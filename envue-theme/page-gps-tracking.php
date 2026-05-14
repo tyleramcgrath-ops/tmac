@@ -1,0 +1,120 @@
+<?php /* Template Name: GPS Tracking */ ?>
+<?php get_header(); ?>
+
+  <section class="page-hero">
+    <div class="page-hero-bg"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80&fit=crop" alt="GPS fleet tracking aerial view"></div>
+    <div class="page-hero-scrim"></div>
+    <div class="page-hero-grid"></div>
+    <div class="page-hero-content fade-up" style="--i:0">
+      <div class="eyebrow">GPS Tracking</div>
+      <h1>Every Vehicle.<br>Every Second.</h1>
+      <p>Know exactly where your fleet is, how it&#8217;s performing, and what needs attention. Real-time GPS tracking powered by Geotab&#8217;s GO device gives you complete visibility across every vehicle in your operation.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="<?php echo esc_url(home_url('/company/')); ?>" class="btn btn-primary">See It Live</a>
+        <a href="<?php echo esc_url(home_url('/geotab/')); ?>" class="btn btn-ghost">About the GO Device</a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .gps-capability-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:3rem}
+    .gps-cap{display:flex;gap:1.25rem;align-items:flex-start;padding:1.75rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--r-xl)}
+    .gps-cap-icon{width:46px;height:46px;border-radius:var(--r);background:var(--blue-lt);border:1px solid var(--blue-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .gps-cap-icon svg{width:22px;height:22px;stroke:var(--blue)}
+    .gps-cap h4{font-family:'Lexend',sans-serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+    .gps-cap p{font-size:.88rem;color:var(--slate);line-height:1.6}
+    .go-device{background:oklch(14% .03 220);border-radius:1.5rem;padding:3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3rem}
+    .go-device-body h3{font-family:'Lexend',sans-serif;font-size:clamp(1.4rem,2vw,2rem);font-weight:800;color:#fff;margin-bottom:1rem;line-height:1.2}
+    .go-device-body p{color:oklch(75% .04 220);line-height:1.7;margin-bottom:1.5rem}
+    .go-device-img{border-radius:1rem;overflow:hidden}
+    .go-device-img img{width:100%;height:280px;object-fit:cover}
+    @media(max-width:1024px){.gps-capability-grid{grid-template-columns:1fr}.go-device{grid-template-columns:1fr}}
+  </style>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="section-label fade-up" style="--i:0">Real-Time Intelligence</div>
+      <h2 class="section-h2 fade-up" style="--i:1">More Than a Dot on a Map</h2>
+      <p class="section-sub fade-up" style="--i:2">EnVue GPS tracking combines precise location data with vehicle diagnostics, driver behavior, and operational analytics in a single unified view.</p>
+      <div class="gps-capability-grid">
+        <div class="gps-cap fade-up" style="--i:0">
+          <div class="gps-cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3m10-10h-3M5 12H2"/></svg></div>
+          <div><h4>Live Map View</h4><p>See all vehicles on a live map updated every 10 seconds. Filter by driver, group, or vehicle type. Click any vehicle for full details.</p></div>
+        </div>
+        <div class="gps-cap fade-up" style="--i:1">
+          <div class="gps-cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div><h4>Trip History &amp; Route Replay</h4><p>Review complete trip history for any vehicle. Replay routes with timestamps, speed data, and stop information.</p></div>
+        </div>
+        <div class="gps-cap fade-up" style="--i:2">
+          <div class="gps-cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+          <div><h4>Geofence Alerts</h4><p>Draw boundaries around job sites, customer locations, or restricted zones. Receive instant alerts when vehicles enter or exit.</p></div>
+        </div>
+        <div class="gps-cap fade-up" style="--i:3">
+          <div class="gps-cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .98h3"/></svg></div>
+          <div><h4>Idle &amp; Speed Alerts</h4><p>Automatic notifications when vehicles idle beyond your threshold, exceed speed limits, or operate outside authorized hours.</p></div>
+        </div>
+        <div class="gps-cap fade-up" style="--i:4">
+          <div class="gps-cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <div><h4>Driver Identification</h4><p>Key fobs and driver ID tags ensure every trip is attributed to the correct driver. Essential for behavior tracking and liability.</p></div>
+        </div>
+        <div class="gps-cap fade-up" style="--i:5">
+          <div class="gps-cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div><h4>Automated Reports</h4><p>Schedule daily, weekly, or monthly reports delivered to your inbox: activity summaries, exception reports, driver rankings.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:oklch(97% .01 220)">
+    <div class="container">
+      <div class="feat-split fade-up" style="--i:0">
+        <div class="feat-split-media"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=900&q=80&fit=crop" alt="MyGeotab fleet dashboard"></div>
+        <div class="feat-split-body">
+          <div class="eyebrow">Powered by MyGeotab</div>
+          <h2>One Dashboard for Your Entire Fleet</h2>
+          <p>MyGeotab is the cloud-based platform that brings all your fleet data together. Unlimited user access, customizable dashboards, and reporting that gives every manager exactly what they need to see.</p>
+          <ul class="check-list">
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>Unlimited user accounts included</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>Fully customizable dashboards and widgets</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>Mobile app for iOS and Android</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>Open API for integration with existing systems</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>300+ marketplace add-on integrations</li>
+          </ul>
+          <a href="<?php echo esc_url(home_url('/geotab/')); ?>" class="btn btn-primary" style="margin-top:1.5rem">Learn About Geotab</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-white">
+    <div class="container">
+      <div class="section-label fade-up" style="--i:0">The Hardware</div>
+      <div class="go-device fade-up" style="--i:1">
+        <div class="go-device-body">
+          <div class="eyebrow" style="color:oklch(65% .14 220)">Geotab GO Device</div>
+          <h3>Plug In. Instantly Connected.</h3>
+          <p>The Geotab GO device plugs directly into your vehicle&#8217;s OBD-II port. No professional installation required. Within seconds of plugging in, your vehicle appears on the live map with full telemetry data streaming to MyGeotab.</p>
+          <ul class="check-list">
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>OBD-II plug-and-play, works with any vehicle</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>Built-in accelerometer and gyroscope</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>Real-time engine diagnostics and fault codes</li>
+            <li><span class="check-icon"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="oklch(44% .14 220)" stroke-width="2" stroke-linecap="round"/></svg></span>4G LTE connectivity with global coverage</li>
+          </ul>
+        </div>
+        <div class="go-device-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80&fit=crop" alt="Geotab GO device fleet tracking"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-dark">
+    <div class="container cta-dark-inner fade-up" style="--i:0">
+      <h2>See Your Fleet on the Map</h2>
+      <p>Request a live demo and see MyGeotab running with real fleet data. We&#8217;ll show you exactly what your operation would look like from day one.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="<?php echo esc_url(home_url('/company/')); ?>" class="btn btn-primary">Request a Demo</a>
+        <a href="<?php echo esc_url(home_url('/resources/')); ?>" class="btn btn-ghost">Fleet ROI Calculator</a>
+      </div>
+    </div>
+  </section>
+
+<?php get_footer(); ?>
