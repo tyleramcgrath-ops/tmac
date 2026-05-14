@@ -678,162 +678,8 @@ footer {
   .fade-in, .feat-photo img, .sol-photo img, .ind-photo img, .rp-photo img { transition: none; }
 }
 
-/* ── FLEET DASHBOARD MOCKUP v3 ── */
-.hero-slide--dash { background: #0d1b2a; overflow: hidden; }
-.fdash2 {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  font-family: 'Lexend', sans-serif;
-}
-/* Top chrome bar */
-.fd2-bar {
-  height: 48px; flex-shrink: 0;
-  background: rgba(10,18,30,0.96);
-  border-bottom: 1px solid rgba(56,120,180,0.18);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px;
-  backdrop-filter: blur(12px);
-}
-.fd2-bar-left { display: flex; align-items: center; gap: 20px; }
-.fd2-brand { font-size: 13px; font-weight: 700; color: #5ba4d4; letter-spacing: -0.02em; }
-.fd2-nav { display: flex; gap: 2px; }
-.fd2-nav-item {
-  font-size: 11px; font-weight: 500; color: rgba(160,190,220,0.45);
-  padding: 5px 12px; border-radius: 5px; cursor: pointer;
-}
-.fd2-nav-item.on { background: rgba(56,120,180,0.15); color: #7dc0ef; }
-.fd2-bar-right { display: flex; align-items: center; gap: 10px; }
-.fd2-chip {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 10px; font-weight: 600;
-  padding: 4px 11px; border-radius: 100px;
-  border: 1px solid rgba(56,120,180,0.2);
-  background: rgba(56,120,180,0.08);
-  color: rgba(140,185,225,0.7);
-}
-.fd2-chip--g { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); color: #4ade80; }
-.fd2-chip--r { border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.1); color: #f87171; }
-.fd2-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.fd2-dot--pulse { animation: pulse 1.6s infinite; }
-/* Main body */
-.fd2-body { flex: 1; display: flex; min-height: 0; position: relative; }
-/* Map fills everything */
-.fd2-map {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 60% 45%, #0d2035 0%, #0b1520 70%);
-  overflow: hidden;
-}
-.fd2-map svg { width: 100%; height: 100%; }
-/* Sidebar glass panel */
-.fd2-sidebar {
-  position: relative; z-index: 10;
-  width: 256px; flex-shrink: 0;
-  background: rgba(8,16,26,0.82);
-  backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(56,120,180,0.16);
-  display: flex; flex-direction: column;
-}
-.fd2-sb-head {
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid rgba(56,120,180,0.1);
-  flex-shrink: 0;
-}
-.fd2-sb-title { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(100,150,200,0.5); margin-bottom: 8px; }
-.fd2-sb-search {
-  display: flex; align-items: center; gap: 7px;
-  background: rgba(56,120,180,0.08);
-  border: 1px solid rgba(56,120,180,0.15);
-  border-radius: 7px; padding: 7px 11px;
-  font-size: 10px; color: rgba(130,175,215,0.4);
-}
-.fd2-vlist { flex: 1; overflow: hidden; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px; }
-.fd2-vrow {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 10px; border-radius: 8px;
-  border: 1px solid transparent;
-  cursor: pointer; transition: all 140ms;
-}
-.fd2-vrow:hover { background: rgba(56,120,180,0.08); }
-.fd2-vrow.sel {
-  background: rgba(56,120,180,0.14);
-  border-color: rgba(91,164,212,0.3);
-}
-.fd2-vrow.alrt { background: rgba(239,68,68,0.07); border-color: rgba(239,68,68,0.2); }
-.fd2-vico {
-  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.fd2-vico--g { background: rgba(34,197,94,0.15); }
-.fd2-vico--b { background: rgba(56,130,210,0.18); }
-.fd2-vico--y { background: rgba(245,158,11,0.15); }
-.fd2-vico--r { background: rgba(239,68,68,0.18); }
-.fd2-vbody { flex: 1; min-width: 0; }
-.fd2-vname { font-size: 11px; font-weight: 600; color: rgba(200,225,245,0.9); line-height: 1.2; }
-.fd2-vsub { font-size: 9px; color: rgba(110,155,195,0.55); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fd2-vbadge {
-  font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 100px; flex-shrink: 0;
-}
-.fd2-vbadge--g { background: rgba(34,197,94,0.15); color: #4ade80; }
-.fd2-vbadge--b { background: rgba(56,140,220,0.15); color: #60a5fa; }
-.fd2-vbadge--y { background: rgba(245,158,11,0.15); color: #fbbf24; }
-.fd2-vbadge--r { background: rgba(239,68,68,0.18); color: #f87171; }
-/* Detail panel floating top-right */
-.fd2-detail {
-  position: absolute; top: 16px; right: 16px; z-index: 20;
-  width: 240px;
-  background: rgba(8,16,26,0.88);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(91,164,212,0.35);
-  border-radius: 14px; overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(91,164,212,0.1);
-}
-.fd2-detail-head {
-  padding: 12px 14px 10px;
-  border-bottom: 1px solid rgba(56,120,180,0.15);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.fd2-detail-name { font-size: 13px; font-weight: 700; color: #c8e1f5; }
-.fd2-detail-badge {
-  font-size: 9px; font-weight: 700; padding: 3px 8px;
-  border-radius: 100px; background: rgba(34,197,94,0.15); color: #4ade80;
-}
-.fd2-detail-rows { padding: 10px 14px; display: flex; flex-direction: column; gap: 7px; }
-.fd2-dr { display: flex; justify-content: space-between; align-items: center; }
-.fd2-dr-label { font-size: 9px; color: rgba(110,155,195,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
-.fd2-dr-val { font-size: 11px; font-weight: 600; color: rgba(200,225,245,0.85); }
-.fd2-dr-val--hi { color: #60a5fa; }
-.fd2-detail-foot {
-  padding: 10px 14px;
-  border-top: 1px solid rgba(56,120,180,0.12);
-  display: flex; gap: 6px;
-}
-.fd2-action {
-  flex: 1; padding: 6px; border-radius: 7px; font-size: 9px; font-weight: 600;
-  background: rgba(56,130,210,0.15); color: #7dc0ef;
-  border: 1px solid rgba(56,130,210,0.2);
-  text-align: center; cursor: pointer;
-}
-/* Bottom stats strip */
-.fd2-stats {
-  position: absolute; bottom: 0; left: 256px; right: 0; z-index: 10;
-  display: flex;
-  background: rgba(8,16,26,0.82);
-  backdrop-filter: blur(16px);
-  border-top: 1px solid rgba(56,120,180,0.15);
-}
-.fd2-stat {
-  flex: 1; padding: 10px 20px;
-  border-right: 1px solid rgba(56,120,180,0.1);
-  display: flex; align-items: center; gap: 10px;
-}
-.fd2-stat:last-child { border-right: none; }
-.fd2-stat-ico {
-  width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.fd2-stat-num { font-size: 18px; font-weight: 800; color: #c8e1f5; line-height: 1; letter-spacing: -0.03em; }
-.fd2-stat-lbl { font-size: 9px; color: rgba(110,155,195,0.5); margin-top: 2px; }
+/* ── LAPTOP MOCKUP SLIDE ── */
+.hero-slide--laptop { background: transparent; overflow: hidden; }
 </style>
 </head>
 <body>
@@ -863,291 +709,239 @@ footer {
     <div class="hero-slide active">
       <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2400&h=1400&q=85" alt="Aerial view of fleet terminal at golden hour" loading="eager">
     </div>
-    <div class="hero-slide hero-slide--dash" style="z-index:2">
-      <div class="fdash2">
-        <!-- Top chrome -->
-        <div class="fd2-bar">
-          <div class="fd2-bar-left">
-            <span class="fd2-brand">EnVue Fleet Live</span>
-            <nav class="fd2-nav">
-              <span class="fd2-nav-item on">Live Map</span>
-              <span class="fd2-nav-item">Assets</span>
-              <span class="fd2-nav-item">Alerts</span>
-              <span class="fd2-nav-item">Reports</span>
-            </nav>
-          </div>
-          <div class="fd2-bar-right">
-            <div class="fd2-chip fd2-chip--g"><span class="fd2-dot fd2-dot--pulse"></span>142 Moving</div>
-            <div class="fd2-chip">8 Idle</div>
-            <div class="fd2-chip fd2-chip--r"><span class="fd2-dot"></span>2 Alerts</div>
-          </div>
-        </div>
-        <!-- Body -->
-        <div class="fd2-body">
-          <!-- Sidebar -->
-          <div class="fd2-sidebar">
-            <div class="fd2-sb-head">
-              <div class="fd2-sb-title">Fleet Assets</div>
-              <div class="fd2-sb-search">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                Search assets…
-              </div>
-            </div>
-            <div class="fd2-vlist">
-              <div class="fd2-vrow sel">
-                <div class="fd2-vico fd2-vico--b">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Truck #1042</div>
-                  <div class="fd2-vsub">58 mph · I-20 West · R. Torres</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--g">Moving</span>
-              </div>
-              <div class="fd2-vrow">
-                <div class="fd2-vico fd2-vico--g">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Van #0387</div>
-                  <div class="fd2-vsub">42 mph · Hwy 80 · M. Chen</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--g">Moving</span>
-              </div>
-              <div class="fd2-vrow">
-                <div class="fd2-vico fd2-vico--y">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Truck #0991</div>
-                  <div class="fd2-vsub">0 mph · Job Site A</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--y">Idle</span>
-              </div>
-              <div class="fd2-vrow alrt">
-                <div class="fd2-vico fd2-vico--r">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Truck #1108</div>
-                  <div class="fd2-vsub">84 mph · FM 1845 — Speeding</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--r">Alert</span>
-              </div>
-              <div class="fd2-vrow">
-                <div class="fd2-vico fd2-vico--g">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Pickup #0214</div>
-                  <div class="fd2-vsub">67 mph · I-20 East · J. Patel</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--g">Moving</span>
-              </div>
-              <div class="fd2-vrow">
-                <div class="fd2-vico fd2-vico--y">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Van #0553</div>
-                  <div class="fd2-vsub">0 mph · Main Depot</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--y">Idle</span>
-              </div>
-              <div class="fd2-vrow">
-                <div class="fd2-vico fd2-vico--b">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                </div>
-                <div class="fd2-vbody">
-                  <div class="fd2-vname">Truck #0762</div>
-                  <div class="fd2-vsub">51 mph · Loop 281 · D. Reyes</div>
-                </div>
-                <span class="fd2-vbadge fd2-vbadge--b">Moving</span>
-              </div>
-            </div>
-          </div>
-          <!-- Map -->
-          <div class="fd2-map">
-            <svg viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-              <defs>
-                <filter id="vglow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                <filter id="rglow"><feGaussianBlur stdDeviation="7" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                <linearGradient id="trail1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/><stop offset="100%" stop-color="#38bdf8" stop-opacity="0.9"/></linearGradient>
-                <linearGradient id="trail2" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#4ade80" stop-opacity="0"/><stop offset="100%" stop-color="#4ade80" stop-opacity="0.8"/></linearGradient>
-                <linearGradient id="trail3" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#fb923c" stop-opacity="0"/><stop offset="100%" stop-color="#fb923c" stop-opacity="0.8"/></linearGradient>
-              </defs>
-              <!-- Map bg -->
-              <rect width="1100" height="560" fill="#111827"/>
-              <!-- Water feature -->
-              <ellipse cx="820" cy="420" rx="130" ry="70" fill="#0c2340" opacity="0.8"/>
-              <text x="820" y="425" fill="#1a4a6b" font-size="9" font-family="Lexend" text-anchor="middle" font-style="italic">Lake Longview</text>
-              <!-- City blocks - visible contrast -->
-              <rect x="30"  y="30"  width="130" height="75" rx="4" fill="#1f2937"/>
-              <rect x="200" y="20"  width="90"  height="85" rx="4" fill="#1f2937"/>
-              <rect x="340" y="30"  width="140" height="65" rx="4" fill="#1f2937"/>
-              <rect x="530" y="20"  width="110" height="80" rx="4" fill="#1f2937"/>
-              <rect x="695" y="30"  width="95"  height="70" rx="4" fill="#1f2937"/>
-              <rect x="840" y="25"  width="120" height="80" rx="4" fill="#1f2937"/>
-              <rect x="1010" y="30" width="80"  height="75" rx="4" fill="#1f2937"/>
-              <rect x="30"  y="185" width="120" height="95" rx="4" fill="#1f2937"/>
-              <rect x="200" y="175" width="85"  height="90" rx="4" fill="#1f2937"/>
-              <rect x="340" y="180" width="140" height="95" rx="4" fill="#1f2937"/>
-              <rect x="530" y="175" width="110" height="100" rx="4" fill="#1f2937"/>
-              <rect x="700" y="180" width="95"  height="90" rx="4" fill="#1f2937"/>
-              <rect x="30"  y="360" width="130" height="90" rx="4" fill="#1f2937"/>
-              <rect x="210" y="355" width="95"  height="95" rx="4" fill="#1f2937"/>
-              <rect x="360" y="360" width="130" height="90" rx="4" fill="#1f2937"/>
-              <rect x="540" y="355" width="100" height="95" rx="4" fill="#1f2937"/>
-              <!-- Major highways - bright and clear -->
-              <rect x="0" y="148" width="1100" height="22" fill="#374151"/>
-              <rect x="0" y="153" width="1100" height="12" fill="#4b5563"/>
-              <rect x="0" y="305" width="1100" height="26" fill="#374151"/>
-              <rect x="0" y="311" width="1100" height="14" fill="#4b5563"/>
-              <rect x="0" y="475" width="1100" height="20" fill="#374151"/>
-              <rect y="0" x="188" height="560" width="20" fill="#374151"/>
-              <rect y="0" x="193" height="560" width="10" fill="#4b5563"/>
-              <rect y="0" x="498" height="560" width="24" fill="#374151"/>
-              <rect y="0" x="504" height="560" width="12" fill="#4b5563"/>
-              <rect y="0" x="840" height="560" width="18" fill="#374151"/>
-              <rect y="0" x="845" height="560" width="9"  fill="#4b5563"/>
-              <!-- Minor roads -->
-              <line x1="0" y1="100" x2="1100" y2="100" stroke="#293548" stroke-width="4"/>
-              <line x1="0" y1="250" x2="1100" y2="250" stroke="#293548" stroke-width="4"/>
-              <line x1="0" y1="430" x2="1100" y2="430" stroke="#293548" stroke-width="4"/>
-              <line x1="0" y1="510" x2="1100" y2="510" stroke="#293548" stroke-width="4"/>
-              <line x1="100" y1="0" x2="100" y2="560" stroke="#293548" stroke-width="4"/>
-              <line x1="330" y1="0" x2="330" y2="560" stroke="#293548" stroke-width="4"/>
-              <line x1="660" y1="0" x2="660" y2="560" stroke="#293548" stroke-width="4"/>
-              <line x1="970" y1="0" x2="970" y2="560" stroke="#293548" stroke-width="4"/>
-              <!-- Road name labels -->
-              <text x="90"  y="311" fill="#6b7280" font-size="8" font-family="Lexend" font-weight="700" text-anchor="middle">I-20 W</text>
-              <text x="700" y="311" fill="#6b7280" font-size="8" font-family="Lexend" font-weight="700" text-anchor="middle">I-20 E</text>
-              <text x="497" y="80" fill="#6b7280" font-size="7" font-family="Lexend" font-weight="700" text-anchor="middle" transform="rotate(-90,497,80)">Loop 281</text>
-              <!-- Glowing route trails -->
-              <path d="M60,318 C160,312 300,310 420,308 C540,306 620,302 720,298" fill="none" stroke="url(#trail1)" stroke-width="3"/>
-              <path d="M60,318 C160,312 300,310 420,308 C540,306 620,302 720,298" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.4"/>
-              <path d="M505,60 C507,150 510,230 508,318 C506,400 502,450 498,490" fill="none" stroke="url(#trail2)" stroke-width="3"/>
-              <path d="M505,60 C507,150 510,230 508,318 C506,400 502,450 498,490" fill="none" stroke="#4ade80" stroke-width="1.5" opacity="0.4"/>
-              <path d="M1050,318 C950,314 860,310 780,308" fill="none" stroke="url(#trail3)" stroke-width="3"/>
-              <!-- Geofence ring -->
-              <circle cx="498" cy="490" r="50" fill="rgba(167,139,250,0.07)" stroke="#a78bfa" stroke-width="2" stroke-dasharray="8,5"/>
-              <text x="498" y="548" fill="#a78bfa" font-size="7.5" font-family="Lexend" font-weight="600" text-anchor="middle">Depot Zone</text>
-              <!-- ── VEHICLE MARKERS ── -->
-              <!-- TRK-1042 selected (blue, big) -->
-              <g transform="translate(420,308)" filter="url(#vglow)">
-                <circle r="22" fill="#1d4ed8" opacity="0.3"/>
-                <circle r="14" fill="#2563eb"/>
-                <circle r="13" fill="none" stroke="#93c5fd" stroke-width="1.5"/>
-                <polygon points="0,-6 5,4 -5,4" fill="white"/>
-              </g>
-              <!-- Callout for TRK-1042 -->
-              <g transform="translate(420,268)">
-                <rect x="-68" y="-30" width="136" height="36" rx="6" fill="#1e3a5f" stroke="#38bdf8" stroke-width="1.5"/>
-                <polygon points="-6,6 0,14 6,6" fill="#1e3a5f" stroke="#38bdf8" stroke-width="1.5" stroke-linejoin="round"/>
-                <polygon points="-4,6 0,12 4,6" fill="#1e3a5f"/>
-                <text x="0" y="-12" fill="#93c5fd" font-size="8.5" font-family="Lexend" text-anchor="middle" font-weight="700">TRK-1042 · 58 mph</text>
-                <text x="0" y="0" fill="#60a5fa" font-size="7.5" font-family="Lexend" text-anchor="middle">I-20 West · R. Torres</text>
-              </g>
-              <!-- VAN-0387 green moving -->
-              <g transform="translate(720,298)" filter="url(#vglow)">
-                <circle r="18" fill="#15803d" opacity="0.3"/>
-                <circle r="11" fill="#16a34a"/>
-                <circle r="10" fill="none" stroke="#86efac" stroke-width="1.5"/>
-                <polygon points="0,-5 4,3 -4,3" fill="white"/>
-              </g>
-              <text x="720" y="284" fill="#86efac" font-size="7" font-family="Lexend" font-weight="700" text-anchor="middle">VAN-0387</text>
-              <!-- TRK-1108 ALERT red -->
-              <g transform="translate(330,160)" filter="url(#rglow)">
-                <circle r="24" fill="#991b1b" opacity="0.35"/>
-                <circle r="15" fill="#dc2626"/>
-                <circle r="14" fill="none" stroke="#fca5a5" stroke-width="2"/>
-                <text x="0" y="5" fill="white" font-size="14" font-family="Lexend" font-weight="900" text-anchor="middle">!</text>
-              </g>
-              <rect x="270" y="132" width="120" height="18" rx="4" fill="#7f1d1d" opacity="0.9"/>
-              <text x="330" y="145" fill="#fca5a5" font-size="8" font-family="Lexend" font-weight="700" text-anchor="middle">⚠ SPEEDING · 84 mph</text>
-              <!-- PKP-0214 blue moving -->
-              <g transform="translate(780,308)" filter="url(#vglow)">
-                <circle r="17" fill="#1d4ed8" opacity="0.25"/>
-                <circle r="10" fill="#3b82f6"/>
-                <polygon points="0,-4 4,3 -4,3" fill="white"/>
-              </g>
-              <text x="780" y="294" fill="#93c5fd" font-size="7" font-family="Lexend" font-weight="700" text-anchor="middle">PKP-0214</text>
-              <!-- TRK-0991 idle amber -->
-              <g transform="translate(498,456)">
-                <circle r="16" fill="#92400e" opacity="0.3"/>
-                <circle r="10" fill="#d97706"/>
-                <rect x="-4" y="-4" width="8" height="8" rx="2" fill="white"/>
-              </g>
-              <text x="498" y="442" fill="#fbbf24" font-size="7" font-family="Lexend" font-weight="700" text-anchor="middle">TRK-0991 · IDLE</text>
-              <!-- VAN-0553 idle -->
-              <g transform="translate(195,420)">
-                <circle r="13" fill="#92400e" opacity="0.25"/>
-                <circle r="8" fill="#d97706"/>
-                <rect x="-3" y="-3" width="6" height="6" rx="1.5" fill="white"/>
-              </g>
-              <!-- TRK-0762 green -->
-              <g transform="translate(508,220)" filter="url(#vglow)">
-                <circle r="16" fill="#15803d" opacity="0.25"/>
-                <circle r="10" fill="#16a34a"/>
-                <polygon points="0,-4 4,3 -4,3" fill="white"/>
-              </g>
-            </svg>
-          </div>
-          <!-- Selected vehicle detail panel -->
-          <div class="fd2-detail">
-            <div class="fd2-detail-head">
-              <span class="fd2-detail-name">Truck #1042</span>
-              <span class="fd2-detail-badge">● Moving</span>
-            </div>
-            <div class="fd2-detail-rows">
-              <div class="fd2-dr"><span class="fd2-dr-label">Speed</span><span class="fd2-dr-val fd2-dr-val--hi">58 mph</span></div>
-              <div class="fd2-dr"><span class="fd2-dr-label">Location</span><span class="fd2-dr-val">I-20 West</span></div>
-              <div class="fd2-dr"><span class="fd2-dr-label">Driver</span><span class="fd2-dr-val">R. Torres</span></div>
-              <div class="fd2-dr"><span class="fd2-dr-label">Engine</span><span class="fd2-dr-val">Running</span></div>
-              <div class="fd2-dr"><span class="fd2-dr-label">Odometer</span><span class="fd2-dr-val">84,291 mi</span></div>
-              <div class="fd2-dr"><span class="fd2-dr-label">Last update</span><span class="fd2-dr-val">Just now</span></div>
-            </div>
-            <div class="fd2-detail-foot">
-              <div class="fd2-action">Trip History</div>
-              <div class="fd2-action">Send Message</div>
-              <div class="fd2-action">Alert</div>
-            </div>
-          </div>
-          <!-- Bottom stats -->
-          <div class="fd2-stats">
-            <div class="fd2-stat">
-              <div class="fd2-stat-ico" style="background:rgba(34,197,94,0.12)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div><div class="fd2-stat-num">142</div><div class="fd2-stat-lbl">Active now</div></div>
-            </div>
-            <div class="fd2-stat">
-              <div class="fd2-stat-ico" style="background:rgba(245,158,11,0.12)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              </div>
-              <div><div class="fd2-stat-num">8</div><div class="fd2-stat-lbl">Idling</div></div>
-            </div>
-            <div class="fd2-stat">
-              <div class="fd2-stat-ico" style="background:rgba(239,68,68,0.12)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              </div>
-              <div><div class="fd2-stat-num">2</div><div class="fd2-stat-lbl">Alerts</div></div>
-            </div>
-            <div class="fd2-stat">
-              <div class="fd2-stat-ico" style="background:rgba(99,102,241,0.12)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              </div>
-              <div><div class="fd2-stat-num">58<span style="font-size:11px;font-weight:500"> avg</span></div><div class="fd2-stat-lbl">mph fleet avg</div></div>
-            </div>
-            <div class="fd2-stat">
-              <div class="fd2-stat-ico" style="background:rgba(56,130,210,0.12)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div><div class="fd2-stat-num">4</div><div class="fd2-stat-lbl">Geofence zones</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="hero-slide hero-slide--laptop" style="z-index:2">
+      <svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
+        <defs>
+          <radialGradient id="lg-glow" cx="720" cy="410" r="500" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#1e40af" stop-opacity="0.28"/>
+            <stop offset="100%" stop-color="#071024" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="lg-mk"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="lg-tr" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.9"/>
+          </linearGradient>
+        </defs>
+        <!-- BG -->
+        <rect width="1440" height="900" fill="#071024"/>
+        <ellipse cx="720" cy="400" rx="550" ry="340" fill="url(#lg-glow)"/>
+        <!-- LAPTOP BEZEL -->
+        <rect x="300" y="40" width="840" height="576" rx="20" fill="#17171c"/>
+        <rect x="300" y="40" width="840" height="2" fill="#2e2e36" opacity="0.7"/>
+        <!-- SCREEN -->
+        <rect x="318" y="58" width="804" height="540" rx="10" fill="#0c1521"/>
+        <!-- camera -->
+        <circle cx="720" cy="49" r="5" fill="#0f0f14"/>
+        <circle cx="720" cy="49" r="2.5" fill="#08080c"/>
+        <!-- APP BAR -->
+        <rect x="318" y="58" width="804" height="38" rx="10" fill="#0d1f38"/>
+        <rect x="318" y="76" width="804" height="20" fill="#0d1f38"/>
+        <circle cx="340" cy="77" r="5.5" fill="#ff5f57"/>
+        <circle cx="358" cy="77" r="5.5" fill="#febc2e"/>
+        <circle cx="376" cy="77" r="5.5" fill="#28c840"/>
+        <text x="400" y="82" fill="#5ba4d4" font-size="12" font-family="Lexend" font-weight="700">EnVue Fleet Live</text>
+        <rect x="504" y="64" width="62" height="24" rx="5" fill="rgba(56,120,180,0.2)"/>
+        <text x="535" y="81" fill="#7dc0ef" font-size="9.5" font-family="Lexend" font-weight="600" text-anchor="middle">Live Map</text>
+        <text x="582" y="81" fill="rgba(120,160,210,0.4)" font-size="9.5" font-family="Lexend">Assets</text>
+        <text x="629" y="81" fill="rgba(120,160,210,0.4)" font-size="9.5" font-family="Lexend">Alerts</text>
+        <text x="676" y="81" fill="rgba(120,160,210,0.4)" font-size="9.5" font-family="Lexend">Reports</text>
+        <rect x="902" y="65" width="84" height="20" rx="10" fill="rgba(34,197,94,0.1)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+        <circle cx="914" cy="75" r="3.5" fill="#4ade80"/>
+        <text x="922" y="79" fill="#4ade80" font-size="8.5" font-family="Lexend" font-weight="600">142 Moving</text>
+        <rect x="996" y="65" width="58" height="20" rx="10" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.3)" stroke-width="1"/>
+        <circle cx="1007" cy="75" r="3" fill="#f87171"/>
+        <text x="1013" y="79" fill="#f87171" font-size="8.5" font-family="Lexend" font-weight="600">2 Alerts</text>
+        <!-- SIDEBAR x=318-503, y=96-558 -->
+        <rect x="318" y="96" width="185" height="462" fill="#0e1929"/>
+        <rect x="503" y="96" width="1" height="462" fill="rgba(56,120,180,0.12)"/>
+        <text x="328" y="115" fill="rgba(100,150,200,0.45)" font-size="8" font-family="Lexend" font-weight="700" letter-spacing="0.1em">FLEET ASSETS</text>
+        <rect x="326" y="121" width="169" height="20" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(80,130,180,0.18)" stroke-width="1"/>
+        <text x="336" y="134" fill="rgba(100,150,200,0.25)" font-size="8.5" font-family="Lexend">Search assets…</text>
+        <!-- VRow 1 selected -->
+        <rect x="319" y="147" width="183" height="38" rx="4" fill="rgba(37,99,235,0.13)" stroke="rgba(37,99,235,0.28)" stroke-width="1"/>
+        <circle cx="334" cy="166" r="8.5" fill="rgba(37,99,235,0.2)"/><circle cx="334" cy="166" r="5.5" fill="#2563eb"/>
+        <polygon points="334,161.5 337.5,169.5 330.5,169.5" fill="white"/>
+        <text x="347" y="162" fill="rgba(200,225,245,0.92)" font-size="9.5" font-family="Lexend" font-weight="600">Truck #1042</text>
+        <text x="347" y="174" fill="rgba(100,155,200,0.45)" font-size="7.5" font-family="Lexend">58 mph · I-20 West</text>
+        <rect x="460" y="156" width="36" height="13" rx="6.5" fill="rgba(34,197,94,0.15)"/>
+        <text x="478" y="166" fill="#4ade80" font-size="7" font-family="Lexend" font-weight="600" text-anchor="middle">Moving</text>
+        <!-- VRow 2 -->
+        <rect x="319" y="189" width="183" height="37" rx="4" fill="transparent"/>
+        <circle cx="334" cy="208" r="7.5" fill="rgba(34,197,94,0.15)"/><circle cx="334" cy="208" r="5" fill="#16a34a"/>
+        <polygon points="334,203.5 337,210.5 331,210.5" fill="white"/>
+        <text x="347" y="204" fill="rgba(200,225,245,0.8)" font-size="9.5" font-family="Lexend" font-weight="500">Van #0387</text>
+        <text x="347" y="216" fill="rgba(100,155,200,0.35)" font-size="7.5" font-family="Lexend">42 mph · Hwy 80</text>
+        <rect x="460" y="199" width="36" height="13" rx="6.5" fill="rgba(34,197,94,0.12)"/>
+        <text x="478" y="209" fill="#4ade80" font-size="7" font-family="Lexend" font-weight="600" text-anchor="middle">Moving</text>
+        <!-- VRow 3 alert -->
+        <rect x="319" y="230" width="183" height="37" rx="4" fill="rgba(239,68,68,0.06)" stroke="rgba(239,68,68,0.18)" stroke-width="1"/>
+        <circle cx="334" cy="249" r="7.5" fill="rgba(239,68,68,0.2)"/><circle cx="334" cy="249" r="5" fill="#dc2626"/>
+        <text x="334" y="253" fill="white" font-size="9" font-family="Lexend" font-weight="900" text-anchor="middle">!</text>
+        <text x="347" y="245" fill="rgba(200,225,245,0.8)" font-size="9.5" font-family="Lexend" font-weight="500">Truck #1108</text>
+        <text x="347" y="257" fill="#f87171" font-size="7.5" font-family="Lexend">84 mph — Speeding</text>
+        <rect x="460" y="240" width="34" height="13" rx="6.5" fill="rgba(239,68,68,0.18)"/>
+        <text x="477" y="250" fill="#f87171" font-size="7" font-family="Lexend" font-weight="600" text-anchor="middle">Alert</text>
+        <!-- VRow 4 -->
+        <rect x="319" y="271" width="183" height="37" rx="4" fill="transparent"/>
+        <circle cx="334" cy="290" r="7.5" fill="rgba(245,158,11,0.15)"/><circle cx="334" cy="290" r="5" fill="#d97706"/>
+        <rect x="331" y="287" width="6" height="6" rx="1.5" fill="white"/>
+        <text x="347" y="286" fill="rgba(200,225,245,0.8)" font-size="9.5" font-family="Lexend" font-weight="500">Truck #0991</text>
+        <text x="347" y="298" fill="rgba(100,155,200,0.35)" font-size="7.5" font-family="Lexend">Idle · Job Site A</text>
+        <rect x="463" y="281" width="29" height="13" rx="6.5" fill="rgba(245,158,11,0.15)"/>
+        <text x="477" y="291" fill="#fbbf24" font-size="7" font-family="Lexend" font-weight="600" text-anchor="middle">Idle</text>
+        <!-- VRow 5 -->
+        <rect x="319" y="312" width="183" height="37" rx="4" fill="transparent"/>
+        <circle cx="334" cy="331" r="7.5" fill="rgba(37,99,235,0.15)"/><circle cx="334" cy="331" r="5" fill="#3b82f6"/>
+        <polygon points="334,326.5 337,333.5 331,333.5" fill="white"/>
+        <text x="347" y="327" fill="rgba(200,225,245,0.8)" font-size="9.5" font-family="Lexend" font-weight="500">Pickup #0214</text>
+        <text x="347" y="339" fill="rgba(100,155,200,0.35)" font-size="7.5" font-family="Lexend">67 mph · I-20 East</text>
+        <rect x="460" y="322" width="36" height="13" rx="6.5" fill="rgba(34,197,94,0.12)"/>
+        <text x="478" y="332" fill="#4ade80" font-size="7" font-family="Lexend" font-weight="600" text-anchor="middle">Moving</text>
+        <!-- VRow 6 -->
+        <rect x="319" y="353" width="183" height="37" rx="4" fill="transparent"/>
+        <circle cx="334" cy="372" r="7.5" fill="rgba(34,197,94,0.15)"/><circle cx="334" cy="372" r="5" fill="#16a34a"/>
+        <polygon points="334,367.5 337,374.5 331,374.5" fill="white"/>
+        <text x="347" y="368" fill="rgba(200,225,245,0.8)" font-size="9.5" font-family="Lexend" font-weight="500">Van #0553</text>
+        <text x="347" y="380" fill="rgba(100,155,200,0.35)" font-size="7.5" font-family="Lexend">51 mph · Loop 281</text>
+        <rect x="460" y="363" width="36" height="13" rx="6.5" fill="rgba(34,197,94,0.12)"/>
+        <text x="478" y="373" fill="#4ade80" font-size="7" font-family="Lexend" font-weight="600" text-anchor="middle">Moving</text>
+        <!-- MAP x=504-1122, y=96-558 -->
+        <rect x="504" y="96" width="618" height="462" fill="#0d1b2c"/>
+        <rect x="516" y="104" width="65" height="46" rx="2" fill="#12253a"/>
+        <rect x="600" y="100" width="58" height="52" rx="2" fill="#12253a"/>
+        <rect x="678" y="105" width="68" height="44" rx="2" fill="#12253a"/>
+        <rect x="774" y="100" width="62" height="50" rx="2" fill="#12253a"/>
+        <rect x="858" y="103" width="68" height="47" rx="2" fill="#12253a"/>
+        <rect x="948" y="101" width="72" height="50" rx="2" fill="#12253a"/>
+        <rect x="1044" y="104" width="64" height="46" rx="2" fill="#12253a"/>
+        <rect x="510" y="222" width="60" height="55" rx="2" fill="#12253a"/>
+        <rect x="596" y="218" width="65" height="60" rx="2" fill="#12253a"/>
+        <rect x="682" y="224" width="60" height="52" rx="2" fill="#12253a"/>
+        <rect x="776" y="219" width="65" height="58" rx="2" fill="#12253a"/>
+        <rect x="862" y="222" width="68" height="55" rx="2" fill="#12253a"/>
+        <rect x="958" y="218" width="60" height="58" rx="2" fill="#12253a"/>
+        <rect x="1050" y="220" width="62" height="55" rx="2" fill="#12253a"/>
+        <rect x="510" y="348" width="68" height="58" rx="2" fill="#12253a"/>
+        <rect x="598" y="352" width="65" height="55" rx="2" fill="#12253a"/>
+        <rect x="686" y="346" width="68" height="62" rx="2" fill="#12253a"/>
+        <rect x="780" y="350" width="60" height="58" rx="2" fill="#12253a"/>
+        <ellipse cx="1010" cy="430" rx="88" ry="50" fill="#07182e" opacity="0.75"/>
+        <!-- Roads H -->
+        <rect x="504" y="168" width="618" height="14" fill="#16283e"/><rect x="504" y="171" width="618" height="8" fill="#1c304a"/>
+        <rect x="504" y="292" width="618" height="16" fill="#16283e"/><rect x="504" y="296" width="618" height="9" fill="#1c304a"/>
+        <rect x="504" y="420" width="618" height="12" fill="#16283e"/>
+        <!-- Roads V -->
+        <rect x="660" y="96" width="14" height="462" fill="#16283e"/><rect x="663" y="96" width="8" height="462" fill="#1c304a"/>
+        <rect x="856" y="96" width="12" height="462" fill="#16283e"/><rect x="859" y="96" width="6" height="462" fill="#1c304a"/>
+        <!-- Minor roads -->
+        <line x1="504" y1="148" x2="1122" y2="148" stroke="#12223a" stroke-width="2.5"/>
+        <line x1="504" y1="270" x2="1122" y2="270" stroke="#12223a" stroke-width="2.5"/>
+        <line x1="504" y1="400" x2="1122" y2="400" stroke="#12223a" stroke-width="2.5"/>
+        <line x1="582" y1="96" x2="582" y2="558" stroke="#12223a" stroke-width="2.5"/>
+        <line x1="770" y1="96" x2="770" y2="558" stroke="#12223a" stroke-width="2.5"/>
+        <line x1="1000" y1="96" x2="1000" y2="558" stroke="#12223a" stroke-width="2.5"/>
+        <text x="524" y="300" fill="rgba(100,150,200,0.35)" font-size="6.5" font-family="Lexend" font-weight="700">I-20 W</text>
+        <text x="964" y="300" fill="rgba(100,150,200,0.35)" font-size="6.5" font-family="Lexend" font-weight="700">I-20 E</text>
+        <text x="669" y="126" fill="rgba(100,150,200,0.35)" font-size="6" font-family="Lexend" font-weight="700" transform="rotate(-90,669,126)">Loop 281</text>
+        <!-- Route trail -->
+        <path d="M522,298 C592,295 642,293 702,291 C762,289 822,288 882,287" fill="none" stroke="url(#lg-tr)" stroke-width="2.5"/>
+        <path d="M522,298 C592,295 642,293 702,291 C762,289 822,288 882,287" fill="none" stroke="#38bdf8" stroke-width="1" opacity="0.4"/>
+        <!-- Geofence -->
+        <circle cx="668" cy="455" r="36" fill="rgba(167,139,250,0.05)" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <text x="668" y="498" fill="#a78bfa" font-size="6.5" font-family="Lexend" font-weight="600" text-anchor="middle">Depot Zone</text>
+        <!-- TRK-1042 selected -->
+        <circle cx="882" cy="287" r="16" fill="#1d4ed8" opacity="0.22"/>
+        <circle cx="882" cy="287" r="10" fill="#2563eb" filter="url(#lg-mk)"/>
+        <circle cx="882" cy="287" r="9.5" fill="none" stroke="#93c5fd" stroke-width="1.5"/>
+        <polygon points="882,282 885.5,291 878.5,291" fill="white"/>
+        <rect x="840" y="257" width="84" height="22" rx="5" fill="#1e3a5f" stroke="#38bdf8" stroke-width="1"/>
+        <polygon points="878,279 882,284 886,279" fill="#1e3a5f"/>
+        <text x="882" y="266" fill="#93c5fd" font-size="7" font-family="Lexend" text-anchor="middle" font-weight="700">TRK-1042 · 58 mph</text>
+        <text x="882" y="275" fill="#60a5fa" font-size="6" font-family="Lexend" text-anchor="middle">I-20 W · R. Torres</text>
+        <!-- VAN-0387 -->
+        <circle cx="1062" cy="293" r="12" fill="#15803d" opacity="0.22"/>
+        <circle cx="1062" cy="293" r="8" fill="#16a34a"/>
+        <circle cx="1062" cy="293" r="7.5" fill="none" stroke="#86efac" stroke-width="1"/>
+        <polygon points="1062,288.5 1065,296 1059,296" fill="white"/>
+        <text x="1062" y="280" fill="#86efac" font-size="6" font-family="Lexend" text-anchor="middle" font-weight="700">VAN-0387</text>
+        <!-- TRK-1108 alert -->
+        <circle cx="548" cy="182" r="14" fill="#991b1b" opacity="0.28"/>
+        <circle cx="548" cy="182" r="9" fill="#dc2626"/>
+        <circle cx="548" cy="182" r="8.5" fill="none" stroke="#fca5a5" stroke-width="1.5"/>
+        <text x="548" y="186" fill="white" font-size="10" font-family="Lexend" font-weight="900" text-anchor="middle">!</text>
+        <rect x="510" y="162" width="76" height="14" rx="3.5" fill="#7f1d1d"/>
+        <text x="548" y="172" fill="#fca5a5" font-size="6" font-family="Lexend" font-weight="700" text-anchor="middle">⚠ 84mph SPEEDING</text>
+        <!-- TRK-0991 idle -->
+        <circle cx="668" cy="436" r="12" fill="#92400e" opacity="0.22"/>
+        <circle cx="668" cy="436" r="7.5" fill="#d97706"/>
+        <rect x="664.5" y="432.5" width="7" height="7" rx="1.5" fill="white"/>
+        <text x="668" y="424" fill="#fbbf24" font-size="5.5" font-family="Lexend" text-anchor="middle" font-weight="700">IDLE</text>
+        <!-- PKP-0214 -->
+        <circle cx="1002" cy="298" r="11" fill="#1d4ed8" opacity="0.2"/>
+        <circle cx="1002" cy="298" r="7" fill="#3b82f6"/>
+        <polygon points="1002,293.5 1005,300.5 999,300.5" fill="white"/>
+        <text x="1002" y="285" fill="#93c5fd" font-size="5.5" font-family="Lexend" text-anchor="middle" font-weight="700">PKP-0214</text>
+        <!-- STATS BAR y=558-598 -->
+        <rect x="318" y="558" width="804" height="40" fill="#0a1624"/>
+        <line x1="318" y1="558" x2="1122" y2="558" stroke="rgba(56,120,200,0.12)" stroke-width="1"/>
+        <text x="358" y="574" fill="#4ade80" font-size="15" font-family="Lexend" font-weight="800">142</text>
+        <text x="358" y="588" fill="rgba(100,150,200,0.38)" font-size="7" font-family="Lexend">Active Now</text>
+        <line x1="420" y1="563" x2="420" y2="591" stroke="rgba(56,120,200,0.1)" stroke-width="1"/>
+        <text x="436" y="574" fill="#fbbf24" font-size="15" font-family="Lexend" font-weight="800">8</text>
+        <text x="436" y="588" fill="rgba(100,150,200,0.38)" font-size="7" font-family="Lexend">Idling</text>
+        <line x1="490" y1="563" x2="490" y2="591" stroke="rgba(56,120,200,0.1)" stroke-width="1"/>
+        <text x="506" y="574" fill="#f87171" font-size="15" font-family="Lexend" font-weight="800">2</text>
+        <text x="506" y="588" fill="rgba(100,150,200,0.38)" font-size="7" font-family="Lexend">Alerts</text>
+        <line x1="560" y1="563" x2="560" y2="591" stroke="rgba(56,120,200,0.1)" stroke-width="1"/>
+        <text x="576" y="574" fill="#60a5fa" font-size="15" font-family="Lexend" font-weight="800">58</text>
+        <text x="596" y="574" fill="#60a5fa" font-size="8" font-family="Lexend"> mph</text>
+        <text x="576" y="588" fill="rgba(100,150,200,0.38)" font-size="7" font-family="Lexend">Fleet Avg</text>
+        <line x1="660" y1="563" x2="660" y2="591" stroke="rgba(56,120,200,0.1)" stroke-width="1"/>
+        <text x="676" y="574" fill="#c4b5fd" font-size="15" font-family="Lexend" font-weight="800">4</text>
+        <text x="676" y="588" fill="rgba(100,150,200,0.38)" font-size="7" font-family="Lexend">Geofences</text>
+        <line x1="730" y1="563" x2="730" y2="591" stroke="rgba(56,120,200,0.1)" stroke-width="1"/>
+        <text x="746" y="574" fill="rgba(200,225,245,0.7)" font-size="15" font-family="Lexend" font-weight="800">152</text>
+        <text x="746" y="588" fill="rgba(100,150,200,0.38)" font-size="7" font-family="Lexend">Total Assets</text>
+        <!-- LAPTOP BASE -->
+        <rect x="268" y="616" width="904" height="16" rx="8" fill="#1c1c22"/>
+        <path d="M220 632 C198 632 186 644 186 660 L190 730 C190 741 198 748 208 748 L1232 748 C1242 748 1250 741 1250 730 L1254 660 C1254 644 1242 632 1220 632 Z" fill="#131316"/>
+        <!-- Keys row 1 -->
+        <rect x="256" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="273" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="290" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="307" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="324" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="341" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="358" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="375" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="392" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="409" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="426" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="443" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="460" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="477" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="494" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="511" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="528" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="545" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="562" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="579" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="596" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="613" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="630" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="647" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="664" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="681" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="698" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="715" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="732" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="749" y="644" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <!-- Keys row 2 -->
+        <rect x="260" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="277" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="294" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="311" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="328" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="345" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="362" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="379" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="396" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="413" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="430" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="447" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="464" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="481" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="498" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="515" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="532" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="549" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="566" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="583" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="600" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="617" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="634" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="651" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="668" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="685" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <rect x="702" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/><rect x="719" y="657" width="11" height="7" rx="1.5" fill="#1d1d22"/>
+        <!-- Spacebar -->
+        <rect x="416" y="698" width="348" height="9" rx="4.5" fill="#1d1d22"/>
+        <!-- Touchpad -->
+        <rect x="572" y="674" width="148" height="42" rx="7" fill="#18181d"/>
+        <rect x="573" y="675" width="146" height="40" rx="6" fill="none" stroke="#1e1e24" stroke-width="1"/>
+      </svg>
     </div>
     <div class="hero-slide">
       <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=2400&h=1400&q=85" alt="Fleet of trucks on the highway" loading="lazy">
