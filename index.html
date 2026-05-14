@@ -677,6 +677,106 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .fade-in, .feat-photo img, .sol-photo img, .ind-photo img, .rp-photo img { transition: none; }
 }
+
+/* ── FLEET DASHBOARD MOCKUP (Hero Slide 2) ── */
+.hero-slide--dash { background: oklch(9% 0.02 220); }
+.fdash {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  font-family: 'Lexend', monospace;
+  background: oklch(9% 0.025 220);
+}
+.fdash-topbar {
+  height: 44px; flex-shrink: 0;
+  background: oklch(12% 0.03 220);
+  border-bottom: 1px solid oklch(22% 0.04 220);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; gap: 16px;
+}
+.fdash-logo-text {
+  font-size: 13px; font-weight: 700; color: oklch(80% 0.14 220);
+  letter-spacing: -0.02em;
+}
+.fdash-breadcrumb {
+  font-size: 11px; color: oklch(50% 0.04 220); margin-left: 10px;
+}
+.fdash-topbar-right { display: flex; gap: 8px; }
+.fdash-pill {
+  font-size: 10px; font-weight: 600;
+  padding: 3px 10px; border-radius: 100px;
+  background: oklch(18% 0.03 220); color: oklch(60% 0.05 220);
+  border: 1px solid oklch(24% 0.04 220);
+  display: flex; align-items: center; gap: 5px;
+}
+.fdash-pill--green { color: oklch(72% 0.18 145); border-color: oklch(40% 0.12 145); background: oklch(16% 0.06 145); }
+.fdash-pill--red { color: oklch(70% 0.18 15); border-color: oklch(40% 0.14 15); background: oklch(16% 0.06 15); }
+.fdash-blink {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: oklch(70% 0.18 145);
+  animation: pulse 1.8s infinite;
+}
+.fdash-body { flex: 1; display: flex; min-height: 0; }
+.fdash-sidebar {
+  width: 240px; flex-shrink: 0;
+  background: oklch(11% 0.025 220);
+  border-right: 1px solid oklch(20% 0.03 220);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.fdash-search {
+  padding: 10px 12px; margin: 10px;
+  background: oklch(15% 0.03 220);
+  border: 1px solid oklch(22% 0.04 220);
+  border-radius: 6px;
+  font-size: 10px; color: oklch(40% 0.03 220);
+  display: flex; align-items: center; gap: 7px;
+  flex-shrink: 0;
+}
+.fdash-vlist { flex: 1; overflow-y: auto; padding: 4px 8px; }
+.fdash-vcard {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 10px; border-radius: 6px; margin-bottom: 2px;
+  cursor: pointer;
+  transition: background 120ms;
+}
+.fdash-vcard:hover { background: oklch(17% 0.03 220); }
+.fdash-vcard--active { background: oklch(16% 0.05 220); border: 1px solid oklch(35% 0.08 220); }
+.fdash-vcard--alert { background: oklch(13% 0.04 15); }
+.fdash-vstatus {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.fdash-vstatus--moving { background: oklch(65% 0.18 145); box-shadow: 0 0 5px oklch(65% 0.18 145 / 0.5); }
+.fdash-vstatus--idle { background: oklch(72% 0.16 70); }
+.fdash-vstatus--alert { background: oklch(65% 0.2 15); box-shadow: 0 0 6px oklch(65% 0.2 15 / 0.6); animation: pulse 1s infinite; }
+.fdash-vinfo { flex: 1; min-width: 0; }
+.fdash-vname { font-size: 11px; font-weight: 600; color: oklch(82% 0.04 220); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fdash-vdetail { font-size: 9px; color: oklch(45% 0.03 220); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fdash-vspeed { font-size: 11px; font-weight: 700; color: oklch(65% 0.14 220); flex-shrink: 0; }
+.fdash-vspeed--idle { color: oklch(65% 0.14 70); }
+.fdash-vspeed--alert { color: oklch(65% 0.18 15); }
+.fdash-map { flex: 1; position: relative; background: oklch(10% 0.02 220); overflow: hidden; }
+.fdash-map-svg { width: 100%; height: 100%; }
+.fdash-mapctrl {
+  position: absolute; top: 12px; right: 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.fdash-btn {
+  width: 28px; height: 28px;
+  background: oklch(14% 0.03 220);
+  border: 1px solid oklch(24% 0.04 220);
+  border-radius: 4px; color: oklch(65% 0.05 220);
+  font-size: 14px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.fdash-legend {
+  position: absolute; bottom: 12px; left: 12px;
+  display: flex; gap: 14px;
+  background: oklch(12% 0.025 220 / 0.9);
+  border: 1px solid oklch(22% 0.03 220);
+  border-radius: 6px; padding: 6px 12px;
+}
+.fdash-leg { display: flex; align-items: center; gap: 5px; font-size: 9px; color: oklch(55% 0.03 220); }
+.fdash-leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -706,8 +806,176 @@ footer {
     <div class="hero-slide active">
       <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2400&h=1400&q=85" alt="Aerial view of fleet terminal at golden hour" loading="eager">
     </div>
-    <div class="hero-slide">
-      <img src="https://images.pexels.com/photos/17220962/pexels-photo-17220962.jpeg?auto=compress&cs=tinysrgb&w=2400&h=1400&fit=crop" alt="GPS fleet telematics dashboard map" loading="lazy">
+    <div class="hero-slide hero-slide--dash">
+      <div class="fdash">
+        <!-- Top bar -->
+        <div class="fdash-topbar">
+          <div class="fdash-topbar-left">
+            <span class="fdash-logo-text">MyGeotab</span>
+            <span class="fdash-breadcrumb">Map · Live View</span>
+          </div>
+          <div class="fdash-topbar-right">
+            <div class="fdash-pill fdash-pill--green"><span class="fdash-blink"></span>142 Active</div>
+            <div class="fdash-pill">8 Idle</div>
+            <div class="fdash-pill fdash-pill--red">2 Alert</div>
+          </div>
+        </div>
+        <!-- Main layout -->
+        <div class="fdash-body">
+          <!-- Sidebar -->
+          <div class="fdash-sidebar">
+            <div class="fdash-search">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              Search vehicles…
+            </div>
+            <div class="fdash-vlist">
+              <div class="fdash-vcard fdash-vcard--active">
+                <div class="fdash-vstatus fdash-vstatus--moving"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Truck #1042</div>
+                  <div class="fdash-vdetail">Moving · 58 mph · I-20 W</div>
+                </div>
+                <div class="fdash-vspeed">58</div>
+              </div>
+              <div class="fdash-vcard">
+                <div class="fdash-vstatus fdash-vstatus--moving"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Van #0387</div>
+                  <div class="fdash-vdetail">Moving · 42 mph · Hwy 80</div>
+                </div>
+                <div class="fdash-vspeed">42</div>
+              </div>
+              <div class="fdash-vcard">
+                <div class="fdash-vstatus fdash-vstatus--idle"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Truck #0991</div>
+                  <div class="fdash-vdetail">Idle · 0 mph · Job Site A</div>
+                </div>
+                <div class="fdash-vspeed fdash-vspeed--idle">0</div>
+              </div>
+              <div class="fdash-vcard">
+                <div class="fdash-vstatus fdash-vstatus--moving"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Pickup #0214</div>
+                  <div class="fdash-vdetail">Moving · 67 mph · I-20 E</div>
+                </div>
+                <div class="fdash-vspeed">67</div>
+              </div>
+              <div class="fdash-vcard fdash-vcard--alert">
+                <div class="fdash-vstatus fdash-vstatus--alert"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Truck #1108</div>
+                  <div class="fdash-vdetail">Speeding · 84 mph · FM 1845</div>
+                </div>
+                <div class="fdash-vspeed fdash-vspeed--alert">84</div>
+              </div>
+              <div class="fdash-vcard">
+                <div class="fdash-vstatus fdash-vstatus--idle"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Van #0553</div>
+                  <div class="fdash-vdetail">Idle · 0 mph · Depot</div>
+                </div>
+                <div class="fdash-vspeed fdash-vspeed--idle">0</div>
+              </div>
+              <div class="fdash-vcard">
+                <div class="fdash-vstatus fdash-vstatus--moving"></div>
+                <div class="fdash-vinfo">
+                  <div class="fdash-vname">Truck #0762</div>
+                  <div class="fdash-vdetail">Moving · 51 mph · Loop 281</div>
+                </div>
+                <div class="fdash-vspeed">51</div>
+              </div>
+            </div>
+          </div>
+          <!-- Map -->
+          <div class="fdash-map">
+            <svg class="fdash-map-svg" viewBox="0 0 900 580" xmlns="http://www.w3.org/2000/svg">
+              <!-- Road grid -->
+              <line x1="0" y1="180" x2="900" y2="180" stroke="#2a3a4a" stroke-width="8"/>
+              <line x1="0" y1="320" x2="900" y2="320" stroke="#2a3a4a" stroke-width="12"/>
+              <line x1="0" y1="460" x2="900" y2="460" stroke="#2a3a4a" stroke-width="6"/>
+              <line x1="180" y1="0" x2="180" y2="580" stroke="#2a3a4a" stroke-width="6"/>
+              <line x1="380" y1="0" x2="380" y2="580" stroke="#2a3a4a" stroke-width="10"/>
+              <line x1="620" y1="0" x2="620" y2="580" stroke="#2a3a4a" stroke-width="6"/>
+              <line x1="800" y1="0" x2="800" y2="580" stroke="#2a3a4a" stroke-width="5"/>
+              <!-- Road labels -->
+              <text x="90" y="314" fill="#3a5268" font-size="10" font-family="monospace" text-anchor="middle">I-20 W</text>
+              <text x="700" y="314" fill="#3a5268" font-size="10" font-family="monospace" text-anchor="middle">I-20 E</text>
+              <text x="375" y="240" fill="#3a5268" font-size="9" font-family="monospace" text-anchor="middle" transform="rotate(-90,375,240)">Loop 281</text>
+              <!-- Route trails -->
+              <polyline points="60,320 180,310 280,290 380,280 480,275 560,270" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-dasharray="5,3" opacity="0.6"/>
+              <polyline points="380,100 390,180 385,280 380,320 370,400 360,460" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="5,3" opacity="0.5"/>
+              <polyline points="800,200 780,250 750,280 700,310 650,320 620,320" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/>
+              <!-- Vehicle markers -->
+              <!-- Truck #1042 moving on I-20 W -->
+              <g transform="translate(200,308)">
+                <circle r="14" fill="#0ea5e9" opacity="0.2"/>
+                <circle r="9" fill="#0ea5e9"/>
+                <text x="0" y="4" fill="white" font-size="8" font-family="monospace" text-anchor="middle" font-weight="bold">▶</text>
+              </g>
+              <!-- Van #0387 -->
+              <g transform="translate(490,273)">
+                <circle r="12" fill="#22c55e" opacity="0.2"/>
+                <circle r="8" fill="#22c55e"/>
+                <text x="0" y="3" fill="white" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">▶</text>
+              </g>
+              <!-- Truck #0991 idle -->
+              <g transform="translate(380,420)">
+                <circle r="10" fill="#f59e0b" opacity="0.2"/>
+                <circle r="7" fill="#f59e0b"/>
+                <rect x="-3" y="-3" width="6" height="6" fill="white" rx="1"/>
+              </g>
+              <!-- Pickup #0214 -->
+              <g transform="translate(700,308)">
+                <circle r="13" fill="#0ea5e9" opacity="0.2"/>
+                <circle r="8" fill="#0ea5e9"/>
+                <text x="0" y="3" fill="white" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">▶</text>
+              </g>
+              <!-- Truck #1108 ALERT speeding -->
+              <g transform="translate(130,175)">
+                <circle r="14" fill="#ef4444" opacity="0.25"/>
+                <circle r="9" fill="#ef4444"/>
+                <text x="0" y="4" fill="white" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">!</text>
+              </g>
+              <!-- Van #0553 idle at depot -->
+              <g transform="translate(620,460)">
+                <circle r="10" fill="#f59e0b" opacity="0.2"/>
+                <circle r="7" fill="#f59e0b"/>
+                <rect x="-3" y="-3" width="6" height="6" fill="white" rx="1"/>
+              </g>
+              <!-- Truck #0762 -->
+              <g transform="translate(560,315)">
+                <circle r="12" fill="#22c55e" opacity="0.2"/>
+                <circle r="8" fill="#22c55e"/>
+                <text x="0" y="3" fill="white" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">▶</text>
+              </g>
+              <!-- Callout for selected vehicle -->
+              <g transform="translate(200,268)">
+                <rect x="-50" y="-38" width="140" height="30" rx="4" fill="#0f1c2a" stroke="#0ea5e9" stroke-width="1" opacity="0.95"/>
+                <text x="-38" y="-20" fill="#0ea5e9" font-size="8" font-family="monospace" font-weight="bold">Truck #1042</text>
+                <text x="-38" y="-9" fill="#7aa8c4" font-size="7" font-family="monospace">58 mph · I-20 W · Driver: R. Torres</text>
+                <line x1="0" y1="-8" x2="0" y2="0" stroke="#0ea5e9" stroke-width="1"/>
+              </g>
+              <!-- Geofence circle -->
+              <circle cx="380" cy="460" r="55" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+              <text x="380" y="520" fill="#a855f7" font-size="8" font-family="monospace" text-anchor="middle" opacity="0.7">Depot Zone</text>
+            </svg>
+            <!-- Map controls -->
+            <div class="fdash-mapctrl">
+              <button class="fdash-btn">+</button>
+              <button class="fdash-btn">−</button>
+              <button class="fdash-btn">⊙</button>
+            </div>
+            <!-- Legend -->
+            <div class="fdash-legend">
+              <span class="fdash-leg"><span class="fdash-leg-dot" style="background:#0ea5e9"></span>Moving</span>
+              <span class="fdash-leg"><span class="fdash-leg-dot" style="background:#f59e0b"></span>Idle</span>
+              <span class="fdash-leg"><span class="fdash-leg-dot" style="background:#ef4444"></span>Alert</span>
+              <span class="fdash-leg"><span class="fdash-leg-dot" style="background:#a855f7;border-radius:0"></span>Geofence</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="hero-slide">
       <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=2400&h=1400&q=85" alt="Fleet of trucks on the highway" loading="lazy">
