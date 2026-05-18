@@ -10,6 +10,7 @@
     initStickyNav();
     initMobileNav();
     initReveal();
+    initLiveTicker();
     initContactForm();
   }
 
@@ -39,7 +40,7 @@
       }
       function start() {
         window.clearInterval(timer);
-        timer = window.setInterval(function () { show(active + 1); }, 6500);
+        timer = window.setInterval(function () { show(active + 1); }, 7000);
       }
       dots.forEach(function (dot) {
         dot.addEventListener('click', function () {
@@ -53,7 +54,7 @@
     });
   }
 
-  /* ---------------- Marquee — duplicate route items for seamless loop ---------------- */
+  /* ---------------- Marquee ---------------- */
   function initMarquee() {
     document.querySelectorAll('.route-inner').forEach(function (track) {
       if (track.dataset.cloned) return;
@@ -71,41 +72,25 @@
   function initStickyNav() {
     var nav = document.querySelector('.topline');
     if (!nav) return;
-    var onScroll = function () {
-      nav.classList.toggle('is-scrolled', window.scrollY > 8);
-    };
+    var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 8); };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  /* ---------------- Mobile hamburger ---------------- */
+  /* ---------------- Mobile drawer ---------------- */
   function initMobileNav() {
     var toggle = document.querySelector('.nav-toggle');
     var drawer = document.querySelector('.mobile-drawer');
     if (!toggle || !drawer) return;
-
     var body = document.body;
-    function close() {
-      body.classList.remove('nav-open');
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-    function open() {
-      body.classList.add('nav-open');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
-    toggle.addEventListener('click', function () {
-      body.classList.contains('nav-open') ? close() : open();
-    });
-    drawer.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', close);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') close();
-    });
+    function close() { body.classList.remove('nav-open'); toggle.setAttribute('aria-expanded', 'false'); }
+    function open()  { body.classList.add('nav-open');    toggle.setAttribute('aria-expanded', 'true');  }
+    toggle.addEventListener('click', function () { body.classList.contains('nav-open') ? close() : open(); });
+    drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
     var mq = window.matchMedia('(min-width: 981px)');
     var onChange = function (e) { if (e.matches) close(); };
-    if (mq.addEventListener) mq.addEventListener('change', onChange);
-    else mq.addListener(onChange);
+    if (mq.addEventListener) mq.addEventListener('change', onChange); else mq.addListener(onChange);
   }
 
   /* ---------------- Reveal on scroll ---------------- */
@@ -125,6 +110,36 @@
       });
     }, { rootMargin: '0px 0px -80px 0px', threshold: 0.05 });
     els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------- Live ticker — fake-real-time updates ---------------- */
+  function initLiveTicker() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('.telemetry-strip [data-live]').forEach(function (el) {
+      var kind = el.dataset.live;
+      var base = parseFloat(el.dataset.base || el.textContent.replace(/[^\d.-]/g, '')) || 0;
+      function tick() {
+        if (kind === 'nodes') {
+          base += Math.floor(Math.random() * 3);
+          el.textContent = base.toLocaleString();
+        } else if (kind === 'lat') {
+          var lat = 25.6 + (Math.random() - 0.5) * 0.4;
+          var lon = -100.3 + (Math.random() - 0.5) * 0.6;
+          el.textContent = lat.toFixed(2) + '°N · ' + Math.abs(lon).toFixed(2) + '°W';
+        } else if (kind === 'time') {
+          var d = new Date();
+          var pad = function (n) { return n < 10 ? '0' + n : n; };
+          el.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + ' UTC-6';
+        } else if (kind === 'speed') {
+          var s = 78 + Math.floor(Math.random() * 22);
+          el.textContent = s + ' KM/H · AVG';
+        }
+      }
+      tick();
+      var interval = kind === 'time' ? 1000 : (kind === 'lat' ? 4000 : 2500);
+      setInterval(tick, interval);
+    });
   }
 
   /* ---------------- Contact form (AJAX) ---------------- */
@@ -158,13 +173,11 @@
             showErr((json && json.data && json.data.message) || 'No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos.');
           }
         })
-        .catch(function () {
-          showErr('No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos.');
-        })
+        .catch(function () { showErr('No pudimos enviar tu mensaje. Intenta de nuevo o escríbenos.'); })
         .finally(function () { submit.disabled = false; });
     });
 
-    function showOk(msg) { status.className = 'emx-form-status is-ok'; status.textContent = msg; }
+    function showOk(msg)  { status.className = 'emx-form-status is-ok';  status.textContent = msg; }
     function showErr(msg) { status.className = 'emx-form-status is-err'; status.textContent = msg; }
   }
 })();

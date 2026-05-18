@@ -1,4 +1,4 @@
-EnVueMex Exact — Elementor Theme (v7.3 "Industrial Editorial Telemetry")
+EnVueMex Exact — Elementor Theme (v7.4 "Industrial Editorial Telemetry — Pushed Further")
 
 INSTALL
 1. WP admin → Appearance → Themes → Add New → Upload Theme.
@@ -22,7 +22,28 @@ REQUIREMENTS
 - PHP 7.4+
 - Elementor 3.x (free is enough)
 
-WHAT'S NEW IN 7.3
+WHAT'S NEW IN 7.4
+- Headlines now scale to 220px max with the last word italicized in
+  electric cyan and an underlined accent stroke — bold editorial gesture.
+- Telemetry strip is now actually live: NODES counter increments,
+  GPS coordinates drift, a real UTC clock ticks, and an average speed
+  reading jitters — every 1–4 seconds.
+- Command panel grew a dashboard sparkline that draws itself in over
+  2.4s with a glowing trailing dot, plus a "VEL · 88 KM/H · AVG / SIG ·
+  STRONG" meta line in JetBrains Mono.
+- Section headlines scale to 108px with italic accent for emphasis.
+- Proof grid restructured to a "featured stat" layout: one giant navy
+  block (with grain + cyan number going up to 180px) anchoring three
+  smaller stats — much more impact than 4-up evenness.
+- Solution rows: numerals up to 96px, hover slide is 32px instead of
+  8px, cyan bar gets a glow, even-bigger arrow boxes (64px).
+- Dark sections, CTA, footer, page hero all gain CRT-style scan-line
+  pattern layered over the grain.
+- Hero h1 entrance is now a clip-path reveal instead of a plain fade.
+- Hero crosshair corner markers are 2x size, brighter cyan, with glow.
+- All radii flattened to 0 — sharper industrial feel.
+
+PREVIOUS — v7.3
 - Bold aesthetic direction: "Industrial editorial telemetry."
 - Typography overhauled: Big Shoulders Display (display) + Manrope (body) +
   JetBrains Mono (telemetry labels). No more generic fonts.

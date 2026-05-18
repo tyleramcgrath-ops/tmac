@@ -56,12 +56,23 @@ class EnVueMex_Hero_Widget extends EnVueMex_Base_Widget {
 	<div class="hero-inner">
 		<div>
 			<div class="telemetry-strip" aria-hidden="true">
-				<span class="tele-line">SYS · LIVE</span>
-				<span class="tele-line">NODES · 10,234</span>
-				<span class="tele-line">LAT 25.6°N · LON 100.3°W</span>
+				<span class="tele-line">SYS · <strong>LIVE</strong></span>
+				<span class="tele-line">NODES · <strong data-live="nodes" data-base="10234">10,234</strong></span>
+				<span class="tele-line">POS · <strong data-live="lat">25.60°N · 100.30°W</strong></span>
+				<span class="tele-line"><strong data-live="time">— UTC-6</strong></span>
 			</div>
 			<div class="eyebrow"><span class="pulse-dot"></span> <?php echo esc_html( $s['eyebrow'] ); ?></div>
-			<h1><?php echo esc_html( $s['title'] ); ?></h1>
+			<?php
+			$title = trim( (string) $s['title'] );
+			$pos   = strrpos( $title, ' ' );
+			if ( $pos !== false ) {
+				$head = substr( $title, 0, $pos );
+				$last = substr( $title, $pos + 1 );
+				echo '<h1>' . esc_html( $head ) . ' <em>' . esc_html( $last ) . '</em></h1>';
+			} else {
+				echo '<h1>' . esc_html( $title ) . '</h1>';
+			}
+			?>
 			<p class="hero-copy"><?php echo esc_html( $s['copy'] ); ?></p>
 			<div class="hero-actions">
 				<a class="btn btn-primary" href="<?php echo esc_url( $s['primary_url'] ); ?>"><?php echo esc_html( $s['primary_label'] ); ?></a>
@@ -73,9 +84,28 @@ class EnVueMex_Hero_Widget extends EnVueMex_Base_Widget {
 				<div class="panel-kicker">Telemetría · Live</div>
 				<div class="panel-status">ON-LINE</div>
 			</div>
-			<div class="signal"><div class="metric-value">15</div><p>Años en el<br>mercado mexicano</p></div>
-			<div class="signal"><div class="metric-value">2011</div><p>Socio Geotab<br>verificado</p></div>
-			<div class="signal"><div class="metric-value">24/7</div><p>Rastreo y<br>soporte continuo</p></div>
+			<div class="panel-spark" aria-hidden="true">
+				<svg viewBox="0 0 320 72" preserveAspectRatio="none">
+					<defs>
+						<linearGradient id="spark-grad" x1="0" x2="0" y1="0" y2="1">
+							<stop offset="0%" stop-color="#7be3ff" stop-opacity="0.4"/>
+							<stop offset="100%" stop-color="#7be3ff" stop-opacity="0"/>
+						</linearGradient>
+					</defs>
+					<path class="spark-fill" d="M0,60 C30,50 50,30 80,35 S140,65 170,40 220,15 260,28 310,52 320,42 L320,72 L0,72 Z"/>
+					<path class="spark-line" d="M0,60 C30,50 50,30 80,35 S140,65 170,40 220,15 260,28 310,52 320,42"/>
+					<circle class="spark-dot" cx="320" cy="42"/>
+				</svg>
+			</div>
+			<div class="panel-meta">
+				<span>VEL · <span data-live="speed">88 KM/H · AVG</span></span>
+				<span>SIG · STRONG</span>
+			</div>
+			<div class="signal-grid">
+				<div class="signal"><div class="metric-value">15</div><p>Años en el<br>mercado mexicano</p></div>
+				<div class="signal"><div class="metric-value">2011</div><p>Socio Geotab<br>verificado</p></div>
+				<div class="signal"><div class="metric-value">24/7</div><p>Rastreo y<br>soporte continuo</p></div>
+			</div>
 		</aside>
 	</div>
 	<div class="hero-dots">
