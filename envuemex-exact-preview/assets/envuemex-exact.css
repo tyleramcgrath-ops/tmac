@@ -1079,3 +1079,39 @@ body.nav-open { overflow: hidden; }
   .lang-toggle { display: none; }
   .mobile-drawer .lang-toggle { display: inline-flex; }
 }
+
+/* ============================================================
+   v7.4.1 safety patches
+   - Reveal animation has a CSS-only fallback so content is never
+     stuck invisible if the IntersectionObserver fails to fire.
+   - feature-image is reinforced so SVG images (without intrinsic
+     pixel size) don't collapse the grid cell or push copy off-screen.
+   ============================================================ */
+[data-reveal] {
+  animation: emxReveal 1s var(--ease-out) 1.6s forwards;
+}
+@keyframes emxReveal {
+  to { opacity: 1; transform: none; }
+}
+[data-reveal].is-in {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+.feature-image {
+  min-height: 480px;
+}
+.feature-image img,
+.feature-image svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 980px) {
+  .feature-image { min-height: 360px; }
+}
