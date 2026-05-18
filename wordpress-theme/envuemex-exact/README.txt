@@ -1,4 +1,4 @@
-EnVueMex Exact — Elementor Theme (v7.2)
+EnVueMex Exact — Elementor Theme (v7.3 "Industrial Editorial Telemetry")
 
 INSTALL
 1. WP admin → Appearance → Themes → Add New → Upload Theme.
@@ -22,11 +22,32 @@ REQUIREMENTS
 - PHP 7.4+
 - Elementor 3.x (free is enough)
 
-WHAT'S NEW IN 7.2
-- Refined design: tighter typography rhythm, cleaner color palette, refined
-  hero command panel, gradient stat numbers, hover micro-interactions.
-- Real mobile hamburger menu with full-screen drawer.
-- Scroll-reveal animations honoring prefers-reduced-motion.
-- AJAX contact form with honeypot + nonce + admin-side log.
-- Per-page tailored content (each inner page has real sections, not a stub).
-- Accessibility: skip link, focus-visible rings, ARIA roles, aria-current.
+WHAT'S NEW IN 7.3
+- Bold aesthetic direction: "Industrial editorial telemetry."
+- Typography overhauled: Big Shoulders Display (display) + Manrope (body) +
+  JetBrains Mono (telemetry labels). No more generic fonts.
+- Navy-dominant palette with sharp green CTAs and electric cyan live-data
+  accents — cyan replaces "decorative" usage; everything else is restraint.
+- Hero gains a monospaced telemetry strip above the headline
+  (SYS · LIVE / NODES · 10,234 / LAT 25.6°N) and an orchestrated page-load:
+  staggered fade-up for eyebrow → headline → copy → CTAs → command panel.
+- Command panel becomes a live dashboard mock with status indicator.
+- Route strip is now a true marquee — continuously scrolling ticker that
+  pauses on hover.
+- Solution rows get gigantic monospaced /01 /02 /03 numerals (76px) that
+  shift to cyan and slide on hover, with a cyan bar that wipes in.
+- Difference cards rebuilt in an asymmetric 4-card editorial grid (wide /
+  narrow / narrow / wide) with monospaced /01-style index chips.
+- Dark sections gain a real SVG turbulence noise grain overlay + radial
+  glows for atmosphere.
+- Proof grid: oversized Big Shoulders numerals + monospaced position
+  numbers (01, 02, 03, 04).
+- Section labels become editorial "/ LABEL" style in monospace.
+- Mobile drawer is now full-bleed navy with Big Shoulders nav items.
+
+CARRIED FORWARD FROM 7.2
+- Real mobile hamburger menu (auto-hidden links was a regression in v7.1).
+- AJAX contact form widget with honeypot + nonce + persisted submission log.
+- Per-page tailored content for all 12 imported pages.
+- prefers-reduced-motion respected throughout.
+- A11y: skip link, focus-visible, ARIA, aria-current on active nav.

@@ -54,7 +54,12 @@ class EnVueMex_Hero_Widget extends EnVueMex_Base_Widget {
 	</div>
 	<div class="hero-frame"></div>
 	<div class="hero-inner">
-		<div data-reveal>
+		<div>
+			<div class="telemetry-strip" aria-hidden="true">
+				<span class="tele-line">SYS · LIVE</span>
+				<span class="tele-line">NODES · 10,234</span>
+				<span class="tele-line">LAT 25.6°N · LON 100.3°W</span>
+			</div>
 			<div class="eyebrow"><span class="pulse-dot"></span> <?php echo esc_html( $s['eyebrow'] ); ?></div>
 			<h1><?php echo esc_html( $s['title'] ); ?></h1>
 			<p class="hero-copy"><?php echo esc_html( $s['copy'] ); ?></p>
@@ -63,11 +68,14 @@ class EnVueMex_Hero_Widget extends EnVueMex_Base_Widget {
 				<a class="btn btn-on-dark" href="<?php echo esc_url( $s['secondary_url'] ); ?>"><?php echo esc_html( $s['secondary_label'] ); ?></a>
 			</div>
 		</div>
-		<aside class="command-panel" data-reveal>
-			<div class="panel-kicker">Gestión de flotas</div>
-			<div class="signal"><div class="metric-value">15</div><p>años de experiencia en el mercado mexicano</p></div>
-			<div class="signal"><div class="metric-value">2011</div><p>Asociación de confianza con Geotab</p></div>
-			<div class="signal"><div class="metric-value">24/7</div><p>Rastreo, seguridad y soporte para flotas comerciales</p></div>
+		<aside class="command-panel">
+			<div class="panel-head">
+				<div class="panel-kicker">Telemetría · Live</div>
+				<div class="panel-status">ON-LINE</div>
+			</div>
+			<div class="signal"><div class="metric-value">15</div><p>Años en el<br>mercado mexicano</p></div>
+			<div class="signal"><div class="metric-value">2011</div><p>Socio Geotab<br>verificado</p></div>
+			<div class="signal"><div class="metric-value">24/7</div><p>Rastreo y<br>soporte continuo</p></div>
 		</aside>
 	</div>
 	<div class="hero-dots">

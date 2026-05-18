@@ -4,11 +4,22 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
+    initHeroLoad();
     initHeroSlider();
+    initMarquee();
     initStickyNav();
     initMobileNav();
     initReveal();
     initContactForm();
+  }
+
+  /* ---------------- Hero orchestrated entrance ---------------- */
+  function initHeroLoad() {
+    document.querySelectorAll('.hero').forEach(function (hero) {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { hero.classList.add('is-loaded'); });
+      });
+    });
   }
 
   /* ---------------- Hero slider ---------------- */
@@ -28,7 +39,7 @@
       }
       function start() {
         window.clearInterval(timer);
-        timer = window.setInterval(function () { show(active + 1); }, 6000);
+        timer = window.setInterval(function () { show(active + 1); }, 6500);
       }
       dots.forEach(function (dot) {
         dot.addEventListener('click', function () {
@@ -36,10 +47,23 @@
           start();
         });
       });
-      // pause on hover
       hero.addEventListener('mouseenter', function () { window.clearInterval(timer); });
       hero.addEventListener('mouseleave', start);
       start();
+    });
+  }
+
+  /* ---------------- Marquee — duplicate route items for seamless loop ---------------- */
+  function initMarquee() {
+    document.querySelectorAll('.route-inner').forEach(function (track) {
+      if (track.dataset.cloned) return;
+      var children = Array.from(track.children);
+      children.forEach(function (child) {
+        var clone = child.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+      track.dataset.cloned = '1';
     });
   }
 
@@ -78,7 +102,6 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') close();
     });
-    // Reset on resize past breakpoint
     var mq = window.matchMedia('(min-width: 981px)');
     var onChange = function (e) { if (e.matches) close(); };
     if (mq.addEventListener) mq.addEventListener('change', onChange);
@@ -117,9 +140,8 @@
       status.textContent = '';
       submit.disabled = true;
       var data = new FormData(form);
-      // Anti-bot honeypot
       if (data.get('emx_hp')) {
-        showOk(form.dataset.successEs || 'Gracias, te contactaremos pronto.');
+        showOk('Gracias, te contactaremos pronto.');
         form.reset();
         submit.disabled = false;
         return;

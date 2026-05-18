@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'EMX_VERSION', '7.2.0' );
+define( 'EMX_VERSION', '7.3.0' );
 define( 'EMX_DIR', get_template_directory() );
 define( 'EMX_URI', get_template_directory_uri() );
 
@@ -17,7 +17,7 @@ define( 'EMX_URI', get_template_directory_uri() );
 function envuemex_exact_assets() {
 	wp_enqueue_style(
 		'envuemex-fonts',
-		'https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Source+Sans+3:wght@400;500;600;700&display=swap',
+		'https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap',
 		array(),
 		null
 	);
