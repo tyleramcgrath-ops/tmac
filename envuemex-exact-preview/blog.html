@@ -4,103 +4,111 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#071321">
-<title>Recursos y Blog — EnVueMex Solutions</title>
+<title data-en="Resources &amp; Blog — EnVueMex Solutions">Recursos y Blog — EnVueMex Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/envuemex-exact.css">
 </head>
 <body>
-<a class="emx-skip" href="#main">Saltar al contenido</a>
+<a class="emx-skip" href="#main" data-en="Skip to content">Saltar al contenido</a>
 <header class="topline" role="banner">
   <a class="brand" href="index.html" aria-label="EnVueMex Solutions">
     <img src="assets/envuemex-logo.webp" alt="EnVueMex Solutions">
   </a>
   <nav class="nav-links" aria-label="Primary">
-    <a class="nav-link" href="index.html">Inicio</a>
-    <a class="nav-link" href="servicios.html">Servicios</a>
+    <a class="nav-link" href="index.html" data-en="Home">Inicio</a>
+    <a class="nav-link" href="servicios.html" data-en="Services">Servicios</a>
     <a class="nav-link" href="gps.html">GPS</a>
-    <a class="nav-link" href="dashcams.html">Dash Cams</a>
-    <a class="nav-link" href="activos.html">Activos</a>
-    <a class="nav-link" href="nosotros.html">Nosotros</a>
+    <a class="nav-link" href="dashcams.html" data-en="Dash Cams">Dash Cams</a>
+    <a class="nav-link" href="activos.html" data-en="Assets">Activos</a>
+    <a class="nav-link" href="nosotros.html" data-en="About">Nosotros</a>
     <a class="nav-link" href="faq.html">FAQ</a>
-    <a class="nav-link" href="eventos.html">Eventos</a>
+    <a class="nav-link" href="eventos.html" data-en="Events">Eventos</a>
     <a class="nav-link" href="blog.html" aria-current="page">Blog</a>
-    <a class="nav-link" href="contacto.html">Contacto</a>
+    <a class="nav-link" href="contacto.html" data-en="Contact">Contacto</a>
   </nav>
   <div class="nav-actions">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" data-lang-btn="es" class="is-active" aria-pressed="true">ES</button>
+      <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+    </div>
     <a class="btn btn-ghost" href="tel:8121880258">81 2188 0258</a>
-    <a class="btn btn-primary" href="contacto.html">Comience hoy</a>
-    <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="emx-drawer">
+    <a class="btn btn-primary" href="contacto.html" data-en="Get started">Comience hoy</a>
+    <button class="nav-toggle" type="button" aria-label="Abrir menú" data-en-attr="aria-label=Open menu" aria-expanded="false" aria-controls="emx-drawer">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
-<aside class="mobile-drawer" id="emx-drawer" aria-label="Menú móvil">
+<aside class="mobile-drawer" id="emx-drawer" aria-label="Menú móvil" data-en-attr="aria-label=Mobile menu">
+  <div class="lang-toggle" role="group" aria-label="Language">
+    <button type="button" data-lang-btn="es" class="is-active" aria-pressed="true">ES</button>
+    <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+  </div>
   <ul>
-    <li><a href="index.html">Inicio</a></li>
-    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="index.html" data-en="Home">Inicio</a></li>
+    <li><a href="servicios.html" data-en="Services">Servicios</a></li>
     <li><a href="gps.html">GPS</a></li>
-    <li><a href="dashcams.html">Dash Cams</a></li>
-    <li><a href="activos.html">Activos</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="dashcams.html" data-en="Dash Cams">Dash Cams</a></li>
+    <li><a href="activos.html" data-en="Assets">Activos</a></li>
+    <li><a href="nosotros.html" data-en="About">Nosotros</a></li>
     <li><a href="faq.html">FAQ</a></li>
-    <li><a href="eventos.html">Eventos</a></li>
+    <li><a href="eventos.html" data-en="Events">Eventos</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="contacto.html" data-en="Contact">Contacto</a></li>
   </ul>
-  <a class="btn btn-primary" href="contacto.html">Comience hoy</a>
+  <a class="btn btn-primary" href="contacto.html" data-en="Get started">Comience hoy</a>
 </aside>
 <main class="emx-clean-page emx-elementor-exact" id="main">
 <div class="emx-page-simple">
   <section class="emx-page-hero" style="background-image:url('assets/hero-truck-line.jpg')">
     <div class="emx-page-hero-inner" data-reveal>
-      <div class="eyebrow"><span class="pulse-dot"></span> Insights · Flotas</div>
-      <h1>Recursos y Blog</h1>
-      <p>Guías prácticas sobre gestión de flotas, seguridad, rastreo GPS y cumplimiento.</p>
+      <div class="eyebrow"><span class="pulse-dot"></span> <span data-en="Insights · Fleets">Insights · Flotas</span></div>
+      <h1 data-en="Resources &amp; Blog">Recursos y Blog</h1>
+      <p data-en="Practical guides on fleet management, safety, GPS tracking and compliance.">Guías prácticas sobre gestión de flotas, seguridad, rastreo GPS y cumplimiento.</p>
     </div>
   </section>
   <section class="emx-page-content">
     <div class="emx-page-content-inner">
-      <div data-reveal>
-        <div class="section-label">Blog · Recursos</div>
-        <h2 style="margin-bottom:32px">Insights para gestores de <em>flotas.</em></h2>
-        <p class="lead" style="margin-bottom:48px">Publicaremos guías prácticas sobre telemática, casos de éxito de flotas mexicanas, mejores prácticas de seguridad vial y novedades de la plataforma Geotab.</p>
+<div data-reveal>
+        <div class="section-label" data-en="Blog · Resources">Blog · Recursos</div>
+        <h2 style="margin-bottom:32px" data-en="Insights for fleet <em>managers.</em>">Insights para gestores de <em>flotas.</em></h2>
+        <p class="lead" style="margin-bottom:48px" data-en="We'll publish practical guides on telematics, Mexican fleet case studies, road safety best practices and Geotab platform updates.">Publicaremos guías prácticas sobre telemática, casos de éxito de flotas mexicanas, mejores prácticas de seguridad vial y novedades de la plataforma Geotab.</p>
       </div>
       <div class="emx-card-grid">
         <article class="emx-card" data-reveal>
-          <div class="emx-card-icon">GUÍA</div>
-          <h3>10 KPI imprescindibles para gerentes de flota</h3>
-          <p>Desde costo por kilómetro hasta calificación de manejo — los indicadores que toda flota debe medir.</p>
+          <div class="emx-card-icon" data-en="GUIDE">GUÍA</div>
+          <h3 data-en="10 essential KPIs for fleet managers">10 KPI imprescindibles para gerentes de flota</h3>
+          <p data-en="From cost-per-kilometer to driver scoring — the indicators every fleet should measure.">Desde costo por kilómetro hasta calificación de manejo — los indicadores que toda flota debe medir.</p>
         </article>
         <article class="emx-card" data-reveal>
-          <div class="emx-card-icon">CASO</div>
-          <h3>Cómo una transportista regio redujo 22% sus siniestros</h3>
-          <p>Coaching automatizado con dash cams de IA transformó la cultura de manejo en 90 días.</p>
+          <div class="emx-card-icon" data-en="CASE">CASO</div>
+          <h3 data-en="How a Monterrey carrier cut accidents by 22%">Cómo una transportista regio redujo 22% sus siniestros</h3>
+          <p data-en="AI dashcam coaching transformed their driving culture in 90 days.">Coaching automatizado con dash cams de IA transformó la cultura de manejo en 90 días.</p>
         </article>
         <article class="emx-card" data-reveal>
-          <div class="emx-card-icon">TÉC</div>
-          <h3>OBD-II vs. cableado: ¿qué instalación es correcta?</h3>
-          <p>Cuándo conviene cada opción según vehículo, durabilidad esperada y necesidad de sensores adicionales.</p>
+          <div class="emx-card-icon" data-en="TECH">TÉC</div>
+          <h3 data-en="OBD-II vs. wired: which install is right?">OBD-II vs. cableado: ¿qué instalación es correcta?</h3>
+          <p data-en="When each option fits, based on vehicle, durability needs and extra sensor requirements.">Cuándo conviene cada opción según vehículo, durabilidad esperada y necesidad de sensores adicionales.</p>
         </article>
         <article class="emx-card" data-reveal>
-          <div class="emx-card-icon">NORM</div>
-          <h3>Cumplimiento NOM-087: lo que tu flota debe saber</h3>
-          <p>Guía rápida de las obligaciones de monitoreo para transporte federal en México.</p>
+          <div class="emx-card-icon" data-en="REG">NORM</div>
+          <h3 data-en="NOM-087 compliance: what your fleet needs to know">Cumplimiento NOM-087: lo que tu flota debe saber</h3>
+          <p data-en="Quick guide to monitoring obligations for federal transport in Mexico.">Guía rápida de las obligaciones de monitoreo para transporte federal en México.</p>
         </article>
         <article class="emx-card" data-reveal>
           <div class="emx-card-icon">API</div>
-          <h3>Integrar Geotab con tu ERP en 4 pasos</h3>
-          <p>Workflow probado para llevar datos de telemetría a tu sistema financiero y de mantenimiento.</p>
+          <h3 data-en="Integrate Geotab with your ERP in 4 steps">Integrar Geotab con tu ERP en 4 pasos</h3>
+          <p data-en="A proven workflow to push telematics data into finance and maintenance systems.">Workflow probado para llevar datos de telemetría a tu sistema financiero y de mantenimiento.</p>
         </article>
         <article class="emx-card" data-reveal>
-          <div class="emx-card-icon">SEG</div>
-          <h3>Reporte: la flota mexicana ante el robo de mercancía</h3>
-          <p>Cifras 2025, zonas críticas, y las prácticas de telemetría que están funcionando.</p>
+          <div class="emx-card-icon" data-en="SAFE">SEG</div>
+          <h3 data-en="Report: Mexican fleets facing cargo theft">Reporte: la flota mexicana ante el robo de mercancía</h3>
+          <p data-en="2025 figures, critical zones, and the telematics practices that are working.">Cifras 2025, zonas críticas, y las prácticas de telemetría que están funcionando.</p>
         </article>
       </div>
       <div style="margin-top:64px;text-align:center" data-reveal>
-        <a class="btn btn-primary" href="contacto.html">Recibir el newsletter</a>
+        <a class="btn btn-primary" href="contacto.html" data-en="Get the newsletter">Recibir el newsletter</a>
       </div>
     </div>
   </section>
@@ -108,9 +116,9 @@
 <section class="cta">
   <div class="cta-inner">
     <div data-reveal>
-      <div class="section-label">Conviértete en cliente</div>
-      <h2>Hable con nuestro asesor <em>calificado.</em></h2>
-      <p>Comience hoy con soluciones conectadas para flotas comerciales en México. Respuesta el mismo día hábil.</p>
+      <div class="section-label" data-en="Become a customer">Conviértete en cliente</div>
+      <h2 data-en="Talk to our qualified <em>advisor.</em>">Hable con nuestro asesor <em>calificado.</em></h2>
+      <p data-en="Start today with connected solutions for commercial fleets in Mexico. Same-day business response.">Comience hoy con soluciones conectadas para flotas comerciales en México. Respuesta el mismo día hábil.</p>
     </div>
     <div class="cta-actions" data-reveal>
       <a class="btn btn-primary" href="mailto:ventas@et-envue.com">ventas@et-envue.com</a>
@@ -122,40 +130,40 @@
   <div class="footer-grid">
     <div>
       <div class="footer-logo"><img src="assets/envuemex-logo.webp" alt="EnVueMex Solutions"></div>
-      <p>Soluciones conectadas para flotas comerciales en México, con soporte experto y tecnología líder de Geotab.</p>
+      <p data-en="Connected solutions for commercial fleets in Mexico, with expert support and Geotab-leading technology.">Soluciones conectadas para flotas comerciales en México, con soporte experto y tecnología líder de Geotab.</p>
     </div>
     <div>
-      <h4>Soluciones</h4>
+      <h4 data-en="Solutions">Soluciones</h4>
       <ul>
-        <li><a href="gps.html">Rastreo GPS</a></li>
-        <li><a href="dashcams.html">Dash cams</a></li>
-        <li><a href="activos.html">Activos no vehiculares</a></li>
-        <li><a href="servicios.html">Gestión de flota</a></li>
+        <li><a href="gps.html" data-en="GPS Tracking">Rastreo GPS</a></li>
+        <li><a href="dashcams.html" data-en="Dash cams">Dash cams</a></li>
+        <li><a href="activos.html" data-en="Non-vehicle assets">Activos no vehiculares</a></li>
+        <li><a href="servicios.html" data-en="Fleet management">Gestión de flota</a></li>
       </ul>
     </div>
     <div>
-      <h4>Empresa</h4>
+      <h4 data-en="Company">Empresa</h4>
       <ul>
-        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="nosotros.html" data-en="About">Nosotros</a></li>
         <li><a href="faq.html">FAQ</a></li>
-        <li><a href="eventos.html">Eventos</a></li>
+        <li><a href="eventos.html" data-en="Events">Eventos</a></li>
         <li><a href="blog.html">Blog</a></li>
       </ul>
     </div>
     <div>
-      <h4>Contacto</h4>
+      <h4 data-en="Contact">Contacto</h4>
       <ul>
         <li>Blvd. Díaz Ordaz 3102, Piso 2</li>
         <li>Santa María, 64650 Monterrey, N.L.</li>
         <li><a href="tel:8121880258">81 2188 0258</a></li>
         <li><a href="mailto:ventas@et-envue.com">ventas@et-envue.com</a></li>
-        <li><a href="privacy.html">Privacidad</a> · <a href="terms.html">Términos</a></li>
+        <li><a href="privacy.html" data-en="Privacy">Privacidad</a> · <a href="terms.html" data-en="Terms">Términos</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 EnVueMex Solutions. Todos los derechos reservados.</span>
-    <span>Gestión de flotas · Seguridad · Cumplimiento</span>
+    <span data-en="© 2026 EnVueMex Solutions. All rights reserved.">© 2026 EnVueMex Solutions. Todos los derechos reservados.</span>
+    <span data-en="Fleet management · Safety · Compliance">Gestión de flotas · Seguridad · Cumplimiento</span>
   </div>
 </footer>
 </main>

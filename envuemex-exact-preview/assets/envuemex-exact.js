@@ -4,6 +4,7 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
+    initLang();
     initHeroSlider();
     initStickyNav();
     initMobileNav();
@@ -144,5 +145,49 @@
 
     function showOk(msg) { status.className = 'emx-form-status is-ok'; status.textContent = msg; }
     function showErr(msg) { status.className = 'emx-form-status is-err'; status.textContent = msg; }
+  }
+  /* ---------------- Language toggle (ES default / EN) ---------------- */
+  function initLang() {
+    var saved;
+    try { saved = localStorage.getItem('emx-lang'); } catch (e) {}
+    var cookie = document.cookie.match(/(?:^|; )emx-lang=([^;]+)/);
+    var initial = saved || (cookie && cookie[1]) || 'es';
+    setLang(initial);
+
+    document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+      btn.addEventListener('click', function () { setLang(btn.dataset.langBtn); });
+    });
+  }
+
+  function setLang(lang) {
+    if (lang !== 'es' && lang !== 'en') lang = 'es';
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.dataset.lang = lang;
+
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      if (!el.dataset.esOriginal) el.dataset.esOriginal = el.innerHTML;
+      el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.esOriginal;
+    });
+
+    document.querySelectorAll('[data-en-attr]').forEach(function (el) {
+      var pairs = el.dataset.enAttr.split('|');
+      pairs.forEach(function (pair) {
+        var parts = pair.split('=');
+        var attr = parts.shift();
+        var enVal = parts.join('=');
+        var storeKey = 'esAttr' + attr.charAt(0).toUpperCase() + attr.slice(1);
+        if (!el.dataset[storeKey]) el.dataset[storeKey] = el.getAttribute(attr) || '';
+        el.setAttribute(attr, lang === 'en' ? enVal : el.dataset[storeKey]);
+      });
+    });
+
+    document.querySelectorAll('[data-lang-btn]').forEach(function (b) {
+      var active = b.dataset.langBtn === lang;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    try { localStorage.setItem('emx-lang', lang); } catch (e) {}
+    document.cookie = 'emx-lang=' + lang + ';path=/;max-age=' + (60 * 60 * 24 * 365) + ';SameSite=Lax';
   }
 })();

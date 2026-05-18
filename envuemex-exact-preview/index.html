@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#071321">
-<title>EnVueMex Solutions — Telemática para flotas comerciales en México</title>
+<title data-en="EnVueMex Solutions — Telematics for commercial fleets in Mexico">EnVueMex Solutions — Telemática para flotas comerciales en México</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,44 +12,55 @@
 </head>
 <body>
 
-<a class="emx-skip" href="#main">Saltar al contenido</a>
+<a class="emx-skip" href="#main" data-en="Skip to content">Saltar al contenido</a>
 
 <header class="topline" role="banner">
   <a class="brand" href="index.html" aria-label="EnVueMex Solutions">
     <img src="assets/envuemex-logo.webp" alt="EnVueMex Solutions">
   </a>
   <nav class="nav-links" aria-label="Primary">
-    <a class="nav-link" href="index.html" aria-current="page">Inicio</a>
-    <a class="nav-link" href="servicios.html">Servicios</a>
+    <a class="nav-link" href="index.html" data-en="Home" aria-current="page">Inicio</a>
+    <a class="nav-link" href="servicios.html" data-en="Services">Servicios</a>
     <a class="nav-link" href="gps.html">GPS</a>
-    <a class="nav-link" href="dashcams.html">Dash Cams</a>
-    <a class="nav-link" href="activos.html">Activos</a>
-    <a class="nav-link" href="nosotros.html">Nosotros</a>
+    <a class="nav-link" href="dashcams.html" data-en="Dash Cams">Dash Cams</a>
+    <a class="nav-link" href="activos.html" data-en="Assets">Activos</a>
+    <a class="nav-link" href="nosotros.html" data-en="About">Nosotros</a>
     <a class="nav-link" href="faq.html">FAQ</a>
-    <a class="nav-link" href="eventos.html">Eventos</a>
+    <a class="nav-link" href="eventos.html" data-en="Events">Eventos</a>
     <a class="nav-link" href="blog.html">Blog</a>
-    <a class="nav-link" href="contacto.html">Contacto</a>
+    <a class="nav-link" href="contacto.html" data-en="Contact">Contacto</a>
   </nav>
   <div class="nav-actions">
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button type="button" data-lang-btn="es" class="is-active" aria-pressed="true">ES</button>
+      <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+    </div>
     <a class="btn btn-ghost" href="tel:8121880258">81 2188 0258</a>
-    <a class="btn btn-primary" href="contacto.html">Comience hoy</a>
-    <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="emx-drawer">
+    <a class="btn btn-primary" href="contacto.html" data-en="Get started">Comience hoy</a>
+    <button class="nav-toggle" type="button" aria-label="Abrir menú" data-en-attr="aria-label=Open menu" aria-expanded="false" aria-controls="emx-drawer">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
-<aside class="mobile-drawer" id="emx-drawer" aria-label="Menú móvil">
+<aside class="mobile-drawer" id="emx-drawer" aria-label="Menú móvil" data-en-attr="aria-label=Mobile menu">
+  <div class="lang-toggle" role="group" aria-label="Language">
+    <button type="button" data-lang-btn="es" class="is-active" aria-pressed="true">ES</button>
+    <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+  </div>
   <ul>
-    <li><a href="#">Inicio</a></li>
-    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="index.html" data-en="Home">Inicio</a></li>
+    <li><a href="servicios.html" data-en="Services">Servicios</a></li>
     <li><a href="gps.html">GPS</a></li>
-    <li><a href="dashcams.html">Dash Cams</a></li>
-    <li><a href="activos.html">Activos</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
-    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="dashcams.html" data-en="Dash Cams">Dash Cams</a></li>
+    <li><a href="activos.html" data-en="Assets">Activos</a></li>
+    <li><a href="nosotros.html" data-en="About">Nosotros</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="eventos.html" data-en="Events">Eventos</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contacto.html" data-en="Contact">Contacto</a></li>
   </ul>
-  <a class="btn btn-primary" href="contacto.html">Comience hoy</a>
+  <a class="btn btn-primary" href="contacto.html" data-en="Get started">Comience hoy</a>
 </aside>
 
 <main class="emx-clean-page emx-elementor-exact" id="main">
@@ -71,16 +82,16 @@
         <span class="tele-line"><strong data-live="time">— UTC-6</strong></span>
       </div>
       <div class="eyebrow"><span class="pulse-dot"></span> EnVueMex Solutions</div>
-      <h1>SOLUCIONES CONECTADAS PARA FLOTAS COMERCIALES EN <em>MÉXICO</em></h1>
-      <p class="hero-copy">Software innovador y personalizable de gestión de flota, rastreo de activos y soluciones de seguridad y cumplimiento normativo.</p>
+      <h1 data-en="CONNECTED SOLUTIONS FOR COMMERCIAL FLEETS IN <em>MEXICO</em>">SOLUCIONES CONECTADAS PARA FLOTAS COMERCIALES EN <em>MÉXICO</em></h1>
+      <p class="hero-copy" data-en="Innovative, customizable fleet-management software, asset tracking, and safety &amp; compliance solutions.">Software innovador y personalizable de gestión de flota, rastreo de activos y soluciones de seguridad y cumplimiento normativo.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="contacto.html">Comience hoy</a>
-        <a class="btn btn-on-dark" href="#soluciones">Descubre más</a>
+        <a class="btn btn-primary" href="contacto.html" data-en="Get started">Comience hoy</a>
+        <a class="btn btn-on-dark" href="#soluciones" data-en="Discover more">Descubre más</a>
       </div>
     </div>
     <aside class="command-panel">
       <div class="panel-head">
-        <div class="panel-kicker">Telemetría · Live</div>
+        <div class="panel-kicker" data-en="Telemetry · Live">Telemetría · Live</div>
         <div class="panel-status">ON-LINE</div>
       </div>
       <div class="panel-spark" aria-hidden="true">
@@ -101,26 +112,26 @@
         <span>SIG · STRONG</span>
       </div>
       <div class="signal-grid">
-        <div class="signal"><div class="metric-value">15</div><p>Años en el<br>mercado mexicano</p></div>
-        <div class="signal"><div class="metric-value">2011</div><p>Socio Geotab<br>verificado</p></div>
-        <div class="signal"><div class="metric-value">24/7</div><p>Rastreo y<br>soporte continuo</p></div>
+        <div class="signal"><div class="metric-value">15</div><p data-en="Years in the<br>Mexican market">Años en el<br>mercado mexicano</p></div>
+        <div class="signal"><div class="metric-value">2011</div><p data-en="Verified Geotab<br>partner">Socio Geotab<br>verificado</p></div>
+        <div class="signal"><div class="metric-value">24/7</div><p data-en="Tracking and<br>continuous support">Rastreo y<br>soporte continuo</p></div>
       </div>
     </aside>
   </div>
   <div class="hero-dots">
-    <button class="hero-dot active" type="button" data-slide="0" aria-label="Ver fila de camiones"></button>
-    <button class="hero-dot" type="button" data-slide="1" aria-label="Ver sistema GPS"></button>
-    <button class="hero-dot" type="button" data-slide="2" aria-label="Ver patio logístico"></button>
+    <button class="hero-dot active" type="button" data-slide="0" aria-label="Ver fila de camiones" data-en-attr="aria-label=View truck row"></button>
+    <button class="hero-dot" type="button" data-slide="1" aria-label="Ver sistema GPS" data-en-attr="aria-label=View GPS system"></button>
+    <button class="hero-dot" type="button" data-slide="2" aria-label="Ver patio logístico" data-en-attr="aria-label=View logistics yard"></button>
   </div>
 </section>
 
 <!-- ROUTE MARQUEE -->
 <div class="route-strip">
   <div class="route-inner">
-    <div class="route-item"><span>Diferencia</span><strong>Seguridad, experiencia, confiabilidad y servicio</strong></div>
-    <div class="route-item"><span>Especialidad</span><strong>Gestión de flotas comerciales</strong></div>
-    <div class="route-item"><span>Plataforma</span><strong>Socio líder de Geotab</strong></div>
-    <div class="route-item"><span>Soporte</span><strong>Implementación y acompañamiento</strong></div>
+    <div class="route-item"><span data-en="Difference">Diferencia</span><strong data-en="Safety, experience, reliability and service">Seguridad, experiencia, confiabilidad y servicio</strong></div>
+    <div class="route-item"><span data-en="Specialty">Especialidad</span><strong data-en="Commercial fleet management">Gestión de flotas comerciales</strong></div>
+    <div class="route-item"><span data-en="Platform">Plataforma</span><strong data-en="Leading Geotab partner">Socio líder de Geotab</strong></div>
+    <div class="route-item"><span data-en="Support">Soporte</span><strong data-en="Implementation and ongoing care">Implementación y acompañamiento</strong></div>
   </div>
 </div>
 
@@ -128,26 +139,26 @@
 <section class="section" id="diferencia">
   <div class="inner section-grid">
     <div data-reveal>
-      <div class="section-label">Diferencia EnVueMex</div>
-      <h2>¿Por qué escoger a EnVueMex <em>Solutions?</em></h2>
-      <p class="lead">Gestionar flotas comerciales en México es más complejo que nunca. Te ayudamos a vencer los desafíos competitivos, regulatorios y operativos con tecnología y acompañamiento experto.</p>
+      <div class="section-label" data-en="EnVueMex Difference">Diferencia EnVueMex</div>
+      <h2 data-en="Why choose EnVueMex <em>Solutions?</em>">¿Por qué escoger a EnVueMex <em>Solutions?</em></h2>
+      <p class="lead" data-en="Managing commercial fleets in Mexico is more complex than ever. We help you beat the competitive, regulatory and operational challenges with technology and expert support.">Gestionar flotas comerciales en México es más complejo que nunca. Te ayudamos a vencer los desafíos competitivos, regulatorios y operativos con tecnología y acompañamiento experto.</p>
     </div>
     <div class="difference-rail">
       <article class="diff-row" data-reveal>
-        <h3>Seguridad</h3>
-        <p>Nuestros productos ofrecen seguridad mejorada para las flotas, respaldada por nuestra destreza en cómo aprovechar mejor los dispositivos conectados.</p>
+        <h3 data-en="Safety">Seguridad</h3>
+        <p data-en="Our products deliver enhanced fleet safety, backed by deep know-how on getting the most from connected devices.">Nuestros productos ofrecen seguridad mejorada para las flotas, respaldada por nuestra destreza en cómo aprovechar mejor los dispositivos conectados.</p>
       </article>
       <article class="diff-row" data-reveal>
-        <h3>Experiencia</h3>
-        <p>Con 15 años en el mercado, EnVueMex extiende al mercado latinoamericano la maestría del primer distribuidor mundial de Geotab.</p>
+        <h3 data-en="Experience">Experiencia</h3>
+        <p data-en="With 15 years in the market, EnVueMex extends to Latin America the mastery of the world's first Geotab distributor.">Con 15 años en el mercado, EnVueMex extiende al mercado latinoamericano la maestría del primer distribuidor mundial de Geotab.</p>
       </article>
       <article class="diff-row" data-reveal>
-        <h3>Confiabilidad</h3>
-        <p>Construimos relaciones de largo plazo: te aconsejamos en los productos, tecnología y herramientas que mejoran el rendimiento de tu flota.</p>
+        <h3 data-en="Reliability">Confiabilidad</h3>
+        <p data-en="We build long-term relationships: we advise you on the products, technology and tools that improve your fleet's performance.">Construimos relaciones de largo plazo: te aconsejamos en los productos, tecnología y herramientas que mejoran el rendimiento de tu flota.</p>
       </article>
       <article class="diff-row" data-reveal>
-        <h3>Servicio</h3>
-        <p>EnVueMex provee soporte mucho después de la compra, ayudando a los clientes a darle a sus inversiones el uso más efectivo posible.</p>
+        <h3 data-en="Service">Servicio</h3>
+        <p data-en="EnVueMex provides support long after the purchase, helping customers get the most effective use from their investments.">EnVueMex provee soporte mucho después de la compra, ayudando a los clientes a darle a sus inversiones el uso más efectivo posible.</p>
       </article>
     </div>
   </div>
@@ -157,32 +168,32 @@
 <section class="section dark" id="soluciones">
   <div class="inner">
     <div data-reveal>
-      <div class="section-label">Soluciones de gestión de flotas</div>
-      <h2>Respaldado por dos décadas de experiencia en la industria del <em>transporte.</em></h2>
-      <p class="lead">EnVueMex Solutions provee soluciones que reducen costos de flota, incrementan eficiencia, automatizan reportes de datos y mantienen el cumplimiento normativo.</p>
+      <div class="section-label" data-en="Fleet management solutions">Soluciones de gestión de flotas</div>
+      <h2 data-en="Backed by two decades of experience in the <em>transport</em> industry.">Respaldado por dos décadas de experiencia en la industria del <em>transporte.</em></h2>
+      <p class="lead" data-en="EnVueMex Solutions delivers solutions that reduce fleet costs, increase efficiency, automate data reports and maintain regulatory compliance.">EnVueMex Solutions provee soluciones que reducen costos de flota, incrementan eficiencia, automatizan reportes de datos y mantienen el cumplimiento normativo.</p>
     </div>
     <div class="solution-list">
       <a class="solution-row" href="gps.html" data-reveal>
         <div class="solution-index">01</div>
         <div>
-          <h3>Soluciones de Rastreo GPS</h3>
-          <p>Dispositivos y sistemas de rastreo GPS que vuelven las flotas más eficientes y efectivas en costo.</p>
+          <h3 data-en="GPS Tracking Solutions">Soluciones de Rastreo GPS</h3>
+          <p data-en="GPS tracking devices and systems that make fleets more efficient and cost-effective.">Dispositivos y sistemas de rastreo GPS que vuelven las flotas más eficientes y efectivas en costo.</p>
         </div>
         <div class="arrow" aria-hidden="true">→</div>
       </a>
       <a class="solution-row" href="dashcams.html" data-reveal>
         <div class="solution-index">02</div>
         <div>
-          <h3>Cámaras de Tablero</h3>
-          <p>Sistemas de cámaras vehiculares clave para gestionar riesgos de flota y hacer los caminos más seguros.</p>
+          <h3 data-en="Dash Cams">Cámaras de Tablero</h3>
+          <p data-en="Vehicle camera systems that are key to managing fleet risk and making the roads safer.">Sistemas de cámaras vehiculares clave para gestionar riesgos de flota y hacer los caminos más seguros.</p>
         </div>
         <div class="arrow" aria-hidden="true">→</div>
       </a>
       <a class="solution-row" href="activos.html" data-reveal>
         <div class="solution-index">03</div>
         <div>
-          <h3>Rastreadores de Activos no Vehiculares</h3>
-          <p>Equipo pesado de construcción y agricultura, ATVs, generadores, compresores y más.</p>
+          <h3 data-en="Non-Vehicle Asset Trackers">Rastreadores de Activos no Vehiculares</h3>
+          <p data-en="Heavy construction and agriculture equipment, ATVs, generators, compressors and more.">Equipo pesado de construcción y agricultura, ATVs, generadores, compresores y más.</p>
         </div>
         <div class="arrow" aria-hidden="true">→</div>
       </a>
@@ -195,19 +206,19 @@
   <div class="feature-split">
     <figure class="feature-image"><img src="assets/home-dashcams.jpg" alt="Dash cams" loading="lazy"></figure>
     <div class="feature-copy" data-reveal>
-      <div class="section-label">Preocupémonos de su flota</div>
-      <h2>Ofrecemos una suite completa de productos <em>telemáticos.</em></h2>
-      <p>Ya sea que busque GPS, dash-cams o rastreo de activos no vehiculares, EnVueMex tiene la solución y el equipo para implementarla.</p>
-      <a class="btn btn-primary" href="contacto.html">Comience hoy</a>
+      <div class="section-label" data-en="Let us worry about your fleet">Preocupémonos de su flota</div>
+      <h2 data-en="A full suite of <em>telematic</em> products.">Ofrecemos una suite completa de productos <em>telemáticos.</em></h2>
+      <p data-en="Whether you're looking for GPS, dash cams or non-vehicle asset tracking, EnVueMex has the solution and the team to implement it.">Ya sea que busque GPS, dash-cams o rastreo de activos no vehiculares, EnVueMex tiene la solución y el equipo para implementarla.</p>
+      <a class="btn btn-primary" href="contacto.html" data-en="Get started">Comience hoy</a>
     </div>
   </div>
   <div class="feature-split" id="geotab">
     <figure class="feature-image"><img src="assets/geotab-award.webp" alt="Geotab Connect Innovation Award 2023" loading="lazy"></figure>
     <div class="feature-copy" data-reveal>
-      <div class="section-label">Socio líder de Geotab</div>
-      <h2>Asociación de confianza con Geotab desde <em>2011.</em></h2>
-      <p>Nuestra alianza estratégica con Geotab nos permite atender personalmente todas sus necesidades telemáticas, con el respaldo del mayor distribuidor a nivel mundial.</p>
-      <a class="btn btn-light" href="nosotros.html">Conoce más sobre nosotros</a>
+      <div class="section-label" data-en="Leading Geotab partner">Socio líder de Geotab</div>
+      <h2 data-en="Trusted partnership with Geotab since <em>2011.</em>">Asociación de confianza con Geotab desde <em>2011.</em></h2>
+      <p data-en="Our strategic alliance with Geotab lets us personally handle every telematic need, backed by the world's largest distributor.">Nuestra alianza estratégica con Geotab nos permite atender personalmente todas sus necesidades telemáticas, con el respaldo del mayor distribuidor a nivel mundial.</p>
+      <a class="btn btn-light" href="nosotros.html" data-en="Learn more about us">Conoce más sobre nosotros</a>
     </div>
   </div>
 </section>
@@ -216,29 +227,29 @@
 <section class="proof">
   <div class="proof-item" data-reveal>
     <strong>15</strong>
-    <span>años de experiencia en el mercado mexicano</span>
+    <span data-en="years in the Mexican market">años de experiencia en el mercado mexicano</span>
   </div>
   <div class="proof-item" data-reveal>
     <strong>2011</strong>
-    <span>asociación de confianza con Geotab</span>
+    <span data-en="trusted partnership with Geotab">asociación de confianza con Geotab</span>
   </div>
   <div class="proof-item" data-reveal>
     <strong>3</strong>
-    <span>líneas principales de soluciones telemáticas</span>
+    <span data-en="core telematic solution lines">líneas principales de soluciones telemáticas</span>
   </div>
   <div class="proof-item" data-reveal>
     <strong>24/7</strong>
-    <span>visibilidad de flota, activos y seguridad</span>
+    <span data-en="fleet, asset and safety visibility">visibilidad de flota, activos y seguridad</span>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta" id="contacto-cta">
+<section class="cta">
   <div class="cta-inner">
     <div data-reveal>
-      <div class="section-label">Conviértete en cliente</div>
-      <h2>Hable con nuestro asesor <em>calificado.</em></h2>
-      <p>Comience hoy con soluciones conectadas para flotas comerciales en México. Le respondemos el mismo día hábil.</p>
+      <div class="section-label" data-en="Become a customer">Conviértete en cliente</div>
+      <h2 data-en="Talk to our qualified <em>advisor.</em>">Hable con nuestro asesor <em>calificado.</em></h2>
+      <p data-en="Start today with connected solutions for commercial fleets in Mexico. Same-day business response.">Comience hoy con soluciones conectadas para flotas comerciales en México. Respuesta el mismo día hábil.</p>
     </div>
     <div class="cta-actions" data-reveal>
       <a class="btn btn-primary" href="mailto:ventas@et-envue.com">ventas@et-envue.com</a>
@@ -252,40 +263,40 @@
   <div class="footer-grid">
     <div>
       <div class="footer-logo"><img src="assets/envuemex-logo.webp" alt="EnVueMex Solutions"></div>
-      <p>Soluciones conectadas para flotas comerciales en México, con soporte experto y tecnología líder de Geotab.</p>
+      <p data-en="Connected solutions for commercial fleets in Mexico, with expert support and Geotab-leading technology.">Soluciones conectadas para flotas comerciales en México, con soporte experto y tecnología líder de Geotab.</p>
     </div>
     <div>
-      <h4>Soluciones</h4>
+      <h4 data-en="Solutions">Soluciones</h4>
       <ul>
-        <li><a href="gps.html">Rastreo GPS</a></li>
-        <li><a href="dashcams.html">Dash cams</a></li>
-        <li><a href="activos.html">Activos no vehiculares</a></li>
-        <li><a href="servicios.html">Gestión de flota</a></li>
+        <li><a href="gps.html" data-en="GPS Tracking">Rastreo GPS</a></li>
+        <li><a href="dashcams.html" data-en="Dash cams">Dash cams</a></li>
+        <li><a href="activos.html" data-en="Non-vehicle assets">Activos no vehiculares</a></li>
+        <li><a href="servicios.html" data-en="Fleet management">Gestión de flota</a></li>
       </ul>
     </div>
     <div>
-      <h4>Empresa</h4>
+      <h4 data-en="Company">Empresa</h4>
       <ul>
-        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="nosotros.html" data-en="About">Nosotros</a></li>
         <li><a href="faq.html">FAQ</a></li>
-        <li><a href="eventos.html">Eventos</a></li>
+        <li><a href="eventos.html" data-en="Events">Eventos</a></li>
         <li><a href="blog.html">Blog</a></li>
       </ul>
     </div>
     <div>
-      <h4>Contacto</h4>
+      <h4 data-en="Contact">Contacto</h4>
       <ul>
         <li>Blvd. Díaz Ordaz 3102, Piso 2</li>
         <li>Santa María, 64650 Monterrey, N.L.</li>
         <li><a href="tel:8121880258">81 2188 0258</a></li>
         <li><a href="mailto:ventas@et-envue.com">ventas@et-envue.com</a></li>
-        <li><a href="privacy.html">Privacidad</a> · <a href="terms.html">Términos</a></li>
+        <li><a href="privacy.html" data-en="Privacy">Privacidad</a> · <a href="terms.html" data-en="Terms">Términos</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 EnVueMex Solutions. Todos los derechos reservados.</span>
-    <span>Gestión de flotas · Seguridad · Cumplimiento</span>
+    <span data-en="© 2026 EnVueMex Solutions. All rights reserved.">© 2026 EnVueMex Solutions. Todos los derechos reservados.</span>
+    <span data-en="Fleet management · Safety · Compliance">Gestión de flotas · Seguridad · Cumplimiento</span>
   </div>
 </footer>
 
