@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'EMX_VERSION', '7.4.0' );
+define( 'EMX_VERSION', '7.4.1' );
 define( 'EMX_DIR', get_template_directory() );
 define( 'EMX_URI', get_template_directory_uri() );
 
