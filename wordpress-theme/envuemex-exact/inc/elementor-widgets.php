@@ -244,7 +244,7 @@ class EnVueMex_Features_Widget extends EnVueMex_Base_Widget {
 	protected function register_controls() {
 		$this->start_controls_section( 'images', array( 'label' => 'Images' ) );
 		$this->add_control( 'image1', array( 'label' => 'Dashcam Image', 'type' => Controls_Manager::MEDIA, 'default' => array( 'url' => $this->asset_url( 'home-dashcams.jpg' ) ) ) );
-		$this->add_control( 'image2', array( 'label' => 'Geotab Image',  'type' => Controls_Manager::MEDIA, 'default' => array( 'url' => $this->asset_url( 'geotab-award.webp' ) ) ) );
+		$this->add_control( 'image2', array( 'label' => 'Geotab Image',  'type' => Controls_Manager::MEDIA, 'default' => array( 'url' => $this->asset_url( 'geotab-go.jpg' ) ) ) );
 		$this->end_controls_section();
 	}
 	protected function render() {
