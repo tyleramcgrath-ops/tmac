@@ -40,9 +40,8 @@ import {
   Plus,
   Minus,
   Mail,
-  Twitter,
-  Linkedin,
-  Github,
+  AtSign,
+  Rss,
   Wand2,
   PlayCircle,
 } from "lucide-react";
@@ -1296,7 +1295,7 @@ function Footer() {
               contact centers.
             </p>
             <div className="mt-5 flex items-center gap-2">
-              {[Twitter, Linkedin, Github, Mail].map((Icon, i) => (
+              {[AtSign, MessageSquareText, Rss, Mail].map((Icon, i) => (
                 <a
                   key={i}
                   href="#"

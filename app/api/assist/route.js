@@ -1,8 +1,10 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+export const dynamic = "force-dynamic";
+
+function getOpenAI() {
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+}
 
 const systemPrompt = `
 You are Centris AI Assist, an AI assistant for Centris Info, a nearshore bilingual contact center.
@@ -104,7 +106,7 @@ export async function POST(req) {
       );
     }
 
-    const response = await openai.responses.create({
+    const response = await getOpenAI().responses.create({
       model: "gpt-5.5",
       input: [
         {
