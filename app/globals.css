@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --centris-deep: #060d44;
+  --centris-blue: #0017ff;
+  --centris-coral: #ff4550;
+  --centris-mist: #f4f6ff;
+  --centris-paper: #fafbff;
+  --centris-ink: #0b1238;
+  --centris-line: #e3e6f5;
+  --centris-muted: #5a6386;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--centris-paper);
+  color: var(--centris-ink);
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(0, 23, 255, 0.2);
+  color: var(--centris-deep);
+}
+
+/* Decorative backgrounds */
+.bg-grid {
+  background-image: linear-gradient(rgba(6, 13, 68, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 13, 68, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.bg-grid-fade {
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 30%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.bg-aurora {
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 10%, rgba(0, 23, 255, 0.18), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 85% 20%, rgba(255, 69, 80, 0.15), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 95%, rgba(0, 23, 255, 0.12), transparent 60%),
+    linear-gradient(180deg, #fafbff 0%, #ffffff 60%);
+}
+
+.bg-noise {
+  position: relative;
+}
+.bg-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.02 0 0 0 0 0.05 0 0 0 0 0.27 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Text gradient */
+.text-gradient-blue {
+  background: linear-gradient(120deg, #0017ff 0%, #4f5dff 60%, #ff4550 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Subtle border ring used on cards */
+.ring-soft {
+  box-shadow:
+    0 0 0 1px rgba(6, 13, 68, 0.06),
+    0 24px 60px -24px rgba(6, 13, 68, 0.18);
+}
+
+/* Marquee mask */
+.mask-fade-x {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* Shine sweep for active CTAs */
+.shine-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.shine-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+.shine-wrap:hover::after {
+  animation: shine 1.2s ease-out forwards;
+}
+@keyframes shine {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Soft pulse ring used on "live" dots */
+@keyframes ping-soft {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(2); opacity: 0; }
+}
+.ping-soft::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: ping-soft 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Scrollbars */
+.scroll-soft::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-soft::-webkit-scrollbar-thumb {
+  background: rgba(0, 23, 255, 0.25);
+  border-radius: 999px;
+}
+.scroll-soft::-webkit-scrollbar-track {
+  background: transparent;
+}
