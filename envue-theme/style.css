@@ -1,0 +1,58 @@
+/*
+Theme Name: EnVue Telematics
+Theme URI: https://envuetelematics.com
+Author: EnVue Telematics
+Description: Fleet intelligence platform theme with Elementor support.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+Text Domain: envue
+*/
+
+/* ── TOKENS (OKLCH — impeccable spec) ── */
+:root {
+  /* Backgrounds — tinted toward brand navy */
+  --bg:      oklch(98.5% 0.005 218);
+  --bg2:     oklch(96%   0.008 218);
+  --bg3:     oklch(93%   0.01  218);
+
+  /* Text */
+  --ink:     oklch(15%   0.025 243);
+  --ink2:    oklch(22%   0.03  243);
+  --slate:   oklch(40%   0.03  243);
+  --muted:   oklch(56%   0.02  243);
+
+  /* Borders */
+  --border:  oklch(87%   0.012 220);
+  --border2: oklch(82%   0.015 220);
+
+  /* Brand blue — from logo (#0369A1 ≈ oklch 44% 0.14 220) */
+  --blue:    oklch(44%   0.14  220);
+  --blue-dk: oklch(38%   0.14  220);
+  --blue-lt: oklch(95%   0.025 220);
+  --blue-md: oklch(88%   0.04  220);
+
+  /* Spacing & radius */
+  --r-sm: 6px;
+  --r:    10px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+
+  /* Easing — Emil spec */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
