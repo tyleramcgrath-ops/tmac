@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  --centris-deep: #060d44;
+  --centris-blue: #0017ff;
+  --centris-coral: #ff4550;
+  --centris-mist: #f4f6ff;
+  --centris-ink: #0b1238;
+  --centris-muted: #5a6386;
 }
 
 * {
@@ -16,10 +21,12 @@ html {
 
 body {
   margin: 0;
-  background: #06131d;
-  color: white;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
+  background: #ffffff;
+  color: var(--centris-ink);
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 button,
@@ -29,18 +36,38 @@ textarea {
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.35);
+  background: rgba(0, 23, 255, 0.18);
+  color: var(--centris-deep);
 }
 
-.custom-scrollbar::-webkit-scrollbar {
+.centris-grid-bg {
+  background-image: linear-gradient(rgba(6, 13, 68, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 13, 68, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.scroll-soft::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.06);
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(8, 145, 178, 0.45);
+.scroll-soft::-webkit-scrollbar-thumb {
+  background: rgba(0, 23, 255, 0.25);
   border-radius: 999px;
+}
+.scroll-soft::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes centris-pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.65;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.centris-pulse-ring {
+  animation: centris-pulse-ring 1.8s ease-out infinite;
 }
