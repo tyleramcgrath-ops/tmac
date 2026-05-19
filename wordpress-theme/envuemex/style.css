@@ -1,0 +1,18 @@
+/*
+Theme Name: Envue Mex
+Theme URI: https://envuemex.com
+Author: TMAC / Envue Mex
+Author URI: https://envuemex.com
+Description: Premium bilingual theme for Envue Mex — telemática y videovigilancia para flotas en México. Elementor-compatible.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: Proprietary
+License URI: https://envuemex.com
+Text Domain: envuemex
+Tags: business, telematics, custom-colors, custom-menu, custom-logo, featured-images, full-width-template, sticky-post, threaded-comments, translation-ready, elementor
+*/
+
+/* All visual styles live in /assets/css/main.css and are enqueued by functions.php.
+   This file exists so WordPress can read the theme header. */
