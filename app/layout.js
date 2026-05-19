@@ -1,26 +1,19 @@
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
+import "@fontsource-variable/plus-jakarta-sans";
+import "@fontsource-variable/jetbrains-mono";
+
 import "./globals.css";
 
 export const metadata = {
-  title: "Centris AI Assist — Humans Powered by AI",
+  title: "Centris — Every conversation, on key.",
   description:
-    "Human-first, AI-accelerated bilingual support assistant for Centris Info.",
+    "Centris listens to live customer conversations and tells your agents the best thing to say, in any language, in the moment.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body>{children}</body>
     </html>
   );
