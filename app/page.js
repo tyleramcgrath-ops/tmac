@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
   Sparkles,
-  ChevronDown,
   ChevronRight,
   Send,
   Copy,
@@ -29,22 +28,29 @@ import {
   Globe,
   Zap,
   Heart,
-  Award,
-  Clock,
-  Building2,
   Stethoscope,
   Plug,
   CreditCard,
   ShoppingBag,
+  Building2,
   Star,
+  Quote,
+  PhoneCall,
+  PhoneIncoming,
+  Clock,
+  CircleUserRound,
+  Activity,
+  PlugZap,
+  Lock,
+  Workflow,
 } from "lucide-react";
 
 const NAV = [
-  { label: "Services", href: "#services" },
+  { label: "Platform", href: "#assist" },
+  { label: "Solutions", href: "#solutions" },
   { label: "Industries", href: "#industries" },
-  { label: "AI Assist", href: "#assist" },
   { label: "Why Centris", href: "#why" },
-  { label: "About", href: "#about" },
+  { label: "Resources", href: "#resources" },
 ];
 
 const MODES = [
@@ -53,7 +59,8 @@ const MODES = [
     label: "Agent Assist",
     short: "What to say next",
     icon: Headphones,
-    sample: "Customer says: I have called three times and no one fixed my bill.",
+    sample:
+      "Customer says: I have called three times and no one fixed my bill.",
   },
   {
     id: "sales",
@@ -205,40 +212,65 @@ const SEED = {
     "Confirm a follow-up time within 24 hours",
   ],
   riskLevel: "Low — standard billing escalation",
-  recommendedAction: "Resolve in-call; supervisor only if customer requests cancellation",
+  recommendedAction:
+    "Resolve in-call; supervisor only if customer requests cancellation",
 };
 
 const INDUSTRIES = [
-  { icon: Stethoscope, name: "Healthcare", body: "Patient support, scheduling, claims." },
-  { icon: Plug, name: "Utilities", body: "Outages, billing, service requests." },
-  { icon: CreditCard, name: "Financial", body: "Payments, disputes, account help." },
-  { icon: ShoppingBag, name: "Retail", body: "Orders, returns, loyalty programs." },
-  { icon: Building2, name: "Enterprise", body: "BPO, back-office, escalations." },
-  { icon: Globe, name: "Public Sector", body: "Bilingual citizen services." },
+  {
+    icon: Stethoscope,
+    name: "Healthcare",
+    body: "Patient support, scheduling, claims, HIPAA-aware workflows.",
+  },
+  {
+    icon: Plug,
+    name: "Utilities",
+    body: "Outages, billing, service requests at storm-day volume.",
+  },
+  {
+    icon: CreditCard,
+    name: "Financial",
+    body: "Payments, disputes, account help — PCI-aware.",
+  },
+  {
+    icon: ShoppingBag,
+    name: "Retail",
+    body: "Orders, returns, loyalty programs, holiday surges.",
+  },
+  {
+    icon: Building2,
+    name: "Enterprise",
+    body: "BPO, back-office processing, escalations.",
+  },
+  {
+    icon: Globe,
+    name: "Public Sector",
+    body: "Bilingual citizen services and intake.",
+  },
 ];
 
 const STATS = [
   { value: "30+", label: "Years in business" },
   { value: "100%", label: "Bilingual agents" },
-  { value: "24/7", label: "Coverage, 365 days" },
+  { value: "24/7/365", label: "Coverage" },
   { value: "Up to 45%", label: "Cost savings vs. U.S." },
 ];
 
 const FEATURES = [
   {
     icon: Heart,
-    title: "Human-first",
+    title: "Human-first, always",
     body: "AI drafts the response. Your bilingual agent reviews, edits, and sends — every time.",
   },
   {
     icon: Languages,
-    title: "Bilingual by design",
-    body: "Every output generated in English and Spanish in a single pass — same tone, same intent.",
+    title: "Bilingual in one pass",
+    body: "Every output generated in English and Spanish together — same tone, same intent.",
   },
   {
     icon: ShieldCheck,
     title: "Built for compliance",
-    body: "Guardrails, redaction, audit logs, and human approval gates for regulated industries.",
+    body: "Guardrails, redaction, audit logs, and supervisor approval gates for regulated work.",
   },
   {
     icon: Zap,
@@ -262,16 +294,19 @@ const HOW_STEPS = [
     n: "01",
     title: "Paste what the customer said",
     body: "Type a message, log a call, or pull in a transcript. Works for voice, chat, and email.",
+    icon: PhoneIncoming,
   },
   {
     n: "02",
     title: "Centris AI Assist responds",
     body: "Best response, Spanish version, CRM notes, why it works, next steps, and risk flags.",
+    icon: Sparkles,
   },
   {
     n: "03",
     title: "Your agent stays in control",
     body: "Copy, edit, send, or escalate. Every customer-facing reply is human-approved.",
+    icon: ShieldCheck,
   },
 ];
 
@@ -292,22 +327,60 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "The client reports practically write themselves. We surface trends our customers actually care about — and we keep the human relationship in front.",
+      "The reports practically write themselves. We surface trends our customers actually care about — and keep the human relationship in front.",
     name: "Priya Shah",
     role: "VP Client Success",
     company: "Northbridge Financial",
   },
 ];
 
+const LOGOS = [
+  "Northbridge",
+  "PivotalPay",
+  "Brightlane",
+  "Solvix",
+  "Onestep",
+  "Bluepeak",
+  "Helio",
+  "Lattice",
+  "Cobalt",
+  "Greypath",
+];
+
+const SOLUTIONS = [
+  {
+    icon: Headphones,
+    title: "Customer Service",
+    body: "Inbound voice, chat, email — bilingual nearshore agents with live AI co-pilot.",
+    bullets: ["Real-time suggestions", "Auto CRM notes", "Escalation flags"],
+  },
+  {
+    icon: TrendingUp,
+    title: "Sales & Lead Gen",
+    body: "Qualification, follow-ups, objection handling, and proposal-ready language.",
+    bullets: ["Lead scoring", "Follow-up drafts", "Pipeline reports"],
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Quality & Coaching",
+    body: "Score every interaction. Supervisors finalize coaching in minutes, not days.",
+    bullets: ["Empathy & tone scoring", "Risk flags", "Coaching plans"],
+  },
+];
+
 function CentrisMark({ size = 32 }) {
+  const ring = Math.max(2, Math.round(size / 12));
   return (
     <span
       className="relative inline-block shrink-0"
       style={{ width: size, height: size }}
+      aria-hidden
     >
       <span
         className="absolute inset-0 rounded-full"
-        style={{ border: `${Math.max(2, size / 12)}px solid #0017FF` }}
+        style={{
+          border: `${ring}px solid #0017FF`,
+        }}
       />
       <span
         className="absolute rounded-full bg-centris-coral"
@@ -322,20 +395,36 @@ function CentrisMark({ size = 32 }) {
   );
 }
 
-function CentrisLogo() {
+function CentrisLogo({ light = false }) {
   return (
     <a href="#" className="flex items-center gap-2.5">
       <CentrisMark size={32} />
-      <span className="text-centris-deep font-extrabold tracking-tight text-xl">
+      <span
+        className={`font-extrabold tracking-tight text-xl font-display ${
+          light ? "text-white" : "text-centris-deep"
+        }`}
+      >
         Centris
       </span>
     </a>
   );
 }
 
-function TopNav({ onTry }) {
+function LivePill({ text = "Live" }) {
   return (
-    <header className="sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-centris-deep/[0.06]">
+    <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold px-2.5 py-1">
+      <span className="relative inline-flex h-2 w-2 text-emerald-500">
+        <span className="ping-soft" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+      </span>
+      {text}
+    </span>
+  );
+}
+
+function TopNav({ onAssist }) {
+  return (
+    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-centris-line/70">
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
         <CentrisLogo />
         <nav className="hidden lg:flex items-center gap-8">
@@ -357,8 +446,8 @@ function TopNav({ onTry }) {
             Sign in
           </a>
           <button
-            onClick={onTry}
-            className="inline-flex items-center gap-1.5 rounded-full bg-centris-blue hover:bg-[#0014e0] text-white text-sm font-semibold px-4 py-2 shadow-soft transition"
+            onClick={onAssist}
+            className="shine-wrap inline-flex items-center gap-1.5 rounded-full bg-centris-blue hover:bg-[#0014e0] text-white text-sm font-semibold px-4 py-2 shadow-soft transition"
           >
             Book a Demo
             <ArrowRight className="h-3.5 w-3.5" />
@@ -369,60 +458,67 @@ function TopNav({ onTry }) {
   );
 }
 
-function Hero({ onTry, onAssist }) {
-  return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white to-centris-mist">
-      <div className="absolute inset-0 centris-grid-bg opacity-60 pointer-events-none" />
-      <div className="absolute -top-32 -right-40 h-[520px] w-[520px] rounded-full bg-centris-blue/10 blur-[120px] pointer-events-none" />
-      <div className="absolute top-40 -left-40 h-[420px] w-[420px] rounded-full bg-centris-coral/10 blur-[100px] pointer-events-none" />
+function FloatingBlob({ className }) {
+  return <div className={`absolute rounded-full blur-3xl ${className}`} />;
+}
 
-      <div className="relative max-w-7xl mx-auto px-5 md:px-8 pt-16 md:pt-24 pb-20 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-12 items-center">
+function Hero({ onAssist }) {
+  return (
+    <section className="relative overflow-hidden bg-aurora bg-noise">
+      <div className="absolute inset-0 bg-grid bg-grid-fade opacity-60 pointer-events-none" />
+      <FloatingBlob className="-top-32 -right-32 h-[520px] w-[520px] bg-centris-blue/15" />
+      <FloatingBlob className="top-40 -left-40 h-[420px] w-[420px] bg-centris-coral/15" />
+
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8 pt-20 md:pt-28 pb-24 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-centris-blue/20 bg-white px-3 py-1.5 text-xs font-semibold text-centris-blue shadow-sm">
-            <Sparkles className="h-3.5 w-3.5" />
-            Now live — Centris AI Assist
+          <div className="inline-flex items-center gap-2 rounded-full border border-centris-blue/15 bg-white/80 backdrop-blur px-3 py-1.5 text-xs font-semibold text-centris-blue shadow-sm">
+            <span className="relative inline-flex h-1.5 w-1.5 text-centris-blue">
+              <span className="ping-soft" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-centris-blue" />
+            </span>
+            Now live — Centris AI Assist v1.0
           </div>
 
-          <h1 className="mt-6 text-[44px] md:text-[64px] xl:text-[72px] leading-[1.02] font-extrabold tracking-tight text-centris-deep">
+          <h1 className="mt-6 font-display font-extrabold tracking-tightest text-centris-deep text-[48px] md:text-[72px] xl:text-[84px] leading-[0.98]">
             Humans
             <br />
-            <span className="text-centris-blue">Powered by AI.</span>
+            powered by{" "}
+            <span className="text-gradient-blue">AI.</span>
           </h1>
 
-          <p className="mt-5 text-lg md:text-xl text-centris-ink/75 leading-relaxed max-w-xl">
+          <p className="mt-6 text-lg md:text-xl text-centris-ink/75 leading-relaxed max-w-xl">
             Centris blends bilingual nearshore agents with real-time AI
-            assistance — so every customer interaction is faster, smarter, and
-            more empathetic.
+            assistance — so every interaction is faster, smarter, and more
+            empathetic.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <button
               onClick={onAssist}
-              className="inline-flex items-center gap-2 rounded-full bg-centris-blue hover:bg-[#0014e0] text-white text-sm font-semibold px-5 py-3 shadow-glow transition"
+              className="shine-wrap inline-flex items-center gap-2 rounded-full bg-centris-blue hover:bg-[#0014e0] text-white text-sm font-bold px-6 py-3.5 shadow-glow transition"
             >
               Try the assistant
               <ArrowRight className="h-4 w-4" />
             </button>
-            <button
-              onClick={onTry}
-              className="inline-flex items-center gap-2 rounded-full bg-white border border-centris-deep/15 hover:border-centris-blue text-centris-deep text-sm font-semibold px-5 py-3 transition"
-            >
+            <button className="inline-flex items-center gap-2 rounded-full bg-white border border-centris-line hover:border-centris-blue text-centris-deep text-sm font-bold px-6 py-3.5 transition">
               <Play className="h-4 w-4 text-centris-coral" />
-              Book a 20-min demo
+              Watch the 90-sec demo
             </button>
           </div>
 
-          <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
-            {STATS.slice(0, 3).map((s) => (
+          <div className="mt-12 grid grid-cols-4 gap-6 max-w-xl">
+            {STATS.map((s) => (
               <div key={s.label}>
-                <div className="text-2xl md:text-3xl font-extrabold text-centris-deep tracking-tight">
+                <div className="text-2xl md:text-3xl font-extrabold text-centris-deep tracking-tight font-display">
                   {s.value}
                 </div>
-                <div className="text-xs text-centris-muted mt-1">{s.label}</div>
+                <div className="text-[11px] text-centris-muted mt-1 leading-tight">
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
@@ -434,111 +530,202 @@ function Hero({ onTry, onAssist }) {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="relative"
         >
-          <HeroAssistantPreview />
+          <HeroStack />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function HeroAssistantPreview() {
+function HeroStack() {
   return (
-    <div className="relative">
-      <div className="absolute -inset-6 bg-gradient-to-br from-centris-blue/15 via-centris-coral/10 to-transparent rounded-[40px] blur-2xl" />
-      <div className="relative rounded-[28px] bg-white border border-centris-deep/8 shadow-glow overflow-hidden">
+    <div className="relative h-[560px] md:h-[620px]">
+      {/* Decorative glow */}
+      <div className="absolute -inset-12 bg-gradient-to-br from-centris-blue/30 via-centris-coral/15 to-transparent rounded-[60px] blur-3xl" />
+
+      {/* Active call info card (floating, top-left) */}
+      <div className="absolute left-0 top-2 z-30 w-[260px] rounded-2xl bg-white shadow-card ring-1 ring-centris-line p-4 animate-floatA">
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-centris-blue to-centris-coral flex items-center justify-center text-white font-bold text-sm">
+              JR
+            </div>
+            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white" />
+          </div>
+          <div className="flex-1">
+            <div className="text-xs text-centris-muted">Active call</div>
+            <div className="text-sm font-bold text-centris-deep">
+              Jordan R. • Billing
+            </div>
+          </div>
+          <PhoneCall className="h-4 w-4 text-emerald-500" />
+        </div>
+        <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+          <div className="rounded-lg bg-centris-mist py-1.5">
+            <div className="text-[9px] text-centris-muted uppercase tracking-wider">
+              Duration
+            </div>
+            <div className="text-xs font-bold text-centris-deep">02:14</div>
+          </div>
+          <div className="rounded-lg bg-centris-mist py-1.5">
+            <div className="text-[9px] text-centris-muted uppercase tracking-wider">
+              Sentiment
+            </div>
+            <div className="text-xs font-bold text-centris-coral">Tense</div>
+          </div>
+          <div className="rounded-lg bg-centris-mist py-1.5">
+            <div className="text-[9px] text-centris-muted uppercase tracking-wider">
+              Tier
+            </div>
+            <div className="text-xs font-bold text-centris-deep">Premier</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main product card */}
+      <div className="absolute right-0 top-12 z-20 w-[88%] md:w-[480px] rounded-[24px] bg-white ring-1 ring-centris-line shadow-card overflow-hidden">
         <div className="bg-centris-deep px-5 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CentrisMark size={22} />
-            <span className="text-white font-bold text-sm tracking-tight">
+            <span className="text-white font-bold text-sm tracking-tight font-display">
               Centris AI Assist
             </span>
           </div>
-          <span className="inline-flex items-center gap-1.5 text-[11px] text-emerald-300 font-semibold">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 centris-pulse-ring" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-            </span>
-            Live
-          </span>
+          <LivePill />
         </div>
-        <div className="p-5 space-y-4 bg-white">
-          <div className="rounded-2xl bg-centris-mist border border-centris-deep/[0.06] p-4">
-            <div className="text-[11px] font-semibold text-centris-blue uppercase tracking-wider mb-1.5">
+        <div className="p-5 space-y-3.5">
+          <div className="rounded-xl bg-centris-mist border border-centris-line p-3.5">
+            <div className="text-[10px] font-bold text-centris-blue uppercase tracking-widest mb-1">
               Customer said
             </div>
             <p className="text-sm text-centris-ink leading-relaxed">
               "I have called three times and no one fixed my bill."
             </p>
           </div>
-          <div className="rounded-2xl bg-gradient-to-br from-centris-blue to-[#3a4cff] text-white p-4 shadow-soft">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wider opacity-80">
-                Best thing to say
-              </span>
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-white/15 rounded-full px-2 py-0.5">
-                <Star className="h-2.5 w-2.5 fill-white" />
-                Recommended
-              </span>
+          <div className="relative rounded-xl bg-gradient-to-br from-centris-blue to-[#3a4cff] text-white p-4 overflow-hidden">
+            <div className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+            <div className="relative">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-widest opacity-90">
+                  Best thing to say
+                </span>
+                <span className="inline-flex items-center gap-1 text-[9px] font-bold bg-white/15 border border-white/20 rounded-full px-2 py-0.5">
+                  <Star className="h-2.5 w-2.5 fill-white" /> Recommended
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed">
+                I understand why you're frustrated, and I'm sorry you've had to
+                call multiple times. I'm going to review your billing issue now
+                and make sure you leave this call with a clear next step.
+              </p>
             </div>
-            <p className="text-sm leading-relaxed">
-              I understand why you're frustrated, and I'm sorry you've had to
-              call multiple times. I'm going to review your billing issue now
-              and make sure you leave this call with a clear next step.
-            </p>
           </div>
-          <div className="rounded-2xl bg-white border border-centris-deep/[0.08] p-4">
-            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-centris-coral uppercase tracking-wider mb-1.5">
-              <Languages className="h-3 w-3" />
-              Spanish version
+          <div className="rounded-xl bg-white border border-centris-line p-3.5">
+            <div className="text-[10px] font-bold text-centris-coral uppercase tracking-widest mb-1 inline-flex items-center gap-1">
+              <Languages className="h-3 w-3" /> Spanish
             </div>
             <p className="text-sm text-centris-ink leading-relaxed">
               Entiendo por qué está frustrado, y lamento que haya tenido que
               llamar varias veces. Voy a revisar su problema de facturación
-              ahora y asegurarme de que termine esta llamada con un próximo
-              paso claro.
+              ahora.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            {["Empathy", "Ownership", "Next step"].map((t) => (
-              <div
-                key={t}
-                className="rounded-xl bg-centris-mist text-centris-deep text-[11px] font-semibold px-3 py-2 text-center border border-centris-deep/[0.05]"
-              >
-                {t}
-              </div>
-            ))}
-          </div>
         </div>
+      </div>
+
+      {/* QA card (floating, bottom-left) */}
+      <div className="absolute left-2 bottom-6 z-30 w-[260px] rounded-2xl bg-white shadow-card ring-1 ring-centris-line p-4 animate-floatB">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2 text-xs font-bold text-centris-deep">
+            <ClipboardCheck className="h-4 w-4 text-centris-blue" /> QA Score
+          </div>
+          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
+            +12 vs avg
+          </span>
+        </div>
+        <div className="space-y-2">
+          <ScoreBar label="Empathy" value={94} />
+          <ScoreBar label="Resolution" value={88} />
+          <ScoreBar label="Compliance" value={96} />
+        </div>
+      </div>
+
+      {/* Floating coral CTA bubble */}
+      <div className="absolute right-6 bottom-0 z-30 inline-flex items-center gap-2 rounded-full bg-centris-coral text-white text-xs font-bold px-3 py-2 shadow-coral animate-floatA">
+        <Sparkles className="h-3.5 w-3.5" /> +38% faster first response
       </div>
     </div>
   );
 }
 
-function TrustBar() {
+function ScoreBar({ label, value }) {
   return (
-    <section className="border-y border-centris-deep/[0.06] bg-white py-8">
+    <div>
+      <div className="flex justify-between text-[10px] text-centris-muted mb-1 font-semibold">
+        <span>{label}</span>
+        <span className="text-centris-deep">{value}</span>
+      </div>
+      <div className="h-1.5 rounded-full bg-centris-mist overflow-hidden">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-centris-blue to-centris-coral"
+          style={{ width: `${value}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function LogoMarquee() {
+  const row = [...LOGOS, ...LOGOS];
+  return (
+    <section className="bg-white border-y border-centris-line/70 py-10">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <div className="text-center text-[11px] tracking-[0.25em] font-bold text-centris-muted mb-6">
           TRUSTED BY LEADING SUPPORT TEAMS
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-80">
-          {["Northbridge", "PivotalPay", "Brightlane", "Solvix", "Onestep", "Bluepeak"].map(
-            (b) => (
-              <span
-                key={b}
-                className="text-centris-deep/60 font-bold text-base tracking-tight"
+        <div className="mask-fade-x overflow-hidden">
+          <div className="flex w-[200%] animate-marquee">
+            {row.map((b, i) => (
+              <div
+                key={i}
+                className="shrink-0 w-1/10 px-8 text-center text-centris-deep/55 font-extrabold text-lg tracking-tight font-display"
+                style={{ width: `${100 / row.length}%` }}
               >
                 {b}
-              </span>
-            )
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function CopyChip({ text }) {
+function SectionHeader({ eyebrow, title, body, align = "left" }) {
+  return (
+    <div
+      className={`max-w-2xl ${
+        align === "center" ? "text-center mx-auto" : ""
+      } mb-12`}
+    >
+      {eyebrow && (
+        <div className="text-xs font-bold tracking-[0.2em] text-centris-blue uppercase mb-3">
+          {eyebrow}
+        </div>
+      )}
+      <h2 className="font-display text-[34px] md:text-[52px] leading-[1.04] font-extrabold tracking-tightest text-centris-deep">
+        {title}
+      </h2>
+      {body && (
+        <p className="mt-4 text-lg text-centris-ink/70 leading-relaxed">
+          {body}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function CopyChip({ text, label = "Copy", className = "" }) {
   const [copied, setCopied] = useState(false);
   async function go() {
     try {
@@ -550,7 +737,7 @@ function CopyChip({ text }) {
   return (
     <button
       onClick={go}
-      className="inline-flex items-center gap-1.5 text-xs font-semibold text-centris-blue hover:text-[#0014e0] transition"
+      className={`inline-flex items-center gap-1.5 text-xs font-semibold transition ${className}`}
     >
       {copied ? (
         <>
@@ -558,7 +745,7 @@ function CopyChip({ text }) {
         </>
       ) : (
         <>
-          <Copy className="h-3 w-3" /> Copy
+          <Copy className="h-3 w-3" /> {label}
         </>
       )}
     </button>
@@ -575,7 +762,13 @@ function AssistantModule({ assistRef }) {
   const [error, setError] = useState("");
   const [escalated, setEscalated] = useState(false);
   const [sentCRM, setSentCRM] = useState(false);
+  const [callSeconds, setCallSeconds] = useState(134);
   const taRef = useRef(null);
+
+  useEffect(() => {
+    const id = setInterval(() => setCallSeconds((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const activeMode = MODES.find((m) => m.id === mode);
   const placeholder = useMemo(() => activeMode?.sample || "", [activeMode]);
@@ -610,7 +803,8 @@ function AssistantModule({ assistRef }) {
             ? data.nextSteps.filter(Boolean)
             : SEED.nextSteps,
         riskLevel: data.riskLevel || SEED.riskLevel,
-        recommendedAction: data.recommendedAction || SEED.recommendedAction,
+        recommendedAction:
+          data.recommendedAction || SEED.recommendedAction,
       });
     } catch (err) {
       setError(err.message || "Unable to reach the AI service.");
@@ -626,37 +820,39 @@ function AssistantModule({ assistRef }) {
     generate(text);
   }
 
+  const mm = String(Math.floor(callSeconds / 60)).padStart(2, "0");
+  const ss = String(callSeconds % 60).padStart(2, "0");
+
   return (
     <section
       id="assist"
       ref={assistRef}
-      className="relative bg-centris-mist py-20 md:py-28 scroll-mt-24"
+      className="relative bg-centris-paper py-20 md:py-28 scroll-mt-24 overflow-hidden"
     >
-      <div className="absolute inset-0 centris-grid-bg opacity-50 pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto px-5 md:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 rounded-full border border-centris-blue/20 bg-white px-3 py-1.5 text-xs font-semibold text-centris-blue mb-4">
-            <Sparkles className="h-3.5 w-3.5" />
-            Try it live
-          </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-centris-deep">
-            The AI co-pilot for your{" "}
-            <span className="text-centris-blue">call center.</span>
-          </h2>
-          <p className="mt-4 text-lg text-centris-ink/70">
-            Type what the customer said. Get the best response, Spanish version,
-            CRM notes, why it works, next steps, and escalation guidance — in
-            seconds.
-          </p>
-        </div>
+      <div className="absolute inset-0 bg-grid bg-grid-fade opacity-40 pointer-events-none" />
+      <FloatingBlob className="top-10 right-0 h-[400px] w-[400px] bg-centris-blue/10" />
+      <FloatingBlob className="bottom-10 left-10 h-[300px] w-[300px] bg-centris-coral/10" />
 
-        <div className="rounded-[28px] bg-white border border-centris-deep/[0.08] shadow-glow overflow-hidden">
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8">
+        <SectionHeader
+          eyebrow="Try it live"
+          align="center"
+          title={
+            <>
+              The AI co-pilot for your{" "}
+              <span className="text-gradient-blue">call center.</span>
+            </>
+          }
+          body="Type what the customer said. Get the best response, Spanish version, CRM notes, why it works, next steps, and escalation guidance — in seconds."
+        />
+
+        <div className="rounded-[28px] bg-white ring-1 ring-centris-line shadow-card overflow-hidden">
           {/* Header bar */}
           <div className="bg-centris-deep text-white px-5 md:px-7 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <CentrisMark size={26} />
               <div>
-                <div className="font-bold text-sm tracking-tight">
+                <div className="font-bold text-sm tracking-tight font-display">
                   Centris AI Assist
                 </div>
                 <div className="text-[11px] text-white/60">
@@ -666,8 +862,11 @@ function AssistantModule({ assistRef }) {
             </div>
             <div className="hidden md:flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/15 text-emerald-200 text-[11px] font-semibold px-2.5 py-1 border border-emerald-400/25">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                Available
+                <span className="relative inline-flex h-1.5 w-1.5 text-emerald-400">
+                  <span className="ping-soft" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                Live session · {mm}:{ss}
               </span>
               <span className="inline-flex items-center gap-1 rounded-full bg-white/10 text-white/90 text-[11px] font-semibold px-2.5 py-1">
                 <Globe className="h-3 w-3" /> EN / ES
@@ -677,9 +876,38 @@ function AssistantModule({ assistRef }) {
 
           {/* Body */}
           <div className="grid grid-cols-12">
-            {/* Sidebar */}
-            <aside className="col-span-12 md:col-span-3 border-r border-centris-deep/[0.06] bg-white p-3 md:p-4">
-              <div className="text-[10px] tracking-[0.2em] text-centris-muted font-bold uppercase mb-3 px-2">
+            {/* Sidebar with caller context */}
+            <aside className="col-span-12 md:col-span-3 border-r border-centris-line bg-white p-3 md:p-4">
+              <div className="rounded-xl bg-centris-deep text-white p-3 mb-3 relative overflow-hidden">
+                <div className="absolute -top-8 -right-8 h-24 w-24 rounded-full bg-centris-coral/30 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-9 w-9 rounded-full bg-gradient-to-br from-centris-blue to-centris-coral flex items-center justify-center font-bold text-xs">
+                      JR
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[10px] text-white/60 uppercase tracking-widest">
+                        Caller
+                      </div>
+                      <div className="text-sm font-bold truncate">
+                        Jordan R.
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5 text-center">
+                    <div className="rounded-md bg-white/5 py-1">
+                      <div className="text-[9px] text-white/50">Tier</div>
+                      <div className="text-[11px] font-bold">Premier</div>
+                    </div>
+                    <div className="rounded-md bg-white/5 py-1">
+                      <div className="text-[9px] text-white/50">Lang</div>
+                      <div className="text-[11px] font-bold">EN</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-[10px] tracking-[0.2em] text-centris-muted font-bold uppercase mb-2 px-2">
                 Workflow
               </div>
               <div className="space-y-1">
@@ -714,7 +942,7 @@ function AssistantModule({ assistRef }) {
                 })}
               </div>
 
-              <div className="mt-5 rounded-xl bg-centris-mist border border-centris-deep/[0.05] p-3">
+              <div className="mt-5 rounded-xl bg-centris-mist border border-centris-line p-3">
                 <div className="flex items-center gap-2 text-xs font-semibold text-centris-deep mb-1.5">
                   <ShieldCheck className="h-3.5 w-3.5 text-centris-blue" />
                   Guardrails on
@@ -727,9 +955,9 @@ function AssistantModule({ assistRef }) {
             </aside>
 
             {/* Main */}
-            <div className="col-span-12 md:col-span-9 p-5 md:p-7 bg-centris-mist/40">
+            <div className="col-span-12 md:col-span-9 p-5 md:p-7 bg-gradient-to-b from-centris-mist/50 to-white">
               {/* Input */}
-              <div className="rounded-2xl bg-white border border-centris-deep/[0.08] p-4 shadow-sm">
+              <div className="rounded-2xl bg-white border border-centris-line p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-[11px] font-bold uppercase tracking-wider text-centris-blue inline-flex items-center gap-1.5">
                     <MessageSquareText className="h-3.5 w-3.5" />
@@ -753,7 +981,7 @@ function AssistantModule({ assistRef }) {
                   placeholder={placeholder}
                   className="w-full bg-transparent border-0 outline-none text-centris-ink text-sm resize-none placeholder:text-centris-muted/70"
                 />
-                <div className="mt-2 flex items-center justify-between">
+                <div className="mt-2 flex items-center justify-between gap-3 flex-wrap">
                   <div className="flex flex-wrap gap-1.5">
                     {(QUICK_PROMPTS[mode] || []).map((q) => (
                       <button
@@ -769,7 +997,7 @@ function AssistantModule({ assistRef }) {
                   <button
                     onClick={() => generate()}
                     disabled={loading || !input.trim()}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-centris-blue hover:bg-[#0014e0] disabled:opacity-50 text-white text-xs font-bold px-4 py-2 shadow-soft transition"
+                    className="shine-wrap inline-flex items-center gap-1.5 rounded-full bg-centris-blue hover:bg-[#0014e0] disabled:opacity-50 text-white text-xs font-bold px-4 py-2 shadow-soft transition"
                   >
                     {loading ? (
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -797,7 +1025,7 @@ function AssistantModule({ assistRef }) {
                   <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
                   <div className="relative">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[11px] font-bold uppercase tracking-wider opacity-90">
+                      <span className="text-[11px] font-bold uppercase tracking-widest opacity-90">
                         Best thing to say
                       </span>
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-white/15 border border-white/20 rounded-full px-2 py-0.5">
@@ -809,14 +1037,11 @@ function AssistantModule({ assistRef }) {
                       {loading ? <Shimmer dark /> : result.bestResponse}
                     </p>
                     <div className="mt-4 flex items-center justify-between">
-                      <button
-                        onClick={() =>
-                          navigator.clipboard?.writeText(result.bestResponse)
-                        }
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-white"
-                      >
-                        <Copy className="h-3 w-3" /> Copy response
-                      </button>
+                      <CopyChip
+                        text={result.bestResponse}
+                        label="Copy response"
+                        className="text-white/90 hover:text-white"
+                      />
                       <span className="text-[11px] text-white/70">
                         {result.riskLevel}
                       </span>
@@ -824,9 +1049,9 @@ function AssistantModule({ assistRef }) {
                   </div>
                 </div>
 
-                <div className="rounded-2xl bg-white border border-centris-deep/[0.08] p-5 shadow-sm">
+                <div className="rounded-2xl bg-white border border-centris-line p-5 shadow-sm">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-centris-coral inline-flex items-center gap-1.5">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-centris-coral inline-flex items-center gap-1.5">
                       <Languages className="h-3.5 w-3.5" />
                       Spanish version
                     </span>
@@ -838,102 +1063,108 @@ function AssistantModule({ assistRef }) {
                     {loading ? <Shimmer /> : result.spanishVersion}
                   </p>
                   <div className="mt-4">
-                    <CopyChip text={result.spanishVersion} />
+                    <CopyChip
+                      text={result.spanishVersion}
+                      label="Copy"
+                      className="text-centris-blue hover:text-[#0014e0]"
+                    />
                   </div>
                 </div>
               </div>
 
               {/* Why + Next + CRM */}
               <div className="mt-3.5 grid grid-cols-1 lg:grid-cols-3 gap-3.5">
-                <div className="rounded-2xl bg-white border border-centris-deep/[0.08] p-5">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-centris-deep inline-flex items-center gap-1.5 mb-3">
+                <div className="rounded-2xl bg-white border border-centris-line p-5">
+                  <div className="text-[11px] font-bold uppercase tracking-widest text-centris-deep inline-flex items-center gap-1.5 mb-3">
                     <Check className="h-3.5 w-3.5 text-centris-blue" />
                     Why this works
                   </div>
                   <ul className="space-y-2.5">
-                    {(loading ? [0, 1, 2] : result.whyThisWorks.slice(0, 4)).map(
-                      (item, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2 text-sm text-centris-ink"
-                        >
-                          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-centris-blue shrink-0" />
-                          {loading ? (
-                            <span className="h-3 rounded bg-centris-mist animate-pulse w-40" />
-                          ) : (
-                            <span>{item}</span>
-                          )}
-                        </li>
-                      )
-                    )}
+                    {(loading
+                      ? [0, 1, 2]
+                      : result.whyThisWorks.slice(0, 4)
+                    ).map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-2 text-sm text-centris-ink"
+                      >
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-centris-blue shrink-0" />
+                        {loading ? (
+                          <span className="h-3 rounded bg-centris-mist animate-pulse w-40" />
+                        ) : (
+                          <span>{item}</span>
+                        )}
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
-                <div className="rounded-2xl bg-white border border-centris-deep/[0.08] p-5">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-centris-deep inline-flex items-center gap-1.5 mb-3">
+                <div className="rounded-2xl bg-white border border-centris-line p-5">
+                  <div className="text-[11px] font-bold uppercase tracking-widest text-centris-deep inline-flex items-center gap-1.5 mb-3">
                     <ClipboardCheck className="h-3.5 w-3.5 text-centris-blue" />
                     Next steps
                   </div>
                   <ol className="space-y-3">
-                    {(loading ? [0, 1, 2] : result.nextSteps.slice(0, 4)).map(
-                      (s, idx) => (
-                        <li
-                          key={idx}
-                          className="flex items-start gap-2.5 text-sm text-centris-ink"
-                        >
-                          <span className="h-5 w-5 rounded-full bg-centris-blue text-white text-[10px] font-bold flex items-center justify-center shrink-0">
-                            {idx + 1}
-                          </span>
-                          {loading ? (
-                            <span className="mt-0.5 h-3 rounded bg-centris-mist animate-pulse w-44" />
-                          ) : (
-                            <span className="leading-snug">{s}</span>
-                          )}
-                        </li>
-                      )
-                    )}
+                    {(loading
+                      ? [0, 1, 2]
+                      : result.nextSteps.slice(0, 4)
+                    ).map((s, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-2.5 text-sm text-centris-ink"
+                      >
+                        <span className="h-5 w-5 rounded-full bg-centris-blue text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                          {idx + 1}
+                        </span>
+                        {loading ? (
+                          <span className="mt-0.5 h-3 rounded bg-centris-mist animate-pulse w-44" />
+                        ) : (
+                          <span className="leading-snug">{s}</span>
+                        )}
+                      </li>
+                    ))}
                   </ol>
                 </div>
 
-                <div className="rounded-2xl bg-centris-deep text-white p-5">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-white/60 inline-flex items-center gap-1.5 mb-3">
-                    <Database className="h-3.5 w-3.5 text-centris-coral" />
-                    CRM Notes
-                  </div>
-                  <p className="text-sm leading-relaxed min-h-[5rem] text-white/90">
-                    {loading ? <Shimmer dark /> : result.crmNotes}
-                  </p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <button
-                      onClick={() =>
-                        navigator.clipboard?.writeText(result.crmNotes)
-                      }
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-white"
-                    >
-                      <Copy className="h-3 w-3" /> Copy notes
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSentCRM(true);
-                        setTimeout(() => setSentCRM(false), 1800);
-                      }}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-centris-coral hover:text-white"
-                    >
-                      {sentCRM ? "Sent" : "Send to CRM"}{" "}
-                      <ArrowUpRight className="h-3 w-3" />
-                    </button>
+                <div className="rounded-2xl bg-centris-deep text-white p-5 relative overflow-hidden">
+                  <div className="absolute -bottom-12 -right-12 h-32 w-32 rounded-full bg-centris-coral/30 blur-2xl" />
+                  <div className="relative">
+                    <div className="text-[11px] font-bold uppercase tracking-widest text-white/60 inline-flex items-center gap-1.5 mb-3">
+                      <Database className="h-3.5 w-3.5 text-centris-coral" />
+                      CRM Notes
+                    </div>
+                    <p className="text-sm leading-relaxed min-h-[5rem] text-white/90">
+                      {loading ? <Shimmer dark /> : result.crmNotes}
+                    </p>
+                    <div className="mt-3 flex items-center justify-between">
+                      <CopyChip
+                        text={result.crmNotes}
+                        label="Copy notes"
+                        className="text-white/90 hover:text-white"
+                      />
+                      <button
+                        onClick={() => {
+                          setSentCRM(true);
+                          setTimeout(() => setSentCRM(false), 1800);
+                        }}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-centris-coral hover:text-white"
+                      >
+                        {sentCRM ? "Sent" : "Send to CRM"}{" "}
+                        <ArrowUpRight className="h-3 w-3" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Recommended action + Escalate */}
-              <div className="mt-3.5 rounded-2xl bg-white border border-centris-deep/[0.08] p-4 flex flex-col md:flex-row md:items-center gap-3 justify-between">
+              <div className="mt-3.5 rounded-2xl bg-white border border-centris-line p-4 flex flex-col md:flex-row md:items-center gap-3 justify-between">
                 <div className="flex items-start gap-3">
                   <div className="h-9 w-9 rounded-full bg-centris-coral/10 flex items-center justify-center shrink-0">
                     <AlertTriangle className="h-4 w-4 text-centris-coral" />
                   </div>
                   <div>
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-centris-coral">
+                    <div className="text-[11px] font-bold uppercase tracking-widest text-centris-coral">
                       Risk &amp; recommended action
                     </div>
                     <div className="text-sm text-centris-ink mt-0.5">
@@ -946,7 +1177,7 @@ function AssistantModule({ assistRef }) {
                     setEscalated(true);
                     setTimeout(() => setEscalated(false), 2200);
                   }}
-                  className={`inline-flex items-center gap-1.5 rounded-full text-xs font-bold px-4 py-2 transition ${
+                  className={`inline-flex items-center gap-1.5 rounded-full text-xs font-bold px-4 py-2 transition shine-wrap ${
                     escalated
                       ? "bg-emerald-500 text-white"
                       : "bg-centris-coral hover:bg-[#e83843] text-white"
@@ -983,37 +1214,60 @@ function Shimmer({ dark = false }) {
   );
 }
 
-function FeaturesSection() {
+function SolutionsSection() {
   return (
-    <section id="services" className="bg-white py-20 md:py-24">
+    <section id="solutions" className="bg-white py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="max-w-2xl mb-12">
-          <div className="text-xs font-bold tracking-[0.2em] text-centris-blue uppercase mb-3">
-            What you get
-          </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-centris-deep">
-            Everything your support team needs —{" "}
-            <span className="text-centris-coral">nothing they don't.</span>
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {FEATURES.map((f) => {
-            const Icon = f.icon;
+        <SectionHeader
+          eyebrow="Solutions"
+          title={
+            <>
+              One platform.{" "}
+              <span className="text-gradient-blue">Three workflows.</span>
+            </>
+          }
+          body="Plug Centris AI Assist into customer service, sales, and quality — all powered by your bilingual nearshore agents."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {SOLUTIONS.map((s, i) => {
+            const Icon = s.icon;
             return (
-              <div
-                key={f.title}
-                className="group rounded-2xl border border-centris-deep/[0.08] bg-white hover:border-centris-blue/40 hover:shadow-soft p-6 transition"
+              <motion.div
+                key={s.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+                className="group relative rounded-3xl bg-white ring-1 ring-centris-line p-7 hover:ring-centris-blue/30 hover:shadow-card transition"
               >
-                <div className="h-11 w-11 rounded-xl bg-centris-mist border border-centris-deep/[0.06] flex items-center justify-center mb-4 group-hover:bg-centris-blue group-hover:border-centris-blue transition">
+                <div className="absolute top-0 left-0 right-0 h-1.5 rounded-t-3xl bg-gradient-to-r from-centris-blue via-centris-blue2 to-centris-coral opacity-0 group-hover:opacity-100 transition" />
+                <div className="h-12 w-12 rounded-2xl bg-centris-mist border border-centris-line flex items-center justify-center group-hover:bg-centris-blue group-hover:border-centris-blue transition">
                   <Icon className="h-5 w-5 text-centris-blue group-hover:text-white transition" />
                 </div>
-                <h3 className="text-lg font-bold text-centris-deep">
-                  {f.title}
+                <h3 className="mt-5 text-2xl font-bold text-centris-deep font-display tracking-tight">
+                  {s.title}
                 </h3>
-                <p className="text-sm text-centris-ink/70 leading-relaxed mt-2">
-                  {f.body}
+                <p className="mt-2 text-centris-ink/70 leading-relaxed">
+                  {s.body}
                 </p>
-              </div>
+                <ul className="mt-5 space-y-2">
+                  {s.bullets.map((b) => (
+                    <li
+                      key={b}
+                      className="flex items-center gap-2 text-sm text-centris-ink"
+                    >
+                      <Check className="h-4 w-4 text-centris-blue shrink-0" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="#assist"
+                  className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-centris-blue hover:text-[#0014e0]"
+                >
+                  Learn more <ArrowRight className="h-3.5 w-3.5" />
+                </a>
+              </motion.div>
             );
           })}
         </div>
@@ -1022,41 +1276,206 @@ function FeaturesSection() {
   );
 }
 
+function FeaturesSection() {
+  return (
+    <section className="bg-centris-paper py-20 md:py-28 relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid bg-grid-fade opacity-40 pointer-events-none" />
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8">
+        <SectionHeader
+          eyebrow="What you get"
+          title={
+            <>
+              Everything your support team needs —{" "}
+              <span className="text-centris-coral">nothing they don't.</span>
+            </>
+          }
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {FEATURES.map((f, i) => {
+            const Icon = f.icon;
+            return (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.45, delay: i * 0.04 }}
+                className="group rounded-2xl bg-white ring-1 ring-centris-line p-6 hover:ring-centris-blue/30 hover:shadow-card transition"
+              >
+                <div className="h-11 w-11 rounded-xl bg-centris-mist border border-centris-line flex items-center justify-center mb-4 group-hover:bg-centris-blue group-hover:border-centris-blue transition">
+                  <Icon className="h-5 w-5 text-centris-blue group-hover:text-white transition" />
+                </div>
+                <h3 className="text-lg font-bold text-centris-deep font-display tracking-tight">
+                  {f.title}
+                </h3>
+                <p className="text-sm text-centris-ink/70 leading-relaxed mt-2">
+                  {f.body}
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BilingualSection() {
+  return (
+    <section className="bg-white py-20 md:py-28 relative overflow-hidden">
+      <FloatingBlob className="-top-32 right-0 h-[420px] w-[420px] bg-centris-coral/10" />
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-12 items-center">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-centris-coral/20 bg-centris-coral/5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-centris-coral mb-4">
+            <Languages className="h-3.5 w-3.5" /> Bilingual by design
+          </div>
+          <h2 className="font-display text-[34px] md:text-[52px] leading-[1.04] font-extrabold tracking-tightest text-centris-deep">
+            English and Spanish.{" "}
+            <span className="text-gradient-blue">One pass.</span>
+          </h2>
+          <p className="mt-5 text-lg text-centris-ink/70 leading-relaxed max-w-md">
+            Every response, CRM note, and script is produced in both languages
+            in a single generation — same tone, same intent, no drift.
+          </p>
+          <div className="mt-6 grid grid-cols-2 gap-3 max-w-md">
+            <StatPill label="Tone match" value="98%" />
+            <StatPill label="Latency" value="< 2s" />
+            <StatPill label="Glossary aware" value="Yes" />
+            <StatPill label="Custom voice" value="Per-client" />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-3">
+          <DialogueBubble
+            from="customer"
+            lang="EN"
+            text="I have called three times and no one fixed my bill."
+          />
+          <DialogueBubble
+            from="ai"
+            lang="EN"
+            text="I understand why you're frustrated, and I'm sorry you've had to call multiple times. I'm going to review your billing issue now and make sure you leave this call with a clear next step."
+            badge="Best thing to say"
+          />
+          <DialogueBubble
+            from="ai"
+            lang="ES"
+            text="Entiendo por qué está frustrado, y lamento que haya tenido que llamar varias veces. Voy a revisar su problema de facturación ahora y asegurarme de que termine esta llamada con un próximo paso claro."
+            badge="Versión en español"
+            coral
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StatPill({ label, value }) {
+  return (
+    <div className="rounded-2xl border border-centris-line bg-white px-4 py-3">
+      <div className="text-xl font-extrabold text-centris-deep font-display tracking-tight">
+        {value}
+      </div>
+      <div className="text-[11px] text-centris-muted uppercase tracking-wider mt-0.5">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+function DialogueBubble({ from, lang, text, badge, coral }) {
+  if (from === "customer") {
+    return (
+      <div className="flex items-start gap-3">
+        <div className="h-9 w-9 rounded-full bg-centris-mist border border-centris-line flex items-center justify-center text-centris-deep font-bold text-xs">
+          JR
+        </div>
+        <div className="flex-1 max-w-[520px]">
+          <div className="text-[10px] text-centris-muted uppercase tracking-widest mb-1 font-bold">
+            Customer · {lang}
+          </div>
+          <div className="rounded-2xl rounded-tl-md bg-white border border-centris-line px-4 py-3 text-centris-ink leading-relaxed">
+            {text}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-start gap-3 justify-end">
+      <div className="flex-1 max-w-[520px]">
+        <div
+          className={`text-[10px] uppercase tracking-widest mb-1 font-bold text-right ${
+            coral ? "text-centris-coral" : "text-centris-blue"
+          }`}
+        >
+          {badge} · {lang}
+        </div>
+        <div
+          className={`relative rounded-2xl rounded-tr-md px-4 py-3 leading-relaxed text-white overflow-hidden ${
+            coral
+              ? "bg-gradient-to-br from-centris-coral to-[#e83843]"
+              : "bg-gradient-to-br from-centris-blue to-[#3a4cff]"
+          }`}
+        >
+          <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/10 blur-2xl pointer-events-none" />
+          <span className="relative">{text}</span>
+        </div>
+      </div>
+      <div className="h-9 w-9 rounded-full bg-centris-deep flex items-center justify-center shrink-0">
+        <CentrisMark size={20} />
+      </div>
+    </div>
+  );
+}
+
 function HowItWorks() {
   return (
-    <section className="bg-centris-mist py-20 md:py-24">
+    <section className="bg-centris-paper py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="text-xs font-bold tracking-[0.2em] text-centris-blue uppercase mb-3">
-            How it works
-          </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-centris-deep">
-            From customer message to{" "}
-            <span className="text-centris-blue">confident reply.</span>
-          </h2>
-        </div>
+        <SectionHeader
+          eyebrow="How it works"
+          align="center"
+          title={
+            <>
+              From customer message to{" "}
+              <span className="text-gradient-blue">confident reply.</span>
+            </>
+          }
+        />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {HOW_STEPS.map((s, i) => (
-            <div
-              key={s.n}
-              className="relative rounded-2xl bg-white border border-centris-deep/[0.08] p-6"
-            >
-              <div className="text-centris-blue text-xs font-bold tracking-[0.25em]">
-                STEP {s.n}
-              </div>
-              <h3 className="mt-3 text-xl font-bold text-centris-deep">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-sm text-centris-ink/70 leading-relaxed">
-                {s.body}
-              </p>
-              {i < HOW_STEPS.length - 1 && (
-                <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 h-7 w-7 items-center justify-center rounded-full bg-white border border-centris-deep/10 text-centris-blue">
-                  <ChevronRight className="h-3.5 w-3.5" />
+          {HOW_STEPS.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <motion.div
+                key={s.n}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="relative rounded-3xl bg-white ring-1 ring-centris-line p-7"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="text-centris-blue text-xs font-bold tracking-[0.25em] font-display">
+                    STEP {s.n}
+                  </div>
+                  <div className="h-10 w-10 rounded-xl bg-centris-mist border border-centris-line flex items-center justify-center">
+                    <Icon className="h-5 w-5 text-centris-blue" />
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+                <h3 className="mt-4 text-xl font-bold text-centris-deep font-display tracking-tight">
+                  {s.title}
+                </h3>
+                <p className="mt-2 text-sm text-centris-ink/70 leading-relaxed">
+                  {s.body}
+                </p>
+                {i < HOW_STEPS.length - 1 && (
+                  <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 h-7 w-7 items-center justify-center rounded-full bg-white ring-1 ring-centris-line text-centris-blue z-10">
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1065,21 +1484,20 @@ function HowItWorks() {
 
 function IndustriesSection() {
   return (
-    <section id="industries" className="bg-white py-20 md:py-24">
+    <section id="industries" className="bg-white py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div className="max-w-xl">
             <div className="text-xs font-bold tracking-[0.2em] text-centris-blue uppercase mb-3">
               Industries
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-centris-deep">
+            <h2 className="font-display text-[34px] md:text-[52px] leading-[1.04] font-extrabold tracking-tightest text-centris-deep">
               Built for the work your customers depend on.
             </h2>
           </div>
-          <p className="text-centris-ink/70 max-w-md">
+          <p className="text-centris-ink/70 max-w-md text-lg">
             Centris partners with regulated, high-volume, and seasonal teams —
-            bringing bilingual nearshore agents and AI assistance to every
-            workflow.
+            bilingual nearshore agents and AI assistance in every workflow.
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -1088,13 +1506,15 @@ function IndustriesSection() {
             return (
               <div
                 key={i.name}
-                className="group rounded-2xl border border-centris-deep/[0.08] bg-white hover:bg-centris-deep hover:border-centris-deep p-5 transition cursor-default"
+                className="group rounded-2xl ring-1 ring-centris-line bg-white hover:bg-centris-deep hover:ring-centris-deep p-5 transition cursor-default"
               >
-                <Icon className="h-5 w-5 text-centris-blue group-hover:text-centris-coral transition" />
-                <div className="mt-3 font-bold text-centris-deep group-hover:text-white transition">
+                <div className="h-9 w-9 rounded-xl bg-centris-mist border border-centris-line flex items-center justify-center group-hover:bg-centris-coral/15 group-hover:border-centris-coral/30 transition">
+                  <Icon className="h-4 w-4 text-centris-blue group-hover:text-centris-coral transition" />
+                </div>
+                <div className="mt-3 font-bold text-centris-deep group-hover:text-white transition font-display tracking-tight">
                   {i.name}
                 </div>
-                <div className="text-xs text-centris-ink/60 group-hover:text-white/70 mt-1 transition">
+                <div className="text-xs text-centris-ink/60 group-hover:text-white/70 mt-1 transition leading-snug">
                   {i.body}
                 </div>
               </div>
@@ -1108,16 +1528,28 @@ function IndustriesSection() {
 
 function StatsBand() {
   return (
-    <section className="bg-centris-deep text-white py-16">
-      <div className="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-        {STATS.map((s) => (
-          <div key={s.label}>
-            <div className="text-4xl md:text-5xl font-extrabold tracking-tight">
-              {s.value}
-            </div>
-            <div className="text-sm text-white/70 mt-2">{s.label}</div>
+    <section className="bg-centris-deep text-white py-20 relative overflow-hidden">
+      <FloatingBlob className="-top-32 -left-32 h-[420px] w-[420px] bg-centris-blue/30" />
+      <FloatingBlob className="-bottom-32 -right-32 h-[420px] w-[420px] bg-centris-coral/20" />
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8">
+        <div className="max-w-2xl mb-10">
+          <div className="text-xs font-bold tracking-[0.2em] text-white/60 uppercase mb-3">
+            By the numbers
           </div>
-        ))}
+          <h2 className="font-display text-[34px] md:text-[48px] leading-[1.05] font-extrabold tracking-tightest">
+            Three decades. Real outcomes.
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {STATS.map((s) => (
+            <div key={s.label}>
+              <div className="text-4xl md:text-5xl font-extrabold tracking-tight font-display">
+                {s.value}
+              </div>
+              <div className="text-sm text-white/70 mt-2">{s.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1125,43 +1557,123 @@ function StatsBand() {
 
 function Testimonials() {
   return (
-    <section id="why" className="bg-white py-20 md:py-24">
+    <section id="why" className="bg-white py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="max-w-2xl mb-12">
-          <div className="text-xs font-bold tracking-[0.2em] text-centris-blue uppercase mb-3">
-            Why Centris
-          </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-centris-deep">
-            Loved by support leaders.
-          </h2>
-        </div>
+        <SectionHeader
+          eyebrow="Why Centris"
+          title="Loved by support leaders."
+        />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {TESTIMONIALS.map((t) => (
-            <div
+          {TESTIMONIALS.map((t, i) => (
+            <motion.div
               key={t.name}
-              className="rounded-2xl border border-centris-deep/[0.08] bg-centris-mist p-6 flex flex-col"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="relative rounded-3xl ring-1 ring-centris-line bg-centris-paper p-7 flex flex-col"
             >
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-3.5 w-3.5 text-centris-coral fill-centris-coral"
-                  />
-                ))}
-              </div>
+              <Quote className="h-6 w-6 text-centris-coral mb-3" />
               <p className="text-centris-ink leading-relaxed flex-1">
                 "{t.quote}"
               </p>
-              <div className="mt-5 pt-5 border-t border-centris-deep/[0.08]">
-                <div className="font-bold text-centris-deep text-sm">
-                  {t.name}
+              <div className="mt-6 pt-5 border-t border-centris-line flex items-center gap-3">
+                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-centris-blue to-centris-coral flex items-center justify-center text-white font-bold text-xs">
+                  {t.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </div>
-                <div className="text-xs text-centris-muted mt-0.5">
-                  {t.role} · {t.company}
+                <div>
+                  <div className="font-bold text-centris-deep text-sm font-display tracking-tight">
+                    {t.name}
+                  </div>
+                  <div className="text-xs text-centris-muted mt-0.5">
+                    {t.role} · {t.company}
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SecurityRow() {
+  const badges = [
+    "SOC 2 (in progress)",
+    "HIPAA on request",
+    "PCI-aware",
+    "GDPR",
+    "PII redaction",
+    "Audit logs",
+  ];
+  return (
+    <section id="resources" className="bg-centris-paper py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 items-center">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-centris-blue/15 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-centris-blue mb-4">
+            <Lock className="h-3.5 w-3.5" /> Built for regulated work
+          </div>
+          <h2 className="font-display text-[34px] md:text-[44px] leading-[1.05] font-extrabold tracking-tightest text-centris-deep">
+            Guardrails your compliance team will love.
+          </h2>
+          <p className="mt-4 text-centris-ink/70 leading-relaxed max-w-xl">
+            Human-in-the-loop by default. Configurable redaction, role-based
+            access, region pinning, and an audit log for every AI output.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {badges.map((b) => (
+              <span
+                key={b}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white border border-centris-line px-3 py-1.5 text-xs font-semibold text-centris-deep"
+              >
+                <ShieldCheck className="h-3.5 w-3.5 text-centris-blue" /> {b}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            {
+              icon: Lock,
+              title: "Private by design",
+              body: "No customer data used to train models. BYO key supported.",
+            },
+            {
+              icon: Activity,
+              title: "Full audit visibility",
+              body: "Every prompt and response logged with timestamps and reviewer.",
+            },
+            {
+              icon: ShieldCheck,
+              title: "Human approval",
+              body: "Sensitive workflows require supervisor sign-off.",
+            },
+            {
+              icon: PlugZap,
+              title: "Plug into your stack",
+              body: "Salesforce, HubSpot, Zendesk, Genesys, NICE, Talkdesk.",
+            },
+          ].map((c) => {
+            const Icon = c.icon;
+            return (
+              <div
+                key={c.title}
+                className="rounded-2xl bg-white ring-1 ring-centris-line p-5"
+              >
+                <Icon className="h-5 w-5 text-centris-blue mb-3" />
+                <div className="font-bold text-centris-deep font-display tracking-tight">
+                  {c.title}
+                </div>
+                <div className="text-xs text-centris-ink/70 mt-1 leading-relaxed">
+                  {c.body}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -1173,31 +1685,32 @@ function CTASection({ onAssist }) {
     <section className="bg-white pb-20 md:pb-28">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-centris-blue via-[#1a2eff] to-centris-deep text-white p-10 md:p-16">
-          <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-centris-coral/30 blur-3xl" />
+          <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-centris-coral/35 blur-3xl" />
           <div className="absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute inset-0 bg-grid bg-grid-fade opacity-15 pointer-events-none" />
+
           <div className="relative grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-8 items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-3 py-1.5 text-xs font-bold uppercase tracking-wider mb-5">
                 <Sparkles className="h-3.5 w-3.5" /> Ready when you are
               </div>
-              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+              <h2 className="font-display text-[34px] md:text-[56px] leading-[1.05] font-extrabold tracking-tightest">
                 Bring human-first, AI-powered support to every interaction.
               </h2>
-              <p className="mt-4 text-white/85 max-w-xl">
-                Book a 20-minute demo with our team. We'll show you the
-                assistant running on your real workflows — bilingual agents
-                included.
+              <p className="mt-4 text-white/85 max-w-xl text-lg">
+                Book a 20-minute demo. We'll show the assistant running on
+                your real workflows — bilingual agents included.
               </p>
             </div>
             <div className="flex flex-col gap-3 md:items-end">
               <button
                 onClick={onAssist}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-centris-deep font-bold text-sm px-6 py-3 hover:bg-centris-mist transition shadow-soft"
+                className="shine-wrap inline-flex items-center justify-center gap-2 rounded-full bg-white text-centris-deep font-bold text-sm px-6 py-3.5 hover:bg-centris-mist transition shadow-soft"
               >
                 Try the assistant
                 <ArrowRight className="h-4 w-4" />
               </button>
-              <button className="inline-flex items-center justify-center gap-2 rounded-full bg-centris-coral hover:bg-[#e83843] text-white font-bold text-sm px-6 py-3 transition">
+              <button className="shine-wrap inline-flex items-center justify-center gap-2 rounded-full bg-centris-coral hover:bg-[#e83843] text-white font-bold text-sm px-6 py-3.5 transition shadow-coral">
                 Book a demo
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -1212,13 +1725,13 @@ function CTASection({ onAssist }) {
 function Footer() {
   const cols = [
     {
-      title: "Services",
+      title: "Platform",
       links: [
-        "Customer Service",
-        "Sales & Lead Gen",
-        "QA & Reporting",
+        "Agent Assist",
+        "Sales",
+        "QA Review",
+        "Client Reports",
         "Training",
-        "Knowledge Base",
       ],
     },
     {
@@ -1237,28 +1750,23 @@ function Footer() {
     },
     {
       title: "Resources",
-      links: ["Blog", "Case Studies", "AI Assist Docs", "Security", "Privacy"],
+      links: ["Blog", "Case Studies", "Docs", "Security", "Privacy"],
     },
   ];
   return (
-    <footer id="about" className="bg-centris-deep text-white pt-16 pb-10">
-      <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+    <footer id="about" className="bg-centris-deep text-white pt-20 pb-10 relative overflow-hidden">
+      <FloatingBlob className="-top-32 -right-32 h-[420px] w-[420px] bg-centris-blue/30" />
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-10">
           <div className="col-span-2">
-            <div className="flex items-center gap-2.5">
-              <CentrisMark size={32} />
-              <span className="font-extrabold tracking-tight text-xl">
-                Centris
-              </span>
-            </div>
+            <CentrisLogo light />
             <p className="mt-4 text-white/70 text-sm max-w-xs leading-relaxed">
               Humans powered by AI. Bilingual, nearshore contact center
               solutions for U.S. brands — 30+ years of human-first support.
             </p>
-            <div className="mt-5 space-y-2 text-sm text-white/70">
+            <div className="mt-5 space-y-2 text-sm text-white/75">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-centris-coral" /> Contact
-                Sales
+                <Phone className="h-4 w-4 text-centris-coral" /> Contact Sales
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-centris-coral" />{" "}
@@ -1290,8 +1798,11 @@ function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
-          <div>© {new Date().getFullYear()} Centris Information Services. All rights reserved.</div>
+        <div className="mt-14 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
+          <div>
+            © {new Date().getFullYear()} Centris Information Services. All
+            rights reserved.
+          </div>
           <div>Built for bilingual nearshore support teams.</div>
         </div>
       </div>
@@ -1307,16 +1818,19 @@ export default function CentrisAIAssistPage() {
   }
 
   return (
-    <main>
-      <TopNav onTry={scrollToAssist} />
-      <Hero onTry={scrollToAssist} onAssist={scrollToAssist} />
-      <TrustBar />
+    <main className="bg-centris-paper">
+      <TopNav onAssist={scrollToAssist} />
+      <Hero onAssist={scrollToAssist} />
+      <LogoMarquee />
       <AssistantModule assistRef={assistRef} />
+      <SolutionsSection />
+      <BilingualSection />
       <FeaturesSection />
       <HowItWorks />
       <IndustriesSection />
       <StatsBand />
       <Testimonials />
+      <SecurityRow />
       <CTASection onAssist={scrollToAssist} />
       <Footer />
     </main>
