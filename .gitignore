@@ -4,6 +4,10 @@ out
 build
 dist
 
+# next/typescript auto-generated build artifacts
+next-env.d.ts
+*.tsbuildinfo
+
 .env
 .env.local
 .env.development.local
