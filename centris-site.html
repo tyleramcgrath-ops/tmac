@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Centris — Human-first contact center solutions, built for an AI future</title>
+    <meta
+      name="description"
+      content="Over 30 years of bilingual contact center expertise. Up to 45% savings versus U.S.-based centers. Centris blends human agents with AI to deliver smarter, more empathetic customer care."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --serif: "Instrument Serif", ui-serif, Georgia, serif;
+        --sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+        --bg: #02041a;
+        --bg-2: #060c44;
+        --fg: #f5f6ff;
+        --muted: rgba(245, 246, 255, 0.6);
+        --quiet: rgba(245, 246, 255, 0.42);
+        --line: rgba(255, 255, 255, 0.1);
+        --line-strong: rgba(255, 255, 255, 0.16);
+        --blue: #0017ff;
+        --blue-2: #3a4cff;
+        --blue-3: #7a86ff;
+        --blue-glow: rgba(0, 23, 255, 0.32);
+        --coral: #ff4650;
+        --coral-soft: #ff8a91;
+        --coral-glow: rgba(255, 69, 80, 0.22);
+        --emerald: #34d399;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        font-feature-settings: "ss01" 1, "cv11" 1;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      a { color: inherit; text-decoration: none; }
+      ::selection { background: rgba(255,255,255,0.18); color: var(--fg); }
+
+      /* Layout */
+      .wrap { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
+      .border-t { border-top: 1px solid var(--line); }
+
+      /* Type tokens */
+      .meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .display, .italic { font-family: var(--serif); font-style: italic; }
+
+      /* ===== NAV ===== */
+      header.nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(2, 4, 26, 0.65);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-inner {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 1.1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .brand-mark {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 26px;
+        letter-spacing: -0.01em;
+        line-height: 1;
+      }
+      .brand-mark::after {
+        content: ".";
+        color: var(--coral);
+      }
+      .nav-links {
+        display: none;
+        gap: 2.25rem;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.65);
+      }
+      .nav-links a { transition: color 0.2s; }
+      .nav-links a:hover { color: var(--fg); }
+      @media (min-width: 900px) { .nav-links { display: flex; } }
+
+      /* CTAs */
+      .cta-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        background: var(--coral);
+        color: white;
+        font-weight: 500;
+        border-radius: 9999px;
+        white-space: nowrap;
+        transition: background 0.2s, box-shadow 0.3s, transform 0.2s;
+      }
+      .cta-primary:hover {
+        background: #ff5d68;
+        box-shadow: 0 0 60px -10px rgba(255, 69, 80, 0.6);
+      }
+      .cta-primary .arr { transition: transform 0.2s; }
+      .cta-primary:hover .arr { transform: translateX(2px); }
+      .cta-primary.md { height: 3rem; padding: 0 1.65rem; font-size: 15px; }
+      .cta-primary.sm { height: 2.25rem; padding: 0 1rem; font-size: 13px; }
+      .cta-primary.lg { height: 3.5rem; padding: 0 2rem; font-size: 16px; }
+      .cta-quiet {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.85);
+        transition: color 0.2s;
+      }
+      .cta-quiet:hover { color: var(--fg); }
+      .cta-quiet u {
+        text-decoration: underline;
+        text-decoration-color: rgba(255, 255, 255, 0.3);
+        text-underline-offset: 4px;
+        transition: text-decoration-color 0.2s;
+      }
+      .cta-quiet:hover u { text-decoration-color: var(--fg); }
+
+      /* ===== HERO ===== */
+      .hero {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        padding: 6rem 0 7rem;
+      }
+      @media (min-width: 768px) { .hero { padding: 8rem 0 9rem; } }
+      .hero-grid {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: grid;
+        gap: 4rem;
+        align-items: end;
+      }
+      @media (min-width: 1024px) {
+        .hero-grid { grid-template-columns: 1.4fr 1fr; gap: 5rem; }
+      }
+      .hero h1 {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(4rem, 11vw, 11rem);
+        line-height: 0.85;
+        letter-spacing: -0.025em;
+        margin: 0;
+        color: white;
+      }
+      .hero h1 .accent { color: var(--coral); font-style: italic; }
+      .hero-headline {
+        margin: 1.75rem 0 0;
+        max-width: 38rem;
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+        font-weight: 300;
+        line-height: 1.25;
+        color: rgba(255,255,255,0.92);
+      }
+      .hero-sub {
+        margin: 1.5rem 0 0;
+        max-width: 32rem;
+        font-size: 15px;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+      .hero-ctas {
+        margin: 2rem 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      /* Hero stats column */
+      .hero-stats {
+        display: grid;
+        gap: 1.5rem;
+        padding-top: 1rem;
+      }
+      .stat {
+        border-top: 1px solid var(--line-strong);
+        padding-top: 1.25rem;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 1.5rem;
+        align-items: baseline;
+      }
+      .stat .n {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(2.5rem, 5vw, 3.75rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: white;
+      }
+      .stat .n .small {
+        font-style: italic;
+        font-size: 0.55em;
+        color: var(--muted);
+        margin-left: 0.05em;
+      }
+      .stat .lbl {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      /* HERO background */
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .hero-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 75% 60% at 18% 35%, rgba(0,23,255,0.28) 0%, transparent 60%),
+          radial-gradient(ellipse 55% 45% at 92% 105%, rgba(255,69,80,0.18) 0%, transparent 65%);
+      }
+      .hero-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(2,4,26,0) 0%, rgba(2,4,26,0.4) 60%, var(--bg) 100%);
+      }
+      .grid-sweep {
+        position: absolute;
+        inset: 0;
+        opacity: 0.28;
+        background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 120px 100%;
+        animation: sweep 22s linear infinite;
+      }
+      @keyframes sweep { from { transform: translateX(0); } to { transform: translateX(-120px); } }
+
+      .reveal { opacity: 0; transform: translateY(18px); animation: rise 0.95s cubic-bezier(0.22,1,0.36,1) forwards; }
+      .r1 { animation-delay: 0s; }
+      .r2 { animation-delay: 0.3s; }
+      .r3 { animation-delay: 0.5s; }
+      .r4 { animation-delay: 0.7s; }
+      .r5 { animation-delay: 0.85s; }
+      @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+      /* Scroll reveal */
+      .ir { opacity: 0; transform: translateY(14px); transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1); }
+      .ir.in { opacity: 1; transform: translateY(0); }
+
+      /* ===== SECTION HEADING ===== */
+      .section { padding: 6rem 0; }
+      @media (min-width: 1024px) { .section { padding: 8rem 0; } }
+      .sec-head { display: grid; gap: 1.25rem; max-width: 60rem; }
+      .sec-head h2 {
+        margin: 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(2.25rem, 5vw, 3.75rem);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+        color: white;
+        text-wrap: balance;
+      }
+      .sec-head .accent { color: var(--coral); }
+      .sec-head p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.75; max-width: 40rem; }
+
+      /* ===== IN ACTION (live call demo) ===== */
+      .in-action-grid {
+        display: grid;
+        gap: 3rem;
+        margin-top: 4rem;
+      }
+      @media (min-width: 1024px) {
+        .in-action-grid { grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
+      }
+      .live-points { display: grid; gap: 2rem; }
+      .live-point { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1.25rem; align-items: start; }
+      .live-point .pn {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.5rem;
+        line-height: 1;
+        color: var(--coral);
+      }
+      .live-point .pt {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.5rem;
+        line-height: 1.15;
+        color: white;
+      }
+      .live-point .pd {
+        margin-top: 0.5rem;
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .session {
+        list-style: none; padding: 0; margin: 0; position: relative;
+      }
+      .session::before {
+        content: ""; position: absolute; left: 5px; top: 0.6rem; bottom: 0.6rem; width: 1px; background: var(--line-strong);
+      }
+      .session li {
+        position: relative; padding-left: 1.75rem; margin-bottom: 1.5rem; display: flex; flex-direction: column;
+      }
+      .session li::before {
+        content: ""; position: absolute; left: 1px; top: 0.5rem; width: 10px; height: 10px; border-radius: 9999px; background: rgba(255,255,255,0.3);
+      }
+      .session li.cust::before { background: rgba(255,255,255,0.9); }
+      .session li.agent::before { background: var(--blue-2); }
+      .session li.suggest::before { background: var(--coral); }
+      .session li.note::before { background: rgba(255,255,255,0.35); }
+      .session li.crm::before { background: var(--emerald); }
+      .session .who {
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: rgba(255,255,255,0.4);
+      }
+      .session li.agent .who { color: var(--blue-3); }
+      .session li.suggest .who { color: var(--coral-soft); }
+      .session li.crm .who { color: var(--emerald); }
+      .session .body { margin-top: 0.35rem; font-size: 15px; line-height: 1.7; }
+      .session li.cust .body { color: rgba(255,255,255,0.92); }
+      .session li.agent .body { color: white; }
+      .session li.suggest .body { color: var(--coral-soft); }
+      .session li.note .body { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--quiet); }
+      .session li.crm .body { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(110,231,183,0.85); }
+      .session .es { font-style: italic; opacity: 0.85; }
+
+      /* ===== SERVICES ===== */
+      .services-list { list-style: none; padding: 0; margin: 3rem 0 0; }
+      .services-list li {
+        display: grid;
+        gap: 0.75rem;
+        padding: 2.5rem 0;
+        border-top: 1px solid var(--line);
+        transition: background 0.3s;
+      }
+      @media (min-width: 768px) {
+        .services-list li {
+          grid-template-columns: 7rem 1fr 1.4fr auto;
+          gap: 3rem;
+          align-items: baseline;
+        }
+      }
+      .services-list li:hover { background: rgba(255,255,255,0.015); }
+      .services-list .idx {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--quiet);
+      }
+      .services-list h3 {
+        margin: 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+        color: white;
+        font-weight: 400;
+      }
+      .services-list p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+      .services-list .more {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--coral);
+        opacity: 0;
+        transition: opacity 0.3s;
+        white-space: nowrap;
+      }
+      .services-list li:hover .more { opacity: 1; }
+
+      /* ===== INDUSTRIES ===== */
+      .industries {
+        margin: 3.5rem 0 0;
+        display: grid;
+        gap: 1.25rem;
+      }
+      @media (min-width: 640px) { .industries { grid-template-columns: repeat(2, 1fr); } }
+      @media (min-width: 1024px) { .industries { grid-template-columns: repeat(3, 1fr); } }
+      .industry {
+        display: block;
+        position: relative;
+        padding: 2rem;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%);
+        transition: transform 0.3s, border-color 0.3s, background 0.3s;
+        overflow: hidden;
+        min-height: 14rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .industry::after {
+        content: ""; position: absolute; inset: -1px; border-radius: 14px; pointer-events: none;
+        background: radial-gradient(ellipse 60% 80% at var(--mx, 50%) var(--my, 0%), rgba(122, 134, 255, 0.18), transparent 60%);
+        opacity: 0; transition: opacity 0.3s;
+      }
+      .industry:hover { transform: translateY(-3px); border-color: rgba(122,134,255,0.4); background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); }
+      .industry:hover::after { opacity: 1; }
+      .industry .ind-num {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--quiet);
+      }
+      .industry h3 {
+        margin: 1.5rem 0 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.85rem;
+        line-height: 1.05;
+        letter-spacing: -0.015em;
+        color: white;
+        font-weight: 400;
+      }
+      .industry p {
+        margin: 0.75rem 0 0;
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--muted);
+        flex: 1;
+      }
+      .industry .more {
+        margin-top: 1.5rem;
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--coral-soft);
+      }
+
+      /* ===== QA BUNDLE FEATURE ===== */
+      .qa-section { position: relative; overflow: hidden; }
+      .qa-section::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background: radial-gradient(ellipse 65% 80% at 80% 30%, rgba(0,23,255,0.16) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 60% at 15% 90%, rgba(255,69,80,0.10) 0%, transparent 60%);
+      }
+      .qa-grid {
+        display: grid;
+        gap: 4rem;
+        margin-top: 4rem;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .qa-grid { grid-template-columns: 1fr 1.05fr; gap: 5rem; }
+      }
+      .qa-features {
+        list-style: none; padding: 0; margin: 2.5rem 0 0;
+        display: grid; gap: 1.25rem;
+      }
+      .qa-features li {
+        display: grid; grid-template-columns: 1.5rem 1fr; gap: 1rem; align-items: start;
+      }
+      .qa-features .dot {
+        width: 8px; height: 8px; margin-top: 0.65rem;
+        border-radius: 9999px; background: var(--coral);
+        box-shadow: 0 0 12px var(--coral);
+      }
+      .qa-features .lbl {
+        font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: white; line-height: 1.3;
+      }
+      .qa-features .desc { display: block; margin-top: 0.25rem; font-size: 14px; color: var(--muted); }
+
+      /* QA dashboard visual */
+      .dashboard {
+        position: relative;
+        background: linear-gradient(180deg, rgba(10,15,42,0.9) 0%, rgba(6,10,30,0.95) 100%);
+        border: 1px solid var(--line-strong);
+        border-radius: 16px;
+        box-shadow:
+          0 60px 120px -40px rgba(0,0,0,0.7),
+          0 0 0 1px rgba(255,255,255,0.04) inset,
+          0 80px 160px -40px rgba(0,23,255,0.25);
+        overflow: hidden;
+      }
+      .dash-bar {
+        display: flex; align-items: center; gap: 0.75rem;
+        padding: 0.85rem 1.15rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .dash-bar .dots { display: flex; gap: 6px; }
+      .dash-bar .dots span { width: 9px; height: 9px; border-radius: 9999px; background: rgba(255,255,255,0.12); }
+      .dash-bar .title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+      .dash-bar .right { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 11px; color: var(--quiet); }
+      .dash-bar .live {
+        position: relative; width: 6px; height: 6px; border-radius: 9999px; background: var(--emerald);
+        box-shadow: 0 0 10px var(--emerald);
+      }
+      .dash-bar .live::after {
+        content: ""; position: absolute; inset: -3px; border-radius: 9999px;
+        border: 1px solid var(--emerald); animation: pulse 1.6s ease-out infinite;
+      }
+      @keyframes pulse { from { transform: scale(0.85); opacity: 0.6; } to { transform: scale(2); opacity: 0; } }
+
+      .dash-body { padding: 1.25rem 1.25rem 1.5rem; display: grid; gap: 1rem; }
+      .dash-row { display: grid; gap: 0.5rem; }
+      .dash-row .ttl {
+        font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+      }
+      .dash-transcript {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.9rem 1rem;
+        display: grid;
+        gap: 0.75rem;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .dt-line { display: grid; grid-template-columns: 70px 1fr; gap: 0.75rem; align-items: start; }
+      .dt-line .role { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); padding-top: 1px; }
+      .dt-line.cust .role { color: rgba(255,255,255,0.55); }
+      .dt-line.agent .role { color: var(--blue-3); }
+      .dt-line .body { color: rgba(255,255,255,0.9); }
+
+      .dash-signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+      .signal {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0.7rem 0.85rem;
+      }
+      .signal .lbl {
+        font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+      }
+      .signal .val {
+        margin-top: 0.35rem;
+        font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1; color: white;
+      }
+      .signal .val.up { color: var(--emerald); }
+      .signal .val.down { color: var(--coral-soft); }
+
+      .sophia-card {
+        background: rgba(255,69,80,0.05);
+        border: 1px solid rgba(255,69,80,0.2);
+        border-radius: 10px;
+        padding: 0.9rem 1rem;
+      }
+      .sophia-card .head {
+        display: flex; align-items: center; gap: 0.5rem;
+        font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--coral-soft);
+      }
+      .sophia-card .head::before {
+        content: ""; width: 6px; height: 6px; border-radius: 9999px; background: var(--coral); box-shadow: 0 0 8px var(--coral);
+      }
+      .sophia-card .text {
+        margin-top: 0.5rem; font-size: 13px; line-height: 1.6; color: white;
+      }
+      .sophia-card .actions {
+        margin-top: 0.65rem; display: flex; gap: 0.75rem;
+        font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+      }
+      .sophia-card .actions .acc { color: var(--coral-soft); }
+
+      /* ===== WHY NEARSHORE / LOCATIONS ===== */
+      .why-grid {
+        display: grid;
+        gap: 4rem;
+        margin-top: 3.5rem;
+      }
+      @media (min-width: 1024px) {
+        .why-grid { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+      }
+      .savings-block {
+        border-top: 1px solid var(--line-strong);
+        padding-top: 2rem;
+      }
+      .savings-big {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(6rem, 16vw, 14rem);
+        line-height: 0.85;
+        letter-spacing: -0.04em;
+        color: white;
+        margin: 0;
+        background: linear-gradient(120deg, #ffffff 0%, #ff8a91 70%, #ff4650 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .savings-big .pct { font-style: italic; }
+      .savings-tag {
+        margin: 0.5rem 0 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .locations { display: grid; gap: 2rem; margin-top: 3rem; }
+      .location {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1.5rem;
+        padding: 1.75rem 0;
+        border-top: 1px solid var(--line);
+        align-items: center;
+      }
+      .location:last-child { border-bottom: 1px solid var(--line); }
+      .location .num {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--quiet);
+      }
+      .location .name {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 2.25rem;
+        line-height: 1;
+        color: white;
+      }
+      .location .country {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ===== TESTIMONIALS ===== */
+      .testimonials {
+        margin: 3.5rem 0 0;
+        display: grid;
+        gap: 1.25rem;
+      }
+      @media (min-width: 768px) {
+        .testimonials { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (min-width: 1200px) {
+        .testimonials { grid-template-columns: repeat(3, 1fr); }
+      }
+      .testimonial {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 2rem 1.75rem;
+        background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%);
+        position: relative;
+      }
+      .testimonial .mark {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 3rem;
+        line-height: 1;
+        color: var(--coral);
+        margin: 0;
+      }
+      .testimonial .quote {
+        margin: 1rem 0 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.25rem;
+        line-height: 1.4;
+        color: rgba(255,255,255,0.92);
+      }
+      .testimonial .attr {
+        margin: 1.25rem 0 0;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--line);
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+      }
+
+      /* ===== CASE STUDIES ===== */
+      .cases { margin: 3.5rem 0 0; display: grid; gap: 2rem; }
+      @media (min-width: 768px) { .cases { grid-template-columns: 1fr 1fr; } }
+      .case {
+        padding: 2.5rem;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s, border-color 0.3s;
+      }
+      .case:hover { transform: translateY(-3px); border-color: rgba(122,134,255,0.4); }
+      .case .lbl {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--quiet);
+      }
+      .case .stat {
+        margin: 1.25rem 0 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(3rem, 5vw, 4rem);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: var(--coral);
+        border: 0;
+        padding: 0;
+        display: block;
+      }
+      .case h3 {
+        margin: 1.5rem 0 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        color: white;
+        font-weight: 400;
+      }
+      .case p {
+        margin: 1rem 0 0;
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--muted);
+        max-width: 32rem;
+      }
+      .case .read {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 1.5rem;
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--coral-soft);
+        transition: gap 0.2s;
+      }
+      .case:hover .read { gap: 0.7rem; }
+
+      /* ===== CLOSING CTA ===== */
+      .closing { position: relative; overflow: hidden; padding: 6rem 0 8rem; text-align: center; }
+      .closing::before {
+        content: ""; position: absolute; inset: 0; z-index: -1;
+        background:
+          radial-gradient(ellipse 60% 80% at 50% 110%, rgba(255,69,80,0.22) 0%, transparent 60%),
+          radial-gradient(ellipse 70% 60% at 50% -10%, rgba(0,23,255,0.18) 0%, transparent 65%);
+      }
+      .closing h2 {
+        max-width: 60rem;
+        margin: 0 auto;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(2.5rem, 7vw, 5.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        color: white;
+        text-wrap: balance;
+      }
+      .closing p {
+        max-width: 36rem;
+        margin: 1.75rem auto 0;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--muted);
+      }
+      .closing .ctas {
+        margin: 2.5rem 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      /* ===== FOOTER ===== */
+      footer { border-top: 1px solid var(--line); }
+      .foot {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 4rem 1.5rem 3rem;
+        display: grid;
+        gap: 3rem;
+      }
+      @media (min-width: 768px) {
+        .foot { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3rem; }
+      }
+      .foot-col h4 {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--quiet);
+        font-weight: 500;
+      }
+      .foot-col ul { list-style: none; padding: 0; margin: 1.25rem 0 0; display: grid; gap: 0.65rem; }
+      .foot-col a { color: var(--muted); font-size: 14px; transition: color 0.2s; }
+      .foot-col a:hover { color: white; }
+      .foot-brand .brand-mark { font-size: 32px; }
+      .foot-brand p { margin: 1rem 0 0; max-width: 22rem; color: var(--muted); font-size: 14px; line-height: 1.7; }
+      .foot-social { margin: 1.5rem 0 0; display: flex; gap: 0.5rem; }
+      .foot-social a {
+        display: grid; place-items: center;
+        width: 36px; height: 36px;
+        border-radius: 9999px;
+        border: 1px solid var(--line-strong);
+        color: rgba(255,255,255,0.7);
+        transition: color 0.2s, border-color 0.2s, background 0.2s;
+      }
+      .foot-social a:hover { color: white; border-color: var(--coral); background: rgba(255,69,80,0.08); }
+
+      .foot-meta {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 1.75rem 1.5rem;
+        border-top: 1px solid var(--line);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--quiet);
+      }
+
+      /* utility */
+      .ico { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="#" class="brand-mark">Centris</a>
+        <nav class="nav-links">
+          <a href="#in-action">Live QA</a>
+          <a href="#services">Services</a>
+          <a href="#industries">Industries</a>
+          <a href="#why">Why Centris</a>
+          <a href="#cases">Case studies</a>
+        </nav>
+        <a class="cta-primary sm" href="#contact">
+          Book a demo
+          <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="grid-sweep"></div>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="meta reveal r1">Say hello to Centris</p>
+          <h1 class="reveal r2">
+            Customer service,<br />
+            <span class="accent">conducted.</span>
+          </h1>
+          <p class="hero-headline reveal r3">
+            We're a leader in contact center solutions, built for a
+            <span class="italic">human-first AI future.</span>
+          </p>
+          <p class="hero-sub reveal r4">
+            For more than 30 years, Centris has provided dedicated bilingual
+            contact center teams that operate as a seamless extension of the
+            organizations we support. Our agents deliver consistent,
+            professional service powered by AI — strengthening customer
+            relationships, improving efficiency, and helping your business
+            grow with confidence.
+          </p>
+          <div class="hero-ctas reveal r5">
+            <a class="cta-primary md" href="#contact">
+              Book a demo
+              <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a class="cta-quiet" href="#in-action">
+              <u>See Live QA in action</u>
+              <svg class="ico" viewBox="0 0 24 24" style="transform:translateY(-1px)"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-stats reveal r5">
+          <div class="stat">
+            <span class="n">Up to <span class="italic">45<span class="small">%</span></span></span>
+            <span class="lbl">savings versus<br />U.S.-based contact centers</span>
+          </div>
+          <div class="stat">
+            <span class="n"><span class="italic">30<span class="small">+</span></span></span>
+            <span class="lbl">years delivering<br />nearshore contact-center work</span>
+          </div>
+          <div class="stat">
+            <span class="n"><span class="italic">5<span class="small">k+</span></span></span>
+            <span class="lbl">happy customers<br />across North America</span>
+          </div>
+          <div class="stat">
+            <span class="n"><span class="italic">2</span></span>
+            <span class="lbl">nearshore locations<br />Monterrey · Aguascalientes</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IN ACTION (Live QA / AI Call Assist Demo) -->
+    <section id="in-action" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">01 — In action</p>
+          <h2>What human-first AI<br /><span class="accent">actually sounds like.</span></h2>
+          <p>
+            Centris hears each call as it happens. Sentiment, language, and
+            policy context arrive at the agent before the next breath. Sophia,
+            our in-call AI assistant, suggests what to say — your agents stay
+            in their voice. The CRM note writes itself.
+          </p>
+        </div>
+
+        <div class="in-action-grid">
+          <ol class="live-points">
+            <li class="live-point ir">
+              <span class="pn">01</span>
+              <div>
+                <span class="pt">Listen in real time.</span>
+                <p class="pd">Live transcription across English and Spanish. Tone, sentiment, and intent extracted as the conversation unfolds — no after-call review.</p>
+              </div>
+            </li>
+            <li class="live-point ir">
+              <span class="pn">02</span>
+              <div>
+                <span class="pt">Suggest the next line.</span>
+                <p class="pd">Sophia pulls the right policy, the right offer, the right empathy — surfaced where the agent is already looking. Accept or rewrite.</p>
+              </div>
+            </li>
+            <li class="live-point ir">
+              <span class="pn">03</span>
+              <div>
+                <span class="pt">Score every call.</span>
+                <p class="pd">Every conversation, on every channel, against your rubric. No sampling. Coaching becomes specific, not vibes.</p>
+              </div>
+            </li>
+            <li class="live-point ir">
+              <span class="pn">04</span>
+              <div>
+                <span class="pt">Close the loop in the CRM.</span>
+                <p class="pd">The call ends — the note is already written, the next step already proposed. Your agents move to the next conversation, not the next form.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="dashboard ir">
+            <div class="dash-bar">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <span class="title">Centris Live QA · Sophia</span>
+              <span class="right">
+                <span>policy 80214</span>
+                <span class="live"></span>
+              </span>
+            </div>
+            <div class="dash-body">
+              <div class="dash-row">
+                <span class="ttl">Live transcript · 6m 12s</span>
+                <div class="dash-transcript">
+                  <div class="dt-line cust">
+                    <span class="role">caller</span>
+                    <span class="body">I called twice last week. Nobody got back to me.</span>
+                  </div>
+                  <div class="dt-line cust es">
+                    <span class="role">caller · es</span>
+                    <span class="body" style="font-style:italic; opacity:0.85;">cliente — y necesito esto resuelto hoy.</span>
+                  </div>
+                  <div class="dt-line agent">
+                    <span class="role">agent</span>
+                    <span class="body">I hear you — two weeks is too long. Let me mark this expedited, 48 hours.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-row">
+                <span class="ttl">Live signals</span>
+                <div class="dash-signals">
+                  <div class="signal">
+                    <div class="lbl">Sentiment</div>
+                    <div class="val up">+0.3</div>
+                  </div>
+                  <div class="signal">
+                    <div class="lbl">Language</div>
+                    <div class="val">es-MX</div>
+                  </div>
+                  <div class="signal">
+                    <div class="lbl">QA score</div>
+                    <div class="val">97<span style="font-size:0.6em;color:var(--muted);">%</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dash-row">
+                <span class="ttl">Sophia suggests</span>
+                <div class="sophia-card">
+                  <div class="head">Next line · confidence 0.94</div>
+                  <div class="text">"I'll send the confirmation in Spanish too. You'll have it by 5pm — and I'll follow up myself if it isn't in your inbox."</div>
+                  <div class="actions">
+                    <span class="acc">↵ accept</span>
+                    <span>esc rewrite</span>
+                    <span>↑ skip</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">02 — Services</p>
+          <h2>Bilingual support teams, <span class="accent">across every channel.</span></h2>
+          <p>
+            Centris delivers human expertise and AI-driven efficiency in one
+            package — helping organizations improve service quality, reduce
+            costs, and scale operations without compromise.
+          </p>
+        </div>
+
+        <ul class="services-list">
+          <li class="ir">
+            <span class="idx">01</span>
+            <h3>AI Call Center</h3>
+            <p>Where humans are powered by AI. Centris blends AI efficiency with real bilingual agents to deliver smarter, more empathetic customer care — at the speed of live conversation.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">02</span>
+            <h3>Customer Support</h3>
+            <p>Nearshore bilingual support across voice, chat, and email. Our agents work as a seamless extension of your team, in your tone, on your hours.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">03</span>
+            <h3>Business Process Outsourcing</h3>
+            <p>Skilled teams in Mexico take on the back-office work that slows you down — so your in-house operation can focus on the work only you can do.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">04</span>
+            <h3>Inbound Sales</h3>
+            <p>Increase customer retention, lift conversion, win market share. Our teams handle the moment your customer's ready to buy — in either language.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">05</span>
+            <h3>Live Chat</h3>
+            <p>A personalized approach to building rapport, optimized for retention. Steal share from competitors who can't match the same level of care.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">06</span>
+            <h3>Marketing Surveys</h3>
+            <p>Let your customers tell you what they want directly. Real conversations, structured insight — fuel for the next product, the next campaign, the next quarter.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">07</span>
+            <h3>Quality Assurance</h3>
+            <p>AI and machine learning capture, transcribe, and score every interaction — across every channel. No sampling, no surprises, no missed coaching moments.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">08</span>
+            <h3>Soft Collections</h3>
+            <p>A sensitive, respectful approach to debt recovery that protects the customer relationship while moving the balance. Empathy at scale.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+          <li class="ir">
+            <span class="idx">09</span>
+            <h3>Tier 1 Tech Support</h3>
+            <p>A first line of defense that actually solves the problem. Our agents are trained in your product and your tone — so the customer never has to wait for a human to call back.</p>
+            <span class="more">→ Learn more</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- QA BUNDLE -->
+    <section class="section qa-section border-t">
+      <div class="wrap">
+        <div class="qa-grid">
+          <div>
+            <div class="sec-head ir">
+              <p class="meta">03 — Centris Unified QA Management</p>
+              <h2>Live QA, meet <span class="italic accent">Sophia.</span></h2>
+              <p>
+                A complete software suite for modernizing quality assurance in
+                contact centers — with our in-call AI assistant Sophia at the
+                core. Real-time transcription, sentiment, suggestions, and
+                automated CRM notes, in one bundle.
+              </p>
+            </div>
+
+            <ul class="qa-features">
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Real-time transcription.</span><span class="desc">Every word captured, in English and Spanish, with sub-second latency.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Sentiment analysis.</span><span class="desc">Live read on tone — frustrated, recovering, advocating — surfaced as the call moves.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Sophia, your in-call assistant.</span><span class="desc">Suggests the right line, the right policy, the right escalation. Agents stay in control.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Automated CRM notes.</span><span class="desc">The note's written before the call ends. No after-call wrap-up.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Score every conversation.</span><span class="desc">Rubrics applied in real time, not on 3% sampled after the fact.</span></div></li>
+            </ul>
+          </div>
+
+          <div class="dashboard ir" style="background: linear-gradient(180deg, rgba(8,12,38,0.95) 0%, rgba(4,8,28,0.98) 100%);">
+            <div class="dash-bar">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <span class="title">QA Dashboard · This week</span>
+              <span class="right"><span>live</span><span class="live"></span></span>
+            </div>
+            <div class="dash-body">
+              <div class="dash-row">
+                <span class="ttl">Volume scored — last 7 days</span>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;align-items:end;height:96px;">
+                  <div style="height:38%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:52%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:48%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:66%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:72%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:88%;background:linear-gradient(180deg,var(--coral-soft),var(--coral));border-radius:3px;"></div>
+                  <div style="height:96%;background:linear-gradient(180deg,var(--coral-soft),var(--coral));border-radius:3px;box-shadow:0 0 20px var(--coral-glow);"></div>
+                </div>
+              </div>
+
+              <div class="dash-signals" style="grid-template-columns:repeat(2,1fr);">
+                <div class="signal">
+                  <div class="lbl">Average QA score</div>
+                  <div class="val up">94<span style="font-size:0.55em;color:var(--muted);">%</span></div>
+                </div>
+                <div class="signal">
+                  <div class="lbl">Sentiment shift</div>
+                  <div class="val up">+0.21</div>
+                </div>
+                <div class="signal">
+                  <div class="lbl">Calls scored</div>
+                  <div class="val">12.4<span style="font-size:0.55em;color:var(--muted);">k</span></div>
+                </div>
+                <div class="signal">
+                  <div class="lbl">Coverage</div>
+                  <div class="val">100<span style="font-size:0.55em;color:var(--muted);">%</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDUSTRIES -->
+    <section id="industries" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">04 — Industries</p>
+          <h2>Built for the conversations<br /><span class="accent">your industry actually has.</span></h2>
+          <p>
+            From a stressed customer filing a claim to a patient navigating a
+            self-service portal — the conversation is the brand. We've spent
+            three decades learning yours.
+          </p>
+        </div>
+
+        <div class="industries">
+          <a href="#" class="industry ir" onmousemove="cardMove(event,this)">
+            <div class="ind-num">01 / Insurance</div>
+            <h3>When the day's already bad,<br />we make the next ten minutes better.</h3>
+            <p>If you're in an accident, filing a claim is stressful. Our agents are trained to walk customers swiftly through the process — empathetically, accurately, in either language.</p>
+            <span class="more">→ Read more</span>
+          </a>
+          <a href="#" class="industry ir" onmousemove="cardMove(event,this)">
+            <div class="ind-num">02 / Healthcare</div>
+            <h3>Patients deserve more<br />than self-help portals.</h3>
+            <p>Patient Advocacy, RCM, Soft Collections, Scheduling — supported by bilingual agents trained in HIPAA-compliant workflows. With self-service growing, your live support matters more than ever.</p>
+            <span class="more">→ Read more</span>
+          </a>
+          <a href="#" class="industry ir" onmousemove="cardMove(event,this)">
+            <div class="ind-num">03 / Retail & E-commerce</div>
+            <h3>Impeccable customer service,<br />any channel they choose.</h3>
+            <p>Voice, live chat, email — your customers reach you wherever they are. We help ecommerce and retail brands keep that experience consistent and on-brand.</p>
+            <span class="more">→ Read more</span>
+          </a>
+          <a href="#" class="industry ir" onmousemove="cardMove(event,this)">
+            <div class="ind-num">04 / Security</div>
+            <h3>Peace of mind, on call.</h3>
+            <p>Customers trust the security industry with what matters most. We hold up that promise with bilingual agents trained to triage and escalate with calm precision.</p>
+            <span class="more">→ Read more</span>
+          </a>
+          <a href="#" class="industry ir" onmousemove="cardMove(event,this)">
+            <div class="ind-num">05 / Utilities</div>
+            <h3>Reliability goes beyond<br />the line itself.</h3>
+            <p>In utilities, being there when it matters most isn't a slogan — it's the brand. Centris keeps that promise live, in two languages, through outages and ordinary days alike.</p>
+            <span class="more">→ Read more</span>
+          </a>
+          <a href="#" class="industry ir" onmousemove="cardMove(event,this)">
+            <div class="ind-num">06 / Plus</div>
+            <h3>Finance · Restaurant · Waste<br />Warranty · Parking</h3>
+            <p>We also serve fast-casual restaurants, finance, waste management, warranty & claims operations, and parking operators — each with the same blend of bilingual humans and AI.</p>
+            <span class="more">→ All industries</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY NEARSHORE -->
+    <section id="why" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">05 — Why Centris</p>
+          <h2>As close to the U.S. as you can be<br /><span class="accent">without being in the U.S.</span></h2>
+          <p>
+            Nearshore isn't a workaround — it's an advantage. Same time zones,
+            same cultural fluency, native Spanish-English bilingual agents, and
+            the cost structure that makes scaling sustainable.
+          </p>
+        </div>
+
+        <div class="why-grid">
+          <div>
+            <div class="savings-block ir">
+              <h3 class="savings-big">45<span class="pct">%</span></h3>
+              <p class="savings-tag">average savings versus U.S.-based contact centers · without sacrificing quality</p>
+            </div>
+
+            <div style="margin-top:3rem;display:grid;gap:1.5rem;">
+              <div class="ir" style="display:grid;gap:0.5rem;">
+                <span class="meta">Bilingual by default</span>
+                <p style="margin:0;color:var(--muted);font-size:15px;line-height:1.75;max-width:30rem;">English and Spanish at native quality. Not a feature toggle — the floor.</p>
+              </div>
+              <div class="ir" style="display:grid;gap:0.5rem;">
+                <span class="meta">Same time zones</span>
+                <p style="margin:0;color:var(--muted);font-size:15px;line-height:1.75;max-width:30rem;">No handoff fatigue. Your customers, your agents, your supervisors — same hours, same day.</p>
+              </div>
+              <div class="ir" style="display:grid;gap:0.5rem;">
+                <span class="meta">30+ years of partnership</span>
+                <p style="margin:0;color:var(--muted);font-size:15px;line-height:1.75;max-width:30rem;">We've been doing this since before "BPO" was a category. The playbooks are real.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ir">
+            <h3 style="margin:0;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:var(--quiet);font-weight:500;">Two nearshore locations</h3>
+            <div class="locations">
+              <div class="location">
+                <span class="num">01</span>
+                <div>
+                  <span class="name">Monterrey</span>
+                  <p style="margin:0.35rem 0 0;color:var(--muted);font-size:14px;line-height:1.7;max-width:28rem;">Flagship operations, dense bilingual talent pool, and our largest customer-facing footprint.</p>
+                </div>
+                <span class="country">Nuevo León · MX</span>
+              </div>
+              <div class="location">
+                <span class="num">02</span>
+                <div>
+                  <span class="name">Aguascalientes</span>
+                  <p style="margin:0.35rem 0 0;color:var(--muted);font-size:14px;line-height:1.7;max-width:28rem;">Second hub, redundancy-ready, growing fastest in agent count year over year.</p>
+                </div>
+                <span class="country">Aguascalientes · MX</span>
+              </div>
+            </div>
+
+            <p style="margin:2.25rem 0 0;font-size:15px;line-height:1.75;color:var(--muted);max-width:32rem;">
+              Both sites operate as a single network — agents, supervisors, QA,
+              and IT share the same playbooks, training, and Centris Live QA
+              tooling. One partner. One contract. One standard.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section id="cases" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">06 — Case studies</p>
+          <h2>What it means<br /><span class="accent">to partner with Centris.</span></h2>
+          <p>The numbers behind the relationships. Real outcomes, real customers, written up so you can see the work — not just the marketing.</p>
+        </div>
+
+        <div class="cases">
+          <a href="#" class="case ir">
+            <span class="lbl">Healthcare technology & services</span>
+            <span class="stat">100%<span style="display:block;font-size:0.4em;font-style:normal;font-family:var(--mono);letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:0.35rem;">Hispanic market support coverage</span></span>
+            <h3>They needed Hispanic market support.<br />They got a partner.</h3>
+            <p>A healthcare technology and services firm came to us to extend Spanish-language patient support. Three years later, Centris also handles Patient Advocacy, RCM follow-up, and QA scoring.</p>
+            <span class="read">Read the case study →</span>
+          </a>
+          <a href="#" class="case ir">
+            <span class="lbl">Auto insurance</span>
+            <span class="stat">50%<span style="display:block;font-size:0.4em;font-style:normal;font-family:var(--mono);letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:0.35rem;">reduction in customer service cost</span></span>
+            <h3>Half the cost.<br />A better experience.</h3>
+            <p>This auto insurance company cut customer service spend by 50% after outsourcing to Centris — while measurably improving NPS, claim handling time, and Spanish-language coverage.</p>
+            <span class="read">Read the case study →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">07 — Testimonials</p>
+          <h2>What our partners<br /><span class="accent">actually tell us.</span></h2>
+          <p>5,000+ happy customers. Here are five of them, by industry.</p>
+        </div>
+
+        <div class="testimonials">
+          <div class="testimonial ir">
+            <p class="mark">"</p>
+            <p class="quote">Centris is without a doubt the best contact center solution provider in North America, and we are grateful for partnering with your team.</p>
+            <p class="attr">Mobile telecommunications</p>
+          </div>
+          <div class="testimonial ir">
+            <p class="mark">"</p>
+            <p class="quote">It has been such an honor and a pleasure to work with you all and I look forward to all the great work we'll get to do in the future! We're very fortunate to work with such great folks like you all.</p>
+            <p class="attr">Quick service restaurant</p>
+          </div>
+          <div class="testimonial ir">
+            <p class="mark">"</p>
+            <p class="quote">It's been a pleasure working with Centris and we appreciate the care you are taking to learn our business and taking care of our customers.</p>
+            <p class="attr">Parking industry</p>
+          </div>
+          <div class="testimonial ir">
+            <p class="mark">"</p>
+            <p class="quote">I am honored and appreciate our Centris team. More so our agents are doing really great work as well.</p>
+            <p class="attr">Appointment scheduling</p>
+          </div>
+          <div class="testimonial ir">
+            <p class="mark">"</p>
+            <p class="quote">Amazing job yesterday — 97.37%. Very impressive.</p>
+            <p class="attr">Staffing industry · QA score</p>
+          </div>
+          <div class="testimonial ir" style="background: linear-gradient(180deg, rgba(255,69,80,0.05) 0%, rgba(255,69,80,0.01) 100%); border-color: rgba(255,69,80,0.2);">
+            <p class="mark" style="font-size:1.5rem;line-height:1;margin-bottom:0.5rem;">5,000+</p>
+            <p class="quote" style="font-size:1.05rem;">Customers we get to do this for, every day across North America.</p>
+            <p class="attr" style="color: var(--coral-soft);">Centris · 2026</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING CTA -->
+    <section id="contact" class="closing border-t">
+      <h2 class="ir">
+        Want to learn more about<br />
+        <span class="accent">outsourcing your contact center?</span>
+      </h2>
+      <p class="ir">
+        Fill out the form on our contact page and we'll get in touch ASAP. Plus,
+        we'll send you our guide to moving contact center operations to Mexico —
+        what works, what doesn't, and what the first 90 days actually look like.
+      </p>
+      <div class="ctas ir">
+        <a class="cta-primary lg" href="#">
+          Book a 15-minute demo
+          <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="cta-quiet" href="tel:18005304897">
+          <u>Or call 1-800-530-4897</u>
+          <svg class="ico" viewBox="0 0 24 24" style="transform:translateY(-1px)"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="foot">
+        <div class="foot-brand">
+          <a href="#" class="brand-mark">Centris</a>
+          <p>Centris Information Services — bilingual nearshore contact center solutions, built for a human-first AI future.</p>
+          <div class="foot-social">
+            <a href="https://facebook.com/centrisinfo" aria-label="Facebook">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/centris-information-services" aria-label="LinkedIn">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://x.com/centrisinfo" aria-label="X">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M18 4 6 20M6 4l12 16" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="foot-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">AI Call Center</a></li>
+            <li><a href="#">Customer Support</a></li>
+            <li><a href="#">Business Process Outsourcing</a></li>
+            <li><a href="#">Inbound Sales</a></li>
+            <li><a href="#">Live Chat</a></li>
+            <li><a href="#">Marketing Surveys</a></li>
+            <li><a href="#">Quality Assurance</a></li>
+            <li><a href="#">Soft Collections</a></li>
+            <li><a href="#">Tier 1 Tech Support</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h4>Industries</h4>
+          <ul>
+            <li><a href="#">Insurance</a></li>
+            <li><a href="#">Healthcare</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">Retail</a></li>
+            <li><a href="#">Utilities</a></li>
+            <li><a href="#">Finance</a></li>
+            <li><a href="#">Restaurant</a></li>
+            <li><a href="#">Waste Management</a></li>
+            <li><a href="#">Warranty & Claims</a></li>
+            <li><a href="#">Parking</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:18005304897">1-800-530-4897</a></li>
+            <li><a href="mailto:kudos@centrisinfo.com">kudos@centrisinfo.com</a></li>
+            <li style="color: var(--muted); font-size: 14px;">119 W. Tyler St., Suite 260<br/>Longview, TX 75601</li>
+          </ul>
+          <h4 style="margin-top:1.75rem;">Resources</h4>
+          <ul>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">Whitepapers</a></li>
+            <li><a href="#">Industry Events</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-meta">
+        <span>© 2026 Centris Information Services</span>
+        <span>Human-first AI for contact centers</span>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll reveal
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const idx = Array.from(e.target.parentNode.children).indexOf(e.target);
+            const delay = Math.min(idx, 8) * 60;
+            setTimeout(() => e.target.classList.add("in"), delay);
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: "-60px 0px -60px 0px", threshold: 0.04 });
+      document.querySelectorAll(".ir").forEach((el) => io.observe(el));
+
+      // Industry card hover lighting
+      function cardMove(ev, el) {
+        const r = el.getBoundingClientRect();
+        const mx = ((ev.clientX - r.left) / r.width) * 100;
+        const my = ((ev.clientY - r.top) / r.height) * 100;
+        el.style.setProperty("--mx", mx + "%");
+        el.style.setProperty("--my", my + "%");
+      }
+      window.cardMove = cardMove;
+    </script>
+  </body>
+</html>
