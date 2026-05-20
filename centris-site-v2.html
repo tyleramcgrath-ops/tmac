@@ -160,25 +160,91 @@
 
       /* ===== HERO ===== */
       .hero {
-        padding: 80px 0 100px;
+        padding: 60px 0 80px;
         position: relative;
+      }
+      .hero-grid {
+        display: grid;
+        gap: 48px;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 60px; }
       }
       .hero .h1-line {
         display: inline-block;
-        font-size: 20px;
+        font-size: 18px;
         text-transform: uppercase;
         letter-spacing: 0.16em;
         color: var(--white);
-        margin-bottom: 32px;
+        margin-bottom: 24px;
       }
       .hero .h1-line .clr-primary { font-weight: 800; }
       .hero h2 {
         color: var(--white);
-        max-width: 880px;
-        font-size: clamp(34px, 4.5vw, 56px);
+        font-size: clamp(34px, 4vw, 52px);
       }
-      .hero .lead { margin: 28px 0 0; max-width: 600px; font-weight: 500; color: rgba(255,255,255,0.7); font-size: 18px; line-height: 1.7; }
-      .hero .ctas { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+      .hero .lead { margin: 24px 0 0; max-width: 540px; font-weight: 500; color: rgba(255,255,255,0.7); font-size: 17px; line-height: 1.7; }
+      .hero .ctas { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+      /* ===== HERO ART (SVG illustration) ===== */
+      .hero-art {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        max-width: 580px;
+        margin: 0 auto;
+      }
+      .hero-art svg { width: 100%; height: 100%; display: block; }
+
+      /* SVG animations */
+      .ha-orb-ring { transform-origin: center; }
+      .ha-orb-ring.r1 { animation: haSpin 30s linear infinite; }
+      .ha-orb-ring.r2 { animation: haSpin 24s linear infinite reverse; }
+      .ha-orb-ring.r3 { animation: haSpin 40s linear infinite; }
+      @keyframes haSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+      .ha-pulse-core { animation: haPulse 4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+      @keyframes haPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.92; } }
+
+      .ha-glow { animation: haGlow 5s ease-in-out infinite; }
+      @keyframes haGlow { 0%,100% { opacity: 0.5; } 50% { opacity: 0.85; } }
+
+      .ha-particle { animation: haDrift 6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+      .ha-particle.p1 { animation-delay: 0s; }
+      .ha-particle.p2 { animation-delay: -1.5s; }
+      .ha-particle.p3 { animation-delay: -3s; }
+      .ha-particle.p4 { animation-delay: -4.5s; }
+      .ha-particle.p5 { animation-delay: -0.8s; }
+      .ha-particle.p6 { animation-delay: -2.2s; }
+      @keyframes haDrift {
+        0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+        50% { transform: translate(6px, -10px); opacity: 1; }
+      }
+
+      .ha-beam { stroke-dasharray: 4 6; animation: haDash 2.5s linear infinite; }
+      @keyframes haDash { to { stroke-dashoffset: -40; } }
+
+      .ha-wave path { animation: haWave 4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+      .ha-wave path:nth-child(1) { animation-delay: 0s; }
+      .ha-wave path:nth-child(2) { animation-delay: -1.3s; }
+      .ha-wave path:nth-child(3) { animation-delay: -2.6s; }
+      @keyframes haWave { 0%,100% { transform: scaleY(0.8); opacity: 0.6; } 50% { transform: scaleY(1.2); opacity: 1; } }
+
+      .ha-bubble { animation: haFloat 5s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+      .ha-bubble.b1 { animation-delay: 0s; }
+      .ha-bubble.b2 { animation-delay: -1.7s; }
+      .ha-bubble.b3 { animation-delay: -3.4s; }
+      @keyframes haFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+
+      .ha-meter-fill { animation: haMeter 4s ease-in-out infinite; transform-origin: left center; transform-box: fill-box; }
+      @keyframes haMeter {
+        0%, 100% { transform: scaleX(0.6); }
+        50% { transform: scaleX(0.95); }
+      }
 
       /* Stats card */
       .hero-stats {
@@ -798,23 +864,173 @@
       <!-- HERO -->
       <section class="hero">
         <div class="wrap">
-          <p class="h1-line reveal r1">Say Hello to <span class="clr-primary">CENTRIS.</span></p>
-          <h2 class="reveal r2">
-            Leader in Contact Center <span class="clr-primary">Solutions</span>,<br />
-            Built for a <span class="clr-accent">Human-First AI</span> Future
-          </h2>
-          <p class="lead reveal r3">
-            Centris delivers bilingual support teams powered by human
-            expertise and AI-driven efficiency — helping organizations
-            improve service quality, reduce costs, and scale operations
-            without compromise. For over 30 years.
-          </p>
-          <div class="ctas reveal r4">
-            <a href="#contact" class="btn lg">
-              Book a demo
-              <svg class="ico-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <a href="#ai" class="btn lg btn-ghost">See AI in action</a>
+          <div class="hero-grid">
+            <div>
+              <p class="h1-line reveal r1">Say Hello to <span class="clr-primary">CENTRIS.</span></p>
+              <h2 class="reveal r2">
+                Leader in Contact Center <span class="clr-primary">Solutions</span>,<br />
+                Built for a <span class="clr-accent">Human-First AI</span> Future
+              </h2>
+              <p class="lead reveal r3">
+                Bilingual support teams powered by human expertise and
+                AI-driven efficiency — improving service quality, reducing
+                costs, and scaling operations without compromise. For
+                over 30 years.
+              </p>
+              <div class="ctas reveal r4">
+                <a href="#contact" class="btn lg">
+                  Book a demo
+                  <svg class="ico-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="#ai" class="btn lg btn-ghost">See AI in action</a>
+              </div>
+            </div>
+
+            <!-- HERO ILLUSTRATION: Human + AI together -->
+            <div class="hero-art reveal r3">
+              <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <!-- Gradients -->
+                  <radialGradient id="agentGlow" cx="50%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#ff8a91" stop-opacity="0.9"/>
+                    <stop offset="60%" stop-color="#ff4650" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#ff4650" stop-opacity="0"/>
+                  </radialGradient>
+                  <radialGradient id="aiGlow" cx="50%" cy="50%" r="60%">
+                    <stop offset="0%" stop-color="#8a96ff" stop-opacity="0.9"/>
+                    <stop offset="50%" stop-color="#6674ff" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="#0017ff" stop-opacity="0"/>
+                  </radialGradient>
+                  <linearGradient id="agentFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ff8a91"/>
+                    <stop offset="100%" stop-color="#ff4650"/>
+                  </linearGradient>
+                  <linearGradient id="aiFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#8a96ff"/>
+                    <stop offset="100%" stop-color="#6674ff"/>
+                  </linearGradient>
+                  <linearGradient id="beam" x1="0%" y1="50%" x2="100%" y2="50%">
+                    <stop offset="0%" stop-color="#ff4650"/>
+                    <stop offset="100%" stop-color="#6674ff"/>
+                  </linearGradient>
+                  <linearGradient id="cardFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#0a1054" stop-opacity="0.95"/>
+                    <stop offset="100%" stop-color="#060c44" stop-opacity="0.95"/>
+                  </linearGradient>
+                  <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="20"/>
+                  </filter>
+                </defs>
+
+                <!-- Ambient background blobs -->
+                <ellipse cx="170" cy="290" rx="180" ry="220" fill="url(#agentGlow)" class="ha-glow"/>
+                <ellipse cx="430" cy="310" rx="180" ry="220" fill="url(#aiGlow)" class="ha-glow"/>
+
+                <!-- Connection beams (data flowing) -->
+                <g class="ha-beams">
+                  <path d="M 220 280 Q 300 240 380 290" stroke="url(#beam)" stroke-width="1.5" fill="none" opacity="0.7" class="ha-beam"/>
+                  <path d="M 220 320 Q 300 360 380 320" stroke="url(#beam)" stroke-width="1.5" fill="none" opacity="0.7" class="ha-beam" style="animation-delay: -1s;"/>
+                  <path d="M 230 350 Q 300 410 370 360" stroke="url(#beam)" stroke-width="1" fill="none" opacity="0.5" class="ha-beam" style="animation-delay: -0.5s;"/>
+                </g>
+
+                <!-- HUMAN side: stylized agent silhouette with headset -->
+                <g class="ha-human">
+                  <!-- Shoulders / body -->
+                  <path d="M 100 480 Q 100 380 180 360 Q 220 355 240 360 Q 260 365 270 380 Q 280 400 280 480 Z" fill="url(#agentFill)" opacity="0.9"/>
+                  <!-- Neck -->
+                  <rect x="167" y="320" width="40" height="50" rx="8" fill="url(#agentFill)" opacity="0.95"/>
+                  <!-- Head -->
+                  <circle cx="187" cy="270" r="58" fill="url(#agentFill)"/>
+                  <!-- Headset band -->
+                  <path d="M 132 260 Q 187 195 242 260" stroke="#0b1238" stroke-width="9" fill="none" stroke-linecap="round"/>
+                  <path d="M 132 260 Q 187 195 242 260" stroke="#ff8a91" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+                  <!-- Ear cups -->
+                  <ellipse cx="129" cy="270" rx="13" ry="18" fill="#0b1238"/>
+                  <ellipse cx="245" cy="270" rx="13" ry="18" fill="#0b1238"/>
+                  <!-- Mic boom -->
+                  <path d="M 245 282 Q 270 295 260 320" stroke="#0b1238" stroke-width="5" fill="none" stroke-linecap="round"/>
+                  <circle cx="258" cy="324" r="6" fill="#ff4650"/>
+                  <!-- Mic pulse -->
+                  <circle cx="258" cy="324" r="6" fill="none" stroke="#ff4650" stroke-width="1.5" class="ha-pulse-core"/>
+                  <!-- Subtle face highlight -->
+                  <ellipse cx="175" cy="255" rx="22" ry="28" fill="#ff8a91" opacity="0.35"/>
+
+                  <!-- Voice waveform coming from agent -->
+                  <g class="ha-wave" stroke="#ff4650" stroke-linecap="round" fill="none">
+                    <path d="M 270 295 L 285 285 L 300 305 L 315 280 L 330 310" stroke-width="2.5" opacity="0.85"/>
+                    <path d="M 270 305 L 285 315 L 300 295 L 315 320 L 330 290" stroke-width="2" opacity="0.6"/>
+                    <path d="M 270 315 L 285 308 L 300 325 L 315 305 L 330 325" stroke-width="1.5" opacity="0.4"/>
+                  </g>
+                </g>
+
+                <!-- AI side: Sophia orb -->
+                <g class="ha-ai">
+                  <!-- Outer rings -->
+                  <circle cx="430" cy="310" r="120" fill="none" stroke="#6674ff" stroke-width="1" opacity="0.25" class="ha-orb-ring r3"/>
+                  <circle cx="430" cy="310" r="92" fill="none" stroke="#6674ff" stroke-width="1" opacity="0.35" stroke-dasharray="2 8" class="ha-orb-ring r1"/>
+                  <circle cx="430" cy="310" r="70" fill="none" stroke="#ff4650" stroke-width="1.2" opacity="0.45" stroke-dasharray="3 5" class="ha-orb-ring r2"/>
+                  <!-- Neural network nodes around -->
+                  <g>
+                    <circle cx="430" cy="218" r="4" fill="#6674ff" opacity="0.9" class="ha-particle p1"/>
+                    <circle cx="522" cy="310" r="4" fill="#ff4650" opacity="0.9" class="ha-particle p2"/>
+                    <circle cx="430" cy="402" r="4" fill="#6674ff" opacity="0.9" class="ha-particle p3"/>
+                    <circle cx="338" cy="310" r="4" fill="#ff8a91" opacity="0.9" class="ha-particle p4"/>
+                    <circle cx="494" cy="246" r="3" fill="#8a96ff" opacity="0.7" class="ha-particle p5"/>
+                    <circle cx="366" cy="374" r="3" fill="#8a96ff" opacity="0.7" class="ha-particle p6"/>
+                    <circle cx="494" cy="374" r="3" fill="#6674ff" opacity="0.7" class="ha-particle p1"/>
+                    <circle cx="366" cy="246" r="3" fill="#6674ff" opacity="0.7" class="ha-particle p3"/>
+                  </g>
+                  <!-- Inner ring connecting nodes -->
+                  <circle cx="430" cy="310" r="48" fill="none" stroke="#6674ff" stroke-width="1" opacity="0.4"/>
+                  <!-- Core orb -->
+                  <circle cx="430" cy="310" r="40" fill="url(#aiFill)" class="ha-pulse-core" opacity="0.95"/>
+                  <circle cx="430" cy="310" r="40" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.3"/>
+                  <!-- Core glow -->
+                  <circle cx="430" cy="310" r="56" fill="url(#aiGlow)" opacity="0.6"/>
+                  <!-- Sophia "S" mark -->
+                  <text x="430" y="324" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="36" fill="#ffffff">S</text>
+                </g>
+
+                <!-- Floating UI cards -->
+                <!-- Card 1: Live transcript (top right) -->
+                <g class="ha-bubble b1">
+                  <rect x="395" y="80" width="180" height="56" rx="12" fill="url(#cardFill)" stroke="#6674ff" stroke-opacity="0.4" stroke-width="1"/>
+                  <text x="408" y="100" font-family="JetBrains Mono, monospace" font-size="9" fill="#6674ff" letter-spacing="1.4">LIVE TRANSCRIPT</text>
+                  <text x="408" y="120" font-family="Inter, sans-serif" font-size="11" fill="#ffffff" font-style="italic">"...I need this resolved today."</text>
+                  <circle cx="565" cy="100" r="3" fill="#34d399"/>
+                </g>
+
+                <!-- Card 2: AI suggestion (left middle) -->
+                <g class="ha-bubble b2">
+                  <rect x="25" y="170" width="190" height="74" rx="12" fill="url(#cardFill)" stroke="#ff4650" stroke-opacity="0.5" stroke-width="1"/>
+                  <circle cx="42" cy="190" r="4" fill="#ff4650"/>
+                  <text x="56" y="194" font-family="JetBrains Mono, monospace" font-size="9" fill="#ff8a91" letter-spacing="1.4">SOPHIA SUGGESTS</text>
+                  <text x="40" y="214" font-family="Inter, sans-serif" font-size="11" fill="#ffffff" font-weight="500">"Mark this expedited.</text>
+                  <text x="40" y="229" font-family="Inter, sans-serif" font-size="11" fill="#ffffff" font-weight="500">48-hour resolution."</text>
+                </g>
+
+                <!-- Card 3: Sentiment meter (bottom right) -->
+                <g class="ha-bubble b3">
+                  <rect x="395" y="470" width="180" height="76" rx="12" fill="url(#cardFill)" stroke="#34d399" stroke-opacity="0.5" stroke-width="1"/>
+                  <text x="408" y="490" font-family="JetBrains Mono, monospace" font-size="9" fill="#6674ff" letter-spacing="1.4">SENTIMENT</text>
+                  <text x="408" y="518" font-family="Inter, sans-serif" font-size="22" font-weight="800" fill="#34d399">+0.3</text>
+                  <text x="455" y="518" font-family="JetBrains Mono, monospace" font-size="9" fill="#d2d2d2" letter-spacing="1">RECOVERING</text>
+                  <!-- meter bar -->
+                  <rect x="408" y="528" width="148" height="4" rx="2" fill="#1a2050"/>
+                  <rect x="408" y="528" width="148" height="4" rx="2" fill="url(#beam)" class="ha-meter-fill"/>
+                </g>
+
+                <!-- Tag labels on figures -->
+                <g>
+                  <rect x="155" y="535" width="64" height="22" rx="11" fill="#ff4650"/>
+                  <text x="187" y="550" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#ffffff" letter-spacing="1.5">HUMAN</text>
+                </g>
+                <g>
+                  <rect x="398" y="442" width="64" height="22" rx="11" fill="#6674ff"/>
+                  <text x="430" y="457" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#ffffff" letter-spacing="1.5">SOPHIA</text>
+                </g>
+              </svg>
+            </div>
           </div>
 
           <div class="hero-stats reveal r5">
