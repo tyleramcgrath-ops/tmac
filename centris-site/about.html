@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About · Centris</title>
+    <meta name="description" content="Centris has provided bilingual nearshore contact center solutions for over 30 years — backed by Sophia AI." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+  .inner-hero {
+    padding: 140px 0 90px;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .inner-hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 80% 0%, rgba(255, 70, 80, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 10% 100%, rgba(102, 116, 255, 0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .inner-hero .wrap { position: relative; z-index: 2; }
+  .inner-hero h6 { color: var(--primary); margin-bottom: 16px; }
+  .inner-hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--white);
+    max-width: 900px;
+  }
+  .inner-hero h1 .accent { color: var(--accent); }
+  .inner-hero .lead {
+    margin-top: 28px; max-width: 640px;
+    font-size: 18px; line-height: 1.7; color: var(--gray-2);
+  }
+
+  .timeline { position: relative; margin: 60px 0 0; padding-left: 40px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    opacity: 0.4;
+  }
+  .timeline-item { position: relative; padding: 0 0 50px 32px; }
+  .timeline-item::before {
+    content: ""; position: absolute; left: -34px; top: 4px; width: 18px; height: 18px;
+    border-radius: 9999px; background: var(--primary);
+    box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--primary);
+  }
+  .timeline-year {
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    color: var(--primary); letter-spacing: 0.18em;
+  }
+  .timeline-item h4 { margin: 8px 0; color: var(--white); font-size: 22px; }
+  .timeline-item p { color: var(--gray-1); font-size: 15px; line-height: 1.7; margin: 0; }
+
+  .values { display: grid; gap: 24px; margin-top: 48px; }
+  @media (min-width: 768px) { .values { grid-template-columns: repeat(3, 1fr); } }
+  .value-card {
+    padding: 32px; border: 1px solid var(--accent); border-radius: 16px;
+    background: rgba(255,255,255,0.02);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .value-card:hover { transform: translateY(-4px); border-color: var(--primary); }
+  .value-card .num {
+    font-family: var(--mono); font-size: 11px; color: var(--gray-3);
+    letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .value-card h4 { margin: 16px 0 12px; color: var(--white); font-size: 22px; }
+  .value-card p { color: var(--gray-1); font-size: 14px; line-height: 1.7; margin: 0; }
+
+  .leader-grid { display: grid; gap: 24px; margin-top: 48px; }
+  @media (min-width: 640px) { .leader-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .leader-grid { grid-template-columns: repeat(4, 1fr); } }
+  .leader {
+    border: 1px solid var(--line); border-radius: 16px; padding: 24px;
+    background: rgba(255,255,255,0.02);
+    text-align: center;
+  }
+  .leader .avatar {
+    width: 96px; height: 96px; margin: 0 auto 16px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: grid; place-items: center;
+    color: white; font-weight: 800; font-size: 32px;
+    letter-spacing: -0.02em;
+  }
+  .leader h5 { color: var(--white); font-size: 18px; margin-bottom: 4px; font-weight: 600; }
+  .leader .role { font-family: var(--mono); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.16em; }
+
+  .about-stats { display: grid; gap: 20px; margin-top: 48px; }
+  @media (min-width: 640px) { .about-stats { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .about-stats { grid-template-columns: repeat(4, 1fr); } }
+  .about-stat {
+    padding: 28px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .about-stat .n {
+    font-size: 48px; font-weight: 800; color: var(--white);
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .about-stat .l {
+    margin-top: 10px; font-family: var(--mono); font-size: 11px;
+    color: var(--gray-2); text-transform: uppercase; letter-spacing: 0.14em;
+  }
+</style>
+  </head>
+  <body>
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+
+    <nav class="top">
+      <div class="inner">
+        <a href="index.html" class="brand">Centris<span class="dot">.</span></a>
+        <div class="nav-links">
+          <a href="services.html">Services</a>
+          <a href="industries.html">Industries</a>
+          <a href="case-studies.html">Case Studies</a>
+          <a href="about.html" style="color:white">About</a>
+        </div>
+        <a href="contact.html" class="btn sm">Book a demo</a>
+      </div>
+    </nav>
+
+    <main>
+
+      <section class="inner-hero">
+        <div class="wrap">
+          <h6>About Centris</h6>
+          <h1>For over 30 years,<br/>we've been the team behind <span class="accent">the customer service.</span></h1>
+          <p class="lead">
+            Centris Information Services delivers dedicated bilingual
+            contact center teams that operate as a seamless extension of
+            the organizations we support. Our agents — backed by Sophia,
+            our in-call AI assistant — strengthen customer relationships,
+            improve operational efficiency, and help your business grow
+            with confidence.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="sec-head ir">
+            <h6>Our Story</h6>
+            <h2>Three decades of <span class="clr-primary">contact-center expertise.</span></h2>
+            <p class="lead">
+              From a single nearshore office in the 1990s to a two-hub
+              operation powered by proprietary AI, our story is one of
+              steady investment in people, language, and technology — in
+              that order.
+            </p>
+          </div>
+
+          <div class="timeline ir">
+            <div class="timeline-item">
+              <div class="timeline-year">1993</div>
+              <h4>Founded in Longview, Texas</h4>
+              <p>Centris opens with a small team and a simple thesis: U.S. companies need higher-quality bilingual customer service than offshore options can deliver.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2003</div>
+              <h4>Monterrey operations open</h4>
+              <p>Our first nearshore hub launches in Monterrey, MX — same time zones as our U.S. clients, native EN/ES bilingual agents.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2014</div>
+              <h4>Aguascalientes opens · 2 hubs, one network</h4>
+              <p>Second nearshore hub for redundancy and scale. Both sites operate as one shared talent pool with unified training and QA.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2021</div>
+              <h4>AI-driven QA platform launches</h4>
+              <p>We begin scoring every customer conversation in real time — no sampling — with machine-learning-based rubric scoring across all channels.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2024</div>
+              <h4>Sophia goes live in production</h4>
+              <p>Our in-call AI assistant rolls out across all client queues. Live transcription, sentiment, and next-line suggestions — sub-second latency, bilingual by default.</p>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">2026</div>
+              <h4>5,000+ partners, 100% scored calls</h4>
+              <p>Centris now supports thousands of customer-facing operations across North America with 100% AI-scored quality coverage.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section border-t">
+        <div class="wrap">
+          <div class="sec-head ir">
+            <h6>What we believe</h6>
+            <h2>Three principles that shape <span class="clr-primary">every customer conversation.</span></h2>
+          </div>
+          <div class="values">
+            <div class="value-card ir">
+              <span class="num">01 — Humans first</span>
+              <h4>AI augments. It never replaces.</h4>
+              <p>Sophia exists to make our agents better — clearer, faster, kinder. The voice on the other end of the call is always human.</p>
+            </div>
+            <div class="value-card ir">
+              <span class="num">02 — Bilingual by default</span>
+              <h4>EN and ES at native quality.</h4>
+              <p>Native fluency isn't a premium tier — it's the floor. Every agent. Every channel. Every customer.</p>
+            </div>
+            <div class="value-card ir">
+              <span class="num">03 — Auditable to the line</span>
+              <h4>Every suggestion, traceable.</h4>
+              <p>Every AI recommendation, every translation, every CRM note — traceable to the call, the policy, the moment.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section border-t">
+        <div class="wrap">
+          <div class="sec-head ir">
+            <h6>By the numbers</h6>
+            <h2>Centris <span class="clr-primary">today.</span></h2>
+          </div>
+          <div class="about-stats">
+            <div class="about-stat ir">
+              <div class="n">5k+</div>
+              <div class="l">Partners across<br/>North America</div>
+            </div>
+            <div class="about-stat ir">
+              <div class="n">100%</div>
+              <div class="l">Of calls scored<br/>by AI · no sampling</div>
+            </div>
+            <div class="about-stat ir">
+              <div class="n">45%</div>
+              <div class="l">Average cost savings<br/>vs U.S.-based centers</div>
+            </div>
+            <div class="about-stat ir">
+              <div class="n">&lt;800ms</div>
+              <div class="l">Sophia latency<br/>utterance to suggestion</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section border-t">
+        <div class="wrap">
+          <div class="sec-head ir">
+            <h6>Leadership</h6>
+            <h2>The team running the show.</h2>
+          </div>
+          <div class="leader-grid">
+            <div class="leader ir"><div class="avatar">AB</div><h5>Alejandro Bautista</h5><div class="role">CEO</div></div>
+            <div class="leader ir"><div class="avatar">MR</div><h5>Maria Rodriguez</h5><div class="role">President · Operations</div></div>
+            <div class="leader ir"><div class="avatar">JC</div><h5>James Chen</h5><div class="role">CTO · AI Platform</div></div>
+            <div class="leader ir"><div class="avatar">SK</div><h5>Sofia Kim</h5><div class="role">VP Customer Success</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="wrap">
+          <div class="closing ir">
+            <h6>Let's talk</h6>
+            <h2>Want to see how we could fit your operation?</h2>
+            <p>15-minute demo, real conversations, no slide deck.</p>
+            <div class="ctas">
+              <a href="contact.html" class="btn lg">Book a demo
+                <svg class="ico-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+              <a href="tel:18005304897" class="btn lg btn-ghost">Call 1-800-530-4897</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="foot-grid">
+          <div class="foot-brand">
+            <a href="index.html" class="brand">Centris<span class="dot">.</span></a>
+            <p>Centris Information Services — bilingual nearshore contact center solutions, built for a human-first AI future.</p>
+            <div class="foot-socials">
+              <a href="https://facebook.com/centrisinfo" aria-label="Facebook">
+                <svg class="ico-svg" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="https://linkedin.com/company/centris-information-services" aria-label="LinkedIn">
+                <svg class="ico-svg" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+              <a href="https://x.com/centrisinfo" aria-label="X">
+                <svg class="ico-svg" viewBox="0 0 24 24"><path d="M18 4 6 20M6 4l12 16"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="foot-col">
+            <h6>Sitemap</h6>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="industries.html">Industries</a></li>
+              <li><a href="case-studies.html">Case Studies</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h6>Services</h6>
+            <ul>
+              <li><a href="service-ai-call-center.html">AI Call Center</a></li>
+              <li><a href="services.html">Customer Support</a></li>
+              <li><a href="services.html">BPO</a></li>
+              <li><a href="services.html">Inbound Sales</a></li>
+              <li><a href="services.html">Live Chat</a></li>
+              <li><a href="services.html">Marketing Surveys</a></li>
+              <li><a href="services.html">Quality Assurance</a></li>
+              <li><a href="services.html">Soft Collections</a></li>
+              <li><a href="services.html">Tier 1 Tech Support</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h6>Connect With Us</h6>
+            <div class="contact-info">
+              <div>
+                <span class="ico"><svg class="ico-svg" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                <p>1-800-530-4897</p>
+              </div>
+              <div>
+                <span class="ico"><svg class="ico-svg" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+                <p>kudos@centrisinfo.com</p>
+              </div>
+              <div>
+                <span class="ico"><svg class="ico-svg" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+                <p>119 W. Tyler St., Suite 260<br/>Longview, TX 75601</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="foot-bottom">© 2026 Centris Information Services. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll reveals
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const idx = Array.from(e.target.parentNode.children).indexOf(e.target);
+            const delay = Math.min(idx, 6) * 70;
+            setTimeout(() => e.target.classList.add("in"), delay);
+            io.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: "-60px 0px -60px 0px", threshold: 0.04 });
+      document.querySelectorAll(".ir").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
