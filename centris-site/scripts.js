@@ -546,10 +546,18 @@
       if (val !== undefined) el.innerHTML = val;
       else if (l === "en") el.innerHTML = el.getAttribute("data-i18n-html-fallback");
     });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (!el.hasAttribute("data-i18n-placeholder-fallback")) el.setAttribute("data-i18n-placeholder-fallback", el.getAttribute("placeholder") || "");
+      const dict = I18N[l] || {};
+      const val = dict[key];
+      if (val !== undefined) el.setAttribute("placeholder", val);
+      else if (l === "en") el.setAttribute("placeholder", el.getAttribute("data-i18n-placeholder-fallback"));
+    });
     const lbl = document.querySelector(".active-lang");
     if (lbl) lbl.textContent = l.toUpperCase();
   }
-  const stored = localStorage.getItem(KEY) || "en";
+  const stored = localStorage.getItem(KEY) || "es";
   apply(stored);
   if (btn) {
     btn.addEventListener("click", () => {
