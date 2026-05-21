@@ -11,13 +11,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --serif: "Instrument Serif", ui-serif, Georgia, serif;
-        --sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+        --serif: "Inter", ui-sans-serif, system-ui, sans-serif;
+        --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
         --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
         --bg: #02041a;
         --bg-2: #060c44;
@@ -42,11 +42,12 @@
       .wrap { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
       .border-t { border-top: 1px solid var(--line); }
       .meta { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255, 255, 255, 0.5); }
-      .display, .italic { font-family: var(--serif); font-style: italic; }
+      .display { font-family: var(--serif); font-weight: 200; }
+      .italic { font-style: italic; }
 
       header.nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(2, 4, 26, 0.65); border-bottom: 1px solid var(--line); }
       .nav-inner { max-width: 80rem; margin: 0 auto; padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-      .brand-mark { font-family: var(--serif); font-style: italic; font-size: 26px; letter-spacing: -0.01em; line-height: 1; }
+      .brand-mark { font-family: var(--serif); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; line-height: 1; }
       .brand-mark::after { content: "."; color: var(--coral); }
       .nav-links { display: none; gap: 2.25rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.65); }
       .nav-links a { transition: color 0.2s; }
@@ -123,16 +124,16 @@
 
       .hero-grid { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; display: grid; gap: 4rem; align-items: end; }
       @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1.4fr 1fr; gap: 5rem; } }
-      .hero h1 { font-family: var(--serif); font-style: italic; font-size: clamp(4rem, 11vw, 11rem); line-height: 0.85; letter-spacing: -0.025em; margin: 0; color: white; }
-      .hero h1 .accent { color: var(--coral); font-style: italic; }
+      .hero h1 { font-family: var(--serif); font-weight: 200; font-size: clamp(4rem, 11vw, 11rem); line-height: 0.85; letter-spacing: -0.025em; margin: 0; color: white; }
+      .hero h1 .accent { color: var(--coral); }
       .hero-headline { margin: 1.75rem 0 0; max-width: 38rem; font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 300; line-height: 1.25; color: rgba(255,255,255,0.92); }
       .hero-sub { margin: 1.5rem 0 0; max-width: 32rem; font-size: 15px; line-height: 1.75; color: var(--muted); }
       .hero-ctas { margin: 2rem 0 0; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
 
       .hero-stats { display: grid; gap: 1.5rem; padding-top: 1rem; }
       .stat { border-top: 1px solid var(--line-strong); padding-top: 1.25rem; display: grid; grid-template-columns: auto 1fr; column-gap: 1.5rem; align-items: baseline; }
-      .stat .n { font-family: var(--serif); font-style: italic; font-size: clamp(2.5rem, 5vw, 3.75rem); line-height: 1; letter-spacing: -0.02em; color: white; }
-      .stat .n .small { font-style: italic; font-size: 0.55em; color: var(--muted); margin-left: 0.05em; }
+      .stat .n { font-family: var(--serif); font-weight: 200; font-size: clamp(2.5rem, 5vw, 3.75rem); line-height: 1; letter-spacing: -0.02em; color: white; }
+      .stat .n .small { font-size: 0.55em; color: var(--muted); margin-left: 0.05em; }
       .stat .lbl { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); line-height: 1.5; }
 
       .reveal { opacity: 0; transform: translateY(18px); animation: rise 0.95s cubic-bezier(0.22,1,0.36,1) forwards; }
@@ -144,7 +145,7 @@
       .section { padding: 6rem 0; }
       @media (min-width: 1024px) { .section { padding: 8rem 0; } }
       .sec-head { display: grid; gap: 1.25rem; max-width: 60rem; }
-      .sec-head h2 { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.02; letter-spacing: -0.02em; color: white; text-wrap: balance; }
+      .sec-head h2 { margin: 0; font-family: var(--serif); font-weight: 200; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.02; letter-spacing: -0.02em; color: white; text-wrap: balance; }
       .sec-head .accent { color: var(--coral); }
       .sec-head p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.75; max-width: 40rem; }
 
@@ -155,7 +156,7 @@
       .pillar { background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%); border: 1px solid var(--line); border-radius: 16px; padding: 1.75rem; transition: transform 0.3s, border-color 0.3s; }
       .pillar:hover { transform: translateY(-4px); border-color: var(--coral); }
       .pillar .pn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--quiet); }
-      .pillar h3 { margin: 1.25rem 0 0.75rem; font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.15; color: white; font-weight: 400; }
+      .pillar h3 { margin: 1.25rem 0 0.75rem; font-family: var(--serif); font-size: 1.2rem; line-height: 1.25; color: white; font-weight: 600; letter-spacing: -0.01em; }
       .pillar p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
       .pillar .footer { margin-top: 1.25rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--coral); }
 
@@ -164,8 +165,8 @@
       @media (min-width: 1024px) { .in-action-grid { grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; } }
       .live-points { display: grid; gap: 2rem; }
       .live-point { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1.25rem; align-items: start; }
-      .live-point .pn { font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1; color: var(--coral); }
-      .live-point .pt { font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.15; color: white; }
+      .live-point .pn { font-family: var(--serif); font-size: 1rem; line-height: 1; color: var(--coral); font-weight: 600; }
+      .live-point .pt { font-family: var(--serif); font-size: 1.1rem; line-height: 1.3; color: white; font-weight: 600; letter-spacing: -0.01em; }
       .live-point .pd { margin-top: 0.5rem; font-size: 15px; line-height: 1.7; color: var(--muted); }
 
       /* ===== Interactive demo dashboard ===== */
@@ -215,7 +216,7 @@
       .dash-signals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .signal { background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 0.85rem; }
       .signal .lbl { font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-      .signal .val { margin-top: 0.35rem; font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1; color: white; }
+      .signal .val { margin-top: 0.35rem; font-family: var(--serif); font-size: 1.25rem; line-height: 1; color: white; font-weight: 700; letter-spacing: -0.02em; }
       .signal .val.up { color: var(--emerald); }
       .signal .meter { margin-top: 6px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
       .signal .fill { height: 100%; background: linear-gradient(90deg, var(--coral), var(--blue-3)); transition: width 0.4s; }
@@ -250,7 +251,7 @@
       .wf-step .who { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; padding: 3px 8px; border-radius: 4px; margin: 0.75rem 0; }
       .wf-step.ai .who { background: var(--coral); color: white; }
       .wf-step.human .who { background: var(--blue-3); color: white; }
-      .wf-step h4 { margin: 0 0 0.5rem; font-family: var(--serif); font-style: italic; font-size: 1.4rem; line-height: 1.1; color: white; font-weight: 400; }
+      .wf-step h4 { margin: 0 0 0.5rem; font-family: var(--serif); font-size: 1.2rem; line-height: 1.2; color: white; font-weight: 600; letter-spacing: -0.01em; }
       .wf-step p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
 
       /* ===== SERVICES (typographic list) ===== */
@@ -259,7 +260,7 @@
       @media (min-width: 768px) { .services-list li { grid-template-columns: 7rem 1fr 1.4fr auto; gap: 3rem; align-items: baseline; } }
       .services-list li:hover { background: rgba(255,255,255,0.015); }
       .services-list .idx { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--quiet); }
-      .services-list h3 { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 2.5vw, 1.85rem); line-height: 1.1; letter-spacing: -0.015em; color: white; font-weight: 400; }
+      .services-list h3 { margin: 0; font-family: var(--serif); font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.2; letter-spacing: -0.015em; color: white; font-weight: 600; }
       .services-list p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
       .services-list .more { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--coral); opacity: 0; transition: opacity 0.3s; white-space: nowrap; }
       .services-list li:hover .more { opacity: 1; }
@@ -276,7 +277,7 @@
       .industry .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(2,4,26,0.1), rgba(2,4,26,0.55)), linear-gradient(135deg, rgba(255,69,80,0.15), transparent 60%, rgba(102,116,255,0.2)); mix-blend-mode: multiply; }
       .industry .body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
       .industry .ind-num { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--quiet); }
-      .industry h3 { margin: 1rem 0 0; font-family: var(--serif); font-style: italic; font-size: 1.65rem; line-height: 1.05; letter-spacing: -0.015em; color: white; font-weight: 400; }
+      .industry h3 { margin: 1rem 0 0; font-family: var(--serif); font-size: 1.4rem; line-height: 1.15; letter-spacing: -0.015em; color: white; font-weight: 600; }
       .industry p { margin: 0.75rem 0 0; font-size: 14px; line-height: 1.7; color: var(--muted); flex: 1; }
       .industry .more { margin-top: 1.25rem; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--coral-soft); }
 
@@ -288,14 +289,14 @@
       .qa-features { list-style: none; padding: 0; margin: 2.5rem 0 0; display: grid; gap: 1.25rem; }
       .qa-features li { display: grid; grid-template-columns: 1.5rem 1fr; gap: 1rem; align-items: start; }
       .qa-features .dot { width: 8px; height: 8px; margin-top: 0.65rem; border-radius: 9999px; background: var(--coral); box-shadow: 0 0 12px var(--coral); }
-      .qa-features .lbl { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: white; line-height: 1.3; }
+      .qa-features .lbl { font-family: var(--serif); font-size: 1rem; color: white; line-height: 1.4; font-weight: 600; }
       .qa-features .desc { display: block; margin-top: 0.25rem; font-size: 14px; color: var(--muted); }
 
       /* ===== WHY / SAVINGS BIG ===== */
       .why-grid { display: grid; gap: 4rem; margin-top: 3.5rem; }
       @media (min-width: 1024px) { .why-grid { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; } }
       .savings-block { border-top: 1px solid var(--line-strong); padding-top: 2rem; }
-      .savings-big { font-family: var(--serif); font-style: italic; font-size: clamp(6rem, 16vw, 14rem); line-height: 0.85; letter-spacing: -0.04em; color: white; margin: 0; background: linear-gradient(120deg, #ffffff 0%, #ff8a91 70%, #ff4650 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      .savings-big { font-family: var(--serif); font-weight: 200; font-size: clamp(6rem, 16vw, 14rem); line-height: 0.85; letter-spacing: -0.04em; color: white; margin: 0; background: linear-gradient(120deg, #ffffff 0%, #ff8a91 70%, #ff4650 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
       .savings-tag { margin: 0.5rem 0 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
 
       .locations { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
@@ -304,7 +305,7 @@
       .location .loc-pic { background: linear-gradient(135deg, var(--blue-3), var(--blue-2)); overflow: hidden; }
       .location .loc-pic img { width: 100%; height: 100%; object-fit: cover; }
       .location .loc-body { padding: 1.25rem 1.5rem; align-self: center; }
-      .location .name { font-family: var(--serif); font-style: italic; font-size: 1.85rem; line-height: 1; color: white; display: block; }
+      .location .name { font-family: var(--serif); font-size: 1.5rem; line-height: 1; color: white; display: block; font-weight: 700; letter-spacing: -0.02em; }
       .location .country { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 0.25rem; }
       .location .desc { color: var(--quiet); font-size: 13px; margin-top: 0.5rem; line-height: 1.5; max-width: 360px; }
       .location .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--quiet); padding: 1.25rem 1.5rem 0 0; }
@@ -315,8 +316,8 @@
       @media (min-width: 768px) { .testimonials { grid-template-columns: repeat(2, 1fr); } }
       @media (min-width: 1200px) { .testimonials { grid-template-columns: repeat(3, 1fr); } }
       .testimonial { border: 1px solid var(--line); border-radius: 14px; padding: 2rem 1.75rem; background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%); }
-      .testimonial .mark { font-family: var(--serif); font-style: italic; font-size: 3rem; line-height: 1; color: var(--coral); margin: 0; }
-      .testimonial .quote { margin: 1rem 0 0; font-family: var(--serif); font-style: italic; font-size: 1.25rem; line-height: 1.4; color: rgba(255,255,255,0.92); }
+      .testimonial .mark { font-family: var(--serif); font-size: 2.5rem; line-height: 1; color: var(--coral); margin: 0; font-weight: 600; }
+      .testimonial .quote { margin: 1rem 0 0; font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 1.1rem; line-height: 1.55; color: rgba(255,255,255,0.92); }
       .testimonial .attr { margin: 1.25rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
 
       /* ===== CASES (with photos) ===== */
@@ -330,9 +331,9 @@
       .case .case-pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(2,4,26,0.6) 100%); }
       .case .case-body { padding: 2.25rem 2.25rem 2.25rem; flex: 1; display: flex; flex-direction: column; }
       .case .lbl { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--quiet); }
-      .case .stat { margin: 1.25rem 0 0; font-family: var(--serif); font-style: italic; font-size: clamp(3rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.02em; color: var(--coral); border: 0; padding: 0; display: block; }
+      .case .stat { margin: 1.25rem 0 0; font-family: var(--serif); font-weight: 200; font-size: clamp(3rem, 5vw, 4rem); line-height: 1; letter-spacing: -0.02em; color: var(--coral); border: 0; padding: 0; display: block; }
       .case .stat .small { display: block; font-size: 0.28em; font-style: normal; font-family: var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; line-height: 1.4; }
-      .case h3 { margin: 1.5rem 0 0; font-family: var(--serif); font-style: italic; font-size: 1.5rem; line-height: 1.2; color: white; font-weight: 400; }
+      .case h3 { margin: 1.5rem 0 0; font-family: var(--serif); font-size: 1.3rem; line-height: 1.25; color: white; font-weight: 600; letter-spacing: -0.01em; }
       .case p { margin: 1rem 0 0; font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 32rem; }
       .case .read { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--coral-soft); transition: gap 0.2s; }
       .case:hover .read { gap: 0.7rem; }
@@ -340,7 +341,7 @@
       /* ===== CLOSING ===== */
       .closing { position: relative; overflow: hidden; padding: 6rem 0 8rem; text-align: center; }
       .closing::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 60% 80% at 50% 110%, rgba(255,69,80,0.22) 0%, transparent 60%), radial-gradient(ellipse 70% 60% at 50% -10%, rgba(0,23,255,0.18) 0%, transparent 65%); }
-      .closing h2 { max-width: 60rem; margin: 0 auto; font-family: var(--serif); font-style: italic; font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.02em; color: white; text-wrap: balance; }
+      .closing h2 { max-width: 60rem; margin: 0 auto; font-family: var(--serif); font-weight: 200; font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.02em; color: white; text-wrap: balance; }
       .closing p { max-width: 36rem; margin: 1.75rem auto 0; font-size: 16px; line-height: 1.75; color: var(--muted); }
       .closing .ctas { margin: 2.5rem 0 0; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
 
@@ -378,9 +379,9 @@
       .logos-track-wrap { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
       .logos-track { display: flex; gap: 5rem; animation: logos-scroll 45s linear infinite; width: max-content; }
       @keyframes logos-scroll { 0% { transform: translateX(0);} 100% { transform: translateX(-50%);} }
-      .logos-track .logo { font-family: var(--serif); font-style: italic; font-size: 32px; color: rgba(255,255,255,0.55); white-space: nowrap; letter-spacing: -0.01em; transition: color 0.3s; flex-shrink: 0; }
-      .logos-track .logo.sans { font-family: var(--sans); font-style: normal; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
-      .logos-track .logo.mono { font-family: var(--mono); font-style: normal; font-size: 18px; text-transform: uppercase; letter-spacing: 0.12em; }
+      .logos-track .logo { font-family: var(--serif); font-weight: 600; font-size: 22px; color: rgba(255,255,255,0.55); white-space: nowrap; letter-spacing: -0.02em; transition: color 0.3s; flex-shrink: 0; }
+      .logos-track .logo.sans { font-weight: 800; font-size: 18px; text-transform: uppercase; letter-spacing: 0.04em; }
+      .logos-track .logo.mono { font-family: var(--mono); font-weight: 500; font-size: 16px; text-transform: uppercase; letter-spacing: 0.14em; }
       .logos-track .logo:hover { color: white; }
 
       /* ===== ROI CALCULATOR ===== */
@@ -390,21 +391,21 @@
       .roi-field { display: grid; gap: 0.85rem; }
       .roi-field-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
       .roi-field-head label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--quiet); }
-      .roi-field-head .v { font-family: var(--serif); font-style: italic; font-size: 1.75rem; color: white; line-height: 1; }
+      .roi-field-head .v { font-family: var(--serif); font-size: 1.35rem; color: white; line-height: 1; font-weight: 700; letter-spacing: -0.02em; }
       .roi-field input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 9999px; outline: none; }
       .roi-field input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--coral); cursor: pointer; box-shadow: 0 0 0 5px rgba(255,69,80,0.18); transition: transform 0.15s; }
       .roi-field input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--coral); cursor: pointer; border: none; box-shadow: 0 0 0 5px rgba(255,69,80,0.18); }
       .roi-field input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
       .roi-out { padding: 2.5rem; border: 1px solid var(--line-strong); border-radius: 1.25rem; background: linear-gradient(180deg, rgba(255,69,80,0.06), rgba(255,69,80,0.01)); }
       .roi-out .meta { color: var(--coral-soft); }
-      .roi-out .big { font-family: var(--serif); font-style: italic; font-size: clamp(3rem, 7vw, 5rem); line-height: 0.95; color: white; margin: 1rem 0 0.25rem; letter-spacing: -0.02em; }
+      .roi-out .big { font-family: var(--serif); font-weight: 200; font-size: clamp(3rem, 7vw, 5rem); line-height: 0.95; color: white; margin: 1rem 0 0.25rem; letter-spacing: -0.02em; }
       .roi-out .big .unit { font-size: 0.4em; color: var(--muted); font-style: normal; font-family: var(--mono); letter-spacing: 0.18em; text-transform: uppercase; margin-left: 0.3em; }
       .roi-out .sub { color: var(--muted); font-size: 14px; line-height: 1.7; }
       .roi-breakdown { margin-top: 2rem; display: grid; gap: 1rem; }
       .roi-line { display: flex; justify-content: space-between; align-items: baseline; padding: 0.85rem 0; border-top: 1px dashed var(--line); font-size: 14px; }
       .roi-line:first-child { border-top: 0; padding-top: 0; }
       .roi-line .k { color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
-      .roi-line .v { color: white; font-family: var(--serif); font-style: italic; font-size: 1.15rem; }
+      .roi-line .v { color: white; font-family: var(--serif); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
       .roi-line.total .v { color: var(--coral); font-size: 1.5rem; }
 
       /* ===== COVERAGE MAP ===== */
@@ -422,17 +423,17 @@
       .map-info { display: grid; gap: 1.5rem; }
       .map-card { padding: 1.5rem; border: 1px solid var(--line); border-radius: 0.85rem; transition: border-color 0.3s, background 0.3s; cursor: pointer; }
       .map-card.active { border-color: var(--coral); background: rgba(255,69,80,0.04); }
-      .map-card h4 { margin: 0; font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: white; line-height: 1; }
+      .map-card h4 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 1.35rem; color: white; line-height: 1; letter-spacing: -0.01em; }
       .map-card .city-meta { margin-top: 0.4rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--quiet); }
       .map-card .city-stats { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
-      .map-card .city-stat .n { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: white; line-height: 1; }
+      .map-card .city-stat .n { font-family: var(--serif); font-size: 1.2rem; color: white; line-height: 1; font-weight: 700; letter-spacing: -0.02em; }
       .map-card .city-stat .l { margin-top: 0.35rem; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--quiet); }
 
       /* ===== FAQ ACCORDION ===== */
       .faq { margin-top: 3rem; max-width: 56rem; }
       .faq-item { border-top: 1px solid var(--line); }
       .faq-item:last-child { border-bottom: 1px solid var(--line); }
-      .faq-q { width: 100%; background: transparent; border: 0; padding: 1.5rem 0; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; cursor: pointer; color: white; font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2vw, 1.55rem); text-align: left; line-height: 1.25; transition: color 0.2s; }
+      .faq-q { width: 100%; background: transparent; border: 0; padding: 1.5rem 0; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; cursor: pointer; color: white; font-family: var(--serif); font-weight: 500; font-size: clamp(1.05rem, 1.6vw, 1.25rem); text-align: left; line-height: 1.4; transition: color 0.2s; letter-spacing: -0.005em; }
       .faq-q:hover { color: var(--coral-soft); }
       .faq-q .plus { width: 24px; height: 24px; flex-shrink: 0; position: relative; }
       .faq-q .plus::before, .faq-q .plus::after { content: ""; position: absolute; background: currentColor; transition: transform 0.3s; }
@@ -453,7 +454,7 @@
       @media (min-width: 640px) { .compliance-badges { grid-template-columns: repeat(4, 1fr); } }
       .badge { padding: 1rem 1.15rem; border: 1px solid var(--line); border-radius: 0.65rem; display: grid; gap: 0.35rem; transition: border-color 0.2s, background 0.2s; }
       .badge:hover { border-color: var(--line-strong); background: rgba(255,255,255,0.02); }
-      .badge .b-name { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: white; line-height: 1; }
+      .badge .b-name { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: white; line-height: 1.1; letter-spacing: -0.01em; }
       .badge .b-desc { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--quiet); line-height: 1.5; }
     </style>
   </head>
@@ -844,7 +845,7 @@
         <div class="why-grid">
           <div>
             <div class="savings-block ir">
-              <h3 class="savings-big">45<span class="pct" style="font-style:italic">%</span></h3>
+              <h3 class="savings-big">45<span class="pct">%</span></h3>
               <p class="savings-tag">average savings versus U.S.-based contact centers · without sacrificing quality</p>
             </div>
             <div style="margin-top:3rem;display:grid;gap:1.5rem;">
