@@ -359,19 +359,140 @@
       .foot-social a:hover { color: white; border-color: var(--coral); background: rgba(255,69,80,0.08); }
       .foot-meta { max-width: 80rem; margin: 0 auto; padding: 1.75rem 1.5rem; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--quiet); }
       .ico { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+      /* ===== LIVE METRICS TICKER ===== */
+      .ticker { background: linear-gradient(90deg, rgba(255,69,80,0.08) 0%, rgba(0,23,255,0.08) 100%); border-bottom: 1px solid var(--line); overflow: hidden; }
+      .ticker-inner { max-width: 80rem; margin: 0 auto; padding: 0.55rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+      .ticker-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 0 rgba(52,211,153,0.5); animation: ticker-pulse 1.6s ease-out infinite; flex-shrink: 0; }
+      @keyframes ticker-pulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5);} 100% { box-shadow: 0 0 0 10px rgba(52,211,153,0);} }
+      .ticker-label { color: var(--emerald); flex-shrink: 0; }
+      .ticker-track { flex: 1; overflow: hidden; position: relative; }
+      .ticker-track::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 60px; background: linear-gradient(90deg, transparent, var(--bg)); pointer-events: none; }
+      .ticker-items { display: flex; gap: 2.5rem; animation: ticker-scroll 38s linear infinite; white-space: nowrap; }
+      .ticker-items span b { color: white; font-weight: 500; }
+      @keyframes ticker-scroll { 0% { transform: translateX(0);} 100% { transform: translateX(-50%);} }
+
+      /* ===== LOGO WALL ===== */
+      .logos { padding: 4rem 0 5rem; background: rgba(255,255,255,0.015); overflow: hidden; }
+      .logos-label { text-align: center; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.22em; color: var(--quiet); margin-bottom: 2rem; }
+      .logos-track-wrap { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent); }
+      .logos-track { display: flex; gap: 5rem; animation: logos-scroll 45s linear infinite; width: max-content; }
+      @keyframes logos-scroll { 0% { transform: translateX(0);} 100% { transform: translateX(-50%);} }
+      .logos-track .logo { font-family: var(--serif); font-style: italic; font-size: 32px; color: rgba(255,255,255,0.55); white-space: nowrap; letter-spacing: -0.01em; transition: color 0.3s; flex-shrink: 0; }
+      .logos-track .logo.sans { font-family: var(--sans); font-style: normal; font-weight: 600; font-size: 22px; letter-spacing: -0.02em; }
+      .logos-track .logo.mono { font-family: var(--mono); font-style: normal; font-size: 18px; text-transform: uppercase; letter-spacing: 0.12em; }
+      .logos-track .logo:hover { color: white; }
+
+      /* ===== ROI CALCULATOR ===== */
+      .roi-wrap { display: grid; gap: 3rem; margin-top: 3rem; }
+      @media (min-width: 900px) { .roi-wrap { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; } }
+      .roi-inputs { display: grid; gap: 2rem; }
+      .roi-field { display: grid; gap: 0.85rem; }
+      .roi-field-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+      .roi-field-head label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--quiet); }
+      .roi-field-head .v { font-family: var(--serif); font-style: italic; font-size: 1.75rem; color: white; line-height: 1; }
+      .roi-field input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 9999px; outline: none; }
+      .roi-field input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--coral); cursor: pointer; box-shadow: 0 0 0 5px rgba(255,69,80,0.18); transition: transform 0.15s; }
+      .roi-field input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--coral); cursor: pointer; border: none; box-shadow: 0 0 0 5px rgba(255,69,80,0.18); }
+      .roi-field input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+      .roi-out { padding: 2.5rem; border: 1px solid var(--line-strong); border-radius: 1.25rem; background: linear-gradient(180deg, rgba(255,69,80,0.06), rgba(255,69,80,0.01)); }
+      .roi-out .meta { color: var(--coral-soft); }
+      .roi-out .big { font-family: var(--serif); font-style: italic; font-size: clamp(3rem, 7vw, 5rem); line-height: 0.95; color: white; margin: 1rem 0 0.25rem; letter-spacing: -0.02em; }
+      .roi-out .big .unit { font-size: 0.4em; color: var(--muted); font-style: normal; font-family: var(--mono); letter-spacing: 0.18em; text-transform: uppercase; margin-left: 0.3em; }
+      .roi-out .sub { color: var(--muted); font-size: 14px; line-height: 1.7; }
+      .roi-breakdown { margin-top: 2rem; display: grid; gap: 1rem; }
+      .roi-line { display: flex; justify-content: space-between; align-items: baseline; padding: 0.85rem 0; border-top: 1px dashed var(--line); font-size: 14px; }
+      .roi-line:first-child { border-top: 0; padding-top: 0; }
+      .roi-line .k { color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+      .roi-line .v { color: white; font-family: var(--serif); font-style: italic; font-size: 1.15rem; }
+      .roi-line.total .v { color: var(--coral); font-size: 1.5rem; }
+
+      /* ===== COVERAGE MAP ===== */
+      .map-wrap { margin-top: 3rem; display: grid; gap: 3rem; align-items: start; }
+      @media (min-width: 900px) { .map-wrap { grid-template-columns: 1.5fr 1fr; gap: 4rem; } }
+      .map-svg { width: 100%; height: auto; background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 1.25rem; overflow: visible; padding: 1rem; }
+      .map-svg .land { fill: rgba(255,255,255,0.04); stroke: rgba(255,255,255,0.12); stroke-width: 1; transition: fill 0.3s; }
+      .map-svg .land.active { fill: rgba(255,69,80,0.08); stroke: rgba(255,69,80,0.3); }
+      .map-svg .pin { cursor: pointer; }
+      .map-svg .pin-ring { fill: none; stroke: var(--coral); stroke-width: 1.5; opacity: 0.4; transform-origin: center; animation: pin-pulse 2.4s ease-out infinite; }
+      .map-svg .pin-ring.delay { animation-delay: 1.2s; }
+      .map-svg .pin-dot { fill: var(--coral); }
+      @keyframes pin-pulse { 0% { r: 4; opacity: 0.6;} 100% { r: 22; opacity: 0;} }
+      .map-svg text { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; fill: rgba(255,255,255,0.7); }
+      .map-info { display: grid; gap: 1.5rem; }
+      .map-card { padding: 1.5rem; border: 1px solid var(--line); border-radius: 0.85rem; transition: border-color 0.3s, background 0.3s; cursor: pointer; }
+      .map-card.active { border-color: var(--coral); background: rgba(255,69,80,0.04); }
+      .map-card h4 { margin: 0; font-family: var(--serif); font-style: italic; font-size: 1.5rem; color: white; line-height: 1; }
+      .map-card .city-meta { margin-top: 0.4rem; font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--quiet); }
+      .map-card .city-stats { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+      .map-card .city-stat .n { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: white; line-height: 1; }
+      .map-card .city-stat .l { margin-top: 0.35rem; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--quiet); }
+
+      /* ===== FAQ ACCORDION ===== */
+      .faq { margin-top: 3rem; max-width: 56rem; }
+      .faq-item { border-top: 1px solid var(--line); }
+      .faq-item:last-child { border-bottom: 1px solid var(--line); }
+      .faq-q { width: 100%; background: transparent; border: 0; padding: 1.5rem 0; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; cursor: pointer; color: white; font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2vw, 1.55rem); text-align: left; line-height: 1.25; transition: color 0.2s; }
+      .faq-q:hover { color: var(--coral-soft); }
+      .faq-q .plus { width: 24px; height: 24px; flex-shrink: 0; position: relative; }
+      .faq-q .plus::before, .faq-q .plus::after { content: ""; position: absolute; background: currentColor; transition: transform 0.3s; }
+      .faq-q .plus::before { left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); }
+      .faq-q .plus::after { top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); }
+      .faq-item.open .faq-q .plus::after { transform: translateX(-50%) rotate(90deg); }
+      .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+      .faq-item.open .faq-a { max-height: 400px; padding-bottom: 1.5rem; }
+      .faq-a p { margin: 0; color: var(--muted); line-height: 1.75; font-size: 15px; max-width: 48rem; }
+
+      /* ===== COMPLIANCE STRIP ===== */
+      .compliance { padding: 3rem 0; border-top: 1px solid var(--line); }
+      .compliance-row { display: grid; gap: 2rem; grid-template-columns: 1fr; align-items: center; }
+      @media (min-width: 768px) { .compliance-row { grid-template-columns: auto 1fr; gap: 3rem; } }
+      .compliance-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--quiet); line-height: 1.7; }
+      .compliance-label b { color: white; font-weight: 500; }
+      .compliance-badges { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      @media (min-width: 640px) { .compliance-badges { grid-template-columns: repeat(4, 1fr); } }
+      .badge { padding: 1rem 1.15rem; border: 1px solid var(--line); border-radius: 0.65rem; display: grid; gap: 0.35rem; transition: border-color 0.2s, background 0.2s; }
+      .badge:hover { border-color: var(--line-strong); background: rgba(255,255,255,0.02); }
+      .badge .b-name { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: white; line-height: 1; }
+      .badge .b-desc { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--quiet); line-height: 1.5; }
     </style>
   </head>
 
   <body>
+    <!-- LIVE METRICS TICKER -->
+    <div class="ticker" aria-label="Live operations metrics">
+      <div class="ticker-inner">
+        <span class="ticker-dot"></span>
+        <span class="ticker-label">Live</span>
+        <div class="ticker-track">
+          <div class="ticker-items">
+            <span>Calls handled today · <b id="tk-calls">12,847</b></span>
+            <span>Avg sentiment · <b id="tk-sent">+0.42</b></span>
+            <span>QA coverage · <b>100%</b></span>
+            <span>Avg handle time · <b id="tk-aht">4m 12s</b></span>
+            <span>Bilingual agents online · <b id="tk-agents">1,284</b></span>
+            <span>First-call resolution · <b>91.3%</b></span>
+            <span>Calls handled today · <b>12,847</b></span>
+            <span>Avg sentiment · <b>+0.42</b></span>
+            <span>QA coverage · <b>100%</b></span>
+            <span>Avg handle time · <b>4m 12s</b></span>
+            <span>Bilingual agents online · <b>1,284</b></span>
+            <span>First-call resolution · <b>91.3%</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
     <header class="nav">
       <div class="nav-inner">
         <a href="#" class="brand-mark">Centris</a>
         <nav class="nav-links">
           <a href="#in-action">Live QA</a>
           <a href="#services">Services</a>
+          <a href="#roi">ROI</a>
           <a href="#industries">Industries</a>
-          <a href="#why">Why Centris</a>
-          <a href="#cases">Case studies</a>
+          <a href="#coverage">Coverage</a>
+          <a href="#cases">Cases</a>
+          <a href="#faq">FAQ</a>
         </nav>
         <a class="cta-primary sm" href="#contact">Book a demo
           <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -403,6 +524,40 @@
           <div class="stat"><span class="n"><span class="italic">30<span class="small">+</span></span></span><span class="lbl">years delivering<br />nearshore contact-center work</span></div>
           <div class="stat"><span class="n"><span class="italic">5<span class="small">k+</span></span></span><span class="lbl">happy customers<br />across North America</span></div>
           <div class="stat"><span class="n"><span class="italic">2</span></span><span class="lbl">nearshore locations<br />Monterrey · Aguascalientes</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGO WALL -->
+    <section class="logos border-t">
+      <p class="logos-label">Trusted across insurance, healthcare, retail, security & more</p>
+      <div class="logos-track-wrap">
+        <div class="logos-track">
+          <span class="logo">Northwind Insurance</span>
+          <span class="logo sans">MERIDIAN HEALTH</span>
+          <span class="logo mono">/ acme &amp; co.</span>
+          <span class="logo">Coastal Utilities</span>
+          <span class="logo sans">SentinelGuard</span>
+          <span class="logo">Rivera Retail Group</span>
+          <span class="logo mono">parkflow.</span>
+          <span class="logo sans">CASCADE QSR</span>
+          <span class="logo">Atlas Warranty</span>
+          <span class="logo mono">tier1.tech</span>
+          <span class="logo">Sterling Auto Finance</span>
+          <span class="logo sans">VEREDA TELECOM</span>
+          <!-- duplicate for seamless loop -->
+          <span class="logo">Northwind Insurance</span>
+          <span class="logo sans">MERIDIAN HEALTH</span>
+          <span class="logo mono">/ acme &amp; co.</span>
+          <span class="logo">Coastal Utilities</span>
+          <span class="logo sans">SentinelGuard</span>
+          <span class="logo">Rivera Retail Group</span>
+          <span class="logo mono">parkflow.</span>
+          <span class="logo sans">CASCADE QSR</span>
+          <span class="logo">Atlas Warranty</span>
+          <span class="logo mono">tier1.tech</span>
+          <span class="logo">Sterling Auto Finance</span>
+          <span class="logo sans">VEREDA TELECOM</span>
         </div>
       </div>
     </section>
@@ -599,11 +754,53 @@
       </div>
     </section>
 
+    <!-- ROI CALCULATOR -->
+    <section id="roi" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">05 — Calculator</p>
+          <h2>See your savings,<br /><span class="accent">in about ten seconds.</span></h2>
+          <p>Move the sliders. Nearshore Mexico typically costs 40–50% less than U.S. centers on a fully-loaded basis, and AI-assisted QA covers 100% of calls instead of the 2–3% manual sample. Numbers update live.</p>
+        </div>
+        <div class="roi-wrap ir">
+          <div class="roi-inputs">
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-vol">Monthly call volume</label><span class="v" id="roi-vol-v">25,000</span></div>
+              <input id="roi-vol" type="range" min="2000" max="200000" step="1000" value="25000" />
+            </div>
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-aht">Avg handle time (min)</label><span class="v" id="roi-aht-v">6.5</span></div>
+              <input id="roi-aht" type="range" min="2" max="15" step="0.5" value="6.5" />
+            </div>
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-rate">Current cost / call ($)</label><span class="v" id="roi-rate-v">$7.20</span></div>
+              <input id="roi-rate" type="range" min="2" max="20" step="0.10" value="7.20" />
+            </div>
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-mix">% bilingual (Spanish)</label><span class="v" id="roi-mix-v">35%</span></div>
+              <input id="roi-mix" type="range" min="0" max="100" step="5" value="35" />
+            </div>
+          </div>
+          <div class="roi-out">
+            <p class="meta">Estimated impact · year one</p>
+            <div class="big" id="roi-savings">$648,000<span class="unit">/ yr saved</span></div>
+            <p class="sub">vs. running the same volume on a U.S.-based or single-language center. Includes labor, real estate, tech stack, QA coverage gains.</p>
+            <div class="roi-breakdown">
+              <div class="roi-line"><span class="k">Current annual spend</span><span class="v" id="roi-current">$2.16M</span></div>
+              <div class="roi-line"><span class="k">Centris annual spend</span><span class="v" id="roi-new">$1.51M</span></div>
+              <div class="roi-line"><span class="k">QA coverage gain</span><span class="v" id="roi-qa">+97 pts</span></div>
+              <div class="roi-line total"><span class="k">Net savings</span><span class="v" id="roi-total">$648K · 30%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- INDUSTRIES with photos -->
     <section id="industries" class="section border-t">
       <div class="wrap">
         <div class="sec-head ir">
-          <p class="meta">05 — Industries</p>
+          <p class="meta">06 — Industries</p>
           <h2>Built for the conversations<br /><span class="accent">your industry actually has.</span></h2>
           <p>From a stressed customer filing a claim to a patient navigating a self-service portal — the conversation is the brand. We've spent three decades learning yours.</p>
         </div>
@@ -640,7 +837,7 @@
     <section id="why" class="section border-t">
       <div class="wrap">
         <div class="sec-head ir">
-          <p class="meta">06 — Why Centris</p>
+          <p class="meta">07 — Why Centris</p>
           <h2>As close to the U.S. as you can be<br /><span class="accent">without being in the U.S.</span></h2>
           <p>Nearshore isn't a workaround — it's an advantage. Same time zones, same cultural fluency, native Spanish-English bilingual agents, and the cost structure that makes scaling sustainable.</p>
         </div>
@@ -684,11 +881,79 @@
       </div>
     </section>
 
+    <!-- COVERAGE MAP -->
+    <section id="coverage" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">08 — Coverage</p>
+          <h2>Two nearshore hubs.<br /><span class="accent">One continuous timezone.</span></h2>
+          <p>Both centers run Central Time. No handoff lag, no overnight gap. Click a pin to see capacity, languages, and shift coverage.</p>
+        </div>
+        <div class="map-wrap ir">
+          <svg class="map-svg" viewBox="0 0 600 360" role="img" aria-label="Coverage map of US and Mexico">
+            <!-- USA outline (stylized) -->
+            <path class="land" d="M40,80 L120,60 L220,55 L320,58 L420,65 L520,70 L555,90 L560,140 L540,170 L500,180 L460,190 L420,185 L380,180 L340,185 L300,190 L280,195 L260,200 L240,205 L220,200 L180,195 L140,190 L100,180 L60,160 L45,130 Z" />
+            <!-- Mexico outline (stylized) -->
+            <path class="land active" d="M180,205 L240,210 L280,215 L320,225 L350,235 L380,260 L390,290 L370,310 L335,320 L300,318 L265,310 L235,295 L210,275 L195,250 L180,225 Z" />
+            <!-- Texas accent (where Centris HQ is) -->
+            <circle cx="245" cy="180" r="3" fill="rgba(255,255,255,0.35)" />
+            <text x="252" y="183">Longview HQ · TX</text>
+            <!-- Monterrey pin -->
+            <g class="pin" data-city="monterrey" transform="translate(260,235)">
+              <circle class="pin-ring" cx="0" cy="0" r="4" />
+              <circle class="pin-ring delay" cx="0" cy="0" r="4" />
+              <circle class="pin-dot" cx="0" cy="0" r="4.5" />
+              <text x="10" y="3">Monterrey</text>
+            </g>
+            <!-- Aguascalientes pin -->
+            <g class="pin" data-city="aguascalientes" transform="translate(295,275)">
+              <circle class="pin-ring" cx="0" cy="0" r="4" />
+              <circle class="pin-ring delay" cx="0" cy="0" r="4" />
+              <circle class="pin-dot" cx="0" cy="0" r="4.5" />
+              <text x="10" y="3">Aguascalientes</text>
+            </g>
+            <!-- timezone band -->
+            <line x1="245" y1="40" x2="245" y2="330" stroke="rgba(255,69,80,0.25)" stroke-width="1" stroke-dasharray="3 4" />
+            <text x="250" y="50" fill="rgba(255,69,80,0.65)">UTC-6 · CT</text>
+          </svg>
+          <div class="map-info">
+            <div class="map-card active" data-city="monterrey">
+              <h4>Monterrey</h4>
+              <div class="city-meta">Nuevo León · UTC-6 · Bilingual hub</div>
+              <div class="city-stats">
+                <div class="city-stat"><div class="n">720+</div><div class="l">Agents</div></div>
+                <div class="city-stat"><div class="n">24/7</div><div class="l">Coverage</div></div>
+                <div class="city-stat"><div class="n">EN·ES</div><div class="l">Languages</div></div>
+              </div>
+            </div>
+            <div class="map-card" data-city="aguascalientes">
+              <h4>Aguascalientes</h4>
+              <div class="city-meta">Centro de México · UTC-6 · Healthcare &amp; finance</div>
+              <div class="city-stats">
+                <div class="city-stat"><div class="n">560+</div><div class="l">Agents</div></div>
+                <div class="city-stat"><div class="n">24/7</div><div class="l">Coverage</div></div>
+                <div class="city-stat"><div class="n">EN·ES</div><div class="l">Languages</div></div>
+              </div>
+            </div>
+            <div class="map-card" data-city="hq">
+              <h4>Longview, TX</h4>
+              <div class="city-meta">U.S. headquarters · UTC-6 · Account leadership</div>
+              <div class="city-stats">
+                <div class="city-stat"><div class="n">30+</div><div class="l">Years</div></div>
+                <div class="city-stat"><div class="n">5K+</div><div class="l">Customers</div></div>
+                <div class="city-stat"><div class="n">100%</div><div class="l">US-led</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CASE STUDIES with photos -->
     <section id="cases" class="section border-t">
       <div class="wrap">
         <div class="sec-head ir">
-          <p class="meta">07 — Case studies</p>
+          <p class="meta">09 — Case studies</p>
           <h2>What it means<br /><span class="accent">to partner with Centris.</span></h2>
           <p>The numbers behind the relationships. Real outcomes, real customers, written up so you can see the work — not just the marketing.</p>
         </div>
@@ -721,7 +986,7 @@
     <section class="section border-t">
       <div class="wrap">
         <div class="sec-head ir">
-          <p class="meta">08 — Testimonials</p>
+          <p class="meta">10 — Testimonials</p>
           <h2>What our partners<br /><span class="accent">actually tell us.</span></h2>
           <p>5,000+ happy customers. Here are six of them, by industry.</p>
         </div>
@@ -732,6 +997,66 @@
           <div class="testimonial ir"><p class="mark">"</p><p class="quote">I am honored and appreciate our Centris team. More so our agents are doing really great work as well.</p><p class="attr">Appointment scheduling</p></div>
           <div class="testimonial ir"><p class="mark">"</p><p class="quote">Amazing job yesterday — 97.37%. Very impressive.</p><p class="attr">Staffing industry · QA score</p></div>
           <div class="testimonial ir" style="background: linear-gradient(180deg, rgba(255,69,80,0.05) 0%, rgba(255,69,80,0.01) 100%); border-color: rgba(255,69,80,0.2);"><p class="mark" style="font-size:1.5rem;line-height:1;margin-bottom:0.5rem;">5,000+</p><p class="quote" style="font-size:1.05rem;">Customers we get to do this for, every day across North America.</p><p class="attr" style="color: var(--coral-soft);">Centris · 2026</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">11 — FAQ</p>
+          <h2>Questions we get<br /><span class="accent">before every kickoff.</span></h2>
+          <p>Direct answers — no sales theater. If something here doesn't match your situation, the demo conversation is the right place to dig in.</p>
+        </div>
+        <div class="faq ir">
+          <div class="faq-item open">
+            <button class="faq-q" aria-expanded="true">How fast can we go live? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Pilot programs typically launch in 30–45 days from signed agreement: weeks 1–2 are knowledge transfer and call-flow design, weeks 3–4 are agent training and shadowing, week 5 is soft launch with QA double-coverage. Full ramp to target volume usually takes 60–90 days.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What does pricing look like? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Most engagements are per-hour FTE or per-call, depending on volume predictability. Expect 40–50% below comparable U.S. centers fully loaded. Pilots start at 10–25 seats; enterprise programs scale to 500+. Use the calculator above for a directional number, then we tighten it with your actual call mix.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How do you handle data security and compliance? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>SOC 2 Type II, HIPAA, PCI-DSS, and GDPR-aligned. PII never leaves controlled environments; recordings and transcripts are encrypted at rest and in transit. Sophia AI runs on isolated tenant infrastructure with full audit trails. We're happy to walk through the controls matrix during procurement review.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Will AI replace the human agents? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>No. Sophia listens, drafts, and recommends — the human decides. The model is augmentation: AI handles knowledge retrieval, sentiment tracking, real-time translation cues, and post-call QA so agents can focus on the conversation. Customers still talk to a person.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What languages do you cover? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>English and Spanish (Mexican and U.S. Hispanic markets) are native across both centers. Sophia adds real-time translation cues for 30+ additional languages on demand. All agents are fully bilingual EN/ES; we don't run language tiers.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Can you integrate with our CRM and telephony? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Yes. Standard integrations include Salesforce, Zendesk, HubSpot, ServiceNow, Genesys, NICE CXone, Five9, AWS Connect, and Twilio Flex. Custom CRMs connect via REST/webhook in roughly two weeks. We don't ask you to switch tools.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How is quality measured? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Sophia auto-scores 100% of calls on adherence, empathy, resolution, and compliance — versus the typical 2–3% manual sample. Human QA analysts review flagged calls and coach against trends weekly. You get a live dashboard plus a weekly digest.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What happens if we want to leave? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Standard contracts are annual with 90-day notice. Transition support includes knowledge artifacts, call recordings (where contractually retained), and a structured handover playbook. No exit fees, no hostage hardware.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPLIANCE STRIP -->
+    <section class="compliance">
+      <div class="wrap">
+        <div class="compliance-row ir">
+          <div class="compliance-label"><b>Certified &amp; audited.</b><br />Independent third-party attestation, refreshed annually.</div>
+          <div class="compliance-badges">
+            <div class="badge"><span class="b-name">SOC 2 · Type II</span><span class="b-desc">Security · Availability · Confidentiality</span></div>
+            <div class="badge"><span class="b-name">HIPAA</span><span class="b-desc">Healthcare PHI handling · BAA available</span></div>
+            <div class="badge"><span class="b-name">PCI-DSS</span><span class="b-desc">Level 1 service provider · pause-resume</span></div>
+            <div class="badge"><span class="b-name">GDPR</span><span class="b-desc">EU data protection · DPA on file</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -1015,6 +1340,92 @@
         return { init };
       })();
       demo.init();
+
+      // ====== LIVE TICKER — gentle wiggle on the numbers
+      (function ticker() {
+        const calls = document.getElementById("tk-calls");
+        const sent = document.getElementById("tk-sent");
+        const aht = document.getElementById("tk-aht");
+        const agents = document.getElementById("tk-agents");
+        if (!calls) return;
+        let n = 12847;
+        setInterval(() => {
+          n += Math.floor(Math.random() * 4) + 1;
+          calls.textContent = n.toLocaleString();
+          sent.textContent = "+" + (0.38 + Math.random() * 0.10).toFixed(2);
+          const ahtMin = 3 + Math.floor(Math.random() * 2);
+          const ahtSec = Math.floor(Math.random() * 60).toString().padStart(2, "0");
+          aht.textContent = ahtMin + "m " + ahtSec + "s";
+          agents.textContent = (1240 + Math.floor(Math.random() * 80)).toLocaleString();
+        }, 2400);
+      })();
+
+      // ====== ROI CALCULATOR
+      (function roi() {
+        const vol = document.getElementById("roi-vol");
+        const aht = document.getElementById("roi-aht");
+        const rate = document.getElementById("roi-rate");
+        const mix = document.getElementById("roi-mix");
+        if (!vol) return;
+        const volV = document.getElementById("roi-vol-v");
+        const ahtV = document.getElementById("roi-aht-v");
+        const rateV = document.getElementById("roi-rate-v");
+        const mixV = document.getElementById("roi-mix-v");
+        const savings = document.getElementById("roi-savings");
+        const curr = document.getElementById("roi-current");
+        const newC = document.getElementById("roi-new");
+        const qa = document.getElementById("roi-qa");
+        const total = document.getElementById("roi-total");
+        const fmtMoney = (n) => {
+          if (n >= 1e6) return "$" + (n / 1e6).toFixed(2) + "M";
+          if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K";
+          return "$" + Math.round(n);
+        };
+        function update() {
+          const v = +vol.value, a = +aht.value, r = +rate.value, m = +mix.value;
+          volV.textContent = (+v).toLocaleString();
+          ahtV.textContent = a.toFixed(1);
+          rateV.textContent = "$" + r.toFixed(2);
+          mixV.textContent = m + "%";
+          // current annual: 12 * volume * rate, with a small bilingual penalty for US centers
+          const usPenalty = 1 + (m / 100) * 0.12;
+          const current = 12 * v * r * usPenalty;
+          // centris: ~55% of US cost-per-call (45% savings on labor + real estate, but slight AI infra cost)
+          const centrisRate = r * 0.55;
+          const newCost = 12 * v * centrisRate;
+          const saved = current - newCost;
+          const pct = Math.round((saved / current) * 100);
+          curr.textContent = fmtMoney(current);
+          newC.textContent = fmtMoney(newCost);
+          qa.textContent = "+97 pts";
+          savings.innerHTML = fmtMoney(saved) + '<span class="unit">/ yr saved</span>';
+          total.textContent = fmtMoney(saved) + " · " + pct + "%";
+        }
+        [vol, aht, rate, mix].forEach((el) => el.addEventListener("input", update));
+        update();
+      })();
+
+      // ====== COVERAGE MAP
+      (function map() {
+        const cards = document.querySelectorAll(".map-card");
+        const pins = document.querySelectorAll(".map-svg .pin");
+        function activate(city) {
+          cards.forEach((c) => c.classList.toggle("active", c.dataset.city === city));
+        }
+        cards.forEach((c) => c.addEventListener("click", () => activate(c.dataset.city)));
+        pins.forEach((p) => p.addEventListener("click", () => activate(p.dataset.city)));
+      })();
+
+      // ====== FAQ ACCORDION
+      (function faq() {
+        document.querySelectorAll(".faq-item").forEach((item) => {
+          const btn = item.querySelector(".faq-q");
+          btn.addEventListener("click", () => {
+            const open = item.classList.toggle("open");
+            btn.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+        });
+      })();
     </script>
   </body>
 </html>
