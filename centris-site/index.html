@@ -20,12 +20,12 @@
         --primary-soft: #ff8a91;
         --secondary: #0017ff;
         --secondary-soft: #3a4cff;
-        --accent: #6674ff;
-        --accent-deep: #4a58e0;
-        --text: #060c44;
-        --bg: #060c44;
-        --bg-2: #050a3a;
-        --bg-3: #0a1054;
+        --accent: #5a6cf0;
+        --accent-deep: #3d4fd6;
+        --text: #0a1735;
+        --bg: #0a1735;
+        --bg-2: #061025;
+        --bg-3: #0f2042;
         --surface: rgba(255,255,255,0.03);
         --surface-2: rgba(255,255,255,0.06);
         --white: #ffffff;
@@ -45,15 +45,15 @@
         --bg: #f5f5f3;
         --bg-2: #ececea;
         --bg-3: #ffffff;
-        --surface: rgba(6,12,68,0.03);
-        --surface-2: rgba(6,12,68,0.06);
-        --white: #060c44;
-        --text: #060c44;
+        --surface: rgba(10,23,53,0.03);
+        --surface-2: rgba(10,23,53,0.06);
+        --white: #0a1735;
+        --text: #0a1735;
         --gray-1: #2b3170;
-        --gray-2: rgba(6,12,68,0.7);
-        --gray-3: rgba(6,12,68,0.45);
-        --line: rgba(6,12,68,0.09);
-        --line-2: rgba(6,12,68,0.16);
+        --gray-2: rgba(10,23,53,0.7);
+        --gray-3: rgba(10,23,53,0.45);
+        --line: rgba(10,23,53,0.09);
+        --line-2: rgba(10,23,53,0.16);
       }
       html[data-theme="light"] body { background: var(--bg); color: var(--text); }
       html[data-theme="light"] .bg-blob { opacity: 0.35; }
@@ -228,7 +228,7 @@
         position: sticky;
         top: 36px;
         z-index: 50;
-        background: rgba(6, 12, 68, 0.78);
+        background: rgba(10, 23, 53, 0.78);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--line);
@@ -402,17 +402,17 @@
         content: ""; position: absolute; inset: 0;
         background:
           linear-gradient(to right,
-            rgba(6, 12, 68, 0.96) 0%,
-            rgba(6, 12, 68, 0.92) 22%,
-            rgba(6, 12, 68, 0.55) 50%,
-            rgba(6, 12, 68, 0.1) 75%,
-            rgba(6, 12, 68, 0) 100%
+            rgba(10, 23, 53, 0.96) 0%,
+            rgba(10, 23, 53, 0.92) 22%,
+            rgba(10, 23, 53, 0.55) 50%,
+            rgba(10, 23, 53, 0.1) 75%,
+            rgba(10, 23, 53, 0) 100%
           );
         pointer-events: none;
       }
       .hero-bg::before {
         content: ""; position: absolute; inset: 0;
-        background: linear-gradient(180deg, rgba(6, 12, 68, 0) 60%, rgba(6, 12, 68, 0.92) 100%);
+        background: linear-gradient(180deg, rgba(10, 23, 53, 0) 60%, rgba(10, 23, 53, 0.92) 100%);
         pointer-events: none;
         z-index: 1;
       }
@@ -430,7 +430,7 @@
         .hero { min-height: 600px; }
         .hero-bg img { opacity: 0.45; }
         .hero-bg::after {
-          background: linear-gradient(180deg, rgba(6,12,68,0.7) 0%, rgba(6,12,68,0.92) 100%);
+          background: linear-gradient(180deg, rgba(10,23,53,0.7) 0%, rgba(10,23,53,0.92) 100%);
         }
       }
       .hero .h1-line {
@@ -483,7 +483,7 @@
       }
       html[data-theme="light"] .hero h1 { color: var(--text); }
       html[data-theme="light"] .hero .lead { color: var(--gray-2); }
-      html[data-theme="light"] .hero .h1-line { color: var(--text); background: rgba(6,12,68,0.05); border-color: rgba(6,12,68,0.12); }
+      html[data-theme="light"] .hero .h1-line { color: var(--text); background: rgba(10,23,53,0.05); border-color: rgba(10,23,53,0.12); }
 
       .hero .ctas {
         margin-top: 40px;
@@ -511,7 +511,7 @@
         right: 32px;
         top: 96px;
         padding: 12px 18px;
-        background: rgba(6, 12, 68, 0.72);
+        background: rgba(10, 23, 53, 0.72);
         border: 1px solid rgba(102, 116, 255, 0.4);
         border-radius: 12px;
         backdrop-filter: blur(20px);
@@ -547,7 +547,7 @@
       .hero-float-card {
         position: absolute;
         z-index: 3;
-        background: rgba(6, 12, 68, 0.78);
+        background: rgba(10, 23, 53, 0.78);
         border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: 12px;
         padding: 14px 16px;
@@ -767,7 +767,7 @@
         aspect-ratio: 1 / 1;
         max-width: 540px;
         margin: 0 auto;
-        background: radial-gradient(ellipse at center, rgba(10,16,84,0.6) 0%, rgba(6,12,68,0) 70%);
+        background: radial-gradient(ellipse at center, rgba(10,16,84,0.6) 0%, rgba(10,23,53,0) 70%);
         border: 1px solid var(--line);
         border-radius: 24px;
         overflow: hidden;
@@ -826,7 +826,7 @@
         position: absolute; z-index: 4;
         display: inline-flex; align-items: center; gap: 8px;
         padding: 7px 12px;
-        background: rgba(6, 12, 68, 0.78);
+        background: rgba(10, 23, 53, 0.78);
         border: 1px solid rgba(255, 255, 255, 0.14);
         border-radius: 9999px;
         backdrop-filter: blur(12px);
@@ -945,7 +945,7 @@
       .meta-pill {
         display: inline-flex; align-items: baseline; gap: 6px;
         padding: 6px 12px;
-        background: rgba(6, 12, 68, 0.72);
+        background: rgba(10, 23, 53, 0.72);
         border: 1px solid var(--line);
         border-radius: 9999px;
         backdrop-filter: blur(12px);
@@ -1328,14 +1328,14 @@
       .ind-card .pic::after {
         content: ""; position: absolute; inset: 0;
         background:
-          linear-gradient(180deg, rgba(6, 12, 68, 0.05) 0%, rgba(6, 12, 68, 0.55) 100%),
+          linear-gradient(180deg, rgba(10, 23, 53, 0.05) 0%, rgba(10, 23, 53, 0.55) 100%),
           linear-gradient(135deg, rgba(255, 70, 80, 0.15), transparent 50%, rgba(102, 116, 255, 0.25));
         mix-blend-mode: multiply; pointer-events: none;
       }
       .ind-card .pic .tag {
         position: absolute; left: 14px; bottom: 14px;
         padding: 5px 11px;
-        background: rgba(6, 12, 68, 0.7);
+        background: rgba(10, 23, 53, 0.7);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255,255,255,0.15);
@@ -1453,7 +1453,7 @@
       .loc .loc-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
       .loc .loc-pic::after {
         content: ""; position: absolute; inset: 0;
-        background: linear-gradient(90deg, rgba(6,12,68,0.3), rgba(6,12,68,0));
+        background: linear-gradient(90deg, rgba(10,23,53,0.3), rgba(10,23,53,0));
         pointer-events: none;
       }
       .loc .loc-body { padding: 22px 24px; align-self: center; }
@@ -1492,7 +1492,7 @@
       .case:hover .case-pic img { transform: scale(1.05); }
       .case .case-pic::after {
         content: ""; position: absolute; inset: 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(6, 12, 68, 0.6) 100%);
+        background: linear-gradient(180deg, transparent 0%, rgba(10, 23, 53, 0.6) 100%);
         pointer-events: none;
       }
       .case .case-body { padding: 36px 36px 36px; flex: 1; display: flex; flex-direction: column; }
