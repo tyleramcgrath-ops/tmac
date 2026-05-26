@@ -31,8 +31,8 @@
       header.nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(2, 4, 26, 0.65); border-bottom: 1px solid var(--line); }
       .nav-inner { max-width: 80rem; margin: 0 auto; padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
       .brand-mark { display: inline-flex; align-items: center; gap: 0.5rem; }
-      .brand-mark img { height: 28px; width: auto; display: block; }
-      .foot-brand .brand-mark img { height: 36px; }
+      .brand-mark img { height: 40px; width: auto; display: block; filter: brightness(0) invert(1); }
+      .foot-brand .brand-mark img { height: 48px; }
       .nav-links { display: none; gap: 2.25rem; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.65); }
       .nav-links a { transition: color 0.2s; }
       .nav-links a:hover { color: var(--fg); }
@@ -911,3 +911,6 @@
 .split-feature .copy p { color: var(--muted); font-size: 15px; line-height: 1.75; }
 .split-feature .img { aspect-ratio: 4 / 3; border-radius: 1rem; overflow: hidden; border: 1px solid var(--line); }
 .split-feature .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Logo — in light theme, restore original colors (navy wordmark + colored icon on white) */
+[data-theme="light"] .brand-mark img { filter: none; }
