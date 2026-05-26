@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Centris — Every conversation, on key.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #02041a;
+        --bg-2: #060d44;
+        --fg: #f5f6ff;
+        --muted: rgba(245, 246, 255, 0.55);
+        --quiet: rgba(245, 246, 255, 0.4);
+        --line: rgba(255, 255, 255, 0.1);
+        --blue: #0017ff;
+        --blue-2: #3a4cff;
+        --blue-3: #7a86ff;
+        --coral: #ff4550;
+        --coral-soft: #ff8a91;
+        --serif: "Instrument Serif", ui-serif, Georgia, serif;
+        --sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        font-feature-settings: "ss01" 1, "cv11" 1;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-weight: 400;
+      }
+      a { color: inherit; text-decoration: none; }
+      ::selection {
+        background: rgba(255, 255, 255, 0.18);
+        color: var(--fg);
+      }
+
+      /* layout helpers */
+      .wrap { max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; }
+      .border-t { border-top: 1px solid var(--line); }
+
+      /* type tokens */
+      .meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .display { font-family: var(--serif); font-style: italic; }
+      .nostyle-italic { font-style: italic; }
+
+      /* ----- HERO ----- */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100svh;
+        overflow: hidden;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+      }
+      .backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: -10;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      .glow-a, .glow-b, .vignette, .sweep {
+        position: absolute; inset: 0; pointer-events: none;
+      }
+      .glow-a {
+        background: radial-gradient(
+          ellipse 90% 70% at 22% 28%,
+          rgba(0, 23, 255, 0.32) 0%,
+          transparent 65%
+        );
+      }
+      .glow-b {
+        background: radial-gradient(
+          ellipse 65% 55% at 88% 110%,
+          rgba(255, 69, 80, 0.22) 0%,
+          transparent 60%
+        );
+      }
+      .vignette {
+        background: linear-gradient(
+          to bottom,
+          rgba(2, 4, 26, 0.55) 0%,
+          rgba(2, 4, 26, 0.3) 35%,
+          rgba(2, 4, 26, 0.85) 100%
+        );
+      }
+      .sweep {
+        opacity: 0.3;
+        background-image: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 120px 100%;
+        animation: sweep 22s linear infinite;
+      }
+      @keyframes sweep {
+        from { transform: translateX(0); }
+        to { transform: translateX(-120px); }
+      }
+
+      /* transcript columns */
+      .col {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 30rem;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 75%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 75%, transparent 100%);
+      }
+      .col-a { left: -22%; }
+      .col-b { left: 36%; }
+      .col-c { left: 78%; }
+      .col-inner {
+        display: flex;
+        flex-direction: column;
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 2.3;
+        color: rgba(255, 255, 255, 0.4);
+        will-change: transform;
+      }
+      .col-a .col-inner { animation: streamA 65s linear infinite; }
+      .col-b .col-inner { animation: streamB 65s linear infinite; }
+      .col-c .col-inner { animation: streamA 65s linear infinite -15s; }
+      @keyframes streamA {
+        from { transform: translateY(0%); }
+        to { transform: translateY(-50%); }
+      }
+      @keyframes streamB {
+        from { transform: translateY(-50%); }
+        to { transform: translateY(0%); }
+      }
+      .col-line { white-space: nowrap; padding: 0 1rem; display: block; }
+      .col-line .idx { color: rgba(255, 255, 255, 0.3); }
+      .col-line .txt { margin-left: 0.75rem; color: rgba(255, 255, 255, 0.6); }
+
+      /* nav */
+      header.nav {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 1.75rem 1.5rem 0;
+      }
+      .brand-mark {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        color: var(--fg);
+      }
+      .nav-links {
+        display: none;
+        gap: 2.25rem;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .nav-links a { transition: color 0.2s ease; }
+      .nav-links a:hover { color: var(--fg); }
+      @media (min-width: 768px) {
+        .nav-links { display: flex; }
+      }
+
+      /* CTAs */
+      .cta-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--coral);
+        color: white;
+        font-family: var(--sans);
+        font-weight: 500;
+        border-radius: 9999px;
+        transition: background 0.2s, box-shadow 0.3s, transform 0.2s;
+      }
+      .cta-primary:hover {
+        background: #ff5d68;
+        box-shadow: 0 0 60px -10px rgba(255, 69, 80, 0.6);
+      }
+      .cta-primary .arrow { transition: transform 0.2s; }
+      .cta-primary:hover .arrow { transform: translateX(2px); }
+      .cta-primary.md { height: 3rem; padding: 0 1.75rem; font-size: 15px; }
+      .cta-primary.sm { height: 2.25rem; padding: 0 1rem; font-size: 13px; }
+      .cta-quiet {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--sans);
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.8);
+        transition: color 0.2s;
+      }
+      .cta-quiet:hover { color: var(--fg); }
+      .cta-quiet u {
+        text-decoration: underline;
+        text-decoration-color: rgba(255, 255, 255, 0.3);
+        text-underline-offset: 4px;
+        transition: text-decoration-color 0.2s;
+      }
+      .cta-quiet:hover u { text-decoration-color: var(--fg); }
+      .cta-quiet .arrow-up {
+        transition: transform 0.2s;
+        transform: translateY(-1px);
+      }
+      .cta-quiet:hover .arrow-up { transform: translate(2px, -3px); }
+
+      /* hero content */
+      .hero-body {
+        position: relative;
+        z-index: 10;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 6rem 1.5rem 5rem;
+        width: 100%;
+      }
+      @media (min-width: 640px) { .hero-body { padding-top: 8rem; } }
+      @media (min-width: 1024px) { .hero-body { padding-bottom: 7rem; } }
+
+      h1.brand {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(4rem, 15vw, 15rem);
+        line-height: 0.85;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .hero-headline {
+        margin: 1.5rem 0 0;
+        max-width: 42rem;
+        font-family: var(--sans);
+        font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+        font-weight: 300;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .hero-sub {
+        margin: 1.75rem 0 0;
+        max-width: 32rem;
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hero-ctas {
+        margin: 2.5rem 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      @media (min-width: 640px) {
+        .hero-ctas { flex-direction: row; align-items: center; }
+      }
+
+      /* reveal animations on hero (CSS, no JS) */
+      .reveal-1, .reveal-2, .reveal-3, .reveal-4 {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: rise 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .reveal-1 { animation-delay: 0s; }
+      .reveal-2 { animation-delay: 0.35s; }
+      .reveal-3 { animation-delay: 0.55s; }
+      .reveal-4 { animation-delay: 0.75s; }
+      @keyframes rise {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ----- IN ACTION ----- */
+      .section { padding: 7rem 0; }
+      @media (min-width: 1024px) { .section { padding: 9rem 0; } }
+      .section h2 {
+        margin: 1.25rem 0 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: var(--fg);
+      }
+      .section p { font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.6); margin: 1.5rem 0 0; max-width: 30rem; }
+      .quiet { color: rgba(255, 255, 255, 0.45) !important; }
+      .two-col {
+        display: grid;
+        gap: 4rem;
+      }
+      @media (min-width: 768px) {
+        .two-col { grid-template-columns: 1fr 1.15fr; gap: 6rem; }
+        .two-col-wide { grid-template-columns: 1fr 2.1fr; }
+      }
+
+      /* session stream */
+      .session {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+      }
+      .session::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 0.5rem;
+        bottom: 0.5rem;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .session li {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+        padding-left: 1.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .session li:last-child { margin-bottom: 0; }
+      .session li::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        top: 0.5rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+      .session li.caller::before { background: rgba(255, 255, 255, 0.85); }
+      .session li.caller-es::before { background: rgba(255, 255, 255, 0.85); }
+      .session li.agent::before { background: var(--blue-2); }
+      .session li.suggest::before { background: var(--coral); }
+      .session li.crm::before { background: #34d399; }
+      .session li.note::before { background: rgba(255, 255, 255, 0.3); }
+      .session .role {
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-right: 0.75rem;
+      }
+      .session li.caller .role { color: rgba(255, 255, 255, 0.35); }
+      .session li.caller-es .role { color: rgba(255, 255, 255, 0.35); }
+      .session li.agent .role { color: var(--blue-3); }
+      .session li.suggest .role { color: rgba(255, 138, 145, 0.7); }
+      .session li .body { font-size: 15px; line-height: 1.7; }
+      .session li.caller .body { color: rgba(255, 255, 255, 0.85); }
+      .session li.caller-es .body { color: rgba(255, 255, 255, 0.75); font-style: italic; }
+      .session li.agent .body { color: var(--fg); }
+      .session li.suggest .body { color: var(--coral-soft); }
+      .session li.note,
+      .session li.crm {
+        font-family: var(--mono);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+      .session li.note .body { color: rgba(255, 255, 255, 0.4); font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; }
+      .session li.crm .body { color: rgba(110, 231, 183, 0.85); font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; }
+
+      /* scroll-reveal (set by IntersectionObserver) */
+      .ir { opacity: 0; transform: translateY(14px); transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+      .ir.in { opacity: 1; transform: translateY(0); }
+      .ir-left { transform: translateX(-8px); }
+      .ir-left.in { transform: translateX(0); }
+
+      /* solutions list */
+      .sols {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sols li {
+        display: grid;
+        gap: 0.5rem;
+        padding: 1.75rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      .sols li:first-child { border-top: none; padding-top: 0; }
+      @media (min-width: 640px) {
+        .sols li { grid-template-columns: 12rem 1fr; gap: 2.5rem; }
+        .sols li .label { padding-top: 0.25rem; }
+      }
+      .sols .label {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .sols h3 {
+        margin: 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(1.4rem, 2.3vw, 1.75rem);
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        color: var(--fg);
+        font-weight: 400;
+      }
+      .sols p {
+        margin: 0.75rem 0 0;
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.55);
+        max-width: 36rem;
+      }
+
+      /* industries ribbon */
+      .industries-list {
+        margin: 1.75rem 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.75rem 2.5rem;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        line-height: 1.1;
+        letter-spacing: -0.015em;
+      }
+      .industries-list span { color: rgba(255, 255, 255, 0.85); }
+      .industries-list .sep { margin-left: 2.5rem; color: rgba(255, 255, 255, 0.3); }
+
+      /* why centris */
+      .why-grid {
+        margin: 2.5rem 0 0;
+        display: grid;
+        gap: 3rem;
+      }
+      @media (min-width: 768px) {
+        .why-grid { grid-template-columns: repeat(3, 1fr); gap: 3.5rem; }
+      }
+      .why-grid h3 {
+        margin: 0;
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: var(--fg);
+        font-weight: 400;
+      }
+      .why-grid p {
+        margin: 1rem 0 0;
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      /* closing CTA */
+      .closing {
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+      .closing-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 60% 80% at 50% 110%, rgba(255, 69, 80, 0.2) 0%, transparent 60%),
+          radial-gradient(ellipse 70% 60% at 50% -10%, rgba(0, 23, 255, 0.18) 0%, transparent 65%);
+        pointer-events: none;
+      }
+      .closing-inner {
+        position: relative;
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 9rem 1.5rem;
+      }
+      .closing h2 {
+        font-family: var(--serif);
+        font-style: italic;
+        font-size: clamp(2.5rem, 7vw, 5.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        color: var(--fg);
+        margin: 0;
+        text-wrap: balance;
+      }
+      .closing-ctas {
+        margin: 3rem 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      @media (min-width: 640px) {
+        .closing-ctas { flex-direction: row; justify-content: center; }
+      }
+
+      /* footer */
+      footer {
+        border-top: 1px solid var(--line);
+      }
+      .foot {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1.25rem;
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: rgba(255, 255, 255, 0.4);
+      }
+      @media (min-width: 640px) {
+        .foot { flex-direction: row; align-items: center; }
+      }
+      .foot-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+      .foot-links a:hover { color: var(--fg); }
+      .brand-foot {
+        font-family: var(--serif);
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.7);
+        text-transform: none;
+        letter-spacing: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="backdrop">
+          <div class="glow-a"></div>
+          <div class="glow-b"></div>
+          <div class="col col-a"><div class="col-inner" id="col-a"></div></div>
+          <div class="col col-b"><div class="col-inner" id="col-b"></div></div>
+          <div class="col col-c"><div class="col-inner" id="col-c"></div></div>
+          <div class="sweep"></div>
+          <div class="vignette"></div>
+        </div>
+
+        <header class="nav">
+          <span class="brand-mark">Centris</span>
+          <nav class="nav-links">
+            <a href="#in-action">Product</a>
+            <a href="#solutions">Solutions</a>
+            <a href="#industries">Industries</a>
+            <a href="#why">Why Centris</a>
+          </nav>
+          <a class="cta-primary sm" href="#book">
+            Book a demo
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </header>
+
+        <div class="hero-body">
+          <h1 class="brand reveal-1">Centris</h1>
+          <p class="hero-headline reveal-2">
+            Every conversation,<span class="display"> on key.</span>
+          </p>
+          <p class="hero-sub reveal-3">
+            Centris listens to live customer conversations and tells your
+            agents the best thing to say — in any language, in the moment.
+          </p>
+          <div class="hero-ctas reveal-4">
+            <a class="cta-primary md" href="#book">
+              Book a demo
+              <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a class="cta-quiet" href="#in-action">
+              <u>See it work</u>
+              <svg class="arrow-up" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- IN ACTION -->
+      <section id="in-action" class="border-t">
+        <div class="wrap section two-col">
+          <div>
+            <span class="meta">01 — In action</span>
+            <h2>One conversation, end to end.</h2>
+            <p>
+              Centris hears the call as it happens — reads the tone, pulls
+              the relevant policy, suggests the next line. When the customer
+              switches languages, so does the agent. The CRM note writes
+              itself.
+            </p>
+            <p class="quiet">No copy-paste. No second screen. No after-call wrap-up.</p>
+          </div>
+          <ol class="session" id="session">
+            <li class="caller ir ir-left"><span class="body"><span class="role">customer</span>I called twice last week. Nobody got back to me.</span></li>
+            <li class="note ir ir-left"><span class="body">tone · frustrated · prior contacts · 2</span></li>
+            <li class="suggest ir ir-left"><span class="body"><span class="role">centris suggests</span>Acknowledge the wait. Offer expedited review with a hard timeline.</span></li>
+            <li class="agent ir ir-left"><span class="body"><span class="role">agent</span>I hear you — two weeks is too long. Let me mark this expedited, 48 hours.</span></li>
+            <li class="caller-es ir ir-left"><span class="body"><span class="role">customer · es</span>cliente — gracias, eso me ayuda mucho.</span></li>
+            <li class="note ir ir-left"><span class="body">sentiment shift · −0.4 → +0.3</span></li>
+            <li class="agent ir ir-left"><span class="body"><span class="role">agent</span>I'll send the confirmation in Spanish too.</span></li>
+            <li class="crm ir ir-left"><span class="body">CRM note logged · coverage-dispute · expedited · es-MX preference.</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- SOLUTIONS -->
+      <section id="solutions" class="border-t">
+        <div class="wrap section two-col two-col-wide">
+          <div>
+            <span class="meta">02 — Solutions</span>
+            <h2>Wherever the conversation is, Centris is there.</h2>
+          </div>
+          <ul class="sols">
+            <li class="ir">
+              <span class="label">Sales</span>
+              <div>
+                <h3>Stop losing the close to silence.</h3>
+                <p>Centris reads buying signals live and surfaces the offer that fits — discount, bundle, or escalation — before the moment passes.</p>
+              </div>
+            </li>
+            <li class="ir">
+              <span class="label">Customer support</span>
+              <div>
+                <h3>First-call resolution as the default.</h3>
+                <p>Policy, account, and history in one panel. The agent answers in their voice; Centris keeps the facts honest.</p>
+              </div>
+            </li>
+            <li class="ir">
+              <span class="label">QA &amp; compliance</span>
+              <div>
+                <h3>Every call, scored. No sampling.</h3>
+                <p>Rubrics run on every conversation in real time — not 3% picked after the fact. Coaching becomes specific, not vibes.</p>
+              </div>
+            </li>
+            <li class="ir">
+              <span class="label">Training</span>
+              <div>
+                <h3>Day-one agents sound like day-300 ones.</h3>
+                <p>Centris carries playbooks, tone, and brand voice. New hires learn by watching the system do the right thing.</p>
+              </div>
+            </li>
+            <li class="ir">
+              <span class="label">Knowledge base</span>
+              <div>
+                <h3>Documentation that updates itself.</h3>
+                <p>Every resolved call becomes a draft article. Reviewed, versioned, searchable — fed back into the next conversation.</p>
+              </div>
+            </li>
+            <li class="ir">
+              <span class="label">Reporting</span>
+              <div>
+                <h3>Why your numbers moved, not just where.</h3>
+                <p>Drivers per cohort, per agent, per topic. Trends pulled from the conversations themselves, not survey afterthoughts.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- INDUSTRIES -->
+      <section id="industries" class="border-t">
+        <div class="wrap" style="padding: 6rem 1.5rem;">
+          <span class="meta">03 — Industries</span>
+          <div class="industries-list" id="industries-list">
+            <span class="ir">Health insurance</span><span class="sep ir">·</span>
+            <span class="ir">Energy &amp; utilities</span><span class="sep ir">·</span>
+            <span class="ir">Property &amp; casualty</span><span class="sep ir">·</span>
+            <span class="ir">Financial services</span><span class="sep ir">·</span>
+            <span class="ir">Telecom</span><span class="sep ir">·</span>
+            <span class="ir">Logistics</span><span class="sep ir">·</span>
+            <span class="ir">Public sector</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY CENTRIS -->
+      <section id="why" class="border-t">
+        <div class="wrap section">
+          <span class="meta">04 — Why Centris</span>
+          <div class="why-grid">
+            <div class="ir">
+              <h3>Bilingual by default.</h3>
+              <p>English ↔ Spanish at native quality. Translation is not a feature toggle — it's the floor.</p>
+            </div>
+            <div class="ir">
+              <h3>Live, not lagged.</h3>
+              <p>Suggestions land while the customer is still talking. Sub-second from utterance to assist.</p>
+            </div>
+            <div class="ir">
+              <h3>Auditable to the line.</h3>
+              <p>Every suggestion, every translation, every CRM note — traceable to the call, the policy, the moment.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLOSING CTA -->
+      <section class="closing border-t">
+        <div class="closing-bg"></div>
+        <div class="closing-inner">
+          <h2 class="ir">
+            Hear what your agents<br />could be saying.
+          </h2>
+          <div class="closing-ctas ir">
+            <a class="cta-primary md" href="#book">
+              Book a 15-minute demo
+              <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a class="cta-quiet" href="#in-action">
+              <u>Or watch a live call</u>
+              <svg class="arrow-up" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="foot">
+          <span>
+            <span class="brand-foot">Centris</span> — customer service, conducted
+          </span>
+          <div class="foot-links">
+            <a href="#">Product</a>
+            <a href="#">Security</a>
+            <a href="#">Pricing</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      // Ambient transcript stream: hydrate the three columns
+      const TRANSCRIPT = [
+        "caller — hola, mi póliza no cubrió la consulta",
+        "agent · spanish — vamos a revisarla ahora mismo",
+        "centris — claim 80214 · denied (out-of-network)",
+        "centris.suggest — 'puedo pedir una revisión de cobertura'",
+        "caller — okay, but I waited two weeks for someone",
+        "centris.tone — escalating · soften, acknowledge",
+        "centris.suggest — 'I hear you, two weeks is too long'",
+        "centris.next — offer expedited review · 48-hour SLA",
+        "agent — 'I'll mark this expedited, 48 hours'",
+        "centris.crm — note logged · category: coverage-dispute",
+        "caller — alright, that works for me",
+        "centris.summary — resolved · sentiment +0.3 · 6m12s",
+        "caller — and could someone call me in Spanish next time",
+        "centris.crm — preference flag · language: es-MX",
+        "centris.handoff — back to queue · 47 calls waiting",
+      ];
+      function buildColumn(id) {
+        const target = document.getElementById(id);
+        if (!target) return;
+        const lines = [];
+        // Triplicate the lines so the -50% translate loops seamlessly
+        for (let pass = 0; pass < 3; pass++) {
+          TRANSCRIPT.forEach((text, i) => {
+            const idx = String(((pass * TRANSCRIPT.length + i) % 99) + 1).padStart(2, "0");
+            lines.push(
+              `<span class="col-line"><span class="idx">${idx}</span><span class="txt">${text}</span></span>`
+            );
+          });
+        }
+        target.innerHTML = lines.join("");
+      }
+      buildColumn("col-a");
+      buildColumn("col-b");
+      buildColumn("col-c");
+
+      // Scroll-triggered reveals (replaces framer-motion whileInView)
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              // Stagger items within the same parent if they're siblings
+              const idx = Array.from(e.target.parentNode.children).indexOf(e.target);
+              const delay = Math.min(idx, 8) * 70;
+              setTimeout(() => e.target.classList.add("in"), delay);
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { rootMargin: "-80px 0px -80px 0px", threshold: 0.05 }
+      );
+      document.querySelectorAll(".ir").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

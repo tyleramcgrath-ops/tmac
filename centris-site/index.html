@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Centris — Leader in Contact Center Solutions, Built for a Human-First AI Future</title>
+    <meta
+      name="description"
+      content="Over 30 years of bilingual contact center expertise. Up to 45% savings versus U.S.-based centers. Centris blends human agents with AI to deliver smarter, more empathetic customer care."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/webp" href="centris-logo.webp" />
+  </head>
+
+  <body>
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
+    <!-- LIVE METRICS TICKER -->
+    <div class="ticker" aria-label="Live operations metrics">
+      <div class="ticker-inner">
+        <span class="ticker-dot"></span>
+        <span class="ticker-label">Live</span>
+        <div class="ticker-track">
+          <div class="ticker-items">
+            <span>Calls handled today · <b id="tk-calls">12,847</b></span>
+            <span>Avg sentiment · <b id="tk-sent">+0.42</b></span>
+            <span>QA coverage · <b>100%</b></span>
+            <span>Avg handle time · <b id="tk-aht">4m 12s</b></span>
+            <span>Bilingual agents online · <b id="tk-agents">1,284</b></span>
+            <span>First-call resolution · <b>91.3%</b></span>
+            <span>Calls handled today · <b>12,847</b></span>
+            <span>Avg sentiment · <b>+0.42</b></span>
+            <span>QA coverage · <b>100%</b></span>
+            <span>Avg handle time · <b>4m 12s</b></span>
+            <span>Bilingual agents online · <b>1,284</b></span>
+            <span>First-call resolution · <b>91.3%</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="index.html" class="brand-mark" aria-label="Centris"><img src="data:image/webp;base64,UklGRloGAABXRUJQVlA4WAoAAAAQAAAApQAAMwAAQUxQSD0DAAABoFVtexbneiTgoK8EHAwOWgfgABxkHLAdZDtAQiREwivhlfAc5OcN7TccR8QEYOS8x6xGUtO5Cp7pchqdesrzkMShaXkWU+TwJA/iMN4YHsN08c6ApyjKOwOeoijvDHiKorwzoDql+dOJ8s6AqmSqfLjEG3NAVZRknj7amzdG1EVZnp9MONJUlWRAXZT15YMlX9q/UM7fqIuymT/XRm9+wS3KzvVjJc8Jvyh79d8niVkGzHTu8IuyfxmzvJOSls7lH5BJpgHREeAXpTOOmBM7s/w5lgO0L8IvSq8NOOhc/1oimX0zu1V8ovQvrjedNv8WkoxDRJnFt/edcIty4O5ZWLVzXUMibcZfG3z2iUuUI6NHK9eEctMZ/6bUleAV5dDs+GF5oTmhvSUjc5TWcipJy1F60rZtAGKMUSQZi0gy1paopKVVoF3BI8qx6ogVabVnZfOobexcO0oAJLkqaZ7/2NTDur4ds3G0IxcX3LOx8yiE3fMQJamONzsDu199s/F3sNx9StL21yuStAlArJhVziGlx0jqvkZlwA2Rv2l1bSRVACCRDAByEYBQaOv6+vpq2f6a+4QkVwCywvHdh/BLrNhdieQl5U4yASBJBQAjyVZEtSKot6ZCzwWldu0O/OggdWhxuYz91khFGhbhQmI9rZ7ogeiY5DgLmzz0/o4wQHKNPHF1mQsIQy7HUvBqzRUjqanzrwDbpRUeZxcXHzYbsDuQCl5SOfguEsmE/j8CYD6L9NOXBkDU9/IsFfIK25lJRgCBJN/FoXJLuulcAUBJ5qmPPwMwRY/CfdQ6L2AyktQYE8kog5Qkr3je8D+Z9i2SZETqMxkABEf04XDYDGApmjrqLEgd9z97BXsfVUZAtOs1AJJ6kqCctZUFgya9a9GWrcBkfVQZAbk6FGPlTEZaCi+0t8tIvb5RHQGJmdTo6/2OmbQcJgAIDuo6AgitddAnnMxBprU1bdLAj1YyPndwkXaFbdvCZdS5AdFCPhiyr9vWBnCSAZ9c7A7y3cJx4bNv9/Bsff5wD7M8BYR7qPIUEO6hzk8Bxz3k8RQgeovtjwEIN+QZT1LiIAt4mrJnn4YJT1S2M6kVqinuMx4hAFZQOCD2AgAAUBAAnQEqpgA0AD6RQJhJJaQiISo1vIiwEglmCHKxjQWlg9+m85Wxf4nir0IdofMB8HfVH4pfTV8wH7ZesB/p/Vh6AHSO+gB+tfpr+xz+4XpVAI0HW1OuIh7BKc+tlU2EG3c9pz7xiEy4hwmS2vrGaFMiRk6HoRNLaV4hMwD2aZuQpjtw2J4iYipiAAD+axULKw73xZ/5zu7c6cz8Kyn9y6jfrxJ+Hlr05mVmbEKPgTv9quR0GxaJW2+7Pl8AY1q7Clh0oS9ZrW90xnH2+Szy86R4xQlFOq45RZR38/tDveDoHlavpLb2gfmZ6MJM0/iDJuOkQN32hEDv8TliU2DB/19gFLRnwmnDvCSQHmxv9S7Aif4Gf1+3xe/9b4fzNhnSL8sj1UvtWcPj4C7Pw//05voL//aWWjs2zIhnTmBMG3QbsL0c6AdfAqmoXUD7Zsft3yyjIOa0v6o7ItcGvloPEdmktmsJc8UV40UyeWTWck2iYhB90D+FVZwTL0ovepmBvGmgGiKjDzv3bOCaDZicQplwq9GQ3M/xkLlCmvlK76mYFBamg/qAEf5k9crw4gq2UVVeZwC0PLIKI2X9XvnZmgWHjqvQtC1fh75iHVyXZfjU4AvRHQvyZe5c30O3yb7cKHOx9S62Ip3msyUeIiyrT3KnGoTKei8P/OuE94fXz94LHm3gnbyC2LkSBqXbdTDU8Ck16hD/C7sumGj6LC5cJby7p9LhOqWE/RxUWpWQ9A5wIUMaxeI8o2GpL0QP7n+NI5PyG/8NC11Qs3vMH3ZLqDmHq/ZeW5Rv91zGPnA1tbWEvG6VxaNPnDCaM9l/WfuNPb0ypwF3JTT09lMsL/4GOpenHYBcR5FK38d0W6P/K50BxZpCDZ83O0pGbsWoYibjB3cAmuxo//vK9vo74OruV9XZS4cVZerSFfYv/oclHfrJZIEyRvuNBdsdwlx/mLNKj/Zfvv/fSTD7AEvnoiOxJZPjfZj82/3z9wIJuf7wAAAAAAAAAAA=" alt="Centris" /></a>
+        <nav class="nav-links">
+          <span class="has-dropdown"><a href="services.html" data-i18n="nav.services">Services</a>
+            <div class="nav-dropdown" role="menu">
+              <a href="service-ai-call-center.html"><span class="num">01</span><span data-i18n="service.ai-call-center.name">AI Call Center</span></a>
+              <a href="service-customer-support.html"><span class="num">02</span><span data-i18n="service.customer-support.name">Customer Support</span></a>
+              <a href="service-bpo.html"><span class="num">03</span><span data-i18n="service.bpo.name">Business Process Outsourcing</span></a>
+              <a href="service-inbound-sales.html"><span class="num">04</span><span data-i18n="service.inbound-sales.name">Inbound Sales</span></a>
+              <a href="service-live-chat.html"><span class="num">05</span><span data-i18n="service.live-chat.name">Live Chat</span></a>
+              <a href="service-marketing-surveys.html"><span class="num">06</span><span data-i18n="service.marketing-surveys.name">Marketing Surveys</span></a>
+              <a href="service-quality-assurance.html"><span class="num">07</span><span data-i18n="service.quality-assurance.name">Quality Assurance</span></a>
+              <a href="service-soft-collections.html"><span class="num">08</span><span data-i18n="service.soft-collections.name">Soft Collections</span></a>
+              <a href="service-tier-1-tech.html"><span class="num">09</span><span data-i18n="service.tier-1-tech.name">Tier 1 Tech Support</span></a>
+              <a class="all-link" href="services.html" data-i18n="nav.all_services">View all services</a>
+            </div>
+          </span>
+          <span class="has-dropdown"><a href="industries.html" data-i18n="nav.industries">Industries</a>
+            <div class="nav-dropdown" role="menu">
+              <a href="industry-insurance.html"><span data-i18n="industry.insurance.name">Insurance</span></a>
+              <a href="industry-healthcare.html"><span data-i18n="industry.healthcare.name">Healthcare</span></a>
+              <a href="industry-retail.html"><span data-i18n="industry.retail.name">Retail &amp; E-commerce</span></a>
+              <a href="industry-security.html"><span data-i18n="industry.security.name">Security</span></a>
+              <a href="industry-utilities.html"><span data-i18n="industry.utilities.name">Utilities</span></a>
+              <a href="industry-finance.html"><span data-i18n="industry.finance.name">Finance</span></a>
+              <a class="all-link" href="industries.html" data-i18n="nav.all_industries">View all industries</a>
+            </div>
+          </span>
+          <a href="case-studies.html" data-i18n="nav.cases">Case Studies</a>
+          <a href="about.html" data-i18n="nav.about">About</a>
+          <a href="resources.html" data-i18n="nav.resources">Resources</a>
+        </nav>
+        <div class="nav-tools">
+          <button class="lang-toggle" aria-label="Toggle language"><span class="active-lang">EN</span></button>
+          <button class="theme-toggle" aria-label="Toggle theme">
+            <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <a class="cta-primary sm" href="contact.html" data-i18n="nav.cta">Book a demo
+            <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO with real photo background -->
+    <section class="hero">
+      <div class="hero-bg-photo">
+        <img src="centris-hero.webp" alt="Centris bilingual customer service professional powered by AI" />
+      </div>
+      <div class="hero-bg"><div class="grid-sweep"></div></div>
+      <div class="hero-grid">
+        <div>
+          <p class="meta reveal r1" data-i18n="hero.label">Say hello to Centris</p>
+          <h1 class="reveal r2"><span data-i18n="hero.h1">Leader in Contact Center Solutions,</span><br /><span class="accent" data-i18n="hero.h1b">Built for a Human-First AI Future.</span></h1>
+          <p class="hero-sub reveal r4" data-i18n="hero.sub">For more than 30 years, Centris has provided dedicated bilingual contact center teams that operate as a seamless extension of the organizations we support. Our agents deliver consistent, professional service powered by Sophia — our in-call AI assistant — strengthening customer relationships, improving efficiency, and helping your business grow with confidence.</p>
+          <div class="hero-ctas reveal r5">
+            <a class="cta-primary md" href="#contact" data-i18n="hero.cta1">Book a demo
+              <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            <a class="cta-quiet" href="#in-action"><u data-i18n="hero.cta2">See Live QA in action</u>
+              <svg class="ico" viewBox="0 0 24 24" style="transform:translateY(-1px)"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          </div>
+        </div>
+        <div class="hero-stats reveal r5">
+          <div class="stat"><span class="n">Up to <span class="italic">45<span class="small">%</span></span></span><span class="lbl">savings versus<br />U.S.-based contact centers</span></div>
+          <div class="stat"><span class="n"><span class="italic">30<span class="small">+</span></span></span><span class="lbl">years delivering<br />nearshore contact-center work</span></div>
+          <div class="stat"><span class="n"><span class="italic">5<span class="small">k+</span></span></span><span class="lbl">happy customers<br />across North America</span></div>
+          <div class="stat"><span class="n"><span class="italic">2</span></span><span class="lbl" data-i18n-html="hero.stat.locs.lbl">nearshore locations<br />Monterrey · Aguascalientes</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGO WALL -->
+    <section class="logos border-t">
+      <p class="logos-label">Trusted across insurance, healthcare, retail, security & more</p>
+      <div class="logos-track-wrap">
+        <div class="logos-track">
+          <span class="logo">Northwind Insurance</span>
+          <span class="logo sans">MERIDIAN HEALTH</span>
+          <span class="logo mono">/ acme &amp; co.</span>
+          <span class="logo">Coastal Utilities</span>
+          <span class="logo sans">SentinelGuard</span>
+          <span class="logo">Rivera Retail Group</span>
+          <span class="logo mono">parkflow.</span>
+          <span class="logo sans">CASCADE QSR</span>
+          <span class="logo">Atlas Warranty</span>
+          <span class="logo mono">tier1.tech</span>
+          <span class="logo">Sterling Auto Finance</span>
+          <span class="logo sans">VEREDA TELECOM</span>
+          <!-- duplicate for seamless loop -->
+          <span class="logo">Northwind Insurance</span>
+          <span class="logo sans">MERIDIAN HEALTH</span>
+          <span class="logo mono">/ acme &amp; co.</span>
+          <span class="logo">Coastal Utilities</span>
+          <span class="logo sans">SentinelGuard</span>
+          <span class="logo">Rivera Retail Group</span>
+          <span class="logo mono">parkflow.</span>
+          <span class="logo sans">CASCADE QSR</span>
+          <span class="logo">Atlas Warranty</span>
+          <span class="logo mono">tier1.tech</span>
+          <span class="logo">Sterling Auto Finance</span>
+          <span class="logo sans">VEREDA TELECOM</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI CAPABILITIES PILLARS -->
+    <section class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.pillars.label">00 — How it works</p>
+          <h2>Four AI pillars<br /><span class="accent">behind every conversation.</span></h2>
+          <p>Sophia is more than a transcript engine. She listens, reads the room, suggests the next move, and scores every interaction — in real time, bilingually.</p>
+        </div>
+        <div class="ai-pillars">
+          <div class="pillar ir"><span class="pn">01</span><h3>Real-time transcription</h3><p>Every word captured, in English and Spanish, with sub-second latency. Full record, every call, every channel.</p><div class="footer">EN · ES · LIVE</div></div>
+          <div class="pillar ir"><span class="pn">02</span><h3>Sentiment analysis</h3><p>Live read on tone — frustrated, recovering, advocating — surfaced as the call moves. Coaching becomes specific, not vibes.</p><div class="footer">−1.0 to +1.0 · realtime</div></div>
+          <div class="pillar ir"><span class="pn">03</span><h3>Sophia, your assistant</h3><p>Suggests the right line, the right policy, the right escalation. Agents stay in control. Accept, rewrite, or skip.</p><div class="footer">conf 0.94 avg</div></div>
+          <div class="pillar ir"><span class="pn">04</span><h3>Auto-scored QA</h3><p>AI and machine learning score every interaction across every channel. No sampling, no surprises, no missed coaching moments.</p><div class="footer">100% coverage</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IN ACTION — interactive demo -->
+    <section id="in-action" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.action.label">01 — In action</p>
+          <h2>What human-first AI<br /><span class="accent">actually sounds like.</span></h2>
+          <p>Centris hears each call as it happens. Sentiment, language, and policy context arrive at the agent before the next breath. Sophia suggests what to say — your agents stay in their voice. The CRM note writes itself.</p>
+        </div>
+
+        <div class="in-action-grid">
+          <ol class="live-points">
+            <li class="live-point ir"><span class="pn">01</span><div><span class="pt">Listen in real time.</span><p class="pd">Live transcription across English and Spanish. Tone, sentiment, and intent extracted as the conversation unfolds — no after-call review.</p></div></li>
+            <li class="live-point ir"><span class="pn">02</span><div><span class="pt">Suggest the next line.</span><p class="pd">Sophia pulls the right policy, the right offer, the right empathy — surfaced where the agent is already looking. Accept or rewrite.</p></div></li>
+            <li class="live-point ir"><span class="pn">03</span><div><span class="pt">Score every call.</span><p class="pd">Every conversation, on every channel, against your rubric. No sampling. Coaching becomes specific, not vibes.</p></div></li>
+            <li class="live-point ir"><span class="pn">04</span><div><span class="pt">Close the loop in the CRM.</span><p class="pd">The call ends — the note is already written, the next step already proposed. Your agents move to the next conversation, not the next form.</p></div></li>
+          </ol>
+
+          <div class="dashboard ir" id="sophiaDemo">
+            <div class="dash-bar">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <span class="title">Sophia · <span id="demoCallTitle">Insurance Claim</span> · <span id="demoTimer">00:00</span></span>
+              <span class="right"><span id="demoStatus">idle</span><span class="live" id="demoLiveDot" style="opacity:0.3"></span></span>
+            </div>
+            <div class="dash-tabs">
+              <button class="dash-tab active" data-scenario="insurance">Insurance</button>
+              <button class="dash-tab" data-scenario="healthcare">Healthcare</button>
+              <button class="dash-tab" data-scenario="billing">Billing</button>
+              <button class="dash-tab" data-scenario="sales">Inbound Sales</button>
+            </div>
+            <div class="dash-body">
+              <div class="dash-row">
+                <span class="ttl">
+                  <span>Live transcript</span>
+                  <span class="waveform" id="demoWave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                </span>
+                <div class="dash-transcript" id="demoConvo">
+                  <div class="dt-empty" id="demoEmpty">Press play to start the call simulation →</div>
+                </div>
+              </div>
+              <div class="dash-row">
+                <span class="ttl">Sentiment over time</span>
+                <div class="sparkline">
+                  <svg viewBox="0 0 240 60" preserveAspectRatio="none">
+                    <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff4650" stop-opacity="0.35"/><stop offset="100%" stop-color="#ff4650" stop-opacity="0"/></linearGradient></defs>
+                    <path id="demoSparkFill" d="" fill="url(#sparkGrad)"/>
+                    <path id="demoSparkLine" d="" stroke="#ff4650" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="dash-row">
+                <span class="ttl">Live signals</span>
+                <div class="dash-signals">
+                  <div class="signal"><div class="lbl">Sentiment</div><div class="val" id="demoSent">0.0</div><div class="meter"><div class="fill" id="demoSentMeter" style="width:50%;"></div></div></div>
+                  <div class="signal"><div class="lbl">Language</div><div class="val" id="demoLang">—</div><div class="meter"><div class="fill" style="width:100%;background:var(--blue-3);"></div></div></div>
+                  <div class="signal"><div class="lbl">QA score</div><div class="val" id="demoQa">—</div><div class="meter"><div class="fill" id="demoQaMeter" style="width:0%;"></div></div></div>
+                </div>
+              </div>
+              <div class="dash-row" id="demoSuggestRow" hidden>
+                <span class="ttl">Sophia suggests · next line</span>
+                <div class="sophia-card ai-suggest">
+                  <div class="head" id="demoSuggestHead">Recommended response · conf 0.94</div>
+                  <div class="text" id="demoSuggestText"></div>
+                  <div class="actions">
+                    <button class="sug-btn acc" id="demoAcceptBtn">↵ Accept</button>
+                    <button class="sug-btn" id="demoRewriteBtn">esc Rewrite</button>
+                    <button class="sug-btn" id="demoSkipBtn">↑ Skip</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="demo-controls">
+              <button class="demo-btn primary" id="demoPlayBtn">
+                <svg class="ico" viewBox="0 0 24 24" style="width:12px;height:12px;"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/></svg>
+                <span id="demoPlayLabel">Play call</span>
+              </button>
+              <button class="demo-btn" id="demoReplayBtn">
+                <svg class="ico" viewBox="0 0 24 24" style="width:12px;height:12px;"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                Replay
+              </button>
+              <button class="demo-btn" id="demoVoiceBtn" aria-pressed="true" title="Toggle voice playback">
+                <svg class="ico" viewBox="0 0 24 24" style="width:12px;height:12px;" id="voiceIco"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                <span id="demoVoiceLabel">Voice on</span>
+              </button>
+              <span class="demo-hint" id="demoHint">Pick a scenario, then press play.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKFLOW -->
+    <section class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.workflow.label">02 — Handoff</p>
+          <h2><span class="accent">AI handles the load.</span><br/>Humans handle the moment.</h2>
+          <p>A live call moves through five steps. AI does what AI is good at; trained bilingual agents do what humans are good at. Neither replaces the other — they hand off in milliseconds.</p>
+        </div>
+        <div class="workflow-steps">
+          <div class="wf-step ai ir"><div class="wf-num">01</div><span class="who">AI</span><h4>Listen</h4><p>Sophia transcribes the call — EN/ES — and detects tone, intent, and language shift.</p></div>
+          <div class="wf-step ai ir"><div class="wf-num">02</div><span class="who">AI</span><h4>Analyze</h4><p>Pull customer history, relevant policy, prior contacts, and sentiment trajectory in under a second.</p></div>
+          <div class="wf-step ai ir"><div class="wf-num">03</div><span class="who">AI</span><h4>Suggest</h4><p>Surface the next line, the right offer, the right escalation — with a confidence score.</p></div>
+          <div class="wf-step human ir"><div class="wf-num">04</div><span class="who">Human</span><h4>Decide</h4><p>The agent stays in their voice. Accept, rewrite, or take the call somewhere only a human can.</p></div>
+          <div class="wf-step ai ir"><div class="wf-num">05</div><span class="who">AI</span><h4>Document</h4><p>The CRM note writes itself. Sentiment shift, action items, language preference — logged before the call ends.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.services.label">03 — Services</p>
+          <h2>Bilingual support teams,<br /><span class="accent">across every channel.</span></h2>
+          <p>Centris delivers human expertise and AI-driven efficiency in one package — helping organizations improve service quality, reduce costs, and scale operations without compromise.</p>
+        </div>
+        <div class="svc-grid">
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #6674FF; background: linear-gradient(135deg, #1a1f5c 0%, #060c44 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <defs><radialGradient id="ai1" cx="50%" cy="50%"><stop offset="0%" stop-color="#6674FF" stop-opacity="0.6"/><stop offset="100%" stop-color="#6674FF" stop-opacity="0"/></radialGradient></defs>
+                <circle cx="200" cy="100" r="80" fill="url(#ai1)"/>
+                <g stroke="#6674FF" stroke-width="1" fill="none" opacity="0.6">
+                  <line x1="80" y1="60" x2="200" y2="100"/><line x1="200" y1="100" x2="320" y2="60"/>
+                  <line x1="200" y1="100" x2="80" y2="140"/><line x1="200" y1="100" x2="320" y2="140"/>
+                  <line x1="80" y1="60" x2="80" y2="140"/><line x1="320" y1="60" x2="320" y2="140"/>
+                  <line x1="200" y1="40" x2="200" y2="100"/><line x1="200" y1="100" x2="200" y2="160"/>
+                </g>
+                <g fill="#6674FF"><circle cx="80" cy="60" r="4"/><circle cx="320" cy="60" r="4"/><circle cx="80" cy="140" r="4"/><circle cx="320" cy="140" r="4"/><circle cx="200" cy="40" r="4"/><circle cx="200" cy="160" r="4"/></g>
+                <circle cx="200" cy="100" r="10" fill="#FF4650"/>
+                <circle cx="200" cy="100" r="18" fill="none" stroke="#FF4650" stroke-width="1" opacity="0.5"><animate attributeName="r" values="10;30;10" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/></circle>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">01</span>
+            <div class="svc-corner"><span class="dot live"></span></div>
+            <div class="svc-body">
+              <h3>AI Call Center</h3>
+              <p>Where humans are powered by AI. Centris blends AI efficiency with real bilingual agents to deliver smarter, more empathetic customer care — at the speed of live conversation.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #FF8A91; background: linear-gradient(135deg, #4a1620 0%, #060c44 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g fill="none" stroke="#FF4650" stroke-width="1.5" opacity="0.5">
+                  <circle cx="200" cy="100" r="30"/><circle cx="200" cy="100" r="55"/><circle cx="200" cy="100" r="80"/><circle cx="200" cy="100" r="105"/>
+                </g>
+                <path d="M 60 100 Q 100 60 140 100 T 220 100 T 300 100 T 380 100" fill="none" stroke="#FF8A91" stroke-width="2" opacity="0.8"/>
+                <circle cx="200" cy="100" r="14" fill="#FF4650"/>
+                <circle cx="200" cy="100" r="6" fill="white"/>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">02</span>
+            <div class="svc-corner"><span class="dot"></span><span class="dot"></span></div>
+            <div class="svc-body">
+              <h3>Customer Support</h3>
+              <p>Nearshore bilingual support across voice, chat, and email. Our agents work as a seamless extension of your team, in your tone, on your hours.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #34d399; background: linear-gradient(135deg, #073227 0%, #060c44 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g fill="#34d399" opacity="0.4">
+                  <rect x="40" y="80" width="20" height="40" rx="2"/><rect x="80" y="60" width="20" height="80" rx="2"/><rect x="120" y="40" width="20" height="120" rx="2"/><rect x="160" y="70" width="20" height="60" rx="2"/><rect x="200" y="50" width="20" height="100" rx="2"/><rect x="240" y="65" width="20" height="70" rx="2"/><rect x="280" y="45" width="20" height="110" rx="2"/><rect x="320" y="75" width="20" height="50" rx="2"/><rect x="360" y="55" width="20" height="90" rx="2"/>
+                </g>
+                <g fill="#34d399"><rect x="120" y="40" width="20" height="120" rx="2"/><rect x="200" y="50" width="20" height="100" rx="2"/><rect x="280" y="45" width="20" height="110" rx="2"/></g>
+                <line x1="20" y1="180" x2="380" y2="180" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">03</span>
+            <div class="svc-corner"><span class="dot"></span></div>
+            <div class="svc-body">
+              <h3>Business Process Outsourcing</h3>
+              <p>Skilled teams in Mexico take on the back-office work that slows you down — so your in-house operation can focus on the work only you can do.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #34d399; background: linear-gradient(135deg, #0c2f24 0%, #0017ff 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="up1" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#34d399" stop-opacity="0"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.5"/></linearGradient></defs>
+                <path d="M 20 160 L 80 130 L 140 140 L 200 90 L 260 70 L 320 40 L 380 30 L 380 200 L 20 200 Z" fill="url(#up1)"/>
+                <polyline points="20,160 80,130 140,140 200,90 260,70 320,40 380,30" fill="none" stroke="#34d399" stroke-width="2.5"/>
+                <g fill="#34d399"><circle cx="80" cy="130" r="3"/><circle cx="140" cy="140" r="3"/><circle cx="200" cy="90" r="3"/><circle cx="260" cy="70" r="3"/><circle cx="320" cy="40" r="3"/><circle cx="380" cy="30" r="5" stroke="white" stroke-width="2"/></g>
+                <text x="350" y="22" font-family="JetBrains Mono" font-size="11" fill="#34d399" font-weight="500">+38%</text>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">04</span>
+            <div class="svc-corner"><span class="dot live"></span></div>
+            <div class="svc-body">
+              <h3>Inbound Sales</h3>
+              <p>Increase customer retention, lift conversion, win market share. Our teams handle the moment your customer's ready to buy — in either language.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #7a86ff; background: linear-gradient(135deg, #1a1f7c 0%, #4a1620 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g><rect x="40" y="40" width="180" height="60" rx="20" fill="#6674FF" opacity="0.85"/><circle cx="60" cy="115" r="3" fill="#6674FF"/><circle cx="72" cy="115" r="3" fill="#6674FF"/><circle cx="84" cy="115" r="3" fill="#6674FF"/></g>
+                <g><rect x="180" y="120" width="200" height="60" rx="20" fill="#FF4650" opacity="0.9"/><circle cx="370" cy="105" r="3" fill="#FF4650"/><circle cx="358" cy="105" r="3" fill="#FF4650"/><circle cx="346" cy="105" r="3" fill="#FF4650"/></g>
+                <text x="55" y="76" font-family="Inter" font-size="14" fill="white" font-weight="500">Hi! Can you help?</text>
+                <text x="195" y="156" font-family="Inter" font-size="14" fill="white" font-weight="500">Absolutely — here for you.</text>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">05</span>
+            <div class="svc-corner"><span class="dot live"></span></div>
+            <div class="svc-body">
+              <h3>Live Chat</h3>
+              <p>A personalized approach to building rapport, optimized for retention. Steal share from competitors who can't match the same level of care.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #FF4650; background: linear-gradient(135deg, #4a2810 0%, #060c44 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g fill="#FF4650"><circle cx="50" cy="50" r="4" opacity="0.3"/><circle cx="100" cy="80" r="6" opacity="0.6"/><circle cx="150" cy="40" r="3" opacity="0.4"/><circle cx="200" cy="100" r="8"/><circle cx="250" cy="60" r="5" opacity="0.7"/><circle cx="300" cy="90" r="4" opacity="0.5"/><circle cx="350" cy="50" r="3" opacity="0.3"/><circle cx="80" cy="140" r="5" opacity="0.5"/><circle cx="160" cy="160" r="7" opacity="0.7"/><circle cx="240" cy="150" r="4" opacity="0.4"/><circle cx="320" cy="130" r="6" opacity="0.6"/></g>
+                <g stroke="#FF8A91" stroke-width="1" fill="none" opacity="0.3"><line x1="100" y1="80" x2="200" y2="100"/><line x1="200" y1="100" x2="250" y2="60"/><line x1="200" y1="100" x2="160" y2="160"/><line x1="200" y1="100" x2="300" y2="90"/></g>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">06</span>
+            <div class="svc-corner"><span class="dot"></span></div>
+            <div class="svc-body">
+              <h3>Marketing Surveys</h3>
+              <p>Let your customers tell you what they want directly. Real conversations, structured insight — fuel for the next product, the next campaign, the next quarter.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #34d399; background: linear-gradient(135deg, #0a2438 0%, #060c44 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g fill="none" stroke="#34d399" stroke-width="1.5"><polygon points="200,40 240,65 240,115 200,140 160,115 160,65" opacity="0.4"/><polygon points="200,60 225,75 225,105 200,120 175,105 175,75" opacity="0.7"/></g>
+                <text x="200" y="105" text-anchor="middle" font-family="Inter" font-size="22" fill="white" font-weight="700">97</text>
+                <text x="200" y="125" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#34d399" letter-spacing="2">SCORE</text>
+                <g stroke="#34d399" stroke-width="2" fill="none" opacity="0.5"><path d="M 80 170 Q 120 165 160 160"/><path d="M 240 160 Q 280 165 320 170"/></g>
+                <g fill="#34d399"><circle cx="80" cy="170" r="3"/><circle cx="320" cy="170" r="3"/></g>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">07</span>
+            <div class="svc-corner"><span class="dot live"></span><span class="dot"></span></div>
+            <div class="svc-body">
+              <h3>Quality Assurance</h3>
+              <p>AI and machine learning capture, transcribe, and score every interaction — across every channel. No sampling, no surprises, no missed coaching moments.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #FF8A91; background: linear-gradient(135deg, #3a1818 0%, #060c44 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g fill="none" stroke="#FF8A91" stroke-width="1" opacity="0.4">
+                  <path d="M 80 100 Q 200 30 320 100 Q 200 170 80 100"/>
+                  <path d="M 110 100 Q 200 50 290 100 Q 200 150 110 100"/>
+                  <path d="M 140 100 Q 200 70 260 100 Q 200 130 140 100"/>
+                </g>
+                <g><path d="M 175 100 Q 175 85 200 85 Q 225 85 225 100 Q 225 115 215 120 L 215 130 L 185 130 L 185 120 Q 175 115 175 100" fill="#FF4650" opacity="0.9"/></g>
+                <text x="200" y="108" text-anchor="middle" font-family="Inter" font-size="11" fill="white" font-weight="600">care</text>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">08</span>
+            <div class="svc-corner"><span class="dot"></span></div>
+            <div class="svc-body">
+              <h3>Soft Collections</h3>
+              <p>A sensitive, respectful approach to debt recovery that protects the customer relationship while moving the balance. Empathy at scale.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+
+          <article class="svc-card ir" data-tilt>
+            <div class="svc-img" style="color: #0017ff; background: linear-gradient(135deg, #060c44 0%, #1a1f7c 100%);">
+              <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                <g stroke="#7a86ff" stroke-width="1.5" fill="none" opacity="0.5"><path d="M 40 60 L 120 60 L 120 100 L 200 100 L 200 60 L 280 60 L 280 140 L 360 140"/><path d="M 40 140 L 100 140 L 100 100 L 160 100"/><path d="M 240 40 L 240 80 L 320 80 L 320 120"/></g>
+                <g fill="#6674FF"><rect x="36" y="56" width="8" height="8"/><rect x="116" y="96" width="8" height="8"/><rect x="196" y="56" width="8" height="8"/><rect x="276" y="56" width="8" height="8"/><rect x="356" y="136" width="8" height="8"/><rect x="36" y="136" width="8" height="8"/><rect x="156" y="96" width="8" height="8"/><rect x="236" y="36" width="8" height="8"/><rect x="316" y="116" width="8" height="8"/></g>
+                <circle cx="200" cy="100" r="22" fill="rgba(255,69,80,0.15)" stroke="#FF4650" stroke-width="1.5"/>
+                <text x="200" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#FF4650" font-weight="500">T1</text>
+              </svg>
+              <div class="glow"></div><div class="scan"></div>
+            </div>
+            <span class="svc-num">09</span>
+            <div class="svc-corner"><span class="dot live"></span></div>
+            <div class="svc-body">
+              <h3>Tier 1 Tech Support</h3>
+              <p>A first line of defense that actually solves the problem. Our agents are trained in your product and your tone — so the customer never has to wait for a human to call back.</p>
+              <span class="svc-cta">Learn more <svg class="ico" viewBox="0 0 24 24" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- QA BUNDLE -->
+    <section class="section qa-section border-t">
+      <div class="wrap">
+        <div class="qa-grid">
+          <div>
+            <div class="sec-head ir">
+              <p class="meta" data-i18n="home.qa.label">04 — Centris Unified QA Management</p>
+              <h2>Live QA, meet <span class="italic accent">Sophia.</span></h2>
+              <p>A complete software suite for modernizing quality assurance in contact centers — with our in-call AI assistant Sophia at the core. Real-time transcription, sentiment, suggestions, and automated CRM notes, in one bundle.</p>
+            </div>
+            <ul class="qa-features">
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Real-time transcription.</span><span class="desc">Every word captured, in English and Spanish, with sub-second latency.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Sentiment analysis.</span><span class="desc">Live read on tone — frustrated, recovering, advocating — surfaced as the call moves.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Sophia, your in-call assistant.</span><span class="desc">Suggests the right line, the right policy, the right escalation. Agents stay in control.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Automated CRM notes.</span><span class="desc">The note's written before the call ends. No after-call wrap-up.</span></div></li>
+              <li class="ir"><span class="dot"></span><div><span class="lbl">Score every conversation.</span><span class="desc">Rubrics applied in real time, not on 3% sampled after the fact.</span></div></li>
+            </ul>
+          </div>
+          <div class="dashboard ir" style="background: linear-gradient(180deg, rgba(8,12,38,0.95) 0%, rgba(4,8,28,0.98) 100%);">
+            <div class="dash-bar">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <span class="title">QA Dashboard · This week</span>
+              <span class="right"><span>live</span><span class="live"></span></span>
+            </div>
+            <div class="dash-body">
+              <div class="dash-row">
+                <span class="ttl">Volume scored — last 7 days</span>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;align-items:end;height:96px;">
+                  <div style="height:38%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:52%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:48%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:66%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:72%;background:linear-gradient(180deg,var(--blue-3),var(--blue-2));border-radius:3px;"></div>
+                  <div style="height:88%;background:linear-gradient(180deg,var(--coral-soft),var(--coral));border-radius:3px;"></div>
+                  <div style="height:96%;background:linear-gradient(180deg,var(--coral-soft),var(--coral));border-radius:3px;box-shadow:0 0 20px rgba(255,69,80,0.4);"></div>
+                </div>
+              </div>
+              <div class="dash-signals" style="grid-template-columns:repeat(2,1fr);">
+                <div class="signal"><div class="lbl">Average QA score</div><div class="val up">94<span style="font-size:0.55em;color:var(--muted);">%</span></div></div>
+                <div class="signal"><div class="lbl">Sentiment shift</div><div class="val up">+0.21</div></div>
+                <div class="signal"><div class="lbl">Calls scored</div><div class="val">12.4<span style="font-size:0.55em;color:var(--muted);">k</span></div></div>
+                <div class="signal"><div class="lbl">Coverage</div><div class="val">100<span style="font-size:0.55em;color:var(--muted);">%</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ANIMATED COUNTERS -->
+    <section class="counters border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta">By the numbers</p>
+          <h2>Thirty years.<br /><span class="accent">Five thousand customers. One mission.</span></h2>
+        </div>
+        <div class="counter-grid ir" id="counterGrid" style="margin-top: 3rem;">
+          <div class="counter"><div class="n"><span data-count="30" data-suffix="+">0</span></div><div class="l"><b>Years</b> · Of bilingual contact center expertise</div></div>
+          <div class="counter"><div class="n"><span data-count="5" data-suffix="K+">0</span></div><div class="l"><b>Customers</b> · Across North America</div></div>
+          <div class="counter"><div class="n"><span data-count="45"><span></span></span><span class="suf">%</span></div><div class="l"><b>Cost savings</b> · Versus U.S.-based centers</div></div>
+          <div class="counter"><div class="n"><span data-count="100"><span></span></span><span class="suf">%</span></div><div class="l"><b>QA coverage</b> · Every call, every channel, every day</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI CALCULATOR -->
+    <section id="roi" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.roi.label">05 — Calculator</p>
+          <h2>See your savings,<br /><span class="accent">in about ten seconds.</span></h2>
+          <p>Move the sliders. Nearshore Mexico typically costs 40–50% less than U.S. centers on a fully-loaded basis, and AI-assisted QA covers 100% of calls instead of the 2–3% manual sample. Numbers update live.</p>
+        </div>
+        <div class="roi-wrap ir">
+          <div class="roi-inputs">
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-vol">Monthly call volume</label><span class="v" id="roi-vol-v">25,000</span></div>
+              <input id="roi-vol" type="range" min="2000" max="200000" step="1000" value="25000" />
+            </div>
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-aht">Avg handle time (min)</label><span class="v" id="roi-aht-v">6.5</span></div>
+              <input id="roi-aht" type="range" min="2" max="15" step="0.5" value="6.5" />
+            </div>
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-rate">Current cost / call ($)</label><span class="v" id="roi-rate-v">$7.20</span></div>
+              <input id="roi-rate" type="range" min="2" max="20" step="0.10" value="7.20" />
+            </div>
+            <div class="roi-field">
+              <div class="roi-field-head"><label for="roi-mix">% bilingual (Spanish)</label><span class="v" id="roi-mix-v">35%</span></div>
+              <input id="roi-mix" type="range" min="0" max="100" step="5" value="35" />
+            </div>
+          </div>
+          <div class="roi-out">
+            <p class="meta">Estimated impact · year one</p>
+            <div class="big" id="roi-savings">$648,000<span class="unit">/ yr saved</span></div>
+            <p class="sub">vs. running the same volume on a U.S.-based or single-language center. Includes labor, real estate, tech stack, QA coverage gains.</p>
+            <div class="roi-breakdown">
+              <div class="roi-line"><span class="k">Current annual spend</span><span class="v" id="roi-current">$2.16M</span></div>
+              <div class="roi-line"><span class="k">Centris annual spend</span><span class="v" id="roi-new">$1.51M</span></div>
+              <div class="roi-line"><span class="k">QA coverage gain</span><span class="v" id="roi-qa">+97 pts</span></div>
+              <div class="roi-line total"><span class="k">Net savings</span><span class="v" id="roi-total">$648K · 30%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INDUSTRIES with photos -->
+    <section id="industries" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.industries.label">06 — Industries</p>
+          <h2>Built for the conversations<br /><span class="accent">your industry actually has.</span></h2>
+          <p>From a stressed customer filing a claim to a patient navigating a self-service portal — the conversation is the brand. We've spent three decades learning yours.</p>
+        </div>
+        <div class="industries">
+          <a href="#" class="industry ir">
+            <div class="pic"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=720&q=80&auto=format&fit=crop" alt="Insurance" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="body"><span class="ind-num">01 / Insurance</span><h3>When the day's already bad,<br />we make the next ten minutes better.</h3><p>If you're in an accident, filing a claim is stressful. Our agents are trained to walk customers swiftly through the process — empathetically, accurately, in either language.</p><span class="more">→ Read more</span></div>
+          </a>
+          <a href="#" class="industry ir">
+            <div class="pic"><img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=720&q=80&auto=format&fit=crop" alt="Healthcare" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="body"><span class="ind-num">02 / Healthcare</span><h3>Patients deserve more<br />than self-help portals.</h3><p>Patient Advocacy, RCM, Soft Collections, Scheduling — supported by bilingual agents trained in HIPAA-compliant workflows.</p><span class="more">→ Read more</span></div>
+          </a>
+          <a href="#" class="industry ir">
+            <div class="pic"><img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=720&q=80&auto=format&fit=crop" alt="Retail" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="body"><span class="ind-num">03 / Retail & E-commerce</span><h3>Impeccable customer service,<br />any channel they choose.</h3><p>Voice, live chat, email — your customers reach you wherever they are. We help retail and e-commerce brands keep that experience consistent and on-brand.</p><span class="more">→ Read more</span></div>
+          </a>
+          <a href="#" class="industry ir">
+            <div class="pic"><img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=720&q=80&auto=format&fit=crop" alt="Security" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="body"><span class="ind-num">04 / Security</span><h3>Peace of mind, on call.</h3><p>Customers trust the security industry with what matters most. We hold up that promise with bilingual agents trained to triage and escalate with calm precision.</p><span class="more">→ Read more</span></div>
+          </a>
+          <a href="#" class="industry ir">
+            <div class="pic"><img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=720&q=80&auto=format&fit=crop" alt="Utilities" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="body"><span class="ind-num">05 / Utilities</span><h3>Reliability goes beyond<br />the line itself.</h3><p>In utilities, being there when it matters most isn't a slogan — it's the brand. Centris keeps that promise live, in two languages, through outages and ordinary days alike.</p><span class="more">→ Read more</span></div>
+          </a>
+          <a href="#" class="industry ir">
+            <div class="pic"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=720&q=80&auto=format&fit=crop" alt="More industries" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="body"><span class="ind-num">06 / Plus</span><h3>Finance · Restaurant · Waste<br />Warranty · Parking</h3><p>We also serve fast-casual restaurants, finance, waste management, warranty & claims operations, and parking operators.</p><span class="more">→ All industries</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY NEARSHORE — with HUGE 45% gradient + location photos -->
+    <section id="why" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.why.label">07 — Why Centris</p>
+          <h2>As close to the U.S. as you can be<br /><span class="accent">without being in the U.S.</span></h2>
+          <p>Nearshore isn't a workaround — it's an advantage. Same time zones, same cultural fluency, native Spanish-English bilingual agents, and the cost structure that makes scaling sustainable.</p>
+        </div>
+        <div class="why-grid">
+          <div>
+            <div class="savings-block ir">
+              <h3 class="savings-big">45<span class="pct">%</span></h3>
+              <p class="savings-tag">average savings versus U.S.-based contact centers · without sacrificing quality</p>
+            </div>
+            <div style="margin-top:3rem;display:grid;gap:1.5rem;">
+              <div class="ir" style="display:grid;gap:0.5rem;"><span class="meta">Bilingual by default</span><p style="margin:0;color:var(--muted);font-size:15px;line-height:1.75;max-width:30rem;">English and Spanish at native quality. Not a feature toggle — the floor.</p></div>
+              <div class="ir" style="display:grid;gap:0.5rem;"><span class="meta">Same time zones</span><p style="margin:0;color:var(--muted);font-size:15px;line-height:1.75;max-width:30rem;">No handoff fatigue. Your customers, your agents, your supervisors — same hours, same day.</p></div>
+              <div class="ir" style="display:grid;gap:0.5rem;"><span class="meta">30+ years of partnership</span><p style="margin:0;color:var(--muted);font-size:15px;line-height:1.75;max-width:30rem;">We've been doing this since before "BPO" was a category. The playbooks are real.</p></div>
+            </div>
+          </div>
+          <div class="ir">
+            <h3 style="margin:0;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.2em;color:var(--quiet);font-weight:500;">Two nearshore locations</h3>
+            <div class="locations">
+              <div class="location">
+                <div class="loc-pic"><img src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=400&q=80&auto=format&fit=crop" alt="Monterrey" onerror="this.style.display='none'" loading="lazy"/></div>
+                <div class="loc-body">
+                  <span class="name">Monterrey</span>
+                  <span class="country">Nuevo León · MX</span>
+                  <p class="desc">Flagship operations, dense bilingual talent pool, and our largest customer-facing footprint.</p>
+                </div>
+                <span class="num">01</span>
+              </div>
+              <div class="location">
+                <div class="loc-pic"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80&auto=format&fit=crop" alt="Aguascalientes" onerror="this.style.display='none'" loading="lazy"/></div>
+                <div class="loc-body">
+                  <span class="name">Aguascalientes</span>
+                  <span class="country">Aguascalientes · MX</span>
+                  <p class="desc">Second hub, redundancy-ready, growing fastest in agent count year over year.</p>
+                </div>
+                <span class="num">02</span>
+              </div>
+            </div>
+            <p style="margin:2.25rem 0 0;font-size:15px;line-height:1.75;color:var(--muted);max-width:32rem;">Both sites operate as a single network — agents, supervisors, QA, and IT share the same playbooks, training, and Centris Live QA tooling. One partner. One contract. One standard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COVERAGE MAP -->
+    <section id="coverage" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.coverage.label">08 — Coverage</p>
+          <h2>Two nearshore hubs.<br /><span class="accent">One continuous timezone.</span></h2>
+          <p>Both centers run Central Time. No handoff lag, no overnight gap. Click a pin to see capacity, languages, and shift coverage.</p>
+        </div>
+        <div class="map-wrap ir">
+          <svg class="map-svg" viewBox="0 0 600 360" role="img" aria-label="Coverage map of US and Mexico">
+            <!-- USA outline (stylized) -->
+            <path class="land" d="M40,80 L120,60 L220,55 L320,58 L420,65 L520,70 L555,90 L560,140 L540,170 L500,180 L460,190 L420,185 L380,180 L340,185 L300,190 L280,195 L260,200 L240,205 L220,200 L180,195 L140,190 L100,180 L60,160 L45,130 Z" />
+            <!-- Mexico outline (stylized) -->
+            <path class="land active" d="M180,205 L240,210 L280,215 L320,225 L350,235 L380,260 L390,290 L370,310 L335,320 L300,318 L265,310 L235,295 L210,275 L195,250 L180,225 Z" />
+            <!-- Monterrey pin -->
+            <g class="pin" data-city="monterrey" transform="translate(260,235)">
+              <circle class="pin-ring" cx="0" cy="0" r="4" />
+              <circle class="pin-ring delay" cx="0" cy="0" r="4" />
+              <circle class="pin-dot" cx="0" cy="0" r="4.5" />
+              <text x="10" y="3">Monterrey</text>
+            </g>
+            <!-- Aguascalientes pin -->
+            <g class="pin" data-city="aguascalientes" transform="translate(295,275)">
+              <circle class="pin-ring" cx="0" cy="0" r="4" />
+              <circle class="pin-ring delay" cx="0" cy="0" r="4" />
+              <circle class="pin-dot" cx="0" cy="0" r="4.5" />
+              <text x="10" y="3">Aguascalientes</text>
+            </g>
+            <!-- timezone band -->
+            <line x1="245" y1="40" x2="245" y2="330" stroke="rgba(255,69,80,0.25)" stroke-width="1" stroke-dasharray="3 4" />
+            <text x="250" y="50" fill="rgba(255,69,80,0.65)">UTC-6 · CT</text>
+          </svg>
+          <div class="map-info">
+            <div class="map-card active" data-city="monterrey">
+              <h4>Monterrey</h4>
+              <div class="city-meta">Nuevo León · UTC-6 · Bilingual hub</div>
+              <div class="city-stats">
+                <div class="city-stat"><div class="n">720+</div><div class="l">Agents</div></div>
+                <div class="city-stat"><div class="n">24/7</div><div class="l">Coverage</div></div>
+                <div class="city-stat"><div class="n">EN·ES</div><div class="l">Languages</div></div>
+              </div>
+            </div>
+            <div class="map-card" data-city="aguascalientes">
+              <h4>Aguascalientes</h4>
+              <div class="city-meta">Centro de México · UTC-6 · Healthcare &amp; finance</div>
+              <div class="city-stats">
+                <div class="city-stat"><div class="n">560+</div><div class="l">Agents</div></div>
+                <div class="city-stat"><div class="n">24/7</div><div class="l">Coverage</div></div>
+                <div class="city-stat"><div class="n">EN·ES</div><div class="l">Languages</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASE STUDIES with photos -->
+    <section id="cases" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.cases.label">09 — Case studies</p>
+          <h2>What it means<br /><span class="accent">to partner with Centris.</span></h2>
+          <p>The numbers behind the relationships. Real outcomes, real customers, written up so you can see the work — not just the marketing.</p>
+        </div>
+        <div class="cases">
+          <a href="#" class="case ir">
+            <div class="case-pic"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80&auto=format&fit=crop" alt="Healthcare" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="case-body">
+              <span class="lbl">Healthcare technology & services</span>
+              <span class="stat">100%<span class="small">Hispanic market support coverage</span></span>
+              <h3>They needed Hispanic market support.<br />They got a partner.</h3>
+              <p>A healthcare technology and services firm came to us to extend Spanish-language patient support. Three years later, Centris also handles Patient Advocacy, RCM follow-up, and QA scoring.</p>
+              <span class="read">Read the case study →</span>
+            </div>
+          </a>
+          <a href="#" class="case ir">
+            <div class="case-pic"><img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=900&q=80&auto=format&fit=crop" alt="Auto insurance" onerror="this.style.display='none'" loading="lazy"/></div>
+            <div class="case-body">
+              <span class="lbl">Auto insurance</span>
+              <span class="stat">50%<span class="small">reduction in customer service cost</span></span>
+              <h3>Half the cost.<br />A better experience.</h3>
+              <p>This auto insurance company cut customer service spend by 50% after outsourcing to Centris — while measurably improving NPS, claim handling time, and Spanish-language coverage.</p>
+              <span class="read">Read the case study →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.testimonials.label">10 — Testimonials</p>
+          <h2>What our partners<br /><span class="accent">actually tell us.</span></h2>
+          <p>5,000+ happy customers. Here are six of them, by industry.</p>
+        </div>
+        <div class="testimonials">
+          <div class="testimonial ir"><p class="mark">"</p><p class="quote">Centris is without a doubt the best contact center solution provider in North America, and we are grateful for partnering with your team.</p><p class="attr">Mobile telecommunications</p></div>
+          <div class="testimonial ir"><p class="mark">"</p><p class="quote">It has been such an honor and a pleasure to work with you all and I look forward to all the great work we'll get to do in the future! We're very fortunate to work with such great folks like you all.</p><p class="attr">Quick service restaurant</p></div>
+          <div class="testimonial ir"><p class="mark">"</p><p class="quote">It's been a pleasure working with Centris and we appreciate the care you are taking to learn our business and taking care of our customers.</p><p class="attr">Parking industry</p></div>
+          <div class="testimonial ir"><p class="mark">"</p><p class="quote">I am honored and appreciate our Centris team. More so our agents are doing really great work as well.</p><p class="attr">Appointment scheduling</p></div>
+          <div class="testimonial ir"><p class="mark">"</p><p class="quote">Amazing job yesterday — 97.37%. Very impressive.</p><p class="attr">Staffing industry · QA score</p></div>
+          <div class="testimonial ir" style="background: linear-gradient(180deg, rgba(255,69,80,0.05) 0%, rgba(255,69,80,0.01) 100%); border-color: rgba(255,69,80,0.2);"><p class="mark" style="font-size:1.5rem;line-height:1;margin-bottom:0.5rem;">5,000+</p><p class="quote" style="font-size:1.05rem;">Customers we get to do this for, every day across North America.</p><p class="attr" style="color: var(--coral-soft);">Centris · 2026</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section border-t">
+      <div class="wrap">
+        <div class="sec-head ir">
+          <p class="meta" data-i18n="home.faq.label">11 — FAQ</p>
+          <h2>Questions we get<br /><span class="accent">before every kickoff.</span></h2>
+          <p>Direct answers — no sales theater. If something here doesn't match your situation, the demo conversation is the right place to dig in.</p>
+        </div>
+        <div class="faq ir">
+          <div class="faq-item open">
+            <button class="faq-q" aria-expanded="true">How fast can we go live? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Pilot programs typically launch in 30–45 days from signed agreement: weeks 1–2 are knowledge transfer and call-flow design, weeks 3–4 are agent training and shadowing, week 5 is soft launch with QA double-coverage. Full ramp to target volume usually takes 60–90 days.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What does pricing look like? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Most engagements are per-hour FTE or per-call, depending on volume predictability. Expect 40–50% below comparable U.S. centers fully loaded. Pilots start at 10–25 seats; enterprise programs scale to 500+. Use the calculator above for a directional number, then we tighten it with your actual call mix.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How do you handle data security and compliance? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>SOC 2 Type II, HIPAA, PCI-DSS, and GDPR-aligned. PII never leaves controlled environments; recordings and transcripts are encrypted at rest and in transit. Sophia AI runs on isolated tenant infrastructure with full audit trails. We're happy to walk through the controls matrix during procurement review.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Will AI replace the human agents? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>No. Sophia listens, drafts, and recommends — the human decides. The model is augmentation: AI handles knowledge retrieval, sentiment tracking, real-time translation cues, and post-call QA so agents can focus on the conversation. Customers still talk to a person.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What languages do you cover? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>English and Spanish (Mexican and U.S. Hispanic markets) are native across both centers. Sophia adds real-time translation cues for 30+ additional languages on demand. All agents are fully bilingual EN/ES; we don't run language tiers.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Can you integrate with our CRM and telephony? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Yes. Standard integrations include Salesforce, Zendesk, HubSpot, ServiceNow, Genesys, NICE CXone, Five9, AWS Connect, and Twilio Flex. Custom CRMs connect via REST/webhook in roughly two weeks. We don't ask you to switch tools.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How is quality measured? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Sophia auto-scores 100% of calls on adherence, empathy, resolution, and compliance — versus the typical 2–3% manual sample. Human QA analysts review flagged calls and coach against trends weekly. You get a live dashboard plus a weekly digest.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What happens if we want to leave? <span class="plus" aria-hidden="true"></span></button>
+            <div class="faq-a"><p>Standard contracts are annual with 90-day notice. Transition support includes knowledge artifacts, call recordings (where contractually retained), and a structured handover playbook. No exit fees, no hostage hardware.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPLIANCE STRIP -->
+    <section class="compliance">
+      <div class="wrap">
+        <div class="compliance-row ir">
+          <div class="compliance-label"><b>Certified &amp; audited.</b><br />Independent third-party attestation, refreshed annually.</div>
+          <div class="compliance-badges">
+            <div class="badge"><span class="b-name">SOC 2 · Type II</span><span class="b-desc">Security · Availability · Confidentiality</span></div>
+            <div class="badge"><span class="b-name">HIPAA</span><span class="b-desc">Healthcare PHI handling · BAA available</span></div>
+            <div class="badge"><span class="b-name">PCI-DSS</span><span class="b-desc">Level 1 service provider · pause-resume</span></div>
+            <div class="badge"><span class="b-name">GDPR</span><span class="b-desc">EU data protection · DPA on file</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section id="contact" class="closing border-t">
+      <h2 class="ir">Want to learn more about<br /><span class="accent">outsourcing your contact center?</span></h2>
+      <p class="ir">Fill out the form on our contact page and we'll get in touch ASAP. Plus, we'll send you our guide to moving contact center operations to Mexico — what works, what doesn't, and what the first 90 days actually look like.</p>
+      <div class="ctas ir">
+        <a class="cta-primary lg" href="#">Book a 15-minute demo
+          <svg class="ico arr" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cta-quiet" href="tel:18005304897"><u>Or call 1-800-530-4897</u>
+          <svg class="ico" viewBox="0 0 24 24" style="transform:translateY(-1px)"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="foot">
+        <div class="foot-brand">
+          <a href="index.html" class="brand-mark" aria-label="Centris"><img src="data:image/webp;base64,UklGRloGAABXRUJQVlA4WAoAAAAQAAAApQAAMwAAQUxQSD0DAAABoFVtexbneiTgoK8EHAwOWgfgABxkHLAdZDtAQiREwivhlfAc5OcN7TccR8QEYOS8x6xGUtO5Cp7pchqdesrzkMShaXkWU+TwJA/iMN4YHsN08c6ApyjKOwOeoijvDHiKorwzoDql+dOJ8s6AqmSqfLjEG3NAVZRknj7amzdG1EVZnp9MONJUlWRAXZT15YMlX9q/UM7fqIuymT/XRm9+wS3KzvVjJc8Jvyh79d8niVkGzHTu8IuyfxmzvJOSls7lH5BJpgHREeAXpTOOmBM7s/w5lgO0L8IvSq8NOOhc/1oimX0zu1V8ovQvrjedNv8WkoxDRJnFt/edcIty4O5ZWLVzXUMibcZfG3z2iUuUI6NHK9eEctMZ/6bUleAV5dDs+GF5oTmhvSUjc5TWcipJy1F60rZtAGKMUSQZi0gy1paopKVVoF3BI8qx6ogVabVnZfOobexcO0oAJLkqaZ7/2NTDur4ds3G0IxcX3LOx8yiE3fMQJamONzsDu199s/F3sNx9StL21yuStAlArJhVziGlx0jqvkZlwA2Rv2l1bSRVACCRDAByEYBQaOv6+vpq2f6a+4QkVwCywvHdh/BLrNhdieQl5U4yASBJBQAjyVZEtSKot6ZCzwWldu0O/OggdWhxuYz91khFGhbhQmI9rZ7ogeiY5DgLmzz0/o4wQHKNPHF1mQsIQy7HUvBqzRUjqanzrwDbpRUeZxcXHzYbsDuQCl5SOfguEsmE/j8CYD6L9NOXBkDU9/IsFfIK25lJRgCBJN/FoXJLuulcAUBJ5qmPPwMwRY/CfdQ6L2AyktQYE8kog5Qkr3je8D+Z9i2SZETqMxkABEf04XDYDGApmjrqLEgd9z97BXsfVUZAtOs1AJJ6kqCctZUFgya9a9GWrcBkfVQZAbk6FGPlTEZaCi+0t8tIvb5RHQGJmdTo6/2OmbQcJgAIDuo6AgitddAnnMxBprU1bdLAj1YyPndwkXaFbdvCZdS5AdFCPhiyr9vWBnCSAZ9c7A7y3cJx4bNv9/Bsff5wD7M8BYR7qPIUEO6hzk8Bxz3k8RQgeovtjwEIN+QZT1LiIAt4mrJnn4YJT1S2M6kVqinuMx4hAFZQOCD2AgAAUBAAnQEqpgA0AD6RQJhJJaQiISo1vIiwEglmCHKxjQWlg9+m85Wxf4nir0IdofMB8HfVH4pfTV8wH7ZesB/p/Vh6AHSO+gB+tfpr+xz+4XpVAI0HW1OuIh7BKc+tlU2EG3c9pz7xiEy4hwmS2vrGaFMiRk6HoRNLaV4hMwD2aZuQpjtw2J4iYipiAAD+axULKw73xZ/5zu7c6cz8Kyn9y6jfrxJ+Hlr05mVmbEKPgTv9quR0GxaJW2+7Pl8AY1q7Clh0oS9ZrW90xnH2+Szy86R4xQlFOq45RZR38/tDveDoHlavpLb2gfmZ6MJM0/iDJuOkQN32hEDv8TliU2DB/19gFLRnwmnDvCSQHmxv9S7Aif4Gf1+3xe/9b4fzNhnSL8sj1UvtWcPj4C7Pw//05voL//aWWjs2zIhnTmBMG3QbsL0c6AdfAqmoXUD7Zsft3yyjIOa0v6o7ItcGvloPEdmktmsJc8UV40UyeWTWck2iYhB90D+FVZwTL0ovepmBvGmgGiKjDzv3bOCaDZicQplwq9GQ3M/xkLlCmvlK76mYFBamg/qAEf5k9crw4gq2UVVeZwC0PLIKI2X9XvnZmgWHjqvQtC1fh75iHVyXZfjU4AvRHQvyZe5c30O3yb7cKHOx9S62Ip3msyUeIiyrT3KnGoTKei8P/OuE94fXz94LHm3gnbyC2LkSBqXbdTDU8Ck16hD/C7sumGj6LC5cJby7p9LhOqWE/RxUWpWQ9A5wIUMaxeI8o2GpL0QP7n+NI5PyG/8NC11Qs3vMH3ZLqDmHq/ZeW5Rv91zGPnA1tbWEvG6VxaNPnDCaM9l/WfuNPb0ypwF3JTT09lMsL/4GOpenHYBcR5FK38d0W6P/K50BxZpCDZ83O0pGbsWoYibjB3cAmuxo//vK9vo74OruV9XZS4cVZerSFfYv/oclHfrJZIEyRvuNBdsdwlx/mLNKj/Zfvv/fSTD7AEvnoiOxJZPjfZj82/3z9wIJuf7wAAAAAAAAAAA=" alt="Centris" /></a>
+          <p data-i18n="foot.about">Centris Information Services &mdash; bilingual nearshore contact center solutions, built for a human-first AI future.</p>
+          <div class="foot-social">
+            <a href="https://facebook.com/centrisinfo" aria-label="Facebook"><svg class="ico" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://linkedin.com/company/centris-information-services" aria-label="LinkedIn"><svg class="ico" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="https://x.com/centrisinfo" aria-label="X"><svg class="ico" viewBox="0 0 24 24"><path d="M18 4 6 20M6 4l12 16"/></svg></a>
+          </div>
+        </div>
+        <div class="foot-col"><h4 data-i18n="foot.services">Services</h4><ul>
+          <li><a href="service-ai-call-center.html" data-i18n="service.ai-call-center.name">AI Call Center</a></li>
+          <li><a href="service-customer-support.html" data-i18n="service.customer-support.name">Customer Support</a></li>
+          <li><a href="service-bpo.html" data-i18n="service.bpo.name">Business Process Outsourcing</a></li>
+          <li><a href="service-inbound-sales.html" data-i18n="service.inbound-sales.name">Inbound Sales</a></li>
+          <li><a href="service-live-chat.html" data-i18n="service.live-chat.name">Live Chat</a></li>
+          <li><a href="service-marketing-surveys.html" data-i18n="service.marketing-surveys.name">Marketing Surveys</a></li>
+          <li><a href="service-quality-assurance.html" data-i18n="service.quality-assurance.name">Quality Assurance</a></li>
+          <li><a href="service-soft-collections.html" data-i18n="service.soft-collections.name">Soft Collections</a></li>
+          <li><a href="service-tier-1-tech.html" data-i18n="service.tier-1-tech.name">Tier 1 Tech Support</a></li>
+        </ul></div>
+        <div class="foot-col"><h4 data-i18n="foot.industries">Industries</h4><ul>
+          <li><a href="industry-insurance.html" data-i18n="industry.insurance.name">Insurance</a></li>
+          <li><a href="industry-healthcare.html" data-i18n="industry.healthcare.name">Healthcare</a></li>
+          <li><a href="industry-retail.html" data-i18n="industry.retail.name">Retail &amp; E-commerce</a></li>
+          <li><a href="industry-security.html" data-i18n="industry.security.name">Security</a></li>
+          <li><a href="industry-utilities.html" data-i18n="industry.utilities.name">Utilities</a></li>
+          <li><a href="industry-finance.html" data-i18n="industry.finance.name">Finance</a></li>
+          <li><a href="industries.html" data-i18n="nav.all_industries">View all industries</a></li>
+        </ul></div>
+        <div class="foot-col">
+          <h4 data-i18n="foot.contact">Contact</h4>
+          <ul>
+            <li><a href="tel:18005304897">1-800-530-4897</a></li>
+            <li><a href="mailto:kudos@centrisinfo.com">kudos@centrisinfo.com</a></li>
+            <li style="color: var(--muted); font-size: 14px;">119 W. Tyler St., Suite 260<br/>Longview, TX 75601</li>
+          </ul>
+          <h4 style="margin-top:1.75rem;" data-i18n="foot.resources">Resources</h4>
+          <ul>
+            <li><a href="case-studies.html" data-i18n="nav.cases">Case Studies</a></li>
+            <li><a href="resources.html">Whitepapers</a></li>
+            <li><a href="resources.html">Industry Events</a></li>
+            <li><a href="resources.html">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-meta">
+        <span>&copy; 2026 Centris Information Services</span>
+        <span data-i18n="foot.tag">Human-first AI for contact centers</span>
+      </div>
+    </footer>
+
+    <!-- FLOATING SOPHIA CHAT WIDGET -->
+    <button class="sophia-fab" id="sophiaFab" aria-label="Open Sophia chat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      <span class="fab-dot"></span>
+    </button>
+    <div class="sophia-panel" id="sophiaPanel" role="dialog" aria-label="Sophia assistant">
+      <div class="sp-head">
+        <div class="sp-avatar">S</div>
+        <div class="sp-meta"><div class="n">Sophia</div><div class="s">Online · Bilingual</div></div>
+        <button class="sp-close" id="sophiaClose" aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="sp-msgs" id="sophiaMsgs">
+        <div class="sp-msg bot">Hi! I'm Sophia, the AI behind Centris contact centers. Ask me about pricing, ramp time, or what AI-assisted QA actually looks like.</div>
+      </div>
+      <div class="sp-quick" id="sophiaQuick">
+        <button data-q="How fast can we go live?">Ramp time</button>
+        <button data-q="What does pricing look like?">Pricing</button>
+        <button data-q="How is quality measured?">Quality / QA</button>
+        <button data-q="What languages do you cover?">Languages</button>
+      </div>
+      <form class="sp-input" id="sophiaForm">
+        <input type="text" id="sophiaInput" placeholder="Ask Sophia anything..." autocomplete="off" />
+        <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+      </form>
+    </div>
+
+    <script>window.__I18N__ = {"en": {}, "es": {"nav.services": "Servicios", "nav.industries": "Industrias", "nav.cases": "Casos de éxito", "nav.about": "Nosotros", "nav.resources": "Recursos", "nav.cta": "Solicitar demo", "nav.liveqa": "QA en vivo", "nav.roi": "ROI", "nav.coverage": "Cobertura", "nav.faq": "Preguntas", "nav.all_services": "Ver todos los servicios", "nav.all_industries": "Ver todas las industrias", "hero.label": "Conoce Centris", "hero.h1": "Líder en Soluciones de Centros de Contacto,", "hero.h1b": "Construido para un Futuro de IA Centrado en lo Humano.", "hero.sub": "Durante más de 30 años, Centris ha brindado equipos bilingües dedicados de centros de contacto que operan como una extensión perfecta de las organizaciones a las que apoyamos. Nuestros agentes entregan un servicio profesional y consistente impulsado por Sophia — nuestro asistente de IA en llamada — fortaleciendo las relaciones con clientes, mejorando la eficiencia y ayudando a tu negocio a crecer con confianza.", "hero.cta1": "Reservar demo", "hero.cta2": "Ver QA en vivo", "hero.stat.savings.lbl": "ahorro vs. centros en EE.UU.", "hero.stat.years.lbl": "años de experiencia bilingüe", "hero.stat.customers.lbl": "clientes satisfechos en Norteamérica", "hero.stat.locs.lbl": "centros nearshore<br />Monterrey · Aguascalientes", "ticker.live": "En vivo", "ticker.i1": "Llamadas hoy &middot; <b>12,847</b>", "ticker.i2": "Sentimiento promedio &middot; <b>+0.42</b>", "ticker.i3": "Cobertura de QA &middot; <b>100%</b>", "ticker.i4": "Tiempo de manejo promedio &middot; <b>4m 12s</b>", "ticker.i5": "Agentes bilingües en línea &middot; <b>1,284</b>", "ticker.i6": "Resolución en primera llamada &middot; <b>91.3%</b>", "logos.label": "De confianza en seguros, salud, retail, seguridad y más", "home.pillars.label": "00 — Cómo funciona", "home.pillars.h2a": "Bilingüe primero.", "home.pillars.h2b": "Mejorado con IA. Sin compromisos.", "home.pillars.sub": "Sophia ejecuta cuatro habilidades en cada llamada. Tu equipo ve el resumen. Tus clientes solo sienten un mejor servicio.", "home.action.label": "01 — En acción", "home.action.h2a": "Mira a Sophia", "home.action.h2b": "trabajar en una llamada real.", "home.action.sub": "Toca play. La conversación se transmite con anotaciones en vivo: transcripción, sentimiento, idioma, puntaje QA, y las sugerencias de Sophia en el panel lateral.", "home.workflow.label": "02 — Flujo de trabajo", "home.workflow.h2a": "Humano + IA, paso a paso.", "home.workflow.h2b": "", "home.workflow.sub": "Sophia maneja el trabajo repetitivo. Los agentes manejan la conversación. Tú obtienes los datos.", "home.services.label": "03 — Servicios", "home.services.h2a": "Equipos de soporte bilingüe,", "home.services.h2b": "en todos los canales.", "home.services.sub": "Centris entrega experiencia humana y eficiencia impulsada por IA en un solo paquete — ayudando a las organizaciones a mejorar la calidad del servicio, reducir costos y escalar operaciones sin compromisos.", "home.qa.label": "04 — Aseguramiento de Calidad Unificado", "home.qa.h2a": "Cada llamada calificada.", "home.qa.h2b": "Cada canal. Sin muestreo.", "home.qa.sub": "La QA manual cubre 2-3% de las llamadas. Nosotros cubrimos el 100%. Sophia transcribe, califica y marca problemas en cada interacción.", "home.roi.label": "05 — Calculadora", "home.roi.h2a": "Ve tus ahorros,", "home.roi.h2b": "en aproximadamente diez segundos.", "home.roi.sub": "Mueve los controles. México nearshore típicamente cuesta 40-50% menos que centros en EE.UU. en una base completamente cargada, y QA asistida por IA cubre 100% de las llamadas en lugar de la muestra manual del 2-3%. Los números se actualizan en vivo.", "home.industries.label": "06 — Industrias", "home.industries.h2a": "Diseñado para las conversaciones", "home.industries.h2b": "que realmente tiene tu industria.", "home.industries.sub": "Una década de patrones específicos de la industria, codificados en el cuaderno de jugadas que entregamos a tu equipo dedicado.", "home.why.label": "07 — Por qué Centris", "home.why.h2a": "Por qué nearshore México,", "home.why.h2b": "no offshore en cualquier lugar.", "home.why.intro": "Centris se construyó sobre dos hubs nearshore en México. Misma zona horaria que la mayor parte de EE.UU. Latencia cultural inmediata. Y un margen presupuestario que cambia lo que es posible:", "home.why.note": "ahorro promedio versus centros con sede en EE.UU., medido en una base completamente cargada (mano de obra + bienes raíces + stack tecnológico + cobertura de QA).", "home.coverage.label": "08 — Cobertura", "home.coverage.h2a": "Dos hubs nearshore.", "home.coverage.h2b": "Una zona horaria continua.", "home.coverage.sub": "Ambos centros operan en hora central. Sin retraso de transferencia, sin brecha nocturna. Haz clic en un pin para ver capacidad, idiomas y cobertura por turno.", "home.cases.label": "09 — Casos de éxito", "home.cases.h2a": "Resultados, no promesas.", "home.cases.h2b": "", "home.cases.sub": "Dos snapshots de ingeniería de socios reales. Más casos disponibles bajo NDA durante la diligencia.", "home.testimonials.label": "10 — Testimonios", "home.testimonials.h2a": "Lo que nuestros socios", "home.testimonials.h2b": "realmente nos dicen.", "home.testimonials.sub": "Más de 5,000 clientes felices. Aquí hay seis de ellos, por industria.", "home.faq.label": "11 — Preguntas", "home.faq.h2a": "Preguntas que recibimos", "home.faq.h2b": "antes de cada kickoff.", "home.faq.sub": "Respuestas directas — sin teatro de ventas. Si algo aquí no coincide con tu situación, la demo es el lugar correcto para profundizar.", "closing.h2a": "¿Quieres saber más sobre", "closing.h2b": "externalizar tu centro de contacto?", "closing.sub": "Llena el formulario en nuestra página de contacto y nos pondremos en contacto lo antes posible. Además, te enviaremos nuestra guía para mover operaciones de contacto a México.", "closing.cta": "Reservar demo de 15 minutos", "closing.alt": "O llama al 1-800-530-4897", "foot.about": "Centris Information Services — soluciones nearshore bilingües de centros de contacto, construidas para un futuro de IA centrado en lo humano.", "foot.services": "Servicios", "foot.industries": "Industrias", "foot.contact": "Contacto", "foot.resources": "Recursos", "foot.tag": "IA centrada en lo humano para centros de contacto", "ph.about.h1": "30 años entregando un mejor servicio al cliente —", "ph.about.h1b": "con un margen.", "ph.about.lede": "Centris se fundó en 1993 con una idea simple: qué pasa si los centros de contacto fueran tratados como socios, no como proveedores. Tres décadas, dos hubs nearshore y más de 5,000 clientes después, esa idea es una práctica.", "ph.services.h1": "Cada conversación. Cada canal.", "ph.services.h1b": "Cada idioma que necesitas.", "ph.services.lede": "Nueve servicios principales, todos construidos sobre el mismo cimiento bilingüe nearshore, todos mejorados por Sophia. Elige uno, combínalos, o háganos diseñar la combinación.", "ph.industries.h1": "Conocemos tu industria —", "ph.industries.h1b": "porque la hemos estado atendiendo durante años.", "ph.industries.lede": "Industrias verticales, cada una con su propio cuaderno de jugadas refinado durante miles de interacciones reales de clientes. Estos no son scripts genéricos.", "ph.cases.h1": "Resultados reales de", "ph.cases.h1b": "socios reales.", "ph.cases.lede": "Snapshots cortos del impacto que generamos. Versiones completas bajo NDA durante la diligencia debida.", "ph.contact.h1": "Hablemos.", "ph.contact.h1b": "", "ph.contact.lede": "Cuéntanos un poco sobre tu operación y agendaremos una demo de 15 minutos esta semana. Vendremos preparados con números para tu mezcla de llamadas.", "ph.resources.h1": "Cuadernos de jugadas, datos,", "ph.resources.h1b": "conversaciones.", "ph.resources.lede": "Lo que estamos escribiendo, midiendo y debatiendo sobre el futuro del servicio al cliente.", "crumb.home": "Inicio", "crumb.about": "Nosotros", "crumb.services": "Servicios", "crumb.industries": "Industrias", "crumb.cases": "Casos de éxito", "crumb.contact": "Contacto", "crumb.resources": "Recursos", "cf.h": "Hablemos.", "cf.name": "Tu nombre", "cf.company": "Empresa", "cf.email": "Correo", "cf.phone": "Teléfono", "cf.vol": "Volumen mensual aproximado de llamadas", "cf.vol.pick": "Elige un rango", "cf.vol.1": "Menos de 5,000 / mes", "cf.vol.2": "5,000–25,000 / mes", "cf.vol.3": "25,000–100,000 / mes", "cf.vol.4": "Más de 100,000 / mes", "cf.vol.5": "Aún no estoy seguro", "cf.int": "¿Qué servicio te interesa?", "cf.int.pick": "Elige un servicio", "cf.int.notsure": "No estoy seguro — hablemos", "cf.msg": "Cuéntanos sobre tu operación", "cf.msg.ph": "¿Qué está funcionando? ¿Qué no? ¿Cuál es el detonante para considerar externalizar ahora?", "cf.send": "Enviar mensaje", "cf.ok": "✓ Enviado — te contactaremos en 1 día hábil.", "cf.aside.call": "Llámanos", "cf.aside.call.hours": "Lunes a viernes, 8am–8pm CT", "cf.aside.email": "Correo", "cf.aside.email.note": "Respondemos en un día hábil.", "cf.aside.hq": "Oficina central en EE.UU.", "cf.aside.centers": "Centros nearshore", "cf.aside.centers.note": "Monterrey, Nuevo León · México<br/>Aguascalientes, Aguascalientes · México", "sd.engagement.label": "Cómo se ve", "sd.engagement.h2a": "Cómo se desarrolla", "sd.engagement.h2b": "un compromiso típico.", "sd.step1.title": "Descubrimiento", "sd.step1.desc": "<b>Descubrimiento</b> · Semana 1 — Escuchamos tus llamadas existentes, auditamos tus playbooks actuales, identificamos las brechas.", "sd.step2.desc": "<b>Diseño</b> · Semanas 2-3 — Construimos tu scorecard, tus scripts, tus rutas de escalación. Tú apruebas cada artefacto.", "sd.step3.desc": "<b>Entrenamiento</b> · Semanas 3-4 — Tu equipo dedicado se entrena en tu producto, tu tono, tu perfil de cliente.", "sd.step4.desc": "<b>Go live</b> · Semana 5+ — Lanzamiento suave con doble cobertura QA. Rampa completa a volumen objetivo en 60-90 días.", "sd.closing.cta": "Reservar demo de 15 minutos", "sd.related.label": "Servicios relacionados", "sd.related.h2": "Lo que también funciona bien con esto.", "id.what.label": "Lo que hacemos aquí", "id.what.h3": "Lo que hacemos aquí, cada día.", "id.stats.label": "Por los números", "id.stats.h2a": "Cómo se ve", "id.stats.h2b": "lo bueno en esta industria.", "counter.years.lbl": "<b>Años</b> · De experiencia bilingüe en centros de contacto", "counter.customers.lbl": "<b>Clientes</b> · A través de Norteamérica", "counter.savings.lbl": "<b>Ahorro de costos</b> · Versus centros en EE.UU.", "counter.qa.lbl": "<b>Cobertura de QA</b> · Cada llamada, cada canal, cada día", "counter.byn.label": "Por los números", "counter.byn.h2a": "Treinta años.", "counter.byn.h2b": "Cinco mil clientes. Una misión.", "about.story.label": "Nuestra historia", "about.story.h3": "Construido nearshore. Operado como una extensión de tu equipo.", "about.story.p1": "Centris comenzó como una operación liderada por EE.UU. con un hub nearshore en Monterrey. La tesis era simple: el trabajo bilingüe en centros de contacto es un oficio, y el oficio requiere continuidad.", "about.story.p2": "Esa tesis aún impulsa a la empresa. Hemos agregado un segundo centro en Aguascalientes, hemos integrado a Sophia (nuestro asistente de IA en llamada) en cada puesto, y hemos crecido para apoyar más de 5,000 relaciones con clientes en Norteamérica.", "about.story.p3": "Cada agente que trabaja en tu cuenta es completamente bilingüe EN/ES, dedicado a tu programa, y respaldado por IA que observa cada llamada para calidad, cumplimiento y oportunidades de coaching.", "about.tl.label": "02 — Línea de tiempo", "about.tl.h2a": "Tres décadas. Dos hubs.", "about.tl.h2b": "Un hilo conductor.", "about.values.label": "03 — Valores", "about.values.h2": "Lo que realmente creemos.", "about.team.label": "04 — Liderazgo", "about.team.h2": "El equipo dirigiendo esto.", "about.values.1.h": "Humano primero", "about.values.1.role": "Valor 01", "about.values.1.p": "La IA aumenta al agente. No reemplaza a la persona en la llamada. Cada interacción tiene un nombre asociado.", "about.values.2.h": "Socio, no proveedor", "about.values.2.role": "Valor 02", "about.values.2.p": "Tu equipo de cuenta tiene nombre, está dedicado y permanece. La continuidad supera al muestreo en cada industria.", "about.values.3.h": "Bilingüe por defecto", "about.values.3.role": "Valor 03", "about.values.3.p": "Cada agente. Cada llamada. Sin niveles de idioma, sin transferencias. Tus clientes hispanohablantes reciben el mismo servicio.", "about.values.4.h": "Medido, no prometido", "about.values.4.role": "Valor 04", "about.values.4.p": "Dashboards en vivo, 100% cobertura QA, resúmenes semanales. Ves lo que nosotros vemos. Los números resuelven las discusiones.", "service.ai-call-center.name": "Centro de Llamadas con IA", "service.customer-support.name": "Atención al Cliente", "service.bpo.name": "Externalización de Procesos", "service.inbound-sales.name": "Ventas Entrantes", "service.live-chat.name": "Chat en Vivo", "service.marketing-surveys.name": "Encuestas de Marketing", "service.quality-assurance.name": "Aseguramiento de Calidad", "service.soft-collections.name": "Cobranza Amistosa", "service.tier-1-tech.name": "Soporte Técnico Nivel 1", "industry.insurance.name": "Seguros", "industry.healthcare.name": "Salud", "industry.retail.name": "Retail y E-commerce", "industry.security.name": "Seguridad", "industry.utilities.name": "Servicios Públicos", "industry.finance.name": "Finanzas", "service.ai-call-center.tag": "Donde los humanos son potenciados por IA.", "service.ai-call-center.lede": "Centris combina la eficiencia de IA con agentes bilingües reales para entregar atención al cliente más inteligente y empática — a la velocidad de la conversación en vivo.", "service.ai-call-center.what.0": "Nuestro centro de llamadas con IA empareja a cada agente bilingüe con Sophia, una asistente en tiempo real que escucha, transcribe, evalúa el sentimiento y sugiere la mejor próxima línea — todo sin frenar la conversación. El agente decide; Sophia acelera.", "service.ai-call-center.what.1": "Eso cambia las matemáticas. El tiempo promedio de manejo baja 18-22%. La resolución en primera llamada llega a más de 90%. Y cada llamada recibe puntaje QA — no la muestra manual del 2% que solía ser el estándar de la industria.", "service.ai-call-center.bullet.0": "<b>Transcripción en vivo y guías de traducción</b> — los agentes ven la intención y el sentimiento del cliente en tiempo real, en cualquier idioma.", "service.ai-call-center.bullet.1": "<b>Sugerencias de próxima mejor acción</b> — Sophia muestra la respuesta óptima con un puntaje de confianza; el agente aprueba, reescribe o omite.", "service.ai-call-center.bullet.2": "<b>QA automática en cada llamada</b> — adherencia, empatía, resolución y cumplimiento evaluados en el 100% de las interacciones.", "service.ai-call-center.bullet.3": "<b>Seguimiento de sentimiento</b> — lectura emocional en tiempo real del cliente, usada para enrutamiento, escalación y coaching post-llamada.", "service.ai-call-center.f1.lbl": "Cómo trabaja Sophia en una llamada", "service.ai-call-center.f1.h": "Escuchando, redactando y evaluando — todo en segundo plano.", "service.ai-call-center.f1.p": "Mientras tu agente habla con el cliente, Sophia transcribe ambos lados en la pantalla, ejecuta detección de intención y sentimiento en cada oración, y trae contenido relevante de la base de conocimientos a un panel lateral. Cuando el cliente hace una pausa, Sophia redacta una respuesta recomendada. Tu agente la lee, decide y habla — todo en menos de dos segundos.", "service.ai-call-center.f2.lbl": "Por qué el bilingüismo importa aquí", "service.ai-call-center.f2.h": "Conversión en español que realmente puedes medir.", "service.ai-call-center.f2.p": "Aproximadamente el 30% del volumen entrante en muchos verticales de Norteamérica viene de clientes que prefieren español. Cuando ese tráfico llega a un IVR solo en inglés o se transfiere a una cola genérica, la conversión cae 20-40%. Nuestros agentes son nativos bilingües en cada llamada — y Sophia muestra guías de traducción para clientes que cambian a mitad de conversación.", "service.customer-support.tag": "Soporte bilingüe nearshore en voz, chat y correo.", "service.customer-support.lede": "Nuestros agentes trabajan como una extensión perfecta de tu equipo, en tu tono, en tus horarios.", "service.customer-support.what.0": "El soporte al cliente es lo que hemos hecho durante 30 años. La diferencia ahora es la capa de IA debajo. Misma voz humana cálida y completamente bilingüe del otro lado — pero con Sophia haciendo a cada agente más rápido, más consistente y mejor informado.", "service.customer-support.what.1": "Asignamos personal según tus horas pico, tu mezcla de canales y tu SLA — y obtienes un equipo dedicado, no un grupo rotativo. Los agentes aprenden tu producto, tu tono y tus clientes.", "service.customer-support.bullet.0": "<b>Voz, chat, correo, SMS</b> — un solo equipo maneja cada canal.", "service.customer-support.bullet.1": "<b>Agentes dedicados</b> — no un grupo compartido. Los mismos nombres, las mismas voces, la misma profundidad de conocimiento.", "service.customer-support.bullet.2": "<b>EN/ES nativo</b> — cada agente es completamente bilingüe; sin niveles de idioma, sin transferencias.", "service.customer-support.bullet.3": "<b>Tu CRM</b> — Salesforce, Zendesk, HubSpot, ServiceNow, personalizado — integramos, no reemplazamos.", "service.customer-support.f1.lbl": "Mezcla de canales", "service.customer-support.f1.h": "La voz es solo una pieza. Nosotros manejamos toda la conversación.", "service.customer-support.f1.p": "Una operación de soporte moderna es voz + chat + correo + SMS + a veces redes sociales. Asignamos un equipo bilingüe a través de todos ellos — así que cuando un cliente que chateó ayer llama hoy, el agente tiene el contexto. Sophia une todo, mostrando tickets previos, última interacción y cualquier problema abierto en el momento que la llamada conecta.", "service.customer-support.f2.lbl": "Adaptación de tono", "service.customer-support.f2.h": "En tu voz. No en la nuestra.", "service.customer-support.f2.p": "El onboarding toma 2-3 semanas. Escuchamos tus llamadas existentes, estudiamos tu guía de voz de marca, ejecutamos sesiones de práctica lado a lado con tu equipo, y solo lanzamos cuando el equipo de QA no puede notar la diferencia entre nuestros agentes y los tuyos. Luego seguimos calibrando mensualmente para que la voz se mantenga fiel mientras tu negocio evoluciona.", "service.bpo.tag": "Equipos calificados en México asumen el trabajo que te frena.", "service.bpo.lede": "Para que tu operación interna pueda concentrarse en el trabajo que solo tú puedes hacer.", "service.bpo.what.0": "BPO es donde la fluidez del centro de contacto se encuentra con la disciplina de la oficina interna. Asumimos el trabajo estructurado y repetible — entrada de datos, procesamiento de documentos, recepción de reclamos, gestión de pedidos, preparación ligera de suscripción — y lo manejamos como una operación ajustada y medida.", "service.bpo.what.1": "Tú obtienes rendimiento, precisión y rastros de auditoría. Nosotros hacemos el trabajo en el que somos buenos. Tu equipo recupera su tiempo.", "service.bpo.bullet.0": "<b>Procesamiento de documentos</b> — reclamos, aplicaciones, contratos, facturas.", "service.bpo.bullet.1": "<b>Entrada y limpieza de datos</b> — alta precisión, QA muestreada, SLAs definidos.", "service.bpo.bullet.2": "<b>Gestión de pedidos y operaciones de cumplimiento</b> — bilingüe donde se necesite.", "service.bpo.bullet.3": "<b>Externalización de procesos de conocimiento</b> — investigación, validación, análisis ligero.", "service.bpo.f1.lbl": "Rendimiento", "service.bpo.f1.h": "Construido para escalar arriba o abajo sin drama.", "service.bpo.f1.p": "El volumen de procesamiento de documentos no es constante. Fin de trimestre, fin de año, post-tormenta en seguros — el volumen puede subir 3-5x. Asignamos un grupo flexible que puede absorber eso sin caer del SLA. Cuando el pico termina, la capacidad se reduce. Pagas por lo que usaste.", "service.bpo.f2.lbl": "Precisión", "service.bpo.f2.h": "QA muestreada + SLAs definidos que puedes auditar.", "service.bpo.f2.p": "Cada lote pasa por QA estructurada — muestreamos, calificamos y reportamos semanalmente sobre precisión por tipo. Si un tipo particular de documento está desviándose, lo corregimos al día siguiente, no el próximo trimestre. Ves las líneas de tendencia, no solo los totales.", "service.inbound-sales.tag": "Maneja el momento en que tu cliente está listo para comprar.", "service.inbound-sales.lede": "Aumenta la retención de clientes, eleva la conversión, gana cuota de mercado — en cualquier idioma.", "service.inbound-sales.what.0": "Las ventas entrantes son conversión en los momentos en los que ya gastaste dinero en marketing. Tomamos la llamada, calificamos, manejamos el cierre y entregamos limpiamente. Sophia rastrea la intención en tiempo real para que el agente sepa qué camino tomar.", "service.inbound-sales.what.1": "La cobertura bilingüe significa que dejas de perder el 30% del tráfico entrante que prefiere español — y dejas de enviarlos a un IVR genérico.", "service.inbound-sales.bullet.0": "<b>Calificación de intención en tiempo real</b> — Sophia identifica a los compradores listos vs. los que están explorando.", "service.inbound-sales.bullet.1": "<b>Cierre bilingüe</b> — conversión en español con contexto completo, no una transferencia de idioma.", "service.inbound-sales.bullet.2": "<b>Nativo del CRM</b> — leads calificados, deduplicados y en cola en tu pipeline existente.", "service.inbound-sales.bullet.3": "<b>Analíticas de conversión</b> — por canal, idioma, campaña, hora.", "service.inbound-sales.f1.lbl": "Por qué esto importa", "service.inbound-sales.f1.h": "El tráfico entrante es el momento de mayor conversión que tienes.", "service.inbound-sales.f1.p": "Para cuando un cliente está llamando, ya decidió comprar algo — solo no ha decidido a quién. Una experiencia entrante débil le entrega la conversión a un competidor. Nuestros agentes están entrenados en manejo de objeciones, señales de urgencia y tu línea de productos específica, con Sophia mostrando ofertas relevantes en tiempo real.", "service.inbound-sales.f2.lbl": "Aumento en idioma español", "service.inbound-sales.f2.h": "El mercado que la mayoría de tus competidores está dejando en la mesa.", "service.inbound-sales.f2.p": "Los clientes entrantes que prefieren español convierten 20-40% menos cuando son enrutados a soporte solo en inglés. Vemos esto en cada vertical que atendemos. Con soporte de cierre bilingüe nativo, esa brecha se cierra — y en algunos casos, las ventas entrantes en español convierten más que en inglés porque la experiencia es más personal.", "service.live-chat.tag": "Conexión personalizada, optimizada para la retención.", "service.live-chat.lede": "Roba cuota de mercado a competidores que no pueden igualar el mismo nivel de cuidado.", "service.live-chat.what.0": "El chat es su propia disciplina. Tono, ritmo y timing son diferentes de la voz. Asignamos chat como un canal de primera clase con agentes que no hacen nada más — y Sophia les da respuestas sugeridas, búsquedas en base de conocimiento y señales de sentimiento en tiempo real.", "service.live-chat.what.1": "Obtienes respuesta más rápida, mejor resolución, y conversaciones que se sienten humanas incluso a escala.", "service.live-chat.bullet.0": "<b>Primera respuesta en menos de 30 segundos</b> — medida, no aspiracional.", "service.live-chat.bullet.1": "<b>Agentes multi-sesión</b> — Sophia los ayuda a manejar varias sin perder contexto.", "service.live-chat.bullet.2": "<b>Activadores proactivos</b> — el chat se abre en el momento correcto basado en comportamiento.", "service.live-chat.bullet.3": "<b>Transferencia a voz</b> — escala a llamada telefónica sin perder el hilo.", "service.live-chat.f1.lbl": "Oficio específico del chat", "service.live-chat.f1.h": "No es solo escribir lo que un agente diría en una llamada.", "service.live-chat.f1.p": "Los agentes de chat necesitan un conjunto diferente de habilidades: brevedad, formato, criterio para emojis y la paciencia para manejar tres conversaciones a la vez. Contratamos y entrenamos específicamente para chat. Nunca son extraídos para colas de voz. El resultado son conversaciones que se leen como un humano competente, no como un script.", "service.live-chat.f2.lbl": "Proactivo vs reactivo", "service.live-chat.f2.h": "El chat correcto en el momento correcto supera a cien incorrectos.", "service.live-chat.f2.p": "Trabajamos con tu equipo de analítica para identificar los momentos de alta intención — abandono del carrito, visitas repetidas a páginas de producto, rebotes en la página de precios — y activamos invitaciones de chat solo cuando el aumento de conversión es estadísticamente probable. Menos ruido, más ingresos.", "service.marketing-surveys.tag": "Deja que tus clientes te digan lo que quieren.", "service.marketing-surveys.lede": "Conversaciones reales, insight estructurado — combustible para el próximo producto, la próxima campaña, el próximo trimestre.", "service.marketing-surveys.what.0": "Las encuestas bien hechas no son un formulario — son una conversación estructurada. Las ejecutamos a escala, en cualquier idioma, y entregamos los resultados como datos estructurados limpios más la transcripción cruda cuando la quieras.", "service.marketing-surveys.what.1": "Sophia ayuda con la adherencia (preguntas hechas en el orden correcto, con el marco correcto) y con la categorización de sentimiento post-llamada. Obtienes los números y el porqué.", "service.marketing-surveys.bullet.0": "<b>Entrega de encuestas por voz y chat</b> — en tu momento elegido.", "service.marketing-surveys.bullet.1": "<b>Administración bilingüe</b> — captura los segmentos que tu formulario se pierde.", "service.marketing-surveys.bullet.2": "<b>Sentimiento + textual</b> — puntuación categórica más voz citable del cliente.", "service.marketing-surveys.bullet.3": "<b>Salida limpia</b> — CSV / API / push directo al CRM.", "service.marketing-surveys.f1.lbl": "Por qué el teléfono supera al formulario", "service.marketing-surveys.f1.h": "Respuestas abiertas que no puedes obtener de un enlace de encuesta.", "service.marketing-surveys.f1.p": "Las encuestas en línea obtienen a las personas que ya amaron (u odiaron) la experiencia. Las encuestas telefónicas alcanzan al medio silencioso — los clientes cuyo feedback realmente movería la aguja en retención. Asignamos agentes bilingües senior que pueden mantener a un respondiente comprometido durante 8-12 minutos de preguntas estructuradas más seguimiento abierto.", "service.marketing-surveys.f2.lbl": "Salida limpia", "service.marketing-surveys.f2.h": "Datos estructurados la misma semana en que ocurren las llamadas.", "service.marketing-surveys.f2.p": "Cada llamada produce tres artefactos: el scorecard estructurado (tu endpoint CSV/API), la transcripción textual (buscable), y las etiquetas de sentimiento + tema generadas por Sophia. Puedes ejecutar análisis de regresión sobre números el viernes y extraer voz citable del cliente para la presentación ejecutiva el lunes.", "service.quality-assurance.tag": "Cada interacción. Cada canal. Sin muestreo.", "service.quality-assurance.lede": "IA y aprendizaje automático capturan, transcriben y califican cada interacción — en cada canal. Sin sorpresas, sin momentos de coaching perdidos.", "service.quality-assurance.what.0": "La QA manual muestrea 2-3% de las llamadas. Nosotros calificamos el 100%. Sophia transcribe, evalúa la adherencia a tu scorecard, marca riesgos de cumplimiento, rastrea sentimiento, y trae momentos coachables a los líderes de QA — quienes pasan su tiempo en las llamadas que realmente importan.", "service.quality-assurance.what.1": "El resultado es coaching más rápido, menos sorpresas de cumplimiento, y un aumento medible en CSAT.", "service.quality-assurance.bullet.0": "<b>100% cobertura de llamadas</b> — no una muestra. Cada llamada, cada canal.", "service.quality-assurance.bullet.1": "<b>Scorecards personalizados</b> — tus dimensiones, tu ponderación, tu rúbrica.", "service.quality-assurance.bullet.2": "<b>Marcado de cumplimiento</b> — divulgación, consentimiento, manejo PCI, lenguaje prohibido.", "service.quality-assurance.bullet.3": "<b>Resumen semanal de insights</b> — temas, tendencias, planes de coaching a nivel agente.", "service.quality-assurance.f1.lbl": "Por qué importa el 100%", "service.quality-assurance.f1.h": "El muestreo es estructuralmente incorrecto para QA en 2026.", "service.quality-assurance.f1.p": "Una muestra del 2% por definición se pierde el 98% de los problemas de cumplimiento, el 98% de los momentos coachables y el 98% de la voz del cliente. Sophia transcribe, califica y marca cada llamada. Tus líderes de QA luego se enfocan en coachear contra los patrones que los datos revelan — no en escuchar 30 llamadas al día esperando atrapar un problema.", "service.quality-assurance.f2.lbl": "Marcado de cumplimiento", "service.quality-assurance.f2.h": "Atrapa la divulgación perdida en 12 horas, no en 12 semanas.", "service.quality-assurance.f2.p": "Sophia sabe qué divulgaciones necesitan hacerse en qué tipos de llamadas. Si un agente omite una línea requerida, la llamada se marca para revisión en la hora. Los líderes de cumplimiento reciben un resumen diario de llamadas marcadas y líneas de tendencia — así un patrón que habría salido en una auditoría trimestral se corrige con coaching la misma semana.", "service.soft-collections.tag": "Un enfoque sensible y respetuoso para la recuperación de deudas.", "service.soft-collections.lede": "Protege la relación con el cliente mientras mueves el saldo. Empatía a escala.", "service.soft-collections.what.0": "La cobranza amistosa es el trabajo de centro de contacto más difícil de hacer bien. La línea entre firme y abrasivo es delgada. Asignamos este trabajo con agentes senior, entrenamiento completo en FDCPA / Reg F, y Sophia vigilando tono o lenguaje que pudiera crear exposición.", "service.soft-collections.what.1": "El resultado es mayor recuperación en morosidades en etapas posteriores y tasas de queja significativamente más bajas — porque el cliente se siente escuchado, no cazado.", "service.soft-collections.bullet.0": "<b>Cumple con FDCPA y Reg F</b> — cada script, cada llamada.", "service.soft-collections.bullet.1": "<b>Monitoreo de tono de Sophia</b> — alerta en tiempo real si el lenguaje se desvía.", "service.soft-collections.bullet.2": "<b>Alcance bilingüe</b> — el trabajo de cobranza más efectivo ocurre en el primer idioma del cliente.", "service.soft-collections.bullet.3": "<b>Preserva al cliente</b> — tasas de queja medidas 60-70% por debajo del promedio de la industria.", "service.soft-collections.f1.lbl": "La diferencia bilingüe", "service.soft-collections.f1.h": "Las tasas de recuperación suben cuando la conversación es en el primer idioma del cliente.", "service.soft-collections.f1.p": "Las conversaciones de cobranza son emocionales incluso en el mejor caso. Cuando ocurren en el segundo idioma de un cliente, la inteligencia emocional — la empatía, la disposición de negociar un plan de pago — se vuelve más difícil de transmitir. La cobranza bilingüe nativa ve tasas de recuperación significativamente más altas en clientes que prefieren español, con tasas de queja más bajas.", "service.soft-collections.f2.lbl": "Cumplimiento + tono", "service.soft-collections.f2.h": "Sophia escucha la desviación del cumplimiento en cada llamada.", "service.soft-collections.f2.p": "FDCPA es implacable. Un solo momento de desviación de tono puede convertirse en una queja regulatoria. Sophia transcribe y analiza cada llamada de cobranza en tiempo real, alertando a supervisores instantáneamente si el lenguaje se acerca a territorio prohibido. Las grabaciones se retienen según tu política de retención, encriptadas en reposo y en tránsito.", "service.tier-1-tech.tag": "Una primera línea de defensa que realmente resuelve el problema.", "service.tier-1-tech.lede": "Nuestros agentes están entrenados en tu producto y tu tono — para que el cliente nunca tenga que esperar a que un humano devuelva la llamada.", "service.tier-1-tech.what.0": "El Nivel 1 es donde la mayoría del soporte técnico o tiene éxito o silenciosamente envía al cliente a una cola de tickets. Nosotros no enviamos a cola. Sophia le da al agente acceso en vivo a tu KB y lista de problemas conocidos, más contexto de las interacciones previas del cliente. La meta es resolución en primer contacto.", "service.tier-1-tech.what.1": "Lo que se queda en Nivel 1, se resuelve. Lo que necesita escalación, se escala limpiamente — con contexto completo, pasos de reproducción, y el cliente informado.", "service.tier-1-tech.bullet.0": "<b>Agentes entrenados en producto</b> — equipo dedicado, no un grupo rotativo.", "service.tier-1-tech.bullet.1": "<b>KB y estado en vivo</b> — Sophia trae el artículo correcto instantáneamente.", "service.tier-1-tech.bullet.2": "<b>Escalación limpia</b> — pasos de reproducción, logs, y contexto del cliente entregados.", "service.tier-1-tech.bullet.3": "<b>Rastreo SLA</b> — métricas de respuesta, resolución y satisfacción por ticket.", "service.tier-1-tech.f1.lbl": "Resolución en primer contacto", "service.tier-1-tech.f1.h": "Si podemos resolverlo sin escalar, lo haremos.", "service.tier-1-tech.f1.p": "La mayoría de las operaciones de Nivel 1 escalan cualquier cosa que no reconocen inmediatamente. Nosotros no. Los agentes están entrenados profundamente en tu producto, con Sophia mostrando el artículo KB correcto y el historial de tickets previos en segundos. Los estudios muestran que 60-75% de los tickets de Nivel 1 pueden cerrarse en primer contacto cuando el agente tiene las herramientas correctas. Nosotros alcanzamos ese estándar.", "service.tier-1-tech.f2.lbl": "Escalación limpia", "service.tier-1-tech.f2.h": "Cuando tiene que ir al Nivel 2, va listo.", "service.tier-1-tech.f2.p": "Lo que más se quejan los equipos de ingeniería son las escalaciones de Nivel 1 sin pasos de reproducción, sin logs, y sin contexto del cliente. Nosotros no hacemos eso. Cada escalación incluye un traspaso estructurado: lo que el cliente reportó, lo que intentamos, lo que observamos, los pasos de reproducción y la expectativa del cliente. El Nivel 2 recoge donde lo dejamos, no desde cero.", "industry.insurance.what": "<p>Los seguros son procesos pesados y sensibles al tono. Los clientes están llamando en el peor día que han tenido este año. Asignamos con agentes bilingües senior que han manejado reclamos durante años, y Sophia les da acceso en vivo a tus datos de póliza e historial de interacciones previas. Las divulgaciones se registran, las señales de fraude se marcan, y el cliente se siente escuchado.</p>", "industry.insurance.bullet.0": "<b>Recepción FNOL</b> — voz, chat y digital. Campos estructurados más transcripción completa.", "industry.insurance.bullet.1": "<b>Servicio de pólizas</b> — endosos, facturación, preguntas de cobertura.", "industry.insurance.bullet.2": "<b>Reclamos bilingües</b> — manejo completo de reclamos en español, no una transferencia de idioma.", "industry.insurance.bullet.3": "<b>Cumplimiento por defecto</b> — cada divulgación, cada consentimiento, registrado y auditado.", "industry.insurance.stat.0": "Menor costo de servicio al cliente vs. centros en EE.UU.", "industry.insurance.stat.1": "Cobertura FNOL en dos hubs", "industry.insurance.stat.2": "Adherencia a divulgación — medida", "industry.insurance.f1.lbl": "Por qué los clientes se van", "industry.insurance.f1.h": "La experiencia de reclamos es el factor #1 de retención en P&C.", "industry.insurance.f1.p": "Los clientes no comparan aseguradoras por precio — las comparan por la experiencia de reclamos. Una mala entrega de reclamo te cuesta al asegurado de por vida. Centris construye equipos de reclamos que resuelven FNOL en una sola interacción bilingüe, con cumplimiento de divulgación integrado y Sophia rastreando cada paso requerido.", "industry.insurance.f2.lbl": "Marcado de señales de fraude", "industry.insurance.f2.h": "Sophia marca patrones sospechosos en tiempo real — para seguimiento de SIU.", "industry.insurance.f2.p": "Sophia analiza la narrativa del reclamo contra patrones conocidos de fraude: inconsistencias en la línea de tiempo, lenguaje evasivo, involucramiento de terceros, historial de pérdidas previas. Los reclamos marcados se enrutan a tu Unidad de Investigaciones Especiales con la transcripción y los marcadores específicos resaltados. Los equipos SIU pasan su tiempo en los casos que ameritan revisión más profunda, no en filtrar.", "industry.healthcare.what": "<p>El trabajo de centro de contacto en salud es primero un campo minado regulatorio, y segundo experiencia del cliente. Asignamos con agentes bilingües entrenados en HIPAA, operamos en infraestructura aislada de PHI con BAAs vigentes, y tenemos a Sophia vigilando la desviación de cumplimiento en cada llamada.</p>", "industry.healthcare.bullet.0": "<b>Acceso de pacientes</b> — programación, registro, verificación de elegibilidad.", "industry.healthcare.bullet.1": "<b>Servicios de miembros</b> — beneficios, estado de reclamos, soporte de apelaciones.", "industry.healthcare.bullet.2": "<b>Seguimiento de autorización previa</b> — bilingüe, persistente, preciso.", "industry.healthcare.bullet.3": "<b>HIPAA y BAA</b> — acuerdos firmados en archivo, auditados anualmente.", "industry.healthcare.stat.0": "Cobertura de soporte al mercado hispano", "industry.healthcare.stat.1": "Infraestructura compatible con Tipo II", "industry.healthcare.stat.2": "Reducción de pacientes ausentes con recordatorios bilingües", "industry.healthcare.f1.lbl": "Acceso bilingüe", "industry.healthcare.f1.h": "Los pacientes que prefieren español merecen la misma experiencia de acceso.", "industry.healthcare.f1.p": "Los pacientes hispanos enfrentan acceso estructuralmente peor a la salud en EE.UU. — en parte porque la puerta de entrada de la mayoría de redes es solo en inglés. Centris cierra esa brecha. Cada agente de acceso de pacientes es completamente bilingüe; cada llamada de servicios de miembros recibe la misma profundidad de ayuda independientemente de la preferencia de idioma. El resultado: 100% de cobertura al mercado hispano con cumplimiento de citas medible y mejor.", "industry.healthcare.f2.lbl": "Manejo de PHI", "industry.healthcare.f2.h": "Infraestructura aislada. Auditada anualmente. BAAs en archivo.", "industry.healthcare.f2.p": "La información de salud del paciente se maneja en infraestructura que nunca sale de entornos controlados. Encriptación en reposo y en tránsito, registro de acceso en cada vista de registro, auditorías anuales de terceros contra la Regla de Seguridad HIPAA. Los BAAs son estándar. Podemos repasar la matriz de controles durante el proceso de adquisición.", "industry.retail.what": "<p>El retail es volátil. Noviembre y diciembre no se parecen a junio, y un centro de contacto que no puede flexionar 2-3x es un centro de contacto que pierde el pico. Asignamos un grupo flexible de agentes bilingües pre-entrenados, listos para desplegar — así que cuando el tráfico se duplica, tus niveles de servicio no caen.</p>", "industry.retail.bullet.0": "<b>Flex de pico</b> — grupo pre-entrenado, listo para escalar con aviso de 2 semanas.", "industry.retail.bullet.1": "<b>Devoluciones y reemplazos</b> — manejados limpiamente, con disposición registrada.", "industry.retail.bullet.2": "<b>Conversión de chat en vivo</b> — chat proactivo bilingüe para recuperación de carrito.", "industry.retail.bullet.3": "<b>Post-compra</b> — entrega, talla, preguntas de producto manejadas en cualquier idioma.", "industry.retail.stat.0": "Flex de capacidad en temporada pico", "industry.retail.stat.1": "Conversión de chat bilingüe", "industry.retail.stat.2": "Primera respuesta promedio de chat", "industry.retail.f1.lbl": "Planeación de temporada pico", "industry.retail.f1.h": "Aumento del Q4, planeado en el Q2.", "industry.retail.f1.p": "Empezamos a contratar para el pico navideño en junio. Para septiembre, el grupo flexible está contratado y entrenado. Para la semana de Black Friday, la capacidad está a 3x del baseline y lista. Cuando llega enero y el volumen cae, el grupo regresa al baseline. Pagas por lo que usaste, tus SLAs se mantienen durante el pico, y tu CSAT no se cae en el trimestre más observado del año.", "industry.retail.f2.lbl": "Devoluciones y disposición", "industry.retail.f2.h": "Las devoluciones son un momento del cliente, no solo un problema de logística.", "industry.retail.f2.p": "Cómo manejas una devolución decide si un cliente regresa. Tratamos las conversaciones de devolución como momentos de retención — escuchando la causa raíz, ofreciendo alternativas donde sea apropiado, y registrando datos de disposición estructurados sobre los cuales tu equipo de merchandising puede actuar. Sentimiento, causa raíz y probabilidad de regresar como cliente — todo se etiqueta en cada llamada.", "industry.security.what": "<p>El trabajo de seguridad tiene cero tolerancia al retraso de transferencia. Las llamadas de alarma necesitan respuesta en segundos, y el agente tiene que operar con calma mientras trae el contexto correcto de la cuenta y el protocolo correcto de despacho. Lo hacemos a escala, bilingüemente, con infraestructura redundante en dos centros.</p>", "industry.security.bullet.0": "<b>Verificación de alarma</b> — guiado por protocolo, calificado, con rastro de auditoría.", "industry.security.bullet.1": "<b>Coordinación de despacho</b> — entrega a PSAP, equipo en sitio, o respuesta armada.", "industry.security.bullet.2": "<b>Servicios de cuenta</b> — facturación, cambios de horario, preguntas técnicas.", "industry.security.bullet.3": "<b>Redundancia</b> — failover entre Monterrey y Aguascalientes; sin punto único de fallo.", "industry.security.stat.0": "Cobertura siempre activa en dos hubs", "industry.security.stat.1": "Tiempo de manejo de respuesta de alarma", "industry.security.stat.2": "Registro de incidentes y rastro de auditoría", "industry.security.f1.lbl": "Velocidad de respuesta", "industry.security.f1.h": "Cada llamada de alarma recibe un humano en menos de 30 segundos.", "industry.security.f1.p": "El trabajo de seguridad no tiene tiempo para colas. Asignamos con cálculo de superposición de turnos que mantiene tiempo de respuesta menor a 30 segundos en todas las horas incluyendo días festivos. Los agentes están entrenados en protocolo en tus procedimientos específicos: verificar, despachar, documentar, escalar si es necesario. Sophia trae contexto de cuenta y protocolo a la pantalla del agente en el momento que la llamada conecta.", "industry.security.f2.lbl": "Redundancia", "industry.security.f2.h": "Si un centro pierde energía, el otro toma la llamada.", "industry.security.f2.p": "Ambos centros nearshore operan como activo-activo para cuentas de seguridad. Las llamadas se enrutan a la cola que tenga menor tiempo de respuesta, y si un sitio pierde energía o conectividad, el tráfico se mueve al otro en segundos. Sin punto único de fallo en el camino de alarma a despacho.", "industry.utilities.what": "<p>El volumen del centro de contacto de servicios públicos es explosivo. Una tormenta o una ola de calor puede cuadruplicar el tráfico entrante en una hora. Pre-asignamos capacidad para ventanas climáticas conocidas y tenemos protocolos de sobrecarga que traen agentes extras en línea en horas, no días.</p>", "industry.utilities.bullet.0": "<b>Recepción de cortes</b> — captura estructurada de ubicación, comunicación ETR.", "industry.utilities.bullet.1": "<b>Facturación y pagos</b> — arreglos, configuración de autopago, manejo de disputas.", "industry.utilities.bullet.2": "<b>Movimientos de servicio</b> — conexiones, desconexiones, transferencias.", "industry.utilities.bullet.3": "<b>Capacidad de sobrecarga</b> — lista para tormentas, con grupo bilingüe pre-asignado.", "industry.utilities.stat.0": "Capacidad de sobrecarga en horas, no días", "industry.utilities.stat.1": "Mezcla bilingüe de llamadas atendida", "industry.utilities.stat.2": "Grabación regulatoria de llamadas", "industry.utilities.f1.lbl": "Protocolos de tormenta", "industry.utilities.f1.h": "Capacidad que responde a pronósticos del clima, no a las consecuencias.", "industry.utilities.f1.p": "Monitoreamos pronósticos del clima para tus territorios de servicio. Cuando se pronostica que una tormenta golpeará, los protocolos de sobrecarga se activan 24 horas antes: los agentes flexibles pre-asignados entran en línea, los supervisores reciben briefing sobre el playbook, y Sophia precarga scripts de protocolo de cortes. Cuando los clientes empiezan a llamar, el equipo está listo.", "industry.utilities.f2.lbl": "Alcance bilingüe", "industry.utilities.f2.h": "En muchos territorios de servicio, 30-50% de los clientes prefieren español.", "industry.utilities.f2.p": "Los servicios públicos tienen una de las tasas de mezcla de llamadas bilingües más altas en el mundo de los centros de contacto — especialmente en Texas, California, Arizona, Florida y Nuevo México. Asignamos completamente bilingüe en cada cola, así que el reporte de cortes, arreglos de facturación y movimientos de servicio ocurren en el primer idioma del cliente. La tasa de aceptación de arreglos de pago en particular es materialmente más alta cuando la conversación es en español.", "industry.finance.what": "<p>Los servicios financieros son trabajo de alta confianza y alta regulación. Asignamos agentes bilingües senior entrenados en Reg E, Reg Z, y tus políticas internas, con Sophia vigilando el lenguaje de cumplimiento en cada llamada. Las grabaciones están encriptadas, retenidas según tu política, y accesibles para auditoría.</p>", "industry.finance.bullet.0": "<b>Servicio de cuentas</b> — saldos, estados de cuenta, autorizaciones.", "industry.finance.bullet.1": "<b>Recepción de disputas</b> — recepción estructurada compatible con Reg E / Reg Z.", "industry.finance.bullet.2": "<b>Verificación de fraude</b> — autenticación de devolución de llamada en tiempo real.", "industry.finance.bullet.3": "<b>Soporte de onboarding</b> — asistencia con aplicaciones, ayuda con carga de documentos.", "industry.finance.stat.0": "Proveedor de servicio Nivel 1", "industry.finance.stat.1": "Resolución bilingüe fluida de disputas", "industry.finance.stat.2": "Grabación y registro de llamadas", "industry.finance.f1.lbl": "Cumplimiento primero", "industry.finance.f1.h": "Reg E, Reg Z, y tu scorecard interno — todo construido en el flujo de trabajo.", "industry.finance.f1.p": "El cumplimiento en servicios financieros no es una lista de chequeo — es una forma de estructurar cada conversación. Lo construimos desde el día uno: divulgaciones scripteadas en los momentos correctos, Sophia calificando cada llamada por adherencia, resúmenes diarios de cumplimiento para tu equipo. Cuando los examinadores piden evidencia, el rastro de auditoría está completo.", "industry.finance.f2.lbl": "Manejo de disputas", "industry.finance.f2.h": "Los plazos de Reg E son implacables. Los cumplimos.", "industry.finance.f2.p": "Reg E te da 10 días para crédito provisional, 45-90 días para investigar. Falla un plazo y los dólares se vuelven tuyos. Centris ejecuta recepción de disputas en un reloj de 24 horas con flujo de trabajo estructurado, dashboards SLA que tu equipo de cumplimiento monitorea en vivo, y soporte completamente bilingüe para que los clientes que prefieren español no terminen en un carril más lento.", "industry.insurance.desc": "Reclamos, FNOL, servicio de pólizas y soporte de suscripción — bilingüe, calificado y rastreado.", "industry.insurance.name_lower": "seguros", "industry.healthcare.desc": "Acceso de pacientes con cumplimiento HIPAA, programación y servicios de miembros para redes de proveedores y aseguradoras.", "industry.healthcare.name_lower": "salud", "industry.retail.desc": "Gestión de pedidos, devoluciones, reemplazos y soporte post-compra — diseñado para picos del Q4.", "industry.retail.name_lower": "retail y e-commerce", "industry.security.desc": "Respuesta a alarmas, coordinación de despacho, servicios de cuenta. Cero tolerancia a latencia, 24/7 en dos centros.", "industry.security.name_lower": "seguridad", "industry.utilities.desc": "Soporte de cortes, facturación, arreglos de pago, conexiones y desconexiones — bilingüe donde importa.", "industry.utilities.name_lower": "servicios públicos", "industry.finance.desc": "Servicio de cuentas, recepción de disputas, verificación de fraude, onboarding para finanzas de consumo y fintech.", "industry.finance.name_lower": "finanzas"}};</script><script src="scripts.js"></script>
+  </body>
+</html>
