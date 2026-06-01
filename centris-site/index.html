@@ -388,15 +388,27 @@
         overflow: hidden;
         background: var(--bg);
       }
-      .hero-bg { position: absolute; inset: 0; z-index: 0; }
+      .hero-bg {
+        position: absolute; inset: 0; z-index: 0;
+        /* Fallback so the hero looks intentional even if the photo URL fails. */
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(ellipse 70% 60% at 75% 50%, rgba(102, 116, 255, 0.22) 0%, transparent 60%),
+          radial-gradient(ellipse 40% 80% at 90% 30%, rgba(255, 70, 80, 0.16) 0%, transparent 60%),
+          radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: auto, auto, 32px 32px;
+        background-position: center, center, center;
+      }
       .hero-bg img {
+        position: relative;
+        z-index: 1;
         width: 85%;
         height: 100%;
         object-fit: cover;
         object-position: right center;
         display: block;
         margin-left: auto;
-        opacity: 0.55;
+        opacity: 0.6;
       }
       .hero-bg::after {
         content: ""; position: absolute; inset: 0;
@@ -686,8 +698,14 @@
       .r5 { animation-delay: 0.6s; }
       @keyframes rise { to { opacity: 1; transform: translateY(0); } }
 
-      .ir { opacity: 0; transform: translateY(16px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
-      .ir.in { opacity: 1; transform: translateY(0); }
+      /* Default: visible (works without JS). When JS loads, html.has-anim hides them so IO can animate in. */
+      .ir { opacity: 1; transform: none; transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+      html.has-anim .ir { opacity: 0; transform: translateY(16px); }
+      html.has-anim .ir.in { opacity: 1; transform: translateY(0); }
+      @media (prefers-reduced-motion: reduce) {
+        html.has-anim .ir { opacity: 1; transform: none; }
+        .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
+      }
 
       /* ===== Section structure ===== */
       .section { padding: 110px 0; position: relative; }
@@ -2649,18 +2667,28 @@
       window.addEventListener("scroll", updateScrollBar, { passive: true });
       updateScrollBar();
 
-      /* ===== Reveal on scroll ===== */
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const idx = Array.from(e.target.parentNode.children).indexOf(e.target);
-            const delay = Math.min(idx, 6) * 70;
-            setTimeout(() => e.target.classList.add("in"), delay);
-            io.unobserve(e.target);
-          }
-        });
-      }, { rootMargin: "-60px 0px -60px 0px", threshold: 0.04 });
-      document.querySelectorAll(".ir").forEach((el) => io.observe(el));
+      /* ===== Reveal on scroll (progressive enhancement) =====
+         Default state in CSS is visible; we hide via html.has-anim only if we're
+         confident we can reveal. Anything still hidden after 1.2s gets force-shown. */
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if ("IntersectionObserver" in window && !prefersReducedMotion) {
+        document.documentElement.classList.add("has-anim");
+        const revealAll = () => document.querySelectorAll(".ir:not(.in)").forEach((el) => el.classList.add("in"));
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const idx = Array.from(e.target.parentNode.children).indexOf(e.target);
+              const delay = Math.min(idx, 6) * 70;
+              setTimeout(() => e.target.classList.add("in"), delay);
+              io.unobserve(e.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
+        document.querySelectorAll(".ir").forEach((el) => io.observe(el));
+        // Safety nets: reveal everything still hidden after 1.2s, or on first scroll.
+        setTimeout(revealAll, 1200);
+        window.addEventListener("scroll", revealAll, { once: true, passive: true });
+      }
 
       /* ===== Theme toggle ===== */
       const themeBtn = document.getElementById("themeToggle");
