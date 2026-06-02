@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>⚡ Shorts Generator — Go Viral in 60s</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #FF6B35;
+    --bg: #07060f;
+    --panel: rgba(255,255,255,0.04);
+    --border: rgba(255,255,255,0.08);
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.45);
+    --font: -apple-system, 'Inter', 'Helvetica Neue', sans-serif;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: linear-gradient(160deg, #07060f 0%, #130f2a 55%, #0d0b1e 100%);
+    min-height: 100vh;
+  }
+
+  /* ── Nav ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    height: 54px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(14px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { font-size: 15px; font-weight: 900; letter-spacing: -0.01em; }
+  .nav-brand span { background: linear-gradient(90deg, #FF6B35, #ffb347); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  #api-status { font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 100px; border: 1px solid; cursor: pointer; transition: all .15s; }
+  #api-status.connected { color: #4ade80; border-color: rgba(74,222,128,.3); background: rgba(74,222,128,.08); }
+  #api-status.disconnected { color: #f87171; border-color: rgba(248,113,113,.3); background: rgba(248,113,113,.08); }
+
+  /* ── API Key Modal ── */
+  #key-modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+  }
+  #key-modal-overlay.open { display: flex; }
+  #key-modal {
+    background: #12101f;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 36px;
+    width: 100%;
+    max-width: 480px;
+    margin: 16px;
+  }
+  #key-modal h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+  #key-modal p { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+  #key-modal p a { color: var(--accent); }
+  .key-input-wrap { position: relative; margin-bottom: 16px; }
+  #api-key-input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 14px 44px 14px 16px;
+    color: #fff;
+    font-size: 14px;
+    font-family: monospace;
+    outline: none;
+    letter-spacing: 0.05em;
+  }
+  #api-key-input:focus { border-color: var(--accent); }
+  #toggle-key-vis {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; color: var(--muted); font-size: 16px;
+  }
+  .modal-note { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+  .modal-note a { color: var(--accent); }
+
+  /* ── Layout ── */
+  .app {
+    display: flex;
+    height: calc(100vh - 54px);
+  }
+
+  /* ── Left panel ── */
+  .left {
+    width: 400px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 28px 24px;
+    gap: 24px;
+  }
+
+  .panel-title { font-size: 22px; font-weight: 900; line-height: 1.1; }
+  .panel-sub { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+  .field-label {
+    display: block;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+
+  textarea#topic {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 15px;
+    color: #fff;
+    font-size: 14px;
+    font-family: var(--font);
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    transition: border-color .2s;
+  }
+  textarea#topic:focus { border-color: var(--accent); }
+
+  .tone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .tone-btn {
+    padding: 10px 12px;
+    border-radius: 9px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.5);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    display: flex; align-items: center; gap: 8px;
+    transition: all .15s;
+    font-family: var(--font);
+  }
+  .tone-btn.active {
+    border-color: var(--accent);
+    background: rgba(255,107,53,.14);
+    color: var(--accent);
+  }
+  .tone-btn .tone-emoji { font-size: 16px; }
+
+  .dur-row { display: flex; gap: 7px; }
+  .dur-btn {
+    flex: 1; padding: 11px 0;
+    border-radius: 9px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.4);
+    font-size: 16px; font-weight: 700;
+    cursor: pointer;
+    transition: all .15s;
+    font-family: var(--font);
+  }
+  .dur-btn.active {
+    border-color: var(--accent);
+    background: rgba(255,107,53,.14);
+    color: var(--accent);
+  }
+
+  #generate-btn {
+    width: 100%;
+    padding: 17px 0;
+    border-radius: 13px;
+    border: none;
+    background: linear-gradient(90deg, #FF6B35, #ff9a3c);
+    color: #fff;
+    font-size: 17px; font-weight: 800;
+    cursor: pointer;
+    font-family: var(--font);
+    letter-spacing: .01em;
+    transition: opacity .15s, transform .1s;
+  }
+  #generate-btn:hover:not(:disabled) { opacity: .92; transform: translateY(-1px); }
+  #generate-btn:disabled { background: rgba(255,107,53,.25); color: rgba(255,255,255,.35); cursor: not-allowed; transform: none; }
+
+  .spinner {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.25);
+    border-top-color: #fff;
+    animation: spin .7s linear infinite;
+    display: inline-block; vertical-align: middle; margin-right: 8px;
+  }
+
+  .tips { border-top: 1px solid var(--border); padding-top: 18px; }
+  .tips-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.22); margin-bottom: 10px; }
+  .tip { font-size: 12px; color: rgba(255,255,255,.32); margin-bottom: 7px; padding-left: 12px; border-left: 2px solid rgba(255,255,255,.08); line-height: 1.5; }
+
+  /* ── Right panel ── */
+  .right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-y: auto;
+  }
+
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,.2);
+    padding: 0 28px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .tab-btn {
+    padding: 14px 18px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(255,255,255,.38);
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: color .15s;
+    margin-bottom: -1px;
+    font-family: var(--font);
+  }
+  .tab-btn.active {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .tab-content { display: none; padding: 28px; }
+  .tab-content.active { display: block; }
+
+  /* ── Phone mockup ── */
+  .preview-layout { display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap; }
+
+  .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; flex-shrink: 0; }
+  .phone {
+    width: 200px; height: 355px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,.1);
+    position: relative;
+    box-shadow: 0 0 50px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+    background: linear-gradient(160deg, #0f0c29, #302b63, #24243e);
+    cursor: pointer;
+  }
+  .phone-grid {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 40px),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 1px,transparent 40px);
+  }
+  .phone-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.5) 100%);
+  }
+  .phone-content {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 22px 12px 12px;
+  }
+  .phone-title-area { text-align: center; }
+  .phone-subtitle { font-size: 7px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 3px; }
+  .phone-title { font-size: 16px; font-weight: 900; color: #fff; line-height: 1.15; text-shadow: 0 2px 8px rgba(0,0,0,.8); }
+  .phone-items { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 5px; margin: 6px 0; }
+  .phone-item {
+    display: flex; gap: 7px; align-items: flex-start;
+    background: rgba(0,0,0,.35);
+    border-radius: 7px; padding: 5px 7px;
+    border: 1px solid rgba(255,255,255,.07);
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity .4s, transform .4s;
+  }
+  .phone-item.visible { opacity: 1; transform: translateX(0); }
+  .phone-num {
+    width: 16px; height: 16px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 900; color: #fff; flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .phone-item-heading { font-size: 8.5px; font-weight: 800; color: #fff; }
+  .phone-item-body { font-size: 7.5px; color: rgba(255,255,255,.6); line-height: 1.4; margin-top: 1px; }
+  .phone-progress-bar {
+    height: 3px; border-radius: 3px; background: rgba(255,255,255,.15); overflow: hidden;
+  }
+  .phone-progress-fill {
+    height: 100%; width: 0%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), #fff);
+    transition: width .1s linear;
+  }
+
+  .phone-play-btn {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .play-circle {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid rgba(255,107,53,.5);
+    background: rgba(255,107,53,.1);
+    color: #FF6B35;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+  .play-circle:hover { background: rgba(255,107,53,.2); }
+  .reset-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.12);
+    background: transparent; color: rgba(255,255,255,.35);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 13px;
+    transition: all .15s;
+  }
+  .reset-circle:hover { background: rgba(255,255,255,.06); }
+  .play-time { font-size: 12px; color: rgba(255,255,255,.3); font-family: monospace; }
+
+  /* ── Result card (right side of preview) ── */
+  .result-card { flex: 1; min-width: 260px; }
+  .result-tag {
+    display: inline-block;
+    padding: 3px 10px; border-radius: 6px;
+    font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .result-title { font-size: 28px; font-weight: 900; line-height: 1.1; margin-bottom: 6px; }
+  .result-hook { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 22px; }
+  .result-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 12px; padding: 12px 14px;
+    background: var(--panel); border-radius: 10px; border: 1px solid var(--border);
+  }
+  .result-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: #fff; flex-shrink: 0;
+  }
+  .result-item-head { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .result-item-body { font-size: 12px; color: rgba(255,255,255,.6); line-height: 1.5; }
+  .result-cta {
+    margin-top: 6px; padding: 10px 14px;
+    border-radius: 9px;
+    font-size: 13px; font-weight: 600;
+  }
+
+  /* ── Script tab ── */
+  .script-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .script-header h2 { font-size: 20px; font-weight: 800; }
+  .voiceover-line {
+    display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px;
+  }
+  .line-num {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+  }
+  .line-text {
+    flex: 1; padding: 11px 14px;
+    background: rgba(255,255,255,.04);
+    border-radius: 9px; border-left: 3px solid;
+    font-size: 14px; color: rgba(255,255,255,.82); line-height: 1.6;
+  }
+  .hook-box {
+    margin-top: 24px; padding: 18px 20px;
+    background: var(--panel); border-radius: 12px; border: 1px solid var(--border);
+  }
+  .hook-box-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 8px; }
+  .hook-box-text { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+
+  /* ── Description tab ── */
+  .desc-section { margin-bottom: 28px; }
+  .desc-label { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+  .desc-text {
+    background: rgba(0,0,0,.3); border-radius: 10px;
+    padding: 16px 18px; font-size: 14px; color: rgba(255,255,255,.8);
+    line-height: 1.7; white-space: pre-wrap; word-break: break-word; margin-bottom: 8px;
+  }
+  .tags-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 8px; }
+  .tag-chip {
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    transition: opacity .15s;
+  }
+  .tag-chip:hover { opacity: .8; }
+  .cta-box {
+    padding: 12px 16px; border-radius: 10px;
+    font-size: 15px; font-weight: 600; margin-bottom: 8px;
+  }
+
+  /* ── Export tab ── */
+  .export-dl-card {
+    border-radius: 13px; padding: 18px 20px; margin-bottom: 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  }
+  .export-step {
+    display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px;
+  }
+  .step-num {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900;
+  }
+  .step-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.55); margin-bottom: 5px; }
+  .code-block {
+    background: rgba(0,0,0,.5); border-radius: 7px; padding: 9px 13px;
+    font-family: monospace; font-size: 12px; color: #a8ff78;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .code-copy { background: none; border: none; cursor: pointer; color: rgba(255,255,255,.3); font-size: 13px; }
+
+  /* ── Shared: copy button ── */
+  .copy-btn {
+    padding: 7px 15px; border-radius: 7px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    font-family: var(--font);
+    transition: opacity .15s;
+  }
+  .copy-btn:hover { opacity: .8; }
+
+  /* ── Empty / loading states ── */
+  .empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; opacity: .25; gap: 10px;
+    padding: 60px 20px;
+  }
+  .empty-icon { font-size: 56px; }
+  .empty-title { font-size: 17px; font-weight: 700; }
+  .empty-sub { font-size: 13px; }
+
+  .error-box {
+    background: rgba(255,60,60,.1); border: 1px solid rgba(255,80,80,.25);
+    border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #f87171;
+    margin-bottom: 12px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Mobile ── */
+  @media (max-width: 700px) {
+    .app { flex-direction: column; height: auto; }
+    .left { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+    .right { min-height: 60vh; }
+    .preview-layout { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- API Key Modal -->
+<div id="key-modal-overlay">
+  <div id="key-modal">
+    <h2>🔑 Enter Your API Key</h2>
+    <p>This app calls Claude directly from your browser. Your key is saved only in your browser — never sent to any server except Anthropic.<br><br>
+    Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+    <div class="key-input-wrap">
+      <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off" />
+      <button id="toggle-key-vis" onclick="toggleKeyVis()">👁</button>
+    </div>
+    <p class="modal-note">Your key is stored in your browser's localStorage and never leaves your device except to call <a href="https://api.anthropic.com" target="_blank">api.anthropic.com</a> directly.</p>
+    <button id="save-key-btn" class="copy-btn" onclick="saveKey()" style="width:100%;padding:14px;font-size:15px;border:none;border-radius:10px;background:linear-gradient(90deg,#FF6B35,#ff9a3c);color:#fff;font-weight:800;">Save & Continue →</button>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-brand"><span>⚡ Shorts</span> Generator</div>
+  <div class="nav-right">
+    <button id="api-status" class="disconnected" onclick="openKeyModal()">No API Key</button>
+  </div>
+</nav>
+
+<!-- App -->
+<div class="app">
+
+  <!-- Left: Form -->
+  <div class="left">
+    <div>
+      <div class="panel-title" id="hero-title" style="background:linear-gradient(90deg,#fff 60%,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+        Go Viral in 60s
+      </div>
+      <div class="panel-sub">Type a topic. Claude writes your hook, script, voiceover &amp; description — ready to post.</div>
+    </div>
+
+    <div id="error-box" class="error-box" style="display:none;"></div>
+
+    <div>
+      <label class="field-label" for="topic">Your Topic or Idea</label>
+      <textarea id="topic" rows="4" placeholder="e.g. 3 foods that secretly age you faster&#10;e.g. habits of people who never get sick&#10;e.g. why 99% of people fail at saving money"></textarea>
+      <div style="font-size:11px;color:rgba(255,255,255,.2);margin-top:5px;text-align:right;">⌘↵ to generate</div>
+    </div>
+
+    <div>
+      <label class="field-label">Tone</label>
+      <div class="tone-grid" id="tone-grid">
+        <button class="tone-btn active" data-value="Educational + Surprising"><span class="tone-emoji">🧠</span> Educational</button>
+        <button class="tone-btn" data-value="Motivational + High Energy"><span class="tone-emoji">🔥</span> Motivational</button>
+        <button class="tone-btn" data-value="Dark / Counterintuitive"><span class="tone-emoji">😈</span> Dark Truth</button>
+        <button class="tone-btn" data-value="Funny + Relatable"><span class="tone-emoji">😂</span> Funny</button>
+        <button class="tone-btn" data-value="Luxury / Aspirational"><span class="tone-emoji">💎</span> Luxury</button>
+        <button class="tone-btn" data-value="Scary but True"><span class="tone-emoji">😱</span> Scary True</button>
+      </div>
+    </div>
+
+    <div>
+      <label class="field-label">Duration</label>
+      <div class="dur-row" id="dur-row">
+        <button class="dur-btn" data-value="15">15s</button>
+        <button class="dur-btn active" data-value="30">30s</button>
+        <button class="dur-btn" data-value="45">45s</button>
+        <button class="dur-btn" data-value="60">60s</button>
+      </div>
+    </div>
+
+    <button id="generate-btn" onclick="generate()">⚡ Generate Short</button>
+
+    <div class="tips">
+      <div class="tips-label">Pro Tips</div>
+      <div class="tip">Be specific — "3 ways caffeine destroys sleep" beats just "coffee"</div>
+      <div class="tip">Dark/counterintuitive tone gets the most replays</div>
+      <div class="tip">30s is the sweet spot for the algorithm push</div>
+    </div>
+  </div>
+
+  <!-- Right: Output -->
+  <div class="right">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="preview">Preview</button>
+      <button class="tab-btn" data-tab="script">Script</button>
+      <button class="tab-btn" data-tab="description">Description</button>
+      <button class="tab-btn" data-tab="export">Export</button>
+    </div>
+
+    <!-- Preview tab -->
+    <div class="tab-content active" id="tab-preview">
+      <div class="preview-layout">
+        <!-- Phone -->
+        <div class="phone-wrap">
+          <div class="phone" id="phone" onclick="togglePlay()">
+            <div class="phone-grid"></div>
+            <div class="phone-vignette"></div>
+            <div class="phone-content">
+              <div class="phone-title-area">
+                <div class="phone-subtitle" id="phone-subtitle" style="display:none;"></div>
+                <div class="phone-title" id="phone-title">
+                  <span style="opacity:.25;font-size:28px;">🎬</span>
+                </div>
+              </div>
+              <div class="phone-items" id="phone-items"></div>
+              <div class="phone-progress-bar">
+                <div class="phone-progress-fill" id="phone-progress"></div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-play-btn">
+            <div class="play-circle" id="play-btn" onclick="togglePlay()">▶</div>
+            <div class="reset-circle" onclick="resetPlay()">↺</div>
+            <div class="play-time" id="play-time">—</div>
+          </div>
+        </div>
+
+        <!-- Result card -->
+        <div class="result-card" id="result-card">
+          <div class="empty" id="preview-empty">
+            <div class="empty-icon">🎬</div>
+            <div class="empty-title">Your short appears here</div>
+            <div class="empty-sub">Fill in the form and hit Generate</div>
+          </div>
+          <div id="preview-loaded" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script tab -->
+    <div class="tab-content" id="tab-script">
+      <div style="max-width:640px;">
+        <div id="script-empty" class="empty"><div class="empty-icon">🎙</div><div class="empty-title">Script appears here</div><div class="empty-sub">Generate a short first</div></div>
+        <div id="script-loaded" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Description tab -->
+    <div class="tab-content" id="tab-description">
+      <div style="max-width:640px;">
+        <div id="desc-empty" class="empty"><div class="empty-icon">📝</div><div class="empty-title">Post copy appears here</div><div class="empty-sub">Generate a short first</div></div>
+        <div id="desc-loaded" style="display:none;"></div>
+      </div>
+    </div>
+
+    <!-- Export tab -->
+    <div class="tab-content" id="tab-export">
+      <div style="max-width:640px;">
+        <h2 style="font-size:20px;font-weight:800;margin-bottom:8px;">Render to MP4</h2>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.6;">Download the data file then run the one-line command on your machine to get a 1080×1920 vertical video.</p>
+        <div id="export-dl" style="display:none;"></div>
+        <div id="export-steps"></div>
+        <div style="margin-top:24px;padding:16px 18px;background:var(--panel);border-radius:11px;border:1px solid var(--border);font-size:12px;color:rgba(255,255,255,.38);line-height:1.7;">
+          <strong style="color:rgba(255,255,255,.55);">Output:</strong> 1080×1920 · 30fps · H.264 MP4 · animated gradient background · spring-physics title · sequential item slide-ins · glowing progress bar
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let apiKey = localStorage.getItem('anthropic_key') || '';
+let currentData = null;
+let selectedTone = 'Educational + Surprising';
+let selectedDuration = 30;
+let playInterval = null;
+let playFrame = 0;
+let isPlaying = false;
+const TOTAL_FRAMES = 80;
+
+// ── Init ───────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  updateKeyStatus();
+  if (!apiKey) openKeyModal();
+  setupToneButtons();
+  setupDurButtons();
+  setupTabs();
+  renderExportSteps();
+  document.getElementById('topic').addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') generate();
+  });
+});
+
+// ── API Key ────────────────────────────────────────────────────────────────
+function openKeyModal() {
+  document.getElementById('api-key-input').value = apiKey || '';
+  document.getElementById('key-modal-overlay').classList.add('open');
+}
+function closeKeyModal() {
+  document.getElementById('key-modal-overlay').classList.remove('open');
+}
+function saveKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val.startsWith('sk-ant')) {
+    document.getElementById('api-key-input').style.borderColor = '#f87171';
+    return;
+  }
+  apiKey = val;
+  localStorage.setItem('anthropic_key', apiKey);
+  updateKeyStatus();
+  closeKeyModal();
+}
+function toggleKeyVis() {
+  const inp = document.getElementById('api-key-input');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+function updateKeyStatus() {
+  const el = document.getElementById('api-status');
+  if (apiKey) {
+    el.textContent = '✓ API Key Set';
+    el.className = 'connected';
+  } else {
+    el.textContent = '⚠ No API Key';
+    el.className = 'disconnected';
+  }
+}
+document.getElementById('key-modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('key-modal-overlay')) closeKeyModal();
+});
+
+// ── Buttons ────────────────────────────────────────────────────────────────
+function setupToneButtons() {
+  document.querySelectorAll('.tone-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedTone = btn.dataset.value;
+    });
+  });
+}
+function setupDurButtons() {
+  document.querySelectorAll('.dur-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.dur-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedDuration = parseInt(btn.dataset.value);
+    });
+  });
+}
+function setupTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+// ── Generate ───────────────────────────────────────────────────────────────
+async function generate() {
+  if (!apiKey) { openKeyModal(); return; }
+  const topic = document.getElementById('topic').value.trim();
+  if (!topic) return;
+
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Generating viral short…';
+  document.getElementById('error-box').style.display = 'none';
+
+  const system = `You are a viral YouTube Shorts content strategist and scriptwriter.
+Generate a complete "Top 3 Listicle" short as JSON. Rules:
+- Hook: creates immediate curiosity in under 8 words
+- Item headings: max 4 words, punchy and surprising
+- Item body: max 18 words, concrete fact or actionable tip
+- Voiceover: conversational, energetic, great read aloud
+- Description: 2-3 sentences + 7-10 hashtags
+- accentColor: bright vibrant hex that pops on dark backgrounds
+- gradientColors: 3 dark/deep hex values
+
+Respond ONLY with valid JSON — no markdown:
+{
+  "title": "2-4 words (use \\n for line break if needed)",
+  "subtitle": "optional short label",
+  "accentColor": "#RRGGBB",
+  "gradientColors": ["#dark1","#dark2","#dark3"],
+  "items": [
+    {"emoji":"emoji","heading":"short heading","body":"fact or tip"},
+    {"emoji":"emoji","heading":"short heading","body":"fact or tip"},
+    {"emoji":"emoji","heading":"short heading","body":"fact or tip"}
+  ],
+  "voiceover": ["line1","line2","line3","line4","cta line"],
+  "description": "full description with hashtags",
+  "hashtags": ["#tag1","#tag2"],
+  "hook": "opening caption hook",
+  "callToAction": "follow CTA"
+}`;
+
+  const userMsg = `Topic: ${topic}
+Tone: ${selectedTone}
+Target duration: ${selectedDuration} seconds
+Make it genuinely surprising and valuable — not generic.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-8',
+        max_tokens: 1500,
+        system,
+        messages: [{ role: 'user', content: userMsg }],
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: { message: res.statusText } }));
+      const msg = err?.error?.message || 'API error';
+      if (res.status === 401) {
+        localStorage.removeItem('anthropic_key');
+        apiKey = '';
+        updateKeyStatus();
+        showError('Invalid API key. Please re-enter your key.');
+        openKeyModal();
+      } else {
+        showError('Error: ' + msg);
+      }
+      return;
+    }
+
+    const json = await res.json();
+    const raw = json.content[0].text.trim();
+    const data = JSON.parse(raw);
+    currentData = data;
+    renderResult(data);
+  } catch (e) {
+    showError('Something went wrong: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '⚡ Generate Short';
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-box');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── Render Result ──────────────────────────────────────────────────────────
+function renderResult(d) {
+  const a = d.accentColor;
+
+  // Update phone background
+  const phone = document.getElementById('phone');
+  phone.style.background = `linear-gradient(160deg, ${d.gradientColors[0]}, ${d.gradientColors[1]}, ${d.gradientColors[2]})`;
+
+  // Phone title
+  if (d.subtitle) {
+    const sub = document.getElementById('phone-subtitle');
+    sub.textContent = d.subtitle;
+    sub.style.color = a;
+    sub.style.display = 'block';
+  }
+  document.getElementById('phone-title').innerHTML = `<span style="text-shadow:0 2px 8px rgba(0,0,0,.8)">${d.title.replace('\\n','<br>')}</span>`;
+
+  // Phone items
+  const itemsEl = document.getElementById('phone-items');
+  itemsEl.innerHTML = d.items.map((item, i) => `
+    <div class="phone-item" id="pitem-${i}">
+      <div class="phone-num" style="background:${a}">${i+1}</div>
+      <div>
+        <div class="phone-item-heading">${item.emoji} ${item.heading}</div>
+        <div class="phone-item-body">${item.body.slice(0,55)}${item.body.length>55?'…':''}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Update progress bar color
+  document.querySelector('.phone-progress-fill').style.background = `linear-gradient(90deg, ${a}, #fff)`;
+
+  // Preview card
+  document.getElementById('preview-empty').style.display = 'none';
+  document.getElementById('preview-loaded').style.display = 'block';
+  document.getElementById('preview-loaded').innerHTML = `
+    <div class="result-tag" style="background:${a}22;border:1px solid ${a}44;color:${a}">${d.subtitle || 'YOUR SHORT'}</div>
+    <div class="result-title">${d.title.replace('\\n',' ')}</div>
+    <div class="result-hook">"${d.hook}"</div>
+    ${d.items.map((item,i) => `
+      <div class="result-item">
+        <div class="result-num" style="background:${a}">${i+1}</div>
+        <div>
+          <div class="result-item-head">${item.emoji} ${item.heading}</div>
+          <div class="result-item-body">${item.body}</div>
+        </div>
+      </div>
+    `).join('')}
+    <div class="result-cta" style="background:${a}12;border:1px solid ${a}30;color:${a}">📢 ${d.callToAction}</div>
+  `;
+
+  // Script tab
+  document.getElementById('script-empty').style.display = 'none';
+  document.getElementById('script-loaded').style.display = 'block';
+  document.getElementById('script-loaded').innerHTML = `
+    <div class="script-header">
+      <h2>Voiceover Script</h2>
+      <button class="copy-btn" onclick="copyText(${JSON.stringify(d.voiceover.join('\n\n'))},'script-all')" id="copy-script-all"
+        style="border:1.5px solid ${a}44;background:${a}15;color:${a};border-radius:8px;">Copy all</button>
+    </div>
+    ${d.voiceover.map((line,i) => `
+      <div class="voiceover-line">
+        <div class="line-num" style="background:${a}22;border:1px solid ${a}44;color:${a}">${i+1}</div>
+        <div class="line-text" style="border-left-color:${a}60">${line}</div>
+        <button class="copy-btn" onclick="copyText(${JSON.stringify(line)},'line-${i}')" id="copy-line-${i}"
+          style="border:1.5px solid ${a}44;background:${a}12;color:${a};border-radius:7px;padding:6px 12px;font-size:11px;white-space:nowrap;">Copy</button>
+      </div>
+    `).join('')}
+    <div class="hook-box">
+      <div class="hook-box-label">Hook / Opening Caption</div>
+      <div class="hook-box-text">${d.hook}</div>
+      <button class="copy-btn" onclick="copyText(${JSON.stringify(d.hook)},'hook')" id="copy-hook"
+        style="border:1.5px solid ${a}44;background:${a}15;color:${a};border-radius:7px;">Copy hook</button>
+    </div>
+  `;
+
+  // Description tab
+  document.getElementById('desc-empty').style.display = 'none';
+  document.getElementById('desc-loaded').style.display = 'block';
+  document.getElementById('desc-loaded').innerHTML = `
+    <div class="desc-section">
+      <div class="desc-label">YouTube / TikTok Description</div>
+      <div class="desc-text">${escHtml(d.description)}</div>
+      <button class="copy-btn" onclick="copyText(${JSON.stringify(d.description)},'desc')" id="copy-desc"
+        style="border:1.5px solid ${a}44;background:${a}15;color:${a};border-radius:7px;">Copy description</button>
+    </div>
+    <div class="desc-section">
+      <div class="desc-label">Hashtags</div>
+      <div class="tags-wrap">${d.hashtags.map((tag,i) => `
+        <span class="tag-chip" onclick="copyText(${JSON.stringify(tag)},'tag-${i}')" id="copy-tag-${i}"
+          style="background:${a}18;border:1px solid ${a}40;color:${a}">${tag}</span>
+      `).join('')}</div>
+      <button class="copy-btn" onclick="copyText(${JSON.stringify(d.hashtags.join(' '))},'tags')" id="copy-tags"
+        style="border:1.5px solid ${a}44;background:${a}15;color:${a};border-radius:7px;">Copy all hashtags</button>
+    </div>
+    <div class="desc-section">
+      <div class="desc-label">Call to Action</div>
+      <div class="cta-box" style="background:${a}12;border:1px solid ${a}30;color:${a}">${escHtml(d.callToAction)}</div>
+      <button class="copy-btn" onclick="copyText(${JSON.stringify(d.callToAction)},'cta')" id="copy-cta"
+        style="border:1.5px solid ${a}44;background:${a}15;color:${a};border-radius:7px;">Copy CTA</button>
+    </div>
+  `;
+
+  // Export tab — update download card
+  renderExportDownload(d);
+
+  // Auto-play preview
+  resetPlay();
+  setTimeout(() => startPlay(), 400);
+}
+
+// ── Video Preview ──────────────────────────────────────────────────────────
+function startPlay() {
+  if (!currentData) return;
+  isPlaying = true;
+  document.getElementById('play-btn').textContent = '⏸';
+  playInterval = setInterval(() => {
+    playFrame++;
+    const prog = Math.min(playFrame / TOTAL_FRAMES, 1);
+    document.getElementById('phone-progress').style.width = (prog * 100) + '%';
+    document.getElementById('play-time').textContent = (playFrame / 30).toFixed(1) + 's';
+
+    // Reveal items at frames 20, 35, 50
+    [20, 35, 50].forEach((f, i) => {
+      if (playFrame === f) {
+        const el = document.getElementById('pitem-' + i);
+        if (el) el.classList.add('visible');
+      }
+    });
+
+    if (playFrame >= TOTAL_FRAMES) stopPlay();
+  }, 1000 / 30);
+}
+function stopPlay() {
+  clearInterval(playInterval);
+  isPlaying = false;
+  document.getElementById('play-btn').textContent = '▶';
+}
+function resetPlay() {
+  stopPlay();
+  playFrame = 0;
+  document.getElementById('phone-progress').style.width = '0%';
+  document.getElementById('play-time').textContent = '0.0s';
+  document.querySelectorAll('.phone-item').forEach(el => el.classList.remove('visible'));
+}
+function togglePlay() {
+  if (!currentData) return;
+  if (isPlaying) stopPlay();
+  else { if (playFrame >= TOTAL_FRAMES) resetPlay(); startPlay(); }
+}
+
+// ── Export ─────────────────────────────────────────────────────────────────
+function renderExportDownload(d) {
+  const a = d.accentColor;
+  const el = document.getElementById('export-dl');
+  el.style.display = 'flex';
+  el.innerHTML = `
+    <div style="flex:1;">
+      <div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:3px;">${escHtml(d.title.replace('\\n',' '))} — data.json</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.4);">3 items · ${selectedDuration}s · ${selectedTone}</div>
+    </div>
+    <button onclick="downloadJson()" style="padding:9px 18px;border-radius:9px;border:2px solid ${a};background:transparent;color:${a};font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:var(--font);">↓ Download data.json</button>
+  `;
+  el.style.background = a + '12';
+  el.style.border = '1.5px solid ' + a + '40';
+  el.style.borderRadius = '12px';
+}
+
+function renderExportSteps() {
+  const steps = [
+    { n:'1', title:'Clone & install Remotion', code:'cd shorts && npm install' },
+    { n:'2', title:'Render your video', code:'bash render.sh ~/Downloads/short-*.json out/short.mp4' },
+    { n:'3', title:'Open your MP4', code:'open out/short.mp4' },
+  ];
+  document.getElementById('export-steps').innerHTML = steps.map(s => `
+    <div class="export-step">
+      <div class="step-num" style="background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.3);color:#FF6B35;">${s.n}</div>
+      <div style="flex:1;">
+        <div class="step-label">${s.title}</div>
+        <div class="code-block">
+          <code>${escHtml(s.code)}</code>
+          <button class="code-copy" onclick="copyText(${JSON.stringify(s.code)},'cmd${s.n}')" id="copy-cmd${s.n}">⎘</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function downloadJson() {
+  if (!currentData) return;
+  const blob = new Blob([JSON.stringify(currentData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'short-' + Date.now() + '.json';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ── Utils ──────────────────────────────────────────────────────────────────
+function copyText(text, id) {
+  navigator.clipboard.writeText(text).then(() => {
+    const el = document.getElementById('copy-' + id);
+    if (!el) return;
+    const orig = el.textContent;
+    el.textContent = '✓ Copied';
+    setTimeout(() => { el.textContent = orig; }, 2000);
+  });
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
