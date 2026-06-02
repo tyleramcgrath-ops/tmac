@@ -17,21 +17,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 28px
 .nav-brand{font-size:15px;font-weight:900;letter-spacing:-0.01em}
 .nav-brand span{background:linear-gradient(90deg,#FF6B35,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .nav-right{display:flex;align-items:center;gap:12px}
-#api-status{font-size:12px;font-weight:600;padding:4px 12px;border-radius:100px;border:1px solid;cursor:pointer;transition:all .15s}
-#api-status.connected{color:#4ade80;border-color:rgba(74,222,128,.3);background:rgba(74,222,128,.08)}
-#api-status.disconnected{color:#f87171;border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.08)}
-#key-modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center}
-#key-modal-overlay.open{display:flex}
-#key-modal{background:#12101f;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:36px;width:100%;max-width:480px;margin:16px}
-#key-modal h2{font-size:22px;font-weight:800;margin-bottom:10px}
-#key-modal p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px}
-#key-modal p a{color:var(--accent)}
-.key-input-wrap{position:relative;margin-bottom:16px}
-#api-key-input{width:100%;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:14px 44px 14px 16px;color:#fff;font-size:14px;font-family:monospace;outline:none;letter-spacing:.05em}
-#api-key-input:focus{border-color:var(--accent)}
-#toggle-key-vis{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px}
-.modal-note{font-size:12px;color:var(--muted);margin-bottom:20px}
-.modal-note a{color:var(--accent)}
+.free-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ade80}
 .app{display:flex;height:calc(100vh - 54px)}
 .left{width:390px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:24px 20px;gap:20px}
 .panel-title{font-size:22px;font-weight:900;line-height:1.1}
@@ -141,23 +127,10 @@ textarea#topic:focus{border-color:var(--accent)}
 </head>
 <body>
 
-<div id="key-modal-overlay">
-  <div id="key-modal">
-    <h2>🔑 Enter Your API Key</h2>
-    <p>This app calls Claude directly from your browser. Your key is saved only in your browser — never sent anywhere except Anthropic.<br><br>Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
-    <div class="key-input-wrap">
-      <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off"/>
-      <button id="toggle-key-vis" onclick="toggleKeyVis()">👁</button>
-    </div>
-    <p class="modal-note">Stored in your browser's localStorage only.</p>
-    <button onclick="saveKey()" style="width:100%;padding:14px;font-size:15px;border:none;border-radius:10px;background:linear-gradient(90deg,#FF6B35,#ff9a3c);color:#fff;font-weight:800;cursor:pointer;font-family:var(--font)">Save & Continue →</button>
-  </div>
-</div>
-
 <nav>
   <div class="nav-brand"><span>⚡ Shorts</span> Generator</div>
   <div class="nav-right">
-    <button id="api-status" class="disconnected" onclick="openKeyModal()">No API Key</button>
+    <span class="free-pill">✓ 100% Free — No Account Needed</span>
   </div>
 </nav>
 
@@ -167,7 +140,7 @@ textarea#topic:focus{border-color:var(--accent)}
   <div class="left">
     <div>
       <div class="panel-title" style="background:linear-gradient(90deg,#fff 60%,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Go Viral in 60s</div>
-      <div class="panel-sub">Type a topic → Claude writes your script → Generate a real video, 100% free.</div>
+      <div class="panel-sub">Type a topic → AI writes your script → Generate a real video. No account. No credits. Totally free.</div>
     </div>
     <div id="error-box" class="error-box" style="display:none"></div>
     <div>
@@ -324,35 +297,18 @@ textarea#topic:focus{border-color:var(--accent)}
 </div>
 
 <script>
-let apiKey=localStorage.getItem('anthropic_key')||'';
 let currentData=null, selectedTone='Educational + Surprising', selectedDuration=30;
 let playInterval=null, playFrame=0, isPlaying=false;
 const TOTAL_FRAMES=80;
 let bgMode='ai', voices=[];
 
 document.addEventListener('DOMContentLoaded',()=>{
-  updateKeyStatus();
-  if(!apiKey) openKeyModal();
   setupButtons(); setupTabs(); loadVoices();
   document.getElementById('topic').addEventListener('keydown',e=>{ if((e.metaKey||e.ctrlKey)&&e.key==='Enter') generate(); });
   document.getElementById('voice-rate').addEventListener('input',e=>{ document.getElementById('rate-label').textContent=parseFloat(e.target.value).toFixed(1)+'x'; });
   showVideoState();
 });
 
-function openKeyModal(){ document.getElementById('api-key-input').value=apiKey||''; document.getElementById('key-modal-overlay').classList.add('open'); }
-function closeKeyModal(){ document.getElementById('key-modal-overlay').classList.remove('open'); }
-function saveKey(){
-  const v=document.getElementById('api-key-input').value.trim();
-  if(!v.startsWith('sk-ant')){ document.getElementById('api-key-input').style.borderColor='#f87171'; return; }
-  apiKey=v; localStorage.setItem('anthropic_key',apiKey); updateKeyStatus(); closeKeyModal();
-}
-function toggleKeyVis(){ const i=document.getElementById('api-key-input'); i.type=i.type==='password'?'text':'password'; }
-function updateKeyStatus(){
-  const el=document.getElementById('api-status');
-  if(apiKey){ el.textContent='✓ API Key'; el.className='connected'; }
-  else { el.textContent='⚠ No Key'; el.className='disconnected'; }
-}
-document.getElementById('key-modal-overlay').addEventListener('click',e=>{ if(e.target===document.getElementById('key-modal-overlay')) closeKeyModal(); });
 
 function setupButtons(){
   document.querySelectorAll('.tone-btn[data-value]').forEach(btn=>{
@@ -404,34 +360,35 @@ function previewVoice(){
 }
 
 async function generate(){
-  if(!apiKey){ openKeyModal(); return; }
   const topic=document.getElementById('topic').value.trim();
   if(!topic) return;
   const btn=document.getElementById('generate-btn');
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Generating…';
   document.getElementById('error-box').style.display='none';
 
-  const system=`You are a viral YouTube Shorts content strategist. Generate a Top 3 Listicle short as JSON only — no markdown.
+  const system=`You are a viral YouTube Shorts content strategist. Generate a Top 3 Listicle short as JSON only — no markdown, no extra text.
 Rules: Hook under 8 words. Headings max 4 words. Body max 18 words. Voiceover lines energetic and conversational.
 accentColor: bright vibrant hex. gradientColors: 3 dark hex values that look great as a gradient.
 imagePrompt: describe a dramatic cinematic background scene for this topic — no text, no people, photorealistic, wide angle.
-JSON schema:
+Return ONLY valid JSON matching this schema exactly:
 {"title":"string","subtitle":"string","accentColor":"#hex","gradientColors":["#h","#h","#h"],"items":[{"emoji":"e","heading":"h","body":"b"},{"emoji":"e","heading":"h","body":"b"},{"emoji":"e","heading":"h","body":"b"}],"voiceover":["l1","l2","l3","l4","l5"],"description":"full desc + hashtags","hashtags":["#t"],"hook":"string","callToAction":"string","imagePrompt":"string"}`;
 
+  const userMsg=`Topic: ${topic}\nTone: ${selectedTone}\nDuration: ${selectedDuration}s\nMake it genuinely surprising and specific.`;
+
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
+    const res=await fetch('https://text.pollinations.ai/',{
       method:'POST',
-      headers:{'x-api-key':apiKey,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-opus-4-8',max_tokens:1500,system,messages:[{role:'user',content:`Topic: ${topic}\nTone: ${selectedTone}\nDuration: ${selectedDuration}s\nMake it genuinely surprising and specific.`}]})
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({
+        messages:[{role:'system',content:system},{role:'user',content:userMsg}],
+        model:'openai-large',
+        seed:Math.floor(Math.random()*9999),
+        jsonMode:true
+      })
     });
-    if(!res.ok){
-      const err=await res.json().catch(()=>({error:{message:res.statusText}}));
-      if(res.status===401){ localStorage.removeItem('anthropic_key'); apiKey=''; updateKeyStatus(); showError('Invalid API key — please re-enter.'); openKeyModal(); }
-      else showError('Error: '+(err?.error?.message||'Unknown error'));
-      return;
-    }
-    const json=await res.json();
-    currentData=JSON.parse(json.content[0].text.trim());
+    if(!res.ok){ showError('Error: '+res.statusText); return; }
+    const text=await res.text();
+    currentData=JSON.parse(text);
     renderResult(currentData);
     showVideoState();
   } catch(e){ showError('Error: '+e.message); }
