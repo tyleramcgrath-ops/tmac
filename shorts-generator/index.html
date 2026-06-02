@@ -88,12 +88,6 @@ textarea:focus{border-color:var(--acc)}
 .phone-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.52) 100%)}
 .phone-c{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:18px 10px 10px}
 .phone-title{font-size:14px;font-weight:900;color:#fff;line-height:1.15;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.9)}
-.phone-items{flex:1;display:flex;flex-direction:column;justify-content:center;gap:4px;margin:5px 0}
-.phone-item{display:flex;gap:6px;align-items:flex-start;background:rgba(0,0,0,.38);border-radius:7px;padding:5px 6px;border:1px solid rgba(255,255,255,.055);opacity:0;transform:translateX(-16px);transition:all .38s}
-.phone-item.vis{opacity:1;transform:none}
-.pnum{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#fff;flex-shrink:0;margin-top:1px}
-.phi-h{font-size:7.5px;font-weight:800;color:#fff}
-.phi-b{font-size:6.5px;color:rgba(255,255,255,.5);line-height:1.4;margin-top:1px}
 .phone-prog{height:2px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
 .phone-prog-fill{height:100%;width:0%;border-radius:2px;transition:width .06s linear}
 .play-row{display:flex;align-items:center;gap:6px}
@@ -258,7 +252,6 @@ textarea:focus{border-color:var(--acc)}
               <div id="ph-sub" style="font-size:6.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:2px;display:none"></div>
               <div id="ph-title" class="phone-title"><span style="opacity:.18;font-size:24px">🎬</span></div>
             </div>
-            <div id="ph-items" class="phone-items"></div>
             <div class="phone-prog"><div class="phone-prog-fill" id="ph-prog"></div></div>
           </div>
         </div>
@@ -493,7 +486,6 @@ function renderResult(d){
   const sub=document.getElementById('ph-sub');
   if(d.subtitle){sub.textContent=d.subtitle;sub.style.color=a;sub.style.display='block';}
   document.getElementById('ph-title').innerHTML=`<div class="phone-title">${d.title.replace('\\n','<br>')}</div>`;
-  document.getElementById('ph-items').innerHTML=d.items.map((it,i)=>`<div class="phone-item" id="pi-${i}"><div class="pnum" style="background:${a}">${i+1}</div><div><div class="phi-h">${it.emoji} ${it.heading}</div><div class="phi-b">${(it.body||'').slice(0,55)}…</div></div></div>`).join('');
   document.getElementById('ph-prog').style.background=`linear-gradient(90deg,${a},#fff)`;
   // Preview card
   document.getElementById('pre-empty').style.display='none'; document.getElementById('pre-loaded').style.display='block';
@@ -530,12 +522,11 @@ function startPlay(){
     pframe++;
     document.getElementById('ph-prog').style.width=Math.min(pframe/80,1)*100+'%';
     document.getElementById('play-t').textContent=(pframe/30).toFixed(1)+'s';
-    [16,30,46].forEach((f,i)=>{if(pframe===f)document.getElementById('pi-'+i)?.classList.add('vis');});
     if(pframe>=80)stopPlay();
   },1000/30);
 }
 function stopPlay(){clearInterval(pif);playing=false;document.getElementById('play-btn').textContent='▶';}
-function resetPlay(){stopPlay();pframe=0;document.getElementById('ph-prog').style.width='0%';document.getElementById('play-t').textContent='0.0s';document.querySelectorAll('.phone-item').forEach(e=>e.classList.remove('vis'));}
+function resetPlay(){stopPlay();pframe=0;document.getElementById('ph-prog').style.width='0%';document.getElementById('play-t').textContent='0.0s';}
 function togglePlay(){if(!D)return;if(playing)stopPlay();else{if(pframe>=80)resetPlay();startPlay();}}
 
 // ── Pexels ─────────────────────────────────────────────────────────────────────
@@ -573,26 +564,54 @@ function drawBg(ctx,W,H,vid,img,d,f,T){
 // Hormozi-style caption: phrase with one highlighted keyword
 function drawHormoziCaption(ctx,W,H,text,accent,keyWords,popF,f){
   if(!text)return;
-  const scale=1+(1-ease(Math.min((f-popF)/5,1)))*0.2;
-  // Split text into words, identify which word to highlight
-  const words=text.toUpperCase().split(' ');
+  const popScale=1+(1-ease(Math.min((f-popF)/5,1)))*0.18;
+  const words=text.toUpperCase().split(' ').filter(Boolean);
   const kw=(keyWords||[]).map(k=>k.toUpperCase());
-  ctx.save();ctx.translate(W/2,H*0.78);ctx.scale(scale,scale);
-  // Measure total width to center
-  ctx.font='900 64px Impact,Arial Black,-apple-system,sans-serif';
-  // 2 words per row max
-  const rows=[];for(let i=0;i<words.length;i+=2)rows.push(words.slice(i,i+2));
-  const rowH=74;
+  const PAD=52; // horizontal padding each side
+  const maxW=W-PAD*2;
+  // Auto-fit font size so no row ever overflows
+  let fs=56;
+  ctx.font=`900 ${fs}px Impact,Arial Black,sans-serif`;
+  // Build rows: wrap when row would exceed maxW
+  const buildRows=()=>{
+    const rows=[];let row=[];
+    words.forEach(w=>{
+      const test=[...row,w];
+      const tw=test.reduce((s,wd,i)=>s+ctx.measureText(wd+(i<test.length-1?' ':'')).width,0);
+      if(row.length&&tw>maxW){rows.push(row);row=[w];}else row.push(w);
+    });
+    if(row.length)rows.push(row);
+    return rows;
+  };
+  // Shrink font until all rows fit
+  while(fs>20){
+    ctx.font=`900 ${fs}px Impact,Arial Black,sans-serif`;
+    const rows=buildRows();
+    const fits=rows.every(r=>r.reduce((s,w,i)=>s+ctx.measureText(w+(i<r.length-1?' ':'')).width,0)<=maxW);
+    if(fits)break;
+    fs-=2;
+  }
+  ctx.font=`900 ${fs}px Impact,Arial Black,sans-serif`;
+  const rows=buildRows();
+  const rowH=fs+12;
+  const totalH=rows.length*rowH;
+  const baseY=H*0.80;
+
+  ctx.save();
+  ctx.translate(W/2,baseY-totalH/2);
+  ctx.scale(popScale,popScale);
   rows.forEach((row,ri)=>{
-    const yOff=(ri-(rows.length-1)/2)*rowH;
-    let x=-row.reduce((a,w,wi)=>a+ctx.measureText(w+(wi<row.length-1?' ':'')).width,0)/2;
+    const rowW=row.reduce((s,w,i)=>s+ctx.measureText(w+(i<row.length-1?' ':'')).width,0);
+    let x=-rowW/2;
+    const y=ri*rowH;
     row.forEach((w,wi)=>{
-      const isKey=kw.some(k=>w.includes(k)||k.includes(w));
-      ctx.strokeStyle='rgba(0,0,0,0.96)';ctx.lineWidth=14;ctx.lineJoin='round';ctx.textAlign='left';
-      ctx.strokeText(w,x,yOff);
+      const isKey=kw.some(k=>w===k||w.startsWith(k)||k.startsWith(w));
+      const ww=ctx.measureText(w+(wi<row.length-1?' ':'')).width;
+      ctx.strokeStyle='rgba(0,0,0,0.96)';ctx.lineWidth=Math.max(fs*0.22,8);ctx.lineJoin='round';ctx.textAlign='left';
+      ctx.strokeText(w,x,y);
       ctx.fillStyle=isKey?accent:'#ffffff';
-      ctx.fillText(w,x,yOff);
-      x+=ctx.measureText(w+(wi<row.length-1?' ':'')).width+6;
+      ctx.fillText(w,x,y);
+      x+=ww;
     });
   });
   ctx.restore();
