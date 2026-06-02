@@ -376,20 +376,19 @@ Return ONLY valid JSON matching this schema exactly:
   const userMsg=`Topic: ${topic}\nTone: ${selectedTone}\nDuration: ${selectedDuration}s\nMake it genuinely surprising and specific.`;
 
   try{
-    const res=await fetch('https://text.pollinations.ai/openai',{
+    const res=await fetch('https://text.pollinations.ai/',{
       method:'POST',
       headers:{'content-type':'application/json'},
       body:JSON.stringify({
         messages:[{role:'system',content:system},{role:'user',content:userMsg}],
-        model:'openai-large',
+        model:'openai',
         seed:Math.floor(Math.random()*9999),
-        response_format:{type:'json_object'}
+        jsonMode:true
       })
     });
     if(!res.ok){ const t=await res.text().catch(()=>res.statusText); showError('API error '+res.status+': '+t.slice(0,200)); return; }
-    const json=await res.json();
-    const raw=json?.choices?.[0]?.message?.content||json;
-    currentData=typeof raw==='string'?JSON.parse(raw):raw;
+    const raw=await res.text();
+    currentData=JSON.parse(raw);
     renderResult(currentData);
     showVideoState();
   } catch(e){ showError('Error: '+(e.message||e.toString()||'Network failure — check your connection')); }
