@@ -741,49 +741,38 @@ async function renderVideo(){
           ctx.restore();
         }
       } else if(si>=2&&si<=4){
-        // ITEMS — clean minimal reveal
+        // ITEMS — cinematic: ghost number + emoji heading, captions carry the content
         const idx=si-2;
         const inP=ease(Math.min((f-S[si])/18,1));
         if(inP>0){
           ctx.save();
-          // giant ghost number
-          ctx.globalAlpha=inP*0.055;ctx.font='900 460px Impact,Arial Black,sans-serif';ctx.fillStyle=d.accentColor;ctx.textAlign='center';
-          ctx.fillText(idx+1,W/2,H*0.64);
+          // subtle ghost number in background
+          ctx.globalAlpha=inP*0.06;
+          ctx.font='900 480px Impact,Arial Black,sans-serif';
+          ctx.fillStyle=d.accentColor;ctx.textAlign='center';
+          ctx.fillText(idx+1,W/2,H*0.66);
+          // emoji + heading, centered, slides up
+          const ty=(1-ease(Math.min((f-S[si])/20,1)))*30;
           ctx.globalAlpha=inP;
-          // slide in from left
-          const tx=(1-ease(Math.min((f-S[si]-4)/16,1)))*-W*0.6;
-          ctx.save();ctx.translate(tx,0);
-          // circle badge
-          ctx.fillStyle=d.accentColor;ctx.beginPath();ctx.arc(72,H*0.255,34,0,Math.PI*2);ctx.fill();
-          ctx.font='900 32px Impact,Arial Black,sans-serif';ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText(idx+1,72,H*0.255+11);
-          // heading
-          ctx.font='900 46px Impact,Arial Black,sans-serif';ctx.fillStyle='#fff';ctx.textAlign='left';
-          ctx.strokeStyle='rgba(0,0,0,0.75)';ctx.lineWidth=10;ctx.lineJoin='round';
+          ctx.save();ctx.translate(0,-ty);
+          ctx.font=`900 52px Impact,Arial Black,sans-serif`;
+          ctx.textAlign='center';
           const hd=`${d.items[idx].emoji} ${d.items[idx].heading.toUpperCase()}`;
-          ctx.strokeText(hd,120,H*0.265);ctx.fillText(hd,120,H*0.265);
-          // stat badge
-          if(d.items[idx].stat&&f>S[si]+10){
-            const sp=ease((f-S[si]-10)/14);
-            ctx.globalAlpha=inP*sp;
-            ctx.fillStyle=d.accentColor+'dd';
-            const sw=ctx.measureText(d.items[idx].stat).width+20; const sx=50,sy=H*0.295;
-            ctx.font='700 20px -apple-system,Inter,sans-serif';
-            const sw2=ctx.measureText(d.items[idx].stat).width+24;
-            ctx.beginPath();ctx.roundRect(sx,sy,sw2,32,16);ctx.fill();
-            ctx.fillStyle='#fff';ctx.textAlign='left';ctx.font='700 18px -apple-system,Inter,sans-serif';
-            ctx.fillText(d.items[idx].stat,sx+12,sy+22);
-          }
-          // body
-          if(f>S[si]+16){
-            const bp=ease((f-S[si]-16)/14);
-            ctx.globalAlpha=inP*bp;
-            ctx.font='400 25px -apple-system,Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.85)';ctx.textAlign='left';
-            ctx.strokeStyle='rgba(0,0,0,0.55)';ctx.lineWidth=5;
-            const bwords=(d.items[idx].body||'').split(' ');let bl='';let by=H*0.345;
-            bwords.forEach(w=>{const t=bl+w+' ';if(ctx.measureText(t).width>W-90&&bl){ctx.strokeText(bl.trim(),48,by);ctx.fillText(bl.trim(),48,by);bl=w+' ';by+=30;}else bl=t;});
-            if(bl){ctx.strokeText(bl.trim(),48,by);ctx.fillText(bl.trim(),48,by);}
-          }
-          ctx.restore();ctx.restore();
+          // auto-wrap heading to fit
+          const hmaxW=W-80;let hline='';const hlines=[];
+          hd.split(' ').forEach(w=>{const t=hline+(hline?' ':'')+w;if(ctx.measureText(t).width>hmaxW&&hline){hlines.push(hline);hline=w;}else hline=t;});
+          if(hline)hlines.push(hline);
+          hlines.forEach((ln,i)=>{
+            ctx.strokeStyle='rgba(0,0,0,0.9)';ctx.lineWidth=13;ctx.lineJoin='round';
+            ctx.strokeText(ln,W/2,H*0.30+i*60-(hlines.length-1)*30);
+            ctx.fillStyle='#fff';ctx.fillText(ln,W/2,H*0.30+i*60-(hlines.length-1)*30);
+          });
+          // accent underline
+          const uw=ease(Math.max(f-S[si]-6,0)/16)*180;
+          ctx.strokeStyle=d.accentColor;ctx.lineWidth=4;ctx.globalAlpha=inP*0.8;
+          ctx.beginPath();ctx.moveTo(W/2-uw/2,H*0.30+hlines.length*60-hlines.length*30+10);ctx.lineTo(W/2+uw/2,H*0.30+hlines.length*60-hlines.length*30+10);ctx.stroke();
+          ctx.restore();
+          ctx.restore();
         }
       } else if(si===5){
         // CTA
