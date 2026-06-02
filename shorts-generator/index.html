@@ -143,6 +143,21 @@ textarea#topic:focus{border-color:var(--accent)}
       <div class="panel-sub">Type a topic → AI writes your script → Real video with stock footage + captions</div>
     </div>
     <div id="error-box" class="error-box"></div>
+
+    <!-- Groq API key -->
+    <div style="background:rgba(250,204,21,.06);border:1px solid rgba(250,204,21,.2);border-radius:11px;padding:14px 16px" id="groq-setup-box">
+      <div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:4px">⚡ Set up instant AI (free, 60 sec)</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:10px;line-height:1.5">Get your free key at <a href="https://console.groq.com" target="_blank" style="color:#fbbf24">console.groq.com</a> — email only, no credit card. Makes generation take 1-2 seconds instead of 30+.</div>
+      <div style="display:flex;gap:7px">
+        <input type="password" id="groq-key-input" placeholder="Paste Groq API key (gsk_…)" style="flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(250,204,21,.25);border-radius:8px;padding:8px 11px;color:#fff;font-size:12px;outline:none;font-family:var(--font)"/>
+        <button onclick="saveGroqKey()" style="padding:8px 13px;border-radius:8px;border:1.5px solid rgba(250,204,21,.4);background:rgba(250,204,21,.12);color:#fbbf24;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap">Save</button>
+      </div>
+    </div>
+    <div id="groq-connected-box" style="display:none;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:11px;padding:10px 14px;display:none">
+      <div style="font-size:12px;font-weight:700;color:#4ade80">⚡ Groq connected — instant generation ready</div>
+      <button onclick="clearGroqKey()" style="font-size:11px;color:rgba(255,255,255,.3);background:none;border:none;cursor:pointer;padding:0;margin-top:3px;font-family:var(--font)">Remove key</button>
+    </div>
+
     <div>
       <label class="fl" for="topic">Your Topic or Idea</label>
       <textarea id="topic" rows="3" placeholder="e.g. 3 foods that secretly age you faster&#10;e.g. habits of people who never get sick&#10;e.g. why 99% fail at saving money"></textarea>
@@ -309,6 +324,24 @@ let bgMode = 'pexels', voices = [];
 let playInterval = null, playFrame = 0, isPlaying = false;
 const PREVIEW_FRAMES = 80;
 let pexelsKey = localStorage.getItem('pexels_key') || '';
+let groqKey = localStorage.getItem('groq_key') || '';
+
+function saveGroqKey() {
+  const v = document.getElementById('groq-key-input').value.trim();
+  if (!v) return;
+  groqKey = v; localStorage.setItem('groq_key', v);
+  showGroqStatus();
+}
+function clearGroqKey() {
+  groqKey = ''; localStorage.removeItem('groq_key');
+  document.getElementById('groq-key-input').value = '';
+  showGroqStatus();
+}
+function showGroqStatus() {
+  const has = !!groqKey;
+  document.getElementById('groq-setup-box').style.display = has ? 'none' : 'block';
+  document.getElementById('groq-connected-box').style.display = has ? 'block' : 'none';
+}
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -334,6 +367,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('pexels-status').textContent = '✓ Pexels key saved — stock video enabled';
     document.getElementById('pexels-status').style.color = '#4ade80';
   }
+  if (groqKey) document.getElementById('groq-key-input').value = groqKey;
+  showGroqStatus();
   loadVoices();
   showVideoState();
 });
@@ -375,25 +410,29 @@ function previewVoice() {
 }
 
 // ─── AI fetch helpers ─────────────────────────────────────────────────────────
-async function fetchPollinations(system, userMsg) {
-  const res = await fetch('https://text.pollinations.ai/', {
+async function fetchGroq(system, userMsg) {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ messages: [{ role: 'system', content: system }, { role: 'user', content: userMsg }], model: 'openai', seed: Math.floor(Math.random() * 9999), jsonMode: true })
+    headers: { 'content-type': 'application/json', 'Authorization': 'Bearer ' + groqKey },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      messages: [{ role: 'system', content: system }, { role: 'user', content: userMsg }],
+      response_format: { type: 'json_object' },
+      temperature: 0.85, max_tokens: 1200
+    })
   });
-  if (!res.ok) throw new Error('POST ' + res.status);
-  const text = await res.text();
-  return JSON.parse(text);
+  if (!res.ok) { const t = await res.text().catch(() => ''); throw new Error('Groq ' + res.status + ': ' + t.slice(0, 120)); }
+  const json = await res.json();
+  return JSON.parse(json.choices[0].message.content);
 }
 
 async function fetchPollinationsGet(topic, tone, duration) {
   const prompt = encodeURIComponent(`Topic: ${topic}. Tone: ${tone}. Duration: ${duration}s. Be surprising and specific.`);
-  const sys = encodeURIComponent(`You are a viral YouTube Shorts strategist. Return ONLY valid JSON with no markdown: {"title":"","subtitle":"","accentColor":"#hex","gradientColors":["#h","#h","#h"],"items":[{"emoji":"","heading":"","body":"","videoSearch":""},{"emoji":"","heading":"","body":"","videoSearch":""},{"emoji":"","heading":"","body":"","videoSearch":""}],"voiceover":["","","","","","","",""],"description":"","hashtags":[""],"hook":"","callToAction":"","imagePrompt":"","topicVideoSearch":""}`);
+  const sys = encodeURIComponent(`Return ONLY valid JSON, no markdown: {"title":"","subtitle":"","accentColor":"#hex","gradientColors":["#h","#h","#h"],"items":[{"emoji":"","heading":"","body":"","videoSearch":""},{"emoji":"","heading":"","body":"","videoSearch":""},{"emoji":"","heading":"","body":"","videoSearch":""}],"voiceover":["","","","","","","",""],"description":"","hashtags":[""],"hook":"","callToAction":"","imagePrompt":"","topicVideoSearch":""}`);
   const res = await fetch(`https://text.pollinations.ai/${prompt}?model=openai&system=${sys}&json=true&seed=${Math.floor(Math.random()*9999)}`);
-  if (!res.ok) throw new Error('GET ' + res.status);
+  if (!res.ok) throw new Error('Pollinations ' + res.status);
   const text = await res.text();
-  // strip any markdown code fences
-  const clean = text.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+  const clean = text.replace(/^```json?\s*/i,'').replace(/\s*```$/i,'').trim();
   return JSON.parse(clean);
 }
 
@@ -414,29 +453,24 @@ Return ONLY valid JSON:
 
   const userMsg = `Topic: ${topic}. Tone: ${selectedTone}. Duration: ${selectedDuration}s. Make it genuinely surprising and specific.`;
 
-  // Try multiple free endpoints in order
-  const endpoints = [
-    () => fetchPollinations(system, userMsg),
-    () => fetchPollinationsGet(topic, selectedTone, selectedDuration),
-  ];
+  // Groq first (instant) → Pollinations GET fallback (slow but free)
+  const methods = groqKey
+    ? [() => fetchGroq(system, userMsg), () => fetchPollinationsGet(topic, selectedTone, selectedDuration)]
+    : [() => fetchPollinationsGet(topic, selectedTone, selectedDuration)];
 
   let lastErr = '';
-  for (let i = 0; i < endpoints.length; i++) {
-    for (let attempt = 1; attempt <= 2; attempt++) {
-      try {
-        if (i > 0 || attempt > 1) {
-          btn.innerHTML = `<span class="spinner"></span> Trying alt server…`;
-          await new Promise(r => setTimeout(r, 1200));
-        }
-        const data = await endpoints[i]();
-        currentData = data;
-        renderResult(currentData);
-        showVideoState();
-        return;
-      } catch (e) { lastErr = e.message || 'unknown'; }
-    }
+  for (let i = 0; i < methods.length; i++) {
+    try {
+      if (i > 0) { btn.innerHTML = '<span class="spinner"></span> Trying fallback…'; await new Promise(r => setTimeout(r, 800)); }
+      currentData = await methods[i]();
+      renderResult(currentData);
+      showVideoState();
+      return;
+    } catch (e) { lastErr = e.message || 'unknown'; }
   }
-  showErr('AI service is overloaded right now. Wait 30 seconds and try again. (' + lastErr + ')');
+  showErr(!groqKey
+    ? 'Pollinations is overloaded. Add a free Groq key above for instant generation.'
+    : 'Failed: ' + lastErr + ' — check your Groq key or try again.');
 }
 
 function showErr(m) { const el = document.getElementById('error-box'); el.textContent = m; el.style.display = 'block'; }
