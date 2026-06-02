@@ -16,7 +16,9 @@ body{background:linear-gradient(160deg,#07060f 0%,#130f2a 55%,#0d0b1e 100%);min-
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:54px;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.4);backdrop-filter:blur(14px);position:sticky;top:0;z-index:100}
 .nav-brand{font-size:15px;font-weight:900;letter-spacing:-0.01em}
 .nav-brand span{background:linear-gradient(90deg,#FF6B35,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-right{display:flex;align-items:center;gap:12px}
+.nav-links{display:flex;align-items:center;gap:16px}
+.nav-links a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:rgba(255,255,255,.8)}
 .free-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.3);color:#4ade80}
 .app{display:flex;height:calc(100vh - 54px)}
 .left{width:390px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;padding:24px 20px;gap:20px}
@@ -93,8 +95,8 @@ textarea#topic:focus{border-color:var(--accent)}
 #render-btn:disabled{background:rgba(124,58,237,.3);color:rgba(255,255,255,.3);cursor:not-allowed}
 .render-progress{display:none;margin-bottom:14px}
 .render-progress.show{display:block}
-.render-bar-wrap{height:5px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-bottom:7px}
-.render-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:4px;transition:width .3s}
+.render-bar-wrap{height:6px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-bottom:7px}
+.render-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#7c3aed,#a855f7);border-radius:4px;transition:width .2s}
 .render-status{font-size:11px;color:rgba(255,255,255,.4);display:flex;justify-content:space-between}
 .download-area{display:none;padding:16px;background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.25);border-radius:12px}
 .download-area.show{display:block}
@@ -103,7 +105,6 @@ textarea#topic:focus{border-color:var(--accent)}
 .dl-btn{padding:10px 16px;border-radius:9px;border:1.5px solid;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 .dl-video{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.4);color:#4ade80}
 .dl-audio{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.4);color:#c084fc}
-/* Shared */
 .copy-btn{padding:7px 15px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)}
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:.25;gap:10px;padding:60px 20px}
 .empty-icon{font-size:56px}.empty-title{font-size:17px;font-weight:700}.empty-sub{font-size:13px}
@@ -121,6 +122,8 @@ textarea#topic:focus{border-color:var(--accent)}
 .tag-chip{padding:5px 12px;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer}
 .cta-box{padding:12px 14px;border-radius:9px;font-size:14px;font-weight:600;margin-bottom:8px}
 #render-canvas{display:none}
+.render-live-preview{width:100%;aspect-ratio:9/16;max-height:300px;border-radius:10px;overflow:hidden;background:#000;border:1px solid var(--border);margin-bottom:14px;display:none;object-fit:contain}
+.render-live-preview.show{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:700px){.app{flex-direction:column;height:auto}.left{width:100%;border-right:none;border-bottom:1px solid var(--border)}.right{min-height:60vh}.preview-layout{flex-direction:column;align-items:center}}
 </style>
@@ -129,7 +132,12 @@ textarea#topic:focus{border-color:var(--accent)}
 
 <nav>
   <div class="nav-brand"><span>⚡ Shorts</span> Generator</div>
-  <div class="nav-right">
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="nav-links">
+      <a href="/tmac">Home</a>
+      <a href="/tmac/envue">EnVue</a>
+      <a href="/tmac/centris">Centris</a>
+    </div>
     <span class="free-pill">✓ 100% Free — No Account Needed</span>
   </div>
 </nav>
@@ -235,8 +243,8 @@ textarea#topic:focus{border-color:var(--accent)}
         <h2 style="font-size:21px;font-weight:900;margin-bottom:6px">🎬 Generate Your Video Free</h2>
         <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7">
           Three free tools, zero signups:<br>
-          <strong style="color:#fff">Pollinations.ai</strong> generates your AI background image &nbsp;·&nbsp;
-          <strong style="color:#fff">Canvas API</strong> records the animated video &nbsp;·&nbsp;
+          <strong style="color:#fff">Pollinations.ai</strong> generates cinematic AI backgrounds &nbsp;·&nbsp;
+          <strong style="color:#fff">Canvas API</strong> records real video at full duration &nbsp;·&nbsp;
           <strong style="color:#fff">Web Speech</strong> reads your voiceover
         </p>
 
@@ -249,19 +257,19 @@ textarea#topic:focus{border-color:var(--accent)}
           <!-- Background -->
           <div class="video-gen-card">
             <div class="video-gen-title">🖼 AI Background <span class="free-badge">FREE — no account</span></div>
-            <div class="video-gen-sub">Pollinations.ai generates a cinematic image from your topic automatically. No API key needed.</div>
+            <div class="video-gen-sub">Pollinations.ai generates a cinematic scene from your topic. Ken Burns pan/zoom applied automatically.</div>
             <div class="bg-mode-row">
-              <button class="bg-btn active" id="bg-ai-btn" onclick="setBgMode('ai')">🤖 AI Image</button>
+              <button class="bg-btn active" id="bg-ai-btn" onclick="setBgMode('ai')">🤖 AI Cinematic</button>
               <button class="bg-btn" id="bg-gradient-btn" onclick="setBgMode('gradient')">🎨 Gradient Only</button>
             </div>
             <div id="bg-preview-box"><span style="font-size:22px;opacity:.3">🖼</span></div>
-            <div style="font-size:11px;color:rgba(255,255,255,.28);margin-top:6px" id="bg-label">AI image fetches when you click Generate Video</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.28);margin-top:6px" id="bg-label">AI image loads when you click Generate Video</div>
           </div>
 
           <!-- Voiceover -->
           <div class="video-gen-card">
             <div class="video-gen-title">🎙 Voiceover <span class="free-badge">FREE — built into browser</span></div>
-            <div class="video-gen-sub">Your browser's built-in text-to-speech reads the script. Pick a voice and speed.</div>
+            <div class="video-gen-sub">Browser text-to-speech reads your script. Select a voice and speed, then test it.</div>
             <div class="voice-row">
               <select class="voice-select" id="voice-select"><option>Loading voices…</option></select>
               <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.4)">
@@ -272,7 +280,9 @@ textarea#topic:focus{border-color:var(--accent)}
             </div>
           </div>
 
-          <button id="render-btn" onclick="renderVideo()">🎬 Generate Free Video</button>
+          <button id="render-btn" onclick="renderVideo()">🎬 Generate Full Video</button>
+
+          <canvas id="render-preview-canvas" class="render-live-preview"></canvas>
 
           <div class="render-progress" id="render-progress">
             <div class="render-bar-wrap"><div class="render-bar-fill" id="render-bar"></div></div>
@@ -308,7 +318,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('voice-rate').addEventListener('input',e=>{ document.getElementById('rate-label').textContent=parseFloat(e.target.value).toFixed(1)+'x'; });
   showVideoState();
 });
-
 
 function setupButtons(){
   document.querySelectorAll('.tone-btn[data-value]').forEach(btn=>{
@@ -371,7 +380,7 @@ Rules: Hook under 8 words. Headings max 4 words. Body max 18 words. Voiceover li
 accentColor: bright vibrant hex. gradientColors: 3 dark hex values that look great as a gradient.
 imagePrompt: describe a dramatic cinematic background scene for this topic — no text, no people, photorealistic, wide angle.
 Return ONLY valid JSON matching this schema exactly:
-{"title":"string","subtitle":"string","accentColor":"#hex","gradientColors":["#h","#h","#h"],"items":[{"emoji":"e","heading":"h","body":"b"},{"emoji":"e","heading":"h","body":"b"},{"emoji":"e","heading":"h","body":"b"}],"voiceover":["l1","l2","l3","l4","l5"],"description":"full desc + hashtags","hashtags":["#t"],"hook":"string","callToAction":"string","imagePrompt":"string"}`;
+{"title":"string","subtitle":"string","accentColor":"#hex","gradientColors":["#h","#h","#h"],"items":[{"emoji":"e","heading":"h","body":"b"},{"emoji":"e","heading":"h","body":"b"},{"emoji":"e","heading":"h","body":"b"}],"voiceover":["l1","l2","l3","l4","l5","l6","l7"],"description":"full desc + hashtags","hashtags":["#t"],"hook":"string","callToAction":"string","imagePrompt":"string"}`;
 
   const userMsg=`Topic: ${topic}\nTone: ${selectedTone}\nDuration: ${selectedDuration}s\nMake it genuinely surprising and specific.`;
 
@@ -439,7 +448,7 @@ function renderResult(d){
   resetPlay(); setTimeout(()=>startPlay(),400);
 }
 
-// Phone preview
+// ── Phone preview animation ────────────────────────────────────────────────
 function startPlay(){
   if(!currentData) return;
   isPlaying=true; document.getElementById('play-btn').textContent='⏸';
@@ -455,152 +464,53 @@ function stopPlay(){ clearInterval(playInterval); isPlaying=false; document.getE
 function resetPlay(){ stopPlay(); playFrame=0; document.getElementById('phone-progress').style.width='0%'; document.getElementById('play-time').textContent='0.0s'; document.querySelectorAll('.phone-item').forEach(el=>el.classList.remove('visible')); }
 function togglePlay(){ if(!currentData) return; if(isPlaying) stopPlay(); else{ if(playFrame>=TOTAL_FRAMES) resetPlay(); startPlay(); } }
 
-// ── Video Rendering ────────────────────────────────────────────────────────
-async function renderVideo(){
-  if(!currentData) return;
-  const btn=document.getElementById('render-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Generating…';
-  document.getElementById('render-progress').classList.add('show');
-  document.getElementById('download-area').classList.remove('show');
-  document.getElementById('dl-audio-btn').style.display='none';
-
-  const d=currentData;
-  const FPS=30, DURATION=selectedDuration, TOTAL=FPS*DURATION;
-  const canvas=document.getElementById('render-canvas');
-  const ctx=canvas.getContext('2d');
-  const W=canvas.width, H=canvas.height;
-
-  setStatus('Fetching AI background image…',5);
-
-  // Fetch AI background
-  let bgImg=null;
-  if(bgMode==='ai'){
-    try{
-      const prompt=encodeURIComponent((d.imagePrompt||`cinematic dramatic background for ${d.title}`));
-      const url=`https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&nologo=true&seed=${Math.floor(Math.random()*99999)}`;
-      bgImg=await loadImg(url);
-      document.getElementById('bg-preview-box').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover" crossorigin="anonymous"/>`;
-      document.getElementById('bg-label').textContent='✓ AI background loaded';
-    } catch(e){ bgImg=null; document.getElementById('bg-label').textContent='AI image unavailable, using gradient'; }
+// ── Particles system ────────────────────────────────────────────────────────
+function initParticles(count, W, H, accentColor){
+  const particles=[];
+  for(let i=0;i<count;i++){
+    particles.push({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*3+1,
+      vy: -(Math.random()*0.6+0.2),
+      vx: (Math.random()-0.5)*0.3,
+      opacity: Math.random()*0.5+0.1,
+      color: Math.random()>0.6 ? accentColor : '#ffffff'
+    });
   }
-
-  setStatus('Recording animated frames…',12);
-
-  // Start canvas recording
-  const stream=canvas.captureStream(FPS);
-  const chunks=[];
-  const mime=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4500000});
-  rec.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
-  rec.start(100);
-
-  // Frame layout constants
-  const TITLE_IN=10;
-  const GAP=Math.max(Math.floor((TOTAL-60)/3),20);
-  const ITEM_FRAMES=[55, 55+GAP, 55+GAP*2];
-
-  for(let f=0;f<TOTAL;f++){
-    drawFrame(ctx,W,H,f,TOTAL,d,bgImg,TITLE_IN,ITEM_FRAMES);
-    if(f%3===0){
-      await new Promise(r=>setTimeout(r,0));
-      setStatus(`Rendering ${f}/${TOTAL} frames…`, 12+Math.round((f/TOTAL)*72));
-    }
-  }
-
-  rec.stop();
-  setStatus('Encoding…',88);
-  await new Promise(r=>rec.onstop=r);
-
-  const blob=new Blob(chunks,{type:'video/webm'});
-  const url=URL.createObjectURL(blob);
-  const dl=document.getElementById('dl-video-btn');
-  dl.href=url; dl.download=`short-${Date.now()}.webm`;
-  document.getElementById('download-area').classList.add('show');
-  setStatus('Done! ✅',100);
-  btn.disabled=false; btn.innerHTML='🎬 Generate Free Video';
-
-  // Generate voiceover audio separately
-  genAudio(d);
+  return particles;
 }
-
-function drawFrame(ctx,W,H,f,TOTAL,d,bgImg,TI,IF){
-  ctx.clearRect(0,0,W,H);
-  const ease=t=>1-Math.pow(1-Math.min(Math.max(t,0),1),3);
-
-  // Background
-  if(bgImg){
-    ctx.drawImage(bgImg,0,0,W,H);
-    const ov=ctx.createLinearGradient(0,0,0,H);
-    ov.addColorStop(0,'rgba(0,0,0,0.6)'); ov.addColorStop(0.4,'rgba(0,0,0,0.35)'); ov.addColorStop(1,'rgba(0,0,0,0.7)');
-    ctx.fillStyle=ov; ctx.fillRect(0,0,W,H);
-  } else {
-    const g=ctx.createLinearGradient(0,0,W,H);
-    g.addColorStop(0,d.gradientColors[0]); g.addColorStop(0.5,d.gradientColors[1]); g.addColorStop(1,d.gradientColors[2]);
-    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-    const vig=ctx.createRadialGradient(W/2,H/2,H*0.15,W/2,H/2,H*0.72);
-    vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,0.5)');
-    ctx.fillStyle=vig; ctx.fillRect(0,0,W,H);
-  }
-
-  // Subtle grid
-  ctx.strokeStyle='rgba(255,255,255,0.035)'; ctx.lineWidth=1;
-  for(let x=0;x<W;x+=54){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke(); }
-  for(let y=0;y<H;y+=54){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke(); }
-
-  // Subtitle
-  if(d.subtitle&&f>=TI){
-    const p=ease((f-TI)/12);
-    ctx.globalAlpha=p; ctx.font='700 20px -apple-system,Inter,sans-serif';
-    ctx.fillStyle=d.accentColor; ctx.textAlign='center';
-    ctx.fillText(d.subtitle.toUpperCase(),W/2,105);
-    ctx.globalAlpha=1;
-  }
-
-  // Title
-  if(f>=TI){
-    const p=ease((f-TI)/15); const sc=0.72+p*0.28;
-    ctx.globalAlpha=p; ctx.save(); ctx.translate(W/2,185); ctx.scale(sc,sc);
-    ctx.font='900 56px -apple-system,Inter,sans-serif'; ctx.fillStyle='#fff'; ctx.textAlign='center';
-    ctx.shadowColor='rgba(0,0,0,0.85)'; ctx.shadowBlur=22;
-    const lines=d.title.replace('\\n','\n').split('\n');
-    lines.forEach((ln,i)=>ctx.fillText(ln,0,i*64-(lines.length-1)*32));
-    ctx.shadowBlur=0; ctx.restore(); ctx.globalAlpha=1;
-  }
-
-  // List items
-  d.items.forEach((item,i)=>{
-    const ef=IF[i]; if(f<ef) return;
-    const p=ease((f-ef)/14); const tx=(1-p)*-90;
-    const y=320+i*178;
-    ctx.globalAlpha=p; ctx.save(); ctx.translate(tx,0);
-    ctx.fillStyle='rgba(0,0,0,0.42)'; rr(ctx,24,y,W-48,158,14); ctx.fill();
-    ctx.strokeStyle='rgba(255,255,255,0.09)'; ctx.lineWidth=1; rr(ctx,24,y,W-48,158,14); ctx.stroke();
-    ctx.fillStyle=d.accentColor; ctx.beginPath(); ctx.arc(66,y+46,26,0,Math.PI*2); ctx.fill();
-    ctx.font='900 20px -apple-system,Inter,sans-serif'; ctx.fillStyle='#fff'; ctx.textAlign='center';
-    ctx.fillText(i+1,66,y+53);
-    ctx.font='800 30px -apple-system,Inter,sans-serif'; ctx.fillStyle='#fff'; ctx.textAlign='left';
-    ctx.fillText(`${item.emoji} ${item.heading}`,104,y+46);
-    ctx.font='400 21px -apple-system,Inter,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.74)';
-    wrapText(ctx,item.body,104,y+80,W-136,27);
-    ctx.restore(); ctx.globalAlpha=1;
+function updateParticles(particles, W, H){
+  particles.forEach(p=>{
+    p.y+=p.vy; p.x+=p.vx;
+    if(p.y<-10) p.y=H+10;
+    if(p.x<0) p.x=W; if(p.x>W) p.x=0;
   });
-
-  // Progress bar
-  const prog=f/TOTAL;
-  ctx.fillStyle='rgba(255,255,255,0.14)'; rr(ctx,24,H-48,W-48,7,4); ctx.fill();
-  if(prog>0){
-    const grd=ctx.createLinearGradient(24,0,24+(W-48)*prog,0);
-    grd.addColorStop(0,d.accentColor); grd.addColorStop(1,'#fff');
-    ctx.fillStyle=grd; rr(ctx,24,H-48,(W-48)*prog,7,4); ctx.fill();
-  }
+}
+function drawParticles(ctx, particles){
+  particles.forEach(p=>{
+    ctx.save();
+    ctx.globalAlpha=p.opacity;
+    ctx.fillStyle=p.color;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  });
 }
 
-function rr(ctx,x,y,w,h,r){
-  ctx.beginPath(); ctx.moveTo(x+r,y);
-  ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+// ── Helper: draw multi-line text centered, returns lines used ───────────────
+function drawWrappedCenter(ctx, text, x, y, maxW, lineH){
+  const words=text.split(' '); let line=''; const lines=[];
+  words.forEach(w=>{
+    const t=line+(line?' ':'')+w;
+    if(ctx.measureText(t).width>maxW&&line){ lines.push(line); line=w; }
+    else line=t;
+  });
+  if(line) lines.push(line);
+  const totalH=(lines.length-1)*lineH;
+  lines.forEach((l,i)=>ctx.fillText(l,x,y-totalH/2+i*lineH));
+  return lines.length;
 }
 
 function wrapText(ctx,text,x,y,maxW,lh){
@@ -613,6 +523,14 @@ function wrapText(ctx,text,x,y,maxW,lh){
   if(line) ctx.fillText(line.trim(),x,y);
 }
 
+function rr(ctx,x,y,w,h,r){
+  ctx.beginPath(); ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+}
+
 function loadImg(url){
   return new Promise((res,rej)=>{ const i=new Image(); i.crossOrigin='anonymous'; i.onload=()=>res(i); i.onerror=rej; i.src=url; });
 }
@@ -621,6 +539,390 @@ function setStatus(msg,pct){
   document.getElementById('render-status-text').textContent=msg;
   document.getElementById('render-pct').textContent=pct+'%';
   document.getElementById('render-bar').style.width=pct+'%';
+}
+
+const ease=t=>1-Math.pow(1-Math.min(Math.max(t,0),1),3);
+const easeInOut=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+// ── Main video renderer ─────────────────────────────────────────────────────
+async function renderVideo(){
+  if(!currentData) return;
+  const btn=document.getElementById('render-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Rendering…';
+  document.getElementById('render-progress').classList.add('show');
+  document.getElementById('download-area').classList.remove('show');
+  document.getElementById('dl-audio-btn').style.display='none';
+
+  const d=currentData;
+  const FPS=30, DURATION=selectedDuration, TOTAL=FPS*DURATION;
+  const canvas=document.getElementById('render-canvas');
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height; // 540x960
+
+  // Show live preview
+  const previewCanvas=document.getElementById('render-preview-canvas');
+  previewCanvas.width=W; previewCanvas.height=H;
+  previewCanvas.classList.add('show');
+  const pctx=previewCanvas.getContext('2d');
+
+  setStatus('Fetching AI background…',3);
+
+  let bgImg=null;
+  if(bgMode==='ai'){
+    try{
+      const prompt=encodeURIComponent((d.imagePrompt||`cinematic dramatic background for ${d.title}, wide angle, photorealistic`));
+      const url=`https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&nologo=true&seed=${Math.floor(Math.random()*99999)}`;
+      bgImg=await loadImg(url);
+      document.getElementById('bg-preview-box').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover"/>`;
+      document.getElementById('bg-label').textContent='✓ AI cinematic background loaded';
+    } catch(e){
+      bgImg=null; document.getElementById('bg-label').textContent='Image unavailable, using gradient';
+    }
+  }
+
+  setStatus('Starting recorder…',6);
+
+  const stream=canvas.captureStream(FPS);
+  const chunks=[];
+  const mime=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm';
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:6000000});
+  rec.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
+  rec.start(200);
+
+  // Scene timing (in frames)
+  // Scene 0: Hook flash                   0 → T*0.12
+  // Scene 1: Title reveal                 T*0.12 → T*0.28
+  // Scene 2: Item 1                       T*0.28 → T*0.50
+  // Scene 3: Item 2                       T*0.50 → T*0.68
+  // Scene 4: Item 3                       T*0.68 → T*0.84
+  // Scene 5: CTA                          T*0.84 → T
+  const S=[0, Math.floor(TOTAL*0.12), Math.floor(TOTAL*0.28), Math.floor(TOTAL*0.50), Math.floor(TOTAL*0.68), Math.floor(TOTAL*0.84), TOTAL];
+
+  const particles=initParticles(40, W, H, d.accentColor);
+
+  setStatus(`Rendering 0/${DURATION}s…`,8);
+
+  // Real-time rendering — one frame per interval tick so MediaRecorder captures correct duration
+  let f=0;
+  await new Promise(resolve=>{
+    const tick=setInterval(()=>{
+      updateParticles(particles, W, H);
+      drawFrame(ctx, W, H, f, TOTAL, d, bgImg, S, particles);
+      // mirror to preview
+      pctx.drawImage(canvas,0,0,previewCanvas.width,previewCanvas.height);
+
+      f++;
+      if(f%FPS===0){
+        const secDone=f/FPS;
+        setStatus(`Rendering ${secDone}s / ${DURATION}s…`, 8+Math.round((f/TOTAL)*80));
+      }
+      if(f>=TOTAL){ clearInterval(tick); resolve(); }
+    }, 1000/FPS);
+  });
+
+  rec.stop();
+  setStatus('Encoding video…',91);
+  await new Promise(r=>rec.onstop=r);
+
+  const blob=new Blob(chunks,{type:'video/webm'});
+  const url=URL.createObjectURL(blob);
+  const dl=document.getElementById('dl-video-btn');
+  dl.href=url; dl.download=`short-${DURATION}s-${Date.now()}.webm`;
+  document.getElementById('download-area').classList.add('show');
+  setStatus('Done! ✅ Video ready to download',100);
+  btn.disabled=false; btn.innerHTML='🎬 Generate Full Video';
+
+  genAudio(d);
+}
+
+// ── drawFrame: cinematic scene-based renderer ──────────────────────────────
+function drawFrame(ctx, W, H, f, TOTAL, d, bgImg, S, particles){
+  ctx.clearRect(0,0,W,H);
+
+  // ── Background with Ken Burns ──────────────────────────────────────────
+  const kbProgress=f/TOTAL; // 0→1 over full video
+  if(bgImg){
+    const scale=1+kbProgress*0.08; // slow zoom in
+    const panX=(kbProgress-0.5)*W*0.04;
+    ctx.save();
+    ctx.translate(W/2+panX, H/2);
+    ctx.scale(scale, scale);
+    ctx.drawImage(bgImg,-W/2,-H/2,W,H);
+    ctx.restore();
+    // dark cinematic overlay — heavier at start/end
+    const vigAmt=f<S[1]?(1-(f/S[1]))*0.3:0;
+    const ov=ctx.createLinearGradient(0,0,0,H);
+    ov.addColorStop(0,`rgba(0,0,0,${0.55+vigAmt})`);
+    ov.addColorStop(0.35,`rgba(0,0,0,${0.25+vigAmt})`);
+    ov.addColorStop(0.65,`rgba(0,0,0,${0.25+vigAmt})`);
+    ov.addColorStop(1,`rgba(0,0,0,${0.65+vigAmt})`);
+    ctx.fillStyle=ov; ctx.fillRect(0,0,W,H);
+  } else {
+    // Animated gradient background
+    const t=f/TOTAL;
+    const g=ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,d.gradientColors[0]);
+    g.addColorStop(0.5+Math.sin(t*Math.PI)*0.1,d.gradientColors[1]);
+    g.addColorStop(1,d.gradientColors[2]);
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    // vignette
+    const vig=ctx.createRadialGradient(W/2,H*0.45,H*0.1,W/2,H*0.45,H*0.75);
+    vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,0.55)');
+    ctx.fillStyle=vig; ctx.fillRect(0,0,W,H);
+  }
+
+  // Subtle grid lines
+  ctx.strokeStyle='rgba(255,255,255,0.028)'; ctx.lineWidth=1;
+  for(let x=54;x<W;x+=54){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke(); }
+  for(let y=54;y<H;y+=54){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke(); }
+
+  // Floating particles
+  drawParticles(ctx, particles);
+
+  // ── Accent glow bar at top ───────────────────────────────────────────────
+  const gbar=ctx.createLinearGradient(0,0,W,0);
+  gbar.addColorStop(0,'rgba(0,0,0,0)'); gbar.addColorStop(0.5,d.accentColor+'99'); gbar.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=gbar; ctx.fillRect(0,0,W,3);
+
+  // ── SCENE 0: Hook flash ──────────────────────────────────────────────────
+  if(f<S[1]){
+    const t=f/S[1];
+    const inP=ease(Math.min(f/12,1));
+    const outP=f>S[1]-18?ease((S[1]-f)/18):1;
+    ctx.save();
+    // big pulse circle behind hook
+    const pulseR=W*0.55*easeInOut(Math.min(f/25,1));
+    const pulseGrad=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,pulseR);
+    pulseGrad.addColorStop(0,d.accentColor+'22'); pulseGrad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=pulseGrad; ctx.fillRect(0,0,W,H);
+
+    ctx.globalAlpha=inP*outP;
+    // "WAIT FOR IT" label
+    ctx.font=`700 22px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle=d.accentColor; ctx.textAlign='center';
+    ctx.letterSpacing='6px';
+    ctx.fillText('STOP SCROLLING',W/2,H/2-110);
+    ctx.letterSpacing='0px';
+
+    // Accent divider line
+    const lineW=ease(Math.max(f-8,0)/20)*280;
+    ctx.strokeStyle=d.accentColor; ctx.lineWidth=2; ctx.globalAlpha=inP*outP*0.7;
+    ctx.beginPath(); ctx.moveTo(W/2-lineW/2,H/2-85); ctx.lineTo(W/2+lineW/2,H/2-85); ctx.stroke();
+
+    // Hook text big
+    ctx.globalAlpha=inP*outP;
+    ctx.font=`900 58px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='#fff'; ctx.textAlign='center';
+    ctx.shadowColor='rgba(0,0,0,0.9)'; ctx.shadowBlur=30;
+    const hookLines=wrapLinesCenter(ctx, d.hook, W-80);
+    hookLines.forEach((ln,i)=>ctx.fillText(ln, W/2, H/2-20+i*66-(hookLines.length-1)*33));
+    ctx.shadowBlur=0;
+
+    // Emoji flash
+    if(f>15){
+      const ep=ease((f-15)/12);
+      ctx.globalAlpha=ep*inP*outP*0.9;
+      ctx.font='80px serif'; ctx.textAlign='center';
+      ctx.fillText(d.items[0].emoji,W/2,H/2+130);
+    }
+    ctx.restore();
+  }
+
+  // ── SCENE 1: Title reveal ────────────────────────────────────────────────
+  if(f>=S[1] && f<S[2]){
+    const tf=(f-S[1])/(S[2]-S[1]);
+    const inP=ease(Math.min((f-S[1])/20,1));
+    const outP=f>S[2]-20?ease((S[2]-f)/20):1;
+    ctx.save(); ctx.globalAlpha=inP*outP;
+
+    // Subtitle label
+    ctx.font=`800 21px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle=d.accentColor; ctx.textAlign='center';
+    ctx.letterSpacing='5px';
+    ctx.fillText((d.subtitle||'TOP 3').toUpperCase(),W/2,H*0.22);
+    ctx.letterSpacing='0px';
+
+    // Accent underline
+    const ulW=ease(Math.max(f-S[1]-5,0)/18)*200;
+    ctx.strokeStyle=d.accentColor; ctx.lineWidth=2.5; ctx.globalAlpha=(inP*outP)*0.8;
+    ctx.beginPath(); ctx.moveTo(W/2-ulW/2,H*0.22+12); ctx.lineTo(W/2+ulW/2,H*0.22+12); ctx.stroke();
+
+    ctx.globalAlpha=inP*outP;
+    // Title
+    const sc=0.75+ease(Math.min((f-S[1])/22,1))*0.25;
+    ctx.save(); ctx.translate(W/2,H*0.38); ctx.scale(sc,sc);
+    ctx.font=`900 70px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='#fff'; ctx.textAlign='center';
+    ctx.shadowColor='rgba(0,0,0,0.95)'; ctx.shadowBlur=28;
+    const titleLines=d.title.replace('\\n','\n').split('\n');
+    titleLines.forEach((ln,i)=>ctx.fillText(ln,0,i*78-(titleLines.length-1)*39));
+    ctx.shadowBlur=0; ctx.restore();
+
+    // "and it will shock you" sub-label
+    if(f>S[1]+25){
+      const sp=ease((f-S[1]-25)/15);
+      ctx.globalAlpha=sp*inP*outP*0.65;
+      ctx.font=`400 26px ${'-apple-system,Inter,sans-serif'}`;
+      ctx.fillStyle='rgba(255,255,255,0.75)'; ctx.textAlign='center';
+      ctx.fillText('...and most people don\'t know this',W/2,H*0.54);
+    }
+    ctx.restore();
+  }
+
+  // ── SCENES 2-4: List items ───────────────────────────────────────────────
+  [0,1,2].forEach(idx=>{
+    const sceneStart=S[idx+2], sceneEnd=S[idx+3];
+    if(f<sceneStart || f>=S[5]) return;
+
+    // This item stays visible from its scene through end (fade out only at CTA)
+    const inP=ease(Math.min((f-sceneStart)/22,1));
+    const outP=f>S[5]-15?ease((S[5]-f)/15):1;
+    const prevItemsAlpha=idx>0&&f>=S[idx+2]?ease(Math.min((f-sceneStart)/30,1))*0.4+0.6:1;
+
+    ctx.save();
+
+    // Item number mega display (background accent)
+    if(f>=sceneStart && f<sceneEnd){
+      const numAlpha=ease(Math.min((f-sceneStart)/16,1))*(f>sceneEnd-20?ease((sceneEnd-f)/20):1);
+      ctx.globalAlpha=numAlpha*0.07;
+      ctx.font=`900 420px ${'-apple-system,Inter,sans-serif'}`;
+      ctx.fillStyle=d.accentColor; ctx.textAlign='center';
+      ctx.fillText(idx+1, W/2, H*0.65);
+    }
+
+    // Card
+    const cardY=200+idx*220;
+    const slideX=f<sceneStart?-W:(1-ease(Math.min((f-sceneStart)/20,1)))*(-W);
+    ctx.globalAlpha=inP*outP;
+    ctx.save(); ctx.translate(slideX,0);
+
+    // Card shadow/glow
+    ctx.shadowColor=d.accentColor; ctx.shadowBlur=20;
+    ctx.fillStyle='rgba(0,0,0,0.55)';
+    rr(ctx,30,cardY,W-60,195,16); ctx.fill();
+    ctx.shadowBlur=0;
+
+    // Card border with accent glow
+    ctx.strokeStyle=d.accentColor+'55'; ctx.lineWidth=1.5;
+    rr(ctx,30,cardY,W-60,195,16); ctx.stroke();
+
+    // Left accent bar
+    ctx.fillStyle=d.accentColor;
+    rr(ctx,30,cardY+18,5,159,3); ctx.fill();
+
+    // Number badge
+    ctx.fillStyle=d.accentColor;
+    ctx.beginPath(); ctx.arc(82,cardY+50,28,0,Math.PI*2); ctx.fill();
+    ctx.font=`900 26px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.shadowBlur=0;
+    ctx.fillText(idx+1,82,cardY+59);
+
+    // Item emoji
+    ctx.font='38px serif'; ctx.textAlign='left';
+    ctx.fillText(d.items[idx].emoji,120,cardY+62);
+
+    // Heading
+    ctx.font=`800 34px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='#fff'; ctx.textAlign='left';
+    ctx.shadowColor='rgba(0,0,0,0.8)'; ctx.shadowBlur=8;
+    ctx.fillText(d.items[idx].heading,168,cardY+58);
+    ctx.shadowBlur=0;
+
+    // Body text
+    ctx.font=`400 23px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='rgba(255,255,255,0.78)';
+    wrapText(ctx, d.items[idx].body, 50, cardY+105, W-100, 30);
+
+    // Animated accent line under heading (draws in)
+    if(f>=sceneStart){
+      const lineP=ease(Math.min((f-sceneStart-8)/18,1));
+      ctx.strokeStyle=d.accentColor+'66'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(50,cardY+72); ctx.lineTo(50+(W-100)*0.7*lineP,cardY+72); ctx.stroke();
+    }
+
+    ctx.restore();
+    ctx.restore();
+  });
+
+  // ── SCENE 5: CTA ────────────────────────────────────────────────────────
+  if(f>=S[5]){
+    const tf=(f-S[5])/(S[6]-S[5]);
+    const inP=ease(Math.min((f-S[5])/20,1));
+    ctx.save(); ctx.globalAlpha=inP;
+
+    // Dark overlay for CTA
+    ctx.fillStyle=`rgba(0,0,0,${tf*0.55})`; ctx.fillRect(0,0,W,H);
+
+    // CTA card
+    const ctaY=H*0.60;
+    ctx.shadowColor=d.accentColor; ctx.shadowBlur=40;
+    ctx.fillStyle='rgba(0,0,0,0.7)';
+    rr(ctx,40,ctaY,W-80,200,20); ctx.fill();
+    ctx.shadowBlur=0;
+    ctx.strokeStyle=d.accentColor; ctx.lineWidth=2;
+    rr(ctx,40,ctaY,W-80,200,20); ctx.stroke();
+
+    // Follow button
+    const btnG=ctx.createLinearGradient(W/2-130,0,W/2+130,0);
+    btnG.addColorStop(0,d.accentColor); btnG.addColorStop(1,d.accentColor+'bb');
+    ctx.fillStyle=btnG;
+    rr(ctx,W/2-130,ctaY+120,260,55,28); ctx.fill();
+    ctx.font=`800 24px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.shadowBlur=0;
+    ctx.fillText('👍  FOLLOW FOR MORE',W/2,ctaY+155);
+
+    // CTA text
+    ctx.font=`700 30px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='#fff'; ctx.textAlign='center';
+    ctx.shadowColor='rgba(0,0,0,0.9)'; ctx.shadowBlur=12;
+    ctx.fillText(d.callToAction,W/2,ctaY+55);
+    ctx.shadowBlur=0;
+    ctx.font=`400 22px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle='rgba(255,255,255,0.6)'; ctx.textAlign='center';
+    ctx.fillText('Share this with someone who needs it',W/2,ctaY+92);
+
+    ctx.restore();
+  }
+
+  // ── ALWAYS: Subtitle label top ───────────────────────────────────────────
+  if(f>=S[2]){
+    const tp=ease(Math.min((f-S[2])/15,1));
+    ctx.save(); ctx.globalAlpha=tp*0.9;
+    ctx.font=`700 19px ${'-apple-system,Inter,sans-serif'}`;
+    ctx.fillStyle=d.accentColor; ctx.textAlign='center';
+    ctx.letterSpacing='4px';
+    ctx.fillText((d.subtitle||'TOP 3').toUpperCase(),W/2,60);
+    ctx.letterSpacing='0px';
+    ctx.restore();
+  }
+
+  // ── Progress bar bottom ──────────────────────────────────────────────────
+  const prog=f/TOTAL;
+  ctx.fillStyle='rgba(255,255,255,0.12)'; rr(ctx,30,H-38,W-60,6,3); ctx.fill();
+  if(prog>0){
+    const pg=ctx.createLinearGradient(30,0,30+(W-60)*prog,0);
+    pg.addColorStop(0,d.accentColor); pg.addColorStop(1,'#ffffff');
+    ctx.fillStyle=pg; rr(ctx,30,H-38,(W-60)*prog,6,3); ctx.fill();
+    // glow dot at end of progress
+    ctx.shadowColor=d.accentColor; ctx.shadowBlur=12;
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(30+(W-60)*prog,H-35,5,0,Math.PI*2); ctx.fill();
+    ctx.shadowBlur=0;
+  }
+  // Duration label
+  ctx.font=`600 18px monospace`;
+  ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.textAlign='right';
+  ctx.fillText(`${(f/30).toFixed(1)}s`,W-32,H-22);
+}
+
+function wrapLinesCenter(ctx, text, maxW){
+  const words=text.split(' '); let line=''; const lines=[];
+  words.forEach(w=>{
+    const t=line+(line?' ':'')+w;
+    if(ctx.measureText(t).width>maxW&&line){ lines.push(line); line=w; }
+    else line=t;
+  });
+  if(line) lines.push(line);
+  return lines;
 }
 
 async function genAudio(d){
