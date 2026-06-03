@@ -1212,16 +1212,20 @@ async function renderVideo(){
   rec.start(100);
 
   let f=0;const totalF=dur*FPS;
+  const renderStart=performance.now();
   await new Promise(resolve=>{
     function fr(){
       if(f>=totalF){rec.stop();resolve();return;}
-      // Keep AudioContext running — browsers may suspend it during long operations
       if(audioCtx&&audioCtx.state!=='running')audioCtx.resume();
       drawFrame(f);f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
       document.getElementById('renderLabel').textContent='Rendering... '+pct+'%';
-      setTimeout(fr,1000/FPS);
+      // Schedule next frame at its correct wall-clock time so total render
+      // duration exactly matches `dur` seconds — prevents video/audio length mismatch
+      const elapsed=performance.now()-renderStart;
+      const nextFrameMs=(f/FPS)*1000;
+      setTimeout(fr,Math.max(0,nextFrameMs-elapsed));
     }
     fr();
   });
