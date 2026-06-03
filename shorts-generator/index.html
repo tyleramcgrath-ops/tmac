@@ -790,16 +790,10 @@ async function stepFindFootage(){
     const q=scenes[i].pexels_search||scenes[i].visual_direction||'cinematic';
     document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${q}"...`;
     let vid=null,thumb=null;
-    // Try Pexels first
-    if(pxKey){
-      try{const r=await fetchPexelsVideo(q,pxKey);if(r){vid=r.vid;thumb=r.thumb;}}
-      catch(e){if(!shownErr){shownErr=true;toast('Pexels: '+e.message+' — trying Pixabay','error');}}
-    }
-    // Fall back to Pixabay
-    if(!vid&&pbKey){
-      try{const r=await fetchPixabayVideo(q,pbKey);if(r){vid=r.vid;thumb=r.thumb;}}
-      catch(e){if(!shownErr){shownErr=true;toast('Pixabay: '+e.message,'error');}}
-    }
+    try{
+      const r=await fetchBestFootage(scenes[i],pxKey,pbKey);
+      if(r){vid=r.vid;thumb=r.thumb;}
+    }catch(e){if(!shownErr){shownErr=true;toast('Footage: '+e.message,'error');}}
     sceneVids.push(vid);sceneThumbUrls.push(thumb);
   }
   document.getElementById('footageProgress').style.width='100%';
@@ -808,13 +802,20 @@ async function stepFindFootage(){
   document.getElementById('buildCaptionsBtn').disabled=false;
 }
 
+function scorePexelsVid(v){
+  // Higher score = better pick: prefer portrait HD, longer duration
+  const isPortrait=v.width<v.height;
+  const hasHD=v.video_files?.some(f=>f.quality==='hd');
+  return (isPortrait?10:0)+(hasHD?5:0)+Math.min((v.duration||0)/30,5);
+}
+
 async function fetchPexelsVideo(query,key){
-  const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=5&orientation=portrait`,{headers:{Authorization:key}});
+  const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=15&orientation=portrait`,{headers:{Authorization:key}});
   if(!r.ok)throw new Error('Pexels '+r.status+(r.status===403?' (invalid key?)':''));
   const data=await r.json();
   const vids=data.videos||[];if(!vids.length)return null;
-  const best=vids[0];
-  const file=best.video_files?.find(f=>f.quality==='hd'&&f.width<f.height)||best.video_files?.[0];
+  const best=vids.sort((a,b)=>scorePexelsVid(b)-scorePexelsVid(a))[0];
+  const file=best.video_files?.find(f=>f.quality==='hd'&&f.width<f.height)||best.video_files?.find(f=>f.width<f.height)||best.video_files?.[0];
   if(!file)return null;
   const el=document.createElement('video');
   el.src=file.link;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
@@ -823,17 +824,55 @@ async function fetchPexelsVideo(query,key){
 }
 
 async function fetchPixabayVideo(query,key){
-  const r=await fetch(`https://pixabay.com/api/videos/?key=${key}&q=${encodeURIComponent(query)}&orientation=vertical&per_page=5&safesearch=true`);
+  const r=await fetch(`https://pixabay.com/api/videos/?key=${key}&q=${encodeURIComponent(query)}&orientation=vertical&per_page=15&safesearch=true`);
   if(!r.ok)throw new Error('Pixabay '+r.status+(r.status===400?' (invalid key?)':''));
   const data=await r.json();
   const hits=data.hits||[];if(!hits.length)return null;
-  const best=hits[0];
-  const file=best.videos?.medium||best.videos?.small||best.videos?.large;
+  // Prefer hits with large video file available
+  const best=hits.sort((a,b)=>{
+    const scoreA=(a.videos?.large?5:0)+(a.videos?.medium?2:0);
+    const scoreB=(b.videos?.large?5:0)+(b.videos?.medium?2:0);
+    return scoreB-scoreA;
+  })[0];
+  const file=best.videos?.large||best.videos?.medium||best.videos?.small;
   if(!file?.url)return null;
   const el=document.createElement('video');
   el.src=file.url;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
   el.play().catch(()=>{});
   return{vid:el,thumb:best.userImageURL||best.previewURL||null};
+}
+
+// Extract 2-4 most meaningful keywords from a scene description
+function extractKeywords(text){
+  const stop=new Set(['a','an','the','and','or','but','in','on','at','to','of','for','with','as','by','this','that','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','their','they','them','we','our','you','your','he','she','it','its','his','her','very','just','also','all','some','one','two','three','four','five','while','when','where','who','what','how','from','into','over','after','before','about','through','these','those','than','then','so','if','not','no','up','out','more','less','most','each','every','between','against','during','without','within','along','around','among']);
+  return text.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/)
+    .filter(w=>w.length>3&&!stop.has(w))
+    .slice(0,4).join(' ');
+}
+
+async function fetchBestFootage(scene,pxKey,pbKey){
+  const primary=scene.pexels_search||scene.visual_direction||'cinematic';
+  // Build query variants: exact → key nouns from visual_direction → key nouns from voiceover
+  const queries=[primary];
+  if(scene.visual_direction&&scene.visual_direction!==primary){
+    const kw=extractKeywords(scene.visual_direction);
+    if(kw&&!queries.includes(kw))queries.push(kw);
+  }
+  if(scene.voiceover){
+    const kw=extractKeywords(scene.voiceover);
+    if(kw&&!queries.includes(kw))queries.push(kw);
+  }
+
+  for(const q of queries){
+    // Try Pexels and Pixabay in parallel for this query
+    const attempts=[];
+    if(pxKey) attempts.push(fetchPexelsVideo(q,pxKey).catch(()=>null));
+    if(pbKey) attempts.push(fetchPixabayVideo(q,pbKey).catch(()=>null));
+    const results=await Promise.all(attempts);
+    const found=results.find(r=>r!=null);
+    if(found)return found;
+  }
+  return null;
 }
 
 function renderFootageTab(){
