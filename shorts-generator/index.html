@@ -124,6 +124,25 @@ nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--borde
 @keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
 .empty-state{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;line-height:1.7}
 .empty-state .ei{font-size:32px;margin-bottom:8px;display:block}
+/* Settings modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;width:460px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal-row{margin-bottom:14px}
+.modal-row label{font-size:12px;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.modal-row label a{font-size:11px;color:var(--acc)}
+.modal-row input,.modal-row select{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 12px;font-size:13px;font-family:inherit}
+.modal-row input:focus,.modal-row select:focus{outline:none;border-color:rgba(255,69,0,0.5)}
+.modal-save{width:100%;padding:11px;border-radius:8px;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--acc),#c73200);color:#fff;margin-top:6px;cursor:pointer;border:none}
+.modal-save:hover{opacity:0.9}
+.settings-btn{background:rgba(255,255,255,0.07);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:6px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px}
+.settings-btn:hover{background:rgba(255,255,255,0.12)}
+.key-status{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:600}
+.key-status.set{background:rgba(74,222,128,0.15);color:var(--grn)}
+.key-status.missing{background:rgba(255,69,0,0.12);color:#ff8a6a}
 </style>
 </head>
 <body>
@@ -132,31 +151,50 @@ nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--borde
   <span class="nav-logo">⚡ Viral Shorts Studio</span>
   <span class="nav-badge">AI</span>
   <div class="nav-spacer"></div>
-  <div class="nav-key-wrap">
-    <label>Gemini Key <a href="https://aistudio.google.com/apikey" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
-    <input type="password" id="geminiKey" placeholder="AIza..." autocomplete="off">
-    <label style="margin-left:6px">Groq Key</label>
-    <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
-    <label style="margin-left:6px">Pexels Key</label>
-    <input type="password" id="pexelsKey" placeholder="pexels..." autocomplete="off">
-    <label style="margin-left:6px">Pixabay Key <a href="https://pixabay.com/api/docs/" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
-    <input type="password" id="pixabayKey" placeholder="pixabay..." autocomplete="off">
-    <label style="margin-left:6px">ElevenLabs Key <a href="https://elevenlabs.io" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
-    <input type="password" id="elKey" placeholder="elevenlabs key..." autocomplete="off">
-    <label style="margin-left:6px">Voice</label>
-    <select id="elVoice" style="width:110px;padding:5px 8px;font-size:12px">
-      <option value="21m00Tcm4TlvDq8ikWAM">Rachel (F)</option>
-      <option value="TxGEqnHWrfWFTfGW9XjX">Josh (M)</option>
-      <option value="pNInz6obpgDQGcFmaJgB">Adam (M)</option>
-      <option value="ErXwobaYiN019PkySvjV">Antoni (M)</option>
-      <option value="EXAVITQu4vr4xnSDxMaL">Sarah (F)</option>
-      <option value="TX3LPaxmHKxFdv7VOQHJ">Liam (M)</option>
-      <option value="IKne3meq5aSn9XLyUdCD">Charlie (AU)</option>
-      <option value="ThT5KcBeYPX3keUQqHPh">Dorothy (UK)</option>
-    </select>
-    <button id="navSaveKey" onclick="saveKeys()">Save</button>
-  </div>
+  <span id="keyStatusBadge" style="font-size:11px;color:var(--muted);margin-right:8px"></span>
+  <button class="settings-btn" onclick="openSettings()">⚙ API Keys</button>
 </nav>
+
+<!-- Settings Modal -->
+<div class="modal-overlay hidden" id="settingsModal" onclick="if(event.target===this)closeSettings()">
+  <div class="modal">
+    <div class="modal-title">⚙ API Keys <button class="modal-close" onclick="closeSettings()">✕</button></div>
+    <div class="modal-row">
+      <label>🤖 Gemini Key (primary AI) <a href="https://aistudio.google.com/apikey" target="_blank">Get free key →</a></label>
+      <input type="password" id="geminiKey" placeholder="AIza..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>⚡ Groq Key (fallback AI) <a href="https://console.groq.com" target="_blank">Get free key →</a></label>
+      <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🎥 Pexels Key (stock video) <a href="https://www.pexels.com/api/" target="_blank">Get free key →</a></label>
+      <input type="password" id="pexelsKey" placeholder="pexels key..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🎞 Pixabay Key (video fallback) <a href="https://pixabay.com/api/docs/" target="_blank">Get free key →</a></label>
+      <input type="password" id="pixabayKey" placeholder="pixabay key..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🔊 ElevenLabs Key (AI voice) <a href="https://elevenlabs.io" target="_blank">Get free key →</a></label>
+      <input type="password" id="elKey" placeholder="elevenlabs key..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🎙 Voice</label>
+      <select id="elVoice">
+        <option value="21m00Tcm4TlvDq8ikWAM">Rachel (Female, calm)</option>
+        <option value="TxGEqnHWrfWFTfGW9XjX">Josh (Male, deep)</option>
+        <option value="pNInz6obpgDQGcFmaJgB">Adam (Male, narration)</option>
+        <option value="ErXwobaYiN019PkySvjV">Antoni (Male, friendly)</option>
+        <option value="EXAVITQu4vr4xnSDxMaL">Sarah (Female, soft)</option>
+        <option value="TX3LPaxmHKxFdv7VOQHJ">Liam (Male, clear)</option>
+        <option value="IKne3meq5aSn9XLyUdCD">Charlie (Australian)</option>
+        <option value="ThT5KcBeYPX3keUQqHPh">Dorothy (British)</option>
+      </select>
+    </div>
+    <button class="modal-save" onclick="saveKeys()">💾 Save All Keys</button>
+  </div>
+</div>
 
 <div class="step-rail">
   <div class="sr-step" id="sr0"><div class="sr-dot" id="srd0">1</div><span class="sr-label">Script</span></div>
@@ -424,16 +462,16 @@ function playAudio(offset=0){
 }
 function stopAudio(){if(audioEl)audioEl.pause();}
 
-// Recording: route AudioBuffer → AudioContext → MediaStreamDestination
-// Returns the MediaStream containing the audio track for MediaRecorder
+// Recording capture via AudioContext → MediaStreamDestination
 function startAudioCapture(offset=0){
   if(!audioCtx||!audioBuffer||!audioDest)return null;
   if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}}
   if(audioCtx.state==='suspended')audioCtx.resume();
   audioCapSrc=audioCtx.createBufferSource();
   audioCapSrc.buffer=audioBuffer;
-  audioCapSrc.connect(audioDest);           // → capture stream
-  audioCapSrc.connect(audioCtx.destination); // → speakers
+  audioCapSrc.loop=true; // loop so audio never cuts out if shorter than video
+  audioCapSrc.connect(audioDest);
+  audioCapSrc.connect(audioCtx.destination);
   audioCapSrc.start(0,Math.min(offset,audioBuffer.duration-0.01));
   return audioDest.stream;
 }
@@ -475,15 +513,27 @@ window.onload=()=>{
   ['geminiKey','groqKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
     const v=localStorage.getItem(id);if(v&&document.getElementById(id))document.getElementById(id).value=v;
   });
+  updateKeyBadge();
   updateStepRail();
 };
 
+function openSettings(){document.getElementById('settingsModal').classList.remove('hidden');}
+function closeSettings(){document.getElementById('settingsModal').classList.add('hidden');}
 function saveKeys(){
-  const fields={geminiKey:'geminiKey',groqKey:'groqKey',pexelsKey:'pexelsKey',pixabayKey:'pixabayKey',elKey:'elKey'};
-  Object.entries(fields).forEach(([store,id])=>{const v=document.getElementById(id)?.value.trim();if(v)localStorage.setItem(store,v);});
+  ['geminiKey','groqKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
+    const v=document.getElementById(id)?.value.trim();if(v)localStorage.setItem(id,v);
+  });
   toast('Keys saved!','success');
+  closeSettings();
+  updateKeyBadge();
 }
 function getKey(id){return document.getElementById(id)?.value.trim()||localStorage.getItem(id)||'';}
+function updateKeyBadge(){
+  const keys=['geminiKey','groqKey','pexelsKey','elKey'];
+  const set=keys.filter(k=>getKey(k)).length;
+  const el=document.getElementById('keyStatusBadge');
+  if(el)el.textContent=set+'/'+keys.length+' keys set';
+}
 function setDur(s){dur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
 function setCapStyle(s){captionStyle=s;document.querySelectorAll('.cap-style-btn').forEach(b=>b.classList.toggle('active',b.dataset.style===s));}
 
@@ -1021,22 +1071,21 @@ async function renderVideo(){
   stopAudio();stopAudioCapture();
 
   const canvas=document.getElementById('previewCanvas');
-  const videoStream=canvas.captureStream(FPS);
+  const videoTracks=canvas.captureStream(FPS).getVideoTracks();
 
-  // Add audio track from AudioContext → MediaStreamDestination
-  // This keeps the audio stream alive for the full recording duration
+  // Build combined stream: video tracks + audio tracks in one MediaStream
+  // (adding tracks to an existing stream is unreliable in Chrome)
   const audioCapStream=startAudioCapture(0);
-  if(audioCapStream){
-    audioCapStream.getAudioTracks().forEach(t=>videoStream.addTrack(t));
-  }
+  const audioTracks=audioCapStream?audioCapStream.getAudioTracks():[];
+  const combinedStream=new MediaStream([...videoTracks,...audioTracks]);
 
   let rec;
   const mimes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
   rec=null;
   for(const m of mimes){
-    try{if(MediaRecorder.isTypeSupported(m)){rec=new MediaRecorder(videoStream,{mimeType:m,videoBitsPerSecond:9_000_000});break;}}catch(e){}
+    try{if(MediaRecorder.isTypeSupported(m)){rec=new MediaRecorder(combinedStream,{mimeType:m,videoBitsPerSecond:9_000_000});break;}}catch(e){}
   }
-  if(!rec)rec=new MediaRecorder(videoStream);
+  if(!rec)rec=new MediaRecorder(combinedStream);
 
   const chunks=[];
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
