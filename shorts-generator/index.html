@@ -720,13 +720,17 @@ async function stepFindFootage(){
   document.getElementById('approveBtn').disabled=true;
   sceneVids=[];sceneThumbUrls=[];
   const scenes=D.scenes||[];
+  if(bgMode==='pexels'&&!pk){
+    toast('No Pexels API key — enter it in the top nav and click Save. Using gradient backgrounds.','error');
+  }
+  let pexelsErr=null;
   for(let i=0;i<scenes.length;i++){
     document.getElementById('footageProgress').style.width=Math.round((i/scenes.length)*100)+'%';
     document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${scenes[i].pexels_search}"...`;
     let vid=null,thumb=null;
     if(bgMode==='pexels'&&pk){
       try{const r=await fetchPexelsVideo(scenes[i].pexels_search,pk);if(r){vid=r.vid;thumb=r.thumb;}}
-      catch(e){console.warn('Pexels:',e);}
+      catch(e){if(!pexelsErr){pexelsErr=e.message;toast('Pexels error: '+e.message,'error');}}
     }
     sceneVids.push(vid);sceneThumbUrls.push(thumb);
   }
@@ -756,7 +760,7 @@ function renderFootageTab(){
   let html='';
   (D.scenes||[]).forEach((s,i)=>{
     const thumb=sceneThumbUrls[i];
-    html+=`<div class="scene-card"><div class="scene-card-header"><div class="scene-num">${s.scene_number||i+1}</div><span class="scene-time">${s.start_time||''} → ${s.end_time||''}</span><span style="font-size:10px;color:${sceneVids[i]?'var(--grn)':'var(--muted)'}">${sceneVids[i]?'✓ Found':'Gradient'}</span></div>${thumb?`<img class="scene-thumb" src="${thumb}" alt="Scene ${i+1}">`:'<div class="scene-thumb-ph">No Pexels footage — using gradient</div>'}<div style="font-size:11px;color:var(--muted)">🔍 ${esc(s.pexels_search||'')}</div></div>`;
+    html+=`<div class="scene-card"><div class="scene-card-header"><div class="scene-num">${s.scene_number||i+1}</div><span class="scene-time">${s.start_time||''} → ${s.end_time||''}</span><span style="font-size:10px;color:${sceneVids[i]?'var(--grn)':'var(--muted)'}">${sceneVids[i]?'✓ Found':'Gradient'}</span></div>${thumb?`<img class="scene-thumb" crossorigin="anonymous" src="${thumb}" alt="Scene ${i+1}" onerror="this.style.display='none'">`:'<div class="scene-thumb-ph">No Pexels key — using gradient</div>'}<div style="font-size:11px;color:var(--muted)">🔍 ${esc(s.pexels_search||'')}</div></div>`;
   });
   document.getElementById('footage-scenes-list').innerHTML=html;
 }
