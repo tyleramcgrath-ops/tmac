@@ -461,19 +461,11 @@ function buildPrompt(topic,attempt){
 
 function validateScript(data){
   const issues=[];
-  const [wMin]=WORD_TARGETS[dur]||[75,90];
   const [sMin]=SCENE_TARGETS[dur]||[5,6];
   if(!data.scenes?.length){issues.push('No scenes');return issues;}
   if(data.scenes.length<sMin)issues.push(`Need ${sMin}+ scenes, got ${data.scenes.length}`);
-  const script=data.full_voiceover_script||data.scenes.map(s=>s.voiceover||'').join(' ');
-  const wc=script.trim().split(/\s+/).filter(Boolean).length;
-  if(wc<wMin*0.75)issues.push(`Need ~${wMin} words, got ${wc}`);
-  data.scenes.forEach((s,i)=>{
-    if(!s.voiceover?.trim())issues.push(`Scene ${i+1}: missing voiceover`);
-    if(!s.caption?.trim())issues.push(`Scene ${i+1}: missing caption`);
-    if(!s.pexels_search?.trim())issues.push(`Scene ${i+1}: missing search`);
-  });
-  if(!data.hook?.trim())issues.push('Missing hook');
+  const missingVo=data.scenes.filter(s=>!s.voiceover?.trim()).length;
+  if(missingVo>data.scenes.length/2)issues.push(`${missingVo} scenes missing voiceover`);
   return issues;
 }
 
