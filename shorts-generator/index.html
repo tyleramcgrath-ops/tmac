@@ -508,35 +508,29 @@ function rebuildCaptionTimeline(){
       const pw=wordTimestamps.slice(i,Math.min(i+ps,wordTimestamps.length));
       const text=pw.map(w=>w.text).join(' ');
       const startSec=pw[0].start;
-      // End = start of next phrase (or effectiveDur for last phrase)
       const endSec=i+ps<wordTimestamps.length?wordTimestamps[i+ps].start:effectiveDur;
       const highlights=pw.map(w=>w.text.toUpperCase().replace(/[^A-Z0-9]/g,'')).filter(w=>allHL.has(w));
-      timeline.push({text,highlights,startSec,endSec,
-        startF:Math.floor(startSec*FPS),endF:Math.ceil(endSec*FPS),popF:Math.floor(startSec*FPS)});
+      timeline.push({text,highlights,startSec,endSec});
     }
   }else{
-    // Fallback: proportional distribution using scene timing scaled to effectiveDur
-    const totalFrames=Math.ceil(effectiveDur*FPS);
-    const scenes=D.scenes||[];
-    scenes.forEach((s,si)=>{
+    // Fallback: proportional by scene timing scaled to effectiveDur
+    (D.scenes||[]).forEach((s,si)=>{
       const sStart=parseTime(s.start_time);
-      const sEnd=si<scenes.length-1?parseTime(scenes[si+1].start_time):dur;
-      const sceneStartF=Math.floor((sStart/dur)*totalFrames);
-      const sceneEndF=Math.min(totalFrames,Math.floor((sEnd/dur)*totalFrames));
+      const sEnd=si<(D.scenes||[]).length-1?parseTime(D.scenes[si+1].start_time):dur;
+      const tStart=(sStart/dur)*effectiveDur;
+      const tEnd=Math.min(effectiveDur,(sEnd/dur)*effectiveDur);
       const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
-      if(!words.length){
-        if(s.caption)timeline.push({text:s.caption,highlights:[],startF:sceneStartF,endF:sceneEndF,
-          startSec:sceneStartF/FPS,endSec:sceneEndF/FPS,popF:sceneStartF,sceneIdx:si});
-        return;
-      }
+      if(!words.length)return;
       const phrases=[];
       for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
-      const fpPer=(sceneEndF-sceneStartF)/phrases.length;
+      const tPer=(tEnd-tStart)/phrases.length;
       phrases.forEach((phrase,pi)=>{
-        const sf=sceneStartF+Math.floor(pi*fpPer);
-        const ef=pi===phrases.length-1?sceneEndF:sceneStartF+Math.floor((pi+1)*fpPer);
-        timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-          startF:sf,endF:ef,startSec:sf/FPS,endSec:ef/FPS,popF:sf,sceneIdx:si});
+        timeline.push({
+          text:phrase,
+          highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
+          startSec:tStart+pi*tPer,
+          endSec:pi===phrases.length-1?tEnd:tStart+(pi+1)*tPer
+        });
       });
     });
   }
@@ -893,9 +887,8 @@ function renderMetadataTab(){
 }
 
 async function generateFootageQueries(scenes){
-  // Dedicated AI call whose only job is: given voiceover text → best stock footage search query
   const lines=scenes.map((s,i)=>`${i+1}. ${(s.voiceover||s.visual_direction||'').slice(0,120)}`).join('\n');
-  const sys='You are a stock footage researcher. For each numbered scene, write exactly ONE Pexels search query: 2-4 specific concrete words naming the exact objects/people/places a viewer would SEE on screen. No abstract concepts. No verbs. Think: what physical things appear in this shot?\nReturn ONLY valid JSON: {"q":["query for scene 1","query for scene 2",...]}';
+  const sys='You are a stock footage researcher. For each scene number, give ONE Pexels search query: 2-4 specific concrete visual words (objects, places, actions that appear on screen). No abstract concepts. Example: "champagne bottles pouring nightclub", "luxury sports car driving", "rapper jewelry closeup", "private jet interior cabin". Return JSON: {"q":["query1","query2",...]}';
   const usr=lines;
   const msgs=[{role:'system',content:sys},{role:'user',content:usr}];
   for(const prov of [{name:'Gemini',fn:m=>callGemini(m)},{name:'Groq',fn:m=>callGroq(m)},{name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)}]){
@@ -925,13 +918,12 @@ async function stepFindFootage(){
   let shownErr=false;
   for(let i=0;i<scenes.length;i++){
     document.getElementById('footageProgress').style.width=Math.round((i/scenes.length)*100)+'%';
-    // Use AI-generated query first, fall back to script's pexels_search
-    const primaryQ=(aiQueries&&aiQueries[i])||scenes[i].pexels_search||scenes[i].visual_direction||'cinematic';
-    const scene={...scenes[i],pexels_search:primaryQ,_aiQuery:primaryQ};
-    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${primaryQ}"...`;
+    const aiQuery=(aiQueries&&aiQueries[i])||null;
+    const displayQ=aiQuery||scenes[i].pexels_search||'cinematic';
+    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${displayQ}"...`;
     let vid=null,thumb=null;
     try{
-      const r=await fetchBestFootage(scene,pxKey,pbKey);
+      const r=await fetchBestFootage(scenes[i],aiQuery,pxKey,pbKey);
       if(r){vid=r.vid;thumb=r.thumb;}
     }catch(e){if(!shownErr){shownErr=true;toast('Footage: '+e.message,'error');}}
     sceneVids.push(vid);sceneThumbUrls.push(thumb);
@@ -989,14 +981,12 @@ function extractKeywords(text){
     .slice(0,4).join(' ');
 }
 
-async function fetchBestFootage(scene,pxKey,pbKey){
-  const primary=scene.pexels_search||scene.visual_direction||'cinematic';
-  // Build query variants: exact → first 2 words → key nouns from voiceover → cinematic fallback
-  const queries=[primary];
-  // Shorter version of primary (first 2-3 words) often gets better results
-  const short=primary.split(' ').slice(0,3).join(' ');
-  if(short!==primary&&!queries.includes(short))queries.push(short);
-  if(scene.visual_direction&&scene.visual_direction!==primary){
+async function fetchBestFootage(scene,aiQuery,pxKey,pbKey){
+  // Build query variants in priority order: AI query → script pexels_search → visual_direction keywords → voiceover keywords
+  const queries=[];
+  if(aiQuery)queries.push(aiQuery);
+  if(scene.pexels_search&&!queries.includes(scene.pexels_search))queries.push(scene.pexels_search);
+  if(scene.visual_direction){
     const kw=extractKeywords(scene.visual_direction);
     if(kw&&!queries.includes(kw))queries.push(kw);
   }
@@ -1004,6 +994,7 @@ async function fetchBestFootage(scene,pxKey,pbKey){
     const kw=extractKeywords(scene.voiceover);
     if(kw&&!queries.includes(kw))queries.push(kw);
   }
+  if(!queries.length)queries.push('cinematic');
 
   for(const q of queries){
     const attempts=[];
@@ -1032,7 +1023,8 @@ async function stepBuildCaptions(){
   wfStep=5;updateStepRail();showCenter('captions');setStatus('working','Building captions...');
   document.getElementById('buildCaptionsBtn').disabled=true;
 
-  captionTimeline=buildCaptionTimeline(D.scenes,FPS,dur);
+  // Build initial timeline (proportional fallback — will be rebuilt after TTS loads)
+  rebuildCaptionTimeline();
 
   // Fetch TTS voiceover audio
   const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
@@ -1056,13 +1048,6 @@ async function stepBuildCaptions(){
   switchRightTab('captions');startPreview();
 }
 
-function buildCaptionTimeline(scenes,fps,duration){
-  // Delegate to rebuildCaptionTimeline which uses the same word-proportional
-  // approach. D and dur/FPS globals are already set at this point.
-  rebuildCaptionTimeline();
-  return captionTimeline;
-}
-
 function parseTime(t){
   if(!t)return 0;
   const p=String(t).split(':');
@@ -1074,7 +1059,7 @@ function renderCaptionsTab(){
   document.getElementById('captions-content').style.display='block';
   let html='';
   captionTimeline.forEach(c=>{
-    const s=(c.startF/FPS).toFixed(1),e=(c.endF/FPS).toFixed(1);
+    const s=(c.startSec).toFixed(1),e=(c.endSec).toFixed(1);
     const words=c.text.split(/\s+/);
     const hiWords=words.map(w=>{
       const clean=w.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
