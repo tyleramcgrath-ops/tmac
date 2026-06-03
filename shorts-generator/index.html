@@ -735,8 +735,9 @@ function buildPrompt(topic,attempt){
   // Compact system prompt — fewer tokens = lower rate limit impact
   const sys=`You are a viral YouTube Shorts writer. Return ONLY valid JSON for a ${dur}s short.
 Rules: ${sMin}-${sMax} scenes, full_voiceover_script must be ${wMin}-${wMax} words, no placeholders.
-Schema: {"title":"","hook":"","full_voiceover_script":"","cta":"","accentColor":"#FF4500","gradientColors":["#0a001a","#200040","#0d0028"],"keyWords":["","","","","",""],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:05","voiceover":"","caption":"","caption_highlights":[""],"pexels_search":"","visual_direction":"","transition":"cut","pacing":"fast"}],"youtube_metadata":{"title_options":["","",""],"description":"","hashtags":["#shorts"],"seo_keywords":[""]}}`;
-  const usr=`Topic: ${topic}\nTone: ${tone}\nFormat: ${fmt}\nDuration: ${dur}s\nScenes: ${sMin}-${sMax}\nWords: ${wMin}-${wMax}${attempt>1?'\n[RETRY: write ALL scenes fully, no placeholders]':''}`;
+FOOTAGE RULES: pexels_search must be 2-4 specific cinematic keywords that visually match what the voiceover is SAYING in that scene. Use concrete nouns and actions — NOT abstract concepts. Good examples: "rolls royce luxury car showroom", "private jet takeoff aerial", "rapper pouring champagne bottle", "stacks of cash money counting", "penthouse apartment skyline view", "lambo sports car street", "diamond jewelry close up", "credit card swipe luxury store". Bad examples: "success", "wealth", "man thinking", "lifestyle". If the topic involves celebrities/money/cars/fashion, use those exact things.
+Schema: {"title":"","hook":"","full_voiceover_script":"","cta":"","accentColor":"#FF4500","gradientColors":["#0a001a","#200040","#0d0028"],"keyWords":["","","","","",""],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:05","voiceover":"","caption":"","caption_highlights":[""],"pexels_search":"rolls royce luxury dealership","visual_direction":"","transition":"cut","pacing":"fast"}],"youtube_metadata":{"title_options":["","",""],"description":"","hashtags":["#shorts"],"seo_keywords":[""]}}`;
+  const usr=`Topic: ${topic}\nTone: ${tone}\nFormat: ${fmt}\nDuration: ${dur}s\nScenes: ${sMin}-${sMax}\nWords: ${wMin}-${wMax}\nIMPORTANT: Every pexels_search must show the EXACT thing being talked about in that scene — specific visual objects, actions, locations. No generic terms.${attempt>1?'\n[RETRY: write ALL scenes fully, no placeholders]':''}`;
   return {sys,usr};
 }
 
@@ -924,8 +925,11 @@ function extractKeywords(text){
 
 async function fetchBestFootage(scene,pxKey,pbKey){
   const primary=scene.pexels_search||scene.visual_direction||'cinematic';
-  // Build query variants: exact → key nouns from visual_direction → key nouns from voiceover
+  // Build query variants: exact → first 2 words → key nouns from voiceover → cinematic fallback
   const queries=[primary];
+  // Shorter version of primary (first 2-3 words) often gets better results
+  const short=primary.split(' ').slice(0,3).join(' ');
+  if(short!==primary&&!queries.includes(short))queries.push(short);
   if(scene.visual_direction&&scene.visual_direction!==primary){
     const kw=extractKeywords(scene.visual_direction);
     if(kw&&!queries.includes(kw))queries.push(kw);
@@ -936,7 +940,6 @@ async function fetchBestFootage(scene,pxKey,pbKey){
   }
 
   for(const q of queries){
-    // Try Pexels and Pixabay in parallel for this query
     const attempts=[];
     if(pxKey) attempts.push(fetchPexelsVideo(q,pxKey).catch(()=>null));
     if(pbKey) attempts.push(fetchPixabayVideo(q,pbKey).catch(()=>null));
