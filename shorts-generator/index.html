@@ -463,13 +463,16 @@ function playAudio(offset=0){
 function stopAudio(){if(audioEl)audioEl.pause();}
 
 // Recording capture via AudioContext → MediaStreamDestination
-function startAudioCapture(offset=0){
-  if(!audioCtx||!audioBuffer||!audioDest)return null;
+async function startAudioCapture(offset=0){
+  if(!audioCtx||!audioBuffer)return null;
   if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}}
-  if(audioCtx.state==='suspended')audioCtx.resume();
+  // Always resume the context — it may have been suspended by the browser
+  if(audioCtx.state!=='running')await audioCtx.resume();
+  // Fresh destination each time so we get a live, clean stream
+  audioDest=audioCtx.createMediaStreamDestination();
   audioCapSrc=audioCtx.createBufferSource();
   audioCapSrc.buffer=audioBuffer;
-  audioCapSrc.loop=true; // loop so audio never cuts out if shorter than video
+  audioCapSrc.loop=true;
   audioCapSrc.connect(audioDest);
   audioCapSrc.connect(audioCtx.destination);
   audioCapSrc.start(0,Math.min(offset,audioBuffer.duration-0.01));
@@ -1114,7 +1117,7 @@ async function renderVideo(){
 
   // Build combined stream: video tracks + audio tracks in one MediaStream
   // (adding tracks to an existing stream is unreliable in Chrome)
-  const audioCapStream=startAudioCapture(0);
+  const audioCapStream=await startAudioCapture(0);
   const audioTracks=audioCapStream?audioCapStream.getAudioTracks():[];
   const combinedStream=new MediaStream([...videoTracks,...audioTracks]);
 
@@ -1141,6 +1144,8 @@ async function renderVideo(){
   await new Promise(resolve=>{
     function fr(){
       if(f>=totalF){rec.stop();stopAudioCapture();resolve();return;}
+      // Keep AudioContext running — browsers may suspend it during long operations
+      if(audioCtx&&audioCtx.state!=='running')audioCtx.resume();
       drawFrame(f);f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
