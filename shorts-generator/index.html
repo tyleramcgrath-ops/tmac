@@ -397,7 +397,7 @@ const FPS=30,W=540,H=960;
 const TAB_MIN={script:0,footage:4,captions:6,metadata:2,export:6};
 
 let wfStep=0,D=null,sceneVids=[],sceneThumbUrls=[],captionTimeline=[];
-let captionStyle='hormozi',bgMode='pexels',dur=30;
+let captionStyle='hormozi',bgMode='pexels',dur=30,effectiveDur=30;
 let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastTS=0;
 
 // ── Audio ─────────────────────────────────────────────────────────────────────
@@ -450,13 +450,15 @@ async function loadAudioBlob(blob){
   audioBuffer=await audioCtx.decodeAudioData(arrayBuf);
   audioDest=audioCtx.createMediaStreamDestination();
 
+  // Drive everything from actual TTS duration so captions, video, and audio all match
+  effectiveDur=audioBuffer.duration;
   audioReady=true;
   rebuildCaptionTimeline();
 }
 
 function rebuildCaptionTimeline(){
   if(!D)return;
-  const totalFrames=dur*FPS;
+  const totalFrames=effectiveDur*FPS;
   const scenes=D.scenes||[];
   const ps=dur<=15?3:4;
   const allWords=scenes.flatMap(s=>(s.voiceover||'').split(/\s+/).filter(Boolean));
@@ -606,7 +608,7 @@ function updateKeyBadge(){
   const el=document.getElementById('keyStatusBadge');
   if(el)el.textContent=set+'/'+keys.length+' keys set';
 }
-function setDur(s){dur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
+function setDur(s){dur=s;effectiveDur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
 function setCapStyle(s){captionStyle=s;document.querySelectorAll('.cap-style-btn').forEach(b=>b.classList.toggle('active',b.dataset.style===s));}
 
 function updateStepRail(){
@@ -1061,7 +1063,7 @@ function previewLoop(ts=0){
     lastTS=ts;
     drawFrame(previewFrame);
     previewFrame++;
-    if(previewFrame>=dur*FPS)previewFrame=0;
+    if(previewFrame>=effectiveDur*FPS)previewFrame=0;
   }
   previewRAF=requestAnimationFrame(previewLoop);
 }
@@ -1199,7 +1201,7 @@ async function renderVideo(){
   await new Promise(r=>setTimeout(r,100));
   rec.start(100);
 
-  let f=0;const totalF=dur*FPS;
+  let f=0;const totalF=Math.ceil(effectiveDur*FPS);
   const renderStart=performance.now();
   await new Promise(resolve=>{
     function fr(){
@@ -1243,7 +1245,7 @@ function playVoiceover(){
 function resetAll(){
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
   stopAudio();stopAudioCapture();stopSpeech();
-  audioReady=false;audioBuffer=null;audioDest=null;
+  audioReady=false;audioBuffer=null;audioDest=null;effectiveDur=dur;
   if(audioBlobUrl){URL.revokeObjectURL(audioBlobUrl);audioBlobUrl=null;}audioEl=null;
   wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
   updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
