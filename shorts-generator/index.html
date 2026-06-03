@@ -1069,7 +1069,7 @@ function renderExportTab(){
 
 // ── Preview ──────────────────────────────────────────────────────────────────
 function startPreview(){
-  previewFrame=0;previewPlaying=true;
+  previewFrame=0;previewPlaying=true;_lastCapText='';_lastCapFrame=0;
   if(previewRAF)cancelAnimationFrame(previewRAF);
   previewRAF=requestAnimationFrame(previewLoop);
   if(audioReady) playAudio(0);
@@ -1161,11 +1161,18 @@ function drawBg(ctx,f,si){
   }
 }
 
+let _lastCapText='',_lastCapFrame=0;
 function drawCaption(ctx,W,H,text,style,accent,highlights,popF,f){
   if(!text)return;
+  // Debounce: ignore single-frame flips at phrase boundaries
+  if(text!==_lastCapText){
+    if(f===_lastCapFrame){return;} // same frame as last change — skip this frame
+    _lastCapText=text;_lastCapFrame=f;
+  }
   const capY=H*0.72;
   const ease=t=>t<0.5?2*t*t:-1+(4-2*t)*t;
-  const pop=Math.min(1,(f-popF)/5);
+  // Clamp pop to [0,1] — negative values (frame behind popF) would inflate scale
+  const pop=Math.min(1,Math.max(0,(f-popF)/5));
   const scale=1+(1-ease(pop))*0.13;
   const defs={
     hormozi:{fs:54,font:'Impact,Arial Black,sans-serif',color:'#fff',strokeColor:'#000',strokeW:12,hlColor:accent,shadow:true,pill:false},
