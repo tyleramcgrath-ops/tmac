@@ -139,6 +139,8 @@ nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--borde
     <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
     <label style="margin-left:6px">Pexels Key</label>
     <input type="password" id="pexelsKey" placeholder="pexels..." autocomplete="off">
+    <label style="margin-left:6px">Pixabay Key <a href="https://pixabay.com/api/docs/" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
+    <input type="password" id="pixabayKey" placeholder="pixabay..." autocomplete="off">
     <label style="margin-left:6px">ElevenLabs Key <a href="https://elevenlabs.io" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
     <input type="password" id="elKey" placeholder="elevenlabs key..." autocomplete="off">
     <label style="margin-left:6px">Voice</label>
@@ -365,8 +367,8 @@ let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastT
 let audioEl=null,audioBlobUrl=null,audioReady=false;
 let audioCtx=null,audioBuffer=null,audioDest=null,audioCapSrc=null;
 
-function getElKey(){return document.getElementById('elKey').value.trim()||localStorage.getItem('elKey')||'';}
-function getVrKey(){return document.getElementById('voicerssKey')?.value.trim()||localStorage.getItem('voicerssKey')||'';}
+function getElKey(){return getKey('elKey');}
+function getVrKey(){return getKey('voicerssKey');}
 
 async function fetchTTSAudio(text){
   const elKey=getElKey();
@@ -470,28 +472,18 @@ function speakPreview(text){
 function stopSpeech(){window.speechSynthesis?.cancel();}
 
 window.onload=()=>{
-  const gem=localStorage.getItem('geminiKey')||'';
-  const gk=localStorage.getItem('groqKey')||'';
-  const pk=localStorage.getItem('pexelsKey')||'';
-  const ek=localStorage.getItem('elKey')||'';
-  if(gem)document.getElementById('geminiKey').value=gem;
-  if(gk)document.getElementById('groqKey').value=gk;
-  if(pk)document.getElementById('pexelsKey').value=pk;
-  if(ek)document.getElementById('elKey').value=ek;
+  ['geminiKey','groqKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
+    const v=localStorage.getItem(id);if(v&&document.getElementById(id))document.getElementById(id).value=v;
+  });
   updateStepRail();
 };
 
 function saveKeys(){
-  const gem=document.getElementById('geminiKey').value.trim();
-  const gk=document.getElementById('groqKey').value.trim();
-  const pk=document.getElementById('pexelsKey').value.trim();
-  const ek=document.getElementById('elKey').value.trim();
-  if(gem)localStorage.setItem('geminiKey',gem);
-  if(gk)localStorage.setItem('groqKey',gk);
-  if(pk)localStorage.setItem('pexelsKey',pk);
-  if(ek)localStorage.setItem('elKey',ek);
+  const fields={geminiKey:'geminiKey',groqKey:'groqKey',pexelsKey:'pexelsKey',pixabayKey:'pixabayKey',elKey:'elKey'};
+  Object.entries(fields).forEach(([store,id])=>{const v=document.getElementById(id)?.value.trim();if(v)localStorage.setItem(store,v);});
   toast('Keys saved!','success');
 }
+function getKey(id){return document.getElementById(id)?.value.trim()||localStorage.getItem(id)||'';}
 function setDur(s){dur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
 function setCapStyle(s){captionStyle=s;document.querySelectorAll('.cap-style-btn').forEach(b=>b.classList.toggle('active',b.dataset.style===s));}
 
@@ -734,23 +726,29 @@ function renderMetadataTab(){
 
 async function stepFindFootage(){
   if(!D||wfStep<2){toast('Generate script first','error');return;}
-  const pk=document.getElementById('pexelsKey').value.trim()||localStorage.getItem('pexelsKey')||'';
   bgMode=document.getElementById('bgModeSelect').value;
   wfStep=3;updateStepRail();showCenter('footage');setStatus('working','Finding footage...');
   document.getElementById('approveBtn').disabled=true;
   sceneVids=[];sceneThumbUrls=[];
   const scenes=D.scenes||[];
-  if(bgMode==='pexels'&&!pk){
-    toast('No Pexels API key — enter it in the top nav and click Save. Using gradient backgrounds.','error');
-  }
-  let pexelsErr=null;
+  const pxKey=getKey('pexelsKey');
+  const pbKey=getKey('pixabayKey');
+  if(!pxKey&&!pbKey) toast('No Pexels or Pixabay key — using gradient backgrounds. Add a key in the top nav.','error');
+  let shownErr=false;
   for(let i=0;i<scenes.length;i++){
     document.getElementById('footageProgress').style.width=Math.round((i/scenes.length)*100)+'%';
-    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${scenes[i].pexels_search}"...`;
+    const q=scenes[i].pexels_search||scenes[i].visual_direction||'cinematic';
+    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${q}"...`;
     let vid=null,thumb=null;
-    if(bgMode==='pexels'&&pk){
-      try{const r=await fetchPexelsVideo(scenes[i].pexels_search,pk);if(r){vid=r.vid;thumb=r.thumb;}}
-      catch(e){if(!pexelsErr){pexelsErr=e.message;toast('Pexels error: '+e.message,'error');}}
+    // Try Pexels first
+    if(pxKey){
+      try{const r=await fetchPexelsVideo(q,pxKey);if(r){vid=r.vid;thumb=r.thumb;}}
+      catch(e){if(!shownErr){shownErr=true;toast('Pexels: '+e.message+' — trying Pixabay','error');}}
+    }
+    // Fall back to Pixabay
+    if(!vid&&pbKey){
+      try{const r=await fetchPixabayVideo(q,pbKey);if(r){vid=r.vid;thumb=r.thumb;}}
+      catch(e){if(!shownErr){shownErr=true;toast('Pixabay: '+e.message,'error');}}
     }
     sceneVids.push(vid);sceneThumbUrls.push(thumb);
   }
@@ -762,7 +760,7 @@ async function stepFindFootage(){
 
 async function fetchPexelsVideo(query,key){
   const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=5&orientation=portrait`,{headers:{Authorization:key}});
-  if(!r.ok)throw new Error('Pexels '+r.status);
+  if(!r.ok)throw new Error('Pexels '+r.status+(r.status===403?' (invalid key?)':''));
   const data=await r.json();
   const vids=data.videos||[];if(!vids.length)return null;
   const best=vids[0];
@@ -772,6 +770,20 @@ async function fetchPexelsVideo(query,key){
   el.src=file.link;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
   el.play().catch(()=>{});
   return{vid:el,thumb:best.image||null};
+}
+
+async function fetchPixabayVideo(query,key){
+  const r=await fetch(`https://pixabay.com/api/videos/?key=${key}&q=${encodeURIComponent(query)}&orientation=vertical&per_page=5&safesearch=true`);
+  if(!r.ok)throw new Error('Pixabay '+r.status+(r.status===400?' (invalid key?)':''));
+  const data=await r.json();
+  const hits=data.hits||[];if(!hits.length)return null;
+  const best=hits[0];
+  const file=best.videos?.medium||best.videos?.small||best.videos?.large;
+  if(!file?.url)return null;
+  const el=document.createElement('video');
+  el.src=file.url;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
+  el.play().catch(()=>{});
+  return{vid:el,thumb:best.userImageURL||best.previewURL||null};
 }
 
 function renderFootageTab(){
