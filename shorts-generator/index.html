@@ -346,6 +346,38 @@ let wfStep=0,D=null,sceneVids=[],sceneThumbUrls=[],captionTimeline=[];
 let captionStyle='hormozi',bgMode='pexels',dur=30;
 let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastTS=0;
 
+// ── Audio (Web Audio API + TTS) ───────────────────────────────────────────────
+let audioCtx=null,audioBuffer=null,audioSource=null,audioDestNode=null;
+
+async function fetchTTSAudio(text){
+  // StreamElements TTS — returns MP3, CORS-friendly, free, no key needed
+  const voice='Brian';
+  const url=`https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=${encodeURIComponent(text)}`;
+  const r=await fetch(url);
+  if(!r.ok)throw new Error('TTS fetch failed: '+r.status);
+  const ab=await r.arrayBuffer();
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  audioBuffer=await audioCtx.decodeAudioData(ab);
+  // create a persistent MediaStreamDestination so we can tap it for recording
+  audioDestNode=audioCtx.createMediaStreamDestination();
+}
+
+function playAudio(offset=0){
+  if(!audioCtx||!audioBuffer)return;
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  if(audioSource){try{audioSource.stop();}catch(e){}}
+  audioSource=audioCtx.createBufferSource();
+  audioSource.buffer=audioBuffer;
+  audioSource.connect(audioCtx.destination);   // speakers
+  audioSource.connect(audioDestNode);           // capture stream for recording
+  audioSource.start(0,offset);
+}
+
+function stopAudio(){
+  if(audioSource){try{audioSource.stop();}catch(e){}}
+  audioSource=null;
+}
+
 window.onload=()=>{
   const gk=localStorage.getItem('groqKey')||'';
   const pk=localStorage.getItem('pexelsKey')||'';
@@ -610,8 +642,20 @@ async function stepBuildCaptions(){
   if(!D||wfStep<4){toast('Find footage first','error');return;}
   wfStep=5;updateStepRail();showCenter('captions');setStatus('working','Building captions...');
   document.getElementById('buildCaptionsBtn').disabled=true;
-  await new Promise(r=>setTimeout(r,300));
+
   captionTimeline=buildCaptionTimeline(D.scenes,FPS,dur);
+
+  // Fetch TTS voiceover audio
+  const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
+  document.getElementById('cs-captions').querySelector('.c-status-sub').textContent='Fetching voiceover audio...';
+  try{
+    await fetchTTSAudio(script);
+    toast('Voiceover loaded ✓','success');
+  }catch(e){
+    console.warn('TTS failed:',e);
+    toast('TTS failed — preview will be silent. Export tab has voiceover button.','info');
+  }
+
   wfStep=6;updateStepRail();unlockTabs();renderCaptionsTab();renderExportTab();
   setStatus('done','Preview ready');showCenter('preview');
   switchRightTab('captions');startPreview();
@@ -664,35 +708,28 @@ function renderExportTab(){
 }
 
 // ── Preview ──────────────────────────────────────────────────────────────────
-function getVoScript(){return D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');}
-
-function startVoiceover(){
-  if(!D||!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  const utt=new SpeechSynthesisUtterance(getVoScript());
-  utt.rate=1.15;utt.pitch=1.0;
-  window.speechSynthesis.speak(utt);
-}
-function stopVoiceover(){window.speechSynthesis?.cancel();}
-
 function startPreview(){
   previewFrame=0;previewPlaying=true;
   if(previewRAF)cancelAnimationFrame(previewRAF);
   previewRAF=requestAnimationFrame(previewLoop);
-  startVoiceover();
+  playAudio(0);
 }
 function togglePreviewPlay(){
   previewPlaying=!previewPlaying;
   document.getElementById('playPauseBtn').textContent=previewPlaying?'⏸ Pause':'▶ Play';
-  if(previewPlaying){previewRAF=requestAnimationFrame(previewLoop);startVoiceover();}
-  else stopVoiceover();
+  if(previewPlaying){
+    previewRAF=requestAnimationFrame(previewLoop);
+    playAudio(previewFrame/FPS); // resume from current position
+  } else {
+    stopAudio();
+  }
 }
 function restartPreview(){
   previewFrame=0;previewPlaying=true;
   document.getElementById('playPauseBtn').textContent='⏸ Pause';
   if(previewRAF)cancelAnimationFrame(previewRAF);
   previewRAF=requestAnimationFrame(previewLoop);
-  startVoiceover();
+  playAudio(0);
 }
 
 function previewLoop(ts=0){
@@ -807,21 +844,42 @@ function roundRect(ctx,x,y,w,h,r){
 // ── Export ───────────────────────────────────────────────────────────────────
 async function renderVideo(){
   if(wfStep<6){toast('Complete all steps first','error');return;}
+
+  // Stop live preview so canvas is free for recording
+  if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
+  stopAudio();
+
   const canvas=document.getElementById('previewCanvas');
-  const stream=canvas.captureStream(FPS);
+  const videoStream=canvas.captureStream(FPS);
+
+  // Add audio track from the AudioContext destination node if available
+  if(audioDestNode){
+    audioDestNode.stream.getAudioTracks().forEach(t=>videoStream.addTrack(t));
+  }
+
   let rec;
-  try{rec=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9',videoBitsPerSecond:9_000_000});}
-  catch(e){rec=new MediaRecorder(stream,{videoBitsPerSecond:9_000_000});}
+  try{
+    rec=new MediaRecorder(videoStream,{mimeType:'video/webm;codecs=vp9,opus',videoBitsPerSecond:9_000_000});
+  }catch(e){
+    try{rec=new MediaRecorder(videoStream,{mimeType:'video/webm',videoBitsPerSecond:9_000_000});}
+    catch(e2){rec=new MediaRecorder(videoStream);}
+  }
+
   const chunks=[];
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
   document.getElementById('exportBtn').disabled=true;
   document.getElementById('renderProgress').style.display='block';
   document.getElementById('renderFill').style.width='0%';
-  wfStep=7;updateStepRail();rec.start(100);
+  wfStep=7;updateStepRail();
+  rec.start(100);
+
+  // Play audio from beginning in sync with frame rendering
+  playAudio(0);
+
   let f=0;const totalF=dur*FPS;
   await new Promise(resolve=>{
     function fr(){
-      if(f>=totalF){rec.stop();resolve();return;}
+      if(f>=totalF){rec.stop();stopAudio();resolve();return;}
       drawFrame(f);f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
@@ -830,6 +888,7 @@ async function renderVideo(){
     }
     fr();
   });
+
   rec.onstop=()=>{
     const blob=new Blob(chunks,{type:'video/webm'});
     const url=URL.createObjectURL(blob);
@@ -838,14 +897,18 @@ async function renderVideo(){
     document.getElementById('renderLabel').textContent='Export complete! ✓';
     wfStep=8;updateStepRail();setStatus('done','Exported!');toast('Video exported!','success');
     document.getElementById('downloadLinks').innerHTML=`<a href="${url}" download="shorts_${Date.now()}.webm" style="font-size:12px;color:var(--grn)">⬇ Download again</a>`;
+    // Restart preview after export
+    previewFrame=0;previewPlaying=true;
+    previewRAF=requestAnimationFrame(previewLoop);
+    playAudio(0);
   };
 }
 
-function playVoiceover(){if(!D)return;startVoiceover();}
+function playVoiceover(){if(!audioBuffer){toast('No voiceover loaded — build captions first','info');return;}playAudio(0);}
 
 function resetAll(){
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
-  stopVoiceover();
+  stopAudio();audioBuffer=null;audioSource=null;
   wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
   updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
   document.getElementById('approveBtn').disabled=true;
