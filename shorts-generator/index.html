@@ -554,17 +554,30 @@ async function callGroq(msgs){
 }
 
 async function callFallback(sys,usr){
-  // Try Pollinations (openai model, POST)
-  const r=await fetch('https://text.pollinations.ai/',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'openai',jsonMode:true,messages:[{role:'system',content:sys},{role:'user',content:usr}],seed:Math.floor(Math.random()*9999)})
-  });
-  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('Pollinations '+r.status+': '+t.slice(0,120));}
-  const txt=await r.text();
-  const j=txt.indexOf('{'),e=txt.lastIndexOf('}');
-  if(j<0||e<0)throw new Error('Pollinations returned no JSON (response: '+txt.slice(0,80)+')');
-  return JSON.parse(txt.slice(j,e+1));
+  const models=['openai','mistral','openai-large'];
+  let lastErr='';
+  for(const model of models){
+    try{
+      // Small random delay to avoid instant re-queue
+      await new Promise(r=>setTimeout(r,1200+Math.random()*1500));
+      const r=await fetch('https://text.pollinations.ai/',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model,jsonMode:true,messages:[{role:'system',content:sys},{role:'user',content:usr}],seed:Math.floor(Math.random()*99999)})
+      });
+      if(!r.ok){
+        const t=await r.text().catch(()=>'');
+        lastErr='Pollinations/'+model+' '+r.status;
+        if(r.status===429){continue;} // try next model
+        throw new Error(lastErr+': '+t.slice(0,100));
+      }
+      const txt=await r.text();
+      const j=txt.indexOf('{'),e=txt.lastIndexOf('}');
+      if(j<0||e<0){lastErr='No JSON from '+model;continue;}
+      return JSON.parse(txt.slice(j,e+1));
+    }catch(e){lastErr=e.message;if(!e.message.includes('429'))throw e;}
+  }
+  throw new Error('All fallback models rate-limited. Wait 30s or get a free Groq key at console.groq.com');
 }
 
 function buildPrompt(topic,attempt){
