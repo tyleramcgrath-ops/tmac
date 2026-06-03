@@ -455,10 +455,10 @@ async function loadAudioBlob(blob){
 }
 
 function rebuildCaptionTimeline(){
-  if(!D||!audioBuffer)return;
-  const audioDur=audioBuffer.duration;
+  if(!D)return;
+  const totalFrames=dur*FPS;
   const scenes=D.scenes||[];
-  const ps=audioDur<=15?3:4;
+  const ps=dur<=15?3:4;
   const allWords=scenes.flatMap(s=>(s.voiceover||'').split(/\s+/).filter(Boolean));
   const totalWords=allWords.length||1;
   const timeline=[];
@@ -466,20 +466,20 @@ function rebuildCaptionTimeline(){
   scenes.forEach((s,si)=>{
     const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
     if(!words.length){wordIdx++;return;}
-    const sceneStartT=(wordIdx/totalWords)*audioDur;
-    const sceneEndT=((wordIdx+words.length)/totalWords)*audioDur;
+    // Map proportionally across the full video frame range so captions
+    // always cover the whole video regardless of TTS audio duration
+    const sceneStartF=Math.floor((wordIdx/totalWords)*totalFrames);
+    const sceneEndF=Math.floor(((wordIdx+words.length)/totalWords)*totalFrames);
     const phrases=[];
     for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
-    const tPerPhrase=(sceneEndT-sceneStartT)/phrases.length;
+    const fpPer=(sceneEndF-sceneStartF)/phrases.length;
     phrases.forEach((phrase,pi)=>{
-      const st=sceneStartT+pi*tPerPhrase;
-      const et=pi===phrases.length-1?sceneEndT:sceneStartT+(pi+1)*tPerPhrase;
+      const sf=sceneStartF+Math.floor(pi*fpPer);
+      const ef=pi===phrases.length-1?sceneEndF:sceneStartF+Math.floor((pi+1)*fpPer);
       timeline.push({
         text:phrase,
         highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-        startT:st, endT:et,
-        startF:Math.floor(st*FPS), endF:Math.floor(et*FPS),
-        popF:Math.floor(st*FPS),
+        startF:sf, endF:ef, popF:sf,
         sceneIdx:si
       });
     });
@@ -988,23 +988,10 @@ async function stepBuildCaptions(){
 }
 
 function buildCaptionTimeline(scenes,fps,duration){
-  const ps=duration<=15?3:4;
-  const timeline=[];
-  (scenes||[]).forEach((s,si)=>{
-    const startF=Math.floor(parseTime(s.start_time)*fps);
-    const nextS=si<scenes.length-1?Math.floor(parseTime(scenes[si+1].start_time)*fps):Math.floor(duration*fps);
-    const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
-    const phrases=[];
-    for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
-    if(!phrases.length)phrases.push(s.caption||'');
-    const fpPer=(nextS-startF)/phrases.length;
-    phrases.forEach((phrase,pi)=>{
-      timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-        startF:startF+Math.floor(pi*fpPer),endF:pi===phrases.length-1?nextS:startF+Math.floor((pi+1)*fpPer),
-        popF:startF+Math.floor(pi*fpPer),sceneIdx:si});
-    });
-  });
-  return timeline;
+  // Delegate to rebuildCaptionTimeline which uses the same word-proportional
+  // approach. D and dur/FPS globals are already set at this point.
+  rebuildCaptionTimeline();
+  return captionTimeline;
 }
 
 function parseTime(t){
@@ -1089,10 +1076,8 @@ function drawFrame(f){
   const g=ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'rgba(0,0,0,0.5)');g.addColorStop(0.4,'rgba(0,0,0,0.08)');g.addColorStop(1,'rgba(0,0,0,0.6)');
   ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  // caption
-  let capT=f/FPS;
-  if(audioEl&&audioReady&&audioEl.duration>0&&!audioEl.paused)capT=audioEl.currentTime;
-  const cap=captionTimeline.find(c=>capT>=c.startT&&capT<c.endT)||captionTimeline.find(c=>f>=c.startF&&f<c.endF);
+  // caption — always frame-based so display is stable and never flips
+  const cap=captionTimeline.find(c=>f>=c.startF&&f<c.endF);
   if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.popF,f);
   // watermark
   ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#fff';ctx.font='500 11px Inter,sans-serif';ctx.fillText('Viral Shorts Studio',16,H-14);ctx.restore();
