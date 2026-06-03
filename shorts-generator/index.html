@@ -1,1354 +1,850 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Viral Shorts Studio — AI YouTube Shorts Generator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viral Shorts Studio</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
   --acc:#FF4500;--acc2:#ff6b35;--ind:#6366f1;--pur:#a855f7;--grn:#4ade80;
-  --bg:#07070f;--bg2:#0c0c1a;--bg3:#101024;
-  --glass:rgba(255,255,255,0.035);--glass2:rgba(255,255,255,0.065);
-  --border:rgba(255,255,255,0.068);--border2:rgba(255,255,255,0.13);
-  --text:#f0f0fa;--muted:rgba(255,255,255,0.38);--dim:rgba(255,255,255,0.18);
-  --font:-apple-system,'Inter','SF Pro Display',sans-serif;
+  --bg:#07070f;--bg2:#0c0c1a;--bg3:#111120;
+  --glass:rgba(255,255,255,0.035);--border:rgba(255,255,255,0.07);
+  --text:#f0f0fa;--muted:rgba(255,255,255,0.4);--dim:rgba(255,255,255,0.18);
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow:hidden}
-body{display:flex;flex-direction:column;background:radial-gradient(ellipse 180% 50% at 50% -10%,rgba(99,102,241,0.07) 0%,transparent 55%) var(--bg)}
-
-/* ── NAV ──────────────────────────────────────────────── */
-nav{height:48px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--border);background:rgba(7,7,15,0.94);backdrop-filter:blur(24px);z-index:200}
-.brand{display:flex;align-items:center;gap:9px}
-.brand-icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--acc),#f59e0b);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.brand-name{font-size:13px;font-weight:800;letter-spacing:-.02em}
-.brand-name em{background:linear-gradient(90deg,var(--acc),#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal}
-.nav-mid{display:flex;align-items:center;gap:6px}
-.status-chip{display:flex;align-items:center;gap:4px;font-size:9px;font-weight:600;padding:3px 8px;border-radius:20px;transition:all .2s}
-.status-chip.on{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);color:var(--grn)}
-.status-chip.off{background:var(--glass);border:1px solid var(--border);color:var(--dim)}
-.status-chip::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.status-chip.on::before{background:var(--grn);box-shadow:0 0 6px var(--grn)}
-.status-chip.off::before{background:rgba(255,255,255,.2)}
-.nav-r{display:flex;align-items:center;gap:10px}
-.nav-link{font-size:10px;color:var(--muted);text-decoration:none;transition:color .15s}
-.nav-link:hover{color:var(--text)}
-.badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,69,0,.1);border:1px solid rgba(255,69,0,.22);color:var(--acc);letter-spacing:.04em;text-transform:uppercase}
-
-/* ── 3-COLUMN STUDIO LAYOUT ───────────────────────────── */
-.studio{display:grid;grid-template-columns:268px 1fr 365px;height:calc(100vh - 48px);overflow:hidden}
-
-/* ── LEFT PANEL ──────────────────────────────────────── */
-.left{border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;background:var(--bg2)}
-.left::-webkit-scrollbar{width:3px}.left::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
-.lsec{padding:13px 13px 0}
-.lsec-last{padding:13px}
-.ldiv{height:1px;background:var(--border);margin:11px 0 0}
-.lhead{font-size:8.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;display:flex;align-items:center;gap:7px}
-.lhead::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* inputs */
-textarea.inp,input.inp{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:8px;padding:9px 11px;color:#fff;font-size:12px;font-family:var(--font);line-height:1.6;resize:none;outline:none;transition:border-color .18s,background .18s}
-textarea.inp:focus,input.inp:focus{border-color:var(--acc);background:rgba(255,69,0,.03)}
-textarea.inp::placeholder,input.inp::placeholder{color:var(--dim)}
-.inp-row{display:flex;gap:5px}
-.inp-sm{flex:1;background:var(--glass);border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:#fff;font-size:11px;outline:none;font-family:var(--font);transition:border-color .15s}
-.inp-sm:focus{border-color:var(--ind)}
-
-/* connection cards */
-.conn{border-radius:9px;padding:10px 12px;margin-bottom:0}
-.conn.ind{background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15)}
-.conn.grn{background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.14)}
-.conn-t{font-size:10px;font-weight:700;margin-bottom:2px;display:flex;align-items:center;justify-content:space-between}
-.conn-s{font-size:9px;color:var(--muted);margin-bottom:7px;line-height:1.5}
-.conn-s a{color:#818cf8;text-decoration:none}
-.conn-btn{padding:5px 11px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;font-family:var(--font);border:1px solid rgba(99,102,241,.4);background:rgba(99,102,241,.1);color:#818cf8;transition:all .15s}
-.conn-btn.g{border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.08);color:var(--grn)}
-.conn-clear{font-size:9px;color:var(--dim);background:none;border:none;cursor:pointer;font-family:var(--font)}
-.conn-clear:hover{color:var(--text)}
-
-/* pill selectors */
-.pill-grid{display:flex;flex-wrap:wrap;gap:4px}
-.pill{padding:5px 10px;border-radius:20px;border:1px solid var(--border);background:var(--glass);color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;transition:all .14s;font-family:var(--font)}
-.pill.active{border-color:var(--acc);background:rgba(255,69,0,.1);color:var(--acc)}
-.pill:hover:not(.active){border-color:var(--border2);color:var(--text)}
-.tone-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.tone{padding:7px 8px;border-radius:7px;border:1px solid var(--border);background:var(--glass);color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;transition:all .14s;font-family:var(--font);text-align:left}
-.tone.active{border-color:var(--acc);background:rgba(255,69,0,.09);color:var(--acc)}
-.dur-row{display:flex;gap:4px}
-.dur{flex:1;padding:8px 0;border-radius:7px;border:1px solid var(--border);background:var(--glass);color:var(--dim);font-size:13px;font-weight:800;cursor:pointer;transition:all .14s;font-family:var(--font);text-align:center}
-.dur.active{border-color:var(--acc);background:rgba(255,69,0,.1);color:var(--acc)}
-
-/* accordion */
-.accord-hd{width:100%;padding:8px 11px;background:var(--glass);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:space-between;transition:all .15s}
-.accord-hd:hover{color:var(--text);border-color:var(--border2)}
-.accord-arrow{display:inline-block;transition:transform .2s;font-size:8px}
-.accord-body{display:none;padding:10px 0 0;flex-direction:column;gap:8px}
-.accord-body.open{display:flex}
-.adv-label{font-size:9px;font-weight:600;color:var(--dim);margin-bottom:4px}
-.adv-grid{display:flex;flex-wrap:wrap;gap:3px}
-.adv-pill{padding:4px 9px;border-radius:20px;border:1px solid var(--border);background:var(--glass);color:var(--muted);font-size:9px;font-weight:600;cursor:pointer;transition:all .14s;font-family:var(--font)}
-.adv-pill.active{border-color:var(--ind);background:rgba(99,102,241,.1);color:#818cf8}
-
-/* generate */
-.gen-btn{width:100%;padding:13px 0;border-radius:9px;border:none;background:linear-gradient(135deg,var(--acc),#f59e0b);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--font);letter-spacing:-.01em;box-shadow:0 4px 22px rgba(255,69,0,.25);transition:all .2s}
-.gen-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 7px 30px rgba(255,69,0,.38)}
-.gen-btn:active:not(:disabled){transform:translateY(0)}
-.gen-btn:disabled{background:rgba(255,69,0,.14);color:rgba(255,255,255,.2);cursor:not-allowed;transform:none;box-shadow:none}
-.spinner{width:12px;height:12px;border-radius:50%;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;animation:spin .55s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+button{cursor:pointer;border:none;outline:none;font-family:inherit}
+input,select,textarea{font-family:inherit;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 12px;width:100%;font-size:13px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(255,69,0,0.5)}
+textarea{resize:vertical;min-height:80px}
+select option{background:var(--bg2)}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;flex-shrink:0;backdrop-filter:blur(10px);z-index:100}
+.nav-logo{font-size:15px;font-weight:800;background:linear-gradient(135deg,var(--acc),var(--pur));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.3px}
+.nav-badge{font-size:10px;background:var(--acc);color:#fff;padding:2px 7px;border-radius:20px;font-weight:700;-webkit-text-fill-color:#fff}
+.nav-spacer{flex:1}
+.nav-key-wrap{display:flex;align-items:center;gap:8px}
+.nav-key-wrap label{font-size:11px;color:var(--muted);margin:0;white-space:nowrap}
+.nav-key-wrap input{width:200px;padding:5px 10px;font-size:12px}
+#navSaveKey{background:var(--acc);color:#fff;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600}
+.step-rail{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 20px}
+.sr-step{display:flex;align-items:center;gap:6px;padding:0 14px}
+.sr-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--dim);transition:all 0.3s;flex-shrink:0}
+.sr-label{font-size:11px;font-weight:600;color:var(--dim);transition:all 0.3s;white-space:nowrap}
+.sr-line{width:36px;height:2px;background:var(--border);transition:all 0.3s;flex-shrink:0}
+.sr-step.active .sr-dot{border-color:var(--acc);color:var(--acc);box-shadow:0 0 8px rgba(255,69,0,0.4)}
+.sr-step.active .sr-label{color:var(--text)}
+.sr-step.done .sr-dot{background:var(--grn);border-color:var(--grn);color:#000}
+.sr-step.done .sr-label{color:var(--grn)}
+.studio{display:grid;grid-template-columns:260px 1fr 360px;height:calc(100vh - 86px);overflow:hidden}
+.left{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.left::-webkit-scrollbar{width:4px}
+.left::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.lsection{padding:14px 16px;border-bottom:1px solid var(--border)}
+.lsection-title{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.lrow{margin-bottom:10px}
+.lrow:last-child{margin-bottom:0}
+.dur-btns{display:flex;gap:6px}
+.dur-btn{flex:1;padding:6px 4px;border-radius:6px;background:var(--glass);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:600;transition:all 0.2s}
+.dur-btn.active{background:rgba(255,69,0,0.15);border-color:var(--acc);color:var(--acc)}
+.btn-generate{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--acc),#c73200);color:#fff;transition:all 0.2s;position:relative;overflow:hidden}
+.btn-generate:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,69,0,0.35)}
+.btn-generate:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-secondary{width:100%;padding:9px;border-radius:7px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);transition:all 0.2s}
+.btn-secondary:hover:not(:disabled){background:rgba(255,255,255,0.1)}
+.btn-secondary:disabled{opacity:0.35;cursor:not-allowed}
+.cap-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.cap-style-btn{padding:7px 8px;border-radius:6px;background:var(--glass);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:600;transition:all 0.2s;text-align:center}
+.cap-style-btn.active{background:rgba(168,85,247,0.15);border-color:var(--pur);color:var(--pur)}
+.status-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
+.status-chip.idle{background:rgba(255,255,255,0.05);color:var(--muted)}
+.status-chip.working{background:rgba(255,165,0,0.15);color:#ffa500}
+.status-chip.done{background:rgba(74,222,128,0.15);color:var(--grn)}
+.status-chip.error{background:rgba(255,69,0,0.15);color:var(--acc)}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden}
+.center-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,69,0,0.04) 0%,transparent 70%);pointer-events:none}
+.c-status{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px;text-align:center;width:100%}
+.c-status-icon{font-size:56px;line-height:1}
+.c-status-title{font-size:22px;font-weight:800;color:var(--text)}
+.c-status-sub{font-size:14px;color:var(--muted);max-width:360px;line-height:1.6}
+.c-status-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.err-box{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:7px;padding:8px 11px;font-size:10px;color:#fca5a5;display:none;line-height:1.55}
-.tip-row{font-size:9px;color:rgba(255,255,255,.18);line-height:1.7}
-.tip-row strong{color:rgba(255,255,255,.3);font-weight:700}
-
-/* ── CENTER PANEL ─────────────────────────────────────── */
-.center{background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:18px 14px 14px;overflow-y:auto;gap:12px}
-.center::-webkit-scrollbar{display:none}
-
-/* progress steps */
-.steps{display:flex;align-items:flex-start;width:100%;max-width:360px;position:relative}
-.step{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;position:relative;z-index:1}
-.step-line{position:absolute;top:9px;left:calc(50% + 10px);right:calc(-50% + 10px);height:1px;background:var(--border);z-index:0}
-.step:last-child .step-line{display:none}
-.step-dot{width:19px;height:19px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg2);font-size:8px;display:flex;align-items:center;justify-content:center;color:var(--dim);transition:all .35s}
-.step.done .step-dot{background:rgba(74,222,128,.14);border-color:var(--grn);color:var(--grn)}
-.step.active .step-dot{background:rgba(255,69,0,.14);border-color:var(--acc);color:var(--acc);box-shadow:0 0 10px rgba(255,69,0,.3)}
-.step-lbl{font-size:7.5px;color:var(--dim);font-weight:500;text-align:center;white-space:nowrap;transition:color .35s}
-.step.done .step-lbl{color:var(--grn)}
-.step.active .step-lbl{color:var(--acc)}
-
-/* phone */
-.phone-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px}
-.phone-glow{position:absolute;inset:-24px;border-radius:55px;background:radial-gradient(ellipse at center,rgba(255,69,0,.07) 0%,transparent 68%);pointer-events:none;z-index:0}
-.phone{width:216px;height:384px;border-radius:32px;overflow:hidden;border:1.5px solid rgba(255,255,255,.1);position:relative;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.04),0 28px 70px rgba(0,0,0,.85),0 0 50px rgba(255,69,0,.05);z-index:1;cursor:pointer;flex-shrink:0}
-.phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:54px;height:5px;border-radius:3px;background:rgba(0,0,0,.9);z-index:10}
-#phone-cv{position:absolute;inset:0;width:100%;height:100%}
-.phone-safe-top{position:absolute;top:0;left:0;right:0;height:22%;background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);pointer-events:none;z-index:2}
-.phone-safe-bot{position:absolute;bottom:0;left:0;right:0;height:32%;background:linear-gradient(to top,rgba(0,0,0,.65),transparent);pointer-events:none;z-index:2}
-.phone-idle{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;opacity:.25;z-index:3}
-.phone-prog-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,.08);z-index:5}
-.phone-prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--acc),#f59e0b);transition:width .07s linear}
-
-/* scene dots */
-.scene-dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:260px}
-.sdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.07);cursor:pointer;transition:all .2s}
-.sdot.active{background:var(--acc);border-color:var(--acc);box-shadow:0 0 8px rgba(255,69,0,.5);width:22px;border-radius:4px}
-.sdot.done{background:rgba(74,222,128,.35);border-color:rgba(74,222,128,.5)}
-
-/* controls */
-.ctrl-row{display:flex;align-items:center;gap:7px}
-.ctrl-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);color:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;transition:all .15s}
-.ctrl-btn:hover{border-color:rgba(255,255,255,.2);color:#fff}
-.ctrl-play{width:42px;height:42px;border-color:rgba(255,69,0,.38);background:rgba(255,69,0,.07);color:var(--acc);font-size:14px}
-.ctrl-play:hover{background:rgba(255,69,0,.14);border-color:rgba(255,69,0,.6)}
-.ctrl-time{font-size:10px;color:var(--muted);font-family:monospace;min-width:68px;text-align:center}
-
-/* caption styles */
-.cap-style-row{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;max-width:340px}
-.cs{padding:4px 9px;border-radius:5px;border:1px solid var(--border);background:var(--glass);color:var(--muted);font-size:9px;font-weight:700;cursor:pointer;transition:all .14s;font-family:var(--font)}
-.cs.active{border-color:var(--acc);background:rgba(255,69,0,.1);color:var(--acc)}
-
-/* ── RIGHT PANEL ──────────────────────────────────────── */
-.right{border-left:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg2);overflow:hidden}
-.rtabs{display:flex;border-bottom:1px solid var(--border);background:rgba(0,0,0,.25);flex-shrink:0}
-.rtab{flex:1;padding:11px 4px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;transition:all .15s;font-family:var(--font);margin-bottom:-1px;white-space:nowrap}
-.rtab.active{border-bottom-color:var(--acc);color:var(--acc)}
-.rpane{display:none;flex:1;overflow-y:auto;padding:13px}
-.rpane.active{display:block}
-.rpane::-webkit-scrollbar{width:3px}.rpane::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07);border-radius:3px}
-.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 20px;opacity:.2;gap:7px}
-.es-icon{font-size:38px}.es-t{font-size:14px;font-weight:700}.es-s{font-size:11px}
-
-/* hook / cta cards */
-.hook-card{background:rgba(255,69,0,.06);border:1px solid rgba(255,69,0,.2);border-radius:9px;padding:11px 13px;margin-bottom:8px}
-.hook-lbl{font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:5px;display:flex;align-items:center;justify-content:space-between}
-.hook-text{font-size:14px;font-weight:700;line-height:1.4;margin-bottom:4px}
-.hook-hint{font-size:10px;color:var(--muted);font-style:italic}
-.cta-card{background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.14);border-radius:9px;padding:11px 13px;margin-bottom:8px}
-
-/* scene cards */
-.scene-card{background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:11px 13px;margin-bottom:7px;transition:border-color .2s}
-.scene-card:hover{border-color:var(--border2)}
-.scene-card.cur{border-color:rgba(255,69,0,.32);background:rgba(255,69,0,.035)}
-.sc-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.sc-id{display:flex;align-items:center;gap:6px}
-.sc-badge{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;flex-shrink:0}
-.sc-t{font-size:11px;font-weight:700}
-.sc-time{font-size:9px;color:var(--dim);font-family:monospace;margin-left:4px}
-.sc-btns{display:flex;gap:4px}
-.sc-btn{padding:3px 8px;border-radius:5px;font-size:9px;font-weight:600;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:var(--glass);color:var(--muted);transition:all .14s}
-.sc-btn:hover{color:var(--text);border-color:var(--border2)}
-.sc-btn.regen{border-color:rgba(99,102,241,.3);color:#818cf8;background:rgba(99,102,241,.06)}
-.sc-btn.regen:hover{background:rgba(99,102,241,.12)}
-.sc-vo{font-size:11px;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:5px;background:rgba(0,0,0,.22);border-radius:6px;padding:7px 9px;border-left:2px solid var(--acc)}
-.sc-cap{font-size:10px;color:var(--muted);margin-bottom:5px;display:flex;align-items:flex-start;gap:5px}
-.sc-cap span{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-style:italic}
-.sc-query{font-size:9px;color:var(--dim);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.sc-qtag{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:2px 7px;color:rgba(255,255,255,.35)}
-.sc-edit{display:none;flex-direction:column;gap:5px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
-.sc-edit.open{display:flex}
-.sc-edit-lbl{font-size:9px;font-weight:600;color:var(--dim);margin-bottom:1px}
-.sc-ta{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(99,102,241,.25);border-radius:6px;padding:6px 8px;color:#fff;font-size:11px;font-family:var(--font);resize:vertical;outline:none;line-height:1.5}
-.sc-ta:focus{border-color:var(--ind)}
-
-/* voiceover lines */
-.vo-line{display:flex;gap:7px;align-items:flex-start;margin-bottom:6px}
-.vo-num{width:17px;height:17px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;margin-top:1px}
-.vo-t{flex:1;font-size:11px;color:rgba(255,255,255,.72);line-height:1.6;padding:6px 9px;background:rgba(255,255,255,.03);border-radius:6px;border-left:2px solid}
-.copy-sm{padding:3px 8px;border-radius:5px;font-size:9px;font-weight:600;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:var(--glass);color:var(--muted);transition:all .14s;flex-shrink:0}
-.copy-sm:hover{color:var(--text);border-color:var(--border2)}
-
-/* desc / metadata */
-.meta-block{margin-bottom:14px}
-.meta-lbl{font-size:8.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin-bottom:7px;padding-bottom:5px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.meta-body{background:rgba(0,0,0,.22);border-radius:7px;padding:10px 12px;font-size:11px;color:rgba(255,255,255,.75);line-height:1.75;white-space:pre-wrap;word-break:break-word;margin-bottom:5px}
-.title-opt{background:var(--glass);border:1px solid var(--border);border-radius:7px;padding:8px 11px;font-size:12px;font-weight:700;margin-bottom:5px;cursor:pointer;transition:border-color .15s}
-.title-opt:hover{border-color:var(--border2)}
-.tags-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px}
-.tag-chip{padding:3px 9px;border-radius:100px;font-size:9px;font-weight:600;cursor:pointer}
-.kw-chip{padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.05);border:1px solid var(--border);font-size:9px;color:rgba(255,255,255,.45)}
-
-/* video tab */
-.vid-sec{background:var(--glass);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:8px}
-.vid-sec-t{font-size:11px;font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.vid-sec-s{font-size:10px;color:var(--muted);line-height:1.55;margin-bottom:9px}
-.free-tag{font-size:8px;font-weight:700;padding:2px 6px;border-radius:10px;background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.18);color:var(--grn)}
-.bg-row{display:flex;gap:4px}
-.bg-btn{flex:1;padding:7px;border-radius:7px;border:1px solid var(--border);background:var(--glass);color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .14s;text-align:center}
-.bg-btn.active{border-color:var(--acc);background:rgba(255,69,0,.09);color:var(--acc)}
-.vsel-row{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-top:6px}
-.vsel{flex:1;min-width:100px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:6px 8px;color:#fff;font-size:10px;outline:none;font-family:var(--font)}
-.vsel option{background:#0c0c1a}
-.rnd-btn{width:100%;padding:13px 0;border-radius:9px;border:none;background:linear-gradient(135deg,var(--ind),var(--pur));color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font);box-shadow:0 4px 18px rgba(99,102,241,.2);transition:all .2s;margin-bottom:8px}
-.rnd-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 28px rgba(99,102,241,.35)}
-.rnd-btn:disabled{background:rgba(99,102,241,.14);color:rgba(255,255,255,.2);cursor:not-allowed;transform:none;box-shadow:none}
-.rp-wrap{display:none;margin-bottom:10px}
-.rp-wrap.show{display:block}
-.rp-bar{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-bottom:5px}
-.rp-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--ind),var(--pur));border-radius:3px;transition:width .2s}
-.rp-lbls{display:flex;justify-content:space-between;font-size:9px;color:var(--muted)}
-.dl-wrap{display:none;background:rgba(74,222,128,.04);border:1px solid rgba(74,222,128,.14);border-radius:9px;padding:11px 13px}
-.dl-wrap.show{display:block}
-.dl-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-.dl-btn{padding:8px 13px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
-.dl-btn.v{background:rgba(74,222,128,.07);border:1.5px solid rgba(74,222,128,.28);color:var(--grn)}
-.dl-btn.a{background:rgba(168,85,247,.07);border:1.5px solid rgba(168,85,247,.28);color:#c084fc}
-#live-cv{width:100%;aspect-ratio:9/16;max-height:180px;border-radius:7px;background:#000;border:1px solid var(--border);display:none;object-fit:contain;margin-bottom:8px}
-#live-cv.show{display:block}
-#rc{display:none}
-
-/* misc */
-.sec-t{font-size:12px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:7px}
-.sec-s{font-size:10px;color:var(--muted);margin-bottom:13px;line-height:1.6}
-.divider{height:1px;background:var(--border);margin:10px 0}
-
-/* responsive */
-@media(max-width:1000px){.studio{grid-template-columns:240px 1fr 320px}}
-@media(max-width:800px){
-  html,body{overflow:auto}
-  .studio{grid-template-columns:1fr;grid-template-rows:auto;height:auto;overflow:visible}
-  .left{border-right:none;border-bottom:1px solid var(--border);max-height:none}
-  .center{border-bottom:1px solid var(--border)}
-  .right{height:600px}
-  .nav-mid{display:none}
-}
-@media(max-width:500px){nav{padding:0 12px}.badge{display:none}}
+.c-progress{width:280px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.c-progress-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--pur));border-radius:2px;transition:width 0.4s ease;width:0%}
+.c-step-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.c-step-item.done{color:var(--grn)}
+.c-step-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;font-weight:700}
+.c-step-item.done .c-step-dot{background:var(--grn);border-color:var(--grn);color:#000}
+.c-preview{display:none;flex-direction:column;align-items:center;gap:12px;padding:16px}
+.phone-frame{width:270px;height:480px;border-radius:28px;background:#000;border:2px solid rgba(255,255,255,0.15);overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+#previewCanvas{width:270px;height:480px;display:block}
+.preview-controls{display:flex;gap:8px;align-items:center}
+.preview-btn{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);transition:all 0.2s}
+.preview-btn:hover{background:rgba(255,255,255,0.12)}
+.preview-btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.right{background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.rtabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto}
+.rtabs::-webkit-scrollbar{height:0}
+.rtab{padding:10px 14px;font-size:12px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;cursor:pointer}
+.rtab.active{color:var(--text);border-bottom-color:var(--acc)}
+.rtab.locked{opacity:0.35;cursor:not-allowed}
+.rtab:not(.locked):hover{color:var(--text)}
+.rtab .li{font-size:9px;margin-left:3px;opacity:0.6}
+.rpane{flex:1;overflow-y:auto;padding:16px}
+.rpane::-webkit-scrollbar{width:4px}
+.rpane::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.rpane>.tab-content{display:none}
+.rpane>.tab-content.active{display:block}
+.scene-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
+.scene-card-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.scene-num{width:22px;height:22px;border-radius:50%;background:rgba(255,69,0,0.15);border:1px solid rgba(255,69,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--acc);flex-shrink:0}
+.scene-time{font-size:11px;color:var(--muted);flex:1}
+.scene-thumb{width:100%;height:80px;border-radius:6px;object-fit:cover;margin-bottom:8px;border:1px solid var(--border)}
+.scene-thumb-ph{width:100%;height:80px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:11px;margin-bottom:8px}
+.scene-field{margin-bottom:6px}
+.scene-field label{margin-bottom:2px}
+.caption-timeline{display:flex;flex-direction:column;gap:6px}
+.cap-phrase{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;display:flex;align-items:center;gap:8px}
+.cap-phrase-text{flex:1;font-size:12px;font-weight:600}
+.cap-phrase-time{font-size:10px;color:var(--muted);white-space:nowrap}
+.cap-phrase .hl{color:var(--acc)}
+.meta-section{margin-bottom:16px}
+.meta-section-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px}
+.meta-tag{display:inline-block;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);color:#a5b4fc;padding:3px 8px;border-radius:4px;font-size:11px;margin:2px}
+.export-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.export-card-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.export-card-sub{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+#renderProgress{display:none;margin-top:8px}
+.render-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.render-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--pur));border-radius:3px;width:0%;transition:width 0.2s}
+#toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:9999}
+.toast{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;max-width:320px;animation:slideIn 0.3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.toast.success{border-color:rgba(74,222,128,0.3);color:var(--grn)}
+.toast.error{border-color:rgba(255,69,0,0.4);color:#ff8a6a}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+.empty-state{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;line-height:1.7}
+.empty-state .ei{font-size:32px;margin-bottom:8px;display:block}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="brand">
-    <div class="brand-icon">⚡</div>
-    <div class="brand-name"><em>Viral</em> Shorts Studio</div>
-  </div>
-  <div class="nav-mid">
-    <div class="status-chip off" id="groq-chip">Groq</div>
-    <div class="status-chip off" id="pex-chip">Pexels</div>
-  </div>
-  <div class="nav-r">
-    <a class="nav-link" href="/tmac">Home</a>
-    <a class="nav-link" href="/tmac/envue">EnVue</a>
-    <span class="badge">100% Free</span>
+  <span class="nav-logo">⚡ Viral Shorts Studio</span>
+  <span class="nav-badge">AI</span>
+  <div class="nav-spacer"></div>
+  <div class="nav-key-wrap">
+    <label>Groq Key</label>
+    <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
+    <label style="margin-left:6px">Pexels Key</label>
+    <input type="password" id="pexelsKey" placeholder="Pexels API key..." autocomplete="off">
+    <button id="navSaveKey" onclick="saveKeys()">Save</button>
   </div>
 </nav>
 
-<canvas id="rc" width="540" height="960"></canvas>
+<div class="step-rail">
+  <div class="sr-step" id="sr0"><div class="sr-dot" id="srd0">1</div><span class="sr-label">Script</span></div>
+  <div class="sr-line" id="srl0"></div>
+  <div class="sr-step" id="sr1"><div class="sr-dot" id="srd1">2</div><span class="sr-label">Footage</span></div>
+  <div class="sr-line" id="srl1"></div>
+  <div class="sr-step" id="sr2"><div class="sr-dot" id="srd2">3</div><span class="sr-label">Captions</span></div>
+  <div class="sr-line" id="srl2"></div>
+  <div class="sr-step" id="sr3"><div class="sr-dot" id="srd3">4</div><span class="sr-label">Preview</span></div>
+  <div class="sr-line" id="srl3"></div>
+  <div class="sr-step" id="sr4"><div class="sr-dot" id="srd4">5</div><span class="sr-label">Export</span></div>
+</div>
 
 <div class="studio">
-
-<!-- ══ LEFT PANEL ══════════════════════════════════════════ -->
-<div class="left">
-
-  <div class="lsec" style="padding-top:13px">
-    <div class="lhead">AI Engine</div>
-    <div id="groq-setup" class="conn ind">
-      <div class="conn-t" style="color:#818cf8">⚡ Groq — Instant Generation <span style="font-size:8px;font-weight:400;color:var(--muted)">free</span></div>
-      <div class="conn-s">Free key at <a href="https://console.groq.com" target="_blank">console.groq.com</a> — email only, no card. 1-2s vs 60s+ without it.</div>
-      <div class="inp-row"><input type="password" class="inp-sm" id="groq-inp" placeholder="gsk_…" style="font-size:10px"/><button class="conn-btn" onclick="saveGroqKey()">Connect</button></div>
+  <!-- LEFT -->
+  <div class="left">
+    <div class="lsection">
+      <div class="lsection-title">Topic</div>
+      <div class="lrow">
+        <label>What's your video about?</label>
+        <textarea id="topicInput" placeholder="e.g. 5 habits that changed my life..."></textarea>
+      </div>
+      <div class="lrow">
+        <label>Format</label>
+        <select id="fmtSelect">
+          <option value="top3">Top 3 Secrets</option>
+          <option value="hook_story">Hook + Story + CTA</option>
+          <option value="tutorial">Quick Tutorial</option>
+          <option value="mindblown">Mind-Blowing Fact</option>
+          <option value="listicle">Rapid Listicle</option>
+          <option value="controversy">Hot Take / Controversy</option>
+        </select>
+      </div>
+      <div class="lrow">
+        <label>Tone</label>
+        <select id="toneSelect">
+          <option value="Educational + Surprising">Educational + Surprising</option>
+          <option value="Hype + Motivational">Hype + Motivational</option>
+          <option value="Calm + Authoritative">Calm + Authoritative</option>
+          <option value="Funny + Relatable">Funny + Relatable</option>
+          <option value="Controversial + Bold">Controversial + Bold</option>
+        </select>
+      </div>
     </div>
-    <div id="groq-ok" class="conn grn" style="display:none">
-      <div class="conn-t" style="color:var(--grn)">⚡ Groq connected <button class="conn-clear" onclick="clearGroqKey()">remove</button></div>
+    <div class="lsection">
+      <div class="lsection-title">Duration</div>
+      <div class="dur-btns">
+        <button class="dur-btn" data-s="15" onclick="setDur(15)">15s</button>
+        <button class="dur-btn active" data-s="30" onclick="setDur(30)">30s</button>
+        <button class="dur-btn" data-s="45" onclick="setDur(45)">45s</button>
+        <button class="dur-btn" data-s="60" onclick="setDur(60)">60s</button>
+      </div>
+    </div>
+    <div class="lsection">
+      <div class="lsection-title">Background</div>
+      <div class="lrow">
+        <label>Source</label>
+        <select id="bgModeSelect">
+          <option value="pexels">Pexels Stock Video</option>
+          <option value="gradient">Animated Gradient</option>
+        </select>
+      </div>
+    </div>
+    <div class="lsection">
+      <div class="lsection-title">Caption Style</div>
+      <div class="cap-style-grid">
+        <button class="cap-style-btn active" data-style="hormozi" onclick="setCapStyle('hormozi')">Hormozi</button>
+        <button class="cap-style-btn" data-style="clean" onclick="setCapStyle('clean')">Clean</button>
+        <button class="cap-style-btn" data-style="yellow" onclick="setCapStyle('yellow')">Yellow Pop</button>
+        <button class="cap-style-btn" data-style="dark" onclick="setCapStyle('dark')">Dark Pill</button>
+        <button class="cap-style-btn" data-style="tiktok" onclick="setCapStyle('tiktok')">TikTok</button>
+      </div>
+    </div>
+    <div class="lsection" style="flex:1;border-bottom:none">
+      <button class="btn-generate" id="genBtn" onclick="stepGenerate()">⚡ Generate Script</button>
+      <div style="height:8px"></div>
+      <button class="btn-secondary" onclick="resetAll()">↺ Start Over</button>
+      <div style="height:10px"></div>
+      <div id="leftStatus" class="status-chip idle">◉ <span id="leftStatusText">Ready</span></div>
     </div>
   </div>
 
-  <div class="lsec" style="padding-top:10px">
-    <div id="pex-setup" class="conn" style="background:rgba(255,255,255,.025);border:1px solid var(--border)">
-      <div class="conn-t" style="color:rgba(255,255,255,.55)">📹 Pexels Stock Footage <span style="font-size:8px;font-weight:400;color:var(--muted)">free</span></div>
-      <div class="conn-s">Free at <a href="https://www.pexels.com/api/" target="_blank" style="color:rgba(255,255,255,.5)">pexels.com/api</a> — real human footage for each scene.</div>
-      <div class="inp-row"><input type="password" class="inp-sm" id="pex-inp" placeholder="Pexels API key…" style="font-size:10px"/><button class="conn-btn g" onclick="savePex()">Add</button></div>
+  <!-- CENTER -->
+  <div class="center">
+    <div class="center-bg"></div>
+    <div class="c-status" id="cs-idle">
+      <div class="c-status-icon">🎬</div>
+      <div class="c-status-title">Viral Shorts Studio</div>
+      <div class="c-status-sub">Enter your topic, choose settings, and hit Generate Script to start building your viral short.</div>
     </div>
-    <div id="pex-ok" class="conn grn" style="display:none">
-      <div class="conn-t" style="color:var(--grn)">📹 Pexels connected <button class="conn-clear" onclick="clearPex()">remove</button></div>
+    <div class="c-status" id="cs-scripting" style="display:none">
+      <div class="c-status-spinner"></div>
+      <div class="c-status-title">Writing Your Script</div>
+      <div class="c-status-sub" id="cs-scripting-sub">Crafting hook, scenes, and CTA...</div>
+      <div class="c-progress"><div class="c-progress-fill" id="scriptProgress"></div></div>
     </div>
-  </div>
-
-  <div class="ldiv"></div>
-
-  <div class="lsec" style="padding-top:11px">
-    <div class="lhead">Content</div>
-    <div style="margin-bottom:10px">
-      <textarea class="inp" id="topic" rows="3" placeholder="Start with a viral angle…&#10;e.g. why most people never build real wealth&#10;e.g. 3 foods that are silently aging you faster&#10;e.g. habits of people who never get sick"></textarea>
-      <div style="font-size:9px;color:rgba(255,255,255,.15);text-align:right;margin-top:3px">⌘↵ generate</div>
+    <div class="c-status" id="cs-script-done" style="display:none">
+      <div class="c-status-icon">✅</div>
+      <div class="c-status-title">Script Ready</div>
+      <div class="c-status-sub">Review your script in the Script tab, then click <strong>Approve Script &amp; Find Footage</strong>.</div>
+      <div id="cs-script-stats" style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:300px"></div>
     </div>
-    <div style="margin-bottom:10px">
-      <div class="lhead" style="margin-bottom:6px">Short Format</div>
-      <div class="pill-grid">
-        <button class="pill active" data-fmt="top3">🔥 Top 3 Secrets</button>
-        <button class="pill" data-fmt="mistake">⚠️ Mistake You're Making</button>
-        <button class="pill" data-fmt="nobody">🤫 Nobody Talks About</button>
-        <button class="pill" data-fmt="tried">📅 I Tried 30 Days</button>
-        <button class="pill" data-fmt="truth">💣 Shocking Truth</button>
+    <div class="c-status" id="cs-footage" style="display:none">
+      <div class="c-status-spinner"></div>
+      <div class="c-status-title">Finding Footage</div>
+      <div class="c-status-sub" id="cs-footage-sub">Searching Pexels for each scene...</div>
+      <div class="c-progress"><div class="c-progress-fill" id="footageProgress"></div></div>
+    </div>
+    <div class="c-status" id="cs-footage-done" style="display:none">
+      <div class="c-status-icon">🎞️</div>
+      <div class="c-status-title">Footage Ready</div>
+      <div class="c-status-sub">Review thumbnails in the Footage tab, then click <strong>Build Captions &amp; Preview</strong>.</div>
+    </div>
+    <div class="c-status" id="cs-captions" style="display:none">
+      <div class="c-status-spinner"></div>
+      <div class="c-status-title">Building Captions</div>
+      <div class="c-status-sub">Generating phrase-level caption timeline...</div>
+    </div>
+    <div class="c-preview" id="cs-preview">
+      <div class="phone-frame">
+        <canvas id="previewCanvas" width="540" height="960"></canvas>
+      </div>
+      <div class="preview-controls">
+        <button class="preview-btn" id="playPauseBtn" onclick="togglePreviewPlay()">⏸ Pause</button>
+        <button class="preview-btn" onclick="restartPreview()">↺ Restart</button>
+        <button class="preview-btn primary" onclick="switchRightTab('export')">Export →</button>
       </div>
     </div>
   </div>
 
-  <div class="lsec">
-    <div class="lhead">Tone</div>
-    <div class="tone-grid" style="margin-bottom:10px">
-      <button class="tone active" data-value="Educational + Surprising">🧠 Educational</button>
-      <button class="tone" data-value="Motivational + High Energy">🔥 Motivational</button>
-      <button class="tone" data-value="Dark + Counterintuitive">😈 Dark Truth</button>
-      <button class="tone" data-value="Funny + Relatable">😂 Funny</button>
-      <button class="tone" data-value="Luxury + Aspirational">💎 Luxury</button>
-      <button class="tone" data-value="Scary but True">😱 Scary True</button>
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="rtabs">
+      <div class="rtab active" id="rtab-script" onclick="switchRightTab('script')">Script</div>
+      <div class="rtab locked" id="rtab-footage" onclick="switchRightTab('footage')">Footage<span class="li">🔒</span></div>
+      <div class="rtab locked" id="rtab-captions" onclick="switchRightTab('captions')">Captions<span class="li">🔒</span></div>
+      <div class="rtab locked" id="rtab-metadata" onclick="switchRightTab('metadata')">Metadata<span class="li">🔒</span></div>
+      <div class="rtab locked" id="rtab-export" onclick="switchRightTab('export')">Export<span class="li">🔒</span></div>
     </div>
-    <div class="lhead" style="margin-bottom:6px">Duration</div>
-    <div class="dur-row" style="margin-bottom:10px">
-      <button class="dur" data-value="15">15s</button>
-      <button class="dur active" data-value="30">30s</button>
-      <button class="dur" data-value="45">45s</button>
-      <button class="dur" data-value="60">60s</button>
-    </div>
-  </div>
-
-  <div class="lsec">
-    <button class="accord-hd" onclick="toggleAccord(this)">
-      Advanced Settings <span class="accord-arrow">▼</span>
-    </button>
-    <div class="accord-body" style="padding-bottom:10px">
-      <div>
-        <div class="adv-label">Platform</div>
-        <div class="adv-grid">
-          <button class="adv-pill active" data-adv="platform" data-value="YouTube Shorts">YouTube Shorts</button>
-          <button class="adv-pill" data-adv="platform" data-value="TikTok">TikTok</button>
-          <button class="adv-pill" data-adv="platform" data-value="Instagram Reels">Instagram</button>
+    <div class="rpane">
+      <div class="tab-content active" id="tab-script">
+        <div id="script-empty" class="empty-state"><span class="ei">📝</span>Enter a topic and click<br><strong>Generate Script</strong> to begin.</div>
+        <div id="script-content" style="display:none">
+          <div id="script-meta"></div>
+          <div id="script-hook" style="margin-bottom:8px"></div>
+          <div id="script-scenes-list"></div>
+          <div id="script-cta" style="margin-bottom:12px"></div>
+          <button class="btn-generate" id="approveBtn" onclick="stepFindFootage()" disabled>🔍 Approve Script &amp; Find Footage</button>
+          <div style="height:6px"></div>
+          <button class="btn-secondary" id="regenBtn" onclick="regenScript()" disabled>↺ Regenerate Script</button>
         </div>
       </div>
-      <div>
-        <div class="adv-label">Pacing</div>
-        <div class="adv-grid">
-          <button class="adv-pill" data-adv="pacing" data-value="slow">Slow</button>
-          <button class="adv-pill active" data-adv="pacing" data-value="medium">Medium</button>
-          <button class="adv-pill" data-adv="pacing" data-value="fast">Fast</button>
-          <button class="adv-pill" data-adv="pacing" data-value="aggressive">Aggressive</button>
+      <div class="tab-content" id="tab-footage">
+        <div id="footage-empty" class="empty-state"><span class="ei">🎥</span>Complete Script step first,<br>then approve to find footage.</div>
+        <div id="footage-content" style="display:none">
+          <div id="footage-scenes-list"></div>
+          <div style="height:8px"></div>
+          <button class="btn-generate" id="buildCaptionsBtn" onclick="stepBuildCaptions()" disabled>🎬 Build Captions &amp; Preview</button>
         </div>
       </div>
-      <div>
-        <div class="adv-label">Visual Style</div>
-        <div class="adv-grid">
-          <button class="adv-pill active" data-adv="vstyle" data-value="Cinematic Dark">Cinematic Dark</button>
-          <button class="adv-pill" data-adv="vstyle" data-value="Luxury Documentary">Luxury Doc</button>
-          <button class="adv-pill" data-adv="vstyle" data-value="High Energy">High Energy</button>
-          <button class="adv-pill" data-adv="vstyle" data-value="Minimal Clean">Minimal</button>
+      <div class="tab-content" id="tab-captions">
+        <div id="captions-empty" class="empty-state"><span class="ei">💬</span>Find footage first,<br>then build captions.</div>
+        <div id="captions-content" style="display:none">
+          <div class="caption-timeline" id="caption-timeline-list"></div>
         </div>
       </div>
-      <div>
-        <div class="adv-label">Audience</div>
-        <input class="inp" id="audience" placeholder="e.g. 18–34 entrepreneurs" style="font-size:11px;padding:7px 10px"/>
+      <div class="tab-content" id="tab-metadata">
+        <div id="metadata-empty" class="empty-state"><span class="ei">📋</span>Generate a script first<br>to see YouTube metadata.</div>
+        <div id="metadata-content" style="display:none"></div>
       </div>
-    </div>
-  </div>
-
-  <div class="lsec-last" style="padding-top:8px">
-    <div id="err-box" class="err-box" style="margin-bottom:8px"></div>
-    <button class="gen-btn" id="gen-btn" onclick="generate()">⚡ Generate Viral Script</button>
-    <div class="tip-row" style="margin-top:10px">
-      <strong>Hook</strong> = first 3s decide everything<br>
-      <strong>Stats</strong> beat vague claims 5× in retention<br>
-      <strong>Loop anchor</strong> = end references the hook
-    </div>
-  </div>
-
-</div><!-- end left -->
-
-<!-- ══ CENTER PANEL ════════════════════════════════════════ -->
-<div class="center">
-
-  <!-- Progress steps -->
-  <div class="steps" id="steps-row">
-    <div class="step" id="st0"><div class="step-line"></div><div class="step-dot">1</div><div class="step-lbl">Script</div></div>
-    <div class="step" id="st1"><div class="step-line"></div><div class="step-dot">2</div><div class="step-lbl">Footage</div></div>
-    <div class="step" id="st2"><div class="step-line"></div><div class="step-dot">3</div><div class="step-lbl">Captions</div></div>
-    <div class="step" id="st3"><div class="step-line"></div><div class="step-dot">4</div><div class="step-lbl">Preview</div></div>
-    <div class="step" id="st4"><div class="step-line"></div><div class="step-dot">5</div><div class="step-lbl">Export</div></div>
-  </div>
-
-  <!-- Phone preview -->
-  <div class="phone-wrap">
-    <div class="phone-glow"></div>
-    <div class="phone" id="phone" onclick="togglePlay()">
-      <div class="phone-notch"></div>
-      <canvas id="phone-cv" width="540" height="960"></canvas>
-      <div class="phone-safe-top"></div>
-      <div class="phone-safe-bot"></div>
-      <div class="phone-idle" id="phone-idle">
-        <div style="font-size:34px">🎬</div>
-        <div style="font-size:11px;font-weight:600">Your Short Appears Here</div>
-        <div style="font-size:9px;color:var(--dim)">Generate a script to preview</div>
-      </div>
-      <div class="phone-prog-bar"><div class="phone-prog-fill" id="ph-prog"></div></div>
-    </div>
-  </div>
-
-  <!-- Scene dots -->
-  <div class="scene-dots" id="scene-dots"></div>
-
-  <!-- Playback controls -->
-  <div class="ctrl-row">
-    <div class="ctrl-btn" onclick="resetPlay()" title="Reset">↺</div>
-    <div class="ctrl-btn ctrl-play" id="ctrl-play" onclick="togglePlay()">▶</div>
-    <div class="ctrl-time" id="ctrl-time">— / —</div>
-  </div>
-
-  <!-- Caption style -->
-  <div>
-    <div style="font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:6px">Caption Style</div>
-    <div class="cap-style-row">
-      <button class="cs active" data-cs="hormozi" onclick="setCapStyle(this)">Hormozi</button>
-      <button class="cs" data-cs="clean" onclick="setCapStyle(this)">Clean White</button>
-      <button class="cs" data-cs="yellow" onclick="setCapStyle(this)">Yellow Hit</button>
-      <button class="cs" data-cs="dark" onclick="setCapStyle(this)">Dark Pill</button>
-      <button class="cs" data-cs="tiktok" onclick="setCapStyle(this)">TikTok</button>
-    </div>
-  </div>
-
-</div><!-- end center -->
-
-<!-- ══ RIGHT PANEL ══════════════════════════════════════════ -->
-<div class="right">
-  <div class="rtabs">
-    <button class="rtab active" data-rt="script" onclick="switchRTab(this)">Script</button>
-    <button class="rtab" data-rt="desc" onclick="switchRTab(this)">Metadata</button>
-    <button class="rtab" data-rt="video" onclick="switchRTab(this)">🎬 Make Video</button>
-  </div>
-
-  <!-- SCRIPT PANE -->
-  <div class="rpane active" id="rp-script">
-    <div class="empty-state" id="sc-empty">
-      <div class="es-icon">🎙</div>
-      <div class="es-t">Script appears here</div>
-      <div class="es-s">Generate your short to see the full scene breakdown</div>
-    </div>
-    <div id="sc-loaded" style="display:none"></div>
-  </div>
-
-  <!-- METADATA PANE -->
-  <div class="rpane" id="rp-desc">
-    <div class="empty-state" id="de-empty">
-      <div class="es-icon">📝</div>
-      <div class="es-t">Metadata appears here</div>
-      <div class="es-s">Generate your short to get YouTube titles, description, and hashtags</div>
-    </div>
-    <div id="de-loaded" style="display:none"></div>
-  </div>
-
-  <!-- VIDEO PANE -->
-  <div class="rpane" id="rp-video">
-    <div class="sec-t">🎬 Export Your Short</div>
-    <div class="sec-s">Real Pexels footage + Hormozi captions + cinematic cuts</div>
-
-    <div id="vid-empty-msg" style="display:none;padding:11px 13px;background:var(--glass);border-radius:8px;border:1px solid var(--border);font-size:11px;color:var(--muted);margin-bottom:12px">← Generate your script first, then come back to render.</div>
-
-    <div id="vid-controls" style="display:none">
-      <div class="vid-sec">
-        <div class="vid-sec-t">📹 Footage Mode</div>
-        <div class="bg-row">
-          <button class="bg-btn active" id="bg-p" onclick="setBg('pexels')">Pexels Video</button>
-          <button class="bg-btn" id="bg-g" onclick="setBg('gradient')">Gradient</button>
-        </div>
-      </div>
-
-      <div class="vid-sec">
-        <div class="vid-sec-t">🎙 Voiceover <span class="free-tag">FREE</span></div>
-        <div class="vid-sec-s">Browser TTS — no account needed. Test before rendering.</div>
-        <div class="vsel-row">
-          <select class="vsel" id="vsel"></select>
-          <input type="range" class="vsel" id="vrate" min="0.6" max="1.4" step="0.05" value="0.95" style="min-width:70px;padding:0" oninput="document.getElementById('rlbl').textContent=parseFloat(this.value).toFixed(2)+'×'"/>
-          <span id="rlbl" style="font-size:10px;color:var(--muted);white-space:nowrap">0.95×</span>
-          <button onclick="testVoice()" style="padding:5px 9px;border-radius:6px;font-size:9px;font-weight:700;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:var(--glass);color:var(--muted)">Test</button>
-        </div>
-      </div>
-
-      <canvas id="live-cv"></canvas>
-      <div class="rp-wrap" id="rp-wrap">
-        <div class="rp-bar"><div class="rp-fill" id="rp-fill"></div></div>
-        <div class="rp-lbls"><span id="rp-txt">Starting…</span><span id="rp-pct">0%</span></div>
-      </div>
-
-      <button class="rnd-btn" id="rnd-btn" onclick="renderVideo()">🎬 Render Full Video</button>
-
-      <div class="dl-wrap" id="dl-wrap">
-        <div style="font-size:11px;font-weight:700;color:var(--grn);margin-bottom:3px">✅ Your short is ready!</div>
-        <div style="font-size:10px;color:var(--muted)">Download and upload directly to YouTube Shorts</div>
-        <div class="dl-btns">
-          <a class="dl-btn v" id="dl-v" href="#" download>⬇ Download Video (.webm)</a>
-          <a class="dl-btn a" id="dl-a" href="#" download style="display:none">🎙 Voiceover Audio</a>
+      <div class="tab-content" id="tab-export">
+        <div id="export-empty" class="empty-state"><span class="ei">📤</span>Complete the full workflow<br>to unlock export.</div>
+        <div id="export-content" style="display:none">
+          <div class="export-card">
+            <div class="export-card-title">🎬 Export Video</div>
+            <div class="export-card-sub">Records the preview as a 540×960 .webm at 9Mbps (VP9).</div>
+            <button class="btn-generate" id="exportBtn" onclick="renderVideo()">⬇ Export .webm</button>
+            <div id="renderProgress">
+              <div class="render-bar"><div class="render-fill" id="renderFill"></div></div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px" id="renderLabel">Rendering...</div>
+            </div>
+          </div>
+          <div class="export-card">
+            <div class="export-card-title">🎵 Voiceover</div>
+            <div class="export-card-sub">Preview TTS voiceover using Web Speech API.</div>
+            <button class="btn-secondary" onclick="playVoiceover()">▶ Play Voiceover</button>
+          </div>
+          <div id="downloadLinks" style="margin-top:8px"></div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-</div><!-- end right -->
-</div><!-- end studio -->
+<div id="toasts"></div>
 
 <script>
-// ── State ──────────────────────────────────────────────────────────────────────
-let D=null,fmt='top3',tone='Educational + Surprising',dur=30,captionStyle='hormozi';
-let bgMode='pexels',voices=[],playing=false,previewRAF=null,previewFrame=0;
-let capPopF=0,lastCap='',curSceneIdx=0;
-let advPlatform='YouTube Shorts',advPacing='medium',advVstyle='Cinematic Dark';
-let groqKey=localStorage.getItem('gk')||'',pexKey=localStorage.getItem('pk')||'';
-try{const s=localStorage.getItem('vss_d');if(s){D=JSON.parse(s);}}catch{}
+const WORD_TARGETS={15:[35,45],30:[75,90],45:[110,135],60:[145,180]};
+const SCENE_TARGETS={15:[3,4],30:[5,6],45:[7,8],60:[9,12]};
+const FPS=30,W=540,H=960;
+const TAB_MIN={script:0,footage:4,captions:6,metadata:2,export:6};
 
-// ── Init ───────────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded',()=>{
-  // Format pills
-  document.querySelectorAll('[data-fmt]').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('[data-fmt]').forEach(x=>x.classList.remove('active')); b.classList.add('active'); fmt=b.dataset.fmt;
-  }));
-  // Tones
-  document.querySelectorAll('[data-value].tone').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('[data-value].tone').forEach(x=>x.classList.remove('active')); b.classList.add('active'); tone=b.dataset.value;
-  }));
-  // Durations
-  document.querySelectorAll('.dur').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('.dur').forEach(x=>x.classList.remove('active')); b.classList.add('active'); dur=parseInt(b.dataset.value);
-  }));
-  // Advanced pills
-  document.querySelectorAll('[data-adv]').forEach(b=>b.addEventListener('click',()=>{
-    const g=b.dataset.adv;
-    document.querySelectorAll(`[data-adv="${g}"]`).forEach(x=>x.classList.remove('active')); b.classList.add('active');
-    if(g==='platform')advPlatform=b.dataset.value;
-    if(g==='pacing')advPacing=b.dataset.value;
-    if(g==='vstyle')advVstyle=b.dataset.value;
-  }));
-  // Keyboard shortcut
-  document.getElementById('topic').addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='Enter')generate();});
-  // Init keys
-  if(groqKey)document.getElementById('groq-inp').value=groqKey;
-  if(pexKey)document.getElementById('pex-inp').value=pexKey;
-  refreshGroq(); refreshPex(); loadVoices(); showVidState();
-  // If we have cached data, render it
-  if(D){renderResult(D);setStep(3);}
-  drawIdlePhone();
-});
+let wfStep=0,D=null,sceneVids=[],sceneThumbUrls=[],captionTimeline=[];
+let captionStyle='hormozi',bgMode='pexels',dur=30;
+let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastTS=0;
 
-function toggleAccord(btn){
-  const body=btn.nextElementSibling;
-  const open=body.classList.toggle('open');
-  btn.querySelector('.accord-arrow').style.transform=open?'rotate(180deg)':'rotate(0)';
-}
-function switchRTab(btn){
-  document.querySelectorAll('.rtab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.rpane').forEach(x=>x.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('rp-'+btn.dataset.rt).classList.add('active');
-}
-function setCapStyle(btn){
-  document.querySelectorAll('.cs').forEach(x=>x.classList.remove('active')); btn.classList.add('active');
-  captionStyle=btn.dataset.cs;
-}
-
-// ── Key management ─────────────────────────────────────────────────────────────
-function saveGroqKey(){const v=document.getElementById('groq-inp').value.trim();if(!v)return;groqKey=v;localStorage.setItem('gk',v);refreshGroq();}
-function clearGroqKey(){groqKey='';localStorage.removeItem('gk');document.getElementById('groq-inp').value='';refreshGroq();}
-function savePex(){const v=document.getElementById('pex-inp').value.trim();if(!v)return;pexKey=v;localStorage.setItem('pk',v);refreshPex();}
-function clearPex(){pexKey='';localStorage.removeItem('pk');document.getElementById('pex-inp').value='';refreshPex();}
-function refreshGroq(){
-  const on=!!groqKey;
-  document.getElementById('groq-setup').style.display=on?'none':'block';
-  document.getElementById('groq-ok').style.display=on?'block':'none';
-  const chip=document.getElementById('groq-chip');
-  chip.className='status-chip '+(on?'on':'off');
-  chip.textContent='Groq '+(on?'✓':'—');
-}
-function refreshPex(){
-  const on=!!pexKey;
-  document.getElementById('pex-setup').style.display=on?'none':'block';
-  document.getElementById('pex-ok').style.display=on?'block':'none';
-  const chip=document.getElementById('pex-chip');
-  chip.className='status-chip '+(on?'on':'off');
-  chip.textContent='Pexels '+(on?'✓':'—');
-}
-function setBg(m){bgMode=m;['p','g'].forEach(id=>document.getElementById('bg-'+id).classList.toggle('active',id===(m==='pexels'?'p':'g')));}
-function showVidState(){
-  document.getElementById('vid-empty-msg').style.display=D?'none':'block';
-  document.getElementById('vid-controls').style.display=D?'block':'none';
-}
-function loadVoices(){
-  const fill=()=>{
-    voices=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('en'));
-    const sel=document.getElementById('vsel');sel.innerHTML='';
-    if(!voices.length){sel.innerHTML='<option>Loading…</option>';return;}
-    voices.forEach((v,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${v.name} (${v.lang})`;sel.appendChild(o);});
-    const p=voices.findIndex(v=>v.name.includes('Google')||v.name.includes('Samantha')||v.name.includes('Natural'));
-    if(p>=0)sel.value=p;
-  };
-  fill();speechSynthesis.onvoiceschanged=fill;
-}
-function getVoice(){return voices[parseInt(document.getElementById('vsel').value)]||null;}
-function testVoice(){
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(D?.scenes?.[0]?.voiceover||'Stop scrolling. What you are about to learn will change everything.');
-  const v=getVoice();if(v)u.voice=v;
-  u.rate=parseFloat(document.getElementById('vrate').value);
-  speechSynthesis.speak(u);
-}
-
-// ── Progress steps ─────────────────────────────────────────────────────────────
-function setStep(n){
-  for(let i=0;i<5;i++){
-    const el=document.getElementById('st'+i);
-    el.className='step'+(i<n?' done':i===n?' active':'');
-  }
-}
-
-// ── Format prompts ─────────────────────────────────────────────────────────────
-const FMT={
-  top3:'TOP 3 SECRETS format. Open with: most people have no idea about X. Then reveal secret #1 (surprising). Then secret #2 (more surprising). Then secret #3 (most mind-blowing, saved for last). End with a loop anchor that references the opening hook.',
-  mistake:'MISTAKE YOU\'RE MAKING format. Open by calling out a specific mistake most people unknowingly make. Reveal why it\'s costing them. Show the correct approach step by step. Escalate stakes with each reveal. End with urgency about the price of not changing.',
-  nobody:'NOBODY TALKS ABOUT THIS format. Open with "nobody talks about this but…" + a bold specific claim. Reveal hidden truth #1. Reveal hidden truth #2 (even more buried). Reveal hidden truth #3 (what insiders know). Close with "now you know what most never will."',
-  tried:'I TRIED IT FOR 30 DAYS format. Tease the shocking result in the hook. Day 1: baseline + surprising discovery. Week 2: counterintuitive finding that challenges assumptions. Final result: data-driven, unexpected outcome the viewer needs to hear.',
-  truth:'SHOCKING TRUTH format. Open with "this sounds fake, but it\'s completely real…". Drop a counterintuitive fact backed by a specific data point. Explain why mainstream thinking is wrong. Add emotional weight and personal stakes. End with strong CTA.'
+window.onload=()=>{
+  const gk=localStorage.getItem('groqKey')||'';
+  const pk=localStorage.getItem('pexelsKey')||'';
+  if(gk)document.getElementById('groqKey').value=gk;
+  if(pk)document.getElementById('pexelsKey').value=pk;
+  updateStepRail();
 };
 
-// ── Generate ───────────────────────────────────────────────────────────────────
-async function generate(){
-  const topic=document.getElementById('topic').value.trim();
-  if(!topic){showErr('Enter a topic or idea first.');return;}
-  const btn=document.getElementById('gen-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Writing script…';
-  document.getElementById('err-box').style.display='none';
-  setStep(0);
-  stopPlay();
+function saveKeys(){
+  const gk=document.getElementById('groqKey').value.trim();
+  const pk=document.getElementById('pexelsKey').value.trim();
+  if(gk)localStorage.setItem('groqKey',gk);
+  if(pk)localStorage.setItem('pexelsKey',pk);
+  toast('Keys saved!','success');
+}
+function setDur(s){dur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
+function setCapStyle(s){captionStyle=s;document.querySelectorAll('.cap-style-btn').forEach(b=>b.classList.toggle('active',b.dataset.style===s));}
 
-  const audience=document.getElementById('audience').value.trim()||'general audience';
-  const sceneCount=dur<=15?3:dur<=30?5:dur<=45?6:8;
-  const secPerScene=(dur/sceneCount).toFixed(1);
-
-  const system=`You are a world-class YouTube Shorts strategist with 500M+ combined views. You write for ${advPlatform} with ${advPacing} pacing and ${advVstyle} visual style.
-
-${FMT[fmt]||FMT.top3}
-
-TARGET AUDIENCE: ${audience}
-PLATFORM: ${advPlatform}
-
-MANDATORY VIRAL RULES:
-- Hook must be under 8 words and create a curiosity gap or urgency — viewer CANNOT stop watching
-- Every voiceover sentence: max 9 words — punchy, emotional, conversational
-- Each scene needs a SPECIFIC data point or verifiable claim (responsibly phrased: "studies suggest", "many experts note", "some reports indicate") — no vague generalities
-- Scenes escalate: mildest reveal first → most shocking or mind-blowing last
-- loopAnchor (final voiceover line) MUST reference the opening hook to trigger rewatches
-- keyWords: 6-8 words that are the single most impactful — these get highlighted in accent color
-- pexels_search: 2-4 word query that will find vertical/portrait real-human footage on Pexels
-- caption: ultra-short 2-5 word Hormozi-style phrase that captures the emotional core of the scene
-- on_screen_text: 1-3 word bold label shown at top of screen (like a chapter marker)
-- accentColor: pick a hex that matches the emotional tone (red for dark/danger, gold for luxury, indigo for mind-blowing, green for health, etc.)
-
-GENERATE exactly ${sceneCount} scenes with ~${secPerScene}s each. Total = ${dur}s.
-
-Scenes must start at 0:00. Times in format M:SS.
-Scene 1 = hook (0:00 to ~0:0${Math.round(dur*0.12)})
-Scene 2 = tension/setup
-Scenes 3-${sceneCount-1} = escalating reveals (one stat/proof each)
-Scene ${sceneCount} = CTA + loop anchor
-
-RETURN ONLY this JSON (zero markdown, zero commentary):
-{"title":"","subtitle":"","hook":"","duration":${dur},"tone":"","format":"","accentColor":"#hex","gradientColors":["#hex","#hex","#hex"],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:08","voiceover":"","caption":"","on_screen_text":"","pexels_search":"","visual_direction":"","editing_notes":""}],"keyWords":["w1","w2","w3","w4","w5","w6"],"cta":"","loopAnchor":"","musicVibe":"","titles":["","",""],"description":"","hashtags":[""],"pinnedComment":"","seoKeywords":[""],"thumbnailText":""}`;
-
-  const msg=`Topic: ${topic}. Tone: ${tone}. Duration: ${dur}s. Platform: ${advPlatform}. Make the hook impossible to scroll past. Include real-world verifiable claims phrased responsibly. Every scene must earn the viewer's attention.`;
-
-  const methods=groqKey
-    ?[()=>fetchGroq(system,msg),()=>fetchPoll(topic,tone,dur)]
-    :[()=>fetchPoll(topic,tone,dur)];
-
-  let lastErr='';
-  for(let i=0;i<methods.length;i++){
-    try{
-      if(i>0){btn.innerHTML='<span class="spinner"></span> Trying fallback…';await wait(800);}
-      D=await methods[i]();
-      if(!D.scenes||!D.scenes.length)throw new Error('No scenes in response');
-      if(!D.keyWords)D.keyWords=[];
-      if(!D.gradientColors||D.gradientColors.length<3)D.gradientColors=['#0a001a','#1a0040','#0d0028'];
-      localStorage.setItem('vss_d',JSON.stringify(D));
-      renderResult(D);showVidState();setStep(3);
-      btn.disabled=false;btn.innerHTML='⚡ Generate Viral Script';
-      return;
-    }catch(e){lastErr=e.message||'unknown';}
+function updateStepRail(){
+  const done=[wfStep>=2,wfStep>=4,wfStep>=6,wfStep>=6,wfStep>=8];
+  const active=[wfStep===1,wfStep===3,wfStep===5,wfStep>=6&&wfStep<8,wfStep===7];
+  for(let i=0;i<5;i++){
+    const el=document.getElementById('sr'+i),dot=document.getElementById('srd'+i);
+    el.className='sr-step'+(done[i]?' done':active[i]?' active':'');
+    dot.innerHTML=done[i]?'✓':(i+1);
   }
-  showErr(groqKey?'Generation failed: '+lastErr:'Pollinations overloaded — add your free Groq key for instant generation.');
-  btn.disabled=false;btn.innerHTML='⚡ Generate Viral Script';
-  setStep(-1);
+  for(let i=0;i<4;i++){
+    const ln=document.getElementById('srl'+i);
+    if(ln)ln.style.background=wfStep>=(i+1)*2?'var(--grn)':'var(--border)';
+  }
 }
 
-function showErr(m){const el=document.getElementById('err-box');el.textContent=m;el.style.display='block';}
-function wait(ms){return new Promise(r=>setTimeout(r,ms));}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function cp(t,id){navigator.clipboard.writeText(t).then(()=>{const e=document.getElementById('cp-'+id);if(!e)return;const o=e.textContent;e.textContent='✓ Copied';setTimeout(()=>e.textContent=o,1500);});}
-
-// ── AI fetch ───────────────────────────────────────────────────────────────────
-async function fetchGroq(sys,msg){
-  const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-    method:'POST',headers:{'content-type':'application/json','Authorization':'Bearer '+groqKey},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:msg}],response_format:{type:'json_object'},temperature:0.88,max_tokens:2400})
+function showCenter(id){
+  ['idle','scripting','script-done','footage','footage-done','captions'].forEach(k=>{
+    const el=document.getElementById('cs-'+k);
+    if(el)el.style.display=k===id?'flex':'none';
   });
-  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('Groq '+r.status+': '+t.slice(0,120));}
-  const j=await r.json();return JSON.parse(j.choices[0].message.content);
-}
-async function fetchPoll(topic,tn,d){
-  const schema='{"title":"","subtitle":"","hook":"","duration":'+d+',"accentColor":"#hex","gradientColors":["#","#","#"],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:08","voiceover":"","caption":"","on_screen_text":"","pexels_search":"","visual_direction":"","editing_notes":""}],"keyWords":["w1","w2"],"cta":"","loopAnchor":"","musicVibe":"","titles":["","",""],"description":"","hashtags":[""],"pinnedComment":"","seoKeywords":[""],"thumbnailText":""}';
-  const p=encodeURIComponent(`Create a ${d}s viral YouTube Short about: ${topic}. Tone: ${tn}. Include ${d<=30?4:6} scenes with strong hook and escalating reveals. Return ONLY JSON: ${schema}`);
-  const r=await fetch(`https://text.pollinations.ai/${p}?model=openai&json=true&seed=${Math.floor(Math.random()*9999)}`);
-  if(!r.ok)throw new Error('Pollinations '+r.status);
-  const raw=(await r.text()).replace(/^```json?\s*/i,'').replace(/\s*```$/i,'').trim();
-  return JSON.parse(raw);
+  document.getElementById('cs-preview').style.display=id==='preview'?'flex':'none';
 }
 
-// ── Render result UI ───────────────────────────────────────────────────────────
-function renderResult(d){
-  const a=d.accentColor||'#FF4500';
-  // --- SCRIPT TAB ---
-  document.getElementById('sc-empty').style.display='none';
-  document.getElementById('sc-loaded').style.display='block';
-  const sc=document.getElementById('sc-loaded');
-  const scenes=d.scenes||[];
-  sc.innerHTML=`
-    <div class="hook-card" style="margin-bottom:10px">
-      <div class="hook-lbl">🎣 Hook — First 3 Seconds <button class="copy-sm" onclick="cp(${JSON.stringify(d.hook||'')},'hk')" id="cp-hk">Copy</button></div>
-      <div class="hook-text">"${esc(d.hook||'')}"</div>
-      ${d.musicVibe?`<div class="hook-hint">🎵 ${esc(d.musicVibe)}</div>`:''}
-    </div>
-    ${scenes.map((s,i)=>sceneCard(s,i,a,d.keyWords)).join('')}
-    <div class="cta-card">
-      <div style="font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--grn);margin-bottom:5px">📣 Call to Action</div>
-      <div style="font-size:13px;font-weight:700;margin-bottom:3px">${esc(d.cta||'')}</div>
-      ${d.loopAnchor?`<div style="font-size:10px;color:var(--muted);font-style:italic;margin-top:4px;padding-top:4px;border-top:1px solid rgba(255,255,255,.07)">🔄 Loop anchor: "${esc(d.loopAnchor)}"</div>`:''}
-    </div>
-    <div style="margin-top:10px">
-      <div style="font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:7px">Full Voiceover Script</div>
-      ${scenes.map((s,i)=>`<div class="vo-line"><div class="vo-num" style="background:${a}18;border:1px solid ${a}35;color:${a}">${i+1}</div><div class="vo-t" style="border-left-color:${a}55">${esc(s.voiceover||'')}</div><button class="copy-sm" onclick="cp(${JSON.stringify(s.voiceover||'')},'vo${i}')" id="cp-vo${i}">Copy</button></div>`).join('')}
-    </div>`;
-  // --- METADATA TAB ---
-  document.getElementById('de-empty').style.display='none';
-  document.getElementById('de-loaded').style.display='block';
-  const de=document.getElementById('de-loaded');
-  const titles=d.titles||[d.title||''];
-  de.innerHTML=`
-    <div class="meta-block">
-      <div class="meta-lbl">YouTube Title Options <button class="copy-sm" onclick="cp(${JSON.stringify(titles[0]||'')},'t0')" id="cp-t0">Copy Best</button></div>
-      ${titles.map((t,i)=>`<div class="title-opt" onclick="cp(${JSON.stringify(t)},'t${i}')" id="cp-t${i}" style="border-left:2px solid ${a}${i===0?'':'55'}">${esc(t)}</div>`).join('')}
-    </div>
-    <div class="meta-block">
-      <div class="meta-lbl">Description <button class="copy-sm" onclick="cp(${JSON.stringify(d.description||'')},'de')" id="cp-de">Copy</button></div>
-      <div class="meta-body">${esc(d.description||'')}</div>
-    </div>
-    <div class="meta-block">
-      <div class="meta-lbl">Hashtags <button class="copy-sm" onclick="cp(${JSON.stringify((d.hashtags||[]).join(' '))},'ht')" id="cp-ht">Copy All</button></div>
-      <div class="tags-wrap">${(d.hashtags||[]).map((t,i)=>`<span class="tag-chip" style="background:${a}12;border:1px solid ${a}30;color:${a}" onclick="cp(${JSON.stringify(t)},'tg${i}')" id="cp-tg${i}">${esc(t)}</span>`).join('')}</div>
-    </div>
-    <div class="meta-block">
-      <div class="meta-lbl">Pinned Comment</div>
-      <div class="meta-body" style="font-size:12px;font-weight:600">${esc(d.pinnedComment||'')}</div>
-      <button class="copy-sm" onclick="cp(${JSON.stringify(d.pinnedComment||'')},'pc')" id="cp-pc">Copy</button>
-    </div>
-    <div class="meta-block">
-      <div class="meta-lbl">SEO Keywords</div>
-      <div class="tags-wrap">${(d.seoKeywords||[]).map(k=>`<span class="kw-chip">${esc(k)}</span>`).join('')}</div>
-    </div>
-    <div class="meta-block">
-      <div class="meta-lbl">Thumbnail Text</div>
-      <div class="meta-body" style="font-size:15px;font-weight:900;color:${a}">${esc(d.thumbnailText||d.title||'')}</div>
-    </div>`;
-  // --- SCENE DOTS ---
-  const dotsEl=document.getElementById('scene-dots');
-  dotsEl.innerHTML=scenes.map((_,i)=>`<div class="sdot${i===0?' active':''}" id="sd-${i}" onclick="jumpScene(${i})"></div>`).join('');
-  // --- PHONE PREVIEW ---
-  document.getElementById('phone-idle').style.display='none';
-  resetPlay();
-  setTimeout(()=>startPlay(),200);
+function switchRightTab(name){
+  if(wfStep<TAB_MIN[name]){toast('Complete earlier steps first','error');return;}
+  activeTab=name;
+  document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('active',t.id==='rtab-'+name));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.toggle('active',t.id==='tab-'+name));
+}
+function unlockTabs(){
+  ['script','footage','captions','metadata','export'].forEach(name=>{
+    const el=document.getElementById('rtab-'+name);
+    if(!el)return;
+    const locked=wfStep<TAB_MIN[name];
+    el.classList.toggle('locked',locked);
+    const li=el.querySelector('.li');
+    if(li)li.style.display=locked?'':'none';
+  });
 }
 
-function sceneCard(s,i,a,kw){
-  const t=esc(s.on_screen_text||'');
-  const cap=esc(s.caption||'');
-  const vo=esc(s.voiceover||'');
-  const q=esc(s.pexels_search||'');
-  const timing=`${s.start_time||''}–${s.end_time||''}`;
-  return `<div class="scene-card" id="scard-${i}">
-    <div class="sc-hd">
-      <div class="sc-id">
-        <div class="sc-badge" style="background:${a}">${i+1}</div>
-        <span class="sc-t">${t||'Scene '+(i+1)}</span>
-        <span class="sc-time">${timing}</span>
-      </div>
-      <div class="sc-btns">
-        <button class="sc-btn" onclick="toggleSceneEdit(${i})">Edit</button>
-        <button class="sc-btn regen" onclick="regenScene(${i})">↻ Regen</button>
-      </div>
-    </div>
-    <div class="sc-vo">${vo}</div>
-    <div class="sc-cap">📝 Caption: <span>${cap}</span></div>
-    <div class="sc-query">🔍 Pexels: <span class="sc-qtag">${q}</span></div>
-    <div class="sc-edit" id="sedit-${i}">
-      <div>
-        <div class="sc-edit-lbl">Voiceover</div>
-        <textarea class="sc-ta" id="svo-${i}" rows="3">${s.voiceover||''}</textarea>
-      </div>
-      <div>
-        <div class="sc-edit-lbl">Caption text</div>
-        <textarea class="sc-ta" id="scap-${i}" rows="1">${s.caption||''}</textarea>
-      </div>
-      <div>
-        <div class="sc-edit-lbl">Pexels search query</div>
-        <textarea class="sc-ta" id="sq-${i}" rows="1">${s.pexels_search||''}</textarea>
-      </div>
-      <div style="display:flex;gap:5px">
-        <button class="sc-btn" style="flex:1" onclick="saveSceneEdit(${i})">✓ Save</button>
-        <button class="sc-btn" onclick="toggleSceneEdit(${i})">Cancel</button>
-      </div>
-    </div>
-  </div>`;
+function setStatus(type,text){
+  const el=document.getElementById('leftStatus');
+  el.className='status-chip '+type;
+  el.innerHTML=(type==='working'?'◎':type==='done'?'●':type==='error'?'✕':'◉')+' <span>'+text+'</span>';
 }
 
-function toggleSceneEdit(i){
-  const el=document.getElementById('sedit-'+i);
-  el.classList.toggle('open');
-}
-function saveSceneEdit(i){
-  if(!D||!D.scenes[i])return;
-  D.scenes[i].voiceover=document.getElementById('svo-'+i).value;
-  D.scenes[i].caption=document.getElementById('scap-'+i).value;
-  D.scenes[i].pexels_search=document.getElementById('sq-'+i).value;
-  localStorage.setItem('vss_d',JSON.stringify(D));
-  toggleSceneEdit(i);
-}
-async function regenScene(i){
-  if(!D||!groqKey){showErr('Groq key required to regenerate individual scenes.');return;}
-  const btn=document.querySelector(`#scard-${i} .sc-btn.regen`);
-  if(btn){btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';}
-  try{
-    const sys=`You are a top YouTube Shorts writer. Rewrite ONE scene of an existing short. Keep the same topic, format and tone. Return ONLY JSON for this single scene matching: {"scene_number":${i+1},"start_time":"${D.scenes[i].start_time}","end_time":"${D.scenes[i].end_time}","voiceover":"","caption":"","on_screen_text":"","pexels_search":"","visual_direction":"","editing_notes":""}`;
-    const msg=`Full short title: "${D.title}". Overall hook: "${D.hook}". Rewrite scene ${i+1} to be more punchy, surprising, and engaging. Current voiceover: "${D.scenes[i].voiceover}"`;
-    const result=await fetchGroq(sys,msg);
-    if(result.voiceover){
-      Object.assign(D.scenes[i],result);
-      localStorage.setItem('vss_d',JSON.stringify(D));
-      const a=D.accentColor||'#FF4500';
-      document.getElementById('scard-'+i).outerHTML=sceneCard(D.scenes[i],i,a,D.keyWords);
-    }
-  }catch(e){showErr('Regen failed: '+e.message);}
-  if(btn){btn.disabled=false;btn.innerHTML='↻ Regen';}
+function toast(msg,type='info'){
+  const c=document.getElementById('toasts'),d=document.createElement('div');
+  d.className='toast '+type;d.textContent=msg;c.appendChild(d);
+  setTimeout(()=>d.remove(),3500);
 }
 
-// ── Phone preview (canvas) ─────────────────────────────────────────────────────
-const ease=t=>1-Math.pow(1-Math.min(Math.max(t,0),1),3);
-
-function drawIdlePhone(){
-  const cv=document.getElementById('phone-cv');
-  const ctx=cv.getContext('2d');
-  const W=cv.width,H=cv.height;
-  const g=ctx.createLinearGradient(0,0,W,H);
-  g.addColorStop(0,'#07070f');g.addColorStop(0.5,'#0f0f22');g.addColorStop(1,'#07070f');
-  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  // subtle grid
-  ctx.strokeStyle='rgba(255,255,255,0.025)';ctx.lineWidth=1;
-  for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-  for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+async function callGroq(msgs){
+  const key=document.getElementById('groqKey').value.trim()||localStorage.getItem('groqKey')||'';
+  if(!key)throw new Error('No Groq API key. Enter it at the top.');
+  const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.75,max_tokens:4096,messages:msgs,response_format:{type:'json_object'}})
+  });
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('Groq '+r.status+': '+t.slice(0,200));}
+  const d=await r.json();
+  return JSON.parse(d.choices?.[0]?.message?.content||'{}');
 }
 
-function startPlay(){
-  if(!D)return;
-  playing=true;
-  document.getElementById('ctrl-play').innerHTML='⏸';
-  const cv=document.getElementById('phone-cv');
-  const ctx=cv.getContext('2d');
-  const W=cv.width,H=cv.height;
-  const FPS=30,T=FPS*dur;
-  const scenes=D.scenes||[];
-  // parse scene frame boundaries
-  const bounds=scenes.map(s=>({
-    startF:Math.floor(parseTime(s.start_time)*FPS),
-    endF:Math.floor(parseTime(s.end_time)*FPS),
-    s
-  }));
-  const kw=D.keyWords||[];
-  capPopF=0;lastCap='';
-
-  let last=null;
-  const loop=ts=>{
-    if(!playing)return;
-    if(last===null)last=ts;
-    if(ts-last>=1000/FPS){
-      last=ts;
-      const f=previewFrame;
-      // current scene
-      let si=bounds.length-1;
-      for(let i=0;i<bounds.length;i++){if(f>=bounds[i].startF&&f<bounds[i].endF){si=i;break;}}
-      const sc=bounds[si]?.s||scenes[0];
-
-      // background gradient
-      const gc=ctx.createLinearGradient(0,0,W,H);
-      gc.addColorStop(0,D.gradientColors[0]||'#0a001a');
-      gc.addColorStop(0.5,D.gradientColors[1]||'#1a0040');
-      gc.addColorStop(1,D.gradientColors[2]||'#0d0028');
-      ctx.fillStyle=gc;ctx.fillRect(0,0,W,H);
-
-      // dark overlays
-      const ov=ctx.createLinearGradient(0,0,0,H);
-      ov.addColorStop(0,'rgba(0,0,0,0.52)');ov.addColorStop(0.35,'rgba(0,0,0,0.08)');
-      ov.addColorStop(0.65,'rgba(0,0,0,0.08)');ov.addColorStop(1,'rgba(0,0,0,0.68)');
-      ctx.fillStyle=ov;ctx.fillRect(0,0,W,H);
-
-      // scene content
-      const scF=f-bounds[si].startF;
-      const scT=Math.max((bounds[si].endF-bounds[si].startF),1);
-
-      if(si===0){
-        // hook — large centered
-        const p=ease(Math.min(scF/16,1));
-        ctx.save();ctx.globalAlpha=p;
-        const hls=wrapText(ctx,((sc.caption||sc.voiceover||'').toUpperCase()),W-80,70);
-        ctx.font='900 70px Impact,Arial Black,sans-serif';ctx.textAlign='center';
-        hls.forEach((ln,li)=>{
-          const y=H*0.40+li*82-(hls.length-1)*41;
-          const sc2=0.85+ease(Math.min(scF/20,1))*0.15;
-          ctx.save();ctx.translate(W/2,y);ctx.scale(sc2,sc2);
-          ctx.strokeStyle='rgba(0,0,0,0.9)';ctx.lineWidth=16;ctx.lineJoin='round';ctx.strokeText(ln,0,0);
-          ctx.fillStyle='#fff';ctx.fillText(ln,0,0);
-          ctx.restore();
-        });
-        // accent line
-        const uw=ease(Math.max(scF-10,0)/18)*200;
-        ctx.strokeStyle=D.accentColor||'#FF4500';ctx.lineWidth=4;ctx.globalAlpha=p*0.8;
-        const ly=H*0.40+hls.length*82-hls.length*41+16;
-        ctx.beginPath();ctx.moveTo(W/2-uw/2,ly);ctx.lineTo(W/2+uw/2,ly);ctx.stroke();
-        ctx.restore();
-      } else if(si<scenes.length-1){
-        // content scenes — on_screen_text label + caption
-        const p=ease(Math.min(scF/16,1));
-        if(sc.on_screen_text&&p>0){
-          ctx.save();ctx.globalAlpha=p;
-          ctx.font='700 28px -apple-system,Inter,sans-serif';ctx.fillStyle=D.accentColor||'#FF4500';
-          ctx.textAlign='center';ctx.letterSpacing='4px';
-          ctx.fillText((sc.on_screen_text||'').toUpperCase(),W/2,H*0.25);ctx.letterSpacing='0px';
-          ctx.restore();
-        }
-        // giant ghost number
-        ctx.save();ctx.globalAlpha=0.05;ctx.font='900 500px Impact,Arial Black,sans-serif';ctx.fillStyle=D.accentColor||'#FF4500';ctx.textAlign='center';
-        ctx.fillText(si,W/2,H*0.68);ctx.restore();
-      } else {
-        // CTA scene
-        const p=ease(Math.min(scF/20,1));
-        ctx.save();ctx.globalAlpha=p;
-        ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(0,H*0.34,W,H*0.32);
-        ctx.font='900 46px Impact,Arial Black,sans-serif';ctx.fillStyle='#fff';ctx.strokeStyle='rgba(0,0,0,0.88)';ctx.lineWidth=11;ctx.lineJoin='round';ctx.textAlign='center';
-        ctx.strokeText((D.cta||'').toUpperCase().slice(0,28),W/2,H*0.48);ctx.fillText((D.cta||'').toUpperCase().slice(0,28),W/2,H*0.48);
-        const bg=ctx.createLinearGradient(W/2-115,0,W/2+115,0);bg.addColorStop(0,D.accentColor||'#FF4500');bg.addColorStop(1,(D.accentColor||'#FF4500')+'aa');
-        ctx.fillStyle=bg;ctx.beginPath();ctx.roundRect(W/2-115,H*0.525,230,54,27);ctx.fill();
-        ctx.font='800 23px -apple-system,Inter,sans-serif';ctx.fillStyle='#fff';ctx.fillText('👍  FOLLOW FOR MORE',W/2,H*0.525+36);
-        ctx.restore();
-      }
-
-      // Hormozi caption
-      const cap=sc.caption||'';
-      if(cap!==lastCap){capPopF=f;lastCap=cap;}
-      drawCaption(ctx,W,H,cap,captionStyle,D.accentColor||'#FF4500',kw,capPopF,f);
-
-      // progress
-      ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(0,H-5,W,5);
-      if(f>0){const gp=ctx.createLinearGradient(0,0,W*(f/T),0);gp.addColorStop(0,D.accentColor||'#FF4500');gp.addColorStop(1,'rgba(255,255,255,0.7)');ctx.fillStyle=gp;ctx.fillRect(0,H-5,W*(f/T),5);}
-
-      // update UI
-      document.getElementById('ph-prog').style.width=Math.min(f/T,1)*100+'%';
-      document.getElementById('ctrl-time').textContent=(f/FPS).toFixed(1)+'s / '+dur+'s';
-
-      // update scene dots
-      if(si!==curSceneIdx){
-        curSceneIdx=si;
-        document.querySelectorAll('.sdot').forEach((d,di)=>{d.className='sdot'+(di<si?' done':di===si?' active':'');});
-        document.querySelectorAll('.scene-card').forEach((c,ci)=>c.classList.toggle('cur',ci===si));
-      }
-
-      previewFrame++;
-      if(previewFrame>=T)previewFrame=0;
-    }
-    previewRAF=requestAnimationFrame(loop);
-  };
-  previewRAF=requestAnimationFrame(loop);
+async function callFallback(sys,usr){
+  const prompt=sys+'\n\n'+usr;
+  const r=await fetch('https://text.pollinations.ai/'+encodeURIComponent(prompt)+'?model=openai&json=true');
+  if(!r.ok)throw new Error('Fallback '+r.status);
+  const txt=await r.text();
+  const j=txt.indexOf('{'),e=txt.lastIndexOf('}');
+  if(j<0||e<0)throw new Error('No JSON in fallback');
+  return JSON.parse(txt.slice(j,e+1));
 }
 
-function stopPlay(){
-  playing=false;
-  if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
-  document.getElementById('ctrl-play').innerHTML='▶';
-}
-function resetPlay(){
-  stopPlay();
-  previewFrame=0;curSceneIdx=0;
-  document.getElementById('ph-prog').style.width='0%';
-  document.getElementById('ctrl-time').textContent='— / —';
-  document.querySelectorAll('.sdot').forEach((d,i)=>{d.className='sdot'+(i===0?' active':'');});
-}
-function togglePlay(){if(!D)return;if(playing)stopPlay();else startPlay();}
-function jumpScene(i){
-  if(!D)return;
-  const FPS=30,T=FPS*dur;
-  const bounds=D.scenes.map(s=>({startF:Math.floor(parseTime(s.start_time)*FPS)}));
-  previewFrame=bounds[i]?.startF||0;
+function buildPrompt(topic,attempt){
+  const [wMin,wMax]=WORD_TARGETS[dur]||[75,90];
+  const [sMin,sMax]=SCENE_TARGETS[dur]||[5,6];
+  const fmt=document.getElementById('fmtSelect').value;
+  const tone=document.getElementById('toneSelect').value;
+  const retry=attempt>1?`\n\nCRITICAL: Previous attempt was incomplete. You MUST write ALL ${sMin}-${sMax} scenes in full. EVERY scene must have a complete voiceover. full_voiceover_script MUST have ${wMin}-${wMax} words. DO NOT stop early.`:'';
+  const sys=`You are an elite YouTube Shorts creator. Generate a COMPLETE ${dur}-second viral script.\n\nMANDATORY:\n- full_voiceover_script: EXACTLY ${wMin}-${wMax} words, word-for-word, nothing cut\n- scenes: EXACTLY ${sMin}-${sMax} scenes, every scene fully written\n- Every scene MUST have: voiceover, caption, pexels_search\n- DO NOT use "[continue]" or placeholders\n- Make it VIRAL: strong hook, fast pacing, surprising facts, emotional CTA\n\nReturn ONLY valid JSON:\n{"title":"","subtitle":"","platform":"YouTube Shorts","format":"${fmt}","tone":"${tone}","duration_seconds":${dur},"estimated_word_count":0,"hook":"","full_voiceover_script":"COMPLETE ${wMin}-${wMax} word script here","cta":"","loopAnchor":"","accentColor":"#FF4500","gradientColors":["#0a001a","#200040","#0d0028"],"keyWords":["w1","w2","w3","w4","w5","w6"],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:05","voiceover":"full spoken text","caption":"SHORT PUNCH","caption_highlights":["WORD"],"on_screen_text":"overlay","pexels_search":"specific query","visual_direction":"what happens","editing_notes":"effects","transition":"cut","pacing":"fast"}],"youtube_metadata":{"title_options":["","",""],"description":"","hashtags":["#shorts"],"pinned_comment":"","thumbnail_text":"","seo_keywords":[""]}}${retry}`;
+  return {sys,usr:`Topic: ${topic}\nFormat: ${fmt}\nTone: ${tone}\nDuration: ${dur}s\nRequired: ${sMin}-${sMax} scenes, ${wMin}-${wMax} words`};
 }
 
-function parseTime(s){
-  if(!s)return 0;
-  const p=s.split(':');
-  return parseInt(p[0]||0)*60+parseFloat(p[1]||0);
+function validateScript(data){
+  const issues=[];
+  const [wMin]=WORD_TARGETS[dur]||[75,90];
+  const [sMin]=SCENE_TARGETS[dur]||[5,6];
+  if(!data.scenes?.length){issues.push('No scenes');return issues;}
+  if(data.scenes.length<sMin)issues.push(`Need ${sMin}+ scenes, got ${data.scenes.length}`);
+  const script=data.full_voiceover_script||data.scenes.map(s=>s.voiceover||'').join(' ');
+  const wc=script.trim().split(/\s+/).filter(Boolean).length;
+  if(wc<wMin*0.75)issues.push(`Need ~${wMin} words, got ${wc}`);
+  data.scenes.forEach((s,i)=>{
+    if(!s.voiceover?.trim())issues.push(`Scene ${i+1}: missing voiceover`);
+    if(!s.caption?.trim())issues.push(`Scene ${i+1}: missing caption`);
+    if(!s.pexels_search?.trim())issues.push(`Scene ${i+1}: missing search`);
+  });
+  if(!data.hook?.trim())issues.push('Missing hook');
+  return issues;
 }
 
-function wrapText(ctx,text,maxW,fs){
-  ctx.font=`900 ${fs}px Impact,Arial Black,sans-serif`;
-  const words=text.split(' ');let line='';const lines=[];
-  words.forEach(w=>{const t=line+(line?' ':'')+w;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;});
-  if(line)lines.push(line);return lines;
-}
-
-// ── Caption drawing ────────────────────────────────────────────────────────────
-function drawCaption(ctx,W,H,text,style,accent,keywords,popF,f){
-  if(!text)return;
-  const words=text.toUpperCase().split(' ').filter(Boolean);
-  if(!words.length)return;
-  const kw=(keywords||[]).map(k=>k.toUpperCase());
-  const pop=1+(1-ease(Math.min((f-popF)/5,1)))*0.14;
-  const PAD=50;const maxW=W-PAD*2;
-
-  const ST={
-    hormozi:{fs:56,f:'Impact,Arial Black,sans-serif',w:'900',col:'#fff',str:'rgba(0,0,0,0.95)',sw:12,hcol:accent},
-    clean:  {fs:44,f:'-apple-system,Inter,sans-serif',w:'800',col:'#fff',str:'rgba(0,0,0,0.7)',sw:7,hcol:'#fff'},
-    yellow: {fs:52,f:'Impact,Arial Black,sans-serif',w:'900',col:'#fff',str:'rgba(0,0,0,0.9)',sw:11,hcol:'#FFE000'},
-    dark:   {fs:40,f:'-apple-system,Inter,sans-serif',w:'700',col:'#fff',str:null,sw:0,hcol:accent,pill:true},
-    tiktok: {fs:48,f:'-apple-system,Inter,sans-serif',w:'800',col:'#fff',str:'rgba(0,0,0,0.8)',sw:9,hcol:'#FF2D55'}
-  };
-  let S=ST[style]||ST.hormozi;
-  let fs=S.fs;
-
-  const buildRows=()=>{
-    ctx.font=`${S.w} ${fs}px ${S.f}`;
-    const rows=[];let row=[];
-    words.forEach(w=>{
-      const test=[...row,w];
-      const tw=test.reduce((acc,wd,i)=>acc+ctx.measureText(wd+(i<test.length-1?' ':'')).width,0);
-      if(row.length&&tw>maxW){rows.push(row);row=[w];}else row.push(w);
-    });
-    if(row.length)rows.push(row);
-    return rows;
-  };
-  while(fs>18){ctx.font=`${S.w} ${fs}px ${S.f}`;const r=buildRows();if(r.every(row=>row.reduce((a,w,i)=>a+ctx.measureText(w+(i<row.length-1?' ':'')).width,0)<=maxW))break;fs-=2;}
-  ctx.font=`${S.w} ${fs}px ${S.f}`;
-  const rows=buildRows();
-  const rowH=fs+10;
-  ctx.save();
-  ctx.translate(W/2,H*0.80-((rows.length-1)*rowH)/2);
-  ctx.scale(pop,pop);
-
-  if(S.pill){
-    const mw=Math.max(...rows.map(r=>r.reduce((a,w,i)=>a+ctx.measureText(w+(i<r.length-1?' ':'')).width,0)));
-    ctx.fillStyle='rgba(0,0,0,0.72)';ctx.beginPath();ctx.roundRect(-mw/2-16,-(rows.length*rowH)/2-10,mw+32,rows.length*rowH+20,11);ctx.fill();
+async function stepGenerate(){
+  const topic=document.getElementById('topicInput').value.trim();
+  if(!topic){toast('Enter a topic first!','error');return;}
+  bgMode=document.getElementById('bgModeSelect').value;
+  wfStep=1;updateStepRail();showCenter('scripting');setStatus('working','Writing script...');
+  document.getElementById('genBtn').disabled=true;
+  document.getElementById('genBtn').textContent='⏳ Generating...';
+  document.getElementById('scriptProgress').style.width='15%';
+  let scriptData=null,lastErr=null;
+  for(let attempt=1;attempt<=3;attempt++){
+    try{
+      document.getElementById('cs-scripting-sub').textContent=attempt>1?`Retry ${attempt}/3 — fixing issues...`:'Crafting hook, scenes, and CTA...';
+      document.getElementById('scriptProgress').style.width=(15+attempt*25)+'%';
+      const {sys,usr}=buildPrompt(topic,attempt);
+      let data;
+      try{data=await callGroq([{role:'system',content:sys},{role:'user',content:usr}]);}
+      catch(e){if(e.message.includes('No Groq'))throw e;toast('Groq failed, trying fallback...','info');data=await callFallback(sys,usr);}
+      const issues=validateScript(data);
+      if(!issues.length){scriptData=data;break;}
+      lastErr=issues.join('; ');
+      toast('Issues found, retrying: '+lastErr,'info');
+    }catch(e){lastErr=e.message;if(attempt===3)break;}
   }
+  document.getElementById('scriptProgress').style.width='100%';
+  document.getElementById('genBtn').disabled=false;
+  document.getElementById('genBtn').textContent='⚡ Generate Script';
+  if(!scriptData){
+    wfStep=0;updateStepRail();showCenter('idle');setStatus('error','Failed');
+    toast('Error: '+(lastErr||'unknown'),'error');return;
+  }
+  D=scriptData;wfStep=2;updateStepRail();unlockTabs();
+  renderScriptTab();renderMetadataTab();showCenter('script-done');
+  renderScriptStats();setStatus('done','Script ready');
+  switchRightTab('script');
+  document.getElementById('approveBtn').disabled=false;
+  document.getElementById('regenBtn').disabled=false;
+}
 
+async function regenScript(){
+  const topic=document.getElementById('topicInput').value.trim();
+  if(!topic){toast('Enter a topic first!','error');return;}
+  wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];unlockTabs();
+  await stepGenerate();
+}
+
+function renderScriptStats(){
+  if(!D)return;
+  const script=D.full_voiceover_script||D.scenes.map(s=>s.voiceover||'').join(' ');
+  const wc=script.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('cs-script-stats').innerHTML=`
+    <div class="c-step-item done"><div class="c-step-dot">✓</div>${D.scenes.length} scenes generated</div>
+    <div class="c-step-item done"><div class="c-step-dot">✓</div>${wc} words in script</div>
+    <div class="c-step-item done"><div class="c-step-dot">✓</div>Hook: "${esc((D.hook||'').slice(0,40))}..."</div>`;
+}
+
+function renderScriptTab(){
+  if(!D)return;
+  document.getElementById('script-empty').style.display='none';
+  document.getElementById('script-content').style.display='block';
+  document.getElementById('script-meta').innerHTML=`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px"><div style="font-size:15px;font-weight:800;margin-bottom:2px">${esc(D.title||'')}</div><div style="font-size:12px;color:var(--muted)">${esc(D.subtitle||'')} · ${D.duration_seconds}s · ${esc(D.tone||'')}</div></div>`;
+  document.getElementById('script-hook').innerHTML=`<div style="background:rgba(255,69,0,0.07);border:1px solid rgba(255,69,0,0.2);border-radius:7px;padding:9px 12px;font-size:13px"><span style="font-size:10px;color:var(--acc);font-weight:700;text-transform:uppercase;letter-spacing:1px">Hook</span><br>${esc(D.hook||'')}</div>`;
+  let html='';
+  (D.scenes||[]).forEach((s,i)=>{
+    html+=`<div class="scene-card"><div class="scene-card-header"><div class="scene-num">${s.scene_number||i+1}</div><span class="scene-time">${s.start_time||''} → ${s.end_time||''}</span><span style="font-size:10px;color:var(--muted)">${s.pacing||''}</span></div><div class="scene-field"><label>Voiceover</label><div style="font-size:12px;line-height:1.6">${esc(s.voiceover||'')}</div></div><div class="scene-field"><label>Caption</label><div style="font-size:12px;color:var(--acc);font-weight:700">${esc(s.caption||'')}</div></div><div class="scene-field"><label>Pexels Search</label><div style="font-size:11px;color:var(--muted)">${esc(s.pexels_search||'')}</div></div><div class="scene-field"><label>Visual Direction</label><div style="font-size:11px;color:var(--muted)">${esc(s.visual_direction||'')}</div></div></div>`;
+  });
+  document.getElementById('script-scenes-list').innerHTML=html;
+  document.getElementById('script-cta').innerHTML=`<div style="background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.2);border-radius:7px;padding:9px 12px;font-size:13px"><span style="font-size:10px;color:#a5b4fc;font-weight:700;text-transform:uppercase;letter-spacing:1px">CTA</span><br>${esc(D.cta||'')}</div>`;
+}
+
+function renderMetadataTab(){
+  if(!D||!D.youtube_metadata)return;
+  document.getElementById('metadata-empty').style.display='none';
+  const m=D.youtube_metadata;
+  document.getElementById('metadata-content').innerHTML=`
+    <div class="meta-section"><div class="meta-section-title">Title Options</div>${(m.title_options||[]).map((t,i)=>`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;margin-bottom:5px">${i+1}. ${esc(t)}</div>`).join('')}</div>
+    <div class="meta-section"><div class="meta-section-title">Description</div><textarea readonly style="min-height:80px;font-size:12px;color:var(--muted)">${esc(m.description||'')}</textarea></div>
+    <div class="meta-section"><div class="meta-section-title">Hashtags</div><div>${(m.hashtags||[]).map(h=>`<span class="meta-tag">${esc(h)}</span>`).join('')}</div></div>
+    <div class="meta-section"><div class="meta-section-title">SEO Keywords</div><div>${(m.seo_keywords||[]).map(k=>`<span class="meta-tag" style="background:rgba(255,69,0,0.1);border-color:rgba(255,69,0,0.2);color:#ff8a6a">${esc(k)}</span>`).join('')}</div></div>
+    <div class="meta-section"><div class="meta-section-title">Thumbnail Text</div><div style="font-size:14px;font-weight:800;color:var(--acc)">${esc(m.thumbnail_text||'')}</div></div>
+    <div class="meta-section"><div class="meta-section-title">Pinned Comment</div><div style="font-size:12px;color:var(--muted)">${esc(m.pinned_comment||'')}</div></div>`;
+  document.getElementById('metadata-content').style.display='block';
+}
+
+async function stepFindFootage(){
+  if(!D||wfStep<2){toast('Generate script first','error');return;}
+  const pk=document.getElementById('pexelsKey').value.trim()||localStorage.getItem('pexelsKey')||'';
+  bgMode=document.getElementById('bgModeSelect').value;
+  wfStep=3;updateStepRail();showCenter('footage');setStatus('working','Finding footage...');
+  document.getElementById('approveBtn').disabled=true;
+  sceneVids=[];sceneThumbUrls=[];
+  const scenes=D.scenes||[];
+  for(let i=0;i<scenes.length;i++){
+    document.getElementById('footageProgress').style.width=Math.round((i/scenes.length)*100)+'%';
+    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${scenes[i].pexels_search}"...`;
+    let vid=null,thumb=null;
+    if(bgMode==='pexels'&&pk){
+      try{const r=await fetchPexelsVideo(scenes[i].pexels_search,pk);if(r){vid=r.vid;thumb=r.thumb;}}
+      catch(e){console.warn('Pexels:',e);}
+    }
+    sceneVids.push(vid);sceneThumbUrls.push(thumb);
+  }
+  document.getElementById('footageProgress').style.width='100%';
+  wfStep=4;updateStepRail();unlockTabs();renderFootageTab();showCenter('footage-done');
+  setStatus('done','Footage ready');switchRightTab('footage');
+  document.getElementById('buildCaptionsBtn').disabled=false;
+}
+
+async function fetchPexelsVideo(query,key){
+  const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=5&orientation=portrait`,{headers:{Authorization:key}});
+  if(!r.ok)throw new Error('Pexels '+r.status);
+  const data=await r.json();
+  const vids=data.videos||[];if(!vids.length)return null;
+  const best=vids[0];
+  const file=best.video_files?.find(f=>f.quality==='hd'&&f.width<f.height)||best.video_files?.[0];
+  if(!file)return null;
+  const el=document.createElement('video');
+  el.src=file.link;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
+  el.play().catch(()=>{});
+  return{vid:el,thumb:best.image||null};
+}
+
+function renderFootageTab(){
+  document.getElementById('footage-empty').style.display='none';
+  document.getElementById('footage-content').style.display='block';
+  let html='';
+  (D.scenes||[]).forEach((s,i)=>{
+    const thumb=sceneThumbUrls[i];
+    html+=`<div class="scene-card"><div class="scene-card-header"><div class="scene-num">${s.scene_number||i+1}</div><span class="scene-time">${s.start_time||''} → ${s.end_time||''}</span><span style="font-size:10px;color:${sceneVids[i]?'var(--grn)':'var(--muted)'}">${sceneVids[i]?'✓ Found':'Gradient'}</span></div>${thumb?`<img class="scene-thumb" src="${thumb}" alt="Scene ${i+1}">`:'<div class="scene-thumb-ph">No Pexels footage — using gradient</div>'}<div style="font-size:11px;color:var(--muted)">🔍 ${esc(s.pexels_search||'')}</div></div>`;
+  });
+  document.getElementById('footage-scenes-list').innerHTML=html;
+}
+
+async function stepBuildCaptions(){
+  if(!D||wfStep<4){toast('Find footage first','error');return;}
+  wfStep=5;updateStepRail();showCenter('captions');setStatus('working','Building captions...');
+  document.getElementById('buildCaptionsBtn').disabled=true;
+  await new Promise(r=>setTimeout(r,300));
+  captionTimeline=buildCaptionTimeline(D.scenes,FPS,dur);
+  wfStep=6;updateStepRail();unlockTabs();renderCaptionsTab();renderExportTab();
+  setStatus('done','Preview ready');showCenter('preview');
+  switchRightTab('captions');startPreview();
+}
+
+function buildCaptionTimeline(scenes,fps,duration){
+  const ps=duration<=15?3:4;
+  const timeline=[];
+  (scenes||[]).forEach((s,si)=>{
+    const startF=Math.floor(parseTime(s.start_time)*fps);
+    const nextS=si<scenes.length-1?Math.floor(parseTime(scenes[si+1].start_time)*fps):Math.floor(duration*fps);
+    const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
+    const phrases=[];
+    for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
+    if(!phrases.length)phrases.push(s.caption||'');
+    const fpPer=(nextS-startF)/phrases.length;
+    phrases.forEach((phrase,pi)=>{
+      timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
+        startF:startF+Math.floor(pi*fpPer),endF:pi===phrases.length-1?nextS:startF+Math.floor((pi+1)*fpPer),
+        popF:startF+Math.floor(pi*fpPer),sceneIdx:si});
+    });
+  });
+  return timeline;
+}
+
+function parseTime(t){
+  if(!t)return 0;
+  const p=String(t).split(':');
+  return p.length===2?parseInt(p[0])*60+parseFloat(p[1]):parseFloat(t)||0;
+}
+
+function renderCaptionsTab(){
+  document.getElementById('captions-empty').style.display='none';
+  document.getElementById('captions-content').style.display='block';
+  let html='';
+  captionTimeline.forEach(c=>{
+    const s=(c.startF/FPS).toFixed(1),e=(c.endF/FPS).toFixed(1);
+    const words=c.text.split(/\s+/);
+    const hiWords=words.map(w=>{
+      const clean=w.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+      return c.highlights.includes(clean)?`<span class="hl">${esc(w)}</span>`:esc(w);
+    }).join(' ');
+    html+=`<div class="cap-phrase"><div class="cap-phrase-text">${hiWords}</div><div class="cap-phrase-time">${s}s–${e}s</div></div>`;
+  });
+  document.getElementById('caption-timeline-list').innerHTML=html||'<div style="color:var(--muted);font-size:12px">No captions</div>';
+}
+function renderExportTab(){
+  document.getElementById('export-empty').style.display='none';
+  document.getElementById('export-content').style.display='block';
+}
+
+// ── Preview ──────────────────────────────────────────────────────────────────
+function startPreview(){
+  previewFrame=0;previewPlaying=true;
+  if(previewRAF)cancelAnimationFrame(previewRAF);
+  previewRAF=requestAnimationFrame(previewLoop);
+}
+function togglePreviewPlay(){
+  previewPlaying=!previewPlaying;
+  document.getElementById('playPauseBtn').textContent=previewPlaying?'⏸ Pause':'▶ Play';
+  if(previewPlaying)previewRAF=requestAnimationFrame(previewLoop);
+}
+function restartPreview(){previewFrame=0;previewPlaying=true;document.getElementById('playPauseBtn').textContent='⏸ Pause';if(previewRAF)cancelAnimationFrame(previewRAF);previewRAF=requestAnimationFrame(previewLoop);}
+
+function previewLoop(ts=0){
+  if(!previewPlaying)return;
+  const elapsed=ts-lastTS;
+  if(elapsed>=1000/FPS){
+    lastTS=ts;
+    drawFrame(previewFrame);
+    previewFrame++;
+    if(previewFrame>=dur*FPS)previewFrame=0;
+  }
+  previewRAF=requestAnimationFrame(previewLoop);
+}
+
+function drawFrame(f){
+  const canvas=document.getElementById('previewCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  const scenes=D?.scenes||[];
+  let si=0;
+  for(let i=0;i<scenes.length;i++){if(f>=Math.floor(parseTime(scenes[i].start_time)*FPS))si=i;}
+  drawBg(ctx,f,si);
+  // overlay gradient
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'rgba(0,0,0,0.5)');g.addColorStop(0.4,'rgba(0,0,0,0.08)');g.addColorStop(1,'rgba(0,0,0,0.6)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // caption
+  const cap=captionTimeline.find(c=>f>=c.startF&&f<c.endF);
+  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.popF,f);
+  // watermark
+  ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#fff';ctx.font='500 11px Inter,sans-serif';ctx.fillText('Viral Shorts Studio',16,H-14);ctx.restore();
+}
+
+function drawBg(ctx,f,si){
+  const vid=sceneVids[si];
+  if(vid&&vid.readyState>=2){
+    const zoom=1+(f%(FPS*5))/(FPS*5)*0.04;
+    const sw=W*zoom,sh=H*zoom,sx=(sw-W)/2,sy=(sh-H)/2;
+    try{ctx.drawImage(vid,-sx,-sy,sw,sh);}catch(e){}
+  } else {
+    const cols=D?.gradientColors||['#0a001a','#200040','#0d0028'];
+    const gi=ctx.createLinearGradient(0,0,W,H);
+    gi.addColorStop(0,cols[0]);gi.addColorStop(0.5,cols[1]);gi.addColorStop(1,cols[2]);
+    ctx.fillStyle=gi;ctx.fillRect(0,0,W,H);
+    const t=f/FPS;
+    const orb=ctx.createRadialGradient(W/2+Math.sin(t)*60,H/3+Math.cos(t*0.7)*80,0,W/2,H/3,280);
+    orb.addColorStop(0,'rgba(255,69,0,0.16)');orb.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=orb;ctx.fillRect(0,0,W,H);
+  }
+}
+
+function drawCaption(ctx,W,H,text,style,accent,highlights,popF,f){
+  if(!text)return;
+  const capY=H*0.72;
+  const ease=t=>t<0.5?2*t*t:-1+(4-2*t)*t;
+  const pop=Math.min(1,(f-popF)/5);
+  const scale=1+(1-ease(pop))*0.13;
+  const defs={
+    hormozi:{fs:54,font:'Impact,Arial Black,sans-serif',color:'#fff',strokeColor:'#000',strokeW:12,hlColor:accent,shadow:true,pill:false},
+    clean:  {fs:42,font:'800 42px Inter,system-ui,sans-serif',color:'#fff',strokeColor:'rgba(0,0,0,0.7)',strokeW:8,hlColor:'#38bdf8',shadow:true,pill:false},
+    yellow: {fs:50,font:'Impact,Arial Black,sans-serif',color:'#FFE000',strokeColor:'#000',strokeW:12,hlColor:'#fff',shadow:false,pill:false},
+    dark:   {fs:40,font:'700 40px Inter,system-ui,sans-serif',color:'#fff',strokeColor:null,strokeW:0,hlColor:accent,shadow:false,pill:true},
+    tiktok: {fs:46,font:'800 46px Inter,system-ui,sans-serif',color:'#fff',strokeColor:'#000',strokeW:8,hlColor:'#FF2D55',shadow:false,pill:false},
+  };
+  const s=defs[style]||defs.hormozi;
+  const maxW=W-104;
+  ctx.save();
+  ctx.translate(W/2,capY);ctx.scale(scale,scale);
+  let fs=s.fs,rows=[];
+  for(let t=0;t<8;t++){
+    const fstr=style==='hormozi'||style==='yellow'?`${fs}px ${s.font}`:s.font.replace(/\d+px/,fs+'px');
+    ctx.font=fstr;rows=wrapText(ctx,text,maxW);
+    if(rows.every(r=>ctx.measureText(r).width<=maxW))break;
+    fs=Math.max(20,fs-4);
+  }
+  const lh=fs*1.28,totalH=rows.length*lh,startY=-totalH/2;
+  const fstr=style==='hormozi'||style==='yellow'?`${fs}px ${s.font}`:s.font.replace(/\d+px/,fs+'px');
+  ctx.font=fstr;
+  if(s.pill){
+    const pad=16;
+    ctx.fillStyle='rgba(0,0,0,0.72)';
+    roundRect(ctx,-maxW/2-pad,startY-pad,maxW+pad*2,totalH+pad*2,12);ctx.fill();
+  }
   rows.forEach((row,ri)=>{
-    const rw=row.reduce((a,w,i)=>a+ctx.measureText(w+(i<row.length-1?' ':'')).width,0);
-    let x=-rw/2;const y=ri*rowH;
-    row.forEach((w,wi)=>{
-      const isKey=kw.some(k=>w===k||w.startsWith(k)||k.startsWith(w));
-      const ww=ctx.measureText(w+(wi<row.length-1?' ':'')).width;
-      if(S.str){ctx.strokeStyle=S.str;ctx.lineWidth=Math.max(fs*0.22,7);ctx.lineJoin='round';ctx.textAlign='left';ctx.strokeText(w,x,y);}
-      ctx.fillStyle=isKey?S.hcol:S.col;ctx.textAlign='left';ctx.fillText(w,x,y);
-      x+=ww;
+    const y=startY+ri*lh+lh*0.8;
+    const words=row.split(' ');let xCur=-ctx.measureText(row).width/2;
+    words.forEach((word,wi)=>{
+      const clean=word.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+      const isHl=highlights.includes(clean);
+      const ww=ctx.measureText(word).width,sp=wi<words.length-1?ctx.measureText(' ').width:0;
+      if(s.shadow){ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;ctx.shadowOffsetY=2;}
+      if(s.strokeColor){ctx.lineWidth=s.strokeW;ctx.strokeStyle=s.strokeColor;ctx.lineJoin='round';ctx.strokeText(word,xCur,y);}
+      ctx.shadowBlur=0;ctx.fillStyle=isHl?s.hlColor:s.color;ctx.fillText(word,xCur,y);
+      xCur+=ww+sp;
     });
   });
   ctx.restore();
 }
 
-// ── Pexels ─────────────────────────────────────────────────────────────────────
-async function pexSearch(q,fallbacks){
-  if(!pexKey)return[];
-  const attempt=async(query)=>{
-    try{
-      const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=5&orientation=portrait`,{headers:{Authorization:pexKey}});
-      if(!r.ok)return[];
-      return (await r.json()).videos||[];
-    }catch{return[];}
-  };
-  let res=await attempt(q);
-  if(!res.length&&fallbacks){
-    for(const fb of fallbacks){res=await attempt(fb);if(res.length)break;}
-  }
-  return res;
+function wrapText(ctx,text,maxW){
+  const words=text.split(' ');const rows=[];let cur='';
+  words.forEach(w=>{const test=cur?cur+' '+w:w;if(ctx.measureText(test).width>maxW&&cur){rows.push(cur);cur=w;}else cur=test;});
+  if(cur)rows.push(cur);return rows;
 }
-function bestUrl(vid){
-  const f=(vid.video_files||[]).sort((a,b)=>{
-    const ap=a.height>=a.width?1:0,bp=b.height>=b.width?1:0;
-    if(ap!==bp)return bp-ap;
-    return(b.quality==='hd'?2:1)-(a.quality==='hd'?2:1);
-  });
-  return f[0]?.link;
-}
-function loadVid(url){return new Promise((res,rej)=>{const v=document.createElement('video');v.crossOrigin='anonymous';v.muted=true;v.playsInline=true;v.preload='auto';v.loop=true;const t=setTimeout(()=>rej(new Error('timeout')),18000);v.oncanplay=()=>{clearTimeout(t);res(v);};v.onerror=()=>{clearTimeout(t);rej(new Error('load error'));};v.src=url;v.load();});}
-function loadImg(url){return new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=rej;i.src=url;});}
-
-// ── Canvas background helper ───────────────────────────────────────────────────
-function drawBg(ctx,W,H,vid,img,d,f,T){
-  const kb=f/T;
-  if(vid&&vid.readyState>=2){
-    const vw=vid.videoWidth||W,vh=vid.videoHeight||H;
-    const s=Math.max(W/vw,H/vh)*(1+kb*0.04);
-    const panX=(kb-0.5)*W*0.03;
-    ctx.save();ctx.translate(W/2+panX,H/2);ctx.drawImage(vid,-vw*s/2,-vh*s/2,vw*s,vh*s);ctx.restore();
-  }else if(img){
-    const s=1+kb*0.06;ctx.save();ctx.translate(W/2,H/2);ctx.scale(s,s);ctx.drawImage(img,-W/2,-H/2,W,H);ctx.restore();
-  }else{
-    const g=ctx.createLinearGradient(0,0,W,H);
-    (d.gradientColors||['#0a001a','#1a0040','#0d0028']).forEach((c,i,a)=>g.addColorStop(i/(a.length-1),c));
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  }
-  const ov=ctx.createLinearGradient(0,0,0,H);
-  ov.addColorStop(0,'rgba(0,0,0,0.58)');ov.addColorStop(0.38,'rgba(0,0,0,0.12)');ov.addColorStop(0.62,'rgba(0,0,0,0.12)');ov.addColorStop(1,'rgba(0,0,0,0.72)');
-  ctx.fillStyle=ov;ctx.fillRect(0,0,W,H);
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);
+  ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
 }
 
-function setSt(msg,pct){document.getElementById('rp-txt').textContent=msg;document.getElementById('rp-pct').textContent=pct+'%';document.getElementById('rp-fill').style.width=pct+'%';}
-
-// ── Render video ───────────────────────────────────────────────────────────────
+// ── Export ───────────────────────────────────────────────────────────────────
 async function renderVideo(){
-  if(!D)return;
-  const d=D;const FPS=30,DUR=dur,T=FPS*DUR;const W=540,H=960;
-  const rcv=document.getElementById('rc');rcv.width=W;rcv.height=H;
-  const rctx=rcv.getContext('2d');
-  const lcv=document.getElementById('live-cv');lcv.width=W;lcv.height=H;
-  const lctx=lcv.getContext('2d');lcv.classList.add('show');
-  const btn=document.getElementById('rnd-btn');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Rendering…';
-  document.getElementById('rp-wrap').classList.add('show');
-  document.getElementById('dl-wrap').classList.remove('show');
-
-  // Stop phone preview during render
-  stopPlay();
-
-  const scenes=d.scenes||[];
-  const bounds=scenes.map(s=>({
-    startF:Math.floor(parseTime(s.start_time)*FPS),
-    endF:Math.floor(parseTime(s.end_time)*FPS),
-    s
-  }));
-  // ensure last scene ends at T
-  if(bounds.length)bounds[bounds.length-1].endF=T;
-
-  setStep(1);setSt('Searching Pexels footage…',3);
-
-  // Load scene videos
-  const svids=new Array(scenes.length).fill(null);
-  if(bgMode==='pexels'&&pexKey){
-    const FALLBACKS=['cinematic city','luxury lifestyle','business professional','dark documentary','success motivation','city lights night'];
-    await Promise.all(scenes.map(async(s,i)=>{
-      try{
-        const res=await pexSearch(s.pexels_search||d.title,[FALLBACKS[i%FALLBACKS.length],'cinematic dark']);
-        const url=res[0]?bestUrl(res[0]):null;
-        if(url)svids[i]=await loadVid(url);
-      }catch{}
-    }));
-    setSt(`Footage: ${svids.filter(Boolean).length}/${scenes.length} clips loaded`,14);
-  }
-
-  let aiImg=null;
-  if(!svids.some(Boolean)&&bgMode!=='gradient'){
-    try{setSt('Generating AI background…',16);const p=encodeURIComponent(d.imagePrompt||`cinematic ${d.title||'short film'}`);aiImg=await loadImg(`https://image.pollinations.ai/prompt/${p}?width=540&height=960&nologo=true`);}catch{}
-  }
-
-  setStep(2);setSt('Building captions…',20);
-  const kw=d.keyWords||[];
-
-  setSt('Recording…',24);
-  const stream=rcv.captureStream(FPS);
+  if(wfStep<6){toast('Complete all steps first','error');return;}
+  const canvas=document.getElementById('previewCanvas');
+  const stream=canvas.captureStream(FPS);
+  let rec;
+  try{rec=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9',videoBitsPerSecond:9_000_000});}
+  catch(e){rec=new MediaRecorder(stream,{videoBitsPerSecond:9_000_000});}
   const chunks=[];
-  const mime=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:9000000});
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
-  rec.start(250);
-
-  let activeSi=-1;
-  function activateScene(si){
-    if(si===activeSi)return;
-    svids.forEach((v,i)=>{if(v&&i!==si)v.pause();});
-    if(svids[si]){svids[si].currentTime=0;svids[si].play().catch(()=>{});}
-    activeSi=si;
-  }
-
-  let capPop=0,lastC='';
-
-  setStep(3);
+  document.getElementById('exportBtn').disabled=true;
+  document.getElementById('renderProgress').style.display='block';
+  document.getElementById('renderFill').style.width='0%';
+  wfStep=7;updateStepRail();rec.start(100);
+  let f=0;const totalF=dur*FPS;
   await new Promise(resolve=>{
-    let f=0,lastT=null;
-    const loop=ts=>{
-      if(lastT===null)lastT=ts;lastT=ts;
-      // find scene
-      let si=bounds.length-1;
-      for(let i=0;i<bounds.length;i++){if(f>=bounds[i].startF&&f<bounds[i].endF){si=i;break;}}
-      activateScene(si);
-      const vid=svids[si]||svids.find(Boolean)||null;
-      const sc=scenes[si];
-
-      drawBg(rctx,W,H,vid,aiImg,d,f,T);
-
-      if(si===0){
-        // hook
-        const p=ease(Math.min(f/16,1));
-        if(p>0){
-          rctx.save();rctx.globalAlpha=p;
-          const hls=wrapText(rctx,(d.hook||'').toUpperCase(),W-72,72);
-          rctx.font='900 72px Impact,Arial Black,sans-serif';rctx.textAlign='center';
-          const sc2=0.85+ease(Math.min(f/20,1))*0.15;
-          hls.forEach((ln,li)=>{
-            const y=H*0.42+li*84-(hls.length-1)*42;
-            rctx.save();rctx.translate(W/2,y);rctx.scale(sc2,sc2);
-            rctx.strokeStyle='rgba(0,0,0,0.92)';rctx.lineWidth=17;rctx.lineJoin='round';rctx.strokeText(ln,0,0);
-            rctx.fillStyle='#fff';rctx.fillText(ln,0,0);
-            rctx.restore();
-          });
-          const uw=ease(Math.max(f-10,0)/18)*220;
-          rctx.strokeStyle=d.accentColor;rctx.lineWidth=5;rctx.globalAlpha=p*0.8;
-          const ly=H*0.42+hls.length*84-hls.length*42+18;
-          rctx.beginPath();rctx.moveTo(W/2-uw/2,ly);rctx.lineTo(W/2+uw/2,ly);rctx.stroke();
-          rctx.restore();
-        }
-      } else if(si<scenes.length-1){
-        // content scenes
-        const scF=f-bounds[si].startF;
-        const inP=ease(Math.min(scF/18,1));
-        if(inP>0){
-          rctx.save();
-          // ghost number
-          rctx.globalAlpha=inP*0.055;rctx.font='900 500px Impact,Arial Black,sans-serif';rctx.fillStyle=d.accentColor;rctx.textAlign='center';
-          rctx.fillText(si,W/2,H*0.66);
-          rctx.globalAlpha=inP;
-          // on_screen_text label
-          if(sc.on_screen_text){
-            const ty=(1-ease(Math.min(scF/18,1)))*22;
-            rctx.save();rctx.translate(0,-ty);
-            rctx.font='700 26px -apple-system,Inter,sans-serif';rctx.fillStyle=d.accentColor;rctx.textAlign='center';rctx.letterSpacing='5px';
-            rctx.fillText(sc.on_screen_text.toUpperCase(),W/2,H*0.25);rctx.letterSpacing='0px';
-            // heading
-            const hls=wrapText(rctx,(sc.on_screen_text||'').toUpperCase(),W-80,52);
-            rctx.font='900 54px Impact,Arial Black,sans-serif';
-            hls.forEach((ln,li)=>{
-              const y=H*0.31+li*62-(hls.length-1)*31;
-              rctx.strokeStyle='rgba(0,0,0,0.88)';rctx.lineWidth=12;rctx.lineJoin='round';rctx.textAlign='center';
-              rctx.strokeText(ln,W/2,y);rctx.fillStyle='#fff';rctx.fillText(ln,W/2,y);
-            });
-            // accent underline
-            const uw=ease(Math.max(scF-6,0)/16)*160;
-            rctx.strokeStyle=d.accentColor;rctx.lineWidth=4;rctx.globalAlpha=inP*0.75;
-            const underY=H*0.31+hls.length*62-hls.length*31+12;
-            rctx.beginPath();rctx.moveTo(W/2-uw/2,underY);rctx.lineTo(W/2+uw/2,underY);rctx.stroke();
-            rctx.restore();
-          }
-          rctx.restore();
-        }
-      } else {
-        // CTA
-        const scF=f-bounds[si].startF;
-        const p=ease(Math.min(scF/20,1));
-        if(p>0){
-          rctx.save();rctx.globalAlpha=p;
-          rctx.fillStyle='rgba(0,0,0,0.4)';rctx.fillRect(0,H*0.34,W,H*0.32);
-          rctx.font='900 48px Impact,Arial Black,sans-serif';rctx.fillStyle='#fff';rctx.strokeStyle='rgba(0,0,0,0.88)';rctx.lineWidth=12;rctx.lineJoin='round';rctx.textAlign='center';
-          const ctaTxt=(d.cta||'FOLLOW FOR MORE').toUpperCase().slice(0,30);
-          rctx.strokeText(ctaTxt,W/2,H*0.49);rctx.fillText(ctaTxt,W/2,H*0.49);
-          const bg=rctx.createLinearGradient(W/2-125,0,W/2+125,0);bg.addColorStop(0,d.accentColor);bg.addColorStop(1,d.accentColor+'bb');
-          rctx.fillStyle=bg;rctx.beginPath();rctx.roundRect(W/2-125,H*0.532,250,56,28);rctx.fill();
-          rctx.font='800 24px -apple-system,Inter,sans-serif';rctx.fillStyle='#fff';rctx.fillText('👍  FOLLOW FOR MORE',W/2,H*0.532+38);
-          if(d.loopAnchor&&scF>22){const la=ease((scF-22)/18);rctx.globalAlpha=p*la*0.65;rctx.font='400 21px -apple-system,Inter,sans-serif';rctx.fillStyle='rgba(255,255,255,0.6)';rctx.fillText(d.loopAnchor,W/2,H*0.635);}
-          rctx.restore();
-        }
-      }
-
-      // caption
-      const cap=sc?.caption||'';
-      if(cap!==lastC){capPop=f;lastC=cap;}
-      drawCaption(rctx,W,H,cap,captionStyle,d.accentColor,kw,capPop,f);
-
-      // progress bar
-      rctx.fillStyle='rgba(255,255,255,0.09)';rctx.fillRect(0,H-4,W,4);
-      if(f>0){const gp=rctx.createLinearGradient(0,0,W*(f/T),0);gp.addColorStop(0,d.accentColor);gp.addColorStop(1,'rgba(255,255,255,0.75)');rctx.fillStyle=gp;rctx.fillRect(0,H-4,W*(f/T),4);}
-
-      lctx.drawImage(rcv,0,0);
-      f++;
-      if(f%FPS===0)setSt(`Recording ${f/FPS}s / ${DUR}s…`,24+Math.round((f/T)*66));
-      if(f<T)requestAnimationFrame(loop);else resolve();
-    };
-    requestAnimationFrame(loop);
+    function fr(){
+      if(f>=totalF){rec.stop();resolve();return;}
+      drawFrame(f);f++;
+      const pct=(f/totalF*100).toFixed(0);
+      document.getElementById('renderFill').style.width=pct+'%';
+      document.getElementById('renderLabel').textContent='Rendering... '+pct+'%';
+      setTimeout(fr,1000/FPS);
+    }
+    fr();
   });
-
-  svids.forEach(v=>v?.pause());
-  rec.stop();setSt('Encoding video…',93);setStep(4);
-  await new Promise(r=>rec.onstop=r);
-  const blob=new Blob(chunks,{type:'video/webm'});
-  const url=URL.createObjectURL(blob);
-  document.getElementById('dl-v').href=url;
-  document.getElementById('dl-v').download=`viral-short-${DUR}s-${Date.now()}.webm`;
-  document.getElementById('dl-wrap').classList.add('show');
-  setSt('✅ Your short is ready!',100);
-  btn.disabled=false;btn.innerHTML='🎬 Render Full Video';
-  genAudio(d);
-  // Restart phone preview
-  startPlay();
-}
-
-async function genAudio(d){
-  try{
-    const ac=new(window.AudioContext||window.webkitAudioContext)();
-    const dest=ac.createMediaStreamDestination();
-    const chunks=[];const ar=new MediaRecorder(dest.stream);
-    ar.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};ar.start();
-    const allVo=(d.scenes||[]).map(s=>s.voiceover||'').filter(Boolean).join('. ');
-    const u=new SpeechSynthesisUtterance(allVo);
-    const v=getVoice();if(v)u.voice=v;
-    u.rate=parseFloat(document.getElementById('vrate').value);
-    await new Promise(r=>{u.onend=()=>{ar.stop();r();};speechSynthesis.speak(u);});
-    await new Promise(r=>ar.onstop=r);
-    const blob=new Blob(chunks,{type:'audio/webm'});
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:'video/webm'});
     const url=URL.createObjectURL(blob);
-    const dl=document.getElementById('dl-a');dl.href=url;dl.download=`voiceover-${Date.now()}.webm`;dl.style.display='inline-flex';
-  }catch{}
+    const a=document.createElement('a');a.href=url;a.download='shorts_'+Date.now()+'.webm';a.click();
+    document.getElementById('exportBtn').disabled=false;
+    document.getElementById('renderLabel').textContent='Export complete! ✓';
+    wfStep=8;updateStepRail();setStatus('done','Exported!');toast('Video exported!','success');
+    document.getElementById('downloadLinks').innerHTML=`<a href="${url}" download="shorts_${Date.now()}.webm" style="font-size:12px;color:var(--grn)">⬇ Download again</a>`;
+  };
 }
+
+function playVoiceover(){
+  if(!D)return;
+  const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
+  const utt=new SpeechSynthesisUtterance(script);utt.rate=1.15;utt.pitch=1.0;
+  window.speechSynthesis.cancel();window.speechSynthesis.speak(utt);
+}
+
+function resetAll(){
+  if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
+  window.speechSynthesis?.cancel();
+  wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
+  updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
+  document.getElementById('approveBtn').disabled=true;
+  document.getElementById('regenBtn').disabled=true;
+  document.getElementById('buildCaptionsBtn').disabled=true;
+  document.getElementById('script-empty').style.display='';
+  document.getElementById('script-content').style.display='none';
+  document.getElementById('footage-empty').style.display='';
+  document.getElementById('footage-content').style.display='none';
+  document.getElementById('captions-empty').style.display='';
+  document.getElementById('captions-content').style.display='none';
+  document.getElementById('metadata-empty').style.display='';
+  document.getElementById('metadata-content').style.display='none';
+  document.getElementById('export-empty').style.display='';
+  document.getElementById('export-content').style.display='none';
+  document.getElementById('renderProgress').style.display='none';
+  const cv=document.getElementById('previewCanvas');cv.getContext('2d').clearRect(0,0,W,H);
+  switchRightTab('script');
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
 </html>
