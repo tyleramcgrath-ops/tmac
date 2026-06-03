@@ -471,7 +471,7 @@ function rebuildCaptionTimeline(){
     const sceneEndF=Math.min(totalFrames,Math.floor((sEnd/dur)*totalFrames));
     const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
     if(!words.length){
-      if(s.caption)timeline.push({text:s.caption,highlights:[],startF:sceneStartF,endF:sceneEndF,popF:sceneStartF,sceneIdx:si});
+      if(s.caption)timeline.push({text:s.caption,highlights:[],startF:sceneStartF,endF:sceneEndF,startSec:sceneStartF/FPS,endSec:sceneEndF/FPS,popF:sceneStartF,sceneIdx:si});
       return;
     }
     const phrases=[];
@@ -482,7 +482,7 @@ function rebuildCaptionTimeline(){
       const sf=sceneStartF+Math.floor(pi*fpPer);
       const ef=pi===phrases.length-1?sceneEndF:sceneStartF+Math.floor((pi+1)*fpPer);
       timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-        startF:sf,endF:ef,popF:sf,sceneIdx:si});
+        startF:sf,endF:ef,startSec:sf/FPS,endSec:ef/FPS,popF:sf,sceneIdx:si});
     });
   });
   captionTimeline=timeline;
@@ -866,19 +866,18 @@ async function stepFindFootage(){
 }
 
 function scorePexelsVid(v){
-  // Higher score = better pick: prefer portrait HD, longer duration
-  const isPortrait=v.width<v.height;
-  const hasHD=v.video_files?.some(f=>f.quality==='hd');
-  return (isPortrait?10:0)+(hasHD?5:0)+Math.min((v.duration||0)/30,5);
+  // Prefer HD quality and longer duration; orientation no longer filtered
+  const hasHD=v.video_files?.some(f=>f.quality==='hd'||f.quality==='uhd');
+  return (hasHD?10:0)+Math.min((v.duration||0)/10,5);
 }
 
 async function fetchPexelsVideo(query,key){
-  const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=15&orientation=portrait`,{headers:{Authorization:key}});
+  const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=15`,{headers:{Authorization:key}});
   if(!r.ok)throw new Error('Pexels '+r.status+(r.status===403?' (invalid key?)':''));
   const data=await r.json();
   const vids=data.videos||[];if(!vids.length)return null;
   const best=vids.sort((a,b)=>scorePexelsVid(b)-scorePexelsVid(a))[0];
-  const file=best.video_files?.find(f=>f.quality==='hd'&&f.width<f.height)||best.video_files?.find(f=>f.width<f.height)||best.video_files?.[0];
+  const file=best.video_files?.find(f=>f.quality==='hd'||f.quality==='uhd')||best.video_files?.[0];
   if(!file)return null;
   const el=document.createElement('video');
   el.src=file.link;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
@@ -887,7 +886,7 @@ async function fetchPexelsVideo(query,key){
 }
 
 async function fetchPixabayVideo(query,key){
-  const r=await fetch(`https://pixabay.com/api/videos/?key=${key}&q=${encodeURIComponent(query)}&orientation=vertical&per_page=15&safesearch=true`);
+  const r=await fetch(`https://pixabay.com/api/videos/?key=${key}&q=${encodeURIComponent(query)}&per_page=15&safesearch=true`);
   if(!r.ok)throw new Error('Pixabay '+r.status+(r.status===400?' (invalid key?)':''));
   const data=await r.json();
   const hits=data.hits||[];if(!hits.length)return null;
@@ -1062,16 +1061,26 @@ function drawFrame(f){
   const ctx=canvas.getContext('2d');
   ctx.clearRect(0,0,W,H);
   const scenes=D?.scenes||[];
+  // Scale scene start times to effectiveDur so background switches at the right frame
+  const totalF=Math.ceil(effectiveDur*FPS);
   let si=0;
-  for(let i=0;i<scenes.length;i++){if(f>=Math.floor(parseTime(scenes[i].start_time)*FPS))si=i;}
+  for(let i=0;i<scenes.length;i++){
+    const scaledF=Math.floor((parseTime(scenes[i].start_time)/dur)*totalF);
+    if(f>=scaledF)si=i;
+  }
   drawBg(ctx,f,si);
   // overlay gradient
   const g=ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'rgba(0,0,0,0.5)');g.addColorStop(0.4,'rgba(0,0,0,0.08)');g.addColorStop(1,'rgba(0,0,0,0.6)');
   ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  // caption — always frame-based so display is stable and never flips
-  const cap=captionTimeline.find(c=>f>=c.startF&&f<c.endF);
-  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.popF,f);
+  // During preview with live audio, sync captions to audio time so they match the voice.
+  // During export, audioEl is paused so fall back to frame time (audio and frames start together).
+  let capLookupT=f/FPS;
+  if(audioReady&&audioEl&&!audioEl.paused&&audioEl.duration>0){
+    capLookupT=audioEl.currentTime%(effectiveDur||audioEl.duration);
+  }
+  const cap=captionTimeline.find(c=>capLookupT>=c.startSec&&capLookupT<c.endSec);
+  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,Math.floor(cap.startSec*FPS),f);
   // watermark
   ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#fff';ctx.font='500 11px Inter,sans-serif';ctx.fillText('Viral Shorts Studio',16,H-14);ctx.restore();
 }
@@ -1080,7 +1089,10 @@ function drawBg(ctx,f,si){
   const vid=sceneVids[si];
   if(vid&&vid.readyState>=2){
     const zoom=1+(f%(FPS*5))/(FPS*5)*0.04;
-    const sw=W*zoom,sh=H*zoom,sx=(sw-W)/2,sy=(sh-H)/2;
+    const vw=vid.videoWidth||W,vh=vid.videoHeight||H;
+    // Cover-scale: fill canvas regardless of video orientation (landscape or portrait)
+    const scale=Math.max(W/vw,H/vh)*zoom;
+    const sw=vw*scale,sh=vh*scale,sx=(sw-W)/2,sy=(sh-H)/2;
     try{ctx.drawImage(vid,-sx,-sy,sw,sh);}catch(e){}
   } else {
     const cols=D?.gradientColors||['#0a001a','#200040','#0d0028'];
