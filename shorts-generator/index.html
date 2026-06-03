@@ -664,17 +664,36 @@ function renderExportTab(){
 }
 
 // ── Preview ──────────────────────────────────────────────────────────────────
+function getVoScript(){return D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');}
+
+function startVoiceover(){
+  if(!D||!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(getVoScript());
+  utt.rate=1.15;utt.pitch=1.0;
+  window.speechSynthesis.speak(utt);
+}
+function stopVoiceover(){window.speechSynthesis?.cancel();}
+
 function startPreview(){
   previewFrame=0;previewPlaying=true;
   if(previewRAF)cancelAnimationFrame(previewRAF);
   previewRAF=requestAnimationFrame(previewLoop);
+  startVoiceover();
 }
 function togglePreviewPlay(){
   previewPlaying=!previewPlaying;
   document.getElementById('playPauseBtn').textContent=previewPlaying?'⏸ Pause':'▶ Play';
-  if(previewPlaying)previewRAF=requestAnimationFrame(previewLoop);
+  if(previewPlaying){previewRAF=requestAnimationFrame(previewLoop);startVoiceover();}
+  else stopVoiceover();
 }
-function restartPreview(){previewFrame=0;previewPlaying=true;document.getElementById('playPauseBtn').textContent='⏸ Pause';if(previewRAF)cancelAnimationFrame(previewRAF);previewRAF=requestAnimationFrame(previewLoop);}
+function restartPreview(){
+  previewFrame=0;previewPlaying=true;
+  document.getElementById('playPauseBtn').textContent='⏸ Pause';
+  if(previewRAF)cancelAnimationFrame(previewRAF);
+  previewRAF=requestAnimationFrame(previewLoop);
+  startVoiceover();
+}
 
 function previewLoop(ts=0){
   if(!previewPlaying)return;
@@ -822,16 +841,11 @@ async function renderVideo(){
   };
 }
 
-function playVoiceover(){
-  if(!D)return;
-  const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
-  const utt=new SpeechSynthesisUtterance(script);utt.rate=1.15;utt.pitch=1.0;
-  window.speechSynthesis.cancel();window.speechSynthesis.speak(utt);
-}
+function playVoiceover(){if(!D)return;startVoiceover();}
 
 function resetAll(){
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
-  window.speechSynthesis?.cancel();
+  stopVoiceover();
   wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
   updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
   document.getElementById('approveBtn').disabled=true;
