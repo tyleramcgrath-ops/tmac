@@ -554,23 +554,16 @@ async function callGroq(msgs){
 }
 
 async function callFallback(sys,usr){
-  // Use Pollinations POST endpoint — GET URLs break with long prompts
+  // Try Pollinations (openai model, POST)
   const r=await fetch('https://text.pollinations.ai/',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'openai',
-      jsonMode:true,
-      messages:[{role:'system',content:sys},{role:'user',content:usr}]
-    })
+    body:JSON.stringify({model:'openai',jsonMode:true,messages:[{role:'system',content:sys},{role:'user',content:usr}],seed:Math.floor(Math.random()*9999)})
   });
-  if(!r.ok){
-    const t=await r.text().catch(()=>'');
-    throw new Error('Fallback '+r.status+': '+t.slice(0,120));
-  }
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('Pollinations '+r.status+': '+t.slice(0,120));}
   const txt=await r.text();
   const j=txt.indexOf('{'),e=txt.lastIndexOf('}');
-  if(j<0||e<0)throw new Error('Fallback returned no JSON. Check your Groq key or try again.');
+  if(j<0||e<0)throw new Error('Pollinations returned no JSON (response: '+txt.slice(0,80)+')');
   return JSON.parse(txt.slice(j,e+1));
 }
 
@@ -602,24 +595,32 @@ async function stepGenerate(){
   document.getElementById('genBtn').disabled=true;
   document.getElementById('genBtn').textContent='⏳ Generating...';
   document.getElementById('scriptProgress').style.width='15%';
-  let scriptData=null,lastErr=null;
+  let scriptData=null,lastErr=null,useGroq=true;
   for(let attempt=1;attempt<=3;attempt++){
     try{
-      document.getElementById('cs-scripting-sub').textContent=attempt>1?`Retry ${attempt}/3 — fixing issues...`:'Crafting hook, scenes, and CTA...';
+      const label=attempt>1?`Retry ${attempt}/3...`:'Crafting hook, scenes, and CTA...';
+      document.getElementById('cs-scripting-sub').textContent=label;
       document.getElementById('scriptProgress').style.width=(15+attempt*25)+'%';
       const {sys,usr}=buildPrompt(topic,attempt);
       let data;
-      try{data=await callGroq([{role:'system',content:sys},{role:'user',content:usr}]);}
-      catch(e){
-        if(e.message.includes('No Groq'))throw e;
-        const groqErr=e.message;
-        toast('Groq failed ('+groqErr.slice(0,60)+'), trying fallback...','info');
+      if(useGroq){
+        try{
+          data=await callGroq([{role:'system',content:sys},{role:'user',content:usr}]);
+        }catch(e){
+          if(e.message.includes('No Groq'))throw e;
+          const is429=e.message.includes('429');
+          useGroq=false; // stop hammering Groq after any failure
+          document.getElementById('cs-scripting-sub').textContent='Groq '+(is429?'rate limited':'failed')+' — using fallback...';
+          toast((is429?'Groq rate limit hit':'Groq failed')+' — switching to fallback AI...','info');
+          data=await callFallback(sys,usr);
+        }
+      } else {
+        document.getElementById('cs-scripting-sub').textContent=`Fallback attempt ${attempt}/3...`;
         data=await callFallback(sys,usr);
       }
       const issues=validateScript(data);
       if(!issues.length){scriptData=data;break;}
       lastErr=issues.join('; ');
-      toast('Issues found, retrying: '+lastErr,'info');
     }catch(e){lastErr=e.message;if(attempt===3)break;}
   }
   document.getElementById('scriptProgress').style.width='100%';
