@@ -403,6 +403,7 @@ let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastT
 // ── Audio ─────────────────────────────────────────────────────────────────────
 let audioEl=null,audioBlobUrl=null,audioReady=false;
 let audioCtx=null,audioBuffer=null,audioDest=null,audioCapSrc=null;
+let wordTimestamps=null; // [{text,start,end}] from ElevenLabs alignment — enables perfect sync
 
 function getElKey(){return getKey('elKey');}
 function getVrKey(){return getKey('voicerssKey');}
@@ -411,10 +412,28 @@ async function fetchTTSAudio(text){
   const elKey=getElKey();
   if(elKey){
     const voiceId=getElVoiceId();
+    const body=JSON.stringify({text:text.slice(0,2500),model_id:'eleven_turbo_v2_5',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.3,use_speaker_boost:true}});
+    // Try /with-timestamps first — gives exact word timings for perfect caption sync
+    try{
+      const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/with-timestamps`,{
+        method:'POST',headers:{'xi-api-key':elKey,'Content-Type':'application/json'},body
+      });
+      if(r.ok){
+        const data=await r.json();
+        if(data.audio_base64&&data.alignment){
+          const raw=atob(data.audio_base64);
+          const arr=new Uint8Array(raw.length);
+          for(let i=0;i<raw.length;i++)arr[i]=raw.charCodeAt(i);
+          wordTimestamps=parseWordTimestamps(data.alignment);
+          await loadAudioBlob(new Blob([arr],{type:'audio/mpeg'}));
+          return;
+        }
+      }
+    }catch(e){console.warn('EL timestamps failed, using regular:',e);}
+    // Regular endpoint fallback (no timestamps — captions use proportional timing)
+    wordTimestamps=null;
     const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
-      method:'POST',
-      headers:{'xi-api-key':elKey,'Content-Type':'application/json','Accept':'audio/mpeg'},
-      body:JSON.stringify({text:text.slice(0,2500),model_id:'eleven_turbo_v2_5',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.3,use_speaker_boost:true}})
+      method:'POST',headers:{'xi-api-key':elKey,'Content-Type':'application/json','Accept':'audio/mpeg'},body
     });
     if(!r.ok){const e=await r.text().catch(()=>'');throw new Error('ElevenLabs '+r.status+': '+e.slice(0,100));}
     const blob=await r.blob();
@@ -422,6 +441,7 @@ async function fetchTTSAudio(text){
     await loadAudioBlob(blob);
     return;
   }
+  wordTimestamps=null;
   const vrKey=getVrKey();
   if(vrKey){
     const params=new URLSearchParams({key:vrKey,hl:'en-us',src:text.slice(0,3000),c:'MP3',f:'16khz_16bit_stereo',ssml:'false',b64:'false'});
@@ -433,6 +453,26 @@ async function fetchTTSAudio(text){
     return;
   }
   throw new Error('No TTS key — add a free ElevenLabs key at elevenlabs.io');
+}
+
+function parseWordTimestamps(alignment){
+  const chars=alignment.characters||[];
+  const starts=alignment.character_start_times_seconds||[];
+  const ends=alignment.character_end_times_seconds||[];
+  const words=[];
+  let wStart=null,wEnd=null,wText='';
+  for(let i=0;i<=chars.length;i++){
+    const c=i<chars.length?chars[i]:' ';
+    if(c===' '||c==='\n'||c==='\t'||i===chars.length){
+      if(wText.trim()){words.push({text:wText.trim(),start:wStart||0,end:wEnd||0});}
+      wText='';wStart=null;wEnd=null;
+    }else{
+      if(wStart===null)wStart=starts[i]||0;
+      wEnd=ends[i]||0;
+      wText+=c;
+    }
+  }
+  return words;
 }
 
 async function loadAudioBlob(blob){
@@ -458,33 +498,48 @@ async function loadAudioBlob(blob){
 
 function rebuildCaptionTimeline(){
   if(!D)return;
-  const totalFrames=Math.ceil(effectiveDur*FPS);
-  const scenes=D.scenes||[];
   const ps=dur<=15?3:4;
   const timeline=[];
-  // Use scene start/end times from the AI script, scaled proportionally to effectiveDur.
-  // This keeps captions matched to the AI's pacing intent regardless of TTS speed.
-  scenes.forEach((s,si)=>{
-    const sStart=parseTime(s.start_time);
-    const sEnd=si<scenes.length-1?parseTime(scenes[si+1].start_time):dur;
-    const sceneStartF=Math.floor((sStart/dur)*totalFrames);
-    const sceneEndF=Math.min(totalFrames,Math.floor((sEnd/dur)*totalFrames));
-    const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
-    if(!words.length){
-      if(s.caption)timeline.push({text:s.caption,highlights:[],startF:sceneStartF,endF:sceneEndF,startSec:sceneStartF/FPS,endSec:sceneEndF/FPS,popF:sceneStartF,sceneIdx:si});
-      return;
+  const allHL=new Set((D.scenes||[]).flatMap(s=>(s.caption_highlights||[]).map(h=>h.toUpperCase().replace(/[^A-Z0-9]/g,''))));
+
+  if(wordTimestamps&&wordTimestamps.length>0){
+    // Perfect sync path: each phrase timed to actual TTS word timestamps
+    for(let i=0;i<wordTimestamps.length;i+=ps){
+      const pw=wordTimestamps.slice(i,Math.min(i+ps,wordTimestamps.length));
+      const text=pw.map(w=>w.text).join(' ');
+      const startSec=pw[0].start;
+      // End = start of next phrase (or effectiveDur for last phrase)
+      const endSec=i+ps<wordTimestamps.length?wordTimestamps[i+ps].start:effectiveDur;
+      const highlights=pw.map(w=>w.text.toUpperCase().replace(/[^A-Z0-9]/g,'')).filter(w=>allHL.has(w));
+      timeline.push({text,highlights,startSec,endSec,
+        startF:Math.floor(startSec*FPS),endF:Math.ceil(endSec*FPS),popF:Math.floor(startSec*FPS)});
     }
-    const phrases=[];
-    for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
-    const range=sceneEndF-sceneStartF;
-    const fpPer=range/phrases.length;
-    phrases.forEach((phrase,pi)=>{
-      const sf=sceneStartF+Math.floor(pi*fpPer);
-      const ef=pi===phrases.length-1?sceneEndF:sceneStartF+Math.floor((pi+1)*fpPer);
-      timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-        startF:sf,endF:ef,startSec:sf/FPS,endSec:ef/FPS,popF:sf,sceneIdx:si});
+  }else{
+    // Fallback: proportional distribution using scene timing scaled to effectiveDur
+    const totalFrames=Math.ceil(effectiveDur*FPS);
+    const scenes=D.scenes||[];
+    scenes.forEach((s,si)=>{
+      const sStart=parseTime(s.start_time);
+      const sEnd=si<scenes.length-1?parseTime(scenes[si+1].start_time):dur;
+      const sceneStartF=Math.floor((sStart/dur)*totalFrames);
+      const sceneEndF=Math.min(totalFrames,Math.floor((sEnd/dur)*totalFrames));
+      const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
+      if(!words.length){
+        if(s.caption)timeline.push({text:s.caption,highlights:[],startF:sceneStartF,endF:sceneEndF,
+          startSec:sceneStartF/FPS,endSec:sceneEndF/FPS,popF:sceneStartF,sceneIdx:si});
+        return;
+      }
+      const phrases=[];
+      for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
+      const fpPer=(sceneEndF-sceneStartF)/phrases.length;
+      phrases.forEach((phrase,pi)=>{
+        const sf=sceneStartF+Math.floor(pi*fpPer);
+        const ef=pi===phrases.length-1?sceneEndF:sceneStartF+Math.floor((pi+1)*fpPer);
+        timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
+          startF:sf,endF:ef,startSec:sf/FPS,endSec:ef/FPS,popF:sf,sceneIdx:si});
+      });
     });
-  });
+  }
   captionTimeline=timeline;
 }
 
@@ -1238,7 +1293,7 @@ function playVoiceover(){
 function resetAll(){
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
   stopAudio();stopAudioCapture();stopSpeech();
-  audioReady=false;audioBuffer=null;audioDest=null;effectiveDur=dur;
+  audioReady=false;audioBuffer=null;audioDest=null;effectiveDur=dur;wordTimestamps=null;
   if(audioBlobUrl){URL.revokeObjectURL(audioBlobUrl);audioBlobUrl=null;}audioEl=null;
   wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
   updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
