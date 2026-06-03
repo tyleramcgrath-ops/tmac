@@ -137,8 +137,19 @@ nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--borde
     <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
     <label style="margin-left:6px">Pexels Key</label>
     <input type="password" id="pexelsKey" placeholder="pexels..." autocomplete="off">
-    <label style="margin-left:6px">VoiceRSS Key <a href="https://www.voicerss.org/registration.aspx" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
-    <input type="password" id="voicerssKey" placeholder="voicerss key..." autocomplete="off">
+    <label style="margin-left:6px">ElevenLabs Key <a href="https://elevenlabs.io" target="_blank" style="font-size:10px;color:var(--acc)">(free)</a></label>
+    <input type="password" id="elKey" placeholder="elevenlabs key..." autocomplete="off">
+    <label style="margin-left:6px">Voice</label>
+    <select id="elVoice" style="width:110px;padding:5px 8px;font-size:12px">
+      <option value="21m00Tcm4TlvDq8ikWAM">Rachel (F)</option>
+      <option value="TxGEqnHWrfWFTfGW9XjX">Josh (M)</option>
+      <option value="pNInz6obpgDQGcFmaJgB">Adam (M)</option>
+      <option value="ErXwobaYiN019PkySvjV">Antoni (M)</option>
+      <option value="EXAVITQu4vr4xnSDxMaL">Sarah (F)</option>
+      <option value="TX3LPaxmHKxFdv7VOQHJ">Liam (M)</option>
+      <option value="IKne3meq5aSn9XLyUdCD">Charlie (AU)</option>
+      <option value="ThT5KcBeYPX3keUQqHPh">Dorothy (UK)</option>
+    </select>
     <button id="navSaveKey" onclick="saveKeys()">Save</button>
   </div>
 </nav>
@@ -351,27 +362,51 @@ let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastT
 // ── Audio ─────────────────────────────────────────────────────────────────────
 let audioEl=null,audioBlobUrl=null,audioReady=false;
 
+function getElKey(){return document.getElementById('elKey').value.trim()||localStorage.getItem('elKey')||'';}
+function getVrKey(){return document.getElementById('voicerssKey')?.value.trim()||localStorage.getItem('voicerssKey')||'';}
+
 async function fetchTTSAudio(text){
-  const vrKey=document.getElementById('voicerssKey').value.trim()||localStorage.getItem('voicerssKey')||'';
-  if(!vrKey)throw new Error('No VoiceRSS key');
+  const elKey=getElKey();
+  if(elKey){
+    try{
+      const voiceId=document.getElementById('elVoice').value||'21m00Tcm4TlvDq8ikWAM';
+      const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
+        method:'POST',
+        headers:{'xi-api-key':elKey,'Content-Type':'application/json','Accept':'audio/mpeg'},
+        body:JSON.stringify({text:text.slice(0,2500),model_id:'eleven_turbo_v2_5',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.3,use_speaker_boost:true}})
+      });
+      if(!r.ok){const e=await r.text().catch(()=>'');throw new Error('ElevenLabs '+r.status+': '+e.slice(0,100));}
+      const blob=await r.blob();
+      if(blob.size<500)throw new Error('ElevenLabs returned empty audio');
+      await loadAudioBlob(blob);
+      return;
+    }catch(e){
+      console.warn('ElevenLabs failed:',e.message);
+      throw e; // surface the real error
+    }
+  }
 
-  // VoiceRSS — proper CORS headers, free 350 req/day, returns MP3
-  const params=new URLSearchParams({key:vrKey,hl:'en-us',src:text.slice(0,3000),c:'MP3',f:'16khz_16bit_stereo',ssml:'false',b64:'false'});
-  const r=await fetch('https://api.voicerss.org/?'+params.toString());
-  if(!r.ok)throw new Error('VoiceRSS '+r.status);
-  const blob=await r.blob();
-  if(blob.size<500)throw new Error('VoiceRSS returned empty audio — check your key');
+  // Fallback: VoiceRSS
+  const vrKey=getVrKey();
+  if(vrKey){
+    const params=new URLSearchParams({key:vrKey,hl:'en-us',src:text.slice(0,3000),c:'MP3',f:'16khz_16bit_stereo',ssml:'false',b64:'false'});
+    const r=await fetch('https://api.voicerss.org/?'+params.toString());
+    if(!r.ok)throw new Error('VoiceRSS '+r.status);
+    const blob=await r.blob();
+    if(blob.size<500)throw new Error('VoiceRSS returned empty — check your key at voicerss.org');
+    await loadAudioBlob(blob);
+    return;
+  }
 
+  throw new Error('No TTS key — add an ElevenLabs key (free at elevenlabs.io) for AI voices');
+}
+
+async function loadAudioBlob(blob){
   if(audioBlobUrl)URL.revokeObjectURL(audioBlobUrl);
   audioBlobUrl=URL.createObjectURL(blob);
   if(!audioEl){audioEl=document.createElement('audio');audioEl.crossOrigin='anonymous';}
-  audioEl.src=audioBlobUrl;
-  audioEl.load();
-  await new Promise((res,rej)=>{
-    audioEl.oncanplaythrough=res;
-    audioEl.onerror=(e)=>rej(new Error('Audio decode failed'));
-    setTimeout(res,5000);
-  });
+  audioEl.src=audioBlobUrl;audioEl.load();
+  await new Promise((res)=>{audioEl.oncanplaythrough=res;audioEl.onerror=res;setTimeout(res,6000);});
   audioReady=true;
 }
 
@@ -422,20 +457,20 @@ function stopSpeech(){window.speechSynthesis?.cancel();}
 window.onload=()=>{
   const gk=localStorage.getItem('groqKey')||'';
   const pk=localStorage.getItem('pexelsKey')||'';
-  const vk=localStorage.getItem('voicerssKey')||'';
+  const ek=localStorage.getItem('elKey')||'';
   if(gk)document.getElementById('groqKey').value=gk;
   if(pk)document.getElementById('pexelsKey').value=pk;
-  if(vk)document.getElementById('voicerssKey').value=vk;
+  if(ek)document.getElementById('elKey').value=ek;
   updateStepRail();
 };
 
 function saveKeys(){
   const gk=document.getElementById('groqKey').value.trim();
   const pk=document.getElementById('pexelsKey').value.trim();
-  const vk=document.getElementById('voicerssKey').value.trim();
+  const ek=document.getElementById('elKey').value.trim();
   if(gk)localStorage.setItem('groqKey',gk);
   if(pk)localStorage.setItem('pexelsKey',pk);
-  if(vk)localStorage.setItem('voicerssKey',vk);
+  if(ek)localStorage.setItem('elKey',ek);
   toast('Keys saved!','success');
 }
 function setDur(s){dur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
@@ -694,17 +729,17 @@ async function stepBuildCaptions(){
   const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
   document.getElementById('cs-captions').querySelector('.c-status-sub').textContent='Fetching voiceover audio...';
   audioReady=false;
-  const vrKey=document.getElementById('voicerssKey').value.trim()||localStorage.getItem('voicerssKey')||'';
-  if(vrKey){
+  const hasKey=getElKey()||getVrKey();
+  if(hasKey){
     try{
       await fetchTTSAudio(script);
-      toast('🔊 Voiceover loaded — audio baked into export!','success');
+      toast('🔊 AI voiceover loaded — audio baked into export!','success');
     }catch(e){
-      console.warn('VoiceRSS failed:',e.message);
-      toast('VoiceRSS error: '+e.message+'. Preview will use browser TTS.','error');
+      console.warn('TTS failed:',e.message);
+      toast('TTS error: '+e.message,'error');
     }
   } else {
-    toast('No VoiceRSS key — using browser voice for preview only. Get a free key at voicerss.org to bake audio into the export.','info');
+    toast('💡 Add an ElevenLabs key (free at elevenlabs.io) for AI voices. Using browser voice for now.','info');
   }
 
   wfStep=6;updateStepRail();unlockTabs();renderCaptionsTab();renderExportTab();
