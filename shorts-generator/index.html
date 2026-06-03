@@ -361,6 +361,7 @@ let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastT
 
 // ── Audio ─────────────────────────────────────────────────────────────────────
 let audioEl=null,audioBlobUrl=null,audioReady=false;
+let audioCtx=null,audioBuffer=null,audioDest=null,audioCapSrc=null;
 
 function getElKey(){return document.getElementById('elKey').value.trim()||localStorage.getItem('elKey')||'';}
 function getVrKey(){return document.getElementById('voicerssKey')?.value.trim()||localStorage.getItem('voicerssKey')||'';}
@@ -368,59 +369,71 @@ function getVrKey(){return document.getElementById('voicerssKey')?.value.trim()|
 async function fetchTTSAudio(text){
   const elKey=getElKey();
   if(elKey){
-    try{
-      const voiceId=document.getElementById('elVoice').value||'21m00Tcm4TlvDq8ikWAM';
-      const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
-        method:'POST',
-        headers:{'xi-api-key':elKey,'Content-Type':'application/json','Accept':'audio/mpeg'},
-        body:JSON.stringify({text:text.slice(0,2500),model_id:'eleven_turbo_v2_5',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.3,use_speaker_boost:true}})
-      });
-      if(!r.ok){const e=await r.text().catch(()=>'');throw new Error('ElevenLabs '+r.status+': '+e.slice(0,100));}
-      const blob=await r.blob();
-      if(blob.size<500)throw new Error('ElevenLabs returned empty audio');
-      await loadAudioBlob(blob);
-      return;
-    }catch(e){
-      console.warn('ElevenLabs failed:',e.message);
-      throw e; // surface the real error
-    }
+    const voiceId=document.getElementById('elVoice').value||'21m00Tcm4TlvDq8ikWAM';
+    const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
+      method:'POST',
+      headers:{'xi-api-key':elKey,'Content-Type':'application/json','Accept':'audio/mpeg'},
+      body:JSON.stringify({text:text.slice(0,2500),model_id:'eleven_turbo_v2_5',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.3,use_speaker_boost:true}})
+    });
+    if(!r.ok){const e=await r.text().catch(()=>'');throw new Error('ElevenLabs '+r.status+': '+e.slice(0,100));}
+    const blob=await r.blob();
+    if(blob.size<500)throw new Error('ElevenLabs returned empty audio');
+    await loadAudioBlob(blob);
+    return;
   }
-
-  // Fallback: VoiceRSS
   const vrKey=getVrKey();
   if(vrKey){
     const params=new URLSearchParams({key:vrKey,hl:'en-us',src:text.slice(0,3000),c:'MP3',f:'16khz_16bit_stereo',ssml:'false',b64:'false'});
     const r=await fetch('https://api.voicerss.org/?'+params.toString());
     if(!r.ok)throw new Error('VoiceRSS '+r.status);
     const blob=await r.blob();
-    if(blob.size<500)throw new Error('VoiceRSS returned empty — check your key at voicerss.org');
+    if(blob.size<500)throw new Error('VoiceRSS returned empty — check your key');
     await loadAudioBlob(blob);
     return;
   }
-
-  throw new Error('No TTS key — add an ElevenLabs key (free at elevenlabs.io) for AI voices');
+  throw new Error('No TTS key — add a free ElevenLabs key at elevenlabs.io');
 }
 
 async function loadAudioBlob(blob){
+  // <audio> element for preview playback
   if(audioBlobUrl)URL.revokeObjectURL(audioBlobUrl);
   audioBlobUrl=URL.createObjectURL(blob);
-  if(!audioEl){audioEl=document.createElement('audio');audioEl.crossOrigin='anonymous';}
+  if(!audioEl){audioEl=document.createElement('audio');}
   audioEl.src=audioBlobUrl;audioEl.load();
-  await new Promise((res)=>{audioEl.oncanplaythrough=res;audioEl.onerror=res;setTimeout(res,6000);});
+  await new Promise(res=>{audioEl.oncanplaythrough=res;audioEl.onerror=res;setTimeout(res,6000);});
+
+  // Web Audio API: decode into AudioBuffer for recording capture
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')await audioCtx.resume();
+  const arrayBuf=await blob.arrayBuffer();
+  audioBuffer=await audioCtx.decodeAudioData(arrayBuf);
+  audioDest=audioCtx.createMediaStreamDestination();
+
   audioReady=true;
 }
 
+// Preview: play through <audio> element (simple, reliable)
 function playAudio(offset=0){
-  if(audioEl&&audioReady){
-    audioEl.currentTime=Math.min(offset,audioEl.duration||999);
-    audioEl.play().catch(e=>console.warn('Audio:',e));
-  }
+  if(!audioEl||!audioReady)return;
+  audioEl.currentTime=Math.min(offset,audioEl.duration-0.01||0);
+  audioEl.play().catch(e=>console.warn('Audio:',e));
 }
 function stopAudio(){if(audioEl)audioEl.pause();}
-function getAudioCaptureStream(){
-  if(!audioEl||!audioReady)return null;
-  try{return (audioEl.captureStream||audioEl.mozCaptureStream).call(audioEl);}catch(e){return null;}
+
+// Recording: route AudioBuffer → AudioContext → MediaStreamDestination
+// Returns the MediaStream containing the audio track for MediaRecorder
+function startAudioCapture(offset=0){
+  if(!audioCtx||!audioBuffer||!audioDest)return null;
+  if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}}
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  audioCapSrc=audioCtx.createBufferSource();
+  audioCapSrc.buffer=audioBuffer;
+  audioCapSrc.connect(audioDest);           // → capture stream
+  audioCapSrc.connect(audioCtx.destination); // → speakers
+  audioCapSrc.start(0,Math.min(offset,audioBuffer.duration-0.01));
+  return audioDest.stream;
 }
+function stopAudioCapture(){if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}audioCapSrc=null;}}
 
 // Web Speech API — pick best available voice
 function getBestVoice(){
@@ -937,15 +950,16 @@ function roundRect(ctx,x,y,w,h,r){
 async function renderVideo(){
   if(wfStep<6){toast('Complete all steps first','error');return;}
 
-  // Stop live preview so canvas is free for recording
+  // Stop live preview
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
-  stopAudio();
+  stopAudio();stopAudioCapture();
 
   const canvas=document.getElementById('previewCanvas');
   const videoStream=canvas.captureStream(FPS);
 
-  // Capture audio from the <audio> element's output stream
-  const audioCapStream=getAudioCaptureStream();
+  // Add audio track from AudioContext → MediaStreamDestination
+  // This keeps the audio stream alive for the full recording duration
+  const audioCapStream=startAudioCapture(0);
   if(audioCapStream){
     audioCapStream.getAudioTracks().forEach(t=>videoStream.addTrack(t));
   }
@@ -964,15 +978,15 @@ async function renderVideo(){
   document.getElementById('renderProgress').style.display='block';
   document.getElementById('renderFill').style.width='0%';
   wfStep=7;updateStepRail();
-  // Start audio BEFORE recorder so first frames have audio
-  playAudio(0);
-  await new Promise(r=>setTimeout(r,80));
+
+  // Small delay so audio stream is flowing before recorder starts
+  await new Promise(r=>setTimeout(r,100));
   rec.start(100);
 
   let f=0;const totalF=dur*FPS;
   await new Promise(resolve=>{
     function fr(){
-      if(f>=totalF){rec.stop();stopAudio();resolve();return;}
+      if(f>=totalF){rec.stop();stopAudioCapture();resolve();return;}
       drawFrame(f);f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
@@ -1005,7 +1019,9 @@ function playVoiceover(){
 
 function resetAll(){
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
-  stopAudio();stopSpeech();audioReady=false;if(audioBlobUrl){URL.revokeObjectURL(audioBlobUrl);audioBlobUrl=null;}audioEl=null;
+  stopAudio();stopAudioCapture();stopSpeech();
+  audioReady=false;audioBuffer=null;audioDest=null;
+  if(audioBlobUrl){URL.revokeObjectURL(audioBlobUrl);audioBlobUrl=null;}audioEl=null;
   wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
   updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
   document.getElementById('approveBtn').disabled=true;
