@@ -543,14 +543,27 @@ function toast(msg,type='info'){
 async function callGroq(msgs){
   const key=document.getElementById('groqKey').value.trim()||localStorage.getItem('groqKey')||'';
   if(!key)throw new Error('No Groq API key. Enter it at the top.');
-  const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',temperature:0.75,max_tokens:4096,messages:msgs,response_format:{type:'json_object'}})
-  });
-  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('Groq '+r.status+': '+t.slice(0,200));}
-  const d=await r.json();
-  return JSON.parse(d.choices?.[0]?.message?.content||'{}');
+  // Try two models — 8b-instant has higher TPM limits on free tier
+  const models=['llama-3.1-8b-instant','llama-3.3-70b-versatile'];
+  for(let mi=0;mi<models.length;mi++){
+    for(let retry=0;retry<2;retry++){
+      const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({model:models[mi],temperature:0.75,max_tokens:3000,messages:msgs,response_format:{type:'json_object'}})
+      });
+      if(r.ok){const d=await r.json();return JSON.parse(d.choices?.[0]?.message?.content||'{}');}
+      const t=await r.text().catch(()=>'');
+      if(r.status===429){
+        const wait=retry===0?8000:20000;
+        document.getElementById('cs-scripting-sub').textContent=`Rate limit — waiting ${wait/1000}s then retrying...`;
+        await new Promise(res=>setTimeout(res,wait));
+        continue;
+      }
+      throw new Error('Groq '+r.status+': '+t.slice(0,150));
+    }
+  }
+  throw new Error('Groq 429: rate limit on all models — switching to fallback');
 }
 
 async function callFallback(sys,usr){
@@ -585,9 +598,12 @@ function buildPrompt(topic,attempt){
   const [sMin,sMax]=SCENE_TARGETS[dur]||[5,6];
   const fmt=document.getElementById('fmtSelect').value;
   const tone=document.getElementById('toneSelect').value;
-  const retry=attempt>1?`\n\nCRITICAL: Previous attempt was incomplete. You MUST write ALL ${sMin}-${sMax} scenes in full. EVERY scene must have a complete voiceover. full_voiceover_script MUST have ${wMin}-${wMax} words. DO NOT stop early.`:'';
-  const sys=`You are an elite YouTube Shorts creator. Generate a COMPLETE ${dur}-second viral script.\n\nMANDATORY:\n- full_voiceover_script: EXACTLY ${wMin}-${wMax} words, word-for-word, nothing cut\n- scenes: EXACTLY ${sMin}-${sMax} scenes, every scene fully written\n- Every scene MUST have: voiceover, caption, pexels_search\n- DO NOT use "[continue]" or placeholders\n- Make it VIRAL: strong hook, fast pacing, surprising facts, emotional CTA\n\nReturn ONLY valid JSON:\n{"title":"","subtitle":"","platform":"YouTube Shorts","format":"${fmt}","tone":"${tone}","duration_seconds":${dur},"estimated_word_count":0,"hook":"","full_voiceover_script":"COMPLETE ${wMin}-${wMax} word script here","cta":"","loopAnchor":"","accentColor":"#FF4500","gradientColors":["#0a001a","#200040","#0d0028"],"keyWords":["w1","w2","w3","w4","w5","w6"],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:05","voiceover":"full spoken text","caption":"SHORT PUNCH","caption_highlights":["WORD"],"on_screen_text":"overlay","pexels_search":"specific query","visual_direction":"what happens","editing_notes":"effects","transition":"cut","pacing":"fast"}],"youtube_metadata":{"title_options":["","",""],"description":"","hashtags":["#shorts"],"pinned_comment":"","thumbnail_text":"","seo_keywords":[""]}}${retry}`;
-  return {sys,usr:`Topic: ${topic}\nFormat: ${fmt}\nTone: ${tone}\nDuration: ${dur}s\nRequired: ${sMin}-${sMax} scenes, ${wMin}-${wMax} words`};
+  // Compact system prompt — fewer tokens = lower rate limit impact
+  const sys=`You are a viral YouTube Shorts writer. Return ONLY valid JSON for a ${dur}s short.
+Rules: ${sMin}-${sMax} scenes, full_voiceover_script must be ${wMin}-${wMax} words, no placeholders.
+Schema: {"title":"","hook":"","full_voiceover_script":"","cta":"","accentColor":"#FF4500","gradientColors":["#0a001a","#200040","#0d0028"],"keyWords":["","","","","",""],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:05","voiceover":"","caption":"","caption_highlights":[""],"pexels_search":"","visual_direction":"","transition":"cut","pacing":"fast"}],"youtube_metadata":{"title_options":["","",""],"description":"","hashtags":["#shorts"],"seo_keywords":[""]}}`;
+  const usr=`Topic: ${topic}\nTone: ${tone}\nFormat: ${fmt}\nDuration: ${dur}s\nScenes: ${sMin}-${sMax}\nWords: ${wMin}-${wMax}${attempt>1?'\n[RETRY: write ALL scenes fully, no placeholders]':''}`;
+  return {sys,usr};
 }
 
 function validateScript(data){
