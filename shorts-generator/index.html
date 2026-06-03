@@ -458,34 +458,32 @@ async function loadAudioBlob(blob){
 
 function rebuildCaptionTimeline(){
   if(!D)return;
-  const totalFrames=effectiveDur*FPS;
+  const totalFrames=Math.ceil(effectiveDur*FPS);
   const scenes=D.scenes||[];
   const ps=dur<=15?3:4;
-  const allWords=scenes.flatMap(s=>(s.voiceover||'').split(/\s+/).filter(Boolean));
-  const totalWords=allWords.length||1;
   const timeline=[];
-  let wordIdx=0;
+  // Use scene start/end times from the AI script, scaled proportionally to effectiveDur.
+  // This keeps captions matched to the AI's pacing intent regardless of TTS speed.
   scenes.forEach((s,si)=>{
+    const sStart=parseTime(s.start_time);
+    const sEnd=si<scenes.length-1?parseTime(scenes[si+1].start_time):dur;
+    const sceneStartF=Math.floor((sStart/dur)*totalFrames);
+    const sceneEndF=Math.min(totalFrames,Math.floor((sEnd/dur)*totalFrames));
     const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
-    if(!words.length){wordIdx++;return;}
-    // Map proportionally across the full video frame range so captions
-    // always cover the whole video regardless of TTS audio duration
-    const sceneStartF=Math.floor((wordIdx/totalWords)*totalFrames);
-    const sceneEndF=Math.floor(((wordIdx+words.length)/totalWords)*totalFrames);
+    if(!words.length){
+      if(s.caption)timeline.push({text:s.caption,highlights:[],startF:sceneStartF,endF:sceneEndF,popF:sceneStartF,sceneIdx:si});
+      return;
+    }
     const phrases=[];
     for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
-    const fpPer=(sceneEndF-sceneStartF)/phrases.length;
+    const range=sceneEndF-sceneStartF;
+    const fpPer=range/phrases.length;
     phrases.forEach((phrase,pi)=>{
       const sf=sceneStartF+Math.floor(pi*fpPer);
       const ef=pi===phrases.length-1?sceneEndF:sceneStartF+Math.floor((pi+1)*fpPer);
-      timeline.push({
-        text:phrase,
-        highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-        startF:sf, endF:ef, popF:sf,
-        sceneIdx:si
-      });
+      timeline.push({text:phrase,highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
+        startF:sf,endF:ef,popF:sf,sceneIdx:si});
     });
-    wordIdx+=words.length;
   });
   captionTimeline=timeline;
 }
@@ -498,32 +496,22 @@ function playAudio(offset=0){
 }
 function stopAudio(){if(audioEl)audioEl.pause();}
 
-// Recording capture — prefer <audio>.captureStream() for reliability
-async function startAudioCapture(offset=0){
-  if(!audioEl||!audioBlobUrl)return null;
-  // Use <audio>.captureStream() — reliable, loops naturally
-  try{
-    audioEl.loop=true;
-    audioEl.currentTime=Math.min(offset,audioEl.duration-0.01||0);
-    await audioEl.play();
-    const stream=audioEl.captureStream?audioEl.captureStream():audioEl.mozCaptureStream?.();
-    if(stream&&stream.getAudioTracks().length>0)return stream;
-  }catch(e){console.warn('captureStream failed, falling back to WebAudio',e);}
-  // Fallback: Web Audio API
+// Recording capture — Web Audio API only (captureStream is unreliable across browsers)
+async function startAudioCapture(){
   if(!audioCtx||!audioBuffer)return null;
   if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}}
   if(audioCtx.state!=='running')await audioCtx.resume();
+  // Fresh destination node every time
   audioDest=audioCtx.createMediaStreamDestination();
   audioCapSrc=audioCtx.createBufferSource();
   audioCapSrc.buffer=audioBuffer;
-  audioCapSrc.loop=true;
+  audioCapSrc.loop=false; // no loop — effectiveDur matches audio duration
   audioCapSrc.connect(audioDest);
   audioCapSrc.connect(audioCtx.destination);
-  audioCapSrc.start(0,Math.min(offset,audioBuffer.duration-0.01));
+  audioCapSrc.start(0);
   return audioDest.stream;
 }
 function stopAudioCapture(){
-  if(audioEl){audioEl.loop=false;audioEl.pause();}
   if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}audioCapSrc=null;}
 }
 
@@ -1174,17 +1162,15 @@ async function renderVideo(){
   stopAudio();stopAudioCapture();
 
   const canvas=document.getElementById('previewCanvas');
-  const videoTracks=canvas.captureStream(FPS).getVideoTracks();
 
-  // Build combined stream: video tracks + audio tracks in one MediaStream
-  // (adding tracks to an existing stream is unreliable in Chrome)
-  const audioCapStream=await startAudioCapture(0);
+  // Start audio FIRST so Web Audio stream is live before recorder starts
+  const audioCapStream=await startAudioCapture();
   const audioTracks=audioCapStream?audioCapStream.getAudioTracks():[];
+  const videoTracks=canvas.captureStream(FPS).getVideoTracks();
   const combinedStream=new MediaStream([...videoTracks,...audioTracks]);
 
-  let rec;
+  let rec=null;
   const mimes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
-  rec=null;
   for(const m of mimes){
     try{if(MediaRecorder.isTypeSupported(m)){rec=new MediaRecorder(combinedStream,{mimeType:m,videoBitsPerSecond:9_000_000});break;}}catch(e){}
   }
@@ -1197,22 +1183,17 @@ async function renderVideo(){
   document.getElementById('renderFill').style.width='0%';
   wfStep=7;updateStepRail();
 
-  // Small delay so audio stream is flowing before recorder starts
-  await new Promise(r=>setTimeout(r,100));
+  // Start recording and render simultaneously — no pre-delay so audio/video/captions are in sync from frame 0
   rec.start(100);
-
-  let f=0;const totalF=Math.ceil(effectiveDur*FPS);
   const renderStart=performance.now();
+  let f=0;const totalF=Math.ceil(effectiveDur*FPS);
   await new Promise(resolve=>{
     function fr(){
       if(f>=totalF){rec.stop();resolve();return;}
-      if(audioCtx&&audioCtx.state!=='running')audioCtx.resume();
       drawFrame(f);f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
       document.getElementById('renderLabel').textContent='Rendering... '+pct+'%';
-      // Schedule next frame at its correct wall-clock time so total render
-      // duration exactly matches `dur` seconds — prevents video/audio length mismatch
       const elapsed=performance.now()-renderStart;
       const nextFrameMs=(f/FPS)*1000;
       setTimeout(fr,Math.max(0,nextFrameMs-elapsed));
