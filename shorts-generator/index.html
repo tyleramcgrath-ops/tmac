@@ -429,12 +429,23 @@ async function callGroq(msgs){
 }
 
 async function callFallback(sys,usr){
-  const prompt=sys+'\n\n'+usr;
-  const r=await fetch('https://text.pollinations.ai/'+encodeURIComponent(prompt)+'?model=openai&json=true');
-  if(!r.ok)throw new Error('Fallback '+r.status);
+  // Use Pollinations POST endpoint — GET URLs break with long prompts
+  const r=await fetch('https://text.pollinations.ai/',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'openai',
+      jsonMode:true,
+      messages:[{role:'system',content:sys},{role:'user',content:usr}]
+    })
+  });
+  if(!r.ok){
+    const t=await r.text().catch(()=>'');
+    throw new Error('Fallback '+r.status+': '+t.slice(0,120));
+  }
   const txt=await r.text();
   const j=txt.indexOf('{'),e=txt.lastIndexOf('}');
-  if(j<0||e<0)throw new Error('No JSON in fallback');
+  if(j<0||e<0)throw new Error('Fallback returned no JSON. Check your Groq key or try again.');
   return JSON.parse(txt.slice(j,e+1));
 }
 
@@ -482,7 +493,12 @@ async function stepGenerate(){
       const {sys,usr}=buildPrompt(topic,attempt);
       let data;
       try{data=await callGroq([{role:'system',content:sys},{role:'user',content:usr}]);}
-      catch(e){if(e.message.includes('No Groq'))throw e;toast('Groq failed, trying fallback...','info');data=await callFallback(sys,usr);}
+      catch(e){
+        if(e.message.includes('No Groq'))throw e;
+        const groqErr=e.message;
+        toast('Groq failed ('+groqErr.slice(0,60)+'), trying fallback...','info');
+        data=await callFallback(sys,usr);
+      }
       const issues=validateScript(data);
       if(!issues.length){scriptData=data;break;}
       lastErr=issues.join('; ');
