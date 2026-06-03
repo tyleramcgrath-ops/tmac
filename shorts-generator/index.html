@@ -892,6 +892,21 @@ function renderMetadataTab(){
   document.getElementById('metadata-content').style.display='block';
 }
 
+async function generateFootageQueries(scenes){
+  // Dedicated AI call whose only job is: given voiceover text → best stock footage search query
+  const lines=scenes.map((s,i)=>`${i+1}. ${(s.voiceover||s.visual_direction||'').slice(0,120)}`).join('\n');
+  const sys='You are a stock footage researcher. For each numbered scene, write exactly ONE Pexels search query: 2-4 specific concrete words naming the exact objects/people/places a viewer would SEE on screen. No abstract concepts. No verbs. Think: what physical things appear in this shot?\nReturn ONLY valid JSON: {"q":["query for scene 1","query for scene 2",...]}';
+  const usr=lines;
+  const msgs=[{role:'system',content:sys},{role:'user',content:usr}];
+  for(const prov of [{name:'Gemini',fn:m=>callGemini(m)},{name:'Groq',fn:m=>callGroq(m)},{name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)}]){
+    try{
+      const data=await prov.fn(msgs,sys,usr);
+      if(data.q&&Array.isArray(data.q)&&data.q.length)return data.q;
+    }catch(e){}
+  }
+  return null;
+}
+
 async function stepFindFootage(){
   if(!D||wfStep<2){toast('Generate script first','error');return;}
   bgMode=document.getElementById('bgModeSelect').value;
@@ -902,14 +917,21 @@ async function stepFindFootage(){
   const pxKey=getKey('pexelsKey');
   const pbKey=getKey('pixabayKey');
   if(!pxKey&&!pbKey) toast('No Pexels or Pixabay key — using gradient backgrounds. Add a key in the top nav.','error');
+
+  // Ask AI for precise visual search queries — separate task from script writing
+  document.getElementById('cs-footage-sub').textContent='AI generating visual search terms...';
+  const aiQueries=await generateFootageQueries(scenes);
+
   let shownErr=false;
   for(let i=0;i<scenes.length;i++){
     document.getElementById('footageProgress').style.width=Math.round((i/scenes.length)*100)+'%';
-    const q=scenes[i].pexels_search||scenes[i].visual_direction||'cinematic';
-    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${q}"...`;
+    // Use AI-generated query first, fall back to script's pexels_search
+    const primaryQ=(aiQueries&&aiQueries[i])||scenes[i].pexels_search||scenes[i].visual_direction||'cinematic';
+    const scene={...scenes[i],pexels_search:primaryQ,_aiQuery:primaryQ};
+    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${primaryQ}"...`;
     let vid=null,thumb=null;
     try{
-      const r=await fetchBestFootage(scenes[i],pxKey,pbKey);
+      const r=await fetchBestFootage(scene,pxKey,pbKey);
       if(r){vid=r.vid;thumb=r.thumb;}
     }catch(e){if(!shownErr){shownErr=true;toast('Footage: '+e.message,'error');}}
     sceneVids.push(vid);sceneThumbUrls.push(thumb);
