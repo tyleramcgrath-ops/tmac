@@ -346,36 +346,82 @@ let wfStep=0,D=null,sceneVids=[],sceneThumbUrls=[],captionTimeline=[];
 let captionStyle='hormozi',bgMode='pexels',dur=30;
 let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastTS=0;
 
-// ── Audio (Web Audio API + TTS) ───────────────────────────────────────────────
-let audioCtx=null,audioBuffer=null,audioSource=null,audioDestNode=null;
+// ── Audio ─────────────────────────────────────────────────────────────────────
+let audioEl=null,audioBlobUrl=null,audioReady=false;
 
+// Try multiple free TTS sources in order
 async function fetchTTSAudio(text){
-  // StreamElements TTS — returns MP3, CORS-friendly, free, no key needed
-  const voice='Brian';
-  const url=`https://api.streamelements.com/kappa/v2/speech?voice=${voice}&text=${encodeURIComponent(text)}`;
-  const r=await fetch(url);
-  if(!r.ok)throw new Error('TTS fetch failed: '+r.status);
-  const ab=await r.arrayBuffer();
-  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  audioBuffer=await audioCtx.decodeAudioData(ab);
-  // create a persistent MediaStreamDestination so we can tap it for recording
-  audioDestNode=audioCtx.createMediaStreamDestination();
+  const trimmed=text.slice(0,600); // most APIs cap around here
+  const sources=[
+    ()=>fetchFromStreamElements(trimmed),
+    ()=>fetchFromGoogleTTS(trimmed),
+  ];
+  for(const src of sources){
+    try{
+      const blob=await src();
+      if(blob&&blob.size>1000){
+        if(audioBlobUrl)URL.revokeObjectURL(audioBlobUrl);
+        audioBlobUrl=URL.createObjectURL(blob);
+        if(!audioEl)audioEl=document.createElement('audio');
+        audioEl.src=audioBlobUrl;
+        audioEl.preload='auto';
+        await new Promise((res,rej)=>{
+          audioEl.oncanplaythrough=res;
+          audioEl.onerror=rej;
+          setTimeout(res,4000); // don't wait forever
+        });
+        audioReady=true;
+        return;
+      }
+    }catch(e){console.warn('TTS source failed:',e);}
+  }
+  throw new Error('All TTS sources failed');
+}
+
+async function fetchFromStreamElements(text){
+  const r=await fetch(`https://api.streamelements.com/kappa/v2/speech?voice=Brian&text=${encodeURIComponent(text)}`);
+  if(!r.ok)throw new Error('SE '+r.status);
+  return r.blob();
+}
+
+async function fetchFromGoogleTTS(text){
+  // Google Translate TTS — unofficial but widely used
+  const chunks=chunkText(text,180);
+  const blobs=[];
+  for(const chunk of chunks){
+    const url=`https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunk)}&tl=en&client=tw-ob`;
+    const r=await fetch(url);
+    if(!r.ok)throw new Error('Google TTS '+r.status);
+    blobs.push(await r.blob());
+  }
+  return new Blob(blobs,{type:'audio/mpeg'});
+}
+
+function chunkText(text,max){
+  const words=text.split(' ');const chunks=[];let cur='';
+  for(const w of words){
+    if((cur+' '+w).trim().length>max&&cur){chunks.push(cur.trim());cur=w;}
+    else cur=(cur+' '+w).trim();
+  }
+  if(cur)chunks.push(cur);
+  return chunks;
 }
 
 function playAudio(offset=0){
-  if(!audioCtx||!audioBuffer)return;
-  if(audioCtx.state==='suspended')audioCtx.resume();
-  if(audioSource){try{audioSource.stop();}catch(e){}}
-  audioSource=audioCtx.createBufferSource();
-  audioSource.buffer=audioBuffer;
-  audioSource.connect(audioCtx.destination);   // speakers
-  audioSource.connect(audioDestNode);           // capture stream for recording
-  audioSource.start(0,offset);
+  if(!audioEl||!audioReady)return;
+  audioEl.currentTime=Math.min(offset,audioEl.duration||0);
+  audioEl.play().catch(e=>console.warn('Audio play:',e));
 }
 
 function stopAudio(){
-  if(audioSource){try{audioSource.stop();}catch(e){}}
-  audioSource=null;
+  if(!audioEl)return;
+  audioEl.pause();
+}
+
+function getAudioCaptureStream(){
+  if(!audioEl)return null;
+  try{return audioEl.captureStream?audioEl.captureStream():audioEl.mozCaptureStream?audioEl.mozCaptureStream():null;}
+  catch(e){return null;}
 }
 
 window.onload=()=>{
@@ -648,12 +694,13 @@ async function stepBuildCaptions(){
   // Fetch TTS voiceover audio
   const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
   document.getElementById('cs-captions').querySelector('.c-status-sub').textContent='Fetching voiceover audio...';
+  audioReady=false;
   try{
     await fetchTTSAudio(script);
-    toast('Voiceover loaded ✓','success');
+    toast('🔊 Voiceover loaded! Audio will play in preview and export.','success');
   }catch(e){
-    console.warn('TTS failed:',e);
-    toast('TTS failed — preview will be silent. Export tab has voiceover button.','info');
+    console.warn('TTS failed:',e.message);
+    toast('⚠️ Could not load voiceover audio (CORS/network). Try a different browser or add your Groq key.','error');
   }
 
   wfStep=6;updateStepRail();unlockTabs();renderCaptionsTab();renderExportTab();
@@ -852,18 +899,19 @@ async function renderVideo(){
   const canvas=document.getElementById('previewCanvas');
   const videoStream=canvas.captureStream(FPS);
 
-  // Add audio track from the AudioContext destination node if available
-  if(audioDestNode){
-    audioDestNode.stream.getAudioTracks().forEach(t=>videoStream.addTrack(t));
+  // Capture audio from the <audio> element's output stream
+  const audioCapStream=getAudioCaptureStream();
+  if(audioCapStream){
+    audioCapStream.getAudioTracks().forEach(t=>videoStream.addTrack(t));
   }
 
   let rec;
-  try{
-    rec=new MediaRecorder(videoStream,{mimeType:'video/webm;codecs=vp9,opus',videoBitsPerSecond:9_000_000});
-  }catch(e){
-    try{rec=new MediaRecorder(videoStream,{mimeType:'video/webm',videoBitsPerSecond:9_000_000});}
-    catch(e2){rec=new MediaRecorder(videoStream);}
+  const mimes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  rec=null;
+  for(const m of mimes){
+    try{if(MediaRecorder.isTypeSupported(m)){rec=new MediaRecorder(videoStream,{mimeType:m,videoBitsPerSecond:9_000_000});break;}}catch(e){}
   }
+  if(!rec)rec=new MediaRecorder(videoStream);
 
   const chunks=[];
   rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
@@ -871,10 +919,10 @@ async function renderVideo(){
   document.getElementById('renderProgress').style.display='block';
   document.getElementById('renderFill').style.width='0%';
   wfStep=7;updateStepRail();
-  rec.start(100);
-
-  // Play audio from beginning in sync with frame rendering
+  // Start audio BEFORE recorder so first frames have audio
   playAudio(0);
+  await new Promise(r=>setTimeout(r,80));
+  rec.start(100);
 
   let f=0;const totalF=dur*FPS;
   await new Promise(resolve=>{
@@ -904,11 +952,11 @@ async function renderVideo(){
   };
 }
 
-function playVoiceover(){if(!audioBuffer){toast('No voiceover loaded — build captions first','info');return;}playAudio(0);}
+function playVoiceover(){if(!audioReady){toast('No voiceover loaded — build captions first','info');return;}playAudio(0);}
 
 function resetAll(){
   if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
-  stopAudio();audioBuffer=null;audioSource=null;
+  stopAudio();audioReady=false;if(audioBlobUrl){URL.revokeObjectURL(audioBlobUrl);audioBlobUrl=null;}audioEl=null;
   wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
   updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
   document.getElementById('approveBtn').disabled=true;
