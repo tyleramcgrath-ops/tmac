@@ -483,21 +483,20 @@ function parseWordTimestamps(alignment){
 }
 
 async function loadAudioBlob(blob){
-  // <audio> element for preview playback
   if(audioBlobUrl)URL.revokeObjectURL(audioBlobUrl);
   audioBlobUrl=URL.createObjectURL(blob);
   if(!audioEl){audioEl=document.createElement('audio');}
-  audioEl.src=audioBlobUrl;audioEl.load();
+  audioEl.src=audioBlobUrl;
+  audioEl.loop=true; // loop so preview stays in sync across multiple plays
+  audioEl.load();
   await new Promise(res=>{audioEl.oncanplaythrough=res;audioEl.onerror=res;setTimeout(res,6000);});
 
-  // Web Audio API: decode into AudioBuffer for recording capture
   if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
   if(audioCtx.state==='suspended')await audioCtx.resume();
   const arrayBuf=await blob.arrayBuffer();
   audioBuffer=await audioCtx.decodeAudioData(arrayBuf);
   audioDest=audioCtx.createMediaStreamDestination();
 
-  // Drive everything from actual TTS duration so captions, video, and audio all match
   effectiveDur=audioBuffer.duration;
   audioReady=true;
   rebuildCaptionTimeline();
@@ -520,26 +519,19 @@ function rebuildCaptionTimeline(){
       timeline.push({text,highlights,startSec,endSec});
     }
   }else{
-    // Fallback: proportional by scene timing scaled to effectiveDur
-    (D.scenes||[]).forEach((s,si)=>{
-      const sStart=parseTime(s.start_time);
-      const sEnd=si<(D.scenes||[]).length-1?parseTime(D.scenes[si+1].start_time):dur;
-      const tStart=(sStart/dur)*effectiveDur;
-      const tEnd=Math.min(effectiveDur,(sEnd/dur)*effectiveDur);
-      const words=(s.voiceover||'').split(/\s+/).filter(Boolean);
-      if(!words.length)return;
-      const phrases=[];
-      for(let i=0;i<words.length;i+=ps)phrases.push(words.slice(i,i+ps).join(' '));
-      const tPer=(tEnd-tStart)/phrases.length;
-      phrases.forEach((phrase,pi)=>{
-        timeline.push({
-          text:phrase,
-          highlights:(s.caption_highlights||[]).map(h=>h.toUpperCase()),
-          startSec:tStart+pi*tPer,
-          endSec:pi===phrases.length-1?tEnd:tStart+(pi+1)*tPer
-        });
-      });
-    });
+    // Fallback: word-rate proportional timing — TTS speaks at roughly constant wpm
+    // so dividing by total word count is far more accurate than scene-based timestamps.
+    const allWords=(D.scenes||[]).flatMap(s=>(s.voiceover||'').split(/\s+/).filter(Boolean));
+    const totalWords=allWords.length;
+    if(totalWords>0){
+      for(let i=0;i<totalWords;i+=ps){
+        const chunk=allWords.slice(i,Math.min(i+ps,totalWords));
+        const startSec=(i/totalWords)*effectiveDur;
+        const endSec=(Math.min(i+ps,totalWords)/totalWords)*effectiveDur;
+        const highlights=chunk.map(w=>w.toUpperCase().replace(/[^A-Z0-9]/g,'')).filter(w=>allHL.has(w));
+        timeline.push({text:chunk.join(' '),highlights,startSec,endSec});
+      }
+    }
   }
   captionTimeline=timeline;
 }
@@ -1114,75 +1106,83 @@ function renderExportTab(){
 
 // ── Preview ──────────────────────────────────────────────────────────────────
 function startPreview(){
-  previewFrame=0;previewPlaying=true;_lastCapText='';_lastCapFrame=0;
+  previewFrame=0;previewPlaying=true;lastTS=0;
   if(previewRAF)cancelAnimationFrame(previewRAF);
-  previewRAF=requestAnimationFrame(previewLoop);
-  if(audioReady) playAudio(0);
-  else {
+  if(audioReady){
+    audioEl.currentTime=0;
+    audioEl.play().catch(e=>console.warn('Audio play:',e));
+  }else{
     const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');
     speakPreview(script);
   }
+  previewRAF=requestAnimationFrame(previewLoop);
 }
 function togglePreviewPlay(){
   previewPlaying=!previewPlaying;
   document.getElementById('playPauseBtn').textContent=previewPlaying?'⏸ Pause':'▶ Play';
   if(previewPlaying){
+    lastTS=0;
+    if(audioReady) audioEl.play().catch(()=>{});
+    else{const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');speakPreview(script);}
     previewRAF=requestAnimationFrame(previewLoop);
-    if(audioReady) playAudio(previewFrame/FPS);
-    else {const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');speakPreview(script);}
-  } else {
-    stopAudio(); stopSpeech();
+  }else{
+    if(audioReady) audioEl.pause();
+    stopSpeech();
   }
 }
 function restartPreview(){
-  previewFrame=0;previewPlaying=true;
+  previewFrame=0;previewPlaying=true;lastTS=0;
   document.getElementById('playPauseBtn').textContent='⏸ Pause';
   if(previewRAF)cancelAnimationFrame(previewRAF);
+  if(audioReady){audioEl.currentTime=0;audioEl.play().catch(()=>{});}
+  else{const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');speakPreview(script);}
   previewRAF=requestAnimationFrame(previewLoop);
-  if(audioReady) playAudio(0);
-  else {const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');speakPreview(script);}
 }
 
-function previewLoop(ts=0){
+function previewLoop(ts){
   if(!previewPlaying)return;
+  if(!lastTS)lastTS=ts;
   const elapsed=ts-lastTS;
   if(elapsed>=1000/FPS){
     lastTS=ts;
-    drawFrame(previewFrame);
+    // Always use audio clock when available — it's the source of truth.
+    // previewFrame only drives the zoom animation in drawBg, not caption timing.
+    const currentT=(audioReady&&audioEl&&audioEl.duration>0)
+      ?audioEl.currentTime
+      :previewFrame/FPS;
+    drawFrame(previewFrame,currentT);
     previewFrame++;
-    if(previewFrame>=effectiveDur*FPS)previewFrame=0;
+    if(previewFrame>=Math.ceil(effectiveDur*FPS))previewFrame=0;
   }
   previewRAF=requestAnimationFrame(previewLoop);
 }
 
-function drawFrame(f){
+// drawFrame(frameIndex, currentTimeSec)
+// frameIndex  — used only for the Ken Burns zoom animation in drawBg
+// currentTimeSec — authoritative time for caption + scene selection
+function drawFrame(f,t){
   const canvas=document.getElementById('previewCanvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
   ctx.clearRect(0,0,W,H);
   const scenes=D?.scenes||[];
-  // Scale scene start times to effectiveDur so background switches at the right frame
-  const totalF=Math.ceil(effectiveDur*FPS);
+
+  // Scene index from time, not frame (avoids rAF drift vs audio clock)
   let si=0;
   for(let i=0;i<scenes.length;i++){
-    const scaledF=Math.floor((parseTime(scenes[i].start_time)/dur)*totalF);
-    if(f>=scaledF)si=i;
+    const sceneStartT=(parseTime(scenes[i].start_time)/dur)*effectiveDur;
+    if(t>=sceneStartT)si=i;
   }
   drawBg(ctx,f,si);
-  // overlay gradient
+
   const g=ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'rgba(0,0,0,0.5)');g.addColorStop(0.4,'rgba(0,0,0,0.08)');g.addColorStop(1,'rgba(0,0,0,0.6)');
   ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  // Caption lookup time: use audio element's current time during preview (true sync),
-  // fall back to frame time during export (audio BufferSource starts at same moment as recording).
-  let capLookupT=f/FPS;
-  if(audioReady&&audioEl&&!audioEl.paused&&audioEl.duration>0){
-    capLookupT=audioEl.currentTime;
-  }
-  // Use <= for endSec so there's no gap at exact boundary
-  const cap=captionTimeline.find(c=>capLookupT>=c.startSec&&capLookupT<=c.endSec);
-  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.startSec,capLookupT);
-  // watermark
+
+  // Caption lookup — purely time-based, no frame arithmetic
+  const cap=captionTimeline.find(c=>t>=c.startSec&&t<=c.endSec);
+  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.startSec,t);
+
   ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#fff';ctx.font='500 11px Inter,sans-serif';ctx.fillText('Viral Shorts Studio',16,H-14);ctx.restore();
 }
 
@@ -1314,8 +1314,8 @@ async function renderVideo(){
     let f=0;
     function fr(){
       if(f>=totalF){rec.stop();resolve();return;}
-      drawFrame(f);
-      videoTrack.requestFrame(); // manually push this frame into the stream
+      drawFrame(f,f/FPS); // explicit time = frame/FPS, in sync with audio source
+      videoTrack.requestFrame(); // push exact frame into captureStream(0)
       f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
@@ -1337,9 +1337,9 @@ async function renderVideo(){
     document.getElementById('renderLabel').textContent='Export complete! ✓';
     wfStep=8;updateStepRail();setStatus('done','Exported!');toast('🎉 Video exported!','success');
     document.getElementById('downloadLinks').innerHTML=`<a href="${url}" download="shorts_${Date.now()}.webm" style="font-size:12px;color:var(--grn)">⬇ Download again</a>`;
-    previewFrame=0;previewPlaying=true;
+    previewFrame=0;previewPlaying=true;lastTS=0;
+    if(audioReady){audioEl.currentTime=0;audioEl.play().catch(()=>{});}
     previewRAF=requestAnimationFrame(previewLoop);
-    playAudio(0);
   };
 }
 
