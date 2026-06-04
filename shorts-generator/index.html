@@ -182,6 +182,10 @@ nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--borde
       <input type="password" id="pixabayKey" placeholder="pixabay key..." autocomplete="off">
     </div>
     <div class="modal-row">
+      <label>🤖 OpenAI Key (ChatGPT — alternative AI) <a href="https://platform.openai.com/api-keys" target="_blank">Get key →</a></label>
+      <input type="password" id="openaiKey" placeholder="sk-..." autocomplete="off">
+    </div>
+    <div class="modal-row">
       <label>🔊 ElevenLabs Key (AI voice) <a href="https://elevenlabs.io" target="_blank">Get free key →</a></label>
       <input type="password" id="elKey" placeholder="elevenlabs key..." autocomplete="off">
     </div>
@@ -630,7 +634,7 @@ function selectVoice(id){
 function getElVoiceId(){return selectedVoiceId;}
 
 window.onload=()=>{
-  ['geminiKey','groqKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
+  ['geminiKey','groqKey','openaiKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
     const v=localStorage.getItem(id);if(v&&document.getElementById(id))document.getElementById(id).value=v;
   });
   updateKeyBadge();
@@ -641,7 +645,7 @@ window.onload=()=>{
 function openSettings(){document.getElementById('settingsModal').classList.remove('hidden');}
 function closeSettings(){document.getElementById('settingsModal').classList.add('hidden');}
 function saveKeys(){
-  ['geminiKey','groqKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
+  ['geminiKey','groqKey','openaiKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
     const v=document.getElementById(id)?.value.trim();if(v)localStorage.setItem(id,v);
   });
   toast('Keys saved!','success');
@@ -749,6 +753,19 @@ async function callGroq(msgs){
   throw new Error('Groq 429: rate limit on all models — switching to fallback');
 }
 
+async function callOpenAI(msgs){
+  const key=document.getElementById('openaiKey')?.value.trim()||localStorage.getItem('openaiKey')||'';
+  if(!key)throw new Error('No OpenAI key');
+  const r=await fetch('https://api.openai.com/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model:'gpt-4o-mini',temperature:0.75,max_tokens:3000,messages:msgs,response_format:{type:'json_object'}})
+  });
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('OpenAI '+r.status+': '+t.slice(0,150));}
+  const d=await r.json();
+  return JSON.parse(d.choices?.[0]?.message?.content||'{}');
+}
+
 async function callFallback(sys,usr){
   const models=['openai','mistral','openai-large'];
   let lastErr='';
@@ -809,9 +826,10 @@ async function stepGenerate(){
   document.getElementById('genBtn').textContent='⏳ Generating...';
   document.getElementById('scriptProgress').style.width='15%';
   let scriptData=null,lastErr=null;
-  // Provider order: Gemini (1M TPM free) → Groq → Pollinations
+  // Provider order: Gemini → OpenAI → Groq → Pollinations
   const providers=[
     {name:'Gemini',fn:(m)=>callGemini(m)},
+    {name:'OpenAI',fn:(m)=>callOpenAI(m)},
     {name:'Groq',fn:(m)=>callGroq(m)},
     {name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)},
   ];
@@ -911,7 +929,7 @@ Rules:
 Return ONLY JSON: {"q":["query for scene 1","query for scene 2",...]}`;
   const usr=lines;
   const msgs=[{role:'system',content:sys},{role:'user',content:usr}];
-  for(const prov of [{name:'Gemini',fn:m=>callGemini(m)},{name:'Groq',fn:m=>callGroq(m)},{name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)}]){
+  for(const prov of [{name:'Gemini',fn:m=>callGemini(m)},{name:'OpenAI',fn:m=>callOpenAI(m)},{name:'Groq',fn:m=>callGroq(m)},{name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)}]){
     try{
       const data=await prov.fn(msgs,sys,usr);
       if(data.q&&Array.isArray(data.q)&&data.q.length)return data.q;
@@ -1260,11 +1278,15 @@ async function renderVideo(){
 
   const canvas=document.getElementById('previewCanvas');
 
-  // Prepare audio graph (connected but NOT started yet)
+  // captureStream(0) = manual mode: we call videoTrack.requestFrame() after each drawFrame()
+  // This guarantees every drawn frame is captured — no browser sampling jitter
+  const videoStream=canvas.captureStream(0);
+  const videoTrack=videoStream.getVideoTracks()[0];
+
+  // Prepare audio graph (connected but NOT started yet — started after rec.start)
   const audioPrep=await prepareAudioCapture();
   const audioTracks=audioPrep?audioPrep.stream.getAudioTracks():[];
-  const videoTracks=canvas.captureStream(FPS).getVideoTracks();
-  const combinedStream=new MediaStream([...videoTracks,...audioTracks]);
+  const combinedStream=new MediaStream([...videoStream.getVideoTracks(),...audioTracks]);
 
   let rec=null;
   const mimes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
@@ -1280,23 +1302,28 @@ async function renderVideo(){
   document.getElementById('renderFill').style.width='0%';
   wfStep=7;updateStepRail();
 
-  // CRITICAL ORDER: start recorder → THEN start audio source at exact same moment.
-  // This ensures the recorder captures audio from frame 0 with no offset.
+  // Start recorder first, then audio — both from same moment, frame 0
   rec.start(100);
-  if(audioPrep) audioPrep.src.start(0); // audio starts WITH the recorder
+  if(audioPrep) audioPrep.src.start(0);
 
+  const totalF=Math.ceil(effectiveDur*FPS);
+  const msPerFrame=1000/FPS;
   const renderStart=performance.now();
-  let f=0;const totalF=Math.ceil(effectiveDur*FPS);
+
   await new Promise(resolve=>{
+    let f=0;
     function fr(){
       if(f>=totalF){rec.stop();resolve();return;}
-      drawFrame(f);f++;
+      drawFrame(f);
+      videoTrack.requestFrame(); // manually push this frame into the stream
+      f++;
       const pct=(f/totalF*100).toFixed(0);
       document.getElementById('renderFill').style.width=pct+'%';
       document.getElementById('renderLabel').textContent='Rendering... '+pct+'%';
+      // Wall-clock pace: schedule next frame at the real-time offset it should appear
       const elapsed=performance.now()-renderStart;
-      const nextFrameMs=(f/FPS)*1000;
-      setTimeout(fr,Math.max(0,nextFrameMs-elapsed));
+      const nextMs=f*msPerFrame;
+      setTimeout(fr,Math.max(0,nextMs-elapsed));
     }
     fr();
   });
@@ -1308,9 +1335,8 @@ async function renderVideo(){
     const a=document.createElement('a');a.href=url;a.download='shorts_'+Date.now()+'.webm';a.click();
     document.getElementById('exportBtn').disabled=false;
     document.getElementById('renderLabel').textContent='Export complete! ✓';
-    wfStep=8;updateStepRail();setStatus('done','Exported!');toast('Video exported!','success');
+    wfStep=8;updateStepRail();setStatus('done','Exported!');toast('🎉 Video exported!','success');
     document.getElementById('downloadLinks').innerHTML=`<a href="${url}" download="shorts_${Date.now()}.webm" style="font-size:12px;color:var(--grn)">⬇ Download again</a>`;
-    // Restart preview after export
     previewFrame=0;previewPlaying=true;
     previewRAF=requestAnimationFrame(previewLoop);
     playAudio(0);
