@@ -391,6 +391,9 @@ nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--borde
 <div id="toasts"></div>
 
 <script>
+// ═══════════════════════════════════════════════════════════════════════════════
+// VIRAL SHORTS STUDIO — complete rewrite for reliable audio+caption+export sync
+// ═══════════════════════════════════════════════════════════════════════════════
 const WORD_TARGETS={15:[35,45],30:[75,90],45:[110,135],60:[145,180]};
 const SCENE_TARGETS={15:[3,4],30:[5,6],45:[7,8],60:[9,12]};
 const FPS=30,W=540,H=960;
@@ -545,20 +548,27 @@ function playAudio(offset=0){
 }
 function stopAudio(){if(audioEl)audioEl.pause();}
 
-// Recording capture — Web Audio API only (captureStream is unreliable across browsers)
-async function startAudioCapture(){
+// Recording capture — Web Audio API only
+// IMPORTANT: prepareAudioCapture() sets up the graph but does NOT call src.start()
+// The caller must call src.start(0) after rec.start() so audio begins with recording.
+async function prepareAudioCapture(){
   if(!audioCtx||!audioBuffer)return null;
   if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}}
   if(audioCtx.state!=='running')await audioCtx.resume();
-  // Fresh destination node every time
   audioDest=audioCtx.createMediaStreamDestination();
   audioCapSrc=audioCtx.createBufferSource();
   audioCapSrc.buffer=audioBuffer;
-  audioCapSrc.loop=false; // no loop — effectiveDur matches audio duration
+  audioCapSrc.loop=false;
   audioCapSrc.connect(audioDest);
   audioCapSrc.connect(audioCtx.destination);
-  audioCapSrc.start(0);
-  return audioDest.stream;
+  // Do NOT call .start() here — caller starts it in sync with rec.start()
+  return{src:audioCapSrc,stream:audioDest.stream};
+}
+// Legacy shim used during preview (still starts immediately)
+async function startAudioCapture(){
+  const r=await prepareAudioCapture();
+  if(r)r.src.start(0);
+  return r?r.stream:null;
 }
 function stopAudioCapture(){
   if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}audioCapSrc=null;}
@@ -887,8 +897,18 @@ function renderMetadataTab(){
 }
 
 async function generateFootageQueries(scenes){
-  const lines=scenes.map((s,i)=>`${i+1}. ${(s.voiceover||s.visual_direction||'').slice(0,120)}`).join('\n');
-  const sys='You are a stock footage researcher. For each scene number, give ONE Pexels search query: 2-4 specific concrete visual words (objects, places, actions that appear on screen). No abstract concepts. Example: "champagne bottles pouring nightclub", "luxury sports car driving", "rapper jewelry closeup", "private jet interior cabin". Return JSON: {"q":["query1","query2",...]}';
+  const lines=scenes.map((s,i)=>`Scene ${i+1}: ${(s.voiceover||'').slice(0,100)} | visual: ${(s.visual_direction||'').slice(0,60)} | script query: ${s.pexels_search||''}`).join('\n');
+  const sys=`You are a stock video search expert. For each scene, write ONE Pexels search query (2-4 words) that finds footage of the SPECIFIC thing being described.
+Rules:
+- Show the exact physical thing the narrator mentions (car, money, person, city, food, etc.)
+- Use concrete nouns + actions or adjectives. Never abstract words like "success", "growth", "wealth", "dream".
+- If narrator says "10 million dollars" → "stacks cash money counting"
+- If narrator says "Rolls Royce" → "rolls royce driving street"
+- If narrator says "working out" → "gym workout barbell lifting"
+- If narrator says "social media" → "phone scrolling instagram feed"
+- If narrator says "mansion" → "luxury mansion pool exterior"
+- Match the scene's energy: fast paced → action shots, calm → slow establishing shots
+Return ONLY JSON: {"q":["query for scene 1","query for scene 2",...]}`;
   const usr=lines;
   const msgs=[{role:'system',content:sys},{role:'user',content:usr}];
   for(const prov of [{name:'Gemini',fn:m=>callGemini(m)},{name:'Groq',fn:m=>callGroq(m)},{name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)}]){
@@ -1135,14 +1155,15 @@ function drawFrame(f){
   const g=ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'rgba(0,0,0,0.5)');g.addColorStop(0.4,'rgba(0,0,0,0.08)');g.addColorStop(1,'rgba(0,0,0,0.6)');
   ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  // During preview with live audio, sync captions to audio time so they match the voice.
-  // During export, audioEl is paused so fall back to frame time (audio and frames start together).
+  // Caption lookup time: use audio element's current time during preview (true sync),
+  // fall back to frame time during export (audio BufferSource starts at same moment as recording).
   let capLookupT=f/FPS;
   if(audioReady&&audioEl&&!audioEl.paused&&audioEl.duration>0){
-    capLookupT=audioEl.currentTime%(effectiveDur||audioEl.duration);
+    capLookupT=audioEl.currentTime;
   }
-  const cap=captionTimeline.find(c=>capLookupT>=c.startSec&&capLookupT<c.endSec);
-  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,Math.floor(cap.startSec*FPS),f);
+  // Use <= for endSec so there's no gap at exact boundary
+  const cap=captionTimeline.find(c=>capLookupT>=c.startSec&&capLookupT<=c.endSec);
+  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.startSec,capLookupT);
   // watermark
   ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#fff';ctx.font='500 11px Inter,sans-serif';ctx.fillText('Viral Shorts Studio',16,H-14);ctx.restore();
 }
@@ -1168,18 +1189,13 @@ function drawBg(ctx,f,si){
   }
 }
 
-let _lastCapText='',_lastCapFrame=0;
-function drawCaption(ctx,W,H,text,style,accent,highlights,popF,f){
+function drawCaption(ctx,W,H,text,style,accent,highlights,startSec,currentSec){
   if(!text)return;
-  // Debounce: ignore single-frame flips at phrase boundaries
-  if(text!==_lastCapText){
-    if(f===_lastCapFrame){return;} // same frame as last change — skip this frame
-    _lastCapText=text;_lastCapFrame=f;
-  }
   const capY=H*0.72;
+  // pop animation: 0→1 over first 0.15s of the phrase
+  const elapsed=Math.max(0,currentSec-startSec);
   const ease=t=>t<0.5?2*t*t:-1+(4-2*t)*t;
-  // Clamp pop to [0,1] — negative values (frame behind popF) would inflate scale
-  const pop=Math.min(1,Math.max(0,(f-popF)/5));
+  const pop=Math.min(1,elapsed/0.15);
   const scale=1+(1-ease(pop))*0.13;
   const defs={
     hormozi:{fs:54,font:'Impact,Arial Black,sans-serif',color:'#fff',strokeColor:'#000',strokeW:12,hlColor:accent,shadow:true,pill:false},
@@ -1244,9 +1260,9 @@ async function renderVideo(){
 
   const canvas=document.getElementById('previewCanvas');
 
-  // Start audio FIRST so Web Audio stream is live before recorder starts
-  const audioCapStream=await startAudioCapture();
-  const audioTracks=audioCapStream?audioCapStream.getAudioTracks():[];
+  // Prepare audio graph (connected but NOT started yet)
+  const audioPrep=await prepareAudioCapture();
+  const audioTracks=audioPrep?audioPrep.stream.getAudioTracks():[];
   const videoTracks=canvas.captureStream(FPS).getVideoTracks();
   const combinedStream=new MediaStream([...videoTracks,...audioTracks]);
 
@@ -1264,8 +1280,11 @@ async function renderVideo(){
   document.getElementById('renderFill').style.width='0%';
   wfStep=7;updateStepRail();
 
-  // Start recording and render simultaneously — no pre-delay so audio/video/captions are in sync from frame 0
+  // CRITICAL ORDER: start recorder → THEN start audio source at exact same moment.
+  // This ensures the recorder captures audio from frame 0 with no offset.
   rec.start(100);
+  if(audioPrep) audioPrep.src.start(0); // audio starts WITH the recorder
+
   const renderStart=performance.now();
   let f=0;const totalF=Math.ceil(effectiveDur*FPS);
   await new Promise(resolve=>{
