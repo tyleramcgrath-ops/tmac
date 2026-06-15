@@ -21,8 +21,10 @@ import {
   type StepState,
 } from './types'
 
-// Orchestrates a full analysis run. The run executes as a detached promise;
-// progress is persisted to the store after every step so the UI can poll.
+// Orchestrates a full analysis run. The core `runAnalysis` calls an `emit`
+// callback after every step; the database-backed mode persists each update so
+// the UI can poll, while the no-database (streaming) mode pushes each update
+// straight to the browser. Same analysis, two delivery channels.
 
 export function newReport(input: ReportInput): Report {
   return {
@@ -38,30 +40,37 @@ export function newReport(input: ReportInput): Report {
   }
 }
 
+/** Called after every progress change with the current report state. */
+export type Emit = (report: Report) => void | Promise<void>
+
 /**
- * Runs the analysis pipeline and returns the job promise. The API route returns
- * its HTTP response immediately and the client polls for progress; the returned
- * promise must be handed to `scheduleBackground()` so it survives on serverless
- * runtimes (see lib/background.ts).
+ * Database-backed background run. The API route returns immediately and the
+ * client polls; the returned promise must be handed to `scheduleBackground()`
+ * so it survives on serverless runtimes (see lib/background.ts).
  */
 export function startPipeline(report: Report): Promise<void> {
-  return runPipeline(report).catch(async (err) => {
-    console.error(`[pipeline] report ${report.id} crashed:`, err)
-    try {
-      const store = await getStore()
-      const latest = (await store.getReport(report.id)) ?? report
-      latest.status = 'failed'
-      latest.error = err instanceof Error ? err.message : 'Unexpected error while building the report.'
-      latest.completedAt = new Date().toISOString()
-      await store.saveReport(latest)
-    } catch (saveErr) {
-      console.error('[pipeline] failed to persist failure state:', saveErr)
-    }
-  })
+  const persist: Emit = async (r) => {
+    const store = await getStore()
+    await store.saveReport(r)
+  }
+  return runAnalysis(report, persist)
+    .then(() => {})
+    .catch(async (err) => {
+      console.error(`[pipeline] report ${report.id} crashed:`, err)
+      try {
+        const store = await getStore()
+        const latest = (await store.getReport(report.id)) ?? report
+        latest.status = 'failed'
+        latest.error = err instanceof Error ? err.message : 'Unexpected error while building the report.'
+        latest.completedAt = new Date().toISOString()
+        await store.saveReport(latest)
+      } catch (saveErr) {
+        console.error('[pipeline] failed to persist failure state:', saveErr)
+      }
+    })
 }
 
-async function runPipeline(report: Report): Promise<void> {
-  const store = await getStore()
+export async function runAnalysis(report: Report, emit: Emit): Promise<Report> {
   const warnings: string[] = []
 
   const setStep = async (id: PipelineStepId, state: StepState, detail?: string) => {
@@ -70,11 +79,11 @@ async function runPipeline(report: Report): Promise<void> {
       step.state = state
       if (detail) step.detail = detail
     }
-    await store.saveReport(report)
+    await emit(report)
   }
 
   report.status = 'running'
-  await store.saveReport(report)
+  await emit(report)
 
   const { keyword, url, country, device, language } = report.input
 
@@ -86,7 +95,7 @@ async function runPipeline(report: Report): Promise<void> {
     report.error = 'No SERP API key configured. Add a SerpAPI key (SERP_API_KEY) on the Settings page to fetch Google results.'
     report.completedAt = new Date().toISOString()
     await setStep('serp', 'error', 'Missing SERP_API_KEY')
-    return
+    return report
   }
   let serp
   try {
@@ -96,7 +105,7 @@ async function runPipeline(report: Report): Promise<void> {
     report.error = err instanceof SerpError ? err.userMessage : 'Failed to fetch search results.'
     report.completedAt = new Date().toISOString()
     await setStep('serp', 'error', report.error)
-    return
+    return report
   }
   await setStep('serp', 'done', `${serp.results.length} organic results`)
 
@@ -229,7 +238,8 @@ async function runPipeline(report: Report): Promise<void> {
   report.completedAt = new Date().toISOString()
   const reportStep = report.steps.find((s) => s.id === 'report')
   if (reportStep) reportStep.state = 'done'
-  await store.saveReport(report)
+  await emit(report)
+  return report
 }
 
 function hostOf(url: string): string {

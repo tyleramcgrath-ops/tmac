@@ -55,6 +55,17 @@ export async function getStore(): Promise<Store> {
   return store
 }
 
+/**
+ * Whether persistent report history is available. True when a database is
+ * configured, or when running on an always-on host (the file store works on a
+ * persistent disk). On serverless without a database, the app falls back to
+ * on-demand streaming analysis with no stored history.
+ */
+export function isHistoryEnabled(): boolean {
+  if (resolveDatabaseUrl()) return true
+  return !process.env.VERCEL
+}
+
 export class StoreConfigError extends Error {
   constructor(message: string) {
     super(message)

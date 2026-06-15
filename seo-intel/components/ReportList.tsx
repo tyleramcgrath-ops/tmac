@@ -17,6 +17,7 @@ export function ReportList({ limit }: { limit?: number }) {
   const router = useRouter()
   const [reports, setReports] = useState<ReportSummary[] | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [historyEnabled, setHistoryEnabled] = useState(true)
   const [busy, setBusy] = useState<string | null>(null)
 
   const load = useCallback(async () => {
@@ -24,6 +25,7 @@ export function ReportList({ limit }: { limit?: number }) {
       const res = await fetch('/api/reports')
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
+      setHistoryEnabled(data.historyEnabled !== false)
       setReports(limit ? data.reports.slice(0, limit) : data.reports)
     } catch {
       setError('Failed to load reports.')
@@ -52,6 +54,14 @@ export function ReportList({ limit }: { limit?: number }) {
 
   if (error) return <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
   if (reports === null) return <p className="py-8 text-center text-sm text-slate-400">Loading reports…</p>
+  if (!historyEnabled) {
+    return (
+      <p className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+        Saved report history is off on this deployment (no database connected). Analyses still run on demand and open
+        immediately. To keep a browsable history, add a Postgres <code>DATABASE_URL</code> — see <code>DEPLOY.md</code>.
+      </p>
+    )
+  }
   if (reports.length === 0) {
     return <p className="py-8 text-center text-sm text-slate-400">No reports yet — run your first analysis above.</p>
   }

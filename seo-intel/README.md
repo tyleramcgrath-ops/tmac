@@ -8,14 +8,16 @@ Built with Next.js (App Router) · React 19 · Tailwind CSS v4 · PostgreSQL (or
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftyleramcgrath-ops%2Ftmac&root-directory=seo-intel&env=SERP_API_KEY&envDescription=SerpAPI%20key%20(required)%20%E2%80%94%20get%20one%20free%20at%20serpapi.com&project-name=seo-intel&repository-name=seo-intel)
 
-Click the button, then: set **Root Directory** to `seo-intel`, add a free
-**Postgres** database from the Storage tab, and paste your `SERP_API_KEY`. Full
-click-by-click walkthrough (with the free-tier notes) is in **[DEPLOY.md](./DEPLOY.md)**.
+Three steps, ~3 minutes, **no database required**: click the button, set
+**Root Directory** to `seo-intel`, paste your `SERP_API_KEY`, and Deploy. Full
+click-by-click walkthrough is in **[DEPLOY.md](./DEPLOY.md)**.
 
-> Why a database is required on Vercel: the analysis runs as background work and
-> streams progress across multiple requests. Serverless functions don't share a
-> local disk between invocations, so reports are stored in Postgres there. On a
-> normal always-on server the built-in file store works with no database.
+> How it works without a database: on serverless (Vercel), each analysis runs in
+> a single streaming request that pushes live progress straight to your browser —
+> no cross-request storage needed. Optionally connect a free Postgres database
+> (one click in Vercel's Storage tab) to also keep a saved, browsable report
+> history. On an always-on server, the built-in file store handles history with
+> no database at all.
 
 ## What it does
 
@@ -57,11 +59,13 @@ The only **required** key is `SERP_API_KEY` ([serpapi.com](https://serpapi.com) 
 
 API keys are resolved **environment-first**; keys saved from the Settings page are stored encrypted and are never sent to the frontend (only a configured/not-configured flag is exposed).
 
-## Database setup
+## Storage modes
 
-**Zero-config (default):** reports are stored as JSON under `.data/` — perfect for local use and demos.
+The app adapts to wherever it runs:
 
-**PostgreSQL (production):** set `DATABASE_URL` (e.g. `postgres://user:pass@host:5432/seo_intel`). Tables (`reports`, `settings`) are created automatically on first use. Works with Supabase — use the connection string from *Project Settings → Database*.
+- **No database (default on Vercel):** analyses run on demand via a single streaming request — live progress, full report, and PDF/CSV/JSON export all work with no storage. Report *history* isn't saved (the History page says so).
+- **Local file store (default on an always-on server):** reports are saved as JSON under `.data/` — zero config, full history, ideal for local use and demos.
+- **PostgreSQL (anywhere):** set `DATABASE_URL` (e.g. `postgres://user:pass@host:5432/seo_intel`) for saved, browsable history on serverless too. Tables (`reports`, `settings`) are created automatically; SSL is enabled automatically for hosted databases. Works with Supabase/Neon/Vercel Postgres — the app also reads `POSTGRES_URL` and related auto-injected names.
 
 ## Running tests
 
@@ -77,8 +81,8 @@ pnpm build       # production build
 
 Any Node 20+ host works. See **[DEPLOY.md](./DEPLOY.md)** for the full Vercel walkthrough.
 
-- **Vercel** (one-click button above): set Root Directory to `seo-intel`, add a Postgres database (Storage tab) and `SERP_API_KEY`. The pipeline uses `waitUntil()` to finish its background work on serverless, and `maxDuration` is set to 300s (Pro runs every time; Hobby works for most runs — see DEPLOY.md's plan note).
-- **Docker / VM / Railway / Render**: `pnpm build && pnpm start`. The app detects it's not on Vercel and runs the pipeline as a normal background job — the built-in file store works with a persistent disk, or set `DATABASE_URL` for Postgres.
+- **Vercel** (one-click button above): set Root Directory to `seo-intel` and add `SERP_API_KEY` — no database needed. Each analysis runs as a single streaming request (`/api/analyze`, `maxDuration` 300s) that pushes live progress to the browser. Optionally connect Postgres for saved history. Pro runs every time; Hobby works for most runs — see DEPLOY.md's plan note.
+- **Docker / VM / Railway / Render**: `pnpm build && pnpm start`. The app detects it's not on Vercel and runs the pipeline as a normal background job with the built-in file store (persistent disk) — or set `DATABASE_URL` for Postgres.
 
 ## Architecture
 

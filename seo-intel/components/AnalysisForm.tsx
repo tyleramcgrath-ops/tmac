@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { stashInput } from '@/lib/client-session'
 
 const COUNTRIES = [
   ['us', 'United States'], ['gb', 'United Kingdom'], ['ca', 'Canada'], ['au', 'Australia'],
@@ -19,16 +20,35 @@ export function AnalysisForm() {
   const [language, setLanguage] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  // null until capabilities load; true = DB history, false = on-demand streaming.
+  const [historyEnabled, setHistoryEnabled] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    fetch('/api/capabilities')
+      .then((r) => r.json())
+      .then((d) => setHistoryEnabled(Boolean(d.historyEnabled)))
+      .catch(() => setHistoryEnabled(true)) // assume history; the create call will surface real errors
+  }, [])
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
     setSubmitting(true)
+    const input = { url, keyword, country, device, language: language || undefined }
+
+    // No-database deployments: hand off to the streaming run on the report page.
+    if (historyEnabled === false) {
+      const id = crypto.randomUUID()
+      stashInput(id, input)
+      router.push(`/reports/${id}`)
+      return
+    }
+
     try {
       const res = await fetch('/api/reports', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, keyword, country, device, language: language || undefined }),
+        body: JSON.stringify(input),
       })
       const data = await res.json()
       if (!res.ok) {

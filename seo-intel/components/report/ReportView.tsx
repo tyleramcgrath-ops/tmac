@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import type { Report } from '@/lib/types'
 import { ScoresSection } from './ScoresSection'
 import { SerpSection } from './SerpSection'
@@ -13,9 +16,50 @@ import { SpeedSection } from './SpeedSection'
 import { AiSearchSection } from './AiSearchSection'
 import { ActionPlanSection } from './ActionPlanSection'
 
-export function ReportView({ report, onRerun }: { report: Report; onRerun: () => void }) {
+export function ReportView({
+  report,
+  onRerun,
+  ephemeral = false,
+}: {
+  report: Report
+  onRerun: () => void
+  ephemeral?: boolean
+}) {
   const r = report.results
+  const [downloading, setDownloading] = useState<string | null>(null)
   if (!r) return null
+
+  // In database mode exports are a simple GET link. In ephemeral (streaming)
+  // mode the report only lives in the browser, so POST it to the stateless
+  // export endpoint and download the returned blob.
+  async function download(format: 'pdf' | 'csv' | 'json') {
+    if (!ephemeral) {
+      window.location.href = `/api/reports/${report.id}/export?format=${format}`
+      return
+    }
+    setDownloading(format)
+    try {
+      const res = await fetch(`/api/export?format=${format}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ report }),
+      })
+      if (!res.ok) throw new Error('export failed')
+      const blob = await res.blob()
+      const objectUrl = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = objectUrl
+      a.download = `seo-report-${report.input.keyword.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}.${format}`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(objectUrl)
+    } catch {
+      alert('Export failed. Please try again.')
+    } finally {
+      setDownloading(null)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -29,9 +73,11 @@ export function ReportView({ report, onRerun }: { report: Report; onRerun: () =>
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <a className="btn-secondary" href={`/api/reports/${report.id}/export?format=pdf`}>Export PDF</a>
-          <a className="btn-secondary" href={`/api/reports/${report.id}/export?format=csv`}>Export CSV</a>
-          <a className="btn-secondary" href={`/api/reports/${report.id}/export?format=json`}>Raw JSON</a>
+          <button className="btn-secondary" disabled={downloading !== null} onClick={() => download('pdf')}>
+            {downloading === 'pdf' ? 'Preparing…' : 'Export PDF'}
+          </button>
+          <button className="btn-secondary" disabled={downloading !== null} onClick={() => download('csv')}>Export CSV</button>
+          <button className="btn-secondary" disabled={downloading !== null} onClick={() => download('json')}>Raw JSON</button>
           <button className="btn-primary" onClick={onRerun}>Re-run</button>
         </div>
       </div>

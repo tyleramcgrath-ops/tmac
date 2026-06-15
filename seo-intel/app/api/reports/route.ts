@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getStore, StoreConfigError } from '@/lib/db'
+import { getStore, isHistoryEnabled, StoreConfigError } from '@/lib/db'
 import { scheduleBackground } from '@/lib/background'
 import { newReport, startPipeline } from '@/lib/pipeline'
 import { validateCountry, validateKeyword, validateLanguage, validateUrl } from '@/lib/validate'
@@ -12,9 +12,13 @@ export const runtime = 'nodejs'
 export const maxDuration = 300
 
 export async function GET() {
+  if (!isHistoryEnabled()) {
+    // No persistent store on this deployment — there is no history to list.
+    return NextResponse.json({ reports: [], historyEnabled: false })
+  }
   try {
     const store = await getStore()
-    return NextResponse.json({ reports: await store.listReports() })
+    return NextResponse.json({ reports: await store.listReports(), historyEnabled: true })
   } catch (err) {
     console.error('[api] list reports failed:', err)
     return NextResponse.json({ error: 'Failed to load reports.' }, { status: 500 })
