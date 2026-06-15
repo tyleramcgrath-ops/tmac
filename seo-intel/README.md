@@ -6,7 +6,7 @@ Built with Next.js (App Router) · React 19 · Tailwind CSS v4 · PostgreSQL (or
 
 ## Deploy a live link (Vercel)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftyleramcgrath-ops%2Ftmac&root-directory=seo-intel&env=SERP_API_KEY&envDescription=SerpAPI%20key%20(required)%20%E2%80%94%20get%20one%20free%20at%20serpapi.com&project-name=seo-intel&repository-name=seo-intel)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftyleramcgrath-ops%2Ftmac&root-directory=seo-intel&env=SERP_API_KEY&envDescription=Your%20free%20SerpAPI%20key%20%E2%80%94%20the%20only%20thing%20the%20app%20needs%20to%20run&envLink=https%3A%2F%2Fserpapi.com%2Fmanage-api-key&project-name=seo-competitor-intelligence&repository-name=seo-competitor-intelligence)
 
 Three steps, ~3 minutes, **no database required**: click the button, set
 **Root Directory** to `seo-intel`, paste your `SERP_API_KEY`, and Deploy. Full
