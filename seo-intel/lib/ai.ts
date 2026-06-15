@@ -132,7 +132,8 @@ Respond with ONLY a JSON object (no markdown fences, no commentary) with exactly
 const CLAUDE_MODEL = 'claude-opus-4-8'
 
 async function callClaude(prompt: string, apiKey: string): Promise<AiInsights> {
-  const client = new Anthropic({ apiKey })
+  // Bound the call so a slow response can't blow the serverless function budget.
+  const client = new Anthropic({ apiKey, timeout: 60_000, maxRetries: 1 })
   const response = await client.messages.create({
     model: CLAUDE_MODEL,
     max_tokens: 4096,
@@ -157,7 +158,7 @@ async function callOpenAi(prompt: string, apiKey: string): Promise<AiInsights> {
       response_format: { type: 'json_object' },
       max_tokens: 4096,
     }),
-    signal: AbortSignal.timeout(120_000),
+    signal: AbortSignal.timeout(60_000),
   })
   if (!res.ok) throw new Error(`OpenAI HTTP ${res.status}`)
   const payload = (await res.json()) as Record<string, any>

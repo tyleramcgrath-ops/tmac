@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server'
-import { getStore } from '@/lib/db'
+import { getStore, StoreConfigError } from '@/lib/db'
+import { scheduleBackground } from '@/lib/background'
 import { newReport, startPipeline } from '@/lib/pipeline'
 import { validateCountry, validateKeyword, validateLanguage, validateUrl } from '@/lib/validate'
 import type { ReportInput } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+// Keep the serverless instance alive long enough for the pipeline to finish via
+// waitUntil(). Vercel clamps this to the plan limit (Hobby ~60s, Pro 300s).
+export const maxDuration = 300
 
 export async function GET() {
   try {
@@ -50,9 +55,12 @@ export async function POST(request: Request) {
     const store = await getStore()
     const report = newReport(input)
     await store.saveReport(report)
-    startPipeline(report)
+    await scheduleBackground(startPipeline(report))
     return NextResponse.json({ id: report.id }, { status: 201 })
   } catch (err) {
+    if (err instanceof StoreConfigError) {
+      return NextResponse.json({ error: err.message }, { status: 503 })
+    }
     console.error('[api] create report failed:', err)
     return NextResponse.json({ error: 'Failed to start the analysis.' }, { status: 500 })
   }

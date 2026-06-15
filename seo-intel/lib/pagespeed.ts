@@ -17,7 +17,7 @@ export async function fetchPageSpeed(
   if (apiKey) params.set('key', apiKey)
 
   try {
-    const res = await fetch(`${PSI_ENDPOINT}?${params}`, { signal: AbortSignal.timeout(90_000) })
+    const res = await fetch(`${PSI_ENDPOINT}?${params}`, { signal: AbortSignal.timeout(45_000) })
     if (res.status === 429) return psiError(url, strategy, 'PageSpeed API rate limit reached. Add a PAGESPEED_API_KEY to raise limits.')
     if (!res.ok) {
       let detail = `HTTP ${res.status}`

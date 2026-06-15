@@ -4,6 +4,19 @@ A production-quality SEO competitor analysis web app. Enter your page URL and a 
 
 Built with Next.js (App Router) · React 19 · Tailwind CSS v4 · PostgreSQL (or zero-config file store) · Claude / OpenAI for AI recommendations.
 
+## Deploy a live link (Vercel)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftyleramcgrath-ops%2Ftmac&root-directory=seo-intel&env=SERP_API_KEY&envDescription=SerpAPI%20key%20(required)%20%E2%80%94%20get%20one%20free%20at%20serpapi.com&project-name=seo-intel&repository-name=seo-intel)
+
+Click the button, then: set **Root Directory** to `seo-intel`, add a free
+**Postgres** database from the Storage tab, and paste your `SERP_API_KEY`. Full
+click-by-click walkthrough (with the free-tier notes) is in **[DEPLOY.md](./DEPLOY.md)**.
+
+> Why a database is required on Vercel: the analysis runs as background work and
+> streams progress across multiple requests. Serverless functions don't share a
+> local disk between invocations, so reports are stored in Postgres there. On a
+> normal always-on server the built-in file store works with no database.
+
 ## What it does
 
 1. **SERP collection** — top 10 organic results, featured snippets, People Also Ask, related searches (SerpAPI; no direct Google scraping).
@@ -62,10 +75,10 @@ pnpm build       # production build
 
 ## Deploying
 
-Any Node 20+ host works:
+Any Node 20+ host works. See **[DEPLOY.md](./DEPLOY.md)** for the full Vercel walkthrough.
 
-- **Vercel**: import the repo, set the root directory to `seo-intel/`, add env vars. Note: analyses run as background work after the API responds; on serverless platforms set a generous function duration (≥ 300s) or deploy to a long-running Node host.
-- **Docker / VM / Railway / Render**: `pnpm build && pnpm start`. Use `DATABASE_URL` for persistence (the file store needs a persistent disk).
+- **Vercel** (one-click button above): set Root Directory to `seo-intel`, add a Postgres database (Storage tab) and `SERP_API_KEY`. The pipeline uses `waitUntil()` to finish its background work on serverless, and `maxDuration` is set to 300s (Pro runs every time; Hobby works for most runs — see DEPLOY.md's plan note).
+- **Docker / VM / Railway / Render**: `pnpm build && pnpm start`. The app detects it's not on Vercel and runs the pipeline as a normal background job — the built-in file store works with a persistent disk, or set `DATABASE_URL` for Postgres.
 
 ## Architecture
 

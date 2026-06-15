@@ -30,7 +30,12 @@ export class PostgresStore implements Store {
   private pool: Pool
 
   constructor(connectionString: string) {
-    this.pool = new Pool({ connectionString, max: 5 })
+    // Hosted Postgres (Neon, Vercel Postgres, Supabase, RDS) requires TLS.
+    // Enable it for anything that isn't an explicit local/disabled connection.
+    const isLocal = /@(localhost|127\.0\.0\.1)[:/]/.test(connectionString)
+    const sslDisabled = /sslmode=disable/.test(connectionString)
+    const ssl = isLocal || sslDisabled ? undefined : { rejectUnauthorized: false }
+    this.pool = new Pool({ connectionString, max: 5, ssl })
   }
 
   async init(): Promise<void> {

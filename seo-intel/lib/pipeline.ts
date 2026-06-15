@@ -38,9 +38,14 @@ export function newReport(input: ReportInput): Report {
   }
 }
 
-export function startPipeline(report: Report): void {
-  // Detached on purpose — the API route returns immediately and the client polls.
-  runPipeline(report).catch(async (err) => {
+/**
+ * Runs the analysis pipeline and returns the job promise. The API route returns
+ * its HTTP response immediately and the client polls for progress; the returned
+ * promise must be handed to `scheduleBackground()` so it survives on serverless
+ * runtimes (see lib/background.ts).
+ */
+export function startPipeline(report: Report): Promise<void> {
+  return runPipeline(report).catch(async (err) => {
     console.error(`[pipeline] report ${report.id} crashed:`, err)
     try {
       const store = await getStore()
