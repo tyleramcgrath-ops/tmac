@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { getApiKey } from './config'
+import { getApiKey, type KeyName, type KeyOverrides } from './config'
 import { getStore } from './db'
 import { crawlAll } from './crawler'
 import { extractPage } from './extract'
@@ -48,12 +48,12 @@ export type Emit = (report: Report) => void | Promise<void>
  * client polls; the returned promise must be handed to `scheduleBackground()`
  * so it survives on serverless runtimes (see lib/background.ts).
  */
-export function startPipeline(report: Report): Promise<void> {
+export function startPipeline(report: Report, keyOverrides?: KeyOverrides): Promise<void> {
   const persist: Emit = async (r) => {
     const store = await getStore()
     await store.saveReport(r)
   }
-  return runAnalysis(report, persist)
+  return runAnalysis(report, persist, keyOverrides)
     .then(() => {})
     .catch(async (err) => {
       console.error(`[pipeline] report ${report.id} crashed:`, err)
@@ -70,8 +70,14 @@ export function startPipeline(report: Report): Promise<void> {
     })
 }
 
-export async function runAnalysis(report: Report, emit: Emit): Promise<Report> {
+export async function runAnalysis(report: Report, emit: Emit, keyOverrides?: KeyOverrides): Promise<Report> {
   const warnings: string[] = []
+
+  // Environment/encrypted-store keys take precedence; browser-supplied keys
+  // (from the in-app Settings page) fill in anything not set server-side.
+  // Overrides are used transiently and never written into the saved report.
+  const resolveKey = async (name: KeyName): Promise<string | null> =>
+    (await getApiKey(name)) ?? keyOverrides?.[name] ?? null
 
   const setStep = async (id: PipelineStepId, state: StepState, detail?: string) => {
     const step = report.steps.find((s) => s.id === id)
@@ -89,7 +95,7 @@ export async function runAnalysis(report: Report, emit: Emit): Promise<Report> {
 
   // ── Step 1: SERP ──
   await setStep('serp', 'running')
-  const serpKey = await getApiKey('SERP_API_KEY')
+  const serpKey = await resolveKey('SERP_API_KEY')
   if (!serpKey) {
     report.status = 'failed'
     report.error = 'No SERP API key configured. Add a SerpAPI key (SERP_API_KEY) on the Settings page to fetch Google results.'
@@ -157,7 +163,7 @@ export async function runAnalysis(report: Report, emit: Emit): Promise<Report> {
 
   // ── Step 4: PageSpeed ──
   await setStep('pagespeed', 'running')
-  const psiKey = await getApiKey('PAGESPEED_API_KEY')
+  const psiKey = await resolveKey('PAGESPEED_API_KEY')
   const psiCompetitorLimit = Number(process.env.PSI_COMPETITOR_LIMIT ?? 3)
   const psiTargets = [
     { analysis: userAnalysis, url: userExtraction.finalUrl || url },
@@ -183,7 +189,7 @@ export async function runAnalysis(report: Report, emit: Emit): Promise<Report> {
 
   // ── Step 6: Backlinks ──
   await setStep('backlinks', 'running')
-  const backlinkKey = await getApiKey('DATAFORSEO_API_KEY')
+  const backlinkKey = await resolveKey('DATAFORSEO_API_KEY')
   const backlinks = await fetchBacklinks(
     [userDomain, ...competitorResults.slice(0, 10).map((r) => r.domain)],
     backlinkKey
@@ -200,8 +206,8 @@ export async function runAnalysis(report: Report, emit: Emit): Promise<Report> {
   const scores = buildScores({ user: userAnalysis, competitors, contentGap, schemaGap, technicalIssues, backlinks, serp, keyword })
   const recommendations = buildRecommendations({ user: userAnalysis, competitors, contentGap, schemaGap, technicalIssues, backlinks, keyword })
 
-  const anthropicKey = await getApiKey('ANTHROPIC_API_KEY')
-  const openaiKey = await getApiKey('OPENAI_API_KEY')
+  const anthropicKey = await resolveKey('ANTHROPIC_API_KEY')
+  const openaiKey = await resolveKey('OPENAI_API_KEY')
   const ai = await generateAiInsights(
     { keyword, serp, user: userAnalysis, competitors, contentGap, schemaGap, technicalIssues, scores },
     { anthropic: anthropicKey, openai: openaiKey }

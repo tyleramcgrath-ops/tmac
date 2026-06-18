@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getStore, isHistoryEnabled, StoreConfigError } from '@/lib/db'
 import { scheduleBackground } from '@/lib/background'
+import { sanitizeKeyOverrides } from '@/lib/config'
 import { newReport, startPipeline } from '@/lib/pipeline'
 import { validateCountry, validateKeyword, validateLanguage, validateUrl } from '@/lib/validate'
 import type { ReportInput } from '@/lib/types'
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
   if (!language.ok) return NextResponse.json({ error: language.error }, { status: 400 })
 
   const device = body.device === 'mobile' ? 'mobile' : 'desktop'
+  const keyOverrides = sanitizeKeyOverrides(body.keys)
 
   const input: ReportInput = {
     url: url.value!,
@@ -59,7 +61,7 @@ export async function POST(request: Request) {
     const store = await getStore()
     const report = newReport(input)
     await store.saveReport(report)
-    await scheduleBackground(startPipeline(report))
+    await scheduleBackground(startPipeline(report, keyOverrides))
     return NextResponse.json({ id: report.id }, { status: 201 })
   } catch (err) {
     if (err instanceof StoreConfigError) {

@@ -51,6 +51,23 @@ export interface KeyStatus {
   source: 'env' | 'saved' | null
 }
 
+// Keys can also be supplied per-request from the browser (the in-app Settings
+// page stores them in localStorage and sends them with each analysis). This
+// sanitizes that untrusted input down to known key names.
+export type KeyOverrides = Partial<Record<KeyName, string>>
+
+export function sanitizeKeyOverrides(input: unknown): KeyOverrides {
+  const out: KeyOverrides = {}
+  if (!input || typeof input !== 'object') return out
+  for (const name of KEY_NAMES) {
+    const value = (input as Record<string, unknown>)[name]
+    if (typeof value === 'string' && value.trim() && value.length <= 500) {
+      out[name] = value.trim()
+    }
+  }
+  return out
+}
+
 export async function getKeyStatuses(): Promise<KeyStatus[]> {
   const statuses: KeyStatus[] = []
   for (const name of KEY_NAMES) {

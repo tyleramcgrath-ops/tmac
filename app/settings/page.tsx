@@ -2,73 +2,76 @@
 
 import { useEffect, useState } from 'react'
 import type { KeyStatus } from '@/lib/config'
+import { CLIENT_KEY_NAMES, type ClientKeyName, readClientKeys, setClientKey } from '@/lib/client-keys'
 
-const KEY_INFO: Record<string, { label: string; help: string; required: boolean }> = {
+const KEY_INFO: Record<ClientKeyName, { label: string; help: string; required: boolean; link?: string }> = {
   SERP_API_KEY: {
     label: 'SERP API key (SerpAPI)',
-    help: 'Required. Fetches the live top 10 Google organic results. Get one at serpapi.com.',
+    help: 'Required. Fetches the live top 10 Google organic results.',
     required: true,
+    link: 'https://serpapi.com/manage-api-key',
   },
   ANTHROPIC_API_KEY: {
     label: 'Anthropic (Claude) API key',
-    help: 'Recommended. Powers tailored AI recommendations. Get one at console.anthropic.com.',
+    help: 'Optional. Powers AI-written recommendations. Without it you still get rule-based suggestions.',
     required: false,
+    link: 'https://console.anthropic.com/settings/keys',
   },
   OPENAI_API_KEY: {
     label: 'OpenAI API key',
-    help: 'Optional fallback AI provider for recommendations.',
+    help: 'Optional fallback AI provider — only needed if you are not using the Claude key.',
     required: false,
+    link: 'https://platform.openai.com/api-keys',
   },
   PAGESPEED_API_KEY: {
     label: 'Google PageSpeed API key',
-    help: 'Optional. PageSpeed works without a key but rate limits are very low; a key is strongly recommended.',
+    help: 'Optional. PageSpeed works without a key but with very low rate limits.',
     required: false,
+    link: 'https://developers.google.com/speed/docs/insights/v5/get-started',
   },
   DATAFORSEO_API_KEY: {
     label: 'DataForSEO API key (login:password)',
     help: 'Optional. Enables backlink and domain-authority comparison.',
     required: false,
+    link: 'https://app.dataforseo.com/api-access',
   },
 }
 
 export default function SettingsPage() {
-  const [keys, setKeys] = useState<KeyStatus[] | null>(null)
-  const [canSave, setCanSave] = useState(false)
-  const [values, setValues] = useState<Record<string, string>>({})
-  const [message, setMessage] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null)
-  const [saving, setSaving] = useState<string | null>(null)
+  const [envStatus, setEnvStatus] = useState<Record<string, KeyStatus>>({})
+  const [values, setValues] = useState<Partial<Record<ClientKeyName, string>>>({})
+  const [saved, setSaved] = useState<Partial<Record<ClientKeyName, boolean>>>({})
+  const [flash, setFlash] = useState<string | null>(null)
 
   useEffect(() => {
+    // Which keys are already set on the host (environment variables)?
     fetch('/api/settings')
       .then((r) => r.json())
       .then((data) => {
-        setKeys(data.keys ?? [])
-        setCanSave(Boolean(data.canSave))
+        const map: Record<string, KeyStatus> = {}
+        for (const k of (data.keys ?? []) as KeyStatus[]) map[k.name] = k
+        setEnvStatus(map)
       })
-      .catch(() => setMessage({ kind: 'error', text: 'Failed to load settings.' }))
+      .catch(() => {})
+    // Which keys has the user stored in this browser?
+    const stored = readClientKeys()
+    setSaved(Object.fromEntries(CLIENT_KEY_NAMES.map((n) => [n, Boolean(stored[n])])))
   }, [])
 
-  async function save(name: string) {
-    setSaving(name)
-    setMessage(null)
-    try {
-      const res = await fetch('/api/settings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, value: values[name] ?? '' }),
-      })
-      const data = await res.json()
-      if (!res.ok) {
-        setMessage({ kind: 'error', text: data.error ?? 'Failed to save key.' })
-      } else {
-        setKeys(data.keys)
-        setValues((v) => ({ ...v, [name]: '' }))
-        setMessage({ kind: 'ok', text: 'Key saved (encrypted at rest).' })
-      }
-    } catch {
-      setMessage({ kind: 'error', text: 'Network error while saving the key.' })
-    }
-    setSaving(null)
+  function save(name: ClientKeyName) {
+    setClientKey(name, values[name] ?? '')
+    setSaved((s) => ({ ...s, [name]: Boolean((values[name] ?? '').trim()) }))
+    setValues((v) => ({ ...v, [name]: '' }))
+    setFlash(`${KEY_INFO[name].label} saved in this browser.`)
+    setTimeout(() => setFlash(null), 2500)
+  }
+
+  function remove(name: ClientKeyName) {
+    setClientKey(name, '')
+    setSaved((s) => ({ ...s, [name]: false }))
+    setValues((v) => ({ ...v, [name]: '' }))
+    setFlash(`${KEY_INFO[name].label} removed.`)
+    setTimeout(() => setFlash(null), 2500)
   }
 
   return (
@@ -76,75 +79,73 @@ export default function SettingsPage() {
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Settings & API keys</h1>
         <p className="mt-1 text-sm text-slate-500">
-          Keys set via environment variables always take precedence and are never displayed. Keys
-          saved here are encrypted with AES-256-GCM using <code className="rounded bg-slate-100 px-1">APP_SECRET</code>{' '}
-          and are never sent to the frontend.
+          Paste your keys here and click Save — they are stored privately in <strong>this browser</strong> and sent
+          securely with each analysis. Nothing is shared with other users. A key set as an environment variable on the
+          host always takes precedence and shows as “set on server”.
         </p>
       </div>
 
-      {!canSave && keys !== null && (
-        <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-          <strong>Saving from this page is disabled</strong> because <code>APP_SECRET</code> is not set.
-          Add keys via environment variables (see <code>.env.example</code>), or set <code>APP_SECRET</code> to
-          enable encrypted storage from the UI.
-        </p>
+      {flash && (
+        <p className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{flash}</p>
       )}
 
-      {message && (
-        <p
-          className={`rounded-lg border px-4 py-3 text-sm ${
-            message.kind === 'ok'
-              ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-              : 'border-red-200 bg-red-50 text-red-700'
-          }`}
-        >
-          {message.text}
-        </p>
-      )}
-
-      {keys === null ? (
-        <p className="py-8 text-center text-sm text-slate-400">Loading…</p>
-      ) : (
-        keys.map((key) => {
-          const info = KEY_INFO[key.name]
-          return (
-            <div key={key.name} className="card">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <h2 className="text-sm font-semibold text-slate-900">
-                  {info?.label ?? key.name}
-                  {info?.required && <span className="ml-2 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">REQUIRED</span>}
-                </h2>
-                {key.configured ? (
-                  <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
-                    Configured ({key.source === 'env' ? 'environment' : 'saved'})
-                  </span>
-                ) : (
-                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">Not configured</span>
+      {CLIENT_KEY_NAMES.map((name) => {
+        const info = KEY_INFO[name]
+        const onServer = envStatus[name]?.source === 'env'
+        const inBrowser = Boolean(saved[name])
+        return (
+          <div key={name} className="card">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <h2 className="text-sm font-semibold text-slate-900">
+                {info.label}
+                {info.required && (
+                  <span className="ml-2 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">REQUIRED</span>
                 )}
-              </div>
-              <p className="mb-3 text-xs text-slate-500">{info?.help}</p>
-              {key.source !== 'env' && (
-                <div className="flex gap-2">
-                  <input
-                    type="password"
-                    className="input"
-                    placeholder={key.configured ? 'Enter a new value to replace (empty to remove)' : 'Paste key…'}
-                    value={values[key.name] ?? ''}
-                    onChange={(e) => setValues((v) => ({ ...v, [key.name]: e.target.value }))}
-                    disabled={!canSave}
-                  />
-                  <button className="btn-primary" onClick={() => save(key.name)} disabled={!canSave || saving === key.name}>
-                    {saving === key.name ? 'Saving…' : 'Save'}
-                  </button>
-                </div>
-              )}
-              {key.source === 'env' && (
-                <p className="text-xs text-slate-400">Set via environment variable — manage it in your deployment configuration.</p>
+              </h2>
+              {onServer ? (
+                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">Set on server</span>
+              ) : inBrowser ? (
+                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">Saved in browser</span>
+              ) : (
+                <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">Not set</span>
               )}
             </div>
-          )
-        })
-      )}
+            <p className="mb-3 text-xs text-slate-500">
+              {info.help}{' '}
+              {info.link && (
+                <a href={info.link} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">
+                  Get a key →
+                </a>
+              )}
+            </p>
+
+            {onServer ? (
+              <p className="text-xs text-slate-400">This key is set via an environment variable on the host — manage it there.</p>
+            ) : (
+              <div className="flex gap-2">
+                <input
+                  type="password"
+                  className="input"
+                  placeholder={inBrowser ? 'Saved — enter a new value to replace' : 'Paste your key…'}
+                  value={values[name] ?? ''}
+                  onChange={(e) => setValues((v) => ({ ...v, [name]: e.target.value }))}
+                />
+                <button className="btn-primary" onClick={() => save(name)}>Save</button>
+                {inBrowser && (
+                  <button className="btn-secondary !text-red-600 hover:!bg-red-50" onClick={() => remove(name)}>
+                    Remove
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+        )
+      })}
+
+      <p className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
+        Keys saved here live only in this browser (this device). If you clear your browser data or use another device,
+        re-enter them. For a permanent, server-side setup, set them as environment variables on your host instead.
+      </p>
     </div>
   )
 }
