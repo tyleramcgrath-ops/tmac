@@ -1,3 +1,4 @@
+import { sanitizeKeyOverrides } from '@/lib/config'
 import { newReport, runAnalysis } from '@/lib/pipeline'
 import { validateCountry, validateKeyword, validateLanguage, validateUrl } from '@/lib/validate'
 import type { ReportInput } from '@/lib/types'
@@ -37,6 +38,7 @@ export async function POST(request: Request) {
     language: language.value || undefined,
   }
 
+  const keyOverrides = sanitizeKeyOverrides(body.keys)
   const report = newReport(input)
   const encoder = new TextEncoder()
 
@@ -46,7 +48,7 @@ export async function POST(request: Request) {
         controller.enqueue(encoder.encode(JSON.stringify(r) + '\n'))
       }
       try {
-        await runAnalysis(report, emit)
+        await runAnalysis(report, emit, keyOverrides)
       } catch (err) {
         report.status = 'failed'
         report.error = err instanceof Error ? err.message : 'Unexpected error while building the report.'

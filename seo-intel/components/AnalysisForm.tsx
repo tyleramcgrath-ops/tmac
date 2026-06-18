@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { stashInput } from '@/lib/client-session'
+import { readClientKeys } from '@/lib/client-keys'
 
 const COUNTRIES = [
   ['us', 'United States'], ['gb', 'United Kingdom'], ['ca', 'Canada'], ['au', 'Australia'],
@@ -48,7 +49,7 @@ export function AnalysisForm() {
       const res = await fetch('/api/reports', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(input),
+        body: JSON.stringify({ ...input, keys: readClientKeys() }),
       })
       const data = await res.json()
       if (!res.ok) {

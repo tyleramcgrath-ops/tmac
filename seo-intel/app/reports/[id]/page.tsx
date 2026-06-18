@@ -7,6 +7,7 @@ import type { Report } from '@/lib/types'
 import { ProgressTracker } from '@/components/ProgressTracker'
 import { ReportView } from '@/components/report/ReportView'
 import { cacheReport, clearInput, readCachedReport, stashInput, takeInput } from '@/lib/client-session'
+import { readClientKeys } from '@/lib/client-keys'
 
 const POLL_MS = 2500
 
@@ -50,7 +51,7 @@ export default function ReportPage() {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(input),
+        body: JSON.stringify({ ...(input as object), keys: readClientKeys() }),
       })
       if (!res.ok || !res.body) {
         const data = await res.json().catch(() => ({}))
@@ -124,7 +125,11 @@ export default function ReportPage() {
       router.push(`/reports/${newId}`)
       return
     }
-    const res = await fetch(`/api/reports/${id}/rerun`, { method: 'POST' })
+    const res = await fetch(`/api/reports/${id}/rerun`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ keys: readClientKeys() }),
+    })
     const data = await res.json()
     if (res.ok) {
       router.push(`/reports/${data.id}`)
