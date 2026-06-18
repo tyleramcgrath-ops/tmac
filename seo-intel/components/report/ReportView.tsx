@@ -15,6 +15,7 @@ import { TechnicalSection } from './TechnicalSection'
 import { SpeedSection } from './SpeedSection'
 import { AiSearchSection } from './AiSearchSection'
 import { ActionPlanSection } from './ActionPlanSection'
+import { WordPressPanel } from './WordPressPanel'
 
 export function ReportView({
   report,
@@ -96,6 +97,7 @@ export function ReportView({
 
       <ScoresSection scores={r.scores} ai={r.ai} userPosition={r.userAnalysis?.position ?? null} />
       <ActionPlanSection recommendations={r.recommendations} />
+      <WordPressPanel report={report} />
       <SerpSection serp={r.serp} userUrl={report.input.url} />
       <ComparisonTable user={r.userAnalysis} competitors={r.competitors} />
       <TitleMetaSection user={r.userAnalysis} competitors={r.competitors} ai={r.ai} keyword={report.input.keyword} />
