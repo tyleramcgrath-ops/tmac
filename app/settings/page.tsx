@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import type { KeyStatus } from '@/lib/config'
 import { CLIENT_KEY_NAMES, type ClientKeyName, readClientKeys, setClientKey } from '@/lib/client-keys'
+import { WordPressConnect } from '@/components/WordPressConnect'
 
 const KEY_INFO: Record<ClientKeyName, { label: string; help: string; required: boolean; link?: string }> = {
   SERP_API_KEY: {
@@ -146,6 +147,15 @@ export default function SettingsPage() {
         Keys saved here live only in this browser (this device). If you clear your browser data or use another device,
         re-enter them. For a permanent, server-side setup, set them as environment variables on your host instead.
       </p>
+
+      <div className="pt-2">
+        <h2 className="text-lg font-bold text-slate-900">Connect WordPress</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          Connect your self-hosted WordPress site so the tool can apply recommended fixes (title, meta description, FAQ,
+          short-answer block) directly to your pages.
+        </p>
+      </div>
+      <WordPressConnect />
     </div>
   )
 }

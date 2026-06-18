@@ -32,9 +32,11 @@ export function ActionPlanSection({ recommendations }: { recommendations: Recomm
   if (recommendations.length === 0) return null
   return (
     <section className="card">
-      <h2 className="section-title">Priority action plan</h2>
+      <h2 className="section-title">Priority action plan — exactly what to do</h2>
       <p className="section-subtitle">
-        Every recommendation is derived from the comparison data, ordered by expected impact and effort.
+        Work top to bottom. These are ordered so the highest-impact, easiest wins come first — do #1, then #2, and so on.
+        Each item tells you the problem, why it matters, and the exact fix. Many of them can be applied straight to your
+        site in the <strong>“Apply fixes to WordPress”</strong> box above.
       </p>
       <ol className="space-y-3">
         {recommendations.map((rec) => (
