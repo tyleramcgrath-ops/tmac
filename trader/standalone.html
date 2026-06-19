@@ -5,16 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TMAC Trader — Aggressive Opportunity Engine (Paper)</title>
 <style>
-  :root{
-    --bg:#0b0e14;--surface:#121722;--surface2:#1a2130;--border:#232c3d;
-    --text:#e7ecf3;--muted:#93a0b4;--accent:#6366f1;--accentfg:#fff;
-    --pos:#2ecc71;--neg:#ff5a52;--warn:#f59e0b;--hot:#ff7a18;
-  }
-  .light{
-    --bg:#f7f8fa;--surface:#fff;--surface2:#f1f3f6;--border:#e3e6eb;
-    --text:#11151c;--muted:#5b6471;--accent:#4f46e5;--accentfg:#fff;
-    --pos:#0f9d58;--neg:#e0322c;--warn:#d97706;--hot:#ea580c;
-  }
+  :root{--bg:#0b0e14;--surface:#121722;--surface2:#1a2130;--border:#232c3d;--text:#e7ecf3;--muted:#93a0b4;--accent:#6366f1;--accentfg:#fff;--pos:#2ecc71;--neg:#ff5a52;--warn:#f59e0b;--hot:#ff7a18}
+  .light{--bg:#f7f8fa;--surface:#fff;--surface2:#f1f3f6;--border:#e3e6eb;--text:#11151c;--muted:#5b6471;--accent:#4f46e5;--accentfg:#fff;--pos:#0f9d58;--neg:#e0322c;--warn:#d97706;--hot:#ea580c}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
   .app{display:grid;grid-template-columns:222px 1fr;min-height:100vh}
@@ -23,61 +15,39 @@
   .brand .dot{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--accent),var(--hot))}
   nav{padding:10px}
   nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;color:var(--muted);text-decoration:none;font-size:14px;cursor:pointer;margin-bottom:2px}
-  nav a.active{background:var(--accent);color:var(--accentfg)}
-  nav a:hover:not(.active){background:var(--surface2)}
+  nav a.active{background:var(--accent);color:var(--accentfg)} nav a:hover:not(.active){background:var(--surface2)}
   .note{position:absolute;bottom:0;width:222px;padding:12px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
-  header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;height:56px;padding:0 18px;background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);flex-wrap:wrap}
+  header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;height:56px;padding:0 18px;background:color-mix(in srgb,var(--surface) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);flex-wrap:wrap}
   main{padding:20px}
   .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600}
-  .b-pos{background:color-mix(in srgb,var(--pos) 18%,transparent);color:var(--pos)}
-  .b-neg{background:color-mix(in srgb,var(--neg) 18%,transparent);color:var(--neg)}
-  .b-warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
-  .b-accent{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
-  .b-hot{background:color-mix(in srgb,var(--hot) 20%,transparent);color:var(--hot)}
-  .b-default{background:var(--surface2);color:var(--muted)}
+  .b-pos{background:color-mix(in srgb,var(--pos) 18%,transparent);color:var(--pos)} .b-neg{background:color-mix(in srgb,var(--neg) 18%,transparent);color:var(--neg)}
+  .b-warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)} .b-accent{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+  .b-hot{background:color-mix(in srgb,var(--hot) 20%,transparent);color:var(--hot)} .b-default{background:var(--surface2);color:var(--muted)}
   button{font:inherit;border:none;border-radius:9px;padding:8px 12px;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-  .btn-primary{background:var(--accent);color:var(--accentfg)}
-  .btn-secondary{background:var(--surface2);color:var(--text)}
-  .btn-danger{background:var(--neg);color:#fff}
-  .btn-success{background:var(--pos);color:#fff}
-  .btn-hot{background:linear-gradient(135deg,var(--accent),var(--hot));color:#fff}
-  .btn-ghost{background:transparent;color:var(--muted)}
+  .btn-primary{background:var(--accent);color:var(--accentfg)} .btn-secondary{background:var(--surface2);color:var(--text)}
+  .btn-danger{background:var(--neg);color:#fff} .btn-success{background:var(--pos);color:#fff}
+  .btn-hot{background:linear-gradient(135deg,var(--accent),var(--hot));color:#fff} .btn-ghost{background:transparent;color:var(--muted)}
   button:disabled{opacity:.5;cursor:not-allowed}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:16px}
-  .grid{display:grid;gap:14px}
-  .g4{grid-template-columns:repeat(4,1fr)}
-  .g3{grid-template-columns:repeat(3,1fr)}
-  .g2{grid-template-columns:repeat(2,1fr)}
-  .stat .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
-  .stat .val{font-size:23px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums}
-  .stat .sub{font-size:12px;color:var(--muted);margin-top:3px}
-  h1{font-size:22px;margin:0 0 4px}
-  h3{font-size:14px;margin:0 0 12px}
-  .muted{color:var(--muted)}
-  .pos{color:var(--pos)}.neg{color:var(--neg)}.hot{color:var(--hot)}
+  .grid{display:grid;gap:14px} .g4{grid-template-columns:repeat(4,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  .stat .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)} .stat .val{font-size:22px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums} .stat .sub{font-size:12px;color:var(--muted);margin-top:3px}
+  h1{font-size:22px;margin:0 0 4px} h3{font-size:14px;margin:0 0 12px}
+  .muted{color:var(--muted)} .pos{color:var(--pos)} .neg{color:var(--neg)} .hot{color:var(--hot)}
   table{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
-  th{text-align:left;font-size:11px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
-  td{padding:8px 10px;border-bottom:1px solid var(--border)}
-  tr:last-child td{border-bottom:none}
-  input,select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:8px 10px;color:var(--text);font:inherit;font-size:14px;outline:none}
-  input:focus,select:focus{border-color:var(--accent)}
-  label.field{display:block;margin-bottom:10px}
-  label.field span{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
-  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .section{display:none}.section.active{display:block}
+  th{text-align:left;font-size:11px;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap} td{padding:8px 10px;border-bottom:1px solid var(--border)} tr:last-child td{border-bottom:none}
+  input,select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:8px 10px;color:var(--text);font:inherit;font-size:14px;outline:none} input:focus,select:focus{border-color:var(--accent)}
+  label.field{display:block;margin-bottom:10px} label.field span{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center} .section{display:none} .section.active{display:block}
   .disc{display:flex;gap:10px;border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);background:color-mix(in srgb,var(--warn) 10%,transparent);border-radius:11px;padding:11px;font-size:13px;color:var(--muted);margin-bottom:18px}
   .empty{padding:30px;text-align:center;color:var(--muted)}
-  .switch{position:relative;width:38px;height:20px;border-radius:999px;background:var(--border);cursor:pointer;transition:.15s;flex:none}
-  .switch.on{background:var(--accent)}
-  .switch .knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s}
-  .switch.on .knob{left:20px}
-  .pill{padding:4px 10px;border-radius:9px;font-size:13px;background:var(--surface2);color:var(--muted);cursor:pointer;border:none}
-  .pill.active{background:var(--accent);color:var(--accentfg)}
-  .meter{height:6px;border-radius:999px;background:var(--surface2);overflow:hidden}
-  .meter > i{display:block;height:100%}
+  .switch{position:relative;width:38px;height:20px;border-radius:999px;background:var(--border);cursor:pointer;transition:.15s;flex:none} .switch.on{background:var(--accent)} .switch .knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s} .switch.on .knob{left:20px}
+  .pill{padding:4px 10px;border-radius:9px;font-size:13px;background:var(--surface2);color:var(--muted);cursor:pointer;border:none} .pill.active{background:var(--accent);color:var(--accentfg)}
+  .meter{height:6px;border-radius:999px;background:var(--surface2);overflow:hidden} .meter>i{display:block;height:100%}
   .opp{border:1px solid var(--border);border-radius:12px;padding:13px;background:var(--surface)}
-  .kv{display:flex;justify-content:space-between;font-size:12px;padding:2px 0}
-  .kv b{font-variant-numeric:tabular-nums}
+  .kv{display:flex;justify-content:space-between;font-size:12px;padding:2px 0} .kv b{font-variant-numeric:tabular-nums}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:9px;font-size:12px;background:var(--surface2);color:var(--muted);cursor:pointer;border:1px solid transparent;user-select:none}
+  .chip.on{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--text);border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+  .chipgrid{display:flex;flex-wrap:wrap;gap:6px;max-height:320px;overflow:auto;padding:4px}
   @media(max-width:860px){.app{grid-template-columns:1fr}aside{display:none}.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}}
 </style>
 </head>
@@ -86,13 +56,14 @@
   <aside>
     <div class="brand"><span class="dot"></span> TMAC Trader</div>
     <nav id="nav"></nav>
-    <div class="note">Aggressive paper engine. Not financial advice — no real money, no broker. Live trading disabled.</div>
+    <div class="note">Aggressive paper engine. Not financial advice — no real money. Live trading disabled.</div>
   </aside>
   <div>
     <header>
       <span id="modeBadge" class="badge b-pos">PAPER MODE</span>
       <span id="aggBadge" class="badge b-default">Standard</span>
       <span id="engineBadge" class="badge b-default">Engine stopped</span>
+      <span id="liveBadge"></span>
       <span id="pauseBadge"></span>
       <div class="row" style="margin-left:auto;gap:6px">
         <span id="mkt" class="muted" style="font-size:12px"></span>
@@ -104,7 +75,9 @@
     <main>
       <div id="dashboard" class="section active"></div>
       <div id="opportunities" class="section"></div>
+      <div id="universe" class="section"></div>
       <div id="strategies" class="section"></div>
+      <div id="analytics" class="section"></div>
       <div id="portfolio" class="section"></div>
       <div id="history" class="section"></div>
       <div id="risk" class="section"></div>
@@ -116,302 +89,226 @@
 "use strict";
 //============================ Universe ============================
 const STARTING_EQUITY=100000;
-const SYMBOLS=[
-  {symbol:"BTC-USD",assetType:"crypto",base:65000},
-  {symbol:"ETH-USD",assetType:"crypto",base:3500},
-  {symbol:"SOL-USD",assetType:"crypto",base:150},
-  {symbol:"DOGE-USD",assetType:"crypto",base:0.15},
-  {symbol:"NVDA",assetType:"equity",base:130},
-  {symbol:"TSLA",assetType:"equity",base:250},
-  {symbol:"AAPL",assetType:"equity",base:220},
-  {symbol:"SPY",assetType:"equity",base:560},
-];
-const SYM=Object.fromEntries(SYMBOLS.map(s=>[s.symbol,s]));
-const CRYPTO=SYMBOLS.filter(s=>s.assetType==="crypto").map(s=>s.symbol);
-const EQUITY=SYMBOLS.filter(s=>s.assetType==="equity").map(s=>s.symbol);
+const CRYPTO_LIST="BTC ETH SOL DOGE XRP ADA AVAX LINK DOT MATIC LTC BCH ATOM UNI ETC XLM NEAR APT ARB OP FIL ICP HBAR VET INJ SUI SEI RENDER IMX AAVE".split(" ").map(s=>s+"-USD");
+const STOCK_LIST=("AAPL MSFT NVDA AMZN META GOOGL TSLA AVGO AMD NFLX ADBE CRM COST PEP CSCO QCOM TXN INTC AMAT MU LRCX KLAC ASML TSM ARM ON ANET DELL SMCI PLTR SNOW DDOG NET CRWD PANW ZS MDB SHOP UBER ABNB DASH RBLX SOFI HOOD AFRM UPST PYPL COIN MARA RIOT CLSK MSTR ENPH FSLR RUN LLY NVO UNH JPM V MA AXP GS MS BAC WFC XOM CVX OXY SLB COP WMT HD LOW NKE SBUX MCD DIS CMCSA BA CAT DE GE HON RTX LMT F GM RIVN LCID T VZ ORCL IBM NOW INTU WDAY TEAM PINS SNAP ROKU TTD").split(" ");
+const ALL_SYMBOLS=[...CRYPTO_LIST,...STOCK_LIST];
+const CRYPTO_SET=new Set(CRYPTO_LIST);
+const COIN_IDS={ "BTC-USD":"bitcoin","ETH-USD":"ethereum","SOL-USD":"solana","DOGE-USD":"dogecoin","XRP-USD":"ripple","ADA-USD":"cardano","AVAX-USD":"avalanche-2","LINK-USD":"chainlink","DOT-USD":"polkadot","MATIC-USD":"matic-network","LTC-USD":"litecoin","BCH-USD":"bitcoin-cash","ATOM-USD":"cosmos","UNI-USD":"uniswap","ETC-USD":"ethereum-classic","XLM-USD":"stellar","NEAR-USD":"near","APT-USD":"aptos","ARB-USD":"arbitrum","OP-USD":"optimism","FIL-USD":"filecoin","ICP-USD":"internet-computer","HBAR-USD":"hedera-hashgraph","VET-USD":"vechain","INJ-USD":"injective-protocol","SUI-USD":"sui","SEI-USD":"sei-network","RENDER-USD":"render-token","IMX-USD":"immutable-x","AAVE-USD":"aave" };
+const assetType=s=>CRYPTO_SET.has(s)?"crypto":"equity";
+function hash(s){ let h=2166136261; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);} return h>>>0; }
+const KNOWN_BASE={ "BTC-USD":65000,"ETH-USD":3500,"SOL-USD":150,"DOGE-USD":0.15,"XRP-USD":0.55,"AAPL":220,"MSFT":430,"NVDA":130,"AMZN":185,"META":520,"GOOGL":175,"TSLA":250,"SPY":560 };
+function basePrice(s){ if(KNOWN_BASE[s])return KNOWN_BASE[s]; const a=assetType(s); const h=hash(s); return a==="crypto"?(1+h%400):(20+h%480); }
+function mulberry(seed){ let a=seed>>>0; return ()=>{a|=0;a=(a+0x6d2b79f5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;}; }
 
-// Aggressive strategy catalog. assetMode: "long" = buy underlying only;
-// "option" = defined-risk options (buy call/put only, never naked sell).
+// Deterministic seeded history shape, scaled so the last bar ≈ target price.
+function buildHistory(sym,target){
+  const a=assetType(sym), vol=a==="crypto"?0.03:0.015, rng=mulberry(hash(sym));
+  let p=1; const raw=[]; for(let i=0;i<160;i++){ p=Math.max(1e-9,p*(1+(rng()-0.5)*2*vol+0.0003)); raw.push(p); }
+  const scale=(target||basePrice(sym))/raw[raw.length-1];
+  return raw.map(x=>x*scale);
+}
+function ensureHistory(sym){
+  if(!state.history[sym]){ state.history[sym]=buildHistory(sym,state.prices[sym]); state.volumes[sym]=state.history[sym].map(()=>1e6*(0.6+Math.random())); if(state.prices[sym]==null)state.prices[sym]=state.history[sym][state.history[sym].length-1]; }
+}
+
+//============================ Strategies ============================
 const KINDS={
-  momentum_breakout:{name:"Momentum Breakout",assetMode:"long",p:{lookback:20},
-    desc:"Buy when price breaks above the recent high with momentum."},
-  volume_continuation:{name:"High-Volume Continuation",assetMode:"long",p:{maPeriod:20,volMult:1.5},
-    desc:"Buy uptrends confirmed by a surge in volume."},
-  rsi_reversal:{name:"RSI Reversal",assetMode:"long",p:{period:14,oversold:32},
-    desc:"Buy bounces as RSI turns up out of oversold."},
-  ma_trend:{name:"MA Trend Following",assetMode:"long",p:{fast:10,slow:30},
-    desc:"Ride trends when fast MA leads slow MA and price is above both."},
-  vol_spike:{name:"News / Volatility Spike",assetMode:"long",p:{threshold:2.5},
-    desc:"Trade sharp volatility spikes (proxy for news catalysts)."},
-  crypto_overnight:{name:"Crypto Overnight Momentum",assetMode:"long",p:{lookback:5,threshold:1.2},
-    desc:"Press crypto momentum while equity markets are closed."},
-  options_defined:{name:"Defined-Risk Options",assetMode:"option",p:{fast:10,slow:30},
-    desc:"Buy calls/puts (defined risk = premium). Never sells naked options."},
+  momentum_breakout:{name:"Momentum Breakout",assetMode:"long",p:{lookback:20},desc:"Buy breakouts above the recent high with momentum."},
+  volume_continuation:{name:"High-Volume Continuation",assetMode:"long",p:{maPeriod:20,volMult:1.5},desc:"Buy uptrends confirmed by a volume surge."},
+  rsi_reversal:{name:"RSI Reversal",assetMode:"long",p:{period:14,oversold:32},desc:"Buy bounces as RSI turns up from oversold."},
+  ma_trend:{name:"MA Trend Following",assetMode:"long",p:{fast:10,slow:30},desc:"Ride trends: fast MA over slow MA, price above both."},
+  vol_spike:{name:"News / Volatility Spike",assetMode:"long",p:{threshold:2.5},desc:"Trade sharp volatility spikes (news proxy)."},
+  crypto_overnight:{name:"Crypto Overnight Momentum",assetMode:"long",p:{lookback:5,threshold:1.2},desc:"Press crypto momentum while equities are closed."},
+  options_defined:{name:"Defined-Risk Options",assetMode:"option",p:{fast:10,slow:30},desc:"Buy calls/puts only. Defined risk = premium. Never naked."},
 };
 
 //============================ State ============================
 let state=load()||freshState();
+migrate();
 function freshState(){
-  const prices={},history={},volumes={};
-  for(const s of SYMBOLS){ prices[s.symbol]=s.base; const h=seedHistory(s.base,s.assetType); history[s.symbol]=h.prices; volumes[s.symbol]=h.vols; }
-  const st={
-    cash:STARTING_EQUITY,equity:STARTING_EQUITY,
-    positions:[],trades:[],logs:[],strategies:[],opps:[],
-    prices,history,volumes,
-    risk:{
-      killSwitch:false,liveEnabled:false,aggressive:false,
-      perTradePct:0.01, perTradePctAgg:0.03,
-      dailyLossPct:0.04, weeklyLossPct:0.08,
-      maxPositions:5, maxPositionsAgg:10,
-      maxConsecutiveLosses:3, pauseMinutes:30, pausedUntil:0,
-      dataFresh:true,
-      maxOptionPremiumPct:0.03,
-    },
-    theme:"dark",
-  };
-  return st;
+  const universeOn={}; for(const s of ALL_SYMBOLS)universeOn[s]=true;   // default: everything ON
+  return { cash:STARTING_EQUITY,equity:STARTING_EQUITY,positions:[],trades:[],logs:[],strategies:[],opps:[],
+    prices:{},history:{},volumes:{},equityHistory:[],universeOn,liveCrypto:false,lastLiveFetch:0,
+    risk:{ killSwitch:false,liveEnabled:false,aggressive:false,perTradePct:0.01,perTradePctAgg:0.03,
+      dailyLossPct:0.04,weeklyLossPct:0.08,maxPositions:5,maxPositionsAgg:12,
+      maxConsecutiveLosses:3,pauseMinutes:30,pausedUntil:0,dataFresh:true,maxOptionPremiumPct:0.03 },
+    theme:"dark" };
 }
-function seedHistory(base,assetType){
-  const vol=assetType==="crypto"?0.03:0.014; let p=base; const prices=[],vols=[];
-  for(let i=0;i<140;i++){ p=Math.max(1e-6,p*(1+(Math.random()-0.5)*2*vol+0.0003)); prices.push(p); vols.push(1e6*(0.6+Math.random())); }
-  return {prices,vols};
+function migrate(){ // ensure new fields exist on older saved states
+  if(!state.universeOn){ state.universeOn={}; for(const s of ALL_SYMBOLS)state.universeOn[s]=true; }
+  if(!state.prices)state.prices={}; if(!state.history)state.history={}; if(!state.volumes)state.volumes={};
+  if(!state.equityHistory)state.equityHistory=[]; if(state.liveCrypto==null)state.liveCrypto=false;
+  for(const s of activeSymbols())ensureHistory(s);
 }
 
-//============================ Persistence ============================
-let storageOK=true;
-function save(){ try{ localStorage.setItem("tmac_agg_v1",JSON.stringify(state)); }catch(e){ storageOK=false; } }
-function load(){ try{ const r=localStorage.getItem("tmac_agg_v1"); return r?JSON.parse(r):null; }catch(e){ storageOK=false; return null; } }
+//============================ Persistence (omit big arrays) ============================
+let storageOK=true,saveT=null;
+function save(){ if(saveT)return; saveT=setTimeout(()=>{ saveT=null; try{
+  const slim={cash:state.cash,equity:state.equity,positions:state.positions,trades:state.trades.slice(0,400),logs:state.logs.slice(0,400),
+    strategies:state.strategies,prices:state.prices,equityHistory:state.equityHistory.slice(-600),universeOn:state.universeOn,
+    liveCrypto:state.liveCrypto,risk:state.risk,theme:state.theme};
+  localStorage.setItem("tmac_agg_v2",JSON.stringify(slim)); }catch(e){ storageOK=false; } },800); }
+function load(){ try{ const r=localStorage.getItem("tmac_agg_v2"); return r?JSON.parse(r):null; }catch(e){ storageOK=false; return null; } }
+
+//============================ Universe helpers ============================
+function activeSymbols(){ return ALL_SYMBOLS.filter(s=>state.universeOn[s]); }
+function activeCrypto(){ return CRYPTO_LIST.filter(s=>state.universeOn[s]); }
+function activeStocks(){ return STOCK_LIST.filter(s=>state.universeOn[s]); }
+function scopedSymbols(strat){
+  const u=activeSymbols(); const sc=strat.scope||"both";
+  if(sc==="crypto")return u.filter(s=>assetType(s)==="crypto");
+  if(sc==="stocks")return u.filter(s=>assetType(s)==="equity");
+  return u;
+}
 
 //============================ Indicators ============================
 function sma(a,p){ if(a.length<p)return NaN; let s=0; for(let i=a.length-p;i<a.length;i++)s+=a[i]; return s/p; }
 function rsi(a,p){ if(a.length<p+1)return NaN; let g=0,l=0; for(let i=a.length-p;i<a.length;i++){const d=a[i]-a[i-1];if(d>=0)g+=d;else l-=d;} const ag=g/p,al=l/p; return al===0?100:100-100/(1+ag/al); }
 function stdev(a,p){ const sl=a.slice(-p); const m=sl.reduce((x,y)=>x+y,0)/sl.length; return Math.sqrt(sl.reduce((x,y)=>x+(y-m)**2,0)/sl.length); }
 function roc(a,p){ if(a.length<p+1)return NaN; const past=a[a.length-1-p]; return past?(a[a.length-1]-past)/past:NaN; }
-function volScore(sym){ const h=state.history[sym]; const sd=stdev(h,20); const px=h[h.length-1]; return Math.max(0,Math.min(1,(sd/px)/(SYM[sym].assetType==="crypto"?0.05:0.025))); }
+function volScore(sym){ ensureHistory(sym); const h=state.history[sym]; const sd=stdev(h,20),px=h[h.length-1]; return Math.max(0,Math.min(1,(sd/px)/(assetType(sym)==="crypto"?0.05:0.025))); }
 
 //============================ Signal generation ============================
-// Returns {dir:'up'|'down', confidence, reason, stopPct, takePct} or null.
 function signal(kind,params,sym){
-  const c=state.history[sym], v=state.volumes[sym], price=c[c.length-1];
-  const P={...KINDS[kind].p,...params};
-  if(kind==="momentum_breakout"){
-    const lb=P.lookback; if(c.length<lb+3)return null;
-    const prior=c.slice(-lb-1,-1); const hi=Math.max(...prior);
-    const mom=roc(c,5);
-    if(price>hi&&mom>0){ const strength=(price-hi)/hi; return {dir:"up",confidence:clamp(0.55+strength*25+mom*8),reason:`Broke ${lb}-bar high ${fmt(hi)} with +${(mom*100).toFixed(1)}% 5-bar momentum`,stopPct:0.04,takePct:0.10}; }
-  } else if(kind==="volume_continuation"){
-    const ma=sma(c,P.maPeriod); const avgVol=v.slice(-P.maPeriod).reduce((a,b)=>a+b,0)/P.maPeriod; const lastVol=v[v.length-1];
-    if(price>ma&&lastVol>avgVol*P.volMult&&roc(c,3)>0){ const vr=lastVol/avgVol; return {dir:"up",confidence:clamp(0.5+Math.min(vr-1,1)*0.4),reason:`Uptrend + volume ${vr.toFixed(1)}× average (continuation)`,stopPct:0.045,takePct:0.11}; }
-  } else if(kind==="rsi_reversal"){
-    const r=rsi(c,P.period),pr=rsi(c.slice(0,-1),P.period); if(isNaN(r)||isNaN(pr))return null;
-    if(pr<=P.oversold&&r>pr&&r<50){ return {dir:"up",confidence:clamp(0.5+(P.oversold-Math.min(pr,P.oversold))/100+0.2),reason:`RSI turning up from oversold (${pr.toFixed(0)}→${r.toFixed(0)})`,stopPct:0.035,takePct:0.08}; }
-  } else if(kind==="ma_trend"){
-    const f=sma(c,P.fast),s=sma(c,P.slow); if(isNaN(f)||isNaN(s))return null;
-    if(price>f&&f>s){ return {dir:"up",confidence:clamp(0.5+(f-s)/s*15),reason:`Uptrend: price>MA${P.fast}>MA${P.slow}`,stopPct:0.04,takePct:0.10}; }
-    if(price<f&&f<s){ return {dir:"down",confidence:clamp(0.5+(s-f)/s*15),reason:`Downtrend: price<MA${P.fast}<MA${P.slow}`,stopPct:0.04,takePct:0.10}; }
-  } else if(kind==="vol_spike"){
-    const move=roc(c,2); const sd=stdev(c,20)/price; if(isNaN(move))return null;
-    if(Math.abs(move)>P.threshold/100&&Math.abs(move)>sd*1.5){ return {dir:move>0?"up":"down",confidence:clamp(0.5+Math.min(Math.abs(move)*10,0.4)),reason:`Volatility spike ${(move*100).toFixed(1)}% (news proxy)`,stopPct:0.05,takePct:0.12}; }
-  } else if(kind==="crypto_overnight"){
-    if(SYM[sym].assetType!=="crypto")return null; if(isEquityOpen())return null;
-    const m=roc(c,P.lookback); if(isNaN(m))return null;
-    if(m>P.threshold/100){ return {dir:"up",confidence:clamp(0.5+Math.min(m*8,0.4)),reason:`Overnight crypto momentum +${(m*100).toFixed(1)}% (equities closed)`,stopPct:0.05,takePct:0.13}; }
-  } else if(kind==="options_defined"){
-    const f=sma(c,P.fast),s=sma(c,P.slow); if(isNaN(f)||isNaN(s))return null;
-    if(f>s&&price>f) return {dir:"up",confidence:clamp(0.55+(f-s)/s*12),reason:`Bullish trend → buy CALL (defined risk = premium)`,stopPct:0.5,takePct:1.0};
-    if(f<s&&price<f) return {dir:"down",confidence:clamp(0.55+(s-f)/s*12),reason:`Bearish trend → buy PUT (defined risk = premium)`,stopPct:0.5,takePct:1.0};
-  }
+  ensureHistory(sym); const c=state.history[sym],v=state.volumes[sym],price=c[c.length-1]; const P={...KINDS[kind].p,...params};
+  if(kind==="momentum_breakout"){ const lb=P.lookback; if(c.length<lb+3)return null; const hi=Math.max(...c.slice(-lb-1,-1)); const mom=roc(c,5);
+    if(price>hi&&mom>0)return {dir:"up",confidence:clamp(0.55+(price-hi)/hi*25+mom*8),reason:`Broke ${lb}-bar high ${fmt(hi)} with +${(mom*100).toFixed(1)}% momentum`,stopPct:0.04,takePct:0.10}; }
+  else if(kind==="volume_continuation"){ const ma=sma(c,P.maPeriod),avg=v.slice(-P.maPeriod).reduce((a,b)=>a+b,0)/P.maPeriod,last=v[v.length-1];
+    if(price>ma&&last>avg*P.volMult&&roc(c,3)>0)return {dir:"up",confidence:clamp(0.5+Math.min(last/avg-1,1)*0.4),reason:`Uptrend + volume ${(last/avg).toFixed(1)}× avg (continuation)`,stopPct:0.045,takePct:0.11}; }
+  else if(kind==="rsi_reversal"){ const r=rsi(c,P.period),pr=rsi(c.slice(0,-1),P.period); if(isNaN(r)||isNaN(pr))return null;
+    if(pr<=P.oversold&&r>pr&&r<50)return {dir:"up",confidence:clamp(0.5+(P.oversold-Math.min(pr,P.oversold))/100+0.2),reason:`RSI turning up from oversold (${pr.toFixed(0)}→${r.toFixed(0)})`,stopPct:0.035,takePct:0.08}; }
+  else if(kind==="ma_trend"){ const f=sma(c,P.fast),s=sma(c,P.slow); if(isNaN(f)||isNaN(s))return null;
+    if(price>f&&f>s)return {dir:"up",confidence:clamp(0.5+(f-s)/s*15),reason:`Uptrend: price>MA${P.fast}>MA${P.slow}`,stopPct:0.04,takePct:0.10};
+    if(price<f&&f<s)return {dir:"down",confidence:clamp(0.5+(s-f)/s*15),reason:`Downtrend: price<MA${P.fast}<MA${P.slow}`,stopPct:0.04,takePct:0.10}; }
+  else if(kind==="vol_spike"){ const move=roc(c,2),sd=stdev(c,20)/price; if(isNaN(move))return null;
+    if(Math.abs(move)>P.threshold/100&&Math.abs(move)>sd*1.5)return {dir:move>0?"up":"down",confidence:clamp(0.5+Math.min(Math.abs(move)*10,0.4)),reason:`Volatility spike ${(move*100).toFixed(1)}% (news proxy)`,stopPct:0.05,takePct:0.12}; }
+  else if(kind==="crypto_overnight"){ if(assetType(sym)!=="crypto")return null; if(isEquityOpen())return null; const m=roc(c,P.lookback); if(isNaN(m))return null;
+    if(m>P.threshold/100)return {dir:"up",confidence:clamp(0.5+Math.min(m*8,0.4)),reason:`Overnight crypto momentum +${(m*100).toFixed(1)}% (equities closed)`,stopPct:0.05,takePct:0.13}; }
+  else if(kind==="options_defined"){ const f=sma(c,P.fast),s=sma(c,P.slow); if(isNaN(f)||isNaN(s))return null;
+    if(f>s&&price>f)return {dir:"up",confidence:clamp(0.55+(f-s)/s*12),reason:`Bullish trend → buy CALL (defined risk = premium)`,stopPct:0.5,takePct:1.0};
+    if(f<s&&price<f)return {dir:"down",confidence:clamp(0.55+(s-f)/s*12),reason:`Bearish trend → buy PUT (defined risk = premium)`,stopPct:0.5,takePct:1.0}; }
   return null;
 }
 const clamp=x=>Math.max(0.05,Math.min(0.98,x));
 
 //============================ Opportunity scan ============================
-// For every enabled strategy × symbol, compute a fully-specified, risk-sized
-// trade idea with R/R, scores, entry, stop, take, size and reason.
 function scan(){
-  const out=[];
-  const riskDollar=state.equity*perTradePct();
-  for(const strat of state.strategies){
-    if(!strat.enabled)continue;
-    for(const sym of strat.symbols){
-      const sig=signal(strat.kind,strat.params,sym);
-      if(!sig)continue;
+  const out=[]; const riskDollar=state.equity*perTradePct();
+  for(const strat of state.strategies){ if(!strat.enabled)continue;
+    for(const sym of scopedSymbols(strat)){
+      const sig=signal(strat.kind,strat.params,sym); if(!sig)continue;
       const price=state.prices[sym]; const isOpt=KINDS[strat.kind].assetMode==="option";
+      const stopPct=strat.stopPct||sig.stopPct, takePct=strat.takePct||sig.takePct;
       let entry=price,stop,take,size,sizeLabel,rr,riskAmt,instrument;
-      if(isOpt){
-        const premiumBudget=Math.min(riskDollar,state.equity*state.risk.maxOptionPremiumPct,state.cash);
-        riskAmt=premiumBudget;                 // defined risk: max loss = premium
-        size=premiumBudget; sizeLabel=fmt$(premiumBudget)+" premium";
-        instrument=sig.dir==="up"?"CALL":"PUT";
-        stop=sig.stopPct; take=sig.takePct;    // in % of premium
-        rr=sig.takePct/sig.stopPct;            // 2:1
-      } else {
-        if(sig.dir==="down")  // long-only underlying: cannot short
-          { out.push(skipIdea(strat,sym,sig,"bearish signal — shorting disabled (long-only)")); continue; }
-        const stopDist=price*sig.stopPct;
-        const qtyRisk=riskDollar/stopDist;
-        const notionalCap=Math.min(strat.maxPositionSize,state.cash);
-        let qty=Math.min(qtyRisk,notionalCap/price);
-        qty=SYM[sym].assetType==="equity"?Math.floor(qty):Math.floor(qty*1e4)/1e4;
-        size=qty; sizeLabel=fmtq(qty)+" units";
-        entry=price; stop=price*(1-sig.stopPct); take=price*(1+sig.takePct);
-        riskAmt=qty*stopDist; rr=sig.takePct/sig.stopPct; instrument="LONG";
-      }
-      const vs=volScore(sym);
-      const score=Math.round(50*sig.confidence+30*Math.min(rr/3,1)+20*vs);
-      out.push({id:strat.id+":"+sym,strategyId:strat.id,strategyName:strat.name,kind:strat.kind,
-        symbol:sym,assetType:SYM[sym].assetType,instrument,dir:sig.dir,
-        entry,stop,take,stopPct:sig.stopPct,takePct:sig.takePct,size,sizeLabel,
-        rr,confidence:sig.confidence,vol:vs,riskAmt,score,reason:sig.reason,actionable:size>0});
-    }
-  }
-  out.sort((a,b)=>(b.score||0)-(a.score||0));
-  return out;
+      if(isOpt){ const prem=Math.min(riskDollar,state.equity*state.risk.maxOptionPremiumPct,state.cash); riskAmt=prem; size=prem; sizeLabel=fmt$(prem)+" premium"; instrument=sig.dir==="up"?"CALL":"PUT"; stop=sig.stopPct; take=sig.takePct; rr=sig.takePct/sig.stopPct; }
+      else { if(sig.dir==="down"){ out.push(skip(strat,sym,sig,"bearish — shorting disabled (long-only)")); continue; }
+        const sd=price*stopPct,qtyRisk=riskDollar/sd,cap=Math.min(strat.maxPositionSize,state.cash); let qty=Math.min(qtyRisk,cap/price);
+        qty=assetType(sym)==="equity"?Math.floor(qty):Math.floor(qty*1e4)/1e4; size=qty; sizeLabel=fmtq(qty)+" units";
+        entry=price; stop=price*(1-stopPct); take=price*(1+takePct); riskAmt=qty*sd; rr=takePct/stopPct; instrument="LONG"; }
+      const vs=volScore(sym); const score=Math.round(50*sig.confidence+30*Math.min(rr/3,1)+20*vs);
+      out.push({id:strat.id+":"+sym,strategyId:strat.id,strategyName:strat.name,kind:strat.kind,symbol:sym,assetType:assetType(sym),instrument,dir:sig.dir,entry,stop,take,stopPct,takePct,size,sizeLabel,rr,confidence:sig.confidence,vol:vs,riskAmt,score,reason:sig.reason,actionable:size>0});
+    } }
+  out.sort((a,b)=>(b.score||0)-(a.score||0)); return out;
 }
-function skipIdea(strat,sym,sig,why){ return {id:strat.id+":"+sym,strategyId:strat.id,strategyName:strat.name,kind:strat.kind,symbol:sym,assetType:SYM[sym].assetType,instrument:"—",dir:sig.dir,reason:sig.reason,skip:why,confidence:sig.confidence,vol:volScore(sym),actionable:false,score:0}; }
+function skip(strat,sym,sig,why){ return {id:strat.id+":"+sym,strategyId:strat.id,strategyName:strat.name,kind:strat.kind,symbol:sym,assetType:assetType(sym),instrument:"—",dir:sig.dir,reason:sig.reason,skip:why,confidence:sig.confidence,vol:volScore(sym),actionable:false,score:0}; }
 
 //============================ Risk gates ============================
-function perTradePct(){ const r=state.risk; return Math.min(r.aggressive?r.perTradePctAgg:r.perTradePct, 0.03); }
+function perTradePct(){ const r=state.risk; return Math.min(r.aggressive?r.perTradePctAgg:r.perTradePct,0.03); }
 function maxPositions(){ const r=state.risk; return r.aggressive?r.maxPositionsAgg:r.maxPositions; }
 function dayStart(){ const d=new Date(); d.setHours(0,0,0,0); return d.getTime(); }
 function weekStart(){ const d=new Date(); const day=(d.getDay()+6)%7; d.setHours(0,0,0,0); return d.getTime()-day*86400000; }
 function pnlSince(t){ return state.trades.filter(x=>x.t>=t&&x.pnl!=null).reduce((s,x)=>s+x.pnl,0); }
 function consecutiveLosses(){ let n=0; for(const t of state.trades){ if(t.pnl==null)continue; if(t.pnl<0)n++; else break; } return n; }
 function isPaused(){ return Date.now()<state.risk.pausedUntil; }
-// Returns "" if clear to trade, else the blocking reason.
-function tradingBlock(){
-  const r=state.risk;
+function tradingBlock(){ const r=state.risk;
   if(r.killSwitch)return "Kill switch engaged";
-  if(!r.dataFresh)return "Market data marked delayed/unclear — trading paused";
+  if(!r.dataFresh)return "Market data marked delayed/unclear";
   if(isPaused())return `Auto-paused after losing streak (${Math.ceil((r.pausedUntil-Date.now())/60000)}m left)`;
   if(pnlSince(dayStart())<=-state.equity*r.dailyLossPct)return "Daily loss limit reached";
   if(pnlSince(weekStart())<=-state.equity*r.weeklyLossPct)return "Weekly loss limit reached";
-  return "";
-}
+  return ""; }
 
 //============================ Execution (paper) ============================
-function log(cat,msg){ state.logs.unshift({t:Date.now(),cat,msg}); if(state.logs.length>700)state.logs.length=700; }
-function tradesTodayFor(id){ return state.trades.filter(t=>t.t>=dayStart()&&t.strategyId===id&&t.side==="buy").length; }
-
-function enter(opp,manual){
-  const block=tradingBlock();
-  if(block){ log("skip",`SKIP ${opp.symbol} (${opp.strategyName}): ${block}`); return {ok:false,why:block}; }
-  if(!opp.actionable){ log("skip",`SKIP ${opp.symbol} (${opp.strategyName}): ${opp.skip||"not actionable"}`); return {ok:false,why:opp.skip}; }
-  if(state.positions.length>=maxPositions()){ log("skip",`SKIP ${opp.symbol}: max open trades (${maxPositions()})`); return {ok:false,why:"max open trades"}; }
-  if(state.positions.find(p=>p.strategyId===opp.strategyId&&p.symbol===opp.symbol)) return {ok:false,why:"already open"};
-  if(opp.riskAmt>state.cash){ log("skip",`SKIP ${opp.symbol}: insufficient cash`); return {ok:false,why:"insufficient cash"}; }
+function log(cat,msg){ state.logs.unshift({t:Date.now(),cat,msg}); if(state.logs.length>800)state.logs.length=800; }
+function enter(opp){
+  const b=tradingBlock(); if(b){ log("skip",`SKIP ${opp.symbol} (${opp.strategyName}): ${b}`); return {ok:false,why:b}; }
+  if(!opp.actionable){ log("skip",`SKIP ${opp.symbol}: ${opp.skip||"not actionable"}`); return {ok:false}; }
+  if(state.positions.length>=maxPositions())return {ok:false,why:"max open trades"};
+  if(state.positions.find(p=>p.strategyId===opp.strategyId&&p.symbol===opp.symbol))return {ok:false,why:"already open"};
+  if(opp.riskAmt>state.cash){ log("skip",`SKIP ${opp.symbol}: insufficient cash`); return {ok:false}; }
   const isOpt=opp.instrument==="CALL"||opp.instrument==="PUT";
-  const pos={id:"p"+Date.now()+Math.random().toString(36).slice(2,6),strategyId:opp.strategyId,strategyName:opp.strategyName,
-    symbol:opp.symbol,assetType:opp.assetType,instrument:opp.instrument,dir:opp.dir,opened:Date.now(),
-    reason:opp.reason,rr:opp.rr,riskAmt:opp.riskAmt};
-  if(isOpt){
-    pos.premium=opp.size; pos.value=opp.size; pos.uEntry=state.prices[opp.symbol]; pos.optDir=opp.dir==="up"?1:-1;
-    pos.stopVal=opp.size*(1-opp.stopPct); pos.takeVal=opp.size*(1+opp.takePct);
-    state.cash-=opp.size;
-  } else {
-    pos.qty=opp.size; pos.avg=opp.entry; pos.price=opp.entry; pos.value=opp.size*opp.entry; pos.upnl=0;
-    pos.stop=opp.stop; pos.take=opp.take;
-    state.cash-=opp.size*opp.entry;
-  }
+  const pos={id:"p"+Date.now()+Math.random().toString(36).slice(2,6),strategyId:opp.strategyId,strategyName:opp.strategyName,symbol:opp.symbol,assetType:opp.assetType,instrument:opp.instrument,dir:opp.dir,opened:Date.now(),reason:opp.reason,rr:opp.rr,riskAmt:opp.riskAmt};
+  if(isOpt){ pos.premium=opp.size;pos.value=opp.size;pos.uEntry=state.prices[opp.symbol];pos.optDir=opp.dir==="up"?1:-1;pos.stopVal=opp.size*(1-opp.stopPct);pos.takeVal=opp.size*(1+opp.takePct);state.cash-=opp.size; }
+  else { pos.qty=opp.size;pos.avg=opp.entry;pos.price=opp.entry;pos.value=opp.size*opp.entry;pos.upnl=0;pos.stop=opp.stop;pos.take=opp.take;state.cash-=opp.size*opp.entry; }
   state.positions.push(pos);
   state.trades.unshift({t:Date.now(),symbol:opp.symbol,side:"buy",instrument:opp.instrument,qty:isOpt?1:opp.size,price:isOpt?opp.size:opp.entry,strategyId:opp.strategyId});
   log("entry",`ENTER ${opp.instrument} ${opp.symbol} (${opp.strategyName}) — ${opp.sizeLabel}, R/R ${opp.rr.toFixed(1)}:1, risk ${fmt$(opp.riskAmt)} — ${opp.reason}`);
   save(); return {ok:true};
 }
-function markToMarket(){
-  let posVal=0;
-  for(const p of state.positions){
-    const px=state.prices[p.symbol];
-    if(p.instrument==="CALL"||p.instrument==="PUT"){
-      const uret=(px-p.uEntry)/p.uEntry*p.optDir; const lev=5;
-      p.value=Math.max(0,p.premium*(1+lev*uret)); p.upnl=p.value-p.premium; p.price=px;
-    } else { p.price=px; p.value=px*p.qty; p.upnl=(px-p.avg)*p.qty; }
-    posVal+=p.value;
-  }
-  state.equity=state.cash+posVal;
-}
-function exit(pos,reason){
-  let pnl,proceeds;
-  if(pos.instrument==="CALL"||pos.instrument==="PUT"){ proceeds=pos.value; pnl=pos.value-pos.premium; }
-  else { proceeds=pos.price*pos.qty; pnl=(pos.price-pos.avg)*pos.qty; }
+function markToMarket(){ let pv=0; for(const p of state.positions){ const px=state.prices[p.symbol]||p.price;
+  if(p.instrument==="CALL"||p.instrument==="PUT"){ const uret=(px-p.uEntry)/p.uEntry*p.optDir; p.value=Math.max(0,p.premium*(1+5*uret)); p.upnl=p.value-p.premium; p.price=px; }
+  else { p.price=px; p.value=px*p.qty; p.upnl=(px-p.avg)*p.qty; } pv+=p.value; } state.equity=state.cash+pv; }
+function exit(pos,reason){ let pnl,proceeds; if(pos.instrument==="CALL"||pos.instrument==="PUT"){proceeds=pos.value;pnl=pos.value-pos.premium;}else{proceeds=pos.price*pos.qty;pnl=(pos.price-pos.avg)*pos.qty;}
   state.cash+=proceeds; state.positions=state.positions.filter(p=>p.id!==pos.id);
   state.trades.unshift({t:Date.now(),symbol:pos.symbol,side:"sell",instrument:pos.instrument,qty:pos.qty||1,price:pos.price,pnl,strategyId:pos.strategyId});
-  log("exit",`EXIT ${pos.instrument} ${pos.symbol} — ${reason} — P/L ${fmt$(pnl)}`);
-}
-function checkExits(){
-  for(const p of [...state.positions]){
-    if(p.instrument==="CALL"||p.instrument==="PUT"){
-      if(p.value<=p.stopVal)exit(p,"stop-loss (premium -"+Math.round((1-p.stopVal/p.premium)*100)+"%)");
-      else if(p.value>=p.takeVal)exit(p,"take-profit (premium +"+Math.round((p.takeVal/p.premium-1)*100)+"%)");
-    } else {
-      const px=state.prices[p.symbol];
-      if(px<=p.stop)exit(p,"stop-loss");
-      else if(px>=p.take)exit(p,"take-profit");
-    }
-  }
+  log("exit",`EXIT ${pos.instrument} ${pos.symbol} — ${reason} — P/L ${fmt$(pnl)}`); }
+function checkExits(){ for(const p of [...state.positions]){ if(p.instrument==="CALL"||p.instrument==="PUT"){ if(p.value<=p.stopVal)exit(p,"stop-loss (premium -"+Math.round((1-p.stopVal/p.premium)*100)+"%)"); else if(p.value>=p.takeVal)exit(p,"take-profit (premium +"+Math.round((p.takeVal/p.premium-1)*100)+"%)"); } else { const px=state.prices[p.symbol]; if(px<=p.stop)exit(p,"stop-loss"); else if(px>=p.take)exit(p,"take-profit"); } } }
+
+//============================ Live crypto prices (optional, CoinGecko) ============================
+async function fetchLiveCrypto(){
+  if(!state.liveCrypto)return; if(Date.now()-state.lastLiveFetch<15000)return; state.lastLiveFetch=Date.now();
+  const syms=activeCrypto().filter(s=>COIN_IDS[s]); if(!syms.length)return;
+  try{ const ids=[...new Set(syms.map(s=>COIN_IDS[s]))].join(",");
+    const res=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`,{cache:"no-store"});
+    if(!res.ok)throw 0; const data=await res.json(); let n=0;
+    for(const s of syms){ const px=data[COIN_IDS[s]]&&data[COIN_IDS[s]].usd; if(px){ state.prices[s]=px; ensureHistory(s); const h=state.history[s]; h.push(px); if(h.length>220)h.shift(); n++; } }
+    if(n){ window._liveOK=true; log("system",`Live crypto prices updated (${n} symbols, CoinGecko)`); }
+  }catch(e){ window._liveOK=false; log("system","Live price fetch failed — using simulator (offline or CORS-blocked)"); }
 }
 
 //============================ Engine ============================
 let engineRunning=false,tickTimer=null;
-function stepPrices(){
-  for(const s of SYMBOLS){
-    const vol=s.assetType==="crypto"?0.012:0.006;
-    const last=state.prices[s.symbol];
-    const np=Math.max(1e-6,last*(1+(Math.random()-0.5)*2*vol+0.0002));
-    state.prices[s.symbol]=np;
-    const h=state.history[s.symbol]; h.push(np); if(h.length>220)h.shift();
-    const spike=Math.random()<0.06?2.5:1; const vv=state.volumes[s.symbol]; vv.push(1e6*(0.6+Math.random())*spike); if(vv.length>220)vv.shift();
-  }
-}
+function stepPrices(){ for(const s of activeSymbols()){ ensureHistory(s);
+  // crypto with live feed: don't randomwalk (fetch updates it); else simulate
+  if(state.liveCrypto&&assetType(s)==="crypto"&&window._liveOK)continue;
+  const vol=assetType(s)==="crypto"?0.012:0.006; const last=state.prices[s]; const np=Math.max(1e-9,last*(1+(Math.random()-0.5)*2*vol+0.0002));
+  state.prices[s]=np; const h=state.history[s]; h.push(np); if(h.length>220)h.shift(); const spike=Math.random()<0.06?2.5:1; const vv=state.volumes[s]; vv.push(1e6*(0.6+Math.random())*spike); if(vv.length>220)vv.shift(); } }
 function tick(){
+  if(state.liveCrypto)fetchLiveCrypto();
   stepPrices(); markToMarket(); checkExits();
-  // losing-streak auto-pause
-  if(!isPaused()&&consecutiveLosses()>=state.risk.maxConsecutiveLosses){
-    state.risk.pausedUntil=Date.now()+state.risk.pauseMinutes*60000;
-    log("risk",`AUTO-PAUSE: ${consecutiveLosses()} losses in a row — halting new entries for ${state.risk.pauseMinutes}m`);
-  }
+  if(!isPaused()&&consecutiveLosses()>=state.risk.maxConsecutiveLosses){ state.risk.pausedUntil=Date.now()+state.risk.pauseMinutes*60000; log("risk",`AUTO-PAUSE: ${consecutiveLosses()} losses in a row — halting entries for ${state.risk.pauseMinutes}m`); }
   state.opps=scan();
-  if(engineRunning){
-    const block=tradingBlock();
-    if(block){ /* engine idles; reasons visible on dashboard */ }
-    else { for(const opp of state.opps){ if(!opp.actionable)continue; if(state.positions.length>=maxPositions())break; enter(opp,false); } }
-  }
-  markToMarket(); save(); liveUpdate();
+  if(engineRunning&&!tradingBlock()){ for(const o of state.opps){ if(!o.actionable)continue; if(state.positions.length>=maxPositions())break; enter(o); } }
+  markToMarket(); state.equityHistory.push({t:Date.now(),e:state.equity}); if(state.equityHistory.length>600)state.equityHistory.shift();
+  save(); liveUpdate();
 }
-function startEngine(){ if(engineRunning)return; if(state.risk.killSwitch){alert("Kill switch is engaged. Disengage it in Risk Controls first.");return;}
-  engineRunning=true; log("system","Engine started — scanning for aggressive opportunities"); tickTimer=setInterval(tick,2000); tick(); }
+function startEngine(){ if(engineRunning)return; if(state.risk.killSwitch){alert("Kill switch engaged. Disengage it in Risk Controls first.");return;} if(activeSymbols().length===0){alert("Your universe is empty. Turn some assets on in the Universe tab.");return;}
+  engineRunning=true; log("system",`Engine started — scanning ${activeSymbols().length} symbols`); tickTimer=setInterval(tick,2500); tick(); }
 function stopEngine(){ engineRunning=false; if(tickTimer)clearInterval(tickTimer); tickTimer=null; log("system","Engine stopped"); save(); render(); }
-function emergencyStop(){ if(!confirm("EMERGENCY STOP: halt the engine, engage the kill switch, and close ALL open positions at market?"))return;
-  stopEngine(); state.risk.killSwitch=true; for(const p of [...state.positions])exit(p,"emergency stop");
-  log("risk","EMERGENCY STOP — kill switch engaged, all positions flattened"); save(); render(); }
+function emergencyStop(){ if(!confirm("EMERGENCY STOP: halt engine, engage kill switch, and close ALL open positions?"))return; stopEngine(); state.risk.killSwitch=true; for(const p of [...state.positions])exit(p,"emergency stop"); log("risk","EMERGENCY STOP — kill switch engaged, positions flattened"); save(); render(); }
 
 //============================ Backtest ============================
 function backtest(kind,params,sym,bars){
-  const a=SYM[sym]; const vol=a.assetType==="crypto"?0.03:0.014; let p=a.base; const ser=[],vols=[];
-  for(let i=0;i<bars;i++){ p=Math.max(1e-6,p*(1+(Math.random()-0.5)*2*vol+0.0003)); ser.push(p); vols.push(1e6*(0.6+Math.random())); }
-  const isOpt=KINDS[kind].assetMode==="option";
-  let cash=100000,pos=null; const pnls=[]; let peak=100000,maxDD=0,eqEnd=100000;
-  const savedH=state.history[sym], savedV=state.volumes[sym], savedP=state.prices[sym];
-  for(let i=40;i<ser.length;i++){
-    state.history[sym]=ser.slice(0,i+1); state.volumes[sym]=vols.slice(0,i+1); state.prices[sym]=ser[i];
-    const price=ser[i];
-    if(pos){
-      if(isOpt){ const uret=(price-pos.uEntry)/pos.uEntry*pos.optDir; const val=Math.max(0,pos.prem*(1+5*uret));
-        if(val<=pos.prem*0.5||val>=pos.prem*2){ pnls.push(val-pos.prem); cash+=val; pos=null; } }
-      else { if(price<=pos.stop){pnls.push((pos.stop-pos.entry)*pos.qty);cash+=pos.stop*pos.qty;pos=null;}
-        else if(price>=pos.take){pnls.push((pos.take-pos.entry)*pos.qty);cash+=pos.take*pos.qty;pos=null;} }
-    }
-    if(!pos){ const sig=signal(kind,params,sym);
-      if(sig&&(isOpt||sig.dir==="up")){
-        if(isOpt){ const prem=cash*0.03; pos={prem,uEntry:price,optDir:sig.dir==="up"?1:-1}; cash-=prem; }
-        else { const risk=cash*0.02,sd=price*sig.stopPct,qty=Math.min(risk/sd,cash*0.95/price); pos={qty,entry:price,stop:price*(1-sig.stopPct),take:price*(1+sig.takePct)}; cash-=qty*price; } } }
-    const eq=cash+(pos?(isOpt?pos.prem:pos.qty*price):0); peak=Math.max(peak,eq); maxDD=Math.max(maxDD,(peak-eq)/peak); eqEnd=eq;
-  }
-  state.history[sym]=savedH; state.volumes[sym]=savedV; state.prices[sym]=savedP;
-  const wins=pnls.filter(x=>x>0); const avgW=wins.length?wins.reduce((a,b)=>a+b,0)/wins.length:0;
-  const losses=pnls.filter(x=>x<0); const avgL=losses.length?losses.reduce((a,b)=>a+b,0)/losses.length:0;
-  return {sym,kind,ret:(eqEnd-100000)/100000,maxDD,winRate:pnls.length?wins.length/pnls.length:0,trades:pnls.length,avgW,avgL,expectancy:pnls.length?pnls.reduce((a,b)=>a+b,0)/pnls.length:0};
+  const a=assetType(sym),vol=a==="crypto"?0.03:0.015; let p=basePrice(sym); const ser=[],vols=[]; const rng=mulberry(hash(sym+"bt"));
+  for(let i=0;i<bars;i++){ p=Math.max(1e-9,p*(1+(rng()-0.5)*2*vol+0.0003)); ser.push(p); vols.push(1e6*(0.6+rng())); }
+  const isOpt=KINDS[kind].assetMode==="option"; let cash=100000,pos=null; const pnls=[]; let peak=100000,maxDD=0,eqEnd=100000;
+  const sh=state.history[sym],sv=state.volumes[sym],sp=state.prices[sym];
+  for(let i=40;i<ser.length;i++){ state.history[sym]=ser.slice(0,i+1); state.volumes[sym]=vols.slice(0,i+1); state.prices[sym]=ser[i]; const price=ser[i];
+    if(pos){ if(isOpt){ const uret=(price-pos.uEntry)/pos.uEntry*pos.optDir,val=Math.max(0,pos.prem*(1+5*uret)); if(val<=pos.prem*0.5||val>=pos.prem*2){pnls.push(val-pos.prem);cash+=val;pos=null;} }
+      else { if(price<=pos.stop){pnls.push((pos.stop-pos.entry)*pos.qty);cash+=pos.stop*pos.qty;pos=null;} else if(price>=pos.take){pnls.push((pos.take-pos.entry)*pos.qty);cash+=pos.take*pos.qty;pos=null;} } }
+    if(!pos){ const sig=signal(kind,params,sym); if(sig&&(isOpt||sig.dir==="up")){ if(isOpt){const prem=cash*0.03;pos={prem,uEntry:price,optDir:sig.dir==="up"?1:-1};cash-=prem;} else {const risk=cash*0.02,sd=price*sig.stopPct,qty=Math.min(risk/sd,cash*0.95/price);pos={qty,entry:price,stop:price*(1-sig.stopPct),take:price*(1+sig.takePct)};cash-=qty*price;} } }
+    const eq=cash+(pos?(isOpt?pos.prem:pos.qty*price):0); peak=Math.max(peak,eq); maxDD=Math.max(maxDD,(peak-eq)/peak); eqEnd=eq; }
+  state.history[sym]=sh; state.volumes[sym]=sv; state.prices[sym]=sp;
+  const wins=pnls.filter(x=>x>0),losses=pnls.filter(x=>x<0);
+  const gw=wins.reduce((a,b)=>a+b,0),gl=-losses.reduce((a,b)=>a+b,0);
+  return {sym,kind,ret:(eqEnd-100000)/100000,maxDD,winRate:pnls.length?wins.length/pnls.length:0,trades:pnls.length,expectancy:pnls.length?pnls.reduce((a,b)=>a+b,0)/pnls.length:0,profitFactor:gl>0?gw/gl:(gw>0?Infinity:0)};
 }
+
+//============================ Analytics ============================
+function perfStats(trades){ const closed=trades.filter(t=>t.pnl!=null); const wins=closed.filter(t=>t.pnl>0),losses=closed.filter(t=>t.pnl<0);
+  const gw=wins.reduce((a,b)=>a+b.pnl,0),gl=-losses.reduce((a,b)=>a+b.pnl,0); const net=gw-gl;
+  return {n:closed.length,winRate:closed.length?wins.length/closed.length:0,net,profitFactor:gl>0?gw/gl:(gw>0?Infinity:0),
+    expectancy:closed.length?net/closed.length:0,avgWin:wins.length?gw/wins.length:0,avgLoss:losses.length?gl/losses.length:0}; }
 
 //============================ Formatting ============================
 function fmt$(n){ return n==null||!isFinite(n)?"—":n.toLocaleString("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}); }
@@ -420,209 +317,165 @@ function fmtq(n){ return n==null?"—":(+n).toLocaleString("en-US",{maximumFract
 function pct(n){ return n==null||!isFinite(n)?"—":(n*100).toFixed(1)+"%"; }
 function ago(t){ const s=Math.floor((Date.now()-t)/1000); if(s<60)return s+"s ago"; const m=Math.floor(s/60); if(m<60)return m+"m ago"; return Math.floor(m/60)+"h ago"; }
 function pcls(n){ return n>0?"pos":n<0?"neg":"muted"; }
-function isEquityOpen(){ const d=new Date(); const day=d.getDay(); if(day===0||day===6)return false; const m=d.getHours()*60+d.getMinutes(); return m>=570&&m<960; }
+function isEquityOpen(){ const d=new Date(),day=d.getDay(); if(day===0||day===6)return false; const m=d.getHours()*60+d.getMinutes(); return m>=570&&m<960; }
 
 //============================ Charts ============================
-function lineChart(data,stroke){ stroke=stroke||"var(--accent)";
-  if(!data||data.length<2)return '<div class="empty">Not enough data — start the engine.</div>';
+function lineChart(data,stroke){ stroke=stroke||"var(--accent)"; if(!data||data.length<2)return '<div class="empty">Not enough data — start the engine.</div>';
   const w=600,h=150,min=Math.min(...data),max=Math.max(...data),rng=(max-min)||1,step=w/(data.length-1);
-  const pts=data.map((v,i)=>[i*step,h-((v-min)/rng)*(h-10)-5]);
-  const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+  const pts=data.map((v,i)=>[i*step,h-((v-min)/rng)*(h-10)-5]); const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
   return `<svg viewBox="0 0 ${w} ${h}" style="width:100%" preserveAspectRatio="none"><path d="${path} L${w},${h} L0,${h} Z" fill="${stroke}" opacity="0.08"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`; }
-function meter(v,color){ return `<div class="meter"><i style="width:${Math.round(v*100)}%;background:${color}"></i></div>`; }
+function meter(v,c){ return `<div class="meter"><i style="width:${Math.round(v*100)}%;background:${c}"></i></div>`; }
 
 //============================ Rendering ============================
-const PAGES=[["dashboard","Dashboard"],["opportunities","Opportunities"],["strategies","Strategies"],["portfolio","Portfolio"],["history","Trade History"],["risk","Risk Controls"],["logs","Logs"]];
-const DATA_PAGES=new Set(["dashboard","opportunities","portfolio","history","logs"]);
+const PAGES=[["dashboard","Dashboard"],["opportunities","Opportunities"],["universe","Universe"],["strategies","Strategies"],["analytics","Analytics"],["portfolio","Portfolio"],["history","Trade History"],["risk","Risk Controls"],["logs","Logs"]];
+const DATA_PAGES=new Set(["dashboard","opportunities","analytics","portfolio","history","logs"]); // auto-refresh; form pages excluded
 let current="dashboard";
 function renderNav(){ document.getElementById("nav").innerHTML=PAGES.map(([id,l])=>`<a class="${id===current?'active':''}" onclick="go('${id}')">${l}</a>`).join(""); }
 function go(id){ current=id; document.querySelectorAll(".section").forEach(s=>s.classList.remove("active")); document.getElementById(id).classList.add("active"); renderNav(); render(); }
-function renderHeader(){
-  const eb=document.getElementById("engineBadge"); eb.className="badge "+(engineRunning?"b-accent":"b-default"); eb.textContent=engineRunning?"Engine running":"Engine stopped";
+function renderHeader(){ const eb=document.getElementById("engineBadge"); eb.className="badge "+(engineRunning?"b-accent":"b-default"); eb.textContent=engineRunning?"Engine running":"Engine stopped";
   const mb=document.getElementById("modeBadge"); if(state.risk.killSwitch){mb.className="badge b-neg";mb.textContent="HALTED";}else{mb.className="badge b-pos";mb.textContent="PAPER MODE";}
   const ab=document.getElementById("aggBadge"); ab.className="badge "+(state.risk.aggressive?"b-hot":"b-default"); ab.textContent=state.risk.aggressive?"⚡ AGGRESSIVE":"Standard";
+  const lb=document.getElementById("liveBadge"); lb.innerHTML=state.liveCrypto?`<span class="badge ${window._liveOK?'b-pos':'b-warn'}">${window._liveOK?'LIVE crypto':'live: connecting…'}</span>`:"";
   const pb=document.getElementById("pauseBadge"); const blk=tradingBlock(); pb.innerHTML=blk?`<span class="badge b-warn">${blk}</span>`:"";
   document.getElementById("startBtn").textContent=engineRunning?"■ Stop":"▶ Start"; document.getElementById("startBtn").className=engineRunning?"btn-secondary":"btn-hot";
-  document.getElementById("mkt").textContent="Crypto ● 24/7 · Equities "+(isEquityOpen()?"● open":"○ closed");
-}
-function renderPage(){ ({dashboard:renderDashboard,opportunities:renderOpps,strategies:renderStrategies,portfolio:renderPortfolio,history:renderHistory,risk:renderRisk,logs:renderLogs}[current])(); }
+  document.getElementById("mkt").textContent=`Universe ${activeSymbols().length} · Equities ${isEquityOpen()?"● open":"○ closed"}`; }
+function renderPage(){ ({dashboard:renderDashboard,opportunities:renderOpps,universe:renderUniverse,strategies:renderStrategies,analytics:renderAnalytics,portfolio:renderPortfolio,history:renderHistory,risk:renderRisk,logs:renderLogs}[current])(); }
 function render(){ renderHeader(); renderPage(); }
 function liveUpdate(){ renderHeader(); if(DATA_PAGES.has(current))renderPage(); }
 function statCard(l,v,sub,cls){ return `<div class="card stat"><div class="lbl">${l}</div><div class="val ${cls||''}">${v}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`; }
-function scoreColor(s){ return s>=70?"var(--pos)":s>=50?"var(--warn)":"var(--muted)"; }
 
-function oppCard(o){
-  if(!o.actionable) return "";
-  return `<div class="opp">
-    <div class="row" style="justify-content:space-between"><div><b>${o.symbol}</b> <span class="badge ${o.instrument==='PUT'?'b-neg':o.instrument==='CALL'?'b-accent':'b-default'}">${o.instrument}</span></div>
-      <span class="badge b-hot">score ${o.score}</span></div>
-    <div class="muted" style="font-size:12px;margin:4px 0">${o.strategyName} — ${o.reason}</div>
-    <div class="kv"><span class="muted">Suggested entry</span><b>${fmt(o.entry)}</b></div>
-    <div class="kv"><span class="muted">Stop loss</span><b class="neg">${o.instrument==='LONG'?fmt(o.stop):'-'+Math.round(o.stopPct*100)+'% premium'}</b></div>
-    <div class="kv"><span class="muted">Take profit</span><b class="pos">${o.instrument==='LONG'?fmt(o.take):'+'+Math.round(o.takePct*100)+'% premium'}</b></div>
-    <div class="kv"><span class="muted">Risk / Reward</span><b>${o.rr.toFixed(1)} : 1</b></div>
-    <div class="kv"><span class="muted">Position size</span><b>${o.sizeLabel}</b></div>
-    <div class="kv"><span class="muted">Risk amount</span><b>${fmt$(o.riskAmt)}</b></div>
-    <div style="margin-top:8px"><div class="muted" style="font-size:11px">Confidence</div>${meter(o.confidence,"var(--accent)")}
-      <div class="muted" style="font-size:11px;margin-top:6px">Volatility</div>${meter(o.vol,"var(--hot)")}</div>
-    <button class="btn-hot" style="width:100%;margin-top:10px;justify-content:center" onclick="execOpp('${o.id}')">Execute (paper)</button>
-  </div>`;
-}
+function oppCard(o){ if(!o.actionable)return ""; return `<div class="opp"><div class="row" style="justify-content:space-between"><div><b>${o.symbol}</b> <span class="badge ${o.instrument==='PUT'?'b-neg':o.instrument==='CALL'?'b-accent':'b-default'}">${o.instrument}</span></div><span class="badge b-hot">score ${o.score}</span></div>
+  <div class="muted" style="font-size:12px;margin:4px 0">${o.strategyName} — ${o.reason}</div>
+  <div class="kv"><span class="muted">Entry</span><b>${fmt(o.entry)}</b></div>
+  <div class="kv"><span class="muted">Stop</span><b class="neg">${o.instrument==='LONG'?fmt(o.stop):'-'+Math.round(o.stopPct*100)+'%'}</b></div>
+  <div class="kv"><span class="muted">Take</span><b class="pos">${o.instrument==='LONG'?fmt(o.take):'+'+Math.round(o.takePct*100)+'%'}</b></div>
+  <div class="kv"><span class="muted">Risk/Reward</span><b>${o.rr.toFixed(1)} : 1</b></div>
+  <div class="kv"><span class="muted">Size</span><b>${o.sizeLabel}</b></div>
+  <div class="kv"><span class="muted">Risk</span><b>${fmt$(o.riskAmt)}</b></div>
+  <div style="margin-top:8px"><div class="muted" style="font-size:11px">Confidence</div>${meter(o.confidence,"var(--accent)")}<div class="muted" style="font-size:11px;margin-top:6px">Volatility</div>${meter(o.vol,"var(--hot)")}</div>
+  <button class="btn-hot" style="width:100%;margin-top:10px;justify-content:center" onclick="execOpp('${o.id}')">Execute (paper)</button></div>`; }
 
-function renderDashboard(){
-  const todayPnl=pnlSince(dayStart()),weekPnl=pnlSince(weekStart());
-  const upnl=state.positions.reduce((s,p)=>s+(p.upnl||0),0);
-  const top=(state.opps||[]).filter(o=>o.actionable).slice(0,4);
-  const tr=[...state.trades].filter(t=>t.pnl!=null).reverse(); let cum=STARTING_EQUITY; const curve=[cum]; for(const t of tr){cum+=t.pnl;curve.push(cum);}
-  const closed=state.trades.filter(t=>t.pnl!=null),wins=closed.filter(t=>t.pnl>0).length;
-  document.getElementById("dashboard").innerHTML=`
-    <h1>Dashboard</h1><p class="muted" style="margin-top:0">Aggressive opportunity engine — paper trading, hard risk limits.</p>
-    <div class="disc">⚠️ <div><b style="color:var(--text)">Not financial advice.</b> Simulated trading only — no real money, no broker. Built to hunt asymmetric setups while strict limits prevent catastrophic loss.</div></div>
-    ${storageOK?"":'<div class="disc" style="border-color:var(--neg);background:color-mix(in srgb,var(--neg) 10%,transparent)">🔒 <div>Your browser blocks storage for local files — changes won\'t survive a refresh (still works this session). Use Chrome/Edge/Firefox.</div></div>'}
-    <div class="grid g4">
-      ${statCard("Equity",fmt$(state.equity),`Unrealized ${fmt$(upnl)}`,pcls(upnl))}
-      ${statCard("Today P/L",fmt$(todayPnl),`Limit ${fmt$(-state.equity*state.risk.dailyLossPct)}`,pcls(todayPnl))}
-      ${statCard("This Week P/L",fmt$(weekPnl),`Limit ${fmt$(-state.equity*state.risk.weeklyLossPct)}`,pcls(weekPnl))}
-      ${statCard("Open Trades",state.positions.length,`Max ${maxPositions()}`)}
-      ${statCard("Risk / Trade",pct(perTradePct()),state.risk.aggressive?"Aggressive":"Standard",state.risk.aggressive?"hot":"")}
-      ${statCard("Loss Streak",consecutiveLosses(),`Auto-pause at ${state.risk.maxConsecutiveLosses}`,consecutiveLosses()?"neg":"")}
-      ${statCard("Win Rate",closed.length?Math.round(wins/closed.length*100)+"%":"—",`${wins}/${closed.length}`)}
-      ${statCard("Live Opportunities",(state.opps||[]).filter(o=>o.actionable).length,"scanning")}
-    </div>
-    <div class="card" style="margin-top:16px"><div class="row" style="justify-content:space-between"><h3 style="margin:0">🔥 Best current opportunities</h3><button class="btn-secondary" onclick="go('opportunities')">View all →</button></div>
-      <div class="grid g4" style="margin-top:12px">${top.length?top.map(oppCard).join(""):'<div class="empty">No qualifying setups right now. Press ▶ Start and let the scanner work.</div>'}</div></div>
-    <div class="grid g2" style="margin-top:16px">
-      <div class="card"><h3>Equity curve (realized)</h3>${lineChart(curve)}</div>
-      <div class="card"><h3>BTC-USD</h3>${lineChart(state.history["BTC-USD"].slice(-80),"var(--hot)")}</div>
-    </div>`;
-}
+function renderDashboard(){ const todayPnl=pnlSince(dayStart()),weekPnl=pnlSince(weekStart()),upnl=state.positions.reduce((s,p)=>s+(p.upnl||0),0);
+  const top=(state.opps||[]).filter(o=>o.actionable).slice(0,6); const st=perfStats(state.trades);
+  const eq=state.equityHistory.map(x=>x.e);
+  document.getElementById("dashboard").innerHTML=`<h1>Dashboard</h1><p class="muted" style="margin-top:0">Aggressive opportunity engine — paper trading, hard risk limits. Universe: ${activeCrypto().length} crypto + ${activeStocks().length} stocks.</p>
+  <div class="disc">⚠️ <div><b style="color:var(--text)">Not financial advice.</b> Simulated trading — no real money, no broker.${state.liveCrypto?' Live crypto prices are real (CoinGecko); stocks are simulated.':''}</div></div>
+  ${storageOK?"":'<div class="disc" style="border-color:var(--neg);background:color-mix(in srgb,var(--neg) 10%,transparent)">🔒 <div>Browser blocks storage for local files — changes won\'t survive refresh. Use Chrome/Edge/Firefox.</div></div>'}
+  <div class="grid g4">${statCard("Equity",fmt$(state.equity),`Unrealized ${fmt$(upnl)}`,pcls(upnl))}${statCard("Today P/L",fmt$(todayPnl),`Limit ${fmt$(-state.equity*state.risk.dailyLossPct)}`,pcls(todayPnl))}${statCard("Week P/L",fmt$(weekPnl),`Limit ${fmt$(-state.equity*state.risk.weeklyLossPct)}`,pcls(weekPnl))}${statCard("Open Trades",state.positions.length,`Max ${maxPositions()}`)}${statCard("Risk/Trade",pct(perTradePct()),state.risk.aggressive?"Aggressive":"Standard",state.risk.aggressive?"hot":"")}${statCard("Loss Streak",consecutiveLosses(),`Pause at ${state.risk.maxConsecutiveLosses}`,consecutiveLosses()?"neg":"")}${statCard("Win Rate",st.n?Math.round(st.winRate*100)+"%":"—",`${st.n} closed`)}${statCard("Opportunities",(state.opps||[]).filter(o=>o.actionable).length,"live scan")}</div>
+  <div class="card" style="margin-top:16px"><div class="row" style="justify-content:space-between"><h3 style="margin:0">🔥 Best current opportunities</h3><button class="btn-secondary" onclick="go('opportunities')">View all →</button></div><div class="grid g3" style="margin-top:12px">${top.length?top.map(oppCard).join(""):'<div class="empty">No qualifying setups yet. Press ▶ Start.</div>'}</div></div>
+  <div class="grid g2" style="margin-top:16px"><div class="card"><h3>Equity curve</h3>${lineChart(eq.length>1?eq:[state.equity,state.equity])}</div><div class="card"><h3>BTC-USD</h3>${(ensureHistory("BTC-USD"),lineChart(state.history["BTC-USD"].slice(-80),"var(--hot)"))}</div></div>`; }
 
-function renderOpps(){
-  const list=(state.opps||[]);
-  const actionable=list.filter(o=>o.actionable),skipped=list.filter(o=>!o.actionable);
-  document.getElementById("opportunities").innerHTML=`
-    <h1>Opportunities</h1><p class="muted" style="margin-top:0">Ranked, fully-sized trade ideas with expected risk/reward. ${engineRunning?"Engine is auto-executing the best ones.":"Press ▶ Start to auto-trade, or Execute manually."}</p>
-    ${actionable.length===0?'<div class="empty card">No qualifying setups at the moment — the scanner updates every couple seconds.</div>':`
-    <div class="card" style="padding:0;overflow:auto"><table><thead><tr>
-      <th>Score</th><th>Symbol</th><th>Type</th><th>Strategy</th><th>Entry</th><th>Stop</th><th>Take</th><th>R/R</th><th>Conf</th><th>Vol</th><th>Size</th><th>Risk</th><th>Reason</th><th></th>
-    </tr></thead><tbody>${actionable.map(o=>`<tr>
-      <td><span class="badge b-hot">${o.score}</span></td><td><b>${o.symbol}</b></td>
-      <td><span class="badge ${o.instrument==='PUT'?'b-neg':o.instrument==='CALL'?'b-accent':'b-default'}">${o.instrument}</span></td>
-      <td class="muted">${o.strategyName}</td><td>${fmt(o.entry)}</td>
-      <td class="neg">${o.instrument==='LONG'?fmt(o.stop):'-'+Math.round(o.stopPct*100)+'%'}</td>
-      <td class="pos">${o.instrument==='LONG'?fmt(o.take):'+'+Math.round(o.takePct*100)+'%'}</td>
-      <td>${o.rr.toFixed(1)}:1</td><td>${Math.round(o.confidence*100)}%</td><td>${Math.round(o.vol*100)}</td>
-      <td>${o.sizeLabel}</td><td>${fmt$(o.riskAmt)}</td><td class="muted" style="max-width:240px">${o.reason}</td>
-      <td><button class="btn-hot" onclick="execOpp('${o.id}')">Execute</button></td></tr>`).join("")}</tbody></table></div>`}
-    ${skipped.length?`<h3 style="margin-top:20px">Skipped signals (and why)</h3><div class="card" style="padding:0;overflow:auto"><table><thead><tr><th>Symbol</th><th>Strategy</th><th>Signal</th><th>Reason skipped</th></tr></thead><tbody>${skipped.map(o=>`<tr><td><b>${o.symbol}</b></td><td class="muted">${o.strategyName}</td><td class="muted">${o.reason||'—'}</td><td class="warn">${o.skip||'—'}</td></tr>`).join("")}</tbody></table></div>`:""}`;
-}
-function execOpp(id){ const o=(state.opps||[]).find(x=>x.id===id); if(!o)return;
-  const r=tradingBlock(); if(r){alert("Trade blocked: "+r);return;}
-  if(!confirm(`Execute paper trade?\n\n${o.instrument} ${o.symbol} — ${o.strategyName}\nEntry ${fmt(o.entry)}\nStop ${o.instrument==='LONG'?fmt(o.stop):'-'+Math.round(o.stopPct*100)+'% premium'}\nTake ${o.instrument==='LONG'?fmt(o.take):'+'+Math.round(o.takePct*100)+'% premium'}\nRisk/Reward ${o.rr.toFixed(1)}:1\nPosition ${o.sizeLabel}\nRisk amount ${fmt$(o.riskAmt)}\n\n${o.reason}`))return;
-  const res=enter(o,true); if(!res.ok)alert("Not executed: "+(res.why||"blocked")); markToMarket(); save(); render(); }
+function renderOpps(){ const list=state.opps||[]; const act=list.filter(o=>o.actionable).slice(0,40),sk=list.filter(o=>!o.actionable).slice(0,30);
+  document.getElementById("opportunities").innerHTML=`<h1>Opportunities</h1><p class="muted" style="margin-top:0">Ranked, risk-sized ideas with expected risk/reward. ${engineRunning?"Engine is auto-executing the best.":"Press ▶ Start to auto-trade, or Execute manually."}</p>
+  ${act.length===0?'<div class="empty card">No qualifying setups right now — scanner refreshes continuously.</div>':`<div class="card" style="padding:0;overflow:auto"><table><thead><tr><th>Score</th><th>Symbol</th><th>Type</th><th>Strategy</th><th>Entry</th><th>Stop</th><th>Take</th><th>R/R</th><th>Conf</th><th>Vol</th><th>Size</th><th>Risk</th><th>Reason</th><th></th></tr></thead><tbody>${act.map(o=>`<tr><td><span class="badge b-hot">${o.score}</span></td><td><b>${o.symbol}</b></td><td><span class="badge ${o.instrument==='PUT'?'b-neg':o.instrument==='CALL'?'b-accent':'b-default'}">${o.instrument}</span></td><td class="muted">${o.strategyName}</td><td>${fmt(o.entry)}</td><td class="neg">${o.instrument==='LONG'?fmt(o.stop):'-'+Math.round(o.stopPct*100)+'%'}</td><td class="pos">${o.instrument==='LONG'?fmt(o.take):'+'+Math.round(o.takePct*100)+'%'}</td><td>${o.rr.toFixed(1)}:1</td><td>${Math.round(o.confidence*100)}%</td><td>${Math.round(o.vol*100)}</td><td>${o.sizeLabel}</td><td>${fmt$(o.riskAmt)}</td><td class="muted" style="max-width:240px">${o.reason}</td><td><button class="btn-hot" onclick="execOpp('${o.id}')">Execute</button></td></tr>`).join("")}</tbody></table></div>`}
+  ${sk.length?`<h3 style="margin-top:20px">Skipped signals (and why)</h3><div class="card" style="padding:0;overflow:auto"><table><thead><tr><th>Symbol</th><th>Strategy</th><th>Signal</th><th>Reason skipped</th></tr></thead><tbody>${sk.map(o=>`<tr><td><b>${o.symbol}</b></td><td class="muted">${o.strategyName}</td><td class="muted">${o.reason||'—'}</td><td class="warn">${o.skip||'—'}</td></tr>`).join("")}</tbody></table></div>`:""}`; }
+function execOpp(id){ const o=(state.opps||[]).find(x=>x.id===id); if(!o)return; const r=tradingBlock(); if(r){alert("Blocked: "+r);return;}
+  if(!confirm(`Execute paper trade?\n\n${o.instrument} ${o.symbol} — ${o.strategyName}\nEntry ${fmt(o.entry)}\nStop ${o.instrument==='LONG'?fmt(o.stop):'-'+Math.round(o.stopPct*100)+'% premium'}\nTake ${o.instrument==='LONG'?fmt(o.take):'+'+Math.round(o.takePct*100)+'% premium'}\nR/R ${o.rr.toFixed(1)}:1\nSize ${o.sizeLabel}\nRisk ${fmt$(o.riskAmt)}\n\n${o.reason}`))return;
+  const res=enter(o); if(!res.ok)alert("Not executed: "+(res.why||"blocked")); markToMarket(); save(); render(); }
 
-function renderStrategies(){
-  const opts=Object.entries(KINDS).map(([k,v])=>`<option value="${k}">${v.name}</option>`).join("");
-  const symOpts=SYMBOLS.map(s=>`<label style="display:inline-flex;gap:5px;align-items:center;margin-right:12px;font-size:13px"><input type="checkbox" style="width:auto" class="symchk" value="${s.symbol}"> ${s.symbol}</label>`).join("");
-  document.getElementById("strategies").innerHTML=`
-    <h1>Strategies</h1><p class="muted" style="margin-top:0">Aggressive setups, each backtested before you trust it. Long-only underlyings; options are defined-risk (buying only).</p>
-    <div class="card" style="margin-bottom:14px"><h3>Add strategy</h3>
-      <div class="grid g3">
-        <label class="field"><span>Name</span><input id="sName" placeholder="e.g. NVDA breakouts"></label>
-        <label class="field"><span>Type</span><select id="sKind">${opts}</select></label>
-        <label class="field"><span>Max position size ($, underlying)</span><input id="sMax" type="number" value="8000"></label>
-      </div>
-      <div style="margin:6px 0"><span style="font-size:11px;color:var(--muted)">Symbols</span><div style="margin-top:6px">${symOpts}</div></div>
-      <button class="btn-primary" onclick="addStrategy()" style="margin-top:10px">+ Add</button>
-      <button class="btn-secondary" onclick="seedDefaults()" style="margin-top:10px">Load full aggressive preset</button>
-    </div>
-    <div class="grid g2">${state.strategies.map(stratCard).join("")||'<div class="empty card">No strategies. Click “Load full aggressive preset”.</div>'}</div>`;
+//---------------- Universe page ----------------
+function renderUniverse(){
+  const cOn=activeCrypto().length,sOn=activeStocks().length;
+  document.getElementById("universe").innerHTML=`<h1>Universe</h1><p class="muted" style="margin-top:0">Choose which assets the bot can trade. ${cOn+sOn} of ${ALL_SYMBOLS.length} enabled.</p>
+  <div class="card" style="margin-bottom:14px"><div class="row" style="gap:8px">
+    <button class="btn-hot" onclick="uniAll(true)">Enable EVERYTHING</button>
+    <button class="btn-secondary" onclick="uniAll(false)">Disable all</button>
+    <button class="btn-secondary" onclick="uniClass('crypto',true)">All crypto on</button>
+    <button class="btn-secondary" onclick="uniClass('crypto',false)">Crypto off</button>
+    <button class="btn-secondary" onclick="uniClass('stocks',true)">All stocks on</button>
+    <button class="btn-secondary" onclick="uniClass('stocks',false)">Stocks off</button>
+    <input id="uSearch" placeholder="Filter symbols…" style="max-width:220px;margin-left:auto" oninput="window._uSearch=this.value;renderUniGrid()">
+  </div></div>
+  <div id="uniGrid"></div>`;
+  renderUniGrid();
 }
-function stratCard(s){ const bt=s.backtest; const k=KINDS[s.kind];
-  return `<div class="card"><div class="row" style="justify-content:space-between">
-    <div><b>${s.name}</b> <span class="badge b-default">${k.name}</span> ${k.assetMode==='option'?'<span class="badge b-accent">options</span>':''}</div>
-    <div class="switch ${s.enabled?'on':''}" onclick="toggleStrat('${s.id}')"><div class="knob"></div></div></div>
+function renderUniGrid(){ const q=(window._uSearch||"").toUpperCase();
+  const chip=s=>`<span class="chip ${state.universeOn[s]?'on':''}" onclick="toggleSym('${s}')">${state.universeOn[s]?'✓ ':''}${s}</span>`;
+  const cr=CRYPTO_LIST.filter(s=>s.includes(q)), st=STOCK_LIST.filter(s=>s.includes(q));
+  const el=document.getElementById("uniGrid"); if(!el)return;
+  el.innerHTML=`<div class="grid g2">
+    <div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">Crypto (${activeCrypto().length}/${CRYPTO_LIST.length})</h3><span class="badge b-default">24/7</span></div><div class="chipgrid" style="margin-top:10px">${cr.map(chip).join("")||'<span class="muted">no match</span>'}</div></div>
+    <div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">Momentum stocks (${activeStocks().length}/${STOCK_LIST.length})</h3><span class="badge b-default">market hours</span></div><div class="chipgrid" style="margin-top:10px">${st.map(chip).join("")||'<span class="muted">no match</span>'}</div></div></div>`; }
+function toggleSym(s){ state.universeOn[s]=!state.universeOn[s]; if(state.universeOn[s])ensureHistory(s); save(); renderHeader(); renderUniGrid(); }
+function uniAll(v){ for(const s of ALL_SYMBOLS)state.universeOn[s]=v; if(v)for(const s of ALL_SYMBOLS)ensureHistory(s); log("system",`Universe: ${v?'all enabled':'all disabled'}`); save(); renderHeader(); renderUniGrid(); }
+function uniClass(cls,v){ const list=cls==="crypto"?CRYPTO_LIST:STOCK_LIST; for(const s of list)state.universeOn[s]=v; if(v)for(const s of list)ensureHistory(s); save(); renderHeader(); renderUniGrid(); }
+
+//---------------- Strategies page ----------------
+function renderStrategies(){ const opts=Object.entries(KINDS).map(([k,v])=>`<option value="${k}">${v.name}</option>`).join("");
+  document.getElementById("strategies").innerHTML=`<h1>Strategies</h1><p class="muted" style="margin-top:0">Pick strategies and the asset scope each one trades. Long-only underlyings; options are defined-risk (buying only).</p>
+  <div class="card" style="margin-bottom:14px"><h3>Add strategy</h3><div class="grid g3">
+    <label class="field"><span>Name</span><input id="sName" placeholder="e.g. Momentum — stocks"></label>
+    <label class="field"><span>Type</span><select id="sKind">${opts}</select></label>
+    <label class="field"><span>Asset scope</span><select id="sScope"><option value="both">Crypto + Stocks</option><option value="crypto">Crypto only</option><option value="stocks">Stocks only</option></select></label>
+  </div><button class="btn-primary" onclick="addStrategy()">+ Add</button><button class="btn-secondary" onclick="seedDefaults()" style="margin-left:8px">Load full aggressive preset</button></div>
+  <div class="grid g2">${state.strategies.map(stratCard).join("")||'<div class="empty card">No strategies. Click “Load full aggressive preset”.</div>'}</div>`; }
+function stratCard(s){ const k=KINDS[s.kind],bt=s.backtest,ed=window._editing===s.id;
+  const params=Object.entries({...k.p,...s.params}).map(([key,val])=>`<label class="field"><span>${key}</span><input type="number" step="any" value="${val}" oninput="editParam('${s.id}','${key}',this.value)"></label>`).join("");
+  return `<div class="card"><div class="row" style="justify-content:space-between"><div><b>${s.name}</b> <span class="badge b-default">${k.name}</span> ${k.assetMode==='option'?'<span class="badge b-accent">options</span>':''} <span class="badge b-default">${s.scope||'both'}</span></div><div class="switch ${s.enabled?'on':''}" onclick="toggleStrat('${s.id}')"><div class="knob"></div></div></div>
     <div class="muted" style="font-size:12px;margin-top:6px">${k.desc}</div>
-    <div class="muted" style="font-size:12px;margin-top:4px">${s.symbols.join(", ")}</div>
-    ${bt?`<div style="font-size:12px;margin-top:8px">Backtest: <span class="${pcls(bt.ret)}">${pct(bt.ret)}</span> return · win ${pct(bt.winRate)} · ${bt.trades} trades · maxDD ${pct(bt.maxDD)} · expectancy ${fmt$(bt.expectancy)}/trade ${bt.ret>0&&bt.trades>=3?'<span class="badge b-pos">PASS</span>':'<span class="badge b-warn">review</span>'}</div>`:'<div class="warn" style="font-size:12px;margin-top:8px">⚠ Not backtested yet</div>'}
-    <div class="row" style="margin-top:10px"><button class="btn-secondary" onclick="runBT('${s.id}')">Backtest</button>
-      <button class="btn-danger" style="margin-left:auto" onclick="delStrat('${s.id}')">Delete</button></div></div>`;
-}
-function addStrategy(){ const kind=document.getElementById("sKind").value;
-  const name=document.getElementById("sName").value.trim()||KINDS[kind].name;
-  const symbols=[...document.querySelectorAll(".symchk:checked")].map(c=>c.value);
-  if(!symbols.length){alert("Pick at least one symbol.");return;}
-  state.strategies.push({id:"s"+Date.now(),name,kind,symbols,params:{},maxPositionSize:+document.getElementById("sMax").value||8000,enabled:true});
-  log("system",`Strategy added: ${name}`); save(); renderStrategies(); }
-function toggleStrat(id){ const s=state.strategies.find(x=>x.id===id); if(s.enabled===false&&!s.backtest){ if(!confirm("This strategy hasn't been backtested. Enable anyway?"))return; } s.enabled=!s.enabled; save(); render(); }
+    ${bt?`<div style="font-size:12px;margin-top:8px">Backtest: <span class="${pcls(bt.ret)}">${pct(bt.ret)}</span> · win ${pct(bt.winRate)} · PF ${isFinite(bt.profitFactor)?bt.profitFactor.toFixed(2):'∞'} · ${bt.trades} trades · maxDD ${pct(bt.maxDD)} ${bt.ret>0&&bt.trades>=3?'<span class="badge b-pos">PASS</span>':'<span class="badge b-warn">review</span>'}</div>`:'<div class="warn" style="font-size:12px;margin-top:8px">⚠ Not backtested</div>'}
+    ${ed?`<div class="card" style="margin-top:10px;background:var(--surface2)"><div class="grid g3">
+      <label class="field"><span>Scope</span><select onchange="editScope('${s.id}',this.value)"><option value="both"${(s.scope||'both')==='both'?' selected':''}>Both</option><option value="crypto"${s.scope==='crypto'?' selected':''}>Crypto</option><option value="stocks"${s.scope==='stocks'?' selected':''}>Stocks</option></select></label>
+      <label class="field"><span>Max position $ (underlying)</span><input type="number" value="${s.maxPositionSize}" oninput="editField('${s.id}','maxPositionSize',this.value)"></label>
+      <label class="field"><span>Stop % (blank=auto)</span><input type="number" step="0.5" value="${s.stopPct?(s.stopPct*100):''}" placeholder="auto" oninput="editPctField('${s.id}','stopPct',this.value)"></label>
+      <label class="field"><span>Take % (blank=auto)</span><input type="number" step="0.5" value="${s.takePct?(s.takePct*100):''}" placeholder="auto" oninput="editPctField('${s.id}','takePct',this.value)"></label>
+      </div><div class="muted" style="font-size:11px;margin:-4px 0 6px">Strategy parameters:</div><div class="grid g3">${params}</div></div>`:""}
+    <div class="row" style="margin-top:10px"><button class="btn-secondary" onclick="runBT('${s.id}')">Backtest</button><button class="btn-secondary" onclick="toggleEdit('${s.id}')">${ed?'Done':'Tune'}</button><button class="btn-danger" style="margin-left:auto" onclick="delStrat('${s.id}')">Delete</button></div></div>`; }
+function addStrategy(){ const kind=document.getElementById("sKind").value,name=document.getElementById("sName").value.trim()||KINDS[kind].name,scope=document.getElementById("sScope").value;
+  state.strategies.push({id:"s"+Date.now(),name,kind,scope,params:{},maxPositionSize:8000,enabled:true}); log("system",`Strategy added: ${name} (${scope})`); save(); renderStrategies(); }
+function toggleStrat(id){ const s=state.strategies.find(x=>x.id===id); if(!s.enabled&&!s.backtest){if(!confirm("Not backtested. Enable anyway?"))return;} s.enabled=!s.enabled; save(); render(); }
 function delStrat(id){ if(!confirm("Delete strategy?"))return; state.strategies=state.strategies.filter(s=>s.id!==id); save(); renderStrategies(); }
-function runBT(id){ const s=state.strategies.find(x=>x.id===id); s.backtest=backtest(s.kind,s.params,s.symbols[0],400); log("system",`Backtest ${s.name} (${s.symbols[0]}): ${pct(s.backtest.ret)} return, ${s.backtest.trades} trades, win ${pct(s.backtest.winRate)}`); save(); renderStrategies(); }
-function seedDefaults(){
-  const presets=[
-    ["Momentum Breakouts","momentum_breakout",["NVDA","TSLA","SPY","AAPL"]],
-    ["Volume Continuation","volume_continuation",["NVDA","TSLA","AAPL"]],
-    ["RSI Reversals","rsi_reversal",["SPY","AAPL","ETH-USD","SOL-USD"]],
-    ["MA Trend","ma_trend",["BTC-USD","ETH-USD","NVDA","SPY"]],
-    ["News / Vol Spikes","vol_spike",["NVDA","TSLA","BTC-USD","SOL-USD"]],
-    ["Crypto Overnight","crypto_overnight",["BTC-USD","ETH-USD","SOL-USD"]],
-    ["Defined-Risk Options","options_defined",["NVDA","TSLA","SPY"]],
-  ];
-  for(const [name,kind,symbols] of presets){ if(state.strategies.find(s=>s.kind===kind))continue;
-    const s={id:"s"+Date.now()+Math.random().toString(36).slice(2,5),name,kind,symbols,params:{},maxPositionSize:8000,enabled:true};
-    s.backtest=backtest(kind,{},symbols[0],400); state.strategies.push(s); }
+function toggleEdit(id){ window._editing=window._editing===id?null:id; renderStrategies(); }
+function editParam(id,k,v){ const s=state.strategies.find(x=>x.id===id); s.params[k]=+v; save(); }
+function editField(id,k,v){ const s=state.strategies.find(x=>x.id===id); s[k]=+v; save(); }
+function editPctField(id,k,v){ const s=state.strategies.find(x=>x.id===id); s[k]=v===""?undefined:(+v/100); save(); }
+function editScope(id,v){ const s=state.strategies.find(x=>x.id===id); s.scope=v; save(); render(); }
+function runBT(id){ const s=state.strategies.find(x=>x.id===id); const sym=scopedSymbols(s)[0]||(s.scope==='crypto'?'BTC-USD':'AAPL'); s.backtest=backtest(s.kind,s.params,sym,400); log("system",`Backtest ${s.name} (${sym}): ${pct(s.backtest.ret)} return, ${s.backtest.trades} trades`); save(); renderStrategies(); }
+function seedDefaults(){ const presets=[["Momentum Breakouts","momentum_breakout","both"],["Volume Continuation","volume_continuation","stocks"],["RSI Reversals","rsi_reversal","both"],["MA Trend","ma_trend","both"],["News / Vol Spikes","vol_spike","both"],["Crypto Overnight","crypto_overnight","crypto"],["Defined-Risk Options","options_defined","stocks"]];
+  for(const [name,kind,scope] of presets){ if(state.strategies.find(s=>s.kind===kind))continue; const s={id:"s"+Date.now()+Math.random().toString(36).slice(2,5),name,kind,scope,params:{},maxPositionSize:8000,enabled:true}; const sym=scopedSymbols(s)[0]||(scope==='crypto'?'BTC-USD':'AAPL'); s.backtest=backtest(kind,{},sym,400); state.strategies.push(s); }
   log("system","Loaded full aggressive preset (7 strategies, auto-backtested)"); save(); render(); }
 
-function renderPortfolio(){
-  document.getElementById("portfolio").innerHTML=`<h1>Portfolio</h1>
-    <div class="grid g4" style="margin-bottom:14px">${statCard("Equity",fmt$(state.equity))}${statCard("Cash",fmt$(state.cash))}${statCard("Unrealized",fmt$(state.positions.reduce((s,p)=>s+(p.upnl||0),0)),"",pcls(state.positions.reduce((s,p)=>s+(p.upnl||0),0)))}${statCard("Open",state.positions.length)}</div>
-    <div class="card" style="padding:0;overflow:auto">${state.positions.length===0?'<div class="empty">No open positions.</div>':`<table><thead><tr><th>Symbol</th><th>Type</th><th>Strategy</th><th>Size</th><th>Entry</th><th>Now</th><th>Value</th><th>P/L</th><th>Stop→Take</th></tr></thead><tbody>${state.positions.map(p=>{const opt=p.instrument!=='LONG';return `<tr><td><b>${p.symbol}</b></td><td><span class="badge ${p.instrument==='PUT'?'b-neg':p.instrument==='CALL'?'b-accent':'b-default'}">${p.instrument}</span></td><td class="muted">${p.strategyName||''}</td><td>${opt?fmt$(p.premium)+" prem":fmtq(p.qty)}</td><td>${opt?fmt(p.uEntry):fmt(p.avg)}</td><td>${fmt(p.price)}</td><td>${fmt$(p.value)}</td><td class="${pcls(p.upnl)}">${fmt$(p.upnl)}</td><td class="muted">${opt?'-'+Math.round((1-p.stopVal/p.premium)*100)+'% / +'+Math.round((p.takeVal/p.premium-1)*100)+'%':fmt(p.stop)+' → '+fmt(p.take)}</td></tr>`;}).join("")}</tbody></table>`}</div>`;
-}
-function renderHistory(){
-  document.getElementById("history").innerHTML=`<h1>Trade History</h1>
-    <div class="card" style="padding:0;overflow:auto">${state.trades.length===0?'<div class="empty">No trades yet.</div>':`<table><thead><tr><th>Time</th><th>Symbol</th><th>Type</th><th>Side</th><th>Price</th><th>P/L</th></tr></thead><tbody>${state.trades.slice(0,120).map(t=>`<tr><td class="muted">${ago(t.t)}</td><td><b>${t.symbol}</b></td><td><span class="badge b-default">${t.instrument||'LONG'}</span></td><td><span class="badge ${t.side==='buy'?'b-pos':'b-neg'}">${t.side}</span></td><td>${fmt(t.price)}</td><td class="${pcls(t.pnl)}">${t.pnl!=null?fmt$(t.pnl):'—'}</td></tr>`).join("")}</tbody></table>`}</div>`;
-}
-function renderRisk(){ const r=state.risk;
-  document.getElementById("risk").innerHTML=`<h1>Risk Controls</h1><p class="muted" style="margin-top:0">Aggressive on upside, strict on downside. These limits are always enforced.</p>
-    <div class="grid g3">
-      <div class="card"><div class="row" style="justify-content:space-between"><b>Aggressive Mode</b><div class="switch ${r.aggressive?'on':''}" onclick="toggleAgg()"><div class="knob"></div></div></div>
-        <p class="muted" style="font-size:13px">Raises risk-per-trade to ${pct(r.perTradePctAgg)} and max open trades to ${r.maxPositionsAgg}. Daily/weekly loss limits, stops, and the streak auto-pause still apply.</p></div>
-      <div class="card"><div class="row" style="justify-content:space-between"><b>Kill Switch</b><span class="badge ${r.killSwitch?'b-neg':'b-pos'}">${r.killSwitch?'ENGAGED':'Clear'}</span></div>
-        <p class="muted" style="font-size:13px">Halts engine and flattens positions.</p>${r.killSwitch?'<button class="btn-success" onclick="disengage()">Disengage</button>':'<button class="btn-danger" onclick="emergencyStop()">Emergency stop</button>'}</div>
-      <div class="card"><div class="row" style="justify-content:space-between"><b>Market Data</b><span class="badge ${r.dataFresh?'b-pos':'b-neg'}">${r.dataFresh?'OK':'DELAYED'}</span></div>
-        <p class="muted" style="font-size:13px">No trades are placed if data is delayed/unclear.</p><button class="btn-secondary" onclick="toggleData()">${r.dataFresh?'Simulate data delay':'Mark data OK'}</button></div>
-    </div>
-    <div class="card" style="margin-top:14px"><h3>Limits</h3><div class="grid g4">
-      <label class="field"><span>Risk / trade — standard %</span><input id="rPer" type="number" step="0.1" value="${(r.perTradePct*100).toFixed(1)}"></label>
-      <label class="field"><span>Risk / trade — aggressive % (max 3)</span><input id="rPerA" type="number" step="0.1" value="${(r.perTradePctAgg*100).toFixed(1)}"></label>
-      <label class="field"><span>Max daily loss %</span><input id="rDay" type="number" step="0.1" value="${(r.dailyLossPct*100).toFixed(1)}"></label>
-      <label class="field"><span>Max weekly loss %</span><input id="rWk" type="number" step="0.1" value="${(r.weeklyLossPct*100).toFixed(1)}"></label>
-      <label class="field"><span>Max open trades (standard)</span><input id="rPos" type="number" value="${r.maxPositions}"></label>
-      <label class="field"><span>Max open trades (aggressive)</span><input id="rPosA" type="number" value="${r.maxPositionsAgg}"></label>
-      <label class="field"><span>Auto-pause after N losses</span><input id="rStk" type="number" value="${r.maxConsecutiveLosses}"></label>
-      <label class="field"><span>Pause duration (min)</span><input id="rPause" type="number" value="${r.pauseMinutes}"></label>
-      <label class="field"><span>Max option premium % of equity</span><input id="rOpt" type="number" step="0.1" value="${(r.maxOptionPremiumPct*100).toFixed(1)}"></label>
-    </div>
-    <button class="btn-primary" onclick="saveRisk()">Save limits</button>
-    <button class="btn-ghost" onclick="resetAll()" style="margin-left:8px">Reset paper account</button>
-    <div class="muted" style="font-size:12px;margin-top:10px">Enforced always: stop-loss + take-profit on every trade · long-only underlyings (no shorting) · options buying only, never naked · risk/trade hard-capped at 3%.</div></div>`;
-}
-function toggleAgg(){ state.risk.aggressive=!state.risk.aggressive; log("risk",`Aggressive mode ${state.risk.aggressive?'ENABLED':'disabled'}`); save(); render(); }
-function toggleData(){ state.risk.dataFresh=!state.risk.dataFresh; log("risk",`Market data marked ${state.risk.dataFresh?'OK':'DELAYED — trading paused'}`); save(); render(); }
-function disengage(){ state.risk.killSwitch=false; log("system","Kill switch disengaged"); save(); render(); }
-function saveRisk(){ const r=state.risk, g=id=>+document.getElementById(id).value;
-  r.perTradePct=Math.min(g("rPer")/100,0.03); r.perTradePctAgg=Math.min(g("rPerA")/100,0.03);
-  r.dailyLossPct=g("rDay")/100; r.weeklyLossPct=g("rWk")/100; r.maxPositions=g("rPos"); r.maxPositionsAgg=g("rPosA");
-  r.maxConsecutiveLosses=g("rStk"); r.pauseMinutes=g("rPause"); r.maxOptionPremiumPct=g("rOpt")/100;
-  log("risk","Risk limits updated"); save(); render(); }
-function resetAll(){ if(!confirm("Reset the paper account? Clears positions, trades, strategies and logs."))return; stopEngine(); const t=state.theme; state=freshState(); state.theme=t; save(); render(); }
+//---------------- Analytics ----------------
+function renderAnalytics(){ const st=perfStats(state.trades); const eq=state.equityHistory.map(x=>x.e);
+  let peak=eq[0]||STARTING_EQUITY; const dd=eq.map(v=>{peak=Math.max(peak,v);return -((peak-v)/peak);});
+  const byStrat={}; for(const t of state.trades){ if(t.pnl==null)continue; const k=t.strategyId||"manual"; (byStrat[k]=byStrat[k]||[]).push(t); }
+  const nameOf=id=>{ const s=state.strategies.find(x=>x.id===id); return s?s.name:"(deleted/manual)"; };
+  document.getElementById("analytics").innerHTML=`<h1>Analytics</h1><p class="muted" style="margin-top:0">Performance across all closed paper trades.</p>
+  <div class="grid g4">${statCard("Net P/L",fmt$(st.net),"",pcls(st.net))}${statCard("Win Rate",st.n?Math.round(st.winRate*100)+"%":"—",`${st.n} trades`)}${statCard("Profit Factor",isFinite(st.profitFactor)?st.profitFactor.toFixed(2):"∞","gross win / gross loss",st.profitFactor>=1?"pos":"neg")}${statCard("Expectancy",fmt$(st.expectancy),"per trade",pcls(st.expectancy))}${statCard("Avg Win",fmt$(st.avgWin),"",'pos')}${statCard("Avg Loss",fmt$(-st.avgLoss),"",'neg')}${statCard("Max Drawdown",pct(Math.min(0,...dd)),"")}${statCard("Open",state.positions.length,"positions")}</div>
+  <div class="grid g2" style="margin-top:16px"><div class="card"><h3>Equity curve</h3>${lineChart(eq.length>1?eq:[state.equity,state.equity])}</div><div class="card"><h3>Drawdown</h3>${lineChart(dd.length>1?dd:[0,0],"var(--neg)")}</div></div>
+  <div class="card" style="margin-top:16px;padding:0;overflow:auto"><h3 style="padding:14px 14px 0">Per-strategy performance</h3>${Object.keys(byStrat).length===0?'<div class="empty">No closed trades yet.</div>':`<table><thead><tr><th>Strategy</th><th>Trades</th><th>Win%</th><th>Net P/L</th><th>Profit Factor</th><th>Expectancy</th></tr></thead><tbody>${Object.entries(byStrat).map(([id,ts])=>{const s=perfStats(ts);return `<tr><td><b>${nameOf(id)}</b></td><td>${s.n}</td><td>${Math.round(s.winRate*100)}%</td><td class="${pcls(s.net)}">${fmt$(s.net)}</td><td>${isFinite(s.profitFactor)?s.profitFactor.toFixed(2):'∞'}</td><td class="${pcls(s.expectancy)}">${fmt$(s.expectancy)}</td></tr>`;}).join("")}</tbody></table>`}</div>`; }
 
-function renderLogs(){ const cats=["all","entry","exit","skip","risk","system"]; window._lc=window._lc||"all";
-  const rows=state.logs.filter(l=>window._lc==="all"||l.cat===window._lc);
-  const tone={entry:"b-pos",exit:"b-accent",skip:"b-warn",risk:"b-neg",system:"b-default"};
-  document.getElementById("logs").innerHTML=`<h1>Logs</h1><p class="muted" style="margin-top:0">Why every trade was entered, skipped, or exited.</p>
-    <div class="row" style="margin-bottom:12px">${cats.map(c=>`<button class="pill ${window._lc===c?'active':''}" onclick="setLC('${c}')">${c}</button>`).join("")}</div>
-    <div class="card" style="padding:0;max-height:70vh;overflow:auto">${rows.length===0?'<div class="empty">No log entries.</div>':rows.map(l=>`<div style="display:flex;gap:10px;padding:9px 12px;border-bottom:1px solid var(--border);font-size:13px"><span class="badge ${tone[l.cat]||'b-default'}">${l.cat}</span><div><div>${l.msg}</div><div class="muted" style="font-size:11px">${new Date(l.t).toLocaleString()}</div></div></div>`).join("")}</div>`;
-}
+function renderPortfolio(){ document.getElementById("portfolio").innerHTML=`<h1>Portfolio</h1><div class="grid g4" style="margin-bottom:14px">${statCard("Equity",fmt$(state.equity))}${statCard("Cash",fmt$(state.cash))}${statCard("Unrealized",fmt$(state.positions.reduce((s,p)=>s+(p.upnl||0),0)),"",pcls(state.positions.reduce((s,p)=>s+(p.upnl||0),0)))}${statCard("Open",state.positions.length)}</div>
+  <div class="card" style="padding:0;overflow:auto">${state.positions.length===0?'<div class="empty">No open positions.</div>':`<table><thead><tr><th>Symbol</th><th>Type</th><th>Strategy</th><th>Size</th><th>Entry</th><th>Now</th><th>Value</th><th>P/L</th><th>Stop→Take</th></tr></thead><tbody>${state.positions.map(p=>{const o=p.instrument!=='LONG';return `<tr><td><b>${p.symbol}</b></td><td><span class="badge ${p.instrument==='PUT'?'b-neg':p.instrument==='CALL'?'b-accent':'b-default'}">${p.instrument}</span></td><td class="muted">${p.strategyName||''}</td><td>${o?fmt$(p.premium)+" prem":fmtq(p.qty)}</td><td>${o?fmt(p.uEntry):fmt(p.avg)}</td><td>${fmt(p.price)}</td><td>${fmt$(p.value)}</td><td class="${pcls(p.upnl)}">${fmt$(p.upnl)}</td><td class="muted">${o?'-'+Math.round((1-p.stopVal/p.premium)*100)+'% / +'+Math.round((p.takeVal/p.premium-1)*100)+'%':fmt(p.stop)+' → '+fmt(p.take)}</td></tr>`;}).join("")}</tbody></table>`}</div>`; }
+function renderHistory(){ document.getElementById("history").innerHTML=`<h1>Trade History</h1><div class="card" style="padding:0;overflow:auto">${state.trades.length===0?'<div class="empty">No trades yet.</div>':`<table><thead><tr><th>Time</th><th>Symbol</th><th>Type</th><th>Side</th><th>Price</th><th>P/L</th></tr></thead><tbody>${state.trades.slice(0,150).map(t=>`<tr><td class="muted">${ago(t.t)}</td><td><b>${t.symbol}</b></td><td><span class="badge b-default">${t.instrument||'LONG'}</span></td><td><span class="badge ${t.side==='buy'?'b-pos':'b-neg'}">${t.side}</span></td><td>${fmt(t.price)}</td><td class="${pcls(t.pnl)}">${t.pnl!=null?fmt$(t.pnl):'—'}</td></tr>`).join("")}</tbody></table>`}</div>`; }
+function renderRisk(){ const r=state.risk; document.getElementById("risk").innerHTML=`<h1>Risk Controls</h1><p class="muted" style="margin-top:0">Aggressive on upside, strict on downside. Always enforced.</p>
+  <div class="grid g3">
+    <div class="card"><div class="row" style="justify-content:space-between"><b>Aggressive Mode</b><div class="switch ${r.aggressive?'on':''}" onclick="toggleAgg()"><div class="knob"></div></div></div><p class="muted" style="font-size:13px">Risk/trade → ${pct(r.perTradePctAgg)}, max open → ${r.maxPositionsAgg}. All loss limits & auto-pause still apply.</p></div>
+    <div class="card"><div class="row" style="justify-content:space-between"><b>Live Crypto Prices</b><div class="switch ${r.dataFresh&&state.liveCrypto?'on':state.liveCrypto?'on':''}" onclick="toggleLive()"><div class="knob"></div></div></div><p class="muted" style="font-size:13px">Use real CoinGecko crypto quotes (still paper). Stocks remain simulated. Needs internet; falls back to sim.</p></div>
+    <div class="card"><div class="row" style="justify-content:space-between"><b>Kill Switch</b><span class="badge ${r.killSwitch?'b-neg':'b-pos'}">${r.killSwitch?'ENGAGED':'Clear'}</span></div><p class="muted" style="font-size:13px">Halts engine & flattens positions.</p>${r.killSwitch?'<button class="btn-success" onclick="disengage()">Disengage</button>':'<button class="btn-danger" onclick="emergencyStop()">Emergency stop</button>'}</div>
+    <div class="card"><div class="row" style="justify-content:space-between"><b>Market Data</b><span class="badge ${r.dataFresh?'b-pos':'b-neg'}">${r.dataFresh?'OK':'DELAYED'}</span></div><p class="muted" style="font-size:13px">No trades if data is delayed/unclear.</p><button class="btn-secondary" onclick="toggleData()">${r.dataFresh?'Simulate data delay':'Mark data OK'}</button></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Limits</h3><div class="grid g4">
+    <label class="field"><span>Risk/trade standard %</span><input id="rPer" type="number" step="0.1" value="${(r.perTradePct*100).toFixed(1)}"></label>
+    <label class="field"><span>Risk/trade aggressive % (≤3)</span><input id="rPerA" type="number" step="0.1" value="${(r.perTradePctAgg*100).toFixed(1)}"></label>
+    <label class="field"><span>Max daily loss %</span><input id="rDay" type="number" step="0.1" value="${(r.dailyLossPct*100).toFixed(1)}"></label>
+    <label class="field"><span>Max weekly loss %</span><input id="rWk" type="number" step="0.1" value="${(r.weeklyLossPct*100).toFixed(1)}"></label>
+    <label class="field"><span>Max open (standard)</span><input id="rPos" type="number" value="${r.maxPositions}"></label>
+    <label class="field"><span>Max open (aggressive)</span><input id="rPosA" type="number" value="${r.maxPositionsAgg}"></label>
+    <label class="field"><span>Auto-pause after N losses</span><input id="rStk" type="number" value="${r.maxConsecutiveLosses}"></label>
+    <label class="field"><span>Pause duration (min)</span><input id="rPause" type="number" value="${r.pauseMinutes}"></label>
+    <label class="field"><span>Max option premium % equity</span><input id="rOpt" type="number" step="0.1" value="${(r.maxOptionPremiumPct*100).toFixed(1)}"></label>
+  </div><button class="btn-primary" onclick="saveRisk()">Save limits</button><button class="btn-ghost" onclick="resetAll()" style="margin-left:8px">Reset paper account</button>
+  <div class="muted" style="font-size:12px;margin-top:10px">Always enforced: stop+take on every trade · long-only underlyings · options buying only (never naked) · risk/trade hard-capped at 3%.</div></div>`; }
+function toggleAgg(){ state.risk.aggressive=!state.risk.aggressive; log("risk",`Aggressive mode ${state.risk.aggressive?'ENABLED':'disabled'}`); save(); render(); }
+function toggleData(){ state.risk.dataFresh=!state.risk.dataFresh; log("risk",`Market data ${state.risk.dataFresh?'OK':'DELAYED — trading paused'}`); save(); render(); }
+function toggleLive(){ state.liveCrypto=!state.liveCrypto; window._liveOK=false; state.lastLiveFetch=0; log("system",`Live crypto prices ${state.liveCrypto?'ON (CoinGecko)':'off — simulator'}`); if(state.liveCrypto)fetchLiveCrypto(); save(); render(); }
+function disengage(){ state.risk.killSwitch=false; log("system","Kill switch disengaged"); save(); render(); }
+function saveRisk(){ const r=state.risk,g=id=>+document.getElementById(id).value; r.perTradePct=Math.min(g("rPer")/100,0.03);r.perTradePctAgg=Math.min(g("rPerA")/100,0.03);r.dailyLossPct=g("rDay")/100;r.weeklyLossPct=g("rWk")/100;r.maxPositions=g("rPos");r.maxPositionsAgg=g("rPosA");r.maxConsecutiveLosses=g("rStk");r.pauseMinutes=g("rPause");r.maxOptionPremiumPct=g("rOpt")/100; log("risk","Risk limits updated"); save(); render(); }
+function resetAll(){ if(!confirm("Reset paper account? Clears positions, trades, strategies, logs and universe."))return; stopEngine(); const t=state.theme; state=freshState(); state.theme=t; migrate(); save(); render(); }
+
+function renderLogs(){ const cats=["all","entry","exit","skip","risk","system"]; window._lc=window._lc||"all"; const rows=state.logs.filter(l=>window._lc==="all"||l.cat===window._lc); const tone={entry:"b-pos",exit:"b-accent",skip:"b-warn",risk:"b-neg",system:"b-default"};
+  document.getElementById("logs").innerHTML=`<h1>Logs</h1><p class="muted" style="margin-top:0">Why every trade was entered, skipped, or exited.</p><div class="row" style="margin-bottom:12px">${cats.map(c=>`<button class="pill ${window._lc===c?'active':''}" onclick="setLC('${c}')">${c}</button>`).join("")}</div><div class="card" style="padding:0;max-height:70vh;overflow:auto">${rows.length===0?'<div class="empty">No log entries.</div>':rows.map(l=>`<div style="display:flex;gap:10px;padding:9px 12px;border-bottom:1px solid var(--border);font-size:13px"><span class="badge ${tone[l.cat]||'b-default'}">${l.cat}</span><div><div>${l.msg}</div><div class="muted" style="font-size:11px">${new Date(l.t).toLocaleString()}</div></div></div>`).join("")}</div>`; }
 function setLC(c){ window._lc=c; renderLogs(); }
 
 //============================ Wiring ============================
@@ -630,11 +483,8 @@ document.getElementById("startBtn").onclick=()=>engineRunning?stopEngine():start
 document.getElementById("stopAll").onclick=emergencyStop;
 document.getElementById("themeBtn").onclick=()=>{ state.theme=state.theme==="dark"?"light":"dark"; applyTheme(); save(); };
 function applyTheme(){ document.body.className=state.theme==="light"?"light":""; }
-Object.assign(window,{go,execOpp,addStrategy,toggleStrat,delStrat,runBT,seedDefaults,toggleAgg,toggleData,disengage,saveRisk,resetAll,setLC,emergencyStop});
-
-applyTheme(); renderNav();
-if(state.strategies.length===0){ seedDefaults(); }
-state.opps=scan(); render();
+Object.assign(window,{go,execOpp,addStrategy,toggleStrat,delStrat,toggleEdit,editParam,editField,editPctField,editScope,runBT,seedDefaults,toggleAgg,toggleData,toggleLive,disengage,saveRisk,resetAll,setLC,emergencyStop,uniAll,uniClass,toggleSym,renderUniGrid});
+applyTheme(); renderNav(); if(state.strategies.length===0)seedDefaults(); state.opps=scan(); render();
 </script>
 </body>
 </html>
