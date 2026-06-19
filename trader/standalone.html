@@ -140,10 +140,12 @@ function seedHistory(base,assetType){
 }
 
 //============================ Persistence ============================
-let saveTimer=null;
-function save(){ if(saveTimer)return; saveTimer=setTimeout(()=>{saveTimer=null;
-  try{ localStorage.setItem("tmac_trader_v1", JSON.stringify(state)); }catch(e){} },300); }
-function load(){ try{ const r=localStorage.getItem("tmac_trader_v1"); return r?JSON.parse(r):null; }catch(e){ return null; } }
+let storageOK=true;
+function save(){
+  try{ localStorage.setItem("tmac_trader_v1", JSON.stringify(state)); }
+  catch(e){ storageOK=false; }
+}
+function load(){ try{ const r=localStorage.getItem("tmac_trader_v1"); return r?JSON.parse(r):null; }catch(e){ storageOK=false; return null; } }
 
 //============================ Indicators ============================
 function sma(arr,p){ if(arr.length<p)return NaN; let s=0; for(let i=arr.length-p;i<arr.length;i++)s+=arr[i]; return s/p; }
@@ -262,7 +264,7 @@ function tick(){
       }
     }
   }
-  markToMarket(); save(); render();
+  markToMarket(); save(); liveUpdate();
 }
 function startEngine(){ if(engineRunning)return; if(state.risk.killSwitch){alert("Kill switch is engaged. Disengage it in Risk Controls first.");return;}
   engineRunning=true; log("system","Engine started"); tickTimer=setInterval(tick,2000); tick(); }
@@ -321,8 +323,12 @@ function renderNav(){
 function go(id){ current=id; document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active"); renderNav(); render(); }
 
-function render(){
-  // header
+// Pages that are pure read-outs and safe to refresh on every engine tick.
+// Form pages (strategies, risk) are NEVER auto-refreshed, so what you type or
+// click is never wiped out from under you.
+const DATA_PAGES=new Set(["dashboard","portfolio","history","logs"]);
+
+function renderHeader(){
   document.getElementById("engineBadge").className="badge "+(engineRunning?"b-accent":"b-default");
   document.getElementById("engineBadge").textContent=engineRunning?"Engine running":"Engine stopped";
   const mb=document.getElementById("modeBadge");
@@ -330,7 +336,8 @@ function render(){
   document.getElementById("startBtn").textContent=engineRunning?"■ Stop":"▶ Start";
   document.getElementById("startBtn").className=engineRunning?"btn-secondary":"btn-primary";
   document.getElementById("mkt").textContent="Crypto ● open · Equities "+(isEquityOpen()?"● open":"○ closed");
-  // page
+}
+function renderPage(){
   if(current==="dashboard")renderDashboard();
   else if(current==="strategies")renderStrategies();
   else if(current==="portfolio")renderPortfolio();
@@ -338,6 +345,11 @@ function render(){
   else if(current==="risk")renderRisk();
   else if(current==="logs")renderLogs();
 }
+// Full render — used by navigation and explicit user actions.
+function render(){ renderHeader(); renderPage(); }
+// Lightweight live refresh from the engine tick — header always, but only
+// re-draw the page if it's a read-only data page (so forms stay intact).
+function liveUpdate(){ renderHeader(); if(DATA_PAGES.has(current))renderPage(); }
 function isEquityOpen(){ const d=new Date(); const day=d.getDay(); if(day===0||day===6)return false; const m=d.getHours()*60+d.getMinutes(); return m>=570&&m<960; }
 
 function statCard(lbl,val,sub,cls){ return `<div class="card stat"><div class="lbl">${lbl}</div><div class="val ${cls||''}">${val}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`; }
@@ -352,6 +364,7 @@ function renderDashboard(){
   document.getElementById("dashboard").innerHTML=`
     <h1>Dashboard</h1><p class="muted" style="margin-top:0">Paper-trading simulator — runs entirely in your browser.</p>
     <div class="disc">⚠️ <div><b style="color:var(--text)">Not financial advice.</b> Simulated trading only. No real money and no broker connection. For education/research.</div></div>
+    ${storageOK?"":'<div class="disc" style="border-color:var(--neg);background:color-mix(in srgb,var(--neg) 10%,transparent)">🔒 <div>Your browser is blocking storage for local files, so changes won\'t survive a refresh (everything still works during this session). Tip: use Chrome, Edge, or Firefox — or keep the tab open.</div></div>'}
     <div class="grid g4">
       ${statCard("Account Equity",usd(state.equity),`Unrealized ${usd(upnl)}`)}
       ${statCard("Cash",usd(state.cash),"")}
