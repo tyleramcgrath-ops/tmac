@@ -11,6 +11,26 @@ modular strategies across **crypto (24/7)**, **equities** (market hours), and
 > explicitly. Use only official, approved broker APIs. You are responsible for
 > your own trades.
 
+## One-click deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftyleramcgrath-ops%2Ftmac%2Ftree%2Fmain%2Ftrader&project-name=tmac-trader&repository-name=tmac-trader)
+
+Click the button, then make sure **Root Directory** is set to `trader` (Vercel
+auto-detects it from the link). No environment variables are required — it
+deploys straight into **paper mode**. Full walkthrough and alternatives in
+**[DEPLOY.md](./DEPLOY.md)**.
+
+> ℹ️ **Vercel is serverless**, so the always-on engine **Start** loop and the
+> in-memory paper state don't persist between requests there — the dashboard and
+> manual "tick" work, but the continuous background engine needs a **persistent**
+> host. For the full experience, deploy with **Docker** or a long-running host
+> (Render / Railway / Fly / a VM) — see [DEPLOY.md](./DEPLOY.md).
+
+> The button deploys the `trader/` folder from the `main` branch, so it works
+> once this PR is merged. To deploy from this feature branch first, use
+> <https://vercel.com/new>, import `tmac`, pick the branch, and set Root
+> Directory to `trader`.
+
 ---
 
 ## What's safe about it
