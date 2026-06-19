@@ -27,8 +27,8 @@ import { Badge, Button } from './ui'
 import { useTraderContext } from './trader-context'
 
 const NAV = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/strategies', label: 'Strategies', icon: TrendingUp },
+  { href: '/', label: 'Home (Start Here)', icon: LayoutDashboard },
+  { href: '/strategies', label: 'Strategies (Advanced)', icon: TrendingUp },
   { href: '/portfolio', label: 'Portfolio', icon: BarChart3 },
   { href: '/watchlists', label: 'Watchlists', icon: Eye },
   { href: '/history', label: 'Trade History', icon: History },
