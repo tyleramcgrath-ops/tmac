@@ -1,0 +1,224 @@
+// Production data model for TMAC Trader (PostgreSQL).
+//
+// NOTE: the default runtime uses a lightweight in-memory/JSON store (see
+// lib/db) so the app runs with zero database setup in paper mode. This schema
+// is the documented production target: provision Postgres, run
+// `prisma migrate dev`, then implement a PostgresStore matching lib/db's shape.
+//
+// All money fields use Decimal to avoid float drift in accounting.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("owner") // owner | trader | viewer (RBAC)
+  createdAt DateTime @default(now())
+
+  brokerConnections BrokerConnection[]
+  strategies        Strategy[]
+  watchlists        Watchlist[]
+  auditLogs         AuditLog[]
+}
+
+model BrokerConnection {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  broker        String // paper | robinhood_crypto | robinhood_equities_options
+  label         String?
+  // Secrets are stored AES-256-GCM encrypted (see lib/crypto). Never plaintext.
+  encryptedKeys String?
+  status        String   @default("disconnected") // connected | disconnected | error
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Strategy {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  name           String
+  kind           String // plugin id: ma_crossover, rsi, breakout, ...
+  assetType      String // crypto | equity | option
+  symbols        String[] // tickers / pairs
+  params         Json
+  // Risk params
+  maxPositionSize     Decimal @db.Decimal(18, 2)
+  stopLossPct         Decimal @db.Decimal(6, 4)
+  takeProfitPct       Decimal @db.Decimal(6, 4)
+  dailyMaxLoss        Decimal @db.Decimal(18, 2)
+  maxTradesPerDay     Int
+  cooldownAfterLossMs Int
+  mode           String   @default("paper") // paper | live
+  enabled        Boolean  @default(false)
+  backtestPassed Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  runs    StrategyRun[]
+  signals Signal[]
+  orders  Order[]
+  trades  Trade[]
+
+  @@index([userId])
+}
+
+model StrategyRun {
+  id         String    @id @default(cuid())
+  strategyId String
+  strategy   Strategy  @relation(fields: [strategyId], references: [id])
+  startedAt  DateTime  @default(now())
+  endedAt    DateTime?
+  status     String    @default("running") // running | stopped | error
+  note       String?
+
+  @@index([strategyId])
+}
+
+model Watchlist {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  // [{ symbol, assetType }]
+  symbols   Json
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Signal {
+  id         String   @id @default(cuid())
+  strategyId String
+  strategy   Strategy @relation(fields: [strategyId], references: [id])
+  symbol     String
+  assetType  String
+  action     String // buy | sell | hold
+  confidence Float
+  price      Decimal  @db.Decimal(18, 8)
+  rationale  String
+  createdAt  DateTime @default(now())
+
+  @@index([strategyId])
+  @@index([createdAt])
+}
+
+model Order {
+  id             String   @id @default(cuid())
+  clientOrderId  String   @unique
+  strategyId     String?
+  strategy       Strategy? @relation(fields: [strategyId], references: [id])
+  symbol         String
+  assetType      String
+  side           String // buy | sell
+  type           String // market | limit
+  quantity       Decimal  @db.Decimal(18, 8)
+  limitPrice     Decimal? @db.Decimal(18, 8)
+  filledQuantity Decimal  @default(0) @db.Decimal(18, 8)
+  filledAvgPrice Decimal? @db.Decimal(18, 8)
+  status         String // pending | submitted | filled | partially_filled | cancelled | rejected
+  mode           String // paper | live
+  broker         String
+  reason         String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  trades Trade[]
+
+  @@index([strategyId])
+  @@index([status])
+}
+
+model Position {
+  id             String   @id @default(cuid())
+  symbol         String
+  assetType      String
+  quantity       Decimal  @db.Decimal(18, 8)
+  avgPrice       Decimal  @db.Decimal(18, 8)
+  marketPrice    Decimal  @db.Decimal(18, 8)
+  unrealizedPnl  Decimal  @db.Decimal(18, 2)
+  stopLossPrice  Decimal? @db.Decimal(18, 8)
+  takeProfitPrice Decimal? @db.Decimal(18, 8)
+  strategyId     String?
+  openedAt       DateTime @default(now())
+
+  @@index([symbol])
+}
+
+model Trade {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  strategyId String?
+  strategy   Strategy? @relation(fields: [strategyId], references: [id])
+  symbol     String
+  assetType  String
+  side       String
+  quantity   Decimal  @db.Decimal(18, 8)
+  price      Decimal  @db.Decimal(18, 8)
+  pnl        Decimal? @db.Decimal(18, 2)
+  mode       String
+  executedAt DateTime @default(now())
+
+  @@index([executedAt])
+  @@index([strategyId])
+}
+
+model RiskEvent {
+  id         String   @id @default(cuid())
+  type       String // kill_switch | daily_loss_limit | order_rejected | ...
+  severity   String // info | warning | critical
+  message    String
+  strategyId String?
+  symbol     String?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  category  String // signal | decision | order | rejection | system | risk
+  message   String
+  data      Json?
+  createdAt DateTime @default(now())
+
+  @@index([category])
+  @@index([createdAt])
+}
+
+model Backtest {
+  id             String   @id @default(cuid())
+  strategyKind   String
+  symbol         String
+  assetType      String
+  params         Json
+  start          DateTime
+  end            DateTime
+  startingEquity Decimal  @db.Decimal(18, 2)
+  endingEquity   Decimal  @db.Decimal(18, 2)
+  totalReturnPct Float
+  maxDrawdownPct Float
+  winRate        Float
+  trades         Int
+  avgWin         Decimal  @db.Decimal(18, 2)
+  avgLoss        Decimal  @db.Decimal(18, 2)
+  sharpe         Float
+  equityCurve    Json
+  createdAt      DateTime @default(now())
+
+  @@index([createdAt])
+}
