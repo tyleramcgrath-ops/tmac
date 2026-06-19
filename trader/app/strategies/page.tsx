@@ -12,12 +12,12 @@ import type { AssetType, StrategyConfig } from '@/lib/types'
 import { CRYPTO_SYMBOLS, STOCK_SYMBOLS, assetTypeOf } from '@/lib/universe'
 
 const blankRisk = {
-  maxPositionSize: 5000,
-  stopLossPct: 0.03,
-  takeProfitPct: 0.06,
-  dailyMaxLoss: 500,
-  maxTradesPerDay: 5,
-  cooldownAfterLossMs: 1_800_000,
+  maxPositionSize: 10000,
+  stopLossPct: 0.05,
+  takeProfitPct: 0.1,
+  dailyMaxLoss: 1_000_000,
+  maxTradesPerDay: 100000,
+  cooldownAfterLossMs: 0,
 }
 
 export default function StrategiesPage() {

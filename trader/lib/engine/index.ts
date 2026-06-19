@@ -10,7 +10,7 @@ import { evaluateStrategy, exitSignals } from './signal-engine'
 export * from './risk-manager'
 export { executeSignal, confirmOrder } from './order-manager'
 
-const TICK_MS = 15_000
+const TICK_MS = 3_000
 
 declare global {
   // eslint-disable-next-line no-var

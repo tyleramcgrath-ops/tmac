@@ -128,7 +128,26 @@ export default function RiskPage() {
           >
             Save limits
           </Button>
+          <Button
+            variant="danger"
+            disabled={busy}
+            onClick={() => {
+              if (!confirm('Remove all size/loss limits? Safe on PAPER (fake money). On a real live account this removes the protections against catastrophic loss — only do this if you mean it.')) return
+              patch({
+                maxAccountRiskPerTradePct: 1,
+                maxDailyLossPct: 1,
+                maxOpenPositions: 1_000_000,
+                maxOptionPremiumPerTrade: 1_000_000,
+              })
+            }}
+          >
+            Remove limits (unlimited)
+          </Button>
         </div>
+        <p className="mt-2 text-xs text-muted">
+          “Remove limits” lets strategies size up to your per-strategy max position and use full buying power, with no
+          daily-loss or position-count caps. The kill switch and the live-trading gate still apply.
+        </p>
       </Card>
 
       {/* Risk events */}
