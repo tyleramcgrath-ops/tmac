@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Plus, Trash2, Power, FlaskConical } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Plus, Trash2, Power, FlaskConical, Layers } from 'lucide-react'
 import { Disclaimer } from '@/components/disclaimer'
 import { Badge, Button, Card, EmptyState, Field, Input, PageHeader, Select, Toggle } from '@/components/ui'
 import { useTraderContext } from '@/components/trader-context'
@@ -9,6 +9,7 @@ import { post } from '@/lib/client/api'
 import type { AvailableStrategy } from '@/lib/client/api'
 import { usd } from '@/lib/client/format'
 import type { AssetType, StrategyConfig } from '@/lib/types'
+import { CRYPTO_SYMBOLS, STOCK_SYMBOLS, assetTypeOf } from '@/lib/universe'
 
 const blankRisk = {
   maxPositionSize: 5000,
@@ -46,6 +47,8 @@ export default function StrategiesPage() {
         }
       />
       <Disclaimer />
+
+      <BulkBuilder available={state.availableStrategies} onCreated={refresh} />
 
       {(creating || editing) && (
         <StrategyForm
@@ -128,6 +131,171 @@ async function action0(path: string, body: Record<string, unknown>, refresh: () 
   } catch (e) {
     alert(e instanceof Error ? e.message : 'Failed')
   }
+}
+
+function Chip({ on, label, onClick }: { on: boolean; label: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+        on
+          ? 'border-[var(--accent)]/50 bg-[var(--accent)]/15 text-[var(--text)]'
+          : 'border-transparent bg-[var(--surface-2)] text-muted hover:text-[var(--text)]'
+      }`}
+    >
+      {on ? '✓ ' : ''}
+      {label}
+    </button>
+  )
+}
+
+function BulkBuilder({ available, onCreated }: { available: AvailableStrategy[]; onCreated: () => Promise<void> }) {
+  const [kinds, setKinds] = useState<Set<string>>(new Set())
+  const [symbols, setSymbols] = useState<Set<string>>(new Set())
+  const [mode, setMode] = useState<'paper' | 'live'>('paper')
+  const [search, setSearch] = useState('')
+  const [risk, setRisk] = useState(blankRisk)
+  const [busy, setBusy] = useState(false)
+
+  const q = search.trim().toUpperCase()
+  const cryptos = useMemo(() => CRYPTO_SYMBOLS.filter((s) => s.includes(q)), [q])
+  const stocks = useMemo(() => STOCK_SYMBOLS.filter((s) => s.includes(q)), [q])
+
+  const cryptoOn = CRYPTO_SYMBOLS.filter((s) => symbols.has(s)).length
+  const stockOn = STOCK_SYMBOLS.filter((s) => symbols.has(s)).length
+
+  function toggle<T>(set: Set<T>, v: T): Set<T> {
+    const next = new Set(set)
+    if (next.has(v)) next.delete(v)
+    else next.add(v)
+    return next
+  }
+  function setGroup(list: string[], on: boolean) {
+    setSymbols((prev) => {
+      const next = new Set(prev)
+      for (const s of list) on ? next.add(s) : next.delete(s)
+      return next
+    })
+  }
+
+  async function create() {
+    const kindList = [...kinds]
+    const chosen = [...symbols]
+    if (kindList.length === 0) return alert('Pick at least one strategy.')
+    if (chosen.length === 0) return alert('Pick at least one symbol.')
+    setBusy(true)
+    let created = 0
+    try {
+      for (const kind of kindList) {
+        const name = available.find((a) => a.id === kind)?.name ?? kind
+        for (const at of ['crypto', 'equity'] as AssetType[]) {
+          const syms = chosen.filter((s) => assetTypeOf(s) === at)
+          if (syms.length === 0) continue
+          await post('/api/strategies', {
+            action: 'save',
+            name: `${name} — ${at}`,
+            kind,
+            assetType: at,
+            symbols: syms,
+            params: {},
+            risk: {
+              maxPositionSize: Number(risk.maxPositionSize),
+              stopLossPct: Number(risk.stopLossPct),
+              takeProfitPct: Number(risk.takeProfitPct),
+              dailyMaxLoss: Number(risk.dailyMaxLoss),
+              maxTradesPerDay: Number(risk.maxTradesPerDay),
+              cooldownAfterLossMs: Number(risk.cooldownAfterLossMs),
+            },
+            mode,
+          })
+          created++
+        }
+      }
+      setKinds(new Set())
+      setSymbols(new Set())
+      await onCreated()
+      alert(`Created ${created} strateg${created === 1 ? 'y' : 'ies'}. They start disabled — flip them on below (live ones need a passing backtest).`)
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <Card className="mb-6">
+      <div className="mb-3 flex items-center gap-2">
+        <Layers size={16} className="text-[var(--accent)]" />
+        <h3 className="text-sm font-medium">Quick build — pick strategies + assets, create in one click</h3>
+      </div>
+
+      {/* Strategies */}
+      <div className="mb-1 text-xs font-medium uppercase tracking-wide text-muted">1. Strategies ({kinds.size} selected)</div>
+      <div className="mb-4 flex flex-wrap gap-1.5">
+        {available.map((a) => (
+          <Chip key={a.id} on={kinds.has(a.id)} label={a.name} onClick={() => setKinds((p) => toggle(p, a.id))} />
+        ))}
+        <Chip on={kinds.size === available.length} label="All strategies" onClick={() => setKinds(kinds.size === available.length ? new Set() : new Set(available.map((a) => a.id)))} />
+      </div>
+
+      {/* Symbols */}
+      <div className="mb-1 flex items-center justify-between">
+        <span className="text-xs font-medium uppercase tracking-wide text-muted">2. Assets ({cryptoOn + stockOn} selected)</span>
+        <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Filter…" className="w-40" />
+      </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="rounded-lg border p-3">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium">Crypto ({cryptoOn}/{CRYPTO_SYMBOLS.length})</span>
+            <span className="flex gap-1">
+              <Button variant="ghost" className="!px-2 !py-1 text-xs" onClick={() => setGroup(CRYPTO_SYMBOLS, true)}>All</Button>
+              <Button variant="ghost" className="!px-2 !py-1 text-xs" onClick={() => setGroup(CRYPTO_SYMBOLS, false)}>None</Button>
+            </span>
+          </div>
+          <div className="flex max-h-56 flex-wrap gap-1.5 overflow-auto">
+            {cryptos.map((s) => <Chip key={s} on={symbols.has(s)} label={s.replace('-USD', '')} onClick={() => setSymbols((p) => toggle(p, s))} />)}
+            {cryptos.length === 0 && <span className="text-xs text-muted">no match</span>}
+          </div>
+        </div>
+        <div className="rounded-lg border p-3">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium">Stocks ({stockOn}/{STOCK_SYMBOLS.length})</span>
+            <span className="flex gap-1">
+              <Button variant="ghost" className="!px-2 !py-1 text-xs" onClick={() => setGroup(STOCK_SYMBOLS, true)}>All</Button>
+              <Button variant="ghost" className="!px-2 !py-1 text-xs" onClick={() => setGroup(STOCK_SYMBOLS, false)}>None</Button>
+            </span>
+          </div>
+          <div className="flex max-h-56 flex-wrap gap-1.5 overflow-auto">
+            {stocks.map((s) => <Chip key={s} on={symbols.has(s)} label={s} onClick={() => setSymbols((p) => toggle(p, s))} />)}
+            {stocks.length === 0 && <span className="text-xs text-muted">no match</span>}
+          </div>
+        </div>
+      </div>
+
+      {/* Risk + mode */}
+      <div className="mt-4 grid gap-3 md:grid-cols-3 lg:grid-cols-6">
+        <Field label="Max size ($)"><Input type="number" value={risk.maxPositionSize} onChange={(e) => setRisk({ ...risk, maxPositionSize: Number(e.target.value) })} /></Field>
+        <Field label="Stop (frac)"><Input type="number" step="0.001" value={risk.stopLossPct} onChange={(e) => setRisk({ ...risk, stopLossPct: Number(e.target.value) })} /></Field>
+        <Field label="Take (frac)"><Input type="number" step="0.001" value={risk.takeProfitPct} onChange={(e) => setRisk({ ...risk, takeProfitPct: Number(e.target.value) })} /></Field>
+        <Field label="Daily max loss ($)"><Input type="number" value={risk.dailyMaxLoss} onChange={(e) => setRisk({ ...risk, dailyMaxLoss: Number(e.target.value) })} /></Field>
+        <Field label="Max trades/day"><Input type="number" value={risk.maxTradesPerDay} onChange={(e) => setRisk({ ...risk, maxTradesPerDay: Number(e.target.value) })} /></Field>
+        <Field label="Mode">
+          <Select value={mode} onChange={(e) => setMode(e.target.value as 'paper' | 'live')}>
+            <option value="paper">Paper</option>
+            <option value="live">Live</option>
+          </Select>
+        </Field>
+      </div>
+
+      <div className="mt-2">
+        <Button variant="primary" disabled={busy} onClick={create}>
+          <Plus size={16} /> {busy ? 'Creating…' : `Create ${kinds.size || 0}×${(cryptoOn > 0 ? 1 : 0) + (stockOn > 0 ? 1 : 0) || 0} strateg${kinds.size > 1 ? 'ies' : 'y'}`}
+        </Button>
+        <span className="ml-3 text-xs text-muted">One strategy is created per selected strategy × asset class (crypto / stocks).</span>
+      </div>
+    </Card>
+  )
 }
 
 function Info({ label, value }: { label: string; value: string }) {
