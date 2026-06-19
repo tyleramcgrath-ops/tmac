@@ -21,6 +21,7 @@ export type OrderStatus =
 
 export type BrokerKind =
   | 'paper'
+  | 'alpaca'
   | 'robinhood_crypto'
   | 'robinhood_equities_options'
 

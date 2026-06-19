@@ -59,6 +59,27 @@ export default function SettingsPage() {
         </Card>
       )}
 
+      {/* Alpaca (recommended) */}
+      <Card className="mb-6 border-[var(--accent)]/40">
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="text-sm font-medium">
+            Alpaca <span className="ml-1 rounded bg-[var(--accent)]/15 px-1.5 py-0.5 text-xs text-[var(--accent)]">Recommended</span>
+          </h3>
+          <Button onClick={() => runTest('alpaca')}>Test connection</Button>
+        </div>
+        <p className="mb-4 text-sm text-muted">
+          Simple key + secret (no request signing), built-in <b>paper</b> environment on the same API, and stocks + crypto
+          with real market data. Get a free <b>paper</b> key at{' '}
+          <span className="text-[var(--text)]">alpaca.markets → Paper Trading → API Keys</span>. Set{' '}
+          <code>ALPACA_PAPER=false</code> only when you intend to trade real money.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <CredRow name="ALPACA_API_KEY" label="API Key ID" configured={info.configured.ALPACA_API_KEY} value={values.ALPACA_API_KEY ?? ''} disabled={!info.canSaveFromUi} onChange={(v) => setValues((s) => ({ ...s, ALPACA_API_KEY: v }))} onSave={() => save('ALPACA_API_KEY')} />
+          <CredRow name="ALPACA_API_SECRET" label="API Secret" configured={info.configured.ALPACA_API_SECRET} value={values.ALPACA_API_SECRET ?? ''} disabled={!info.canSaveFromUi} onChange={(v) => setValues((s) => ({ ...s, ALPACA_API_SECRET: v }))} onSave={() => save('ALPACA_API_SECRET')} />
+        </div>
+        {test.alpaca && <TestResult result={test.alpaca} />}
+      </Card>
+
       {/* Robinhood Crypto */}
       <Card className="mb-6">
         <div className="mb-2 flex items-center justify-between">

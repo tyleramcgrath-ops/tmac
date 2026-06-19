@@ -2,9 +2,19 @@ import type { AppState } from '../db'
 import { getSecret } from '../config'
 import type { AssetType, TradingMode } from '../types'
 import type { BrokerAdapter } from './adapter'
+import { AlpacaAdapter } from './alpaca'
 import { PaperTradingAdapter } from './paper'
 import { RobinhoodCryptoAdapter } from './robinhood-crypto'
 import { RobinhoodEquitiesOptionsAdapter } from './robinhood-equities-options'
+
+async function alpacaCredsIfConfigured() {
+  const keyId = await getSecret('ALPACA_API_KEY')
+  const secret = await getSecret('ALPACA_API_SECRET')
+  if (!keyId || !secret) return null
+  // Default to Alpaca's PAPER environment unless explicitly set to live.
+  const paper = (process.env.ALPACA_PAPER ?? 'true').toLowerCase() !== 'false'
+  return { keyId, secret, paper }
+}
 
 export type { BrokerAdapter, PlaceOrderRequest } from './adapter'
 export { BrokerNotConfiguredError } from './adapter'
@@ -22,7 +32,13 @@ export async function getAdapter(
   if (mode === 'paper') {
     return new PaperTradingAdapter(state)
   }
-  // LIVE mode
+  // LIVE mode.
+  // Alpaca (if configured) is preferred — it handles BOTH crypto and equities
+  // through one API, and its own paper environment (ALPACA_PAPER=true) keeps it
+  // risk-free while you validate.
+  const alpaca = await alpacaCredsIfConfigured()
+  if (alpaca) return new AlpacaAdapter(alpaca)
+
   if (assetType === 'crypto') {
     const apiKey = await getSecret('RH_CRYPTO_API_KEY')
     const privateKeyBase64 = await getSecret('RH_CRYPTO_PRIVATE_KEY')
@@ -33,4 +49,4 @@ export async function getAdapter(
   return new RobinhoodEquitiesOptionsAdapter()
 }
 
-export { PaperTradingAdapter, RobinhoodCryptoAdapter, RobinhoodEquitiesOptionsAdapter }
+export { AlpacaAdapter, PaperTradingAdapter, RobinhoodCryptoAdapter, RobinhoodEquitiesOptionsAdapter }

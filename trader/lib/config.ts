@@ -7,6 +7,8 @@ import { decrypt, encrypt } from './crypto'
 // "configured" boolean per key (see app/api/settings).
 
 export const KEY_NAMES = [
+  'ALPACA_API_KEY',
+  'ALPACA_API_SECRET',
   'RH_CRYPTO_API_KEY',
   'RH_CRYPTO_PRIVATE_KEY',
 ] as const

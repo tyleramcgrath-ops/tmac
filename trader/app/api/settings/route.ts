@@ -9,7 +9,7 @@ import {
   type KeyName,
 } from '@/lib/config'
 import { getStore } from '@/lib/db'
-import { RobinhoodCryptoAdapter } from '@/lib/brokers'
+import { AlpacaAdapter, RobinhoodCryptoAdapter } from '@/lib/brokers'
 
 export const dynamic = 'force-dynamic'
 
@@ -52,6 +52,14 @@ export async function POST(req: Request) {
       const { broker } = testSchema.parse(body)
       if (broker === 'paper') {
         return NextResponse.json({ ok: true, message: 'Paper trading simulator ready.' })
+      }
+      if (broker === 'alpaca') {
+        const keyId = await getSecret('ALPACA_API_KEY')
+        const secret = await getSecret('ALPACA_API_SECRET')
+        const paper = (process.env.ALPACA_PAPER ?? 'true').toLowerCase() !== 'false'
+        const adapter = new AlpacaAdapter(keyId && secret ? { keyId, secret, paper } : null)
+        const result = await adapter.testConnection()
+        return NextResponse.json(result)
       }
       if (broker === 'robinhood_crypto') {
         const apiKey = await getSecret('RH_CRYPTO_API_KEY')
