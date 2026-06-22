@@ -1,0 +1,38 @@
+# Local stack for TMAC Trader.
+#
+# The app runs out of the box without Postgres (in-memory/JSON store). The
+# `db` service is provided for the production data model (prisma/schema.prisma);
+# set DATABASE_URL on the app to use it once a PostgresStore is implemented.
+
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      # - APP_SECRET=change-me-32-bytes-hex
+      # - RH_CRYPTO_API_KEY=
+      # - RH_CRYPTO_PRIVATE_KEY=
+      # - DATABASE_URL=postgresql://trader:trader@db:5432/tmac_trader
+    volumes:
+      - trader-data:/app/.data
+    restart: unless-stopped
+    # depends_on:
+    #   - db
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=trader
+      - POSTGRES_PASSWORD=trader
+      - POSTGRES_DB=tmac_trader
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  trader-data:
+  pg-data:
