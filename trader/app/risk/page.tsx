@@ -95,13 +95,13 @@ export default function RiskPage() {
       <Card className="mt-6">
         <h3 className="mb-4 text-sm font-medium">Account-wide limits</h3>
         <div className="grid gap-4 md:grid-cols-3">
-          <Field label="Max account risk per trade (fraction)" hint="0.01 = 1% of equity">
-            <Input type="number" step="0.001" value={draft.maxAccountRiskPerTradePct} onChange={(e) => setDraft({ ...draft, maxAccountRiskPerTradePct: Number(e.target.value) })} />
+          <Field label="Max risk per trade (%)" hint="100 = up to 100% of account. Type any whole number.">
+            <Input type="number" step="1" value={Math.round(draft.maxAccountRiskPerTradePct * 100)} onChange={(e) => setDraft({ ...draft, maxAccountRiskPerTradePct: Number(e.target.value) / 100 })} />
           </Field>
-          <Field label="Max daily loss (fraction)" hint="0.03 = 3% halts all trading">
-            <Input type="number" step="0.001" value={draft.maxDailyLossPct} onChange={(e) => setDraft({ ...draft, maxDailyLossPct: Number(e.target.value) })} />
+          <Field label="Max daily loss (%)" hint="100 = never halts (no daily loss limit).">
+            <Input type="number" step="1" value={Math.round(draft.maxDailyLossPct * 100)} onChange={(e) => setDraft({ ...draft, maxDailyLossPct: Number(e.target.value) / 100 })} />
           </Field>
-          <Field label="Max open positions">
+          <Field label="Max open positions" hint="How many trades open at once.">
             <Input type="number" value={draft.maxOpenPositions} onChange={(e) => setDraft({ ...draft, maxOpenPositions: Number(e.target.value) })} />
           </Field>
           <Field label="Max option premium per trade ($)">
