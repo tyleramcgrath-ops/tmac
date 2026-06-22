@@ -63,13 +63,15 @@ export function globalTradingBlocks(state: AppState, mode: TradingMode): string[
   if (mode === 'live' && !risk.liveTradingEnabled) {
     reasons.push('Live trading is disabled. Enable it explicitly in Risk Controls to trade live.')
   }
-  // Daily loss circuit breaker (account-wide).
-  const dailyLoss = realizedPnlToday(state)
-  const maxDailyLoss = state.account.equity * risk.maxDailyLossPct
-  if (dailyLoss <= -maxDailyLoss) {
-    reasons.push(
-      `Daily loss limit reached (${dailyLoss.toFixed(2)} <= -${maxDailyLoss.toFixed(2)}). Trading halted for today.`,
-    )
+  // Daily loss circuit breaker (account-wide) — skipped in no-restrictions mode.
+  if (!risk.unrestricted) {
+    const dailyLoss = realizedPnlToday(state)
+    const maxDailyLoss = state.account.equity * risk.maxDailyLossPct
+    if (dailyLoss <= -maxDailyLoss) {
+      reasons.push(
+        `Daily loss limit reached (${dailyLoss.toFixed(2)} <= -${maxDailyLoss.toFixed(2)}). Trading halted for today.`,
+      )
+    }
   }
   // Never trade on uncertain account state.
   if (!Number.isFinite(state.account.equity) || state.account.equity <= 0) {
@@ -125,27 +127,27 @@ export function assessTrade(state: AppState, p: TradeProposal): SizedDecision {
     return { approved: false, reasons: ['Already holding a position for this symbol/strategy.'], riskAmount: 0, quantity: 0 }
   }
 
-  // Strategy daily loss limit.
-  const stratPnl = realizedPnlToday(state, p.strategy.id)
-  if (stratPnl <= -sr.dailyMaxLoss && sr.dailyMaxLoss > 0) {
-    reasons.push(`Strategy daily max loss reached (${stratPnl.toFixed(2)} <= -${sr.dailyMaxLoss}).`)
-  }
-
-  // Max trades/day.
-  if (tradesToday(state, p.strategy.id) >= sr.maxTradesPerDay) {
-    reasons.push(`Max trades per day reached (${sr.maxTradesPerDay}).`)
-  }
-
-  // Cooldown after a loss.
-  const lossAt = lastLossAt(state, p.strategy.id)
-  if (lossAt && Date.now() - lossAt < sr.cooldownAfterLossMs) {
-    const mins = Math.ceil((sr.cooldownAfterLossMs - (Date.now() - lossAt)) / 60000)
-    reasons.push(`In post-loss cooldown (~${mins} min remaining).`)
-  }
-
-  // Max open positions (account-wide).
-  if (state.positions.length >= risk.maxOpenPositions) {
-    reasons.push(`Max open positions reached (${risk.maxOpenPositions}).`)
+  // In no-restrictions mode, skip all the per-strategy / account caps below.
+  if (!risk.unrestricted) {
+    // Strategy daily loss limit.
+    const stratPnl = realizedPnlToday(state, p.strategy.id)
+    if (stratPnl <= -sr.dailyMaxLoss && sr.dailyMaxLoss > 0) {
+      reasons.push(`Strategy daily max loss reached (${stratPnl.toFixed(2)} <= -${sr.dailyMaxLoss}).`)
+    }
+    // Max trades/day.
+    if (tradesToday(state, p.strategy.id) >= sr.maxTradesPerDay) {
+      reasons.push(`Max trades per day reached (${sr.maxTradesPerDay}).`)
+    }
+    // Cooldown after a loss.
+    const lossAt = lastLossAt(state, p.strategy.id)
+    if (lossAt && Date.now() - lossAt < sr.cooldownAfterLossMs) {
+      const mins = Math.ceil((sr.cooldownAfterLossMs - (Date.now() - lossAt)) / 60000)
+      reasons.push(`In post-loss cooldown (~${mins} min remaining).`)
+    }
+    // Max open positions (account-wide).
+    if (state.positions.length >= risk.maxOpenPositions) {
+      reasons.push(`Max open positions reached (${risk.maxOpenPositions}).`)
+    }
   }
 
   // 5. Position sizing.
@@ -153,7 +155,8 @@ export function assessTrade(state: AppState, p: TradeProposal): SizedDecision {
   const takeProfitPrice = p.price * (1 + sr.takeProfitPct)
   const stopDistance = p.price * sr.stopLossPct
 
-  const riskDollar = state.account.equity * risk.maxAccountRiskPerTradePct
+  // No-restrictions => size straight off the position-size / cash cap.
+  const riskDollar = risk.unrestricted ? Infinity : state.account.equity * risk.maxAccountRiskPerTradePct
   const qtyFromRisk = stopDistance > 0 ? riskDollar / stopDistance : Infinity
 
   // Notional cap: strategy max position size, and available cash unless margin

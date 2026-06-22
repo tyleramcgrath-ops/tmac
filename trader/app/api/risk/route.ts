@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
 const schema = z.object({
   liveTradingEnabled: z.boolean().optional(),
   confirmationMode: z.boolean().optional(),
+  unrestricted: z.boolean().optional(),
   maxAccountRiskPerTradePct: z.number().min(0).max(1).optional(),
   maxDailyLossPct: z.number().min(0).max(1).optional(),
   maxOpenPositions: z.number().int().min(1).max(1_000_000).optional(),

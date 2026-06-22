@@ -68,6 +68,7 @@ function defaultState(): AppState {
       liveTradingEnabled: false, // SAFE DEFAULT: live trading off
       killSwitchEngaged: false,
       confirmationMode: true,
+      unrestricted: false,
       maxAccountRiskPerTradePct: 0.01, // 1% of equity per trade
       maxDailyLossPct: 0.03, // 3% daily loss halts everything
       maxOpenPositions: 10,

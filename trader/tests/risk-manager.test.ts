@@ -168,6 +168,29 @@ describe('uncertainty guards', () => {
   })
 })
 
+describe('no-restrictions (unlimited) mode', () => {
+  it('bypasses max trades/day, cooldown, max positions and daily loss', () => {
+    const strat = makeStrategy({ risk: defaultStrategyRisk({ maxTradesPerDay: 1, maxPositionSize: 1_000_000 }) })
+    const trades: Trade[] = [
+      { id: 't', orderId: 'o', symbol: 'BTC-USD', assetType: 'crypto', side: 'sell', quantity: 1, price: 1, pnl: -50000, mode: 'paper', strategyId: 'strat1', executedAt: Date.now() },
+    ]
+    const positions: Position[] = Array.from({ length: 50 }, (_, i) => ({
+      id: `p${i}`, symbol: `S${i}`, assetType: 'equity', quantity: 1, avgPrice: 1, marketPrice: 1, marketValue: 1, unrealizedPnl: 0, openedAt: Date.now(),
+    }))
+    const state = makeState({ trades, positions, risk: defaultRisk({ unrestricted: true }) })
+    const d = assessTrade(state, buy({ strategy: strat }))
+    expect(d.approved).toBe(true)
+    expect(d.quantity).toBeGreaterThan(0)
+  })
+
+  it('still respects the kill switch even when unrestricted', () => {
+    const state = makeState({ risk: defaultRisk({ unrestricted: true, killSwitchEngaged: true }) })
+    const d = assessTrade(state, buy())
+    expect(d.approved).toBe(false)
+    expect(d.reasons.join(' ')).toMatch(/Kill switch/)
+  })
+})
+
 describe('helpers', () => {
   it('sums realized pnl today', () => {
     const trades: Trade[] = [

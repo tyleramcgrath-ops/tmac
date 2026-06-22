@@ -65,9 +65,11 @@ export default function ControlCenter() {
     if (kinds.size === 0) return alert('STEP 2: pick at least one strategy.')
     setBusy('build')
     try {
-      if (noLimits) {
-        await post('/api/risk', { maxAccountRiskPerTradePct: 1, maxDailyLossPct: 1, maxOpenPositions: 1_000_000, maxOptionPremiumPerTrade: 1_000_000 })
-      }
+      // No-limits => turn on the engine-level no-restrictions mode (skips every
+      // cap) and raise the numbers too. Off => restore sane caps.
+      await post('/api/risk', noLimits
+        ? { unrestricted: true, maxAccountRiskPerTradePct: 1, maxDailyLossPct: 1, maxOpenPositions: 1_000_000, maxOptionPremiumPerTrade: 1_000_000 }
+        : { unrestricted: false })
       const chosen = [...picked]
       const ids: string[] = []
       for (const kind of kinds) {

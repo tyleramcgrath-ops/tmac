@@ -161,6 +161,7 @@ export interface GlobalRiskSettings {
   liveTradingEnabled: boolean // master live switch (default false)
   killSwitchEngaged: boolean // emergency stop
   confirmationMode: boolean // require manual confirm before live orders
+  unrestricted?: boolean // no-restrictions mode: skip all caps (paper)
   maxAccountRiskPerTradePct: number // fraction of equity at risk per trade
   maxDailyLossPct: number // fraction of equity; halts all trading when hit
   maxOpenPositions: number
