@@ -9,9 +9,10 @@ const schema = z.object({
   liveTradingEnabled: z.boolean().optional(),
   confirmationMode: z.boolean().optional(),
   unrestricted: z.boolean().optional(),
-  maxAccountRiskPerTradePct: z.number().min(0).max(1).optional(),
-  maxDailyLossPct: z.number().min(0).max(1).optional(),
-  maxOpenPositions: z.number().int().min(1).max(1_000_000).optional(),
+  // No upper caps — set these as high as you want (paper is fake money).
+  maxAccountRiskPerTradePct: z.number().min(0).optional(),
+  maxDailyLossPct: z.number().min(0).optional(),
+  maxOpenPositions: z.number().int().min(1).optional(),
   maxOptionPremiumPerTrade: z.number().min(0).optional(),
   allowNakedOptions: z.boolean().optional(),
   allowMargin: z.boolean().optional(),
