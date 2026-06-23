@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tyler McGrath — SEO &amp; Growth Marketing That Ranks</title>
+<meta name="description" content="Tyler McGrath is an SEO and growth marketing consultant who turns search traffic into customers. Audits, strategy, and execution that move you up and to the right." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   TYLER McGRATH — SEO & Growth Marketing
+   Aesthetic: data-terminal editorial. Deep ink, acid-lime,
+   characterful type, climbing-rank motion.
+   ============================================================ */
+
+:root{
+  --ink:        #09090C;
+  --ink-2:      #0E0E13;
+  --surface:    #15151C;
+  --surface-2:  #1C1C25;
+  --line:       rgba(255,255,255,.09);
+  --line-2:     rgba(255,255,255,.05);
+  --cream:      #F4F3EC;
+  --muted:      #93939F;
+  --muted-2:    #65656F;
+  --lime:       #CBF94B;
+  --lime-deep:  #A9DD2B;
+  --coral:      #FF6A3D;
+  --violet:     #7C6CFF;
+
+  --maxw: 1240px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+
+  --font-display: "Clash Display", "Times New Roman", serif;
+  --font-body:    "General Sans", system-ui, sans-serif;
+  --font-mono:    "Space Mono", ui-monospace, monospace;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+body{
+  font-family:var(--font-body);
+  background:var(--ink);
+  color:var(--cream);
+  line-height:1.55;
+  overflow-x:hidden;
+  position:relative;
+}
+::selection{ background:var(--lime); color:var(--ink); }
+
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+
+/* ---- grain + atmosphere overlays ------------------------- */
+body::before{ /* film grain */
+  content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+  opacity:.038; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.glow{ position:fixed; border-radius:50%; filter:blur(120px); z-index:0; pointer-events:none; opacity:.5; }
+.glow.a{ width:620px; height:620px; top:-220px; right:-160px; background:radial-gradient(circle, rgba(203,249,75,.30), transparent 70%); }
+.glow.b{ width:540px; height:540px; top:480px; left:-240px;  background:radial-gradient(circle, rgba(124,108,255,.22), transparent 70%); }
+.glow.c{ width:560px; height:560px; bottom:200px; right:-200px; background:radial-gradient(circle, rgba(255,106,61,.16), transparent 70%); }
+
+/* ---- layout helpers -------------------------------------- */
+.wrap{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:28px; position:relative; z-index:2; }
+section{ position:relative; }
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--lime); display:inline-flex; align-items:center; gap:.6em;
+}
+.eyebrow::before{ content:""; width:26px; height:1px; background:var(--lime); display:inline-block; }
+
+h1,h2,h3{ font-family:var(--font-display); font-weight:600; line-height:.98; letter-spacing:-.02em; }
+.display{ font-size:clamp(2.9rem, 8vw, 6.4rem); font-weight:600; }
+.section-title{ font-size:clamp(2rem, 4.6vw, 3.6rem); }
+.lead{ color:var(--muted); font-size:clamp(1rem,1.3vw,1.18rem); max-width:54ch; }
+
+/* ---- buttons --------------------------------------------- */
+.btn{
+  position:relative; display:inline-flex; align-items:center; gap:.6em;
+  font-family:var(--font-body); font-weight:600; font-size:.98rem;
+  padding:1rem 1.6rem; border-radius:100px; cursor:pointer; border:1px solid transparent;
+  transition:transform .35s var(--ease), background .3s, color .3s, box-shadow .3s; will-change:transform;
+}
+.btn .arrow{ transition:transform .35s var(--ease); }
+.btn:hover .arrow{ transform:translateX(4px); }
+.btn-primary{ background:var(--lime); color:var(--ink); box-shadow:0 0 0 0 rgba(203,249,75,.5); }
+.btn-primary:hover{ box-shadow:0 14px 40px -8px rgba(203,249,75,.55); }
+.btn-ghost{ background:transparent; color:var(--cream); border-color:var(--line); }
+.btn-ghost:hover{ border-color:var(--cream); background:rgba(255,255,255,.04); }
+
+/* ============== NAV ======================================= */
+.nav{
+  position:fixed; inset:0 0 auto 0; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 28px; transition:background .4s var(--ease), border-color .4s, padding .4s;
+  border-bottom:1px solid transparent;
+}
+.nav.scrolled{ background:rgba(9,9,12,.72); backdrop-filter:blur(14px); border-color:var(--line); padding:12px 28px; }
+.brand{ display:flex; align-items:center; gap:.7rem; font-family:var(--font-display); font-weight:600; font-size:1.18rem; letter-spacing:-.01em; }
+.brand .mark{
+  width:34px; height:34px; border-radius:9px; background:var(--lime); color:var(--ink);
+  display:grid; place-items:center; font-family:var(--font-mono); font-weight:700; font-size:.95rem;
+  box-shadow:0 6px 22px -6px rgba(203,249,75,.6);
+}
+.nav-links{ display:flex; align-items:center; gap:2rem; }
+.nav-links a{ font-size:.92rem; color:var(--muted); transition:color .25s; position:relative; }
+.nav-links a:not(.btn)::after{ content:""; position:absolute; left:0; bottom:-5px; width:0; height:1px; background:var(--lime); transition:width .3s var(--ease); }
+.nav-links a:not(.btn):hover{ color:var(--cream); }
+.nav-links a:not(.btn):hover::after{ width:100%; }
+.nav-cta{ padding:.6rem 1.15rem; font-size:.9rem; }
+.burger{ display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:6px; }
+.burger span{ width:24px; height:2px; background:var(--cream); transition:.3s; }
+
+/* ============== HERO ====================================== */
+.hero{ padding:clamp(120px,18vh,180px) 0 90px; }
+.hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center; }
+.hero-tag{ margin-bottom:26px; }
+.hero h1 .ln{ display:block; overflow:hidden; }
+.hero h1 .ln > span{ display:inline-block; transform:translateY(105%); }
+.hero h1 em{ font-style:normal; color:var(--lime); position:relative; }
+.hero h1 em::after{ content:""; position:absolute; left:0; right:0; bottom:.08em; height:.09em; background:var(--lime); opacity:.35; }
+.hero .lead{ margin:30px 0 36px; }
+.hero-cta{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+.hero-meta{ display:flex; gap:26px; margin-top:42px; flex-wrap:wrap; }
+.hero-meta .item .n{ font-family:var(--font-display); font-size:1.7rem; font-weight:600; color:var(--cream); display:flex; align-items:baseline; gap:.1em; }
+.hero-meta .item .n .pct{ color:var(--lime); font-size:1.1rem; }
+.hero-meta .item .l{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted-2); margin-top:2px; }
+.hero-meta .item{ position:relative; padding-left:18px; }
+.hero-meta .item::before{ content:""; position:absolute; left:0; top:4px; bottom:4px; width:2px; background:var(--line); }
+
+/* reveal animations for hero load */
+.hero[data-on] h1 .ln > span{ animation:rise .9s var(--ease-out) forwards; }
+.hero[data-on] h1 .ln:nth-child(1) > span{ animation-delay:.10s; }
+.hero[data-on] h1 .ln:nth-child(2) > span{ animation-delay:.20s; }
+.hero[data-on] h1 .ln:nth-child(3) > span{ animation-delay:.30s; }
+@keyframes rise{ to{ transform:translateY(0); } }
+.fade-up{ opacity:0; transform:translateY(22px); }
+.hero[data-on] .fade-up{ animation:fadeUp .9s var(--ease-out) forwards; }
+.hero[data-on] .hero-tag{ animation-delay:.05s; }
+.hero[data-on] .lead{ animation-delay:.42s; }
+.hero[data-on] .hero-cta{ animation-delay:.52s; }
+.hero[data-on] .hero-meta{ animation-delay:.62s; }
+@keyframes fadeUp{ to{ opacity:1; transform:none; } }
+
+/* ---- ranking dashboard card ------------------------------ */
+.dash{
+  background:linear-gradient(180deg, rgba(28,28,37,.9), rgba(14,14,19,.92));
+  border:1px solid var(--line); border-radius:22px; padding:24px;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(30px) scale(.98);
+}
+.hero[data-on] .dash{ animation:fadeUp 1s var(--ease-out) .5s forwards; }
+.dash::before{ content:""; position:absolute; top:-1px; left:18px; right:18px; height:1px; background:linear-gradient(90deg,transparent,var(--lime),transparent); opacity:.5; }
+.dash-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.dash-head .t{ font-family:var(--font-mono); font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.live{ display:inline-flex; align-items:center; gap:.5em; font-family:var(--font-mono); font-size:.7rem; color:var(--lime); }
+.live .dot{ width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 0 var(--lime); animation:pulse 1.8s infinite; }
+@keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(203,249,75,.6); } 70%{ box-shadow:0 0 0 8px rgba(203,249,75,0); } 100%{ box-shadow:0 0 0 0 rgba(203,249,75,0); } }
+
+.kw{ display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-bottom:1px solid var(--line-2); }
+.kw:last-of-type{ border-bottom:0; }
+.kw .term{ font-size:.92rem; color:var(--cream); }
+.kw .term small{ display:block; font-family:var(--font-mono); font-size:.62rem; color:var(--muted-2); letter-spacing:.08em; margin-top:2px; }
+.kw .pos{ display:flex; align-items:center; gap:12px; }
+.kw .rank{ font-family:var(--font-display); font-weight:600; font-size:1.15rem; min-width:34px; text-align:right; }
+.kw .delta{ font-family:var(--font-mono); font-size:.72rem; color:var(--lime); display:inline-flex; align-items:center; gap:2px; background:rgba(203,249,75,.1); padding:3px 8px; border-radius:6px; }
+.dash-foot{ display:flex; align-items:flex-end; justify-content:space-between; margin-top:20px; padding-top:18px; border-top:1px solid var(--line); }
+.dash-foot .big{ font-family:var(--font-display); font-size:2.2rem; font-weight:600; line-height:1; }
+.dash-foot .big span{ color:var(--lime); }
+.dash-foot .cap{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2); margin-top:6px; }
+.spark{ width:120px; height:48px; }
+.spark path.line{ fill:none; stroke:var(--lime); stroke-width:2.5; stroke-linecap:round; stroke-dasharray:300; stroke-dashoffset:300; }
+.dash.drawn .spark path.line{ animation:draw 1.6s var(--ease-out) .3s forwards; }
+@keyframes draw{ to{ stroke-dashoffset:0; } }
+
+/* ============== MARQUEE / trust =========================== */
+.trust{ padding:34px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; }
+.trust .label{ text-align:center; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted-2); margin-bottom:22px; }
+.marquee{ display:flex; gap:64px; width:max-content; animation:scroll 32s linear infinite; }
+.marquee:hover{ animation-play-state:paused; }
+.marquee span{ font-family:var(--font-display); font-size:1.5rem; font-weight:500; color:var(--muted); white-space:nowrap; opacity:.7; transition:color .3s,opacity .3s; }
+.marquee span:hover{ color:var(--cream); opacity:1; }
+@keyframes scroll{ to{ transform:translateX(-50%); } }
+
+/* ============== generic reveal ============================ */
+.reveal{ opacity:0; transform:translateY(34px); transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.d1{ transition-delay:.08s; } .reveal.d2{ transition-delay:.16s; }
+.reveal.d3{ transition-delay:.24s; } .reveal.d4{ transition-delay:.32s; }
+
+.section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:54px; flex-wrap:wrap; }
+.section-head .lead{ margin-top:18px; }
+
+/* ============== STATS band ================================ */
+.stats{ padding:96px 0; }
+.stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--line); border-radius:20px; overflow:hidden; background:var(--ink-2); }
+.stat{ padding:42px 30px; border-right:1px solid var(--line); position:relative; }
+.stat:last-child{ border-right:0; }
+.stat .num{ font-family:var(--font-display); font-size:clamp(2.6rem,4.5vw,3.6rem); font-weight:600; line-height:1; letter-spacing:-.03em; }
+.stat .num .suf{ color:var(--lime); }
+.stat .desc{ color:var(--muted); font-size:.92rem; margin-top:12px; }
+
+/* ============== SERVICES ================================== */
+.services{ padding:96px 0; }
+.svc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.svc{
+  position:relative; padding:34px; border-radius:18px; background:var(--surface);
+  border:1px solid var(--line); overflow:hidden; transition:transform .5s var(--ease), border-color .4s, background .4s;
+}
+.svc::after{ content:""; position:absolute; inset:0; background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%), rgba(203,249,75,.10), transparent 60%); opacity:0; transition:opacity .4s; pointer-events:none; }
+.svc:hover{ transform:translateY(-6px); border-color:rgba(203,249,75,.35); background:var(--surface-2); }
+.svc:hover::after{ opacity:1; }
+.svc .ic{ width:48px; height:48px; border-radius:12px; background:var(--ink); border:1px solid var(--line); display:grid; place-items:center; margin-bottom:22px; color:var(--lime); }
+.svc .ic svg{ width:24px; height:24px; }
+.svc h3{ font-size:1.4rem; margin-bottom:10px; }
+.svc p{ color:var(--muted); font-size:.95rem; }
+.svc .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+.svc .tags i{ font-style:normal; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.06em; color:var(--muted); border:1px solid var(--line); padding:4px 9px; border-radius:6px; }
+.svc .idx{ position:absolute; top:26px; right:30px; font-family:var(--font-mono); font-size:.72rem; color:var(--muted-2); }
+
+/* ============== PROCESS =================================== */
+.process{ padding:96px 0; }
+.steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+.step{ padding:30px 24px; border-top:2px solid var(--line); position:relative; transition:border-color .4s; }
+.step:hover{ border-color:var(--lime); }
+.step .no{ font-family:var(--font-mono); font-size:.8rem; color:var(--lime); margin-bottom:18px; }
+.step h3{ font-size:1.35rem; margin-bottom:10px; }
+.step p{ color:var(--muted); font-size:.92rem; }
+
+/* ============== RESULTS / case ============================ */
+.results{ padding:96px 0; }
+.case-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.case{ padding:32px; border-radius:18px; border:1px solid var(--line); background:linear-gradient(180deg,var(--surface),var(--ink-2)); position:relative; overflow:hidden; }
+.case .sector{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted-2); }
+.case .metric{ font-family:var(--font-display); font-size:3.1rem; font-weight:600; line-height:1; margin:18px 0 6px; }
+.case .metric span{ color:var(--lime); }
+.case .what{ color:var(--muted); font-size:.95rem; }
+.case .bar{ height:5px; border-radius:4px; background:var(--line); margin-top:24px; overflow:hidden; }
+.case .bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg,var(--lime-deep),var(--lime)); border-radius:4px; transition:width 1.4s var(--ease-out); }
+.case.in .bar i{ width:var(--w,80%); }
+
+/* ============== ABOUT ===================================== */
+.about{ padding:96px 0; }
+.about-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:54px; align-items:center; }
+.portrait{ border-radius:20px; border:1px solid var(--line); overflow:hidden; position:relative; background:
+  linear-gradient(135deg,#1c1c25,#0e0e13); aspect-ratio:4/5; display:grid; place-items:center; }
+.portrait .mono-mark{ font-family:var(--font-display); font-weight:600; font-size:7rem; color:rgba(203,249,75,.14); letter-spacing:-.04em; }
+.portrait .badge{ position:absolute; bottom:18px; left:18px; right:18px; background:rgba(9,9,12,.7); backdrop-filter:blur(10px); border:1px solid var(--line); border-radius:13px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; }
+.portrait .badge .n{ font-weight:600; } .portrait .badge .r{ font-family:var(--font-mono); font-size:.72rem; color:var(--lime); }
+.about h2{ margin-bottom:22px; }
+.about p{ color:var(--muted); margin-bottom:18px; max-width:56ch; }
+.about p strong{ color:var(--cream); font-weight:600; }
+.about .creds{ display:flex; gap:30px; margin-top:30px; flex-wrap:wrap; }
+.about .creds .c .n{ font-family:var(--font-display); font-size:1.9rem; font-weight:600; }
+.about .creds .c .l{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-2); }
+.sig{ font-family:var(--font-display); font-size:2.2rem; color:var(--cream); margin-top:14px; transform:rotate(-3deg); display:inline-block; }
+
+/* ============== TESTIMONIALS ============================== */
+.quotes{ padding:96px 0; }
+.q-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.q{ padding:34px; border-radius:18px; border:1px solid var(--line); background:var(--surface); }
+.q .stars{ color:var(--lime); letter-spacing:3px; margin-bottom:16px; font-size:.9rem; }
+.q blockquote{ font-family:var(--font-display); font-weight:500; font-size:1.3rem; line-height:1.32; letter-spacing:-.01em; }
+.q .by{ display:flex; align-items:center; gap:12px; margin-top:24px; }
+.q .av{ width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,var(--lime),var(--lime-deep)); color:var(--ink); display:grid; place-items:center; font-weight:700; font-family:var(--font-mono); }
+.q .by .nm{ font-weight:600; font-size:.95rem; } .q .by .ro{ font-size:.82rem; color:var(--muted-2); }
+
+/* ============== PRICING =================================== */
+.pricing{ padding:96px 0; }
+.price-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+.plan{ padding:34px; border-radius:20px; border:1px solid var(--line); background:var(--ink-2); display:flex; flex-direction:column; position:relative; }
+.plan.feat{ background:linear-gradient(180deg,#1b1d12,var(--ink-2)); border-color:rgba(203,249,75,.4); box-shadow:0 30px 70px -40px rgba(203,249,75,.4); }
+.plan .pop{ position:absolute; top:-12px; right:24px; background:var(--lime); color:var(--ink); font-family:var(--font-mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; padding:5px 11px; border-radius:100px; font-weight:700; }
+.plan .pn{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+.plan .pp{ font-family:var(--font-display); font-size:3rem; font-weight:600; margin:14px 0 4px; line-height:1; }
+.plan .pp small{ font-family:var(--font-body); font-size:1rem; color:var(--muted); font-weight:400; }
+.plan .pd{ color:var(--muted); font-size:.92rem; margin-bottom:22px; }
+.plan ul{ list-style:none; display:flex; flex-direction:column; gap:13px; margin-bottom:28px; flex:1; }
+.plan li{ display:flex; gap:11px; align-items:flex-start; font-size:.92rem; color:var(--cream); }
+.plan li svg{ width:18px; height:18px; color:var(--lime); flex-shrink:0; margin-top:2px; }
+.plan .btn{ width:100%; justify-content:center; }
+
+/* ============== CTA + CONTACT ============================= */
+.cta{ padding:96px 0 110px; }
+.cta-box{ border-radius:28px; border:1px solid var(--line); background:radial-gradient(120% 140% at 0% 0%, rgba(203,249,75,.1), transparent 50%), linear-gradient(180deg,var(--surface),var(--ink-2)); padding:clamp(36px,6vw,72px); position:relative; overflow:hidden; }
+.cta-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:54px; align-items:center; }
+.cta h2{ font-size:clamp(2.2rem,4.6vw,4rem); margin-bottom:18px; }
+.cta p{ color:var(--muted); margin-bottom:6px; }
+.form{ display:flex; flex-direction:column; gap:14px; }
+.field{ position:relative; }
+.field input, .field textarea{
+  width:100%; background:var(--ink); border:1px solid var(--line); border-radius:12px; color:var(--cream);
+  font-family:var(--font-body); font-size:.95rem; padding:15px 16px; transition:border-color .3s, background .3s; resize:vertical;
+}
+.field input:focus, .field textarea:focus{ outline:none; border-color:var(--lime); background:var(--ink-2); }
+.field input::placeholder, .field textarea::placeholder{ color:var(--muted-2); }
+.form .btn{ justify-content:center; margin-top:4px; }
+.form .fine{ font-size:.78rem; color:var(--muted-2); text-align:center; }
+
+/* ============== FOOTER ==================================== */
+footer{ border-top:1px solid var(--line); padding:64px 0 40px; }
+.foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:54px; }
+.foot-brand p{ color:var(--muted); font-size:.92rem; margin-top:18px; max-width:34ch; }
+.foot-col h4{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-2); margin-bottom:18px; }
+.foot-col a{ display:block; color:var(--muted); font-size:.92rem; margin-bottom:12px; transition:color .25s; }
+.foot-col a:hover{ color:var(--lime); }
+.foot-bot{ display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid var(--line); color:var(--muted-2); font-size:.84rem; flex-wrap:wrap; gap:14px; }
+.foot-bot .mono{ font-family:var(--font-mono); }
+
+/* ============== RESPONSIVE ================================ */
+@media (max-width: 980px){
+  .hero-grid, .about-grid, .cta-grid{ grid-template-columns:1fr; gap:40px; }
+  .svc-grid, .case-grid, .q-grid, .price-grid{ grid-template-columns:1fr 1fr; }
+  .steps{ grid-template-columns:1fr 1fr; }
+  .stats-grid{ grid-template-columns:1fr 1fr; }
+  .stat:nth-child(2){ border-right:0; } .stat:nth-child(1),.stat:nth-child(2){ border-bottom:1px solid var(--line); }
+  .foot-grid{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width: 680px){
+  .nav-links{ position:fixed; inset:0 0 0 auto; width:78%; max-width:320px; flex-direction:column; justify-content:center; align-items:flex-start; gap:1.6rem; background:rgba(9,9,12,.96); backdrop-filter:blur(20px); border-left:1px solid var(--line); padding:40px; transform:translateX(100%); transition:transform .5s var(--ease); }
+  .nav-links.open{ transform:none; }
+  .nav-links a{ font-size:1.2rem; color:var(--cream); }
+  .burger{ display:flex; z-index:1001; }
+  .svc-grid, .case-grid, .q-grid, .price-grid, .steps, .stats-grid{ grid-template-columns:1fr; }
+  .stat{ border-right:0; border-bottom:1px solid var(--line); }
+  .foot-grid{ grid-template-columns:1fr; }
+  .hero-meta{ gap:18px; }
+}
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } .hero h1 .ln>span,.fade-up,.dash,.reveal{ opacity:1 !important; transform:none !important; } }
+</style>
+</head>
+
+<body>
+<div class="glow a"></div><div class="glow b"></div><div class="glow c"></div>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav" id="nav">
+  <a href="#top" class="brand"><span class="mark">TM</span> Tyler McGrath</a>
+  <div class="nav-links" id="navlinks">
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#results">Results</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact" class="btn btn-primary nav-cta">Free audit <span class="arrow">→</span></a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow hero-tag fade-up">SEO &amp; Growth Marketing Consultant</div>
+      <h1 class="display">
+        <span class="ln"><span>Get found.</span></span>
+        <span class="ln"><span>Get clients.</span></span>
+        <span class="ln"><span>Get <em>ahead</em>.</span></span>
+      </h1>
+      <p class="lead fade-up">I help businesses climb the rankings and turn search traffic into revenue — with data-driven SEO, content, and growth strategy that actually compounds.</p>
+      <div class="hero-cta fade-up">
+        <a href="#contact" class="btn btn-primary">Book a free audit <span class="arrow">→</span></a>
+        <a href="#results" class="btn btn-ghost">See the results</a>
+      </div>
+      <div class="hero-meta fade-up">
+        <div class="item"><div class="n"><span class="pct">+</span><span data-count="312" data-suffix="%">0</span></div><div class="l">Avg. organic growth</div></div>
+        <div class="item"><div class="n"><span data-count="120" data-suffix="+">0</span></div><div class="l">Clients ranked #1</div></div>
+        <div class="item"><div class="n"><span data-count="11" data-suffix=" yrs">0</span></div><div class="l">In the trenches</div></div>
+      </div>
+    </div>
+
+    <!-- live ranking dashboard -->
+    <div class="dash" id="dash" aria-hidden="true">
+      <div class="dash-head">
+        <span class="t">Keyword Rankings</span>
+        <span class="live"><span class="dot"></span> Live tracking</span>
+      </div>
+      <div class="kw">
+        <div class="term">seo agency near me <small>VOL 18,100</small></div>
+        <div class="pos"><span class="rank">#1</span><span class="delta">↑ 14</span></div>
+      </div>
+      <div class="kw">
+        <div class="term">marketing consultant <small>VOL 9,900</small></div>
+        <div class="pos"><span class="rank">#2</span><span class="delta">↑ 9</span></div>
+      </div>
+      <div class="kw">
+        <div class="term">local seo services <small>VOL 12,400</small></div>
+        <div class="pos"><span class="rank">#1</span><span class="delta">↑ 21</span></div>
+      </div>
+      <div class="kw">
+        <div class="term">best growth strategy <small>VOL 6,600</small></div>
+        <div class="pos"><span class="rank">#3</span><span class="delta">↑ 7</span></div>
+      </div>
+      <div class="dash-foot">
+        <div>
+          <div class="big">+<span data-count="247">0</span>%</div>
+          <div class="cap">Organic clicks · 90 days</div>
+        </div>
+        <svg class="spark" viewBox="0 0 120 48" preserveAspectRatio="none">
+          <path class="line" d="M2,44 L20,40 L38,42 L56,30 L74,26 L92,14 L118,4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== TRUST ===================== -->
+<section class="trust">
+  <div class="label">Trusted by founders, marketers &amp; local businesses</div>
+  <div class="marquee" id="marquee">
+    <span>Northside Dental</span><span>★</span><span>Harbor &amp; Co.</span><span>★</span><span>Velo Fitness</span><span>★</span><span>Bright Path Law</span><span>★</span><span>Maple &amp; Stone</span><span>★</span><span>Driftwood Realty</span><span>★</span>
+    <span>Northside Dental</span><span>★</span><span>Harbor &amp; Co.</span><span>★</span><span>Velo Fitness</span><span>★</span><span>Bright Path Law</span><span>★</span><span>Maple &amp; Stone</span><span>★</span><span>Driftwood Realty</span><span>★</span>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat"><div class="num"><span data-count="4.9" data-dec="1">0</span><span class="suf">M</span></div><div class="desc">Monthly organic impressions driven for clients</div></div>
+      <div class="stat"><div class="num"><span data-count="1.8" data-dec="1">0</span></div><div class="desc">Average Google position after engagement</div></div>
+      <div class="stat"><div class="num"><span data-count="63">0</span><span class="suf">%</span></div><div class="desc">Average reduction in cost-per-lead</div></div>
+      <div class="stat"><div class="num"><span data-count="92">0</span><span class="suf">%</span></div><div class="desc">Client retention past the 12-month mark</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">What I do</div>
+        <h2 class="section-title reveal d1">Everything you need to<br>win the search game.</h2>
+      </div>
+      <p class="lead reveal d2">No bloated retainers, no vanity metrics. Just the levers that move pipeline — pulled in the right order.</p>
+    </div>
+
+    <div class="svc-grid">
+      <article class="svc reveal" data-tilt>
+        <span class="idx">01</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3>Technical &amp; On-Page SEO</h3>
+        <p>Crawl, fix, and optimize every page so Google understands — and rewards — your site. Speed, schema, architecture, the works.</p>
+        <div class="tags"><i>Site audits</i><i>Core Web Vitals</i><i>Schema</i></div>
+      </article>
+      <article class="svc reveal d1" data-tilt>
+        <span class="idx">02</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V6a2 2 0 0 1 2-2h12"/><path d="M6 17h12a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H6a2 2 0 0 1 0-4z"/></svg></div>
+        <h3>Content That Ranks</h3>
+        <p>Search-intent driven content strategy and production that earns links, builds authority, and converts readers into customers.</p>
+        <div class="tags"><i>Keyword maps</i><i>Editorial</i><i>Topical authority</i></div>
+      </article>
+      <article class="svc reveal d2" data-tilt>
+        <span class="idx">03</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.3-7-10a7 7 0 0 1 14 0c0 5.7-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg></div>
+        <h3>Local SEO</h3>
+        <p>Own the map pack and your city. Google Business Profile, citations, reviews, and local landing pages that bring in nearby buyers.</p>
+        <div class="tags"><i>Map pack</i><i>GBP</i><i>Reviews</i></div>
+      </article>
+      <article class="svc reveal" data-tilt>
+        <span class="idx">04</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <h3>Growth Strategy</h3>
+        <p>A full-funnel roadmap that connects SEO, paid, email, and CRO into one compounding system — measured against revenue, not clicks.</p>
+        <div class="tags"><i>Full-funnel</i><i>CRO</i><i>Roadmaps</i></div>
+      </article>
+      <article class="svc reveal d1" data-tilt>
+        <span class="idx">05</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 13l2.5 2.5L16 9"/></svg></div>
+        <h3>Analytics &amp; Reporting</h3>
+        <p>Clean GA4 &amp; Search Console setup with dashboards you'll actually read. Know exactly what's working and where the next dollar goes.</p>
+        <div class="tags"><i>GA4</i><i>Dashboards</i><i>Attribution</i></div>
+      </article>
+      <article class="svc reveal d2" data-tilt>
+        <span class="idx">06</span>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a4 4 0 0 1 4 4c0 2-2 3-2 5"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/><path d="M5 8a7 7 0 0 1 14 0"/></svg></div>
+        <h3>Fractional CMO</h3>
+        <p>Senior marketing leadership without the full-time salary. I steer the strategy, manage the vendors, and keep the team accountable.</p>
+        <div class="tags"><i>Leadership</i><i>Vendor mgmt</i><i>Hiring</i></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROCESS ===================== -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">How it works</div>
+        <h2 class="section-title reveal d1">A simple path<br>to predictable growth.</h2>
+      </div>
+      <p class="lead reveal d2">Every engagement runs the same proven loop — so you always know what's happening and why.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="no">/ 01</div><h3>Audit</h3><p>Deep technical, content, and competitor analysis to find exactly where you're leaking traffic and revenue.</p></div>
+      <div class="step reveal d1"><div class="no">/ 02</div><h3>Strategy</h3><p>A prioritized roadmap tied to business goals — high-impact moves first, busywork never.</p></div>
+      <div class="step reveal d2"><div class="no">/ 03</div><h3>Execute</h3><p>Hands-on implementation across tech, content, and links. I build, you approve, we ship weekly.</p></div>
+      <div class="step reveal d3"><div class="no">/ 04</div><h3>Scale</h3><p>Double down on winners, compound the gains, and turn rankings into a reliable revenue channel.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RESULTS ===================== -->
+<section class="results" id="results">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">Proof, not promises</div>
+        <h2 class="section-title reveal d1">Numbers that<br>moved the business.</h2>
+      </div>
+      <p class="lead reveal d2">A few recent outcomes. Real clients, real growth — full case studies available on request.</p>
+    </div>
+    <div class="case-grid">
+      <article class="case reveal" style="--w:94%">
+        <div class="sector">Dental · Local</div>
+        <div class="metric">+<span>318</span>%</div>
+        <div class="what">organic patient bookings in 7 months by owning the local map pack and rebuilding service pages.</div>
+        <div class="bar"><i></i></div>
+      </article>
+      <article class="case reveal d1" style="--w:88%">
+        <div class="sector">B2B SaaS</div>
+        <div class="metric"><span>#1</span></div>
+        <div class="what">ranking for 40+ high-intent commercial keywords, driving a 3.6× increase in demo requests.</div>
+        <div class="bar"><i></i></div>
+      </article>
+      <article class="case reveal d2" style="--w:79%">
+        <div class="sector">E-commerce</div>
+        <div class="metric">−<span>61</span>%</div>
+        <div class="what">cost per acquisition by shifting spend from paid to compounding organic search revenue.</div>
+        <div class="bar"><i></i></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="about">
+  <div class="wrap about-grid">
+    <div class="portrait reveal">
+      <div class="mono-mark">TM</div>
+      <div class="badge"><div class="n">Tyler McGrath</div><div class="r">SEO · GROWTH</div></div>
+    </div>
+    <div>
+      <div class="eyebrow reveal">Who you're working with</div>
+      <h2 class="section-title reveal d1">No agency layers.<br>Just a specialist who ships.</h2>
+      <p class="reveal d2">For over a decade I've helped local businesses, startups, and e-commerce brands turn search into their most profitable channel. <strong>When you hire me, you get me</strong> — not an account manager passing your work to a junior team.</p>
+      <p class="reveal d2">I'm obsessive about two things: the data behind every decision, and the revenue at the end of it. Rankings are a means, not the scoreboard. The scoreboard is your pipeline.</p>
+      <div class="creds reveal d3">
+        <div class="c"><div class="n">120+</div><div class="l">Sites optimized</div></div>
+        <div class="c"><div class="n">11 yrs</div><div class="l">Experience</div></div>
+        <div class="c"><div class="n">100%</div><div class="l">Senior-led</div></div>
+      </div>
+      <span class="sig reveal d3">Tyler</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="quotes">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">Kind words</div>
+        <h2 class="section-title reveal d1">Clients who climbed.</h2>
+      </div>
+    </div>
+    <div class="q-grid">
+      <figure class="q reveal">
+        <div class="stars">★★★★★</div>
+        <blockquote>"We went from page 3 to the top of Google in under six months. Tyler doesn't just talk strategy — he does the work and the numbers follow."</blockquote>
+        <figcaption class="by"><span class="av">SR</span><div><div class="nm">Sarah Reyes</div><div class="ro">Owner, Northside Dental</div></div></figcaption>
+      </figure>
+      <figure class="q reveal d1">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The clearest, most honest marketing partner I've worked with. Every report ties back to revenue. Our demo pipeline tripled."</blockquote>
+        <figcaption class="by"><span class="av">DM</span><div><div class="nm">Daniel Morrow</div><div class="ro">Founder, Harbor &amp; Co.</div></div></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">Engagements</div>
+        <h2 class="section-title reveal d1">Pick your altitude.</h2>
+      </div>
+      <p class="lead reveal d2">Flexible, no long lock-ins. Start with an audit and scale into whatever fits.</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan reveal">
+        <div class="pn">Audit</div>
+        <div class="pp">$1,500<small></small></div>
+        <div class="pd">A one-time, deep-dive diagnosis with a prioritized action plan.</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Full technical &amp; content audit</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Competitor gap analysis</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> 90-day roadmap</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> 60-min strategy call</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Get started</a>
+      </div>
+      <div class="plan feat reveal d1">
+        <span class="pop">Most popular</span>
+        <div class="pn">Growth Retainer</div>
+        <div class="pp">$3,800<small>/mo</small></div>
+        <div class="pd">Done-for-you SEO &amp; content, executed week over week.</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Everything in Audit</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Ongoing on-page &amp; technical work</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> 4 content pieces / month</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Link building &amp; outreach</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Live dashboard + monthly review</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Book a call <span class="arrow">→</span></a>
+      </div>
+      <div class="plan reveal d2">
+        <div class="pn">Fractional CMO</div>
+        <div class="pp">Custom<small></small></div>
+        <div class="pd">Senior marketing leadership across every channel.</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Full growth strategy ownership</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Team &amp; vendor management</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Paid + SEO + email + CRO</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg> Weekly leadership sync</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Let's talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA / CONTACT ===================== -->
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <div class="cta-grid">
+        <div>
+          <div class="eyebrow">Free, no-pressure</div>
+          <h2 style="margin-top:18px;">Let's find your<br>next 10,000 visitors.</h2>
+          <p>Tell me a little about your business and I'll send back a free mini-audit within 48 hours — three things you can fix this week, no strings.</p>
+          <p style="margin-top:18px;color:var(--cream);font-weight:600;">hello@tylermcgrath.co · @tylermcgrath</p>
+        </div>
+        <form class="form" id="form" onsubmit="return handleSubmit(event)">
+          <div class="field"><input type="text" name="name" placeholder="Your name" required /></div>
+          <div class="field"><input type="email" name="email" placeholder="Email address" required /></div>
+          <div class="field"><input type="url" name="site" placeholder="Website URL" /></div>
+          <div class="field"><textarea name="msg" rows="3" placeholder="What's your biggest growth challenge?"></textarea></div>
+          <button type="submit" class="btn btn-primary">Send my free audit <span class="arrow">→</span></button>
+          <div class="fine" id="formNote">Replies within one business day. Your details stay private.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand"><span class="mark">TM</span> Tyler McGrath</a>
+        <p>SEO &amp; growth marketing consulting for businesses that want to be found and chosen.</p>
+      </div>
+      <div class="foot-col"><h4>Services</h4><a href="#services">Technical SEO</a><a href="#services">Content</a><a href="#services">Local SEO</a><a href="#services">Fractional CMO</a></div>
+      <div class="foot-col"><h4>Company</h4><a href="#results">Case studies</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a><a href="#process">Process</a></div>
+      <div class="foot-col"><h4>Connect</h4><a href="#contact">Email</a><a href="#">LinkedIn</a><a href="#">X / Twitter</a><a href="#contact">Book a call</a></div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 Tyler McGrath. All rights reserved.</span>
+      <span class="mono">Built to rank ↗</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---- nav scroll state ---- */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
+
+/* ---- mobile menu ---- */
+const burger = document.getElementById('burger');
+const links = document.getElementById('navlinks');
+burger.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+/* ---- hero load ---- */
+window.addEventListener('load', () => {
+  document.querySelector('.hero').setAttribute('data-on','');
+});
+
+/* ---- count-up ---- */
+function animateCount(el){
+  const target = parseFloat(el.dataset.count);
+  const dec = parseInt(el.dataset.dec || '0', 10);
+  const suffix = el.dataset.suffix || '';
+  const dur = 1500; const start = performance.now();
+  function tick(now){
+    const p = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = (target * eased).toFixed(dec);
+    el.textContent = val + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = (dec ? target.toFixed(dec) : target) + suffix;
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ---- intersection reveals ---- */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll?.('[data-count]').forEach(animateCount);
+    if (e.target.matches?.('[data-count]')) animateCount(e.target);
+    io.unobserve(e.target);
+  });
+}, { threshold:.2 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* hero meta + dash counters fire on load */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.hero [data-count], .dash [data-count]').forEach(animateCount);
+    document.getElementById('dash').classList.add('drawn');
+  }, 700);
+});
+
+/* ---- pointer glow on service cards ---- */
+document.querySelectorAll('.svc').forEach(card => {
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+});
+
+/* ---- magnetic primary buttons ---- */
+document.querySelectorAll('.btn-primary').forEach(btn => {
+  btn.addEventListener('pointermove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width/2) * .2;
+    const y = (e.clientY - r.top - r.height/2) * .3;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('pointerleave', () => btn.style.transform = '');
+});
+
+/* ---- form (demo) ---- */
+function handleSubmit(e){
+  e.preventDefault();
+  const note = document.getElementById('formNote');
+  note.textContent = "✓ Thanks — your free mini-audit is on its way. Check your inbox within 48 hours.";
+  note.style.color = 'var(--lime)';
+  e.target.querySelector('button').textContent = 'Sent ✓';
+  return false;
+}
+</script>
+</body>
+</html>
