@@ -66,10 +66,10 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.9;letter-spa
 .burger span{width:24px;height:2px;background:var(--ink);}
 
 /* =============== HERO =============== */
-.hero{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;padding-top:70px;min-height:100svh;}
-.hero-left{padding:48px max(var(--gut),calc((100vw - var(--maxw))/2 + var(--gut)));display:flex;flex-direction:column;justify-content:center;}
-.hero .label{margin-bottom:26px;}
-.hero h1{font-size:clamp(2.7rem,6.6vw,5.9rem);font-weight:800;line-height:.92;letter-spacing:-.035em;}
+.hero{display:grid;grid-template-columns:1fr 1.06fr;align-items:stretch;padding-top:70px;min-height:100svh;}
+.hero-left{padding:44px max(var(--gut),calc((100vw - var(--maxw))/2 + var(--gut)));display:flex;flex-direction:column;justify-content:center;}
+.hero .label{margin-bottom:24px;}
+.hero h1{font-size:clamp(2.5rem,5.6vw,5.05rem);font-weight:800;line-height:.92;letter-spacing:-.035em;}
 .hero h1 .row{display:block;overflow:hidden;}
 .hero h1 .row>span{display:inline-block;transform:translateY(110%);}
 .hero .sub{color:var(--grey);font-size:1.05rem;line-height:1.55;max-width:34ch;margin-top:28px;}
@@ -78,22 +78,10 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.9;letter-spa
 .scroll-tip .a{display:inline-block;animation:bob 1.8s var(--ease) infinite;}
 @keyframes bob{50%{transform:translateY(4px);}}
 
-/* concrete monolith art */
-.hero-art{position:relative;overflow:hidden;background:linear-gradient(168deg,#e9e9e7 0%,#cfcfcd 48%,#b4b4b2 100%);display:flex;align-items:center;justify-content:center;}
-.hero-art .sky{position:absolute;width:60%;aspect-ratio:1;left:62%;top:30%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,255,255,.85),transparent 65%);}
-.hero-art .floor{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,rgba(150,150,148,0),rgba(120,120,118,.5));}
-.monolith{position:relative;z-index:2;transform:perspective(1100px) rotateY(-15deg) rotateX(6deg);transform-style:preserve-3d;transition:transform .3s var(--ease-out);}
-.bigword{font-family:var(--display);font-weight:900;font-size:clamp(7rem,15vw,14rem);letter-spacing:-.05em;line-height:.8;color:#EDEDEB;
-  text-shadow:
-    1px 1px #d6d6d4,2px 2px #d1d1cf,3px 3px #ccccca,4px 4px #c7c7c5,5px 5px #c2c2c0,6px 6px #bdbdbb,
-    7px 7px #b8b8b6,8px 8px #b3b3b1,9px 9px #aeaeac,10px 10px #a9a9a7,11px 11px #a4a4a2,12px 12px #9f9f9d,
-    13px 13px #9a9a98,14px 14px #959593,15px 15px #909090,16px 16px #8b8b8b,17px 17px #868686,18px 18px #818181,
-    22px 22px 18px rgba(0,0,0,.22),40px 42px 50px rgba(0,0,0,.3);}
-.hero-art .figure{position:absolute;z-index:3;bottom:20%;left:43%;width:14px;height:42px;}
-.hero-art .figure svg{width:100%;height:100%;fill:#3a3a3a;}
-.hero-art .grain{position:absolute;inset:0;z-index:4;opacity:.06;pointer-events:none;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-.hero-art .vig{position:absolute;inset:0;z-index:4;pointer-events:none;box-shadow:inset 0 0 160px 30px rgba(40,40,40,.35);}
+/* hero image (concrete RMA) — drop your render in at redesign/hero.jpg */
+.hero-art{position:relative;overflow:hidden;background:linear-gradient(168deg,#e9e9e7,#c6c6c4 52%,#a8a8a6);}
+.hero-art::after{content:"RMA";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:13vw;letter-spacing:-.05em;color:rgba(10,10,11,.06);pointer-events:none;z-index:0;}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;z-index:1;transition:transform .3s var(--ease-out);}
 
 /* hero load */
 .hero[data-on] h1 .row>span{animation:rise .9s var(--ease-out) forwards;}
@@ -123,7 +111,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.9;letter-spa
 .rv.in{opacity:1;transform:none;}
 .rv.d1{transition-delay:.07s;}.rv.d2{transition-delay:.14s;}.rv.d3{transition-delay:.21s;}.rv.d4{transition-delay:.28s;}
 .sec{padding:92px 0;}
-.colgrid{display:grid;grid-template-columns:0.82fr 2.3fr;gap:54px;}
+.colgrid{display:grid;grid-template-columns:0.74fr 2.5fr;gap:58px;}
 .col-intro .label{display:block;margin-bottom:20px;}
 .col-intro h2{margin-bottom:22px;}
 .col-intro .body{max-width:30ch;margin-bottom:26px;}
@@ -183,7 +171,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.9;letter-spa
 
 /* =============== FOOTER =============== */
 .footwrap{border-top:1px solid var(--line);}
-.foot{display:grid;grid-template-columns:1fr 1.2fr .9fr .9fr 1.3fr;gap:0;}
+.foot{display:grid;grid-template-columns:1fr 1.15fr .8fr .8fr .8fr 1.15fr;gap:0;}
 .cta-card{background:var(--ink);color:#fff;padding:40px 34px;display:flex;flex-direction:column;justify-content:center;}
 .cta-card h3{font-size:1.5rem;line-height:.96;margin-bottom:14px;}
 .cta-card p{color:rgba(255,255,255,.6);font-size:.82rem;line-height:1.5;margin-bottom:22px;}
@@ -278,12 +266,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.9;letter-spa
     <div class="scroll-tip fade"><span class="a">↓</span> Scroll to explore</div>
   </div>
   <div class="hero-art" id="art">
-    <div class="sky"></div>
-    <div class="monolith" id="monolith"><div class="bigword">RMA</div></div>
-    <div class="figure"><svg viewBox="0 0 14 42"><path d="M7 0a3 3 0 110 6 3 3 0 010-6zM4 8h6l1 13-2 1-1-8-1 8-2-1zM5 22l1 9-1 11H4l-1-11zM9 22l1 9-1 11h-1l-1-11z"/></svg></div>
-    <div class="floor"></div>
-    <div class="grain"></div>
-    <div class="vig"></div>
+    <img class="hero-img" src="hero.jpg" alt="RMA — concrete typographic sculpture" onerror="this.remove()" />
   </div>
 </header>
 
@@ -424,6 +407,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.9;letter-spa
       </div>
       <div class="foot-col"><h5>Services</h5><a href="#services" class="fl">AI Search Optimization</a><a href="#services" class="fl">SEO</a><a href="#services" class="fl">Paid Media</a><a href="#services" class="fl">Web Design</a><a href="#services" class="fl">Social Media</a><a href="#services" class="fl">Branding</a></div>
       <div class="foot-col"><h5>Company</h5><a href="#approach" class="fl">About Us</a><a href="#work" class="fl">Case Studies</a><a href="#contact" class="fl">Careers</a><a href="#contact" class="fl">Contact</a></div>
+      <div class="foot-col"><h5>Resources</h5><a href="#insights" class="fl">Insights</a><a href="#" class="fl">Guides</a><a href="#" class="fl">Glossary</a><a href="#" class="fl">Newsletters</a></div>
       <div class="foot-col news"><h5>Stay Ahead Of The Curve</h5><p>Get insights on growth marketing and AI search.</p>
         <form onsubmit="return subscribe(event)"><input type="email" placeholder="Enter your email" required aria-label="Email" /><button type="submit" aria-label="Subscribe">→</button></form>
         <p id="newsNote" style="display:none;margin-top:12px;"></p>
@@ -454,12 +438,13 @@ function animateCount(el){
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');e.target.querySelectorAll?.('[data-count]').forEach(animateCount);io.unobserve(e.target);});},{threshold:.2});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-/* hero monolith parallax */
-const art=document.getElementById('art'),mono=document.getElementById('monolith');
-if(matchMedia('(pointer:fine)').matches){
+/* hero image subtle parallax */
+const art=document.getElementById('art');
+const heroImg=art&&art.querySelector('.hero-img');
+if(heroImg&&matchMedia('(pointer:fine)').matches){
   art.addEventListener('pointermove',e=>{const r=art.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-    mono.style.transform=`perspective(1100px) rotateY(${-15+x*8}deg) rotateX(${6-y*8}deg)`;});
-  art.addEventListener('pointerleave',()=>mono.style.transform='');
+    heroImg.style.transform=`scale(1.05) translate(${-x*14}px,${-y*14}px)`;});
+  art.addEventListener('pointerleave',()=>{heroImg.style.transform='';});
 }
 document.querySelectorAll('.mag').forEach(b=>{
   b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.16}px,${(e.clientY-r.top-r.height/2)*.28}px)`;});
