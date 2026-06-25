@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RMA — Relative Marketing Agency · We Engineer Growth That Compounds</title>
+<meta name="description" content="RMA is a full-service marketing agency. Strategy, creativity, and technology — we build marketing systems that compound." />
+<meta name="theme-color" content="#070A14" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<script>
+(function(){try{var t=localStorage.getItem('rma-theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}document.documentElement.classList.add('anim');})();
+</script>
+<style>
+/* =========================================================
+   RMA — Relative Marketing Agency · v3
+   Premium editorial. Dark showpiece hero, light body, tokens,
+   light+dark themes, WCAG-minded.
+   ========================================================= */
+:root{
+  color-scheme:light;
+  --bg:#FFFFFF; --surface:#F5F6F8; --surface-2:#ECEEF2;
+  --ink:#0B0E16; --muted:#4A4F5C; --muted-2:#777C89;
+  --line:rgba(11,14,22,.12); --line-soft:rgba(11,14,22,.06);
+  --accent:#1E4FE6; --accent-2:#5C7CFF; --accent-hover:#1A43C4; --link:#1A43C4; --focus:#1E4FE6;
+  --panel:#0B0E16; --panel-ink:#F4F6FB; --panel-muted:rgba(255,255,255,.6); --panel-line:rgba(255,255,255,.12);
+
+  /* hero palette (constant, both themes) */
+  --hero-1:#0A1330; --hero-2:#070A16; --hero-3:#0C1024;
+  --hero-ink:#F3F6FF; --hero-muted:rgba(220,228,255,.62); --hero-line:rgba(140,165,255,.13);
+  --glow:#2C5BFF;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"General Sans",system-ui,sans-serif;
+  --fs-xs:.72rem;--fs-sm:.84rem;--fs-base:1rem;--fs-md:1.1rem;--fs-lg:1.4rem;--fs-xl:2rem;
+  --fs-2xl:clamp(1.9rem,3.6vw,2.9rem);--fs-hero:clamp(2.9rem,6.6vw,6rem);
+  --ls-tight:-.035em;
+  --s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.5rem;--s6:2rem;--s7:3rem;--s8:4rem;--s9:6rem;--s10:8rem;
+  --maxw:1320px;--gut:clamp(20px,4vw,40px);
+  --ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);--dur:.4s;
+  --r:14px;
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#080A11;--surface:#10131C;--surface-2:#171B26;
+  --ink:#EDEFF5;--muted:#A6ABBA;--muted-2:#71778A;
+  --line:rgba(255,255,255,.13);--line-soft:rgba(255,255,255,.06);
+  --accent:#5C7CFF;--accent-2:#88A0FF;--accent-hover:#7D97FF;--link:#88A0FF;--focus:#7D97FF;
+  --panel:#0C1020;--panel-ink:#EDEFF5;--panel-muted:rgba(255,255,255,.62);--panel-line:rgba(255,255,255,.12);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#080A11;--surface:#10131C;--surface-2:#171B26;--ink:#EDEFF5;--muted:#A6ABBA;--muted-2:#71778A;
+  --line:rgba(255,255,255,.13);--line-soft:rgba(255,255,255,.06);--accent:#5C7CFF;--accent-2:#88A0FF;--accent-hover:#7D97FF;--link:#88A0FF;--focus:#7D97FF;
+  --panel:#0C1020;--panel-ink:#EDEFF5;--panel-muted:rgba(255,255,255,.62);--panel-line:rgba(255,255,255,.12);
+}}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden;transition:background var(--dur),color var(--dur);}
+::selection{background:var(--accent);color:#fff;}
+a{color:inherit;text-decoration:none;}img{max-width:100%;display:block;}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px;}
+.vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.skip{position:fixed;left:var(--gut);top:var(--s3);z-index:3000;background:var(--ink);color:var(--bg);padding:var(--s3) var(--s4);font-weight:600;font-size:var(--fs-sm);transform:translateY(-180%);transition:transform var(--dur) var(--ease);}
+.skip:focus{transform:none;}
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut);}
+
+h1,h2,h3,h4{font-family:var(--display);font-weight:800;line-height:.92;letter-spacing:var(--ls-tight);text-transform:uppercase;}
+.kicker{display:inline-flex;align-items:center;gap:.7em;font-weight:600;font-size:var(--fs-xs);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.kicker::before{content:"";width:22px;height:2px;background:var(--accent);}
+.title-lg{font-size:var(--fs-2xl);}
+.body{color:var(--muted);font-size:var(--fs-base);line-height:1.65;}
+.accent{color:var(--accent);}
+
+.rma{display:block;height:auto;color:var(--ink);}
+.rma .r,.rma .a{stroke:currentColor;} .rma .m{stroke:var(--accent);}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.7em;font-family:var(--body);font-weight:600;font-size:var(--fs-sm);letter-spacing:.03em;text-transform:uppercase;padding:.95rem 1.5rem;border:1.5px solid var(--ink);background:none;color:var(--ink);cursor:pointer;border-radius:100px;transition:background var(--dur),color var(--dur),border-color var(--dur),transform var(--dur);}
+.btn .ar{transition:transform var(--dur) var(--ease);}.btn:hover .ar{transform:translateX(4px);}
+.btn-fill{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-fill:hover{background:var(--accent-hover);border-color:var(--accent-hover);}
+.btn-line:hover{background:var(--ink);color:var(--bg);}
+.arrowlink{display:inline-flex;align-items:center;gap:.7em;font-weight:600;font-size:var(--fs-sm);letter-spacing:.05em;text-transform:uppercase;}
+.arrowlink .o{width:42px;height:42px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;transition:background var(--dur),color var(--dur),transform var(--dur);}
+.arrowlink:hover .o{background:var(--accent);border-color:var(--accent);color:#fff;transform:rotate(45deg);}
+
+/* ---------- NAV (overlays dark hero, solid on scroll) ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:var(--s5);padding:var(--s4) var(--gut);color:#fff;border-bottom:1px solid transparent;transition:background var(--dur),color var(--dur),border-color var(--dur),padding var(--dur);}
+.nav.scrolled{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(12px);color:var(--ink);border-color:var(--line);padding-block:.7rem;}
+.logo{display:flex;align-items:center;gap:.7rem;}
+.logo .rma{height:30px;}
+.logo .tag{font-weight:600;font-size:.52rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.6);line-height:1.3;}
+.nav.scrolled .logo .tag{color:var(--muted);}
+.nav-mid{display:flex;align-items:center;gap:var(--s6);}
+.nav-mid a{font-size:var(--fs-sm);font-weight:600;letter-spacing:.04em;text-transform:uppercase;position:relative;padding:4px 0;}
+.nav-mid a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--accent-2);transition:width var(--dur) var(--ease);}
+.nav-mid a:hover::after,.nav-mid a:focus-visible::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:var(--s4);}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border:1.5px solid rgba(255,255,255,.28);background:none;color:inherit;cursor:pointer;border-radius:50%;transition:border-color var(--dur),background var(--dur);}
+.nav.scrolled .icon-btn{border-color:var(--line);}
+.icon-btn:hover{border-color:currentColor;}
+.icon-btn svg{width:18px;height:18px;}
+.theme-toggle .moon{display:none;}:root[data-theme="dark"] .theme-toggle .sun{display:none;}:root[data-theme="dark"] .theme-toggle .moon{display:block;}
+.nav-cta{padding:.6rem 1.1rem;font-size:.72rem;background:#fff;color:#0B0E16;border-color:#fff;}
+.nav-cta:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+.nav.scrolled .nav-cta{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+.nav.scrolled .nav-cta:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px;}
+.burger span{width:24px;height:2px;background:currentColor;}
+
+/* ---------- HERO (dark showpiece) ---------- */
+.hero{position:relative;min-height:100svh;
+  background:radial-gradient(120% 120% at 78% 18%,var(--hero-1) 0%,var(--hero-3) 42%,var(--hero-2) 100%);
+  color:var(--hero-ink);overflow:hidden;}
+.hero-inner{position:relative;z-index:3;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;min-height:100svh;padding-top:84px;}
+.hero .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--hero-line) 1px,transparent 1px),linear-gradient(90deg,var(--hero-line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(80% 80% at 70% 35%,#000 25%,transparent 100%);}
+.hero .grain{position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.hero-left{position:relative;z-index:3;padding:var(--s7) 0 var(--s7) max(var(--gut),calc((100vw - var(--maxw))/2 + var(--gut)));padding-right:var(--s6);}
+.hero .kicker{color:var(--hero-muted);margin-bottom:var(--s5);}
+.hero .kicker::before{background:var(--accent-2);}
+.hero h1{font-size:var(--fs-hero);line-height:.9;letter-spacing:-.04em;color:#fff;}
+.hero h1 .row{display:block;overflow:hidden;}
+.hero h1 .row>span{display:inline-block;}
+.hero h1 .accent{color:var(--accent-2);}
+.hero .sub{color:var(--hero-muted);font-size:var(--fs-md);max-width:36ch;margin-top:var(--s5);}
+.hero .cta-row{display:flex;align-items:center;gap:var(--s5);margin-top:var(--s6);flex-wrap:wrap;}
+.hero .cta-row .arrowlink{color:#fff;}
+.hero .trust{margin-top:var(--s8);display:flex;align-items:center;gap:var(--s5);flex-wrap:wrap;}
+.hero .trust .lbl{font-size:var(--fs-xs);letter-spacing:.16em;text-transform:uppercase;color:var(--hero-muted);}
+.hero .trust .names{display:flex;gap:var(--s5);flex-wrap:wrap;}
+.hero .trust .names span{font-family:var(--display);font-weight:700;font-size:1.05rem;color:rgba(255,255,255,.5);}
+
+/* hero stage : dimensional RMA monogram */
+.hero-stage{position:relative;z-index:2;height:100%;min-height:480px;display:grid;place-items:center;}
+.hero-stage .halo{position:absolute;width:62%;aspect-ratio:1;left:54%;top:46%;transform:translate(-50%,-50%);background:radial-gradient(circle,color-mix(in srgb,var(--glow) 70%,transparent),transparent 62%);filter:blur(30px);}
+.mono{position:relative;width:74%;max-width:540px;transition:transform .3s var(--ease-out);transform-style:preserve-3d;}
+.mono svg{width:100%;height:auto;display:block;}
+.mono .depth{position:absolute;inset:0;z-index:1;color:#05media;}
+.mono .depth-1{color:#0a1126;transform:translate(14px,18px);}
+.mono .depth-2{color:#0c1530;transform:translate(8px,11px);}
+.mono .face{position:relative;z-index:3;color:#E9EEFF;}
+.mono .face .m{stroke:url(#mg);filter:drop-shadow(0 0 18px rgba(60,100,255,.85));}
+.chip{position:absolute;z-index:4;background:rgba(10,16,38,.66);backdrop-filter:blur(10px);border:1px solid var(--hero-line);border-radius:12px;padding:.7rem .9rem;display:flex;align-items:center;gap:.6rem;box-shadow:0 20px 50px -18px rgba(0,0,0,.7);}
+.chip .v{font-family:var(--display);font-weight:800;font-size:1.05rem;color:#7DF2A8;}
+.chip .v.blue{color:var(--accent-2);}
+.chip .t{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-muted);line-height:1.3;}
+.chip.c1{top:12%;right:4%;}.chip.c2{bottom:14%;left:0%;}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:#7DF2A8;box-shadow:0 0 0 0 #7DF2A8;animation:pulse 1.8s infinite;}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(125,242,168,0);}100%{box-shadow:0 0 0 0 rgba(125,242,168,0);}}
+
+/* entrance */
+@keyframes rise{from{transform:translateY(115%);}to{transform:translateY(0);}}
+@keyframes fade{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+html.anim .hero h1 .row>span{transform:translateY(115%);animation:rise .9s var(--ease-out) forwards;}
+html.anim .hero h1 .row:nth-child(1)>span{animation-delay:.12s;}
+html.anim .hero h1 .row:nth-child(2)>span{animation-delay:.22s;}
+html.anim .hero h1 .row:nth-child(3)>span{animation-delay:.32s;}
+html.anim .hero .fade{opacity:0;animation:fade .8s var(--ease-out) forwards;}
+html.anim .hero .kicker{animation-delay:.05s;}
+html.anim .hero .sub{animation-delay:.44s;}
+html.anim .hero .cta-row{animation-delay:.54s;}
+html.anim .hero .trust{animation-delay:.64s;}
+html.anim .hero-stage{opacity:0;animation:fade 1.1s var(--ease-out) .3s forwards;}
+html.anim .chip{opacity:0;animation:fade .7s var(--ease-out) forwards;}
+html.anim .chip.c1{animation-delay:1.1s;}html.anim .chip.c2{animation-delay:1.3s;}
+
+/* ---------- reveal / sections ---------- */
+html.anim .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);}
+html.anim .rv.in{opacity:1;transform:none;}
+.rv.d1{transition-delay:.07s;}.rv.d2{transition-delay:.14s;}.rv.d3{transition-delay:.21s;}.rv.d4{transition-delay:.28s;}
+.sec{padding:var(--s9) 0;}
+.sechead{display:grid;grid-template-columns:auto 1fr auto;gap:var(--s5);align-items:end;margin-bottom:var(--s8);}
+.sechead .ix{font-family:var(--display);font-weight:800;font-size:1rem;color:var(--accent);letter-spacing:.04em;}
+.sechead h2{font-size:var(--fs-2xl);}
+.sechead .rule{height:1px;background:var(--line);align-self:center;margin-bottom:8px;}
+.sechead .body{max-width:30ch;}
+
+/* APPROACH */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1.5px solid var(--ink);}
+.step{padding:var(--s5) var(--s4) var(--s5) 0;border-right:1px solid var(--line);}
+.step:last-child{border-right:0;}
+.step .no{font-family:var(--display);font-weight:800;font-size:1.6rem;}
+.step .ic{margin:var(--s5) 0;color:var(--accent);}.step .ic svg{width:26px;height:26px;}
+.step h4{font-size:var(--fs-sm);letter-spacing:.04em;margin-bottom:8px;}
+.step p{color:var(--muted);font-size:var(--fs-xs);line-height:1.5;}
+
+/* RESULTS band (dark navy gradient) */
+.results{margin-top:var(--s7);border-radius:var(--r);overflow:hidden;background:radial-gradient(120% 140% at 85% 10%,var(--hero-1),var(--hero-2));color:var(--hero-ink);border:1px solid var(--panel-line);position:relative;}
+.results .inner{display:grid;grid-template-columns:.9fr 2fr;gap:var(--s6);align-items:center;padding:var(--s6) var(--s7);position:relative;z-index:2;}
+.results .glow{position:absolute;width:40%;aspect-ratio:1;right:-6%;top:-30%;background:radial-gradient(circle,color-mix(in srgb,var(--glow) 55%,transparent),transparent 65%);filter:blur(30px);z-index:1;}
+.results .head .t{font-weight:700;font-size:var(--fs-sm);letter-spacing:.1em;text-transform:uppercase;}
+.results .head .spark{width:100%;max-width:200px;height:50px;margin-top:var(--s4);}
+.results .head .spark path{fill:none;stroke:var(--accent-2);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;}
+.results.in .head .spark path{animation:draw 1.6s var(--ease-out) forwards;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+.results .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s5);}
+.results .st .n{font-family:var(--display);font-weight:800;font-size:clamp(2rem,3vw,2.7rem);line-height:1;}
+.results .st .n .u{color:var(--accent-2);}
+.results .st .l{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--hero-muted);margin-top:8px;line-height:1.4;}
+
+/* SERVICES — bento */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);}
+.svc{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:var(--s5);min-height:200px;display:flex;flex-direction:column;overflow:hidden;transition:transform var(--dur) var(--ease),border-color var(--dur),background var(--dur);}
+.svc:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));}
+.svc .ic{width:44px;height:44px;border-radius:11px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;color:var(--accent);margin-bottom:auto;}
+.svc .ic svg{width:22px;height:22px;}
+.svc h4{font-size:var(--fs-sm);letter-spacing:.02em;margin:var(--s5) 0 8px;}
+.svc p{color:var(--muted);font-size:var(--fs-xs);line-height:1.5;}
+.svc .sn{position:absolute;top:var(--s5);right:var(--s5);font-size:.66rem;font-weight:600;color:var(--muted-2);}
+.svc.feature{grid-column:span 2;grid-row:span 2;background:radial-gradient(120% 120% at 85% 12%,var(--hero-1),var(--hero-2));color:var(--hero-ink);border-color:var(--panel-line);justify-content:space-between;}
+.svc.feature .ic{background:rgba(255,255,255,.06);border-color:var(--hero-line);color:var(--accent-2);}
+.svc.feature h4{font-size:var(--fs-xl);margin-top:var(--s6);}
+.svc.feature p{color:var(--hero-muted);font-size:var(--fs-sm);max-width:34ch;}
+.svc.feature .sn{color:var(--hero-muted);}
+.svc.feature .arrowlink{color:#fff;margin-top:var(--s5);}
+
+/* CASE */
+.case{display:grid;grid-template-columns:1.1fr 1fr;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);}
+.case .visual{position:relative;min-height:340px;background:radial-gradient(120% 120% at 30% 20%,var(--hero-1),var(--hero-2));overflow:hidden;display:flex;align-items:flex-end;padding:var(--s5);}
+.case .visual .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--hero-line) 1px,transparent 1px),linear-gradient(90deg,var(--hero-line) 1px,transparent 1px);background-size:46px 46px;mask-image:radial-gradient(70% 70% at 40% 40%,#000,transparent);}
+.case .visual .mono{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:56%;}
+.case .visual .tag{position:relative;z-index:3;font-weight:600;font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--hero-muted);}
+.case .info{padding:var(--s7);display:flex;flex-direction:column;justify-content:center;background:var(--surface);}
+.case .info .sector{font-weight:600;font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s4);}
+.case .info .big{font-family:var(--display);font-weight:800;font-size:clamp(2.8rem,5vw,3.8rem);line-height:.95;letter-spacing:-.03em;}
+.case .info .big .u{color:var(--accent);}
+.case .info .cap{color:var(--muted);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.06em;margin-top:6px;}
+.case .info .row2{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s5);margin-top:var(--s6);}
+.case .info .kv .n{font-family:var(--display);font-weight:800;font-size:1.5rem;}
+.case .info .kv .l{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.case .info .ch{width:130px;height:60px;flex-shrink:0;}
+.case .info .ch path{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:280;stroke-dashoffset:280;}
+.case .info .ch circle{fill:var(--accent);opacity:0;}
+.case.in .info .ch path{animation:draw 1.6s var(--ease-out) forwards;}
+.case.in .info .ch circle{animation:pop .3s var(--ease-out) 1.5s forwards;}
+@keyframes pop{to{opacity:1;}}
+
+/* INDUSTRIES */
+.ind-row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);}
+.ind{display:flex;align-items:center;gap:var(--s4);padding:var(--s5);border:1px solid var(--line);border-radius:12px;transition:border-color var(--dur),background var(--dur);}
+.ind:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--surface);}
+.ind .ic{color:var(--accent);}.ind .ic svg{width:24px;height:24px;}
+.ind .nm{font-weight:600;font-size:var(--fs-sm);}
+
+/* CTA */
+.cta-band{margin-top:var(--s9);border-radius:var(--r);overflow:hidden;position:relative;background:radial-gradient(120% 140% at 80% 10%,var(--hero-1),var(--hero-2));color:var(--hero-ink);padding:var(--s8) var(--s7);display:grid;grid-template-columns:1.3fr .7fr;gap:var(--s6);align-items:center;border:1px solid var(--panel-line);}
+.cta-band .glow{position:absolute;width:46%;aspect-ratio:1;left:38%;top:-30%;background:radial-gradient(circle,color-mix(in srgb,var(--glow) 55%,transparent),transparent 62%);filter:blur(34px);}
+.cta-band h2{position:relative;font-size:clamp(2.4rem,5vw,4rem);line-height:.94;}
+.cta-band h2 .accent{color:var(--accent-2);}
+.cta-band .r{position:relative;}
+.cta-band .r p{color:var(--hero-muted);margin-bottom:var(--s5);}
+.cta-band .btn{background:#fff;color:#0B0E16;border-color:#fff;}
+.cta-band .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* FOOTER */
+.footwrap{border-top:1px solid var(--line);margin-top:var(--s9);}
+.foot{display:grid;grid-template-columns:1.5fr .8fr .8fr 1.2fr;gap:var(--s6);padding:var(--s8) 0 var(--s6);}
+.foot-brand .rma{height:36px;margin-bottom:var(--s4);}
+.foot-brand p{color:var(--muted);font-size:var(--fs-sm);max-width:28ch;margin-bottom:var(--s5);}
+.socials{display:flex;gap:10px;}
+.socials a{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--ink);transition:background var(--dur),color var(--dur);}
+.socials a:hover{background:var(--accent);border-color:var(--accent);color:#fff;}.socials svg{width:15px;height:15px;}
+.foot-col h3{font-family:var(--body);font-weight:600;font-size:var(--fs-xs);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:var(--s5);}
+.foot-col a.fl{display:block;color:var(--ink);font-size:var(--fs-sm);margin-bottom:var(--s3);transition:color var(--dur);}
+.foot-col a.fl:hover{color:var(--accent);}
+.news p{color:var(--muted);font-size:var(--fs-sm);margin-bottom:var(--s4);}
+.news form{display:flex;border:1px solid var(--line);border-radius:100px;overflow:hidden;}
+.news input{flex:1;border:0;background:transparent;padding:.8rem 1rem;font-family:var(--body);font-size:var(--fs-sm);color:var(--ink);}
+.news input::placeholder{color:var(--muted-2);}
+.news button{background:var(--accent);color:#fff;border:0;width:48px;cursor:pointer;transition:background var(--dur);}.news button:hover{background:var(--accent-hover);}
+.foot-bot{border-top:1px solid var(--line);padding:var(--s5) 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.foot-bot span,.foot-bot a{font-size:var(--fs-xs);color:var(--muted);}
+.foot-bot .links{display:flex;gap:var(--s5);}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1024px){
+  .hero{min-height:auto;}
+  .hero-inner{grid-template-columns:1fr;min-height:auto;}
+  .hero-left{padding:var(--s7) var(--gut) 0;}
+  .hero-stage{min-height:420px;padding:var(--s6) var(--gut) var(--s8);}
+  .sechead{grid-template-columns:1fr;gap:var(--s3);}.sechead .rule{display:none;}
+  .steps{grid-template-columns:repeat(3,1fr);}
+  .results .inner{grid-template-columns:1fr;}.results .stats{grid-template-columns:repeat(2,1fr);}
+  .bento{grid-template-columns:repeat(2,1fr);}.svc.feature{grid-column:span 2;grid-row:auto;}
+  .case{grid-template-columns:1fr;}
+  .ind-row{grid-template-columns:repeat(2,1fr);}
+  .cta-band{grid-template-columns:1fr;}
+  .foot{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:680px){
+  .nav-mid{position:fixed;inset:0 0 0 auto;width:84%;max-width:330px;flex-direction:column;justify-content:center;align-items:flex-start;gap:var(--s5);background:var(--bg);color:var(--ink);border-left:1px solid var(--line);padding:var(--s8) var(--s6);transform:translateX(100%);transition:transform var(--dur) var(--ease);}
+  .nav-mid.open{transform:none;}.nav-mid a{font-size:1.2rem;color:var(--ink);}
+  .burger{display:flex;}
+  .hero h1{font-size:clamp(2.6rem,11vw,3.6rem);}
+  .steps{grid-template-columns:1fr 1fr;}.step{border-right:0;}
+  .results .stats{grid-template-columns:1fr 1fr;}
+  .bento{grid-template-columns:1fr;}.svc.feature{grid-column:auto;}
+  .ind-row{grid-template-columns:1fr;}
+  .foot{grid-template-columns:1fr;}
+  .chip.c1{right:0;}.chip.c2{left:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}
+  .hero h1 .row>span,.fade,.rv,.hero-stage,.chip{opacity:1!important;transform:none!important;}
+  .spark path,.ch path{stroke-dashoffset:0!important;}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <a href="#top" class="logo" aria-label="RMA — Relative Marketing Agency, home">
+    <svg class="rma" viewBox="0 0 350 150" fill="none" aria-hidden="true" focusable="false"><g stroke-width="26" stroke-linecap="square" stroke-linejoin="miter">
+      <path class="r" d="M20,134 L20,16 L62,16 L86,38 L62,62 L30,62 M49,62 L94,134"/>
+      <path class="m" d="M124,134 L124,16 L168,86 L212,16 L212,134"/>
+      <path class="a" d="M250,134 L288,16 L326,134 M264,98 L312,98"/>
+    </g></svg>
+    <span class="tag" aria-hidden="true">Relative<br>Marketing<br>Agency</span>
+  </a>
+  <div class="nav-mid" id="navmid">
+    <a href="#services">Services</a><a href="#work">Work</a><a href="#industries">Industries</a><a href="#approach">About</a><a href="#insights">Insights</a><a href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1.5 12h3M19.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+    </button>
+    <a href="#contact" class="btn nav-cta">Let's grow <span class="ar" aria-hidden="true">→</span></a>
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navmid"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="hero-inner">
+  <div class="hero-left">
+    <span class="kicker fade">Full-Service Marketing Agency</span>
+    <h1>
+      <span class="row"><span>We Engineer</span></span>
+      <span class="row"><span>Growth That</span></span>
+      <span class="row"><span><span class="accent">Compounds.</span></span></span>
+    </h1>
+    <p class="sub fade">Strategy, creativity, and technology — together we build marketing systems that don't just spike, they compound, quarter after quarter.</p>
+    <div class="cta-row fade">
+      <a href="#contact" class="btn btn-fill mag">Start your project <span class="ar" aria-hidden="true">→</span></a>
+      <a href="#work" class="arrowlink">View our work <span class="o" aria-hidden="true">→</span></a>
+    </div>
+    <div class="trust fade">
+      <span class="lbl">Trusted by</span>
+      <div class="names"><span>Northwind</span><span>Vertex</span><span>Meridian</span><span>Cadence</span></div>
+    </div>
+  </div>
+  <div class="hero-stage" aria-hidden="true">
+    <div class="halo"></div>
+    <div class="mono" id="mono">
+      <svg class="rma face" viewBox="0 0 350 150" fill="none"><defs><linearGradient id="mg" x1="124" y1="16" x2="212" y2="134" gradientUnits="userSpaceOnUse"><stop stop-color="#6E8FFF"/><stop offset="1" stop-color="#2C5BFF"/></linearGradient></defs>
+        <g stroke-width="26" stroke-linecap="square" stroke-linejoin="miter">
+          <path class="r" d="M20,134 L20,16 L62,16 L86,38 L62,62 L30,62 M49,62 L94,134"/>
+          <path class="m" d="M124,134 L124,16 L168,86 L212,16 L212,134"/>
+          <path class="a" d="M250,134 L288,16 L326,134 M264,98 L312,98"/>
+        </g></svg>
+    </div>
+    <div class="chip c1"><span class="v">↑ 312%</span><span class="t">Revenue<br>6 months</span></div>
+    <div class="chip c2"><span class="dot"></span><span class="t">Live campaigns<br>compounding</span></div>
+  </div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+<!-- APPROACH -->
+<section class="sec" id="approach" aria-labelledby="approach-h">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="ix rv">/ 01</span>
+      <div class="rule rv"></div>
+      <div></div>
+    </div>
+    <div class="sechead" style="margin-bottom:var(--s7);grid-template-columns:1fr 1fr;">
+      <h2 class="rv" id="approach-h">Data Drives.<br>Strategy Delivers.</h2>
+      <p class="body rv d1" style="align-self:end;max-width:40ch;justify-self:end;">Our proven process combines data intelligence with creative execution to deliver measurable business outcomes at every stage of growth.</p>
+    </div>
+    <ol class="steps" style="list-style:none;">
+      <li class="step rv"><div class="no">01</div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h4>Discover</h4><p>We uncover insights, analyze your market, and identify growth opportunities.</p></li>
+      <li class="step rv d1"><div class="no">02</div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div><h4>Strategize</h4><p>We craft data-driven strategies tailored to your goals and audience.</p></li>
+      <li class="step rv d2"><div class="no">03</div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4.5 16.5L3 21l4.5-1.5M14 6l4 4M6.5 18.5C6 14 9 8 13 5c2.5-1.9 6-2 8-2 0 2 0 5.5-2 8-3 4-9 7-13 7.5z"/></svg></div><h4>Execute</h4><p>We bring strategies to life with precision across every channel.</p></li>
+      <li class="step rv d3"><div class="no">04</div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 20v-5M10 20V9M16 20v-8M22 20V4"/></svg></div><h4>Optimize</h4><p>We analyze, iterate, and refine for continuous improvement.</p></li>
+      <li class="step rv d4"><div class="no">05</div><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></div><h4>Scale</h4><p>We scale what works and drive compounding growth.</p></li>
+    </ol>
+    <div class="results rv" id="results">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="inner">
+        <div class="head">
+          <p class="t">Results that<br>speak for themselves</p>
+          <svg class="spark" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true"><path d="M3,46 L34,40 L64,43 L96,28 L126,31 L158,14 L197,4"/></svg>
+        </div>
+        <div class="stats">
+          <div class="st"><div class="n" data-count="312" data-suffix="%">312%</div><div class="l">Avg. revenue increase in 6 months</div></div>
+          <div class="st"><div class="n" data-count="184" data-suffix="%">184%</div><div class="l">More pipeline with AI search</div></div>
+          <div class="st"><div class="n" data-count="220" data-suffix="%">220%</div><div class="l">Increase in qualified leads</div></div>
+          <div class="st"><div class="n" data-count="98" data-suffix="%">98%</div><div class="l">Client retention year over year</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services" style="padding-top:0;" aria-labelledby="services-h">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="ix rv">/ 02</span><div class="rule rv"></div>
+      <a href="#contact" class="arrowlink rv">All services <span class="o" aria-hidden="true">→</span></a>
+    </div>
+    <div class="sechead" style="margin-bottom:var(--s7);grid-template-columns:1fr 1fr;">
+      <h2 class="rv" id="services-h">Full-Service Marketing.<br>Built For Growth.</h2>
+      <p class="body rv d1" style="align-self:end;max-width:40ch;justify-self:end;">End-to-end solutions across every channel to build, grow, and scale your brand — one accountable team behind all of it.</p>
+    </div>
+    <div class="bento rv">
+      <article class="svc feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></div>
+        <span class="sn">01</span>
+        <div><h4>AI Search Optimization</h4><p>Rank where it matters most — across Google and the new answer engines — with content and authority built to win AI-era search.</p>
+        <a href="#contact" class="arrowlink">Learn more <span class="o" aria-hidden="true">→</span></a></div>
+      </article>
+      <article class="svc"><span class="sn">02</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg></div><h4>SEO</h4><p>Technical SEO, content, and link building.</p></article>
+      <article class="svc"><span class="sn">03</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div><h4>Paid Media</h4><p>Campaigns engineered to maximize ROI.</p></article>
+      <article class="svc"><span class="sn">04</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="1"/><path d="M8 21h8M12 18v3"/></svg></div><h4>Web Design</h4><p>Conversion-focused sites that perform.</p></article>
+      <article class="svc"><span class="sn">05</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 10v11M2 13v6M14 8c2-1 3-3 3-5 0 0 4 2 4 7s-3 6-3 6H7l-1-1V11l1-1h7z"/></svg></div><h4>Social Media</h4><p>Content, community, and growth.</p></article>
+      <article class="svc"><span class="sn">06</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2l2.4 6.9H22l-6 4.4 2.3 7-6.3-4.6L5.7 20l2.3-7-6-4.4h7.6L12 2z"/></svg></div><h4>Branding</h4><p>Memorable, trusted brand systems.</p></article>
+      <article class="svc"><span class="sn">07</span><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 3v18h18M8 15l3-4 3 2 4-6"/></svg></div><h4>Analytics</h4><p>Insights that drive smarter decisions.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- CASE -->
+<section class="sec" id="work" style="padding-top:0;" aria-labelledby="work-h">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="ix rv">/ 03</span><div class="rule rv"></div><div></div>
+    </div>
+    <div class="sechead" style="margin-bottom:var(--s7);grid-template-columns:1fr 1fr;">
+      <h2 class="rv" id="work-h">Turning Strategy<br>Into Serious Growth.</h2>
+      <p class="body rv d1" style="align-self:end;max-width:40ch;justify-self:end;">How we helped an eCommerce brand grow revenue 312% in six months with AI-powered search and performance marketing.</p>
+    </div>
+    <div class="case rv">
+      <div class="visual">
+        <div class="grid-bg" aria-hidden="true"></div>
+        <div class="mono"><svg class="rma face" viewBox="0 0 350 150" fill="none"><g stroke-width="26" stroke-linecap="square" stroke-linejoin="miter" stroke="#E9EEFF"><path d="M20,134 L20,16 L62,16 L86,38 L62,62 L30,62 M49,62 L94,134"/><path d="M124,134 L124,16 L168,86 L212,16 L212,134" stroke="#5C7CFF"/><path d="M250,134 L288,16 L326,134 M264,98 L312,98"/></g></svg></div>
+        <span class="tag">Performance · Retail</span>
+      </div>
+      <div class="info">
+        <p class="sector">eCommerce</p>
+        <div class="big"><span class="u">+</span>312%</div>
+        <p class="cap">Revenue increase in 6 months</p>
+        <div class="row2">
+          <div class="kv"><div class="n" data-count="2.8" data-dec="1" data-suffix="M+">2.8M+</div><div class="l">New users</div></div>
+          <div class="kv"><div class="n" data-count="6.4" data-dec="1" data-suffix="×">6.4×</div><div class="l">ROAS</div></div>
+          <svg class="ch" viewBox="0 0 130 60" preserveAspectRatio="none" aria-hidden="true"><path d="M4,54 L28,50 L54,42 L80,36 L104,20 L126,5"/><circle cx="126" cy="5" r="4"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="sec" id="industries" style="padding-top:0;" aria-labelledby="ind-h">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="ix rv">/ 04</span><div class="rule rv"></div><div></div>
+    </div>
+    <div class="sechead" style="margin-bottom:var(--s7);grid-template-columns:1fr 1fr;">
+      <h2 class="rv" id="ind-h">Expertise Across<br>Every Industry.</h2>
+      <p class="body rv d1" style="align-self:end;max-width:40ch;justify-self:end;">Tailored strategies for the industries that drive the world forward.</p>
+    </div>
+    <div class="ind-row rv">
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12zM6 6L5 3H2M9 20a1 1 0 100 2 1 1 0 000-2zM18 20a1 1 0 100 2 1 1 0 000-2z"/></svg></span><span class="nm">E-Commerce</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M18 10a4 4 0 00-1-7.9A6 6 0 005 9a4 4 0 00-1 7.9M8 17l4 4 4-4M12 12v9"/></svg></span><span class="nm">SaaS</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.3 3-5.5A4.5 4.5 0 0012 5 4.5 4.5 0 002 8.5c0 2.2 1.5 4 3 5.5l7 7 7-7z"/></svg></span><span class="nm">Healthcare</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 11l9-8 9 8M5 9v11h14V9"/></svg></span><span class="nm">Real Estate</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14"/></svg></span><span class="nm">Hospitality</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span><span class="nm">Education</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span><span class="nm">Finance</span></div>
+      <div class="ind"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></span><span class="nm">And More</span></div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-band rv" id="contact">
+      <div class="glow" aria-hidden="true"></div>
+      <h2>Let's Build<br>What's <span class="accent">Next.</span></h2>
+      <div class="r">
+        <p>Ready to grow your brand, outpace your competition, and dominate your market? Let's talk.</p>
+        <a href="mailto:hello@rma.agency" class="btn mag">Start your project <span class="ar" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footwrap" id="insights">
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <svg class="rma" viewBox="0 0 350 150" fill="none" aria-hidden="true" focusable="false"><g stroke-width="26" stroke-linecap="square" stroke-linejoin="miter"><path class="r" d="M20,134 L20,16 L62,16 L86,38 L62,62 L30,62 M49,62 L94,134"/><path class="m" d="M124,134 L124,16 L168,86 L212,16 L212,134"/><path class="a" d="M250,134 L288,16 L326,134 M264,98 L312,98"/></g></svg>
+        <p>We engineer growth through strategy, creativity, and technology.</p>
+        <div class="socials">
+          <a href="#" aria-label="RMA on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 002.5 6 2.5 2.5 0 005 8.5 2.5 2.5 0 007.5 6 2.5 2.5 0 004.98 3.5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4 0 4.88 2.64 4.88 6.07V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg></a>
+          <a href="#" aria-label="RMA on X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h3l-7 8 8 12h-6l-5-7-5 7H1l8-9L1 2h6l4 6zM16 20h2L8 4H6z"/></svg></a>
+          <a href="#" aria-label="RMA on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <nav class="foot-col" aria-label="Services"><h3>Services</h3><a href="#services" class="fl">AI Search</a><a href="#services" class="fl">SEO</a><a href="#services" class="fl">Paid Media</a><a href="#services" class="fl">Branding</a></nav>
+      <nav class="foot-col" aria-label="Company"><h3>Company</h3><a href="#approach" class="fl">About</a><a href="#work" class="fl">Case Studies</a><a href="#contact" class="fl">Careers</a><a href="#contact" class="fl">Contact</a></nav>
+      <div class="foot-col news">
+        <h3>Stay Ahead Of The Curve</h3>
+        <p>Insights on growth marketing and AI search.</p>
+        <form onsubmit="return subscribe(event)"><label class="vh" for="ne">Email</label><input id="ne" type="email" placeholder="Enter your email" required /><button type="submit" aria-label="Subscribe">→</button></form>
+        <p id="newsNote" role="status" style="display:none;margin-top:12px;color:var(--accent);"></p>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 RMA — Relative Marketing Agency.</span>
+      <div class="links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+var root=document.documentElement,tBtn=document.getElementById('themeToggle');
+function syncT(){tBtn.setAttribute('aria-pressed',String(root.getAttribute('data-theme')==='dark'));}
+syncT();
+tBtn.addEventListener('click',function(){var n=root.getAttribute('data-theme')==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('rma-theme',n);}catch(e){}syncT();});
+var nav=document.getElementById('nav');
+addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>20);},{passive:true});
+var burger=document.getElementById('burger'),navmid=document.getElementById('navmid');
+burger.addEventListener('click',function(){var o=navmid.classList.toggle('open');burger.setAttribute('aria-expanded',String(o));burger.setAttribute('aria-label',o?'Close menu':'Open menu');});
+navmid.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){navmid.classList.remove('open');burger.setAttribute('aria-expanded','false');});});
+function animateCount(el){var target=parseFloat(el.dataset.count),dec=parseInt(el.dataset.dec||'0',10),suf=el.dataset.suffix||'',s=performance.now();(function t(n){var p=Math.min((n-s)/1500,1),e=1-Math.pow(1-p,3);el.textContent=(target*e).toFixed(dec)+suf;if(p<1)requestAnimationFrame(t);else el.textContent=(dec?target.toFixed(dec):target)+suf;})(s);}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;e.target.classList.add('in');e.target.querySelectorAll&&e.target.querySelectorAll('[data-count]').forEach(animateCount);io.unobserve(e.target);});},{threshold:.2});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+var mono=document.getElementById('mono'),hero=document.querySelector('.hero');
+if(mono&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();var x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;mono.style.transform='perspective(900px) rotateY('+(x*10)+'deg) rotateX('+(-y*10)+'deg)';});
+  hero.addEventListener('pointerleave',function(){mono.style.transform='';});
+}
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){document.querySelectorAll('.mag').forEach(function(b){b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.16)+'px,'+((e.clientY-r.top-r.height/2)*.28)+'px)';});b.addEventListener('pointerleave',function(){b.style.transform='';});});}
+function subscribe(e){e.preventDefault();var n=document.getElementById('newsNote');n.style.display='block';n.textContent="✓ You're in. Welcome to the curve.";e.target.reset();return false;}
+</script>
+</body>
+</html>
