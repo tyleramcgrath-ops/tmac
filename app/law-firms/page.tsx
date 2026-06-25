@@ -58,10 +58,10 @@ export default function LawFirmsPage() {
                   Book a consultation
                 </a>
                 <a
-                  href="#showcase"
+                  href="/law-firms/demos"
                   className="w-full rounded-xl border border-white/10 px-6 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-white/5 sm:w-auto"
                 >
-                  See it in action
+                  Try the live demos
                 </a>
               </div>
             </Reveal>
@@ -160,6 +160,17 @@ export default function LawFirmsPage() {
         />
         <div className="mt-14">
           <Showcase />
+        </div>
+        <div className="mt-10 text-center">
+          <a
+            href="/law-firms/demos"
+            className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-6 py-3.5 text-sm font-semibold text-slate-950 transition hover:bg-amber-300"
+          >
+            Try the interactive demos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
         </div>
       </section>
 
@@ -793,7 +804,7 @@ const footerCols = [
     title: 'Product',
     links: [
       { label: 'Services', href: '#services' },
-      { label: 'Showcase', href: '#showcase' },
+      { label: 'Live demos', href: '/law-firms/demos' },
       { label: 'Integrations', href: '#integrations' },
       { label: 'Pricing', href: '#pricing' },
     ],
