@@ -37,12 +37,18 @@ export function SiteNav() {
           ))}
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
           <a
             href="#contact"
+            className="text-sm font-semibold text-slate-200 transition hover:text-white"
+          >
+            Book a call
+          </a>
+          <a
+            href="/law-firms/get-started"
             className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-300"
           >
-            Book a consultation
+            Get started
           </a>
         </div>
 
@@ -77,11 +83,11 @@ export function SiteNav() {
               </a>
             ))}
             <a
-              href="#contact"
+              href="/law-firms/get-started"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-lg bg-amber-400 px-4 py-2.5 text-center text-sm font-semibold text-slate-950"
             >
-              Book a consultation
+              Get started
             </a>
           </div>
         </div>
