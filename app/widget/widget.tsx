@@ -17,7 +17,18 @@ type Status = 'idle' | 'loading' | 'done' | 'error'
  * and the shared report renderer, and reports its height to the host page so the
  * embedding iframe can auto-resize.
  */
-export function ScanWidget({ initialDomain = '' }: { initialDomain?: string }) {
+export interface WidgetBrand {
+  name?: string
+  logo?: string
+}
+
+export function ScanWidget({
+  initialDomain = '',
+  brand,
+}: {
+  initialDomain?: string
+  brand?: WidgetBrand
+}) {
   const [domain, setDomain] = useState(initialDomain)
   const [keyword, setKeyword] = useState('')
   const [status, setStatus] = useState<Status>('idle')
@@ -70,11 +81,20 @@ export function ScanWidget({ initialDomain = '' }: { initialDomain?: string }) {
     <div ref={rootRef} className="rf-card rf-topline overflow-hidden">
       <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-5 py-3.5">
         <div className="flex items-center gap-2.5">
-          <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)]">
-            <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
-          </span>
+          {brand?.logo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={brand.logo}
+              alt={brand.name ? `${brand.name} logo` : 'logo'}
+              className="h-7 w-auto max-w-[140px] object-contain"
+            />
+          ) : (
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)]">
+              <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
+            </span>
+          )}
           <span className="text-sm font-semibold text-white">
-            Free SEO Audit
+            {brand?.name ? `${brand.name} · Free SEO Audit` : 'Free SEO Audit'}
           </span>
         </div>
         <span className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">

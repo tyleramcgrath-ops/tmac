@@ -12,6 +12,9 @@
  * Optional attributes:
  *   data-domain   prefill the domain field
  *   data-height   initial height in px (default 520)
+ *   data-accent   brand accent color, e.g. "#7c5cff"
+ *   data-logo     absolute https URL to your logo
+ *   data-name     your brand name (shown in the widget header)
  */
 (function () {
   var script = document.currentScript
@@ -24,11 +27,16 @@
     return
   }
 
-  var domain = script.getAttribute('data-domain') || ''
   var initialHeight = parseInt(script.getAttribute('data-height') || '520', 10)
 
-  var src = origin + '/widget'
-  if (domain) src += '?domain=' + encodeURIComponent(domain)
+  var params = new URLSearchParams()
+  var map = { domain: 'data-domain', accent: 'data-accent', logo: 'data-logo', name: 'data-name' }
+  Object.keys(map).forEach(function (key) {
+    var val = script.getAttribute(map[key])
+    if (val) params.set(key, val)
+  })
+  var qs = params.toString()
+  var src = origin + '/widget' + (qs ? '?' + qs : '')
 
   var iframe = document.createElement('iframe')
   iframe.src = src

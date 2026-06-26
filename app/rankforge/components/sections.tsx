@@ -769,7 +769,7 @@ function EmbedWidget() {
     if (typeof window !== 'undefined') setOrigin(window.location.origin)
   }, [])
 
-  const snippet = `<script async\n  src="${origin}/widget.js"\n  data-domain="clientsite.com"></script>`
+  const snippet = `<script async\n  src="${origin}/widget.js"\n  data-domain="clientsite.com"\n  data-name="Your Agency"\n  data-accent="#7c5cff"\n  data-logo="https://youragency.com/logo.svg"></script>`
 
   const copy = async () => {
     try {
