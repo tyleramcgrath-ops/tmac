@@ -68,28 +68,36 @@ export async function POST(request: Request) {
     )
   }
   const keyword = String(body.keyword ?? '').trim().slice(0, 80)
+  const debug =
+    body.debug === true ||
+    new URL(request.url).searchParams.get('debug') === '1'
 
   // ── Fetch + extract the user's page ──
   let signals: Signals
+  let signalsDebug: { via: string; status: number; proxyConfigured: boolean } | null = null
   try {
-    const { html, finalUrl, status } = await fetchHtml(url)
+    const fetched = await fetchHtml(url)
+    const { html, finalUrl, status, via, proxyConfigured } = fetched
     if (!html || status >= 400) {
       const blocked = status === 403 || status === 401 || status === 429
       return Response.json(
         {
           error: blocked
-            ? 'This site blocks automated requests (returned 403). Some sites behind Cloudflare/bot protection can only be scanned from an allow-listed crawler — try another page or domain.'
+            ? 'This site blocks automated requests (returned 403). Sites behind Cloudflare/WAF bot protection can only be scanned through an allow-listed crawler — set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another page/domain.'
             : `The site responded with status ${status || 'no content'}. Try a different page.`,
+          ...(debug ? { debug: { via, status, proxyConfigured } } : {}),
         },
         { status: 502 }
       )
     }
     signals = extractSignals(html, finalUrl, status)
+    if (debug) signalsDebug = { via, status, proxyConfigured }
   } catch {
     return Response.json(
       {
         error:
           'We could not reach that site. Check the domain and make sure it is publicly accessible.',
+        ...(debug ? { debug: { via: 'failed', status: 0, proxyConfigured: !!process.env.SCRAPE_API_TEMPLATE } } : {}),
       },
       { status: 502 }
     )
@@ -159,6 +167,7 @@ export async function POST(request: Request) {
     pageSpeed,
     competitors,
     backlinks: backlinksStatus(),
+    ...(debug && signalsDebug ? { debug: signalsDebug } : {}),
     metrics: {
       titleLength: signals.titleLength,
       metaDescriptionLength: signals.metaDescriptionLength,

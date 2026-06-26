@@ -435,39 +435,59 @@ function browserHeaders(ua: string): Record<string, string> {
 
 const BLOCK_STATUSES = new Set([401, 403, 405, 406, 429, 503])
 
+export type FetchVia = 'browser' | 'googlebot' | 'proxy' | 'failed'
+
+export interface FetchResult {
+  html: string
+  finalUrl: string
+  status: number
+  via: FetchVia
+  proxyConfigured: boolean
+}
+
 export async function fetchHtml(
   url: string,
   timeoutMs = 12_000,
   maxBytes = 3_000_000
-): Promise<{ html: string; finalUrl: string; status: number }> {
+): Promise<FetchResult> {
+  const template = process.env.SCRAPE_API_TEMPLATE
+  const proxyConfigured = !!template
+  let via: FetchVia = 'browser'
+
   let result = await fetchOnce(url, BROWSER_UA, timeoutMs, maxBytes)
+
   // Retry as Googlebot if the site blocked the browser request.
   if (BLOCK_STATUSES.has(result.status) || (!result.html && result.status === 0)) {
     try {
       const retry = await fetchOnce(url, GOOGLEBOT_UA, timeoutMs, maxBytes)
-      if (!BLOCK_STATUSES.has(retry.status) && retry.html) result = retry
+      if (!BLOCK_STATUSES.has(retry.status) && retry.html) {
+        result = retry
+        via = 'googlebot'
+      }
     } catch {
       /* keep the first result */
     }
   }
+
   // Final fallback: route through a scraping/render proxy (residential IPs +
   // JS rendering) for sites behind Cloudflare/WAF bot protection that a direct
   // datacenter fetch can't pass. Configure SCRAPE_API_TEMPLATE with a {{url}}
   // placeholder, e.g. a ScraperAPI/ScrapingBee/Zyte endpoint including your key.
-  const template = process.env.SCRAPE_API_TEMPLATE
   if (template && (BLOCK_STATUSES.has(result.status) || !result.html)) {
     try {
       const proxied = template.replace('{{url}}', encodeURIComponent(url))
-      const via = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, 25_000), maxBytes)
-      if (via.html && !BLOCK_STATUSES.has(via.status)) {
+      const viaProxy = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, 25_000), maxBytes)
+      if (viaProxy.html && !BLOCK_STATUSES.has(viaProxy.status)) {
         // Keep the original target as finalUrl so link analysis stays correct.
-        return { html: via.html, finalUrl: url, status: 200 }
+        return { html: viaProxy.html, finalUrl: url, status: 200, via: 'proxy', proxyConfigured }
       }
     } catch {
       /* keep the direct result */
     }
   }
-  return result
+
+  if (!result.html || result.status >= 400) via = 'failed'
+  return { ...result, via, proxyConfigured }
 }
 
 async function fetchOnce(
