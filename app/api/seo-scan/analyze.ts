@@ -450,6 +450,23 @@ export async function fetchHtml(
       /* keep the first result */
     }
   }
+  // Final fallback: route through a scraping/render proxy (residential IPs +
+  // JS rendering) for sites behind Cloudflare/WAF bot protection that a direct
+  // datacenter fetch can't pass. Configure SCRAPE_API_TEMPLATE with a {{url}}
+  // placeholder, e.g. a ScraperAPI/ScrapingBee/Zyte endpoint including your key.
+  const template = process.env.SCRAPE_API_TEMPLATE
+  if (template && (BLOCK_STATUSES.has(result.status) || !result.html)) {
+    try {
+      const proxied = template.replace('{{url}}', encodeURIComponent(url))
+      const via = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, 25_000), maxBytes)
+      if (via.html && !BLOCK_STATUSES.has(via.status)) {
+        // Keep the original target as finalUrl so link analysis stays correct.
+        return { html: via.html, finalUrl: url, status: 200 }
+      }
+    } catch {
+      /* keep the direct result */
+    }
+  }
   return result
 }
 
