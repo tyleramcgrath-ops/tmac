@@ -11,6 +11,7 @@ import {
 } from './sections'
 import { Pricing, FinalCTA, Footer } from './pricing-cta'
 import { ScanProvider } from './scan'
+import { DemoProvider } from './demo'
 
 const TRUST = [
   'Technical SEO',
@@ -53,6 +54,7 @@ export function RankForgeSite() {
   return (
     <div className="rf-root">
       <ScanProvider>
+       <DemoProvider>
         <main className="min-h-screen bg-[var(--rf-bg)]">
           <Nav />
           <Hero />
@@ -67,6 +69,7 @@ export function RankForgeSite() {
           <FinalCTA />
           <Footer />
         </main>
+       </DemoProvider>
       </ScanProvider>
     </div>
   )

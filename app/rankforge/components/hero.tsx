@@ -12,8 +12,10 @@ import {
 } from 'lucide-react'
 import { Reveal } from './reveal'
 import { ScanForm } from './scan'
+import { useDemo } from './demo'
 
 export function Hero() {
+  const demo = useDemo()
   return (
     <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-36">
       {/* ambient backdrop */}
@@ -54,13 +56,14 @@ export function Hero() {
 
           <Reveal delay={300}>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-              <a
-                href="#demo"
+              <button
+                type="button"
+                onClick={() => demo.open()}
                 className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium"
               >
                 <Play className="h-4 w-4 fill-current" />
                 Watch Demo
-              </a>
+              </button>
               <span className="text-xs text-[var(--rf-faint)]">
                 No credit card · Full crawl in ~60 seconds
               </span>
