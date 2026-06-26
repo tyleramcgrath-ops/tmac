@@ -280,7 +280,7 @@ function ScanModal() {
   )
 }
 
-function ScanLoading() {
+export function ScanLoading() {
   const steps = [
     'Fetching page & following redirects',
     'Extracting on-page SEO signals',
@@ -303,7 +303,7 @@ function ScanLoading() {
   )
 }
 
-function ScanError({ message }: { message: string | null }) {
+export function ScanError({ message }: { message: string | null }) {
   return (
     <div className="py-8 text-center">
       <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--rf-red)]/10">
@@ -325,7 +325,7 @@ const SEV_STYLE: Record<Severity, { dot: string; label: string; icon: typeof Inf
 
 const UNLOCK_KEY = 'rf_scan_unlocked'
 
-function ScanReport({ result }: { result: ScanResult }) {
+export function ScanReport({ result }: { result: ScanResult }) {
   const m = result.metrics
   const ps = result.pageSpeed
   const [unlocked, setUnlocked] = useState(false)

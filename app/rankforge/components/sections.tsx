@@ -17,8 +17,11 @@ import {
   Building2,
   ExternalLink,
   Sparkles,
+  Code2 as CodeIcon,
+  Copy,
   type LucideIcon,
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Reveal } from './reveal'
 
 /* ------------------------------------------------------------------ */
@@ -747,7 +750,82 @@ export function Agency() {
             </div>
           </Reveal>
         </div>
+
+        {/* Embeddable lead-capture widget */}
+        <Reveal delay={120} className="mt-8">
+          <EmbedWidget />
+        </Reveal>
       </div>
     </section>
+  )
+}
+
+/* Copy-paste snippet for the standalone audit widget. */
+function EmbedWidget() {
+  const [origin, setOrigin] = useState('https://your-rankforge-domain.com')
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') setOrigin(window.location.origin)
+  }, [])
+
+  const snippet = `<script async\n  src="${origin}/widget.js"\n  data-domain="clientsite.com"></script>`
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(snippet)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch {
+      /* clipboard blocked */
+    }
+  }
+
+  return (
+    <div className="rf-card rf-topline overflow-hidden">
+      <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[var(--rf-card-line)] bg-white/[0.03] text-[var(--rf-blue-bright)]">
+            <CodeIcon className="h-5 w-5" />
+          </span>
+          <div>
+            <h3 className="text-base font-semibold">
+              Embed the lead-capture audit widget
+            </h3>
+            <p className="mt-1 text-sm text-[var(--rf-muted)]">
+              Drop one line on any client or prospect site. Visitors run a free
+              scan; you capture the lead.
+            </p>
+          </div>
+        </div>
+        <a
+          href="/widget"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rf-btn-ghost inline-flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium"
+        >
+          Preview widget <ExternalLink className="h-4 w-4" />
+        </a>
+      </div>
+      <div className="relative border-t border-[var(--rf-card-line)] bg-[#070b15] p-4">
+        <pre className="rf-mono overflow-x-auto pr-24 text-[12.5px] leading-relaxed text-[var(--rf-muted)]">
+          <code>{snippet}</code>
+        </pre>
+        <button
+          onClick={copy}
+          className="rf-btn-ghost absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium"
+        >
+          {copied ? (
+            <>
+              <Check className="h-3.5 w-3.5 text-[var(--rf-green)]" /> Copied
+            </>
+          ) : (
+            <>
+              <Copy className="h-3.5 w-3.5" /> Copy
+            </>
+          )}
+        </button>
+      </div>
+    </div>
   )
 }
