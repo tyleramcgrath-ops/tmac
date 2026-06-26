@@ -74,8 +74,13 @@ export async function POST(request: Request) {
   try {
     const { html, finalUrl, status } = await fetchHtml(url)
     if (!html || status >= 400) {
+      const blocked = status === 403 || status === 401 || status === 429
       return Response.json(
-        { error: `The site responded with status ${status || 'no content'}. Try a different page.` },
+        {
+          error: blocked
+            ? 'This site blocks automated requests (returned 403). Some sites behind Cloudflare/bot protection can only be scanned from an allow-listed crawler — try another page or domain.'
+            : `The site responded with status ${status || 'no content'}. Try a different page.`,
+        },
         { status: 502 }
       )
     }

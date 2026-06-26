@@ -410,21 +410,61 @@ export function normalizeUrl(raw: string): string | null {
   }
 }
 
+// A current desktop Chrome UA. Many sites / CDNs (Cloudflare, Akamai) return 403
+// to unknown bot user-agents, so we present as a real browser. If that is still
+// blocked we retry once as Googlebot, which a lot of sites allow-list.
+const BROWSER_UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+const GOOGLEBOT_UA =
+  'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+
+function browserHeaders(ua: string): Record<string, string> {
+  return {
+    'User-Agent': ua,
+    Accept:
+      'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Cache-Control': 'no-cache',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+  }
+}
+
+const BLOCK_STATUSES = new Set([401, 403, 405, 406, 429, 503])
+
 export async function fetchHtml(
   url: string,
   timeoutMs = 12_000,
   maxBytes = 3_000_000
+): Promise<{ html: string; finalUrl: string; status: number }> {
+  let result = await fetchOnce(url, BROWSER_UA, timeoutMs, maxBytes)
+  // Retry as Googlebot if the site blocked the browser request.
+  if (BLOCK_STATUSES.has(result.status) || (!result.html && result.status === 0)) {
+    try {
+      const retry = await fetchOnce(url, GOOGLEBOT_UA, timeoutMs, maxBytes)
+      if (!BLOCK_STATUSES.has(retry.status) && retry.html) result = retry
+    } catch {
+      /* keep the first result */
+    }
+  }
+  return result
+}
+
+async function fetchOnce(
+  url: string,
+  ua: string,
+  timeoutMs: number,
+  maxBytes: number
 ): Promise<{ html: string; finalUrl: string; status: number }> {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), timeoutMs)
   const res = await fetch(url, {
     redirect: 'follow',
     signal: controller.signal,
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (compatible; RankForgeBot/1.0; +https://rankforge.ai/bot)',
-      Accept: 'text/html,application/xhtml+xml',
-    },
+    headers: browserHeaders(ua),
   }).finally(() => clearTimeout(timer))
 
   const finalUrl = res.url || url
