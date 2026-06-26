@@ -10,6 +10,7 @@ import {
   Agency,
 } from './sections'
 import { Pricing, FinalCTA, Footer } from './pricing-cta'
+import { ScanProvider } from './scan'
 
 const TRUST = [
   'Technical SEO',
@@ -51,20 +52,22 @@ function TrustBar() {
 export function RankForgeSite() {
   return (
     <div className="rf-root">
-      <main className="min-h-screen bg-[var(--rf-bg)]">
-        <Nav />
-        <Hero />
-        <TrustBar />
-        <StackSection />
-        <CommandCenter />
-        <WarRoom />
-        <AISearch />
-        <FixList />
-        <Agency />
-        <Pricing />
-        <FinalCTA />
-        <Footer />
-      </main>
+      <ScanProvider>
+        <main className="min-h-screen bg-[var(--rf-bg)]">
+          <Nav />
+          <Hero />
+          <TrustBar />
+          <StackSection />
+          <CommandCenter />
+          <WarRoom />
+          <AISearch />
+          <FixList />
+          <Agency />
+          <Pricing />
+          <FinalCTA />
+          <Footer />
+        </main>
+      </ScanProvider>
     </div>
   )
 }

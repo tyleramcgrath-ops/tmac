@@ -1,10 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import {
-  ArrowRight,
   Play,
-  Search,
   Gauge,
   Bot,
   Target,
@@ -14,10 +11,9 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import { Reveal } from './reveal'
+import { ScanForm } from './scan'
 
 export function Hero() {
-  const [domain, setDomain] = useState('')
-
   return (
     <section id="top" className="relative overflow-hidden pt-28 pb-16 sm:pt-36">
       {/* ambient backdrop */}
@@ -51,28 +47,9 @@ export function Hero() {
 
           {/* Domain input */}
           <Reveal delay={240}>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
-            >
-              <div className="rf-card flex flex-1 items-center gap-3 px-4 py-3 focus-within:border-[var(--rf-card-line-strong)]">
-                <Search className="h-5 w-5 shrink-0 text-[var(--rf-faint)]" />
-                <input
-                  value={domain}
-                  onChange={(e) => setDomain(e.target.value)}
-                  placeholder="Enter your domain"
-                  aria-label="Enter your domain"
-                  className="w-full bg-transparent text-[15px] text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="rf-btn-primary flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold"
-              >
-                Start Free SEO Scan
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </form>
+            <div className="mt-8">
+              <ScanForm cta="Start Free SEO Scan" />
+            </div>
           </Reveal>
 
           <Reveal delay={300}>

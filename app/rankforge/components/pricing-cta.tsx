@@ -1,8 +1,8 @@
 'use client'
 
-import { Check, ArrowRight, Zap, Search } from 'lucide-react'
-import { useState } from 'react'
+import { Check, ArrowRight, Zap } from 'lucide-react'
 import { Reveal } from './reveal'
+import { ScanForm } from './scan'
 
 /* ================================================================== */
 /* 7. Pricing                                                          */
@@ -138,7 +138,6 @@ export function Pricing() {
 /* ================================================================== */
 
 export function FinalCTA() {
-  const [domain, setDomain] = useState('')
   return (
     <section id="scan" className="relative py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -157,27 +156,9 @@ export function FinalCTA() {
                 minute. See your Fix List before you ever enter a card.
               </p>
 
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
-              >
-                <div className="rf-card flex flex-1 items-center gap-3 px-4 py-3">
-                  <Search className="h-5 w-5 shrink-0 text-[var(--rf-faint)]" />
-                  <input
-                    value={domain}
-                    onChange={(e) => setDomain(e.target.value)}
-                    placeholder="Enter your domain"
-                    aria-label="Enter your domain"
-                    className="w-full bg-transparent text-[15px] text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="rf-btn-primary flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold"
-                >
-                  Run Free SEO Scan <ArrowRight className="h-4 w-4" />
-                </button>
-              </form>
+              <div className="mt-8">
+                <ScanForm cta="Run Free SEO Scan" />
+              </div>
               <p className="mt-4 text-xs text-[var(--rf-faint)]">
                 No credit card required · Cancel anytime
               </p>
