@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X, Zap, Play } from 'lucide-react'
+import { useDemo } from './demo'
 
 const LINKS = [
   { label: 'Platform', href: '#command-center' },
@@ -14,6 +15,7 @@ const LINKS = [
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const demo = useDemo()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -53,6 +55,14 @@ export function Nav() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
+          <button
+            type="button"
+            onClick={() => demo.open()}
+            className="inline-flex items-center gap-1.5 text-sm text-[var(--rf-muted)] transition-colors hover:text-white"
+          >
+            <Play className="h-3.5 w-3.5 fill-current" />
+            Watch Demo
+          </button>
           <a
             href="#login"
             className="text-sm text-[var(--rf-muted)] transition-colors hover:text-white"
@@ -89,6 +99,17 @@ export function Nav() {
                 {l.label}
               </a>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false)
+                demo.open()
+              }}
+              className="rf-btn-ghost mt-2 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium"
+            >
+              <Play className="h-4 w-4 fill-current" />
+              Watch Demo
+            </button>
             <a
               href="#scan"
               onClick={() => setOpen(false)}
