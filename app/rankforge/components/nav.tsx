@@ -64,10 +64,10 @@ export function Nav() {
             Watch Demo
           </button>
           <a
-            href="#login"
+            href="/app"
             className="text-sm text-[var(--rf-muted)] transition-colors hover:text-white"
           >
-            Log in
+            Open App
           </a>
           <a
             href="#scan"
