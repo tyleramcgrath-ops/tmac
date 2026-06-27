@@ -339,6 +339,40 @@ function collectTypes(node: unknown, out: Set<string>): void {
     if (Array.isArray(obj['@graph'])) collectTypes(obj['@graph'], out)
   }
 }
+// Distinct, same-host internal page URLs (for the multi-page crawler). Skips
+// assets, anchors, and non-http(s) links; strips hashes; caps the result.
+export function extractInternalLinks(html: string, baseUrl: string, cap = 80): string[] {
+  let host = ''
+  try {
+    host = new URL(baseUrl).hostname.replace(/^www\./, '')
+  } catch {
+    return []
+  }
+  const seen = new Set<string>()
+  const out: string[] = []
+  const re = /<a\b[^>]*\bhref\s*=\s*["']([^"']+)["']/gi
+  let m: RegExpExecArray | null
+  while ((m = re.exec(html)) && out.length < cap) {
+    const href = m[1]
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) continue
+    try {
+      const abs = new URL(href, baseUrl)
+      if (abs.protocol !== 'http:' && abs.protocol !== 'https:') continue
+      if (abs.hostname.replace(/^www\./, '') !== host) continue
+      if (/\.(jpg|jpeg|png|gif|svg|webp|avif|css|js|pdf|zip|mp4|mp3|xml|json|ico|woff2?|ttf)(\?|$)/i.test(abs.pathname)) continue
+      abs.hash = ''
+      const key = abs.toString()
+      if (!seen.has(key)) {
+        seen.add(key)
+        out.push(key)
+      }
+    } catch {
+      /* unparsable */
+    }
+  }
+  return out
+}
+
 function countLinks(html: string, baseUrl: string): { internal: number; external: number } {
   let host = ''
   try {
