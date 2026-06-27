@@ -57,6 +57,31 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     setIsOpen(true)
   }, [])
 
+  // Deep link: ?demo=<chapter-id> (or #demo) opens the tour on that chapter.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const id = params.get('demo')
+    if (id) {
+      const idx = CHAPTERS.findIndex((c) => c.id === id)
+      open(idx >= 0 ? idx : 0)
+    } else if (window.location.hash === '#demo') {
+      open(0)
+    }
+  }, [open])
+
+  // Keep the URL shareable while the tour is open; clean it up on close.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const url = new URL(window.location.href)
+    if (isOpen) {
+      url.searchParams.set('demo', CHAPTERS[active]?.id ?? 'overview')
+      url.hash = ''
+    } else {
+      url.searchParams.delete('demo')
+    }
+    window.history.replaceState(null, '', url.toString())
+  }, [isOpen, active])
+
   return (
     <DemoContext.Provider value={{ open }}>
       {children}
