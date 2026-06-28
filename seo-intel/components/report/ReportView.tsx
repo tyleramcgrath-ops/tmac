@@ -16,6 +16,8 @@ import { SpeedSection } from './SpeedSection'
 import { AiSearchSection } from './AiSearchSection'
 import { ActionPlanSection } from './ActionPlanSection'
 import { WordPressPanel } from './WordPressPanel'
+import { PriorityChecklist } from './PriorityChecklist'
+import { ReportNav } from './ReportNav'
 
 export function ReportView({
   report,
@@ -67,8 +69,9 @@ export function ReportView({
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">SEO Competitor Report</p>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">“{report.input.keyword}”</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 break-all text-sm text-slate-500">
             {report.input.url} · {report.input.country.toUpperCase()} · {report.input.device} ·{' '}
             {new Date(report.createdAt).toLocaleString()}
           </p>
@@ -95,20 +98,23 @@ export function ReportView({
         </div>
       )}
 
-      <ScoresSection scores={r.scores} ai={r.ai} userPosition={r.userAnalysis?.position ?? null} />
-      <ActionPlanSection recommendations={r.recommendations} />
-      <WordPressPanel report={report} />
-      <SerpSection serp={r.serp} userUrl={report.input.url} />
-      <ComparisonTable user={r.userAnalysis} competitors={r.competitors} />
-      <TitleMetaSection user={r.userAnalysis} competitors={r.competitors} ai={r.ai} keyword={report.input.keyword} />
-      <ContentGapSection gap={r.contentGap} user={r.userAnalysis} ai={r.ai} />
-      <HeadingsSection user={r.userAnalysis} competitors={r.competitors} ai={r.ai} />
-      <KeywordSection user={r.userAnalysis} competitors={r.competitors} keyword={report.input.keyword} />
-      <SchemaSection gap={r.schemaGap} />
-      <BacklinksSection backlinks={r.backlinks} />
-      <TechnicalSection issues={r.technicalIssues} />
-      <SpeedSection user={r.userAnalysis} competitors={r.competitors} />
-      <AiSearchSection ai={r.ai} aiScore={r.scores?.aiReadiness ?? null} />
+      <ReportNav />
+
+      <div id="checklist" className="scroll-mt-28"><PriorityChecklist report={report} /></div>
+      <div id="summary" className="scroll-mt-28"><ScoresSection scores={r.scores} ai={r.ai} userPosition={r.userAnalysis?.position ?? null} /></div>
+      <div id="plan" className="scroll-mt-28"><ActionPlanSection recommendations={r.recommendations} /></div>
+      <div id="wordpress" className="scroll-mt-28"><WordPressPanel report={report} /></div>
+      <div id="competitors" className="scroll-mt-28"><SerpSection serp={r.serp} userUrl={report.input.url} /></div>
+      <div className="scroll-mt-28"><ComparisonTable user={r.userAnalysis} competitors={r.competitors} /></div>
+      <div id="titles" className="scroll-mt-28"><TitleMetaSection user={r.userAnalysis} competitors={r.competitors} ai={r.ai} keyword={report.input.keyword} /></div>
+      <div id="content" className="scroll-mt-28"><ContentGapSection gap={r.contentGap} user={r.userAnalysis} ai={r.ai} /></div>
+      <div id="headings" className="scroll-mt-28"><HeadingsSection user={r.userAnalysis} competitors={r.competitors} ai={r.ai} /></div>
+      <div id="keywords" className="scroll-mt-28"><KeywordSection user={r.userAnalysis} competitors={r.competitors} keyword={report.input.keyword} /></div>
+      <div id="schema" className="scroll-mt-28"><SchemaSection gap={r.schemaGap} /></div>
+      <div id="backlinks" className="scroll-mt-28"><BacklinksSection backlinks={r.backlinks} /></div>
+      <div id="technical" className="scroll-mt-28"><TechnicalSection issues={r.technicalIssues} /></div>
+      <div id="speed" className="scroll-mt-28"><SpeedSection user={r.userAnalysis} competitors={r.competitors} /></div>
+      <div id="ai" className="scroll-mt-28"><AiSearchSection ai={r.ai} aiScore={r.scores?.aiReadiness ?? null} /></div>
     </div>
   )
 }

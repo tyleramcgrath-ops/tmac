@@ -12,7 +12,10 @@ body {
 }
 
 .card {
-  @apply rounded-xl border border-slate-200 bg-white p-6 shadow-sm;
+  @apply rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow;
+}
+.card:hover {
+  @apply shadow-md;
 }
 
 .section-title {
