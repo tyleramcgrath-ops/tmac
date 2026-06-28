@@ -1,8 +1,10 @@
-// Multi-page site crawler powering the /app Site Audit.
+// Full-site crawler powering the /app Site Audit.
 //
-// BFS-crawls internal pages from the entered domain (capped, concurrency-limited
-// and time-budgeted to fit the function window), runs the shared on-page
-// analyzer on each, and returns per-page results plus a site-wide aggregate.
+// Stateless + batched: the client calls this repeatedly, passing back the
+// `frontier` and `visited` it received, until `done` is true. This crawls the
+// entire site across multiple short requests (bypassing the per-request
+// serverless time limit). The first call seeds the frontier from the site's
+// XML sitemap(s) when available, then discovers links while crawling.
 
 import {
   buildFixes,
@@ -22,10 +24,10 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
-const DEFAULT_LIMIT = 12
-const MAX_LIMIT = 25
-const CONCURRENCY = 5
-const TIME_BUDGET_MS = 45_000
+const HARD_CAP = 300 // safety ceiling on total pages per audit
+const BATCH = 10 // pages analyzed per request
+const CONCURRENCY = 6
+const REQUEST_BUDGET_MS = 38_000
 const PER_PAGE_TIMEOUT = 8_000
 
 interface PageResult {
@@ -39,8 +41,7 @@ interface PageResult {
   schemaTypes: string[]
   https: boolean
   indexable: boolean
-  fixCount: number
-  criticalCount: number
+  fixes: FixItem[]
 }
 
 export async function POST(request: Request) {
@@ -55,35 +56,58 @@ export async function POST(request: Request) {
   if (!start) {
     return Response.json({ error: 'Enter a valid domain, e.g. example.com' }, { status: 400 })
   }
-  const limit = Math.min(
-    MAX_LIMIT,
-    Math.max(1, Number(body.limit) || DEFAULT_LIMIT)
-  )
+  const host = safeHost(start)
+  const maxPages = Math.min(HARD_CAP, Math.max(1, Number(body.maxPages) || 150))
+
+  const visited = new Set<string>((Array.isArray(body.visited) ? body.visited : []).map(String))
+  let frontier: string[] = Array.isArray(body.frontier) ? body.frontier.map(String) : []
+  const firstCall = !Array.isArray(body.frontier)
+
+  // First call: seed from sitemap(s) + homepage.
+  if (firstCall) {
+    frontier = [stripHash(start)]
+    if (body.seedSitemap !== false) {
+      const fromSitemap = await seedFromSitemap(start, host, maxPages * 2)
+      for (const u of fromSitemap) if (!frontier.includes(u)) frontier.push(u)
+    }
+  }
 
   const began = Date.now()
-  const queue: string[] = [start]
-  const queued = new Set<string>([stripHash(start)])
   const pages: PageResult[] = []
-  const allFixes: { fix: FixItem; page: string }[] = []
-  let homeStatusBlocked = false
+  const queued = new Set<string>(frontier)
+  let blockedHome = false
 
-  while (queue.length > 0 && pages.length < limit && Date.now() - began < TIME_BUDGET_MS) {
-    const batch = queue.splice(0, CONCURRENCY)
+  while (
+    frontier.length > 0 &&
+    visited.size + pages.length < maxPages &&
+    pages.length < BATCH &&
+    Date.now() - began < REQUEST_BUDGET_MS
+  ) {
+    // pull a concurrency-sized slice of not-yet-visited URLs
+    const slice: string[] = []
+    while (slice.length < CONCURRENCY && frontier.length > 0) {
+      const next = frontier.shift()!
+      const key = stripHash(next)
+      if (visited.has(key)) continue
+      slice.push(next)
+    }
+    if (slice.length === 0) break
+
     const results = await Promise.all(
-      batch.map(async (pageUrl) => {
+      slice.map(async (pageUrl) => {
         try {
           const { html, finalUrl, status } = await fetchHtml(pageUrl, PER_PAGE_TIMEOUT)
-          if (!html || status >= 400) return { pageUrl, status, html: '', finalUrl }
-          return { pageUrl, status, html, finalUrl }
+          return { pageUrl, html, finalUrl, status }
         } catch {
-          return { pageUrl, status: 0, html: '', finalUrl: pageUrl }
+          return { pageUrl, html: '', finalUrl: pageUrl, status: 0 }
         }
       })
     )
 
     for (const r of results) {
+      visited.add(stripHash(r.pageUrl))
       if (!r.html) {
-        if (r.pageUrl === start) homeStatusBlocked = r.status === 403 || r.status === 401
+        if (r.pageUrl === stripHash(start) && (r.status === 403 || r.status === 401)) blockedHome = true
         continue
       }
       const signals = extractSignals(r.html, r.finalUrl, r.status)
@@ -97,7 +121,6 @@ export async function POST(request: Request) {
       const overall = clamp(
         (scores.technical * 30 + scores.content * 30 + scores.schema * 12 + scores.ai * 16) / 88
       )
-      const criticalCount = fixes.filter((f) => f.severity === 'critical').length
       pages.push({
         url: r.finalUrl,
         status: r.status,
@@ -109,28 +132,23 @@ export async function POST(request: Request) {
         schemaTypes: signals.schemaTypes,
         https: signals.https,
         indexable: signals.indexable,
-        fixCount: fixes.length,
-        criticalCount,
+        fixes,
       })
-      for (const fix of fixes) allFixes.push({ fix, page: r.finalUrl })
-
-      // Discover more internal links (only from the start host).
-      if (pages.length + queue.length < limit) {
-        for (const link of extractInternalLinks(r.html, r.finalUrl)) {
-          const key = stripHash(link)
-          if (!queued.has(key) && queued.size < MAX_LIMIT * 3) {
-            queued.add(key)
-            queue.push(link)
-          }
+      // discover internal links
+      for (const link of extractInternalLinks(r.html, r.finalUrl, 120)) {
+        const key = stripHash(link)
+        if (!visited.has(key) && !queued.has(key)) {
+          queued.add(key)
+          frontier.push(link)
         }
       }
     }
   }
 
-  if (pages.length === 0) {
+  if (firstCall && pages.length === 0) {
     return Response.json(
       {
-        error: homeStatusBlocked
+        error: blockedHome
           ? 'This site blocks automated requests (403). Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another domain.'
           : 'Could not crawl that site. Check the domain and make sure it is publicly accessible.',
       },
@@ -138,64 +156,101 @@ export async function POST(request: Request) {
     )
   }
 
-  // ── Aggregate ──
-  const avg = (xs: number[]) => clamp(xs.reduce((a, b) => a + b, 0) / xs.length)
-  const siteScore = avg(pages.map((p) => p.overall))
-  const categories = {
-    technical: avg(pages.map((p) => p.scores.technical)),
-    content: avg(pages.map((p) => p.scores.content)),
-    schema: avg(pages.map((p) => p.scores.schema)),
-    ai: avg(pages.map((p) => p.scores.ai)),
-  }
-
-  // Group identical issues across pages.
-  const grouped = new Map<string, { fix: FixItem; pages: string[] }>()
-  for (const { fix, page } of allFixes) {
-    const key = `${fix.severity}|${fix.category}|${fix.title}`
-    const g = grouped.get(key)
-    if (g) {
-      if (!g.pages.includes(page)) g.pages.push(page)
-    } else {
-      grouped.set(key, { fix, pages: [page] })
-    }
-  }
-  const rank: Record<string, number> = { critical: 0, warning: 1, info: 2 }
-  const issues = [...grouped.values()]
-    .map((g) => ({
-      severity: g.fix.severity,
-      category: g.fix.category,
-      title: g.fix.title,
-      affectedPages: g.pages.length,
-    }))
-    .sort(
-      (a, b) =>
-        rank[a.severity] - rank[b.severity] || b.affectedPages - a.affectedPages
-    )
-
-  const severityTotals = {
-    critical: issues.filter((i) => i.severity === 'critical').length,
-    warning: issues.filter((i) => i.severity === 'warning').length,
-    info: issues.filter((i) => i.severity === 'info').length,
-  }
+  // De-dupe remaining frontier against visited and cap it.
+  const remaining = frontier.filter((u) => !visited.has(stripHash(u))).slice(0, HARD_CAP * 2)
+  const done = remaining.length === 0 || visited.size >= maxPages
 
   return Response.json({
-    domain: safeHost(start),
+    domain: host,
     startUrl: start,
-    crawledAt: new Date().toISOString(),
-    pagesCrawled: pages.length,
-    reachedLimit: pages.length >= limit,
-    siteScore,
-    categories,
-    severityTotals,
-    totals: {
-      avgWordCount: Math.round(avg(pages.map((p) => p.wordCount))),
-      pagesWithSchema: pages.filter((p) => p.schemaTypes.length > 0).length,
-      nonIndexable: pages.filter((p) => !p.indexable).length,
-      httpsPages: pages.filter((p) => p.https).length,
-    },
-    issues,
-    pages: pages.sort((a, b) => a.overall - b.overall),
+    pages,
+    visited: [...visited],
+    frontier: done ? [] : remaining,
+    discovered: visited.size + remaining.length,
+    crawledTotal: visited.size,
+    done,
+    maxPages,
   })
+}
+
+// ─── Sitemap discovery ────────────────────────────────────────────────────────
+
+async function seedFromSitemap(start: string, host: string, cap: number): Promise<string[]> {
+  let origin = ''
+  try {
+    origin = new URL(start).origin
+  } catch {
+    return []
+  }
+  const candidates = [
+    `${origin}/sitemap_index.xml`,
+    `${origin}/sitemap.xml`,
+    `${origin}/wp-sitemap.xml`,
+  ]
+  const urls = new Set<string>()
+
+  for (const sm of candidates) {
+    if (urls.size >= cap) break
+    const xml = await safeText(sm)
+    if (!xml) continue
+
+    // sitemap index → child sitemaps
+    const childSitemaps = matchAll(xml, /<sitemap>[\s\S]*?<loc>([\s\S]*?)<\/loc>/gi)
+    if (childSitemaps.length > 0) {
+      for (const child of childSitemaps.slice(0, 12)) {
+        if (urls.size >= cap) break
+        const childXml = await safeText(child.trim())
+        if (!childXml) continue
+        for (const loc of matchAll(childXml, /<url>[\s\S]*?<loc>([\s\S]*?)<\/loc>/gi)) {
+          addIfSameHost(urls, loc, host, cap)
+        }
+      }
+    }
+    // flat urlset
+    for (const loc of matchAll(xml, /<url>[\s\S]*?<loc>([\s\S]*?)<\/loc>/gi)) {
+      addIfSameHost(urls, loc, host, cap)
+    }
+    if (urls.size > 0) break // found a working sitemap
+  }
+  return [...urls]
+}
+
+function addIfSameHost(set: Set<string>, loc: string, host: string, cap: number) {
+  if (set.size >= cap) return
+  try {
+    const u = new URL(loc.trim())
+    if (u.hostname.replace(/^www\./, '') !== host) return
+    if (/\.(jpg|jpeg|png|gif|svg|webp|avif|css|js|pdf|zip|mp4|mp3|ico|woff2?|ttf)(\?|$)/i.test(u.pathname)) return
+    u.hash = ''
+    set.add(u.toString())
+  } catch {
+    /* ignore */
+  }
+}
+
+function matchAll(s: string, re: RegExp): string[] {
+  const out: string[] = []
+  let m: RegExpExecArray | null
+  while ((m = re.exec(s))) out.push(m[1])
+  return out
+}
+
+async function safeText(url: string): Promise<string | null> {
+  try {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), 8000)
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; RankForgeBot/1.0)' },
+    }).finally(() => clearTimeout(timer))
+    if (!res.ok) return null
+    const ct = res.headers.get('content-type') ?? ''
+    if (!/xml|text/.test(ct)) return null
+    const text = await res.text()
+    return text.slice(0, 2_000_000)
+  } catch {
+    return null
+  }
 }
 
 function stripHash(u: string): string {
