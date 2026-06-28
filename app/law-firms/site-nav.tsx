@@ -45,7 +45,7 @@ export function SiteNav() {
             Book a call
           </a>
           <a
-            href="/law-firms/get-started"
+            href="/get-started"
             className="rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-300"
           >
             Get started
@@ -83,7 +83,7 @@ export function SiteNav() {
               </a>
             ))}
             <a
-              href="/law-firms/get-started"
+              href="/get-started"
               onClick={() => setOpen(false)}
               className="mt-2 rounded-lg bg-amber-400 px-4 py-2.5 text-center text-sm font-semibold text-slate-950"
             >

@@ -52,7 +52,7 @@ export default function LawFirmsPage() {
             <Reveal delay={240}>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
-                  href="/law-firms/get-started"
+                  href="/get-started"
                   className="w-full rounded-xl bg-amber-400 px-6 py-3.5 text-center text-sm font-semibold text-slate-950 shadow-lg shadow-amber-400/20 transition hover:bg-amber-300 sm:w-auto"
                 >
                   Make my site AI-ready
