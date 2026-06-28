@@ -24,6 +24,9 @@ import {
   Gauge,
   StopCircle,
   Sparkles,
+  Wand2,
+  Rocket,
+  RotateCcw,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -697,6 +700,10 @@ function ConnectNote({ title, note, envVar }: { title: string; note?: string; en
 
 interface WpStatus { ok: boolean; name?: string; description?: string; hasAioseo?: boolean; authProvided?: boolean; authValid?: boolean }
 interface WpItem { id: number; link: string; title: string }
+interface WpAnalysis { title: string; titleLength: number; metaDescription: string; metaDescriptionLength: number; h1Count: number; wordCount: number; schemaTypes: string[]; hasOpenGraph: boolean }
+interface WpEditPost { id: number; type: 'posts' | 'pages'; link: string; title: string; excerpt: string; content: string }
+interface WpEdit { post: WpEditPost; analysis: WpAnalysis | null }
+interface WpCreds { siteUrl: string; username: string; appPassword: string }
 
 function WordPress() {
   const [siteUrl, setSiteUrl] = useState('')
@@ -712,7 +719,20 @@ function WordPress() {
     setStatus('testing'); setError(null)
     try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'test', siteUrl, username, appPassword }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Connection failed.'); setStatus('error'); return } setInfo(json); setStatus('connected'); try { localStorage.setItem('rf_app_wp', JSON.stringify({ siteUrl, username })) } catch { /* ignore */ } } catch { setError('Could not reach the site.'); setStatus('error') }
   }
-  const list = async (action: 'posts' | 'pages') => { setLoadingItems(true); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setItems(json.items || []) } catch { /* ignore */ } finally { setLoadingItems(false) } }
+  const [listType, setListType] = useState<'posts' | 'pages'>('posts')
+  const [editing, setEditing] = useState<WpEdit | null>(null)
+  const [optimizingId, setOptimizingId] = useState<number | null>(null)
+  const list = async (action: 'posts' | 'pages') => { setListType(action); setLoadingItems(true); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setItems(json.items || []) } catch { /* ignore */ } finally { setLoadingItems(false) } }
+  const optimize = async (item: WpItem) => {
+    setOptimizingId(item.id)
+    try {
+      const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'get', id: item.id, type: listType, siteUrl, username, appPassword }) })
+      const json = await res.json()
+      if (res.ok) setEditing(json)
+      else setError(json?.error ?? 'Could not load item.')
+    } catch { setError('Could not load item.') } finally { setOptimizingId(null) }
+  }
+  const creds: WpCreds = { siteUrl, username, appPassword }
   return (
     <div className="space-y-4">
       <div className="rf-card p-5">
@@ -736,10 +756,156 @@ function WordPress() {
           </div>
           {loadingItems && <p className="text-sm text-[var(--rf-muted)]"><Loader2 className="mr-1 inline h-4 w-4 animate-spin" /> Loading…</p>}
           {items.length > 0 && (
-            <div className="rf-card overflow-hidden"><div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Content ({items.length})</div><div className="divide-y divide-[var(--rf-card-line)]">{items.map((it) => (<a key={it.id} href={it.link} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-white/[0.02]"><span className="truncate text-[var(--rf-text)]" dangerouslySetInnerHTML={{ __html: it.title || pathOf(it.link) }} /><ExternalLink className="h-3.5 w-3.5 shrink-0 text-[var(--rf-faint)]" /></a>))}</div></div>
+            <div className="rf-card overflow-hidden">
+              <div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">{listType} ({items.length}) · optimize &amp; deploy SEO fixes</div>
+              <div className="divide-y divide-[var(--rf-card-line)]">
+                {items.map((it) => (
+                  <div key={it.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm">
+                    <span className="truncate text-[var(--rf-text)]" dangerouslySetInnerHTML={{ __html: it.title || pathOf(it.link) }} />
+                    <span className="flex shrink-0 items-center gap-2">
+                      <a href={it.link} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-faint)] hover:text-white"><ExternalLink className="h-3.5 w-3.5" /></a>
+                      <button onClick={() => optimize(it)} disabled={optimizingId === it.id} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium disabled:opacity-60">
+                        {optimizingId === it.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />} Optimize
+                      </button>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </>
       )}
+      {editing && <Optimizer edit={editing} creds={creds} authValid={!!info?.authValid} onClose={() => setEditing(null)} />}
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* WordPress optimizer + deploy                                        */
+/* ------------------------------------------------------------------ */
+
+const SCHEMA_RE = /\n?<!-- rankforge-schema:start -->[\s\S]*?<!-- rankforge-schema:end -->\n?/g
+function schemaBlock(title: string, url: string): string {
+  const json = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: title, url })
+  return `\n<!-- rankforge-schema:start -->\n<script type="application/ld+json">${json}</script>\n<!-- rankforge-schema:end -->\n`
+}
+
+function Optimizer({ edit, creds, authValid, onClose }: { edit: WpEdit; creds: WpCreds; authValid: boolean; onClose: () => void }) {
+  const a = edit.analysis
+  const [title, setTitle] = useState(edit.post.title)
+  const [meta, setMeta] = useState(edit.post.excerpt || a?.metaDescription || '')
+  const [addSchema, setAddSchema] = useState(!!a && a.schemaTypes.length === 0)
+  const [step, setStep] = useState<'edit' | 'confirm' | 'applying' | 'done' | 'error'>('edit')
+  const [error, setError] = useState<string | null>(null)
+  const [undone, setUndone] = useState(false)
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    document.addEventListener('keydown', onKey); document.body.style.overflow = 'hidden'
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [onClose])
+
+  const buildPayload = (revert: boolean) => {
+    const payload: Record<string, string> = { id: String(edit.post.id) }
+    if (revert) {
+      payload.title = edit.post.title
+      payload.excerpt = edit.post.excerpt
+      if (addSchema) payload.content = edit.post.content
+      return payload
+    }
+    if (title !== edit.post.title) payload.title = title
+    if (meta !== edit.post.excerpt) payload.excerpt = meta
+    if (addSchema) payload.content = edit.post.content.replace(SCHEMA_RE, '') + schemaBlock(title || edit.post.title, edit.post.link)
+    return payload
+  }
+
+  const send = async (revert: boolean) => {
+    setStep('applying'); setError(null)
+    try {
+      const res = await fetch('/api/wordpress', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'apply', type: edit.post.type, ...creds, ...buildPayload(revert) }),
+      })
+      const json = await res.json()
+      if (!res.ok) { setError(json?.error ?? 'Deploy failed.'); setStep('error'); return }
+      setUndone(revert); setStep('done')
+    } catch { setError('Network error.'); setStep('error') }
+  }
+
+  const changeCount = (title !== edit.post.title ? 1 : 0) + (meta !== edit.post.excerpt ? 1 : 0) + (addSchema ? 1 : 0)
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm sm:p-8" onClick={onClose}>
+      <div className="rf-card rf-topline relative my-auto w-full max-w-xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-5 py-3.5">
+          <span className="flex items-center gap-2 text-sm font-semibold text-white"><Wand2 className="h-4 w-4 text-[var(--rf-blue-bright)]" /> Optimize &amp; deploy</span>
+          <button onClick={onClose} className="rf-btn-ghost grid h-8 w-8 place-items-center rounded-lg"><X className="h-4 w-4" /></button>
+        </div>
+
+        <div className="max-h-[72vh] overflow-y-auto p-5">
+          <a href={edit.post.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-[var(--rf-blue-bright)] hover:text-white">{pathOf(edit.post.link)} <ExternalLink className="h-3 w-3" /></a>
+
+          {a && (
+            <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
+              <Badge ok={a.titleLength >= 30 && a.titleLength <= 60} text={`Title ${a.titleLength}c`} />
+              <Badge ok={a.metaDescriptionLength >= 70 && a.metaDescriptionLength <= 160} text={`Meta ${a.metaDescriptionLength}c`} />
+              <Badge ok={a.h1Count === 1} text={`${a.h1Count} H1`} />
+              <Badge ok={a.schemaTypes.length > 0} text={a.schemaTypes.length ? 'Has schema' : 'No schema'} />
+            </div>
+          )}
+
+          {step === 'done' ? (
+            <div className="py-8 text-center">
+              <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--rf-green)]/10"><Check className="h-6 w-6 text-[var(--rf-green)]" /></span>
+              <p className="mt-3 font-semibold text-white">{undone ? 'Reverted on your site' : 'Deployed to your site'}</p>
+              <p className="mt-1 text-sm text-[var(--rf-muted)]">{undone ? 'The previous values were restored.' : 'Your changes are live on WordPress.'}</p>
+              <div className="mt-4 flex justify-center gap-2">
+                {!undone && <button onClick={() => send(true)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium"><RotateCcw className="h-4 w-4" /> Undo</button>}
+                <a href={edit.post.link} target="_blank" rel="noopener noreferrer" className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold">View page <ExternalLink className="h-4 w-4" /></a>
+              </div>
+            </div>
+          ) : (
+            <>
+              <label className="mt-5 block text-xs font-medium text-[var(--rf-muted)]">SEO title</label>
+              <input value={title} onChange={(e) => setTitle(e.target.value)} className="rf-card mt-1 w-full bg-transparent px-3 py-2 text-sm text-white focus:outline-none" />
+              <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{title.length} chars · aim 30–60</p>
+
+              <label className="mt-4 block text-xs font-medium text-[var(--rf-muted)]">Meta description (excerpt)</label>
+              <textarea value={meta} onChange={(e) => setMeta(e.target.value)} rows={3} className="rf-card mt-1 w-full resize-y bg-transparent px-3 py-2 text-sm text-white focus:outline-none" />
+              <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{meta.length} chars · aim 70–160</p>
+
+              <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-sm">
+                <input type="checkbox" checked={addSchema} onChange={(e) => setAddSchema(e.target.checked)} className="mt-0.5 accent-[var(--rf-blue)]" />
+                <span><span className="text-[var(--rf-text)]">Add JSON-LD Article schema</span><span className="block text-[11px] text-[var(--rf-faint)]">Injected into the post content (idempotent &amp; reversible).</span></span>
+              </label>
+
+              {!authValid && (
+                <p className="mt-4 rounded-lg border border-[var(--rf-amber)]/30 bg-[var(--rf-amber)]/10 px-3 py-2 text-xs text-[var(--rf-amber)]">Connect with a valid Application Password to deploy changes.</p>
+              )}
+              {step === 'error' && <p className="mt-3 text-xs text-[var(--rf-red)]">{error}</p>}
+
+              {step === 'confirm' ? (
+                <div className="mt-5 rounded-xl border border-[var(--rf-card-line-strong)] bg-white/[0.02] p-3">
+                  <p className="text-sm text-white">Deploy {changeCount} change{changeCount !== 1 ? 's' : ''} to your live site?</p>
+                  <p className="mt-1 text-[11px] text-[var(--rf-faint)]">You can undo right after.</p>
+                  <div className="mt-3 flex gap-2">
+                    <button onClick={() => send(false)} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold"><Rocket className="h-4 w-4" /> Deploy now</button>
+                    <button onClick={() => setStep('edit')} className="rf-btn-ghost rounded-xl px-4 py-2 text-sm font-medium">Cancel</button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setStep('confirm')}
+                  disabled={!authValid || changeCount === 0 || step === 'applying'}
+                  className="rf-btn-primary mt-5 inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {step === 'applying' ? <><Loader2 className="h-4 w-4 animate-spin" /> Deploying…</> : <><Rocket className="h-4 w-4" /> Review &amp; deploy ({changeCount})</>}
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
