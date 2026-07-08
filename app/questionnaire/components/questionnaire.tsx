@@ -7,7 +7,10 @@ import {
   ArrowLeft,
   Check,
   CornerDownLeft,
-  Sparkles,
+  ShieldCheck,
+  BadgeCheck,
+  Cpu,
+  Clock,
   Send,
 } from 'lucide-react'
 import {
@@ -162,9 +165,9 @@ function TopBar({
 }) {
   return (
     <div className="fixed inset-x-0 top-0 z-30 mx-auto flex h-16 w-full max-w-2xl items-center justify-between px-5 sm:px-8">
-      <span className="tp-brand text-[15px]">
-        <span className="tp-brand-dot" />
-        True Point
+      <span className="tp-brand">
+        <span className="tp-brand-dot">TP</span>
+        TruePoint<span className="tp-brand-sub">&nbsp;Systems</span>
       </span>
       {showCount && (
         <span
@@ -183,6 +186,8 @@ function TopBar({
 /* Intro                                                               */
 /* ------------------------------------------------------------------ */
 
+const TRUST_ICONS = [BadgeCheck, ShieldCheck, Clock, Cpu]
+
 function Intro({ onStart }: { onStart: () => void }) {
   useEnterKey(onStart)
   return (
@@ -192,9 +197,9 @@ function Intro({ onStart }: { onStart: () => void }) {
         style={{
           top: '-8rem',
           right: '-6rem',
-          height: '20rem',
-          width: '20rem',
-          background: 'rgba(109, 94, 252, 0.28)',
+          height: '22rem',
+          width: '22rem',
+          background: 'rgba(48, 110, 60, 0.5)',
         }}
       />
       <div
@@ -204,20 +209,23 @@ function Intro({ onStart }: { onStart: () => void }) {
           left: '-8rem',
           height: '18rem',
           width: '18rem',
-          background: 'rgba(16, 185, 129, 0.18)',
+          background: 'rgba(212, 175, 87, 0.22)',
           animationDelay: '1.4s',
         }}
       />
       <div className="tp-stagger relative flex flex-col items-start gap-6">
-        <span className="tp-eyebrow inline-flex items-center gap-2">
-          <Sparkles className="h-3.5 w-3.5" />
+        <span className="tp-pill">
+          <ShieldCheck className="h-3.5 w-3.5" />
           {intro.eyebrow}
         </span>
-        <h1 className="tp-display tp-gradient">{intro.title}</h1>
+        <h1 className="tp-display">
+          <span className="text-[var(--tp-ink)]">{intro.titleLead} </span>
+          <span className="tp-gradient">{intro.titleGold}</span>
+        </h1>
         <p className="max-w-xl text-lg leading-relaxed text-[var(--tp-ink-soft)]">
           {intro.subtitle}
         </p>
-        <div className="mt-2 flex flex-wrap items-center gap-4">
+        <div className="mt-1 flex flex-wrap items-center gap-4">
           <button className="tp-btn tp-btn-primary" onClick={onStart}>
             {intro.cta}
             <ArrowRight className="h-4 w-4" />
@@ -225,6 +233,17 @@ function Intro({ onStart }: { onStart: () => void }) {
           <span className="tp-hint">
             Press <span className="tp-kbd">Enter ↵</span> {intro.meta}
           </span>
+        </div>
+        <div className="tp-trust mt-4 border-t border-[var(--tp-line)] pt-6">
+          {intro.trust.map((t, i) => {
+            const Icon = TRUST_ICONS[i % TRUST_ICONS.length]
+            return (
+              <span key={t} className="tp-trust-item">
+                <Icon className="h-4 w-4" strokeWidth={2} />
+                {t}
+              </span>
+            )
+          })}
         </div>
       </div>
     </div>
@@ -615,10 +634,10 @@ function Outro({
             right: '-4rem',
             height: '18rem',
             width: '18rem',
-            background: 'rgba(16, 185, 129, 0.22)',
+            background: 'rgba(48, 110, 60, 0.45)',
           }}
         />
-        <span className="tp-pop grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-[var(--tp-good)] to-[#0ea371] text-white shadow-[0_18px_40px_-16px_rgba(16,185,129,0.9)]">
+        <span className="tp-pop grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-[var(--tp-green-bright)] to-[var(--tp-green)] text-white shadow-[0_18px_40px_-16px_rgba(48,110,60,0.9)]">
           <Check className="h-8 w-8" strokeWidth={3} />
         </span>
         <h2 className="tp-display tp-gradient">{outro.doneTitle}</h2>
@@ -638,7 +657,7 @@ function Outro({
           left: '-6rem',
           height: '18rem',
           width: '18rem',
-          background: 'rgba(109, 94, 252, 0.26)',
+          background: 'rgba(212, 175, 87, 0.2)',
         }}
       />
       <span className="tp-eyebrow">{outro.eyebrow}</span>
