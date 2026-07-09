@@ -76,7 +76,7 @@ function analyze(pages: PageResult[]): Analytics | null {
   const avg = (xs: number[]) => Math.round(xs.reduce((a, b) => a + b, 0) / xs.length)
 
   const grouped = new Map<string, Issue>()
-  for (const p of pages) for (const f of p.fixes) {
+  for (const p of pages) for (const f of p.fixes ?? []) {
     const key = `${f.severity}|${f.category}|${f.title}`
     const g = grouped.get(key)
     if (g) g.affectedPages++
@@ -86,25 +86,25 @@ function analyze(pages: PageResult[]): Analytics | null {
   const issues = [...grouped.values()].sort((a, b) => rank[a.severity] - rank[b.severity] || b.affectedPages - a.affectedPages)
 
   const catCount = new Map<string, number>()
-  for (const p of pages) for (const f of p.fixes) catCount.set(f.category, (catCount.get(f.category) || 0) + 1)
+  for (const p of pages) for (const f of p.fixes ?? []) catCount.set(f.category, (catCount.get(f.category) || 0) + 1)
   const issuesByCategory = [...catCount.entries()].map(([category, count]) => ({ category, count })).sort((a, b) => b.count - a.count)
 
   const dupOf = (key: (p: PageResult) => string): Dup[] => {
     const m = new Map<string, string[]>()
-    for (const p of pages) { const v = key(p).trim(); if (!v) continue; const arr = m.get(v.toLowerCase()) || []; arr.push(p.url); m.set(v.toLowerCase(), arr) }
+    for (const p of pages) { const v = String(key(p) ?? '').trim(); if (!v) continue; const arr = m.get(v.toLowerCase()) || []; arr.push(p.url); m.set(v.toLowerCase(), arr) }
     return [...m.entries()].filter(([, arr]) => arr.length > 1).map(([, arr]) => ({ value: key(pages.find((p) => norm(p.url) === norm(arr[0]))!) || arr[0], pages: arr })).sort((a, b) => b.pages.length - a.pages.length)
   }
 
   const pageKeys = new Set(pages.map((p) => norm(p.url)))
   const keyToUrl = new Map(pages.map((p) => [norm(p.url), p.url]))
   const inbound: Record<string, number> = {}
-  for (const p of pages) for (const t of p.internalTargets) { const k = norm(t); if (pageKeys.has(k) && k !== norm(p.url)) inbound[k] = (inbound[k] || 0) + 1 }
+  for (const p of pages) for (const t of p.internalTargets ?? []) { const k = norm(t); if (pageKeys.has(k) && k !== norm(p.url)) inbound[k] = (inbound[k] || 0) + 1 }
   const orphans = pages.filter((p) => { const path = pathOf(p.url); return path !== '/' && !(inbound[norm(p.url)] > 0) })
   const topLinked = Object.entries(inbound).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([k, count]) => ({ url: keyToUrl.get(k) || k, count }))
   const inboundVals = pages.map((p) => inbound[norm(p.url)] || 0)
 
   const schemaMap = new Map<string, number>()
-  for (const p of pages) for (const t of p.schemaTypes) schemaMap.set(t, (schemaMap.get(t) || 0) + 1)
+  for (const p of pages) for (const t of p.schemaTypes ?? []) schemaMap.set(t, (schemaMap.get(t) || 0) + 1)
 
   return {
     siteScore: avg(pages.map((p) => p.overall)),
@@ -141,7 +141,15 @@ export default function AppDashboard() {
   useEffect(() => {
     try {
       const d = localStorage.getItem('rf_app_domain'); if (d) setDomain(d)
-      const cached = localStorage.getItem('rf_app_pages'); if (cached) { setPages(JSON.parse(cached)); setStatus('done') }
+      // Only restore cached audits from the current data shape; older caches
+      // (pre-redesign) lack fields the analytics need and would crash the page.
+      const cached = localStorage.getItem('rf_app_pages')
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        const valid = Array.isArray(parsed) && parsed.every((p) => p && Array.isArray(p.internalTargets) && typeof p.title === 'string' && Array.isArray(p.fixes))
+        if (valid && parsed.length > 0) { setPages(parsed); setStatus('done') }
+        else localStorage.removeItem('rf_app_pages')
+      }
       const ps = localStorage.getItem('rf_app_ps'); if (ps) setPageSpeed(JSON.parse(ps))
     } catch { /* ignore */ }
   }, [])
