@@ -5,8 +5,9 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, ArrowUpRight, Check, AlertTriangle, Info, Download, Printer,
   Zap, ExternalLink, RefreshCw, X, Gauge, StopCircle, Network, ShieldCheck,
-  Code2, Wand2, Rocket, RotateCcw, TrendingUp, type LucideIcon,
+  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, type LucideIcon,
 } from 'lucide-react'
+import { CommandCenter, logEvent } from './command'
 
 /* ================================================================== */
 /* Types                                                              */
@@ -40,9 +41,10 @@ interface Analytics {
 interface PageSpeed { available: boolean; performance: number | null; lcpMs: number | null; cls: number | null; inpMs: number | null; strategy?: string }
 interface CrawlResponse { pages?: PageResult[]; visited?: string[]; frontier?: string[]; discovered?: number; crawledTotal?: number; done?: boolean; error?: string }
 
-type SectionId = 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema' | 'rankings' | 'backlinks' | 'wordpress' | 'reports'
+type SectionId = 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema' | 'rankings' | 'backlinks' | 'wordpress' | 'reports'
 const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: LucideIcon }[] }[] = [
   { label: 'Analyze', items: [
+    { id: 'command', label: 'Command Center', icon: Bot },
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
     { id: 'audit', label: 'Site Audit', icon: Radar },
     { id: 'content', label: 'Content', icon: FileText },
@@ -126,7 +128,7 @@ function analyze(pages: PageResult[]): Analytics | null {
 export default function AppDashboard() {
   const [domain, setDomain] = useState('')
   const [maxPages, setMaxPages] = useState(150)
-  const [section, setSection] = useState<SectionId>('overview')
+  const [section, setSection] = useState<SectionId>('command')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [pages, setPages] = useState<PageResult[]>([])
   const [progress, setProgress] = useState({ crawled: 0, discovered: 0 })
@@ -160,6 +162,7 @@ export default function AppDashboard() {
         if (json.done || stopRef.current || safety >= 40 || acc.length >= maxPages) break
       }
       setStatus('done')
+      logEvent('audit', `Audited ${acc.length} pages on ${value}`)
       try { localStorage.setItem('rf_app_pages', JSON.stringify(acc)) } catch { /* quota */ }
       try { const ps = await fetch('/api/pagespeed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: value }) }).then((r) => r.json()); if (ps?.available) { setPageSpeed(ps); try { localStorage.setItem('rf_app_ps', JSON.stringify(ps)) } catch { /* ignore */ } } } catch { /* ignore */ }
     } catch { if (acc.length === 0) { setError('Network error — please try again.'); setStatus('error') } else setStatus('done') }
@@ -207,6 +210,7 @@ export default function AppDashboard() {
           </div>
           <main className="p-4 sm:p-6">
             {error && status === 'error' && <div className="mb-4 flex items-center gap-2 rounded-xl border border-[var(--rf-red)]/30 bg-[var(--rf-red)]/10 px-4 py-3 text-sm text-[var(--rf-red)]"><AlertTriangle className="h-4 w-4" /> {error}</div>}
+            {section === 'command' && <CommandCenter a={a} pages={pages} pageSpeed={pageSpeed} domain={domain} status={status} onRun={runAudit} onGo={(s) => setSection(s as SectionId)} />}
             {section === 'overview' && <Overview a={a} pages={pages} status={status} onRun={runAudit} pageSpeed={pageSpeed} domain={domain} crawled={progress.crawled} onGo={setSection} />}
             {section === 'audit' && <Audit a={a} pages={pages} onSelect={setSelected} />}
             {section === 'content' && <Content a={a} pages={pages} />}
@@ -625,7 +629,7 @@ function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdi
     if (addSchema) payload.content = edit.post.content.replace(SCHEMA_RE, '') + schemaBlock(title || origTitle, edit.post.link)
     return payload
   }
-  const send = async (revert: boolean) => { setStep('applying'); setError(null); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply', type: edit.post.type, ...creds, ...buildPayload(revert) }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Deploy failed.'); setStep('error'); return } setUndone(revert); setStep('done') } catch { setError('Network error.'); setStep('error') } }
+  const send = async (revert: boolean) => { setStep('applying'); setError(null); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply', type: edit.post.type, ...creds, ...buildPayload(revert) }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Deploy failed.'); setStep('error'); return } setUndone(revert); setStep('done'); logEvent(revert ? 'fix' : 'deploy', revert ? `Reverted SEO changes on ${pathOf(edit.post.link)}` : `Deployed SEO fixes to ${pathOf(edit.post.link)}`) } catch { setError('Network error.'); setStep('error') } }
   const changeCount = (title !== origTitle ? 1 : 0) + (meta !== origMeta ? 1 : 0) + (addSchema ? 1 : 0)
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm sm:p-8" onClick={onClose}>
