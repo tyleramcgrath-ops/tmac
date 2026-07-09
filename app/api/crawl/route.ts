@@ -36,9 +36,14 @@ interface PageResult {
   overall: number
   scores: { technical: number; content: number; schema: number; ai: number }
   wordCount: number
+  title: string
   titleLength: number
+  metaDescription: string
+  canonical: string
+  mixedContent: boolean
   h1Count: number
   schemaTypes: string[]
+  internalTargets: string[]
   https: boolean
   indexable: boolean
   fixes: FixItem[]
@@ -121,24 +126,29 @@ export async function POST(request: Request) {
       const overall = clamp(
         (scores.technical * 30 + scores.content * 30 + scores.schema * 12 + scores.ai * 16) / 88
       )
+      const links = extractInternalLinks(r.html, r.finalUrl, 120).map(stripHash)
       pages.push({
         url: r.finalUrl,
         status: r.status,
         overall,
         scores,
         wordCount: signals.wordCount,
+        title: signals.title,
         titleLength: signals.titleLength,
+        metaDescription: signals.metaDescription,
+        canonical: signals.canonical,
+        mixedContent: signals.mixedContent,
         h1Count: signals.h1Count,
         schemaTypes: signals.schemaTypes,
+        internalTargets: [...new Set(links)].slice(0, 40),
         https: signals.https,
         indexable: signals.indexable,
         fixes,
       })
       // discover internal links
-      for (const link of extractInternalLinks(r.html, r.finalUrl, 120)) {
-        const key = stripHash(link)
-        if (!visited.has(key) && !queued.has(key)) {
-          queued.add(key)
+      for (const link of links) {
+        if (!visited.has(link) && !queued.has(link)) {
+          queued.add(link)
           frontier.push(link)
         }
       }
