@@ -111,7 +111,7 @@ export async function POST(request: Request) {
     if (action === 'get') {
       const id = Number(body.id)
       if (!id) return Response.json({ error: 'Missing post id.' }, { status: 400 })
-      const res = await wpFetch(`${siteUrl}/wp-json/wp/v2/${type}/${id}?context=edit&_fields=id,link,title,excerpt,content,status`, headers)
+      const res = await wpFetch(`${siteUrl}/wp-json/wp/v2/${type}/${id}?context=edit&_fields=id,link,title,excerpt,content,status,aioseo_meta_data`, headers)
       if (!res.ok) {
         return Response.json({ error: res.status === 401 ? 'Authentication required to read this item for editing.' : `Could not load item (${res.status}).` }, { status: 502 })
       }
@@ -120,6 +120,10 @@ export async function POST(request: Request) {
         const v = d?.[k]
         return v && typeof v === 'object' ? String(v.raw ?? '') : String(v ?? '')
       }
+      // AIOSEO SEO title/description (its own fields — the real <title>/meta).
+      const aioseo = d?.aioseo_meta_data && typeof d.aioseo_meta_data === 'object' ? d.aioseo_meta_data : {}
+      const aioseoTitle = typeof aioseo.title === 'string' ? aioseo.title : ''
+      const aioseoDescription = typeof aioseo.description === 'string' ? aioseo.description : ''
       const link = String(d?.link ?? '')
       let analysis: Record<string, unknown> | null = null
       try {
@@ -142,7 +146,7 @@ export async function POST(request: Request) {
       }
       return Response.json({
         ok: true,
-        post: { id, type, link, title: raw('title'), excerpt: raw('excerpt'), content: raw('content'), status: d?.status ?? null },
+        post: { id, type, link, title: raw('title'), excerpt: raw('excerpt'), content: raw('content'), status: d?.status ?? null, aioseoTitle, aioseoDescription },
         analysis,
       })
     }
@@ -154,10 +158,15 @@ export async function POST(request: Request) {
       }
       const id = Number(body.id)
       if (!id) return Response.json({ error: 'Missing post id.' }, { status: 400 })
-      const payload: Record<string, string> = {}
+      const payload: Record<string, unknown> = {}
       if (typeof body.title === 'string') payload.title = body.title
       if (typeof body.excerpt === 'string') payload.excerpt = body.excerpt
       if (typeof body.content === 'string') payload.content = body.content
+      // AIOSEO SEO title/description via its REST-exposed field.
+      const aioseo: Record<string, string> = {}
+      if (typeof body.aioseoTitle === 'string') aioseo.title = body.aioseoTitle
+      if (typeof body.aioseoDescription === 'string') aioseo.description = body.aioseoDescription
+      if (Object.keys(aioseo).length > 0) payload.aioseo_meta_data = aioseo
       if (Object.keys(payload).length === 0) {
         return Response.json({ error: 'No changes to apply.' }, { status: 400 })
       }
