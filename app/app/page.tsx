@@ -701,7 +701,7 @@ function ConnectNote({ title, note, envVar }: { title: string; note?: string; en
 interface WpStatus { ok: boolean; name?: string; description?: string; hasAioseo?: boolean; authProvided?: boolean; authValid?: boolean }
 interface WpItem { id: number; link: string; title: string }
 interface WpAnalysis { title: string; titleLength: number; metaDescription: string; metaDescriptionLength: number; h1Count: number; wordCount: number; schemaTypes: string[]; hasOpenGraph: boolean }
-interface WpEditPost { id: number; type: 'posts' | 'pages'; link: string; title: string; excerpt: string; content: string }
+interface WpEditPost { id: number; type: 'posts' | 'pages'; link: string; title: string; excerpt: string; content: string; aioseoTitle: string; aioseoDescription: string }
 interface WpEdit { post: WpEditPost; analysis: WpAnalysis | null }
 interface WpCreds { siteUrl: string; username: string; appPassword: string }
 
@@ -775,7 +775,7 @@ function WordPress() {
           )}
         </>
       )}
-      {editing && <Optimizer edit={editing} creds={creds} authValid={!!info?.authValid} onClose={() => setEditing(null)} />}
+      {editing && <Optimizer edit={editing} creds={creds} authValid={!!info?.authValid} hasAioseo={!!info?.hasAioseo} onClose={() => setEditing(null)} />}
     </div>
   )
 }
@@ -790,10 +790,14 @@ function schemaBlock(title: string, url: string): string {
   return `\n<!-- rankforge-schema:start -->\n<script type="application/ld+json">${json}</script>\n<!-- rankforge-schema:end -->\n`
 }
 
-function Optimizer({ edit, creds, authValid, onClose }: { edit: WpEdit; creds: WpCreds; authValid: boolean; onClose: () => void }) {
+function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdit; creds: WpCreds; authValid: boolean; hasAioseo: boolean; onClose: () => void }) {
   const a = edit.analysis
-  const [title, setTitle] = useState(edit.post.title)
-  const [meta, setMeta] = useState(edit.post.excerpt || a?.metaDescription || '')
+  // With AIOSEO we edit its SEO title/description (the real <title>/meta);
+  // otherwise we fall back to the core post title/excerpt.
+  const origTitle = hasAioseo ? edit.post.aioseoTitle || a?.title || edit.post.title : edit.post.title
+  const origMeta = hasAioseo ? edit.post.aioseoDescription || edit.post.excerpt || a?.metaDescription || '' : edit.post.excerpt || a?.metaDescription || ''
+  const [title, setTitle] = useState(origTitle)
+  const [meta, setMeta] = useState(origMeta)
   const [addSchema, setAddSchema] = useState(!!a && a.schemaTypes.length === 0)
   const [step, setStep] = useState<'edit' | 'confirm' | 'applying' | 'done' | 'error'>('edit')
   const [error, setError] = useState<string | null>(null)
@@ -807,15 +811,17 @@ function Optimizer({ edit, creds, authValid, onClose }: { edit: WpEdit; creds: W
 
   const buildPayload = (revert: boolean) => {
     const payload: Record<string, string> = { id: String(edit.post.id) }
+    const setTitleField = (v: string) => { if (hasAioseo) payload.aioseoTitle = v; else payload.title = v }
+    const setMetaField = (v: string) => { if (hasAioseo) payload.aioseoDescription = v; else payload.excerpt = v }
     if (revert) {
-      payload.title = edit.post.title
-      payload.excerpt = edit.post.excerpt
+      setTitleField(origTitle)
+      setMetaField(origMeta)
       if (addSchema) payload.content = edit.post.content
       return payload
     }
-    if (title !== edit.post.title) payload.title = title
-    if (meta !== edit.post.excerpt) payload.excerpt = meta
-    if (addSchema) payload.content = edit.post.content.replace(SCHEMA_RE, '') + schemaBlock(title || edit.post.title, edit.post.link)
+    if (title !== origTitle) setTitleField(title)
+    if (meta !== origMeta) setMetaField(meta)
+    if (addSchema) payload.content = edit.post.content.replace(SCHEMA_RE, '') + schemaBlock(title || origTitle, edit.post.link)
     return payload
   }
 
@@ -832,7 +838,7 @@ function Optimizer({ edit, creds, authValid, onClose }: { edit: WpEdit; creds: W
     } catch { setError('Network error.'); setStep('error') }
   }
 
-  const changeCount = (title !== edit.post.title ? 1 : 0) + (meta !== edit.post.excerpt ? 1 : 0) + (addSchema ? 1 : 0)
+  const changeCount = (title !== origTitle ? 1 : 0) + (meta !== origMeta ? 1 : 0) + (addSchema ? 1 : 0)
 
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm sm:p-8" onClick={onClose}>
@@ -866,7 +872,10 @@ function Optimizer({ edit, creds, authValid, onClose }: { edit: WpEdit; creds: W
             </div>
           ) : (
             <>
-              <label className="mt-5 block text-xs font-medium text-[var(--rf-muted)]">SEO title</label>
+              <p className="mt-4 rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">
+                {hasAioseo ? 'Writing AIOSEO SEO fields' : 'Writing core post title / excerpt'}
+              </p>
+              <label className="mt-2 block text-xs font-medium text-[var(--rf-muted)]">SEO title</label>
               <input value={title} onChange={(e) => setTitle(e.target.value)} className="rf-card mt-1 w-full bg-transparent px-3 py-2 text-sm text-white focus:outline-none" />
               <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{title.length} chars · aim 30–60</p>
 
