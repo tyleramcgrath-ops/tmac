@@ -79,6 +79,9 @@ model Project {
   googleSearchConsole  GoogleSearchConsoleMetric[]
   googleAnalytics4     GoogleAnalytics4Metric[]
 
+  // Action center
+  workItems   WorkItem[]
+
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
@@ -271,6 +274,58 @@ model ForgeMemory {
   updatedAt DateTime @updatedAt
 
   @@index([projectId])
+}
+
+// WorkItem is a task in the action center workflow
+model WorkItem {
+  id          String   @id @default(cuid())
+  projectId   String
+  auditId     String?  // which audit triggered this
+  url         String   // page URL to fix
+
+  // What needs to be done
+  type        String   // "title", "meta", "schema", "technical", "conversion", etc.
+  status      String   @default("detected") // detected, explained, generated, previewed, approved, deployed, verified, completed
+  title       String
+  description String?
+  why         String?  // explanation grounded in data
+
+  // Impact metrics
+  estimatedTraffic Int     @default(0)
+  estimatedRevenue Float   @default(0)
+  priority    String   @default("medium") // critical, high, medium, low
+  confidence  Int      @default(0) // 0-100
+
+  // Generated fix
+  generatedFix String?  // JSON: { title, meta, schema, etc. }
+  fixPreview   String?  // HTML preview of how page will look
+
+  // Approval
+  approvedAt  DateTime?
+  approvedBy  String?   // user ID who approved
+
+  // Deployment
+  deployedAt  DateTime?
+  deploymentId String?  // deployment record ID
+  deploymentStatus String? // pending, success, failed
+
+  // Verification
+  verifiedAt  DateTime?
+  beforeMetrics String? // JSON snapshot before deployment
+  afterMetrics  String? // JSON snapshot after deployment
+  verificationStatus String? // pending, improved, no_change, regressed
+
+  // Metadata
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@index([url])
+  @@index([priority])
+  @@index([createdAt])
 }
 
 // OAuthCredential stores encrypted OAuth tokens for integrations
