@@ -1,0 +1,146 @@
+/* =====================================================================
+   North Star — Flagship Experience
+   An editorial, advisor-led layout. Reuses the --rf-* tokens defined in
+   app/rankforge/rankforge.css for color continuity, but intentionally
+   avoids the dashboard/card-grid language of the SEO command center.
+   Scoped under .ns-root.
+   ===================================================================== */
+
+.ns-root {
+  background: radial-gradient(ellipse 120% 60% at 50% -10%, rgba(47, 107, 255, 0.10), transparent 55%), var(--rf-bg);
+  min-height: 100vh;
+}
+
+.ns-serif {
+  font-feature-settings: 'ss01';
+  letter-spacing: -0.02em;
+}
+
+/* ---- Editorial surface: quieter than .rf-card, no boxed-in feel ---- */
+.ns-panel {
+  background: linear-gradient(160deg, rgba(19, 26, 44, 0.55) 0%, rgba(10, 16, 32, 0.55) 60%, rgba(8, 13, 26, 0.55) 100%);
+  border: 1px solid var(--rf-card-line);
+  border-radius: 20px;
+}
+
+.ns-panel-quiet {
+  border: 1px solid var(--rf-card-line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+/* ---- Status dot: never the only signal — always paired with text ---- */
+.ns-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.ns-dot-good { background: var(--rf-green); }
+.ns-dot-watch { background: var(--rf-amber); }
+.ns-dot-attention { background: var(--rf-red); }
+.ns-dot-neutral { background: var(--rf-faint); }
+
+/* ---- Understanding pill (Digital DNA) ---- */
+.ns-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.ns-pill-well { background: rgba(52, 211, 153, 0.10); color: var(--rf-green); border-color: rgba(52, 211, 153, 0.25); }
+.ns-pill-partial { background: rgba(251, 191, 36, 0.10); color: var(--rf-amber); border-color: rgba(251, 191, 36, 0.25); }
+.ns-pill-verify { background: rgba(148, 173, 224, 0.10); color: var(--rf-muted); border-color: var(--rf-card-line-strong); }
+.ns-pill-off { background: rgba(148, 173, 224, 0.04); color: var(--rf-faint); border-color: var(--rf-card-line); }
+
+/* ---- Helix motif: two smooth intertwining ribbons, decorative only ----
+   Intentionally abstract — not a literal double helix with rungs, to
+   avoid reading as medical/lab/genetic. Suggests continuity + growth. */
+.ns-helix-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.ns-helix-svg {
+  position: absolute;
+  right: -8%;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 180%;
+  width: auto;
+  opacity: 0.5;
+}
+@media (max-width: 640px) {
+  .ns-helix-svg { opacity: 0.3; right: -30%; }
+}
+
+/* ---- Focus states: always visible, never suppressed ---- */
+.ns-root a:focus-visible,
+.ns-root button:focus-visible,
+.ns-root input:focus-visible,
+.ns-root textarea:focus-visible,
+.ns-root [tabindex]:focus-visible {
+  outline: 2px solid var(--rf-blue-bright);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ---- Restrained motion ---- */
+.ns-fade-in {
+  animation: ns-fade-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes ns-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ns-expand {
+  overflow: hidden;
+  transition: grid-template-rows 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  display: grid;
+  grid-template-rows: 0fr;
+}
+.ns-expand.ns-expand-open {
+  grid-template-rows: 1fr;
+}
+.ns-expand > div {
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-fade-in { animation: none; }
+  .ns-expand { transition: none; }
+  .ns-root * { scroll-behavior: auto !important; }
+}
+
+/* ---- Preview badge: unmistakable, cannot be confused with production ---- */
+.ns-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: repeating-linear-gradient(135deg, rgba(251, 191, 36, 0.14), rgba(251, 191, 36, 0.14) 4px, rgba(251, 191, 36, 0.22) 4px, rgba(251, 191, 36, 0.22) 8px);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #fde68a;
+}
+
+/* ---- Minimum touch target guarantee on mobile ---- */
+@media (max-width: 768px) {
+  .ns-touch {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
