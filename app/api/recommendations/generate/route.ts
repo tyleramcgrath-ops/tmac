@@ -33,7 +33,8 @@ export async function GET(request: Request) {
     const [gscMetric, ga4Metric, latestAudit] = await Promise.all([
       prisma.googleSearchConsoleMetric.findUnique({
         where: {
-          projectId_url: {
+          organizationId_projectId_url: {
+            organizationId: project.organizationId,
             projectId,
             url: pageUrl,
           },
@@ -41,7 +42,8 @@ export async function GET(request: Request) {
       }),
       prisma.googleAnalytics4Metric.findUnique({
         where: {
-          projectId_url: {
+          organizationId_projectId_url: {
+            organizationId: project.organizationId,
             projectId,
             url: pageUrl,
           },

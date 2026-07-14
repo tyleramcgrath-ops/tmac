@@ -36,10 +36,21 @@ export async function POST(request: Request) {
   try {
     const prisma = getPrismaClient()
 
+    // Get project to find organizationId
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+      select: { organizationId: true, domain: true },
+    })
+
+    if (!project) {
+      return Response.json({ error: 'Project not found.' }, { status: 404 })
+    }
+
     // Get OAuth credential for this project
     const credential = await prisma.oAuthCredential.findUnique({
       where: {
-        projectId_provider: {
+        organizationId_provider_projectId: {
+          organizationId: project.organizationId,
           projectId,
           provider: 'google',
         },
@@ -92,14 +103,6 @@ export async function POST(request: Request) {
     // Fetch page metrics
     const pageMetrics = await fetchGA4PageMetrics(credential.ga4PropertyId, accessToken, start, end)
 
-    const project = await prisma.project.findUnique({
-      where: { id: projectId },
-    })
-
-    if (!project) {
-      return Response.json({ error: 'Project not found.' }, { status: 404 })
-    }
-
     // Store/update metrics for each page
     let syncedCount = 0
     let errors: string[] = []
@@ -114,12 +117,14 @@ export async function POST(request: Request) {
         // Upsert the metric
         await prisma.googleAnalytics4Metric.upsert({
           where: {
-            projectId_url: {
+            organizationId_projectId_url: {
+              organizationId: project.organizationId,
               projectId,
               url: normalizedUrl,
             },
           },
           create: {
+            organizationId: project.organizationId,
             projectId,
             url: normalizedUrl,
             users: metric.users,

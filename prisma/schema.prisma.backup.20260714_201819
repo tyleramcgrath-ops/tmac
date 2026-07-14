@@ -1,0 +1,554 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organizations OrganizationMember[]
+  projects      Project[]
+  events        Event[]
+
+  @@index([email])
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members  OrganizationMember[]
+  projects Project[]
+
+  @@index([createdAt])
+}
+
+model OrganizationMember {
+  id             String   @id @default(cuid())
+  userId         String
+  organizationId String
+  role           String   @default("member") // member, admin
+  createdAt      DateTime @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([userId])
+  @@index([organizationId])
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  userId          String
+  organizationId  String?
+  name            String
+  domain          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Business inputs (stored as JSON or separate fields)
+  monthlyVisits   Int      @default(0)
+  valuePerVisit   Float    @default(0)
+
+  // WordPress integration (optional)
+  wpSiteUrl       String?
+  wpUser          String?
+  wpAppPassword   String? // encrypted in production
+
+  // Audit history
+  audits          Audit[]
+  deployments     Deployment[]
+  events          Event[]
+
+  // Integrations
+  oauthCredentials     OAuthCredential[]
+  googleSearchConsole  GoogleSearchConsoleMetric[]
+  googleAnalytics4     GoogleAnalytics4Metric[]
+
+  // Action center
+  workItems   WorkItem[]
+
+  // Competitor intelligence
+  competitors Competitor[]
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, domain])
+  @@index([userId])
+  @@index([organizationId])
+  @@index([createdAt])
+}
+
+// Audit represents a complete crawl snapshot at a point in time
+model Audit {
+  id        String   @id @default(cuid())
+  projectId String
+  status    String   @default("pending") // pending, running, completed, failed
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+
+  // Crawl metadata
+  pageCount       Int      @default(0)
+  issueCount      Int      @default(0)
+  criticalCount   Int      @default(0)
+  warningCount    Int      @default(0)
+  infoCount       Int      @default(0)
+
+  // Aggregate scores (computed from pages)
+  siteScore       Int      @default(0) // 0-100
+  technicalScore  Int      @default(0)
+  contentScore    Int      @default(0)
+  schemaScore     Int      @default(0)
+  aiScore         Int      @default(0)
+
+  // Aggregate metrics
+  schemaCoverage  Int      @default(0) // percentage
+  orphanCount     Int      @default(0)
+  avgInbound      Int      @default(0)
+
+  // Rich snapshot for comparison and Forge grounding
+  summary         String?  // JSON string with top issues, key findings
+
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  pages     Page[]
+  issues    Issue[]
+  events    Event[]
+
+  @@index([projectId])
+  @@index([startedAt])
+  @@index([status])
+}
+
+// Page represents a single URL found during a crawl
+model Page {
+  id      String @id @default(cuid())
+  auditId String
+  url     String
+  status  Int    @default(0) // HTTP status
+
+  // Content metrics
+  title           String?
+  metaDescription String?
+  h1              String?
+  h1Count         Int     @default(0)
+  contentLength   Int     @default(0)
+
+  // Technical signals
+  canonical       String?
+  hasNoindex      Boolean @default(false)
+  hasMixedContent Boolean @default(false)
+  pageSpeedScore  Int?
+
+  // Internal linking
+  internalLinks   Int @default(0)
+  internalTargets Int @default(0)
+  inboundCount    Int @default(0) // links pointing to this page
+
+  // Schema & AI readiness
+  schemaTypes     String? // JSON array of schema.org types found
+  aiScore         Int     @default(0) // 0-100, based on schema + indexability + content
+  technicalScore  Int     @default(0)
+  contentScore    Int     @default(0)
+  schemaScore     Int     @default(0)
+
+  audit  Audit   @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  issues Issue[]
+
+  @@unique([auditId, url])
+  @@index([auditId])
+  @@index([status])
+}
+
+// Issue represents a detected problem (duplicate title, no schema, etc.)
+model Issue {
+  id      String @id @default(cuid())
+  auditId String
+  pageId  String
+  type    String // "duplicate_title", "duplicate_meta", "no_schema", "no_h1", "missing_meta", etc.
+  severity String @default("info") // critical, warning, info
+
+  title       String
+  description String?
+
+  // For duplicates, which other page(s) have the same value
+  affectedPages String? // JSON array of URLs
+
+  audit Audit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  page  Page  @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([auditId])
+  @@index([pageId])
+  @@index([severity])
+}
+
+// Recommendation is a prioritized action item based on Priority Engine logic
+model Recommendation {
+  id        String   @id @default(cuid())
+  projectId String
+  auditId   String?  // which audit generated this recommendation
+  category  String   // "schema", "title", "meta", "performance", "indexability", etc.
+  title     String
+  description String?
+  severity  String   @default("info") // critical, warning, info
+
+  // Priority engine data
+  affectedPages   Int     @default(0)
+  trafficGain     Int     @default(0) // estimated traffic recovery
+  revenueGain     Float   @default(0) // estimated $ recovery
+  difficulty      String  @default("medium") // easy, medium, hard
+  estimatedMins   Int     @default(30)
+  confidence      Int     @default(80) // 0-100
+
+  dismissed Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@index([auditId])
+  @@index([severity])
+}
+
+// Deployment records WordPress publish events
+model Deployment {
+  id        String   @id @default(cuid())
+  projectId String
+  type      String   @default("deploy") // deploy, revert
+  status    String   @default("pending") // pending, success, failed
+  createdAt DateTime @default(now())
+
+  // What was deployed
+  targetUrl String? // which page was updated
+  changes   String? // JSON describing the changes (title before/after, etc.)
+
+  // Error tracking
+  error     String?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([createdAt])
+}
+
+// Event logs user actions and system events
+model Event {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String?
+  auditId   String?
+  type      String   // audit, deploy, revert, fix, forge_chat, etc.
+  action    String?  // descriptive action
+  createdAt DateTime @default(now())
+
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  audit  Audit?   @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([createdAt])
+  @@index([type])
+}
+
+// ForgeMemory stores conversation history and learned patterns per project
+model ForgeMemory {
+  id        String   @id @default(cuid())
+  projectId String   @unique
+
+  // Recent conversation context (last N messages)
+  messages  String   // JSON array of { role, content } objects
+
+  // Learned patterns from this project's audit history
+  patterns  String?  // JSON with common issues, recurring problems, past recommendations
+
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+// WorkItem is a task in the action center workflow
+model WorkItem {
+  id          String   @id @default(cuid())
+  projectId   String
+  auditId     String?  // which audit triggered this
+  url         String   // page URL to fix
+
+  // What needs to be done
+  type        String   // "title", "meta", "schema", "technical", "conversion", etc.
+  status      String   @default("detected") // detected, explained, generated, previewed, approved, deployed, verified, completed
+  title       String
+  description String?
+  why         String?  // explanation grounded in data
+
+  // Impact metrics
+  estimatedTraffic Int     @default(0)
+  estimatedRevenue Float   @default(0)
+  priority    String   @default("medium") // critical, high, medium, low
+  confidence  Int      @default(0) // 0-100
+
+  // Generated fix
+  generatedFix String?  // JSON: { title, meta, schema, etc. }
+  fixPreview   String?  // HTML preview of how page will look
+
+  // Approval
+  approvedAt  DateTime?
+  approvedBy  String?   // user ID who approved
+
+  // Deployment
+  deployedAt  DateTime?
+  deploymentId String?  // deployment record ID
+  deploymentStatus String? // pending, success, failed
+
+  // Verification
+  verifiedAt  DateTime?
+  beforeMetrics String? // JSON snapshot before deployment
+  afterMetrics  String? // JSON snapshot after deployment
+  verificationStatus String? // pending, improved, no_change, regressed
+
+  // Metadata
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+  @@index([url])
+  @@index([priority])
+  @@index([createdAt])
+}
+
+// OAuthCredential stores encrypted OAuth tokens for integrations
+model OAuthCredential {
+  id        String   @id @default(cuid())
+  projectId String
+  provider  String   // "google"
+
+  // Token data (stored encrypted in production)
+  accessToken   String
+  refreshToken  String?
+  expiresAt     DateTime?
+
+  // Integration-specific metadata
+  scope         String?           // OAuth scopes granted
+  gscPropertyUrl String?          // For GSC: the property URL (https://domain.com/)
+  ga4PropertyId String?           // For GA4: the GA4 property ID (numeric)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, provider])
+  @@index([projectId])
+}
+
+// GoogleSearchConsoleMetric stores GSC data for a URL
+model GoogleSearchConsoleMetric {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+
+  // GSC metrics
+  clicks        Int     @default(0)
+  impressions   Int     @default(0)
+  ctr           Float   @default(0)      // 0.0-100.0 percentage
+  position      Float   @default(0)      // average position
+
+  // Top queries for this URL
+  topQueries    String? // JSON array of {query, clicks, impressions, ctr, position}
+
+  // Devices
+  devices       String? // JSON array of {device, clicks, impressions, ctr, position}
+
+  // Countries
+  countries     String? // JSON array of {country, clicks, impressions, ctr, position}
+
+  // Data freshness
+  dataDate      DateTime? // Last date of GSC data
+  syncedAt      DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, url])
+  @@index([projectId])
+  @@index([url])
+  @@index([clicks])
+  @@index([impressions])
+}
+
+// GoogleAnalytics4Metric stores GA4 data for a page/URL
+model GoogleAnalytics4Metric {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+
+  // GA4 organic traffic metrics
+  users               Int     @default(0)
+  sessions            Int     @default(0)
+  engagementRate      Float   @default(0)      // 0-1.0
+  bounceRate          Float   @default(0)      // 0-1.0
+  avgSessionDuration  Float   @default(0)      // seconds
+
+  // Conversion metrics
+  conversions         Int     @default(0)
+  conversionRate      Float   @default(0)      // 0-1.0
+  revenue             Float   @default(0)      // USD
+
+  // Data freshness
+  dataDate            DateTime?
+  syncedAt            DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, url])
+  @@index([projectId])
+  @@index([url])
+  @@index([users])
+  @@index([sessions])
+  @@index([conversions])
+}
+
+// Competitor stores competitor domain and metadata
+model Competitor {
+  id                String   @id @default(cuid())
+  projectId         String
+  domain            String
+  displayName       String
+  industry          String?
+  notes             String?
+  monitoringStatus  String   @default("active") // active, paused, archived
+  crawlFrequency    Int      @default(7)       // days between crawls
+
+  // Last sync timestamps
+  lastCrawl         DateTime?
+  lastComparison    DateTime?
+
+  // Metadata
+  dateAdded         DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  project           Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshots         CompetitorSnapshot[]
+  changes           CompetitorChange[]
+  opportunities     CompetitorOpportunity[]
+
+  @@unique([projectId, domain])
+  @@index([projectId])
+  @@index([monitoringStatus])
+  @@index([lastCrawl])
+}
+
+// CompetitorSnapshot stores a point-in-time crawl of competitor
+model CompetitorSnapshot {
+  id            String   @id @default(cuid())
+  competitorId  String
+
+  // Crawl data (stored as JSON for flexibility)
+  pageCount     Int      @default(0)
+  issueCount    Int      @default(0)
+  technicalScore Int     @default(0)
+  contentScore  Int      @default(0)
+  schemaScore   Int      @default(0)
+
+  // Page-level snapshots (JSON array of {url, title, meta, h1, canonical, schema, etc})
+  pages         String?  // JSON array of page snapshots
+
+  // Metadata
+  crawledAt     DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  competitor    Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+
+  @@index([competitorId])
+  @@index([crawledAt])
+}
+
+// CompetitorChange represents a detected change between snapshots
+model CompetitorChange {
+  id            String   @id @default(cuid())
+  competitorId  String
+
+  // Change metadata
+  type          String   // newPages, removedPages, titleChanges, metaChanges, h1Changes, canonicalChanges, schemaChanges, linkingChanges, robotsChanges, sitemapChanges, contentExpansion, etc
+  severity      String   @default("medium") // critical, high, medium, low
+
+  // Change details
+  description   String   // Human-readable summary
+  count         Int      @default(1)        // How many items changed
+
+  // Optional: affected pages (JSON array of URLs or page objects)
+  affectedPages String?  // JSON array of URLs or detailed page data
+
+  // Impact assessment
+  impact        String?  // "competitive_threat", "opportunity", "neutral"
+  impactReason  String?  // Why this matters
+
+  // Timeline
+  detectedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  competitor    Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+
+  @@index([competitorId])
+  @@index([detectedAt])
+  @@index([severity])
+  @@index([type])
+}
+
+// CompetitorOpportunity stores actionable insights from competitor changes
+model CompetitorOpportunity {
+  id            String   @id @default(cuid())
+  competitorId  String
+
+  // What changed
+  changeType    String   // newPages, contentExpansion, schema, linkingChanges, etc
+  title         String   // "Competitor added 6 new pages"
+  description   String   // Full explanation
+
+  // Why it matters
+  competitive_threat Boolean @default(false)
+  opportunity   Boolean @default(false)
+
+  // Recommended action
+  recommendedAction String?  // What user should do
+  actionType    String?  // "create_cluster", "add_schema", "improve_linking", etc
+
+  // Impact estimates
+  estimatedTraffic Int?      // Potential traffic impact
+  estimatedDifficulty String? // easy, medium, hard
+  estimatedTime   Int?      // hours to implement
+
+  // Status
+  dismissed     Boolean @default(false)
+  implementedAt DateTime?
+
+  // Timeline
+  detectedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  competitor    Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+
+  @@index([competitorId])
+  @@index([detectedAt])
+  @@index([dismissed])
+}
+
+// Extend Project to include competitors
+// (Project model above already has this relationship in a later commit)

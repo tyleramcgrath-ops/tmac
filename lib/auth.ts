@@ -1,19 +1,37 @@
-// Temporary auth/identification utility
-// For Phase 3, this will be replaced with proper auth (OAuth, etc.)
+import crypto from 'crypto'
 
-const USER_ID_KEY = 'rf_user_id'
+// Simple password hashing using PBKDF2 (built-in Node crypto)
+// For production, use bcryptjs: npm install bcryptjs
+export async function hashPassword(password: string): Promise<string> {
+  const salt = crypto.randomBytes(16).toString('hex')
+  const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex')
+  return `${salt}:${hash}`
+}
 
-export function getOrCreateUserId(): string {
-  try {
-    let userId = localStorage.getItem(USER_ID_KEY)
-    if (!userId) {
-      // Generate a unique ID for anonymous user
-      userId = `anon_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`
-      localStorage.setItem(USER_ID_KEY, userId)
-    }
-    return userId
-  } catch {
-    // If localStorage is not available, generate a session-only ID
-    return `session_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`
-  }
+export async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
+  const [salt, hash] = storedHash.split(':')
+  const hashOfAttempt = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex')
+  return hash === hashOfAttempt
+}
+
+export function generateToken(length: number = 32): string {
+  return crypto.randomBytes(length).toString('hex')
+}
+
+export function getTokenExpiry(hours: number = 24): Date {
+  const now = new Date()
+  now.setHours(now.getHours() + hours)
+  return now
+}
+
+export function generateSessionToken(): string {
+  return generateToken(32)
+}
+
+export function generateResetToken(): string {
+  return generateToken(16)
+}
+
+export function generateVerifyToken(): string {
+  return generateToken(16)
 }

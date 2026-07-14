@@ -27,7 +27,8 @@ export async function GET(request: Request) {
     // Check what integrations are connected
     const googleCred = await prisma.oAuthCredential.findUnique({
       where: {
-        projectId_provider: {
+        organizationId_provider_projectId: {
+          organizationId: project.organizationId,
           projectId,
           provider: 'google',
         },

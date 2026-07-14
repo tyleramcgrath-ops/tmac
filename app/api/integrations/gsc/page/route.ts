@@ -31,7 +31,8 @@ export async function GET(request: Request) {
     // Get GSC metrics
     const gscMetric = await prisma.googleSearchConsoleMetric.findUnique({
       where: {
-        projectId_url: {
+        organizationId_projectId_url: {
+          organizationId: project.organizationId,
           projectId,
           url: pageUrl,
         },

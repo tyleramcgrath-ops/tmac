@@ -136,6 +136,7 @@ export async function POST(request: Request) {
     // Store opportunity
     const stored = await prisma.competitorOpportunity.create({
       data: {
+        organizationId: change.organizationId,
         competitorId: change.competitorId,
         changeType: change.type,
         title: opportunity.title,

@@ -36,10 +36,21 @@ export async function POST(request: Request) {
   try {
     const prisma = getPrismaClient()
 
+    // Get project to find organizationId
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+      select: { organizationId: true, domain: true },
+    })
+
+    if (!project) {
+      return Response.json({ error: 'Project not found.' }, { status: 404 })
+    }
+
     // Get OAuth credential for this project
     const credential = await prisma.oAuthCredential.findUnique({
       where: {
-        projectId_provider: {
+        organizationId_provider_projectId: {
+          organizationId: project.organizationId,
           projectId,
           provider: 'google',
         },
@@ -51,14 +62,6 @@ export async function POST(request: Request) {
         { error: 'Google Search Console not connected for this project.' },
         { status: 401 }
       )
-    }
-
-    const project = await prisma.project.findUnique({
-      where: { id: projectId },
-    })
-
-    if (!project) {
-      return Response.json({ error: 'Project not found.' }, { status: 404 })
     }
 
     // Refresh token if expired
@@ -110,12 +113,14 @@ export async function POST(request: Request) {
         // Upsert the metric
         await prisma.googleSearchConsoleMetric.upsert({
           where: {
-            projectId_url: {
+            organizationId_projectId_url: {
+              organizationId: project.organizationId,
               projectId,
               url: normalizedUrl,
             },
           },
           create: {
+            organizationId: project.organizationId,
             projectId,
             url: normalizedUrl,
             clicks: metric.clicks,

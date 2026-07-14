@@ -18,9 +18,20 @@ export async function GET(request: Request) {
   try {
     const prisma = getPrismaClient()
 
+    // Get project to find organizationId
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+      select: { organizationId: true },
+    })
+
+    if (!project) {
+      return Response.json({ error: 'Project not found.' }, { status: 404 })
+    }
+
     const credential = await prisma.oAuthCredential.findUnique({
       where: {
-        projectId_provider: {
+        organizationId_provider_projectId: {
+          organizationId: project.organizationId,
           projectId,
           provider: 'google',
         },

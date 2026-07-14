@@ -60,6 +60,7 @@ export async function POST(request: Request) {
     // Create snapshot
     const snapshot = await prisma.competitorSnapshot.create({
       data: {
+        organizationId: competitor.organizationId,
         competitorId,
         pageCount: pages.length,
         pages: JSON.stringify(pages),
@@ -95,6 +96,7 @@ export async function POST(request: Request) {
     for (const change of detectedChanges) {
       await prisma.competitorChange.create({
         data: {
+          organizationId: competitor.organizationId,
           competitorId,
           type: change.type,
           severity: change.severity,

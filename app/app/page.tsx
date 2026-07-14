@@ -9,7 +9,6 @@ import {
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
 import { ForgeDock } from './forge'
-import { getOrCreateUserId } from '@/lib/auth'
 
 /* ================================================================== */
 /* Types                                                              */
@@ -187,7 +186,8 @@ export default function AppDashboard() {
         localStorage.setItem('rf_app_pages_domain', value)
       } catch { /* quota */ }
       // Persist audit to database (fire-and-forget)
-      const userId = getOrCreateUserId()
+      // TODO: Use authenticated user from session
+      const userId = `anon_${Date.now().toString(36)}`
       const analyticsData = analyze(acc)
       if (analyticsData) {
         fetch('/api/audit', {

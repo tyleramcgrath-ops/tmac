@@ -48,13 +48,24 @@ export async function GET(request: Request) {
 
     const prisma = getPrismaClient()
 
+    // Get project to find organizationId
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+      select: { organizationId: true },
+    })
+
+    if (!project) {
+      return Response.redirect(`/app/projects/${projectId}?integration=${provider}&error=project_not_found`)
+    }
+
     // Calculate expiration time
     const expiresAt = new Date(Date.now() + tokenResponse.expires_in * 1000)
 
-    // Check if credential already exists for this project + provider
+    // Check if credential already exists for this organization + project + provider
     const existing = await prisma.oAuthCredential.findUnique({
       where: {
-        projectId_provider: {
+        organizationId_provider_projectId: {
+          organizationId: project.organizationId,
           projectId,
           provider,
         },
@@ -75,6 +86,7 @@ export async function GET(request: Request) {
       // Create new credential
       await prisma.oAuthCredential.create({
         data: {
+          organizationId: project.organizationId,
           projectId,
           provider,
           accessToken: tokenResponse.access_token,

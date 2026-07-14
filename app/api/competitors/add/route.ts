@@ -60,6 +60,7 @@ export async function POST(request: Request) {
     // Create competitor
     const competitor = await prisma.competitor.create({
       data: {
+        organizationId: project.organizationId,
         projectId,
         domain,
         displayName,
