@@ -100,8 +100,8 @@ export class DailyMissionGenerator {
       );
 
       filtered.sort((a, b) => {
-        const aPriority = priorityMap.get(a.pageId) || 0;
-        const bPriority = priorityMap.get(b.pageId) || 0;
+        const aPriority = (priorityMap.get(a.pageId) || 0) as number;
+        const bPriority = (priorityMap.get(b.pageId) || 0) as number;
         if (aPriority !== bPriority) return bPriority - aPriority;
         return 0;
       });

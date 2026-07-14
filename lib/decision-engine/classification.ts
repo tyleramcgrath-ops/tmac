@@ -252,35 +252,36 @@ export class PageClassificationEngine {
   async saveClassification(
     organizationId: string,
     projectId: string,
-    pageId: string,
-    classification: PageClassificationResult,
-    auditId: string
+    pageUrl: string,
+    classification: PageClassificationResult
   ) {
     const existing = await this.prisma.pageClassification.findUnique({
-      where: { pageId_auditId: { pageId, auditId } },
+      where: { projectId_pageUrl: { projectId, pageUrl } },
     });
+
+    const classificationData = {
+      primaryClassification: classification.primaryType,
+      confidenceScore: classification.confidence,
+      classifications: {
+        type: classification.primaryType,
+        confidence: classification.confidence,
+        secondaryTypes: classification.secondaryTypes,
+        signals: classification.signals,
+      } as any,
+    };
 
     if (existing) {
       return this.prisma.pageClassification.update({
-        where: { pageId_auditId: { pageId, auditId } },
-        data: {
-          primaryType: classification.primaryType,
-          secondaryTypes: classification.secondaryTypes,
-          confidence: classification.confidence,
-          classificationSignals: JSON.stringify(classification.signals),
-        },
+        where: { projectId_pageUrl: { projectId, pageUrl } },
+        data: classificationData,
       });
     } else {
       return this.prisma.pageClassification.create({
         data: {
-          pageId,
-          auditId,
+          pageUrl,
           organizationId,
           projectId,
-          primaryType: classification.primaryType,
-          secondaryTypes: classification.secondaryTypes,
-          confidence: classification.confidence,
-          classificationSignals: JSON.stringify(classification.signals),
+          ...classificationData,
         },
       });
     }

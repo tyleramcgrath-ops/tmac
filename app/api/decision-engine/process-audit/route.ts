@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       auditId,
       pageCount: decisions.length,
       topPages: decisions.slice(0, 5).map((d) => ({
-        pageId: d.pageId,
+        pageUrl: d.pageUrl,
         rank: d.priorityRank,
         businessValue: d.businessValueScore,
         seoOpportunity: d.seoOpportunityScore,

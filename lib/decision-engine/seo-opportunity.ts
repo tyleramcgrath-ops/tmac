@@ -349,17 +349,16 @@ export class SEOOpportunityEngine {
   async saveSEOOpportunityScore(
     organizationId: string,
     projectId: string,
-    pageId: string,
-    auditId: string,
+    pageUrl: string,
     result: SEOOpportunityResult
   ) {
-    const existing = await this.prisma.seoOpportunityScore.findUnique({
-      where: { pageId_auditId: { pageId, auditId } },
+    const existing = await this.prisma.sEOOpportunityScore.findUnique({
+      where: { projectId_pageUrl: { projectId, pageUrl } },
     });
 
     if (existing) {
-      return this.prisma.seoOpportunityScore.update({
-        where: { pageId_auditId: { pageId, auditId } },
+      return this.prisma.sEOOpportunityScore.update({
+        where: { projectId_pageUrl: { projectId, pageUrl } },
         data: {
           rankingGapScore: result.components.rankingGapScore,
           ctrGapScore: result.components.ctrGapScore,
@@ -378,10 +377,9 @@ export class SEOOpportunityEngine {
         },
       });
     } else {
-      return this.prisma.seoOpportunityScore.create({
+      return this.prisma.sEOOpportunityScore.create({
         data: {
-          pageId,
-          auditId,
+          pageUrl,
           organizationId,
           projectId,
           rankingGapScore: result.components.rankingGapScore,

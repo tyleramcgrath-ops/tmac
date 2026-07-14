@@ -703,8 +703,6 @@ model PageClassification {
   organization     Organization @relation("PageClassifications", fields: [organizationId], references: [id], onDelete: Cascade)
   project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   signals          PageSignals?
-  businessValue    BusinessValueScore?
-  seoOpportunity   SEOOpportunityScore?
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -793,41 +791,31 @@ model BusinessValueScore {
   pageUrl          String
 
   // Component scores (0-100)
-  revenueContribution Int
-  conversionVolume Int
-  conversionRate   Int
-  trafficVolume    Int
-  strategicImportance Int
-  navigationProminence Int
-  internalAuthority Int
-  trend            Int     // -50 to +50
-  manualPriority   Int
-  businessTypeWeight Float @default(1.0)
+  revenueScore     Int
+  conversionScore  Int
+  strategicScore   Int
+  navigationScore  Int
+  authorityScore   Int
+  trendScore       Int
+  manualPriorityScore Int
 
   // Weights used
-  weightRevenue    Float   @default(0.40)
-  weightConversions Float  @default(0.25)
-  weightStrategic  Float   @default(0.20)
-  weightNavigation Float   @default(0.10)
-  weightAuthority  Float   @default(0.05)
+  weightsUsed      Json?    // {"revenue": 0.40, ...}
 
   // Final score
-  businessValueScore Int    // 0-100
-  scoreExplanation Json     // [{factor, points, reason}]
-
-  businessMode     String?  @default("general")
+  totalBusinessValue Int    // 0-100
+  explanation      String?
 
   calculatedAt     DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
   organization     Organization @relation("BusinessValueScores", fields: [organizationId], references: [id], onDelete: Cascade)
   project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
   @@index([projectId])
-  @@index([businessValueScore])
+  @@index([totalBusinessValue])
 }
 
 model SEOOpportunityScore {
@@ -837,42 +825,35 @@ model SEOOpportunityScore {
   pageUrl          String
 
   // Component scores (0-100)
-  rankingGap       Int
-  ctrGap           Int
-  impressionVolume Int
-  schemaGaps       Int
-  internalLinking  Int
-  indexability     Int
-  coreWebVitals    Int
-  contentFreshness Int
-  backlinks        Int
-  duplicateContent Int
+  rankingGapScore  Int
+  ctrGapScore      Int
+  impressionScore  Int
+  schemaGapsScore  Int
+  internalLinkingScore Int
+  indexabilityScore Int
+  coreWebVitalsScore Int
+  contentFreshnessScore Int
+  backlinksScore   Int
+  duplicateContentScore Int
 
   // Weights used
-  weightRanking    Float   @default(0.30)
-  weightCtr        Float   @default(0.25)
-  weightImpressions Float  @default(0.20)
-  weightSchema     Float   @default(0.15)
-  weightContentFresh Float @default(0.10)
+  weightsUsed      Json?
 
   // Final score
-  seoOpportunityScore Int   // 0-100
-  scoreExplanation Json    // [{factor, points, reason}]
-
-  // Opportunities
-  opportunities    String[]
+  totalSeoOpportunity Int   // 0-100
+  identifiedOpportunities Json?
+  explanation      String?
 
   calculatedAt     DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
   organization     Organization @relation("SEOOpportunityScores", fields: [organizationId], references: [id], onDelete: Cascade)
   project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
   @@index([projectId])
-  @@index([seoOpportunityScore])
+  @@index([totalSeoOpportunity])
 }
 
 model PagePriority {

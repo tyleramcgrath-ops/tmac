@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { PageClassificationEngine } from './classification';
 import { BusinessValueEngine } from './business-value';
+import type { BusinessValueWeights } from './business-value';
 import { SEOOpportunityEngine } from './seo-opportunity';
+import type { SEOOpportunityWeights } from './seo-opportunity';
 import { DecisionEngine } from './decision';
 import { DailyMissionGenerator } from './daily-mission';
 import { RiskAssessmentEngine } from './risk';
@@ -102,9 +104,8 @@ export class CompleteDecisionEngine {
         await this.classificationEngine.saveClassification(
           organizationId,
           projectId,
-          page.id,
-          classification,
-          auditId
+          page.url,
+          classification
         );
 
         // 2. Get page signals (would come from GA4, GSC integration)
@@ -132,8 +133,7 @@ export class CompleteDecisionEngine {
         await this.businessValueEngine.saveBusinessValueScore(
           organizationId,
           projectId,
-          page.id,
-          auditId,
+          page.url,
           businessValueResult
         );
 
@@ -162,14 +162,13 @@ export class CompleteDecisionEngine {
         await this.seoOpportunityEngine.saveSEOOpportunityScore(
           organizationId,
           projectId,
-          page.id,
-          auditId,
+          page.url,
           seoOpportunityResult
         );
 
         // 5. Make priority decision
         const priorityDecision = await this.decisionEngine.decidePagePriority(
-          page.id,
+          page.url,
           businessValueResult.totalScore,
           seoOpportunityResult.totalScore,
           businessValueResult.explanation,
@@ -210,9 +209,9 @@ export class CompleteDecisionEngine {
     for (const decision of rankedDecisions) {
       await this.prisma.pagePriority.update({
         where: {
-          pageId_auditId: {
-            pageId: decision.pageId,
+          auditId_pageUrl: {
             auditId,
+            pageUrl: decision.pageUrl,
           },
         },
         data: {
@@ -254,12 +253,11 @@ export class CompleteDecisionEngine {
 export {
   PageClassificationEngine,
   BusinessValueEngine,
-  BusinessValueWeights,
   SEOOpportunityEngine,
-  SEOOpportunityWeights,
   DecisionEngine,
   DailyMissionGenerator,
   RiskAssessmentEngine,
   TimeToWinEngine,
   ExpectedBusinessReturnEngine,
 };
+export type { BusinessValueWeights, SEOOpportunityWeights };

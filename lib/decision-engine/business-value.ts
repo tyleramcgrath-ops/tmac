@@ -293,7 +293,6 @@ export class BusinessValueEngine {
   async saveBusinessValueScore(
     organizationId: string,
     projectId: string,
-    pageId: string,
     pageUrl: string,
     result: BusinessValueResult
   ) {

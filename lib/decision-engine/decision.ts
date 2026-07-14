@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 export interface PagePriorityDecision {
-  pageId: string;
+  pageUrl: string;
   businessValueScore: number;
   seoOpportunityScore: number;
   businessWeight: number;
@@ -29,7 +29,7 @@ export class DecisionEngine {
   }
 
   async decidePagePriority(
-    pageId: string,
+    pageUrl: string,
     businessValueScore: number,
     seoOpportunityScore: number,
     businessValueExplanation: string,
@@ -57,7 +57,7 @@ export class DecisionEngine {
 
     // Generate explainability
     const explainability = this.generateExplainability(
-      pageId,
+      pageUrl,
       businessValueScore,
       seoOpportunityScore,
       businessValueExplanation,
@@ -74,7 +74,7 @@ export class DecisionEngine {
     );
 
     return {
-      pageId,
+      pageUrl,
       businessValueScore,
       seoOpportunityScore,
       businessWeight,
@@ -109,7 +109,7 @@ export class DecisionEngine {
   }
 
   private generateExplainability(
-    pageId: string,
+    pageUrl: string,
     businessValueScore: number,
     seoOpportunityScore: number,
     businessValueExplanation: string,
@@ -328,12 +328,12 @@ export class DecisionEngine {
     decision: PagePriorityDecision
   ) {
     const existing = await this.prisma.pagePriority.findUnique({
-      where: { pageId_auditId: { pageId: decision.pageId, auditId } },
+      where: { auditId_pageUrl: { auditId, pageUrl: decision.pageUrl } },
     });
 
     if (existing) {
       return this.prisma.pagePriority.update({
-        where: { pageId_auditId: { pageId: decision.pageId, auditId } },
+        where: { auditId_pageUrl: { auditId, pageUrl: decision.pageUrl } },
         data: {
           businessValueScore: decision.businessValueScore,
           seoOpportunityScore: decision.seoOpportunityScore,
@@ -349,7 +349,7 @@ export class DecisionEngine {
     } else {
       return this.prisma.pagePriority.create({
         data: {
-          pageId: decision.pageId,
+          pageUrl: decision.pageUrl,
           auditId,
           organizationId,
           projectId,
