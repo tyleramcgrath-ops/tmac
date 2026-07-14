@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
 import { ForgeDock } from './forge'
+import { getOrCreateUserId } from '@/lib/auth'
 
 /* ================================================================== */
 /* Types                                                              */
@@ -173,6 +174,27 @@ export default function AppDashboard() {
       setStatus('done')
       logEvent('audit', `Audited ${acc.length} pages on ${value}`)
       try { localStorage.setItem('rf_app_pages', JSON.stringify(acc)) } catch { /* quota */ }
+      // Persist audit to database (fire-and-forget)
+      const userId = getOrCreateUserId()
+      const analyticsData = analyze(acc)
+      if (analyticsData) {
+        fetch('/api/audit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'save',
+            userId,
+            domain: value,
+            pages: acc,
+            siteScore: analyticsData.siteScore,
+            technicalScore: analyticsData.categories.technical,
+            contentScore: analyticsData.categories.content,
+            schemaScore: analyticsData.categories.schema,
+            aiScore: analyticsData.categories.ai,
+            analytics: analyticsData,
+          }),
+        }).catch((err) => console.error('[audit] save failed:', err))
+      }
       try { const ps = await fetch('/api/pagespeed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: value }) }).then((r) => r.json()); if (ps?.available) { setPageSpeed(ps); try { localStorage.setItem('rf_app_ps', JSON.stringify(ps)) } catch { /* ignore */ } } } catch { /* ignore */ }
     } catch { if (acc.length === 0) { setError('Network error — please try again.'); setStatus('error') } else setStatus('done') }
   }, [domain, maxPages])

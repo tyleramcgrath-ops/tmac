@@ -1,0 +1,268 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organizations OrganizationMember[]
+  projects      Project[]
+  events        Event[]
+
+  @@index([email])
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members  OrganizationMember[]
+  projects Project[]
+
+  @@index([createdAt])
+}
+
+model OrganizationMember {
+  id             String   @id @default(cuid())
+  userId         String
+  organizationId String
+  role           String   @default("member") // member, admin
+  createdAt      DateTime @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([userId])
+  @@index([organizationId])
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  userId          String
+  organizationId  String?
+  name            String
+  domain          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Business inputs (stored as JSON or separate fields)
+  monthlyVisits   Int      @default(0)
+  valuePerVisit   Float    @default(0)
+
+  // WordPress integration (optional)
+  wpSiteUrl       String?
+  wpUser          String?
+  wpAppPassword   String? // encrypted in production
+
+  // Audit history
+  audits          Audit[]
+  deployments     Deployment[]
+  events          Event[]
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, domain])
+  @@index([userId])
+  @@index([organizationId])
+  @@index([createdAt])
+}
+
+// Audit represents a complete crawl snapshot at a point in time
+model Audit {
+  id        String   @id @default(cuid())
+  projectId String
+  status    String   @default("pending") // pending, running, completed, failed
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+
+  // Crawl metadata
+  pageCount       Int      @default(0)
+  issueCount      Int      @default(0)
+  criticalCount   Int      @default(0)
+  warningCount    Int      @default(0)
+  infoCount       Int      @default(0)
+
+  // Aggregate scores (computed from pages)
+  siteScore       Int      @default(0) // 0-100
+  technicalScore  Int      @default(0)
+  contentScore    Int      @default(0)
+  schemaScore     Int      @default(0)
+  aiScore         Int      @default(0)
+
+  // Aggregate metrics
+  schemaCoverage  Int      @default(0) // percentage
+  orphanCount     Int      @default(0)
+  avgInbound      Int      @default(0)
+
+  // Rich snapshot for comparison and Forge grounding
+  summary         String?  // JSON string with top issues, key findings
+
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  pages     Page[]
+  issues    Issue[]
+  events    Event[]
+
+  @@index([projectId])
+  @@index([startedAt])
+  @@index([status])
+}
+
+// Page represents a single URL found during a crawl
+model Page {
+  id      String @id @default(cuid())
+  auditId String
+  url     String
+  status  Int    @default(0) // HTTP status
+
+  // Content metrics
+  title           String?
+  metaDescription String?
+  h1              String?
+  h1Count         Int     @default(0)
+  contentLength   Int     @default(0)
+
+  // Technical signals
+  canonical       String?
+  hasNoindex      Boolean @default(false)
+  hasMixedContent Boolean @default(false)
+  pageSpeedScore  Int?
+
+  // Internal linking
+  internalLinks   Int @default(0)
+  internalTargets Int @default(0)
+  inboundCount    Int @default(0) // links pointing to this page
+
+  // Schema & AI readiness
+  schemaTypes     String? // JSON array of schema.org types found
+  aiScore         Int     @default(0) // 0-100, based on schema + indexability + content
+  technicalScore  Int     @default(0)
+  contentScore    Int     @default(0)
+  schemaScore     Int     @default(0)
+
+  audit  Audit   @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  issues Issue[]
+
+  @@unique([auditId, url])
+  @@index([auditId])
+  @@index([status])
+}
+
+// Issue represents a detected problem (duplicate title, no schema, etc.)
+model Issue {
+  id      String @id @default(cuid())
+  auditId String
+  pageId  String
+  type    String // "duplicate_title", "duplicate_meta", "no_schema", "no_h1", "missing_meta", etc.
+  severity String @default("info") // critical, warning, info
+
+  title       String
+  description String?
+
+  // For duplicates, which other page(s) have the same value
+  affectedPages String? // JSON array of URLs
+
+  audit Audit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  page  Page  @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([auditId])
+  @@index([pageId])
+  @@index([severity])
+}
+
+// Recommendation is a prioritized action item based on Priority Engine logic
+model Recommendation {
+  id        String   @id @default(cuid())
+  projectId String
+  auditId   String?  // which audit generated this recommendation
+  category  String   // "schema", "title", "meta", "performance", "indexability", etc.
+  title     String
+  description String?
+  severity  String   @default("info") // critical, warning, info
+
+  // Priority engine data
+  affectedPages   Int     @default(0)
+  trafficGain     Int     @default(0) // estimated traffic recovery
+  revenueGain     Float   @default(0) // estimated $ recovery
+  difficulty      String  @default("medium") // easy, medium, hard
+  estimatedMins   Int     @default(30)
+  confidence      Int     @default(80) // 0-100
+
+  dismissed Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@index([auditId])
+  @@index([severity])
+}
+
+// Deployment records WordPress publish events
+model Deployment {
+  id        String   @id @default(cuid())
+  projectId String
+  type      String   @default("deploy") // deploy, revert
+  status    String   @default("pending") // pending, success, failed
+  createdAt DateTime @default(now())
+
+  // What was deployed
+  targetUrl String? // which page was updated
+  changes   String? // JSON describing the changes (title before/after, etc.)
+
+  // Error tracking
+  error     String?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([createdAt])
+}
+
+// Event logs user actions and system events
+model Event {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String?
+  auditId   String?
+  type      String   // audit, deploy, revert, fix, forge_chat, etc.
+  action    String?  // descriptive action
+  createdAt DateTime @default(now())
+
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  audit  Audit?   @relation(fields: [auditId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([createdAt])
+  @@index([type])
+}
+
+// ForgeMemory stores conversation history and learned patterns per project
+model ForgeMemory {
+  id        String   @id @default(cuid())
+  projectId String   @unique
+
+  // Recent conversation context (last N messages)
+  messages  String   // JSON array of { role, content } objects
+
+  // Learned patterns from this project's audit history
+  patterns  String?  // JSON with common issues, recurring problems, past recommendations
+
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
