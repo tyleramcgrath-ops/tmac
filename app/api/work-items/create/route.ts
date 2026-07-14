@@ -42,6 +42,7 @@ export async function POST(request: Request) {
       try {
         const item = await prisma.workItem.create({
           data: {
+            organizationId: project.organizationId,
             projectId,
             url: String(rec.url ?? ''),
             type: String(rec.type ?? ''),

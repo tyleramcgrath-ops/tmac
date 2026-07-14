@@ -53,12 +53,14 @@ export async function saveAudit({
 }) {
   const prisma = getPrismaClient()
   try {
-    // Ensure project exists
-    const project = await prisma.project.upsert({
-      where: { userId_domain: { userId, domain } },
-      update: { updatedAt: new Date() },
-      create: { userId, name: domain, domain },
+    // Get project - in multi-tenant system, must already exist
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
     })
+
+    if (!project) {
+      throw new Error(`Project ${projectId} not found`)
+    }
 
     // Compute derived aggregates from the real Analytics shape (see page.tsx).
     const schemaCoveragePct =
@@ -77,6 +79,7 @@ export async function saveAudit({
     // Create audit snapshot
     const audit = await prisma.audit.create({
       data: {
+        organizationId: project.organizationId,
         projectId: project.id,
         status: 'completed',
         pageCount: pages.length,
@@ -236,13 +239,13 @@ export async function compareAudits(auditId1: string, auditId2: string) {
  * Log an event (audit, deployment, etc.)
  */
 export async function logEvent({
-  userId,
+  organizationId,
   projectId,
   type,
   action,
   auditId,
 }: {
-  userId: string
+  organizationId: string
   projectId?: string
   type: string
   action?: string
@@ -252,7 +255,7 @@ export async function logEvent({
   try {
     await prisma.event.create({
       data: {
-        userId,
+        organizationId,
         projectId,
         auditId,
         type,
@@ -262,46 +265,5 @@ export async function logEvent({
   } catch (error) {
     console.error('[db] Failed to log event:', error)
     // Don't throw - event logging should be fire-and-forget
-  }
-}
-
-/**
- * Get user's projects
- */
-export async function getUserProjects(userId: string) {
-  const prisma = getPrismaClient()
-  try {
-    return await prisma.project.findMany({
-      where: { userId },
-      orderBy: { updatedAt: 'desc' },
-    })
-  } catch (error) {
-    console.error('[db] Failed to load projects:', error)
-    throw error
-  }
-}
-
-/**
- * Get or create a project
- */
-export async function getOrCreateProject({
-  userId,
-  domain,
-  name,
-}: {
-  userId: string
-  domain: string
-  name?: string
-}) {
-  const prisma = getPrismaClient()
-  try {
-    return await prisma.project.upsert({
-      where: { userId_domain: { userId, domain } },
-      update: { updatedAt: new Date() },
-      create: { userId, domain, name: name || domain },
-    })
-  } catch (error) {
-    console.error('[db] Failed to get/create project:', error)
-    throw error
   }
 }
