@@ -177,8 +177,8 @@ function generateOpportunityFromChange(
     type: string
     description: string
     count: number
-    impact?: string
-    impactReason?: string
+    impact?: string | null
+    impactReason?: string | null
   },
   actionType?: string
 ): {
