@@ -5,9 +5,10 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, ArrowUpRight, Check, AlertTriangle, Info, Download, Printer,
   Zap, ExternalLink, RefreshCw, X, Gauge, StopCircle, Network, ShieldCheck,
-  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, type LucideIcon,
+  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, type LucideIcon,
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
+import { ForgeDock } from './forge'
 
 /* ================================================================== */
 /* Types                                                              */
@@ -233,6 +234,16 @@ export default function AppDashboard() {
         </div>
       </div>
       {selected && <PageDrawer page={selected} onClose={() => setSelected(null)} />}
+      <ForgeDock
+        domain={domain}
+        siteScore={a?.siteScore}
+        pages={pages.length || undefined}
+        critical={a?.severityTotals.critical}
+        warnings={a?.severityTotals.warning}
+        orphans={a?.links.orphans.length}
+        schemaPct={a && pages.length ? Math.round((a.totals.pagesWithSchema / pages.length) * 100) : undefined}
+        topIssues={a?.issues.slice(0, 3).map((i) => i.title)}
+      />
     </div>
   )
 }
@@ -619,7 +630,8 @@ function WordPress() {
 }
 
 const SCHEMA_RE = /\n?<!-- rankforge-schema:start -->[\s\S]*?<!-- rankforge-schema:end -->\n?/g
-function schemaBlock(title: string, url: string): string { return `\n<!-- rankforge-schema:start -->\n<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: title, url })}</script>\n<!-- rankforge-schema:end -->\n` }
+function wrapSchema(json: string): string { return `\n<!-- rankforge-schema:start -->\n<script type="application/ld+json">${json}</script>\n<!-- rankforge-schema:end -->\n` }
+function defaultSchema(title: string, url: string): string { return JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: title, url }) }
 
 function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdit; creds: WpCreds; authValid: boolean; hasAioseo: boolean; onClose: () => void }) {
   const an = edit.analysis
@@ -627,6 +639,20 @@ function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdi
   const origMeta = hasAioseo ? edit.post.aioseoDescription || edit.post.excerpt || an?.metaDescription || '' : edit.post.excerpt || an?.metaDescription || ''
   const [title, setTitle] = useState(origTitle); const [meta, setMeta] = useState(origMeta); const [addSchema, setAddSchema] = useState(!!an && an.schemaTypes.length === 0)
   const [step, setStep] = useState<'edit' | 'confirm' | 'applying' | 'done' | 'error'>('edit'); const [error, setError] = useState<string | null>(null); const [undone, setUndone] = useState(false)
+  const [aiSchema, setAiSchema] = useState(''); const [aiBusy, setAiBusy] = useState(false); const [aiErr, setAiErr] = useState<string | null>(null); const [aiNote, setAiNote] = useState<string | null>(null)
+  const writeWithAI = async () => {
+    setAiBusy(true); setAiErr(null); setAiNote(null)
+    try {
+      const excerpt = edit.post.content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 2000)
+      const res = await fetch('/api/forge/rewrite', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: edit.post.link, currentTitle: title, currentMeta: meta, excerpt }) })
+      const j = await res.json()
+      if (!res.ok) { setAiErr(j?.error ?? 'AI generation failed.'); return }
+      if (j.seoTitle) setTitle(j.seoTitle)
+      if (j.metaDescription) setMeta(j.metaDescription)
+      if (j.jsonLd) { setAiSchema(j.jsonLd); setAddSchema(true) }
+      if (j.rationale) setAiNote(j.rationale)
+    } catch { setAiErr('Network error reaching Forge.') } finally { setAiBusy(false) }
+  }
   useEffect(() => { const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose(); document.addEventListener('keydown', onKey); document.body.style.overflow = 'hidden'; return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = '' } }, [onClose])
   const buildPayload = (revert: boolean) => {
     const payload: Record<string, string> = { id: String(edit.post.id) }
@@ -634,7 +660,7 @@ function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdi
     const setM = (v: string) => { if (hasAioseo) payload.aioseoDescription = v; else payload.excerpt = v }
     if (revert) { setT(origTitle); setM(origMeta); if (addSchema) payload.content = edit.post.content; return payload }
     if (title !== origTitle) setT(title); if (meta !== origMeta) setM(meta)
-    if (addSchema) payload.content = edit.post.content.replace(SCHEMA_RE, '') + schemaBlock(title || origTitle, edit.post.link)
+    if (addSchema) payload.content = edit.post.content.replace(SCHEMA_RE, '') + wrapSchema(aiSchema || defaultSchema(title || origTitle, edit.post.link))
     return payload
   }
   const send = async (revert: boolean) => { setStep('applying'); setError(null); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply', type: edit.post.type, ...creds, ...buildPayload(revert) }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Deploy failed.'); setStep('error'); return } setUndone(revert); setStep('done'); logEvent(revert ? 'fix' : 'deploy', revert ? `Reverted SEO changes on ${pathOf(edit.post.link)}` : `Deployed SEO fixes to ${pathOf(edit.post.link)}`) } catch { setError('Network error.'); setStep('error') } }
@@ -649,7 +675,12 @@ function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdi
           {step === 'done' ? (
             <div className="py-8 text-center"><span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--rf-green)]/10"><Check className="h-6 w-6 text-[var(--rf-green)]" /></span><p className="mt-3 font-semibold text-white">{undone ? 'Reverted on your site' : 'Deployed to your site'}</p><p className="mt-1 text-sm text-[var(--rf-muted)]">{undone ? 'The previous values were restored.' : 'Your changes are live on WordPress.'}</p><div className="mt-4 flex justify-center gap-2">{!undone && <button onClick={() => send(true)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-medium"><RotateCcw className="h-4 w-4" /> Undo</button>}<a href={edit.post.link} target="_blank" rel="noopener noreferrer" className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold">View page <ExternalLink className="h-4 w-4" /></a></div></div>
           ) : (<>
-            <p className="mt-4 rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">{hasAioseo ? 'Writing AIOSEO SEO fields' : 'Writing core post title / excerpt'}</p>
+            <div className="mt-4 flex items-center justify-between gap-2">
+              <p className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">{hasAioseo ? 'Writing AIOSEO SEO fields' : 'Writing core post title / excerpt'}</p>
+              <button onClick={writeWithAI} disabled={aiBusy} className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--rf-violet)]/40 bg-[var(--rf-violet)]/10 px-2.5 py-1 text-xs font-medium text-[var(--rf-violet)] hover:bg-[var(--rf-violet)]/20 disabled:opacity-60">{aiBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />} Write with AI</button>
+            </div>
+            {aiErr && <p className="mt-1 text-[11px] text-[var(--rf-red)]">{aiErr}</p>}
+            {aiNote && <p className="mt-1 flex items-start gap-1.5 text-[11px] text-[var(--rf-muted)]"><Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-[var(--rf-violet)]" />{aiNote}</p>}
             <label className="mt-2 block text-xs font-medium text-[var(--rf-muted)]">SEO title</label><input value={title} onChange={(e) => setTitle(e.target.value)} className="rf-card mt-1 w-full bg-transparent px-3 py-2 text-sm text-white focus:outline-none" /><p className="mt-1 text-[11px] text-[var(--rf-faint)]">{title.length} chars · aim 30–60</p>
             <label className="mt-4 block text-xs font-medium text-[var(--rf-muted)]">Meta description</label><textarea value={meta} onChange={(e) => setMeta(e.target.value)} rows={3} className="rf-card mt-1 w-full resize-y bg-transparent px-3 py-2 text-sm text-white focus:outline-none" /><p className="mt-1 text-[11px] text-[var(--rf-faint)]">{meta.length} chars · aim 70–160</p>
             <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-sm"><input type="checkbox" checked={addSchema} onChange={(e) => setAddSchema(e.target.checked)} className="mt-0.5 accent-[var(--rf-blue)]" /><span><span className="text-[var(--rf-text)]">Add JSON-LD Article schema</span><span className="block text-[11px] text-[var(--rf-faint)]">Injected into the post content (idempotent &amp; reversible).</span></span></label>
