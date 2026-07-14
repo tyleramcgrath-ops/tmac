@@ -28,6 +28,8 @@ import {
   Rocket,
   RotateCcw,
   Lightbulb,
+  Compass,
+  Activity,
   type LucideIcon,
 } from 'lucide-react'
 import { GrowthOpportunity } from '@/components/growth-opportunity'
@@ -77,9 +79,9 @@ interface CrawlResponse {
   error?: string
 }
 
-type SectionId = 'overview' | 'audit' | 'content' | 'rankings' | 'backlinks' | 'wordpress' | 'reports' | 'growth-opportunity'
+type SectionId = 'briefing' | 'growth-opportunity' | 'audit' | 'content' | 'rankings' | 'backlinks' | 'wordpress' | 'reports'
 const SECTIONS: { id: SectionId; label: string; icon: LucideIcon }[] = [
-  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'briefing', label: 'Executive Briefing', icon: Compass },
   { id: 'growth-opportunity', label: 'Growth Opportunity', icon: Lightbulb },
   { id: 'audit', label: 'Site Audit', icon: Radar },
   { id: 'content', label: 'Content', icon: FileText },
@@ -144,7 +146,7 @@ function aggregate(pages: PageResult[]): Aggregate | null {
 export default function AppDashboard() {
   const [domain, setDomain] = useState('')
   const [maxPages, setMaxPages] = useState(150)
-  const [section, setSection] = useState<SectionId>('overview')
+  const [section, setSection] = useState<SectionId>('briefing')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
   const [pages, setPages] = useState<PageResult[]>([])
   const [progress, setProgress] = useState({ crawled: 0, discovered: 0 })
@@ -230,15 +232,17 @@ export default function AppDashboard() {
 
       {/* top bar */}
       <header className="sticky top-0 z-30 border-b border-[var(--rf-card-line)] bg-[rgba(5,7,14,0.8)] backdrop-blur-xl">
-        <div className="flex flex-col gap-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:px-6">
-          <div className="flex items-center gap-2.5">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] shadow-[0_8px_24px_-8px_rgba(47,107,255,0.9)]">
-              <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
-            </span>
-            <span className="text-[15px] font-semibold">
-              RankForge<span className="text-[var(--rf-blue-bright)]"> AI</span>
-              <span className="ml-2 hidden rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)] sm:inline">Command Center</span>
-            </span>
+        <div className="flex flex-col gap-4 px-4 py-4 lg:flex-row lg:items-center lg:justify-between lg:px-6 lg:py-5">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2.5">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] shadow-[0_8px_24px_-8px_rgba(47,107,255,0.9)]">
+                <Compass className="h-4 w-4 text-white" strokeWidth={2.5} />
+              </span>
+              <span className="text-[15px] font-semibold">
+                North Star<span className="text-[var(--rf-blue-bright)]"> Compass</span>
+              </span>
+            </div>
+            <p className="text-xs text-[var(--rf-muted)] pl-10">Business growth advisor</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <div className="rf-card flex flex-1 items-center gap-2 px-3 py-2 sm:w-72">
@@ -256,18 +260,19 @@ export default function AppDashboard() {
               onChange={(e) => setMaxPages(Number(e.target.value))}
               className="rf-card cursor-pointer bg-transparent px-2.5 py-2 text-sm text-white focus:outline-none"
               title="Max pages to crawl"
+              aria-label="Maximum pages to crawl"
             >
               <option className="bg-[#0b1120]" value={50}>50 pages</option>
               <option className="bg-[#0b1120]" value={150}>150 pages</option>
               <option className="bg-[#0b1120]" value={300}>All (≤300)</option>
             </select>
             {status === 'loading' ? (
-              <button onClick={stop} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold">
+              <button onClick={stop} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold" aria-label="Stop audit">
                 <StopCircle className="h-4 w-4" /> Stop
               </button>
             ) : (
-              <button onClick={runAudit} className="rf-btn-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold">
-                <RefreshCw className="h-4 w-4" /> Run Audit
+              <button onClick={runAudit} className="rf-btn-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold" aria-label="Check my business now">
+                <Zap className="h-4 w-4" /> Check my business now
               </button>
             )}
           </div>
@@ -308,7 +313,7 @@ export default function AppDashboard() {
                 <AlertTriangle className="h-4 w-4" /> {error}
               </div>
             )}
-            {section === 'overview' && <Overview agg={agg} pages={pages} status={status} onRun={runAudit} pageSpeed={pageSpeed} crawled={progress.crawled} />}
+            {section === 'briefing' && <Briefing agg={agg} pages={pages} status={status} onRun={runAudit} pageSpeed={pageSpeed} crawled={progress.crawled} domain={domain} />}
             {section === 'growth-opportunity' && <GrowthOpportunity pages={pages} agg={agg} domain={domain} />}
             {section === 'audit' && <Audit agg={agg} pages={pages} onSelect={setSelected} />}
             {section === 'content' && <Content pages={pages} />}
@@ -423,7 +428,175 @@ function Stat({ label, value, tone = 'white', numeric }: { label: string; value:
 function SevIcon({ s }: { s: Severity }) { return s === 'info' ? <Info className={`h-4 w-4 ${TONE.info}`} /> : <AlertTriangle className={`h-4 w-4 ${TONE[s]}`} /> }
 
 /* ------------------------------------------------------------------ */
-/* Overview                                                            */
+/* Executive Briefing                                                  */
+/* ------------------------------------------------------------------ */
+
+function Briefing({ agg, pages, status, onRun, pageSpeed, crawled, domain }: { agg: Aggregate | null; pages: PageResult[]; status: string; onRun: () => void; pageSpeed: PageSpeed | null; crawled: number; domain: string }) {
+  if (!agg && status === 'loading') return <CrawlingState crawled={crawled} />
+  if (!agg) return <BriefingEmpty onRun={onRun} />
+
+  return (
+    <div className="space-y-6">
+      {/* Morning greeting + status */}
+      <div className="space-y-2">
+        <h1 className="text-2xl font-semibold text-white sm:text-3xl">Good morning.</h1>
+        <p className="text-[var(--rf-muted)]">
+          {pages.length === 0
+            ? 'Ready to check your business.'
+            : pages.length === 1
+              ? 'Your latest business check is complete. One page analyzed.'
+              : `Your latest business check is complete. ${pages.length} pages analyzed.`}
+        </p>
+      </div>
+
+      {/* Primary: Growth Opportunity */}
+      <GrowthOpportunity pages={pages} agg={agg} domain={domain} />
+
+      {/* Digital DNA Summary */}
+      <DigitalDNASummary pages={pages} agg={agg} />
+
+      {/* Agent Activity & System Status */}
+      <AgentActivityStatus pages={pages} />
+    </div>
+  )
+}
+
+function BriefingEmpty({ onRun }: { onRun?: () => void }) {
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-semibold text-white sm:text-3xl">Good morning.</h1>
+        <p className="text-[var(--rf-muted)]">Let's see what North Star can help you with.</p>
+      </div>
+
+      <div className="rf-card rf-topline grid place-items-center rounded-2xl border border-[var(--rf-card-line)] px-6 py-16 text-center sm:py-20">
+        <span className="rf-pulse grid h-16 w-16 place-items-center rounded-2xl bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]">
+          <Compass className="h-8 w-8" />
+        </span>
+        <p className="mt-6 text-lg font-semibold text-white">Check your business</p>
+        <p className="mt-2 max-w-sm text-sm leading-relaxed text-[var(--rf-muted)]">
+          Enter your website domain and North Star will discover growth opportunities, verify what's working, and show you what matters most.
+        </p>
+        {onRun && (
+          <button onClick={onRun} className="rf-btn-primary mt-6 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold">
+            <Zap className="h-4 w-4" /> Get started
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function DigitalDNASummary({ pages, agg }: { pages: PageResult[]; agg: Aggregate | null }) {
+  if (!agg) return null
+
+  const totalSchemaPages = agg.totals.pagesWithSchema
+  const schemaPercentage = pages.length > 0 ? Math.round((totalSchemaPages / pages.length) * 100) : 0
+  const indexablePages = pages.length - agg.totals.nonIndexable
+  const indexablePercentage = pages.length > 0 ? Math.round((indexablePages / pages.length) * 100) : 0
+
+  return (
+    <div className="rf-card overflow-hidden border border-[var(--rf-card-line)]">
+      <div className="border-b border-[var(--rf-card-line)] px-5 py-4 sm:px-6 sm:py-5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--rf-cyan)]/15">
+            <Sparkles className="h-4 w-4 text-[var(--rf-cyan)]" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-white">Digital DNA</h3>
+            <p className="text-xs text-[var(--rf-muted)]">What North Star understands about your business</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-px divide-x divide-y divide-[var(--rf-card-line)] sm:grid-cols-4">
+        <DigitalDNACell label="Pages analyzed" value={pages.length.toString()} tone="white" />
+        <DigitalDNACell label="Structured data" value={`${schemaPercentage}%`} detail={`${totalSchemaPages} page${totalSchemaPages !== 1 ? 's' : ''}`} tone={schemaPercentage >= 50 ? 'green' : schemaPercentage >= 25 ? 'amber' : 'red'} />
+        <DigitalDNACell label="Indexable" value={`${indexablePercentage}%`} detail={`${indexablePages} page${indexablePages !== 1 ? 's' : ''}`} tone={indexablePercentage >= 90 ? 'green' : indexablePercentage >= 70 ? 'amber' : 'red'} />
+        <DigitalDNACell label="Site score" value={agg.siteScore.toString()} tone={agg.siteScore >= 80 ? 'green' : agg.siteScore >= 60 ? 'amber' : 'red'} />
+      </div>
+
+      <div className="border-t border-[var(--rf-card-line)] px-5 py-4 sm:px-6 sm:py-5">
+        <p className="text-xs leading-relaxed text-[var(--rf-muted)]">
+          North Star continuously learns how your business works by analyzing your website structure, content, and how customers might find you. The more we observe, the better we understand your opportunities.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function DigitalDNACell({ label, value, detail, tone }: { label: string; value: string; detail?: string; tone: string }) {
+  const toneClass = tone === 'green' ? 'text-[var(--rf-green)]' : tone === 'amber' ? 'text-[var(--rf-amber)]' : tone === 'red' ? 'text-[var(--rf-red)]' : 'text-white'
+  return (
+    <div className="p-4 text-center sm:p-5">
+      <p className={`text-2xl font-semibold ${toneClass}`}>{value}</p>
+      <p className="mt-1.5 text-xs text-[var(--rf-muted)]">{label}</p>
+      {detail && <p className="mt-1 text-[10px] text-[var(--rf-faint)]">{detail}</p>}
+    </div>
+  )
+}
+
+function AgentActivityStatus({ pages }: { pages: PageResult[] }) {
+  return (
+    <div className="rf-card overflow-hidden border border-[var(--rf-card-line)]">
+      <div className="border-b border-[var(--rf-card-line)] px-5 py-4 sm:px-6 sm:py-5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--rf-green)]/15">
+            <Activity className="h-4 w-4 text-[var(--rf-green)]" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-white">Agent Activity</h3>
+            <p className="text-xs text-[var(--rf-muted)]">What North Star is working on</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="divide-y divide-[var(--rf-card-line)] p-5 sm:p-6">
+        <div className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
+          <div className="flex items-center gap-3">
+            <div className="flex h-2.5 w-2.5 rounded-full bg-[var(--rf-green)]" />
+            <div>
+              <p className="text-sm text-white">Website analysis</p>
+              <p className="text-xs text-[var(--rf-muted)]">Checking your current website evidence</p>
+            </div>
+          </div>
+          <span className="text-xs text-[var(--rf-muted)] ml-4 shrink-0">Completed</span>
+        </div>
+
+        <div className="flex items-center justify-between py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-2.5 w-2.5 rounded-full bg-[var(--rf-amber)]" />
+            <div>
+              <p className="text-sm text-white">Growth opportunity detection</p>
+              <p className="text-xs text-[var(--rf-muted)]">Analyzing for immediate improvements</p>
+            </div>
+          </div>
+          <span className="text-xs text-[var(--rf-muted)] ml-4 shrink-0">{pages.length > 0 ? 'Ready' : 'Waiting'}</span>
+        </div>
+
+        <div className="flex items-center justify-between py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-2.5 w-2.5 rounded-full bg-[var(--rf-blue-bright)]" />
+            <div>
+              <p className="text-sm text-white">Continuous monitoring</p>
+              <p className="text-xs text-[var(--rf-muted)]">Ready to run whenever you are</p>
+            </div>
+          </div>
+          <span className="text-xs text-[var(--rf-muted)] ml-4 shrink-0">Ready</span>
+        </div>
+      </div>
+
+      <div className="border-t border-[var(--rf-card-line)] bg-white/[0.01] px-5 py-4 sm:px-6 sm:py-5">
+        <p className="text-xs leading-relaxed text-[var(--rf-muted)]">
+          North Star's analysis runs in the background, continuously learning about your business. No integration required — results update each time you check.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* Overview (kept for backward compatibility)                          */
 /* ------------------------------------------------------------------ */
 
 function Overview({ agg, pages, status, onRun, pageSpeed, crawled }: { agg: Aggregate | null; pages: PageResult[]; status: string; onRun: () => void; pageSpeed: PageSpeed | null; crawled: number }) {
