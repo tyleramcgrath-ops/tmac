@@ -19,6 +19,8 @@ import {
   scoreTechnical,
   type FixItem,
 } from '../seo-scan/analyze'
+import { checkOutboundUrl } from '@/lib/ssrf'
+import { checkRateLimit, clientKey } from '@/lib/rateLimit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -50,6 +52,14 @@ interface PageResult {
 }
 
 export async function POST(request: Request) {
+  const rl = checkRateLimit(clientKey(request, 'crawl'), 30, 60_000)
+  if (!rl.ok) {
+    return Response.json(
+      { error: 'Too many crawl requests. Try again in a minute.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } }
+    )
+  }
+
   let body: Record<string, unknown>
   try {
     body = await request.json()
@@ -247,6 +257,8 @@ function matchAll(s: string, re: RegExp): string[] {
 
 async function safeText(url: string): Promise<string | null> {
   try {
+    const blocked = await checkOutboundUrl(url)
+    if (blocked) return null
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 8000)
     const res = await fetch(url, {

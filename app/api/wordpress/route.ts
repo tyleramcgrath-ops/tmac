@@ -10,6 +10,7 @@
 // Nothing is persisted server-side. Writes require valid authentication.
 
 import { extractSignals, fetchHtml } from '../seo-scan/analyze'
+import { checkOutboundUrl } from '@/lib/ssrf'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -35,6 +36,10 @@ async function wpFetch(
   headers: Record<string, string>,
   opts: { method?: string; body?: string; timeoutMs?: number } = {}
 ) {
+  const blocked = await checkOutboundUrl(url)
+  if (blocked) {
+    throw new Error(`Blocked outbound URL: ${blocked}`)
+  }
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), opts.timeoutMs ?? 12_000)
   try {

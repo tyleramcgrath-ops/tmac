@@ -8,6 +8,7 @@
 import { streamText } from 'ai'
 import { DEFAULT_MODEL } from '@/ai/constants'
 import { getModelOptions } from '@/ai/gateway'
+import { checkRateLimit, clientKey } from '@/lib/rateLimit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -28,6 +29,14 @@ Rules:
 - Prefer tight, skimmable answers. Use short paragraphs or bullets. Keep it under ~200 words unless asked to go deep.`
 
 export async function POST(req: Request) {
+  const rl = checkRateLimit(clientKey(req, 'forge'), 20, 60_000)
+  if (!rl.ok) {
+    return Response.json(
+      { error: 'Too many requests. Slow down and try again in a minute.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } }
+    )
+  }
+
   let body: { messages?: ChatMessage[]; context?: string }
   try {
     body = await req.json()

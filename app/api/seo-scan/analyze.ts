@@ -479,6 +479,8 @@ export interface FetchResult {
   proxyConfigured: boolean
 }
 
+import { checkOutboundUrl } from '@/lib/ssrf'
+
 export async function fetchHtml(
   url: string,
   timeoutMs = 12_000,
@@ -487,6 +489,12 @@ export async function fetchHtml(
   const template = process.env.SCRAPE_API_TEMPLATE
   const proxyConfigured = !!template
   let via: FetchVia = 'browser'
+
+  // SSRF guard — reject internal targets before any network call.
+  const blocked = await checkOutboundUrl(url)
+  if (blocked) {
+    return { html: '', finalUrl: url, status: 0, via: 'failed', proxyConfigured }
+  }
 
   let result = await fetchOnce(url, BROWSER_UA, timeoutMs, maxBytes)
 
@@ -540,6 +548,11 @@ async function fetchOnce(
 
   const finalUrl = res.url || url
   const status = res.status
+  // Re-check after redirects — a public URL may 302 into a private address.
+  if (finalUrl !== url) {
+    const blocked = await checkOutboundUrl(finalUrl)
+    if (blocked) return { html: '', finalUrl, status: 0 }
+  }
   if (!res.body) return { html: await res.text(), finalUrl, status }
 
   const reader = res.body.getReader()

@@ -143,16 +143,25 @@ export default function AppDashboard() {
   useEffect(() => {
     try {
       const d = localStorage.getItem('rf_app_domain'); if (d) setDomain(d)
-      // Only restore cached audits from the current data shape; older caches
-      // (pre-redesign) lack fields the analytics need and would crash the page.
+      // Only restore cached audits from the CURRENT domain and current data
+      // shape; older caches (pre-redesign) lack fields the analytics need, and
+      // caches from a different domain would show the wrong site's pages.
+      const cachedDomain = localStorage.getItem('rf_app_pages_domain')
       const cached = localStorage.getItem('rf_app_pages')
-      if (cached) {
+      if (cached && cachedDomain && cachedDomain === d) {
         const parsed = JSON.parse(cached)
         const valid = Array.isArray(parsed) && parsed.every((p) => p && Array.isArray(p.internalTargets) && typeof p.title === 'string' && Array.isArray(p.fixes))
         if (valid && parsed.length > 0) { setPages(parsed); setStatus('done') }
         else localStorage.removeItem('rf_app_pages')
+      } else if (cached) {
+        // Stale from a different domain — drop it.
+        localStorage.removeItem('rf_app_pages')
+        localStorage.removeItem('rf_app_pages_domain')
       }
-      const ps = localStorage.getItem('rf_app_ps'); if (ps) setPageSpeed(JSON.parse(ps))
+      const psDomain = localStorage.getItem('rf_app_ps_domain')
+      const ps = localStorage.getItem('rf_app_ps')
+      if (ps && psDomain && psDomain === d) setPageSpeed(JSON.parse(ps))
+      else if (ps) { localStorage.removeItem('rf_app_ps'); localStorage.removeItem('rf_app_ps_domain') }
     } catch { /* ignore */ }
   }, [])
 
@@ -173,7 +182,10 @@ export default function AppDashboard() {
       }
       setStatus('done')
       logEvent('audit', `Audited ${acc.length} pages on ${value}`)
-      try { localStorage.setItem('rf_app_pages', JSON.stringify(acc)) } catch { /* quota */ }
+      try {
+        localStorage.setItem('rf_app_pages', JSON.stringify(acc))
+        localStorage.setItem('rf_app_pages_domain', value)
+      } catch { /* quota */ }
       // Persist audit to database (fire-and-forget)
       const userId = getOrCreateUserId()
       const analyticsData = analyze(acc)
@@ -195,7 +207,16 @@ export default function AppDashboard() {
           }),
         }).catch((err) => console.error('[audit] save failed:', err))
       }
-      try { const ps = await fetch('/api/pagespeed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: value }) }).then((r) => r.json()); if (ps?.available) { setPageSpeed(ps); try { localStorage.setItem('rf_app_ps', JSON.stringify(ps)) } catch { /* ignore */ } } } catch { /* ignore */ }
+      try {
+        const ps = await fetch('/api/pagespeed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: value }) }).then((r) => r.json())
+        if (ps?.available) {
+          setPageSpeed(ps)
+          try {
+            localStorage.setItem('rf_app_ps', JSON.stringify(ps))
+            localStorage.setItem('rf_app_ps_domain', value)
+          } catch { /* ignore */ }
+        }
+      } catch { /* ignore */ }
     } catch { if (acc.length === 0) { setError('Network error — please try again.'); setStatus('error') } else setStatus('done') }
   }, [domain, maxPages])
 

@@ -60,8 +60,17 @@ export function ForgeDock(props: ForgeContext) {
         body: JSON.stringify({ messages: next, context: buildContext(props) }),
       })
       if (!res.ok || !res.body) {
-        const j = await res.json().catch(() => ({}))
-        setMessages((m) => setLast(m, j?.error ?? 'Forge is unavailable right now.'))
+        // Server may return JSON (error) or text (fallback). Try JSON first.
+        let msg = 'Forge is unavailable right now.'
+        try {
+          const clone = res.clone()
+          const j = await clone.json()
+          if (j?.error) msg = String(j.error)
+        } catch {
+          try { const t = await res.text(); if (t) msg = t.slice(0, 500) } catch { /* ignore */ }
+        }
+        if (res.status === 429) msg = 'You are sending messages too fast. Wait a moment.'
+        setMessages((m) => setLast(m, msg))
         return
       }
       const reader = res.body.getReader(); const dec = new TextDecoder(); let acc = ''

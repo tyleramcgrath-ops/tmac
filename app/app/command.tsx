@@ -64,7 +64,9 @@ function readEvents(): RfEvent[] {
 /* ------------------------------------------------------------------ */
 
 interface Biz { monthlyVisits: number; valuePerVisit: number; name: string }
-const DEFAULT_BIZ: Biz = { monthlyVisits: 1000, valuePerVisit: 2, name: '' }
+// Default to zero so a new user isn't shown made-up revenue numbers. Once they
+// enter real inputs, the estimates become meaningful.
+const DEFAULT_BIZ: Biz = { monthlyVisits: 0, valuePerVisit: 0, name: '' }
 function readBiz(): Biz {
   try { const raw = localStorage.getItem('rf_app_biz'); return raw ? { ...DEFAULT_BIZ, ...JSON.parse(raw) } : DEFAULT_BIZ } catch { return DEFAULT_BIZ }
 }
@@ -206,13 +208,24 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
             <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]"><DollarSign className="h-4 w-4 text-[var(--rf-green)]" /> Revenue opportunity</p>
-            <p className="mt-1 text-3xl font-semibold text-[var(--rf-green)]">~${totalRevenue.toLocaleString()}<span className="text-base text-[var(--rf-faint)]">/mo</span></p>
-            <p className="mt-1 text-xs text-[var(--rf-muted)]">≈ {totalTraffic.toLocaleString()} recoverable visits/mo if today's issues are fixed.</p>
+            {biz.monthlyVisits > 0 && biz.valuePerVisit > 0 ? (
+              <>
+                <p className="mt-1 text-3xl font-semibold text-[var(--rf-green)]">~${totalRevenue.toLocaleString()}<span className="text-base text-[var(--rf-faint)]">/mo</span></p>
+                <p className="mt-1 text-xs text-[var(--rf-muted)]">≈ {totalTraffic.toLocaleString()} recoverable visits/mo if today's issues are fixed.</p>
+              </>
+            ) : (
+              <>
+                <p className="mt-1 text-xl font-semibold text-white">Add your traffic & value to model recovery.</p>
+                <p className="mt-1 text-xs text-[var(--rf-muted)]">Without real inputs I won't fabricate a dollar figure.</p>
+              </>
+            )}
           </div>
           <div className="text-right">
-            <p className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">Modeled estimate*</p>
-            <p className="mt-1 text-xs text-[var(--rf-muted)]">Based on your inputs: {biz.monthlyVisits.toLocaleString()} visits/mo · ${biz.valuePerVisit}/visit</p>
-            <button onClick={() => setShowBiz(true)} className="mt-1 text-xs text-[var(--rf-blue-bright)] hover:text-white">Tune inputs →</button>
+            <p className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">{biz.monthlyVisits > 0 ? 'Modeled estimate*' : 'Not yet estimated'}</p>
+            {biz.monthlyVisits > 0 && (
+              <p className="mt-1 text-xs text-[var(--rf-muted)]">Based on your inputs: {biz.monthlyVisits.toLocaleString()} visits/mo · ${biz.valuePerVisit}/visit</p>
+            )}
+            <button onClick={() => setShowBiz(true)} className="mt-1 text-xs text-[var(--rf-blue-bright)] hover:text-white">{biz.monthlyVisits > 0 ? 'Tune inputs →' : 'Set inputs →'}</button>
           </div>
         </div>
       </div>
@@ -228,7 +241,11 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
                 <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{p.category} · {p.affectedPages} page{p.affectedPages > 1 ? 's' : ''} · {p.confidence}% confidence</p>
               </div>
               <div className="flex shrink-0 items-center gap-4">
-                <span className="text-right"><span className="block rf-mono text-sm font-semibold text-[var(--rf-green)]">+${p.revenueGain.toLocaleString()}/mo</span><span className="block text-[10px] text-[var(--rf-faint)]">+{p.trafficGain.toLocaleString()} visits</span></span>
+                {biz.monthlyVisits > 0 && biz.valuePerVisit > 0 ? (
+                  <span className="text-right"><span className="block rf-mono text-sm font-semibold text-[var(--rf-green)]">+${p.revenueGain.toLocaleString()}/mo</span><span className="block text-[10px] text-[var(--rf-faint)]">+{p.trafficGain.toLocaleString()} visits</span></span>
+                ) : (
+                  <span className="text-right"><span className="block rf-mono text-[11px] text-[var(--rf-faint)]">no estimate</span></span>
+                )}
                 <span className="text-right"><span className="block text-xs text-[var(--rf-muted)]">{p.difficulty}</span><span className="flex items-center gap-1 text-[10px] text-[var(--rf-faint)]"><Clock className="h-3 w-3" />{p.minutes} min</span></span>
                 <button onClick={() => onGo(p.section)} className="rf-btn-primary rounded-lg px-3.5 py-1.5 text-xs font-semibold">Fix now</button>
               </div>
@@ -267,7 +284,9 @@ function brief(a: Analytics, pages: number, revenue: number) {
   const schemaPct = pages ? Math.round((a.totals.pagesWithSchema / pages) * 100) : 0
   if (schemaPct < 70) items.push({ icon: Code2, tone: 'text-[var(--rf-blue-bright)]', text: `Schema coverage is only ${schemaPct}% — structured data is the fastest AI-visibility win available.`, cta: 'Add schema', section: 'schema' })
   if (a.totals.nonIndexable > 0) items.push({ icon: ShieldCheck, tone: 'text-[var(--rf-amber)]', text: `${a.totals.nonIndexable} crawled page${a.totals.nonIndexable > 1 ? 's' : ''} can't rank at all (noindex or errors).`, cta: 'Review', section: 'indexability' })
-  items.push({ icon: DollarSign, tone: 'text-[var(--rf-green)]', text: `I estimate ~$${revenue.toLocaleString()}/mo of recoverable value in today's fix list.*`, cta: 'See plan', section: 'audit' })
+  if (revenue > 0) {
+    items.push({ icon: DollarSign, tone: 'text-[var(--rf-green)]', text: `I estimate ~$${revenue.toLocaleString()}/mo of recoverable value in today's fix list.*`, cta: 'See plan', section: 'audit' })
+  }
   return items.slice(0, 4)
 }
 

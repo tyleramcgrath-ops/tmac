@@ -1,6 +1,16 @@
 // Database utilities for audit persistence
 import { PrismaClient } from '@prisma/client'
 
+// Matches the URL normalization page.tsx uses to build the inbound-count map.
+function normalizeUrlKey(url: string): string {
+  try {
+    const x = new URL(url)
+    return x.hostname.replace(/^www\./, '') + (x.pathname.replace(/\/+$/, '') || '/')
+  } catch {
+    return url.replace(/\/+$/, '')
+  }
+}
+
 // Create a singleton instance of PrismaClient
 // Lazily initialize to avoid errors during build
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient }
@@ -50,6 +60,20 @@ export async function saveAudit({
       create: { userId, name: domain, domain },
     })
 
+    // Compute derived aggregates from the real Analytics shape (see page.tsx).
+    const schemaCoveragePct =
+      pages.length > 0 && Array.isArray(analytics.schemaCoverage)
+        ? Math.round(
+            (analytics.schemaCoverage.reduce((s: number, x: { count: number }) => s + (x.count || 0), 0) /
+              pages.length) *
+              100
+          )
+        : 0
+    const orphanCount = Array.isArray(analytics.links?.orphans) ? analytics.links.orphans.length : 0
+    const topIssueTitles = Array.isArray(analytics.issues)
+      ? analytics.issues.slice(0, 5).map((i: { title: string }) => i.title)
+      : []
+
     // Create audit snapshot
     const audit = await prisma.audit.create({
       data: {
@@ -57,46 +81,56 @@ export async function saveAudit({
         status: 'completed',
         pageCount: pages.length,
         issueCount: analytics.issues?.length || 0,
-        criticalCount: analytics.severity?.critical || 0,
-        warningCount: analytics.severity?.warning || 0,
-        infoCount: analytics.severity?.info || 0,
+        criticalCount: analytics.severityTotals?.critical || 0,
+        warningCount: analytics.severityTotals?.warning || 0,
+        infoCount: analytics.severityTotals?.info || 0,
         siteScore,
         technicalScore,
         contentScore,
         schemaScore,
         aiScore,
-        schemaCoverage: analytics.schemaCoverage || 0,
-        orphanCount: analytics.links?.orphans || 0,
-        avgInbound: analytics.links?.avgInbound || 0,
+        schemaCoverage: schemaCoveragePct,
+        orphanCount,
+        avgInbound: Math.round(analytics.links?.avgInbound || 0),
         summary: JSON.stringify({
-          topIssues: analytics.topIssues || [],
-          duplicates: analytics.duplicates || {},
-          indexability: analytics.index || {},
+          topIssues: topIssueTitles,
+          duplicates: {
+            titles: analytics.duplicates?.titles?.length || 0,
+            metas: analytics.duplicates?.metas?.length || 0,
+          },
+          indexability: {
+            noindex: analytics.index?.noindex?.length || 0,
+            nonCanonical: analytics.index?.nonCanonical?.length || 0,
+            mixed: analytics.index?.mixed?.length || 0,
+            nonOk: analytics.index?.nonOk?.length || 0,
+          },
         }),
         endedAt: new Date(),
       },
     })
 
     // Save pages
+    const inboundCounts: Record<string, number> = analytics.links?.inbound || {}
     for (const page of pages) {
+      const internalTargetsCount = Array.isArray(page.internalTargets) ? page.internalTargets.length : 0
       await prisma.page.create({
         data: {
           auditId: audit.id,
           url: page.url,
-          status: page.status,
-          title: page.title,
-          metaDescription: page.metaDescription,
-          h1: page.h1,
+          status: page.status || 0,
+          title: page.title || null,
+          metaDescription: page.metaDescription || null,
+          h1: null,
           h1Count: page.h1Count || 0,
-          contentLength: page.contentLength || 0,
-          canonical: page.canonical,
-          hasNoindex: page.noindex || false,
-          hasMixedContent: page.mixedContent || false,
-          pageSpeedScore: page.pageSpeedScore,
-          internalLinks: page.internalTargets || 0,
-          internalTargets: page.internalTargets || 0,
-          inboundCount: analytics.links?.inboundCounts?.[page.url] || 0,
-          schemaTypes: page.schemaTypes ? JSON.stringify(page.schemaTypes) : null,
+          contentLength: page.wordCount || 0,
+          canonical: page.canonical || null,
+          hasNoindex: page.indexable === false,
+          hasMixedContent: !!page.mixedContent,
+          pageSpeedScore: null,
+          internalLinks: internalTargetsCount,
+          internalTargets: internalTargetsCount,
+          inboundCount: inboundCounts[normalizeUrlKey(page.url)] || 0,
+          schemaTypes: Array.isArray(page.schemaTypes) ? JSON.stringify(page.schemaTypes) : null,
           technicalScore: page.scores?.technical || 0,
           contentScore: page.scores?.content || 0,
           schemaScore: page.scores?.schema || 0,
