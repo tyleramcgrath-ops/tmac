@@ -7,9 +7,7 @@ import { PreviewStateSwitcher } from '@/components/north-star/PreviewStateSwitch
 import { MorningBriefing } from '@/components/north-star/MorningBriefing'
 import { ApprovalNeeded } from '@/components/north-star/ApprovalNeeded'
 import { PrimaryOpportunity } from '@/components/north-star/PrimaryOpportunity'
-import { RunNow } from '@/components/north-star/RunNow'
-import { AgentActivity } from '@/components/north-star/AgentActivity'
-import { DigitalDNASummary } from '@/components/north-star/DigitalDNASummary'
+import { BehindTheScenes } from '@/components/north-star/BehindTheScenes'
 import { AskCompass } from '@/components/north-star/AskCompass'
 import { BriefingHistory } from '@/components/north-star/BriefingHistory'
 
@@ -35,19 +33,15 @@ export default function NorthStarPage() {
           <span className="hidden font-normal text-[var(--rf-faint)] sm:inline">— your business growth advisor</span>
         </div>
 
-        <main id="main-content" className="flex flex-col gap-6 sm:gap-8">
+        {/* key forces a clean re-entrance of the stagger animation on scenario switch */}
+        <main key={scenarioId} id="main-content" className="ns-stagger flex flex-col gap-6 sm:gap-8">
           <MorningBriefing scenario={scenario} />
 
           <PrimaryOpportunity opportunity={scenario.opportunity} stale={scenario.opportunityStale} />
 
-          <RunNow scenario={scenario} />
-
           {scenario.pendingApproval && <ApprovalNeeded approval={scenario.pendingApproval} />}
 
-          <div className="grid items-start gap-6 sm:gap-8 md:grid-cols-2">
-            <AgentActivity items={scenario.activity} />
-            <DigitalDNASummary areas={scenario.digitalDna} pagesChecked={scenario.pagesChecked} />
-          </div>
+          <BehindTheScenes activity={scenario.activity} dnaAreas={scenario.digitalDna} pagesChecked={scenario.pagesChecked} />
 
           <AskCompass scenario={scenario} />
 

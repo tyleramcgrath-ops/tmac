@@ -27,13 +27,13 @@ export function ApprovalNeeded({ approval }: { approval: PendingApproval }) {
             <div className="mt-4 flex flex-wrap gap-2.5">
               <button
                 onClick={() => setState('approved')}
-                className="ns-touch inline-flex items-center gap-2 rounded-xl bg-[var(--rf-amber)] px-4 py-2 text-sm font-semibold text-[#1a1200] transition-transform hover:-translate-y-0.5"
+                className="ns-touch ns-lift inline-flex items-center gap-2 rounded-xl bg-[var(--rf-amber)] px-4 py-2 text-sm font-semibold text-[#1a1200]"
               >
                 <Check className="h-4 w-4" /> Approve &amp; publish
               </button>
               <button
                 onClick={() => setState('dismissed')}
-                className="ns-touch rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"
+                className="ns-touch ns-lift rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"
               >
                 <X className="h-4 w-4" /> Not now
               </button>

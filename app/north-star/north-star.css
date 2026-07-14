@@ -144,3 +144,84 @@
     min-width: 44px;
   }
 }
+
+/* ---- Hover lift: the one physical gesture every clickable surface shares ---- */
+.ns-lift {
+  transition: transform 0.18s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.18s ease, background-color 0.18s ease;
+}
+.ns-lift:hover {
+  transform: translateY(-1px);
+}
+.ns-lift:active {
+  transform: translateY(0);
+}
+
+/* ---- Quiet link: de-emphasized secondary action, no button chrome ---- */
+.ns-quiet-link {
+  color: var(--rf-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--rf-card-line-strong);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.ns-quiet-link:hover {
+  color: var(--rf-blue-bright);
+  text-decoration-color: currentColor;
+}
+
+/* ---- Thinking indicator: three breathing dots, honest "considering" state ---- */
+.ns-thinking {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ns-thinking span {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--rf-blue-bright);
+  animation: ns-thinking-bounce 1.2s ease-in-out infinite;
+}
+.ns-thinking span:nth-child(2) { animation-delay: 0.15s; }
+.ns-thinking span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes ns-thinking-bounce {
+  0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* ---- Stagger reveal: sections arrive in a calm, deliberate sequence ---- */
+.ns-stagger > * {
+  animation: ns-fade-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.ns-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.ns-stagger > *:nth-child(2) { animation-delay: 60ms; }
+.ns-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.ns-stagger > *:nth-child(4) { animation-delay: 180ms; }
+.ns-stagger > *:nth-child(5) { animation-delay: 240ms; }
+.ns-stagger > *:nth-child(6) { animation-delay: 300ms; }
+
+/* ---- Skeleton shimmer: honest "working on it" texture, no fake percentages ---- */
+.ns-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+.ns-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: ns-shimmer 1.6s ease-in-out infinite;
+}
+@keyframes ns-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-stagger > * { animation: none; }
+  .ns-thinking span { animation: none; opacity: 0.8; }
+  .ns-skeleton::after { animation: none; }
+  .ns-lift, .ns-lift:hover { transform: none; }
+}

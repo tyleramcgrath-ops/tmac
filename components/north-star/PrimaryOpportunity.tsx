@@ -28,7 +28,7 @@ export function PrimaryOpportunity({
 
   if (!opportunity) {
     return (
-      <section aria-label="Today's most important opportunity" className="ns-panel ns-fade-in p-6 sm:p-8 text-center">
+      <section aria-label="Today's most important opportunity" className="ns-panel ns-fade-in p-8 text-center sm:p-10">
         <Sparkles className="mx-auto h-6 w-6 text-[var(--rf-faint)]" aria-hidden="true" />
         <p className="mt-3 text-base font-medium text-white">Nothing new to review today.</p>
         <p className="mt-1.5 text-sm text-[var(--rf-muted)] max-w-md mx-auto">
@@ -39,37 +39,45 @@ export function PrimaryOpportunity({
   }
 
   return (
-    <section aria-labelledby="opportunity-heading" className="ns-panel ns-fade-in overflow-hidden">
-      <div className="p-5 sm:p-8">
+    <section
+      aria-labelledby="opportunity-heading"
+      className="ns-panel ns-fade-in overflow-hidden border-[var(--rf-card-line-strong)] shadow-[0_30px_80px_-40px_rgba(47,107,255,0.35)]"
+      onKeyDown={(e) => {
+        if (e.key === 'Escape' && section) setSection(null)
+      }}
+    >
+      <div className="p-6 sm:p-9">
         {stale && (
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--rf-card-line-strong)] bg-white/[0.02] px-3 py-1 text-[11px] text-[var(--rf-faint)]">
             <History className="h-3 w-3" /> Based on your last successful check — not confirmed today
           </div>
         )}
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--rf-blue-bright)]">Today&apos;s most important opportunity</p>
-        <h2 id="opportunity-heading" className="ns-serif mt-2 text-xl font-semibold leading-snug text-white sm:text-2xl">
-          {opportunity.headline}
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--rf-muted)] sm:text-base">
+        <div className="flex items-start gap-3">
+          <Sparkles className="mt-1.5 h-4 w-4 shrink-0 text-[var(--rf-amber)]" aria-hidden="true" />
+          <h2 id="opportunity-heading" className="ns-serif text-2xl font-semibold leading-[1.2] text-white sm:text-[28px]">
+            {opportunity.headline}
+          </h2>
+        </div>
+        <p className="mt-3 max-w-2xl pl-7 text-sm leading-relaxed text-[var(--rf-muted)] sm:text-base">
           {opportunity.businessReason}
         </p>
 
         {/* Affected pages */}
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="mt-5 flex flex-wrap gap-2 pl-7">
           {opportunity.affectedPages.map((p) => (
             <a
               key={p.url}
               href={p.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="ns-touch inline-flex items-center gap-1.5 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.015] px-2.5 py-1.5 text-xs text-[var(--rf-muted)] transition-colors hover:border-[var(--rf-card-line-strong)] hover:text-white"
+              className="ns-touch ns-lift inline-flex items-center gap-1.5 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.015] px-2.5 py-1.5 text-xs text-[var(--rf-muted)] hover:border-[var(--rf-card-line-strong)] hover:text-white"
             >
               <PageIcon className="h-3 w-3 shrink-0" /> {p.label}
             </a>
           ))}
         </div>
 
-        <p className="mt-4 text-xs text-[var(--rf-faint)]">{opportunity.evidenceSource}</p>
+        <p className="mt-4 pl-7 text-xs text-[var(--rf-faint)]">{opportunity.evidenceSource}</p>
       </div>
 
       {/* Three actions */}
@@ -145,7 +153,7 @@ function OpportunityAction({
       aria-selected={isOpen}
       aria-controls={`${id}-panel`}
       onClick={onClick}
-      className={`ns-touch flex flex-col items-start gap-1.5 rounded-xl border p-4 text-left transition-colors ${
+      className={`ns-touch ns-lift flex flex-col items-start gap-1.5 rounded-xl border p-4 text-left ${
         isOpen
           ? 'border-[var(--rf-blue-bright)]/50 bg-[var(--rf-blue-bright)]/10'
           : 'border-[var(--rf-card-line)] bg-white/[0.012] hover:border-[var(--rf-card-line-strong)]'

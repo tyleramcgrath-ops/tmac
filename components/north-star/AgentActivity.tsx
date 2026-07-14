@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, Clock, Loader2, CheckCircle2, AlertTriangle, ClipboardCheck, Circle, Activity } from 'lucide-react'
+import { ChevronDown, Clock, Loader2, CheckCircle2, AlertTriangle, ClipboardCheck, Circle } from 'lucide-react'
 import type { ActivityItem, ActivityStatus } from '@/lib/north-star-preview-data'
 
 const STATUS_LABEL: Record<ActivityStatus, string> = {
@@ -38,23 +38,14 @@ const PERSISTENCE_LABEL: Record<ActivityItem['persistence'], string> = {
   'not-connected': 'Not scheduled',
 }
 
-export function AgentActivity({ items }: { items: ActivityItem[] }) {
+/** Content-only: the activity list, with no outer card or heading of its own. Meant to live inside a shared shell (see BehindTheScenes.tsx). */
+export function AgentActivityList({ items }: { items: ActivityItem[] }) {
   return (
-    <section aria-labelledby="activity-heading" className="ns-panel ns-fade-in p-5 sm:p-7">
-      <div className="flex items-center gap-2.5">
-        <Activity className="h-4 w-4 text-[var(--rf-green)]" aria-hidden="true" />
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--rf-green)]">What North Star is doing</p>
-          <h2 id="activity-heading" className="text-lg font-semibold text-white">Agent activity</h2>
-        </div>
-      </div>
-
-      <ul className="mt-4 space-y-2">
-        {items.map((item) => (
-          <ActivityRow key={item.id} item={item} />
-        ))}
-      </ul>
-    </section>
+    <ul className="space-y-2">
+      {items.map((item) => (
+        <ActivityRow key={item.id} item={item} />
+      ))}
+    </ul>
   )
 }
 

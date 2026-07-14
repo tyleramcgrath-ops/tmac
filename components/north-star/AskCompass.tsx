@@ -18,7 +18,7 @@ function answerFor(question: string, scenario: PreviewScenario): string {
   const q = question.toLowerCase()
   const opp = scenario.opportunity
 
-  if (q.includes('focus this week') || q.includes('focus') ) {
+  if (q.includes('focus this week') || q.includes('focus')) {
     if (opp) {
       return `Honestly? ${opp.headline} That's the one thing worth fixing this week — everything else can wait. Want me to walk you through it, or would you rather I prepare a draft for your review?`
     }
@@ -62,25 +62,54 @@ function answerFor(question: string, scenario: PreviewScenario): string {
 export function AskCompass({ scenario }: { scenario: PreviewScenario }) {
   const [question, setQuestion] = useState('')
   const [conversation, setConversation] = useState<{ q: string; a: string }[]>([])
+  const [pending, setPending] = useState<string | null>(null)
 
   const ask = (q: string) => {
     const text = q.trim()
-    if (!text) return
-    setConversation((c) => [...c, { q: text, a: answerFor(text, scenario) }])
+    if (!text || pending) return
     setQuestion('')
+    setPending(text)
+    window.setTimeout(() => {
+      setConversation((c) => [...c, { q: text, a: answerFor(text, scenario) }])
+      setPending(null)
+    }, 550)
   }
+
+  const asked = new Set(conversation.map((c) => c.q))
+  const remainingSuggestions = SUGGESTED.filter((s) => !asked.has(s))
 
   return (
     <section aria-labelledby="ask-compass-heading" className="ns-panel ns-fade-in p-5 sm:p-7">
       <div className="flex items-center gap-2.5">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--rf-violet)]/15">
-          <Compass className="h-4 w-4 text-[var(--rf-violet)]" />
-        </div>
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--rf-violet)]">Ask Compass</p>
-          <h2 id="ask-compass-heading" className="text-lg font-semibold text-white">Your business advisor, on call</h2>
-        </div>
+        <Compass className="h-4 w-4 text-[var(--rf-violet)]" aria-hidden="true" />
+        <h2 id="ask-compass-heading" className="text-lg font-semibold text-white">Ask Compass</h2>
       </div>
+      <p className="mt-1 text-sm text-[var(--rf-muted)]">Your business advisor, on call — ask in plain English.</p>
+
+      {(conversation.length > 0 || pending) && (
+        <div className="mt-5 space-y-4 border-b border-[var(--rf-card-line)] pb-5" role="log" aria-label="Conversation with Compass">
+          {conversation.map((turn, i) => (
+            <div key={i} className="space-y-2">
+              <p className="text-sm font-medium text-white">{turn.q}</p>
+              <div className="flex items-start gap-2.5">
+                <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--rf-blue-bright)]" />
+                <p className="text-sm leading-relaxed text-[var(--rf-muted)]">{turn.a}</p>
+              </div>
+            </div>
+          ))}
+          {pending && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-white">{pending}</p>
+              <div className="flex items-center gap-2.5">
+                <Sparkles className="h-3.5 w-3.5 shrink-0 text-[var(--rf-blue-bright)]" />
+                <span className="ns-thinking" role="status" aria-label="Compass is thinking">
+                  <span /><span /><span />
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <form
         onSubmit={(e) => {
@@ -94,41 +123,31 @@ export function AskCompass({ scenario }: { scenario: PreviewScenario }) {
           id="ask-compass-input"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
+          disabled={!!pending}
           placeholder="What should I focus on this week?"
-          className="w-full bg-transparent text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
+          className="w-full bg-transparent text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none disabled:opacity-50"
         />
         <button
           type="submit"
-          disabled={!question.trim()}
+          disabled={!question.trim() || !!pending}
           aria-label="Ask Compass"
-          className="ns-touch flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--rf-blue-bright)] text-white transition-opacity disabled:opacity-30"
+          className="ns-touch ns-lift flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--rf-blue-bright)] text-white disabled:opacity-30"
         >
           <ArrowUp className="h-4 w-4" />
         </button>
       </form>
 
-      <div className="mt-3 flex flex-wrap gap-2">
-        {SUGGESTED.map((s) => (
-          <button
-            key={s}
-            onClick={() => ask(s)}
-            className="ns-touch rounded-full border border-[var(--rf-card-line)] px-3 py-1.5 text-xs text-[var(--rf-muted)] transition-colors hover:border-[var(--rf-card-line-strong)] hover:text-white"
-          >
-            {s}
-          </button>
-        ))}
-      </div>
-
-      {conversation.length > 0 && (
-        <div className="mt-5 space-y-4 border-t border-[var(--rf-card-line)] pt-5">
-          {conversation.map((turn, i) => (
-            <div key={i} className="space-y-2">
-              <p className="text-sm font-medium text-white">{turn.q}</p>
-              <div className="flex items-start gap-2.5">
-                <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--rf-blue-bright)]" />
-                <p className="text-sm leading-relaxed text-[var(--rf-muted)]">{turn.a}</p>
-              </div>
-            </div>
+      {remainingSuggestions.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {remainingSuggestions.map((s) => (
+            <button
+              key={s}
+              onClick={() => ask(s)}
+              disabled={!!pending}
+              className="ns-touch ns-lift rounded-full border border-[var(--rf-card-line)] px-3 py-1.5 text-xs text-[var(--rf-muted)] hover:border-[var(--rf-card-line-strong)] hover:text-white disabled:opacity-40"
+            >
+              {s}
+            </button>
           ))}
         </div>
       )}
