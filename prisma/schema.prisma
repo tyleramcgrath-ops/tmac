@@ -77,6 +77,7 @@ model Project {
   // Integrations
   oauthCredentials     OAuthCredential[]
   googleSearchConsole  GoogleSearchConsoleMetric[]
+  googleAnalytics4     GoogleAnalytics4Metric[]
 
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
@@ -276,15 +277,17 @@ model ForgeMemory {
 model OAuthCredential {
   id        String   @id @default(cuid())
   projectId String
-  provider  String   // "google", "facebook", etc.
+  provider  String   // "google"
 
   // Token data (stored encrypted in production)
   accessToken   String
   refreshToken  String?
   expiresAt     DateTime?
 
-  // For Google Search Console: the property URL
-  scope         String?
+  // Integration-specific metadata
+  scope         String?           // OAuth scopes granted
+  gscPropertyUrl String?          // For GSC: the property URL (https://domain.com/)
+  ga4PropertyId String?           // For GA4: the GA4 property ID (numeric)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -328,4 +331,37 @@ model GoogleSearchConsoleMetric {
   @@index([url])
   @@index([clicks])
   @@index([impressions])
+}
+
+// GoogleAnalytics4Metric stores GA4 data for a page/URL
+model GoogleAnalytics4Metric {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+
+  // GA4 organic traffic metrics
+  users               Int     @default(0)
+  sessions            Int     @default(0)
+  engagementRate      Float   @default(0)      // 0-1.0
+  bounceRate          Float   @default(0)      // 0-1.0
+  avgSessionDuration  Float   @default(0)      // seconds
+
+  // Conversion metrics
+  conversions         Int     @default(0)
+  conversionRate      Float   @default(0)      // 0-1.0
+  revenue             Float   @default(0)      // USD
+
+  // Data freshness
+  dataDate            DateTime?
+  syncedAt            DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, url])
+  @@index([projectId])
+  @@index([url])
+  @@index([users])
+  @@index([sessions])
+  @@index([conversions])
 }
