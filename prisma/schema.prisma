@@ -74,6 +74,10 @@ model Project {
   deployments     Deployment[]
   events          Event[]
 
+  // Integrations
+  oauthCredentials     OAuthCredential[]
+  googleSearchConsole  GoogleSearchConsoleMetric[]
+
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
@@ -266,4 +270,62 @@ model ForgeMemory {
   updatedAt DateTime @updatedAt
 
   @@index([projectId])
+}
+
+// OAuthCredential stores encrypted OAuth tokens for integrations
+model OAuthCredential {
+  id        String   @id @default(cuid())
+  projectId String
+  provider  String   // "google", "facebook", etc.
+
+  // Token data (stored encrypted in production)
+  accessToken   String
+  refreshToken  String?
+  expiresAt     DateTime?
+
+  // For Google Search Console: the property URL
+  scope         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, provider])
+  @@index([projectId])
+}
+
+// GoogleSearchConsoleMetric stores GSC data for a URL
+model GoogleSearchConsoleMetric {
+  id        String   @id @default(cuid())
+  projectId String
+  url       String
+
+  // GSC metrics
+  clicks        Int     @default(0)
+  impressions   Int     @default(0)
+  ctr           Float   @default(0)      // 0.0-100.0 percentage
+  position      Float   @default(0)      // average position
+
+  // Top queries for this URL
+  topQueries    String? // JSON array of {query, clicks, impressions, ctr, position}
+
+  // Devices
+  devices       String? // JSON array of {device, clicks, impressions, ctr, position}
+
+  // Countries
+  countries     String? // JSON array of {country, clicks, impressions, ctr, position}
+
+  // Data freshness
+  dataDate      DateTime? // Last date of GSC data
+  syncedAt      DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, url])
+  @@index([projectId])
+  @@index([url])
+  @@index([clicks])
+  @@index([impressions])
 }
