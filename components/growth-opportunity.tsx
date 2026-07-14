@@ -26,8 +26,7 @@ interface GrowthOpportunityProps {
 export function GrowthOpportunity({ pages, agg }: GrowthOpportunityProps) {
   const [expandedSection, setExpandedSection] = useState<'why' | 'guide' | 'prepare' | null>(null)
 
-  // Analyze whether homepage has contact info
-  const homepageUrl = pages[0]?.url // First page is usually homepage
+  // Find homepage
   const homepage = pages.find((p) => {
     try {
       const url = new URL(p.url)
@@ -37,30 +36,33 @@ export function GrowthOpportunity({ pages, agg }: GrowthOpportunityProps) {
     }
   }) || pages[0]
 
-  const hasLocalBusinessSchema = homepage?.schemaTypes.includes('LocalBusiness') || homepage?.schemaTypes.includes('Organization')
-  const hasContactInfo = homepage?.fixes.some((f) => f.category === 'contact' || f.title.toLowerCase().includes('contact'))
+  // Detect what's actually in the crawl data
+  const hasLocalBusinessSchema = homepage?.schemaTypes.includes('LocalBusiness')
+  const hasOrganizationSchema = homepage?.schemaTypes.includes('Organization')
+  const missingContactIssue = homepage?.fixes.some((f) => f.title.toLowerCase().includes('contact') || f.title.toLowerCase().includes('phone'))
 
   // If we don't have clear opportunity markers, show placeholder
   if (!pages.length) return <EmptyState />
 
   const opportunity = {
-    title: "People looking for you can't easily find your contact information",
-    description: 'When someone searches for your business, they want to call, visit, or email you immediately. If they can\'t find this information easily, they\'ll choose a competitor instead.',
-    confidence: 92,
-    potentialValue: '3–12 additional calls/visits per week',
-    assumption: 'Assumes 0.5–2% of searchers who find your site attempt to contact you',
-    whyWeThinkThis: hasLocalBusinessSchema
-      ? 'Your homepage does have some contact structure, but we found inconsistencies or missing details in how it\'s formatted.'
-      : 'Your homepage is missing structured business contact information that search engines and people can easily find.',
-    evidence: [
-      `${pages.length} pages analyzed`,
-      hasLocalBusinessSchema ? 'Some schema markup present' : 'No LocalBusiness or Organization schema detected',
-      homepage?.titleLength ? `Homepage title: "${homepage.titleLength} characters"` : 'Homepage analyzed',
+    title: 'Customers may have difficulty reaching you from important pages',
+    description: 'Visitors who want to call, book, or request information need quick access to your contact methods. We checked whether your contact information is structured in a way search engines and people can easily discover.',
+    verified: missingContactIssue
+      ? 'Your homepage is missing or unclear contact information (phone, email, or contact action)'
+      : 'Contact information structure is incomplete or unstructured on your homepage',
+    businessEffect: 'Visitors who cannot quickly call, book, or request information may leave without contacting you.',
+    cannotMeasure: [
+      'Actual number of lost contacts, calls, or visits',
+      'Percentage of visitors who attempt to contact you',
+      'Revenue impact of missing or unclear contact info',
+      'Whether visitors actually see the contact information that exists',
     ],
-    cannotVerify: [
-      'Whether your phone number generates revenue',
-      'Your actual contact form submission rate',
-      'Customer behavior after finding your info',
+    confidenceNote: 'Confidence increases as we observe user behavior and outcomes. We can only verify what appears in your HTML; we cannot measure visitor intent or actions.',
+    evidence: [
+      `${pages.length} pages crawled`,
+      hasLocalBusinessSchema ? 'LocalBusiness schema detected' : 'No LocalBusiness schema detected',
+      hasOrganizationSchema ? 'Organization schema detected' : 'No Organization schema detected',
+      missingContactIssue ? 'Contact issues flagged in crawl analysis' : 'No contact issues flagged',
     ],
   }
 
@@ -85,22 +87,16 @@ export function GrowthOpportunity({ pages, agg }: GrowthOpportunityProps) {
           </div>
 
           {/* Key metrics row */}
-          <div className="mt-5 grid grid-cols-3 gap-3 sm:gap-4">
-            <MetricBadge
-              icon={TrendingUp}
-              label="Potential value"
-              value={opportunity.potentialValue}
-              highlight
-            />
-            <MetricBadge
-              icon={Zap}
-              label="Confidence"
-              value={`${opportunity.confidence}%`}
-            />
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-2 sm:gap-4">
             <MetricBadge
               icon={Eye}
+              label="What we verified"
+              value={`${pages.length} pages analyzed`}
+            />
+            <MetricBadge
+              icon={AlertCircle}
               label="Status"
-              value="Not optimized"
+              value={missingContactIssue ? 'Issue found' : 'Incomplete data'}
             />
           </div>
         </div>
@@ -148,10 +144,10 @@ export function GrowthOpportunity({ pages, agg }: GrowthOpportunityProps) {
             <span className="font-medium text-white">What we verified:</span> {opportunity.evidence.join('; ')}
           </p>
           <p>
-            <span className="font-medium text-white">What we cannot verify:</span> {opportunity.cannotVerify.join('; ')}
+            <span className="font-medium text-white">What we cannot measure:</span> {opportunity.cannotMeasure.join('; ')}
           </p>
           <p className="pt-2 text-[11px] text-[var(--rf-faint)]">
-            Digital DNA becomes more confident as you take action and we observe results.
+            {opportunity.confidenceNote}
           </p>
         </div>
       </div>
@@ -231,15 +227,20 @@ function WhySection({ opportunity }: { opportunity: any }) {
       <div>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-white">
           <CheckCircle2 className="h-4 w-4 text-[var(--rf-green)]" />
-          Why we think this matters
+          What we verified
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-[var(--rf-muted)]">
-          {opportunity.whyWeThinkThis}
+          {opportunity.verified}
         </p>
       </div>
 
       <div>
-        <h4 className="text-sm font-medium text-white">Evidence</h4>
+        <h4 className="text-sm font-medium text-white">Possible business effect</h4>
+        <p className="mt-2 text-sm text-[var(--rf-muted)]">{opportunity.businessEffect}</p>
+      </div>
+
+      <div>
+        <h4 className="text-sm font-medium text-white">Evidence from crawl</h4>
         <ul className="mt-2 space-y-2">
           {opportunity.evidence.map((item: string, i: number) => (
             <li key={i} className="flex items-start gap-2.5 text-sm text-[var(--rf-muted)]">
@@ -251,13 +252,20 @@ function WhySection({ opportunity }: { opportunity: any }) {
       </div>
 
       <div>
-        <h4 className="text-sm font-medium text-white">This assumes</h4>
-        <p className="mt-2 text-sm text-[var(--rf-muted)]">{opportunity.assumption}</p>
+        <h4 className="text-sm font-medium text-white">What we cannot measure yet</h4>
+        <ul className="mt-2 space-y-2">
+          {opportunity.cannotMeasure.map((item: string, i: number) => (
+            <li key={i} className="flex items-start gap-2.5 text-sm text-[var(--rf-muted)]">
+              <span className="mt-1.5 block h-1.5 w-1.5 rounded-full bg-[var(--rf-muted)]/30 shrink-0" />
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="rounded-lg border border-[var(--rf-amber)]/20 bg-[var(--rf-amber)]/5 p-3">
-        <p className="text-xs font-medium text-[var(--rf-amber)]">
-          Confidence increases as you act and we measure results. If you add clear contact info and see no change in calls/visits, Digital DNA will learn that this isn't your growth lever.
+      <div className="rounded-lg border border-[var(--rf-blue-bright)]/20 bg-[var(--rf-blue-bright)]/5 p-3">
+        <p className="text-xs text-[var(--rf-blue-bright)]">
+          {opportunity.confidenceNote}
         </p>
       </div>
     </div>
@@ -270,31 +278,34 @@ function GuideSection() {
       <div>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-white">
           <TrendingUp className="h-4 w-4 text-[var(--rf-blue-bright)]" />
-          How to make your contact information visible
+          Improve contact information discoverability
         </h3>
+        <p className="mt-2 text-sm text-[var(--rf-muted)]">
+          The goal is to make it effortless for visitors to call, visit, or email you.
+        </p>
       </div>
 
       <div className="space-y-3">
         {[
           {
             step: 1,
-            title: 'Put your phone number on the homepage',
-            description: 'Make it prominent (header, hero section, or top right). People should see it within 1 second.',
+            title: 'Audit where contact info appears',
+            description: 'Check your homepage, main pages, and footer. Note where phone, address, and contact form are (or are not) visible.',
           },
           {
             step: 2,
-            title: 'Add your business address if you have a physical location',
-            description: 'Show your address prominently. If you\'re a plumber/dentist/restaurant, people want to know where to find you.',
+            title: 'Make contact information immediately visible',
+            description: 'Place phone and/or email in header, hero section, or navigation. Visitors should find it without scrolling.',
           },
           {
             step: 3,
-            title: 'Add LocalBusiness structured data',
-            description: 'This helps search engines and people find your correct info. Includes: name, phone, address, hours, website URL.',
+            title: 'Use consistent contact details across all pages',
+            description: 'Same phone number, address, and email everywhere. Inconsistent info confuses both people and search engines.',
           },
           {
             step: 4,
-            title: 'Make sure your contact form works',
-            description: 'Test it yourself. Verify emails arrive. Respond to submissions within 2 hours.',
+            title: 'Test your contact methods',
+            description: 'Verify your phone number works, emails arrive, and contact forms submit successfully. Respond to inquiries promptly.',
           },
         ].map((item) => (
           <div key={item.step} className="flex gap-3">
@@ -311,7 +322,7 @@ function GuideSection() {
 
       <div className="rounded-lg border border-[var(--rf-blue-bright)]/20 bg-[var(--rf-blue-bright)]/5 p-3">
         <p className="text-xs text-[var(--rf-blue-bright)]">
-          This usually takes 15–30 minutes if you update your website yourself, or 1–2 hours if someone needs to help you.
+          After implementing changes, we can revisit this opportunity to measure whether it improved visitor behavior. Without conversion tracking or call tracking, we cannot know the business impact until you verify it.
         </p>
       </div>
     </div>
@@ -323,58 +334,45 @@ function PrepareSection() {
     <div className="space-y-4">
       <div>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-white">
-          <FileText className="h-4 w-4 text-[var(--rf-green)]" />
-          What to add to your website
+          <FileText className="h-4 w-4 text-[var(--rf-blue-bright)]" />
+          Contact information checklist
         </h3>
+        <p className="mt-2 text-sm text-[var(--rf-muted)]">Review and improve how customers find your contact methods:</p>
       </div>
 
       <div className="space-y-3">
         <div className="rounded-lg border border-[var(--rf-card-line)] bg-white/[0.01] p-4">
-          <p className="text-xs font-medium text-[var(--rf-muted)] uppercase tracking-wider">LocalBusiness Schema Code</p>
-          <p className="mt-3 text-xs text-[var(--rf-muted)]">Add this to your website's HTML &lt;head&gt; section:</p>
-          <pre className="mt-2 overflow-x-auto rounded bg-black/30 p-2.5 text-xs text-[var(--rf-blue-bright)]">
-{`<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Your Business Name",
-  "telephone": "+1-XXX-XXX-XXXX",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "123 Main St",
-    "addressLocality": "City",
-    "addressRegion": "State",
-    "postalCode": "12345"
-  },
-  "url": "https://yourdomain.com"
-}
-</script>`}
-          </pre>
-          <p className="mt-2 text-xs text-[var(--rf-faint)]">Replace the placeholder values with your actual information.</p>
-        </div>
-
-        <div className="rounded-lg border border-[var(--rf-card-line)] bg-white/[0.01] p-4">
-          <p className="text-xs font-medium text-[var(--rf-muted)] uppercase tracking-wider">Homepage Changes</p>
-          <ul className="mt-2 space-y-2 text-sm text-[var(--rf-muted)]">
+          <p className="text-xs font-medium text-[var(--rf-muted)] uppercase tracking-wider">Visible contact information</p>
+          <ul className="mt-3 space-y-2 text-sm text-[var(--rf-muted)]">
             <li className="flex items-start gap-2">
-              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-green)]" />
-              <span>Add phone number in header or hero section</span>
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-muted)]" />
+              <span>Phone number visible on homepage (header, hero, or top navigation)</span>
             </li>
             <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-green)]" />
-              <span>Add address in footer or contact area</span>
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-muted)]" />
+              <span>Business address or location clearly displayed</span>
             </li>
             <li className="flex items-start gap-2">
-              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-green)]" />
-              <span>Ensure contact form is visible and working</span>
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-muted)]" />
+              <span>Contact form or email address accessible</span>
             </li>
           </ul>
         </div>
+
+        <div className="rounded-lg border border-[var(--rf-card-line)] bg-white/[0.01] p-4">
+          <p className="text-xs font-medium text-[var(--rf-muted)] uppercase tracking-wider">Structured data (optional)</p>
+          <p className="mt-2 text-sm text-[var(--rf-muted)]">
+            If you add LocalBusiness schema markup, search engines can display your contact information more prominently. This requires your actual business name, phone, address, and hours—do not use placeholder values.
+          </p>
+          <p className="mt-2 text-xs text-[var(--rf-faint)]">
+            Your website builder likely has a UI for this rather than requiring manual code editing.
+          </p>
+        </div>
       </div>
 
-      <div className="rounded-lg border border-[var(--rf-green)]/20 bg-[var(--rf-green)]/5 p-3">
-        <p className="text-xs text-[var(--rf-green)]">
-          Don't have a developer? Most website builders (Wix, Squarespace, WordPress) have simple ways to add this information without coding.
+      <div className="rounded-lg border border-[var(--rf-blue-bright)]/20 bg-[var(--rf-blue-bright)]/5 p-3">
+        <p className="text-xs text-[var(--rf-blue-bright)]">
+          After making changes, revisit this section in a few weeks. As we observe how visitors interact with your updated contact information, Digital DNA will learn whether this change improves your business outcomes.
         </p>
       </div>
     </div>
