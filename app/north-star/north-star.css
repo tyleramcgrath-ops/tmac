@@ -225,3 +225,71 @@
   .ns-skeleton::after { animation: none; }
   .ns-lift, .ns-lift:hover { transform: none; }
 }
+
+/* =====================================================================
+   Investigation — the "Check my business now" moment.
+   Calm and methodical: a growing log of what's being examined, each
+   line settling into place rather than sliding or bouncing. No fake
+   progress bar, no percentage — just steps becoming findings.
+   ===================================================================== */
+
+.ns-step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: ns-step-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes ns-step-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ns-step-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Active step: a slow, quiet breathing ring — deliberately not a spinner */
+.ns-step-active-ring {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--rf-blue-bright);
+  animation: ns-step-breathe 1.6s ease-in-out infinite;
+}
+@keyframes ns-step-breathe {
+  0%, 100% { opacity: 0.45; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* The reveal: a single settled arrival, no bounce, no celebration */
+.ns-reveal-in {
+  animation: ns-reveal-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes ns-reveal-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* One-time attention pulse for a section scrolled-to from the reveal —
+   fires once, settles, never loops. */
+.ns-highlight-once {
+  animation: ns-highlight-pulse 1.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes ns-highlight-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(79, 139, 255, 0); }
+  15% { box-shadow: 0 0 0 3px rgba(79, 139, 255, 0.35); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 139, 255, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-step-row { animation: none; }
+  .ns-step-active-ring { animation: none; opacity: 1; }
+  .ns-reveal-in { animation: none; }
+  .ns-highlight-once { animation: none; }
+}

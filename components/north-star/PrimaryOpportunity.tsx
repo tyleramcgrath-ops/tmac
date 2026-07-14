@@ -40,6 +40,7 @@ export function PrimaryOpportunity({
 
   return (
     <section
+      id="primary-opportunity"
       aria-labelledby="opportunity-heading"
       className="ns-panel ns-fade-in overflow-hidden border-[var(--rf-card-line-strong)] shadow-[0_30px_80px_-40px_rgba(47,107,255,0.35)]"
       onKeyDown={(e) => {

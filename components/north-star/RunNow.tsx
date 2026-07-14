@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Zap, CheckCircle2, AlertTriangle, Copy, HelpCircle, ClipboardCheck, Loader2, ChevronDown } from 'lucide-react'
+import { Zap, ChevronDown } from 'lucide-react'
 import type { PreviewScenario, RunOutcome } from '@/lib/north-star-preview-data'
+import { Investigation } from './Investigation'
 
-type RunState = 'idle' | 'queued' | 'checking' | 'result'
+type RunState = 'idle' | 'investigating'
 
 const OUTCOME_OPTIONS: { id: RunOutcome; label: string }[] = [
   { id: 'completed', label: 'Completed' },
@@ -22,9 +23,7 @@ export function RunNow({ scenario }: { scenario: PreviewScenario }) {
 
   const runCheck = () => {
     setInfoOpen(false)
-    setState('queued')
-    window.setTimeout(() => setState('checking'), 450)
-    window.setTimeout(() => setState('result'), 1350)
+    setState('investigating')
   }
 
   const reset = () => setState('idle')
@@ -68,15 +67,9 @@ export function RunNow({ scenario }: { scenario: PreviewScenario }) {
         </div>
       )}
 
-      {state === 'queued' && (
-        <StatusBlock icon={<Loader2 className="h-4 w-4 animate-spin text-[var(--rf-blue-bright)]" />} title="Queued" detail="North Star is about to start checking your business." />
+      {state === 'investigating' && (
+        <Investigation key={outcome} scenario={scenario} outcome={outcome} onDone={reset} />
       )}
-
-      {state === 'checking' && (
-        <StatusBlock icon={<Loader2 className="h-4 w-4 animate-spin text-[var(--rf-blue-bright)]" />} title="Checking your website" detail={`Reviewing ${scenario.business.domain}…`} skeleton />
-      )}
-
-      {state === 'result' && <ResultBlock outcome={outcome} onReset={reset} />}
 
       {/* Dev-only preview control — clearly labeled, never shown to a real customer */}
       {state === 'idle' && (
@@ -118,72 +111,6 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     <div className="min-w-0">
       <p className="text-[11px] uppercase tracking-wide text-[var(--rf-faint)]">{label}</p>
       <p className="mt-0.5 text-sm leading-snug text-white">{value}</p>
-    </div>
-  )
-}
-
-function StatusBlock({ icon, title, detail, skeleton }: { icon: React.ReactNode; title: string; detail: string; skeleton?: boolean }) {
-  return (
-    <div className="mt-4 flex items-center gap-3" role="status" aria-live="polite">
-      {icon}
-      <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-white">{title}</p>
-        {skeleton ? (
-          <div className="ns-skeleton mt-1.5 h-3 w-40 max-w-full" aria-hidden="true" />
-        ) : (
-          <p className="text-xs text-[var(--rf-muted)]">{detail}</p>
-        )}
-      </div>
-    </div>
-  )
-}
-
-function ResultBlock({ outcome, onReset }: { outcome: RunOutcome; onReset: () => void }) {
-  const content: Record<RunOutcome, { icon: React.ReactNode; title: string; detail: string; tone: string }> = {
-    completed: {
-      icon: <CheckCircle2 className="h-4 w-4 text-[var(--rf-green)]" />,
-      title: 'Check complete',
-      detail: 'Your briefing has been updated with what North Star found.',
-      tone: 'text-[var(--rf-green)]',
-    },
-    failed: {
-      icon: <AlertTriangle className="h-4 w-4 text-[var(--rf-red)]" />,
-      title: "Couldn't complete the check",
-      detail: 'Your website may be unreachable right now. North Star will try again automatically.',
-      tone: 'text-[var(--rf-red)]',
-    },
-    duplicate: {
-      icon: <Copy className="h-4 w-4 text-[var(--rf-amber)]" />,
-      title: 'A check is already running',
-      detail: 'North Star started a check moments ago. Let that finish before starting another.',
-      tone: 'text-[var(--rf-amber)]',
-    },
-    'insufficient-evidence': {
-      icon: <HelpCircle className="h-4 w-4 text-[var(--rf-muted)]" />,
-      title: 'Not enough evidence yet',
-      detail: 'North Star reached your site but found too little to confidently update your briefing. It will try again next check.',
-      tone: 'text-[var(--rf-muted)]',
-    },
-    'waiting-approval': {
-      icon: <ClipboardCheck className="h-4 w-4 text-[var(--rf-amber)]" />,
-      title: 'One update needs your approval',
-      detail: 'North Star prepared a change based on this check. Review it below before it goes live.',
-      tone: 'text-[var(--rf-amber)]',
-    },
-  }
-  const c = content[outcome]
-  return (
-    <div className="mt-4 flex items-start justify-between gap-4" role="status" aria-live="polite">
-      <div className="flex items-start gap-3">
-        {c.icon}
-        <div>
-          <p className={`text-sm font-medium ${c.tone}`}>{c.title}</p>
-          <p className="mt-0.5 max-w-sm text-xs text-[var(--rf-muted)]">{c.detail}</p>
-        </div>
-      </div>
-      <button onClick={onReset} className="ns-touch ns-quiet-link shrink-0 text-xs font-medium">
-        Done
-      </button>
     </div>
   )
 }

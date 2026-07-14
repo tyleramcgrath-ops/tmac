@@ -11,6 +11,7 @@ export function ApprovalNeeded({ approval }: { approval: PendingApproval }) {
 
   return (
     <section
+      id="pending-approval"
       aria-label="Waiting for your approval"
       className="ns-panel ns-fade-in relative overflow-hidden border-[var(--rf-amber)]/25 p-5 sm:p-6"
     >
