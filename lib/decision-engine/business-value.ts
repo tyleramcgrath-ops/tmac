@@ -294,16 +294,16 @@ export class BusinessValueEngine {
     organizationId: string,
     projectId: string,
     pageId: string,
-    auditId: string,
+    pageUrl: string,
     result: BusinessValueResult
   ) {
     const existing = await this.prisma.businessValueScore.findUnique({
-      where: { pageId_auditId: { pageId, auditId } },
+      where: { projectId_pageUrl: { projectId, pageUrl } },
     });
 
     if (existing) {
       return this.prisma.businessValueScore.update({
-        where: { pageId_auditId: { pageId, auditId } },
+        where: { projectId_pageUrl: { projectId, pageUrl } },
         data: {
           revenueScore: result.components.revenueScore,
           conversionScore: result.components.conversionScore,
@@ -320,8 +320,7 @@ export class BusinessValueEngine {
     } else {
       return this.prisma.businessValueScore.create({
         data: {
-          pageId,
-          auditId,
+          pageUrl,
           organizationId,
           projectId,
           revenueScore: result.components.revenueScore,

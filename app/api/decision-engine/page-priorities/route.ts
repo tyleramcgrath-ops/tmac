@@ -33,19 +33,6 @@ export async function GET(request: NextRequest) {
         projectId,
         organizationId,
       },
-      include: {
-        page: {
-          select: {
-            url: true,
-            title: true,
-            status: true,
-            contentLength: true,
-            internalLinks: true,
-            inboundCount: true,
-            pageSpeedScore: true,
-          },
-        },
-      },
       orderBy: { priorityRank: 'asc' },
       take: limit,
       skip: offset,
@@ -61,9 +48,7 @@ export async function GET(request: NextRequest) {
     });
 
     const formattedPriorities = priorities.map((p) => ({
-      pageId: p.pageId,
-      url: p.page?.url,
-      title: p.page?.title,
+      pageUrl: p.pageUrl,
       businessValueScore: p.businessValueScore,
       seoOpportunityScore: p.seoOpportunityScore,
       priorityScore: p.priorityScore,
@@ -94,9 +79,9 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { organizationId, projectId, auditId, pageId, weights } = body;
+    const { organizationId, projectId, auditId, pageUrl, weights } = body;
 
-    if (!organizationId || !projectId || !auditId || !pageId) {
+    if (!organizationId || !projectId || !auditId || !pageUrl) {
       return error('Missing required fields', 400);
     }
 
@@ -113,9 +98,9 @@ export async function POST(request: NextRequest) {
     if (weights) {
       const priority = await prisma.pagePriority.findUnique({
         where: {
-          pageId_auditId: {
-            pageId,
+          auditId_pageUrl: {
             auditId,
+            pageUrl,
           },
         },
       });
@@ -135,9 +120,9 @@ export async function POST(request: NextRequest) {
 
       const updated = await prisma.pagePriority.update({
         where: {
-          pageId_auditId: {
-            pageId,
+          auditId_pageUrl: {
             auditId,
+            pageUrl,
           },
         },
         data: {
@@ -150,7 +135,7 @@ export async function POST(request: NextRequest) {
       return success({
         message: 'Page priority updated',
         priority: {
-          pageId: updated.pageId,
+          pageUrl: updated.pageUrl,
           priorityScore: updated.priorityScore,
           businessWeight: updated.businessWeight,
           seoWeight: updated.seoWeight,

@@ -110,6 +110,16 @@ model Organization {
   googleSearchConsoleMetrics GoogleSearchConsoleMetric[]
   googleAnalytics4Metrics GoogleAnalytics4Metric[]
 
+  // Decision Engine (org-level)
+  pageClassifications PageClassification[] @relation("PageClassifications")
+  pageSignals         PageSignals[] @relation("PageSignals")
+  businessValueScores BusinessValueScore[] @relation("BusinessValueScores")
+  seoOpportunityScores SEOOpportunityScore[] @relation("SEOOpportunityScores")
+  pagePriorities      PagePriority[] @relation("PagePriorities")
+  recommendationDecisions RecommendationDecision[] @relation("RecommendationDecisions")
+  dailyMissions       DailyMission[] @relation("DailyMissions")
+  businessContext     BusinessContext? @relation("BusinessContext")
+
   @@index([slug])
   @@index([createdAt])
 }
@@ -190,6 +200,15 @@ model Project {
   deployments     Deployment[]
   events          Event[]
   recommendations Recommendation[]
+
+  // Decision Engine
+  pageClassifications PageClassification[]
+  pageSignals         PageSignals[]
+  businessValueScores BusinessValueScore[]
+  seoOpportunityScores SEOOpportunityScore[]
+  pagePriorities      PagePriority[]
+  recommendationDecisions RecommendationDecision[]
+  dailyMissions       DailyMission[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -686,8 +705,7 @@ model PageClassification {
   signals          PageSignals?
   businessValue    BusinessValueScore?
   seoOpportunity   SEOOpportunityScore?
-  priority         PagePriority?
-  
+
   @@unique([projectId, pageUrl])
   @@index([organizationId])
   @@index([projectId])
@@ -861,23 +879,24 @@ model PagePriority {
   id               String   @id @default(cuid())
   organizationId   String
   projectId        String
+  auditId          String
   pageUrl          String
 
   // Component scores
-  businessValue    Int      // 0-100
-  seoOpportunity   Int      // 0-100
+  businessValueScore    Int      // 0-100
+  seoOpportunityScore   Int      // 0-100
 
   // Weighted priority
   priorityScore    Int      // 0-100
-  businessValueWeight Float @default(0.60)
-  seoOpportunityWeight Float @default(0.40)
+  businessWeight Float @default(0.60)
+  seoWeight Float @default(0.40)
 
   // Ranking
   priorityRank     Int      // position among all pages
-  percentile       Int      // 0-100
+  percentile       Float    // 0-100
 
   // Explainability
-  explanation      Json     // {why, factors, opportunities}
+  explainability   Json?     // {businessValueDriver, seoOpportunityDriver, combinedRationale, whyThisPage, whyNow, keyFactors, risks}
   summary          String
 
   calculatedAt     DateTime @default(now())
@@ -885,11 +904,11 @@ model PagePriority {
 
   organization     Organization @relation("PagePriorities", fields: [organizationId], references: [id], onDelete: Cascade)
   project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
 
-  @@unique([projectId, pageUrl])
+  @@unique([auditId, pageUrl])
   @@index([organizationId])
   @@index([projectId])
+  @@index([auditId])
   @@index([priorityScore])
   @@index([priorityRank])
 }

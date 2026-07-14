@@ -49,20 +49,6 @@ export async function GET(request: NextRequest) {
         projectId,
         organizationId,
       },
-      include: {
-        page: {
-          select: {
-            id: true,
-            url: true,
-            title: true,
-            status: true,
-            contentLength: true,
-            internalLinks: true,
-            inboundCount: true,
-            pageSpeedScore: true,
-          },
-        },
-      },
       orderBy,
       take: limit,
       skip: offset,
@@ -83,9 +69,7 @@ export async function GET(request: NextRequest) {
         : null;
 
       return {
-        pageId: p.pageId,
-        url: p.page?.url,
-        title: p.page?.title,
+        pageUrl: p.pageUrl,
         businessValueScore: p.businessValueScore,
         seoOpportunityScore: p.seoOpportunityScore,
         priorityScore: p.priorityScore,
@@ -202,7 +186,7 @@ export async function POST(request: NextRequest) {
         recommendationType,
         businessValue: 60,
         seoOpportunity: 70,
-        expectedBusinessReturn: JSON.stringify(expectedReturn),
+        expectedBusinessReturn: expectedReturn as any,
         difficulty: 5,
         riskLevel: 'Medium',
         estimatedTime: timeToWin.expectedDays * 480, // Convert to minutes (8 hours per day)
@@ -212,6 +196,10 @@ export async function POST(request: NextRequest) {
         whyThisPage: 'Page has improvement potential',
         whyThisPriority: 'Aligns with business priorities',
         confidence: 0.75,
+        dataSupporting: {
+          timelineRealistic: timeToWin,
+          expectedGain: expectedReturn,
+        } as any,
       },
     });
 
