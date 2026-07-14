@@ -651,3 +651,351 @@ model Recommendation_Legacy {
   @@index([auditId])
   @@index([severity])
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DECISION ENGINE
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PageClassification {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  pageUrl          String
+
+  // Classification results
+  classifications  Json     // [{type: "ServicePage", confidence: 0.96, signals: [...]}]
+  primaryClassification String
+  confidenceScore  Float    // 0-1
+  
+  // Classification signals
+  urlPattern       String?
+  hasSchema        String[]
+  hasForm          Boolean  @default(false)
+  ctaButtons       String[]
+  navigationLevel  String?  // "main", "secondary", "footer"
+  internalLinkCount Int     @default(0)
+  
+  // Manual override
+  manualClassification String?
+  
+  classifiedAt     DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  organization     Organization @relation("PageClassifications", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  signals          PageSignals?
+  businessValue    BusinessValueScore?
+  seoOpportunity   SEOOpportunityScore?
+  priority         PagePriority?
+  
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([primaryClassification])
+}
+
+model PageSignals {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  pageUrl          String
+
+  // GA4 Signals
+  ga4_monthlyVisitors Int   @default(0)
+  ga4_monthlyConversions Int @default(0)
+  ga4_conversionRate Float  @default(0)
+  ga4_conversionValue Float @default(0)
+  ga4_30dayTrend   Float    @default(0)
+  ga4_lastUpdated  DateTime?
+
+  // GSC Signals
+  gsc_monthlyImpressions Int   @default(0)
+  gsc_monthlyClicks Int         @default(0)
+  gsc_ctr          Float        @default(0)
+  gsc_avgPosition  Float        @default(0)
+  gsc_industryAvgCtr Float      @default(0)
+  gsc_30dayTrend   Float        @default(0)
+  gsc_lastUpdated  DateTime?
+
+  // Crawl Signals
+  crawl_status     Int           @default(0)
+  crawl_title      String?
+  crawl_metaDescription String?
+  crawl_h1         String?
+  crawl_contentLength Int        @default(0)
+  crawl_internalLinks Int        @default(0)
+  crawl_inboundCount Int         @default(0)
+  crawl_hasCanonical Boolean     @default(false)
+  crawl_hasNoindex Boolean       @default(false)
+  crawl_schemaTypes String[]
+  crawl_coreWebVitals Json?
+  crawl_mobileUsable Boolean     @default(true)
+  crawl_lastCrawled DateTime?
+
+  // Technical Signals
+  technical_issueCount Int @default(0)
+  technical_criticalIssues Int @default(0)
+  technical_score Int @default(0)
+
+  // Content Signals
+  content_score    Int    @default(0)
+  content_daysOld  Int    @default(0)
+  content_lastUpdated DateTime?
+
+  // Schema Signals
+  schema_score     Int    @default(0)
+  schema_hasLocalBusiness Boolean @default(false)
+  schema_hasService Boolean @default(false)
+  schema_hasFAQ    Boolean @default(false)
+  schema_completeness Float @default(0)
+
+  // Business Signals
+  business_strategicImportance Int?
+  business_manualPriority String?  // "MISSION_CRITICAL", "HIGH", "NORMAL", "IGNORE"
+  business_revenuePotential Float?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("PageSignals", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([ga4_30dayTrend])
+  @@index([gsc_avgPosition])
+}
+
+model BusinessValueScore {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  pageUrl          String
+
+  // Component scores (0-100)
+  revenueContribution Int
+  conversionVolume Int
+  conversionRate   Int
+  trafficVolume    Int
+  strategicImportance Int
+  navigationProminence Int
+  internalAuthority Int
+  trend            Int     // -50 to +50
+  manualPriority   Int
+  businessTypeWeight Float @default(1.0)
+
+  // Weights used
+  weightRevenue    Float   @default(0.40)
+  weightConversions Float  @default(0.25)
+  weightStrategic  Float   @default(0.20)
+  weightNavigation Float   @default(0.10)
+  weightAuthority  Float   @default(0.05)
+
+  // Final score
+  businessValueScore Int    // 0-100
+  scoreExplanation Json     // [{factor, points, reason}]
+
+  businessMode     String?  @default("general")
+
+  calculatedAt     DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("BusinessValueScores", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([businessValueScore])
+}
+
+model SEOOpportunityScore {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  pageUrl          String
+
+  // Component scores (0-100)
+  rankingGap       Int
+  ctrGap           Int
+  impressionVolume Int
+  schemaGaps       Int
+  internalLinking  Int
+  indexability     Int
+  coreWebVitals    Int
+  contentFreshness Int
+  backlinks        Int
+  duplicateContent Int
+
+  // Weights used
+  weightRanking    Float   @default(0.30)
+  weightCtr        Float   @default(0.25)
+  weightImpressions Float  @default(0.20)
+  weightSchema     Float   @default(0.15)
+  weightContentFresh Float @default(0.10)
+
+  // Final score
+  seoOpportunityScore Int   // 0-100
+  scoreExplanation Json    // [{factor, points, reason}]
+
+  // Opportunities
+  opportunities    String[]
+
+  calculatedAt     DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("SEOOpportunityScores", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([seoOpportunityScore])
+}
+
+model PagePriority {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  pageUrl          String
+
+  // Component scores
+  businessValue    Int      // 0-100
+  seoOpportunity   Int      // 0-100
+
+  // Weighted priority
+  priorityScore    Int      // 0-100
+  businessValueWeight Float @default(0.60)
+  seoOpportunityWeight Float @default(0.40)
+
+  // Ranking
+  priorityRank     Int      // position among all pages
+  percentile       Int      // 0-100
+
+  // Explainability
+  explanation      Json     // {why, factors, opportunities}
+  summary          String
+
+  calculatedAt     DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("PagePriorities", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([priorityScore])
+  @@index([priorityRank])
+}
+
+model RecommendationDecision {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  pageUrl          String
+  recommendationType String
+
+  // Scoring
+  businessValue    Int
+  seoOpportunity   Int
+  expectedBusinessReturn Json
+  difficulty       Int      // 1-10
+  riskLevel        String   // "Very Low", "Low", "Medium", "High", "Very High"
+  riskExplanation  String?
+  estimatedTime    Int      // minutes
+  timeToWin        String   // "Immediate", "Short Term", etc
+  dependencies     String[]
+
+  // Explainability
+  whyThis          String
+  whyNow           String
+  whyThisPage      String
+  whyThisPriority  String
+  confidence       Float    // 0-1
+  dataSupporting   Json
+
+  // Prediction & verification
+  prediction       Json?
+  deployment       DateTime?
+  actualResult     Json?
+  variance         Float?
+  verifiedAt       DateTime?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("RecommendationDecisions", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl, recommendationType])
+  @@index([organizationId])
+  @@index([projectId])
+}
+
+model DailyMission {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  date             DateTime @default(now())
+
+  // Selected recommendation
+  pageUrl          String
+  recommendationType String
+  
+  // Context
+  reasoning        String
+  expectedReturn   Json
+  estimatedTime    Int
+  difficulty       Int
+
+  // Status
+  status           String   @default("active")  // "active", "completed", "skipped"
+  completedAt      DateTime?
+  actualTime       Int?
+  actualResult     Json?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("DailyMissions", fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, date])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+}
+
+model BusinessContext {
+  id               String   @id @default(cuid())
+  organizationId   String   @unique
+
+  // Business mode
+  businessMode     String   @default("general")
+
+  // Weighting preferences
+  businessValueWeights Json?
+  seoOpportunityWeights Json?
+  priorityWeights  Json?
+
+  // Business priorities
+  highestValueServices String[]
+  highestValueLocations String[]
+  primaryConversionGoal String?
+  secondaryConversionGoal String?
+
+  // Constraints
+  maxDeploymentsPerDay Int @default(5)
+  requiresManualApproval Boolean @default(true)
+  autoApproveRiskLevel String?
+
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation("BusinessContext", fields: [organizationId], references: [id], onDelete: Cascade)
+}
