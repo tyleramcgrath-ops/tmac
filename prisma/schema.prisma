@@ -82,6 +82,9 @@ model Project {
   // Action center
   workItems   WorkItem[]
 
+  // Competitor intelligence
+  competitors Competitor[]
+
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
@@ -420,3 +423,132 @@ model GoogleAnalytics4Metric {
   @@index([sessions])
   @@index([conversions])
 }
+
+// Competitor stores competitor domain and metadata
+model Competitor {
+  id                String   @id @default(cuid())
+  projectId         String
+  domain            String
+  displayName       String
+  industry          String?
+  notes             String?
+  monitoringStatus  String   @default("active") // active, paused, archived
+  crawlFrequency    Int      @default(7)       // days between crawls
+
+  // Last sync timestamps
+  lastCrawl         DateTime?
+  lastComparison    DateTime?
+
+  // Metadata
+  dateAdded         DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  project           Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshots         CompetitorSnapshot[]
+  changes           CompetitorChange[]
+  opportunities     CompetitorOpportunity[]
+
+  @@unique([projectId, domain])
+  @@index([projectId])
+  @@index([monitoringStatus])
+  @@index([lastCrawl])
+}
+
+// CompetitorSnapshot stores a point-in-time crawl of competitor
+model CompetitorSnapshot {
+  id            String   @id @default(cuid())
+  competitorId  String
+
+  // Crawl data (stored as JSON for flexibility)
+  pageCount     Int      @default(0)
+  issueCount    Int      @default(0)
+  technicalScore Int     @default(0)
+  contentScore  Int      @default(0)
+  schemaScore   Int      @default(0)
+
+  // Page-level snapshots (JSON array of {url, title, meta, h1, canonical, schema, etc})
+  pages         String?  // JSON array of page snapshots
+
+  // Metadata
+  crawledAt     DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  competitor    Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+
+  @@index([competitorId])
+  @@index([crawledAt])
+}
+
+// CompetitorChange represents a detected change between snapshots
+model CompetitorChange {
+  id            String   @id @default(cuid())
+  competitorId  String
+
+  // Change metadata
+  type          String   // newPages, removedPages, titleChanges, metaChanges, h1Changes, canonicalChanges, schemaChanges, linkingChanges, robotsChanges, sitemapChanges, contentExpansion, etc
+  severity      String   @default("medium") // critical, high, medium, low
+
+  // Change details
+  description   String   // Human-readable summary
+  count         Int      @default(1)        // How many items changed
+
+  // Optional: affected pages (JSON array of URLs or page objects)
+  affectedPages String?  // JSON array of URLs or detailed page data
+
+  // Impact assessment
+  impact        String?  // "competitive_threat", "opportunity", "neutral"
+  impactReason  String?  // Why this matters
+
+  // Timeline
+  detectedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  competitor    Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+
+  @@index([competitorId])
+  @@index([detectedAt])
+  @@index([severity])
+  @@index([type])
+}
+
+// CompetitorOpportunity stores actionable insights from competitor changes
+model CompetitorOpportunity {
+  id            String   @id @default(cuid())
+  competitorId  String
+
+  // What changed
+  changeType    String   // newPages, contentExpansion, schema, linkingChanges, etc
+  title         String   // "Competitor added 6 new pages"
+  description   String   // Full explanation
+
+  // Why it matters
+  competitive_threat Boolean @default(false)
+  opportunity   Boolean @default(false)
+
+  // Recommended action
+  recommendedAction String?  // What user should do
+  actionType    String?  // "create_cluster", "add_schema", "improve_linking", etc
+
+  // Impact estimates
+  estimatedTraffic Int?      // Potential traffic impact
+  estimatedDifficulty String? // easy, medium, hard
+  estimatedTime   Int?      // hours to implement
+
+  // Status
+  dismissed     Boolean @default(false)
+  implementedAt DateTime?
+
+  // Timeline
+  detectedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  competitor    Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+
+  @@index([competitorId])
+  @@index([detectedAt])
+  @@index([dismissed])
+}
+
+// Extend Project to include competitors
+// (Project model above already has this relationship in a later commit)
