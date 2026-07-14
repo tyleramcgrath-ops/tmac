@@ -27,8 +27,10 @@ import {
   Wand2,
   Rocket,
   RotateCcw,
+  Lightbulb,
   type LucideIcon,
 } from 'lucide-react'
+import { GrowthOpportunity } from '@/components/growth-opportunity'
 
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
@@ -36,7 +38,7 @@ import {
 
 type Severity = 'critical' | 'warning' | 'info'
 interface FixItem { severity: Severity; category: string; title: string }
-interface PageResult {
+export interface PageResult {
   url: string
   status: number
   overall: number
@@ -50,7 +52,7 @@ interface PageResult {
   fixes: FixItem[]
 }
 interface Issue { severity: Severity; category: string; title: string; affectedPages: number }
-interface Aggregate {
+export interface Aggregate {
   siteScore: number
   categories: { technical: number; content: number; schema: number; ai: number }
   severityTotals: { critical: number; warning: number; info: number }
@@ -75,9 +77,10 @@ interface CrawlResponse {
   error?: string
 }
 
-type SectionId = 'overview' | 'audit' | 'content' | 'rankings' | 'backlinks' | 'wordpress' | 'reports'
+type SectionId = 'overview' | 'audit' | 'content' | 'rankings' | 'backlinks' | 'wordpress' | 'reports' | 'growth-opportunity'
 const SECTIONS: { id: SectionId; label: string; icon: LucideIcon }[] = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { id: 'growth-opportunity', label: 'Growth Opportunity', icon: Lightbulb },
   { id: 'audit', label: 'Site Audit', icon: Radar },
   { id: 'content', label: 'Content', icon: FileText },
   { id: 'rankings', label: 'Rankings', icon: LineChart },
@@ -306,6 +309,7 @@ export default function AppDashboard() {
               </div>
             )}
             {section === 'overview' && <Overview agg={agg} pages={pages} status={status} onRun={runAudit} pageSpeed={pageSpeed} crawled={progress.crawled} />}
+            {section === 'growth-opportunity' && <GrowthOpportunity pages={pages} agg={agg} domain={domain} />}
             {section === 'audit' && <Audit agg={agg} pages={pages} onSelect={setSelected} />}
             {section === 'content' && <Content pages={pages} />}
             {section === 'rankings' && <Rankings domain={domain} />}
