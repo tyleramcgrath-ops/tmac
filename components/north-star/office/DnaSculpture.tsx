@@ -115,6 +115,7 @@ export function DnaSculpture({
   pagesChecked,
   selectedKey,
   activeKey,
+  investigating = false,
   onSelect,
   onAskCompass,
 }: {
@@ -122,6 +123,7 @@ export function DnaSculpture({
   pagesChecked: number
   selectedKey: string | null
   activeKey: string | null
+  investigating?: boolean
   onSelect: (key: string) => void
   onAskCompass?: () => void
 }) {
@@ -131,10 +133,11 @@ export function DnaSculpture({
   const [dims, setDims] = useState({ w: 1100, h: 560 })
   const regionsRef = useRef<Region[]>([])
   const rungRef = useRef<RungParticle[]>([])
-  const stateRef = useRef({ selectedKey, hoveredKey: null as string | null, activeKey })
+  const stateRef = useRef({ selectedKey, hoveredKey: null as string | null, activeKey, investigating })
   stateRef.current.selectedKey = selectedKey
   stateRef.current.hoveredKey = hoveredKey
   stateRef.current.activeKey = activeKey
+  stateRef.current.investigating = investigating
 
   // Responsive sizing
   useEffect(() => {
@@ -179,22 +182,21 @@ export function DnaSculpture({
     canvas.style.height = `${dims.h}px`
     ctx.scale(dpr, dpr)
 
-    // Cosmic backdrop, generated once per size: a parallax starfield and a soft
-    // two-tone nebula haze in the brand's warm/cool palette. Coordinates are
-    // normalized (0..1) so they scale with the canvas.
-    const stars = Array.from({ length: 180 }, () => ({
+    // A few faint dust motes drifting in the volumetric light — the only
+    // ambient particulate in the architectural room (no starfield).
+    const motes = Array.from({ length: 26 }, () => ({
       x: Math.random(), y: Math.random(),
-      s: Math.random() * Math.random() * 1.6 + 0.2,
-      a: Math.random() * 0.5 + 0.08,
+      s: Math.random() * 0.9 + 0.3,
+      a: Math.random() * 0.16 + 0.03,
       ph: Math.random() * PI2,
-      tw: 0.4 + Math.random() * 0.9,
-      warm: Math.random() < 0.22,
     }))
-    const nebula: Array<{ x: number; y: number; r: number; c: [number, number, number]; a: number }> = [
-      { x: 0.30, y: 0.26, r: 0.60, c: [201, 168, 119], a: 0.10 },
-      { x: 0.72, y: 0.60, r: 0.62, c: [92, 118, 176], a: 0.09 },
-      { x: 0.52, y: 0.90, r: 0.50, c: [150, 120, 92], a: 0.07 },
-    ]
+
+    // Evidence flow: while a check runs, discrete particles of evidence rise up
+    // through the room and converge into the molecule — the signature moment.
+    // No loading bars; the office is visibly gathering understanding.
+    const evidence: Array<{ x: number; y: number; tx: number; ty: number; t: number; life: number; warm: boolean }> = []
+    let spawnAcc = 0
+    let lastT = 0
 
     let raf = 0
 
@@ -206,48 +208,81 @@ export function DnaSculpture({
       const cy = (g.topY + g.botY) / 2
       const maxD = Math.max(w, h)
 
+      // The DNA is the light source: aggregate understanding drives how warm and
+      // how bright the whole room reads. Growth → warmer, brighter, more complete.
+      let uSum = 0
+      regions.forEach((r) => {
+        uSum += r.understanding === 'well-understood' ? 1 : r.understanding === 'partially-understood' ? 0.5 : r.understanding === 'needs-verification' ? 0.2 : 0
+      })
+      const understanding = regions.length ? uSum / regions.length : 0
+      const warmLift = 0.35 + 0.65 * understanding // 0..1 warmth of the room light
+
       ctx!.clearRect(0, 0, w, h)
-      // deep-space base: near-black with a faint vertical warm lift
+      // dark architectural glass: cool graphite, faintly warmed by the DNA's light
+      const gTop = Math.round(12 + 4 * warmLift), gMid = Math.round(15 + 6 * warmLift), gWarm = Math.round(10 + 10 * warmLift)
       const base = ctx!.createLinearGradient(0, 0, 0, h)
-      base.addColorStop(0, '#070709')
-      base.addColorStop(0.55, '#0a0a0e')
-      base.addColorStop(1, '#08070b')
+      base.addColorStop(0, `rgb(${gTop},${gTop + 1},${gTop + 3})`)
+      base.addColorStop(0.5, `rgb(${gMid},${gMid + 1},${gMid + 4})`)
+      base.addColorStop(1, `rgb(${gWarm - 2},${gWarm - 3},${gWarm})`)
       ctx!.fillStyle = base
       ctx!.fillRect(0, 0, w, h)
 
-      // nebula haze (additive, very soft)
-      ctx!.globalCompositeOperation = 'lighter'
-      nebula.forEach((n) => {
-        const drift = reduce ? 0 : Math.sin(time / 9000 + n.x * 6) * 0.015
-        const nx = (n.x + drift) * w, ny = n.y * h, nr = n.r * maxD
-        const ng = ctx!.createRadialGradient(nx, ny, 0, nx, ny, nr)
-        ng.addColorStop(0, `rgba(${n.c[0]},${n.c[1]},${n.c[2]},${n.a})`)
-        ng.addColorStop(1, 'rgba(0,0,0,0)')
-        ctx!.fillStyle = ng
-        ctx!.fillRect(0, 0, w, h)
-      })
-      // starfield
-      stars.forEach((st) => {
-        const tw = reduce ? 0.8 : 0.55 + 0.45 * Math.sin(time / 900 * st.tw + st.ph)
-        const a = st.a * tw
-        ctx!.fillStyle = st.warm ? `rgba(224,206,168,${a})` : `rgba(196,206,224,${a})`
-        ctx!.beginPath()
-        ctx!.arc(st.x * w, st.y * h, st.s, 0, PI2)
-        ctx!.fill()
-      })
-      ctx!.globalCompositeOperation = 'source-over'
-      // vignette to focus the molecule
-      const vig = ctx!.createRadialGradient(g.cx, cy, maxD * 0.18, g.cx, cy, maxD * 0.72)
-      vig.addColorStop(0, 'rgba(0,0,0,0)')
-      vig.addColorStop(1, 'rgba(0,0,0,0.55)')
-      ctx!.fillStyle = vig
-      ctx!.fillRect(0, 0, w, h)
-
-      const breathe = reduce ? 0.5 : Math.sin(time / 1800) * 0.5 + 0.5
-      const rot = reduce ? 0 : time * 0.00022
+      const breathe = reduce ? 0.5 : Math.sin(time / 2600) * 0.5 + 0.5
+      // idle motion reduced ~50%: when nothing changes the molecule is nearly still
+      const rot = reduce ? 0 : time * 0.00011
       const { selectedKey: sel, hoveredKey: hov, activeKey: act } = stateRef.current
       const anyFocus = sel || hov
       const phaseAt = (y: number) => ((y - g.topY) / g.span) * g.turns * PI2 + rot
+
+      // volumetric light pouring down from the core (the DNA lights the room)
+      ctx!.globalCompositeOperation = 'lighter'
+      const coreGlow = ctx!.createRadialGradient(g.cx, g.topY, 0, g.cx, g.topY, maxD * 0.62)
+      const lr = Math.round(150 + 90 * warmLift), lg2 = Math.round(130 + 55 * warmLift), lb = Math.round(96 + 20 * warmLift)
+      coreGlow.addColorStop(0, `rgba(${lr},${lg2},${lb},${0.10 + 0.12 * understanding + 0.03 * breathe})`)
+      coreGlow.addColorStop(0.5, `rgba(${lr},${lg2},${lb},${0.03 + 0.04 * understanding})`)
+      coreGlow.addColorStop(1, 'rgba(0,0,0,0)')
+      ctx!.fillStyle = coreGlow
+      ctx!.fillRect(0, 0, w, h)
+      // two soft volumetric shafts angling down from the core
+      ;[-0.5, 0.5].forEach((dir) => {
+        ctx!.save()
+        const grad = ctx!.createLinearGradient(g.cx, g.topY, g.cx + dir * w * 0.5, h)
+        grad.addColorStop(0, `rgba(${lr},${lg2},${lb},${0.05 + 0.05 * understanding})`)
+        grad.addColorStop(1, 'rgba(0,0,0,0)')
+        ctx!.fillStyle = grad
+        ctx!.beginPath()
+        ctx!.moveTo(g.cx - 14, g.topY)
+        ctx!.lineTo(g.cx + 14, g.topY)
+        ctx!.lineTo(g.cx + dir * w * 0.42 + 90, h)
+        ctx!.lineTo(g.cx + dir * w * 0.42 - 90, h)
+        ctx!.closePath()
+        ctx!.fill()
+        ctx!.restore()
+      })
+      // drifting dust motes catching the light
+      motes.forEach((m) => {
+        const dy = reduce ? 0 : (Math.sin(time / 5200 + m.ph) * 0.02)
+        const mx = m.x * w, my = ((m.y + dy) % 1) * h
+        ctx!.fillStyle = `rgba(${lr},${lg2},${lb},${m.a * (0.5 + 0.5 * understanding)})`
+        ctx!.beginPath()
+        ctx!.arc(mx, my, m.s, 0, PI2)
+        ctx!.fill()
+      })
+      ctx!.globalCompositeOperation = 'source-over'
+
+      // reflective smoked-glass floor: a soft mirror sheen beneath the molecule
+      const floor = ctx!.createLinearGradient(0, g.botY, 0, h)
+      floor.addColorStop(0, `rgba(${lr},${lg2},${lb},${0.05 * understanding})`)
+      floor.addColorStop(1, 'rgba(0,0,0,0)')
+      ctx!.fillStyle = floor
+      ctx!.fillRect(0, g.botY, w, h - g.botY)
+
+      // smoked-metal vignette to hold the eye on the molecule
+      const vig = ctx!.createRadialGradient(g.cx, cy, maxD * 0.16, g.cx, cy, maxD * 0.72)
+      vig.addColorStop(0, 'rgba(0,0,0,0)')
+      vig.addColorStop(1, 'rgba(4,5,7,0.62)')
+      ctx!.fillStyle = vig
+      ctx!.fillRect(0, 0, w, h)
 
       // Two solid twisting ribbons — a warm gold and a cool platinum — that
       // swell face-on and pinch to a thin edge at each crossover, exactly like
@@ -281,7 +316,7 @@ export function DnaSculpture({
           const hw = 2 + 9.5 * Math.abs(Math.cos(ph)) // wide face-on, pinched at the crossover
           const cur = { x, yt: y - hw * 0.32, yb: y + hw * 0.32, z, depth }
           if (prev) {
-            const shimmer = reduce ? 1 : 0.85 + 0.15 * Math.sin(time / 650 + f * 8)
+            const shimmer = reduce ? 1 : 0.92 + 0.08 * Math.sin(time / 1100 + f * 8)
             const a = (0.42 + 0.5 * cur.depth) * shimmer * dimAll
             const cr = Math.round(FAR[0] + (near[0] - FAR[0]) * cur.depth)
             const cg = Math.round(FAR[1] + (near[1] - FAR[1]) * cur.depth)
@@ -386,6 +421,50 @@ export function DnaSculpture({
         ctx!.beginPath()
         ctx!.arc(g.cx, g.topY, 8, 0, PI2)
         ctx!.fill()
+      }
+
+      // ── evidence flow: particles rising into the molecule during a check ──
+      const dt = lastT ? Math.min(time - lastT, 48) : 16
+      lastT = time
+      if (!reduce && stateRef.current.investigating) {
+        spawnAcc += dt
+        if (spawnAcc > 360) {
+          spawnAcc = 0
+          // aim at the strand currently being examined, else the core
+          const target = regions.find((r) => r.key === stateRef.current.activeKey)
+          const ty = target ? target.y : g.topY
+          evidence.push({
+            x: g.cx + (Math.random() - 0.5) * g.amp * 2.2,
+            y: g.botY + 24,
+            tx: g.cx + (Math.random() - 0.5) * g.amp * 0.5,
+            ty,
+            t: 0,
+            life: 1500 + Math.random() * 700,
+            warm: Math.random() < 0.6,
+          })
+        }
+      }
+      if (evidence.length) {
+        ctx!.globalCompositeOperation = 'lighter'
+        for (let i = evidence.length - 1; i >= 0; i--) {
+          const e = evidence[i]
+          e.t += dt / e.life
+          if (e.t >= 1) { evidence.splice(i, 1); continue }
+          const ease = e.t * e.t * (3 - 2 * e.t)
+          const x = e.x + (e.tx - e.x) * ease
+          const y = e.y + (e.ty - e.y) * ease
+          const fade = e.t < 0.85 ? 1 : (1 - e.t) / 0.15
+          const col = e.warm ? '201,168,119' : '150,196,214'
+          const r = 1.6 + 1.4 * (1 - e.t)
+          const ggrad = ctx!.createRadialGradient(x, y, 0, x, y, r * 4)
+          ggrad.addColorStop(0, `rgba(${col},${0.5 * fade})`)
+          ggrad.addColorStop(1, 'rgba(0,0,0,0)')
+          ctx!.fillStyle = ggrad
+          ctx!.beginPath(); ctx!.arc(x, y, r * 4, 0, PI2); ctx!.fill()
+          ctx!.fillStyle = `rgba(${col},${0.9 * fade})`
+          ctx!.beginPath(); ctx!.arc(x, y, r, 0, PI2); ctx!.fill()
+        }
+        ctx!.globalCompositeOperation = 'source-over'
       }
 
       if (!reduce) raf = requestAnimationFrame(paint)

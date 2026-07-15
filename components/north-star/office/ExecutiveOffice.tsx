@@ -80,6 +80,13 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const currentStep = investigating ? stepsRef.current[Math.min(stepIndex, stepsRef.current.length) - 1] : null
   const activeDnaKey = currentStep ? STEP_TO_DNA[currentStep.id] ?? null : null
 
+  // The DNA is the room's light source: aggregate understanding warms and
+  // brightens the whole office. One number, computed from the sculpture's
+  // state, drives the ambient lighting everywhere else.
+  const understanding = scenario.digitalDna.length
+    ? scenario.digitalDna.reduce((s, a) => s + (a.understanding === 'well-understood' ? 1 : a.understanding === 'partially-understood' ? 0.5 : a.understanding === 'needs-verification' ? 0.2 : 0), 0) / scenario.digitalDna.length
+    : 0
+
   const quietMessage = !investigating && lastReveal && ['quiet', 'failed', 'duplicate', 'insufficient'].includes(lastReveal)
     ? lastReveal === 'quiet' ? `Checked ${scenario.pagesChecked} pages — nothing rose to the level of your attention.`
     : lastReveal === 'failed' ? `${scenario.business.domain} didn't respond. I'll try again automatically.`
@@ -88,7 +95,15 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
     : null
 
   return (
-    <div className="office-stage" id="main-content">
+    <div
+      className="office-stage"
+      id="main-content"
+      data-investigating={investigating || undefined}
+      style={{ ['--office-understanding' as string]: understanding.toFixed(3) }}
+    >
+      {/* Ambient room light emitted by the DNA — warmer and brighter as
+          understanding grows. Purely presentational, never intercepts input. */}
+      <div className="office-ambient" aria-hidden="true" />
       <div className="office-hud">
         <div className="office-brand"><CompassIcon className="h-4 w-4" style={{ color: 'var(--office-brass)' }} aria-hidden="true" /> North Star</div>
         <div className="office-status">
@@ -111,6 +126,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
           pagesChecked={scenario.pagesChecked}
           selectedKey={selectedDnaKey}
           activeKey={activeDnaKey}
+          investigating={investigating}
           onSelect={(k) => setSelectedDnaKey(k === selectedDnaKey ? null : k)}
           onAskCompass={() => openCompass('digital-dna')}
         />
@@ -157,6 +173,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
           pagesChecked={scenario.pagesChecked}
           selectedKey={selectedDnaKey}
           activeKey={activeDnaKey}
+          investigating={investigating}
           onSelect={(k) => setSelectedDnaKey(k === selectedDnaKey ? null : k)}
         />
       </div>
