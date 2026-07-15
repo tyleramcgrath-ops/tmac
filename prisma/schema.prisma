@@ -42,6 +42,14 @@ model User {
   campaignApprovals ExecutionCampaign[]
   executionAuditLogs ExecutionAuditLog[]
 
+  // Autonomous Operations (Phase 10.1)
+  autonomyEnabled   AutonomyMode[] @relation("autonomy_enabled")
+  autonomyDisabled  AutonomyMode[] @relation("autonomy_disabled")
+  stopsActivated    EmergencyStop[] @relation("stop_activated")
+  stopsDeactivated  EmergencyStop[] @relation("stop_deactivated")
+  autonomyPolicies  AutonomyPolicy[]
+  autonomyDecisions AutonomyDecisionLog[]
+
   @@index([email])
   @@index([createdAt])
 }
@@ -185,6 +193,13 @@ model Organization {
   rollbackSnapshots     ExecutionRollbackSnapshot[]
   executionAuditLogs    ExecutionAuditLog[]
 
+  // Autonomous Operations (Phase 10.1)
+  autonomyModes         AutonomyMode[]
+  emergencyStops        EmergencyStop[] @relation("organization_stops")
+  autonomyPolicies      AutonomyPolicy[]
+  autonomyDecisionLogs  AutonomyDecisionLog[]
+  autonomyMetrics       AutonomyMetrics[]
+
   @@index([slug])
   @@index([createdAt])
 }
@@ -327,6 +342,13 @@ model Project {
   executionJobs         ExecutionJob[]
   executionCampaigns    ExecutionCampaign[]
   executionAuditLogs    ExecutionAuditLog[]
+
+  // Autonomous Operations (Phase 10.1)
+  autonomyModes        AutonomyMode[]
+  emergencyStops       EmergencyStop[] @relation("project_stops")
+  autonomyPolicies     AutonomyPolicy[]
+  autonomyDecisionLogs AutonomyDecisionLog[]
+  autonomyMetrics      AutonomyMetrics[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -2787,6 +2809,277 @@ model ExecutionAuditLog {
   @@index([operation])
   @@index([actor])
   @@index([timestamp])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 10.1: AUTONOMOUS OPERATIONS VALIDATION & SAFETY
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Autonomy mode for a project (fail-closed by default)
+model AutonomyMode {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+
+  mode              String   @default("disabled") // "disabled" | "simulation_only" | "approval_required" | "low_risk_autonomy"
+  enabledAt         DateTime?
+  enabledByUserId   String?
+  disabledAt        DateTime?
+  disabledByUserId  String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  enabledByUser     User?        @relation("autonomy_enabled", fields: [enabledByUserId], references: [id], onDelete: SetNull)
+  disabledByUser    User?        @relation("autonomy_disabled", fields: [disabledByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, projectId])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([mode])
+}
+
+/// Emergency stop (global, organization, or project level)
+model EmergencyStop {
+  id                String   @id @default(cuid())
+  organizationId    String?
+  projectId         String?
+
+  level             String   // "global" | "organization" | "project"
+  reason            String
+  activatedAt       DateTime @default(now())
+  activatedByUserId String
+  deactivatedAt     DateTime?
+  deactivatedByUserId String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project?      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  activatedByUser   User          @relation("stop_activated", fields: [activatedByUserId], references: [id], onDelete: Restrict)
+  deactivatedByUser User?         @relation("stop_deactivated", fields: [deactivatedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([level])
+  @@index([activatedAt])
+}
+
+/// Policy rules for autonomy decisions (hierarchical: global → org → project → recommendation)
+model AutonomyPolicy {
+  id                String   @id @default(cuid())
+  organizationId    String?  // null = global policy
+  projectId         String?  // null = not project-specific
+
+  level             String   // "global" | "organization" | "project"
+  executionType     String   // "missing_schema" | "broken_links" | etc., or "*" for all
+
+  // Permission rules
+  allowAutonomous   Boolean  @default(false)
+  requireApproval   Boolean  @default(true)
+  minRiskThreshold  String   @default("very_low") // "very_low" | "low" | "medium" | "high" | "critical"
+  minConfidence     Float    @default(0.85) // 0.0-1.0
+  dataFreshnessHours Int    @default(24)
+
+  // Operational limits
+  maxChangesPerDay  Int      @default(100)
+  maxPagesPerDay    Int      @default(50)
+  maxConcurrent     Int      @default(10)
+  businessHoursOnly Boolean  @default(false)
+
+  // Restrictions
+  forbiddenPageTypes String[] // JSON array of protected page types
+  requireRollbackSupport Boolean @default(true)
+  requireVerification Boolean @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  createdByUserId   String?
+
+  organization      Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project?      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdByUser     User?         @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([level])
+  @@index([executionType])
+}
+
+/// Safety contract for each execution type (immutable specification of autonomy terms)
+model ExecutionContract {
+  id                String   @id @default(cuid())
+
+  executionType     String   @unique // "missing_schema" | "broken_links" | etc.
+  version           Int      @default(1)
+
+  // Contract terms
+  maxRiskLevel      String   // "very_low" | "low"
+  minConfidence     Float    @default(0.85)
+  dataFreshness     Int      @default(24) // hours
+
+  // Preconditions (all must be true)
+  requiresRollbackSupport Boolean @default(true)
+  requiresVerification Boolean @default(true)
+  requiresWordPressConnection Boolean @default(true)
+
+  // Forbidden scenarios (must not be true)
+  forbiddenPageTypes String[] // JSON array of page types that cannot be modified
+  forbiddenPlugins  String[] // JSON array of incompatible plugins
+  maxBatchSize      Int      @default(10)
+
+  // Rollback and verification methods
+  rollbackMethod    String   // "state_restore" | "api_revert" | etc.
+  verificationMethod String  // "html_parse" | "api_read" | etc.
+  autoRetryCount    Int      @default(3)
+
+  // Mutation scope (what can change)
+  allowedMutations  String[] // JSON array of allowed field changes
+  maxMutationScope  String   // "target_field" | "post_metadata" | etc.
+
+  // Escalation
+  escalateOnFailure Boolean @default(true)
+  escalateOnHighRisk Boolean @default(true)
+
+  activatedAt       DateTime @default(now())
+  retiredAt         DateTime?
+
+  @@index([executionType])
+  @@index([activatedAt])
+}
+
+/// Immutable decision log (every autonomous evaluation recorded here)
+model AutonomyDecisionLog {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+
+  // Candidate information
+  candidateId       String
+  executionType     String
+  recommendationId  String?
+
+  // Policy evaluation
+  globalPolicy      Json
+  organizationPolicy Json?
+  projectPolicy     Json?
+  recommendationPolicy Json?
+
+  // Risk assessment
+  riskLevel         String   // "very_low" | "low" | "medium" | "high" | "critical"
+  riskFactors       Json     // Detailed risk inputs
+  riskScore         Float    // 0.0-1.0
+
+  // Confidence assessment
+  confidence        Float    // 0.0-1.0
+  confidenceFactors Json
+
+  // Data freshness
+  lastDataUpdate    DateTime
+  dataFreshnessHours Int
+
+  // Business context
+  businessContext   Json     // Money-page status, time-of-day, daily change count, etc.
+
+  // Safety conditions
+  rollbackAvailable Boolean  @default(true)
+  verificationAvailable Boolean @default(true)
+  wordPressHealthy  Boolean  @default(true)
+  pluginCompatible  Boolean  @default(true)
+  emergencyStopActive Boolean @default(false)
+
+  // Decision result
+  decision          String   // "approved" | "blocked" | "deferred" | "requires_approval"
+  reason            String   // Detailed explanation
+  decisionMaker     String   // "policy_engine" | "operator" | "user"
+  decidedByUserId   String?
+
+  // Execution plan
+  executionPlan     Json?    // What would be executed
+  verificationPlan  Json?    // How it would be verified
+  rollbackPlan      Json?    // How it would be rolled back
+
+  // Lifecycle
+  executedAt        DateTime?
+  executionResult   String?  // "success" | "verification_failed" | "rollback_failed"
+  executionError    String?
+  verificationResult Json?
+  rollbackResult    String?
+
+  // Outcome tracking
+  outcomeStatus     String   @default("awaiting_data") // "awaiting_data" | "no_change" | "positive" | "negative" | "inconclusive" | "reversed" | "rolled_back"
+  outcomeMetrics    Json?    // CTR, impressions, rankings, etc.
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  decidedByUser     User?        @relation(fields: [decidedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([executionType])
+  @@index([decision])
+  @@index([createdAt])
+  @@index([outcomeStatus])
+}
+
+/// Autonomy quality metrics (aggregated from decision logs)
+model AutonomyMetrics {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String?  // null = organization-level aggregate
+
+  period            String   @default("daily") // "daily" | "weekly" | "monthly"
+  date              DateTime
+
+  // Evaluation metrics
+  evaluationsPerformed Int @default(0)
+  simulatedApprovals Int @default(0)
+  realExecutions    Int @default(0)
+  blockedActions    Int @default(0)
+  approvalRequired  Int @default(0)
+  deferred          Int @default(0)
+
+  // Execution metrics
+  successfulExecutions Int @default(0)
+  verificationFailures Int @default(0)
+  automaticRollbacks Int @default(0)
+  rollbackFailures  Int @default(0)
+  userReversals     Int @default(0)
+
+  // Quality metrics
+  successRate       Float    @default(0.0)
+  verificationFailureRate Float @default(0.0)
+  rollbackRate      Float    @default(0.0)
+  falseApprovalRate Float    @default(0.0)
+  falseRejectionRate Float    @default(0.0)
+
+  // Performance
+  meanExecutionTime Int      @default(0) // milliseconds
+  meanVerificationTime Int   @default(0)
+  meanRollbackTime  Int      @default(0)
+  maxQueueLatency   Int      @default(0)
+
+  // Safety
+  safetyIncidents   Int      @default(0)
+  criticalDefects   Int      @default(0)
+  highDefects       Int      @default(0)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project?     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, projectId, period, date])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([date])
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
