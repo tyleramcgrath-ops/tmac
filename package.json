@@ -13,6 +13,10 @@
     "test:rollback": "node --import tsx lib/execution/__tests__/rollback.test.ts",
     "test:verification": "node --import tsx lib/execution/__tests__/verification.test.ts",
     "test:tenant-isolation": "node --import tsx lib/execution/__tests__/tenant-isolation.test.ts",
+    "test:wordpress-validation": "node --import tsx lib/execution/__tests__/wordpress-validation.test.ts",
+    "docker:up": "docker-compose -f docker-compose.test.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.test.yml down",
+    "docker:logs": "docker-compose -f docker-compose.test.yml logs -f",
     "postinstall": "prisma generate || true"
   },
   "dependencies": {

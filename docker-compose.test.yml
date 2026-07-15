@@ -1,0 +1,145 @@
+version: '3.8'
+
+services:
+  # Clean WordPress (baseline)
+  wordpress-clean:
+    image: wordpress:6.4-php8.2-apache
+    container_name: wp-clean
+    ports:
+      - "8001:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql-clean
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_TABLE_PREFIX: wp_
+    depends_on:
+      - mysql-clean
+    volumes:
+      - wp-clean-data:/var/www/html
+    networks:
+      - test-network
+
+  mysql-clean:
+    image: mysql:8.0
+    container_name: mysql-clean
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-clean-data:/var/lib/mysql
+    networks:
+      - test-network
+
+  # WordPress with Yoast
+  wordpress-yoast:
+    image: wordpress:6.4-php8.2-apache
+    container_name: wp-yoast
+    ports:
+      - "8002:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql-yoast
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_TABLE_PREFIX: wp_
+    depends_on:
+      - mysql-yoast
+    volumes:
+      - wp-yoast-data:/var/www/html
+      - ./test/wordpress/wp-content:/var/www/html/wp-content:ro
+    networks:
+      - test-network
+
+  mysql-yoast:
+    image: mysql:8.0
+    container_name: mysql-yoast
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-yoast-data:/var/lib/mysql
+    networks:
+      - test-network
+
+  # WordPress with Rank Math
+  wordpress-rankmath:
+    image: wordpress:6.4-php8.2-apache
+    container_name: wp-rankmath
+    ports:
+      - "8003:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql-rankmath
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_TABLE_PREFIX: wp_
+    depends_on:
+      - mysql-rankmath
+    volumes:
+      - wp-rankmath-data:/var/www/html
+    networks:
+      - test-network
+
+  mysql-rankmath:
+    image: mysql:8.0
+    container_name: mysql-rankmath
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-rankmath-data:/var/lib/mysql
+    networks:
+      - test-network
+
+  # WordPress with AIOSEO
+  wordpress-aioseo:
+    image: wordpress:6.4-php8.2-apache
+    container_name: wp-aioseo
+    ports:
+      - "8004:80"
+    environment:
+      WORDPRESS_DB_HOST: mysql-aioseo
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_TABLE_PREFIX: wp_
+    depends_on:
+      - mysql-aioseo
+    volumes:
+      - wp-aioseo-data:/var/www/html
+    networks:
+      - test-network
+
+  mysql-aioseo:
+    image: mysql:8.0
+    container_name: mysql-aioseo
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-aioseo-data:/var/lib/mysql
+    networks:
+      - test-network
+
+volumes:
+  wp-clean-data:
+  mysql-clean-data:
+  wp-yoast-data:
+  mysql-yoast-data:
+  wp-rankmath-data:
+  mysql-rankmath-data:
+  wp-aioseo-data:
+  mysql-aioseo-data:
+
+networks:
+  test-network:
+    driver: bridge
