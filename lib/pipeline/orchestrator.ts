@@ -9,6 +9,11 @@ import { calculateDecisionEngine } from './stages/decision-engine'
 import { selectDailyMission } from './stages/mission-selection'
 import { verifyGraph } from './graph/verifier'
 import { retrieveGraphContext, internalLinkOpportunities } from './graph/queries'
+import {
+  planIncrementalRebuild,
+  pruneRemovedPages,
+  persistPageHashes,
+} from './graph/incremental'
 import type { Page } from '@prisma/client'
 
 interface PipelineConfig {
@@ -142,11 +147,22 @@ export async function executePipeline(config: PipelineConfig) {
     await createStageRecord(prisma, run.id, 'knowledge_graph')
     console.log(`[Pipeline] Stage 5/8: Knowledge Graph...`)
 
+    // Plan the graph rebuild — skip unchanged pages when possible, prune
+    // pages that no longer exist in the latest audit.
+    const incrementalPlan = await planIncrementalRebuild({ projectId }, pages)
+    if (incrementalPlan.removedPageUrls.length) {
+      await pruneRemovedPages({ projectId }, incrementalPlan.removedPageUrls)
+    }
+
     const kgResults = await buildKnowledgeGraph(
       { organizationId, projectId },
       entityResults,
       topicResults,
     )
+
+    // Stamp the current content hash on every page node so the next run can
+    // do a fast incremental diff.
+    await persistPageHashes({ projectId }, pages)
 
     // Verify + repair the graph immediately after construction so downstream
     // stages consume a clean graph.
@@ -161,6 +177,14 @@ export async function executePipeline(config: PipelineConfig) {
       data: {
         evidence: JSON.stringify({
           build: kgResults,
+          incremental: {
+            totalPages: incrementalPlan.totalPages,
+            changed: incrementalPlan.changedPageUrls.length,
+            added: incrementalPlan.newPageUrls.length,
+            removed: incrementalPlan.removedPageUrls.length,
+            unchanged: incrementalPlan.unchangedPageUrls.length,
+            fullRebuild: incrementalPlan.fullRebuild,
+          },
           verification: {
             totals: kgVerification.totals,
             findings: kgVerification.findings.length,

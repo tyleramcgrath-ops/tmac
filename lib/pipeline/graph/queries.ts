@@ -1,5 +1,6 @@
 import { getPrismaClient } from '@/lib/db'
 import { EDGE_TYPES, NODE_TYPES } from '@/lib/pipeline/stages/knowledge-graph'
+import { withLatency } from './metrics'
 import type { KnowledgeGraphEdge, KnowledgeGraphNode } from '@prisma/client'
 
 /**
@@ -430,6 +431,10 @@ export interface GraphContext {
 }
 
 export async function retrieveGraphContext(ctx: Ctx): Promise<GraphContext> {
+  return withLatency('retrieveGraphContext', () => retrieveGraphContextImpl(ctx))
+}
+
+async function retrieveGraphContextImpl(ctx: Ctx): Promise<GraphContext> {
   const prisma = getPrismaClient()
   const [nodes, edges, strong, weak, orphans, weakMoney, mEntities, mServices, mLocations, links] =
     await Promise.all([

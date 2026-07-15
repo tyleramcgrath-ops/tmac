@@ -14,3 +14,22 @@ export { calculateDecisionEngine } from './stages/decision-engine'
 export { selectDailyMission } from './stages/mission-selection'
 export * from './graph/queries'
 export { verifyGraph } from './graph/verifier'
+export {
+  explainPageImportance,
+  explainMoneyPage,
+  explainRecommendation,
+  explainWeakestEntities,
+} from './graph/reasoning'
+export { detectClusters } from './graph/clusters'
+export { moneyPageIntelligence, moneyPagePortfolio } from './graph/money-pages'
+export {
+  planIncrementalRebuild,
+  pruneRemovedPages,
+  persistPageHashes,
+  pageContentHash,
+} from './graph/incremental'
+export {
+  withLatency,
+  readLatencyStats,
+  resetLatencyStats,
+} from './graph/metrics'
