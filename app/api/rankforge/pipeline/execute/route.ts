@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 export const maxDuration = 300
 
 export async function POST(request: Request) {
-  return withAuth(async (session, req) => {
+  const handler = await withAuth(async (session, req) => {
     try {
       const prisma = getPrismaClient()
       const body = await req.json()
@@ -76,12 +76,13 @@ export async function POST(request: Request) {
         { status: 500 },
       )
     }
-  })(request)
+  })
+  return handler(request)
 }
 
 // GET endpoint to check pipeline status
 export async function GET(request: Request) {
-  return withAuth(async (session, req) => {
+  const handler = await withAuth(async (session, req) => {
     try {
       const prisma = getPrismaClient()
       const { searchParams } = new URL(req.url)
@@ -117,5 +118,6 @@ export async function GET(request: Request) {
         { status: 500 },
       )
     }
-  })(request)
+  })
+  return handler(request)
 }
