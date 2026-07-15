@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "test": "node --loader tsx lib/execution/__tests__/execution.test.ts",
+    "test:wordpress": "node --loader tsx lib/execution/__tests__/wordpress.integration.test.ts",
+    "test:rollback": "node --loader tsx lib/execution/__tests__/rollback.test.ts",
+    "test:verification": "node --loader tsx lib/execution/__tests__/verification.test.ts",
+    "test:tenant-isolation": "node --loader tsx lib/execution/__tests__/tenant-isolation.test.ts",
     "postinstall": "prisma generate || true"
   },
   "dependencies": {

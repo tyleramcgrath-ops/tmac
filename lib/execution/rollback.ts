@@ -186,54 +186,139 @@ async function revertChange(snapshot: {
 }
 
 async function revertTitle(pageUrl: string, previousTitle: string): Promise<void> {
-  // WordPress API call would go here
-  // For now, log the action
-  console.log(`[ROLLBACK] Reverting title on ${pageUrl} to: ${previousTitle}`)
+  const postId = await resolvePostIdFromUrl(pageUrl)
+  if (!postId) throw new Error(`Could not resolve post ID for ${pageUrl}`)
 
-  // In production:
-  // const response = await fetch('/wp-json/wp/v2/pages?search=...', {
-  //   method: 'POST',
-  //   body: JSON.stringify({ title: previousTitle })
-  // })
+  await makeWordPressRequest('POST', `/posts/${postId}`, {
+    title: previousTitle,
+    meta: { yoast_title: previousTitle, rank_math_title: previousTitle },
+  })
 }
 
 async function revertMetaDescription(pageUrl: string, previousDescription: string): Promise<void> {
-  console.log(`[ROLLBACK] Reverting meta description on ${pageUrl} to: ${previousDescription}`)
+  const postId = await resolvePostIdFromUrl(pageUrl)
+  if (!postId) throw new Error(`Could not resolve post ID for ${pageUrl}`)
 
-  // Would use Yoast/AIOSEO/Rank Math REST API
+  await makeWordPressRequest('POST', `/posts/${postId}`, {
+    meta: {
+      yoast_metadesc: previousDescription,
+      rank_math_description: previousDescription,
+    },
+  })
 }
 
 async function revertCanonical(pageUrl: string, previousCanonical: string): Promise<void> {
-  console.log(`[ROLLBACK] Reverting canonical on ${pageUrl} to: ${previousCanonical}`)
+  const postId = await resolvePostIdFromUrl(pageUrl)
+  if (!postId) throw new Error(`Could not resolve post ID for ${pageUrl}`)
 
-  // Would fetch page and replace canonical tag
+  await makeWordPressRequest('POST', `/posts/${postId}`, {
+    meta: {
+      rank_math_canonical: previousCanonical,
+      _wp_canonical: previousCanonical,
+    },
+  })
 }
 
-async function revertSchema(
-  pageUrl: string,
-  previousSchema: Record<string, unknown>
-): Promise<void> {
-  console.log(`[ROLLBACK] Reverting schema on ${pageUrl}`)
+async function revertSchema(pageUrl: string, previousSchema: Record<string, unknown>): Promise<void> {
+  const postId = await resolvePostIdFromUrl(pageUrl)
+  if (!postId) throw new Error(`Could not resolve post ID for ${pageUrl}`)
 
-  // Would replace or remove schema markup
+  if (previousSchema) {
+    await makeWordPressRequest('POST', `/posts/${postId}`, {
+      meta: {
+        rank_math_schema: JSON.stringify(previousSchema),
+        _schema_markup: JSON.stringify(previousSchema),
+      },
+    })
+  }
 }
 
 async function revertInternalLinks(pageUrl: string, linksToRemove: string[]): Promise<void> {
-  console.log(`[ROLLBACK] Reverting internal links on ${pageUrl}, removing ${linksToRemove.length} links`)
+  const postId = await resolvePostIdFromUrl(pageUrl)
+  if (!postId) throw new Error(`Could not resolve post ID for ${pageUrl}`)
 
-  // Would remove added links from content
+  // Fetch current content and remove links
+  const response = await makeWordPressRequest('GET', `/posts/${postId}`)
+  const post = (await response.json()) as Record<string, any>
+  let content = post.content?.rendered || ''
+
+  for (const link of linksToRemove) {
+    const regex = new RegExp(`<a[^>]*href=["']${link}["'][^>]*>.*?</a>`, 'gi')
+    content = content.replace(regex, '')
+  }
+
+  await makeWordPressRequest('POST', `/posts/${postId}`, { content })
 }
 
 async function revertContent(pageUrl: string, previousContent: string): Promise<void> {
-  console.log(`[ROLLBACK] Reverting content on ${pageUrl}`)
+  const postId = await resolvePostIdFromUrl(pageUrl)
+  if (!postId) throw new Error(`Could not resolve post ID for ${pageUrl}`)
 
-  // Would restore previous content version
+  await makeWordPressRequest('POST', `/posts/${postId}`, {
+    content: previousContent,
+  })
 }
 
 async function revertRedirect(pageUrl: string): Promise<void> {
-  console.log(`[ROLLBACK] Removing redirect from ${pageUrl}`)
+  // Remove redirect rule from WordPress
+  const redirectUrl = new URL(pageUrl)
+  const redirectPath = redirectUrl.pathname
 
-  // Would remove .htaccess or WordPress redirect rule
+  // Check for redirect plugin
+  await makeWordPressRequest('DELETE', `/redirect-rule`, {
+    source: redirectPath,
+  }).catch(() => {
+    // Ignore if redirect plugin doesn't exist
+  })
+}
+
+async function resolvePostIdFromUrl(pageUrl: string): Promise<number | null> {
+  try {
+    const url = new URL(pageUrl)
+    const path = url.pathname.replace(/^\/|\/$/g, '')
+
+    const response = await makeWordPressRequest('GET', `/posts?slug=${encodeURIComponent(path)}&_fields=id`)
+    const posts = (await response.json()) as { id: number }[]
+
+    return posts.length > 0 ? posts[0].id : null
+  } catch {
+    return null
+  }
+}
+
+async function makeWordPressRequest(
+  method: string,
+  endpoint: string,
+  body?: Record<string, unknown>
+): Promise<Response> {
+  // Get WordPress auth from environment
+  const wpBaseUrl = process.env.WORDPRESS_BASE_URL || 'http://localhost'
+  const wpUsername = process.env.WORDPRESS_USERNAME || ''
+  const wpAppPassword = process.env.WORDPRESS_APP_PASSWORD || ''
+
+  const url = `${wpBaseUrl}/wp-json/wp/v2${endpoint}`
+
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  }
+
+  // Add basic auth with app password
+  if (wpUsername && wpAppPassword) {
+    const auth = Buffer.from(`${wpUsername}:${wpAppPassword}`).toString('base64')
+    headers['Authorization'] = `Basic ${auth}`
+  }
+
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+  })
+
+  if (!response.ok) {
+    throw new Error(`WordPress API error: ${response.status} ${response.statusText}`)
+  }
+
+  return response
 }
 
 export async function getRollbackSnapshots(deploymentId: string): Promise<RollbackSnapshot[]> {

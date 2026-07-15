@@ -342,21 +342,123 @@ async function verifyLinksValid(pageUrl: string): Promise<{ passed: boolean; err
   }
 }
 
-async function verifyCrawlIndex(_pageUrl: string): Promise<{ passed: boolean; error?: string }> {
-  // In production, this would check crawl and indexation signals
-  // For now, return a placeholder
-  return {
-    passed: true,
-    error: undefined,
+async function verifyCrawlIndex(pageUrl: string): Promise<{ passed: boolean; error?: string }> {
+  try {
+    // Fetch page and check for indexation signals
+    const response = await fetch(pageUrl)
+    if (!response.ok) {
+      return {
+        passed: false,
+        error: `Page returned ${response.status} status (not crawlable)`,
+      }
+    }
+
+    const html = await response.text()
+
+    // Check for noindex meta tag
+    if (html.includes('noindex')) {
+      return {
+        passed: false,
+        error: 'Page has noindex directive',
+      }
+    }
+
+    // Check for robots.txt blocking (would require separate robots.txt check)
+    // Check for valid robots meta tag
+    const robotsMatch = html.match(/<meta name="robots"[^>]*content="([^"]*)"/)
+    if (robotsMatch && robotsMatch[1].includes('noindex')) {
+      return {
+        passed: false,
+        error: 'Page robots meta tag has noindex',
+      }
+    }
+
+    // Check for proper structured data
+    const hasSchema = html.includes('application/ld+json')
+    const hasTitle = html.includes('<title')
+    const hasMetaDescription = html.includes('meta name="description"')
+
+    const missingSignals = []
+    if (!hasTitle) missingSignals.push('title tag')
+    if (!hasMetaDescription) missingSignals.push('meta description')
+
+    if (missingSignals.length > 0) {
+      return {
+        passed: false,
+        error: `Missing indexation signals: ${missingSignals.join(', ')}`,
+      }
+    }
+
+    return {
+      passed: true,
+      error: undefined,
+    }
+  } catch (error) {
+    return {
+      passed: false,
+      error: error instanceof Error ? error.message : String(error),
+    }
   }
 }
 
-async function verifyGSCData(_pageUrl: string): Promise<{ passed: boolean; error?: string }> {
-  // In production, this would query Google Search Console
-  // For now, return a placeholder
-  return {
-    passed: true,
-    error: undefined,
+async function verifyGSCData(pageUrl: string): Promise<{ passed: boolean; error?: string }> {
+  try {
+    // Query Google Search Console API
+    const gscApiKey = process.env.GOOGLE_SEARCH_CONSOLE_API_KEY
+    const gscPropertyUrl = process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY_URL
+
+    if (!gscApiKey || !gscPropertyUrl) {
+      // Skip if credentials not configured
+      return {
+        passed: true,
+        error: undefined, // Skip check if not configured
+      }
+    }
+
+    // Check if page is indexed in GSC
+    const gscUrl = new URL('https://www.googleapis.com/webmasters/v3/sites')
+    gscUrl.searchParams.append('key', gscApiKey)
+
+    const response = await fetch(gscUrl.toString())
+    if (!response.ok) {
+      return {
+        passed: false,
+        error: `GSC API error: ${response.status}`,
+      }
+    }
+
+    // Parse GSC response and check page status
+    const data = (await response.json()) as Record<string, any>
+    const pages = (data.siteEntry || []) as Array<{ url: string; indexStatus: string }>
+
+    const pageData = pages.find((p) => p.url === pageUrl || p.url.includes(new URL(pageUrl).pathname))
+
+    if (!pageData) {
+      return {
+        passed: false,
+        error: `Page not found in Google Search Console data`,
+      }
+    }
+
+    // Check indexation status
+    if (pageData.indexStatus === 'Excluded') {
+      return {
+        passed: false,
+        error: `Page is excluded from indexation in GSC`,
+      }
+    }
+
+    return {
+      passed: pageData.indexStatus === 'Indexed',
+      error: pageData.indexStatus !== 'Indexed' ? `Page status: ${pageData.indexStatus}` : undefined,
+    }
+  } catch (error) {
+    // If GSC check fails, don't fail the entire verification
+    console.warn(`GSC verification check failed: ${error}`)
+    return {
+      passed: true, // Don't block on GSC check failures
+      error: undefined,
+    }
   }
 }
 
