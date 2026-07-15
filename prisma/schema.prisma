@@ -38,6 +38,10 @@ model User {
   executionApprovals   ExecutionApproval[]
   executionDeployments ExecutionDeployment[]
 
+  // Execution Engine (Phase 9.1)
+  campaignApprovals ExecutionCampaign[]
+  executionAuditLogs ExecutionAuditLog[]
+
   @@index([email])
   @@index([createdAt])
 }
@@ -174,6 +178,12 @@ model Organization {
   executionVerifications ExecutionVerification[]
   executionOutcomes      ExecutionOutcome[]
   executionHistories     ExecutionHistory[]
+
+  // Execution Engine (Phase 9.1)
+  executionJobs         ExecutionJob[]
+  executionCampaigns    ExecutionCampaign[]
+  rollbackSnapshots     ExecutionRollbackSnapshot[]
+  auditLogs             ExecutionAuditLog[]
 
   @@index([slug])
   @@index([createdAt])
@@ -312,6 +322,11 @@ model Project {
   executionPlans     ExecutionPlan[]
   executionOutcomes  ExecutionOutcome[]
   executionHistories ExecutionHistory[]
+
+  // Execution Engine (Phase 9.1)
+  executionJobs      ExecutionJob[]
+  executionCampaigns ExecutionCampaign[]
+  auditLogs          ExecutionAuditLog[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -2476,6 +2491,7 @@ model ExecutionPlan {
   deployment    ExecutionDeployment?
   verifications ExecutionVerification[]
   outcome       ExecutionOutcome?
+  jobs          ExecutionJob[]
 
   @@index([organizationId])
   @@index([projectId])
@@ -2534,6 +2550,7 @@ model ExecutionDeployment {
   organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   executionPlan  ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
   deployedByUser User          @relation(fields: [deployedByUserId], references: [id], onDelete: Cascade)
+  rollbackSnapshot ExecutionRollbackSnapshot?
 
   @@index([organizationId])
   @@index([executionPlanId])
@@ -2637,31 +2654,171 @@ model ExecutionHistory {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RELATIONS: Phase 9 to existing models
+// PHASE 9.1: PRODUCTION EXECUTION ENGINE
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Add Phase 9 relations to Organization model (extend existing model)
+/// Background execution jobs for safe, resumable work.
+model ExecutionJob {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  executionPlanId   String
+  campaignId        String?  // Null if standalone, set if part of campaign
+
+  jobType           String   // "execute" | "verify" | "rollback"
+  status            String   @default("queued") // "queued" | "running" | "success" | "failed" | "retrying" | "paused"
+  priority          Int      @default(0)
+
+  attemptCount      Int      @default(0)
+  maxAttempts       Int      @default(3)
+  lastAttemptAt     DateTime?
+  nextRetryAt       DateTime?
+
+  payload           Json     // Job-specific data
+  result            Json?    // Execution result
+  error             String?
+
+  queuedAt          DateTime @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  executionPlan     ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([executionPlanId])
+  @@index([campaignId])
+  @@index([status])
+  @@index([priority])
+  @@index([queuedAt])
+}
+
+/// Campaign execution groups multiple actions as one unit.
+model ExecutionCampaign {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+
+  name              String
+  description       String?
+  campaignType      String   // "technical_cleanup" | "internal_linking" | "schema_rollout" | "ctr_improvement" | "service_refresh" | "custom"
+
+  status            String   @default("draft") // "draft" | "queued" | "running" | "paused" | "completed" | "rolled_back" | "failed"
+  executionPlanIds  String[] // Ordered list of plan IDs
+
+  approvedAt        DateTime?
+  approvedByUserId  String?
+  startedAt         DateTime?
+  completedAt       DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  approvedByUser    User? @relation(fields: [approvedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([campaignType])
+}
+
+/// Rollback snapshots to enable reversibility.
+model ExecutionRollbackSnapshot {
+  id                      String   @id @default(cuid())
+  organizationId          String
+  executionDeploymentId   String   @unique
+
+  previousValue           Json     // Full previous state
+  newValue                Json     // Full new state
+  changeType              String   // "title" | "meta_description" | "canonical" | "schema" | "internal_link" | etc
+  pageUrl                 String
+
+  rollbackExecutedAt      DateTime?
+  rollbackStatus          String?  // "pending" | "success" | "failed"
+  rollbackError           String?
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  organization            Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  deployment              ExecutionDeployment @relation(fields: [executionDeploymentId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([executionDeploymentId])
+  @@index([changeType])
+  @@index([pageUrl])
+}
+
+/// Detailed audit trail for all execution operations.
+model ExecutionAuditLog {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  executionPlanId   String?
+  deploymentId      String?
+
+  operation         String   // "created_plan" | "approved" | "rejected" | "executed" | "verified" | "rolled_back" | "measured"
+  actor             String   // User email or "system"
+  actorUserId       String?
+
+  beforeState       Json?    // Full state before
+  afterState        Json?    // Full state after
+  changes           Json     // Detailed changes
+  reason            String?  // Why this operation
+
+  verified          Boolean  @default(false)
+  verificationResult Json?
+
+  timestamp         DateTime @default(now())
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  actor_user        User? @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([executionPlanId])
+  @@index([operation])
+  @@index([actor])
+  @@index([timestamp])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RELATIONS: Phase 9.1 to existing models
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Add Phase 9.1 relations to ExecutionDeployment model (extend existing model)
+// model ExecutionDeployment {
+//   ...existing fields...
+//   rollbackSnapshot      ExecutionRollbackSnapshot?
+// }
+
+// Add Phase 9.1 relations to Organization model (extend existing model)
 // model Organization {
 //   ...existing fields...
-//   executionPlans        ExecutionPlan[]
-//   executionApprovals    ExecutionApproval[]
-//   executionDeployments  ExecutionDeployment[]
-//   executionVerifications ExecutionVerification[]
-//   executionOutcomes     ExecutionOutcome[]
-//   executionHistories    ExecutionHistory[]
+//   executionJobs         ExecutionJob[]
+//   executionCampaigns    ExecutionCampaign[]
+//   rollbackSnapshots     ExecutionRollbackSnapshot[]
+//   auditLogs             ExecutionAuditLog[]
 // }
 
-// Add Phase 9 relations to Project model (extend existing model)
+// Add Phase 9.1 relations to Project model (extend existing model)
 // model Project {
 //   ...existing fields...
-//   executionPlans        ExecutionPlan[]
-//   executionOutcomes     ExecutionOutcome[]
-//   executionHistories    ExecutionHistory[]
+//   executionJobs         ExecutionJob[]
+//   executionCampaigns    ExecutionCampaign[]
+//   auditLogs             ExecutionAuditLog[]
 // }
 
-// Add Phase 9 relations to User model (extend existing model)
+// Add Phase 9.1 relations to User model (extend existing model)
 // model User {
 //   ...existing fields...
-//   executionApprovals    ExecutionApproval[]
-//   executionDeployments  ExecutionDeployment[]
+//   campaignApprovals     ExecutionCampaign[]
+//   auditLogs             ExecutionAuditLog[]
 // }
