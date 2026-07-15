@@ -306,4 +306,4 @@ export function validateEntities(entities: Entity[], industry: string): Entity[]
   return entities.filter((e) => e.confidence >= 0.8);
 }
 
-export { Entity, ExtractionMetrics };
+export type { Entity, ExtractionMetrics };

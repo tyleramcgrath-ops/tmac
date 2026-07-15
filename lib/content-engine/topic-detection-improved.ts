@@ -313,4 +313,4 @@ export function validateTopics(topics: Topic[], bodyText: string): Topic[] {
   });
 }
 
-export { Topic, TopicMetrics };
+export type { Topic, TopicMetrics };
