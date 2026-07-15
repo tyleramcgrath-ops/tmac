@@ -185,7 +185,6 @@ export function DnaSculpture({
       const w = dims.w, h = dims.h
       const g = helixGeom(w, h)
       const regions = regionsRef.current
-      const regionByKey = (k: string) => regions.find((r) => r.key === k)
 
       ctx!.clearRect(0, 0, w, h)
       ctx!.fillStyle = 'rgba(10,10,12,1)'
@@ -204,37 +203,49 @@ export function DnaSculpture({
       const anyFocus = sel || hov
       const phaseAt = (y: number) => ((y - g.topY) / g.span) * g.turns * PI2 + rot
 
-      // Everything is collected as depth-carrying points and painted far→near,
-      // so the two strands genuinely pass over and behind one another at every
-      // crossover — the intertwining read of a real 3D double helix.
-      const pts: Array<{ x: number; y: number; z: number; r: number; col: string }> = []
-      // Two-tone strands — a warm gold and a cool platinum — so the eye tracks
-      // each one separately as they weave over and behind each other.
-      const NEAR0: [number, number, number] = [231, 213, 170]
-      const NEAR1: [number, number, number] = [174, 186, 205]
-      const FAR: [number, number, number] = [66, 72, 92]
-      const STEPS = 190
+      // Two solid twisting ribbons — a warm gold and a cool platinum — that
+      // swell face-on and pinch to a thin edge at each crossover, exactly like
+      // an illustrated DNA strand. Every ribbon segment and base-pair detail
+      // becomes a depth-keyed primitive, painted far→near so the strands truly
+      // pass over and behind one another. Base pairs stay a quiet secondary
+      // detail (no ladder of even steps) and come alive only on focus.
+      type Prim =
+        | { t: 0; ax: number; ayt: number; ayb: number; bx: number; byt: number; byb: number; z: number; col: string }
+        | { t: 1; x: number; y: number; r: number; z: number; col: string }
+        | { t: 2; x0: number; x1: number; y: number; z: number; col: string; lw: number }
+      const prims: Prim[] = []
+      const NEAR0: [number, number, number] = [233, 215, 172]
+      const NEAR1: [number, number, number] = [176, 188, 208]
+      const FAR: [number, number, number] = [58, 64, 84]
+      const N = 150
+      const dimAll = anyFocus ? 0.5 : 1
 
-      // ── backbone strands, sampled densely into two continuous 3D tubes ──
+      // ── the two ribbon strands ───────────────────────────────────────
       for (let strand = 0; strand < 2; strand++) {
         const near = strand === 0 ? NEAR0 : NEAR1
-        for (let i = 0; i <= STEPS; i++) {
-          const yFrac = i / STEPS
-          const y = g.topY + yFrac * g.span
+        let prev: { x: number; yt: number; yb: number; z: number; depth: number } | null = null
+        for (let i = 0; i <= N; i++) {
+          const f = i / N
+          const y = g.topY + f * g.span
           const ph = phaseAt(y) + strand * Math.PI
+          const x = g.cx + g.amp * Math.cos(ph)
           const z = Math.sin(ph)
           const depth = (z + 1) / 2
-          const shimmer = reduce ? 1 : 0.82 + 0.18 * Math.sin(time / 650 + yFrac * 8)
-          // gentle depth falloff keeps the back strand visible (never invisible)
-          const a = (0.15 + 0.5 * depth) * shimmer * (anyFocus ? 0.55 : 1)
-          const cr = Math.round(FAR[0] + (near[0] - FAR[0]) * depth)
-          const cg = Math.round(FAR[1] + (near[1] - FAR[1]) * depth)
-          const cb = Math.round(FAR[2] + (near[2] - FAR[2]) * depth)
-          pts.push({ x: g.cx + g.amp * Math.cos(ph), y, z, r: 0.9 + 2.3 * depth, col: `rgba(${cr},${cg},${cb},${a})` })
+          const hw = 2 + 9.5 * Math.abs(Math.cos(ph)) // wide face-on, pinched at the crossover
+          const cur = { x, yt: y - hw * 0.32, yb: y + hw * 0.32, z, depth }
+          if (prev) {
+            const shimmer = reduce ? 1 : 0.85 + 0.15 * Math.sin(time / 650 + f * 8)
+            const a = (0.42 + 0.5 * cur.depth) * shimmer * dimAll
+            const cr = Math.round(FAR[0] + (near[0] - FAR[0]) * cur.depth)
+            const cg = Math.round(FAR[1] + (near[1] - FAR[1]) * cur.depth)
+            const cb = Math.round(FAR[2] + (near[2] - FAR[2]) * cur.depth)
+            prims.push({ t: 0, ax: prev.x, ayt: prev.yt, ayb: prev.yb, bx: cur.x, byt: cur.yt, byb: cur.yb, z: (prev.z + cur.z) / 2, col: `rgba(${cr},${cg},${cb},${a})` })
+          }
+          prev = cur
         }
       }
 
-      // ── base-pair rungs + nucleotide anchors ─────────────────────────
+      // ── base pairs: quiet connector + colored nucleotide anchors ─────
       regions.forEach((r) => {
         if (r.isHub) return
         const c = STATE_RGB[r.understanding]
@@ -243,55 +254,52 @@ export function DnaSculpture({
         const dimmed = anyFocus && !isFocused
         const ph = phaseAt(r.y)
         const pulse = isActive && !reduce ? 0.7 + 0.3 * Math.sin(time / 300) : 1
-        const focusMul = isFocused ? 1.8 : isActive ? 1.35 : 1
+        const focusMul = isFocused ? 1.9 : isActive ? 1.4 : 1
         const xA = g.cx + g.amp * Math.cos(ph), zA = Math.sin(ph)
         const xB = g.cx + g.amp * Math.cos(ph + Math.PI), zB = Math.sin(ph + Math.PI)
 
-        const steps = 9
-        for (let i = 1; i < steps; i++) {
-          const u = i / steps
-          const z = zA + (zB - zA) * u
-          const depth = (z + 1) / 2
-          const a = (r.understanding === 'not-connected' ? 0.06 : 0.18) * (0.35 + 0.65 * depth) * focusMul * pulse * (dimmed ? 0.3 : 1)
-          pts.push({ x: xA + (xB - xA) * u, y: r.y, z, r: 1.15 * (0.6 + 0.7 * depth), col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
-        }
+        const connA = (r.understanding === 'not-connected' ? 0.05 : 0.12) * focusMul * pulse * (dimmed ? 0.4 : 1)
+        prims.push({ t: 2, x0: xA, x1: xB, y: r.y, z: (zA + zB) / 2, col: `rgba(${c[0]},${c[1]},${c[2]},${connA})`, lw: isFocused ? 1.8 : 1 })
 
-        const baseSize = r.understanding === 'well-understood' ? 3.4 : r.understanding === 'partially-understood' ? 2.7 : r.understanding === 'needs-verification' ? 2.1 : 1.6
+        const baseSize = r.understanding === 'well-understood' ? 3.2 : r.understanding === 'partially-understood' ? 2.6 : r.understanding === 'needs-verification' ? 2.0 : 1.5
         ;([[xA, zA], [xB, zB]] as Array<[number, number]>).forEach(([x, z]) => {
           const depth = (z + 1) / 2
-          const a = (r.understanding === 'not-connected' ? 0.18 : 0.55) * (0.4 + 0.6 * depth) * focusMul * pulse * (dimmed ? 0.3 : 1)
-          pts.push({ x, y: r.y, z, r: baseSize * (0.55 + 0.75 * depth) * (isFocused ? 1.3 : 1), col: `rgba(${c[0]},${c[1]},${c[2]},${Math.min(a, 0.95)})` })
+          const a = (r.understanding === 'not-connected' ? 0.22 : 0.6) * (0.45 + 0.55 * depth) * focusMul * pulse * (dimmed ? 0.35 : 1)
+          prims.push({ t: 1, x, y: r.y, r: baseSize * (0.6 + 0.7 * depth) * (isFocused ? 1.3 : 1), z, col: `rgba(${c[0]},${c[1]},${c[2]},${Math.min(a, 0.95)})` })
         })
+
+        // energy crosses the base pair only when the region is in focus/active
+        if (isFocused || isActive) {
+          rungRef.current.forEach((p) => {
+            if (p.regionKey !== r.key) return
+            if (!reduce) { p.u += p.speed; if (p.u > 1) p.u -= 1 }
+            const u = reduce ? p.u0 : p.u
+            const z = zA + (zB - zA) * u
+            const depth = (z + 1) / 2
+            const tw = reduce ? 0.85 : 0.5 + 0.5 * Math.sin(time / 380 + p.phase)
+            const a = 0.5 * tw * (0.4 + 0.6 * depth) * pulse
+            prims.push({ t: 1, x: xA + (xB - xA) * u, y: r.y + p.off, r: p.size * (0.6 + 0.6 * depth), z, col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
+          })
+        }
       })
 
-      // ── energy crossing each base pair ───────────────────────────────
-      rungRef.current.forEach((p) => {
-        const r = regionByKey(p.regionKey)
-        if (!r) return
-        if (!reduce) { p.u += p.speed; if (p.u > 1) p.u -= 1 }
-        const u = reduce ? p.u0 : p.u
-        const ph = phaseAt(r.y)
-        const xA = g.cx + g.amp * Math.cos(ph), zA = Math.sin(ph)
-        const xB = g.cx + g.amp * Math.cos(ph + Math.PI), zB = Math.sin(ph + Math.PI)
-        const z = zA + (zB - zA) * u
-        const depth = (z + 1) / 2
-        const c = STATE_RGB[r.understanding]
-        const isFocused = sel === r.key || hov === r.key
-        const isActive = act === r.key
-        const dimmed = anyFocus && !isFocused
-        const tw = reduce ? 0.8 : 0.5 + 0.5 * Math.sin(time / 380 + p.phase)
-        const base = r.understanding === 'not-connected' ? 0.06 : 0.32
-        const a = base * tw * (0.4 + 0.6 * depth) * (isFocused ? 1.8 : isActive ? 1.3 : 1) * (dimmed ? 0.28 : 1)
-        pts.push({ x: xA + (xB - xA) * u, y: r.y + p.off, z, r: p.size * (0.55 + 0.7 * depth) * (isFocused ? 1.3 : 1), col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
-      })
-
-      // paint far → near so nearer points occlude farther ones (the weave)
-      pts.sort((a, b) => a.z - b.z)
-      for (let i = 0; i < pts.length; i++) {
-        ctx!.fillStyle = pts[i].col
-        ctx!.beginPath()
-        ctx!.arc(pts[i].x, pts[i].y, pts[i].r, 0, PI2)
-        ctx!.fill()
+      // paint far → near so nearer primitives occlude farther ones (the weave)
+      prims.sort((a, b) => a.z - b.z)
+      for (let i = 0; i < prims.length; i++) {
+        const p = prims[i]
+        if (p.t === 0) {
+          ctx!.fillStyle = p.col
+          ctx!.beginPath()
+          ctx!.moveTo(p.ax, p.ayt); ctx!.lineTo(p.bx, p.byt); ctx!.lineTo(p.bx, p.byb); ctx!.lineTo(p.ax, p.ayb); ctx!.closePath()
+          ctx!.fill()
+        } else if (p.t === 1) {
+          ctx!.fillStyle = p.col
+          ctx!.beginPath(); ctx!.arc(p.x, p.y, p.r, 0, PI2); ctx!.fill()
+        } else {
+          ctx!.strokeStyle = p.col
+          ctx!.lineWidth = p.lw
+          ctx!.beginPath(); ctx!.moveTo(p.x0, p.y); ctx!.lineTo(p.x1, p.y); ctx!.stroke()
+        }
       }
 
       // ── luminous core (the business) the strands spring from ─────────
