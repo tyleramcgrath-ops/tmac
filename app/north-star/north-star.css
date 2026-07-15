@@ -1,85 +1,17 @@
 /* =====================================================================
-   North Star — Flagship Experience
-   An editorial, advisor-led layout. Reuses the --rf-* tokens defined in
-   app/rankforge/rankforge.css for color continuity, but intentionally
-   avoids the dashboard/card-grid language of the SEO command center.
-   Scoped under .ns-root.
+   North Star — Business Growth Command Center
+   A full-viewport operational console: left rail, business-state top bar,
+   a living Digital DNA hero at center stage, a priorities panel, and a
+   bottom workflow timeline. Distinct from RankForge's card-grid dashboard
+   language — this is a console, not an article, not a metrics wall.
+   Scoped under .ns-root. Reuses --rf-* color tokens for platform
+   continuity only; layout, composition, and interaction are original.
    ===================================================================== */
 
 .ns-root {
-  background: radial-gradient(ellipse 120% 60% at 50% -10%, rgba(47, 107, 255, 0.10), transparent 55%), var(--rf-bg);
+  background: var(--rf-bg);
   min-height: 100vh;
-}
-
-.ns-serif {
-  font-feature-settings: 'ss01';
-  letter-spacing: -0.02em;
-}
-
-/* ---- Editorial surface: quieter than .rf-card, no boxed-in feel ---- */
-.ns-panel {
-  background: linear-gradient(160deg, rgba(19, 26, 44, 0.55) 0%, rgba(10, 16, 32, 0.55) 60%, rgba(8, 13, 26, 0.55) 100%);
-  border: 1px solid var(--rf-card-line);
-  border-radius: 20px;
-}
-
-.ns-panel-quiet {
-  border: 1px solid var(--rf-card-line);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.012);
-}
-
-/* ---- Status dot: never the only signal — always paired with text ---- */
-.ns-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  flex-shrink: 0;
-}
-.ns-dot-good { background: var(--rf-green); }
-.ns-dot-watch { background: var(--rf-amber); }
-.ns-dot-attention { background: var(--rf-red); }
-.ns-dot-neutral { background: var(--rf-faint); }
-
-/* ---- Understanding pill (Digital DNA) ---- */
-.ns-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 500;
-  border: 1px solid transparent;
-  white-space: nowrap;
-}
-.ns-pill-well { background: rgba(52, 211, 153, 0.10); color: var(--rf-green); border-color: rgba(52, 211, 153, 0.25); }
-.ns-pill-partial { background: rgba(251, 191, 36, 0.10); color: var(--rf-amber); border-color: rgba(251, 191, 36, 0.25); }
-.ns-pill-verify { background: rgba(148, 173, 224, 0.10); color: var(--rf-muted); border-color: var(--rf-card-line-strong); }
-.ns-pill-off { background: rgba(148, 173, 224, 0.04); color: var(--rf-faint); border-color: var(--rf-card-line); }
-
-/* ---- Helix motif: two smooth intertwining ribbons, decorative only ----
-   Intentionally abstract — not a literal double helix with rungs, to
-   avoid reading as medical/lab/genetic. Suggests continuity + growth. */
-.ns-helix-wrap {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  border-radius: inherit;
-}
-.ns-helix-svg {
-  position: absolute;
-  right: -8%;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 180%;
-  width: auto;
-  opacity: 0.5;
-}
-@media (max-width: 640px) {
-  .ns-helix-svg { opacity: 0.3; right: -30%; }
+  overflow-x: hidden;
 }
 
 /* ---- Focus states: always visible, never suppressed ---- */
@@ -93,32 +25,12 @@
   border-radius: 8px;
 }
 
-/* ---- Restrained motion ---- */
-.ns-fade-in {
-  animation: ns-fade-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-@keyframes ns-fade-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.ns-expand {
-  overflow: hidden;
-  transition: grid-template-rows 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
-  display: grid;
-  grid-template-rows: 0fr;
-}
-.ns-expand.ns-expand-open {
-  grid-template-rows: 1fr;
-}
-.ns-expand > div {
-  min-height: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ns-fade-in { animation: none; }
-  .ns-expand { transition: none; }
-  .ns-root * { scroll-behavior: auto !important; }
+/* ---- Minimum touch target guarantee on mobile ---- */
+@media (max-width: 768px) {
+  .ns-touch {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 /* ---- Preview badge: unmistakable, cannot be confused with production ---- */
@@ -135,53 +47,28 @@
   background: repeating-linear-gradient(135deg, rgba(251, 191, 36, 0.14), rgba(251, 191, 36, 0.14) 4px, rgba(251, 191, 36, 0.22) 4px, rgba(251, 191, 36, 0.22) 8px);
   border: 1px solid rgba(251, 191, 36, 0.4);
   color: #fde68a;
+  white-space: nowrap;
 }
 
-/* ---- Minimum touch target guarantee on mobile ---- */
-@media (max-width: 768px) {
-  .ns-touch {
-    min-height: 44px;
-    min-width: 44px;
-  }
+/* ---- Status dot ---- */
+.ns-dot { display: inline-block; width: 8px; height: 8px; border-radius: 999px; flex-shrink: 0; }
+.ns-dot-good { background: var(--rf-green); }
+.ns-dot-watch { background: var(--rf-amber); }
+.ns-dot-attention { background: var(--rf-red); }
+.ns-dot-neutral { background: var(--rf-faint); }
+
+/* ---- Breathing pulse: reserved for genuinely active work only ---- */
+.cc-pulse {
+  animation: cc-pulse 1.6s ease-in-out infinite;
+}
+@keyframes cc-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
-/* ---- Hover lift: the one physical gesture every clickable surface shares ---- */
-.ns-lift {
-  transition: transform 0.18s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.18s ease, background-color 0.18s ease;
-}
-.ns-lift:hover {
-  transform: translateY(-1px);
-}
-.ns-lift:active {
-  transform: translateY(0);
-}
-
-/* ---- Quiet link: de-emphasized secondary action, no button chrome ---- */
-.ns-quiet-link {
-  color: var(--rf-muted);
-  text-decoration: underline;
-  text-decoration-color: var(--rf-card-line-strong);
-  text-underline-offset: 3px;
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
-}
-.ns-quiet-link:hover {
-  color: var(--rf-blue-bright);
-  text-decoration-color: currentColor;
-}
-
-/* ---- Thinking indicator: three breathing dots, honest "considering" state ---- */
-.ns-thinking {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.ns-thinking span {
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  background: var(--rf-blue-bright);
-  animation: ns-thinking-bounce 1.2s ease-in-out infinite;
-}
+/* ---- Thinking indicator ---- */
+.ns-thinking { display: inline-flex; align-items: center; gap: 4px; }
+.ns-thinking span { width: 5px; height: 5px; border-radius: 999px; background: var(--rf-blue-bright); animation: ns-thinking-bounce 1.2s ease-in-out infinite; }
 .ns-thinking span:nth-child(2) { animation-delay: 0.15s; }
 .ns-thinking span:nth-child(3) { animation-delay: 0.3s; }
 @keyframes ns-thinking-bounce {
@@ -189,107 +76,281 @@
   30% { opacity: 1; transform: translateY(-2px); }
 }
 
-/* ---- Stagger reveal: sections arrive in a calm, deliberate sequence ---- */
-.ns-stagger > * {
-  animation: ns-fade-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-.ns-stagger > *:nth-child(1) { animation-delay: 0ms; }
-.ns-stagger > *:nth-child(2) { animation-delay: 60ms; }
-.ns-stagger > *:nth-child(3) { animation-delay: 120ms; }
-.ns-stagger > *:nth-child(4) { animation-delay: 180ms; }
-.ns-stagger > *:nth-child(5) { animation-delay: 240ms; }
-.ns-stagger > *:nth-child(6) { animation-delay: 300ms; }
+/* ---- Panel entrance ---- */
+.cc-fade-in { animation: cc-fade-in 0.3s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes cc-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ---- Skeleton shimmer: honest "working on it" texture, no fake percentages ---- */
-.ns-skeleton {
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-}
-.ns-skeleton::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-  animation: ns-shimmer 1.6s ease-in-out infinite;
-}
-@keyframes ns-shimmer {
-  100% { transform: translateX(100%); }
-}
+.cc-slide-in { animation: cc-slide-in 0.32s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes cc-slide-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .ns-stagger > * { animation: none; }
+  .cc-pulse, .cc-fade-in, .cc-slide-in { animation: none !important; }
   .ns-thinking span { animation: none; opacity: 0.8; }
-  .ns-skeleton::after { animation: none; }
-  .ns-lift, .ns-lift:hover { transform: none; }
+  .ns-root * { scroll-behavior: auto !important; }
 }
 
 /* =====================================================================
-   Investigation — the "Check my business now" moment.
-   Calm and methodical: a growing log of what's being examined, each
-   line settling into place rather than sliding or bouncing. No fake
-   progress bar, no percentage — just steps becoming findings.
+   Shell — the full-viewport command center grid
    ===================================================================== */
 
-.ns-step-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  animation: ns-step-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-@keyframes ns-step-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.ns-step-marker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  margin-top: 2px;
-  flex-shrink: 0;
+.cc-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "rail topbar"
+    "rail banner"
+    "rail workspace"
+    "rail timeline";
+  min-height: 100vh;
 }
 
-/* Active step: a slow, quiet breathing ring — deliberately not a spinner */
-.ns-step-active-ring {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--rf-blue-bright);
-  animation: ns-step-breathe 1.6s ease-in-out infinite;
+.cc-rail { grid-area: rail; border-right: 1px solid var(--rf-card-line); background: var(--rf-bg-2); min-width: 0; }
+.cc-topbar { grid-area: topbar; border-bottom: 1px solid var(--rf-card-line); min-width: 0; }
+.cc-banner-row { grid-area: banner; min-width: 0; }
+.cc-workspace {
+  grid-area: workspace;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  grid-template-areas: "center priority";
+  min-height: 0;
 }
-@keyframes ns-step-breathe {
-  0%, 100% { opacity: 0.45; transform: scale(0.85); }
-  50% { opacity: 1; transform: scale(1); }
+.cc-timeline { grid-area: timeline; border-top: 1px solid var(--rf-card-line); min-width: 0; }
+
+.cc-center { grid-area: center; border-right: 1px solid var(--rf-card-line); min-width: 0; }
+.cc-priority { grid-area: priority; min-width: 0; }
+.cc-workspace { min-width: 0; }
+
+@media (max-width: 1100px) {
+  .cc-workspace { grid-template-columns: 1fr; grid-template-areas: "priority" "center"; }
+  .cc-center { border-right: none; }
 }
 
-/* The reveal: a single settled arrival, no bounce, no celebration */
-.ns-reveal-in {
-  animation: ns-reveal-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-@keyframes ns-reveal-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* One-time attention pulse for a section scrolled-to from the reveal —
-   fires once, settles, never loops. */
-.ns-highlight-once {
-  animation: ns-highlight-pulse 1.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-@keyframes ns-highlight-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(79, 139, 255, 0); }
-  15% { box-shadow: 0 0 0 3px rgba(79, 139, 255, 0.35); }
-  100% { box-shadow: 0 0 0 0 rgba(79, 139, 255, 0); }
+/* ---- Mobile bottom action bar (replaces the rail on small screens) ---- */
+.cc-mobile-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+  border-top: 1px solid var(--rf-card-line); background: rgba(8,12,24,0.95); backdrop-filter: blur(12px);
+  align-items: stretch; justify-content: space-around; padding: 6px 4px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ns-step-row { animation: none; }
-  .ns-step-active-ring { animation: none; opacity: 1; }
-  .ns-reveal-in { animation: none; }
-  .ns-highlight-once { animation: none; }
+@media (max-width: 768px) {
+  .cc-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "topbar"
+      "banner"
+      "workspace"
+      "timeline";
+    padding-bottom: 64px;
+  }
+  .cc-rail { display: none; }
+  .cc-mobile-bar { display: flex; }
 }
+.cc-mobile-bar-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 8px; font-size: 10px; font-weight: 500; color: var(--rf-faint);
+  position: relative;
+}
+.cc-mobile-bar-item[data-has-badge="true"]::after {
+  content: ''; position: absolute; top: 2px; right: 10px; width: 6px; height: 6px; border-radius: 999px; background: var(--rf-amber);
+}
+
+/* =====================================================================
+   Left rail
+   ===================================================================== */
+
+.cc-rail-inner { position: sticky; top: 0; display: flex; flex-direction: column; height: 100vh; padding: 20px 12px; }
+.cc-rail-brand { display: flex; align-items: center; gap: 8px; padding: 0 8px 20px; font-weight: 600; font-size: 14px; color: var(--rf-text); }
+.cc-rail-nav { display: flex; flex-direction: column; gap: 2px; }
+.cc-rail-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 10px;
+  font-size: 13px; font-weight: 500; color: var(--rf-muted);
+  transition: background-color 0.15s ease, color 0.15s ease;
+  text-align: left; width: 100%;
+  position: relative;
+}
+.cc-rail-item:hover { background: rgba(255,255,255,0.03); color: var(--rf-text); }
+.cc-rail-item[data-active="true"] { background: rgba(79,139,255,0.12); color: var(--rf-blue-bright); }
+.cc-rail-item[data-active="true"]::before {
+  content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 16px; border-radius: 2px; background: var(--rf-blue-bright);
+}
+.cc-rail-item .cc-rail-badge {
+  margin-left: auto; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px;
+  background: var(--rf-amber); color: #1a1200;
+}
+.cc-rail-footer { margin-top: auto; padding: 12px 8px 0; border-top: 1px solid var(--rf-card-line); }
+
+/* =====================================================================
+   Top bar — business state
+   ===================================================================== */
+
+.cc-topbar-inner { display: flex; align-items: center; gap: 24px; padding: 14px 24px; flex-wrap: wrap; }
+.cc-topbar-status { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cc-topbar-headline { font-size: 15px; font-weight: 600; color: var(--rf-text); }
+.cc-topbar-meta { display: flex; align-items: center; gap: 16px; margin-left: auto; flex-wrap: wrap; font-size: 12px; color: var(--rf-faint); }
+.cc-topbar-meta-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.cc-topbar-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 10px;
+  background: linear-gradient(180deg, var(--rf-blue-bright), var(--rf-blue));
+  color: white; font-size: 13px; font-weight: 600;
+  box-shadow: 0 8px 24px -10px rgba(47,107,255,0.6);
+  transition: transform 0.15s ease;
+  white-space: nowrap;
+}
+.cc-topbar-cta:hover { transform: translateY(-1px); }
+.cc-topbar-cta:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+/* =====================================================================
+   Digital DNA hero — the signature visualization
+   ===================================================================== */
+
+.cc-dna-hero { position: relative; padding: 28px 28px 20px; min-height: 460px; }
+.cc-dna-svg-wrap { position: relative; width: 100%; height: 380px; }
+.cc-dna-node {
+  cursor: pointer;
+}
+.cc-dna-node circle { transition: r 0.2s ease, filter 0.2s ease; }
+.cc-dna-node:hover circle,
+.cc-dna-node[data-selected="true"] circle { filter: brightness(1.3); }
+.cc-dna-node text { cursor: pointer; }
+
+.cc-dna-legend { display: flex; flex-wrap: wrap; gap: 14px; padding: 8px 4px 0; font-size: 11px; color: var(--rf-faint); }
+.cc-dna-legend-item { display: flex; align-items: center; gap: 6px; }
+.cc-dna-legend-dot { width: 8px; height: 8px; border-radius: 999px; }
+
+/* Understanding state colors */
+.cc-state-understood { color: var(--rf-green); }
+.cc-state-developing { color: var(--rf-amber); }
+.cc-state-verify { color: var(--rf-blue-bright); }
+.cc-state-off { color: var(--rf-faint); }
+.cc-state-stale { color: var(--rf-red); }
+
+/* =====================================================================
+   Right panel — today's priorities
+   ===================================================================== */
+
+.cc-priority-section { padding: 20px; border-bottom: 1px solid var(--rf-card-line); }
+.cc-priority-section:last-child { border-bottom: none; }
+.cc-priority-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rf-faint); margin-bottom: 10px; }
+.cc-priority-card {
+  border: 1px solid var(--rf-card-line); border-radius: 12px; padding: 14px;
+  background: rgba(255,255,255,0.015);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.cc-priority-card[data-actionable="true"] { cursor: pointer; }
+.cc-priority-card[data-actionable="true"]:hover { border-color: var(--rf-card-line-strong); background: rgba(255,255,255,0.03); }
+.cc-priority-empty { font-size: 13px; color: var(--rf-muted); padding: 4px 0; }
+
+/* =====================================================================
+   Bottom operational timeline
+   ===================================================================== */
+
+.cc-timeline-inner { display: flex; align-items: stretch; gap: 0; padding: 14px 24px; overflow-x: auto; }
+.cc-timeline-step {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  min-width: 108px; position: relative; padding: 0 4px;
+}
+.cc-timeline-step::before {
+  content: ''; position: absolute; top: 9px; left: -50%; width: 100%; height: 1px;
+  background: var(--rf-card-line);
+}
+.cc-timeline-step:first-child::before { display: none; }
+.cc-timeline-dot {
+  width: 18px; height: 18px; border-radius: 999px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--rf-card-line); background: var(--rf-bg-2); z-index: 1;
+}
+.cc-timeline-dot[data-state="completed"] { border-color: var(--rf-green); background: rgba(52,211,153,0.12); }
+.cc-timeline-dot[data-state="running"] { border-color: var(--rf-blue-bright); background: rgba(79,139,255,0.12); }
+.cc-timeline-dot[data-state="waiting-approval"] { border-color: var(--rf-amber); background: rgba(251,191,36,0.12); }
+.cc-timeline-dot[data-state="failed"] { border-color: var(--rf-red); background: rgba(251,106,106,0.12); }
+.cc-timeline-dot[data-state="blocked"],
+.cc-timeline-dot[data-state="not-connected"] { opacity: 0.5; }
+.cc-timeline-label { font-size: 11px; font-weight: 500; text-align: center; color: var(--rf-muted); }
+.cc-timeline-substate { font-size: 10px; color: var(--rf-faint); text-align: center; }
+
+/* =====================================================================
+   Overlay panels — Opportunity Workspace / Approval Center / Compass
+   ===================================================================== */
+
+.cc-overlay-scrim {
+  position: fixed; inset: 0; background: rgba(3,5,10,0.6); backdrop-filter: blur(2px);
+  z-index: 50; animation: cc-fade-in 0.2s ease both;
+}
+.cc-overlay-panel {
+  position: fixed; top: 0; right: 0; height: 100vh; width: min(560px, 100vw);
+  background: var(--rf-bg-2); border-left: 1px solid var(--rf-card-line);
+  z-index: 51; overflow-y: auto;
+  animation: cc-slide-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (max-width: 640px) {
+  .cc-overlay-panel { width: 100vw; }
+}
+.cc-overlay-header {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--rf-bg-2); border-bottom: 1px solid var(--rf-card-line);
+  padding: 18px 22px; display: flex; align-items: flex-start; gap: 12px; justify-content: space-between;
+}
+.cc-overlay-body { padding: 22px; }
+.cc-overlay-close {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--rf-faint); transition: background-color 0.15s ease, color 0.15s ease;
+}
+.cc-overlay-close:hover { background: rgba(255,255,255,0.05); color: var(--rf-text); }
+
+.cc-field { margin-bottom: 20px; }
+.cc-field-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--rf-faint); margin-bottom: 6px; }
+.cc-field-value { font-size: 14px; line-height: 1.6; color: var(--rf-muted); }
+
+.cc-btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  background: linear-gradient(180deg, var(--rf-blue-bright), var(--rf-blue)); color: white;
+  transition: transform 0.15s ease;
+}
+.cc-btn-primary:hover { transform: translateY(-1px); }
+.cc-btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  border: 1px solid var(--rf-card-line); color: var(--rf-muted);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.cc-btn-ghost:hover { border-color: var(--rf-card-line-strong); color: var(--rf-text); }
+.cc-btn-amber {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  background: var(--rf-amber); color: #1a1200;
+  transition: transform 0.15s ease;
+}
+.cc-btn-amber:hover { transform: translateY(-1px); }
+
+/* ---- Compass chat ---- */
+.cc-compass-msg { padding: 10px 0; }
+.cc-compass-input-row {
+  display: flex; align-items: center; gap: 8px; border: 1px solid var(--rf-card-line);
+  border-radius: 12px; padding: 8px 8px 8px 14px; background: rgba(255,255,255,0.015);
+}
+.cc-compass-input-row:focus-within { border-color: rgba(79,139,255,0.5); }
+.cc-compass-suggestion {
+  border: 1px solid var(--rf-card-line); border-radius: 999px; padding: 6px 12px;
+  font-size: 12px; color: var(--rf-muted); transition: border-color 0.15s ease, color 0.15s ease;
+}
+.cc-compass-suggestion:hover { border-color: var(--rf-card-line-strong); color: var(--rf-text); }
+
+/* ---- Investigation banner (inline in top bar area) ---- */
+.cc-investigation-banner {
+  padding: 10px 24px; border-bottom: 1px solid var(--rf-card-line);
+  background: rgba(79,139,255,0.05);
+  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--rf-text);
+}
+
+/* ---- Priority badges ---- */
+.cc-priority-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; }
+.cc-priority-pill-high { background: rgba(251,106,106,0.15); color: #ff9b9b; }
+.cc-priority-pill-medium { background: rgba(251,191,36,0.15); color: var(--rf-amber); }
+.cc-priority-pill-low { background: rgba(148,173,224,0.12); color: var(--rf-muted); }

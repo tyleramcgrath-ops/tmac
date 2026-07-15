@@ -52,8 +52,12 @@ export interface PrepareItem {
   status: PrepareItemStatus
 }
 
+export type OpportunityPriority = 'high' | 'medium' | 'low'
+
 export interface Opportunity {
   headline: string
+  priority: OpportunityPriority
+  affectedAreas: string[]
   businessReason: string
   evidenceSummary: string
   affectedPages: { url: string; label: string }[]
@@ -130,6 +134,12 @@ export interface PendingApproval {
   title: string
   detail: string
   preparedBy: string
+  whatChanges: string
+  whyRecommended: string
+  requiredSpend: string
+  customerImpact: string
+  rollbackPlan: string
+  whatWillBeMeasured: string
 }
 
 export interface PreviewScenario {
@@ -165,6 +175,8 @@ const BUSINESS = { name: 'Martinez Plumbing & Drain', domain: 'martinezplumbing.
 
 const CONTACT_OPPORTUNITY: Opportunity = {
   headline: 'Customers may have trouble reaching you from your most important pages.',
+  priority: 'high',
+  affectedAreas: ['Website', 'Conversion paths', 'Reputation'],
   businessReason:
     'When someone lands on your homepage or a service page ready to call, every extra second spent hunting for your phone number is a chance they give up and call the next plumber instead.',
   evidenceSummary: 'Your homepage does not show a clickable phone number or contact method before a visitor scrolls.',
@@ -355,6 +367,12 @@ const waitingApproval: PreviewScenario = {
     detail:
       'Your website lists different holiday hours than your Google Business Profile. North Star prepared an update so both match. Nothing has been published — this is only a draft waiting on you.',
     preparedBy: 'North Star',
+    whatChanges: "Your Google Business Profile hours will be updated to match the holiday hours already listed on your website (closed Dec 25, reduced hours Dec 24 and Jan 1).",
+    whyRecommended: 'Customers checking Google before calling see different hours than your website shows. Mismatched hours are a common reason people give up and call a competitor instead.',
+    requiredSpend: 'None — this is a listing update, not an ad or paid change.',
+    customerImpact: 'Anyone viewing your Google Business Profile will see the corrected hours immediately after publishing.',
+    rollbackPlan: 'North Star keeps the previous hours on file. If anything looks wrong, tell Compass "undo the holiday hours change" and it reverts within one check cycle.',
+    whatWillBeMeasured: 'Whether your website and Google Business Profile hours stay in sync on your next few checks.',
   },
   digitalDna: dnaAreas(),
   activity: [
