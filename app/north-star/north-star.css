@@ -151,40 +151,18 @@
 .office-horizon-item b { color: var(--rf-muted); font-weight: 500; }
 .office-horizon-empty { font-size: 12px; color: var(--rf-faint); padding: 0 28px 14px; }
 
-/* ---- Digital DNA sculpture ---- */
+/* ---- Digital DNA sculpture ----
+   Canvas-driven particle-flow field (components/north-star/office/DnaSculpture.tsx).
+   No DOM nodes/lines are drawn for the sculpture itself — only accessible
+   hit-target buttons (invisible) and text labels sit in this wrapper. */
 .office-dna-wrap {
   position: relative;
-  height: 460px;
+  height: 560px;
   margin: 0 auto;
-  max-width: 1100px;
+  max-width: 1300px;
 }
-.office-dna-core {
-  position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
-  width: 78px; height: 78px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #3a3020, #17140c 70%);
-  border: 1px solid var(--office-brass);
-  box-shadow: 0 0 70px -8px rgba(201,168,119,0.5), inset 0 0 26px rgba(0,0,0,0.6);
-  /* No explicit z-index: an explicit stacking level here would paint above
-     every DOM-later sibling regardless of order, hiding the identity node
-     and its label that are meant to sit visually on top of this glow. */
-}
-.office-dna-core[data-active="true"] {
-  animation: office-core-breathe 1.8s ease-in-out infinite;
-}
-@keyframes office-core-breathe {
-  0%, 100% { box-shadow: 0 0 70px -8px rgba(201,168,119,0.5), inset 0 0 26px rgba(0,0,0,0.6); }
-  50% { box-shadow: 0 0 100px -6px rgba(201,168,119,0.75), inset 0 0 26px rgba(0,0,0,0.6); }
-}
-.office-dna-node {
-  position: absolute;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-.office-dna-node:hover, .office-dna-node[data-selected="true"] { filter: brightness(1.35); transform: scale(1.08); }
-.office-dna-node[data-active="true"] { animation: office-core-breathe 1.4s ease-in-out infinite; }
 .office-dna-label {
-  position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 6px;
+  position: absolute; transform: translateX(-50%);
   font-size: 11px; color: var(--rf-muted); white-space: nowrap; text-align: center;
 }
 .office-dna-label[data-major="true"] { font-weight: 600; color: var(--office-ink); }
