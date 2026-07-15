@@ -15,68 +15,68 @@ datasource db {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model User {
-  id               String   @id @default(cuid())
-  email            String   @unique
-  emailVerified    DateTime?
-  name             String?
-  passwordHash     String?  // bcrypt hash, nullable for OAuth-only accounts
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  passwordHash  String? // bcrypt hash, nullable for OAuth-only accounts
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // Sessions and authentication
-  sessions                 Session[]
-  passwordResetTokens      PasswordResetToken[]
-  emailVerificationTokens  EmailVerificationToken[]
+  sessions                Session[]
+  passwordResetTokens     PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
 
   // Organizational relationships
-  organizationMemberships  OrganizationMember[]
+  organizationMemberships OrganizationMember[]
 
   // Audit trail
-  auditLogs                AuditLog[]
+  auditLogs AuditLog[]
 
   // Execution Engine (Phase 9.0)
-  executionApprovals       ExecutionApproval[]
-  executionDeployments     ExecutionDeployment[]
+  executionApprovals   ExecutionApproval[]
+  executionDeployments ExecutionDeployment[]
 
   @@index([email])
   @@index([createdAt])
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  userId       String
-  expiresAt    DateTime
-  createdAt    DateTime @default(now())
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([expiresAt])
 }
 
 model PasswordResetToken {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   userId    String
-  token     String   @unique
+  token     String    @unique
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   usedAt    DateTime?
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([expiresAt])
 }
 
 model EmailVerificationToken {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   userId    String
-  token     String   @unique
+  token     String    @unique
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   usedAt    DateTime?
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([expiresAt])
@@ -87,61 +87,61 @@ model EmailVerificationToken {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Organization {
-  id               String   @id @default(cuid())
-  name             String
-  slug             String   @unique  // For URL: example.tmac.com
-  logoUrl          String?
-  description      String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique // For URL: example.tmac.com
+  logoUrl     String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   // Team & access control
-  members          OrganizationMember[]
-  teamInvitations  TeamInvitation[]
+  members         OrganizationMember[]
+  teamInvitations TeamInvitation[]
 
   // Organization data
-  projects         Project[]
-  audits           Audit[]
-  workItems        WorkItem[]
-  events           Event[]
-  auditLogs        AuditLog[]
-  recommendations  Recommendation[]
-  competitors      Competitor[]
-  deployments      Deployment[]
+  projects        Project[]
+  audits          Audit[]
+  workItems       WorkItem[]
+  events          Event[]
+  auditLogs       AuditLog[]
+  recommendations Recommendation[]
+  competitors     Competitor[]
+  deployments     Deployment[]
 
   // Integrations (org-level)
-  oauthCredentials OAuthCredential[]
+  oauthCredentials           OAuthCredential[]
   googleSearchConsoleMetrics GoogleSearchConsoleMetric[]
-  googleAnalytics4Metrics GoogleAnalytics4Metric[]
+  googleAnalytics4Metrics    GoogleAnalytics4Metric[]
 
   // Decision Engine (org-level)
-  pageClassifications PageClassification[] @relation("PageClassifications")
-  pageSignals         PageSignals[] @relation("PageSignals")
-  businessValueScores BusinessValueScore[] @relation("BusinessValueScores")
-  seoOpportunityScores SEOOpportunityScore[] @relation("SEOOpportunityScores")
-  pagePriorities      PagePriority[] @relation("PagePriorities")
+  pageClassifications     PageClassification[]     @relation("PageClassifications")
+  pageSignals             PageSignals[]            @relation("PageSignals")
+  businessValueScores     BusinessValueScore[]     @relation("BusinessValueScores")
+  seoOpportunityScores    SEOOpportunityScore[]    @relation("SEOOpportunityScores")
+  pagePriorities          PagePriority[]           @relation("PagePriorities")
   recommendationDecisions RecommendationDecision[] @relation("RecommendationDecisions")
-  dailyMissions       DailyMission[] @relation("DailyMissions")
+  dailyMissions           DailyMission[]           @relation("DailyMissions")
 
   // Business Context (Phase 7.6)
-  businessProfiles    BusinessProfile[]
-  businessObjectives  BusinessObjective[]
+  businessProfiles            BusinessProfile[]
+  businessObjectives          BusinessObjective[]
   pageBusinessClassifications PageBusinessClassification[]
-  conversionGoals     ConversionGoal[]
-  seasonalPriorities  SeasonalPriority[]
-  businessContextVersions BusinessContextVersion[]
-  campaignTemplates   CampaignTemplate[]
+  conversionGoals             ConversionGoal[]
+  seasonalPriorities          SeasonalPriority[]
+  businessContextVersions     BusinessContextVersion[]
+  campaignTemplates           CampaignTemplate[]
 
   // Content Optimization (Phase 7.7)
-  contentInventories  ContentInventory[]
-  contentMetrics      ContentMetrics[]
-  contentGaps         ContentGapAnalysis[]
-  contentRefreshes    ContentRefreshOpportunity[]
-  contentBriefs       ContentBrief[]
-  generatedContent    GeneratedContent[]
-  contentDiffs        ContentDiff[]
-  internalLinkRecs    InternalLinkRecommendation[]
-  contentDecayAlerts  ContentDecayAlert[]
+  contentInventories ContentInventory[]
+  contentMetrics     ContentMetrics[]
+  contentGaps        ContentGapAnalysis[]
+  contentRefreshes   ContentRefreshOpportunity[]
+  contentBriefs      ContentBrief[]
+  generatedContent   GeneratedContent[]
+  contentDiffs       ContentDiff[]
+  internalLinkRecs   InternalLinkRecommendation[]
+  contentDecayAlerts ContentDecayAlert[]
 
   // Pipeline (Phase 7.8F)
   pipelineRuns        PipelineRun[]
@@ -151,48 +151,48 @@ model Organization {
   knowledgeGraphEdges KnowledgeGraphEdge[]
 
   // Operator (Phase 8.1)
-  operatorMemories    OperatorMemory[]
-  operatorOutcomes    OperatorOutcome[]
-  operatorCandidates  OperatorCandidate[]
-  operatorEvents      OperatorEvent[]
-  operatorPreferences OperatorPreference[]
-  operatorActionPlans OperatorActionPlan[]
+  operatorMemories          OperatorMemory[]
+  operatorOutcomes          OperatorOutcome[]
+  operatorCandidates        OperatorCandidate[]
+  operatorEvents            OperatorEvent[]
+  operatorPreferences       OperatorPreference[]
+  operatorActionPlans       OperatorActionPlan[]
   operatorNotificationPrefs OperatorNotificationPref[]
 
   // Operator Phase 8.2 (Self-Review)
-  operatorReviewCycles OperatorReviewCycle[]
-  operatorStrategies   OperatorStrategy[]
-  operatorWhyNots      OperatorWhyNot[]
+  operatorReviewCycles     OperatorReviewCycle[]
+  operatorStrategies       OperatorStrategy[]
+  operatorWhyNots          OperatorWhyNot[]
   operatorConfidenceAudits OperatorConfidenceAudit[]
   operatorOpportunityCosts OperatorOpportunityCost[]
-  operatorQualityMetrics OperatorQualityMetric[]
+  operatorQualityMetrics   OperatorQualityMetric[]
 
   // Execution Engine (Phase 9.0)
-  executionPlans        ExecutionPlan[]
-  executionApprovals    ExecutionApproval[]
-  executionDeployments  ExecutionDeployment[]
+  executionPlans         ExecutionPlan[]
+  executionApprovals     ExecutionApproval[]
+  executionDeployments   ExecutionDeployment[]
   executionVerifications ExecutionVerification[]
-  executionOutcomes     ExecutionOutcome[]
-  executionHistories    ExecutionHistory[]
+  executionOutcomes      ExecutionOutcome[]
+  executionHistories     ExecutionHistory[]
 
   @@index([slug])
   @@index([createdAt])
 }
 
 model OrganizationMember {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   organizationId String
   userId         String
-  role           String   // 'owner', 'admin', 'manager', 'analyst', 'viewer'
-  invitedAt      DateTime @default(now())
+  role           String // 'owner', 'admin', 'manager', 'analyst', 'viewer'
+  invitedAt      DateTime  @default(now())
   joinedAt       DateTime?
   removedAt      DateTime?
-  invitedBy      String?  // User ID who sent the invitation
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  invitedBy      String? // User ID who sent the invitation
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, userId])
   @@index([organizationId])
@@ -201,18 +201,18 @@ model OrganizationMember {
 }
 
 model TeamInvitation {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   organizationId String
   email          String
-  role           String   // 'admin', 'manager', 'analyst', 'viewer'
-  token          String   @unique
+  role           String // 'admin', 'manager', 'analyst', 'viewer'
+  token          String    @unique
   expiresAt      DateTime
   acceptedAt     DateTime?
-  userId         String?  // Populated when invitation is accepted
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  userId         String? // Populated when invitation is accepted
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([email])
@@ -224,66 +224,66 @@ model TeamInvitation {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Project {
-  id              String   @id @default(cuid())
-  organizationId  String
-  name            String
-  domain          String
-  description     String?
-  favicon         String?
-  status          String   @default("active") // active, archived, deleted
-  isFavorite      Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(cuid())
+  organizationId String
+  name           String
+  domain         String
+  description    String?
+  favicon        String?
+  status         String   @default("active") // active, archived, deleted
+  isFavorite     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   // Business inputs
-  monthlyVisits   Int      @default(0)
-  valuePerVisit   Float    @default(0)
+  monthlyVisits Int   @default(0)
+  valuePerVisit Float @default(0)
 
   // WordPress integration
-  wpSiteUrl       String?
-  wpUser          String?
-  wpAppPassword   String?  // Encrypted
+  wpSiteUrl     String?
+  wpUser        String?
+  wpAppPassword String? // Encrypted
 
   // Project data
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  audits          Audit[]
-  workItems       WorkItem[]
-  competitors     Competitor[]
-  oauthCredentials OAuthCredential[]
+  organization        Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  audits              Audit[]
+  workItems           WorkItem[]
+  competitors         Competitor[]
+  oauthCredentials    OAuthCredential[]
   googleSearchConsole GoogleSearchConsoleMetric[]
-  googleAnalytics4 GoogleAnalytics4Metric[]
-  deployments     Deployment[]
-  events          Event[]
-  recommendations Recommendation[]
+  googleAnalytics4    GoogleAnalytics4Metric[]
+  deployments         Deployment[]
+  events              Event[]
+  recommendations     Recommendation[]
 
   // Decision Engine
-  pageClassifications PageClassification[]
-  pageSignals         PageSignals[]
-  businessValueScores BusinessValueScore[]
-  seoOpportunityScores SEOOpportunityScore[]
-  pagePriorities      PagePriority[]
+  pageClassifications     PageClassification[]
+  pageSignals             PageSignals[]
+  businessValueScores     BusinessValueScore[]
+  seoOpportunityScores    SEOOpportunityScore[]
+  pagePriorities          PagePriority[]
   recommendationDecisions RecommendationDecision[]
-  dailyMissions       DailyMission[]
+  dailyMissions           DailyMission[]
 
   // Business Context
-  businessProfile   BusinessProfile?
-  businessObjectives BusinessObjective[]
+  businessProfile             BusinessProfile?
+  businessObjectives          BusinessObjective[]
   pageBusinessClassifications PageBusinessClassification[]
-  conversionGoals   ConversionGoal[]
-  seasonalPriorities SeasonalPriority[]
-  businessContextVersions BusinessContextVersion[]
-  campaignTemplates CampaignTemplate[]
+  conversionGoals             ConversionGoal[]
+  seasonalPriorities          SeasonalPriority[]
+  businessContextVersions     BusinessContextVersion[]
+  campaignTemplates           CampaignTemplate[]
 
   // Content Optimization (Phase 7.7)
-  contentInventories  ContentInventory[]
-  contentMetrics      ContentMetrics[]
-  contentGaps         ContentGapAnalysis[]
-  contentRefreshes    ContentRefreshOpportunity[]
-  contentBriefs       ContentBrief[]
-  generatedContent    GeneratedContent[]
-  contentDiffs        ContentDiff[]
-  internalLinkRecs    InternalLinkRecommendation[]
-  contentDecayAlerts  ContentDecayAlert[]
+  contentInventories ContentInventory[]
+  contentMetrics     ContentMetrics[]
+  contentGaps        ContentGapAnalysis[]
+  contentRefreshes   ContentRefreshOpportunity[]
+  contentBriefs      ContentBrief[]
+  generatedContent   GeneratedContent[]
+  contentDiffs       ContentDiff[]
+  internalLinkRecs   InternalLinkRecommendation[]
+  contentDecayAlerts ContentDecayAlert[]
 
   // Pipeline (Phase 7.8F)
   pipelineRuns        PipelineRun[]
@@ -293,25 +293,25 @@ model Project {
   knowledgeGraphEdges KnowledgeGraphEdge[]
 
   // Operator (Phase 8.1)
-  operatorMemories    OperatorMemory[]
-  operatorOutcomes    OperatorOutcome[]
-  operatorCandidates  OperatorCandidate[]
-  operatorEvents      OperatorEvent[]
-  operatorPreferences OperatorPreference[]
-  operatorActionPlans OperatorActionPlan[]
+  operatorMemories          OperatorMemory[]
+  operatorOutcomes          OperatorOutcome[]
+  operatorCandidates        OperatorCandidate[]
+  operatorEvents            OperatorEvent[]
+  operatorPreferences       OperatorPreference[]
+  operatorActionPlans       OperatorActionPlan[]
   operatorNotificationPrefs OperatorNotificationPref[]
 
   // Operator Phase 8.2 (Self-Review)
-  operatorReviewCycles OperatorReviewCycle[]
-  operatorStrategies   OperatorStrategy[]
-  operatorWhyNots      OperatorWhyNot[]
+  operatorReviewCycles     OperatorReviewCycle[]
+  operatorStrategies       OperatorStrategy[]
+  operatorWhyNots          OperatorWhyNot[]
   operatorConfidenceAudits OperatorConfidenceAudit[]
   operatorOpportunityCosts OperatorOpportunityCost[]
 
   // Execution Engine (Phase 9.0)
-  executionPlans        ExecutionPlan[]
-  executionOutcomes     ExecutionOutcome[]
-  executionHistories    ExecutionHistory[]
+  executionPlans     ExecutionPlan[]
+  executionOutcomes  ExecutionOutcome[]
+  executionHistories ExecutionHistory[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -325,40 +325,40 @@ model Project {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Audit {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  status          String   @default("pending") // pending, running, completed, failed
-  startedAt       DateTime @default(now())
-  endedAt         DateTime?
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String
+  status         String    @default("pending") // pending, running, completed, failed
+  startedAt      DateTime  @default(now())
+  endedAt        DateTime?
 
   // Crawl metadata
-  pageCount       Int      @default(0)
-  issueCount      Int      @default(0)
-  criticalCount   Int      @default(0)
-  warningCount    Int      @default(0)
-  infoCount       Int      @default(0)
+  pageCount     Int @default(0)
+  issueCount    Int @default(0)
+  criticalCount Int @default(0)
+  warningCount  Int @default(0)
+  infoCount     Int @default(0)
 
   // Scores
-  siteScore       Int      @default(0)
-  technicalScore  Int      @default(0)
-  contentScore    Int      @default(0)
-  schemaScore     Int      @default(0)
-  aiScore         Int      @default(0)
+  siteScore      Int @default(0)
+  technicalScore Int @default(0)
+  contentScore   Int @default(0)
+  schemaScore    Int @default(0)
+  aiScore        Int @default(0)
 
   // Metrics
-  schemaCoverage  Int      @default(0)
-  orphanCount     Int      @default(0)
-  avgInbound      Int      @default(0)
+  schemaCoverage Int @default(0)
+  orphanCount    Int @default(0)
+  avgInbound     Int @default(0)
 
   // Summary
-  summary         String?  // JSON
+  summary String? // JSON
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  pages           Page[]
-  issues          Issue[]
-  events          Event[]
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  pages        Page[]
+  issues       Issue[]
+  events       Event[]
 
   @@index([organizationId])
   @@index([projectId])
@@ -367,38 +367,38 @@ model Audit {
 }
 
 model Page {
-  id              String   @id @default(cuid())
-  auditId         String
-  url             String
-  status          Int      @default(0)
+  id      String @id @default(cuid())
+  auditId String
+  url     String
+  status  Int    @default(0)
 
   // Content
   title           String?
   metaDescription String?
   h1              String?
-  h1Count         Int      @default(0)
-  contentLength   Int      @default(0)
+  h1Count         Int     @default(0)
+  contentLength   Int     @default(0)
 
   // Technical
   canonical       String?
-  hasNoindex      Boolean  @default(false)
-  hasMixedContent Boolean  @default(false)
+  hasNoindex      Boolean @default(false)
+  hasMixedContent Boolean @default(false)
   pageSpeedScore  Int?
 
   // Linking
-  internalLinks   Int      @default(0)
-  internalTargets Int      @default(0)
-  inboundCount    Int      @default(0)
+  internalLinks   Int @default(0)
+  internalTargets Int @default(0)
+  inboundCount    Int @default(0)
 
   // Schema & AI
-  schemaTypes     String?  // JSON array
-  aiScore         Int      @default(0)
-  technicalScore  Int      @default(0)
-  contentScore    Int      @default(0)
-  schemaScore     Int      @default(0)
+  schemaTypes    String? // JSON array
+  aiScore        Int     @default(0)
+  technicalScore Int     @default(0)
+  contentScore   Int     @default(0)
+  schemaScore    Int     @default(0)
 
-  audit           Audit    @relation(fields: [auditId], references: [id], onDelete: Cascade)
-  issues          Issue[]
+  audit  Audit   @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  issues Issue[]
 
   @@unique([auditId, url])
   @@index([auditId])
@@ -406,17 +406,17 @@ model Page {
 }
 
 model Issue {
-  id              String   @id @default(cuid())
-  auditId         String
-  pageId          String
-  type            String   // duplicate_title, missing_meta, etc
-  severity        String   @default("info") // critical, warning, info
-  title           String
-  description     String?
-  affectedPages   String?  // JSON array
+  id            String  @id @default(cuid())
+  auditId       String
+  pageId        String
+  type          String // duplicate_title, missing_meta, etc
+  severity      String  @default("info") // critical, warning, info
+  title         String
+  description   String?
+  affectedPages String? // JSON array
 
-  audit           Audit    @relation(fields: [auditId], references: [id], onDelete: Cascade)
-  page            Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  audit Audit @relation(fields: [auditId], references: [id], onDelete: Cascade)
+  page  Page  @relation(fields: [pageId], references: [id], onDelete: Cascade)
 
   @@index([auditId])
   @@index([pageId])
@@ -428,22 +428,22 @@ model Issue {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model OAuthCredential {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String?
-  provider        String   // google, microsoft, etc
-  accessToken     String   // ENCRYPTED
-  refreshToken    String?  // ENCRYPTED
-  expiresAt       DateTime?
-  scope           String?
-  gscPropertyUrl  String?  // Encrypted
-  ga4PropertyId   String?  // Encrypted
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  lastUsedAt      DateTime?
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String?
+  provider       String // google, microsoft, etc
+  accessToken    String // ENCRYPTED
+  refreshToken   String? // ENCRYPTED
+  expiresAt      DateTime?
+  scope          String?
+  gscPropertyUrl String? // Encrypted
+  ga4PropertyId  String? // Encrypted
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  lastUsedAt     DateTime?
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project?     @relation(fields: [projectId], references: [id], onDelete: SetNull)
 
   @@unique([organizationId, provider, projectId])
   @@index([organizationId])
@@ -451,23 +451,23 @@ model OAuthCredential {
 }
 
 model GoogleSearchConsoleMetric {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  url             String
-  clicks          Int      @default(0)
-  impressions     Int      @default(0)
-  ctr             Float    @default(0)
-  position        Float    @default(0)
-  topQueries      String?  // JSON
-  devices         String?  // JSON
-  countries       String?  // JSON
-  dataDate        DateTime?
-  syncedAt        DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String
+  url            String
+  clicks         Int       @default(0)
+  impressions    Int       @default(0)
+  ctr            Float     @default(0)
+  position       Float     @default(0)
+  topQueries     String? // JSON
+  devices        String? // JSON
+  countries      String? // JSON
+  dataDate       DateTime?
+  syncedAt       DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, projectId, url])
   @@index([organizationId])
@@ -476,24 +476,24 @@ model GoogleSearchConsoleMetric {
 }
 
 model GoogleAnalytics4Metric {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  url             String
-  users           Int      @default(0)
-  sessions        Int      @default(0)
-  engagementRate  Float    @default(0)
-  bounceRate      Float    @default(0)
-  avgSessionDuration Float @default(0)
-  conversions     Int      @default(0)
-  conversionRate  Float    @default(0)
-  revenue         Float    @default(0)
-  dataDate        DateTime?
-  syncedAt        DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                 String    @id @default(cuid())
+  organizationId     String
+  projectId          String
+  url                String
+  users              Int       @default(0)
+  sessions           Int       @default(0)
+  engagementRate     Float     @default(0)
+  bounceRate         Float     @default(0)
+  avgSessionDuration Float     @default(0)
+  conversions        Int       @default(0)
+  conversionRate     Float     @default(0)
+  revenue            Float     @default(0)
+  dataDate           DateTime?
+  syncedAt           DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, projectId, url])
   @@index([organizationId])
@@ -506,25 +506,25 @@ model GoogleAnalytics4Metric {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Recommendation {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  auditId         String?
-  category        String
-  title           String
-  description     String?
-  severity        String   @default("info")
-  affectedPages   Int      @default(0)
-  trafficGain     Int      @default(0)
-  revenueGain     Float    @default(0)
-  difficulty      String   @default("medium")
-  estimatedMins   Int      @default(30)
-  confidence      Int      @default(80)
-  dismissed       Boolean  @default(false)
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  auditId        String?
+  category       String
+  title          String
+  description    String?
+  severity       String   @default("info")
+  affectedPages  Int      @default(0)
+  trafficGain    Int      @default(0)
+  revenueGain    Float    @default(0)
+  difficulty     String   @default("medium")
+  estimatedMins  Int      @default(30)
+  confidence     Int      @default(80)
+  dismissed      Boolean  @default(false)
+  createdAt      DateTime @default(now())
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -532,36 +532,36 @@ model Recommendation {
 }
 
 model WorkItem {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  auditId         String?
-  url             String
-  type            String   // title, meta, schema, technical, conversion, etc
-  status          String   @default("detected") // 8-step workflow
-  title           String
-  description     String?
-  why             String?
-  estimatedTraffic Int    @default(0)
-  estimatedRevenue Float  @default(0)
-  priority        String   @default("medium")
-  confidence      Int      @default(0)
-  generatedFix    String?  // JSON encrypted
-  fixPreview      String?
-  approvedAt      DateTime?
-  approvedBy      String?
-  deployedAt      DateTime?
-  deploymentId    String?
-  deploymentStatus String?
-  verifiedAt      DateTime?
-  beforeMetrics   String?  // JSON
-  afterMetrics    String?  // JSON
+  id                 String    @id @default(cuid())
+  organizationId     String
+  projectId          String
+  auditId            String?
+  url                String
+  type               String // title, meta, schema, technical, conversion, etc
+  status             String    @default("detected") // 8-step workflow
+  title              String
+  description        String?
+  why                String?
+  estimatedTraffic   Int       @default(0)
+  estimatedRevenue   Float     @default(0)
+  priority           String    @default("medium")
+  confidence         Int       @default(0)
+  generatedFix       String? // JSON encrypted
+  fixPreview         String?
+  approvedAt         DateTime?
+  approvedBy         String?
+  deployedAt         DateTime?
+  deploymentId       String?
+  deploymentStatus   String?
+  verifiedAt         DateTime?
+  beforeMetrics      String? // JSON
+  afterMetrics       String? // JSON
   verificationStatus String? // improved, no_change, regressed
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -575,26 +575,26 @@ model WorkItem {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Competitor {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  domain          String
-  displayName     String
-  industry        String?
-  notes           String?
-  monitoringStatus String @default("active")
-  crawlFrequency  Int      @default(7)
-  lastCrawl       DateTime?
-  lastComparison  DateTime?
-  dateAdded       DateTime @default(now())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id               String    @id @default(cuid())
+  organizationId   String
+  projectId        String
+  domain           String
+  displayName      String
+  industry         String?
+  notes            String?
+  monitoringStatus String    @default("active")
+  crawlFrequency   Int       @default(7)
+  lastCrawl        DateTime?
+  lastComparison   DateTime?
+  dateAdded        DateTime  @default(now())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  snapshots       CompetitorSnapshot[]
-  changes         CompetitorChange[]
-  opportunities   CompetitorOpportunity[]
+  organization  Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project       Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshots     CompetitorSnapshot[]
+  changes       CompetitorChange[]
+  opportunities CompetitorOpportunity[]
 
   @@unique([projectId, domain])
   @@index([organizationId])
@@ -602,19 +602,19 @@ model Competitor {
 }
 
 model CompetitorSnapshot {
-  id              String   @id @default(cuid())
-  organizationId  String
-  competitorId    String
-  pageCount       Int      @default(0)
-  issueCount      Int      @default(0)
-  technicalScore  Int      @default(0)
-  contentScore    Int      @default(0)
-  schemaScore     Int      @default(0)
-  pages           String?  // JSON
-  crawledAt       DateTime @default(now())
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  competitorId   String
+  pageCount      Int      @default(0)
+  issueCount     Int      @default(0)
+  technicalScore Int      @default(0)
+  contentScore   Int      @default(0)
+  schemaScore    Int      @default(0)
+  pages          String? // JSON
+  crawledAt      DateTime @default(now())
+  createdAt      DateTime @default(now())
 
-  competitor      Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+  competitor Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([competitorId])
@@ -622,20 +622,20 @@ model CompetitorSnapshot {
 }
 
 model CompetitorChange {
-  id              String   @id @default(cuid())
-  organizationId  String
-  competitorId    String
-  type            String   // newPages, removedPages, titleChanges, etc
-  severity        String   @default("medium")
-  description     String
-  count           Int      @default(1)
-  affectedPages   String?  // JSON
-  impact          String?  // competitive_threat, opportunity, neutral
-  impactReason    String?
-  detectedAt      DateTime @default(now())
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  competitorId   String
+  type           String // newPages, removedPages, titleChanges, etc
+  severity       String   @default("medium")
+  description    String
+  count          Int      @default(1)
+  affectedPages  String? // JSON
+  impact         String? // competitive_threat, opportunity, neutral
+  impactReason   String?
+  detectedAt     DateTime @default(now())
+  createdAt      DateTime @default(now())
 
-  competitor      Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+  competitor Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([competitorId])
@@ -644,25 +644,25 @@ model CompetitorChange {
 }
 
 model CompetitorOpportunity {
-  id              String   @id @default(cuid())
-  organizationId  String
-  competitorId    String
-  changeType      String
-  title           String
-  description     String
-  competitive_threat Boolean @default(false)
-  opportunity     Boolean  @default(false)
-  recommendedAction String?
-  actionType      String?
-  estimatedTraffic Int?
+  id                  String    @id @default(cuid())
+  organizationId      String
+  competitorId        String
+  changeType          String
+  title               String
+  description         String
+  competitive_threat  Boolean   @default(false)
+  opportunity         Boolean   @default(false)
+  recommendedAction   String?
+  actionType          String?
+  estimatedTraffic    Int?
   estimatedDifficulty String?
-  estimatedTime   Int?
-  dismissed       Boolean  @default(false)
-  implementedAt   DateTime?
-  detectedAt      DateTime @default(now())
-  createdAt       DateTime @default(now())
+  estimatedTime       Int?
+  dismissed           Boolean   @default(false)
+  implementedAt       DateTime?
+  detectedAt          DateTime  @default(now())
+  createdAt           DateTime  @default(now())
 
-  competitor      Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
+  competitor Competitor @relation(fields: [competitorId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([competitorId])
@@ -674,18 +674,18 @@ model CompetitorOpportunity {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Deployment {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String
-  type            String   @default("deploy")
-  status          String   @default("pending")
-  targetUrl       String?
-  changes         String?  // JSON
-  error           String?
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  type           String   @default("deploy")
+  status         String   @default("pending")
+  targetUrl      String?
+  changes        String? // JSON
+  error          String?
+  createdAt      DateTime @default(now())
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -698,18 +698,18 @@ model Deployment {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Event {
-  id              String   @id @default(cuid())
-  organizationId  String
-  projectId       String?
-  auditId         String?
-  type            String   // audit, deploy, forge_chat, recommendation_generated, etc
-  action          String?
-  metadata        String?  // JSON for extra context
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  auditId        String?
+  type           String // audit, deploy, forge_chat, recommendation_generated, etc
+  action         String?
+  metadata       String? // JSON for extra context
+  createdAt      DateTime @default(now())
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project         Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  audit           Audit?        @relation(fields: [auditId], references: [id], onDelete: SetNull)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project?     @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  audit        Audit?       @relation(fields: [auditId], references: [id], onDelete: SetNull)
 
   @@index([organizationId])
   @@index([projectId])
@@ -718,19 +718,19 @@ model Event {
 }
 
 model AuditLog {
-  id              String   @id @default(cuid())
-  organizationId  String
-  userId          String
-  action          String   // user.login, project.created, credentials.changed, etc
-  resource        String   // user, project, organization, credential
-  resourceId      String
-  changes         String?  // JSON of what changed
-  ipAddress       String?
-  userAgent       String?
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String
+  action         String // user.login, project.created, credentials.changed, etc
+  resource       String // user, project, organization, credential
+  resourceId     String
+  changes        String? // JSON of what changed
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
 
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([userId])
@@ -743,31 +743,31 @@ model AuditLog {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ForgeMemory {
-  id              String   @id @default(cuid())
-  projectId       String   @unique
-  messages        String   // JSON
-  patterns        String?  // JSON
-  updatedAt       DateTime @updatedAt
+  id        String   @id @default(cuid())
+  projectId String   @unique
+  messages  String // JSON
+  patterns  String? // JSON
+  updatedAt DateTime @updatedAt
 
   @@index([projectId])
 }
 
 model Recommendation_Legacy {
-  id              String   @id @default(cuid())
-  projectId       String
-  auditId         String?
-  category        String
-  title           String
-  description     String?
-  severity        String   @default("info")
-  affectedPages   Int      @default(0)
-  trafficGain     Int      @default(0)
-  revenueGain     Float    @default(0)
-  difficulty      String   @default("medium")
-  estimatedMins   Int      @default(30)
-  confidence      Int      @default(80)
-  dismissed       Boolean  @default(false)
-  createdAt       DateTime @default(now())
+  id            String   @id @default(cuid())
+  projectId     String
+  auditId       String?
+  category      String
+  title         String
+  description   String?
+  severity      String   @default("info")
+  affectedPages Int      @default(0)
+  trafficGain   Int      @default(0)
+  revenueGain   Float    @default(0)
+  difficulty    String   @default("medium")
+  estimatedMins Int      @default(30)
+  confidence    Int      @default(80)
+  dismissed     Boolean  @default(false)
+  createdAt     DateTime @default(now())
 
   @@index([projectId])
   @@index([auditId])
@@ -779,33 +779,33 @@ model Recommendation_Legacy {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model PageClassification {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  pageUrl          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Classification results
-  classifications  Json     // [{type: "ServicePage", confidence: 0.96, signals: [...]}]
+  classifications       Json // [{type: "ServicePage", confidence: 0.96, signals: [...]}]
   primaryClassification String
-  confidenceScore  Float    // 0-1
-  
+  confidenceScore       Float // 0-1
+
   // Classification signals
-  urlPattern       String?
-  hasSchema        String[]
-  hasForm          Boolean  @default(false)
-  ctaButtons       String[]
-  navigationLevel  String?  // "main", "secondary", "footer"
-  internalLinkCount Int     @default(0)
-  
+  urlPattern        String?
+  hasSchema         String[]
+  hasForm           Boolean  @default(false)
+  ctaButtons        String[]
+  navigationLevel   String? // "main", "secondary", "footer"
+  internalLinkCount Int      @default(0)
+
   // Manual override
   manualClassification String?
-  
-  classifiedAt     DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  
-  organization     Organization @relation("PageClassifications", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  signals          PageSignals?
+
+  classifiedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  organization Organization @relation("PageClassifications", fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  signals      PageSignals?
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -814,71 +814,71 @@ model PageClassification {
 }
 
 model PageSignals {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  pageUrl          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // GA4 Signals
-  ga4_monthlyVisitors Int   @default(0)
-  ga4_monthlyConversions Int @default(0)
-  ga4_conversionRate Float  @default(0)
-  ga4_conversionValue Float @default(0)
-  ga4_30dayTrend   Float    @default(0)
-  ga4_lastUpdated  DateTime?
+  ga4_monthlyVisitors    Int       @default(0)
+  ga4_monthlyConversions Int       @default(0)
+  ga4_conversionRate     Float     @default(0)
+  ga4_conversionValue    Float     @default(0)
+  ga4_30dayTrend         Float     @default(0)
+  ga4_lastUpdated        DateTime?
 
   // GSC Signals
-  gsc_monthlyImpressions Int   @default(0)
-  gsc_monthlyClicks Int         @default(0)
-  gsc_ctr          Float        @default(0)
-  gsc_avgPosition  Float        @default(0)
-  gsc_industryAvgCtr Float      @default(0)
-  gsc_30dayTrend   Float        @default(0)
-  gsc_lastUpdated  DateTime?
+  gsc_monthlyImpressions Int       @default(0)
+  gsc_monthlyClicks      Int       @default(0)
+  gsc_ctr                Float     @default(0)
+  gsc_avgPosition        Float     @default(0)
+  gsc_industryAvgCtr     Float     @default(0)
+  gsc_30dayTrend         Float     @default(0)
+  gsc_lastUpdated        DateTime?
 
   // Crawl Signals
-  crawl_status     Int           @default(0)
-  crawl_title      String?
+  crawl_status          Int       @default(0)
+  crawl_title           String?
   crawl_metaDescription String?
-  crawl_h1         String?
-  crawl_contentLength Int        @default(0)
-  crawl_internalLinks Int        @default(0)
-  crawl_inboundCount Int         @default(0)
-  crawl_hasCanonical Boolean     @default(false)
-  crawl_hasNoindex Boolean       @default(false)
-  crawl_schemaTypes String[]
-  crawl_coreWebVitals Json?
-  crawl_mobileUsable Boolean     @default(true)
-  crawl_lastCrawled DateTime?
+  crawl_h1              String?
+  crawl_contentLength   Int       @default(0)
+  crawl_internalLinks   Int       @default(0)
+  crawl_inboundCount    Int       @default(0)
+  crawl_hasCanonical    Boolean   @default(false)
+  crawl_hasNoindex      Boolean   @default(false)
+  crawl_schemaTypes     String[]
+  crawl_coreWebVitals   Json?
+  crawl_mobileUsable    Boolean   @default(true)
+  crawl_lastCrawled     DateTime?
 
   // Technical Signals
-  technical_issueCount Int @default(0)
+  technical_issueCount     Int @default(0)
   technical_criticalIssues Int @default(0)
-  technical_score Int @default(0)
+  technical_score          Int @default(0)
 
   // Content Signals
-  content_score    Int    @default(0)
-  content_daysOld  Int    @default(0)
+  content_score       Int       @default(0)
+  content_daysOld     Int       @default(0)
   content_lastUpdated DateTime?
 
   // Schema Signals
-  schema_score     Int    @default(0)
+  schema_score            Int     @default(0)
   schema_hasLocalBusiness Boolean @default(false)
-  schema_hasService Boolean @default(false)
-  schema_hasFAQ    Boolean @default(false)
-  schema_completeness Float @default(0)
+  schema_hasService       Boolean @default(false)
+  schema_hasFAQ           Boolean @default(false)
+  schema_completeness     Float   @default(0)
 
   // Business Signals
   business_strategicImportance Int?
-  business_manualPriority String?  // "MISSION_CRITICAL", "HIGH", "NORMAL", "IGNORE"
-  business_revenuePotential Float?
+  business_manualPriority      String? // "MISSION_CRITICAL", "HIGH", "NORMAL", "IGNORE"
+  business_revenuePotential    Float?
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization     Organization @relation("PageSignals", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  classification   PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
+  organization   Organization       @relation("PageSignals", fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  classification PageClassification @relation(fields: [projectId, pageUrl], references: [projectId, pageUrl], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -888,32 +888,32 @@ model PageSignals {
 }
 
 model BusinessValueScore {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  pageUrl          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Component scores (0-100)
-  revenueScore     Int
-  conversionScore  Int
-  strategicScore   Int
-  navigationScore  Int
-  authorityScore   Int
-  trendScore       Int
+  revenueScore        Int
+  conversionScore     Int
+  strategicScore      Int
+  navigationScore     Int
+  authorityScore      Int
+  trendScore          Int
   manualPriorityScore Int
 
   // Weights used
-  weightsUsed      Json?    // {"revenue": 0.40, ...}
+  weightsUsed Json? // {"revenue": 0.40, ...}
 
   // Final score
-  totalBusinessValue Int    // 0-100
-  explanation      String?
+  totalBusinessValue Int // 0-100
+  explanation        String?
 
-  calculatedAt     DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  calculatedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  organization     Organization @relation("BusinessValueScores", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation("BusinessValueScores", fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -922,36 +922,36 @@ model BusinessValueScore {
 }
 
 model SEOOpportunityScore {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  pageUrl          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Component scores (0-100)
-  rankingGapScore  Int
-  ctrGapScore      Int
-  impressionScore  Int
-  schemaGapsScore  Int
-  internalLinkingScore Int
-  indexabilityScore Int
-  coreWebVitalsScore Int
+  rankingGapScore       Int
+  ctrGapScore           Int
+  impressionScore       Int
+  schemaGapsScore       Int
+  internalLinkingScore  Int
+  indexabilityScore     Int
+  coreWebVitalsScore    Int
   contentFreshnessScore Int
-  backlinksScore   Int
+  backlinksScore        Int
   duplicateContentScore Int
 
   // Weights used
-  weightsUsed      Json?
+  weightsUsed Json?
 
   // Final score
-  totalSeoOpportunity Int   // 0-100
+  totalSeoOpportunity     Int // 0-100
   identifiedOpportunities Json?
-  explanation      String?
+  explanation             String?
 
-  calculatedAt     DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  calculatedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  organization     Organization @relation("SEOOpportunityScores", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation("SEOOpportunityScores", fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -960,34 +960,34 @@ model SEOOpportunityScore {
 }
 
 model PagePriority {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  auditId          String
-  pageUrl          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  auditId        String
+  pageUrl        String
 
   // Component scores
-  businessValueScore    Int      // 0-100
-  seoOpportunityScore   Int      // 0-100
+  businessValueScore  Int // 0-100
+  seoOpportunityScore Int // 0-100
 
   // Weighted priority
-  priorityScore    Int      // 0-100
+  priorityScore  Int // 0-100
   businessWeight Float @default(0.60)
-  seoWeight Float @default(0.40)
+  seoWeight      Float @default(0.40)
 
   // Ranking
-  priorityRank     Int      // position among all pages
-  percentile       Float    // 0-100
+  priorityRank Int // position among all pages
+  percentile   Float // 0-100
 
   // Explainability
-  explainability   Json?     // {businessValueDriver, seoOpportunityDriver, combinedRationale, whyThisPage, whyNow, keyFactors, risks}
-  summary          String
+  explainability Json? // {businessValueDriver, seoOpportunityDriver, combinedRationale, whyThisPage, whyNow, keyFactors, risks}
+  summary        String
 
-  calculatedAt     DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  calculatedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  organization     Organization @relation("PagePriorities", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation("PagePriorities", fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([auditId, pageUrl])
   @@index([organizationId])
@@ -998,43 +998,43 @@ model PagePriority {
 }
 
 model RecommendationDecision {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  pageUrl          String
+  id                 String @id @default(cuid())
+  organizationId     String
+  projectId          String
+  pageUrl            String
   recommendationType String
 
   // Scoring
-  businessValue    Int
-  seoOpportunity   Int
+  businessValue          Int
+  seoOpportunity         Int
   expectedBusinessReturn Json
-  difficulty       Int      // 1-10
-  riskLevel        String   // "Very Low", "Low", "Medium", "High", "Very High"
-  riskExplanation  String?
-  estimatedTime    Int      // minutes
-  timeToWin        String   // "Immediate", "Short Term", etc
-  dependencies     String[]
+  difficulty             Int // 1-10
+  riskLevel              String // "Very Low", "Low", "Medium", "High", "Very High"
+  riskExplanation        String?
+  estimatedTime          Int // minutes
+  timeToWin              String // "Immediate", "Short Term", etc
+  dependencies           String[]
 
   // Explainability
-  whyThis          String
-  whyNow           String
-  whyThisPage      String
-  whyThisPriority  String
-  confidence       Float    // 0-1
-  dataSupporting   Json
+  whyThis         String
+  whyNow          String
+  whyThisPage     String
+  whyThisPriority String
+  confidence      Float // 0-1
+  dataSupporting  Json
 
   // Prediction & verification
-  prediction       Json?
-  deployment       DateTime?
-  actualResult     Json?
-  variance         Float?
-  verifiedAt       DateTime?
+  prediction   Json?
+  deployment   DateTime?
+  actualResult Json?
+  variance     Float?
+  verifiedAt   DateTime?
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization     Organization @relation("RecommendationDecisions", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation("RecommendationDecisions", fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl, recommendationType])
   @@index([organizationId])
@@ -1042,32 +1042,32 @@ model RecommendationDecision {
 }
 
 model DailyMission {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  date             DateTime @default(now())
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  date           DateTime @default(now())
 
   // Selected recommendation
-  pageUrl          String
+  pageUrl            String
   recommendationType String
-  
+
   // Context
-  reasoning        String
-  expectedReturn   Json
-  estimatedTime    Int
-  difficulty       Int
+  reasoning      String
+  expectedReturn Json
+  estimatedTime  Int
+  difficulty     Int
 
   // Status
-  status           String   @default("active")  // "active", "completed", "skipped"
-  completedAt      DateTime?
-  actualTime       Int?
-  actualResult     Json?
+  status       String    @default("active") // "active", "completed", "skipped"
+  completedAt  DateTime?
+  actualTime   Int?
+  actualResult Json?
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization     Organization @relation("DailyMissions", fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation("DailyMissions", fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, date])
   @@index([organizationId])
@@ -1080,55 +1080,55 @@ model DailyMission {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model BusinessProfile {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
   // Core business info
-  businessName      String
-  industry          String   // law_firm, medical_practice, ecommerce, saas, local_business, etc
-  businessModel     String   // b2b, b2c, local_service, marketplace, subscription, etc
-  description       String?
+  businessName  String
+  industry      String // law_firm, medical_practice, ecommerce, saas, local_business, etc
+  businessModel String // b2b, b2c, local_service, marketplace, subscription, etc
+  description   String?
 
   // Products and services
-  primaryServices   String[] // JSON: [{name, value}]
+  primaryServices     String[] // JSON: [{name, value}]
   highestValueService String?
-  secondaryServices String[] @default([])
+  secondaryServices   String[] @default([])
 
   // Locations
-  primaryLocations  String[] // JSON: [{city, state, country}]
+  primaryLocations   String[] // JSON: [{city, state, country}]
   expansionLocations String[] @default([])
-  serveGlobally     Boolean  @default(false)
+  serveGlobally      Boolean  @default(false)
 
   // Business metrics (all optional - never invent)
-  averageLeadValue  Float?
+  averageLeadValue     Float?
   averageCustomerValue Float?
-  averageOrderValue Float?
-  closeRate         Float?   // 0-1
+  averageOrderValue    Float?
+  closeRate            Float? // 0-1
 
   // Goals and strategy
-  targetCustomers   String?
-  primaryConversionGoal String
+  targetCustomers          String?
+  primaryConversionGoal    String
   secondaryConversionGoals String[] @default([])
 
   // Seasonal and strategic
   seasonalPriorities String[] @default([]) // References to SeasonalPriority
-  businessNotes     String?
+  businessNotes      String?
 
   // Current focus
-  activeObjective   String?  // References current BusinessObjective
-  objective90Days   String?
+  activeObjective String? // References current BusinessObjective
+  objective90Days String?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  objectives        BusinessObjective[]
+  organization        Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project             Project                      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  objectives          BusinessObjective[]
   pageClassifications PageBusinessClassification[]
-  conversionGoals   ConversionGoal[]
-  seasonalPeriods   SeasonalPriority[]
-  versions          BusinessContextVersion[]
+  conversionGoals     ConversionGoal[]
+  seasonalPeriods     SeasonalPriority[]
+  versions            BusinessContextVersion[]
 
   @@unique([organizationId, projectId])
   @@unique([projectId])
@@ -1138,31 +1138,31 @@ model BusinessProfile {
 }
 
 model BusinessObjective {
-  id                String   @id @default(cuid())
+  id                String @id @default(cuid())
   organizationId    String
   projectId         String
   businessProfileId String
 
-  objectiveType     String   // increase_leads, increase_calls, increase_revenue, expand_locations, launch_service, etc
-  customObjective   String?  // For custom objective type
-  isActive          Boolean  @default(true)
+  objectiveType   String // increase_leads, increase_calls, increase_revenue, expand_locations, launch_service, etc
+  customObjective String? // For custom objective type
+  isActive        Boolean @default(true)
 
-  description       String?
-  targetMetric      String?
-  targetValue       Float?
-  targetDate        DateTime?
+  description  String?
+  targetMetric String?
+  targetValue  Float?
+  targetDate   DateTime?
 
   // How this objective influences Decision Engine
   priorityPageTypes String[] // Which page types matter for this objective
   priorityServices  String[] @default([])
   priorityLocations String[] @default([])
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  businessProfile BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1171,73 +1171,73 @@ model BusinessObjective {
 }
 
 model IndustryPlaybook {
-  id                String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  industry          String   @unique // law_firm, medical, dental, hvac, real_estate, saas, ecommerce, etc
-  displayName       String
-  description       String?
+  industry    String  @unique // law_firm, medical, dental, hvac, real_estate, saas, ecommerce, etc
+  displayName String
+  description String?
 
   // Priority guidance
-  importantPageTypes String[] // Which page types matter most
+  importantPageTypes       String[] // Which page types matter most
   importantConversionTypes String[] // lead, call, appointment, purchase, signup, etc
-  typicalMoneyPages String[] // ["service_page", "product_page", "location_page", "pricing_page"]
+  typicalMoneyPages        String[] // ["service_page", "product_page", "location_page", "pricing_page"]
 
   // Technical guidance
-  recommendedSchema String[] // ["LocalBusiness", "Product", "Service", etc]
+  recommendedSchema       String[] // ["LocalBusiness", "Product", "Service", etc]
   criticalTechnicalIssues String[] // Which technical issues matter most
-  contentOpportunities String[] // High-value content types
+  contentOpportunities    String[] // High-value content types
 
   // Importance scores
-  localSeoImportance Int @default(50) // 0-100
+  localSeoImportance    Int @default(50) // 0-100
   trustSignalImportance Int @default(50)
-  schemaImportance   Int @default(50)
+  schemaImportance      Int @default(50)
 
   // Decision Engine weight recommendations
-  businessValueWeight Float @default(0.60)
+  businessValueWeight  Float @default(0.60)
   seoOpportunityWeight Float @default(0.40)
 
   // Time estimates
-  typicalTimeToWin   String // "immediate", "short_term", "medium_term", "long_term"
+  typicalTimeToWin          String // "immediate", "short_term", "medium_term", "long_term"
   typeicalFirstResultsWeeks Int?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  campaigns         CampaignTemplate[]
+  campaigns CampaignTemplate[]
 
   @@index([industry])
 }
 
 model PageBusinessClassification {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Business classification
   businessClassification String // mission_critical, high_value, supporting, informational, utility, ignore
-  manualOverride    Boolean  @default(false)
-  overriddenBy      String?  // User ID who set override
-  overriddenAt      DateTime?
+  manualOverride         Boolean   @default(false)
+  overriddenBy           String? // User ID who set override
+  overriddenAt           DateTime?
 
   // Supporting data
-  relatedService    String?
-  relatedProduct    String?
-  relatedLocation   String?
+  relatedService  String?
+  relatedProduct  String?
+  relatedLocation String?
 
   // Metrics
-  monthlyRevenue    Float?
+  monthlyRevenue     Float?
   monthlyConversions Int?
-  conversionValue   Float?
+  conversionValue    Float?
 
-  rationale         String?  // Why this classification
+  rationale String? // Why this classification
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  businessProfile   BusinessProfile @relation(fields: [organizationId, projectId], references: [organizationId, projectId], onDelete: Cascade)
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  businessProfile BusinessProfile @relation(fields: [organizationId, projectId], references: [organizationId, projectId], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -1246,31 +1246,31 @@ model PageBusinessClassification {
 }
 
 model ConversionGoal {
-  id                String   @id @default(cuid())
+  id                String @id @default(cuid())
   organizationId    String
   projectId         String
   businessProfileId String
 
-  goalName          String
-  goalType          String   // lead, call, appointment, purchase, signup, download, etc
-  description       String?
+  goalName    String
+  goalType    String // lead, call, appointment, purchase, signup, download, etc
+  description String?
 
   // Tracking
   conversionUrl     String?
   trackingParameter String?
 
   // Value
-  estimatedValue    Float?
-  priority          Int      @default(1) // 1 = primary, 2 = secondary, etc
+  estimatedValue Float?
+  priority       Int    @default(1) // 1 = primary, 2 = secondary, etc
 
-  isActive          Boolean  @default(true)
+  isActive Boolean @default(true)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  businessProfile BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1279,31 +1279,31 @@ model ConversionGoal {
 }
 
 model SeasonalPriority {
-  id                String   @id @default(cuid())
+  id                String @id @default(cuid())
   organizationId    String
   projectId         String
   businessProfileId String
 
-  name              String   // "tax_season", "holiday_sales", "summer_travel", etc
-  description       String?
+  name        String // "tax_season", "holiday_sales", "summer_travel", etc
+  description String?
 
-  startDate         DateTime
-  endDate           DateTime
-  preparationLeadDays Int @default(30) // Days before season to increase priority
+  startDate           DateTime
+  endDate             DateTime
+  preparationLeadDays Int      @default(30) // Days before season to increase priority
 
   // What matters during this season
-  relevantServices  String[] @default([])
-  relevantProducts  String[] @default([])
-  priorityPageUrls  String[] @default([])
+  relevantServices String[] @default([])
+  relevantProducts String[] @default([])
+  priorityPageUrls String[] @default([])
 
-  isActive          Boolean  @default(true)
+  isActive Boolean @default(true)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  businessProfile BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1312,25 +1312,25 @@ model SeasonalPriority {
 }
 
 model BusinessContextVersion {
-  id                String   @id @default(cuid())
+  id                String @id @default(cuid())
   organizationId    String
   projectId         String
   businessProfileId String
 
-  changeType        String   // industry_changed, objective_changed, service_added, etc
-  previousValue     String?  // JSON of what changed
-  newValue          String?  // JSON of what changed to
+  changeType    String // industry_changed, objective_changed, service_added, etc
+  previousValue String? // JSON of what changed
+  newValue      String? // JSON of what changed to
 
-  changedBy         String?  // User ID
-  reason            String?
+  changedBy String? // User ID
+  reason    String?
 
   impactedRecommendations Int @default(0)
 
-  createdAt         DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  businessProfile BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project         Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1339,35 +1339,35 @@ model BusinessContextVersion {
 }
 
 model CampaignTemplate {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
-  name              String
-  description       String?
-  industry          String?  // References IndustryPlaybook.industry if set
-  templateType      String   // "practice_area_growth", "location_expansion", "category_growth", etc
+  name         String
+  description  String?
+  industry     String? // References IndustryPlaybook.industry if set
+  templateType String // "practice_area_growth", "location_expansion", "category_growth", etc
 
   // What this campaign focuses on
   pageTypePriorities String[] // JSON: [{type, weight}]
-  technicalFocus    String[]
-  contentFocus      String[]
+  technicalFocus     String[]
+  contentFocus       String[]
 
   // Decision Engine adjustments for this campaign
-  businessValueWeightAdjustment Float @default(1.0)
+  businessValueWeightAdjustment  Float @default(1.0)
   seoOpportunityWeightAdjustment Float @default(1.0)
 
   // Expected results
   estimatedTimeWeeks Int?
   estimatedImpact    String? // "high", "medium", "low"
 
-  isPublic          Boolean  @default(true)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  isPublic  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  playbook          IndustryPlaybook? @relation(fields: [industry], references: [industry], onDelete: SetNull)
+  organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  playbook     IndustryPlaybook? @relation(fields: [industry], references: [industry], onDelete: SetNull)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1380,55 +1380,55 @@ model CampaignTemplate {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ContentInventory {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String   // Unique per project
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String // Unique per project
 
   // Content classification
-  contentType       String   // page, blog, service, location, product, landing, faq, resource
-  primaryTopic      String?
-  primaryEntities   String[] @default([]) // JSON: entity names
+  contentType     String // page, blog, service, location, product, landing, faq, resource
+  primaryTopic    String?
+  primaryEntities String[] @default([]) // JSON: entity names
 
   // Page metrics
-  wordCount         Int      @default(0)
-  imageCount        Int      @default(0)
-  lastModified      DateTime?
-  indexStatus       String   @default("unknown") // indexed, not_indexed, blocked, noindex, crawled_not_indexed
-  canonical         String?
+  wordCount    Int       @default(0)
+  imageCount   Int       @default(0)
+  lastModified DateTime?
+  indexStatus  String    @default("unknown") // indexed, not_indexed, blocked, noindex, crawled_not_indexed
+  canonical    String?
 
   // Link structure
-  internalLinkCount Int      @default(0)
-  externalLinkCount Int      @default(0)
-  linksToThisPage   Int      @default(0)
+  internalLinkCount Int @default(0)
+  externalLinkCount Int @default(0)
+  linksToThisPage   Int @default(0)
 
   // Schema and structure
-  hasSchema         Boolean  @default(false)
-  schemaTypes       String[] @default([])
-  targetKeywords    String[] @default([]) // From GSC or manual
+  hasSchema      Boolean  @default(false)
+  schemaTypes    String[] @default([])
+  targetKeywords String[] @default([]) // From GSC or manual
 
   // Performance data
-  gscImpressions    Int      @default(0)
-  gscClicks         Int      @default(0)
-  gscAverageCtr     Float    @default(0)
-  gscAveragePosition Float   @default(0)
-  ga4Sessions       Int      @default(0)
-  ga4Pageviews      Int      @default(0)
-  ga4Conversions    Int      @default(0)
+  gscImpressions     Int   @default(0)
+  gscClicks          Int   @default(0)
+  gscAverageCtr      Float @default(0)
+  gscAveragePosition Float @default(0)
+  ga4Sessions        Int   @default(0)
+  ga4Pageviews       Int   @default(0)
+  ga4Conversions     Int   @default(0)
 
   // Business context
-  businessValue     Float    @default(0)
-  decisionEngineScore Float  @default(0)
-  isMoneyPage       Boolean  @default(false)
+  businessValue       Float   @default(0)
+  decisionEngineScore Float   @default(0)
+  isMoneyPage         Boolean @default(false)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  metrics           ContentMetrics?
+  organization       Organization               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project            Project                    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  metrics            ContentMetrics?
   refreshOpportunity ContentRefreshOpportunity?
-  gaps              ContentGapAnalysis[]
+  gaps               ContentGapAnalysis[]
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -1440,50 +1440,50 @@ model ContentInventory {
 }
 
 model ContentMetrics {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
-  inventoryId       String   @unique // One-to-one with ContentInventory
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
+  inventoryId    String @unique // One-to-one with ContentInventory
 
   // Quality scores (0-100)
-  qualityScore      Int      @default(0)
+  qualityScore       Int     @default(0)
   qualityExplanation String?
 
-  freshnessScore    Int      @default(0)
+  freshnessScore       Int     @default(0)
   freshnessExplanation String?
 
-  entityCoverageScore Int    @default(0)
-  entityExplanation String?
+  entityCoverageScore Int     @default(0)
+  entityExplanation   String?
 
-  topicalDepthScore Int      @default(0)
+  topicalDepthScore  Int     @default(0)
   topicalExplanation String?
 
-  readabilityScore  Int      @default(0)
+  readabilityScore       Int     @default(0)
   readabilityExplanation String?
 
-  seoOptimizationScore Int   @default(0)
-  seoExplanation    String?
+  seoOptimizationScore Int     @default(0)
+  seoExplanation       String?
 
-  aiReadinessScore  Int      @default(0)
+  aiReadinessScore       Int     @default(0)
   aiReadinessExplanation String?
 
-  conversionReadinessScore Int @default(0)
-  conversionExplanation String?
+  conversionReadinessScore Int     @default(0)
+  conversionExplanation    String?
 
-  businessValueScore Int     @default(0)
+  businessValueScore  Int     @default(0)
   businessExplanation String?
 
   // Overall
-  opportunityScore  Int      @default(0)
-  overallScore      Int      @default(0)
+  opportunityScore Int @default(0)
+  overallScore     Int @default(0)
 
-  calculatedAt      DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  calculatedAt DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  inventory         ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inventory    ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -1493,42 +1493,42 @@ model ContentMetrics {
 }
 
 model ContentGapAnalysis {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  inventoryId       String? // Reference to related page if exists
+  id             String  @id @default(cuid())
+  organizationId String
+  projectId      String
+  inventoryId    String? // Reference to related page if exists
 
-  gapType           String   // missing_service, missing_location, missing_faq, missing_comparison, missing_support, missing_trust, missing_cluster
-  description       String
-  priority          String   @default("medium") // high, medium, low
-  expectedImpact    String? // "high", "medium", "low" + business value estimate
+  gapType        String // missing_service, missing_location, missing_faq, missing_comparison, missing_support, missing_trust, missing_cluster
+  description    String
+  priority       String  @default("medium") // high, medium, low
+  expectedImpact String? // "high", "medium", "low" + business value estimate
 
   // What should be created
   recommendedPageType String? // service_page, location_page, faq, comparison_page, etc
-  suggestedTopic    String?
-  suggestedTitle    String?
+  suggestedTopic      String?
+  suggestedTitle      String?
 
   // Context for generation
-  relatedKeywords   String[] @default([])
-  relatedServices   String[] @default([])
-  relatedLocations  String[] @default([])
+  relatedKeywords    String[] @default([])
+  relatedServices    String[] @default([])
+  relatedLocations   String[] @default([])
   competitorExamples String[] @default([]) // URLs from competitors doing this well
 
   // Why this matters
-  rationale         String   // Explain why this gap exists and why it matters
-  estimatedTrafficPotential Int @default(0)
+  rationale                  String // Explain why this gap exists and why it matters
+  estimatedTrafficPotential  Int     @default(0)
   businessObjectiveAlignment String? // How this supports the 90-day objective
 
-  isAddressed       Boolean  @default(false)
-  addressedBy       String?  // Content brief or generated content ID
-  addressedAt       DateTime?
+  isAddressed Boolean   @default(false)
+  addressedBy String? // Content brief or generated content ID
+  addressedAt DateTime?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  inventory         ContentInventory? @relation(fields: [inventoryId], references: [id], onDelete: SetNull)
+  organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inventory    ContentInventory? @relation(fields: [inventoryId], references: [id], onDelete: SetNull)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1538,41 +1538,41 @@ model ContentGapAnalysis {
 }
 
 model ContentRefreshOpportunity {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
-  inventoryId       String   @unique // One-to-one with ContentInventory
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
+  inventoryId    String @unique // One-to-one with ContentInventory
 
   // Why refresh is needed
-  refreshReasons    String[] // traffic_decline, ctr_decline, ranking_decline, outdated_content, thin_content, weak_entities, missing_schema, competitor_overtake, outdated_stats
-  trafficTrend30d   Float    @default(0) // % change
-  rankingTrend30d   Float    @default(0) // position change
-  ctrTrend30d       Float    @default(0) // % change
+  refreshReasons  String[] // traffic_decline, ctr_decline, ranking_decline, outdated_content, thin_content, weak_entities, missing_schema, competitor_overtake, outdated_stats
+  trafficTrend30d Float    @default(0) // % change
+  rankingTrend30d Float    @default(0) // position change
+  ctrTrend30d     Float    @default(0) // % change
 
   // Timeline
-  lastRefreshed     DateTime?
+  lastRefreshed        DateTime?
   suggestedRefreshDate DateTime?
-  daysStale         Int      @default(0)
+  daysStale            Int       @default(0)
 
   // Potential
-  estimatedPotential Float   @default(0) // Traffic recovery potential
-  priority          String   @default("medium") // high, medium, low
+  estimatedPotential Float  @default(0) // Traffic recovery potential
+  priority           String @default("medium") // high, medium, low
 
   // What to improve
   suggestedImprovements String[]
 
   // Status
-  isScheduled       Boolean  @default(false)
+  isScheduled        Boolean   @default(false)
   refreshInitiatedAt DateTime?
   refreshCompletedAt DateTime?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  inventory         ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inventory    ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1581,13 +1581,13 @@ model ContentRefreshOpportunity {
 }
 
 model ContentBrief {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String? // NULL for new pages, set for existing page rewrites
+  id             String  @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String? // NULL for new pages, set for existing page rewrites
 
   // Purpose and audience
-  purpose           String   // increase_rankings, capture_traffic, improve_conversions, build_authority, support_product, etc
+  purpose           String // increase_rankings, capture_traffic, improve_conversions, build_authority, support_product, etc
   targetAudience    String
   businessObjective String? // Reference to Business Objective this supports
 
@@ -1598,27 +1598,27 @@ model ContentBrief {
   questionsToAnswer String[] @default([])
 
   // Technical requirements
-  recommendedSchema String[] @default([])
+  recommendedSchema      String[] @default([])
   internalLinksToInclude String[] @default([]) // URLs to link to
-  targetKeywords    String[] @default([])
+  targetKeywords         String[] @default([])
 
   // Call to action and expectations
-  callToAction      String?
-  expectedOutcome   String? // What success looks like
-  targetWordCount   Int?
+  callToAction    String?
+  expectedOutcome String? // What success looks like
+  targetWordCount Int?
 
   // User review status
-  status            String   @default("draft") // draft, approved, generating, generated, deployed
-  approvedBy        String?
-  approvedAt        DateTime?
-  reviewNotes       String?
+  status      String    @default("draft") // draft, approved, generating, generated, deployed
+  approvedBy  String?
+  approvedAt  DateTime?
+  reviewNotes String?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  generatedContent  GeneratedContent?
+  organization     Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  generatedContent GeneratedContent?
 
   @@index([organizationId])
   @@index([projectId])
@@ -1627,47 +1627,47 @@ model ContentBrief {
 }
 
 model GeneratedContent {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  briefId           String   @unique
-  pageUrl           String? // NULL for new pages
+  id             String  @id @default(cuid())
+  organizationId String
+  projectId      String
+  briefId        String  @unique
+  pageUrl        String? // NULL for new pages
 
-  contentType       String   // blog_article, service_page, location_page, faq_section, comparison_page, landing_page, cluster_page
+  contentType String // blog_article, service_page, location_page, faq_section, comparison_page, landing_page, cluster_page
 
   // Generated content
-  generatedTitle    String
+  generatedTitle           String
   generatedMetaDescription String
-  generatedBody     String   // Full HTML or markdown
-  generatedHeadings String[] @default([]) // H1, H2, H3 structure
-  generatedSchema   String?  // JSON-LD
+  generatedBody            String // Full HTML or markdown
+  generatedHeadings        String[] @default([]) // H1, H2, H3 structure
+  generatedSchema          String? // JSON-LD
 
   // Internal linking
   generatedInternalLinks String[] @default([]) // JSON: [{url, anchor}]
 
   // Scores
-  seoOptimizationScore Float  @default(0)
+  seoOptimizationScore   Float @default(0)
   businessAlignmentScore Float @default(0)
-  readabilityScore  Float    @default(0)
-  keyword1Relevance Float    @default(0)
-  keyword2Relevance Float    @default(0)
+  readabilityScore       Float @default(0)
+  keyword1Relevance      Float @default(0)
+  keyword2Relevance      Float @default(0)
 
   // Approval workflow
-  approvalStatus    String   @default("pending") // pending, approved, rejected, deployed
-  approvalNotes     String?
-  approvedBy        String?
-  approvedAt        DateTime?
+  approvalStatus String    @default("pending") // pending, approved, rejected, deployed
+  approvalNotes  String?
+  approvedBy     String?
+  approvedAt     DateTime?
 
   // Deployment
-  deployedAt        DateTime?
-  deploymentStatus  String?
+  deployedAt       DateTime?
+  deploymentStatus String?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  brief             ContentBrief @relation(fields: [briefId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  brief        ContentBrief @relation(fields: [briefId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1676,45 +1676,45 @@ model GeneratedContent {
 }
 
 model ContentDiff {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Current state
-  currentTitle      String?
+  currentTitle           String?
   currentMetaDescription String?
-  currentHeadings   String[] @default([])
-  currentWordCount  Int      @default(0)
-  currentSchema     String?
+  currentHeadings        String[] @default([])
+  currentWordCount       Int      @default(0)
+  currentSchema          String?
 
   // Suggested changes
-  suggestedTitle    String?
+  suggestedTitle           String?
   suggestedMetaDescription String?
-  suggestedHeadings String[] @default([])
-  suggestedWordCount Int?
-  suggestedSchema   String?
+  suggestedHeadings        String[] @default([])
+  suggestedWordCount       Int?
+  suggestedSchema          String?
 
   // Impact analysis
-  estimatedSeoImpact String // "high_positive", "moderate_positive", "low_positive", "neutral", "negative"
-  seoImpactExplanation String?
-  estimatedBusinessImpact String
+  estimatedSeoImpact        String // "high_positive", "moderate_positive", "low_positive", "neutral", "negative"
+  seoImpactExplanation      String?
+  estimatedBusinessImpact   String
   businessImpactExplanation String?
 
   // Change tracking
   changesHighlighted String[] // JSON: [{section, current, suggested, impact}]
-  diffSummary       String?
+  diffSummary        String?
 
   // Approval
-  isApproved        Boolean  @default(false)
-  approvedBy        String?
-  approvedAt        DateTime?
+  isApproved Boolean   @default(false)
+  approvedBy String?
+  approvedAt DateTime?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl])
   @@index([organizationId])
@@ -1723,35 +1723,35 @@ model ContentDiff {
 }
 
 model InternalLinkRecommendation {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  fromPageUrl       String
-  toPageUrl         String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  fromPageUrl    String
+  toPageUrl      String
 
   // Link details
   suggestedAnchorText String
-  linkContext       String? // Surrounding text for context
-  priority          String   @default("medium") // high, medium, low
+  linkContext         String? // Surrounding text for context
+  priority            String  @default("medium") // high, medium, low
 
   // Why this link helps
-  rationale         String
-  estimatedBenefit  String? // "improves_topical_relevance", "builds_authority", "supports_conversion_goal", etc
+  rationale        String
+  estimatedBenefit String? // "improves_topical_relevance", "builds_authority", "supports_conversion_goal", etc
 
   // Relationship
-  isTopicallyRelevant Boolean @default(true)
-  isAuthorityBuilder Boolean @default(false)
+  isTopicallyRelevant  Boolean @default(true)
+  isAuthorityBuilder   Boolean @default(false)
   isConversionRelevant Boolean @default(false)
 
   // Status
-  isImplemented     Boolean  @default(false)
-  implementedAt     DateTime?
+  isImplemented Boolean   @default(false)
+  implementedAt DateTime?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, fromPageUrl, toPageUrl])
   @@index([organizationId])
@@ -1761,37 +1761,37 @@ model InternalLinkRecommendation {
 }
 
 model ContentDecayAlert {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // What's declining
-  decayType         String   // traffic_loss, ranking_loss, ctr_decline, impressions_decline
-  severity          String   @default("medium") // high, medium, low
-  decayPercentage   Float
+  decayType       String // traffic_loss, ranking_loss, ctr_decline, impressions_decline
+  severity        String @default("medium") // high, medium, low
+  decayPercentage Float
 
   // Timeline
-  detectedAt        DateTime @default(now())
-  decayStartedAt    DateTime?
-  lastMeasuredAt    DateTime?
-  trend30d          Float?
+  detectedAt     DateTime  @default(now())
+  decayStartedAt DateTime?
+  lastMeasuredAt DateTime?
+  trend30d       Float?
 
   // Context
-  currentValue      Float
-  previousValue     Float
-  potentialCause    String[]
+  currentValue   Float
+  previousValue  Float
+  potentialCause String[]
 
   // Resolution
-  isResolved        Boolean  @default(false)
-  resolvedBy        String?  // Content refresh, new internal links, etc
-  resolvedAt        DateTime?
+  isResolved Boolean   @default(false)
+  resolvedBy String? // Content refresh, new internal links, etc
+  resolvedAt DateTime?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1805,38 +1805,38 @@ model ContentDecayAlert {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model PipelineRun {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  auditId           String?  // Reference to source crawl audit
+  id             String  @id @default(cuid())
+  organizationId String
+  projectId      String
+  auditId        String? // Reference to source crawl audit
 
   // Run metadata
-  status            String   @default("queued") // queued, running, completed, partial, failed, blocked, cancelled
-  reason            String?  // For failures/blocks
+  status String  @default("queued") // queued, running, completed, partial, failed, blocked, cancelled
+  reason String? // For failures/blocks
 
   // Execution timeline
-  queuedAt          DateTime @default(now())
-  startedAt         DateTime?
-  completedAt       DateTime?
-  duration          Int?     // milliseconds
+  queuedAt    DateTime  @default(now())
+  startedAt   DateTime?
+  completedAt DateTime?
+  duration    Int? // milliseconds
 
   // Results summary
-  pagesQueued       Int      @default(0)
-  pagesProcessed    Int      @default(0)
-  pagesSkipped      Int      @default(0)
-  pagesFailed       Int      @default(0)
+  pagesQueued    Int @default(0)
+  pagesProcessed Int @default(0)
+  pagesSkipped   Int @default(0)
+  pagesFailed    Int @default(0)
 
   // Stage tracking
-  stages            PipelineStage[]
+  stages PipelineStage[]
 
   // Evidence for Forge
-  forgeContext      String?  // JSON containing grounding evidence
+  forgeContext String? // JSON containing grounding evidence
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -1845,31 +1845,31 @@ model PipelineRun {
 }
 
 model PipelineStage {
-  id                String   @id @default(cuid())
-  runId             String
+  id    String @id @default(cuid())
+  runId String
 
   // Stage info
-  stageName         String   // "content_inventory", "classification", "topic_detection", etc
-  status            String   @default("pending") // pending, running, completed, partial, failed, blocked
+  stageName String // "content_inventory", "classification", "topic_detection", etc
+  status    String @default("pending") // pending, running, completed, partial, failed, blocked
 
   // Execution
-  startedAt         DateTime?
-  completedAt       DateTime?
-  duration          Int?     // milliseconds
+  startedAt   DateTime?
+  completedAt DateTime?
+  duration    Int? // milliseconds
 
   // Results
-  itemsProcessed    Int      @default(0)
-  itemsFailed       Int      @default(0)
-  itemsSkipped      Int      @default(0)
+  itemsProcessed Int @default(0)
+  itemsFailed    Int @default(0)
+  itemsSkipped   Int @default(0)
 
   // Error handling
-  error             String?
-  failedItems       String?  // JSON array of failed page URLs
+  error       String?
+  failedItems String? // JSON array of failed page URLs
 
   // Evidence
-  evidence          String?  // JSON containing stage-specific results
+  evidence String? // JSON containing stage-specific results
 
-  run               PipelineRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  run PipelineRun @relation(fields: [runId], references: [id], onDelete: Cascade)
 
   @@unique([runId, stageName])
   @@index([runId])
@@ -1877,39 +1877,39 @@ model PipelineStage {
 }
 
 model ContentEntity {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Entity details
-  entityName        String
-  entityType        String   // person, organization, place, product, service, topic, etc
-  confidence        Float    // 0-1
+  entityName String
+  entityType String // person, organization, place, product, service, topic, etc
+  confidence Float // 0-1
 
   // Detection source
-  detectionSource   String[] // "heading", "schema", "cooccurrence", "cross_reference", "manual_override"
+  detectionSource String[] // "heading", "schema", "cooccurrence", "cross_reference", "manual_override"
 
   // Evidence
-  mentions          Int      @default(1)
-  contexts          String[] // JSON: surrounding text snippets
+  mentions Int      @default(1)
+  contexts String[] // JSON: surrounding text snippets
 
   // Relationships
-  relatedEntities   String[] @default([]) // JSON: entity IDs
+  relatedEntities String[] @default([]) // JSON: entity IDs
 
   // Manual override
-  isVerified        Boolean  @default(false)
-  verifiedBy        String?
-  verifiedAt        DateTime?
+  isVerified Boolean   @default(false)
+  verifiedBy String?
+  verifiedAt DateTime?
 
   // Hash for change detection
-  contentHash       String?
+  contentHash String?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl, entityName])
   @@index([organizationId])
@@ -1919,40 +1919,40 @@ model ContentEntity {
 }
 
 model ContentTopic {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  pageUrl           String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  pageUrl        String
 
   // Topic details
-  topicName         String
-  topicCluster      String?  // Grouping for related topics
-  confidence        Float    // 0-1
+  topicName    String
+  topicCluster String? // Grouping for related topics
+  confidence   Float // 0-1
 
   // Detection signals
-  detectionSignals  String[] // "heading", "entity_cooccurrence", "semantic_similarity", "industry_map", "manual"
+  detectionSignals String[] // "heading", "entity_cooccurrence", "semantic_similarity", "industry_map", "manual"
 
   // Relationships
-  parentTopics      String[] @default([])
-  childTopics       String[] @default([])
-  relatedTopics     String[] @default([])
+  parentTopics  String[] @default([])
+  childTopics   String[] @default([])
+  relatedTopics String[] @default([])
 
   // Evidence
-  evidenceScore     Float    @default(0)
+  evidenceScore Float @default(0)
 
   // Manual override
-  isConfirmed       Boolean  @default(false)
-  confirmedBy       String?
-  confirmedAt       DateTime?
+  isConfirmed Boolean   @default(false)
+  confirmedBy String?
+  confirmedAt DateTime?
 
   // Hash for change detection
-  contentHash       String?
+  contentHash String?
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, pageUrl, topicName])
   @@index([organizationId])
@@ -1961,34 +1961,34 @@ model ContentTopic {
 }
 
 model KnowledgeGraphNode {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
   // Node identity
-  nodeId            String   // Stable, deterministic id derived from label+type
-  nodeType          String   // page | topic | entity | service | product | location | category | faq | author | schema_type | money_page | business_objective | internal_link
-  nodeLabel         String
-  nodeUrl           String?  // For page-typed nodes: canonical URL
+  nodeId    String // Stable, deterministic id derived from label+type
+  nodeType  String // page | topic | entity | service | product | location | category | faq | author | schema_type | money_page | business_objective | internal_link
+  nodeLabel String
+  nodeUrl   String? // For page-typed nodes: canonical URL
 
   // Node data
-  properties        String?  // JSON blob: confidence, scores, metadata specific to the node type
-  pageUrls          String[] @default([]) // Pages where this appears
-  frequency         Int      @default(1)  // How many pages mention this
-  score             Float    @default(0)  // Composite importance score
+  properties String? // JSON blob: confidence, scores, metadata specific to the node type
+  pageUrls   String[] @default([]) // Pages where this appears
+  frequency  Int      @default(1) // How many pages mention this
+  score      Float    @default(0) // Composite importance score
 
   // Metadata
-  isCore            Boolean  @default(false) // Is this a core business element?
-  coreReason        String?
-  version           Int      @default(1)
+  isCore     Boolean @default(false) // Is this a core business element?
+  coreReason String?
+  version    Int     @default(1)
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  outgoing          KnowledgeGraphEdge[] @relation("outgoing")
-  incoming          KnowledgeGraphEdge[] @relation("incoming")
+  organization Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  outgoing     KnowledgeGraphEdge[] @relation("outgoing")
+  incoming     KnowledgeGraphEdge[] @relation("incoming")
 
   @@unique([projectId, nodeId])
   @@index([organizationId])
@@ -2000,32 +2000,32 @@ model KnowledgeGraphNode {
 }
 
 model KnowledgeGraphEdge {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
-  fromNodeId        String
-  toNodeId          String
+  fromNodeId String
+  toNodeId   String
 
   // Relationship
-  relationshipType  String   // PAGE_HAS_TOPIC | PAGE_MENTIONS_ENTITY | PAGE_SUPPORTS_PAGE | PAGE_SUPPORTS_MONEY_PAGE | PAGE_LINKS_TO_PAGE | PAGE_TARGETS_LOCATION | PAGE_OFFERS_SERVICE | PAGE_DESCRIBES_PRODUCT | PAGE_CONTAINS_SCHEMA | ENTITY_RELATES_TO_ENTITY | TOPIC_RELATES_TO_TOPIC | SERVICE_RELATES_TO_LOCATION | CATEGORY_CONTAINS_PRODUCT | AUTHOR_WROTE_PAGE | PAGE_HAS_FAQ | PAGE_TARGETS_OBJECTIVE
-  confidence        Float    @default(0.8) // 0-1
-  strength          Int      @default(1)   // Repeated observations reinforce strength
+  relationshipType String // PAGE_HAS_TOPIC | PAGE_MENTIONS_ENTITY | PAGE_SUPPORTS_PAGE | PAGE_SUPPORTS_MONEY_PAGE | PAGE_LINKS_TO_PAGE | PAGE_TARGETS_LOCATION | PAGE_OFFERS_SERVICE | PAGE_DESCRIBES_PRODUCT | PAGE_CONTAINS_SCHEMA | ENTITY_RELATES_TO_ENTITY | TOPIC_RELATES_TO_TOPIC | SERVICE_RELATES_TO_LOCATION | CATEGORY_CONTAINS_PRODUCT | AUTHOR_WROTE_PAGE | PAGE_HAS_FAQ | PAGE_TARGETS_OBJECTIVE
+  confidence       Float  @default(0.8) // 0-1
+  strength         Int    @default(1) // Repeated observations reinforce strength
 
   // Evidence + provenance
-  evidence          String?  // JSON snippet describing why the edge exists (heading, anchor, schema, cooccurrence…)
-  source            String   @default("pipeline") // pipeline | manual | inference | schema
-  sources           String[] @default([])  // Optional additional evidence pointers (page URLs, snippets)
-  version           Int      @default(1)
-  detectedAt        DateTime @default(now())
+  evidence   String? // JSON snippet describing why the edge exists (heading, anchor, schema, cooccurrence…)
+  source     String   @default("pipeline") // pipeline | manual | inference | schema
+  sources    String[] @default([]) // Optional additional evidence pointers (page URLs, snippets)
+  version    Int      @default(1)
+  detectedAt DateTime @default(now())
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  fromNode          KnowledgeGraphNode @relation("outgoing", fields: [projectId, fromNodeId], references: [projectId, nodeId], onDelete: Cascade)
-  toNode            KnowledgeGraphNode @relation("incoming", fields: [projectId, toNodeId], references: [projectId, nodeId], onDelete: Cascade)
+  organization Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fromNode     KnowledgeGraphNode @relation("outgoing", fields: [projectId, fromNodeId], references: [projectId, nodeId], onDelete: Cascade)
+  toNode       KnowledgeGraphNode @relation("incoming", fields: [projectId, toNodeId], references: [projectId, nodeId], onDelete: Cascade)
 
   @@unique([projectId, fromNodeId, toNodeId, relationshipType])
   @@index([organizationId])
@@ -2045,30 +2045,30 @@ model KnowledgeGraphEdge {
 /// specific page + recommendation type, so we never re-recommend the same
 /// action and we can learn from what the user accepted or rejected.
 model OperatorMemory {
-  id                 String   @id @default(cuid())
-  organizationId     String
-  projectId          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
   // Target
   pageUrl            String
-  recommendationType String   // money_page_reinforcement, add_faq_schema, refresh_content, etc.
+  recommendationType String // money_page_reinforcement, add_faq_schema, refresh_content, etc.
 
   // Decision
-  status             String   @default("proposed") // proposed | accepted | rejected | ignored | deferred | completed | expired | blocked
-  reason             String?  // Human/user reason when explicit
-  decidedAt          DateTime?
-  decidedBy          String?  // userId or "operator"
-  expiresAt          DateTime?
+  status    String    @default("proposed") // proposed | accepted | rejected | ignored | deferred | completed | expired | blocked
+  reason    String? // Human/user reason when explicit
+  decidedAt DateTime?
+  decidedBy String? // userId or "operator"
+  expiresAt DateTime?
 
   // Snapshot at decision time — used both for explainability and learning.
-  snapshot           Json?
+  snapshot Json?
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project            Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  outcomes           OperatorOutcome[]
+  organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  outcomes     OperatorOutcome[]
 
   @@unique([projectId, pageUrl, recommendationType])
   @@index([organizationId])
@@ -2082,28 +2082,28 @@ model OperatorMemory {
 /// automated deploy) implements a recommendation, so future prioritization
 /// can learn from real deltas rather than guesses.
 model OperatorOutcome {
-  id             String   @id @default(cuid())
+  id             String @id @default(cuid())
   organizationId String
   projectId      String
   memoryId       String
 
   // What moved
-  trafficDelta      Float?
-  ctrDelta          Float?
-  rankingDelta      Float?
-  conversionDelta   Float?
-  revenueDelta      Float?
+  trafficDelta    Float?
+  ctrDelta        Float?
+  rankingDelta    Float?
+  conversionDelta Float?
+  revenueDelta    Float?
 
   // Time window covered by the observation
-  windowStart    DateTime
-  windowEnd      DateTime
+  windowStart DateTime
+  windowEnd   DateTime
 
-  notes          String?
-  createdAt      DateTime @default(now())
+  notes     String?
+  createdAt DateTime @default(now())
 
-  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  memory         OperatorMemory  @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+  organization Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  memory       OperatorMemory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2115,54 +2115,54 @@ model OperatorOutcome {
 /// opportunities, user-created, campaigns) writes into this shape so the
 /// Operator can dedupe, consolidate, and rank uniformly.
 model OperatorCandidate {
-  id                 String   @id @default(cuid())
-  organizationId     String
-  projectId          String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
   // Source provenance
-  sourceSystem       String   // graph | decision_engine | gap_analysis | crawl | gsc | ga4 | competitor | decay | schema | wordpress | user | campaign
-  sourceRecordId     String?
-  category           String   // money_page | internal_link | schema | content_gap | technical | authority | competitor | campaign …
-  actionType         String   // canonical action verb, e.g. add_faq_schema, expand_content, add_internal_link
+  sourceSystem   String // graph | decision_engine | gap_analysis | crawl | gsc | ga4 | competitor | decay | schema | wordpress | user | campaign
+  sourceRecordId String?
+  category       String // money_page | internal_link | schema | content_gap | technical | authority | competitor | campaign …
+  actionType     String // canonical action verb, e.g. add_faq_schema, expand_content, add_internal_link
 
   // Targets
-  primaryPageUrl     String
-  affectedPageUrls   String[] @default([])
+  primaryPageUrl   String
+  affectedPageUrls String[] @default([])
 
   // Business linkage
-  businessObjective  String?
-  moneyPageUrl       String?
+  businessObjective String?
+  moneyPageUrl      String?
 
   // Evidence + scores (Json blobs so shape can evolve)
-  evidence           Json?    // graph paths, GSC deltas, competitor changes…
-  decisionScores     Json?    // { businessValue, seoOpportunity, industryScore, … }
+  evidence       Json? // graph paths, GSC deltas, competitor changes…
+  decisionScores Json? // { businessValue, seoOpportunity, industryScore, … }
 
   // Effort + risk
-  estimatedMinutes   Int      @default(60)
-  timeToWin          String?  // "Short Term" | "Medium Term" | "Long Term"
-  risk               String   @default("low") // low | medium | high
-  confidence         Float    @default(0.7)
-  dependencies       String[] @default([])
+  estimatedMinutes     Int      @default(60)
+  timeToWin            String? // "Short Term" | "Medium Term" | "Long Term"
+  risk                 String   @default("low") // low | medium | high
+  confidence           Float    @default(0.7)
+  dependencies         String[] @default([])
   deploymentCapability String? // wordpress | custom_html | manual | none
 
   // Deduplication
-  dedupeKey          String   // (projectId, category, actionType, primaryPageUrl) canonicalized
-  consolidatedFrom   String[] @default([]) // candidate ids that were merged in
-  supersedesId       String?
-  supersededById     String?
+  dedupeKey        String // (projectId, category, actionType, primaryPageUrl) canonicalized
+  consolidatedFrom String[] @default([]) // candidate ids that were merged in
+  supersedesId     String?
+  supersededById   String?
 
   // Lifecycle
-  status             String   @default("new") // new | recommended | suppressed | superseded | expired
-  createdAt          DateTime @default(now())
-  lastRecalculatedAt DateTime @default(now())
+  status             String    @default("new") // new | recommended | suppressed | superseded | expired
+  createdAt          DateTime  @default(now())
+  lastRecalculatedAt DateTime  @default(now())
   expiresAt          DateTime?
 
   // Denormalized for fast display
-  headline           String?
-  reasoning          Json?
+  headline  String?
+  reasoning Json?
 
-  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project            Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, dedupeKey])
   @@index([organizationId])
@@ -2176,21 +2176,21 @@ model OperatorCandidate {
 /// Append-only event log for the Operator so users can trace every promotion,
 /// demotion, suppression, mission change, learning adjustment and conflict.
 model OperatorEvent {
-  id             String   @id @default(cuid())
+  id             String @id @default(cuid())
   organizationId String
   projectId      String
 
-  kind           String   // candidate_discovered | candidate_consolidated | candidate_promoted | candidate_demoted | candidate_suppressed | mission_selected | mission_changed | recommendation_accepted | recommendation_rejected | recommendation_deferred | action_completed | outcome_verified | learning_adjustment_made | conflict_detected | data_became_stale | recommendation_expired
-  summary        String
-  payload        Json?
+  kind    String // candidate_discovered | candidate_consolidated | candidate_promoted | candidate_demoted | candidate_suppressed | mission_selected | mission_changed | recommendation_accepted | recommendation_rejected | recommendation_deferred | action_completed | outcome_verified | learning_adjustment_made | conflict_detected | data_became_stale | recommendation_expired
+  summary String
+  payload Json?
 
-  candidateId    String?
-  memoryId       String?
+  candidateId String?
+  memoryId    String?
 
-  createdAt      DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2202,22 +2202,22 @@ model OperatorEvent {
 /// ranking based on these but never silently overrides the active business
 /// objective. Rows are project + optionally user scoped.
 model OperatorPreference {
-  id             String   @id @default(cuid())
+  id             String  @id @default(cuid())
   organizationId String
   projectId      String
-  userId         String?  // null = project-default preference
+  userId         String? // null = project-default preference
 
-  category       String   // "add_faq_schema", "content_rewrite", "internal_link", …
-  signal         String   // accept | reject | defer | ignore | prefer_time_window
-  weightDelta    Float    @default(0)   // -1.0 … +1.0 additive rank nudge
-  samples        Int      @default(0)   // how many observations feed this preference
-  detail         Json?
+  category    String // "add_faq_schema", "content_rewrite", "internal_link", …
+  signal      String // accept | reject | defer | ignore | prefer_time_window
+  weightDelta Float  @default(0) // -1.0 … +1.0 additive rank nudge
+  samples     Int    @default(0) // how many observations feed this preference
+  detail      Json?
 
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, userId, category, signal])
   @@index([organizationId])
@@ -2228,23 +2228,23 @@ model OperatorPreference {
 /// itself is short and each step carries its own owner + dependency + risk +
 /// deployment method + verification method.
 model OperatorActionPlan {
-  id               String   @id @default(cuid())
-  organizationId   String
-  projectId        String
-  candidateId      String
-  memoryId         String?
+  id             String  @id @default(cuid())
+  organizationId String
+  projectId      String
+  candidateId    String
+  memoryId       String?
 
-  headline         String
-  totalMinutes     Int      @default(0)
-  status           String   @default("pending") // pending | in_progress | completed | failed | rolled_back
+  headline     String
+  totalMinutes Int    @default(0)
+  status       String @default("pending") // pending | in_progress | completed | failed | rolled_back
 
-  steps            Json     // OperatorPlanStep[]
+  steps Json // OperatorPlanStep[]
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project          Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2254,20 +2254,20 @@ model OperatorActionPlan {
 
 /// Per-user (or project-default) notification preferences.
 model OperatorNotificationPref {
-  id             String   @id @default(cuid())
+  id             String  @id @default(cuid())
   organizationId String
   projectId      String
   userId         String?
 
-  channel        String   // in_app | email_digest
-  category       String   // new_primary_mission | critical_issue | mission_changed | deployment_failed | verification_succeeded | recommendation_returned | strong_opportunity | competitor_risk | more_evidence_required
-  enabled        Boolean  @default(true)
+  channel  String // in_app | email_digest
+  category String // new_primary_mission | critical_issue | mission_changed | deployment_failed | verification_succeeded | recommendation_returned | strong_opportunity | competitor_risk | more_evidence_required
+  enabled  Boolean @default(true)
 
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@unique([projectId, userId, channel, category])
   @@index([organizationId])
@@ -2281,28 +2281,28 @@ model OperatorNotificationPref {
 /// Tracks the self-review cycle for every shortlist. Records original recommendations,
 /// review findings (promote/demote/merge/replace/suppress), consultant review, and final recommendations.
 model OperatorReviewCycle {
-  id                  String   @id @default(cuid())
-  organizationId      String
-  projectId           String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
 
-  originalShortlist   Json     // OperatorShortlist before review
-  reviewDecisions     Json     // ReviewDecision[] (promote/demote/merge/replace/suppress/escalate)
-  consultantReview    Json?    // ConsultantReview (would consultant agree?)
-  finalShortlist      Json     // OperatorShortlist after review
+  originalShortlist Json // OperatorShortlist before review
+  reviewDecisions   Json // ReviewDecision[] (promote/demote/merge/replace/suppress/escalate)
+  consultantReview  Json? // ConsultantReview (would consultant agree?)
+  finalShortlist    Json // OperatorShortlist after review
 
-  agreements          Int      @default(0)   // how many recommendations agreed with consultant mode
-  disagreements       Int      @default(0)
-  promotions          Int      @default(0)   // count by decision type
-  demotions           Int      @default(0)
-  merges              Int      @default(0)
-  replacements        Int      @default(0)
-  suppressions        Int      @default(0)
-  escalations        Int      @default(0)
+  agreements    Int @default(0) // how many recommendations agreed with consultant mode
+  disagreements Int @default(0)
+  promotions    Int @default(0) // count by decision type
+  demotions     Int @default(0)
+  merges        Int @default(0)
+  replacements  Int @default(0)
+  suppressions  Int @default(0)
+  escalations   Int @default(0)
 
-  createdAt           DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2312,24 +2312,24 @@ model OperatorReviewCycle {
 /// Alternative strategies generated by the Operator. For each recommendation,
 /// the Operator generates 3 strategies and explains why one was chosen.
 model OperatorStrategy {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  candidateId       String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  candidateId    String
 
-  strategyType      String   // "fastest_roi" | "long_term_authority" | "lowest_risk"
-  headline          String
-  steps             Json     // Multi-step action sequence
-  expectedROI       Float    @default(0)
-  timelineWeeks     Int      @default(0)
-  riskLevel         String   // "low" | "medium" | "high"
-  rationale         String
-  isRecommended     Boolean  @default(false)
+  strategyType  String // "fastest_roi" | "long_term_authority" | "lowest_risk"
+  headline      String
+  steps         Json // Multi-step action sequence
+  expectedROI   Float   @default(0)
+  timelineWeeks Int     @default(0)
+  riskLevel     String // "low" | "medium" | "high"
+  rationale     String
+  isRecommended Boolean @default(false)
 
-  createdAt         DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2339,20 +2339,20 @@ model OperatorStrategy {
 
 /// Why-not analysis: explains why competing recommendations were rejected.
 model OperatorWhyNot {
-  id                  String   @id @default(cuid())
+  id                  String @id @default(cuid())
   organizationId      String
   projectId           String
   selectedCandidateId String
   rejectedCandidateId String
 
-  reason              String   // "lower_business_value" | "missing_prerequisite" | "already_performing_well" | "recently_optimized" | "low_confidence" | "better_opportunity" | "waiting_for_data" | "objective_mismatch"
-  explanation         String
-  magnitude           Float    @default(0)   // e.g., score difference
+  reason      String // "lower_business_value" | "missing_prerequisite" | "already_performing_well" | "recently_optimized" | "low_confidence" | "better_opportunity" | "waiting_for_data" | "objective_mismatch"
+  explanation String
+  magnitude   Float  @default(0) // e.g., score difference
 
-  createdAt           DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2362,32 +2362,32 @@ model OperatorWhyNot {
 /// Confidence audit for every recommendation. Tracks evidence quality,
 /// data freshness, assumptions, unknown variables, and missing data.
 model OperatorConfidenceAudit {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
-  candidateId       String
+  id             String @id @default(cuid())
+  organizationId String
+  projectId      String
+  candidateId    String
 
-  overallConfidence Float    @default(0.5)
-  evidenceQuality   Float    @default(0.5)
-  dataFreshness     Float    @default(0.5)
-  dataSourceCoverage Float   @default(0.5)
+  overallConfidence  Float @default(0.5)
+  evidenceQuality    Float @default(0.5)
+  dataFreshness      Float @default(0.5)
+  dataSourceCoverage Float @default(0.5)
 
-  assumptions       Json     // string[]
-  unknownVariables  Json     // string[]
-  missingData       Json     // string[]
-  reasonsForCaution Json     // string[]
+  assumptions       Json // string[]
+  unknownVariables  Json // string[]
+  missingData       Json // string[]
+  reasonsForCaution Json // string[]
 
-  crawlIncomplete   Boolean  @default(false)
-  weakEntityDetection Boolean @default(false)
-  noGSC             Boolean  @default(false)
-  noGA4             Boolean  @default(false)
-  weakGraphEvidence Boolean  @default(false)
+  crawlIncomplete       Boolean @default(false)
+  weakEntityDetection   Boolean @default(false)
+  noGSC                 Boolean @default(false)
+  noGA4                 Boolean @default(false)
+  weakGraphEvidence     Boolean @default(false)
   limitedHistoricalData Boolean @default(false)
 
-  createdAt         DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2396,21 +2396,21 @@ model OperatorConfidenceAudit {
 
 /// Opportunity cost analysis: what are we giving up by choosing this recommendation?
 model OperatorOpportunityCost {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String
+  id                  String  @id @default(cuid())
+  organizationId      String
+  projectId           String
   selectedCandidateId String
-  delayedCandidateId String?
+  delayedCandidateId  String?
 
-  description       String
-  costMagnitude     String   // "low" | "medium" | "high"
-  estimatedDelay    Int      @default(0)   // days
-  businessImpact    String
+  description    String
+  costMagnitude  String // "low" | "medium" | "high"
+  estimatedDelay Int    @default(0) // days
+  businessImpact String
 
-  createdAt         DateTime @default(now())
+  createdAt DateTime @default(now())
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2418,19 +2418,19 @@ model OperatorOpportunityCost {
 
 /// Quality metrics for the Operator itself. Tracks acceptance rate, success rate, etc.
 model OperatorQualityMetric {
-  id                String   @id @default(cuid())
-  organizationId    String
-  projectId         String?
+  id             String  @id @default(cuid())
+  organizationId String
+  projectId      String?
 
-  metricType        String   // "operator_agreement" | "consultant_agreement" | "acceptance_rate" | "completion_rate" | "success_rate" | "false_positive_rate" | "regret_rate" | "replacement_rate"
-  value             Float    @default(0)
-  samples           Int      @default(0)
-  period            String   @default("all_time")   // "week" | "month" | "quarter" | "all_time"
+  metricType String // "operator_agreement" | "consultant_agreement" | "acceptance_rate" | "completion_rate" | "success_rate" | "false_positive_rate" | "regret_rate" | "replacement_rate"
+  value      Float  @default(0)
+  samples    Int    @default(0)
+  period     String @default("all_time") // "week" | "month" | "quarter" | "all_time"
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([metricType])
@@ -2443,39 +2443,39 @@ model OperatorQualityMetric {
 
 /// Execution plans derived from recommendations. Stores workflow definition and steps.
 model ExecutionPlan {
-  id                    String   @id @default(cuid())
-  organizationId        String
-  projectId             String
-  recommendationId      String?  // Reference to original recommendation if from Operator
+  id               String  @id @default(cuid())
+  organizationId   String
+  projectId        String
+  recommendationId String? // Reference to original recommendation if from Operator
 
-  title                 String   // e.g., "Update title on Service Page"
-  description           String?
-  executionType         String   // "update_title" | "add_schema" | "improve_links" | "create_section" | "refresh_content" | "repair_canonical" | "repair_redirect" | "merge_content" | "add_images" | "improve_headings" | "custom"
+  title         String // e.g., "Update title on Service Page"
+  description   String?
+  executionType String // "update_title" | "add_schema" | "improve_links" | "create_section" | "refresh_content" | "repair_canonical" | "repair_redirect" | "merge_content" | "add_images" | "improve_headings" | "custom"
 
-  pageUrl               String   // Target page URL
-  steps                 Json     // ExecutionStep[] - ordered workflow steps
-  expectedInputs        Json     // What data is needed
-  expectedOutputs       Json     // What will change
-  dependencies          Json     // Other pages/tasks that must complete first
-  rollbackStrategy      String   // "none" | "restore_backup" | "reverse_steps" | "manual"
+  pageUrl          String // Target page URL
+  steps            Json // ExecutionStep[] - ordered workflow steps
+  expectedInputs   Json // What data is needed
+  expectedOutputs  Json // What will change
+  dependencies     Json // Other pages/tasks that must complete first
+  rollbackStrategy String // "none" | "restore_backup" | "reverse_steps" | "manual"
 
-  estimatedTimeMinutes  Int      @default(0)
-  estimatedRiskLevel    String   @default("medium") // "low" | "medium" | "high"
-  expectedROI           Float    @default(0)        // Expected business return percentage
-  expectedConfidence    Float    @default(0.5)      // 0-1 confidence in success
+  estimatedTimeMinutes Int    @default(0)
+  estimatedRiskLevel   String @default("medium") // "low" | "medium" | "high"
+  expectedROI          Float  @default(0) // Expected business return percentage
+  expectedConfidence   Float  @default(0.5) // 0-1 confidence in success
 
-  status                String   @default("draft")  // "draft" | "pending_approval" | "approved" | "executing" | "completed" | "failed" | "rolled_back"
-  approvalPolicy        String   @default("manual") // "automatic" | "manual" | "two_person" | "admin" | "enterprise"
+  status         String @default("draft") // "draft" | "pending_approval" | "approved" | "executing" | "completed" | "failed" | "rolled_back"
+  approvalPolicy String @default("manual") // "automatic" | "manual" | "two_person" | "admin" | "enterprise"
 
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization          Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project               Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  approvals             ExecutionApproval[]
-  deployment            ExecutionDeployment?
-  verifications         ExecutionVerification[]
-  outcome               ExecutionOutcome?
+  organization  Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project       Project                 @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  approvals     ExecutionApproval[]
+  deployment    ExecutionDeployment?
+  verifications ExecutionVerification[]
+  outcome       ExecutionOutcome?
 
   @@index([organizationId])
   @@index([projectId])
@@ -2486,19 +2486,19 @@ model ExecutionPlan {
 
 /// Approval workflows for execution plans.
 model ExecutionApproval {
-  id                  String   @id @default(cuid())
-  organizationId      String
-  executionPlanId     String
-  approverUserId      String
+  id              String @id @default(cuid())
+  organizationId  String
+  executionPlanId String
+  approverUserId  String
 
-  status              String   // "pending" | "approved" | "rejected"
-  reasoning           String?
-  approvedAt          DateTime?
-  createdAt           DateTime @default(now())
+  status     String // "pending" | "approved" | "rejected"
+  reasoning  String?
+  approvedAt DateTime?
+  createdAt  DateTime  @default(now())
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
-  approverUser        User @relation(fields: [approverUserId], references: [id], onDelete: Cascade)
+  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executionPlan ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  approverUser  User          @relation(fields: [approverUserId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([executionPlanId])
@@ -2508,32 +2508,32 @@ model ExecutionApproval {
 
 /// Deployment execution records.
 model ExecutionDeployment {
-  id                  String   @id @default(cuid())
-  organizationId      String
-  executionPlanId     String   @unique
-  deployedByUserId    String
+  id               String @id @default(cuid())
+  organizationId   String
+  executionPlanId  String @unique
+  deployedByUserId String
 
-  dryRunStatus        String?  // null | "pending" | "success" | "failed"
-  dryRunResult        Json?    // Dry run preview/validation results
+  dryRunStatus String? // null | "pending" | "success" | "failed"
+  dryRunResult Json? // Dry run preview/validation results
 
-  actualStatus        String   @default("pending") // "pending" | "in_progress" | "success" | "partial_failure" | "failed"
-  attemptCount        Int      @default(0)
-  maxAttempts         Int      @default(3)
+  actualStatus String @default("pending") // "pending" | "in_progress" | "success" | "partial_failure" | "failed"
+  attemptCount Int    @default(0)
+  maxAttempts  Int    @default(3)
 
-  changes             Json     // Actual changes made (before/after diffs)
-  errors              String[]
-  warnings            String[]
+  changes  Json // Actual changes made (before/after diffs)
+  errors   String[]
+  warnings String[]
 
-  rollbackExecuted    Boolean  @default(false)
-  rollbackReason      String?
+  rollbackExecuted Boolean @default(false)
+  rollbackReason   String?
 
-  deployedAt          DateTime?
-  completedAt         DateTime?
-  createdAt           DateTime @default(now())
+  deployedAt  DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
-  deployedByUser      User @relation(fields: [deployedByUserId], references: [id], onDelete: Cascade)
+  organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executionPlan  ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  deployedByUser User          @relation(fields: [deployedByUserId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([executionPlanId])
@@ -2543,24 +2543,24 @@ model ExecutionDeployment {
 
 /// Post-deployment verification results.
 model ExecutionVerification {
-  id                  String   @id @default(cuid())
-  organizationId      String
-  executionPlanId     String
-  deploymentId        String?
+  id              String  @id @default(cuid())
+  organizationId  String
+  executionPlanId String
+  deploymentId    String?
 
-  verifyType          String   // "page_updated" | "schema_valid" | "title_changed" | "links_added" | "canonical_fixed" | "indexability" | "html_valid" | "all"
-  status              String   // "pending" | "verifying" | "success" | "failed"
-  details             Json     // Verification details and checks
+  verifyType String // "page_updated" | "schema_valid" | "title_changed" | "links_added" | "canonical_fixed" | "indexability" | "html_valid" | "all"
+  status     String // "pending" | "verifying" | "success" | "failed"
+  details    Json // Verification details and checks
 
-  passedChecks        String[]
-  failedChecks        String[]
-  automatedRollback   Boolean  @default(false)
+  passedChecks      String[]
+  failedChecks      String[]
+  automatedRollback Boolean  @default(false)
 
-  verifiedAt          DateTime?
-  createdAt           DateTime @default(now())
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executionPlan ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([executionPlanId])
@@ -2570,43 +2570,43 @@ model ExecutionVerification {
 
 /// Business outcome tracking after deployment.
 model ExecutionOutcome {
-  id                  String   @id @default(cuid())
-  organizationId      String
-  projectId           String
-  executionPlanId     String   @unique
-  deploymentId        String?
+  id              String  @id @default(cuid())
+  organizationId  String
+  projectId       String
+  executionPlanId String  @unique
+  deploymentId    String?
 
   // Measured outcomes (null if data not yet available)
-  rankingsImproved    Boolean?
-  rankingsDelta       Float?   // Position change (-2, +1, etc)
+  rankingsImproved Boolean?
+  rankingsDelta    Float? // Position change (-2, +1, etc)
 
-  ctrImproved         Boolean?
-  ctrDelta            Float?   // CTR change (0.05 = +5%)
+  ctrImproved Boolean?
+  ctrDelta    Float? // CTR change (0.05 = +5%)
 
-  trafficImproved     Boolean?
-  trafficDelta        Int?     // Additional visits
+  trafficImproved Boolean?
+  trafficDelta    Int? // Additional visits
 
   conversionsImproved Boolean?
-  conversionsDelta    Float?   // Conversion rate change
+  conversionsDelta    Float? // Conversion rate change
 
   aiReadinessImproved Boolean?
-  aiReadinessDelta    Float?   // Readability/schema/semantic score change
+  aiReadinessDelta    Float? // Readability/schema/semantic score change
 
-  coreWebVitalsChange Json?    // LCP/FID/CLS changes
+  coreWebVitalsChange Json? // LCP/FID/CLS changes
 
-  measurementPeriodDays Int?   // How many days of data collected
+  measurementPeriodDays Int? // How many days of data collected
   measurementStartDate  DateTime?
   measurementEndDate    DateTime?
 
-  status              String   @default("tracking") // "tracking" | "insufficient_data" | "complete"
-  notes               String?
+  status String  @default("tracking") // "tracking" | "insufficient_data" | "complete"
+  notes  String?
 
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  organization  Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project       Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  executionPlan ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
@@ -2616,18 +2616,18 @@ model ExecutionOutcome {
 
 /// Execution history audit trail.
 model ExecutionHistory {
-  id                  String   @id @default(cuid())
-  organizationId      String
-  projectId           String
-  executionPlanId     String?
+  id              String  @id @default(cuid())
+  organizationId  String
+  projectId       String
+  executionPlanId String?
 
-  action              String   // "created" | "approved" | "rejected" | "deployed" | "verified" | "rolled_back" | "outcome_tracked"
-  actor               String   // User email or system
-  details             Json     // Action-specific details
-  timestamp           DateTime @default(now())
+  action    String // "created" | "approved" | "rejected" | "deployed" | "verified" | "rolled_back" | "outcome_tracked"
+  actor     String // User email or system
+  details   Json // Action-specific details
+  timestamp DateTime @default(now())
 
-  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([projectId])
