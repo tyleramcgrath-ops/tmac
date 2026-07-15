@@ -234,7 +234,18 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
         <button className="office-mobile-bar-item ns-touch" onClick={() => openCompass('command-center')}><CompassIcon className="h-5 w-5" aria-hidden="true" />Compass</button>
       </nav>
 
-      {overlay === 'briefing' && <MorningBriefingOverlay scenario={scenario} onClose={() => setOverlay(null)} />}
+      {overlay === 'briefing' && (
+        <MorningBriefingOverlay
+          scenario={scenario}
+          investigating={investigating}
+          currentSource={currentSource}
+          lastReveal={lastReveal}
+          onClose={() => setOverlay(null)}
+          onAskCompass={(ctx) => openCompass(ctx ?? 'command-center')}
+          onOpenOpportunity={openOpportunity}
+          onOpenApproval={openApproval}
+        />
+      )}
       {overlay === 'opportunity' && scenario.opportunity && (
         <CCOpportunityWorkspace
           opportunity={scenario.opportunity}

@@ -62,6 +62,17 @@ export function timelineFor(scenario: PreviewScenario): TimelineStage[] {
         { id: 'measuring', label: 'Measuring', state: 'not-connected', note: 'Not started.' },
         { id: 'learning', label: 'Learning', state: 'blocked', note: "Using your last successful check — not updated today." },
       ]
+    case 'insufficient-evidence':
+      return [
+        { id: 'checking', label: 'Checking', state: 'failed', note: `Only ${scenario.pagesChecked} page checked before the connection dropped.` },
+        { id: 'understanding', label: 'Understanding', state: 'blocked', note: 'Skipped — not enough evidence to compare.' },
+        { id: 'deciding', label: 'Deciding', state: 'blocked', note: "Won't decide from incomplete evidence." },
+        { id: 'preparing', label: 'Preparing', state: 'blocked', note: 'Blocked on a complete check.' },
+        { id: 'approval', label: 'Waiting for approval', state: 'not-connected', note: 'Nothing pending.' },
+        { id: 'completing', label: 'Completing', state: 'not-connected', note: 'Not started.' },
+        { id: 'measuring', label: 'Measuring', state: 'not-connected', note: 'Not started.' },
+        { id: 'learning', label: 'Learning', state: 'blocked', note: 'Digital DNA left unchanged — not enough evidence to update it responsibly.' },
+      ]
     case 'automation-not-connected':
       return [
         { id: 'checking', label: 'Checking', state: 'completed', note: `Last manual check: ${scenario.lastCheckedAt}.` },

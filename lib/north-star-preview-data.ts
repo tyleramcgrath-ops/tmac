@@ -29,6 +29,7 @@ export type PreviewScenarioId =
   | 'no-changes'
   | 'waiting-approval'
   | 'check-failed'
+  | 'insufficient-evidence'
   | 'automation-not-connected'
   | 'first-visit'
 
@@ -390,7 +391,7 @@ const waitingApproval: PreviewScenario = {
     { id: 'h2', date: 'Yesterday', outcome: 'opportunity-found', summary: 'Found that contact info is hard to find on your homepage.', johnActed: false, followUp: 'Still open — not yet addressed.' },
     { id: 'h3', date: '2 days ago', outcome: 'no-change', summary: 'Nothing new that day.', johnActed: null, followUp: null },
   ],
-  defaultRunOutcome: 'completed',
+  defaultRunOutcome: 'waiting-approval',
 }
 
 /* ------------------------------------------------------------------ */
@@ -432,7 +433,57 @@ const checkFailed: PreviewScenario = {
 }
 
 /* ------------------------------------------------------------------ */
-/* Scenario 5 — Persistent automation not connected                    */
+/* Scenario 5 — Check interrupted, not enough evidence gathered         */
+/* ------------------------------------------------------------------ */
+
+const insufficientEvidence: PreviewScenario = {
+  id: 'insufficient-evidence',
+  switcherLabel: 'Insufficient evidence',
+  switcherHint: 'The connection dropped before enough pages were gathered.',
+  business: BUSINESS,
+  lastCheckedAt: 'Today, 6:03 AM (incomplete)',
+  lastCheckStatus: 'incomplete',
+  pagesChecked: 1,
+  briefing: {
+    headline: `Good morning, ${BUSINESS.ownerFirstName}.`,
+    subline: "Today's check stopped early — only 1 page loaded before the connection dropped.",
+    materialChange: false,
+    actionRequired: false,
+    automationConnected: true,
+    automationNote: 'Daily checks are on. North Star will try a full check again tomorrow at 6:00 AM — you can also try again now.',
+  },
+  opportunity: null,
+  opportunityStale: false,
+  pendingApproval: null,
+  digitalDna: dnaAreas({
+    identity: { key: 'identity', label: 'Business identity', understanding: 'partially-understood', evidenceCount: 1, note: 'Business name confirmed from the one page loaded. Not enough to confirm anything further.' },
+    services: { key: 'services', label: 'Services', understanding: 'needs-verification', evidenceCount: 0, note: "The connection dropped before your services page loaded." },
+    locations: { key: 'locations', label: 'Locations', understanding: 'needs-verification', evidenceCount: 0, note: 'Not reached before the connection dropped.' },
+    customers: { key: 'customers', label: 'Customers', understanding: 'not-connected', evidenceCount: 0, note: 'No customer data connected yet.' },
+    website: { key: 'website', label: 'Website', understanding: 'partially-understood', evidenceCount: 1, note: '1 of 14 usual pages loaded before the check stopped.' },
+    reputation: { key: 'reputation', label: 'Reputation', understanding: 'needs-verification', evidenceCount: 0, note: 'Not reached before the connection dropped.' },
+    marketing: { key: 'marketing', label: 'Marketing activity', understanding: 'not-connected', evidenceCount: 0, note: 'No advertising accounts connected.' },
+    offers: { key: 'offers', label: 'Offers & promotions', understanding: 'not-connected', evidenceCount: 0, note: 'Not reached before the connection dropped.' },
+    competitors: { key: 'competitors', label: 'Competitors', understanding: 'needs-verification', evidenceCount: 0, note: 'Needs more checks over time before we can compare confidently.' },
+    seasonality: { key: 'seasonality', label: 'Seasonality', understanding: 'needs-verification', evidenceCount: 0, note: 'Needs several months of data to identify patterns.' },
+    conversion: { key: 'conversion', label: 'Conversion paths', understanding: 'needs-verification', evidenceCount: 0, note: 'Not reached before the connection dropped.' },
+  }),
+  activity: [
+    { id: 'a1', label: 'Checking your website', status: 'needs-attention', startedAt: '6:00 AM', finishedAt: '6:03 AM', finding: 'Found 1 page before the connection dropped — not enough to responsibly update what I know.', actionRequired: false, persistence: 'temporary', technicalDetail: 'Crawl interrupted after 1 page; connection reset before sitemap traversal completed.' },
+    { id: 'a2', label: 'Understanding what changed', status: 'waiting', startedAt: null, finishedAt: null, finding: 'Skipped — not enough evidence gathered to compare.', actionRequired: false, persistence: 'persistent', technicalDetail: 'Insufficient page count to run the diff step.' },
+    { id: 'a3', label: 'Preparing your briefing', status: 'finished', startedAt: '6:03 AM', finishedAt: '6:03 AM', finding: 'Briefing prepared, noting the check was incomplete.', actionRequired: false, persistence: 'persistent', technicalDetail: 'Briefing generated without updating Digital DNA beyond what was confirmed.' },
+    { id: 'a4', label: 'Retrying automatically', status: 'waiting', startedAt: null, finishedAt: null, finding: null, actionRequired: false, persistence: 'persistent', technicalDetail: 'Scheduled retry tomorrow, 6:00 AM.' },
+  ],
+  history: [
+    { id: 'h1', date: 'Today', outcome: 'check-incomplete', summary: 'Only 1 page loaded before the connection dropped — not enough to update what I know.', johnActed: null, followUp: 'We will try a full check again tomorrow morning.' },
+    { id: 'h2', date: '2 days ago', outcome: 'no-change', summary: 'Nothing new that day.', johnActed: null, followUp: null },
+    { id: 'h3', date: '1 week ago', outcome: 'opportunity-found', summary: 'Found that contact info is hard to find on your homepage.', johnActed: true, followUp: 'You said this was fixed. We confirmed it on the next check.' },
+  ],
+  defaultRunOutcome: 'insufficient-evidence',
+}
+
+/* ------------------------------------------------------------------ */
+/* Scenario 6 — Persistent automation not connected                    */
 /* ------------------------------------------------------------------ */
 
 const automationNotConnected: PreviewScenario = {
@@ -466,13 +517,14 @@ const automationNotConnected: PreviewScenario = {
   history: [
     { id: 'h1', date: '4 days ago', outcome: 'opportunity-found', summary: 'Found that contact info is hard to find on your homepage.', johnActed: null, followUp: 'Still open.' },
     { id: 'h2', date: '2 weeks ago', outcome: 'no-change', summary: 'Nothing new that day.', johnActed: null, followUp: null },
-    { id: 'h3', date: '5 weeks ago', outcome: 'opportunity-found', summary: 'Found 3 pages loading slowly on mobile.', johnActed: true, followUp: 'You said this was fixed.' },
+    { id: 'h3', date: '3 weeks ago', outcome: 'result-unknown', summary: "You said you'd updated your service area listing, but the next manual check couldn't confirm the change had gone live.", johnActed: true, followUp: 'Ask North Star to check again to confirm it went live.' },
+    { id: 'h4', date: '5 weeks ago', outcome: 'opportunity-found', summary: 'Found 3 pages loading slowly on mobile.', johnActed: true, followUp: 'You said this was fixed.' },
   ],
   defaultRunOutcome: 'completed',
 }
 
 /* ------------------------------------------------------------------ */
-/* Scenario 6 — First visit, limited evidence                          */
+/* Scenario 7 — First visit, limited evidence                          */
 /* ------------------------------------------------------------------ */
 
 const firstVisit: PreviewScenario = {
@@ -535,6 +587,7 @@ export const PREVIEW_SCENARIOS: Record<PreviewScenarioId, PreviewScenario> = {
   'no-changes': noChanges,
   'waiting-approval': waitingApproval,
   'check-failed': checkFailed,
+  'insufficient-evidence': insufficientEvidence,
   'automation-not-connected': automationNotConnected,
   'first-visit': firstVisit,
 }

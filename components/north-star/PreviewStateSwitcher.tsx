@@ -7,6 +7,7 @@ const ORDER: PreviewScenarioId[] = [
   'no-changes',
   'waiting-approval',
   'check-failed',
+  'insufficient-evidence',
   'automation-not-connected',
   'first-visit',
 ]
