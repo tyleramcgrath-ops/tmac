@@ -57,148 +57,78 @@ interface ValidationIssue {
 }
 
 /**
- * Real websites to validate (18 total across 6 industries)
- * Using public/testable sites only
+ * WAVE 1: Real websites for initial validation (6 sites, one per industry)
+ * These are public, lawfully crawlable websites with good schema support
  */
-const VALIDATION_TARGETS = {
+const WAVE_1_TARGETS = {
   law_firm: [
     {
-      domain: 'example-law-1.com',
-      name: 'Smith & Associates',
+      domain: 'foley.com',
+      name: 'Foley & Lardner LLP',
       industry: 'law_firm',
-      expectedServices: ['Personal Injury', 'Medical Malpractice', 'Product Liability'],
-      expectedLocations: ['New York', 'New Jersey'],
-    },
-    {
-      domain: 'example-law-2.com',
-      name: 'Johnson Legal Group',
-      industry: 'law_firm',
-      expectedServices: ['Divorce', 'Family Law', 'Custody'],
-      expectedLocations: ['California', 'Nevada'],
-    },
-    {
-      domain: 'example-law-3.com',
-      name: 'Corporate Law Partners',
-      industry: 'law_firm',
-      expectedServices: ['M&A', 'Employment Law', 'Contracts'],
-      expectedLocations: ['New York', 'California', 'Texas'],
+      expectedServices: ['Corporate Law', 'Litigation', 'Intellectual Property', 'Employment Law'],
+      expectedLocations: ['New York', 'Chicago', 'Los Angeles', 'Washington DC'],
+      crawlLimit: 300,
     },
   ],
   ecommerce: [
     {
-      domain: 'example-shop-1.com',
-      name: 'Electronics Store',
+      domain: 'bhphotovideo.com',
+      name: 'B&H Photo Video',
       industry: 'ecommerce',
-      expectedCategories: ['Laptops', 'Phones', 'Accessories'],
-      expectedPageTypes: ['product', 'category', 'buying_guide'],
-    },
-    {
-      domain: 'example-shop-2.com',
-      name: 'Fashion Retailer',
-      industry: 'ecommerce',
-      expectedCategories: ['Men', 'Women', 'Accessories'],
-      expectedPageTypes: ['product', 'category', 'lookbook'],
-    },
-    {
-      domain: 'example-shop-3.com',
-      name: 'Home Goods',
-      industry: 'ecommerce',
-      expectedCategories: ['Furniture', 'Decor', 'Kitchen'],
-      expectedPageTypes: ['product', 'category', 'style_guide'],
+      expectedCategories: ['Cameras', 'Lenses', 'Lighting', 'Audio', 'Computers'],
+      expectedPageTypes: ['product', 'category', 'buying_guide', 'reviews'],
+      crawlLimit: 500,
     },
   ],
   saas: [
     {
-      domain: 'example-saas-1.com',
-      name: 'Project Management Tool',
+      domain: 'calendly.com',
+      name: 'Calendly',
       industry: 'saas',
-      expectedFeatures: ['Task Management', 'Team Collaboration', 'Reporting'],
-      expectedPageTypes: ['pricing', 'features', 'comparison', 'case_study'],
-    },
-    {
-      domain: 'example-saas-2.com',
-      name: 'Marketing Automation',
-      industry: 'saas',
-      expectedFeatures: ['Email Marketing', 'Segmentation', 'Analytics'],
-      expectedPageTypes: ['pricing', 'features', 'comparison', 'documentation'],
-    },
-    {
-      domain: 'example-saas-3.com',
-      name: 'CRM Platform',
-      industry: 'saas',
-      expectedFeatures: ['Contact Management', 'Sales Pipeline', 'Forecasting'],
-      expectedPageTypes: ['pricing', 'features', 'comparison', 'integration'],
+      expectedFeatures: ['Scheduling', 'Integrations', 'Team Scheduling', 'Resource Booking'],
+      expectedPageTypes: ['pricing', 'features', 'comparison', 'blog', 'case_study'],
+      crawlLimit: 200,
     },
   ],
   local_service: [
     {
-      domain: 'example-local-1.com',
-      name: 'HVAC Company',
+      domain: 'servicemaster.com',
+      name: 'ServiceMaster',
       industry: 'local_service',
-      expectedServices: ['Installation', 'Repair', 'Maintenance'],
-      expectedLocations: ['Boston', 'Cambridge', 'Brookline'],
-    },
-    {
-      domain: 'example-local-2.com',
-      name: 'Dental Practice',
-      industry: 'local_service',
-      expectedServices: ['Cleaning', 'Whitening', 'Implants'],
-      expectedLocations: ['San Francisco', 'Oakland', 'Berkeley'],
-    },
-    {
-      domain: 'example-local-3.com',
-      name: 'Plumbing Service',
-      industry: 'local_service',
-      expectedServices: ['Emergency Repair', 'Installation', 'Maintenance'],
-      expectedLocations: ['Los Angeles', 'Pasadena', 'Long Beach'],
+      expectedServices: ['Cleaning', 'Restoration', 'Termite Control', 'Carpet Care'],
+      expectedLocations: ['nationwide'],
+      crawlLimit: 400,
     },
   ],
   agency: [
     {
-      domain: 'example-agency-1.com',
-      name: 'Digital Marketing Agency',
+      domain: 'webfx.com',
+      name: 'WebFX',
       industry: 'agency',
-      expectedServices: ['SEO', 'PPC', 'Content Marketing'],
-      expectedPageTypes: ['service', 'case_study', 'blog', 'about'],
-    },
-    {
-      domain: 'example-agency-2.com',
-      name: 'Web Design Agency',
-      industry: 'agency',
-      expectedServices: ['Web Design', 'Development', 'Branding'],
-      expectedPageTypes: ['service', 'portfolio', 'process', 'team'],
-    },
-    {
-      domain: 'example-agency-3.com',
-      name: 'PR & Communications',
-      industry: 'agency',
-      expectedServices: ['PR', 'Social Media', 'Crisis Management'],
-      expectedPageTypes: ['service', 'case_study', 'insights', 'team'],
+      expectedServices: ['SEO', 'PPC', 'Web Design', 'Content Marketing', 'Social Media'],
+      expectedPageTypes: ['service', 'case_study', 'blog', 'resources'],
+      crawlLimit: 300,
     },
   ],
   content_heavy: [
     {
-      domain: 'example-content-1.com',
-      name: 'News/Publishing Site',
+      domain: 'dev.to',
+      name: 'Dev.to',
       industry: 'content',
-      expectedPageCount: 1000,
-      expectedPageTypes: ['article', 'category', 'author', 'archive'],
-    },
-    {
-      domain: 'example-content-2.com',
-      name: 'Technical Documentation',
-      industry: 'content',
-      expectedPageCount: 500,
-      expectedPageTypes: ['guide', 'api_docs', 'tutorial', 'faq'],
-    },
-    {
-      domain: 'example-content-3.com',
-      name: 'Educational Platform',
-      industry: 'content',
-      expectedPageCount: 800,
-      expectedPageTypes: ['course', 'lesson', 'article', 'resources'],
+      expectedPageCount: 100000,
+      expectedPageTypes: ['article', 'tag', 'user', 'series'],
+      crawlLimit: 500,
     },
   ],
+};
+
+/**
+ * WAVE 2 & 3: Additional sites for deeper validation
+ * Will be populated as Wave 1 completes
+ */
+const VALIDATION_TARGETS = {
+  ...WAVE_1_TARGETS,
 };
 
 /**
