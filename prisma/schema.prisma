@@ -34,6 +34,10 @@ model User {
   // Audit trail
   auditLogs                AuditLog[]
 
+  // Execution Engine (Phase 9.0)
+  executionApprovals       ExecutionApproval[]
+  executionDeployments     ExecutionDeployment[]
+
   @@index([email])
   @@index([createdAt])
 }
@@ -162,6 +166,14 @@ model Organization {
   operatorConfidenceAudits OperatorConfidenceAudit[]
   operatorOpportunityCosts OperatorOpportunityCost[]
   operatorQualityMetrics OperatorQualityMetric[]
+
+  // Execution Engine (Phase 9.0)
+  executionPlans        ExecutionPlan[]
+  executionApprovals    ExecutionApproval[]
+  executionDeployments  ExecutionDeployment[]
+  executionVerifications ExecutionVerification[]
+  executionOutcomes     ExecutionOutcome[]
+  executionHistories    ExecutionHistory[]
 
   @@index([slug])
   @@index([createdAt])
@@ -295,6 +307,11 @@ model Project {
   operatorWhyNots      OperatorWhyNot[]
   operatorConfidenceAudits OperatorConfidenceAudit[]
   operatorOpportunityCosts OperatorOpportunityCost[]
+
+  // Execution Engine (Phase 9.0)
+  executionPlans        ExecutionPlan[]
+  executionOutcomes     ExecutionOutcome[]
+  executionHistories    ExecutionHistory[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -2419,3 +2436,232 @@ model OperatorQualityMetric {
   @@index([metricType])
   @@index([period])
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 9: EXECUTION ENGINE
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Execution plans derived from recommendations. Stores workflow definition and steps.
+model ExecutionPlan {
+  id                    String   @id @default(cuid())
+  organizationId        String
+  projectId             String
+  recommendationId      String?  // Reference to original recommendation if from Operator
+
+  title                 String   // e.g., "Update title on Service Page"
+  description           String?
+  executionType         String   // "update_title" | "add_schema" | "improve_links" | "create_section" | "refresh_content" | "repair_canonical" | "repair_redirect" | "merge_content" | "add_images" | "improve_headings" | "custom"
+
+  pageUrl               String   // Target page URL
+  steps                 Json     // ExecutionStep[] - ordered workflow steps
+  expectedInputs        Json     // What data is needed
+  expectedOutputs       Json     // What will change
+  dependencies          Json     // Other pages/tasks that must complete first
+  rollbackStrategy      String   // "none" | "restore_backup" | "reverse_steps" | "manual"
+
+  estimatedTimeMinutes  Int      @default(0)
+  estimatedRiskLevel    String   @default("medium") // "low" | "medium" | "high"
+  expectedROI           Float    @default(0)        // Expected business return percentage
+  expectedConfidence    Float    @default(0.5)      // 0-1 confidence in success
+
+  status                String   @default("draft")  // "draft" | "pending_approval" | "approved" | "executing" | "completed" | "failed" | "rolled_back"
+  approvalPolicy        String   @default("manual") // "automatic" | "manual" | "two_person" | "admin" | "enterprise"
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  organization          Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project               Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  approvals             ExecutionApproval[]
+  deployment            ExecutionDeployment?
+  verifications         ExecutionVerification[]
+  outcome               ExecutionOutcome?
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([executionType])
+  @@index([approvalPolicy])
+}
+
+/// Approval workflows for execution plans.
+model ExecutionApproval {
+  id                  String   @id @default(cuid())
+  organizationId      String
+  executionPlanId     String
+  approverUserId      String
+
+  status              String   // "pending" | "approved" | "rejected"
+  reasoning           String?
+  approvedAt          DateTime?
+  createdAt           DateTime @default(now())
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  approverUser        User @relation(fields: [approverUserId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([executionPlanId])
+  @@index([approverUserId])
+  @@index([status])
+}
+
+/// Deployment execution records.
+model ExecutionDeployment {
+  id                  String   @id @default(cuid())
+  organizationId      String
+  executionPlanId     String   @unique
+  deployedByUserId    String
+
+  dryRunStatus        String?  // null | "pending" | "success" | "failed"
+  dryRunResult        Json?    // Dry run preview/validation results
+
+  actualStatus        String   @default("pending") // "pending" | "in_progress" | "success" | "partial_failure" | "failed"
+  attemptCount        Int      @default(0)
+  maxAttempts         Int      @default(3)
+
+  changes             Json     // Actual changes made (before/after diffs)
+  errors              String[]
+  warnings            String[]
+
+  rollbackExecuted    Boolean  @default(false)
+  rollbackReason      String?
+
+  deployedAt          DateTime?
+  completedAt         DateTime?
+  createdAt           DateTime @default(now())
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+  deployedByUser      User @relation(fields: [deployedByUserId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([executionPlanId])
+  @@index([actualStatus])
+  @@index([deployedAt])
+}
+
+/// Post-deployment verification results.
+model ExecutionVerification {
+  id                  String   @id @default(cuid())
+  organizationId      String
+  executionPlanId     String
+  deploymentId        String?
+
+  verifyType          String   // "page_updated" | "schema_valid" | "title_changed" | "links_added" | "canonical_fixed" | "indexability" | "html_valid" | "all"
+  status              String   // "pending" | "verifying" | "success" | "failed"
+  details             Json     // Verification details and checks
+
+  passedChecks        String[]
+  failedChecks        String[]
+  automatedRollback   Boolean  @default(false)
+
+  verifiedAt          DateTime?
+  createdAt           DateTime @default(now())
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([executionPlanId])
+  @@index([status])
+  @@index([verifyType])
+}
+
+/// Business outcome tracking after deployment.
+model ExecutionOutcome {
+  id                  String   @id @default(cuid())
+  organizationId      String
+  projectId           String
+  executionPlanId     String   @unique
+  deploymentId        String?
+
+  // Measured outcomes (null if data not yet available)
+  rankingsImproved    Boolean?
+  rankingsDelta       Float?   // Position change (-2, +1, etc)
+
+  ctrImproved         Boolean?
+  ctrDelta            Float?   // CTR change (0.05 = +5%)
+
+  trafficImproved     Boolean?
+  trafficDelta        Int?     // Additional visits
+
+  conversionsImproved Boolean?
+  conversionsDelta    Float?   // Conversion rate change
+
+  aiReadinessImproved Boolean?
+  aiReadinessDelta    Float?   // Readability/schema/semantic score change
+
+  coreWebVitalsChange Json?    // LCP/FID/CLS changes
+
+  measurementPeriodDays Int?   // How many days of data collected
+  measurementStartDate  DateTime?
+  measurementEndDate    DateTime?
+
+  status              String   @default("tracking") // "tracking" | "insufficient_data" | "complete"
+  notes               String?
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  executionPlan       ExecutionPlan @relation(fields: [executionPlanId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([executionPlanId])
+  @@index([status])
+}
+
+/// Execution history audit trail.
+model ExecutionHistory {
+  id                  String   @id @default(cuid())
+  organizationId      String
+  projectId           String
+  executionPlanId     String?
+
+  action              String   // "created" | "approved" | "rejected" | "deployed" | "verified" | "rolled_back" | "outcome_tracked"
+  actor               String   // User email or system
+  details             Json     // Action-specific details
+  timestamp           DateTime @default(now())
+
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project             Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([executionPlanId])
+  @@index([action])
+  @@index([timestamp])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// RELATIONS: Phase 9 to existing models
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Add Phase 9 relations to Organization model (extend existing model)
+// model Organization {
+//   ...existing fields...
+//   executionPlans        ExecutionPlan[]
+//   executionApprovals    ExecutionApproval[]
+//   executionDeployments  ExecutionDeployment[]
+//   executionVerifications ExecutionVerification[]
+//   executionOutcomes     ExecutionOutcome[]
+//   executionHistories    ExecutionHistory[]
+// }
+
+// Add Phase 9 relations to Project model (extend existing model)
+// model Project {
+//   ...existing fields...
+//   executionPlans        ExecutionPlan[]
+//   executionOutcomes     ExecutionOutcome[]
+//   executionHistories    ExecutionHistory[]
+// }
+
+// Add Phase 9 relations to User model (extend existing model)
+// model User {
+//   ...existing fields...
+//   executionApprovals    ExecutionApproval[]
+//   executionDeployments  ExecutionDeployment[]
+// }
