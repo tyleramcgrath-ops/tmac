@@ -128,6 +128,17 @@ model Organization {
   businessContextVersions BusinessContextVersion[]
   campaignTemplates   CampaignTemplate[]
 
+  // Content Optimization (Phase 7.7)
+  contentInventories  ContentInventory[]
+  contentMetrics      ContentMetrics[]
+  contentGaps         ContentGapAnalysis[]
+  contentRefreshes    ContentRefreshOpportunity[]
+  contentBriefs       ContentBrief[]
+  generatedContent    GeneratedContent[]
+  contentDiffs        ContentDiff[]
+  internalLinkRecs    InternalLinkRecommendation[]
+  contentDecayAlerts  ContentDecayAlert[]
+
   @@index([slug])
   @@index([createdAt])
 }
@@ -226,6 +237,17 @@ model Project {
   seasonalPriorities SeasonalPriority[]
   businessContextVersions BusinessContextVersion[]
   campaignTemplates CampaignTemplate[]
+
+  // Content Optimization (Phase 7.7)
+  contentInventories  ContentInventory[]
+  contentMetrics      ContentMetrics[]
+  contentGaps         ContentGapAnalysis[]
+  contentRefreshes    ContentRefreshOpportunity[]
+  contentBriefs       ContentBrief[]
+  generatedContent    GeneratedContent[]
+  contentDiffs        ContentDiff[]
+  internalLinkRecs    InternalLinkRecommendation[]
+  contentDecayAlerts  ContentDecayAlert[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -1287,4 +1309,428 @@ model CampaignTemplate {
   @@index([projectId])
   @@index([industry])
   @@index([templateType])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 7.7: AI CONTENT & OPTIMIZATION ENGINE
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ContentInventory {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String   // Unique per project
+
+  // Content classification
+  contentType       String   // page, blog, service, location, product, landing, faq, resource
+  primaryTopic      String?
+  primaryEntities   String[] @default([]) // JSON: entity names
+
+  // Page metrics
+  wordCount         Int      @default(0)
+  imageCount        Int      @default(0)
+  lastModified      DateTime?
+  indexStatus       String   @default("unknown") // indexed, not_indexed, blocked, noindex, crawled_not_indexed
+  canonical         String?
+
+  // Link structure
+  internalLinkCount Int      @default(0)
+  externalLinkCount Int      @default(0)
+  linksToThisPage   Int      @default(0)
+
+  // Schema and structure
+  hasSchema         Boolean  @default(false)
+  schemaTypes       String[] @default([])
+  targetKeywords    String[] @default([]) // From GSC or manual
+
+  // Performance data
+  gscImpressions    Int      @default(0)
+  gscClicks         Int      @default(0)
+  gscAverageCtr     Float    @default(0)
+  gscAveragePosition Float   @default(0)
+  ga4Sessions       Int      @default(0)
+  ga4Pageviews      Int      @default(0)
+  ga4Conversions    Int      @default(0)
+
+  // Business context
+  businessValue     Float    @default(0)
+  decisionEngineScore Float  @default(0)
+  isMoneyPage       Boolean  @default(false)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  metrics           ContentMetrics?
+  refreshOpportunity ContentRefreshOpportunity?
+  gaps              ContentGapAnalysis[]
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([contentType])
+  @@index([indexStatus])
+  @@index([isMoneyPage])
+  @@index([updatedAt])
+}
+
+model ContentMetrics {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+  inventoryId       String   @unique // One-to-one with ContentInventory
+
+  // Quality scores (0-100)
+  qualityScore      Int      @default(0)
+  qualityExplanation String?
+
+  freshnessScore    Int      @default(0)
+  freshnessExplanation String?
+
+  entityCoverageScore Int    @default(0)
+  entityExplanation String?
+
+  topicalDepthScore Int      @default(0)
+  topicalExplanation String?
+
+  readabilityScore  Int      @default(0)
+  readabilityExplanation String?
+
+  seoOptimizationScore Int   @default(0)
+  seoExplanation    String?
+
+  aiReadinessScore  Int      @default(0)
+  aiReadinessExplanation String?
+
+  conversionReadinessScore Int @default(0)
+  conversionExplanation String?
+
+  businessValueScore Int     @default(0)
+  businessExplanation String?
+
+  // Overall
+  opportunityScore  Int      @default(0)
+  overallScore      Int      @default(0)
+
+  calculatedAt      DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inventory         ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([opportunityScore])
+  @@index([overallScore])
+}
+
+model ContentGapAnalysis {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  inventoryId       String? // Reference to related page if exists
+
+  gapType           String   // missing_service, missing_location, missing_faq, missing_comparison, missing_support, missing_trust, missing_cluster
+  description       String
+  priority          String   @default("medium") // high, medium, low
+  expectedImpact    String? // "high", "medium", "low" + business value estimate
+
+  // What should be created
+  recommendedPageType String? // service_page, location_page, faq, comparison_page, etc
+  suggestedTopic    String?
+  suggestedTitle    String?
+
+  // Context for generation
+  relatedKeywords   String[] @default([])
+  relatedServices   String[] @default([])
+  relatedLocations  String[] @default([])
+  competitorExamples String[] @default([]) // URLs from competitors doing this well
+
+  // Why this matters
+  rationale         String   // Explain why this gap exists and why it matters
+  estimatedTrafficPotential Int @default(0)
+  businessObjectiveAlignment String? // How this supports the 90-day objective
+
+  isAddressed       Boolean  @default(false)
+  addressedBy       String?  // Content brief or generated content ID
+  addressedAt       DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inventory         ContentInventory? @relation(fields: [inventoryId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([gapType])
+  @@index([priority])
+  @@index([isAddressed])
+}
+
+model ContentRefreshOpportunity {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+  inventoryId       String   @unique // One-to-one with ContentInventory
+
+  // Why refresh is needed
+  refreshReasons    String[] // traffic_decline, ctr_decline, ranking_decline, outdated_content, thin_content, weak_entities, missing_schema, competitor_overtake, outdated_stats
+  trafficTrend30d   Float    @default(0) // % change
+  rankingTrend30d   Float    @default(0) // position change
+  ctrTrend30d       Float    @default(0) // % change
+
+  // Timeline
+  lastRefreshed     DateTime?
+  suggestedRefreshDate DateTime?
+  daysStale         Int      @default(0)
+
+  // Potential
+  estimatedPotential Float   @default(0) // Traffic recovery potential
+  priority          String   @default("medium") // high, medium, low
+
+  // What to improve
+  suggestedImprovements String[]
+
+  // Status
+  isScheduled       Boolean  @default(false)
+  refreshInitiatedAt DateTime?
+  refreshCompletedAt DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  inventory         ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([priority])
+  @@index([isScheduled])
+}
+
+model ContentBrief {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String? // NULL for new pages, set for existing page rewrites
+
+  // Purpose and audience
+  purpose           String   // increase_rankings, capture_traffic, improve_conversions, build_authority, support_product, etc
+  targetAudience    String
+  businessObjective String? // Reference to Business Objective this supports
+
+  // Content structure
+  primaryTopic      String
+  supportingTopics  String[] @default([])
+  entitiesToInclude String[] @default([])
+  questionsToAnswer String[] @default([])
+
+  // Technical requirements
+  recommendedSchema String[] @default([])
+  internalLinksToInclude String[] @default([]) // URLs to link to
+  targetKeywords    String[] @default([])
+
+  // Call to action and expectations
+  callToAction      String?
+  expectedOutcome   String? // What success looks like
+  targetWordCount   Int?
+
+  // User review status
+  status            String   @default("draft") // draft, approved, generating, generated, deployed
+  approvedBy        String?
+  approvedAt        DateTime?
+  reviewNotes       String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  generatedContent  GeneratedContent?
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([businessObjective])
+}
+
+model GeneratedContent {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  briefId           String   @unique
+  pageUrl           String? // NULL for new pages
+
+  contentType       String   // blog_article, service_page, location_page, faq_section, comparison_page, landing_page, cluster_page
+
+  // Generated content
+  generatedTitle    String
+  generatedMetaDescription String
+  generatedBody     String   // Full HTML or markdown
+  generatedHeadings String[] @default([]) // H1, H2, H3 structure
+  generatedSchema   String?  // JSON-LD
+
+  // Internal linking
+  generatedInternalLinks String[] @default([]) // JSON: [{url, anchor}]
+
+  // Scores
+  seoOptimizationScore Float  @default(0)
+  businessAlignmentScore Float @default(0)
+  readabilityScore  Float    @default(0)
+  keyword1Relevance Float    @default(0)
+  keyword2Relevance Float    @default(0)
+
+  // Approval workflow
+  approvalStatus    String   @default("pending") // pending, approved, rejected, deployed
+  approvalNotes     String?
+  approvedBy        String?
+  approvedAt        DateTime?
+
+  // Deployment
+  deployedAt        DateTime?
+  deploymentStatus  String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  brief             ContentBrief @relation(fields: [briefId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([approvalStatus])
+  @@index([deployedAt])
+}
+
+model ContentDiff {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+
+  // Current state
+  currentTitle      String?
+  currentMetaDescription String?
+  currentHeadings   String[] @default([])
+  currentWordCount  Int      @default(0)
+  currentSchema     String?
+
+  // Suggested changes
+  suggestedTitle    String?
+  suggestedMetaDescription String?
+  suggestedHeadings String[] @default([])
+  suggestedWordCount Int?
+  suggestedSchema   String?
+
+  // Impact analysis
+  estimatedSeoImpact String // "high_positive", "moderate_positive", "low_positive", "neutral", "negative"
+  seoImpactExplanation String?
+  estimatedBusinessImpact String
+  businessImpactExplanation String?
+
+  // Change tracking
+  changesHighlighted String[] // JSON: [{section, current, suggested, impact}]
+  diffSummary       String?
+
+  // Approval
+  isApproved        Boolean  @default(false)
+  approvedBy        String?
+  approvedAt        DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([estimatedSeoImpact])
+}
+
+model InternalLinkRecommendation {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  fromPageUrl       String
+  toPageUrl         String
+
+  // Link details
+  suggestedAnchorText String
+  linkContext       String? // Surrounding text for context
+  priority          String   @default("medium") // high, medium, low
+
+  // Why this link helps
+  rationale         String
+  estimatedBenefit  String? // "improves_topical_relevance", "builds_authority", "supports_conversion_goal", etc
+
+  // Relationship
+  isTopicallyRelevant Boolean @default(true)
+  isAuthorityBuilder Boolean @default(false)
+  isConversionRelevant Boolean @default(false)
+
+  // Status
+  isImplemented     Boolean  @default(false)
+  implementedAt     DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, fromPageUrl, toPageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([priority])
+  @@index([isImplemented])
+}
+
+model ContentDecayAlert {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+
+  // What's declining
+  decayType         String   // traffic_loss, ranking_loss, ctr_decline, impressions_decline
+  severity          String   @default("medium") // high, medium, low
+  decayPercentage   Float
+
+  // Timeline
+  detectedAt        DateTime @default(now())
+  decayStartedAt    DateTime?
+  lastMeasuredAt    DateTime?
+  trend30d          Float?
+
+  // Context
+  currentValue      Float
+  previousValue     Float
+  potentialCause    String[]
+
+  // Resolution
+  isResolved        Boolean  @default(false)
+  resolvedBy        String?  // Content refresh, new internal links, etc
+  resolvedAt        DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([severity])
+  @@index([decayType])
+  @@index([isResolved])
 }
