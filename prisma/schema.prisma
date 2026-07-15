@@ -149,6 +149,11 @@ model Organization {
   // Operator (Phase 8.1)
   operatorMemories    OperatorMemory[]
   operatorOutcomes    OperatorOutcome[]
+  operatorCandidates  OperatorCandidate[]
+  operatorEvents      OperatorEvent[]
+  operatorPreferences OperatorPreference[]
+  operatorActionPlans OperatorActionPlan[]
+  operatorNotificationPrefs OperatorNotificationPref[]
 
   @@index([slug])
   @@index([createdAt])
@@ -270,6 +275,11 @@ model Project {
   // Operator (Phase 8.1)
   operatorMemories    OperatorMemory[]
   operatorOutcomes    OperatorOutcome[]
+  operatorCandidates  OperatorCandidate[]
+  operatorEvents      OperatorEvent[]
+  operatorPreferences OperatorPreference[]
+  operatorActionPlans OperatorActionPlan[]
+  operatorNotificationPrefs OperatorNotificationPref[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -2066,4 +2076,168 @@ model OperatorOutcome {
   @@index([organizationId])
   @@index([projectId])
   @@index([memoryId])
+}
+
+/// Normalized candidate row. Every source system (crawl, decision engine,
+/// graph, gap analysis, GSC, GA4, competitors, decay, schema gaps, WordPress
+/// opportunities, user-created, campaigns) writes into this shape so the
+/// Operator can dedupe, consolidate, and rank uniformly.
+model OperatorCandidate {
+  id                 String   @id @default(cuid())
+  organizationId     String
+  projectId          String
+
+  // Source provenance
+  sourceSystem       String   // graph | decision_engine | gap_analysis | crawl | gsc | ga4 | competitor | decay | schema | wordpress | user | campaign
+  sourceRecordId     String?
+  category           String   // money_page | internal_link | schema | content_gap | technical | authority | competitor | campaign …
+  actionType         String   // canonical action verb, e.g. add_faq_schema, expand_content, add_internal_link
+
+  // Targets
+  primaryPageUrl     String
+  affectedPageUrls   String[] @default([])
+
+  // Business linkage
+  businessObjective  String?
+  moneyPageUrl       String?
+
+  // Evidence + scores (Json blobs so shape can evolve)
+  evidence           Json?    // graph paths, GSC deltas, competitor changes…
+  decisionScores     Json?    // { businessValue, seoOpportunity, industryScore, … }
+
+  // Effort + risk
+  estimatedMinutes   Int      @default(60)
+  timeToWin          String?  // "Short Term" | "Medium Term" | "Long Term"
+  risk               String   @default("low") // low | medium | high
+  confidence         Float    @default(0.7)
+  dependencies       String[] @default([])
+  deploymentCapability String? // wordpress | custom_html | manual | none
+
+  // Deduplication
+  dedupeKey          String   // (projectId, category, actionType, primaryPageUrl) canonicalized
+  consolidatedFrom   String[] @default([]) // candidate ids that were merged in
+  supersedesId       String?
+  supersededById     String?
+
+  // Lifecycle
+  status             String   @default("new") // new | recommended | suppressed | superseded | expired
+  createdAt          DateTime @default(now())
+  lastRecalculatedAt DateTime @default(now())
+  expiresAt          DateTime?
+
+  // Denormalized for fast display
+  headline           String?
+  reasoning          Json?
+
+  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project            Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, dedupeKey])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([category])
+  @@index([primaryPageUrl])
+  @@index([projectId, status])
+}
+
+/// Append-only event log for the Operator so users can trace every promotion,
+/// demotion, suppression, mission change, learning adjustment and conflict.
+model OperatorEvent {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+
+  kind           String   // candidate_discovered | candidate_consolidated | candidate_promoted | candidate_demoted | candidate_suppressed | mission_selected | mission_changed | recommendation_accepted | recommendation_rejected | recommendation_deferred | action_completed | outcome_verified | learning_adjustment_made | conflict_detected | data_became_stale | recommendation_expired
+  summary        String
+  payload        Json?
+
+  candidateId    String?
+  memoryId       String?
+
+  createdAt      DateTime @default(now())
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([kind])
+  @@index([projectId, createdAt])
+}
+
+/// Per-user (or project-default) learned preferences. The Operator adjusts
+/// ranking based on these but never silently overrides the active business
+/// objective. Rows are project + optionally user scoped.
+model OperatorPreference {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  userId         String?  // null = project-default preference
+
+  category       String   // "add_faq_schema", "content_rewrite", "internal_link", …
+  signal         String   // accept | reject | defer | ignore | prefer_time_window
+  weightDelta    Float    @default(0)   // -1.0 … +1.0 additive rank nudge
+  samples        Int      @default(0)   // how many observations feed this preference
+  detail         Json?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId, category, signal])
+  @@index([organizationId])
+  @@index([projectId])
+}
+
+/// Multi-step action plan for compound recommendations. Bounded — the plan
+/// itself is short and each step carries its own owner + dependency + risk +
+/// deployment method + verification method.
+model OperatorActionPlan {
+  id               String   @id @default(cuid())
+  organizationId   String
+  projectId        String
+  candidateId      String
+  memoryId         String?
+
+  headline         String
+  totalMinutes     Int      @default(0)
+  status           String   @default("pending") // pending | in_progress | completed | failed | rolled_back
+
+  steps            Json     // OperatorPlanStep[]
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project          Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([candidateId])
+  @@index([status])
+}
+
+/// Per-user (or project-default) notification preferences.
+model OperatorNotificationPref {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  userId         String?
+
+  channel        String   // in_app | email_digest
+  category       String   // new_primary_mission | critical_issue | mission_changed | deployment_failed | verification_succeeded | recommendation_returned | strong_opportunity | competitor_risk | more_evidence_required
+  enabled        Boolean  @default(true)
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId, channel, category])
+  @@index([organizationId])
+  @@index([projectId])
 }

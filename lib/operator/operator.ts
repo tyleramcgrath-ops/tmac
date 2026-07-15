@@ -1,10 +1,15 @@
 import { getPrismaClient } from '@/lib/db'
 import { retrieveGraphContext } from '@/lib/pipeline/graph/queries'
 import { collectCandidates } from './candidates'
+import { consolidate, computeDedupeKey, canonicalizeActionType } from './consolidate'
+import { persistConsolidated } from './persist'
 import { applyJudgment } from './judgment'
+import { bucketFor, suppressionFor } from './suppress'
+import { calibratedMultiplierFor } from './learning'
+import { loadPreferenceMap } from './preferences'
+import { logEvent } from './events'
 import {
   isBlockedByMemory,
-  learningMultiplierFor,
   loadMemoryMap,
   memoryKey,
   proposeMemory,
@@ -15,6 +20,7 @@ import type {
   FocusWindow,
   OperatorReadout,
   OperatorRecommendation,
+  OperatorShortlist,
 } from './types'
 import { FOCUS_MINUTES } from './types'
 
@@ -42,28 +48,77 @@ export async function computeNextAction(input: {
   }
   const organizationId = input.organizationId ?? project.organizationId
 
-  const [candidates, memoryMap, businessProfile, seasonalPriorities, graphContext] =
+  const [rawCandidates, memoryMap, businessProfile, seasonalPriorities, graphContext, preferences] =
     await Promise.all([
       collectCandidates(input.projectId),
       loadMemoryMap(input.projectId),
       prisma.businessProfile.findFirst({ where: { projectId: input.projectId } }),
       prisma.seasonalPriority.findMany({ where: { projectId: input.projectId } }),
       retrieveGraphContext({ projectId: input.projectId }).catch(() => null),
+      loadPreferenceMap({ projectId: input.projectId }),
     ])
+
+  // Phase 8.1A: consolidate duplicates from multiple source systems.
+  const consolidation = consolidate(input.projectId, rawCandidates)
+  const consolidatedCandidates = consolidation.consolidated
+  if (input.persistProposals !== false) {
+    try {
+      await persistConsolidated({ organizationId, projectId: input.projectId }, consolidation)
+      if (consolidation.duplicates.length) {
+        await logEvent({
+          organizationId,
+          projectId: input.projectId,
+          kind: 'candidate_consolidated',
+          summary: `Consolidated ${consolidation.duplicates.reduce((n, d) => n + d.ids.length, 0)} duplicate candidates into ${consolidation.duplicates.length} survivors`,
+          payload: consolidation.duplicates,
+        })
+      }
+      if (consolidation.conflicts.length) {
+        await logEvent({
+          organizationId,
+          projectId: input.projectId,
+          kind: 'conflict_detected',
+          summary: `${consolidation.conflicts.length} conflicting recommendations detected`,
+          payload: consolidation.conflicts,
+        })
+      }
+    } catch (err) {
+      console.warn('[operator] persist / event log failed', err)
+    }
+  }
 
   const activeObjective = businessProfile?.activeObjective ?? null
   const activeSeasonalKeywords = new Set(
     seasonalPriorities.flatMap((s) => splitAndLower((s as any).focusKeywords ?? '')),
   )
   const hasBusinessProfile = !!businessProfile
+  const industry = businessProfile?.industry ?? null
 
   const scored = await Promise.all(
-    candidates.map(async (c) => {
+    consolidatedCandidates.map(async (c) => {
       const context = deriveContext(c, activeSeasonalKeywords)
       const { adjustedScore, boosts } = applyJudgment(c, context)
-      const learningMultiplier = await learningMultiplierFor(input.projectId, c.recommendationType)
-      const finalScore = adjustedScore * learningMultiplier
-      return { candidate: c, adjustedScore, boosts, learningMultiplier, finalScore, context }
+      const calibration = await calibratedMultiplierFor({
+        projectId: input.projectId,
+        recommendationType: c.recommendationType,
+        industry,
+      })
+      const preference =
+        preferences.get(canonicalizeActionType(c.recommendationType)) ??
+        preferences.get('*')
+      const preferenceDelta = preference?.netDelta ?? 0
+      const finalScore = adjustedScore * calibration.value + preferenceDelta * 20
+      return {
+        candidate: c,
+        adjustedScore,
+        boosts,
+        learningMultiplier: calibration.value,
+        learningSource: calibration.source,
+        preferenceDelta,
+        finalScore,
+        context,
+        hasConflict: c.conflictsWith.length > 0,
+      }
     }),
   )
 
@@ -104,6 +159,28 @@ export async function computeNextAction(input: {
     )
   }
 
+  // Phase 8.1A: build the structured shortlist.
+  const shortlist = await buildShortlist({
+    organizationId,
+    projectId: input.projectId,
+    scored: filtered,
+    activeObjective,
+    persistProposals: input.persistProposals ?? true,
+  })
+  if (shortlist.primaryMission && input.persistProposals !== false) {
+    try {
+      await logEvent({
+        organizationId,
+        projectId: input.projectId,
+        kind: 'mission_selected',
+        summary: `Primary mission: ${shortlist.primaryMission.headline}`,
+        candidateId: shortlist.primaryMission.id,
+      })
+    } catch {
+      // non-fatal
+    }
+  }
+
   return {
     generatedAt: new Date().toISOString(),
     projectId: input.projectId,
@@ -116,6 +193,102 @@ export async function computeNextAction(input: {
       hasBusinessProfile,
       hasSeasonality: seasonalPriorities.length > 0,
     },
+    shortlist,
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Shortlist bucketing (Phase 8.1A)
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function buildShortlist(input: {
+  organizationId: string
+  projectId: string
+  scored: ScoredCandidate[]
+  activeObjective: string | null
+  persistProposals: boolean
+}): Promise<OperatorShortlist> {
+  const suppressed: OperatorShortlist['suppressed'] = []
+  const primaryPool: ScoredCandidate[] = []
+  const nextBest: ScoredCandidate[] = []
+  const watch: ScoredCandidate[] = []
+  const deferred: ScoredCandidate[] = []
+  const critical: ScoredCandidate[] = []
+
+  for (const s of input.scored) {
+    const ctx = {
+      isMoneyPage: s.context.isMoneyPage,
+      isIndexable: true, // TODO: derive from PageSignals/Page.hasNoindex if available
+      pageRanksInTop3: false,
+      pageConvertsWell: false,
+      clusterCoverageSufficient: false,
+      metadataAcceptable: false,
+      candidateHasConflict: s.hasConflict ?? false,
+      dependencyStillOpen: false,
+      evidenceAgeDays: null,
+      dataSufficient: true,
+      userCanApprove: true,
+      userCanDeploy: true,
+      deploymentAvailable: true,
+    }
+    const suppression = suppressionFor(s.candidate, ctx)
+    const bucket = bucketFor(s.candidate, s.finalScore, suppression)
+    if (bucket === 'suppressed') {
+      const rec = await buildRecommendation({
+        organizationId: input.organizationId,
+        projectId: input.projectId,
+        scored: s,
+        activeObjective: input.activeObjective,
+        alternates: [],
+        persistProposal: false,
+      })
+      suppressed.push({ item: rec, reason: suppression?.reason ?? 'Suppressed' })
+      continue
+    }
+    if (bucket === 'critical') critical.push(s)
+    else if (bucket === 'primary') primaryPool.push(s)
+    else if (bucket === 'next_best') nextBest.push(s)
+    else if (bucket === 'watch') watch.push(s)
+    else deferred.push(s)
+  }
+
+  const primaryPick = primaryPool[0] ?? critical[0] ?? nextBest[0] ?? null
+
+  const materialize = async (list: ScoredCandidate[]): Promise<OperatorRecommendation[]> => {
+    const out: OperatorRecommendation[] = []
+    for (const s of list) {
+      out.push(
+        await buildRecommendation({
+          organizationId: input.organizationId,
+          projectId: input.projectId,
+          scored: s,
+          activeObjective: input.activeObjective,
+          alternates: [],
+          persistProposal: false,
+        }),
+      )
+    }
+    return out
+  }
+
+  const primaryMission = primaryPick
+    ? await buildRecommendation({
+        organizationId: input.organizationId,
+        projectId: input.projectId,
+        scored: primaryPick,
+        activeObjective: input.activeObjective,
+        alternates: [],
+        persistProposal: input.persistProposals,
+      })
+    : null
+
+  return {
+    primaryMission,
+    nextBestActions: (await materialize(nextBest)).slice(0, 3),
+    watchList: (await materialize(watch)).slice(0, 3),
+    deferredOpportunities: (await materialize(deferred)).slice(0, 3),
+    criticalAlerts: (await materialize(critical)).slice(0, 3),
+    suppressed: suppressed.slice(0, 10),
   }
 }
 
@@ -132,18 +305,37 @@ export async function computeFocusPlan(input: {
   const chosen: OperatorRecommendation[] = []
   const refused: FocusPlan['refusedItems'] = []
   let used = 0
-  const candidatesInOrder = [readout.primaryRecommendation, ...readout.alternatives].filter(
-    (x): x is OperatorRecommendation => !!x,
-  )
+
+  // Prefer the structured shortlist when present; fall back to primary + alts.
+  const sl = readout.shortlist
+  const candidatesInOrder = sl
+    ? [
+        ...(sl.criticalAlerts ?? []),
+        ...(sl.primaryMission ? [sl.primaryMission] : []),
+        ...(sl.nextBestActions ?? []),
+        ...(sl.watchList ?? []),
+      ]
+    : [readout.primaryRecommendation, ...readout.alternatives].filter(
+        (x): x is OperatorRecommendation => !!x,
+      )
 
   for (const item of candidatesInOrder) {
-    if (used + item.estimatedMinutes <= budget) {
+    const minRealistic = MIN_MINUTES_FOR_ACTION_REALISTIC(item)
+    if (minRealistic > budget) {
+      refused.push({
+        item,
+        reason: `Needs at least ${minRealistic}m — doesn't fit a ${input.window} session`,
+      })
+      continue
+    }
+    const cost = Math.max(item.estimatedMinutes, minRealistic)
+    if (used + cost <= budget) {
       chosen.push(item)
-      used += item.estimatedMinutes
+      used += cost
     } else {
       refused.push({
         item,
-        reason: `Doesn't fit — ${item.estimatedMinutes}m needed, ${budget - used}m left`,
+        reason: `Doesn't fit — ${cost}m needed, ${budget - used}m left`,
       })
     }
     if (used >= budget) break
@@ -159,6 +351,23 @@ export async function computeFocusPlan(input: {
   }
 }
 
+function MIN_MINUTES_FOR_ACTION_REALISTIC(item: OperatorRecommendation): number {
+  const type = canonicalizeActionType(item.recommendationType)
+  const table: Record<string, number> = {
+    full_content_rewrite: 120,
+    page_migration: 90,
+    redirect_and_merge: 60,
+    money_page_reinforcement: 45,
+    refresh_content: 45,
+    repair_topic_cluster: 45,
+    add_missing_entities: 30,
+    add_faq_schema: 20,
+    add_internal_links: 10,
+    fix_homepage_typo: 5,
+  }
+  return table[type] ?? 15
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Reasoning + narrative
 // ─────────────────────────────────────────────────────────────────────────────
@@ -168,8 +377,11 @@ interface ScoredCandidate {
   adjustedScore: number
   boosts: ReturnType<typeof applyJudgment>['boosts']
   learningMultiplier: number
+  learningSource?: 'project' | 'industry' | 'global' | 'default'
+  preferenceDelta?: number
   finalScore: number
   context: ReturnType<typeof deriveContext>
+  hasConflict?: boolean
 }
 
 async function buildRecommendation(input: {
