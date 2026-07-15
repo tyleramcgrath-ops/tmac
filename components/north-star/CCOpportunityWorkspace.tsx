@@ -13,7 +13,17 @@ const PRIORITY_CLASS = {
 
 const DISMISS_REASONS = ['Not relevant to my business', 'Already handled elsewhere', 'Will revisit later', 'Disagree with the finding']
 
-export function CCOpportunityWorkspace({ opportunity, stale, onClose }: { opportunity: Opportunity; stale: boolean; onClose: () => void }) {
+export function CCOpportunityWorkspace({
+  opportunity,
+  stale,
+  onClose,
+  onExplain,
+}: {
+  opportunity: Opportunity
+  stale: boolean
+  onClose: () => void
+  onExplain?: () => void
+}) {
   const [dismissing, setDismissing] = useState(false)
   const [dismissed, setDismissed] = useState<string | null>(null)
   const canApprove = opportunity.prepareChecklist.every((i) => i.status === 'ready')
@@ -141,7 +151,7 @@ export function CCOpportunityWorkspace({ opportunity, stale, onClose }: { opport
         </div>
       ) : (
         <div className="flex flex-wrap gap-2.5 pt-2 border-t border-[var(--rf-card-line)] mt-6">
-          <button className="cc-btn-primary ns-touch">Explain this</button>
+          <button className="cc-btn-primary ns-touch" onClick={onExplain}>Explain this</button>
           <button className="cc-btn-ghost ns-touch">Prepare the work</button>
           <button className="cc-btn-amber ns-touch" disabled={!canApprove} style={!canApprove ? { opacity: 0.4, cursor: 'default' } : undefined} title={!canApprove ? 'Confirm your business details first' : undefined}>
             Approve

@@ -1,0 +1,199 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { Dna, Target, ClipboardCheck, Compass as CompassIcon } from 'lucide-react'
+import type { PreviewScenario, RunOutcome } from '@/lib/north-star-preview-data'
+import { buildInvestigationSteps, revealKindFor, type RevealKind } from '@/lib/north-star-investigation'
+import type { CompassContext } from '@/lib/north-star-compass'
+import { DnaSculpture } from './DnaSculpture'
+import { ActivityWall } from './ActivityWall'
+import { PriorityWall } from './PriorityWall'
+import { ProgressHorizon } from './ProgressHorizon'
+import { DeskScene } from './DeskScene'
+import { MorningBriefingOverlay } from './MorningBriefingOverlay'
+import { CCOpportunityWorkspace } from '../CCOpportunityWorkspace'
+import { CCApprovalCenter } from '../CCApprovalCenter'
+import { CCCompassPanel } from '../CCCompassPanel'
+import { CCWorkInProgressOverlay, CCResultsOverlay, CCSourcesOverlay, CCEmptyOverlay } from '../CCSecondaryOverlays'
+
+type Overlay = 'briefing' | 'opportunity' | 'opportunity-empty' | 'approval' | 'approval-empty' | 'compass' | 'work-in-progress' | 'results' | 'sources' | null
+type InvPhase = 'idle' | 'stepping' | 'settling'
+
+/** Investigation step id -> the Digital DNA area it's actually examining, so the
+ *  sculpture activates only where the check is genuinely looking — no fake movement. */
+const STEP_TO_DNA: Record<string, string | null> = {
+  connect: 'website', found: 'website', identity: 'identity', contact: 'conversion',
+  compare: null, mismatch: 'reputation', ruledout: 'reputation', stoodout: null,
+  noresponse: 'website', retry: 'website', stillfailed: 'website',
+  notenough: 'website', duplicate: null,
+}
+
+export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
+  const [overlay, setOverlay] = useState<Overlay>(null)
+  const [compassContext, setCompassContext] = useState<CompassContext>('command-center')
+  const [selectedDnaKey, setSelectedDnaKey] = useState<string | null>(null)
+  const [investigating, setInvestigating] = useState(false)
+  const [invPhase, setInvPhase] = useState<InvPhase>('idle')
+  const [stepIndex, setStepIndex] = useState(1)
+  const [lastReveal, setLastReveal] = useState<RevealKind | null>(null)
+  const stepsRef = useRef(buildInvestigationSteps(scenario, scenario.defaultRunOutcome))
+
+  const outcome: RunOutcome = scenario.defaultRunOutcome
+
+  useEffect(() => {
+    if (invPhase !== 'stepping') return
+    const steps = stepsRef.current
+    if (stepIndex >= steps.length) {
+      const t = window.setTimeout(() => setInvPhase('settling'), 450)
+      return () => window.clearTimeout(t)
+    }
+    const t = window.setTimeout(() => setStepIndex((n) => n + 1), steps[stepIndex - 1].durationMs)
+    return () => window.clearTimeout(t)
+  }, [stepIndex, invPhase])
+
+  useEffect(() => {
+    if (invPhase !== 'settling') return
+    const t = window.setTimeout(() => {
+      const kind = revealKindFor(scenario, outcome)
+      setInvestigating(false)
+      setInvPhase('idle')
+      setLastReveal(kind)
+      if (kind === 'opportunity') setOverlay('opportunity')
+      else if (kind === 'approval') setOverlay('approval')
+    }, 300)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invPhase])
+
+  const runCheck = () => {
+    stepsRef.current = buildInvestigationSteps(scenario, outcome)
+    setStepIndex(1)
+    setInvPhase('stepping')
+    setInvestigating(true)
+    setLastReveal(null)
+  }
+
+  const openOpportunity = () => setOverlay(scenario.opportunity ? 'opportunity' : 'opportunity-empty')
+  const openApproval = () => setOverlay(scenario.pendingApproval ? 'approval' : 'approval-empty')
+  const openCompass = (ctx: CompassContext) => { setCompassContext(ctx); setOverlay('compass') }
+
+  const currentStep = investigating ? stepsRef.current[Math.min(stepIndex, stepsRef.current.length) - 1] : null
+  const activeDnaKey = currentStep ? STEP_TO_DNA[currentStep.id] ?? null : null
+
+  const quietMessage = !investigating && lastReveal && ['quiet', 'failed', 'duplicate', 'insufficient'].includes(lastReveal)
+    ? lastReveal === 'quiet' ? `Checked ${scenario.pagesChecked} pages — nothing rose to the level of your attention.`
+    : lastReveal === 'failed' ? `${scenario.business.domain} didn't respond. I'll try again automatically.`
+    : lastReveal === 'duplicate' ? 'A check is already underway — let that finish first.'
+    : "Not enough evidence gathered before the connection dropped. I'll try again next check."
+    : null
+
+  return (
+    <div className="office-stage" id="main-content">
+      <div className="office-hud">
+        <div className="office-brand"><CompassIcon className="h-4 w-4" style={{ color: 'var(--office-brass)' }} aria-hidden="true" /> North Star</div>
+        <div className="office-status">
+          {scenario.business.name} · <b>{scenario.briefing.subline}</b>
+        </div>
+      </div>
+
+      {(investigating || quietMessage) && (
+        <p className="office-investigation-line" role="status" aria-live="polite">
+          <span className="cc-pulse" style={{ width: 8, height: 8, borderRadius: 999, background: 'var(--office-brass)', display: 'inline-block' }} aria-hidden="true" />
+          {investigating ? currentStep?.text : quietMessage}
+        </p>
+      )}
+
+      <ProgressHorizon scenario={scenario} onOpen={() => setOverlay('results')} />
+
+      <div className="office-desktop-dna">
+        <DnaSculpture
+          areas={scenario.digitalDna}
+          pagesChecked={scenario.pagesChecked}
+          selectedKey={selectedDnaKey}
+          activeKey={activeDnaKey}
+          onSelect={(k) => setSelectedDnaKey(k === selectedDnaKey ? null : k)}
+          onAskCompass={() => openCompass('digital-dna')}
+        />
+      </div>
+
+      <div className="office-walls">
+        <ActivityWall activity={scenario.activity} onOpen={() => setOverlay('work-in-progress')} />
+        <div style={{ pointerEvents: 'none' }} />
+        <PriorityWall scenario={scenario} onOpenOpportunity={openOpportunity} onOpenApproval={openApproval} />
+      </div>
+
+      <DeskScene
+        scenario={scenario}
+        investigating={investigating}
+        onOpenBriefing={() => setOverlay('briefing')}
+        onOpenCompass={() => openCompass('command-center')}
+        onOpenApproval={openApproval}
+        onCheckNow={runCheck}
+      />
+
+      {/* Mobile executive console — same identity, focused stacked sheets */}
+      <div className="office-mobile-console">
+        <button className="office-mobile-card" style={{ width: '100%', textAlign: 'left' }} onClick={() => setOverlay('briefing')}>
+          <p className="office-mobile-label">Morning briefing</p>
+          <p style={{ fontSize: 14, fontWeight: 600 }}>{scenario.briefing.headline}</p>
+        </button>
+        {scenario.pendingApproval && (
+          <button className="office-mobile-card" style={{ width: '100%', textAlign: 'left' }} onClick={openApproval}>
+            <p className="office-mobile-label">Waiting for approval</p>
+            <p style={{ fontSize: 14 }}>{scenario.pendingApproval.title}</p>
+          </button>
+        )}
+        {scenario.opportunity && (
+          <button className="office-mobile-card" style={{ width: '100%', textAlign: 'left' }} onClick={openOpportunity}>
+            <p className="office-mobile-label">Top opportunity</p>
+            <p style={{ fontSize: 14 }}>{scenario.opportunity.headline}</p>
+          </button>
+        )}
+        <button className="office-obj-cta ns-touch" style={{ position: 'static', transform: 'none', width: '100%', margin: '4px 0 14px' }} onClick={runCheck} disabled={investigating}>
+          ⚡ {investigating ? 'Checking…' : 'Check my business'}
+        </button>
+        <DnaSculpture
+          areas={scenario.digitalDna}
+          pagesChecked={scenario.pagesChecked}
+          selectedKey={selectedDnaKey}
+          activeKey={activeDnaKey}
+          onSelect={(k) => setSelectedDnaKey(k === selectedDnaKey ? null : k)}
+        />
+      </div>
+
+      <nav className="office-mobile-bar" aria-label="North Star quick actions">
+        <button className="office-mobile-bar-item ns-touch" onClick={() => document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' })}><Dna className="h-5 w-5" aria-hidden="true" />Digital DNA</button>
+        <button className="office-mobile-bar-item ns-touch" data-has-badge={!!(scenario.opportunity && !scenario.opportunityStale)} onClick={openOpportunity}><Target className="h-5 w-5" aria-hidden="true" />Opportunities</button>
+        <button className="office-mobile-bar-item ns-touch" data-has-badge={!!scenario.pendingApproval} onClick={openApproval}><ClipboardCheck className="h-5 w-5" aria-hidden="true" />Approvals</button>
+        <button className="office-mobile-bar-item ns-touch" onClick={() => openCompass('command-center')}><CompassIcon className="h-5 w-5" aria-hidden="true" />Compass</button>
+      </nav>
+
+      {overlay === 'briefing' && <MorningBriefingOverlay scenario={scenario} onClose={() => setOverlay(null)} />}
+      {overlay === 'opportunity' && scenario.opportunity && (
+        <CCOpportunityWorkspace
+          opportunity={scenario.opportunity}
+          stale={scenario.opportunityStale}
+          onClose={() => setOverlay(null)}
+          onExplain={() => openCompass('opportunity')}
+        />
+      )}
+      {overlay === 'opportunity-empty' && (
+        <CCEmptyOverlay title="No opportunities" eyebrow="Opportunities" message="North Star hasn't found anything worth reviewing yet." onClose={() => setOverlay(null)} />
+      )}
+      {overlay === 'approval' && scenario.pendingApproval && (
+        <CCApprovalCenter
+          approval={scenario.pendingApproval}
+          onClose={() => setOverlay(null)}
+          onAskCompass={() => openCompass('approval')}
+        />
+      )}
+      {overlay === 'approval-empty' && (
+        <CCEmptyOverlay title="Nothing pending" eyebrow="Approvals" message="Nothing is waiting on your approval right now." onClose={() => setOverlay(null)} />
+      )}
+      {overlay === 'compass' && <CCCompassPanel scenario={scenario} context={compassContext} onClose={() => setOverlay(null)} />}
+      {overlay === 'work-in-progress' && <CCWorkInProgressOverlay activity={scenario.activity} onClose={() => setOverlay(null)} />}
+      {overlay === 'results' && <CCResultsOverlay history={scenario.history} onClose={() => setOverlay(null)} />}
+      {overlay === 'sources' && <CCSourcesOverlay areas={scenario.digitalDna} pagesChecked={scenario.pagesChecked} onClose={() => setOverlay(null)} />}
+    </div>
+  )
+}

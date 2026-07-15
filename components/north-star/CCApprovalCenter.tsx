@@ -5,11 +5,29 @@ import { Check, X } from 'lucide-react'
 import type { PendingApproval } from '@/lib/north-star-preview-data'
 import { CCOverlayShell } from './CCOverlay'
 
-export function CCApprovalCenter({ approval, onClose }: { approval: PendingApproval; onClose: () => void }) {
+export function CCApprovalCenter({
+  approval,
+  onClose,
+  onAskCompass,
+}: {
+  approval: PendingApproval
+  onClose: () => void
+  onAskCompass?: () => void
+}) {
   const [state, setState] = useState<'pending' | 'approved' | 'declined'>('pending')
 
   return (
     <CCOverlayShell title={approval.title} eyebrow="Approval center" onClose={onClose}>
+      <div className="cc-field" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+        <div>
+          <p className="cc-field-label">Before</p>
+          <p className="cc-field-value">{approval.beforeState}</p>
+        </div>
+        <div>
+          <p className="cc-field-label">After</p>
+          <p className="cc-field-value">{approval.afterState}</p>
+        </div>
+      </div>
       <div className="cc-field">
         <p className="cc-field-label">What will change</p>
         <p className="cc-field-value">{approval.whatChanges}</p>
@@ -38,7 +56,12 @@ export function CCApprovalCenter({ approval, onClose }: { approval: PendingAppro
         <p className="cc-field-label">What will be measured</p>
         <p className="cc-field-value">{approval.whatWillBeMeasured}</p>
       </div>
-      <p className="text-xs text-[var(--rf-faint)] mb-6">Prepared by {approval.preparedBy}. Nothing is published without your explicit approval.</p>
+      <p className="text-xs text-[var(--rf-faint)] mb-3">Prepared by {approval.preparedBy}. Nothing is published without your explicit approval.</p>
+      {onAskCompass && (
+        <button onClick={onAskCompass} className="mb-6 text-xs font-medium text-[var(--office-brass-bright)] hover:underline">
+          Ask Compass about the risk →
+        </button>
+      )}
 
       {state === 'pending' && (
         <div className="flex flex-wrap gap-2.5 pt-4 border-t border-[var(--rf-card-line)]">

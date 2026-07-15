@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { PREVIEW_SCENARIOS, DEFAULT_SCENARIO_ID, type PreviewScenarioId } from '@/lib/north-star-preview-data'
 import { PreviewStateSwitcher } from '@/components/north-star/PreviewStateSwitcher'
-import { CommandCenter } from '@/components/north-star/CommandCenter'
+import { ExecutiveOffice } from '@/components/north-star/office/ExecutiveOffice'
 
 export default function NorthStarPage() {
   const [scenarioId, setScenarioId] = useState<PreviewScenarioId>(DEFAULT_SCENARIO_ID)
@@ -20,9 +20,7 @@ export default function NorthStarPage() {
 
       <PreviewStateSwitcher active={scenarioId} onChange={setScenarioId} />
 
-      <div id="main-content">
-        <CommandCenter key={scenarioId} scenario={scenario} />
-      </div>
+      <ExecutiveOffice key={scenarioId} scenario={scenario} />
     </>
   )
 }

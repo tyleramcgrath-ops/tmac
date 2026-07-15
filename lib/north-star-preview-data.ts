@@ -134,6 +134,8 @@ export interface PendingApproval {
   title: string
   detail: string
   preparedBy: string
+  beforeState: string
+  afterState: string
   whatChanges: string
   whyRecommended: string
   requiredSpend: string
@@ -367,6 +369,8 @@ const waitingApproval: PreviewScenario = {
     detail:
       'Your website lists different holiday hours than your Google Business Profile. North Star prepared an update so both match. Nothing has been published — this is only a draft waiting on you.',
     preparedBy: 'North Star',
+    beforeState: 'Google Business Profile shows regular hours for Dec 24, Dec 25, and Jan 1 — no holiday adjustment listed.',
+    afterState: 'Google Business Profile shows closed Dec 25, reduced hours Dec 24 and Jan 1 — matching your website exactly.',
     whatChanges: "Your Google Business Profile hours will be updated to match the holiday hours already listed on your website (closed Dec 25, reduced hours Dec 24 and Jan 1).",
     whyRecommended: 'Customers checking Google before calling see different hours than your website shows. Mismatched hours are a common reason people give up and call a competitor instead.',
     requiredSpend: 'None — this is a listing update, not an ad or paid change.',

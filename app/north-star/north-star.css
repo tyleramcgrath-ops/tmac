@@ -1,18 +1,40 @@
 /* =====================================================================
-   North Star — Business Growth Command Center
-   A full-viewport operational console: left rail, business-state top bar,
-   a living Digital DNA hero at center stage, a priorities panel, and a
-   bottom workflow timeline. Distinct from RankForge's card-grid dashboard
-   language — this is a console, not an article, not a metrics wall.
-   Scoped under .ns-root. Reuses --rf-* color tokens for platform
-   continuity only; layout, composition, and interaction are original.
+   North Star — Executive Office
+   An immersive, premium executive workspace: a central desk (Compass
+   display, Morning Briefing, approval tray, check-in control), a Digital
+   DNA sculpture rising behind it, and activity/priority/progress
+   integrated into the room itself rather than pasted on as cards.
+   Scoped under .ns-root. Overrides the shared --rf-* accent locally to a
+   warm brass tone so North Star reads as its own place, not a RankForge
+   dashboard reskin — RankForge's own stylesheet and pages are untouched.
    ===================================================================== */
 
 .ns-root {
-  background: var(--rf-bg);
+  /* Warm executive palette, scoped to this root only */
+  --office-graphite-0: #0b0b0d;
+  --office-graphite-1: #16161a;
+  --office-graphite-2: #1e1e24;
+  --office-brass: #c9a877;
+  --office-brass-bright: #e0c496;
+  --office-warm-line: rgba(201, 168, 119, 0.16);
+  --office-ink: #f3efe6;
+
+  /* Re-tint the shared accent + surfaces for this root only (RankForge's
+     own .rf-root pages never carry .ns-root, so nothing there changes) */
+  --rf-blue-bright: var(--office-brass);
+  --rf-blue: #a98a5c;
+  --rf-bg: var(--office-graphite-0);
+  --rf-bg-2: var(--office-graphite-1);
+  --rf-card-line: var(--office-warm-line);
+  --rf-card-line-strong: rgba(201, 168, 119, 0.32);
+  --rf-text: var(--office-ink);
+
+  background: radial-gradient(ellipse 120% 70% at 50% -10%, #221f26, var(--office-graphite-0) 55%);
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+.ns-serif { font-family: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif; }
 
 /* ---- Focus states: always visible, never suppressed ---- */
 .ns-root a:focus-visible,
@@ -90,188 +112,231 @@
 }
 
 /* =====================================================================
-   Shell — the full-viewport command center grid
+   The Office — a 2.5D executive workspace, not a dashboard grid.
+   Composition: a horizon strip (progress), a Digital DNA sculpture rising
+   in the middle distance, side walls (activity / priorities) angled in
+   perspective, and an executive desk in the foreground whose objects
+   *are* the navigation — no sidebar, no card grid.
    ===================================================================== */
 
-.cc-shell {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  grid-template-rows: auto auto 1fr auto;
-  grid-template-areas:
-    "rail topbar"
-    "rail banner"
-    "rail workspace"
-    "rail timeline";
+.office-stage {
+  position: relative;
   min-height: 100vh;
+  overflow: hidden;
+  perspective: 1400px;
 }
 
-.cc-rail { grid-area: rail; border-right: 1px solid var(--rf-card-line); background: var(--rf-bg-2); min-width: 0; }
-.cc-topbar { grid-area: topbar; border-bottom: 1px solid var(--rf-card-line); min-width: 0; }
-.cc-banner-row { grid-area: banner; min-width: 0; }
-.cc-workspace {
-  grid-area: workspace;
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  grid-template-areas: "center priority";
-  min-height: 0;
+.office-hud {
+  position: relative;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 20px 28px;
 }
-.cc-timeline { grid-area: timeline; border-top: 1px solid var(--rf-card-line); min-width: 0; }
+.office-brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: var(--office-ink); }
+.office-status { font-size: 12px; color: var(--rf-muted); text-align: right; }
+.office-status b { color: var(--office-ink); font-weight: 600; }
 
-.cc-center { grid-area: center; border-right: 1px solid var(--rf-card-line); min-width: 0; }
-.cc-priority { grid-area: priority; min-width: 0; }
-.cc-workspace { min-width: 0; }
+/* ---- Horizon: evidence-based progress strip ---- */
+.office-horizon {
+  position: relative; z-index: 25;
+  display: flex; gap: 20px; flex-wrap: wrap;
+  padding: 0 28px 14px;
+  font-size: 11px; color: var(--rf-faint);
+}
+.office-horizon-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.office-horizon-item b { color: var(--rf-muted); font-weight: 500; }
+.office-horizon-empty { font-size: 12px; color: var(--rf-faint); padding: 0 28px 14px; }
 
-@media (max-width: 1100px) {
-  .cc-workspace { grid-template-columns: 1fr; grid-template-areas: "priority" "center"; }
-  .cc-center { border-right: none; }
+/* ---- Digital DNA sculpture ---- */
+.office-dna-wrap {
+  position: relative;
+  height: 460px;
+  margin: 0 auto;
+  max-width: 1100px;
+}
+.office-dna-core {
+  position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
+  width: 78px; height: 78px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #3a3020, #17140c 70%);
+  border: 1px solid var(--office-brass);
+  box-shadow: 0 0 70px -8px rgba(201,168,119,0.5), inset 0 0 26px rgba(0,0,0,0.6);
+  /* No explicit z-index: an explicit stacking level here would paint above
+     every DOM-later sibling regardless of order, hiding the identity node
+     and its label that are meant to sit visually on top of this glow. */
+}
+.office-dna-core[data-active="true"] {
+  animation: office-core-breathe 1.8s ease-in-out infinite;
+}
+@keyframes office-core-breathe {
+  0%, 100% { box-shadow: 0 0 70px -8px rgba(201,168,119,0.5), inset 0 0 26px rgba(0,0,0,0.6); }
+  50% { box-shadow: 0 0 100px -6px rgba(201,168,119,0.75), inset 0 0 26px rgba(0,0,0,0.6); }
+}
+.office-dna-node {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.office-dna-node:hover, .office-dna-node[data-selected="true"] { filter: brightness(1.35); transform: scale(1.08); }
+.office-dna-node[data-active="true"] { animation: office-core-breathe 1.4s ease-in-out infinite; }
+.office-dna-label {
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 6px;
+  font-size: 11px; color: var(--rf-muted); white-space: nowrap; text-align: center;
+}
+.office-dna-label[data-major="true"] { font-weight: 600; color: var(--office-ink); }
+
+.office-dna-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; padding-top: 10px; font-size: 11px; color: var(--rf-faint); }
+.office-dna-legend-item { display: flex; align-items: center; gap: 6px; }
+.office-dna-legend-dot { width: 8px; height: 8px; border-radius: 999px; }
+
+.office-dna-detail {
+  max-width: 520px; margin: 8px auto 0; padding: 16px 18px;
+  border: 1px solid var(--rf-card-line); border-radius: 12px; background: rgba(255,255,255,0.02);
 }
 
-/* ---- Mobile bottom action bar (replaces the rail on small screens) ---- */
-.cc-mobile-bar {
-  display: none;
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
-  border-top: 1px solid var(--rf-card-line); background: rgba(8,12,24,0.95); backdrop-filter: blur(12px);
-  align-items: stretch; justify-content: space-around; padding: 6px 4px;
+/* ---- Side walls: activity (left) / priorities (right) ---- */
+.office-walls {
+  position: relative; z-index: 8;
+  display: grid; grid-template-columns: 260px 1fr 260px;
+  gap: 0; align-items: start;
+  max-width: 1500px; margin: 24px auto 0;
+  padding: 0 20px;
+}
+.office-wall {
+  padding: 22px 20px;
+  border: 1px solid var(--rf-card-line);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  transform-style: preserve-3d;
+}
+.office-wall-left { transform: perspective(1000px) rotateY(6deg); transform-origin: left center; }
+.office-wall-right { transform: perspective(1000px) rotateY(-6deg); transform-origin: right center; }
+.office-wall h3 {
+  margin: 0 0 14px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rf-faint);
+}
+.office-wall-item {
+  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; font-size: 13px; color: var(--rf-muted); text-align: left; width: 100%;
+}
+.office-wall-item:last-child { margin-bottom: 0; }
+.office-wall-item[data-actionable="true"] { cursor: pointer; }
+.office-wall-item[data-actionable="true"]:hover { color: var(--office-ink); }
+.office-wall-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.office-wall-empty { font-size: 13px; color: var(--rf-faint); }
+
+/* ---- The desk ---- */
+.office-desk-zone { position: relative; z-index: 10; height: 320px; margin-top: 12px; }
+.office-desk-surface {
+  position: absolute; left: 50%; bottom: 90px; transform: translateX(-50%) rotateX(56deg);
+  transform-origin: bottom center; width: min(920px, 92vw); height: 280px;
+  background: linear-gradient(160deg, #24201a, #16130f 60%, #0d0b09);
+  border-radius: 16px; border: 1px solid var(--office-warm-line);
+  box-shadow: 0 60px 100px -40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.office-desk-edge {
+  position: absolute; left: 50%; bottom: 88px; transform: translateX(-50%);
+  width: min(960px, 94vw); height: 5px; border-radius: 4px;
+  background: linear-gradient(90deg, transparent, var(--office-brass), transparent); opacity: 0.5;
+}
+.office-desk-front {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: min(980px, 96vw); height: 92px;
+  background: linear-gradient(180deg, #16130f, #0a0908);
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 40px 70px -20px rgba(0,0,0,0.9);
+}
+.office-desk-objects {
+  position: absolute; left: 50%; bottom: 92px; transform: translateX(-50%);
+  width: min(880px, 90vw); height: 200px;
+}
+.office-obj {
+  position: absolute; border-radius: 10px; cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.office-obj:hover { transform: translateY(-3px); }
+.office-obj-briefing {
+  left: 4%; top: 30px; width: 168px; height: 108px;
+  background: linear-gradient(170deg, #efe6d2, #d9cdb1); color: #241f16;
+  transform: rotate(-5deg); padding: 12px 14px;
+  box-shadow: 0 18px 30px -14px rgba(0,0,0,0.6);
+}
+.office-obj-briefing:hover { transform: rotate(-5deg) translateY(-3px); }
+.office-obj-compass {
+  left: 50%; top: 6px; transform: translateX(-50%); width: 168px; height: 118px;
+  background: linear-gradient(160deg, #262229, #16141a);
+  border: 1px solid var(--office-warm-line);
+  box-shadow: 0 20px 40px -20px rgba(0,0,0,0.7);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+}
+.office-compass-face { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--office-brass); position: relative; }
+.office-compass-needle { position: absolute; left: 50%; top: 50%; width: 2px; height: 12px; background: var(--office-brass); transform-origin: bottom; transform: translate(-50%, -100%) rotate(28deg); }
+.office-obj-tray {
+  right: 3%; top: 34px; width: 168px; height: 96px;
+  background: linear-gradient(160deg, #2a241d, #191510);
+  border: 1px solid var(--office-warm-line);
+  box-shadow: 0 16px 30px -14px rgba(0,0,0,0.6);
+  padding: 12px 14px;
+}
+.office-obj-cta {
+  left: 50%; top: 150px; transform: translateX(-50%); width: 220px; height: 56px;
+  background: linear-gradient(180deg, var(--office-brass-bright), var(--office-brass));
+  color: #241c0f; font-weight: 700; font-size: 14px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 16px 32px -8px rgba(201,168,119,0.5);
+}
+.office-obj-cta:hover { transform: translateX(-50%) translateY(-3px); }
+.office-obj-cta:disabled { opacity: 0.6; cursor: default; }
+.office-obj-cta:disabled:hover { transform: translateX(-50%); }
+.office-activity-light {
+  position: absolute; right: 0; top: -10px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--rf-green); box-shadow: 0 0 14px 3px var(--rf-green);
 }
 
-@media (max-width: 768px) {
-  .cc-shell {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "topbar"
-      "banner"
-      "workspace"
-      "timeline";
-    padding-bottom: 64px;
+/* ---- Investigation: environmental status line ---- */
+.office-investigation-line {
+  position: relative; z-index: 26; text-align: center;
+  padding: 8px 24px 0; font-size: 13px; color: var(--office-ink);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+/* ---- Mobile executive console (stacked, same identity, focused sheets) ---- */
+.office-mobile-console { display: none; }
+@media (max-width: 900px) {
+  .office-desk-zone, .office-walls, .office-desktop-dna { display: none; }
+  .office-mobile-console { display: block; position: relative; z-index: 10; padding: 0 20px 100px; }
+  .office-mobile-card {
+    border: 1px solid var(--rf-card-line); border-radius: 12px; background: rgba(255,255,255,0.02);
+    padding: 16px; margin-bottom: 14px;
   }
-  .cc-rail { display: none; }
-  .cc-mobile-bar { display: flex; }
+  .office-mobile-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rf-faint); margin-bottom: 8px; }
+  .office-dna-wrap { height: 340px; max-width: 100%; padding: 0 8px; }
 }
-.cc-mobile-bar-item {
+@media (min-width: 901px) {
+  .office-mobile-bar { display: none !important; }
+}
+
+.office-mobile-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+  border-top: 1px solid var(--rf-card-line); background: rgba(11,11,13,0.95); backdrop-filter: blur(12px);
+  display: flex; align-items: stretch; justify-content: space-around; padding: 6px 4px;
+}
+.office-mobile-bar-item {
   display: flex; flex-direction: column; align-items: center; gap: 3px;
   padding: 6px 8px; font-size: 10px; font-weight: 500; color: var(--rf-faint);
   position: relative;
 }
-.cc-mobile-bar-item[data-has-badge="true"]::after {
+.office-mobile-bar-item[data-has-badge="true"]::after {
   content: ''; position: absolute; top: 2px; right: 10px; width: 6px; height: 6px; border-radius: 999px; background: var(--rf-amber);
 }
 
-/* =====================================================================
-   Left rail
-   ===================================================================== */
-
-.cc-rail-inner { position: sticky; top: 0; display: flex; flex-direction: column; height: 100vh; padding: 20px 12px; }
-.cc-rail-brand { display: flex; align-items: center; gap: 8px; padding: 0 8px 20px; font-weight: 600; font-size: 14px; color: var(--rf-text); }
-.cc-rail-nav { display: flex; flex-direction: column; gap: 2px; }
-.cc-rail-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 10px; border-radius: 10px;
-  font-size: 13px; font-weight: 500; color: var(--rf-muted);
-  transition: background-color 0.15s ease, color 0.15s ease;
-  text-align: left; width: 100%;
-  position: relative;
-}
-.cc-rail-item:hover { background: rgba(255,255,255,0.03); color: var(--rf-text); }
-.cc-rail-item[data-active="true"] { background: rgba(79,139,255,0.12); color: var(--rf-blue-bright); }
-.cc-rail-item[data-active="true"]::before {
-  content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%);
-  width: 3px; height: 16px; border-radius: 2px; background: var(--rf-blue-bright);
-}
-.cc-rail-item .cc-rail-badge {
-  margin-left: auto; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px;
-  background: var(--rf-amber); color: #1a1200;
-}
-.cc-rail-footer { margin-top: auto; padding: 12px 8px 0; border-top: 1px solid var(--rf-card-line); }
-
-/* =====================================================================
-   Top bar — business state
-   ===================================================================== */
-
-.cc-topbar-inner { display: flex; align-items: center; gap: 24px; padding: 14px 24px; flex-wrap: wrap; }
-.cc-topbar-status { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.cc-topbar-headline { font-size: 15px; font-weight: 600; color: var(--rf-text); }
-.cc-topbar-meta { display: flex; align-items: center; gap: 16px; margin-left: auto; flex-wrap: wrap; font-size: 12px; color: var(--rf-faint); }
-.cc-topbar-meta-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-.cc-topbar-cta {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 16px; border-radius: 10px;
-  background: linear-gradient(180deg, var(--rf-blue-bright), var(--rf-blue));
-  color: white; font-size: 13px; font-weight: 600;
-  box-shadow: 0 8px 24px -10px rgba(47,107,255,0.6);
-  transition: transform 0.15s ease;
-  white-space: nowrap;
-}
-.cc-topbar-cta:hover { transform: translateY(-1px); }
-.cc-topbar-cta:disabled { opacity: 0.6; cursor: default; transform: none; }
-
-/* =====================================================================
-   Digital DNA hero — the signature visualization
-   ===================================================================== */
-
-.cc-dna-hero { position: relative; padding: 28px 28px 20px; min-height: 460px; }
-.cc-dna-svg-wrap { position: relative; width: 100%; height: 380px; }
-.cc-dna-node {
-  cursor: pointer;
-}
-.cc-dna-node circle { transition: r 0.2s ease, filter 0.2s ease; }
-.cc-dna-node:hover circle,
-.cc-dna-node[data-selected="true"] circle { filter: brightness(1.3); }
-.cc-dna-node text { cursor: pointer; }
-
-.cc-dna-legend { display: flex; flex-wrap: wrap; gap: 14px; padding: 8px 4px 0; font-size: 11px; color: var(--rf-faint); }
-.cc-dna-legend-item { display: flex; align-items: center; gap: 6px; }
-.cc-dna-legend-dot { width: 8px; height: 8px; border-radius: 999px; }
-
-/* Understanding state colors */
-.cc-state-understood { color: var(--rf-green); }
-.cc-state-developing { color: var(--rf-amber); }
-.cc-state-verify { color: var(--rf-blue-bright); }
-.cc-state-off { color: var(--rf-faint); }
-.cc-state-stale { color: var(--rf-red); }
-
-/* =====================================================================
-   Right panel — today's priorities
-   ===================================================================== */
-
-.cc-priority-section { padding: 20px; border-bottom: 1px solid var(--rf-card-line); }
-.cc-priority-section:last-child { border-bottom: none; }
-.cc-priority-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rf-faint); margin-bottom: 10px; }
-.cc-priority-card {
-  border: 1px solid var(--rf-card-line); border-radius: 12px; padding: 14px;
-  background: rgba(255,255,255,0.015);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
-}
-.cc-priority-card[data-actionable="true"] { cursor: pointer; }
-.cc-priority-card[data-actionable="true"]:hover { border-color: var(--rf-card-line-strong); background: rgba(255,255,255,0.03); }
-.cc-priority-empty { font-size: 13px; color: var(--rf-muted); padding: 4px 0; }
-
-/* =====================================================================
-   Bottom operational timeline
-   ===================================================================== */
-
-.cc-timeline-inner { display: flex; align-items: stretch; gap: 0; padding: 14px 24px; overflow-x: auto; }
-.cc-timeline-step {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  min-width: 108px; position: relative; padding: 0 4px;
-}
-.cc-timeline-step::before {
-  content: ''; position: absolute; top: 9px; left: -50%; width: 100%; height: 1px;
-  background: var(--rf-card-line);
-}
-.cc-timeline-step:first-child::before { display: none; }
-.cc-timeline-dot {
-  width: 18px; height: 18px; border-radius: 999px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  border: 2px solid var(--rf-card-line); background: var(--rf-bg-2); z-index: 1;
-}
-.cc-timeline-dot[data-state="completed"] { border-color: var(--rf-green); background: rgba(52,211,153,0.12); }
-.cc-timeline-dot[data-state="running"] { border-color: var(--rf-blue-bright); background: rgba(79,139,255,0.12); }
-.cc-timeline-dot[data-state="waiting-approval"] { border-color: var(--rf-amber); background: rgba(251,191,36,0.12); }
-.cc-timeline-dot[data-state="failed"] { border-color: var(--rf-red); background: rgba(251,106,106,0.12); }
-.cc-timeline-dot[data-state="blocked"],
-.cc-timeline-dot[data-state="not-connected"] { opacity: 0.5; }
-.cc-timeline-label { font-size: 11px; font-weight: 500; text-align: center; color: var(--rf-muted); }
-.cc-timeline-substate { font-size: 10px; color: var(--rf-faint); text-align: center; }
+/* ---- Priority badges (kept for opportunity/priority items) ---- */
+.office-priority-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; }
+.office-priority-pill-high { background: rgba(224,138,127,0.18); color: #f0a99c; }
+.office-priority-pill-medium { background: rgba(201,168,119,0.18); color: var(--office-brass-bright); }
+.office-priority-pill-low { background: rgba(148,173,224,0.12); color: var(--rf-muted); }
 
 /* =====================================================================
    Overlay panels — Opportunity Workspace / Approval Center / Compass
