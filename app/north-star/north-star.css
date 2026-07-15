@@ -293,3 +293,28 @@
   .ns-reveal-in { animation: none; }
   .ns-highlight-once { animation: none; }
 }
+
+/* =====================================================================
+   North Star Main Experience Flow
+   One continuous product narrative: Arrival → Opportunity → Approval →
+   Digital DNA → Working → Compass → History. Each section fades in
+   deliberately, creating a calm, confident progression.
+   ===================================================================== */
+
+.ns-main-flow {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reduce motion support */
+@media (prefers-reduced-motion: reduce) {
+  .ns-arrival-section,
+  .ns-opportunity-section,
+  .ns-approval-section,
+  .ns-dna-section,
+  .ns-working-section,
+  .ns-compass-section,
+  .ns-history-section {
+    animation: none !important;
+  }
+}
