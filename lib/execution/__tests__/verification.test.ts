@@ -12,7 +12,7 @@ suite.describe('HTML Validity Checks', () => {
   suite.it('should detect valid HTML structure', async () => {
     // Mock fetch for valid HTML
     const originalFetch = globalThis.fetch
-    globalThis.fetch = async () => {
+    globalThis.fetch = (async () => {
       return new Response(
         `
         <!DOCTYPE html>
@@ -28,7 +28,7 @@ suite.describe('HTML Validity Checks', () => {
         `,
         { status: 200 }
       )
-    } as any
+    }) as any
 
     try {
       // Simple inline test since we can't import the actual verification functions
