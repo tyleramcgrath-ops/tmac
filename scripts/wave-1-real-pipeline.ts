@@ -513,7 +513,7 @@ async function executeWave1() {
   console.log(`Total Pages Processed: ${totalPages}`);
   console.log(`Total Pages Reviewed: ${totalReviewed}`);
   console.log(`Average Classification Accuracy: ${avgAccuracy}%`);
-  console.log(`');
+  console.log(`\n`);
   console.log(`Critical Defects: 0`);
   console.log(`High Defects: 0`);
   console.log(`\n✅ WAVE 1 EXECUTION COMPLETE`);
