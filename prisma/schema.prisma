@@ -139,6 +139,13 @@ model Organization {
   internalLinkRecs    InternalLinkRecommendation[]
   contentDecayAlerts  ContentDecayAlert[]
 
+  // Pipeline (Phase 7.8F)
+  pipelineRuns        PipelineRun[]
+  contentEntities     ContentEntity[]
+  contentTopics       ContentTopic[]
+  knowledgeGraphNodes KnowledgeGraphNode[]
+  knowledgeGraphEdges KnowledgeGraphEdge[]
+
   @@index([slug])
   @@index([createdAt])
 }
@@ -248,6 +255,13 @@ model Project {
   contentDiffs        ContentDiff[]
   internalLinkRecs    InternalLinkRecommendation[]
   contentDecayAlerts  ContentDecayAlert[]
+
+  // Pipeline (Phase 7.8F)
+  pipelineRuns        PipelineRun[]
+  contentEntities     ContentEntity[]
+  contentTopics       ContentTopic[]
+  knowledgeGraphNodes KnowledgeGraphNode[]
+  knowledgeGraphEdges KnowledgeGraphEdge[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -1421,6 +1435,7 @@ model ContentMetrics {
   project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   inventory         ContentInventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
 
+  @@unique([projectId, pageUrl])
   @@index([organizationId])
   @@index([projectId])
   @@index([opportunityScore])
@@ -1733,4 +1748,228 @@ model ContentDecayAlert {
   @@index([severity])
   @@index([decayType])
   @@index([isResolved])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 7.8F: CONTENT INTELLIGENCE PIPELINE
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PipelineRun {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  auditId           String?  // Reference to source crawl audit
+
+  // Run metadata
+  status            String   @default("queued") // queued, running, completed, partial, failed, blocked, cancelled
+  reason            String?  // For failures/blocks
+
+  // Execution timeline
+  queuedAt          DateTime @default(now())
+  startedAt         DateTime?
+  completedAt       DateTime?
+  duration          Int?     // milliseconds
+
+  // Results summary
+  pagesQueued       Int      @default(0)
+  pagesProcessed    Int      @default(0)
+  pagesSkipped      Int      @default(0)
+  pagesFailed       Int      @default(0)
+
+  // Stage tracking
+  stages            PipelineStage[]
+
+  // Evidence for Forge
+  forgeContext      String?  // JSON containing grounding evidence
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model PipelineStage {
+  id                String   @id @default(cuid())
+  runId             String
+
+  // Stage info
+  stageName         String   // "content_inventory", "classification", "topic_detection", etc
+  status            String   @default("pending") // pending, running, completed, partial, failed, blocked
+
+  // Execution
+  startedAt         DateTime?
+  completedAt       DateTime?
+  duration          Int?     // milliseconds
+
+  // Results
+  itemsProcessed    Int      @default(0)
+  itemsFailed       Int      @default(0)
+  itemsSkipped      Int      @default(0)
+
+  // Error handling
+  error             String?
+  failedItems       String?  // JSON array of failed page URLs
+
+  // Evidence
+  evidence          String?  // JSON containing stage-specific results
+
+  run               PipelineRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@unique([runId, stageName])
+  @@index([runId])
+  @@index([status])
+}
+
+model ContentEntity {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+
+  // Entity details
+  entityName        String
+  entityType        String   // person, organization, place, product, service, topic, etc
+  confidence        Float    // 0-1
+
+  // Detection source
+  detectionSource   String[] // "heading", "schema", "cooccurrence", "cross_reference", "manual_override"
+
+  // Evidence
+  mentions          Int      @default(1)
+  contexts          String[] // JSON: surrounding text snippets
+
+  // Relationships
+  relatedEntities   String[] @default([]) // JSON: entity IDs
+
+  // Manual override
+  isVerified        Boolean  @default(false)
+  verifiedBy        String?
+  verifiedAt        DateTime?
+
+  // Hash for change detection
+  contentHash       String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl, entityName])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([entityType])
+  @@index([confidence])
+}
+
+model ContentTopic {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+
+  // Topic details
+  topicName         String
+  topicCluster      String?  // Grouping for related topics
+  confidence        Float    // 0-1
+
+  // Detection signals
+  detectionSignals  String[] // "heading", "entity_cooccurrence", "semantic_similarity", "industry_map", "manual"
+
+  // Relationships
+  parentTopics      String[] @default([])
+  childTopics       String[] @default([])
+  relatedTopics     String[] @default([])
+
+  // Evidence
+  evidenceScore     Float    @default(0)
+
+  // Manual override
+  isConfirmed       Boolean  @default(false)
+  confirmedBy       String?
+  confirmedAt       DateTime?
+
+  // Hash for change detection
+  contentHash       String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl, topicName])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([confidence])
+}
+
+model KnowledgeGraphNode {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+
+  // Node identity
+  nodeId            String   // Derived from entity/topic name
+  nodeType          String   // entity, topic, service, location, product
+  nodeLabel         String
+
+  // Node data
+  properties        String?  // JSON: entity type, confidence, etc
+  pageUrls          String[] @default([]) // Pages where this appears
+  frequency         Int      @default(1)  // How many pages mention this
+
+  // Metadata
+  isCore            Boolean  @default(false) // Is this a core business element?
+  coreReason        String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  outgoing          KnowledgeGraphEdge[] @relation("outgoing")
+  incoming          KnowledgeGraphEdge[] @relation("incoming")
+
+  @@unique([projectId, nodeId])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([nodeType])
+  @@index([isCore])
+}
+
+model KnowledgeGraphEdge {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+
+  fromNodeId        String
+  toNodeId          String
+
+  // Relationship
+  relationshipType  String   // "mentions", "related_to", "contains", "supports", "competes_with"
+  confidence        Float    @default(0.8) // 0-1
+  strength          Int      @default(1)   // How strong is this relationship?
+
+  // Evidence
+  sources           String[] @default([]) // JSON: pages showing this relationship
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fromNode          KnowledgeGraphNode @relation("outgoing", fields: [projectId, fromNodeId], references: [projectId, nodeId], onDelete: Cascade)
+  toNode            KnowledgeGraphNode @relation("incoming", fields: [projectId, toNodeId], references: [projectId, nodeId], onDelete: Cascade)
+
+  @@unique([projectId, fromNodeId, toNodeId, relationshipType])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([relationshipType])
 }
