@@ -179,6 +179,23 @@ export function DnaSculpture({
     canvas.style.height = `${dims.h}px`
     ctx.scale(dpr, dpr)
 
+    // Cosmic backdrop, generated once per size: a parallax starfield and a soft
+    // two-tone nebula haze in the brand's warm/cool palette. Coordinates are
+    // normalized (0..1) so they scale with the canvas.
+    const stars = Array.from({ length: 180 }, () => ({
+      x: Math.random(), y: Math.random(),
+      s: Math.random() * Math.random() * 1.6 + 0.2,
+      a: Math.random() * 0.5 + 0.08,
+      ph: Math.random() * PI2,
+      tw: 0.4 + Math.random() * 0.9,
+      warm: Math.random() < 0.22,
+    }))
+    const nebula: Array<{ x: number; y: number; r: number; c: [number, number, number]; a: number }> = [
+      { x: 0.30, y: 0.26, r: 0.60, c: [201, 168, 119], a: 0.10 },
+      { x: 0.72, y: 0.60, r: 0.62, c: [92, 118, 176], a: 0.09 },
+      { x: 0.52, y: 0.90, r: 0.50, c: [150, 120, 92], a: 0.07 },
+    ]
+
     let raf = 0
 
     function paint(time: number) {
@@ -186,15 +203,44 @@ export function DnaSculpture({
       const g = helixGeom(w, h)
       const regions = regionsRef.current
 
-      ctx!.clearRect(0, 0, w, h)
-      ctx!.fillStyle = 'rgba(10,10,12,1)'
-      ctx!.fillRect(0, 0, w, h)
-      // soft depth glow behind the molecule
       const cy = (g.topY + g.botY) / 2
-      const bg = ctx!.createRadialGradient(g.cx, cy, 0, g.cx, cy, Math.max(w, h) * 0.5)
-      bg.addColorStop(0, 'rgba(32,27,18,0.28)')
-      bg.addColorStop(1, 'rgba(0,0,0,0)')
-      ctx!.fillStyle = bg
+      const maxD = Math.max(w, h)
+
+      ctx!.clearRect(0, 0, w, h)
+      // deep-space base: near-black with a faint vertical warm lift
+      const base = ctx!.createLinearGradient(0, 0, 0, h)
+      base.addColorStop(0, '#070709')
+      base.addColorStop(0.55, '#0a0a0e')
+      base.addColorStop(1, '#08070b')
+      ctx!.fillStyle = base
+      ctx!.fillRect(0, 0, w, h)
+
+      // nebula haze (additive, very soft)
+      ctx!.globalCompositeOperation = 'lighter'
+      nebula.forEach((n) => {
+        const drift = reduce ? 0 : Math.sin(time / 9000 + n.x * 6) * 0.015
+        const nx = (n.x + drift) * w, ny = n.y * h, nr = n.r * maxD
+        const ng = ctx!.createRadialGradient(nx, ny, 0, nx, ny, nr)
+        ng.addColorStop(0, `rgba(${n.c[0]},${n.c[1]},${n.c[2]},${n.a})`)
+        ng.addColorStop(1, 'rgba(0,0,0,0)')
+        ctx!.fillStyle = ng
+        ctx!.fillRect(0, 0, w, h)
+      })
+      // starfield
+      stars.forEach((st) => {
+        const tw = reduce ? 0.8 : 0.55 + 0.45 * Math.sin(time / 900 * st.tw + st.ph)
+        const a = st.a * tw
+        ctx!.fillStyle = st.warm ? `rgba(224,206,168,${a})` : `rgba(196,206,224,${a})`
+        ctx!.beginPath()
+        ctx!.arc(st.x * w, st.y * h, st.s, 0, PI2)
+        ctx!.fill()
+      })
+      ctx!.globalCompositeOperation = 'source-over'
+      // vignette to focus the molecule
+      const vig = ctx!.createRadialGradient(g.cx, cy, maxD * 0.18, g.cx, cy, maxD * 0.72)
+      vig.addColorStop(0, 'rgba(0,0,0,0)')
+      vig.addColorStop(1, 'rgba(0,0,0,0.55)')
+      ctx!.fillStyle = vig
       ctx!.fillRect(0, 0, w, h)
 
       const breathe = reduce ? 0.5 : Math.sin(time / 1800) * 0.5 + 0.5
@@ -214,6 +260,7 @@ export function DnaSculpture({
         | { t: 1; x: number; y: number; r: number; z: number; col: string }
         | { t: 2; x0: number; x1: number; y: number; z: number; col: string; lw: number }
       const prims: Prim[] = []
+      const glow: Array<{ x: number; y: number; r: number; c: [number, number, number]; a: number }> = []
       const NEAR0: [number, number, number] = [233, 215, 172]
       const NEAR1: [number, number, number] = [176, 188, 208]
       const FAR: [number, number, number] = [58, 64, 84]
@@ -240,6 +287,10 @@ export function DnaSculpture({
             const cg = Math.round(FAR[1] + (near[1] - FAR[1]) * cur.depth)
             const cb = Math.round(FAR[2] + (near[2] - FAR[2]) * cur.depth)
             prims.push({ t: 0, ax: prev.x, ayt: prev.yt, ayb: prev.yb, bx: cur.x, byt: cur.yt, byb: cur.yb, z: (prev.z + cur.z) / 2, col: `rgba(${cr},${cg},${cb},${a})` })
+          }
+          // bloom only along the near/front of the strand, sampled sparsely
+          if (depth > 0.62 && i % 3 === 0) {
+            glow.push({ x, y, r: 7 + 12 * depth, c: near, a: 0.07 * depth * dimAll })
           }
           prev = cur
         }
@@ -301,6 +352,18 @@ export function DnaSculpture({
           ctx!.beginPath(); ctx!.moveTo(p.x0, p.y); ctx!.lineTo(p.x1, p.y); ctx!.stroke()
         }
       }
+
+      // ── soft bloom along the front of the ribbons (additive) ─────────
+      ctx!.globalCompositeOperation = 'lighter'
+      for (let i = 0; i < glow.length; i++) {
+        const b = glow[i]
+        const bg2 = ctx!.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r)
+        bg2.addColorStop(0, `rgba(${b.c[0]},${b.c[1]},${b.c[2]},${b.a})`)
+        bg2.addColorStop(1, 'rgba(0,0,0,0)')
+        ctx!.fillStyle = bg2
+        ctx!.beginPath(); ctx!.arc(b.x, b.y, b.r, 0, PI2); ctx!.fill()
+      }
+      ctx!.globalCompositeOperation = 'source-over'
 
       // ── luminous core (the business) the strands spring from ─────────
       const hub = regions.find((r) => r.isHub)
