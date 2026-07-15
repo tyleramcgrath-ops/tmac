@@ -194,7 +194,10 @@ export function DnaSculpture({
     // Evidence flow: while a check runs, discrete particles of evidence rise up
     // through the room and converge into the molecule — the signature moment.
     // No loading bars; the office is visibly gathering understanding.
-    const evidence: Array<{ x: number; y: number; tx: number; ty: number; t: number; life: number; warm: boolean }> = []
+    const evidence: Array<{ x: number; y: number; tx: number; ty: number; t: number; life: number; warm: boolean; key: string | null }> = []
+    // Stage 3: when evidence lands, the receiving strand "thinks" — a transient
+    // reaction that brightens it and gently reorganizes its neighbors.
+    const react: Record<string, number> = {}
     let spawnAcc = 0
     let lastT = 0
 
@@ -332,26 +335,33 @@ export function DnaSculpture({
       }
 
       // ── base pairs: quiet connector + colored nucleotide anchors ─────
-      regions.forEach((r) => {
+      regions.forEach((r, idx) => {
         if (r.isHub) return
         const c = STATE_RGB[r.understanding]
         const isFocused = sel === r.key || hov === r.key
         const isActive = act === r.key
         const dimmed = anyFocus && !isFocused
-        const ph = phaseAt(r.y)
-        const pulse = isActive && !reduce ? 0.7 + 0.3 * Math.sin(time / 300) : 1
-        const focusMul = isFocused ? 1.9 : isActive ? 1.4 : 1
+        // Stage 3: the strand receiving evidence responds; neighbors reorganize.
+        const selfReact = react[r.key] || 0
+        const prevK = regions[idx - 1]?.key, nextK = regions[idx + 1]?.key
+        const nbReact = 0.5 * ((prevK ? react[prevK] || 0 : 0) + (nextK ? react[nextK] || 0 : 0))
+        const wob = reduce ? 0 : nbReact * 3 * Math.sin(time / 220 + r.y)
+        const ry = r.y + wob
+        const reactMul = 1 + selfReact * 0.9
+        const ph = phaseAt(ry)
+        const pulse = (isActive && !reduce ? 0.7 + 0.3 * Math.sin(time / 300) : 1) * reactMul
+        const focusMul = (isFocused ? 1.9 : isActive ? 1.4 : 1) * reactMul
         const xA = g.cx + g.amp * Math.cos(ph), zA = Math.sin(ph)
         const xB = g.cx + g.amp * Math.cos(ph + Math.PI), zB = Math.sin(ph + Math.PI)
 
         const connA = (r.understanding === 'not-connected' ? 0.05 : 0.12) * focusMul * pulse * (dimmed ? 0.4 : 1)
-        prims.push({ t: 2, x0: xA, x1: xB, y: r.y, z: (zA + zB) / 2, col: `rgba(${c[0]},${c[1]},${c[2]},${connA})`, lw: isFocused ? 1.8 : 1 })
+        prims.push({ t: 2, x0: xA, x1: xB, y: ry, z: (zA + zB) / 2, col: `rgba(${c[0]},${c[1]},${c[2]},${connA})`, lw: isFocused ? 1.8 : 1 })
 
-        const baseSize = r.understanding === 'well-understood' ? 3.2 : r.understanding === 'partially-understood' ? 2.6 : r.understanding === 'needs-verification' ? 2.0 : 1.5
+        const baseSize = (r.understanding === 'well-understood' ? 3.2 : r.understanding === 'partially-understood' ? 2.6 : r.understanding === 'needs-verification' ? 2.0 : 1.5) * (1 + selfReact * 0.35)
         ;([[xA, zA], [xB, zB]] as Array<[number, number]>).forEach(([x, z]) => {
           const depth = (z + 1) / 2
           const a = (r.understanding === 'not-connected' ? 0.22 : 0.6) * (0.45 + 0.55 * depth) * focusMul * pulse * (dimmed ? 0.35 : 1)
-          prims.push({ t: 1, x, y: r.y, r: baseSize * (0.6 + 0.7 * depth) * (isFocused ? 1.3 : 1), z, col: `rgba(${c[0]},${c[1]},${c[2]},${Math.min(a, 0.95)})` })
+          prims.push({ t: 1, x, y: ry, r: baseSize * (0.6 + 0.7 * depth) * (isFocused ? 1.3 : 1), z, col: `rgba(${c[0]},${c[1]},${c[2]},${Math.min(a, 0.95)})` })
         })
 
         // energy crosses the base pair only when the region is in focus/active
@@ -441,6 +451,7 @@ export function DnaSculpture({
             t: 0,
             life: 1500 + Math.random() * 700,
             warm: Math.random() < 0.6,
+            key: target ? target.key : null,
           })
         }
       }
@@ -449,7 +460,7 @@ export function DnaSculpture({
         for (let i = evidence.length - 1; i >= 0; i--) {
           const e = evidence[i]
           e.t += dt / e.life
-          if (e.t >= 1) { evidence.splice(i, 1); continue }
+          if (e.t >= 1) { if (e.key) react[e.key] = Math.min((react[e.key] || 0) + 0.5, 1.4); evidence.splice(i, 1); continue }
           const ease = e.t * e.t * (3 - 2 * e.t)
           const x = e.x + (e.tx - e.x) * ease
           const y = e.y + (e.ty - e.y) * ease
@@ -466,6 +477,8 @@ export function DnaSculpture({
         }
         ctx!.globalCompositeOperation = 'source-over'
       }
+      // decay the thinking reactions each frame
+      for (const k in react) { react[k] *= 0.985; if (react[k] < 0.01) delete react[k] }
 
       if (!reduce) raf = requestAnimationFrame(paint)
     }

@@ -28,6 +28,26 @@ const STEP_TO_DNA: Record<string, string | null> = {
   notenough: 'website', duplicate: null,
 }
 
+/** Stage 1: every step is Scout gathering evidence from a nameable source in
+ *  the outside world — the origin is visually meaningful, never generic. */
+const STEP_TO_SOURCE: Record<string, string> = {
+  connect: 'Website', found: 'Website', identity: 'Website', contact: 'Website',
+  compare: 'Google', mismatch: 'Google Business Profile', ruledout: 'Reviews', stoodout: 'Reviews',
+  noresponse: 'Website', retry: 'Website', stillfailed: 'Website', notenough: 'Website', duplicate: 'Website',
+}
+
+/** Stage 4: Compass speaks from understanding, generated from real preview
+ *  state of the Digital DNA and the check — never from search. */
+function compassReactionFor(kind: RevealKind, scenario: PreviewScenario): string {
+  const understood = scenario.digitalDna.filter((a) => a.understanding === 'well-understood').length
+  const gaps = scenario.digitalDna.filter((a) => a.understanding === 'needs-verification' || a.understanding === 'not-connected')
+  if (kind === 'approval') return "I found something and connected two patterns. I've prepared the correction on your desk for review."
+  if (kind === 'opportunity') return `I found something. Your understanding grew — ${understood} of ${scenario.digitalDna.length} areas are now clear.`
+  if (kind === 'failed') return "I couldn't reach your site this time, so I've held off. I'll try again automatically."
+  if (gaps.length) return `Nothing needed your attention. I still need more evidence on ${gaps[0].label} before I'd recommend anything.`
+  return 'Nothing rose to your attention. Your business looks stable today.'
+}
+
 export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const [overlay, setOverlay] = useState<Overlay>(null)
   const [compassContext, setCompassContext] = useState<CompassContext>('command-center')
@@ -36,6 +56,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const [invPhase, setInvPhase] = useState<InvPhase>('idle')
   const [stepIndex, setStepIndex] = useState(1)
   const [lastReveal, setLastReveal] = useState<RevealKind | null>(null)
+  const [compassReaction, setCompassReaction] = useState<string | null>(null)
   const stepsRef = useRef(buildInvestigationSteps(scenario, scenario.defaultRunOutcome))
 
   const outcome: RunOutcome = scenario.defaultRunOutcome
@@ -58,6 +79,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       setInvestigating(false)
       setInvPhase('idle')
       setLastReveal(kind)
+      setCompassReaction(compassReactionFor(kind, scenario)) // Stage 4: Compass notices
       if (kind === 'opportunity') setOverlay('opportunity')
       else if (kind === 'approval') setOverlay('approval')
     }, 300)
@@ -71,6 +93,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
     setInvPhase('stepping')
     setInvestigating(true)
     setLastReveal(null)
+    setCompassReaction("I'm connecting what Scout is finding to what I already understand.")
   }
 
   const openOpportunity = () => setOverlay(scenario.opportunity ? 'opportunity' : 'opportunity-empty')
@@ -79,6 +102,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
 
   const currentStep = investigating ? stepsRef.current[Math.min(stepIndex, stepsRef.current.length) - 1] : null
   const activeDnaKey = currentStep ? STEP_TO_DNA[currentStep.id] ?? null : null
+  const currentSource = currentStep ? STEP_TO_SOURCE[currentStep.id] ?? null : null
 
   // The DNA is the room's light source: aggregate understanding warms and
   // brightens the whole office. One number, computed from the sculpture's
@@ -114,7 +138,14 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       {(investigating || quietMessage) && (
         <p className="office-investigation-line" role="status" aria-live="polite">
           <span className="cc-pulse" style={{ width: 8, height: 8, borderRadius: 999, background: 'var(--office-brass)', display: 'inline-block' }} aria-hidden="true" />
+          {investigating && currentSource && <span className="office-scout-source">Scout · {currentSource}</span>}
           {investigating ? currentStep?.text : quietMessage}
+        </p>
+      )}
+      {!investigating && compassReaction && (
+        <p className="office-compass-note" role="status" aria-live="polite">
+          <CompassIcon className="h-3.5 w-3.5" style={{ color: 'var(--office-brass-bright)' }} aria-hidden="true" />
+          {compassReaction}
         </p>
       )}
 
