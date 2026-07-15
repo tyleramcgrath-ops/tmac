@@ -10,8 +10,8 @@
  *  - No fabricated revenue, lead, call, or ROI numbers.
  *  - No fabricated confidence percentages.
  *  - No competitor or industry benchmark claims.
- *  - Every "opportunity" claim is phrased as verified-vs-unverified, the
- *    same discipline used in components/growth-opportunity.tsx.
+ *  - Every "opportunity" claim is phrased as verified-vs-unverified —
+ *    nothing shown without evidence backing it.
  *
  * Codex: this module is intentionally isolated. Swap PREVIEW_SCENARIOS for
  * real API/contract data and delete this file — nothing outside
