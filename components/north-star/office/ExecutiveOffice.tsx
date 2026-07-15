@@ -57,7 +57,15 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const [stepIndex, setStepIndex] = useState(1)
   const [lastReveal, setLastReveal] = useState<RevealKind | null>(null)
   const [compassReaction, setCompassReaction] = useState<string | null>(null)
+  const [briefPulse, setBriefPulse] = useState(false)      // Stage 5
+  const [approvalArrived, setApprovalArrived] = useState(false) // Stage 6
   const stepsRef = useRef(buildInvestigationSteps(scenario, scenario.defaultRunOutcome))
+
+  // Reset the chain's downstream state whenever the previewed scenario changes.
+  useEffect(() => {
+    setOverlay(null); setSelectedDnaKey(null); setInvestigating(false); setInvPhase('idle')
+    setLastReveal(null); setCompassReaction(null); setBriefPulse(false); setApprovalArrived(false)
+  }, [scenario])
 
   const outcome: RunOutcome = scenario.defaultRunOutcome
 
@@ -80,12 +88,19 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       setInvPhase('idle')
       setLastReveal(kind)
       setCompassReaction(compassReactionFor(kind, scenario)) // Stage 4: Compass notices
-      if (kind === 'opportunity') setOverlay('opportunity')
-      else if (kind === 'approval') setOverlay('approval')
+      setBriefPulse(kind === 'opportunity' || kind === 'approval') // Stage 5
+      setApprovalArrived(kind === 'approval') // Stage 6: prepared work slides in
     }, 300)
     return () => window.clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invPhase])
+
+  // Morning Brief's "just updated" highlight fades once it's been noticed.
+  useEffect(() => {
+    if (!briefPulse) return
+    const t = window.setTimeout(() => setBriefPulse(false), 4200)
+    return () => window.clearTimeout(t)
+  }, [briefPulse])
 
   const runCheck = () => {
     stepsRef.current = buildInvestigationSteps(scenario, outcome)
@@ -164,7 +179,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       </div>
 
       <div className="office-walls">
-        <ActivityWall activity={scenario.activity} onOpen={() => setOverlay('work-in-progress')} />
+        <ActivityWall activity={scenario.activity} investigating={investigating} nearingEnd={stepIndex >= stepsRef.current.length - 1} onOpen={() => setOverlay('work-in-progress')} />
         <div style={{ pointerEvents: 'none' }} />
         <PriorityWall scenario={scenario} onOpenOpportunity={openOpportunity} onOpenApproval={openApproval} />
       </div>
@@ -172,6 +187,9 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       <DeskScene
         scenario={scenario}
         investigating={investigating}
+        briefPulse={briefPulse}
+        approvalArrived={approvalArrived}
+        compassReaction={compassReaction}
         onOpenBriefing={() => setOverlay('briefing')}
         onOpenCompass={() => openCompass('command-center')}
         onOpenApproval={openApproval}
