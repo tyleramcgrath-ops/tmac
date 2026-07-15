@@ -34,7 +34,6 @@ const RUNG_DENSITY: Record<DigitalDnaUnderstanding, number> = {
   'needs-verification': 6,
   'not-connected': 3,
 }
-const BACKBONE_PER_STRAND = 140
 
 interface Region {
   key: string
@@ -47,14 +46,6 @@ interface Region {
   rowH: number
   side: number
   labelX: number
-}
-
-interface BackbonePt {
-  strand: number // 0 or 1
-  s: number // position along helix, 0..1
-  s0: number // initial (used for the static reduced-motion frame)
-  speed: number
-  size: number
 }
 
 interface RungParticle {
@@ -93,7 +84,7 @@ function helixGeom(w: number, h: number): Geom {
     botY: h * 0.92,
     span: h * 0.92 - h * 0.15,
     amp: Math.min(w * 0.13, 165),
-    turns: 2.4,
+    turns: 3.0,
     labelGap: w < 560 ? 16 : 42,
   }
 }
@@ -139,7 +130,6 @@ export function DnaSculpture({
   const [hoveredKey, setHoveredKey] = useState<string | null>(null)
   const [dims, setDims] = useState({ w: 1100, h: 560 })
   const regionsRef = useRef<Region[]>([])
-  const backboneRef = useRef<BackbonePt[]>([])
   const rungRef = useRef<RungParticle[]>([])
   const stateRef = useRef({ selectedKey, hoveredKey: null as string | null, activeKey })
   stateRef.current.selectedKey = selectedKey
@@ -161,15 +151,6 @@ export function DnaSculpture({
   useEffect(() => {
     const regions = layout(areas, dims.w, dims.h)
     regionsRef.current = regions
-
-    const backbone: BackbonePt[] = []
-    for (let strand = 0; strand < 2; strand++) {
-      for (let i = 0; i < BACKBONE_PER_STRAND; i++) {
-        const s = i / BACKBONE_PER_STRAND + Math.random() * 0.003
-        backbone.push({ strand, s, s0: s, speed: 0.00006 + Math.random() * 0.00006, size: 0.7 + Math.random() * 0.9 })
-      }
-    }
-    backboneRef.current = backbone
 
     const rungs: RungParticle[] = []
     regions.forEach((r) => {
@@ -223,22 +204,37 @@ export function DnaSculpture({
       const anyFocus = sel || hov
       const phaseAt = (y: number) => ((y - g.topY) / g.span) * g.turns * PI2 + rot
 
-      // ── backbone strands (the sugar-phosphate helix) ─────────────────
-      backboneRef.current.forEach((p) => {
-        if (!reduce) { p.s += p.speed; if (p.s > 1) p.s -= 1 }
-        const s = reduce ? p.s0 : p.s
-        const y = g.topY + s * g.span
-        const ph = phaseAt(y) + p.strand * Math.PI
-        const x = g.cx + g.amp * Math.cos(ph)
-        const depth = (Math.sin(ph) + 1) / 2 // 0 = far, 1 = near
-        const a = (0.09 + 0.2 * depth) * (anyFocus ? 0.5 : 1)
-        ctx!.fillStyle = `rgba(206,190,150,${a})`
-        ctx!.beginPath()
-        ctx!.arc(x, y, (0.6 + 1.0 * depth) * p.size, 0, PI2)
-        ctx!.fill()
-      })
+      // Everything is collected as depth-carrying points and painted far→near,
+      // so the two strands genuinely pass over and behind one another at every
+      // crossover — the intertwining read of a real 3D double helix.
+      const pts: Array<{ x: number; y: number; z: number; r: number; col: string }> = []
+      // Two-tone strands — a warm gold and a cool platinum — so the eye tracks
+      // each one separately as they weave over and behind each other.
+      const NEAR0: [number, number, number] = [231, 213, 170]
+      const NEAR1: [number, number, number] = [174, 186, 205]
+      const FAR: [number, number, number] = [66, 72, 92]
+      const STEPS = 190
 
-      // ── base-pair nucleotides (where each rung meets the strands) ────
+      // ── backbone strands, sampled densely into two continuous 3D tubes ──
+      for (let strand = 0; strand < 2; strand++) {
+        const near = strand === 0 ? NEAR0 : NEAR1
+        for (let i = 0; i <= STEPS; i++) {
+          const yFrac = i / STEPS
+          const y = g.topY + yFrac * g.span
+          const ph = phaseAt(y) + strand * Math.PI
+          const z = Math.sin(ph)
+          const depth = (z + 1) / 2
+          const shimmer = reduce ? 1 : 0.82 + 0.18 * Math.sin(time / 650 + yFrac * 8)
+          // gentle depth falloff keeps the back strand visible (never invisible)
+          const a = (0.15 + 0.5 * depth) * shimmer * (anyFocus ? 0.55 : 1)
+          const cr = Math.round(FAR[0] + (near[0] - FAR[0]) * depth)
+          const cg = Math.round(FAR[1] + (near[1] - FAR[1]) * depth)
+          const cb = Math.round(FAR[2] + (near[2] - FAR[2]) * depth)
+          pts.push({ x: g.cx + g.amp * Math.cos(ph), y, z, r: 0.9 + 2.3 * depth, col: `rgba(${cr},${cg},${cb},${a})` })
+        }
+      }
+
+      // ── base-pair rungs + nucleotide anchors ─────────────────────────
       regions.forEach((r) => {
         if (r.isHub) return
         const c = STATE_RGB[r.understanding]
@@ -251,28 +247,20 @@ export function DnaSculpture({
         const xA = g.cx + g.amp * Math.cos(ph), zA = Math.sin(ph)
         const xB = g.cx + g.amp * Math.cos(ph + Math.PI), zB = Math.sin(ph + Math.PI)
 
-        // the ladder rung itself — a dotted bridge between the two strands
-        const steps = 8
+        const steps = 9
         for (let i = 1; i < steps; i++) {
           const u = i / steps
-          const x = xA + (xB - xA) * u
-          const depth = ((zA + (zB - zA) * u) + 1) / 2
-          const a = (r.understanding === 'not-connected' ? 0.06 : 0.16) * (0.4 + 0.6 * depth) * focusMul * pulse * (dimmed ? 0.3 : 1)
-          ctx!.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a})`
-          ctx!.beginPath()
-          ctx!.arc(x, r.y, 1.15 * (0.6 + 0.6 * depth), 0, PI2)
-          ctx!.fill()
+          const z = zA + (zB - zA) * u
+          const depth = (z + 1) / 2
+          const a = (r.understanding === 'not-connected' ? 0.06 : 0.18) * (0.35 + 0.65 * depth) * focusMul * pulse * (dimmed ? 0.3 : 1)
+          pts.push({ x: xA + (xB - xA) * u, y: r.y, z, r: 1.15 * (0.6 + 0.7 * depth), col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
         }
 
-        // nucleotides — the bright anchor points where the rung meets each strand
         const baseSize = r.understanding === 'well-understood' ? 3.4 : r.understanding === 'partially-understood' ? 2.7 : r.understanding === 'needs-verification' ? 2.1 : 1.6
         ;([[xA, zA], [xB, zB]] as Array<[number, number]>).forEach(([x, z]) => {
           const depth = (z + 1) / 2
-          const a = (r.understanding === 'not-connected' ? 0.16 : 0.5) * (0.4 + 0.6 * depth) * focusMul * pulse * (dimmed ? 0.3 : 1)
-          ctx!.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${Math.min(a, 0.95)})`
-          ctx!.beginPath()
-          ctx!.arc(x, r.y, baseSize * (0.6 + 0.7 * depth) * (isFocused ? 1.3 : 1), 0, PI2)
-          ctx!.fill()
+          const a = (r.understanding === 'not-connected' ? 0.18 : 0.55) * (0.4 + 0.6 * depth) * focusMul * pulse * (dimmed ? 0.3 : 1)
+          pts.push({ x, y: r.y, z, r: baseSize * (0.55 + 0.75 * depth) * (isFocused ? 1.3 : 1), col: `rgba(${c[0]},${c[1]},${c[2]},${Math.min(a, 0.95)})` })
         })
       })
 
@@ -285,20 +273,26 @@ export function DnaSculpture({
         const ph = phaseAt(r.y)
         const xA = g.cx + g.amp * Math.cos(ph), zA = Math.sin(ph)
         const xB = g.cx + g.amp * Math.cos(ph + Math.PI), zB = Math.sin(ph + Math.PI)
-        const x = xA + (xB - xA) * u
-        const depth = ((zA + (zB - zA) * u) + 1) / 2
+        const z = zA + (zB - zA) * u
+        const depth = (z + 1) / 2
         const c = STATE_RGB[r.understanding]
         const isFocused = sel === r.key || hov === r.key
         const isActive = act === r.key
         const dimmed = anyFocus && !isFocused
         const tw = reduce ? 0.8 : 0.5 + 0.5 * Math.sin(time / 380 + p.phase)
-        const base = r.understanding === 'not-connected' ? 0.06 : 0.3
+        const base = r.understanding === 'not-connected' ? 0.06 : 0.32
         const a = base * tw * (0.4 + 0.6 * depth) * (isFocused ? 1.8 : isActive ? 1.3 : 1) * (dimmed ? 0.28 : 1)
-        ctx!.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a})`
-        ctx!.beginPath()
-        ctx!.arc(x, r.y + p.off, p.size * (0.6 + 0.6 * depth) * (isFocused ? 1.3 : 1), 0, PI2)
-        ctx!.fill()
+        pts.push({ x: xA + (xB - xA) * u, y: r.y + p.off, z, r: p.size * (0.55 + 0.7 * depth) * (isFocused ? 1.3 : 1), col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
       })
+
+      // paint far → near so nearer points occlude farther ones (the weave)
+      pts.sort((a, b) => a.z - b.z)
+      for (let i = 0; i < pts.length; i++) {
+        ctx!.fillStyle = pts[i].col
+        ctx!.beginPath()
+        ctx!.arc(pts[i].x, pts[i].y, pts[i].r, 0, PI2)
+        ctx!.fill()
+      }
 
       // ── luminous core (the business) the strands spring from ─────────
       const hub = regions.find((r) => r.isHub)
