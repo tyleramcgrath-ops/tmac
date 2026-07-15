@@ -118,7 +118,15 @@ model Organization {
   pagePriorities      PagePriority[] @relation("PagePriorities")
   recommendationDecisions RecommendationDecision[] @relation("RecommendationDecisions")
   dailyMissions       DailyMission[] @relation("DailyMissions")
-  businessContext     BusinessContext? @relation("BusinessContext")
+
+  // Business Context (Phase 7.6)
+  businessProfiles    BusinessProfile[]
+  businessObjectives  BusinessObjective[]
+  pageBusinessClassifications PageBusinessClassification[]
+  conversionGoals     ConversionGoal[]
+  seasonalPriorities  SeasonalPriority[]
+  businessContextVersions BusinessContextVersion[]
+  campaignTemplates   CampaignTemplate[]
 
   @@index([slug])
   @@index([createdAt])
@@ -209,6 +217,15 @@ model Project {
   pagePriorities      PagePriority[]
   recommendationDecisions RecommendationDecision[]
   dailyMissions       DailyMission[]
+
+  // Business Context
+  businessProfile   BusinessProfile?
+  businessObjectives BusinessObjective[]
+  pageBusinessClassifications PageBusinessClassification[]
+  conversionGoals   ConversionGoal[]
+  seasonalPriorities SeasonalPriority[]
+  businessContextVersions BusinessContextVersion[]
+  campaignTemplates CampaignTemplate[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -972,30 +989,302 @@ model DailyMission {
   @@index([status])
 }
 
-model BusinessContext {
-  id               String   @id @default(cuid())
-  organizationId   String   @unique
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 7.6: BUSINESS CONTEXT & INDUSTRY PLAYBOOKS
+// ─────────────────────────────────────────────────────────────────────────────
 
-  // Business mode
-  businessMode     String   @default("general")
+model BusinessProfile {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
 
-  // Weighting preferences
-  businessValueWeights Json?
-  seoOpportunityWeights Json?
-  priorityWeights  Json?
+  // Core business info
+  businessName      String
+  industry          String   // law_firm, medical_practice, ecommerce, saas, local_business, etc
+  businessModel     String   // b2b, b2c, local_service, marketplace, subscription, etc
+  description       String?
 
-  // Business priorities
-  highestValueServices String[]
-  highestValueLocations String[]
-  primaryConversionGoal String?
-  secondaryConversionGoal String?
+  // Products and services
+  primaryServices   String[] // JSON: [{name, value}]
+  highestValueService String?
+  secondaryServices String[] @default([])
 
-  // Constraints
-  maxDeploymentsPerDay Int @default(5)
-  requiresManualApproval Boolean @default(true)
-  autoApproveRiskLevel String?
+  // Locations
+  primaryLocations  String[] // JSON: [{city, state, country}]
+  expansionLocations String[] @default([])
+  serveGlobally     Boolean  @default(false)
 
-  updatedAt        DateTime @updatedAt
+  // Business metrics (all optional - never invent)
+  averageLeadValue  Float?
+  averageCustomerValue Float?
+  averageOrderValue Float?
+  closeRate         Float?   // 0-1
 
-  organization     Organization @relation("BusinessContext", fields: [organizationId], references: [id], onDelete: Cascade)
+  // Goals and strategy
+  targetCustomers   String?
+  primaryConversionGoal String
+  secondaryConversionGoals String[] @default([])
+
+  // Seasonal and strategic
+  seasonalPriorities String[] @default([]) // References to SeasonalPriority
+  businessNotes     String?
+
+  // Current focus
+  activeObjective   String?  // References current BusinessObjective
+  objective90Days   String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  objectives        BusinessObjective[]
+  pageClassifications PageBusinessClassification[]
+  conversionGoals   ConversionGoal[]
+  seasonalPeriods   SeasonalPriority[]
+  versions          BusinessContextVersion[]
+
+  @@unique([organizationId, projectId])
+  @@unique([projectId])
+  @@index([organizationId])
+  @@index([industry])
+  @@index([activeObjective])
+}
+
+model BusinessObjective {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  businessProfileId String
+
+  objectiveType     String   // increase_leads, increase_calls, increase_revenue, expand_locations, launch_service, etc
+  customObjective   String?  // For custom objective type
+  isActive          Boolean  @default(true)
+
+  description       String?
+  targetMetric      String?
+  targetValue       Float?
+  targetDate        DateTime?
+
+  // How this objective influences Decision Engine
+  priorityPageTypes String[] // Which page types matter for this objective
+  priorityServices  String[] @default([])
+  priorityLocations String[] @default([])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([businessProfileId])
+  @@index([isActive])
+}
+
+model IndustryPlaybook {
+  id                String   @id @default(cuid())
+
+  industry          String   @unique // law_firm, medical, dental, hvac, real_estate, saas, ecommerce, etc
+  displayName       String
+  description       String?
+
+  // Priority guidance
+  importantPageTypes String[] // Which page types matter most
+  importantConversionTypes String[] // lead, call, appointment, purchase, signup, etc
+  typicalMoneyPages String[] // ["service_page", "product_page", "location_page", "pricing_page"]
+
+  // Technical guidance
+  recommendedSchema String[] // ["LocalBusiness", "Product", "Service", etc]
+  criticalTechnicalIssues String[] // Which technical issues matter most
+  contentOpportunities String[] // High-value content types
+
+  // Importance scores
+  localSeoImportance Int @default(50) // 0-100
+  trustSignalImportance Int @default(50)
+  schemaImportance   Int @default(50)
+
+  // Decision Engine weight recommendations
+  businessValueWeight Float @default(0.60)
+  seoOpportunityWeight Float @default(0.40)
+
+  // Time estimates
+  typicalTimeToWin   String // "immediate", "short_term", "medium_term", "long_term"
+  typeicalFirstResultsWeeks Int?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  campaigns         CampaignTemplate[]
+
+  @@index([industry])
+}
+
+model PageBusinessClassification {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  pageUrl           String
+
+  // Business classification
+  businessClassification String // mission_critical, high_value, supporting, informational, utility, ignore
+  manualOverride    Boolean  @default(false)
+  overriddenBy      String?  // User ID who set override
+  overriddenAt      DateTime?
+
+  // Supporting data
+  relatedService    String?
+  relatedProduct    String?
+  relatedLocation   String?
+
+  // Metrics
+  monthlyRevenue    Float?
+  monthlyConversions Int?
+  conversionValue   Float?
+
+  rationale         String?  // Why this classification
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  businessProfile   BusinessProfile @relation(fields: [organizationId, projectId], references: [organizationId, projectId], onDelete: Cascade)
+
+  @@unique([projectId, pageUrl])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([businessClassification])
+}
+
+model ConversionGoal {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  businessProfileId String
+
+  goalName          String
+  goalType          String   // lead, call, appointment, purchase, signup, download, etc
+  description       String?
+
+  // Tracking
+  conversionUrl     String?
+  trackingParameter String?
+
+  // Value
+  estimatedValue    Float?
+  priority          Int      @default(1) // 1 = primary, 2 = secondary, etc
+
+  isActive          Boolean  @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([businessProfileId])
+  @@index([goalType])
+}
+
+model SeasonalPriority {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  businessProfileId String
+
+  name              String   // "tax_season", "holiday_sales", "summer_travel", etc
+  description       String?
+
+  startDate         DateTime
+  endDate           DateTime
+  preparationLeadDays Int @default(30) // Days before season to increase priority
+
+  // What matters during this season
+  relevantServices  String[] @default([])
+  relevantProducts  String[] @default([])
+  priorityPageUrls  String[] @default([])
+
+  isActive          Boolean  @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([businessProfileId])
+  @@index([startDate])
+}
+
+model BusinessContextVersion {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  businessProfileId String
+
+  changeType        String   // industry_changed, objective_changed, service_added, etc
+  previousValue     String?  // JSON of what changed
+  newValue          String?  // JSON of what changed to
+
+  changedBy         String?  // User ID
+  reason            String?
+
+  impactedRecommendations Int @default(0)
+
+  createdAt         DateTime @default(now())
+
+  businessProfile   BusinessProfile @relation(fields: [businessProfileId], references: [id], onDelete: Cascade)
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([businessProfileId])
+  @@index([createdAt])
+}
+
+model CampaignTemplate {
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+
+  name              String
+  description       String?
+  industry          String?  // References IndustryPlaybook.industry if set
+  templateType      String   // "practice_area_growth", "location_expansion", "category_growth", etc
+
+  // What this campaign focuses on
+  pageTypePriorities String[] // JSON: [{type, weight}]
+  technicalFocus    String[]
+  contentFocus      String[]
+
+  // Decision Engine adjustments for this campaign
+  businessValueWeightAdjustment Float @default(1.0)
+  seoOpportunityWeightAdjustment Float @default(1.0)
+
+  // Expected results
+  estimatedTimeWeeks Int?
+  estimatedImpact    String? // "high", "medium", "low"
+
+  isPublic          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  playbook          IndustryPlaybook? @relation(fields: [industry], references: [industry], onDelete: SetNull)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([industry])
+  @@index([templateType])
 }
