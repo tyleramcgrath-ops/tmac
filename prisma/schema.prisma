@@ -183,7 +183,7 @@ model Organization {
   executionJobs         ExecutionJob[]
   executionCampaigns    ExecutionCampaign[]
   rollbackSnapshots     ExecutionRollbackSnapshot[]
-  auditLogs             ExecutionAuditLog[]
+  executionAuditLogs    ExecutionAuditLog[]
 
   @@index([slug])
   @@index([createdAt])
@@ -324,9 +324,9 @@ model Project {
   executionHistories ExecutionHistory[]
 
   // Execution Engine (Phase 9.1)
-  executionJobs      ExecutionJob[]
-  executionCampaigns ExecutionCampaign[]
-  auditLogs          ExecutionAuditLog[]
+  executionJobs         ExecutionJob[]
+  executionCampaigns    ExecutionCampaign[]
+  executionAuditLogs    ExecutionAuditLog[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
