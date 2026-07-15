@@ -146,6 +146,10 @@ model Organization {
   knowledgeGraphNodes KnowledgeGraphNode[]
   knowledgeGraphEdges KnowledgeGraphEdge[]
 
+  // Operator (Phase 8.1)
+  operatorMemories    OperatorMemory[]
+  operatorOutcomes    OperatorOutcome[]
+
   @@index([slug])
   @@index([createdAt])
 }
@@ -262,6 +266,10 @@ model Project {
   contentTopics       ContentTopic[]
   knowledgeGraphNodes KnowledgeGraphNode[]
   knowledgeGraphEdges KnowledgeGraphEdge[]
+
+  // Operator (Phase 8.1)
+  operatorMemories    OperatorMemory[]
+  operatorOutcomes    OperatorOutcome[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -1984,4 +1992,78 @@ model KnowledgeGraphEdge {
   @@index([projectId, relationshipType])
   @@index([projectId, fromNodeId])
   @@index([projectId, toNodeId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PHASE 8.1: OPERATOR MODE (AI SEO EMPLOYEE)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Persistent work memory for the AI Operator. One row per decision the
+/// Operator (or the user acting on the Operator's advice) has taken on a
+/// specific page + recommendation type, so we never re-recommend the same
+/// action and we can learn from what the user accepted or rejected.
+model OperatorMemory {
+  id                 String   @id @default(cuid())
+  organizationId     String
+  projectId          String
+
+  // Target
+  pageUrl            String
+  recommendationType String   // money_page_reinforcement, add_faq_schema, refresh_content, etc.
+
+  // Decision
+  status             String   @default("proposed") // proposed | accepted | rejected | ignored | deferred | completed | expired | blocked
+  reason             String?  // Human/user reason when explicit
+  decidedAt          DateTime?
+  decidedBy          String?  // userId or "operator"
+  expiresAt          DateTime?
+
+  // Snapshot at decision time — used both for explainability and learning.
+  snapshot           Json?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project            Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  outcomes           OperatorOutcome[]
+
+  @@unique([projectId, pageUrl, recommendationType])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([projectId, status])
+  @@index([expiresAt])
+}
+
+/// Measured outcome for a memory row — recorded after the user (or an
+/// automated deploy) implements a recommendation, so future prioritization
+/// can learn from real deltas rather than guesses.
+model OperatorOutcome {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  memoryId       String
+
+  // What moved
+  trafficDelta      Float?
+  ctrDelta          Float?
+  rankingDelta      Float?
+  conversionDelta   Float?
+  revenueDelta      Float?
+
+  // Time window covered by the observation
+  windowStart    DateTime
+  windowEnd      DateTime
+
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  memory         OperatorMemory  @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([memoryId])
 }
