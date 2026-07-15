@@ -9,6 +9,7 @@ import { streamText } from 'ai'
 import { DEFAULT_MODEL } from '@/ai/constants'
 import { getModelOptions } from '@/ai/gateway'
 import { checkRateLimit, clientKey } from '@/lib/rateLimit'
+import { retrieveGraphContext } from '@/lib/pipeline/graph/queries'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
     )
   }
 
-  let body: { messages?: ChatMessage[]; context?: string }
+  let body: { messages?: ChatMessage[]; context?: string; projectId?: string }
   try {
     body = await req.json()
   } catch {
@@ -52,7 +53,25 @@ export async function POST(req: Request) {
   }
 
   const context = typeof body.context === 'string' ? body.context.slice(0, 6000) : ''
-  const system = context ? `${SYSTEM}\n\n--- SITE AUDIT CONTEXT ---\n${context}` : `${SYSTEM}\n\n(No audit has been run yet — invite the user to run an audit so you can ground your advice in their real site.)`
+
+  // Live knowledge-graph retrieval — grounds Forge in explainable graph state
+  // rather than a static JSON blob whenever a projectId is provided.
+  let graphContextBlock = ''
+  if (typeof body.projectId === 'string' && body.projectId) {
+    try {
+      const graph = await retrieveGraphContext({ projectId: body.projectId })
+      graphContextBlock = `\n\n--- KNOWLEDGE GRAPH CONTEXT (live retrieval @ ${graph.generatedAt}) ---\n${formatGraphContext(graph)}`
+    } catch (err) {
+      console.warn('[forge] graph retrieval failed', err)
+    }
+  }
+
+  const auditBlock = context ? `\n\n--- SITE AUDIT CONTEXT ---\n${context}` : ''
+  const fallback =
+    !context && !graphContextBlock
+      ? `\n\n(No audit has been run yet — invite the user to run an audit so you can ground your advice in their real site.)`
+      : ''
+  const system = `${SYSTEM}${auditBlock}${graphContextBlock}${fallback}`
 
   try {
     const result = streamText({
@@ -69,4 +88,61 @@ export async function POST(req: Request) {
       { status: 502 }
     )
   }
+}
+
+function formatGraphContext(graph: Awaited<ReturnType<typeof retrieveGraphContext>>): string {
+  const parts: string[] = []
+  parts.push(
+    `Graph totals: ${graph.totals.nodes} nodes, ${graph.totals.edges} edges. ` +
+      `Nodes by type: ${JSON.stringify(graph.totals.byNodeType)}. ` +
+      `Edges by type: ${JSON.stringify(graph.totals.byEdgeType)}.`,
+  )
+  if (graph.strongestCluster) {
+    parts.push(
+      `Strongest topic cluster: "${graph.strongestCluster.cluster}" — ${graph.strongestCluster.pageCount} pages, ${graph.strongestCluster.topicCount} topics, avg confidence ${graph.strongestCluster.averageConfidence.toFixed(2)}.`,
+    )
+  }
+  if (graph.weakestCluster) {
+    parts.push(
+      `Weakest topic cluster: "${graph.weakestCluster.cluster}" — ${graph.weakestCluster.pageCount} pages, ${graph.weakestCluster.topicCount} topics.`,
+    )
+  }
+  if (graph.orphanPages.length) {
+    parts.push(
+      `Orphan pages (${graph.orphanPages.length}):\n` +
+        graph.orphanPages.map((o) => `  - ${o.label} (${o.url}) — ${o.reason}`).join('\n'),
+    )
+  }
+  if (graph.weakMoneyPages.length) {
+    parts.push(
+      `Weak money pages (${graph.weakMoneyPages.length}):\n` +
+        graph.weakMoneyPages
+          .map(
+            (w) =>
+              `  - ${w.label} (${w.url}) — supporting=${w.supportingCount}; ${w.reasons.join('; ')}`,
+          )
+          .join('\n'),
+    )
+  }
+  if (graph.missingServices.length) {
+    parts.push(`Missing core services on-site: ${graph.missingServices.join(', ')}`)
+  }
+  if (graph.missingLocations.length) {
+    parts.push(`Missing core locations on-site: ${graph.missingLocations.join(', ')}`)
+  }
+  if (graph.missingEntities.length) {
+    parts.push(`Missing core entities on-site: ${graph.missingEntities.slice(0, 10).join(', ')}`)
+  }
+  if (graph.topLinkOpportunities.length) {
+    parts.push(
+      `Top internal-link opportunities (${graph.topLinkOpportunities.length}):\n` +
+        graph.topLinkOpportunities
+          .map(
+            (l) =>
+              `  - ${l.fromUrl} → ${l.toUrl} (shared topics ${l.sharedTopics}, confidence ${l.confidence.toFixed(2)})`,
+          )
+          .join('\n'),
+    )
+  }
+  return parts.join('\n\n')
 }

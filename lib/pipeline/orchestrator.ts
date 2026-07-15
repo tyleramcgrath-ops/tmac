@@ -7,8 +7,9 @@ import { analyzeGaps } from './stages/gap-analysis'
 import { scorePages } from './stages/content-scoring'
 import { calculateDecisionEngine } from './stages/decision-engine'
 import { selectDailyMission } from './stages/mission-selection'
-import type { Page, Audit, PrismaClient } from '@prisma/client'
-import type { DefaultArgs } from '@prisma/client/runtime/library'
+import { verifyGraph } from './graph/verifier'
+import { retrieveGraphContext, internalLinkOpportunities } from './graph/queries'
+import type { Page } from '@prisma/client'
 
 interface PipelineConfig {
   organizationId: string
@@ -147,9 +148,63 @@ export async function executePipeline(config: PipelineConfig) {
       topicResults,
     )
 
+    // Verify + repair the graph immediately after construction so downstream
+    // stages consume a clean graph.
+    const kgVerification = await verifyGraph({ projectId }, { repair: true })
+
     await updateStageRecord(prisma, run.id, 'knowledge_graph', 'completed', {
       itemsProcessed: kgResults.nodesCreated + kgResults.edgesCreated,
     })
+
+    await prisma.pipelineStage.update({
+      where: { runId_stageName: { runId: run.id, stageName: 'knowledge_graph' } },
+      data: {
+        evidence: JSON.stringify({
+          build: kgResults,
+          verification: {
+            totals: kgVerification.totals,
+            findings: kgVerification.findings.length,
+            repaired: kgVerification.repaired,
+          },
+        }),
+      },
+    })
+
+    // Materialize internal-link opportunities from the graph so they show up
+    // in the recommendation UI without waiting for a separate stage.
+    const linkOps = await internalLinkOpportunities({ projectId }, 100)
+    for (const op of linkOps) {
+      if (!op.fromPage.nodeUrl || !op.toPage.nodeUrl) continue
+      try {
+        await prisma.internalLinkRecommendation.upsert({
+          where: {
+            projectId_fromPageUrl_toPageUrl: {
+              projectId,
+              fromPageUrl: op.fromPage.nodeUrl,
+              toPageUrl: op.toPage.nodeUrl,
+            },
+          },
+          create: {
+            organizationId,
+            projectId,
+            fromPageUrl: op.fromPage.nodeUrl,
+            toPageUrl: op.toPage.nodeUrl,
+            suggestedAnchorText: op.toPage.nodeLabel.slice(0, 120),
+            rationale: op.reason,
+            priority: op.confidence > 0.8 ? 'high' : op.confidence > 0.6 ? 'medium' : 'low',
+            estimatedBenefit: 'improves_topical_relevance',
+            isTopicallyRelevant: true,
+          },
+          update: {
+            suggestedAnchorText: op.toPage.nodeLabel.slice(0, 120),
+            rationale: op.reason,
+            priority: op.confidence > 0.8 ? 'high' : op.confidence > 0.6 ? 'medium' : 'low',
+          },
+        })
+      } catch (e) {
+        console.warn('[pipeline] internal-link recommendation failed', e)
+      }
+    }
 
     // ─────────────────────────────────────────────────────────────────────────────
     // STAGE 6: CONTENT QUALITY SCORING
@@ -208,6 +263,8 @@ export async function executePipeline(config: PipelineConfig) {
 
     const duration = Date.now() - startTime
 
+    const graphContext = await retrieveGraphContext({ projectId })
+
     const forgeContext = {
       runId: run.id,
       audit: {
@@ -222,6 +279,20 @@ export async function executePipeline(config: PipelineConfig) {
         topics: topicResults.length,
         gaps: gapResults.gapsFound,
         recommendations: decisionResults.pagesScored,
+      },
+      knowledgeGraph: {
+        build: kgResults,
+        verification: {
+          totals: kgVerification.totals,
+          findings: kgVerification.findings.length,
+          repaired: kgVerification.repaired,
+        },
+        totals: graphContext.totals,
+        strongestCluster: graphContext.strongestCluster?.cluster ?? null,
+        weakestCluster: graphContext.weakestCluster?.cluster ?? null,
+        orphanPages: graphContext.orphanPages.length,
+        weakMoneyPages: graphContext.weakMoneyPages.length,
+        internalLinkOpportunities: graphContext.topLinkOpportunities.length,
       },
       mission: missionResult,
       evidenceAvailable: true,

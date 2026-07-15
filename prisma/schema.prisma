@@ -1916,18 +1916,21 @@ model KnowledgeGraphNode {
   projectId         String
 
   // Node identity
-  nodeId            String   // Derived from entity/topic name
-  nodeType          String   // entity, topic, service, location, product
+  nodeId            String   // Stable, deterministic id derived from label+type
+  nodeType          String   // page | topic | entity | service | product | location | category | faq | author | schema_type | money_page | business_objective | internal_link
   nodeLabel         String
+  nodeUrl           String?  // For page-typed nodes: canonical URL
 
   // Node data
-  properties        String?  // JSON: entity type, confidence, etc
+  properties        String?  // JSON blob: confidence, scores, metadata specific to the node type
   pageUrls          String[] @default([]) // Pages where this appears
   frequency         Int      @default(1)  // How many pages mention this
+  score             Float    @default(0)  // Composite importance score
 
   // Metadata
   isCore            Boolean  @default(false) // Is this a core business element?
   coreReason        String?
+  version           Int      @default(1)
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -1942,6 +1945,8 @@ model KnowledgeGraphNode {
   @@index([projectId])
   @@index([nodeType])
   @@index([isCore])
+  @@index([projectId, nodeType])
+  @@index([projectId, nodeUrl])
 }
 
 model KnowledgeGraphEdge {
@@ -1953,12 +1958,16 @@ model KnowledgeGraphEdge {
   toNodeId          String
 
   // Relationship
-  relationshipType  String   // "mentions", "related_to", "contains", "supports", "competes_with"
+  relationshipType  String   // PAGE_HAS_TOPIC | PAGE_MENTIONS_ENTITY | PAGE_SUPPORTS_PAGE | PAGE_SUPPORTS_MONEY_PAGE | PAGE_LINKS_TO_PAGE | PAGE_TARGETS_LOCATION | PAGE_OFFERS_SERVICE | PAGE_DESCRIBES_PRODUCT | PAGE_CONTAINS_SCHEMA | ENTITY_RELATES_TO_ENTITY | TOPIC_RELATES_TO_TOPIC | SERVICE_RELATES_TO_LOCATION | CATEGORY_CONTAINS_PRODUCT | AUTHOR_WROTE_PAGE | PAGE_HAS_FAQ | PAGE_TARGETS_OBJECTIVE
   confidence        Float    @default(0.8) // 0-1
-  strength          Int      @default(1)   // How strong is this relationship?
+  strength          Int      @default(1)   // Repeated observations reinforce strength
 
-  // Evidence
-  sources           String[] @default([]) // JSON: pages showing this relationship
+  // Evidence + provenance
+  evidence          String?  // JSON snippet describing why the edge exists (heading, anchor, schema, cooccurrence…)
+  source            String   @default("pipeline") // pipeline | manual | inference | schema
+  sources           String[] @default([])  // Optional additional evidence pointers (page URLs, snippets)
+  version           Int      @default(1)
+  detectedAt        DateTime @default(now())
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -1972,4 +1981,7 @@ model KnowledgeGraphEdge {
   @@index([organizationId])
   @@index([projectId])
   @@index([relationshipType])
+  @@index([projectId, relationshipType])
+  @@index([projectId, fromNodeId])
+  @@index([projectId, toNodeId])
 }
