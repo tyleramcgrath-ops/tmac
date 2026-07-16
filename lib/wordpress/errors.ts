@@ -14,6 +14,7 @@ export type WordPressErrorCategory =
   | 'rest_api_blocked'
   | 'invalid_username'
   | 'invalid_app_password'
+  | 'authorization_header_not_forwarded'
   | 'application_passwords_disabled'
   | 'insufficient_permissions'
   | 'security_plugin_blocking'
@@ -85,6 +86,13 @@ const CATEGORY_COPY: Record<WordPressErrorCategory, Omit<WordPressErrorReport, '
     whatFailed: 'WordPress rejected the Application Password.',
     whyLikely: 'The password may have been mistyped, revoked, or regenerated since it was entered here.',
     whatToDo: 'Generate a new Application Password under WordPress → Users → Profile → Application Passwords, and paste it in exactly as shown.',
+    canRetry: true,
+  },
+  authorization_header_not_forwarded: {
+    category: 'authorization_header_not_forwarded',
+    whatFailed: "WordPress never received the login credentials — it reports \"not currently logged in\" regardless of what was entered.",
+    whyLikely: 'Many hosts (common on shared/cPanel hosting running PHP via FastCGI or PHP-FPM) strip the Authorization header before it reaches WordPress, so Application Password authentication never runs at all. A new username and a freshly generated Application Password will fail identically, because the credentials themselves are never the problem.',
+    whatToDo: 'Add this to the site\'s .htaccess (above "# BEGIN WordPress"): RewriteCond %{HTTP:Authorization} ^(.*) then RewriteRule .* - [E=HTTP_AUTHORIZATION:%1] — or ask the host to forward the Authorization header to PHP. On Nginx, this needs fastcgi_param HTTP_AUTHORIZATION $http_authorization; in the PHP location block.',
     canRetry: true,
   },
   application_passwords_disabled: {
@@ -235,7 +243,17 @@ export function classifyWordPressError(input: ClassifyWordPressErrorInput): Word
       category = 'site_unreachable'
     }
   } else if (httpStatus === 401) {
-    if (body.includes('incorrect password') || body.includes('application password') || body.includes('invalid_username') === false && body.includes('password')) {
+    // "rest_not_logged_in" is WordPress's generic fallback for when NO
+    // authentication method was recognized at all — distinct from a wrong
+    // password (which WP reports with a specific
+    // application_passwords_incorrect_password-style error instead). It
+    // almost always means the Authorization header never reached PHP, most
+    // commonly on hosts running FastCGI/PHP-FPM without header forwarding
+    // configured. Credentials are not the problem here, so don't tell the
+    // user to regenerate a password that was never actually checked.
+    if (body.includes('rest_not_logged_in') || body.includes('not currently logged in')) {
+      category = 'authorization_header_not_forwarded'
+    } else if (body.includes('incorrect password') || body.includes('application password') || body.includes('invalid_username') === false && body.includes('password')) {
       category = 'invalid_app_password'
     } else if (body.includes('invalid_username') || body.includes('unknown_user') || body.includes('username')) {
       category = 'invalid_username'
