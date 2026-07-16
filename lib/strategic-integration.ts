@@ -10,6 +10,7 @@
  */
 
 import type { StrategicPlan, QuarterlyGoal, MasterGrowthPlan } from './strategic-planning'
+import { formatRoiPercent } from './roi'
 
 // Re-export for convenience
 export type StrategicInitiative = any // Type extracted from MasterGrowthPlan.phases values
@@ -96,9 +97,9 @@ export function generateStrategicMissions(
         baseline: 0,
       })) ?? [
         { metric: 'Traffic Growth', target: 30, unit: '%', baseline: 0 },
-        { metric: 'Revenue Impact', target: init.expectedROI.revenue, unit: '%', baseline: 0 },
+        { metric: 'Revenue Impact', target: formatRoiPercent(init.expectedROI.revenue).percent, unit: '%', baseline: 0 },
       ],
-      expectedROI: init.expectedROI.revenue,
+      expectedROI: formatRoiPercent(init.expectedROI.revenue).percent,
       effort: init.effort,
       timeline: init.timeline,
       priority: init.priority,
@@ -139,8 +140,8 @@ export function initiativeToCandidate(
     type: mapInitiativeTypeToAction(initiative.type),
     actionUrl: `strategic/${initiative.id}`,
     source: 'strategic-plan',
-    businessValue: initiative.expectedROI.revenue,
-    seoValue: initiative.expectedROI.traffic,
+    businessValue: formatRoiPercent(initiative.expectedROI.revenue).percent,
+    seoValue: formatRoiPercent(initiative.expectedROI.traffic).percent,
     effort: estimateEffortHours(initiative),
     confidence: initiative.confidence,
     rationale: initiative.description,
@@ -149,7 +150,7 @@ export function initiativeToCandidate(
       whyNow: `Part of ${quarter} strategic initiative`,
       evidence: initiative.evidence,
       risks: [],
-      upside: `+${initiative.expectedROI.revenue}% revenue impact`,
+      upside: `+${formatRoiPercent(initiative.expectedROI.revenue).percent}% revenue impact (estimated)`,
     },
     dependencies: initiative.dependencies,
     timeframe: quarter,
@@ -220,10 +221,13 @@ function estimateEffortHours(init: StrategicInitiative): number {
  * Generate success criteria from an initiative.
  */
 function generateSuccessCriteria(init: StrategicInitiative): string[] {
+  const traffic = formatRoiPercent(init.expectedROI.traffic)
+  const revenue = formatRoiPercent(init.expectedROI.revenue)
+  const leads = Math.max(0, Math.min(1000, Math.round(init.expectedROI.leads || 0)))
   return [
-    `Achieve +${init.expectedROI.traffic}% traffic growth`,
-    `Generate +${init.expectedROI.revenue}% revenue impact`,
-    `Capture +${init.expectedROI.leads} leads from new content`,
+    `Achieve an estimated +${traffic.percent}% traffic growth`,
+    `Generate an estimated +${revenue.percent}% revenue impact`,
+    `Capture an estimated +${leads} leads from new content`,
     `Complete within ${init.effort.phases} phase(s)`,
     `Maintain >90% confidence throughout execution`,
   ]

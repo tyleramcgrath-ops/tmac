@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals'
+import { describe, it, expect } from 'vitest'
 import { buildNodeId, NODE_TYPES, EDGE_TYPES } from '../stages/knowledge-graph'
 
 /**

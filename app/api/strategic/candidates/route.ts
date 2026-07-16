@@ -3,7 +3,7 @@ import { analyzeStrategicPosition } from '@/lib/strategic-planning'
 import { createStrategicOperatorWorkflow } from '@/lib/strategic-integration'
 import { analyzeBusinessIntelligence } from '@/lib/business-intelligence'
 import { analyzeOrganic } from '@/lib/organic-intelligence'
-import type { PageResult, Analytics } from '@/lib/demo-data'
+import { demoStrategicPages, demoStrategicAnalytics, DEMO_BUSINESS_NAME, DEMO_MONTHLY_VISITS, DEMO_VALUE_PER_VISIT } from '@/lib/fixtures/demo-strategic-data'
 
 /**
  * GET /api/strategic/candidates
@@ -21,45 +21,13 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const quarter = (searchParams.get('quarter') || getCurrentQuarter()) as any
 
-    // Generate a strategic plan (demo)
-    const demoPages: PageResult[] = [
-      {
-        url: 'https://example.com',
-        status: 200,
-        overall: 85,
-        scores: { technical: 90, content: 80, schema: 75, ai: 85 },
-        wordCount: 2000,
-        title: 'Example Page',
-        titleLength: 12,
-        metaDescription: 'Example description',
-        canonical: 'https://example.com',
-        mixedContent: false,
-        h1Count: 1,
-        schemaTypes: ['Organization'],
-        internalTargets: [],
-        https: true,
-        indexable: true,
-        fixes: [],
-      },
-    ]
+    // Generate a strategic plan from realistic fixture data (demo)
+    const demoPages = demoStrategicPages
+    const demoAnalytics = demoStrategicAnalytics
 
-    const demoAnalytics: Analytics = {
-      siteScore: 78,
-      categories: { technical: 82, content: 75, schema: 70, ai: 80 },
-      severityTotals: { critical: 2, warning: 5, info: 10 },
-      totals: { avgWordCount: 1500, pagesWithSchema: 45, nonIndexable: 3, httpsPages: 98 },
-      issues: [],
-      links: {
-        orphans: [],
-        avgInbound: 2.5,
-        noInternalLinks: 3,
-      },
-      schemaCoverage: [],
-    }
-
-    const businessName = 'Demo Business'
-    const monthlyVisits = 5000
-    const valuePerVisit = 150
+    const businessName = DEMO_BUSINESS_NAME
+    const monthlyVisits = DEMO_MONTHLY_VISITS
+    const valuePerVisit = DEMO_VALUE_PER_VISIT
     const business = analyzeBusinessIntelligence(demoPages, demoAnalytics, businessName, monthlyVisits, valuePerVisit)
     const organic = analyzeOrganic(demoPages, demoAnalytics, businessName)
     const plan = analyzeStrategicPosition(demoPages, demoAnalytics, business, organic, businessName, monthlyVisits, valuePerVisit)

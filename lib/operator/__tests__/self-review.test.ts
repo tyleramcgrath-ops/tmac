@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from '@jest/globals'
+import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { executeSelfReview } from '../self-review'
 import { generateWhyNotAnalysis } from '../why-not'
 import { executeConsultantReview } from '../consultant'

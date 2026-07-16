@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals'
+import { describe, it, expect } from 'vitest'
 import { consolidate, canonicalizeActionType, computeDedupeKey } from '../consolidate'
 import { suppressionFor, bucketFor } from '../suppress'
 import type { Candidate } from '../types'

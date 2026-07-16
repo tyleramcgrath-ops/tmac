@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from 'vitest';
 
 /**
  * Phase 7.8A: Content Decay & Refresh Opportunity Detection Tests

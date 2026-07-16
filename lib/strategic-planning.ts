@@ -25,6 +25,7 @@
 import type { PageResult, Analytics } from './demo-data'
 import type { BusinessIntelligence, BusinessModel } from './business-intelligence'
 import type { OrganicIntelligence } from './organic-intelligence'
+import { formatRoiPercent } from './roi'
 
 /* ================================================================== */
 /* TYPES & INTERFACES                                                 */
@@ -1147,7 +1148,7 @@ function generateQuarterlyGoals(
         { metric: 'Topic Authority', target: 55, unit: 'average score' },
       ],
       initiatives: ['Core topic expansion', 'Money page optimization'],
-      expectedROI: 5000,
+      expectedROI: formatRoiPercent(15).percent, // conservative Q1 estimate — foundational work, limited compounding yet
       confidence: 0.9,
     },
     {
@@ -1159,7 +1160,7 @@ function generateQuarterlyGoals(
         { metric: 'Content Coverage', target: 65, unit: 'percent' },
       ],
       initiatives: ['Content gap filling', 'AI visibility increase'],
-      expectedROI: 8000,
+      expectedROI: formatRoiPercent(28).percent, // Q2 — early initiatives compounding
       confidence: 0.85,
     },
     {
@@ -1171,7 +1172,7 @@ function generateQuarterlyGoals(
         { metric: 'Competitive Position', target: 3, unit: 'rank' },
       ],
       initiatives: ['Service expansion', 'Authority building'],
-      expectedROI: 12000,
+      expectedROI: formatRoiPercent(42).percent, // Q3 — market expansion initiatives maturing
       confidence: 0.8,
     },
     {
@@ -1183,7 +1184,7 @@ function generateQuarterlyGoals(
         { metric: 'Brand Authority', target: 75, unit: 'score' },
       ],
       initiatives: ['Thought leadership', 'Market domination'],
-      expectedROI: 18000,
+      expectedROI: formatRoiPercent(58).percent, // Q4 — full-year compounding of prior quarters
       confidence: 0.75,
     },
   ]

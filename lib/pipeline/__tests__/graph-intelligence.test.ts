@@ -1,4 +1,4 @@
-import { describe, it, expect } from '@jest/globals'
+import { describe, it, expect } from 'vitest'
 import { pageContentHash } from '../graph/incremental'
 import { readLatencyStats, resetLatencyStats, withLatency } from '../graph/metrics'
 import type { Page } from '@prisma/client'

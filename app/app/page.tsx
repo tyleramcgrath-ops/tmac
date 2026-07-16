@@ -711,25 +711,104 @@ interface WpAnalysis { title: string; titleLength: number; metaDescription: stri
 interface WpEditPost { id: number; type: 'posts' | 'pages'; link: string; title: string; excerpt: string; content: string; aioseoTitle: string; aioseoDescription: string }
 interface WpEdit { post: WpEditPost; analysis: WpAnalysis | null }
 interface WpCreds { siteUrl: string; username: string; appPassword: string }
+interface WpDiagStep { step: number; id: string; label: string; status: 'pass' | 'fail' | 'warning' | 'skipped'; detail: string; error?: { whatFailed: string; whyLikely: string; whatToDo: string; canRetry: boolean; technicalDetails: string } }
+interface WpDiagResult {
+  steps: WpDiagStep[]
+  overallStatus: 'connected' | 'unauthenticated_only' | 'failed'
+  readyToSave: boolean
+  siteUrl: string | null
+  authenticatedUser: { id: number; name: string; roles: string[] } | null
+  canEdit: boolean | null
+  seoPlugin: { plugin: string; pluginLabel: string; supportedFields: string[]; unsupportedFields: string[]; knownLimitations: string[] } | null
+}
 
 function WordPress() {
   const [siteUrl, setSiteUrl] = useState(''); const [username, setUsername] = useState(''); const [appPassword, setAppPassword] = useState('')
   const [status, setStatus] = useState<'idle' | 'testing' | 'connected' | 'error'>('idle'); const [info, setInfo] = useState<WpStatus | null>(null); const [error, setError] = useState<string | null>(null)
+  const [diag, setDiag] = useState<WpDiagResult | null>(null); const [showTechnical, setShowTechnical] = useState<string | null>(null)
   const [items, setItems] = useState<WpItem[]>([]); const [loadingItems, setLoadingItems] = useState(false)
   const [listType, setListType] = useState<'posts' | 'pages'>('posts'); const [editing, setEditing] = useState<WpEdit | null>(null); const [optimizingId, setOptimizingId] = useState<number | null>(null)
   useEffect(() => { try { const s = localStorage.getItem('rf_app_wp'); if (s) { const p = JSON.parse(s); setSiteUrl(p.siteUrl || ''); setUsername(p.username || '') } } catch { /* ignore */ } }, [])
-  const test = async () => { setStatus('testing'); setError(null); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'test', siteUrl, username, appPassword }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Connection failed.'); setStatus('error'); return } setInfo(json); setStatus('connected'); try { localStorage.setItem('rf_app_wp', JSON.stringify({ siteUrl, username })) } catch { /* ignore */ } } catch { setError('Could not reach the site.'); setStatus('error') } }
+  const test = async () => {
+    setStatus('testing'); setError(null); setDiag(null)
+    try {
+      const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'diagnose', siteUrl, username, appPassword }) })
+      const json: WpDiagResult = await res.json()
+      setDiag(json)
+      const failedStep = json.steps?.find((s) => s.status === 'fail')
+      if (!res.ok || json.overallStatus === 'failed') {
+        setError(failedStep?.error?.whatFailed ?? 'Connection failed.')
+        setStatus('error')
+        return
+      }
+      setInfo({
+        ok: true,
+        name: json.siteUrl ?? siteUrl,
+        hasAioseo: json.seoPlugin?.plugin === 'aioseo',
+        authProvided: !!(username && appPassword),
+        authValid: json.readyToSave,
+      })
+      setStatus(json.overallStatus === 'connected' ? 'connected' : 'error')
+      if (json.overallStatus !== 'connected') setError('Connected to the site, but not all required checks passed yet — see steps below.')
+      try { localStorage.setItem('rf_app_wp', JSON.stringify({ siteUrl, username })) } catch { /* ignore */ }
+    } catch {
+      setError('Could not reach the site.'); setStatus('error')
+    }
+  }
   const list = async (action: 'posts' | 'pages') => { setListType(action); setLoadingItems(true); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setItems(json.items || []) } catch { /* ignore */ } finally { setLoadingItems(false) } }
   const optimize = async (item: WpItem) => { setOptimizingId(item.id); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'get', id: item.id, type: listType, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setEditing(json); else setError(json?.error ?? 'Could not load item.') } catch { setError('Could not load item.') } finally { setOptimizingId(null) } }
   const creds: WpCreds = { siteUrl, username, appPassword }
+  const stepIcon = (s: WpDiagStep['status']) => s === 'pass' ? <Check className="h-3.5 w-3.5 text-[var(--rf-green)]" /> : s === 'fail' ? <span className="text-[var(--rf-red)]">✕</span> : s === 'warning' ? <span className="text-amber-400">!</span> : <span className="text-[var(--rf-faint)]">–</span>
   return (
     <div className="space-y-4">
       <div className="rf-card p-5">
         <p className="text-sm font-semibold text-white">Connect WordPress</p>
         <p className="mt-1 text-xs text-[var(--rf-muted)]">Use an Application Password (Users → Profile → Application Passwords). Credentials stay in your browser. Or set <span className="rf-mono text-[var(--rf-cyan)]">WP_SITE_URL / WP_USER / WP_APP_PASSWORD</span> in Vercel.</p>
-        <div className="mt-3 grid gap-2 sm:grid-cols-3"><input value={siteUrl} onChange={(e) => setSiteUrl(e.target.value)} placeholder="https://yoursite.com" className="rf-card bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none sm:col-span-3" /><input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username" className="rf-card bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /><input value={appPassword} onChange={(e) => setAppPassword(e.target.value)} type="password" placeholder="application password" className="rf-card bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none sm:col-span-2" /></div>
+        <div className="mt-3 grid gap-2 sm:grid-cols-3"><input value={siteUrl} onChange={(e) => setSiteUrl(e.target.value)} placeholder="yoursite.com" className="rf-card bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none sm:col-span-3" /><input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username" className="rf-card bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /><input value={appPassword} onChange={(e) => setAppPassword(e.target.value)} type="password" placeholder="application password" className="rf-card bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none sm:col-span-2" /></div>
         <button onClick={test} disabled={status === 'testing'} className="rf-btn-primary mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">{status === 'testing' ? <><Loader2 className="h-4 w-4 animate-spin" /> Connecting…</> : 'Connect'}</button>
         {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+
+        {diag && diag.steps.length > 0 && (
+          <div className="mt-4 rounded-xl border border-[var(--rf-card-line)] divide-y divide-[var(--rf-card-line)]">
+            {diag.steps.map((s) => (
+              <div key={s.id} className="px-3 py-2">
+                <div className="flex items-start gap-2 text-xs">
+                  <span className="mt-0.5 w-4 shrink-0 text-center">{stepIcon(s.status)}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={s.status === 'skipped' ? 'text-[var(--rf-faint)]' : 'text-[var(--rf-text)]'}>{s.step}. {s.label}</span>
+                    </div>
+                    <p className="mt-0.5 text-[var(--rf-muted)]">{s.detail}</p>
+                    {s.error && (
+                      <div className="mt-1 space-y-1">
+                        <p className="text-[var(--rf-muted)]"><span className="font-medium text-[var(--rf-text)]">Why:</span> {s.error.whyLikely}</p>
+                        <p className="text-[var(--rf-muted)]"><span className="font-medium text-[var(--rf-text)]">Do this:</span> {s.error.whatToDo}</p>
+                        <div className="flex items-center gap-2">
+                          {s.error.canRetry && <span className="text-[10px] uppercase tracking-wide text-[var(--rf-cyan)]">Retryable</span>}
+                          <button onClick={() => setShowTechnical(showTechnical === s.id ? null : s.id)} className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)] hover:text-white">
+                            {showTechnical === s.id ? 'Hide' : 'Show'} technical details
+                          </button>
+                        </div>
+                        {showTechnical === s.id && <pre className="rf-mono mt-1 whitespace-pre-wrap rounded-lg bg-black/30 p-2 text-[10px] text-[var(--rf-faint)]">{s.error.technicalDetails}</pre>}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {diag?.seoPlugin && (
+          <div className="mt-3 rounded-xl border border-[var(--rf-card-line)] p-3 text-xs">
+            <p className="font-medium text-[var(--rf-text)]">SEO plugin: {diag.seoPlugin.pluginLabel}</p>
+            {diag.seoPlugin.knownLimitations.length > 0 && (
+              <ul className="mt-1 space-y-0.5 text-[var(--rf-muted)]">
+                {diag.seoPlugin.knownLimitations.map((l, i) => <li key={i}>• {l}</li>)}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
       {status === 'connected' && info && <>
         <div className="rf-card p-5"><div className="flex items-center gap-2 text-sm"><Check className="h-4 w-4 text-[var(--rf-green)]" /><span className="font-semibold text-white">{info.name}</span></div>{info.description && <p className="mt-1 text-xs text-[var(--rf-muted)]">{info.description}</p>}<div className="mt-3 flex flex-wrap gap-2 text-[11px]"><Badge ok={!!info.authValid} text={info.authValid ? 'Authenticated' : info.authProvided ? 'Auth failed' : 'Public (no auth)'} /><Badge ok={!!info.hasAioseo} text={info.hasAioseo ? 'AIOSEO detected' : 'AIOSEO not detected'} /></div><div className="mt-4 flex gap-2"><button onClick={() => list('posts')} className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">List posts</button><button onClick={() => list('pages')} className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">List pages</button></div></div>
