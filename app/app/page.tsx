@@ -50,6 +50,23 @@ interface LatestAudit { siteScore: number; pageCount: number; criticalCount: num
 interface ProjectSummary { id: string; name: string; domain: string; status: string; isFavorite: boolean; createdAt: string; updatedAt: string; latestAudit: LatestAudit | null }
 interface AuditHistoryItem { id: string; startedAt: string; endedAt: string | null; pageCount: number; siteScore: number; criticalCount: number; warningCount: number }
 
+type PortfolioStatus = 'critical' | 'needs_attention' | 'opportunity' | 'improving' | 'stable' | 'waiting_for_data' | 'blocked' | 'no_action_needed'
+interface PortfolioProject {
+  projectId: string; name: string; domain: string; isFavorite: boolean
+  status: PortfolioStatus; score: number; headline: string; reasons: string[]; recommendedFocus: string; missingData: string[]
+  siteScore: number | null; criticalCount: number; pageCount: number; lastCrawlAt: string | null; keywordCount: number
+}
+const PORTFOLIO_STATUS_META: Record<PortfolioStatus, { label: string; color: string; bg: string }> = {
+  critical: { label: 'Critical', color: 'var(--rf-red)', bg: 'rgba(251,106,106,0.12)' },
+  needs_attention: { label: 'Needs attention', color: 'var(--rf-amber)', bg: 'rgba(251,191,36,0.12)' },
+  opportunity: { label: 'Opportunity', color: 'var(--rf-cyan)', bg: 'rgba(34,211,238,0.12)' },
+  improving: { label: 'Improving', color: 'var(--rf-green)', bg: 'rgba(52,211,153,0.12)' },
+  stable: { label: 'Stable', color: 'var(--rf-muted)', bg: 'rgba(148,173,224,0.10)' },
+  waiting_for_data: { label: 'Waiting for data', color: 'var(--rf-faint)', bg: 'rgba(148,173,224,0.08)' },
+  blocked: { label: 'Blocked', color: 'var(--rf-red)', bg: 'rgba(251,106,106,0.12)' },
+  no_action_needed: { label: 'No action needed', color: 'var(--rf-muted)', bg: 'rgba(148,173,224,0.10)' },
+}
+
 type SectionId = 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema' | 'rankings' | 'backlinks' | 'wordpress' | 'reports' | 'projects'
 const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: LucideIcon }[] }[] = [
   { label: 'Workspace', items: [
@@ -1218,8 +1235,28 @@ function AuthGate({ onAuthed }: { onAuthed: (user: SessionUser, organizationId: 
 /* Projects — list, switch, and create                                */
 /* ================================================================== */
 
+function PortfolioStatusBadge({ status }: { status: PortfolioStatus }) {
+  const meta = PORTFOLIO_STATUS_META[status]
+  return <span className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide" style={{ color: meta.color, background: meta.bg }}>{meta.label}</span>
+}
+
 function Projects({ projects, currentProjectId, onOpen, onCreated }: { projects: ProjectSummary[]; currentProjectId: string | null; onOpen: (p: ProjectSummary) => void; onCreated: (p: ProjectSummary) => void }) {
   const [newDomain, setNewDomain] = useState(''); const [creating, setCreating] = useState(false); const [error, setError] = useState<string | null>(null)
+  const [portfolio, setPortfolio] = useState<PortfolioProject[]>([]); const [loadingPortfolio, setLoadingPortfolio] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      setLoadingPortfolio(true)
+      try {
+        const res = await fetch('/api/portfolio')
+        const json = await res.json()
+        if (!cancelled && res.ok && Array.isArray(json.projects)) setPortfolio(json.projects)
+      } catch { /* ignore */ } finally { if (!cancelled) setLoadingPortfolio(false) }
+    })()
+    return () => { cancelled = true }
+  }, [projects.length])
+
   const create = async () => {
     const domain = newDomain.trim(); if (!domain) return
     setCreating(true); setError(null)
@@ -1234,6 +1271,14 @@ function Projects({ projects, currentProjectId, onOpen, onCreated }: { projects:
       setCreating(false)
     }
   }
+
+  const priorityById = new Map(portfolio.map((p) => [p.projectId, p]))
+  // Portfolio order (most urgent first) when we have it; else fall back to given order.
+  const ordered = portfolio.length > 0
+    ? portfolio.map((pr) => projects.find((p) => p.id === pr.projectId)).filter(Boolean) as ProjectSummary[]
+    : projects
+  const orderedWithUnranked = [...ordered, ...projects.filter((p) => !priorityById.has(p.id) && !ordered.includes(p))]
+
   return (
     <div className="space-y-4">
       <div className="rf-card p-5">
@@ -1253,28 +1298,42 @@ function Projects({ projects, currentProjectId, onOpen, onCreated }: { projects:
           <p className="mt-1 max-w-sm text-sm text-[var(--rf-muted)]">Add a domain above, or run an audit from the search bar — it'll show up here automatically.</p>
         </div>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p) => {
-            const g = p.latestAudit ? gradeInfo(p.latestAudit.siteScore) : null
-            return (
-              <button key={p.id} onClick={() => onOpen(p)} className={`rf-card rf-card-hover p-4 text-left ${p.id === currentProjectId ? 'ring-1 ring-[var(--rf-blue-bright)]' : ''}`}>
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0"><p className="truncate text-sm font-semibold text-white">{p.name}</p><p className="truncate text-[11px] text-[var(--rf-faint)]">{p.domain}</p></div>
-                  {p.isFavorite && <Star className="h-3.5 w-3.5 shrink-0 fill-[var(--rf-amber)] text-[var(--rf-amber)]" />}
-                </div>
-                <div className="mt-3 flex items-center justify-between">
-                  {p.latestAudit && g ? (
-                    <>
-                      <span className="text-2xl font-semibold" style={{ color: g.color }}>{p.latestAudit.siteScore}</span>
-                      <span className="text-right text-[11px] text-[var(--rf-faint)]">{p.latestAudit.pageCount} pages<br />{new Date(p.latestAudit.startedAt).toLocaleDateString()}</span>
-                    </>
-                  ) : <span className="text-xs text-[var(--rf-faint)]">No audits yet — click to run one</span>}
-                </div>
-                {p.latestAudit && p.latestAudit.criticalCount > 0 && <p className="mt-2 text-[11px] text-[var(--rf-red)]">{p.latestAudit.criticalCount} critical issue{p.latestAudit.criticalCount !== 1 ? 's' : ''}</p>}
-              </button>
-            )
-          })}
-        </div>
+        <>
+          <p className="flex items-center gap-2 text-xs text-[var(--rf-muted)]">
+            {loadingPortfolio ? <><Loader2 className="h-3 w-3 animate-spin" /> Ranking your projects by what needs attention…</> : <>Sorted by what needs attention today. Click a project to open it.</>}
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {orderedWithUnranked.map((p) => {
+              const g = p.latestAudit ? gradeInfo(p.latestAudit.siteScore) : null
+              const pr = priorityById.get(p.id)
+              return (
+                <button key={p.id} onClick={() => onOpen(p)} className={`rf-card rf-card-hover flex flex-col p-4 text-left ${p.id === currentProjectId ? 'ring-1 ring-[var(--rf-blue-bright)]' : ''}`}>
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0"><p className="truncate text-sm font-semibold text-white">{p.name}</p><p className="truncate text-[11px] text-[var(--rf-faint)]">{p.domain}</p></div>
+                    {p.isFavorite && <Star className="h-3.5 w-3.5 shrink-0 fill-[var(--rf-amber)] text-[var(--rf-amber)]" />}
+                  </div>
+                  {pr && <div className="mt-2"><PortfolioStatusBadge status={pr.status} /></div>}
+                  <div className="mt-3 flex items-center justify-between">
+                    {p.latestAudit && g ? (
+                      <>
+                        <span className="text-2xl font-semibold" style={{ color: g.color }}>{p.latestAudit.siteScore}</span>
+                        <span className="text-right text-[11px] text-[var(--rf-faint)]">{p.latestAudit.pageCount} pages<br />{new Date(p.latestAudit.startedAt).toLocaleDateString()}</span>
+                      </>
+                    ) : <span className="text-xs text-[var(--rf-faint)]">No audits yet — click to run one</span>}
+                  </div>
+                  {pr && (
+                    <div className="mt-3 border-t border-[var(--rf-card-line)] pt-2">
+                      <p className="text-[11px] font-medium text-[var(--rf-text)]">{pr.headline}</p>
+                      <p className="mt-1 text-[11px] text-[var(--rf-muted)]">{pr.recommendedFocus}</p>
+                      {pr.missingData.length > 0 && <p className="mt-1 text-[10px] text-[var(--rf-faint)]">Missing: {pr.missingData.join(', ')}</p>}
+                    </div>
+                  )}
+                  {!pr && p.latestAudit && p.latestAudit.criticalCount > 0 && <p className="mt-2 text-[11px] text-[var(--rf-red)]">{p.latestAudit.criticalCount} critical issue{p.latestAudit.criticalCount !== 1 ? 's' : ''}</p>}
+                </button>
+              )
+            })}
+          </div>
+        </>
       )}
     </div>
   )
