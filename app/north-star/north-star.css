@@ -1,9 +1,12 @@
 /* =====================================================================
    North Star — Executive Office
-   An immersive, premium executive workspace: a central desk (Compass
-   display, Morning Briefing, approval tray, check-in control), a Digital
-   DNA sculpture rising behind it, and activity/priority/progress
-   integrated into the room itself rather than pasted on as cards.
+   The restored Executive Office: a photographic room with a real window
+   onto the world, a desk in the foreground, and Compass emerging in
+   engraved light from that desk — the confirmed original design (ported
+   from north-star-station @ 546fb87), with one substitution: the Business
+   Twin destination now holds the Living Digital DNA sculpture. Decisions,
+   Intelligence, and Results are reached as destinations from the left
+   wing, not stacked into the first viewport.
    Scoped under .ns-root. Overrides the shared --rf-* accent locally to a
    warm brass tone so North Star reads as its own place, not a RankForge
    dashboard reskin — RankForge's own stylesheet and pages are untouched.
@@ -112,76 +115,13 @@
 }
 
 /* =====================================================================
-   The Office — a 2.5D executive workspace, not a dashboard grid.
-   Composition: a horizon strip (progress), a Digital DNA sculpture rising
-   in the middle distance, side walls (activity / priorities) angled in
-   perspective, and an executive desk in the foreground whose objects
-   *are* the navigation — no sidebar, no card grid.
+   The Office — the restored photographic Executive Office (ported from
+   north-star-station @ 546fb87): a real room (window, desk, Compass
+   emerging in engraved light) reached via the hq-, arch-, and station-
+   prefixed classes below, plus a left wing and right-side drawers
+   (cc-overlay-*) for the room's destinations — Digital DNA, Decisions,
+   Intelligence, Results.
    ===================================================================== */
-
-.office-stage {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-  perspective: 1400px;
-  /* dark architectural glass — graphite, smoked metal, quiet depth */
-  background:
-    radial-gradient(130% 90% at 50% -6%, #15161b 0%, #0e0f13 46%, #090a0d 100%);
-}
-/* Ambient light the DNA casts into the room; opacity tracks understanding, so
-   the whole office reads warmer and more complete as the business is learned. */
-.office-ambient {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(56% 48% at 50% 15%, rgba(201, 168, 119, 0.17), rgba(150, 128, 92, 0.05) 46%, rgba(0, 0, 0, 0) 72%);
-  opacity: calc(0.34 + 0.6 * var(--office-understanding, 0));
-  transition: opacity 1.1s ease;
-}
-.office-stage[data-investigating] .office-ambient {
-  opacity: calc(0.5 + 0.6 * var(--office-understanding, 0));
-  transition: opacity 0.6s ease;
-}
-@media (prefers-reduced-motion: reduce) {
-  .office-ambient { transition: none; }
-}
-
-.office-hud {
-  position: relative;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 20px 28px;
-}
-.office-brand { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; color: var(--office-ink); }
-.office-status { font-size: 12px; color: var(--rf-muted); text-align: right; }
-.office-status b { color: var(--office-ink); font-weight: 600; }
-
-/* ---- Horizon: evidence-based progress strip ---- */
-.office-horizon {
-  position: relative; z-index: 25;
-  display: flex; gap: 20px; flex-wrap: wrap;
-  padding: 0 28px 14px;
-  font-size: 11px; color: var(--rf-faint);
-}
-/* Evidence chain: Scout's evidence source + Compass reacting from understanding */
-.office-scout-source {
-  display: inline-flex; align-items: center;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--office-brass-bright);
-  border: 1px solid var(--office-warm-line); border-radius: 999px;
-  padding: 2px 9px; background: rgba(201, 168, 119, 0.08);
-}
-.office-compass-note {
-  position: relative; z-index: 26; text-align: center;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  padding: 6px 24px 0; font-size: 12.5px; color: var(--office-brass-bright);
-}
-.office-horizon-item { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-.office-horizon-item b { color: var(--rf-muted); font-weight: 500; }
-.office-horizon-empty { font-size: 12px; color: var(--rf-faint); padding: 0 28px 14px; }
 
 /* ---- Digital DNA sculpture ----
    Canvas-driven double-helix sculpture (components/north-star/office/DnaSculpture.tsx).
@@ -212,178 +152,12 @@
   border: 1px solid var(--rf-card-line); border-radius: 12px; background: rgba(255,255,255,0.02);
 }
 
-/* ---- Side walls: activity (left) / priorities (right) ---- */
-.office-walls {
-  position: relative; z-index: 8;
-  display: grid; grid-template-columns: 260px 1fr 260px;
-  gap: 0; align-items: start;
-  max-width: 1500px; margin: 24px auto 0;
-  padding: 0 20px;
-}
-.office-wall {
-  padding: 22px 20px;
-  border: 1px solid var(--rf-card-line);
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  transform-style: preserve-3d;
-}
-.office-wall-left { transform: perspective(1000px) rotateY(6deg); transform-origin: left center; }
-.office-wall-right { transform: perspective(1000px) rotateY(-6deg); transform-origin: right center; }
-.office-wall h3 {
-  margin: 0 0 14px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rf-faint);
-}
-.office-wall-item {
-  display: flex; gap: 10px; align-items: flex-start; margin-bottom: 14px; font-size: 13px; color: var(--rf-muted); text-align: left; width: 100%;
-}
-.office-wall-item:last-child { margin-bottom: 0; }
-.office-wall-item[data-actionable="true"] { cursor: pointer; }
-.office-wall-item[data-actionable="true"]:hover { color: var(--office-ink); }
-.office-wall-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
-.office-wall-empty { font-size: 13px; color: var(--rf-faint); }
-
-/* ---- The desk ---- */
-.office-desk-zone { position: relative; z-index: 10; height: 320px; margin-top: 12px; }
-.office-desk-surface {
-  position: absolute; left: 50%; bottom: 90px; transform: translateX(-50%) rotateX(56deg);
-  transform-origin: bottom center; width: min(920px, 92vw); height: 280px;
-  background: linear-gradient(160deg, #24201a, #16130f 60%, #0d0b09);
-  border-radius: 16px; border: 1px solid var(--office-warm-line);
-  box-shadow: 0 60px 100px -40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.03);
-}
-.office-desk-edge {
-  position: absolute; left: 50%; bottom: 88px; transform: translateX(-50%);
-  width: min(960px, 94vw); height: 5px; border-radius: 4px;
-  background: linear-gradient(90deg, transparent, var(--office-brass), transparent); opacity: 0.5;
-}
-.office-desk-front {
-  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
-  width: min(980px, 96vw); height: 92px;
-  background: linear-gradient(180deg, #16130f, #0a0908);
-  border-radius: 0 0 14px 14px;
-  box-shadow: 0 40px 70px -20px rgba(0,0,0,0.9);
-}
-.office-desk-objects {
-  position: absolute; left: 50%; bottom: 92px; transform: translateX(-50%);
-  width: min(880px, 90vw); height: 200px;
-}
-.office-obj {
-  position: absolute; border-radius: 10px; cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-.office-obj:hover { transform: translateY(-3px); }
-.office-obj-briefing {
-  left: 4%; top: 30px; width: 168px; height: 108px;
-  background: linear-gradient(170deg, #efe6d2, #d9cdb1); color: #241f16;
-  transform: rotate(-5deg); padding: 12px 14px;
-  box-shadow: 0 18px 30px -14px rgba(0,0,0,0.6);
-}
-.office-obj-briefing:hover { transform: rotate(-5deg) translateY(-3px); }
-.office-obj-compass {
-  left: 50%; top: 6px; transform: translateX(-50%); width: 168px; height: 118px;
-  background: linear-gradient(160deg, #262229, #16141a);
-  border: 1px solid var(--office-warm-line);
-  box-shadow: 0 20px 40px -20px rgba(0,0,0,0.7);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-}
-.office-compass-face { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--office-brass); position: relative; }
-.office-compass-needle { position: absolute; left: 50%; top: 50%; width: 2px; height: 12px; background: var(--office-brass); transform-origin: bottom; transform: translate(-50%, -100%) rotate(28deg); }
-.office-obj-tray {
-  right: 3%; top: 34px; width: 168px; height: 96px;
-  background: linear-gradient(160deg, #2a241d, #191510);
-  border: 1px solid var(--office-warm-line);
-  box-shadow: 0 16px 30px -14px rgba(0,0,0,0.6);
-  padding: 12px 14px;
-}
-/* Stage 4-6 desk choreography: Compass speaks, brief updates, folder arrives */
-.office-compass-say { font-size: 10.5px; line-height: 1.4; color: var(--office-brass-bright); text-align: center; max-width: 150px; margin-top: 2px; }
-.office-obj-compass.compass-speaking { border-color: var(--office-brass); box-shadow: 0 20px 44px -18px rgba(201,168,119,0.5); }
-.office-obj-compass.compass-speaking .office-compass-face { border-color: var(--office-brass-bright); box-shadow: 0 0 14px -2px rgba(201,168,119,0.7); }
-.office-obj-briefing.brief-updated { animation: office-brief-reveal 4s ease; }
-@keyframes office-brief-reveal {
-  0% { box-shadow: 0 18px 30px -14px rgba(0,0,0,0.6), 0 0 0 0 rgba(201,168,119,0); }
-  18% { box-shadow: 0 18px 30px -14px rgba(0,0,0,0.6), 0 0 0 3px rgba(201,168,119,0.55); }
-  100% { box-shadow: 0 18px 30px -14px rgba(0,0,0,0.6), 0 0 0 0 rgba(201,168,119,0); }
-}
-.office-obj-folder {
-  right: 3%; top: 34px; width: 172px; height: 100px;
-  background: linear-gradient(158deg, #3a3020, #211a10);
-  border: 1px solid var(--office-brass);
-  box-shadow: 0 18px 34px -14px rgba(0,0,0,0.65);
-  padding: 14px 14px 12px;
-}
-.office-folder-tab {
-  position: absolute; top: -9px; left: 16px; width: 52px; height: 12px;
-  border-radius: 6px 6px 0 0;
-  background: linear-gradient(180deg, #4a3d26, #3a3020);
-  border: 1px solid var(--office-brass); border-bottom: none;
-}
-.office-obj-folder.folder-arrived { animation: office-folder-slide 900ms cubic-bezier(.2,.8,.25,1); }
-@keyframes office-folder-slide {
-  0% { transform: translateY(46px) rotate(3deg); opacity: 0; }
-  60% { opacity: 1; }
-  100% { transform: translateY(0) rotate(0); opacity: 1; }
-}
-.office-wall-item.work-live .office-wall-dot { animation: office-work-pulse 1.5s ease-in-out infinite; }
-@keyframes office-work-pulse { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) {
-  .office-obj-briefing.brief-updated, .office-obj-folder.folder-arrived, .office-wall-item.work-live .office-wall-dot { animation: none; }
-}
-.office-obj-cta {
-  left: 50%; top: 150px; transform: translateX(-50%); width: 220px; height: 56px;
-  background: linear-gradient(180deg, var(--office-brass-bright), var(--office-brass));
-  color: #241c0f; font-weight: 700; font-size: 14px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 16px 32px -8px rgba(201,168,119,0.5);
-}
-.office-obj-cta:hover { transform: translateX(-50%) translateY(-3px); }
-.office-obj-cta:disabled { opacity: 0.6; cursor: default; }
-.office-obj-cta:disabled:hover { transform: translateX(-50%); }
-.office-activity-light {
-  position: absolute; right: 0; top: -10px; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--rf-green); box-shadow: 0 0 14px 3px var(--rf-green);
-}
-
-/* =====================================================================
-   Executive Office composition — the DNA is the room's centerpiece, sized
-   to sit in the space the centerpiece has always occupied (contained, not a
-   full-height hero) and pulled down to slightly overlap the desk, so the
-   desk — Compass, Morning Briefing, approval tray, Check My Business — walls,
-   and status all read together in the first viewport. The DNA sculpture
-   itself (particles/ribbons, motion, reactions) is unchanged.
-   ===================================================================== */
-.office-stage .office-dna-wrap { height: 360px; }
-/* The side walls flank the room; the desk rises into the empty centre band
-   beneath the DNA (its objects are centred and clear the walls' side
-   columns), so DNA, walls and desk read as one room in a single viewport
-   rather than a tall vertical stack with a dead gap in the middle. */
-.office-stage .office-walls { margin-top: 8px; }
-.office-stage .office-desk-zone { margin-top: -232px; z-index: 12; }
-/* The desk zone now overlaps the walls' vertical band, so its empty area must
-   let clicks fall through to the walls behind it; only the actual desk objects
-   (Compass, Briefing, approval, Check My Business) capture pointer events. */
-.office-stage .office-desk-zone { pointer-events: none; }
-.office-stage .office-desk-zone button,
-.office-stage .office-desk-zone .office-obj { pointer-events: auto; }
-
-/* ---- Investigation: environmental status line ---- */
-.office-investigation-line {
-  position: relative; z-index: 26; text-align: center;
-  padding: 8px 24px 0; font-size: 13px; color: var(--office-ink);
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-}
-
-/* ---- Mobile executive console (stacked, same identity, focused sheets) ---- */
-.office-mobile-console { display: none; }
+/* the DNA overlay is a drawer (cc-overlay-panel), narrower than a full
+   room stage — keep the sculpture responsive within it */
 @media (max-width: 900px) {
-  .office-desk-zone, .office-walls, .office-desktop-dna { display: none; }
-  .office-mobile-console { display: block; position: relative; z-index: 10; padding: 0 20px 100px; }
-  .office-mobile-card {
-    border: 1px solid var(--rf-card-line); border-radius: 12px; background: rgba(255,255,255,0.02);
-    padding: 16px; margin-bottom: 14px;
-  }
-  .office-mobile-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rf-faint); margin-bottom: 8px; }
   .office-dna-wrap { height: 340px; max-width: 100%; padding: 0 8px; }
 }
+
 @media (min-width: 901px) {
   .office-mobile-bar { display: none !important; }
 }
@@ -401,12 +175,6 @@
 .office-mobile-bar-item[data-has-badge="true"]::after {
   content: ''; position: absolute; top: 2px; right: 10px; width: 6px; height: 6px; border-radius: 999px; background: var(--rf-amber);
 }
-
-/* ---- Priority badges (kept for opportunity/priority items) ---- */
-.office-priority-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; }
-.office-priority-pill-high { background: rgba(224,138,127,0.18); color: #f0a99c; }
-.office-priority-pill-medium { background: rgba(201,168,119,0.18); color: var(--office-brass-bright); }
-.office-priority-pill-low { background: rgba(148,173,224,0.12); color: var(--rf-muted); }
 
 /* =====================================================================
    Overlay panels — Opportunity Workspace / Approval Center / Compass
@@ -523,3 +291,272 @@
 .cc-priority-pill-high { background: rgba(251,106,106,0.15); color: #ff9b9b; }
 .cc-priority-pill-medium { background: rgba(251,191,36,0.15); color: var(--rf-amber); }
 .cc-priority-pill-low { background: rgba(148,173,224,0.12); color: var(--rf-muted); }
+
+/* =====================================================================
+   The room itself — ported verbatim from the confirmed North Star
+   Executive Office baseline (north-star-station @ 546fb87, globals.css).
+   A photographic environment-plate room: window onto the world, frozen
+   shell, desk foreground plate with Compass's glow riding it. Every class
+   below is consumed by components/north-star/office/ExecutiveOffice.tsx
+   and CompassConsole.tsx exactly as in that baseline.
+   ===================================================================== */
+
+.station-scene {
+  --px: 0;
+  --py: 0;
+  perspective: 1600px;
+}
+
+.hq-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(105.5%, 158dvh);
+  aspect-ratio: 3 / 2;
+  /* a real camera: the pointer rotates the room a hair; with the world and
+     the desk seated at true depths, the planes parallax physically */
+  transform: translate(-50%, -50%)
+    translate3d(
+      calc(var(--px, 0) * -9px + var(--cam-x, 0px)),
+      calc(var(--py, 0) * -5px + var(--cam-y, 0px)),
+      0
+    )
+    rotateY(calc(var(--px, 0) * 1.05deg)) rotateX(calc(var(--py, 0) * -0.75deg));
+  transform-style: preserve-3d;
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* the world beyond the glass sits deep behind the room plane */
+.hq-far {
+  transform: translateZ(-150px) scale(1.094);
+}
+
+/* the desk assembly stands off the room, nearest the camera */
+.hq-near {
+  transform: translateZ(58px) scale(0.9645);
+  will-change: transform;
+}
+
+/* the glass: the world beyond it is graded through a backdrop filter, so the
+   sky darkens/cools/blurs while the room stays untouched */
+.hq-window {
+  -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 1.5%,
+      #000 98.5%,
+      transparent
+    ),
+    linear-gradient(180deg, transparent, #000 3%, #000 97%, transparent),
+    radial-gradient(ellipse 10% 24% at 79.7% 99%, transparent 52%, #000 90%),
+    radial-gradient(ellipse 6.5% 15% at 37.8% 91%, transparent 50%, #000 90%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 1.5%, #000 98.5%, transparent),
+    linear-gradient(180deg, transparent, #000 3%, #000 97%, transparent),
+    radial-gradient(ellipse 10% 24% at 79.7% 99%, transparent 52%, #000 90%),
+    radial-gradient(ellipse 6.5% 15% at 37.8% 91%, transparent 50%, #000 90%);
+  mask-composite: intersect;
+}
+
+.hq-fade {
+  transition: opacity 6s linear;
+}
+
+.hq-fade-slow {
+  transition: opacity 10s linear;
+}
+
+/* lightning: long, mostly-dark cycles; two incommensurate periods so the
+   pattern never reads as a loop. Gated by --env-storm on the parent. */
+.hq-flash-a {
+  animation: hq-flash 19s linear -7s infinite;
+}
+.hq-flash-b {
+  animation: hq-flash 29s linear -21s infinite;
+}
+@keyframes hq-flash {
+  0%, 88.4%, 89.6%, 90.2%, 91.4%, 100% { opacity: 0; }
+  88.9% { opacity: 0.55; }
+  89.2% { opacity: 0.12; }
+  90.7% { opacity: 0.3; }
+}
+
+/* Compass breathes — two slow incommensurate micro-variations, never a pulse */
+.hq-breathe-a {
+  animation: hq-breathe 13s ease-in-out -5s infinite alternate;
+}
+.hq-breathe-b {
+  animation: hq-breathe 29s ease-in-out -17s infinite alternate-reverse;
+}
+@keyframes hq-breathe {
+  from { opacity: 0.94; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-stage { transform: translate(-50%, -50%); transition: none; transform-style: flat; }
+  .hq-far, .hq-near { transform: none; }
+  .hq-flash-a, .hq-flash-b, .hq-breathe-a, .hq-breathe-b { animation: none; }
+  .hq-flash-a, .hq-flash-b { opacity: 0; }
+}
+
+/* the world behind the glass: exterior sits at its own depth — the distance
+   moves less than the room */
+.hq-exterior {
+  transform: translate3d(calc(var(--px) * 5px), calc(var(--py) * 3px), 0) scale(1.03);
+  filter: brightness(var(--env-bright, 1)) saturate(var(--env-sat, 1)) blur(var(--env-blur, 0px));
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1), filter 6s linear;
+  will-change: transform;
+}
+
+/* seasonal grade lives on the world only; the architecture never changes */
+.hq-exterior-fade {
+  transition: opacity 8s linear, filter 10s linear;
+  filter: saturate(var(--season-sat, 1)) hue-rotate(var(--season-hue, 0deg));
+}
+
+/* snowfall: two drifting dot fields, gated by --env-snow on the parent */
+.hq-snowfall-a,
+.hq-snowfall-b {
+  background-image: radial-gradient(1.6px 1.6px at 22px 34px, rgba(255, 255, 255, 0.8), transparent 55%),
+    radial-gradient(1.2px 1.2px at 68px 12px, rgba(255, 255, 255, 0.6), transparent 55%),
+    radial-gradient(1.4px 1.4px at 105px 78px, rgba(255, 255, 255, 0.7), transparent 55%),
+    radial-gradient(1px 1px at 44px 96px, rgba(255, 255, 255, 0.5), transparent 55%);
+  background-size: 130px 130px;
+}
+.hq-snowfall-a {
+  animation: hq-snow-a 34s linear -12s infinite;
+  opacity: 0.5;
+}
+.hq-snowfall-b {
+  background-size: 90px 90px;
+  animation: hq-snow-b 52s linear -30s infinite;
+  opacity: 0.3;
+}
+@keyframes hq-snow-a {
+  from { transform: translate3d(0, -12%, 0); }
+  to { transform: translate3d(-3%, 12%, 0); }
+}
+@keyframes hq-snow-b {
+  from { transform: translate3d(0, -12%, 0); }
+  to { transform: translate3d(2%, 12%, 0); }
+}
+
+/* second rain scale — different spacing, angle, and speed */
+.hq-rain-b {
+  background:
+    linear-gradient(99deg, transparent 0 55%, rgba(255, 255, 255, 0.06) 56%, transparent 57%),
+    linear-gradient(99deg, transparent 0 30%, rgba(220, 228, 238, 0.045) 31%, transparent 32%);
+  background-size: 88px 150px, 140px 190px;
+  animation: station-rain 12s linear -5s infinite;
+}
+
+/* frost creeping at the pane edges */
+.hq-frost {
+  background: radial-gradient(120% 120% at 0% 0%, rgba(220, 232, 244, 0.26), transparent 26%),
+    radial-gradient(120% 120% at 100% 0%, rgba(220, 232, 244, 0.22), transparent 24%),
+    radial-gradient(140% 140% at 0% 100%, rgba(214, 228, 242, 0.28), transparent 28%),
+    radial-gradient(140% 140% at 100% 100%, rgba(214, 228, 242, 0.24), transparent 26%),
+    linear-gradient(180deg, rgba(226, 236, 246, 0.08), transparent 12%);
+  filter: blur(1.2px);
+  -webkit-mask-image: radial-gradient(88% 88% at 50% 50%, transparent 52%, #000 96%);
+  mask-image: radial-gradient(88% 88% at 50% 50%, transparent 52%, #000 96%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-exterior { transform: scale(1.03); transition: none; }
+  .hq-snowfall-a, .hq-snowfall-b, .hq-rain-b { animation: none; }
+}
+
+/* information projected onto the floor plane — foreshortened like light on
+   stone, never a flat HTML block */
+.hq-floor-projected {
+  transform: perspective(1100px) rotateX(13deg);
+  transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), #000 72%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), #000 72%);
+}
+
+/* letterpress light engraved into stone */
+.hq-engraved {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.85), 0 0 14px rgba(255, 210, 140, 0.14);
+  transform: perspective(1000px) rotateX(9deg);
+  transform-origin: 50% 100%;
+}
+
+/* wind drives the precipitation drift rate */
+.hq-window .station-rain { animation-duration: calc(18s - var(--env-wind, 0) * 9s); }
+.hq-window .hq-rain-b { animation-duration: calc(12s - var(--env-wind, 0) * 6s); }
+.hq-snowfall-a { animation-duration: calc(34s - var(--env-wind, 0) * 15s); }
+.hq-snowfall-b { animation-duration: calc(52s - var(--env-wind, 0) * 22s); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-floor-projected, .hq-engraved { transform: none; }
+}
+
+/* passing cloud-light: a vast soft luminance band drifts across the world so
+   the mountain light breathes the way real weather does. Wind quickens it. */
+.hq-cloudlight-a,
+.hq-cloudlight-b {
+  mix-blend-mode: soft-light;
+  will-change: transform;
+}
+.hq-cloudlight-a {
+  background: linear-gradient(104deg, transparent 12%, rgba(28, 32, 40, 0.55) 30%, transparent 46%, rgba(235, 238, 244, 0.4) 66%, transparent 82%);
+  animation: hq-cloudlight calc(96s - var(--env-wind, 0) * 40s) linear -30s infinite;
+}
+.hq-cloudlight-b {
+  background: linear-gradient(98deg, transparent 20%, rgba(238, 240, 246, 0.3) 38%, transparent 52%, rgba(24, 28, 36, 0.42) 72%, transparent 88%);
+  animation: hq-cloudlight calc(141s - var(--env-wind, 0) * 55s) linear -85s infinite reverse;
+}
+@keyframes hq-cloudlight {
+  from { transform: translate3d(-34%, 0, 0); }
+  to { transform: translate3d(34%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-cloudlight-a, .hq-cloudlight-b { animation: none; opacity: 0; }
+}
+
+/* fine cinematic film grain over the whole room */
+.arch-grain {
+  mix-blend-mode: overlay;
+  opacity: 0.045;
+}
+
+/* etched / projected exhibition typography */
+.arch-etch {
+  color: #f5eddd;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.65), 0 -1px 0 rgba(255, 255, 255, 0.1), 0 0 34px rgba(247, 224, 170, 0.16);
+}
+.arch-projected {
+  text-shadow: 0 0 16px rgba(247, 224, 170, 0.32);
+}
+
+/* rain on the glass */
+.station-rain {
+  background:
+    linear-gradient(105deg, transparent 0 42%, rgba(255, 255, 255, 0.08) 43%, transparent 44%),
+    linear-gradient(105deg, transparent 0 63%, rgba(232, 220, 198, 0.06) 64%, transparent 65%);
+  background-size: 120px 180px, 180px 220px;
+  animation: station-rain 18s linear infinite;
+}
+@keyframes station-rain {
+  from { transform: translate3d(0, -8%, 0); }
+  to { transform: translate3d(-6%, 8%, 0); }
+}
+
+/* entrance: a quiet rise-and-settle for overlays struck into the room */
+.station-arrival {
+  opacity: 0;
+  animation: station-arrival 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes station-arrival {
+  from { opacity: 0; transform: translate3d(0, 16px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .station-rain, .hq-rain-b, .station-arrival { animation: none; opacity: 1; }
+}

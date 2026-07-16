@@ -221,9 +221,9 @@ export function DnaSculpture({
       const warmLift = 0.35 + 0.65 * understanding // 0..1 warmth of the room light
 
       // The canvas itself stays transparent — no opaque background fill — so
-      // the office's own architectural atmosphere (.ns-root + .office-ambient)
-      // shows straight through. The DNA sits IN the room's existing air rather
-      // than painting a separate room of its own; only light is added below.
+      // the surrounding drawer's own atmosphere shows straight through. The
+      // DNA sits IN that space rather than painting a separate room of its
+      // own; only light is added below.
       ctx!.clearRect(0, 0, w, h)
 
       const breathe = reduce ? 0.5 : Math.sin(time / 2600) * 0.5 + 0.5
