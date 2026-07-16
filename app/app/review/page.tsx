@@ -160,7 +160,7 @@ export default function ReviewPage() {
                           .trim()
 
                         return (
-                          <div key={key} className="rf-card flex items-center justify-between gap-4 px-4 py-3">
+                          <div key={key} className="rf-card rf-topline flex items-center justify-between gap-4 px-4 py-3 transition-colors hover:bg-white/[0.03]">
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
                                 <span className="font-medium text-white">{title}</span>
@@ -179,7 +179,7 @@ export default function ReviewPage() {
                                     style={{ width: `${status.completion}%` }}
                                   />
                                 </div>
-                                <span className="rf-mono text-xs text-[var(--rf-muted)]">{status.completion}%</span>
+                                <span className="rf-mono text-xs font-semibold text-[var(--rf-muted)]">{status.completion}%</span>
                               </div>
                             </div>
                           </div>
@@ -259,15 +259,15 @@ export default function ReviewPage() {
                 {/* Top Pages */}
                 <div>
                   <h2 className="mb-3 text-lg font-semibold text-white">Top Pages by Traffic</h2>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {demoData.crawl.topPages.map((page, i) => (
-                      <div key={i} className="rf-card flex items-center justify-between px-4 py-3">
+                      <div key={i} className="rf-card flex items-center justify-between px-4 py-3 transition-colors hover:bg-white/[0.03]">
                         <div className="flex-1 min-w-0">
                           <p className="truncate text-sm font-medium text-white">{page.url}</p>
                           <p className="text-xs text-[var(--rf-muted)]">{page.keywords} keywords</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-sm font-semibold text-[var(--rf-blue-bright)]">{page.visits.toLocaleString()}</p>
+                        <div className="text-right pl-4">
+                          <p className="text-sm font-semibold text-[var(--rf-green)]">{page.visits.toLocaleString()}</p>
                           <p className="text-xs text-[var(--rf-muted)]">visits</p>
                         </div>
                       </div>
@@ -316,28 +316,28 @@ export default function ReviewPage() {
                   <h2 className="mb-3 text-lg font-semibold text-white">Top Recommendations</h2>
                   <div className="space-y-3">
                     {demoData.decisionEngine.recommendations.map((rec, i) => (
-                      <div key={i} className="rf-card rf-topline px-4 py-4">
+                      <div key={i} className="rf-card rf-topline px-4 py-4 transition-colors hover:bg-white/[0.02]">
                         <div className="flex items-start justify-between mb-3">
-                          <div>
+                          <div className="flex-1">
                             <p className="font-semibold text-white">{rec.type}</p>
                             <p className="text-xs text-[var(--rf-muted)] mt-0.5">{rec.page}</p>
                           </div>
-                          <span className="inline-flex items-center rounded-lg bg-[var(--rf-amber)]/15 px-2.5 py-1 text-xs font-semibold text-[var(--rf-amber)]">
-                            Pending
+                          <span className="inline-flex items-center rounded-lg bg-[var(--rf-green)]/15 px-2.5 py-1 text-xs font-semibold text-[var(--rf-green)] ml-4 shrink-0">
+                            ✓ Ready
                           </span>
                         </div>
-                        <div className="grid gap-3 md:grid-cols-3">
+                        <div className="grid gap-3 md:grid-cols-3 pt-3 border-t border-white/[0.06]">
                           <div>
                             <p className="text-xs font-medium text-[var(--rf-muted)]">Business Value</p>
-                            <p className="mt-1 text-lg font-bold text-white">{rec.businessValue}</p>
+                            <p className="mt-1.5 text-lg font-bold text-white">{rec.businessValue}</p>
                           </div>
                           <div>
                             <p className="text-xs font-medium text-[var(--rf-muted)]">SEO Opportunity</p>
-                            <p className="mt-1 text-lg font-bold text-white">{rec.seoOpportunity}</p>
+                            <p className="mt-1.5 text-lg font-bold text-white">{rec.seoOpportunity}</p>
                           </div>
                           <div>
                             <p className="text-xs font-medium text-[var(--rf-muted)]">Priority</p>
-                            <p className="mt-1 text-lg font-bold text-white">#{rec.priority}</p>
+                            <p className="mt-1.5 text-lg font-bold text-[var(--rf-blue-bright)]">#{rec.priority}</p>
                           </div>
                         </div>
                       </div>
@@ -363,7 +363,12 @@ export default function ReviewPage() {
                 {/* Primary Mission */}
                 <div className="rf-card rf-topline bg-gradient-to-br from-[var(--rf-blue)]/10 to-[var(--rf-cyan)]/10 px-4 py-4 md:px-6 md:py-6">
                   <div className="flex items-start justify-between mb-4">
-                    <h2 className="text-lg font-semibold text-white">🎯 Primary Mission</h2>
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-lg bg-[var(--rf-blue-bright)]/20 flex items-center justify-center">
+                        <Sparkles className="h-4 w-4 text-[var(--rf-blue-bright)]" />
+                      </div>
+                      <h2 className="text-lg font-semibold text-white">Primary Mission</h2>
+                    </div>
                     <span className="inline-flex items-center rounded-lg bg-[var(--rf-green)]/15 px-2.5 py-1 text-xs font-semibold text-[var(--rf-green)]">
                       <CheckCircle2 className="h-3 w-3 mr-1" />
                       Selected
@@ -391,13 +396,13 @@ export default function ReviewPage() {
                   <h2 className="mb-3 text-lg font-semibold text-white">Shortlisted Candidates</h2>
                   <div className="space-y-3">
                     {demoData.operator.candidates.map((cand, i) => (
-                      <div key={i} className="rf-card px-4 py-3">
-                        <div className="flex items-start justify-between mb-2">
+                      <div key={i} className="rf-card rf-topline px-4 py-3 transition-colors hover:bg-white/[0.03]">
+                        <div className="flex items-start justify-between mb-3">
                           <div>
                             <p className="font-semibold text-white">{cand.type}</p>
                             <p className="text-xs text-[var(--rf-muted)] mt-0.5">{cand.page}</p>
                           </div>
-                          <span className="inline-flex items-center rounded-lg bg-[var(--rf-blue)]/15 px-2 py-1 text-xs font-semibold text-[var(--rf-blue-bright)]">
+                          <span className="inline-flex items-center rounded-lg bg-[var(--rf-blue)]/15 px-2.5 py-1 text-xs font-semibold text-[var(--rf-blue-bright)]">
                             {(cand.confidence * 100).toFixed(0)}%
                           </span>
                         </div>
@@ -447,7 +452,7 @@ export default function ReviewPage() {
                 {/* Recent Executions */}
                 <div>
                   <h2 className="mb-3 text-lg font-semibold text-white">Recent Executions</h2>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {demoData.executionHistory.recent.map((exec, i) => (
                       <div key={i} className="rf-card flex items-center justify-between px-4 py-3">
                         <div className="flex-1 min-w-0">
