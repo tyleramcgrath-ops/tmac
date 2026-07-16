@@ -78,7 +78,19 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const [approvalArrived, setApprovalArrived] = useState(false) // Stage 6
   const [isDimmed, setIsDimmed] = useState(false)
   const [discovering, setDiscovering] = useState(false) // Compass briefly flares when it has something new
+  const [tabHidden, setTabHidden] = useState(false)
   const stepsRef = useRef(buildInvestigationSteps(scenario, scenario.defaultRunOutcome))
+
+  // The room's ambient loops (dust, sun breathe, glass sweep) cost real
+  // compositor work for effects nobody can see while the tab is hidden —
+  // pause them there. No visible frame differs from this; the animation
+  // clock simply doesn't advance while it can't be seen.
+  useEffect(() => {
+    const onVisibility = () => setTabHidden(document.hidden)
+    onVisibility()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
+  }, [])
 
   // --- the room itself: environment, world light, and camera parallax,
   // ported from the confirmed baseline (north-star-station @ 546fb87) ---
@@ -260,6 +272,10 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
     else setOverlay('results')
   }
 
+  // The room isn't meaningfully visible while hidden or scrimmed behind a
+  // drawer — pause its ambient loops rather than animate for no one.
+  const ambientPaused = tabHidden || overlay !== null
+
   return (
     <section
       id="main-content"
@@ -275,7 +291,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
 
       <div
         ref={sceneRef}
-        className={`station-scene absolute inset-0 transition-opacity duration-500 ease-out ${isDimmed ? 'opacity-95' : 'opacity-100'}`}
+        className={`station-scene absolute inset-0 transition-opacity duration-500 ease-out ${isDimmed ? 'opacity-95' : 'opacity-100'}${ambientPaused ? ' hq-ambient-paused' : ''}`}
         style={{
           ...environmentVars(environment),
           ...lightingVars(plateLight),

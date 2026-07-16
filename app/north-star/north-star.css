@@ -732,3 +732,18 @@
 @media (prefers-reduced-motion: reduce) {
   [data-investigating] .hq-evidence-sweep { animation: none; opacity: 0; }
 }
+
+/* ---- performance: the four continuous ambient loops above (dust ×2, sun
+   breathe, glass sweep) cost nothing to look at while nobody can see them —
+   tab hidden, or a drawer's scrim covering the room. Pausing them there is
+   invisible during normal use (nothing changes on the visible frame) and
+   stops idle compositor work. Investigation's evidence sweep and Compass's
+   breathing are intentionally excluded: they're either already gated to a
+   real, brief state (evidence sweep) or are Compass itself, which nothing
+   in this pass touches. ---- */
+.hq-ambient-paused .hq-dust-a,
+.hq-ambient-paused .hq-dust-b,
+.hq-ambient-paused .hq-sunbreathe,
+.hq-ambient-paused .hq-glass-sweep {
+  animation-play-state: paused;
+}
