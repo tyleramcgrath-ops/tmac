@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, ArrowUpRight, Check, AlertTriangle, Info, Download, Printer,
   Zap, ExternalLink, RefreshCw, X, Gauge, StopCircle, Network, ShieldCheck,
-  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, type LucideIcon,
+  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, Scissors, type LucideIcon,
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
 import { ForgeDock } from './forge'
@@ -824,6 +824,23 @@ const SCHEMA_RE = /\n?<!-- rankforge-schema:start -->[\s\S]*?<!-- rankforge-sche
 function wrapSchema(json: string): string { return `\n<!-- rankforge-schema:start -->\n<script type="application/ld+json">${json}</script>\n<!-- rankforge-schema:end -->\n` }
 function defaultSchema(title: string, url: string): string { return JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: title, url }) }
 
+// Non-AI fallback for shortening an over-length title/meta description: cuts at
+// the last sentence boundary within range, falling back to the last word
+// boundary, so the result never trails off mid-word. Never used to lengthen —
+// padding a too-short field with filler text would be worse SEO advice than
+// leaving it alone, since that requires actual context an AI has and a
+// heuristic doesn't.
+function shortenToFit(text: string, maxLen: number): string {
+  const trimmed = text.trim()
+  if (trimmed.length <= maxLen) return trimmed
+  const window = trimmed.slice(0, maxLen + 1)
+  const lastSentenceEnd = Math.max(window.lastIndexOf('. '), window.lastIndexOf('! '), window.lastIndexOf('? '))
+  if (lastSentenceEnd > maxLen * 0.5) return window.slice(0, lastSentenceEnd + 1).trim()
+  const lastSpace = window.slice(0, maxLen).lastIndexOf(' ')
+  if (lastSpace > maxLen * 0.4) return window.slice(0, lastSpace).trim().replace(/[,;:-]$/, '')
+  return window.slice(0, maxLen).trim()
+}
+
 function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdit; creds: WpCreds; authValid: boolean; hasAioseo: boolean; onClose: () => void }) {
   const an = edit.analysis
   const origTitle = hasAioseo ? edit.post.aioseoTitle || an?.title || edit.post.title : edit.post.title
@@ -872,8 +889,8 @@ function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdi
             </div>
             {aiErr && <p className="mt-1 text-[11px] text-[var(--rf-red)]">{aiErr}</p>}
             {aiNote && <p className="mt-1 flex items-start gap-1.5 text-[11px] text-[var(--rf-muted)]"><Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-[var(--rf-violet)]" />{aiNote}</p>}
-            <label className="mt-2 block text-xs font-medium text-[var(--rf-muted)]">SEO title</label><input value={title} onChange={(e) => setTitle(e.target.value)} className="rf-card mt-1 w-full bg-transparent px-3 py-2 text-sm text-white focus:outline-none" /><p className="mt-1 text-[11px] text-[var(--rf-faint)]">{title.length} chars · aim 30–60</p>
-            <label className="mt-4 block text-xs font-medium text-[var(--rf-muted)]">Meta description</label><textarea value={meta} onChange={(e) => setMeta(e.target.value)} rows={3} className="rf-card mt-1 w-full resize-y bg-transparent px-3 py-2 text-sm text-white focus:outline-none" /><p className="mt-1 text-[11px] text-[var(--rf-faint)]">{meta.length} chars · aim 70–160</p>
+            <label className="mt-2 block text-xs font-medium text-[var(--rf-muted)]">SEO title</label><input value={title} onChange={(e) => setTitle(e.target.value)} className="rf-card mt-1 w-full bg-transparent px-3 py-2 text-sm text-white focus:outline-none" /><div className="mt-1 flex items-center justify-between gap-2"><p className="text-[11px] text-[var(--rf-faint)]">{title.length} chars · aim 30–60</p>{title.length > 60 && <button onClick={() => setTitle(shortenToFit(title, 60))} className="inline-flex items-center gap-1 text-[11px] font-medium text-[var(--rf-cyan)] hover:text-white"><Scissors className="h-3 w-3" /> Shorten to fit</button>}</div>
+            <label className="mt-4 block text-xs font-medium text-[var(--rf-muted)]">Meta description</label><textarea value={meta} onChange={(e) => setMeta(e.target.value)} rows={3} className="rf-card mt-1 w-full resize-y bg-transparent px-3 py-2 text-sm text-white focus:outline-none" /><div className="mt-1 flex items-center justify-between gap-2"><p className="text-[11px] text-[var(--rf-faint)]">{meta.length} chars · aim 70–160</p>{meta.length > 160 && <button onClick={() => setMeta(shortenToFit(meta, 160))} className="inline-flex items-center gap-1 text-[11px] font-medium text-[var(--rf-cyan)] hover:text-white"><Scissors className="h-3 w-3" /> Shorten to fit</button>}</div>
             <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-sm"><input type="checkbox" checked={addSchema} onChange={(e) => setAddSchema(e.target.checked)} className="mt-0.5 accent-[var(--rf-blue)]" /><span><span className="text-[var(--rf-text)]">Add JSON-LD Article schema</span><span className="block text-[11px] text-[var(--rf-faint)]">Injected into the post content (idempotent &amp; reversible).</span></span></label>
             {!authValid && <p className="mt-4 rounded-lg border border-[var(--rf-amber)]/30 bg-[var(--rf-amber)]/10 px-3 py-2 text-xs text-[var(--rf-amber)]">Connect with a valid Application Password to deploy changes.</p>}
             {step === 'error' && <p className="mt-3 text-xs text-[var(--rf-red)]">{error}</p>}
