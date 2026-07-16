@@ -344,67 +344,26 @@
 }
 
 /* =====================================================================
-   Executive Office restoration — three layout variants.
-   The DNA sculpture itself (particles/ribbons, motion, reactions) is
-   unchanged across all three; only the room's composition — how large
-   the DNA reads, how it sits over the desk, how wide the room is —
-   differs, so the desk stays reachable in the first viewport instead of
-   being pushed below a full-height DNA hero.
+   Executive Office composition — the DNA is the room's centerpiece, sized
+   to sit in the space the centerpiece has always occupied (contained, not a
+   full-height hero) and pulled down to slightly overlap the desk, so the
+   desk — Compass, Morning Briefing, approval tray, Check My Business — walls,
+   and status all read together in the first viewport. The DNA sculpture
+   itself (particles/ribbons, motion, reactions) is unchanged.
    ===================================================================== */
-
-/* A — Original Executive Desk Restored: DNA contained above the desk,
-   proportions closest to the approved office, everything else unchanged. */
-.office-stage[data-office-variant="a"] .office-dna-wrap { height: 380px; }
-.office-stage[data-office-variant="a"] .office-desk-zone { margin-top: -10px; }
-
-/* B — Minimal Intelligence Office: narrower room, DNA reads larger and more
-   central, walls simplified into a single stacked column, bigger desk. */
-.office-stage[data-office-variant="b"] { max-width: 1080px; margin: 0 auto; }
-.office-stage[data-office-variant="b"] .office-hud,
-.office-stage[data-office-variant="b"] .office-horizon,
-.office-stage[data-office-variant="b"] .office-investigation-line,
-.office-stage[data-office-variant="b"] .office-compass-note { max-width: 1080px; margin-left: auto; margin-right: auto; }
-.office-stage[data-office-variant="b"] .office-dna-wrap { height: 440px; max-width: 980px; }
-.office-stage[data-office-variant="b"] .office-walls {
-  grid-template-columns: 1fr; max-width: 640px; gap: 14px; margin: 20px auto 0;
-}
-.office-stage[data-office-variant="b"] .office-wall-left,
-.office-stage[data-office-variant="b"] .office-wall-right { transform: none; }
-.office-stage[data-office-variant="b"] .office-desk-zone { margin-top: 4px; }
-.office-stage[data-office-variant="b"] .office-desk-surface,
-.office-stage[data-office-variant="b"] .office-desk-edge,
-.office-stage[data-office-variant="b"] .office-desk-front { width: min(1040px, 96vw); }
-.office-stage[data-office-variant="b"] .office-desk-objects { width: min(980px, 94vw); }
-
-/* C — Executive Strategy Room: wider architectural space, DNA reads as a
-   wide back-wall band, desk enlarged in the foreground, walls narrower and
-   pulled in close to flank the desk rather than spanning the full room. */
-.office-stage[data-office-variant="c"] .office-dna-wrap { height: 300px; max-width: 1700px; }
-.office-stage[data-office-variant="c"] .office-walls { max-width: 1700px; grid-template-columns: 210px 1fr 210px; margin-top: 16px; }
-.office-stage[data-office-variant="c"] .office-desk-zone { margin-top: 0; }
-.office-stage[data-office-variant="c"] .office-desk-surface,
-.office-stage[data-office-variant="c"] .office-desk-edge,
-.office-stage[data-office-variant="c"] .office-desk-front { width: min(1100px, 96vw); }
-.office-stage[data-office-variant="c"] .office-desk-objects { width: min(1000px, 94vw); }
-
-@media (max-width: 900px) {
-  .office-stage[data-office-variant] { max-width: none; }
-}
-
-/* Dev-only variant switcher — comparison tool, not part of the shipped room */
-.office-variant-switcher {
-  position: fixed; bottom: 14px; left: 14px; z-index: 50;
-  display: flex; gap: 4px; padding: 4px;
-  background: rgba(11,11,13,0.85); border: 1px solid var(--office-warm-line); border-radius: 10px;
-  backdrop-filter: blur(8px);
-}
-.office-variant-switcher button {
-  width: 30px; height: 26px; border-radius: 7px; font-size: 11px; font-weight: 700;
-  color: var(--rf-faint); background: transparent;
-}
-.office-variant-switcher button[aria-pressed="true"] { background: rgba(201,168,119,0.16); color: var(--office-brass-bright); }
-.office-variant-switcher-label { font-size: 9px; color: var(--rf-faint); padding: 4px 2px 4px 6px; align-self: center; text-transform: uppercase; letter-spacing: 0.06em; }
-@media (max-width: 900px) { .office-variant-switcher { display: none; } }
+.office-stage .office-dna-wrap { height: 360px; }
+/* The side walls flank the room; the desk rises into the empty centre band
+   beneath the DNA (its objects are centred and clear the walls' side
+   columns), so DNA, walls and desk read as one room in a single viewport
+   rather than a tall vertical stack with a dead gap in the middle. */
+.office-stage .office-walls { margin-top: 8px; }
+.office-stage .office-desk-zone { margin-top: -232px; z-index: 12; }
+/* The desk zone now overlaps the walls' vertical band, so its empty area must
+   let clicks fall through to the walls behind it; only the actual desk objects
+   (Compass, Briefing, approval, Check My Business) capture pointer events. */
+.office-stage .office-desk-zone { pointer-events: none; }
+.office-stage .office-desk-zone button,
+.office-stage .office-desk-zone .office-obj { pointer-events: auto; }
 
 /* ---- Investigation: environmental status line ---- */
 .office-investigation-line {

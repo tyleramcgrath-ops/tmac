@@ -48,15 +48,7 @@ function compassReactionFor(kind: RevealKind, scenario: PreviewScenario): string
   return 'Nothing rose to your attention. Your business looks stable today.'
 }
 
-/** Dev-only comparison of the three Executive Office restoration variants.
- *  A: original desk proportions restored, DNA contained above the desk.
- *  B: minimal, narrower room, DNA reads larger and central, one wall column.
- *  C: wider strategy room, DNA as a back-wall band, enlarged desk.
- *  Ships as 'a' — the switcher exists purely to compare before finalizing. */
-type OfficeVariant = 'a' | 'b' | 'c'
-
 export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
-  const [officeVariant, setOfficeVariant] = useState<OfficeVariant>('a')
   const [overlay, setOverlay] = useState<Overlay>(null)
   const [compassContext, setCompassContext] = useState<CompassContext>('command-center')
   const [selectedDnaKey, setSelectedDnaKey] = useState<string | null>(null)
@@ -146,21 +138,12 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       className="office-stage"
       id="main-content"
       data-investigating={investigating || undefined}
-      data-office-variant={officeVariant}
       style={{ ['--office-understanding' as string]: understanding.toFixed(3) }}
     >
       {/* Ambient room light emitted by the DNA — warmer and brighter as
           understanding grows. Purely presentational, never intercepts input. */}
       <div className="office-ambient" aria-hidden="true" />
 
-      {/* Dev-only: compare the three restoration variants. Not part of the
-          shipped room — a temporary tool for choosing the final direction. */}
-      <div className="office-variant-switcher" role="group" aria-label="Preview layout variant (dev only)">
-        <span className="office-variant-switcher-label">Layout</span>
-        {(['a', 'b', 'c'] as const).map((v) => (
-          <button key={v} onClick={() => setOfficeVariant(v)} aria-pressed={officeVariant === v}>{v.toUpperCase()}</button>
-        ))}
-      </div>
       <div className="office-hud">
         <div className="office-brand"><CompassIcon className="h-4 w-4" style={{ color: 'var(--office-brass)' }} aria-hidden="true" /> North Star</div>
         <div className="office-status">
