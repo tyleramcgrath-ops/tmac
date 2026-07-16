@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
 import { ForgeDock } from './forge'
+import { Onboarding } from '@/components/onboarding'
+import { DEMO_PROJECTS } from '@/lib/demo-data'
 
 /* ================================================================== */
 /* Types                                                              */
@@ -136,11 +138,61 @@ export default function AppDashboard() {
   const [error, setError] = useState<string | null>(null)
   const [pageSpeed, setPageSpeed] = useState<PageSpeed | null>(null)
   const [selected, setSelected] = useState<PageResult | null>(null)
+  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [isDemoProject, setIsDemoProject] = useState(false)
   const stopRef = useRef(false)
   const a = useMemo(() => analyze(pages), [pages])
 
+  const loadDemoProject = (demoType: string) => {
+    const demo = DEMO_PROJECTS[demoType as keyof typeof DEMO_PROJECTS]
+    if (!demo) return
+    setDomain(demo.domain)
+    setPages(demo.pages)
+    setPageSpeed(demo.pageSpeed)
+    setStatus('done')
+    setShowOnboarding(false)
+    setIsDemoProject(true)
+    try {
+      localStorage.setItem('rf_app_demo', demoType)
+      localStorage.setItem('rf_app_domain', demo.domain)
+      localStorage.setItem('rf_app_pages', JSON.stringify(demo.pages))
+      localStorage.setItem('rf_app_pages_domain', demo.domain)
+      localStorage.setItem('rf_app_ps', JSON.stringify(demo.pageSpeed))
+      localStorage.setItem('rf_app_ps_domain', demo.domain)
+    } catch { /* quota */ }
+  }
+
+  const clearDemo = () => {
+    try {
+      localStorage.removeItem('rf_app_demo')
+      localStorage.removeItem('rf_app_domain')
+      localStorage.removeItem('rf_app_pages')
+      localStorage.removeItem('rf_app_pages_domain')
+      localStorage.removeItem('rf_app_ps')
+      localStorage.removeItem('rf_app_ps_domain')
+    } catch { /* ignore */ }
+    setDomain('')
+    setPages([])
+    setPageSpeed(null)
+    setStatus('idle')
+    setIsDemoProject(false)
+  }
+
   useEffect(() => {
     try {
+      const savedDemo = localStorage.getItem('rf_app_demo')
+      if (savedDemo) {
+        const demo = DEMO_PROJECTS[savedDemo as keyof typeof DEMO_PROJECTS]
+        if (demo) {
+          setDomain(demo.domain)
+          setPages(demo.pages)
+          setPageSpeed(demo.pageSpeed)
+          setStatus('done')
+          setIsDemoProject(true)
+          return
+        }
+      }
+
       const d = localStorage.getItem('rf_app_domain'); if (d) setDomain(d)
       // Only restore cached audits from the CURRENT domain and current data
       // shape; older caches (pre-redesign) lack fields the analytics need, and
@@ -161,6 +213,11 @@ export default function AppDashboard() {
       const ps = localStorage.getItem('rf_app_ps')
       if (ps && psDomain && psDomain === d) setPageSpeed(JSON.parse(ps))
       else if (ps) { localStorage.removeItem('rf_app_ps'); localStorage.removeItem('rf_app_ps_domain') }
+
+      // Show onboarding if no project loaded
+      if (!d && !savedDemo) {
+        setShowOnboarding(true)
+      }
     } catch { /* ignore */ }
   }, [])
 
@@ -220,6 +277,10 @@ export default function AppDashboard() {
     } catch { if (acc.length === 0) { setError('Network error — please try again.'); setStatus('error') } else setStatus('done') }
   }, [domain, maxPages])
 
+  if (showOnboarding) {
+    return <Onboarding onSelectDemo={loadDemoProject} onSkipToRealSite={() => setShowOnboarding(false)} />
+  }
+
   return (
     <div className="relative flex min-h-screen flex-col">
       <div className="rf-grid pointer-events-none fixed inset-0 -z-10 opacity-50" />
@@ -227,10 +288,15 @@ export default function AppDashboard() {
 
       <header className="sticky top-0 z-30 border-b border-[var(--rf-card-line)] bg-[rgba(5,7,14,0.8)] backdrop-blur-xl">
         <div className="flex flex-col gap-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:px-6">
-          <a href="/" className="flex items-center gap-2.5">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] shadow-[0_8px_24px_-8px_rgba(47,107,255,0.9)]"><Zap className="h-4 w-4 text-white" strokeWidth={2.5} /></span>
-            <span className="text-[15px] font-semibold">RankForge<span className="text-[var(--rf-blue-bright)]"> AI</span><span className="ml-2 hidden rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)] sm:inline">Command Center</span></span>
-          </a>
+          <div className="flex items-center gap-4">
+            <a href="/" className="flex items-center gap-2.5">
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] shadow-[0_8px_24px_-8px_rgba(47,107,255,0.9)]"><Zap className="h-4 w-4 text-white" strokeWidth={2.5} /></span>
+              <span className="text-[15px] font-semibold">RankForge<span className="text-[var(--rf-blue-bright)]"> AI</span><span className="ml-2 hidden rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)] sm:inline">Command Center</span></span>
+            </a>
+            {isDemoProject && (
+              <span className="hidden sm:inline rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-blue)] bg-[var(--rf-blue)]/10 px-2 py-1 rounded">Demo Project</span>
+            )}
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <div className="rf-card flex flex-1 items-center gap-2 px-3 py-2 sm:w-72"><Search className="h-4 w-4 shrink-0 text-[var(--rf-faint)]" /><input value={domain} onChange={(e) => setDomain(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && status !== 'loading' && runAudit()} placeholder="yourdomain.com" className="w-full bg-transparent text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /></div>
             <select value={maxPages} onChange={(e) => setMaxPages(Number(e.target.value))} className="rf-card cursor-pointer bg-transparent px-2.5 py-2 text-sm text-white focus:outline-none" title="Max pages to crawl">
@@ -238,6 +304,9 @@ export default function AppDashboard() {
             </select>
             {status === 'loading' ? <button onClick={() => (stopRef.current = true)} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"><StopCircle className="h-4 w-4" /> Stop</button>
               : <button onClick={runAudit} className="rf-btn-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"><RefreshCw className="h-4 w-4" /> Run Audit</button>}
+            {isDemoProject && (
+              <button onClick={clearDemo} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"><X className="h-4 w-4" /> Clear Demo</button>
+            )}
           </div>
         </div>
         {status === 'loading' && <CrawlProgress crawled={progress.crawled} discovered={progress.discovered} max={maxPages} />}
