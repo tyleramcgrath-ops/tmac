@@ -1,5 +1,9 @@
-// Audit persistence API — save and load audits from database
-// Requires DATABASE_URL to be configured
+// Audit persistence API — save and load audits from the database.
+// Every action is scoped to the signed-in user's organization; projects and
+// audits from other organizations are never visible here.
+// Requires DATABASE_URL to be configured.
+
+import { getCurrentSession } from '@/lib/session'
 
 export const runtime = 'nodejs'
 
@@ -9,9 +13,15 @@ export async function POST(request: Request) {
   try {
     const { getPrismaClient } = await import('@/lib/db')
     prisma = getPrismaClient()
-  } catch (error) {
+  } catch {
     return Response.json({ error: 'Database is not configured.' }, { status: 503 })
   }
+
+  const session = await getCurrentSession()
+  if (!session || !session.organizationId) {
+    return Response.json({ error: 'Sign in to save and load audits.' }, { status: 401 })
+  }
+  const organizationId = session.organizationId
 
   let body: Record<string, any>
   try {
@@ -26,8 +36,7 @@ export async function POST(request: Request) {
   if (action === 'save') {
     try {
       const {
-        userId,
-        domain,
+        projectId,
         pages,
         siteScore,
         technicalScore,
@@ -37,21 +46,19 @@ export async function POST(request: Request) {
         analytics,
       } = body
 
-      if (!userId || !domain || !pages) {
+      if (!projectId || !pages) {
         return Response.json({ error: 'Missing required fields.' }, { status: 400 })
       }
 
-      // Ensure project exists
-      const project = await prisma.project.upsert({
-        where: { userId_domain: { userId, domain } },
-        update: { updatedAt: new Date() },
-        create: { userId, name: domain, domain },
-      })
+      const project = await prisma.project.findUnique({ where: { id: projectId } })
+      if (!project || project.organizationId !== organizationId) {
+        return Response.json({ error: 'Project not found.' }, { status: 404 })
+      }
 
-      // Create audit
       const audit = await prisma.audit.create({
         data: {
-          projectId: project.id,
+          organizationId,
+          projectId,
           status: 'completed',
           pageCount: pages.length,
           issueCount: analytics?.issues?.length || 0,
@@ -108,6 +115,8 @@ export async function POST(request: Request) {
         })
       }
 
+      await prisma.project.update({ where: { id: projectId }, data: { updatedAt: new Date() } })
+
       return Response.json({
         success: true,
         auditId: audit.id,
@@ -119,27 +128,21 @@ export async function POST(request: Request) {
     }
   }
 
-  // Load audit history
+  // Load audit history (score over time) for a project
   if (action === 'history') {
     try {
-      const { userId, domain } = body
-
-      if (!userId || !domain) {
-        return Response.json({ error: 'Missing required fields.' }, { status: 400 })
+      const { projectId } = body
+      if (!projectId) {
+        return Response.json({ error: 'Missing projectId.' }, { status: 400 })
       }
 
-      // Find project
-      const project = await prisma.project.findUnique({
-        where: { userId_domain: { userId, domain } },
-      })
-
-      if (!project) {
+      const project = await prisma.project.findUnique({ where: { id: projectId } })
+      if (!project || project.organizationId !== organizationId) {
         return Response.json({ audits: [] })
       }
 
-      // Get audit history
       const audits = await prisma.audit.findMany({
-        where: { projectId: project.id },
+        where: { projectId },
         orderBy: { startedAt: 'desc' },
         take: 20,
         select: {
@@ -160,11 +163,10 @@ export async function POST(request: Request) {
     }
   }
 
-  // Load specific audit
+  // Load a specific audit's page-level detail
   if (action === 'load') {
     try {
       const { auditId } = body
-
       if (!auditId) {
         return Response.json({ error: 'Missing auditId.' }, { status: 400 })
       }
@@ -193,7 +195,7 @@ export async function POST(request: Request) {
         },
       })
 
-      if (!audit) {
+      if (!audit || audit.organizationId !== organizationId) {
         return Response.json({ error: 'Audit not found.' }, { status: 404 })
       }
 

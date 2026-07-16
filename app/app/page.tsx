@@ -5,7 +5,8 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, ArrowUpRight, Check, AlertTriangle, Info, Download, Printer,
   Zap, ExternalLink, RefreshCw, X, Gauge, StopCircle, Network, ShieldCheck,
-  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, Scissors, ListChecks, type LucideIcon,
+  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, Scissors, ListChecks,
+  FolderOpen, LogOut, Plus, Star, type LucideIcon,
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
 import { ForgeDock } from './forge'
@@ -44,8 +45,16 @@ interface Analytics {
 interface PageSpeed { available: boolean; performance: number | null; lcpMs: number | null; cls: number | null; inpMs: number | null; strategy?: string }
 interface CrawlResponse { pages?: PageResult[]; visited?: string[]; frontier?: string[]; discovered?: number; crawledTotal?: number; done?: boolean; error?: string }
 
-type SectionId = 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema' | 'rankings' | 'backlinks' | 'wordpress' | 'reports'
+interface SessionUser { id: string; email: string; name: string | null }
+interface LatestAudit { siteScore: number; pageCount: number; criticalCount: number; startedAt: string }
+interface ProjectSummary { id: string; name: string; domain: string; status: string; isFavorite: boolean; createdAt: string; updatedAt: string; latestAudit: LatestAudit | null }
+interface AuditHistoryItem { id: string; startedAt: string; endedAt: string | null; pageCount: number; siteScore: number; criticalCount: number; warningCount: number }
+
+type SectionId = 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema' | 'rankings' | 'backlinks' | 'wordpress' | 'reports' | 'projects'
 const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: LucideIcon }[] }[] = [
+  { label: 'Workspace', items: [
+    { id: 'projects', label: 'My Projects', icon: FolderOpen },
+  ]},
   { label: 'Analyze', items: [
     { id: 'command', label: 'Command Center', icon: Bot },
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -143,6 +152,65 @@ export default function AppDashboard() {
   const stopRef = useRef(false)
   const a = useMemo(() => analyze(pages), [pages])
 
+  const [authStatus, setAuthStatus] = useState<'checking' | 'unauth' | 'authed'>('checking')
+  const [sessionUser, setSessionUser] = useState<SessionUser | null>(null)
+  const [organizationId, setOrganizationId] = useState<string | null>(null)
+  const [projects, setProjects] = useState<ProjectSummary[]>([])
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null)
+  const [history, setHistory] = useState<AuditHistoryItem[]>([])
+
+  const refreshProjects = useCallback(async (orgId: string) => {
+    try {
+      const res = await fetch(`/api/projects/list?organizationId=${encodeURIComponent(orgId)}`)
+      const json = await res.json()
+      if (res.ok && Array.isArray(json.projects)) setProjects(json.projects)
+    } catch { /* ignore */ }
+  }, [])
+
+  const refreshHistory = useCallback(async (projectId: string) => {
+    try {
+      const res = await fetch('/api/audit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'history', projectId }) })
+      const json = await res.json()
+      if (res.ok && Array.isArray(json.audits)) setHistory(json.audits)
+    } catch { /* ignore */ }
+  }, [])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/auth/session')
+        if (!res.ok) { setAuthStatus('unauth'); return }
+        const json = await res.json()
+        setSessionUser(json.user)
+        setOrganizationId(json.organization?.id ?? null)
+        setAuthStatus('authed')
+        if (json.organization?.id) refreshProjects(json.organization.id)
+      } catch {
+        setAuthStatus('unauth')
+      }
+    })()
+  }, [refreshProjects])
+
+  const handleAuthed = (user: SessionUser, orgId: string) => {
+    setSessionUser(user); setOrganizationId(orgId); setAuthStatus('authed'); refreshProjects(orgId)
+  }
+  const logout = async () => {
+    try { await fetch('/api/auth/logout', { method: 'POST' }) } catch { /* ignore */ }
+    setSessionUser(null); setOrganizationId(null); setAuthStatus('unauth')
+    setProjects([]); setCurrentProjectId(null); setHistory([])
+    setDomain(''); setPages([]); setPageSpeed(null); setStatus('idle')
+  }
+  const openProject = (p: ProjectSummary) => {
+    setCurrentProjectId(p.id); setDomain(p.domain); setSection('overview')
+    setHistory([]); refreshHistory(p.id)
+    try {
+      const cachedDomain = localStorage.getItem('rf_app_pages_domain')
+      const cached = localStorage.getItem('rf_app_pages')
+      if (cached && cachedDomain === p.domain) { const parsed = JSON.parse(cached); if (Array.isArray(parsed) && parsed.length > 0) { setPages(parsed); setStatus('done'); return } }
+    } catch { /* ignore */ }
+    setPages([]); setStatus('idle')
+  }
+
   const loadDemoProject = (demoType: string) => {
     const demo = DEMO_PROJECTS[demoType as keyof typeof DEMO_PROJECTS]
     if (!demo) return
@@ -179,6 +247,7 @@ export default function AppDashboard() {
   }
 
   useEffect(() => {
+    if (authStatus !== 'authed') return
     try {
       const savedDemo = localStorage.getItem('rf_app_demo')
       if (savedDemo) {
@@ -219,7 +288,7 @@ export default function AppDashboard() {
         setShowOnboarding(true)
       }
     } catch { /* ignore */ }
-  }, [])
+  }, [authStatus])
 
   const runAudit = useCallback(async () => {
     const value = domain.trim(); if (!value) return
@@ -242,27 +311,34 @@ export default function AppDashboard() {
         localStorage.setItem('rf_app_pages', JSON.stringify(acc))
         localStorage.setItem('rf_app_pages_domain', value)
       } catch { /* quota */ }
-      // Persist audit to database (fire-and-forget)
-      // TODO: Use authenticated user from session
-      const userId = `anon_${Date.now().toString(36)}`
+      // Persist audit to the signed-in user's project (fire-and-forget)
       const analyticsData = analyze(acc)
       if (analyticsData) {
-        fetch('/api/audit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'save',
-            userId,
-            domain: value,
-            pages: acc,
-            siteScore: analyticsData.siteScore,
-            technicalScore: analyticsData.categories.technical,
-            contentScore: analyticsData.categories.content,
-            schemaScore: analyticsData.categories.schema,
-            aiScore: analyticsData.categories.ai,
-            analytics: analyticsData,
-          }),
-        }).catch((err) => console.error('[audit] save failed:', err))
+        ;(async () => {
+          try {
+            const rp = await fetch('/api/projects/resolve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain: value }) })
+            const rj = await rp.json()
+            if (!rp.ok || !rj.project) return
+            setCurrentProjectId(rj.project.id)
+            setProjects((prev) => [rj.project, ...prev.filter((p) => p.id !== rj.project.id)])
+            const sr = await fetch('/api/audit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                action: 'save',
+                projectId: rj.project.id,
+                pages: acc,
+                siteScore: analyticsData.siteScore,
+                technicalScore: analyticsData.categories.technical,
+                contentScore: analyticsData.categories.content,
+                schemaScore: analyticsData.categories.schema,
+                aiScore: analyticsData.categories.ai,
+                analytics: analyticsData,
+              }),
+            })
+            if (sr.ok) { refreshHistory(rj.project.id); if (organizationId) refreshProjects(organizationId) }
+          } catch (err) { console.error('[audit] save failed:', err) }
+        })()
       }
       try {
         const ps = await fetch('/api/pagespeed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: value }) }).then((r) => r.json())
@@ -275,7 +351,14 @@ export default function AppDashboard() {
         }
       } catch { /* ignore */ }
     } catch { if (acc.length === 0) { setError('Network error — please try again.'); setStatus('error') } else setStatus('done') }
-  }, [domain, maxPages])
+  }, [domain, maxPages, organizationId, refreshHistory, refreshProjects])
+
+  if (authStatus === 'checking') {
+    return <div className="grid min-h-screen place-items-center bg-[var(--rf-bg,#05070e)]"><Loader2 className="h-8 w-8 animate-spin text-[var(--rf-blue-bright)]" /></div>
+  }
+  if (authStatus === 'unauth') {
+    return <AuthGate onAuthed={handleAuthed} />
+  }
 
   if (showOnboarding) {
     return <Onboarding onSelectDemo={loadDemoProject} onSkipToRealSite={() => setShowOnboarding(false)} />
@@ -307,6 +390,7 @@ export default function AppDashboard() {
             {isDemoProject && (
               <button onClick={clearDemo} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"><X className="h-4 w-4" /> Clear Demo</button>
             )}
+            {sessionUser && <span className="hidden items-center gap-2 rounded-xl border border-[var(--rf-card-line)] px-3 py-2 text-xs text-[var(--rf-muted)] lg:flex"><span className="truncate max-w-[160px]">{sessionUser.name || sessionUser.email}</span><button onClick={logout} title="Log out" className="text-[var(--rf-faint)] hover:text-white"><LogOut className="h-3.5 w-3.5" /></button></span>}
           </div>
         </div>
         {status === 'loading' && <CrawlProgress crawled={progress.crawled} discovered={progress.discovered} max={maxPages} />}
@@ -331,8 +415,9 @@ export default function AppDashboard() {
           </div>
           <main className="p-4 sm:p-6">
             {error && status === 'error' && <div className="mb-4 flex items-center gap-2 rounded-xl border border-[var(--rf-red)]/30 bg-[var(--rf-red)]/10 px-4 py-3 text-sm text-[var(--rf-red)]"><AlertTriangle className="h-4 w-4" /> {error}</div>}
+            {section === 'projects' && <Projects projects={projects} currentProjectId={currentProjectId} onOpen={openProject} onCreated={(p) => { setProjects((prev) => [p, ...prev.filter((x) => x.id !== p.id)]); openProject(p) }} />}
             {section === 'command' && <CommandCenter a={a} pages={pages} pageSpeed={pageSpeed} domain={domain} status={status} onRun={runAudit} onGo={(s) => setSection(s as SectionId)} />}
-            {section === 'overview' && <Overview a={a} pages={pages} status={status} onRun={runAudit} pageSpeed={pageSpeed} domain={domain} crawled={progress.crawled} onGo={setSection} />}
+            {section === 'overview' && <Overview a={a} pages={pages} status={status} onRun={runAudit} pageSpeed={pageSpeed} domain={domain} crawled={progress.crawled} onGo={setSection} history={history} />}
             {section === 'audit' && <Audit a={a} pages={pages} onSelect={setSelected} />}
             {section === 'content' && <Content a={a} pages={pages} />}
             {section === 'links' && <Links a={a} />}
@@ -454,7 +539,7 @@ function LinkList({ title, rows, empty = 'Nothing here — nice.' }: { title: st
 /* Overview                                                           */
 /* ================================================================== */
 
-function Overview({ a, pages, status, onRun, pageSpeed, domain, crawled, onGo }: { a: Analytics | null; pages: PageResult[]; status: string; onRun: () => void; pageSpeed: PageSpeed | null; domain: string; crawled: number; onGo: (s: SectionId) => void }) {
+function Overview({ a, pages, status, onRun, pageSpeed, domain, crawled, onGo, history }: { a: Analytics | null; pages: PageResult[]; status: string; onRun: () => void; pageSpeed: PageSpeed | null; domain: string; crawled: number; onGo: (s: SectionId) => void; history?: AuditHistoryItem[] }) {
   if (!a && status === 'loading') return <CrawlingState crawled={crawled} />
   if (!a) return <EmptyState onRun={onRun} />
   const g = gradeInfo(a.siteScore)
@@ -474,6 +559,8 @@ function Overview({ a, pages, status, onRun, pageSpeed, domain, crawled, onGo }:
           </div>
         </div>
       </div>
+
+      {history && history.length > 1 && <ProgressionCard history={history} />}
 
       {/* KPI strip */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -525,6 +612,22 @@ function CoreWebVitals({ ps }: { ps: PageSpeed | null }) {
 
 function CrawlingState({ crawled }: { crawled: number }) {
   return <div className="rf-card grid place-items-center px-6 py-20 text-center"><Loader2 className="h-10 w-10 animate-spin text-[var(--rf-blue-bright)]" /><p className="mt-4 font-medium text-white">Crawling your site…</p><p className="mt-1 text-sm text-[var(--rf-muted)]">{crawled} pages analyzed so far. Results stream in as we go.</p></div>
+}
+
+function ProgressionCard({ history }: { history: AuditHistoryItem[] }) {
+  const chrono = [...history].reverse() // oldest → newest
+  const first = chrono[0]; const latest = chrono[chrono.length - 1]
+  const delta = latest.siteScore - first.siteScore
+  return (
+    <Card title="Score progression" right={<span className={`rf-mono text-xs font-semibold ${delta > 0 ? 'text-[var(--rf-green)]' : delta < 0 ? 'text-[var(--rf-red)]' : 'text-[var(--rf-faint)]'}`}>{delta > 0 ? '+' : ''}{delta} since {new Date(first.startedAt).toLocaleDateString()}</span>}>
+      <div className="flex items-end gap-1.5" style={{ height: 64 }}>
+        {chrono.map((h) => (
+          <div key={h.id} title={`${new Date(h.startedAt).toLocaleDateString()} · score ${h.siteScore}`} className="group relative flex-1 rounded-t-sm bg-gradient-to-t from-[var(--rf-blue)] to-[var(--rf-cyan)] transition-opacity hover:opacity-80" style={{ height: `${Math.max(4, h.siteScore)}%` }} />
+        ))}
+      </div>
+      <div className="mt-2 flex items-center justify-between text-[11px] text-[var(--rf-faint)]"><span>{new Date(first.startedAt).toLocaleDateString()}</span><span className="rf-mono text-white">{latest.siteScore} latest</span><span>{new Date(latest.startedAt).toLocaleDateString()}</span></div>
+    </Card>
+  )
 }
 
 /* ================================================================== */
@@ -1058,6 +1161,119 @@ function BulkRowView({ row, onChange }: { row: BulkRow; onChange: (patch: Partia
           {row.newTitle && <label className="flex cursor-pointer items-start gap-2"><input type="checkbox" checked={row.applyTitle} disabled={status !== 'ready'} onChange={(e) => onChange({ applyTitle: e.target.checked })} className="mt-0.5 accent-[var(--rf-blue)]" /><span><span className="text-[var(--rf-muted)]">Shorten title ({row.origTitle?.length}c → {row.newTitle.length}c):</span> <span className="text-[var(--rf-text)]">{row.newTitle}</span></span></label>}
           {row.newMeta && <label className="flex cursor-pointer items-start gap-2"><input type="checkbox" checked={row.applyMeta} disabled={status !== 'ready'} onChange={(e) => onChange({ applyMeta: e.target.checked })} className="mt-0.5 accent-[var(--rf-blue)]" /><span><span className="text-[var(--rf-muted)]">{row.origMeta?.trim() ? 'Shorten meta description' : 'Generate meta description from content'} ({row.newMeta.length}c):</span> <span className="text-[var(--rf-text)]">{row.newMeta}</span></span></label>}
           {row.needsSchema && <label className="flex cursor-pointer items-start gap-2"><input type="checkbox" checked={row.applySchema} disabled={status !== 'ready'} onChange={(e) => onChange({ applySchema: e.target.checked })} className="mt-0.5 accent-[var(--rf-blue)]" /><span className="text-[var(--rf-muted)]">Add JSON-LD Article schema</span></label>}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ================================================================== */
+/* Auth gate — login / register                                       */
+/* ================================================================== */
+
+function AuthGate({ onAuthed }: { onAuthed: (user: SessionUser, organizationId: string) => void }) {
+  const [mode, setMode] = useState<'login' | 'register'>('login')
+  const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [name, setName] = useState('')
+  const [busy, setBusy] = useState(false); const [error, setError] = useState<string | null>(null)
+
+  const submit = async () => {
+    if (!email.trim() || !password) { setError('Enter your email and password.'); return }
+    setBusy(true); setError(null)
+    try {
+      const res = await fetch(`/api/auth/${mode}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(mode === 'register' ? { email, password, name } : { email, password }) })
+      const json = await res.json()
+      if (!res.ok) { setError(json?.error ?? 'Something went wrong.'); return }
+      onAuthed(json.user, json.organization?.id)
+    } catch {
+      setError('Network error — please try again.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center px-4">
+      <div className="rf-grid pointer-events-none fixed inset-0 -z-10 opacity-50" />
+      <div className="rf-glow pointer-events-none fixed left-1/2 top-[-160px] -z-10 h-[420px] w-[760px] -translate-x-1/2 opacity-40" />
+      <div className="rf-card rf-topline w-full max-w-sm p-6">
+        <div className="flex items-center gap-2.5"><span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] shadow-[0_8px_24px_-8px_rgba(47,107,255,0.9)]"><Zap className="h-4 w-4 text-white" strokeWidth={2.5} /></span><span className="text-[15px] font-semibold">RankForge<span className="text-[var(--rf-blue-bright)]"> AI</span></span></div>
+        <h1 className="mt-5 text-lg font-semibold text-white">{mode === 'login' ? 'Sign in' : 'Create your account'}</h1>
+        <p className="mt-1 text-sm text-[var(--rf-muted)]">{mode === 'login' ? 'Sign in to see your saved projects and progress.' : 'Your projects, audits, and score history are saved to your account.'}</p>
+        <form onSubmit={(e) => { e.preventDefault(); if (!busy) submit() }} className="mt-4 space-y-2.5">
+          {mode === 'register' && <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name (optional)" className="rf-card w-full bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" />}
+          <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@company.com" className="rf-card w-full bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" />
+          <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder={mode === 'register' ? 'Password (min. 8 characters)' : 'Password'} className="rf-card w-full bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" />
+          {error && <p className="text-xs text-[var(--rf-red)]">{error}</p>}
+          <button type="submit" disabled={busy} className="rf-btn-primary w-full rounded-xl px-4 py-2.5 text-sm font-semibold disabled:opacity-70">{busy ? <Loader2 className="mx-auto h-4 w-4 animate-spin" /> : mode === 'login' ? 'Sign in' : 'Create account'}</button>
+        </form>
+        <button onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError(null) }} className="mt-4 w-full text-center text-xs text-[var(--rf-muted)] hover:text-white">
+          {mode === 'login' ? "Don't have an account? Create one" : 'Already have an account? Sign in'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+/* ================================================================== */
+/* Projects — list, switch, and create                                */
+/* ================================================================== */
+
+function Projects({ projects, currentProjectId, onOpen, onCreated }: { projects: ProjectSummary[]; currentProjectId: string | null; onOpen: (p: ProjectSummary) => void; onCreated: (p: ProjectSummary) => void }) {
+  const [newDomain, setNewDomain] = useState(''); const [creating, setCreating] = useState(false); const [error, setError] = useState<string | null>(null)
+  const create = async () => {
+    const domain = newDomain.trim(); if (!domain) return
+    setCreating(true); setError(null)
+    try {
+      const res = await fetch('/api/projects/resolve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain }) })
+      const json = await res.json()
+      if (!res.ok || !json.project) { setError(json?.error ?? 'Could not create project.'); return }
+      setNewDomain(''); onCreated(json.project)
+    } catch {
+      setError('Network error.')
+    } finally {
+      setCreating(false)
+    }
+  }
+  return (
+    <div className="space-y-4">
+      <div className="rf-card p-5">
+        <p className="text-sm font-semibold text-white">Add a project</p>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">Track a new domain. Every audit you run is saved here automatically.</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <input value={newDomain} onChange={(e) => setNewDomain(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && !creating && create()} placeholder="yourdomain.com" className="rf-card min-w-[200px] flex-1 bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" />
+          <button onClick={create} disabled={creating} className="rf-btn-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">{creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />} Add project</button>
+        </div>
+        {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+      </div>
+
+      {projects.length === 0 ? (
+        <div className="rf-card rf-topline grid place-items-center px-6 py-16 text-center">
+          <span className="rf-pulse grid h-14 w-14 place-items-center rounded-2xl bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]"><FolderOpen className="h-7 w-7" /></span>
+          <p className="mt-4 text-lg font-semibold text-white">No projects yet</p>
+          <p className="mt-1 max-w-sm text-sm text-[var(--rf-muted)]">Add a domain above, or run an audit from the search bar — it'll show up here automatically.</p>
+        </div>
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p) => {
+            const g = p.latestAudit ? gradeInfo(p.latestAudit.siteScore) : null
+            return (
+              <button key={p.id} onClick={() => onOpen(p)} className={`rf-card rf-card-hover p-4 text-left ${p.id === currentProjectId ? 'ring-1 ring-[var(--rf-blue-bright)]' : ''}`}>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0"><p className="truncate text-sm font-semibold text-white">{p.name}</p><p className="truncate text-[11px] text-[var(--rf-faint)]">{p.domain}</p></div>
+                  {p.isFavorite && <Star className="h-3.5 w-3.5 shrink-0 fill-[var(--rf-amber)] text-[var(--rf-amber)]" />}
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  {p.latestAudit && g ? (
+                    <>
+                      <span className="text-2xl font-semibold" style={{ color: g.color }}>{p.latestAudit.siteScore}</span>
+                      <span className="text-right text-[11px] text-[var(--rf-faint)]">{p.latestAudit.pageCount} pages<br />{new Date(p.latestAudit.startedAt).toLocaleDateString()}</span>
+                    </>
+                  ) : <span className="text-xs text-[var(--rf-faint)]">No audits yet — click to run one</span>}
+                </div>
+                {p.latestAudit && p.latestAudit.criticalCount > 0 && <p className="mt-2 text-[11px] text-[var(--rf-red)]">{p.latestAudit.criticalCount} critical issue{p.latestAudit.criticalCount !== 1 ? 's' : ''}</p>}
+              </button>
+            )
+          })}
         </div>
       )}
     </div>

@@ -68,13 +68,23 @@ export async function GET(request: Request) {
         valuePerVisit: true,
         createdAt: true,
         updatedAt: true,
+        audits: {
+          orderBy: { startedAt: 'desc' },
+          take: 1,
+          select: { siteScore: true, pageCount: true, criticalCount: true, startedAt: true },
+        },
       },
     })
 
+    const withLatest = projects.map(({ audits, ...p }: { audits: { siteScore: number; pageCount: number; criticalCount: number; startedAt: Date }[] } & Record<string, unknown>) => ({
+      ...p,
+      latestAudit: audits[0] ?? null,
+    }))
+
     return Response.json({
       success: true,
-      projects,
-      count: projects.length,
+      projects: withLatest,
+      count: withLatest.length,
     })
   } catch (err) {
     console.error('[projects/list] Error', err)
