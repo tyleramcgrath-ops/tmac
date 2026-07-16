@@ -9,10 +9,15 @@ export function CCApprovalCenter({
   approval,
   onClose,
   onAskCompass,
+  onResolve,
 }: {
   approval: PendingApproval
   onClose: () => void
   onAskCompass?: () => void
+  /** Fired once the owner has acted on this approval (approved or set aside),
+   *  so the desk folder can withdraw. Reviewing then closing without acting
+   *  does NOT resolve it — the prepared work stays on the desk. */
+  onResolve?: () => void
 }) {
   const [state, setState] = useState<'pending' | 'approved' | 'declined'>('pending')
 
@@ -65,10 +70,10 @@ export function CCApprovalCenter({
 
       {state === 'pending' && (
         <div className="flex flex-wrap gap-2.5 pt-4 border-t border-[var(--rf-card-line)]">
-          <button onClick={() => setState('approved')} className="cc-btn-amber ns-touch">
+          <button onClick={() => { setState('approved'); onResolve?.() }} className="cc-btn-amber ns-touch">
             <Check className="h-4 w-4" /> Approve &amp; publish this exact change
           </button>
-          <button onClick={() => setState('declined')} className="cc-btn-ghost ns-touch">
+          <button onClick={() => { setState('declined'); onResolve?.() }} className="cc-btn-ghost ns-touch">
             <X className="h-4 w-4" /> Not now
           </button>
         </div>

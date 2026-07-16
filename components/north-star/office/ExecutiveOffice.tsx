@@ -79,6 +79,8 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const [isDimmed, setIsDimmed] = useState(false)
   const [discovering, setDiscovering] = useState(false) // Compass briefly flares when it has something new
   const [tabHidden, setTabHidden] = useState(false)
+  const [approvalResolved, setApprovalResolved] = useState(false) // the owner has acted on the pending approval
+  const [approvalAnnounce, setApprovalAnnounce] = useState('') // SR announcement when prepared work newly arrives
   const stepsRef = useRef(buildInvestigationSteps(scenario, scenario.defaultRunOutcome))
 
   // The room's ambient loops (dust, sun breathe, glass sweep) cost real
@@ -182,6 +184,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   useEffect(() => {
     setOverlay(null); setInvestigating(false); setInvPhase('idle')
     setLastReveal(null); setCompassReaction(null); setBriefPulse(false); setApprovalArrived(false)
+    setApprovalResolved(false); setApprovalAnnounce('')
   }, [scenario])
 
   const outcome: RunOutcome = scenario.defaultRunOutcome
@@ -206,7 +209,11 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
       setLastReveal(kind)
       setCompassReaction(compassReactionFor(kind, scenario)) // Stage 4: Compass notices
       setBriefPulse(kind === 'opportunity' || kind === 'approval') // Stage 5
-      setApprovalArrived(kind === 'approval') // Stage 6: prepared work slides in
+      setApprovalArrived(kind === 'approval') // Stage 6: prepared work slides onto the desk
+      if (kind === 'approval' && scenario.pendingApproval) {
+        setApprovalResolved(false)
+        setApprovalAnnounce(`North Star prepared ${scenario.pendingApproval.title} for your review.`)
+      }
     }, 300)
     return () => window.clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -501,6 +508,36 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
         />
       </div>
 
+      {/* --- prepared work, resting on the desk (desktop). Present only when a
+             real pendingApproval exists and the owner hasn't acted on it yet;
+             the desk is otherwise calm. It represents work North Star has
+             prepared and is waiting to be reviewed — not a notification. --- */}
+      {scenario.pendingApproval && (
+        <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
+          <button
+            type="button"
+            onClick={openApproval}
+            aria-hidden={approvalResolved || undefined}
+            tabIndex={approvalResolved ? -1 : 0}
+            aria-label={`Prepared for your review: ${scenario.pendingApproval.title}. Open the approval.`}
+            className={`hq-folder pointer-events-auto absolute left-[62.5%] top-[63%] w-[8.6%] min-w-[112px] text-left${
+              approvalResolved ? ' hq-folder-leaving' : approvalArrived ? ' hq-folder-arriving' : ''
+            }`}
+          >
+            <span aria-hidden="true" className="hq-folder-shadow" />
+            <span className="hq-folder-body">
+              <span aria-hidden="true" className="hq-folder-tab" />
+              <span className="hq-folder-eyebrow">Prepared for you</span>
+              <span className="hq-folder-label">Approval needed</span>
+              <span className="hq-folder-title">{scenario.pendingApproval.title}</span>
+            </span>
+          </button>
+        </div>
+      )}
+
+      {/* the room quietly tells assistive tech when prepared work newly arrives */}
+      <div className="sr-only" role="status" aria-live="polite">{approvalResolved ? '' : approvalAnnounce}</div>
+
       {/* --- the wing: wayfinding to the room's destinations --- */}
       <div className="absolute inset-y-0 left-0 z-40 hidden lg:block">
         <CommandWing scenario={scenario} active={wingActive} onOpen={openWing} />
@@ -553,6 +590,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
           approval={scenario.pendingApproval}
           onClose={() => setOverlay(null)}
           onAskCompass={() => openCompass('approval')}
+          onResolve={() => setApprovalResolved(true)}
         />
       )}
       {overlay === 'approval-empty' && (

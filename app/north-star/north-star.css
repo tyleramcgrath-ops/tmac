@@ -900,3 +900,141 @@
     animation: none;
   }
 }
+
+/* =====================================================================
+   Prepared work — the physical approval folder on the executive desk.
+   Present only when a real pendingApproval exists (driven entirely by
+   scenario state in ExecutiveOffice); the desk is otherwise calm. It reads
+   as leather-bound work a trusted executive set down for review — never a
+   notification: no badge, no red, no pulse, no bounce.
+   ===================================================================== */
+.hq-folder {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  /* lies on the desk surface, foreshortened a touch to sit on the plane */
+  transform: perspective(680px) rotateX(30deg);
+  transform-origin: 50% 100%;
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 320ms ease;
+  filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.55));
+}
+.hq-folder:hover {
+  /* a trusted document lifted very slightly toward you on approach */
+  transform: perspective(680px) rotateX(30deg) translateY(-3px) scale(1.015);
+  filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.6)) brightness(1.05);
+}
+.hq-folder:active {
+  transform: perspective(680px) rotateX(30deg) translateY(-1px) scale(1.005);
+}
+
+/* the contact shadow the folder casts onto the desk */
+.hq-folder-shadow {
+  position: absolute;
+  left: 8%;
+  right: -6%;
+  bottom: -9%;
+  height: 34%;
+  border-radius: 50%;
+  background: radial-gradient(60% 100% at 45% 40%, rgba(2, 3, 6, 0.6), transparent 72%);
+  filter: blur(6px);
+  z-index: 0;
+}
+
+/* the leather portfolio itself */
+.hq-folder-body {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 12px 13px 13px;
+  border-radius: 5px 7px 6px 5px;
+  background:
+    linear-gradient(158deg, rgba(255, 236, 200, 0.06), transparent 40%),
+    linear-gradient(158deg, #3d3220 0%, #2b2214 55%, #1d1710 100%);
+  border: 1px solid rgba(201, 168, 119, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(224, 198, 142, 0.22),
+    inset 0 0 22px rgba(0, 0, 0, 0.4);
+}
+/* a faint grain so the leather isn't a flat fill (reuses the room's noise) */
+.hq-folder-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+}
+
+/* the restrained tab */
+.hq-folder-tab {
+  position: absolute;
+  top: -7px;
+  left: 16px;
+  width: 42px;
+  height: 8px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #4a3d26, #362b1a);
+  border: 1px solid rgba(201, 168, 119, 0.4);
+  border-bottom: none;
+}
+
+.hq-folder-eyebrow {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a8946f;
+}
+.hq-folder-label {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #e8d6b0;
+}
+.hq-folder-title {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #b6a888;
+  /* keep the label restrained: at most two lines, never a wall of text */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* quiet arrival: settles onto the desk, never bounces */
+.hq-folder-arriving {
+  animation: hq-folder-settle 780ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+@keyframes hq-folder-settle {
+  0% { opacity: 0; transform: perspective(680px) rotateX(30deg) translateY(-14px) scale(0.97); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: perspective(680px) rotateX(30deg) translateY(0) scale(1); }
+}
+
+/* quiet departure: the folder withdraws once the owner has acted */
+.hq-folder-leaving {
+  opacity: 0;
+  pointer-events: none;
+  animation: hq-folder-withdraw 620ms cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+@keyframes hq-folder-withdraw {
+  0% { opacity: 1; transform: perspective(680px) rotateX(30deg) translateY(0) scale(1); }
+  100% { opacity: 0; transform: perspective(680px) rotateX(30deg) translateY(10px) scale(0.985); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-folder { transition: none; }
+  .hq-folder:hover, .hq-folder:active { transform: perspective(680px) rotateX(30deg); }
+  .hq-folder-arriving { animation: none; }
+  /* leaving stays hidden instantly via the base opacity:0 on .hq-folder-leaving */
+  .hq-folder-leaving { animation: none; }
+}
