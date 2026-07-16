@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { analyzeStrategicPosition } from '@/lib/strategic-planning'
 import { createStrategicOperatorWorkflow } from '@/lib/strategic-integration'
+import { analyzeBusinessIntelligence } from '@/lib/business-intelligence'
+import { analyzeOrganic } from '@/lib/organic-intelligence'
 import type { PageResult, Analytics } from '@/lib/demo-data'
 
 /**
@@ -55,7 +57,12 @@ export async function GET(request: NextRequest) {
       schemaCoverage: [],
     }
 
-    const plan = analyzeStrategicPosition(demoPages, demoAnalytics, {} as any, {} as any, 'Demo Business', 5000, 150)
+    const businessName = 'Demo Business'
+    const monthlyVisits = 5000
+    const valuePerVisit = 150
+    const business = analyzeBusinessIntelligence(demoPages, demoAnalytics, businessName, monthlyVisits, valuePerVisit)
+    const organic = analyzeOrganic(demoPages, demoAnalytics, businessName)
+    const plan = analyzeStrategicPosition(demoPages, demoAnalytics, business, organic, businessName, monthlyVisits, valuePerVisit)
 
     // Create operator workflow
     const workflow = createStrategicOperatorWorkflow(plan)
