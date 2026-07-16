@@ -120,6 +120,7 @@ model Organization {
   recommendations Recommendation[]
   competitors     Competitor[]
   deployments     Deployment[]
+  keywords        Keyword[]
 
   // Integrations (org-level)
   oauthCredentials           OAuthCredential[]
@@ -274,6 +275,7 @@ model Project {
   audits              Audit[]
   workItems           WorkItem[]
   competitors         Competitor[]
+  keywords            Keyword[]
   oauthCredentials    OAuthCredential[]
   googleSearchConsole GoogleSearchConsoleMetric[]
   googleAnalytics4    GoogleAnalytics4Metric[]
@@ -610,6 +612,70 @@ model WorkItem {
 // ─────────────────────────────────────────────────────────────────────────────
 // COMPETITORS (Organization-scoped)
 // ─────────────────────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────────────────────
+// KEYWORD UNIVERSE & RANK TRACKING (Organization-scoped)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Keyword {
+  id               String    @id @default(cuid())
+  organizationId   String
+  projectId        String
+  keyword          String
+  normalizedKeyword String
+  targetPageUrl    String?
+  type             String // primary, secondary, long_tail, question
+  intent           String // transactional, commercial, informational, local, comparison, navigational, branded
+  status           String    @default("tracking") // tracking, opportunity, winning, declining, lost, new, unassigned, cannibalized, not_recommended, ignored
+  confidence       Float     @default(0)
+  estimatedDemand  Float? // relative, content-frequency-based — never a measured search volume
+  evidence         String? // JSON string[]
+  sources          String? // JSON string[] — title, h1, h2, body, url, schema, faq
+
+  currentPosition  Int?
+  previousPosition Int?
+  bestPosition     Int?
+  rankingUrl       String?
+  dataSource       String? // rankforge_live_check, gsc, manual, imported, estimated, unavailable
+
+  firstDiscoveredAt DateTime @default(now())
+  lastCheckedAt     DateTime?
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  organization  Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project       Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  rankingChecks RankingCheck[]
+
+  @@unique([projectId, normalizedKeyword])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([type])
+}
+
+model RankingCheck {
+  id         String   @id @default(cuid())
+  keywordId  String
+  position   Int? // null when the check could not be completed — never fabricated
+  device     String   @default("desktop") // desktop, mobile
+  country    String?
+  language   String?
+  location   String?
+  rankingUrl String?
+  serpFeatures String? // JSON string[] — local_pack, featured_snippet, paa, video, image, news, shopping, ai_overview
+  source     String // rankforge_live_check, gsc, manual, imported, estimated
+  available  Boolean  @default(true)
+  unavailableReason String?
+  checkedAt  DateTime @default(now())
+
+  keyword Keyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+
+  @@index([keywordId])
+  @@index([checkedAt])
+  @@index([source])
+}
 
 model Competitor {
   id               String    @id @default(cuid())

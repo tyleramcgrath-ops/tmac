@@ -4,6 +4,7 @@
 // Requires DATABASE_URL to be configured.
 
 import { getCurrentSession } from '@/lib/session'
+import { buildKeywordUpserts } from '@/lib/keywords/persist'
 
 export const runtime = 'nodejs'
 
@@ -113,6 +114,50 @@ export async function POST(request: Request) {
         await prisma.page.createMany({
           data: pageData.slice(i, i + 50),
         })
+      }
+
+      // Merge this crawl's discovered keywords into the project's Keyword
+      // Universe, flagging any keyword claimed as "primary" on more than one
+      // page as cannibalized. Best-effort — a failure here should not fail
+      // the whole audit save.
+      try {
+        const keywordRecords = buildKeywordUpserts(
+          pages.map((p: any) => ({ url: p.url, keywords: Array.isArray(p.keywords) ? p.keywords : [] }))
+        )
+        for (const rec of keywordRecords) {
+          await prisma.keyword.upsert({
+            where: { projectId_normalizedKeyword: { projectId, normalizedKeyword: rec.normalizedKeyword } },
+            create: {
+              organizationId,
+              projectId,
+              keyword: rec.keyword,
+              normalizedKeyword: rec.normalizedKeyword,
+              targetPageUrl: rec.targetPageUrl,
+              type: rec.type,
+              intent: rec.intent,
+              confidence: rec.confidence,
+              estimatedDemand: rec.estimatedDemand,
+              evidence: JSON.stringify(rec.evidence),
+              sources: JSON.stringify(rec.sources),
+              status: rec.cannibalized ? 'cannibalized' : 'new',
+              lastCheckedAt: new Date(),
+            },
+            update: {
+              keyword: rec.keyword,
+              targetPageUrl: rec.targetPageUrl,
+              type: rec.type,
+              intent: rec.intent,
+              confidence: rec.confidence,
+              estimatedDemand: rec.estimatedDemand,
+              evidence: JSON.stringify(rec.evidence),
+              sources: JSON.stringify(rec.sources),
+              ...(rec.cannibalized ? { status: 'cannibalized' } : {}),
+              lastCheckedAt: new Date(),
+            },
+          })
+        }
+      } catch (kwError) {
+        console.error('[audit] keyword persistence error (non-fatal):', kwError)
       }
 
       await prisma.project.update({ where: { id: projectId }, data: { updatedAt: new Date() } })

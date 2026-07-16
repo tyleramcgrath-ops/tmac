@@ -21,6 +21,7 @@ import {
 } from '../seo-scan/analyze'
 import { checkOutboundUrl } from '@/lib/ssrf'
 import { checkRateLimit, clientKey } from '@/lib/rateLimit'
+import { discoverKeywords, type DiscoveredKeyword } from '@/lib/keywords/discover'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -49,6 +50,7 @@ interface PageResult {
   https: boolean
   indexable: boolean
   fixes: FixItem[]
+  keywords: DiscoveredKeyword[]
 }
 
 export async function POST(request: Request) {
@@ -137,6 +139,19 @@ export async function POST(request: Request) {
         (scores.technical * 30 + scores.content * 30 + scores.schema * 12 + scores.ai * 16) / 88
       )
       const links = extractInternalLinks(r.html, r.finalUrl, 120).map(stripHash)
+      const keywords = signals.indexable
+        ? discoverKeywords({
+            title: signals.title,
+            metaDescription: signals.metaDescription,
+            h1: signals.h1,
+            h2: signals.h2,
+            bodyText: signals.bodyText,
+            url: r.finalUrl,
+            schemaTypes: signals.schemaTypes,
+            hasFaq: signals.hasFaq,
+            brandTerms: brandTerms(host),
+          })
+        : []
       pages.push({
         url: r.finalUrl,
         status: r.status,
@@ -154,6 +169,7 @@ export async function POST(request: Request) {
         https: signals.https,
         indexable: signals.indexable,
         fixes,
+        keywords,
       })
       // discover internal links
       for (const link of links) {
@@ -290,4 +306,13 @@ function safeHost(u: string): string {
   } catch {
     return u
   }
+}
+// Best-effort brand term guess from the domain itself (e.g. "acmeplumbing.com"
+// -> "acmeplumbing" / "acme plumbing"), used only to classify branded intent —
+// never presented as verified brand data.
+function brandTerms(host: string): string[] {
+  const label = host.split('.')[0] ?? ''
+  if (!label) return []
+  const spaced = label.replace(/[-_]+/g, ' ').replace(/([a-z])([A-Z])/g, '$1 $2')
+  return [...new Set([label, spaced])].filter(Boolean)
 }
