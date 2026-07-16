@@ -97,6 +97,25 @@ describe('classifyWordPressError', () => {
     expect(r.category).toBe('redirect_loop')
   })
 
+  it('includes request URL, method, and response headers in technical details when provided', () => {
+    // These fields are what a hosting provider's support team needs to
+    // locate a specific request in their own logs — added after a live
+    // support escalation (SiteGround) asked for exact URL, method, and
+    // response headers alongside status/body, none of which were being
+    // captured before this.
+    const r = classifyWordPressError({
+      httpStatus: 202,
+      bodyText: '<html>challenge page</html>',
+      headers: { 'content-type': 'text/html', 'x-example-header': 'value123' },
+      step: 'rest discovery',
+      requestUrl: 'https://example.com/wp-json/',
+      requestMethod: 'GET',
+    })
+    expect(r.technicalDetails).toContain('GET https://example.com/wp-json/')
+    expect(r.technicalDetails).toContain('content-type: text/html')
+    expect(r.technicalDetails).toContain('x-example-header: value123')
+  })
+
   it('classifies an SSRF block message as rankforge_configuration_error and is not retryable', () => {
     const r = classifyWordPressError({ exceptionMessage: 'Blocked outbound URL: Private / reserved IP addresses are not allowed.' })
     expect(r.category).toBe('rankforge_configuration_error')

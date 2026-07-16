@@ -125,7 +125,7 @@ export async function runConnectionDiagnostics(
     indexRes = result.response
     indexBody = await readBodyText(indexRes)
     if (!indexRes.ok) {
-      const report = classifyWordPressError({ httpStatus: indexRes.status, bodyText: indexBody, step: 'wp-json reachability' })
+      const report = classifyWordPressError({ httpStatus: indexRes.status, bodyText: indexBody, headers: headersToObject(indexRes.headers), step: 'wp-json reachability', requestUrl: normalized.restRoot, requestMethod: 'GET' })
       steps.push(step(3, 'rest_reachable', 'fail', `/wp-json/ responded with HTTP ${indexRes.status}.`, report))
       for (let i = 4; i <= 12; i++) steps.push(skip(i, 'Skipped — REST API is not reachable.'))
       return finalize(steps, normalized.siteUrl, normalized.restRoot)
@@ -149,7 +149,7 @@ export async function runConnectionDiagnostics(
       steps.push(step(4, 'rest_discovery', 'pass', `Discovered ${namespaces.length} REST namespace(s).`))
     }
   } catch {
-    steps.push(step(4, 'rest_discovery', 'fail', 'REST root did not return valid JSON — something between RankForge and the site is altering the response.', classifyWordPressError({ httpStatus: indexRes.status, bodyText: indexBody, step: 'rest discovery' })))
+    steps.push(step(4, 'rest_discovery', 'fail', 'REST root did not return valid JSON — something between RankForge and the site is altering the response.', classifyWordPressError({ httpStatus: indexRes.status, bodyText: indexBody, headers: headersToObject(indexRes.headers), step: 'rest discovery', requestUrl: normalized.restRoot, requestMethod: 'GET' })))
     for (let i = 5; i <= 12; i++) steps.push(skip(i, 'Skipped — REST discovery failed.'))
     return finalize(steps, normalized.siteUrl, normalized.restRoot)
   }

@@ -210,6 +210,9 @@ export interface ClassifyWordPressErrorInput {
   exceptionName?: string
   /** Which diagnostic step this failure occurred at, for technical detail context. */
   step?: string
+  /** The exact request URL and method, for support-ticket-grade technical detail. */
+  requestUrl?: string
+  requestMethod?: string
 }
 
 /** Redacts anything that could resemble a credential from technical detail strings. */
@@ -220,7 +223,7 @@ function redact(text: string): string {
 }
 
 export function classifyWordPressError(input: ClassifyWordPressErrorInput): WordPressErrorReport {
-  const { httpStatus, bodyText = '', headers = {}, exceptionMessage = '', exceptionName = '', step = '' } = input
+  const { httpStatus, bodyText = '', headers = {}, exceptionMessage = '', exceptionName = '', step = '', requestUrl = '', requestMethod = '' } = input
   const body = bodyText.toLowerCase()
   const msg = exceptionMessage.toLowerCase()
   const headerBlob = Object.entries(headers).map(([k, v]) => `${k}: ${v}`).join('\n').toLowerCase()
@@ -313,12 +316,15 @@ export function classifyWordPressError(input: ClassifyWordPressErrorInput): Word
   }
 
   const copy = CATEGORY_COPY[category]
+  const headerLines = Object.entries(headers)
   const technicalParts = [
     step ? `Step: ${step}` : null,
+    requestUrl ? `Request: ${requestMethod || 'GET'} ${requestUrl}` : null,
     httpStatus ? `HTTP status: ${httpStatus}` : null,
     exceptionName ? `Exception: ${exceptionName}` : null,
     exceptionMessage ? `Message: ${exceptionMessage}` : null,
-    bodyText ? `Response: ${bodyText.slice(0, 500)}` : null,
+    headerLines.length > 0 ? `Response headers:\n${headerLines.map(([k, v]) => `  ${k}: ${v}`).join('\n')}` : null,
+    bodyText ? `Response body: ${bodyText.slice(0, 500)}` : null,
   ].filter(Boolean) as string[]
 
   return {
