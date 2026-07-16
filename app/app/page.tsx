@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, ArrowUpRight, Check, AlertTriangle, Info, Download, Printer,
   Zap, ExternalLink, RefreshCw, X, Gauge, StopCircle, Network, ShieldCheck,
-  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, Scissors, type LucideIcon,
+  Code2, Wand2, Rocket, RotateCcw, TrendingUp, Bot, Sparkles, Scissors, ListChecks, type LucideIcon,
 } from 'lucide-react'
 import { CommandCenter, logEvent } from './command'
 import { ForgeDock } from './forge'
@@ -728,6 +728,7 @@ function WordPress() {
   const [diag, setDiag] = useState<WpDiagResult | null>(null); const [showTechnical, setShowTechnical] = useState<string | null>(null)
   const [items, setItems] = useState<WpItem[]>([]); const [loadingItems, setLoadingItems] = useState(false)
   const [listType, setListType] = useState<'posts' | 'pages'>('posts'); const [editing, setEditing] = useState<WpEdit | null>(null); const [optimizingId, setOptimizingId] = useState<number | null>(null)
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set()); const [bulkOpen, setBulkOpen] = useState(false)
   useEffect(() => { try { const s = localStorage.getItem('rf_app_wp'); if (s) { const p = JSON.parse(s); setSiteUrl(p.siteUrl || ''); setUsername(p.username || '') } } catch { /* ignore */ } }, [])
   const test = async () => {
     setStatus('testing'); setError(null); setDiag(null)
@@ -755,8 +756,10 @@ function WordPress() {
       setError('Could not reach the site.'); setStatus('error')
     }
   }
-  const list = async (action: 'posts' | 'pages') => { setListType(action); setLoadingItems(true); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setItems(json.items || []) } catch { /* ignore */ } finally { setLoadingItems(false) } }
+  const list = async (action: 'posts' | 'pages') => { setListType(action); setSelectedIds(new Set()); setLoadingItems(true); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setItems(json.items || []) } catch { /* ignore */ } finally { setLoadingItems(false) } }
   const optimize = async (item: WpItem) => { setOptimizingId(item.id); try { const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'get', id: item.id, type: listType, siteUrl, username, appPassword }) }); const json = await res.json(); if (res.ok) setEditing(json); else setError(json?.error ?? 'Could not load item.') } catch { setError('Could not load item.') } finally { setOptimizingId(null) } }
+  const toggleSelect = (id: number) => setSelectedIds((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next })
+  const toggleSelectAll = () => setSelectedIds((prev) => prev.size === items.length ? new Set() : new Set(items.map((it) => it.id)))
   const creds: WpCreds = { siteUrl, username, appPassword }
   const stepIcon = (s: WpDiagStep['status']) => s === 'pass' ? <Check className="h-3.5 w-3.5 text-[var(--rf-green)]" /> : s === 'fail' ? <span className="text-[var(--rf-red)]">✕</span> : s === 'warning' ? <span className="text-amber-400">!</span> : <span className="text-[var(--rf-faint)]">–</span>
   return (
@@ -813,9 +816,16 @@ function WordPress() {
       {status === 'connected' && info && <>
         <div className="rf-card p-5"><div className="flex items-center gap-2 text-sm"><Check className="h-4 w-4 text-[var(--rf-green)]" /><span className="font-semibold text-white">{info.name}</span></div>{info.description && <p className="mt-1 text-xs text-[var(--rf-muted)]">{info.description}</p>}<div className="mt-3 flex flex-wrap gap-2 text-[11px]"><Badge ok={!!info.authValid} text={info.authValid ? 'Authenticated' : info.authProvided ? 'Auth failed' : 'Public (no auth)'} /><Badge ok={!!info.hasAioseo} text={info.hasAioseo ? 'AIOSEO detected' : 'AIOSEO not detected'} /></div><div className="mt-4 flex gap-2"><button onClick={() => list('posts')} className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">List posts</button><button onClick={() => list('pages')} className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">List pages</button></div></div>
         {loadingItems && <p className="text-sm text-[var(--rf-muted)]"><Loader2 className="mr-1 inline h-4 w-4 animate-spin" /> Loading…</p>}
-        {items.length > 0 && <div className="rf-card overflow-hidden"><div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">{listType} ({items.length}) · optimize &amp; deploy SEO fixes</div><div className="divide-y divide-[var(--rf-card-line)]">{items.map((it) => <div key={it.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm"><span className="truncate text-[var(--rf-text)]" dangerouslySetInnerHTML={{ __html: it.title || pathOf(it.link) }} /><span className="flex shrink-0 items-center gap-2"><a href={it.link} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-faint)] hover:text-white"><ExternalLink className="h-3.5 w-3.5" /></a><button onClick={() => optimize(it)} disabled={optimizingId === it.id} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium disabled:opacity-60">{optimizingId === it.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />} Optimize</button></span></div>)}</div></div>}
+        {items.length > 0 && <div className="rf-card overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--rf-card-line)] px-4 py-2.5">
+            <label className="flex cursor-pointer items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]"><input type="checkbox" checked={items.length > 0 && selectedIds.size === items.length} onChange={toggleSelectAll} className="accent-[var(--rf-blue)]" />{listType} ({items.length}) · {selectedIds.size > 0 ? `${selectedIds.size} selected` : 'optimize & deploy SEO fixes'}</label>
+            {selectedIds.size > 0 && <button onClick={() => setBulkOpen(true)} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold"><ListChecks className="h-3.5 w-3.5" /> Optimize {selectedIds.size} selected</button>}
+          </div>
+          <div className="divide-y divide-[var(--rf-card-line)]">{items.map((it) => <div key={it.id} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm"><span className="flex min-w-0 items-center gap-2.5"><input type="checkbox" checked={selectedIds.has(it.id)} onChange={() => toggleSelect(it.id)} className="shrink-0 accent-[var(--rf-blue)]" /><span className="truncate text-[var(--rf-text)]" dangerouslySetInnerHTML={{ __html: it.title || pathOf(it.link) }} /></span><span className="flex shrink-0 items-center gap-2"><a href={it.link} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-faint)] hover:text-white"><ExternalLink className="h-3.5 w-3.5" /></a><button onClick={() => optimize(it)} disabled={optimizingId === it.id} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium disabled:opacity-60">{optimizingId === it.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Wand2 className="h-3.5 w-3.5" />} Optimize</button></span></div>)}</div>
+        </div>}
       </>}
       {editing && <Optimizer edit={editing} creds={creds} authValid={!!info?.authValid} hasAioseo={!!info?.hasAioseo} onClose={() => setEditing(null)} />}
+      {bulkOpen && <BulkOptimizer items={items.filter((it) => selectedIds.has(it.id))} type={listType} creds={creds} authValid={!!info?.authValid} hasAioseo={!!info?.hasAioseo} onClose={() => setBulkOpen(false)} onDeployed={(ids) => setSelectedIds((prev) => { const next = new Set(prev); for (const id of ids) next.delete(id); return next })} />}
     </div>
   )
 }
@@ -904,6 +914,155 @@ function Optimizer({ edit, creds, authValid, hasAioseo, onClose }: { edit: WpEdi
 }
 
 function Badge({ ok, text }: { ok: boolean; text: string }) { return <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 ${ok ? 'bg-[var(--rf-green)]/10 text-[var(--rf-green)]' : 'bg-white/[0.05] text-[var(--rf-muted)]'}`}>{ok ? <Check className="h-3 w-3" /> : <Info className="h-3 w-3" />} {text}</span> }
+
+/* ================================================================== */
+/* WordPress bulk optimize — scan several pages at once, auto-detect  */
+/* fixable issues (over-length / missing title+meta, missing schema), */
+/* review, then deploy the reviewed subset in one pass.               */
+/* ================================================================== */
+
+interface BulkRow {
+  item: WpItem
+  status: 'loading' | 'ready' | 'no-fixes' | 'applying' | 'done' | 'error'
+  error?: string
+  post?: WpEditPost
+  analysis?: WpAnalysis | null
+  origTitle?: string
+  origMeta?: string
+  newTitle?: string | null
+  newMeta?: string | null
+  needsSchema?: boolean
+  applyTitle: boolean
+  applyMeta: boolean
+  applySchema: boolean
+}
+
+function BulkOptimizer({ items, type, creds, authValid, hasAioseo, onClose, onDeployed }: { items: WpItem[]; type: 'posts' | 'pages'; creds: WpCreds; authValid: boolean; hasAioseo: boolean; onClose: () => void; onDeployed: (ids: number[]) => void }) {
+  const [rows, setRows] = useState<BulkRow[]>(() => items.map((item) => ({ item, status: 'loading', applyTitle: false, applyMeta: false, applySchema: false })))
+  const [deploying, setDeploying] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      for (const item of items) {
+        if (cancelled) return
+        try {
+          const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'get', id: item.id, type, ...creds }) })
+          const json = await res.json()
+          if (cancelled) return
+          if (!res.ok) { setRows((prev) => prev.map((r) => r.item.id === item.id ? { ...r, status: 'error', error: json?.error ?? 'Could not load item.' } : r)); continue }
+          const post: WpEditPost = json.post
+          const analysis: WpAnalysis | null = json.analysis ?? null
+          const origTitle = hasAioseo ? post.aioseoTitle || analysis?.title || post.title : post.title
+          const origMeta = hasAioseo ? post.aioseoDescription || post.excerpt || analysis?.metaDescription || '' : post.excerpt || analysis?.metaDescription || ''
+          const plainContent = post.content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+          let newTitle: string | null = null
+          let newMeta: string | null = null
+          if (origTitle.length > 60) newTitle = shortenToFit(origTitle, 60)
+          if (!origMeta.trim() && plainContent) newMeta = shortenToFit(plainContent, 160)
+          else if (origMeta.length > 160) newMeta = shortenToFit(origMeta, 160)
+          const needsSchema = !!analysis && analysis.schemaTypes.length === 0
+          const hasFix = !!newTitle || !!newMeta || needsSchema
+          setRows((prev) => prev.map((r) => r.item.id === item.id ? {
+            ...r, status: hasFix ? 'ready' : 'no-fixes', post, analysis, origTitle, origMeta, newTitle, newMeta, needsSchema,
+            applyTitle: !!newTitle, applyMeta: !!newMeta, applySchema: needsSchema,
+          } : r))
+        } catch {
+          if (!cancelled) setRows((prev) => prev.map((r) => r.item.id === item.id ? { ...r, status: 'error', error: 'Network error.' } : r))
+        }
+      }
+    })()
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const setRow = (id: number, patch: Partial<BulkRow>) => setRows((prev) => prev.map((r) => r.item.id === id ? { ...r, ...patch } : r))
+  const readyRows = rows.filter((r) => r.status === 'ready' && (r.applyTitle || r.applyMeta || r.applySchema))
+
+  const deployAll = async () => {
+    setDeploying(true)
+    const deployedIds: number[] = []
+    for (const row of rows) {
+      if (row.status !== 'ready' || !(row.applyTitle || row.applyMeta || row.applySchema)) continue
+      setRow(row.item.id, { status: 'applying' })
+      const payload: Record<string, string> = { id: String(row.item.id) }
+      if (row.applyTitle && row.newTitle) { if (hasAioseo) payload.aioseoTitle = row.newTitle; else payload.title = row.newTitle }
+      if (row.applyMeta && row.newMeta) { if (hasAioseo) payload.aioseoDescription = row.newMeta; else payload.excerpt = row.newMeta }
+      if (row.applySchema && row.post) payload.content = row.post.content.replace(SCHEMA_RE, '') + wrapSchema(defaultSchema(row.newTitle || row.origTitle || row.post.title, row.post.link))
+      try {
+        const res = await fetch('/api/wordpress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'apply', type, ...creds, ...payload }) })
+        const json = await res.json()
+        if (!res.ok) { setRow(row.item.id, { status: 'error', error: json?.error ?? 'Deploy failed.' }); continue }
+        setRow(row.item.id, { status: 'done' })
+        deployedIds.push(row.item.id)
+        logEvent('deploy', `Deployed bulk SEO fixes to ${pathOf(row.item.link)}`)
+      } catch {
+        setRow(row.item.id, { status: 'error', error: 'Network error.' })
+      }
+    }
+    setDeploying(false)
+    if (deployedIds.length > 0) onDeployed(deployedIds)
+  }
+
+  const loadingCount = rows.filter((r) => r.status === 'loading').length
+  const doneCount = rows.filter((r) => r.status === 'done').length
+  const errorCount = rows.filter((r) => r.status === 'error').length
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm sm:p-8" onClick={deploying ? undefined : onClose}>
+      <div className="rf-card rf-topline relative my-auto w-full max-w-3xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-5 py-3.5">
+          <span className="flex items-center gap-2 text-sm font-semibold text-white"><ListChecks className="h-4 w-4 text-[var(--rf-blue-bright)]" /> Bulk optimize ({rows.length})</span>
+          <button onClick={onClose} disabled={deploying} className="rf-btn-ghost grid h-8 w-8 place-items-center rounded-lg disabled:opacity-50"><X className="h-4 w-4" /></button>
+        </div>
+        <div className="max-h-[72vh] overflow-y-auto p-5">
+          {!authValid && <p className="mb-3 rounded-lg border border-[var(--rf-amber)]/30 bg-[var(--rf-amber)]/10 px-3 py-2 text-xs text-[var(--rf-amber)]">Connect with a valid Application Password to deploy changes.</p>}
+          {loadingCount > 0 && <p className="mb-3 flex items-center gap-1.5 text-xs text-[var(--rf-muted)]"><Loader2 className="h-3.5 w-3.5 animate-spin" /> Scanning {loadingCount} of {rows.length} for fixable issues…</p>}
+          <div className="space-y-2">{rows.map((r) => <BulkRowView key={r.item.id} row={r} onChange={(patch) => setRow(r.item.id, patch)} />)}</div>
+          <div className="mt-5 flex flex-col items-start gap-3 border-t border-[var(--rf-card-line)] pt-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-[var(--rf-muted)]">
+              {[
+                doneCount > 0 ? `${doneCount} deployed` : null,
+                errorCount > 0 ? `${errorCount} failed` : null,
+                readyRows.length > 0 ? `${readyRows.length} ready to deploy` : null,
+              ].filter(Boolean).join(' · ') || (loadingCount === 0 ? 'No fixable issues found in the selected pages.' : '')}
+            </p>
+            <button onClick={deployAll} disabled={!authValid || deploying || readyRows.length === 0} className="rf-btn-primary inline-flex shrink-0 items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60">
+              {deploying ? <><Loader2 className="h-4 w-4 animate-spin" /> Deploying…</> : <><Rocket className="h-4 w-4" /> Deploy {readyRows.length} change{readyRows.length !== 1 ? 's' : ''}</>}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function BulkRowView({ row, onChange }: { row: BulkRow; onChange: (patch: Partial<BulkRow>) => void }) {
+  const { item, status } = row
+  const statusIcon = status === 'loading' ? <Loader2 className="h-3.5 w-3.5 animate-spin text-[var(--rf-faint)]" />
+    : status === 'applying' ? <Loader2 className="h-3.5 w-3.5 animate-spin text-[var(--rf-blue-bright)]" />
+    : status === 'done' ? <Check className="h-3.5 w-3.5 text-[var(--rf-green)]" />
+    : status === 'error' ? <AlertTriangle className="h-3.5 w-3.5 text-[var(--rf-red)]" />
+    : status === 'no-fixes' ? <Check className="h-3.5 w-3.5 text-[var(--rf-faint)]" />
+    : <Wand2 className="h-3.5 w-3.5 text-[var(--rf-cyan)]" />
+  return (
+    <div className="rounded-xl border border-[var(--rf-card-line)] px-3 py-2.5">
+      <div className="flex items-center justify-between gap-2 text-sm">
+        <span className="flex min-w-0 items-center gap-2"><span className="shrink-0">{statusIcon}</span><span className="truncate text-[var(--rf-text)]" dangerouslySetInnerHTML={{ __html: item.title || pathOf(item.link) }} /></span>
+        <a href={item.link} target="_blank" rel="noopener noreferrer" className="shrink-0 text-[var(--rf-faint)] hover:text-white"><ExternalLink className="h-3.5 w-3.5" /></a>
+      </div>
+      {status === 'error' && <p className="mt-1 text-[11px] text-[var(--rf-red)]">{row.error}</p>}
+      {status === 'no-fixes' && <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No automatically fixable issues — title and meta are already within range and schema is present.</p>}
+      {(status === 'ready' || status === 'applying' || status === 'done') && (
+        <div className="mt-2 space-y-1.5 text-[11px]">
+          {row.newTitle && <label className="flex cursor-pointer items-start gap-2"><input type="checkbox" checked={row.applyTitle} disabled={status !== 'ready'} onChange={(e) => onChange({ applyTitle: e.target.checked })} className="mt-0.5 accent-[var(--rf-blue)]" /><span><span className="text-[var(--rf-muted)]">Shorten title ({row.origTitle?.length}c → {row.newTitle.length}c):</span> <span className="text-[var(--rf-text)]">{row.newTitle}</span></span></label>}
+          {row.newMeta && <label className="flex cursor-pointer items-start gap-2"><input type="checkbox" checked={row.applyMeta} disabled={status !== 'ready'} onChange={(e) => onChange({ applyMeta: e.target.checked })} className="mt-0.5 accent-[var(--rf-blue)]" /><span><span className="text-[var(--rf-muted)]">{row.origMeta?.trim() ? 'Shorten meta description' : 'Generate meta description from content'} ({row.newMeta.length}c):</span> <span className="text-[var(--rf-text)]">{row.newMeta}</span></span></label>}
+          {row.needsSchema && <label className="flex cursor-pointer items-start gap-2"><input type="checkbox" checked={row.applySchema} disabled={status !== 'ready'} onChange={(e) => onChange({ applySchema: e.target.checked })} className="mt-0.5 accent-[var(--rf-blue)]" /><span className="text-[var(--rf-muted)]">Add JSON-LD Article schema</span></label>}
+        </div>
+      )}
+    </div>
+  )
+}
 
 /* ================================================================== */
 /* Reports                                                            */
