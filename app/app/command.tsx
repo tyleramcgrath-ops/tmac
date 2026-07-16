@@ -142,11 +142,12 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
 
   if (!a) {
     return (
-      <div className="rf-card rf-topline grid place-items-center px-6 py-20 text-center">
-        <span className="rf-pulse grid h-14 w-14 place-items-center rounded-2xl bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]"><Bot className="h-7 w-7" /></span>
-        <p className="mt-4 text-lg font-semibold text-white">{greeting(biz.name)}</p>
-        <p className="mt-1 max-w-sm text-sm text-[var(--rf-muted)]">I'm Forge, your AI SEO employee. Run your first audit and I'll brief you on exactly what to fix and what it's worth.</p>
-        <button onClick={onRun} className="rf-btn-primary mt-5 rounded-xl px-5 py-2.5 text-sm font-semibold">Run first audit</button>
+      <div className="rf-card rf-topline grid place-items-center px-6 py-16 text-center">
+        <span className="rf-pulse grid h-16 w-16 place-items-center rounded-2xl bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]"><Sparkles className="h-8 w-8" /></span>
+        <p className="mt-6 text-2xl font-semibold text-white">{greeting(biz.name)}</p>
+        <p className="mt-3 max-w-md text-sm text-[var(--rf-muted)]">I'll scan your site, identify revenue-blocking issues, rank them by impact, and tell you exactly what to fix first and what it's worth.</p>
+        <button onClick={onRun} className="rf-btn-primary mt-6 rounded-xl px-6 py-3 text-sm font-semibold">Scan your site now</button>
+        <p className="mt-4 text-xs text-[var(--rf-faint)]">Takes 2-3 minutes depending on site size</p>
       </div>
     )
   }
@@ -161,11 +162,11 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
         <div className="rf-glow pointer-events-none absolute -right-20 -top-20 h-64 w-64 opacity-40" />
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="rf-mono text-[11px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">Forge · your AI SEO employee</p>
+            <p className="rf-mono text-[11px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">🔍 What's happening with {domain || 'your site'}</p>
             <h1 className="mt-1 text-2xl font-semibold text-white">{greeting(biz.name)}</h1>
-            <p className="mt-0.5 text-sm text-[var(--rf-muted)]">Here's where {domain || 'your site'} stands right now.</p>
+            <p className="mt-0.5 text-sm text-[var(--rf-muted)]">Here are the opportunities you should focus on today.</p>
           </div>
-          <button onClick={() => setShowBiz(true)} className="rf-btn-ghost inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium"><Settings2 className="h-3.5 w-3.5" /> Business inputs</button>
+          <button onClick={() => setShowBiz(true)} className="rf-btn-ghost inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all hover:bg-white/[0.04]"><Settings2 className="h-3.5 w-3.5" /> Your numbers</button>
         </div>
         <ul className="mt-4 space-y-2">
           {brief(a, pages.length, totalRevenue).map((b, i) => (
@@ -179,13 +180,13 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
 
       {/* ── Signature gauges ── */}
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rf-card rf-card-hover relative overflow-hidden p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">AI Authority Score</p>
+        <div className="rf-card rf-card-hover relative overflow-hidden p-6 transition-all hover:shadow-lg hover:shadow-[var(--rf-blue)]/10">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">AI Visibility Score</p>
           <div className="mt-3 flex items-center gap-6">
             <BigGauge value={ai} />
             <div className="min-w-0 flex-1">
-              <p className="text-sm text-[var(--rf-muted)]">{ai >= 80 ? 'Excellent — AI engines can read, trust, and cite this site.' : ai >= 60 ? 'Good — a few structural upgrades will earn more AI citations.' : 'AI engines struggle to cite this site. Fix schema and structure first.'}</p>
-              <p className="mt-2 rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">On-page readiness, computed from your crawl</p>
+              <p className="text-sm text-[var(--rf-muted)]">{ai >= 80 ? 'Excellent — AI models will readily cite and reference this site.' : ai >= 60 ? 'Good — minor improvements will increase AI citations significantly.' : 'Low — focus on structure and data markup first to improve AI discovery.'}</p>
+              <p className="mt-2 rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">How easily AI can understand and cite your content</p>
             </div>
           </div>
           <div className="mt-4 grid gap-1.5 sm:grid-cols-2">
@@ -204,39 +205,39 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
       </div>
 
       {/* ── Revenue engine ── */}
-      <div className="rf-card rf-topline relative overflow-hidden p-5">
+      <div className="rf-card rf-topline relative overflow-hidden p-5 transition-all hover:shadow-lg hover:shadow-[var(--rf-green)]/10">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]"><DollarSign className="h-4 w-4 text-[var(--rf-green)]" /> Revenue opportunity</p>
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]"><DollarSign className="h-4 w-4 text-[var(--rf-green)]" /> Revenue at stake</p>
             {biz.monthlyVisits > 0 && biz.valuePerVisit > 0 ? (
               <>
                 <p className="mt-1 text-3xl font-semibold text-[var(--rf-green)]">~${totalRevenue.toLocaleString()}<span className="text-base text-[var(--rf-faint)]">/mo</span></p>
-                <p className="mt-1 text-xs text-[var(--rf-muted)]">≈ {totalTraffic.toLocaleString()} recoverable visits/mo if today's issues are fixed.</p>
+                <p className="mt-1 text-xs text-[var(--rf-muted)]">This is what you could recover by fixing today's top opportunities.</p>
               </>
             ) : (
               <>
-                <p className="mt-1 text-xl font-semibold text-white">Add your traffic & value to model recovery.</p>
-                <p className="mt-1 text-xs text-[var(--rf-muted)]">Without real inputs I won't fabricate a dollar figure.</p>
+                <p className="mt-1 text-xl font-semibold text-white">Enter your traffic & conversion value</p>
+                <p className="mt-1 text-xs text-[var(--rf-muted)]">So we can show you the real revenue impact of each improvement.</p>
               </>
             )}
           </div>
           <div className="text-right">
-            <p className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">{biz.monthlyVisits > 0 ? 'Modeled estimate*' : 'Not yet estimated'}</p>
+            <p className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">{biz.monthlyVisits > 0 ? 'Calculated estimate' : 'Not calculated'}</p>
             {biz.monthlyVisits > 0 && (
-              <p className="mt-1 text-xs text-[var(--rf-muted)]">Based on your inputs: {biz.monthlyVisits.toLocaleString()} visits/mo · ${biz.valuePerVisit}/visit</p>
+              <p className="mt-1 text-xs text-[var(--rf-muted)]">{biz.monthlyVisits.toLocaleString()} visits × ${biz.valuePerVisit} per visit</p>
             )}
-            <button onClick={() => setShowBiz(true)} className="mt-1 text-xs text-[var(--rf-blue-bright)] hover:text-white">{biz.monthlyVisits > 0 ? 'Tune inputs →' : 'Set inputs →'}</button>
+            <button onClick={() => setShowBiz(true)} className="mt-1 text-xs text-[var(--rf-blue-bright)] transition-colors hover:text-white">{biz.monthlyVisits > 0 ? 'Update →' : 'Configure →'}</button>
           </div>
         </div>
       </div>
 
       {/* ── Priority engine ── */}
       <div className="rf-card overflow-hidden">
-        <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-4 py-2.5"><span className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Today's highest-impact tasks</span><span className="rf-mono text-[10px] text-[var(--rf-faint)]">estimates*</span></div>
+        <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-4 py-2.5"><span className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Your growth roadmap (ranked by impact)</span><span className="rf-mono text-[10px] text-[var(--rf-faint)]">estimates*</span></div>
         <div className="divide-y divide-[var(--rf-card-line)]">
-          {priorities.slice(0, 5).map((p, i) => (
-            <div key={i} className="flex flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="min-w-0">
+          {priorities.slice(0, 8).map((p, i) => (
+            <div key={i} className="group flex flex-col gap-2 px-4 py-3 transition-colors hover:bg-white/[0.02] sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0 flex-1">
                 <p className="flex items-center gap-2 text-sm text-[var(--rf-text)]"><SevDot s={p.severity} />{p.title}</p>
                 <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{p.category} · {p.affectedPages} page{p.affectedPages > 1 ? 's' : ''} · {p.confidence}% confidence</p>
               </div>
@@ -244,15 +245,15 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
                 {biz.monthlyVisits > 0 && biz.valuePerVisit > 0 ? (
                   <span className="text-right"><span className="block rf-mono text-sm font-semibold text-[var(--rf-green)]">+${p.revenueGain.toLocaleString()}/mo</span><span className="block text-[10px] text-[var(--rf-faint)]">+{p.trafficGain.toLocaleString()} visits</span></span>
                 ) : (
-                  <span className="text-right"><span className="block rf-mono text-[11px] text-[var(--rf-faint)]">no estimate</span></span>
+                  <span className="text-right"><span className="block rf-mono text-[11px] text-[var(--rf-faint)]">—</span></span>
                 )}
-                <span className="text-right"><span className="block text-xs text-[var(--rf-muted)]">{p.difficulty}</span><span className="flex items-center gap-1 text-[10px] text-[var(--rf-faint)]"><Clock className="h-3 w-3" />{p.minutes} min</span></span>
-                <button onClick={() => onGo(p.section)} className="rf-btn-primary rounded-lg px-3.5 py-1.5 text-xs font-semibold">Fix now</button>
+                <span className="hidden text-right sm:block"><span className="block text-xs text-[var(--rf-muted)]">{p.difficulty}</span><span className="flex items-center gap-1 text-[10px] text-[var(--rf-faint)]"><Clock className="h-3 w-3" />{p.minutes} min</span></span>
+                <button onClick={() => onGo(p.section)} className="rf-btn-primary rounded-lg px-3.5 py-1.5 text-xs font-semibold opacity-0 transition-opacity group-hover:opacity-100">Fix</button>
               </div>
             </div>
           ))}
         </div>
-        <p className="border-t border-[var(--rf-card-line)] px-4 py-2 text-[10px] text-[var(--rf-faint)]">*Traffic & revenue are modeled from your business inputs — not measured analytics. Tune them under Business inputs.</p>
+        <p className="border-t border-[var(--rf-card-line)] px-4 py-2 text-[10px] text-[var(--rf-faint)]">*Estimates are modeled from your business inputs. More accurate with actual traffic & conversion data.</p>
       </div>
 
       {/* ── Autopilot + timeline ── */}
@@ -279,13 +280,13 @@ function greeting(name: string): string {
 function brief(a: Analytics, pages: number, revenue: number) {
   const items: { icon: LucideIcon; tone: string; text: string; cta: string; section: string }[] = []
   const top = a.issues.find((i) => i.severity === 'critical') ?? a.issues[0]
-  if (a.severityTotals.critical > 0 && top) items.push({ icon: AlertTriangle, tone: 'text-[var(--rf-red)]', text: `${a.severityTotals.critical} critical issue${a.severityTotals.critical > 1 ? 's are' : ' is'} suppressing rankings — worst: “${top.title}”.`, cta: 'Fix', section: 'audit' })
-  if (a.links.orphans.length > 0) items.push({ icon: Network, tone: 'text-[var(--rf-amber)]', text: `${a.links.orphans.length} pages are orphaned — Google and AI engines can barely find them.`, cta: 'Link them', section: 'links' })
+  if (a.severityTotals.critical > 0 && top) items.push({ icon: AlertTriangle, tone: 'text-[var(--rf-red)]', text: `${a.severityTotals.critical} high-impact improvement${a.severityTotals.critical > 1 ? 's' : ''} blocking rankings — top priority: “${top.title}”.`, cta: 'Prioritize', section: 'audit' })
+  if (a.links.orphans.length > 0) items.push({ icon: Network, tone: 'text-[var(--rf-amber)]', text: `${a.links.orphans.length} pages are undiscovered — linking them could improve visibility by 15-20%.`, cta: 'Connect', section: 'links' })
   const schemaPct = pages ? Math.round((a.totals.pagesWithSchema / pages) * 100) : 0
-  if (schemaPct < 70) items.push({ icon: Code2, tone: 'text-[var(--rf-blue-bright)]', text: `Schema coverage is only ${schemaPct}% — structured data is the fastest AI-visibility win available.`, cta: 'Add schema', section: 'schema' })
-  if (a.totals.nonIndexable > 0) items.push({ icon: ShieldCheck, tone: 'text-[var(--rf-amber)]', text: `${a.totals.nonIndexable} crawled page${a.totals.nonIndexable > 1 ? 's' : ''} can't rank at all (noindex or errors).`, cta: 'Review', section: 'indexability' })
+  if (schemaPct < 70) items.push({ icon: Code2, tone: 'text-[var(--rf-blue-bright)]', text: `Structured data coverage is ${schemaPct}% — upgrading it could increase AI citations by 30%.`, cta: 'Upgrade', section: 'schema' })
+  if (a.totals.nonIndexable > 0) items.push({ icon: ShieldCheck, tone: 'text-[var(--rf-amber)]', text: `${a.totals.nonIndexable} page${a.totals.nonIndexable > 1 ? 's are' : ' is'} hidden from search — these are losing opportunity.`, cta: 'Expose', section: 'indexability' })
   if (revenue > 0) {
-    items.push({ icon: DollarSign, tone: 'text-[var(--rf-green)]', text: `I estimate ~$${revenue.toLocaleString()}/mo of recoverable value in today's fix list.*`, cta: 'See plan', section: 'audit' })
+    items.push({ icon: DollarSign, tone: 'text-[var(--rf-green)]', text: `~$${revenue.toLocaleString()}/mo in revenue recovery available by addressing today's top improvements.*`, cta: 'See roadmap', section: 'audit' })
   }
   return items.slice(0, 4)
 }
