@@ -235,23 +235,41 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
       <div className="rf-card overflow-hidden">
         <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-4 py-2.5"><span className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Your growth roadmap (ranked by impact)</span><span className="rf-mono text-[10px] text-[var(--rf-faint)]">estimates*</span></div>
         <div className="divide-y divide-[var(--rf-card-line)]">
-          {priorities.slice(0, 8).map((p, i) => (
-            <div key={i} className="group flex flex-col gap-2 px-4 py-3 transition-colors hover:bg-white/[0.02] sm:flex-row sm:items-center sm:justify-between">
-              <div className="min-w-0 flex-1">
-                <p className="flex items-center gap-2 text-sm text-[var(--rf-text)]"><SevDot s={p.severity} />{p.title}</p>
-                <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{p.category} · {p.affectedPages} page{p.affectedPages > 1 ? 's' : ''} · {p.confidence}% confidence</p>
+          {priorities.slice(0, 8).map((p, i) => {
+            const difficultyColor = p.difficulty === 'Easy' ? 'text-[var(--rf-green)]' : p.difficulty === 'Medium' ? 'text-[var(--rf-amber)]' : 'text-[var(--rf-red)]'
+            return (
+              <div key={i} className="group flex flex-col gap-3 px-4 py-4 transition-colors hover:bg-white/[0.02]">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="flex items-center gap-2 text-sm font-medium text-[var(--rf-text)]"><SevDot s={p.severity} />{p.title}</p>
+                    <p className="mt-1 text-xs text-[var(--rf-muted)]">
+                      <span className="inline-block mr-3">{p.category}</span>
+                      <span className="inline-block mr-3">Affects {p.affectedPages} page{p.affectedPages > 1 ? 's' : ''}</span>
+                      <span className={`inline-block ${difficultyColor}`}>{p.difficulty}</span>
+                    </p>
+                  </div>
+                  {biz.monthlyVisits > 0 && biz.valuePerVisit > 0 ? (
+                    <span className="shrink-0 text-right"><span className="block rf-mono text-sm font-semibold text-[var(--rf-green)]">+${p.revenueGain.toLocaleString()}</span><span className="block text-[10px] text-[var(--rf-muted)]">/month</span></span>
+                  ) : (
+                    <span className="shrink-0 text-right"><span className="block rf-mono text-[10px] text-[var(--rf-faint)]">Impact</span></span>
+                  )}
+                </div>
+
+                {/* Decision Engine: Show why this matters */}
+                <div className="border-l-2 border-[var(--rf-blue)]/30 pl-3 py-2 rounded-none bg-[var(--rf-blue)]/[0.03]">
+                  <p className="text-xs text-[var(--rf-muted)] flex items-center gap-2">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--rf-blue)]" />
+                    <span>
+                      {p.severity === 'critical' && `This is blocking ${Math.round((p.trafficGain / Math.max(1, biz.monthlyVisits)) * 100)}% of potential traffic growth`}
+                      {p.severity === 'warning' && `Could unlock ${p.trafficGain.toLocaleString()} additional monthly visits`}
+                      {p.severity === 'info' && `Quick win: can be fixed in ~${p.minutes} minutes`}
+                    </span>
+                  </p>
+                  <p className="text-xs text-[var(--rf-faint)] mt-1.5">Confidence: {p.confidence}% · Takes ~{p.minutes} min{p.minutes > 1 ? 's' : ''}</p>
+                </div>
               </div>
-              <div className="flex shrink-0 items-center gap-4">
-                {biz.monthlyVisits > 0 && biz.valuePerVisit > 0 ? (
-                  <span className="text-right"><span className="block rf-mono text-sm font-semibold text-[var(--rf-green)]">+${p.revenueGain.toLocaleString()}/mo</span><span className="block text-[10px] text-[var(--rf-faint)]">+{p.trafficGain.toLocaleString()} visits</span></span>
-                ) : (
-                  <span className="text-right"><span className="block rf-mono text-[11px] text-[var(--rf-faint)]">—</span></span>
-                )}
-                <span className="hidden text-right sm:block"><span className="block text-xs text-[var(--rf-muted)]">{p.difficulty}</span><span className="flex items-center gap-1 text-[10px] text-[var(--rf-faint)]"><Clock className="h-3 w-3" />{p.minutes} min</span></span>
-                <button onClick={() => onGo(p.section)} className="rf-btn-primary rounded-lg px-3.5 py-1.5 text-xs font-semibold opacity-0 transition-opacity group-hover:opacity-100">Fix</button>
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
         <p className="border-t border-[var(--rf-card-line)] px-4 py-2 text-[10px] text-[var(--rf-faint)]">*Estimates are modeled from your business inputs. More accurate with actual traffic & conversion data.</p>
       </div>
