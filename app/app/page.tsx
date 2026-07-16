@@ -1310,7 +1310,12 @@ function Projects({ projects, currentProjectId, onOpen, onCreated }: { projects:
               const g = p.latestAudit ? gradeInfo(p.latestAudit.siteScore) : null
               const pr = priorityById.get(p.id)
               return (
-                <button key={p.id} onClick={() => onOpen(p)} className={`rf-card rf-card-hover flex flex-col p-4 text-left ${p.id === currentProjectId ? 'ring-1 ring-[var(--rf-blue-bright)]' : ''}`}>
+                <div key={p.id} className={`rf-card rf-card-hover flex flex-col p-4 text-left ${p.id === currentProjectId ? 'ring-1 ring-[var(--rf-blue-bright)]' : ''}`}>
+                  <div className="mb-1 flex items-center justify-between gap-2">
+                    <button onClick={() => onOpen(p)} className="text-[11px] text-[var(--rf-blue-bright)] hover:text-white">Open in dashboard</button>
+                    <a href={`/app/projects/${p.id}`} className="text-[11px] text-[var(--rf-cyan)] hover:text-white">Command center →</a>
+                  </div>
+                  <button onClick={() => onOpen(p)} className="flex flex-1 flex-col text-left">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0"><p className="truncate text-sm font-semibold text-white">{p.name}</p><p className="truncate text-[11px] text-[var(--rf-faint)]">{p.domain}</p></div>
                     {p.isFavorite && <Star className="h-3.5 w-3.5 shrink-0 fill-[var(--rf-amber)] text-[var(--rf-amber)]" />}
@@ -1332,7 +1337,8 @@ function Projects({ projects, currentProjectId, onOpen, onCreated }: { projects:
                     </div>
                   )}
                   {!pr && p.latestAudit && p.latestAudit.criticalCount > 0 && <p className="mt-2 text-[11px] text-[var(--rf-red)]">{p.latestAudit.criticalCount} critical issue{p.latestAudit.criticalCount !== 1 ? 's' : ''}</p>}
-                </button>
+                  </button>
+                </div>
               )
             })}
           </div>
