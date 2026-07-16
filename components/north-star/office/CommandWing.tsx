@@ -64,6 +64,16 @@ export function CommandWing({
     return scenario.history.length ? 'bg-[#7fcf9f] shadow-[0_0_8px_rgba(127,207,159,0.5)]' : 'bg-[#6a6252]'
   }
 
+  // A destination's dot quietly breathes only when that destination genuinely
+  // has in-flight or unattended work — so the wing reads as somewhere work is
+  // actively happening, never decoration. Every branch is real scenario state.
+  const liveFor = (id: WingDestination): boolean => {
+    if (id === 'decisions') return !!scenario.pendingApproval
+    if (id === 'intelligence') return scenario.activity.some((a) => a.status === 'checking' || a.status === 'understanding' || a.status === 'preparing')
+    if (id === 'digital-dna') return scenario.digitalDna.some((a) => a.understanding === 'partially-understood')
+    return false
+  }
+
   return (
     <aside className="relative flex h-full w-52 flex-col px-7 py-7">
       {/* not a panel — a pool of shadow at the hall's left edge that the
@@ -102,7 +112,7 @@ export function CommandWing({
               }`}
             >
               <span>{label}</span>
-              <span aria-hidden="true" className={`ml-auto size-1.5 shrink-0 rounded-full ${dotClassFor(id)}`} />
+              <span aria-hidden="true" data-live={liveFor(id) || undefined} className={`hq-wing-dot ml-auto size-1.5 shrink-0 rounded-full ${dotClassFor(id)}`} />
             </button>
           )
         })}

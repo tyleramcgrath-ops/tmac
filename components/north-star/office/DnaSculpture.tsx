@@ -382,6 +382,22 @@ export function DnaSculpture({
             const a = 0.5 * tw * (0.4 + 0.6 * depth) * pulse
             prims.push({ t: 1, x: xA + (xB - xA) * u, y: r.y + p.off, r: p.size * (0.6 + 0.6 * depth), z, col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
           })
+        } else if (!reduce && (r.understanding === 'well-understood' || r.understanding === 'partially-understood')) {
+          // Idle knowledge-flow: established understanding is live, not inert.
+          // A single faint pulse drifts across each already-understood strand,
+          // staggered per strand so the molecule reads like a scientific
+          // instrument at rest — showing what it KNOWS, never implying new
+          // analysis (that only happens during an actual check, above).
+          const strength = r.understanding === 'well-understood' ? 1 : 0.55
+          const u = ((time * 0.00007 + idx * 0.37) % 1 + 1) % 1
+          const z = zA + (zB - zA) * u
+          const depth = (z + 1) / 2
+          // fade in and out at the ends so pulses emerge and dissolve, never pop
+          const edge = Math.sin(u * Math.PI)
+          const a = 0.18 * strength * edge * (0.4 + 0.6 * depth) * (dimmed ? 0.4 : 1)
+          if (a > 0.01) {
+            prims.push({ t: 1, x: xA + (xB - xA) * u, y: ry, r: (1.1 + 0.9 * depth) * strength, z, col: `rgba(${c[0]},${c[1]},${c[2]},${a})` })
+          }
         }
       })
 

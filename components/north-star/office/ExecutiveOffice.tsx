@@ -444,7 +444,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
           <div aria-hidden="true" className="hq-evidence-sweep pointer-events-none absolute left-[26%] top-[58%] size-2" />
           <div aria-hidden="true" className="hq-evidence-sweep pointer-events-none absolute left-[71%] top-[60%] size-2" style={{ animationDelay: '0.9s' }} />
           <div
-            className="hq-fade absolute left-[50.1%] top-[59.5%] h-[4.5%] w-[13%] -translate-x-1/2 rounded-full mix-blend-screen blur-[5px] bg-[radial-gradient(50%_100%_at_50%_50%,rgba(255,208,132,0.3),transparent_75%)]"
+            className={`hq-fade absolute left-[50.1%] top-[59.5%] h-[4.5%] w-[13%] -translate-x-1/2 rounded-full mix-blend-screen blur-[5px] bg-[radial-gradient(50%_100%_at_50%_50%,rgba(255,208,132,0.3),transparent_75%)]${!investigating && !discovering ? ' hq-compass-consider' : ''}`}
             style={{ opacity: 'calc(0.35 + var(--env-compass) * 0.4)' }}
           />
           <div className="hq-fade-slow absolute inset-0 mix-blend-soft-light bg-[#cfd6dd]" style={{ opacity: 'calc(var(--env-snow) * 0.12)' }} />
@@ -467,7 +467,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
             className="pointer-events-none absolute -inset-x-7 -inset-y-6 bg-[rgba(3,4,8,0.52)] backdrop-blur-[5px] [mask-image:radial-gradient(125%_115%_at_18%_55%,#000_50%,transparent_82%)] [-webkit-mask-image:radial-gradient(125%_115%_at_18%_55%,#000_50%,transparent_82%)]"
           />
           <div className="pointer-events-auto relative">
-            <div className="arch-projected flex items-center gap-2 text-[10.5px] font-semibold tracking-[0.4em] text-[#e0b877]">
+            <div className={`arch-projected flex items-center gap-2 text-[10.5px] font-semibold tracking-[0.4em] text-[#e0b877]${scenario.briefing.materialChange && !briefPulse ? ' hq-brief-live' : ''}`}>
               EXECUTIVE BRIEFING
               {briefPulse && <span className="brief-updated-tag !m-0 !py-0.5">Updated</span>}
             </div>

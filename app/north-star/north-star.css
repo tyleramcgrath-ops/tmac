@@ -851,3 +851,52 @@
   filter: blur(28px);
   transition: opacity 900ms ease;
 }
+
+/* =====================================================================
+   Behavior pass — the office has been working before you arrived. Nothing
+   here is decoration or a fabricated metric: every cue is gated by real
+   scenario state (pending approval, in-flight activity, a materially
+   changed brief, developing understanding) and simply makes that
+   already-true state legible as quiet, autonomous life in the room.
+   ===================================================================== */
+
+/* the wing acknowledges where work is genuinely happening — a slow breath on
+   a destination's dot only while that destination has in-flight/unattended
+   work. Never a blink; a resting heartbeat. */
+.hq-wing-dot[data-live] {
+  animation: hq-wing-live 3.4s ease-in-out infinite;
+}
+@keyframes hq-wing-live {
+  0%, 100% { opacity: 0.72; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.28); }
+}
+
+/* the floor briefing carries a quiet "updated recently" emphasis when the
+   morning's check materially changed it — a slow warm swell on the eyebrow,
+   like a paragraph someone just revised. Only when materialChange is true. */
+.hq-brief-live {
+  animation: hq-brief-live 7.5s ease-in-out infinite;
+}
+@keyframes hq-brief-live {
+  0%, 100% { color: #e0b877; text-shadow: 0 0 16px rgba(247, 224, 170, 0.32); }
+  50% { color: #f4d79a; text-shadow: 0 0 22px rgba(247, 224, 170, 0.55); }
+}
+
+/* Compass considers, quietly and on its own — a very slow independent swell
+   of its grounding light, reading as an advisor turning something over.
+   Light only; Compass never moves. */
+.hq-compass-consider {
+  animation: hq-compass-consider 11s ease-in-out infinite;
+}
+@keyframes hq-compass-consider {
+  0%, 100% { opacity: calc(0.35 + var(--env-compass) * 0.4); }
+  50% { opacity: calc(0.35 + var(--env-compass) * 0.4 + 0.14); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-wing-dot[data-live],
+  .hq-brief-live,
+  .hq-compass-consider {
+    animation: none;
+  }
+}
