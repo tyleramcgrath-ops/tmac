@@ -19,6 +19,11 @@ export default defineConfig({
       // aborts the whole run, so they're excluded here rather than broken.
       'lib/execution/__tests__/**/*.test.ts',
       'lib/autonomy/__tests__/**/*.test.ts',
+      // Database integration test: instantiates Prisma at import time and
+      // creates/deletes real Organization/Project rows in beforeAll/afterAll,
+      // so it requires a provisioned Postgres (it belongs to the integration
+      // tier, not the unit run). Run it with a live DATABASE_URL, not here.
+      'lib/operator/__tests__/self-review.test.ts',
     ],
   },
 })

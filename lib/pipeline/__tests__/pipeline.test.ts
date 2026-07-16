@@ -53,7 +53,10 @@ const mockPages: Partial<Page>[] = [
     url: 'https://example-law.com/contact',
     title: 'Contact Us | Smith & Associates',
     h1: 'Get In Touch',
-    contentLength: 500,
+    // Genuinely thin: a contact page that's little more than a form and an
+    // address (< 300 words). The thin-content test expects this page to be
+    // flagged; at 500 words it wasn't actually thin.
+    contentLength: 220,
     metaDescription: 'Contact Smith & Associates for a free consultation',
     schemaTypes: '["LocalBusiness","ContactPoint"]',
     internalLinks: 5,
@@ -270,7 +273,12 @@ describe('Pipeline Stage Functions', () => {
       const seoScore = 75
       const technicalScore = 80
 
-      const opportunityScore = (100 - qualityScore - seoScore - technicalScore) / 3
+      // Opportunity = average headroom across the three dimensions (how far
+      // each sits below a perfect 100). The previous formula subtracted all
+      // three scores from a single 100, which goes negative whenever the
+      // scores sum past 100 — nonsensical for a 0-100 opportunity metric.
+      const opportunityScore =
+        ((100 - qualityScore) + (100 - seoScore) + (100 - technicalScore)) / 3
 
       expect(opportunityScore).toBeGreaterThanOrEqual(0)
       expect(opportunityScore).toBeLessThanOrEqual(100)

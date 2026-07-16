@@ -505,14 +505,13 @@ describe('Phase 7.8A: Content Gap Analysis', () => {
         },
       ];
 
-      // Easy, high-ROI gaps should be prioritized
-      const prioritized = gaps.sort(
-        (a, b) =>
-          b.roi -
-          a.roi +
-          (a.difficulty === 'easy' ? 0.2 : 0) -
-          (b.difficulty === 'easy' ? 0.2 : 0)
-      );
+      // Easy, high-ROI gaps should be prioritized. Score each gap as ROI plus
+      // an "easy" bonus, then sort highest-score-first. (The previous inline
+      // comparator distributed the easy-bonus sign incorrectly, which pushed
+      // the easy, highest-ROI gap DOWN the list.)
+      const priorityScore = (g: { roi: number; difficulty: string }) =>
+        g.roi + (g.difficulty === 'easy' ? 0.2 : 0);
+      const prioritized = gaps.sort((a, b) => priorityScore(b) - priorityScore(a));
 
       expect(prioritized[0].gap).toBe('Service Page');
     });

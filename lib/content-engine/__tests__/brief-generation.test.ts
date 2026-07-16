@@ -40,7 +40,9 @@ describe('Phase 7.8A: Content Brief Generation', () => {
         status: 'draft',
       };
 
-      expect(brief.purpose).toContain('Tax Controversy');
+      // The brief's purpose names the service ("tax controversy"); match
+      // case-insensitively since prose naturally lowercases it mid-sentence.
+      expect(brief.purpose.toLowerCase()).toContain('tax controversy');
       expect(brief.contentType).toBe('service_page');
     });
 

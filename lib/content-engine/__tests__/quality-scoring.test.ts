@@ -75,8 +75,10 @@ describe('Phase 7.8A: Content Quality Scoring', () => {
         };
 
         // Expected: Quality score reduced by 30-40%
-        // Reason: Even good content becomes stale
-        expect(page.lastUpdated).toBeLessThan(new Date().toISOString());
+        // Reason: Even good content becomes stale.
+        // (lastUpdated is an ISO date string; compare as a timestamp — the
+        //  page was last updated well before now, so it is outdated.)
+        expect(new Date(page.lastUpdated).getTime()).toBeLessThan(Date.now());
       });
 
       it('should reward original research and data', () => {
@@ -116,9 +118,11 @@ describe('Phase 7.8A: Content Quality Scoring', () => {
         };
 
         // Expected score: 60-75
-        // Evidence: moderately stale, still relevant
+        // Evidence: moderately stale, still relevant. "3-6 months ago" is
+        // inclusive of the 6-month (~180-day) upper edge, so the boundary
+        // is <= 180, not < 180.
         expect(page.daysSinceUpdate).toBeGreaterThan(90);
-        expect(page.daysSinceUpdate).toBeLessThan(180);
+        expect(page.daysSinceUpdate).toBeLessThanOrEqual(180);
       });
 
       it('should score low for pages not updated in 1+ year', () => {
