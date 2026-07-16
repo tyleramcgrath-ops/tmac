@@ -71,6 +71,7 @@ export function CompassConsole({
   scenario,
   investigating = false,
   statusText = null,
+  discovering = false,
   onCheckNow,
   className = '',
   style,
@@ -79,6 +80,7 @@ export function CompassConsole({
   scenario: PreviewScenario
   investigating?: boolean
   statusText?: string | null
+  discovering?: boolean
   onCheckNow: () => void
   className?: string
   style?: CSSProperties
@@ -186,7 +188,7 @@ export function CompassConsole({
   return (
     <aside id="compass" className={`relative ${className}`} style={style}>
       {/* no scrim, no chrome — the desk face is dark stone; words are light */}
-      <div className="hq-engraved relative mx-auto flex max-w-[26rem] flex-col items-center px-2 text-center [text-shadow:0_2px_14px_rgba(2,4,10,0.95),0_0_3px_rgba(2,4,10,0.85)]">
+      <div className={`hq-engraved relative mx-auto flex max-w-[26rem] flex-col items-center px-2 text-center [text-shadow:0_2px_14px_rgba(2,4,10,0.95),0_0_3px_rgba(2,4,10,0.85)]${discovering ? ' hq-discovering' : ''}`}>
         {/* the words rest on a projection of light — a soft holographic panel
             struck above the desk, so the counsel never floats on the marble */}
         <div
@@ -226,7 +228,7 @@ export function CompassConsole({
               type="button"
               onClick={() => setMode('ask')}
               disabled={investigating}
-              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-colors hover:bg-white/[0.06] hover:text-[#fff8e8] focus:outline-none disabled:opacity-50"
+              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-[color,background-color,transform] duration-150 hover:bg-white/[0.06] hover:text-[#fff8e8] active:scale-[0.94] focus:outline-none disabled:opacity-50"
             >
               ASK COMPASS
             </button>
@@ -235,7 +237,7 @@ export function CompassConsole({
               type="button"
               onClick={onCheckNow}
               disabled={investigating}
-              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-colors hover:bg-white/[0.06] hover:text-[#fff8e8] focus:outline-none disabled:opacity-50"
+              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-[color,background-color,transform] duration-150 hover:bg-white/[0.06] hover:text-[#fff8e8] active:scale-[0.94] focus:outline-none disabled:opacity-50"
             >
               {investigating ? 'CHECKING…' : 'CHECK MY BUSINESS'}
             </button>

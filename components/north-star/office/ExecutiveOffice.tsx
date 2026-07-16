@@ -77,6 +77,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   const [briefPulse, setBriefPulse] = useState(false)      // Stage 5
   const [approvalArrived, setApprovalArrived] = useState(false) // Stage 6
   const [isDimmed, setIsDimmed] = useState(false)
+  const [discovering, setDiscovering] = useState(false) // Compass briefly flares when it has something new
   const stepsRef = useRef(buildInvestigationSteps(scenario, scenario.defaultRunOutcome))
 
   // --- the room itself: environment, world light, and camera parallax,
@@ -206,6 +207,17 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
     return () => window.clearTimeout(t)
   }, [briefPulse])
 
+  // Compass flares briefly the moment it has something genuinely new to
+  // report — the same reveal that drives briefPulse, read as light instead
+  // of a badge. Never fires from opening/closing overlays.
+  useEffect(() => {
+    if (!briefPulse) return
+    setDiscovering(true)
+    const t = window.setTimeout(() => setDiscovering(false), 1400)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastReveal])
+
   const runCheck = () => {
     stepsRef.current = buildInvestigationSteps(scenario, outcome)
     setStepIndex(1)
@@ -319,7 +331,16 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
               <div className="hq-snowfall-b absolute -inset-y-[20%] inset-x-0" />
               <div className="hq-frost absolute inset-0" />
             </div>
+            {/* a slow specular sweep, like light crossing real panes */}
+            <div aria-hidden="true" className="hq-glass-sweep pointer-events-none absolute inset-0" />
           </div>
+
+          {/* the sun breathes — an almost-imperceptible drift in warmth */}
+          <div aria-hidden="true" className="hq-sunbreathe pointer-events-none absolute inset-0" />
+
+          {/* ambient dust, always faintly adrift in the light shafts */}
+          <div aria-hidden="true" className="hq-dust-a pointer-events-none absolute -inset-y-[15%] inset-x-0" />
+          <div aria-hidden="true" className="hq-dust-b pointer-events-none absolute -inset-y-[15%] inset-x-0" />
 
           {/* ---- the office answers the world (derived from the sampled plate) ---- */}
           <div
@@ -353,11 +374,16 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
               className="hq-fade absolute left-[50.1%] top-[52.4%] aspect-square w-[19%] -translate-x-1/2 -translate-y-1/2"
               style={{ opacity: 'calc(0.3 + var(--env-compass) * 0.45 + var(--approach, 0) * 0.22)' }}
             >
-              <div className="absolute left-1/2 top-[76%] h-[7%] w-[46%] -translate-x-1/2 rounded-full bg-[radial-gradient(50%_100%_at_50%_50%,rgba(2,3,5,0.5),transparent_75%)] blur-[4px]" />
-              <div className="absolute left-1/2 top-[-14%] h-[52%] w-[34%] -translate-x-1/2 rounded-full bg-[radial-gradient(50%_60%_at_50%_78%,rgba(255,212,142,0.14),transparent_75%)] mix-blend-screen blur-[12px]" />
-              <div className="hq-breathe-a absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(255,220,160,0.42),rgba(255,200,124,0.14)_48%,transparent_66%)] mix-blend-screen blur-[5px]" />
-              <div className="hq-breathe-b absolute left-1/2 top-1/2 h-[92%] w-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,210,140,0.2),transparent_70%)] mix-blend-screen blur-[10px]" />
-              <div className="absolute left-1/2 top-1/2 h-[7%] w-[120%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,214,150,0.15),transparent)] mix-blend-screen blur-[3px]" />
+              {/* idle breath + discovery flare live on an inner wrapper, so the
+                  outer positioning above (Compass's actual place in the room)
+                  never moves or resizes */}
+              <div className={`hq-orb-idle absolute inset-0${discovering ? ' hq-discovering' : ''}`}>
+                <div className="absolute left-1/2 top-[76%] h-[7%] w-[46%] -translate-x-1/2 rounded-full bg-[radial-gradient(50%_100%_at_50%_50%,rgba(2,3,5,0.5),transparent_75%)] blur-[4px]" />
+                <div className="absolute left-1/2 top-[-14%] h-[52%] w-[34%] -translate-x-1/2 rounded-full bg-[radial-gradient(50%_60%_at_50%_78%,rgba(255,212,142,0.14),transparent_75%)] mix-blend-screen blur-[12px]" />
+                <div className="hq-breathe-a absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(255,220,160,0.42),rgba(255,200,124,0.14)_48%,transparent_66%)] mix-blend-screen blur-[5px]" />
+                <div className="hq-breathe-b absolute left-1/2 top-1/2 h-[92%] w-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,210,140,0.2),transparent_70%)] mix-blend-screen blur-[10px]" />
+                <div className="absolute left-1/2 top-1/2 h-[7%] w-[120%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,214,150,0.15),transparent)] mix-blend-screen blur-[3px]" />
+              </div>
             </div>
           </div>
           <div
@@ -367,6 +393,12 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
               opacity: 'var(--env-reflect)',
             }}
           />
+          {/* a second, tighter highlight so the desk reads as polished wood,
+              not a flat photo */}
+          <div aria-hidden="true" className="hq-desk-highlight pointer-events-none absolute left-[50.1%] top-[74%] h-[16%] w-[30%] -translate-x-1/2" />
+          {/* evidence, read as light moving through the room while a check runs */}
+          <div aria-hidden="true" className="hq-evidence-sweep pointer-events-none absolute left-[26%] top-[58%] size-2" />
+          <div aria-hidden="true" className="hq-evidence-sweep pointer-events-none absolute left-[71%] top-[60%] size-2" style={{ animationDelay: '0.9s' }} />
           <div
             className="hq-fade absolute left-[50.1%] top-[59.5%] h-[4.5%] w-[13%] -translate-x-1/2 rounded-full mix-blend-screen blur-[5px] bg-[radial-gradient(50%_100%_at_50%_50%,rgba(255,208,132,0.3),transparent_75%)]"
             style={{ opacity: 'calc(0.35 + var(--env-compass) * 0.4)' }}
@@ -419,6 +451,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
           scenario={scenario}
           investigating={investigating}
           statusText={compassStatusText}
+          discovering={discovering}
           onCheckNow={runCheck}
           className="pointer-events-auto w-[27rem]"
         />

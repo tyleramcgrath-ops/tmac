@@ -72,6 +72,8 @@ export function CommandWing({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(1,2,4,0.94),rgba(1,2,4,0.66)_55%,rgba(1,2,4,0.12)_85%,transparent)] backdrop-blur-[2px]"
       />
+      {/* brushed metal, not flat shadow */}
+      <div aria-hidden="true" className="hq-wing-metal pointer-events-none absolute inset-0" />
 
       <div className="relative flex items-center gap-3">
         <div className="relative grid size-9 place-items-center">
@@ -92,7 +94,7 @@ export function CommandWing({
               key={id}
               type="button"
               onClick={() => open(id)}
-              className={`group relative flex cursor-pointer items-center gap-2.5 border-l py-3 pl-5 text-left text-[12px] font-medium uppercase tracking-[0.2em] transition-colors duration-300 [text-shadow:0_1px_6px_rgba(1,2,5,0.9)] ${
+              className={`group relative flex cursor-pointer items-center gap-2.5 border-l py-3 pl-5 text-left text-[12px] font-medium uppercase tracking-[0.2em] transition-[color,border-color,transform] duration-300 [text-shadow:0_1px_6px_rgba(1,2,5,0.9)] active:scale-[0.98] active:pl-[1.15rem] ${
                 isActive ? 'border-[#c8b48a]/80 text-[#f5edda]' : 'border-transparent text-[#c1b8a6] hover:text-[#f0e7d4]'
               }`}
             >

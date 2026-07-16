@@ -295,6 +295,10 @@ export function DnaSculpture({
         | { t: 2; x0: number; x1: number; y: number; z: number; col: string; lw: number }
       const prims: Prim[] = []
       const glow: Array<{ x: number; y: number; r: number; c: [number, number, number]; a: number }> = []
+      // a thin specular streak along the near edge of each ribbon — the
+      // difference between a flat gradient and something that reads as a
+      // physically lit, faintly glassy material
+      const specular: Array<{ x0: number; y0: number; x1: number; y1: number; a: number }> = []
       const NEAR0: [number, number, number] = [233, 215, 172]
       const NEAR1: [number, number, number] = [176, 188, 208]
       const FAR: [number, number, number] = [58, 64, 84]
@@ -325,6 +329,12 @@ export function DnaSculpture({
           // bloom only along the near/front of the strand, sampled sparsely
           if (depth > 0.62 && i % 3 === 0) {
             glow.push({ x, y, r: 7 + 12 * depth, c: near, a: 0.07 * depth * dimAll })
+          }
+          // a glassy specular line rides only the brightest crest of the
+          // near face, where a real polished ribbon would catch the light
+          if (prev && depth > 0.78 && i % 2 === 0) {
+            const streakShimmer = reduce ? 1 : 0.85 + 0.15 * Math.sin(time / 900 + f * 11)
+            specular.push({ x0: prev.x, y0: prev.yt, x1: cur.x, y1: cur.yt, a: (depth - 0.78) * 0.9 * streakShimmer * dimAll })
           }
           prev = cur
         }
@@ -403,6 +413,15 @@ export function DnaSculpture({
         bg2.addColorStop(1, 'rgba(0,0,0,0)')
         ctx!.fillStyle = bg2
         ctx!.beginPath(); ctx!.arc(b.x, b.y, b.r, 0, PI2); ctx!.fill()
+      }
+      // the specular crest — a hairline of near-white light, additive, so it
+      // only ever brightens (never flattens) the ribbon color beneath it
+      ctx!.lineWidth = 0.8
+      for (let i = 0; i < specular.length; i++) {
+        const s = specular[i]
+        if (s.a <= 0.002) continue
+        ctx!.strokeStyle = `rgba(255,250,238,${s.a})`
+        ctx!.beginPath(); ctx!.moveTo(s.x0, s.y0); ctx!.lineTo(s.x1, s.y1); ctx!.stroke()
       }
       ctx!.globalCompositeOperation = 'source-over'
 

@@ -560,3 +560,175 @@
 @media (prefers-reduced-motion: reduce) {
   .station-rain, .hq-rain-b, .station-arrival { animation: none; opacity: 1; }
 }
+
+/* =====================================================================
+   Polish pass — the Executive Office is locked (layout, Compass, Digital
+   DNA, and navigation are unchanged). Everything below is additive
+   atmosphere, material, and microinteraction work: it makes the same room
+   feel more alive without moving anything in it.
+   ===================================================================== */
+
+/* ---- ambient dust, always faintly adrift in the light shafts ---- */
+.hq-dust-a,
+.hq-dust-b {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255, 228, 180, 0.5), transparent 60%),
+    radial-gradient(1.4px 1.4px at 38% 61%, rgba(255, 228, 180, 0.4), transparent 60%),
+    radial-gradient(1px 1px at 64% 18%, rgba(255, 228, 180, 0.45), transparent 60%),
+    radial-gradient(1.2px 1.2px at 81% 74%, rgba(255, 228, 180, 0.35), transparent 60%),
+    radial-gradient(1px 1px at 27% 84%, rgba(255, 228, 180, 0.4), transparent 60%),
+    radial-gradient(1.3px 1.3px at 92% 40%, rgba(255, 228, 180, 0.3), transparent 60%);
+  background-size: 340px 340px;
+  mix-blend-mode: screen;
+  opacity: 0.4;
+}
+.hq-dust-a {
+  animation: hq-dust-drift-a 46s linear infinite;
+}
+.hq-dust-b {
+  background-size: 260px 260px;
+  opacity: 0.28;
+  animation: hq-dust-drift-b 61s linear infinite;
+}
+@keyframes hq-dust-drift-a {
+  from { transform: translate3d(0, 6%, 0); }
+  to { transform: translate3d(-2.5%, -6%, 0); }
+}
+@keyframes hq-dust-drift-b {
+  from { transform: translate3d(-1%, -5%, 0); }
+  to { transform: translate3d(2%, 5%, 0); }
+}
+
+/* ---- the sun breathes — an almost-imperceptible drift in warmth, quite
+   separate from time-of-day, so the room never reads as a still frame ---- */
+.hq-sunbreathe {
+  background: radial-gradient(60% 45% at 78% 34%, rgba(255, 214, 150, 0.5), transparent 72%);
+  mix-blend-mode: soft-light;
+  animation: hq-sunbreathe 22s ease-in-out infinite;
+}
+@keyframes hq-sunbreathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.6; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-dust-a, .hq-dust-b { animation: none; }
+  .hq-sunbreathe { animation: none; opacity: 0.45; }
+}
+
+/* ---- Compass: idle breath gets a hair of scale, not just opacity, and a
+   brief warm flare when there's something new to report — still the exact
+   same orb, same position, same size at rest ---- */
+.hq-orb-idle {
+  animation: hq-orb-idle 9s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes hq-orb-idle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.018); }
+}
+.hq-orb-idle.hq-discovering {
+  animation: hq-orb-discover 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hq-orb-discover {
+  0% { transform: scale(1); filter: brightness(1); }
+  30% { transform: scale(1.07); filter: brightness(1.55); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+.hq-engraved.hq-discovering {
+  animation: hq-engraved-discover 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hq-engraved-discover {
+  0% { filter: brightness(1); }
+  30% { filter: brightness(1.28); }
+  100% { filter: brightness(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hq-orb-idle { animation: none; }
+  .hq-orb-idle.hq-discovering, .hq-engraved.hq-discovering { animation: none; filter: brightness(1.2); }
+}
+
+/* ---- glass: a slow specular sweep, like light crossing real panes ---- */
+.hq-glass-sweep {
+  background: linear-gradient(115deg, transparent 42%, rgba(255, 246, 224, 0.06) 49%, transparent 56%);
+  mix-blend-mode: screen;
+  animation: hq-glass-sweep 26s ease-in-out infinite;
+}
+@keyframes hq-glass-sweep {
+  0%, 100% { transform: translate3d(-14%, 0, 0); opacity: 0; }
+  45% { opacity: 1; }
+  55% { transform: translate3d(14%, 0, 0); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hq-glass-sweep { animation: none; opacity: 0; }
+}
+
+/* ---- desk: a second, tighter highlight on the wood/marble reflection so it
+   reads as polished, not flat ---- */
+.hq-desk-highlight {
+  background: linear-gradient(100deg, transparent 38%, rgba(255, 238, 208, 0.16) 50%, transparent 62%);
+  mix-blend-mode: screen;
+}
+
+/* ---- the left wing: brushed metal instead of flat shadow ---- */
+.hq-wing-metal {
+  background:
+    repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 3px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 30%);
+  mix-blend-mode: overlay;
+}
+
+/* ---- drawer panels: a whisper of paper grain, not scenery ---- */
+.cc-overlay-panel {
+  position: relative;
+}
+.cc-overlay-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ---- microinteractions: physical buttons ---- */
+.office-mobile-bar-item,
+.cc-overlay-close,
+.brief-action-link,
+.cc-btn-primary,
+.cc-btn-ghost,
+.cc-btn-amber {
+  transition: transform 150ms cubic-bezier(0.2, 0.7, 0.2, 1), background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+.office-mobile-bar-item:active,
+.cc-overlay-close:active,
+.cc-btn-primary:active,
+.cc-btn-ghost:active,
+.cc-btn-amber:active {
+  transform: scale(0.94);
+}
+
+/* drawer entrance: a touch of settle instead of a linear slide */
+.cc-slide-in { animation-timing-function: cubic-bezier(0.18, 1.12, 0.32, 1); }
+
+/* ---- investigation: evidence reads as light moving through the room, not
+   a progress bar — a soft mote drifting from the window toward the desk,
+   only while a check is actually running ---- */
+.hq-evidence-sweep {
+  opacity: 0;
+  background: radial-gradient(3px 3px at 50% 50%, rgba(255, 224, 170, 0.9), rgba(255, 210, 140, 0.25) 60%, transparent 75%);
+  filter: blur(0.5px);
+}
+[data-investigating] .hq-evidence-sweep {
+  animation: hq-evidence-sweep 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes hq-evidence-sweep {
+  0% { opacity: 0; transform: translate3d(0, 0, 0) scale(0.6); }
+  12% { opacity: 0.9; }
+  85% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate3d(0, -34vh, 0) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-investigating] .hq-evidence-sweep { animation: none; opacity: 0; }
+}
