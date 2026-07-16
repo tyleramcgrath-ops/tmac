@@ -408,6 +408,7 @@ export default function AppDashboard() {
               <button onClick={clearDemo} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"><X className="h-4 w-4" /> Clear Demo</button>
             )}
             <a href="/app/today" className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold" title="Today's briefing"><Sparkles className="h-4 w-4 text-[var(--rf-blue-bright)]" /> Today</a>
+            <a href="/app/opportunities" className="rf-btn-ghost hidden items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold sm:inline-flex" title="SEO opportunities"><TrendingUp className="h-4 w-4 text-[var(--rf-cyan)]" /> Opportunities</a>
             {sessionUser && <span className="hidden items-center gap-2 rounded-xl border border-[var(--rf-card-line)] px-3 py-2 text-xs text-[var(--rf-muted)] lg:flex"><span className="truncate max-w-[160px]">{sessionUser.name || sessionUser.email}</span><button onClick={logout} title="Log out" className="text-[var(--rf-faint)] hover:text-white"><LogOut className="h-3.5 w-3.5" /></button></span>}
           </div>
         </div>
