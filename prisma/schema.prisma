@@ -2857,8 +2857,8 @@ model EmergencyStop {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  organization      Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  project           Project?      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  organization      Organization? @relation("organization_stops", fields: [organizationId], references: [id], onDelete: Cascade)
+  project           Project?      @relation("project_stops", fields: [projectId], references: [id], onDelete: Cascade)
   activatedByUser   User          @relation("stop_activated", fields: [activatedByUserId], references: [id], onDelete: Restrict)
   deactivatedByUser User?         @relation("stop_deactivated", fields: [deactivatedByUserId], references: [id], onDelete: SetNull)
 
