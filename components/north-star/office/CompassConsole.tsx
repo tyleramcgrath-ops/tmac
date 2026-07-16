@@ -228,7 +228,7 @@ export function CompassConsole({
               type="button"
               onClick={() => setMode('ask')}
               disabled={investigating}
-              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-[color,background-color,transform] duration-150 hover:bg-white/[0.06] hover:text-[#fff8e8] active:scale-[0.94] focus:outline-none disabled:opacity-50"
+              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-[color,background-color,transform] duration-150 hover:-translate-y-px hover:bg-white/[0.06] hover:text-[#fff8e8] active:translate-y-0 active:scale-[0.94] focus:outline-none disabled:opacity-50"
             >
               ASK COMPASS
             </button>
@@ -237,7 +237,7 @@ export function CompassConsole({
               type="button"
               onClick={onCheckNow}
               disabled={investigating}
-              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-[color,background-color,transform] duration-150 hover:bg-white/[0.06] hover:text-[#fff8e8] active:scale-[0.94] focus:outline-none disabled:opacity-50"
+              className="cursor-pointer rounded-full px-3.5 py-1.5 text-[10.5px] font-medium tracking-[0.24em] text-[#e9dbba] transition-[color,background-color,transform] duration-150 hover:-translate-y-px hover:bg-white/[0.06] hover:text-[#fff8e8] active:translate-y-0 active:scale-[0.94] focus:outline-none disabled:opacity-50"
             >
               {investigating ? 'CHECKING…' : 'CHECK MY BUSINESS'}
             </button>

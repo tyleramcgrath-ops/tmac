@@ -276,11 +276,25 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
   // drawer — pause its ambient loops rather than animate for no one.
   const ambientPaused = tabHidden || overlay !== null
 
+  // How well North Star understands this business, as one number — the same
+  // formula DnaSculpture uses internally. Exposed as a CSS custom property
+  // on the whole room so every surface (desk, wing, Compass) can quietly
+  // acknowledge it without any of them knowing about Digital DNA directly.
+  const dnaWarmth = scenario.digitalDna.length
+    ? scenario.digitalDna.reduce((sum, a) => sum + (
+        a.understanding === 'well-understood' ? 1
+        : a.understanding === 'partially-understood' ? 0.5
+        : a.understanding === 'needs-verification' ? 0.2
+        : 0
+      ), 0) / scenario.digitalDna.length
+    : 0
+
   return (
     <section
       id="main-content"
       className="relative h-[100dvh] w-full touch-none overflow-hidden bg-black"
       data-investigating={investigating || undefined}
+      style={{ ['--dna-warmth' as string]: dnaWarmth.toFixed(3) }}
       onPointerMove={handlePointer}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
@@ -304,6 +318,9 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
             <ExteriorView condition={condition} location={DEFAULT_LOCATION} onLight={handleLight} />
             <div className="hq-cloudlight-a absolute -inset-x-[40%] inset-y-0" />
             <div className="hq-cloudlight-b absolute -inset-x-[40%] inset-y-0" />
+            {/* a touch of atmospheric depth between the near peaks and the
+                far range — static, so it reads as distance, not weather */}
+            <div aria-hidden="true" className="hq-depth-haze pointer-events-none absolute inset-0" />
           </div>
 
           {/* ---- the frozen office shell (true alpha panes) ---- */}
@@ -393,12 +410,15 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
               {/* idle breath + discovery flare live on an inner wrapper, so the
                   outer positioning above (Compass's actual place in the room)
                   never moves or resizes */}
-              <div className={`hq-orb-idle absolute inset-0${discovering ? ' hq-discovering' : ''}`}>
+              <div className={`hq-orb-idle absolute inset-0${discovering ? ' hq-discovering' : ''}${investigating ? ' hq-orb-thinking' : ''}`}>
                 <div className="absolute left-1/2 top-[76%] h-[7%] w-[46%] -translate-x-1/2 rounded-full bg-[radial-gradient(50%_100%_at_50%_50%,rgba(2,3,5,0.5),transparent_75%)] blur-[4px]" />
                 <div className="absolute left-1/2 top-[-14%] h-[52%] w-[34%] -translate-x-1/2 rounded-full bg-[radial-gradient(50%_60%_at_50%_78%,rgba(255,212,142,0.14),transparent_75%)] mix-blend-screen blur-[12px]" />
                 <div className="hq-breathe-a absolute inset-[12%] rounded-full bg-[radial-gradient(circle,rgba(255,220,160,0.42),rgba(255,200,124,0.14)_48%,transparent_66%)] mix-blend-screen blur-[5px]" />
                 <div className="hq-breathe-b absolute left-1/2 top-1/2 h-[92%] w-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(255,210,140,0.2),transparent_70%)] mix-blend-screen blur-[10px]" />
                 <div className="absolute left-1/2 top-1/2 h-[7%] w-[120%] -translate-x-1/2 -translate-y-1/2 bg-[linear-gradient(90deg,transparent,rgba(255,214,150,0.15),transparent)] mix-blend-screen blur-[3px]" />
+                {/* acknowledges Digital DNA: invisible until the business is
+                    genuinely understood, purely additive */}
+                <div className="hq-orb-warmth absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(255,232,190,0.5),transparent_70%)] mix-blend-screen blur-[6px]" />
               </div>
             </div>
           </div>
@@ -412,6 +432,14 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
           {/* a second, tighter highlight so the desk reads as polished wood,
               not a flat photo */}
           <div aria-hidden="true" className="hq-desk-highlight pointer-events-none absolute left-[50.1%] top-[74%] h-[16%] w-[30%] -translate-x-1/2" />
+          {/* the desk answers understanding: invisible at rest until North
+              Star genuinely understands the business, and brightens while
+              Compass is actively working or has just found something —
+              reflected light that changes when Compass speaks */}
+          <div
+            aria-hidden="true"
+            className={`hq-desk-glow pointer-events-none absolute left-[50.1%] top-[74%] h-[16%] w-[30%] -translate-x-1/2${investigating ? ' hq-desk-thinking' : ''}${discovering ? ' hq-discovering' : ''}`}
+          />
           {/* evidence, read as light moving through the room while a check runs */}
           <div aria-hidden="true" className="hq-evidence-sweep pointer-events-none absolute left-[26%] top-[58%] size-2" />
           <div aria-hidden="true" className="hq-evidence-sweep pointer-events-none absolute left-[71%] top-[60%] size-2" style={{ animationDelay: '0.9s' }} />
@@ -433,7 +461,7 @@ export function ExecutiveOffice({ scenario }: { scenario: PreviewScenario }) {
         className="pointer-events-none absolute bottom-0 left-0 z-[9] h-[52%] w-[52%] bg-[radial-gradient(88%_98%_at_14%_96%,rgba(2,3,6,0.8),rgba(2,3,6,0.4)_55%,transparent_80%)]"
       />
       <div className="pointer-events-none absolute inset-x-0 bottom-[7.5rem] z-10 px-6 sm:px-12 lg:pl-60">
-        <div className="hq-floor-projected relative max-w-sm [text-shadow:0_2px_14px_rgba(1,2,5,0.95)]">
+        <div className={`hq-floor-projected relative max-w-sm [text-shadow:0_2px_14px_rgba(1,2,5,0.95)]${briefPulse ? ' hq-brief-settle' : ''}`}>
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -inset-x-7 -inset-y-6 bg-[rgba(3,4,8,0.52)] backdrop-blur-[5px] [mask-image:radial-gradient(125%_115%_at_18%_55%,#000_50%,transparent_82%)] [-webkit-mask-image:radial-gradient(125%_115%_at_18%_55%,#000_50%,transparent_82%)]"

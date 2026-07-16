@@ -701,6 +701,12 @@
 .cc-btn-amber {
   transition: transform 150ms cubic-bezier(0.2, 0.7, 0.2, 1), background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
 }
+.cc-overlay-close:hover,
+.cc-btn-primary:hover,
+.cc-btn-ghost:hover,
+.cc-btn-amber:hover {
+  transform: translateY(-1px);
+}
 .office-mobile-bar-item:active,
 .cc-overlay-close:active,
 .cc-btn-primary:active,
@@ -746,4 +752,97 @@
 .hq-ambient-paused .hq-sunbreathe,
 .hq-ambient-paused .hq-glass-sweep {
   animation-play-state: paused;
+}
+
+/* =====================================================================
+   Craftsmanship pass — still the same locked room. Every rule below is
+   either (a) invisible until a real state makes it visible — the business
+   being understood, a check running, a discovery landing — or (b) a static
+   material/depth refinement. Nothing here moves the desk, Compass, Digital
+   DNA, or the wing; several rules quietly connect them to each other.
+   ===================================================================== */
+
+/* ---- Compass: an anticipation cue distinct from idle breathing, only
+   while Scout is genuinely working ---- */
+.hq-orb-idle.hq-orb-thinking {
+  animation: hq-orb-thinking 1.8s ease-in-out infinite;
+}
+@keyframes hq-orb-thinking {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.03); filter: brightness(1.12); }
+}
+/* acknowledges Digital DNA: invisible at zero understanding, purely additive */
+.hq-orb-warmth {
+  opacity: calc(var(--dna-warmth, 0) * 0.5);
+  transition: opacity 1.2s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hq-orb-idle.hq-orb-thinking { animation: none; filter: brightness(1.06); }
+}
+
+/* ---- the desk answers understanding, and reflects when Compass speaks:
+   invisible until the business is genuinely understood (purely additive —
+   the desk's baseline look is exactly what it was without this rule),
+   brightening while a check runs and flaring on discovery ---- */
+.hq-desk-glow {
+  background: radial-gradient(60% 70% at 50% 30%, rgba(255, 220, 160, 0.5), transparent 72%);
+  mix-blend-mode: screen;
+  opacity: calc(var(--dna-warmth, 0) * 0.32);
+  transition: opacity 1.2s ease;
+}
+.hq-desk-glow.hq-desk-thinking {
+  animation: hq-desk-thinking 2.4s ease-in-out infinite;
+}
+@keyframes hq-desk-thinking {
+  0%, 100% { opacity: calc(var(--dna-warmth, 0) * 0.32); }
+  50% { opacity: calc(var(--dna-warmth, 0) * 0.32 + 0.18); }
+}
+.hq-desk-glow.hq-discovering {
+  animation: hq-desk-discover 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hq-desk-discover {
+  0% { opacity: calc(var(--dna-warmth, 0) * 0.32); }
+  30% { opacity: calc(var(--dna-warmth, 0) * 0.32 + 0.35); }
+  100% { opacity: calc(var(--dna-warmth, 0) * 0.32); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hq-desk-glow.hq-desk-thinking, .hq-desk-glow.hq-discovering { animation: none; }
+}
+
+/* ---- the wing answers understanding too, the same quiet way the desk
+   does — inherits --dna-warmth from the room ---- */
+.hq-wing-warmth {
+  background: linear-gradient(90deg, rgba(255, 220, 160, 0.5), transparent 60%);
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--dna-warmth, 0) * 0.4);
+  transition: opacity 1.2s ease;
+}
+
+/* ---- the world outside: a touch of atmospheric depth between the near
+   peaks and the far range — static, so it reads as distance, not weather ---- */
+.hq-depth-haze {
+  background: linear-gradient(180deg, rgba(184, 198, 218, 0.08), transparent 42%, transparent 62%, rgba(120, 130, 145, 0.06));
+  mix-blend-mode: soft-light;
+}
+
+/* ---- the briefing settles onto the floor like paper landing, once, when
+   it updates — the perspective tilt (rotateX) has to ride along or the
+   floor projection would briefly flatten ---- */
+.hq-brief-settle {
+  animation: hq-brief-settle 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes hq-brief-settle {
+  0% { transform: perspective(1100px) rotateX(13deg) translateY(-6px) scale(0.994); opacity: 0.85; }
+  100% { transform: perspective(1100px) rotateX(13deg) translateY(0) scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hq-brief-settle { animation: none; }
+}
+
+/* ---- Digital DNA casts believable light into its own drawer, scaled to
+   the same understanding its ribbons already glow with ---- */
+.hq-dna-cast {
+  background: radial-gradient(60% 55% at 50% 38%, rgba(255, 214, 150, 0.55), rgba(201, 168, 119, 0.18) 55%, transparent 78%);
+  filter: blur(28px);
+  transition: opacity 900ms ease;
 }

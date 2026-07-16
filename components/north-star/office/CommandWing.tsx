@@ -74,6 +74,9 @@ export function CommandWing({
       />
       {/* brushed metal, not flat shadow */}
       <div aria-hidden="true" className="hq-wing-metal pointer-events-none absolute inset-0" />
+      {/* acknowledges Digital DNA: invisible until the business is
+          genuinely understood, inherited from the room via --dna-warmth */}
+      <div aria-hidden="true" className="hq-wing-warmth pointer-events-none absolute inset-0" />
 
       <div className="relative flex items-center gap-3">
         <div className="relative grid size-9 place-items-center">
@@ -94,7 +97,7 @@ export function CommandWing({
               key={id}
               type="button"
               onClick={() => open(id)}
-              className={`group relative flex cursor-pointer items-center gap-2.5 border-l py-3 pl-5 text-left text-[12px] font-medium uppercase tracking-[0.2em] transition-[color,border-color,transform] duration-300 [text-shadow:0_1px_6px_rgba(1,2,5,0.9)] active:scale-[0.98] active:pl-[1.15rem] ${
+              className={`group relative flex cursor-pointer items-center gap-2.5 border-l py-3 pl-5 text-left text-[12px] font-medium uppercase tracking-[0.2em] transition-[color,border-color,transform,padding] duration-300 [text-shadow:0_1px_6px_rgba(1,2,5,0.9)] hover:pl-[1.35rem] active:scale-[0.98] active:pl-[1.15rem] ${
                 isActive ? 'border-[#c8b48a]/80 text-[#f5edda]' : 'border-transparent text-[#c1b8a6] hover:text-[#f0e7d4]'
               }`}
             >
