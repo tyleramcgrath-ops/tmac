@@ -125,9 +125,9 @@ const CATEGORY_COPY: Record<WordPressErrorCategory, Omit<WordPressErrorReport, '
   },
   proxy_challenge: {
     category: 'proxy_challenge',
-    whatFailed: 'A proxy or CDN (such as Cloudflare) intercepted the request with a challenge page.',
-    whyLikely: 'Bot-protection features (JS challenge, CAPTCHA, "I\'m Under Attack" mode) block automated, non-browser requests like this one.',
-    whatToDo: 'In the CDN/proxy dashboard, add an allowlist rule for the WordPress REST API path (/wp-json/) or for RankForge specifically.',
+    whatFailed: 'A bot-protection challenge intercepted the request instead of WordPress.',
+    whyLikely: 'A CDN (Cloudflare) or hosting-level security product (e.g. SiteGround\'s built-in bot protection, Sucuri Website Firewall) is issuing a CAPTCHA/JS challenge to automated, non-browser requests like this one, before WordPress ever sees it.',
+    whatToDo: 'If using Cloudflare: add an allowlist rule for /wp-json/ in the CDN dashboard. If on managed hosting (SiteGround, WP Engine, Kinsta, etc.): check the host\'s Security/Site Tools settings for bot protection, or contact hosting support to allowlist REST API access for this integration.',
     canRetry: true,
   },
   incorrect_install_path: {
@@ -227,8 +227,22 @@ export function classifyWordPressError(input: ClassifyWordPressErrorInput): Word
 
   let category: WordPressErrorCategory = 'unknown'
 
-  // Network / exception-level failures first — no HTTP status was ever received.
-  if (!httpStatus) {
+  // Bot-protection / CAPTCHA challenge pages can arrive on unusual status
+  // codes (SiteGround's sgcaptcha challenge has been observed on HTTP 202,
+  // not just 403/503), so this is checked independent of status, before any
+  // status-specific branch runs.
+  const isBotChallengePage =
+    body.includes('sgcaptcha') ||
+    body.includes('.well-known/sgcaptcha') ||
+    headerBlob.includes('cf-ray') ||
+    body.includes('cloudflare') ||
+    body.includes('checking your browser') ||
+    body.includes('attention required') ||
+    (body.includes('http-equiv="refresh"') && (body.includes('captcha') || body.includes('challenge')))
+
+  if (isBotChallengePage) {
+    category = 'proxy_challenge'
+  } else if (!httpStatus) {
     if (exceptionName === 'AbortError' || msg.includes('aborted') || msg.includes('timeout') || msg.includes('timed out')) {
       category = 'server_timeout'
     } else if (msg.includes('certificate') || msg.includes('self-signed') || msg.includes('self signed') || msg.includes('ssl')) {

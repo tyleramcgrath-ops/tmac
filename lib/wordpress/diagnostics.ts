@@ -149,7 +149,7 @@ export async function runConnectionDiagnostics(
       steps.push(step(4, 'rest_discovery', 'pass', `Discovered ${namespaces.length} REST namespace(s).`))
     }
   } catch {
-    steps.push(step(4, 'rest_discovery', 'fail', 'REST root did not return valid JSON — something between RankForge and the site is altering the response.', classifyWordPressError({ bodyText: indexBody, step: 'rest discovery' })))
+    steps.push(step(4, 'rest_discovery', 'fail', 'REST root did not return valid JSON — something between RankForge and the site is altering the response.', classifyWordPressError({ httpStatus: indexRes.status, bodyText: indexBody, step: 'rest discovery' })))
     for (let i = 5; i <= 12; i++) steps.push(skip(i, 'Skipped — REST discovery failed.'))
     return finalize(steps, normalized.siteUrl, normalized.restRoot)
   }

@@ -2,6 +2,25 @@ import { describe, it, expect } from 'vitest'
 import { classifyWordPressError } from '../errors'
 
 describe('classifyWordPressError', () => {
+  it('classifies a SiteGround sgcaptcha challenge page as proxy_challenge, even on an unusual HTTP 202', () => {
+    // Regression: found via live testing against a real SiteGround-hosted
+    // WordPress site (envuetelematics.com). SiteGround's hosting-level bot
+    // protection intercepted the /wp-json/ request before WordPress ever
+    // saw it, returning a meta-refresh redirect to /.well-known/sgcaptcha/
+    // on HTTP 202 — not one of the status codes (403/503) the classifier
+    // previously checked for challenge pages, so it fell back to a
+    // misleading "domain may be down" message despite the domain clearly
+    // being reachable (steps 1-3 already succeeded).
+    const r = classifyWordPressError({
+      httpStatus: 202,
+      bodyText: '<html><head><link rel="icon" href="data:;"><meta http-equiv="refresh" content="0;/.well-known/sgcaptcha/?r=%2Fwp-json%2F&y=ipc:3.88.159.235:1784224861.883"></head></html>',
+      step: 'rest discovery',
+    })
+    expect(r.category).toBe('proxy_challenge')
+    expect(r.category).not.toBe('site_unreachable')
+    expect(r.whatToDo.toLowerCase()).toContain('security')
+  })
+
   it('classifies 401 with password wording as invalid_app_password', () => {
     const r = classifyWordPressError({ httpStatus: 401, bodyText: '{"code":"incorrect_password","message":"Incorrect password."}' })
     expect(r.category).toBe('invalid_app_password')
