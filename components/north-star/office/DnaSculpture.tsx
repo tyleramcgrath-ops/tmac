@@ -220,15 +220,11 @@ export function DnaSculpture({
       const understanding = regions.length ? uSum / regions.length : 0
       const warmLift = 0.35 + 0.65 * understanding // 0..1 warmth of the room light
 
+      // The canvas itself stays transparent — no opaque background fill — so
+      // the office's own architectural atmosphere (.ns-root + .office-ambient)
+      // shows straight through. The DNA sits IN the room's existing air rather
+      // than painting a separate room of its own; only light is added below.
       ctx!.clearRect(0, 0, w, h)
-      // dark architectural glass: cool graphite, faintly warmed by the DNA's light
-      const gTop = Math.round(12 + 4 * warmLift), gMid = Math.round(15 + 6 * warmLift), gWarm = Math.round(10 + 10 * warmLift)
-      const base = ctx!.createLinearGradient(0, 0, 0, h)
-      base.addColorStop(0, `rgb(${gTop},${gTop + 1},${gTop + 3})`)
-      base.addColorStop(0.5, `rgb(${gMid},${gMid + 1},${gMid + 4})`)
-      base.addColorStop(1, `rgb(${gWarm - 2},${gWarm - 3},${gWarm})`)
-      ctx!.fillStyle = base
-      ctx!.fillRect(0, 0, w, h)
 
       const breathe = reduce ? 0.5 : Math.sin(time / 2600) * 0.5 + 0.5
       // idle motion reduced ~50%: when nothing changes the molecule is nearly still
