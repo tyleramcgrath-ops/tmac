@@ -46,7 +46,13 @@ export async function safeWordPressFetch(
     try {
       res = await fetch(currentUrl, {
         method: opts.method ?? 'GET',
-        headers,
+        // Identify honestly as RankForge rather than sending Node's default
+        // (or no) User-Agent — some hosting-level bot protection treats an
+        // unidentified client as a stronger bot signal. This is client
+        // identification, not fingerprint spoofing: it does not attempt to
+        // impersonate a browser or evade a challenge that's actually working
+        // as intended.
+        headers: { 'User-Agent': 'RankForge-WordPress-Integration/1.0', ...headers },
         body: opts.body,
         redirect: 'manual',
         signal: controller.signal,
