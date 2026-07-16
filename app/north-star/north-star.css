@@ -158,7 +158,12 @@
   .office-dna-wrap { height: 340px; max-width: 100%; padding: 0 8px; }
 }
 
-@media (min-width: 901px) {
+/* The mobile bar is the room's navigation whenever the desktop command wing
+   and Compass console aren't shown. Those appear at Tailwind's lg breakpoint
+   (1024px), so the mobile bar must stay visible right up to it — hiding it at
+   901px left a 901–1023px band (tablets, partial laptop windows) with no way
+   to reach any destination. */
+@media (min-width: 1024px) {
   .office-mobile-bar { display: none !important; }
 }
 
