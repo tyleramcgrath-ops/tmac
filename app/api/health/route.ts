@@ -10,6 +10,10 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
   const appSecret = process.env.APP_SECRET || ''
   const databasePresent = !!(process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL)
+  // Diagnostic: env-var KEY NAMES (never values) that look like an APP_SECRET
+  // spelling — reveals typos ("APP_SECRET " with a space, "APPSECRET", wrong
+  // case) without exposing any secret. Value length only, never the value.
+  const appSecretLikeKeys = Object.keys(process.env).filter((k) => /app[\s_-]?secret/i.test(k))
   return Response.json({
     ok: true,
     vercelEnv: process.env.VERCEL_ENV ?? null, // 'production' | 'preview' | 'development' | null
@@ -17,6 +21,9 @@ export async function GET() {
     appSecretPresent: appSecret.length > 0,
     appSecretLength: appSecret.length, // length only — never the value
     appSecretValid: appSecret.length >= 32,
+    // Exact key names (not values) matching an APP_SECRET spelling, so a typo is
+    // visible. Empty [] means no such variable exists in this environment at all.
+    appSecretLikeKeys,
     databaseUrlPresent: databasePresent,
     signupAllowlistSet: !!process.env.RF_SIGNUP_ALLOWLIST,
     googleOAuthConfigured: !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET),
