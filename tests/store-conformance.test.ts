@@ -78,10 +78,20 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       await store.updateUser({ ...u, tokenVersion: 5 })
       expect((await store.getUserById(u.id))?.tokenVersion).toBe(5)
 
+      // getUserByVerifyToken (RC2 P4)
+      await store.updateUser({ ...u, verifyToken: 'tok-123' })
+      expect((await store.getUserByVerifyToken('tok-123'))?.id).toBe(u.id)
+
       const o = org()
       await store.createOrg(o, u.id)
       expect((await store.getMembership(o.id, u.id))?.role).toBe('owner')
       expect((await store.listOrgsForUser(u.id)).map((x) => x.id)).toContain(o.id)
+      // updateOrg (RC2 P6 pilot fields)
+      await store.updateOrg({ ...o, pilot: { status: 'active', expiresAt: null } })
+      expect((await store.getOrg(o.id))?.pilot?.status).toBe('active')
+      // pilot feedback
+      await store.createFeedback({ id: uid(), orgId: o.id, userId: u.id, kind: 'issue', message: 'x', createdAt: now() })
+      expect((await store.listFeedback(o.id)).length).toBe(1)
 
       // addMember (upsert path)
       const u2 = user()

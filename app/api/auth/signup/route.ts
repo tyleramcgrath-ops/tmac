@@ -2,6 +2,8 @@ import { randomUUID } from 'crypto'
 import { hashPassword } from '@/lib/foundation/crypto'
 import { assertSameOrigin, audit, handled, sessionCookieFor } from '@/lib/foundation/auth'
 import { clientKey, rateLimit } from '@/lib/foundation/rate-limit'
+import { signupAllowed } from '@/lib/foundation/env'
+import { sendVerificationEmail } from '@/lib/foundation/mailer'
 import { getStore } from '@/lib/foundation/store'
 
 export const runtime = 'nodejs'
@@ -29,6 +31,11 @@ export const POST = handled(async (request) => {
   if (password.length < 10) {
     return Response.json({ error: 'Password must be at least 10 characters.' }, { status: 400 })
   }
+  // Pilot allow-list gate (RC2 P6): when RF_SIGNUP_ALLOWLIST is set, only listed
+  // emails/domains may register. Unset ⇒ open (dev/self-serve).
+  if (!signupAllowed(email)) {
+    return Response.json({ error: 'Sign-ups are limited during the pilot. Contact us for access.' }, { status: 403 })
+  }
 
   const store = await getStore()
   if (await store.getUserByEmail(email)) {
@@ -36,7 +43,12 @@ export const POST = handled(async (request) => {
   }
 
   const now = new Date().toISOString()
-  const user = { id: randomUUID(), email, name: name || email.split('@')[0], passwordHash: await hashPassword(password), tokenVersion: 0, createdAt: now }
+  // Email verification (RC2 P4): the account is created unverified with a
+  // 24h token, and a verification email is "sent" (logged-only unless a mail
+  // webhook is configured — see mailer.ts). Non-blocking during the pilot.
+  const verifyToken = randomUUID()
+  const verifyTokenExpiresAt = new Date(Date.now() + 24 * 3600 * 1000).toISOString()
+  const user = { id: randomUUID(), email, name: name || email.split('@')[0], passwordHash: await hashPassword(password), tokenVersion: 0, emailVerified: false, verifyToken, verifyTokenExpiresAt, createdAt: now }
   await store.createUser(user)
 
   // Every user gets a personal organization; teams invite into shared orgs.
@@ -44,7 +56,10 @@ export const POST = handled(async (request) => {
   await store.createOrg(org, user.id)
   await audit(org.id, user.id, 'user.signup', user.id, email)
 
-  return new Response(JSON.stringify({ user: { id: user.id, email, name: user.name }, org }), {
+  const link = `${new URL(request.url).origin}/api/auth/verify?token=${verifyToken}`
+  const mail = await sendVerificationEmail(email, link)
+
+  return new Response(JSON.stringify({ user: { id: user.id, email, name: user.name, emailVerified: false }, org, emailDelivery: mail.via }), {
     status: 201,
     headers: { 'Content-Type': 'application/json', 'Set-Cookie': await sessionCookieFor(user.id, 0) },
   })

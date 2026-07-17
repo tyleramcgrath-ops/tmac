@@ -25,6 +25,7 @@ export interface SessionUser {
   id: string
   email: string
   name: string
+  emailVerified?: boolean
 }
 export interface Org {
   id: string
@@ -178,6 +179,10 @@ export const api = {
   login: (email: string, password: string) =>
     req<{ user: SessionUser }>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   logout: () => req<{ ok: true }>('/api/auth/logout', { method: 'POST' }),
+  // Email verification (RC2 P4) + pilot feedback (RC2 P6).
+  resendVerification: () => req<{ ok: boolean }>('/api/auth/resend', { method: 'POST' }),
+  submitFeedback: (kind: 'feedback' | 'issue', message: string, projectId?: string) =>
+    req<{ ok: boolean; id: string }>('/api/feedback', { method: 'POST', body: JSON.stringify({ kind, message, projectId }) }),
 
   // projects
   listProjects: () => req<{ projects: ProjectDTO[] }>('/api/projects'),

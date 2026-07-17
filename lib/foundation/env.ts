@@ -64,6 +64,21 @@ export function googleOAuthConfig(): GoogleOAuthConfig | null {
   return { clientId, clientSecret, redirectBase: process.env.GOOGLE_OAUTH_REDIRECT_BASE || undefined }
 }
 
+// Pilot sign-up allow-list (RC2 P6). RF_SIGNUP_ALLOWLIST is a comma-separated
+// list of exact emails and/or @domains (e.g. "a@x.com,@acme.com"). When set,
+// only matching emails may register. Unset ⇒ open sign-up (dev/self-serve).
+export function signupAllowed(email: string): boolean {
+  const raw = process.env.RF_SIGNUP_ALLOWLIST
+  if (!raw) return true
+  const e = email.trim().toLowerCase()
+  const domain = '@' + e.split('@')[1]
+  return raw
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean)
+    .some((entry) => (entry.startsWith('@') ? entry === domain : entry === e))
+}
+
 // APP_SECRET is required for any authenticated flow regardless of store.
 // Production demands a strong (≥32-char) secret; the crypto primitives enforce
 // a ≥16 floor everywhere (Phase D.6 P6).

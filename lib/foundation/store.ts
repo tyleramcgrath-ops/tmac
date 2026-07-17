@@ -11,6 +11,7 @@ import type {
   Competitor,
   Organization,
   OrgMember,
+  PilotFeedback,
   Project,
   ProviderConnection,
   Recommendation,
@@ -26,7 +27,9 @@ export interface FoundationStore {
   updateUser(user: User): Promise<void>
   getUserByEmail(email: string): Promise<User | null>
   getUserById(id: string): Promise<User | null>
+  getUserByVerifyToken(token: string): Promise<User | null>
   createOrg(org: Organization, ownerId: string): Promise<void>
+  updateOrg(org: Organization): Promise<void>
   getOrg(id: string): Promise<Organization | null>
   listOrgsForUser(userId: string): Promise<Organization[]>
   getMembership(orgId: string, userId: string): Promise<OrgMember | null>
@@ -67,6 +70,9 @@ export interface FoundationStore {
   getProviderConnection(projectId: string, kind: ProviderConnection['kind']): Promise<ProviderConnection | null>
   listProviderConnections(projectId: string): Promise<ProviderConnection[]>
   deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']): Promise<void>
+  // pilot feedback / issues (RC2 P6)
+  createFeedback(entry: PilotFeedback): Promise<void>
+  listFeedback(orgId: string, limit?: number): Promise<PilotFeedback[]>
   // audit log
   appendAudit(entry: AuditLogEntry): Promise<void>
   listAudit(orgId: string, limit?: number): Promise<AuditLogEntry[]>

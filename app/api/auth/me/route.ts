@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   const store = await getStore()
   const orgs = await store.listOrgsForUser(user.id)
   return Response.json({
-    user: { id: user.id, email: user.email, name: user.name },
+    user: { id: user.id, email: user.email, name: user.name, emailVerified: user.emailVerified ?? false },
     orgs: orgs.map((o) => ({ id: o.id, name: o.name })),
   })
 }

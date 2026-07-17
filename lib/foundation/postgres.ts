@@ -19,6 +19,7 @@ import type {
   Competitor,
   Organization,
   OrgMember,
+  PilotFeedback,
   Project,
   ProviderConnection,
   Recommendation,
@@ -85,6 +86,11 @@ const TABLES = {
     pk: ['id'],
     keys: (a: AuditLogEntry) => ({ id: a.id, org_id: a.orgId, at: a.at }),
   } as TableDesc<AuditLogEntry>,
+  feedback: {
+    name: 'rf_feedback',
+    pk: ['id'],
+    keys: (f: PilotFeedback) => ({ id: f.id, org_id: f.orgId, created_at: f.createdAt }),
+  } as TableDesc<PilotFeedback>,
 }
 
 export class PostgresFoundationStore implements FoundationStore {
@@ -173,9 +179,16 @@ export class PostgresFoundationStore implements FoundationStore {
     const r = await this.rows<User>('SELECT data FROM rf_users WHERE id=$1', [id])
     return r[0] ?? null
   }
+  async getUserByVerifyToken(token: string) {
+    const r = await this.rows<User>("SELECT data FROM rf_users WHERE data->>'verifyToken'=$1", [token])
+    return r[0] ?? null
+  }
   async createOrg(org: Organization, ownerId: string) {
     await this.ins(TABLES.orgs, org)
     await this.ins(TABLES.members, { orgId: org.id, userId: ownerId, role: 'owner', createdAt: org.createdAt })
+  }
+  async updateOrg(org: Organization) {
+    await this.upd(TABLES.orgs, org)
   }
   async getOrg(id: string) {
     const r = await this.rows<Organization>('SELECT data FROM rf_orgs WHERE id=$1', [id])
@@ -314,6 +327,14 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
     await this.pool.query('DELETE FROM rf_provider_connections WHERE project_id=$1 AND kind=$2', [projectId, kind])
+  }
+
+  // ── Pilot feedback (RC2 P6) ────────────────────────────────────────────────
+  async createFeedback(entry: PilotFeedback) {
+    await this.ins(TABLES.feedback, entry)
+  }
+  async listFeedback(orgId: string, limit = 100) {
+    return this.rows<PilotFeedback>('SELECT data FROM rf_feedback WHERE org_id=$1 ORDER BY created_at DESC LIMIT $2', [orgId, limit])
   }
 
   // ── Audit ──────────────────────────────────────────────────────────────────

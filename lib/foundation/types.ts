@@ -14,12 +14,38 @@ export interface User {
   // of the user's existing sessions at once (logout-everywhere / revoke on
   // password change / compromise). Absent = 0 for pre-migration users.
   tokenVersion?: number
+  // Email verification (RC2 P4). Absent/false until the user confirms their
+  // address via the emailed link. Non-blocking during the guided pilot — the app
+  // works, but an unverified banner is shown and verification is encouraged.
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiresAt?: string | null
   createdAt: string
 }
 
 export interface Organization {
   id: string
   name: string
+  // Pilot administration (RC2 P6). Present for pilot orgs; lets an operator set
+  // an expiry and status. When status is 'expired'/'disabled' (or expiresAt has
+  // passed) project access is blocked with a clear message.
+  pilot?: {
+    status: 'active' | 'expired' | 'disabled'
+    expiresAt?: string | null
+    notes?: string
+  }
+  createdAt: string
+}
+
+// Pilot feedback / issue reports (RC2 P6). Collected in-product so a guided
+// pilot's confusion points and bugs are captured with attribution.
+export interface PilotFeedback {
+  id: string
+  orgId: string
+  userId: string
+  projectId?: string | null
+  kind: 'feedback' | 'issue'
+  message: string
   createdAt: string
 }
 

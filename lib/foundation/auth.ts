@@ -118,6 +118,14 @@ export async function requireProjectRole(
   if (ROLE_RANK[membership.role] < ROLE_RANK[minRole]) {
     throw new HttpError(403, `This action requires the ${minRole} role.`)
   }
+  // Pilot expiration (RC2 P6): a pilot org whose window has closed is blocked
+  // with a clear, honest message rather than silently working forever.
+  const org = await store.getOrg(project.orgId)
+  const pilot = org?.pilot
+  if (pilot) {
+    const expired = pilot.status === 'expired' || pilot.status === 'disabled' || (pilot.expiresAt != null && Date.parse(pilot.expiresAt) < Date.now())
+    if (expired) throw new HttpError(403, 'Your pilot access has ended. Contact us to continue.')
+  }
   return { project, role: membership.role }
 }
 

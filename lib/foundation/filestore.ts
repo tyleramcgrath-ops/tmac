@@ -10,6 +10,7 @@ import type {
   Competitor,
   Organization,
   OrgMember,
+  PilotFeedback,
   Project,
   ProviderConnection,
   Recommendation,
@@ -30,6 +31,7 @@ type Collections = {
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
   providerConnections: ProviderConnection[]
+  feedback: PilotFeedback[]
   audit: AuditLogEntry[]
 }
 
@@ -44,6 +46,7 @@ const EMPTY: Collections = {
   wpConnections: [],
   wpDeployments: [],
   providerConnections: [],
+  feedback: [],
   audit: [],
 }
 
@@ -109,11 +112,17 @@ export class FileFoundationStore implements FoundationStore {
   async getUserById(id: string) {
     return (await this.read('users')).find((u) => u.id === id) ?? null
   }
+  async getUserByVerifyToken(token: string) {
+    return (await this.read('users')).find((u) => u.verifyToken === token) ?? null
+  }
   async createOrg(org: Organization, ownerId: string) {
     await this.mutate('orgs', (orgs) => ({ data: [...orgs, org] }))
     await this.mutate('members', (members) => ({
       data: [...members, { orgId: org.id, userId: ownerId, role: 'owner' as const, createdAt: org.createdAt }],
     }))
+  }
+  async updateOrg(org: Organization) {
+    await this.mutate('orgs', (orgs) => ({ data: orgs.map((o) => (o.id === org.id ? org : o)) }))
   }
   async getOrg(id: string) {
     return (await this.read('orgs')).find((o) => o.id === id) ?? null
@@ -257,6 +266,17 @@ export class FileFoundationStore implements FoundationStore {
     await this.mutate('providerConnections', (all) => ({
       data: all.filter((c) => !(c.projectId === projectId && c.kind === kind)),
     }))
+  }
+
+  // pilot feedback (RC2 P6)
+  async createFeedback(entry: PilotFeedback) {
+    await this.mutate('feedback', (all) => ({ data: [...all, entry] }))
+  }
+  async listFeedback(orgId: string, limit = 100) {
+    return (await this.read('feedback'))
+      .filter((f) => f.orgId === orgId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, limit)
   }
 
   // audit

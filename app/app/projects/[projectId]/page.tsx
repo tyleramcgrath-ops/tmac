@@ -17,6 +17,7 @@ import { OperatorTab } from './_components/OperatorTab'
 import { WordPressTab } from './_components/WordPressTab'
 import { HistoryTab } from './_components/HistoryTab'
 import { AtlasTab } from './_components/AtlasTab'
+import { OnboardingChecklist } from './_components/OnboardingChecklist'
 
 type Tab = 'audit' | 'recommendations' | 'operator' | 'atlas' | 'wordpress' | 'history'
 
@@ -73,6 +74,8 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
         </div>
         <DangerZone projectId={projectId} onDeleted={() => router.replace('/app/projects')} />
       </div>
+
+      <OnboardingChecklist projectId={projectId} scans={scans} onGoScan={() => setTab('audit')} />
 
       <div className="flex gap-1 border-b border-[var(--rf-card-line)]">
         {tabs.map((t) => (
