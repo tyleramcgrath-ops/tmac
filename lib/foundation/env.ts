@@ -33,8 +33,8 @@ export function resolveStoreEnv(): StoreEnv {
         'DATABASE_URL is required in production. RankForge will not fall back to the ephemeral file store, which would silently lose all data on this platform. Provision a PostgreSQL database and set DATABASE_URL.'
       )
     }
-    if (!process.env.APP_SECRET || process.env.APP_SECRET.length < 8) {
-      throw new EnvError('APP_SECRET (min 8 chars) is required in production for sessions and credential encryption.')
+    if (!process.env.APP_SECRET || process.env.APP_SECRET.length < 32) {
+      throw new EnvError('APP_SECRET (min 32 chars) is required in production for sessions and credential encryption. Generate one with: openssl rand -base64 32')
     }
     return { kind: 'postgres', databaseUrl }
   }
@@ -44,8 +44,11 @@ export function resolveStoreEnv(): StoreEnv {
 }
 
 // APP_SECRET is required for any authenticated flow regardless of store.
+// Production demands a strong (≥32-char) secret; the crypto primitives enforce
+// a ≥16 floor everywhere (Phase D.6 P6).
 export function requireAppSecret(): void {
-  if (!process.env.APP_SECRET || process.env.APP_SECRET.length < 8) {
-    throw new EnvError('APP_SECRET (min 8 chars) must be set for authentication.')
+  const min = process.env.NODE_ENV === 'production' ? 32 : 16
+  if (!process.env.APP_SECRET || process.env.APP_SECRET.length < min) {
+    throw new EnvError(`APP_SECRET (min ${min} chars) must be set for authentication.`)
   }
 }

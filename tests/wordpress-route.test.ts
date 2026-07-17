@@ -9,6 +9,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
+import { __resetRateLimits } from '../lib/foundation/rate-limit'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
 import { POST as wpPost } from '../app/api/projects/[projectId]/wordpress/route'
@@ -43,6 +44,7 @@ function cookieFrom(res: Response) {
 
 beforeEach(() => {
   post.title = 'Old Title'
+  __resetRateLimits()
   store = new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-wpr-')))
   __setStoreForTests(store)
   __setTrustedHostsForTests(['wp.test'])

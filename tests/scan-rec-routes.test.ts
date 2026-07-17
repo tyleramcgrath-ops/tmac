@@ -8,6 +8,7 @@ import { tmpdir } from 'os'
 import path from 'path'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
+import { __resetRateLimits } from '../lib/foundation/rate-limit'
 import { POST as signup } from '../app/api/auth/signup/route'
 import { POST as createProject } from '../app/api/projects/route'
 import { POST as scansPost, GET as scansGet } from '../app/api/projects/[projectId]/scans/route'
@@ -29,6 +30,7 @@ const CTX0 = { params: Promise.resolve({}) }
 
 async function setup() {
   __setStoreForTests(new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-sr-'))))
+  __resetRateLimits()
   const cookie = cookieFrom(await signup(jsonReq({ email: `u${Math.round(performance.now())}@x.com`, password: 'longenough123' }), CTX0))
   const proj = await createProject(jsonReq({ domain: 'example.com' }, cookie), CTX0)
   const { project } = (await proj.json()) as { project: { id: string } }

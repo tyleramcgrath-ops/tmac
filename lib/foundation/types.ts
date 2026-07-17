@@ -9,6 +9,11 @@ export interface User {
   email: string
   name: string
   passwordHash: string
+  // Session generation counter (Phase D.6 P6). Every issued session token
+  // embeds the tokenVersion current at issue time; bumping it invalidates ALL
+  // of the user's existing sessions at once (logout-everywhere / revoke on
+  // password change / compromise). Absent = 0 for pre-migration users.
+  tokenVersion?: number
   createdAt: string
 }
 

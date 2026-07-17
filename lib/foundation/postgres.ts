@@ -50,6 +50,9 @@ export class PostgresFoundationStore implements FoundationStore {
       user,
     ])
   }
+  async updateUser(user: User) {
+    await this.pool.query('UPDATE rf_users SET email=$2, data=$3 WHERE id=$1', [user.id, user.email, user])
+  }
   async getUserByEmail(email: string) {
     const r = await this.rows<User>('SELECT data FROM rf_users WHERE email=$1', [email.toLowerCase()])
     return r[0] ?? null

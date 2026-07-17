@@ -57,9 +57,12 @@ describe('passwords & sessions', () => {
     expect(await verifyPassword('x', 'garbage')).toBe(false)
   })
 
-  it('session tokens round-trip and reject tampering', async () => {
-    const token = await createSessionToken('user-123')
-    expect(await readSessionToken(token)).toBe('user-123')
+  it('session tokens round-trip (with tokenVersion) and reject tampering', async () => {
+    const token = await createSessionToken('user-123', 4)
+    expect(await readSessionToken(token)).toEqual({ userId: 'user-123', tokenVersion: 4 })
+    // Legacy token without a tv claim defaults to version 0.
+    const legacy = await createSessionToken('user-9')
+    expect(await readSessionToken(legacy)).toEqual({ userId: 'user-9', tokenVersion: 0 })
     expect(await readSessionToken(token.slice(0, -3) + 'abc')).toBeNull()
   })
 

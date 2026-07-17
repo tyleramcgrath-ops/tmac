@@ -92,6 +92,11 @@ export class FileFoundationStore implements FoundationStore {
       return { data: [...users, user] }
     })
   }
+  async updateUser(user: User) {
+    await this.mutate('users', (users) => ({
+      data: users.map((u) => (u.id === user.id ? user : u)),
+    }))
+  }
   async getUserByEmail(email: string) {
     return (await this.read('users')).find((u) => u.email === email.toLowerCase()) ?? null
   }

@@ -21,6 +21,7 @@ import type {
 export interface FoundationStore {
   // users & orgs
   createUser(user: User): Promise<void>
+  updateUser(user: User): Promise<void>
   getUserByEmail(email: string): Promise<User | null>
   getUserById(id: string): Promise<User | null>
   createOrg(org: Organization, ownerId: string): Promise<void>

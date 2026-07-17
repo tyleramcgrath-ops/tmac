@@ -1,11 +1,24 @@
 import { randomUUID } from 'crypto'
 import { hashPassword } from '@/lib/foundation/crypto'
-import { audit, handled, sessionCookieFor } from '@/lib/foundation/auth'
+import { assertSameOrigin, audit, handled, sessionCookieFor } from '@/lib/foundation/auth'
+import { clientKey, rateLimit } from '@/lib/foundation/rate-limit'
 import { getStore } from '@/lib/foundation/store'
 
 export const runtime = 'nodejs'
 
+// Signup abuse cap (Phase D.6 P6): 5 new accounts / hour per client IP.
+const SIGNUP_LIMIT = 5
+const SIGNUP_WINDOW_MS = 60 * 60 * 1000
+
 export const POST = handled(async (request) => {
+  assertSameOrigin(request)
+  const gate = rateLimit(`signup:${clientKey(request)}`, SIGNUP_LIMIT, SIGNUP_WINDOW_MS, Date.now())
+  if (!gate.ok) {
+    return Response.json(
+      { error: 'Too many sign-up attempts. Please wait and try again.' },
+      { status: 429, headers: { 'Retry-After': String(gate.retryAfterSec) } }
+    )
+  }
   const body = (await request.json().catch(() => ({}))) as Record<string, unknown>
   const email = String(body.email ?? '').trim().toLowerCase()
   const name = String(body.name ?? '').trim().slice(0, 80)
@@ -23,7 +36,7 @@ export const POST = handled(async (request) => {
   }
 
   const now = new Date().toISOString()
-  const user = { id: randomUUID(), email, name: name || email.split('@')[0], passwordHash: await hashPassword(password), createdAt: now }
+  const user = { id: randomUUID(), email, name: name || email.split('@')[0], passwordHash: await hashPassword(password), tokenVersion: 0, createdAt: now }
   await store.createUser(user)
 
   // Every user gets a personal organization; teams invite into shared orgs.
@@ -33,6 +46,6 @@ export const POST = handled(async (request) => {
 
   return new Response(JSON.stringify({ user: { id: user.id, email, name: user.name }, org }), {
     status: 201,
-    headers: { 'Content-Type': 'application/json', 'Set-Cookie': await sessionCookieFor(user.id) },
+    headers: { 'Content-Type': 'application/json', 'Set-Cookie': await sessionCookieFor(user.id, 0) },
   })
 })

@@ -7,8 +7,10 @@ import { tmpdir } from 'os'
 import path from 'path'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
+import { __resetRateLimits } from '../lib/foundation/rate-limit'
 import { POST as signup } from '../app/api/auth/signup/route'
 import { POST as login } from '../app/api/auth/login/route'
+import { POST as logout } from '../app/api/auth/logout/route'
 import { GET as me } from '../app/api/auth/me/route'
 import { GET as listProjects, POST as createProject } from '../app/api/projects/route'
 import { GET as getProject } from '../app/api/projects/[projectId]/route'
@@ -33,6 +35,7 @@ function cookieFrom(res: Response): string {
 describe('auth routes', () => {
   beforeEach(() => {
     __setStoreForTests(new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-auth-'))))
+    __resetRateLimits()
   })
 
   it('signup issues a session; /me identifies the user; login works; bad password refused', async () => {
@@ -60,6 +63,39 @@ describe('auth routes', () => {
     expect((await signup(jsonReq('http://t/s', { email: 'a@b.com', password: 'short' }), CTX)).status).toBe(400)
     await signup(jsonReq('http://t/s', { email: 'dup@b.com', password: 'longenough123' }), CTX)
     expect((await signup(jsonReq('http://t/s', { email: 'dup@b.com', password: 'longenough123' }), CTX)).status).toBe(409)
+  })
+
+  it('logout everywhere revokes existing sessions (tokenVersion bump)', async () => {
+    const cookie = cookieFrom(
+      await signup(jsonReq('http://t/s', { email: 'rev@x.com', password: 'longenough123' }), CTX)
+    )
+    const meBody = async () =>
+      (await (await me(new Request('http://t/me', { headers: { cookie } }))).json()) as { user: unknown }
+    // Session works.
+    expect((await meBody()).user).not.toBeNull()
+    // Logout everywhere.
+    const out = await logout(jsonReq('http://t/api/auth/logout', { everywhere: true }, cookie), CTX)
+    expect(out.status).toBe(200)
+    // The OLD cookie is now dead even though its JWT is unexpired + well-signed.
+    expect((await meBody()).user).toBeNull()
+  })
+
+  it('rate-limits repeated failed logins (429)', async () => {
+    await signup(jsonReq('http://t/s', { email: 'brute@x.com', password: 'longenough123' }), CTX)
+    let status = 0
+    for (let i = 0; i < 12; i++) {
+      status = (await login(jsonReq('http://t/l', { email: 'brute@x.com', password: 'nope' }), CTX)).status
+    }
+    expect(status).toBe(429) // exceeded 10 attempts / window
+  })
+
+  it('rejects a cross-origin login (CSRF defense-in-depth)', async () => {
+    const req = new Request('http://app.rankforge.com/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', origin: 'http://evil.example', host: 'app.rankforge.com' },
+      body: JSON.stringify({ email: 'a@b.com', password: 'x' }),
+    })
+    expect((await login(req, CTX)).status).toBe(403)
   })
 
   it('project routes: unauthenticated 401; cross-tenant read 404; owner CRUD works', async () => {

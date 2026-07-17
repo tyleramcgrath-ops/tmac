@@ -10,6 +10,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
+import { __resetRateLimits } from '../lib/foundation/rate-limit'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { POST as signup } from '../app/api/auth/signup/route'
 import { POST as createProject } from '../app/api/projects/route'
@@ -90,6 +91,7 @@ async function setup() {
 
 beforeEach(() => {
   resetWp()
+  __resetRateLimits()
   __setTrustedHostsForTests(['wp.test'])
   vi.stubGlobal('fetch', (i: string | URL, init?: RequestInit) => Promise.resolve(fakeWp(String(i), init)))
 })

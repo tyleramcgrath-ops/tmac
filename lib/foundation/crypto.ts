@@ -34,10 +34,14 @@ export async function verifyPassword(password: string, stored: string): Promise<
   return actual.length === expected.length && timingSafeEqual(actual, expected)
 }
 
+// Minimum APP_SECRET length the crypto primitives will operate with. Raised
+// from 8 → 16 in Phase D.6 P6; production enforces a stronger ≥32 in env.ts.
+const MIN_SECRET_LEN = 16
+
 function requireSecret(): Buffer {
   const secret = process.env.APP_SECRET
-  if (!secret || secret.length < 8) {
-    throw new Error('APP_SECRET must be set to use sessions or credential encryption.')
+  if (!secret || secret.length < MIN_SECRET_LEN) {
+    throw new Error(`APP_SECRET must be at least ${MIN_SECRET_LEN} characters to use sessions or credential encryption.`)
   }
   return createHash('sha256').update(secret).digest()
 }
@@ -61,18 +65,26 @@ export function decryptSecret(payload: string): string {
 
 const SESSION_TTL = '7d'
 
-export async function createSessionToken(userId: string): Promise<string> {
-  return new SignJWT({ sub: userId })
+// The session token now carries a `tv` (tokenVersion) claim (Phase D.6 P6) so a
+// server-side version bump can revoke every outstanding token for a user.
+export async function createSessionToken(userId: string, tokenVersion = 0): Promise<string> {
+  return new SignJWT({ sub: userId, tv: tokenVersion })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(SESSION_TTL)
     .sign(requireSecret())
 }
 
-export async function readSessionToken(token: string): Promise<string | null> {
+export interface SessionClaims {
+  userId: string
+  tokenVersion: number
+}
+
+export async function readSessionToken(token: string): Promise<SessionClaims | null> {
   try {
     const { payload } = await jwtVerify(token, requireSecret())
-    return typeof payload.sub === 'string' ? payload.sub : null
+    if (typeof payload.sub !== 'string') return null
+    return { userId: payload.sub, tokenVersion: typeof payload.tv === 'number' ? payload.tv : 0 }
   } catch {
     return null
   }
