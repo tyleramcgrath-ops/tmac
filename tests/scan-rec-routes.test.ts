@@ -1,0 +1,127 @@
+// Integration tests through the real route handlers: scan lifecycle
+// (start -> complete/partial/fail, persisted history) and recommendation
+// workflow (persist, accept, reject, reopen after a fresh login).
+
+import { beforeEach, describe, expect, it } from 'vitest'
+import { mkdtempSync } from 'fs'
+import { tmpdir } from 'os'
+import path from 'path'
+import { FileFoundationStore } from '../lib/foundation/filestore'
+import { __setStoreForTests } from '../lib/foundation/store'
+import { POST as signup } from '../app/api/auth/signup/route'
+import { POST as createProject } from '../app/api/projects/route'
+import { POST as scansPost, GET as scansGet } from '../app/api/projects/[projectId]/scans/route'
+import { GET as recsGet, PATCH as recsPatch } from '../app/api/projects/[projectId]/recommendations/route'
+
+process.env.APP_SECRET = 'scan-rec-secret-123'
+
+function jsonReq(body: unknown, cookie?: string): Request {
+  return new Request('http://t', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...(cookie ? { cookie } : {}) },
+    body: JSON.stringify(body),
+  })
+}
+function cookieFrom(res: Response): string {
+  return (res.headers.get('set-cookie') ?? '').split(';')[0]
+}
+const CTX0 = { params: Promise.resolve({}) }
+
+async function setup() {
+  __setStoreForTests(new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-sr-'))))
+  const cookie = cookieFrom(await signup(jsonReq({ email: `u${Math.round(performance.now())}@x.com`, password: 'longenough123' }), CTX0))
+  const proj = await createProject(jsonReq({ domain: 'example.com' }, cookie), CTX0)
+  const { project } = (await proj.json()) as { project: { id: string } }
+  return { cookie, projectId: project.id, ctx: { params: Promise.resolve({ projectId: project.id }) } }
+}
+
+const PAGES = [
+  { url: 'https://example.com/', overall: 70, fixes: [{ severity: 'critical', category: 'Content gaps', title: 'Add a <title> tag' }] },
+  { url: 'https://example.com/a', overall: 60, fixes: [{ severity: 'warning', category: 'Schema opportunities', title: 'Add structured data (JSON-LD) — none found' }] },
+]
+
+describe('scan lifecycle', () => {
+  beforeEach(() => {})
+
+  it('start -> complete persists a completed scan and derives recommendations; history reflects it', async () => {
+    const { cookie, ctx } = await setup()
+    const started = await scansPost(jsonReq({ action: 'start' }, cookie), ctx)
+    expect(started.status).toBe(201)
+    const scanId = ((await started.json()) as { scan: { id: string } }).scan.id
+
+    const done = await scansPost(jsonReq({ action: 'complete', scanId, pages: PAGES, blocked: [], discovered: 5 }, cookie), ctx)
+    const doneBody = (await done.json()) as { scan: { status: string }; recommendationCount: number }
+    expect(doneBody.scan.status).toBe('completed')
+    expect(doneBody.recommendationCount).toBeGreaterThan(0)
+
+    const hist = await scansGet(new Request('http://t/scans', { headers: { cookie } }), ctx)
+    const { scans } = (await hist.json()) as { scans: { status: string }[] }
+    expect(scans[0].status).toBe('completed')
+  })
+
+  it('a scan with blocked pages is persisted as partial (honest)', async () => {
+    const { cookie, ctx } = await setup()
+    const res = await scansPost(
+      jsonReq({ action: 'complete', pages: PAGES, blocked: [{ url: 'https://example.com/x', reason: 'waf_challenge' }], discovered: 6 }, cookie),
+      ctx
+    )
+    expect(((await res.json()) as { scan: { status: string } }).scan.status).toBe('partial')
+  })
+
+  it('a failed scan is recorded with its error, not lost', async () => {
+    const { cookie, ctx } = await setup()
+    const started = await scansPost(jsonReq({ action: 'start' }, cookie), ctx)
+    const scanId = ((await started.json()) as { scan: { id: string } }).scan.id
+    const failed = await scansPost(jsonReq({ action: 'fail', scanId, error: 'Homepage blocked (403).' }, cookie), ctx)
+    expect(((await failed.json()) as { scan: { status: string; error: string } }).scan.status).toBe('failed')
+
+    const hist = await scansGet(new Request('http://t/scans', { headers: { cookie } }), ctx)
+    const { scans } = (await hist.json()) as { scans: { status: string; error: string }[] }
+    expect(scans[0].status).toBe('failed')
+    expect(scans[0].error).toContain('403')
+  })
+})
+
+describe('recommendation workflow', () => {
+  it('persist -> accept -> reject -> reopen, each recorded in history', async () => {
+    const { cookie, ctx } = await setup()
+    await scansPost(jsonReq({ action: 'complete', pages: PAGES, blocked: [], discovered: 5 }, cookie), ctx)
+
+    let recs = (await (await recsGet(new Request('http://t/r', { headers: { cookie } }), ctx)).json()) as {
+      recommendations: { id: string; status: string }[]
+    }
+    expect(recs.recommendations.length).toBeGreaterThan(0)
+    const id = recs.recommendations[0].id
+
+    for (const status of ['accepted', 'rejected', 'open']) {
+      const res = await recsPatch(jsonReq({ id, status }, cookie), ctx)
+      expect(res.status).toBe(200)
+    }
+    // Reopen after a fresh login — same store, new session cookie.
+    const recheck = (await (await recsGet(new Request('http://t/r', { headers: { cookie } }), ctx)).json()) as {
+      recommendations: { id: string; status: string; history: unknown[] }[]
+    }
+    const target = recheck.recommendations.find((r) => r.id === id)!
+    expect(target.status).toBe('open')
+    expect(target.history.length).toBe(3)
+  })
+
+  it('rejects an illegal transition (deployed is set by execution, not the user)', async () => {
+    const { cookie, ctx } = await setup()
+    await scansPost(jsonReq({ action: 'complete', pages: PAGES, blocked: [], discovered: 5 }, cookie), ctx)
+    const recs = (await (await recsGet(new Request('http://t/r', { headers: { cookie } }), ctx)).json()) as {
+      recommendations: { id: string }[]
+    }
+    const res = await recsPatch(jsonReq({ id: recs.recommendations[0].id, status: 'verified' }, cookie), ctx)
+    expect(res.status).toBe(400)
+  })
+
+  it('blocks cross-tenant recommendation access', async () => {
+    const a = await setup()
+    await scansPost(jsonReq({ action: 'complete', pages: PAGES, blocked: [], discovered: 5 }, a.cookie), a.ctx)
+    // A different user in a different store-less tenant hitting A's project id.
+    const bCookie = cookieFrom(await signup(jsonReq({ email: 'intruder@x.com', password: 'longenough123' }), CTX0))
+    const res = await recsGet(new Request('http://t/r', { headers: { cookie: bCookie } }), a.ctx)
+    expect(res.status).toBe(404)
+  })
+})
