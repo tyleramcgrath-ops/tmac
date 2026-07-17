@@ -97,6 +97,15 @@ export class PostgresFoundationStore implements FoundationStore {
   static async create(url: string): Promise<PostgresFoundationStore> {
     const ssl = /localhost|127\.0\.0\.1/.test(url) ? undefined : { rejectUnauthorized: false }
     const pool = new Pool({ connectionString: url, ssl, max: 5 })
+    // RC1 reliability fix: node-pg emits 'error' on IDLE clients when the
+    // backend drops them (exactly what a Postgres restart / failover does). An
+    // unhandled 'error' on the pool's EventEmitter would crash the Node process.
+    // We swallow it here — the pool transparently opens fresh connections on the
+    // next query, so a routine DB restart degrades to a few failed in-flight
+    // requests (mapped to 500s) instead of taking the whole server down.
+    pool.on('error', (err) => {
+      console.warn('[postgres] idle client error (pool will recover):', err instanceof Error ? err.message : err)
+    })
     if (process.env.RF_SKIP_MIGRATE_ON_CONNECT !== '1') {
       await runMigrations(pool)
     }

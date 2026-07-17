@@ -11,15 +11,19 @@ export interface OperatorMetrics {
   fixedToday: number // deployed or verified with today's date
   verifiedImprovements: number
   deploymentsTotal: number
-  deploymentSuccessRate: number // verified / (verified+verify_failed+failed)
-  verificationFailureRate: number
-  rollbackRate: number
-  automationSuccessRate: number // verified / deployed
+  // Rates + trust are null (rendered "—") until there is at least one applied
+  // deployment. With zero evidence we do NOT show a fabricated baseline (RC1
+  // honesty fix — a fresh project previously displayed "Trust score 40" / "0%"
+  // implying data that did not exist). null means "no data yet", not "0".
+  deploymentSuccessRate: number | null // verified / (verified+verify_failed+failed)
+  verificationFailureRate: number | null
+  rollbackRate: number | null
+  automationSuccessRate: number | null // verified / applied
   avgTimeToResolutionHours: number | null
   // Trust score 0-100: blends verification success, low rollback, low
-  // verify-failure. Deterministic and explained in the docs.
-  trustScore: number
-  operatorAccuracy: number // deployed fixes that verified, as a %
+  // verify-failure. Deterministic; null until ≥1 applied deployment.
+  trustScore: number | null
+  operatorAccuracy: number | null // applied fixes that verified, as a %
 }
 
 function isToday(iso: string | undefined, today: string): boolean {
@@ -50,15 +54,22 @@ export function computeOperatorMetrics(
   const avgTtr = durations.length ? durations.reduce((a, b) => a + b, 0) / durations.length : null
 
   const deploySuccessDenom = verified + verifyFailed + failed
-  const deploymentSuccessRate = deploySuccessDenom ? verified / deploySuccessDenom : 0
-  const verificationFailureRate = applied ? verifyFailed / applied : 0
-  const rollbackRate = applied ? rolledBack / applied : 0
-  const automationSuccessRate = applied ? verified / applied : 0
+  // Rates are null with no evidence (never a fabricated 0/100 baseline).
+  const deploymentSuccessRate = deploySuccessDenom ? verified / deploySuccessDenom : null
+  const verificationFailureRate = applied ? verifyFailed / applied : null
+  const rollbackRate = applied ? rolledBack / applied : null
+  const automationSuccessRate = applied ? verified / applied : null
 
   // Trust score: reward verification success, penalize verify-failure + rollback.
-  const trustScore = Math.round(
-    100 * Math.max(0, deploymentSuccessRate * 0.6 + (1 - verificationFailureRate) * 0.25 + (1 - rollbackRate) * 0.15)
-  )
+  // Only computed once there is at least one applied deployment to trust.
+  const trustScore =
+    applied === 0
+      ? null
+      : Math.round(
+          100 * Math.max(0, (deploymentSuccessRate ?? 0) * 0.6 + (1 - (verificationFailureRate ?? 0)) * 0.25 + (1 - (rollbackRate ?? 0)) * 0.15)
+        )
+
+  const r3 = (n: number | null) => (n === null ? null : Number(n.toFixed(3)))
 
   return {
     recommendationsTotal: recs.length,
@@ -67,12 +78,12 @@ export function computeOperatorMetrics(
     fixedToday: deployments.filter((d) => (isToday(d.verification?.checkedAt, today) || isToday(d.approvedAt, today)) && d.status === 'verified').length,
     verifiedImprovements: verified,
     deploymentsTotal,
-    deploymentSuccessRate: Number(deploymentSuccessRate.toFixed(3)),
-    verificationFailureRate: Number(verificationFailureRate.toFixed(3)),
-    rollbackRate: Number(rollbackRate.toFixed(3)),
-    automationSuccessRate: Number(automationSuccessRate.toFixed(3)),
+    deploymentSuccessRate: r3(deploymentSuccessRate),
+    verificationFailureRate: r3(verificationFailureRate),
+    rollbackRate: r3(rollbackRate),
+    automationSuccessRate: r3(automationSuccessRate),
     avgTimeToResolutionHours: avgTtr === null ? null : Number(avgTtr.toFixed(2)),
     trustScore,
-    operatorAccuracy: applied ? Math.round((verified / applied) * 100) : 0,
+    operatorAccuracy: applied ? Math.round((verified / applied) * 100) : null,
   }
 }

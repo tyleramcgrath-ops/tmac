@@ -408,13 +408,14 @@ export interface OperatorMetricsDTO {
   fixedToday: number
   verifiedImprovements: number
   deploymentsTotal: number
-  deploymentSuccessRate: number
-  verificationFailureRate: number
-  rollbackRate: number
-  automationSuccessRate: number
+  // null = no data yet (rendered "—"), never a fabricated 0/baseline.
+  deploymentSuccessRate: number | null
+  verificationFailureRate: number | null
+  rollbackRate: number | null
+  automationSuccessRate: number | null
   avgTimeToResolutionHours: number | null
-  trustScore: number
-  operatorAccuracy: number
+  trustScore: number | null
+  operatorAccuracy: number | null
 }
 export interface OperatorPolicyDTO {
   autoApprove: { title?: string; metaDescription?: string; schema?: string }

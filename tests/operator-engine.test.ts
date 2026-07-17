@@ -164,4 +164,18 @@ describe('operator metrics (§10)', () => {
     expect(m.trustScore).toBeLessThanOrEqual(100)
     expect(m.avgTimeToResolutionHours).toBeCloseTo(0.17, 1)
   })
+
+  it('reports no fabricated baseline for a project with zero deployments (RC1 honesty)', () => {
+    const m = computeOperatorMetrics([], [], '2026-07-17')
+    // With no evidence, trust + rates are null (rendered "—"), never a made-up 40/0%.
+    expect(m.trustScore).toBeNull()
+    expect(m.deploymentSuccessRate).toBeNull()
+    expect(m.automationSuccessRate).toBeNull()
+    expect(m.rollbackRate).toBeNull()
+    expect(m.verificationFailureRate).toBeNull()
+    expect(m.operatorAccuracy).toBeNull()
+    // Honest counts are still zero (not null).
+    expect(m.deploymentsTotal).toBe(0)
+    expect(m.verifiedImprovements).toBe(0)
+  })
 })

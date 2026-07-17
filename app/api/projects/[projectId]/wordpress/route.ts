@@ -10,9 +10,10 @@
 // session expiry, and device change — they live in the store.
 
 import { randomUUID } from 'crypto'
-import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { assertSameOrigin, audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
+import { isSafeFetchTarget } from '@/app/api/seo-scan/url-guard'
 import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
 import type { WpConnection } from '@/lib/foundation/types'
 
@@ -20,6 +21,7 @@ export const runtime = 'nodejs'
 export const maxDuration = 60
 
 export const PUT = handled(async (request, { params }) => {
+  assertSameOrigin(request)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'admin')
@@ -33,6 +35,17 @@ export const PUT = handled(async (request, { params }) => {
       { error: 'siteUrl, username, and appPassword are required.' },
       { status: 400 }
     )
+  }
+
+  // SSRF guard (RC1): the connect probe fetches a tenant-supplied URL with an
+  // Authorization header, so it MUST pass the same resolved-IP/port guard as
+  // every other outbound fetch — otherwise an admin could point siteUrl at
+  // 169.254.169.254, an internal host, or an odd port and use the probe as an
+  // internal-network / cloud-metadata request-forgery + reachability oracle
+  // (and leak the Basic header to it). Reject unsafe targets before any fetch.
+  const safe = await isSafeFetchTarget(`${siteUrl}/wp-json/wp/v2/users/me`)
+  if (!safe.ok) {
+    return Response.json({ error: `Refusing to connect to an unsafe WordPress URL: ${safe.detail ?? safe.reason}` }, { status: 400 })
   }
 
   // Validate the credentials against the live site before storing.

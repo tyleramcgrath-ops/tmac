@@ -5,6 +5,11 @@ import { api, ApiError, type OperatorMetricsDTO, type OperatorPreviewDTO } from 
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { Stat } from './shared'
 
+// A rate (0-1) as a percent, or "—" when there is no data yet (null).
+function pct(v: number | null): string {
+  return v === null ? '—' : `${Math.round(v * 100)}%`
+}
+
 // Render one side of a char diff (the "before" = equal+delete, "after" = equal+insert).
 function renderDiff(diff: OperatorPreviewDTO['diff'], side: 'delete' | 'insert'): string {
   if (!diff) return ''
@@ -83,16 +88,17 @@ export function OperatorTab({ projectId }: { projectId: string }) {
     <div className="space-y-5">
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
 
-      {/* Executive metrics (execution-focused) */}
+      {/* Executive metrics (execution-focused). "—" means no data yet — a fresh
+          project shows no fabricated trust/success baseline (RC1 honesty fix). */}
       {metrics && (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Stat label="Trust score" value={String(metrics.trustScore)} />
+          <Stat label="Trust score" value={metrics.trustScore === null ? '—' : String(metrics.trustScore)} />
           <Stat label="Verified fixes" value={String(metrics.verifiedImprovements)} />
           <Stat label="Pending approvals" value={String(metrics.pendingApprovals)} />
-          <Stat label="Rollback rate" value={`${Math.round(metrics.rollbackRate * 100)}%`} />
+          <Stat label="Rollback rate" value={pct(metrics.rollbackRate)} />
           <Stat label="Deployments" value={String(metrics.deploymentsTotal)} />
-          <Stat label="Automation success" value={`${Math.round(metrics.automationSuccessRate * 100)}%`} />
-          <Stat label="Verify-fail rate" value={`${Math.round(metrics.verificationFailureRate * 100)}%`} />
+          <Stat label="Automation success" value={pct(metrics.automationSuccessRate)} />
+          <Stat label="Verify-fail rate" value={pct(metrics.verificationFailureRate)} />
           <Stat label="Avg resolution (h)" value={metrics.avgTimeToResolutionHours === null ? '—' : String(metrics.avgTimeToResolutionHours)} />
         </div>
       )}

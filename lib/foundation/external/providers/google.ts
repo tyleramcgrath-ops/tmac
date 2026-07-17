@@ -43,9 +43,12 @@ function ymd(ms: number): string {
 }
 
 // Map a thrown fetch/HTTP failure onto the provider's honest failure reason.
+// invalid_grant / invalid_token (a revoked or expired refresh token) count as
+// 'unauthorized' so the UI can prompt the user to reconnect, rather than a
+// generic error (RC1 failure-honesty fix).
 function failureFrom(err: unknown): ProviderOutcome<never> {
   const msg = err instanceof Error ? err.message : String(err)
-  if (/\b401\b|unauthor/i.test(msg)) return { ok: false, reason: 'unauthorized', detail: msg }
+  if (/\b401\b|unauthor|invalid_grant|invalid_token/i.test(msg)) return { ok: false, reason: 'unauthorized', detail: msg }
   if (/\b429\b|rate/i.test(msg)) return { ok: false, reason: 'rate-limited', detail: msg }
   return { ok: false, reason: 'error', detail: msg }
 }
@@ -68,11 +71,22 @@ async function freshToken(deps: GoogleProviderDeps): Promise<string> {
 
 async function postJson(url: string, token: string, body: unknown, fetchImpl?: FetchImpl): Promise<unknown> {
   const doFetch = fetchImpl ?? ((i: string, init?: RequestInit) => fetch(i, init))
-  const res = await doFetch(url, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
+  // RC1 robustness: bound the request so a hung Google socket can't stall the
+  // Atlas assembly (mirrors wpFetch's 20s guard). The default fetch honours the
+  // signal; injected test fetches ignore it harmlessly.
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 15_000)
+  let res: Response
+  try {
+    res = await doFetch(url, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    } as RequestInit)
+  } finally {
+    clearTimeout(timer)
+  }
   if (!res.ok) {
     let detail = ''
     try { detail = (await res.text()).slice(0, 200) } catch { /* ignore */ }

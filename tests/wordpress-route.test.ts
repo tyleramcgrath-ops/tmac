@@ -12,7 +12,7 @@ import { __setStoreForTests } from '../lib/foundation/store'
 import { __resetRateLimits } from '../lib/foundation/rate-limit'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
-import { POST as wpPost } from '../app/api/projects/[projectId]/wordpress/route'
+import { POST as wpPost, PUT as wpPut } from '../app/api/projects/[projectId]/wordpress/route'
 import { POST as signup } from '../app/api/auth/signup/route'
 import { POST as createProject } from '../app/api/projects/route'
 import type { Recommendation, WpConnection } from '../lib/foundation/types'
@@ -107,6 +107,25 @@ describe('deploy from recommendation (route)', () => {
     const updated = await store.getRecommendation(rec.id)
     expect(updated?.status).toBe('verified')
     expect(updated?.history.at(-1)?.to).toBe('verified')
+  })
+
+  it('rejects connecting WordPress to an internal/link-local host (SSRF guard on the connect probe)', async () => {
+    const ctx0 = { params: Promise.resolve({}) }
+    const cookie = cookieFrom(
+      await signup(new Request('http://t', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: 'ssrf@x.com', password: 'longenough123' }) }), ctx0)
+    )
+    const projRes = await createProject(new Request('http://t', { method: 'POST', headers: { 'Content-Type': 'application/json', cookie }, body: JSON.stringify({ domain: 'ssrf.test' }) }), ctx0)
+    const { project } = (await projRes.json()) as { project: { id: string } }
+    const ctx = { params: Promise.resolve({ projectId: project.id }) }
+    // Cloud-metadata address — must be refused with 400 BEFORE any fetch/probe.
+    const res = await wpPut(
+      new Request('http://t', { method: 'PUT', headers: { 'Content-Type': 'application/json', cookie, origin: 'http://t', host: 't' }, body: JSON.stringify({ siteUrl: 'http://169.254.169.254', username: 'admin', appPassword: 'pw' }) }),
+      ctx
+    )
+    expect(res.status).toBe(400)
+    expect(JSON.stringify(await res.json())).toMatch(/unsafe/i)
+    // Nothing was stored.
+    expect(await store.getWpConnection(project.id)).toBeNull()
   })
 
   it('resolve action maps a recommendation URL to a post id', async () => {
