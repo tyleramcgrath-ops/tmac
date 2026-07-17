@@ -1,32 +1,25 @@
 'use client'
 
-// Project workspace shell (Phase D.6 P8). This file owns ONLY page-level
-// concerns: project fetch, error/loading gating, and tab routing. Each tab's
-// presentation + state lives in its own module under ./_components, so no
-// single file carries five tabs, three forms, and a modal at once.
+// Project workspace entry. New projects land in the connect-first onboarding
+// (confirm site → run first audit → connect WordPress/Google); once a real
+// audit exists the project opens in the full Command Center dashboard. All data
+// is server-side and persisted — the dashboard derives its views from the
+// latest scan, never from localStorage.
 
 import { use, useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { api, ApiError, type ProjectDTO, type ScanSummary } from '../../lib/client'
 import { EmptyState, Spinner } from '../../lib/ui'
-import { DangerZone } from './_components/shared'
-import { AuditTab } from './_components/AuditTab'
-import { RecommendationsTab } from './_components/RecommendationsTab'
-import { OperatorTab } from './_components/OperatorTab'
-import { WordPressTab } from './_components/WordPressTab'
-import { HistoryTab } from './_components/HistoryTab'
-import { AtlasTab } from './_components/AtlasTab'
-import { OnboardingChecklist } from './_components/OnboardingChecklist'
+import { ProjectDashboard } from './_components/ProjectDashboard'
+import { ConnectFirst } from './_components/ConnectFirst'
 
-type Tab = 'audit' | 'recommendations' | 'operator' | 'atlas' | 'wordpress' | 'history'
+type Mode = 'loading' | 'wizard' | 'dashboard'
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = use(params)
-  const router = useRouter()
   const [project, setProject] = useState<ProjectDTO | null>(null)
   const [scans, setScans] = useState<ScanSummary[]>([])
-  const [tab, setTab] = useState<Tab>('audit')
+  const [mode, setMode] = useState<Mode>('loading')
   const [error, setError] = useState('')
 
   const load = useCallback(async () => {
@@ -34,67 +27,34 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
       const { project, scans } = await api.getProject(projectId)
       setProject(project)
       setScans(scans)
+      // Decide the entry mode only once, on first load: returning projects with
+      // a completed audit open straight into the dashboard; brand-new ones start
+      // in onboarding. Later reloads (after running an audit) never yank the user
+      // out of whichever surface they're on.
+      setMode((prev) => {
+        if (prev !== 'loading') return prev
+        const hasScan = scans.some((s) => s.status === 'completed' || s.status === 'complete')
+        return hasScan ? 'dashboard' : 'wizard'
+      })
     } catch (err) {
-      if (err instanceof ApiError && err.status === 404) {
-        setError('Project not found, or you do not have access.')
-      } else {
-        setError(err instanceof ApiError ? err.message : 'Could not load project.')
-      }
+      if (err instanceof ApiError && err.status === 404) setError('Project not found, or you do not have access.')
+      else setError(err instanceof ApiError ? err.message : 'Could not load project.')
     }
   }, [projectId])
 
-  useEffect(() => {
-    void load()
-  }, [load])
+  useEffect(() => { void load() }, [load])
 
-  if (error) return <EmptyState title="Unavailable" detail={error} action={<Link href="/app/projects" className="rf-btn-ghost rounded-lg px-4 py-2 text-sm">Back to projects</Link>} />
-  if (!project) return <Spinner label="Loading project…" />
-
-  // Tab order follows the real workflow (scan → review → connect → deploy).
-  // Atlas (external intelligence) is opt-in via NEXT_PUBLIC_RF_ENABLE_ATLAS so a
-  // guided pilot isn't shown a surface that's mostly "unavailable" or a
-  // Connect-Google dead end (RC2 P2). Hidden by default.
-  const atlasEnabled = process.env.NEXT_PUBLIC_RF_ENABLE_ATLAS === '1'
-  const tabs: { id: Tab; label: string }[] = [
-    { id: 'audit', label: 'Audit' },
-    { id: 'recommendations', label: 'Recommendations' },
-    { id: 'wordpress', label: 'WordPress' },
-    { id: 'operator', label: 'Operator' },
-    ...(atlasEnabled ? [{ id: 'atlas' as Tab, label: 'Atlas' }] : []),
-    { id: 'history', label: 'History' },
-  ]
-
-  return (
-    <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <Link href="/app/projects" className="rf-mono text-xs text-[var(--rf-muted)] hover:text-white">← Projects</Link>
-          <h1 className="mt-1 text-2xl font-semibold text-white">{project.name}</h1>
-          <p className="rf-mono text-sm text-[var(--rf-blue-bright)]">{project.domain}</p>
-        </div>
-        <DangerZone projectId={projectId} onDeleted={() => router.replace('/app/projects')} />
+  if (error) {
+    return (
+      <div className="mx-auto max-w-5xl px-5 py-10">
+        <EmptyState title="Unavailable" detail={error} action={<Link href="/app/projects" className="rf-btn-ghost rounded-lg px-4 py-2 text-sm">Back to projects</Link>} />
       </div>
+    )
+  }
+  if (!project || mode === 'loading') return <Spinner label="Loading project…" />
 
-      <OnboardingChecklist projectId={projectId} scans={scans} onGoScan={() => setTab('audit')} />
-
-      <div className="flex gap-1 border-b border-[var(--rf-card-line)]">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`px-4 py-2 text-sm font-medium ${tab === t.id ? 'border-b-2 border-[var(--rf-blue-bright)] text-white' : 'text-[var(--rf-muted)] hover:text-white'}`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      {tab === 'audit' && <AuditTab project={project} scans={scans} onScanDone={load} />}
-      {tab === 'recommendations' && <RecommendationsTab projectId={projectId} />}
-      {tab === 'operator' && <OperatorTab projectId={projectId} />}
-      {tab === 'atlas' && atlasEnabled && <AtlasTab projectId={projectId} />}
-      {tab === 'wordpress' && <WordPressTab projectId={projectId} />}
-      {tab === 'history' && <HistoryTab scans={scans} />}
-    </div>
-  )
+  if (mode === 'wizard') {
+    return <ConnectFirst project={project} scans={scans} onReload={load} onEnter={() => setMode('dashboard')} />
+  }
+  return <ProjectDashboard project={project} scans={scans} onReload={load} />
 }

@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { api, ApiError, type ProjectDTO } from '../lib/client'
-import { EmptyState, Field, inputClass, Spinner } from '../lib/ui'
+import { AppHeader, EmptyState, Field, inputClass, Spinner } from '../lib/ui'
+import { PilotBar } from '../lib/PilotBar'
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<ProjectDTO[] | null>(null)
@@ -23,8 +24,18 @@ export default function ProjectsPage() {
     void load()
   }, [])
 
-  if (projects === null) return <Spinner label="Loading projects…" />
+  return (
+    <>
+      <AppHeader />
+      <PilotBar />
+      <main className="mx-auto max-w-5xl px-5 pb-8 pt-2">
+        {projects === null ? <Spinner label="Loading projects…" /> : <ProjectsInner projects={projects} setProjects={setProjects} error={error} creating={creating} setCreating={setCreating} />}
+      </main>
+    </>
+  )
+}
 
+function ProjectsInner({ projects, setProjects, error, creating, setCreating }: { projects: ProjectDTO[]; setProjects: React.Dispatch<React.SetStateAction<ProjectDTO[] | null>>; error: string; creating: boolean; setCreating: (v: boolean) => void }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
