@@ -13,6 +13,7 @@ import { __setStoreForTests } from '../lib/foundation/store'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { POST as signup } from '../app/api/auth/signup/route'
 import { POST as createProject } from '../app/api/projects/route'
+import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
 import { POST as previewRoute } from '../app/api/projects/[projectId]/operator/preview/route'
 import { POST as executeRoute } from '../app/api/projects/[projectId]/operator/execute/route'
 import { GET as metricsRoute } from '../app/api/projects/[projectId]/operator/metrics/route'
@@ -87,11 +88,13 @@ async function setup() {
 
 beforeEach(() => {
   resetWp()
+  __setTrustedHostsForTests(['wp.test'])
   vi.stubGlobal('fetch', (i: string | URL, init?: RequestInit) => Promise.resolve(fakeWp(String(i), init)))
 })
 afterEach(() => {
   vi.unstubAllGlobals()
   __setStoreForTests(null)
+  __setTrustedHostsForTests(null)
 })
 
 describe('operator preview', () => {

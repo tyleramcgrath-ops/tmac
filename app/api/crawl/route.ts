@@ -20,6 +20,7 @@ import {
   type FixItem,
 } from '../seo-scan/analyze'
 import { assessPageValidity } from '../seo-scan/page-validity'
+import { isSafeFetchTarget } from '../seo-scan/url-guard'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -308,6 +309,8 @@ function matchAll(s: string, re: RegExp): string[] {
 
 async function safeText(url: string): Promise<string | null> {
   try {
+    // SSRF guard (Phase D.6 P4): sitemap <loc> URLs are attacker-influenced.
+    if (!(await isSafeFetchTarget(url)).ok) return null
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 8000)
     const res = await fetch(url, {

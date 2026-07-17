@@ -6,6 +6,7 @@
 // values and is itself verified. Nothing depends on browser state.
 
 import { createHash, randomUUID } from 'crypto'
+import { isSafeFetchTarget } from '../../app/api/seo-scan/url-guard'
 import { decryptSecret } from './crypto'
 import { getStore } from './store'
 import type { WpConnection, WpDeployment } from './types'
@@ -59,9 +60,17 @@ async function wpFetch(
   path: string,
   init: { method?: string; body?: unknown } = {}
 ): Promise<Record<string, unknown>> {
+  // SSRF guard (Phase D.6 P4): the WordPress site URL is tenant-supplied and
+  // must be re-validated (resolved-IP + port) before every request — a
+  // connection could point at an internal host or a name that later rebinds.
+  const target = `${conn.siteUrl}/wp-json/wp/v2${path}`
+  const safe = await isSafeFetchTarget(target)
+  if (!safe.ok) {
+    throw new Error(`Refusing to contact unsafe WordPress target: ${safe.detail ?? safe.reason}`)
+  }
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), 20_000)
-  const res = await fetch(`${conn.siteUrl}/wp-json/wp/v2${path}`, {
+  const res = await fetch(target, {
     method: init.method ?? 'GET',
     signal: controller.signal,
     headers: {

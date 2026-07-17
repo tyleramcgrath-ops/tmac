@@ -1,3 +1,4 @@
+import { isSafeFetchTarget } from './url-guard'
 // Reusable on-page SEO analysis used by /api/seo-scan.
 //
 // Pure functions over fetched HTML so the same extractor powers both the user's
@@ -541,14 +542,40 @@ async function fetchOnce(
 ): Promise<{ html: string; finalUrl: string; status: number }> {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), timeoutMs)
-  const res = await fetch(url, {
-    redirect: 'follow',
-    signal: controller.signal,
-    headers: browserHeaders(ua),
-  }).finally(() => clearTimeout(timer))
 
-  const finalUrl = res.url || url
-  const status = res.status
+  // SSRF guard (Phase D.6 P4): follow redirects MANUALLY, validating the
+  // resolved address of every hop, so a public URL cannot redirect (or
+  // DNS-rebind) into an internal address. `isProxyUrl` skips the check for a
+  // configured scraping proxy endpoint (trusted, operator-supplied).
+  const isProxy = !!process.env.SCRAPE_API_TEMPLATE && url.startsWith(new URL(process.env.SCRAPE_API_TEMPLATE.replace('{{url}}', 'x')).origin)
+  let current = url
+  let status = 0
+  let finalUrl = url
+  let res: Response
+  try {
+    for (let hop = 0; hop < 6; hop++) {
+      if (!isProxy) {
+        const safe = await isSafeFetchTarget(current)
+        if (!safe.ok) {
+          clearTimeout(timer)
+          // Surface as a network failure (status 0) — never fetched.
+          return { html: '', finalUrl: current, status: 0 }
+        }
+      }
+      res = await fetch(current, { redirect: 'manual', signal: controller.signal, headers: browserHeaders(ua) })
+      status = res.status
+      finalUrl = res.url || current
+      if (status >= 300 && status < 400 && res.headers.get('location')) {
+        current = new URL(res.headers.get('location')!, current).toString()
+        continue
+      }
+      break
+    }
+  } finally {
+    clearTimeout(timer)
+  }
+  res = res!
+
   if (!res.body) return { html: await res.text(), finalUrl, status }
 
   const reader = res.body.getReader()

@@ -12,6 +12,7 @@ import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '../lib/foundation/wp-execution'
+import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
 import type { WpConnection } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'wp-double-secret-123'
@@ -105,6 +106,7 @@ beforeEach(() => {
   wp = new FakeWordPress()
   store = new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-wp-')))
   __setStoreForTests(store)
+  __setTrustedHostsForTests(['wp.test'])
   vi.stubGlobal('fetch', (input: string | URL, init?: RequestInit) =>
     Promise.resolve(wp.handle(String(input), init))
   )
@@ -112,6 +114,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.unstubAllGlobals()
   __setStoreForTests(null)
+  __setTrustedHostsForTests(null)
 })
 
 describe('WordPress deploy + read-back verification', () => {

@@ -15,6 +15,7 @@ import path from 'path'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '../lib/foundation/wp-execution'
 import { __setStoreForTests } from '../lib/foundation/store'
+import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import type { WpConnection } from '../lib/foundation/types'
 
@@ -56,8 +57,13 @@ function conn(base: string, password = PASS): WpConnection {
 d('WordPress execution over real HTTP (PHP WP-REST emulator, not WordPress)', () => {
   beforeAll(() => {
     __setStoreForTests(new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'wphttp-'))))
+    // The emulator runs on real localhost; trust it for this transport test.
+    __setTrustedHostsForTests(['127.0.0.1'])
   })
-  afterAll(() => __setStoreForTests(null))
+  afterAll(() => {
+    __setStoreForTests(null)
+    __setTrustedHostsForTests(null)
+  })
 
   it('resolves slug, deploys, verifies by read-back, and rolls back — over HTTP', async () => {
     const port = 8790

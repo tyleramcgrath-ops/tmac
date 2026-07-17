@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
 import { encryptSecret } from '../lib/foundation/crypto'
+import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
 import { POST as wpPost } from '../app/api/projects/[projectId]/wordpress/route'
 import { POST as signup } from '../app/api/auth/signup/route'
 import { POST as createProject } from '../app/api/projects/route'
@@ -44,11 +45,13 @@ beforeEach(() => {
   post.title = 'Old Title'
   store = new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-wpr-')))
   __setStoreForTests(store)
+  __setTrustedHostsForTests(['wp.test'])
   vi.stubGlobal('fetch', (i: string | URL, init?: RequestInit) => Promise.resolve(fakeWp(String(i), init)))
 })
 afterEach(() => {
   vi.unstubAllGlobals()
   __setStoreForTests(null)
+  __setTrustedHostsForTests(null)
 })
 
 describe('deploy from recommendation (route)', () => {
