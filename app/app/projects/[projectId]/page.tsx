@@ -242,11 +242,14 @@ function WordPressTab({ projectId }: { projectId: string }) {
       {!state.connection ? (
         <ConnectWordPress projectId={projectId} onConnected={load} />
       ) : (
-        <div className="rf-card p-4">
-          <p className="text-sm font-semibold text-white">Connected</p>
-          <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{state.connection.siteUrl}</p>
-          <p className="mt-1 text-xs text-[var(--rf-muted)]">User {state.connection.username} · AIOSEO {state.connection.aioseo ? 'detected' : 'not detected'}</p>
-        </div>
+        <>
+          <div className="rf-card p-4">
+            <p className="text-sm font-semibold text-white">Connected</p>
+            <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{state.connection.siteUrl}</p>
+            <p className="mt-1 text-xs text-[var(--rf-muted)]">User {state.connection.username} · AIOSEO {state.connection.aioseo ? 'detected' : 'not detected'}</p>
+          </div>
+          <DeployForm projectId={projectId} onDeployed={load} />
+        </>
       )}
 
       <div>
@@ -288,6 +291,89 @@ function WordPressTab({ projectId }: { projectId: string }) {
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+function DeployForm({ projectId, onDeployed }: { projectId: string; onDeployed: () => void }) {
+  const [form, setForm] = useState({ postId: '', postType: 'pages', title: '', metaDescription: '', reason: '' })
+  const [confirming, setConfirming] = useState(false)
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const changeCount = [form.title, form.metaDescription].filter(Boolean).length
+
+  async function deploy() {
+    setError('')
+    setBusy(true)
+    try {
+      await api.deployWordpress(projectId, {
+        postId: Number(form.postId),
+        postType: form.postType,
+        title: form.title || undefined,
+        metaDescription: form.metaDescription || undefined,
+        reason: form.reason,
+      })
+      setConfirming(false)
+      setForm({ postId: '', postType: 'pages', title: '', metaDescription: '', reason: '' })
+      onDeployed()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Deploy failed.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="rf-card space-y-3 p-4">
+      <p className="text-sm font-semibold text-white">New deployment</p>
+      <p className="text-xs text-[var(--rf-muted)]">Writes to your live site. Every change is captured (before/after), verified by read-back, and stored as a durable, reversible record.</p>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="Post ID">
+          <input className={inputClass} value={form.postId} onChange={(e) => setForm({ ...form, postId: e.target.value })} />
+        </Field>
+        <Field label="Type">
+          <select className={inputClass} value={form.postType} onChange={(e) => setForm({ ...form, postType: e.target.value })}>
+            <option value="pages">pages</option>
+            <option value="posts">posts</option>
+          </select>
+        </Field>
+        <Field label="Reason (required)">
+          <input className={inputClass} value={form.reason} onChange={(e) => setForm({ ...form, reason: e.target.value })} />
+        </Field>
+      </div>
+      <Field label="New title (optional)">
+        <input className={inputClass} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+      </Field>
+      <Field label="New meta description (optional)">
+        <input className={inputClass} value={form.metaDescription} onChange={(e) => setForm({ ...form, metaDescription: e.target.value })} />
+      </Field>
+      {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
+      {!confirming ? (
+        <button
+          onClick={() => {
+            if (!form.postId || !form.reason || changeCount === 0) {
+              setError('Post ID, a reason, and at least one change are required.')
+              return
+            }
+            setError('')
+            setConfirming(true)
+          }}
+          className="rf-btn-ghost rounded-lg px-4 py-2 text-sm"
+        >
+          Review &amp; deploy
+        </button>
+      ) : (
+        <div className="rounded-lg border border-[var(--rf-card-line-strong)] p-3">
+          <p className="text-sm text-white">Deploy {changeCount} change{changeCount > 1 ? 's' : ''} to {form.postType}/{form.postId} on your live site?</p>
+          <div className="mt-2 flex gap-2">
+            <button onClick={() => setConfirming(false)} className="rf-btn-ghost rounded-md px-3 py-1.5 text-xs">Cancel</button>
+            <button onClick={deploy} disabled={busy} className="rf-btn-primary rounded-md px-3 py-1.5 text-xs font-semibold disabled:opacity-60">
+              {busy ? 'Deploying…' : 'Confirm deploy'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
