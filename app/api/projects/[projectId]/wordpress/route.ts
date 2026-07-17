@@ -13,7 +13,7 @@ import { randomUUID } from 'crypto'
 import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
-import { executeWpDeployment, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
+import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
 import type { WpConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -89,6 +89,15 @@ export const POST = handled(async (request, { params }) => {
   const connection = await store.getWpConnection(projectId)
   if (!connection) throw new HttpError(400, 'Connect WordPress for this project first.')
 
+  // Map a recommendation's affected URL to a WordPress post so the user need
+  // not re-enter a post id. Honest fallback: returns resolved:false when no
+  // match, and the UI then requires manual selection.
+  if (body.action === 'resolve') {
+    const pageUrl = String(body.url ?? '')
+    const target = await resolveWpTarget(connection, pageUrl)
+    return Response.json({ resolved: !!target, target })
+  }
+
   if (body.action === 'deploy') {
     const postId = Number(body.postId)
     const postType = body.postType === 'pages' ? ('pages' as const) : ('posts' as const)
@@ -102,6 +111,7 @@ export const POST = handled(async (request, { params }) => {
     }
     if (!reason) throw new HttpError(400, 'A reason is required for every deployment.')
 
+    const recommendationId = body.recommendationId ? String(body.recommendationId) : undefined
     const dep = await executeWpDeployment({
       projectId,
       connection,
@@ -110,8 +120,19 @@ export const POST = handled(async (request, { params }) => {
       changes: { title, metaDescription },
       approvedBy: user.id,
       reason,
-      recommendationId: body.recommendationId ? String(body.recommendationId) : undefined,
+      recommendationId,
     })
+    // Reflect the deployment on the linked recommendation: deployed & verified
+    // if read-back matched, otherwise leave it (still deployed) for the user.
+    if (recommendationId && dep.status !== 'failed') {
+      const rec = await store.getRecommendation(recommendationId)
+      if (rec && rec.projectId === projectId) {
+        const to = dep.status === 'verified' ? 'verified' : 'deployed'
+        rec.history.push({ at: new Date().toISOString(), by: user.id, from: rec.status, to })
+        rec.status = to
+        await store.updateRecommendation(rec)
+      }
+    }
     await audit(project.orgId, user.id, 'wordpress.deploy', dep.id, `${postType}/${postId}: ${dep.status}`)
     return Response.json({ deployment: dep }, { status: dep.status === 'failed' ? 502 : 201 })
   }
@@ -122,6 +143,15 @@ export const POST = handled(async (request, { params }) => {
     if (dep.status === 'rolled_back') throw new HttpError(400, 'Already rolled back.')
     if (dep.status === 'failed') throw new HttpError(400, 'Nothing was applied — no rollback needed.')
     const updated = await rollbackWpDeployment({ deployment: dep, connection, actorId: user.id })
+    // Reflect rollback on the linked recommendation.
+    if (dep.recommendationId) {
+      const rec = await store.getRecommendation(dep.recommendationId)
+      if (rec && rec.projectId === projectId && rec.status !== 'rolled_back') {
+        rec.history.push({ at: new Date().toISOString(), by: user.id, from: rec.status, to: 'rolled_back' })
+        rec.status = 'rolled_back'
+        await store.updateRecommendation(rec)
+      }
+    }
     await audit(project.orgId, user.id, 'wordpress.rollback', dep.id, updated.result)
     return Response.json({ deployment: updated })
   }

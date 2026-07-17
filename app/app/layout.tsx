@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import '../rankforge/rankforge.css'
 
 export const metadata: Metadata = {
-  title: 'RankForge AI — SEO Command Center',
-  description: 'Your all-in-one SEO command center: site audits, content, rankings, backlinks, and WordPress.',
+  title: 'RankForge — SEO Projects',
+  description: 'Persistent SEO projects: crawl audits, evidence-backed recommendations, and auditable WordPress deployments.',
   robots: { index: false, follow: false },
 }
 

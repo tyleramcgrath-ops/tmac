@@ -11,7 +11,7 @@ import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
 import { encryptSecret } from '../lib/foundation/crypto'
-import { executeWpDeployment, rollbackWpDeployment } from '../lib/foundation/wp-execution'
+import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '../lib/foundation/wp-execution'
 import type { WpConnection } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'wp-double-secret-123'
@@ -47,6 +47,12 @@ class FakeWordPress {
 
   handle(url: string, init?: RequestInit): Response {
     const method = init?.method ?? 'GET'
+    // Slug lookup: /pages?slug=services -> [post 10]
+    if (url.includes('/wp-json/wp/v2/pages?slug=services')) {
+      const p = this.posts.get(10)!
+      return json([{ id: 10, title: { raw: p.title } }])
+    }
+    if (/\/wp-json\/wp\/v2\/(pages|posts)\?slug=/.test(url)) return json([])
     if (url.includes('/wp-json/wp/v2/pages/10') || url.includes('/wp-json/wp/v2/posts/10')) {
       const post = this.posts.get(10)!
       if (method === 'POST') {
@@ -156,6 +162,18 @@ describe('WordPress deploy + read-back verification', () => {
       reason: 'r',
     })
     expect(dep.status).toBe('failed')
+  })
+})
+
+describe('recommendation → deployment target resolution', () => {
+  it('resolves a page URL to a WordPress post by slug', async () => {
+    const t = await resolveWpTarget(connection(), 'https://wp.test/services')
+    expect(t).toEqual({ postId: 10, postType: 'pages', title: 'Original Title' })
+  })
+
+  it('returns null (honest manual fallback) when no post matches the slug', async () => {
+    expect(await resolveWpTarget(connection(), 'https://wp.test/no-such-page')).toBeNull()
+    expect(await resolveWpTarget(connection(), 'https://wp.test/')).toBeNull() // homepage, no slug
   })
 })
 

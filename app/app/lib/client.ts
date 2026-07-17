@@ -149,6 +149,11 @@ export const api = {
     req<{ connection: { siteUrl: string; username: string; aioseo: boolean } | null; deployments: DeploymentDTO[] }>(
       `/api/projects/${projectId}/wordpress`
     ),
+  resolveWpTarget: (projectId: string, url: string) =>
+    req<{ resolved: boolean; target: { postId: number; postType: string; title: string } | null }>(
+      `/api/projects/${projectId}/wordpress`,
+      { method: 'POST', body: JSON.stringify({ action: 'resolve', url }) }
+    ),
   connectWordpress: (projectId: string, siteUrl: string, username: string, appPassword: string) =>
     req<{ connection: { siteUrl: string; username: string; aioseo: boolean } }>(
       `/api/projects/${projectId}/wordpress`,

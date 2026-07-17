@@ -17,6 +17,38 @@ interface WpPostSnapshot {
   link: string
 }
 
+// Resolves a page URL (e.g. a recommendation's affected URL) to a WordPress
+// post/page id by slug, so the user doesn't re-enter a post id by hand. Returns
+// null for the homepage or when no match is found (caller must fall back to
+// manual selection — reported honestly, never guessed).
+export async function resolveWpTarget(
+  conn: WpConnection,
+  pageUrl: string
+): Promise<{ postId: number; postType: 'posts' | 'pages'; title: string } | null> {
+  let slug = ''
+  try {
+    const path = new URL(pageUrl).pathname.replace(/\/+$/, '')
+    slug = path.split('/').filter(Boolean).pop() ?? ''
+  } catch {
+    return null
+  }
+  if (!slug) return null
+  for (const type of ['pages', 'posts'] as const) {
+    try {
+      const list = (await wpFetch(conn, `/${type}?slug=${encodeURIComponent(slug)}&context=edit`)) as unknown
+      const arr = Array.isArray(list) ? (list as Record<string, unknown>[]) : []
+      if (arr.length > 0) {
+        const post = arr[0]
+        const title = (post.title as { raw?: string; rendered?: string })?.raw ?? ''
+        return { postId: Number(post.id), postType: type, title }
+      }
+    } catch {
+      /* try next type */
+    }
+  }
+  return null
+}
+
 function authHeader(conn: WpConnection): string {
   const password = decryptSecret(conn.appPasswordEnc)
   return 'Basic ' + Buffer.from(`${conn.username}:${password}`).toString('base64')
