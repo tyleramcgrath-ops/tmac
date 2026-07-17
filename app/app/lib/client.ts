@@ -172,4 +172,88 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'rollback', deploymentId }),
     }),
+
+  // ── Operator (Phase D) ──
+  operatorPreview: (projectId: string, recommendationIds?: string[]) =>
+    req<{ previews: OperatorPreviewDTO[] }>(`/api/projects/${projectId}/operator/preview`, {
+      method: 'POST',
+      body: JSON.stringify({ recommendationIds: recommendationIds ?? [] }),
+    }),
+  operatorDeploy: (
+    projectId: string,
+    items: { recommendationId: string; approve?: boolean; editedValue?: string }[],
+    dryRun = false
+  ) =>
+    req<{ results: OperatorResultDTO[]; summary: { total: number; verified: number; failed: number }; dryRun: boolean }>(
+      `/api/projects/${projectId}/operator/execute`,
+      { method: 'POST', body: JSON.stringify({ action: 'deploy', items, dryRun }) }
+    ),
+  operatorRollback: (projectId: string, deploymentIds: string[]) =>
+    req<{ results: OperatorResultDTO[] }>(`/api/projects/${projectId}/operator/execute`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'rollback', deploymentIds }),
+    }),
+  operatorMetrics: (projectId: string) =>
+    req<{ metrics: OperatorMetricsDTO; learning: unknown[] }>(`/api/projects/${projectId}/operator/metrics`),
+  getOperatorPolicy: (projectId: string) =>
+    req<{ policy: OperatorPolicyDTO }>(`/api/projects/${projectId}/operator/policy`),
+  setOperatorPolicy: (projectId: string, policy: OperatorPolicyDTO) =>
+    req<{ policy: OperatorPolicyDTO }>(`/api/projects/${projectId}/operator/policy`, {
+      method: 'PUT',
+      body: JSON.stringify({ policy }),
+    }),
+}
+
+export interface DiffSeg {
+  type: 'equal' | 'insert' | 'delete'
+  text: string
+}
+export interface OperatorPreviewDTO {
+  recommendationId: string
+  title?: string
+  pageType?: string
+  actionable: boolean
+  deployable?: boolean
+  fixKind?: string
+  currentValue?: string
+  proposedValue?: string
+  diff?: DiffSeg[]
+  reason?: string
+  confidence?: number
+  safety?: { risk: string; blocked: boolean; warnings: string[]; rollbackPlan: string; affectedPages: number }
+  decision?: { decision: string; reason: string }
+  note?: string
+}
+export interface OperatorResultDTO {
+  recommendationId?: string
+  deploymentId?: string
+  ok: boolean
+  status?: string
+  verified?: boolean
+  reopened?: boolean
+  requiresApproval?: boolean
+  blocked?: boolean
+  dryRun?: boolean
+  error?: string
+  stage?: string
+  note?: string
+}
+export interface OperatorMetricsDTO {
+  recommendationsTotal: number
+  pendingApprovals: number
+  fixedToday: number
+  verifiedImprovements: number
+  deploymentsTotal: number
+  deploymentSuccessRate: number
+  verificationFailureRate: number
+  rollbackRate: number
+  automationSuccessRate: number
+  avgTimeToResolutionHours: number | null
+  trustScore: number
+  operatorAccuracy: number
+}
+export interface OperatorPolicyDTO {
+  autoApprove: { title?: string; metaDescription?: string; schema?: string }
+  maxAutoApprovePages: number
+  alwaysRequireApproval?: string[]
 }
