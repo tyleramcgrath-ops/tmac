@@ -34,6 +34,8 @@ export interface Project {
   businessProfile: string
   goals: string[]
   notes: string
+  // Operator automation policy (Phase D). Stored as JSONB; optional.
+  operatorPolicy?: unknown
   createdAt: string
   updatedAt: string
 }
