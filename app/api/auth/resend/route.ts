@@ -21,5 +21,9 @@ export const POST = handled(async (request) => {
   await store.updateUser({ ...user, verifyToken: token, verifyTokenExpiresAt: expiresAt })
   const link = `${new URL(request.url).origin}/api/auth/verify?token=${token}`
   const mail = await sendVerificationEmail(user.email, link)
-  return Response.json({ ok: true, emailDelivery: mail.via })
+  // When no email provider is configured (logged-only), return the link so the
+  // authenticated account owner can verify directly — they only ever receive
+  // their OWN link, and only while signed in as that account. When a real email
+  // was delivered, we do NOT return the link (the user checks their inbox).
+  return Response.json({ ok: true, emailDelivery: mail.via, verifyUrl: mail.delivered ? null : link })
 })

@@ -56,10 +56,17 @@ export async function sendEmail(email: OutboundEmail): Promise<MailResult> {
 
 export async function sendVerificationEmail(to: string, link: string): Promise<MailResult> {
   lastLinks.set(to.toLowerCase(), link)
-  return sendEmail({
+  const result = await sendEmail({
     to,
     subject: 'Verify your RankForge email',
     html: `<p>Welcome to RankForge. Confirm your email to finish setting up your account:</p><p><a href="${link}">Verify email</a></p><p>Or paste this link: ${link}</p>`,
     text: `Welcome to RankForge. Verify your email: ${link}`,
   })
+  // In logged-only mode (no MAIL_WEBHOOK_URL) print the actual link so an
+  // operator can retrieve it from the server logs and hand it to the user —
+  // this is the documented pilot fallback when email isn't wired up.
+  if (!result.delivered) {
+    console.log(`[mailer] verification link for ${to}: ${link}`)
+  }
+  return result
 }

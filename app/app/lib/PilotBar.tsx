@@ -28,12 +28,15 @@ export function PilotBar() {
 
 function VerifyBanner({ onVerified }: { onVerified: () => void }) {
   const [sent, setSent] = useState(false)
+  const [verifyUrl, setVerifyUrl] = useState<string | null>(null)
   const [err, setErr] = useState('')
   async function resend() {
     setErr('')
     try {
-      await api.resendVerification()
+      const r = await api.resendVerification()
       setSent(true)
+      // No email provider configured → we get the link back to verify directly.
+      setVerifyUrl(r.verifyUrl ?? null)
     } catch (e) {
       setErr(e instanceof ApiError ? e.message : 'Could not resend.')
     }
@@ -41,7 +44,14 @@ function VerifyBanner({ onVerified }: { onVerified: () => void }) {
   return (
     <div className="border-b border-yellow-400/20 bg-yellow-500/10 px-5 py-2">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 text-xs text-yellow-100">
-        <span>Please verify your email to secure your account. {sent && <b>Verification email re-sent.</b>} {err && <b className="text-red-300">{err}</b>}</span>
+        <span>
+          Please verify your email to secure your account.{' '}
+          {sent && !verifyUrl && <b>Verification email sent — check your inbox.</b>}
+          {verifyUrl && (
+            <>Email isn’t configured on this deployment, so <a href={verifyUrl} className="font-semibold text-[var(--rf-blue-bright)] underline">click here to verify now →</a></>
+          )}
+          {err && <b className="text-red-300">{err}</b>}
+        </span>
         <span className="flex gap-2">
           <button onClick={resend} className="rf-btn-ghost rounded px-2 py-0.5 text-[11px]">Resend link</button>
           <button onClick={onVerified} className="rf-btn-ghost rounded px-2 py-0.5 text-[11px]">I’ve verified</button>

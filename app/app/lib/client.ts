@@ -180,7 +180,7 @@ export const api = {
     req<{ user: SessionUser }>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   logout: () => req<{ ok: true }>('/api/auth/logout', { method: 'POST' }),
   // Email verification (RC2 P4) + pilot feedback (RC2 P6).
-  resendVerification: () => req<{ ok: boolean }>('/api/auth/resend', { method: 'POST' }),
+  resendVerification: () => req<{ ok: boolean; emailDelivery?: string; verifyUrl?: string | null }>('/api/auth/resend', { method: 'POST' }),
   submitFeedback: (kind: 'feedback' | 'issue', message: string, projectId?: string) =>
     req<{ ok: boolean; id: string }>('/api/feedback', { method: 'POST', body: JSON.stringify({ kind, message, projectId }) }),
 
