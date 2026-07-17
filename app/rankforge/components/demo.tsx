@@ -105,61 +105,64 @@ const CHAPTERS: {
   label: string
   blurb: string
   icon: LucideIcon
+  planned?: boolean
   render: () => ReactNode
 }[] = [
   {
     id: 'overview',
     label: 'Command Center',
-    blurb: 'Every metric that matters, unified in one live dashboard.',
+    blurb: 'How your audit scores and fix lists come together in one dashboard.',
     icon: LayoutDashboard,
     render: () => <ChapterOverview />,
   },
   {
     id: 'audit',
     label: 'Technical Audit',
-    blurb: 'Full-site crawl: Core Web Vitals, indexation, and severity-scored issues.',
+    blurb: 'Full-site crawl (up to 300 pages): Core Web Vitals, indexability, and severity-scored issues.',
     icon: Radar,
     render: () => <ChapterAudit />,
   },
   {
     id: 'ranks',
-    label: 'Rank Tracking',
-    blurb: 'Daily Google, Maps & AI positions with trends and SERP features.',
+    label: 'Rank Check',
+    blurb: 'Point-in-time Google positions today. Tracking over time is on the roadmap.',
     icon: LineChart,
     render: () => <ChapterRanks />,
   },
   {
     id: 'ai',
-    label: 'AI Search Visibility',
-    blurb: 'Where you get cited across ChatGPT, Gemini, Perplexity, AI Overviews.',
+    label: 'AI Citation Tracking',
+    blurb: 'Roadmap concept — today, audits score AI readiness; citation tracking is not built yet.',
     icon: Bot,
+    planned: true,
     render: () => <ChapterAI />,
   },
   {
     id: 'war',
-    label: 'Competitor War Room',
-    blurb: 'Your page vs the entire top 10 — every gap, quantified.',
+    label: 'Competitor Compare',
+    blurb: 'Your page vs the Google top 10 for one keyword — every on-page gap, quantified.',
     icon: Swords,
     render: () => <ChapterWarRoom />,
   },
   {
     id: 'content',
-    label: 'Content Optimization',
-    blurb: 'NLP briefs and on-page scoring that tell writers exactly what to add.',
+    label: 'Content Analysis',
+    blurb: 'Audit-based content scoring, with Forge drafting title & meta fixes you approve.',
     icon: PenTool,
     render: () => <ChapterContent />,
   },
   {
     id: 'local',
     label: 'Local SEO Heatmap',
-    blurb: 'Grid rank tracking across every neighborhood + GBP health.',
+    blurb: 'Roadmap concept — geo-grid rankings and GBP health are not built yet.',
     icon: MapPin,
+    planned: true,
     render: () => <ChapterLocal />,
   },
   {
     id: 'report',
-    label: 'White-Label Report',
-    blurb: 'Branded client reports with the prioritized fix list, on autopilot.',
+    label: 'Reports & Export',
+    blurb: 'Export any audit as JSON or a print-ready PDF. White-label branding is on the roadmap.',
     icon: FileBarChart,
     render: () => <ChapterReport />,
   },
@@ -262,6 +265,13 @@ function DemoModal({
           </div>
         </div>
 
+        {/* Persistent disclosure — always visible while the tour is open */}
+        <div className="border-b border-[var(--rf-card-line)] bg-[var(--rf-amber)]/10 px-4 py-2 text-center sm:px-5">
+          <p className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-amber)]">
+            Interactive preview with sample data — not live measurements
+          </p>
+        </div>
+
         <div className="flex min-h-0 flex-1">
           {/* chapter rail */}
           <nav className="hidden w-60 shrink-0 overflow-y-auto border-r border-[var(--rf-card-line)] p-3 md:block">
@@ -287,7 +297,14 @@ function DemoModal({
                   >
                     <Icon className="h-4 w-4" />
                   </span>
-                  <span className="text-sm font-medium">{c.label}</span>
+                  <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                    {c.label}
+                  </span>
+                  {c.planned && (
+                    <span className="rf-mono shrink-0 rounded border border-[var(--rf-card-line)] px-1 py-0.5 text-[8px] uppercase tracking-wider text-[var(--rf-faint)]">
+                      Planned
+                    </span>
+                  )}
                   {isActive && (
                     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white/10">
                       <span
@@ -330,6 +347,13 @@ function DemoModal({
                 </h3>
                 <p className="text-xs text-[var(--rf-muted)]">{chapter.blurb}</p>
               </div>
+              {chapter.planned && (
+                <div className="mb-4 rounded-lg border border-dashed border-[var(--rf-card-line-strong)] bg-white/[0.02] px-3 py-2 text-center">
+                  <p className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
+                    On the roadmap — concept preview, not a shipped feature
+                  </p>
+                </div>
+              )}
               {chapter.render()}
             </div>
 
@@ -497,30 +521,30 @@ function ChapterOverview() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
-        <MetricStat label="SEO Score" value="92/100" delta="▲ 14 this month" tone="green" spark={[60, 64, 62, 70, 74, 80, 86, 92]} />
-        <MetricStat label="AI Visibility" value="78%" delta="▲ 22 pts" tone="cyan" spark={[40, 44, 50, 55, 62, 68, 74, 78]} />
-        <MetricStat label="Keyword Wins" value="1,284" delta="▲ 341 new top-10" tone="green" spark={[700, 820, 910, 1010, 1090, 1180, 1240, 1284]} />
-        <MetricStat label="Technical Issues" value="37" delta="▼ 58 resolved" tone="amber" spark={[120, 110, 95, 80, 70, 55, 44, 37]} />
-        <MetricStat label="Content Gaps" value="46" delta="12 high-impact" tone="blue" spark={[60, 58, 55, 53, 50, 49, 47, 46]} />
-        <MetricStat label="Competitor Threats" value="9" delta="3 gaining fast" tone="red" spark={[4, 5, 6, 6, 7, 8, 8, 9]} />
+        <MetricStat label="SEO Score" value="92/100" delta="sample" tone="green" spark={[60, 64, 62, 70, 74, 80, 86, 92]} />
+        <MetricStat label="AI Readiness" value="78/100" delta="sample" tone="cyan" spark={[40, 44, 50, 55, 62, 68, 74, 78]} />
+        <MetricStat label="Pages Crawled" value="284/300" delta="sample" tone="green" spark={[80, 120, 160, 190, 220, 250, 270, 284]} />
+        <MetricStat label="Technical Issues" value="37" delta="sample" tone="amber" spark={[120, 110, 95, 80, 70, 55, 44, 37]} />
+        <MetricStat label="Content Fixes" value="46" delta="sample" tone="blue" spark={[60, 58, 55, 53, 50, 49, 47, 46]} />
+        <MetricStat label="Duplicate Pages" value="9" delta="sample" tone="red" spark={[4, 5, 6, 6, 7, 8, 8, 9]} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Panel title="Visibility Index — 90 days" className="lg:col-span-2" right={<span className="rf-mono text-[11px] text-[var(--rf-green)]">▲ 31.4%</span>}>
+        <Panel title="Audit score by page" className="lg:col-span-2" right={<span className="rf-mono text-[11px] text-[var(--rf-faint)]">sample</span>}>
           <div className="flex h-40 items-end gap-1.5">
             {[34, 40, 38, 46, 52, 49, 58, 63, 60, 70, 68, 77, 82, 79, 88, 92].map((h, i) => (
               <div key={i} className="flex-1 rounded-t-sm bg-gradient-to-t from-[var(--rf-blue)]/30 to-[var(--rf-cyan)]" style={{ height: `${h}%` }} />
             ))}
           </div>
         </Panel>
-        <Panel title="Live activity">
+        <Panel title="Recent activity — sample">
           <ul className="space-y-3 text-sm">
             {[
-              ['ranked #3 for “enterprise crm”', 'green'],
-              ['cited by ChatGPT (2 prompts)', 'cyan'],
-              ['LCP fixed on /pricing', 'green'],
-              ['competitor lost 4 positions', 'blue'],
-              ['12 new backlinks detected', 'green'],
+              ['audit complete — 284 pages crawled', 'green'],
+              ['Forge drafted 12 title rewrites', 'cyan'],
+              ['meta fixes deployed to WordPress', 'green'],
+              ['rank check run for 25 keywords', 'blue'],
+              ['report exported (JSON + PDF)', 'green'],
             ].map(([t, c], i) => (
               <li key={i} className="flex items-start gap-2 text-[var(--rf-muted)]">
                 <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${c === 'green' ? 'bg-[var(--rf-green)]' : c === 'cyan' ? 'bg-[var(--rf-cyan)]' : 'bg-[var(--rf-blue-bright)]'}`} />
@@ -568,10 +592,10 @@ function ChapterAudit() {
         <Panel title="Crawl summary">
           <ul className="space-y-2.5 text-sm">
             {[
-              ['Pages crawled', '4,812'],
-              ['Indexable', '4,390'],
-              ['Redirects', '212'],
-              ['Broken links', '46'],
+              ['Pages crawled', '284 / 300'],
+              ['Indexable', '261'],
+              ['Redirects', '12'],
+              ['Broken links', '16'],
               ['Avg. response', '380ms'],
             ].map(([k, v]) => (
               <li key={k} className="flex justify-between">
@@ -613,11 +637,11 @@ function ChapterRanks() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-3">
-        <MetricStat label="Avg. position" value="6.2" delta="▲ 2.4" tone="green" />
-        <MetricStat label="Top 3 keywords" value="184" delta="▲ 31" tone="green" />
-        <MetricStat label="Share of voice" value="42%" delta="▲ 9 pts" tone="cyan" />
+        <MetricStat label="Keywords checked" value="5" delta="sample" tone="cyan" />
+        <MetricStat label="Avg. position" value="5.0" delta="sample" tone="green" />
+        <MetricStat label="In top 3" value="2" delta="sample" tone="green" />
       </div>
-      <Panel title="Keyword positions — Google + AI" right={<span className="rf-mono text-[11px] text-[var(--rf-faint)]">daily refresh</span>}>
+      <Panel title="Keyword positions — point-in-time check" right={<span className="rf-mono text-[11px] text-[var(--rf-faint)]">on demand</span>}>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -655,6 +679,10 @@ function ChapterRanks() {
             </tbody>
           </table>
         </div>
+        <p className="rf-mono mt-3 text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">
+          Δ and trend columns are a roadmap concept — today&apos;s rank check
+          is a point-in-time snapshot
+        </p>
       </Panel>
     </div>
   )
@@ -708,10 +736,10 @@ function ChapterWarRoom() {
     ['Title tag', 'Optimized · 58 chars', 'Generic · 41', true],
     ['Schema markup', 'Article + FAQ + HowTo', 'None', true],
     ['Word count', '2,140', '3,680', false],
-    ['Referring domains', '184', '512', false],
+    ['Meta description', 'CTR-tuned + CTA', 'Missing keyword', true],
     ['Internal links', '27', '12', true],
-    ['Topical coverage', '91%', '74%', true],
-    ['AI answer visibility', 'Cited 4×', 'Not cited', true],
+    ['Heading structure', 'Clean H1–H3 outline', 'Flat, missing H2s', true],
+    ['Image alt coverage', '96%', '61%', true],
   ]
   return (
     <Panel title="Your page vs Top 10 — “enterprise crm software”">
@@ -739,7 +767,7 @@ function ChapterWarRoom() {
           ))}
         </div>
       </div>
-      <p className="mt-3 text-xs text-[var(--rf-muted)]">Close 2 gaps (referring domains, depth) to overtake position #1.</p>
+      <p className="mt-3 text-xs text-[var(--rf-muted)]">Close the content-depth gap to compete for position #1. (Sample comparison for one keyword.)</p>
     </Panel>
   )
 }
@@ -767,7 +795,7 @@ function ChapterContent() {
           </div>
         </div>
       </Panel>
-      <Panel title="NLP brief — terms to include">
+      <Panel title="Forge suggestions — terms to consider">
         <div className="flex flex-wrap gap-2">
           {terms.map(([t, has]) => (
             <span key={t} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs ${has ? 'bg-[var(--rf-green)]/10 text-[var(--rf-green)]' : 'border border-[var(--rf-card-line-strong)] text-[var(--rf-muted)]'}`}>
@@ -845,13 +873,13 @@ function ChapterReport() {
   return (
     <div className="space-y-4">
       <Panel
-        title="Client report — Acme Co."
-        right={<span className="rf-mono rounded bg-white/[0.05] px-2 py-0.5 text-[10px] text-[var(--rf-muted)]">PDF · your brand</span>}
+        title="Audit report — Acme Co."
+        right={<span className="rf-mono rounded bg-white/[0.05] px-2 py-0.5 text-[10px] text-[var(--rf-muted)]">JSON export · print/PDF</span>}
       >
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Organic traffic</p><p className="mt-1 text-xl font-semibold text-[var(--rf-green)]">+38%</p></div>
-          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Keywords in top 10</p><p className="mt-1 text-xl font-semibold text-[var(--rf-blue-bright)]">+126</p></div>
-          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Leads from organic</p><p className="mt-1 text-xl font-semibold text-[var(--rf-cyan)]">+54</p></div>
+          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">SEO score</p><p className="mt-1 text-xl font-semibold text-[var(--rf-green)]">92/100</p></div>
+          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Pages crawled</p><p className="mt-1 text-xl font-semibold text-[var(--rf-blue-bright)]">284</p></div>
+          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Open issues</p><p className="mt-1 text-xl font-semibold text-[var(--rf-cyan)]">37</p></div>
         </div>
         <div className="mt-4 flex h-24 items-end gap-1.5">
           {[30, 38, 35, 48, 55, 52, 64, 70, 68, 80, 84, 90].map((h, i) => (
@@ -860,14 +888,14 @@ function ChapterReport() {
         </div>
       </Panel>
 
-      <Panel title="This month's prioritized fix list">
+      <Panel title="Prioritized fix list">
         <ul className="space-y-1.5">
           {[
             ['Resolve 4 soft-404s blocking indexation', 'Critical', 'red'],
             ['Publish “sales forecasting” pillar page', 'High', 'amber'],
             ['Add Product + Review schema to 7 pages', 'High', 'amber'],
             ['Build 8 internal links to /features hub', 'Medium', 'blue'],
-            ['Reclaim 4 broken inbound links', 'Medium', 'blue'],
+            ['Fix 16 broken internal links', 'Medium', 'blue'],
           ].map(([t, sev, tone], i) => (
             <li key={i} className="flex items-center justify-between rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2 text-sm">
               <span className="flex items-center gap-2 text-[var(--rf-text)]"><Check className="h-3.5 w-3.5 text-[var(--rf-green)]" />{t}</span>

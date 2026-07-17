@@ -59,17 +59,17 @@ function SectionHeading({
 }
 
 /* ================================================================== */
-/* 1. Replace Your SEO Stack                                           */
+/* 1. Consolidate Your SEO Workflow                                    */
 /* ================================================================== */
 
 const STACK = [
-  { name: 'Semrush', use: 'Keyword & rank tracking' },
-  { name: 'Ahrefs', use: 'Backlinks & competitors' },
-  { name: 'Surfer', use: 'Content optimization' },
-  { name: 'Screaming Frog', use: 'Technical crawls' },
-  { name: 'BrightLocal', use: 'Local SEO & maps' },
-  { name: 'Looker Studio', use: 'Client reporting' },
-  { name: 'AI writers', use: 'Briefs & drafts' },
+  { name: 'Crawler exports', use: 'Technical site audits' },
+  { name: 'PageSpeed tabs', use: 'Core Web Vitals checks' },
+  { name: 'SERP spot-checks', use: 'Keyword rank checks' },
+  { name: 'Schema validators', use: 'Structured data review' },
+  { name: 'Fix spreadsheets', use: 'Prioritizing issues' },
+  { name: 'CMS back-and-forth', use: 'Shipping meta fixes' },
+  { name: 'Copy-paste AI chats', use: 'Title & meta rewrites' },
 ]
 
 export function StackSection() {
@@ -80,11 +80,11 @@ export function StackSection() {
           eyebrow="Consolidate"
           title={
             <>
-              Replace your entire{' '}
-              <span className="rf-gradient-text">SEO stack</span>
+              Consolidate your core{' '}
+              <span className="rf-gradient-text">SEO workflow</span>
             </>
           }
-          sub="Stop paying for seven subscriptions, seven logins, and seven dashboards that never talk to each other. RankForge AI does the job of all of them — in one place."
+          sub="Stop stitching together crawler exports, PageSpeed tabs, and fix spreadsheets. RankForge AI runs the audit, ranks the fixes, and deploys the approved ones — in one place."
         />
 
         <div className="mt-14 grid items-center gap-8 lg:grid-cols-[1fr_auto_1fr]">
@@ -149,10 +149,10 @@ export function StackSection() {
               </ul>
               <div className="mt-6 flex items-baseline gap-2 border-t border-[var(--rf-card-line)] pt-5">
                 <span className="text-2xl font-semibold text-white">
-                  Save $1,400+/mo
+                  One workflow
                 </span>
                 <span className="text-xs text-[var(--rf-faint)]">
-                  vs. buying every tool separately
+                  audit → prioritized fixes → approved deploys
                 </span>
               </div>
             </div>
@@ -175,39 +175,66 @@ const FEATURES: {
 }[] = [
   {
     icon: Bot,
-    title: 'AI SEO Agent',
-    desc: 'An autonomous agent that crawls, diagnoses, writes briefs, and ships fixes — working your site like a senior strategist 24/7.',
-    tag: 'Autonomous',
+    title: 'Forge — AI SEO Assistant',
+    desc: 'An AI assistant grounded in your crawl. It analyzes your audit, answers questions about your site, and drafts title & meta fixes you review and approve.',
+    tag: 'You approve',
   },
   {
     icon: Radar,
-    title: 'Technical Site Audits',
-    desc: 'Full-site crawls surfacing Core Web Vitals, indexation, redirects, broken links, and crawl-budget leaks with severity scoring.',
+    title: 'Full-Site Audits',
+    desc: 'Crawls up to 300 pages and scores technical health, content, schema, and AI readiness — with indexability checks, duplicate detection, and internal-link analysis.',
     tag: 'Crawl engine',
   },
   {
     icon: LineChart,
-    title: 'Google + AI Rank Tracking',
-    desc: 'Daily positions across Google, Maps, and AI answer engines — with share-of-voice, SERP features, and volatility alerts.',
-    tag: 'Daily refresh',
+    title: 'Rank Check & Competitor Compare',
+    desc: 'Check point-in-time Google positions for your keywords and line your page up against the top 10 for any single keyword.',
+    tag: 'On demand',
   },
   {
     icon: PenTool,
-    title: 'Content Optimization',
-    desc: 'NLP-driven briefs, entity coverage, and on-page scoring that tells writers exactly what to add to outrank the top 10.',
-    tag: 'NLP briefs',
+    title: 'WordPress Deploy',
+    desc: 'Connect via Application Password, pull pages and posts, get AI-suggested title & meta rewrites (AIOSEO supported), then deploy with review-and-approve — and undo.',
+    tag: 'One-click undo',
   },
   {
     icon: MapPin,
-    title: 'Local SEO Heatmaps',
-    desc: 'Grid-based rank heatmaps across every neighborhood, GBP optimization, citations, and review velocity tracking.',
-    tag: 'Geo grid',
+    title: 'Lead-Capture Audit Widget',
+    desc: 'Embed a free single-page SEO scan — with Core Web Vitals via Google PageSpeed — on any site, branded per embed, and capture the lead.',
+    tag: 'Embeddable',
   },
   {
     icon: FileBarChart,
-    title: 'White Label Client Reports',
-    desc: 'Branded, automated PDF and live dashboards your clients actually read — scheduled, on your domain, in your colors.',
-    tag: 'White label',
+    title: 'Reports & Export',
+    desc: 'Export every audit as JSON or generate a clean print/PDF report straight from your browser — ready to hand to a client or a dev team.',
+    tag: 'JSON + PDF',
+  },
+]
+
+const ROADMAP: { title: string; desc: string }[] = [
+  {
+    title: 'Rank tracking over time',
+    desc: 'Scheduled position history, trends, and share-of-voice.',
+  },
+  {
+    title: 'Continuous monitoring',
+    desc: 'Scheduled crawls and alerts when something breaks.',
+  },
+  {
+    title: 'AI citation tracking',
+    desc: 'Measure when AI answer engines cite your brand.',
+  },
+  {
+    title: 'Backlink analysis',
+    desc: 'Backlink monitoring and competitor gap discovery.',
+  },
+  {
+    title: 'Local SEO heatmaps',
+    desc: 'Geo-grid rankings and Google Business Profile tools.',
+  },
+  {
+    title: 'White-label & client portals',
+    desc: 'Branded dashboards, scheduled reports, and team seats.',
   },
 ]
 
@@ -224,10 +251,16 @@ export function CommandCenter() {
               <span className="rf-gradient-text">Command Center</span>
             </>
           }
-          sub="Every weapon you need to win organic, AI, and local search — engineered to work as one system, not seven disconnected tabs."
+          sub="Audit, prioritize, fix, deploy — engineered to work as one system, not seven disconnected tabs. Everything below ships today."
         />
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 text-center">
+          <span className="rf-mono inline-block rounded-full border border-[var(--rf-green)]/40 bg-[var(--rf-green)]/10 px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--rf-green)]">
+            Available today
+          </span>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f, i) => {
             const Icon = f.icon
             return (
@@ -253,6 +286,32 @@ export function CommandCenter() {
             )
           })}
         </div>
+
+        {/* Roadmap — explicitly labeled, visually de-emphasized */}
+        <div className="mt-14 text-center">
+          <span className="rf-mono inline-block rounded-full border border-[var(--rf-card-line-strong)] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
+            On the roadmap — not available yet
+          </span>
+        </div>
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {ROADMAP.map((r, i) => (
+            <Reveal key={r.title} delay={i * 50}>
+              <div className="rf-card h-full border-dashed p-5 opacity-70">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-[var(--rf-muted)]">
+                    {r.title}
+                  </h3>
+                  <span className="rf-mono shrink-0 rounded-full border border-[var(--rf-card-line)] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">
+                    Planned
+                  </span>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-[var(--rf-faint)]">
+                  {r.desc}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -269,15 +328,16 @@ type Row = {
   win: boolean
 }
 
+// Sample comparison for illustration — labeled as such in the UI below.
 const WAR_ROWS: Row[] = [
   { metric: 'Title tag', you: 'Optimized · 58 chars', comp: 'Generic · 41 chars', win: true },
   { metric: 'Meta description', you: 'CTR-tuned + CTA', comp: 'Missing keyword', win: true },
   { metric: 'Schema markup', you: 'Article + FAQ + HowTo', comp: 'None', win: true },
   { metric: 'Word count', you: '2,140', comp: '3,680', win: false },
-  { metric: 'Referring domains', you: '184', comp: '512', win: false },
+  { metric: 'Heading structure', you: 'Clean H1–H3 outline', comp: 'Flat, missing H2s', win: true },
   { metric: 'Internal links', you: '27', comp: '12', win: true },
-  { metric: 'Topical coverage', you: '91%', comp: '74%', win: true },
-  { metric: 'AI answer visibility', you: 'Cited 4×', comp: 'Not cited', win: true },
+  { metric: 'Image alt coverage', you: '96%', comp: '61%', win: true },
+  { metric: 'Page speed', you: 'LCP 1.9s', comp: 'LCP 1.4s', win: false },
 ]
 
 export function WarRoom() {
@@ -292,11 +352,17 @@ export function WarRoom() {
               Competitor <span className="rf-gradient-text">War Room</span>
             </>
           }
-          sub="Line up your page against the entire first page of Google. See exactly what's keeping you out of the top spot — and the precise gaps to close."
+          sub="Pick a keyword and line your page up against the current Google top 10. See exactly which on-page gaps to close — one keyword at a time."
         />
 
         <Reveal className="mt-14">
           <div className="rf-card rf-topline overflow-hidden">
+            {/* sample-data label */}
+            <div className="flex justify-between border-b border-[var(--rf-card-line)] bg-white/[0.015] px-4 py-2 sm:px-6">
+              <span className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-amber)]">
+                Sample data for illustration
+              </span>
+            </div>
             {/* header */}
             <div className="grid grid-cols-[1.2fr_1fr_1fr_auto] items-center gap-2 border-b border-[var(--rf-card-line)] px-4 py-4 text-xs uppercase tracking-wider text-[var(--rf-faint)] sm:px-6">
               <span>Signal</span>
@@ -359,17 +425,18 @@ export function WarRoom() {
 /* 4. AI Search Visibility                                             */
 /* ================================================================== */
 
-const AI_ENGINES = [
-  { name: 'ChatGPT', score: 82, note: 'Cited in 41 prompts' },
-  { name: 'Google AI Overviews', score: 76, note: 'Featured in 28 SERPs' },
-  { name: 'Perplexity', score: 69, note: 'Source on 33 answers' },
-  { name: 'Gemini', score: 58, note: 'Cited in 19 prompts' },
-  { name: 'Bing Copilot', score: 64, note: 'Linked in 22 answers' },
+// Sample AI-readiness factor scores for illustration — labeled in the UI.
+const AI_FACTORS = [
+  { name: 'Content structure', score: 82, note: 'Answer-ready headings' },
+  { name: 'Schema coverage', score: 76, note: 'Machine-readable markup' },
+  { name: 'Extractability', score: 69, note: 'Clear, quotable passages' },
+  { name: 'Entity clarity', score: 58, note: 'Who/what is unambiguous' },
+  { name: 'Crawl access', score: 64, note: 'Bots can reach your pages' },
 ]
 
 export function AISearch() {
   const overall = Math.round(
-    AI_ENGINES.reduce((a, e) => a + e.score, 0) / AI_ENGINES.length
+    AI_FACTORS.reduce((a, e) => a + e.score, 0) / AI_FACTORS.length
   )
   return (
     <section id="ai-search" className="relative py-24">
@@ -379,10 +446,10 @@ export function AISearch() {
           eyebrow="AEO / GEO"
           title={
             <>
-              AI Search <span className="rf-gradient-text">Visibility</span>
+              AI Search <span className="rf-gradient-text">Readiness</span>
             </>
           }
-          sub="Search isn't just Google anymore. Track exactly when and where your brand gets cited across every major AI answer engine — and grow it on purpose."
+          sub="Search isn't just Google anymore. Every audit scores how ready your pages are to be understood and quoted by AI answer engines — structure, schema, and extractability. (Citation tracking across engines is on our roadmap, not available yet.)"
         />
 
         <div className="mt-14 grid gap-6 lg:grid-cols-[340px_1fr]">
@@ -390,22 +457,22 @@ export function AISearch() {
           <Reveal>
             <div className="rf-card rf-topline flex h-full flex-col items-center justify-center p-8 text-center">
               <p className="text-xs uppercase tracking-[0.18em] text-[var(--rf-faint)]">
-                AI Visibility Score
+                AI Readiness Score
               </p>
               <ScoreRing value={overall} />
-              <p className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--rf-green)]">
-                <Sparkles className="h-4 w-4" /> +22 pts this month
+              <p className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--rf-cyan)]">
+                <Sparkles className="h-4 w-4" /> Scored on every audit
               </p>
-              <p className="mt-2 text-xs text-[var(--rf-muted)]">
-                Aggregated across 5 answer engines
+              <p className="rf-mono mt-2 text-[10px] uppercase tracking-wider text-[var(--rf-amber)]">
+                Sample data for illustration
               </p>
             </div>
           </Reveal>
 
-          {/* per-engine bars */}
+          {/* per-factor bars */}
           <Reveal delay={120}>
             <div className="rf-card grid h-full gap-4 p-6 sm:p-8">
-              {AI_ENGINES.map((e, i) => (
+              {AI_FACTORS.map((e, i) => (
                 <div key={e.name}>
                   <div className="mb-1.5 flex items-center justify-between text-sm">
                     <span className="flex items-center gap-2 font-medium">
@@ -430,6 +497,9 @@ export function AISearch() {
                   </div>
                 </div>
               ))}
+              <p className="rf-mono self-end text-right text-[10px] uppercase tracking-wider text-[var(--rf-amber)]">
+                Sample data for illustration
+              </p>
             </div>
           </Reveal>
         </div>
@@ -538,24 +608,24 @@ const FIX_GROUPS: {
   },
   {
     icon: MapPin,
-    label: 'Local SEO improvements',
+    label: 'Indexability blockers',
     count: 5,
     tone: 'green',
     items: [
-      'Add 3 service-area landing pages',
-      'Fix 14 inconsistent citations',
-      'Boost review velocity in 2 grids',
+      'Unblock 2 pages disallowed in robots.txt',
+      'Remove stray noindex on /guides',
+      'Add 3 missing pages to the sitemap',
     ],
   },
   {
     icon: ExternalLink,
-    label: 'Backlink opportunities',
+    label: 'Duplicate content',
     count: 23,
     tone: 'amber',
     items: [
-      '11 competitor links you can replicate',
-      '6 unlinked brand mentions to claim',
-      'Reclaim 4 broken inbound links',
+      'Merge 3 near-duplicate service pages',
+      'Canonicalize parameterized URLs',
+      'De-duplicate 9 boilerplate titles',
     ],
   },
 ]
@@ -580,10 +650,16 @@ export function FixList() {
               The <span className="rf-gradient-text">Fix List Engine</span>
             </>
           }
-          sub="Most tools dump data and walk away. RankForge turns every signal into a single prioritized action list — ranked by impact, ready to assign."
+          sub="Most tools dump data and walk away. RankForge turns every audit signal into a single prioritized action list — ranked by impact, ready to assign."
         />
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 text-center">
+          <span className="rf-mono inline-block rounded-full border border-[var(--rf-card-line)] bg-white/[0.03] px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-[var(--rf-amber)]">
+            Sample data for illustration
+          </span>
+        </div>
+
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {FIX_GROUPS.map((g, i) => {
             const Icon = g.icon
             return (
@@ -627,13 +703,16 @@ export function FixList() {
 /* 6. Agency Mode                                                      */
 /* ================================================================== */
 
-const AGENCY = [
-  'White-label dashboards on your own domain',
-  'Branded client portals with role-based access',
-  'Automated, scheduled SEO reports',
+const AGENCY_TODAY = [
   'Lead-capture SEO audit widget for your site',
-  'Unlimited team seats & client workspaces',
-  'Fully branded PDF deliverables',
+  'Per-embed branding: your name, logo & colors',
+  'Full-site audits you can run per client',
+  'JSON export + print/PDF report deliverables',
+]
+
+const AGENCY_ROADMAP = [
+  'White-label dashboards & client portals',
+  'Scheduled reports & team seats',
 ]
 
 export function Agency() {
@@ -656,16 +735,33 @@ export function Agency() {
             </Reveal>
             <Reveal delay={140}>
               <p className="mt-4 text-[var(--rf-muted)]">
-                Put your brand on everything. Win clients with an instant audit
-                widget, retain them with portals they love, and scale delivery
-                without scaling headcount.
+                Win clients with an instant, branded audit widget on your own
+                site, then deliver audits and fix lists that speak for
+                themselves.
               </p>
             </Reveal>
             <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-              {AGENCY.map((a, i) => (
+              {AGENCY_TODAY.map((a, i) => (
                 <Reveal as="li" key={a} delay={i * 60}>
                   <span className="flex items-start gap-2.5 text-sm text-[var(--rf-text)]">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-green)]" />
+                    {a}
+                  </span>
+                </Reveal>
+              ))}
+            </ul>
+            <Reveal delay={160}>
+              <p className="rf-mono mt-6 text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
+                On the roadmap — not available yet
+              </p>
+            </Reveal>
+            <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+              {AGENCY_ROADMAP.map((a, i) => (
+                <Reveal as="li" key={a} delay={i * 60}>
+                  <span className="flex items-start gap-2.5 text-sm text-[var(--rf-faint)]">
+                    <span className="rf-mono mt-0.5 shrink-0 rounded border border-[var(--rf-card-line)] px-1.5 text-[9px] uppercase tracking-wider">
+                      Soon
+                    </span>
                     {a}
                   </span>
                 </Reveal>
@@ -685,6 +781,11 @@ export function Agency() {
           <Reveal delay={120}>
             <div className="rf-card rf-topline rf-float relative overflow-hidden p-5">
               <div className="rf-glow pointer-events-none absolute -right-10 -top-10 h-40 w-40 opacity-60" />
+              <div className="mb-4 flex justify-center">
+                <span className="rf-mono rounded-full border border-[var(--rf-card-line)] bg-white/[0.03] px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-[var(--rf-amber)]">
+                  Roadmap concept — sample data
+                </span>
+              </div>
               <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] pb-4">
                 <div className="flex items-center gap-2.5">
                   <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] text-xs font-bold text-white">

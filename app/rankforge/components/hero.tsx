@@ -28,22 +28,23 @@ export function Hero() {
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--rf-card-line-strong)] bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-[var(--rf-muted)]">
               <span className="rf-blink h-2 w-2 rounded-full bg-[var(--rf-green)]" />
-              All-in-one SEO &amp; AI Search platform — built for operators
+              SEO audit &amp; AI-assisted optimization — built for operators
             </span>
           </Reveal>
 
           <Reveal delay={80}>
             <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-              Dominate Google, AI Search, and Local Rankings From One{' '}
-              <span className="rf-gradient-text">Ruthless SEO Command Center</span>
+              Audit Your Site, Fix What Matters, and Ship It From One{' '}
+              <span className="rf-gradient-text">SEO Command Center</span>
             </h1>
           </Reveal>
 
           <Reveal delay={160}>
             <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-[var(--rf-muted)] sm:text-lg">
-              Run technical audits, content briefs, AI search tracking,
-              competitor gaps, schema, local maps, rank tracking, backlinks, and
-              client reports — without jumping between ten tools.
+              Crawl up to 300 pages and get technical, content, schema, and
+              AI-readiness scores with a prioritized fix list. Then deploy
+              approved title and meta fixes straight to WordPress — with Forge,
+              your AI SEO assistant, on call.
             </p>
           </Reveal>
 
@@ -65,7 +66,7 @@ export function Hero() {
                 Watch Demo
               </button>
               <span className="text-xs text-[var(--rf-faint)]">
-                No credit card · Full crawl in ~60 seconds
+                No credit card · Crawls up to 300 pages
               </span>
             </div>
           </Reveal>
@@ -84,28 +85,29 @@ export function Hero() {
 /* Futuristic dashboard mockup                                         */
 /* ------------------------------------------------------------------ */
 
+// Sample values for the illustrative preview below — not live measurements.
 const METRICS = [
   {
     label: 'SEO Score',
     value: '92',
     sub: '/100',
-    delta: '+14',
+    delta: 'sample',
     tone: 'green',
     icon: Gauge,
   },
   {
-    label: 'AI Visibility',
+    label: 'AI Readiness',
     value: '78',
-    sub: '%',
-    delta: '+22',
+    sub: '/100',
+    delta: 'sample',
     tone: 'cyan',
     icon: Bot,
   },
   {
-    label: 'Keyword Wins',
-    value: '1,284',
-    sub: '',
-    delta: '+341',
+    label: 'Pages Crawled',
+    value: '284',
+    sub: '/300',
+    delta: 'sample',
     tone: 'green',
     icon: Target,
   },
@@ -113,23 +115,23 @@ const METRICS = [
     label: 'Technical Issues',
     value: '37',
     sub: '',
-    delta: '-58',
+    delta: 'sample',
     tone: 'amber',
     icon: ShieldAlert,
   },
   {
-    label: 'Content Gaps',
+    label: 'Content Fixes',
     value: '46',
     sub: '',
-    delta: 'new',
+    delta: 'sample',
     tone: 'blue',
     icon: FileText,
   },
   {
-    label: 'Competitor Threats',
+    label: 'Duplicate Pages',
     value: '9',
     sub: '',
-    delta: 'live',
+    delta: 'sample',
     tone: 'red',
     icon: Swords,
   },
@@ -144,7 +146,7 @@ const TONE: Record<string, string> = {
 }
 
 function DashboardMockup() {
-  // Deterministic bar heights for the trend chart (avoids hydration drift).
+  // Deterministic sample bar heights for the preview chart (avoids hydration drift).
   const bars = [38, 52, 44, 61, 57, 72, 66, 80, 75, 88, 84, 96]
 
   return (
@@ -161,9 +163,8 @@ function DashboardMockup() {
               app.rankforge.ai / overview
             </span>
           </div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--rf-card-line)] px-2.5 py-1 text-[11px] text-[var(--rf-muted)]">
-            <span className="rf-blink h-1.5 w-1.5 rounded-full bg-[var(--rf-green)]" />
-            Live crawl
+          <span className="rf-mono inline-flex items-center gap-2 rounded-full border border-[var(--rf-card-line)] px-2.5 py-1 text-[10px] uppercase tracking-wider text-[var(--rf-amber)]">
+            Illustrative product preview — sample data
           </span>
         </div>
 
@@ -207,11 +208,11 @@ function DashboardMockup() {
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-[var(--rf-cyan)]" />
                 <span className="text-sm font-medium text-white">
-                  Visibility Index
+                  Audit Score by Page
                 </span>
               </div>
-              <span className="rf-mono text-[11px] text-[var(--rf-green)]">
-                ▲ 31.4%
+              <span className="rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">
+                sample
               </span>
             </div>
 
@@ -236,9 +237,9 @@ function DashboardMockup() {
 
             <div className="mt-3 grid grid-cols-3 gap-2 border-t border-[var(--rf-card-line)] pt-3">
               {[
-                ['Google', '#1', TONE.green],
-                ['AI Overviews', 'cited', TONE.cyan],
-                ['Local Pack', 'top 3', TONE.blue],
+                ['Technical', '94', TONE.green],
+                ['Schema', '81', TONE.cyan],
+                ['Content', '88', TONE.blue],
               ].map(([k, v, c]) => (
                 <div key={k}>
                   <p className="text-[10px] text-[var(--rf-faint)]">{k}</p>

@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import { RankForgeSite } from './rankforge/components/rankforge-site'
 
 export const metadata: Metadata = {
-  title: 'RankForge AI — The Ruthless SEO & AI Search Command Center',
+  title: 'RankForge AI — SEO Audit & AI-Assisted Optimization Command Center',
   description:
-    'Run technical audits, content briefs, AI search tracking, competitor gaps, schema, local maps, rank tracking, backlinks, and white-label client reports from one command center. Replace your entire SEO stack.',
+    'Crawl up to 300 pages and get technical, content, schema, and AI-readiness scores with a prioritized fix list. Check keyword rankings, compare against the top 10, deploy approved fixes to WordPress, and work with Forge — your AI SEO assistant.',
   openGraph: {
-    title: 'RankForge AI — Dominate Google, AI Search, and Local Rankings',
+    title: 'RankForge AI — Audit Your Site. Fix What Matters. Deploy With Confidence.',
     description:
-      'One ruthless SEO command center for agencies, consultants, and businesses. Replace Semrush, Ahrefs, Surfer, Screaming Frog, BrightLocal, and Looker Studio.',
+      'Full-site SEO audits, prioritized fix lists, review-and-approve WordPress deploys, and an AI assistant grounded in your crawl — one command center that consolidates your core SEO workflow.',
   },
 }
 
