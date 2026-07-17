@@ -33,34 +33,49 @@ async function listMigrations(): Promise<{ version: string; sql: string }[]> {
   )
 }
 
+// A fixed advisory-lock key so that concurrent runners (multiple serverless
+// instances cold-starting at once, or parallel test workers sharing a DB)
+// serialize instead of racing on the migration-history insert.
+const MIGRATION_LOCK_KEY = 748_113_902
+
 export async function runMigrations(pool: Pool): Promise<MigrationResult> {
   await pool.query(HISTORY)
-  const done = new Set(
-    (await pool.query<{ version: string }>('SELECT version FROM rf_schema_migrations')).rows.map(
-      (r) => r.version
-    )
-  )
   const migrations = await listMigrations()
   const result: MigrationResult = { applied: [], skipped: [] }
 
-  for (const m of migrations) {
-    if (done.has(m.version)) {
-      result.skipped.push(m.version)
-      continue
+  // Serialize all migration runners on one session-level advisory lock. Held
+  // for the whole loop on a dedicated connection; released in finally.
+  const lock: PoolClient = await pool.connect()
+  await lock.query('SELECT pg_advisory_lock($1)', [MIGRATION_LOCK_KEY])
+  try {
+    // Read applied set AFTER acquiring the lock so a runner that waited sees
+    // everything the previous holder applied.
+    const done = new Set(
+      (await lock.query<{ version: string }>('SELECT version FROM rf_schema_migrations')).rows.map((r) => r.version)
+    )
+    for (const m of migrations) {
+      if (done.has(m.version)) {
+        result.skipped.push(m.version)
+        continue
+      }
+      const client: PoolClient = await pool.connect()
+      try {
+        await client.query('BEGIN')
+        await client.query(m.sql)
+        // ON CONFLICT: belt-and-braces against any second writer.
+        await client.query('INSERT INTO rf_schema_migrations (version) VALUES ($1) ON CONFLICT (version) DO NOTHING', [m.version])
+        await client.query('COMMIT')
+        result.applied.push(m.version)
+      } catch (err) {
+        await client.query('ROLLBACK')
+        throw new Error(`Migration ${m.version} failed: ${err instanceof Error ? err.message : err}`)
+      } finally {
+        client.release()
+      }
     }
-    const client: PoolClient = await pool.connect()
-    try {
-      await client.query('BEGIN')
-      await client.query(m.sql)
-      await client.query('INSERT INTO rf_schema_migrations (version) VALUES ($1)', [m.version])
-      await client.query('COMMIT')
-      result.applied.push(m.version)
-    } catch (err) {
-      await client.query('ROLLBACK')
-      throw new Error(`Migration ${m.version} failed: ${err instanceof Error ? err.message : err}`)
-    } finally {
-      client.release()
-    }
+  } finally {
+    await lock.query('SELECT pg_advisory_unlock($1)', [MIGRATION_LOCK_KEY])
+    lock.release()
   }
   return result
 }
