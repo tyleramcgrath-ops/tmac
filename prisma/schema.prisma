@@ -201,6 +201,8 @@ model Organization {
   autonomyDecisionLogs  AutonomyDecisionLog[]
   autonomyMetrics       AutonomyMetrics[]
   scheduledJobs         ScheduledJob[]
+  jobExecutions         JobExecution[]
+  measurementWindows    MeasurementWindow[]
 
   @@index([slug])
   @@index([createdAt])
@@ -355,6 +357,8 @@ model Project {
 
   // Scheduling & freshness
   scheduledJobs        ScheduledJob[]
+  jobExecutions        JobExecution[]
+  measurementWindows   MeasurementWindow[]
 
   @@unique([organizationId, domain])
   @@index([organizationId])
@@ -393,7 +397,12 @@ model ScheduledJob {
   // Locking (duplicate prevention for concurrent workers)
   lockedAt       DateTime?
   lockExpiresAt  DateTime?
+  lockOwner      String?   // worker/lease owner id that currently holds the claim
   idempotencyKey String?   // project:jobType:window — unique per in-flight window
+
+  // Trigger provenance & worker bookkeeping
+  triggerType    String?   // scheduled, manual, chained, retry, system
+  workerVersion  String?   // version of the worker that last processed this job
 
   // Bookkeeping
   dataPeriod     String?   // the data window this run processes
@@ -405,12 +414,107 @@ model ScheduledJob {
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  executions   JobExecution[]
 
   @@unique([projectId, jobType])
   @@index([organizationId])
   @@index([projectId])
   @@index([status])
   @@index([nextRunAt])
+  @@index([lockExpiresAt])
+}
+
+// A separate, immutable record for every job run. Never overwritten — the
+// ScheduledJob row holds current state; JobExecution rows are the history.
+model JobExecution {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String
+  scheduledJobId String
+  jobType        String
+
+  // Provenance
+  triggerType    String    @default("scheduled") // scheduled, manual, chained, retry, system
+  attempt        Int       @default(1)
+  idempotencyKey String?
+  workerVersion  String?
+  lockOwner      String?
+
+  // Lifecycle timing
+  queuedAt       DateTime?
+  startedAt      DateTime  @default(now())
+  finishedAt     DateTime?
+  durationMs     Int?
+
+  // Result
+  status         String    @default("running") // running, completed, completed_with_warnings, blocked, failed, retrying, cancelled
+  recordsProcessed Int?
+  dataPeriod     String?
+  resultSummary  String?   // human-readable one-line outcome
+  warnings       String?   // JSON array of warning strings
+  failureClass   String?   // retryable, waiting_for_configuration, waiting_for_user_action, permanent
+  failureReason  String?   // sanitized (no secrets)
+  diagnostics    String?   // JSON, sanitized
+  followUpJobs   String?   // JSON array of {jobType, idempotencyKey} chained after this run
+
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  scheduledJob ScheduledJob @relation(fields: [scheduledJobId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([scheduledJobId])
+  @@index([status])
+  @@index([startedAt])
+  @@index([idempotencyKey])
+}
+
+// A persisted measurement window: after a change/deployment, we watch defined
+// pages/keywords over a period and evaluate the outcome from real evidence.
+model MeasurementWindow {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String
+
+  // What is being measured
+  opportunityId  String?
+  actionId       String?
+  deploymentId   String?
+  page           String?
+  keyword        String?
+  changeType     String    // title_meta, content, new_page, internal_links, schema, canonical, redirect, conversion_tracking, cta
+
+  // Window timing
+  changeAppliedAt DateTime
+  measureStartAt  DateTime
+  measureEndAt    DateTime
+  reviewAt        DateTime  // when the outcome engine should (re-)evaluate
+  lastEvaluatedAt DateTime?
+
+  // Baseline vs current evidence (kept separate: rank / gsc / ga4)
+  baseline       String?   // JSON snapshot at change time
+  current        String?   // JSON snapshot at latest evaluation
+  sourceFreshness String?  // JSON: freshness of each source at evaluation
+
+  // Outcome
+  status         String    @default("awaiting_data") // awaiting_data, too_early, improving, neutral, declining, inconclusive, successful, needs_review, rolled_back
+  confidence     Float     @default(0)
+  notes          String?
+
+  createdBy      String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([reviewAt])
+  @@index([deploymentId])
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

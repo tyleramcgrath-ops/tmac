@@ -73,8 +73,50 @@ export default function SchedulesPage() {
       const res = await fetch('/api/schedules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action, projectId, jobType }) })
       const json = await res.json()
       if (!res.ok) { setNote(json?.error ?? 'Action failed.'); return }
-      if (action === 'run_now') setNote(`Queued ${JOB_LABEL[jobType!] ?? jobType} — job ${json.jobId}.`)
       if (action === 'ensure_defaults') setNote(`Created ${json.ensured} default schedules.`)
+      load(projectId)
+    } catch { setNote('Network error.') } finally { setBusy(null) }
+  }
+
+  // Run Now — executes the real job through the worker and polls execution state.
+  const runNow = async (job: Job) => {
+    setBusy(job.jobType); setNote(`Running ${JOB_LABEL[job.jobType] ?? job.jobType}…`)
+    try {
+      const res = await fetch(`/api/schedules/${encodeURIComponent(job.id)}/run`, { method: 'POST' })
+      const json = await res.json()
+      if (!res.ok) { setNote(json?.error ?? 'Run failed.'); load(projectId); return }
+
+      const TERMINAL = ['completed', 'completed_with_warnings', 'blocked', 'failed', 'cancelled']
+      let status: string = json.status
+      let summary: string | null = json.resultSummary ?? null
+      let records: number | null = json.recordsProcessed ?? null
+      let durationMs: number | null = json.durationMs ?? null
+
+      // If it wasn't already terminal (another worker took it), poll the execution.
+      if (json.executionId && !TERMINAL.includes(status)) {
+        for (let i = 0; i < 20 && !TERMINAL.includes(status); i++) {
+          await new Promise((r) => setTimeout(r, 1500))
+          const er = await fetch(`/api/executions/${encodeURIComponent(json.executionId)}`)
+          if (!er.ok) break
+          const ej = await er.json()
+          status = ej.execution.status; summary = ej.execution.resultSummary; records = ej.execution.recordsProcessed; durationMs = ej.execution.durationMs
+        }
+      } else if (!json.executionId) {
+        // The cron grabbed it — poll the job's latest execution.
+        for (let i = 0; i < 20 && !TERMINAL.includes(status); i++) {
+          await new Promise((r) => setTimeout(r, 1500))
+          const er = await fetch(`/api/schedules/${encodeURIComponent(job.id)}/executions?limit=1`)
+          if (!er.ok) break
+          const ej = await er.json()
+          const latest = ej.executions?.[0]
+          if (latest) { status = latest.status; summary = latest.resultSummary; records = latest.recordsProcessed; durationMs = latest.durationMs }
+        }
+      }
+
+      const label = JOB_LABEL[job.jobType] ?? job.jobType
+      const dur = durationMs != null ? ` · ${(durationMs / 1000).toFixed(1)}s` : ''
+      const rec = records != null ? ` · ${records} records` : ''
+      setNote(`${label}: ${status.replace(/_/g, ' ')}${rec}${dur}${summary ? ` — ${summary}` : ''}`)
       load(projectId)
     } catch { setNote('Network error.') } finally { setBusy(null) }
   }
@@ -137,14 +179,14 @@ export default function SchedulesPage() {
                           </p>
                         </div>
                         <div className="flex shrink-0 items-center gap-1.5">
-                          <button onClick={() => act('run_now', j.jobType)} disabled={busy === j.jobType || j.status === 'running' || j.status === 'queued'} className="rf-btn-ghost inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium disabled:opacity-50">{busy === j.jobType ? <Loader2 className="h-3 w-3 animate-spin" /> : <Play className="h-3 w-3" />} Run now</button>
+                          <button onClick={() => runNow(j)} disabled={busy === j.jobType || j.status === 'running'} className="rf-btn-ghost inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium disabled:opacity-50">{busy === j.jobType ? <Loader2 className="h-3 w-3 animate-spin" /> : <Play className="h-3 w-3" />} Run now</button>
                           <button onClick={() => act(j.enabled ? 'pause' : 'resume', j.jobType)} className="rf-btn-ghost inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium">{j.enabled ? <><Pause className="h-3 w-3" /> Pause</> : <><RefreshCw className="h-3 w-3" /> Resume</>}</button>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <p className="text-center text-[11px] text-[var(--rf-faint)]">Run now creates a real queued job (duplicate-prevented) processed by the background worker — not a local spinner.</p>
+                <p className="text-center text-[11px] text-[var(--rf-faint)]">Run now executes the job through the real worker (atomic claim, execution history, retries) and reports the actual result — not a local spinner.</p>
               </>
             )}
           </div>
