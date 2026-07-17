@@ -1,26 +1,35 @@
-# RankForge RC1 — Known Limitations
+# RankForge — Known Limitations (updated at RC2)
 
-An honest, complete list of what RankForge does **not** do (or has not proven) as
-of RC1. Grouped by kind. Nothing here is hidden from the reader; this is the
-document a support team and a pilot customer should both have.
+An honest, complete list of what RankForge does **not** do (or has not proven).
+Grouped by kind. Nothing here is hidden; this is the document a support team and
+a pilot customer should both have. **RC2 status is noted inline.**
 
 ## Unproven against live third-party services (environment-blocked)
-- **Live WordPress writes.** The connect → deploy → read-back verify → rollback
-  path is proven only against an in-process WordPress test double. It has never
-  written to a real WordPress site. (RC1 BLOCKER for paid use — must be validated
-  on real infrastructure first.)
-- **Live Google OAuth + GSC/GA4 API.** The authorization-code exchange, token
-  refresh, and Search Console / Analytics queries are unit-tested with an
-  injected fake. The real handshake with Google has never run (sandbox egress is
-  restricted to GitHub + package registries). Goes live only when
-  `GOOGLE_CLIENT_ID`/`SECRET` are set and the app runs where Google is reachable.
+- **Live WordPress writes — RESOLVED at RC2.** The connect → deploy → read-back
+  verify → rollback path was validated against a **real running WordPress**
+  (core 7.1 on PHP + SQLite), through RankForge's real routes, with a real
+  Application Password — 8/8 (see `LIVE_WORDPRESS_VALIDATION.md`). Remaining
+  caveat: **AIOSEO-specific meta storage** was not validated live (the plugin is
+  egress-blocked); AIOSEO *auto-detection* was validated live and the storage
+  path is covered by the test double — verify on the first real AIOSEO customer.
+- **Live Google OAuth + GSC/GA4 API — still unproven.** The code exchange, token
+  refresh, and GSC/GA4 queries are unit-tested with an injected fake; the real
+  handshake with Google has never run (egress restricted). RC2 mitigates the
+  *dead-end* (see below) but does not prove live Google. Recommended pilot
+  posture: Atlas OFF (`NEXT_PUBLIC_RF_ENABLE_ATLAS` unset).
+- **Real email delivery — pluggable, not exercised.** Verification email uses a
+  pluggable mailer; without `MAIL_WEBHOOK_URL` it is **logged-only** (honestly
+  reported), so no real message is sent in this environment. Set the webhook to
+  enable delivery.
 
 ## Missing features (do not exist)
-- **Email verification** — signup creates a live, session-bearing account with no
-  email confirmation.
 - **Team invitations / member management UI** — roles and membership exist in the
   store and are enforced by routes, but there is no way to invite or manage
-  teammates through the product. Effectively single-user per org.
+  teammates through the product. Effectively single-user per org. (RC2: unchanged
+  — pilot uses one login per business.)
+- **Self-serve pilot admin UI** — RC2 added pilot fields (allow-list, org
+  expiration/status) and feedback collection, but there is **no admin dashboard**:
+  operators set `org.pilot` via a script/DB and read feedback via the API/store.
 - **Explicit organization creation** — an org is auto-created at signup; there is
   no create-/switch-org surface.
 - **Strategy screen** — no dedicated Strategy UI; strategy is the internal
@@ -40,10 +49,13 @@ document a support team and a pilot customer should both have.
   threats/opportunities-from-diffs are always empty.
 
 ## Operational / robustness limitations
-- **Rate limiting** covers only login/signup. Scan/crawl (outbound
-  amplification) and OAuth-start are uncapped.
-- **In-process rate limiter** — per-instance; auth limits weaken under horizontal
-  scaling (needs a shared Redis/Postgres store).
+- **Rate limiting — expanded at RC2.** Now covers signup, login, oauth-start,
+  scans, crawl, WordPress connect/deploy, recommendations, and operator execute.
+- **In-process rate limiter** — per-instance; limits weaken under horizontal
+  scaling (needs a shared Redis/Postgres store). Unchanged.
+- **Email verification is non-blocking** — accounts work before verifying (a
+  banner nudges). Deliberate for the guided pilot; tighten to blocking for
+  open self-serve.
 - **No query-level DB retry** — a Postgres connection loss surfaces as a 500 for
   in-flight requests. (The pool now survives a restart without crashing — RC1
   fix — and recovers on the next query, but individual requests fail during the
