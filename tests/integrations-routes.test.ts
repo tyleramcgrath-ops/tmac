@@ -49,11 +49,15 @@ describe('integrations status route', () => {
   it('lists both Google kinds as disconnected by default (no credential field)', async () => {
     const a = await makeUserWithProject('owner@x.com')
     const res = await integrationsGet(new Request('http://t/i', { headers: { cookie: a.cookie } }), a.ctx)
-    const { integrations } = (await res.json()) as { integrations: Record<string, unknown>[] }
+    const body = (await res.json()) as { integrations: Record<string, unknown>[]; configured: boolean }
+    const { integrations } = body
     expect(integrations.map((i) => i.kind).sort()).toEqual(['analytics', 'search-console'])
     expect(integrations.every((i) => i.status === 'disconnected')).toBe(true)
     // The encrypted credential must never appear in the projection.
     expect(JSON.stringify(integrations)).not.toContain('credentialEnc')
+    // Not configured here (no GOOGLE_CLIENT_ID) → the UI hides Connect Google
+    // entirely, so a customer never reaches a dead end (RC2 P2).
+    expect(body.configured).toBe(false)
   })
   it('a different tenant gets 404 (existence not disclosed)', async () => {
     const a = await makeUserWithProject('a@x.com')
@@ -88,6 +92,20 @@ describe('disconnect route', () => {
     const a = await makeUserWithProject('e@x.com')
     const res = await integrationsDelete(new Request('http://t/i?kind=search-console', { method: 'DELETE', headers: { cookie: a.cookie, origin: 'http://t' } }), a.ctx)
     expect(res.status).toBe(404)
+  })
+})
+
+describe('rate limiting (RC2 P5)', () => {
+  it('429s the scan endpoint after the per-IP budget is exceeded', async () => {
+    const a = await makeUserWithProject('rl@x.com')
+    const { POST: scans } = await import('../app/api/projects/[projectId]/scans/route')
+    // Budget is 60/min for 'scans'. Fire 61 with a stable client IP.
+    let last = 200
+    for (let i = 0; i < 61; i++) {
+      const r = new Request('http://t', { method: 'POST', headers: { 'Content-Type': 'application/json', cookie: a.cookie, 'x-forwarded-for': '9.9.9.9' }, body: JSON.stringify({ action: 'start' }) })
+      last = (await scans(r, a.ctx)).status
+    }
+    expect(last).toBe(429)
   })
 })
 

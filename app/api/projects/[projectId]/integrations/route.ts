@@ -5,6 +5,7 @@
 
 import { handled, requireProjectRole, requireUser, assertSameOrigin, audit, HttpError } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
+import { googleOAuthConfig } from '@/lib/foundation/env'
 import type { ExternalProviderKind, ProviderConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -43,7 +44,10 @@ export const GET = handled(async (request, { params }) => {
     const c = byKind.get(kind)
     return c ? publicView(c) : { kind, vendor: 'google' as const, status: 'disconnected' as const, detail: 'Not connected.', accountEmail: null, resourceId: null, scope: '', connectedAt: null, updatedAt: null }
   })
-  return Response.json({ integrations })
+  // `configured` = this deployment actually has Google OAuth credentials, so the
+  // "Connect Google" button is only ever shown when it can genuinely work — a
+  // customer never reaches a dead end (RC2 P2).
+  return Response.json({ integrations, configured: googleOAuthConfig() !== null })
 })
 
 export const PATCH = handled(async (request, { params }) => {

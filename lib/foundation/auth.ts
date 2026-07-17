@@ -9,6 +9,7 @@
 import { randomUUID } from 'crypto'
 import { createSessionToken, readSessionToken } from './crypto'
 import { getStore } from './store'
+import { clientKey, rateLimit } from './rate-limit'
 import type { Project, Role, User } from './types'
 
 export const SESSION_COOKIE = 'rf_session'
@@ -88,6 +89,14 @@ export function assertSameOrigin(request: Request): void {
   if (originHost !== host) {
     throw new HttpError(403, 'Cross-origin request rejected.')
   }
+}
+
+// Per-route rate limiting (RC2 P5). Throws 429 once `limit` requests from the
+// same client IP have been made inside `windowMs`. Keyed by route name so each
+// endpoint has its own budget. In-process (see rate-limit.ts scope note).
+export function enforceRateLimit(request: Request, name: string, limit: number, windowMs = 60_000): void {
+  const r = rateLimit(`${name}:${clientKey(request)}`, limit, windowMs, Date.now())
+  if (!r.ok) throw new HttpError(429, `Too many requests. Try again in ${r.retryAfterSec}s.`)
 }
 
 const ROLE_RANK: Record<Role, number> = { member: 1, admin: 2, owner: 3 }

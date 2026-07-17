@@ -7,7 +7,7 @@
 // than bouncing the user to a broken Google screen.
 
 import { randomUUID } from 'crypto'
-import { handled, requireProjectRole, requireUser, HttpError, assertSameOrigin } from '@/lib/foundation/auth'
+import { handled, requireProjectRole, requireUser, HttpError, assertSameOrigin, enforceRateLimit } from '@/lib/foundation/auth'
 import { googleOAuthConfig } from '@/lib/foundation/env'
 import { buildAuthUrl, redirectUriFrom, signState, type OAuthState } from '@/lib/foundation/oauth/google'
 import type { ExternalProviderKind } from '@/lib/foundation/types'
@@ -23,6 +23,7 @@ function kindsFromQuery(raw: string | null): ExternalProviderKind[] {
 
 export const GET = handled(async (request, { params }) => {
   assertSameOrigin(request)
+  enforceRateLimit(request, 'oauth-start', 20)
   const user = await requireUser(request)
   const { projectId } = await params
   await requireProjectRole(user, projectId, 'admin')

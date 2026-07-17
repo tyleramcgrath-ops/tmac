@@ -10,7 +10,7 @@
 // session expiry, and device change — they live in the store.
 
 import { randomUUID } from 'crypto'
-import { assertSameOrigin, audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { assertSameOrigin, audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
 import { isSafeFetchTarget } from '@/app/api/seo-scan/url-guard'
@@ -22,6 +22,7 @@ export const maxDuration = 60
 
 export const PUT = handled(async (request, { params }) => {
   assertSameOrigin(request)
+  enforceRateLimit(request, 'wp-connect', 20)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'admin')
@@ -93,6 +94,8 @@ export const GET = handled(async (request, { params }) => {
 })
 
 export const POST = handled(async (request, { params }) => {
+  assertSameOrigin(request)
+  enforceRateLimit(request, 'wp-deploy', 60)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'admin')

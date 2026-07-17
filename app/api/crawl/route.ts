@@ -21,6 +21,7 @@ import {
 } from '../seo-scan/analyze'
 import { assessPageValidity } from '../seo-scan/page-validity'
 import { isSafeFetchTarget } from '../seo-scan/url-guard'
+import { clientKey, rateLimit } from '@/lib/foundation/rate-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -67,6 +68,12 @@ interface PageResult {
 }
 
 export async function POST(request: Request) {
+  // Rate limit (RC2 P5): the crawl drives outbound fetches, so cap per client IP
+  // to prevent using the server as a traffic amplifier. Generous — a real scan
+  // makes many batched calls — but bounded.
+  const rl = rateLimit(`crawl:${clientKey(request)}`, 300, 60_000, Date.now())
+  if (!rl.ok) return Response.json({ error: `Rate limit reached — retry in ${rl.retryAfterSec}s.` }, { status: 429 })
+
   let body: Record<string, unknown>
   try {
     body = await request.json()

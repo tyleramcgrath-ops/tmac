@@ -9,7 +9,7 @@
 // guidance.
 
 import { useCallback, useEffect, useState } from 'react'
-import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
+import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ReportDTO, type GscReportDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
@@ -41,6 +41,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
   const [snapshot, setSnapshot] = useState<AtlasSnapshotDTO | null>(null)
   const [competitors, setCompetitors] = useState<CompetitorDTO[]>([])
   const [integrations, setIntegrations] = useState<IntegrationDTO[]>([])
+  const [googleConfigured, setGoogleConfigured] = useState(false)
   const [domain, setDomain] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -48,14 +49,15 @@ export function AtlasTab({ projectId }: { projectId: string }) {
 
   const load = useCallback(async () => {
     try {
-      const [{ snapshot }, { competitors }, { integrations }] = await Promise.all([
+      const [{ snapshot }, { competitors }, integ] = await Promise.all([
         api.getAtlas(projectId),
         api.listCompetitors(projectId),
         api.listIntegrations(projectId),
       ])
       setSnapshot(snapshot)
       setCompetitors(competitors)
-      setIntegrations(integrations)
+      setIntegrations(integ.integrations)
+      setGoogleConfigured(integ.configured)
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Could not load Mission Atlas.')
       setSnapshot(null)
@@ -160,26 +162,38 @@ export function AtlasTab({ projectId }: { projectId: string }) {
         </div>
       </div>
 
-      {/* External data sources — Connect Google (Phase H) */}
-      <div className="rf-card space-y-3 p-4">
-        <div className="flex items-center justify-between">
+      {/* External data sources — Connect Google (Phase H / RC2 P2).
+          Only shown when this deployment actually has Google OAuth configured,
+          so a customer never clicks "Connect Google" and hits a dead end. */}
+      {googleConfigured ? (
+        <div className="rf-card space-y-3 p-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-semibold text-white">External data sources</p>
+            <button onClick={connectGoogle} className="rf-btn-primary rounded-lg px-3 py-1.5 text-xs font-semibold">
+              Connect Google
+            </button>
+          </div>
+          {connectNotice && (
+            <p className={`rounded-lg px-3 py-2 text-xs ${connectNotice.ok ? 'bg-[var(--rf-green)]/10 text-[var(--rf-green)]' : 'bg-red-500/10 text-red-300'}`}>{connectNotice.text}</p>
+          )}
+          <div className="grid gap-2 sm:grid-cols-2">
+            {integrations.map((it) => (
+              <GoogleIntegrationCard key={it.kind} it={it} onDisconnect={() => disconnect(it.kind)} onSaveResource={(v) => saveResource(it.kind, v)} />
+            ))}
+          </div>
+          {/* Imported Google data (RC2 P2): rendered when observed, honest failure/unavailable otherwise. */}
+          <GscPanel o={snapshot.gsc} />
+          <Ga4Panel o={snapshot.analytics} />
+          <p className="text-[10px] text-[var(--rf-faint)]">
+            Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
+          </p>
+        </div>
+      ) : (
+        <div className="rf-card p-4">
           <p className="text-sm font-semibold text-white">External data sources</p>
-          <button onClick={connectGoogle} className="rf-btn-primary rounded-lg px-3 py-1.5 text-xs font-semibold">
-            Connect Google
-          </button>
+          <p className="mt-1 text-xs text-[var(--rf-muted)]">Google Search Console &amp; Analytics are not enabled on this workspace yet. Competitor tracking below works without them.</p>
         </div>
-        {connectNotice && (
-          <p className={`rounded-lg px-3 py-2 text-xs ${connectNotice.ok ? 'bg-[var(--rf-green)]/10 text-[var(--rf-green)]' : 'bg-red-500/10 text-red-300'}`}>{connectNotice.text}</p>
-        )}
-        <div className="grid gap-2 sm:grid-cols-2">
-          {integrations.map((it) => (
-            <GoogleIntegrationCard key={it.kind} it={it} onDisconnect={() => disconnect(it.kind)} onSaveResource={(v) => saveResource(it.kind, v)} />
-          ))}
-        </div>
-        <p className="text-[10px] text-[var(--rf-faint)]">
-          Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
-        </p>
-      </div>
+      )}
 
       {/* Competitors */}
       <div className="rf-card space-y-3 p-4">
@@ -227,6 +241,82 @@ export function AtlasTab({ projectId }: { projectId: string }) {
 const KIND_LABEL: Record<IntegrationDTO['kind'], string> = {
   'search-console': 'Search Console',
   analytics: 'Analytics (GA4)',
+}
+
+// Shared header for a Google data panel: grade badge + last-sync + failure note.
+function DataPanelHeader({ title, o }: { title: string; o: ObservationDTO<unknown> }) {
+  const synced = o.evidence.fetchedAt ? new Date(o.evidence.fetchedAt).toLocaleString() : null
+  return (
+    <div className="flex items-center justify-between">
+      <span className="text-xs font-semibold text-white">{title}</span>
+      <span className="flex items-center gap-2">
+        {synced && <span className="text-[10px] text-[var(--rf-faint)]">last sync {synced}</span>}
+        {o.evidence.freshness && <span className="text-[9px] uppercase text-[var(--rf-faint)]">{o.evidence.freshness}</span>}
+        <GradeBadge grade={o.evidence.grade} />
+      </span>
+    </div>
+  )
+}
+
+function GscPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
+  const rows = o.value?.rows ?? []
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <DataPanelHeader title="Search Console — top queries" o={o} />
+      {o.value === null ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{o.evidence.note ?? 'Unavailable.'}</p>
+      ) : rows.length === 0 ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">Connected — no query rows in the current window.</p>
+      ) : (
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full text-[11px]">
+            <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Query</th><th className="px-2 font-normal">Clicks</th><th className="px-2 font-normal">Impr.</th><th className="px-2 font-normal">CTR</th><th className="pl-2 font-normal">Pos.</th></tr></thead>
+            <tbody>
+              {rows.slice(0, 8).map((r, i) => (
+                <tr key={i} className="text-[var(--rf-muted)]">
+                  <td className="truncate pr-2 text-white">{r.query}</td>
+                  <td className="px-2">{r.clicks}</td>
+                  <td className="px-2">{r.impressions}</td>
+                  <td className="px-2">{(r.ctr * 100).toFixed(1)}%</td>
+                  <td className="pl-2">{r.position.toFixed(1)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Ga4Panel({ o }: { o: ObservationDTO<Ga4ReportDTO> }) {
+  const pages = o.value?.pages ?? []
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <DataPanelHeader title="Analytics — top pages" o={o} />
+      {o.value === null ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{o.evidence.note ?? 'Unavailable.'}</p>
+      ) : pages.length === 0 ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">Connected — no page rows in the current window.</p>
+      ) : (
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full text-[11px]">
+            <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Page</th><th className="px-2 font-normal">Sessions</th><th className="px-2 font-normal">Engaged</th><th className="pl-2 font-normal">Conv.</th></tr></thead>
+            <tbody>
+              {pages.slice(0, 8).map((r, i) => (
+                <tr key={i} className="text-[var(--rf-muted)]">
+                  <td className="truncate pr-2 text-white">{r.page}</td>
+                  <td className="px-2">{r.sessions}</td>
+                  <td className="px-2">{r.engagedSessions}</td>
+                  <td className="pl-2">{r.conversions}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
 }
 
 function GoogleIntegrationCard({ it, onDisconnect, onSaveResource }: { it: IntegrationDTO; onDisconnect: () => void; onSaveResource: (v: string) => void }) {

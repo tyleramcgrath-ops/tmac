@@ -13,7 +13,7 @@
 // derives evidence-backed recommendations from it.
 
 import { randomUUID } from 'crypto'
-import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { generateRecommendationsFromScan, persistScanRecommendations } from '@/lib/foundation/recommendations'
 import { coordinateProject } from '@/lib/foundation/agents/service'
 import { getStore } from '@/lib/foundation/store'
@@ -71,6 +71,7 @@ function finalize(scan: Scan, body: Record<string, unknown>, userId: string): Sc
 }
 
 export const POST = handled(async (request, { params }) => {
+  enforceRateLimit(request, 'scans', 60)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'member')

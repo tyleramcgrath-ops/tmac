@@ -1,4 +1,4 @@
-import { audit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { audit, enforceRateLimit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { coordinateProject } from '@/lib/foundation/agents/service'
 import type { RecommendationStatus } from '@/lib/foundation/types'
@@ -6,6 +6,7 @@ import type { RecommendationStatus } from '@/lib/foundation/types'
 export const runtime = 'nodejs'
 
 export const GET = handled(async (request, { params }) => {
+  enforceRateLimit(request, 'recs-read', 120)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'member')
@@ -38,6 +39,7 @@ const VALID_TRANSITIONS: Record<RecommendationStatus, RecommendationStatus[]> = 
 }
 
 export const PATCH = handled(async (request, { params }) => {
+  enforceRateLimit(request, 'recs-write', 120)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'member')

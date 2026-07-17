@@ -49,12 +49,17 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
   if (error) return <EmptyState title="Unavailable" detail={error} action={<Link href="/app/projects" className="rf-btn-ghost rounded-lg px-4 py-2 text-sm">Back to projects</Link>} />
   if (!project) return <Spinner label="Loading project…" />
 
+  // Tab order follows the real workflow (scan → review → connect → deploy).
+  // Atlas (external intelligence) is opt-in via NEXT_PUBLIC_RF_ENABLE_ATLAS so a
+  // guided pilot isn't shown a surface that's mostly "unavailable" or a
+  // Connect-Google dead end (RC2 P2). Hidden by default.
+  const atlasEnabled = process.env.NEXT_PUBLIC_RF_ENABLE_ATLAS === '1'
   const tabs: { id: Tab; label: string }[] = [
     { id: 'audit', label: 'Audit' },
     { id: 'recommendations', label: 'Recommendations' },
-    { id: 'operator', label: 'Operator' },
-    { id: 'atlas', label: 'Atlas' },
     { id: 'wordpress', label: 'WordPress' },
+    { id: 'operator', label: 'Operator' },
+    ...(atlasEnabled ? [{ id: 'atlas' as Tab, label: 'Atlas' }] : []),
     { id: 'history', label: 'History' },
   ]
 
@@ -84,7 +89,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
       {tab === 'audit' && <AuditTab project={project} scans={scans} onScanDone={load} />}
       {tab === 'recommendations' && <RecommendationsTab projectId={projectId} />}
       {tab === 'operator' && <OperatorTab projectId={projectId} />}
-      {tab === 'atlas' && <AtlasTab projectId={projectId} />}
+      {tab === 'atlas' && atlasEnabled && <AtlasTab projectId={projectId} />}
       {tab === 'wordpress' && <WordPressTab projectId={projectId} />}
       {tab === 'history' && <HistoryTab scans={scans} />}
     </div>

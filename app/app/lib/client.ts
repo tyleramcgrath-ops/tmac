@@ -232,7 +232,7 @@ export const api = {
 
   // external integrations (Phase H — Connect Google: GSC + GA4)
   listIntegrations: (projectId: string) =>
-    req<{ integrations: IntegrationDTO[] }>(`/api/projects/${projectId}/integrations`),
+    req<{ integrations: IntegrationDTO[]; configured: boolean }>(`/api/projects/${projectId}/integrations`),
   startGoogleConnect: (projectId: string, kind: 'search-console' | 'analytics' | 'all' = 'all') =>
     req<{ url: string }>(`/api/projects/${projectId}/integrations/google/start?kind=${kind}`),
   setIntegrationResource: (projectId: string, kind: 'search-console' | 'analytics', resourceId: string) =>
@@ -354,14 +354,21 @@ export interface MorningBriefingDTO {
   evidenceSummary: Record<EvidenceGradeDTO, number>
   confidence: number | 'unknown'
 }
+// Typed GSC / GA4 payloads so the Atlas tab can render imported Google data
+// (RC2 P2) rather than leaving it fetched-but-hidden.
+export interface GscRowDTO { query: string; page: string; clicks: number; impressions: number; ctr: number; position: number }
+export interface GscReportDTO { range: { from: string; to: string }; rows: GscRowDTO[] }
+export interface Ga4PageDTO { page: string; sessions: number; engagedSessions: number; conversions: number; revenue: number | null; keyEvents: number }
+export interface Ga4ReportDTO { range: { from: string; to: string }; currency: string | null; pages: Ga4PageDTO[] }
+
 export interface AtlasSnapshotDTO {
   generatedAt: string
   providers: ProviderStatusDTO[]
   competitors: { competitor: CompetitorDTO; overlap: OverlapDTO }[]
   aiVisibility: ObservationDTO<unknown[]>
   backlinks: ObservationDTO<unknown>
-  gsc: ObservationDTO<unknown>
-  analytics: ObservationDTO<unknown>
+  gsc: ObservationDTO<GscReportDTO>
+  analytics: ObservationDTO<Ga4ReportDTO>
   trends: ObservationDTO<unknown>
   changes: { category: string; subject: string; note: string; evidence: EvidenceDTO }[]
   briefing: MorningBriefingDTO

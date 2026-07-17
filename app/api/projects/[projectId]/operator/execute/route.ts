@@ -8,7 +8,7 @@
 //
 // Deploy requires the admin role.
 
-import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { assertSameOrigin, audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
 import { buildOperatorPreview, outcomeForDeployment, signalsForRecommendation } from '@/lib/foundation/operator/pipeline'
@@ -29,6 +29,8 @@ async function reopenOrAdvance(store: Awaited<ReturnType<typeof getStore>>, rec:
 }
 
 export const POST = handled(async (request, { params }) => {
+  assertSameOrigin(request)
+  enforceRateLimit(request, 'operator-execute', 30)
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'admin')
