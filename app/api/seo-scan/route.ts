@@ -21,6 +21,7 @@ import {
   type CategoryScore,
   type Signals,
 } from './analyze'
+import { assessPageValidity } from './page-validity'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -78,13 +79,18 @@ export async function POST(request: Request) {
   try {
     const fetched = await fetchHtml(url)
     const { html, finalUrl, status, via, proxyConfigured } = fetched
-    if (!html || status >= 400) {
-      const blocked = status === 403 || status === 401 || status === 429
+    // INTEGRITY GATE: also catches WAF/bot challenges served with status 200 —
+    // those bodies are interstitials, not the site, and must never be scored.
+    const validity = assessPageValidity(html, status)
+    if (!validity.ok) {
+      const blocked = status === 403 || status === 401 || status === 429 ||
+        validity.reason === 'waf_challenge' || validity.reason === 'proxy_denial'
       return Response.json(
         {
           error: blocked
-            ? 'This site blocks automated requests (returned 403). Sites behind Cloudflare/WAF bot protection can only be scanned through an allow-listed crawler — set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another page/domain.'
-            : `The site responded with status ${status || 'no content'}. Try a different page.`,
+            ? `This page could not be read: ${validity.detail ?? 'the site blocks automated requests.'} No score was generated — blocked pages are never analyzed. Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another page/domain.`
+            : `The site responded with ${validity.detail ?? `status ${status || 'no content'}`} Try a different page.`,
+          blockedReason: validity.reason,
           ...(debug ? { debug: { via, status, proxyConfigured } } : {}),
         },
         { status: 502 }
