@@ -3,6 +3,8 @@
 // in doubt, require explicit human approval rather than proceed.
 
 import type { GeneratedFix } from './fixgen'
+import { ruleIdOf } from './fixgen'
+import { isDangerousRule } from '../reco/rules'
 import type { Recommendation } from '../types'
 
 export type RiskLevel = 'low' | 'medium' | 'high' | 'blocked'
@@ -20,15 +22,11 @@ export interface SafetyAssessment {
   blockReason?: string
 }
 
-// Categorically dangerous change types — blocked from any automated path; they
-// require an explicit, single, human-approved action (never bulk/auto).
-const DANGEROUS_RULES = new Set([
-  'robots-directive',
-  'noindex',
-  'canonical', // changing canonicals can deindex; needs human eyes
-  'redirect',
-  'sitemap',
-])
+// Fix kinds that are categorically risky to auto-apply irrespective of which
+// rule produced them (a canonical rewrite can deindex). Rule-level danger is
+// declared in the typed RULE_REGISTRY (isDangerousRule) — this set covers the
+// deployable-artifact dimension. Both are typed; neither parses display text.
+const DANGEROUS_FIX_KINDS = new Set<GeneratedFix['kind']>(['canonical'])
 
 export function assessSafety(rec: Recommendation, fix: GeneratedFix): SafetyAssessment {
   const affectedPages = rec.evidence.affectedUrls.length
@@ -46,8 +44,10 @@ export function assessSafety(rec: Recommendation, fix: GeneratedFix): SafetyAsse
     warnings.push('Changes visible SERP-facing copy; verify wording matches brand voice.')
   }
 
-  // Categorically dangerous → block automated execution.
-  const dangerous = DANGEROUS_RULES.has(fix.kind) || /robots|noindex|canonical|redirect|sitemap/i.test(rec.title)
+  // Categorically dangerous → block automated execution. Decided from TYPED
+  // rule identity + fix kind (Phase D.6 P2) — never a title regex, which
+  // silently failed the moment a rule was reworded.
+  const dangerous = isDangerousRule(ruleIdOf(rec)) || DANGEROUS_FIX_KINDS.has(fix.kind)
   if (dangerous) {
     return {
       risk: 'blocked',

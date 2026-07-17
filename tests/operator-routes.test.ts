@@ -76,9 +76,11 @@ async function setup() {
   }
   await store.createScan(scan)
   const rec: Recommendation = {
-    id: randomUUID(), projectId: project.id, scanId: scan.id, title: 'Missing <title> tag', category: 'content',
+    id: randomUUID(), projectId: project.id, scanId: scan.id,
+    ruleId: 'missing-title', ruleVersion: 1, ruleCategory: 'content', ruleSeverity: 'critical', businessContext: 'money-page',
+    title: 'Missing <title> tag', category: 'content',
     severity: 'critical', status: 'accepted', reasoning: 'Title missing', confidence: 90, confidenceBasis: 'x',
-    evidence: { affectedUrls: ['https://wp.test/roof-repair'], facts: ['Rule "missing-title", certainty 1'] },
+    evidence: { affectedUrls: ['https://wp.test/roof-repair'], facts: [] },
     expectedImpact: { category: 'content', size: 'high', note: 'CTR' }, risk: { level: 'low', note: '' },
     createdAt: new Date().toISOString(), history: [],
   }

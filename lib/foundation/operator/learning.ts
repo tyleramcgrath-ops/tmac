@@ -5,7 +5,7 @@
 // the durable history already stored on recommendations and deployments.
 
 import type { Recommendation, WpDeployment } from '../types'
-import { ruleIdFromRecommendation } from './fixgen'
+import { ruleIdOf } from './fixgen'
 
 export interface RuleStats {
   ruleId: string
@@ -26,7 +26,7 @@ export interface RuleStats {
 }
 
 function recStatusRule(rec: Recommendation): string {
-  return ruleIdFromRecommendation(rec)
+  return ruleIdOf(rec)
 }
 
 export function aggregateLearning(recs: Recommendation[], deployments: WpDeployment[]): RuleStats[] {
@@ -56,7 +56,7 @@ export function aggregateLearning(recs: Recommendation[], deployments: WpDeploym
   // Deployment-derived signals (verification failures, rollbacks).
   for (const dep of deployments) {
     const ruleId = dep.recommendationId
-      ? recStatusRule(recs.find((r) => r.id === dep.recommendationId) ?? ({ title: '', evidence: { facts: [] } } as unknown as Recommendation))
+      ? recStatusRule(recs.find((r) => r.id === dep.recommendationId) ?? ({ ruleId: 'unknown' } as unknown as Recommendation))
       : 'unknown'
     const s = get(ruleId)
     if (dep.status === 'verify_failed') s.verifyFailed++

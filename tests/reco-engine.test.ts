@@ -63,6 +63,34 @@ describe('false-positive elimination (Phase B FP-1/2/3)', () => {
   })
 })
 
+describe('first-class typed rule identity (Phase D.6 P2)', () => {
+  it('stamps typed rule fields and keeps identity OUT of display text', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf([{ url: 'https://x.com/product/z', title: '', titleLength: 0, schemaTypes: ['Product'], https: true, indexable: true, metaDescriptionLength: 120 }])
+    )
+    const missingTitle = recommendations.find((r) => r.ruleId === 'missing-title')
+    expect(missingTitle).toBeTruthy()
+    // Typed identity is present and correctly shaped.
+    expect(missingTitle!.ruleId).toBe('missing-title')
+    expect(missingTitle!.ruleVersion).toBe(1)
+    expect(missingTitle!.ruleCategory).toBe('content')
+    expect(['critical', 'warning', 'info']).toContain(missingTitle!.ruleSeverity)
+    expect(typeof missingTitle!.businessContext).toBe('string')
+    // No recommendation leaks a parseable "Rule ..." string into evidence.
+    for (const r of recommendations) {
+      expect(r.evidence.facts.join(' ')).not.toMatch(/Rule "/)
+    }
+  })
+
+  it('every recommendation carries a ruleId registered in RULE_REGISTRY', () => {
+    const { recommendations } = generateRecommendationsV2(scanOf(GITHUB_PAGES as unknown as unknown[]))
+    for (const r of recommendations) {
+      expect(r.ruleId.length).toBeGreaterThan(0)
+      expect(r.ruleVersion).toBeGreaterThanOrEqual(1)
+    }
+  })
+})
+
 describe('false-negative restoration (Phase B FN-1): cross-page duplicates', () => {
   it('flags duplicate meta descriptions across pages', () => {
     const { recommendations } = generateRecommendationsV2(

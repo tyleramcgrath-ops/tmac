@@ -90,6 +90,18 @@ export interface Recommendation {
   id: string
   projectId: string
   scanId: string
+  // ── First-class rule identity (Phase D.6 P2) ──────────────────────────────
+  // Typed, never parsed from display text. The operator, learning loop,
+  // recommendation engine, and verification engine all consume THESE fields;
+  // `title`/`reasoning` are presentation-only. ruleVersion lets a rule evolve
+  // (change its logic/thresholds) while keeping a stable, comparable identity.
+  ruleId: string
+  ruleVersion: number
+  ruleCategory: string
+  ruleSeverity: 'critical' | 'warning' | 'info'
+  // The business weighting bucket this page fell into ('money-page' |
+  // 'standard' | 'utility' | 'site'); typed, drives priority/impact framing.
+  businessContext: string
   title: string
   category: string
   severity: 'critical' | 'warning' | 'info'

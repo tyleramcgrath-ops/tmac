@@ -8,7 +8,7 @@ import { randomUUID } from 'crypto'
 import type { Recommendation, RecommendationStatus, Scan } from '../types'
 import { classifyPage, type PageType } from './classify'
 import { deriveBusinessContext, pageBusinessWeight, type ProjectContext } from './business'
-import { runPageRules, type Category, type Finding } from './rules'
+import { runPageRules, ruleVersion, type Category, type Finding } from './rules'
 import { runCrossPageRules, type CrossPageFinding } from './cross-page'
 import { toPageSignals, type PageSignals } from './signals'
 
@@ -51,6 +51,15 @@ function priorityScore(f: Finding, businessWeight: number, confidence: number): 
     RISK_DAMP[f.risk.level] *
     100
   )
+}
+
+// Typed business-context bucket (Phase D.6 P2). Derived from the page's
+// business weight so downstream consumers read a stable label, not a number.
+function businessContextOf(businessWeight: number, pageType: string): string {
+  if (pageType === 'site') return 'site'
+  if (businessWeight >= 0.9) return 'money-page'
+  if (businessWeight <= 0.4) return 'utility'
+  return 'standard'
 }
 
 // Map the finding's importance/impact to the legacy severity enum for the UI.
@@ -155,13 +164,21 @@ export function generateRecommendationsV2(
   ) => {
     const conf = confidence2(f, classificationConf)
     const pscore = priorityScore(f, businessWeight, conf.value)
+    const severity = severityOf(f, businessWeight)
     recs.push({
       id: randomUUID(),
       projectId: scan.projectId,
       scanId: scan.id,
+      // Typed rule identity (P2) — the authoritative fields every downstream
+      // consumer reads. No display string is ever parsed to recover these.
+      ruleId: f.ruleId,
+      ruleVersion: ruleVersion(f.ruleId),
+      ruleCategory: f.category,
+      ruleSeverity: severity,
+      businessContext: businessContextOf(businessWeight, pageType),
       title: f.title,
       category: f.category,
-      severity: severityOf(f, businessWeight),
+      severity,
       status: 'open' as RecommendationStatus,
       pageType,
       priorityScore: Math.round(pscore * 10) / 10,
@@ -170,11 +187,12 @@ export function generateRecommendationsV2(
       needsHumanReview: conf.value < 50 || f.ruleCertainty < 0.65,
       reasoning:
         `${f.explanation.why} ${f.explanation.whyThisPage} Affects ${urls.length} ${pageType} page(s).`,
+      // Presentation-only facts. Rule identity lives in the typed fields above,
+      // never in this text (Phase D.6 P2 — no parseable "Rule ..." string here).
       evidence: {
         affectedUrls: urls.slice(0, 25),
         facts: [
           `Detected on ${urls.length} page(s) classified "${pageType}"`,
-          `Rule "${f.ruleId}", certainty ${f.ruleCertainty}`,
           ...f.supportingElements,
         ],
         supportingElements: f.supportingElements,

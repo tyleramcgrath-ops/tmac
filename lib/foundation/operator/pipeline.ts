@@ -7,7 +7,7 @@
 import type { Recommendation, WpDeployment } from '../types'
 import type { PageSignals } from '../reco/signals'
 import { toPageSignals } from '../reco/signals'
-import { generateFix, ruleIdFromRecommendation, type GeneratedFix } from './fixgen'
+import { generateFix, ruleIdOf, type GeneratedFix } from './fixgen'
 import { charDiff, type Preview } from './diff'
 import { assessSafety, type SafetyAssessment } from './safety'
 import { evaluatePolicy, type AutomationPolicy, type ApprovalDecision } from './policy'
@@ -37,7 +37,7 @@ export function buildOperatorPreview(
   signals: PageSignals,
   policy: AutomationPolicy
 ): OperatorPreview {
-  const ruleId = ruleIdFromRecommendation(rec)
+  const ruleId = ruleIdOf(rec)
   const fix = generateFix(ruleId, signals)
   const safety = assessSafety(rec, fix)
   const decision = evaluatePolicy(policy, fix, safety)

@@ -3,7 +3,7 @@
 // substrate, and executive metrics.
 
 import { describe, expect, it } from 'vitest'
-import { generateFix, ruleIdFromRecommendation } from '../lib/foundation/operator/fixgen'
+import { generateFix, ruleIdOf } from '../lib/foundation/operator/fixgen'
 import { charDiff } from '../lib/foundation/operator/diff'
 import { assessSafety } from '../lib/foundation/operator/safety'
 import { evaluatePolicy, EXAMPLE_POLICY, DEFAULT_POLICY } from '../lib/foundation/operator/policy'
@@ -14,9 +14,12 @@ import type { Recommendation, WpDeployment } from '../lib/foundation/types'
 
 function rec(partial: Partial<Recommendation>): Recommendation {
   return {
-    id: 'r1', projectId: 'p', scanId: 's', title: 'Missing <title> tag', category: 'content',
+    id: 'r1', projectId: 'p', scanId: 's',
+    ruleId: 'missing-title', ruleVersion: 1, ruleCategory: 'content', ruleSeverity: 'critical',
+    businessContext: 'money-page',
+    title: 'Missing <title> tag', category: 'content',
     severity: 'critical', status: 'open', reasoning: 'why', confidence: 90,
-    confidenceBasis: 'x', evidence: { affectedUrls: ['https://x.com/product/z'], facts: ['Rule "missing-title", certainty 1'] },
+    confidenceBasis: 'x', evidence: { affectedUrls: ['https://x.com/product/z'], facts: [] },
     expectedImpact: { category: 'content', size: 'high', note: 'CTR/rank' }, risk: { level: 'low', note: '' },
     createdAt: '2026-07-17T00:00:00Z', history: [], ...partial,
   }
@@ -48,8 +51,10 @@ describe('fix generation (§2): produces concrete changes', () => {
     const fix = generateFix('alt-text', { url: 'https://x.com/a', imagesMissingAlt: 5 })
     expect(fix.actionable).toBe(false)
   })
-  it('maps a recommendation back to its ruleId', () => {
-    expect(ruleIdFromRecommendation(rec({}))).toBe('missing-title')
+  it('reads a recommendation ruleId from its typed field (no parsing)', () => {
+    expect(ruleIdOf(rec({}))).toBe('missing-title')
+    expect(ruleIdOf(rec({ ruleId: 'schema-missing' }))).toBe('schema-missing')
+    expect(ruleIdOf({})).toBe('unknown')
   })
 })
 
@@ -66,12 +71,20 @@ describe('safe diff (§3)', () => {
 })
 
 describe('safety engine (§7): blocks dangerous actions', () => {
-  it('blocks robots/canonical/redirect classes', () => {
-    const r = rec({ title: 'Fix canonical tag', risk: { level: 'medium', note: '' } })
-    const fix = generateFix('canonical', { url: 'https://x.com/a' })
+  it('blocks a dangerous rule from its typed ruleId (not its title)', () => {
+    // Title is deliberately innocuous — blocking must come from the typed rule
+    // identity, proving the former title-regex decoy is gone.
+    const r = rec({ ruleId: 'noindex', title: 'Improve this page', ruleCategory: 'indexability', risk: { level: 'medium', note: '' } })
+    const fix = generateFix('noindex', { url: 'https://x.com/a' })
     const s = assessSafety(r, fix)
     expect(s.blocked).toBe(true)
     expect(s.risk).toBe('blocked')
+  })
+  it('blocks a dangerous fix kind (canonical) regardless of rule', () => {
+    const r = rec({ ruleId: 'missing-title', title: 'anything' })
+    const fix = { actionable: false, kind: 'canonical' as const, proposedValue: '', currentValue: '', note: '' }
+    const s = assessSafety(r, fix)
+    expect(s.blocked).toBe(true)
   })
   it('scores a title change as low/medium and never blocks', () => {
     const r = rec({ title: 'Missing <title> tag' })
@@ -97,13 +110,13 @@ describe('approval policy (§4)', () => {
     expect(evaluatePolicy(EXAMPLE_POLICY, fix, s).decision).toBe('auto-approved')
   })
   it('never auto-approves a blocked action', () => {
-    const r = rec({ title: 'Change robots directive' })
-    const fix = generateFix('robots-directive', { url: 'https://x.com' })
+    const r = rec({ ruleId: 'noindex', title: 'Change robots directive' })
+    const fix = generateFix('noindex', { url: 'https://x.com' })
     const s = assessSafety(r, fix)
     expect(evaluatePolicy(EXAMPLE_POLICY, fix, s).decision).toBe('blocked')
   })
   it('requires approval when a change touches more pages than the cap', () => {
-    const r = rec({ risk: { level: 'low', note: '' }, evidence: { affectedUrls: Array.from({ length: 9 }, (_, i) => `https://x.com/p${i}`), facts: ['Rule "missing-title", certainty 1'] } })
+    const r = rec({ risk: { level: 'low', note: '' }, evidence: { affectedUrls: Array.from({ length: 9 }, (_, i) => `https://x.com/p${i}`), facts: [] } })
     const fix = generateFix('missing-title', { url: 'https://x.com/p0' })
     const s = assessSafety(r, fix)
     expect(evaluatePolicy(EXAMPLE_POLICY, fix, s).decision).toBe('requires-approval')

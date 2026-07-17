@@ -309,6 +309,45 @@ const ruleAltText: Rule = ({ s }) => {
   }
 }
 
+// ── Rule registry (Phase D.6 P2) ─────────────────────────────────────────────
+// The single, typed source of rule metadata. `version` lets a rule's logic
+// evolve while its identity stays stable and comparable across scans;
+// `dangerous` drives safety blocking WITHOUT parsing any display string (the
+// former title-regex). Every ruleId the engine can emit — page and cross-page —
+// must appear here so the operator/safety layers never fall back to guessing.
+export interface RuleMeta {
+  version: number
+  // Categorically risky to auto-apply (indexation/canonical/robots class):
+  // blocked from any automated/bulk path regardless of policy.
+  dangerous: boolean
+}
+
+export const RULE_REGISTRY: Record<string, RuleMeta> = {
+  // page rules
+  noindex: { version: 1, dangerous: true }, // toggling indexability can deindex
+  'mixed-content': { version: 1, dangerous: false },
+  'missing-title': { version: 1, dangerous: false },
+  'title-length': { version: 1, dangerous: false },
+  'missing-meta': { version: 1, dangerous: false },
+  'multiple-h1': { version: 1, dangerous: false },
+  'schema-missing': { version: 1, dangerous: false },
+  breadcrumb: { version: 1, dangerous: false },
+  faq: { version: 1, dangerous: false },
+  'alt-text': { version: 1, dangerous: false },
+  // cross-page rules
+  'dup-title': { version: 1, dangerous: false },
+  'dup-meta': { version: 1, dangerous: false },
+  'orphan-pages': { version: 1, dangerous: false },
+}
+
+export function ruleVersion(ruleId: string): number {
+  return RULE_REGISTRY[ruleId]?.version ?? 1
+}
+
+export function isDangerousRule(ruleId: string): boolean {
+  return RULE_REGISTRY[ruleId]?.dangerous ?? false
+}
+
 export const PAGE_RULES: Rule[] = [
   ruleNoindex,
   ruleMixedContent,

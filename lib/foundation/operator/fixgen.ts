@@ -114,16 +114,10 @@ export function generateFix(ruleId: string, s: PageSignals): GeneratedFix {
   }
 }
 
-// Map a recommendation (title + evidence facts) to its ruleId.
-export function ruleIdFromRecommendation(rec: { title: string; evidence: { facts: string[] } }): string {
-  const m = rec.evidence.facts.join(' ').match(/Rule "([^"]+)"/)
-  if (m) return m[1]
-  // Fallback: infer from title.
-  const t = rec.title.toLowerCase()
-  if (t.includes('missing <title>')) return 'missing-title'
-  if (t.includes('title is')) return 'title-length'
-  if (t.includes('meta description') && t.includes('missing')) return 'missing-meta'
-  if (t.includes('structured data') || t.includes('schema')) return 'schema-missing'
-  if (t.includes('alt text')) return 'alt-text'
-  return 'unknown'
+// Read a recommendation's ruleId from its first-class typed field (Phase D.6
+// P2). No string parsing: identity is data, not prose. Legacy rows missing the
+// field are backfilled by migration 002; an empty value degrades to 'unknown'
+// (for which no fix generator exists), never a regex guess.
+export function ruleIdOf(rec: { ruleId?: string }): string {
+  return rec.ruleId && rec.ruleId.length > 0 ? rec.ruleId : 'unknown'
 }
