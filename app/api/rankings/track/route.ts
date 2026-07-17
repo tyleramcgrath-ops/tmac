@@ -7,33 +7,12 @@
 // never overwrite a previously observed position with a guess.
 
 import { getCurrentSession } from '@/lib/session'
-import {
-  interpretSerpResponse,
-  unavailableResult,
-  summarizeRankChecks,
-  type RankCheckResult,
-  type SerpResponse,
-} from '@/lib/rankings/track'
+import { summarizeRankChecks, type RankCheckResult } from '@/lib/rankings/track'
+import { getRankProvider, getProviderStatus } from '@/lib/rankings/provider'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
-
-async function serpCheck(keyword: string, domain: string, key: string): Promise<RankCheckResult> {
-  try {
-    const endpoint = new URL('https://serpapi.com/search.json')
-    endpoint.searchParams.set('engine', 'google')
-    endpoint.searchParams.set('q', keyword)
-    endpoint.searchParams.set('num', '100')
-    endpoint.searchParams.set('api_key', key)
-    const res = await fetch(endpoint)
-    if (!res.ok) return unavailableResult(keyword, `SERP request failed (HTTP ${res.status})`)
-    const data = (await res.json()) as SerpResponse
-    return interpretSerpResponse(keyword, domain, data)
-  } catch (err) {
-    return unavailableResult(keyword, err instanceof Error ? err.message : 'SERP request error')
-  }
-}
 
 export async function POST(request: Request) {
   let prisma: any
@@ -100,14 +79,14 @@ export async function POST(request: Request) {
     return Response.json({ error: 'No keywords to track. Run an audit to discover keywords, or pass a keyword list.' }, { status: 400 })
   }
 
-  const key = process.env.SERPAPI_KEY
+  const provider = getRankProvider()
   const device = body.device === 'mobile' ? 'mobile' : 'desktop'
+  const country = body.country ?? null
+  const language = body.language ?? null
   const results: RankCheckResult[] = []
 
   for (const rec of keywordRecords) {
-    const result = key
-      ? await serpCheck(rec.keyword, project.domain, key)
-      : unavailableResult(rec.keyword, 'No live SERP source configured (set SERPAPI_KEY to enable RankForge live rank checks).')
+    const result = await provider.check({ keyword: rec.keyword, domain: project.domain, device, country, language })
     results.push(result)
 
     // Always record the check — including unavailable ones, so the reason is auditable.
@@ -149,11 +128,13 @@ export async function POST(request: Request) {
     }
   }
 
+  const providerStatus = getProviderStatus()
   return Response.json({
     ok: true,
     projectId,
     checkedAt: new Date().toISOString(),
-    liveSourceConfigured: !!key,
+    liveSourceConfigured: providerStatus.configured,
+    provider: providerStatus,
     summary: summarizeRankChecks(results),
     results: results.map((r) => ({
       keyword: r.keyword,
