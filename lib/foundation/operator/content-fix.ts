@@ -13,8 +13,13 @@ export type ContentTransform =
   | { type: 'https-upgrade'; hosts: string[] }
   | { type: 'prepend-h1'; text: string }
   | { type: 'append-internal-links'; links: { url: string; anchor: string }[] }
+  | { type: 'set-jsonld'; jsonLd: string }
 
 const RELATED_MARKER = 'rankforge:related'
+const SCHEMA_MARKER = 'rankforge:schema'
+// Matches a previously-inserted managed schema block so re-applying replaces it
+// in place (idempotent) rather than stacking duplicates.
+const SCHEMA_BLOCK_RE = /<!-- rankforge:schema -->[\s\S]*?<!-- \/rankforge:schema -->/
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -58,6 +63,19 @@ export function applyContentTransform(content: string, t: ContentTransform): Tra
       const block = `\n<!-- ${RELATED_MARKER} -->\n<p><strong>Related pages</strong></p>\n<ul>\n${items}\n</ul>`
       return { content: content + block, changed: true, summary: `Added ${links.length} internal link(s).` }
     }
+    case 'set-jsonld': {
+      // Upsert a managed JSON-LD block into the post body. The JSON must be
+      // valid; an invalid or empty payload is a no-op (never ship broken markup).
+      const json = t.jsonLd.trim()
+      if (!json) return { content, changed: false, summary: 'No structured data provided; no change.' }
+      try { JSON.parse(json) } catch { return { content, changed: false, summary: 'Structured data is not valid JSON; skipped.' } }
+      const block = `<!-- ${SCHEMA_MARKER} -->\n<script type="application/ld+json">\n${json}\n</script>\n<!-- /${SCHEMA_MARKER} -->`
+      if (SCHEMA_BLOCK_RE.test(content)) {
+        const replaced = content.replace(SCHEMA_BLOCK_RE, block)
+        return { content: replaced, changed: replaced !== content, summary: replaced !== content ? 'Updated structured data (JSON-LD).' : 'Structured data already up to date; no change.' }
+      }
+      return { content: `${content}\n${block}`, changed: true, summary: 'Added structured data (JSON-LD).' }
+    }
   }
 }
 
@@ -71,5 +89,11 @@ export function verifyContentTransform(content: string, t: ContentTransform): bo
       return /<h1[\s>]/i.test(content)
     case 'append-internal-links':
       return content.includes(RELATED_MARKER)
+    case 'set-jsonld':
+      // Confirm BOTH the marker and a real ld+json <script> survived the write.
+      // WordPress strips <script> from post content unless the user has the
+      // `unfiltered_html` capability, so checking the marker alone would false-
+      // pass; requiring the script tag makes a stripped write verify-fail honestly.
+      return content.includes(SCHEMA_MARKER) && /<script[^>]*type=["']application\/ld\+json["']/i.test(content)
   }
 }

@@ -120,27 +120,58 @@ async function readPost(
   return snapshotFrom(raw, conn.aioseo)
 }
 
-// Browse the connected site's posts/pages so the user can pick one to optimize
-// with one click (restores the old "list & optimize" flow, now credentialed &
-// SSRF-guarded server-side). Returns lightweight rows only.
-export interface WpItem { id: number; link: string; title: string; status: string }
+// Browse the connected site's posts/pages so the user can pick one (or many) to
+// optimize (restores the old "list & optimize" flow, now credentialed &
+// SSRF-guarded server-side). Returns lightweight rows only, each tagged with its
+// type so a combined posts+pages list can be bulk-optimized. Paginates through
+// the REST API (WordPress caps per_page at 100) up to a safety ceiling so sites
+// with hundreds of items list fully instead of being silently truncated at 50.
+export interface WpItem { id: number; type: 'posts' | 'pages'; link: string; title: string; status: string }
+
+const LIST_MAX_PAGES = 10 // ceiling: up to 10 × 100 = 1000 items per type
+
 export async function listWpItems(
   conn: WpConnection,
   postType: 'posts' | 'pages',
   search = ''
 ): Promise<WpItem[]> {
-  const q = new URLSearchParams({ per_page: '50', context: 'edit', orderby: 'modified', order: 'desc', _fields: 'id,link,title,status' })
-  if (search.trim()) q.set('search', search.trim())
-  const data = (await wpFetch(conn, `/${postType}?${q.toString()}`)) as unknown
-  const arr = Array.isArray(data) ? (data as Record<string, unknown>[]) : []
-  return arr.map((p) => ({
-    id: Number(p.id),
-    link: String(p.link ?? ''),
-    title: (p.title as { raw?: string; rendered?: string } | undefined)?.raw
-      ?? (p.title as { rendered?: string } | undefined)?.rendered
-      ?? '(untitled)',
-    status: String(p.status ?? ''),
-  }))
+  const out: WpItem[] = []
+  for (let page = 1; page <= LIST_MAX_PAGES; page++) {
+    const q = new URLSearchParams({ per_page: '100', page: String(page), context: 'edit', orderby: 'modified', order: 'desc', _fields: 'id,link,title,status' })
+    if (search.trim()) q.set('search', search.trim())
+    let arr: Record<string, unknown>[]
+    try {
+      const data = (await wpFetch(conn, `/${postType}?${q.toString()}`)) as unknown
+      arr = Array.isArray(data) ? (data as Record<string, unknown>[]) : []
+    } catch {
+      // WordPress returns 400 (rest_post_invalid_page_number) when paging past
+      // the last page — that's the natural end of the list, not an error.
+      break
+    }
+    for (const p of arr) {
+      out.push({
+        id: Number(p.id),
+        type: postType,
+        link: String(p.link ?? ''),
+        title: (p.title as { raw?: string; rendered?: string } | undefined)?.raw
+          ?? (p.title as { rendered?: string } | undefined)?.rendered
+          ?? '(untitled)',
+        status: String(p.status ?? ''),
+      })
+    }
+    if (arr.length < 100) break // last page reached
+  }
+  return out
+}
+
+// Combined listing: every page AND post on the connected site, so the UI can
+// show one list and bulk-optimize across both types.
+export async function listAllWpItems(conn: WpConnection, search = ''): Promise<WpItem[]> {
+  const [pages, posts] = await Promise.all([
+    listWpItems(conn, 'pages', search),
+    listWpItems(conn, 'posts', search),
+  ])
+  return [...pages, ...posts]
 }
 
 // Fetch one item's current SEO fields + content so the optimizer can show the

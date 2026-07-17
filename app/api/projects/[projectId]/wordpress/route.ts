@@ -14,7 +14,7 @@ import { assertSameOrigin, audit, enforceRateLimit, handled, HttpError, requireP
 import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
 import { isSafeFetchTarget } from '@/app/api/seo-scan/url-guard'
-import { executeWpDeployment, getWpItem, listWpItems, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
+import { executeWpDeployment, getWpItem, listAllWpItems, listWpItems, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
 import type { WpConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -105,10 +105,16 @@ export const POST = handled(async (request, { params }) => {
   const connection = await store.getWpConnection(projectId)
   if (!connection) throw new HttpError(400, 'Connect WordPress for this project first.')
 
-  // Browse the connected site so the user can one-click optimize any page/post.
+  // Browse the connected site so the user can one-click (or bulk) optimize any
+  // page/post. 'all' returns every page AND post so both can be listed together.
   if (body.action === 'list') {
+    const search = String(body.search ?? '')
+    if (body.postType === 'all') {
+      const items = await listAllWpItems(connection, search)
+      return Response.json({ items })
+    }
     const postType = body.postType === 'pages' ? ('pages' as const) : ('posts' as const)
-    const items = await listWpItems(connection, postType, String(body.search ?? ''))
+    const items = await listWpItems(connection, postType, search)
     return Response.json({ items })
   }
 
@@ -136,10 +142,13 @@ export const POST = handled(async (request, { params }) => {
     const title = body.title === undefined ? undefined : String(body.title).slice(0, 300)
     const metaDescription =
       body.metaDescription === undefined ? undefined : String(body.metaDescription).slice(0, 500)
+    // Optional structured data (JSON-LD): deployed as a managed, reversible block
+    // in the post body via the verified content-transform path.
+    const jsonLd = body.jsonLd === undefined ? undefined : String(body.jsonLd).slice(0, 20000)
     const reason = String(body.reason ?? '').slice(0, 1000)
     if (!Number.isInteger(postId) || postId <= 0) throw new HttpError(400, 'postId required.')
-    if (title === undefined && metaDescription === undefined) {
-      throw new HttpError(400, 'Nothing to deploy — provide title and/or metaDescription.')
+    if (title === undefined && metaDescription === undefined && jsonLd === undefined) {
+      throw new HttpError(400, 'Nothing to deploy — provide a title, meta description, and/or structured data.')
     }
     if (!reason) throw new HttpError(400, 'A reason is required for every deployment.')
 
@@ -149,7 +158,11 @@ export const POST = handled(async (request, { params }) => {
       connection,
       postId,
       postType,
-      changes: { title, metaDescription },
+      changes: {
+        title,
+        metaDescription,
+        contentTransform: jsonLd ? { type: 'set-jsonld', jsonLd } : undefined,
+      },
       approvedBy: user.id,
       reason,
       recommendationId,

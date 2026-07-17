@@ -258,9 +258,10 @@ export const api = {
       `/api/projects/${projectId}/wordpress`,
       { method: 'POST', body: JSON.stringify({ action: 'resolve', url }) }
     ),
-  // Browse & one-click optimize (restored classic flow).
-  listWordpressItems: (projectId: string, postType: 'posts' | 'pages') =>
-    req<{ items: { id: number; link: string; title: string; status: string }[] }>(
+  // Browse & one-click / bulk optimize (restored classic flow). 'all' returns
+  // every page AND post so both can be listed and bulk-optimized together.
+  listWordpressItems: (projectId: string, postType: 'posts' | 'pages' | 'all') =>
+    req<{ items: { id: number; type: 'posts' | 'pages'; link: string; title: string; status: string }[] }>(
       `/api/projects/${projectId}/wordpress`,
       { method: 'POST', body: JSON.stringify({ action: 'list', postType }) }
     ),
@@ -270,7 +271,7 @@ export const api = {
       { method: 'POST', body: JSON.stringify({ action: 'get', postType, postId }) }
     ),
   forgeRewrite: (input: { url: string; currentTitle: string; currentMeta: string; excerpt: string }) =>
-    req<{ seoTitle?: string; metaDescription?: string; jsonLd?: string; rationale?: string }>(
+    req<{ seoTitle?: string; metaDescription?: string; jsonLd?: string; schemaType?: string; rationale?: string }>(
       '/api/forge/rewrite',
       { method: 'POST', body: JSON.stringify(input) }
     ),
@@ -281,7 +282,7 @@ export const api = {
     ),
   deployWordpress: (
     projectId: string,
-    input: { postId: number; postType: string; title?: string; metaDescription?: string; reason: string; recommendationId?: string }
+    input: { postId: number; postType: string; title?: string; metaDescription?: string; jsonLd?: string; reason: string; recommendationId?: string }
   ) =>
     req<{ deployment: DeploymentDTO }>(`/api/projects/${projectId}/wordpress`, {
       method: 'POST',
