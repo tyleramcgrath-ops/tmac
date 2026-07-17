@@ -3,14 +3,14 @@
 import { Suspense, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { api, ApiError } from '@/app/app/lib/client'
-import { Field, inputClass } from '@/app/app/lib/ui'
+import { api, ApiError } from '@/app/lib/client'
+import { Field, inputClass } from '@/app/lib/ui'
 import '@/app/rankforge/rankforge.css'
 
 function LoginForm() {
   const router = useRouter()
   const params = useSearchParams()
-  const next = params.get('next') || '/app/projects'
+  const next = params.get('next') || '/projects'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

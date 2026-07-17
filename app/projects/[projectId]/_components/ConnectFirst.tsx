@@ -85,11 +85,11 @@ export function ConnectFirst({ project, scans, onReload, onEnter }: {
 
       <header className="sticky top-0 z-30 border-b border-[var(--rf-card-line)] bg-[rgba(5,7,14,0.8)] px-6 py-3 backdrop-blur-xl">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
-          <Link href="/app/projects" className="flex items-center gap-2.5">
+          <Link href="/projects" className="flex items-center gap-2.5">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)]"><Zap className="h-4 w-4 text-white" strokeWidth={2.5} /></span>
             <span className="text-[15px] font-semibold text-white">RankForge<span className="text-[var(--rf-blue-bright)]"> AI</span></span>
           </Link>
-          <Link href="/app/projects" className="rf-mono text-xs text-[var(--rf-muted)] hover:text-white">← All projects</Link>
+          <Link href="/projects" className="rf-mono text-xs text-[var(--rf-muted)] hover:text-white">← All projects</Link>
         </div>
       </header>
 

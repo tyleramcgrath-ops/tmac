@@ -1,17 +1,8 @@
-import type { Metadata } from 'next'
-import { RankForgeSite } from './rankforge/components/rankforge-site'
+import { redirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'RankForge AI — SEO Audit & AI-Assisted Optimization Command Center',
-  description:
-    'Crawl up to 300 pages and get technical, content, schema, and AI-readiness scores with a prioritized fix list. Check keyword rankings, compare against the top 10, deploy approved fixes to WordPress, and work with Forge — your AI SEO assistant.',
-  openGraph: {
-    title: 'RankForge AI — Audit Your Site. Fix What Matters. Deploy With Confidence.',
-    description:
-      'Full-site SEO audits, prioritized fix lists, review-and-approve WordPress deploys, and an AI assistant grounded in your crawl — one command center that consolidates your core SEO workflow.',
-  },
-}
-
+// The site entry is the product: forward to the authenticated projects area,
+// which sends signed-out visitors to the login screen. The marketing site
+// remains available at /rankforge.
 export default function HomePage() {
-  return <RankForgeSite />
+  redirect('/projects')
 }

@@ -158,7 +158,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
       {/* ── top bar ── */}
       <header className="sticky top-0 z-30 border-b border-[var(--rf-card-line)] bg-[rgba(5,7,14,0.8)] backdrop-blur-xl">
         <div className="flex flex-col gap-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:px-6">
-          <Link href="/app/projects" className="flex items-center gap-2.5">
+          <Link href="/projects" className="flex items-center gap-2.5">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)] shadow-[0_8px_24px_-8px_rgba(47,107,255,0.9)]"><Zap className="h-4 w-4 text-white" strokeWidth={2.5} /></span>
             <span className="text-[15px] font-semibold text-white">RankForge<span className="text-[var(--rf-blue-bright)]"> AI</span><span className="ml-2 hidden rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)] sm:inline">Command Center</span></span>
           </Link>
@@ -185,7 +185,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
         <nav className="hidden w-56 shrink-0 border-r border-[var(--rf-card-line)] p-3 md:block">
           <div className="mb-3">
             <p className="px-3 py-1.5 rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">Workspace</p>
-            <Link href="/app/projects" className="mb-0.5 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm text-[var(--rf-muted)] transition-colors hover:bg-white/[0.03] hover:text-white"><FolderOpen className="h-4 w-4" /> My Projects</Link>
+            <Link href="/projects" className="mb-0.5 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm text-[var(--rf-muted)] transition-colors hover:bg-white/[0.03] hover:text-white"><FolderOpen className="h-4 w-4" /> My Projects</Link>
           </div>
           {NAV_GROUPS.map((grp) => (
             <div key={grp.label} className="mb-3">
@@ -231,7 +231,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
             {section === 'history' && (
               <div className="space-y-6">
                 <HistoryTab scans={scans} />
-                <div className="flex justify-end"><DangerZone projectId={project.id} onDeleted={() => router.replace('/app/projects')} /></div>
+                <div className="flex justify-end"><DangerZone projectId={project.id} onDeleted={() => router.replace('/projects')} /></div>
               </div>
             )}
           </main>

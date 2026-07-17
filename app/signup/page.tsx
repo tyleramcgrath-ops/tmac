@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { api, ApiError } from '@/app/app/lib/client'
-import { Field, inputClass } from '@/app/app/lib/ui'
+import { api, ApiError } from '@/app/lib/client'
+import { Field, inputClass } from '@/app/lib/ui'
 import '@/app/rankforge/rankforge.css'
 
 export default function SignupPage() {
@@ -27,7 +27,7 @@ export default function SignupPage() {
     setLoading(true)
     try {
       await api.signup(email, password, name)
-      router.replace('/app/projects')
+      router.replace('/projects')
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Something went wrong. Try again.')
       setLoading(false)

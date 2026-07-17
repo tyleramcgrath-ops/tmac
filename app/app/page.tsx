@@ -5,5 +5,5 @@ import { redirect } from 'next/navigation'
 // deployments) lives server-side — never in localStorage. /app forwards into
 // the projects list, which opens each project's Command Center dashboard.
 export default function AppIndex() {
-  redirect('/app/projects')
+  redirect('/projects')
 }
