@@ -63,7 +63,18 @@ function counselFor(scenario: PreviewScenario, question: string): Counsel {
       sub: `Built from ${scenario.pagesChecked} page${scenario.pagesChecked === 1 ? '' : 's'} checked. Ask me to check again for the rest.`,
     }
   }
-  return { headline: scenario.briefing.headline, sub: scenario.briefing.subline }
+  if (/traffic|speed|fast|slow|rank|seo|search|visit/.test(q)) {
+    return {
+      headline: "I don't have that measured yet",
+      sub: 'My counsel today only covers what I can verify: your opportunity, what needs your approval, and how well I understand your business. Ask me about one of those.',
+    }
+  }
+  // An honest miss, not a silent substitute — Compass never lets an
+  // unrecognized question pass as if it were answered.
+  return {
+    headline: "I'm not sure I follow that one",
+    sub: "Ask me about your opportunity, what's waiting on approval, or how well I understand your business — I'll tell you plainly when I don't know.",
+  }
 }
 
 export function CompassConsole({
