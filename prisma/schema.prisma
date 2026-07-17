@@ -422,6 +422,10 @@ model ScheduledJob {
   @@index([status])
   @@index([nextRunAt])
   @@index([lockExpiresAt])
+  // Composite: the worker's claim query (processBatch) filters on status plus
+  // a due nextRunAt on every cron tick and every Run Now — this is the hottest
+  // read path in the scheduling system.
+  @@index([status, nextRunAt])
 }
 
 // A separate, immutable record for every job run. Never overwritten — the
@@ -469,6 +473,9 @@ model JobExecution {
   @@index([status])
   @@index([startedAt])
   @@index([idempotencyKey])
+  // Composite: "history for this job, most recent first" (the executions
+  // list + Run Now polling) filters on scheduledJobId and sorts by startedAt.
+  @@index([scheduledJobId, startedAt])
 }
 
 // A persisted measurement window: after a change/deployment, we watch defined
@@ -515,6 +522,9 @@ model MeasurementWindow {
   @@index([status])
   @@index([reviewAt])
   @@index([deploymentId])
+  // Composite: dashboard "measuring outcomes" / "recent wins" list a project's
+  // windows most-recently-updated first.
+  @@index([projectId, updatedAt])
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

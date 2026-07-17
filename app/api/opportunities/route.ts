@@ -32,21 +32,17 @@ export async function GET(request: Request) {
   })
 
   const now = new Date()
-  const projectMeta = new Map<string, { name: string; domain: string }>()
-  let all: (FusedOpportunity & { projectName?: string; domain?: string })[] = []
 
-  for (const p of projects) {
-    projectMeta.set(p.id, { name: p.name, domain: p.domain })
-
-    // Latest audit pages.
+  // Each project's fusion is independent — gather them concurrently instead
+  // of one sequential round trip at a time (measurable at portfolio scale;
+  // bounded by the DB pool, not by an artificial serial wait).
+  const perProject = await Promise.all(projects.map(async (p: any) => {
     const pageRows = p.audits[0]
       ? await prisma.page.findMany({ where: { auditId: p.audits[0].id }, select: PAGE_SELECT })
       : []
     const pages = mapPageRows(pageRows)
     const keywords = mapKeywordRows(p.keywords)
 
-    // GSC/GA4 (connected only when an OAuthCredential + rows exist), fused,
-    // and the worst-source freshness that feeds the confidence penalty.
     const { fusion, worst } = await gatherProjectFusion({
       prisma, projectId: p.id, domain: p.domain, pages, keywords,
       crawlLastSuccessAt: p.audits[0]?.startedAt ?? null, projectUpdatedAt: p.updatedAt, now,
@@ -56,9 +52,10 @@ export async function GET(request: Request) {
       projectId: p.id, pages: fusion.pages, keywords: fusion.keywords,
       wordpressConnected: !!p.wpSiteUrl, worstFreshness: worst,
     })
-    all = all.concat(fused.map((o) => ({ ...o, projectName: p.name, domain: p.domain })))
-  }
+    return fused.map((o) => ({ ...o, projectName: p.name, domain: p.domain }))
+  }))
 
+  let all: (FusedOpportunity & { projectName?: string; domain?: string })[] = perProject.flat()
   all.sort((a, b) => b.priorityScore - a.priorityScore)
   const filtered = typeFilter ? all.filter((o) => o.type === typeFilter) : all
 
