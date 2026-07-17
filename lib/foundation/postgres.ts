@@ -61,9 +61,10 @@ export class PostgresFoundationStore implements FoundationStore {
   async createOrg(org: Organization, ownerId: string) {
     await this.pool.query('INSERT INTO rf_orgs (id, data) VALUES ($1,$2)', [org.id, org])
     const member: OrgMember = { orgId: org.id, userId: ownerId, role: 'owner', createdAt: org.createdAt }
-    await this.pool.query('INSERT INTO rf_members (org_id, user_id, data) VALUES ($1,$2,$3)', [
+    await this.pool.query('INSERT INTO rf_members (org_id, user_id, role, data) VALUES ($1,$2,$3,$4)', [
       org.id,
       ownerId,
+      member.role,
       member,
     ])
   }
@@ -89,16 +90,17 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async addMember(member: OrgMember) {
     await this.pool.query(
-      `INSERT INTO rf_members (org_id, user_id, data) VALUES ($1,$2,$3)
-       ON CONFLICT (org_id, user_id) DO UPDATE SET data=$3`,
-      [member.orgId, member.userId, member]
+      `INSERT INTO rf_members (org_id, user_id, role, data) VALUES ($1,$2,$3,$4)
+       ON CONFLICT (org_id, user_id) DO UPDATE SET role=$3, data=$4`,
+      [member.orgId, member.userId, member.role, member]
     )
   }
 
   async createProject(project: Project) {
-    await this.pool.query('INSERT INTO rf_projects (id, org_id, data) VALUES ($1,$2,$3)', [
+    await this.pool.query('INSERT INTO rf_projects (id, org_id, domain, data) VALUES ($1,$2,$3,$4)', [
       project.id,
       project.orgId,
+      project.domain,
       project,
     ])
   }
@@ -107,7 +109,7 @@ export class PostgresFoundationStore implements FoundationStore {
     return r[0] ?? null
   }
   async updateProject(project: Project) {
-    await this.pool.query('UPDATE rf_projects SET data=$2 WHERE id=$1', [project.id, project])
+    await this.pool.query('UPDATE rf_projects SET domain=$2, data=$3 WHERE id=$1', [project.id, project.domain, project])
   }
   async deleteProject(id: string) {
     await this.pool.query('DELETE FROM rf_projects WHERE id=$1', [id])
@@ -153,7 +155,7 @@ export class PostgresFoundationStore implements FoundationStore {
     return r[0] ?? null
   }
   async updateRecommendation(rec: Recommendation) {
-    await this.pool.query('UPDATE rf_recommendations SET data=$2 WHERE id=$1', [rec.id, rec])
+    await this.pool.query('UPDATE rf_recommendations SET status=$2, data=$3 WHERE id=$1', [rec.id, rec.status, rec])
   }
   async listRecommendations(projectId: string) {
     return this.rows<Recommendation>(
@@ -177,8 +179,8 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async createWpDeployment(dep: WpDeployment) {
     await this.pool.query(
-      'INSERT INTO rf_wp_deployments (id, project_id, created_at, data) VALUES ($1,$2,$3,$4)',
-      [dep.id, dep.projectId, dep.createdAt, dep]
+      'INSERT INTO rf_wp_deployments (id, project_id, status, created_at, data) VALUES ($1,$2,$3,$4,$5)',
+      [dep.id, dep.projectId, dep.status, dep.createdAt, dep]
     )
   }
   async getWpDeployment(id: string) {
@@ -186,7 +188,7 @@ export class PostgresFoundationStore implements FoundationStore {
     return r[0] ?? null
   }
   async updateWpDeployment(dep: WpDeployment) {
-    await this.pool.query('UPDATE rf_wp_deployments SET data=$2 WHERE id=$1', [dep.id, dep])
+    await this.pool.query('UPDATE rf_wp_deployments SET status=$2, data=$3 WHERE id=$1', [dep.id, dep.status, dep])
   }
   async listWpDeployments(projectId: string) {
     return this.rows<WpDeployment>(
