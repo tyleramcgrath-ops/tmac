@@ -5,6 +5,7 @@
 
 import { getPrismaClient } from '@/lib/db'
 import { getCurrentSession } from '@/lib/session'
+import { ensureDefaultSchedules } from '@/lib/scheduling/bootstrap'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -45,6 +46,14 @@ export async function POST(request: Request) {
     await prisma.event.create({
       data: { organizationId, projectId: project.id, type: 'project', action: 'created' },
     }).catch(() => {})
+
+    // Every project gets its automation initialized the moment it exists — a
+    // brand-new user shouldn't have to separately visit /app/schedules before
+    // /app/today and /app/projects/[id] reflect real state instead of
+    // "not configured".
+    await ensureDefaultSchedules({ prisma, organizationId, projectId: project.id, createdBy: session.userId }).catch((err) => {
+      console.error('[projects/resolve] Failed to ensure default schedules:', err instanceof Error ? err.message : err)
+    })
 
     return Response.json({ success: true, project, created: true })
   } catch (err) {

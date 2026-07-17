@@ -5,16 +5,11 @@
 
 import { getCurrentSession } from '@/lib/session'
 import { DEFAULT_FREQUENCY, computeNextRun, idempotencyKey, type JobType, type Frequency } from '@/lib/scheduling/schedule'
+import { ensureDefaultSchedules, ALL_JOB_TYPES } from '@/lib/scheduling/bootstrap'
 import { classifyFreshness, type FreshnessSource } from '@/lib/freshness/policy'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
-
-const ALL_JOB_TYPES: JobType[] = [
-  'crawl', 'priority_rankings', 'full_rankings', 'gsc_sync', 'ga4_sync',
-  'fusion', 'portfolio_priority', 'daily_mission', 'morning_briefing',
-  'opportunities', 'deployment_verification', 'weekly_summary',
-]
 
 // Map a job type to the freshness source it feeds (most share the name).
 const JOB_TO_SOURCE: Partial<Record<JobType, FreshnessSource>> = {
@@ -101,19 +96,8 @@ export async function POST(request: Request) {
 
   // ── ensure default schedules exist for the project ──
   if (action === 'ensure_defaults') {
-    const created: string[] = []
-    for (const jobType of ALL_JOB_TYPES) {
-      const frequency = DEFAULT_FREQUENCY[jobType]
-      const nextRunAt = computeNextRun({ frequency, from: now, preferredHour: 6 })
-      const res = await prisma.scheduledJob.upsert({
-        where: { projectId_jobType: { projectId, jobType } },
-        create: { organizationId: session.organizationId, projectId, jobType, frequency, nextRunAt, status: 'scheduled', createdBy: session.userId },
-        update: {}, // don't clobber an existing schedule
-        select: { id: true },
-      })
-      created.push(res.id)
-    }
-    return Response.json({ ok: true, ensured: created.length })
+    const ensured = await ensureDefaultSchedules({ prisma, organizationId: session.organizationId, projectId, createdBy: session.userId, now })
+    return Response.json({ ok: true, ensured })
   }
 
   const jobType = body.jobType as JobType

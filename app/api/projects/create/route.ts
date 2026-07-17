@@ -1,5 +1,6 @@
 import { getPrismaClient } from '@/lib/db'
 import { getCurrentSession } from '@/lib/session'
+import { ensureDefaultSchedules } from '@/lib/scheduling/bootstrap'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -82,6 +83,11 @@ export async function POST(request: Request) {
         type: 'project',
         action: 'created',
       },
+    })
+
+    // Initialize automation immediately — no separate manual step required.
+    await ensureDefaultSchedules({ prisma, organizationId, projectId: project.id, createdBy: session.userId }).catch((err) => {
+      console.error('[projects/create] Failed to ensure default schedules:', err instanceof Error ? err.message : err)
     })
 
     return Response.json({
