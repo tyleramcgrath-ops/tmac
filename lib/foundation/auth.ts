@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto'
 import { createSessionToken, readSessionToken } from './crypto'
 import { getStore } from './store'
 import { clientKey, rateLimit } from './rate-limit'
+import { EnvError } from './env'
 import type { Project, Role, User } from './types'
 
 export const SESSION_COOKIE = 'rf_session'
@@ -160,6 +161,12 @@ export function handled(
         return Response.json({ error: err.message }, { status: err.status })
       }
       const message = err instanceof Error ? err.message : 'Unexpected error.'
+      // Configuration errors (missing DATABASE_URL / APP_SECRET in production)
+      // are safe to surface and actionable — don't bury them as a generic 500.
+      // They contain no secrets, only the name of the missing env var.
+      if (err instanceof EnvError || /\bAPP_SECRET\b|\bDATABASE_URL\b/.test(message)) {
+        return Response.json({ error: `Server not configured — ${message}` }, { status: 503 })
+      }
       const status = message === 'email_taken' ? 409 : 500
       return Response.json(
         { error: status === 409 ? 'An account with this email already exists.' : 'Unexpected error.' },
