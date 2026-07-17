@@ -1,9 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import {
   Loader2, AlertTriangle, TrendingUp, Zap, ArrowLeft, Target, Clock,
-  ShieldAlert, Sparkles, Hourglass, Ban, CheckCircle2,
+  ShieldAlert, Sparkles, Hourglass, Ban, CheckCircle2, Activity, Trophy, Gauge,
 } from 'lucide-react'
 
 type PortfolioStatus = 'critical' | 'needs_attention' | 'opportunity' | 'improving' | 'stable' | 'waiting_for_data' | 'blocked' | 'no_action_needed'
@@ -12,6 +12,10 @@ type AvailableTime = '15m' | '30m' | '1h' | '2h' | 'half_day' | 'full_day'
 interface Briefing { projectCount: number; needingAttention: number; critical: number; improving: number; waitingForData: number; stable: number; opportunities: number }
 type Mission = { projectId: string; projectName: string; domain: string; status: PortfolioStatus; headline: string; whyThisFirst: string; recommendedAction: string; reasons: string[]; missingData: string[] } | null
 interface BucketItem { projectId: string; projectName: string; domain: string; status: PortfolioStatus; headline: string; action: string }
+interface Incident { id: string; kind: string; scope: string; severity: 'critical' | 'warning' | 'info'; title: string; detail?: string; occurrences: number; sources: string[]; projectName?: string | null }
+interface AttentionJob { id: string; projectId: string; jobType: string; status: string; failureClass: string | null; failureReason: string | null; retryable: boolean; needsUser: boolean; needsConfig: boolean; projectName?: string | null }
+interface Measuring { id: string; projectId: string; page: string | null; keyword: string | null; changeType: string; status: string; confidence: number; reviewAt: string | null; notes: string | null; projectName?: string | null }
+interface Win { id: string; projectId: string; page: string | null; keyword: string | null; changeType: string; confidence: number; at: string; notes: string | null; projectName?: string | null }
 interface TodayResponse {
   ok: boolean
   generatedAt: string
@@ -19,6 +23,22 @@ interface TodayResponse {
   mission: Mission
   buckets: Record<'do_first' | 'quick_wins' | 'strategic' | 'risks' | 'waiting' | 'blocked', BucketItem[]>
   availableTime: AvailableTime
+  scheduleHealth?: { total: number; running: number; failed: number; retrying: number; blocked: number; paused: number; healthy: number; score: number }
+  dataProblems?: Incident[]
+  jobsRequiringAttention?: AttentionJob[]
+  measuringResults?: Measuring[]
+  winsSinceYesterday?: Win[]
+}
+
+const SEV_COLOR: Record<string, string> = { critical: 'var(--rf-red)', warning: 'var(--rf-amber)', info: 'var(--rf-faint)' }
+const JOB_LABEL: Record<string, string> = {
+  crawl: 'Site crawl', priority_rankings: 'Priority ranks', full_rankings: 'Full ranks', gsc_sync: 'GSC sync', ga4_sync: 'GA4 sync',
+  fusion: 'Data fusion', portfolio_priority: 'Portfolio priority', daily_mission: 'Daily mission', morning_briefing: 'Morning briefing',
+  opportunities: 'Opportunities', deployment_verification: 'Deploy verification', weekly_summary: 'Weekly summary',
+}
+const MEASURE_COLOR: Record<string, string> = {
+  awaiting_data: 'var(--rf-faint)', too_early: 'var(--rf-faint)', improving: 'var(--rf-green)', neutral: 'var(--rf-muted)',
+  declining: 'var(--rf-red)', inconclusive: 'var(--rf-amber)', needs_review: 'var(--rf-amber)', successful: 'var(--rf-green)',
 }
 
 const STATUS_META: Record<PortfolioStatus, { label: string; color: string; bg: string }> = {
@@ -162,10 +182,102 @@ export default function TodayPage() {
               })}
             </div>
 
+            {/* ── Data Problems Blocking Decisions ── */}
+            {(data.dataProblems?.length ?? 0) > 0 && (
+              <Section icon={ShieldAlert} color="var(--rf-red)" title="Data problems blocking decisions" count={data.dataProblems!.length}>
+                <div className="divide-y divide-[var(--rf-card-line)]">
+                  {data.dataProblems!.map((p) => (
+                    <div key={p.id} className="px-4 py-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: SEV_COLOR[p.severity] }} />
+                        <span className="text-sm font-medium text-white">{p.title}</span>
+                        {p.projectName && <span className="text-[11px] text-[var(--rf-faint)]">{p.projectName}</span>}
+                        {p.occurrences > 1 && <span className="rounded-full bg-white/[0.05] px-1.5 py-0.5 text-[10px] text-[var(--rf-muted)]">seen {p.occurrences}× · 1 incident</span>}
+                      </div>
+                      {p.detail && <p className="mt-1 pl-3.5 text-xs text-[var(--rf-muted)]">{p.detail}</p>}
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* ── Jobs Requiring Attention ── */}
+            {(data.jobsRequiringAttention?.length ?? 0) > 0 && (
+              <Section icon={Activity} color="var(--rf-amber)" title="Jobs requiring attention" count={data.jobsRequiringAttention!.length}>
+                <div className="divide-y divide-[var(--rf-card-line)]">
+                  {data.jobsRequiringAttention!.map((j) => (
+                    <div key={j.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-sm font-medium text-white">{JOB_LABEL[j.jobType] ?? j.jobType}</span>
+                          {j.projectName && <span className="text-[11px] text-[var(--rf-faint)]">{j.projectName}</span>}
+                          <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" style={{ color: j.status === 'failed' ? 'var(--rf-red)' : 'var(--rf-amber)', background: 'rgba(255,255,255,0.05)' }}>{j.status.replace(/_/g, ' ')}</span>
+                        </div>
+                        {j.failureReason && <p className="mt-1 text-xs text-[var(--rf-muted)]">{j.failureReason}</p>}
+                      </div>
+                      <span className="shrink-0 text-[11px]" style={{ color: j.needsConfig ? 'var(--rf-cyan)' : j.needsUser ? 'var(--rf-amber)' : 'var(--rf-green)' }}>{j.needsConfig ? 'Needs setup' : j.needsUser ? 'Needs you' : 'Auto-retrying'}</span>
+                    </div>
+                  ))}
+                </div>
+                <a href="/app/schedules" className="block border-t border-[var(--rf-card-line)] px-4 py-2 text-center text-[11px] text-[var(--rf-blue-bright)] hover:text-white">Manage schedules →</a>
+              </Section>
+            )}
+
+            {/* ── Measuring Results ── */}
+            {(data.measuringResults?.length ?? 0) > 0 && (
+              <Section icon={Gauge} color="var(--rf-blue-bright)" title="Measuring results" count={data.measuringResults!.length}>
+                <div className="divide-y divide-[var(--rf-card-line)]">
+                  {data.measuringResults!.slice(0, 8).map((m) => (
+                    <div key={m.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="truncate text-sm font-medium text-white">{m.keyword ?? m.page ?? m.changeType}</span>
+                          {m.projectName && <span className="text-[11px] text-[var(--rf-faint)]">{m.projectName}</span>}
+                        </div>
+                        <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{m.changeType.replace(/_/g, ' ')}{m.reviewAt ? ` · review ${new Date(m.reviewAt).toLocaleDateString()}` : ''}</p>
+                      </div>
+                      <span className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase" style={{ color: MEASURE_COLOR[m.status] ?? 'var(--rf-muted)', background: 'rgba(255,255,255,0.05)' }}>{m.status.replace(/_/g, ' ')}</span>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* ── Wins Since Yesterday (measured/verified only) ── */}
+            {(data.winsSinceYesterday?.length ?? 0) > 0 && (
+              <Section icon={Trophy} color="var(--rf-green)" title="Wins since yesterday" count={data.winsSinceYesterday!.length}>
+                <div className="divide-y divide-[var(--rf-card-line)]">
+                  {data.winsSinceYesterday!.map((w) => (
+                    <div key={w.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
+                      <div className="min-w-0">
+                        <span className="truncate text-sm font-medium text-white">{w.keyword ?? w.page ?? w.changeType}</span>
+                        {w.projectName && <span className="ml-2 text-[11px] text-[var(--rf-faint)]">{w.projectName}</span>}
+                        {w.notes && <p className="mt-0.5 text-xs text-[var(--rf-muted)]">{w.notes}</p>}
+                      </div>
+                      <span className="shrink-0 text-[11px] text-[var(--rf-green)]">verified · {Math.round(w.confidence * 100)}% conf</span>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
             <p className="text-center text-[11px] text-[var(--rf-faint)]">Generated {new Date(data.generatedAt).toLocaleString()} · adjust your available time above to reshape the plan.</p>
           </div>
         )}
       </main>
+    </div>
+  )
+}
+
+function Section({ icon: Icon, color, title, count, children }: { icon: typeof Target; color: string; title: string; count: number; children: ReactNode }) {
+  return (
+    <div className="rf-card overflow-hidden">
+      <div className="flex items-center gap-2 border-b border-[var(--rf-card-line)] px-4 py-2.5">
+        <Icon className="h-4 w-4" style={{ color }} />
+        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">{title}</span>
+        <span className="rf-mono text-[11px] text-[var(--rf-faint)]">{count}</span>
+      </div>
+      {children}
     </div>
   )
 }
