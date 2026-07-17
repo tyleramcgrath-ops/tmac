@@ -22,7 +22,6 @@ export const runtime = 'nodejs'
 
 interface PageLike {
   overall?: number
-  fixes?: { severity: string }[]
 }
 
 function emptyScan(projectId: string, userId: string): Scan {
@@ -46,8 +45,6 @@ function finalize(scan: Scan, body: Record<string, unknown>, userId: string): Sc
   const pages = Array.isArray(body.pages) ? body.pages : []
   const blocked = Array.isArray(body.blocked) ? body.blocked : []
   const typed = pages as PageLike[]
-  const severity = (sev: string) =>
-    typed.reduce((n, p) => n + (p.fixes ?? []).filter((f) => f.severity === sev).length, 0)
   const siteScore = Math.round(typed.reduce((n, p) => n + (p.overall ?? 0), 0) / Math.max(1, typed.length))
   return {
     ...scan,
@@ -60,9 +57,12 @@ function finalize(scan: Scan, body: Record<string, unknown>, userId: string): Sc
       urlsDiscovered: Number(body.discovered ?? pages.length),
       blockedCount: blocked.length,
       siteScore,
-      critical: severity('critical'),
-      warning: severity('warning'),
-      info: severity('info'),
+      // Severity counts are filled from the recommendation engine below — the
+      // SINGLE issue-evaluation source (Phase D.6 P3) — so the audit headline
+      // can never disagree with the recommendations list. Placeholder here.
+      critical: 0,
+      warning: 0,
+      info: 0,
     },
     pages,
     blocked,
@@ -101,22 +101,34 @@ export const POST = handled(async (request, { params }) => {
   if (pages.length > 1000) throw new HttpError(413, 'Scan payload too large.')
 
   let scan: Scan
+  let isUpdate = false
   if (body.scanId) {
     const existing = await store.getScan(String(body.scanId))
     if (!existing || existing.projectId !== projectId) throw new HttpError(404, 'Scan not found.')
     scan = finalize(existing, body, user.id)
-    await store.updateScan(scan)
+    isUpdate = true
   } else {
     scan = finalize(emptyScan(projectId, user.id), body, user.id)
-    await store.createScan(scan)
   }
 
-  // V2 engine: page-type-aware, business-aware, with a self-evaluation.
+  // V2 engine: page-type-aware, business-aware, with a self-evaluation. This is
+  // the SINGLE issue-evaluation pipeline (Phase D.6 P3) — the audit summary's
+  // severity counts are derived from the SAME recommendations shown in the
+  // Recommendations list, so the two can never disagree.
   const { recommendations, selfEvaluation } = generateRecommendationsFromScan(scan, {
     industry: project.industry,
     businessProfile: project.businessProfile,
     goals: project.goals,
   })
+  const sevCount = (sev: string) => recommendations.filter((r) => r.severity === sev).length
+  scan.summary.critical = sevCount('critical')
+  scan.summary.warning = sevCount('warning')
+  scan.summary.info = sevCount('info')
+
+  // Persist the scan with the reco-derived counts.
+  if (isUpdate) await store.updateScan(scan)
+  else await store.createScan(scan)
+
   // Stable-identity upsert (P1): preserve prior triage/history across rescans.
   const { created, updated } = await persistScanRecommendations(store, projectId, recommendations)
   await audit(

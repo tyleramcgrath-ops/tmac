@@ -276,6 +276,19 @@ export function scoreAiReadiness(s: Signals): number {
   return clamp(score)
 }
 
+// Single source of truth for the blended page/site score (Phase D.6 P3). The
+// crawler and the single-page scan both call this instead of re-inlining the
+// weighted formula, so the number can never drift between the two surfaces.
+export interface CategoryScores {
+  technical: number
+  content: number
+  schema: number
+  ai: number
+}
+export function overallScore(s: CategoryScores): number {
+  return clamp((s.technical * 30 + s.content * 30 + s.schema * 12 + s.ai * 16) / 88)
+}
+
 export function scoreIntent(usage: KeywordUsage): number {
   let score = 0
   if (usage.inTitle) score += 25

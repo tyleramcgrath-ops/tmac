@@ -8,11 +8,11 @@
 
 import {
   buildFixes,
-  clamp,
   extractInternalLinks,
   extractSignals,
   fetchHtml,
   normalizeUrl,
+  overallScore,
   scoreAiReadiness,
   scoreContent,
   scoreSchema,
@@ -167,9 +167,7 @@ export async function POST(request: Request) {
         schema: scoreSchema(signals),
         ai: scoreAiReadiness(signals),
       }
-      const overall = clamp(
-        (scores.technical * 30 + scores.content * 30 + scores.schema * 12 + scores.ai * 16) / 88
-      )
+      const overall = overallScore(scores)
       const links = extractInternalLinks(r.html, r.finalUrl, 120).map(stripHash)
       // Canonical duplicate detection: a page whose canonical points at a
       // different URL is a variant, not an independent page. It is kept in

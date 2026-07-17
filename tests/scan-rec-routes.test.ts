@@ -57,8 +57,22 @@ describe('scan lifecycle', () => {
     expect(doneBody.recommendationCount).toBeGreaterThan(0)
 
     const hist = await scansGet(new Request('http://t/scans', { headers: { cookie } }), ctx)
-    const { scans } = (await hist.json()) as { scans: { status: string }[] }
+    const { scans } = (await hist.json()) as {
+      scans: { status: string; summary: { critical: number; warning: number; info: number } }[]
+    }
     expect(scans[0].status).toBe('completed')
+
+    // P3 single source of truth: the audit summary's severity counts are the
+    // recommendation engine's counts — never a second, disagreeing engine.
+    const recsRes = (await (await recsGet(new Request('http://t/r', { headers: { cookie } }), ctx)).json()) as {
+      recommendations: { severity: string }[]
+    }
+    const sum = scans[0].summary
+    const sev = (s: string) => recsRes.recommendations.filter((r) => r.severity === s).length
+    expect(sum.critical).toBe(sev('critical'))
+    expect(sum.warning).toBe(sev('warning'))
+    expect(sum.info).toBe(sev('info'))
+    expect(sum.critical + sum.warning + sum.info).toBe(recsRes.recommendations.length)
   })
 
   it('a scan with blocked pages is persisted as partial (honest)', async () => {
