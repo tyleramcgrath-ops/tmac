@@ -281,7 +281,15 @@ export const api = {
 
 // ── Mission Atlas DTOs (Phase G) ─────────────────────────────────────────────
 export type EvidenceGradeDTO = 'observed' | 'imported' | 'estimated' | 'unavailable'
-export interface EvidenceDTO { grade: EvidenceGradeDTO; source: string; fetchedAt: string | null; note?: string }
+export interface EvidenceDTO {
+  grade: EvidenceGradeDTO
+  source: string
+  fetchedAt: string | null
+  partial?: boolean
+  dateRange?: { from: string; to: string } | null
+  freshness?: 'fresh' | 'stale' | 'unknown'
+  note?: string
+}
 export interface ObservationDTO<T> { value: T | null; evidence: EvidenceDTO; confidence: number | 'unknown' }
 export interface CompetitorDTO {
   id: string

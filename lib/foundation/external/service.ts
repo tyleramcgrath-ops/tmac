@@ -10,7 +10,7 @@ import { computeOverlap, type CompetitorOverlap } from './competitors'
 import { buildExternalGraph, type ExternalGraph } from './knowledge-graph'
 import { generateBriefing, type MorningBriefing } from './briefing'
 import { detectAiCitationChanges, detectBacklinkChanges, detectRankingChanges, significantChanges, type Change } from './change-detection'
-import { unavailable, type EvidenceGrade, type Observation, type ProviderOutcome, type ProviderStatus } from './types'
+import { freshnessOf, unavailable, type EvidenceGrade, type Observation, type ProviderOutcome, type ProviderStatus } from './types'
 import type { AiSearchProvider, AiVisibility } from './providers/ai-search'
 import type { BacklinkProfile, BacklinkProvider } from './providers/backlinks'
 import type { GscReport, SearchConsoleProvider } from './providers/search-console'
@@ -62,11 +62,23 @@ export interface PriorSnapshotData {
   aiVisibility?: AiVisibility[]
 }
 
-function toObservation<T>(o: ProviderOutcome<T>, unavailableWhat: string): Observation<T> {
+function toObservation<T>(o: ProviderOutcome<T>, unavailableWhat: string, nowMs: number): Observation<T> {
   if (o.ok) {
+    // Duck-type an applicable data window off the payload (GSC/GA4 carry .range).
+    const range = (o.data as { range?: { from: string; to: string } } | null)?.range
     return {
       value: o.data,
-      evidence: { grade: o.grade, source: o.source, fetchedAt: o.fetchedAt, note: o.partial ? 'partial response' : undefined },
+      evidence: {
+        grade: o.grade,
+        source: o.source,
+        fetchedAt: o.fetchedAt,
+        partial: o.partial ?? false,
+        dateRange: range && range.from ? range : null,
+        // A just-fetched value is fresh; a 1h TTL is a placeholder used the day
+        // stored snapshots are re-read (see freshnessOf).
+        freshness: freshnessOf(o.fetchedAt, nowMs, 60 * 60 * 1000),
+        note: o.partial ? 'partial response' : undefined,
+      },
       confidence: 'unknown',
     }
   }
@@ -103,14 +115,15 @@ export async function assembleAtlas(input: {
       if (o.ok) { aiObservations.push(o.data); anyAiObserved = true }
     }
   }
+  const nowMs = Date.parse(now)
   const aiVisibility: Observation<AiVisibility[]> = anyAiObserved
-    ? { value: aiObservations, evidence: { grade: 'observed', source: 'ai-search', fetchedAt: now }, confidence: 'unknown' }
+    ? { value: aiObservations, evidence: { grade: 'observed', source: 'ai-search', fetchedAt: now, partial: false, freshness: freshnessOf(now, nowMs, 60 * 60 * 1000) }, confidence: 'unknown' }
     : unavailable<AiVisibility[]>('none', 'No AI-search engine connected — AI-visibility is unavailable.')
 
-  const backlinks = toObservation(await providers.backlinks.fetchProfile(project.domain), 'Backlink profile')
-  const gsc = toObservation(await providers.searchConsole.fetchReport(project.domain), 'Search Console data')
-  const analytics = toObservation(await providers.analytics.fetchReport(project.domain), 'Analytics data')
-  const trends = toObservation(await providers.trends.fetchTrends([project.name || project.domain]), 'Trend data')
+  const backlinks = toObservation(await providers.backlinks.fetchProfile(project.domain), 'Backlink profile', nowMs)
+  const gsc = toObservation(await providers.searchConsole.fetchReport(project.domain), 'Search Console data', nowMs)
+  const analytics = toObservation(await providers.analytics.fetchReport(project.domain), 'Analytics data', nowMs)
+  const trends = toObservation(await providers.trends.fetchTrends([project.name || project.domain]), 'Trend data', nowMs)
 
   // Competitor overlap. Their pages are not crawled in this environment, so
   // overlap degrades to Unavailable per dimension (with reasons) — never faked.

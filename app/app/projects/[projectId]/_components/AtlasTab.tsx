@@ -24,11 +24,13 @@ function GradeBadge({ grade }: { grade: EvidenceGradeDTO }) {
 }
 
 function OverlapCell({ label, o }: { label: string; o: ObservationDTO<number> }) {
+  // Unavailable values render '—' (never 0) and expose their reason on hover, so
+  // a gap is never mistaken for a measured zero.
   return (
-    <div className="flex items-center justify-between rounded border border-[var(--rf-card-line)] px-2 py-1">
+    <div className="flex items-center justify-between rounded border border-[var(--rf-card-line)] px-2 py-1" title={o.value === null ? o.evidence.note ?? 'unavailable' : `${o.evidence.grade} · ${o.evidence.source}`}>
       <span className="text-[11px] text-[var(--rf-muted)]">{label}</span>
       <span className="flex items-center gap-1.5">
-        <span className="text-[11px] text-white">{o.value === null ? '—' : `${Math.round(o.value * 100)}%`}</span>
+        <span className={`text-[11px] ${o.value === null ? 'text-[var(--rf-faint)]' : 'text-white'}`}>{o.value === null ? '—' : `${Math.round(o.value * 100)}%`}</span>
         <GradeBadge grade={o.evidence.grade} />
       </span>
     </div>
@@ -91,7 +93,9 @@ export function AtlasTab({ projectId }: { projectId: string }) {
       <div className="rf-card space-y-2 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-white">Morning briefing · {b.date}</p>
-          <span className="text-[11px] text-[var(--rf-muted)]">Confidence: {b.confidence === 'unknown' ? 'unknown' : `${b.confidence}%`}</span>
+          <span className="text-[11px] text-[var(--rf-muted)]">
+            Generated {new Date(snapshot.generatedAt).toLocaleString()} · Confidence: {b.confidence === 'unknown' ? 'unknown' : `${b.confidence}%`}
+          </span>
         </div>
         <p className="text-xs text-[var(--rf-muted)]">{b.headline}</p>
         <p className="rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2 text-xs text-white">

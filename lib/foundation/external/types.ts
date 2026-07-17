@@ -17,13 +17,40 @@
 
 export type EvidenceGrade = 'observed' | 'imported' | 'estimated' | 'unavailable'
 
+// Freshness is SEPARATE from grade: an `observed` datum can still be stale.
+// 'observed' therefore never implies current/complete/verified/exact — those
+// are carried by `freshness` / `partial` / `dateRange`, not by the grade.
+export type Freshness = 'fresh' | 'stale' | 'unknown'
+
 export interface Evidence {
   grade: EvidenceGrade
   // Where it came from: 'rankforge-crawl' | 'semrush' | 'gsc' | 'inference' |
-  // 'none' | a provider id. Human-readable, never empty.
+  // 'none' | a provider id. Human-readable, never empty. Doubles as the
+  // provenance reference (which provider/source produced this datum).
   source: string
+  // When RankForge retrieved it (null for estimates / unavailable).
   fetchedAt: string | null
+  // COMPLETENESS: true when the provider returned a truncated/partial payload,
+  // so `observed` is not mistaken for `complete`.
+  partial?: boolean
+  // The data window the value describes (e.g. a GSC 28-day range), distinct
+  // from fetchedAt. Null/absent when not applicable (point-in-time facts).
+  dateRange?: { from: string; to: string } | null
+  // CURRENCY: whether the value is still fresh relative to a TTL, so `observed`
+  // is not mistaken for `current`. Computed by freshnessOf() for stored data.
+  freshness?: Freshness
+  // Why a datum is unavailable/errored (or any other note). Never a value.
   note?: string
+}
+
+// Freshness of a retrieved datum vs a TTL. Pure (caller supplies nowMs), so it
+// is deterministic and testable, and applies equally to a re-read stored
+// snapshot. Missing/invalid timestamps are honestly 'unknown', never 'fresh'.
+export function freshnessOf(fetchedAt: string | null, nowMs: number, ttlMs: number): Freshness {
+  if (!fetchedAt) return 'unknown'
+  const t = Date.parse(fetchedAt)
+  if (Number.isNaN(t)) return 'unknown'
+  return nowMs - t <= ttlMs ? 'fresh' : 'stale'
 }
 
 // The atom. `value` is null exactly when grade === 'unavailable'.
