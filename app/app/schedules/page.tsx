@@ -131,7 +131,7 @@ export default function SchedulesPage() {
             <a href="/app" className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium"><ArrowLeft className="h-3.5 w-3.5" /> Dashboard</a>
             <span className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)]"><Zap className="h-3.5 w-3.5 text-white" strokeWidth={2.5} /></span><span className="text-sm font-semibold text-white">Schedules</span></span>
           </div>
-          {projects.length > 0 && <select value={projectId} onChange={(e) => setProjectId(e.target.value)} className="rf-card cursor-pointer bg-transparent px-2.5 py-1.5 text-xs text-white focus:outline-none">{projects.map((p) => <option key={p.id} value={p.id} className="bg-[#0b1120]">{p.name}</option>)}</select>}
+          {projects.length > 0 && <select aria-label="Select project" value={projectId} onChange={(e) => setProjectId(e.target.value)} className="rf-card cursor-pointer bg-transparent px-2.5 py-1.5 text-xs text-white focus:outline-none">{projects.map((p) => <option key={p.id} value={p.id} className="bg-[#0b1120]">{p.name}</option>)}</select>}
         </div>
       </header>
 
@@ -139,9 +139,19 @@ export default function SchedulesPage() {
         {status === 'loading' && <div className="rf-card grid place-items-center py-20"><Loader2 className="h-8 w-8 animate-spin text-[var(--rf-blue-bright)]" /></div>}
         {status === 'unauth' && <div className="rf-card rf-topline grid place-items-center py-16 text-center"><p className="text-lg font-semibold text-white">Sign in to manage schedules</p><a href="/app" className="rf-btn-primary mt-4 rounded-xl px-5 py-2.5 text-sm font-semibold">Go to sign in</a></div>}
         {status === 'error' && <div className="rf-card grid place-items-center py-16 text-center"><AlertTriangle className="h-8 w-8 text-[var(--rf-red)]" /><p className="mt-3 text-sm text-[var(--rf-muted)]">Couldn&apos;t load schedules.</p></div>}
+        {status === 'ready' && !data && projects.length === 0 && (
+          <div className="rf-card grid place-items-center py-16 text-center">
+            <h1 className="sr-only">Schedules</h1>
+            <Clock className="h-8 w-8 text-[var(--rf-faint)]" />
+            <p className="mt-3 text-sm font-medium text-white">No projects yet</p>
+            <p className="mt-1 max-w-sm text-xs text-[var(--rf-muted)]">Add a project from the dashboard to start tracking schedules and freshness.</p>
+            <a href="/app" className="rf-btn-primary mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold">Go to dashboard</a>
+          </div>
+        )}
 
         {status === 'ready' && data && (
           <div className="space-y-4">
+            <h1 className="text-xl font-semibold text-white">Schedules</h1>
             {note && <div className="rounded-xl border border-[var(--rf-card-line)] bg-white/[0.02] px-4 py-2.5 text-xs text-[var(--rf-muted)]">{note}</div>}
 
             {data.jobs.length === 0 ? (

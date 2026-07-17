@@ -95,15 +95,15 @@ export default function TodayPage() {
       <div className="rf-glow pointer-events-none fixed left-1/2 top-[-160px] -z-10 h-[420px] w-[760px] -translate-x-1/2 opacity-40" />
 
       <header className="sticky top-0 z-30 border-b border-[var(--rf-card-line)] bg-[rgba(5,7,14,0.8)] px-4 py-3 backdrop-blur-xl lg:px-6">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <a href="/app" className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium"><ArrowLeft className="h-3.5 w-3.5" /> Dashboard</a>
             <span className="flex items-center gap-2"><span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-[var(--rf-blue-bright)] to-[var(--rf-blue)]"><Zap className="h-3.5 w-3.5 text-white" strokeWidth={2.5} /></span><span className="text-sm font-semibold text-white">Today</span></span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Clock className="mr-1 hidden h-3.5 w-3.5 text-[var(--rf-faint)] sm:block" />
+          <div className="-mx-1 flex max-w-full items-center gap-1.5 overflow-x-auto px-1">
+            <Clock className="mr-1 hidden h-3.5 w-3.5 shrink-0 text-[var(--rf-faint)] sm:block" />
             {TIME_OPTIONS.map((o) => (
-              <button key={o.key} onClick={() => setTime(o.key)} className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition-colors ${time === o.key ? 'bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]' : 'text-[var(--rf-muted)] hover:text-white'}`}>{o.label}</button>
+              <button key={o.key} onClick={() => setTime(o.key)} className={`shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-medium transition-colors ${time === o.key ? 'bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]' : 'text-[var(--rf-muted)] hover:text-white'}`}>{o.label}</button>
             ))}
           </div>
         </div>
