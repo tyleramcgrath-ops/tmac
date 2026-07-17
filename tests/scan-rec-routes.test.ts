@@ -35,9 +35,11 @@ async function setup() {
   return { cookie, projectId: project.id, ctx: { params: Promise.resolve({ projectId: project.id }) } }
 }
 
+// Real page SIGNALS (Phase C V2 reads signals, not pre-computed fixes):
+// a product page missing its title (critical) + a pricing page missing schema.
 const PAGES = [
-  { url: 'https://example.com/', overall: 70, fixes: [{ severity: 'critical', category: 'Content gaps', title: 'Add a <title> tag' }] },
-  { url: 'https://example.com/a', overall: 60, fixes: [{ severity: 'warning', category: 'Schema opportunities', title: 'Add structured data (JSON-LD) — none found' }] },
+  { url: 'https://example.com/product/z', overall: 60, title: '', titleLength: 0, metaDescription: 'x', metaDescriptionLength: 90, h1Count: 1, schemaTypes: ['Product'], https: true, mixedContent: false, indexable: true },
+  { url: 'https://example.com/pricing', overall: 70, title: 'Pricing', titleLength: 7, metaDescription: 'x', metaDescriptionLength: 90, h1Count: 1, schemaTypes: [], https: true, mixedContent: false, indexable: true },
 ]
 
 describe('scan lifecycle', () => {

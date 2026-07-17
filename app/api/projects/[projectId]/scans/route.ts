@@ -14,7 +14,7 @@
 
 import { randomUUID } from 'crypto'
 import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
-import { buildRecommendationsFromScan } from '@/lib/foundation/recommendations'
+import { generateRecommendationsFromScan } from '@/lib/foundation/recommendations'
 import { getStore } from '@/lib/foundation/store'
 import type { Scan } from '@/lib/foundation/types'
 
@@ -111,12 +111,27 @@ export const POST = handled(async (request, { params }) => {
     await store.createScan(scan)
   }
 
-  const recommendations = buildRecommendationsFromScan(scan)
+  // V2 engine: page-type-aware, business-aware, with a self-evaluation.
+  const { recommendations, selfEvaluation } = generateRecommendationsFromScan(scan, {
+    industry: project.industry,
+    businessProfile: project.businessProfile,
+    goals: project.goals,
+  })
   await store.createRecommendations(recommendations)
-  await audit(project.orgId, user.id, 'scan.complete', scan.id, `${scan.status}: ${pages.length} pages, ${recommendations.length} recs`)
+  await audit(
+    project.orgId,
+    user.id,
+    'scan.complete',
+    scan.id,
+    `${scan.status}: ${pages.length} pages, ${recommendations.length} recs, ${selfEvaluation.needsHumanReview} need review`
+  )
 
   return Response.json(
-    { scan: { id: scan.id, status: scan.status, createdAt: scan.createdAt, summary: scan.summary }, recommendationCount: recommendations.length },
+    {
+      scan: { id: scan.id, status: scan.status, createdAt: scan.createdAt, summary: scan.summary },
+      recommendationCount: recommendations.length,
+      selfEvaluation,
+    },
     { status: 201 }
   )
 })

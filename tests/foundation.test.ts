@@ -161,7 +161,8 @@ describe('tenant isolation & authorization', () => {
   })
 })
 
-describe('recommendations (A8): why/evidence/confidence/impact/risk', () => {
+describe('recommendations (A8→Phase C V2): evidence/confidence/explainability', () => {
+  // V2 reads page SIGNALS (not pre-computed fixes) and is page-type aware.
   const scan: Scan = {
     id: 'scan-1',
     projectId: 'proj-1',
@@ -171,33 +172,33 @@ describe('recommendations (A8): why/evidence/confidence/impact/risk', () => {
     startedAt: new Date('2026-01-01').toISOString(),
     completedAt: new Date('2026-01-01').toISOString(),
     error: null,
-    summary: { pagesCrawled: 4, urlsDiscovered: 10, blockedCount: 1, siteScore: 60, critical: 1, warning: 2, info: 0 },
+    summary: { pagesCrawled: 3, urlsDiscovered: 10, blockedCount: 1, siteScore: 60, critical: 1, warning: 2, info: 0 },
     pages: [
-      { url: 'https://x.com/', fixes: [{ severity: 'warning', category: 'Schema opportunities', title: 'Add structured data (JSON-LD) — none found' }] },
-      { url: 'https://x.com/a', fixes: [{ severity: 'warning', category: 'Schema opportunities', title: 'Add structured data (JSON-LD) — none found' }] },
-      { url: 'https://x.com/b', fixes: [{ severity: 'critical', category: 'Content gaps', title: 'Add a <title> tag' }] },
-      // Canonical duplicate must be excluded from evidence/prevalence.
-      { url: 'https://x.com/a?utm=1', duplicateOf: 'https://x.com/a', fixes: [{ severity: 'warning', category: 'Schema opportunities', title: 'Add structured data (JSON-LD) — none found' }] },
+      { url: 'https://x.com/pricing', title: 'Pricing', titleLength: 7, metaDescription: 'p', metaDescriptionLength: 90, h1Count: 1, schemaTypes: [], https: true, mixedContent: false, indexable: true },
+      { url: 'https://x.com/product/z', title: '', titleLength: 0, metaDescription: '', metaDescriptionLength: 0, h1Count: 1, schemaTypes: ['Product'], https: true, mixedContent: false, indexable: true },
+      // Canonical duplicate must be excluded.
+      { url: 'https://x.com/pricing?ref=1', duplicateOf: 'https://x.com/pricing', title: 'Pricing', titleLength: 7, schemaTypes: [], https: true, indexable: true },
     ],
     blocked: [],
   }
 
-  it('groups identical fixes, stores evidence URLs and answers all five questions', () => {
+  it('emits evidence-backed, explained recommendations with confidence not tied to prevalence', () => {
     const recs = buildRecommendationsFromScan(scan)
-    expect(recs.length).toBe(2)
-    const schema = recs.find((r) => r.category === 'Schema opportunities')!
-    expect(schema.evidence.affectedUrls).toEqual(['https://x.com/', 'https://x.com/a'])
-    expect(schema.reasoning).toContain('2 of 3')
-    expect(schema.confidence).toBeGreaterThan(0)
-    expect(schema.confidence).toBeLessThanOrEqual(100)
-    expect(schema.confidenceBasis).toContain('rule certainty')
-    expect(schema.expectedImpact.category).toBe('schema')
-    expect(['low', 'medium', 'high']).toContain(schema.risk.level)
+    expect(recs.length).toBeGreaterThan(0)
+    for (const r of recs) {
+      expect(r.evidence.affectedUrls.length).toBeGreaterThan(0)
+      expect(r.explanation?.why).toBeTruthy()
+      expect(r.confidence).toBeGreaterThan(0)
+      expect(r.confidence).toBeLessThanOrEqual(100)
+      expect(r.confidenceBasis).toContain('NOT prevalence')
+      expect(['low', 'medium', 'high']).toContain(r.risk.level)
+    }
   })
 
-  it('critical issues sort first', () => {
+  it('the missing <title> on the product page is highest priority (rank 1)', () => {
     const recs = buildRecommendationsFromScan(scan)
-    expect(recs[0].severity).toBe('critical')
+    expect(recs[0].title).toMatch(/Missing <title>/i)
+    expect(recs[0].priorityRank).toBe(1)
   })
 
   it('status history is the audit trail shape the API appends to', async () => {

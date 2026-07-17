@@ -74,6 +74,15 @@ export type RecommendationStatus =
   | 'rolled_back'
   | 'dismissed'
 
+// Full explainability (Phase C §9): every recommendation answers these.
+export interface RecommendationExplanation {
+  why: string
+  whyNow: string
+  whyThisPage: string
+  whatIfIgnored: string
+  whatCouldMakeWrong: string
+}
+
 // Every recommendation must answer: Why? Evidence? Confidence? Impact? Risk?
 export interface Recommendation {
   id: string
@@ -83,10 +92,23 @@ export interface Recommendation {
   category: string
   severity: 'critical' | 'warning' | 'info'
   status: RecommendationStatus
+  // Page type this applies to (Phase C page intelligence); 'site' for
+  // cross-page recommendations.
+  pageType?: string
+  // Deterministic priority rank (1 = do first) and its numeric score.
+  priorityRank?: number
+  priorityScore?: number
+  // Google guidance reference where applicable.
+  googleGuidance?: string
+  // Structured explainability (Phase C §9).
+  explanation?: RecommendationExplanation
+  // Whether the engine thinks a human should review before acting.
+  needsHumanReview?: boolean
   // Why this matters — plain-language reasoning, stored, not regenerated.
   reasoning: string
-  // Verifiable facts this rests on: which URLs, which measured signals.
-  evidence: { affectedUrls: string[]; facts: string[] }
+  // Verifiable facts this rests on: which URLs, which measured signals, and
+  // the specific on-page elements supporting the finding.
+  evidence: { affectedUrls: string[]; facts: string[]; supportingElements?: string[] }
   // 0-100. Deterministic: rule certainty × observed prevalence. The formula
   // is stored with the number so it is auditable, never a magic constant.
   confidence: number

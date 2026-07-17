@@ -102,7 +102,16 @@ export function extractSignals(
     /frequently asked questions/i.test(bodyText)
 
   const https = finalUrl.startsWith('https://')
-  const mixedContent = https && /(?:src|href)=["']http:\/\//i.test(html)
+  // Mixed content is an INSECURE SUB-RESOURCE loaded into an HTTPS page —
+  // img/script/iframe/audio/video `src`, or a stylesheet `<link rel=stylesheet
+  // href>`. A navigational <a href="http://…"> is a link to an http page, NOT
+  // mixed content. Matching bare `href` (the Phase B FP-1 bug) flagged ordinary
+  // outbound links as a critical issue, so it is excluded here.
+  const mixedContent =
+    https &&
+    (/<(?:img|script|iframe|audio|video|source|embed|track)\b[^>]*\bsrc=["']http:\/\//i.test(html) ||
+      /<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["']http:\/\//i.test(html) ||
+      /<link\b[^>]*\bhref=["']http:\/\/[^"']*["'][^>]*\brel=["']stylesheet["']/i.test(html))
   const indexable = status === 200 && !noindex
 
   return {

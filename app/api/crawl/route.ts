@@ -55,6 +55,13 @@ interface PageResult {
   internalTargets: string[]
   https: boolean
   indexable: boolean
+  // Richer signals forwarded for the recommendation engine (V2).
+  h2Count: number
+  metaDescriptionLength: number
+  imagesMissingAlt: number
+  hasFaq: boolean
+  hasOpenGraph: boolean
+  externalLinks: number
   fixes: FixItem[]
 }
 
@@ -188,6 +195,12 @@ export async function POST(request: Request) {
         internalTargets: [...new Set(links)].slice(0, 40),
         https: signals.https,
         indexable: signals.indexable,
+        h2Count: signals.h2Count,
+        metaDescriptionLength: signals.metaDescriptionLength,
+        imagesMissingAlt: signals.imagesMissingAlt,
+        hasFaq: signals.hasFaq,
+        hasOpenGraph: signals.hasOpenGraph,
+        externalLinks: signals.externalLinks,
         fixes,
       })
       // discover internal links
