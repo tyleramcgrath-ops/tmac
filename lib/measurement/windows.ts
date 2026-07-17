@@ -97,7 +97,6 @@ const MEANINGFUL_PCT = 0.1            // 10% relative change
  */
 export function evaluateOutcome(input: EvaluateInput): EvaluateResult {
   const { baseline, current, now, reviewAt, changeAppliedAt, freshness } = input
-  const reasons: string[] = []
   const evidence: string[] = []
 
   // Not enough elapsed time yet.

@@ -4,7 +4,7 @@
 // Prisma so it's fully unit-testable. The DB claim + handler dispatch live in
 // the API route; this module never performs I/O.
 
-import type { JobType, JobStatus, Frequency } from './schedule'
+import type { JobType, JobStatus } from './schedule'
 import { idempotencyKey } from './schedule'
 
 // Bump when the worker's behavior changes in a way worth recording per run.

@@ -3,11 +3,18 @@
 import { getPrismaClient } from '@/lib/db'
 import { refreshAccessToken } from '@/lib/google-oauth'
 import { getGA4Properties } from '@/lib/ga4-api'
+import { getCurrentSession } from '@/lib/session'
+import { encryptToken, decryptTokenTolerant } from '@/lib/crypto/tokens'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
+  const session = await getCurrentSession()
+  if (!session || !session.organizationId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const url = new URL(request.url)
   const projectId = url.searchParams.get('projectId')
 
@@ -24,7 +31,7 @@ export async function GET(request: Request) {
       select: { organizationId: true },
     })
 
-    if (!project) {
+    if (!project || project.organizationId !== session.organizationId) {
       return Response.json({ error: 'Project not found.' }, { status: 404 })
     }
 
@@ -46,7 +53,7 @@ export async function GET(request: Request) {
     }
 
     // Refresh token if expired
-    let accessToken = credential.accessToken
+    let accessToken = decryptTokenTolerant(credential.accessToken)
     if (credential.expiresAt && credential.expiresAt < new Date()) {
       if (!credential.refreshToken) {
         return Response.json(
@@ -55,16 +62,16 @@ export async function GET(request: Request) {
         )
       }
 
-      const refreshed = await refreshAccessToken(credential.refreshToken)
+      const refreshed = await refreshAccessToken(decryptTokenTolerant(credential.refreshToken))
       accessToken = refreshed.access_token
 
-      // Update credential with new token
+      // Update credential with new (encrypted) token
       const newExpiresAt = new Date(Date.now() + refreshed.expires_in * 1000)
       await prisma.oAuthCredential.update({
         where: { id: credential.id },
         data: {
-          accessToken,
-          refreshToken: refreshed.refresh_token || credential.refreshToken,
+          accessToken: encryptToken(accessToken),
+          refreshToken: refreshed.refresh_token ? encryptToken(refreshed.refresh_token) : credential.refreshToken,
           expiresAt: newExpiresAt,
         },
       })

@@ -7,6 +7,7 @@
 // Manually callable in dev: `curl -H "Authorization: Bearer $CRON_SECRET" \
 //   http://localhost:3000/api/cron/jobs`
 
+import { timingSafeEqual } from 'crypto'
 import { resolveBatchSize } from '@/lib/scheduling/worker'
 import { processBatch } from '@/lib/scheduling/engine'
 
@@ -14,13 +15,25 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
+/** Constant-time string compare — a bearer-secret check must not leak timing
+ * information about how many leading characters matched. */
+function safeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a)
+  const bufB = Buffer.from(b)
+  // Buffers of different length would throw in timingSafeEqual; comparing
+  // against a same-length buffer first keeps the whole check constant-time
+  // relative to the secret's length rather than the input's.
+  if (bufA.length !== bufB.length) return false
+  return timingSafeEqual(bufA, bufB)
+}
+
 function authorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET
   if (!secret) return false // fail closed — never process without a configured secret
   const header = request.headers.get('authorization') || ''
   // Accept "Bearer <secret>" (Vercel Cron) or the raw secret.
   const provided = header.startsWith('Bearer ') ? header.slice(7) : header
-  return provided === secret
+  return safeEqual(provided, secret)
 }
 
 async function handle(request: Request): Promise<Response> {

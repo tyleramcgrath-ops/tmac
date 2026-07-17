@@ -87,6 +87,7 @@ export async function POST(request: Request) {
 
   const session = await getCurrentSession()
   if (!session || !session.organizationId) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  if (session.role === 'viewer') return Response.json({ error: 'Viewers cannot modify schedules.' }, { status: 403 })
 
   let body: any
   try { body = await request.json() } catch { return Response.json({ error: 'Invalid request body.' }, { status: 400 }) }

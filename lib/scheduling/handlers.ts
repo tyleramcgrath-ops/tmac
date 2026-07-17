@@ -10,12 +10,11 @@
 
 import type { JobType } from './schedule'
 import type { JobHandler, HandlerContext, HandlerResult } from './worker'
-import { fuse, type CrawlPageInput, type KeywordInput, type GscRowInput, type Ga4RowInput } from '@/lib/fusion/engine'
 import { buildFusedOpportunities } from '@/lib/opportunities/fused'
-import { classifyFreshness, worstFreshness } from '@/lib/freshness/policy'
 import { rankPortfolio } from '@/lib/portfolio/priority'
 import { signalsFromProject, PORTFOLIO_PROJECT_SELECT } from '@/lib/portfolio/signals'
 import { getProviderStatus } from '@/lib/rankings/provider'
+import { gatherProjectFusion as gatherFusion, mapPageRows, mapKeywordRows, PAGE_SELECT, KEYWORD_SELECT } from '@/lib/fusion/gather'
 
 // ── Shared: gather fused inputs for a single project from the DB ─────────────
 async function gatherProjectFusion(ctx: HandlerContext) {
@@ -24,41 +23,22 @@ async function gatherProjectFusion(ctx: HandlerContext) {
     where: { id: projectId },
     select: {
       id: true, name: true, domain: true, wpSiteUrl: true, updatedAt: true,
-      keywords: { select: { keyword: true, normalizedKeyword: true, intent: true, type: true, status: true, targetPageUrl: true, currentPosition: true, previousPosition: true, bestPosition: true, dataSource: true, confidence: true, estimatedDemand: true } },
+      keywords: { select: KEYWORD_SELECT },
       audits: { orderBy: { startedAt: 'desc' }, take: 1, select: { id: true, startedAt: true } },
     },
   })
   if (!project) throw new Error('Project deleted')
 
   const pageRows = project.audits[0]
-    ? await prisma.page.findMany({ where: { auditId: project.audits[0].id }, select: { url: true, status: true, title: true, metaDescription: true, h1Count: true, contentLength: true, canonical: true, hasNoindex: true, hasMixedContent: true, schemaTypes: true, internalLinks: true, inboundCount: true, technicalScore: true, contentScore: true, schemaScore: true, aiScore: true } })
+    ? await prisma.page.findMany({ where: { auditId: project.audits[0].id }, select: PAGE_SELECT })
     : []
-  const pages: CrawlPageInput[] = pageRows.map((pr: any) => ({
-    url: pr.url, status: pr.status, title: pr.title, metaDescription: pr.metaDescription, h1Count: pr.h1Count,
-    contentLength: pr.contentLength, canonical: pr.canonical, hasNoindex: pr.hasNoindex, hasMixedContent: pr.hasMixedContent,
-    schemaTypes: pr.schemaTypes ? (() => { try { return JSON.parse(pr.schemaTypes) } catch { return [] } })() : [],
-    internalLinks: pr.internalLinks, inboundCount: pr.inboundCount, technicalScore: pr.technicalScore,
-    contentScore: pr.contentScore, schemaScore: pr.schemaScore, aiScore: pr.aiScore,
-  }))
-  const keywords: KeywordInput[] = project.keywords.map((k: any) => ({
-    keyword: k.keyword, normalizedKeyword: k.normalizedKeyword, intent: k.intent ?? 'informational', type: k.type ?? 'primary',
-    status: k.status ?? 'tracking', targetPageUrl: k.targetPageUrl, currentPosition: k.currentPosition, previousPosition: k.previousPosition,
-    bestPosition: k.bestPosition, dataSource: k.dataSource, confidence: k.confidence ?? 0.5, estimatedDemand: k.estimatedDemand,
-  }))
+  const pages = mapPageRows(pageRows)
+  const keywords = mapKeywordRows(project.keywords)
 
-  const cred = await prisma.oAuthCredential.findFirst({ where: { projectId, provider: 'google' } })
-  const gscRows = cred ? await prisma.googleSearchConsoleMetric.findMany({ where: { projectId } }) : []
-  const ga4Rows = cred ? await prisma.googleAnalytics4Metric.findMany({ where: { projectId } }) : []
-  const gsc: GscRowInput[] | null = cred && gscRows.length ? gscRows.map((g: any) => ({ url: g.url, clicks: g.clicks, impressions: g.impressions, ctr: g.ctr, position: g.position, dataDate: g.dataDate?.toISOString() ?? null })) : null
-  const ga4: Ga4RowInput[] | null = cred && ga4Rows.length ? ga4Rows.map((g: any) => ({ url: g.url, sessions: g.sessions, users: g.users, engagementRate: g.engagementRate, conversions: g.conversions, revenue: g.revenue, dataDate: g.dataDate?.toISOString() ?? null })) : null
-
-  const fusion = fuse({ projectId, domain: project.domain, pages, keywords, gsc, ga4 })
-  const freshnessResults = [
-    classifyFreshness({ source: 'crawl', lastSuccessAt: project.audits[0]?.startedAt ?? null, now }),
-    classifyFreshness({ source: 'gsc', configured: !!gsc, lastSuccessAt: gsc ? project.updatedAt : null, now }),
-    classifyFreshness({ source: 'ga4', configured: !!ga4, lastSuccessAt: ga4 ? project.updatedAt : null, now }),
-  ]
-  const worst = worstFreshness(freshnessResults)
+  const { fusion, worst } = await gatherFusion({
+    prisma, projectId, domain: project.domain, pages, keywords,
+    crawlLastSuccessAt: project.audits[0]?.startedAt ?? null, projectUpdatedAt: project.updatedAt, now,
+  })
   return { project, fusion, worst, wordpressConnected: !!project.wpSiteUrl, hasCrawl: pageRows.length > 0 }
 }
 

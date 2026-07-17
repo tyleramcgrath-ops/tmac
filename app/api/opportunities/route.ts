@@ -4,9 +4,8 @@
 // with a stale-data penalty, and never fabricates metrics.
 
 import { getCurrentSession } from '@/lib/session'
-import { fuse, type CrawlPageInput, type KeywordInput, type GscRowInput, type Ga4RowInput } from '@/lib/fusion/engine'
 import { buildFusedOpportunities, type FusedOpportunity } from '@/lib/opportunities/fused'
-import { classifyFreshness, worstFreshness } from '@/lib/freshness/policy'
+import { gatherProjectFusion, mapPageRows, mapKeywordRows, PAGE_SELECT, KEYWORD_SELECT } from '@/lib/fusion/gather'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -27,7 +26,7 @@ export async function GET(request: Request) {
     where: { organizationId: session.organizationId, status: 'active', ...(projectFilter ? { id: projectFilter } : {}) },
     select: {
       id: true, name: true, domain: true, wpSiteUrl: true, updatedAt: true,
-      keywords: { select: { keyword: true, normalizedKeyword: true, intent: true, type: true, status: true, targetPageUrl: true, currentPosition: true, previousPosition: true, bestPosition: true, dataSource: true, confidence: true, estimatedDemand: true } },
+      keywords: { select: KEYWORD_SELECT },
       audits: { orderBy: { startedAt: 'desc' }, take: 1, select: { id: true, startedAt: true } },
     },
   })
@@ -41,37 +40,17 @@ export async function GET(request: Request) {
 
     // Latest audit pages.
     const pageRows = p.audits[0]
-      ? await prisma.page.findMany({ where: { auditId: p.audits[0].id }, select: { url: true, status: true, title: true, metaDescription: true, h1Count: true, contentLength: true, canonical: true, hasNoindex: true, hasMixedContent: true, schemaTypes: true, internalLinks: true, inboundCount: true, technicalScore: true, contentScore: true, schemaScore: true, aiScore: true } })
+      ? await prisma.page.findMany({ where: { auditId: p.audits[0].id }, select: PAGE_SELECT })
       : []
-    const pages: CrawlPageInput[] = pageRows.map((pr: any) => ({
-      url: pr.url, status: pr.status, title: pr.title, metaDescription: pr.metaDescription, h1Count: pr.h1Count,
-      contentLength: pr.contentLength, canonical: pr.canonical, hasNoindex: pr.hasNoindex, hasMixedContent: pr.hasMixedContent,
-      schemaTypes: pr.schemaTypes ? (() => { try { return JSON.parse(pr.schemaTypes) } catch { return [] } })() : [],
-      internalLinks: pr.internalLinks, inboundCount: pr.inboundCount, technicalScore: pr.technicalScore,
-      contentScore: pr.contentScore, schemaScore: pr.schemaScore, aiScore: pr.aiScore,
-    }))
-    const keywords: KeywordInput[] = p.keywords.map((k: any) => ({
-      keyword: k.keyword, normalizedKeyword: k.normalizedKeyword, intent: k.intent ?? 'informational', type: k.type ?? 'primary',
-      status: k.status ?? 'tracking', targetPageUrl: k.targetPageUrl, currentPosition: k.currentPosition, previousPosition: k.previousPosition,
-      bestPosition: k.bestPosition, dataSource: k.dataSource, confidence: k.confidence ?? 0.5, estimatedDemand: k.estimatedDemand,
-    }))
+    const pages = mapPageRows(pageRows)
+    const keywords = mapKeywordRows(p.keywords)
 
-    // GSC/GA4 (connected only when an OAuthCredential + rows exist).
-    const cred = await prisma.oAuthCredential.findFirst({ where: { projectId: p.id, provider: 'google' } })
-    const gscRows = cred ? await prisma.googleSearchConsoleMetric.findMany({ where: { projectId: p.id } }) : []
-    const ga4Rows = cred ? await prisma.googleAnalytics4Metric.findMany({ where: { projectId: p.id } }) : []
-    const gsc: GscRowInput[] | null = cred && gscRows.length ? gscRows.map((g: any) => ({ url: g.url, clicks: g.clicks, impressions: g.impressions, ctr: g.ctr, position: g.position, dataDate: g.dataDate?.toISOString() ?? null })) : null
-    const ga4: Ga4RowInput[] | null = cred && ga4Rows.length ? ga4Rows.map((g: any) => ({ url: g.url, sessions: g.sessions, users: g.users, engagementRate: g.engagementRate, conversions: g.conversions, revenue: g.revenue, dataDate: g.dataDate?.toISOString() ?? null })) : null
-
-    const fusion = fuse({ projectId: p.id, domain: p.domain, pages, keywords, gsc, ga4 })
-
-    // Worst freshness across the project's sources feeds the confidence penalty.
-    const freshnessResults = [
-      classifyFreshness({ source: 'crawl', lastSuccessAt: p.audits[0]?.startedAt ?? null, now }),
-      classifyFreshness({ source: 'gsc', configured: !!gsc, lastSuccessAt: gsc ? p.updatedAt : null, now }),
-      classifyFreshness({ source: 'ga4', configured: !!ga4, lastSuccessAt: ga4 ? p.updatedAt : null, now }),
-    ]
-    const worst = worstFreshness(freshnessResults)
+    // GSC/GA4 (connected only when an OAuthCredential + rows exist), fused,
+    // and the worst-source freshness that feeds the confidence penalty.
+    const { fusion, worst } = await gatherProjectFusion({
+      prisma, projectId: p.id, domain: p.domain, pages, keywords,
+      crawlLastSuccessAt: p.audits[0]?.startedAt ?? null, projectUpdatedAt: p.updatedAt, now,
+    })
 
     const fused = buildFusedOpportunities({
       projectId: p.id, pages: fusion.pages, keywords: fusion.keywords,

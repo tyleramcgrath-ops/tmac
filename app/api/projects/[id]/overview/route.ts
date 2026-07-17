@@ -6,9 +6,8 @@ import { getCurrentSession } from '@/lib/session'
 import { computePortfolioPriority } from '@/lib/portfolio/priority'
 import { signalsFromProject, PORTFOLIO_PROJECT_SELECT, type ProjectWithData } from '@/lib/portfolio/signals'
 import { buildOpportunities, type KeywordInput, type CrawlIssueInput } from '@/lib/opportunities/build'
-import { fuse, type CrawlPageInput, type KeywordInput as FusionKeywordInput, type GscRowInput, type Ga4RowInput } from '@/lib/fusion/engine'
 import { buildFusedOpportunities } from '@/lib/opportunities/fused'
-import { classifyFreshness, worstFreshness } from '@/lib/freshness/policy'
+import { gatherProjectFusion, mapPageRows, mapKeywordRows, PAGE_SELECT, KEYWORD_SELECT } from '@/lib/fusion/gather'
 import { scheduleHealth, dataFreshness, jobsRequiringAttention, decisionBlockers, measuringOutcomes, recentWins, readyToDeploy, type JobLite, type MeasurementLite } from '@/lib/dashboard/sections'
 
 export const runtime = 'nodejs'
@@ -45,11 +44,10 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
   // Priority + recommended focus (the mission for this project).
   const priority = computePortfolioPriority(signalsFromProject(project as ProjectWithData))
 
-  // Ranking summary from the Keyword Universe.
-  const kwRows = await prisma.keyword.findMany({
-    where: { projectId },
-    select: { keyword: true, currentPosition: true, previousPosition: true, status: true, targetPageUrl: true, confidence: true, intent: true },
-  })
+  // Ranking summary from the Keyword Universe. Selects the full keyword shape
+  // (KEYWORD_SELECT) so the same rows can feed fusion below without discarding
+  // normalizedKeyword/bestPosition/dataSource/estimatedDemand.
+  const kwRows = await prisma.keyword.findMany({ where: { projectId }, select: KEYWORD_SELECT })
   const ranked = kwRows.filter((k: any) => k.currentPosition !== null)
   const rankingSummary = {
     tracked: ranked.length,
@@ -62,15 +60,17 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
     losers: kwRows.filter((k: any) => k.currentPosition !== null && k.previousPosition !== null && k.previousPosition - k.currentPosition < 0).length,
   }
 
-  // Top opportunities (reuse the normalizer).
-  const latestAudit = project.audits[0] ?? null
-  let crawlIssues: CrawlIssueInput[] = []
-  const auditWithSummary = await prisma.audit.findFirst({
-    where: { projectId }, orderBy: { startedAt: 'desc' }, select: { summary: true, criticalCount: true, warningCount: true, startedAt: true },
+  // Top opportunities (reuse the normalizer). One query for "the latest audit"
+  // covers the priority headline, crawl issues, and the page fetch below — the
+  // route previously issued three separate queries for overlapping audit data.
+  const latestAudit = await prisma.audit.findFirst({
+    where: { projectId }, orderBy: { startedAt: 'desc' },
+    select: { id: true, startedAt: true, siteScore: true, criticalCount: true, warningCount: true, pageCount: true, summary: true },
   })
-  if (auditWithSummary?.summary) {
+  let crawlIssues: CrawlIssueInput[] = []
+  if (latestAudit?.summary) {
     try {
-      const parsed = JSON.parse(auditWithSummary.summary)
+      const parsed = JSON.parse(latestAudit.summary)
       const topIssues = Array.isArray(parsed?.topIssues) ? parsed.topIssues : []
       crawlIssues = topIssues.filter((i: any) => i.title && i.severity).map((i: any) => ({
         pageUrl: null,
@@ -114,32 +114,16 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
   const blockers = decisionBlockers(projectId, jobRows, freshness)
 
   // Fused opportunities (crawl + rankings + GSC + GA4) for capability states.
-  const latestAuditRow = await prisma.audit.findFirst({ where: { projectId }, orderBy: { startedAt: 'desc' }, select: { id: true, startedAt: true } })
-  const pageRows = latestAuditRow
-    ? await prisma.page.findMany({ where: { auditId: latestAuditRow.id }, select: { url: true, status: true, title: true, metaDescription: true, h1Count: true, contentLength: true, canonical: true, hasNoindex: true, hasMixedContent: true, schemaTypes: true, internalLinks: true, inboundCount: true, technicalScore: true, contentScore: true, schemaScore: true, aiScore: true } })
+  // Reuses `latestAudit` (already fetched above) instead of a fourth audit query.
+  const pageRows = latestAudit
+    ? await prisma.page.findMany({ where: { auditId: latestAudit.id }, select: PAGE_SELECT })
     : []
-  const fusionPages: CrawlPageInput[] = pageRows.map((pr: any) => ({
-    url: pr.url, status: pr.status, title: pr.title, metaDescription: pr.metaDescription, h1Count: pr.h1Count,
-    contentLength: pr.contentLength, canonical: pr.canonical, hasNoindex: pr.hasNoindex, hasMixedContent: pr.hasMixedContent,
-    schemaTypes: pr.schemaTypes ? (() => { try { return JSON.parse(pr.schemaTypes) } catch { return [] } })() : [],
-    internalLinks: pr.internalLinks, inboundCount: pr.inboundCount, technicalScore: pr.technicalScore,
-    contentScore: pr.contentScore, schemaScore: pr.schemaScore, aiScore: pr.aiScore,
-  }))
-  const fusionKeywords: FusionKeywordInput[] = kwRows.map((k: any) => ({
-    keyword: k.keyword, normalizedKeyword: k.keyword.toLowerCase(), intent: k.intent ?? 'informational', type: 'primary',
-    status: k.status ?? 'tracking', targetPageUrl: k.targetPageUrl, currentPosition: k.currentPosition, previousPosition: k.previousPosition,
-    bestPosition: null, dataSource: null, confidence: k.confidence ?? 0.5, estimatedDemand: null,
-  }))
-  const gscRows = cred ? await prisma.googleSearchConsoleMetric.findMany({ where: { projectId } }) : []
-  const ga4Rows = cred ? await prisma.googleAnalytics4Metric.findMany({ where: { projectId } }) : []
-  const gsc: GscRowInput[] | null = cred && gscRows.length ? gscRows.map((g: any) => ({ url: g.url, clicks: g.clicks, impressions: g.impressions, ctr: g.ctr, position: g.position, dataDate: g.dataDate?.toISOString() ?? null })) : null
-  const ga4: Ga4RowInput[] | null = cred && ga4Rows.length ? ga4Rows.map((g: any) => ({ url: g.url, sessions: g.sessions, users: g.users, engagementRate: g.engagementRate, conversions: g.conversions, revenue: g.revenue, dataDate: g.dataDate?.toISOString() ?? null })) : null
-  const fusion = fuse({ projectId, domain: project.domain, pages: fusionPages, keywords: fusionKeywords, gsc, ga4 })
-  const worst = worstFreshness([
-    classifyFreshness({ source: 'crawl', lastSuccessAt: latestAuditRow?.startedAt ?? null, now }),
-    classifyFreshness({ source: 'gsc', configured: !!gsc, lastSuccessAt: gsc ? project.updatedAt : null, now }),
-    classifyFreshness({ source: 'ga4', configured: !!ga4, lastSuccessAt: ga4 ? project.updatedAt : null, now }),
-  ])
+  const fusionPages = mapPageRows(pageRows)
+  const fusionKeywords = mapKeywordRows(kwRows)
+  const { fusion, worst } = await gatherProjectFusion({
+    prisma, projectId, domain: project.domain, pages: fusionPages, keywords: fusionKeywords,
+    crawlLastSuccessAt: latestAudit?.startedAt ?? null, projectUpdatedAt: project.updatedAt, now,
+  })
   const fused = buildFusedOpportunities({ projectId, pages: fusion.pages, keywords: fusion.keywords, wordpressConnected: !!project.wpSiteUrl, worstFreshness: worst })
   const deployReady = readyToDeploy(fused as any)
 
@@ -159,7 +143,7 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
       isFavorite: project.isFavorite, createdAt: project.createdAt,
     },
     priority,
-    lastCrawlAt: latestAudit?.startedAt ?? auditWithSummary?.startedAt ?? null,
+    lastCrawlAt: latestAudit?.startedAt ?? null,
     latestAudit: latestAudit ? { siteScore: latestAudit.siteScore, criticalCount: latestAudit.criticalCount, pageCount: latestAudit.pageCount } : null,
     rankingSummary,
     opportunities,

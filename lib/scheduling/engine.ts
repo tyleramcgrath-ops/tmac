@@ -15,8 +15,6 @@ import {
 } from './worker'
 import { getHandler } from './handlers'
 
-const DAY = 24 * 3600 * 1000
-
 /** Try to atomically claim a specific job for this worker. Returns the claimed
  * row (with a fresh JobExecution created) or null if another worker won it. */
 export async function claimAndStart(opts: {
@@ -83,7 +81,7 @@ async function enqueueFollowUp(opts: {
   idempotencyKey: string
   now: Date
 }): Promise<string | null> {
-  const { prisma, organizationId, projectId, jobType, idempotencyKey, now } = opts
+  const { prisma, organizationId, projectId, jobType, idempotencyKey } = opts
   // Don't chain into a job that is disabled/paused.
   const existing = await prisma.scheduledJob.findUnique({ where: { projectId_jobType: { projectId, jobType } } })
   if (existing && existing.enabled === false) return null

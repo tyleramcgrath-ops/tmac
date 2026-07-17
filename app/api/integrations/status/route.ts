@@ -1,11 +1,17 @@
 // Check integration status for a project
 
 import { getPrismaClient } from '@/lib/db'
+import { getCurrentSession } from '@/lib/session'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
+  const session = await getCurrentSession()
+  if (!session || !session.organizationId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const url = new URL(request.url)
   const projectId = url.searchParams.get('projectId')
 
@@ -20,7 +26,7 @@ export async function GET(request: Request) {
       where: { id: projectId },
     })
 
-    if (!project) {
+    if (!project || project.organizationId !== session.organizationId) {
       return Response.json({ error: 'Project not found.' }, { status: 404 })
     }
 

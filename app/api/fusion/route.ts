@@ -7,7 +7,7 @@
 // connected) — the engine still produces a full result.
 
 import { getCurrentSession } from '@/lib/session'
-import { fuse, type CrawlPageInput, type KeywordInput, type GscRowInput, type Ga4RowInput } from '@/lib/fusion/engine'
+import { gatherProjectFusion, mapPageRows, mapKeywordRows, PAGE_SELECT, KEYWORD_SELECT } from '@/lib/fusion/gather'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -41,54 +41,19 @@ export async function GET(request: Request) {
     select: { id: true, startedAt: true },
   })
   const pageRows = latestAudit
-    ? await prisma.page.findMany({
-        where: { auditId: latestAudit.id },
-        select: {
-          url: true, status: true, title: true, metaDescription: true, h1Count: true,
-          contentLength: true, canonical: true, hasNoindex: true, hasMixedContent: true,
-          schemaTypes: true, internalLinks: true, inboundCount: true,
-          technicalScore: true, contentScore: true, schemaScore: true, aiScore: true,
-        },
-      })
+    ? await prisma.page.findMany({ where: { auditId: latestAudit.id }, select: PAGE_SELECT })
     : []
-  const pages: CrawlPageInput[] = pageRows.map((p: any) => ({
-    url: p.url, status: p.status, title: p.title, metaDescription: p.metaDescription,
-    h1Count: p.h1Count, contentLength: p.contentLength, canonical: p.canonical,
-    hasNoindex: p.hasNoindex, hasMixedContent: p.hasMixedContent,
-    schemaTypes: p.schemaTypes ? (() => { try { return JSON.parse(p.schemaTypes) } catch { return [] } })() : [],
-    internalLinks: p.internalLinks, inboundCount: p.inboundCount,
-    technicalScore: p.technicalScore, contentScore: p.contentScore, schemaScore: p.schemaScore, aiScore: p.aiScore,
-  }))
+  const pages = mapPageRows(pageRows)
 
   // Keyword Universe.
-  const kwRows = await prisma.keyword.findMany({
-    where: { projectId },
-    select: {
-      keyword: true, normalizedKeyword: true, intent: true, type: true, status: true,
-      targetPageUrl: true, currentPosition: true, previousPosition: true, bestPosition: true,
-      dataSource: true, confidence: true, estimatedDemand: true,
-    },
+  const kwRows = await prisma.keyword.findMany({ where: { projectId }, select: KEYWORD_SELECT })
+  const keywords = mapKeywordRows(kwRows)
+
+  // GSC / GA4 fused — connected iff there's an OAuthCredential AND metric rows exist.
+  const { fusion: result } = await gatherProjectFusion({
+    prisma, projectId, domain: project.domain, pages, keywords,
+    crawlLastSuccessAt: latestAudit?.startedAt ?? null, projectUpdatedAt: project.updatedAt, now: new Date(),
   })
-  const keywords: KeywordInput[] = kwRows.map((k: any) => ({
-    keyword: k.keyword, normalizedKeyword: k.normalizedKeyword, intent: k.intent ?? 'informational',
-    type: k.type ?? 'primary', status: k.status ?? 'tracking', targetPageUrl: k.targetPageUrl,
-    currentPosition: k.currentPosition, previousPosition: k.previousPosition, bestPosition: k.bestPosition,
-    dataSource: k.dataSource, confidence: k.confidence ?? 0.5, estimatedDemand: k.estimatedDemand,
-  }))
-
-  // GSC / GA4 — connected iff there's an OAuthCredential AND metric rows exist.
-  const cred = await prisma.oAuthCredential.findFirst({ where: { projectId, provider: 'google' } })
-  const gscRows = cred ? await prisma.googleSearchConsoleMetric.findMany({ where: { projectId } }) : []
-  const ga4Rows = cred ? await prisma.googleAnalytics4Metric.findMany({ where: { projectId } }) : []
-
-  const gsc: GscRowInput[] | null = cred && gscRows.length > 0
-    ? gscRows.map((g: any) => ({ url: g.url, clicks: g.clicks, impressions: g.impressions, ctr: g.ctr, position: g.position, dataDate: g.dataDate?.toISOString() ?? null }))
-    : null
-  const ga4: Ga4RowInput[] | null = cred && ga4Rows.length > 0
-    ? ga4Rows.map((g: any) => ({ url: g.url, sessions: g.sessions, users: g.users, engagementRate: g.engagementRate, conversions: g.conversions, revenue: g.revenue, dataDate: g.dataDate?.toISOString() ?? null }))
-    : null
-
-  const result = fuse({ projectId, domain: project.domain, pages, keywords, gsc, ga4 })
 
   return Response.json({
     ok: true,

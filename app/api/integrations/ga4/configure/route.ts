@@ -1,11 +1,17 @@
 // Configure which GA4 property to use for a project
 
 import { getPrismaClient } from '@/lib/db'
+import { getCurrentSession } from '@/lib/session'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request) {
+  const session = await getCurrentSession()
+  if (!session || !session.organizationId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   let body: Record<string, unknown>
   try {
     body = await request.json()
@@ -32,7 +38,7 @@ export async function POST(request: Request) {
       select: { organizationId: true },
     })
 
-    if (!project) {
+    if (!project || project.organizationId !== session.organizationId) {
       return Response.json({ error: 'Project not found.' }, { status: 404 })
     }
 

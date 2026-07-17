@@ -4,7 +4,7 @@ import { getCurrentSession } from '@/lib/session'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function POST(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getCurrentSession()
     if (!session) {

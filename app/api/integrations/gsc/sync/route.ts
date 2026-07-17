@@ -4,12 +4,19 @@ import { getPrismaClient } from '@/lib/db'
 import { refreshAccessToken } from '@/lib/google-oauth'
 import { fetchGSCPageMetrics, fetchGSCQueriesForPage } from '@/lib/gsc-api'
 import { checkRateLimit, clientKey } from '@/lib/rateLimit'
+import { getCurrentSession } from '@/lib/session'
+import { encryptToken, decryptTokenTolerant } from '@/lib/crypto/tokens'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
 export async function POST(request: Request) {
+  const session = await getCurrentSession()
+  if (!session || !session.organizationId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const rl = checkRateLimit(clientKey(request, 'gsc-sync'), 5, 60_000)
   if (!rl.ok) {
     return Response.json(
@@ -42,7 +49,7 @@ export async function POST(request: Request) {
       select: { organizationId: true, domain: true },
     })
 
-    if (!project) {
+    if (!project || project.organizationId !== session.organizationId) {
       return Response.json({ error: 'Project not found.' }, { status: 404 })
     }
 
@@ -65,7 +72,7 @@ export async function POST(request: Request) {
     }
 
     // Refresh token if expired
-    let accessToken = credential.accessToken
+    let accessToken = decryptTokenTolerant(credential.accessToken)
     if (credential.expiresAt && credential.expiresAt < new Date()) {
       if (!credential.refreshToken) {
         return Response.json(
@@ -74,16 +81,16 @@ export async function POST(request: Request) {
         )
       }
 
-      const refreshed = await refreshAccessToken(credential.refreshToken)
+      const refreshed = await refreshAccessToken(decryptTokenTolerant(credential.refreshToken))
       accessToken = refreshed.access_token
 
-      // Update credential with new token
+      // Update credential with new (encrypted) token
       const newExpiresAt = new Date(Date.now() + refreshed.expires_in * 1000)
       await prisma.oAuthCredential.update({
         where: { id: credential.id },
         data: {
-          accessToken,
-          refreshToken: refreshed.refresh_token || credential.refreshToken,
+          accessToken: encryptToken(accessToken),
+          refreshToken: refreshed.refresh_token ? encryptToken(refreshed.refresh_token) : credential.refreshToken,
           expiresAt: newExpiresAt,
         },
       })
