@@ -11,6 +11,7 @@ import type {
   Organization,
   OrgMember,
   Project,
+  ProviderConnection,
   Recommendation,
   Scan,
   User,
@@ -28,6 +29,7 @@ type Collections = {
   competitors: Competitor[]
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
+  providerConnections: ProviderConnection[]
   audit: AuditLogEntry[]
 }
 
@@ -41,6 +43,7 @@ const EMPTY: Collections = {
   competitors: [],
   wpConnections: [],
   wpDeployments: [],
+  providerConnections: [],
   audit: [],
 }
 
@@ -233,6 +236,27 @@ export class FileFoundationStore implements FoundationStore {
     return (await this.read('wpDeployments'))
       .filter((d) => d.projectId === projectId)
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+
+  // external provider connections (Phase H)
+  async upsertProviderConnection(conn: ProviderConnection) {
+    await this.mutate('providerConnections', (all) => {
+      const rest = all.filter((c) => !(c.projectId === conn.projectId && c.kind === conn.kind))
+      return { data: [...rest, conn] }
+    })
+  }
+  async getProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
+    return (await this.read('providerConnections')).find((c) => c.projectId === projectId && c.kind === kind) ?? null
+  }
+  async listProviderConnections(projectId: string) {
+    return (await this.read('providerConnections'))
+      .filter((c) => c.projectId === projectId)
+      .sort((a, b) => a.kind.localeCompare(b.kind))
+  }
+  async deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
+    await this.mutate('providerConnections', (all) => ({
+      data: all.filter((c) => !(c.projectId === projectId && c.kind === kind)),
+    }))
   }
 
   // audit

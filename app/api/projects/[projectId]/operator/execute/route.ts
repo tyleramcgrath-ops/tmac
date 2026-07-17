@@ -71,6 +71,9 @@ export const POST = handled(async (request, { params }) => {
   // ── Bulk deploy ──
   const conn = await store.getWpConnection(projectId)
   const pages = await latestScanPages(store, projectId)
+  // Other real crawled pages, so internal-linking fixes can only ever link to
+  // pages that actually exist (never invented URLs).
+  const sitePages = pages.map((p) => ({ url: String(p.url ?? ''), title: String((p.title as string) ?? '') })).filter((p) => p.url)
   const policy = policyOf(project)
   const all = await store.listRecommendations(projectId)
   const items = Array.isArray(body.items) ? (body.items as Record<string, unknown>[]) : []
@@ -89,7 +92,7 @@ export const POST = handled(async (request, { params }) => {
       results.push({ recommendationId: recId, ok: false, stage: 'signals', error: 'no page signals; re-run scan' })
       continue
     }
-    const { fix, safety, decision, preview } = buildOperatorPreview(rec, signals, policy)
+    const { fix, safety, decision, preview } = buildOperatorPreview(rec, signals, policy, { sitePages })
 
     // Safety/policy gating.
     if (safety.blocked) {
@@ -106,9 +109,15 @@ export const POST = handled(async (request, { params }) => {
       continue
     }
 
-    // Allow caller-edited values (human edit before approval) to override.
+    // Build the WordPress changes from the fix. A content transform (Phase H:
+    // https-upgrade / missing-H1 / internal-links) writes the post body; a
+    // title/meta fix writes that field and honours a human-edited value.
     const value = typeof item.editedValue === 'string' ? (item.editedValue as string) : fix.proposedValue
-    const changes = fix.kind === 'title' ? { title: value } : { metaDescription: value }
+    const changes = fix.contentTransform
+      ? { contentTransform: fix.contentTransform }
+      : fix.kind === 'title'
+        ? { title: value }
+        : { metaDescription: value }
 
     if (dryRun) {
       results.push({ recommendationId: recId, ok: true, dryRun: true, decision: decision.decision, changes, diff: preview.diff, safety })

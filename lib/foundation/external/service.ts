@@ -20,6 +20,10 @@ import { NullSearchConsoleProvider } from './providers/search-console'
 import { NullAnalyticsProvider } from './providers/analytics'
 import { NullTrendProvider } from './providers/trends'
 import { NullBacklinkProvider } from './providers/backlinks'
+import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider } from './providers/google'
+import type { FoundationStore } from '../store'
+import { googleOAuthConfig } from '../env'
+import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
 
 export interface ProviderSet {
   aiSearch: AiSearchProvider[]
@@ -39,6 +43,51 @@ export function disconnectedProviderSet(): ProviderSet {
     analytics: new NullAnalyticsProvider(),
     trends: new NullTrendProvider(),
   }
+}
+
+// Resolve a project's REAL providers from its stored, encrypted connections
+// (Phase H). Google Search Console / Analytics become live providers when the
+// project has connected them; everything else stays Null (no Google equivalent).
+// This is the seam the atlas route now uses in place of the all-disconnected
+// default — so provider-specific logic never leaks into the reco/strategy layer.
+//
+// Refreshed tokens are persisted back through `store` so a long-lived connection
+// doesn't re-refresh on every read. If Google OAuth isn't configured on the
+// deployment (no client id/secret), we can't refresh, so we degrade to Null.
+export async function connectedProviderSet(
+  store: FoundationStore,
+  projectId: string,
+  project: { domain: string },
+  nowMs: number
+): Promise<ProviderSet> {
+  const set = disconnectedProviderSet()
+  const config = googleOAuthConfig()
+  if (!config) return set
+
+  const makeDeps = (bundle: GoogleTokenBundle, kind: 'search-console' | 'analytics') => ({
+    bundle,
+    clientId: config.clientId,
+    clientSecret: config.clientSecret,
+    nowMs,
+    persist: async (next: GoogleTokenBundle) => {
+      const fresh = await store.getProviderConnection(projectId, kind)
+      if (fresh) await store.upsertProviderConnection({ ...fresh, credentialEnc: encodeTokenBundle(next), updatedAt: new Date(nowMs).toISOString() })
+    },
+  })
+
+  const gsc = await store.getProviderConnection(projectId, 'search-console')
+  if (gsc && gsc.status === 'connected') {
+    try {
+      set.searchConsole = new GoogleSearchConsoleProvider('gsc', makeDeps(decodeTokenBundle(gsc.credentialEnc), 'search-console'), gsc.resourceId, project.domain)
+    } catch { /* corrupt credential → leave Null (disconnected) */ }
+  }
+  const ga = await store.getProviderConnection(projectId, 'analytics')
+  if (ga && ga.status === 'connected') {
+    try {
+      set.analytics = new GoogleAnalyticsProvider('ga4', makeDeps(decodeTokenBundle(ga.credentialEnc), 'analytics'), ga.resourceId)
+    } catch { /* corrupt credential → leave Null (disconnected) */ }
+  }
+  return set
 }
 
 export interface AtlasSnapshot {

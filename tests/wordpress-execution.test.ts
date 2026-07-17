@@ -60,6 +60,7 @@ class FakeWordPress {
         if (this.failWrites) return json({ message: 'server error' }, 500)
         const body = JSON.parse((init?.body as string) ?? '{}')
         if (body.title !== undefined) post.title = body.title
+        if (body.content !== undefined) post.content = body.content
         if (body.excerpt !== undefined) post.excerpt = body.excerpt
         if (body.aioseo_meta_data?.description !== undefined && !this.dropMeta) {
           post.aioseoDescription = body.aioseo_meta_data.description
@@ -165,6 +166,59 @@ describe('WordPress deploy + read-back verification', () => {
       reason: 'r',
     })
     expect(dep.status).toBe('failed')
+  })
+})
+
+describe('WordPress content-transform deploys (Phase H)', () => {
+  it('upgrades insecure http:// references in the body, verifies, and can roll back', async () => {
+    wp.posts.get(10)!.content = '<img src="http://wp.test/logo.png"><p>hi</p>'
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      connection: connection(),
+      postId: 10,
+      postType: 'pages',
+      changes: { contentTransform: { type: 'https-upgrade', hosts: ['wp.test'] } },
+      approvedBy: 'user-1',
+      reason: 'Fix mixed content',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.content).toContain('https://wp.test/logo.png')
+    expect(wp.posts.get(10)!.content).not.toContain('http://wp.test/logo.png')
+
+    const rolled = await rollbackWpDeployment({ deployment: dep, connection: connection(), actorId: 'user-2' })
+    expect(rolled.status).toBe('rolled_back')
+    expect(wp.posts.get(10)!.content).toContain('http://wp.test/logo.png') // before-body restored
+  })
+
+  it('inserts a missing H1 and records it as verified', async () => {
+    wp.posts.get(10)!.content = '<p>no heading here</p>'
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      connection: connection(),
+      postId: 10,
+      postType: 'pages',
+      changes: { contentTransform: { type: 'prepend-h1', text: 'Our Services' } },
+      approvedBy: 'user-1',
+      reason: 'Add H1',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.content.startsWith('<h1>Our Services</h1>')).toBe(true)
+  })
+
+  it('is a no-op (verified, no write) when the fix is already satisfied', async () => {
+    wp.posts.get(10)!.content = '<h1>Already</h1><p>body</p>'
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      connection: connection(),
+      postId: 10,
+      postType: 'pages',
+      changes: { contentTransform: { type: 'prepend-h1', text: 'X' } },
+      approvedBy: 'user-1',
+      reason: 'Add H1',
+    })
+    expect(dep.status).toBe('verified')
+    expect(dep.result).toMatch(/already satisfied/i)
+    expect(wp.posts.get(10)!.content).toBe('<h1>Already</h1><p>body</p>') // untouched
   })
 })
 

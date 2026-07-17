@@ -203,6 +203,59 @@ const ruleMultipleH1: Rule = ({ s, cls }) => {
   }
 }
 
+const ruleMissingH1: Rule = ({ s, cls }) => {
+  if (!has(s.h1Count)) return null
+  if (s.h1Count > 0) return null
+  // A search-results/utility page legitimately may lack an H1; don't nag those.
+  if (cls.type === 'search') return null
+  return {
+    ruleId: 'missing-h1',
+    title: 'Page has no H1 heading',
+    category: 'content',
+    ruleCertainty: 0.9,
+    importance: 0.7,
+    seoImpact: 'medium',
+    effort: 'low',
+    risk: { level: 'low', note: 'Adding a single clear H1 is safe; it touches page markup.' },
+    googleGuidance: 'A clear H1 states the page topic for users and search engines.',
+    supportingElements: ['H1 count = 0'],
+    explanation: {
+      why: 'The H1 is the page’s primary heading; its absence weakens the topical signal and accessibility.',
+      whyNow: 'A missing H1 is a concrete, low-effort content defect.',
+      whyThisPage: `This ${cls.type} page renders no H1 heading.`,
+      whatIfIgnored: 'Users and search engines get a weaker signal of what the page is about.',
+      whatCouldMakeWrong: 'A heading rendered via JavaScript after load would not appear in the static crawl.',
+    },
+  }
+}
+
+const ruleInternalLinking: Rule = ({ s, cls }) => {
+  if (!has(s.internalTargets)) return null
+  // Only content/decision pages benefit; skip utility, search, and shallow roots.
+  const eligible: PageType[] = ['product', 'service', 'pricing', 'documentation', 'comparison', 'blog_article', 'category', 'landing', 'case_study']
+  if (!eligible.includes(cls.type)) return null
+  if (s.internalTargets.length >= 3) return null
+  return {
+    ruleId: 'internal-linking',
+    title: `Thin internal linking (${s.internalTargets.length} internal link${s.internalTargets.length === 1 ? '' : 's'})`,
+    category: 'links',
+    ruleCertainty: 0.7,
+    importance: 0.55,
+    seoImpact: 'medium',
+    effort: 'low',
+    risk: { level: 'low', note: 'Adding relevant internal links to real pages is safe and additive.' },
+    googleGuidance: 'Internal links distribute authority and help Google discover and rank related pages.',
+    supportingElements: [`Internal links out = ${s.internalTargets.length}`],
+    explanation: {
+      why: 'Well-linked pages pass authority and are discovered/crawled more reliably than isolated ones.',
+      whyNow: 'This page links out to very few internal pages, leaving relevance and crawl value on the table.',
+      whyThisPage: `This ${cls.type} page has only ${s.internalTargets.length} internal link(s).`,
+      whatIfIgnored: 'Related pages get less internal authority and may be crawled/ranked less.',
+      whatCouldMakeWrong: 'A deliberately focused landing page may intentionally minimize outbound links.',
+    },
+  }
+}
+
 // ── Schema (page-type-appropriate) ──────────────────────────────────────────
 
 const ruleSchemaMissing: Rule = ({ s, cls }) => {
@@ -330,6 +383,8 @@ export const RULE_REGISTRY: Record<string, RuleMeta> = {
   'title-length': { version: 1, dangerous: false },
   'missing-meta': { version: 1, dangerous: false },
   'multiple-h1': { version: 1, dangerous: false },
+  'missing-h1': { version: 1, dangerous: false },
+  'internal-linking': { version: 1, dangerous: false },
   'schema-missing': { version: 1, dangerous: false },
   breadcrumb: { version: 1, dangerous: false },
   faq: { version: 1, dangerous: false },
@@ -357,6 +412,8 @@ export const PAGE_RULES: Rule[] = [
   ruleAltText,
   ruleTitleLength,
   ruleMultipleH1,
+  ruleMissingH1,
+  ruleInternalLinking,
   ruleBreadcrumb,
   ruleFaq,
 ]

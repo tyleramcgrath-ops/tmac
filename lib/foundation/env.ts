@@ -43,6 +43,27 @@ export function resolveStoreEnv(): StoreEnv {
   return databaseUrl ? { kind: 'postgres', databaseUrl } : { kind: 'file' }
 }
 
+// Google OAuth (Phase H). The Connect-Google flow needs a Google Cloud OAuth
+// client. These are read from env so the deployment owner supplies them in
+// Vercel; RankForge never ships credentials. When unset, the flow reports
+// "not configured" instead of failing obscurely (see the start route).
+export interface GoogleOAuthConfig {
+  clientId: string
+  clientSecret: string
+  // Optional explicit redirect base (e.g. https://app.example.com). When unset,
+  // the callback URL is derived from the incoming request origin, which works
+  // for Vercel preview + production. Whatever it resolves to must be registered
+  // as an Authorized redirect URI in the Google Cloud console.
+  redirectBase?: string
+}
+
+export function googleOAuthConfig(): GoogleOAuthConfig | null {
+  const clientId = process.env.GOOGLE_CLIENT_ID
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+  if (!clientId || !clientSecret) return null
+  return { clientId, clientSecret, redirectBase: process.env.GOOGLE_OAUTH_REDIRECT_BASE || undefined }
+}
+
 // APP_SECRET is required for any authenticated flow regardless of store.
 // Production demands a strong (≥32-char) secret; the crypto primitives enforce
 // a ≥16 floor everywhere (Phase D.6 P6).

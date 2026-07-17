@@ -9,6 +9,7 @@
 
 import type { PageSignals } from '../reco/signals'
 import { classifyPage, PREFERRED_SCHEMA } from '../reco/classify'
+import type { ContentTransform } from './content-fix'
 
 export type FixKind =
   | 'title'
@@ -17,18 +18,50 @@ export type FixKind =
   | 'altText'
   | 'canonical'
   | 'heading'
+  | 'mixedContent'
+  | 'internalLinks'
   | 'none'
 
 export interface GeneratedFix {
   actionable: boolean
   kind: FixKind
   // The WordPress-deployable field + value (title/metaDescription), when the
-  // fix maps to a supported write. schema/alt/heading are advisory payloads.
+  // fix maps to a supported write. schema/alt are advisory payloads.
   deploy?: { title?: string; metaDescription?: string }
+  // A body-content transform (Phase H): https-upgrade, prepend-h1, internal
+  // links. Applied to the LIVE post content at deploy time. Present ⇒ this fix
+  // is a WordPress content write (not title/meta).
+  contentTransform?: ContentTransform
   // The concrete artifact to apply (e.g. the JSON-LD block, or the new title).
   proposedValue: string
   currentValue: string
   note: string
+}
+
+// Extra context a fix generator may use (e.g. other real site pages to link to).
+export interface FixGenContext {
+  sitePages?: { url: string; title: string }[]
+}
+
+function hostOf(url: string): string {
+  try {
+    return new URL(url).hostname
+  } catch {
+    return ''
+  }
+}
+
+function deriveHeading(s: PageSignals): string {
+  const fromTitle = (s.title ?? '').split(/[·|—–]/)[0].trim()
+  if (fromTitle) return fromTitle
+  try {
+    const slug = decodeURIComponent(new URL(s.url).pathname.split('/').filter(Boolean).pop() ?? '')
+    const words = slug.replace(/[-_]+/g, ' ').trim()
+    if (words) return words.replace(/\b\w/g, (c) => c.toUpperCase())
+  } catch {
+    /* fall through */
+  }
+  return 'Overview'
 }
 
 function brandFromTitle(title: string | undefined): string {
@@ -66,8 +99,55 @@ function generateSchema(s: PageSignals): string {
 
 // Generate a concrete fix for a recommendation identified by its rule.
 // `ruleId` is embedded in the recommendation's evidence facts; callers pass it.
-export function generateFix(ruleId: string, s: PageSignals): GeneratedFix {
+export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext = {}): GeneratedFix {
   switch (ruleId) {
+    case 'mixed-content': {
+      // Upgrade insecure same-host http:// sub-resources to https. Deterministic
+      // scheme swap on the page's own host (+ www) — never touches third-party
+      // links that may lack an https endpoint.
+      const host = hostOf(s.url)
+      if (!host) return { actionable: false, kind: 'none', proposedValue: '', currentValue: '', note: 'Could not determine the page host.' }
+      const hosts = host.startsWith('www.') ? [host, host.slice(4)] : [host, `www.${host}`]
+      return {
+        actionable: true,
+        kind: 'mixedContent',
+        contentTransform: { type: 'https-upgrade', hosts },
+        proposedValue: `Rewrite http://${host}… → https://${host}… in the post body`,
+        currentValue: 'Insecure http:// sub-resource(s) on an https page',
+        note: 'Upgrades same-host insecure references to https. Applied to the live post body; verified by read-back.',
+      }
+    }
+    case 'missing-h1': {
+      const text = deriveHeading(s)
+      return {
+        actionable: true,
+        kind: 'heading',
+        contentTransform: { type: 'prepend-h1', text },
+        proposedValue: `<h1>${text}</h1>`,
+        currentValue: '(no H1 on the page)',
+        note: 'Inserts a single H1 derived from the page title/slug. Edit the heading text before deploy if needed.',
+      }
+    }
+    case 'internal-linking': {
+      // Link to a few OTHER real pages from this scan the page doesn't already
+      // link to. Sourced from the crawl — never invented URLs.
+      const already = new Set((s.internalTargets ?? []).map((u) => u.replace(/\/$/, '')))
+      const candidates = (ctx.sitePages ?? [])
+        .filter((p) => p.url && p.url.replace(/\/$/, '') !== s.url.replace(/\/$/, '') && !already.has(p.url.replace(/\/$/, '')))
+        .slice(0, 3)
+        .map((p) => ({ url: p.url, anchor: (p.title || '').split(/[·|—–]/)[0].trim() || p.url }))
+      if (candidates.length === 0) {
+        return { actionable: false, kind: 'internalLinks', proposedValue: '', currentValue: `${(s.internalTargets ?? []).length} internal links`, note: 'No other crawled pages available to link to — re-run a fuller crawl.' }
+      }
+      return {
+        actionable: true,
+        kind: 'internalLinks',
+        contentTransform: { type: 'append-internal-links', links: candidates },
+        proposedValue: candidates.map((c) => `→ ${c.anchor} (${c.url})`).join('\n'),
+        currentValue: `${(s.internalTargets ?? []).length} internal links`,
+        note: 'Appends a "Related pages" block linking to real crawled pages. Review the selection before deploy.',
+      }
+    }
     case 'missing-title': {
       // Compose from H1 intent + brand when available; else from the URL slug.
       const brand = brandFromTitle(s.title)

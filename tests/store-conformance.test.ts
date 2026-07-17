@@ -14,7 +14,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import type { FoundationStore } from '../lib/foundation/store'
-import type { Competitor, Organization, Project, Recommendation, Scan, User, WpConnection, WpDeployment } from '../lib/foundation/types'
+import type { Competitor, Organization, Project, ProviderConnection, Recommendation, Scan, User, WpConnection, WpDeployment } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'store-conformance-secret-01'
 
@@ -140,6 +140,22 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       expect((await store.listCompetitors(p.id)).map((c) => c.id)).toContain(comp.id)
       await store.deleteCompetitor(comp.id)
       expect(await store.getCompetitor(comp.id)).toBeNull()
+
+      // provider connections (Phase H) — compound-key upsert + delete
+      const pc: ProviderConnection = {
+        projectId: p.id, kind: 'search-console', vendor: 'google', credentialEnc: 'iv.tag.data',
+        accountEmail: 'owner@x.com', resourceId: null, scope: 'gsc', status: 'connected', detail: 'Connected.',
+        connectedBy: u.id, createdAt: now(), updatedAt: now(),
+      }
+      await store.upsertProviderConnection(pc)
+      await store.upsertProviderConnection({ ...pc, resourceId: 'sc-domain:example.com' })
+      expect((await store.getProviderConnection(p.id, 'search-console'))?.resourceId).toBe('sc-domain:example.com')
+      // A second kind is an independent row (compound PK project_id+kind).
+      await store.upsertProviderConnection({ ...pc, kind: 'analytics', resourceId: '123' })
+      expect((await store.listProviderConnections(p.id)).map((c) => c.kind).sort()).toEqual(['analytics', 'search-console'])
+      await store.deleteProviderConnection(p.id, 'search-console')
+      expect(await store.getProviderConnection(p.id, 'search-console')).toBeNull()
+      expect((await store.listProviderConnections(p.id)).map((c) => c.kind)).toEqual(['analytics'])
 
       // audit
       await store.appendAudit({ id: uid(), orgId: o.id, actorId: u.id, action: 'x', target: 't', detail: '', at: now() })

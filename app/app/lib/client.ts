@@ -130,9 +130,25 @@ export interface RecommendationDTO {
   confidenceBasis: string
   expectedImpact: { category: string; size: string; note: string }
   risk: { level: string; note: string }
+  // Priority (Phase H): engine rank + optional human override for reordering.
+  priorityRank?: number
+  userPriority?: number
   createdAt: string
   history: { at: string; by: string; from: string; to: string }[]
   coordination?: CoordinationDTO
+}
+
+// External integration status (Phase H) — never carries a credential.
+export interface IntegrationDTO {
+  kind: 'search-console' | 'analytics'
+  vendor: string
+  status: 'connected' | 'disconnected' | 'error'
+  detail: string
+  accountEmail: string | null
+  resourceId: string | null
+  scope: string
+  connectedAt: string | null
+  updatedAt: string | null
 }
 export interface DeploymentDTO {
   id: string
@@ -206,6 +222,26 @@ export const api = {
       method: 'PATCH',
       body: JSON.stringify({ id, status }),
     }),
+  // Human priority override (Phase H). Pass null to clear and fall back to the
+  // engine's rank.
+  setRecommendationPriority: (projectId: string, id: string, userPriority: number | null) =>
+    req<{ recommendation: RecommendationDTO }>(`/api/projects/${projectId}/recommendations`, {
+      method: 'PATCH',
+      body: JSON.stringify({ id, userPriority }),
+    }),
+
+  // external integrations (Phase H — Connect Google: GSC + GA4)
+  listIntegrations: (projectId: string) =>
+    req<{ integrations: IntegrationDTO[] }>(`/api/projects/${projectId}/integrations`),
+  startGoogleConnect: (projectId: string, kind: 'search-console' | 'analytics' | 'all' = 'all') =>
+    req<{ url: string }>(`/api/projects/${projectId}/integrations/google/start?kind=${kind}`),
+  setIntegrationResource: (projectId: string, kind: 'search-console' | 'analytics', resourceId: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/integrations`, {
+      method: 'PATCH',
+      body: JSON.stringify({ kind, resourceId }),
+    }),
+  disconnectIntegration: (projectId: string, kind: 'search-console' | 'analytics') =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/integrations?kind=${kind}`, { method: 'DELETE' }),
 
   // wordpress
   getWordpress: (projectId: string) =>

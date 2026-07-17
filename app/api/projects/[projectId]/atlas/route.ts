@@ -8,7 +8,7 @@ import { handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { latestScanPages } from '@/lib/foundation/operator/context'
 import { toPageSignals } from '@/lib/foundation/reco/signals'
-import { assembleAtlas, disconnectedProviderSet } from '@/lib/foundation/external/service'
+import { assembleAtlas, connectedProviderSet } from '@/lib/foundation/external/service'
 
 export const runtime = 'nodejs'
 
@@ -24,14 +24,19 @@ export const GET = handled(async (request, { params }) => {
   ])
   const ourPages = rawPages.map(toPageSignals)
 
+  const now = new Date().toISOString()
+  // Resolve the project's REAL providers from its connected integrations (Phase
+  // H). Google Search Console / Analytics become live when connected; otherwise
+  // (and for any provider still unreachable in this environment) they degrade
+  // gracefully to Unavailable — never fabricated.
+  const providers = await connectedProviderSet(store, projectId, { domain: project.domain }, Date.parse(now))
+
   const snapshot = await assembleAtlas({
-    now: new Date().toISOString(),
+    now,
     project: { domain: project.domain, name: project.name },
     ourPages,
     competitors,
-    // Real providers would be resolved from the project's connected integrations
-    // here; none are reachable in this environment, so we degrade gracefully.
-    providers: disconnectedProviderSet(),
+    providers,
   })
 
   return Response.json({ snapshot })

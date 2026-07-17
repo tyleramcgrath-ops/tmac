@@ -9,7 +9,7 @@
 // guidance.
 
 import { useCallback, useEffect, useState } from 'react'
-import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
+import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
@@ -40,15 +40,22 @@ function OverlapCell({ label, o }: { label: string; o: ObservationDTO<number> })
 export function AtlasTab({ projectId }: { projectId: string }) {
   const [snapshot, setSnapshot] = useState<AtlasSnapshotDTO | null>(null)
   const [competitors, setCompetitors] = useState<CompetitorDTO[]>([])
+  const [integrations, setIntegrations] = useState<IntegrationDTO[]>([])
   const [domain, setDomain] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [connectNotice, setConnectNotice] = useState<{ ok: boolean; text: string } | null>(null)
 
   const load = useCallback(async () => {
     try {
-      const [{ snapshot }, { competitors }] = await Promise.all([api.getAtlas(projectId), api.listCompetitors(projectId)])
+      const [{ snapshot }, { competitors }, { integrations }] = await Promise.all([
+        api.getAtlas(projectId),
+        api.listCompetitors(projectId),
+        api.listIntegrations(projectId),
+      ])
       setSnapshot(snapshot)
       setCompetitors(competitors)
+      setIntegrations(integrations)
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Could not load Mission Atlas.')
       setSnapshot(null)
@@ -57,6 +64,45 @@ export function AtlasTab({ projectId }: { projectId: string }) {
   useEffect(() => {
     void load()
   }, [load])
+
+  // Surface the result of the Google OAuth round-trip (?google=connected|error).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const g = params.get('google')
+    if (!g) return
+    if (g === 'connected') setConnectNotice({ ok: true, text: 'Google connected. Search Console & Analytics are now live for this project.' })
+    else setConnectNotice({ ok: false, text: `Google connection failed: ${params.get('reason') ?? 'unknown error'}` })
+    // Clean the query so a refresh doesn't repeat the banner.
+    const url = new URL(window.location.href)
+    ;['google', 'reason', 'tab'].forEach((k) => url.searchParams.delete(k))
+    window.history.replaceState({}, '', url.toString())
+  }, [])
+
+  async function connectGoogle() {
+    setError('')
+    try {
+      const { url } = await api.startGoogleConnect(projectId, 'all')
+      window.location.href = url
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not start Google connect. Is GOOGLE_CLIENT_ID configured?')
+    }
+  }
+  async function disconnect(kind: 'search-console' | 'analytics') {
+    try {
+      await api.disconnectIntegration(projectId, kind)
+      await load()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not disconnect.')
+    }
+  }
+  async function saveResource(kind: 'search-console' | 'analytics', resourceId: string) {
+    try {
+      await api.setIntegrationResource(projectId, kind, resourceId)
+      await load()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not save.')
+    }
+  }
 
   async function addCompetitor(e: React.FormEvent) {
     e.preventDefault()
@@ -114,22 +160,25 @@ export function AtlasTab({ projectId }: { projectId: string }) {
         </div>
       </div>
 
-      {/* Provider connections */}
-      <div className="rf-card p-4">
-        <p className="mb-2 text-sm font-semibold text-white">External data sources</p>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-          {snapshot.providers.length === 0 && <p className="text-xs text-[var(--rf-muted)]">No providers configured.</p>}
-          {snapshot.providers.map((p) => (
-            <div key={p.id} className="rounded border border-[var(--rf-card-line)] px-2 py-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium text-white">{p.kind}</span>
-                <span className={`rf-mono text-[9px] uppercase ${p.state === 'connected' ? 'text-[var(--rf-green)]' : 'text-[var(--rf-faint)]'}`}>{p.state}</span>
-              </div>
-              <p className="text-[10px] leading-tight text-[var(--rf-muted)]">{p.detail}</p>
-            </div>
+      {/* External data sources — Connect Google (Phase H) */}
+      <div className="rf-card space-y-3 p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-white">External data sources</p>
+          <button onClick={connectGoogle} className="rf-btn-primary rounded-lg px-3 py-1.5 text-xs font-semibold">
+            Connect Google
+          </button>
+        </div>
+        {connectNotice && (
+          <p className={`rounded-lg px-3 py-2 text-xs ${connectNotice.ok ? 'bg-[var(--rf-green)]/10 text-[var(--rf-green)]' : 'bg-red-500/10 text-red-300'}`}>{connectNotice.text}</p>
+        )}
+        <div className="grid gap-2 sm:grid-cols-2">
+          {integrations.map((it) => (
+            <GoogleIntegrationCard key={it.kind} it={it} onDisconnect={() => disconnect(it.kind)} onSaveResource={(v) => saveResource(it.kind, v)} />
           ))}
         </div>
-        <p className="mt-2 text-[10px] text-[var(--rf-faint)]">Providers plug in behind stable interfaces. When disconnected, external intelligence is reported as Unavailable — never fabricated.</p>
+        <p className="text-[10px] text-[var(--rf-faint)]">
+          Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
+        </p>
       </div>
 
       {/* Competitors */}
@@ -171,6 +220,41 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+const KIND_LABEL: Record<IntegrationDTO['kind'], string> = {
+  'search-console': 'Search Console',
+  analytics: 'Analytics (GA4)',
+}
+
+function GoogleIntegrationCard({ it, onDisconnect, onSaveResource }: { it: IntegrationDTO; onDisconnect: () => void; onSaveResource: (v: string) => void }) {
+  const [resource, setResource] = useState(it.resourceId ?? '')
+  const connected = it.status === 'connected'
+  const tone = connected ? 'text-[var(--rf-green)]' : it.status === 'error' ? 'text-yellow-300' : 'text-[var(--rf-faint)]'
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium text-white">{KIND_LABEL[it.kind]}</span>
+        <span className={`rf-mono text-[9px] uppercase ${tone}`}>{it.status}</span>
+      </div>
+      <p className="mt-0.5 text-[10px] leading-tight text-[var(--rf-muted)]">{it.detail}</p>
+      {it.accountEmail && <p className="mt-0.5 text-[10px] text-[var(--rf-faint)]">as {it.accountEmail}</p>}
+      {connected && it.kind === 'analytics' && (
+        // GA4 needs a numeric property id to query; capture it here.
+        <div className="mt-2 flex items-end gap-1.5">
+          <div className="flex-1">
+            <Field label="GA4 property ID">
+              <input className={inputClass} placeholder="e.g. 123456789" value={resource} onChange={(e) => setResource(e.target.value)} />
+            </Field>
+          </div>
+          <button onClick={() => onSaveResource(resource)} className="rf-btn-ghost rounded-md px-2 py-1.5 text-[11px]">Save</button>
+        </div>
+      )}
+      {connected && (
+        <button onClick={onDisconnect} className="mt-2 rf-btn-ghost rounded-md px-2 py-1 text-[10px] text-red-300">Disconnect</button>
+      )}
     </div>
   )
 }

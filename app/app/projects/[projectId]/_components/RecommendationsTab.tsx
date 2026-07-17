@@ -38,6 +38,33 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
     }
   }
 
+  // Human priority override (Phase H): move a recommendation up/down by setting
+  // its userPriority just across its neighbour's effective rank, then reload so
+  // the server-side ordering is authoritative.
+  const effRank = (r: RecommendationDTO) => r.userPriority ?? (r.priorityRank ?? 9999)
+  async function move(index: number, dir: -1 | 1) {
+    if (!recs) return
+    const target = index + dir
+    if (target < 0 || target >= recs.length) return
+    const me = recs[index]
+    const neighbour = recs[target]
+    const newPriority = dir < 0 ? effRank(neighbour) - 0.5 : effRank(neighbour) + 0.5
+    try {
+      await api.setRecommendationPriority(projectId, me.id, newPriority)
+      await load()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not reorder.')
+    }
+  }
+  async function resetPriority(id: string) {
+    try {
+      await api.setRecommendationPriority(projectId, id, null)
+      await load()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not reset priority.')
+    }
+  }
+
   if (recs === null) return <Spinner label="Loading recommendations…" />
   if (recs.length === 0) return <EmptyState title="No recommendations yet" detail="Run a scan on the Audit tab. Recommendations are derived from real crawl findings and stored with evidence and confidence." />
 
@@ -45,15 +72,26 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
     <div className="space-y-3">
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
       {metrics && agents.length > 0 && <AgentTeamStrip agents={agents} metrics={metrics} />}
-      {recs.map((r) => (
+      {recs.map((r, index) => (
         <div key={r.id} className="rf-card p-4">
           <div className="flex items-start justify-between gap-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <SeverityDot s={r.severity} />
-                <p className="font-medium text-white">{r.title}</p>
+            <div className="flex items-start gap-2">
+              {/* Priority reorder controls (Phase H) */}
+              <div className="flex flex-col items-center gap-0.5 pt-0.5">
+                <span className="rf-mono text-[10px] text-[var(--rf-faint)]">#{index + 1}</span>
+                <button onClick={() => move(index, -1)} disabled={index === 0} className="rf-btn-ghost rounded px-1 text-[10px] leading-none disabled:opacity-30" title="Move up">▲</button>
+                <button onClick={() => move(index, 1)} disabled={index === recs.length - 1} className="rf-btn-ghost rounded px-1 text-[10px] leading-none disabled:opacity-30" title="Move down">▼</button>
               </div>
-              <p className="mt-1 text-xs text-[var(--rf-muted)]">{r.reasoning}</p>
+              <div>
+                <div className="flex items-center gap-2">
+                  <SeverityDot s={r.severity} />
+                  <p className="font-medium text-white">{r.title}</p>
+                  {r.userPriority !== undefined && (
+                    <button onClick={() => resetPriority(r.id)} className="rf-mono rounded border border-[var(--rf-card-line)] px-1 text-[9px] uppercase text-[var(--rf-blue-bright)]" title="Custom priority — click to reset to the engine's ranking">pinned ✕</button>
+                  )}
+                </div>
+                <p className="mt-1 text-xs text-[var(--rf-muted)]">{r.reasoning}</p>
+              </div>
             </div>
             <StatusChip status={r.status} />
           </div>
@@ -80,7 +118,7 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
                 onClick={() => setDeployRec(r)}
                 className="rf-btn-primary rounded-md px-2.5 py-1 text-[11px] font-semibold"
               >
-                Deploy fix →
+                Fix on WordPress →
               </button>
             )}
           </div>

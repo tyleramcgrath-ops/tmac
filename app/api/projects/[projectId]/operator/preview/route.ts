@@ -17,6 +17,7 @@ export const POST = handled(async (request, { params }) => {
 
   const store = await getStore()
   const pages = await latestScanPages(store, projectId)
+  const sitePages = pages.map((p) => ({ url: String(p.url ?? ''), title: String((p.title as string) ?? '') })).filter((p) => p.url)
   const policy = policyOf(project)
   const all = await store.listRecommendations(projectId)
   const selected = ids.length ? all.filter((r) => ids.includes(r.id)) : all
@@ -26,7 +27,7 @@ export const POST = handled(async (request, { params }) => {
     if (!signals) {
       return { recommendationId: rec.id, actionable: false, note: 'No page signals found for this recommendation (re-run the scan).' }
     }
-    const p = buildOperatorPreview(rec, signals, policy)
+    const p = buildOperatorPreview(rec, signals, policy, { sitePages })
     return {
       recommendationId: rec.id,
       title: rec.title,

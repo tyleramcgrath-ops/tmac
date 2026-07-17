@@ -35,18 +35,26 @@ registries. Therefore, against real third-party services, the following were
 4. **Deployment proven** — `next build` compiles and the Vercel preview deploys.
 5. **Live provider behavior UNPROVEN** — as enumerated above.
 
-## Credential storage status
+## Credential storage status — UPDATED in Phase H (now built)
 
-There is **no encrypted credential store for external providers**. The
-`ProviderConfig.credential` field exists in the type system and drives the
-mock's `unauthorized` / `connected` behavior, but no external credential is ever
-persisted, serialized into a snapshot, returned by an API, or logged — because
-no such storage or connect endpoint exists yet. The AES-256-GCM secret
-encryption used for WordPress app-passwords (`lib/foundation/crypto.ts`) is the
-approved mechanism to reuse when this is built.
+> **Update (Phase H):** the encrypted external-credential store and the Google
+> connect flow described below as "not built" now exist. See
+> `PHASE_H_GOOGLE_AND_FIXES.md`. OAuth token bundles are AES-256-GCM encrypted
+> (`encryptSecret`), stored per `(project, kind)` in `rf_provider_connections`
+> (migration `004`), never returned by an API or logged, and Search Console /
+> Analytics resolve as live providers when connected. What remains unproven is
+> only the **live Google handshake against Google's servers** (blocked by this
+> environment's egress) — the flow is unit-tested end-to-end with an injected
+> fake and goes live when `GOOGLE_CLIENT_ID`/`SECRET` are set on Vercel.
 
-**Live connectors are therefore architecturally defined but NOT
-activation-ready.** This is stated as a limitation, not simulated as readiness.
+*(Original Phase G statement, retained for the record:)* There was **no
+encrypted credential store for external providers**. The `ProviderConfig.credential`
+field existed in the type system and drove the mock's `unauthorized` /
+`connected` behavior, but no external credential was persisted, serialized into a
+snapshot, returned by an API, or logged — because no such storage or connect
+endpoint existed yet. The AES-256-GCM secret encryption used for WordPress
+app-passwords (`lib/foundation/crypto.ts`) was named as the approved mechanism to
+reuse when this was built — and Phase H reused exactly that.
 
 ## Recommended first provider for controlled live validation
 

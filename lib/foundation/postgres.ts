@@ -20,6 +20,7 @@ import type {
   Organization,
   OrgMember,
   Project,
+  ProviderConnection,
   Recommendation,
   Scan,
   User,
@@ -74,6 +75,11 @@ const TABLES = {
     pk: ['id'],
     keys: (d: WpDeployment) => ({ id: d.id, project_id: d.projectId, status: d.status, created_at: d.createdAt }),
   } as TableDesc<WpDeployment>,
+  providerConn: {
+    name: 'rf_provider_connections',
+    pk: ['project_id', 'kind'],
+    keys: (c: ProviderConnection) => ({ project_id: c.projectId, kind: c.kind, created_at: c.createdAt }),
+  } as TableDesc<ProviderConnection>,
   audit: {
     name: 'rf_audit',
     pk: ['id'],
@@ -278,6 +284,27 @@ export class PostgresFoundationStore implements FoundationStore {
       'SELECT data FROM rf_wp_deployments WHERE project_id=$1 ORDER BY created_at DESC',
       [projectId]
     )
+  }
+
+  // ── External provider connections (Phase H) ────────────────────────────────
+  async upsertProviderConnection(conn: ProviderConnection) {
+    await this.ups(TABLES.providerConn, conn)
+  }
+  async getProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
+    const r = await this.rows<ProviderConnection>(
+      'SELECT data FROM rf_provider_connections WHERE project_id=$1 AND kind=$2',
+      [projectId, kind]
+    )
+    return r[0] ?? null
+  }
+  async listProviderConnections(projectId: string) {
+    return this.rows<ProviderConnection>(
+      'SELECT data FROM rf_provider_connections WHERE project_id=$1 ORDER BY kind',
+      [projectId]
+    )
+  }
+  async deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
+    await this.pool.query('DELETE FROM rf_provider_connections WHERE project_id=$1 AND kind=$2', [projectId, kind])
   }
 
   // ── Audit ──────────────────────────────────────────────────────────────────

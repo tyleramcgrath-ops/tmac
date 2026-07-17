@@ -7,7 +7,7 @@
 import type { Recommendation, WpDeployment } from '../types'
 import type { PageSignals } from '../reco/signals'
 import { toPageSignals } from '../reco/signals'
-import { generateFix, ruleIdOf, type GeneratedFix } from './fixgen'
+import { generateFix, ruleIdOf, type FixGenContext, type GeneratedFix } from './fixgen'
 import { charDiff, type Preview } from './diff'
 import { assessSafety, type SafetyAssessment } from './safety'
 import { evaluatePolicy, type AutomationPolicy, type ApprovalDecision } from './policy'
@@ -35,16 +35,19 @@ export function signalsForRecommendation(
 export function buildOperatorPreview(
   rec: Recommendation,
   signals: PageSignals,
-  policy: AutomationPolicy
+  policy: AutomationPolicy,
+  ctx: FixGenContext = {}
 ): OperatorPreview {
   const ruleId = ruleIdOf(rec)
-  const fix = generateFix(ruleId, signals)
+  const fix = generateFix(ruleId, signals, ctx)
   const safety = assessSafety(rec, fix)
   const decision = evaluatePolicy(policy, fix, safety)
 
   const field: Preview['field'] =
     fix.kind === 'title' ? 'title' : fix.kind === 'metaDescription' ? 'metaDescription' : fix.kind === 'schema' ? 'schema' : 'other'
-  const deployable = fix.actionable && (fix.kind === 'title' || fix.kind === 'metaDescription')
+  // Deployable = a supported WordPress write: title/meta OR a body-content
+  // transform (Phase H). schema/alt remain advisory.
+  const deployable = fix.actionable && (fix.kind === 'title' || fix.kind === 'metaDescription' || fix.contentTransform !== undefined)
 
   const preview: Preview = {
     recommendationId: rec.id,

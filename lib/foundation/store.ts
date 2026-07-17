@@ -12,6 +12,7 @@ import type {
   Organization,
   OrgMember,
   Project,
+  ProviderConnection,
   Recommendation,
   Scan,
   User,
@@ -61,6 +62,11 @@ export interface FoundationStore {
   getWpDeployment(id: string): Promise<WpDeployment | null>
   updateWpDeployment(dep: WpDeployment): Promise<void>
   listWpDeployments(projectId: string): Promise<WpDeployment[]>
+  // external provider connections (Phase H — encrypted OAuth credentials)
+  upsertProviderConnection(conn: ProviderConnection): Promise<void>
+  getProviderConnection(projectId: string, kind: ProviderConnection['kind']): Promise<ProviderConnection | null>
+  listProviderConnections(projectId: string): Promise<ProviderConnection[]>
+  deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']): Promise<void>
   // audit log
   appendAudit(entry: AuditLogEntry): Promise<void>
   listAudit(orgId: string, limit?: number): Promise<AuditLogEntry[]>

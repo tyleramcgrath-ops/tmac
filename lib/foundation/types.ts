@@ -122,6 +122,11 @@ export interface Recommendation {
   // Deterministic priority rank (1 = do first) and its numeric score.
   priorityRank?: number
   priorityScore?: number
+  // User-set priority override (Phase H). When present it wins over the
+  // engine's priorityRank for ordering, so a human can force an issue up or
+  // down the list. Lower = higher priority. Cleared (undefined) → fall back to
+  // the engine rank.
+  userPriority?: number
   // Google guidance reference where applicable.
   googleGuidance?: string
   // Structured explainability (Phase C §9).
@@ -165,6 +170,36 @@ export interface Competitor {
   lastSnapshotAt?: string | null
 }
 
+// A connected external provider (Phase H). Holds the ENCRYPTED OAuth token
+// bundle for a project's Google (or future vendor) integration, keyed by
+// (projectId, kind). The secret (access/refresh tokens) lives only inside
+// `credentialEnc` (AES-256-GCM, same primitive as WordPress app-passwords) and
+// is NEVER returned to clients — routes strip it and return only the safe
+// metadata below. There is one row per provider kind so Search Console and
+// Analytics connect independently.
+export type ExternalProviderKind = 'search-console' | 'analytics'
+
+export interface ProviderConnection {
+  projectId: string
+  kind: ExternalProviderKind
+  // Vendor family — 'google' today; the shape is vendor-neutral for later.
+  vendor: 'google'
+  // AES-256-GCM encrypted JSON token bundle { accessToken, refreshToken,
+  // expiresAt, scope }. Never serialized into an API response or a log.
+  credentialEnc: string
+  // Safe, non-secret metadata surfaced to the UI.
+  accountEmail: string | null
+  // GSC site URL ('sc-domain:example.com' or 'https://example.com/') or the
+  // GA4 numeric property id, once known/selected. null until resolved.
+  resourceId: string | null
+  scope: string
+  status: 'connected' | 'error'
+  detail: string
+  connectedBy: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface WpConnection {
   id: string
   projectId: string
@@ -195,7 +230,7 @@ export interface WpDeployment {
   postType: 'posts' | 'pages'
   postUrl: string
   before: { title: string; metaDescription: string; contentHash: string; content: string }
-  after: { title?: string; metaDescription?: string }
+  after: { title?: string; metaDescription?: string; content?: string }
   approvedBy: string
   approvedAt: string
   reason: string
