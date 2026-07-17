@@ -35,7 +35,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="grid min-h-screen place-items-center px-4">
+    <div className="rf-root grid min-h-screen place-items-center bg-[var(--rf-bg)] px-4">
       <div className="w-full max-w-sm">
         <h1 className="mb-1 text-2xl font-semibold text-white">Create your RankForge account</h1>
         <p className="mb-6 text-sm text-[var(--rf-muted)]">A personal workspace is created for you automatically.</p>

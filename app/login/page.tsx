@@ -31,7 +31,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="grid min-h-screen place-items-center px-4">
+    <div className="rf-root grid min-h-screen place-items-center bg-[var(--rf-bg)] px-4">
       <div className="w-full max-w-sm">
         <h1 className="mb-1 text-2xl font-semibold text-white">Sign in to RankForge</h1>
         <p className="mb-6 text-sm text-[var(--rf-muted)]">Access your projects, audits, and deployments.</p>
