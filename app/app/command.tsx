@@ -107,23 +107,30 @@ function buildPriorities(a: Analytics, pages: number, biz: Biz): { list: Priorit
   return { list, totalRevenue: Math.round(totalTraffic * biz.valuePerVisit), totalTraffic }
 }
 
-/* AI Authority — composite of real on-page AI-search signals. */
-function aiAuthority(a: Analytics, pages: number): number {
+/* AI Readiness — an ESTIMATE composed only of measurable on-page signals
+ * from the crawl. This is not a measurement of visibility or citations in
+ * any AI engine — nothing here queries AI engines. Per-engine scores were
+ * removed deliberately: implying engine-level measurement that isn't
+ * performed is fabrication. */
+function aiReadiness(a: Analytics, pages: number): number {
   const schemaPct = pages ? (a.totals.pagesWithSchema / pages) * 100 : 0
   const indexPct = pages ? ((pages - a.totals.nonIndexable) / pages) * 100 : 0
   return clamp(a.categories.ai * 0.5 + schemaPct * 0.2 + indexPct * 0.15 + a.categories.content * 0.15)
 }
 
-const ENGINES: { name: string; mix: (a: Analytics, ai: number) => number }[] = [
-  { name: 'ChatGPT', mix: (a, ai) => ai * 0.6 + a.categories.content * 0.4 },
-  { name: 'Claude', mix: (a, ai) => ai * 0.55 + a.categories.content * 0.45 },
-  { name: 'Gemini', mix: (a, ai) => ai * 0.5 + a.categories.schema * 0.3 + a.categories.technical * 0.2 },
-  { name: 'Perplexity', mix: (a, ai) => ai * 0.65 + a.categories.content * 0.35 },
-  { name: 'Google AI Overview', mix: (a, ai) => ai * 0.45 + a.categories.schema * 0.35 + a.categories.technical * 0.2 },
-  { name: 'Microsoft Copilot', mix: (a, ai) => ai * 0.5 + a.categories.technical * 0.5 },
-  { name: 'Meta AI', mix: (a, ai) => ai * 0.55 + a.categories.content * 0.45 - 4 },
-  { name: 'DeepSeek', mix: (a, ai) => ai * 0.6 + a.categories.content * 0.4 - 7 },
-]
+/* The measurable signals behind the estimate — each is a real, verifiable
+ * fact from the crawl, shown so the number is auditable instead of magic. */
+function readinessSignals(a: Analytics, pages: number): { name: string; value: number; detail: string }[] {
+  const pct = (n: number) => (pages ? Math.round((n / pages) * 100) : 0)
+  return [
+    { name: 'Structured data coverage', value: pct(a.totals.pagesWithSchema), detail: `${a.totals.pagesWithSchema}/${pages} pages have JSON-LD schema` },
+    { name: 'Indexability', value: pct(pages - a.totals.nonIndexable), detail: `${pages - a.totals.nonIndexable}/${pages} pages indexable` },
+    { name: 'Content depth', value: clamp(Math.round((a.totals.avgWordCount / 900) * 100)), detail: `${a.totals.avgWordCount} avg words/page` },
+    { name: 'Content quality score', value: a.categories.content, detail: 'titles, metas, headings, thin-page checks' },
+    { name: 'Technical health', value: a.categories.technical, detail: 'from crawl fix list' },
+    { name: 'HTTPS coverage', value: pct(a.totals.httpsPages), detail: `${a.totals.httpsPages}/${pages} pages on HTTPS` },
+  ]
+}
 
 /* ------------------------------------------------------------------ */
 /* Component                                                           */
@@ -149,7 +156,7 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
     )
   }
 
-  const ai = aiAuthority(a, pages.length)
+  const ai = aiReadiness(a, pages.length)
   const { list: priorities, totalRevenue, totalTraffic } = buildPriorities(a, pages.length, biz)
 
   return (
@@ -178,20 +185,21 @@ export function CommandCenter({ a, pages, pageSpeed, domain, status, onRun, onGo
       {/* ── Signature gauges ── */}
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="rf-card rf-card-hover relative overflow-hidden p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">AI Authority Score</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">AI Readiness Estimate</p>
           <div className="mt-3 flex items-center gap-6">
             <BigGauge value={ai} />
             <div className="min-w-0 flex-1">
-              <p className="text-sm text-[var(--rf-muted)]">{ai >= 80 ? 'Excellent — AI engines can read, trust, and cite this site.' : ai >= 60 ? 'Good — a few structural upgrades will earn more AI citations.' : 'AI engines struggle to cite this site. Fix schema and structure first.'}</p>
-              <p className="mt-2 rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">On-page readiness, computed from your crawl</p>
+              <p className="text-sm text-[var(--rf-muted)]">{ai >= 80 ? 'Strong structural readiness — schema, indexability, and content depth are in good shape.' : ai >= 60 ? 'Decent structure — a few upgrades (schema, FAQs, depth) would improve machine readability.' : 'Weak structural readiness. Fix schema coverage and content structure first.'}</p>
+              <p className="mt-2 rf-mono text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">Estimate from crawl signals only — not a measurement of AI-engine visibility or citations</p>
             </div>
           </div>
           <div className="mt-4 grid gap-1.5 sm:grid-cols-2">
-            {ENGINES.map((e, i) => { const v = clamp(e.mix(a, ai)); return (
-              <div key={e.name}>
-                <div className="mb-0.5 flex items-center justify-between text-[11px]"><span className="text-[var(--rf-muted)]">{e.name}</span><span className="rf-mono text-white">{v}</span></div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.05]"><div className="h-full rounded-full bg-gradient-to-r from-[var(--rf-blue)] to-[var(--rf-cyan)]" style={{ width: `${v}%`, animation: `rf-grow-x 0.9s cubic-bezier(0.2,0.7,0.2,1) ${i * 60}ms both`, transformOrigin: 'left' }} /></div>
-              </div>) })}
+            {readinessSignals(a, pages.length).map((s, i) => (
+              <div key={s.name} title={s.detail}>
+                <div className="mb-0.5 flex items-center justify-between text-[11px]"><span className="text-[var(--rf-muted)]">{s.name}</span><span className="rf-mono text-white">{s.value}</span></div>
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.05]"><div className="h-full rounded-full bg-gradient-to-r from-[var(--rf-blue)] to-[var(--rf-cyan)]" style={{ width: `${s.value}%`, animation: `rf-grow-x 0.9s cubic-bezier(0.2,0.7,0.2,1) ${i * 60}ms both`, transformOrigin: 'left' }} /></div>
+                <p className="mt-0.5 text-[10px] text-[var(--rf-faint)]">{s.detail}</p>
+              </div>))}
           </div>
         </div>
 
