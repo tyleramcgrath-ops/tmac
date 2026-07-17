@@ -10,7 +10,8 @@
     "test": "vitest run",
     "type-check": "tsc --noEmit",
     "db:migrate": "node --experimental-strip-types scripts/migrate.mjs",
-    "db:migrate:prod": "node --experimental-strip-types scripts/migrate.mjs"
+    "db:migrate:prod": "node --experimental-strip-types scripts/migrate.mjs",
+    "test:e2e": "bash scripts/e2e.sh"
   },
   "dependencies": {
     "@ai-sdk/gateway": "3.0.59",
@@ -54,6 +55,7 @@
     "zustand": "5.0.6"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@types/ms": "2.1.0",
     "@types/node": "^20",
