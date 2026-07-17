@@ -1,10 +1,19 @@
-// Persist a completed crawl as a Scan and derive stored, evidence-backed
-// recommendations from it (A8). The client runs the batched /api/crawl loop
-// and posts the final result here; the server recomputes nothing but stores
-// the verifiable payload plus derived recommendations with provenance.
+// Scan lifecycle + persistence (A6).
+//
+// The crawl runs client-side (batched /api/crawl loop). To guarantee results
+// survive a browser close, the client:
+//   1. POST {action:'start'}                 -> creates a 'running' scan, returns id
+//   2. POST {action:'complete', scanId, ...} -> finalizes to completed/partial,
+//                                               derives + persists recommendations
+//   3. POST {action:'fail', scanId, error}   -> marks the scan 'failed' honestly
+// A single-shot POST with pages (no action) is also accepted for convenience
+// and stored as completed/partial in one call.
+//
+// The server recomputes nothing — it stores the verifiable crawl payload and
+// derives evidence-backed recommendations from it.
 
 import { randomUUID } from 'crypto'
-import { audit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { buildRecommendationsFromScan } from '@/lib/foundation/recommendations'
 import { getStore } from '@/lib/foundation/store'
 import type { Scan } from '@/lib/foundation/types'
@@ -16,54 +25,98 @@ interface PageLike {
   fixes?: { severity: string }[]
 }
 
-export const POST = handled(async (request, { params }) => {
-  const user = await requireUser(request)
-  const { projectId } = await params
-  const { project } = await requireProjectRole(user, projectId, 'member')
-
-  const body = (await request.json().catch(() => ({}))) as Record<string, unknown>
-  const pages = Array.isArray(body.pages) ? body.pages : []
-  const blocked = Array.isArray(body.blocked) ? body.blocked : []
-  if (pages.length === 0) {
-    return Response.json({ error: 'A scan needs at least one crawled page.' }, { status: 400 })
-  }
-  if (pages.length > 1000) {
-    return Response.json({ error: 'Scan payload too large.' }, { status: 413 })
-  }
-
-  const typedPages = pages as PageLike[]
-  const severityCount = (sev: string) =>
-    typedPages.reduce((n, p) => n + (p.fixes ?? []).filter((f) => f.severity === sev).length, 0)
-  const siteScore = Math.round(
-    typedPages.reduce((n, p) => n + (p.overall ?? 0), 0) / Math.max(1, typedPages.length)
-  )
-
-  const scan: Scan = {
+function emptyScan(projectId: string, userId: string): Scan {
+  const now = new Date().toISOString()
+  return {
     id: randomUUID(),
     projectId,
-    createdBy: user.id,
-    createdAt: new Date().toISOString(),
+    createdBy: userId,
+    createdAt: now,
+    status: 'running',
+    startedAt: now,
+    completedAt: null,
+    error: null,
+    summary: { pagesCrawled: 0, urlsDiscovered: 0, blockedCount: 0, siteScore: 0, critical: 0, warning: 0, info: 0 },
+    pages: [],
+    blocked: [],
+  }
+}
+
+function finalize(scan: Scan, body: Record<string, unknown>, userId: string): Scan {
+  const pages = Array.isArray(body.pages) ? body.pages : []
+  const blocked = Array.isArray(body.blocked) ? body.blocked : []
+  const typed = pages as PageLike[]
+  const severity = (sev: string) =>
+    typed.reduce((n, p) => n + (p.fixes ?? []).filter((f) => f.severity === sev).length, 0)
+  const siteScore = Math.round(typed.reduce((n, p) => n + (p.overall ?? 0), 0) / Math.max(1, typed.length))
+  return {
+    ...scan,
+    createdBy: scan.createdBy || userId,
+    status: blocked.length > 0 ? 'partial' : 'completed',
+    completedAt: new Date().toISOString(),
+    error: null,
     summary: {
       pagesCrawled: pages.length,
       urlsDiscovered: Number(body.discovered ?? pages.length),
       blockedCount: blocked.length,
       siteScore,
-      critical: severityCount('critical'),
-      warning: severityCount('warning'),
-      info: severityCount('info'),
+      critical: severity('critical'),
+      warning: severity('warning'),
+      info: severity('info'),
     },
     pages,
     blocked,
   }
+}
 
+export const POST = handled(async (request, { params }) => {
+  const user = await requireUser(request)
+  const { projectId } = await params
+  const { project } = await requireProjectRole(user, projectId, 'member')
   const store = await getStore()
-  await store.createScan(scan)
+  const body = (await request.json().catch(() => ({}))) as Record<string, unknown>
+  const action = String(body.action ?? '')
+
+  if (action === 'start') {
+    const scan = emptyScan(projectId, user.id)
+    await store.createScan(scan)
+    await audit(project.orgId, user.id, 'scan.start', scan.id, project.domain)
+    return Response.json({ scan: { id: scan.id, status: scan.status, createdAt: scan.createdAt } }, { status: 201 })
+  }
+
+  if (action === 'fail') {
+    const scan = await store.getScan(String(body.scanId ?? ''))
+    if (!scan || scan.projectId !== projectId) throw new HttpError(404, 'Scan not found.')
+    scan.status = 'cancelled' === body.reason ? 'cancelled' : 'failed'
+    scan.error = String(body.error ?? 'The crawl failed.').slice(0, 500)
+    scan.completedAt = new Date().toISOString()
+    await store.updateScan(scan)
+    await audit(project.orgId, user.id, 'scan.fail', scan.id, scan.error)
+    return Response.json({ scan: { id: scan.id, status: scan.status, error: scan.error } })
+  }
+
+  // 'complete' (finalize an existing running scan) or single-shot (no scanId).
+  const pages = Array.isArray(body.pages) ? body.pages : []
+  if (pages.length === 0) throw new HttpError(400, 'A scan needs at least one crawled page.')
+  if (pages.length > 1000) throw new HttpError(413, 'Scan payload too large.')
+
+  let scan: Scan
+  if (body.scanId) {
+    const existing = await store.getScan(String(body.scanId))
+    if (!existing || existing.projectId !== projectId) throw new HttpError(404, 'Scan not found.')
+    scan = finalize(existing, body, user.id)
+    await store.updateScan(scan)
+  } else {
+    scan = finalize(emptyScan(projectId, user.id), body, user.id)
+    await store.createScan(scan)
+  }
+
   const recommendations = buildRecommendationsFromScan(scan)
   await store.createRecommendations(recommendations)
-  await audit(project.orgId, user.id, 'scan.create', scan.id, `${pages.length} pages, ${recommendations.length} recommendations`)
+  await audit(project.orgId, user.id, 'scan.complete', scan.id, `${scan.status}: ${pages.length} pages, ${recommendations.length} recs`)
 
   return Response.json(
-    { scan: { id: scan.id, createdAt: scan.createdAt, summary: scan.summary }, recommendationCount: recommendations.length },
+    { scan: { id: scan.id, status: scan.status, createdAt: scan.createdAt, summary: scan.summary }, recommendationCount: recommendations.length },
     { status: 201 }
   )
 })
@@ -84,6 +137,13 @@ export const GET = handled(async (request, { params }) => {
   }
   const scans = await store.listScans(projectId, 20)
   return Response.json({
-    scans: scans.map((s) => ({ id: s.id, createdAt: s.createdAt, summary: s.summary })),
+    scans: scans.map((s) => ({
+      id: s.id,
+      status: s.status,
+      createdAt: s.createdAt,
+      completedAt: s.completedAt,
+      error: s.error,
+      summary: s.summary,
+    })),
   })
 })

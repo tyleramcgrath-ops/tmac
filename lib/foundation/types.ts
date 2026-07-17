@@ -40,11 +40,17 @@ export interface Project {
 
 // A persisted crawl/audit run. `pages` is the full crawl payload; `summary`
 // carries the headline numbers so lists don't need the whole blob.
+export type ScanStatus = 'queued' | 'running' | 'completed' | 'partial' | 'failed' | 'cancelled'
+
 export interface Scan {
   id: string
   projectId: string
   createdBy: string
   createdAt: string
+  status: ScanStatus
+  startedAt: string | null
+  completedAt: string | null
+  error: string | null
   summary: {
     pagesCrawled: number
     urlsDiscovered: number
@@ -58,7 +64,15 @@ export interface Scan {
   blocked: unknown[]
 }
 
-export type RecommendationStatus = 'open' | 'accepted' | 'dismissed' | 'deployed'
+export type RecommendationStatus =
+  | 'open'
+  | 'accepted'
+  | 'modified'
+  | 'rejected'
+  | 'deployed'
+  | 'verified'
+  | 'rolled_back'
+  | 'dismissed'
 
 // Every recommendation must answer: Why? Evidence? Confidence? Impact? Risk?
 export interface Recommendation {

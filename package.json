@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "db:migrate": "node --experimental-strip-types scripts/migrate.mjs",
+    "db:migrate:prod": "node --experimental-strip-types scripts/migrate.mjs"
   },
   "dependencies": {
     "@ai-sdk/gateway": "3.0.59",

@@ -37,6 +37,7 @@ export interface FoundationStore {
   listProjects(orgId: string): Promise<Project[]>
   // scans
   createScan(scan: Scan): Promise<void>
+  updateScan(scan: Scan): Promise<void>
   getScan(id: string): Promise<Scan | null>
   listScans(projectId: string, limit?: number): Promise<Scan[]>
   // recommendations
@@ -60,11 +61,13 @@ let cached: FoundationStore | null = null
 
 export async function getStore(): Promise<FoundationStore> {
   if (cached) return cached
-  const dbUrl =
-    process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL
-  if (dbUrl) {
+  // resolveStoreEnv throws in production when DATABASE_URL/APP_SECRET are
+  // missing — no silent file fallback that would lose data on Vercel.
+  const { resolveStoreEnv } = await import('./env')
+  const env = resolveStoreEnv()
+  if (env.kind === 'postgres') {
     const { PostgresFoundationStore } = await import('./postgres')
-    cached = await PostgresFoundationStore.create(dbUrl)
+    cached = await PostgresFoundationStore.create(env.databaseUrl!)
   } else {
     const { FileFoundationStore } = await import('./filestore')
     cached = new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || '.data/foundation')

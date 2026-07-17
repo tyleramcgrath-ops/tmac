@@ -12,11 +12,17 @@ export const GET = handled(async (request, { params }) => {
   return Response.json({ recommendations: await store.listRecommendations(projectId) })
 })
 
+// User-driven transitions. 'deployed'/'verified'/'rolled_back' are set by the
+// WordPress execution flow, not by this endpoint, so they are terminal here.
 const VALID_TRANSITIONS: Record<RecommendationStatus, RecommendationStatus[]> = {
-  open: ['accepted', 'dismissed'],
-  accepted: ['open', 'dismissed', 'deployed'],
+  open: ['accepted', 'modified', 'rejected', 'dismissed'],
+  accepted: ['open', 'modified', 'rejected', 'dismissed'],
+  modified: ['accepted', 'open', 'rejected', 'dismissed'],
+  rejected: ['open'],
   dismissed: ['open'],
-  deployed: [],
+  deployed: ['verified', 'rolled_back'],
+  verified: ['rolled_back'],
+  rolled_back: ['open'],
 }
 
 export const PATCH = handled(async (request, { params }) => {

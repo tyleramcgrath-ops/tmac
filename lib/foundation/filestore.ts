@@ -150,6 +150,9 @@ export class FileFoundationStore implements FoundationStore {
   async createScan(scan: Scan) {
     await this.mutate('scans', (scans) => ({ data: [...scans, scan] }))
   }
+  async updateScan(scan: Scan) {
+    await this.mutate('scans', (scans) => ({ data: scans.map((s) => (s.id === scan.id ? scan : s)) }))
+  }
   async getScan(id: string) {
     return (await this.read('scans')).find((s) => s.id === id) ?? null
   }

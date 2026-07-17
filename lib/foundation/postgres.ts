@@ -5,6 +5,7 @@
 // Schema is created automatically on first connect.
 
 import { Pool } from 'pg'
+import { runMigrations } from './migrate'
 import type { FoundationStore } from './store'
 import type {
   AuditLogEntry,
@@ -18,62 +19,6 @@ import type {
   WpDeployment,
 } from './types'
 
-const SCHEMA = `
-CREATE TABLE IF NOT EXISTS rf_users (
-  id TEXT PRIMARY KEY,
-  email TEXT UNIQUE NOT NULL,
-  data JSONB NOT NULL
-);
-CREATE TABLE IF NOT EXISTS rf_orgs (
-  id TEXT PRIMARY KEY,
-  data JSONB NOT NULL
-);
-CREATE TABLE IF NOT EXISTS rf_members (
-  org_id TEXT NOT NULL,
-  user_id TEXT NOT NULL,
-  data JSONB NOT NULL,
-  PRIMARY KEY (org_id, user_id)
-);
-CREATE TABLE IF NOT EXISTS rf_projects (
-  id TEXT PRIMARY KEY,
-  org_id TEXT NOT NULL,
-  data JSONB NOT NULL
-);
-CREATE INDEX IF NOT EXISTS rf_projects_org_idx ON rf_projects (org_id);
-CREATE TABLE IF NOT EXISTS rf_scans (
-  id TEXT PRIMARY KEY,
-  project_id TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  data JSONB NOT NULL
-);
-CREATE INDEX IF NOT EXISTS rf_scans_project_idx ON rf_scans (project_id, created_at DESC);
-CREATE TABLE IF NOT EXISTS rf_recommendations (
-  id TEXT PRIMARY KEY,
-  project_id TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  data JSONB NOT NULL
-);
-CREATE INDEX IF NOT EXISTS rf_recs_project_idx ON rf_recommendations (project_id, created_at DESC);
-CREATE TABLE IF NOT EXISTS rf_wp_connections (
-  project_id TEXT PRIMARY KEY,
-  data JSONB NOT NULL
-);
-CREATE TABLE IF NOT EXISTS rf_wp_deployments (
-  id TEXT PRIMARY KEY,
-  project_id TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  data JSONB NOT NULL
-);
-CREATE INDEX IF NOT EXISTS rf_wp_deps_project_idx ON rf_wp_deployments (project_id, created_at DESC);
-CREATE TABLE IF NOT EXISTS rf_audit (
-  id TEXT PRIMARY KEY,
-  org_id TEXT NOT NULL,
-  at TEXT NOT NULL,
-  data JSONB NOT NULL
-);
-CREATE INDEX IF NOT EXISTS rf_audit_org_idx ON rf_audit (org_id, at DESC);
-`
-
 export class PostgresFoundationStore implements FoundationStore {
   private pool: Pool
 
@@ -84,7 +29,12 @@ export class PostgresFoundationStore implements FoundationStore {
   static async create(url: string): Promise<PostgresFoundationStore> {
     const ssl = /localhost|127\.0\.0\.1/.test(url) ? undefined : { rejectUnauthorized: false }
     const pool = new Pool({ connectionString: url, ssl, max: 5 })
-    await pool.query(SCHEMA)
+    // Schema comes from versioned migrations, not request-time DDL. Running
+    // here is idempotent (skips already-applied) and safe on cold start; the
+    // authoritative path is the `pnpm db:migrate` CLI in deploy.
+    if (process.env.RF_SKIP_MIGRATE_ON_CONNECT !== '1') {
+      await runMigrations(pool)
+    }
     return new PostgresFoundationStore(pool)
   }
 
@@ -167,10 +117,15 @@ export class PostgresFoundationStore implements FoundationStore {
   }
 
   async createScan(scan: Scan) {
-    await this.pool.query('INSERT INTO rf_scans (id, project_id, created_at, data) VALUES ($1,$2,$3,$4)', [
+    await this.pool.query(
+      'INSERT INTO rf_scans (id, project_id, status, created_at, data) VALUES ($1,$2,$3,$4,$5)',
+      [scan.id, scan.projectId, scan.status, scan.createdAt, scan]
+    )
+  }
+  async updateScan(scan: Scan) {
+    await this.pool.query('UPDATE rf_scans SET status=$2, data=$3 WHERE id=$1', [
       scan.id,
-      scan.projectId,
-      scan.createdAt,
+      scan.status,
       scan,
     ])
   }
@@ -188,8 +143,8 @@ export class PostgresFoundationStore implements FoundationStore {
   async createRecommendations(recs: Recommendation[]) {
     for (const rec of recs) {
       await this.pool.query(
-        'INSERT INTO rf_recommendations (id, project_id, created_at, data) VALUES ($1,$2,$3,$4)',
-        [rec.id, rec.projectId, rec.createdAt, rec]
+        'INSERT INTO rf_recommendations (id, project_id, scan_id, status, created_at, data) VALUES ($1,$2,$3,$4,$5,$6)',
+        [rec.id, rec.projectId, rec.scanId, rec.status, rec.createdAt, rec]
       )
     }
   }
