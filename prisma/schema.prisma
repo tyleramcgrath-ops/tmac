@@ -200,6 +200,7 @@ model Organization {
   autonomyPolicies      AutonomyPolicy[]
   autonomyDecisionLogs  AutonomyDecisionLog[]
   autonomyMetrics       AutonomyMetrics[]
+  scheduledJobs         ScheduledJob[]
 
   @@index([slug])
   @@index([createdAt])
@@ -352,11 +353,64 @@ model Project {
   autonomyDecisionLogs AutonomyDecisionLog[]
   autonomyMetrics      AutonomyMetrics[]
 
+  // Scheduling & freshness
+  scheduledJobs        ScheduledJob[]
+
   @@unique([organizationId, domain])
   @@index([organizationId])
   @@index([status])
   @@index([isFavorite])
   @@index([createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCHEDULING & FRESHNESS (background jobs)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ScheduledJob {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String
+  jobType        String    // crawl, gsc_sync, ga4_sync, priority_rankings, ...
+  enabled        Boolean   @default(true)
+  frequency      String    @default("daily") // hourly, daily, weekly, after_source_update, after_deployment, manual
+  timezone       String    @default("UTC")
+  tzOffsetMinutes Int      @default(0)
+  preferredHour  Int       @default(6)
+
+  // Scheduling state
+  status         String    @default("scheduled") // scheduled, queued, running, completed, completed_with_warnings, retrying, failed, paused, blocked, not_configured
+  lastAttemptAt  DateTime?
+  lastSuccessAt  DateTime?
+  lastFailureAt  DateTime?
+  nextRunAt      DateTime?
+  durationMs     Int?
+  retryCount     Int       @default(0)
+  maxRetries     Int       @default(3)
+  failureReason  String?
+  failureClass   String?   // retryable, waiting_for_configuration, waiting_for_user_action, permanent
+
+  // Locking (duplicate prevention for concurrent workers)
+  lockedAt       DateTime?
+  lockExpiresAt  DateTime?
+  idempotencyKey String?   // project:jobType:window — unique per in-flight window
+
+  // Bookkeeping
+  dataPeriod     String?   // the data window this run processes
+  recordsProcessed Int?
+  createdBy      String?
+  updatedBy      String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, jobType])
+  @@index([organizationId])
+  @@index([projectId])
+  @@index([status])
+  @@index([nextRunAt])
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

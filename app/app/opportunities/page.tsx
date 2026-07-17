@@ -5,12 +5,14 @@ import { Loader2, AlertTriangle, Zap, ArrowLeft, Target, ExternalLink, Search } 
 
 type Effort = 'low' | 'medium' | 'high'
 type Risk = 'low' | 'medium' | 'high'
+interface Estimate { metric: string; value: number | null; explanation: string; inputs: Record<string, unknown>; confidence: number; missing: string[] }
 interface Opportunity {
-  id: string; projectId: string; projectName: string | null; domain: string | null
+  id: string; projectId: string; projectName?: string | null; domain?: string | null
   page: string | null; keyword: string | null; type: string; title: string
-  whyItMatters: string; businessValue: number; expectedReturn: number
-  effort: Effort; risk: Risk; confidence: number; evidence: string[]
-  dataSource: string; recommendedFix: string; status: string
+  primaryReason: string; supportingSignals: string[]; conflictingSignals: string[]
+  businessValue: number; expectedReturn: number; effort: Effort; risk: Risk; confidence: number
+  priorityScore: number; dataSources: string[]; recommendedFix: string
+  capability: string; estimate: Estimate | null; missingEvidence: string[]
 }
 interface OppResponse {
   ok: boolean; generatedAt: string
@@ -20,9 +22,13 @@ interface OppResponse {
 
 const TYPE_LABEL: Record<string, string> = {
   ranking: 'Ranking', ctr: 'CTR', traffic_recovery: 'Traffic recovery', conversion: 'Conversion',
-  technical: 'Technical', content_gap: 'Content gap', content_decay: 'Content decay',
-  internal_linking: 'Internal links', schema: 'Schema', cannibalization: 'Cannibalization',
-  local: 'Local', ai_search: 'AI search', money_page: 'Money page', new_keyword: 'New keyword', lost_keyword: 'Lost keyword',
+  tracking_quality: 'Tracking gap', strong_conversion_weak_ranking: 'Converts, under-ranks',
+  deployment_regression: 'Deploy regression', technical: 'Technical', schema: 'Schema', content_gap: 'Content gap',
+}
+const CAPABILITY_LABEL: Record<string, string> = {
+  ready_to_generate: 'Ready to generate', ready_to_preview: 'Ready to preview', ready_for_approval: 'Ready for approval',
+  ready_to_deploy: 'Ready to deploy', waiting_for_wordpress: 'Waiting for WordPress', waiting_for_data: 'Waiting for data',
+  waiting_for_permissions: 'Waiting for permissions', blocked: 'Blocked', completed: 'Completed', measuring_outcome: 'Measuring outcome',
 }
 const EFFORT_COLOR: Record<Effort, string> = { low: 'var(--rf-green)', medium: 'var(--rf-amber)', high: 'var(--rf-red)' }
 const RISK_COLOR: Record<Risk, string> = { low: 'var(--rf-green)', medium: 'var(--rf-amber)', high: 'var(--rf-red)' }
@@ -103,8 +109,13 @@ export default function OpportunitiesPage() {
                           <span className="inline-flex items-center rounded-full bg-[var(--rf-blue)]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--rf-blue-bright)]">{TYPE_LABEL[o.type] ?? o.type}</span>
                           {o.projectName && <span className="text-[11px] text-[var(--rf-faint)]">{o.projectName}</span>}
                         </div>
-                        <p className="mt-1.5 text-sm font-medium text-white">{o.title}</p>
-                        <p className="mt-1 text-xs text-[var(--rf-muted)]">{o.whyItMatters}</p>
+                        <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                          <p className="text-sm font-medium text-white">{o.title}</p>
+                          <span className="rounded-full bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium text-[var(--rf-muted)]">{CAPABILITY_LABEL[o.capability] ?? o.capability}</span>
+                        </div>
+                        <p className="mt-1 text-xs text-[var(--rf-muted)]">{o.primaryReason}</p>
+                        {o.supportingSignals.length > 0 && <p className="mt-1 text-[11px] text-[var(--rf-faint)]">Supporting: {o.supportingSignals.join(' · ')}</p>}
+                        {o.conflictingSignals.length > 0 && <p className="mt-1 text-[11px] text-[var(--rf-amber)]">Conflicting: {o.conflictingSignals.join(' · ')}</p>}
                       </div>
                       <div className="shrink-0 text-right">
                         <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">Business value</p>
@@ -116,9 +127,16 @@ export default function OpportunitiesPage() {
                       <span className="text-[var(--rf-muted)]">Effort <span className="font-semibold" style={{ color: EFFORT_COLOR[o.effort] }}>{o.effort}</span></span>
                       <span className="text-[var(--rf-muted)]">Risk <span className="font-semibold" style={{ color: RISK_COLOR[o.risk] }}>{o.risk}</span></span>
                       <span className="text-[var(--rf-muted)]">Confidence <span className="font-semibold text-white">{Math.round(o.confidence * 100)}%</span></span>
-                      <span className="rf-mono text-[var(--rf-faint)]">source: {o.dataSource}</span>
+                      <span className="rf-mono text-[var(--rf-faint)]">sources: {o.dataSources.join(', ')}</span>
                       {o.page && <a href={o.page} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[var(--rf-blue-bright)] hover:text-white">page <ExternalLink className="h-3 w-3" /></a>}
                     </div>
+                    {o.estimate && (
+                      <div className="mt-2.5 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2">
+                        <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">Estimate · {o.estimate.metric.replace(/_/g, ' ')}</p>
+                        <p className="mt-0.5 text-xs text-white">{o.estimate.value != null ? o.estimate.value.toLocaleString() : 'Insufficient data to estimate.'}</p>
+                        <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{o.estimate.explanation}{o.estimate.missing.length > 0 ? ` · missing: ${o.estimate.missing.join(', ')}` : ''}</p>
+                      </div>
+                    )}
                     <div className="mt-2.5 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2">
                       <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">Recommended fix</p>
                       <p className="mt-0.5 text-xs text-[var(--rf-text)]">{o.recommendedFix}</p>
@@ -127,7 +145,7 @@ export default function OpportunitiesPage() {
                 ))}
               </div>
             )}
-            <p className="text-center text-[11px] text-[var(--rf-faint)]">Generated {new Date(data.generatedAt).toLocaleString()} from real crawl and ranking data.</p>
+            <p className="text-center text-[11px] text-[var(--rf-faint)]">Generated {new Date(data.generatedAt).toLocaleString()} from fused crawl, ranking, GSC, and GA4 evidence.</p>
           </div>
         )}
       </main>
