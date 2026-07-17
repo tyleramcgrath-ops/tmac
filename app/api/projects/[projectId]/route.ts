@@ -11,7 +11,14 @@ export const GET = handled(async (request, { params }) => {
   const scans = await store.listScans(projectId, 10)
   return Response.json({
     project,
-    scans: scans.map((s) => ({ id: s.id, createdAt: s.createdAt, summary: s.summary })),
+    scans: scans.map((s) => ({
+      id: s.id,
+      status: s.status,
+      createdAt: s.createdAt,
+      completedAt: s.completedAt,
+      error: s.error,
+      summary: s.summary,
+    })),
   })
 })
 
