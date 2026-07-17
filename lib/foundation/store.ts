@@ -8,6 +8,7 @@
 
 import type {
   AuditLogEntry,
+  Competitor,
   Organization,
   OrgMember,
   Project,
@@ -42,6 +43,13 @@ export interface FoundationStore {
   getScan(id: string): Promise<Scan | null>
   listScans(projectId: string, limit?: number): Promise<Scan[]>
   // recommendations
+  // competitors (Phase G)
+  createCompetitor(competitor: Competitor): Promise<void>
+  updateCompetitor(competitor: Competitor): Promise<void>
+  listCompetitors(projectId: string): Promise<Competitor[]>
+  getCompetitor(id: string): Promise<Competitor | null>
+  deleteCompetitor(id: string): Promise<void>
+
   createRecommendations(recs: Recommendation[]): Promise<void>
   getRecommendation(id: string): Promise<Recommendation | null>
   updateRecommendation(rec: Recommendation): Promise<void>

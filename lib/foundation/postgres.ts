@@ -16,6 +16,7 @@ import { runMigrations } from './migrate'
 import type { FoundationStore } from './store'
 import type {
   AuditLogEntry,
+  Competitor,
   Organization,
   OrgMember,
   Project,
@@ -58,6 +59,11 @@ const TABLES = {
     pk: ['id'],
     keys: (r: Recommendation) => ({ id: r.id, project_id: r.projectId, scan_id: r.scanId, status: r.status, created_at: r.createdAt }),
   } as TableDesc<Recommendation>,
+  competitors: {
+    name: 'rf_competitors',
+    pk: ['id'],
+    keys: (c: Competitor) => ({ id: c.id, project_id: c.projectId, domain: c.domain, created_at: c.createdAt }),
+  } as TableDesc<Competitor>,
   wpConn: {
     name: 'rf_wp_connections',
     pk: ['project_id'],
@@ -229,6 +235,24 @@ export class PostgresFoundationStore implements FoundationStore {
       'SELECT data FROM rf_recommendations WHERE project_id=$1 ORDER BY created_at DESC',
       [projectId]
     )
+  }
+
+  // ── Competitors (Phase G) ────────────────────────────────────────────────
+  async createCompetitor(competitor: Competitor) {
+    await this.ins(TABLES.competitors, competitor)
+  }
+  async updateCompetitor(competitor: Competitor) {
+    await this.upd(TABLES.competitors, competitor)
+  }
+  async listCompetitors(projectId: string) {
+    return this.rows<Competitor>('SELECT data FROM rf_competitors WHERE project_id=$1 ORDER BY created_at DESC', [projectId])
+  }
+  async getCompetitor(id: string) {
+    const r = await this.rows<Competitor>('SELECT data FROM rf_competitors WHERE id=$1', [id])
+    return r[0] ?? null
+  }
+  async deleteCompetitor(id: string) {
+    await this.pool.query('DELETE FROM rf_competitors WHERE id=$1', [id])
   }
 
   // ── WordPress ──────────────────────────────────────────────────────────────

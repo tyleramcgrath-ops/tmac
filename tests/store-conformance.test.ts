@@ -14,7 +14,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import type { FoundationStore } from '../lib/foundation/store'
-import type { Organization, Project, Recommendation, Scan, User, WpConnection, WpDeployment } from '../lib/foundation/types'
+import type { Competitor, Organization, Project, Recommendation, Scan, User, WpConnection, WpDeployment } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'store-conformance-secret-01'
 
@@ -130,6 +130,16 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       await store.updateWpDeployment({ ...dep, status: 'verified' })
       expect((await store.getWpDeployment(dep.id))?.status).toBe('verified')
       expect((await store.listWpDeployments(p.id)).map((x) => x.id)).toContain(dep.id)
+
+      // competitors (Phase G)
+      const comp: Competitor = { id: uid(), projectId: p.id, domain: 'rival.com', label: 'Rival', addedBy: u.id, createdAt: now() }
+      await store.createCompetitor(comp)
+      expect((await store.getCompetitor(comp.id))?.domain).toBe('rival.com')
+      await store.updateCompetitor({ ...comp, label: 'Rival Inc', overlap: { topicOverlap: 0.4 } })
+      expect((await store.getCompetitor(comp.id))?.label).toBe('Rival Inc')
+      expect((await store.listCompetitors(p.id)).map((c) => c.id)).toContain(comp.id)
+      await store.deleteCompetitor(comp.id)
+      expect(await store.getCompetitor(comp.id)).toBeNull()
 
       // audit
       await store.appendAudit({ id: uid(), orgId: o.id, actorId: u.id, action: 'x', target: 't', detail: '', at: now() })

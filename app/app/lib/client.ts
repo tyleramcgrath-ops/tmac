@@ -265,6 +265,63 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify({ policy }),
     }),
+
+  // external intelligence (Phase G — Mission Atlas)
+  listCompetitors: (projectId: string) =>
+    req<{ competitors: CompetitorDTO[] }>(`/api/projects/${projectId}/competitors`),
+  addCompetitor: (projectId: string, domain: string, label?: string) =>
+    req<{ competitor: CompetitorDTO }>(`/api/projects/${projectId}/competitors`, {
+      method: 'POST',
+      body: JSON.stringify({ domain, label }),
+    }),
+  deleteCompetitor: (projectId: string, id: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/competitors?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
+}
+
+// ── Mission Atlas DTOs (Phase G) ─────────────────────────────────────────────
+export type EvidenceGradeDTO = 'observed' | 'imported' | 'estimated' | 'unavailable'
+export interface EvidenceDTO { grade: EvidenceGradeDTO; source: string; fetchedAt: string | null; note?: string }
+export interface ObservationDTO<T> { value: T | null; evidence: EvidenceDTO; confidence: number | 'unknown' }
+export interface CompetitorDTO {
+  id: string
+  domain: string
+  label: string
+  createdAt: string
+}
+export interface OverlapDTO {
+  businessOverlap: ObservationDTO<number>
+  topicOverlap: ObservationDTO<number>
+  serviceOverlap: ObservationDTO<number>
+  entityOverlap: ObservationDTO<number>
+  contentOverlap: ObservationDTO<number>
+  authorityOverlap: ObservationDTO<number>
+}
+export interface ProviderStatusDTO { id: string; kind: string; state: string; detail: string; lastCheckedAt: string | null }
+export interface BriefingItemDTO { title: string; detail: string; evidence: EvidenceDTO; confidence: number | 'unknown' }
+export interface MorningBriefingDTO {
+  date: string
+  headline: string
+  yesterday: BriefingItemDTO[]
+  overnight: BriefingItemDTO[]
+  newOpportunities: BriefingItemDTO[]
+  newThreats: BriefingItemDTO[]
+  recommendedMission: string
+  evidenceSummary: Record<EvidenceGradeDTO, number>
+  confidence: number | 'unknown'
+}
+export interface AtlasSnapshotDTO {
+  generatedAt: string
+  providers: ProviderStatusDTO[]
+  competitors: { competitor: CompetitorDTO; overlap: OverlapDTO }[]
+  aiVisibility: ObservationDTO<unknown[]>
+  backlinks: ObservationDTO<unknown>
+  gsc: ObservationDTO<unknown>
+  analytics: ObservationDTO<unknown>
+  trends: ObservationDTO<unknown>
+  changes: { category: string; subject: string; note: string; evidence: EvidenceDTO }[]
+  briefing: MorningBriefingDTO
+  grades: Record<EvidenceGradeDTO, number>
 }
 
 export interface DiffSeg {

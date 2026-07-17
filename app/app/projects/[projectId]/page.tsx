@@ -16,8 +16,9 @@ import { RecommendationsTab } from './_components/RecommendationsTab'
 import { OperatorTab } from './_components/OperatorTab'
 import { WordPressTab } from './_components/WordPressTab'
 import { HistoryTab } from './_components/HistoryTab'
+import { AtlasTab } from './_components/AtlasTab'
 
-type Tab = 'audit' | 'recommendations' | 'operator' | 'wordpress' | 'history'
+type Tab = 'audit' | 'recommendations' | 'operator' | 'atlas' | 'wordpress' | 'history'
 
 export default function ProjectDetailPage({ params }: { params: Promise<{ projectId: string }> }) {
   const { projectId } = use(params)
@@ -52,6 +53,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
     { id: 'audit', label: 'Audit' },
     { id: 'recommendations', label: 'Recommendations' },
     { id: 'operator', label: 'Operator' },
+    { id: 'atlas', label: 'Atlas' },
     { id: 'wordpress', label: 'WordPress' },
     { id: 'history', label: 'History' },
   ]
@@ -82,6 +84,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
       {tab === 'audit' && <AuditTab project={project} scans={scans} onScanDone={load} />}
       {tab === 'recommendations' && <RecommendationsTab projectId={projectId} />}
       {tab === 'operator' && <OperatorTab projectId={projectId} />}
+      {tab === 'atlas' && <AtlasTab projectId={projectId} />}
       {tab === 'wordpress' && <WordPressTab projectId={projectId} />}
       {tab === 'history' && <HistoryTab scans={scans} />}
     </div>

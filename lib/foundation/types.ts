@@ -150,6 +150,21 @@ export interface Recommendation {
   history: { at: string; by: string; from: RecommendationStatus; to: RecommendationStatus }[]
 }
 
+// A tracked competitor (Phase G §1). Overlap metrics are computed from real
+// crawls when available and graded; never invented. Stored per project.
+export interface Competitor {
+  id: string
+  projectId: string
+  domain: string
+  label: string
+  addedBy: string
+  createdAt: string
+  // Last computed overlap snapshot (graded Observations); JSONB, optional.
+  overlap?: unknown
+  // Last external-intelligence snapshot fetched for this competitor; optional.
+  lastSnapshotAt?: string | null
+}
+
 export interface WpConnection {
   id: string
   projectId: string

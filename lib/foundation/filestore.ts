@@ -7,6 +7,7 @@ import path from 'path'
 import type { FoundationStore } from './store'
 import type {
   AuditLogEntry,
+  Competitor,
   Organization,
   OrgMember,
   Project,
@@ -24,6 +25,7 @@ type Collections = {
   projects: Project[]
   scans: Scan[]
   recommendations: Recommendation[]
+  competitors: Competitor[]
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
   audit: AuditLogEntry[]
@@ -36,6 +38,7 @@ const EMPTY: Collections = {
   projects: [],
   scans: [],
   recommendations: [],
+  competitors: [],
   wpConnections: [],
   wpDeployments: [],
   audit: [],
@@ -184,6 +187,25 @@ export class FileFoundationStore implements FoundationStore {
     return (await this.read('recommendations'))
       .filter((r) => r.projectId === projectId)
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+
+  // competitors (Phase G)
+  async createCompetitor(competitor: Competitor) {
+    await this.mutate('competitors', (all) => ({ data: [...all, competitor] }))
+  }
+  async updateCompetitor(competitor: Competitor) {
+    await this.mutate('competitors', (all) => ({ data: all.map((c) => (c.id === competitor.id ? competitor : c)) }))
+  }
+  async listCompetitors(projectId: string) {
+    return (await this.read('competitors'))
+      .filter((c) => c.projectId === projectId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+  async getCompetitor(id: string) {
+    return (await this.read('competitors')).find((c) => c.id === id) ?? null
+  }
+  async deleteCompetitor(id: string) {
+    await this.mutate('competitors', (all) => ({ data: all.filter((c) => c.id !== id) }))
   }
 
   // wordpress
