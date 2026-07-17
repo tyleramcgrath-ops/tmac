@@ -63,7 +63,7 @@ function ProjectsInner({ projects, setProjects, error, creating, setCreating }: 
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
           {projects.map((p) => (
-            <Link key={p.id} href={`/app/projects/${p.id}`} className="rf-card rf-card-hover block p-4">
+            <Link key={p.id} href={`/projects/${p.id}`} className="rf-card rf-card-hover block p-4">
               <p className="font-semibold text-white">{p.name}</p>
               <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{p.domain}</p>
               {p.industry && <p className="mt-1 text-xs text-[var(--rf-muted)]">{p.industry}</p>}

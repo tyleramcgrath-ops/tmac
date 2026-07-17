@@ -258,6 +258,22 @@ export const api = {
       `/api/projects/${projectId}/wordpress`,
       { method: 'POST', body: JSON.stringify({ action: 'resolve', url }) }
     ),
+  // Browse & one-click optimize (restored classic flow).
+  listWordpressItems: (projectId: string, postType: 'posts' | 'pages') =>
+    req<{ items: { id: number; link: string; title: string; status: string }[] }>(
+      `/api/projects/${projectId}/wordpress`,
+      { method: 'POST', body: JSON.stringify({ action: 'list', postType }) }
+    ),
+  getWordpressItem: (projectId: string, postType: 'posts' | 'pages', postId: number) =>
+    req<{ post: { postId: number; postType: 'posts' | 'pages'; title: string; metaDescription: string; content: string; link: string } }>(
+      `/api/projects/${projectId}/wordpress`,
+      { method: 'POST', body: JSON.stringify({ action: 'get', postType, postId }) }
+    ),
+  forgeRewrite: (input: { url: string; currentTitle: string; currentMeta: string; excerpt: string }) =>
+    req<{ seoTitle?: string; metaDescription?: string; jsonLd?: string; rationale?: string }>(
+      '/api/forge/rewrite',
+      { method: 'POST', body: JSON.stringify(input) }
+    ),
   connectWordpress: (projectId: string, siteUrl: string, username: string, appPassword: string) =>
     req<{ connection: { siteUrl: string; username: string; aioseo: boolean } }>(
       `/api/projects/${projectId}/wordpress`,

@@ -14,7 +14,7 @@ import { assertSameOrigin, audit, enforceRateLimit, handled, HttpError, requireP
 import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
 import { isSafeFetchTarget } from '@/app/api/seo-scan/url-guard'
-import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
+import { executeWpDeployment, getWpItem, listWpItems, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
 import type { WpConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -104,6 +104,22 @@ export const POST = handled(async (request, { params }) => {
   const store = await getStore()
   const connection = await store.getWpConnection(projectId)
   if (!connection) throw new HttpError(400, 'Connect WordPress for this project first.')
+
+  // Browse the connected site so the user can one-click optimize any page/post.
+  if (body.action === 'list') {
+    const postType = body.postType === 'pages' ? ('pages' as const) : ('posts' as const)
+    const items = await listWpItems(connection, postType, String(body.search ?? ''))
+    return Response.json({ items })
+  }
+
+  // Fetch one item's current SEO fields + content for the optimizer.
+  if (body.action === 'get') {
+    const postType = body.postType === 'pages' ? ('pages' as const) : ('posts' as const)
+    const postId = Number(body.postId)
+    if (!Number.isInteger(postId) || postId <= 0) throw new HttpError(400, 'postId required.')
+    const post = await getWpItem(connection, postType, postId)
+    return Response.json({ post: { ...post, postId, postType } })
+  }
 
   // Map a recommendation's affected URL to a WordPress post so the user need
   // not re-enter a post id. Honest fallback: returns resolved:false when no

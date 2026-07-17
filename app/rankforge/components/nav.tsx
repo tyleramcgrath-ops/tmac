@@ -64,7 +64,7 @@ export function Nav() {
             Watch Demo
           </button>
           <a
-            href="/app"
+            href="/projects"
             className="text-sm text-[var(--rf-muted)] transition-colors hover:text-white"
           >
             Open App

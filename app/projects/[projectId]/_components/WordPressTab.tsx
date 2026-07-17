@@ -5,6 +5,7 @@ import { api, ApiError, type DeploymentDTO } from '../../../lib/client'
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { ChangeRow, StatusChip } from './shared'
 import { ConnectWordPress, DeployForm } from './WpForms'
+import { WpBrowseOptimize } from './WpOptimizer'
 
 export function WordPressTab({ projectId }: { projectId: string }) {
   const [state, setState] = useState<{ connection: { siteUrl: string; username: string; aioseo: boolean } | null; deployments: DeploymentDTO[] } | null>(null)
@@ -45,6 +46,7 @@ export function WordPressTab({ projectId }: { projectId: string }) {
             <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{state.connection.siteUrl}</p>
             <p className="mt-1 text-xs text-[var(--rf-muted)]">User {state.connection.username} · AIOSEO {state.connection.aioseo ? 'detected' : 'not detected'}</p>
           </div>
+          <WpBrowseOptimize projectId={projectId} onDeployed={load} />
           <DeployForm projectId={projectId} onDeployed={load} />
         </>
       )}

@@ -120,6 +120,41 @@ async function readPost(
   return snapshotFrom(raw, conn.aioseo)
 }
 
+// Browse the connected site's posts/pages so the user can pick one to optimize
+// with one click (restores the old "list & optimize" flow, now credentialed &
+// SSRF-guarded server-side). Returns lightweight rows only.
+export interface WpItem { id: number; link: string; title: string; status: string }
+export async function listWpItems(
+  conn: WpConnection,
+  postType: 'posts' | 'pages',
+  search = ''
+): Promise<WpItem[]> {
+  const q = new URLSearchParams({ per_page: '50', context: 'edit', orderby: 'modified', order: 'desc', _fields: 'id,link,title,status' })
+  if (search.trim()) q.set('search', search.trim())
+  const data = (await wpFetch(conn, `/${postType}?${q.toString()}`)) as unknown
+  const arr = Array.isArray(data) ? (data as Record<string, unknown>[]) : []
+  return arr.map((p) => ({
+    id: Number(p.id),
+    link: String(p.link ?? ''),
+    title: (p.title as { raw?: string; rendered?: string } | undefined)?.raw
+      ?? (p.title as { rendered?: string } | undefined)?.rendered
+      ?? '(untitled)',
+    status: String(p.status ?? ''),
+  }))
+}
+
+// Fetch one item's current SEO fields + content so the optimizer can show the
+// before-state and feed the AI rewrite. Reuses the same read/snapshot path the
+// deployment engine uses, so "before" here matches "before" at deploy time.
+export async function getWpItem(
+  conn: WpConnection,
+  postType: 'posts' | 'pages',
+  postId: number
+): Promise<{ title: string; metaDescription: string; content: string; link: string }> {
+  const snap = await readPost(conn, postType, postId)
+  return { title: snap.title, metaDescription: snap.metaDescription, content: snap.content, link: snap.link }
+}
+
 function updatePayload(
   conn: WpConnection,
   changes: WpChanges

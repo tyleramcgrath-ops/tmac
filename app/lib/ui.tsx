@@ -34,7 +34,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
   const router = useRouter()
   useEffect(() => {
-    if (!loading && !user) router.replace('/login?next=/app/projects')
+    if (!loading && !user) router.replace('/login?next=/projects')
   }, [loading, user, router])
 
   if (loading) return <Spinner label="Loading your session…" />
@@ -47,7 +47,7 @@ export function AppHeader() {
   const router = useRouter()
   return (
     <header className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-5 py-3">
-      <Link href="/app/projects" className="flex items-center gap-2 font-semibold text-white">
+      <Link href="/projects" className="flex items-center gap-2 font-semibold text-white">
         <span className="rf-mono text-sm tracking-tight text-[var(--rf-blue-bright)]">RankForge</span>
       </Link>
       <div className="flex items-center gap-3 text-sm">

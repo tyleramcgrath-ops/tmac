@@ -18,7 +18,7 @@ export const runtime = 'nodejs'
 
 function backTo(request: Request, projectId: string | null, status: string, reason?: string): Response {
   const origin = new URL(request.url).origin
-  const dest = projectId ? `${origin}/app/projects/${projectId}?tab=atlas&google=${status}` : `${origin}/app?google=${status}`
+  const dest = projectId ? `${origin}/projects/${projectId}?tab=atlas&google=${status}` : `${origin}/projects?google=${status}`
   const url = reason ? `${dest}&reason=${encodeURIComponent(reason.slice(0, 140))}` : dest
   return Response.redirect(url, 302)
 }

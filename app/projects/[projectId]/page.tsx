@@ -47,7 +47,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ projec
   if (error) {
     return (
       <div className="mx-auto max-w-5xl px-5 py-10">
-        <EmptyState title="Unavailable" detail={error} action={<Link href="/app/projects" className="rf-btn-ghost rounded-lg px-4 py-2 text-sm">Back to projects</Link>} />
+        <EmptyState title="Unavailable" detail={error} action={<Link href="/projects" className="rf-btn-ghost rounded-lg px-4 py-2 text-sm">Back to projects</Link>} />
       </div>
     )
   }
