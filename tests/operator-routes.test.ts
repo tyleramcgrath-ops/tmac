@@ -76,7 +76,7 @@ async function setup() {
   }
   await store.createScan(scan)
   const rec: Recommendation = {
-    id: randomUUID(), projectId: project.id, scanId: scan.id,
+    id: randomUUID(), projectId: project.id, scanId: scan.id, issueId: 'missing-title::site',
     ruleId: 'missing-title', ruleVersion: 1, ruleCategory: 'content', ruleSeverity: 'critical', businessContext: 'money-page',
     title: 'Missing <title> tag', category: 'content',
     severity: 'critical', status: 'accepted', reasoning: 'Title missing', confidence: 90, confidenceBasis: 'x',

@@ -80,7 +80,7 @@ describe('deploy from recommendation (route)', () => {
     const scanId = randomUUID()
     await store.createScan({ id: scanId, projectId: project.id, createdBy: 'u', createdAt: new Date().toISOString(), status: 'completed', startedAt: null, completedAt: null, error: null, summary: { pagesCrawled: 1, urlsDiscovered: 1, blockedCount: 0, siteScore: 50, critical: 0, warning: 1, info: 0 }, pages: [], blocked: [] })
     const rec: Recommendation = {
-      id: randomUUID(), projectId: project.id, scanId,
+      id: randomUUID(), projectId: project.id, scanId, issueId: 'title-length::site',
       ruleId: 'title-length', ruleVersion: 1, ruleCategory: 'content', ruleSeverity: 'warning', businessContext: 'standard',
       title: 'Title is too long', category: 'Content gaps',
       severity: 'warning', status: 'accepted', reasoning: 'r', evidence: { affectedUrls: ['https://wp.test/services'], facts: [] },

@@ -14,7 +14,7 @@ import type { Recommendation, WpDeployment } from '../lib/foundation/types'
 
 function rec(partial: Partial<Recommendation>): Recommendation {
   return {
-    id: 'r1', projectId: 'p', scanId: 's',
+    id: 'r1', projectId: 'p', scanId: 's', issueId: 'missing-title::site',
     ruleId: 'missing-title', ruleVersion: 1, ruleCategory: 'content', ruleSeverity: 'critical',
     businessContext: 'money-page',
     title: 'Missing <title> tag', category: 'content',

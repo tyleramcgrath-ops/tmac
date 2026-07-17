@@ -90,6 +90,11 @@ export interface Recommendation {
   id: string
   projectId: string
   scanId: string
+  // Stable cross-scan identity (Phase D.6 P1). Deterministic from the rule +
+  // logical target, so re-scans UPSERT onto the same issue instead of minting a
+  // new UUID and orphaning the human's prior triage/history. `id` stays the
+  // per-project row key; `issueId` is what survives across scans.
+  issueId: string
   // ── First-class rule identity (Phase D.6 P2) ──────────────────────────────
   // Typed, never parsed from display text. The operator, learning loop,
   // recommendation engine, and verification engine all consume THESE fields;

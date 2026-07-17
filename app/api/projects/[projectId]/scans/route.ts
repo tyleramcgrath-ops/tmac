@@ -14,7 +14,7 @@
 
 import { randomUUID } from 'crypto'
 import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
-import { generateRecommendationsFromScan } from '@/lib/foundation/recommendations'
+import { generateRecommendationsFromScan, persistScanRecommendations } from '@/lib/foundation/recommendations'
 import { getStore } from '@/lib/foundation/store'
 import type { Scan } from '@/lib/foundation/types'
 
@@ -117,13 +117,14 @@ export const POST = handled(async (request, { params }) => {
     businessProfile: project.businessProfile,
     goals: project.goals,
   })
-  await store.createRecommendations(recommendations)
+  // Stable-identity upsert (P1): preserve prior triage/history across rescans.
+  const { created, updated } = await persistScanRecommendations(store, projectId, recommendations)
   await audit(
     project.orgId,
     user.id,
     'scan.complete',
     scan.id,
-    `${scan.status}: ${pages.length} pages, ${recommendations.length} recs, ${selfEvaluation.needsHumanReview} need review`
+    `${scan.status}: ${pages.length} pages, ${recommendations.length} recs (${created} new, ${updated} updated), ${selfEvaluation.needsHumanReview} need review`
   )
 
   return Response.json(

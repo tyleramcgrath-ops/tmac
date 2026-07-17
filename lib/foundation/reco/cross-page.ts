@@ -7,6 +7,9 @@ import type { PageSignals } from './signals'
 
 export interface CrossPageFinding extends Finding {
   affectedUrls: string[]
+  // Stable identity scope for cross-scan upsert (Phase D.6 P1): the shared
+  // value that defines this duplicate group, or 'site' for whole-site findings.
+  issueScope: string
 }
 
 function norm(s: string | undefined): string {
@@ -34,9 +37,10 @@ export function runCrossPageRules(rawPages: PageSignals[]): CrossPageFinding[] {
   const out: CrossPageFinding[] = []
 
   // ── Duplicate titles ──
-  for (const [, urls] of duplicates(pages, 'title')) {
+  for (const [value, urls] of duplicates(pages, 'title')) {
     out.push({
       ruleId: 'dup-title',
+      issueScope: value,
       title: `${urls.length} pages share the same <title>`,
       category: 'content',
       ruleCertainty: 0.95,
@@ -58,9 +62,10 @@ export function runCrossPageRules(rawPages: PageSignals[]): CrossPageFinding[] {
   }
 
   // ── Duplicate meta descriptions (the specific Phase B FN-1) ──
-  for (const [, urls] of duplicates(pages, 'metaDescription')) {
+  for (const [value, urls] of duplicates(pages, 'metaDescription')) {
     out.push({
       ruleId: 'dup-meta',
+      issueScope: value,
       title: `${urls.length} pages share the same meta description`,
       category: 'content',
       ruleCertainty: 0.95,
@@ -105,6 +110,7 @@ export function runCrossPageRules(rawPages: PageSignals[]): CrossPageFinding[] {
   if (orphans.length > 0 && pages.some((p) => (p.internalTargets?.length ?? 0) > 0)) {
     out.push({
       ruleId: 'orphan-pages',
+      issueScope: 'site',
       title: `${orphans.length} page(s) have no internal inbound links`,
       category: 'links',
       ruleCertainty: 0.7,

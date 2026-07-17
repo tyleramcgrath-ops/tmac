@@ -11,6 +11,7 @@ import { deriveBusinessContext, pageBusinessWeight, type ProjectContext } from '
 import { runPageRules, ruleVersion, type Category, type Finding } from './rules'
 import { runCrossPageRules, type CrossPageFinding } from './cross-page'
 import { toPageSignals, type PageSignals } from './signals'
+import { makeIssueId } from './identity'
 
 /* ── Confidence 2.0 (Phase C §3) ──────────────────────────────────────────────
  * Confidence is NOT recommendation frequency. It expresses how sure we are the
@@ -160,7 +161,8 @@ export function generateRecommendationsV2(
     urls: string[],
     pageType: string,
     classificationConf: number,
-    businessWeight: number
+    businessWeight: number,
+    issueScope: string
   ) => {
     const conf = confidence2(f, classificationConf)
     const pscore = priorityScore(f, businessWeight, conf.value)
@@ -169,6 +171,8 @@ export function generateRecommendationsV2(
       id: randomUUID(),
       projectId: scan.projectId,
       scanId: scan.id,
+      // Stable cross-scan identity (P1) — deterministic, not the random id above.
+      issueId: makeIssueId(f.ruleId, issueScope),
       // Typed rule identity (P2) — the authoritative fields every downstream
       // consumer reads. No display string is ever parsed to recover these.
       ruleId: f.ruleId,
@@ -208,9 +212,12 @@ export function generateRecommendationsV2(
 
   for (const g of grouped.values()) {
     const pageType = g.types.size === 1 ? [...g.types][0] : 'multiple'
-    push(g.f, g.urls, pageType, g.classificationConf, g.businessWeight)
+    // Identity scope mirrors the grouping: schema rules are page-type-specific
+    // (keyed by title), page-agnostic rules are site-wide.
+    const scope = SCHEMA_SPECIFIC.has(g.f.ruleId) ? g.f.title : 'site'
+    push(g.f, g.urls, pageType, g.classificationConf, g.businessWeight, scope)
   }
-  for (const c of cross) push(c, c.affectedUrls, 'site', 1, 0.9)
+  for (const c of cross) push(c, c.affectedUrls, 'site', 1, 0.9, c.issueScope)
 
   // 6. Assign deterministic priority rank (business/confidence-driven).
   recs.sort((a, b) => (b.priorityScore ?? 0) - (a.priorityScore ?? 0))
