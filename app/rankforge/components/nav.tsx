@@ -7,7 +7,7 @@ import { useDemo } from './demo'
 const LINKS = [
   { label: 'Platform', href: '#command-center' },
   { label: 'War Room', href: '#war-room' },
-  { label: 'AI Search', href: '#ai-search' },
+  { label: 'AI Readiness', href: '#ai-search' },
   { label: 'Agency', href: '#agency' },
   { label: 'Pricing', href: '#pricing' },
 ]

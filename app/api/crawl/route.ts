@@ -8,17 +8,20 @@
 
 import {
   buildFixes,
-  clamp,
   extractInternalLinks,
   extractSignals,
   fetchHtml,
   normalizeUrl,
+  overallScore,
   scoreAiReadiness,
   scoreContent,
   scoreSchema,
   scoreTechnical,
   type FixItem,
 } from '../seo-scan/analyze'
+import { assessPageValidity } from '../seo-scan/page-validity'
+import { isSafeFetchTarget } from '../seo-scan/url-guard'
+import { clientKey, rateLimit } from '@/lib/foundation/rate-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -30,9 +33,17 @@ const CONCURRENCY = 6
 const REQUEST_BUDGET_MS = 38_000
 const PER_PAGE_TIMEOUT = 8_000
 
+interface BlockedResult {
+  url: string
+  status: number
+  reason: string
+  detail: string
+}
+
 interface PageResult {
   url: string
   status: number
+  duplicateOf?: string
   overall: number
   scores: { technical: number; content: number; schema: number; ai: number }
   wordCount: number
@@ -46,10 +57,23 @@ interface PageResult {
   internalTargets: string[]
   https: boolean
   indexable: boolean
+  // Richer signals forwarded for the recommendation engine (V2).
+  h2Count: number
+  metaDescriptionLength: number
+  imagesMissingAlt: number
+  hasFaq: boolean
+  hasOpenGraph: boolean
+  externalLinks: number
   fixes: FixItem[]
 }
 
 export async function POST(request: Request) {
+  // Rate limit (RC2 P5): the crawl drives outbound fetches, so cap per client IP
+  // to prevent using the server as a traffic amplifier. Generous — a real scan
+  // makes many batched calls — but bounded.
+  const rl = rateLimit(`crawl:${clientKey(request)}`, 300, 60_000, Date.now())
+  if (!rl.ok) return Response.json({ error: `Rate limit reached — retry in ${rl.retryAfterSec}s.` }, { status: 429 })
+
   let body: Record<string, unknown>
   try {
     body = await request.json()
@@ -79,6 +103,7 @@ export async function POST(request: Request) {
 
   const began = Date.now()
   const pages: PageResult[] = []
+  const blocked: BlockedResult[] = []
   const queued = new Set<string>(frontier)
   let blockedHome = false
 
@@ -111,11 +136,37 @@ export async function POST(request: Request) {
 
     for (const r of results) {
       visited.add(stripHash(r.pageUrl))
-      if (!r.html) {
-        if (r.pageUrl === stripHash(start) && (r.status === 403 || r.status === 401)) blockedHome = true
+
+      // INTEGRITY GATE: error pages, WAF/bot challenges, proxy denials, and
+      // empty/non-HTML responses must never be scored. A 403 with an HTML
+      // body is a firewall's message, not the website — analyzing it would
+      // fabricate an audit. Blocked pages are reported as blocked; unknown
+      // stays unknown.
+      const validity = assessPageValidity(r.html, r.status)
+      if (!validity.ok) {
+        blocked.push({
+          url: r.pageUrl,
+          status: r.status,
+          reason: validity.reason ?? 'unknown',
+          detail: validity.detail ?? '',
+        })
+        if (r.pageUrl === stripHash(start)) blockedHome = true
         continue
       }
-      const signals = extractSignals(r.html, r.finalUrl, r.status)
+
+      let signals
+      try {
+        signals = extractSignals(r.html, r.finalUrl, r.status)
+      } catch {
+        // Extraction failure is reported honestly, never scored around.
+        blocked.push({
+          url: r.pageUrl,
+          status: r.status,
+          reason: 'extraction_failed',
+          detail: 'The page was fetched but its content could not be parsed.',
+        })
+        continue
+      }
       const fixes = buildFixes(signals, null)
       const scores = {
         technical: scoreTechnical(fixes),
@@ -123,13 +174,20 @@ export async function POST(request: Request) {
         schema: scoreSchema(signals),
         ai: scoreAiReadiness(signals),
       }
-      const overall = clamp(
-        (scores.technical * 30 + scores.content * 30 + scores.schema * 12 + scores.ai * 16) / 88
-      )
+      const overall = overallScore(scores)
       const links = extractInternalLinks(r.html, r.finalUrl, 120).map(stripHash)
+      // Canonical duplicate detection: a page whose canonical points at a
+      // different URL is a variant, not an independent page. It is kept in
+      // the report (data is real) but flagged so it is never double-counted
+      // as a separate optimization target.
+      const canonicalNorm = normalizeCanonical(signals.canonical)
+      const selfNorm = normalizeCanonical(r.finalUrl)
+      const duplicateOf =
+        canonicalNorm && selfNorm && canonicalNorm !== selfNorm ? canonicalNorm : undefined
       pages.push({
         url: r.finalUrl,
         status: r.status,
+        ...(duplicateOf ? { duplicateOf } : {}),
         overall,
         scores,
         wordCount: signals.wordCount,
@@ -143,6 +201,12 @@ export async function POST(request: Request) {
         internalTargets: [...new Set(links)].slice(0, 40),
         https: signals.https,
         indexable: signals.indexable,
+        h2Count: signals.h2Count,
+        metaDescriptionLength: signals.metaDescriptionLength,
+        imagesMissingAlt: signals.imagesMissingAlt,
+        hasFaq: signals.hasFaq,
+        hasOpenGraph: signals.hasOpenGraph,
+        externalLinks: signals.externalLinks,
         fixes,
       })
       // discover internal links
@@ -156,11 +220,13 @@ export async function POST(request: Request) {
   }
 
   if (firstCall && pages.length === 0) {
+    const homeBlock = blocked.find((b) => b.url === stripHash(start))
     return Response.json(
       {
         error: blockedHome
-          ? 'This site blocks automated requests (403). Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another domain.'
+          ? `This site could not be read: ${homeBlock?.detail ?? 'the homepage is blocked (403).'} No audit was generated — blocked pages are never scored. Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another domain.`
           : 'Could not crawl that site. Check the domain and make sure it is publicly accessible.',
+        blocked,
       },
       { status: 502 }
     )
@@ -174,6 +240,7 @@ export async function POST(request: Request) {
     domain: host,
     startUrl: start,
     pages,
+    blocked,
     visited: [...visited],
     frontier: done ? [] : remaining,
     discovered: visited.size + remaining.length,
@@ -247,6 +314,8 @@ function matchAll(s: string, re: RegExp): string[] {
 
 async function safeText(url: string): Promise<string | null> {
   try {
+    // SSRF guard (Phase D.6 P4): sitemap <loc> URLs are attacker-influenced.
+    if (!(await isSafeFetchTarget(url)).ok) return null
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 8000)
     const res = await fetch(url, {
@@ -260,6 +329,18 @@ async function safeText(url: string): Promise<string | null> {
     return text.slice(0, 2_000_000)
   } catch {
     return null
+  }
+}
+
+function normalizeCanonical(u: string): string {
+  if (!u) return ''
+  try {
+    const x = new URL(u)
+    x.hash = ''
+    // Trailing-slash-insensitive comparison so example.com/a and /a/ match.
+    return x.origin + x.pathname.replace(/\/+$/, '') + x.search
+  } catch {
+    return ''
   }
 }
 

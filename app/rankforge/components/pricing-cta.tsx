@@ -8,7 +8,15 @@ import { ScanForm } from './scan'
 /* 7. Pricing                                                          */
 /* ================================================================== */
 
-const PLANS = [
+const PLANS: {
+  name: string
+  price: number
+  blurb: string
+  cta: string
+  featured: boolean
+  features: string[]
+  soon: string[]
+}[] = [
   {
     name: 'Starter',
     price: 99,
@@ -16,27 +24,28 @@ const PLANS = [
     cta: 'Start Free Scan',
     featured: false,
     features: [
-      '5 projects · 500 tracked keywords',
-      'Technical audits & Fix List Engine',
-      'Google + AI rank tracking',
-      'Content optimization briefs',
-      'AI search visibility tracking',
+      'Full-site audits — up to 300 pages per crawl',
+      'Technical, content, schema & AI-readiness scores',
+      'Prioritized Fix List Engine',
+      'Core Web Vitals via Google PageSpeed',
+      'JSON export & print/PDF reports',
     ],
+    soon: ['Rank tracking over time'],
   },
   {
     name: 'Growth',
     price: 199,
-    blurb: 'For in-house teams scaling organic + AI search.',
+    blurb: 'For in-house teams scaling organic search.',
     cta: 'Start Free Scan',
     featured: true,
     features: [
-      '20 projects · 2,500 tracked keywords',
       'Everything in Starter',
-      'Local SEO heatmaps & GBP tools',
-      'Competitor War Room',
-      'Backlink monitoring & gap finder',
-      'Scheduled reports',
+      'Keyword rank checks (point-in-time Google positions)',
+      'Competitor top-10 comparison per keyword',
+      'WordPress deploy: review, approve & undo',
+      'Forge — AI SEO assistant + title/meta rewrites',
     ],
+    soon: ['Scheduled crawls & monitoring', 'Backlink analysis'],
   },
   {
     name: 'Agency',
@@ -45,12 +54,14 @@ const PLANS = [
     cta: 'Talk to Sales',
     featured: false,
     features: [
-      'Unlimited projects · 10,000 keywords',
       'Everything in Growth',
-      'White-label dashboards & PDFs',
-      'Client portals & lead-capture widget',
-      'Unlimited team seats',
+      'Embeddable lead-capture audit widget',
+      'Per-embed branding: your name, logo & colors',
       'Priority support & onboarding',
+    ],
+    soon: [
+      'White-label dashboards & client portals',
+      'Scheduled reports & team seats',
     ],
   },
 ]
@@ -74,8 +85,8 @@ export function Pricing() {
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-4 text-[var(--rf-muted)]">
-              One subscription replaces your whole stack. Cancel anytime. 14-day
-              money-back guarantee.
+              One subscription that consolidates your core SEO workflow. Cancel
+              anytime. 14-day money-back guarantee.
             </p>
           </Reveal>
         </div>
@@ -124,6 +135,26 @@ export function Pricing() {
                     </li>
                   ))}
                 </ul>
+                {p.soon.length > 0 && (
+                  <div className="mt-6 border-t border-[var(--rf-card-line)] pt-5">
+                    <p className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
+                      Coming soon — not available yet
+                    </p>
+                    <ul className="mt-3 space-y-2.5">
+                      {p.soon.map((f) => (
+                        <li
+                          key={f}
+                          className="flex items-start gap-2.5 text-sm text-[var(--rf-faint)]"
+                        >
+                          <span className="rf-mono mt-0.5 shrink-0 rounded border border-[var(--rf-card-line)] px-1.5 text-[9px] uppercase tracking-wider">
+                            Soon
+                          </span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </Reveal>
           ))}
@@ -152,8 +183,9 @@ export function FinalCTA() {
                 <span className="rf-gradient-text">Start Ranking.</span>
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-[var(--rf-muted)]">
-                Run a full technical, content, AI, and local audit in about a
-                minute. See your Fix List before you ever enter a card.
+                Run a full technical, content, schema, and AI-readiness audit —
+                up to 300 pages. See your Fix List before you ever enter a
+                card.
               </p>
 
               <div className="mt-8">
@@ -174,30 +206,36 @@ export function FinalCTA() {
 /* Footer                                                              */
 /* ================================================================== */
 
-const FOOTER_COLS = [
+const FOOTER_COLS: {
+  title: string
+  links: { label: string; href: string }[]
+}[] = [
   {
     title: 'Platform',
     links: [
-      'AI SEO Agent',
-      'Technical Audits',
-      'Rank Tracking',
-      'Content Optimization',
-      'Local SEO',
+      { label: 'Forge AI Assistant', href: '#command-center' },
+      { label: 'Site Audits & Fix Lists', href: '#command-center' },
+      { label: 'Competitor Compare', href: '#war-room' },
+      { label: 'AI Readiness', href: '#ai-search' },
+      { label: 'WordPress Deploy', href: '#command-center' },
     ],
   },
   {
     title: 'Solutions',
     links: [
-      'For Agencies',
-      'For Consultants',
-      'For In-House Teams',
-      'AI Search (AEO)',
-      'White Label',
+      { label: 'For Agencies', href: '#agency' },
+      { label: 'For Consultants', href: '#command-center' },
+      { label: 'For In-House Teams', href: '#command-center' },
+      { label: 'Lead-Capture Widget', href: '#agency' },
     ],
   },
   {
     title: 'Company',
-    links: ['About', 'Customers', 'Pricing', 'Blog', 'Contact'],
+    links: [
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'Agency Mode', href: '#agency' },
+      { label: 'Free Scan', href: '#scan' },
+    ],
   },
 ]
 
@@ -216,8 +254,8 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-4 max-w-xs text-sm text-[var(--rf-muted)]">
-              The ruthless SEO &amp; AI search command center for agencies,
-              consultants, and businesses.
+              The SEO audit &amp; AI-assisted optimization command center for
+              agencies, consultants, and businesses.
             </p>
           </div>
 
@@ -226,12 +264,12 @@ export function Footer() {
               <p className="text-sm font-semibold text-white">{col.title}</p>
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
-                  <li key={l}>
+                  <li key={l.label}>
                     <a
-                      href="#"
+                      href={l.href}
                       className="text-sm text-[var(--rf-muted)] transition-colors hover:text-white"
                     >
-                      {l}
+                      {l.label}
                     </a>
                   </li>
                 ))}
@@ -242,17 +280,6 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-[var(--rf-card-line)] pt-6 text-xs text-[var(--rf-faint)] sm:flex-row">
           <p>© {new Date().getFullYear()} RankForge AI. All rights reserved.</p>
-          <div className="flex gap-5">
-            <a href="#" className="hover:text-white">
-              Privacy
-            </a>
-            <a href="#" className="hover:text-white">
-              Terms
-            </a>
-            <a href="#" className="hover:text-white">
-              Security
-            </a>
-          </div>
         </div>
       </div>
     </footer>

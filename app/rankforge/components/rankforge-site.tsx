@@ -15,13 +15,13 @@ import { DemoProvider } from './demo'
 
 const TRUST = [
   'Technical SEO',
-  'AI Search (AEO/GEO)',
-  'Rank Tracking',
-  'Content Briefs',
-  'Local Heatmaps',
-  'Backlink Gaps',
-  'Schema Engine',
-  'White-Label Reports',
+  'AI Readiness',
+  'Content Analysis',
+  'Schema Analysis',
+  'Internal Links',
+  'Fix Lists',
+  'WordPress Deploy',
+  'Forge AI Assistant',
 ]
 
 function TrustBar() {
