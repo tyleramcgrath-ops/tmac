@@ -1,5 +1,6 @@
 import { audit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
+import { coordinateProject } from '@/lib/foundation/agents/service'
 import type { RecommendationStatus } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -7,9 +8,14 @@ export const runtime = 'nodejs'
 export const GET = handled(async (request, { params }) => {
   const user = await requireUser(request)
   const { projectId } = await params
-  await requireProjectRole(user, projectId, 'member')
+  const { project } = await requireProjectRole(user, projectId, 'member')
   const store = await getStore()
-  return Response.json({ recommendations: await store.listRecommendations(projectId) })
+  // Multi-agent coordination (Phase F): each recommendation is returned with its
+  // agent stances, consensus, and provenance chain; plus per-agent reports,
+  // memory, and consensus metrics. No new dashboard — the existing
+  // Recommendations tab renders this inline.
+  const { coordinated, reports, memory, metrics } = await coordinateProject(store, project)
+  return Response.json({ recommendations: coordinated, agents: reports, memory, metrics })
 })
 
 // User-driven transitions. 'deployed'/'verified'/'rolled_back' are set by the

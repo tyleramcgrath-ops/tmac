@@ -1,20 +1,25 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { api, ApiError, type RecommendationDTO } from '../../../lib/client'
+import { api, ApiError, type AgentReportDTO, type ConsensusMetricsDTO, type RecommendationDTO } from '../../../lib/client'
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { SeverityDot, StatusChip } from './shared'
 import { DeployFromRecommendation } from './DeployFromRecommendation'
+import { AgentTeamStrip, ConsensusBlock } from './AgentPanel'
 
 export function RecommendationsTab({ projectId }: { projectId: string }) {
   const [recs, setRecs] = useState<RecommendationDTO[] | null>(null)
+  const [agents, setAgents] = useState<AgentReportDTO[]>([])
+  const [metrics, setMetrics] = useState<ConsensusMetricsDTO | null>(null)
   const [error, setError] = useState('')
   const [deployRec, setDeployRec] = useState<RecommendationDTO | null>(null)
 
   const load = useCallback(async () => {
     try {
-      const { recommendations } = await api.listRecommendations(projectId)
+      const { recommendations, agents, metrics } = await api.listRecommendations(projectId)
       setRecs(recommendations)
+      setAgents(agents)
+      setMetrics(metrics)
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Could not load recommendations.')
       setRecs([])
@@ -39,6 +44,7 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
   return (
     <div className="space-y-3">
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
+      {metrics && agents.length > 0 && <AgentTeamStrip agents={agents} metrics={metrics} />}
       {recs.map((r) => (
         <div key={r.id} className="rf-card p-4">
           <div className="flex items-start justify-between gap-3">
@@ -78,6 +84,7 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
               </button>
             )}
           </div>
+          {r.coordination && <ConsensusBlock coordination={r.coordination} />}
         </div>
       ))}
       {deployRec && (

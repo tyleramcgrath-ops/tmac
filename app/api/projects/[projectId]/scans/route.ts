@@ -15,6 +15,7 @@
 import { randomUUID } from 'crypto'
 import { audit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { generateRecommendationsFromScan, persistScanRecommendations } from '@/lib/foundation/recommendations'
+import { coordinateProject } from '@/lib/foundation/agents/service'
 import { getStore } from '@/lib/foundation/store'
 import type { Scan } from '@/lib/foundation/types'
 
@@ -131,12 +132,19 @@ export const POST = handled(async (request, { params }) => {
 
   // Stable-identity upsert (P1): preserve prior triage/history across rescans.
   const { created, updated } = await persistScanRecommendations(store, projectId, recommendations)
+
+  // Multi-agent coordination (Phase F): the crawl produces COORDINATED
+  // recommendations — each analyzed by a domain owner, challenged by QA, and
+  // synthesized into a consensus. Surface the consensus breakdown so the user
+  // sees a team verdict, not a single opinion.
+  const { metrics } = await coordinateProject(store, project)
+
   await audit(
     project.orgId,
     user.id,
     'scan.complete',
     scan.id,
-    `${scan.status}: ${pages.length} pages, ${recommendations.length} recs (${created} new, ${updated} updated), ${selfEvaluation.needsHumanReview} need review`
+    `${scan.status}: ${pages.length} pages, ${recommendations.length} recs (${created} new, ${updated} updated), ${selfEvaluation.needsHumanReview} need review; consensus agree=${metrics.consensus.agree} disagree=${metrics.consensus.disagree} needs-review=${metrics.consensus['needs-review']} human-required=${metrics.consensus['human-required']}`
   )
 
   return Response.json(
@@ -144,6 +152,7 @@ export const POST = handled(async (request, { params }) => {
       scan: { id: scan.id, status: scan.status, createdAt: scan.createdAt, summary: scan.summary },
       recommendationCount: recommendations.length,
       selfEvaluation,
+      consensus: metrics.consensus,
     },
     { status: 201 }
   )

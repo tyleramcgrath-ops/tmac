@@ -58,6 +58,66 @@ export interface ScanSummary {
     info: number
   }
 }
+// Multi-agent coordination (Phase F).
+export interface AgentStanceDTO {
+  agentId: string
+  position: 'support' | 'concern' | 'neutral'
+  confidence: number
+  evidence: string[]
+  assumptions: string[]
+  note: string
+}
+export interface ProvenanceDTO {
+  discoveredBy: string
+  analyzedBy: string
+  challengedBy: string
+  prioritizedBy: string
+  approvedBy: string | null
+  deployedBy: string | null
+  verifiedBy: string | null
+}
+export interface CoordinationDTO {
+  primaryOwner: string
+  stances: AgentStanceDTO[]
+  consensus: 'agree' | 'disagree' | 'needs-review' | 'human-required'
+  consensusReason: string
+  provenance: ProvenanceDTO
+  disagreements: string[]
+}
+export interface AgentReportDTO {
+  agentId: string
+  name: string
+  active: boolean
+  ownedFindings: number
+  observations: { agentId: string; kind: string; title: string; detail: string; evidenceUrls: string[]; confidence: number | 'unknown' }[]
+  summary: string
+}
+export interface AgentMemoryDTO {
+  agentId: string
+  totalOwned: number
+  accepted: number
+  rejected: number
+  overridden: number
+  verified: number
+  rolledBack: number
+  reliability: number
+  suggestedConfidenceNudge: number
+  lessons: string[]
+}
+export interface ConsensusMetricsDTO {
+  totalRecommendations: number
+  consensus: { agree: number; disagree: number; 'needs-review': number; 'human-required': number }
+  agentAgreementRate: number
+  disagreementRate: number
+  humanRequiredRate: number
+  consensusQuality: number
+  humanAgreementRate: number | 'unknown'
+  userOverrideRate: number
+  verificationSuccessRate: number | 'unknown'
+  falsePositiveProxy: number
+  precisionProxy: number
+}
+
 export interface RecommendationDTO {
   id: string
   title: string
@@ -72,6 +132,7 @@ export interface RecommendationDTO {
   risk: { level: string; note: string }
   createdAt: string
   history: { at: string; by: string; from: string; to: string }[]
+  coordination?: CoordinationDTO
 }
 export interface DeploymentDTO {
   id: string
@@ -135,9 +196,11 @@ export const api = {
       `/api/projects/${projectId}/scans?id=${id}`
     ),
 
-  // recommendations
+  // recommendations (coordinated by the multi-agent layer — Phase F)
   listRecommendations: (projectId: string) =>
-    req<{ recommendations: RecommendationDTO[] }>(`/api/projects/${projectId}/recommendations`),
+    req<{ recommendations: RecommendationDTO[]; agents: AgentReportDTO[]; memory: AgentMemoryDTO[]; metrics: ConsensusMetricsDTO }>(
+      `/api/projects/${projectId}/recommendations`
+    ),
   setRecommendationStatus: (projectId: string, id: string, status: string) =>
     req<{ recommendation: RecommendationDTO }>(`/api/projects/${projectId}/recommendations`, {
       method: 'PATCH',

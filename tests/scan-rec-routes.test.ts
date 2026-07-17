@@ -67,7 +67,9 @@ describe('scan lifecycle', () => {
     // P3 single source of truth: the audit summary's severity counts are the
     // recommendation engine's counts — never a second, disagreeing engine.
     const recsRes = (await (await recsGet(new Request('http://t/r', { headers: { cookie } }), ctx)).json()) as {
-      recommendations: { severity: string }[]
+      recommendations: { severity: string; coordination?: { consensus: string; provenance: { discoveredBy: string; analyzedBy: string; challengedBy: string } } }[]
+      agents: { agentId: string }[]
+      metrics: { totalRecommendations: number; consensus: Record<string, number> }
     }
     const sum = scans[0].summary
     const sev = (s: string) => recsRes.recommendations.filter((r) => r.severity === s).length
@@ -75,6 +77,17 @@ describe('scan lifecycle', () => {
     expect(sum.warning).toBe(sev('warning'))
     expect(sum.info).toBe(sev('info'))
     expect(sum.critical + sum.warning + sum.info).toBe(recsRes.recommendations.length)
+
+    // Phase F: the API returns coordinated recommendations — a 9-agent team,
+    // consensus metrics, and a traceable provenance chain on every rec.
+    expect(new Set(recsRes.agents.map((a) => a.agentId)).size).toBe(9)
+    expect(recsRes.metrics.totalRecommendations).toBe(recsRes.recommendations.length)
+    for (const r of recsRes.recommendations) {
+      expect(r.coordination).toBeTruthy()
+      expect(r.coordination!.provenance.discoveredBy).toBe('scout')
+      expect(r.coordination!.provenance.challengedBy).toBe('qa')
+      expect(['agree', 'disagree', 'needs-review', 'human-required']).toContain(r.coordination!.consensus)
+    }
   })
 
   it('a scan with blocked pages is persisted as partial (honest)', async () => {

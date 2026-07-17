@@ -140,6 +140,12 @@ export interface Recommendation {
   // Which score category improves and qualitative size. No invented dollars.
   expectedImpact: { category: string; size: 'high' | 'medium' | 'low'; note: string }
   risk: { level: 'low' | 'medium' | 'high'; note: string }
+  // Multi-agent coordination (Phase F): which agents analyzed/challenged this,
+  // the consensus verdict, surfaced disagreements, and the provenance chain.
+  // Optional + computed each scan; stored so the UI can show traceable
+  // ownership without recomputing. Kept as `unknown` at the type boundary to
+  // avoid a types.ts → agents/ import cycle (agents/ imports types).
+  coordination?: unknown
   createdAt: string
   history: { at: string; by: string; from: RecommendationStatus; to: RecommendationStatus }[]
 }
