@@ -215,13 +215,16 @@ injected fetch — also improves testability. Covered by a new
 
 ## 7. Cron trigger & auth
 
-- **`vercel.json` cron** hitting `POST /api/internal/cron` every 10 min:
-  ```json
-  { "crons": [{ "path": "/api/internal/cron", "schedule": "*/10 * * * *" }] }
-  ```
+- **Trigger:** the product runs on Vercel's Hobby plan, which doesn't support
+  platform crons, so `.github/workflows/scheduler-cron.yml` polls
+  `POST /api/internal/cron` every 15 min via `curl` instead — a free,
+  Hobby-compatible substitute. If the project ever moves to Vercel Pro, a
+  `vercel.json` `crons` entry hitting the same route is a drop-in replacement;
+  the route doesn't care who calls it.
 - The route is **not** user-auth'd; it's protected by a shared secret:
-  `Authorization: Bearer $CRON_SECRET` (Vercel injects the header for platform
-  crons; reject anything else). Add `CRON_SECRET` to `env.ts` validation.
+  `Authorization: Bearer $CRON_SECRET`, which must be set identically in two
+  places — the Vercel project's env vars, and the GitHub repo's Actions
+  secret of the same name.
 - The route does bounded work: reap stale locks → materialize due schedules →
   claim ≤N jobs → run each → record outcome. Always returns 200 with a summary;
   per-job failures never fail the whole tick.

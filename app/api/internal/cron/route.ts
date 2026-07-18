@@ -1,10 +1,14 @@
-// Cron-triggered scheduler runner (RankForge). Vercel Cron hits this on a fixed
-// cadence (see vercel.json). One pass = reap stale locks → materialize due
-// schedules → drain due jobs. Idempotent and safe to over-fire (claims are
-// atomic). Protected by CRON_SECRET: Vercel automatically sends
-// `Authorization: Bearer $CRON_SECRET` for platform cron invocations, and any
-// request without it is rejected — so this internal endpoint is never publicly
-// runnable.
+// Cron-triggered scheduler runner (RankForge). One pass = reap stale locks →
+// materialize due schedules → drain due jobs. Idempotent and safe to
+// over-fire (claims are atomic). Protected by CRON_SECRET: any request
+// without a matching `Authorization: Bearer $CRON_SECRET` is rejected, so
+// this internal endpoint is never publicly runnable.
+//
+// Trigger: Vercel's Hobby plan doesn't support platform crons, so
+// .github/workflows/scheduler-cron.yml polls this on a schedule instead (see
+// that file, and SCHEDULER_DESIGN.md §7). If the project ever moves to Vercel
+// Pro, a vercel.json `crons` entry hitting this same route is a drop-in
+// replacement — the route itself doesn't care who calls it.
 
 import { randomUUID } from 'crypto'
 import { getStore } from '@/lib/foundation/store'
