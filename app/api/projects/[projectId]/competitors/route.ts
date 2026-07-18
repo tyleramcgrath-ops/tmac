@@ -59,7 +59,10 @@ export const POST = handled(async (request, { params }) => {
       ? computeOverlap(ourPages, crawl.pages, now)
       : computeOverlap(ourPages, null, now)
 
-    const updated: Competitor = { ...competitor, overlap, lastSnapshotAt: now }
+    const snapshotPages = crawl.ok
+      ? crawl.pages.filter((p) => p.title).slice(0, 20).map((p) => ({ url: p.url, title: p.title! }))
+      : competitor.snapshotPages
+    const updated: Competitor = { ...competitor, overlap, lastSnapshotAt: now, snapshotPages }
     await store.updateCompetitor(updated)
     await audit(project.orgId, user.id, 'competitor.refresh', competitor.id, crawl.ok ? `crawled ${crawl.pagesCrawled} pages` : `crawl failed: ${crawl.error}`)
     return Response.json({ competitor: updated, crawled: crawl.ok, pagesCrawled: crawl.pagesCrawled, error: crawl.ok ? undefined : crawl.error })

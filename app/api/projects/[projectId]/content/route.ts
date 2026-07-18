@@ -12,7 +12,8 @@ import { DEFAULT_MODEL } from '@/ai/constants'
 import { getModelOptions } from '@/ai/gateway'
 import { audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
-import { buildContentPrompt, fetchSerpForKeyword, markCompetitors, sanitizeContentHtml } from '@/lib/foundation/content/brief'
+import { latestScanPages } from '@/lib/foundation/operator/context'
+import { buildContentPrompt, fetchSerpForKeyword, findContentGaps, markCompetitors, sanitizeContentHtml } from '@/lib/foundation/content/brief'
 import { createWpDraftPost } from '@/lib/foundation/wp-execution'
 import type { ContentBrief } from '@/lib/foundation/types'
 
@@ -33,6 +34,17 @@ export const GET = handled(async (request, { params }) => {
   const { projectId } = await params
   await requireProjectRole(user, projectId, 'member')
   const store = await getStore()
+
+  // Content gaps: real competitor pages we have nothing comparable to, ranked
+  // by topic distinctness. Pure token-overlap over already-crawled data — no
+  // extra network call, so it's cheap to compute on every load.
+  if (new URL(request.url).searchParams.get('gaps') === '1') {
+    const [rawPages, competitors] = await Promise.all([latestScanPages(store, projectId), store.listCompetitors(projectId)])
+    const ourPages = rawPages.map((p) => ({ title: typeof p.title === 'string' ? p.title : undefined }))
+    const gaps = findContentGaps(ourPages, competitors)
+    return Response.json({ gaps })
+  }
+
   return Response.json({ briefs: await store.listContentBriefs(projectId) })
 })
 

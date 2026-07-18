@@ -401,6 +401,8 @@ export const api = {
   // ── Content Studio ──
   listContentBriefs: (projectId: string) =>
     req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
+  getContentGaps: (projectId: string) =>
+    req<{ gaps: ContentGapDTO[] }>(`/api/projects/${projectId}/content?gaps=1`),
   generateContentBrief: (projectId: string, keyword: string) =>
     req<{ brief: ContentBriefDTO }>(`/api/projects/${projectId}/content`, {
       method: 'POST',
@@ -416,6 +418,11 @@ export const api = {
 }
 
 // ── Content Studio DTOs ──────────────────────────────────────────────────────
+export interface ContentGapDTO {
+  title: string
+  url: string
+  competitorDomain: string
+}
 export interface ContentBriefSerpResultDTO {
   url: string
   title: string

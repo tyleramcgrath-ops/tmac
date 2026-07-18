@@ -102,6 +102,67 @@ export function buildContentPrompt(input: {
   return lines.join('\n')
 }
 
+export interface ContentGap {
+  title: string
+  url: string
+  competitorDomain: string
+}
+
+const STOPWORDS = new Set(['the', 'and', 'for', 'with', 'your', 'you', 'are', 'this', 'that', 'from', 'how', 'what', 'why', 'best', 'top', 'guide', 'vs', 'our', 'about'])
+
+function significantTokens(title: string): Set<string> {
+  return new Set(
+    title
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((t) => t.length > 3 && !STOPWORDS.has(t))
+  )
+}
+
+// Real pages a tracked competitor has that we have nothing comparable to,
+// ranked by how distinct the topic is (fewer of our own pages share any
+// significant word with it = a bigger gap). Pure token-overlap heuristic —
+// no embeddings/AI call, so it's fast, deterministic, and free to run on
+// every competitor refresh.
+export function findContentGaps(
+  ourPages: { title?: string }[],
+  competitors: { domain: string; snapshotPages?: { url: string; title: string }[] }[],
+  limit = 10
+): ContentGap[] {
+  const ourTokenSets = ourPages.map((p) => significantTokens(p.title ?? ''))
+  const seen = new Set<string>() // dedupe near-identical competitor topics across competitors
+  const gaps: { gap: ContentGap; overlapScore: number }[] = []
+
+  for (const c of competitors) {
+    for (const p of c.snapshotPages ?? []) {
+      const theirTokens = significantTokens(p.title)
+      if (theirTokens.size === 0) continue
+      const key = [...theirTokens].sort().join(' ')
+      if (seen.has(key)) continue
+
+      let bestOverlap = 0
+      for (const ours of ourTokenSets) {
+        if (ours.size === 0) continue
+        let inter = 0
+        for (const t of theirTokens) if (ours.has(t)) inter++
+        const overlap = inter / theirTokens.size
+        if (overlap > bestOverlap) bestOverlap = overlap
+      }
+      // A real gap: we have nothing that shares even half the competitor
+      // page's significant vocabulary.
+      if (bestOverlap < 0.5) {
+        seen.add(key)
+        gaps.push({ gap: { title: p.title, url: p.url, competitorDomain: c.domain }, overlapScore: bestOverlap })
+      }
+    }
+  }
+
+  return gaps
+    .sort((a, b) => a.overlapScore - b.overlapScore)
+    .slice(0, limit)
+    .map((g) => g.gap)
+}
+
 const ALLOWED_TAGS = new Set(['h2', 'h3', 'h4', 'p', 'ul', 'ol', 'li', 'strong', 'em', 'b', 'i', 'a', 'br', 'blockquote', 'span'])
 
 // Defense-in-depth: the model's HTML output can be influenced by attacker-

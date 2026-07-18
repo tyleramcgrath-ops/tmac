@@ -194,6 +194,10 @@ export interface Competitor {
   overlap?: unknown
   // Last external-intelligence snapshot fetched for this competitor; optional.
   lastSnapshotAt?: string | null
+  // A small, capped sample of real pages from the last crawl (url + title
+  // only) — enough to power content-gap analysis without storing full page
+  // bodies. Set alongside `overlap` by the same refresh; never invented.
+  snapshotPages?: { url: string; title: string }[]
 }
 
 // A generated content brief / draft blog post (Content Studio). Researched from

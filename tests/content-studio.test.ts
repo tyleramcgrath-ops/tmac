@@ -4,7 +4,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { randomUUID } from 'crypto'
-import { buildContentPrompt, fetchSerpForKeyword, markCompetitors, sanitizeContentHtml } from '../lib/foundation/content/brief'
+import { buildContentPrompt, fetchSerpForKeyword, findContentGaps, markCompetitors, sanitizeContentHtml } from '../lib/foundation/content/brief'
 import { createWpDraftPost } from '../lib/foundation/wp-execution'
 import { encryptSecret } from '../lib/foundation/crypto'
 import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
@@ -46,6 +46,33 @@ describe('buildContentPrompt: honest about research availability', () => {
     const prompt = buildContentPrompt({ keyword: 'best crm', domain: 'acme.com', serpAvailable: false, serpResults: [], competitorsConsidered: [] })
     expect(prompt).toContain('unavailable')
     expect(prompt).not.toContain('Current Google results')
+  })
+})
+
+describe('findContentGaps: real competitor topics we have nothing comparable to', () => {
+  it('flags a competitor page whose topic we have no page for', () => {
+    const ours = [{ title: 'Pricing · Us' }, { title: 'About Us' }]
+    const competitors = [{ domain: 'rival.com', snapshotPages: [{ url: 'https://rival.com/enterprise-onboarding-guide', title: 'Enterprise Onboarding Guide' }] }]
+    const gaps = findContentGaps(ours, competitors)
+    expect(gaps).toHaveLength(1)
+    expect(gaps[0]).toEqual({ title: 'Enterprise Onboarding Guide', url: 'https://rival.com/enterprise-onboarding-guide', competitorDomain: 'rival.com' })
+  })
+  it('does not flag a topic we already substantially cover', () => {
+    const ours = [{ title: 'Enterprise Onboarding Guide for New Teams' }]
+    const competitors = [{ domain: 'rival.com', snapshotPages: [{ url: 'https://rival.com/enterprise-onboarding', title: 'Enterprise Onboarding Guide' }] }]
+    expect(findContentGaps(ours, competitors)).toHaveLength(0)
+  })
+  it('dedupes the same topic appearing across multiple competitors', () => {
+    const ours: { title?: string }[] = []
+    const competitors = [
+      { domain: 'rival.com', snapshotPages: [{ url: 'https://rival.com/pricing-guide', title: 'Complete Pricing Guide' }] },
+      { domain: 'other.com', snapshotPages: [{ url: 'https://other.com/pricing-guide', title: 'Complete Pricing Guide' }] },
+    ]
+    expect(findContentGaps(ours, competitors)).toHaveLength(1)
+  })
+  it('never invents a gap when there is nothing to compare', () => {
+    expect(findContentGaps([], [])).toEqual([])
+    expect(findContentGaps([{ title: 'X' }], [{ domain: 'rival.com', snapshotPages: [] }])).toEqual([])
   })
 })
 
