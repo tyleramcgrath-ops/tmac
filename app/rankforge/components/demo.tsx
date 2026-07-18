@@ -24,8 +24,6 @@ import {
   FileBarChart,
   Check,
   AlertTriangle,
-  TrendingUp,
-  TrendingDown,
   Gauge,
   Sparkles,
   type LucideIcon,
@@ -139,8 +137,8 @@ const CHAPTERS: {
   },
   {
     id: 'war',
-    label: 'Competitor Compare',
-    blurb: 'Your page vs the Google top 10 for one keyword — every on-page gap, quantified.',
+    label: 'Competitor Overlap',
+    blurb: 'Atlas compares your site against a tracked competitor across six real, evidence-graded overlap dimensions.',
     icon: Swords,
     render: () => <ChapterWarRoom />,
   },
@@ -517,20 +515,25 @@ const TONE = {
 /* Chapter 1 — Command Center                                          */
 /* ================================================================== */
 
+// Stat cards below mirror exactly what a real scan's summary contains
+// (lib/foundation/types.ts Scan.summary — the same numbers the Audit tab
+// shows: pagesCrawled, urlsDiscovered, blockedCount, siteScore, critical/
+// warning/info counts derived from the same recommendation list a real
+// project sees, so this demo never claims a stat the backend can't produce.
 function ChapterOverview() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
-        <MetricStat label="SEO Score" value="92/100" delta="sample" tone="green" spark={[60, 64, 62, 70, 74, 80, 86, 92]} />
-        <MetricStat label="AI Readiness" value="78/100" delta="sample" tone="cyan" spark={[40, 44, 50, 55, 62, 68, 74, 78]} />
-        <MetricStat label="Pages Crawled" value="284/300" delta="sample" tone="green" spark={[80, 120, 160, 190, 220, 250, 270, 284]} />
-        <MetricStat label="Technical Issues" value="37" delta="sample" tone="amber" spark={[120, 110, 95, 80, 70, 55, 44, 37]} />
-        <MetricStat label="Content Fixes" value="46" delta="sample" tone="blue" spark={[60, 58, 55, 53, 50, 49, 47, 46]} />
-        <MetricStat label="Duplicate Pages" value="9" delta="sample" tone="red" spark={[4, 5, 6, 6, 7, 8, 8, 9]} />
+        <MetricStat label="Site score" value="76/100" delta="sample" tone="green" spark={[52, 56, 58, 63, 67, 70, 73, 76]} />
+        <MetricStat label="Pages crawled" value="284/300" delta="sample" tone="green" spark={[80, 120, 160, 190, 220, 250, 270, 284]} />
+        <MetricStat label="Blocked (unknown)" value="3" delta="sample" tone="amber" spark={[6, 5, 5, 4, 4, 3, 3, 3]} />
+        <MetricStat label="Critical issues" value="12" delta="sample" tone="red" spark={[22, 20, 18, 16, 15, 14, 13, 12]} />
+        <MetricStat label="Warning issues" value="34" delta="sample" tone="amber" spark={[48, 45, 42, 40, 38, 36, 35, 34]} />
+        <MetricStat label="Info issues" value="19" delta="sample" tone="blue" spark={[24, 23, 22, 21, 20, 20, 19, 19]} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Panel title="Audit score by page" className="lg:col-span-2" right={<span className="rf-mono text-[11px] text-[var(--rf-faint)]">sample</span>}>
+        <Panel title="Site score, most recent scans" className="lg:col-span-2" right={<span className="rf-mono text-[11px] text-[var(--rf-faint)]">sample</span>}>
           <div className="flex h-40 items-end gap-1.5">
             {[34, 40, 38, 46, 52, 49, 58, 63, 60, 70, 68, 77, 82, 79, 88, 92].map((h, i) => (
               <div key={i} className="flex-1 rounded-t-sm bg-gradient-to-t from-[var(--rf-blue)]/30 to-[var(--rf-cyan)]" style={{ height: `${h}%` }} />
@@ -540,11 +543,10 @@ function ChapterOverview() {
         <Panel title="Recent activity — sample">
           <ul className="space-y-3 text-sm">
             {[
-              ['audit complete — 284 pages crawled', 'green'],
-              ['Forge drafted 12 title rewrites', 'cyan'],
-              ['meta fixes deployed to WordPress', 'green'],
-              ['rank check run for 25 keywords', 'blue'],
-              ['report exported (JSON + PDF)', 'green'],
+              ['scan complete — 284 pages crawled', 'green'],
+              ['recommendations refreshed (12 critical, 34 warning)', 'cyan'],
+              ['title + meta fix deployed to WordPress, verified', 'green'],
+              ['automatic re-audit scheduled — weekly', 'blue'],
             ].map(([t, c], i) => (
               <li key={i} className="flex items-start gap-2 text-[var(--rf-muted)]">
                 <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${c === 'green' ? 'bg-[var(--rf-green)]' : c === 'cyan' ? 'bg-[var(--rf-cyan)]' : 'bg-[var(--rf-blue-bright)]'}`} />
@@ -562,25 +564,30 @@ function ChapterOverview() {
 /* Chapter 2 — Technical Audit                                         */
 /* ================================================================== */
 
+// The four category scores are the real ones the crawler computes per page —
+// scoreTechnical/scoreContent/scoreSchema/scoreAiReadiness in
+// app/api/seo-scan/analyze.ts, rolled up into `overall` — not Core Web
+// Vitals (RankForge doesn't run Lighthouse; there's no LCP/CLS/INP in a real
+// scan). Every issue below is a real, verbatim title buildFixes() generates.
 function ChapterAudit() {
-  const vitals: [string, string, keyof typeof TONE][] = [
-    ['Performance', '94', 'green'],
-    ['LCP', '1.9s', 'green'],
-    ['CLS', '0.04', 'green'],
-    ['INP', '180ms', 'amber'],
+  const categories: [string, string, keyof typeof TONE][] = [
+    ['Technical', '82', 'green'],
+    ['Content', '68', 'amber'],
+    ['Schema', '54', 'amber'],
+    ['AI Readiness', '71', 'cyan'],
   ]
   const issues: [string, string, keyof typeof TONE][] = [
-    ['4 soft 404s blocking indexation', 'Critical', 'red'],
-    ['11 duplicate URLs missing canonical', 'Critical', 'red'],
-    ['38 images over 200KB', 'Warning', 'amber'],
-    ['9 pages with thin content (<300w)', 'Warning', 'amber'],
-    ['Sitemap missing 23 live URLs', 'Warning', 'amber'],
-    ['No hreflang on /es pages', 'Info', 'blue'],
+    ['Fix mixed (http://) content on an HTTPS page', 'Critical', 'red'],
+    ['Add an H1 heading', 'Critical', 'red'],
+    ['Title is 84 chars — aim for 30–60', 'Warning', 'amber'],
+    ['Thin content (240 words) — expand to 600+', 'Warning', 'amber'],
+    ['Add structured data (JSON-LD) — none found', 'Warning', 'amber'],
+    ['Add an FAQ section + FAQPage schema for AI visibility', 'Info', 'blue'],
   ]
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {vitals.map(([k, v, t]) => (
+        {categories.map(([k, v, t]) => (
           <div key={k} className="rf-card p-3 text-center">
             <Gauge className={`mx-auto h-4 w-4 ${TONE[t]}`} />
             <p className="mt-1 text-lg font-semibold text-white">{v}</p>
@@ -593,10 +600,9 @@ function ChapterAudit() {
           <ul className="space-y-2.5 text-sm">
             {[
               ['Pages crawled', '284 / 300'],
-              ['Indexable', '261'],
-              ['Redirects', '12'],
-              ['Broken links', '16'],
-              ['Avg. response', '380ms'],
+              ['URLs discovered', '311'],
+              ['Blocked (unknown)', '3'],
+              ['Site score', '76 / 100'],
             ].map(([k, v]) => (
               <li key={k} className="flex justify-between">
                 <span className="text-[var(--rf-muted)]">{k}</span>
@@ -626,20 +632,25 @@ function ChapterAudit() {
 /* Chapter 3 — Rank Tracking                                           */
 /* ================================================================== */
 
+// Columns match the real /api/rankings response exactly: { keyword, position,
+// url, topResult }. No search volume, SERP-feature, or trend data is
+// returned by that endpoint (it queries live Google search results via
+// SERPAPI_KEY for the domain's current position — nothing more) so none of
+// that is shown here.
 function ChapterRanks() {
-  const rows: [string, number, number, string, number[]][] = [
-    ['enterprise crm software', 3, 4, '14,800', [9, 8, 7, 7, 5, 4, 3]],
-    ['best crm for startups', 1, 2, '8,100', [6, 5, 5, 4, 3, 2, 1]],
-    ['crm pricing comparison', 7, -2, '5,400', [4, 5, 5, 6, 6, 7, 7]],
-    ['ai crm tools', 5, 6, '6,600', [12, 11, 9, 8, 7, 6, 5]],
-    ['sales pipeline software', 9, 1, '3,900', [11, 10, 10, 9, 9, 8, 9]],
+  const rows: [string, number | null, string, string][] = [
+    ['enterprise crm software', 3, '/platform/enterprise', 'salesforce.com'],
+    ['best crm for startups', 1, '/', '(your page)'],
+    ['crm pricing comparison', 7, '/pricing', 'hubspot.com'],
+    ['ai crm tools', 5, '/features/ai', 'zoho.com'],
+    ['sales pipeline software', null, '—', 'pipedrive.com'],
   ]
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-3">
         <MetricStat label="Keywords checked" value="5" delta="sample" tone="cyan" />
-        <MetricStat label="Avg. position" value="5.0" delta="sample" tone="green" />
-        <MetricStat label="In top 3" value="2" delta="sample" tone="green" />
+        <MetricStat label="Avg. position" value="4.0" delta="sample" tone="green" />
+        <MetricStat label="Not ranking (top 100)" value="1" delta="sample" tone="amber" />
       </div>
       <Panel title="Keyword positions — point-in-time check" right={<span className="rf-mono text-[11px] text-[var(--rf-faint)]">on demand</span>}>
         <div className="overflow-x-auto">
@@ -647,41 +658,26 @@ function ChapterRanks() {
             <thead>
               <tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]">
                 <th className="pb-2 font-medium">Keyword</th>
-                <th className="pb-2 font-medium">Pos.</th>
-                <th className="pb-2 font-medium">Δ</th>
-                <th className="pb-2 font-medium">Volume</th>
-                <th className="pb-2 font-medium">SERP features</th>
-                <th className="pb-2 text-right font-medium">Trend</th>
+                <th className="pb-2 font-medium">Position</th>
+                <th className="pb-2 font-medium">Your ranking URL</th>
+                <th className="pb-2 text-right font-medium">#1 result</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--rf-card-line)]">
-              {rows.map(([kw, pos, delta, vol, trend]) => (
+              {rows.map(([kw, pos, url, top]) => (
                 <tr key={kw}>
                   <td className="py-2.5 pr-3 text-[var(--rf-text)]">{kw}</td>
-                  <td className="py-2.5 pr-3 rf-mono font-semibold text-white">#{pos}</td>
-                  <td className={`py-2.5 pr-3 rf-mono ${delta >= 0 ? 'text-[var(--rf-green)]' : 'text-[var(--rf-red)]'}`}>
-                    <span className="inline-flex items-center gap-0.5">
-                      {delta >= 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                      {Math.abs(delta)}
-                    </span>
-                  </td>
-                  <td className="py-2.5 pr-3 text-[var(--rf-muted)]">{vol}</td>
-                  <td className="py-2.5 pr-3">
-                    <span className="rf-mono rounded bg-white/[0.05] px-1.5 py-0.5 text-[10px] text-[var(--rf-cyan)]">
-                      {pos <= 3 ? 'AI Overview' : 'People Also Ask'}
-                    </span>
-                  </td>
-                  <td className="py-2.5 text-right">
-                    <span className="inline-block"><Spark points={trend.map((t) => 14 - t)} color="var(--rf-green)" /></span>
-                  </td>
+                  <td className="py-2.5 pr-3 rf-mono font-semibold text-white">{pos ? `#${pos}` : 'not in top 100'}</td>
+                  <td className="py-2.5 pr-3 text-[var(--rf-muted)]">{url}</td>
+                  <td className="py-2.5 text-right text-[var(--rf-muted)]">{top}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <p className="rf-mono mt-3 text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">
-          Δ and trend columns are a roadmap concept — today&apos;s rank check
-          is a point-in-time snapshot
+          A point-in-time Google check via SERP API — re-run it any time to see
+          today&apos;s positions. History/trend tracking over time is on the roadmap.
         </p>
       </Panel>
     </div>
@@ -731,43 +727,49 @@ function ChapterAI() {
 /* Chapter 5 — Competitor War Room                                     */
 /* ================================================================== */
 
+// Mirrors what Atlas' CompetitorOverlap actually computes from BOTH sites'
+// real crawls (lib/foundation/external/competitors.ts): six overlap
+// dimensions, each carrying its own evidence grade — Observed (both sites
+// crawled successfully), Estimated (inferred, not directly measured), or
+// Unavailable (couldn't be computed, e.g. no backlink provider connected).
+// There is no per-keyword "your page vs the SERP top 10" signal diff built —
+// competitor intelligence works at the domain level.
 function ChapterWarRoom() {
-  const rows: [string, string, string, boolean][] = [
-    ['Title tag', 'Optimized · 58 chars', 'Generic · 41', true],
-    ['Schema markup', 'Article + FAQ + HowTo', 'None', true],
-    ['Word count', '2,140', '3,680', false],
-    ['Meta description', 'CTR-tuned + CTA', 'Missing keyword', true],
-    ['Internal links', '27', '12', true],
-    ['Heading structure', 'Clean H1–H3 outline', 'Flat, missing H2s', true],
-    ['Image alt coverage', '96%', '61%', true],
+  const rows: [string, number, 'observed' | 'estimated' | 'unavailable'][] = [
+    ['Topic overlap', 62, 'observed'],
+    ['Service overlap', 48, 'observed'],
+    ['Entity overlap', 55, 'observed'],
+    ['Content overlap', 40, 'observed'],
+    ['Business overlap', 71, 'estimated'],
+    ['Authority overlap', 0, 'unavailable'],
   ]
+  const gradeLabel = { observed: 'Observed', estimated: 'Estimated', unavailable: 'Unavailable' } as const
+  const gradeTone = { observed: 'green', estimated: 'amber', unavailable: 'red' } as const
   return (
-    <Panel title="Your page vs Top 10 — “enterprise crm software”">
-      <div className="overflow-x-auto">
-        <div className="grid grid-cols-[1.2fr_1fr_1fr_auto] gap-2 border-b border-[var(--rf-card-line)] pb-2 text-[11px] uppercase tracking-wider text-[var(--rf-faint)]">
-          <span>Signal</span>
-          <span className="text-[var(--rf-blue-bright)]">Your page</span>
-          <span>Top 10 avg</span>
-          <span className="text-right">Status</span>
-        </div>
-        <div className="divide-y divide-[var(--rf-card-line)]">
-          {rows.map(([sig, you, comp, win]) => (
-            <div key={sig} className="grid grid-cols-[1.2fr_1fr_1fr_auto] items-center gap-2 py-2.5 text-sm">
-              <span className="font-medium text-[var(--rf-text)]">{sig}</span>
-              <span className="text-[var(--rf-text)]">{you}</span>
-              <span className="text-[var(--rf-muted)]">{comp}</span>
-              <span className="flex justify-end">
-                {win ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--rf-green)]/10 px-2 py-0.5 text-[11px] text-[var(--rf-green)]"><Check className="h-3 w-3" />Lead</span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--rf-red)]/10 px-2 py-0.5 text-[11px] text-[var(--rf-red)]"><AlertTriangle className="h-3 w-3" />Gap</span>
-                )}
+    <Panel title="Atlas — competitor overlap vs acme-competitor.com">
+      <div className="space-y-3.5">
+        {rows.map(([dim, pct, grade]) => (
+          <div key={dim}>
+            <div className="mb-1 flex items-center justify-between text-sm">
+              <span className="font-medium text-white">{dim}</span>
+              <span className="flex items-center gap-2">
+                <span className={`rf-mono text-[10px] ${TONE[gradeTone[grade]]}`}>{gradeLabel[grade]}</span>
+                <span className="rf-mono text-white">{grade === 'unavailable' ? '—' : `${pct}%`}</span>
               </span>
             </div>
-          ))}
-        </div>
+            <div className="h-2 overflow-hidden rounded-full bg-white/[0.05]">
+              <div
+                className={`h-full rounded-full ${grade === 'unavailable' ? 'bg-white/[0.06]' : 'bg-gradient-to-r from-[var(--rf-blue)] to-[var(--rf-cyan)]'}`}
+                style={{ width: grade === 'unavailable' ? '100%' : `${pct}%` }}
+              />
+            </div>
+          </div>
+        ))}
       </div>
-      <p className="mt-3 text-xs text-[var(--rf-muted)]">Close the content-depth gap to compete for position #1. (Sample comparison for one keyword.)</p>
+      <p className="mt-3 text-xs text-[var(--rf-muted)]">
+        Authority overlap needs a backlink provider connected for both sites — shown honestly as
+        unavailable, never guessed. (Sample overlap for one tracked competitor.)
+      </p>
     </Panel>
   )
 }
@@ -776,28 +778,34 @@ function ChapterWarRoom() {
 /* Chapter 6 — Content Optimization                                    */
 /* ================================================================== */
 
+// The content score is the real scoreContent() category from a scan. The
+// checklist mirrors what keywordUsage() actually checks per page (title/H1/
+// first-100-words/meta-description placement) — the same checks Forge's
+// title & meta rewrites target. There's no readability grade or auto-
+// generated outline in the real engine, so those aren't shown.
 function ChapterContent() {
-  const terms: [string, boolean][] = [
-    ['pipeline automation', true], ['lead scoring', true], ['sales forecasting', false],
-    ['contact management', true], ['workflow builder', false], ['API integrations', false],
-    ['mobile CRM', true], ['reporting dashboard', false],
+  const checks: [string, boolean][] = [
+    ['Keyword in title tag', true],
+    ['Keyword in H1', true],
+    ['Keyword in opening 100 words', false],
+    ['Keyword in meta description', false],
   ]
   return (
     <div className="grid gap-4 lg:grid-cols-[240px_1fr]">
       <Panel title="Content score">
         <div className="flex flex-col items-center py-2">
           <Ring value={68} label="of 100" />
-          <p className="mt-3 text-center text-xs text-[var(--rf-muted)]">Add 4 of 8 terms to reach <span className="text-[var(--rf-green)]">90+</span></p>
+          <p className="mt-3 text-center text-xs text-[var(--rf-muted)]">2 of 4 keyword placements missing</p>
           <div className="mt-3 w-full space-y-1.5 text-[11px]">
-            <div className="flex justify-between"><span className="text-[var(--rf-faint)]">Word count</span><span className="text-white">2,140 / 2,600</span></div>
-            <div className="flex justify-between"><span className="text-[var(--rf-faint)]">Readability</span><span className="text-[var(--rf-green)]">Grade 8</span></div>
-            <div className="flex justify-between"><span className="text-[var(--rf-faint)]">Headings</span><span className="text-amber-300">+3 H2 needed</span></div>
+            <div className="flex justify-between"><span className="text-[var(--rf-faint)]">Word count</span><span className="text-white">240 words</span></div>
+            <div className="flex justify-between"><span className="text-[var(--rf-faint)]">Open Graph tags</span><span className="text-[var(--rf-red)]">Missing</span></div>
+            <div className="flex justify-between"><span className="text-[var(--rf-faint)]">FAQ section</span><span className="text-amber-300">Not found</span></div>
           </div>
         </div>
       </Panel>
-      <Panel title="Forge suggestions — terms to consider">
+      <Panel title="Keyword targeting — “sales pipeline software”">
         <div className="flex flex-wrap gap-2">
-          {terms.map(([t, has]) => (
+          {checks.map(([t, has]) => (
             <span key={t} className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs ${has ? 'bg-[var(--rf-green)]/10 text-[var(--rf-green)]' : 'border border-[var(--rf-card-line-strong)] text-[var(--rf-muted)]'}`}>
               {has ? <Check className="h-3 w-3" /> : <span className="h-1.5 w-1.5 rounded-full bg-[var(--rf-amber)]" />}
               {t}
@@ -805,13 +813,11 @@ function ChapterContent() {
           ))}
         </div>
         <div className="mt-4 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] p-3">
-          <p className="text-xs font-semibold text-white">Suggested outline</p>
-          <ul className="mt-2 space-y-1 text-xs text-[var(--rf-muted)]">
-            <li>H2 · How sales forecasting works in a CRM</li>
-            <li>H2 · Building automated workflows (with examples)</li>
-            <li>H2 · Native vs third-party API integrations</li>
-            <li>H3 · FAQ: pricing, onboarding, data migration</li>
-          </ul>
+          <p className="text-xs font-semibold text-white">Forge-drafted fix</p>
+          <p className="mt-2 text-xs text-[var(--rf-muted)]">
+            Rewrites the title and meta description to include the target keyword — you review
+            and approve before anything deploys to WordPress.
+          </p>
         </div>
       </Panel>
     </div>
@@ -877,9 +883,9 @@ function ChapterReport() {
         right={<span className="rf-mono rounded bg-white/[0.05] px-2 py-0.5 text-[10px] text-[var(--rf-muted)]">JSON export · print/PDF</span>}
       >
         <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">SEO score</p><p className="mt-1 text-xl font-semibold text-[var(--rf-green)]">92/100</p></div>
+          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Site score</p><p className="mt-1 text-xl font-semibold text-[var(--rf-green)]">76/100</p></div>
           <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Pages crawled</p><p className="mt-1 text-xl font-semibold text-[var(--rf-blue-bright)]">284</p></div>
-          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Open issues</p><p className="mt-1 text-xl font-semibold text-[var(--rf-cyan)]">37</p></div>
+          <div className="rf-card p-3 text-center"><p className="text-[11px] text-[var(--rf-faint)]">Critical + warning</p><p className="mt-1 text-xl font-semibold text-[var(--rf-cyan)]">46</p></div>
         </div>
         <div className="mt-4 flex h-24 items-end gap-1.5">
           {[30, 38, 35, 48, 55, 52, 64, 70, 68, 80, 84, 90].map((h, i) => (
@@ -891,11 +897,11 @@ function ChapterReport() {
       <Panel title="Prioritized fix list">
         <ul className="space-y-1.5">
           {[
-            ['Resolve 4 soft-404s blocking indexation', 'Critical', 'red'],
-            ['Publish “sales forecasting” pillar page', 'High', 'amber'],
-            ['Add Product + Review schema to 7 pages', 'High', 'amber'],
-            ['Build 8 internal links to /features hub', 'Medium', 'blue'],
-            ['Fix 16 broken internal links', 'Medium', 'blue'],
+            ['Fix mixed (http://) content on an HTTPS page', 'Critical', 'red'],
+            ['Add an H1 heading', 'Critical', 'red'],
+            ['Thin content (240 words) — expand to 600+', 'Warning', 'amber'],
+            ['Only 3 internal links — add contextual links', 'Warning', 'amber'],
+            ['Add BreadcrumbList schema', 'Info', 'blue'],
           ].map(([t, sev, tone], i) => (
             <li key={i} className="flex items-center justify-between rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2 text-sm">
               <span className="flex items-center gap-2 text-[var(--rf-text)]"><Check className="h-3.5 w-3.5 text-[var(--rf-green)]" />{t}</span>
