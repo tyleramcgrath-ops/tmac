@@ -392,6 +392,51 @@ export const api = {
   deleteCompetitor: (projectId: string, id: string) =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/competitors?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
+
+  // ── Content Studio ──
+  listContentBriefs: (projectId: string) =>
+    req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
+  generateContentBrief: (projectId: string, keyword: string) =>
+    req<{ brief: ContentBriefDTO }>(`/api/projects/${projectId}/content`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'generate', keyword }),
+    }),
+  publishContentBrief: (projectId: string, id: string, postType: 'posts' | 'pages') =>
+    req<{ brief: ContentBriefDTO; verified: boolean; note: string }>(`/api/projects/${projectId}/content`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'publish', id, postType }),
+    }),
+  deleteContentBrief: (projectId: string, id: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/content?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+}
+
+// ── Content Studio DTOs ──────────────────────────────────────────────────────
+export interface ContentBriefSerpResultDTO {
+  url: string
+  title: string
+  snippet: string
+  position: number
+  competitorDomain: string | null
+}
+export interface ContentBriefDTO {
+  id: string
+  projectId: string
+  keyword: string
+  createdBy: string
+  createdAt: string
+  status: 'draft' | 'published' | 'discarded'
+  serpAvailable: boolean
+  serpResults: ContentBriefSerpResultDTO[]
+  competitorsConsidered: string[]
+  title: string
+  metaDescription: string
+  outline: string[]
+  contentHtml: string
+  rationale: string
+  wpPostId?: number
+  wpPostType?: 'posts' | 'pages'
+  wpLink?: string
+  publishedAt?: string
 }
 
 // ── Mission Atlas DTOs (Phase G) ─────────────────────────────────────────────

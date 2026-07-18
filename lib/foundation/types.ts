@@ -196,6 +196,43 @@ export interface Competitor {
   lastSnapshotAt?: string | null
 }
 
+// A generated content brief / draft blog post (Content Studio). Researched from
+// real live SERP results (never invented) and drafted by AI from that evidence
+// + real tracked-competitor overlap; the draft is never auto-published — it
+// only becomes a live WordPress post when a user explicitly deploys it, going
+// through the same create-then-verify path as every other WordPress write.
+export type ContentBriefStatus = 'draft' | 'published' | 'discarded'
+export interface ContentBriefSerpResult {
+  url: string
+  title: string
+  snippet: string
+  position: number
+  competitorDomain: string | null // set when this result matches a tracked competitor
+}
+export interface ContentBrief {
+  id: string
+  projectId: string
+  keyword: string
+  createdBy: string
+  createdAt: string
+  status: ContentBriefStatus
+  // Research evidence — honestly empty/unavailable when no SERP key is configured.
+  serpAvailable: boolean
+  serpResults: ContentBriefSerpResult[]
+  competitorsConsidered: string[] // tracked competitor domains found in the SERP results
+  // The generated draft.
+  title: string
+  metaDescription: string
+  outline: string[]
+  contentHtml: string
+  rationale: string
+  // Set once deployed to WordPress as a real draft post.
+  wpPostId?: number
+  wpPostType?: 'posts' | 'pages'
+  wpLink?: string
+  publishedAt?: string
+}
+
 // A connected external provider (Phase H). Holds the ENCRYPTED OAuth token
 // bundle for a project's Google (or future vendor) integration, keyed by
 // (projectId, kind). The secret (access/refresh tokens) lives only inside

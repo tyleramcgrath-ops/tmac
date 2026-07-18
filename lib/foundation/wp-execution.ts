@@ -321,6 +321,46 @@ export async function getWpItem(
   return { title: snap.title, metaDescription: snap.metaDescription, content: snap.content, link: snap.link }
 }
 
+export interface WpDraftResult {
+  postId: number
+  postType: 'posts' | 'pages'
+  link: string
+  verified: boolean
+  note: string
+}
+
+// Create a brand-new WordPress post/page as a DRAFT — never published — for
+// the Content Studio's AI-drafted briefs. Uses the same field-write mapping
+// (title/meta routed to the detected SEO plugin's field) as an ordinary
+// deploy, then verifies by re-reading the live post rather than trusting the
+// create response, matching the honesty guarantee every other WP write makes.
+export async function createWpDraftPost(
+  conn: WpConnection,
+  postType: 'posts' | 'pages',
+  fields: { title: string; content: string; metaDescription?: string }
+): Promise<WpDraftResult> {
+  const payload = {
+    ...updatePayload(conn, { title: fields.title, content: fields.content, metaDescription: fields.metaDescription }),
+    status: 'draft',
+  }
+  const raw = await wpFetch(conn, `/${postType}`, { method: 'POST', body: payload })
+  const postId = Number(raw.id)
+  if (!Number.isInteger(postId) || postId <= 0) {
+    throw new Error('WordPress did not return a valid post id for the new draft.')
+  }
+  const after = await readPost(conn, postType, postId)
+  const verified = after.title === fields.title && (fields.metaDescription === undefined || after.metaDescription === fields.metaDescription)
+  return {
+    postId,
+    postType,
+    link: after.link || String(raw.link ?? ''),
+    verified,
+    note: verified
+      ? 'Draft created on WordPress and verified by read-back.'
+      : 'Draft created; some fields did not verify on read-back (the active plugin may store them separately).',
+  }
+}
+
 function updatePayload(
   conn: WpConnection,
   changes: WpChanges

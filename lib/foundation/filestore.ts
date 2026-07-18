@@ -8,6 +8,7 @@ import type { FoundationStore } from './store'
 import type {
   AuditLogEntry,
   Competitor,
+  ContentBrief,
   Job,
   Organization,
   OrgMember,
@@ -30,6 +31,7 @@ type Collections = {
   scans: Scan[]
   recommendations: Recommendation[]
   competitors: Competitor[]
+  contentBriefs: ContentBrief[]
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
   providerConnections: ProviderConnection[]
@@ -47,6 +49,7 @@ const EMPTY: Collections = {
   scans: [],
   recommendations: [],
   competitors: [],
+  contentBriefs: [],
   wpConnections: [],
   wpDeployments: [],
   providerConnections: [],
@@ -224,6 +227,25 @@ export class FileFoundationStore implements FoundationStore {
   }
   async deleteCompetitor(id: string) {
     await this.mutate('competitors', (all) => ({ data: all.filter((c) => c.id !== id) }))
+  }
+
+  // content briefs (Content Studio)
+  async createContentBrief(brief: ContentBrief) {
+    await this.mutate('contentBriefs', (all) => ({ data: [...all, brief] }))
+  }
+  async updateContentBrief(brief: ContentBrief) {
+    await this.mutate('contentBriefs', (all) => ({ data: all.map((b) => (b.id === brief.id ? brief : b)) }))
+  }
+  async listContentBriefs(projectId: string) {
+    return (await this.read('contentBriefs'))
+      .filter((b) => b.projectId === projectId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+  async getContentBrief(id: string) {
+    return (await this.read('contentBriefs')).find((b) => b.id === id) ?? null
+  }
+  async deleteContentBrief(id: string) {
+    await this.mutate('contentBriefs', (all) => ({ data: all.filter((b) => b.id !== id) }))
   }
 
   // wordpress

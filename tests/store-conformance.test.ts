@@ -14,7 +14,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import type { FoundationStore } from '../lib/foundation/store'
-import type { Competitor, Job, Organization, Project, ProviderConnection, Recommendation, Scan, Schedule, User, WpConnection, WpDeployment } from '../lib/foundation/types'
+import type { Competitor, ContentBrief, Job, Organization, Project, ProviderConnection, Recommendation, Scan, Schedule, User, WpConnection, WpDeployment } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'store-conformance-secret-01'
 
@@ -150,6 +150,20 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       expect((await store.listCompetitors(p.id)).map((c) => c.id)).toContain(comp.id)
       await store.deleteCompetitor(comp.id)
       expect(await store.getCompetitor(comp.id)).toBeNull()
+
+      // content briefs (Content Studio)
+      const brief: ContentBrief = {
+        id: uid(), projectId: p.id, keyword: 'best crm', createdBy: u.id, createdAt: now(), status: 'draft',
+        serpAvailable: false, serpResults: [], competitorsConsidered: [],
+        title: 'Best CRM', metaDescription: 'meta', outline: ['Intro'], contentHtml: '<p>hi</p>', rationale: 'r',
+      }
+      await store.createContentBrief(brief)
+      expect((await store.getContentBrief(brief.id))?.keyword).toBe('best crm')
+      await store.updateContentBrief({ ...brief, status: 'published', wpPostId: 42, wpPostType: 'posts', wpLink: 'https://wp.test/p/42' })
+      expect((await store.getContentBrief(brief.id))?.status).toBe('published')
+      expect((await store.listContentBriefs(p.id)).map((b) => b.id)).toContain(brief.id)
+      await store.deleteContentBrief(brief.id)
+      expect(await store.getContentBrief(brief.id)).toBeNull()
 
       // provider connections (Phase H) — compound-key upsert + delete
       const pc: ProviderConnection = {
