@@ -9,6 +9,7 @@
 import type {
   AuditLogEntry,
   Competitor,
+  Job,
   Organization,
   OrgMember,
   PilotFeedback,
@@ -16,6 +17,7 @@ import type {
   ProviderConnection,
   Recommendation,
   Scan,
+  Schedule,
   User,
   WpConnection,
   WpDeployment,
@@ -70,6 +72,19 @@ export interface FoundationStore {
   getProviderConnection(projectId: string, kind: ProviderConnection['kind']): Promise<ProviderConnection | null>
   listProviderConnections(projectId: string): Promise<ProviderConnection[]>
   deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']): Promise<void>
+  // scheduler: jobs + recurring schedules
+  enqueueJob(job: Job): Promise<void>
+  getJob(id: string): Promise<Job | null>
+  updateJob(job: Job): Promise<void>
+  listJobs(projectId: string, limit?: number): Promise<Job[]>
+  claimDueJobs(nowIso: string, limit: number, runnerId: string): Promise<Job[]>
+  requeueStaleJobs(cutoffIso: string): Promise<number>
+  upsertSchedule(schedule: Schedule): Promise<void>
+  getSchedule(projectId: string, kind: Schedule['kind']): Promise<Schedule | null>
+  listSchedules(projectId: string): Promise<Schedule[]>
+  listDueSchedules(nowIso: string): Promise<Schedule[]>
+  deleteSchedule(projectId: string, kind: Schedule['kind']): Promise<void>
+
   // pilot feedback / issues (RC2 P6)
   createFeedback(entry: PilotFeedback): Promise<void>
   listFeedback(orgId: string, limit?: number): Promise<PilotFeedback[]>

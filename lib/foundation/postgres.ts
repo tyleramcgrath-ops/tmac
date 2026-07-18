@@ -17,6 +17,7 @@ import type { FoundationStore } from './store'
 import type {
   AuditLogEntry,
   Competitor,
+  Job,
   Organization,
   OrgMember,
   PilotFeedback,
@@ -24,6 +25,7 @@ import type {
   ProviderConnection,
   Recommendation,
   Scan,
+  Schedule,
   User,
   WpConnection,
   WpDeployment,
@@ -91,6 +93,16 @@ const TABLES = {
     pk: ['id'],
     keys: (f: PilotFeedback) => ({ id: f.id, org_id: f.orgId, created_at: f.createdAt }),
   } as TableDesc<PilotFeedback>,
+  jobs: {
+    name: 'rf_jobs',
+    pk: ['id'],
+    keys: (j: Job) => ({ id: j.id, project_id: j.projectId, status: j.status, run_at: j.runAt, locked_at: j.lockedAt, created_at: j.createdAt }),
+  } as TableDesc<Job>,
+  schedules: {
+    name: 'rf_schedules',
+    pk: ['project_id', 'kind'],
+    keys: (s: Schedule) => ({ project_id: s.projectId, kind: s.kind, enabled: s.enabled, next_run_at: s.nextRunAt, created_at: s.createdAt }),
+  } as TableDesc<Schedule>,
 }
 
 export class PostgresFoundationStore implements FoundationStore {
@@ -327,6 +339,74 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
     await this.pool.query('DELETE FROM rf_provider_connections WHERE project_id=$1 AND kind=$2', [projectId, kind])
+  }
+
+  // ── Scheduler: jobs + schedules ────────────────────────────────────────────
+  async enqueueJob(job: Job) {
+    await this.ins(TABLES.jobs, job)
+  }
+  async getJob(id: string) {
+    const r = await this.rows<Job>('SELECT data FROM rf_jobs WHERE id=$1', [id])
+    return r[0] ?? null
+  }
+  async updateJob(job: Job) {
+    await this.upd(TABLES.jobs, job)
+  }
+  async listJobs(projectId: string, limit = 50) {
+    return this.rows<Job>('SELECT data FROM rf_jobs WHERE project_id=$1 ORDER BY created_at DESC LIMIT $2', [projectId, limit])
+  }
+  // Atomic multi-runner claim via FOR UPDATE SKIP LOCKED: concurrent runners
+  // never receive the same job. Done in one transaction so the row lock is held
+  // across the UPDATE that flips it to 'running'.
+  async claimDueJobs(nowIso: string, limit: number, runnerId: string) {
+    const client = await this.pool.connect()
+    try {
+      await client.query('BEGIN')
+      const sel = await client.query<{ data: Job }>(
+        `SELECT data FROM rf_jobs WHERE status='queued' AND run_at <= $1 ORDER BY run_at LIMIT $2 FOR UPDATE SKIP LOCKED`,
+        [nowIso, limit]
+      )
+      const claimed: Job[] = []
+      for (const row of sel.rows) {
+        const job = { ...row.data, status: 'running' as const, lockedAt: nowIso, lockedBy: runnerId, attempts: row.data.attempts + 1, updatedAt: nowIso }
+        await client.query('UPDATE rf_jobs SET status=$2, run_at=$3, locked_at=$4, data=$5 WHERE id=$1', [
+          job.id, job.status, job.runAt, job.lockedAt, JSON.stringify(job),
+        ])
+        claimed.push(job)
+      }
+      await client.query('COMMIT')
+      return claimed
+    } catch (e) {
+      await client.query('ROLLBACK')
+      throw e
+    } finally {
+      client.release()
+    }
+  }
+  async requeueStaleJobs(cutoffIso: string) {
+    const r = await this.pool.query(
+      `UPDATE rf_jobs SET status='queued', locked_at=NULL,
+         data = data || '{"status":"queued","lockedAt":null,"lockedBy":null}'::jsonb
+       WHERE status='running' AND locked_at < $1`,
+      [cutoffIso]
+    )
+    return r.rowCount ?? 0
+  }
+  async upsertSchedule(schedule: Schedule) {
+    await this.ups(TABLES.schedules, schedule)
+  }
+  async getSchedule(projectId: string, kind: Schedule['kind']) {
+    const r = await this.rows<Schedule>('SELECT data FROM rf_schedules WHERE project_id=$1 AND kind=$2', [projectId, kind])
+    return r[0] ?? null
+  }
+  async listSchedules(projectId: string) {
+    return this.rows<Schedule>('SELECT data FROM rf_schedules WHERE project_id=$1 ORDER BY kind', [projectId])
+  }
+  async listDueSchedules(nowIso: string) {
+    return this.rows<Schedule>("SELECT data FROM rf_schedules WHERE enabled=true AND next_run_at <= $1", [nowIso])
+  }
+  async deleteSchedule(projectId: string, kind: Schedule['kind']) {
+    await this.pool.query('DELETE FROM rf_schedules WHERE project_id=$1 AND kind=$2', [projectId, kind])
   }
 
   // ── Pilot feedback (RC2 P6) ────────────────────────────────────────────────

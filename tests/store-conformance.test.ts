@@ -14,7 +14,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import type { FoundationStore } from '../lib/foundation/store'
-import type { Competitor, Organization, Project, ProviderConnection, Recommendation, Scan, User, WpConnection, WpDeployment } from '../lib/foundation/types'
+import type { Competitor, Job, Organization, Project, ProviderConnection, Recommendation, Scan, Schedule, User, WpConnection, WpDeployment } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'store-conformance-secret-01'
 
@@ -166,6 +166,25 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       await store.deleteProviderConnection(p.id, 'search-console')
       expect(await store.getProviderConnection(p.id, 'search-console')).toBeNull()
       expect((await store.listProviderConnections(p.id)).map((c) => c.kind)).toEqual(['analytics'])
+
+      // scheduler: schedules + job queue (claim / requeue)
+      const sched: Schedule = { id: uid(), orgId: o.id, projectId: p.id, kind: 'scheduled_scan', cron: '0 6 * * *', enabled: true, nextRunAt: '2026-01-01T00:00:00Z', lastRunAt: null, createdAt: now(), updatedAt: now() }
+      await store.upsertSchedule(sched)
+      expect((await store.getSchedule(p.id, 'scheduled_scan'))?.cron).toBe('0 6 * * *')
+      expect((await store.listDueSchedules('2026-01-02T00:00:00Z')).map((s) => s.id)).toContain(sched.id)
+      const job: Job = { id: uid(), orgId: o.id, projectId: p.id, kind: 'scheduled_scan', status: 'queued', runAt: '2026-01-01T06:00:00Z', payload: {}, attempts: 0, maxAttempts: 3, lockedAt: null, lockedBy: null, lastError: null, result: null, createdAt: now(), updatedAt: now() }
+      await store.enqueueJob(job)
+      const claimed = await store.claimDueJobs('2026-01-01T06:30:00Z', 5, 'runner1')
+      expect(claimed.map((j) => j.id)).toContain(job.id)
+      expect((await store.getJob(job.id))?.status).toBe('running')
+      // stale-lock reaper returns it to the queue
+      expect(await store.requeueStaleJobs('2100-01-01T00:00:00Z')).toBeGreaterThan(0)
+      expect((await store.getJob(job.id))?.status).toBe('queued')
+      await store.updateJob({ ...job, status: 'succeeded' })
+      expect((await store.getJob(job.id))?.status).toBe('succeeded')
+      expect((await store.listJobs(p.id)).map((j) => j.id)).toContain(job.id)
+      await store.deleteSchedule(p.id, 'scheduled_scan')
+      expect(await store.getSchedule(p.id, 'scheduled_scan')).toBeNull()
 
       // audit
       await store.appendAudit({ id: uid(), orgId: o.id, actorId: u.id, action: 'x', target: 't', detail: '', at: now() })
