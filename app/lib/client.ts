@@ -250,7 +250,7 @@ export const api = {
 
   // wordpress
   getWordpress: (projectId: string) =>
-    req<{ connection: { siteUrl: string; username: string; aioseo: boolean } | null; deployments: DeploymentDTO[] }>(
+    req<{ connection: { siteUrl: string; username: string; aioseo: boolean; seoPlugin?: 'aioseo' | 'rankmath' | 'yoast' | 'core' } | null; deployments: DeploymentDTO[] }>(
       `/api/projects/${projectId}/wordpress`
     ),
   resolveWpTarget: (projectId: string, url: string) =>

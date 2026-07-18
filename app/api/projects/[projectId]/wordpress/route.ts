@@ -15,7 +15,8 @@ import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
 import { isSafeFetchTarget } from '@/app/api/seo-scan/url-guard'
 import { executeWpDeployment, getWpItem, listAllWpItems, listWpItems, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
-import type { WpConnection } from '@/lib/foundation/types'
+import { pluginOf } from '@/lib/foundation/wp-execution'
+import type { SeoPlugin, WpConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -59,10 +60,16 @@ export const PUT = handled(async (request, { params }) => {
       { status: 502 }
     )
   }
+  // Detect which SEO plugin manages meta storage from the site's REST
+  // namespaces, so the meta description is written to the field that plugin
+  // actually renders (AIOSEO → aioseo_meta_data, Rank Math → rank_math_*,
+  // Yoast → _yoast_wpseo_*, otherwise the native excerpt).
   const nsProbe = await fetch(`${siteUrl}/wp-json`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
-  const aioseo = Array.isArray((nsProbe as { namespaces?: string[] } | null)?.namespaces)
-    ? ((nsProbe as { namespaces: string[] }).namespaces.some((n) => n.startsWith('aioseo')))
-    : false
+  const namespaces = Array.isArray((nsProbe as { namespaces?: string[] } | null)?.namespaces)
+    ? (nsProbe as { namespaces: string[] }).namespaces
+    : []
+  const has = (prefix: string) => namespaces.some((n) => n.startsWith(prefix))
+  const seoPlugin: SeoPlugin = has('aioseo') ? 'aioseo' : has('rankmath') ? 'rankmath' : has('yoast') ? 'yoast' : 'core'
 
   const conn: WpConnection = {
     id: randomUUID(),
@@ -70,14 +77,15 @@ export const PUT = handled(async (request, { params }) => {
     siteUrl,
     username,
     appPasswordEnc: encryptSecret(appPassword),
-    aioseo,
+    aioseo: seoPlugin === 'aioseo',
+    seoPlugin,
     createdBy: user.id,
     createdAt: new Date().toISOString(),
   }
   const store = await getStore()
   await store.upsertWpConnection(conn)
   await audit(project.orgId, user.id, 'wordpress.connect', projectId, siteUrl)
-  return Response.json({ connection: { siteUrl, username, aioseo } })
+  return Response.json({ connection: { siteUrl, username, aioseo: conn.aioseo, seoPlugin } })
 })
 
 export const GET = handled(async (request, { params }) => {
@@ -88,7 +96,7 @@ export const GET = handled(async (request, { params }) => {
   const conn = await store.getWpConnection(projectId)
   const deployments = await store.listWpDeployments(projectId)
   return Response.json({
-    connection: conn ? { siteUrl: conn.siteUrl, username: conn.username, aioseo: conn.aioseo } : null,
+    connection: conn ? { siteUrl: conn.siteUrl, username: conn.username, aioseo: conn.aioseo, seoPlugin: pluginOf(conn) } : null,
     deployments,
   })
 })

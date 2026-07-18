@@ -226,6 +226,11 @@ export interface ProviderConnection {
   updatedAt: string
 }
 
+// Which SEO plugin manages the site's title/meta storage. Detected at connect
+// time from the site's REST namespaces. 'core' = no SEO plugin (meta lives in
+// the native excerpt). Meta description is written to the matching plugin field.
+export type SeoPlugin = 'aioseo' | 'rankmath' | 'yoast' | 'core'
+
 export interface WpConnection {
   id: string
   projectId: string
@@ -233,7 +238,10 @@ export interface WpConnection {
   username: string
   // AES-256-GCM encrypted application password. Never returned to clients.
   appPasswordEnc: string
+  // Back-compat: retained for connections created before seoPlugin existed
+  // (true ⇒ aioseo). New code should read `seoPlugin` via pluginOf().
   aioseo: boolean
+  seoPlugin?: SeoPlugin
   createdBy: string
   createdAt: string
 }

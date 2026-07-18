@@ -22,6 +22,23 @@ a pilot customer should both have. **RC2 status is noted inline.**
   reported), so no real message is sent in this environment. Set the webhook to
   enable delivery.
 
+## SEO-plugin write support (Yoast / Rank Math / AIOSEO)
+- The active SEO plugin is auto-detected from the site's REST namespaces at
+  connect time, and the meta description is written to that plugin's field
+  (AIOSEO `aioseo_meta_data`, Rank Math `rank_math_description`, Yoast
+  `_yoast_wpseo_metadesc`, else the native excerpt). **Every write is verified by
+  read-back**, so a field the plugin does not expose for REST writes surfaces as
+  `verify_failed` — never a false success.
+- **Yoast caveat:** `_yoast_wpseo_*` are protected meta keys; on a stock install
+  they may not be writable via the core REST `meta` object without registering
+  them (`show_in_rest` + `auth_callback`). Where that is the case the deployment
+  is honestly reported `verify_failed`. A companion snippet/MU-plugin to expose
+  these keys is planned. AIOSEO and Rank Math expose their fields for REST and
+  are covered by the test double; verify on the first live customer of each.
+- **SEO title vs post title:** the "SEO title" edit writes the native WordPress
+  post title (live-validated), not a per-plugin title override. Per-plugin title
+  overrides (`rank_math_title`, `_yoast_wpseo_title`) are a planned enhancement.
+
 ## Missing features (do not exist)
 - **Team invitations / member management UI** — roles and membership exist in the
   store and are enforced by routes, but there is no way to invite or manage
