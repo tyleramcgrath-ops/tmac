@@ -106,3 +106,30 @@ export interface WhileYouWereAwayBrief {
 export function trackedPageToInput(p: TrackedPage): ReportInput {
   return { url: p.url, keyword: p.keyword, country: p.country, device: p.device, language: p.language }
 }
+
+// ─── Agentic fix loop — proposals the Compass can apply on approval ───────────
+
+export type ProposalStatus = 'proposed' | 'approved' | 'applied' | 'partial' | 'rejected' | 'failed'
+
+/** One concrete edit the Compass proposes. `auto` = can be published via API. */
+export interface ProposedChange {
+  field: 'title' | 'metaDescription' | 'shortAnswer' | 'faq' | 'schema'
+  label: string
+  before: string | null
+  after: string
+  rationale: string
+  auto: boolean // false = manual paste (e.g. AIOSEO meta, JSON-LD)
+  applied?: boolean
+  resultMessage?: string
+}
+
+export interface ChangeProposal {
+  id: string
+  siteId: string
+  url: string
+  reportId: string
+  createdAt: string
+  status: ProposalStatus
+  changes: ProposedChange[]
+  appliedAt?: string
+}

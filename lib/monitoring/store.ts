@@ -5,7 +5,7 @@
 // Domain objects are stored as namespaced JSON documents.
 
 import { getStore } from '../db'
-import type { MonitoredSite, MonitorRun, Snapshot } from './types'
+import type { ChangeProposal, MonitoredSite, MonitorRun, Snapshot } from './types'
 
 const SITE_INDEX = 'monitor:sites:index' // string[] of site ids
 const site = (id: string) => `monitor:site:${id}`
@@ -111,4 +111,25 @@ export async function getPreviousRun(siteId: string): Promise<MonitorRun | null>
   const ids = (await readJson<string[]>(runIndex(siteId))) ?? []
   if (ids.length < 2) return null
   return readJson<MonitorRun>(run(ids[ids.length - 2]))
+}
+
+// ─── Proposals (agentic fix loop) ────────────────────────────────────────────
+
+const proposal = (id: string) => `monitor:proposal:${id}`
+const proposalIndex = (siteId: string) => `monitor:proposals:${siteId}` // string[] of proposal ids
+
+export async function saveProposal(p: ChangeProposal): Promise<void> {
+  await writeJson(proposal(p.id), p)
+  const ids = (await readJson<string[]>(proposalIndex(p.siteId))) ?? []
+  if (!ids.includes(p.id)) await writeJson(proposalIndex(p.siteId), [...ids, p.id])
+}
+
+export async function getProposal(id: string): Promise<ChangeProposal | null> {
+  return readJson<ChangeProposal>(proposal(id))
+}
+
+export async function listProposals(siteId: string): Promise<ChangeProposal[]> {
+  const ids = (await readJson<string[]>(proposalIndex(siteId))) ?? []
+  const items = await Promise.all(ids.map((id) => readJson<ChangeProposal>(proposal(id))))
+  return items.filter((x): x is ChangeProposal => x !== null)
 }
