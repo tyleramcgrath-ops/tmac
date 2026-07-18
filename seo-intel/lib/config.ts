@@ -11,6 +11,7 @@ export const KEY_NAMES = [
   'OPENAI_API_KEY',
   'PAGESPEED_API_KEY',
   'DATAFORSEO_API_KEY',
+  'PERPLEXITY_API_KEY',
 ] as const
 
 export type KeyName = (typeof KEY_NAMES)[number]
