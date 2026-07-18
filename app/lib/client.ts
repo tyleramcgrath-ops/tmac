@@ -548,6 +548,7 @@ export interface OperatorResultDTO {
 }
 export interface OperatorMetricsDTO {
   recommendationsTotal: number
+  regressedRecommendations: number
   pendingApprovals: number
   fixedToday: number
   verifiedImprovements: number

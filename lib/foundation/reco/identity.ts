@@ -36,12 +36,24 @@ export function mergeForUpsert(existing: Recommendation, incoming: Recommendatio
       to: existing.status,
     })
   }
+
+  // Regression detection: the SAME issue was confirmed fixed (verified) by a
+  // real WordPress deploy, and a LATER scan (different scanId — never the
+  // same scan re-detecting itself) found it again. Something changed the live
+  // site back without RankForge's involvement — this must never be silently
+  // re-absorbed as if the fix never happened.
+  const isRegression = existing.status === 'verified' && existing.scanId !== incoming.scanId
+  const status = isRegression ? 'regressed' : existing.status
+  if (isRegression) {
+    history.push({ at: incoming.createdAt, by: 'system', from: 'verified', to: 'regressed' })
+  }
+
   return {
     ...incoming,
     // identity + triage preserved from the existing row
     id: existing.id,
     issueId: existing.issueId,
-    status: existing.status,
+    status,
     createdAt: existing.createdAt,
     history,
     // everything else on `incoming` (confidence, evidence, priority, title,

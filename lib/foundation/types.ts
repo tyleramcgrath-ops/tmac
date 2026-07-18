@@ -106,6 +106,12 @@ export type RecommendationStatus =
   | 'verified'
   | 'rolled_back'
   | 'dismissed'
+  // A later scan re-detected an issue that was previously confirmed fixed
+  // (verified) — something changed the live site back (a theme update, a
+  // manual edit, a plugin) without RankForge's involvement. Distinct from
+  // 'open' (never dealt with) so the regression is never silently absorbed
+  // back into the normal queue.
+  | 'regressed'
 
 // Full explainability (Phase C §9): every recommendation answers these.
 export interface RecommendationExplanation {
