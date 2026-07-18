@@ -321,7 +321,16 @@ export const api = {
     ),
   deployWordpress: (
     projectId: string,
-    input: { postId: number; postType: string; title?: string; metaDescription?: string; jsonLd?: string; reason: string; recommendationId?: string }
+    input: {
+      postId: number
+      postType: string
+      title?: string
+      metaDescription?: string
+      jsonLd?: string
+      internalLinks?: { url: string; anchor: string }[]
+      reason: string
+      recommendationId?: string
+    }
   ) =>
     req<{ deployment: DeploymentDTO }>(`/api/projects/${projectId}/wordpress`, {
       method: 'POST',

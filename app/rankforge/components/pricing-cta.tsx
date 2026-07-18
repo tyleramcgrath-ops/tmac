@@ -44,8 +44,10 @@ const PLANS: {
       'Competitor top-10 comparison per keyword',
       'WordPress deploy: review, approve & undo',
       'Forge — AI SEO assistant + title/meta rewrites',
+      'Automatic scheduled re-audits (daily or weekly)',
+      'Outcome measurement — real Search Console before/after per fix',
     ],
-    soon: ['Scheduled crawls & monitoring', 'Backlink analysis'],
+    soon: ['Regression monitoring & alerts', 'Backlink analysis'],
   },
   {
     name: 'Agency',

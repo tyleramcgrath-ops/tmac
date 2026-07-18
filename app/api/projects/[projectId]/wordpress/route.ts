@@ -181,12 +181,31 @@ export const POST = handled(async (request, { params }) => {
     // Optional structured data (JSON-LD): deployed as a managed, reversible block
     // in the post body via the verified content-transform path.
     const jsonLd = body.jsonLd === undefined ? undefined : String(body.jsonLd).slice(0, 20000)
+    // Optional automatic internal links: {url, anchor} pairs the CLIENT already
+    // resolved from the site's own real WordPress items (never invented here) —
+    // same append-internal-links content transform the Operator/recommendation
+    // path uses, now reachable from the everyday "Optimize pages & posts" flow.
+    const internalLinksRaw = Array.isArray(body.internalLinks) ? body.internalLinks : []
+    const internalLinks = internalLinksRaw
+      .map((l) => (l && typeof l === 'object' ? { url: String((l as { url?: unknown }).url ?? ''), anchor: String((l as { anchor?: unknown }).anchor ?? '') } : null))
+      .filter((l): l is { url: string; anchor: string } => !!l && !!l.url && !!l.anchor)
+      .slice(0, 10)
     const reason = String(body.reason ?? '').slice(0, 1000)
     if (!Number.isInteger(postId) || postId <= 0) throw new HttpError(400, 'postId required.')
-    if (title === undefined && metaDescription === undefined && jsonLd === undefined) {
-      throw new HttpError(400, 'Nothing to deploy — provide a title, meta description, and/or structured data.')
+    if (title === undefined && metaDescription === undefined && jsonLd === undefined && internalLinks.length === 0) {
+      throw new HttpError(400, 'Nothing to deploy — provide a title, meta description, structured data, and/or internal links.')
     }
     if (!reason) throw new HttpError(400, 'A reason is required for every deployment.')
+
+    // Only one body-content transform can be applied per deploy today —
+    // internal links take precedence when both are requested in the same call
+    // (the UI keeps them mutually exclusive per click, so this is a defensive
+    // fallback, not the normal path).
+    const contentTransform = internalLinks.length > 0
+      ? ({ type: 'append-internal-links', links: internalLinks } as const)
+      : jsonLd
+        ? ({ type: 'set-jsonld', jsonLd } as const)
+        : undefined
 
     const recommendationId = body.recommendationId ? String(body.recommendationId) : undefined
     const dep = await executeWpDeployment({
@@ -195,11 +214,7 @@ export const POST = handled(async (request, { params }) => {
       connection,
       postId,
       postType,
-      changes: {
-        title,
-        metaDescription,
-        contentTransform: jsonLd ? { type: 'set-jsonld', jsonLd } : undefined,
-      },
+      changes: { title, metaDescription, contentTransform },
       approvedBy: user.id,
       reason,
       recommendationId,

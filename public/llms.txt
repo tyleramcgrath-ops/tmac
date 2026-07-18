@@ -1,0 +1,34 @@
+# RankForge
+
+> RankForge is an SEO tool for WordPress that runs a full-site audit, generates evidence-backed fixes, and deploys approved title/meta/schema/internal-link changes directly to the live site — then reads the change back from the live site to verify it actually took effect, with one-click rollback. Every claim it makes is measured, never estimated or invented.
+
+## What it actually does
+
+- **Audits**: crawls a WordPress site (up to 300 pages), scoring technical, content, schema, and AI-readiness signals per page from real fetched HTML — no fabricated scores.
+- **Generates fixes**: an evidence-backed, severity-ranked fix list (critical/warning/info) derived from the same crawl the audit summary is based on, so the two can never disagree. Fix types include title/meta rewrites, JSON-LD structured data, missing-H1 insertion, HTTPS upgrades of insecure resources, and automatic internal linking to other real crawled pages (never invented URLs).
+- **Deploys to WordPress**: connects via a WordPress Application Password, auto-detects the site's SEO plugin (Yoast, Rank Math, All in One SEO, or none — falls back to the post excerpt), and writes each approved fix to the live site.
+- **Verifies by read-back**: after every write, re-reads the live post to confirm the change actually persisted. A change is only ever reported "verified" if the live site confirms it — never assumed from the write response.
+- **Reversible**: every deployment is a durable server-side record with the captured before-value, so any change can be rolled back in one click.
+- **Measures outcomes**: for every verified deployment, RankForge compares Google Search Console clicks/impressions/position for the affected URL 14 days before vs. 14 days after — real proof a fix moved a real metric, not a claimed one. If Search Console isn't connected, this is reported as an honest "not measured," never fabricated.
+- **Runs on a schedule**: projects can opt into automatic recurring re-audits (daily or weekly) that re-crawl the site and refresh recommendations without manual intervention.
+- **Multi-agent review**: recommendations are independently evaluated by multiple specialized reviewers (technical, content, schema, AI-readiness) plus a QA critic, producing a consensus verdict rather than a single unchecked opinion.
+- **Can install a missing SEO plugin**: if no SEO plugin is detected, RankForge can install and activate Yoast SEO or All in One SEO on the connected site via WordPress's own plugin API — only on explicit user approval, never automatically.
+
+## What it does NOT do (honestly, on purpose)
+
+- No fabricated Core Web Vitals (LCP/CLS/INP) — the crawler doesn't run Lighthouse.
+- No invented backlink, traffic, or ranking-history numbers — anything not directly measured is shown as "unavailable," not guessed.
+- No AI citation tracking or local-SEO geo-grid rankings yet — these are roadmap items, explicitly labeled as such in the product, not shipped features.
+- No agentic writes beyond scoped, reversible SEO fields — RankForge never installs arbitrary code or modifies a site beyond the specific approved change.
+
+## Who it's for
+
+Website owners, in-house marketers, SEO consultants, and agencies managing WordPress sites who want audit findings to become deployed, verified fixes instead of a to-do list someone has to execute by hand.
+
+## Links
+
+- Homepage: /
+- Features: /features
+- WordPress integration: /wordpress
+- For agencies: /agency
+- Pricing: /pricing

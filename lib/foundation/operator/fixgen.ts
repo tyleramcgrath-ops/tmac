@@ -71,6 +71,18 @@ function brandFromTitle(title: string | undefined): string {
   return m.length > 1 ? m[m.length - 1] : ''
 }
 
+// Derive a real, page-specific title fragment from the URL: the last path
+// segment, humanized, or "Home" for the root — never invented copy.
+function slugTitle(url: string): string {
+  try {
+    const parts = new URL(url).pathname.split('/').filter(Boolean)
+    if (parts.length === 0) return 'Home'
+    return decodeURIComponent(parts[parts.length - 1]).replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+  } catch {
+    return ''
+  }
+}
+
 function truncateTitle(title: string, max = 60): string {
   if (title.length <= max) return title
   // Trim on a word boundary, keep a trailing brand if present.
@@ -162,6 +174,25 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
       })()
       const value = brand ? `${slug} · ${brand}` : slug
       return { actionable: true, kind: 'title', deploy: { title: value }, proposedValue: value, currentValue: '', note: 'Composed from the URL slug (+brand). Review wording before deploy.' }
+    }
+    case 'dup-title': {
+      // Multiple pages share the exact same <title>. Differentiate THIS page
+      // (s.title is the duplicate value itself, so it can't be reused as-is)
+      // from its own URL slug, keeping any existing brand suffix.
+      const brand = brandFromTitle(s.title)
+      const slug = slugTitle(s.url)
+      if (!slug) {
+        return { actionable: false, kind: 'none', proposedValue: '', currentValue: s.title ?? '', note: 'Could not derive a distinct title from this page’s URL — edit manually.' }
+      }
+      const value = truncateTitle(brand ? `${slug} · ${brand}` : slug, 60)
+      return {
+        actionable: true,
+        kind: 'title',
+        deploy: { title: value },
+        proposedValue: value,
+        currentValue: s.title ?? '',
+        note: 'Composed from this page’s URL slug (+brand) so it no longer duplicates the title shared with other pages. Review wording before deploy.',
+      }
     }
     case 'title-length': {
       if (!s.title) return { actionable: false, kind: 'none', proposedValue: '', currentValue: '', note: 'No current title to shorten.' }

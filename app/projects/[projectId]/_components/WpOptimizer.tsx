@@ -10,7 +10,7 @@
 import { useMemo, useRef, useState } from 'react'
 import {
   Loader2, Wand2, Sparkles, ExternalLink, Rocket, Check, X, FileText, FileType2,
-  Layers, Scissors, Code2, AlertTriangle, ListChecks,
+  Layers, Scissors, Code2, AlertTriangle, ListChecks, Link2,
 } from 'lucide-react'
 import { api, ApiError } from '../../../lib/client'
 
@@ -21,6 +21,18 @@ interface WpPost { postId: number; postType: PostType; title: string; metaDescri
 
 function pathOf(url: string): string { try { const u = new URL(url); return (u.pathname + u.search) || '/' } catch { return url } }
 function keyOf(it: { type: PostType; id: number }): string { return `${it.type}:${it.id}` }
+
+// Pick up to `n` OTHER real items from the already-loaded site listing as
+// internal-link candidates — never invented, always something the WordPress
+// REST API just returned. Mirrors the rule engine's internal-linking fix
+// generator (lib/foundation/operator/fixgen.ts), just sourced from the
+// items this component already has in hand instead of a crawl.
+function pickLinkCandidates(current: WpItem, all: WpItem[], n = 3): { url: string; anchor: string }[] {
+  return all
+    .filter((it) => keyOf(it) !== keyOf(current) && it.link && it.title)
+    .slice(0, n)
+    .map((it) => ({ url: it.link, anchor: it.title.replace(/<[^>]+>/g, '').split(/[·|—–]/)[0].trim() || it.link }))
+}
 
 // Trim a title to <=max chars on a word boundary, without an ellipsis (titles
 // shouldn't end in "…"). Kept deterministic so it works even when AI is offline.
@@ -168,10 +180,19 @@ export function WpBrowseOptimize({ projectId, onDeployed }: { projectId: string;
 
       {selectedItems.length > 0 && <BulkBar count={selectedItems.length} onRun={(opts) => setBulk({ items: selectedItems, opts })} onClear={() => setSelected(new Set())} />}
 
-      {editing && <Optimizer projectId={projectId} post={editing} onClose={() => setEditing(null)} onDeployed={() => { setEditing(null); onDeployed() }} />}
+      {editing && (
+        <Optimizer
+          projectId={projectId} post={editing}
+          linkCandidates={pickLinkCandidates(
+            { id: editing.postId, type: editing.postType, link: editing.link, title: editing.title, status: '' },
+            items
+          )}
+          onClose={() => setEditing(null)} onDeployed={() => { setEditing(null); onDeployed() }}
+        />
+      )}
       {bulk && (
         <BulkRunner
-          projectId={projectId} items={bulk.items} opts={bulk.opts}
+          projectId={projectId} items={bulk.items} allItems={items} opts={bulk.opts}
           onClose={() => setBulk(null)}
           onFinished={() => { setSelected(new Set()); onDeployed() }}
         />
@@ -182,11 +203,15 @@ export function WpBrowseOptimize({ projectId, onDeployed }: { projectId: string;
 
 // ── Bulk options bar ─────────────────────────────────────────────────────────
 
-interface BulkOpts { shorten: boolean; schema: boolean }
+interface BulkOpts { shorten: boolean; schema: boolean; internalLinks: boolean }
 
+// Schema and internal links each occupy the single body-content-transform
+// slot a deploy supports, so they're mutually exclusive per run (checking
+// one clears the other) rather than silently dropping whichever loses.
 function BulkBar({ count, onRun, onClear }: { count: number; onRun: (o: BulkOpts) => void; onClear: () => void }) {
   const [shorten, setShorten] = useState(false)
   const [schema, setSchema] = useState(false)
+  const [internalLinks, setInternalLinks] = useState(false)
   return (
     <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-[var(--rf-blue-bright)]/30 bg-[var(--rf-blue-bright)]/[0.06] px-4 py-3">
       <span className="text-sm font-semibold text-white">{count} selected</span>
@@ -195,12 +220,16 @@ function BulkBar({ count, onRun, onClear }: { count: number; onRun: (o: BulkOpts
         <Scissors className="h-3.5 w-3.5" /> Shorten titles to ≤60 chars
       </label>
       <label className="inline-flex cursor-pointer items-center gap-1.5 text-xs text-[var(--rf-muted)]">
-        <input type="checkbox" checked={schema} onChange={(e) => setSchema(e.target.checked)} className="h-3.5 w-3.5 accent-[var(--rf-blue-bright)]" />
+        <input type="checkbox" checked={schema} onChange={(e) => { setSchema(e.target.checked); if (e.target.checked) setInternalLinks(false) }} className="h-3.5 w-3.5 accent-[var(--rf-blue-bright)]" />
         <Code2 className="h-3.5 w-3.5" /> Add structured data (schema)
+      </label>
+      <label className="inline-flex cursor-pointer items-center gap-1.5 text-xs text-[var(--rf-muted)]">
+        <input type="checkbox" checked={internalLinks} onChange={(e) => { setInternalLinks(e.target.checked); if (e.target.checked) setSchema(false) }} className="h-3.5 w-3.5 accent-[var(--rf-blue-bright)]" />
+        <Link2 className="h-3.5 w-3.5" /> Add internal links
       </label>
       <div className="ml-auto flex items-center gap-2">
         <button onClick={onClear} className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">Clear</button>
-        <button onClick={() => onRun({ shorten, schema })} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold">
+        <button onClick={() => onRun({ shorten, schema, internalLinks })} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold">
           <Sparkles className="h-3.5 w-3.5" /> Optimize {count} with Forge
         </button>
       </div>
@@ -224,8 +253,8 @@ function badge(s: RowStatus): { text: string; cls: string; Icon: typeof Check } 
   }
 }
 
-function BulkRunner({ projectId, items, opts, onClose, onFinished }: {
-  projectId: string; items: WpItem[]; opts: BulkOpts; onClose: () => void; onFinished: () => void
+function BulkRunner({ projectId, items, allItems, opts, onClose, onFinished }: {
+  projectId: string; items: WpItem[]; allItems: WpItem[]; opts: BulkOpts; onClose: () => void; onFinished: () => void
 }) {
   const [rows, setRows] = useState<RunRow[]>(() => items.map((it) => ({ key: keyOf(it), item: it, status: 'queued', note: '' })))
   const [phase, setPhase] = useState<'ready' | 'running' | 'done'>('ready')
@@ -240,6 +269,7 @@ function BulkRunner({ projectId, items, opts, onClose, onFinished }: {
     let title = post.title
     let meta = post.metaDescription
     let jsonLd: string | undefined
+    const internalLinks = opts.internalLinks ? pickLinkCandidates(it, allItems) : undefined
     let aiNote = ''
     try {
       const excerpt = post.content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 2000)
@@ -255,14 +285,15 @@ function BulkRunner({ projectId, items, opts, onClose, onFinished }: {
 
     const changedTitle = title !== post.title
     const changedMeta = meta !== post.metaDescription
-    if (!changedTitle && !changedMeta && !jsonLd) {
-      return { status: 'skipped', note: aiNote || 'Already optimal — nothing to change.' }
+    if (!changedTitle && !changedMeta && !jsonLd && !internalLinks?.length) {
+      return { status: 'skipped', note: aiNote || (opts.internalLinks ? 'No other pages available to link to.' : 'Already optimal — nothing to change.') }
     }
     const { deployment } = await api.deployWordpress(projectId, {
       postId: it.id, postType: it.type,
       title: changedTitle ? title : undefined,
       metaDescription: changedMeta ? meta : undefined,
       jsonLd,
+      internalLinks,
       reason: 'Bulk SEO optimization via Forge',
     })
     const st: RowStatus = deployment.status === 'verified' ? 'verified' : deployment.status === 'failed' ? 'failed' : 'applied'
@@ -307,7 +338,7 @@ function BulkRunner({ projectId, items, opts, onClose, onFinished }: {
               <p className="text-white">Forge will optimize the SEO title &amp; meta description of each item and deploy live.</p>
               <ul className="mt-2 space-y-1 text-[13px] text-[var(--rf-muted)]">
                 <li>• {opts.shorten ? 'Titles will be shortened to ≤60 characters.' : 'Titles kept at Forge’s recommended length.'}</li>
-                <li>• {opts.schema ? 'Structured data (JSON-LD) will be added to each item’s body.' : 'No structured data will be added.'}</li>
+                <li>• {opts.schema ? 'Structured data (JSON-LD) will be added to each item’s body.' : opts.internalLinks ? 'Links to other real pages on your site will be added to each item’s body.' : 'No structured data or internal links will be added.'}</li>
                 <li>• Each change is read back to verify, and every one can be undone individually from the deployment history.</li>
               </ul>
               <div className="mt-3 flex gap-2">
@@ -362,12 +393,13 @@ function BulkRunner({ projectId, items, opts, onClose, onFinished }: {
 
 // ── Single-item optimizer ────────────────────────────────────────────────────
 
-function Optimizer({ projectId, post, onClose, onDeployed }: { projectId: string; post: WpPost; onClose: () => void; onDeployed: () => void }) {
+function Optimizer({ projectId, post, linkCandidates, onClose, onDeployed }: { projectId: string; post: WpPost; linkCandidates: { url: string; anchor: string }[]; onClose: () => void; onDeployed: () => void }) {
   const [title, setTitle] = useState(post.title)
   const [meta, setMeta] = useState(post.metaDescription)
   const [jsonLd, setJsonLd] = useState('')
   const [schemaType, setSchemaType] = useState('')
   const [deploySchema, setDeploySchema] = useState(false)
+  const [deployInternalLinks, setDeployInternalLinks] = useState(false)
   const [showSchema, setShowSchema] = useState(false)
   const [aiBusy, setAiBusy] = useState(false)
   const [aiNote, setAiNote] = useState('')
@@ -375,7 +407,7 @@ function Optimizer({ projectId, post, onClose, onDeployed }: { projectId: string
   const [step, setStep] = useState<'edit' | 'confirm' | 'applying' | 'done' | 'error'>('edit')
   const [error, setError] = useState('')
 
-  const changed = (title !== post.title ? 1 : 0) + (meta !== post.metaDescription ? 1 : 0) + (deploySchema && jsonLd.trim() ? 1 : 0)
+  const changed = (title !== post.title ? 1 : 0) + (meta !== post.metaDescription ? 1 : 0) + (deploySchema && jsonLd.trim() ? 1 : 0) + (deployInternalLinks && linkCandidates.length > 0 ? 1 : 0)
 
   async function writeWithAI() {
     setAiBusy(true); setAiErr(''); setAiNote('')
@@ -401,6 +433,7 @@ function Optimizer({ projectId, post, onClose, onDeployed }: { projectId: string
         title: title !== post.title ? title : undefined,
         metaDescription: meta !== post.metaDescription ? meta : undefined,
         jsonLd: deploySchema && jsonLd.trim() ? jsonLd : undefined,
+        internalLinks: deployInternalLinks && linkCandidates.length > 0 ? linkCandidates : undefined,
         reason: 'One-click SEO optimization via Forge',
       })
       setStep('done')
@@ -457,7 +490,7 @@ function Optimizer({ projectId, post, onClose, onDeployed }: { projectId: string
               <div className="mt-4 rounded-xl border border-[var(--rf-card-line)] p-3">
                 <label className="flex cursor-pointer items-center justify-between gap-2">
                   <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--rf-muted)]"><Code2 className="h-3.5 w-3.5" /> Structured data (JSON-LD){schemaType ? ` · ${schemaType}` : ''}</span>
-                  <input type="checkbox" checked={deploySchema} onChange={(e) => setDeploySchema(e.target.checked)} disabled={!jsonLd.trim()} className="h-4 w-4 accent-[var(--rf-blue-bright)] disabled:opacity-40" />
+                  <input type="checkbox" checked={deploySchema} onChange={(e) => { setDeploySchema(e.target.checked); if (e.target.checked) setDeployInternalLinks(false) }} disabled={!jsonLd.trim()} className="h-4 w-4 accent-[var(--rf-blue-bright)] disabled:opacity-40" />
                 </label>
                 {!jsonLd.trim() ? (
                   <p className="mt-1.5 text-[11px] text-[var(--rf-faint)]">Click “Write with AI” to generate schema for this page.</p>
@@ -466,6 +499,26 @@ function Optimizer({ projectId, post, onClose, onDeployed }: { projectId: string
                     <button onClick={() => setShowSchema((s) => !s)} className="mt-1.5 text-[11px] font-medium text-[var(--rf-blue-bright)] hover:text-white">{showSchema ? 'Hide' : 'View'} JSON-LD</button>
                     {showSchema && <pre className="mt-1.5 max-h-40 overflow-auto rounded-lg bg-black/40 p-2 text-[10px] leading-relaxed text-[var(--rf-muted)]">{jsonLd}</pre>}
                     <p className="mt-1 text-[11px] text-[var(--rf-faint)]">Added to the post body as a managed block and verified after deploy (needs the WordPress user to allow HTML/scripts).</p>
+                  </>
+                )}
+              </div>
+
+              {/* Automatic internal linking */}
+              <div className="mt-3 rounded-xl border border-[var(--rf-card-line)] p-3">
+                <label className="flex cursor-pointer items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--rf-muted)]"><Link2 className="h-3.5 w-3.5" /> Automatic internal linking</span>
+                  <input type="checkbox" checked={deployInternalLinks} onChange={(e) => { setDeployInternalLinks(e.target.checked); if (e.target.checked) setDeploySchema(false) }} disabled={linkCandidates.length === 0} className="h-4 w-4 accent-[var(--rf-blue-bright)] disabled:opacity-40" />
+                </label>
+                {linkCandidates.length === 0 ? (
+                  <p className="mt-1.5 text-[11px] text-[var(--rf-faint)]">No other pages on your site to link to yet.</p>
+                ) : (
+                  <>
+                    <p className="mt-1.5 text-[11px] text-[var(--rf-faint)]">Adds links to {linkCandidates.length} real page{linkCandidates.length !== 1 ? 's' : ''} on your site, added to the post body as a managed block:</p>
+                    <ul className="mt-1 space-y-0.5">
+                      {linkCandidates.map((l) => (
+                        <li key={l.url} className="truncate text-[11px] text-[var(--rf-muted)]">→ {l.anchor} <span className="text-[var(--rf-faint)]">({pathOf(l.url)})</span></li>
+                      ))}
+                    </ul>
                   </>
                 )}
               </div>
