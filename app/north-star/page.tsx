@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { PREVIEW_SCENARIOS, DEFAULT_SCENARIO_ID, type PreviewScenarioId } from '@/lib/north-star-preview-data'
 import { PreviewStateSwitcher } from '@/components/north-star/PreviewStateSwitcher'
 import { ExecutiveOffice } from '@/components/north-star/office/ExecutiveOffice'
-import { LiveBusinessTwin } from '@/components/north-star/LiveBusinessTwin'
+import { LiveDigitalDna } from '@/components/north-star/LiveDigitalDna'
 
 export default function NorthStarPage() {
   const [scenarioId, setScenarioId] = useState<PreviewScenarioId>(DEFAULT_SCENARIO_ID)
@@ -32,7 +32,7 @@ export default function NorthStarPage() {
 
       <ExecutiveOffice key={scenarioId} scenario={scenario} />
 
-      {showLive && <LiveBusinessTwin onClose={() => setShowLive(false)} />}
+      {showLive && <LiveDigitalDna onClose={() => setShowLive(false)} />}
     </>
   )
 }

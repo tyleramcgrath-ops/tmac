@@ -1,9 +1,13 @@
 'use client'
 
 /**
- * Live Business Twin — the first office surface wired to the real engine
+ * Live Digital DNA — the first office surface wired to the real engine
  * (monitoring + citations + automation), same-origin under /api/*. Every value
  * is a real, dated measurement; when nothing has run yet, it says so plainly.
+ *
+ * "Digital DNA" is the current name for the connected understanding of the
+ * business (formerly "Business Twin"); the backend store keeps the neutral
+ * MonitoredSite naming.
  */
 import { useNorthStarLive } from '@/lib/use-north-star-live'
 
@@ -20,13 +24,13 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   )
 }
 
-export function LiveBusinessTwin({ onClose }: { onClose?: () => void }) {
+export function LiveDigitalDna({ onClose }: { onClose?: () => void }) {
   const live = useNorthStarLive()
 
   return (
     <div
       role="dialog"
-      aria-label="Live Business Twin"
+      aria-label="Digital DNA"
       style={{
         position: 'absolute', inset: 0, zIndex: 40, display: 'flex', justifyContent: 'center', alignItems: 'flex-start',
         background: 'rgba(4,4,6,0.72)', backdropFilter: 'blur(6px)', overflowY: 'auto', padding: '6vh 4vw',
@@ -35,7 +39,7 @@ export function LiveBusinessTwin({ onClose }: { onClose?: () => void }) {
       <div style={{ width: 'min(720px, 100%)', color: ink, fontFamily: 'system-ui,-apple-system,Segoe UI,Roboto,sans-serif' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 18 }}>
           <div>
-            <p style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: gold, margin: 0 }}>North Star · Business Twin</p>
+            <p style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: gold, margin: 0 }}>North Star · Digital DNA</p>
             <h2 style={{ fontSize: 24, margin: '4px 0 0', fontFamily: 'Iowan Old Style, Georgia, serif' }}>
               {live.activeSite ? live.activeSite.label : 'Your company, watched live'}
             </h2>
