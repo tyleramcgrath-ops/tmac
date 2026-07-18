@@ -206,6 +206,17 @@ export interface Competitor {
   snapshotPages?: { url: string; title: string }[]
 }
 
+// Rolling baseline for Mission Atlas change detection (Phase G). One row per
+// project — the last OBSERVED gsc/backlinks/aiVisibility values, so the next
+// Atlas load can report real "what changed since last time" instead of always
+// comparing against nothing. `data` is untyped JSONB (PriorSnapshotData);
+// only ever written by assembleAtlas's own output, never user input.
+export interface AtlasHistory {
+  projectId: string
+  data: unknown
+  capturedAt: string
+}
+
 // A generated content brief / draft blog post (Content Studio). Researched from
 // real live SERP results (never invented) and drafted by AI from that evidence
 // + real tracked-competitor overlap; the draft is never auto-published — it

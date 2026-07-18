@@ -7,6 +7,7 @@
 // is never the source of truth for any entity defined here.
 
 import type {
+  AtlasHistory,
   AuditLogEntry,
   Competitor,
   ContentBrief,
@@ -56,6 +57,9 @@ export interface FoundationStore {
   listCompetitors(projectId: string): Promise<Competitor[]>
   getCompetitor(id: string): Promise<Competitor | null>
   deleteCompetitor(id: string): Promise<void>
+  // Atlas change-detection baseline (Phase G)
+  getAtlasHistory(projectId: string): Promise<AtlasHistory | null>
+  upsertAtlasHistory(history: AtlasHistory): Promise<void>
   // content briefs (Content Studio)
   createContentBrief(brief: ContentBrief): Promise<void>
   updateContentBrief(brief: ContentBrief): Promise<void>

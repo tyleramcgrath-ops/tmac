@@ -6,6 +6,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import type { FoundationStore } from './store'
 import type {
+  AtlasHistory,
   AuditLogEntry,
   Competitor,
   ContentBrief,
@@ -31,6 +32,7 @@ type Collections = {
   scans: Scan[]
   recommendations: Recommendation[]
   competitors: Competitor[]
+  atlasHistory: AtlasHistory[]
   contentBriefs: ContentBrief[]
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
@@ -49,6 +51,7 @@ const EMPTY: Collections = {
   scans: [],
   recommendations: [],
   competitors: [],
+  atlasHistory: [],
   contentBriefs: [],
   wpConnections: [],
   wpDeployments: [],
@@ -227,6 +230,17 @@ export class FileFoundationStore implements FoundationStore {
   }
   async deleteCompetitor(id: string) {
     await this.mutate('competitors', (all) => ({ data: all.filter((c) => c.id !== id) }))
+  }
+
+  // Atlas change-detection baseline (Phase G)
+  async getAtlasHistory(projectId: string) {
+    return (await this.read('atlasHistory')).find((h) => h.projectId === projectId) ?? null
+  }
+  async upsertAtlasHistory(history: AtlasHistory) {
+    await this.mutate('atlasHistory', (all) => {
+      const rest = all.filter((h) => h.projectId !== history.projectId)
+      return { data: [...rest, history] }
+    })
   }
 
   // content briefs (Content Studio)

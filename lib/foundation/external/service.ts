@@ -214,3 +214,17 @@ export async function assembleAtlas(input: {
     graph, changes, briefing, grades,
   }
 }
+
+// The rolling baseline to persist as "yesterday" for the NEXT call's change
+// detection. Per-dimension: only overwrite with a fresh value when this call
+// actually OBSERVED it — a transient disconnect (provider errored, token
+// expired) must never silently reset the baseline to null and erase the
+// ability to detect a change once the provider reconnects. Pure so the
+// baseline-rollover logic is testable without any store/route plumbing.
+export function nextPriorSnapshot(snapshot: AtlasSnapshot, prev?: PriorSnapshotData): PriorSnapshotData {
+  return {
+    gsc: snapshot.gsc.evidence.grade === 'observed' ? snapshot.gsc.value : prev?.gsc ?? null,
+    backlinks: snapshot.backlinks.evidence.grade === 'observed' ? snapshot.backlinks.value : prev?.backlinks ?? null,
+    aiVisibility: snapshot.aiVisibility.evidence.grade === 'observed' ? (snapshot.aiVisibility.value ?? []) : prev?.aiVisibility ?? [],
+  }
+}

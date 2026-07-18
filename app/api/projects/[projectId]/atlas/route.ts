@@ -8,7 +8,7 @@ import { handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { latestScanPages } from '@/lib/foundation/operator/context'
 import { toPageSignals } from '@/lib/foundation/reco/signals'
-import { assembleAtlas, connectedProviderSet } from '@/lib/foundation/external/service'
+import { assembleAtlas, connectedProviderSet, nextPriorSnapshot, type PriorSnapshotData } from '@/lib/foundation/external/service'
 
 export const runtime = 'nodejs'
 
@@ -18,11 +18,13 @@ export const GET = handled(async (request, { params }) => {
   const { project } = await requireProjectRole(user, projectId, 'member')
   const store = await getStore()
 
-  const [competitors, rawPages] = await Promise.all([
+  const [competitors, rawPages, history] = await Promise.all([
     store.listCompetitors(projectId),
     latestScanPages(store, projectId),
+    store.getAtlasHistory(projectId),
   ])
   const ourPages = rawPages.map(toPageSignals)
+  const prev = (history?.data as PriorSnapshotData | undefined) ?? undefined
 
   const now = new Date().toISOString()
   // Resolve the project's REAL providers from its connected integrations (Phase
@@ -37,7 +39,12 @@ export const GET = handled(async (request, { params }) => {
     ourPages,
     competitors,
     providers,
+    prev,
   })
+
+  // Roll the baseline forward for the NEXT load's change detection (only the
+  // dimensions actually observed this time — see nextPriorSnapshot).
+  await store.upsertAtlasHistory({ projectId, data: nextPriorSnapshot(snapshot, prev), capturedAt: now })
 
   return Response.json({ snapshot })
 })

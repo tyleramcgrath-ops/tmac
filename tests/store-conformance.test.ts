@@ -151,6 +151,13 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       await store.deleteCompetitor(comp.id)
       expect(await store.getCompetitor(comp.id)).toBeNull()
 
+      // Atlas change-detection baseline (Phase G)
+      expect(await store.getAtlasHistory(p.id)).toBeNull()
+      await store.upsertAtlasHistory({ projectId: p.id, data: { gsc: null }, capturedAt: now() })
+      expect((await store.getAtlasHistory(p.id))?.data).toEqual({ gsc: null })
+      await store.upsertAtlasHistory({ projectId: p.id, data: { gsc: { range: { from: 'a', to: 'b' }, rows: [] } }, capturedAt: now() })
+      expect((await store.getAtlasHistory(p.id))?.data).toEqual({ gsc: { range: { from: 'a', to: 'b' }, rows: [] } }) // upsert replaces, no duplicate row
+
       // content briefs (Content Studio)
       const brief: ContentBrief = {
         id: uid(), projectId: p.id, keyword: 'best crm', createdBy: u.id, createdAt: now(), status: 'draft',

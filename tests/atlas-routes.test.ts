@@ -57,6 +57,18 @@ describe('atlas + competitors tenant isolation', () => {
     expect(snapshot.briefing.headline).toMatch(/no external data/i)
   })
 
+  it('persists an Atlas change-detection baseline across loads without crashing the disconnected default path', async () => {
+    const a = await makeUserWithProject('history@x.com')
+    const first = await atlasGet(new Request('http://t/a', { headers: { cookie: a.cookie } }), a.ctx)
+    expect(first.status).toBe(200)
+    const second = await atlasGet(new Request('http://t/a', { headers: { cookie: a.cookie } }), a.ctx)
+    expect(second.status).toBe(200)
+    // Everything stays honestly unavailable — a persisted baseline of nulls
+    // must never manufacture a "change" out of nothing.
+    const { snapshot } = (await second.json()) as { snapshot: { changes: unknown[] } }
+    expect(snapshot.changes).toEqual([])
+  })
+
   it('rejects invalid + duplicate competitor domains', async () => {
     const a = await makeUserWithProject('dup@x.com')
     expect((await competitorsPost(jsonReq({ domain: 'not a domain' }, a.cookie), a.ctx)).status).toBe(400)
