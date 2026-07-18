@@ -139,6 +139,7 @@ export const POST = handled(async (request, { params }) => {
     try {
       const dep = await executeWpDeployment({
         projectId,
+        orgId: project.orgId,
         connection: conn,
         postId: target.postId,
         postType: target.postType,

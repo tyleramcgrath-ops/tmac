@@ -75,7 +75,7 @@ d('WordPress execution over real HTTP (PHP WP-REST emulator, not WordPress)', ()
       expect(target).toMatchObject({ postId: 10, postType: 'pages' })
 
       const dep = await executeWpDeployment({
-        projectId: 'p1', connection: conn(base), postId: 10, postType: 'pages',
+        projectId: 'p1', orgId: 'o1', connection: conn(base), postId: 10, postType: 'pages',
         changes: { title: 'HTTP New Title', metaDescription: 'HTTP new meta' },
         approvedBy: 'u', reason: 'http proof',
       })
@@ -105,7 +105,7 @@ d('WordPress execution over real HTTP (PHP WP-REST emulator, not WordPress)', ()
     try {
       await waitUp(base)
       const dep = await executeWpDeployment({
-        projectId: 'p1', connection: conn(base), postId: 10, postType: 'pages',
+        projectId: 'p1', orgId: 'o1', connection: conn(base), postId: 10, postType: 'pages',
         changes: { metaDescription: 'will not stick' }, approvedBy: 'u', reason: 'drop',
       })
       expect(dep.status).toBe('verify_failed')
@@ -127,7 +127,7 @@ d('WordPress execution over real HTTP (PHP WP-REST emulator, not WordPress)', ()
       // data. This surfaces as a rejection, not a silent success.
       await expect(
         executeWpDeployment({
-          projectId: 'p1', connection: conn(base, 'wrong-password'), postId: 10, postType: 'pages',
+          projectId: 'p1', orgId: 'o1', connection: conn(base, 'wrong-password'), postId: 10, postType: 'pages',
           changes: { title: 'x' }, approvedBy: 'u', reason: 'bad creds',
         })
       ).rejects.toThrow(/401/)

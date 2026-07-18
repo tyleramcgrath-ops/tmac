@@ -10,6 +10,7 @@ import { isSafeFetchTarget } from '../../app/api/seo-scan/url-guard'
 import { decryptSecret } from './crypto'
 import { getStore } from './store'
 import { applyContentTransform, verifyContentTransform, type ContentTransform } from './operator/content-fix'
+import { makeJob } from './scheduler/engine'
 import type { SeoPlugin, WpConnection, WpDeployment } from './types'
 
 // Resolve the effective SEO plugin for a connection, honouring the legacy
@@ -253,6 +254,7 @@ function hash(text: string): string {
 
 export async function executeWpDeployment(opts: {
   projectId: string
+  orgId: string
   connection: WpConnection
   postId: number
   postType: 'posts' | 'pages'
@@ -361,6 +363,25 @@ export async function executeWpDeployment(opts: {
   }
 
   await store.createWpDeployment(dep)
+
+  // Outcome-measurement flywheel (SCHEDULER_DESIGN.md §11): only a CONFIRMED
+  // live change is worth measuring — a verify_failed/failed deployment has no
+  // trustworthy "before this change" baseline distinct from "after". Scheduled
+  // 14 days out so Search Console has real before/after windows to compare.
+  if (dep.status === 'verified') {
+    const now = new Date()
+    await store.enqueueJob(
+      makeJob({
+        orgId: opts.orgId,
+        projectId: opts.projectId,
+        kind: 'outcome_capture',
+        runAt: new Date(now.getTime() + 14 * 24 * 3600 * 1000),
+        payload: { deploymentId: dep.id },
+        now,
+      })
+    )
+  }
+
   return dep
 }
 

@@ -141,6 +141,7 @@ describe('WordPress deploy + read-back verification', () => {
   it('applies a title change, verifies by reading it back, and stores a durable record', async () => {
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -161,6 +162,7 @@ describe('WordPress deploy + read-back verification', () => {
     wp.dropMeta = true
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -177,6 +179,7 @@ describe('WordPress deploy + read-back verification', () => {
     wp.failWrites = true
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -190,6 +193,7 @@ describe('WordPress deploy + read-back verification', () => {
   it('writes the meta description to the Rank Math field and reads it back to verify', async () => {
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connectionWith('rankmath'),
       postId: 10,
       postType: 'pages',
@@ -208,6 +212,7 @@ describe('WordPress deploy + read-back verification', () => {
   it('writes the meta description to the Yoast field and reads it back to verify', async () => {
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connectionWith('yoast'),
       postId: 10,
       postType: 'pages',
@@ -225,6 +230,7 @@ describe('WordPress deploy + read-back verification', () => {
   it('core (no SEO plugin) still writes the meta description to the native excerpt', async () => {
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connectionWith('core'),
       postId: 10,
       postType: 'pages',
@@ -242,6 +248,7 @@ describe('WordPress content-transform deploys (Phase H)', () => {
     wp.posts.get(10)!.content = '<img src="http://wp.test/logo.png"><p>hi</p>'
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -262,6 +269,7 @@ describe('WordPress content-transform deploys (Phase H)', () => {
     wp.posts.get(10)!.content = '<p>no heading here</p>'
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -277,6 +285,7 @@ describe('WordPress content-transform deploys (Phase H)', () => {
     wp.posts.get(10)!.content = '<h1>Already</h1><p>body</p>'
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -306,6 +315,7 @@ describe('WordPress rollback', () => {
   it('restores captured before-values and verifies the rollback', async () => {
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
@@ -328,6 +338,7 @@ describe('WordPress rollback', () => {
   it('surfaces a failed rollback honestly when the write errors', async () => {
     const dep = await executeWpDeployment({
       projectId: 'proj-wp',
+      orgId: 'org-wp',
       connection: connection(),
       postId: 10,
       postType: 'pages',
