@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #faf6f0;
+  --surface: #fffdfb;
+  --surface-2: #f2eae0;
+  --border: #e6dbcc;
+  --border-soft: #efe6d9;
+  --ink: #241f1a;
+  --ink-dim: #6f6459;
+  --ink-mute: #a89a8a;
+  --accent: #bd6a49;
+  --accent-deep: #8a4630;
+  --rise: #7e9271;
+  --fall: #ab7256;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-mute: var(--ink-mute);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-rise: var(--rise);
+  --color-fall: var(--fall);
+  --font-display: var(--font-fraunces);
+  --font-mono: var(--font-jetbrains);
+  --font-body: var(--font-manrope);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  background: var(--bg);
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* ticker marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 44s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rise {
+  animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.15s; }
+.rise-3 { animation-delay: 0.25s; }
+.rise-4 { animation-delay: 0.35s; }
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+.pulse-dot {
+  animation: breathe 2.6s ease-in-out infinite;
+}
+
+/* soft atmospheric bloom, replaces a harsher technical grid */
+.grid-fade {
+  background-image:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 55%),
+    radial-gradient(circle at 75% 0%, color-mix(in srgb, var(--rise) 12%, transparent) 0%, transparent 50%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 0%, black 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 0%, black 35%, transparent 100%);
+}
+
+.tape-up::before {
+  content: "↑";
+  color: var(--rise);
+  margin-right: 5px;
+  font-size: 0.85em;
+  vertical-align: middle;
+}
+
+.tape-down::before {
+  content: "↓";
+  color: var(--fall);
+  margin-right: 5px;
+  font-size: 0.85em;
+  vertical-align: middle;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.card-soft {
+  box-shadow:
+    0 1px 2px rgba(36, 31, 26, 0.03),
+    0 16px 40px -20px rgba(36, 31, 26, 0.16);
+}
