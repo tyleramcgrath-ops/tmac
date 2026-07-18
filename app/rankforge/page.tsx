@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { RankForgeSite } from './components/rankforge-site'
 
 export const metadata: Metadata = {
-  title: 'RankForge AI — The Ruthless SEO & AI Search Command Center',
+  title: 'RankForge — The SEO tool that safely does the work on your WordPress site',
   description:
-    'Run technical audits, content briefs, AI search tracking, competitor gaps, schema, local maps, rank tracking, backlinks, and white-label client reports from one command center. Replace your entire SEO stack.',
+    'RankForge audits your WordPress site, fixes what matters, and deploys the changes for you — then reads every change back to verify it stuck, with one-click rollback. Works with Yoast, Rank Math, and AIOSEO. Never a number we didn’t measure.',
 }
 
 export default function RankForgePage() {

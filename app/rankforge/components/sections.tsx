@@ -193,9 +193,9 @@ const FEATURES: {
   },
   {
     icon: PenTool,
-    title: 'WordPress Deploy',
-    desc: 'Connect via Application Password, pull pages and posts, get AI-suggested title & meta rewrites (AIOSEO supported), then deploy with review-and-approve — and undo.',
-    tag: 'One-click undo',
+    title: 'WordPress Deploy — Verified & Reversible',
+    desc: 'Connect via Application Password, pull every page & post, and deploy AI-written title & meta fixes — one at a time or in bulk. Works with Yoast, Rank Math & AIOSEO. Every change is read back to prove it stuck, with one-click rollback.',
+    tag: 'Verified · undo',
   },
   {
     icon: MapPin,
@@ -247,11 +247,11 @@ export function CommandCenter() {
           eyebrow="The Platform"
           title={
             <>
-              The SEO{' '}
-              <span className="rf-gradient-text">Command Center</span>
+              Audit. Fix. Deploy.{' '}
+              <span className="rf-gradient-text">Verify.</span>
             </>
           }
-          sub="Audit, prioritize, fix, deploy — engineered to work as one system, not seven disconnected tabs. Everything below ships today."
+          sub="One closed loop for WordPress SEO: find what matters, let Forge write the fix, ship it to your live site, and read it back to prove it worked — with rollback if it didn’t. Everything below ships today."
         />
 
         <div className="mt-10 text-center">

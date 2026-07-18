@@ -28,23 +28,25 @@ export function Hero() {
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--rf-card-line-strong)] bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-[var(--rf-muted)]">
               <span className="rf-blink h-2 w-2 rounded-full bg-[var(--rf-green)]" />
-              SEO audit &amp; AI-assisted optimization — built for operators
+              For WordPress · Yoast, Rank Math &amp; AIOSEO
             </span>
           </Reveal>
 
           <Reveal delay={80}>
             <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-              Audit Your Site, Fix What Matters, and Ship It From One{' '}
-              <span className="rf-gradient-text">SEO Command Center</span>
+              The SEO tool that actually{' '}
+              <span className="rf-gradient-text">does the work</span>{' '}
+              on your WordPress site
             </h1>
           </Reveal>
 
           <Reveal delay={160}>
             <p className="mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-[var(--rf-muted)] sm:text-lg">
-              Crawl up to 300 pages and get technical, content, schema, and
-              AI-readiness scores with a prioritized fix list. Then deploy
-              approved title and meta fixes straight to WordPress — with Forge,
-              your AI SEO assistant, on call.
+              Audit tools hand you a to-do list. RankForge audits your site,
+              fixes what matters, and <strong className="text-[var(--rf-text)]">deploys the change for
+              you</strong> — then reads it back to prove it stuck, with one-click
+              rollback. No copy-paste, no CMS back-and-forth. And never a number
+              we didn’t actually measure.
             </p>
           </Reveal>
 
@@ -66,7 +68,7 @@ export function Hero() {
                 Watch Demo
               </button>
               <span className="text-xs text-[var(--rf-faint)]">
-                No credit card · Crawls up to 300 pages
+                No credit card · Every change verified &amp; reversible
               </span>
             </div>
           </Reveal>
