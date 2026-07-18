@@ -3,10 +3,46 @@
 import { useCallback, useEffect, useState } from 'react'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import { api, ApiError, type DeploymentDTO, type DeploymentOutcomeDTO } from '../../../lib/client'
+import { summarizeOutcomes } from '../../../lib/outcome-summary'
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { ChangeRow, StatusChip } from './shared'
 import { ConnectWordPress, DeployForm } from './WpForms'
 import { WpBrowseOptimize } from './WpOptimizer'
+
+// The headline the outcome-measurement flywheel exists to produce: proof, in
+// aggregate, that deployed fixes move real Search Console metrics — not just
+// a per-deployment delta buried in a list. Renders nothing when there's
+// nothing to report yet (no fabricated claim on empty data).
+function OutcomeSummaryCard({ deployments }: { deployments: DeploymentDTO[] }) {
+  const s = summarizeOutcomes(deployments)
+  if (s.measured === 0 && s.pending === 0 && s.skipped === 0) return null
+
+  return (
+    <div className="rf-card p-4">
+      <p className="text-sm font-semibold text-white">Outcomes — did the fixes work?</p>
+      {s.measured > 0 ? (
+        <>
+          <p className="mt-1 text-xs text-[var(--rf-muted)]">
+            <span className="rf-mono text-[var(--rf-green)]">{s.improvedClicks}</span> of{' '}
+            <span className="rf-mono text-white">{s.measured}</span> measured fixes increased clicks — avg{' '}
+            <span className="rf-mono">{s.avgClicksDelta >= 0 ? '+' : ''}{s.avgClicksDelta.toFixed(1)}</span> clicks,{' '}
+            avg position {s.avgPositionDelta >= 0 ? '+' : ''}{s.avgPositionDelta.toFixed(1)}{' '}
+            ({s.avgPositionDelta < 0 ? 'improved' : s.avgPositionDelta > 0 ? 'worsened' : 'unchanged'}), 14 days before vs after.
+          </p>
+        </>
+      ) : (
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">No fixes measured yet.</p>
+      )}
+      {(s.pending > 0 || s.skipped > 0) && (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">
+          {s.pending > 0 && `${s.pending} pending (measured ~14 days after deployment)`}
+          {s.pending > 0 && s.skipped > 0 && ' · '}
+          {s.skipped > 0 && `${s.skipped} not measured (no Search Console connected, or a permanent read failure)`}
+        </p>
+      )}
+    </div>
+  )
+}
 
 // Outcome-measurement flywheel (SCHEDULER_DESIGN.md §11): did this fix
 // actually move Search Console clicks/impressions/position for the affected
@@ -152,6 +188,8 @@ export function WordPressTab({ projectId }: { projectId: string }) {
           <DeployForm projectId={projectId} onDeployed={load} />
         </>
       )}
+
+      {state.deployments.length > 0 && <OutcomeSummaryCard deployments={state.deployments} />}
 
       <div>
         <p className="mb-2 text-sm font-semibold text-white">Deployment history</p>
