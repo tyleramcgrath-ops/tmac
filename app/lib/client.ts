@@ -168,6 +168,14 @@ export interface JobDTO {
   lastError: string | null
   createdAt: string
 }
+export interface DeploymentOutcomeDTO {
+  capturedAt: string
+  skipped: boolean
+  reason?: string
+  before?: { from: string; to: string; clicks: number; impressions: number; ctr: number; position: number }
+  after?: { from: string; to: string; clicks: number; impressions: number; ctr: number; position: number }
+  delta?: { clicks: number; impressions: number; ctr: number; position: number }
+}
 export interface DeploymentDTO {
   id: string
   postId: number
@@ -183,6 +191,9 @@ export interface DeploymentDTO {
   result: string
   rolledBackAt?: string
   createdAt: string
+  // Outcome-measurement flywheel (SCHEDULER_DESIGN.md §11): populated ~14
+  // days after a verified deployment. Absent until then.
+  outcome?: DeploymentOutcomeDTO
 }
 
 export const api = {
