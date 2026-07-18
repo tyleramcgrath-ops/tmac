@@ -1,0 +1,84 @@
+# RankForge — Known Limitations (updated at RC2)
+
+An honest, complete list of what RankForge does **not** do (or has not proven).
+Grouped by kind. Nothing here is hidden; this is the document a support team and
+a pilot customer should both have. **RC2 status is noted inline.**
+
+## Unproven against live third-party services (environment-blocked)
+- **Live WordPress writes — RESOLVED at RC2.** The connect → deploy → read-back
+  verify → rollback path was validated against a **real running WordPress**
+  (core 7.1 on PHP + SQLite), through RankForge's real routes, with a real
+  Application Password — 8/8 (see `LIVE_WORDPRESS_VALIDATION.md`). Remaining
+  caveat: **AIOSEO-specific meta storage** was not validated live (the plugin is
+  egress-blocked); AIOSEO *auto-detection* was validated live and the storage
+  path is covered by the test double — verify on the first real AIOSEO customer.
+- **Live Google OAuth + GSC/GA4 API — still unproven.** The code exchange, token
+  refresh, and GSC/GA4 queries are unit-tested with an injected fake; the real
+  handshake with Google has never run (egress restricted). RC2 mitigates the
+  *dead-end* (see below) but does not prove live Google. Recommended pilot
+  posture: Atlas OFF (`NEXT_PUBLIC_RF_ENABLE_ATLAS` unset).
+- **Real email delivery — pluggable, not exercised.** Verification email uses a
+  pluggable mailer; without `MAIL_WEBHOOK_URL` it is **logged-only** (honestly
+  reported), so no real message is sent in this environment. Set the webhook to
+  enable delivery.
+
+## Missing features (do not exist)
+- **Team invitations / member management UI** — roles and membership exist in the
+  store and are enforced by routes, but there is no way to invite or manage
+  teammates through the product. Effectively single-user per org. (RC2: unchanged
+  — pilot uses one login per business.)
+- **Self-serve pilot admin UI** — RC2 added pilot fields (allow-list, org
+  expiration/status) and feedback collection, but there is **no admin dashboard**:
+  operators set `org.pilot` via a script/DB and read feedback via the API/store.
+- **Explicit organization creation** — an org is auto-created at signup; there is
+  no create-/switch-org surface.
+- **Strategy screen** — no dedicated Strategy UI; strategy is the internal
+  priority/business-context engine, surfaced inline in Recommendations.
+- **Roadmap generation** — no roadmap feature of any kind.
+- **CEO / executive briefing** — does not exist as a distinct feature. The only
+  briefing is the Atlas *morning briefing*; the Operator "Executive metrics" grid
+  is a KPI panel, not a briefing.
+- **Onboarding / first-run guidance** — no wizard, checklist, or tour.
+- **Password reset / account recovery** — not present (follows from no email).
+
+## Built but not surfaced to the user (hidden / not wired)
+- **GSC data in Atlas** — fetched into `snapshot.gsc` but never rendered.
+- **GA4 data in Atlas** — fetched into `snapshot.analytics` but never rendered.
+- **Atlas change-detection** — `assembleAtlas` supports a prior snapshot for
+  "what changed overnight," but the route never persists/passes one, so the
+  threats/opportunities-from-diffs are always empty.
+
+## Operational / robustness limitations
+- **Rate limiting — expanded at RC2.** Now covers signup, login, oauth-start,
+  scans, crawl, WordPress connect/deploy, recommendations, and operator execute.
+- **In-process rate limiter** — per-instance; limits weaken under horizontal
+  scaling (needs a shared Redis/Postgres store). Unchanged.
+- **Email verification is non-blocking** — accounts work before verifying (a
+  banner nudges). Deliberate for the guided pilot; tighten to blocking for
+  open self-serve.
+- **No query-level DB retry** — a Postgres connection loss surfaces as a 500 for
+  in-flight requests. (The pool now survives a restart without crashing — RC1
+  fix — and recovers on the next query, but individual requests fail during the
+  blip.)
+- **OAuth state is not single-use** — replay is bounded only by a 10-minute
+  window (low practical risk; redemption also needs Google's one-time code + the
+  originating session).
+- **Deep-linkable tabs** — project tab state lives in React state, not the URL;
+  refresh resets to Audit and tabs aren't shareable.
+- **File store is dev/test only** — production requires PostgreSQL; the file
+  store would lose data on Vercel's ephemeral disk (enforced by `env.ts`).
+
+## Scope / data honesty limitations (by design, stated for clarity)
+- RankForge never reports rankings, traffic, ROI, or AI-visibility it has not
+  observed; when a source is disconnected the value is **Unavailable**, not a
+  guess. This is a deliberate limitation, not a defect — but it means a
+  brand-new project's Atlas tab shows mostly "unavailable," which can read as
+  "empty/broken" without a connected data source.
+- The multi-agent "team" is a set of analytical **roles over one evidence
+  pipeline**, not independent AI models.
+
+## What IS proven (for contrast — see RC1_READINESS.md Section 1)
+Auth, tenant isolation, crawl→recommendations, triage + editable priority, the
+WordPress deploy/verify/rollback *logic*, operator safety gating, evidence
+grading, encrypted credentials, and Postgres persistence — all covered by the
+284-test suite and, for persistence, verified on real PostgreSQL 16.

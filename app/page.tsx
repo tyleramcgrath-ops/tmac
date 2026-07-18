@@ -1,17 +1,8 @@
-import type { Metadata } from 'next'
-import { RankForgeSite } from './rankforge/components/rankforge-site'
+import { redirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'RankForge AI — The Ruthless SEO & AI Search Command Center',
-  description:
-    'Run technical audits, content briefs, AI search tracking, competitor gaps, schema, local maps, rank tracking, backlinks, and white-label client reports from one command center. Replace your entire SEO stack.',
-  openGraph: {
-    title: 'RankForge AI — Dominate Google, AI Search, and Local Rankings',
-    description:
-      'One ruthless SEO command center for agencies, consultants, and businesses. Replace Semrush, Ahrefs, Surfer, Screaming Frog, BrightLocal, and Looker Studio.',
-  },
-}
-
+// The site entry is the product: forward to the authenticated projects area,
+// which sends signed-out visitors to the login screen. The marketing site
+// remains available at /rankforge.
 export default function HomePage() {
-  return <RankForgeSite />
+  redirect('/projects')
 }

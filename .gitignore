@@ -43,3 +43,6 @@ next-env.d.ts
 
 # seo-intel engine local dev store (FileStore)
 .data/
+
+/test-results
+/playwright-report

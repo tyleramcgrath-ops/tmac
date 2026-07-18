@@ -1,3 +1,4 @@
+import { isSafeFetchTarget } from './url-guard'
 // Reusable on-page SEO analysis used by /api/seo-scan.
 //
 // Pure functions over fetched HTML so the same extractor powers both the user's
@@ -102,7 +103,16 @@ export function extractSignals(
     /frequently asked questions/i.test(bodyText)
 
   const https = finalUrl.startsWith('https://')
-  const mixedContent = https && /(?:src|href)=["']http:\/\//i.test(html)
+  // Mixed content is an INSECURE SUB-RESOURCE loaded into an HTTPS page —
+  // img/script/iframe/audio/video `src`, or a stylesheet `<link rel=stylesheet
+  // href>`. A navigational <a href="http://…"> is a link to an http page, NOT
+  // mixed content. Matching bare `href` (the Phase B FP-1 bug) flagged ordinary
+  // outbound links as a critical issue, so it is excluded here.
+  const mixedContent =
+    https &&
+    (/<(?:img|script|iframe|audio|video|source|embed|track)\b[^>]*\bsrc=["']http:\/\//i.test(html) ||
+      /<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["']http:\/\//i.test(html) ||
+      /<link\b[^>]*\bhref=["']http:\/\/[^"']*["'][^>]*\brel=["']stylesheet["']/i.test(html))
   const indexable = status === 200 && !noindex
 
   return {
@@ -264,6 +274,19 @@ export function scoreAiReadiness(s: Signals): number {
   if (s.h2Count >= 2) score += 10
   if (s.indexable) score += 10
   return clamp(score)
+}
+
+// Single source of truth for the blended page/site score (Phase D.6 P3). The
+// crawler and the single-page scan both call this instead of re-inlining the
+// weighted formula, so the number can never drift between the two surfaces.
+export interface CategoryScores {
+  technical: number
+  content: number
+  schema: number
+  ai: number
+}
+export function overallScore(s: CategoryScores): number {
+  return clamp((s.technical * 30 + s.content * 30 + s.schema * 12 + s.ai * 16) / 88)
 }
 
 export function scoreIntent(usage: KeywordUsage): number {
@@ -532,14 +555,40 @@ async function fetchOnce(
 ): Promise<{ html: string; finalUrl: string; status: number }> {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), timeoutMs)
-  const res = await fetch(url, {
-    redirect: 'follow',
-    signal: controller.signal,
-    headers: browserHeaders(ua),
-  }).finally(() => clearTimeout(timer))
 
-  const finalUrl = res.url || url
-  const status = res.status
+  // SSRF guard (Phase D.6 P4): follow redirects MANUALLY, validating the
+  // resolved address of every hop, so a public URL cannot redirect (or
+  // DNS-rebind) into an internal address. `isProxyUrl` skips the check for a
+  // configured scraping proxy endpoint (trusted, operator-supplied).
+  const isProxy = !!process.env.SCRAPE_API_TEMPLATE && url.startsWith(new URL(process.env.SCRAPE_API_TEMPLATE.replace('{{url}}', 'x')).origin)
+  let current = url
+  let status = 0
+  let finalUrl = url
+  let res: Response
+  try {
+    for (let hop = 0; hop < 6; hop++) {
+      if (!isProxy) {
+        const safe = await isSafeFetchTarget(current)
+        if (!safe.ok) {
+          clearTimeout(timer)
+          // Surface as a network failure (status 0) — never fetched.
+          return { html: '', finalUrl: current, status: 0 }
+        }
+      }
+      res = await fetch(current, { redirect: 'manual', signal: controller.signal, headers: browserHeaders(ua) })
+      status = res.status
+      finalUrl = res.url || current
+      if (status >= 300 && status < 400 && res.headers.get('location')) {
+        current = new URL(res.headers.get('location')!, current).toString()
+        continue
+      }
+      break
+    }
+  } finally {
+    clearTimeout(timer)
+  }
+  res = res!
+
   if (!res.body) return { html: await res.text(), finalUrl, status }
 
   const reader = res.body.getReader()

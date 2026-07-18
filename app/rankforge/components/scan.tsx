@@ -416,7 +416,7 @@ export function ScanReport({ result }: { result: ScanResult }) {
 
       <div className="mt-6 flex flex-col items-center gap-2 border-t border-[var(--rf-card-line)] pt-5 text-center">
         <p className="text-sm text-[var(--rf-muted)]">
-          Want rank tracking, AI-search visibility, and white-label reports too?
+          Want full-site crawls, prioritized fix lists, and one-click WordPress deploys?
         </p>
         <a
           href="#pricing"
