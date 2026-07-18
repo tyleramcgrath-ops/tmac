@@ -5,6 +5,7 @@ import { api, ApiError, type ProjectDTO, type ScanSummary } from '../../../lib/c
 import { EmptyState } from '../../../lib/ui'
 import { runCrawl } from '../../../lib/crawl-runner'
 import { Stat, StatusChip } from './shared'
+import { AutomationCard } from './AutomationCard'
 
 export function AuditTab({ project, scans, onScanDone }: { project: ProjectDTO; scans: ScanSummary[]; onScanDone: () => void }) {
   const [running, setRunning] = useState(false)
@@ -60,6 +61,7 @@ export function AuditTab({ project, scans, onScanDone }: { project: ProjectDTO; 
           <p className="mt-3 text-[11px] text-[var(--rf-faint)]">Ran {new Date(latest.createdAt).toLocaleString()}</p>
         </div>
       )}
+      {latest && <AutomationCard projectId={project.id} />}
     </div>
   )
 }
