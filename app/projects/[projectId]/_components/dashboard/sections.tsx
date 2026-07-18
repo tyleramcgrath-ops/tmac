@@ -14,6 +14,7 @@ import {
   type Analytics, type PageResult, type PageSpeed, type Severity, type Dup,
   pathOf, scoreColor, gradeInfo,
 } from './analytics'
+import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
 
 const TONE: Record<string, string> = { critical: 'text-[var(--rf-red)]', warning: 'text-[var(--rf-amber)]', info: 'text-[var(--rf-blue-bright)]' }
 
@@ -218,7 +219,20 @@ function DupCard({ title, dups }: { title: string; dups: Dup[] }) {
 
 /* ── Internal Links ─────────────────────────────────────────────────────── */
 
-export function Links({ a }: { a: Analytics }) {
+export function Links({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
+  // Merge orphans + no-outbound-link pages into one actionable fix list —
+  // a page can be both, and either reason is fixed the same way (link it to
+  // a few other real pages on the site).
+  const targets: LinkTarget[] = (() => {
+    const byUrl = new Map<string, LinkTarget>()
+    for (const p of a.links.orphans) byUrl.set(p.url, { url: p.url, title: p.title, reason: 'no inbound links' })
+    for (const p of pages.filter((p) => p.internalTargets.length === 0)) {
+      const existing = byUrl.get(p.url)
+      byUrl.set(p.url, { url: p.url, title: p.title, reason: existing ? 'no inbound or outbound links' : 'no outbound links' })
+    }
+    return [...byUrl.values()]
+  })()
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -227,7 +241,7 @@ export function Links({ a }: { a: Analytics }) {
         <Stat label="Avg. inbound links" value={String(a.links.avgInbound)} icon={TrendingUp} />
         <Stat label="Most-linked page" value={a.links.topLinked[0] ? `${a.links.topLinked[0].count}` : '—'} tone="text-[var(--rf-cyan)]" />
       </div>
-      <LinkList title="Orphan pages — no internal links point here" rows={a.links.orphans.slice(0, 12).map((p) => [pathOf(p.url), 'add internal links', p.url])} empty="No orphans — great internal linking." />
+      <InternalLinksPanel projectId={projectId} targets={targets} />
       <LinkList title="Most-linked pages (internal authority)" rows={a.links.topLinked.map((t) => [pathOf(t.url), `${t.count} inbound`, t.url])} empty="Run an audit to map internal links." />
     </div>
   )

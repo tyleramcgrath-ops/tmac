@@ -218,7 +218,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
               : section === 'overview' ? <Overview a={a} pages={pages} pageSpeed={pageSpeed} domain={project.domain} onGo={go} />
               : section === 'audit' ? <Audit a={a} pages={pages} />
               : section === 'content' ? <Content a={a} pages={pages} />
-              : section === 'links' ? <Links a={a} />
+              : section === 'links' ? <Links a={a} pages={pages} projectId={project.id} />
               : section === 'indexability' ? <Indexability a={a} pages={pages} />
               : section === 'schema' ? <Schema a={a} pages={pages} />
               : section === 'reports' ? <Reports a={a} pages={pages} domain={project.domain} pageSpeed={pageSpeed} />
