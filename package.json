@@ -12,6 +12,11 @@
   "dependencies": {
     "@ai-sdk/gateway": "3.0.59",
     "@ai-sdk/openai": "3.0.37",
+    "@anthropic-ai/sdk": "^0.74.0",
+    "@vercel/functions": "^3.7.1",
+    "cheerio": "^1.0.0",
+    "pdfkit": "^0.15.2",
+    "pg": "^8.13.1",
     "@ai-sdk/provider": "3.0.8",
     "@ai-sdk/react": "3.0.107",
     "@ai-sdk/vercel": "2.0.33",
@@ -52,6 +57,8 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/ms": "2.1.0",
+    "@types/pdfkit": "^0.13.8",
+    "@types/pg": "^8.11.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
