@@ -4,13 +4,13 @@
 
 import type { Handlers } from './engine'
 import { getStore } from '../store'
-import { runScheduledReeval } from './scan-runner'
+import { runScheduledScan } from './scan-runner'
 
 export function productionHandlers(): Handlers {
   return {
     scheduled_scan: async (job) => {
       const store = await getStore()
-      return runScheduledReeval(store, job.projectId)
+      return runScheduledScan(store, job)
     },
   }
 }

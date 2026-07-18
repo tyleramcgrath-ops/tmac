@@ -1,8 +1,8 @@
 'use client'
 
-// Automation: schedule a recurring re-audit for this project. v1 re-runs the
-// recommendation + multi-agent pipeline on the latest scan on a daily/weekly
-// cadence (a server-side re-crawl is a planned follow-up). Honest about state:
+// Automation: schedule a recurring re-audit for this project. Drives a real
+// server-side re-crawl on a daily/weekly cadence, then refreshes
+// recommendations + the multi-agent consensus from it. Honest about state:
 // shows the next run, last run, and any failed job — never a fabricated status.
 
 import { useCallback, useEffect, useState } from 'react'
