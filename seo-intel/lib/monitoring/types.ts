@@ -30,7 +30,7 @@ export interface MonitoredSite {
     gsc?: { connected: boolean; propertyUrl?: string }
     ga4?: { connected: boolean; propertyId?: string }
     wordpress?: { connected: boolean; baseUrl?: string }
-    slack?: { connected: boolean; channel?: string }
+    slack?: { connected: boolean; webhookUrl?: string; channel?: string }
     email?: { connected: boolean; address?: string }
   }
 }
