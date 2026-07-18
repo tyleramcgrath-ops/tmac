@@ -172,7 +172,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
             </button>
             <button onClick={() => setSection('command')} className="rf-btn-ghost hidden items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium sm:inline-flex"><Sparkles className="h-4 w-4 text-[var(--rf-blue-bright)]" /> Today</button>
             <button onClick={() => setSection('audit')} className="rf-btn-ghost hidden items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium sm:inline-flex"><TrendingUp className="h-4 w-4 text-[var(--rf-green)]" /> Opportunities</button>
-            <button onClick={async () => { await logout(); router.replace('/login') }} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium" title={user?.email}><span className="hidden max-w-[120px] truncate sm:inline">{user?.name || user?.email?.split('@')[0]}</span><LogOut className="h-4 w-4" /></button>
+            <button onClick={async () => { await logout(); router.replace('/') }} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium" title={user?.email}><span className="hidden max-w-[120px] truncate sm:inline">{user?.name || user?.email?.split('@')[0]}</span><LogOut className="h-4 w-4" /></button>
           </div>
         </div>
         {running && <div className="px-4 pb-2 lg:px-6"><div className="flex items-center justify-between text-[11px] text-[var(--rf-muted)]"><span className="flex items-center gap-1.5"><Loader2 className="h-3 w-3 animate-spin text-[var(--rf-blue-bright)]" /> {progress || 'Crawling…'}</span></div></div>}

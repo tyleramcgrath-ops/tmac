@@ -9,27 +9,19 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import './globals.css'
 
-const title = 'OSS Vibe Coding Platform'
-const description = `This is a demo of an end-to-end coding platform where the user can enter text prompts, and the agent will create a full stack application. It uses Vercel's AI Cloud services like Sandbox for secure code execution, AI Gateway for GPT-5 and other models support, Fluid Compute for efficient rendering and streaming, and it's built with Next.js and the AI SDK.`
+const title = 'RankForge — SEO that safely does the work on your WordPress site'
+const description =
+  'RankForge audits your WordPress site, fixes what matters, and deploys the change for you — then verifies it by read-back, with one-click rollback. Works with Yoast, Rank Math & AIOSEO.'
 
 export const metadata: Metadata = {
-  title,
+  title: {
+    default: title,
+    template: '%s',
+  },
   description,
-  openGraph: {
-    images: [
-      {
-        url: 'https://assets.vercel.com/image/upload/v1754588799/OSSvibecodingplatform/OG.png',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    images: [
-      {
-        url: 'https://assets.vercel.com/image/upload/v1754588799/OSSvibecodingplatform/OG.png',
-      },
-    ],
-  },
+  applicationName: 'RankForge',
+  openGraph: { title, description, type: 'website' },
+  twitter: { card: 'summary_large_image', title, description },
 }
 
 export default function RootLayout({

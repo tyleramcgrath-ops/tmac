@@ -213,28 +213,26 @@ const FOOTER_COLS: {
   {
     title: 'Platform',
     links: [
-      { label: 'Forge AI Assistant', href: '#command-center' },
-      { label: 'Site Audits & Fix Lists', href: '#command-center' },
-      { label: 'Competitor Compare', href: '#war-room' },
-      { label: 'AI Readiness', href: '#ai-search' },
-      { label: 'WordPress Deploy', href: '#command-center' },
+      { label: 'Features', href: '/features' },
+      { label: 'WordPress Deploy', href: '/wordpress' },
+      { label: 'Competitor Compare', href: '/agency' },
+      { label: 'Pricing', href: '/pricing' },
     ],
   },
   {
     title: 'Solutions',
     links: [
-      { label: 'For Agencies', href: '#agency' },
-      { label: 'For Consultants', href: '#command-center' },
-      { label: 'For In-House Teams', href: '#command-center' },
-      { label: 'Lead-Capture Widget', href: '#agency' },
+      { label: 'For Agencies', href: '/agency' },
+      { label: 'For WordPress', href: '/wordpress' },
+      { label: 'For In-House Teams', href: '/features' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'Pricing', href: '#pricing' },
-      { label: 'Agency Mode', href: '#agency' },
-      { label: 'Free Scan', href: '#scan' },
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Client area', href: '/projects' },
+      { label: 'Start free', href: '/signup' },
     ],
   },
 ]

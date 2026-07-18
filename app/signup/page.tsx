@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { api, ApiError } from '@/app/lib/client'
 import { Field, inputClass } from '@/app/lib/ui'
@@ -37,6 +38,9 @@ export default function SignupPage() {
   return (
     <div className="rf-root grid min-h-screen place-items-center bg-[var(--rf-bg)] px-4">
       <div className="w-full max-w-sm">
+        <Link href="/" className="mb-6 inline-flex items-center gap-1.5 text-sm text-[var(--rf-muted)] transition-colors hover:text-white">
+          <ArrowLeft className="h-4 w-4" /> Back to homepage
+        </Link>
         <h1 className="mb-1 text-2xl font-semibold text-white">Create your RankForge account</h1>
         <p className="mb-6 text-sm text-[var(--rf-muted)]">A personal workspace is created for you automatically.</p>
         <form onSubmit={submit} className="rf-card space-y-4 p-6">
