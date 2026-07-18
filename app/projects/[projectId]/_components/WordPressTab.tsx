@@ -54,6 +54,58 @@ const SEO_PLUGIN_LABEL: Record<'aioseo' | 'rankmath' | 'yoast' | 'core', string>
   core: 'none (writes to excerpt)',
 }
 
+// No SEO plugin detected on the connected site — meta descriptions currently
+// fall back to the post excerpt. Offer to install one, but ONLY on explicit
+// per-plugin click: this runs arbitrary plugin code with full site
+// privileges and, unlike a title/meta write, has no clean rollback, so it's
+// never triggered automatically. Honest about the common failure mode too —
+// many managed hosts block direct plugin installs.
+function InstallSeoPlugin({ projectId, onInstalled }: { projectId: string; onInstalled: () => void }) {
+  const [installing, setInstalling] = useState<'yoast' | 'aioseo' | null>(null)
+  const [error, setError] = useState('')
+
+  async function install(plugin: 'yoast' | 'aioseo') {
+    setInstalling(plugin)
+    setError('')
+    try {
+      await api.installWordpressPlugin(projectId, plugin)
+      onInstalled()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Install failed.')
+    } finally {
+      setInstalling(null)
+    }
+  }
+
+  return (
+    <div className="rf-card p-4">
+      <p className="text-sm font-semibold text-white">No SEO plugin detected</p>
+      <p className="mt-1 text-xs text-[var(--rf-muted)]">
+        Meta descriptions currently fall back to the post excerpt. Install a plugin for full support — this writes
+        directly to your live site and can&apos;t be undone from RankForge (deactivate it from wp-admin if needed).
+        Some hosts block automatic plugin installs; you&apos;ll get an honest error if that happens.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button
+          onClick={() => install('yoast')}
+          disabled={installing !== null}
+          className="rf-btn-ghost rounded-md px-3 py-1.5 text-xs disabled:opacity-60"
+        >
+          {installing === 'yoast' ? 'Installing…' : 'Install Yoast SEO'}
+        </button>
+        <button
+          onClick={() => install('aioseo')}
+          disabled={installing !== null}
+          className="rf-btn-ghost rounded-md px-3 py-1.5 text-xs disabled:opacity-60"
+        >
+          {installing === 'aioseo' ? 'Installing…' : 'Install All in One SEO'}
+        </button>
+      </div>
+      {error && <p className="mt-2 text-[11px] text-[var(--rf-red)]">{error}</p>}
+    </div>
+  )
+}
+
 export function WordPressTab({ projectId }: { projectId: string }) {
   const [state, setState] = useState<{ connection: { siteUrl: string; username: string; aioseo: boolean; seoPlugin?: 'aioseo' | 'rankmath' | 'yoast' | 'core' } | null; deployments: DeploymentDTO[] } | null>(null)
   const [error, setError] = useState('')
@@ -93,6 +145,9 @@ export function WordPressTab({ projectId }: { projectId: string }) {
             <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{state.connection.siteUrl}</p>
             <p className="mt-1 text-xs text-[var(--rf-muted)]">User {state.connection.username} · SEO plugin: {SEO_PLUGIN_LABEL[state.connection.seoPlugin ?? (state.connection.aioseo ? 'aioseo' : 'core')]}</p>
           </div>
+          {(state.connection.seoPlugin ?? (state.connection.aioseo ? 'aioseo' : 'core')) === 'core' && (
+            <InstallSeoPlugin projectId={projectId} onInstalled={load} />
+          )}
           <WpBrowseOptimize projectId={projectId} onDeployed={load} />
           <DeployForm projectId={projectId} onDeployed={load} />
         </>
