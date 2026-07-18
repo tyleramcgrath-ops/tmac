@@ -8,10 +8,7 @@
 import type { FoundationStore } from '../store'
 import type { Project, Recommendation } from '../types'
 import { sendEmail, type MailResult } from '../mailer'
-
-function escapeHtml(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-}
+import { escapeHtml, resolveOwnerEmails } from './notify'
 
 export interface RegressionEmail {
   subject: string
@@ -54,13 +51,7 @@ export async function notifyRegressions(
   regressed: Recommendation[]
 ): Promise<MailResult[]> {
   if (regressed.length === 0) return []
-  const members = await store.listMembers(project.orgId)
-  const owners = members.filter((m) => m.role === 'owner')
-  const emails: string[] = []
-  for (const m of owners) {
-    const u = await store.getUserById(m.userId)
-    if (u) emails.push(u.email)
-  }
+  const emails = await resolveOwnerEmails(store, project.orgId)
   if (emails.length === 0) return []
 
   const content = buildRegressionEmail(project, regressed)

@@ -6,6 +6,7 @@ import type { Handlers } from './engine'
 import { getStore } from '../store'
 import { runScheduledScan } from './scan-runner'
 import { runOutcomeCapture } from './outcome-runner'
+import { runMonitorDigest } from './digest'
 
 export function productionHandlers(): Handlers {
   return {
@@ -16,6 +17,10 @@ export function productionHandlers(): Handlers {
     outcome_capture: async (job) => {
       const store = await getStore()
       return runOutcomeCapture(store, job)
+    },
+    monitor: async (job) => {
+      const store = await getStore()
+      return runMonitorDigest(store, job)
     },
   }
 }
