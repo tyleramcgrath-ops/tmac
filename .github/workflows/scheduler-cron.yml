@@ -1,0 +1,45 @@
+name: RankForge scheduler tick
+
+# Vercel's Hobby plan doesn't support platform crons, so this workflow is the
+# trigger for /api/internal/cron instead (SCHEDULER_DESIGN.md §7). Every run
+# does bounded work (reap stale locks -> materialize due schedules -> drain a
+# few due jobs) and is safe to over-fire — job claiming is atomic. 15 min
+# keeps crawl continuations (SCHEDULER_DESIGN.md §6) draining promptly without
+# hammering the endpoint. GitHub's own scheduler can delay firings under load
+# and disables schedules after 60 days with no repo activity — acceptable for
+# v1; revisit if that latency/reliability isn't good enough.
+#
+# Requires two repo configuration values (Settings -> Secrets and variables ->
+# Actions):
+#   - Secret  CRON_SECRET   — must exactly match the CRON_SECRET set on the
+#                             Vercel project (Settings -> Environment Variables).
+#   - Variable CRON_APP_URL — the production URL, e.g. https://tmac-nu.vercel.app
+#                             (optional; falls back to that default below).
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call /api/internal/cron
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ vars.CRON_APP_URL }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::CRON_SECRET repo secret is not set (Settings -> Secrets and variables -> Actions). Skipping — the scheduler will not run until it's configured."
+            exit 1
+          fi
+          url="${APP_URL:-https://tmac-nu.vercel.app}/api/internal/cron"
+          status=$(curl -sS -o response.json -w '%{http_code}' -X POST "$url" -H "Authorization: Bearer $CRON_SECRET")
+          echo "HTTP $status"
+          cat response.json
+          echo
+          if [ "$status" != "200" ]; then
+            echo "::error::Cron tick failed with HTTP $status"
+            exit 1
+          fi
