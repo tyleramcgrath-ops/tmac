@@ -11,7 +11,7 @@ import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
 import { encryptSecret } from '../lib/foundation/crypto'
-import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '../lib/foundation/wp-execution'
+import { detectSeoPlugin, executeWpDeployment, installWpPlugin, resolveWpTarget, rollbackWpDeployment } from '../lib/foundation/wp-execution'
 import { __setTrustedHostsForTests } from '../app/api/seo-scan/url-guard'
 import type { WpConnection } from '../lib/foundation/types'
 
@@ -36,6 +36,9 @@ class FakeWordPress {
   dropMeta = false
   // When true, writes throw 500 (models a server error) — rollback fails.
   failWrites = false
+  // Plugin-install simulation (D6-P?, explicit-approval install).
+  pluginInstallOutcome: 'ok' | 'filesystem' | 'forbidden' = 'ok'
+  installedPluginNamespace: string | null = null // set after a simulated successful install
 
   constructor() {
     this.posts.set(10, {
@@ -93,6 +96,24 @@ class FakeWordPress {
         },
         link: post.link,
       })
+    }
+    if (url.includes('/wp-json/wp/v2/plugins') && method === 'POST') {
+      if (this.pluginInstallOutcome === 'filesystem') {
+        return json({ code: 'unable_to_connect_to_filesystem', message: 'Could not access filesystem.' }, 500)
+      }
+      if (this.pluginInstallOutcome === 'forbidden') {
+        return json({ code: 'rest_cannot_manage_plugins', message: 'Sorry, you are not allowed to manage plugins.' }, 403)
+      }
+      const body = JSON.parse((init?.body as string) ?? '{}')
+      this.installedPluginNamespace = body.slug === 'wordpress-seo' ? 'yoast' : body.slug === 'all-in-one-seo-pack' ? 'aioseo' : null
+      return json({ plugin: `${body.slug}/${body.slug}.php`, status: 'active' }, 200)
+    }
+    // Namespace probe (detectSeoPlugin) — reflects a plugin just installed.
+    if (/\/wp-json\/?$/.test(url) && method === 'GET') {
+      const ns = ['wp/v2']
+      if (this.installedPluginNamespace === 'yoast') ns.push('yoast/v1')
+      if (this.installedPluginNamespace === 'aioseo') ns.push('aioseo/v1')
+      return json({ namespaces: ns })
     }
     return json({ message: 'not found' }, 404)
   }
@@ -350,5 +371,49 @@ describe('WordPress rollback', () => {
     await expect(
       rollbackWpDeployment({ deployment: dep, connection: connection(), actorId: 'user-2' })
     ).rejects.toThrow()
+  })
+})
+
+describe('installWpPlugin (explicit-approval SEO plugin install)', () => {
+  it('installs, activates, and the site now reports the plugin on re-detection', async () => {
+    const result = await installWpPlugin(connection(), 'yoast')
+    expect(result).toEqual({ ok: true, seoPlugin: 'yoast' })
+
+    const detected = await detectSeoPlugin('https://wp.test')
+    expect(detected).toBe('yoast')
+  })
+
+  it('installs AIOSEO too', async () => {
+    const result = await installWpPlugin(connection(), 'aioseo')
+    expect(result).toEqual({ ok: true, seoPlugin: 'aioseo' })
+  })
+
+  it('surfaces the common managed-host failure (filesystem blocked) honestly, not as a crash', async () => {
+    wp.pluginInstallOutcome = 'filesystem'
+    const result = await installWpPlugin(connection(), 'yoast')
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.error).toMatch(/FTP\/SSH|blocks direct writes/i)
+      expect(result.error).toMatch(/manually/i)
+    }
+  })
+
+  it('surfaces an insufficient-capability failure honestly', async () => {
+    wp.pluginInstallOutcome = 'forbidden'
+    const result = await installWpPlugin(connection(), 'aioseo')
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.error).toMatch(/Administrator/i)
+  })
+
+  it('never silently retries or works around a failure — one call, one honest outcome', async () => {
+    wp.pluginInstallOutcome = 'filesystem'
+    let calls = 0
+    const realHandle = wp.handle.bind(wp)
+    wp.handle = (url, init) => {
+      if (url.includes('/wp-json/wp/v2/plugins')) calls++
+      return realHandle(url, init)
+    }
+    await installWpPlugin(connection(), 'yoast')
+    expect(calls).toBe(1)
   })
 })

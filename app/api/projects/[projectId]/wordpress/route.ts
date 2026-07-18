@@ -2,21 +2,33 @@
 //
 // PUT   — store the connection (application password encrypted at rest).
 // GET   — connection status (never returns the password) + deployment history.
-// POST  {action:'deploy'}   — server-side apply with before-capture,
-//                             verification, and a durable execution record.
-// POST  {action:'rollback'} — restore captured before-values; verified.
+// POST  {action:'deploy'}         — server-side apply with before-capture,
+//                                    verification, and a durable execution record.
+// POST  {action:'rollback'}       — restore captured before-values; verified.
+// POST  {action:'install-plugin'} — explicit, one-click install+activate of
+//                                    Yoast/AIOSEO when none is detected (D6-P?).
 //
-// Deploy/rollback require the admin role. Records survive browser close,
-// session expiry, and device change — they live in the store.
+// Deploy/rollback/install-plugin require the admin role. Records survive
+// browser close, session expiry, and device change — they live in the store.
 
 import { randomUUID } from 'crypto'
 import { assertSameOrigin, audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { encryptSecret } from '@/lib/foundation/crypto'
 import { getStore } from '@/lib/foundation/store'
 import { isSafeFetchTarget } from '@/app/api/seo-scan/url-guard'
-import { executeWpDeployment, getWpItem, listAllWpItems, listWpItems, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
-import { pluginOf } from '@/lib/foundation/wp-execution'
-import type { SeoPlugin, WpConnection } from '@/lib/foundation/types'
+import {
+  detectSeoPlugin,
+  executeWpDeployment,
+  getWpItem,
+  installWpPlugin,
+  listAllWpItems,
+  listWpItems,
+  pluginOf,
+  resolveWpTarget,
+  rollbackWpDeployment,
+  type InstallablePlugin,
+} from '@/lib/foundation/wp-execution'
+import type { WpConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60
@@ -60,16 +72,7 @@ export const PUT = handled(async (request, { params }) => {
       { status: 502 }
     )
   }
-  // Detect which SEO plugin manages meta storage from the site's REST
-  // namespaces, so the meta description is written to the field that plugin
-  // actually renders (AIOSEO → aioseo_meta_data, Rank Math → rank_math_*,
-  // Yoast → _yoast_wpseo_*, otherwise the native excerpt).
-  const nsProbe = await fetch(`${siteUrl}/wp-json`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
-  const namespaces = Array.isArray((nsProbe as { namespaces?: string[] } | null)?.namespaces)
-    ? (nsProbe as { namespaces: string[] }).namespaces
-    : []
-  const has = (prefix: string) => namespaces.some((n) => n.startsWith(prefix))
-  const seoPlugin: SeoPlugin = has('aioseo') ? 'aioseo' : has('rankmath') ? 'rankmath' : has('yoast') ? 'yoast' : 'core'
+  const seoPlugin = await detectSeoPlugin(siteUrl)
 
   const conn: WpConnection = {
     id: randomUUID(),
@@ -112,6 +115,31 @@ export const POST = handled(async (request, { params }) => {
   const store = await getStore()
   const connection = await store.getWpConnection(projectId)
   if (!connection) throw new HttpError(400, 'Connect WordPress for this project first.')
+
+  // Explicit, one-click install+activate of an SEO plugin when none is
+  // detected — the user approves exactly this action for exactly this site;
+  // never triggered automatically. Rate-limited separately and tightly: this
+  // is a much heavier, riskier operation than a field write.
+  if (body.action === 'install-plugin') {
+    enforceRateLimit(request, 'wp-plugin-install', 5)
+    const plugin = body.plugin === 'aioseo' ? ('aioseo' as InstallablePlugin) : body.plugin === 'yoast' ? ('yoast' as InstallablePlugin) : null
+    if (!plugin) throw new HttpError(400, 'plugin must be "yoast" or "aioseo".')
+
+    const result = await installWpPlugin(connection, plugin)
+    if (!result.ok) {
+      await audit(project.orgId, user.id, 'wordpress.install_plugin', projectId, `${plugin}: failed — ${result.error}`)
+      return Response.json({ ok: false, error: result.error }, { status: 502 })
+    }
+
+    // Re-detect from the live site (rather than trusting our own request)
+    // and persist so future title/meta writes immediately target the right
+    // field for the plugin that's now actually active.
+    const seoPlugin = await detectSeoPlugin(connection.siteUrl)
+    const updated: WpConnection = { ...connection, seoPlugin, aioseo: seoPlugin === 'aioseo' }
+    await store.upsertWpConnection(updated)
+    await audit(project.orgId, user.id, 'wordpress.install_plugin', projectId, `${plugin}: installed + activated`)
+    return Response.json({ ok: true, seoPlugin })
+  }
 
   // Browse the connected site so the user can one-click (or bulk) optimize any
   // page/post. 'all' returns every page AND post so both can be listed together.

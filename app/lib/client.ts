@@ -332,6 +332,15 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ action: 'rollback', deploymentId }),
     }),
+  // Explicit, one-click install of an SEO plugin when none is detected. An
+  // expected, honest failure (e.g. the host blocks direct plugin installs)
+  // surfaces as ApiError with the real reason as its message — same pattern
+  // as connectWordpress/deployWordpress.
+  installWordpressPlugin: (projectId: string, plugin: 'yoast' | 'aioseo') =>
+    req<{ ok: true; seoPlugin: 'aioseo' | 'rankmath' | 'yoast' | 'core' }>(
+      `/api/projects/${projectId}/wordpress`,
+      { method: 'POST', body: JSON.stringify({ action: 'install-plugin', plugin }) }
+    ),
 
   // ── Operator (Phase D) ──
   operatorPreview: (projectId: string, recommendationIds?: string[]) =>

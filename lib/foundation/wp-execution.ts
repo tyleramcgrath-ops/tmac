@@ -19,6 +19,23 @@ export function pluginOf(conn: WpConnection): SeoPlugin {
   return conn.seoPlugin ?? (conn.aioseo ? 'aioseo' : 'core')
 }
 
+// Detect which SEO plugin manages meta storage from the site's advertised
+// REST namespaces, so writes land in the field that plugin actually renders
+// (AIOSEO → aioseo_meta_data, Rank Math → rank_math_*, Yoast → _yoast_wpseo_*,
+// otherwise the native excerpt). Used both when a connection is first made
+// and to re-detect after installing a plugin.
+export async function detectSeoPlugin(siteUrl: string): Promise<SeoPlugin> {
+  const target = `${siteUrl}/wp-json`
+  const safe = await isSafeFetchTarget(target)
+  if (!safe.ok) return 'core'
+  const probe = await fetch(target).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+  const namespaces = Array.isArray((probe as { namespaces?: string[] } | null)?.namespaces)
+    ? (probe as { namespaces: string[] }).namespaces
+    : []
+  const has = (prefix: string) => namespaces.some((n) => n.startsWith(prefix))
+  return has('aioseo') ? 'aioseo' : has('rankmath') ? 'rankmath' : has('yoast') ? 'yoast' : 'core'
+}
+
 // Post-meta keys each plugin uses to store the SEO meta description. Reading and
 // writing both go through these so a Rank Math / Yoast site's description lands
 // in (and is read back from) the field the plugin actually renders.
@@ -109,6 +126,95 @@ async function wpFetch(
     throw new Error(`WordPress responded ${res.status} for ${init.method ?? 'GET'} ${path}`)
   }
   return (await res.json()) as Record<string, unknown>
+}
+
+// WordPress.org plugin slugs for the two SEO plugins we can offer to install.
+export type InstallablePlugin = 'yoast' | 'aioseo'
+const PLUGIN_SLUG: Record<InstallablePlugin, string> = {
+  yoast: 'wordpress-seo',
+  aioseo: 'all-in-one-seo-pack',
+}
+const PLUGIN_LABEL: Record<InstallablePlugin, string> = {
+  yoast: 'Yoast SEO',
+  aioseo: 'All in One SEO',
+}
+
+export type InstallPluginResult =
+  | { ok: true; seoPlugin: SeoPlugin }
+  | { ok: false; error: string }
+
+// Install + activate an SEO plugin via WordPress core's REST API
+// (POST /wp/v2/plugins, available since WP 5.5), using the same Application
+// Password credential already stored for content writes — no new auth.
+// EXPLICIT USER APPROVAL ONLY: this is never triggered automatically; it
+// runs exactly once, when the user clicks "Install X" for a specific plugin.
+//
+// This is a materially different risk than a title/meta/content write — it
+// executes arbitrary plugin code with full site privileges and has no clean
+// rollback (deactivating it later doesn't undo whatever it already did:
+// database tables, hooks, etc.). It's also unreliable across hosts: many
+// managed WP hosts (WP Engine, Kinsta, SiteGround, ...) block direct
+// filesystem writes and require FTP/SSH credentials entered in wp-admin,
+// which makes the REST install fail there — an expected, honest failure,
+// not a bug. Every failure mode is surfaced with its real reason; nothing is
+// silently retried or worked around.
+export async function installWpPlugin(conn: WpConnection, plugin: InstallablePlugin): Promise<InstallPluginResult> {
+  const slug = PLUGIN_SLUG[plugin]
+  const target = `${conn.siteUrl}/wp-json/wp/v2/plugins`
+  const safe = await isSafeFetchTarget(target)
+  if (!safe.ok) {
+    return { ok: false, error: `Refusing to contact unsafe WordPress target: ${safe.detail ?? safe.reason}` }
+  }
+
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 30_000) // plugin install can be slow
+  let res: Response
+  try {
+    res = await fetch(target, {
+      method: 'POST',
+      signal: controller.signal,
+      headers: { Authorization: authHeader(conn), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug, status: 'active' }),
+    })
+  } catch (err) {
+    clearTimeout(timer)
+    return { ok: false, error: `Could not reach the site: ${err instanceof Error ? err.message : 'network error'}` }
+  } finally {
+    clearTimeout(timer)
+  }
+
+  const body = (await res.json().catch(() => null)) as { code?: string; message?: string; status?: string } | null
+
+  if (!res.ok) {
+    return { ok: false, error: honestInstallFailure(res.status, body, plugin) }
+  }
+  // The endpoint can 200/201 without activating (e.g. status stays
+  // 'inactive' if activation needs a second call on some setups) — verify.
+  if (body?.status !== 'active') {
+    return { ok: false, error: `${PLUGIN_LABEL[plugin]} installed but could not be activated automatically. Activate it from your WordPress admin.` }
+  }
+
+  return { ok: true, seoPlugin: plugin }
+}
+
+function honestInstallFailure(status: number, body: { code?: string; message?: string } | null, plugin: InstallablePlugin): string {
+  const label = PLUGIN_LABEL[plugin]
+  switch (body?.code) {
+    case 'folder_exists':
+      return `${label} appears to already be installed — activate it from your WordPress admin.`
+    case 'unable_to_connect_to_filesystem':
+    case 'fs_unavailable':
+      return `This host requires FTP/SSH credentials for plugin installs and blocks direct writes — install ${label} manually from your WordPress admin (Plugins → Add New).`
+    case 'rest_cannot_manage_plugins':
+    case 'rest_forbidden':
+      return `The connected WordPress user isn't allowed to install plugins (needs Administrator). Install ${label} manually, or reconnect with an admin account.`
+    case 'plugins_api_failed':
+      return `The site couldn't reach the WordPress.org plugin directory to fetch ${label}. Try again, or install it manually.`
+    default:
+      return body?.message
+        ? `Could not install ${label}: ${body.message}`
+        : `Could not install ${label} (HTTP ${status}). Install it manually from your WordPress admin.`
+  }
 }
 
 function snapshotFrom(raw: Record<string, unknown>, plugin: SeoPlugin): WpPostSnapshot {
