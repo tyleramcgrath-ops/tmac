@@ -24,6 +24,8 @@ interface FakePost {
   excerpt: string
   content: string
   aioseoDescription: string
+  rankMathDescription: string
+  yoastDescription: string
   link: string
 }
 
@@ -42,6 +44,8 @@ class FakeWordPress {
       excerpt: 'Original meta',
       content: '<p>Original body</p>',
       aioseoDescription: 'Original meta',
+      rankMathDescription: 'Original RM meta',
+      yoastDescription: 'Original Yoast meta',
       link: 'https://wp.test/services',
     })
   }
@@ -68,6 +72,13 @@ class FakeWordPress {
         if (body.meta?._aioseo_description !== undefined && !this.dropMeta) {
           post.aioseoDescription = body.meta._aioseo_description
         }
+        // Rank Math / Yoast store the meta description in their own post-meta keys.
+        if (body.meta?.rank_math_description !== undefined && !this.dropMeta) {
+          post.rankMathDescription = body.meta.rank_math_description
+        }
+        if (body.meta?._yoast_wpseo_metadesc !== undefined && !this.dropMeta) {
+          post.yoastDescription = body.meta._yoast_wpseo_metadesc
+        }
       }
       return json({
         id: 10,
@@ -75,7 +86,11 @@ class FakeWordPress {
         excerpt: { raw: post.excerpt },
         content: { raw: post.content, rendered: post.content },
         aioseo_meta_data: { description: post.aioseoDescription },
-        meta: { _aioseo_description: post.aioseoDescription },
+        meta: {
+          _aioseo_description: post.aioseoDescription,
+          rank_math_description: post.rankMathDescription,
+          _yoast_wpseo_metadesc: post.yoastDescription,
+        },
         link: post.link,
       })
     }
@@ -101,6 +116,10 @@ function connection(aioseo = true): WpConnection {
     createdBy: 'user-1',
     createdAt: new Date().toISOString(),
   }
+}
+
+function connectionWith(seoPlugin: WpConnection['seoPlugin']): WpConnection {
+  return { ...connection(false), seoPlugin }
 }
 
 beforeEach(() => {
@@ -166,6 +185,55 @@ describe('WordPress deploy + read-back verification', () => {
       reason: 'r',
     })
     expect(dep.status).toBe('failed')
+  })
+
+  it('writes the meta description to the Rank Math field and reads it back to verify', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      connection: connectionWith('rankmath'),
+      postId: 10,
+      postType: 'pages',
+      changes: { metaDescription: 'Rank Math optimized description' },
+      approvedBy: 'user-1',
+      reason: 'Meta optimization (Rank Math)',
+    })
+    expect(dep.status).toBe('verified')
+    // Landed in the Rank Math field, not the excerpt/AIOSEO field.
+    expect(wp.posts.get(10)!.rankMathDescription).toBe('Rank Math optimized description')
+    expect(wp.posts.get(10)!.excerpt).toBe('Original meta')
+    expect(dep.before.metaDescription).toBe('Original RM meta')
+    expect(dep.verification?.metaMatches).toBe(true)
+  })
+
+  it('writes the meta description to the Yoast field and reads it back to verify', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      connection: connectionWith('yoast'),
+      postId: 10,
+      postType: 'pages',
+      changes: { metaDescription: 'Yoast optimized description' },
+      approvedBy: 'user-1',
+      reason: 'Meta optimization (Yoast)',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.yoastDescription).toBe('Yoast optimized description')
+    expect(wp.posts.get(10)!.excerpt).toBe('Original meta')
+    expect(dep.before.metaDescription).toBe('Original Yoast meta')
+    expect(dep.verification?.metaMatches).toBe(true)
+  })
+
+  it('core (no SEO plugin) still writes the meta description to the native excerpt', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      connection: connectionWith('core'),
+      postId: 10,
+      postType: 'pages',
+      changes: { metaDescription: 'Core excerpt description' },
+      approvedBy: 'user-1',
+      reason: 'Meta optimization (core)',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.excerpt).toBe('Core excerpt description')
   })
 })
 

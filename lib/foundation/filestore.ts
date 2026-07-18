@@ -8,6 +8,7 @@ import type { FoundationStore } from './store'
 import type {
   AuditLogEntry,
   Competitor,
+  Job,
   Organization,
   OrgMember,
   PilotFeedback,
@@ -15,6 +16,7 @@ import type {
   ProviderConnection,
   Recommendation,
   Scan,
+  Schedule,
   User,
   WpConnection,
   WpDeployment,
@@ -31,6 +33,8 @@ type Collections = {
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
   providerConnections: ProviderConnection[]
+  jobs: Job[]
+  schedules: Schedule[]
   feedback: PilotFeedback[]
   audit: AuditLogEntry[]
 }
@@ -46,6 +50,8 @@ const EMPTY: Collections = {
   wpConnections: [],
   wpDeployments: [],
   providerConnections: [],
+  jobs: [],
+  schedules: [],
   feedback: [],
   audit: [],
 }
@@ -265,6 +271,77 @@ export class FileFoundationStore implements FoundationStore {
   async deleteProviderConnection(projectId: string, kind: ProviderConnection['kind']) {
     await this.mutate('providerConnections', (all) => ({
       data: all.filter((c) => !(c.projectId === projectId && c.kind === kind)),
+    }))
+  }
+
+  // scheduler: jobs + schedules
+  async enqueueJob(job: Job) {
+    await this.mutate('jobs', (all) => ({ data: [...all, job] }))
+  }
+  async getJob(id: string) {
+    return (await this.read('jobs')).find((j) => j.id === id) ?? null
+  }
+  async updateJob(job: Job) {
+    await this.mutate('jobs', (all) => ({ data: all.map((j) => (j.id === job.id ? job : j)) }))
+  }
+  async listJobs(projectId: string, limit = 50) {
+    return (await this.read('jobs'))
+      .filter((j) => j.projectId === projectId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, limit)
+  }
+  // Atomic claim: single-process dev store, so the collection mutex is enough to
+  // guarantee a job is handed to exactly one caller (mirrors Postgres SKIP LOCKED).
+  async claimDueJobs(nowIso: string, limit: number, runnerId: string) {
+    const claimed = await this.mutate('jobs', (all) => {
+      const due = all
+        .filter((j) => j.status === 'queued' && j.runAt <= nowIso)
+        .sort((a, b) => a.runAt.localeCompare(b.runAt))
+        .slice(0, limit)
+      const ids = new Set(due.map((j) => j.id))
+      const updated = all.map((j) =>
+        ids.has(j.id)
+          ? { ...j, status: 'running' as const, lockedAt: nowIso, lockedBy: runnerId, attempts: j.attempts + 1, updatedAt: nowIso }
+          : j
+      )
+      return { data: updated, result: updated.filter((j) => ids.has(j.id)) }
+    })
+    return claimed ?? []
+  }
+  // Return jobs stuck in 'running' whose lock predates the cutoff back to the
+  // queue (the runner that held them died mid-flight).
+  async requeueStaleJobs(cutoffIso: string) {
+    const n = await this.mutate('jobs', (all) => {
+      let count = 0
+      const data = all.map((j) => {
+        if (j.status === 'running' && j.lockedAt && j.lockedAt < cutoffIso) {
+          count++
+          return { ...j, status: 'queued' as const, lockedAt: null, lockedBy: null, updatedAt: cutoffIso }
+        }
+        return j
+      })
+      return { data, result: count }
+    })
+    return n ?? 0
+  }
+  async upsertSchedule(schedule: Schedule) {
+    await this.mutate('schedules', (all) => {
+      const rest = all.filter((s) => !(s.projectId === schedule.projectId && s.kind === schedule.kind))
+      return { data: [...rest, schedule] }
+    })
+  }
+  async getSchedule(projectId: string, kind: Schedule['kind']) {
+    return (await this.read('schedules')).find((s) => s.projectId === projectId && s.kind === kind) ?? null
+  }
+  async listSchedules(projectId: string) {
+    return (await this.read('schedules')).filter((s) => s.projectId === projectId)
+  }
+  async listDueSchedules(nowIso: string) {
+    return (await this.read('schedules')).filter((s) => s.enabled && s.nextRunAt <= nowIso)
+  }
+  async deleteSchedule(projectId: string, kind: Schedule['kind']) {
+    await this.mutate('schedules', (all) => ({
+      data: all.filter((s) => !(s.projectId === projectId && s.kind === kind)),
     }))
   }
 

@@ -7,8 +7,15 @@ import { ChangeRow, StatusChip } from './shared'
 import { ConnectWordPress, DeployForm } from './WpForms'
 import { WpBrowseOptimize } from './WpOptimizer'
 
+const SEO_PLUGIN_LABEL: Record<'aioseo' | 'rankmath' | 'yoast' | 'core', string> = {
+  aioseo: 'All in One SEO',
+  rankmath: 'Rank Math',
+  yoast: 'Yoast SEO',
+  core: 'none (writes to excerpt)',
+}
+
 export function WordPressTab({ projectId }: { projectId: string }) {
-  const [state, setState] = useState<{ connection: { siteUrl: string; username: string; aioseo: boolean } | null; deployments: DeploymentDTO[] } | null>(null)
+  const [state, setState] = useState<{ connection: { siteUrl: string; username: string; aioseo: boolean; seoPlugin?: 'aioseo' | 'rankmath' | 'yoast' | 'core' } | null; deployments: DeploymentDTO[] } | null>(null)
   const [error, setError] = useState('')
 
   const load = useCallback(async () => {
@@ -44,7 +51,7 @@ export function WordPressTab({ projectId }: { projectId: string }) {
           <div className="rf-card p-4">
             <p className="text-sm font-semibold text-white">Connected</p>
             <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{state.connection.siteUrl}</p>
-            <p className="mt-1 text-xs text-[var(--rf-muted)]">User {state.connection.username} · AIOSEO {state.connection.aioseo ? 'detected' : 'not detected'}</p>
+            <p className="mt-1 text-xs text-[var(--rf-muted)]">User {state.connection.username} · SEO plugin: {SEO_PLUGIN_LABEL[state.connection.seoPlugin ?? (state.connection.aioseo ? 'aioseo' : 'core')]}</p>
           </div>
           <WpBrowseOptimize projectId={projectId} onDeployed={load} />
           <DeployForm projectId={projectId} onDeployed={load} />

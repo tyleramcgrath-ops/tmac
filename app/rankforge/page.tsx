@@ -1,12 +1,8 @@
-import type { Metadata } from 'next'
-import { RankForgeSite } from './components/rankforge-site'
+import { redirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'RankForge AI — The Ruthless SEO & AI Search Command Center',
-  description:
-    'Run technical audits, content briefs, AI search tracking, competitor gaps, schema, local maps, rank tracking, backlinks, and white-label client reports from one command center. Replace your entire SEO stack.',
-}
-
+// The marketing site now lives at the real routes under (marketing) — '/',
+// '/features', '/wordpress', '/agency', '/pricing'. Keep the old path working
+// by sending it to the homepage (avoids duplicate content).
 export default function RankForgePage() {
-  return <RankForgeSite />
+  redirect('/')
 }

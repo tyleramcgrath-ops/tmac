@@ -55,7 +55,7 @@ export function AppHeader() {
         <button
           onClick={async () => {
             await logout()
-            router.replace('/login')
+            router.replace('/')
           }}
           className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium"
         >

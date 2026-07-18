@@ -10,7 +10,21 @@ import { isSafeFetchTarget } from '../../app/api/seo-scan/url-guard'
 import { decryptSecret } from './crypto'
 import { getStore } from './store'
 import { applyContentTransform, verifyContentTransform, type ContentTransform } from './operator/content-fix'
-import type { WpConnection, WpDeployment } from './types'
+import type { SeoPlugin, WpConnection, WpDeployment } from './types'
+
+// Resolve the effective SEO plugin for a connection, honouring the legacy
+// `aioseo` boolean on records created before `seoPlugin` existed.
+export function pluginOf(conn: WpConnection): SeoPlugin {
+  return conn.seoPlugin ?? (conn.aioseo ? 'aioseo' : 'core')
+}
+
+// Post-meta keys each plugin uses to store the SEO meta description. Reading and
+// writing both go through these so a Rank Math / Yoast site's description lands
+// in (and is read back from) the field the plugin actually renders.
+const META_DESC_KEY: Record<Exclude<SeoPlugin, 'core' | 'aioseo'>, string> = {
+  rankmath: 'rank_math_description',
+  yoast: '_yoast_wpseo_metadesc',
+}
 
 // The set of fields a deployment may change. title/metaDescription are direct
 // writes; contentTransform (Phase H) is applied to the LIVE post body at deploy
@@ -96,16 +110,30 @@ async function wpFetch(
   return (await res.json()) as Record<string, unknown>
 }
 
-function snapshotFrom(raw: Record<string, unknown>, aioseo: boolean): WpPostSnapshot {
+function snapshotFrom(raw: Record<string, unknown>, plugin: SeoPlugin): WpPostSnapshot {
   const title = (raw.title as { raw?: string; rendered?: string } | undefined) ?? {}
   const content = (raw.content as { raw?: string; rendered?: string } | undefined) ?? {}
   const meta = (raw.meta as Record<string, unknown> | undefined) ?? {}
   const aioseoMeta = (raw.aioseo_meta_data as { description?: string } | undefined) ?? {}
+  // Read the meta description from the field the active plugin actually uses,
+  // so "before" reflects what the site renders (and matches "after" at verify).
+  let metaDescription: string
+  switch (plugin) {
+    case 'aioseo':
+      metaDescription = aioseoMeta.description ?? (meta._aioseo_description as string) ?? ''
+      break
+    case 'rankmath':
+      metaDescription = (meta[META_DESC_KEY.rankmath] as string) ?? ''
+      break
+    case 'yoast':
+      metaDescription = (meta[META_DESC_KEY.yoast] as string) ?? ''
+      break
+    default:
+      metaDescription = (raw.excerpt as { raw?: string } | undefined)?.raw ?? ''
+  }
   return {
     title: title.raw ?? title.rendered ?? '',
-    metaDescription: aioseo
-      ? (aioseoMeta.description ?? (meta._aioseo_description as string) ?? '')
-      : ((raw.excerpt as { raw?: string } | undefined)?.raw ?? ''),
+    metaDescription,
     content: content.raw ?? content.rendered ?? '',
     link: (raw.link as string) ?? '',
   }
@@ -117,30 +145,61 @@ async function readPost(
   postId: number
 ): Promise<WpPostSnapshot> {
   const raw = await wpFetch(conn, `/${postType}/${postId}?context=edit`)
-  return snapshotFrom(raw, conn.aioseo)
+  return snapshotFrom(raw, pluginOf(conn))
 }
 
-// Browse the connected site's posts/pages so the user can pick one to optimize
-// with one click (restores the old "list & optimize" flow, now credentialed &
-// SSRF-guarded server-side). Returns lightweight rows only.
-export interface WpItem { id: number; link: string; title: string; status: string }
+// Browse the connected site's posts/pages so the user can pick one (or many) to
+// optimize (restores the old "list & optimize" flow, now credentialed &
+// SSRF-guarded server-side). Returns lightweight rows only, each tagged with its
+// type so a combined posts+pages list can be bulk-optimized. Paginates through
+// the REST API (WordPress caps per_page at 100) up to a safety ceiling so sites
+// with hundreds of items list fully instead of being silently truncated at 50.
+export interface WpItem { id: number; type: 'posts' | 'pages'; link: string; title: string; status: string }
+
+const LIST_MAX_PAGES = 10 // ceiling: up to 10 × 100 = 1000 items per type
+
 export async function listWpItems(
   conn: WpConnection,
   postType: 'posts' | 'pages',
   search = ''
 ): Promise<WpItem[]> {
-  const q = new URLSearchParams({ per_page: '50', context: 'edit', orderby: 'modified', order: 'desc', _fields: 'id,link,title,status' })
-  if (search.trim()) q.set('search', search.trim())
-  const data = (await wpFetch(conn, `/${postType}?${q.toString()}`)) as unknown
-  const arr = Array.isArray(data) ? (data as Record<string, unknown>[]) : []
-  return arr.map((p) => ({
-    id: Number(p.id),
-    link: String(p.link ?? ''),
-    title: (p.title as { raw?: string; rendered?: string } | undefined)?.raw
-      ?? (p.title as { rendered?: string } | undefined)?.rendered
-      ?? '(untitled)',
-    status: String(p.status ?? ''),
-  }))
+  const out: WpItem[] = []
+  for (let page = 1; page <= LIST_MAX_PAGES; page++) {
+    const q = new URLSearchParams({ per_page: '100', page: String(page), context: 'edit', orderby: 'modified', order: 'desc', _fields: 'id,link,title,status' })
+    if (search.trim()) q.set('search', search.trim())
+    let arr: Record<string, unknown>[]
+    try {
+      const data = (await wpFetch(conn, `/${postType}?${q.toString()}`)) as unknown
+      arr = Array.isArray(data) ? (data as Record<string, unknown>[]) : []
+    } catch {
+      // WordPress returns 400 (rest_post_invalid_page_number) when paging past
+      // the last page — that's the natural end of the list, not an error.
+      break
+    }
+    for (const p of arr) {
+      out.push({
+        id: Number(p.id),
+        type: postType,
+        link: String(p.link ?? ''),
+        title: (p.title as { raw?: string; rendered?: string } | undefined)?.raw
+          ?? (p.title as { rendered?: string } | undefined)?.rendered
+          ?? '(untitled)',
+        status: String(p.status ?? ''),
+      })
+    }
+    if (arr.length < 100) break // last page reached
+  }
+  return out
+}
+
+// Combined listing: every page AND post on the connected site, so the UI can
+// show one list and bulk-optimize across both types.
+export async function listAllWpItems(conn: WpConnection, search = ''): Promise<WpItem[]> {
+  const [pages, posts] = await Promise.all([
+    listWpItems(conn, 'pages', search),
+    listWpItems(conn, 'posts', search),
+  ])
+  return [...pages, ...posts]
 }
 
 // Fetch one item's current SEO fields + content so the optimizer can show the
@@ -160,14 +219,29 @@ function updatePayload(
   changes: WpChanges
 ): Record<string, unknown> {
   const payload: Record<string, unknown> = {}
+  // Title is written to the native post title for every plugin — that behaviour
+  // is live-validated (RC2) and, absent a per-plugin title override, the post
+  // title is what renders in the <title> tag.
   if (changes.title !== undefined) payload.title = changes.title
   if (changes.content !== undefined) payload.content = changes.content
   if (changes.metaDescription !== undefined) {
-    if (conn.aioseo) {
-      payload.aioseo_meta_data = { description: changes.metaDescription }
-      payload.meta = { _aioseo_description: changes.metaDescription }
-    } else {
-      payload.excerpt = changes.metaDescription
+    // Route the meta description to the field the detected plugin renders from.
+    // Read-back verification (executeWpDeployment step 3) confirms it persisted,
+    // so a plugin that blocks the write surfaces as verify_failed, never a false
+    // success.
+    switch (pluginOf(conn)) {
+      case 'aioseo':
+        payload.aioseo_meta_data = { description: changes.metaDescription }
+        payload.meta = { _aioseo_description: changes.metaDescription }
+        break
+      case 'rankmath':
+        payload.meta = { [META_DESC_KEY.rankmath]: changes.metaDescription }
+        break
+      case 'yoast':
+        payload.meta = { [META_DESC_KEY.yoast]: changes.metaDescription }
+        break
+      default:
+        payload.excerpt = changes.metaDescription
     }
   }
   return payload

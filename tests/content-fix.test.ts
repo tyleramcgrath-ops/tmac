@@ -59,6 +59,30 @@ describe('applyContentTransform + verify', () => {
     expect(r.content).toContain('&lt;script&gt;')
     expect(r.content).not.toContain('<script>x')
   })
+  it('upserts a managed JSON-LD block idempotently and updates in place', () => {
+    const t: ContentTransform = { type: 'set-jsonld', jsonLd: '{"@context":"https://schema.org","@type":"Article"}' }
+    const r = applyContentTransform('<p>body</p>', t)
+    expect(r.changed).toBe(true)
+    expect(r.content).toContain('<script type="application/ld+json">')
+    expect(r.content).toContain('rankforge:schema')
+    expect(verifyContentTransform(r.content, t)).toBe(true)
+    // idempotent: same JSON re-applied is a no-op
+    expect(applyContentTransform(r.content, t).changed).toBe(false)
+    // changing the schema replaces the block, not stacks a second one
+    const t2: ContentTransform = { type: 'set-jsonld', jsonLd: '{"@context":"https://schema.org","@type":"Product"}' }
+    const r2 = applyContentTransform(r.content, t2)
+    expect(r2.changed).toBe(true)
+    expect(r2.content.match(/rankforge:schema -->/g)?.length).toBe(2) // one open + one close, single block
+    expect(r2.content).toContain('"Product"')
+    expect(r2.content).not.toContain('"Article"')
+  })
+  it('rejects invalid JSON schema (no broken markup shipped)', () => {
+    const t: ContentTransform = { type: 'set-jsonld', jsonLd: 'not json' }
+    const r = applyContentTransform('<p>body</p>', t)
+    expect(r.changed).toBe(false)
+    // verify fails when the script never made it into the content (e.g. WP stripped it)
+    expect(verifyContentTransform('<!-- rankforge:schema --><!-- /rankforge:schema -->', { type: 'set-jsonld', jsonLd: '{}' })).toBe(false)
+  })
 })
 
 describe('fix generators (Phase H)', () => {
