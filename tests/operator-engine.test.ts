@@ -47,6 +47,25 @@ describe('fix generation (§2): produces concrete changes', () => {
     expect(fix.proposedValue).toMatch(/"@type": "Product"/)
     expect(fix.proposedValue).toMatch(/Offer/)
   })
+  it('differentiates a dup-title page from its own URL slug, preserving brand', () => {
+    const fix = generateFix('dup-title', { url: 'https://envuetelematics.com/fleet-tracking', title: 'EnVue Telematics · EnVue Telematics' })
+    expect(fix.actionable).toBe(true)
+    expect(fix.kind).toBe('title')
+    expect(fix.proposedValue).toMatch(/Fleet Tracking/i)
+    expect(fix.proposedValue).toMatch(/EnVue Telematics$/)
+    expect(fix.deploy?.title).toBe(fix.proposedValue)
+    expect(fix.currentValue).toBe('EnVue Telematics · EnVue Telematics')
+  })
+  it('dup-title on the homepage (root path) uses "Home" as the differentiator', () => {
+    const fix = generateFix('dup-title', { url: 'https://envuetelematics.com/', title: 'EnVue Telematics' })
+    expect(fix.actionable).toBe(true)
+    expect(fix.proposedValue).toMatch(/^Home/)
+  })
+  it('dup-title is honestly non-actionable when the URL cannot be parsed', () => {
+    const fix = generateFix('dup-title', { url: 'not-a-url', title: 'Dup' })
+    expect(fix.actionable).toBe(false)
+    expect(fix.kind).toBe('none')
+  })
   it('does not fabricate alt text (advisory only)', () => {
     const fix = generateFix('alt-text', { url: 'https://x.com/a', imagesMissingAlt: 5 })
     expect(fix.actionable).toBe(false)
