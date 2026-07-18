@@ -1,10 +1,14 @@
 // Competitor management (Phase G §1). Persist tracked competitors per project.
-// Overlap metrics are computed by the Atlas endpoint from real crawls and
+// Overlap metrics are computed from real crawls (action 'refresh') and
 // graded — never invented here.
 
 import { randomUUID } from 'crypto'
-import { audit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
+import { audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
+import { latestScanPages } from '@/lib/foundation/operator/context'
+import { toPageSignals } from '@/lib/foundation/reco/signals'
+import { computeOverlap } from '@/lib/foundation/external/competitors'
+import { crawlCompetitorSample } from '@/lib/foundation/external/competitor-crawl'
 import type { Competitor } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -33,6 +37,34 @@ export const POST = handled(async (request, { params }) => {
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'member')
   const body = (await request.json().catch(() => ({}))) as Record<string, unknown>
+
+  // Refresh a real overlap snapshot: crawl a bounded sample of the competitor's
+  // site (same SSRF-guarded engine as every other crawl) and compute real
+  // Jaccard-based overlap against our latest scan. Rate-limited well below the
+  // ordinary write limits since it's an outbound crawl of a third-party site,
+  // not a local field write.
+  if (body.action === 'refresh') {
+    enforceRateLimit(request, 'competitor-refresh', 5)
+    const store = await getStore()
+    const competitor = await store.getCompetitor(String(body.id ?? ''))
+    if (!competitor || competitor.projectId !== projectId) throw new HttpError(404, 'Competitor not found.')
+
+    const [rawPages, crawl] = await Promise.all([
+      latestScanPages(store, projectId),
+      crawlCompetitorSample(competitor.domain),
+    ])
+    const ourPages = rawPages.map(toPageSignals)
+    const now = new Date().toISOString()
+    const overlap = crawl.ok
+      ? computeOverlap(ourPages, crawl.pages, now)
+      : computeOverlap(ourPages, null, now)
+
+    const updated: Competitor = { ...competitor, overlap, lastSnapshotAt: now }
+    await store.updateCompetitor(updated)
+    await audit(project.orgId, user.id, 'competitor.refresh', competitor.id, crawl.ok ? `crawled ${crawl.pagesCrawled} pages` : `crawl failed: ${crawl.error}`)
+    return Response.json({ competitor: updated, crawled: crawl.ok, pagesCrawled: crawl.pagesCrawled, error: crawl.ok ? undefined : crawl.error })
+  }
+
   const domain = normalizeDomain(String(body.domain ?? ''))
   if (!domain) return Response.json({ error: 'Enter a valid competitor domain, e.g. rival.com' }, { status: 400 })
 

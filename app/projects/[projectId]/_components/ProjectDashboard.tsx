@@ -14,7 +14,7 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, RefreshCw, StopCircle, Network, ShieldCheck, Code2, Bot,
   Zap, FolderOpen, Wand2, Sparkles, TrendingUp, History as HistoryIcon,
-  LogOut, PenSquare, type LucideIcon,
+  LogOut, PenSquare, Swords, type LucideIcon,
 } from 'lucide-react'
 import { api, ApiError, type ProjectDTO, type ScanSummary } from '../../../lib/client'
 import { useAuth } from '../../../lib/auth-context'
@@ -26,13 +26,14 @@ import { RecommendationsTab } from './RecommendationsTab'
 import { OperatorTab } from './OperatorTab'
 import { WordPressTab } from './WordPressTab'
 import { ContentTab } from './ContentTab'
+import { AtlasTab } from './AtlasTab'
 import { HistoryTab } from './HistoryTab'
 import { DangerZone } from './shared'
 import { PilotBar } from '../../../lib/PilotBar'
 
 type SectionId =
   | 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema'
-  | 'recommendations' | 'rankings' | 'backlinks' | 'content-studio' | 'wordpress' | 'operator' | 'reports' | 'history'
+  | 'recommendations' | 'rankings' | 'backlinks' | 'content-studio' | 'competitors' | 'wordpress' | 'operator' | 'reports' | 'history'
 
 const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: LucideIcon }[] }[] = [
   { label: 'Analyze', items: [
@@ -49,6 +50,7 @@ const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: 
     { id: 'rankings', label: 'Rankings', icon: LineChart },
     { id: 'backlinks', label: 'Backlinks', icon: Link2 },
     { id: 'content-studio', label: 'Content Studio', icon: PenSquare },
+    { id: 'competitors', label: 'Competitors', icon: Swords },
   ]},
   { label: 'Deploy', items: [
     { id: 'wordpress', label: 'WordPress', icon: Plug },
@@ -229,6 +231,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
             {section === 'rankings' && <Rankings domain={project.domain} />}
             {section === 'backlinks' && <Backlinks domain={project.domain} />}
             {section === 'content-studio' && <ContentTab projectId={project.id} />}
+            {section === 'competitors' && <AtlasTab projectId={project.id} />}
             {section === 'wordpress' && <WordPressTab projectId={project.id} />}
             {section === 'operator' && <OperatorTab projectId={project.id} />}
             {section === 'history' && (

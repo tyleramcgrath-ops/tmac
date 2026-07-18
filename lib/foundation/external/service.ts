@@ -6,7 +6,7 @@
 
 import type { Competitor, Project } from '../types'
 import type { PageSignals } from '../reco/signals'
-import { computeOverlap, type CompetitorOverlap } from './competitors'
+import { computeOverlap, isCompetitorOverlap, type CompetitorOverlap } from './competitors'
 import { buildExternalGraph, type ExternalGraph } from './knowledge-graph'
 import { generateBriefing, type MorningBriefing } from './briefing'
 import { detectAiCitationChanges, detectBacklinkChanges, detectRankingChanges, significantChanges, type Change } from './change-detection'
@@ -174,11 +174,12 @@ export async function assembleAtlas(input: {
   const analytics = toObservation(await providers.analytics.fetchReport(project.domain), 'Analytics data', nowMs)
   const trends = toObservation(await providers.trends.fetchTrends([project.name || project.domain]), 'Trend data', nowMs)
 
-  // Competitor overlap. Their pages are not crawled in this environment, so
-  // overlap degrades to Unavailable per dimension (with reasons) — never faked.
+  // Competitor overlap. Uses the last real crawl snapshot (Refresh action,
+  // per-dimension Observed) when one exists and is shaped correctly; otherwise
+  // degrades to Unavailable per dimension (with reasons) — never faked.
   const overlaps = competitors.map((competitor) => ({
     competitor,
-    overlap: computeOverlap(input.ourPages, null, now),
+    overlap: isCompetitorOverlap(competitor.overlap) ? competitor.overlap : computeOverlap(input.ourPages, null, now),
   }))
 
   const graph = buildExternalGraph(project.domain, overlaps, aiVisibility.value ?? [])

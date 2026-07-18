@@ -46,6 +46,8 @@ export function AtlasTab({ projectId }: { projectId: string }) {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [connectNotice, setConnectNotice] = useState<{ ok: boolean; text: string } | null>(null)
+  const [refreshingId, setRefreshingId] = useState<string | null>(null)
+  const [refreshNotes, setRefreshNotes] = useState<Record<string, string>>({})
 
   const load = useCallback(async () => {
     try {
@@ -126,6 +128,22 @@ export function AtlasTab({ projectId }: { projectId: string }) {
       await load()
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Could not remove competitor.')
+    }
+  }
+  async function refresh(id: string) {
+    setRefreshingId(id)
+    setRefreshNotes((n) => ({ ...n, [id]: '' }))
+    try {
+      const r = await api.refreshCompetitor(projectId, id)
+      setRefreshNotes((n) => ({
+        ...n,
+        [id]: r.crawled ? `Crawled ${r.pagesCrawled} page${r.pagesCrawled !== 1 ? 's' : ''} — overlap updated.` : `Could not crawl this site: ${r.error ?? 'unknown reason'}`,
+      }))
+      await load()
+    } catch (err) {
+      setRefreshNotes((n) => ({ ...n, [id]: err instanceof ApiError ? err.message : 'Refresh failed.' }))
+    } finally {
+      setRefreshingId(null)
     }
   }
 
@@ -214,10 +232,23 @@ export function AtlasTab({ projectId }: { projectId: string }) {
               const overlap = overlapByCompetitor.get(c.id) as OverlapDTO | undefined
               return (
                 <div key={c.id} className="rounded-lg border border-[var(--rf-card-line)] p-3">
-                  <div className="flex items-center justify-between">
-                    <p className="rf-mono text-xs text-[var(--rf-blue-bright)]">{c.domain}</p>
-                    <button onClick={() => remove(c.id)} className="rf-btn-ghost rounded-md px-2 py-1 text-[11px] text-red-300">Remove</button>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="rf-mono truncate text-xs text-[var(--rf-blue-bright)]">{c.domain}</p>
+                      <p className="text-[10px] text-[var(--rf-faint)]">{c.lastSnapshotAt ? `Last crawled ${new Date(c.lastSnapshotAt).toLocaleString()}` : 'Never crawled — overlap is unavailable until refreshed'}</p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-1.5">
+                      <button
+                        onClick={() => refresh(c.id)}
+                        disabled={refreshingId === c.id}
+                        className="rf-btn-primary rounded-md px-2.5 py-1 text-[11px] font-medium disabled:opacity-60"
+                      >
+                        {refreshingId === c.id ? 'Crawling…' : 'Refresh'}
+                      </button>
+                      <button onClick={() => remove(c.id)} className="rf-btn-ghost rounded-md px-2 py-1 text-[11px] text-red-300">Remove</button>
+                    </div>
                   </div>
+                  {refreshNotes[c.id] && <p className="mt-1.5 text-[11px] text-[var(--rf-muted)]">{refreshNotes[c.id]}</p>}
                   {overlap && (
                     <div className="mt-2 grid grid-cols-2 gap-1.5 sm:grid-cols-3">
                       <OverlapCell label="Business" o={overlap.businessOverlap} />

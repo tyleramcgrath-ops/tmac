@@ -24,6 +24,20 @@ export interface CompetitorOverlap {
   authorityOverlap: Observation<number>
 }
 
+const OVERLAP_KEYS = ['businessOverlap', 'topicOverlap', 'serviceOverlap', 'entityOverlap', 'contentOverlap', 'authorityOverlap'] as const
+
+// A competitor's `overlap` field is untyped JSONB (persisted from a prior
+// refresh, schema-less on the wire). Validate its shape before trusting it as
+// a real CompetitorOverlap rather than casting blindly.
+export function isCompetitorOverlap(x: unknown): x is CompetitorOverlap {
+  if (!x || typeof x !== 'object') return false
+  const o = x as Record<string, unknown>
+  return OVERLAP_KEYS.every((k) => {
+    const v = o[k] as { evidence?: { grade?: unknown } } | undefined
+    return !!v && typeof v === 'object' && !!v.evidence && typeof v.evidence.grade === 'string'
+  })
+}
+
 function jaccard(a: Set<string>, b: Set<string>): number {
   if (a.size === 0 && b.size === 0) return 0
   let inter = 0

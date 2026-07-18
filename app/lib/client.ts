@@ -391,6 +391,11 @@ export const api = {
     }),
   deleteCompetitor: (projectId: string, id: string) =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/competitors?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  refreshCompetitor: (projectId: string, id: string) =>
+    req<{ competitor: CompetitorDTO; crawled: boolean; pagesCrawled: number; error?: string }>(`/api/projects/${projectId}/competitors`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'refresh', id }),
+    }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
 
   // ── Content Studio ──
@@ -456,6 +461,7 @@ export interface CompetitorDTO {
   domain: string
   label: string
   createdAt: string
+  lastSnapshotAt?: string | null
 }
 export interface OverlapDTO {
   businessOverlap: ObservationDTO<number>
