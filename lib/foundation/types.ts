@@ -313,7 +313,32 @@ export interface WpDeployment {
   rolledBackAt?: string
   rolledBackBy?: string
   createdAt: string
+  // Outcome-measurement flywheel (SCHEDULER_DESIGN.md §11): did this fix
+  // actually move Search Console metrics for the affected URL? Populated by
+  // the `outcome_capture` job ~14 days after a verified deployment. Absent
+  // until then; `skipped` (never fabricated) when Search Console isn't
+  // connected or the reading failed permanently.
+  outcome?: DeploymentOutcome
 }
+
+export interface DeploymentOutcomeWindow {
+  from: string
+  to: string
+  clicks: number
+  impressions: number
+  ctr: number
+  position: number
+}
+
+export type DeploymentOutcome =
+  | {
+      capturedAt: string
+      skipped: false
+      before: DeploymentOutcomeWindow
+      after: DeploymentOutcomeWindow
+      delta: { clicks: number; impressions: number; ctr: number; position: number }
+    }
+  | { capturedAt: string; skipped: true; reason: string }
 
 export interface AuditLogEntry {
   id: string

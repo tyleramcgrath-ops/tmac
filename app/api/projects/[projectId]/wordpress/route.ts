@@ -163,6 +163,7 @@ export const POST = handled(async (request, { params }) => {
     const recommendationId = body.recommendationId ? String(body.recommendationId) : undefined
     const dep = await executeWpDeployment({
       projectId,
+      orgId: project.orgId,
       connection,
       postId,
       postType,

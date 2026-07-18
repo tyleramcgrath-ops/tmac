@@ -5,12 +5,17 @@
 import type { Handlers } from './engine'
 import { getStore } from '../store'
 import { runScheduledScan } from './scan-runner'
+import { runOutcomeCapture } from './outcome-runner'
 
 export function productionHandlers(): Handlers {
   return {
     scheduled_scan: async (job) => {
       const store = await getStore()
       return runScheduledScan(store, job)
+    },
+    outcome_capture: async (job) => {
+      const store = await getStore()
+      return runOutcomeCapture(store, job)
     },
   }
 }

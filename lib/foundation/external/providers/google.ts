@@ -16,7 +16,7 @@
 
 import type { ProviderOutcome, ProviderStatus } from '../types'
 import { statusFor } from './shared'
-import type { GscReport, GscRow, SearchConsoleProvider } from './search-console'
+import type { GscPageMetrics, GscReport, GscRow, SearchConsoleProvider } from './search-console'
 import type { Ga4Report, Ga4PageMetrics, AnalyticsProvider } from './analytics'
 import {
   isExpired,
@@ -125,6 +125,47 @@ export class GoogleSearchConsoleProvider implements SearchConsoleProvider {
         position: r.position ?? 0,
       }))
       return { ok: true, data: { range: { from, to }, rows }, grade: 'observed', source: 'gsc', fetchedAt: new Date(this.deps.nowMs).toISOString() }
+    } catch (err) {
+      return failureFrom(err)
+    }
+  }
+
+  // Aggregate clicks/impressions/ctr/position for ONE page over an EXACT date
+  // range — used by the outcome-measurement flywheel to compare a page's
+  // performance before vs after a deployed fix (SCHEDULER_DESIGN.md §11).
+  // dimensions=['page'] filtered to exactly this URL returns one aggregated
+  // row across the whole range, not a per-query breakdown.
+  async fetchPageMetrics(page: string, from: string, to: string): Promise<ProviderOutcome<GscPageMetrics>> {
+    try {
+      const token = await freshToken(this.deps)
+      const url = `${GSC_ENDPOINT}/${encodeURIComponent(this.site)}/searchAnalytics/query`
+      const json = (await postJson(
+        url,
+        token,
+        {
+          startDate: from,
+          endDate: to,
+          dimensions: ['page'],
+          dimensionFilterGroups: [{ filters: [{ dimension: 'page', operator: 'equals', expression: page }] }],
+          rowLimit: 1,
+        },
+        this.deps.fetchImpl
+      )) as GscApiResponse
+      const row = json.rows?.[0]
+      return {
+        ok: true,
+        data: {
+          range: { from, to },
+          page,
+          clicks: row?.clicks ?? 0,
+          impressions: row?.impressions ?? 0,
+          ctr: row?.ctr ?? 0,
+          position: row?.position ?? 0,
+        },
+        grade: 'observed',
+        source: 'gsc',
+        fetchedAt: new Date(this.deps.nowMs).toISOString(),
+      }
     } catch (err) {
       return failureFrom(err)
     }

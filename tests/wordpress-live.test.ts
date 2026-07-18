@@ -139,6 +139,7 @@ run('LIVE WordPress — real routes against a real WP REST API', () => {
     const conn = (await (await getStore()).getWpConnection((await ctx.params).projectId))!
     const dep = await executeWpDeployment({
       projectId: (await ctx.params).projectId,
+      orgId: 'org-live',
       connection: conn,
       postId,
       postType: postType as 'posts' | 'pages',
