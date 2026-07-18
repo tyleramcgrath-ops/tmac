@@ -151,6 +151,23 @@ export interface IntegrationDTO {
   connectedAt: string | null
   updatedAt: string | null
 }
+export interface ScheduleDTO {
+  id: string
+  kind: string
+  cron: string
+  enabled: boolean
+  nextRunAt: string
+  lastRunAt: string | null
+}
+export interface JobDTO {
+  id: string
+  kind: string
+  status: string
+  runAt: string
+  attempts: number
+  lastError: string | null
+  createdAt: string
+}
 export interface DeploymentDTO {
   id: string
   postId: number
@@ -247,6 +264,17 @@ export const api = {
     }),
   disconnectIntegration: (projectId: string, kind: 'search-console' | 'analytics') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/integrations?kind=${kind}`, { method: 'DELETE' }),
+
+  // automation / scheduler
+  getSchedule: (projectId: string) =>
+    req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
+  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean) =>
+    req<{ schedule: ScheduleDTO }>(`/api/projects/${projectId}/schedule`, {
+      method: 'PUT',
+      body: JSON.stringify({ frequency, enabled }),
+    }),
+  clearSchedule: (projectId: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/schedule`, { method: 'DELETE' }),
 
   // wordpress
   getWordpress: (projectId: string) =>

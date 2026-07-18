@@ -1,9 +1,9 @@
 # RankForge — Scheduler & Background Jobs (Design)
 
-**Status:** design, not built. Target: the foundation everything compounding
-depends on — recurring crawls, regression monitoring, rank history, and the
-**outcome-measurement flywheel** (see the strategy note: measuring the result of
-each deployed fix is the real moat, and it needs scheduling).
+**Status:** v1 built and live — durable job queue, cron runner, schedule API,
+Automation UI, and the server-side re-crawl driver (§6) are all shipped.
+`scheduled_scan` now drives a real crawl end-to-end, not just a re-evaluation
+of the latest scan. v2 (`outcome_capture`, `monitor` — §11) is still design-only.
 
 This document is build-ready: it names the exact files, the data model, the
 state machine, and the one genuinely hard part (driving the crawl server-side).
