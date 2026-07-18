@@ -1,13 +1,27 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import { Download, TrendingDown, TrendingUp } from 'lucide-react'
 import { api, ApiError, type DeploymentDTO, type DeploymentOutcomeDTO } from '../../../lib/client'
 import { summarizeOutcomes } from '../../../lib/outcome-summary'
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { ChangeRow, StatusChip } from './shared'
 import { ConnectWordPress, DeployForm } from './WpForms'
 import { WpBrowseOptimize } from './WpOptimizer'
+import { downloadCsv } from '../../../lib/csv'
+
+function exportDeploymentsCsv(deployments: DeploymentDTO[]) {
+  const rows: (string | number)[][] = [
+    ['Date', 'Page', 'Status', 'Title before', 'Title after', 'Meta before', 'Meta after', 'Reason', 'Result', 'Clicks delta', 'Position delta'],
+    ...deployments.map((d) => [
+      d.createdAt, d.postUrl, d.status,
+      d.before.title, d.after.title ?? '', d.before.metaDescription, d.after.metaDescription ?? '',
+      d.reason, d.result,
+      d.outcome?.delta?.clicks ?? '', d.outcome?.delta?.position ?? '',
+    ]),
+  ]
+  downloadCsv(`rankforge-deployments-${new Date().toISOString().slice(0, 10)}.csv`, rows)
+}
 
 // The headline the outcome-measurement flywheel exists to produce: proof, in
 // aggregate, that deployed fixes move real Search Console metrics — not just
@@ -192,7 +206,14 @@ export function WordPressTab({ projectId }: { projectId: string }) {
       {state.deployments.length > 0 && <OutcomeSummaryCard deployments={state.deployments} />}
 
       <div>
-        <p className="mb-2 text-sm font-semibold text-white">Deployment history</p>
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm font-semibold text-white">Deployment history</p>
+          {state.deployments.length > 0 && (
+            <button onClick={() => exportDeploymentsCsv(state.deployments)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium">
+              <Download className="h-3.5 w-3.5" /> Export CSV
+            </button>
+          )}
+        </div>
         {state.deployments.length === 0 ? (
           <EmptyState title="No deployments yet" detail="Deployments are durable server-side records — they survive refresh, logout, and other devices. Nothing is shown as 'verified' unless the changed value was read back and matched." />
         ) : (
