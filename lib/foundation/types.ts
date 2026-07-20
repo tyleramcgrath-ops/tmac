@@ -56,6 +56,23 @@ export interface OrgMember {
   createdAt: string
 }
 
+// Team invitation (email → org, before the invitee has (or uses) an account).
+// `token` is the single-use secret in the emailed link — never the id, which
+// is safe to expose in list views. `status` transitions pending → accepted |
+// revoked | expired (expired is derived from expiresAt, not stored eagerly).
+export interface Invitation {
+  id: string
+  orgId: string
+  email: string
+  role: Role
+  invitedBy: string
+  token: string
+  status: 'pending' | 'accepted' | 'revoked'
+  createdAt: string
+  expiresAt: string
+  acceptedAt?: string | null
+}
+
 export interface Project {
   id: string
   orgId: string

@@ -10,6 +10,7 @@ import type {
   AuditLogEntry,
   Competitor,
   ContentBrief,
+  Invitation,
   Job,
   Organization,
   OrgMember,
@@ -28,6 +29,7 @@ type Collections = {
   users: User[]
   orgs: Organization[]
   members: OrgMember[]
+  invitations: Invitation[]
   projects: Project[]
   scans: Scan[]
   recommendations: Recommendation[]
@@ -47,6 +49,7 @@ const EMPTY: Collections = {
   users: [],
   orgs: [],
   members: [],
+  invitations: [],
   projects: [],
   scans: [],
   recommendations: [],
@@ -157,6 +160,30 @@ export class FileFoundationStore implements FoundationStore {
       const rest = members.filter((m) => !(m.orgId === member.orgId && m.userId === member.userId))
       return { data: [...rest, member] }
     })
+  }
+
+  async removeMember(orgId: string, userId: string) {
+    await this.mutate('members', (members) => ({
+      data: members.filter((m) => !(m.orgId === orgId && m.userId === userId)),
+    }))
+  }
+
+  // team invitations
+  async createInvitation(invitation: Invitation) {
+    await this.mutate('invitations', (all) => ({ data: [...all, invitation] }))
+  }
+  async updateInvitation(invitation: Invitation) {
+    await this.mutate('invitations', (all) => ({
+      data: all.map((i) => (i.id === invitation.id ? invitation : i)),
+    }))
+  }
+  async getInvitationByToken(token: string) {
+    return (await this.read('invitations')).find((i) => i.token === token) ?? null
+  }
+  async listInvitations(orgId: string) {
+    return (await this.read('invitations'))
+      .filter((i) => i.orgId === orgId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
   }
 
   // projects

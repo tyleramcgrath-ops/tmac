@@ -51,6 +51,11 @@ export function AppHeader() {
         <span className="rf-mono text-sm tracking-tight text-[var(--rf-blue-bright)]">RankForge</span>
       </Link>
       <div className="flex items-center gap-3 text-sm">
+        {user && (
+          <Link href="/team" className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">
+            Team
+          </Link>
+        )}
         {user && <span className="text-[var(--rf-muted)]">{user.email}</span>}
         <button
           onClick={async () => {

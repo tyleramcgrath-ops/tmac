@@ -11,6 +11,7 @@ import type {
   AuditLogEntry,
   Competitor,
   ContentBrief,
+  Invitation,
   Job,
   Organization,
   OrgMember,
@@ -39,6 +40,12 @@ export interface FoundationStore {
   getMembership(orgId: string, userId: string): Promise<OrgMember | null>
   listMembers(orgId: string): Promise<OrgMember[]>
   addMember(member: OrgMember): Promise<void>
+  removeMember(orgId: string, userId: string): Promise<void>
+  // team invitations
+  createInvitation(invitation: Invitation): Promise<void>
+  updateInvitation(invitation: Invitation): Promise<void>
+  getInvitationByToken(token: string): Promise<Invitation | null>
+  listInvitations(orgId: string): Promise<Invitation[]>
   // projects
   createProject(project: Project): Promise<void>
   getProject(id: string): Promise<Project | null>

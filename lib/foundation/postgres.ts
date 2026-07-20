@@ -19,6 +19,7 @@ import type {
   AuditLogEntry,
   Competitor,
   ContentBrief,
+  Invitation,
   Job,
   Organization,
   OrgMember,
@@ -50,6 +51,11 @@ const TABLES = {
     pk: ['org_id', 'user_id'],
     keys: (m: OrgMember) => ({ org_id: m.orgId, user_id: m.userId, role: m.role }),
   } as TableDesc<OrgMember>,
+  invitations: {
+    name: 'rf_invitations',
+    pk: ['id'],
+    keys: (i: Invitation) => ({ id: i.id, org_id: i.orgId, email: i.email, token: i.token, status: i.status, created_at: i.createdAt }),
+  } as TableDesc<Invitation>,
   projects: {
     name: 'rf_projects',
     pk: ['id'],
@@ -233,6 +239,25 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async addMember(member: OrgMember) {
     await this.ups(TABLES.members, member)
+  }
+
+  async removeMember(orgId: string, userId: string) {
+    await this.pool.query('DELETE FROM rf_members WHERE org_id=$1 AND user_id=$2', [orgId, userId])
+  }
+
+  // ── Team invitations ─────────────────────────────────────────────────────────
+  async createInvitation(invitation: Invitation) {
+    await this.ins(TABLES.invitations, invitation)
+  }
+  async updateInvitation(invitation: Invitation) {
+    await this.upd(TABLES.invitations, invitation)
+  }
+  async getInvitationByToken(token: string) {
+    const r = await this.rows<Invitation>('SELECT data FROM rf_invitations WHERE token=$1', [token])
+    return r[0] ?? null
+  }
+  async listInvitations(orgId: string) {
+    return this.rows<Invitation>('SELECT data FROM rf_invitations WHERE org_id=$1 ORDER BY created_at DESC', [orgId])
   }
 
   // ── Projects ───────────────────────────────────────────────────────────────
