@@ -79,6 +79,22 @@ export function signupAllowed(email: string): boolean {
     .some((entry) => (entry.startsWith('@') ? entry === domain : entry === e))
 }
 
+// RankForge-staff gate for the pilot admin surface (org.pilot management,
+// cross-org feedback). RF_STAFF_EMAILS is a comma-separated exact-email
+// allow-list — no domain wildcards, unlike the signup allow-list, since this
+// gates a much more sensitive surface. Unset ⇒ nobody is staff (fails closed,
+// not open) — the admin routes 404 for everyone until explicitly configured.
+export function isStaffEmail(email: string): boolean {
+  const raw = process.env.RF_STAFF_EMAILS
+  if (!raw) return false
+  const e = email.trim().toLowerCase()
+  return raw
+    .split(',')
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean)
+    .includes(e)
+}
+
 // APP_SECRET is required for any authenticated flow regardless of store.
 // Production demands a strong (≥32-char) secret; the crypto primitives enforce
 // a ≥16 floor everywhere (Phase D.6 P6).

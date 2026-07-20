@@ -230,6 +230,10 @@ export class PostgresFoundationStore implements FoundationStore {
       [userId]
     )
   }
+  async listOrgs() {
+    const orgs = await this.rows<Organization>('SELECT data FROM rf_orgs', [])
+    return orgs.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
   async getMembership(orgId: string, userId: string) {
     const r = await this.rows<OrgMember>('SELECT data FROM rf_members WHERE org_id=$1 AND user_id=$2', [orgId, userId])
     return r[0] ?? null
@@ -479,6 +483,9 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async listFeedback(orgId: string, limit = 100) {
     return this.rows<PilotFeedback>('SELECT data FROM rf_feedback WHERE org_id=$1 ORDER BY created_at DESC LIMIT $2', [orgId, limit])
+  }
+  async listAllFeedback(limit = 200) {
+    return this.rows<PilotFeedback>('SELECT data FROM rf_feedback ORDER BY created_at DESC LIMIT $1', [limit])
   }
 
   // ── Audit ──────────────────────────────────────────────────────────────────

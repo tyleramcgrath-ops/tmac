@@ -40,13 +40,6 @@ a pilot customer should both have. **RC2 status is noted inline.**
   overrides (`rank_math_title`, `_yoast_wpseo_title`) are a planned enhancement.
 
 ## Missing features (do not exist)
-- **Team invitations / member management UI** — roles and membership exist in the
-  store and are enforced by routes, but there is no way to invite or manage
-  teammates through the product. Effectively single-user per org. (RC2: unchanged
-  — pilot uses one login per business.)
-- **Self-serve pilot admin UI** — RC2 added pilot fields (allow-list, org
-  expiration/status) and feedback collection, but there is **no admin dashboard**:
-  operators set `org.pilot` via a script/DB and read feedback via the API/store.
 - **Explicit organization creation** — an org is auto-created at signup; there is
   no create-/switch-org surface.
 - **Strategy screen** — no dedicated Strategy UI; strategy is the internal
@@ -80,8 +73,6 @@ a pilot customer should both have. **RC2 status is noted inline.**
 - **OAuth state is not single-use** — replay is bounded only by a 10-minute
   window (low practical risk; redemption also needs Google's one-time code + the
   originating session).
-- **Deep-linkable tabs** — project tab state lives in React state, not the URL;
-  refresh resets to Audit and tabs aren't shareable.
 - **File store is dev/test only** — production requires PostgreSQL; the file
   store would lose data on Vercel's ephemeral disk (enforced by `env.ts`).
 

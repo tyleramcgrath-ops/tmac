@@ -46,6 +46,30 @@ export interface InvitationDTO {
   createdAt: string
   expiresAt: string
 }
+export interface PilotDTO {
+  status: 'active' | 'expired' | 'disabled'
+  expiresAt: string | null
+  notes?: string
+}
+export interface AdminOrgDTO {
+  id: string
+  name: string
+  pilot: PilotDTO | null
+  ownerEmail: string | null
+  memberCount: number
+  projectCount: number
+  createdAt: string
+}
+export interface AdminFeedbackDTO {
+  id: string
+  orgId: string
+  orgName: string
+  userEmail: string
+  projectId: string | null
+  kind: 'feedback' | 'issue'
+  message: string
+  createdAt: string
+}
 export interface ProjectDTO {
   id: string
   orgId: string
@@ -245,6 +269,15 @@ export const api = {
     req<{ orgName: string; role: string; email: string }>(`/api/invitations/${token}`),
   acceptInvitation: (token: string) =>
     req<{ org: Org | null }>(`/api/invitations/${token}`, { method: 'POST' }),
+
+  // pilot admin (staff-only; 404s for non-staff)
+  adminListOrgs: () => req<{ orgs: AdminOrgDTO[] }>('/api/admin/orgs'),
+  adminSetPilot: (orgId: string, pilot: PilotDTO) =>
+    req<{ org: { id: string; name: string; pilot: PilotDTO } }>(`/api/admin/orgs/${orgId}/pilot`, {
+      method: 'PATCH',
+      body: JSON.stringify(pilot),
+    }),
+  adminListFeedback: () => req<{ feedback: AdminFeedbackDTO[] }>('/api/admin/feedback'),
 
   // projects
   listProjects: () => req<{ projects: ProjectDTO[] }>('/api/projects'),
