@@ -43,6 +43,10 @@ export interface Signals {
   internalLinks: number
   externalLinks: number
   schemaTypes: string[]
+  // Present only when a LocalBusiness (or subtype) JSON-LD node was found:
+  // the NAP (name/address/telephone) fields it is missing. Absent entirely
+  // when no LocalBusiness node exists — never a guess about intent.
+  localBusinessMissingFields?: string[]
   https: boolean
   mixedContent: boolean
   hasOpenGraph: boolean
@@ -85,6 +89,7 @@ export function extractSignals(
 
   const hasOpenGraph = /property=["']og:/i.test(head)
   const schemaTypes = extractSchemaTypes(html)
+  const localBusinessMissingFields = extractLocalBusinessMissingFields(html)
   const { internal, external } = countLinks(html, finalUrl)
 
   const imgTags = html.match(/<img\b[^>]*>/gi) || []
@@ -138,6 +143,7 @@ export function extractSignals(
     internalLinks: internal,
     externalLinks: external,
     schemaTypes,
+    localBusinessMissingFields,
     https,
     mixedContent,
     hasOpenGraph,
@@ -361,6 +367,58 @@ function collectTypes(node: unknown, out: Set<string>): void {
     else if (Array.isArray(t)) t.forEach((x) => typeof x === 'string' && out.add(x))
     if (Array.isArray(obj['@graph'])) collectTypes(obj['@graph'], out)
   }
+}
+
+// NAP (name/address/telephone) completeness for a LocalBusiness node — the
+// fields Google actually uses for local-pack eligibility. Scoped to the exact
+// 'LocalBusiness' @type (matching PREFERRED_SCHEMA's mapping) rather than
+// every schema.org subtype, so this only fires where we're sure the page
+// intends to be a local-business listing. Returns undefined when no such
+// node exists (nothing to say); an empty array means one was found and complete.
+function extractLocalBusinessMissingFields(html: string): string[] | undefined {
+  const re = /<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi
+  let m: RegExpExecArray | null
+  let node: Record<string, unknown> | undefined
+  while ((m = re.exec(html))) {
+    let parsed: unknown
+    try {
+      parsed = JSON.parse(m[1].trim())
+    } catch {
+      continue
+    }
+    node = findLocalBusinessNode(parsed)
+    if (node) break
+  }
+  if (!node) return undefined
+
+  const missing: string[] = []
+  const hasNonEmptyString = (v: unknown) => typeof v === 'string' && v.trim().length > 0
+  if (!hasNonEmptyString(node.name)) missing.push('name')
+  const addr = node.address
+  const hasAddress =
+    hasNonEmptyString(addr) ||
+    (addr && typeof addr === 'object' && hasNonEmptyString((addr as Record<string, unknown>).streetAddress))
+  if (!hasAddress) missing.push('address')
+  if (!hasNonEmptyString(node.telephone)) missing.push('telephone')
+  return missing
+}
+
+function findLocalBusinessNode(node: unknown): Record<string, unknown> | undefined {
+  if (Array.isArray(node)) {
+    for (const n of node) {
+      const found = findLocalBusinessNode(n)
+      if (found) return found
+    }
+    return undefined
+  }
+  if (node && typeof node === 'object') {
+    const obj = node as Record<string, unknown>
+    const t = obj['@type']
+    const isLocalBusiness = t === 'LocalBusiness' || (Array.isArray(t) && t.includes('LocalBusiness'))
+    if (isLocalBusiness) return obj
+    if (Array.isArray(obj['@graph'])) return findLocalBusinessNode(obj['@graph'])
+  }
+  return undefined
 }
 // Distinct, same-host internal page URLs (for the multi-page crawler). Skips
 // assets, anchors, and non-http(s) links; strips hashes; caps the result.

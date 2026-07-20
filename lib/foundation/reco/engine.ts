@@ -127,7 +127,7 @@ export function generateRecommendationsV2(
   //    all want Organization. Page-AGNOSTIC rules (multiple-H1, title-length,
   //    missing-meta, alt-text) group SITE-WIDE by ruleId, so "7 pages have
   //    multiple H1s" is one recommendation, not seven.
-  const SCHEMA_SPECIFIC = new Set(['schema-missing', 'breadcrumb', 'faq'])
+  const SCHEMA_SPECIFIC = new Set(['schema-missing', 'local-business-incomplete', 'breadcrumb', 'faq'])
   const grouped = new Map<
     string,
     { f: Finding; urls: string[]; classificationConf: number; businessWeight: number; types: Set<PageType> }
