@@ -7,6 +7,7 @@ import { getStore } from '../store'
 import { runScheduledScan } from './scan-runner'
 import { runOutcomeCapture } from './outcome-runner'
 import { runMonitorDigest } from './digest'
+import { runCompetitorRefreshJob } from './competitor-refresh-runner'
 
 export function productionHandlers(): Handlers {
   return {
@@ -21,6 +22,10 @@ export function productionHandlers(): Handlers {
     monitor: async (job) => {
       const store = await getStore()
       return runMonitorDigest(store, job)
+    },
+    competitor_refresh: async (job) => {
+      const store = await getStore()
+      return runCompetitorRefreshJob(store, job)
     },
   }
 }

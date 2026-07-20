@@ -346,12 +346,12 @@ export const api = {
   // automation / scheduler
   getSchedule: (projectId: string) =>
     req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
-  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' = 'scheduled_scan') =>
+  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' = 'scheduled_scan') =>
     req<{ schedule: ScheduleDTO }>(`/api/projects/${projectId}/schedule`, {
       method: 'PUT',
       body: JSON.stringify({ frequency, enabled, kind }),
     }),
-  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' = 'scheduled_scan') =>
+  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' = 'scheduled_scan') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/schedule?kind=${kind}`, { method: 'DELETE' }),
 
   // wordpress

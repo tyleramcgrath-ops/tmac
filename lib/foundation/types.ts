@@ -309,7 +309,7 @@ export type SeoPlugin = 'aioseo' | 'rankmath' | 'yoast' | 'core'
 // ── Scheduler / background jobs ──────────────────────────────────────────────
 // A durable job queue (Postgres in prod, file store in dev) drained by a
 // cron-triggered runner. See SCHEDULER_DESIGN.md.
-export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor'
+export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor' | 'competitor_refresh'
 export type JobStatus = 'queued' | 'running' | 'succeeded' | 'failed' | 'canceled'
 
 export interface Job {

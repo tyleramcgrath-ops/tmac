@@ -5,10 +5,7 @@
 import { randomUUID } from 'crypto'
 import { audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
-import { latestScanPages } from '@/lib/foundation/operator/context'
-import { toPageSignals } from '@/lib/foundation/reco/signals'
-import { computeOverlap } from '@/lib/foundation/external/competitors'
-import { crawlCompetitorSample } from '@/lib/foundation/external/competitor-crawl'
+import { refreshOneCompetitor } from '@/lib/foundation/scheduler/competitor-refresh-runner'
 import type { Competitor } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -49,23 +46,10 @@ export const POST = handled(async (request, { params }) => {
     const competitor = await store.getCompetitor(String(body.id ?? ''))
     if (!competitor || competitor.projectId !== projectId) throw new HttpError(404, 'Competitor not found.')
 
-    const [rawPages, crawl] = await Promise.all([
-      latestScanPages(store, projectId),
-      crawlCompetitorSample(competitor.domain),
-    ])
-    const ourPages = rawPages.map(toPageSignals)
-    const now = new Date().toISOString()
-    const overlap = crawl.ok
-      ? computeOverlap(ourPages, crawl.pages, now)
-      : computeOverlap(ourPages, null, now)
-
-    const snapshotPages = crawl.ok
-      ? crawl.pages.filter((p) => p.title).slice(0, 20).map((p) => ({ url: p.url, title: p.title! }))
-      : competitor.snapshotPages
-    const updated: Competitor = { ...competitor, overlap, lastSnapshotAt: now, snapshotPages }
-    await store.updateCompetitor(updated)
-    await audit(project.orgId, user.id, 'competitor.refresh', competitor.id, crawl.ok ? `crawled ${crawl.pagesCrawled} pages` : `crawl failed: ${crawl.error}`)
-    return Response.json({ competitor: updated, crawled: crawl.ok, pagesCrawled: crawl.pagesCrawled, error: crawl.ok ? undefined : crawl.error })
+    const result = await refreshOneCompetitor(store, competitor)
+    const updated = await store.getCompetitor(competitor.id)
+    await audit(project.orgId, user.id, 'competitor.refresh', competitor.id, result.crawled ? `crawled ${result.pagesCrawled} pages` : `crawl failed: ${result.error}`)
+    return Response.json({ competitor: updated, crawled: result.crawled, pagesCrawled: result.pagesCrawled, error: result.error })
   }
 
   const domain = normalizeDomain(String(body.domain ?? ''))

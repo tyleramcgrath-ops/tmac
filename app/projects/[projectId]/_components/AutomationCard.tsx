@@ -6,11 +6,11 @@
 // shows the next run, last run, and any failed job — never a fabricated status.
 
 import { useCallback, useEffect, useState } from 'react'
-import { CalendarClock, Loader2, Mail } from 'lucide-react'
+import { CalendarClock, Loader2, Mail, Swords } from 'lucide-react'
 import { api, ApiError, type ScheduleDTO, type JobDTO } from '../../../lib/client'
 
 type Freq = 'off' | 'daily' | 'weekly'
-type Kind = 'scheduled_scan' | 'monitor'
+type Kind = 'scheduled_scan' | 'monitor' | 'competitor_refresh'
 
 function freqOf(s: ScheduleDTO | undefined): Freq {
   if (!s || !s.enabled) return 'off'
@@ -50,8 +50,10 @@ export function AutomationCard({ projectId }: { projectId: string }) {
 
   const schedule = schedules.find((s) => s.kind === 'scheduled_scan')
   const digestSchedule = schedules.find((s) => s.kind === 'monitor')
+  const competitorSchedule = schedules.find((s) => s.kind === 'competitor_refresh')
   const current = freqOf(schedule)
   const digestCurrent = freqOf(digestSchedule)
+  const competitorCurrent = freqOf(competitorSchedule)
 
   return (
     <div className="rf-card p-5">
@@ -105,6 +107,33 @@ export function AutomationCard({ projectId }: { projectId: string }) {
           <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
             Next send {new Date(digestSchedule.nextRunAt).toLocaleString()}
             {digestSchedule.lastRunAt ? ` · last sent ${new Date(digestSchedule.lastRunAt).toLocaleString()}` : ' · not sent yet'}
+          </p>
+        )}
+      </div>
+
+      <div className="mt-4 border-t border-[var(--rf-card-line)] pt-4">
+        <div className="flex items-center gap-2">
+          <Swords className="h-4 w-4 text-[var(--rf-blue-bright)]" />
+          <p className="text-sm font-semibold text-white">Auto-refresh competitors</p>
+          {saving === 'competitor_refresh' && <Loader2 className="h-3.5 w-3.5 animate-spin text-[var(--rf-faint)]" />}
+        </div>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">Re-crawl every tracked competitor and recompute overlap on a schedule, so it stays current without clicking Refresh.</p>
+        <div className="mt-3 inline-flex rounded-lg border border-[var(--rf-card-line)] p-0.5">
+          {(['off', 'daily', 'weekly'] as Freq[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => choose('competitor_refresh', f)}
+              disabled={!!saving}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium capitalize transition-colors disabled:opacity-60 ${competitorCurrent === f ? 'rf-btn-primary' : 'text-[var(--rf-muted)] hover:text-white'}`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        {competitorSchedule?.enabled && (
+          <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
+            Next refresh {new Date(competitorSchedule.nextRunAt).toLocaleString()}
+            {competitorSchedule.lastRunAt ? ` · last ran ${new Date(competitorSchedule.lastRunAt).toLocaleString()}` : ' · not run yet'}
           </p>
         )}
       </div>
