@@ -8,6 +8,8 @@
 // provider relay / serverless function) which receives { to, subject, html }.
 // If unset, delivery is "logged only" and honestly reported as such.
 
+import { escapeHtml } from './scheduler/notify'
+
 export interface OutboundEmail {
   to: string
   subject: string
@@ -23,8 +25,13 @@ const lastLinks = new Map<string, string>()
 export function __lastVerificationLink(email: string): string | undefined {
   return lastLinks.get(email.toLowerCase())
 }
+const lastInvitationLinks = new Map<string, string>()
+export function __lastInvitationLink(email: string): string | undefined {
+  return lastInvitationLinks.get(email.toLowerCase())
+}
 export function __resetMailer(): void {
   lastLinks.clear()
+  lastInvitationLinks.clear()
 }
 
 async function post(url: string, body: unknown): Promise<void> {
@@ -67,6 +74,31 @@ export async function sendVerificationEmail(to: string, link: string): Promise<M
   // this is the documented pilot fallback when email isn't wired up.
   if (!result.delivered) {
     console.log(`[mailer] verification link for ${to}: ${link}`)
+  }
+  return result
+}
+
+export async function sendInvitationEmail(
+  to: string,
+  orgName: string,
+  inviterName: string,
+  role: string,
+  link: string
+): Promise<MailResult> {
+  lastInvitationLinks.set(to.toLowerCase(), link)
+  const safeOrg = escapeHtml(orgName)
+  const safeInviter = escapeHtml(inviterName)
+  const safeRole = escapeHtml(role)
+  const result = await sendEmail({
+    to,
+    subject: `${inviterName} invited you to ${orgName} on RankForge`,
+    html: `<p>${safeInviter} invited you to join <strong>${safeOrg}</strong> on RankForge as ${safeRole}.</p><p><a href="${link}">Accept invitation</a></p><p>Or paste this link: ${link}</p>`,
+    text: `${inviterName} invited you to join ${orgName} on RankForge as ${role}. Accept: ${link}`,
+  })
+  // Same logged-only fallback as sendVerificationEmail — the pilot's documented
+  // path when MAIL_WEBHOOK_URL isn't configured.
+  if (!result.delivered) {
+    console.log(`[mailer] invitation link for ${to}: ${link}`)
   }
   return result
 }

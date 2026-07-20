@@ -11,7 +11,7 @@ import { createSessionToken, readSessionToken } from './crypto'
 import { getStore } from './store'
 import { clientKey, rateLimit } from './rate-limit'
 import { EnvError } from './env'
-import type { Project, Role, User } from './types'
+import type { Organization, Project, Role, User } from './types'
 
 export const SESSION_COOKIE = 'rf_session'
 
@@ -128,6 +128,25 @@ export async function requireProjectRole(
     if (expired) throw new HttpError(403, 'Your pilot access has ended. Contact us to continue.')
   }
   return { project, role: membership.role }
+}
+
+// Resolves an org and enforces that `user` is a member with at least
+// `minRole`. Mirrors requireProjectRole's tenant-isolation contract (404, not
+// 403, when the caller has no visibility into the org at all).
+export async function requireOrgRole(
+  user: User,
+  orgId: string,
+  minRole: Role
+): Promise<{ org: Organization; role: Role }> {
+  const store = await getStore()
+  const org = await store.getOrg(orgId)
+  if (!org) throw new HttpError(404, 'Organization not found.')
+  const membership = await store.getMembership(orgId, user.id)
+  if (!membership) throw new HttpError(404, 'Organization not found.')
+  if (ROLE_RANK[membership.role] < ROLE_RANK[minRole]) {
+    throw new HttpError(403, `This action requires the ${minRole} role.`)
+  }
+  return { org, role: membership.role }
 }
 
 export async function audit(

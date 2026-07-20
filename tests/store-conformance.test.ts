@@ -14,7 +14,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import type { FoundationStore } from '../lib/foundation/store'
-import type { Competitor, ContentBrief, Job, Organization, Project, ProviderConnection, Recommendation, Scan, Schedule, User, WpConnection, WpDeployment } from '../lib/foundation/types'
+import type { Competitor, ContentBrief, Invitation, Job, Organization, Project, ProviderConnection, Recommendation, Scan, Schedule, User, WpConnection, WpDeployment } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'store-conformance-secret-01'
 
@@ -101,6 +101,23 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       // upsert again → role updates, no duplicate
       await store.addMember({ orgId: o.id, userId: u2.id, role: 'admin', createdAt: now() })
       expect((await store.getMembership(o.id, u2.id))?.role).toBe('admin')
+
+      // team invitations
+      const inv: Invitation = {
+        id: uid(), orgId: o.id, email: 'invitee@x.com', role: 'member', invitedBy: u.id,
+        token: uid(), status: 'pending', createdAt: now(), expiresAt: '2100-01-01T00:00:00Z',
+      }
+      await store.createInvitation(inv)
+      expect((await store.getInvitationByToken(inv.token))?.id).toBe(inv.id)
+      expect((await store.listInvitations(o.id)).map((i) => i.id)).toContain(inv.id)
+      await store.updateInvitation({ ...inv, status: 'accepted', acceptedAt: now() })
+      expect((await store.getInvitationByToken(inv.token))?.status).toBe('accepted')
+
+      // removeMember — the third member added above is removable independent
+      // of the others (compound-key delete, not a full-collection wipe).
+      await store.removeMember(o.id, u2.id)
+      expect(await store.getMembership(o.id, u2.id)).toBeNull()
+      expect((await store.getMembership(o.id, u.id))?.role).toBe('owner') // untouched
 
       // projects
       const p = project(o.id)

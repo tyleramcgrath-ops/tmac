@@ -31,6 +31,21 @@ export interface Org {
   id: string
   name: string
 }
+export type Role = 'owner' | 'admin' | 'member'
+export interface MemberDTO {
+  userId: string
+  email: string
+  name: string
+  role: Role
+  createdAt: string
+}
+export interface InvitationDTO {
+  id: string
+  email: string
+  role: Role
+  createdAt: string
+  expiresAt: string
+}
 export interface ProjectDTO {
   id: string
   orgId: string
@@ -211,6 +226,25 @@ export const api = {
   resendVerification: () => req<{ ok: boolean; emailDelivery?: string; verifyUrl?: string | null }>('/api/auth/resend', { method: 'POST' }),
   submitFeedback: (kind: 'feedback' | 'issue', message: string, projectId?: string) =>
     req<{ ok: boolean; id: string }>('/api/feedback', { method: 'POST', body: JSON.stringify({ kind, message, projectId }) }),
+
+  // team / invitations
+  listMembers: (orgId: string) =>
+    req<{ org: Org; members: MemberDTO[]; invitations: InvitationDTO[] }>(`/api/org/${orgId}/members`),
+  inviteMember: (orgId: string, email: string, role: 'admin' | 'member') =>
+    req<{ invitation: InvitationDTO; emailDelivery: string }>(`/api/org/${orgId}/invitations`, {
+      method: 'POST',
+      body: JSON.stringify({ email, role }),
+    }),
+  revokeInvitation: (orgId: string, invitationId: string) =>
+    req<{ ok: true }>(`/api/org/${orgId}/invitations/${invitationId}`, { method: 'DELETE' }),
+  updateMemberRole: (orgId: string, userId: string, role: 'owner' | 'admin' | 'member') =>
+    req<{ ok: true }>(`/api/org/${orgId}/members/${userId}`, { method: 'PATCH', body: JSON.stringify({ role }) }),
+  removeMember: (orgId: string, userId: string) =>
+    req<{ ok: true }>(`/api/org/${orgId}/members/${userId}`, { method: 'DELETE' }),
+  previewInvitation: (token: string) =>
+    req<{ orgName: string; role: string; email: string }>(`/api/invitations/${token}`),
+  acceptInvitation: (token: string) =>
+    req<{ org: Org | null }>(`/api/invitations/${token}`, { method: 'POST' }),
 
   // projects
   listProjects: () => req<{ projects: ProjectDTO[] }>('/api/projects'),
