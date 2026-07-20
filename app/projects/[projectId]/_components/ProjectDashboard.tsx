@@ -10,6 +10,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, RefreshCw, StopCircle, Network, ShieldCheck, Code2, Bot,
@@ -60,13 +61,17 @@ const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: 
   ]},
 ]
 const ALL_SECTIONS = NAV_GROUPS.flatMap((g) => g.items)
+const SECTION_IDS = ALL_SECTIONS.map((s) => s.id) as [SectionId, ...SectionId[]]
 
 export function ProjectDashboard({ project, scans, onReload, initialSection = 'command' }: {
   project: ProjectDTO; scans: ScanSummary[]; onReload: () => void; initialSection?: SectionId
 }) {
   const router = useRouter()
   const { user, logout } = useAuth()
-  const [section, setSection] = useState<SectionId>(initialSection)
+  // Deep-linkable/shareable/back-button-able tabs: `?tab=` is the source of
+  // truth, synced via nuqs. An unknown/missing value falls back to
+  // `initialSection` rather than erroring.
+  const [section, setSection] = useQueryState('tab', parseAsStringLiteral(SECTION_IDS).withDefault(initialSection))
   const [pages, setPages] = useState<PageResult[]>([])
   const [pageSpeed, setPageSpeed] = useState<PageSpeed | null>(null)
   const [events, setEvents] = useState<RfEvent[]>([])
