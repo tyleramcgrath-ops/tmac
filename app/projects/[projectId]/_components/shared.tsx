@@ -6,11 +6,11 @@
 import { useState } from 'react'
 import { api, ApiError } from '../../../lib/client'
 
-export function Stat({ label, value }: { label: string; value: string }) {
+export function Stat({ label, value, tone }: { label: string; value: string; tone?: string }) {
   return (
     <div className="rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2">
       <p className="text-[10px] uppercase tracking-wider text-[var(--rf-faint)]">{label}</p>
-      <p className="text-lg font-semibold text-white">{value}</p>
+      <p className={`text-lg font-semibold ${tone ?? 'text-white'}`}>{value}</p>
     </div>
   )
 }
@@ -26,6 +26,7 @@ export function StatusChip({ status }: { status: string }) {
     verify_failed: 'text-yellow-300',
     rolled_back: 'text-[var(--rf-muted)]',
     cancelled: 'text-[var(--rf-muted)]',
+    regressed: 'text-red-300',
   }
   return <span className={`rf-mono text-[11px] uppercase ${tone[status] ?? 'text-[var(--rf-muted)]'}`}>{status.replace('_', ' ')}</span>
 }

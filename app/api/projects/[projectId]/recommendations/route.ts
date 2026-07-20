@@ -36,6 +36,7 @@ const VALID_TRANSITIONS: Record<RecommendationStatus, RecommendationStatus[]> = 
   deployed: ['verified', 'rolled_back'],
   verified: ['rolled_back'],
   rolled_back: ['open'],
+  regressed: ['accepted', 'modified', 'rejected', 'dismissed'],
 }
 
 export const PATCH = handled(async (request, { params }) => {

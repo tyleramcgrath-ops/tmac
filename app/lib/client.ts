@@ -279,13 +279,13 @@ export const api = {
   // automation / scheduler
   getSchedule: (projectId: string) =>
     req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
-  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean) =>
+  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' = 'scheduled_scan') =>
     req<{ schedule: ScheduleDTO }>(`/api/projects/${projectId}/schedule`, {
       method: 'PUT',
-      body: JSON.stringify({ frequency, enabled }),
+      body: JSON.stringify({ frequency, enabled, kind }),
     }),
-  clearSchedule: (projectId: string) =>
-    req<{ ok: boolean }>(`/api/projects/${projectId}/schedule`, { method: 'DELETE' }),
+  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' = 'scheduled_scan') =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/schedule?kind=${kind}`, { method: 'DELETE' }),
 
   // wordpress
   getWordpress: (projectId: string) =>
@@ -391,7 +391,64 @@ export const api = {
     }),
   deleteCompetitor: (projectId: string, id: string) =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/competitors?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  refreshCompetitor: (projectId: string, id: string) =>
+    req<{ competitor: CompetitorDTO; crawled: boolean; pagesCrawled: number; error?: string }>(`/api/projects/${projectId}/competitors`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'refresh', id }),
+    }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
+
+  // ── Content Studio ──
+  listContentBriefs: (projectId: string) =>
+    req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
+  getContentGaps: (projectId: string) =>
+    req<{ gaps: ContentGapDTO[] }>(`/api/projects/${projectId}/content?gaps=1`),
+  generateContentBrief: (projectId: string, keyword: string) =>
+    req<{ brief: ContentBriefDTO }>(`/api/projects/${projectId}/content`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'generate', keyword }),
+    }),
+  publishContentBrief: (projectId: string, id: string, postType: 'posts' | 'pages') =>
+    req<{ brief: ContentBriefDTO; verified: boolean; note: string }>(`/api/projects/${projectId}/content`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'publish', id, postType }),
+    }),
+  deleteContentBrief: (projectId: string, id: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/content?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+}
+
+// ── Content Studio DTOs ──────────────────────────────────────────────────────
+export interface ContentGapDTO {
+  title: string
+  url: string
+  competitorDomain: string
+}
+export interface ContentBriefSerpResultDTO {
+  url: string
+  title: string
+  snippet: string
+  position: number
+  competitorDomain: string | null
+}
+export interface ContentBriefDTO {
+  id: string
+  projectId: string
+  keyword: string
+  createdBy: string
+  createdAt: string
+  status: 'draft' | 'published' | 'discarded'
+  serpAvailable: boolean
+  serpResults: ContentBriefSerpResultDTO[]
+  competitorsConsidered: string[]
+  title: string
+  metaDescription: string
+  outline: string[]
+  contentHtml: string
+  rationale: string
+  wpPostId?: number
+  wpPostType?: 'posts' | 'pages'
+  wpLink?: string
+  publishedAt?: string
 }
 
 // ── Mission Atlas DTOs (Phase G) ─────────────────────────────────────────────
@@ -411,6 +468,7 @@ export interface CompetitorDTO {
   domain: string
   label: string
   createdAt: string
+  lastSnapshotAt?: string | null
 }
 export interface OverlapDTO {
   businessOverlap: ObservationDTO<number>
@@ -490,6 +548,7 @@ export interface OperatorResultDTO {
 }
 export interface OperatorMetricsDTO {
   recommendationsTotal: number
+  regressedRecommendations: number
   pendingApprovals: number
   fixedToday: number
   verifiedImprovements: number

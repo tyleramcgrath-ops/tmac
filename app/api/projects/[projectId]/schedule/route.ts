@@ -9,7 +9,12 @@ import { randomUUID } from 'crypto'
 import { assertSameOrigin, audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { nextCronTime } from '@/lib/foundation/scheduler/engine'
-import type { Schedule } from '@/lib/foundation/types'
+import type { JobKind, Schedule } from '@/lib/foundation/types'
+
+// Schedule kinds a project can turn on from the UI. 'outcome_capture' is
+// scheduler-internal (enqueued per-deployment, never user-configured) so it's
+// deliberately excluded here.
+const SUPPORTED_KINDS: JobKind[] = ['scheduled_scan', 'monitor']
 
 export const runtime = 'nodejs'
 
@@ -41,7 +46,9 @@ export const PUT = handled(async (request, { params }) => {
   const cron = FREQUENCY_CRON[frequency]
   if (!cron) throw new HttpError(400, 'frequency must be "daily" or "weekly".')
   const enabled = body.enabled !== false
-  const kind = 'scheduled_scan' as const
+  const kindRaw = body.kind ? String(body.kind) : 'scheduled_scan'
+  if (!SUPPORTED_KINDS.includes(kindRaw as JobKind)) throw new HttpError(400, `kind must be one of: ${SUPPORTED_KINDS.join(', ')}.`)
+  const kind = kindRaw as JobKind
 
   const store = await getStore()
   const existing = await store.getSchedule(projectId, kind)
@@ -68,8 +75,11 @@ export const DELETE = handled(async (request, { params }) => {
   const user = await requireUser(request)
   const { projectId } = await params
   const { project } = await requireProjectRole(user, projectId, 'admin')
+  const kindRaw = new URL(request.url).searchParams.get('kind') ?? 'scheduled_scan'
+  if (!SUPPORTED_KINDS.includes(kindRaw as JobKind)) throw new HttpError(400, `kind must be one of: ${SUPPORTED_KINDS.join(', ')}.`)
+  const kind = kindRaw as JobKind
   const store = await getStore()
-  await store.deleteSchedule(projectId, 'scheduled_scan')
-  await audit(project.orgId, user.id, 'schedule.delete', projectId, 'scheduled_scan')
+  await store.deleteSchedule(projectId, kind)
+  await audit(project.orgId, user.id, 'schedule.delete', projectId, kind)
   return Response.json({ ok: true })
 })

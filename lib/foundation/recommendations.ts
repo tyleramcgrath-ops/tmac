@@ -37,27 +37,32 @@ export async function persistScanRecommendations(
   store: Pick<FoundationStore, 'listRecommendations' | 'createRecommendations' | 'updateRecommendation'>,
   projectId: string,
   incoming: Recommendation[]
-): Promise<{ created: number; updated: number }> {
+): Promise<{ created: number; updated: number; regressed: Recommendation[] }> {
   const existing = await store.listRecommendations(projectId)
   const byIssue = new Map<string, Recommendation>()
   for (const r of existing) if (r.issueId) byIssue.set(r.issueId, r)
 
   const seen = new Set<string>()
   const toCreate: Recommendation[] = []
+  const regressed: Recommendation[] = []
   let updated = 0
   for (const rec of incoming) {
     if (seen.has(rec.issueId)) continue // guard: unique per scan
     seen.add(rec.issueId)
     const prev = byIssue.get(rec.issueId)
     if (prev) {
-      await store.updateRecommendation(mergeForUpsert(prev, rec))
+      const merged = mergeForUpsert(prev, rec)
+      await store.updateRecommendation(merged)
+      // A fresh transition into 'regressed' this call — not one already
+      // sitting regressed from a prior scan (never re-alert on the same one).
+      if (merged.status === 'regressed' && prev.status !== 'regressed') regressed.push(merged)
       updated++
     } else {
       toCreate.push(rec)
     }
   }
   if (toCreate.length) await store.createRecommendations(toCreate)
-  return { created: toCreate.length, updated }
+  return { created: toCreate.length, updated, regressed }
 }
 
 export type { SelfEvaluation }

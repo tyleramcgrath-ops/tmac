@@ -91,16 +91,26 @@ export function OperatorTab({ projectId }: { projectId: string }) {
       {/* Executive metrics (execution-focused). "—" means no data yet — a fresh
           project shows no fabricated trust/success baseline (RC1 honesty fix). */}
       {metrics && (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Stat label="Trust score" value={metrics.trustScore === null ? '—' : String(metrics.trustScore)} />
-          <Stat label="Verified fixes" value={String(metrics.verifiedImprovements)} />
-          <Stat label="Pending approvals" value={String(metrics.pendingApprovals)} />
-          <Stat label="Rollback rate" value={pct(metrics.rollbackRate)} />
-          <Stat label="Deployments" value={String(metrics.deploymentsTotal)} />
-          <Stat label="Automation success" value={pct(metrics.automationSuccessRate)} />
-          <Stat label="Verify-fail rate" value={pct(metrics.verificationFailureRate)} />
-          <Stat label="Avg resolution (h)" value={metrics.avgTimeToResolutionHours === null ? '—' : String(metrics.avgTimeToResolutionHours)} />
-        </div>
+        <>
+          {metrics.regressedRecommendations > 0 && (
+            <div className="flex items-center justify-between rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5">
+              <p className="text-sm text-red-200">
+                <b>{metrics.regressedRecommendations}</b> fix{metrics.regressedRecommendations !== 1 ? 'es' : ''} confirmed live previously {metrics.regressedRecommendations !== 1 ? 'have' : 'has'} reverted — a later scan re-found the same issue after it was verified fixed.
+              </p>
+            </div>
+          )}
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <Stat label="Trust score" value={metrics.trustScore === null ? '—' : String(metrics.trustScore)} />
+            <Stat label="Verified fixes" value={String(metrics.verifiedImprovements)} />
+            <Stat label="Regressed" value={String(metrics.regressedRecommendations)} tone={metrics.regressedRecommendations > 0 ? 'text-red-300' : undefined} />
+            <Stat label="Pending approvals" value={String(metrics.pendingApprovals)} />
+            <Stat label="Rollback rate" value={pct(metrics.rollbackRate)} />
+            <Stat label="Deployments" value={String(metrics.deploymentsTotal)} />
+            <Stat label="Automation success" value={pct(metrics.automationSuccessRate)} />
+            <Stat label="Verify-fail rate" value={pct(metrics.verificationFailureRate)} />
+            <Stat label="Avg resolution (h)" value={metrics.avgTimeToResolutionHours === null ? '—' : String(metrics.avgTimeToResolutionHours)} />
+          </div>
+        </>
       )}
 
       <div className="flex items-center justify-between">

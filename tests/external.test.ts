@@ -12,7 +12,7 @@ import { MockSearchConsoleProvider } from '../lib/foundation/external/providers/
 import { computeOverlap } from '../lib/foundation/external/competitors'
 import { detectRankingChanges, detectAiCitationChanges, significantChanges } from '../lib/foundation/external/change-detection'
 import { generateBriefing } from '../lib/foundation/external/briefing'
-import { assembleAtlas, disconnectedProviderSet } from '../lib/foundation/external/service'
+import { assembleAtlas, disconnectedProviderSet, nextPriorSnapshot } from '../lib/foundation/external/service'
 import { buildExternalGraph } from '../lib/foundation/external/knowledge-graph'
 import type { Competitor } from '../lib/foundation/types'
 import type { PageSignals } from '../lib/foundation/reco/signals'
@@ -185,6 +185,54 @@ describe('atlas assembly — disconnected by default in this environment', () =>
     })
     expect(snap.aiVisibility.evidence.grade).toBe('observed')
     expect(snap.grades.observed).toBeGreaterThan(0)
+  })
+})
+
+describe('Atlas change detection: a real prior baseline surfaces real changes', () => {
+  it('the second load reports a real ranking change once a prior baseline exists (previously always empty)', async () => {
+    const providersBefore = disconnectedProviderSet()
+    providersBefore.searchConsole = new MockSearchConsoleProvider(
+      'gsc', { connected: true, credential: 'k' },
+      { range: { from: '2026-07-01', to: '2026-07-14' }, rows: [{ query: 'best crm', page: 'https://us.com/', clicks: 10, impressions: 100, ctr: 0.1, position: 12 }] },
+      NOW
+    )
+    const first = await assembleAtlas({ now: NOW, project: { domain: 'us.com', name: 'Us' }, ourPages: [], competitors: [], providers: providersBefore })
+    expect(first.changes).toHaveLength(0) // no prior yet — honestly nothing to compare
+
+    const prior = nextPriorSnapshot(first)
+    expect(prior.gsc?.rows[0].position).toBe(12) // the real observed value was captured, not fabricated
+
+    const NOW2 = '2026-07-18T06:00:00Z'
+    const providersAfter = disconnectedProviderSet()
+    providersAfter.searchConsole = new MockSearchConsoleProvider(
+      'gsc', { connected: true, credential: 'k' },
+      { range: { from: '2026-07-04', to: '2026-07-17' }, rows: [{ query: 'best crm', page: 'https://us.com/', clicks: 40, impressions: 100, ctr: 0.4, position: 4 }] },
+      NOW2
+    )
+    const second = await assembleAtlas({ now: NOW2, project: { domain: 'us.com', name: 'Us' }, ourPages: [], competitors: [], providers: providersAfter, prev: prior })
+    expect(second.changes.length).toBeGreaterThan(0)
+    // position moved 12 -> 4 (an improvement — lower is better), a real delta from real data.
+    expect(second.changes.some((c) => c.category === 'ranking' && c.delta < 0)).toBe(true)
+  })
+
+  it('nextPriorSnapshot never overwrites a real baseline with a transient disconnect', () => {
+    const prev = { gsc: { range: { from: 'a', to: 'b' }, rows: [{ query: 'q', page: 'p', clicks: 1, impressions: 1, ctr: 1, position: 5 }] } }
+    // A snapshot where gsc came back unavailable this round (provider errored/token expired).
+    const snapshot = {
+      gsc: { value: null, evidence: { grade: 'unavailable', source: 'gsc', fetchedAt: null } },
+      backlinks: { value: null, evidence: { grade: 'unavailable', source: 'x', fetchedAt: null } },
+      aiVisibility: { value: null, evidence: { grade: 'unavailable', source: 'x', fetchedAt: null } },
+    } as never
+    const next = nextPriorSnapshot(snapshot, prev)
+    expect(next.gsc).toEqual(prev.gsc) // baseline preserved, not erased
+  })
+
+  it('nextPriorSnapshot never invents a baseline from scratch when nothing was ever observed', () => {
+    const snapshot = { gsc: { value: null, evidence: { grade: 'unavailable', source: 'gsc', fetchedAt: null } }, backlinks: { value: null, evidence: { grade: 'unavailable', source: 'x', fetchedAt: null } }, aiVisibility: { value: null, evidence: { grade: 'unavailable', source: 'x', fetchedAt: null } } } as never
+    const next = nextPriorSnapshot(snapshot)
+    expect(next.gsc).toBeNull()
+    expect(next.backlinks).toBeNull()
+    expect(next.aiVisibility).toEqual([])
   })
 })
 

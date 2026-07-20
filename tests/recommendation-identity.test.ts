@@ -69,6 +69,34 @@ describe('mergeForUpsert (triage + history preserved, content refreshed)', () =>
     expect(merged.history).toHaveLength(1)
     expect(merged.status).toBe('accepted')
   })
+
+  it('regression: a verified fix re-detected in a LATER scan is marked regressed, not silently kept verified', () => {
+    const existing = {
+      id: 'r1', issueId: 'missing-title::site', status: 'verified', createdAt: 'T0', ruleVersion: 1,
+      history: [{ at: 'T0', by: 'system', from: 'deployed', to: 'verified' }], scanId: 's1',
+    } as unknown as Recommendation
+    const incoming = {
+      id: 'r-new', issueId: 'missing-title::site', status: 'open', createdAt: 'T2', ruleVersion: 1,
+      history: [], scanId: 's2',
+    } as unknown as Recommendation
+    const merged = mergeForUpsert(existing, incoming)
+    expect(merged.status).toBe('regressed')
+    expect(merged.history.at(-1)).toEqual({ at: 'T2', by: 'system', from: 'verified', to: 'regressed' })
+  })
+
+  it('does NOT regress when the same scan produces the finding (no false regression within one scan)', () => {
+    const existing = { id: 'r1', issueId: 'i', status: 'verified', createdAt: 'T0', ruleVersion: 1, history: [], scanId: 's1' } as unknown as Recommendation
+    const incoming = { id: 'r-new', issueId: 'i', status: 'open', createdAt: 'T0', ruleVersion: 1, history: [], scanId: 's1' } as unknown as Recommendation
+    const merged = mergeForUpsert(existing, incoming)
+    expect(merged.status).toBe('verified')
+  })
+
+  it('does NOT regress a status other than verified (e.g. dismissed stays dismissed)', () => {
+    const existing = { id: 'r1', issueId: 'i', status: 'dismissed', createdAt: 'T0', ruleVersion: 1, history: [], scanId: 's1' } as unknown as Recommendation
+    const incoming = { id: 'r-new', issueId: 'i', status: 'open', createdAt: 'T1', ruleVersion: 1, history: [], scanId: 's2' } as unknown as Recommendation
+    const merged = mergeForUpsert(existing, incoming)
+    expect(merged.status).toBe('dismissed')
+  })
 })
 
 describe('persistScanRecommendations (rescan upsert over the store)', () => {

@@ -7,6 +7,11 @@ import type { Recommendation, WpDeployment } from '../types'
 export interface OperatorMetrics {
   recommendationsTotal: number
   openRecommendations: number
+  // A later scan re-detected an issue that was previously confirmed fixed —
+  // something reverted it on the live site outside RankForge. Surfaced
+  // separately from openRecommendations so a regression is never mistaken
+  // for a fix that was simply never attempted.
+  regressedRecommendations: number
   pendingApprovals: number // accepted but not yet deployed
   fixedToday: number // deployed or verified with today's date
   verifiedImprovements: number
@@ -74,6 +79,7 @@ export function computeOperatorMetrics(
   return {
     recommendationsTotal: recs.length,
     openRecommendations: recs.filter((r) => r.status === 'open').length,
+    regressedRecommendations: recs.filter((r) => r.status === 'regressed').length,
     pendingApprovals: recs.filter((r) => r.status === 'accepted').length,
     fixedToday: deployments.filter((d) => (isToday(d.verification?.checkedAt, today) || isToday(d.approvedAt, today)) && d.status === 'verified').length,
     verifiedImprovements: verified,

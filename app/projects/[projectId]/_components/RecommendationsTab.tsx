@@ -1,11 +1,21 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { Download } from 'lucide-react'
 import { api, ApiError, type AgentReportDTO, type ConsensusMetricsDTO, type RecommendationDTO } from '../../../lib/client'
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { SeverityDot, StatusChip } from './shared'
 import { DeployFromRecommendation } from './DeployFromRecommendation'
 import { AgentTeamStrip, ConsensusBlock } from './AgentPanel'
+import { downloadCsv } from '../../../lib/csv'
+
+function exportRecommendationsCsv(recs: RecommendationDTO[]) {
+  const rows: (string | number)[][] = [
+    ['Title', 'Category', 'Severity', 'Status', 'Confidence', 'Affected URLs', 'Reasoning', 'Created'],
+    ...recs.map((r) => [r.title, r.category, r.severity, r.status, r.confidence, r.evidence.affectedUrls.join('; '), r.reasoning, r.createdAt]),
+  ]
+  downloadCsv(`rankforge-recommendations-${new Date().toISOString().slice(0, 10)}.csv`, rows)
+}
 
 export function RecommendationsTab({ projectId }: { projectId: string }) {
   const [recs, setRecs] = useState<RecommendationDTO[] | null>(null)
@@ -71,6 +81,11 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
   return (
     <div className="space-y-3">
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
+      <div className="flex justify-end">
+        <button onClick={() => exportRecommendationsCsv(recs)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium">
+          <Download className="h-3.5 w-3.5" /> Export CSV
+        </button>
+      </div>
       {metrics && agents.length > 0 && <AgentTeamStrip agents={agents} metrics={metrics} />}
       {recs.map((r, index) => (
         <div key={r.id} className="rf-card p-4">

@@ -6,8 +6,10 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import type { FoundationStore } from './store'
 import type {
+  AtlasHistory,
   AuditLogEntry,
   Competitor,
+  ContentBrief,
   Job,
   Organization,
   OrgMember,
@@ -30,6 +32,8 @@ type Collections = {
   scans: Scan[]
   recommendations: Recommendation[]
   competitors: Competitor[]
+  atlasHistory: AtlasHistory[]
+  contentBriefs: ContentBrief[]
   wpConnections: WpConnection[]
   wpDeployments: WpDeployment[]
   providerConnections: ProviderConnection[]
@@ -47,6 +51,8 @@ const EMPTY: Collections = {
   scans: [],
   recommendations: [],
   competitors: [],
+  atlasHistory: [],
+  contentBriefs: [],
   wpConnections: [],
   wpDeployments: [],
   providerConnections: [],
@@ -224,6 +230,36 @@ export class FileFoundationStore implements FoundationStore {
   }
   async deleteCompetitor(id: string) {
     await this.mutate('competitors', (all) => ({ data: all.filter((c) => c.id !== id) }))
+  }
+
+  // Atlas change-detection baseline (Phase G)
+  async getAtlasHistory(projectId: string) {
+    return (await this.read('atlasHistory')).find((h) => h.projectId === projectId) ?? null
+  }
+  async upsertAtlasHistory(history: AtlasHistory) {
+    await this.mutate('atlasHistory', (all) => {
+      const rest = all.filter((h) => h.projectId !== history.projectId)
+      return { data: [...rest, history] }
+    })
+  }
+
+  // content briefs (Content Studio)
+  async createContentBrief(brief: ContentBrief) {
+    await this.mutate('contentBriefs', (all) => ({ data: [...all, brief] }))
+  }
+  async updateContentBrief(brief: ContentBrief) {
+    await this.mutate('contentBriefs', (all) => ({ data: all.map((b) => (b.id === brief.id ? brief : b)) }))
+  }
+  async listContentBriefs(projectId: string) {
+    return (await this.read('contentBriefs'))
+      .filter((b) => b.projectId === projectId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
+  async getContentBrief(id: string) {
+    return (await this.read('contentBriefs')).find((b) => b.id === id) ?? null
+  }
+  async deleteContentBrief(id: string) {
+    await this.mutate('contentBriefs', (all) => ({ data: all.filter((b) => b.id !== id) }))
   }
 
   // wordpress

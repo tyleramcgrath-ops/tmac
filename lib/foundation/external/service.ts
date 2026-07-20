@@ -6,7 +6,7 @@
 
 import type { Competitor, Project } from '../types'
 import type { PageSignals } from '../reco/signals'
-import { computeOverlap, type CompetitorOverlap } from './competitors'
+import { computeOverlap, isCompetitorOverlap, type CompetitorOverlap } from './competitors'
 import { buildExternalGraph, type ExternalGraph } from './knowledge-graph'
 import { generateBriefing, type MorningBriefing } from './briefing'
 import { detectAiCitationChanges, detectBacklinkChanges, detectRankingChanges, significantChanges, type Change } from './change-detection'
@@ -174,11 +174,12 @@ export async function assembleAtlas(input: {
   const analytics = toObservation(await providers.analytics.fetchReport(project.domain), 'Analytics data', nowMs)
   const trends = toObservation(await providers.trends.fetchTrends([project.name || project.domain]), 'Trend data', nowMs)
 
-  // Competitor overlap. Their pages are not crawled in this environment, so
-  // overlap degrades to Unavailable per dimension (with reasons) — never faked.
+  // Competitor overlap. Uses the last real crawl snapshot (Refresh action,
+  // per-dimension Observed) when one exists and is shaped correctly; otherwise
+  // degrades to Unavailable per dimension (with reasons) — never faked.
   const overlaps = competitors.map((competitor) => ({
     competitor,
-    overlap: computeOverlap(input.ourPages, null, now),
+    overlap: isCompetitorOverlap(competitor.overlap) ? competitor.overlap : computeOverlap(input.ourPages, null, now),
   }))
 
   const graph = buildExternalGraph(project.domain, overlaps, aiVisibility.value ?? [])
@@ -211,5 +212,19 @@ export async function assembleAtlas(input: {
     competitors: overlaps,
     aiVisibility, backlinks, gsc, analytics, trends,
     graph, changes, briefing, grades,
+  }
+}
+
+// The rolling baseline to persist as "yesterday" for the NEXT call's change
+// detection. Per-dimension: only overwrite with a fresh value when this call
+// actually OBSERVED it — a transient disconnect (provider errored, token
+// expired) must never silently reset the baseline to null and erase the
+// ability to detect a change once the provider reconnects. Pure so the
+// baseline-rollover logic is testable without any store/route plumbing.
+export function nextPriorSnapshot(snapshot: AtlasSnapshot, prev?: PriorSnapshotData): PriorSnapshotData {
+  return {
+    gsc: snapshot.gsc.evidence.grade === 'observed' ? snapshot.gsc.value : prev?.gsc ?? null,
+    backlinks: snapshot.backlinks.evidence.grade === 'observed' ? snapshot.backlinks.value : prev?.backlinks ?? null,
+    aiVisibility: snapshot.aiVisibility.evidence.grade === 'observed' ? (snapshot.aiVisibility.value ?? []) : prev?.aiVisibility ?? [],
   }
 }

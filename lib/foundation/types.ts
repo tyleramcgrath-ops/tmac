@@ -106,6 +106,12 @@ export type RecommendationStatus =
   | 'verified'
   | 'rolled_back'
   | 'dismissed'
+  // A later scan re-detected an issue that was previously confirmed fixed
+  // (verified) — something changed the live site back (a theme update, a
+  // manual edit, a plugin) without RankForge's involvement. Distinct from
+  // 'open' (never dealt with) so the regression is never silently absorbed
+  // back into the normal queue.
+  | 'regressed'
 
 // Full explainability (Phase C §9): every recommendation answers these.
 export interface RecommendationExplanation {
@@ -194,6 +200,58 @@ export interface Competitor {
   overlap?: unknown
   // Last external-intelligence snapshot fetched for this competitor; optional.
   lastSnapshotAt?: string | null
+  // A small, capped sample of real pages from the last crawl (url + title
+  // only) — enough to power content-gap analysis without storing full page
+  // bodies. Set alongside `overlap` by the same refresh; never invented.
+  snapshotPages?: { url: string; title: string }[]
+}
+
+// Rolling baseline for Mission Atlas change detection (Phase G). One row per
+// project — the last OBSERVED gsc/backlinks/aiVisibility values, so the next
+// Atlas load can report real "what changed since last time" instead of always
+// comparing against nothing. `data` is untyped JSONB (PriorSnapshotData);
+// only ever written by assembleAtlas's own output, never user input.
+export interface AtlasHistory {
+  projectId: string
+  data: unknown
+  capturedAt: string
+}
+
+// A generated content brief / draft blog post (Content Studio). Researched from
+// real live SERP results (never invented) and drafted by AI from that evidence
+// + real tracked-competitor overlap; the draft is never auto-published — it
+// only becomes a live WordPress post when a user explicitly deploys it, going
+// through the same create-then-verify path as every other WordPress write.
+export type ContentBriefStatus = 'draft' | 'published' | 'discarded'
+export interface ContentBriefSerpResult {
+  url: string
+  title: string
+  snippet: string
+  position: number
+  competitorDomain: string | null // set when this result matches a tracked competitor
+}
+export interface ContentBrief {
+  id: string
+  projectId: string
+  keyword: string
+  createdBy: string
+  createdAt: string
+  status: ContentBriefStatus
+  // Research evidence — honestly empty/unavailable when no SERP key is configured.
+  serpAvailable: boolean
+  serpResults: ContentBriefSerpResult[]
+  competitorsConsidered: string[] // tracked competitor domains found in the SERP results
+  // The generated draft.
+  title: string
+  metaDescription: string
+  outline: string[]
+  contentHtml: string
+  rationale: string
+  // Set once deployed to WordPress as a real draft post.
+  wpPostId?: number
+  wpPostType?: 'posts' | 'pages'
+  wpLink?: string
+  publishedAt?: string
 }
 
 // A connected external provider (Phase H). Holds the ENCRYPTED OAuth token

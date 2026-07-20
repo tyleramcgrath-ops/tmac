@@ -25,6 +25,7 @@ import { generateRecommendationsFromScan, persistScanRecommendations } from '../
 import { coordinateProject } from '../agents/service'
 import { isCrawlBatchError, runCrawlBatch } from '../../engine/crawl-batch'
 import { makeJob } from './engine'
+import { notifyRegressions } from './regression-alert'
 
 // Marks scans/recommendations produced by the scheduler rather than a human
 // click, for auditability (e.g. shown as "Automatic" in history).
@@ -139,8 +140,12 @@ export async function runScheduledScan(store: FoundationStore, job: Job): Promis
   finalized.summary.info = sevCount('info')
 
   await store.updateScan(finalized)
-  const { created, updated } = await persistScanRecommendations(store, project.id, recommendations)
+  const { created, updated, regressed } = await persistScanRecommendations(store, project.id, recommendations)
   await coordinateProject(store, project)
+  // Regression alert (monitoring, not just passive detection): only the
+  // scheduled path emails — a human running an interactive audit already sees
+  // the result immediately in the dashboard, no alert needed.
+  if (regressed.length > 0) await notifyRegressions(store, project, regressed)
 
   return {
     scanId: finalized.id,
@@ -150,6 +155,7 @@ export async function runScheduledScan(store: FoundationStore, job: Job): Promis
     recommendations: recommendations.length,
     created,
     updated,
+    regressed: regressed.length,
     needsHumanReview: selfEvaluation.needsHumanReview,
   }
 }

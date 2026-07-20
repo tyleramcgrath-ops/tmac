@@ -197,4 +197,11 @@ describe('operator metrics (§10)', () => {
     expect(m.deploymentsTotal).toBe(0)
     expect(m.verifiedImprovements).toBe(0)
   })
+
+  it('counts regressed recommendations separately from open ones', () => {
+    const recs = [rec({ id: 'a', status: 'regressed' }), rec({ id: 'b', status: 'open' }), rec({ id: 'c', status: 'verified' })]
+    const m = computeOperatorMetrics(recs, [], '2026-07-17')
+    expect(m.regressedRecommendations).toBe(1)
+    expect(m.openRecommendations).toBe(1)
+  })
 })

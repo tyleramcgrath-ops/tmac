@@ -15,8 +15,10 @@ import { Pool } from 'pg'
 import { runMigrations } from './migrate'
 import type { FoundationStore } from './store'
 import type {
+  AtlasHistory,
   AuditLogEntry,
   Competitor,
+  ContentBrief,
   Job,
   Organization,
   OrgMember,
@@ -68,6 +70,16 @@ const TABLES = {
     pk: ['id'],
     keys: (c: Competitor) => ({ id: c.id, project_id: c.projectId, domain: c.domain, created_at: c.createdAt }),
   } as TableDesc<Competitor>,
+  atlasHistory: {
+    name: 'rf_atlas_history',
+    pk: ['project_id'],
+    keys: (h: AtlasHistory) => ({ project_id: h.projectId, captured_at: h.capturedAt }),
+  } as TableDesc<AtlasHistory>,
+  contentBriefs: {
+    name: 'rf_content_briefs',
+    pk: ['id'],
+    keys: (b: ContentBrief) => ({ id: b.id, project_id: b.projectId, status: b.status, created_at: b.createdAt }),
+  } as TableDesc<ContentBrief>,
   wpConn: {
     name: 'rf_wp_connections',
     pk: ['project_id'],
@@ -293,6 +305,33 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async deleteCompetitor(id: string) {
     await this.pool.query('DELETE FROM rf_competitors WHERE id=$1', [id])
+  }
+
+  // ── Atlas change-detection baseline (Phase G) ───────────────────────────────
+  async getAtlasHistory(projectId: string) {
+    const r = await this.rows<AtlasHistory>('SELECT data FROM rf_atlas_history WHERE project_id=$1', [projectId])
+    return r[0] ?? null
+  }
+  async upsertAtlasHistory(history: AtlasHistory) {
+    await this.ups(TABLES.atlasHistory, history)
+  }
+
+  // ── Content briefs (Content Studio) ─────────────────────────────────────────
+  async createContentBrief(brief: ContentBrief) {
+    await this.ins(TABLES.contentBriefs, brief)
+  }
+  async updateContentBrief(brief: ContentBrief) {
+    await this.upd(TABLES.contentBriefs, brief)
+  }
+  async listContentBriefs(projectId: string) {
+    return this.rows<ContentBrief>('SELECT data FROM rf_content_briefs WHERE project_id=$1 ORDER BY created_at DESC', [projectId])
+  }
+  async getContentBrief(id: string) {
+    const r = await this.rows<ContentBrief>('SELECT data FROM rf_content_briefs WHERE id=$1', [id])
+    return r[0] ?? null
+  }
+  async deleteContentBrief(id: string) {
+    await this.pool.query('DELETE FROM rf_content_briefs WHERE id=$1', [id])
   }
 
   // ── WordPress ──────────────────────────────────────────────────────────────
