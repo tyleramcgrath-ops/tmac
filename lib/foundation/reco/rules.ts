@@ -284,6 +284,31 @@ const ruleSchemaMissing: Rule = ({ s, cls }) => {
   }
 }
 
+const ruleLocalBusinessIncomplete: Rule = ({ s, cls }) => {
+  if (!has(s.localBusinessMissingFields)) return null
+  if (s.localBusinessMissingFields.length === 0) return null
+  const missing = s.localBusinessMissingFields
+  return {
+    ruleId: 'local-business-incomplete',
+    title: `LocalBusiness schema is missing ${missing.join(', ')}`,
+    category: 'schema',
+    ruleCertainty: 0.9,
+    importance: 0.6,
+    seoImpact: 'medium',
+    effort: 'low',
+    risk: { level: 'low', note: 'Filling in real, already-published business details is safe.' },
+    googleGuidance: 'Complete NAP (name/address/phone) in LocalBusiness schema supports local-pack and Maps eligibility.',
+    supportingElements: [`LocalBusiness node found, missing: ${missing.join(', ')}`],
+    explanation: {
+      why: 'Google uses name/address/telephone from LocalBusiness schema to match a page to local search and Maps results.',
+      whyNow: 'A LocalBusiness block already exists on this page but is incomplete, so it may not be fully trusted for local ranking.',
+      whyThisPage: `This ${cls.type} page publishes LocalBusiness schema missing: ${missing.join(', ')}.`,
+      whatIfIgnored: 'Weaker or no eligibility for local-pack/Maps rich results tied to this page.',
+      whatCouldMakeWrong: 'The business may be legitimately online-only (no physical address) or phone-free by design.',
+    },
+  }
+}
+
 const ruleBreadcrumb: Rule = ({ s, cls }) => {
   if (!has(s.schemaTypes)) return null
   if (s.schemaTypes.includes('BreadcrumbList')) return null
@@ -386,6 +411,7 @@ export const RULE_REGISTRY: Record<string, RuleMeta> = {
   'missing-h1': { version: 1, dangerous: false },
   'internal-linking': { version: 1, dangerous: false },
   'schema-missing': { version: 1, dangerous: false },
+  'local-business-incomplete': { version: 1, dangerous: false },
   breadcrumb: { version: 1, dangerous: false },
   faq: { version: 1, dangerous: false },
   'alt-text': { version: 1, dangerous: false },
@@ -409,6 +435,7 @@ export const PAGE_RULES: Rule[] = [
   ruleMissingTitle,
   ruleMissingMeta,
   ruleSchemaMissing,
+  ruleLocalBusinessIncomplete,
   ruleAltText,
   ruleTitleLength,
   ruleMultipleH1,

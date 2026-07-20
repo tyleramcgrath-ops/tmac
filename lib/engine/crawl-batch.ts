@@ -48,6 +48,7 @@ export interface CrawlPageResult {
   mixedContent: boolean
   h1Count: number
   schemaTypes: string[]
+  localBusinessMissingFields?: string[]
   internalTargets: string[]
   https: boolean
   indexable: boolean
@@ -201,6 +202,7 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
         mixedContent: signals.mixedContent,
         h1Count: signals.h1Count,
         schemaTypes: signals.schemaTypes,
+        ...(signals.localBusinessMissingFields ? { localBusinessMissingFields: signals.localBusinessMissingFields } : {}),
         internalTargets: [...new Set(links)].slice(0, 40),
         https: signals.https,
         indexable: signals.indexable,

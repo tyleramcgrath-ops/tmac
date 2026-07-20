@@ -63,6 +63,30 @@ describe('false-positive elimination (Phase B FP-1/2/3)', () => {
   })
 })
 
+describe('local-business schema completeness', () => {
+  it('recommends filling in missing NAP fields when LocalBusiness schema is incomplete', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf([{ url: 'https://x.com/contact', title: 'Contact', titleLength: 20, schemaTypes: ['LocalBusiness'], localBusinessMissingFields: ['address', 'telephone'], https: true, indexable: true, metaDescriptionLength: 120 }])
+    )
+    const found = recommendations.find((r) => r.title.includes('LocalBusiness'))
+    expect(found?.title).toMatch(/address, telephone/)
+  })
+
+  it('does NOT fire when the LocalBusiness node is already complete', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf([{ url: 'https://x.com/contact', title: 'Contact', titleLength: 20, schemaTypes: ['LocalBusiness'], localBusinessMissingFields: [], https: true, indexable: true, metaDescriptionLength: 120 }])
+    )
+    expect(recommendations.map(rec).join(' | ')).not.toMatch(/is missing/)
+  })
+
+  it('does NOT fire when there is no LocalBusiness node at all (localBusinessMissingFields absent)', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf([{ url: 'https://x.com/contact', title: 'Contact', titleLength: 20, schemaTypes: [], https: true, indexable: true, metaDescriptionLength: 120 }])
+    )
+    expect(recommendations.map(rec).join(' | ')).not.toMatch(/is missing/)
+  })
+})
+
 describe('first-class typed rule identity (Phase D.6 P2)', () => {
   it('stamps typed rule fields and keeps identity OUT of display text', () => {
     const { recommendations } = generateRecommendationsV2(

@@ -70,6 +70,12 @@ describe('fix generation (§2): produces concrete changes', () => {
     const fix = generateFix('alt-text', { url: 'https://x.com/a', imagesMissingAlt: 5 })
     expect(fix.actionable).toBe(false)
   })
+  it('does not fabricate LocalBusiness NAP fields (advisory only)', () => {
+    const fix = generateFix('local-business-incomplete', { url: 'https://x.com/contact', localBusinessMissingFields: ['address', 'telephone'] })
+    expect(fix.actionable).toBe(false)
+    expect(fix.kind).toBe('schema')
+    expect(fix.currentValue).toMatch(/address, telephone/)
+  })
   it('reads a recommendation ruleId from its typed field (no parsing)', () => {
     expect(ruleIdOf(rec({}))).toBe('missing-title')
     expect(ruleIdOf(rec({ ruleId: 'schema-missing' }))).toBe('schema-missing')

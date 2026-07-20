@@ -15,6 +15,7 @@ export interface PageSignals {
   wordCount?: number
   canonical?: string
   schemaTypes?: string[]
+  localBusinessMissingFields?: string[]
   https?: boolean
   mixedContent?: boolean
   indexable?: boolean
@@ -44,6 +45,9 @@ export function toPageSignals(raw: Record<string, unknown>): PageSignals {
   s.wordCount = num(raw.wordCount)
   s.canonical = str(raw.canonical)
   s.schemaTypes = Array.isArray(raw.schemaTypes) ? (raw.schemaTypes as string[]) : undefined
+  s.localBusinessMissingFields = Array.isArray(raw.localBusinessMissingFields)
+    ? (raw.localBusinessMissingFields as string[])
+    : undefined
   s.https = bool(raw.https)
   s.mixedContent = bool(raw.mixedContent)
   s.indexable = bool(raw.indexable)

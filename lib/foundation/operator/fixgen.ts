@@ -217,6 +217,16 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
       const value = generateSchema(s)
       return { actionable: true, kind: 'schema', proposedValue: value, currentValue: '(no JSON-LD)', note: 'Page-appropriate JSON-LD; insert in <head>. Advisory — not auto-written to WP.' }
     }
+    case 'local-business-incomplete': {
+      const missing = s.localBusinessMissingFields ?? []
+      return {
+        actionable: false,
+        kind: 'schema',
+        proposedValue: '',
+        currentValue: `LocalBusiness schema missing: ${missing.join(', ') || 'unknown fields'}`,
+        note: 'Real business name/address/phone must come from the business, not be invented — add the missing fields to the existing JSON-LD manually.',
+      }
+    }
     case 'alt-text': {
       return { actionable: false, kind: 'altText', proposedValue: '', currentValue: `${s.imagesMissingAlt ?? 0} images without alt`, note: 'Alt text must describe each specific image; generate per-image with human input.' }
     }

@@ -194,3 +194,53 @@ describe('extractSignals — redirects & mixed content', () => {
     expect(extractSignals(html, 'http://x.com/', 200).mixedContent).toBe(false)
   })
 })
+
+describe('extractSignals — LocalBusiness NAP completeness', () => {
+  it('is undefined when no LocalBusiness node exists', () => {
+    const html = `<script type="application/ld+json">{"@type":"Article","name":"x"}</script>`
+    expect(extractSignals(html, 'https://x.com/', 200).localBusinessMissingFields).toBeUndefined()
+  })
+
+  it('returns an empty array when name/address/telephone are all present', () => {
+    const html = `<script type="application/ld+json">{
+      "@type": "LocalBusiness",
+      "name": "Acme Dental",
+      "telephone": "+1-555-0100",
+      "address": {"@type": "PostalAddress", "streetAddress": "1 Main St"}
+    }</script>`
+    const s = extractSignals(html, 'https://acme-dental.com/', 200)
+    expect(s.localBusinessMissingFields).toEqual([])
+  })
+
+  it('lists exactly the missing NAP fields', () => {
+    const html = `<script type="application/ld+json">{"@type":"LocalBusiness","name":"Acme Dental"}</script>`
+    const s = extractSignals(html, 'https://acme-dental.com/', 200)
+    expect(s.localBusinessMissingFields).toEqual(['address', 'telephone'])
+  })
+
+  it('accepts a plain string address', () => {
+    const html = `<script type="application/ld+json">{
+      "@type": "LocalBusiness", "name": "Acme", "telephone": "555-0100", "address": "1 Main St, Anytown"
+    }</script>`
+    const s = extractSignals(html, 'https://x.com/', 200)
+    expect(s.localBusinessMissingFields).toEqual([])
+  })
+
+  it('finds a LocalBusiness node nested in @graph', () => {
+    const html = `<script type="application/ld+json">{
+      "@graph": [{"@type":"WebSite","name":"Site"}, {"@type":"LocalBusiness","name":"Acme"}]
+    }</script>`
+    const s = extractSignals(html, 'https://x.com/', 200)
+    expect(s.localBusinessMissingFields).toEqual(['address', 'telephone'])
+  })
+
+  it('ignores non-LocalBusiness types even when NAP-like fields are absent', () => {
+    const html = `<script type="application/ld+json">{"@type":"Organization","name":"Acme"}</script>`
+    expect(extractSignals(html, 'https://x.com/', 200).localBusinessMissingFields).toBeUndefined()
+  })
+
+  it('does not crash on malformed JSON-LD and reports undefined', () => {
+    const html = `<script type="application/ld+json">{not valid json</script>`
+    expect(extractSignals(html, 'https://x.com/', 200).localBusinessMissingFields).toBeUndefined()
+  })
+})
