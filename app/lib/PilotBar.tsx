@@ -5,17 +5,18 @@
 // every pilot user a one-click way to send feedback or report an issue. Kept
 // minimal — it supports the workflow rather than distracting from it.
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from './auth-context'
 import { api, ApiError } from './client'
 
 export function PilotBar() {
-  const { user, refresh } = useAuth()
+  const { user, orgs, refresh } = useAuth()
   const [open, setOpen] = useState(false)
   if (!user) return null
   return (
     <>
       {user.emailVerified === false && <VerifyBanner onVerified={refresh} />}
+      {orgs[0] && <TrialBanner orgId={orgs[0].id} />}
       <div className="mx-auto flex max-w-5xl justify-end px-5 pt-3">
         <button onClick={() => setOpen(true)} className="rf-btn-ghost rounded-md px-2.5 py-1 text-[11px] text-[var(--rf-muted)]">
           Send feedback / report issue
@@ -23,6 +24,48 @@ export function PilotBar() {
       </div>
       {open && <FeedbackModal onClose={() => setOpen(false)} />}
     </>
+  )
+}
+
+// Nudges users during the trial and once it's ended — never blocks anything,
+// just points at /billing. Silent when Stripe isn't configured or the org's
+// already on a paid plan.
+function TrialBanner({ orgId }: { orgId: string }) {
+  const [days, setDays] = useState<number | null>(null)
+  const [ended, setEnded] = useState(false)
+  useEffect(() => {
+    let cancelled = false
+    api
+      .billingStatus(orgId)
+      .then((res) => {
+        if (cancelled || !res.configured) return
+        if (res.status === 'trialing') setDays(res.trialDaysRemaining ?? null)
+        if (res.status === 'past_due' || res.status === 'canceled') setEnded(true)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [orgId])
+
+  if (ended) {
+    return (
+      <div className="border-b border-amber-400/20 bg-amber-500/10 px-5 py-2">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 text-xs text-amber-100">
+          <span>Your trial has ended — automatic fixes are paused. Audits and recommendations are still free.</span>
+          <a href="/billing" className="rf-btn-ghost rounded px-2 py-0.5 text-[11px]">Upgrade →</a>
+        </div>
+      </div>
+    )
+  }
+  if (days === null || days > 3) return null
+  return (
+    <div className="border-b border-[var(--rf-blue-bright)]/20 bg-[var(--rf-blue-bright)]/10 px-5 py-2">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 text-xs text-white">
+        <span>{days} day{days === 1 ? '' : 's'} left in your trial.</span>
+        <a href="/billing" className="rf-btn-ghost rounded px-2 py-0.5 text-[11px]">Upgrade →</a>
+      </div>
+    </div>
   )
 }
 

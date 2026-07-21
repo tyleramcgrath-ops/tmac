@@ -28,6 +28,8 @@ import {
   rollbackWpDeployment,
   type InstallablePlugin,
 } from '@/lib/foundation/wp-execution'
+import { isAutomationAllowed } from '@/lib/foundation/billing'
+import { stripeConfig } from '@/lib/foundation/env'
 import type { WpConnection } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -173,6 +175,13 @@ export const POST = handled(async (request, { params }) => {
   }
 
   if (body.action === 'deploy') {
+    // Billing gate: this is a direct-deploy path (WordPress tab, Internal
+    // Links panel) — it must be gated the same as Operator deploy, or a
+    // trial-expired org could bypass the paywall by using this route instead.
+    const org = await store.getOrg(project.orgId)
+    const gate = isAutomationAllowed(org?.billing, !!stripeConfig(), Date.now())
+    if (!gate.allowed) throw new HttpError(402, gate.reason ?? 'Upgrade required to auto-deploy fixes.')
+
     const postId = Number(body.postId)
     const postType = body.postType === 'pages' ? ('pages' as const) : ('posts' as const)
     const title = body.title === undefined ? undefined : String(body.title).slice(0, 300)

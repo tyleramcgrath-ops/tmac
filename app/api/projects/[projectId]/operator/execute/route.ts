@@ -13,6 +13,8 @@ import { getStore } from '@/lib/foundation/store'
 import { executeWpDeployment, resolveWpTarget, rollbackWpDeployment } from '@/lib/foundation/wp-execution'
 import { buildOperatorPreview, outcomeForDeployment, signalsForRecommendation } from '@/lib/foundation/operator/pipeline'
 import { latestScanPages, policyOf } from '@/lib/foundation/operator/context'
+import { isAutomationAllowed } from '@/lib/foundation/billing'
+import { stripeConfig } from '@/lib/foundation/env'
 import type { Recommendation } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -79,6 +81,22 @@ export const POST = handled(async (request, { params }) => {
   const policy = policyOf(project)
   const all = await store.listRecommendations(projectId)
   const items = Array.isArray(body.items) ? (body.items as Record<string, unknown>[]) : []
+
+  // Billing gate: auto-deploying a fix (never dry-run previews) requires an
+  // active trial or subscription. Blocked uniformly per item so the response
+  // shape matches every other early-exit reason the UI already handles.
+  const org = await store.getOrg(project.orgId)
+  const gate = dryRun ? { allowed: true } : isAutomationAllowed(org?.billing, !!stripeConfig(), Date.now())
+  if (!gate.allowed) {
+    const results = items.map((item) => ({
+      recommendationId: String(item.recommendationId ?? ''),
+      ok: false,
+      stage: 'billing',
+      blocked: true,
+      error: gate.reason,
+    }))
+    return Response.json({ action, dryRun, results, summary: { total: items.length, verified: 0, failed: items.length } })
+  }
 
   const results: Record<string, unknown>[] = []
   for (const item of items) {

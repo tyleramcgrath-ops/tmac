@@ -56,6 +56,11 @@ export function AppHeader() {
             Team
           </Link>
         )}
+        {user && (
+          <Link href="/billing" className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">
+            Billing
+          </Link>
+        )}
         {user && <span className="text-[var(--rf-muted)]">{user.email}</span>}
         <button
           onClick={async () => {

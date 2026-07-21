@@ -34,6 +34,20 @@ export interface Organization {
     expiresAt?: string | null
     notes?: string
   }
+  // Self-serve billing (Stripe). Absent entirely on orgs created before billing
+  // existed, or in a deployment with no STRIPE_SECRET_KEY configured — both
+  // cases mean "no paywall enforced" (see lib/foundation/billing.ts), never a
+  // silent lockout. `status` is kept in sync by the Stripe webhook, not
+  // inferred client-side. Distinct from `pilot` above: `pilot` is a
+  // staff-administered manual override for the guided pilot program; `billing`
+  // is the real self-serve trial/subscription lifecycle.
+  billing?: {
+    status: 'trialing' | 'active' | 'past_due' | 'canceled'
+    trialEndsAt: string | null
+    stripeCustomerId: string | null
+    stripeSubscriptionId: string | null
+    updatedAt: string
+  }
   createdAt: string
 }
 

@@ -420,7 +420,7 @@ export const api = {
 
   // ── Operator (Phase D) ──
   operatorPreview: (projectId: string, recommendationIds?: string[]) =>
-    req<{ previews: OperatorPreviewDTO[] }>(`/api/projects/${projectId}/operator/preview`, {
+    req<{ previews: OperatorPreviewDTO[]; billing: { allowed: boolean; reason?: string } }>(`/api/projects/${projectId}/operator/preview`, {
       method: 'POST',
       body: JSON.stringify({ recommendationIds: recommendationIds ?? [] }),
     }),
@@ -447,6 +447,13 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify({ policy }),
     }),
+
+  // ── Billing (Stripe) ──
+  billingStatus: (orgId: string) => req<BillingStatusDTO>(`/api/billing/status?orgId=${encodeURIComponent(orgId)}`),
+  billingCheckout: (orgId: string) =>
+    req<{ url: string }>('/api/billing/checkout', { method: 'POST', body: JSON.stringify({ orgId }) }),
+  billingPortal: (orgId: string) =>
+    req<{ url: string }>('/api/billing/portal', { method: 'POST', body: JSON.stringify({ orgId }) }),
 
   // external intelligence (Phase G — Mission Atlas)
   listCompetitors: (projectId: string) =>
@@ -612,6 +619,15 @@ export interface OperatorResultDTO {
   error?: string
   stage?: string
   note?: string
+}
+export interface BillingStatusDTO {
+  configured: boolean
+  priceLabel?: string
+  priceCents?: number
+  status?: 'trialing' | 'active' | 'past_due' | 'canceled' | null
+  trialEndsAt?: string | null
+  trialDaysRemaining?: number | null
+  hasStripeCustomer?: boolean
 }
 export interface OperatorMetricsDTO {
   recommendationsTotal: number

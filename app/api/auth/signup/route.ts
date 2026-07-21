@@ -3,6 +3,7 @@ import { hashPassword } from '@/lib/foundation/crypto'
 import { assertSameOrigin, audit, handled, sessionCookieFor } from '@/lib/foundation/auth'
 import { clientKey, rateLimit } from '@/lib/foundation/rate-limit'
 import { signupAllowed } from '@/lib/foundation/env'
+import { newTrialBilling } from '@/lib/foundation/billing'
 import { sendVerificationEmail } from '@/lib/foundation/mailer'
 import { getStore } from '@/lib/foundation/store'
 
@@ -52,7 +53,10 @@ export const POST = handled(async (request) => {
   await store.createUser(user)
 
   // Every user gets a personal organization; teams invite into shared orgs.
-  const org = { id: randomUUID(), name: `${user.name}'s workspace`, createdAt: now }
+  // Billing starts a real 14-day trial regardless of whether Stripe is
+  // configured on this deployment — isAutomationAllowed() only enforces it
+  // when Stripe actually is configured, so this is harmless otherwise.
+  const org = { id: randomUUID(), name: `${user.name}'s workspace`, createdAt: now, billing: newTrialBilling(now) }
   await store.createOrg(org, user.id)
   await audit(org.id, user.id, 'user.signup', user.id, email)
 
