@@ -5,6 +5,8 @@ import { handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { buildOperatorPreview, signalsForRecommendation } from '@/lib/foundation/operator/pipeline'
 import { latestScanPages, policyOf } from '@/lib/foundation/operator/context'
+import { isAutomationAllowed } from '@/lib/foundation/billing'
+import { stripeConfig } from '@/lib/foundation/env'
 
 export const runtime = 'nodejs'
 
@@ -48,5 +50,10 @@ export const POST = handled(async (request, { params }) => {
     }
   })
 
-  return Response.json({ previews })
+  // Surfaced so the UI can show the upgrade prompt before the user attempts a
+  // deploy, not just after it's rejected — a preview never blocks itself.
+  const org = await store.getOrg(project.orgId)
+  const gate = isAutomationAllowed(org?.billing, !!stripeConfig(), Date.now())
+
+  return Response.json({ previews, billing: gate })
 })

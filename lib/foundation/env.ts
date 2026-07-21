@@ -64,6 +64,44 @@ export function googleOAuthConfig(): GoogleOAuthConfig | null {
   return { clientId, clientSecret, redirectBase: process.env.GOOGLE_OAUTH_REDIRECT_BASE || undefined }
 }
 
+export interface StripeConfig {
+  secretKey: string
+  webhookSecret: string
+  priceCents: number
+  priceLabel: string
+}
+
+// Self-serve billing. Unset STRIPE_SECRET_KEY ⇒ billing is entirely
+// unconfigured: no paywall is enforced anywhere (dev/self-host mode), matching
+// every other optional integration in this app (Google OAuth, mail webhook).
+// STRIPE_WEBHOOK_SECRET is required alongside it — without it we cannot verify
+// a webhook payload actually came from Stripe, so partial configuration is
+// treated the same as no configuration (fails closed, not open, since an
+// unverified webhook could otherwise be spoofed to grant free access).
+export function stripeConfig(): StripeConfig | null {
+  const secretKey = process.env.STRIPE_SECRET_KEY
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+  if (!secretKey || !webhookSecret) return null
+  const priceCents = Number(process.env.STRIPE_PRICE_CENTS) || 4900
+  return { secretKey, webhookSecret, priceCents, priceLabel: process.env.STRIPE_PRICE_LABEL || 'RankForge Pro' }
+}
+
+// Transactional email via Resend (https://resend.com). Optional and
+// independent of MAIL_WEBHOOK_URL — when both are set, Resend takes
+// precedence since it needs no separate relay to build. Unset RESEND_API_KEY
+// ⇒ this path is skipped entirely (falls through to MAIL_WEBHOOK_URL, then
+// logged-only), matching every other optional integration.
+export interface ResendConfig {
+  apiKey: string
+  from: string
+}
+
+export function resendConfig(): ResendConfig | null {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) return null
+  return { apiKey, from: process.env.RESEND_FROM_EMAIL || 'RankForge <onboarding@resend.dev>' }
+}
+
 // Pilot sign-up allow-list (RC2 P6). RF_SIGNUP_ALLOWLIST is a comma-separated
 // list of exact emails and/or @domains (e.g. "a@x.com,@acme.com"). When set,
 // only matching emails may register. Unset ⇒ open sign-up (dev/self-serve).

@@ -9,7 +9,7 @@
 // offered here.
 
 import { useCallback, useEffect, useState } from 'react'
-import { CheckCircle2, Loader2, Sparkles } from 'lucide-react'
+import { CheckCircle2, Loader2, Lock, Sparkles } from 'lucide-react'
 import { api, ApiError, type RecommendationDTO } from '../../../lib/client'
 
 type Phase = 'loading' | 'idle' | 'confirm' | 'running' | 'done'
@@ -19,6 +19,7 @@ export function BulkFixBar({ projectId, categories, label, onFixed }: { projectI
   const [deployable, setDeployable] = useState<RecommendationDTO[]>([])
   const [error, setError] = useState('')
   const [result, setResult] = useState<{ verified: number; failed: number; total: number } | null>(null)
+  const [billingBlocked, setBillingBlocked] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     setPhase('loading')
@@ -30,7 +31,8 @@ export function BulkFixBar({ projectId, categories, label, onFixed }: { projectI
         setPhase('idle')
         return
       }
-      const { previews } = await api.operatorPreview(projectId, open.map((r) => r.id))
+      const { previews, billing } = await api.operatorPreview(projectId, open.map((r) => r.id))
+      setBillingBlocked(billing.allowed ? null : billing.reason ?? 'Upgrade required to auto-deploy fixes.')
       const byId = new Map(previews.map((p) => [p.recommendationId, p]))
       const fixable = open.filter((r) => {
         const p = byId.get(r.id)
@@ -65,6 +67,18 @@ export function BulkFixBar({ projectId, categories, label, onFixed }: { projectI
 
   if (phase === 'loading') return null
   if (deployable.length === 0 && phase !== 'done') return null
+
+  if (billingBlocked && phase !== 'done') {
+    return (
+      <div className="rf-card flex flex-wrap items-center justify-between gap-3 border border-amber-500/30 bg-amber-500/5 px-4 py-3">
+        <p className="flex items-center gap-1.5 text-sm text-white">
+          <Lock className="h-4 w-4 text-amber-400" />
+          {label}: {deployable.length} issue{deployable.length === 1 ? '' : 's'} found. {billingBlocked}
+        </p>
+        <a href="/billing" className="rf-btn-primary shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold">Upgrade</a>
+      </div>
+    )
+  }
 
   return (
     <div className="rf-card flex flex-wrap items-center justify-between gap-3 border border-[var(--rf-blue-bright)]/30 bg-[var(--rf-blue-bright)]/5 px-4 py-3">
