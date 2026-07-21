@@ -318,6 +318,55 @@ describe('WordPress content-transform deploys (Phase H)', () => {
     expect(dep.result).toMatch(/already satisfied/i)
     expect(wp.posts.get(10)!.content).toBe('<h1>Already</h1><p>body</p>') // untouched
   })
+
+  it('demotes extra H1s to H2 on the live post, verifies, and can roll back', async () => {
+    wp.posts.get(10)!.content = '<h1>Real Heading</h1><p>mid</p><h1>Duplicate</h1>'
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connection(),
+      postId: 10,
+      postType: 'pages',
+      changes: { contentTransform: { type: 'demote-extra-h1' } },
+      approvedBy: 'user-1',
+      reason: 'Fix multiple H1s',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.content).toBe('<h1>Real Heading</h1><p>mid</p><h2>Duplicate</h2>')
+
+    const rolled = await rollbackWpDeployment({ deployment: dep, connection: connection(), actorId: 'user-2' })
+    expect(rolled.status).toBe('rolled_back')
+    expect(wp.posts.get(10)!.content).toBe('<h1>Real Heading</h1><p>mid</p><h1>Duplicate</h1>')
+  })
+
+  it('keyed set-jsonld deploys (page schema + breadcrumb) coexist without overwriting each other', async () => {
+    wp.posts.get(10)!.content = '<p>body</p>'
+    const schemaDep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connection(),
+      postId: 10,
+      postType: 'pages',
+      changes: { contentTransform: { type: 'set-jsonld', jsonLd: '{"@type":"WebPage"}' } },
+      approvedBy: 'user-1',
+      reason: 'Add schema',
+    })
+    expect(schemaDep.status).toBe('verified')
+
+    const crumbDep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connection(),
+      postId: 10,
+      postType: 'pages',
+      changes: { contentTransform: { type: 'set-jsonld', jsonLd: '{"@type":"BreadcrumbList"}', key: 'breadcrumb' } },
+      approvedBy: 'user-1',
+      reason: 'Add breadcrumb',
+    })
+    expect(crumbDep.status).toBe('verified')
+    expect(wp.posts.get(10)!.content).toContain('"WebPage"')
+    expect(wp.posts.get(10)!.content).toContain('"BreadcrumbList"')
+  })
 })
 
 describe('recommendation → deployment target resolution', () => {

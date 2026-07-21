@@ -94,8 +94,8 @@ function truncateTitle(title: string, max = 60): string {
   return brand ? `${trimmed} · ${brand}` : trimmed
 }
 
-// Build a page-appropriate JSON-LD block from real signals.
-function generateSchema(s: PageSignals): string {
+// Build a page-appropriate JSON-LD object (raw, unwrapped) from real signals.
+function generateSchemaJson(s: PageSignals): string {
   const type = classifyPage(s).type
   const preferred = PREFERRED_SCHEMA[type] ?? 'WebPage'
   const name = (s.title ?? '').split(/[·|—–]/)[0].trim() || s.url
@@ -107,7 +107,37 @@ function generateSchema(s: PageSignals): string {
     base.name = brandFromTitle(s.title) || name
   }
   if (s.metaDescription) base.description = s.metaDescription
-  return `<script type="application/ld+json">\n${JSON.stringify(base, null, 2)}\n</script>`
+  return JSON.stringify(base, null, 2)
+}
+
+// Build a BreadcrumbList JSON-LD object (raw, unwrapped) from the page's own
+// URL path segments. Each ancestor's label is the REAL crawled page's title
+// when we have it (matched against ctx.sitePages), otherwise a humanized
+// path segment — never invented copy, and every `item` URL is a real,
+// derivable ancestor URL on this site, never a guessed ancestor page.
+function generateBreadcrumbJson(s: PageSignals, sitePages: { url: string; title: string }[]): string | null {
+  let origin: string
+  let segments: string[]
+  try {
+    const u = new URL(s.url)
+    origin = u.origin
+    segments = u.pathname.split('/').filter(Boolean)
+  } catch {
+    return null
+  }
+  if (segments.length === 0) return null // homepage has no trail
+  const byPath = new Map(sitePages.map((p) => [p.url.replace(/\/$/, ''), p.title]))
+  const humanize = (seg: string) => decodeURIComponent(seg).replace(/[-_]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+  const items: { '@type': 'ListItem'; position: number; name: string; item: string }[] = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${origin}/` },
+  ]
+  segments.forEach((seg, i) => {
+    const path = `${origin}/${segments.slice(0, i + 1).join('/')}`
+    const isLast = i === segments.length - 1
+    const label = (isLast ? (s.title ?? '').split(/[·|—–]/)[0].trim() : '') || byPath.get(path) || humanize(seg)
+    items.push({ '@type': 'ListItem', position: i + 2, name: label, item: `${path}/` })
+  })
+  return JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items }, null, 2)
 }
 
 // Generate a concrete fix for a recommendation identified by its rule.
@@ -217,8 +247,39 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
       return { actionable: true, kind: 'metaDescription', deploy: { metaDescription: value }, proposedValue: value, currentValue: s.metaDescription ?? '', note: 'Template-derived; edit to match the page voice before deploy.' }
     }
     case 'schema-missing': {
-      const value = generateSchema(s)
-      return { actionable: true, kind: 'schema', proposedValue: value, currentValue: '(no JSON-LD)', note: 'Page-appropriate JSON-LD; insert in <head>. Advisory — not auto-written to WP.' }
+      const json = generateSchemaJson(s)
+      return {
+        actionable: true,
+        kind: 'schema',
+        contentTransform: { type: 'set-jsonld', jsonLd: json },
+        proposedValue: `<script type="application/ld+json">\n${json}\n</script>`,
+        currentValue: '(no JSON-LD)',
+        note: 'Page-appropriate JSON-LD, written into the post body as a managed block and verified by read-back.',
+      }
+    }
+    case 'breadcrumb': {
+      const json = generateBreadcrumbJson(s, ctx.sitePages ?? [])
+      if (!json) {
+        return { actionable: false, kind: 'schema', proposedValue: '', currentValue: '(no BreadcrumbList)', note: 'Could not derive a breadcrumb trail from this URL.' }
+      }
+      return {
+        actionable: true,
+        kind: 'schema',
+        contentTransform: { type: 'set-jsonld', jsonLd: json, key: 'breadcrumb' },
+        proposedValue: `<script type="application/ld+json">\n${json}\n</script>`,
+        currentValue: '(no BreadcrumbList)',
+        note: 'BreadcrumbList built from this URL\'s real path segments, labeled from crawled page titles where available. Written as its own managed block, independent of any page schema.',
+      }
+    }
+    case 'multiple-h1': {
+      return {
+        actionable: true,
+        kind: 'heading',
+        contentTransform: { type: 'demote-extra-h1' },
+        proposedValue: `Demote extra H1${(s.h1Count ?? 2) > 2 ? 's' : ''} to H2, keep the first`,
+        currentValue: `${s.h1Count ?? 'multiple'} H1 headings`,
+        note: 'Demotes every H1 after the first to H2 in the live post body. Which heading counts as "first" is document order — review the diff before deploy.',
+      }
     }
     case 'local-business-incomplete': {
       const missing = s.localBusinessMissingFields ?? []
