@@ -26,9 +26,11 @@ import type {
   PilotFeedback,
   Project,
   ProviderConnection,
+  RankSnapshot,
   Recommendation,
   Scan,
   Schedule,
+  TrackedKeyword,
   User,
   WpConnection,
   WpDeployment,
@@ -121,6 +123,16 @@ const TABLES = {
     pk: ['project_id', 'kind'],
     keys: (s: Schedule) => ({ project_id: s.projectId, kind: s.kind, enabled: s.enabled, next_run_at: s.nextRunAt, created_at: s.createdAt }),
   } as TableDesc<Schedule>,
+  trackedKeywords: {
+    name: 'rf_tracked_keywords',
+    pk: ['id'],
+    keys: (k: TrackedKeyword) => ({ id: k.id, project_id: k.projectId, keyword: k.keyword, created_at: k.createdAt }),
+  } as TableDesc<TrackedKeyword>,
+  rankSnapshots: {
+    name: 'rf_rank_snapshots',
+    pk: ['id'],
+    keys: (s: RankSnapshot) => ({ id: s.id, project_id: s.projectId, keyword: s.keyword, checked_at: s.checkedAt }),
+  } as TableDesc<RankSnapshot>,
 }
 
 export class PostgresFoundationStore implements FoundationStore {
@@ -334,6 +346,29 @@ export class PostgresFoundationStore implements FoundationStore {
   }
   async deleteCompetitor(id: string) {
     await this.pool.query('DELETE FROM rf_competitors WHERE id=$1', [id])
+  }
+
+  // ── Rank tracking ────────────────────────────────────────────────────────
+  async addTrackedKeyword(kw: TrackedKeyword) {
+    await this.ins(TABLES.trackedKeywords, kw)
+  }
+  async listTrackedKeywords(projectId: string) {
+    return this.rows<TrackedKeyword>('SELECT data FROM rf_tracked_keywords WHERE project_id=$1 ORDER BY created_at', [projectId])
+  }
+  async removeTrackedKeyword(id: string) {
+    await this.pool.query('DELETE FROM rf_tracked_keywords WHERE id=$1', [id])
+  }
+  async recordRankSnapshot(snap: RankSnapshot) {
+    await this.ins(TABLES.rankSnapshots, snap)
+  }
+  async listRankSnapshots(projectId: string, keyword?: string) {
+    if (keyword) {
+      return this.rows<RankSnapshot>(
+        'SELECT data FROM rf_rank_snapshots WHERE project_id=$1 AND keyword=$2 ORDER BY checked_at',
+        [projectId, keyword]
+      )
+    }
+    return this.rows<RankSnapshot>('SELECT data FROM rf_rank_snapshots WHERE project_id=$1 ORDER BY checked_at', [projectId])
   }
 
   // ── Atlas change-detection baseline (Phase G) ───────────────────────────────

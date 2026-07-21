@@ -4,16 +4,11 @@
 // position. Requires SERPAPI_KEY; without it, returns a graceful "connect a key"
 // response so the UI can prompt for setup.
 
+import { fetchKeywordPosition, hostOf, serpApiKey } from '@/lib/foundation/serp'
+
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
-
-interface RankRow {
-  keyword: string
-  position: number | null
-  url: string | null
-  topResult: string | null
-}
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>
@@ -25,8 +20,7 @@ export async function POST(request: Request) {
 
   let host = ''
   try {
-    const u = String(body.domain ?? '')
-    host = new URL(/^https?:\/\//.test(u) ? u : `https://${u}`).hostname.replace(/^www\./, '')
+    host = hostOf(String(body.domain ?? ''))
   } catch {
     return Response.json({ error: 'Enter a valid domain.' }, { status: 400 })
   }
@@ -39,7 +33,7 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Add at least one keyword.' }, { status: 400 })
   }
 
-  const key = process.env.SERPAPI_KEY
+  const key = serpApiKey()
   if (!key) {
     return Response.json({
       available: false,
@@ -48,39 +42,9 @@ export async function POST(request: Request) {
     })
   }
 
-  const rows: RankRow[] = []
+  const rows = []
   for (const keyword of keywords) {
-    try {
-      const endpoint = new URL('https://serpapi.com/search.json')
-      endpoint.searchParams.set('engine', 'google')
-      endpoint.searchParams.set('q', keyword)
-      endpoint.searchParams.set('num', '100')
-      endpoint.searchParams.set('api_key', key)
-      const res = await fetch(endpoint)
-      if (!res.ok) {
-        rows.push({ keyword, position: null, url: null, topResult: null })
-        continue
-      }
-      const data = await res.json()
-      const organic: { link?: string; position?: number }[] = Array.isArray(data?.organic_results)
-        ? data.organic_results
-        : []
-      const match = organic.find((r) => {
-        try {
-          return r.link && new URL(r.link).hostname.replace(/^www\./, '') === host
-        } catch {
-          return false
-        }
-      })
-      rows.push({
-        keyword,
-        position: match?.position ?? null,
-        url: match?.link ?? null,
-        topResult: organic[0]?.link ?? null,
-      })
-    } catch {
-      rows.push({ keyword, position: null, url: null, topResult: null })
-    }
+    rows.push(await fetchKeywordPosition(keyword, host, key))
   }
 
   const tracked = rows.filter((r) => r.position !== null)

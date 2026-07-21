@@ -17,9 +17,11 @@ import type {
   PilotFeedback,
   Project,
   ProviderConnection,
+  RankSnapshot,
   Recommendation,
   Scan,
   Schedule,
+  TrackedKeyword,
   User,
   WpConnection,
   WpDeployment,
@@ -43,6 +45,8 @@ type Collections = {
   schedules: Schedule[]
   feedback: PilotFeedback[]
   audit: AuditLogEntry[]
+  trackedKeywords: TrackedKeyword[]
+  rankSnapshots: RankSnapshot[]
 }
 
 const EMPTY: Collections = {
@@ -63,6 +67,8 @@ const EMPTY: Collections = {
   schedules: [],
   feedback: [],
   audit: [],
+  trackedKeywords: [],
+  rankSnapshots: [],
 }
 
 export class FileFoundationStore implements FoundationStore {
@@ -260,6 +266,27 @@ export class FileFoundationStore implements FoundationStore {
   }
   async deleteCompetitor(id: string) {
     await this.mutate('competitors', (all) => ({ data: all.filter((c) => c.id !== id) }))
+  }
+
+  // rank tracking
+  async addTrackedKeyword(kw: TrackedKeyword) {
+    await this.mutate('trackedKeywords', (all) => ({ data: [...all, kw] }))
+  }
+  async listTrackedKeywords(projectId: string) {
+    return (await this.read('trackedKeywords'))
+      .filter((k) => k.projectId === projectId)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+  }
+  async removeTrackedKeyword(id: string) {
+    await this.mutate('trackedKeywords', (all) => ({ data: all.filter((k) => k.id !== id) }))
+  }
+  async recordRankSnapshot(snap: RankSnapshot) {
+    await this.mutate('rankSnapshots', (all) => ({ data: [...all, snap] }))
+  }
+  async listRankSnapshots(projectId: string, keyword?: string) {
+    return (await this.read('rankSnapshots'))
+      .filter((s) => s.projectId === projectId && (!keyword || s.keyword === keyword))
+      .sort((a, b) => a.checkedAt.localeCompare(b.checkedAt))
   }
 
   // Atlas change-detection baseline (Phase G)

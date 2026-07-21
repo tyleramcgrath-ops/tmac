@@ -182,14 +182,14 @@ const FEATURES: {
   {
     icon: Radar,
     title: 'Full-Site Audits',
-    desc: 'Crawls up to 300 pages and scores technical health, content, schema, and AI readiness — with indexability checks, duplicate detection, and internal-link analysis.',
+    desc: 'Crawls your entire site, sitemap-aware, and scores technical health, content, schema, and AI readiness — with indexability checks, duplicate detection, and internal-link analysis.',
     tag: 'Crawl engine',
   },
   {
     icon: LineChart,
-    title: 'Rank Check & Competitor Compare',
-    desc: 'Check point-in-time Google positions for your keywords and line your page up against the top 10 for any single keyword.',
-    tag: 'On demand',
+    title: 'Rank Tracking & Competitor Compare',
+    desc: 'Track keyword positions over time — every check builds real history, charted as a trend, not just a one-off number — and line your page up against the top 10.',
+    tag: 'Scheduled + on demand',
   },
   {
     icon: PenTool,
@@ -213,14 +213,6 @@ const FEATURES: {
 
 const ROADMAP: { title: string; desc: string }[] = [
   {
-    title: 'Rank tracking over time',
-    desc: 'Scheduled position history, trends, and share-of-voice.',
-  },
-  {
-    title: 'Continuous monitoring',
-    desc: 'Scheduled crawls and alerts when something breaks.',
-  },
-  {
     title: 'AI citation tracking',
     desc: 'Measure when AI answer engines cite your brand.',
   },
@@ -234,7 +226,7 @@ const ROADMAP: { title: string; desc: string }[] = [
   },
   {
     title: 'White-label & client portals',
-    desc: 'Branded dashboards, scheduled reports, and team seats.',
+    desc: 'Branded dashboards and scheduled reports for agency clients.',
   },
 ]
 
@@ -772,7 +764,7 @@ export function Agency() {
                 href="#pricing"
                 className="rf-btn-primary mt-8 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold"
               >
-                See Agency plan <ArrowRight className="h-4 w-4" />
+                See pricing <ArrowRight className="h-4 w-4" />
               </a>
             </Reveal>
           </div>

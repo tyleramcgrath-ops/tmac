@@ -5,10 +5,10 @@
 // the old dashboard used, now sourced from persisted scans instead of client
 // state. Rankings uses the live /api/rankings endpoint (keyed, honest fallback).
 
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   Radar, FileText, Plug, Download, Printer, Check, AlertTriangle, Info,
-  ExternalLink, Loader2, Gauge, Network, ShieldCheck, TrendingUp, X, type LucideIcon,
+  ExternalLink, Loader2, Gauge, Network, ShieldCheck, TrendingUp, Trash2, Plus, X, type LucideIcon,
 } from 'lucide-react'
 import {
   type Analytics, type PageResult, type PageSpeed, type Severity, type Dup,
@@ -16,6 +16,7 @@ import {
 } from './analytics'
 import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
 import { BulkFixBar } from '../BulkFixBar'
+import { api, ApiError, type RankSnapshotDTO, type TrackedKeywordDTO } from '../../../../lib/client'
 
 const TONE: Record<string, string> = { critical: 'text-[var(--rf-red)]', warning: 'text-[var(--rf-amber)]', info: 'text-[var(--rf-blue-bright)]' }
 
@@ -297,7 +298,7 @@ export function Schema({ a, pages, projectId }: { a: Analytics; pages: PageResul
 /* ── Rankings (live /api/rankings, honest fallback) ─────────────────────── */
 
 interface RankResp { available: boolean; note?: string; rows?: { keyword: string; position: number | null; url: string | null }[]; summary?: { tracked: number; top3: number; top10: number; avg: number | null } }
-export function Rankings({ domain }: { domain: string }) {
+export function Rankings({ domain, projectId }: { domain: string; projectId: string }) {
   const [kw, setKw] = useState(''); const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle'); const [resp, setResp] = useState<RankResp | null>(null); const [error, setError] = useState<string | null>(null)
   const track = async () => {
     const keywords = kw.split('\n').map((k) => k.trim()).filter(Boolean)
@@ -308,12 +309,130 @@ export function Rankings({ domain }: { domain: string }) {
   }
   return (
     <div className="space-y-4">
-      <div className="rf-card p-4"><p className="text-sm font-semibold text-white">Track keyword rankings</p><p className="mt-1 text-xs text-[var(--rf-muted)]">One keyword per line. Live Google positions for <span className="text-white">{domain || 'your domain'}</span>.</p><textarea value={kw} onChange={(e) => setKw(e.target.value)} rows={4} placeholder={'best crm software\nai crm tools'} className="rf-card mt-3 w-full resize-y bg-transparent p-3 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /><button onClick={track} disabled={status === 'loading'} className="rf-btn-primary mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">{status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Checking…</> : 'Check positions'}</button>{error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}</div>
+      <div className="rf-card p-4"><p className="text-sm font-semibold text-white">Check keyword rankings now</p><p className="mt-1 text-xs text-[var(--rf-muted)]">One keyword per line. Live Google positions for <span className="text-white">{domain || 'your domain'}</span>.</p><textarea value={kw} onChange={(e) => setKw(e.target.value)} rows={4} placeholder={'best crm software\nai crm tools'} className="rf-card mt-3 w-full resize-y bg-transparent p-3 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /><button onClick={track} disabled={status === 'loading'} className="rf-btn-primary mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">{status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Checking…</> : 'Check positions'}</button>{error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}</div>
       {status === 'done' && resp && !resp.available && <ConnectNote title="Live rank tracking needs a SERP API key" note={resp.note} envVar="SERPAPI_KEY" />}
       {status === 'done' && resp?.available && resp.rows && <>
         <div className="grid grid-cols-3 gap-3"><Stat label="Tracked" numeric={resp.summary?.tracked ?? 0} /><Stat label="Top 10" numeric={resp.summary?.top10 ?? 0} tone={TONE.info} /><Stat label="Avg. position" value={resp.summary?.avg != null ? String(resp.summary.avg) : '—'} tone="text-[var(--rf-green)]" /></div>
         <div className="rf-card overflow-hidden"><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Keyword</th><th className="px-4 py-2 font-medium">Position</th><th className="px-4 py-2 font-medium">URL</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{resp.rows.map((r) => <tr key={r.keyword} className="hover:bg-white/[0.02]"><td className="px-4 py-2.5 text-[var(--rf-text)]">{r.keyword}</td><td className="px-4 py-2.5 rf-mono font-semibold text-white">{r.position != null ? `#${r.position}` : <span className="text-[var(--rf-faint)]">—</span>}</td><td className="max-w-[240px] truncate px-4 py-2.5">{r.url ? <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-muted)] hover:text-white">{pathOf(r.url)}</a> : <span className="text-[var(--rf-faint)]">—</span>}</td></tr>)}</tbody></table></div></div>
       </>}
+      <RankingHistory projectId={projectId} />
+    </div>
+  )
+}
+
+/* ── Rank tracking history (trend over time, not just point-in-time) ─────── */
+
+function Sparkline({ points }: { points: (number | null)[] }) {
+  const known = points.filter((p): p is number => p != null)
+  if (known.length < 2) return <span className="text-[11px] text-[var(--rf-faint)]">Not enough history yet</span>
+  const w = 160, h = 32, pad = 3
+  const min = Math.min(...known), max = Math.max(...known)
+  const span = Math.max(1, max - min)
+  const step = (w - pad * 2) / (points.length - 1)
+  // Lower rank position is better — invert Y so an improving trend visibly rises.
+  const y = (v: number) => pad + ((v - min) / span) * (h - pad * 2)
+  let path = ''
+  points.forEach((p, i) => {
+    if (p == null) return
+    const cmd = path === '' ? 'M' : 'L'
+    path += `${cmd}${(pad + i * step).toFixed(1)},${y(p).toFixed(1)} `
+  })
+  return (
+    <svg width={w} height={h} className="overflow-visible">
+      <path d={path.trim()} fill="none" stroke="var(--rf-blue-bright)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function RankingHistory({ projectId }: { projectId: string }) {
+  const [keywords, setKeywords] = useState<TrackedKeywordDTO[] | null>(null)
+  const [snapshots, setSnapshots] = useState<RankSnapshotDTO[]>([])
+  const [newKeyword, setNewKeyword] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState<string | null>(null)
+
+  const load = useCallback(async () => {
+    try {
+      const [{ keywords }, { snapshots }] = await Promise.all([api.listTrackedKeywords(projectId), api.rankingHistory(projectId)])
+      setKeywords(keywords)
+      setSnapshots(snapshots)
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not load rank history.')
+    }
+  }, [projectId])
+  useEffect(() => { void load() }, [load])
+
+  async function add() {
+    const keyword = newKeyword.trim()
+    if (!keyword) return
+    setBusy('add'); setError('')
+    try { await api.addTrackedKeyword(projectId, keyword); setNewKeyword(''); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not add keyword.') }
+    finally { setBusy(null) }
+  }
+  async function remove(id: string) {
+    setBusy(id); setError('')
+    try { await api.removeTrackedKeyword(projectId, id); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not remove keyword.') }
+    finally { setBusy(null) }
+  }
+  async function checkNow(keyword: string) {
+    setBusy(keyword); setError('')
+    try { await api.checkTrackedKeywordNow(projectId, keyword); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not check position.') }
+    finally { setBusy(null) }
+  }
+
+  if (keywords === null) return null
+
+  return (
+    <div className="rf-card p-4">
+      <div className="flex items-center gap-2"><TrendingUp className="h-4 w-4 text-[var(--rf-blue-bright)]" /><p className="text-sm font-semibold text-white">Rank tracking history</p></div>
+      <p className="mt-1 text-xs text-[var(--rf-muted)]">Track keywords once and every future check — manual or scheduled (see Automation) — builds real position history over time.</p>
+      <div className="mt-3 flex gap-2">
+        <input
+          value={newKeyword}
+          onChange={(e) => setNewKeyword(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && void add()}
+          placeholder="Add a keyword to track"
+          className="rf-card flex-1 bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
+        />
+        <button onClick={add} disabled={busy === 'add' || !newKeyword.trim()} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold disabled:opacity-60">
+          {busy === 'add' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />} Track
+        </button>
+      </div>
+      {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+
+      {keywords.length === 0 ? (
+        <p className="mt-4 text-sm text-[var(--rf-muted)]">No keywords tracked yet. Add one above to start building history.</p>
+      ) : (
+        <div className="mt-4 space-y-2">
+          {keywords.map((k) => {
+            const rows = snapshots.filter((s) => s.keyword === k.keyword)
+            const latest = rows[rows.length - 1]
+            return (
+              <div key={k.id} className="flex items-center justify-between gap-4 rounded-lg border border-[var(--rf-card-line)] px-3 py-2.5">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-white">{k.keyword}</p>
+                  <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">
+                    {latest ? `Last checked ${new Date(latest.checkedAt).toLocaleDateString()} — ${latest.position != null ? `#${latest.position}` : 'not ranking'}` : 'Never checked'}
+                    {' · '}{rows.length} check{rows.length === 1 ? '' : 's'}
+                  </p>
+                </div>
+                <Sparkline points={rows.map((r) => r.position)} />
+                <div className="flex shrink-0 gap-1.5">
+                  <button onClick={() => void checkNow(k.keyword)} disabled={busy === k.keyword} className="rf-btn-ghost rounded-md px-2.5 py-1 text-[11px] font-medium disabled:opacity-60">
+                    {busy === k.keyword ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Check now'}
+                  </button>
+                  <button onClick={() => void remove(k.id)} disabled={busy === k.id} className="rf-btn-ghost rounded-md p-1.5 text-[var(--rf-faint)] hover:text-[var(--rf-red)] disabled:opacity-60">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
