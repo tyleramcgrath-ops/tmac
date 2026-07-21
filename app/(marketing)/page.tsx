@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Hero } from '../rankforge/components/hero'
-import { StackSection } from '../rankforge/components/sections'
+import { StackSection, WarRoom } from '../rankforge/components/sections'
 import { FinalCTA } from '../rankforge/components/pricing-cta'
 import { Faq } from './_components/faq'
 
@@ -24,6 +24,7 @@ export default function HomePage() {
     <>
       <Hero />
       <StackSection />
+      <WarRoom />
       <Faq items={FAQ_ITEMS} />
       <FinalCTA />
     </>

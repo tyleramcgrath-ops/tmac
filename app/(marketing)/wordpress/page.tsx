@@ -4,6 +4,7 @@ import { Plug, Wand2, ShieldCheck, Undo2, Layers, Check, LineChart, Link2, Calen
 import { PageIntro } from '../_components/page-intro'
 import { Faq } from '../_components/faq'
 import { FinalCTA } from '../../rankforge/components/pricing-cta'
+import { DeployDiffMockup } from '../../rankforge/components/deploy-diff'
 
 export const metadata: Metadata = {
   title: 'WordPress SEO on autopilot — Yoast, Rank Math & AIOSEO | RankForge',
@@ -61,6 +62,10 @@ export default function WordPressPage() {
             </div>
           ))}
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pb-12 sm:px-8">
+        <DeployDiffMockup />
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-12 sm:px-8">

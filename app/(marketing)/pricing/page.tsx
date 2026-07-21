@@ -25,7 +25,7 @@ export default function PricingPage() {
         title="One plan. Everything included."
         sub="Start free. Try every feature — including automatic WordPress deploy — for 14 days. Audits, recommendations, and rollback stay free forever either way."
       />
-      <Pricing />
+      <Pricing heading={false} />
       <Faq eyebrow="Pricing FAQ" title="Pricing — questions, answered" items={FAQ_ITEMS} />
       <FinalCTA />
     </>
