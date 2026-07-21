@@ -1,8 +1,14 @@
 'use client'
 
-import { Check, ArrowRight, Zap } from 'lucide-react'
+import { Check, ArrowRight, RotateCcw, ShieldCheck, TrendingUp, Zap } from 'lucide-react'
 import { Reveal } from './reveal'
 import { ScanForm } from './scan'
+
+const TRUST_STRIP = [
+  { icon: ShieldCheck, label: 'Every change verified by read-back' },
+  { icon: RotateCcw, label: 'One-click rollback, always' },
+  { icon: TrendingUp, label: 'Real Search Console proof, not a promise' },
+]
 
 /* ================================================================== */
 /* 7. Pricing                                                          */
@@ -28,30 +34,36 @@ const PLAN = {
   soon: ['Backlink analysis'],
 }
 
-export function Pricing() {
+// `heading: false` on the standalone /pricing page, whose PageIntro already
+// renders the H1 + description — showing this section's own heading too
+// would duplicate it. The single-scroll rankforge-site.tsx renders Pricing
+// as one section among many and needs the heading, so it stays the default.
+export function Pricing({ heading = true }: { heading?: boolean } = {}) {
   return (
     <section id="pricing" className="relative py-24">
       <div className="rf-glow rf-pulse pointer-events-none absolute left-1/2 top-0 -z-10 h-[360px] w-[640px] -translate-x-1/2 opacity-40" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <Reveal>
-            <span className="rf-mono inline-block rounded-full border border-[var(--rf-card-line)] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--rf-blue-bright)]">
-              Pricing
-            </span>
-          </Reveal>
-          <Reveal delay={80}>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-              One plan.{' '}
-              <span className="rf-gradient-text">Ruthless ROI.</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={140}>
-            <p className="mt-4 text-[var(--rf-muted)]">
-              Every feature, from day one. Audits, recommendations, and rollback are always free —
-              the trial and subscription only gate automatic WordPress deploys. Cancel anytime.
-            </p>
-          </Reveal>
-        </div>
+        {heading && (
+          <div className="mx-auto max-w-2xl text-center">
+            <Reveal>
+              <span className="rf-mono inline-block rounded-full border border-[var(--rf-card-line)] bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-[var(--rf-blue-bright)]">
+                Pricing
+              </span>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                One plan.{' '}
+                <span className="rf-gradient-text">Ruthless ROI.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={140}>
+              <p className="mt-4 text-[var(--rf-muted)]">
+                Every feature, from day one. Audits, recommendations, and rollback are always free —
+                the trial and subscription only gate automatic WordPress deploys. Cancel anytime.
+              </p>
+            </Reveal>
+          </div>
+        )}
 
         <div className="mx-auto mt-14 max-w-md">
           <Reveal>
@@ -99,6 +111,17 @@ export function Pricing() {
             </div>
           </Reveal>
         </div>
+
+        <Reveal delay={120}>
+          <div className="mx-auto mt-10 flex max-w-2xl flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {TRUST_STRIP.map((t) => (
+              <span key={t.label} className="flex items-center gap-2 text-xs text-[var(--rf-muted)]">
+                <t.icon className="h-4 w-4 text-[var(--rf-blue-bright)]" />
+                {t.label}
+              </span>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   )
@@ -124,8 +147,8 @@ export function FinalCTA() {
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-[var(--rf-muted)]">
                 Run a full technical, content, schema, and AI-readiness audit —
-                up to 300 pages. See your Fix List before you ever enter a
-                card.
+                your entire site, sitemap-aware. See your Fix List before you
+                ever enter a card.
               </p>
 
               <div className="mt-8">

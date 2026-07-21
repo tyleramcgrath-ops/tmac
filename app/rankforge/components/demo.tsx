@@ -116,7 +116,7 @@ const CHAPTERS: {
   {
     id: 'audit',
     label: 'Technical Audit',
-    blurb: 'Full-site crawl (up to 300 pages): Core Web Vitals, indexability, and severity-scored issues.',
+    blurb: 'Full-site crawl (entire site, sitemap-aware): Core Web Vitals, indexability, and severity-scored issues.',
     icon: Radar,
     render: () => <ChapterAudit />,
   },
