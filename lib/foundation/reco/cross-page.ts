@@ -12,6 +12,22 @@ export interface CrossPageFinding extends Finding {
   issueScope: string
 }
 
+// A URL the crawler could not read. Only entries the crawler actually fetched
+// appear here (from scan.blocked); its shape mirrors the crawl engine's
+// BlockedResult. `status` is the real HTTP status (0 = connection failed).
+export interface BlockedPage {
+  url: string
+  status: number
+  reason?: string
+}
+
+function coerceBlocked(raw: unknown[]): BlockedPage[] {
+  return raw
+    .filter((b): b is Record<string, unknown> => !!b && typeof b === 'object')
+    .map((b) => ({ url: String(b.url ?? ''), status: typeof b.status === 'number' ? b.status : 0, reason: typeof b.reason === 'string' ? b.reason : undefined }))
+    .filter((b) => b.url)
+}
+
 function norm(s: string | undefined): string {
   return (s ?? '').trim().toLowerCase().replace(/\s+/g, ' ')
 }
@@ -30,11 +46,12 @@ function duplicates(pages: PageSignals[], field: 'title' | 'metaDescription'): M
   return new Map([...groups].filter(([, urls]) => urls.length >= 2))
 }
 
-export function runCrossPageRules(rawPages: PageSignals[]): CrossPageFinding[] {
+export function runCrossPageRules(rawPages: PageSignals[], rawBlocked: unknown[] = []): CrossPageFinding[] {
   // Exclude canonical-duplicate variants from cross-page analysis so a variant
   // isn't reported as a "duplicate" of its own canonical.
   const pages = rawPages.filter((p) => !p.duplicateOf)
   const out: CrossPageFinding[] = []
+  const strip = (u: string) => u.split('#')[0].replace(/\/$/, '')
 
   // ── Duplicate titles ──
   for (const [value, urls] of duplicates(pages, 'title')) {
@@ -88,7 +105,6 @@ export function runCrossPageRules(rawPages: PageSignals[]): CrossPageFinding[] {
 
   // ── Orphan pages (no internal inbound links from the crawled set) ──
   const inbound = new Map<string, number>()
-  const strip = (u: string) => u.split('#')[0].replace(/\/$/, '')
   for (const p of pages) inbound.set(strip(p.url), 0)
   for (const p of pages) {
     for (const t of p.internalTargets ?? []) {
@@ -129,6 +145,60 @@ export function runCrossPageRules(rawPages: PageSignals[]): CrossPageFinding[] {
         whatCouldMakeWrong: 'The crawl may be incomplete, so a real inbound link could exist outside the sampled set.',
       },
     })
+  }
+
+  // ── Broken internal links (links to pages the crawler read as HTTP errors) ──
+  // Uses the crawl's own blocked set: a target is "broken" only when the
+  // crawler actually fetched it and the server returned a 4xx/5xx. Policy
+  // exclusions (WAF/bot-challenge, proxy denial, non-HTML, connection failures
+  // → status 0) are NOT counted — those aren't the site's broken links, and
+  // flagging them would fabricate a defect from an environment artifact.
+  const blocked = coerceBlocked(rawBlocked)
+  const errorTargets = new Map<string, number>() // normalized url → HTTP status
+  for (const b of blocked) {
+    if (b.status >= 400) errorTargets.set(strip(b.url), b.status)
+  }
+  if (errorTargets.size > 0) {
+    // target url → set of source pages that link to it
+    const linkedFrom = new Map<string, Set<string>>()
+    for (const p of pages) {
+      for (const t of p.internalTargets ?? []) {
+        const k = strip(t)
+        if (errorTargets.has(k)) {
+          const set = linkedFrom.get(k) ?? new Set<string>()
+          set.add(p.url)
+          linkedFrom.set(k, set)
+        }
+      }
+    }
+    if (linkedFrom.size > 0) {
+      const sourcePages = [...new Set([...linkedFrom.values()].flatMap((s) => [...s]))].sort()
+      const elements = [...linkedFrom.entries()]
+        .sort((a, b) => b[1].size - a[1].size)
+        .slice(0, 10)
+        .map(([target, sources]) => `${target} (HTTP ${errorTargets.get(target)}) — linked from ${sources.size} page${sources.size === 1 ? '' : 's'}`)
+      out.push({
+        ruleId: 'broken-internal-links',
+        issueScope: 'site',
+        title: `${linkedFrom.size} internal link target(s) return errors`,
+        category: 'links',
+        ruleCertainty: 0.85,
+        importance: 0.75,
+        seoImpact: 'high',
+        effort: 'low',
+        risk: { level: 'low', note: 'Fixing or removing a dead link is safe and additive.' },
+        googleGuidance: 'Links to error pages waste crawl budget, break the user journey, and pass no internal authority.',
+        supportingElements: elements,
+        affectedUrls: sourcePages,
+        explanation: {
+          why: 'Internal links pointing to error pages dead-end users and crawlers and leak the link equity the link was meant to pass.',
+          whyNow: `The crawl found live links to ${linkedFrom.size} URL(s) that returned HTTP errors — a concrete, already-happening defect.`,
+          whyThisPage: `These ${sourcePages.length} page(s) contain at least one link to a URL that returned a 4xx/5xx during this crawl.`,
+          whatIfIgnored: 'Users hit dead ends, crawl budget is wasted on error pages, and internal authority is lost.',
+          whatCouldMakeWrong: 'A 5xx may be a transient server blip at crawl time, or the target may have been temporarily down — re-crawl to confirm before mass-editing.',
+        },
+      })
+    }
   }
 
   return out

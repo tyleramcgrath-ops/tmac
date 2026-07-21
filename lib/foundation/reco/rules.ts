@@ -419,6 +419,7 @@ export const RULE_REGISTRY: Record<string, RuleMeta> = {
   'dup-title': { version: 1, dangerous: false },
   'dup-meta': { version: 1, dangerous: false },
   'orphan-pages': { version: 1, dangerous: false },
+  'broken-internal-links': { version: 1, dangerous: false },
 }
 
 export function ruleVersion(ruleId: string): number {

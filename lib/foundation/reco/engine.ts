@@ -118,8 +118,10 @@ export function generateRecommendationsV2(
     }
   }
 
-  // 4. Cross-page rules (duplicate/orphan) — the restored false negatives.
-  const cross: CrossPageFinding[] = runCrossPageRules(canonical)
+  // 4. Cross-page rules (duplicate/orphan/broken-links) — the restored false
+  //    negatives. `scan.blocked` carries the URLs the crawler read as errors,
+  //    which powers broken-internal-link detection.
+  const cross: CrossPageFinding[] = runCrossPageRules(canonical, Array.isArray(scan.blocked) ? scan.blocked : [])
 
   // 5. Group findings into as few recommendations as possible (Phase C: fewer,
   //    better). SCHEMA advice is page-type-specific (Organization vs Product),

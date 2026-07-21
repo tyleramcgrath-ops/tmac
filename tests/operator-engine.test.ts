@@ -76,6 +76,11 @@ describe('fix generation (§2): produces concrete changes', () => {
     expect(fix.kind).toBe('schema')
     expect(fix.currentValue).toMatch(/address, telephone/)
   })
+  it('does not auto-edit broken internal links (advisory — fix vs remove is a judgment call)', () => {
+    const fix = generateFix('broken-internal-links', { url: 'https://x.com/a' })
+    expect(fix.actionable).toBe(false)
+    expect(fix.note).toMatch(/re-crawl to confirm/i)
+  })
   it('reads a recommendation ruleId from its typed field (no parsing)', () => {
     expect(ruleIdOf(rec({}))).toBe('missing-title')
     expect(ruleIdOf(rec({ ruleId: 'schema-missing' }))).toBe('schema-missing')

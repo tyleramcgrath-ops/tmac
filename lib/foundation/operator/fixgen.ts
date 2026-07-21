@@ -230,6 +230,12 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
     case 'alt-text': {
       return { actionable: false, kind: 'altText', proposedValue: '', currentValue: `${s.imagesMissingAlt ?? 0} images without alt`, note: 'Alt text must describe each specific image; generate per-image with human input.' }
     }
+    case 'broken-internal-links': {
+      // Advisory: each broken link is either repaired (fix the target/URL) or
+      // removed, which is a judgment call we won't automate. The specific
+      // broken targets are listed in the recommendation's evidence.
+      return { actionable: false, kind: 'internalLinks', proposedValue: '', currentValue: 'links to error (4xx/5xx) pages', note: 'Repair or remove each dead link — deciding which needs human judgment. See the listed targets; re-crawl to confirm none were transient.' }
+    }
     default:
       return { actionable: false, kind: 'none', proposedValue: '', currentValue: '', note: `No automated fix generator for rule "${ruleId}".` }
   }
