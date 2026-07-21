@@ -17,8 +17,10 @@ import {
   questions,
   intro,
   outro,
+  computeReadiness,
   type Question,
 } from '../questions'
+import { TpLogo } from './tp-logo'
 
 type Answer = string | string[] | number
 type Answers = Record<string, Answer>
@@ -104,6 +106,7 @@ export function Questionnaire() {
 
   return (
     <div className="tp-root">
+      <CyberBackdrop />
       <div className="tp-dots" />
       <div className="tp-progress">
         <div className="tp-progress-fill" style={{ width: `${progress}%` }} />
@@ -115,7 +118,7 @@ export function Questionnaire() {
         total={total}
       />
 
-      <main className="relative mx-auto flex min-h-[100dvh] w-full max-w-2xl flex-col justify-center px-5 py-24 sm:px-8">
+      <main className="tp-stage relative mx-auto flex min-h-[100dvh] w-full max-w-2xl flex-col justify-center px-5 py-24 sm:px-8">
         {phase === 'intro' && <Intro onStart={() => go(0, 'up')} />}
 
         {typeof phase === 'number' && (
@@ -141,11 +144,48 @@ export function Questionnaire() {
           <Outro
             dir={dir}
             submitted={submitted}
+            readiness={computeReadiness(answers)}
             onSubmit={submit}
             onBack={back}
           />
         )}
       </main>
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* Animated backdrop                                                   */
+/* ------------------------------------------------------------------ */
+
+function CyberBackdrop() {
+  // deterministic particle positions so SSR/CSR markup matches
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 7 }, (_, i) => ({
+        left: `${8 + i * 13}%`,
+        delay: `${i * 1.6}s`,
+        duration: `${11 + (i % 4) * 3}s`,
+      })),
+    []
+  )
+  return (
+    <div className="tp-cyber" aria-hidden="true">
+      <div className="tp-radar" />
+      <div className="tp-cyber-grid" />
+      <div className="tp-scanline" />
+      {particles.map((p, i) => (
+        <span
+          key={i}
+          className="tp-particle"
+          style={{
+            left: p.left,
+            bottom: '-6px',
+            animationDelay: p.delay,
+            animationDuration: p.duration,
+          }}
+        />
+      ))}
     </div>
   )
 }
@@ -165,10 +205,7 @@ function TopBar({
 }) {
   return (
     <div className="fixed inset-x-0 top-0 z-30 mx-auto flex h-16 w-full max-w-2xl items-center justify-between px-5 sm:px-8">
-      <span className="tp-brand">
-        <span className="tp-brand-dot">TP</span>
-        TruePoint<span className="tp-brand-sub">&nbsp;Systems</span>
-      </span>
+      <TpLogo markClass="h-8 w-8" />
       {showCount && (
         <span
           className="tp-index"
@@ -239,7 +276,9 @@ function Intro({ onStart }: { onStart: () => void }) {
             const Icon = TRUST_ICONS[i % TRUST_ICONS.length]
             return (
               <span key={t} className="tp-trust-item">
-                <Icon className="h-4 w-4" strokeWidth={2} />
+                <span className="tp-trust-ic">
+                  <Icon className="h-4 w-4" strokeWidth={2} />
+                </span>
                 {t}
               </span>
             )
@@ -613,11 +652,13 @@ function TextField({
 function Outro({
   dir,
   submitted,
+  readiness,
   onSubmit,
   onBack,
 }: {
   dir: 'up' | 'down'
   submitted: boolean
+  readiness: { score: number; band: string }
   onSubmit: () => void
   onBack: () => void
 }) {
@@ -661,20 +702,87 @@ function Outro({
         }}
       />
       <span className="tp-eyebrow">{outro.eyebrow}</span>
-      <h2 className="tp-display tp-gradient">{outro.title}</h2>
-      <p className="max-w-lg text-lg leading-relaxed text-[var(--tp-ink-soft)]">
-        {outro.subtitle}
-      </p>
-      <div className="mt-2 flex items-center gap-3">
-        <button className="tp-btn tp-btn-primary" onClick={onSubmit}>
-          {outro.cta}
-          <Send className="h-4 w-4" />
-        </button>
-        <button className="tp-btn tp-btn-ghost" onClick={onBack}>
-          <ArrowLeft className="h-4 w-4" />
-          Back
-        </button>
+      <div className="flex w-full flex-col items-center gap-7 sm:flex-row sm:items-center sm:gap-9">
+        <ReadinessRing score={readiness.score} band={readiness.band} />
+        <div className="flex flex-col items-start gap-4">
+          <h2 className="tp-display tp-gradient">{outro.title}</h2>
+          <p className="max-w-md text-lg leading-relaxed text-[var(--tp-ink-soft)]">
+            {outro.subtitle}
+          </p>
+          <div className="mt-1 flex items-center gap-3">
+            <button className="tp-btn tp-btn-primary" onClick={onSubmit}>
+              {outro.cta}
+              <Send className="h-4 w-4" />
+            </button>
+            <button className="tp-btn tp-btn-ghost" onClick={onBack}>
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+  )
+}
+
+/* Animated radial gauge that counts up to the readiness score. */
+function ReadinessRing({ score, band }: { score: number; band: string }) {
+  const [display, setDisplay] = useState(0)
+  useEffect(() => {
+    let raf = 0
+    const start = performance.now()
+    const dur = 1200
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / dur)
+      const eased = 1 - Math.pow(1 - p, 3)
+      setDisplay(Math.round(eased * score))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [score])
+
+  const R = 52
+  const C = 2 * Math.PI * R
+  const offset = C * (1 - display / 100)
+  const tone =
+    score >= 75
+      ? 'var(--tp-good)'
+      : score >= 45
+        ? 'var(--tp-gold)'
+        : '#f0a35a'
+
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="tp-ring-wrap">
+        <svg className="tp-ring-svg" viewBox="0 0 120 120">
+          <defs>
+            <linearGradient id="tp-ring-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="var(--tp-gold-bright)" />
+              <stop offset="1" stopColor="var(--tp-green-bright)" />
+            </linearGradient>
+          </defs>
+          <circle className="tp-ring-track" cx="60" cy="60" r={R} />
+          <circle
+            className="tp-ring-arc"
+            cx="60"
+            cy="60"
+            r={R}
+            strokeDasharray={C}
+            strokeDashoffset={offset}
+          />
+        </svg>
+        <div className="tp-ring-center">
+          <div>
+            <span className="tp-ring-num tp-gradient">{display}</span>
+            <span className="tp-ring-max"> /100</span>
+          </div>
+        </div>
+      </div>
+      <span className="tp-band" style={{ color: tone, borderColor: tone }}>
+        <ShieldCheck className="h-3.5 w-3.5" />
+        {band}
+      </span>
     </div>
   )
 }

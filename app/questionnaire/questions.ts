@@ -84,6 +84,37 @@ export const outro = {
     'Your responses are locked in. Watch your inbox — your personalized cybersecurity readiness report and next steps are being prepared.',
 }
 
+/* Rough readiness score (0–100) derived from the security answers. Swappable
+   alongside the questions — if ids change, unmatched answers simply don't
+   contribute. Returns { score, band }. */
+export function computeReadiness(answers: Record<string, unknown>): {
+  score: number
+  band: string
+} {
+  let score = 0
+
+  const conf = answers['confidence']
+  if (typeof conf === 'number') score += (conf / 10) * 30 // up to 30
+
+  const controls = answers['controls']
+  if (Array.isArray(controls)) {
+    const good = controls.filter((c) => c !== 'none').length
+    score += Math.min(good, 5) * 7 // up to 35
+  }
+
+  const ir = answers['incident_response']
+  const irMap: Record<string, number> = { tested: 20, written: 12, informal: 5, no: 0 }
+  if (typeof ir === 'string' && ir in irMap) score += irMap[ir] // up to 20
+
+  const li = answers['last_incident']
+  const liMap: Record<string, number> = { never: 15, old: 10, recent: 4, unsure: 0 }
+  if (typeof li === 'string' && li in liMap) score += liMap[li] // up to 15
+
+  score = Math.max(0, Math.min(100, Math.round(score)))
+  const band = score >= 75 ? 'Strong posture' : score >= 45 ? 'Developing' : 'High exposure'
+  return { score, band }
+}
+
 export const questions: Question[] = [
   {
     id: 'org_size',
