@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Check, Link2, Loader2 } from 'lucide-react'
 import { api, ApiError } from '../../../lib/client'
 import { pathOf } from './dashboard/analytics'
+import { rankLinkCandidates } from '@/lib/foundation/reco/link-ranking'
 
 interface WpItem { id: number; type: 'posts' | 'pages'; link: string; title: string; status: string }
 export interface LinkTarget { url: string; title: string; reason: string }
@@ -19,11 +20,13 @@ function keyOf(it: { type: string; id: number }): string {
   return `${it.type}:${it.id}`
 }
 
+// Picks link targets by topical relevance to the page being linked FROM
+// (title + URL overlap), not an arbitrary slice — the same real pages either
+// way, just the ones actually related to this content, which is what search
+// engines and readers benefit from.
 function pickLinkCandidates(current: WpItem, all: WpItem[], n = 3): { url: string; anchor: string }[] {
-  return all
-    .filter((it) => keyOf(it) !== keyOf(current) && it.link && it.title)
-    .slice(0, n)
-    .map((it) => ({ url: it.link, anchor: it.title.replace(/<[^>]+>/g, '').split(/[·|—–]/)[0].trim() || it.link }))
+  const pool = all.filter((it) => keyOf(it) !== keyOf(current) && it.link && it.title)
+  return rankLinkCandidates({ url: current.link, title: current.title }, pool.map((it) => ({ url: it.link, title: it.title })), n)
 }
 
 type RowState = { status: 'idle' | 'busy' | 'linked' | 'skipped' | 'error'; note: string }

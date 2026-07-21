@@ -70,6 +70,24 @@ describe('fix generation (§2): produces concrete changes', () => {
     const fix = generateFix('alt-text', { url: 'https://x.com/a', imagesMissingAlt: 5 })
     expect(fix.actionable).toBe(false)
   })
+  it('internal-linking picks topically RELEVANT real pages, not an arbitrary slice', () => {
+    const sitePages = [
+      { url: 'https://acme.com/pricing', title: 'Pricing' },
+      { url: 'https://acme.com/about', title: 'About Acme' },
+      { url: 'https://acme.com/fleet-fuel-cards', title: 'Fleet Fuel Cards' },
+      { url: 'https://acme.com/fleet-tracking', title: 'Fleet Tracking Software' },
+    ]
+    const fix = generateFix(
+      'internal-linking',
+      { url: 'https://acme.com/fleet-fuel-management', title: 'Fleet Fuel Management Guide', internalTargets: [] },
+      { sitePages }
+    )
+    expect(fix.actionable).toBe(true)
+    const urls = fix.contentTransform?.type === 'append-internal-links' ? fix.contentTransform.links.map((l) => l.url) : []
+    // The two topically related pages (share "fleet"/"fuel") outrank the two
+    // unrelated ones (pricing, about) despite appearing later in the list.
+    expect(urls.slice(0, 2).sort()).toEqual(['https://acme.com/fleet-fuel-cards', 'https://acme.com/fleet-tracking'])
+  })
   it('does not fabricate LocalBusiness NAP fields (advisory only)', () => {
     const fix = generateFix('local-business-incomplete', { url: 'https://x.com/contact', localBusinessMissingFields: ['address', 'telephone'] })
     expect(fix.actionable).toBe(false)
