@@ -15,6 +15,7 @@ import {
   pathOf, scoreColor, gradeInfo,
 } from './analytics'
 import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
+import { BulkFixBar } from '../BulkFixBar'
 
 const TONE: Record<string, string> = { critical: 'text-[var(--rf-red)]', warning: 'text-[var(--rf-amber)]', info: 'text-[var(--rf-blue-bright)]' }
 
@@ -152,12 +153,13 @@ export function Overview({ a, pages, pageSpeed, domain, onGo }: { a: Analytics; 
 
 /* ── Site Audit ─────────────────────────────────────────────────────────── */
 
-export function Audit({ a, pages }: { a: Analytics; pages: PageResult[] }) {
+export function Audit({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
   const [filter, setFilter] = useState<'all' | Severity>('all')
   const [selected, setSelected] = useState<PageResult | null>(null)
   const issues = filter === 'all' ? a.issues : a.issues.filter((i) => i.severity === filter)
   return (
     <div className="space-y-4">
+      <BulkFixBar projectId={projectId} label="Fix everything" />
       <div className="flex flex-wrap gap-2">{(['all', 'critical', 'warning', 'info'] as const).map((f) => <button key={f} onClick={() => setFilter(f)} className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize ${filter === f ? 'bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]' : 'rf-btn-ghost'}`}>{f}{f !== 'all' ? ` (${a.severityTotals[f]})` : ''}</button>)}</div>
       <div className="rf-card overflow-hidden"><div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Issues ({issues.length})</div><div className="divide-y divide-[var(--rf-card-line)]">{issues.length === 0 ? <p className="px-4 py-6 text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> No issues in this filter.</p> : issues.map((i, idx) => <div key={idx} className="flex items-start justify-between gap-3 px-4 py-3"><span className="flex items-start gap-3 text-sm"><SevIcon s={i.severity} /><span><span className="text-[var(--rf-text)]">{i.title}</span><span className="block text-[11px] text-[var(--rf-faint)]">{i.category}</span></span></span><span className="shrink-0 rf-mono text-[11px] text-[var(--rf-muted)]">{i.affectedPages} page{i.affectedPages > 1 ? 's' : ''}</span></div>)}</div></div>
       <PagesTable pages={pages} onSelect={setSelected} />
@@ -190,10 +192,11 @@ function PageDrawer({ page, onClose }: { page: PageResult; onClose: () => void }
 
 /* ── Content ────────────────────────────────────────────────────────────── */
 
-export function Content({ a, pages }: { a: Analytics; pages: PageResult[] }) {
+export function Content({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
   const thin = pages.filter((p) => p.wordCount < 300); const noSchema = pages.filter((p) => p.schemaTypes.length === 0); const titleIssues = pages.filter((p) => p.titleLength < 30 || p.titleLength > 60); const noH1 = pages.filter((p) => p.h1Count !== 1)
   return (
     <div className="space-y-4">
+      <BulkFixBar projectId={projectId} categories={['content']} label="Fix content issues" />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Duplicate titles" numeric={a.duplicates.titles.length} tone={a.duplicates.titles.length ? TONE.critical : 'text-[var(--rf-green)]'} />
         <Stat label="Duplicate metas" numeric={a.duplicates.metas.length} tone={a.duplicates.metas.length ? TONE.warning : 'text-[var(--rf-green)]'} />
@@ -249,9 +252,10 @@ export function Links({ a, pages, projectId }: { a: Analytics; pages: PageResult
 
 /* ── Indexability ───────────────────────────────────────────────────────── */
 
-export function Indexability({ a, pages }: { a: Analytics; pages: PageResult[] }) {
+export function Indexability({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
   return (
     <div className="space-y-4">
+      <BulkFixBar projectId={projectId} categories={['technical', 'indexability']} label="Fix indexability issues" />
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="Indexable pages" value={`${pages.length - a.totals.nonIndexable}/${pages.length}`} tone="text-[var(--rf-green)]" icon={ShieldCheck} />
         <Stat label="Noindex" numeric={a.index.noindex.length} tone={a.index.noindex.length ? TONE.critical : 'text-[var(--rf-green)]'} />
@@ -270,12 +274,13 @@ export function Indexability({ a, pages }: { a: Analytics; pages: PageResult[] }
 
 /* ── Structured Data ────────────────────────────────────────────────────── */
 
-export function Schema({ a, pages }: { a: Analytics; pages: PageResult[] }) {
+export function Schema({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
   const covered = a.totals.pagesWithSchema; const pct = Math.round((covered / pages.length) * 100)
   const recommended = ['Organization', 'WebSite', 'BreadcrumbList', 'Article', 'FAQPage', 'Product']
   const present = new Set(a.schemaCoverage.map((s) => s.type))
   return (
     <div className="space-y-4">
+      <BulkFixBar projectId={projectId} categories={['schema']} label="Fix structured data" />
       <div className="grid gap-4 lg:grid-cols-[260px_1fr]">
         <div className="rf-card flex flex-col items-center justify-center p-6"><Ring value={pct} /><p className="mt-3 text-xs text-[var(--rf-muted)]">{covered}/{pages.length} pages have schema</p></div>
         <Card title="Schema types found">

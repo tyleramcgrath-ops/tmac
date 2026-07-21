@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { Download, TrendingDown, TrendingUp } from 'lucide-react'
+import { Download, RotateCcw, TrendingDown, TrendingUp } from 'lucide-react'
 import { api, ApiError, type DeploymentDTO, type DeploymentOutcomeDTO } from '../../../lib/client'
 import { summarizeOutcomes } from '../../../lib/outcome-summary'
 import { EmptyState, Spinner } from '../../../lib/ui'
@@ -9,6 +9,63 @@ import { ChangeRow, StatusChip } from './shared'
 import { ConnectWordPress, DeployForm } from './WpForms'
 import { WpBrowseOptimize } from './WpOptimizer'
 import { downloadCsv } from '../../../lib/csv'
+
+// One-click "restore everything" — rolls back every deployment RankForge has
+// made to this project that hasn't already been rolled back (or failed), via
+// the same per-deployment rollback (stored "before" snapshot restore, read-
+// back verified) as the single-row button below, just looped over all of
+// them. Irreversible in the sense that re-applying the original fixes is a
+// fresh deploy, not an undo of the undo — so this always warns before running.
+function RestoreAllButton({ projectId, eligible, onDone }: { projectId: string; eligible: DeploymentDTO[]; onDone: () => void }) {
+  const [phase, setPhase] = useState<'idle' | 'confirm' | 'running' | 'done'>('idle')
+  const [error, setError] = useState('')
+  const [summary, setSummary] = useState<{ ok: number; total: number } | null>(null)
+
+  async function run() {
+    setPhase('running')
+    setError('')
+    try {
+      const { results } = await api.operatorRollback(projectId, eligible.map((d) => d.id))
+      const ok = results.filter((r) => r.ok).length
+      setSummary({ ok, total: eligible.length })
+      setPhase('done')
+      await onDone()
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Restore failed.')
+      setPhase('idle')
+    }
+  }
+
+  if (eligible.length === 0) return null
+
+  if (phase === 'confirm') {
+    return (
+      <div className="rf-card w-full border border-red-500/30 bg-red-500/5 p-4 text-sm">
+        <p className="font-semibold text-white">Roll back all {eligible.length} deployment{eligible.length === 1 ? '' : 's'}?</p>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">
+          This restores every title/meta/content change RankForge has made on this site back to what it was before — one at a time, each verified
+          by read-back. This cannot be undone automatically; re-applying a fix afterward is a fresh deploy.
+        </p>
+        <div className="mt-3 flex gap-2">
+          <button onClick={() => setPhase('idle')} className="rf-btn-ghost rounded-lg px-3 py-1.5 text-xs font-medium">Cancel</button>
+          <button onClick={() => void run()} className="rounded-lg bg-red-500/20 px-3 py-1.5 text-xs font-semibold text-red-200 hover:bg-red-500/30">
+            Yes, roll everything back
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col items-end gap-1">
+      <button onClick={() => setPhase('confirm')} disabled={phase === 'running'} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-red-300 disabled:opacity-60">
+        <RotateCcw className="h-3.5 w-3.5" /> {phase === 'running' ? 'Restoring…' : `Restore everything (${eligible.length})`}
+      </button>
+      {phase === 'done' && summary && <p className="text-[11px] text-[var(--rf-muted)]">Rolled back {summary.ok} of {summary.total}.</p>}
+      {error && <p className="text-[11px] text-red-300">{error}</p>}
+    </div>
+  )
+}
 
 function exportDeploymentsCsv(deployments: DeploymentDTO[]) {
   const rows: (string | number)[][] = [
@@ -183,6 +240,8 @@ export function WordPressTab({ projectId }: { projectId: string }) {
 
   if (state === null) return <Spinner label="Loading WordPress…" />
 
+  const rollbackEligible = state.deployments.filter((d) => d.status !== 'rolled_back' && d.status !== 'failed')
+
   return (
     <div className="space-y-5">
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
@@ -206,13 +265,16 @@ export function WordPressTab({ projectId }: { projectId: string }) {
       {state.deployments.length > 0 && <OutcomeSummaryCard deployments={state.deployments} />}
 
       <div>
-        <div className="mb-2 flex items-center justify-between">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm font-semibold text-white">Deployment history</p>
-          {state.deployments.length > 0 && (
-            <button onClick={() => exportDeploymentsCsv(state.deployments)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium">
-              <Download className="h-3.5 w-3.5" /> Export CSV
-            </button>
-          )}
+          <div className="flex flex-wrap items-center gap-2">
+            {state.deployments.length > 0 && (
+              <button onClick={() => exportDeploymentsCsv(state.deployments)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium">
+                <Download className="h-3.5 w-3.5" /> Export CSV
+              </button>
+            )}
+            <RestoreAllButton projectId={projectId} eligible={rollbackEligible} onDone={load} />
+          </div>
         </div>
         {state.deployments.length === 0 ? (
           <EmptyState title="No deployments yet" detail="Deployments are durable server-side records — they survive refresh, logout, and other devices. Nothing is shown as 'verified' unless the changed value was read back and matched." />

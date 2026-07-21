@@ -50,7 +50,9 @@ export async function runCrawl(
     frontier = data.frontier
     discovered = data.discovered ?? discovered
     onProgress?.(`Crawled ${pages.length} pages${blocked.length ? `, ${blocked.length} blocked` : ''}…`)
-    if (data.done || (frontier && frontier.length === 0) || round > 60) break
+    // Round ceiling only bounds a pathological/runaway crawl — a real site
+    // finishes when its frontier is exhausted (data.done), well under this.
+    if (data.done || (frontier && frontier.length === 0) || round > 3000) break
   }
 
   return { pages, blocked, discovered }
