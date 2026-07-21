@@ -9,6 +9,7 @@
 
 import type { PageSignals } from '../reco/signals'
 import { classifyPage, PREFERRED_SCHEMA } from '../reco/classify'
+import { rankLinkCandidates } from '../reco/link-ranking'
 import type { ContentTransform } from './content-fix'
 
 export type FixKind =
@@ -142,12 +143,14 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
     }
     case 'internal-linking': {
       // Link to a few OTHER real pages from this scan the page doesn't already
-      // link to. Sourced from the crawl — never invented URLs.
+      // link to — ranked by topical relevance (title/URL overlap with this
+      // page), not an arbitrary slice, since a related page is both more
+      // useful to readers and a stronger SEO signal than a random one.
+      // Sourced from the crawl — never invented URLs.
       const already = new Set((s.internalTargets ?? []).map((u) => u.replace(/\/$/, '')))
-      const candidates = (ctx.sitePages ?? [])
+      const pool = (ctx.sitePages ?? [])
         .filter((p) => p.url && p.url.replace(/\/$/, '') !== s.url.replace(/\/$/, '') && !already.has(p.url.replace(/\/$/, '')))
-        .slice(0, 3)
-        .map((p) => ({ url: p.url, anchor: (p.title || '').split(/[·|—–]/)[0].trim() || p.url }))
+      const candidates = rankLinkCandidates({ url: s.url, title: s.title ?? '' }, pool, 3)
       if (candidates.length === 0) {
         return { actionable: false, kind: 'internalLinks', proposedValue: '', currentValue: `${(s.internalTargets ?? []).length} internal links`, note: 'No other crawled pages available to link to — re-run a fuller crawl.' }
       }
@@ -229,6 +232,12 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
     }
     case 'alt-text': {
       return { actionable: false, kind: 'altText', proposedValue: '', currentValue: `${s.imagesMissingAlt ?? 0} images without alt`, note: 'Alt text must describe each specific image; generate per-image with human input.' }
+    }
+    case 'broken-internal-links': {
+      // Advisory: each broken link is either repaired (fix the target/URL) or
+      // removed, which is a judgment call we won't automate. The specific
+      // broken targets are listed in the recommendation's evidence.
+      return { actionable: false, kind: 'internalLinks', proposedValue: '', currentValue: 'links to error (4xx/5xx) pages', note: 'Repair or remove each dead link — deciding which needs human judgment. See the listed targets; re-crawl to confirm none were transient.' }
     }
     default:
       return { actionable: false, kind: 'none', proposedValue: '', currentValue: '', note: `No automated fix generator for rule "${ruleId}".` }

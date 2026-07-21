@@ -13,6 +13,7 @@ import {
   Layers, Scissors, Code2, AlertTriangle, ListChecks, Link2,
 } from 'lucide-react'
 import { api, ApiError } from '../../../lib/client'
+import { rankLinkCandidates } from '@/lib/foundation/reco/link-ranking'
 
 type PostType = 'posts' | 'pages'
 type Filter = 'all' | PostType
@@ -24,14 +25,15 @@ function keyOf(it: { type: PostType; id: number }): string { return `${it.type}:
 
 // Pick up to `n` OTHER real items from the already-loaded site listing as
 // internal-link candidates — never invented, always something the WordPress
-// REST API just returned. Mirrors the rule engine's internal-linking fix
+// REST API just returned. Ranked by topical relevance (title/URL overlap
+// with the page being linked from) rather than an arbitrary slice, since a
+// related page is both more useful to readers and a stronger SEO signal
+// than a random one. Mirrors the rule engine's internal-linking fix
 // generator (lib/foundation/operator/fixgen.ts), just sourced from the
 // items this component already has in hand instead of a crawl.
 function pickLinkCandidates(current: WpItem, all: WpItem[], n = 3): { url: string; anchor: string }[] {
-  return all
-    .filter((it) => keyOf(it) !== keyOf(current) && it.link && it.title)
-    .slice(0, n)
-    .map((it) => ({ url: it.link, anchor: it.title.replace(/<[^>]+>/g, '').split(/[·|—–]/)[0].trim() || it.link }))
+  const pool = all.filter((it) => keyOf(it) !== keyOf(current) && it.link && it.title)
+  return rankLinkCandidates({ url: current.link, title: current.title }, pool.map((it) => ({ url: it.link, title: it.title })), n)
 }
 
 // Trim a title to <=max chars on a word boundary, without an ellipsis (titles

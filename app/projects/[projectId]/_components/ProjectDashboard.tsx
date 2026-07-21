@@ -63,6 +63,13 @@ const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: 
 const ALL_SECTIONS = NAV_GROUPS.flatMap((g) => g.items)
 const SECTION_IDS = ALL_SECTIONS.map((s) => s.id) as [SectionId, ...SectionId[]]
 
+// "Entire site" isn't infinite — it's the same safety ceiling the crawler
+// itself enforces (lib/engine/crawl-batch.ts HARD_CAP). A real site's crawl
+// finishes when its frontier is exhausted, well under this; it's the default
+// so a first audit actually covers the whole site instead of stopping at an
+// arbitrary partial sample.
+const ENTIRE_SITE_MAX_PAGES = 20_000
+
 export function ProjectDashboard({ project, scans, onReload, initialSection = 'command' }: {
   project: ProjectDTO; scans: ScanSummary[]; onReload: () => void; initialSection?: SectionId
 }) {
@@ -76,7 +83,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
   const [pageSpeed, setPageSpeed] = useState<PageSpeed | null>(null)
   const [events, setEvents] = useState<RfEvent[]>([])
   const [loadingPages, setLoadingPages] = useState(true)
-  const [maxPages, setMaxPages] = useState(150)
+  const [maxPages, setMaxPages] = useState(ENTIRE_SITE_MAX_PAGES)
   const [running, setRunning] = useState(false)
   const [progress, setProgress] = useState('')
   const [error, setError] = useState('')
@@ -173,8 +180,10 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
           </Link>
           <div className="flex flex-wrap items-center gap-2">
             <div className="rf-card flex flex-1 items-center gap-2 px-3 py-2 sm:w-72"><Search className="h-4 w-4 shrink-0 text-[var(--rf-faint)]" /><span className="truncate text-sm text-white">{project.domain}</span></div>
-            <select value={maxPages} onChange={(e) => setMaxPages(Number(e.target.value))} className="rf-card cursor-pointer bg-transparent px-2.5 py-2 text-sm text-white focus:outline-none" title="Max pages to crawl" disabled={running}>
-              <option className="bg-[#0b1120]" value={50}>50 pages</option><option className="bg-[#0b1120]" value={150}>150 pages</option><option className="bg-[#0b1120]" value={300}>All (≤300)</option>
+            <select value={maxPages} onChange={(e) => setMaxPages(Number(e.target.value))} className="rf-card cursor-pointer bg-transparent px-2.5 py-2 text-sm text-white focus:outline-none" title="Pages to crawl" disabled={running}>
+              <option className="bg-[#0b1120]" value={ENTIRE_SITE_MAX_PAGES}>Entire site</option>
+              <option className="bg-[#0b1120]" value={150}>Quick scan (150 pages)</option>
+              <option className="bg-[#0b1120]" value={50}>Quick scan (50 pages)</option>
             </select>
             <button onClick={runAudit} className={running ? 'rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold' : 'rf-btn-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold'}>
               {running ? <><StopCircle className="h-4 w-4" /> Stop</> : <><RefreshCw className="h-4 w-4" /> Run Audit</>}
@@ -223,11 +232,11 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
               loadingPages ? <div className="rf-card grid place-items-center py-20"><Loader2 className="h-8 w-8 animate-spin text-[var(--rf-blue-bright)]" /></div>
               : !a ? <EmptyAudit onRun={runAudit} status={status} domain={project.domain} />
               : section === 'overview' ? <Overview a={a} pages={pages} pageSpeed={pageSpeed} domain={project.domain} onGo={go} />
-              : section === 'audit' ? <Audit a={a} pages={pages} />
-              : section === 'content' ? <Content a={a} pages={pages} />
+              : section === 'audit' ? <Audit a={a} pages={pages} projectId={project.id} />
+              : section === 'content' ? <Content a={a} pages={pages} projectId={project.id} />
               : section === 'links' ? <Links a={a} pages={pages} projectId={project.id} />
-              : section === 'indexability' ? <Indexability a={a} pages={pages} />
-              : section === 'schema' ? <Schema a={a} pages={pages} />
+              : section === 'indexability' ? <Indexability a={a} pages={pages} projectId={project.id} />
+              : section === 'schema' ? <Schema a={a} pages={pages} projectId={project.id} />
               : section === 'reports' ? <Reports a={a} pages={pages} domain={project.domain} pageSpeed={pageSpeed} />
               : null
             )}

@@ -16,6 +16,11 @@ import { api, ApiError, type ProjectDTO, type ScanSummary } from '../../../lib/c
 import { runCrawl } from '../../../lib/crawl-runner'
 import { WordPressTab } from './WordPressTab'
 
+// Same safety ceiling as the Command Center's "Entire site" option and the
+// crawler itself (lib/engine/crawl-batch.ts HARD_CAP) — the first audit
+// should cover the whole site, not stop at an arbitrary partial sample.
+const ENTIRE_SITE_MAX_PAGES = 20_000
+
 type StepState = 'todo' | 'active' | 'done'
 
 export function ConnectFirst({ project, scans, onReload, onEnter }: {
@@ -31,7 +36,7 @@ export function ConnectFirst({ project, scans, onReload, onEnter }: {
   const [running, setRunning] = useState(false)
   const [progress, setProgress] = useState('')
   const [error, setError] = useState('')
-  const [maxPages] = useState(150)
+  const [maxPages] = useState(ENTIRE_SITE_MAX_PAGES)
   const stopRef = useRef(false)
 
   useEffect(() => {
@@ -125,7 +130,7 @@ export function ConnectFirst({ project, scans, onReload, onEnter }: {
 
           {/* Step 2 — audit */}
           <StepCard n={2} label="Run your first audit" icon={Radar} state={steps[1].state} open={open === 2} onToggle={() => setOpen(open === 2 ? 0 : 2)}>
-            <p className="text-sm text-[var(--rf-muted)]">RankForge crawls {project.domain} (sitemap-aware, up to {maxPages} pages), scores every page, and finds the fixes worth the most. This is a real crawl and takes a minute or two.</p>
+            <p className="text-sm text-[var(--rf-muted)]">RankForge crawls the entire site at {project.domain} (sitemap-aware), scores every page, and finds the fixes worth the most. This is a real crawl and can take a few minutes on a larger site.</p>
             {error && <p className="mt-2 rounded-lg bg-[var(--rf-red)]/10 px-3 py-2 text-xs text-[var(--rf-red)]">{error}</p>}
             {running && <div className="mt-3 flex items-center gap-2 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2 text-sm text-[var(--rf-muted)]"><Loader2 className="h-4 w-4 animate-spin text-[var(--rf-blue-bright)]" /> {progress}</div>}
             <div className="mt-3 flex gap-2">

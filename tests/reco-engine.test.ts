@@ -9,13 +9,13 @@ import { generateRecommendationsV2 } from '../lib/foundation/reco/engine'
 import type { Scan } from '../lib/foundation/types'
 import { GITHUB_PAGES } from './fixtures/github-signals'
 
-function scanOf(pages: unknown[]): Scan {
+function scanOf(pages: unknown[], blocked: unknown[] = []): Scan {
   const now = new Date('2026-07-17').toISOString()
   return {
     id: 's', projectId: 'p', createdBy: 'u', createdAt: now, status: 'completed',
     startedAt: now, completedAt: now, error: null,
-    summary: { pagesCrawled: pages.length, urlsDiscovered: pages.length, blockedCount: 0, siteScore: 0, critical: 0, warning: 0, info: 0 },
-    pages, blocked: [],
+    summary: { pagesCrawled: pages.length, urlsDiscovered: pages.length, blockedCount: blocked.length, siteScore: 0, critical: 0, warning: 0, info: 0 },
+    pages, blocked,
   }
 }
 const rec = (r: { title: string }) => r.title
@@ -128,6 +128,61 @@ describe('false-negative restoration (Phase B FN-1): cross-page duplicates', () 
     expect(dup).toBeTruthy()
     expect(dup?.evidence.affectedUrls).toHaveLength(3)
     expect(dup?.pageType).toBe('site')
+  })
+})
+
+describe('broken internal links (from the crawl blocked set)', () => {
+  const linker = (url: string, targets: string[]) => ({
+    url, title: url, titleLength: 20, schemaTypes: ['Article'], https: true, indexable: true,
+    metaDescriptionLength: 120, internalTargets: targets,
+  })
+
+  it('flags pages that link to internal URLs the crawler read as 4xx/5xx', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf(
+        [
+          linker('https://x.com/a', ['https://x.com/dead', 'https://x.com/b']),
+          linker('https://x.com/b', ['https://x.com/dead']),
+          linker('https://x.com/dead-source-only', ['https://x.com/gone']),
+        ],
+        [
+          { url: 'https://x.com/dead', status: 404, reason: 'http_error' },
+          { url: 'https://x.com/gone', status: 410, reason: 'http_error' },
+        ]
+      )
+    )
+    const broken = recommendations.find((r) => r.ruleId === 'broken-internal-links')
+    expect(broken).toBeTruthy()
+    expect(broken?.title).toMatch(/2 internal link target\(s\) return errors/)
+    // affectedUrls are the SOURCE pages that contain the dead links.
+    expect(broken?.evidence.affectedUrls).toEqual(
+      expect.arrayContaining(['https://x.com/a', 'https://x.com/b', 'https://x.com/dead-source-only'])
+    )
+    expect(broken?.category).toBe('links')
+  })
+
+  it('does NOT flag policy exclusions (WAF/proxy/non-HTML/connection-fail), only real HTTP errors', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf(
+        [linker('https://x.com/a', ['https://x.com/waf', 'https://x.com/timeout', 'https://x.com/nothtml'])],
+        [
+          { url: 'https://x.com/waf', status: 200, reason: 'waf_challenge' },
+          { url: 'https://x.com/timeout', status: 0, reason: 'empty_response' },
+          { url: 'https://x.com/nothtml', status: 200, reason: 'not_html' },
+        ]
+      )
+    )
+    expect(recommendations.find((r) => r.ruleId === 'broken-internal-links')).toBeUndefined()
+  })
+
+  it('does NOT fire when an error page exists but no crawled page links to it', () => {
+    const { recommendations } = generateRecommendationsV2(
+      scanOf(
+        [linker('https://x.com/a', ['https://x.com/b'])],
+        [{ url: 'https://x.com/orphan-404', status: 404, reason: 'http_error' }]
+      )
+    )
+    expect(recommendations.find((r) => r.ruleId === 'broken-internal-links')).toBeUndefined()
   })
 })
 

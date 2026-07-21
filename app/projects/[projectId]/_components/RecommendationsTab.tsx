@@ -6,6 +6,7 @@ import { api, ApiError, type AgentReportDTO, type ConsensusMetricsDTO, type Reco
 import { EmptyState, Spinner } from '../../../lib/ui'
 import { SeverityDot, StatusChip } from './shared'
 import { DeployFromRecommendation } from './DeployFromRecommendation'
+import { BulkFixBar } from './BulkFixBar'
 import { AgentTeamStrip, ConsensusBlock } from './AgentPanel'
 import { downloadCsv } from '../../../lib/csv'
 
@@ -81,6 +82,7 @@ export function RecommendationsTab({ projectId }: { projectId: string }) {
   return (
     <div className="space-y-3">
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{error}</p>}
+      <BulkFixBar projectId={projectId} label="Fix everything" onFixed={load} />
       <div className="flex justify-end">
         <button onClick={() => exportRecommendationsCsv(recs)} className="rf-btn-ghost inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium">
           <Download className="h-3.5 w-3.5" /> Export CSV

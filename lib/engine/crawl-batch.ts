@@ -21,7 +21,11 @@ import {
 import { assessPageValidity } from '../../app/api/seo-scan/page-validity'
 import { isSafeFetchTarget } from '../../app/api/seo-scan/url-guard'
 
-const HARD_CAP = 300 // safety ceiling on total pages per audit
+// Safety ceiling on total pages per audit — not a target. Batched crawling
+// (this function is called repeatedly with visited/frontier carried forward)
+// means a real site's crawl runs to completion (frontier exhausted) well
+// under this; it exists only to bound a pathological/runaway site.
+const HARD_CAP = 20_000
 const BATCH = 10 // pages analyzed per call
 const CONCURRENCY = 6
 const REQUEST_BUDGET_MS = 38_000
