@@ -4,11 +4,15 @@
 // memory so an operator can retrieve it and tests can assert on it. We NEVER
 // pretend an email was delivered when it wasn't.
 //
-// To enable real delivery, set MAIL_WEBHOOK_URL (a POST endpoint — e.g. a
-// provider relay / serverless function) which receives { to, subject, html }.
-// If unset, delivery is "logged only" and honestly reported as such.
+// Two ways to enable real delivery, tried in order:
+//   1. RESEND_API_KEY — sends directly via Resend's API, no relay to build.
+//   2. MAIL_WEBHOOK_URL — a POST endpoint (e.g. a provider relay / serverless
+//      function) which receives { to, subject, html, text }, for any other
+//      provider.
+// If neither is set, delivery is "logged only" and honestly reported as such.
 
 import { escapeHtml } from './scheduler/notify'
+import { resendConfig } from './env'
 
 export interface OutboundEmail {
   to: string
@@ -34,23 +38,38 @@ export function __resetMailer(): void {
   lastInvitationLinks.clear()
 }
 
-async function post(url: string, body: unknown): Promise<void> {
+async function post(url: string, body: unknown, headers?: Record<string, string>): Promise<void> {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), 10_000)
   try {
-    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: controller.signal })
-    if (!res.ok) throw new Error(`mail webhook responded ${res.status}`)
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(body), signal: controller.signal })
+    if (!res.ok) throw new Error(`mail request responded ${res.status}: ${await res.text().catch(() => '')}`)
   } finally {
     clearTimeout(timer)
   }
 }
 
 export async function sendEmail(email: OutboundEmail): Promise<MailResult> {
+  const resend = resendConfig()
+  if (resend) {
+    try {
+      await post(
+        'https://api.resend.com/emails',
+        { from: resend.from, to: email.to, subject: email.subject, html: email.html, text: email.text },
+        { Authorization: `Bearer ${resend.apiKey}` }
+      )
+      return { delivered: true, via: 'webhook', detail: 'Sent via Resend.' }
+    } catch (err) {
+      console.warn('[mailer] Resend delivery failed:', err instanceof Error ? err.message : err)
+      return { delivered: false, via: 'webhook', detail: `Delivery failed: ${err instanceof Error ? err.message : 'error'}` }
+    }
+  }
+
   const hook = process.env.MAIL_WEBHOOK_URL
   if (!hook) {
     // Honest no-op: record + log, report logged-only.
-    console.log(`[mailer] (logged-only, no MAIL_WEBHOOK_URL) to=${email.to} subject="${email.subject}"`)
-    return { delivered: false, via: 'logged-only', detail: 'MAIL_WEBHOOK_URL not set — email logged, not delivered.' }
+    console.log(`[mailer] (logged-only, no RESEND_API_KEY/MAIL_WEBHOOK_URL) to=${email.to} subject="${email.subject}"`)
+    return { delivered: false, via: 'logged-only', detail: 'No email provider configured — email logged, not delivered.' }
   }
   try {
     await post(hook, { to: email.to, subject: email.subject, html: email.html, text: email.text })
