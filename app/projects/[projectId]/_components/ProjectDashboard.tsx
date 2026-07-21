@@ -242,7 +242,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
             )}
 
             {section === 'recommendations' && <RecommendationsTab projectId={project.id} />}
-            {section === 'rankings' && <Rankings domain={project.domain} />}
+            {section === 'rankings' && <Rankings domain={project.domain} projectId={project.id} />}
             {section === 'backlinks' && <Backlinks domain={project.domain} />}
             {section === 'content-studio' && <ContentTab projectId={project.id} />}
             {section === 'competitors' && <AtlasTab projectId={project.id} />}

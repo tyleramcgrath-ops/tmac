@@ -346,12 +346,12 @@ export const api = {
   // automation / scheduler
   getSchedule: (projectId: string) =>
     req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
-  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' = 'scheduled_scan') =>
+  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking' = 'scheduled_scan') =>
     req<{ schedule: ScheduleDTO }>(`/api/projects/${projectId}/schedule`, {
       method: 'PUT',
       body: JSON.stringify({ frequency, enabled, kind }),
     }),
-  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' = 'scheduled_scan') =>
+  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking' = 'scheduled_scan') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/schedule?kind=${kind}`, { method: 'DELETE' }),
 
   // wordpress
@@ -472,6 +472,26 @@ export const api = {
     }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
 
+  // ── Rank tracking history ──
+  listTrackedKeywords: (projectId: string) =>
+    req<{ keywords: TrackedKeywordDTO[] }>(`/api/projects/${projectId}/rankings/keywords`),
+  addTrackedKeyword: (projectId: string, keyword: string) =>
+    req<{ keyword: TrackedKeywordDTO }>(`/api/projects/${projectId}/rankings/keywords`, {
+      method: 'POST',
+      body: JSON.stringify({ keyword }),
+    }),
+  removeTrackedKeyword: (projectId: string, id: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/rankings/keywords?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  checkTrackedKeywordNow: (projectId: string, keyword: string) =>
+    req<{ snapshot: RankSnapshotDTO }>(`/api/projects/${projectId}/rankings/keywords`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'check', keyword }),
+    }),
+  rankingHistory: (projectId: string, keyword?: string) =>
+    req<{ snapshots: RankSnapshotDTO[] }>(
+      `/api/projects/${projectId}/rankings/history${keyword ? `?keyword=${encodeURIComponent(keyword)}` : ''}`
+    ),
+
   // ── Content Studio ──
   listContentBriefs: (projectId: string) =>
     req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
@@ -543,6 +563,18 @@ export interface CompetitorDTO {
   label: string
   createdAt: string
   lastSnapshotAt?: string | null
+}
+export interface TrackedKeywordDTO {
+  id: string
+  keyword: string
+  createdAt: string
+}
+export interface RankSnapshotDTO {
+  id: string
+  keyword: string
+  position: number | null
+  url: string | null
+  checkedAt: string
 }
 export interface OverlapDTO {
   businessOverlap: ObservationDTO<number>

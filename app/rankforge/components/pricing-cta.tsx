@@ -8,65 +8,25 @@ import { ScanForm } from './scan'
 /* 7. Pricing                                                          */
 /* ================================================================== */
 
-const PLANS: {
-  name: string
-  price: number
-  blurb: string
-  cta: string
-  featured: boolean
-  features: string[]
-  soon: string[]
-}[] = [
-  {
-    name: 'Starter',
-    price: 99,
-    blurb: 'For solo consultants and growing sites.',
-    cta: 'Start Free Scan',
-    featured: false,
-    features: [
-      'Full-site audits — up to 300 pages per crawl',
-      'Technical, content, schema & AI-readiness scores',
-      'Prioritized Fix List Engine',
-      'Core Web Vitals via Google PageSpeed',
-      'JSON export & print/PDF reports',
-    ],
-    soon: ['Rank tracking over time'],
-  },
-  {
-    name: 'Growth',
-    price: 199,
-    blurb: 'For in-house teams scaling organic search.',
-    cta: 'Start Free Scan',
-    featured: true,
-    features: [
-      'Everything in Starter',
-      'Keyword rank checks (point-in-time Google positions)',
-      'Competitor top-10 comparison per keyword',
-      'WordPress deploy: review, approve & undo',
-      'Forge — AI SEO assistant + title/meta rewrites',
-      'Automatic scheduled re-audits (daily or weekly)',
-      'Outcome measurement — real Search Console before/after per fix',
-    ],
-    soon: ['Regression monitoring & alerts', 'Backlink analysis'],
-  },
-  {
-    name: 'Agency',
-    price: 399,
-    blurb: 'For agencies running SEO for many clients.',
-    cta: 'Talk to Sales',
-    featured: false,
-    features: [
-      'Everything in Growth',
-      'Embeddable lead-capture audit widget',
-      'Per-embed branding: your name, logo & colors',
-      'Priority support & onboarding',
-    ],
-    soon: [
-      'White-label dashboards & client portals',
-      'Scheduled reports & team seats',
-    ],
-  },
-]
+const PLAN = {
+  name: 'RankForge Pro',
+  price: 49,
+  blurb: 'Everything, for every site you manage. No tiers, no seat limits.',
+  cta: 'Start your 14-day free trial',
+  features: [
+    'Full-site audits — the entire site, sitemap-aware, not a capped sample',
+    'Technical, content, schema & AI-readiness scoring',
+    'Prioritized Fix List Engine with one-click bulk fixes',
+    'WordPress deploy: automatic, verified by read-back, reversible any time',
+    'Forge — AI SEO assistant + title/meta rewrites',
+    'Automatic scheduled re-audits, monitor digests & competitor refresh',
+    'Team invitations & role-based access',
+    'Keyword rank tracking — real position history over time, not just point-in-time',
+    'Regression monitoring — email alert when a verified fix reverts on the live site',
+    'Outcome measurement — real Search Console before/after per fix',
+  ],
+  soon: ['Backlink analysis'],
+}
 
 export function Pricing() {
   return (
@@ -81,85 +41,63 @@ export function Pricing() {
           </Reveal>
           <Reveal delay={80}>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-              Simple plans.{' '}
+              One plan.{' '}
               <span className="rf-gradient-text">Ruthless ROI.</span>
             </h2>
           </Reveal>
           <Reveal delay={140}>
             <p className="mt-4 text-[var(--rf-muted)]">
-              One subscription that consolidates your core SEO workflow. Cancel
-              anytime. 14-day money-back guarantee.
+              Every feature, from day one. Audits, recommendations, and rollback are always free —
+              the trial and subscription only gate automatic WordPress deploys. Cancel anytime.
             </p>
           </Reveal>
         </div>
 
-        <div className="mt-14 grid items-stretch gap-5 lg:grid-cols-3">
-          {PLANS.map((p, i) => (
-            <Reveal key={p.name} delay={i * 90}>
-              <div
-                className={`rf-card relative flex h-full flex-col p-7 ${
-                  p.featured
-                    ? 'rf-topline border-[var(--rf-card-line-strong)] shadow-[0_40px_90px_-40px_rgba(47,107,255,0.6)]'
-                    : 'rf-card-hover'
-                }`}
+        <div className="mx-auto mt-14 max-w-md">
+          <Reveal>
+            <div className="rf-card rf-topline relative flex h-full flex-col border-[var(--rf-card-line-strong)] p-7 shadow-[0_40px_90px_-40px_rgba(47,107,255,0.6)]">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[var(--rf-blue-bright)] to-[var(--rf-cyan)] px-3 py-1 text-[11px] font-semibold text-[#04101f]">
+                14-day free trial
+              </span>
+              <h3 className="text-lg font-semibold">{PLAN.name}</h3>
+              <p className="mt-1 text-sm text-[var(--rf-muted)]">{PLAN.blurb}</p>
+              <div className="mt-5 flex items-baseline gap-1">
+                <span className="text-4xl font-semibold text-white">${PLAN.price}</span>
+                <span className="text-sm text-[var(--rf-faint)]">/mo, after your trial</span>
+              </div>
+
+              <a
+                href="/signup"
+                className="rf-btn-primary mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold"
               >
-                {p.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[var(--rf-blue-bright)] to-[var(--rf-cyan)] px-3 py-1 text-[11px] font-semibold text-[#04101f]">
-                    Most popular
-                  </span>
-                )}
-                <h3 className="text-lg font-semibold">{p.name}</h3>
-                <p className="mt-1 text-sm text-[var(--rf-muted)]">{p.blurb}</p>
-                <div className="mt-5 flex items-baseline gap-1">
-                  <span className="text-4xl font-semibold text-white">
-                    ${p.price}
-                  </span>
-                  <span className="text-sm text-[var(--rf-faint)]">/mo</span>
-                </div>
+                {PLAN.cta} <ArrowRight className="h-4 w-4" />
+              </a>
 
-                <a
-                  href="#scan"
-                  className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold ${
-                    p.featured ? 'rf-btn-primary' : 'rf-btn-ghost'
-                  }`}
-                >
-                  {p.cta} <ArrowRight className="h-4 w-4" />
-                </a>
-
-                <ul className="mt-7 space-y-3 border-t border-[var(--rf-card-line)] pt-6">
-                  {p.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-2.5 text-sm text-[var(--rf-text)]"
-                    >
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-green)]" />
+              <ul className="mt-7 space-y-3 border-t border-[var(--rf-card-line)] pt-6">
+                {PLAN.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-sm text-[var(--rf-text)]">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-green)]" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 border-t border-[var(--rf-card-line)] pt-5">
+                <p className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
+                  Coming soon — not available yet
+                </p>
+                <ul className="mt-3 space-y-2.5">
+                  {PLAN.soon.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-sm text-[var(--rf-faint)]">
+                      <span className="rf-mono mt-0.5 shrink-0 rounded border border-[var(--rf-card-line)] px-1.5 text-[9px] uppercase tracking-wider">
+                        Soon
+                      </span>
                       {f}
                     </li>
                   ))}
                 </ul>
-                {p.soon.length > 0 && (
-                  <div className="mt-6 border-t border-[var(--rf-card-line)] pt-5">
-                    <p className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
-                      Coming soon — not available yet
-                    </p>
-                    <ul className="mt-3 space-y-2.5">
-                      {p.soon.map((f) => (
-                        <li
-                          key={f}
-                          className="flex items-start gap-2.5 text-sm text-[var(--rf-faint)]"
-                        >
-                          <span className="rf-mono mt-0.5 shrink-0 rounded border border-[var(--rf-card-line)] px-1.5 text-[9px] uppercase tracking-wider">
-                            Soon
-                          </span>
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
               </div>
-            </Reveal>
-          ))}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

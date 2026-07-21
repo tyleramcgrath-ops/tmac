@@ -6,15 +6,15 @@ import { Pricing, FinalCTA } from '../../rankforge/components/pricing-cta'
 export const metadata: Metadata = {
   title: 'Pricing | RankForge',
   description:
-    'Simple plans for operators, consultants, and agencies. Audit, fix, and safely deploy SEO changes to WordPress — with every change verified and reversible, and real proof it moved Search Console metrics.',
+    'One plan, $49/mo after a 14-day free trial. Audit, fix, and safely deploy SEO changes to WordPress — with every change verified and reversible, and real proof it moved Search Console metrics.',
   alternates: { canonical: '/pricing' },
 }
 
 const FAQ_ITEMS = [
-  { q: 'Is there a free option?', a: 'Yes — running a full audit and seeing the fix list is free, no credit card required, on any plan tier.' },
-  { q: 'What\'s the difference between Starter and Growth?', a: 'Starter covers full audits and the prioritized fix list. Growth adds the WordPress deploy loop (review, approve, deploy, verify, undo), Forge\'s AI-written title/meta rewrites, automatic scheduled re-audits, and Search Console outcome measurement — the parts of the product that actually make and prove changes on your live site, not just report on it.' },
-  { q: 'What does Agency add beyond Growth?', a: 'Everything in Growth, applied across a portfolio of client sites, plus the embeddable lead-capture audit widget with per-client branding and priority onboarding support.' },
-  { q: 'Can I cancel?', a: 'Yes, cancel anytime.' },
+  { q: 'Is there a free option?', a: 'Yes — running a full audit, seeing the prioritized fix list, and rolling back any change are always free, no credit card required, forever.' },
+  { q: 'What does the trial include?', a: 'Everything. Every feature is unlocked for 14 days — including automatic WordPress deploys — so you can see real fixes go live and get verified before paying anything.' },
+  { q: 'What happens after my trial ends?', a: 'Audits, recommendations, and rollback stay free indefinitely. The $49/mo subscription is only required to keep RankForge automatically deploying fixes to your live WordPress site.' },
+  { q: 'Can I cancel?', a: 'Yes, cancel anytime from your billing settings.' },
 ]
 
 export default function PricingPage() {
@@ -22,11 +22,11 @@ export default function PricingPage() {
     <>
       <PageIntro
         eyebrow="Pricing"
-        title="Pricing that scales from one site to a whole agency"
-        sub="Start free. Upgrade when you’re deploying fixes across more sites. Every plan includes the verified, reversible WordPress deploy loop — that’s the whole point."
+        title="One plan. Everything included."
+        sub="Start free. Try every feature — including automatic WordPress deploy — for 14 days. Audits, recommendations, and rollback stay free forever either way."
       />
       <Pricing />
-      <Faq eyebrow="Pricing FAQ" title="Plans — questions, answered" items={FAQ_ITEMS} />
+      <Faq eyebrow="Pricing FAQ" title="Pricing — questions, answered" items={FAQ_ITEMS} />
       <FinalCTA />
     </>
   )

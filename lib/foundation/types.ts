@@ -237,6 +237,32 @@ export interface Competitor {
   snapshotPages?: { url: string; title: string }[]
 }
 
+// A keyword a project tracks Google rank position for over time. The keyword
+// list itself is just config; RankSnapshot rows are the actual historical
+// data, one per (keyword, check). Position tracking requires SERPAPI_KEY —
+// without it the schedule still exists but produces no snapshots, same
+// honest-fallback pattern as every other optional external integration.
+export interface TrackedKeyword {
+  id: string
+  projectId: string
+  keyword: string
+  addedBy: string
+  createdAt: string
+}
+
+// One real, timestamped Google position check for a tracked keyword. `null`
+// position means genuinely not found in the top results checked (SERPAPI_KEY
+// returns up to 100), never a placeholder — the UI must render "not ranking"
+// rather than treat null as zero.
+export interface RankSnapshot {
+  id: string
+  projectId: string
+  keyword: string
+  position: number | null
+  url: string | null
+  checkedAt: string
+}
+
 // Rolling baseline for Mission Atlas change detection (Phase G). One row per
 // project — the last OBSERVED gsc/backlinks/aiVisibility values, so the next
 // Atlas load can report real "what changed since last time" instead of always
@@ -323,7 +349,7 @@ export type SeoPlugin = 'aioseo' | 'rankmath' | 'yoast' | 'core'
 // ── Scheduler / background jobs ──────────────────────────────────────────────
 // A durable job queue (Postgres in prod, file store in dev) drained by a
 // cron-triggered runner. See SCHEDULER_DESIGN.md.
-export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor' | 'competitor_refresh'
+export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor' | 'competitor_refresh' | 'rank_tracking'
 export type JobStatus = 'queued' | 'running' | 'succeeded' | 'failed' | 'canceled'
 
 export interface Job {

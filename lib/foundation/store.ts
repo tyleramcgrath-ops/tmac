@@ -18,9 +18,11 @@ import type {
   PilotFeedback,
   Project,
   ProviderConnection,
+  RankSnapshot,
   Recommendation,
   Scan,
   Schedule,
+  TrackedKeyword,
   User,
   WpConnection,
   WpDeployment,
@@ -67,6 +69,12 @@ export interface FoundationStore {
   listCompetitors(projectId: string): Promise<Competitor[]>
   getCompetitor(id: string): Promise<Competitor | null>
   deleteCompetitor(id: string): Promise<void>
+  // rank tracking (keyword position history)
+  addTrackedKeyword(kw: TrackedKeyword): Promise<void>
+  listTrackedKeywords(projectId: string): Promise<TrackedKeyword[]>
+  removeTrackedKeyword(id: string): Promise<void>
+  recordRankSnapshot(snap: RankSnapshot): Promise<void>
+  listRankSnapshots(projectId: string, keyword?: string): Promise<RankSnapshot[]>
   // Atlas change-detection baseline (Phase G)
   getAtlasHistory(projectId: string): Promise<AtlasHistory | null>
   upsertAtlasHistory(history: AtlasHistory): Promise<void>

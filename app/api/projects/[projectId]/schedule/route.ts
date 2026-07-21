@@ -14,7 +14,7 @@ import type { JobKind, Schedule } from '@/lib/foundation/types'
 // Schedule kinds a project can turn on from the UI. 'outcome_capture' is
 // scheduler-internal (enqueued per-deployment, never user-configured) so it's
 // deliberately excluded here.
-const SUPPORTED_KINDS: JobKind[] = ['scheduled_scan', 'monitor', 'competitor_refresh']
+const SUPPORTED_KINDS: JobKind[] = ['scheduled_scan', 'monitor', 'competitor_refresh', 'rank_tracking']
 
 export const runtime = 'nodejs'
 

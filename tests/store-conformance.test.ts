@@ -170,6 +170,17 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       await store.deleteCompetitor(comp.id)
       expect(await store.getCompetitor(comp.id)).toBeNull()
 
+      // rank tracking
+      const kwId = uid()
+      await store.addTrackedKeyword({ id: kwId, projectId: p.id, keyword: 'best crm software', addedBy: u.id, createdAt: now() })
+      expect((await store.listTrackedKeywords(p.id)).map((k) => k.keyword)).toContain('best crm software')
+      await store.recordRankSnapshot({ id: uid(), projectId: p.id, keyword: 'best crm software', position: 7, url: 'https://acme.com/crm', checkedAt: now() })
+      await store.recordRankSnapshot({ id: uid(), projectId: p.id, keyword: 'best crm software', position: null, url: null, checkedAt: now() })
+      expect((await store.listRankSnapshots(p.id, 'best crm software')).length).toBe(2)
+      expect((await store.listRankSnapshots(p.id)).length).toBeGreaterThanOrEqual(2)
+      await store.removeTrackedKeyword(kwId)
+      expect(await store.listTrackedKeywords(p.id)).toHaveLength(0)
+
       // Atlas change-detection baseline (Phase G)
       expect(await store.getAtlasHistory(p.id)).toBeNull()
       await store.upsertAtlasHistory({ projectId: p.id, data: { gsc: null }, capturedAt: now() })
