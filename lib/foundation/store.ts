@@ -37,6 +37,9 @@ export interface FoundationStore {
   updateOrg(org: Organization): Promise<void>
   getOrg(id: string): Promise<Organization | null>
   listOrgsForUser(userId: string): Promise<Organization[]>
+  // Global org list — pilot-admin only (see requireStaff); never exposed to
+  // regular tenant-scoped routes.
+  listOrgs(): Promise<Organization[]>
   getMembership(orgId: string, userId: string): Promise<OrgMember | null>
   listMembers(orgId: string): Promise<OrgMember[]>
   addMember(member: OrgMember): Promise<void>
@@ -106,6 +109,8 @@ export interface FoundationStore {
   // pilot feedback / issues (RC2 P6)
   createFeedback(entry: PilotFeedback): Promise<void>
   listFeedback(orgId: string, limit?: number): Promise<PilotFeedback[]>
+  // Cross-org feedback — pilot-admin only.
+  listAllFeedback(limit?: number): Promise<PilotFeedback[]>
   // audit log
   appendAudit(entry: AuditLogEntry): Promise<void>
   listAudit(orgId: string, limit?: number): Promise<AuditLogEntry[]>

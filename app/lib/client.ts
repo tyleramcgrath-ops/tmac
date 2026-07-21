@@ -46,6 +46,30 @@ export interface InvitationDTO {
   createdAt: string
   expiresAt: string
 }
+export interface PilotDTO {
+  status: 'active' | 'expired' | 'disabled'
+  expiresAt: string | null
+  notes?: string
+}
+export interface AdminOrgDTO {
+  id: string
+  name: string
+  pilot: PilotDTO | null
+  ownerEmail: string | null
+  memberCount: number
+  projectCount: number
+  createdAt: string
+}
+export interface AdminFeedbackDTO {
+  id: string
+  orgId: string
+  orgName: string
+  userEmail: string
+  projectId: string | null
+  kind: 'feedback' | 'issue'
+  message: string
+  createdAt: string
+}
 export interface ProjectDTO {
   id: string
   orgId: string
@@ -246,6 +270,15 @@ export const api = {
   acceptInvitation: (token: string) =>
     req<{ org: Org | null }>(`/api/invitations/${token}`, { method: 'POST' }),
 
+  // pilot admin (staff-only; 404s for non-staff)
+  adminListOrgs: () => req<{ orgs: AdminOrgDTO[] }>('/api/admin/orgs'),
+  adminSetPilot: (orgId: string, pilot: PilotDTO) =>
+    req<{ org: { id: string; name: string; pilot: PilotDTO } }>(`/api/admin/orgs/${orgId}/pilot`, {
+      method: 'PATCH',
+      body: JSON.stringify(pilot),
+    }),
+  adminListFeedback: () => req<{ feedback: AdminFeedbackDTO[] }>('/api/admin/feedback'),
+
   // projects
   listProjects: () => req<{ projects: ProjectDTO[] }>('/api/projects'),
   createProject: (input: Partial<ProjectDTO> & { domain: string }) =>
@@ -313,12 +346,12 @@ export const api = {
   // automation / scheduler
   getSchedule: (projectId: string) =>
     req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
-  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' = 'scheduled_scan') =>
+  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' = 'scheduled_scan') =>
     req<{ schedule: ScheduleDTO }>(`/api/projects/${projectId}/schedule`, {
       method: 'PUT',
       body: JSON.stringify({ frequency, enabled, kind }),
     }),
-  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' = 'scheduled_scan') =>
+  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' = 'scheduled_scan') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/schedule?kind=${kind}`, { method: 'DELETE' }),
 
   // wordpress

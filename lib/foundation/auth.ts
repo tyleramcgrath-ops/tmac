@@ -10,7 +10,7 @@ import { randomUUID } from 'crypto'
 import { createSessionToken, readSessionToken } from './crypto'
 import { getStore } from './store'
 import { clientKey, rateLimit } from './rate-limit'
-import { EnvError } from './env'
+import { EnvError, isStaffEmail } from './env'
 import type { Organization, Project, Role, User } from './types'
 
 export const SESSION_COOKIE = 'rf_session'
@@ -147,6 +147,13 @@ export async function requireOrgRole(
     throw new HttpError(403, `This action requires the ${minRole} role.`)
   }
   return { org, role: membership.role }
+}
+
+// Gate for the RankForge-staff pilot admin surface. 404s (not 403) for the
+// same reason cross-tenant resources 404 — the admin surface's existence
+// isn't disclosed to callers who don't have it.
+export function requireStaff(user: User): void {
+  if (!isStaffEmail(user.email)) throw new HttpError(404, 'Not found.')
 }
 
 export async function audit(

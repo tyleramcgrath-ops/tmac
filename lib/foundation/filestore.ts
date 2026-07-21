@@ -147,6 +147,9 @@ export class FileFoundationStore implements FoundationStore {
     const orgIds = new Set(members.filter((m) => m.userId === userId).map((m) => m.orgId))
     return (await this.read('orgs')).filter((o) => orgIds.has(o.id))
   }
+  async listOrgs() {
+    return (await this.read('orgs')).slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  }
   async getMembership(orgId: string, userId: string) {
     return (
       (await this.read('members')).find((m) => m.orgId === orgId && m.userId === userId) ?? null
@@ -415,6 +418,12 @@ export class FileFoundationStore implements FoundationStore {
   async listFeedback(orgId: string, limit = 100) {
     return (await this.read('feedback'))
       .filter((f) => f.orgId === orgId)
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, limit)
+  }
+  async listAllFeedback(limit = 200) {
+    return (await this.read('feedback'))
+      .slice()
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
       .slice(0, limit)
   }
