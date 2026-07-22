@@ -373,6 +373,20 @@ function GoogleIntegrationCard({ it, onDisconnect, onSaveResource }: { it: Integ
           <button onClick={() => onSaveResource(resource)} className="rf-btn-ghost rounded-md px-2 py-1.5 text-[11px]">Save</button>
         </div>
       )}
+      {connected && it.kind === 'search-console' && (
+        // Without an override we assume a Domain property (sc-domain:<domain>).
+        // If the site is verified as a URL-prefix property instead, the account
+        // can be a full user there and still get a 403 on the guessed
+        // sc-domain resource — let the user point us at the exact property.
+        <div className="mt-2 flex items-end gap-1.5">
+          <div className="flex-1">
+            <Field label="Search Console property (optional override)">
+              <input className={inputClass} placeholder="e.g. https://example.com/ or sc-domain:example.com" value={resource} onChange={(e) => setResource(e.target.value)} />
+            </Field>
+          </div>
+          <button onClick={() => onSaveResource(resource)} className="rf-btn-ghost rounded-md px-2 py-1.5 text-[11px]">Save</button>
+        </div>
+      )}
       {connected && (
         <button onClick={onDisconnect} className="mt-2 rf-btn-ghost rounded-md px-2 py-1 text-[10px] text-red-300">Disconnect</button>
       )}
