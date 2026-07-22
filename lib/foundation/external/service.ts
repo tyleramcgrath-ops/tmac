@@ -20,7 +20,7 @@ import { NullSearchConsoleProvider } from './providers/search-console'
 import { NullAnalyticsProvider } from './providers/analytics'
 import { NullTrendProvider } from './providers/trends'
 import { NullBacklinkProvider } from './providers/backlinks'
-import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry, type GscTrendPoint, type Ga4TrendPoint } from './providers/google'
+import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry, type GscTrendPoint, type Ga4TrendPoint, type GscBreakdownRow, type Ga4ChannelRow } from './providers/google'
 import type { FoundationStore } from '../store'
 import { googleOAuthConfig } from '../env'
 import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
@@ -163,6 +163,36 @@ export async function fetchGoogleTrends(
   return {
     gsc: gscOutcome.ok ? { ok: true, points: gscOutcome.data } : { ok: false, reason: gscOutcome.detail },
     analytics: analyticsOutcome.ok ? { ok: true, points: analyticsOutcome.data } : { ok: false, reason: analyticsOutcome.detail },
+  }
+}
+
+// Device/country (GSC) + traffic-channel (GA4) breakdowns — "see everything
+// you'd see in the native Search Console / Analytics UI", not just the
+// query/page tables the atlas snapshot already carries.
+export interface GoogleBreakdowns {
+  gscDevice: { ok: true; rows: GscBreakdownRow[] } | { ok: false; reason: string }
+  gscCountry: { ok: true; rows: GscBreakdownRow[] } | { ok: false; reason: string }
+  ga4Channel: { ok: true; rows: Ga4ChannelRow[] } | { ok: false; reason: string }
+}
+
+export async function fetchGoogleBreakdowns(
+  store: FoundationStore,
+  projectId: string,
+  project: { domain: string },
+  nowMs: number
+): Promise<GoogleBreakdowns> {
+  const { searchConsole, analytics } = await resolveGoogleProviders(store, projectId, project, nowMs)
+  const disconnectedGsc = { ok: false as const, reason: 'disconnected' as const, detail: 'Search Console not connected.' }
+  const disconnectedGa4 = { ok: false as const, reason: 'disconnected' as const, detail: 'Google Analytics not connected.' }
+  const [deviceOutcome, countryOutcome, channelOutcome] = await Promise.all([
+    searchConsole ? searchConsole.fetchBreakdown('device') : Promise.resolve(disconnectedGsc),
+    searchConsole ? searchConsole.fetchBreakdown('country') : Promise.resolve(disconnectedGsc),
+    analytics ? analytics.fetchChannelBreakdown() : Promise.resolve(disconnectedGa4),
+  ])
+  return {
+    gscDevice: deviceOutcome.ok ? { ok: true, rows: deviceOutcome.data } : { ok: false, reason: deviceOutcome.detail },
+    gscCountry: countryOutcome.ok ? { ok: true, rows: countryOutcome.data } : { ok: false, reason: countryOutcome.detail },
+    ga4Channel: channelOutcome.ok ? { ok: true, rows: channelOutcome.data } : { ok: false, reason: channelOutcome.detail },
   }
 }
 

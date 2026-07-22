@@ -155,6 +155,7 @@ export async function listSearchConsoleSites(deps: GoogleProviderDeps): Promise<
 // ── Search Console ───────────────────────────────────────────────────────────
 interface GscApiResponse { rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] }
 export interface GscTrendPoint { date: string; clicks: number; impressions: number; ctr: number; position: number }
+export interface GscBreakdownRow { key: string; clicks: number; impressions: number; ctr: number; position: number }
 
 export class GoogleSearchConsoleProvider implements SearchConsoleProvider {
   readonly kind = 'search-console' as const
@@ -202,6 +203,25 @@ export class GoogleSearchConsoleProvider implements SearchConsoleProvider {
         .map((r) => ({ date: r.keys[0] ?? '', clicks: r.clicks ?? 0, impressions: r.impressions ?? 0, ctr: r.ctr ?? 0, position: r.position ?? 0 }))
         .sort((a, b) => a.date.localeCompare(b.date))
       return { ok: true, data: points, grade: 'observed', source: 'gsc', fetchedAt: new Date(this.deps.nowMs).toISOString() }
+    } catch (err) {
+      return failureFrom(err)
+    }
+  }
+
+  // Clicks/impressions/ctr/position broken down by device or country over the
+  // trailing 28 days — "see everything you'd see in Search Console itself",
+  // not just the query/page table. Same shape, different single dimension.
+  async fetchBreakdown(dimension: 'device' | 'country'): Promise<ProviderOutcome<GscBreakdownRow[]>> {
+    try {
+      const token = await freshToken(this.deps)
+      const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
+      const to = ymd(this.deps.nowMs)
+      const url = `${GSC_ENDPOINT}/${encodeURIComponent(this.site)}/searchAnalytics/query`
+      const json = (await postJson(url, token, { startDate: from, endDate: to, dimensions: [dimension], rowLimit: 50 }, this.deps.fetchImpl)) as GscApiResponse
+      const rows: GscBreakdownRow[] = (json.rows ?? [])
+        .map((r) => ({ key: r.keys[0] ?? '', clicks: r.clicks ?? 0, impressions: r.impressions ?? 0, ctr: r.ctr ?? 0, position: r.position ?? 0 }))
+        .sort((a, b) => b.clicks - a.clicks)
+      return { ok: true, data: rows, grade: 'observed', source: 'gsc', fetchedAt: new Date(this.deps.nowMs).toISOString() }
     } catch (err) {
       return failureFrom(err)
     }
@@ -255,6 +275,7 @@ interface Ga4ApiResponse {
   metadata?: { currencyCode?: string }
 }
 export interface Ga4TrendPoint { date: string; sessions: number; engagedSessions: number; conversions: number; revenue: number | null }
+export interface Ga4ChannelRow { channel: string; sessions: number; engagedSessions: number; conversions: number }
 
 export class GoogleAnalyticsProvider implements AnalyticsProvider {
   readonly kind = 'analytics' as const
@@ -329,6 +350,33 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
         return { date, sessions: m[0] ?? 0, engagedSessions: m[1] ?? 0, conversions: m[2] ?? 0, revenue: currency ? m[3] ?? 0 : null }
       })
       return { ok: true, data: points, grade: 'observed', source: 'ga4', fetchedAt: new Date(this.deps.nowMs).toISOString() }
+    } catch (err) {
+      return failureFrom(err)
+    }
+  }
+
+  // Sessions/engagement/conversions broken down by default channel group
+  // (Organic Search, Direct, Referral, Paid Search, …) over the trailing 28
+  // days — the traffic-source view GA4's own reports lead with.
+  async fetchChannelBreakdown(): Promise<ProviderOutcome<Ga4ChannelRow[]>> {
+    if (!this.propertyId) return { ok: false, reason: 'error', detail: 'No GA4 property selected — set the property id to enable Analytics.' }
+    try {
+      const token = await freshToken(this.deps)
+      const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
+      const to = ymd(this.deps.nowMs)
+      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const json = (await postJson(url, token, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+        metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'keyEvents' }],
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        limit: 20,
+      }, this.deps.fetchImpl)) as Ga4ApiResponse
+      const rows: Ga4ChannelRow[] = (json.rows ?? []).map((r) => {
+        const m = r.metricValues.map((v) => Number(v.value) || 0)
+        return { channel: r.dimensionValues[0]?.value ?? '(unassigned)', sessions: m[0] ?? 0, engagedSessions: m[1] ?? 0, conversions: m[2] ?? 0 }
+      })
+      return { ok: true, data: rows, grade: 'observed', source: 'ga4', fetchedAt: new Date(this.deps.nowMs).toISOString() }
     } catch (err) {
       return failureFrom(err)
     }

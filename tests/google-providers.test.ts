@@ -104,6 +104,24 @@ describe('GoogleSearchConsoleProvider', () => {
       expect(out.data[0].clicks).toBe(5)
     }
   })
+  it('returns a device/country breakdown sorted by clicks descending', async () => {
+    let requestedDimensions: string[] = []
+    const provider = new GoogleSearchConsoleProvider('gsc', deps(async (_u, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'))
+      requestedDimensions = body.dimensions ?? []
+      return ok({ rows: [
+        { keys: ['MOBILE'], clicks: 3, impressions: 40, ctr: 0.075, position: 5.1 },
+        { keys: ['DESKTOP'], clicks: 9, impressions: 80, ctr: 0.11, position: 3.4 },
+      ] })
+    }), null, 'x.com')
+    const out = await provider.fetchBreakdown('device')
+    expect(requestedDimensions).toEqual(['device'])
+    expect(out.ok).toBe(true)
+    if (out.ok) {
+      expect(out.data.map((r) => r.key)).toEqual(['DESKTOP', 'MOBILE'])
+      expect(out.data[0].clicks).toBe(9)
+    }
+  })
 })
 
 describe('GoogleAnalyticsProvider', () => {
@@ -161,6 +179,23 @@ describe('GoogleAnalyticsProvider', () => {
       expect(out.data[0].date).toBe('2026-07-01')
       expect(out.data[0].sessions).toBe(10)
       expect(out.data[0].revenue).toBeNull()
+    }
+  })
+  it('returns a channel-group breakdown (Organic Search, Direct, …)', async () => {
+    let requestedDimensions: string[] = []
+    const provider = new GoogleAnalyticsProvider('ga4', deps(async (_u, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'))
+      requestedDimensions = (body.dimensions ?? []).map((d: { name: string }) => d.name)
+      return ok({
+        rows: [{ dimensionValues: [{ value: 'Organic Search' }], metricValues: [{ value: '100' }, { value: '60' }, { value: '5' }] }],
+        metadata: {},
+      })
+    }), '123456789')
+    const out = await provider.fetchChannelBreakdown()
+    expect(requestedDimensions).toEqual(['sessionDefaultChannelGroup'])
+    expect(out.ok).toBe(true)
+    if (out.ok) {
+      expect(out.data[0]).toEqual({ channel: 'Organic Search', sessions: 100, engagedSessions: 60, conversions: 5 })
     }
   })
 })
