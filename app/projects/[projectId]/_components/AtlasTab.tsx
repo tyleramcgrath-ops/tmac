@@ -196,7 +196,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           )}
           <div className="grid gap-2 sm:grid-cols-2">
             {integrations.map((it) => (
-              <GoogleIntegrationCard key={it.kind} it={it} onDisconnect={() => disconnect(it.kind)} onSaveResource={(v) => saveResource(it.kind, v)} />
+              <GoogleIntegrationCard key={it.kind} projectId={projectId} it={it} onDisconnect={() => disconnect(it.kind)} onSaveResource={(v) => saveResource(it.kind, v)} />
             ))}
           </div>
           {/* Imported Google data (RC2 P2): rendered when observed, honest failure/unavailable otherwise. */}
@@ -350,10 +350,24 @@ function Ga4Panel({ o }: { o: ObservationDTO<Ga4ReportDTO> }) {
   )
 }
 
-function GoogleIntegrationCard({ it, onDisconnect, onSaveResource }: { it: IntegrationDTO; onDisconnect: () => void; onSaveResource: (v: string) => void }) {
+function GoogleIntegrationCard({ projectId, it, onDisconnect, onSaveResource }: { projectId: string; it: IntegrationDTO; onDisconnect: () => void; onSaveResource: (v: string) => void }) {
   const [resource, setResource] = useState(it.resourceId ?? '')
   const connected = it.status === 'connected'
   const tone = connected ? 'text-[var(--rf-green)]' : it.status === 'error' ? 'text-yellow-300' : 'text-[var(--rf-faint)]'
+  // Verified Search Console properties for this account — fetched lazily so a
+  // picker can replace guessing the exact resourceId string that avoids a 403.
+  const [sites, setSites] = useState<{ siteUrl: string; permissionLevel: string }[] | null>(null)
+  const [sitesError, setSitesError] = useState<string | null>(null)
+  useEffect(() => {
+    if (!(connected && it.kind === 'search-console')) return
+    let cancelled = false
+    api.listGoogleSearchConsoleSites(projectId).then((r) => {
+      if (cancelled) return
+      setSites(r.sites)
+      setSitesError(r.sites.length === 0 ? r.error ?? null : null)
+    }).catch((e) => { if (!cancelled) setSitesError(e instanceof Error ? e.message : String(e)) })
+    return () => { cancelled = true }
+  }, [connected, it.kind, projectId])
   return (
     <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
       <div className="flex items-center justify-between">
@@ -378,11 +392,22 @@ function GoogleIntegrationCard({ it, onDisconnect, onSaveResource }: { it: Integ
         // If the site is verified as a URL-prefix property instead, the account
         // can be a full user there and still get a 403 on the guessed
         // sc-domain resource — let the user point us at the exact property.
+        // sites/sitesError come from the account's real verified-property list,
+        // fetched via the Search Console API — the dropdown never guesses.
         <div className="mt-2 flex items-end gap-1.5">
           <div className="flex-1">
             <Field label="Search Console property (optional override)">
-              <input className={inputClass} placeholder="e.g. https://example.com/ or sc-domain:example.com" value={resource} onChange={(e) => setResource(e.target.value)} />
+              <input className={inputClass} list={`gsc-sites-${it.kind}`} placeholder="e.g. https://example.com/ or sc-domain:example.com" value={resource} onChange={(e) => setResource(e.target.value)} />
+              <datalist id={`gsc-sites-${it.kind}`}>
+                {(sites ?? []).map((s) => <option key={s.siteUrl} value={s.siteUrl}>{s.permissionLevel}</option>)}
+              </datalist>
             </Field>
+            {sites && sites.length > 0 && (
+              <p className="mt-1 text-[10px] text-[var(--rf-faint)]">
+                {sites.length} verified {sites.length === 1 ? 'property' : 'properties'} on this account — pick one from the dropdown.
+              </p>
+            )}
+            {sitesError && <p className="mt-1 text-[10px] text-yellow-300">{sitesError}</p>}
           </div>
           <button onClick={() => onSaveResource(resource)} className="rf-btn-ghost rounded-md px-2 py-1.5 text-[11px]">Save</button>
         </div>

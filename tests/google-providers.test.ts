@@ -4,7 +4,7 @@
 // graded 'observed' and failures degrade honestly (never fabricated).
 
 import { describe, expect, it } from 'vitest'
-import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider } from '../lib/foundation/external/providers/google'
+import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites } from '../lib/foundation/external/providers/google'
 import type { GoogleTokenBundle } from '../lib/foundation/oauth/google'
 
 process.env.APP_SECRET = 'google-providers-test-secret-01'
@@ -55,6 +55,19 @@ describe('GoogleSearchConsoleProvider', () => {
       expect(out.detail).toContain('Add it as a user')
       expect(out.detail).not.toContain('{')
     }
+  })
+  it('lists verified Search Console properties for the account (sites.list)', async () => {
+    let calledUrl = ''
+    const out = await listSearchConsoleSites(deps(async (u) => {
+      calledUrl = u
+      return ok({ siteEntry: [{ siteUrl: 'https://example.com/', permissionLevel: 'siteFullUser' }, { siteUrl: 'sc-domain:example.com', permissionLevel: 'siteOwner' }] })
+    }))
+    expect(out.ok).toBe(true)
+    if (out.ok) {
+      expect(out.data).toHaveLength(2)
+      expect(out.data[0].siteUrl).toBe('https://example.com/')
+    }
+    expect(calledUrl).toContain('webmasters/v3/sites')
   })
   it('refreshes an expired access token before querying', async () => {
     const expired: GoogleTokenBundle = { ...future, expiresAt: new Date(-10_000).toISOString() }

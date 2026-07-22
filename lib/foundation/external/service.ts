@@ -20,7 +20,7 @@ import { NullSearchConsoleProvider } from './providers/search-console'
 import { NullAnalyticsProvider } from './providers/analytics'
 import { NullTrendProvider } from './providers/trends'
 import { NullBacklinkProvider } from './providers/backlinks'
-import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider } from './providers/google'
+import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry } from './providers/google'
 import type { FoundationStore } from '../store'
 import { googleOAuthConfig } from '../env'
 import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
@@ -88,6 +88,40 @@ export async function connectedProviderSet(
     } catch { /* corrupt credential → leave Null (disconnected) */ }
   }
   return set
+}
+
+// List every Search Console property the connected Google account can see
+// (with permission level), so the UI can offer a picker instead of making the
+// user guess the exact resourceId string that avoids a 403. Returns null when
+// Search Console isn't connected or OAuth isn't configured — the route turns
+// that into a clear error rather than an empty-but-successful list.
+export async function listGoogleSearchConsoleProperties(
+  store: FoundationStore,
+  projectId: string,
+  nowMs: number
+): Promise<{ ok: true; sites: GscSiteEntry[] } | { ok: false; reason: string }> {
+  const config = googleOAuthConfig()
+  if (!config) return { ok: false, reason: 'Google OAuth is not configured on this deployment.' }
+  const gsc = await store.getProviderConnection(projectId, 'search-console')
+  if (!gsc || gsc.status !== 'connected') return { ok: false, reason: 'Search Console is not connected for this project.' }
+  let bundle: GoogleTokenBundle
+  try {
+    bundle = decodeTokenBundle(gsc.credentialEnc)
+  } catch {
+    return { ok: false, reason: 'Stored Google credential could not be read — reconnect Google.' }
+  }
+  const outcome = await listSearchConsoleSites({
+    bundle,
+    clientId: config.clientId,
+    clientSecret: config.clientSecret,
+    nowMs,
+    persist: async (next) => {
+      const fresh = await store.getProviderConnection(projectId, 'search-console')
+      if (fresh) await store.upsertProviderConnection({ ...fresh, credentialEnc: encodeTokenBundle(next), updatedAt: new Date(nowMs).toISOString() })
+    },
+  })
+  if (!outcome.ok) return { ok: false, reason: outcome.detail }
+  return { ok: true, sites: outcome.data }
 }
 
 export interface AtlasSnapshot {
