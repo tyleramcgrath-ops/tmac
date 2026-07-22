@@ -9,7 +9,7 @@
 // guidance.
 
 import { useCallback, useEffect, useState } from 'react'
-import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ReportDTO, type Ga4TrendPointDTO, type GoogleTrendsDTO, type GscReportDTO, type GscTrendPointDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
+import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ChannelRowDTO, type Ga4ReportDTO, type Ga4TrendPointDTO, type GoogleBreakdownsDTO, type GoogleTrendsDTO, type GscBreakdownRowDTO, type GscReportDTO, type GscTrendPointDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
@@ -201,6 +201,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           </div>
           {/* Imported Google data (RC2 P2): rendered when observed, honest failure/unavailable otherwise. */}
           <TrendCharts projectId={projectId} />
+          <BreakdownTables projectId={projectId} />
           <GscPanel o={snapshot.gsc} />
           <Ga4Panel o={snapshot.analytics} />
           <p className="text-[10px] text-[var(--rf-faint)]">
@@ -384,6 +385,87 @@ function TrendCharts({ projectId }: { projectId: string }) {
       <p className="text-xs font-semibold text-white">28-day trend</p>
       {trends.gsc.ok ? <GscTrendCharts points={trends.gsc.points} /> : <p className="text-[11px] text-[var(--rf-faint)]">Search Console trend unavailable: {trends.gsc.reason}</p>}
       {trends.analytics.ok ? <Ga4TrendCharts points={trends.analytics.points} /> : <p className="text-[11px] text-[var(--rf-faint)]">Analytics trend unavailable: {trends.analytics.reason}</p>}
+    </div>
+  )
+}
+
+/* ── Device/country (GSC) + traffic-channel (GA4) breakdowns — the
+   "everything you'd see in the native tool" views, beyond the query/page
+   tables. Small ranked tables, not charts — a bar-per-row would just be
+   these same numbers with extra pixels. ─────────────────────────────────── */
+
+function BreakdownTable({ title, rows, keyLabel }: { title: string; rows: { key: string; clicks: number; impressions: number; ctr: number; position: number }[]; keyLabel: string }) {
+  if (rows.length === 0) return <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No rows in the current window.</p>
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">{title}</p>
+      <div className="mt-2 overflow-x-auto">
+        <table className="w-full text-[11px]">
+          <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">{keyLabel}</th><th className="px-2 font-normal">Clicks</th><th className="px-2 font-normal">Impr.</th><th className="px-2 font-normal">CTR</th><th className="pl-2 font-normal">Pos.</th></tr></thead>
+          <tbody>
+            {rows.slice(0, 8).map((r) => (
+              <tr key={r.key} className="text-[var(--rf-muted)]">
+                <td className="truncate pr-2 text-white">{r.key}</td>
+                <td className="px-2">{r.clicks}</td>
+                <td className="px-2">{r.impressions}</td>
+                <td className="px-2">{(r.ctr * 100).toFixed(1)}%</td>
+                <td className="pl-2">{r.position.toFixed(1)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+function Ga4ChannelTable({ rows }: { rows: Ga4ChannelRowDTO[] }) {
+  if (rows.length === 0) return <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No rows in the current window.</p>
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">Analytics — traffic channel</p>
+      <div className="mt-2 overflow-x-auto">
+        <table className="w-full text-[11px]">
+          <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Channel</th><th className="px-2 font-normal">Sessions</th><th className="px-2 font-normal">Engaged</th><th className="pl-2 font-normal">Conv.</th></tr></thead>
+          <tbody>
+            {rows.slice(0, 8).map((r) => (
+              <tr key={r.channel} className="text-[var(--rf-muted)]">
+                <td className="truncate pr-2 text-white">{r.channel}</td>
+                <td className="px-2">{r.sessions}</td>
+                <td className="px-2">{r.engagedSessions}</td>
+                <td className="pl-2">{r.conversions}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+function BreakdownTables({ projectId }: { projectId: string }) {
+  const [data, setData] = useState<GoogleBreakdownsDTO | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    api.getGoogleBreakdowns(projectId)
+      .then((d) => { if (!cancelled) setData(d) })
+      .catch((e) => { if (!cancelled) setError(e instanceof ApiError ? e.message : 'Could not load breakdown data.') })
+    return () => { cancelled = true }
+  }, [projectId])
+
+  if (error) return <p className="text-[11px] text-yellow-300">{error}</p>
+  if (!data) return null
+  const allUnavailable = !data.gscDevice.ok && !data.gscCountry.ok && !data.ga4Channel.ok
+  if (allUnavailable) return null
+
+  const toBreakdownRows = (rows: GscBreakdownRowDTO[]) => rows.map((r) => ({ key: r.key, clicks: r.clicks, impressions: r.impressions, ctr: r.ctr, position: r.position }))
+
+  return (
+    <div className="grid gap-2 sm:grid-cols-3">
+      {data.gscDevice.ok ? <BreakdownTable title="Search Console — by device" keyLabel="Device" rows={toBreakdownRows(data.gscDevice.rows)} /> : <p className="text-[11px] text-[var(--rf-faint)]">Device breakdown unavailable: {data.gscDevice.reason}</p>}
+      {data.gscCountry.ok ? <BreakdownTable title="Search Console — by country" keyLabel="Country" rows={toBreakdownRows(data.gscCountry.rows)} /> : <p className="text-[11px] text-[var(--rf-faint)]">Country breakdown unavailable: {data.gscCountry.reason}</p>}
+      {data.ga4Channel.ok ? <Ga4ChannelTable rows={data.ga4Channel.rows} /> : <p className="text-[11px] text-[var(--rf-faint)]">Channel breakdown unavailable: {data.ga4Channel.reason}</p>}
     </div>
   )
 }

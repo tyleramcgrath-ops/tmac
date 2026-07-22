@@ -353,6 +353,9 @@ export const api = {
   // Day-by-day GSC + GA4 trend for the Atlas dashboard's charts.
   getGoogleTrends: (projectId: string) =>
     req<GoogleTrendsDTO>(`/api/projects/${projectId}/analytics/trend`),
+  // Device/country (GSC) + traffic-channel (GA4) breakdowns.
+  getGoogleBreakdowns: (projectId: string) =>
+    req<GoogleBreakdownsDTO>(`/api/projects/${projectId}/analytics/breakdown`),
 
   // automation / scheduler
   getSchedule: (projectId: string) =>
@@ -674,6 +677,15 @@ export interface Ga4TrendPointDTO { date: string; sessions: number; engagedSessi
 export interface GoogleTrendsDTO {
   gsc: { ok: true; points: GscTrendPointDTO[] } | { ok: false; reason: string }
   analytics: { ok: true; points: Ga4TrendPointDTO[] } | { ok: false; reason: string }
+}
+
+// Device/country (GSC) + traffic-channel (GA4) breakdowns.
+export interface GscBreakdownRowDTO { key: string; clicks: number; impressions: number; ctr: number; position: number }
+export interface Ga4ChannelRowDTO { channel: string; sessions: number; engagedSessions: number; conversions: number }
+export interface GoogleBreakdownsDTO {
+  gscDevice: { ok: true; rows: GscBreakdownRowDTO[] } | { ok: false; reason: string }
+  gscCountry: { ok: true; rows: GscBreakdownRowDTO[] } | { ok: false; reason: string }
+  ga4Channel: { ok: true; rows: Ga4ChannelRowDTO[] } | { ok: false; reason: string }
 }
 
 export interface AtlasSnapshotDTO {

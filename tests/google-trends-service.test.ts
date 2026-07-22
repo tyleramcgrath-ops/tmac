@@ -9,7 +9,7 @@ import { tmpdir } from 'os'
 import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
-import { fetchGoogleTrends, resolveGoogleProviders } from '../lib/foundation/external/service'
+import { fetchGoogleBreakdowns, fetchGoogleTrends, resolveGoogleProviders } from '../lib/foundation/external/service'
 import { encodeTokenBundle, type GoogleTokenBundle } from '../lib/foundation/oauth/google'
 import type { Organization, Project, ProviderConnection, User } from '../lib/foundation/types'
 
@@ -74,5 +74,16 @@ describe('fetchGoogleTrends', () => {
     const trends = await fetchGoogleTrends(store, p.id, p, Date.now())
     expect(trends.gsc.ok).toBe(false)
     expect(trends.analytics.ok).toBe(false)
+  })
+})
+
+describe('fetchGoogleBreakdowns', () => {
+  it('degrades all three views independently when nothing is connected', async () => {
+    const store = newStore()
+    const p = await seedProject(store)
+    const breakdowns = await fetchGoogleBreakdowns(store, p.id, p, Date.now())
+    expect(breakdowns.gscDevice.ok).toBe(false)
+    expect(breakdowns.gscCountry.ok).toBe(false)
+    expect(breakdowns.ga4Channel.ok).toBe(false)
   })
 })
