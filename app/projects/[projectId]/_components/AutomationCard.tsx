@@ -6,11 +6,11 @@
 // shows the next run, last run, and any failed job — never a fabricated status.
 
 import { useCallback, useEffect, useState } from 'react'
-import { CalendarClock, Loader2, Mail, Swords, TrendingUp } from 'lucide-react'
-import { api, ApiError, type ScheduleDTO, type JobDTO } from '../../../lib/client'
+import { CalendarClock, Loader2, Mail, Swords, TrendingUp, Quote, Link2 } from 'lucide-react'
+import { api, ApiError, type ScheduleDTO, type JobDTO, type ScheduleKind } from '../../../lib/client'
 
 type Freq = 'off' | 'daily' | 'weekly'
-type Kind = 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking'
+type Kind = ScheduleKind
 
 function freqOf(s: ScheduleDTO | undefined): Freq {
   if (!s || !s.enabled) return 'off'
@@ -52,10 +52,14 @@ export function AutomationCard({ projectId }: { projectId: string }) {
   const digestSchedule = schedules.find((s) => s.kind === 'monitor')
   const competitorSchedule = schedules.find((s) => s.kind === 'competitor_refresh')
   const rankSchedule = schedules.find((s) => s.kind === 'rank_tracking')
+  const citationSchedule = schedules.find((s) => s.kind === 'ai_citation_check')
+  const backlinkSchedule = schedules.find((s) => s.kind === 'backlink_refresh')
   const current = freqOf(schedule)
   const digestCurrent = freqOf(digestSchedule)
   const competitorCurrent = freqOf(competitorSchedule)
   const rankCurrent = freqOf(rankSchedule)
+  const citationCurrent = freqOf(citationSchedule)
+  const backlinkCurrent = freqOf(backlinkSchedule)
 
   return (
     <div className="rf-card p-5">
@@ -163,6 +167,60 @@ export function AutomationCard({ projectId }: { projectId: string }) {
           <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
             Next check {new Date(rankSchedule.nextRunAt).toLocaleString()}
             {rankSchedule.lastRunAt ? ` · last ran ${new Date(rankSchedule.lastRunAt).toLocaleString()}` : ' · not run yet'}
+          </p>
+        )}
+      </div>
+
+      <div className="mt-4 border-t border-[var(--rf-card-line)] pt-4">
+        <div className="flex items-center gap-2">
+          <Quote className="h-4 w-4 text-[var(--rf-blue-bright)]" />
+          <p className="text-sm font-semibold text-white">AI citation checks</p>
+          {saving === 'ai_citation_check' && <Loader2 className="h-3.5 w-3.5 animate-spin text-[var(--rf-faint)]" />}
+        </div>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">Snapshot every tracked query against Perplexity on a schedule, so AI Citations shows a real trend. Requires PERPLEXITY_API_KEY.</p>
+        <div className="mt-3 inline-flex rounded-lg border border-[var(--rf-card-line)] p-0.5">
+          {(['off', 'daily', 'weekly'] as Freq[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => choose('ai_citation_check', f)}
+              disabled={!!saving}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium capitalize transition-colors disabled:opacity-60 ${citationCurrent === f ? 'rf-btn-primary' : 'text-[var(--rf-muted)] hover:text-white'}`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        {citationSchedule?.enabled && (
+          <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
+            Next check {new Date(citationSchedule.nextRunAt).toLocaleString()}
+            {citationSchedule.lastRunAt ? ` · last ran ${new Date(citationSchedule.lastRunAt).toLocaleString()}` : ' · not run yet'}
+          </p>
+        )}
+      </div>
+
+      <div className="mt-4 border-t border-[var(--rf-card-line)] pt-4">
+        <div className="flex items-center gap-2">
+          <Link2 className="h-4 w-4 text-[var(--rf-blue-bright)]" />
+          <p className="text-sm font-semibold text-white">Backlink profile refresh</p>
+          {saving === 'backlink_refresh' && <Loader2 className="h-3.5 w-3.5 animate-spin text-[var(--rf-faint)]" />}
+        </div>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">Snapshot total backlinks, referring domains, and Trust/Citation Flow on a schedule. Requires MAJESTIC_API_KEY.</p>
+        <div className="mt-3 inline-flex rounded-lg border border-[var(--rf-card-line)] p-0.5">
+          {(['off', 'daily', 'weekly'] as Freq[]).map((f) => (
+            <button
+              key={f}
+              onClick={() => choose('backlink_refresh', f)}
+              disabled={!!saving}
+              className={`rounded-md px-3 py-1.5 text-xs font-medium capitalize transition-colors disabled:opacity-60 ${backlinkCurrent === f ? 'rf-btn-primary' : 'text-[var(--rf-muted)] hover:text-white'}`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        {backlinkSchedule?.enabled && (
+          <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
+            Next check {new Date(backlinkSchedule.nextRunAt).toLocaleString()}
+            {backlinkSchedule.lastRunAt ? ` · last ran ${new Date(backlinkSchedule.lastRunAt).toLocaleString()}` : ' · not run yet'}
           </p>
         )}
       </div>

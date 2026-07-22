@@ -190,6 +190,7 @@ export interface IntegrationDTO {
   connectedAt: string | null
   updatedAt: string | null
 }
+export type ScheduleKind = 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking' | 'ai_citation_check' | 'backlink_refresh'
 export interface ScheduleDTO {
   id: string
   kind: string
@@ -346,12 +347,12 @@ export const api = {
   // automation / scheduler
   getSchedule: (projectId: string) =>
     req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
-  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking' = 'scheduled_scan') =>
+  setSchedule: (projectId: string, frequency: 'daily' | 'weekly', enabled: boolean, kind: ScheduleKind = 'scheduled_scan') =>
     req<{ schedule: ScheduleDTO }>(`/api/projects/${projectId}/schedule`, {
       method: 'PUT',
       body: JSON.stringify({ frequency, enabled, kind }),
     }),
-  clearSchedule: (projectId: string, kind: 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking' = 'scheduled_scan') =>
+  clearSchedule: (projectId: string, kind: ScheduleKind = 'scheduled_scan') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/schedule?kind=${kind}`, { method: 'DELETE' }),
 
   // wordpress
@@ -492,6 +493,32 @@ export const api = {
       `/api/projects/${projectId}/rankings/history${keyword ? `?keyword=${encodeURIComponent(keyword)}` : ''}`
     ),
 
+  // ── AI citation tracking ──
+  listTrackedAiQueries: (projectId: string) =>
+    req<{ queries: TrackedAiQueryDTO[] }>(`/api/projects/${projectId}/citations/queries`),
+  addTrackedAiQuery: (projectId: string, query: string) =>
+    req<{ query: TrackedAiQueryDTO }>(`/api/projects/${projectId}/citations/queries`, {
+      method: 'POST',
+      body: JSON.stringify({ query }),
+    }),
+  removeTrackedAiQuery: (projectId: string, id: string) =>
+    req<{ ok: boolean }>(`/api/projects/${projectId}/citations/queries?id=${encodeURIComponent(id)}`, { method: 'DELETE' }),
+  checkTrackedAiQueryNow: (projectId: string, query: string) =>
+    req<{ snapshot: AiCitationSnapshotDTO }>(`/api/projects/${projectId}/citations/queries`, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'check', query }),
+    }),
+  citationHistory: (projectId: string, query?: string) =>
+    req<{ snapshots: AiCitationSnapshotDTO[] }>(
+      `/api/projects/${projectId}/citations/history${query ? `?query=${encodeURIComponent(query)}` : ''}`
+    ),
+
+  // ── Backlink profile ──
+  getBacklinks: (projectId: string) =>
+    req<{ configured: boolean; snapshots: BacklinkSnapshotDTO[] }>(`/api/projects/${projectId}/backlinks`),
+  checkBacklinksNow: (projectId: string) =>
+    req<{ snapshot: BacklinkSnapshotDTO }>(`/api/projects/${projectId}/backlinks`, { method: 'POST' }),
+
   // ── Content Studio ──
   listContentBriefs: (projectId: string) =>
     req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
@@ -574,6 +601,33 @@ export interface RankSnapshotDTO {
   keyword: string
   position: number | null
   url: string | null
+  checkedAt: string
+}
+export interface TrackedAiQueryDTO {
+  id: string
+  query: string
+  createdAt: string
+}
+export interface AiCitationSnapshotDTO {
+  id: string
+  query: string
+  engine: 'perplexity'
+  available: boolean
+  cited: boolean
+  position: number | null
+  citedUrl: string | null
+  sourceCount: number
+  message?: string
+  checkedAt: string
+}
+export interface BacklinkSnapshotDTO {
+  id: string
+  available: boolean
+  totalBacklinks: number | null
+  referringDomains: number | null
+  trustFlow: number | null
+  citationFlow: number | null
+  message?: string
   checkedAt: string
 }
 export interface OverlapDTO {

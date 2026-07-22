@@ -181,6 +181,23 @@ function contract(name: string, make: () => Promise<{ store: FoundationStore; cl
       await store.removeTrackedKeyword(kwId)
       expect(await store.listTrackedKeywords(p.id)).toHaveLength(0)
 
+      // AI citation tracking
+      const aiQId = uid()
+      await store.addTrackedAiQuery({ id: aiQId, projectId: p.id, query: 'best crm software', addedBy: u.id, createdAt: now() })
+      expect((await store.listTrackedAiQueries(p.id)).map((q) => q.query)).toContain('best crm software')
+      await store.recordAiCitationSnapshot({ id: uid(), projectId: p.id, query: 'best crm software', engine: 'perplexity', available: true, cited: true, position: 2, citedUrl: 'https://acme.com/crm', sourceCount: 5, checkedAt: now() })
+      await store.recordAiCitationSnapshot({ id: uid(), projectId: p.id, query: 'best crm software', engine: 'perplexity', available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, message: 'not connected', checkedAt: now() })
+      expect((await store.listAiCitationSnapshots(p.id, 'best crm software')).length).toBe(2)
+      expect((await store.listAiCitationSnapshots(p.id)).length).toBeGreaterThanOrEqual(2)
+      await store.removeTrackedAiQuery(aiQId)
+      expect(await store.listTrackedAiQueries(p.id)).toHaveLength(0)
+
+      // backlink profile snapshots
+      await store.recordBacklinkSnapshot({ id: uid(), projectId: p.id, available: true, totalBacklinks: 1200, referringDomains: 85, trustFlow: 32, citationFlow: 40, checkedAt: now() })
+      await store.recordBacklinkSnapshot({ id: uid(), projectId: p.id, available: false, totalBacklinks: null, referringDomains: null, trustFlow: null, citationFlow: null, message: 'not configured', checkedAt: now() })
+      expect((await store.listBacklinkSnapshots(p.id)).length).toBeGreaterThanOrEqual(2)
+      expect((await store.listBacklinkSnapshots(p.id, 1)).length).toBe(1)
+
       // Atlas change-detection baseline (Phase G)
       expect(await store.getAtlasHistory(p.id)).toBeNull()
       await store.upsertAtlasHistory({ projectId: p.id, data: { gsc: null }, capturedAt: now() })

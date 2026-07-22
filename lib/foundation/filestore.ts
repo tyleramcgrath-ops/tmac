@@ -6,8 +6,10 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import type { FoundationStore } from './store'
 import type {
+  AiCitationSnapshot,
   AtlasHistory,
   AuditLogEntry,
+  BacklinkSnapshot,
   Competitor,
   ContentBrief,
   Invitation,
@@ -21,6 +23,7 @@ import type {
   Recommendation,
   Scan,
   Schedule,
+  TrackedAiQuery,
   TrackedKeyword,
   User,
   WpConnection,
@@ -47,6 +50,9 @@ type Collections = {
   audit: AuditLogEntry[]
   trackedKeywords: TrackedKeyword[]
   rankSnapshots: RankSnapshot[]
+  trackedAiQueries: TrackedAiQuery[]
+  aiCitationSnapshots: AiCitationSnapshot[]
+  backlinkSnapshots: BacklinkSnapshot[]
 }
 
 const EMPTY: Collections = {
@@ -69,6 +75,9 @@ const EMPTY: Collections = {
   audit: [],
   trackedKeywords: [],
   rankSnapshots: [],
+  trackedAiQueries: [],
+  aiCitationSnapshots: [],
+  backlinkSnapshots: [],
 }
 
 export class FileFoundationStore implements FoundationStore {
@@ -287,6 +296,38 @@ export class FileFoundationStore implements FoundationStore {
     return (await this.read('rankSnapshots'))
       .filter((s) => s.projectId === projectId && (!keyword || s.keyword === keyword))
       .sort((a, b) => a.checkedAt.localeCompare(b.checkedAt))
+  }
+
+  // AI citation tracking
+  async addTrackedAiQuery(q: TrackedAiQuery) {
+    await this.mutate('trackedAiQueries', (all) => ({ data: [...all, q] }))
+  }
+  async listTrackedAiQueries(projectId: string) {
+    return (await this.read('trackedAiQueries'))
+      .filter((q) => q.projectId === projectId)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+  }
+  async removeTrackedAiQuery(id: string) {
+    await this.mutate('trackedAiQueries', (all) => ({ data: all.filter((q) => q.id !== id) }))
+  }
+  async recordAiCitationSnapshot(snap: AiCitationSnapshot) {
+    await this.mutate('aiCitationSnapshots', (all) => ({ data: [...all, snap] }))
+  }
+  async listAiCitationSnapshots(projectId: string, query?: string) {
+    return (await this.read('aiCitationSnapshots'))
+      .filter((s) => s.projectId === projectId && (!query || s.query === query))
+      .sort((a, b) => a.checkedAt.localeCompare(b.checkedAt))
+  }
+
+  // Backlink profile snapshots
+  async recordBacklinkSnapshot(snap: BacklinkSnapshot) {
+    await this.mutate('backlinkSnapshots', (all) => ({ data: [...all, snap] }))
+  }
+  async listBacklinkSnapshots(projectId: string, limit?: number) {
+    const rows = (await this.read('backlinkSnapshots'))
+      .filter((s) => s.projectId === projectId)
+      .sort((a, b) => b.checkedAt.localeCompare(a.checkedAt))
+    return limit ? rows.slice(0, limit) : rows
   }
 
   // Atlas change-detection baseline (Phase G)
