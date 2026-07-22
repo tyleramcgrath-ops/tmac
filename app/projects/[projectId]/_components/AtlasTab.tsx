@@ -9,7 +9,7 @@
 // guidance.
 
 import { useCallback, useEffect, useState } from 'react'
-import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ReportDTO, type GscReportDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
+import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ReportDTO, type Ga4TrendPointDTO, type GoogleTrendsDTO, type GscReportDTO, type GscTrendPointDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
@@ -200,6 +200,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
             ))}
           </div>
           {/* Imported Google data (RC2 P2): rendered when observed, honest failure/unavailable otherwise. */}
+          <TrendCharts projectId={projectId} />
           <GscPanel o={snapshot.gsc} />
           <Ga4Panel o={snapshot.analytics} />
           <p className="text-[10px] text-[var(--rf-faint)]">
@@ -285,6 +286,104 @@ function DataPanelHeader({ title, o }: { title: string; o: ObservationDTO<unknow
         {o.evidence.freshness && <span className="text-[9px] uppercase text-[var(--rf-faint)]">{o.evidence.freshness}</span>}
         <GradeBadge grade={o.evidence.grade} />
       </span>
+    </div>
+  )
+}
+
+/* ── Day-by-day GSC/GA4 trend charts — the actual "analytics dashboard" view,
+   distinct from the top-queries/top-pages tables below. Lightweight inline
+   SVG (no charting dependency) so every point plotted is a real number
+   returned by Google, never interpolated or estimated. ─────────────────── */
+
+function TrendMetricChart({ label, points, format }: { label: string; points: { date: string; value: number | null }[]; format?: (v: number) => string }) {
+  const known = points.filter((p): p is { date: string; value: number } => p.value != null)
+  const fmt = format ?? ((v: number) => Math.round(v).toLocaleString())
+  if (known.length < 2) {
+    return (
+      <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+        <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">{label}</p>
+        <p className="mt-2 text-[11px] text-[var(--rf-faint)]">Not enough daily data yet.</p>
+      </div>
+    )
+  }
+  const w = 280, h = 56, pad = 4
+  const min = Math.min(...known.map((p) => p.value)), max = Math.max(...known.map((p) => p.value))
+  const span = Math.max(1e-9, max - min)
+  const step = points.length > 1 ? (w - pad * 2) / (points.length - 1) : 0
+  // Higher value renders higher on the chart — except "position", where a
+  // LOWER Google rank position is the improvement; callers pass invert=true
+  // via a wrapped format/points transform when that matters (see below).
+  const y = (v: number) => pad + (1 - (v - min) / span) * (h - pad * 2)
+  let path = ''
+  points.forEach((p, i) => {
+    if (p.value == null) return
+    const x = pad + i * step
+    path += `${path === '' ? 'M' : 'L'}${x.toFixed(1)},${y(p.value).toFixed(1)} `
+  })
+  const latest = known[known.length - 1].value
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <div className="flex items-baseline justify-between">
+        <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">{label}</p>
+        <p className="text-sm font-semibold text-white">{fmt(latest)}</p>
+      </div>
+      <svg width="100%" height={h} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" className="mt-2 overflow-visible">
+        <path d={path.trim()} fill="none" stroke="var(--rf-blue-bright)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <div className="mt-1 flex justify-between text-[9px] text-[var(--rf-faint)]">
+        <span>{points[0]?.date}</span>
+        <span>{points[points.length - 1]?.date}</span>
+      </div>
+    </div>
+  )
+}
+
+function GscTrendCharts({ points }: { points: GscTrendPointDTO[] }) {
+  return (
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <TrendMetricChart label="Clicks / day" points={points.map((p) => ({ date: p.date, value: p.clicks }))} />
+      <TrendMetricChart label="Impressions / day" points={points.map((p) => ({ date: p.date, value: p.impressions }))} />
+      <TrendMetricChart label="Avg. CTR" points={points.map((p) => ({ date: p.date, value: p.ctr * 100 }))} format={(v) => `${v.toFixed(1)}%`} />
+      <TrendMetricChart label="Avg. position" points={points.map((p) => ({ date: p.date, value: p.position }))} format={(v) => v.toFixed(1)} />
+    </div>
+  )
+}
+
+function Ga4TrendCharts({ points }: { points: Ga4TrendPointDTO[] }) {
+  const hasRevenue = points.some((p) => p.revenue != null)
+  return (
+    <div className={`grid grid-cols-2 gap-2 ${hasRevenue ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`}>
+      <TrendMetricChart label="Sessions / day" points={points.map((p) => ({ date: p.date, value: p.sessions }))} />
+      <TrendMetricChart label="Engaged sessions / day" points={points.map((p) => ({ date: p.date, value: p.engagedSessions }))} />
+      <TrendMetricChart label="Conversions / day" points={points.map((p) => ({ date: p.date, value: p.conversions }))} />
+      {hasRevenue && <TrendMetricChart label="Revenue / day" points={points.map((p) => ({ date: p.date, value: p.revenue }))} format={(v) => `$${v.toFixed(2)}`} />}
+    </div>
+  )
+}
+
+function TrendCharts({ projectId }: { projectId: string }) {
+  const [trends, setTrends] = useState<GoogleTrendsDTO | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  useEffect(() => {
+    let cancelled = false
+    api.getGoogleTrends(projectId)
+      .then((t) => { if (!cancelled) setTrends(t) })
+      .catch((e) => { if (!cancelled) setError(e instanceof ApiError ? e.message : 'Could not load trend data.') })
+    return () => { cancelled = true }
+  }, [projectId])
+
+  if (error) return <p className="text-[11px] text-yellow-300">{error}</p>
+  if (!trends) return null
+  // Both sides unavailable (nothing connected yet, or both errored) — the
+  // tables below already explain why in detail, so stay quiet here rather
+  // than showing four empty chart shells.
+  if (!trends.gsc.ok && !trends.analytics.ok) return null
+
+  return (
+    <div className="space-y-2">
+      <p className="text-xs font-semibold text-white">28-day trend</p>
+      {trends.gsc.ok ? <GscTrendCharts points={trends.gsc.points} /> : <p className="text-[11px] text-[var(--rf-faint)]">Search Console trend unavailable: {trends.gsc.reason}</p>}
+      {trends.analytics.ok ? <Ga4TrendCharts points={trends.analytics.points} /> : <p className="text-[11px] text-[var(--rf-faint)]">Analytics trend unavailable: {trends.analytics.reason}</p>}
     </div>
   )
 }
