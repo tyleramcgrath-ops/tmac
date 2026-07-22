@@ -20,7 +20,7 @@ import {
   api, ApiError,
   type RankSnapshotDTO, type TrackedKeywordDTO,
   type AiCitationSnapshotDTO, type TrackedAiQueryDTO,
-  type BacklinkSnapshotDTO,
+  type BacklinkSnapshotDTO, type CompetitorRankComparisonDTO,
 } from '../../../../lib/client'
 
 const TONE: Record<string, string> = { critical: 'text-[var(--rf-red)]', warning: 'text-[var(--rf-amber)]', info: 'text-[var(--rf-blue-bright)]' }
@@ -321,6 +321,7 @@ export function Rankings({ domain, projectId }: { domain: string; projectId: str
         <div className="rf-card overflow-hidden"><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Keyword</th><th className="px-4 py-2 font-medium">Position</th><th className="px-4 py-2 font-medium">URL</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{resp.rows.map((r) => <tr key={r.keyword} className="hover:bg-white/[0.02]"><td className="px-4 py-2.5 text-[var(--rf-text)]">{r.keyword}</td><td className="px-4 py-2.5 rf-mono font-semibold text-white">{r.position != null ? `#${r.position}` : <span className="text-[var(--rf-faint)]">—</span>}</td><td className="max-w-[240px] truncate px-4 py-2.5">{r.url ? <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-muted)] hover:text-white">{pathOf(r.url)}</a> : <span className="text-[var(--rf-faint)]">—</span>}</td></tr>)}</tbody></table></div></div>
       </>}
       <RankingHistory projectId={projectId} />
+      <CompetitorRankComparison projectId={projectId} />
     </div>
   )
 }
@@ -437,6 +438,76 @@ function RankingHistory({ projectId }: { projectId: string }) {
             )
           })}
         </div>
+      )}
+    </div>
+  )
+}
+
+/* ── Competitor rank comparison (free) — reuses the same SERP-based live
+   checker against tracked competitor domains, for the keywords already
+   tracked above. No paid competitor-intel API. ─────────────────────────── */
+
+function CompetitorRankComparison({ projectId }: { projectId: string }) {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [resp, setResp] = useState<CompetitorRankComparisonDTO | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  async function run() {
+    setStatus('loading'); setError(null)
+    try {
+      const r = await api.compareCompetitorRankings(projectId)
+      setResp(r)
+      setStatus('done')
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not compare rankings.')
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div className="rf-card p-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-white">Rank vs. competitors</p>
+          <p className="mt-1 text-xs text-[var(--rf-muted)]">Compares live Google positions for your tracked keywords against your tracked competitors — same SERP lookup as "Check positions" above, no paid competitor-intel API.</p>
+        </div>
+        <button onClick={run} disabled={status === 'loading'} className="rf-btn-primary shrink-0 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">
+          {status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Comparing…</> : 'Compare now'}
+        </button>
+      </div>
+      {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+      {status === 'done' && resp && !resp.available && <ConnectNote title="Live competitor comparison needs a SERP API key" note={resp.note} envVar="SERPAPI_KEY" />}
+      {status === 'done' && resp?.available && resp.rows && (
+        <>
+          <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
+            Comparing {resp.keywordsCompared} of {resp.keywordsTotal} tracked keyword{resp.keywordsTotal === 1 ? '' : 's'} against {resp.competitorsCompared} of {resp.competitorsTotal} tracked competitor{resp.competitorsTotal === 1 ? '' : 's'}.
+          </p>
+          <div className="mt-2 overflow-x-auto rounded-lg border border-[var(--rf-card-line)]">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]">
+                  <th className="px-4 py-2 font-medium">Keyword</th>
+                  <th className="px-4 py-2 font-medium">{resp.domain}</th>
+                  {resp.rows[0]?.competitors.map((c) => <th key={c.label} className="px-4 py-2 font-medium">{c.label}</th>)}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--rf-card-line)]">
+                {resp.rows.map((r) => {
+                  const best = Math.min(...[r.us, ...r.competitors.map((c) => c.position)].filter((p): p is number => p != null))
+                  return (
+                    <tr key={r.keyword} className="hover:bg-white/[0.02]">
+                      <td className="px-4 py-2.5 text-[var(--rf-text)]">{r.keyword}</td>
+                      <td className={`px-4 py-2.5 rf-mono font-semibold ${r.us != null && r.us === best ? 'text-[var(--rf-green)]' : 'text-white'}`}>{r.us != null ? `#${r.us}` : <span className="text-[var(--rf-faint)]">—</span>}</td>
+                      {r.competitors.map((c) => (
+                        <td key={c.label} className={`px-4 py-2.5 rf-mono ${c.position != null && c.position === best ? 'text-[var(--rf-green)] font-semibold' : 'text-[var(--rf-muted)]'}`}>{c.position != null ? `#${c.position}` : <span className="text-[var(--rf-faint)]">—</span>}</td>
+                      ))}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   )
