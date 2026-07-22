@@ -111,6 +111,47 @@ async function postJson(url: string, token: string, body: unknown, fetchImpl?: F
   return res.json()
 }
 
+async function getJson(url: string, token: string, fetchImpl?: FetchImpl): Promise<unknown> {
+  const doFetch = fetchImpl ?? ((i: string, init?: RequestInit) => fetch(i, init))
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 15_000)
+  let res: Response
+  try {
+    res = await doFetch(url, { method: 'GET', headers: { Authorization: `Bearer ${token}` }, signal: controller.signal } as RequestInit)
+  } finally {
+    clearTimeout(timer)
+  }
+  if (!res.ok) {
+    let detail = ''
+    try { detail = (await res.text()).slice(0, 200) } catch { /* ignore */ }
+    throw new Error(`${res.status} ${detail}`)
+  }
+  return res.json()
+}
+
+// List every Search Console property this OAuth account can see, with its
+// permission level. Used to help a user pick the right resourceId override —
+// the app otherwise guesses a Domain property (sc-domain:<domain>) which 403s
+// for an account that only has access to the URL-prefix property instead.
+export interface GscSiteEntry { siteUrl: string; permissionLevel: string }
+interface GscSitesApiResponse { siteEntry?: GscSiteEntry[] }
+
+export async function listSearchConsoleSites(deps: GoogleProviderDeps): Promise<ProviderOutcome<GscSiteEntry[]>> {
+  try {
+    const token = await freshToken(deps)
+    const json = (await getJson(`${GSC_ENDPOINT}`, token, deps.fetchImpl)) as GscSitesApiResponse
+    return {
+      ok: true,
+      data: json.siteEntry ?? [],
+      grade: 'observed',
+      source: 'gsc',
+      fetchedAt: new Date(deps.nowMs).toISOString(),
+    }
+  } catch (err) {
+    return failureFrom(err)
+  }
+}
+
 // ── Search Console ───────────────────────────────────────────────────────────
 interface GscApiResponse { rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] }
 

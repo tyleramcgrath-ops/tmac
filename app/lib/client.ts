@@ -343,6 +343,13 @@ export const api = {
     }),
   disconnectIntegration: (projectId: string, kind: 'search-console' | 'analytics') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/integrations?kind=${kind}`, { method: 'DELETE' }),
+  // Verified Search Console properties for the connected account — used to pick
+  // the resourceId override without guessing (a Domain-property guess 403s an
+  // account that only has access to the URL-prefix property).
+  listGoogleSearchConsoleSites: (projectId: string) =>
+    req<{ sites: { siteUrl: string; permissionLevel: string }[]; error?: string }>(
+      `/api/projects/${projectId}/integrations/google/sites`
+    ),
 
   // automation / scheduler
   getSchedule: (projectId: string) =>
