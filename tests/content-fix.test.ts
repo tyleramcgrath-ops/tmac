@@ -83,6 +83,44 @@ describe('applyContentTransform + verify', () => {
     // verify fails when the script never made it into the content (e.g. WP stripped it)
     expect(verifyContentTransform('<!-- rankforge:schema --><!-- /rankforge:schema -->', { type: 'set-jsonld', jsonLd: '{}' })).toBe(false)
   })
+  it('keyed set-jsonld blocks coexist independently — one does not overwrite the other', () => {
+    const page: ContentTransform = { type: 'set-jsonld', jsonLd: '{"@type":"Product"}' }
+    const crumb: ContentTransform = { type: 'set-jsonld', jsonLd: '{"@type":"BreadcrumbList"}', key: 'breadcrumb' }
+    let content = applyContentTransform('<p>body</p>', page).content
+    content = applyContentTransform(content, crumb).content
+    expect(content).toContain('"Product"')
+    expect(content).toContain('"BreadcrumbList"')
+    expect(verifyContentTransform(content, page)).toBe(true)
+    expect(verifyContentTransform(content, crumb)).toBe(true)
+    // re-applying the page schema only touches its own block
+    const updated = applyContentTransform(content, { type: 'set-jsonld', jsonLd: '{"@type":"Article"}' })
+    expect(updated.content).toContain('"Article"')
+    expect(updated.content).not.toContain('"Product"')
+    expect(updated.content).toContain('"BreadcrumbList"') // untouched
+  })
+
+  it('demotes every H1 after the first to H2, keeping the first as-is', () => {
+    const t: ContentTransform = { type: 'demote-extra-h1' }
+    const r = applyContentTransform('<h1 class="x">First</h1><p>mid</p><h1>Second</h1><h1>Third</h1>', t)
+    expect(r.changed).toBe(true)
+    expect(r.content).toContain('<h1 class="x">First</h1>')
+    expect(r.content).toContain('<h2>Second</h2>')
+    expect(r.content).toContain('<h2>Third</h2>')
+    expect(verifyContentTransform(r.content, t)).toBe(true)
+    // idempotent: re-applying to the fixed content is a no-op
+    expect(applyContentTransform(r.content, t).changed).toBe(false)
+  })
+  it('demote-extra-h1 is a no-op with zero or one H1', () => {
+    const t: ContentTransform = { type: 'demote-extra-h1' }
+    expect(applyContentTransform('<p>no h1 here</p>', t).changed).toBe(false)
+    expect(applyContentTransform('<h1>Only one</h1>', t).changed).toBe(false)
+  })
+  it('demote-extra-h1 skips malformed markup rather than guessing', () => {
+    const t: ContentTransform = { type: 'demote-extra-h1' }
+    // Unbalanced h1 tags (three opens, two closes) — cannot be safely paired.
+    const r = applyContentTransform('<h1>A</h1><h1>B<h1>C</h1>', t)
+    expect(r.changed).toBe(false)
+  })
 })
 
 describe('fix generators (Phase H)', () => {
@@ -111,6 +149,37 @@ describe('fix generators (Phase H)', () => {
   it('internal-linking is advisory when there are no other pages to link to', () => {
     const fix = generateFix('internal-linking', sig(), { sitePages: [] })
     expect(fix.actionable).toBe(false)
+  })
+  it('schema-missing is now deployable — writes a managed JSON-LD block, not just advisory', () => {
+    const fix = generateFix('schema-missing', sig({ title: 'Widgets · Shop' }))
+    expect(fix.actionable).toBe(true)
+    expect(fix.contentTransform).toEqual({ type: 'set-jsonld', jsonLd: expect.stringContaining('"@type": "WebPage"') })
+  })
+  it('breadcrumb builds a real trail from the URL, labeling ancestors from crawled titles when available', () => {
+    const fix = generateFix('breadcrumb', sig({ url: 'https://shop.example.com/category/widgets', title: 'Widgets · Shop' }), {
+      sitePages: [{ url: 'https://shop.example.com/category', title: 'Category Hub' }],
+    })
+    expect(fix.actionable).toBe(true)
+    const t = fix.contentTransform as Extract<ContentTransform, { type: 'set-jsonld' }>
+    expect(t.key).toBe('breadcrumb')
+    const json = JSON.parse(t.jsonLd)
+    expect(json['@type']).toBe('BreadcrumbList')
+    const names = json.itemListElement.map((i: { name: string }) => i.name)
+    expect(names).toEqual(['Home', 'Category Hub', 'Widgets'])
+    const items = json.itemListElement.map((i: { item: string }) => i.item)
+    expect(items).toEqual(['https://shop.example.com/', 'https://shop.example.com/category/', 'https://shop.example.com/category/widgets/'])
+  })
+  it('breadcrumb falls back to a humanized path segment when no crawled page matches', () => {
+    const fix = generateFix('breadcrumb', sig({ url: 'https://shop.example.com/blog/best-widgets', title: 'Best Widgets' }))
+    const t = fix.contentTransform as Extract<ContentTransform, { type: 'set-jsonld' }>
+    const json = JSON.parse(t.jsonLd)
+    expect(json.itemListElement.map((i: { name: string }) => i.name)).toEqual(['Home', 'Blog', 'Best Widgets'])
+  })
+  it('multiple-h1 → deployable demote-extra-h1 transform', () => {
+    const fix = generateFix('multiple-h1', sig({ h1Count: 3 }))
+    expect(fix.actionable).toBe(true)
+    expect(fix.kind).toBe('heading')
+    expect(fix.contentTransform).toEqual({ type: 'demote-extra-h1' })
   })
 })
 

@@ -13,13 +13,27 @@ export type ContentTransform =
   | { type: 'https-upgrade'; hosts: string[] }
   | { type: 'prepend-h1'; text: string }
   | { type: 'append-internal-links'; links: { url: string; anchor: string }[] }
-  | { type: 'set-jsonld'; jsonLd: string }
+  // `key` lets independent JSON-LD fixes (page schema, breadcrumbs, …) coexist
+  // as separate managed blocks instead of overwriting each other — each key
+  // gets its own marker. Omit for the original single-block behavior.
+  | { type: 'set-jsonld'; jsonLd: string; key?: string }
+  // Demotes every H1 after the first to H2, live post body only (never
+  // touches PageSignals/crawl data). H1 cannot validly nest, so open/close
+  // tags are paired by document order; if pairing can't be done safely
+  // (malformed markup), this is a no-op rather than a guess.
+  | { type: 'demote-extra-h1' }
 
 const RELATED_MARKER = 'rankforge:related'
-const SCHEMA_MARKER = 'rankforge:schema'
 // Matches a previously-inserted managed schema block so re-applying replaces it
-// in place (idempotent) rather than stacking duplicates.
-const SCHEMA_BLOCK_RE = /<!-- rankforge:schema -->[\s\S]*?<!-- \/rankforge:schema -->/
+// in place (idempotent) rather than stacking duplicates. Keyed so multiple
+// independent JSON-LD fixes (e.g. page schema + breadcrumbs) don't collide.
+function schemaMarker(key?: string): string {
+  return key ? `rankforge:schema:${key}` : 'rankforge:schema'
+}
+function schemaBlockRe(key?: string): RegExp {
+  const m = schemaMarker(key)
+  return new RegExp(`<!-- ${m} -->[\\s\\S]*?<!-- /${m} -->`)
+}
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -69,12 +83,47 @@ export function applyContentTransform(content: string, t: ContentTransform): Tra
       const json = t.jsonLd.trim()
       if (!json) return { content, changed: false, summary: 'No structured data provided; no change.' }
       try { JSON.parse(json) } catch { return { content, changed: false, summary: 'Structured data is not valid JSON; skipped.' } }
-      const block = `<!-- ${SCHEMA_MARKER} -->\n<script type="application/ld+json">\n${json}\n</script>\n<!-- /${SCHEMA_MARKER} -->`
-      if (SCHEMA_BLOCK_RE.test(content)) {
-        const replaced = content.replace(SCHEMA_BLOCK_RE, block)
+      const marker = schemaMarker(t.key)
+      const blockRe = schemaBlockRe(t.key)
+      const block = `<!-- ${marker} -->\n<script type="application/ld+json">\n${json}\n</script>\n<!-- /${marker} -->`
+      if (blockRe.test(content)) {
+        const replaced = content.replace(blockRe, block)
         return { content: replaced, changed: replaced !== content, summary: replaced !== content ? 'Updated structured data (JSON-LD).' : 'Structured data already up to date; no change.' }
       }
       return { content: `${content}\n${block}`, changed: true, summary: 'Added structured data (JSON-LD).' }
+    }
+    case 'demote-extra-h1': {
+      const opens = [...content.matchAll(/<h1(\s[^>]*)?>/gi)]
+      const closes = [...content.matchAll(/<\/h1>/gi)]
+      if (opens.length <= 1) return { content, changed: false, summary: 'Only one H1 found; no change.' }
+      if (opens.length !== closes.length) return { content, changed: false, summary: 'H1 tags could not be safely paired (malformed markup); skipped.' }
+      // H1 cannot validly nest, so a simple stack pairs each open with its
+      // nearest following close in document order.
+      type Tok = { idx: number; len: number; kind: 'open' | 'close'; attrs?: string }
+      const tokens: Tok[] = [
+        ...opens.map((m) => ({ idx: m.index!, len: m[0].length, kind: 'open' as const, attrs: m[1] ?? '' })),
+        ...closes.map((m) => ({ idx: m.index!, len: m[0].length, kind: 'close' as const })),
+      ].sort((a, b) => a.idx - b.idx)
+      const stack: Tok[] = []
+      const pairs: { open: Tok; close: Tok }[] = []
+      for (const tok of tokens) {
+        if (tok.kind === 'open') stack.push(tok)
+        else {
+          const open = stack.pop()
+          if (open) pairs.push({ open, close: tok })
+        }
+      }
+      if (pairs.length !== opens.length) return { content, changed: false, summary: 'H1 tags could not be safely paired; skipped.' }
+      pairs.sort((a, b) => a.open.idx - b.open.idx)
+      const toDemote = pairs.slice(1) // keep the first H1 as-is
+      if (toDemote.length === 0) return { content, changed: false, summary: 'Only one H1 found; no change.' }
+      let out = content
+      // Replace back-to-front so earlier indices stay valid.
+      for (const p of [...toDemote].sort((a, b) => b.open.idx - a.open.idx)) {
+        out = out.slice(0, p.close.idx) + '</h2>' + out.slice(p.close.idx + p.close.len)
+        out = out.slice(0, p.open.idx) + `<h2${p.open.attrs}>` + out.slice(p.open.idx + p.open.len)
+      }
+      return { content: out, changed: true, summary: `Demoted ${toDemote.length} extra H1 heading(s) to H2, keeping the first as the page's single H1.` }
     }
   }
 }
@@ -94,6 +143,8 @@ export function verifyContentTransform(content: string, t: ContentTransform): bo
       // WordPress strips <script> from post content unless the user has the
       // `unfiltered_html` capability, so checking the marker alone would false-
       // pass; requiring the script tag makes a stripped write verify-fail honestly.
-      return content.includes(SCHEMA_MARKER) && /<script[^>]*type=["']application\/ld\+json["']/i.test(content)
+      return content.includes(schemaMarker(t.key)) && /<script[^>]*type=["']application\/ld\+json["']/i.test(content)
+    case 'demote-extra-h1':
+      return (content.match(/<h1[\s>]/gi) ?? []).length <= 1
   }
 }
