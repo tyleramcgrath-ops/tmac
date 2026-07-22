@@ -10,7 +10,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
-import { buildDigestContent, runMonitorDigest } from '../lib/foundation/scheduler/digest'
+import { buildDigestContent, runMonitorDigest, summarizeDeploymentOutcomes } from '../lib/foundation/scheduler/digest'
 import { productionHandlers } from '../lib/foundation/scheduler/handlers'
 import { materializeDueSchedules, runDueJobs, makeJob } from '../lib/foundation/scheduler/engine'
 import { POST as signup } from '../app/api/auth/signup/route'
@@ -35,6 +35,40 @@ describe('buildDigestContent: honest, real-data-only summary', () => {
     expect(email.subject).toContain('site score 82')
     expect(email.text).toContain('Pages crawled: 12')
     expect(email.text).toContain('Critical issues: 2')
+  })
+  it('omits the proof-of-impact section entirely when nothing has been measured yet — never a fabricated 0', () => {
+    const metrics = computeOperatorMetrics([], [], '2026-07-18')
+    const email = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, { measured: 0, improvedClicks: 0, avgClicksDelta: 0, avgPositionDelta: 0, pending: 2, skipped: 0 })
+    expect(email.text).not.toContain('Proof of impact')
+  })
+  it('includes the real measured Search Console deltas when outcomes exist', () => {
+    const metrics = computeOperatorMetrics([], [], '2026-07-18')
+    const email = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, { measured: 3, improvedClicks: 2, avgClicksDelta: 5.5, avgPositionDelta: -1.2, pending: 1, skipped: 0 })
+    expect(email.text).toContain('Proof of impact (real Search Console deltas)')
+    expect(email.text).toContain('Fixes with measured impact: 3')
+    expect(email.text).toContain('Improved clicks: 2 of 3')
+    expect(email.text).toContain('Avg. clicks change: +5.5')
+    expect(email.text).toContain('Avg. position change: -1.2 (better)')
+    expect(email.html).toContain('Proof of impact')
+  })
+})
+
+describe('summarizeDeploymentOutcomes: honest aggregation (never fabricates a measured win)', () => {
+  it('separates measured/pending/skipped and never fabricates a measured outcome', () => {
+    const now = new Date().toISOString()
+    const base = { id: 'd', projectId: 'p', connectionId: 'c', postId: 1, postType: 'pages' as const, postUrl: 'u', before: { title: '', metaDescription: '', contentHash: '', content: '' }, after: {}, approvedBy: 'u', approvedAt: now, reason: 'r', verification: null, result: 'ok', createdAt: now }
+    const measured: WpDeployment = { ...base, id: 'm', status: 'verified', outcome: { capturedAt: now, skipped: false, before: { from: '', to: '', clicks: 5, impressions: 50, ctr: 0.1, position: 6 }, after: { from: '', to: '', clicks: 10, impressions: 60, ctr: 0.16, position: 4 }, delta: { clicks: 5, impressions: 10, ctr: 0.06, position: -2 } } }
+    const skipped: WpDeployment = { ...base, id: 's', status: 'verified', outcome: { capturedAt: now, skipped: true, reason: 'Search Console not connected.' } }
+    const pending: WpDeployment = { ...base, id: 'p2', status: 'verified' }
+    const notEligible: WpDeployment = { ...base, id: 'n', status: 'applied' }
+
+    const summary = summarizeDeploymentOutcomes([measured, skipped, pending, notEligible])
+    expect(summary.measured).toBe(1)
+    expect(summary.improvedClicks).toBe(1)
+    expect(summary.avgClicksDelta).toBe(5)
+    expect(summary.avgPositionDelta).toBe(-2)
+    expect(summary.skipped).toBe(1)
+    expect(summary.pending).toBe(1)
   })
 })
 
