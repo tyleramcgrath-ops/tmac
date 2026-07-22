@@ -154,6 +154,7 @@ export async function listSearchConsoleSites(deps: GoogleProviderDeps): Promise<
 
 // ── Search Console ───────────────────────────────────────────────────────────
 interface GscApiResponse { rows?: { keys: string[]; clicks: number; impressions: number; ctr: number; position: number }[] }
+export interface GscTrendPoint { date: string; clicks: number; impressions: number; ctr: number; position: number }
 
 export class GoogleSearchConsoleProvider implements SearchConsoleProvider {
   readonly kind = 'search-console' as const
@@ -182,6 +183,25 @@ export class GoogleSearchConsoleProvider implements SearchConsoleProvider {
         position: r.position ?? 0,
       }))
       return { ok: true, data: { range: { from, to }, rows }, grade: 'observed', source: 'gsc', fetchedAt: new Date(this.deps.nowMs).toISOString() }
+    } catch (err) {
+      return failureFrom(err)
+    }
+  }
+
+  // Day-by-day clicks/impressions/ctr/position for the trailing 28 days — the
+  // Atlas dashboard's trend chart. dimensions=['date'] gives one row per day
+  // instead of the aggregated query/page rows fetchReport returns.
+  async fetchDailyTrend(): Promise<ProviderOutcome<GscTrendPoint[]>> {
+    try {
+      const token = await freshToken(this.deps)
+      const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
+      const to = ymd(this.deps.nowMs)
+      const url = `${GSC_ENDPOINT}/${encodeURIComponent(this.site)}/searchAnalytics/query`
+      const json = (await postJson(url, token, { startDate: from, endDate: to, dimensions: ['date'], rowLimit: 30 }, this.deps.fetchImpl)) as GscApiResponse
+      const points: GscTrendPoint[] = (json.rows ?? [])
+        .map((r) => ({ date: r.keys[0] ?? '', clicks: r.clicks ?? 0, impressions: r.impressions ?? 0, ctr: r.ctr ?? 0, position: r.position ?? 0 }))
+        .sort((a, b) => a.date.localeCompare(b.date))
+      return { ok: true, data: points, grade: 'observed', source: 'gsc', fetchedAt: new Date(this.deps.nowMs).toISOString() }
     } catch (err) {
       return failureFrom(err)
     }
@@ -234,6 +254,7 @@ interface Ga4ApiResponse {
   rows?: { dimensionValues: { value: string }[]; metricValues: { value: string }[] }[]
   metadata?: { currencyCode?: string }
 }
+export interface Ga4TrendPoint { date: string; sessions: number; engagedSessions: number; conversions: number; revenue: number | null }
 
 export class GoogleAnalyticsProvider implements AnalyticsProvider {
   readonly kind = 'analytics' as const
@@ -277,6 +298,37 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
         }
       })
       return { ok: true, data: { range: { from, to }, currency, pages }, grade: 'observed', source: 'ga4', fetchedAt: new Date(this.deps.nowMs).toISOString() }
+    } catch (err) {
+      return failureFrom(err)
+    }
+  }
+
+  // Day-by-day sessions/engagement/conversions for the trailing 28 days — the
+  // Atlas dashboard's trend chart. dimensions=[{name:'date'}] gives one row
+  // per day instead of the per-page aggregate fetchReport returns.
+  async fetchDailyTrend(): Promise<ProviderOutcome<Ga4TrendPoint[]>> {
+    if (!this.propertyId) return { ok: false, reason: 'error', detail: 'No GA4 property selected — set the property id to enable Analytics.' }
+    try {
+      const token = await freshToken(this.deps)
+      const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
+      const to = ymd(this.deps.nowMs)
+      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const json = (await postJson(url, token, {
+        dateRanges: [{ startDate: from, endDate: to }],
+        dimensions: [{ name: 'date' }],
+        metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'keyEvents' }, { name: 'totalRevenue' }],
+        orderBys: [{ dimension: { dimensionName: 'date' } }],
+        limit: 100,
+      }, this.deps.fetchImpl)) as Ga4ApiResponse
+      const currency = json.metadata?.currencyCode ?? null
+      const points: Ga4TrendPoint[] = (json.rows ?? []).map((r) => {
+        const m = r.metricValues.map((v) => Number(v.value) || 0)
+        const raw = r.dimensionValues[0]?.value ?? ''
+        // GA4 returns date dimensions as YYYYMMDD — reshape to YYYY-MM-DD.
+        const date = /^\d{8}$/.test(raw) ? `${raw.slice(0, 4)}-${raw.slice(4, 6)}-${raw.slice(6, 8)}` : raw
+        return { date, sessions: m[0] ?? 0, engagedSessions: m[1] ?? 0, conversions: m[2] ?? 0, revenue: currency ? m[3] ?? 0 : null }
+      })
+      return { ok: true, data: points, grade: 'observed', source: 'ga4', fetchedAt: new Date(this.deps.nowMs).toISOString() }
     } catch (err) {
       return failureFrom(err)
     }

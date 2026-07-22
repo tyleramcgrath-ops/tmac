@@ -20,7 +20,7 @@ import { NullSearchConsoleProvider } from './providers/search-console'
 import { NullAnalyticsProvider } from './providers/analytics'
 import { NullTrendProvider } from './providers/trends'
 import { NullBacklinkProvider } from './providers/backlinks'
-import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry } from './providers/google'
+import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry, type GscTrendPoint, type Ga4TrendPoint } from './providers/google'
 import type { FoundationStore } from '../store'
 import { googleOAuthConfig } from '../env'
 import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
@@ -45,26 +45,18 @@ export function disconnectedProviderSet(): ProviderSet {
   }
 }
 
-// Resolve a project's REAL providers from its stored, encrypted connections
-// (Phase H). Google Search Console / Analytics become live providers when the
-// project has connected them; everything else stays Null (no Google equivalent).
-// This is the seam the atlas route now uses in place of the all-disconnected
-// default — so provider-specific logic never leaks into the reco/strategy layer.
-//
-// Refreshed tokens are persisted back through `store` so a long-lived connection
-// doesn't re-refresh on every read. If Google OAuth isn't configured on the
-// deployment (no client id/secret), we can't refresh, so we degrade to Null.
-export async function connectedProviderSet(
+// Build the GoogleProviderDeps for one connection kind — shared by every
+// Google-backed call site (the ProviderSet, the sites-list diagnostic, the
+// trend chart) so token refresh + persistence is implemented exactly once.
+function googleDeps(
   store: FoundationStore,
   projectId: string,
-  project: { domain: string },
+  kind: 'search-console' | 'analytics',
+  bundle: GoogleTokenBundle,
+  config: { clientId: string; clientSecret: string },
   nowMs: number
-): Promise<ProviderSet> {
-  const set = disconnectedProviderSet()
-  const config = googleOAuthConfig()
-  if (!config) return set
-
-  const makeDeps = (bundle: GoogleTokenBundle, kind: 'search-console' | 'analytics') => ({
+) {
+  return {
     bundle,
     clientId: config.clientId,
     clientSecret: config.clientSecret,
@@ -73,28 +65,62 @@ export async function connectedProviderSet(
       const fresh = await store.getProviderConnection(projectId, kind)
       if (fresh) await store.upsertProviderConnection({ ...fresh, credentialEnc: encodeTokenBundle(next), updatedAt: new Date(nowMs).toISOString() })
     },
-  })
+  }
+}
+
+// Resolve a project's REAL Google provider instances from its stored,
+// encrypted connections (Phase H) — null when not connected, OAuth isn't
+// configured, or the stored credential is corrupt. This is the single seam
+// every Google-specific call site (ProviderSet, sites-list, trend chart)
+// resolves through, so there is exactly one place that decodes a token bundle
+// and wires up refresh + persist.
+export async function resolveGoogleProviders(
+  store: FoundationStore,
+  projectId: string,
+  project: { domain: string },
+  nowMs: number
+): Promise<{ searchConsole: GoogleSearchConsoleProvider | null; analytics: GoogleAnalyticsProvider | null }> {
+  const config = googleOAuthConfig()
+  if (!config) return { searchConsole: null, analytics: null }
+
+  let searchConsole: GoogleSearchConsoleProvider | null = null
+  let analytics: GoogleAnalyticsProvider | null = null
 
   const gsc = await store.getProviderConnection(projectId, 'search-console')
   if (gsc && gsc.status === 'connected') {
     try {
-      set.searchConsole = new GoogleSearchConsoleProvider('gsc', makeDeps(decodeTokenBundle(gsc.credentialEnc), 'search-console'), gsc.resourceId, project.domain)
-    } catch { /* corrupt credential → leave Null (disconnected) */ }
+      searchConsole = new GoogleSearchConsoleProvider('gsc', googleDeps(store, projectId, 'search-console', decodeTokenBundle(gsc.credentialEnc), config, nowMs), gsc.resourceId, project.domain)
+    } catch { /* corrupt credential → leave null (disconnected) */ }
   }
   const ga = await store.getProviderConnection(projectId, 'analytics')
   if (ga && ga.status === 'connected') {
     try {
-      set.analytics = new GoogleAnalyticsProvider('ga4', makeDeps(decodeTokenBundle(ga.credentialEnc), 'analytics'), ga.resourceId)
-    } catch { /* corrupt credential → leave Null (disconnected) */ }
+      analytics = new GoogleAnalyticsProvider('ga4', googleDeps(store, projectId, 'analytics', decodeTokenBundle(ga.credentialEnc), config, nowMs), ga.resourceId)
+    } catch { /* corrupt credential → leave null (disconnected) */ }
   }
+  return { searchConsole, analytics }
+}
+
+// Given a project's providers (default: none connected → everything
+// Unavailable), the atlas route's seam into the ProviderSet interface.
+export async function connectedProviderSet(
+  store: FoundationStore,
+  projectId: string,
+  project: { domain: string },
+  nowMs: number
+): Promise<ProviderSet> {
+  const set = disconnectedProviderSet()
+  const { searchConsole, analytics } = await resolveGoogleProviders(store, projectId, project, nowMs)
+  if (searchConsole) set.searchConsole = searchConsole
+  if (analytics) set.analytics = analytics
   return set
 }
 
 // List every Search Console property the connected Google account can see
 // (with permission level), so the UI can offer a picker instead of making the
-// user guess the exact resourceId string that avoids a 403. Returns null when
-// Search Console isn't connected or OAuth isn't configured — the route turns
-// that into a clear error rather than an empty-but-successful list.
+// user guess the exact resourceId string that avoids a 403. Returns an error
+// reason when Search Console isn't connected or OAuth isn't configured — the
+// route turns that into a clear message rather than an empty-but-successful list.
 export async function listGoogleSearchConsoleProperties(
   store: FoundationStore,
   projectId: string,
@@ -110,18 +136,34 @@ export async function listGoogleSearchConsoleProperties(
   } catch {
     return { ok: false, reason: 'Stored Google credential could not be read — reconnect Google.' }
   }
-  const outcome = await listSearchConsoleSites({
-    bundle,
-    clientId: config.clientId,
-    clientSecret: config.clientSecret,
-    nowMs,
-    persist: async (next) => {
-      const fresh = await store.getProviderConnection(projectId, 'search-console')
-      if (fresh) await store.upsertProviderConnection({ ...fresh, credentialEnc: encodeTokenBundle(next), updatedAt: new Date(nowMs).toISOString() })
-    },
-  })
+  const outcome = await listSearchConsoleSites(googleDeps(store, projectId, 'search-console', bundle, config, nowMs))
   if (!outcome.ok) return { ok: false, reason: outcome.detail }
   return { ok: true, sites: outcome.data }
+}
+
+// Day-by-day GSC + GA4 trend for the Atlas dashboard's charts. Each side
+// independently degrades to a clear "unavailable" reason (not connected, no
+// GA4 property, API error) — never a fabricated series.
+export interface GoogleTrends {
+  gsc: { ok: true; points: GscTrendPoint[] } | { ok: false; reason: string }
+  analytics: { ok: true; points: Ga4TrendPoint[] } | { ok: false; reason: string }
+}
+
+export async function fetchGoogleTrends(
+  store: FoundationStore,
+  projectId: string,
+  project: { domain: string },
+  nowMs: number
+): Promise<GoogleTrends> {
+  const { searchConsole, analytics } = await resolveGoogleProviders(store, projectId, project, nowMs)
+  const [gscOutcome, analyticsOutcome] = await Promise.all([
+    searchConsole ? searchConsole.fetchDailyTrend() : Promise.resolve({ ok: false as const, reason: 'disconnected' as const, detail: 'Search Console not connected.' }),
+    analytics ? analytics.fetchDailyTrend() : Promise.resolve({ ok: false as const, reason: 'disconnected' as const, detail: 'Google Analytics not connected.' }),
+  ])
+  return {
+    gsc: gscOutcome.ok ? { ok: true, points: gscOutcome.data } : { ok: false, reason: gscOutcome.detail },
+    analytics: analyticsOutcome.ok ? { ok: true, points: analyticsOutcome.data } : { ok: false, reason: analyticsOutcome.detail },
+  }
 }
 
 export interface AtlasSnapshot {

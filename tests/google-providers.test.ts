@@ -86,6 +86,24 @@ describe('GoogleSearchConsoleProvider', () => {
     expect(refreshed).toBe(true)
     expect(persisted).toBe(true)
   })
+  it('returns a day-by-day trend sorted ascending by date, for the dashboard chart', async () => {
+    let requestedDimensions: string[] = []
+    const provider = new GoogleSearchConsoleProvider('gsc', deps(async (_u, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'))
+      requestedDimensions = body.dimensions ?? []
+      return ok({ rows: [
+        { keys: ['2026-07-02'], clicks: 3, impressions: 40, ctr: 0.075, position: 5.1 },
+        { keys: ['2026-07-01'], clicks: 5, impressions: 50, ctr: 0.1, position: 4.2 },
+      ] })
+    }), null, 'x.com')
+    const out = await provider.fetchDailyTrend()
+    expect(requestedDimensions).toEqual(['date'])
+    expect(out.ok).toBe(true)
+    if (out.ok) {
+      expect(out.data.map((p) => p.date)).toEqual(['2026-07-01', '2026-07-02'])
+      expect(out.data[0].clicks).toBe(5)
+    }
+  })
 })
 
 describe('GoogleAnalyticsProvider', () => {
@@ -127,6 +145,22 @@ describe('GoogleAnalyticsProvider', () => {
       // second, separately-requested "conversions" number.
       expect(out.data.pages[0].conversions).toBe(4)
       expect(out.data.pages[0].keyEvents).toBe(4)
+    }
+  })
+  it('returns a day-by-day trend with GA4\'s YYYYMMDD date reshaped to YYYY-MM-DD', async () => {
+    const provider = new GoogleAnalyticsProvider('ga4', deps(async () => ok({
+      rows: [
+        { dimensionValues: [{ value: '20260701' }], metricValues: [{ value: '10' }, { value: '7' }, { value: '2' }, { value: '0' }] },
+        { dimensionValues: [{ value: '20260702' }], metricValues: [{ value: '12' }, { value: '8' }, { value: '3' }, { value: '0' }] },
+      ],
+      metadata: {},
+    })), '123456789')
+    const out = await provider.fetchDailyTrend()
+    expect(out.ok).toBe(true)
+    if (out.ok) {
+      expect(out.data[0].date).toBe('2026-07-01')
+      expect(out.data[0].sessions).toBe(10)
+      expect(out.data[0].revenue).toBeNull()
     }
   })
 })

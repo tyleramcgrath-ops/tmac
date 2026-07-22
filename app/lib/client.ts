@@ -350,6 +350,9 @@ export const api = {
     req<{ sites: { siteUrl: string; permissionLevel: string }[]; error?: string }>(
       `/api/projects/${projectId}/integrations/google/sites`
     ),
+  // Day-by-day GSC + GA4 trend for the Atlas dashboard's charts.
+  getGoogleTrends: (projectId: string) =>
+    req<GoogleTrendsDTO>(`/api/projects/${projectId}/analytics/trend`),
 
   // automation / scheduler
   getSchedule: (projectId: string) =>
@@ -664,6 +667,14 @@ export interface GscRowDTO { query: string; page: string; clicks: number; impres
 export interface GscReportDTO { range: { from: string; to: string }; rows: GscRowDTO[] }
 export interface Ga4PageDTO { page: string; sessions: number; engagedSessions: number; conversions: number; revenue: number | null; keyEvents: number }
 export interface Ga4ReportDTO { range: { from: string; to: string }; currency: string | null; pages: Ga4PageDTO[] }
+
+// Day-by-day trend points for the Atlas dashboard's charts.
+export interface GscTrendPointDTO { date: string; clicks: number; impressions: number; ctr: number; position: number }
+export interface Ga4TrendPointDTO { date: string; sessions: number; engagedSessions: number; conversions: number; revenue: number | null }
+export interface GoogleTrendsDTO {
+  gsc: { ok: true; points: GscTrendPointDTO[] } | { ok: false; reason: string }
+  analytics: { ok: true; points: Ga4TrendPointDTO[] } | { ok: false; reason: string }
+}
 
 export interface AtlasSnapshotDTO {
   generatedAt: string
