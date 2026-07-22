@@ -194,24 +194,29 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
       const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      // GA4 renamed "conversions" to "key events" in 2024, and its Data API now
+      // treats the two metric names as aliases of the same underlying field —
+      // requesting both in one report is rejected as "duplicate metrics". Ask
+      // for keyEvents only and populate both output fields from that one value.
       const json = (await postJson(url, token, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'pagePath' }],
-        metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'conversions' }, { name: 'totalRevenue' }, { name: 'keyEvents' }],
+        metrics: [{ name: 'sessions' }, { name: 'engagedSessions' }, { name: 'keyEvents' }, { name: 'totalRevenue' }],
         limit: 100,
       }, this.deps.fetchImpl)) as Ga4ApiResponse
       const currency = json.metadata?.currencyCode ?? null
       const pages: Ga4PageMetrics[] = (json.rows ?? []).map((r) => {
         const m = r.metricValues.map((v) => Number(v.value) || 0)
+        const keyEvents = m[2] ?? 0
         const revenue = m[3]
         return {
           page: r.dimensionValues[0]?.value ?? '',
           sessions: m[0] ?? 0,
           engagedSessions: m[1] ?? 0,
-          conversions: m[2] ?? 0,
+          conversions: keyEvents,
           // Revenue is null (never 0-as-fact) when the property reports no currency.
           revenue: currency ? revenue ?? 0 : null,
-          keyEvents: m[4] ?? 0,
+          keyEvents,
         }
       })
       return { ok: true, data: { range: { from, to }, currency, pages }, grade: 'observed', source: 'ga4', fetchedAt: new Date(this.deps.nowMs).toISOString() }

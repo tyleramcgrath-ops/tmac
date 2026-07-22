@@ -83,4 +83,25 @@ describe('GoogleAnalyticsProvider', () => {
       expect(out.data.pages[0].revenue).toBeNull()
     }
   })
+  it('never requests conversions and keyEvents together — GA4 rejects them as duplicate metrics', async () => {
+    let requestedMetrics: string[] = []
+    const provider = new GoogleAnalyticsProvider('ga4', deps(async (_u, init) => {
+      const body = JSON.parse(String(init?.body ?? '{}'))
+      requestedMetrics = (body.metrics ?? []).map((m: { name: string }) => m.name)
+      return ok({
+        rows: [{ dimensionValues: [{ value: '/p' }], metricValues: [{ value: '10' }, { value: '7' }, { value: '4' }, { value: '0' }] }],
+        metadata: {},
+      })
+    }), '123456789')
+    const out = await provider.fetchReport('123456789')
+    expect(requestedMetrics).toEqual(['sessions', 'engagedSessions', 'keyEvents', 'totalRevenue'])
+    expect(requestedMetrics.filter((m) => m === 'conversions')).toHaveLength(0)
+    expect(out.ok).toBe(true)
+    if (out.ok) {
+      // Both fields are populated from the single keyEvents value — never a
+      // second, separately-requested "conversions" number.
+      expect(out.data.pages[0].conversions).toBe(4)
+      expect(out.data.pages[0].keyEvents).toBe(4)
+    }
+  })
 })
