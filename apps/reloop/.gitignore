@@ -32,18 +32,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-!.env.example
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.env*.local
-
-# seo-intel engine local dev store (FileStore)
-.data/
-
-/test-results
-/playwright-report
-apps/reloop/package-lock.json
