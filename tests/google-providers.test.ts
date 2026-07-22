@@ -44,6 +44,18 @@ describe('GoogleSearchConsoleProvider', () => {
     const r429 = await p429.fetchReport('x.com')
     if (!r429.ok) expect(r429.reason).toBe('rate-limited')
   })
+  it('turns a 403 insufficient-permission error into a plain-language fix instruction', async () => {
+    const body = { error: { code: 403, message: "User does not have sufficient permission for site 'sc-domain:example.com'. See also: https://support.google.com/webmasters/answer/2451999." } }
+    const provider = new GoogleSearchConsoleProvider('gsc', deps(async () => ({ ok: false, status: 403, json: async () => body, text: async () => JSON.stringify(body) } as unknown as Response)), null, 'example.com')
+    const out = await provider.fetchReport('example.com')
+    expect(out.ok).toBe(false)
+    if (!out.ok) {
+      expect(out.reason).toBe('unauthorized')
+      expect(out.detail).toContain('sc-domain:example.com')
+      expect(out.detail).toContain('Add it as a user')
+      expect(out.detail).not.toContain('{')
+    }
+  })
   it('refreshes an expired access token before querying', async () => {
     const expired: GoogleTokenBundle = { ...future, expiresAt: new Date(-10_000).toISOString() }
     let refreshed = false

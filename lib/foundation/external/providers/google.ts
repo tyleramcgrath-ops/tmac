@@ -46,8 +46,24 @@ function ymd(ms: number): string {
 // invalid_grant / invalid_token (a revoked or expired refresh token) count as
 // 'unauthorized' so the UI can prompt the user to reconnect, rather than a
 // generic error (RC1 failure-honesty fix).
+//
+// A 403 "insufficient permission" is a DIFFERENT problem from an invalid
+// token: the OAuth account is valid but was never added as a user on that
+// specific Search Console / Analytics property. Surface that distinction in
+// plain language instead of raw Google JSON, so the fix (add the account as
+// a property user) is obvious without reading an API error.
 function failureFrom(err: unknown): ProviderOutcome<never> {
   const msg = err instanceof Error ? err.message : String(err)
+  if (/\b403\b/.test(msg) && /sufficient permission/i.test(msg)) {
+    const site = msg.match(/site '([^']+)'/)?.[1]
+    return {
+      ok: false,
+      reason: 'unauthorized',
+      detail: site
+        ? `The connected Google account does not have access to ${site}. Add it as a user in Search Console (Settings → Users and permissions) and reconnect.`
+        : 'The connected Google account does not have access to this property. Add it as a user in the Google property settings and reconnect.',
+    }
+  }
   if (/\b401\b|unauthor|invalid_grant|invalid_token/i.test(msg)) return { ok: false, reason: 'unauthorized', detail: msg }
   if (/\b429\b|rate/i.test(msg)) return { ok: false, reason: 'rate-limited', detail: msg }
   return { ok: false, reason: 'error', detail: msg }
