@@ -263,6 +263,53 @@ export interface RankSnapshot {
   checkedAt: string
 }
 
+// A query a project tracks for AI-answer-engine citations (e.g. "best crm
+// software" asked of Perplexity). Config only; AiCitationSnapshot rows are
+// the actual historical checks.
+export interface TrackedAiQuery {
+  id: string
+  projectId: string
+  query: string
+  addedBy: string
+  createdAt: string
+}
+
+// One real, timestamped check of whether an AI engine cited this project's
+// domain when asked a tracked query. `available:false` means the engine
+// isn't connected (no PERPLEXITY_API_KEY) or the query errored — never
+// fabricated as "not cited". `cited`/`position`/`citedUrl`/`sourceCount`
+// are only meaningful when `available` is true.
+export interface AiCitationSnapshot {
+  id: string
+  projectId: string
+  query: string
+  engine: 'perplexity'
+  available: boolean
+  cited: boolean
+  position: number | null
+  citedUrl: string | null
+  sourceCount: number
+  message?: string
+  checkedAt: string
+}
+
+// One real, timestamped aggregate backlink-profile check for the project's
+// domain (never a page-by-page crawl of the open web — sourced from a real
+// third-party backlink index). `available:false` means no provider is
+// configured (no MAJESTIC_API_KEY) or the lookup failed — never a
+// fabricated zero.
+export interface BacklinkSnapshot {
+  id: string
+  projectId: string
+  available: boolean
+  totalBacklinks: number | null
+  referringDomains: number | null
+  trustFlow: number | null
+  citationFlow: number | null
+  message?: string
+  checkedAt: string
+}
+
 // Rolling baseline for Mission Atlas change detection (Phase G). One row per
 // project — the last OBSERVED gsc/backlinks/aiVisibility values, so the next
 // Atlas load can report real "what changed since last time" instead of always
@@ -349,7 +396,7 @@ export type SeoPlugin = 'aioseo' | 'rankmath' | 'yoast' | 'core'
 // ── Scheduler / background jobs ──────────────────────────────────────────────
 // A durable job queue (Postgres in prod, file store in dev) drained by a
 // cron-triggered runner. See SCHEDULER_DESIGN.md.
-export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor' | 'competitor_refresh' | 'rank_tracking'
+export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor' | 'competitor_refresh' | 'rank_tracking' | 'ai_citation_check' | 'backlink_refresh'
 export type JobStatus = 'queued' | 'running' | 'succeeded' | 'failed' | 'canceled'
 
 export interface Job {

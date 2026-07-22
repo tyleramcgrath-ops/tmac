@@ -16,7 +16,12 @@ import {
 } from './analytics'
 import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
 import { BulkFixBar } from '../BulkFixBar'
-import { api, ApiError, type RankSnapshotDTO, type TrackedKeywordDTO } from '../../../../lib/client'
+import {
+  api, ApiError,
+  type RankSnapshotDTO, type TrackedKeywordDTO,
+  type AiCitationSnapshotDTO, type TrackedAiQueryDTO,
+  type BacklinkSnapshotDTO,
+} from '../../../../lib/client'
 
 const TONE: Record<string, string> = { critical: 'text-[var(--rf-red)]', warning: 'text-[var(--rf-amber)]', info: 'text-[var(--rf-blue-bright)]' }
 
@@ -437,8 +442,168 @@ function RankingHistory({ projectId }: { projectId: string }) {
   )
 }
 
-export function Backlinks({ domain }: { domain: string }) {
-  return <div className="space-y-4"><ConnectNote title="Backlink data needs a provider" note={`Connect a backlink API to see referring domains, authority, and new/lost links for ${domain || 'your domain'}.`} envVar="(backlink provider key)" /><div className="rf-card p-5"><p className="text-sm font-semibold text-white">What you&apos;ll get here</p><ul className="mt-3 grid gap-2 text-sm text-[var(--rf-muted)] sm:grid-cols-2">{['Referring domains & total backlinks', 'Domain authority trend', 'New vs lost links', 'Anchor-text distribution', 'Competitor link gap', 'Toxic link flags'].map((t) => <li key={t} className="flex items-center gap-2"><Check className="h-4 w-4 text-[var(--rf-green)]" /> {t}</li>)}</ul></div></div>
+export function Backlinks({ projectId }: { projectId: string }) {
+  const [configured, setConfigured] = useState<boolean | null>(null)
+  const [snapshots, setSnapshots] = useState<BacklinkSnapshotDTO[]>([])
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const load = useCallback(async () => {
+    try {
+      const res = await api.getBacklinks(projectId)
+      setConfigured(res.configured)
+      setSnapshots(res.snapshots)
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not load backlink data.')
+    }
+  }, [projectId])
+  useEffect(() => { void load() }, [load])
+
+  async function checkNow() {
+    setBusy(true); setError('')
+    try { await api.checkBacklinksNow(projectId); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not check backlinks.') }
+    finally { setBusy(false) }
+  }
+
+  if (configured === null) return null
+  if (!configured) {
+    return <div className="space-y-4"><ConnectNote title="Backlink data needs a provider" note="Connect Majestic (set MAJESTIC_API_KEY in your environment) to see total backlinks, referring domains, and Trust/Citation Flow." envVar="MAJESTIC_API_KEY" /><div className="rf-card p-5"><p className="text-sm font-semibold text-white">What you&apos;ll get here</p><ul className="mt-3 grid gap-2 text-sm text-[var(--rf-muted)] sm:grid-cols-2">{['Total backlinks & referring domains', 'Trust Flow & Citation Flow trend', 'Scheduled or on-demand snapshots'].map((t) => <li key={t} className="flex items-center gap-2"><Check className="h-4 w-4 text-[var(--rf-green)]" /> {t}</li>)}</ul></div></div>
+  }
+
+  const latest = snapshots[0]
+  return (
+    <div className="space-y-4">
+      <div className="rf-card p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-white">Backlink profile</p>
+          <button onClick={() => void checkNow()} disabled={busy} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold disabled:opacity-60">
+            {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null} {busy ? 'Checking…' : 'Check now'}
+          </button>
+        </div>
+        {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+        {!latest && <p className="mt-3 text-sm text-[var(--rf-muted)]">No snapshot yet — click "Check now" or enable a schedule in Automation.</p>}
+        {latest && !latest.available && <p className="mt-3 text-sm text-[var(--rf-amber)]">{latest.message ?? 'Last check was unavailable.'}</p>}
+        {latest?.available && (
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <Stat label="Backlinks" numeric={latest.totalBacklinks ?? 0} />
+            <Stat label="Referring domains" numeric={latest.referringDomains ?? 0} tone={TONE.info} />
+            <Stat label="Trust Flow" value={latest.trustFlow != null ? String(latest.trustFlow) : '—'} tone="text-[var(--rf-green)]" />
+            <Stat label="Citation Flow" value={latest.citationFlow != null ? String(latest.citationFlow) : '—'} tone="text-[var(--rf-cyan)]" />
+          </div>
+        )}
+        {latest && <p className="mt-3 text-[11px] text-[var(--rf-faint)]">Last checked {new Date(latest.checkedAt).toLocaleString()}</p>}
+      </div>
+      {snapshots.length > 1 && (
+        <div className="rf-card overflow-hidden"><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Checked</th><th className="px-4 py-2 font-medium">Backlinks</th><th className="px-4 py-2 font-medium">Ref. domains</th><th className="px-4 py-2 font-medium">Trust Flow</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{snapshots.filter((s) => s.available).map((s) => <tr key={s.id}><td className="px-4 py-2.5 text-[var(--rf-muted)]">{new Date(s.checkedAt).toLocaleDateString()}</td><td className="px-4 py-2.5 rf-mono text-white">{s.totalBacklinks ?? '—'}</td><td className="px-4 py-2.5 rf-mono text-white">{s.referringDomains ?? '—'}</td><td className="px-4 py-2.5 rf-mono text-white">{s.trustFlow ?? '—'}</td></tr>)}</tbody></table></div></div>
+      )}
+    </div>
+  )
+}
+
+/* ── AI citation tracking (real Perplexity checks, honest fallback) ─────── */
+
+export function AiCitations({ projectId }: { projectId: string }) {
+  const [queries, setQueries] = useState<TrackedAiQueryDTO[] | null>(null)
+  const [snapshots, setSnapshots] = useState<AiCitationSnapshotDTO[]>([])
+  const [newQuery, setNewQuery] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState<string | null>(null)
+
+  const load = useCallback(async () => {
+    try {
+      const [{ queries }, { snapshots }] = await Promise.all([api.listTrackedAiQueries(projectId), api.citationHistory(projectId)])
+      setQueries(queries)
+      setSnapshots(snapshots)
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not load AI citation data.')
+    }
+  }, [projectId])
+  useEffect(() => { void load() }, [load])
+
+  async function add() {
+    const query = newQuery.trim()
+    if (!query) return
+    setBusy('add'); setError('')
+    try { await api.addTrackedAiQuery(projectId, query); setNewQuery(''); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not add query.') }
+    finally { setBusy(null) }
+  }
+  async function remove(id: string) {
+    setBusy(id); setError('')
+    try { await api.removeTrackedAiQuery(projectId, id); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not remove query.') }
+    finally { setBusy(null) }
+  }
+  async function checkNow(query: string) {
+    setBusy(query); setError('')
+    try { await api.checkTrackedAiQueryNow(projectId, query); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not check citation.') }
+    finally { setBusy(null) }
+  }
+
+  if (queries === null) return null
+
+  return (
+    <div className="space-y-4">
+      <div className="rf-card p-4">
+        <p className="text-sm font-semibold text-white">Track AI-answer citations</p>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">Add a question people ask AI assistants. Each check asks Perplexity (the only AI engine with a public API that returns real sources) and records whether your domain was cited.</p>
+        <div className="mt-3 flex gap-2">
+          <input
+            value={newQuery}
+            onChange={(e) => setNewQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && void add()}
+            placeholder="e.g. best project management software for startups"
+            className="rf-card flex-1 bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
+          />
+          <button onClick={add} disabled={busy === 'add' || !newQuery.trim()} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold disabled:opacity-60">
+            {busy === 'add' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />} Track
+          </button>
+        </div>
+        {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+      </div>
+
+      {queries.length === 0 ? (
+        <p className="text-sm text-[var(--rf-muted)]">No queries tracked yet. Add one above to start checking.</p>
+      ) : (
+        <div className="space-y-2">
+          {queries.map((q) => {
+            const rows = snapshots.filter((s) => s.query === q.query)
+            const latest = rows[rows.length - 1]
+            const unavailable = latest && !latest.available
+            return (
+              <div key={q.id} className="rf-card flex items-center justify-between gap-4 px-4 py-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-white">{q.query}</p>
+                  {latest ? (
+                    unavailable ? (
+                      <p className="mt-0.5 text-[11px] text-[var(--rf-amber)]">{latest.message ?? 'Perplexity not connected.'}</p>
+                    ) : (
+                      <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">
+                        Last checked {new Date(latest.checkedAt).toLocaleDateString()} — {latest.cited ? <span className="text-[var(--rf-green)]">cited (source #{latest.position})</span> : <span className="text-[var(--rf-muted)]">not cited</span>}
+                        {' · '}{rows.length} check{rows.length === 1 ? '' : 's'}
+                      </p>
+                    )
+                  ) : (
+                    <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">Never checked</p>
+                  )}
+                </div>
+                <div className="flex shrink-0 gap-1.5">
+                  <button onClick={() => void checkNow(q.query)} disabled={busy === q.query} className="rf-btn-ghost rounded-md px-2.5 py-1 text-[11px] font-medium disabled:opacity-60">
+                    {busy === q.query ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Check now'}
+                  </button>
+                  <button onClick={() => void remove(q.id)} disabled={busy === q.id} className="rf-btn-ghost rounded-md p-1.5 text-[var(--rf-faint)] hover:text-[var(--rf-red)] disabled:opacity-60">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function ConnectNote({ title, note, envVar }: { title: string; note?: string; envVar: string }) {

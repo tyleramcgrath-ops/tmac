@@ -209,17 +209,21 @@ const FEATURES: {
     desc: 'Export every audit as JSON or generate a clean print/PDF report straight from your browser — ready to hand to a client or a dev team.',
     tag: 'JSON + PDF',
   },
+  {
+    icon: Bot,
+    title: 'AI Citation Tracking',
+    desc: 'Track questions people ask AI assistants and get a real, scheduled check against Perplexity for whether your domain is cited in the answer — not a guess, an actual API response.',
+    tag: 'Perplexity-backed',
+  },
+  {
+    icon: Link2,
+    title: 'Backlink Profile Monitoring',
+    desc: 'Total backlinks, referring domains, and Trust/Citation Flow from a real backlink index, snapshotted over time on demand or on a schedule.',
+    tag: 'Real index data',
+  },
 ]
 
 const ROADMAP: { title: string; desc: string }[] = [
-  {
-    title: 'AI citation tracking',
-    desc: 'Measure when AI answer engines cite your brand.',
-  },
-  {
-    title: 'Backlink analysis',
-    desc: 'Backlink monitoring and competitor gap discovery.',
-  },
   {
     title: 'Local SEO heatmaps',
     desc: 'Geo-grid rankings and Google Business Profile tools.',

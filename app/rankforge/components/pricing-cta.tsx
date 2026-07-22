@@ -28,10 +28,12 @@ const PLAN = {
     'Automatic scheduled re-audits, monitor digests & competitor refresh',
     'Team invitations & role-based access',
     'Keyword rank tracking — real position history over time, not just point-in-time',
+    'AI citation tracking — real checks against Perplexity for whether AI answers cite you',
+    'Backlink profile monitoring — total backlinks, referring domains, Trust/Citation Flow',
     'Regression monitoring — email alert when a verified fix reverts on the live site',
     'Outcome measurement — real Search Console before/after per fix',
   ],
-  soon: ['Backlink analysis'],
+  soon: [],
 }
 
 // `heading: false` on the standalone /pricing page, whose PageIntro already
@@ -93,6 +95,7 @@ export function Pricing({ heading = true }: { heading?: boolean } = {}) {
                   </li>
                 ))}
               </ul>
+              {PLAN.soon.length > 0 && (
               <div className="mt-6 border-t border-[var(--rf-card-line)] pt-5">
                 <p className="rf-mono text-[10px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">
                   Coming soon — not available yet
@@ -108,6 +111,7 @@ export function Pricing({ heading = true }: { heading?: boolean } = {}) {
                   ))}
                 </ul>
               </div>
+              )}
             </div>
           </Reveal>
         </div>

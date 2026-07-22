@@ -7,8 +7,10 @@
 // is never the source of truth for any entity defined here.
 
 import type {
+  AiCitationSnapshot,
   AtlasHistory,
   AuditLogEntry,
+  BacklinkSnapshot,
   Competitor,
   ContentBrief,
   Invitation,
@@ -22,6 +24,7 @@ import type {
   Recommendation,
   Scan,
   Schedule,
+  TrackedAiQuery,
   TrackedKeyword,
   User,
   WpConnection,
@@ -75,6 +78,15 @@ export interface FoundationStore {
   removeTrackedKeyword(id: string): Promise<void>
   recordRankSnapshot(snap: RankSnapshot): Promise<void>
   listRankSnapshots(projectId: string, keyword?: string): Promise<RankSnapshot[]>
+  // AI citation tracking
+  addTrackedAiQuery(q: TrackedAiQuery): Promise<void>
+  listTrackedAiQueries(projectId: string): Promise<TrackedAiQuery[]>
+  removeTrackedAiQuery(id: string): Promise<void>
+  recordAiCitationSnapshot(snap: AiCitationSnapshot): Promise<void>
+  listAiCitationSnapshots(projectId: string, query?: string): Promise<AiCitationSnapshot[]>
+  // Backlink profile snapshots
+  recordBacklinkSnapshot(snap: BacklinkSnapshot): Promise<void>
+  listBacklinkSnapshots(projectId: string, limit?: number): Promise<BacklinkSnapshot[]>
   // Atlas change-detection baseline (Phase G)
   getAtlasHistory(projectId: string): Promise<AtlasHistory | null>
   upsertAtlasHistory(history: AtlasHistory): Promise<void>

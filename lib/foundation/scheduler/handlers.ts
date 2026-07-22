@@ -9,6 +9,8 @@ import { runOutcomeCapture } from './outcome-runner'
 import { runMonitorDigest } from './digest'
 import { runCompetitorRefreshJob } from './competitor-refresh-runner'
 import { runRankTrackingJob } from './rank-tracking-runner'
+import { runAiCitationCheckJob } from './ai-citation-runner'
+import { runBacklinkRefreshJob } from './backlink-runner'
 
 export function productionHandlers(): Handlers {
   return {
@@ -31,6 +33,14 @@ export function productionHandlers(): Handlers {
     rank_tracking: async (job) => {
       const store = await getStore()
       return runRankTrackingJob(store, job)
+    },
+    ai_citation_check: async (job) => {
+      const store = await getStore()
+      return runAiCitationCheckJob(store, job)
+    },
+    backlink_refresh: async (job) => {
+      const store = await getStore()
+      return runBacklinkRefreshJob(store, job)
     },
   }
 }

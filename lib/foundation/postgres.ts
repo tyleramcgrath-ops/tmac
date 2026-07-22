@@ -15,8 +15,10 @@ import { Pool } from 'pg'
 import { runMigrations } from './migrate'
 import type { FoundationStore } from './store'
 import type {
+  AiCitationSnapshot,
   AtlasHistory,
   AuditLogEntry,
+  BacklinkSnapshot,
   Competitor,
   ContentBrief,
   Invitation,
@@ -30,6 +32,7 @@ import type {
   Recommendation,
   Scan,
   Schedule,
+  TrackedAiQuery,
   TrackedKeyword,
   User,
   WpConnection,
@@ -133,6 +136,21 @@ const TABLES = {
     pk: ['id'],
     keys: (s: RankSnapshot) => ({ id: s.id, project_id: s.projectId, keyword: s.keyword, checked_at: s.checkedAt }),
   } as TableDesc<RankSnapshot>,
+  trackedAiQueries: {
+    name: 'rf_tracked_ai_queries',
+    pk: ['id'],
+    keys: (q: TrackedAiQuery) => ({ id: q.id, project_id: q.projectId, query: q.query, created_at: q.createdAt }),
+  } as TableDesc<TrackedAiQuery>,
+  aiCitationSnapshots: {
+    name: 'rf_ai_citation_snapshots',
+    pk: ['id'],
+    keys: (s: AiCitationSnapshot) => ({ id: s.id, project_id: s.projectId, query: s.query, checked_at: s.checkedAt }),
+  } as TableDesc<AiCitationSnapshot>,
+  backlinkSnapshots: {
+    name: 'rf_backlink_snapshots',
+    pk: ['id'],
+    keys: (s: BacklinkSnapshot) => ({ id: s.id, project_id: s.projectId, checked_at: s.checkedAt }),
+  } as TableDesc<BacklinkSnapshot>,
 }
 
 export class PostgresFoundationStore implements FoundationStore {
@@ -369,6 +387,41 @@ export class PostgresFoundationStore implements FoundationStore {
       )
     }
     return this.rows<RankSnapshot>('SELECT data FROM rf_rank_snapshots WHERE project_id=$1 ORDER BY checked_at', [projectId])
+  }
+
+  // ── AI citation tracking ─────────────────────────────────────────────────
+  async addTrackedAiQuery(q: TrackedAiQuery) {
+    await this.ins(TABLES.trackedAiQueries, q)
+  }
+  async listTrackedAiQueries(projectId: string) {
+    return this.rows<TrackedAiQuery>('SELECT data FROM rf_tracked_ai_queries WHERE project_id=$1 ORDER BY created_at', [projectId])
+  }
+  async removeTrackedAiQuery(id: string) {
+    await this.pool.query('DELETE FROM rf_tracked_ai_queries WHERE id=$1', [id])
+  }
+  async recordAiCitationSnapshot(snap: AiCitationSnapshot) {
+    await this.ins(TABLES.aiCitationSnapshots, snap)
+  }
+  async listAiCitationSnapshots(projectId: string, query?: string) {
+    if (query) {
+      return this.rows<AiCitationSnapshot>(
+        'SELECT data FROM rf_ai_citation_snapshots WHERE project_id=$1 AND query=$2 ORDER BY checked_at',
+        [projectId, query]
+      )
+    }
+    return this.rows<AiCitationSnapshot>('SELECT data FROM rf_ai_citation_snapshots WHERE project_id=$1 ORDER BY checked_at', [projectId])
+  }
+
+  // ── Backlink profile snapshots ───────────────────────────────────────────
+  async recordBacklinkSnapshot(snap: BacklinkSnapshot) {
+    await this.ins(TABLES.backlinkSnapshots, snap)
+  }
+  async listBacklinkSnapshots(projectId: string, limit?: number) {
+    const rows = await this.rows<BacklinkSnapshot>(
+      `SELECT data FROM rf_backlink_snapshots WHERE project_id=$1 ORDER BY checked_at DESC${limit ? ` LIMIT ${Number(limit)}` : ''}`,
+      [projectId]
+    )
+    return rows
   }
 
   // ── Atlas change-detection baseline (Phase G) ───────────────────────────────

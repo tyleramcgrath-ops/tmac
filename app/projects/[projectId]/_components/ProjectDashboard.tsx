@@ -15,14 +15,14 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, RefreshCw, StopCircle, Network, ShieldCheck, Code2, Bot,
   Zap, FolderOpen, Wand2, Sparkles, TrendingUp, History as HistoryIcon,
-  LogOut, PenSquare, Swords, type LucideIcon,
+  LogOut, PenSquare, Swords, Quote, type LucideIcon,
 } from 'lucide-react'
 import { api, ApiError, type ProjectDTO, type ScanSummary } from '../../../lib/client'
 import { useAuth } from '../../../lib/auth-context'
 import { runCrawl } from '../../../lib/crawl-runner'
 import { analyze, type PageResult, type PageSpeed } from './dashboard/analytics'
 import { CommandCenter, type RfEvent } from './dashboard/command'
-import { Overview, Audit, Content, Links, Indexability, Schema, Rankings, Backlinks, Reports, EmptyAudit } from './dashboard/sections'
+import { Overview, Audit, Content, Links, Indexability, Schema, Rankings, Backlinks, AiCitations, Reports, EmptyAudit } from './dashboard/sections'
 import { RecommendationsTab } from './RecommendationsTab'
 import { OperatorTab } from './OperatorTab'
 import { WordPressTab } from './WordPressTab'
@@ -34,7 +34,7 @@ import { PilotBar } from '../../../lib/PilotBar'
 
 type SectionId =
   | 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema'
-  | 'recommendations' | 'rankings' | 'backlinks' | 'content-studio' | 'competitors' | 'wordpress' | 'operator' | 'reports' | 'history'
+  | 'recommendations' | 'rankings' | 'backlinks' | 'ai-citations' | 'content-studio' | 'competitors' | 'wordpress' | 'operator' | 'reports' | 'history'
 
 const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: LucideIcon }[] }[] = [
   { label: 'Analyze', items: [
@@ -50,6 +50,7 @@ const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: 
   { label: 'Grow', items: [
     { id: 'rankings', label: 'Rankings', icon: LineChart },
     { id: 'backlinks', label: 'Backlinks', icon: Link2 },
+    { id: 'ai-citations', label: 'AI Citations', icon: Quote },
     { id: 'content-studio', label: 'Content Studio', icon: PenSquare },
     { id: 'competitors', label: 'Competitors', icon: Swords },
   ]},
@@ -243,7 +244,8 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
 
             {section === 'recommendations' && <RecommendationsTab projectId={project.id} />}
             {section === 'rankings' && <Rankings domain={project.domain} projectId={project.id} />}
-            {section === 'backlinks' && <Backlinks domain={project.domain} />}
+            {section === 'backlinks' && <Backlinks projectId={project.id} />}
+            {section === 'ai-citations' && <AiCitations projectId={project.id} />}
             {section === 'content-studio' && <ContentTab projectId={project.id} />}
             {section === 'competitors' && <AtlasTab projectId={project.id} />}
             {section === 'wordpress' && <WordPressTab projectId={project.id} />}
