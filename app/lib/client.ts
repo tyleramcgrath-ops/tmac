@@ -505,6 +505,11 @@ export const api = {
     req<{ snapshots: RankSnapshotDTO[] }>(
       `/api/projects/${projectId}/rankings/history${keyword ? `?keyword=${encodeURIComponent(keyword)}` : ''}`
     ),
+  // Free competitor rank comparison — reuses the same SERPAPI_KEY-gated live
+  // position checker against tracked competitor domains, for the keywords
+  // already tracked for this project. No paid competitor-intel API.
+  compareCompetitorRankings: (projectId: string) =>
+    req<CompetitorRankComparisonDTO>(`/api/projects/${projectId}/rankings/competitors`),
 
   // ── AI citation tracking ──
   listTrackedAiQueries: (projectId: string) =>
@@ -615,6 +620,16 @@ export interface RankSnapshotDTO {
   position: number | null
   url: string | null
   checkedAt: string
+}
+export interface CompetitorRankComparisonDTO {
+  available: boolean
+  note?: string
+  domain?: string
+  keywordsCompared?: number
+  keywordsTotal?: number
+  competitorsCompared?: number
+  competitorsTotal?: number
+  rows?: { keyword: string; us: number | null; competitors: { label: string; position: number | null }[] }[]
 }
 export interface TrackedAiQueryDTO {
   id: string
