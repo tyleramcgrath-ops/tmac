@@ -13,6 +13,7 @@ import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type Evidence
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 import { findKeywordOpportunities } from '../../../../lib/foundation/reco/keyword-opportunities'
 import { findKeywordCannibalization } from '../../../../lib/foundation/reco/keyword-cannibalization'
+import { detectTrafficDecay } from '../../../../lib/foundation/reco/traffic-decay'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -354,6 +355,19 @@ function GscTrendCharts({ points }: { points: GscTrendPointDTO[] }) {
   )
 }
 
+// Traffic decay: derived client-side from the same 30-day GSC trend points
+// TrendCharts already fetched — no extra request. Only renders when a real,
+// meaningful decline is detected; silent otherwise (no "all clear" noise).
+function TrafficDecayBanner({ points }: { points: GscTrendPointDTO[] }) {
+  const decay = detectTrafficDecay(points)
+  if (!decay) return null
+  return (
+    <p className="rounded-lg bg-yellow-500/10 px-3 py-2 text-[11px] text-yellow-300">
+      Organic clicks are down {Math.abs(decay.changePct).toFixed(0)}% in the last half of this window ({decay.earlierClicks} → {decay.recentClicks}) — worth checking for a ranking drop, a lost featured snippet, or a seasonal shift.
+    </p>
+  )
+}
+
 function Ga4TrendCharts({ points }: { points: Ga4TrendPointDTO[] }) {
   const hasRevenue = points.some((p) => p.revenue != null)
   return (
@@ -387,7 +401,14 @@ function TrendCharts({ projectId }: { projectId: string }) {
   return (
     <div className="space-y-2">
       <p className="text-xs font-semibold text-white">28-day trend</p>
-      {trends.gsc.ok ? <GscTrendCharts points={trends.gsc.points} /> : <p className="text-[11px] text-[var(--rf-faint)]">Search Console trend unavailable: {trends.gsc.reason}</p>}
+      {trends.gsc.ok ? (
+        <>
+          <TrafficDecayBanner points={trends.gsc.points} />
+          <GscTrendCharts points={trends.gsc.points} />
+        </>
+      ) : (
+        <p className="text-[11px] text-[var(--rf-faint)]">Search Console trend unavailable: {trends.gsc.reason}</p>
+      )}
       {trends.analytics.ok ? <Ga4TrendCharts points={trends.analytics.points} /> : <p className="text-[11px] text-[var(--rf-faint)]">Analytics trend unavailable: {trends.analytics.reason}</p>}
     </div>
   )
