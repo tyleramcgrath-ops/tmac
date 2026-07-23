@@ -18,9 +18,9 @@ import { useEffect, useRef } from 'react'
 /** Where the render's compass sits on the plate, in % of the frame,
  *  and how large the live armillary should be relative to frame height. */
 const PLATE = {
-  coreX: 50.0, // % from left to the compass center
-  coreY: 52.5, // % from top to the compass center
-  coreD: 30, // armillary diameter, in vh
+  coreX: 50.1, // % from left to the compass center
+  coreY: 54.2, // % from top to the compass center
+  coreD: 21.5, // armillary diameter, in vh
 }
 
 export default function BoardHero() {
@@ -46,6 +46,19 @@ export default function BoardHero() {
     <main ref={rootRef} className="hz-plate-root" onPointerMove={onPointerMove}>
       {/* the render, full bleed — the room is the image */}
       <div className="hz-plate" aria-label="North Star Headquarters — the command table at dusk" role="img" />
+
+      {/* quiets the sheet label baked into the render's top-left corner */}
+      <div className="hz-plate-patch" aria-hidden="true" />
+
+      {/* the dome carries the name, set live so it stays razor sharp */}
+      <header className="hz-brand">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M50 4 L55.5 44.5 L96 50 L55.5 55.5 L50 96 L44.5 55.5 L4 50 L44.5 44.5 Z" fill="#e8c988" />
+          <circle cx="50" cy="50" r="3.4" fill="#fff6dd" />
+        </svg>
+        <h1>North Star</h1>
+        <p>Headquarters</p>
+      </header>
 
       {/* the Core, alive on top of the render's compass */}
       <div

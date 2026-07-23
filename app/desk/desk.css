@@ -37,6 +37,57 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+/* quiets the sheet label baked into the render's top-left corner —
+   reads as the dome's own vignette, not a patch */
+.hz-plate-patch {
+  position: absolute;
+  left: -3%;
+  top: -3%;
+  width: 17%;
+  height: 19%;
+  background:
+    radial-gradient(78% 70% at 30% 28%, #010102 0%, #010102 55%, rgba(1, 1, 2, 0.75) 72%, transparent 90%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* the name in the dome, live and razor sharp */
+.hz-brand {
+  position: absolute;
+  left: 50%;
+  top: 3.6%;
+  transform: translateX(-50%);
+  z-index: 5;
+  text-align: center;
+  font-family: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
+  pointer-events: none;
+  animation: hz-live-in 2.4s cubic-bezier(0.22, 0.8, 0.24, 1) both 0.8s;
+}
+.hz-brand svg {
+  width: clamp(20px, 2.4vw, 34px);
+  margin: 0 auto 0.5rem;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(232, 182, 104, 0.6));
+}
+.hz-brand h1 {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.75vw, 1.45rem);
+  font-weight: 400;
+  letter-spacing: 0.52em;
+  text-indent: 0.52em;
+  color: #eed09a;
+  text-shadow: 0 0 20px rgba(232, 182, 104, 0.45), 0 2px 12px rgba(0, 0, 0, 0.9);
+  text-transform: uppercase;
+}
+.hz-brand p {
+  margin: 0.4rem 0 0;
+  font-size: clamp(0.46rem, 0.75vw, 0.62rem);
+  letter-spacing: 0.6em;
+  text-indent: 0.6em;
+  text-transform: uppercase;
+  color: rgba(238, 224, 196, 0.72);
+}
+
 /* =====================================================================
    THE LIVE CORE — rings turning over the render's own compass
    ===================================================================== */
