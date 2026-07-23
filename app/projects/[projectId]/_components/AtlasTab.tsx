@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ChannelRowDTO, type Ga4ReportDTO, type Ga4TrendPointDTO, type GoogleBreakdownsDTO, type GoogleTrendsDTO, type GscBreakdownRowDTO, type GscReportDTO, type GscTrendPointDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
+import { findKeywordOpportunities } from '../../../../lib/foundation/reco/keyword-opportunities'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -203,6 +204,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           <TrendCharts projectId={projectId} />
           <BreakdownTables projectId={projectId} />
           <GscPanel o={snapshot.gsc} />
+          <OpportunityPanel o={snapshot.gsc} />
           <Ga4Panel o={snapshot.analytics} />
           <p className="text-[10px] text-[var(--rf-faint)]">
             Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
@@ -490,6 +492,42 @@ function GscPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
                   <td className="px-2">{r.clicks}</td>
                   <td className="px-2">{r.impressions}</td>
                   <td className="px-2">{(r.ctr * 100).toFixed(1)}%</td>
+                  <td className="pl-2">{r.position.toFixed(1)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Quick-win keyword opportunities: derived client-side from the same GSC rows
+// GscPanel already has (no extra fetch). Positions 4-20 with real, non-trivial
+// impressions — pages Google already ranks, closest to a page-1 breakthrough.
+function OpportunityPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
+  const rows = o.value?.rows ?? []
+  const opportunities = findKeywordOpportunities(rows)
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <DataPanelHeader title="Keyword opportunities — quick wins" o={o} />
+      {o.value === null ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{o.evidence.note ?? 'Unavailable.'}</p>
+      ) : opportunities.length === 0 ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No queries currently ranking positions 4–20 with meaningful impressions.</p>
+      ) : (
+        <div className="mt-2 overflow-x-auto">
+          <p className="mb-1 text-[10px] text-[var(--rf-faint)]">Ranking on page 1–2 with real search volume — the closest, cheapest wins available.</p>
+          <table className="w-full text-[11px]">
+            <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Query</th><th className="px-2 font-normal">Page</th><th className="px-2 font-normal">Impr.</th><th className="px-2 font-normal">Clicks</th><th className="pl-2 font-normal">Pos.</th></tr></thead>
+            <tbody>
+              {opportunities.map((r, i) => (
+                <tr key={i} className="text-[var(--rf-muted)]">
+                  <td className="truncate pr-2 text-white">{r.query}</td>
+                  <td className="max-w-[160px] truncate px-2">{r.page}</td>
+                  <td className="px-2">{r.impressions}</td>
+                  <td className="px-2">{r.clicks}</td>
                   <td className="pl-2">{r.position.toFixed(1)}</td>
                 </tr>
               ))}
