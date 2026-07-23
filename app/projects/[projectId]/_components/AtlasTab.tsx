@@ -15,6 +15,7 @@ import { findKeywordOpportunities } from '../../../../lib/foundation/reco/keywor
 import { findKeywordCannibalization } from '../../../../lib/foundation/reco/keyword-cannibalization'
 import { detectTrafficDecay } from '../../../../lib/foundation/reco/traffic-decay'
 import { findLowCtrOutliers } from '../../../../lib/foundation/reco/ctr-outliers'
+import { findLowConversionOutliers } from '../../../../lib/foundation/reco/conversion-outliers'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -211,6 +212,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           <CannibalizationPanel o={snapshot.gsc} />
           <CtrOutlierPanel o={snapshot.gsc} />
           <Ga4Panel o={snapshot.analytics} />
+          <ConversionOutlierPanel o={snapshot.analytics} />
           <p className="text-[10px] text-[var(--rf-faint)]">
             Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
           </p>
@@ -658,6 +660,41 @@ function Ga4Panel({ o }: { o: ObservationDTO<Ga4ReportDTO> }) {
                   <td className="px-2">{r.sessions}</td>
                   <td className="px-2">{r.engagedSessions}</td>
                   <td className="pl-2">{r.conversions}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Low-conversion-rate outliers: derived client-side from the same GA4 page
+// rows Ga4Panel already has — flags pages with real traffic converting well
+// below the site's own median, a self-relative CRO signal.
+function ConversionOutlierPanel({ o }: { o: ObservationDTO<Ga4ReportDTO> }) {
+  const pages = o.value?.pages ?? []
+  const outliers = findLowConversionOutliers(pages)
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <DataPanelHeader title="Low-conversion outliers" o={o} />
+      {o.value === null ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{o.evidence.note ?? 'Unavailable.'}</p>
+      ) : outliers.length === 0 ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No page is currently underperforming its own site's conversion-rate median.</p>
+      ) : (
+        <div className="mt-2 overflow-x-auto">
+          <p className="mb-1 text-[10px] text-[var(--rf-faint)]">Real traffic, conversion rate well below other pages on this site — worth a CRO look.</p>
+          <table className="w-full text-[11px]">
+            <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Page</th><th className="px-2 font-normal">Sessions</th><th className="px-2 font-normal">Rate</th><th className="pl-2 font-normal">Site median</th></tr></thead>
+            <tbody>
+              {outliers.map((r, i) => (
+                <tr key={i} className="text-[var(--rf-muted)]">
+                  <td className="max-w-[200px] truncate pr-2 text-white">{r.page}</td>
+                  <td className="px-2">{r.sessions}</td>
+                  <td className="px-2">{(r.conversionRate * 100).toFixed(1)}%</td>
+                  <td className="pl-2">{(r.cohortMedianRate * 100).toFixed(1)}%</td>
                 </tr>
               ))}
             </tbody>
