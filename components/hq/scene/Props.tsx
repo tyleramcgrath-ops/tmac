@@ -64,6 +64,29 @@ export function Props() {
         </group>
       ))}
 
+      {/* Bronze celestial globe on a stand, left-forward */}
+      <group position={[-5.6, 0, 1.2]}>
+        <mesh position-y={0.5} material={bronze}>
+          <cylinderGeometry args={[0.08, 0.16, 1.0, 16]} />
+        </mesh>
+        <mesh position-y={1.0} material={brass}>
+          <torusGeometry args={[0.42, 0.02, 10, 60]} />
+        </mesh>
+        <mesh position-y={1.0} material={stone}>
+          <sphereGeometry args={[0.36, 32, 24]} />
+        </mesh>
+      </group>
+
+      {/* Sculptural obelisk on a plinth, right-forward */}
+      <group position={[5.6, 0, 1.4]}>
+        <mesh position-y={0.25} material={stone}>
+          <boxGeometry args={[0.7, 0.5, 0.7]} />
+        </mesh>
+        <mesh position-y={1.15} material={brass}>
+          <coneGeometry args={[0.16, 1.3, 4]} />
+        </mesh>
+      </group>
+
       {/* Leather reading chair, right of the desk */}
       <group position={[6.4, 0, -1.2]} rotation-y={-0.7}>
         <mesh position-y={0.42} material={leather} castShadow>

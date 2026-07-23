@@ -146,6 +146,36 @@ export function Room() {
     return arr
   }, [])
 
+  // North Star compass rose embedded in the floor (brass inlay, museum-grade).
+  const compassGeo = useMemo(() => {
+    const s = new THREE.Shape()
+    const R = 2.2
+    const inner = R * 0.16
+    for (let k = 0; k < 16; k++) {
+      const isPoint = k % 2 === 0
+      const isMajor = k % 4 === 0
+      const rad = isPoint ? (isMajor ? R : R * 0.62) : inner
+      const a = (k / 16) * Math.PI * 2 - Math.PI / 2
+      const x = Math.cos(a) * rad
+      const y = Math.sin(a) * rad
+      if (k === 0) s.moveTo(x, y)
+      else s.lineTo(x, y)
+    }
+    s.closePath()
+    return new THREE.ShapeGeometry(s)
+  }, [])
+  const compassMat = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#a98a5c', roughness: 0.45, metalness: 1, envMapIntensity: 0.7 }),
+    [],
+  )
+  // Warm light glowing from adjacent rooms through side archways.
+  const archGlow = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#e9c48a', emissive: new THREE.Color('#c98f4a'), emissiveIntensity: 1.4, roughness: 0.7 }),
+    [],
+  )
+  // Archways cut into the solid (south) wall — a hallway and an adjacent room.
+  const archAngles = useMemo(() => [50, 130, 90].map((d) => (d * Math.PI) / 180), [])
+
   return (
     <group>
       {/* Floor — honed Italian black marble with a soft (never mirror-like)
@@ -174,6 +204,36 @@ export function Room() {
           <ringGeometry args={[r - 0.03, r + 0.03, 160]} />
         </mesh>
       ))}
+      {/* North Star compass rose embedded at the centre, under the desk/Core */}
+      <mesh geometry={compassGeo} rotation-x={-Math.PI / 2} position-y={0.005} material={compassMat} />
+      <mesh rotation-x={-Math.PI / 2} position-y={0.006} material={inlayMat}>
+        <ringGeometry args={[2.28, 2.34, 96]} />
+      </mesh>
+
+      {/* Adjacent rooms glimpsed through archways in the solid wall — the
+          headquarters reads as part of a larger building (discoverability). */}
+      {archAngles.map((a, i) => {
+        const x = Math.cos(a) * (ROOM_R - 0.1)
+        const z = Math.sin(a) * (ROOM_R - 0.1)
+        return (
+          <group key={i} position={[x, 0, z]} rotation-y={-a + Math.PI / 2}>
+            {/* Warm room beyond (a lit panel set back behind the wall opening) */}
+            <mesh position={[0, 1.5, 0.6]} material={archGlow}>
+              <planeGeometry args={[1.6, 2.6]} />
+            </mesh>
+            <pointLight position={[0, 1.6, 0.2]} color="#e9b877" intensity={2.4} distance={6} decay={2} />
+            {/* Bronze arch surround */}
+            <mesh position={[0, 2.5, 0.05]} material={bronze}>
+              <boxGeometry args={[2.0, 0.16, 0.3]} />
+            </mesh>
+            {[-1, 1].map((s) => (
+              <mesh key={s} position={[s * 0.95, 1.25, 0.05]} material={bronze}>
+                <boxGeometry args={[0.16, 2.6, 0.3]} />
+              </mesh>
+            ))}
+          </group>
+        )
+      })}
 
       {/* Flanking pedestal lamps — warm pools + symmetry (Concept A) */}
       {[-1, 1].map((s) => (

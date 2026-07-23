@@ -17,6 +17,7 @@ import { ROOM_R, WALL_H } from './Room'
 const NORTH_START = Math.PI // north half (−Z), 180° arc
 const ARC = Math.PI
 const GLASS_H = WALL_H + 0.4
+const BASE_H = 0.85 // stone parapet the glazing sits on
 
 export function GlassWall() {
   const glassMat = useMemo(() => {
@@ -45,6 +46,10 @@ export function GlassWall() {
     () => new THREE.MeshStandardMaterial({ color: '#6f5c3f', roughness: 0.45, metalness: 1, envMapIntensity: 0.9 }),
     [],
   )
+  const stone = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#20222a', roughness: 0.85, metalness: 0.05, envMapIntensity: 0.4 }),
+    [],
+  )
 
   // Fewer, larger structural divisions: 6 bays → substantial bronze piers,
   // not a greenhouse of thin mullions (Blueprint refinement).
@@ -60,36 +65,49 @@ export function GlassWall() {
     return arr
   }, [])
 
-  // One restrained horizontal transom, high on the glazing.
-  const transoms = [GLASS_H * 0.68]
+  const glassMidY = (BASE_H + GLASS_H) / 2
+  const glassSpan = GLASS_H - BASE_H
 
   return (
     <group>
-      {/* Glass surface: an open half-cylinder facing the room interior. */}
-      <mesh position-y={GLASS_H / 2} material={glassMat} renderOrder={2}>
-        <cylinderGeometry args={[ROOM_R - 0.02, ROOM_R - 0.02, GLASS_H, 96, 1, true, NORTH_START, ARC]} />
+      {/* Stone parapet the glazing sits on (deep, with a brass cap) */}
+      <mesh position-y={BASE_H / 2} material={stone} castShadow receiveShadow>
+        <cylinderGeometry args={[ROOM_R + 0.05, ROOM_R + 0.18, BASE_H, 96, 1, true, NORTH_START, ARC]} />
+      </mesh>
+      <mesh position-y={BASE_H} rotation-x={Math.PI / 2} material={brass}>
+        <torusGeometry args={[ROOM_R + 0.06, 0.05, 10, 120]} />
       </mesh>
 
-      {/* Substantial structural piers between the glass bays */}
+      {/* Glass surface: an open half-cylinder above the parapet. */}
+      <mesh position-y={glassMidY} material={glassMat} renderOrder={2}>
+        <cylinderGeometry args={[ROOM_R - 0.02, ROOM_R - 0.02, glassSpan, 96, 1, true, NORTH_START, ARC]} />
+      </mesh>
+
+      {/* Deep bronze piers between the bays — set inboard with real depth */}
       {piers.map((v) => (
-        <mesh key={v.key} position={[v.x, GLASS_H / 2, v.z]} rotation-y={v.ry} material={bronze} castShadow>
-          <boxGeometry args={[0.26, GLASS_H, 0.5]} />
-        </mesh>
+        <group key={v.key} position={[v.x, glassMidY, v.z]} rotation-y={v.ry}>
+          <mesh material={bronze} castShadow>
+            <boxGeometry args={[0.24, glassSpan, 0.62]} />
+          </mesh>
+          {/* Inner reveal fin — reads as frame depth */}
+          <mesh position-z={0.34} material={stone}>
+            <boxGeometry args={[0.16, glassSpan, 0.1]} />
+          </mesh>
+        </group>
       ))}
 
-      {/* Restrained horizontal transom */}
-      {transoms.map((h) => (
-        <mesh key={h} position-y={h} rotation-x={Math.PI / 2} material={brass}>
-          <torusGeometry args={[ROOM_R - 0.02, 0.06, 10, 120]} />
-        </mesh>
-      ))}
+      {/* Deep bronze header beam (the eye reads real thickness at the top) */}
+      <mesh position-y={GLASS_H} rotation-x={Math.PI / 2} material={bronze} castShadow>
+        <torusGeometry args={[ROOM_R + 0.02, 0.2, 12, 120]} />
+      </mesh>
+      <mesh position-y={GLASS_H - 0.02} rotation-x={Math.PI / 2} material={brass}>
+        <torusGeometry args={[ROOM_R - 0.02, 0.05, 10, 120]} />
+      </mesh>
 
-      {/* Head and sill rails */}
-      {[0.08, GLASS_H].map((h) => (
-        <mesh key={h} position-y={h} rotation-x={Math.PI / 2} material={bronze}>
-          <torusGeometry args={[ROOM_R, 0.12, 12, 120]} />
-        </mesh>
-      ))}
+      {/* A restrained mid transom */}
+      <mesh position-y={BASE_H + glassSpan * 0.62} rotation-x={Math.PI / 2} material={brass}>
+        <torusGeometry args={[ROOM_R - 0.02, 0.045, 10, 120]} />
+      </mesh>
     </group>
   )
 }

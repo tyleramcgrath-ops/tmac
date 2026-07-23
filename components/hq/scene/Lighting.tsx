@@ -56,9 +56,10 @@ export function Lighting() {
 
   return (
     <group>
-      {/* Low ambient + hemisphere fill — keeps shadows readable, never flat */}
-      <hemisphereLight args={['#3a4859', '#181109', 1.1]} />
-      <ambientLight intensity={0.32} />
+      {/* Deliberately low fill for cinematic contrast — bright focal points,
+          dark corners (Hollywood, not uniform software lighting). */}
+      <hemisphereLight args={['#2c3948', '#140e08', 0.6]} />
+      <ambientLight intensity={0.16} />
 
       {/* Natural key light through the glass wall (north, high) */}
       <directionalLight
