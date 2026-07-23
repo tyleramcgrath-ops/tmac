@@ -3,15 +3,14 @@
 import { useEffect, useRef } from 'react'
 
 /* =====================================================================
-   THE HORIZON — COMMAND TABLE
-   Plate no. 03 of North Star Headquarters, built fresh from the board:
-   a single ellipse of absolute black stone on a sculpted stem, brass
-   rings inlaid flush with the surface, and the Core — a machined brass
-   armillary — turning slowly above its mount. The world outside is a
-   360° horizon at last light. The stars are the interface.
+   NORTH STAR HEADQUARTERS — THE HORIZON, COMMAND TABLE
+   The board's hero frame, rebuilt as a living scene: a dark stone room
+   behind floor-to-ceiling glass, dusk burning on the horizon, a blade
+   of absolute black stone rimmed in warm light, and the Core — a
+   sphere of brass rings — turning slowly above its mount.
    ===================================================================== */
 
-// Deterministic starfield — same sky on server and client, every night.
+// Deterministic starfield — the same sky on server and client.
 function seeded(seed: number) {
   let s = seed
   return () => {
@@ -20,37 +19,27 @@ function seeded(seed: number) {
   }
 }
 
-const rand = seeded(19)
-const STARS = Array.from({ length: 110 }, () => ({
-  x: +(rand() * 1600).toFixed(1),
-  y: +(rand() * rand() * 560).toFixed(1),
-  r: +(0.4 + rand() * 1.2).toFixed(2),
-  o: +(0.25 + rand() * 0.65).toFixed(2),
+const starRand = seeded(19)
+const STARS = Array.from({ length: 90 }, () => ({
+  x: +(starRand() * 1600).toFixed(1),
+  y: +(starRand() * starRand() * 340).toFixed(1),
+  r: +(0.4 + starRand() * 1.1).toFixed(2),
+  o: +(0.2 + starRand() * 0.6).toFixed(2),
 }))
 
-// A small asterism, upper left — lines faint, points bright.
-const ASTERISM = [
-  [305, 128], [392, 96], [472, 150], [560, 118], [610, 196], [532, 248], [447, 214],
-] as const
-
-// Inlay tick marks around the tabletop's outer brass ring.
-const TABLE_CX = 700
-const TABLE_CY = 480
-const SQUASH = 60 / 520
-const TICKS = Array.from({ length: 24 }, (_, i) => {
-  const a = (i * 15 * Math.PI) / 180
-  const cos = Math.cos(a)
-  const sin = Math.sin(a)
-  const major = i % 6 === 0
-  const r0 = major ? 438 : 444
-  const r1 = 458
-  return {
-    x1: +(TABLE_CX + cos * r0).toFixed(1),
-    y1: +(TABLE_CY + sin * r0 * SQUASH).toFixed(1),
-    x2: +(TABLE_CX + cos * r1).toFixed(1),
-    y2: +(TABLE_CY + sin * r1 * SQUASH).toFixed(1),
-    major,
-  }
+// The constellation dome: a survey web of points across the ceiling.
+const domeRand = seeded(7)
+const DOME_PTS = Array.from({ length: 26 }, () => ({
+  x: +(domeRand() * 1600).toFixed(1),
+  y: +(14 + domeRand() * 160).toFixed(1),
+}))
+const DOME_LINKS = DOME_PTS.flatMap((p, i) => {
+  const near = DOME_PTS
+    .map((q, j) => ({ j, d: (p.x - q.x) ** 2 + ((p.y - q.y) * 2.4) ** 2 }))
+    .filter(({ j }) => j > i)
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 2)
+  return near.map(({ j }) => [i, j] as const)
 })
 
 function CompassStar() {
@@ -58,143 +47,109 @@ function CompassStar() {
     <svg viewBox="0 0 100 100" aria-hidden="true">
       <defs>
         <linearGradient id="hz-star-gold" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fbeec9" />
-          <stop offset="0.45" stopColor="#e8c377" />
-          <stop offset="1" stopColor="#8f6a2e" />
+          <stop offset="0" stopColor="#fff4d4" />
+          <stop offset="0.45" stopColor="#f0cc7f" />
+          <stop offset="1" stopColor="#a87c36" />
         </linearGradient>
       </defs>
-      {/* diagonal points, behind */}
       <path
-        d="M50 50 L26 26 L44 44 Z M50 50 L74 26 L56 44 Z M50 50 L74 74 L56 56 Z M50 50 L26 74 L44 56 Z"
-        fill="#a37d38"
+        d="M50 50 L28 28 L45 45 Z M50 50 L72 28 L55 45 Z M50 50 L72 72 L55 55 Z M50 50 L28 72 L45 55 Z"
+        fill="#b8903f"
       />
       <path
         d="M50 2 L56 44 L98 50 L56 56 L50 98 L44 56 L2 50 L44 44 Z"
         fill="url(#hz-star-gold)"
-        stroke="#fff3d6"
-        strokeWidth="0.5"
+        stroke="#fff6dd"
+        strokeWidth="0.6"
       />
-      <circle cx="50" cy="50" r="4.5" fill="#fff6dd" />
+      <circle cx="50" cy="50" r="4" fill="#fffbe9" />
     </svg>
   )
 }
 
-function CompassRose() {
-  return (
-    <svg viewBox="0 0 100 100" aria-hidden="true">
-      <g fill="none" stroke="#c39a52">
-        <circle cx="50" cy="50" r="46" strokeWidth="0.8" opacity="0.7" />
-        <circle cx="50" cy="50" r="38" strokeWidth="0.5" opacity="0.45" />
-        {Array.from({ length: 36 }, (_, i) => {
-          const a = (i * 10 * Math.PI) / 180
-          const long = i % 9 === 0
-          const r0 = long ? 39 : 42.5
-          return (
-            <line
-              key={i}
-              x1={+(50 + Math.cos(a) * r0).toFixed(2)}
-              y1={+(50 + Math.sin(a) * r0).toFixed(2)}
-              x2={+(50 + Math.cos(a) * 46).toFixed(2)}
-              y2={+(50 + Math.sin(a) * 46).toFixed(2)}
-              strokeWidth={long ? 1 : 0.5}
-              opacity={long ? 0.9 : 0.5}
-            />
-          )
-        })}
-      </g>
-      <path d="M50 14 L53 47 L50 54 L47 47 Z" fill="#e8c377" />
-      <path d="M50 86 L53 53 L50 46 L47 53 Z" fill="#6d5224" />
-      <circle cx="50" cy="50" r="2.2" fill="#f0d492" />
-    </svg>
-  )
-}
-
+/** The Horizon itself, drawn over the full frame so its light and the
+ *  room's datums stay in perfect register at any viewport. */
 function CommandTable() {
   return (
-    <svg className="hz-table" viewBox="0 0 1400 1000" aria-label="The Horizon command table: an elliptical black stone top on a sculpted stem, brass rings inlaid in the surface">
+    <svg
+      className="hz-table"
+      viewBox="0 0 1600 900"
+      preserveAspectRatio="none"
+      aria-label="The Horizon command table: a blade-thin ellipse of black stone on a sculpted stem, its rim emitting warm light"
+    >
       <defs>
-        <linearGradient id="hz-brassline" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#7a5c2c" />
-          <stop offset="0.3" stopColor="#e8c377" />
-          <stop offset="0.55" stopColor="#f6e2ac" />
-          <stop offset="0.8" stopColor="#c39a52" />
-          <stop offset="1" stopColor="#6d5224" />
+        <linearGradient id="hz-top" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#2c2118" />
+          <stop offset="0.35" stopColor="#15110d" />
+          <stop offset="1" stopColor="#070606" />
         </linearGradient>
-        <radialGradient id="hz-stone-top" cx="0.5" cy="0.38" r="0.75">
-          <stop offset="0" stopColor="#1d1d23" />
-          <stop offset="0.55" stopColor="#121216" />
-          <stop offset="1" stopColor="#08080a" />
-        </radialGradient>
-        <linearGradient id="hz-stone-rim" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#040405" />
-          <stop offset="0.6" stopColor="#0e0e11" />
-          <stop offset="1" stopColor="#1a1a20" />
+        <linearGradient id="hz-rim" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#0c0a08" />
+          <stop offset="0.55" stopColor="#050404" />
+          <stop offset="1" stopColor="#020202" />
         </linearGradient>
-        <linearGradient id="hz-stem" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#040405" />
-          <stop offset="0.36" stopColor="#0e0e12" />
-          <stop offset="0.5" stopColor="#2a2a33" />
-          <stop offset="0.64" stopColor="#0e0e12" />
-          <stop offset="1" stopColor="#040405" />
+        <linearGradient id="hz-stem2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#020202" />
+          <stop offset="0.34" stopColor="#0a0908" />
+          <stop offset="0.5" stopColor="#191512" />
+          <stop offset="0.66" stopColor="#0a0908" />
+          <stop offset="1" stopColor="#020202" />
         </linearGradient>
-        <linearGradient id="hz-foot-brass" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#e8c377" />
-          <stop offset="0.5" stopColor="#a8813f" />
-          <stop offset="1" stopColor="#4c3817" />
+        <linearGradient id="hz-emit" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#c9862e" stopOpacity="0.1" />
+          <stop offset="0.18" stopColor="#f4b45e" stopOpacity="0.75" />
+          <stop offset="0.5" stopColor="#ffd894" stopOpacity="1" />
+          <stop offset="0.82" stopColor="#f4b45e" stopOpacity="0.75" />
+          <stop offset="1" stopColor="#c9862e" stopOpacity="0.1" />
         </linearGradient>
-        <linearGradient id="hz-sheen" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#ffcf94" stopOpacity="0.16" />
-          <stop offset="0.6" stopColor="#ffcf94" stopOpacity="0.03" />
-          <stop offset="1" stopColor="#ffcf94" stopOpacity="0" />
-        </linearGradient>
-        <filter id="hz-soft" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="14" />
+        <filter id="hz-blur6" x="-30%" y="-300%" width="160%" height="700%">
+          <feGaussianBlur stdDeviation="6" />
+        </filter>
+        <filter id="hz-blur16" x="-30%" y="-120%" width="160%" height="340%">
+          <feGaussianBlur stdDeviation="16" />
+        </filter>
+        <filter id="hz-blur2" x="-20%" y="-200%" width="140%" height="500%">
+          <feGaussianBlur stdDeviation="1.6" />
         </filter>
       </defs>
 
-      {/* grounded: the table's shadow, pooled on the stone */}
-      <ellipse cx="700" cy="906" rx="340" ry="36" fill="#000" opacity="0.8" filter="url(#hz-soft)" />
+      {/* the table's shadow, pooled beneath the foot */}
+      <ellipse cx="800" cy="836" rx="520" ry="42" fill="#000" opacity="0.72" filter="url(#hz-blur16)" />
 
-      {/* the stem: one sweep from waist to flare, nothing extra */}
+      {/* the stem: one manta sweep from the blade's underside to the stone */}
       <path
-        d="M 638 505
-           C 646 585, 662 615, 665 655
-           C 668 735, 612 812, 550 862
-           L 850 862
-           C 788 812, 732 735, 735 655
-           C 738 615, 754 585, 762 505
+        d="M 726 622
+           C 742 668, 756 690, 758 712
+           C 760 756, 700 796, 622 822
+           L 978 822
+           C 900 796, 840 756, 842 712
+           C 844 690, 858 668, 874 622
            Z"
-        fill="url(#hz-stem)"
+        fill="url(#hz-stem2)"
       />
+      {/* horizon light grazing the stem's flanks */}
+      <path d="M 748 640 C 756 686 762 700 756 726 C 750 764 700 794 650 814" fill="none" stroke="#b97f3c" strokeWidth="2" opacity="0.4" filter="url(#hz-blur2)" />
+      <path d="M 852 640 C 844 686 838 700 844 726 C 850 764 900 794 950 814" fill="none" stroke="#d99a4c" strokeWidth="2.4" opacity="0.55" filter="url(#hz-blur2)" />
 
-      {/* the foot: stone over a machined brass base ring */}
-      <ellipse cx="700" cy="884" rx="250" ry="38" fill="url(#hz-foot-brass)" />
-      <ellipse cx="700" cy="872" rx="246" ry="36" fill="url(#hz-stone-rim)" />
-      <path d="M 454 884 A 246 36 0 0 0 946 884" fill="none" stroke="url(#hz-brassline)" strokeWidth="1.4" opacity="0.65" />
+      {/* the foot, seated on a hairline of brass */}
+      <ellipse cx="800" cy="818" rx="185" ry="17" fill="url(#hz-rim)" />
+      <path d="M 615 820 A 185 17 0 0 0 985 820" fill="none" stroke="url(#hz-emit)" strokeWidth="1.6" opacity="0.5" />
 
-      {/* the top: knife edge first, then the surface over it */}
-      <ellipse cx="700" cy="497" rx="520" ry="60" fill="url(#hz-stone-rim)" />
-      <path d="M 180 497 A 520 60 0 0 0 1220 497" fill="none" stroke="url(#hz-brassline)" strokeWidth="1.6" opacity="0.85" />
-      <ellipse cx="700" cy="480" rx="520" ry="60" fill="url(#hz-stone-top)" />
-      {/* last light, caught in the polish */}
-      <ellipse cx="700" cy="480" rx="520" ry="60" fill="url(#hz-sheen)" />
+      {/* the blade: rim first, then the polished face */}
+      <ellipse cx="800" cy="620" rx="497" ry="27" fill="url(#hz-rim)" />
+      {/* the 40 mm edge, emitting 2700 K — sharp line plus bloom */}
+      <path d="M 303 621 A 497 27 0 0 0 1297 621" fill="none" stroke="url(#hz-emit)" strokeWidth="7" opacity="0.5" filter="url(#hz-blur6)" />
+      <path d="M 303 621 A 497 27 0 0 0 1297 621" fill="none" stroke="url(#hz-emit)" strokeWidth="2.2" />
+      <ellipse cx="800" cy="608" rx="497" ry="27" fill="url(#hz-top)" />
+      {/* dusk lying across the polish */}
+      <ellipse cx="800" cy="608" rx="497" ry="27" fill="url(#hz-emit)" opacity="0.1" />
+      {/* the back edge catching the horizon direct */}
+      <path d="M 315 602 A 497 27 0 0 1 1285 602" fill="none" stroke="#ffcf8e" strokeWidth="1.6" opacity="0.6" filter="url(#hz-blur2)" />
 
-      {/* brass inlaid flush with the stone — rings, then the survey ticks */}
-      <ellipse cx="700" cy="480" rx="430" ry="49.6" fill="none" stroke="url(#hz-brassline)" strokeWidth="1.7" opacity="0.85" />
-      <ellipse cx="700" cy="480" rx="330" ry="38.1" fill="none" stroke="url(#hz-brassline)" strokeWidth="1.2" opacity="0.6" />
-      <ellipse cx="700" cy="480" rx="210" ry="24.2" fill="none" stroke="url(#hz-brassline)" strokeWidth="1" opacity="0.45" />
-      <g stroke="#c39a52">
-        {TICKS.map((t, i) => (
-          <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} strokeWidth={t.major ? 1.6 : 0.8} opacity={t.major ? 0.8 : 0.45} />
-        ))}
-      </g>
-      {/* the cardinal inlay beneath the Core's mount */}
-      <g stroke="url(#hz-brassline)" strokeWidth="1.2" opacity="0.7">
-        <line x1="700" y1="466" x2="700" y2="452" />
-        <line x1="700" y1="494" x2="700" y2="508" />
-        <line x1="580" y1="480" x2="550" y2="480" />
-        <line x1="820" y1="480" x2="850" y2="480" />
-      </g>
+      {/* brass rings inlaid flush in the stone */}
+      <ellipse cx="800" cy="609" rx="420" ry="21.5" fill="none" stroke="#d8a95c" strokeWidth="1.3" opacity="0.6" />
+      <ellipse cx="800" cy="609" rx="300" ry="15" fill="none" stroke="#c99c50" strokeWidth="1" opacity="0.42" />
+      <ellipse cx="800" cy="609" rx="180" ry="8.6" fill="none" stroke="#c99c50" strokeWidth="1" opacity="0.3" />
     </svg>
   )
 }
@@ -219,63 +174,87 @@ export default function HorizonCommandTable() {
 
   return (
     <main ref={rootRef} className="hz-root" onPointerMove={onPointerMove}>
-      {/* the world outside: night falling on a 360° horizon */}
-      <div className="hz-sky" aria-hidden="true">
-        <svg className="hz-stars" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      {/* the world beyond the glass */}
+      <div className="hz-view" aria-hidden="true">
+        <svg className="hz-viewstars" viewBox="0 0 1600 340" preserveAspectRatio="xMidYMid slice">
           {STARS.map((s, i) => (
-            <circle key={i} className="hz-star" cx={s.x} cy={s.y} r={s.r} fill="#f6ecd6" opacity={s.o} />
+            <circle key={i} className="hz-star" cx={s.x} cy={s.y} r={s.r} fill="#f2e9d4" opacity={s.o} />
           ))}
         </svg>
-        <svg className="hz-constellation" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-          {ASTERISM.slice(0, -1).map(([x, y], i) => {
-            const [nx, ny] = ASTERISM[i + 1]
-            return <line key={i} x1={x} y1={y} x2={nx} y2={ny} />
-          })}
-          {ASTERISM.map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r={i === 3 ? 2.4 : 1.4} />
+        <div className="hz-range far">
+          <svg viewBox="0 0 1600 300" preserveAspectRatio="none">
+            <path
+              d="M0 210 L130 158 L262 190 L400 128 L536 176 L668 140 L810 182 L948 130 L1082 170 L1222 142 L1364 176 L1600 150 L1600 300 L0 300 Z"
+              fill="#2c2b40"
+            />
+          </svg>
+        </div>
+        <div className="hz-range mid">
+          <svg viewBox="0 0 1600 300" preserveAspectRatio="none">
+            <path
+              d="M0 216 L170 168 L330 204 L500 152 L676 198 L852 160 L1030 202 L1210 168 L1400 200 L1600 178 L1600 300 L0 300 Z"
+              fill="#151726"
+            />
+          </svg>
+        </div>
+        <div className="hz-range near">
+          <svg viewBox="0 0 1600 300" preserveAspectRatio="none">
+            <path
+              d="M0 230 L210 196 L420 222 L640 190 L860 218 L1080 194 L1300 220 L1600 202 L1600 300 L0 300 Z"
+              fill="#0a0d16"
+            />
+          </svg>
+        </div>
+        <div className="hz-lake" />
+        <div className="hz-sunpath" />
+      </div>
+
+      {/* the glass wall and its brass-edged mullions */}
+      <div className="hz-glasswall" aria-hidden="true">
+        <i className="hz-mullion m1" />
+        <i className="hz-mullion m2" />
+        <i className="hz-mullion m3" />
+        <i className="hz-mullion m4" />
+      </div>
+      <div className="hz-head" aria-hidden="true" />
+      <div className="hz-sill" aria-hidden="true" />
+
+      {/* the constellation dome */}
+      <div className="hz-ceiling hz-wake w1" aria-hidden="true">
+        <svg className="hz-dome" viewBox="0 0 1600 198" preserveAspectRatio="none">
+          {DOME_LINKS.map(([a, b], i) => (
+            <line key={i} x1={DOME_PTS[a].x} y1={DOME_PTS[a].y} x2={DOME_PTS[b].x} y2={DOME_PTS[b].y} />
           ))}
-          {/* the north star flares, just barely */}
-          <g stroke="rgba(240,212,146,0.5)" strokeWidth="0.7">
-            <line x1="560" y1="104" x2="560" y2="132" />
-            <line x1="546" y1="118" x2="574" y2="118" />
-          </g>
+          {DOME_PTS.map((p, i) => (
+            <circle key={i} cx={p.x} cy={p.y} r={i % 5 === 0 ? 1.6 : 1} />
+          ))}
         </svg>
       </div>
+      <div className="hz-cove hz-wake w1" aria-hidden="true" />
 
-      <div className="hz-ridge" aria-hidden="true">
-        <svg viewBox="0 0 1600 300" preserveAspectRatio="none">
-          <path
-            d="M0 196 L110 148 L214 176 L342 118 L470 168 L586 132 L724 174 L862 122 L988 164 L1120 136 L1258 170 L1396 144 L1600 178 L1600 300 L0 300 Z"
-            fill="#141c2e"
-          />
-          <path
-            d="M0 238 L156 200 L322 226 L488 186 L668 220 L846 192 L1024 226 L1210 200 L1408 228 L1600 208 L1600 300 L0 300 Z"
-            fill="#0a0e18"
-          />
-        </svg>
-      </div>
+      {/* black stone columns framing the panorama */}
+      <div className="hz-column cl hz-wake w1" aria-hidden="true" />
+      <div className="hz-column cr hz-wake w1" aria-hidden="true" />
 
-      <div className="hz-water" aria-hidden="true" />
-
-      <div className="hz-glass" aria-hidden="true">
-        <i /><i /><i /><i />
-      </div>
-
-      {/* the floor: one black disc, rings of brass set into it */}
-      <div className="hz-floor hz-wake w1" aria-hidden="true">
-        <div className="hz-floor-rings">
+      {/* the floor: the world mirrored down into the polish */}
+      <div className="hz-floor hz-wake w2" aria-hidden="true">
+        <div className="hz-floor-mirror">
           <i /><i /><i /><i />
         </div>
+        <div className="hz-inlay">
+          <i /><i /><i /><i />
+        </div>
+        <div className="hz-floor-glow" />
       </div>
 
-      {/* the centerpiece: the Horizon, and the Core above it */}
-      <div className="hz-stage hz-wake w2">
-        <div className="hz-table-glow" aria-hidden="true" />
+      {/* the Horizon, and the Core above it */}
+      <div className="hz-stage hz-wake w3">
         <CommandTable />
-        <div className="hz-core-pool" aria-hidden="true" />
+        <div className="hz-rimcast" aria-hidden="true" />
+        <div className="hz-corereflect" aria-hidden="true" />
 
-        <div className="hz-core" role="img" aria-label="The Core: a brass armillary compass turning slowly above the table">
-          <div className="hz-core-halo" aria-hidden="true" />
+        <div className="hz-core" role="img" aria-label="The Core: a glowing sphere of brass rings turning slowly above the table">
+          <div className="hz-halo" aria-hidden="true" />
           <div className="hz-core-scene" aria-hidden="true">
             <div className="hz-gimbal">
               <div className="hz-ring outer" />
@@ -283,51 +262,35 @@ export default function HorizonCommandTable() {
                 <div className="hz-ring m0" />
                 <div className="hz-ring m1" />
                 <div className="hz-ring m2" />
+                <div className="hz-ring m3" />
                 <div className="hz-ring eq" />
-                <div className="hz-ring tilt" />
+                <div className="hz-ring t1" />
+                <div className="hz-ring t2" />
+                <div className="hz-ring inner" />
               </div>
             </div>
           </div>
+          <div className="hz-heart" aria-hidden="true" />
           <div className="hz-core-star" aria-hidden="true">
             <CompassStar />
           </div>
-          <div className="hz-core-mount" aria-hidden="true" />
+          <div className="hz-mount" aria-hidden="true" />
         </div>
       </div>
 
-      {/* the plate: engraved titles, quiet specification */}
-      <div className="hz-frame" aria-hidden="true" />
-
-      <header className="hz-title hz-wake w3">
-        <p className="hz-eyebrow">North Star Headquarters</p>
-        <h1>
-          The <em>Horizon</em>
-        </h1>
-        <p className="hz-plate-no">Command Table · Plate 03</p>
+      {/* the plate */}
+      <header className="hz-title hz-wake w4">
+        <h1>North Star Headquarters</h1>
+        <p>One compass. Endless clarity.</p>
       </header>
 
-      <div className="hz-rose hz-wake w3" aria-hidden="true">
-        <CompassRose />
+      <div className="hz-captions hz-wake w4">
+        <span>The core is the <b>heart</b>.</span>
+        <span>The horizon is the <b>command</b>.</span>
+        <span>The stars are the <b>interface</b>.</span>
       </div>
 
-      <p className="hz-caption hz-wake w4">
-        The core is the <b>heart</b>. The horizon is the <b>command</b>. The stars are the <b>interface</b>.
-      </p>
-
-      <p className="hz-motto hz-wake w4">One Compass · Endless Clarity</p>
-
-      <dl className="hz-spec hz-wake w4">
-        <dt>Stone</dt>
-        <dd>Absolute black · honed</dd>
-        <dt>Metal</dt>
-        <dd>Brass · polished</dd>
-        <dt>Height</dt>
-        <dd>740 mm</dd>
-        <dt>Light</dt>
-        <dd>2700 K</dd>
-      </dl>
-
-      <div className="hz-vignette" aria-hidden="true" />
+      <div className="hz-grade" aria-hidden="true" />
       <svg className="hz-grain" aria-hidden="true">
         <filter id="hz-grain-f">
           <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
