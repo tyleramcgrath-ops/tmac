@@ -57,6 +57,19 @@ export interface GoogleOAuthConfig {
   redirectBase?: string
 }
 
+// The app's own origin, for links built OUTSIDE a request context (scheduled
+// jobs like the weekly digest have no incoming Request to derive an origin
+// from, unlike e.g. the email-verification link builders). Prefers an
+// explicit override, then Vercel's own runtime-provided hostname. Null (never
+// a guessed localhost URL in production) when neither is available — callers
+// must omit the link entirely rather than emit a broken one.
+export function appBaseUrl(): string | null {
+  const explicit = process.env.APP_BASE_URL
+  if (explicit) return explicit.replace(/\/$/, '')
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`
+  return null
+}
+
 export function googleOAuthConfig(): GoogleOAuthConfig | null {
   const clientId = process.env.GOOGLE_CLIENT_ID
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET
