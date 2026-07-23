@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { api, ApiError, type AtlasSnapshotDTO, type CompetitorDTO, type EvidenceGradeDTO, type Ga4ChannelRowDTO, type Ga4ReportDTO, type Ga4TrendPointDTO, type GoogleBreakdownsDTO, type GoogleTrendsDTO, type GscBreakdownRowDTO, type GscReportDTO, type GscTrendPointDTO, type IntegrationDTO, type ObservationDTO, type OverlapDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 import { findKeywordOpportunities } from '../../../../lib/foundation/reco/keyword-opportunities'
+import { findKeywordCannibalization } from '../../../../lib/foundation/reco/keyword-cannibalization'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -205,6 +206,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           <BreakdownTables projectId={projectId} />
           <GscPanel o={snapshot.gsc} />
           <OpportunityPanel o={snapshot.gsc} />
+          <CannibalizationPanel o={snapshot.gsc} />
           <Ga4Panel o={snapshot.analytics} />
           <p className="text-[10px] text-[var(--rf-faint)]">
             Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
@@ -533,6 +535,44 @@ function OpportunityPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Keyword cannibalization: also derived client-side from the same GSC rows —
+// queries where impressions are split across 2+ distinct real pages, which
+// splits the ranking signal Google would otherwise concentrate on one page.
+function CannibalizationPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
+  const rows = o.value?.rows ?? []
+  const conflicts = findKeywordCannibalization(rows)
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <DataPanelHeader title="Keyword cannibalization" o={o} />
+      {o.value === null ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{o.evidence.note ?? 'Unavailable.'}</p>
+      ) : conflicts.length === 0 ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No query is currently split across multiple ranking pages.</p>
+      ) : (
+        <div className="mt-2 space-y-2">
+          <p className="text-[10px] text-[var(--rf-faint)]">Same query, multiple real pages competing — consolidating usually outranks splitting.</p>
+          {conflicts.map((c, i) => (
+            <div key={i} className="rounded border border-[var(--rf-card-line)] p-2">
+              <p className="text-[11px] font-semibold text-white">{c.query}</p>
+              <table className="mt-1 w-full text-[11px]">
+                <tbody>
+                  {c.pages.map((p, j) => (
+                    <tr key={j} className="text-[var(--rf-muted)]">
+                      <td className="max-w-[220px] truncate pr-2">{p.page}</td>
+                      <td className="px-2">{p.impressions} impr.</td>
+                      <td className="pl-2">pos. {p.position.toFixed(1)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
         </div>
       )}
     </div>
