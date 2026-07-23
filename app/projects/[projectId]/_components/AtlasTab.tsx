@@ -14,6 +14,7 @@ import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
 import { findKeywordOpportunities } from '../../../../lib/foundation/reco/keyword-opportunities'
 import { findKeywordCannibalization } from '../../../../lib/foundation/reco/keyword-cannibalization'
 import { detectTrafficDecay } from '../../../../lib/foundation/reco/traffic-decay'
+import { findLowCtrOutliers } from '../../../../lib/foundation/reco/ctr-outliers'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -208,6 +209,7 @@ export function AtlasTab({ projectId }: { projectId: string }) {
           <GscPanel o={snapshot.gsc} />
           <OpportunityPanel o={snapshot.gsc} />
           <CannibalizationPanel o={snapshot.gsc} />
+          <CtrOutlierPanel o={snapshot.gsc} />
           <Ga4Panel o={snapshot.analytics} />
           <p className="text-[10px] text-[var(--rf-faint)]">
             Connecting opens Google’s consent screen for read-only Search Console + Analytics access. Credentials are encrypted; when a source is disconnected its intelligence is reported as Unavailable — never fabricated.
@@ -594,6 +596,42 @@ function CannibalizationPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
               </table>
             </div>
           ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Low-CTR outliers: also derived client-side from the same GSC rows — flags
+// queries underperforming their own site's cohort at a similar position,
+// a real signal the title/meta may be worth rewriting.
+function CtrOutlierPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
+  const rows = o.value?.rows ?? []
+  const outliers = findLowCtrOutliers(rows)
+  return (
+    <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
+      <DataPanelHeader title="Low-CTR outliers — title/meta rewrite candidates" o={o} />
+      {o.value === null ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">{o.evidence.note ?? 'Unavailable.'}</p>
+      ) : outliers.length === 0 ? (
+        <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No query is currently underperforming its own position cohort.</p>
+      ) : (
+        <div className="mt-2 overflow-x-auto">
+          <p className="mb-1 text-[10px] text-[var(--rf-faint)]">CTR well below other queries at a similar rank on this site — a real, self-relative signal, not an assumed industry average.</p>
+          <table className="w-full text-[11px]">
+            <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Query</th><th className="px-2 font-normal">Page</th><th className="px-2 font-normal">Pos.</th><th className="px-2 font-normal">CTR</th><th className="pl-2 font-normal">Cohort median</th></tr></thead>
+            <tbody>
+              {outliers.map((r, i) => (
+                <tr key={i} className="text-[var(--rf-muted)]">
+                  <td className="truncate pr-2 text-white">{r.query}</td>
+                  <td className="max-w-[140px] truncate px-2">{r.page}</td>
+                  <td className="px-2">{r.position.toFixed(1)}</td>
+                  <td className="px-2">{(r.ctr * 100).toFixed(1)}%</td>
+                  <td className="pl-2">{(r.cohortMedianCtr * 100).toFixed(1)}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
