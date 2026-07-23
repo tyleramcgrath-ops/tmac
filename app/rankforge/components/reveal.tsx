@@ -39,7 +39,12 @@ export function Reveal({
     return () => io.disconnect()
   }, [])
 
-  const Comp = Tag as React.ElementType
+  // Cast the polymorphic tag through `any` at the JSX site: the project pulls
+  // in @react-three/fiber's global JSX augmentation (for the /hq scene), which
+  // widens the intrinsic-element union so a bare `ElementType` intersects to
+  // `never` here. The runtime tag is always a known DOM element.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Comp = Tag as any
   return (
     <Comp
       ref={ref as React.Ref<HTMLElement>}
