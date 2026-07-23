@@ -7,6 +7,7 @@ import type { FoundationStore } from '../store'
 import type { Job } from '../types'
 import { checkCitation, perplexityApiKey } from '../ai-citations'
 import { hostOf } from '../serp'
+import { detectCitationLosses, notifyCitationLosses } from './ai-citation-alert'
 
 export async function runAiCitationCheckJob(store: FoundationStore, job: Job): Promise<Record<string, unknown>> {
   const project = await store.getProject(job.projectId)
@@ -24,6 +25,16 @@ export async function runAiCitationCheckJob(store: FoundationStore, job: Job): P
   } catch {
     return { checked: 0, note: 'project domain is not a valid URL/host' }
   }
+
+  // The most recent REAL snapshot per query, taken BEFORE this run's new
+  // ones are recorded — the only honest baseline to compare a loss against.
+  const previousSnapshots = await Promise.all(
+    queries.map(async (tq) => {
+      const history = await store.listAiCitationSnapshots(job.projectId, tq.query)
+      return history.at(-1) ?? null
+    })
+  )
+  const previous = previousSnapshots.filter((s): s is NonNullable<typeof s> => s !== null)
 
   const checkedAt = new Date().toISOString()
   const results: { query: string; cited: boolean; available: boolean }[] = []
@@ -44,5 +55,9 @@ export async function runAiCitationCheckJob(store: FoundationStore, job: Job): P
     })
     results.push({ query: tq.query, cited: c.cited, available: c.available })
   }
-  return { checked: results.length, results }
+
+  const losses = detectCitationLosses(previous, results)
+  const alerted = await notifyCitationLosses(store, project, losses)
+
+  return { checked: results.length, results, lost: losses.length, alerted: alerted.length }
 }
