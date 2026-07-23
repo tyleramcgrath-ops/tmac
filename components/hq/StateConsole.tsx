@@ -1,49 +1,42 @@
 'use client'
 
-import { CORE_STATES, ENVIRONMENT_STATES, TIMES_OF_DAY } from '@/lib/hq/state'
-import type { CoreState, EnvironmentState, SceneModel, TimeOfDay } from '@/lib/hq/state'
-import type { ShotKind } from './HeadquartersScene'
+import {
+  CORE_STATES,
+  ENVIRONMENT_STATES,
+  TIMES_OF_DAY,
+  WEATHERS,
+} from '@/lib/hq/state'
+import type { CoreState, EnvironmentState, SceneModel, TimeOfDay, Weather } from '@/lib/hq/state'
+import type { CameraPreset } from './scene/Cameras'
+
+const CAMERAS: CameraPreset[] = ['hero', 'executive', 'conversation', 'atmospheric', 'boardroom']
 
 /**
- * Preview console — an explicitly isolated demonstration harness, NOT product
- * chrome and NOT fabricated telemetry (Bible §16). It exists so the Core and
- * room states required by the deck (idle, speaking, concern, close-up,
- * reduced-motion) can be inspected and screenshotted deterministically. It is
- * closed by default and never claims anything about a real business.
- *
- * Toggle with the backtick key, the corner control, or ?console=1.
+ * Preview console — an explicitly isolated demonstration harness, not product
+ * chrome and not fabricated telemetry (Bible §16 / Blueprint §16). Closed by
+ * default; drives visual state only. Toggle with the corner control, the
+ * backtick key, or ?console=1.
  */
 export function StateConsole({
   open,
-  onOpenChange,
+  onToggle,
   scene,
-  shot,
+  cam,
   motion,
-  pinnedCore,
-  pinnedEnv,
-  pinnedTime,
+  pins,
   setParam,
-  onPulseCompletion,
 }: {
   open: boolean
-  onOpenChange: (v: boolean) => void
+  onToggle: () => void
   scene: SceneModel
-  shot: ShotKind
+  cam: CameraPreset
   motion: 'full' | 'reduced' | null
-  pinnedCore: CoreState | null
-  pinnedEnv: EnvironmentState | null
-  pinnedTime: TimeOfDay | null
+  pins: { core: CoreState | null; env: EnvironmentState | null; time: TimeOfDay | null; weather: Weather | null }
   setParam: (key: string, value: string | null) => void
-  onPulseCompletion: () => void
 }) {
   return (
     <>
-      <button
-        type="button"
-        className="hq-console-tab"
-        aria-expanded={open}
-        onClick={() => onOpenChange(!open)}
-      >
+      <button type="button" className="hq-console-tab" aria-expanded={open} onClick={onToggle}>
         {open ? 'Close' : 'Preview'}
       </button>
 
@@ -51,103 +44,63 @@ export function StateConsole({
         <aside className="hq-console" aria-label="State preview (demonstration only)">
           <header>
             <span className="hq-console-eyebrow">Preview console</span>
-            <p className="hq-console-note">
-              Demonstration harness — drives visual state only. Not connected to any project.
-            </p>
+            <p className="hq-console-note">Demonstration harness — drives the scene only. Not connected to any project.</p>
           </header>
 
+          <Group label="Camera">
+            {CAMERAS.map((c) => (
+              <Chip key={c} active={cam === c} onClick={() => setParam('cam', c === 'hero' ? null : c)}>
+                {c}
+              </Chip>
+            ))}
+          </Group>
+
           <Group label="Core state">
-            {CORE_STATES.map((s) =>
-              s === 'completion' ? (
-                <button
-                  key={s}
-                  type="button"
-                  className="hq-chip"
-                  onClick={onPulseCompletion}
-                  title="Play the one-shot completion wave"
-                >
-                  {s} ⟳
-                </button>
-              ) : (
-                <button
-                  key={s}
-                  type="button"
-                  className={`hq-chip ${pinnedCore === s ? 'is-active' : ''}`}
-                  aria-pressed={pinnedCore === s}
-                  onClick={() => setParam('core', pinnedCore === s ? null : s)}
-                >
-                  {s}
-                </button>
-              ),
-            )}
+            {CORE_STATES.map((s) => (
+              <Chip key={s} active={pins.core === s} onClick={() => setParam('core', pins.core === s ? null : s)}>
+                {s}
+              </Chip>
+            ))}
           </Group>
 
           <Group label="Environment">
             {ENVIRONMENT_STATES.map((s) => (
-              <button
-                key={s}
-                type="button"
-                className={`hq-chip ${pinnedEnv === s ? 'is-active' : ''}`}
-                aria-pressed={pinnedEnv === s}
-                onClick={() => setParam('env', pinnedEnv === s ? null : s)}
-              >
+              <Chip key={s} active={pins.env === s} onClick={() => setParam('env', pins.env === s ? null : s)}>
                 {s}
-              </button>
+              </Chip>
             ))}
           </Group>
 
           <Group label="Time of day">
             {TIMES_OF_DAY.map((t) => (
-              <button
-                key={t}
-                type="button"
-                className={`hq-chip ${pinnedTime === t ? 'is-active' : ''}`}
-                aria-pressed={pinnedTime === t}
-                onClick={() => setParam('time', pinnedTime === t ? null : t)}
-              >
+              <Chip key={t} active={pins.time === t} onClick={() => setParam('time', pins.time === t ? null : t)}>
                 {t}
-              </button>
+              </Chip>
             ))}
           </Group>
 
-          <Group label="Camera">
-            <button
-              type="button"
-              className={`hq-chip ${shot === 'room' ? 'is-active' : ''}`}
-              onClick={() => setParam('shot', null)}
-            >
-              full room
-            </button>
-            <button
-              type="button"
-              className={`hq-chip ${shot === 'close' ? 'is-active' : ''}`}
-              onClick={() => setParam('shot', 'close')}
-            >
-              close-up
-            </button>
+          <Group label="Weather">
+            {WEATHERS.map((w) => (
+              <Chip key={w} active={pins.weather === w} onClick={() => setParam('weather', pins.weather === w ? null : w)}>
+                {w}
+              </Chip>
+            ))}
           </Group>
 
           <Group label="Motion">
-            <button
-              type="button"
-              className={`hq-chip ${motion !== 'reduced' ? 'is-active' : ''}`}
-              onClick={() => setParam('motion', null)}
-            >
+            <Chip active={motion !== 'reduced'} onClick={() => setParam('motion', null)}>
               system default
-            </button>
-            <button
-              type="button"
-              className={`hq-chip ${motion === 'reduced' ? 'is-active' : ''}`}
-              onClick={() => setParam('motion', 'reduced')}
-            >
+            </Chip>
+            <Chip active={motion === 'reduced'} onClick={() => setParam('motion', 'reduced')}>
               reduced
-            </button>
+            </Chip>
           </Group>
 
           <footer className="hq-console-readout">
-            <span>core · {scene.core}</span>
-            <span>env · {scene.env}</span>
-            <span>time · {scene.time}</span>
+            <span>{scene.core}</span>
+            <span>{scene.env}</span>
+            <span>{scene.time}</span>
+            <span>{scene.weather}</span>
           </footer>
         </aside>
       )}
@@ -161,5 +114,13 @@ function Group({ label, children }: { label: string; children: React.ReactNode }
       <legend>{label}</legend>
       <div className="hq-chip-row">{children}</div>
     </fieldset>
+  )
+}
+
+function Chip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button type="button" className={`hq-chip ${active ? 'is-active' : ''}`} aria-pressed={active} onClick={onClick}>
+      {children}
+    </button>
   )
 }

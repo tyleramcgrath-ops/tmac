@@ -83,34 +83,48 @@ describe('deriveEnvironment (Bible §06 state mapping)', () => {
 
 describe('deriveSky', () => {
   it('night shows stars, the moon and the North Star itself', () => {
-    const sky = deriveSky('confident', 'night')
+    const sky = deriveSky('confident', 'night', 'clear')
     expect(sky.stars).toBe(true)
     expect(sky.moon).toBe(true)
     expect(sky.northStar).toBe(true)
   })
 
-  it('heavy weather hides the North Star and the moon', () => {
-    const sky = deriveSky('warning', 'night')
+  it('a storm hides the North Star and the moon', () => {
+    const sky = deriveSky('warning', 'night', 'storm')
     expect(sky.rain).toBe(true)
+    expect(sky.storm).toBe(true)
     expect(sky.cloudDensity).toBe(2)
     expect(sky.northStar).toBe(false)
     expect(sky.moon).toBe(false)
   })
 
   it('the overnight environment is a night sky regardless of clock', () => {
-    const sky = deriveSky('overnight', 'day')
+    const sky = deriveSky('overnight', 'day', 'clear')
     expect(sky.stars).toBe(true)
     expect(sky.northStar).toBe(true)
   })
 
-  it('uncertainty renders fog, warning renders rain — never both', () => {
+  it('warning defaults to a storm, uncertainty to fog', () => {
     expect(deriveSky('uncertain', 'day').fog).toBe(true)
     expect(deriveSky('uncertain', 'day').rain).toBe(false)
+    expect(deriveSky('warning', 'day').storm).toBe(true)
     expect(deriveSky('warning', 'day').fog).toBe(false)
   })
 
-  it('a confident day keeps some ambient cloud so the exterior stays alive', () => {
-    expect(deriveSky('confident', 'day').cloudDensity).toBe(1)
+  it('an aurora only shows on a clear night, alongside stars', () => {
+    expect(deriveSky('confident', 'night', 'aurora').aurora).toBe(true)
+    expect(deriveSky('confident', 'night', 'aurora').stars).toBe(true)
+    expect(deriveSky('confident', 'day', 'aurora').aurora).toBe(false)
+  })
+
+  it('snow is distinct from rain', () => {
+    const sky = deriveSky('confident', 'day', 'snow')
+    expect(sky.snow).toBe(true)
+    expect(sky.rain).toBe(false)
+  })
+
+  it('a confident clear day keeps some ambient cloud so the exterior stays alive', () => {
+    expect(deriveSky('confident', 'day', 'clear').cloudDensity).toBe(1)
   })
 })
 
@@ -156,6 +170,20 @@ describe('composeScene', () => {
     const scene = composeScene(calm, new Date(2026, 6, 23, 23, 30))
     expect(scene.time).toBe('night')
     expect(scene.sky.stars).toBe(true)
+  })
+
+  it('honours an explicit weather override and reflects it in narration', () => {
+    const scene = composeScene(calm, 'night', 'aurora')
+    expect(scene.weather).toBe('aurora')
+    expect(scene.sky.aurora).toBe(true)
+    expect(scene.narration).toMatch(/aurora/i)
+  })
+
+  it('defaults warning to a storm when no weather is given', () => {
+    const scene = composeScene({ ...calm, attention: 'warning' }, 'day')
+    expect(scene.env).toBe('warning')
+    expect(scene.weather).toBe('storm')
+    expect(scene.sky.storm).toBe(true)
   })
 })
 

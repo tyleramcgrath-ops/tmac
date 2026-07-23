@@ -38,6 +38,11 @@ export type EnvironmentState = (typeof ENVIRONMENT_STATES)[number]
 export const TIMES_OF_DAY = ['dawn', 'day', 'dusk', 'night'] as const
 export type TimeOfDay = (typeof TIMES_OF_DAY)[number]
 
+/** Exterior weather beyond the glass (Blueprint §7, §14). Weather occurs
+ * outside the wall; the room only responds with restrained glass behaviour. */
+export const WEATHERS = ['clear', 'rain', 'snow', 'fog', 'storm', 'aurora'] as const
+export type Weather = (typeof WEATHERS)[number]
+
 /**
  * Product truth — the honest inputs the scene is allowed to react to.
  * Bible §16 rejects fabricated telemetry: every field here must ultimately be
@@ -64,7 +69,12 @@ export interface SkyModel {
   /** Dawn/sunrise glow at the horizon. */
   sunrise: boolean
   rain: boolean
+  snow: boolean
   fog: boolean
+  /** Lightning flashes during a thunderstorm. */
+  storm: boolean
+  /** Rare aurora ribbons on a clear night. */
+  aurora: boolean
   /** 0 = clear horizon, 1 = ambient cloud, 2 = heavy weather. */
   cloudDensity: 0 | 1 | 2
 }
@@ -74,6 +84,7 @@ export interface SceneModel {
   core: CoreState
   env: EnvironmentState
   time: TimeOfDay
+  weather: Weather
   sky: SkyModel
   /** Non-visual state description for the accessibility layer (aria-live). */
   narration: string
@@ -107,19 +118,32 @@ export function deriveEnvironment(truth: ProductTruth, time: TimeOfDay): Environ
   return 'confident'
 }
 
-/** Structural sky flags for a given environment + time. */
-export function deriveSky(env: EnvironmentState, time: TimeOfDay): SkyModel {
+/** Default weather for an environment when none is set explicitly. Warning
+ * couples to a storm; low confidence to fog; otherwise clear (Blueprint §14). */
+export function deriveWeather(env: EnvironmentState): Weather {
+  if (env === 'warning') return 'storm'
+  if (env === 'uncertain') return 'fog'
+  return 'clear'
+}
+
+/** Structural sky flags for a given environment, time and weather. */
+export function deriveSky(env: EnvironmentState, time: TimeOfDay, weather: Weather = deriveWeather(env)): SkyModel {
   const night = time === 'night' || env === 'overnight'
+  const heavy = weather === 'storm'
+  const clearSky = weather === 'clear' || weather === 'aurora'
   return {
-    stars: night,
-    // Bible §02: the actual North Star may become visible during night
-    // states, aligned with the Core. Heavy weather hides it.
-    northStar: night && env !== 'warning',
-    moon: night && env !== 'warning',
-    sunrise: (time === 'dawn' && env !== 'warning') || env === 'success' || env === 'confident',
-    rain: env === 'warning',
-    fog: env === 'uncertain',
-    cloudDensity: env === 'warning' ? 2 : env === 'analyzing' || env === 'uncertain' ? 1 : night ? 0 : 1,
+    stars: night && clearSky,
+    // Bible §02: the actual North Star appears in its correct clear-night
+    // location, aligned with the Core. Heavy weather hides it.
+    northStar: night && clearSky,
+    moon: night && clearSky,
+    sunrise: clearSky && ((time === 'dawn') || env === 'success' || env === 'confident'),
+    rain: weather === 'rain' || weather === 'storm',
+    snow: weather === 'snow',
+    fog: weather === 'fog',
+    storm: weather === 'storm',
+    aurora: weather === 'aurora' && night,
+    cloudDensity: heavy ? 2 : weather === 'rain' || weather === 'fog' || weather === 'snow' ? 1 : night ? 0 : 1,
   }
 }
 
@@ -128,7 +152,7 @@ export function deriveSky(env: EnvironmentState, time: TimeOfDay): SkyModel {
  * Bible §06 temperature language: describe state, never feelings.
  * Bible §17 voice: calm, direct, brief, evidence-first.
  */
-export function narrate(core: CoreState, env: EnvironmentState, time: TimeOfDay): string {
+export function narrate(core: CoreState, env: EnvironmentState, time: TimeOfDay, weather: Weather = 'clear'): string {
   const coreLine: Record<CoreState, string> = {
     idle: 'North Star is at rest.',
     listening: 'North Star is listening.',
@@ -141,8 +165,8 @@ export function narrate(core: CoreState, env: EnvironmentState, time: TimeOfDay)
   const envLine: Record<EnvironmentState, string> = {
     confident: 'The room is confident: warm light and a clear horizon.',
     analyzing: 'The room is analyzing: cooler, quieter light.',
-    uncertain: 'Confidence is low: soft fog beyond the window.',
-    warning: 'A warning is active: amber accents and heavier weather.',
+    uncertain: 'Confidence is low: soft fog beyond the glass.',
+    warning: 'A warning is active: amber accents and cooler light.',
     overnight: 'Overnight operation: deep night with visible stars.',
     success: 'Work verified: returning sunlight.',
   }
@@ -152,15 +176,28 @@ export function narrate(core: CoreState, env: EnvironmentState, time: TimeOfDay)
     dusk: 'It is dusk at headquarters.',
     night: 'It is night at headquarters.',
   }
-  return `${coreLine[core]} ${envLine[env]} ${timeLine[time]}`
+  const weatherLine: Record<Weather, string> = {
+    clear: '',
+    rain: ' Rain falls beyond the glass.',
+    snow: ' Snow falls beyond the glass.',
+    fog: ' Fog has developed beyond the windows.',
+    storm: ' A thunderstorm moves across the horizon.',
+    aurora: ' An aurora moves across the night sky.',
+  }
+  return `${coreLine[core]} ${envLine[env]} ${timeLine[time]}${weatherLine[weather]}`
 }
 
 /** Compose the full scene model from product truth. */
-export function composeScene(truth: ProductTruth, now: Date | TimeOfDay = new Date()): SceneModel {
+export function composeScene(
+  truth: ProductTruth,
+  now: Date | TimeOfDay = new Date(),
+  weather?: Weather,
+): SceneModel {
   const time = typeof now === 'string' ? now : deriveTimeOfDay(now)
   const env = deriveEnvironment(truth, time)
-  const sky = deriveSky(env, time)
-  return { core: truth.activity, env, time, sky, narration: narrate(truth.activity, env, time) }
+  const w = weather ?? deriveWeather(env)
+  const sky = deriveSky(env, time, w)
+  return { core: truth.activity, env, time, weather: w, sky, narration: narrate(truth.activity, env, time, w) }
 }
 
 /** Type guards for URL-driven preview parameters. */
@@ -172,4 +209,7 @@ export function isEnvironmentState(v: string | null | undefined): v is Environme
 }
 export function isTimeOfDay(v: string | null | undefined): v is TimeOfDay {
   return typeof v === 'string' && (TIMES_OF_DAY as readonly string[]).includes(v)
+}
+export function isWeather(v: string | null | undefined): v is Weather {
+  return typeof v === 'string' && (WEATHERS as readonly string[]).includes(v)
 }

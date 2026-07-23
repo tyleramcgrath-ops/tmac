@@ -1,13 +1,23 @@
-import { Suspense } from 'react'
-import { HeadquartersScene } from '@/components/hq/HeadquartersScene'
+'use client'
 
-// The headquarters is the application (Bible §02). This route is the new
-// scene module required by §14 — the old room under /north-star is reference
-// only and is never patched or reused.
+import dynamic from 'next/dynamic'
+
+// The headquarters is a WebGL scene and cannot server-render — load it
+// client-only with a cinematic loading veil. This route is the new scene
+// module required by the Blueprint; the rejected SVG build is discarded.
+const Headquarters = dynamic(() => import('@/components/hq/Headquarters').then((m) => m.Headquarters), {
+  ssr: false,
+  loading: () => (
+    <div className="hq-root hq-loading">
+      <div>
+        <div className="hq-loading-mark">North Star</div>
+        <div className="hq-loading-sub">Entering the headquarters</div>
+        <div className="hq-loading-bar" />
+      </div>
+    </div>
+  ),
+})
+
 export default function HqPage() {
-  return (
-    <Suspense fallback={null}>
-      <HeadquartersScene />
-    </Suspense>
-  )
+  return <Headquarters />
 }

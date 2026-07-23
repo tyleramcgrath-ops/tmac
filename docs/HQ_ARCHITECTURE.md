@@ -1,200 +1,198 @@
-# North Star — Headquarters (Phase 1)
+# North Star — Executive Headquarters (Phase 1, 3D)
 
-> The room is the product. The Core is the heart.
+> The architecture itself is the interface. The room is the product. The Core is the heart.
 
-This document records the architecture and design decisions for **Phase 1** of
-North Star: the Concept A **headquarters shell** and the **North Star Core**.
-It is the engineering companion to the _North Star Product & Design Bible_
-(the constitution) and the _Visual Design Deck_ (the visual source of truth).
-Where this document and those conflict, the Bible and Deck win.
+Engineering companion to the three sources of truth — the **Product & Design
+Bible**, the **Visual Design Deck**, and the **Headquarters Architectural
+Blueprint (Rev A)**. Where this document and those conflict, the documents win.
 
-## Scope of this phase
+This build **replaces** the earlier SVG scene (rejected as an "SVG
+illustration"). It is a genuine **WebGL / React Three Fiber** environment with
+real geometry, PBR materials, physical lighting and reflections — rebuilt from
+a blank composition per the Blueprint's construction requirements (§17).
 
-The Deck's Claude Handoff (slide 16) is explicit:
+## Scope — Phase 1 only
 
-> Build only the Concept A headquarters shell and North Star Core first. Do not
-> implement Mission Control, Digital DNA, Atlas, reports, agents, or workspace
-> UI yet… Stop after the headquarters and Core are implemented.
+Headquarters shell, executive desk, North Star Core, environment, materials,
+lighting, atmosphere, camera system and environmental motion (Blueprint §16).
+**No** Mission Control, Digital DNA, Atlas, reports, agents, dashboards,
+settings, automation, projects, workspaces, or business/telemetry data.
 
-So this phase ships **only** the environment, the room, the desk and the Core,
-with the full state language wired through them. There is **no business
-functionality, no dashboard, no data**. The next phase (Mission Control) is
-deliberately not started.
+Route: **`/hq`** (client-only WebGL, `ssr: false`, cinematic loading veil).
 
-### The old room is not reused
+## Why 3D (and why not the old SVG)
 
-The Bible §14 requires implementation to begin "in a new scene module and
-route." The previous experience under `app/north-star/` (the `ExecutiveOffice`
-and its compass) is a **reference only** and is neither imported nor patched.
-Phase 1 is a blank composition at a **new route, `/hq`**, with its own layout,
-fonts and stylesheet. Nothing from the old room leaks in.
+The Blueprint is explicit (§2, §17, Acceptance §18): a flat SVG scene, a SaaS
+dashboard, a Figma mockup or an infographic is **rejected**. Materials must be
+physically rendered, react credibly to light, and every object must have
+foreground/midground/background, perspective and scale. That is a real-time 3D
+brief, so the scene is built with Three.js via React Three Fiber, PBR materials,
+physical lights, a reflective floor, and a bloom/tone-mapped post pipeline.
 
-## Route & module layout
+## Module layout
 
 ```
 app/hq/
-  layout.tsx        # scene chrome: institutional serif + operational sans, metadata
-  page.tsx          # server component → <HeadquartersScene/>
-  hq.css            # scene-scoped design tokens, materials, motion, states, a11y
+  layout.tsx        # institutional serif + operational sans, metadata
+  page.tsx          # client dynamic import of the scene (ssr:false) + loading veil
+  hq.css            # thin DOM layer only: loading, a11y narration, preview console
 
 components/hq/
-  HeadquartersScene.tsx  # orchestrator: state → SceneModel, camera, stage scaling, a11y
-  Environment.tsx        # exterior: sky, stars, North Star, moon, sunrise, ridges, clouds, weather
-  Architecture.tsx       # room shell: arched window, columns, ribs, walls, floor + reflections
-  Desk.tsx               # the sacred desk + flush projection base
-  Core.tsx               # the North Star Core (astrolabe dial, gimbal rings, star, crystal, filaments)
-  StateConsole.tsx       # isolated demonstration harness (not product chrome)
+  Headquarters.tsx        # client host: Canvas, state (URL-driven), a11y, console, reduced-motion
+  sceneContext.ts         # SceneModel + reduced-motion provided to scene children
+  textures.ts             # procedural canvas textures (marble, walnut, brushed brass, engraving, glow) — no external assets (CSP/offline safe)
+  StateConsole.tsx        # isolated demonstration harness (not product chrome)
+  scene/
+    Observatory.tsx       # assembles the scene + reflection Environment + postprocessing
+    Room.tsx              # marble floor (reflective) + brass inlay rings, limestone wall, dome, brass ribs, skylight
+    GlassWall.tsx         # ~180° curved smoked-glass wall + brass mullions/transoms
+    Desk.tsx              # sculptural marble + walnut + brass desk with projection aperture
+    Core.tsx              # the North Star Core: gimbal rings, engraved brass, crystal star, state motion
+    Exterior.tsx          # sky (time-driven), stars, moon, North Star, ridges, rain/snow/fog/storm/aurora
+    Lighting.tsx          # cove pools + directional key/fill + natural light through the glass
+    Atmosphere.tsx        # dust motes in directional light
+    Cameras.tsx           # five named cinematic cameras + subtle stabilised drift
 
-lib/hq/
-  state.ts          # pure, testable state engine (product truth → SceneModel)
-
-tests/hq-state.test.ts # 22 unit tests over the state engine
-scripts/hq-screenshots.mjs # regenerates the state gallery deterministically
+lib/hq/state.ts           # pure, tested state engine → SceneModel (core, env, time, weather, sky, narration)
+tests/hq-state.test.ts    # 26 unit tests
+scripts/hq-screenshots.mjs# regenerates the gallery deterministically (SwiftShader-friendly)
 ```
 
-## The layered scene (Bible §14)
+## The build (Blueprint §3–§14)
 
-Everything is authored on a single **1920×1080 stage** and the whole stage is
-scaled to _cover_ the viewport. This is the Bible's "one shared spatial
-coordinate system" — the Core is never an absolutely-positioned image pasted
-over a background; it lives in the same coordinate space as the desk it floats
-above, the window behind it and the reflection below it, so depth, occlusion,
-scale and reflection always agree.
+- **Shell** — a circular observatory (~24 m across). Honed Italian black-marble
+  floor with concentric brass inlay rings on the central axis; a limestone
+  perimeter; a domed ceiling with 16 brass structural ribs converging to a
+  central circular **skylight aligned directly above the Core**.
+- **Glass wall** — ~180° of smoked architectural glazing with thin brushed-brass
+  mullions and transom rails; controlled reflectivity, never mirror-like.
+- **Desk** — ~12 ft × 5 ft × 30 in. Walnut waterfall body, visually seamless
+  black-marble top, brass reveal and edge, and a concealed central projection
+  aperture. Reflected in the polished floor. No visible electronics.
+- **Core** — ~42 in, floating ~4 ft above the desk. Machined-titanium inner
+  ring, smoked optical-crystal middle ring with warm embedded illumination,
+  engraved brushed-brass outer ring, and a warm-white crystal star with
+  controlled bloom. Three gimbals rotate on independent axes.
+- **Lighting** — warm concealed cove pools + directional key/fill (so surfaces
+  read at room scale without flat, uniform brightness) + natural light through
+  the glass, colour and intensity by time and environment. Deep, readable
+  shadows.
+- **Reflections** — a reflective marble floor (soft, blurred, never a mirror)
+  plus a controlled studio **environment map built from Lightformers** (no
+  external HDR asset) gives brass, marble and glass believable reflections.
+- **Exterior & atmosphere** — time-driven gradient sky, slowly drifting stars,
+  the North Star in its correct clear-night position on the Core's axis, moon,
+  sunrise glow, layered mountain silhouettes; rain, snow, fog, storm lightning
+  and a rare aurora occur **outside** the glass. Dust motes drift in the light.
+- **Cameras** — five named shots (hero, executive, conversation, atmospheric,
+  boardroom), natural architectural perspective, never orthographic, with a
+  slow stabilised idle drift.
 
-Paint order top-to-bottom establishes occlusion:
+## State engine (Bible §06, Blueprint §10)
 
-1. **Environment** — sky/weather/time, drawn beneath everything and only ever
-   visible through the true window apertures (the wall is a single
-   even-odd path with the arch and slit windows cut out of it).
-2. **Architecture** — arched celestial window, radial brass mullions,
-   flanking columns and pilasters, ceiling ribs, entablature, polished floor
-   with a mirrored window pool and column reflections.
-3. **Desk** — dark walnut top, black-stone body, one brass alignment line, and
-   the projection base integrated flush into the surface.
-4. **Core** — the instrument, its projection beam, desk glow, suspended
-   particles, and its reflection in the lacquer.
-5. **Finishing** — state tint, vignette and a faint film grain.
-
-## The North Star Core (Bible §04–05)
-
-The Core is built as layered **SVG + CSS**, not WebGL. Rationale:
-
-- The Core is fundamentally a precision instrument of concentric engraved rings
-  and faceted star geometry. Vector rendering stays razor-sharp at 1440p/4K
-  ("precision watchmaking detail") with no asset pipeline.
-- It keeps the whole scene in one DOM/coordinate space, is trivially
-  reduced-motion friendly, is deterministic for screenshots and tests, ships a
-  tiny bundle, and avoids the "game-like" look the Bible explicitly forbids.
-
-Composition: an outer **astrolabe dial** (engraved minute track, cardinal
-lozenges) concentric with an eight-point **star** (four dominant, four
-secondary faceted points) over a dark **obsidian body**, a controlled central
-**crystal** (warm-white, never blown out), thin **energy filaments** from the
-crystal through the points to the dial, and two **gimbal rings** on independent
-axes with light beads that travel their circumference and duck behind the body.
-
-### One implementation note worth remembering
-
-SVG groups rotate/scale about the instrument's true centre using
-`transform-box: fill-box; transform-origin: center`, and each animated group's
-geometry is kept symmetric about the origin (the orbit groups carry an
-invisible symmetrizer circle). `fill-box` is used rather than `view-box`
-because the CSS minifier (Lightning CSS) silently drops the newer `view-box`
-value — which otherwise detaches the dial from the star the moment it animates.
-
-## State engine (Bible §06, §16)
-
-`lib/hq/state.ts` is a pure function from **product truth** to a `SceneModel`.
-It never invents activity: the room "changes with meaning, not mood theater."
-
-- **Core states** (§05): `idle`, `listening`, `thinking`, `speaking`,
-  `opportunity`, `concern`, `completion` — each expressed through ring rate,
-  alignment, crystal cadence, warmth and scale.
-- **Environment states** (§06): `confident`, `analyzing`, `uncertain`,
-  `warning`, `overnight`, `success` — expressed through light temperature,
-  brass luminance, sky wash, weather and the exterior.
-- **Time of day** is derived from the local clock; a night sky reveals the
-  actual North Star on the room's central axis, aligned with the Core.
-
-Copy describes state (confident, investigating, blocked, completed) and
-**never claims the system has feelings** — enforced by a unit test.
-
-## Accessibility (Bible §13, §14)
-
-- A visually-hidden `role="status"` `aria-live` region narrates the current
-  state in North Star's voice; the stage carries an `aria-label`.
-- **Reduced motion** (`prefers-reduced-motion`, or the preview's `motion`
-  control) freezes every loop at its resting/aligned frame. No meaning is
-  carried by motion alone — state stays legible through alignment, colour,
-  contrast and tint. `data-motion="full"` can force motion on for capture.
-- Keyboard: the preview console is reachable and toggle-able; focusable
-  controls use native buttons.
+`lib/hq/state.ts` is a pure function from **product truth** → `SceneModel`. It
+never fabricates activity. Core states (idle, listening, thinking, speaking,
+opportunity, concern, completion) drive ring rates, crystal cadence, warmth and
+accent colour; environment states (confident, analyzing, uncertain, warning,
+overnight, success) and weather (clear, rain, snow, fog, storm, aurora) drive
+light, sky and exterior. Narration describes state, never feelings (enforced by
+test).
 
 ## Performance
 
-- Continuous animation touches only **transform / opacity / filter** so the
-  compositor carries it at 60fps; no layout or paint in the animation loop.
-- The scene is a **static prerender** (`/hq` builds as static content); there
-  is no client data fetching in Phase 1.
-- No WebGL context, no large raster assets — the scene is vector + CSS, so the
-  route's payload is small and there is nothing to lazy-load beyond fonts.
+- Continuous animation is transform/rotation/opacity on the GPU; no per-frame
+  allocation in the hot path. `dpr` is capped at 1.75; reduced-motion halts
+  drift, rotation and weather.
+- The reflective floor and post effects (bloom, SMAA, vignette, ACES tone
+  mapping) are the main cost; on a real GPU this holds interactive frame rates.
+- `/hq` prerenders only a lightweight loading shell; the scene is client-only
+  and imported on demand, so no other route pays for the 3D bundle.
 
-## The preview console is not product chrome
+## Accessibility
 
-The Deck requires speaking-, warning- and reduced-motion screenshots, so the
-scene needs a way to exercise states. `StateConsole` is an **explicitly
-isolated demonstration harness**: closed by default, labelled "drives visual
-state only — not connected to any project," and it drives nothing but the
-visual state. It is not a dashboard, not a sidebar, and it fabricates no
-telemetry (Bible §16). Toggle it with the corner control, the backtick key, or
-`?console=1`.
+- A visually-hidden `role="status"`/`aria-live` region narrates the current
+  state in North Star's voice.
+- `prefers-reduced-motion` (or the preview `motion` control) freezes drift and
+  weather while preserving the full composition, materials and lighting — no
+  meaning is carried by motion alone (Blueprint §17).
 
-## Preview parameters
+## Preview console — not product chrome
 
-`/hq` accepts URL parameters for deterministic inspection and capture:
+`StateConsole` is an explicitly isolated demonstration harness: closed by
+default, labelled "drives the scene only — not connected to any project," and it
+drives only visual state. It fabricates no telemetry (Bible §16 / Blueprint
+§16). Toggle with the corner control, the backtick key, or `?console=1`.
 
-| Param     | Values                                                                 |
-| --------- | ---------------------------------------------------------------------- |
-| `core`    | idle · listening · thinking · speaking · opportunity · concern · completion |
-| `env`     | confident · analyzing · uncertain · warning · overnight · success      |
-| `time`    | dawn · day · dusk · night                                              |
-| `shot`    | (default full room) · `close`                                          |
-| `motion`  | `reduced` · `full`                                                     |
-| `console` | `1` to open the preview console                                        |
+### Preview parameters (`/hq?…`)
 
-## State gallery
+| Param | Values |
+| --- | --- |
+| `cam` | hero · executive · conversation · atmospheric · boardroom |
+| `core` | idle · listening · thinking · speaking · opportunity · concern · completion |
+| `env` | confident · analyzing · uncertain · warning · overnight · success |
+| `time` | dawn · day · dusk · night |
+| `weather` | clear · rain · snow · fog · storm · aurora |
+| `motion` | reduced · full |
+| `console` | `1` to open the console |
+
+## Gallery
 
 Regenerate with `node scripts/hq-screenshots.mjs` against a running build.
 
-| State | Frame |
+| View | File |
 | --- | --- |
-| Full room (night, confident) | `docs/hq-screenshots/01-full-room.png` |
-| Core close-up | `docs/hq-screenshots/02-core-closeup.png` |
-| Speaking (dusk) | `docs/hq-screenshots/03-speaking.png` |
-| Concern / warning | `docs/hq-screenshots/04-warning-concern.png` |
-| Reduced motion | `docs/hq-screenshots/05-reduced-motion.png` |
-| Thinking / analyzing | `docs/hq-screenshots/06-thinking-analyzing.png` |
-| Opportunity / success | `docs/hq-screenshots/07-opportunity-success.png` |
-| Preview console | `docs/hq-screenshots/08-preview-console.png` |
+| Hero | `docs/hq-screenshots/01-hero.png` |
+| Executive desk | `docs/hq-screenshots/02-executive-desk.png` |
+| Core close-up | `docs/hq-screenshots/03-core-closeup.png` |
+| Day | `docs/hq-screenshots/04-day.png` |
+| Dusk (speaking) | `docs/hq-screenshots/05-dusk.png` |
+| Night | `docs/hq-screenshots/06-night.png` |
+| Storm / warning | `docs/hq-screenshots/07-storm-warning.png` |
+| Success | `docs/hq-screenshots/08-success.png` |
+| Reduced motion | `docs/hq-screenshots/09-reduced-motion.png` |
+| Atmospheric (dome + skylight) | `docs/hq-screenshots/10-atmospheric-dome.png` |
+| Boardroom | `docs/hq-screenshots/11-boardroom.png` |
+| Aurora | `docs/hq-screenshots/12-aurora.png` |
 
-## Acceptance tests (Bible §16) — status
+## Blueprint §18 acceptance test — status
 
-| Test | Status |
-| --- | --- |
-| A logo-less screenshot is unmistakably North Star | ✅ |
-| Premium executive observatory, not a generic office | ✅ |
-| Desk is clean, centered and visually important | ✅ |
-| Core is a dimensional star/astrolabe artifact (not orb/flat compass/overlay) | ✅ |
-| Core occupies ~15–20% of the room at rest | ✅ (~18%) |
-| No text/navigation/hologram overlaps the Core in the default state | ✅ |
-| Exterior and reflections move subtly | ✅ |
-| Speaking/thinking/concern/completion change both Core and room | ✅ |
-| Reduced-motion preserves all meaning | ✅ |
-| Retains hierarchy and cinematic depth at 1440p/4K | ✅ |
-| Digital DNA / Atlas connected and evidence-backed | ⏳ later phase (out of scope) |
+| # | Test | Status |
+| --- | --- | --- |
+| 1 | The room feels architectural rather than graphical | ✅ |
+| 2 | Breathtaking with all interfaces disabled | ✅ (no UI in the scene) |
+| 3 | The desk dominates and feels sculptural | ✅ |
+| 4 | The Core is memorable, engineered, physically substantial | ✅ |
+| 5 | Stone, walnut, brass, glass appear tangible | ✅ (leather seating: not in frame this phase) |
+| 6 | Lighting creates depth, contrast, atmosphere, reflections | ✅ |
+| 7 | The camera feels cinematic, not flat/orthographic | ✅ |
+| 8 | Clear foreground/midground/background layers | ✅ |
+| 9 | Appropriate for a CEO; premium enough to be permanent | ✅ |
+| 10 | A single screenshot is recognizable as North Star without a logo | ✅ |
+| 11 | Clearly matches the Concept A visual direction | ✅ |
+| 12 | Nothing resembles the rejected PR #93 SVG illustration | ✅ (rebuilt in WebGL) |
 
-## What is intentionally not here
+## Unavoidable technical compromises
 
-Mission Control, Digital DNA, Atlas, agents, reports, approvals, settings and
-any connected data. Per the build sequence these come only after the room and
-Core are approved.
+- **Software-rendered screenshots.** The gallery is captured in headless
+  Chromium via SwiftShader (no GPU in CI). Frames are correct but softer/slower
+  than a GPU; on real hardware the scene is sharper and runs at interactive
+  rates.
+- **Faux smoked glass** rather than physical transmission — chosen for
+  controllable "smoked, restrained, never mirror-like" glass and to avoid an
+  expensive transmission pass. Reads as architectural glazing.
+- **Procedural (canvas) textures** for marble/walnut/brass instead of
+  photographic PBR scans — the app runs under a strict CSP with no external
+  image assets. Believable at scene scale; a future pass could swap in
+  self-hosted scanned maps.
+- **Reflection environment from Lightformers**, not a captured HDRI, for the
+  same CSP/offline reason.
+- **Leather seating** (Blueprint material schedule) is not yet placed — no
+  seating is in the approved camera framings this phase.
+- The repo's `pnpm lint` script (`next lint`) is broken independently of this
+  work (removed in Next 16); `pnpm type-check` and `pnpm build` are green.
+
+## Not in this phase
+
+Everything downstream of the room and Core — Mission Control, Digital DNA,
+Atlas, agents, reports, settings and any connected data. Explicit stop for
+approval before Phase 2 (Blueprint §20).

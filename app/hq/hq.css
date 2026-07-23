@@ -1,887 +1,91 @@
 /* ============================================================================
-   NORTH STAR — HEADQUARTERS
-   Concept A: a cinematic executive observatory that is the application itself.
-   Palette, materials and motion follow the Product & Design Bible §13.
-   The room is the product. The Core is the heart.
-
-   Layout model (Bible §14): one shared coordinate system. Every layer is
-   authored on a 1920×1080 stage and the whole stage is scaled to cover the
-   viewport, so composition, depth and reflections never drift out of register.
-
-   Motion model: continuous animation touches only transform / opacity /
-   filter so the compositor carries it at 60fps. Reduced-motion freezes every
-   loop at its resting (aligned) frame while state stays legible through
-   alignment, color and contrast.
+   NORTH STAR — HEADQUARTERS (3D)
+   The architecture itself is the interface. The scene is rendered in WebGL
+   (React Three Fiber); this stylesheet is only the thin DOM layer around the
+   canvas: the accessibility narration, the loading state, and the isolated
+   preview console. No scene visuals live here.
    ========================================================================== */
 
 .hq-root {
-  /* ——— Palette (Bible §13) ——— */
-  --g-0: #0b0b0d; /* graphite ground */
-  --g-1: #16161a;
-  --g-2: #1e1e24;
-  --ink: #f3efe6; /* warm ink */
+  --ink: #f3efe6;
   --brass: #c9a877;
   --brass-bright: #e0c496;
-  --brass-deep: #8a744f;
-  --amber: #d9a441; /* semantic concern */
-  --cool: #cfe0ef; /* restrained cool-white analysis light */
-  --verified: #8fb08a; /* muted green, verified health */
-
-  /* Intelligence light — the color the Core and room warm toward. Warm white
-     by default (never a neon-blue default glow, Bible §04). */
-  --intel: #ffe9c4;
-  --intel-soft: #ffd9a0;
-
   --font-serif: var(--font-hq-serif), 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
   --font-sans: var(--font-hq-sans), 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-
   color: var(--ink);
   font-family: var(--font-sans);
 }
 
-/* ——————————————————————————————————————————————————————————————
-   VIEWPORT + STAGE + CAMERA
-   —————————————————————————————————————————————————————————————— */
 .hq-viewport {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: #050506;
-  /* State-driven scene variables, defaulted here and overridden per state. */
-  --stage-scale: 1;
-  --tint: transparent;
-  --tint-a: 0;
-  --room-warmth: 0.5; /* 0 cool → 1 warm */
-  --intel-now: var(--intel);
-  --brass-lum: 1;
-  --core-scale: 1;
-  --sky-top: #0b0d16;
-  --sky-mid: #12141d;
-  --sky-horizon: #1a1c24;
-  --spill: rgba(255, 233, 196, 0.05);
-  --pool-a: rgba(201, 168, 119, 0.06);
-  --pool-b: rgba(201, 168, 119, 0);
-  cursor: default;
+  background: #050507;
+}
+.hq-viewport canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
 }
 
-.hq-stage {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 1920px;
-  height: 1080px;
-  transform: translate(-50%, -50%) scale(var(--stage-scale));
-  transform-origin: center center;
-  will-change: transform, opacity;
-  background: var(--g-0);
-}
-
-/* Cinematic arrival: the room settles in as if the user just walked in. */
-.hq-viewport[data-ready='true'] .hq-stage {
-  animation: hq-arrive 1500ms cubic-bezier(0.16, 0.84, 0.28, 1) both;
-}
-@keyframes hq-arrive {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(calc(var(--stage-scale) * 1.06));
-    filter: brightness(0.4) blur(6px);
-  }
-  60% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(var(--stage-scale));
-    filter: brightness(1) blur(0);
-  }
-}
-
-.hq-camera {
-  position: absolute;
+/* Loading veil shown until the scene mounts. */
+.hq-loading {
+  position: fixed;
   inset: 0;
-  transform-origin: 960px 566px;
-  transition: transform 1400ms cubic-bezier(0.4, 0, 0.1, 1);
-  will-change: transform;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120% 90% at 50% 60%, #0e0f13, #050506);
+  color: var(--ink);
+  z-index: 10;
 }
-/* Close-up: reserved for deliberate transitions (Bible §02 camera rules). */
-.hq-viewport[data-shot='close'] .hq-camera {
-  transform: scale(2.15) translateY(38px);
-}
-
-.hq-architecture,
-.hq-desk,
-.hq-exterior,
-.hq-core-field {
-  position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1080px;
-}
-.hq-architecture,
-.hq-desk {
-  overflow: visible;
-}
-
-/* ——————————————————————————————————————————————————————————————
-   ENVIRONMENT — sky, weather, exterior depth (Bible §02, §06)
-   The exterior lives beneath the architecture and is only ever seen through
-   the window apertures — the walls occlude it everywhere else.
-   —————————————————————————————————————————————————————————————— */
-.hq-exterior {
-  overflow: hidden;
-}
-.hq-sky,
-.hq-sky-state {
-  position: absolute;
-  inset: 0;
-}
-.hq-sky {
-  background:
-    radial-gradient(120% 80% at 50% 92%, var(--sky-horizon) 0%, transparent 55%),
-    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 46%, var(--sky-horizon) 78%);
-  transition: background 2600ms ease;
-}
-/* Env-tinted wash over the base sky — crossfades between states. */
-.hq-sky-state {
-  background: var(--sky-wash, transparent);
-  opacity: var(--sky-wash-a, 0);
-  transition: opacity 2600ms ease, background 2600ms ease;
-  mix-blend-mode: screen;
-}
-
-/* Time-of-day skies. */
-.hq-viewport[data-time='night'] {
-  --sky-top: #05060c;
-  --sky-mid: #0a0c15;
-  --sky-horizon: #12141f;
-}
-.hq-viewport[data-time='dawn'] {
-  --sky-top: #14161f;
-  --sky-mid: #26232b;
-  --sky-horizon: #4a3a34;
-}
-.hq-viewport[data-time='day'] {
-  --sky-top: #1b2634;
-  --sky-mid: #24303f;
-  --sky-horizon: #33404e;
-}
-.hq-viewport[data-time='dusk'] {
-  --sky-top: #0f1018;
-  --sky-mid: #241d29;
-  --sky-horizon: #4a3140;
-}
-
-.hq-stars {
-  position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1080px;
-  opacity: 0;
-  transition: opacity 2600ms ease;
-}
-.hq-stars.is-on {
-  opacity: 1;
-}
-.hq-star-dot {
-  fill: #f4f1ea;
-  animation: hq-twinkle 8s ease-in-out infinite;
-}
-@keyframes hq-twinkle {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-
-/* The North Star itself — on the room's central axis (Bible §02). */
-.hq-northstar {
-  position: absolute;
-  left: 942px;
-  top: 232px;
-  width: 36px;
-  height: 36px;
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 2600ms ease, transform 2600ms ease;
-}
-.hq-northstar.is-on {
-  opacity: 1;
-  transform: scale(1);
-}
-.hq-northstar-halo {
-  fill: #fff6e2;
-  opacity: 0.16;
-  animation: hq-breath 7s ease-in-out infinite;
-}
-.hq-northstar-body {
-  fill: #fff8ec;
-}
-
-.hq-moon {
-  position: absolute;
-  left: 1300px;
-  top: 336px;
-  width: 92px;
-  height: 92px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 36%, #f4f0e4 0%, #cdc7ba 46%, #8f897c 100%);
-  box-shadow: 0 0 60px 18px rgba(240, 236, 224, 0.14);
-  opacity: 0;
-  transition: opacity 2600ms ease;
-}
-.hq-moon.is-on {
+.hq-loading-mark {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   opacity: 0.9;
 }
-
-/* Dawn / sunrise glow low on the horizon. */
-.hq-sunglow {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 320px;
-  height: 420px;
-  background: radial-gradient(80% 100% at 50% 100%, rgba(255, 196, 128, 0.5) 0%, rgba(255, 170, 110, 0.16) 40%, transparent 72%);
-  opacity: 0;
-  transition: opacity 2600ms ease;
-  animation: hq-breath 12s ease-in-out infinite;
+.hq-loading-sub {
+  margin-top: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--brass);
+  text-align: center;
 }
-.hq-sunglow.is-on {
-  opacity: calc(0.45 + var(--room-warmth) * 0.55);
-}
-
-/* Distant terrain — layered depth. */
-.hq-ridge {
-  position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1080px;
-}
-.hq-ridge-far path {
-  fill: #171922;
-  opacity: 0.7;
-}
-.hq-ridge-near path {
-  fill: #0f111a;
-}
-
-/* Cloud strata — soft banded gradients drifting at unequal speeds. */
-.hq-clouds {
-  position: absolute;
-  left: -40%;
-  right: -40%;
-  width: 180%;
-  opacity: 0;
-  transition: opacity 2600ms ease;
-  will-change: transform;
-  pointer-events: none;
-}
-.hq-clouds-far {
-  top: 300px;
-  height: 200px;
-  background: radial-gradient(60% 90% at 20% 50%, rgba(150, 160, 180, 0.1), transparent 60%),
-    radial-gradient(50% 80% at 55% 40%, rgba(150, 160, 180, 0.08), transparent 60%),
-    radial-gradient(60% 90% at 85% 60%, rgba(150, 160, 180, 0.09), transparent 60%);
-  animation: hq-drift-far 140s linear infinite;
-}
-.hq-clouds-mid {
-  top: 400px;
-  height: 220px;
-  background: radial-gradient(55% 90% at 30% 55%, rgba(120, 128, 148, 0.14), transparent 62%),
-    radial-gradient(60% 85% at 70% 45%, rgba(120, 128, 148, 0.12), transparent 62%);
-  animation: hq-drift-mid 96s linear infinite;
-}
-.hq-clouds-near {
-  top: 240px;
-  height: 320px;
-  background: radial-gradient(60% 90% at 25% 50%, rgba(60, 64, 78, 0.5), transparent 60%),
-    radial-gradient(70% 90% at 65% 55%, rgba(48, 52, 66, 0.55), transparent 62%),
-    radial-gradient(55% 80% at 90% 45%, rgba(60, 64, 78, 0.45), transparent 60%);
-  animation: hq-drift-near 68s linear infinite;
-}
-.hq-clouds.is-on {
-  opacity: 1;
-}
-@keyframes hq-drift-far {
-  from {
-    transform: translateX(-8%);
-  }
-  to {
-    transform: translateX(8%);
-  }
-}
-@keyframes hq-drift-mid {
-  from {
-    transform: translateX(6%);
-  }
-  to {
-    transform: translateX(-10%);
-  }
-}
-@keyframes hq-drift-near {
-  from {
-    transform: translateX(-12%);
-  }
-  to {
-    transform: translateX(10%);
-  }
-}
-
-/* Rain — a masked, drifting streak field confined to the arch aperture. */
-.hq-rain {
-  position: absolute;
-  left: 540px;
-  top: 180px;
-  width: 840px;
-  height: 584px;
-  opacity: 0;
-  transition: opacity 1600ms ease;
-  background-image: repeating-linear-gradient(
-    100deg,
-    transparent 0,
-    transparent 22px,
-    rgba(190, 205, 220, 0.18) 22px,
-    rgba(190, 205, 220, 0.18) 23px
-  );
-  background-size: 200px 200px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 60%, transparent 100%);
-  mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, #000 60%, transparent 100%);
-  animation: hq-rain 0.7s linear infinite;
-}
-.hq-rain.is-on {
-  opacity: 0.6;
-}
-@keyframes hq-rain {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -35px 200px;
-  }
-}
-
-/* Low-confidence fog beyond the glass. */
-.hq-fog {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 300px;
-  height: 380px;
-  opacity: 0;
-  transition: opacity 2400ms ease;
-  background: linear-gradient(180deg, transparent, rgba(180, 188, 200, 0.16) 55%, rgba(180, 188, 200, 0.22));
-  animation: hq-breath 16s ease-in-out infinite;
-}
-.hq-fog.is-on {
-  opacity: 1;
-}
-
-/* Architecture helpers. */
-.hq-brass-reveal {
-  fill: var(--brass);
-  opacity: calc(0.55 * var(--brass-lum));
-}
-.hq-axis-rib {
-  stroke: var(--brass);
-  opacity: calc(0.5 * var(--brass-lum));
-}
-.hq-window-spill {
-  fill: var(--spill);
-  transition: fill 2400ms ease;
-}
-.hq-datum rect {
-  fill: var(--brass-deep);
-  opacity: 0.4;
-}
-.hq-pool-stop-a {
-  stop-color: var(--brass);
-  stop-opacity: calc(0.08 * var(--brass-lum));
-}
-.hq-pool-stop-b {
-  stop-color: var(--brass);
-  stop-opacity: 0;
-}
-.hq-floor-pool {
-  opacity: var(--brass-lum);
-  transition: opacity 2400ms ease;
-}
-.hq-mullion-glint {
-  stroke: var(--brass);
-  opacity: calc(0.4 * var(--brass-lum));
-}
-
-/* Desk. */
-.hq-base-ember {
-  fill: var(--intel-now);
-  opacity: calc(0.25 + var(--room-warmth) * 0.4);
-  transition: fill 1400ms ease, opacity 1400ms ease;
-}
-
-/* ——————————————————————————————————————————————————————————————
-   THE NORTH STAR CORE (Bible §04, §05)
-   —————————————————————————————————————————————————————————————— */
-.hq-core {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  overflow: visible;
-  transform: scale(var(--core-scale));
-  transform-origin: center center;
-  transition: transform 900ms cubic-bezier(0.34, 1.2, 0.4, 1);
-}
-
-/* Projection beam rising from the desk base to the instrument. */
-.hq-beam {
-  position: absolute;
-  left: 906px;
-  top: 566px;
-  width: 108px;
-  height: 300px;
-  background: linear-gradient(180deg, rgba(255, 233, 196, 0.14), rgba(255, 233, 196, 0.03) 60%, transparent);
-  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
-  mask-image: linear-gradient(180deg, #000, transparent);
-  clip-path: polygon(30% 0, 70% 0, 92% 100%, 8% 100%);
-  filter: blur(3px);
-  opacity: calc(0.4 + var(--room-warmth) * 0.5);
-  transition: opacity 1400ms ease;
-}
-.hq-desk-glow {
-  position: absolute;
-  left: 780px;
-  top: 792px;
-  width: 360px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, var(--intel-now) 0%, transparent 70%);
-  opacity: calc(0.1 + var(--room-warmth) * 0.14);
-  filter: blur(6px);
-  transition: opacity 1400ms ease, background 1400ms ease;
-}
-
-.hq-core-reflection {
-  position: absolute;
-  width: 220px;
-  height: 80px;
-  overflow: visible;
-  opacity: 0.12;
-  filter: blur(2.5px);
-  -webkit-mask-image: linear-gradient(180deg, #000, transparent 80%);
-  mask-image: linear-gradient(180deg, #000, transparent 80%);
-}
-
-/* ——— Rings ——— */
-/* Every animated Core group rotates/scales about the instrument's true
-   center. Each group's geometry is symmetric about the origin (the orbit
-   groups carry an invisible symmetrizer circle), so `transform-box: fill-box`
-   resolves `transform-origin: center` to (0,0). fill-box is used rather than
-   view-box because the CSS minifier drops the newer view-box value. */
-.hq-dial,
-.hq-dial-ticks circle,
-.hq-orbitA,
-.hq-orbitB,
-.hq-star-breath,
-.hq-star,
-.hq-crystal,
-.hq-halo,
-.hq-sparkle {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.hq-dial {
-  animation: hq-dial-drift 60s linear infinite;
-}
-@keyframes hq-dial-drift {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.hq-dial-ticks circle {
-  transform-origin: center;
-  animation: hq-dial-counter 120s linear infinite;
-}
-@keyframes hq-dial-counter {
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-.hq-ring {
-  fill: none;
-  stroke: url(#hq-ring-brass);
-  stroke-width: 2.2;
-  opacity: 0.85;
-}
-.hq-ring-front {
-  fill: none;
-  stroke: url(#hq-ring-brass);
-  stroke-width: 2.2;
-  opacity: 0.5;
-}
-.hq-orbitA {
-  animation: hq-spin 26s linear infinite;
-}
-.hq-orbitB {
-  animation: hq-spin 34s linear infinite reverse;
-}
-@keyframes hq-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.hq-node {
-  fill: #fff7e6;
-}
-.hq-node-halo {
-  fill: var(--intel-now);
-  opacity: 0.32;
-}
-
-/* ——— Star + crystal ——— */
-.hq-star-breath {
-  animation: hq-breath 18s ease-in-out infinite;
-}
-@keyframes hq-breath {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.018);
-  }
-}
-.hq-facet-light {
-  fill: url(#hq-facet-light);
-}
-.hq-facet-dark {
-  fill: url(#hq-facet-dark);
-}
-.hq-facet-edge {
-  fill: #fff6e2;
-  opacity: 0.12;
-}
-.hq-point-glow {
-  fill: var(--intel-now);
-  opacity: 0;
-}
-.hq-crystal {
-  transform-origin: center;
-  animation: hq-crystal 18s ease-in-out infinite;
-}
-.hq-crystal-stop {
-  stop-color: var(--intel-now);
-}
-@keyframes hq-crystal {
-  0%,
-  100% {
-    opacity: 0.9;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-.hq-halo {
-  transform-origin: center;
-  animation: hq-breath 18s ease-in-out infinite;
-}
-.hq-halo-stop {
-  stop-color: var(--intel-now);
-  stop-opacity: 0.55;
-}
-.hq-sparkle {
-  transform-origin: center;
-  animation: hq-dial-drift 40s linear infinite;
-}
-.hq-fil {
-  stroke: var(--intel-now);
-  stroke-width: 1.1;
-  opacity: 0.3;
-}
-.hq-fil-minor {
-  opacity: 0.16;
-  stroke-width: 0.8;
-}
-.hq-fil-anchor {
-  stroke: var(--brass-bright);
-  stroke-width: 1;
-  opacity: 0.4;
-}
-
-/* Suspended particles. */
-.hq-particles span {
-  position: absolute;
-  width: 2px;
+.hq-loading-bar {
+  margin: 1.2rem auto 0;
+  width: 180px;
   height: 2px;
-  border-radius: 50%;
-  background: var(--intel-soft);
-  opacity: 0.3;
-  will-change: transform, opacity;
-  animation: hq-float 16s ease-in-out infinite;
+  background: rgba(201, 168, 119, 0.18);
+  overflow: hidden;
+  border-radius: 2px;
 }
-@keyframes hq-float {
-  0%,
-  100% {
-    transform: translate(0, 0);
-    opacity: 0.14;
-  }
-  50% {
-    transform: translate(6px, -14px);
-    opacity: 0.5;
-  }
+.hq-loading-bar::after {
+  content: '';
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--brass-bright), transparent);
+  animation: hq-sweep 1.4s ease-in-out infinite;
 }
-
-/* Completion wave — one refined light wave, then settle (Bible §05). */
-.hq-wave {
-  position: absolute;
-  left: 960px;
-  top: 566px;
-  width: 20px;
-  height: 20px;
-  margin: -10px 0 0 -10px;
-  border-radius: 50%;
-  border: 1.5px solid var(--intel);
-  opacity: 0;
-  pointer-events: none;
-}
-.hq-viewport[data-core='completion'] .hq-wave {
-  animation: hq-wave 2400ms cubic-bezier(0.2, 0.6, 0.2, 1) 1;
-}
-@keyframes hq-wave {
-  0% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  14% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(64);
-  }
-}
-
-/* ——————————————————————————————————————————————————————————————
-   CORE + ROOM STATES (Bible §05, §06)
-   Each state changes both the Core and the room. Copy never claims feelings.
-   —————————————————————————————————————————————————————————————— */
-
-/* LISTENING — rings settle toward alignment, room becomes attentive. */
-.hq-viewport[data-core='listening'] {
-  --core-scale: 1.01;
-}
-.hq-viewport[data-core='listening'] .hq-orbitA {
-  animation-duration: 44s;
-}
-.hq-viewport[data-core='listening'] .hq-orbitB {
-  animation-duration: 52s;
-}
-
-/* THINKING — independent ring rates quicken, light cools, filaments travel. */
-.hq-viewport[data-core='thinking'] {
-  --intel-now: var(--cool);
-}
-.hq-viewport[data-core='thinking'] .hq-orbitA {
-  animation-duration: 12s;
-}
-.hq-viewport[data-core='thinking'] .hq-orbitB {
-  animation-duration: 9s;
-}
-.hq-viewport[data-core='thinking'] .hq-dial {
-  animation-duration: 30s;
-}
-.hq-viewport[data-core='thinking'] .hq-fil {
-  animation: hq-fil-travel 2.4s ease-in-out infinite;
-  stroke-dasharray: 6 60;
-}
-@keyframes hq-fil-travel {
+@keyframes hq-sweep {
   from {
-    stroke-dashoffset: 66;
-    opacity: 0.5;
+    transform: translateX(-120%);
   }
   to {
-    stroke-dashoffset: 0;
-    opacity: 0.2;
+    transform: translateX(360%);
   }
+}
+.hq-fallback {
+  max-width: 30rem;
+  padding: 2rem;
+  text-align: center;
+  line-height: 1.6;
 }
 
-/* SPEAKING — the star pulses with cadence; light runs through the points. */
-.hq-viewport[data-core='speaking'] {
-  --core-scale: 1.03;
-}
-.hq-viewport[data-core='speaking'] .hq-crystal {
-  animation: hq-cadence 1.7s ease-in-out infinite;
-}
-@keyframes hq-cadence {
-  0% {
-    opacity: 0.85;
-    transform: scale(0.98);
-  }
-  18% {
-    opacity: 1;
-    transform: scale(1.16);
-  }
-  38% {
-    opacity: 0.9;
-    transform: scale(1.04);
-  }
-  55% {
-    opacity: 1;
-    transform: scale(1.12);
-  }
-  100% {
-    opacity: 0.85;
-    transform: scale(0.98);
-  }
-}
-.hq-viewport[data-core='speaking'] .hq-point-glow {
-  animation: hq-point-run 1.7s ease-in-out infinite;
-}
-@keyframes hq-point-run {
-  0%,
-  60%,
-  100% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.6;
-  }
-}
-.hq-viewport[data-core='speaking'] .hq-halo {
-  animation: hq-cadence 1.7s ease-in-out infinite;
-}
-
-/* OPPORTUNITY — rings lock to precise alignment, brass warms, star expands. */
-.hq-viewport[data-core='opportunity'] {
-  --core-scale: 1.04;
-  --brass-lum: 1.25;
-  --room-warmth: 0.85;
-}
-.hq-viewport[data-core='opportunity'] .hq-orbitA,
-.hq-viewport[data-core='opportunity'] .hq-orbitB {
-  animation-play-state: paused;
-}
-
-/* CONCERN — room cools and darkens; amber replaces warmth; movement heavies.
-   Never flash red (Bible §05). */
-.hq-viewport[data-core='concern'] {
-  --intel-now: var(--amber);
-  --room-warmth: 0.3;
-  --brass-lum: 0.8;
-}
-.hq-viewport[data-core='concern'] .hq-orbitA {
-  animation-duration: 60s;
-}
-.hq-viewport[data-core='concern'] .hq-orbitB {
-  animation-duration: 74s;
-}
-.hq-viewport[data-core='concern'] .hq-dial {
-  animation-duration: 130s;
-}
-
-/* COMPLETION — a brief warm surge (the wave layer carries the travel). */
-.hq-viewport[data-core='completion'] {
-  --core-scale: 1.03;
-  --room-warmth: 0.95;
-  --brass-lum: 1.2;
-}
-
-/* ——— Environment washes over the sky (Bible §06 state mapping) ——— */
-.hq-viewport[data-env='confident'] {
-  --room-warmth: 0.8;
-  --brass-lum: 1.15;
-  --spill: rgba(255, 233, 196, 0.08);
-  --sky-wash: radial-gradient(80% 60% at 50% 100%, rgba(255, 190, 130, 0.28), transparent 70%);
-  --sky-wash-a: 0.7;
-}
-.hq-viewport[data-env='analyzing'] {
-  --room-warmth: 0.42;
-  --spill: rgba(207, 224, 239, 0.05);
-  --sky-wash: linear-gradient(180deg, rgba(150, 170, 195, 0.14), transparent 60%);
-  --sky-wash-a: 0.6;
-}
-.hq-viewport[data-env='uncertain'] {
-  --room-warmth: 0.34;
-  --brass-lum: 0.85;
-  --spill: rgba(200, 208, 220, 0.04);
-  --sky-wash: none;
-  --sky-wash-a: 0;
-}
-.hq-viewport[data-env='warning'] {
-  --room-warmth: 0.22;
-  --brass-lum: 0.78;
-  --spill: rgba(217, 164, 65, 0.06);
-  --tint: #1a0f04;
-  --tint-a: 0.18;
-  --sky-wash: linear-gradient(180deg, rgba(40, 30, 20, 0.4), rgba(217, 164, 65, 0.05) 80%);
-  --sky-wash-a: 0.8;
-}
-.hq-viewport[data-env='overnight'] {
-  --room-warmth: 0.5;
-  --brass-lum: 0.95;
-  --spill: rgba(255, 233, 196, 0.05);
-  --tint: #050912;
-  --tint-a: 0.14;
-}
-.hq-viewport[data-env='success'] {
-  --room-warmth: 0.98;
-  --brass-lum: 1.3;
-  --spill: rgba(255, 214, 160, 0.1);
-  --sky-wash: radial-gradient(90% 70% at 50% 100%, rgba(255, 200, 140, 0.4), transparent 72%);
-  --sky-wash-a: 0.85;
-}
-
-/* ——————————————————————————————————————————————————————————————
-   CINEMATIC FINISHING — tint, vignette, grain
-   —————————————————————————————————————————————————————————————— */
-.hq-tint {
-  position: absolute;
-  inset: 0;
-  background: var(--tint);
-  opacity: var(--tint-a);
-  mix-blend-mode: multiply;
-  transition: background 2400ms ease, opacity 2400ms ease;
-  pointer-events: none;
-}
-.hq-vignette {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(130% 120% at 50% 46%, transparent 52%, rgba(0, 0, 0, 0.5) 100%),
-    radial-gradient(80% 60% at 50% 108%, rgba(0, 0, 0, 0.55), transparent 60%);
-}
-.hq-grain {
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  pointer-events: none;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: hq-grain 1.2s steps(3) infinite;
-}
-@keyframes hq-grain {
-  0% {
-    transform: translate(0, 0);
-  }
-  33% {
-    transform: translate(-4px, 3px);
-  }
-  66% {
-    transform: translate(3px, -2px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-/* ——————————————————————————————————————————————————————————————
-   ACCESSIBILITY
-   —————————————————————————————————————————————————————————————— */
+/* Accessibility: visually-hidden live state narration. */
 .hq-sr {
   position: absolute;
   width: 1px;
@@ -894,59 +98,8 @@
   border: 0;
 }
 
-/* Reduced motion (Bible §13, §16): freeze every loop at its resting frame.
-   State stays legible through alignment, color, contrast and the tint — no
-   meaning is carried by motion alone. `data-motion` lets the preview force a
-   mode for screenshots; `full` re-enables under an OS reduce preference. */
-@media (prefers-reduced-motion: reduce) {
-  .hq-viewport:not([data-motion='full']) .hq-stage,
-  .hq-viewport:not([data-motion='full']) .hq-dial,
-  .hq-viewport:not([data-motion='full']) .hq-dial-ticks circle,
-  .hq-viewport:not([data-motion='full']) .hq-orbitA,
-  .hq-viewport:not([data-motion='full']) .hq-orbitB,
-  .hq-viewport:not([data-motion='full']) .hq-star-breath,
-  .hq-viewport:not([data-motion='full']) .hq-crystal,
-  .hq-viewport:not([data-motion='full']) .hq-halo,
-  .hq-viewport:not([data-motion='full']) .hq-sparkle,
-  .hq-viewport:not([data-motion='full']) .hq-fil,
-  .hq-viewport:not([data-motion='full']) .hq-point-glow,
-  .hq-viewport:not([data-motion='full']) .hq-particles span,
-  .hq-viewport:not([data-motion='full']) .hq-clouds,
-  .hq-viewport:not([data-motion='full']) .hq-rain,
-  .hq-viewport:not([data-motion='full']) .hq-fog,
-  .hq-viewport:not([data-motion='full']) .hq-sunglow,
-  .hq-viewport:not([data-motion='full']) .hq-star-dot,
-  .hq-viewport:not([data-motion='full']) .hq-northstar-halo,
-  .hq-viewport:not([data-motion='full']) .hq-wave,
-  .hq-viewport:not([data-motion='full']) .hq-grain {
-    animation: none !important;
-  }
-}
-.hq-viewport[data-motion='reduced'] .hq-stage,
-.hq-viewport[data-motion='reduced'] .hq-dial,
-.hq-viewport[data-motion='reduced'] .hq-dial-ticks circle,
-.hq-viewport[data-motion='reduced'] .hq-orbitA,
-.hq-viewport[data-motion='reduced'] .hq-orbitB,
-.hq-viewport[data-motion='reduced'] .hq-star-breath,
-.hq-viewport[data-motion='reduced'] .hq-crystal,
-.hq-viewport[data-motion='reduced'] .hq-halo,
-.hq-viewport[data-motion='reduced'] .hq-sparkle,
-.hq-viewport[data-motion='reduced'] .hq-fil,
-.hq-viewport[data-motion='reduced'] .hq-point-glow,
-.hq-viewport[data-motion='reduced'] .hq-particles span,
-.hq-viewport[data-motion='reduced'] .hq-clouds,
-.hq-viewport[data-motion='reduced'] .hq-rain,
-.hq-viewport[data-motion='reduced'] .hq-fog,
-.hq-viewport[data-motion='reduced'] .hq-sunglow,
-.hq-viewport[data-motion='reduced'] .hq-star-dot,
-.hq-viewport[data-motion='reduced'] .hq-northstar-halo,
-.hq-viewport[data-motion='reduced'] .hq-wave,
-.hq-viewport[data-motion='reduced'] .hq-grain {
-  animation: none !important;
-}
-
 /* ——————————————————————————————————————————————————————————————
-   PREVIEW CONSOLE — isolated demonstration harness (Bible §16)
+   PREVIEW CONSOLE — isolated demonstration harness (Bible §16 / Blueprint §16)
    —————————————————————————————————————————————————————————————— */
 .hq-console-tab {
   position: fixed;
@@ -971,7 +124,6 @@
   border-color: rgba(224, 196, 150, 0.7);
   background: rgba(20, 18, 14, 0.75);
 }
-
 .hq-console {
   position: fixed;
   right: 20px;
@@ -1002,7 +154,6 @@
   font-size: 20px;
   font-weight: 600;
   color: var(--ink);
-  letter-spacing: 0.01em;
 }
 .hq-console-note {
   margin-top: 4px;
@@ -1050,7 +201,8 @@
 }
 .hq-console-readout {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   font-size: 10px;
