@@ -22,6 +22,12 @@ export type ContentTransform =
   // tags are paired by document order; if pairing can't be done safely
   // (malformed markup), this is a no-op rather than a guess.
   | { type: 'demote-extra-h1' }
+  // Core Web Vitals: marks every <img> below `skipFirst` (default 1 — the
+  // first image is the likely LCP candidate and is deliberately left eager)
+  // with loading="lazy" decoding="async" when it doesn't already declare a
+  // loading strategy. Purely additive — never removes or reorders images —
+  // and idempotent (an image already marked is left untouched).
+  | { type: 'optimize-images'; skipFirst?: number }
 
 const RELATED_MARKER = 'rankforge:related'
 // Matches a previously-inserted managed schema block so re-applying replaces it
@@ -125,6 +131,20 @@ export function applyContentTransform(content: string, t: ContentTransform): Tra
       }
       return { content: out, changed: true, summary: `Demoted ${toDemote.length} extra H1 heading(s) to H2, keeping the first as the page's single H1.` }
     }
+    case 'optimize-images': {
+      const skipFirst = t.skipFirst ?? 1
+      const matches = [...content.matchAll(/<img\b[^>]*>/gi)]
+      const candidates = matches.slice(skipFirst).filter((m) => !/\bloading\s*=\s*["'][^"']*["']/i.test(m[0]))
+      if (candidates.length === 0) return { content, changed: false, summary: 'No below-the-fold images need lazy-loading; no change.' }
+      let out = content
+      // Replace back-to-front so earlier match indices stay valid.
+      for (const m of [...candidates].sort((a, b) => b.index! - a.index!)) {
+        const tag = m[0]
+        const patched = tag.replace(/^<img\b/i, '<img loading="lazy" decoding="async"')
+        out = out.slice(0, m.index!) + patched + out.slice(m.index! + tag.length)
+      }
+      return { content: out, changed: true, summary: `Added loading="lazy" to ${candidates.length} below-the-fold image(s).` }
+    }
   }
 }
 
@@ -146,5 +166,14 @@ export function verifyContentTransform(content: string, t: ContentTransform): bo
       return content.includes(schemaMarker(t.key)) && /<script[^>]*type=["']application\/ld\+json["']/i.test(content)
     case 'demote-extra-h1':
       return (content.match(/<h1[\s>]/gi) ?? []).length <= 1
+    case 'optimize-images': {
+      const skipFirst = t.skipFirst ?? 1
+      const matches = [...content.matchAll(/<img\b[^>]*>/gi)]
+      // Verifies every eligible image now declares SOME loading strategy —
+      // not specifically "lazy", since a re-run after a manual edit (or a
+      // legitimately eager image the site owner added) should still verify
+      // rather than false-failing on content this transform doesn't own.
+      return matches.slice(skipFirst).every((m) => /\bloading\s*=\s*["'][^"']*["']/i.test(m[0]))
+    }
   }
 }

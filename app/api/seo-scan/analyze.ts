@@ -40,6 +40,7 @@ export interface Signals {
   bodyText: string
   images: number
   imagesMissingAlt: number
+  imagesMissingLazyLoad: number
   internalLinks: number
   externalLinks: number
   schemaTypes: string[]
@@ -97,6 +98,15 @@ export function extractSignals(
   const imagesMissingAlt = imgTags.filter(
     (t) => !/\balt\s*=\s*["'][^"']*\S[^"']*["']/i.test(t)
   ).length
+  // A missing `loading` attribute means the browser eagerly fetches every
+  // image on the page regardless of viewport position — a real, common
+  // contributor to poor LCP/CLS. Below-the-fold images should be
+  // `loading="lazy"`; the FIRST image (likely the LCP candidate) is
+  // deliberately excluded from this count, matching the safe auto-fix
+  // (content-fix.ts) which never lazy-loads it.
+  const imagesMissingLazyLoad = imgTags
+    .slice(1)
+    .filter((t) => !/\bloading\s*=\s*["']lazy["']/i.test(t)).length
 
   const bodyText = textOf(sliceTag(html, 'body') ?? html)
   const words = bodyText ? bodyText.split(/\s+/).filter(Boolean) : []
@@ -140,6 +150,7 @@ export function extractSignals(
     bodyText,
     images,
     imagesMissingAlt,
+    imagesMissingLazyLoad,
     internalLinks: internal,
     externalLinks: external,
     schemaTypes,

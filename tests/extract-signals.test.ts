@@ -52,6 +52,17 @@ describe('extractSignals — happy path', () => {
     expect(s.wordCount).toBeGreaterThanOrEqual(120)
     expect(s.noindex).toBe(false)
   })
+  it('counts below-the-fold images missing loading="lazy", excluding the first (likely LCP) image', () => {
+    const html = '<html><body><img src="hero.jpg"><img src="a.jpg"><img src="b.jpg" loading="lazy"><img src="c.jpg"></body></html>'
+    const s = extractSignals(html, 'https://acme.com/p', 200)
+    // 4 images total; first is exempt; of the remaining 3, one already declares
+    // loading="lazy" — only the other 2 count as needing the fix.
+    expect(s.imagesMissingLazyLoad).toBe(2)
+  })
+  it('reports zero when there is nothing below-the-fold or every image already declares loading', () => {
+    expect(extractSignals('<img src="only.jpg">', 'https://acme.com/p', 200).imagesMissingLazyLoad).toBe(0)
+    expect(extractSignals('<img src="a.jpg"><img src="b.jpg" loading="lazy">', 'https://acme.com/p', 200).imagesMissingLazyLoad).toBe(0)
+  })
 })
 
 describe('extractSignals — failure & empty paths (never throws)', () => {

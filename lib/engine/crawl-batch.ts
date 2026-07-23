@@ -59,6 +59,7 @@ export interface CrawlPageResult {
   h2Count: number
   metaDescriptionLength: number
   imagesMissingAlt: number
+  imagesMissingLazyLoad: number
   hasFaq: boolean
   hasOpenGraph: boolean
   externalLinks: number
@@ -213,6 +214,7 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
         h2Count: signals.h2Count,
         metaDescriptionLength: signals.metaDescriptionLength,
         imagesMissingAlt: signals.imagesMissingAlt,
+        imagesMissingLazyLoad: signals.imagesMissingLazyLoad,
         hasFaq: signals.hasFaq,
         hasOpenGraph: signals.hasOpenGraph,
         externalLinks: signals.externalLinks,
