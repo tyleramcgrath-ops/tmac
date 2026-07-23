@@ -12,6 +12,8 @@ import { sendEmail, type MailResult } from '../mailer'
 import { escapeHtml, resolveOwners } from './notify'
 import { appBaseUrl } from '../env'
 import { signApproveToken } from './approve-link'
+import { connectedProviderSet } from '../external/service'
+import { findKeywordOpportunities, type KeywordOpportunity } from '../reco/keyword-opportunities'
 
 export interface DigestContent {
   subject: string
@@ -65,7 +67,8 @@ export function buildDigestContent(
   scan: Scan | null,
   metrics: OperatorMetrics,
   outcomes?: OutcomeDigestSummary,
-  approveLinks?: ApproveLinkItem[]
+  approveLinks?: ApproveLinkItem[],
+  opportunities?: KeywordOpportunity[]
 ): DigestContent {
   const label = project.name || project.domain
   const subject = scan ? `Weekly summary for ${label} — site score ${scan.summary.siteScore}` : `Weekly summary for ${label} — no audit yet`
@@ -108,8 +111,17 @@ export function buildDigestContent(
     ? `<p>Approve &amp; deploy now:</p><ul>${links.map((l) => `<li>${escapeHtml(l.title)} — <a href="${escapeHtml(l.url)}">Approve &amp; deploy</a></li>`).join('')}</ul>`
     : ''
 
-  const text = `Weekly summary for ${label}\n\n${rowsText(scanLines)}\n\n${rowsText(opLines)}${outcomeTextBlock}${approveTextBlock}\n\nOpen RankForge for the full breakdown.`
-  const html = `<p>Weekly summary for <b>${escapeHtml(label)}</b></p><ul>${rowsHtml(scanLines)}</ul><ul>${rowsHtml(opLines)}</ul>${outcomeHtmlBlock}${approveHtmlBlock}<p>Open RankForge for the full breakdown.</p>`
+  const opps = opportunities ?? []
+  const oppLine = (o: KeywordOpportunity) => `"${o.query}" (position ${o.position.toFixed(1)}, ${o.impressions} impressions)`
+  const oppTextBlock = opps.length
+    ? `\n\nKeyword opportunities (real Search Console near-misses):\n${opps.map((o) => `- ${oppLine(o)}`).join('\n')}`
+    : ''
+  const oppHtmlBlock = opps.length
+    ? `<p>Keyword opportunities (real Search Console near-misses):</p><ul>${opps.map((o) => `<li>${escapeHtml(oppLine(o))}</li>`).join('')}</ul>`
+    : ''
+
+  const text = `Weekly summary for ${label}\n\n${rowsText(scanLines)}\n\n${rowsText(opLines)}${outcomeTextBlock}${oppTextBlock}${approveTextBlock}\n\nOpen RankForge for the full breakdown.`
+  const html = `<p>Weekly summary for <b>${escapeHtml(label)}</b></p><ul>${rowsHtml(scanLines)}</ul><ul>${rowsHtml(opLines)}</ul>${outcomeHtmlBlock}${oppHtmlBlock}${approveHtmlBlock}<p>Open RankForge for the full breakdown.</p>`
 
   return { subject, html, text }
 }
@@ -143,13 +155,25 @@ export async function runMonitorDigest(store: FoundationStore, job: Job): Promis
   const pending = recs.filter((r) => r.status === 'accepted')
   const nowMs = Date.now()
 
+  // Best-effort: Search Console may not be connected, or the fetch may fail
+  // — either way the digest still sends with everything else, just without
+  // this section. Never blocks or fails the whole job over an optional extra.
+  let opportunities: KeywordOpportunity[] = []
+  try {
+    const providers = await connectedProviderSet(store, project.id, { domain: project.domain }, nowMs)
+    const gsc = await providers.searchConsole.fetchReport(project.domain)
+    if (gsc.ok) opportunities = findKeywordOpportunities(gsc.data.rows, 3)
+  } catch (err) {
+    console.warn('[digest] keyword-opportunities fetch failed:', err instanceof Error ? err.message : err)
+  }
+
   const owners = await resolveOwners(store, project.orgId)
   const results: MailResult[] = []
   for (const { userId, email: to } of owners) {
     // Each owner's approve links carry THEIR OWN id — the approve route
     // re-verifies that id's project role at click time, so a link is only
     // ever as powerful as the recipient's own current access.
-    const content = buildDigestContent(project, scan, metrics, outcomes, approveLinksFor(project, pending, userId, nowMs))
+    const content = buildDigestContent(project, scan, metrics, outcomes, approveLinksFor(project, pending, userId, nowMs), opportunities)
     try {
       results.push(await sendEmail({ to, subject: content.subject, html: content.html, text: content.text }))
     } catch (err) {

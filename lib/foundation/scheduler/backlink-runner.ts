@@ -7,6 +7,7 @@ import type { FoundationStore } from '../store'
 import type { Job } from '../types'
 import { checkBacklinks, majesticApiKey } from '../backlinks'
 import { hostOf } from '../serp'
+import { detectBacklinkDrop, notifyBacklinkDrop } from './backlink-alert'
 
 export async function runBacklinkRefreshJob(store: FoundationStore, job: Job): Promise<Record<string, unknown>> {
   const project = await store.getProject(job.projectId)
@@ -22,8 +23,12 @@ export async function runBacklinkRefreshJob(store: FoundationStore, job: Job): P
     return { checked: false, note: 'project domain is not a valid URL/host' }
   }
 
+  // The most recent REAL snapshot, taken BEFORE this run's new one is
+  // recorded — the only honest baseline to compare a drop against.
+  const [previous] = await store.listBacklinkSnapshots(job.projectId, 1)
+
   const c = await checkBacklinks(host, key)
-  await store.recordBacklinkSnapshot({
+  const snapshot = {
     id: crypto.randomUUID(),
     projectId: job.projectId,
     available: c.available,
@@ -33,6 +38,11 @@ export async function runBacklinkRefreshJob(store: FoundationStore, job: Job): P
     citationFlow: c.citationFlow,
     message: c.message,
     checkedAt: new Date().toISOString(),
-  })
-  return { checked: true, available: c.available }
+  }
+  await store.recordBacklinkSnapshot(snapshot)
+
+  const drop = detectBacklinkDrop(previous ?? null, snapshot)
+  const alerted = await notifyBacklinkDrop(store, project, drop)
+
+  return { checked: true, available: c.available, dropped: drop ? drop.lost : 0, alerted: alerted.length }
 }
