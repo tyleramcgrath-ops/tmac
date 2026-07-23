@@ -6,10 +6,12 @@
 // without opening the app.
 
 import type { FoundationStore } from '../store'
-import type { Job, Project, Scan, WpDeployment } from '../types'
+import type { Job, Project, Recommendation, Scan, WpDeployment } from '../types'
 import { computeOperatorMetrics, type OperatorMetrics } from '../operator/metrics'
 import { sendEmail, type MailResult } from '../mailer'
-import { escapeHtml, resolveOwnerEmails } from './notify'
+import { escapeHtml, resolveOwners } from './notify'
+import { appBaseUrl } from '../env'
+import { signApproveToken } from './approve-link'
 
 export interface DigestContent {
   subject: string
@@ -45,12 +47,26 @@ export function summarizeDeploymentOutcomes(deployments: Pick<WpDeployment, 'sta
   return { measured, improvedClicks, avgClicksDelta, avgPositionDelta, pending, skipped }
 }
 
+// A pending-approval recommendation with its signed one-click deploy link —
+// omitted (never included) when appBaseUrl() can't be determined, since a
+// broken link is worse than no link.
+export interface ApproveLinkItem {
+  title: string
+  url: string
+}
+
 // Pure: builds the email from real, already-computed state. `scan` is the
 // project's latest scan (null for a project that has never completed one —
 // reported honestly as "no audit yet", never a fabricated score). `outcomes`
 // is omitted from the email entirely when there's nothing measured yet
 // (never a "0 clicks" line that reads as a failed campaign).
-export function buildDigestContent(project: Pick<Project, 'domain' | 'name'>, scan: Scan | null, metrics: OperatorMetrics, outcomes?: OutcomeDigestSummary): DigestContent {
+export function buildDigestContent(
+  project: Pick<Project, 'domain' | 'name'>,
+  scan: Scan | null,
+  metrics: OperatorMetrics,
+  outcomes?: OutcomeDigestSummary,
+  approveLinks?: ApproveLinkItem[]
+): DigestContent {
   const label = project.name || project.domain
   const subject = scan ? `Weekly summary for ${label} — site score ${scan.summary.siteScore}` : `Weekly summary for ${label} — no audit yet`
 
@@ -84,10 +100,32 @@ export function buildDigestContent(project: Pick<Project, 'domain' | 'name'>, sc
   const outcomeTextBlock = outcomeLines ? `\n\nProof of impact (real Search Console deltas):\n${rowsText(outcomeLines)}` : ''
   const outcomeHtmlBlock = outcomeLines ? `<p>Proof of impact (real Search Console deltas):</p><ul>${rowsHtml(outcomeLines)}</ul>` : ''
 
-  const text = `Weekly summary for ${label}\n\n${rowsText(scanLines)}\n\n${rowsText(opLines)}${outcomeTextBlock}\n\nOpen RankForge for the full breakdown.`
-  const html = `<p>Weekly summary for <b>${escapeHtml(label)}</b></p><ul>${rowsHtml(scanLines)}</ul><ul>${rowsHtml(opLines)}</ul>${outcomeHtmlBlock}<p>Open RankForge for the full breakdown.</p>`
+  const links = approveLinks ?? []
+  const approveTextBlock = links.length
+    ? `\n\nApprove & deploy now:\n${links.map((l) => `- ${l.title}: ${l.url}`).join('\n')}`
+    : ''
+  const approveHtmlBlock = links.length
+    ? `<p>Approve &amp; deploy now:</p><ul>${links.map((l) => `<li>${escapeHtml(l.title)} — <a href="${escapeHtml(l.url)}">Approve &amp; deploy</a></li>`).join('')}</ul>`
+    : ''
+
+  const text = `Weekly summary for ${label}\n\n${rowsText(scanLines)}\n\n${rowsText(opLines)}${outcomeTextBlock}${approveTextBlock}\n\nOpen RankForge for the full breakdown.`
+  const html = `<p>Weekly summary for <b>${escapeHtml(label)}</b></p><ul>${rowsHtml(scanLines)}</ul><ul>${rowsHtml(opLines)}</ul>${outcomeHtmlBlock}${approveHtmlBlock}<p>Open RankForge for the full breakdown.</p>`
 
   return { subject, html, text }
+}
+
+// Up to this many pending-approval recommendations get an inline one-click
+// link — enough to be genuinely useful without turning the email into a wall
+// of links; the rest are still counted honestly in "Pending approvals".
+const MAX_APPROVE_LINKS = 5
+
+export function approveLinksFor(project: Project, pending: Recommendation[], userId: string, nowMs: number): ApproveLinkItem[] {
+  const base = appBaseUrl()
+  if (!base) return [] // never emit a link that would 404 in production
+  return pending.slice(0, MAX_APPROVE_LINKS).map((rec) => {
+    const token = signApproveToken({ recommendationId: rec.id, projectId: project.id, userId, issuedAt: nowMs })
+    return { title: rec.title, url: `${base}/api/approve/${token}` }
+  })
 }
 
 export async function runMonitorDigest(store: FoundationStore, job: Job): Promise<Record<string, unknown>> {
@@ -102,16 +140,21 @@ export async function runMonitorDigest(store: FoundationStore, job: Job): Promis
   const scan = scans[0] ?? null
   const metrics = computeOperatorMetrics(recs, deployments, new Date().toISOString().slice(0, 10))
   const outcomes = summarizeDeploymentOutcomes(deployments)
+  const pending = recs.filter((r) => r.status === 'accepted')
+  const nowMs = Date.now()
 
-  const content = buildDigestContent(project, scan, metrics, outcomes)
-  const emails = await resolveOwnerEmails(store, project.orgId)
+  const owners = await resolveOwners(store, project.orgId)
   const results: MailResult[] = []
-  for (const to of emails) {
+  for (const { userId, email: to } of owners) {
+    // Each owner's approve links carry THEIR OWN id — the approve route
+    // re-verifies that id's project role at click time, so a link is only
+    // ever as powerful as the recipient's own current access.
+    const content = buildDigestContent(project, scan, metrics, outcomes, approveLinksFor(project, pending, userId, nowMs))
     try {
       results.push(await sendEmail({ to, subject: content.subject, html: content.html, text: content.text }))
     } catch (err) {
       console.warn('[digest] send failed:', err instanceof Error ? err.message : err)
     }
   }
-  return { sent: results.length, recipients: emails.length }
+  return { sent: results.length, recipients: owners.length }
 }

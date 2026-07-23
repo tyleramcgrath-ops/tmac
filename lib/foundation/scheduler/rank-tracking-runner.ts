@@ -7,6 +7,7 @@
 import type { FoundationStore } from '../store'
 import type { Job } from '../types'
 import { fetchKeywordPosition, hostOf, serpApiKey } from '../serp'
+import { detectRankDrops, notifyRankDrops } from './rank-alert'
 
 export async function runRankTrackingJob(store: FoundationStore, job: Job): Promise<Record<string, unknown>> {
   const project = await store.getProject(job.projectId)
@@ -25,6 +26,16 @@ export async function runRankTrackingJob(store: FoundationStore, job: Job): Prom
     return { checked: 0, note: 'project domain is not a valid URL/host' }
   }
 
+  // The most recent REAL snapshot per keyword, taken BEFORE this run's new
+  // ones are recorded — the only honest baseline to compare a drop against.
+  const previousSnapshots = await Promise.all(
+    keywords.map(async (tk) => {
+      const history = await store.listRankSnapshots(job.projectId, tk.keyword)
+      return history.at(-1) ?? null
+    })
+  )
+  const previous = previousSnapshots.filter((s): s is NonNullable<typeof s> => s !== null)
+
   const checkedAt = new Date().toISOString()
   const results: { keyword: string; position: number | null }[] = []
   for (const tk of keywords) {
@@ -32,5 +43,9 @@ export async function runRankTrackingJob(store: FoundationStore, job: Job): Prom
     await store.recordRankSnapshot({ id: crypto.randomUUID(), projectId: job.projectId, keyword: tk.keyword, position, url, checkedAt })
     results.push({ keyword: tk.keyword, position })
   }
-  return { checked: results.length, results }
+
+  const drops = detectRankDrops(previous, results)
+  const alerted = await notifyRankDrops(store, project, drops)
+
+  return { checked: results.length, results, drops: drops.length, alerted: alerted.length }
 }

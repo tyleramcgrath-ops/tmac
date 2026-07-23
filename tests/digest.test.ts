@@ -10,7 +10,9 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
 import { __setStoreForTests } from '../lib/foundation/store'
-import { buildDigestContent, runMonitorDigest, summarizeDeploymentOutcomes } from '../lib/foundation/scheduler/digest'
+import { approveLinksFor, buildDigestContent, runMonitorDigest, summarizeDeploymentOutcomes } from '../lib/foundation/scheduler/digest'
+import { verifyApproveToken } from '../lib/foundation/scheduler/approve-link'
+import type { Recommendation } from '../lib/foundation/types'
 import { productionHandlers } from '../lib/foundation/scheduler/handlers'
 import { materializeDueSchedules, runDueJobs, makeJob } from '../lib/foundation/scheduler/engine'
 import { POST as signup } from '../app/api/auth/signup/route'
@@ -50,6 +52,48 @@ describe('buildDigestContent: honest, real-data-only summary', () => {
     expect(email.text).toContain('Avg. clicks change: +5.5')
     expect(email.text).toContain('Avg. position change: -1.2 (better)')
     expect(email.html).toContain('Proof of impact')
+  })
+  it('includes one-click approve links when provided, and omits the section when there are none', () => {
+    const metrics = computeOperatorMetrics([], [], '2026-07-18')
+    const withLinks = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, [{ title: 'Fix missing title', url: 'https://app.example.com/api/approve/tok123' }])
+    expect(withLinks.text).toContain('Approve & deploy now')
+    expect(withLinks.text).toContain('Fix missing title: https://app.example.com/api/approve/tok123')
+    expect(withLinks.html).toContain('href="https://app.example.com/api/approve/tok123"')
+
+    const withoutLinks = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, [])
+    expect(withoutLinks.text).not.toContain('Approve & deploy now')
+  })
+})
+
+describe('approveLinksFor', () => {
+  const project = { id: 'p1', orgId: 'o1', domain: 'acme.com', name: 'Acme', industry: '', businessProfile: '', goals: [], notes: '', createdAt: '', updatedAt: '' }
+  const recAt = (n: number): Recommendation => ({
+    id: `r${n}`, projectId: 'p1', scanId: 's', issueId: `rule::x${n}`, ruleId: 'missing-title', ruleVersion: 1,
+    ruleCategory: 'content', ruleSeverity: 'warning', businessContext: 'standard', title: `Fix ${n}`, category: 'content',
+    severity: 'warning', status: 'accepted', reasoning: 'r', evidence: { affectedUrls: [`https://acme.com/${n}`], facts: [] },
+    confidence: 80, confidenceBasis: 'x', expectedImpact: { category: 'content', size: 'medium', note: '' },
+    risk: { level: 'low', note: '' }, createdAt: '', history: [],
+  })
+  const ORIGINAL_ENV = { ...process.env }
+  beforeEach(() => { process.env = { ...ORIGINAL_ENV } })
+  afterEach(() => { process.env = { ...ORIGINAL_ENV } })
+
+  it('produces no links when the app has no known base URL — never a broken link', () => {
+    delete process.env.APP_BASE_URL
+    delete process.env.VERCEL_URL
+    const links = approveLinksFor(project, [recAt(1)], 'u1', 1000)
+    expect(links).toEqual([])
+  })
+  it('produces a real, independently-verifiable signed link per pending recommendation, capped at 5', () => {
+    process.env.APP_BASE_URL = 'https://app.example.com'
+    const pending = Array.from({ length: 8 }, (_, i) => recAt(i))
+    const links = approveLinksFor(project, pending, 'u1', 1000)
+    expect(links).toHaveLength(5)
+    expect(links[0].title).toBe('Fix 0')
+    expect(links[0].url.startsWith('https://app.example.com/api/approve/')).toBe(true)
+    const token = links[0].url.split('/api/approve/')[1]
+    const payload = verifyApproveToken(token, 1000 + 1000)
+    expect(payload).toEqual({ recommendationId: 'r0', projectId: 'p1', userId: 'u1', issuedAt: 1000 })
   })
 })
 
