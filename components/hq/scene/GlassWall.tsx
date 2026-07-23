@@ -21,12 +21,12 @@ const GLASS_H = WALL_H + 0.4
 export function GlassWall() {
   const glassMat = useMemo(() => {
     const m = new THREE.MeshPhysicalMaterial({
-      color: '#0a0f16',
+      color: '#0c131e',
       roughness: 0.12,
       metalness: 0,
       transmission: 0,
       transparent: true,
-      opacity: 0.3,
+      opacity: 0.16,
       envMapIntensity: 0.5,
       reflectivity: 0.35,
       clearcoat: 1,

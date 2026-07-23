@@ -91,13 +91,13 @@ export function Core() {
         roughness: 0.25,
         metalness: 0.6,
         emissive: new THREE.Color('#ffdca0'),
-        emissiveIntensity: 0.85,
+        emissiveIntensity: 0.5,
         envMapIntensity: 1.4,
       }),
     [],
   )
   const coreMat = useMemo(
-    () => new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: new THREE.Color('#fff0d0'), emissiveIntensity: 2.1 }),
+    () => new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: new THREE.Color('#fff0d0'), emissiveIntensity: 1.35 }),
     [],
   )
   const obsidian = useMemo(
@@ -164,13 +164,39 @@ export function Core() {
       {/* Fixed outer guard ring with gimbal bearings (the mounting frame) */}
       <group>
         <mesh material={brass} castShadow>
-          <torusGeometry args={[0.56, 0.018, 16, 160]} />
+          <torusGeometry args={[0.56, 0.02, 16, 160]} />
         </mesh>
         {bearings.map((a, i) => (
           <mesh key={i} position={[Math.cos(a) * 0.56, Math.sin(a) * 0.56, 0]} material={bearingMat} castShadow>
-            <sphereGeometry args={[0.035, 16, 16]} />
+            <sphereGeometry args={[0.04, 16, 16]} />
           </mesh>
         ))}
+        {/* Counterweight spheres on the equator (like the reference orrery) */}
+        {[0, Math.PI].map((a, i) => (
+          <mesh key={`cw-${i}`} position={[Math.cos(a) * 0.56, 0, Math.sin(a) * 0.56]} material={bearingMat} castShadow>
+            <sphereGeometry args={[0.055, 20, 20]} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Static armillary cage — several fine great-circle rings at varied
+          tilts read as a spherical instrument, not a flat icon. */}
+      <group>
+        {[
+          [0, 0, 0],
+          [0, Math.PI / 2, 0],
+          [Math.PI / 2, 0, 0],
+          [0.5, 0.4, 0],
+          [-0.5, 0.9, 0],
+        ].map((r, i) => (
+          <mesh key={i} rotation={r as [number, number, number]} material={brass}>
+            <torusGeometry args={[0.52, 0.007, 10, 140]} />
+          </mesh>
+        ))}
+        {/* A horizontal equatorial ellipse ring */}
+        <mesh rotation={[Math.PI / 2, 0, 0]} material={brass}>
+          <torusGeometry args={[0.5, 0.01, 10, 140]} />
+        </mesh>
       </group>
 
       {/* Outer brushed-brass ring, engraved (gimbal on Z) */}

@@ -20,7 +20,8 @@ const SKY: Record<TimeOfDay, { top: string; horizon: string }> = {
   dawn: { top: '#243056', horizon: '#e6a870' },
   day: { top: '#3f5c82', horizon: '#c6d6e6' },
   dusk: { top: '#1f1a3a', horizon: '#d67a4e' },
-  night: { top: '#070b16', horizon: '#182238' },
+  // Moonlit night — deep blue, never near-black, so the landscape stays legible.
+  night: { top: '#0e1830', horizon: '#33496e' },
 }
 
 function seeded(seed: number) {
@@ -94,9 +95,9 @@ export function Exterior() {
     const rnd = seeded(53)
     for (let i = 0; i < N; i++) {
       const ang = Math.PI + rnd() * Math.PI // north arc
-      const rad = 96 + rnd() * 26
+      const rad = 50 + rnd() * 14 // valley between the near and mid ranges
       pos[i * 3] = Math.cos(ang) * rad
-      pos[i * 3 + 1] = 1.5 + rnd() * 4.5
+      pos[i * 3 + 1] = 1 + rnd() * 6
       pos[i * 3 + 2] = Math.sin(ang) * rad
     }
     const g = new THREE.BufferGeometry()
@@ -135,7 +136,7 @@ export function Exterior() {
     [starGlow],
   )
   const cityMat = useMemo(
-    () => new THREE.PointsMaterial({ size: 1.2, map: softGlow ?? undefined, color: '#ffcf94', transparent: true, depthWrite: false, opacity: 0.0, blending: THREE.AdditiveBlending }),
+    () => new THREE.PointsMaterial({ size: 1.8, map: softGlow ?? undefined, color: '#ffca82', transparent: true, depthWrite: false, opacity: 0.0, blending: THREE.AdditiveBlending }),
     [softGlow],
   )
   const precipMat = useMemo(
@@ -225,6 +226,12 @@ export function Exterior() {
         <spriteMaterial map={softGlow ?? undefined} transparent depthWrite={false} blending={THREE.AdditiveBlending} opacity={scene.sky.sunrise ? 0.55 : scene.time === 'day' ? 0.35 : 0.12} />
       </sprite>
 
+      {/* Cool moonlit horizon band — keeps the night landscape legible by
+          lighting the sky behind the mountain silhouettes. */}
+      <sprite position={[0, 14, -172]} scale={[360, 60, 1]}>
+        <spriteMaterial map={moonGlow ?? undefined} transparent depthWrite={false} blending={THREE.AdditiveBlending} opacity={scene.time === 'night' ? 0.4 : scene.time === 'dusk' ? 0.3 : 0.12} color="#8fb0e0" />
+      </sprite>
+
       {/* Reflective lake between the shore and the observatory */}
       <mesh rotation-x={-Math.PI / 2} position={[0, -0.6, -70]} material={waterMat}>
         <planeGeometry args={[360, 150]} />
@@ -299,10 +306,13 @@ function Ridges() {
       g.computeVertexNormals()
       return g
     }
+    // Dramatic ranges that loom close enough to fill the windows. Atmospheric
+    // perspective: distant ranges lighter/hazier, near ones darker — cool
+    // moonlit blues so they read against the sky.
     return [
-      { geo: ridge(150, 6, 34, 11), color: '#2a3547' },
-      { geo: ridge(118, 3, 24, 29), color: '#1a2233' },
-      { geo: ridge(92, 0, 16, 43), color: '#0e1420' },
+      { geo: ridge(98, 10, 52, 11), color: '#5f7295' },
+      { geo: ridge(66, 4, 40, 29), color: '#46587a' },
+      { geo: ridge(42, -2, 26, 43), color: '#33445f' },
     ]
   }, [])
   return (

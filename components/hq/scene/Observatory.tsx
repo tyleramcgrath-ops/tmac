@@ -42,7 +42,7 @@ export function Observatory({ cam, reduced }: { cam: CameraPreset; reduced: bool
       <Atmosphere />
 
       <EffectComposer multisampling={0} enableNormalPass={false}>
-        <Bloom mipmapBlur intensity={0.5} luminanceThreshold={0.85} luminanceSmoothing={0.28} radius={0.6} />
+        <Bloom mipmapBlur intensity={0.32} luminanceThreshold={0.9} luminanceSmoothing={0.3} radius={0.55} />
         <SMAA />
         <Vignette eskil={false} offset={0.32} darkness={0.62} />
         <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />

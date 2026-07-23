@@ -83,11 +83,14 @@ export function Lighting() {
           key={c.key}
           position={[c.x, WALL_H - 0.3, c.z]}
           color="#ffcf9c"
-          intensity={9}
-          distance={18}
+          intensity={12}
+          distance={19}
           decay={2}
         />
       ))}
+
+      {/* Warm downlight pooling on the desk (reads as the Core lighting it). */}
+      <spotLight position={[0, 6.5, 0.5]} angle={0.5} penumbra={0.9} color="#ffdca6" intensity={90} distance={12} decay={2} />
 
       {/* A soft warm uplight grazing the desk from the projection base */}
       <pointLight position={[0, 0.9, 0]} color="#ffdca6" intensity={3.2} distance={5} decay={2} />
@@ -117,8 +120,9 @@ export function Lighting() {
       <directionalLight position={[-6, 9, -14]} intensity={0.7} color="#aebfe0" />
 
       {/* Warm architectural bounce rising off the marble floor. */}
-      <pointLight position={[0, 0.4, 2.5]} color="#c99a5e" intensity={12} distance={12} decay={2} />
-      <hemisphereLight args={['#20344f', '#3a2a18', 0.35]} />
+      <pointLight position={[0, 0.4, 2.5]} color="#d0a566" intensity={20} distance={13} decay={2} />
+      <pointLight position={[0, 0.5, -2]} color="#caa16a" intensity={12} distance={11} decay={2} />
+      <hemisphereLight args={['#243a56', '#43301c', 0.4]} />
     </group>
   )
 }

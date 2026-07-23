@@ -5,42 +5,41 @@ import * as THREE from 'three'
 import { marbleTexture, walnutTexture } from '../textures'
 
 /**
- * The executive desk (Blueprint §9, table 6): ~12 ft × 5 ft × 30 in. A single
- * sculptural object — a black open-pore walnut body with a waterfall profile,
- * a visually seamless black-marble top, restrained brushed-brass trim, and a
- * concealed central projection aperture from which the Core's light rises. No
- * visible screens, keyboards, seams or cables.
+ * The executive desk (Blueprint §9) — matched to the Concept A reference: a
+ * round marble-and-walnut drum on a raised dais, with brass vertical ribs and
+ * banding, a honed black-marble top with a concentric brass inlay and a
+ * concealed central projection aperture, and a premium tufted leather chair.
+ * The dominant sculptural foreground object.
  */
 
-export const DESK_W = 3.66
-export const DESK_D = 1.5
 export const DESK_H = 0.76
 export const DESK_TOP_Y = DESK_H
+const DRUM_R = 1.55
+const TOP_R = 1.7
+const DAIS_R = 2.5
 
 export function Desk() {
   const marble = marbleTexture()
   const walnut = walnutTexture()
 
   const walnutMat = useMemo(() => {
-    // White base — the walnut albedo comes entirely from the texture map.
     const m = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.5, metalness: 0.05, envMapIntensity: 1.1 })
     if (walnut) {
       const t = walnut.clone()
       t.needsUpdate = true
-      t.repeat.set(2, 1)
+      t.wrapS = t.wrapT = THREE.RepeatWrapping
+      t.repeat.set(6, 1)
       m.map = t
     }
     return m
   }, [walnut])
 
   const marbleMat = useMemo(() => {
-    // Near-white base over the mid-tone marble map: reads as honed dark stone
-    // under room light instead of a black hole.
-    const m = new THREE.MeshStandardMaterial({ color: '#e8e8ee', roughness: 0.14, metalness: 0.25, envMapIntensity: 1.9 })
+    const m = new THREE.MeshStandardMaterial({ color: '#e6e6ec', roughness: 0.16, metalness: 0.2, envMapIntensity: 1.7 })
     if (marble) {
       const t = marble.clone()
       t.needsUpdate = true
-      t.repeat.set(1.4, 0.7)
+      t.repeat.set(2, 2)
       m.map = t
       m.roughnessMap = t
     }
@@ -48,7 +47,7 @@ export function Desk() {
   }, [marble])
 
   const brass = useMemo(
-    () => new THREE.MeshStandardMaterial({ color: '#cbaa79', roughness: 0.3, metalness: 1, envMapIntensity: 1.3 }),
+    () => new THREE.MeshStandardMaterial({ color: '#c9a877', roughness: 0.3, metalness: 1, envMapIntensity: 1.3 }),
     [],
   )
   const bronzeDark = useMemo(
@@ -56,61 +55,92 @@ export function Desk() {
     [],
   )
   const apertureMat = useMemo(
-    () => new THREE.MeshStandardMaterial({ color: '#0a0a0c', roughness: 0.5, metalness: 0.2 }),
+    () => new THREE.MeshStandardMaterial({ color: '#141014', roughness: 0.5, metalness: 0.2 }),
+    [],
+  )
+  const leather = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#3a2418', roughness: 0.55, metalness: 0.05, envMapIntensity: 0.6 }),
     [],
   )
 
-  const bodyTopY = DESK_H - 0.16
+  // Brass vertical ribs around the drum.
+  const ribs = useMemo(() => Array.from({ length: 16 }, (_, i) => (i / 16) * Math.PI * 2), [])
 
   return (
     <group>
-      {/* Walnut body — a solid waterfall mass with layered side panels */}
-      <mesh position={[0, bodyTopY / 2, 0]} material={walnutMat} castShadow receiveShadow>
-        <boxGeometry args={[DESK_W - 0.55, bodyTopY, DESK_D - 0.28]} />
+      {/* Raised marble dais */}
+      <mesh position-y={0.07} material={marbleMat} receiveShadow castShadow>
+        <cylinderGeometry args={[DAIS_R, DAIS_R + 0.1, 0.14, 64]} />
       </mesh>
-      {/* Waterfall end panels sweeping to the floor (the sculptural silhouette) */}
-      {[-1, 1].map((s) => (
-        <mesh key={s} position={[s * (DESK_W / 2 - 0.18), bodyTopY / 2, 0]} material={walnutMat} castShadow receiveShadow>
-          <boxGeometry args={[0.36, bodyTopY, DESK_D]} />
+      <mesh position-y={0.145} rotation-x={-Math.PI / 2} material={brass}>
+        <ringGeometry args={[DAIS_R - 0.04, DAIS_R - 0.005, 64]} />
+      </mesh>
+
+      {/* Walnut drum body */}
+      <mesh position-y={0.14 + (DESK_H - 0.14 - 0.12) / 2 + 0.02} material={walnutMat} castShadow receiveShadow>
+        <cylinderGeometry args={[DRUM_R, DRUM_R + 0.06, DESK_H - 0.14 - 0.12, 64]} />
+      </mesh>
+      {/* Brass ribs */}
+      {ribs.map((a, i) => (
+        <mesh key={i} position={[Math.cos(a) * (DRUM_R + 0.03), 0.44, Math.sin(a) * (DRUM_R + 0.03)]} rotation-y={-a} material={brass}>
+          <boxGeometry args={[0.05, DESK_H - 0.3, 0.09]} />
         </mesh>
       ))}
-      {/* A layered walnut fascia across the front for depth */}
-      <mesh position={[0, bodyTopY * 0.62, DESK_D / 2 - 0.16]} material={walnutMat} castShadow>
-        <boxGeometry args={[DESK_W - 0.2, bodyTopY * 0.5, 0.12]} />
+      {/* Brass banding top and bottom of the drum */}
+      <mesh position-y={0.2} rotation-x={Math.PI / 2} material={brass}>
+        <torusGeometry args={[DRUM_R + 0.04, 0.03, 10, 80]} />
       </mesh>
-      {/* Recessed toe plinth in bronze */}
-      <mesh position={[0, 0.06, 0]} material={bronzeDark}>
-        <boxGeometry args={[DESK_W - 0.8, 0.12, DESK_D - 0.55]} />
-      </mesh>
-      {/* Brass base rail grounding the desk */}
-      <mesh position={[0, 0.14, 0]} material={brass}>
-        <boxGeometry args={[DESK_W - 0.5, 0.02, DESK_D - 0.24]} />
+      <mesh position-y={DESK_H - 0.16} rotation-x={Math.PI / 2} material={brass}>
+        <torusGeometry args={[DRUM_R + 0.05, 0.035, 10, 80]} />
       </mesh>
 
-      {/* Brass reveal line between body and top */}
-      <mesh position={[0, bodyTopY + 0.02, 0]} material={brass}>
-        <boxGeometry args={[DESK_W - 0.46, 0.04, DESK_D - 0.2]} />
+      {/* Marble top slab with a real edge */}
+      <mesh position-y={DESK_H - 0.06} material={marbleMat} castShadow receiveShadow>
+        <cylinderGeometry args={[TOP_R, TOP_R, 0.13, 64]} />
       </mesh>
-
-      {/* Marble top — a thick slab with a real edge and a slight overhang */}
-      <mesh position={[0, DESK_H - 0.09, 0]} material={marbleMat} castShadow receiveShadow>
-        <boxGeometry args={[DESK_W, 0.18, DESK_D]} />
+      {/* Brass edge inlay + a concentric inlay ring on the surface */}
+      <mesh position-y={DESK_H + 0.004} rotation-x={-Math.PI / 2} material={brass}>
+        <ringGeometry args={[TOP_R - 0.05, TOP_R - 0.02, 64]} />
       </mesh>
-      {/* Thin brass edge inlay around the top */}
-      <mesh position={[0, DESK_H - 0.005, 0]} material={brass}>
-        <boxGeometry args={[DESK_W + 0.01, 0.008, DESK_D + 0.01]} />
+      <mesh position-y={DESK_H + 0.004} rotation-x={-Math.PI / 2} material={brass}>
+        <ringGeometry args={[0.66, 0.69, 64]} />
       </mesh>
 
       {/* Concealed projection aperture, centred on the top */}
-      <group position={[0, DESK_H + 0.001, 0]}>
+      <group position={[0, DESK_H + 0.006, 0]}>
         <mesh rotation-x={-Math.PI / 2} material={bronzeDark}>
-          <ringGeometry args={[0.34, 0.42, 64]} />
+          <ringGeometry args={[0.34, 0.44, 64]} />
         </mesh>
         <mesh rotation-x={-Math.PI / 2} material={brass}>
           <ringGeometry args={[0.3, 0.315, 64]} />
         </mesh>
         <mesh rotation-x={-Math.PI / 2} position-y={-0.002} material={apertureMat}>
           <circleGeometry args={[0.3, 64]} />
+        </mesh>
+      </group>
+
+      {/* Premium leather executive chair, tucked at the far edge */}
+      <group position={[0, 0, -1.85]}>
+        {/* Seat */}
+        <mesh position-y={0.5} material={leather} castShadow>
+          <boxGeometry args={[0.62, 0.16, 0.6]} />
+        </mesh>
+        {/* Backrest (slightly reclined) */}
+        <mesh position={[0, 0.98, -0.28]} rotation-x={-0.14} material={leather} castShadow>
+          <boxGeometry args={[0.62, 0.86, 0.14]} />
+        </mesh>
+        {/* Armrests */}
+        {[-1, 1].map((s) => (
+          <mesh key={s} position={[s * 0.36, 0.66, 0.02]} material={leather}>
+            <boxGeometry args={[0.08, 0.1, 0.5]} />
+          </mesh>
+        ))}
+        {/* Pedestal + base */}
+        <mesh position-y={0.28} material={bronzeDark}>
+          <cylinderGeometry args={[0.06, 0.06, 0.36, 16]} />
+        </mesh>
+        <mesh position-y={0.06} material={bronzeDark}>
+          <cylinderGeometry args={[0.34, 0.36, 0.08, 24]} />
         </mesh>
       </group>
     </group>

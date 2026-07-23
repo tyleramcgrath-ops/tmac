@@ -74,6 +74,16 @@ export function Room() {
     () => new THREE.MeshStandardMaterial({ color: '#2b2b30', roughness: 0.75, metalness: 0.1, envMapIntensity: 0.5 }),
     [],
   )
+  // Floor inlays: satin bronze that catches light but does not glow — reads as
+  // an architectural inlay, not a light marker (correction pass).
+  const inlayMat = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#8a744f', roughness: 0.5, metalness: 1, envMapIntensity: 0.55 }),
+    [],
+  )
+  const lampMat = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#fff2d6', emissive: new THREE.Color('#ffcf8a'), emissiveIntensity: 2.2 }),
+    [],
+  )
 
   // Dome: a lathed spherical cap from the wall spring up to the skylight ring.
   const domeGeo = useMemo(() => {
@@ -143,10 +153,10 @@ export function Room() {
       <mesh rotation-x={-Math.PI / 2} position-y={0} receiveShadow>
         <circleGeometry args={[ROOM_R + 6, 96]} />
         <MeshReflectorMaterial
-          resolution={1024}
-          mixBlur={1.1}
-          mixStrength={2.6}
-          blur={[420, 120]}
+          resolution={512}
+          mixBlur={1.2}
+          mixStrength={2.4}
+          blur={[300, 90]}
           mirror={0}
           depthScale={0.7}
           minDepthThreshold={0.3}
@@ -158,16 +168,25 @@ export function Room() {
         />
       </mesh>
 
-      {/* Brass inlay rings, just proud of the marble */}
+      {/* Satin-bronze inlay rings, just proud of the marble */}
       {inlayRadii.map((r) => (
-        <mesh key={r} rotation-x={-Math.PI / 2} position-y={0.006} material={brass}>
-          <ringGeometry args={[r - 0.035, r + 0.035, 160]} />
+        <mesh key={r} rotation-x={-Math.PI / 2} position-y={0.006} material={inlayMat}>
+          <ringGeometry args={[r - 0.03, r + 0.03, 160]} />
         </mesh>
       ))}
-      {/* Central brass medallion under the desk/Core axis */}
-      <mesh rotation-x={-Math.PI / 2} position-y={0.006} material={bronze}>
-        <ringGeometry args={[0.0, 0.5, 64]} />
-      </mesh>
+
+      {/* Flanking pedestal lamps — warm pools + symmetry (Concept A) */}
+      {[-1, 1].map((s) => (
+        <group key={s} position={[s * 4.6, 0, -3.2]}>
+          <mesh position-y={0.55} material={bronze}>
+            <cylinderGeometry args={[0.12, 0.16, 1.1, 16]} />
+          </mesh>
+          <mesh position-y={1.2} material={lampMat}>
+            <sphereGeometry args={[0.16, 24, 24]} />
+          </mesh>
+          <pointLight position={[0, 1.2, 0]} color="#ffcf8a" intensity={7} distance={9} decay={2} />
+        </group>
+      ))}
 
       {/* Perimeter wall — solid limestone on the south half (behind camera, at
           +Z); the north half (−Z) is the glass wall (rendered separately). */}

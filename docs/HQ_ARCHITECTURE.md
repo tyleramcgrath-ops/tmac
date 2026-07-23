@@ -174,13 +174,29 @@ the §18 tests, for the owner's review. Several remain work-in-progress.
 | 11 | Matches Concept A direction | Improving; owner to judge |
 | 12 | Nothing resembles the rejected SVG build | Met — rebuilt in WebGL |
 
+## Correction pass toward Concept A
+
+After comparing against the approved Concept A reference renders (embedded in
+the Visual Deck), a focused pass brought the scene closer: a **warm luxury
+tone** (not a cold dark showroom); a **round marble-and-walnut drum desk** with
+brass ribs/banding and a **tufted leather chair** on a raised dais; a **dense
+armillary Core** (nested brass rings, counterweight spheres, the eight-point
+star + obsidian hub) with **bloom pulled back** so it reads as a machined
+instrument first; **flanking warm pedestal lamps**; a **finished coffered dome**
+with an oculus; **satin-bronze floor inlays** that catch light without glowing;
+a **moonlit deep-blue night exterior** (never near-black) with legible sky,
+stars and mountains through clearer glass; and a **Concept A hero camera**
+(seated eye-level, symmetric, desk-dominant, no fisheye, dev chrome hidden via
+`?chrome=off`).
+
 ## Remaining visual compromises / work-in-progress
 
-- **Exterior at true night is intentionally dark** — mountains read as low-
-  contrast silhouettes; the vista is carried by stars, moon, city lights and
-  haze. It reads best at dawn/dusk. A brighter moonlit-night grade is possible.
-- **Leather seating** (Blueprint material schedule) is not yet placed — no
-  seating falls in the approved camera framings this phase.
+- **Exterior mountains read subtly**, especially at night — the vista is now a
+  moonlit deep-blue with legible sky, stars and a mountain horizon, but the
+  ranges are less dramatic than the photoreal reference. A further pass could
+  add snow-cap highlighting and stronger valley city lights.
+- **Leather chair is present but simple** (blocked-in executive form); it is not
+  yet a fully detailed tufted piece.
 - **Software-rendered screenshots.** Captured in headless Chromium via
   SwiftShader (no GPU here); frames are correct but softer than a real GPU,
   which is sharper and interactive.

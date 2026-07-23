@@ -60,6 +60,9 @@ export function Headquarters() {
     weather: isWeather(weatherParam) ? weatherParam : null,
   }
   const cam: CameraPreset = (CAMERA_PRESETS as string[]).includes(camParam ?? '') ? (camParam as CameraPreset) : 'hero'
+  // `?chrome=off` hides all development chrome (the preview tab/console) for
+  // clean, product-quality screenshots.
+  const hideChrome = params.get('chrome') === 'off'
 
   const reduced = usePrefersReducedMotion(motionParam)
 
@@ -137,15 +140,17 @@ export function Headquarters() {
           {scene.narration}
         </p>
 
-        <StateConsole
-          open={consoleOpen}
-          onToggle={() => setConsoleOpen((v) => !v)}
-          scene={scene}
-          cam={cam}
-          motion={motionParam}
-          pins={pins}
-          setParam={setParam}
-        />
+        {!hideChrome && (
+          <StateConsole
+            open={consoleOpen}
+            onToggle={() => setConsoleOpen((v) => !v)}
+            scene={scene}
+            cam={cam}
+            motion={motionParam}
+            pins={pins}
+            setParam={setParam}
+          />
+        )}
       </div>
     </SceneCtx.Provider>
   )

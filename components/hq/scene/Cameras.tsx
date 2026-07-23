@@ -19,9 +19,10 @@ interface Shot {
 }
 
 export const SHOTS: Record<CameraPreset, Shot> = {
-  // Lower, cinematic eye-level; longer lens (smaller fov) to avoid fisheye;
-  // desk dominant in the foreground with dome + exterior establishing scale.
-  hero: { pos: [0, 1.95, 8.2], target: [0, 1.45, -3], fov: 37 },
+  // Concept A hero: seated eye-level, symmetric, desk large in the foreground,
+  // Core centered above it, dome + panoramic landscape behind. Longer lens,
+  // no fisheye.
+  hero: { pos: [0, 2.15, 7.6], target: [0, 1.78, -6], fov: 42 },
   executive: { pos: [2.4, 2.35, 5.0], target: [-0.3, 1.2, -3], fov: 40 },
   conversation: { pos: [0, 2.0, 3.8], target: [0, 2.05, -1], fov: 40 },
   atmospheric: { pos: [0, 1.0, 4.8], target: [0, 5.2, -2], fov: 54 },
