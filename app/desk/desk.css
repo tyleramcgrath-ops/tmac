@@ -1,14 +1,16 @@
 /* =====================================================================
    NORTH STAR HEADQUARTERS — THE BOARD ITSELF, ALIVE
    The vision-board render is the room (a full-bleed plate); this file
-   adds only the living light that rides it: the Core's turning rings,
-   its breathing halo, and the grain that fuses plate and light into
-   one exposure.
+   adds the living light and the interface that rides it: the Core's
+   turning rings, the wake pulse, the rising glass panels, the three
+   principles, the station line, and the grain that fuses everything
+   into one exposure.
    ===================================================================== */
 
 .hz-root {
   --mx: 0;
   --my: 0;
+  --hz-serif: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
 }
 
 .hz-plate-root {
@@ -19,9 +21,24 @@
   background: #050505;
   cursor: default;
   user-select: none;
+  font-family: var(--hz-serif);
 }
 
-/* the render, full bleed */
+/* ---------------------------------------------------------------------
+   The render — full bleed, with a long cinematic drift
+   --------------------------------------------------------------------- */
+
+.hz-plate-drift {
+  position: absolute;
+  inset: 0;
+  animation: hz-drift-slow 75s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes hz-drift-slow {
+  from { transform: scale(1); }
+  to { transform: scale(1.018); }
+}
+
 .hz-plate {
   position: absolute;
   inset: -1.5%;
@@ -33,8 +50,8 @@
   animation: hz-plate-in 2.2s cubic-bezier(0.22, 0.8, 0.24, 1) both;
 }
 @keyframes hz-plate-in {
-  from { opacity: 0; transform: scale(1.02); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* quiets the sheet label baked into the render's top-left corner —
@@ -51,6 +68,31 @@
   pointer-events: none;
 }
 
+/* the station line, engraved where the label used to be */
+.hz-status {
+  position: absolute;
+  left: clamp(1.2rem, 2.6vw, 2.6rem);
+  top: clamp(1.1rem, 2.6vh, 2.2rem);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  pointer-events: none;
+  animation: hz-live-in 2.4s cubic-bezier(0.22, 0.8, 0.24, 1) both 1.1s;
+}
+.hz-status-time {
+  font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+  letter-spacing: 0.3em;
+  color: #e8cf9d;
+  text-shadow: 0 0 14px rgba(232, 182, 104, 0.4), 0 1px 8px rgba(0, 0, 0, 0.9);
+}
+.hz-status-line {
+  font-size: clamp(0.44rem, 0.68vw, 0.58rem);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(226, 208, 172, 0.55);
+}
+
 /* the name in the dome, live and razor sharp */
 .hz-brand {
   position: absolute;
@@ -59,7 +101,6 @@
   transform: translateX(-50%);
   z-index: 5;
   text-align: center;
-  font-family: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
   pointer-events: none;
   animation: hz-live-in 2.4s cubic-bezier(0.22, 0.8, 0.24, 1) both 0.8s;
 }
@@ -89,16 +130,31 @@
 }
 
 /* =====================================================================
-   THE LIVE CORE — rings turning over the render's own compass
+   THE LIVE CORE — a button: touch it and the room wakes
    ===================================================================== */
 
 .hz-live {
   position: absolute;
   aspect-ratio: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
   transform: translate(-50%, -50%) translate3d(calc(var(--mx) * -8px), calc(var(--my) * -5px), 0);
   will-change: transform;
+  transition: filter 0.9s ease;
   animation: hz-live-in 2.6s cubic-bezier(0.22, 0.8, 0.24, 1) both 0.5s;
 }
+.hz-live:focus-visible {
+  outline: 1px solid rgba(240, 205, 130, 0.8);
+  outline-offset: 8px;
+  border-radius: 50%;
+}
+[data-awake] .hz-live { filter: brightness(1.18) saturate(1.05); }
+[data-focus='heart'] .hz-live { filter: brightness(1.3) saturate(1.1); }
+
+.hz-live > span { display: block; }
 @keyframes hz-live-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -109,7 +165,9 @@
   inset: -60%;
   background: radial-gradient(circle at 50% 52%, rgba(255, 202, 126, 0.2), rgba(255, 182, 106, 0.07) 34%, transparent 62%);
   animation: hz-breathe 7s ease-in-out infinite;
+  transition: transform 0.9s ease;
 }
+[data-awake] .hz-live-halo { transform: scale(1.15); }
 
 .hz-live-scene {
   position: absolute;
@@ -175,9 +233,208 @@
   animation: hz-breathe 9s ease-in-out infinite;
 }
 
+/* the wake pulse — one ring of light crossing outward on each touch */
+.hz-pulse {
+  position: absolute;
+  inset: -4%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 222, 152, 0.75);
+  box-shadow: 0 0 18px rgba(240, 196, 116, 0.5);
+  animation: hz-pulse 1.15s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+  pointer-events: none;
+}
+@keyframes hz-pulse {
+  from { transform: scale(0.5); opacity: 0.95; }
+  to { transform: scale(2); opacity: 0; }
+}
+
 @keyframes hz-breathe {
   0%, 100% { opacity: 0.75; }
   50% { opacity: 1; }
+}
+
+/* =====================================================================
+   THE ANSWERS — horizon and dome lighting up for their principles
+   ===================================================================== */
+
+.hz-horizonline {
+  position: absolute;
+  left: 24%;
+  right: 24%;
+  top: 60.5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 206, 130, 0.75) 30%, rgba(255, 226, 164, 0.95) 50%, rgba(255, 206, 130, 0.75) 70%, transparent);
+  filter: blur(1px);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+[data-focus='command'] .hz-horizonline { opacity: 1; }
+
+.hz-domespark {
+  position: absolute;
+  inset: 2% 20% 78%;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+[data-focus='interface'] .hz-domespark { opacity: 1; }
+.hz-domespark i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff2cf, rgba(240, 200, 120, 0.4) 60%, transparent);
+  box-shadow: 0 0 12px rgba(255, 220, 150, 0.9);
+  animation: hz-spark 1.6s ease-in-out infinite alternate;
+}
+.hz-domespark i:nth-child(1) { left: 12%; top: 42%; }
+.hz-domespark i:nth-child(2) { left: 34%; top: 16%; animation-delay: -0.5s; }
+.hz-domespark i:nth-child(3) { left: 55%; top: 55%; animation-delay: -0.9s; }
+.hz-domespark i:nth-child(4) { left: 74%; top: 25%; animation-delay: -1.2s; }
+.hz-domespark i:nth-child(5) { left: 90%; top: 48%; animation-delay: -0.3s; }
+@keyframes hz-spark {
+  from { transform: scale(0.8); opacity: 0.6; }
+  to { transform: scale(1.25); opacity: 1; }
+}
+
+/* =====================================================================
+   THE INTERFACE — glass panels rising from the table
+   ===================================================================== */
+
+.hz-panels {
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  transform: translateX(-50%);
+  z-index: 7;
+  display: flex;
+  gap: clamp(0.7rem, 1.2vw, 1.4rem);
+  justify-content: center;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s 0.9s;
+}
+.hz-panels.up {
+  visibility: visible;
+  pointer-events: auto;
+  transition: visibility 0s;
+}
+
+.hz-panel {
+  width: clamp(190px, 16.5vw, 250px);
+  padding: clamp(0.8rem, 1.3vw, 1.2rem) clamp(0.9rem, 1.4vw, 1.3rem);
+  border: 1px solid rgba(214, 170, 98, 0.4);
+  border-top-color: rgba(244, 208, 132, 0.8);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(10, 10, 13, 0.58), rgba(6, 6, 8, 0.72));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(214, 160, 90, 0.08);
+  opacity: 0;
+  transform: translateY(46px) scale(0.97);
+  transition: opacity 0.7s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.7s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+.hz-panels.up .hz-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.hz-panel-eyebrow {
+  margin: 0;
+  font-size: clamp(0.42rem, 0.62vw, 0.54rem);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(240, 205, 130, 0.85);
+}
+.hz-panel h2 {
+  margin: 0.45rem 0 0;
+  font-size: clamp(0.82rem, 1.1vw, 1.02rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #f2e8d2;
+}
+.hz-panel-body {
+  margin: 0.5rem 0 0;
+  font-size: clamp(0.66rem, 0.85vw, 0.8rem);
+  line-height: 1.55;
+  color: rgba(226, 214, 188, 0.78);
+}
+
+/* the invitation, until the first touch */
+.hz-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 11.5%;
+  transform: translateX(-50%);
+  z-index: 6;
+  margin: 0;
+  font-size: clamp(0.5rem, 0.72vw, 0.62rem);
+  letter-spacing: 0.55em;
+  text-indent: 0.55em;
+  text-transform: uppercase;
+  color: rgba(240, 214, 150, 0.75);
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+  animation: hz-hint 4s ease-in-out infinite;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+.hz-hint[data-hidden] { opacity: 0 !important; animation: none; }
+@keyframes hz-hint {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.95; }
+}
+
+/* =====================================================================
+   THE PRINCIPLES — three lines that light their own elements
+   ===================================================================== */
+
+.hz-principles {
+  position: absolute;
+  bottom: clamp(1.2rem, 3.6vh, 2.4rem);
+  inset-inline: clamp(1.4rem, 6vw, 5rem);
+  z-index: 8;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.hz-principles button {
+  margin: 0;
+  padding: 0.4rem 0.2rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--hz-serif);
+  font-size: clamp(0.5rem, 0.76vw, 0.62rem);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(216, 198, 164, 0.62);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.95);
+  transition: color 0.5s ease;
+}
+.hz-principles button:hover,
+.hz-principles button:focus-visible {
+  color: rgba(244, 222, 168, 0.95);
+}
+.hz-principles button:focus-visible {
+  outline: 1px solid rgba(240, 205, 130, 0.7);
+  outline-offset: 4px;
+}
+.hz-principles b {
+  font-weight: 400;
+  color: rgba(244, 216, 148, 0.95);
+}
+
+@media (max-width: 920px) {
+  .hz-principles { justify-content: center; }
+  .hz-principles button:not(:first-child) { display: none; }
+  .hz-panels {
+    top: 58%;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hz-panel { width: min(78vw, 340px); }
 }
 
 /* =====================================================================
@@ -208,4 +465,5 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+  .hz-panel { transition-duration: 0.01ms !important; }
 }
