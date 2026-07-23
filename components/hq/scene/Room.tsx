@@ -116,8 +116,8 @@ export function Room() {
     return arr
   }, [])
 
-  // Concentric brass inlay rings set into the floor beneath the Core (§8).
-  const inlayRadii = [2.4, 3.4, 4.6, 6.0]
+  // Restrained brass inlays supporting the desk/Core axis (not a ring arena).
+  const inlayRadii = [3.0, 5.2]
 
   // Coffered latitude rings on the dome — with the meridian ribs these read as
   // recessed coffers rather than exposed ribs over a void (Blueprint §6).
@@ -184,7 +184,7 @@ export function Room() {
           <mesh position-y={1.2} material={lampMat}>
             <sphereGeometry args={[0.16, 24, 24]} />
           </mesh>
-          <pointLight position={[0, 1.2, 0]} color="#ffcf8a" intensity={7} distance={9} decay={2} />
+          <pointLight position={[0, 1.2, 0]} color="#ffcf8a" intensity={3.5} distance={7} decay={2} />
         </group>
       ))}
 

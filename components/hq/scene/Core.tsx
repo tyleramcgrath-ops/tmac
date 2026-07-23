@@ -15,7 +15,10 @@ import type { CoreState } from '@/lib/hq/state'
  * gimbals rotate on their own axes with believable clearances.
  */
 
-export const CORE_Y = 2.35
+export const CORE_Y = 2.75
+// The Core dominates the hero: scaled up to fill much of the central window
+// (~40% of room height) while sitting directly above and behind the desk.
+export const CORE_SCALE = 1.95
 
 // Warm-white intelligence light; cools for thinking, ambers for warning.
 const ACCENT: Record<CoreState, string> = {
@@ -151,15 +154,15 @@ export function Core() {
     if (scene.core === 'speaking') pulse = 1 + Math.sin(t * 3.4) * 0.09
     if (scene.core === 'listening') pulse = 1.03
     if (crystal.current) crystal.current.scale.setScalar(pulse)
-    if (light.current) light.current.intensity = (scene.core === 'concern' ? 2.4 : 4.2) * pulse
+    if (light.current) light.current.intensity = (scene.core === 'concern' ? 3.2 : 5.5) * pulse
     if (star.current) star.current.scale.setScalar(1 + (pulse - 1) * 0.5)
   })
 
   return (
-    <group position={[0, CORE_Y, 0]}>
+    <group position={[0, CORE_Y, 0]} scale={CORE_SCALE}>
       {/* Warm localized light the Core casts into the room (reflections on
-          desk + floor). Never overpowering (Blueprint §11). */}
-      <pointLight ref={light} color={ACCENT.idle} intensity={4} distance={9} decay={2} castShadow />
+          desk + floor). The brightest element in the scene (Blueprint §11). */}
+      <pointLight ref={light} color={ACCENT.idle} intensity={5} distance={12} decay={2} castShadow />
 
       {/* Fixed outer guard ring with gimbal bearings (the mounting frame) */}
       <group>

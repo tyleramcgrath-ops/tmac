@@ -10,6 +10,7 @@ import { Core } from './Core'
 import { Exterior } from './Exterior'
 import { Lighting } from './Lighting'
 import { Atmosphere } from './Atmosphere'
+import { Props } from './Props'
 import { Cameras, type CameraPreset } from './Cameras'
 
 /**
@@ -39,6 +40,7 @@ export function Observatory({ cam, reduced }: { cam: CameraPreset; reduced: bool
       <GlassWall />
       <Desk />
       <Core />
+      <Props />
       <Atmosphere />
 
       <EffectComposer multisampling={0} enableNormalPass={false}>

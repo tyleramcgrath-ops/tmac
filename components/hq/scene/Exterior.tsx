@@ -280,46 +280,62 @@ export function Exterior() {
   )
 }
 
-/** Three layered mountain silhouettes with atmospheric colour fade. */
+/**
+ * Layered snow-capped mountain ranges that loom close enough to fill the
+ * windows. Per-vertex colours give a moonlit rock base with white snow on the
+ * peaks and darker feet; nearer ranges are darker, distant ranges hazier
+ * (atmospheric perspective). Rendered unlit so they read at night.
+ */
 function Ridges() {
   const layers = useMemo(() => {
-    function ridge(radius: number, base: number, height: number, seed: number) {
-      const seg = 140
+    function ridge(radius: number, base: number, height: number, seed: number, rock: THREE.Color, snow: THREE.Color) {
+      const seg = 150
       const rnd = seeded(seed)
       const top: THREE.Vector3[] = []
-      // Two-octave height so ranges read as peaks, not noise.
       for (let i = 0; i <= seg; i++) {
         const f = i / seg
         const ang = Math.PI + f * Math.PI
-        const h = base + height * (0.35 + 0.4 * Math.abs(Math.sin(f * 9 + seed)) + 0.25 * rnd())
+        // Two octaves → jagged peaks rather than smooth noise.
+        const peak = 0.45 * Math.abs(Math.sin(f * 7 + seed)) + 0.3 * Math.abs(Math.sin(f * 19 + seed * 2)) + 0.2 * rnd()
+        const h = base + height * (0.3 + peak)
         top.push(new THREE.Vector3(Math.cos(ang) * radius, h, Math.sin(ang) * radius))
       }
       const pts: number[] = []
+      const cols: number[] = []
+      const peakMax = base + height * 1.05
+      const push = (v: THREE.Vector3) => {
+        pts.push(v.x, v.y, v.z)
+        // Snow above ~62% of this range's height; rock below; darker at the foot.
+        const t = THREE.MathUtils.clamp((v.y - base) / (peakMax - base), 0, 1)
+        const c = rock.clone()
+        if (t > 0.62) c.lerp(snow, THREE.MathUtils.clamp((t - 0.62) / 0.3, 0, 1))
+        else c.multiplyScalar(0.6 + 0.4 * t)
+        cols.push(c.r, c.g, c.b)
+      }
       for (let i = 0; i < seg; i++) {
         const a0 = top[i]
         const a1 = top[i + 1]
-        pts.push(a0.x, a0.y, a0.z, a0.x, -2, a0.z, a1.x, a1.y, a1.z)
-        pts.push(a1.x, a1.y, a1.z, a0.x, -2, a0.z, a1.x, -2, a1.z)
+        const b0 = new THREE.Vector3(a0.x, -4, a0.z)
+        const b1 = new THREE.Vector3(a1.x, -4, a1.z)
+        push(a0); push(b0); push(a1)
+        push(a1); push(b0); push(b1)
       }
       const g = new THREE.BufferGeometry()
       g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pts), 3))
-      g.computeVertexNormals()
+      g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(cols), 3))
       return g
     }
-    // Dramatic ranges that loom close enough to fill the windows. Atmospheric
-    // perspective: distant ranges lighter/hazier, near ones darker — cool
-    // moonlit blues so they read against the sky.
     return [
-      { geo: ridge(98, 10, 52, 11), color: '#5f7295' },
-      { geo: ridge(66, 4, 40, 29), color: '#46587a' },
-      { geo: ridge(42, -2, 26, 43), color: '#33445f' },
+      ridge(104, 12, 60, 11, new THREE.Color('#4a5c7e'), new THREE.Color('#c9d6e8')),
+      ridge(72, 5, 46, 29, new THREE.Color('#374867'), new THREE.Color('#aebdd4')),
+      ridge(46, -3, 30, 43, new THREE.Color('#2a3a56'), new THREE.Color('#8fa0bd')),
     ]
   }, [])
   return (
     <group>
-      {layers.map((l, i) => (
-        <mesh key={i} geometry={l.geo}>
-          <meshBasicMaterial color={l.color} />
+      {layers.map((geo, i) => (
+        <mesh key={i} geometry={geo}>
+          <meshBasicMaterial vertexColors />
         </mesh>
       ))}
     </group>

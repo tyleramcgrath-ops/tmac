@@ -22,11 +22,13 @@ export const SHOTS: Record<CameraPreset, Shot> = {
   // Concept A hero: seated eye-level, symmetric, desk large in the foreground,
   // Core centered above it, dome + panoramic landscape behind. Longer lens,
   // no fisheye.
-  hero: { pos: [0, 2.15, 7.6], target: [0, 1.78, -6], fov: 42 },
-  executive: { pos: [2.4, 2.35, 5.0], target: [-0.3, 1.2, -3], fov: 40 },
-  conversation: { pos: [0, 2.0, 3.8], target: [0, 2.05, -1], fov: 40 },
-  atmospheric: { pos: [0, 1.0, 4.8], target: [0, 5.2, -2], fov: 54 },
-  boardroom: { pos: [7.6, 2.5, 5.0], target: [-1.6, 1.4, -3], fov: 44 },
+  // Desk in the lower-central third, the enlarged Core centered above it, the
+  // panoramic window and mountains immediately behind — Concept A framing.
+  hero: { pos: [0, 1.95, 9.4], target: [0, 2.35, -6], fov: 43 },
+  executive: { pos: [2.8, 2.5, 6.2], target: [-0.3, 1.6, -3], fov: 42 },
+  conversation: { pos: [0, 2.5, 5.2], target: [0, 2.7, -1], fov: 42 },
+  atmospheric: { pos: [0, 1.0, 5.6], target: [0, 5.2, -2], fov: 54 },
+  boardroom: { pos: [8.6, 2.6, 5.8], target: [-1.6, 1.9, -3], fov: 46 },
 }
 
 export function Cameras({ preset, reduced }: { preset: CameraPreset; reduced: boolean }) {
