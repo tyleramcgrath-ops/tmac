@@ -387,6 +387,31 @@ const ruleAltText: Rule = ({ s }) => {
   }
 }
 
+// ── Performance (Core Web Vitals) ───────────────────────────────────────────
+
+const ruleImageOptimization: Rule = ({ s }) => {
+  if (!has(s.imagesMissingLazyLoad) || s.imagesMissingLazyLoad <= 0) return null
+  return {
+    ruleId: 'image-optimization',
+    title: `${s.imagesMissingLazyLoad} below-the-fold image(s) loading eagerly`,
+    category: 'technical',
+    ruleCertainty: 0.8,
+    importance: 0.4,
+    seoImpact: 'medium',
+    effort: 'low',
+    risk: { level: 'low', note: 'Adding loading="lazy" + decoding="async" is additive and never applied to the likely-LCP first image.' },
+    googleGuidance: 'Lazy-loading below-the-fold images and deferring their decode reduces initial page weight and improves Core Web Vitals (LCP, INP).',
+    supportingElements: [`${s.imagesMissingLazyLoad} <img> below the first without loading="lazy"`],
+    explanation: {
+      why: 'Every image on the page loads eagerly by default, competing with above-the-fold content for bandwidth on first paint.',
+      whyNow: 'A one-line attribute change with no visual or content risk.',
+      whyThisPage: `${s.imagesMissingLazyLoad} images here are not the first (likely LCP) image and are not marked lazy.`,
+      whatIfIgnored: 'Slower Largest Contentful Paint and Interaction to Next Paint hurt both Core Web Vitals and real user experience.',
+      whatCouldMakeWrong: 'A carousel or above-the-fold image beyond the first slot could still benefit from eager loading — review before bulk-applying across templated pages.',
+    },
+  }
+}
+
 // ── Rule registry (Phase D.6 P2) ─────────────────────────────────────────────
 // The single, typed source of rule metadata. `version` lets a rule's logic
 // evolve while its identity stays stable and comparable across scans;
@@ -415,6 +440,7 @@ export const RULE_REGISTRY: Record<string, RuleMeta> = {
   breadcrumb: { version: 1, dangerous: false },
   faq: { version: 1, dangerous: false },
   'alt-text': { version: 1, dangerous: false },
+  'image-optimization': { version: 1, dangerous: false },
   // cross-page rules
   'dup-title': { version: 1, dangerous: false },
   'dup-meta': { version: 1, dangerous: false },
@@ -444,6 +470,7 @@ export const PAGE_RULES: Rule[] = [
   ruleInternalLinking,
   ruleBreadcrumb,
   ruleFaq,
+  ruleImageOptimization,
 ]
 
 export function runPageRules(ctx: RuleCtx): Finding[] {

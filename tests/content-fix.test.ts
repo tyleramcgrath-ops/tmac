@@ -121,6 +121,25 @@ describe('applyContentTransform + verify', () => {
     const r = applyContentTransform('<h1>A</h1><h1>B<h1>C</h1>', t)
     expect(r.changed).toBe(false)
   })
+
+  it('optimize-images lazy-loads every image after the first (likely LCP) one', () => {
+    const t: ContentTransform = { type: 'optimize-images' }
+    const content = '<img src="a.jpg"><p>text</p><img src="b.jpg"><img src="c.jpg" loading="eager">'
+    const r = applyContentTransform(content, t)
+    expect(r.changed).toBe(true)
+    // first image untouched (no loading attribute added)
+    expect(r.content).toMatch(/<img src="a\.jpg">/)
+    expect(r.content).toContain('<img loading="lazy" decoding="async" src="b.jpg">')
+    // already-declared loading strategy on the third image is left alone (idempotent, never overridden)
+    expect(r.content).toContain('<img src="c.jpg" loading="eager">')
+    expect(verifyContentTransform(r.content, t)).toBe(true)
+    expect(applyContentTransform(r.content, t).changed).toBe(false)
+  })
+  it('optimize-images is a no-op with zero or one image', () => {
+    const t: ContentTransform = { type: 'optimize-images' }
+    expect(applyContentTransform('<p>no images</p>', t).changed).toBe(false)
+    expect(applyContentTransform('<img src="only.jpg">', t).changed).toBe(false)
+  })
 })
 
 describe('fix generators (Phase H)', () => {
@@ -181,11 +200,22 @@ describe('fix generators (Phase H)', () => {
     expect(fix.kind).toBe('heading')
     expect(fix.contentTransform).toEqual({ type: 'demote-extra-h1' })
   })
+  it('image-optimization → deployable optimize-images transform, first (LCP) image left eager', () => {
+    const fix = generateFix('image-optimization', sig({ imagesMissingLazyLoad: 3 }))
+    expect(fix.actionable).toBe(true)
+    expect(fix.kind).toBe('performance')
+    expect(fix.contentTransform).toEqual({ type: 'optimize-images', skipFirst: 1 })
+  })
 })
 
 describe('operator preview marks content fixes deployable', () => {
   it('mixed-content preview is deployable (not advisory)', () => {
     const p = buildOperatorPreview(recFor('mixed-content'), sig(), DEFAULT_POLICY)
+    expect(p.preview.deployable).toBe(true)
+    expect(p.safety.blocked).toBe(false)
+  })
+  it('image-optimization preview is deployable (not advisory)', () => {
+    const p = buildOperatorPreview(recFor('image-optimization'), sig({ imagesMissingLazyLoad: 2 }), DEFAULT_POLICY)
     expect(p.preview.deployable).toBe(true)
     expect(p.safety.blocked).toBe(false)
   })
@@ -195,6 +225,21 @@ describe('new rules are registered + fire', () => {
   it('registers missing-h1 and internal-linking', () => {
     expect(RULE_REGISTRY['missing-h1']).toBeDefined()
     expect(RULE_REGISTRY['internal-linking']).toBeDefined()
+  })
+  it('registers image-optimization and it fires when below-the-fold images lack lazy-loading', () => {
+    expect(RULE_REGISTRY['image-optimization']).toBeDefined()
+    const s = sig({ imagesMissingLazyLoad: 4 })
+    const cls = classifyPage(s)
+    const biz = deriveBusinessContext({ industry: '', businessProfile: '', goals: [] }, [cls.type])
+    const findings = runPageRules({ s, cls, biz })
+    expect(findings.some((f) => f.ruleId === 'image-optimization')).toBe(true)
+  })
+  it('image-optimization does not fire when there is nothing to lazy-load', () => {
+    const s = sig({ imagesMissingLazyLoad: 0 })
+    const cls = classifyPage(s)
+    const biz = deriveBusinessContext({ industry: '', businessProfile: '', goals: [] }, [cls.type])
+    const findings = runPageRules({ s, cls, biz })
+    expect(findings.some((f) => f.ruleId === 'image-optimization')).toBe(false)
   })
   it('missing-h1 fires when a content page has zero H1', () => {
     const s = sig({ h1Count: 0, title: 'Widgets' })

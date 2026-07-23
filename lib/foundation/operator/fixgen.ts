@@ -21,6 +21,7 @@ export type FixKind =
   | 'heading'
   | 'mixedContent'
   | 'internalLinks'
+  | 'performance'
   | 'none'
 
 export interface GeneratedFix {
@@ -289,6 +290,19 @@ export function generateFix(ruleId: string, s: PageSignals, ctx: FixGenContext =
         proposedValue: '',
         currentValue: `LocalBusiness schema missing: ${missing.join(', ') || 'unknown fields'}`,
         note: 'Real business name/address/phone must come from the business, not be invented — add the missing fields to the existing JSON-LD manually.',
+      }
+    }
+    case 'image-optimization': {
+      // Additive, purely-syntactic attribute change on the live post body —
+      // deterministic and safe to auto-apply, same trust tier as https-upgrade.
+      // The first image is left eager (it's the likely LCP candidate).
+      return {
+        actionable: true,
+        kind: 'performance',
+        contentTransform: { type: 'optimize-images', skipFirst: 1 },
+        proposedValue: `Add loading="lazy" decoding="async" to ${s.imagesMissingLazyLoad ?? 0} below-the-fold image(s)`,
+        currentValue: `${s.imagesMissingLazyLoad ?? 0} below-the-fold image(s) loading eagerly`,
+        note: 'Marks images after the first (likely LCP) with loading="lazy" decoding="async" in the live post body. Applied to the live post body; verified by read-back.',
       }
     }
     case 'alt-text': {

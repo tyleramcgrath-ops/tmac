@@ -20,6 +20,7 @@ export interface PageSignals {
   mixedContent?: boolean
   indexable?: boolean
   imagesMissingAlt?: number
+  imagesMissingLazyLoad?: number
   hasFaq?: boolean
   hasOpenGraph?: boolean
   internalTargets?: string[]
@@ -52,6 +53,7 @@ export function toPageSignals(raw: Record<string, unknown>): PageSignals {
   s.mixedContent = bool(raw.mixedContent)
   s.indexable = bool(raw.indexable)
   s.imagesMissingAlt = num(raw.imagesMissingAlt)
+  s.imagesMissingLazyLoad = num(raw.imagesMissingLazyLoad)
   s.hasFaq = bool(raw.hasFaq)
   s.hasOpenGraph = bool(raw.hasOpenGraph)
   s.internalTargets = Array.isArray(raw.internalTargets) ? (raw.internalTargets as string[]) : undefined
