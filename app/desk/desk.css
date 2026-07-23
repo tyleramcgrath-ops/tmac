@@ -1,0 +1,560 @@
+/* =====================================================================
+   THE HORIZON — COMMAND TABLE
+   North Star Headquarters · plate no. 03, built fresh from the board.
+   Absolute black stone, polished brass, warm white 2700K.
+   One compass. Endless clarity.
+   ===================================================================== */
+
+.hz-root {
+  /* Materials palette (board panel 09) */
+  --hz-black-0: #030304;
+  --hz-black-1: #08080a;
+  --hz-black-2: #101013;
+  --hz-night: #0b1220;
+  --hz-night-high: #131c30;
+  --hz-brass: #c39a52;
+  --hz-brass-hi: #f0d492;
+  --hz-brass-lo: #7a5c2c;
+  --hz-ivory: #f2e8d5;
+  --hz-warm: #ffd9a0; /* 2700 K */
+  --hz-dim: #9a8f7b;
+
+  --hz-serif: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
+
+  --mx: 0;
+  --my: 0;
+
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--hz-black-0);
+  color: var(--hz-ivory);
+  font-family: var(--hz-serif);
+  cursor: default;
+  user-select: none;
+}
+
+/* ---------------------------------------------------------------------
+   The world beyond the glass: night sky, ridge line, still water
+   --------------------------------------------------------------------- */
+
+.hz-sky {
+  position: absolute;
+  inset: -3% -4%;
+  background:
+    radial-gradient(46% 20% at 50% 62%, rgba(255, 166, 84, 0.34), rgba(214, 122, 52, 0.12) 55%, transparent 80%),
+    linear-gradient(180deg, #05070d 0%, #0a1120 38%, #131c30 56%, #23253c 63%, #4a3a41 66%, #0f1220 70%, #080a12 100%);
+  transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 4px), 0);
+  will-change: transform;
+}
+
+.hz-stars,
+.hz-constellation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hz-star { animation: hz-twinkle 5.5s ease-in-out infinite; }
+.hz-star:nth-child(3n) { animation-duration: 7.5s; animation-delay: -2.4s; }
+.hz-star:nth-child(4n) { animation-duration: 9s; animation-delay: -5s; }
+.hz-star:nth-child(5n) { animation-delay: -1.2s; }
+
+@keyframes hz-twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+.hz-constellation line {
+  stroke: rgba(195, 154, 82, 0.28);
+  stroke-width: 0.6;
+}
+.hz-constellation circle {
+  fill: var(--hz-brass-hi);
+  opacity: 0.85;
+}
+
+.hz-ridge {
+  position: absolute;
+  inset-inline: -4%;
+  bottom: 33.5%;
+  height: 30%;
+  transform: translate3d(calc(var(--mx) * 10px), calc(var(--my) * 6px), 0);
+  will-change: transform;
+}
+.hz-ridge svg { width: 100%; height: 100%; display: block; }
+
+/* still water between the far ridge and the floor slab */
+.hz-water {
+  position: absolute;
+  inset-inline: -4%;
+  bottom: 27%;
+  height: 8%;
+  background: linear-gradient(180deg, #232336 0%, #12131e 34%, #0a0b12 70%, #07070c 100%);
+  transform: translate3d(calc(var(--mx) * 10px), calc(var(--my) * 6px), 0);
+}
+.hz-water::before {
+  /* the sun's path, laid on the water */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(52% 85% at 50% 0%, rgba(255, 190, 120, 0.4), rgba(255, 170, 96, 0.1) 55%, transparent 80%);
+  filter: blur(2px);
+}
+.hz-water::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 3px,
+    rgba(255, 195, 130, 0.07) 3px 4px
+  );
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(50% 100% at 50% 0%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(50% 100% at 50% 0%, #000 30%, transparent 75%);
+}
+
+/* ---------------------------------------------------------------------
+   The glass: 360° horizon, low-iron, near-invisible mullions
+   --------------------------------------------------------------------- */
+
+.hz-glass {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  bottom: 27%;
+  pointer-events: none;
+}
+.hz-glass i {
+  position: absolute;
+  top: 4%;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(195, 154, 82, 0.22) 30%, rgba(195, 154, 82, 0.1) 85%, transparent);
+}
+.hz-glass i:nth-child(1) { left: 14%; }
+.hz-glass i:nth-child(2) { left: 38%; }
+.hz-glass i:nth-child(3) { left: 62%; }
+.hz-glass i:nth-child(4) { left: 86%; }
+
+/* ---------------------------------------------------------------------
+   The floor: one black disc, brass rings inlaid, honed sheen
+   --------------------------------------------------------------------- */
+
+.hz-floor {
+  position: absolute;
+  inset-inline: -6%;
+  bottom: -2%;
+  height: 30%;
+  background: linear-gradient(180deg, #131317 0%, #0b0b0e 26%, #050506 78%);
+}
+.hz-floor::before {
+  /* the horizon's afterglow caught in the stone */
+  content: '';
+  position: absolute;
+  inset-inline: 20%;
+  top: 0;
+  height: 55%;
+  background: radial-gradient(55% 80% at 50% 0%, rgba(255, 176, 104, 0.13), transparent 75%);
+}
+
+.hz-floor-rings {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+.hz-floor-rings i {
+  position: absolute;
+  left: 50%;
+  top: 34%;
+  border: 1px solid rgba(195, 154, 82, 0.34);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(195, 154, 82, 0.12);
+}
+.hz-floor-rings i:nth-child(1) { width: 34%; aspect-ratio: 5.4; top: 40%; opacity: 0.9; }
+.hz-floor-rings i:nth-child(2) { width: 56%; aspect-ratio: 5.1; top: 32%; opacity: 0.7; }
+.hz-floor-rings i:nth-child(3) { width: 82%; aspect-ratio: 4.9; top: 22%; opacity: 0.5; }
+.hz-floor-rings i:nth-child(4) { width: 116%; aspect-ratio: 4.7; top: 8%; opacity: 0.38; }
+
+/* ---------------------------------------------------------------------
+   The centerpiece: table + Core share one stage so they sit together
+   --------------------------------------------------------------------- */
+
+.hz-stage {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5%;
+  width: min(1120px, 96vw, 138vh);
+  aspect-ratio: 1400 / 1000;
+  transform: translateX(-50%) translate3d(calc(var(--mx) * -14px), calc(var(--my) * -8px), 0);
+  will-change: transform;
+}
+
+.hz-table {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* warm light pooled beneath the table — the room is lit by its objects */
+.hz-table-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 64%;
+  height: 26%;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 55% at 50% 78%, rgba(255, 190, 120, 0.14), transparent 75%);
+  filter: blur(6px);
+  animation: hz-breathe 9s ease-in-out infinite;
+}
+
+/* the Core's light striking the tabletop */
+.hz-core-pool {
+  position: absolute;
+  left: 50%;
+  bottom: 50.4%;
+  width: 30%;
+  height: 7%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255, 210, 140, 0.34), rgba(255, 190, 120, 0.1) 55%, transparent 78%);
+  filter: blur(5px);
+  animation: hz-breathe 7s ease-in-out infinite;
+}
+
+@keyframes hz-breathe {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+/* ---------------------------------------------------------------------
+   THE CORE — brass armillary, true 3D, precision machined
+   --------------------------------------------------------------------- */
+
+.hz-core {
+  position: absolute;
+  left: 50%;
+  bottom: 51.5%;
+  width: 24.5%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+}
+
+.hz-core-halo {
+  position: absolute;
+  inset: -46%;
+  background: radial-gradient(circle at 50% 54%, rgba(255, 210, 140, 0.22), rgba(255, 190, 120, 0.07) 42%, transparent 66%);
+  filter: blur(4px);
+  animation: hz-breathe 7s ease-in-out infinite;
+}
+
+.hz-core-scene {
+  position: absolute;
+  inset: 4%;
+  perspective: 900px;
+}
+
+.hz-gimbal {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: hz-slew 84s linear infinite reverse;
+}
+
+.hz-sphere {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: hz-slew 38s linear infinite;
+}
+
+@keyframes hz-slew {
+  from { transform: rotateX(-12deg) rotateY(0turn); }
+  to { transform: rotateX(-12deg) rotateY(1turn); }
+}
+
+.hz-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--hz-brass);
+  box-shadow:
+    inset 0 0 5px rgba(240, 212, 146, 0.5),
+    0 0 7px rgba(195, 154, 82, 0.32);
+}
+.hz-ring.m0 { transform: rotateY(0deg); }
+.hz-ring.m1 { transform: rotateY(60deg); border-color: #a8813f; }
+.hz-ring.m2 { transform: rotateY(120deg); border-color: #d8b268; }
+.hz-ring.eq {
+  inset: 11%;
+  transform: rotateX(76deg);
+  border-width: 3px;
+  border-color: var(--hz-brass-hi);
+  box-shadow:
+    inset 0 0 7px rgba(240, 212, 146, 0.6),
+    0 0 10px rgba(220, 180, 110, 0.4);
+}
+.hz-ring.tilt {
+  inset: 5%;
+  transform: rotateX(64deg) rotateY(22deg);
+  border-width: 1px;
+  border-color: rgba(195, 154, 82, 0.6);
+  box-shadow: none;
+}
+
+/* outer meridian carried by the counter-rotating gimbal */
+.hz-ring.outer {
+  inset: -7%;
+  border-width: 1.5px;
+  border-color: rgba(216, 178, 104, 0.75);
+  transform: rotateY(90deg);
+}
+
+/* the star is the interface — it faces you always */
+.hz-core-star {
+  position: absolute;
+  inset: 26%;
+  animation: hz-star-pulse 7s ease-in-out infinite;
+}
+.hz-core-star svg { width: 100%; height: 100%; display: block; }
+
+@keyframes hz-star-pulse {
+  0%, 100% { filter: drop-shadow(0 0 9px rgba(255, 214, 150, 0.55)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 22px rgba(255, 220, 160, 0.95)); transform: scale(1.035); }
+}
+
+/* the mount: a machined brass foot seating the Core into the stone */
+.hz-core-mount {
+  position: absolute;
+  left: 50%;
+  bottom: -5.5%;
+  width: 24%;
+  height: 8%;
+  transform: translateX(-50%);
+}
+.hz-core-mount::before {
+  content: '';
+  position: absolute;
+  inset-inline: 30%;
+  top: -46%;
+  bottom: 40%;
+  background: linear-gradient(90deg, #6d5224, #d8b268 45%, #8a6a32);
+  border-radius: 2px;
+}
+.hz-core-mount::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(50% 50% at 50% 42%, #e5c47c 0%, #b08a44 45%, #55401e 100%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------------------------------------------------------------------
+   Title block, captions, specification — engraved, never printed
+   --------------------------------------------------------------------- */
+
+.hz-frame {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(195, 154, 82, 0.16);
+  pointer-events: none;
+}
+.hz-frame::before,
+.hz-frame::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(195, 154, 82, 0.55);
+  border-style: solid;
+}
+.hz-frame::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+.hz-frame::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+.hz-title {
+  position: absolute;
+  top: clamp(2rem, 5vh, 3.4rem);
+  left: clamp(1.6rem, 5vw, 4.2rem);
+  z-index: 10;
+}
+.hz-eyebrow {
+  font-size: clamp(0.56rem, 0.9vw, 0.7rem);
+  letter-spacing: 0.52em;
+  color: var(--hz-brass);
+  text-transform: uppercase;
+}
+.hz-title h1 {
+  margin: 0.85rem 0 0;
+  font-size: clamp(2.2rem, 5vw, 3.7rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.02;
+  color: var(--hz-ivory);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.9);
+}
+.hz-title h1 em {
+  font-style: italic;
+  color: var(--hz-brass-hi);
+}
+.hz-plate-no {
+  margin-top: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: clamp(0.56rem, 0.85vw, 0.68rem);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--hz-dim);
+}
+.hz-plate-no::before {
+  content: '';
+  width: 2.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--hz-brass), transparent);
+}
+
+.hz-rose {
+  position: absolute;
+  top: clamp(2rem, 5vh, 3.4rem);
+  right: clamp(1.6rem, 5vw, 4.2rem);
+  width: clamp(52px, 6vw, 76px);
+  opacity: 0.8;
+  z-index: 10;
+  animation: hz-rose-turn 240s linear infinite;
+}
+
+@keyframes hz-rose-turn {
+  to { transform: rotate(1turn); }
+}
+
+.hz-caption {
+  position: absolute;
+  bottom: clamp(1.6rem, 4.5vh, 3rem);
+  left: clamp(1.6rem, 5vw, 4.2rem);
+  max-width: 21rem;
+  z-index: 10;
+  font-style: italic;
+  font-size: clamp(0.82rem, 1.1vw, 0.98rem);
+  line-height: 1.75;
+  color: rgba(242, 232, 213, 0.62);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+}
+.hz-caption b {
+  font-weight: 400;
+  color: var(--hz-brass-hi);
+}
+
+.hz-spec {
+  position: absolute;
+  bottom: clamp(1.6rem, 4.5vh, 3rem);
+  right: clamp(1.6rem, 5vw, 4.2rem);
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.5rem 1.4rem;
+  font-size: clamp(0.54rem, 0.8vw, 0.64rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-align: right;
+}
+.hz-spec dt { color: var(--hz-dim); }
+.hz-spec dd { margin: 0; color: var(--hz-brass); }
+
+.hz-motto {
+  position: absolute;
+  bottom: clamp(1.7rem, 4.6vh, 3.1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-size: clamp(0.56rem, 0.85vw, 0.68rem);
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(195, 154, 82, 0.85);
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+}
+
+@media (max-width: 1180px) {
+  .hz-motto { display: none; }
+}
+
+/* ---------------------------------------------------------------------
+   Atmosphere: vignette + grain — cinematic, architectural, timeless
+   --------------------------------------------------------------------- */
+
+.hz-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(130% 100% at 50% 42%, transparent 52%, rgba(2, 2, 3, 0.55) 88%, rgba(2, 2, 3, 0.82) 100%),
+    linear-gradient(180deg, rgba(2, 2, 3, 0.5), transparent 18%);
+}
+
+.hz-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+/* ---------------------------------------------------------------------
+   Arrival: silence, anticipation — then the room awakens
+   --------------------------------------------------------------------- */
+
+.hz-wake {
+  opacity: 0;
+  animation: hz-wake 1.6s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+}
+.hz-wake.w1 { animation-delay: 0.15s; }
+.hz-wake.w2 { animation-delay: 0.5s; }
+.hz-wake.w3 { animation-delay: 0.9s; }
+.hz-wake.w4 { animation-delay: 1.3s; }
+
+@keyframes hz-wake {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hz-stage.hz-wake {
+  animation-name: hz-rise;
+  animation-duration: 2.2s;
+}
+@keyframes hz-rise {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translate3d(calc(var(--mx) * -14px), calc(var(--my) * -8px), 0) translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translate3d(calc(var(--mx) * -14px), calc(var(--my) * -8px), 0) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hz-root *,
+  .hz-root *::before,
+  .hz-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .hz-wake { opacity: 1; }
+}
