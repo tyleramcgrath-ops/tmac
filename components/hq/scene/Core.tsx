@@ -100,6 +100,16 @@ export function Core() {
     () => new THREE.MeshStandardMaterial({ color: '#ffffff', emissive: new THREE.Color('#fff0d0'), emissiveIntensity: 2.1 }),
     [],
   )
+  const obsidian = useMemo(
+    () => new THREE.MeshPhysicalMaterial({ color: '#0a0a0d', roughness: 0.12, metalness: 0.2, clearcoat: 1, clearcoatRoughness: 0.1, envMapIntensity: 1.2 }),
+    [],
+  )
+  const bearingMat = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#e0c496', roughness: 0.25, metalness: 1, envMapIntensity: 1.6 }),
+    [],
+  )
+  // Bearing nubs where the gimbals pivot, on the outer ring plane.
+  const bearings = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2]
 
   const star2D = useMemo(() => starShape(), [])
 
@@ -141,7 +151,7 @@ export function Core() {
     if (scene.core === 'speaking') pulse = 1 + Math.sin(t * 3.4) * 0.09
     if (scene.core === 'listening') pulse = 1.03
     if (crystal.current) crystal.current.scale.setScalar(pulse)
-    if (light.current) light.current.intensity = (scene.core === 'concern' ? 3 : 6) * pulse
+    if (light.current) light.current.intensity = (scene.core === 'concern' ? 2.4 : 4.2) * pulse
     if (star.current) star.current.scale.setScalar(1 + (pulse - 1) * 0.5)
   })
 
@@ -149,12 +159,28 @@ export function Core() {
     <group position={[0, CORE_Y, 0]}>
       {/* Warm localized light the Core casts into the room (reflections on
           desk + floor). Never overpowering (Blueprint §11). */}
-      <pointLight ref={light} color={ACCENT.idle} intensity={6} distance={9} decay={2} castShadow />
+      <pointLight ref={light} color={ACCENT.idle} intensity={4} distance={9} decay={2} castShadow />
+
+      {/* Fixed outer guard ring with gimbal bearings (the mounting frame) */}
+      <group>
+        <mesh material={brass} castShadow>
+          <torusGeometry args={[0.56, 0.018, 16, 160]} />
+        </mesh>
+        {bearings.map((a, i) => (
+          <mesh key={i} position={[Math.cos(a) * 0.56, Math.sin(a) * 0.56, 0]} material={bearingMat} castShadow>
+            <sphereGeometry args={[0.035, 16, 16]} />
+          </mesh>
+        ))}
+      </group>
 
       {/* Outer brushed-brass ring, engraved (gimbal on Z) */}
       <group ref={outer} rotation={[0.32, 0, 0]}>
         <mesh material={brass} castShadow>
-          <torusGeometry args={[0.5, 0.022, 20, 160]} />
+          <torusGeometry args={[0.5, 0.026, 20, 160]} />
+        </mesh>
+        {/* Inner engraved coordinate band */}
+        <mesh material={brass}>
+          <torusGeometry args={[0.47, 0.012, 12, 160]} />
         </mesh>
         {ticks.map((tk) => (
           <mesh key={tk.key} position={[tk.x, tk.y, 0]} rotation={[0, 0, tk.rot]} material={brass}>
@@ -173,9 +199,18 @@ export function Core() {
       {/* Inner machined-titanium ring (gimbal on Y) */}
       <group ref={inner} rotation={[0.9, 0, 0]}>
         <mesh material={titanium} castShadow>
-          <torusGeometry args={[0.36, 0.02, 18, 120]} />
+          <torusGeometry args={[0.36, 0.022, 18, 120]} />
+        </mesh>
+        <mesh material={titanium}>
+          <torusGeometry args={[0.29, 0.014, 12, 100]} />
         </mesh>
       </group>
+
+      {/* Obsidian hub disc behind the star — distinct dark material the star
+          is mounted against (visible between the arms). */}
+      <mesh material={obsidian} position-z={-0.05} scale={[1, 1, 0.28]}>
+        <sphereGeometry args={[0.17, 32, 32]} />
+      </mesh>
 
       {/* The warm-white crystal star, facing the camera (+Z) */}
       <group ref={star}>

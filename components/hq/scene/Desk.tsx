@@ -60,39 +60,45 @@ export function Desk() {
     [],
   )
 
-  const bodyTopY = DESK_H - 0.09
+  const bodyTopY = DESK_H - 0.16
 
   return (
     <group>
-      {/* Contact shadow catcher is handled by the floor + real shadows. */}
-
-      {/* Walnut body — a broad waterfall pedestal (two side panels + core mass) */}
+      {/* Walnut body — a solid waterfall mass with layered side panels */}
       <mesh position={[0, bodyTopY / 2, 0]} material={walnutMat} castShadow receiveShadow>
-        <boxGeometry args={[DESK_W - 0.5, bodyTopY, DESK_D - 0.24]} />
+        <boxGeometry args={[DESK_W - 0.55, bodyTopY, DESK_D - 0.28]} />
       </mesh>
-      {/* Waterfall end panels reaching the floor */}
+      {/* Waterfall end panels sweeping to the floor (the sculptural silhouette) */}
       {[-1, 1].map((s) => (
-        <mesh key={s} position={[s * (DESK_W / 2 - 0.14), bodyTopY / 2, 0]} material={walnutMat} castShadow receiveShadow>
-          <boxGeometry args={[0.28, bodyTopY, DESK_D]} />
+        <mesh key={s} position={[s * (DESK_W / 2 - 0.18), bodyTopY / 2, 0]} material={walnutMat} castShadow receiveShadow>
+          <boxGeometry args={[0.36, bodyTopY, DESK_D]} />
         </mesh>
       ))}
+      {/* A layered walnut fascia across the front for depth */}
+      <mesh position={[0, bodyTopY * 0.62, DESK_D / 2 - 0.16]} material={walnutMat} castShadow>
+        <boxGeometry args={[DESK_W - 0.2, bodyTopY * 0.5, 0.12]} />
+      </mesh>
       {/* Recessed toe plinth in bronze */}
-      <mesh position={[0, 0.05, 0]} material={bronzeDark}>
-        <boxGeometry args={[DESK_W - 0.7, 0.1, DESK_D - 0.5]} />
+      <mesh position={[0, 0.06, 0]} material={bronzeDark}>
+        <boxGeometry args={[DESK_W - 0.8, 0.12, DESK_D - 0.55]} />
+      </mesh>
+      {/* Brass base rail grounding the desk */}
+      <mesh position={[0, 0.14, 0]} material={brass}>
+        <boxGeometry args={[DESK_W - 0.5, 0.02, DESK_D - 0.24]} />
       </mesh>
 
       {/* Brass reveal line between body and top */}
-      <mesh position={[0, bodyTopY + 0.015, 0]} material={brass}>
-        <boxGeometry args={[DESK_W - 0.42, 0.03, DESK_D - 0.16]} />
+      <mesh position={[0, bodyTopY + 0.02, 0]} material={brass}>
+        <boxGeometry args={[DESK_W - 0.46, 0.04, DESK_D - 0.2]} />
       </mesh>
 
-      {/* Marble top slab — visually seamless */}
-      <mesh position={[0, DESK_H - 0.04, 0]} material={marbleMat} castShadow receiveShadow>
-        <boxGeometry args={[DESK_W, 0.08, DESK_D]} />
+      {/* Marble top — a thick slab with a real edge and a slight overhang */}
+      <mesh position={[0, DESK_H - 0.09, 0]} material={marbleMat} castShadow receiveShadow>
+        <boxGeometry args={[DESK_W, 0.18, DESK_D]} />
       </mesh>
       {/* Thin brass edge inlay around the top */}
       <mesh position={[0, DESK_H - 0.005, 0]} material={brass}>
-        <boxGeometry args={[DESK_W + 0.008, 0.006, DESK_D + 0.008]} />
+        <boxGeometry args={[DESK_W + 0.01, 0.008, DESK_D + 0.01]} />
       </mesh>
 
       {/* Concealed projection aperture, centred on the top */}

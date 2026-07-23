@@ -154,42 +154,55 @@ Regenerate with `node scripts/hq-screenshots.mjs` against a running build.
 | Boardroom | `docs/hq-screenshots/11-boardroom.png` |
 | Aurora | `docs/hq-screenshots/12-aurora.png` |
 
-## Blueprint §18 acceptance test — status
+## Blueprint §18 acceptance — self-assessment (pending owner approval)
 
-| # | Test | Status |
+Phase 1 is **not** being claimed complete; these are the author's notes toward
+the §18 tests, for the owner's review. Several remain work-in-progress.
+
+| # | Test | Self-assessment |
 | --- | --- | --- |
-| 1 | The room feels architectural rather than graphical | ✅ |
-| 2 | Breathtaking with all interfaces disabled | ✅ (no UI in the scene) |
-| 3 | The desk dominates and feels sculptural | ✅ |
-| 4 | The Core is memorable, engineered, physically substantial | ✅ |
-| 5 | Stone, walnut, brass, glass appear tangible | ✅ (leather seating: not in frame this phase) |
-| 6 | Lighting creates depth, contrast, atmosphere, reflections | ✅ |
-| 7 | The camera feels cinematic, not flat/orthographic | ✅ |
-| 8 | Clear foreground/midground/background layers | ✅ |
-| 9 | Appropriate for a CEO; premium enough to be permanent | ✅ |
-| 10 | A single screenshot is recognizable as North Star without a logo | ✅ |
-| 11 | Clearly matches the Concept A visual direction | ✅ |
-| 12 | Nothing resembles the rejected PR #93 SVG illustration | ✅ (rebuilt in WebGL) |
+| 1 | Architectural rather than graphical | Met — genuine 3D, coffered dome, columns, reflections |
+| 2 | Breathtaking with interfaces disabled | Improved; owner to judge |
+| 3 | Desk dominates and feels sculptural | Met — sculpted slab, dominant foreground |
+| 4 | Core memorable, engineered, substantial | Met — gimbals, bearings, distinct materials, controlled bloom |
+| 5 | Stone/walnut/brass/glass tangible | Partially — procedural maps read well; leather seating not yet placed |
+| 6 | Lighting: depth, contrast, atmosphere, reflections | Met — pools + directional + moonlight + reflective floor |
+| 7 | Camera cinematic, not orthographic | Met — lower eye-level, longer lens |
+| 8 | Foreground/midground/background layers | Met |
+| 9 | CEO-appropriate; permanent-grade | Owner to judge |
+| 10 | Recognizable as North Star without a logo | Met |
+| 11 | Matches Concept A direction | Improving; owner to judge |
+| 12 | Nothing resembles the rejected SVG build | Met — rebuilt in WebGL |
 
-## Unavoidable technical compromises
+## Remaining visual compromises / work-in-progress
 
-- **Software-rendered screenshots.** The gallery is captured in headless
-  Chromium via SwiftShader (no GPU in CI). Frames are correct but softer/slower
-  than a GPU; on real hardware the scene is sharper and runs at interactive
-  rates.
-- **Faux smoked glass** rather than physical transmission — chosen for
-  controllable "smoked, restrained, never mirror-like" glass and to avoid an
-  expensive transmission pass. Reads as architectural glazing.
-- **Procedural (canvas) textures** for marble/walnut/brass instead of
-  photographic PBR scans — the app runs under a strict CSP with no external
-  image assets. Believable at scene scale; a future pass could swap in
-  self-hosted scanned maps.
-- **Reflection environment from Lightformers**, not a captured HDRI, for the
-  same CSP/offline reason.
+- **Exterior at true night is intentionally dark** — mountains read as low-
+  contrast silhouettes; the vista is carried by stars, moon, city lights and
+  haze. It reads best at dawn/dusk. A brighter moonlit-night grade is possible.
 - **Leather seating** (Blueprint material schedule) is not yet placed — no
-  seating is in the approved camera framings this phase.
-- The repo's `pnpm lint` script (`next lint`) is broken independently of this
-  work (removed in Next 16); `pnpm type-check` and `pnpm build` are green.
+  seating falls in the approved camera framings this phase.
+- **Software-rendered screenshots.** Captured in headless Chromium via
+  SwiftShader (no GPU here); frames are correct but softer than a real GPU,
+  which is sharper and interactive.
+- **Faux smoked glass** rather than physical transmission — controllable and
+  cheap; reads as architectural glazing.
+- **Procedural (canvas) textures** and a **Lightformer reflection environment**
+  rather than photographic PBR scans / captured HDRI — the app runs under a
+  strict CSP with no external image assets. A future pass could self-host
+  scanned maps.
+- The repo's `pnpm lint` (`next lint`) is broken independently of this work
+  (removed in Next 16); `pnpm type-check` and `pnpm build` are green.
+
+## Vercel deployment — unresolved, needs logs
+
+The Vercel preview deploy is failing. It is **not** reproducible locally:
+`pnpm install --frozen-lockfile`, `pnpm type-check`, the 26 unit tests, and a
+clean `pnpm build` all pass (Node 22.22.2, pnpm 10.33.0), including under
+`CI=1 VERCEL=1 VERCEL_ENV=preview NODE_ENV=production`. This environment has no
+route to Vercel's build logs (no token/CLI; the egress proxy blocks
+`api.vercel.com`). Per the owner's instruction, no speculative build-config
+changes have been made — the exact cause must be read from the Vercel build log
+(or a `VERCEL_TOKEN` provided) before fixing.
 
 ## Not in this phase
 

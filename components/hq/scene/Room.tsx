@@ -70,6 +70,11 @@ export function Room() {
     [],
   )
 
+  const columnStone = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#2b2b30', roughness: 0.75, metalness: 0.1, envMapIntensity: 0.5 }),
+    [],
+  )
+
   // Dome: a lathed spherical cap from the wall spring up to the skylight ring.
   const domeGeo = useMemo(() => {
     const pts: THREE.Vector2[] = []
@@ -103,6 +108,33 @@ export function Room() {
 
   // Concentric brass inlay rings set into the floor beneath the Core (§8).
   const inlayRadii = [2.4, 3.4, 4.6, 6.0]
+
+  // Coffered latitude rings on the dome — with the meridian ribs these read as
+  // recessed coffers rather than exposed ribs over a void (Blueprint §6).
+  const domeRings = useMemo(() => {
+    const out: { y: number; r: number; key: number }[] = []
+    const seg = 4
+    for (let i = 1; i <= seg; i++) {
+      const a = (i / (seg + 1)) * (Math.PI / 2)
+      out.push({ y: WALL_H + (APEX_Y - WALL_H) * Math.sin(a), r: SKYLIGHT_R + (ROOM_R - SKYLIGHT_R) * Math.cos(a), key: i })
+    }
+    return out
+  }, [])
+
+  const oculusMat = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: '#1a1206', emissive: new THREE.Color('#3a2a12'), emissiveIntensity: 0.6, roughness: 0.6, metalness: 0.4, side: THREE.DoubleSide }),
+    [],
+  )
+
+  // Substantial columns framing the panorama (Blueprint §5). Two heavy piers
+  // flank the glass opening on the central axis; others punctuate the perimeter.
+  const columnAngles = useMemo(() => {
+    const arr: number[] = []
+    // Framing columns: two pairs flank the panorama (never on the central
+    // north axis behind the Core) plus two on the solid side behind the camera.
+    for (const deg of [200, 240, 300, 340, 60, 120]) arr.push((deg * Math.PI) / 180)
+    return arr
+  }, [])
 
   return (
     <group>
@@ -160,10 +192,41 @@ export function Room() {
         </mesh>
       ))}
 
-      {/* Skylight ring at the apex, directly above the Core */}
-      <mesh position-y={APEX_Y - 0.1} rotation-x={-Math.PI / 2} material={brass}>
-        <torusGeometry args={[SKYLIGHT_R, 0.12, 16, 96]} />
+      {/* Coffered latitude rings on the dome */}
+      {domeRings.map((r) => (
+        <mesh key={r.key} position-y={r.y} rotation-x={Math.PI / 2} material={bronze}>
+          <torusGeometry args={[r.r, 0.05, 8, 120]} />
+        </mesh>
+      ))}
+
+      {/* Oculus collar + glowing skylight ring at the apex, above the Core */}
+      <mesh position-y={APEX_Y - 0.12} material={oculusMat}>
+        <cylinderGeometry args={[SKYLIGHT_R + 0.35, SKYLIGHT_R, 0.5, 96, 1, true]} />
       </mesh>
+      <mesh position-y={APEX_Y - 0.1} rotation-x={-Math.PI / 2} material={brass}>
+        <torusGeometry args={[SKYLIGHT_R, 0.14, 16, 96]} />
+      </mesh>
+
+      {/* Framing columns */}
+      {columnAngles.map((a, i) => {
+        const x = Math.cos(a) * (ROOM_R - 0.35)
+        const z = Math.sin(a) * (ROOM_R - 0.35)
+        return (
+          <group key={i} position={[x, 0, z]}>
+            {/* Shaft */}
+            <mesh position-y={WALL_H / 2} material={columnStone} castShadow>
+              <cylinderGeometry args={[0.42, 0.46, WALL_H, 24]} />
+            </mesh>
+            {/* Bronze base + capital */}
+            <mesh position-y={0.2} material={bronze}>
+              <cylinderGeometry args={[0.54, 0.58, 0.4, 24]} />
+            </mesh>
+            <mesh position-y={WALL_H - 0.2} material={bronze}>
+              <cylinderGeometry args={[0.5, 0.54, 0.4, 24]} />
+            </mesh>
+          </group>
+        )
+      })}
     </group>
   )
 }

@@ -19,11 +19,13 @@ interface Shot {
 }
 
 export const SHOTS: Record<CameraPreset, Shot> = {
-  hero: { pos: [0, 2.15, 8.4], target: [0, 1.5, -2], fov: 44 },
-  executive: { pos: [2.8, 2.9, 5.6], target: [-0.4, 1.35, -2.5], fov: 44 },
-  conversation: { pos: [0, 2.15, 4.2], target: [0, 2.1, -0.5], fov: 42 },
-  atmospheric: { pos: [0, 0.8, 5.4], target: [0, 5.2, -1.5], fov: 55 },
-  boardroom: { pos: [8.4, 2.7, 5.4], target: [-1.5, 1.5, -3], fov: 46 },
+  // Lower, cinematic eye-level; longer lens (smaller fov) to avoid fisheye;
+  // desk dominant in the foreground with dome + exterior establishing scale.
+  hero: { pos: [0, 1.95, 8.2], target: [0, 1.45, -3], fov: 37 },
+  executive: { pos: [2.4, 2.35, 5.0], target: [-0.3, 1.2, -3], fov: 40 },
+  conversation: { pos: [0, 2.0, 3.8], target: [0, 2.05, -1], fov: 40 },
+  atmospheric: { pos: [0, 1.0, 4.8], target: [0, 5.2, -2], fov: 54 },
+  boardroom: { pos: [7.6, 2.5, 5.0], target: [-1.6, 1.4, -3], fov: 44 },
 }
 
 export function Cameras({ preset, reduced }: { preset: CameraPreset; reduced: boolean }) {

@@ -112,6 +112,13 @@ export function Lighting() {
       />
       {/* Cool counter-fill from the front-left keeps shadows from going black. */}
       <directionalLight position={[-7, 5, 6]} intensity={0.55} color="#c6d4e8" />
+
+      {/* Cool moonlight raking in through the glass wall (from the north). */}
+      <directionalLight position={[-6, 9, -14]} intensity={0.7} color="#aebfe0" />
+
+      {/* Warm architectural bounce rising off the marble floor. */}
+      <pointLight position={[0, 0.4, 2.5]} color="#c99a5e" intensity={12} distance={12} decay={2} />
+      <hemisphereLight args={['#20344f', '#3a2a18', 0.35]} />
     </group>
   )
 }
