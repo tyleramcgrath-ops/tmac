@@ -63,6 +63,17 @@ describe('buildDigestContent: honest, real-data-only summary', () => {
     const withoutLinks = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, [])
     expect(withoutLinks.text).not.toContain('Approve & deploy now')
   })
+  it('includes real keyword opportunities when provided, and omits the section when there are none', () => {
+    const metrics = computeOperatorMetrics([], [], '2026-07-18')
+    const withOpps = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, undefined, [
+      { query: 'best crm', page: '/crm', position: 8.2, impressions: 400, clicks: 12, ctr: 0.03 },
+    ])
+    expect(withOpps.text).toContain('Keyword opportunities (real Search Console near-misses)')
+    expect(withOpps.text).toContain('"best crm" (position 8.2, 400 impressions)')
+
+    const withoutOpps = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, undefined, [])
+    expect(withoutOpps.text).not.toContain('Keyword opportunities')
+  })
 })
 
 describe('approveLinksFor', () => {
