@@ -29,7 +29,7 @@ import type { PlateLight } from '@/components/north-star/office/plateLighting'
  *  the horizon still burning, the room lit by its own warm light.
  *  ?time=night&weather=rain etc. still work for review, as in the office. */
 const HQ_ENV: Environment = {
-  time: 'blue-hour',
+  time: 'night',
   weather: 'clear',
   season: 'summer',
   businessHealth: 92,
@@ -89,6 +89,9 @@ export default function CommandTablePage() {
           {/* ---- the world: the dusk master, seated DEEP behind the glass ---- */}
           <div className="hq-far absolute left-[19.66%] top-[19.34%] h-[43.95%] w-[60.42%] overflow-hidden">
             <ExteriorView condition={condition} location={DEFAULT_LOCATION} onLight={handleLight} />
+            {/* the board keeps a line of fire on the night horizon — dusk's
+                last heat behind the ranges, under the stars */}
+            <div aria-hidden="true" className="hz-horizonfire pointer-events-none absolute inset-x-0" />
             <div className="hq-cloudlight-a absolute -inset-x-[40%] inset-y-0" />
             <div className="hq-cloudlight-b absolute -inset-x-[40%] inset-y-0" />
             <div aria-hidden="true" className="hq-depth-haze pointer-events-none absolute inset-0" />

@@ -74,6 +74,28 @@
 }
 
 /* ---------------------------------------------------------------------
+   The horizon's fire — the board's dusk line kept alive under the stars
+   --------------------------------------------------------------------- */
+
+.hz-horizonfire {
+  top: 55%;
+  height: 24%;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    52% 46% at 50% 55%,
+    rgba(244, 164, 78, 0.5),
+    rgba(214, 126, 54, 0.18) 50%,
+    transparent 76%
+  );
+  filter: blur(6px);
+  animation: hz-fire 12s ease-in-out infinite;
+}
+@keyframes hz-fire {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* ---------------------------------------------------------------------
    The plate — the board's typography, engraved over the room
    --------------------------------------------------------------------- */
 
