@@ -16,6 +16,7 @@ import { findKeywordCannibalization } from '../../../../lib/foundation/reco/keyw
 import { detectTrafficDecay } from '../../../../lib/foundation/reco/traffic-decay'
 import { findLowCtrOutliers } from '../../../../lib/foundation/reco/ctr-outliers'
 import { findLowConversionOutliers } from '../../../../lib/foundation/reco/conversion-outliers'
+import { detectChannelConcentration } from '../../../../lib/foundation/reco/channel-concentration'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -450,9 +451,15 @@ function BreakdownTable({ title, rows, keyLabel }: { title: string; rows: { key:
 
 function Ga4ChannelTable({ rows }: { rows: Ga4ChannelRowDTO[] }) {
   if (rows.length === 0) return <p className="mt-1 text-[11px] text-[var(--rf-faint)]">No rows in the current window.</p>
+  const concentration = detectChannelConcentration(rows)
   return (
     <div className="rounded-lg border border-[var(--rf-card-line)] p-3">
       <p className="text-[10px] uppercase tracking-wide text-[var(--rf-faint)]">Analytics — traffic channel</p>
+      {concentration && (
+        <p className="mt-2 rounded-lg bg-yellow-500/10 px-3 py-2 text-[11px] text-yellow-300">
+          {Math.round(concentration.share * 100)}% of sessions come from {concentration.channel} alone — a real concentration risk. An algorithm update, ad-account issue, or platform policy change on that one channel could crater total traffic.
+        </p>
+      )}
       <div className="mt-2 overflow-x-auto">
         <table className="w-full text-[11px]">
           <thead><tr className="text-left text-[var(--rf-faint)]"><th className="pr-2 font-normal">Channel</th><th className="px-2 font-normal">Sessions</th><th className="px-2 font-normal">Engaged</th><th className="pl-2 font-normal">Conv.</th></tr></thead>
