@@ -19,7 +19,7 @@
 // ever split into a separate async step) but `deriveStage` cannot honestly
 // produce them today, and does not pretend to. Likewise 'executing'/
 // 'deploying' are real only within the acting session's own live request
-// (see the client that calls POST .../operator/execute) — deploys are executed
+// (see app/desk/panels/approvals/ApprovalsPanel.tsx) — deploys are executed
 // synchronously today, so no other poller ever observes an in-flight write.
 // A future async deploy worker would persist real intermediate states, and
 // this same function would start producing them without any API/UI change.

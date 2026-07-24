@@ -1,0 +1,560 @@
+// Foundation entity types — the persistent core of RankForge.
+// Phase A4/A6/A8: users, organizations, projects, scans, recommendations,
+// WordPress connections and auditable deployments.
+
+export type Role = 'owner' | 'admin' | 'member'
+
+export interface User {
+  id: string
+  email: string
+  name: string
+  passwordHash: string
+  // Session generation counter (Phase D.6 P6). Every issued session token
+  // embeds the tokenVersion current at issue time; bumping it invalidates ALL
+  // of the user's existing sessions at once (logout-everywhere / revoke on
+  // password change / compromise). Absent = 0 for pre-migration users.
+  tokenVersion?: number
+  // Email verification (RC2 P4). Absent/false until the user confirms their
+  // address via the emailed link. Non-blocking during the guided pilot — the app
+  // works, but an unverified banner is shown and verification is encouraged.
+  emailVerified?: boolean
+  verifyToken?: string | null
+  verifyTokenExpiresAt?: string | null
+  createdAt: string
+}
+
+export interface Organization {
+  id: string
+  name: string
+  // Pilot administration (RC2 P6). Present for pilot orgs; lets an operator set
+  // an expiry and status. When status is 'expired'/'disabled' (or expiresAt has
+  // passed) project access is blocked with a clear message.
+  pilot?: {
+    status: 'active' | 'expired' | 'disabled'
+    expiresAt?: string | null
+    notes?: string
+  }
+  // Self-serve billing (Stripe). Absent entirely on orgs created before billing
+  // existed, or in a deployment with no STRIPE_SECRET_KEY configured — both
+  // cases mean "no paywall enforced" (see lib/foundation/billing.ts), never a
+  // silent lockout. `status` is kept in sync by the Stripe webhook, not
+  // inferred client-side. Distinct from `pilot` above: `pilot` is a
+  // staff-administered manual override for the guided pilot program; `billing`
+  // is the real self-serve trial/subscription lifecycle.
+  billing?: {
+    status: 'trialing' | 'active' | 'past_due' | 'canceled'
+    trialEndsAt: string | null
+    stripeCustomerId: string | null
+    stripeSubscriptionId: string | null
+    updatedAt: string
+  }
+  createdAt: string
+}
+
+// Pilot feedback / issue reports (RC2 P6). Collected in-product so a guided
+// pilot's confusion points and bugs are captured with attribution.
+export interface PilotFeedback {
+  id: string
+  orgId: string
+  userId: string
+  projectId?: string | null
+  kind: 'feedback' | 'issue'
+  message: string
+  createdAt: string
+}
+
+export interface OrgMember {
+  orgId: string
+  userId: string
+  role: Role
+  createdAt: string
+}
+
+// Team invitation (email → org, before the invitee has (or uses) an account).
+// `token` is the single-use secret in the emailed link — never the id, which
+// is safe to expose in list views. `status` transitions pending → accepted |
+// revoked | expired (expired is derived from expiresAt, not stored eagerly).
+export interface Invitation {
+  id: string
+  orgId: string
+  email: string
+  role: Role
+  invitedBy: string
+  token: string
+  status: 'pending' | 'accepted' | 'revoked'
+  createdAt: string
+  expiresAt: string
+  acceptedAt?: string | null
+}
+
+export interface Project {
+  id: string
+  orgId: string
+  domain: string
+  name: string
+  industry: string
+  businessProfile: string
+  goals: string[]
+  notes: string
+  // Operator automation policy (Phase D). Stored as JSONB; optional.
+  operatorPolicy?: unknown
+  createdAt: string
+  updatedAt: string
+}
+
+// A persisted crawl/audit run. `pages` is the full crawl payload; `summary`
+// carries the headline numbers so lists don't need the whole blob.
+export type ScanStatus = 'queued' | 'running' | 'completed' | 'partial' | 'failed' | 'cancelled'
+
+export interface Scan {
+  id: string
+  projectId: string
+  createdBy: string
+  createdAt: string
+  status: ScanStatus
+  startedAt: string | null
+  completedAt: string | null
+  error: string | null
+  summary: {
+    pagesCrawled: number
+    urlsDiscovered: number
+    blockedCount: number
+    siteScore: number
+    critical: number
+    warning: number
+    info: number
+  }
+  pages: unknown[]
+  blocked: unknown[]
+}
+
+export type RecommendationStatus =
+  | 'open'
+  | 'accepted'
+  | 'modified'
+  | 'rejected'
+  | 'deployed'
+  | 'verified'
+  | 'rolled_back'
+  | 'dismissed'
+  // A later scan re-detected an issue that was previously confirmed fixed
+  // (verified) — something changed the live site back (a theme update, a
+  // manual edit, a plugin) without RankForge's involvement. Distinct from
+  // 'open' (never dealt with) so the regression is never silently absorbed
+  // back into the normal queue.
+  | 'regressed'
+
+// Full explainability (Phase C §9): every recommendation answers these.
+export interface RecommendationExplanation {
+  why: string
+  whyNow: string
+  whyThisPage: string
+  whatIfIgnored: string
+  whatCouldMakeWrong: string
+}
+
+// Every recommendation must answer: Why? Evidence? Confidence? Impact? Risk?
+export interface Recommendation {
+  id: string
+  projectId: string
+  scanId: string
+  // Stable cross-scan identity (Phase D.6 P1). Deterministic from the rule +
+  // logical target, so re-scans UPSERT onto the same issue instead of minting a
+  // new UUID and orphaning the human's prior triage/history. `id` stays the
+  // per-project row key; `issueId` is what survives across scans.
+  issueId: string
+  // ── First-class rule identity (Phase D.6 P2) ──────────────────────────────
+  // Typed, never parsed from display text. The operator, learning loop,
+  // recommendation engine, and verification engine all consume THESE fields;
+  // `title`/`reasoning` are presentation-only. ruleVersion lets a rule evolve
+  // (change its logic/thresholds) while keeping a stable, comparable identity.
+  ruleId: string
+  ruleVersion: number
+  ruleCategory: string
+  ruleSeverity: 'critical' | 'warning' | 'info'
+  // The business weighting bucket this page fell into ('money-page' |
+  // 'standard' | 'utility' | 'site'); typed, drives priority/impact framing.
+  businessContext: string
+  title: string
+  category: string
+  severity: 'critical' | 'warning' | 'info'
+  status: RecommendationStatus
+  // Page type this applies to (Phase C page intelligence); 'site' for
+  // cross-page recommendations.
+  pageType?: string
+  // Deterministic priority rank (1 = do first) and its numeric score.
+  priorityRank?: number
+  priorityScore?: number
+  // User-set priority override (Phase H). When present it wins over the
+  // engine's priorityRank for ordering, so a human can force an issue up or
+  // down the list. Lower = higher priority. Cleared (undefined) → fall back to
+  // the engine rank.
+  userPriority?: number
+  // Google guidance reference where applicable.
+  googleGuidance?: string
+  // Structured explainability (Phase C §9).
+  explanation?: RecommendationExplanation
+  // Whether the engine thinks a human should review before acting.
+  needsHumanReview?: boolean
+  // Why this matters — plain-language reasoning, stored, not regenerated.
+  reasoning: string
+  // Verifiable facts this rests on: which URLs, which measured signals, and
+  // the specific on-page elements supporting the finding.
+  evidence: { affectedUrls: string[]; facts: string[]; supportingElements?: string[] }
+  // 0-100. Deterministic: rule certainty × observed prevalence. The formula
+  // is stored with the number so it is auditable, never a magic constant.
+  confidence: number
+  confidenceBasis: string
+  // Which score category improves and qualitative size. No invented dollars.
+  expectedImpact: { category: string; size: 'high' | 'medium' | 'low'; note: string }
+  risk: { level: 'low' | 'medium' | 'high'; note: string }
+  // Multi-agent coordination (Phase F): which agents analyzed/challenged this,
+  // the consensus verdict, surfaced disagreements, and the provenance chain.
+  // Optional + computed each scan; stored so the UI can show traceable
+  // ownership without recomputing. Kept as `unknown` at the type boundary to
+  // avoid a types.ts → agents/ import cycle (agents/ imports types).
+  coordination?: unknown
+  createdAt: string
+  history: { at: string; by: string; from: RecommendationStatus; to: RecommendationStatus }[]
+}
+
+// A tracked competitor (Phase G §1). Overlap metrics are computed from real
+// crawls when available and graded; never invented. Stored per project.
+export interface Competitor {
+  id: string
+  projectId: string
+  domain: string
+  label: string
+  addedBy: string
+  createdAt: string
+  // Last computed overlap snapshot (graded Observations); JSONB, optional.
+  overlap?: unknown
+  // Last external-intelligence snapshot fetched for this competitor; optional.
+  lastSnapshotAt?: string | null
+  // A small, capped sample of real pages from the last crawl (url + title
+  // only) — enough to power content-gap analysis without storing full page
+  // bodies. Set alongside `overlap` by the same refresh; never invented.
+  snapshotPages?: { url: string; title: string }[]
+}
+
+// A keyword a project tracks Google rank position for over time. The keyword
+// list itself is just config; RankSnapshot rows are the actual historical
+// data, one per (keyword, check). Position tracking requires SERPAPI_KEY —
+// without it the schedule still exists but produces no snapshots, same
+// honest-fallback pattern as every other optional external integration.
+export interface TrackedKeyword {
+  id: string
+  projectId: string
+  keyword: string
+  addedBy: string
+  createdAt: string
+}
+
+// One real, timestamped Google position check for a tracked keyword. `null`
+// position means genuinely not found in the top results checked (SERPAPI_KEY
+// returns up to 100), never a placeholder — the UI must render "not ranking"
+// rather than treat null as zero.
+export interface RankSnapshot {
+  id: string
+  projectId: string
+  keyword: string
+  position: number | null
+  url: string | null
+  checkedAt: string
+}
+
+// A query a project tracks for AI-answer-engine citations (e.g. "best crm
+// software" asked of Perplexity). Config only; AiCitationSnapshot rows are
+// the actual historical checks.
+export interface TrackedAiQuery {
+  id: string
+  projectId: string
+  query: string
+  addedBy: string
+  createdAt: string
+}
+
+// One real, timestamped check of whether an AI engine cited this project's
+// domain when asked a tracked query. `available:false` means the engine
+// isn't connected (no PERPLEXITY_API_KEY) or the query errored — never
+// fabricated as "not cited". `cited`/`position`/`citedUrl`/`sourceCount`
+// are only meaningful when `available` is true.
+export interface AiCitationSnapshot {
+  id: string
+  projectId: string
+  query: string
+  engine: 'perplexity'
+  available: boolean
+  cited: boolean
+  position: number | null
+  citedUrl: string | null
+  sourceCount: number
+  message?: string
+  checkedAt: string
+}
+
+// One real, timestamped aggregate backlink-profile check for the project's
+// domain (never a page-by-page crawl of the open web — sourced from a real
+// third-party backlink index). `available:false` means no provider is
+// configured (no MAJESTIC_API_KEY) or the lookup failed — never a
+// fabricated zero.
+export interface BacklinkSnapshot {
+  id: string
+  projectId: string
+  available: boolean
+  totalBacklinks: number | null
+  referringDomains: number | null
+  trustFlow: number | null
+  citationFlow: number | null
+  message?: string
+  checkedAt: string
+}
+
+// Rolling baseline for Mission Atlas change detection (Phase G). One row per
+// project — the last OBSERVED gsc/backlinks/aiVisibility values, so the next
+// Atlas load can report real "what changed since last time" instead of always
+// comparing against nothing. `data` is untyped JSONB (PriorSnapshotData);
+// only ever written by assembleAtlas's own output, never user input.
+export interface AtlasHistory {
+  projectId: string
+  data: unknown
+  capturedAt: string
+}
+
+// A generated content brief / draft blog post (Content Studio). Researched from
+// real live SERP results (never invented) and drafted by AI from that evidence
+// + real tracked-competitor overlap; the draft is never auto-published — it
+// only becomes a live WordPress post when a user explicitly deploys it, going
+// through the same create-then-verify path as every other WordPress write.
+export type ContentBriefStatus = 'draft' | 'published' | 'discarded'
+export interface ContentBriefSerpResult {
+  url: string
+  title: string
+  snippet: string
+  position: number
+  competitorDomain: string | null // set when this result matches a tracked competitor
+}
+export interface ContentBrief {
+  id: string
+  projectId: string
+  keyword: string
+  createdBy: string
+  createdAt: string
+  status: ContentBriefStatus
+  // Research evidence — honestly empty/unavailable when no SERP key is configured.
+  serpAvailable: boolean
+  serpResults: ContentBriefSerpResult[]
+  competitorsConsidered: string[] // tracked competitor domains found in the SERP results
+  // The generated draft.
+  title: string
+  metaDescription: string
+  outline: string[]
+  contentHtml: string
+  rationale: string
+  // Set once deployed to WordPress as a real draft post.
+  wpPostId?: number
+  wpPostType?: 'posts' | 'pages'
+  wpLink?: string
+  publishedAt?: string
+}
+
+// A connected external provider (Phase H). Holds the ENCRYPTED OAuth token
+// bundle for a project's Google (or future vendor) integration, keyed by
+// (projectId, kind). The secret (access/refresh tokens) lives only inside
+// `credentialEnc` (AES-256-GCM, same primitive as WordPress app-passwords) and
+// is NEVER returned to clients — routes strip it and return only the safe
+// metadata below. There is one row per provider kind so Search Console and
+// Analytics connect independently.
+export type ExternalProviderKind = 'search-console' | 'analytics'
+
+export interface ProviderConnection {
+  projectId: string
+  kind: ExternalProviderKind
+  // Vendor family — 'google' today; the shape is vendor-neutral for later.
+  vendor: 'google'
+  // AES-256-GCM encrypted JSON token bundle { accessToken, refreshToken,
+  // expiresAt, scope }. Never serialized into an API response or a log.
+  credentialEnc: string
+  // Safe, non-secret metadata surfaced to the UI.
+  accountEmail: string | null
+  // GSC site URL ('sc-domain:example.com' or 'https://example.com/') or the
+  // GA4 numeric property id, once known/selected. null until resolved.
+  resourceId: string | null
+  scope: string
+  status: 'connected' | 'error'
+  detail: string
+  connectedBy: string
+  createdAt: string
+  updatedAt: string
+}
+
+// Which SEO plugin manages the site's title/meta storage. Detected at connect
+// time from the site's REST namespaces. 'core' = no SEO plugin (meta lives in
+// the native excerpt). Meta description is written to the matching plugin field.
+export type SeoPlugin = 'aioseo' | 'rankmath' | 'yoast' | 'core'
+
+// ── Scheduler / background jobs ──────────────────────────────────────────────
+// A durable job queue (Postgres in prod, file store in dev) drained by a
+// cron-triggered runner. See SCHEDULER_DESIGN.md.
+export type JobKind = 'scheduled_scan' | 'outcome_capture' | 'monitor' | 'competitor_refresh' | 'rank_tracking' | 'ai_citation_check' | 'backlink_refresh'
+export type JobStatus = 'queued' | 'running' | 'succeeded' | 'failed' | 'canceled'
+
+export interface Job {
+  id: string
+  orgId: string
+  projectId: string
+  kind: JobKind
+  status: JobStatus
+  runAt: string // ISO — earliest time this job may run
+  payload: Record<string, unknown>
+  attempts: number
+  maxAttempts: number
+  lockedAt: string | null
+  lockedBy: string | null
+  lastError: string | null
+  result: Record<string, unknown> | null
+  createdAt: string
+  updatedAt: string
+}
+
+// A per-project recurring schedule that materializes Jobs on its cron cadence.
+export interface Schedule {
+  id: string
+  orgId: string
+  projectId: string
+  kind: JobKind
+  cron: string // 5-field cron (min hour dom month dow), UTC
+  enabled: boolean
+  nextRunAt: string
+  lastRunAt: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface WpConnection {
+  id: string
+  projectId: string
+  siteUrl: string
+  username: string
+  // AES-256-GCM encrypted application password. Never returned to clients.
+  appPasswordEnc: string
+  // Back-compat: retained for connections created before seoPlugin existed
+  // (true ⇒ aioseo). New code should read `seoPlugin` via pluginOf().
+  aioseo: boolean
+  seoPlugin?: SeoPlugin
+  createdBy: string
+  createdAt: string
+}
+
+export type DeploymentStatus =
+  | 'applied'
+  | 'verified'
+  | 'verify_failed'
+  | 'failed'
+  | 'rolled_back'
+
+// Durable execution record (A6). Every WordPress change stores before,
+// after, who approved, when, why, verification, and rollback data — server
+// side, surviving browser close / session expiry / device change.
+export interface WpDeployment {
+  id: string
+  projectId: string
+  connectionId: string
+  postId: number
+  postType: 'posts' | 'pages'
+  postUrl: string
+  before: { title: string; metaDescription: string; contentHash: string; content: string }
+  after: { title?: string; metaDescription?: string; content?: string }
+  approvedBy: string
+  approvedAt: string
+  reason: string
+  recommendationId?: string
+  status: DeploymentStatus
+  verification: { checkedAt: string; titleMatches: boolean | null; metaMatches: boolean | null; note: string } | null
+  result: string
+  rolledBackAt?: string
+  rolledBackBy?: string
+  createdAt: string
+  // Outcome-measurement flywheel (SCHEDULER_DESIGN.md §11): did this fix
+  // actually move Search Console metrics for the affected URL? Populated by
+  // the `outcome_capture` job ~14 days after a verified deployment. Absent
+  // until then; `skipped` (never fabricated) when Search Console isn't
+  // connected or the reading failed permanently.
+  outcome?: DeploymentOutcome
+}
+
+export interface DeploymentOutcomeWindow {
+  from: string
+  to: string
+  clicks: number
+  impressions: number
+  ctr: number
+  position: number
+}
+
+export type DeploymentOutcome =
+  | {
+      capturedAt: string
+      skipped: false
+      before: DeploymentOutcomeWindow
+      after: DeploymentOutcomeWindow
+      delta: { clicks: number; impressions: number; ctr: number; position: number }
+    }
+  | { capturedAt: string; skipped: true; reason: string }
+
+export interface AuditLogEntry {
+  id: string
+  orgId: string
+  actorId: string
+  action: string
+  target: string
+  detail: string
+  at: string
+}
+
+// Activity Stream — the single event log every domain lifecycle action
+// writes to. Not a UI timeline: a backend record of record. The Compass, the
+// Mission Queue, the Agent Roster, the Morning Brief, a future notification
+// center, and a future autonomous runtime all read the same events instead
+// of each independently re-deriving "what happened" from raw entity state.
+// Every event corresponds to something that actually happened; nothing here
+// is ever synthesized for visual effect.
+export type ActivityEventType =
+  | 'mission.created'
+  | 'recommendation.generated'
+  | 'mission.prioritized'
+  | 'approval.requested'
+  | 'approval.granted'
+  | 'mission.paused'
+  | 'mission.resumed'
+  | 'mission.canceled'
+  | 'mission.retried'
+  | 'deployment.started'
+  | 'deployment.finished'
+  | 'verification.passed'
+  | 'verification.failed'
+  | 'rollback.started'
+  | 'rollback.finished'
+  | 'agent.active'
+  | 'agent.idle'
+  | 'command.executed'
+  | 'command.failed'
+  | 'atlas.recommendation_updated'
+  | 'scout.discovery_completed'
+
+export interface ActivityEvent {
+  id: string
+  orgId: string
+  projectId: string
+  type: ActivityEventType
+  summary: string
+  missionId: string | null
+  recommendationId: string | null
+  // One of the five operational roles (scout/atlas/forge/operator/sentinel)
+  // when the event is attributable to an agent; loosely typed here to avoid
+  // this module depending on lib/foundation/missions/engine.ts.
+  agentRole: string | null
+  actorId: string | null
+  detail: string | null
+  at: string
+}
