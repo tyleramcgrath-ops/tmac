@@ -495,7 +495,11 @@ export const api = {
   // right now?" A projection of the same Mission, timestamped by the
   // Activity Stream's real events. Not a diagram of its own truth. ──
   getMissionOperations: (projectId: string, missionId: string) =>
-    req<{ operations: MissionOperationsDTO }>(`/api/projects/${projectId}/missions/${missionId}/operations`),
+    // missionId is a recommendation's issueId — a composite `${projectId}:${ruleId}:${url}`
+    // key (see seed.ts) that embeds raw "://" and further "/"s. Un-encoded,
+    // those slashes get read as extra path segments and miss the
+    // [missionId] route entirely (404) instead of reaching the handler.
+    req<{ operations: MissionOperationsDTO }>(`/api/projects/${projectId}/missions/${encodeURIComponent(missionId)}/operations`),
 
   // ── Command Bar (Headquarters, Milestone 3) — a registered, enumerable
   // set of actions, not a chatbot. `confirmed` must be sent as a second,
