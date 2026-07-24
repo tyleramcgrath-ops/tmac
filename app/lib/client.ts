@@ -836,7 +836,7 @@ export type CommandActionType =
   | 'summarize-project' | 'list-approvals' | 'list-active-missions' | 'list-blocked-missions'
   | 'list-completed-today' | 'explain-mission' | 'scout-findings' | 'atlas-recommendation'
   | 'list-deployments' | 'list-failed' | 'mission-detail' | 'next-best-action'
-  | 'preview-change' | 'verify-deployment'
+  | 'preview-change' | 'verify-deployment' | 'search-project'
   | 'prioritize-mission' | 'pause-mission' | 'resume-mission' | 'focus-mission'
   | 'approve-mission' | 'deploy-mission' | 'retry-mission' | 'cancel-mission' | 'rollback-deployment'
 export type CommandRiskLevel = 'read-only' | 'reversible' | 'consequential'

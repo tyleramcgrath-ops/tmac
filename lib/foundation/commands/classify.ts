@@ -18,9 +18,16 @@ interface Matcher {
   test: (n: string) => boolean
 }
 
+// A find/search/look-up prefix is checked FIRST, ahead of every other
+// matcher — the free text after it is a global search query and may contain
+// words ("approval", "blocked", "deploy") that would otherwise misclassify
+// it as one of the fixed-phrase commands below.
+const SEARCH_PREFIX = /^(find|search(?:\s+for)?|look up)\s+(.+)/
+
 // Order matters — more specific patterns are checked first so, e.g., "deploy"
 // alone doesn't misclassify "show recent deployments" as "deploy this".
 const MATCHERS: Matcher[] = [
+  { action: 'search-project', test: (n) => SEARCH_PREFIX.test(n) },
   { action: 'rollback-deployment', test: (n) => any(n, 'roll back', 'rollback', 'revert') },
   { action: 'list-deployments', test: (n) => has(n, 'deploy') && any(n, 'recent', 'show', 'list', 'history') },
   { action: 'deploy-mission', test: (n) => has(n, 'deploy') },
@@ -54,14 +61,19 @@ export interface ClassifiedCommand {
   // real resolution happens by fuzzy title match in the engine, never
   // fabricated.
   missionHint: string | null
+  // The free-text query for a 'search-project' command — everything after
+  // the find/search/look-up prefix. Null for every other action.
+  searchQuery: string | null
 }
 
 export function classifyCommand(raw: string): ClassifiedCommand {
   const n = norm(raw)
   const match = MATCHERS.find((m) => m.test(n))
   const hintMatch = raw.match(/"([^"]+)"/)
+  const searchMatch = match?.action === 'search-project' ? n.match(SEARCH_PREFIX) : null
   return {
     action: match?.action ?? 'unsupported',
     missionHint: hintMatch ? hintMatch[1] : null,
+    searchQuery: searchMatch ? searchMatch[2] : null,
   }
 }

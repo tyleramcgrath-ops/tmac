@@ -19,6 +19,7 @@ import { buildOperatorPreview, signalsForRecommendation } from '../operator/pipe
 import { deployOneRecommendation, applyDeploymentOutcome } from '../operator/deploy-one'
 import { rollbackWpDeployment } from '../wp-execution'
 import { emitActivity } from '../activity/emit'
+import { searchProject } from '../search/engine'
 import { classifyCommand } from './classify'
 import type { CommandActionType, CommandExecutionStatus, CommandRequest, CommandResult, CommandRiskLevel } from './types'
 
@@ -39,6 +40,7 @@ const RISK_LEVEL: Record<CommandActionType, CommandRiskLevel> = {
   'next-best-action': 'read-only',
   'preview-change': 'read-only',
   'verify-deployment': 'read-only',
+  'search-project': 'read-only',
   'prioritize-mission': 'reversible',
   'pause-mission': 'reversible',
   'resume-mission': 'reversible',
@@ -61,7 +63,7 @@ const REQUIRED_ROLE: Record<CommandActionType, Role> = {
   'list-blocked-missions': 'member', 'list-completed-today': 'member', 'explain-mission': 'member',
   'scout-findings': 'member', 'atlas-recommendation': 'member', 'list-deployments': 'member',
   'list-failed': 'member', 'mission-detail': 'member', 'next-best-action': 'member',
-  'preview-change': 'member', 'verify-deployment': 'member',
+  'preview-change': 'member', 'verify-deployment': 'member', 'search-project': 'member',
   'prioritize-mission': 'member', 'pause-mission': 'member', 'resume-mission': 'member', 'focus-mission': 'member',
   'approve-mission': 'member', 'retry-mission': 'member', 'cancel-mission': 'member',
   'deploy-mission': 'admin', 'rollback-deployment': 'admin',
@@ -134,7 +136,7 @@ export async function runCommand(ctx: CommandContext, req: CommandRequest): Prom
       intent: 'unsupported',
       status: 'rejected-unsupported',
       message:
-        "I don't recognize that one yet. Try: \"what needs my approval\", \"what is North Star working on\", \"show blocked missions\", \"summarize this project\", or \"what should I do next\".",
+        "I don't recognize that one yet. Try: \"what needs my approval\", \"what is North Star working on\", \"show blocked missions\", \"summarize this project\", \"find <keyword>\", or \"what should I do next\".",
     }))
   }
 
@@ -181,7 +183,7 @@ export async function runCommand(ctx: CommandContext, req: CommandRequest): Prom
 
   // ── Level 1: read-only, executes immediately ──────────────────────────
   if (riskLevel === 'read-only') {
-    return emitCommandOutcome(ctx, req, await executeReadOnly(ctx, req, action, { missionQueue, roster, deployments, mission }))
+    return emitCommandOutcome(ctx, req, await executeReadOnly(ctx, req, action, { missionQueue, roster, deployments, contentBriefs, mission, searchQuery: classified.searchQuery }))
   }
 
   // ── Level 2/3: plan on the first call, execute only when confirmed ─────
@@ -198,9 +200,16 @@ async function executeReadOnly(
   ctx: CommandContext,
   req: CommandRequest,
   action: CommandActionType,
-  data: { missionQueue: MissionQueueSnapshot; roster: ReturnType<typeof buildAgentRoster>; deployments: Awaited<ReturnType<FoundationStore['listWpDeployments']>>; mission: Mission | null }
+  data: {
+    missionQueue: MissionQueueSnapshot
+    roster: ReturnType<typeof buildAgentRoster>
+    deployments: Awaited<ReturnType<FoundationStore['listWpDeployments']>>
+    contentBriefs: Awaited<ReturnType<FoundationStore['listContentBriefs']>>
+    mission: Mission | null
+    searchQuery: string | null
+  }
 ): Promise<CommandResult> {
-  const { missionQueue, roster, deployments, mission } = data
+  const { missionQueue, roster, deployments, contentBriefs, mission, searchQuery } = data
   const base = { intent: action, riskLevel: 'read-only' as const, status: 'executed' as const, missionId: mission?.id ?? req.missionId ?? null }
 
   switch (action) {
@@ -308,6 +317,18 @@ async function executeReadOnly(
           ? `${latest.postUrl}: ${latest.verification.note}`
           : `${latest.postUrl} has not been verified yet.`,
         evidence: latest.verification,
+      })
+    }
+    case 'search-project': {
+      if (!searchQuery) return result(req, { ...base, status: 'rejected-invalid', message: 'Search for what? Try "find missing meta description".' })
+      const found = searchProject(searchQuery, { missionQueue, roster, deployments, contentBriefs })
+      return result(req, {
+        ...base,
+        message: found.length
+          ? `${found.length} result${found.length === 1 ? '' : 's'} for "${searchQuery}": ${found.map((r) => r.title).join(', ')}.`
+          : `Nothing found for "${searchQuery}".`,
+        missionId: found.find((r) => r.missionId)?.missionId ?? base.missionId,
+        evidence: found,
       })
     }
     default:

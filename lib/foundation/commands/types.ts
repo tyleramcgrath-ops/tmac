@@ -21,6 +21,7 @@ export type CommandActionType =
   | 'next-best-action'
   | 'preview-change'
   | 'verify-deployment'
+  | 'search-project'
   // Level 2 — reversible internal change, confirm then execute
   | 'prioritize-mission'
   | 'pause-mission'
