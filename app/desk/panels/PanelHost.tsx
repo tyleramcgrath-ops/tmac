@@ -36,7 +36,7 @@ export default function PanelHost({
   return (
     <>
       <article className="ns-panel" style={{ transitionDelay: DELAYS[0] }}>
-        <BriefingPanel projectId={projectId} projectsResolved={projectsResolved} />
+        <BriefingPanel projectId={projectId} projectsResolved={projectsResolved} onCompassState={onCompassState} />
       </article>
       <article className="ns-panel" style={{ transitionDelay: DELAYS[1] }}>
         <OpportunitiesPanel projectId={projectId} projectsResolved={projectsResolved} />

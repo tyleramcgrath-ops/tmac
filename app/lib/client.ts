@@ -486,6 +486,11 @@ export const api = {
     }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
 
+  // ── Executive Brief (Headquarters, Milestone 6) — aggregates the Mission
+  // Queue, Agent Roster, Activity Stream, and Mission Atlas into one
+  // normalized "read this first" briefing. Not a new intelligence source. ──
+  getExecutiveBrief: (projectId: string) => req<{ brief: ExecutiveBriefDTO }>(`/api/projects/${projectId}/brief`),
+
   // ── Live Agent Roster (Headquarters, Milestone 1) ──
   getAgentRoster: (projectId: string) => req<{ roster: AgentRosterDTO }>(`/api/projects/${projectId}/agents/roster`),
 
@@ -749,6 +754,45 @@ export interface AtlasSnapshotDTO {
   changes: { category: string; subject: string; note: string; evidence: EvidenceDTO }[]
   briefing: MorningBriefingDTO
   grades: Record<EvidenceGradeDTO, number>
+}
+
+// ── Executive Brief (Headquarters, Milestone 6) ─────────────────────────────
+export type BriefEvidenceKind = 'mission' | 'agent' | 'metric' | 'activity'
+export interface BriefEvidenceRefDTO {
+  kind: BriefEvidenceKind
+  id: string
+  label: string
+}
+export interface BriefItemDTO {
+  text: string
+  why: string | null
+  evidence: BriefEvidenceRefDTO[]
+}
+export type AttentionSeverity = 'blocked' | 'pending-approval' | 'verification-failed' | 'canceled'
+export interface AttentionItemDTO extends BriefItemDTO {
+  severity: AttentionSeverity
+}
+export interface PerformanceMetricDTO {
+  label: string
+  value: string
+  deltaLabel: string | null
+  source: string
+}
+export interface DataSourceStatusDTO {
+  name: string
+  available: boolean
+  reason: string | null
+}
+export interface ExecutiveBriefDTO {
+  generatedAt: string
+  project: { id: string; name: string }
+  executiveSummary: string
+  priorities: BriefItemDTO[]
+  recentProgress: BriefItemDTO[]
+  attentionRequired: AttentionItemDTO[]
+  performance: { metrics: PerformanceMetricDTO[]; note: string | null }
+  recommendation: { text: string; reasoning: string; evidence: BriefEvidenceRefDTO[] } | null
+  dataSources: DataSourceStatusDTO[]
 }
 
 // ── Live Agent Roster (Headquarters, Milestone 1) ───────────────────────────

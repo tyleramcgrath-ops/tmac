@@ -224,6 +224,16 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-chips { list-style: none; margin: 0.55rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
 .ns-chips li { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; padding: 0.28rem 0.5rem; border: 1px solid rgba(210,170,102,0.22); border-radius: 6px; background: rgba(20,16,10,0.42); font-size: clamp(0.58rem,0.76vw,0.7rem); color: rgba(226,214,188,0.85); }
 .ns-chips b { font-weight: 400; white-space: nowrap; color: #ecc276; font-variant-numeric: tabular-nums; }
+
+/* Morning briefing (Milestone 6) — a compact merged priorities/attention
+   list; dot color is the only visual distinction (gold = priority, red =
+   attention), keeping the panel legible at its fixed width. */
+.ns-brief-list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.28rem; }
+.ns-brief-list li { display: flex; align-items: center; gap: 0.5rem; padding: 0.26rem 0.5rem; border: 1px solid rgba(210,170,102,0.18); border-radius: 6px; background: rgba(20,16,10,0.32); }
+.ns-brief-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ecc276; }
+.ns-brief-list li[data-kind='attention'] .ns-brief-dot { background: #e08a7a; }
+.ns-brief-text { flex: 1; min-width: 0; font-size: clamp(0.56rem,0.72vw,0.66rem); color: rgba(226,214,188,0.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-brief-sources { opacity: 0.55; font-size: clamp(0.5rem,0.64vw,0.58rem); }
 .ns-approve { margin-top: 0.7rem; padding: 0.45rem 0.95rem; border: 1px solid rgba(238,205,135,0.5); border-radius: 6px; background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; font-family: var(--serif); font-size: clamp(0.48rem,0.66vw,0.58rem); letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, opacity 0.4s ease; }
 .ns-approve:hover:not(:disabled) { background: linear-gradient(180deg, rgba(240,190,110,0.32), rgba(170,126,58,0.18)); }
 .ns-approve:focus-visible { outline: 1px solid rgba(240,205,130,0.8); outline-offset: 3px; }

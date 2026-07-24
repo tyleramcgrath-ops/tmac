@@ -1,7 +1,15 @@
 'use client'
 
+// UI layer (Engine -> API -> UI): pure presentation. Every sentence, item,
+// and number below is read directly off the ExecutiveBriefDTO the API
+// already computed by aggregating the Mission Queue, Agent Roster, Activity
+// Stream, and Mission Atlas — no derivation happens in this component. The
+// Compass briefly walks listening -> thinking -> planning -> success while
+// the real request is in flight; it never fabricates progress.
+
 import { useEffect, useState } from 'react'
-import { api, ApiError, type AtlasSnapshotDTO, type GoogleTrendsDTO } from '../../../lib/client'
+import { api, ApiError, type ExecutiveBriefDTO, type GoogleTrendsDTO } from '../../../lib/client'
+import type { CompassState } from '../../compass'
 
 // Smooth quadratic-curve sparkline through real GSC click points — mirrors
 // the curve-building approach used by the room's own SVG elements, just fed
@@ -28,11 +36,13 @@ function buildSparkline(points: { clicks: number }[]) {
 export default function BriefingPanel({
   projectId,
   projectsResolved,
+  onCompassState,
 }: {
   projectId: string | null
   projectsResolved: boolean
+  onCompassState?: (s: CompassState) => void
 }) {
-  const [snapshot, setSnapshot] = useState<AtlasSnapshotDTO | null>(null)
+  const [brief, setBrief] = useState<ExecutiveBriefDTO | null>(null)
   const [trends, setTrends] = useState<GoogleTrendsDTO | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -44,21 +54,46 @@ export default function BriefingPanel({
     }
     let cancelled = false
     setLoading(true)
-    ;(async () => {
-      try {
-        const [atlas, trend] = await Promise.all([api.getAtlas(projectId), api.getGoogleTrends(projectId)])
-        if (cancelled) return
-        setSnapshot(atlas.snapshot)
-        setTrends(trend)
-      } catch (err) {
-        if (!cancelled) setError(err instanceof ApiError ? err.message : 'Could not load the morning briefing.')
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
+
+    // The room's own wake choreography (page.tsx's runWake) authoritatively
+    // sets the Compass through 'awakening' -> 'idle' during the first few
+    // seconds after wake, ending with its own C('idle') call around 3.7s in
+    // non-quick mode. Starting the brief's real listening/thinking/planning
+    // sequence immediately on mount would be overwritten by that call a
+    // moment later — this delay ensures the brief's real generation states
+    // are the ones the user actually sees, not swallowed by wake's own
+    // scripted timers. The panel itself isn't visible until the user
+    // summons it (well after this window), so the delay is not felt as a
+    // loading stall.
+    const WAKE_SETTLE_MS = 4200
+    const timer = window.setTimeout(() => {
+      if (cancelled) return
+      onCompassState?.('listening')
+      ;(async () => {
+        try {
+          onCompassState?.('thinking')
+          const [briefRes, trend] = await Promise.all([api.getExecutiveBrief(projectId), api.getGoogleTrends(projectId)])
+          if (cancelled) return
+          onCompassState?.('planning')
+          setBrief(briefRes.brief)
+          setTrends(trend)
+          onCompassState?.('success')
+        } catch (err) {
+          if (!cancelled) {
+            setError(err instanceof ApiError ? err.message : 'Could not load the morning briefing.')
+            onCompassState?.('error')
+          }
+        } finally {
+          if (!cancelled) setLoading(false)
+        }
+      })()
+    }, WAKE_SETTLE_MS)
+
     return () => {
       cancelled = true
+      window.clearTimeout(timer)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId])
 
   if (!projectsResolved || loading) {
@@ -81,27 +116,35 @@ export default function BriefingPanel({
     )
   }
 
-  if (error || !snapshot) {
+  if (error || !brief) {
     return (
       <>
         <p className="ns-panel-eyebrow">Morning briefing</p>
         <h2>Not connected yet.</h2>
-        <p className="ns-panel-body">{error ?? 'Connect a data source to see your briefing here.'}</p>
+        <p className="ns-panel-body">{error ?? 'Could not load your briefing.'}</p>
       </>
     )
   }
 
-  const brief = snapshot.briefing
-  const bodyLine =
-    brief.overnight[0]?.detail ?? brief.newOpportunities[0]?.detail ?? 'Nothing new since your last visit.'
   const gscTrend = trends?.gsc.ok ? trends.gsc.points : null
   const spark = gscTrend ? buildSparkline(gscTrend) : null
+  const connectedSources = brief.dataSources.filter((s) => s.available).length
+
+  // Priorities and attention items share one compact list — a priority is a
+  // real next action, an attention item is a real thing blocking progress.
+  // Distinguished by dot color (gold vs red), not by separate lists, so the
+  // panel stays legible at its fixed width (a 7-column layout overflowed
+  // illegibly in Milestone 4 — this panel keeps that lesson).
+  const topItems = [
+    ...brief.priorities.slice(0, 2).map((p) => ({ kind: 'priority' as const, text: p.text })),
+    ...brief.attentionRequired.slice(0, 2).map((a) => ({ kind: 'attention' as const, text: a.text })),
+  ].slice(0, 3)
 
   return (
     <>
       <p className="ns-panel-eyebrow">Morning briefing</p>
-      <h2>{brief.headline || 'Your week, understood.'}</h2>
-      {spark ? (
+      <h2>{brief.executiveSummary}</h2>
+      {spark && (
         <svg className="ns-spark" viewBox="0 0 120 36" aria-hidden>
           <defs>
             <linearGradient id="ns-spark-fill" x1="0" y1="0" x2="0" y2="1">
@@ -113,12 +156,21 @@ export default function BriefingPanel({
           <path d={spark.d} fill="none" stroke="#ecc276" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx="120" cy={spark.lastY} r="2.2" fill="#ffe2a4" />
         </svg>
-      ) : (
-        <p className="ns-panel-body" style={{ opacity: 0.7 }}>
-          Connect Search Console to see traffic trend here.
-        </p>
       )}
-      <p className="ns-panel-body">{bodyLine}</p>
+      {topItems.length > 0 && (
+        <ul className="ns-brief-list">
+          {topItems.map((item, i) => (
+            <li key={i} data-kind={item.kind}>
+              <span className="ns-brief-dot" aria-hidden />
+              <span className="ns-brief-text">{item.text}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="ns-panel-body">
+        {brief.recommendation ? brief.recommendation.text : 'No strong signal yet — not enough evidence for a confident recommendation.'}
+      </p>
+      <p className="ns-panel-body ns-brief-sources">{connectedSources} of {brief.dataSources.length} data sources connected.</p>
     </>
   )
 }
