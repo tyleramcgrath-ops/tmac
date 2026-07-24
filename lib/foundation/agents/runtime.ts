@@ -15,8 +15,8 @@
 // populate the same shape (via push instead of poll) without any UI change —
 // the UI only ever consumes this contract, never the raw records below.
 
-import type { AtlasHistory, ContentBrief, Job, Project, Recommendation, Scan, WpDeployment } from '../types'
-import type { OperatorMetrics } from '../operator/metrics'
+import type { AtlasHistory, ContentBrief, Job, Project, Scan } from '../types'
+import { missionsForAgent, type MissionQueueSnapshot } from '../missions/engine'
 
 export type AgentId = 'scout' | 'atlas' | 'forge' | 'operator' | 'sentinel'
 
@@ -194,9 +194,12 @@ function buildForge(project: Project, briefs: ContentBrief[], now: number): Agen
   }
 }
 
-// ── Operator — approved execution & deployment. Source: open recommendations
-// (pending approval) + the most recent WordPress deployment. ──────────────
-function buildOperator(project: Project, recs: Recommendation[], deployments: WpDeployment[], now: number): AgentRuntimeState {
+// ── Operator — approved execution & deployment. Milestone 2: the mission
+// queue (lib/foundation/missions/engine.ts) is the single source of truth for
+// work — Operator's status is derived from which missions it is CURRENTLY
+// responsible for, not by independently re-scanning recommendations/
+// deployments. "The mission owns the work; the agent moves it along." ─────
+function buildOperator(project: Project, missionQueue: MissionQueueSnapshot, now: number): AgentRuntimeState {
   const base = {
     agentId: 'operator' as const,
     name: 'Operator',
@@ -204,56 +207,63 @@ function buildOperator(project: Project, recs: Recommendation[], deployments: Wp
     project: { id: project.id, name: project.name },
     sourceWorkflow: 'operator-deploy' as const,
   }
-  const latest = [...deployments].sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0]
-  if (latest && isRecent(latest.createdAt, now)) {
-    if (latest.status === 'verify_failed' || latest.status === 'failed') {
-      return {
-        ...base,
-        status: 'failed',
-        currentActivity: null,
-        progress: null,
-        evidenceAt: latest.verification?.checkedAt ?? latest.createdAt,
-        blockingReason: latest.verification?.note ?? 'The deploy could not be verified.',
-        lastCompletedAction: null,
-      }
-    }
+  const mine = missionsForAgent(missionQueue, 'operator')
+
+  const retrying = mine.find((m) => m.stage === 'retry')
+  if (retrying) {
     return {
       ...base,
-      status: 'completed',
+      status: 'failed',
       currentActivity: null,
       progress: null,
-      evidenceAt: latest.verification?.checkedAt ?? latest.createdAt,
-      blockingReason: null,
-      lastCompletedAction: latest.status === 'rolled_back' ? `Rolled back the change on ${latest.postUrl}.` : `Deployed and verified the fix on ${latest.postUrl}.`,
+      evidenceAt: retrying.updatedAt,
+      blockingReason: retrying.blockingReason,
+      lastCompletedAction: null,
     }
   }
-  const pending = recs.filter((r) => r.status === 'open')
-  if (pending.length > 0) {
+  const inFlight = mine.find((m) => m.stage === 'executing' || m.stage === 'deploying' || m.stage === 'verifying')
+  if (inFlight) {
     return {
       ...base,
-      status: 'waiting-for-approval',
-      currentActivity: `${pending.length} finding${pending.length === 1 ? '' : 's'} awaiting your approval.`,
+      status: inFlight.stage === 'verifying' ? 'verifying' : 'active',
+      currentActivity: `Deploying "${inFlight.title}".`,
       progress: null,
-      evidenceAt: pending[0].createdAt,
+      evidenceAt: inFlight.updatedAt,
       blockingReason: null,
       lastCompletedAction: null,
     }
   }
+  const waiting = mine.filter((m) => m.stage === 'waiting-for-approval' || m.stage === 'approved')
+  if (waiting.length > 0) {
+    return {
+      ...base,
+      status: 'waiting-for-approval',
+      currentActivity: `${waiting.length} mission${waiting.length === 1 ? '' : 's'} awaiting your approval.`,
+      progress: null,
+      evidenceAt: waiting[0].updatedAt,
+      blockingReason: null,
+      lastCompletedAction: null,
+    }
+  }
+  const recentlyDone = [...missionQueue.missions]
+    .filter((m) => m.stage === 'completed' && m.deployment)
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0]
   return {
     ...base,
-    status: 'idle',
+    status: recentlyDone && isRecent(recentlyDone.updatedAt, now) ? 'completed' : 'idle',
     currentActivity: null,
     progress: null,
-    evidenceAt: latest?.createdAt ?? null,
+    evidenceAt: recentlyDone?.updatedAt ?? null,
     blockingReason: null,
-    lastCompletedAction: latest ? `Deployed and verified the fix on ${latest.postUrl}.` : null,
+    lastCompletedAction: recentlyDone?.deployment ? `Deployed and verified the fix on ${recentlyDone.deployment.postUrl}.` : null,
   }
 }
 
 // ── Sentinel — verification, monitoring, failure/regression detection.
-// Source: regressed recommendations + monitor/outcome jobs + the most recent
-// deployment's verification read-back. ────────────────────────────────────
-function buildSentinel(project: Project, recs: Recommendation[], jobs: Job[], deployments: WpDeployment[], metrics: OperatorMetrics, now: number): AgentRuntimeState {
+// Missions it currently owns (verifying / retry-after-regression) come from
+// the mission queue; monitor/outcome_capture jobs cover the ambient
+// background watch that isn't itself a mission. ──────────────────────────
+function buildSentinel(project: Project, missionQueue: MissionQueueSnapshot, jobs: Job[], now: number): AgentRuntimeState {
   const base = {
     agentId: 'sentinel' as const,
     name: 'Sentinel',
@@ -261,15 +271,29 @@ function buildSentinel(project: Project, recs: Recommendation[], jobs: Job[], de
     project: { id: project.id, name: project.name },
     sourceWorkflow: 'verification' as const,
   }
-  const regressed = recs.filter((r) => r.status === 'regressed')
-  if (regressed.length > 0) {
+  const mine = missionsForAgent(missionQueue, 'sentinel')
+
+  const regressedOrFailed = mine.find((m) => m.stage === 'retry')
+  if (regressedOrFailed) {
     return {
       ...base,
       status: 'failed',
       currentActivity: null,
       progress: null,
-      evidenceAt: regressed[0].history[regressed[0].history.length - 1]?.at ?? null,
-      blockingReason: `${regressed.length} previously-verified fix${regressed.length === 1 ? '' : 'es'} regressed since.`,
+      evidenceAt: regressedOrFailed.updatedAt,
+      blockingReason: regressedOrFailed.blockingReason,
+      lastCompletedAction: null,
+    }
+  }
+  const verifying = mine.find((m) => m.stage === 'verifying')
+  if (verifying) {
+    return {
+      ...base,
+      status: 'verifying',
+      currentActivity: `Verifying "${verifying.title}" by read-back.`,
+      progress: null,
+      evidenceAt: verifying.updatedAt,
+      blockingReason: null,
       lastCompletedAction: null,
     }
   }
@@ -285,30 +309,17 @@ function buildSentinel(project: Project, recs: Recommendation[], jobs: Job[], de
       lastCompletedAction: null,
     }
   }
-  const latestVerified = [...deployments]
-    .filter((d) => d.verification)
-    .sort((a, b) => (b.verification!.checkedAt).localeCompare(a.verification!.checkedAt))[0]
-  if (latestVerified && isRecent(latestVerified.verification!.checkedAt, now)) {
-    return {
-      ...base,
-      status: 'completed',
-      currentActivity: null,
-      progress: null,
-      evidenceAt: latestVerified.verification!.checkedAt,
-      blockingReason: null,
-      lastCompletedAction: `Verified ${latestVerified.postUrl} by read-back.`,
-    }
-  }
+  const recentlyVerified = [...missionQueue.missions]
+    .filter((m) => m.stage === 'completed' && m.deployment)
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0]
   return {
     ...base,
-    status: 'idle',
+    status: recentlyVerified && isRecent(recentlyVerified.updatedAt, now) ? 'completed' : 'idle',
     currentActivity: null,
     progress: null,
-    evidenceAt: latestVerified?.verification?.checkedAt ?? null,
-    blockingReason: metrics.verificationFailureRate && metrics.verificationFailureRate > 0.2
-      ? `Verification failure rate is elevated (${Math.round(metrics.verificationFailureRate * 100)}%).`
-      : null,
-    lastCompletedAction: latestVerified ? `Verified ${latestVerified.postUrl} by read-back.` : null,
+    evidenceAt: recentlyVerified?.updatedAt ?? null,
+    blockingReason: null,
+    lastCompletedAction: recentlyVerified?.deployment ? `Verified ${recentlyVerified.deployment.postUrl} by read-back.` : null,
   }
 }
 
@@ -316,11 +327,11 @@ export function buildAgentRoster(input: {
   project: Project
   scans: Scan[]
   jobs: Job[]
-  recommendations: Recommendation[]
-  deployments: WpDeployment[]
   contentBriefs: ContentBrief[]
   atlasHistory: AtlasHistory | null
-  operatorMetrics: OperatorMetrics
+  // The single source of truth for Operator/Sentinel — see the module
+  // comment above and lib/foundation/missions/engine.ts.
+  missionQueue: MissionQueueSnapshot
   now?: number
 }): AgentRosterSnapshot {
   const now = input.now ?? Date.now()
@@ -334,8 +345,8 @@ export function buildAgentRoster(input: {
       buildScout(input.project, scans, now),
       buildAtlas(input.project, jobs, input.atlasHistory, now),
       buildForge(input.project, briefs, now),
-      buildOperator(input.project, input.recommendations, input.deployments, now),
-      buildSentinel(input.project, input.recommendations, jobs, input.deployments, input.operatorMetrics, now),
+      buildOperator(input.project, input.missionQueue, now),
+      buildSentinel(input.project, input.missionQueue, jobs, now),
     ],
   }
 }

@@ -354,6 +354,22 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-agents li[data-status='active'] .ns-agents-status, .ns-agents li[data-status='verifying'] .ns-agents-status { color: #ecc276; }
 .ns-agents li[data-status='failed'] .ns-agents-status, .ns-agents li[data-status='blocked'] .ns-agents-status { color: #e08a7a; }
 
+/* mission queue — summary counters + a short recent-missions list */
+.ns-missions-summary { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.35rem; }
+.ns-missions-summary li { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; padding: 0.35rem 0.2rem; border: 1px solid rgba(210,170,102,0.2); border-radius: 6px; background: rgba(20,16,10,0.36); }
+.ns-missions-summary b { font-size: clamp(0.72rem,0.95vw,0.86rem); color: #ecc276; font-variant-numeric: tabular-nums; font-weight: 400; }
+.ns-missions-summary span { font-size: clamp(0.42rem,0.56vw,0.5rem); letter-spacing: 0.06em; text-transform: uppercase; color: rgba(226,214,188,0.55); text-align: center; }
+.ns-missions-list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.28rem; }
+.ns-missions-list li { display: flex; align-items: center; gap: 0.5rem; padding: 0.26rem 0.5rem; border: 1px solid rgba(210,170,102,0.18); border-radius: 6px; background: rgba(20,16,10,0.32); }
+.ns-missions-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: rgba(226,214,188,0.35); }
+.ns-missions-title { flex: 1; min-width: 0; font-size: clamp(0.54rem,0.7vw,0.64rem); color: rgba(226,214,188,0.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-missions-stage { font-weight: 400; white-space: nowrap; font-size: clamp(0.48rem,0.6vw,0.55rem); letter-spacing: 0.06em; text-transform: uppercase; color: rgba(226,214,188,0.5); }
+.ns-missions-list li[data-stage='waiting-for-approval'] .ns-missions-dot, .ns-missions-list li[data-stage='approved'] .ns-missions-dot { background: #9ec6e0; }
+.ns-missions-list li[data-stage='executing'] .ns-missions-dot, .ns-missions-list li[data-stage='deploying'] .ns-missions-dot, .ns-missions-list li[data-stage='verifying'] .ns-missions-dot { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-missions-list li[data-stage='completed'] .ns-missions-dot { background: #9ed6a0; }
+.ns-missions-list li[data-stage='failed'] .ns-missions-dot, .ns-missions-list li[data-stage='retry'] .ns-missions-dot { background: #e08a7a; }
+.ns-missions-list li[data-stage='failed'] .ns-missions-stage, .ns-missions-list li[data-stage='retry'] .ns-missions-stage { color: #e08a7a; }
+
 @media (prefers-reduced-motion: reduce) {
   .ns-progress-bar.indeterminate, .ns-skeleton-line { animation: none; }
 }

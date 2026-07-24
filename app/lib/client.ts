@@ -489,6 +489,10 @@ export const api = {
   // ── Live Agent Roster (Headquarters, Milestone 1) ──
   getAgentRoster: (projectId: string) => req<{ roster: AgentRosterDTO }>(`/api/projects/${projectId}/agents/roster`),
 
+  // ── Mission Queue (Headquarters, Milestone 2) — the single source of
+  // truth for work: every recommendation's real lifecycle. ──
+  getMissionQueue: (projectId: string) => req<{ queue: MissionQueueDTO }>(`/api/projects/${projectId}/missions`),
+
   // ── Rank tracking history ──
   listTrackedKeywords: (projectId: string) =>
     req<{ keywords: TrackedKeywordDTO[] }>(`/api/projects/${projectId}/rankings/keywords`),
@@ -741,6 +745,42 @@ export interface AgentRuntimeStateDTO {
 export interface AgentRosterDTO {
   generatedAt: string
   agents: AgentRuntimeStateDTO[]
+}
+
+// ── Mission Queue (Headquarters, Milestone 2) ───────────────────────────────
+export type MissionStage =
+  | 'discovered' | 'scored' | 'planned' | 'waiting-for-approval' | 'approved'
+  | 'executing' | 'deploying' | 'verifying' | 'completed' | 'failed' | 'retry'
+export interface MissionDTO {
+  id: string
+  recommendationId: string
+  title: string
+  category: string
+  severity: 'critical' | 'warning' | 'info'
+  stage: MissionStage
+  currentAgent: AgentId | null
+  project: { id: string; name: string }
+  createdAt: string
+  updatedAt: string
+  confidence: number
+  expectedImpactSize: 'high' | 'medium' | 'low'
+  blockingReason: string | null
+  deployment: { id: string; postUrl: string; status: string } | null
+}
+export interface MissionQueueSummaryDTO {
+  total: number
+  waitingForApproval: number
+  approved: number
+  active: number
+  completed: number
+  failed: number
+  retry: number
+}
+export interface MissionQueueDTO {
+  generatedAt: string
+  missions: MissionDTO[]
+  currentMission: MissionDTO | null
+  summary: MissionQueueSummaryDTO
 }
 
 export interface DiffSeg {

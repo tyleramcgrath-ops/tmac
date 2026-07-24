@@ -1,13 +1,19 @@
-// Live Agent Roster (Headquarters, Milestone 1) — a read-time projection of
-// real workflow state (scans, jobs, recommendations, deployments, content
-// briefs, atlas history) onto five named operational roles. See
+// Live Agent Roster (Headquarters, Milestone 1/2) — a read-time projection of
+// real workflow state onto five named operational roles. See
 // lib/foundation/agents/runtime.ts for the documented status-mapping rules.
-// No new persistence, no autonomous execution — this is pure recomputation
-// over records other routes already produce.
+// No new persistence, no autonomous execution.
+//
+// Milestone 2: Operator and Sentinel are derived from the mission queue (the
+// single source of truth for work — lib/foundation/missions/engine.ts), not
+// independently re-scanned here. Scout/Atlas/Forge still read their own
+// workflows directly (scans, background jobs, content briefs), since crawling
+// and intelligence-gathering aren't themselves missions — they're what
+// produces and feeds missions.
 
 import { handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
-import { computeOperatorMetrics } from '@/lib/foundation/operator/metrics'
+import { coordinateProject } from '@/lib/foundation/agents/service'
+import { buildMissionQueue } from '@/lib/foundation/missions/engine'
 import { buildAgentRoster } from '@/lib/foundation/agents/runtime'
 
 export const runtime = 'nodejs'
@@ -18,27 +24,28 @@ export const GET = handled(async (request, { params }) => {
   const { project } = await requireProjectRole(user, projectId, 'member')
   const store = await getStore()
 
-  const [scans, jobs, recommendations, deployments, contentBriefs, atlasHistory] = await Promise.all([
+  const [scans, jobs, contentBriefs, atlasHistory, coordination, deployments] = await Promise.all([
     store.listScans(projectId, 5),
     store.listJobs(projectId, 20),
-    store.listRecommendations(projectId),
-    store.listWpDeployments(projectId),
     store.listContentBriefs(projectId),
     store.getAtlasHistory(projectId),
+    coordinateProject(store, project),
+    store.listWpDeployments(projectId),
   ])
 
-  const today = new Date().toISOString().slice(0, 10)
-  const operatorMetrics = computeOperatorMetrics(recommendations, deployments, today)
+  const missionQueue = buildMissionQueue({
+    project: { id: project.id, name: project.name },
+    coordination,
+    deployments,
+  })
 
   const roster = buildAgentRoster({
     project,
     scans,
     jobs,
-    recommendations,
-    deployments,
     contentBriefs,
     atlasHistory,
-    operatorMetrics,
+    missionQueue,
   })
 
   return Response.json({ roster })

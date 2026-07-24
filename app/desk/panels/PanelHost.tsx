@@ -10,8 +10,9 @@ import BriefingPanel from './briefing/BriefingPanel'
 import OpportunitiesPanel from './opportunities/OpportunitiesPanel'
 import ApprovalsPanel from './approvals/ApprovalsPanel'
 import AgentRosterPanel from './agents/AgentRosterPanel'
+import MissionQueuePanel from './missions/MissionQueuePanel'
 
-const DELAYS = ['0ms', '130ms', '260ms', '390ms']
+const DELAYS = ['0ms', '130ms', '260ms', '390ms', '520ms']
 
 export default function PanelHost({
   projectId,
@@ -54,6 +55,9 @@ export default function PanelHost({
           panelsUp={panelsUp}
           onCompassSignal={onAgentSignal}
         />
+      </article>
+      <article className="ns-panel" style={{ transitionDelay: DELAYS[4] }}>
+        <MissionQueuePanel projectId={projectId} projectsResolved={projectsResolved} panelsUp={panelsUp} />
       </article>
     </>
   )
