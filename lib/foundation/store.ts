@@ -7,6 +7,8 @@
 // is never the source of truth for any entity defined here.
 
 import type {
+  ActivityEvent,
+  ActivityEventType,
   AiCitationSnapshot,
   AtlasHistory,
   AuditLogEntry,
@@ -134,6 +136,9 @@ export interface FoundationStore {
   // audit log
   appendAudit(entry: AuditLogEntry): Promise<void>
   listAudit(orgId: string, limit?: number): Promise<AuditLogEntry[]>
+  // activity stream — see ActivityEvent in types.ts
+  appendActivity(event: ActivityEvent): Promise<void>
+  listActivity(projectId: string, opts?: { limit?: number; types?: ActivityEventType[] }): Promise<ActivityEvent[]>
 }
 
 let cached: FoundationStore | null = null

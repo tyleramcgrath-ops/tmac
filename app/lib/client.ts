@@ -496,6 +496,18 @@ export const api = {
   // ── Command Bar (Headquarters, Milestone 3) — a registered, enumerable
   // set of actions, not a chatbot. `confirmed` must be sent as a second,
   // separate call for Level 2/3 actions — never combined with the plan. ──
+  // ── Activity Stream (Headquarters, Milestone 3.5 architectural refinement)
+  // — the single event log every real domain action writes to. Not a UI
+  // timeline of its own; every future consumer (notification center,
+  // mission history, timeline) reads this instead of re-deriving history. ──
+  getActivity: (projectId: string, opts?: { limit?: number; types?: ActivityEventType[] }) => {
+    const qs = new URLSearchParams()
+    if (opts?.limit) qs.set('limit', String(opts.limit))
+    if (opts?.types?.length) qs.set('types', opts.types.join(','))
+    const suffix = qs.toString() ? `?${qs.toString()}` : ''
+    return req<{ events: ActivityEventDTO[] }>(`/api/projects/${projectId}/activity${suffix}`)
+  },
+
   runCommand: (projectId: string, commandReq: CommandRequestDTO) =>
     req<{ result: CommandResultDTO }>(`/api/projects/${projectId}/commands`, {
       method: 'POST',
@@ -825,6 +837,27 @@ export interface CommandResultDTO {
   message: string
   evidence: unknown
   auditedAt: string | null
+}
+
+// ── Activity Stream (Headquarters, Milestone 3.5) ───────────────────────────
+export type ActivityEventType =
+  | 'mission.created' | 'recommendation.generated' | 'mission.prioritized' | 'approval.requested'
+  | 'approval.granted' | 'mission.paused' | 'mission.resumed' | 'mission.canceled' | 'mission.retried'
+  | 'deployment.started' | 'deployment.finished' | 'verification.passed' | 'verification.failed'
+  | 'rollback.started' | 'rollback.finished' | 'agent.active' | 'agent.idle' | 'command.executed'
+  | 'command.failed' | 'atlas.recommendation_updated' | 'scout.discovery_completed'
+export interface ActivityEventDTO {
+  id: string
+  orgId: string
+  projectId: string
+  type: ActivityEventType
+  summary: string
+  missionId: string | null
+  recommendationId: string | null
+  agentRole: string | null
+  actorId: string | null
+  detail: string | null
+  at: string
 }
 
 export interface DiffSeg {

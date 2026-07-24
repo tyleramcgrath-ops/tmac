@@ -9,6 +9,7 @@ import type { Project, Recommendation, WpConnection } from '../types'
 import { buildOperatorPreview, outcomeForDeployment, signalsForRecommendation } from './pipeline'
 import type { AutomationPolicy } from './policy'
 import { executeWpDeployment, resolveWpTarget } from '../wp-execution'
+import { emitActivity } from '../activity/emit'
 
 export interface DeployOneResult {
   recommendationId: string
@@ -76,6 +77,17 @@ export async function deployOneRecommendation(input: {
   const target = await resolveWpTarget(conn, rec.evidence.affectedUrls[0])
   if (!target) return { recommendationId: rec.id, ok: false, stage: 'resolve', error: 'could not resolve a WordPress post for the affected URL' }
 
+  await emitActivity(store, {
+    orgId: project.orgId,
+    projectId: project.id,
+    type: 'deployment.started',
+    summary: `Operator is deploying "${rec.title}" to WordPress.`,
+    missionId: rec.issueId,
+    recommendationId: rec.id,
+    agentRole: 'operator',
+    actorId: approvedBy,
+  })
+
   try {
     const dep = await executeWpDeployment({
       projectId: project.id,
@@ -89,6 +101,39 @@ export async function deployOneRecommendation(input: {
       recommendationId: rec.id,
     })
     const note = await applyDeploymentOutcome(store, rec, approvedBy, dep.status, dep.result)
+    await emitActivity(store, {
+      orgId: project.orgId,
+      projectId: project.id,
+      type: 'deployment.finished',
+      summary: `Deployment of "${rec.title}" finished: ${dep.status}.`,
+      missionId: rec.issueId,
+      recommendationId: rec.id,
+      agentRole: 'operator',
+      actorId: approvedBy,
+      detail: dep.status,
+    })
+    if (dep.status === 'verified') {
+      await emitActivity(store, {
+        orgId: project.orgId,
+        projectId: project.id,
+        type: 'verification.passed',
+        summary: `Sentinel verified "${rec.title}" is live as expected.`,
+        missionId: rec.issueId,
+        recommendationId: rec.id,
+        agentRole: 'sentinel',
+      })
+    } else if (dep.status === 'verify_failed' || dep.status === 'failed') {
+      await emitActivity(store, {
+        orgId: project.orgId,
+        projectId: project.id,
+        type: 'verification.failed',
+        summary: `Sentinel could not verify "${rec.title}" — reopened for another pass.`,
+        missionId: rec.issueId,
+        recommendationId: rec.id,
+        agentRole: 'sentinel',
+        detail: dep.result,
+      })
+    }
     return {
       recommendationId: rec.id,
       ok: dep.status === 'verified',
@@ -99,6 +144,17 @@ export async function deployOneRecommendation(input: {
       note,
     }
   } catch (err) {
+    await emitActivity(store, {
+      orgId: project.orgId,
+      projectId: project.id,
+      type: 'deployment.finished',
+      summary: `Deployment of "${rec.title}" failed before it reached WordPress.`,
+      missionId: rec.issueId,
+      recommendationId: rec.id,
+      agentRole: 'operator',
+      actorId: approvedBy,
+      detail: err instanceof Error ? err.message : 'deploy failed',
+    })
     return { recommendationId: rec.id, ok: false, stage: 'deploy', error: err instanceof Error ? err.message : 'deploy failed' }
   }
 }

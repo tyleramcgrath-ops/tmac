@@ -11,6 +11,7 @@ import { decryptSecret } from './crypto'
 import { getStore } from './store'
 import { applyContentTransform, verifyContentTransform, type ContentTransform } from './operator/content-fix'
 import { makeJob } from './scheduler/engine'
+import { emitActivity } from './activity/emit'
 import type { SeoPlugin, WpConnection, WpDeployment } from './types'
 
 // Resolve the effective SEO plugin for a connection, honouring the legacy
@@ -538,6 +539,19 @@ export async function rollbackWpDeployment(opts: {
 }): Promise<WpDeployment> {
   const store = await getStore()
   const dep = opts.deployment
+  const project = await store.getProject(dep.projectId)
+
+  if (project) {
+    await emitActivity(store, {
+      orgId: project.orgId,
+      projectId: dep.projectId,
+      type: 'rollback.started',
+      summary: `Operator is rolling back the deployment on ${dep.postUrl}.`,
+      recommendationId: dep.recommendationId ?? null,
+      agentRole: 'operator',
+      actorId: opts.actorId,
+    })
+  }
 
   const restore: WpChanges = {}
   if (dep.after.title !== undefined) restore.title = dep.before.title
@@ -564,5 +578,17 @@ export async function rollbackWpDeployment(opts: {
       ? 'Rolled back to captured before-values and verified.'
       : 'Rollback applied but verification found mismatches — check the site.'
   await store.updateWpDeployment(dep)
+
+  if (project) {
+    await emitActivity(store, {
+      orgId: project.orgId,
+      projectId: dep.projectId,
+      type: 'rollback.finished',
+      summary: `Rollback of ${dep.postUrl} finished: ${dep.result}`,
+      recommendationId: dep.recommendationId ?? null,
+      agentRole: 'operator',
+      actorId: opts.actorId,
+    })
+  }
   return dep
 }

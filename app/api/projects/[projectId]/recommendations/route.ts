@@ -2,7 +2,20 @@ import { audit, enforceRateLimit, handled, requireProjectRole, requireUser } fro
 import { getStore } from '@/lib/foundation/store'
 import { coordinateProject } from '@/lib/foundation/agents/service'
 import { RECOMMENDATION_TRANSITIONS } from '@/lib/foundation/reco/transitions'
-import type { RecommendationStatus } from '@/lib/foundation/types'
+import { emitActivity } from '@/lib/foundation/activity/emit'
+import type { ActivityEventType, RecommendationStatus } from '@/lib/foundation/types'
+
+// The subset of transitions reachable from this general-purpose route that
+// map cleanly onto a single Activity Stream event type. Transitions this
+// route allows but that don't map here (e.g. into 'deployed'/'verified') are
+// always driven by the deploy/rollback pipeline instead, which emits its own
+// deployment.*/verification.* events at the source — never duplicated here.
+const ACTIVITY_FOR_STATUS: Partial<Record<RecommendationStatus, ActivityEventType>> = {
+  accepted: 'approval.granted',
+  dismissed: 'mission.paused',
+  rejected: 'mission.canceled',
+  open: 'mission.resumed',
+}
 
 export const runtime = 'nodejs'
 
@@ -78,5 +91,19 @@ export const PATCH = handled(async (request, { params }) => {
     rec.id,
     hasStatus ? `${rec.title}: → ${rec.status}` : `${rec.title}: priority=${rec.userPriority ?? 'cleared'}`
   )
+  if (hasStatus) {
+    const activityType = ACTIVITY_FOR_STATUS[rec.status]
+    if (activityType) {
+      await emitActivity(store, {
+        orgId: project.orgId,
+        projectId,
+        type: activityType,
+        summary: `"${rec.title}" is now ${rec.status}.`,
+        missionId: rec.issueId,
+        recommendationId: rec.id,
+        actorId: user.id,
+      })
+    }
+  }
   return Response.json({ recommendation: rec })
 })

@@ -511,3 +511,50 @@ export interface AuditLogEntry {
   detail: string
   at: string
 }
+
+// Activity Stream — the single event log every domain lifecycle action
+// writes to. Not a UI timeline: a backend record of record. The Compass, the
+// Mission Queue, the Agent Roster, the Morning Brief, a future notification
+// center, and a future autonomous runtime all read the same events instead
+// of each independently re-deriving "what happened" from raw entity state.
+// Every event corresponds to something that actually happened; nothing here
+// is ever synthesized for visual effect.
+export type ActivityEventType =
+  | 'mission.created'
+  | 'recommendation.generated'
+  | 'mission.prioritized'
+  | 'approval.requested'
+  | 'approval.granted'
+  | 'mission.paused'
+  | 'mission.resumed'
+  | 'mission.canceled'
+  | 'mission.retried'
+  | 'deployment.started'
+  | 'deployment.finished'
+  | 'verification.passed'
+  | 'verification.failed'
+  | 'rollback.started'
+  | 'rollback.finished'
+  | 'agent.active'
+  | 'agent.idle'
+  | 'command.executed'
+  | 'command.failed'
+  | 'atlas.recommendation_updated'
+  | 'scout.discovery_completed'
+
+export interface ActivityEvent {
+  id: string
+  orgId: string
+  projectId: string
+  type: ActivityEventType
+  summary: string
+  missionId: string | null
+  recommendationId: string | null
+  // One of the five operational roles (scout/atlas/forge/operator/sentinel)
+  // when the event is attributable to an agent; loosely typed here to avoid
+  // this module depending on lib/foundation/missions/engine.ts.
+  agentRole: string | null
+  actorId: string | null
+  detail: string | null
+  at: string
+}

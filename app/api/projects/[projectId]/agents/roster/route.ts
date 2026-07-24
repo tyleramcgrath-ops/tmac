@@ -15,6 +15,7 @@ import { getStore } from '@/lib/foundation/store'
 import { coordinateProject } from '@/lib/foundation/agents/service'
 import { buildMissionQueue } from '@/lib/foundation/missions/engine'
 import { buildAgentRoster } from '@/lib/foundation/agents/runtime'
+import { emitActivity } from '@/lib/foundation/activity/emit'
 
 export const runtime = 'nodejs'
 
@@ -47,6 +48,32 @@ export const GET = handled(async (request, { params }) => {
     atlasHistory,
     missionQueue,
   })
+
+  // Agent Roster is polled, not pushed — but a genuine active/idle
+  // transition is still a real event worth recording once, not on every
+  // poll. Detect it by comparing against the last agent.active/agent.idle
+  // event this project actually emitted, per role.
+  const recentAgentEvents = await store.listActivity(projectId, {
+    types: ['agent.active', 'agent.idle'],
+    limit: 50,
+  })
+  const lastBucketByRole = new Map<string, 'active' | 'idle'>()
+  for (const e of recentAgentEvents) {
+    if (e.agentRole && !lastBucketByRole.has(e.agentRole)) {
+      lastBucketByRole.set(e.agentRole, e.type === 'agent.active' ? 'active' : 'idle')
+    }
+  }
+  for (const agent of roster.agents) {
+    const bucket: 'active' | 'idle' = agent.status === 'idle' ? 'idle' : 'active'
+    if (lastBucketByRole.get(agent.agentId) === bucket) continue
+    await emitActivity(store, {
+      orgId: project.orgId,
+      projectId,
+      type: bucket === 'active' ? 'agent.active' : 'agent.idle',
+      summary: `${agent.name} became ${bucket}${agent.currentActivity ? `: ${agent.currentActivity}` : '.'}`,
+      agentRole: agent.agentId,
+    })
+  }
 
   return Response.json({ roster })
 })

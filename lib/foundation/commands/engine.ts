@@ -18,6 +18,7 @@ import { latestScanPages, policyOf } from '../operator/context'
 import { buildOperatorPreview, signalsForRecommendation } from '../operator/pipeline'
 import { deployOneRecommendation, applyDeploymentOutcome } from '../operator/deploy-one'
 import { rollbackWpDeployment } from '../wp-execution'
+import { emitActivity } from '../activity/emit'
 import { classifyCommand } from './classify'
 import type { CommandActionType, CommandExecutionStatus, CommandRequest, CommandResult, CommandRiskLevel } from './types'
 
@@ -108,15 +109,33 @@ function result(base: CommandRequest, patch: Partial<CommandResult>): CommandRes
   }
 }
 
+// The generic Activity Stream layer for the Command Bar: every command that
+// reaches a final (non-pending) outcome is recorded here, regardless of
+// which specific domain event(s) its handler also emitted. This is what lets
+// a future notification center or timeline show "12 commands run today"
+// without knowing about every individual action type.
+async function emitCommandOutcome(ctx: CommandContext, req: CommandRequest, r: CommandResult): Promise<CommandResult> {
+  if (r.status === 'pending-confirmation') return r
+  await emitActivity(ctx.store, {
+    orgId: ctx.project.orgId,
+    projectId: ctx.project.id,
+    type: r.status === 'executed' ? 'command.executed' : 'command.failed',
+    summary: r.status === 'executed' ? `Command executed: "${req.raw}"` : `Command failed: "${req.raw}" — ${r.message}`,
+    missionId: r.missionId,
+    actorId: ctx.userId,
+  })
+  return r
+}
+
 export async function runCommand(ctx: CommandContext, req: CommandRequest): Promise<CommandResult> {
   const classified = classifyCommand(req.raw)
   if (classified.action === 'unsupported') {
-    return result(req, {
+    return emitCommandOutcome(ctx, req, result(req, {
       intent: 'unsupported',
       status: 'rejected-unsupported',
       message:
         "I don't recognize that one yet. Try: \"what needs my approval\", \"what is North Star working on\", \"show blocked missions\", \"summarize this project\", or \"what should I do next\".",
-    })
+    }))
   }
 
   const action = classified.action
@@ -124,13 +143,13 @@ export async function runCommand(ctx: CommandContext, req: CommandRequest): Prom
   const requiredRole = REQUIRED_ROLE[action]
 
   if (ROLE_RANK[ctx.userRole] < ROLE_RANK[requiredRole]) {
-    return result(req, {
+    return emitCommandOutcome(ctx, req, result(req, {
       intent: action,
       riskLevel,
       permission: 'denied',
       status: 'rejected-permission',
       message: `This action requires the ${requiredRole} role.`,
-    })
+    }))
   }
 
   // Everything below needs the current real state — computed fresh, never
@@ -152,24 +171,24 @@ export async function runCommand(ctx: CommandContext, req: CommandRequest): Prom
   ]
   const mission = resolveMission(missionQueue, req.missionId, classified.missionHint)
   if (needsMission.includes(action) && !mission) {
-    return result(req, {
+    return emitCommandOutcome(ctx, req, result(req, {
       intent: action,
       riskLevel,
       status: 'rejected-invalid',
       message: 'Which mission? Select one in the Mission Queue first, or name it in your command.',
-    })
+    }))
   }
 
   // ── Level 1: read-only, executes immediately ──────────────────────────
   if (riskLevel === 'read-only') {
-    return await executeReadOnly(ctx, req, action, { missionQueue, roster, deployments, mission })
+    return emitCommandOutcome(ctx, req, await executeReadOnly(ctx, req, action, { missionQueue, roster, deployments, mission }))
   }
 
   // ── Level 2/3: plan on the first call, execute only when confirmed ─────
   if (!req.confirmed) {
     return await planMutation(ctx, req, action, riskLevel, { missionQueue, mission, deployments })
   }
-  return await executeMutation(ctx, req, action, riskLevel, { missionQueue, mission, deployments })
+  return emitCommandOutcome(ctx, req, await executeMutation(ctx, req, action, riskLevel, { missionQueue, mission, deployments }))
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -410,7 +429,11 @@ async function executeMutation(
   const base = { intent: action, riskLevel, missionId: mission?.id ?? null }
   const auditedAt = new Date().toISOString()
 
-  async function transitionAndAudit(to: Recommendation['status'], auditAction: string) {
+  async function transitionAndAudit(
+    to: Recommendation['status'],
+    auditAction: string,
+    activityType: 'approval.granted' | 'mission.paused' | 'mission.resumed' | 'mission.canceled' | 'mission.retried'
+  ) {
     const rec = await ctx.store.getRecommendation(mission!.recommendationId)
     if (!rec) return result(req, { ...base, status: 'failed', message: 'That recommendation no longer exists.' })
     if (!canTransition(rec.status, to)) {
@@ -420,6 +443,15 @@ async function executeMutation(
     rec.status = to
     await ctx.store.updateRecommendation(rec)
     await audit(ctx.project.orgId, ctx.userId, auditAction, rec.id, `${rec.title}: → ${to} (via command bar)`)
+    await emitActivity(ctx.store, {
+      orgId: ctx.project.orgId,
+      projectId: ctx.project.id,
+      type: activityType,
+      summary: `"${rec.title}" is now ${to}.`,
+      missionId: mission!.id,
+      recommendationId: rec.id,
+      actorId: ctx.userId,
+    })
     return result(req, { ...base, status: 'executed', message: `"${mission!.title}" is now ${to}.`, evidence: rec, auditedAt })
   }
 
@@ -430,18 +462,28 @@ async function executeMutation(
       rec.userPriority = 1
       await ctx.store.updateRecommendation(rec)
       await audit(ctx.project.orgId, ctx.userId, 'recommendation.priority', rec.id, `${rec.title}: priority=1 (via command bar)`)
+      await emitActivity(ctx.store, {
+        orgId: ctx.project.orgId,
+        projectId: ctx.project.id,
+        type: 'mission.prioritized',
+        summary: `"${rec.title}" was moved to top priority.`,
+        missionId: mission!.id,
+        recommendationId: rec.id,
+        agentRole: 'atlas',
+        actorId: ctx.userId,
+      })
       return result(req, { ...base, status: 'executed', message: `"${mission!.title}" is now top priority.`, evidence: rec, auditedAt })
     }
     case 'pause-mission':
-      return await transitionAndAudit('dismissed', 'recommendation.status')
+      return await transitionAndAudit('dismissed', 'recommendation.status', 'mission.paused')
     case 'resume-mission':
-      return await transitionAndAudit('open', 'recommendation.status')
+      return await transitionAndAudit('open', 'recommendation.status', 'mission.resumed')
     case 'approve-mission':
-      return await transitionAndAudit('accepted', 'recommendation.status')
+      return await transitionAndAudit('accepted', 'recommendation.status', 'approval.granted')
     case 'retry-mission':
-      return await transitionAndAudit('open', 'recommendation.status')
+      return await transitionAndAudit('open', 'recommendation.status', 'mission.retried')
     case 'cancel-mission':
-      return await transitionAndAudit('rejected', 'recommendation.status')
+      return await transitionAndAudit('rejected', 'recommendation.status', 'mission.canceled')
     case 'focus-mission':
       return result(req, { ...base, status: 'executed', message: `"${mission!.title}" is in focus.`, evidence: mission, auditedAt })
     case 'deploy-mission': {
