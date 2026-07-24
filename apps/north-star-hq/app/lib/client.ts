@@ -237,20 +237,13 @@ export interface DeploymentDTO {
 }
 
 export const api = {
-  // auth
+  // auth — there is no login/signup form anywhere in this app; the
+  // onboarding wizard (see app/onboarding-wizard.tsx) is the only account
+  // creation path, via activateOnboarding.
   me: () => req<{ user: SessionUser | null; orgs?: Org[] }>('/api/auth/me'),
-  signup: (email: string, password: string, name?: string) =>
-    req<{ user: SessionUser; org: Org }>('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email, password, name }),
-    }),
-  login: (email: string, password: string) =>
-    req<{ user: SessionUser }>('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
   logout: () => req<{ ok: true }>('/api/auth/logout', { method: 'POST' }),
-  // Email verification (RC2 P4) + pilot feedback (RC2 P6).
-  resendVerification: () => req<{ ok: boolean; emailDelivery?: string; verifyUrl?: string | null }>('/api/auth/resend', { method: 'POST' }),
-  submitFeedback: (kind: 'feedback' | 'issue', message: string, projectId?: string) =>
-    req<{ ok: boolean; id: string }>('/api/feedback', { method: 'POST', body: JSON.stringify({ kind, message, projectId }) }),
+  activateOnboarding: (input: { hqName: string; website: string; industry: string }) =>
+    req<{ ok: true }>('/api/onboarding/activate', { method: 'POST', body: JSON.stringify(input) }),
 
   // team / invitations
   listMembers: (orgId: string) =>

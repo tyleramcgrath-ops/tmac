@@ -541,3 +541,84 @@ html[data-dev] .ns-dev { display: flex; }
    high-bit-depth displays (a 6K XDR shows banding a laptop hides) */
 .ns-dither { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0.02; mix-blend-mode: overlay; }
 .ns-dither rect { width: 100%; height: 100%; }
+
+/* =====================================================================
+   ONBOARDING WIZARD — first-launch activation, layered over the still-
+   sleeping room (Scene 1/2 are just the room's own asleep state). Reuses
+   the room's glass/serif/brass language rather than inventing a new one.
+   ===================================================================== */
+.ns-onboard {
+  position: absolute; inset: 0; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.6rem; padding: 1.5rem; text-align: center;
+  opacity: 0; animation: ns-onboard-in 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes ns-onboard-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sits well below the Compass sphere — Scene 2 keeps the compass alone,
+   Scene 3's copy never overlaps its rings. Later steps use a glass card
+   instead, which reads cleanly over the compass on its own. */
+.ns-onboard-welcome { position: absolute; left: 50%; bottom: 9vh; transform: translateX(-50%); width: min(92vw, 640px); }
+
+.ns-onboard-welcome h2 {
+  margin: 0; font-weight: 400; font-size: clamp(1.4rem,3.2vw,2.4rem); letter-spacing: 0.04em;
+  color: #f2e8d2; text-shadow: 0 0 30px rgba(232,182,104,0.35), 0 2px 14px rgba(0,0,0,0.9);
+}
+.ns-onboard-tagline {
+  margin: 0.7rem 0 0; font-size: clamp(0.7rem,1vw,0.86rem); letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(238,208,154,0.85);
+}
+.ns-onboard-sub { margin: 1.1rem 0 0; font-size: clamp(0.78rem,1vw,0.92rem); color: rgba(226,214,188,0.65); }
+
+.ns-onboard-card {
+  width: min(92vw, 460px); padding: 2rem 2.1rem;
+  opacity: 0; transform: translateY(14px); animation: ns-onboard-card-in 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes ns-onboard-card-in { to { opacity: 1; transform: translateY(0); } }
+.ns-onboard-card h3 {
+  margin: 0 0 1.1rem; font-weight: 400; font-size: clamp(1rem,1.6vw,1.24rem); line-height: 1.4; color: #f2e8d2;
+}
+.ns-onboard-input {
+  width: 100%; padding: 0.75rem 0.9rem; border: 1px solid rgba(210,170,102,0.28); border-radius: 8px;
+  background: rgba(4,5,8,0.5); color: #f4ecd9; font-family: var(--serif); font-size: clamp(0.9rem,1.2vw,1.02rem);
+  outline: none; transition: border-color 0.3s ease;
+}
+.ns-onboard-input::placeholder { color: rgba(226,214,188,0.32); }
+.ns-onboard-input:focus { border-color: rgba(238,206,140,0.65); }
+.ns-onboard-hint { margin: 0.8rem 0 0; font-size: clamp(0.68rem,0.86vw,0.78rem); line-height: 1.5; color: rgba(226,214,188,0.55); }
+.ns-onboard-error { margin: 0 0 0.9rem; font-size: clamp(0.7rem,0.88vw,0.8rem); color: #e8a99a; }
+
+.ns-onboard-actions { margin-top: 1.4rem; display: flex; justify-content: center; }
+.ns-onboard-primary {
+  padding: 0.6rem 1.6rem; border: 1px solid rgba(238,205,135,0.5); border-radius: 8px;
+  background: linear-gradient(180deg, rgba(214,164,90,0.24), rgba(150,110,50,0.13)); color: #f4dfae;
+  font-family: var(--serif); font-size: clamp(0.68rem,0.86vw,0.76rem); letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
+}
+.ns-onboard-primary:hover:not(:disabled) { background: linear-gradient(180deg, rgba(240,190,110,0.34), rgba(170,126,58,0.18)); transform: translateY(-1px); }
+.ns-onboard-primary:disabled { opacity: 0.35; cursor: default; }
+.ns-onboard-enter { padding: 0.75rem 2.4rem; font-size: clamp(0.74rem,0.94vw,0.84rem); }
+
+.ns-onboard-grid { margin-top: 1.2rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+.ns-onboard-choice {
+  padding: 0.65rem 0.8rem; border: 1px solid rgba(210,170,102,0.22); border-radius: 8px;
+  background: rgba(255,255,255,0.02); color: rgba(226,214,188,0.78);
+  font-family: var(--serif); font-size: clamp(0.7rem,0.9vw,0.8rem); letter-spacing: 0.04em;
+  cursor: pointer; transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.ns-onboard-choice:hover { border-color: rgba(238,206,140,0.4); color: #f0e2bc; }
+.ns-onboard-choice[aria-pressed='true'] {
+  border-color: rgba(238,206,140,0.75); background: rgba(214,164,90,0.16); color: #f5edda;
+}
+
+.ns-onboard-integrations { text-align: left; max-height: 46vh; overflow-y: auto; }
+.ns-onboard-status {
+  flex: none; align-self: center; font-size: clamp(0.56rem,0.72vw,0.62rem); letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(158,214,160,0.75);
+}
+
+.ns-onboard-ready h3 { margin-bottom: 0.3rem; }
+
+@media (max-width: 560px) {
+  .ns-onboard-grid { grid-template-columns: 1fr 1fr; }
+}
