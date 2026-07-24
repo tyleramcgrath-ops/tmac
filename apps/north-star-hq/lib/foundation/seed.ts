@@ -1,8 +1,10 @@
-// Seeds a sample project into a freshly created org so a new signup's
+// Seeds a sample project into a freshly created org so a new activation's
 // Headquarters dashboard has something real to show immediately, instead of
 // an empty state. This app has no connection to any real customer's data —
-// see store.ts. Every recommendation/deployment below is fabricated demo
-// content for a fictional business ("Aurora Outdoor Co.").
+// see store.ts. The illustrative recommendations/activity below are
+// fabricated demo content (an outdoor-gear retailer's issue set) — only the
+// project's own name/domain/industry reflect what the user actually typed
+// during onboarding.
 
 import { randomUUID } from 'crypto'
 import { encryptSecret } from './crypto'
@@ -23,14 +25,35 @@ function iso(minutesAgo: number): string {
   return new Date(Date.now() - minutesAgo * 60_000).toISOString()
 }
 
-export async function seedSampleProject(store: FoundationStore, orgId: string, userId: string): Promise<void> {
+// Strips a user-entered URL/host down to a bare domain (e.g.
+// "https://example.com/pricing" -> "example.com"). Falls back to the demo
+// domain for empty/unparseable input rather than seeding a broken URL.
+function normalizeDomain(input: string | undefined): string {
+  const raw = (input || '').trim()
+  if (!raw) return 'aurora-outdoor.example'
+  try {
+    const host = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`).hostname
+    return host || 'aurora-outdoor.example'
+  } catch {
+    return 'aurora-outdoor.example'
+  }
+}
+
+export interface SeedOptions {
+  name?: string
+  domain?: string
+  industry?: string
+}
+
+export async function seedSampleProject(store: FoundationStore, orgId: string, userId: string, opts: SeedOptions = {}): Promise<void> {
   const now = iso(0)
+  const domain = normalizeDomain(opts.domain)
   const project: Project = {
     id: randomUUID(),
     orgId,
-    domain: 'aurora-outdoor.example',
-    name: 'Aurora Outdoor Co.',
-    industry: 'Ecommerce — outdoor gear',
+    domain,
+    name: opts.name?.trim() || 'Aurora Outdoor Co.',
+    industry: opts.industry?.trim() || 'Ecommerce — outdoor gear',
     businessProfile: 'Direct-to-consumer outdoor gear retailer (tents, packs, trail footwear).',
     goals: ['Grow organic revenue', 'Fix technical SEO health', 'Scale content production'],
     notes: 'Seeded demo project for North Star Headquarters.',
@@ -57,7 +80,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
   const wpConnection: WpConnection = {
     id: randomUUID(),
     projectId: project.id,
-    siteUrl: 'https://aurora-outdoor.example',
+    siteUrl: `https://${domain}`,
     username: 'demo',
     appPasswordEnc: encryptSecret('demo-simulated-app-password'),
     aioseo: false,
@@ -94,7 +117,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
       title: 'Missing meta description on /tents/aurora-3p',
       category: 'Technical SEO',
       status: 'open',
-      url: 'https://aurora-outdoor.example/tents/aurora-3p',
+      url: `https://${domain}/tents/aurora-3p`,
       reasoning: 'This product page has no meta description, so Google is generating a snippet from body text — usually a worse click-through pitch than a written one.',
       facts: ['No <meta name="description"> tag found in the rendered HTML.', 'Page received 1,204 impressions in the last 28 days per Search Console.'],
       impactSize: 'high',
@@ -110,7 +133,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
       title: '4 internal links point to a 404\'d /trail-runners-old page',
       category: 'Technical SEO',
       status: 'open',
-      url: 'https://aurora-outdoor.example/collections/footwear',
+      url: `https://${domain}/collections/footwear`,
       reasoning: 'The old trail-runner collection URL was retired but 4 pages still link to it, sending both users and crawl budget into a dead end.',
       facts: ['GET /trail-runners-old returns 404.', '4 internal links found across the crawl pointing at this URL.'],
       impactSize: 'medium',
@@ -126,7 +149,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
       title: 'Product page for Aurora 2P Tent is thin relative to top-ranking competitors',
       category: 'Content',
       status: 'accepted',
-      url: 'https://aurora-outdoor.example/tents/aurora-2p',
+      url: `https://${domain}/tents/aurora-2p`,
       reasoning: 'The page has 96 words of unique copy; the top 3 ranking competitor pages for "2 person backpacking tent" average 480 words covering weight, packed size, and weather rating.',
       facts: ['96 words of body copy detected.', 'Competing pages average 480 words on the same query cluster.'],
       impactSize: 'medium',
@@ -142,7 +165,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
       title: 'Title tag on /packs/summit-40l is truncated in search results',
       category: 'Technical SEO',
       status: 'deployed',
-      url: 'https://aurora-outdoor.example/packs/summit-40l',
+      url: `https://${domain}/packs/summit-40l`,
       reasoning: 'The title tag is 78 characters, well past the ~60 character point where Google typically truncates — the brand name and key spec are getting cut off.',
       facts: ['Title tag measured at 78 characters.', 'Rendered SERP snippet is truncated with an ellipsis.'],
       impactSize: 'medium',
@@ -159,7 +182,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
       title: 'Hero product images missing alt text on the homepage',
       category: 'Accessibility',
       status: 'deployed',
-      url: 'https://aurora-outdoor.example/',
+      url: `https://${domain}/`,
       reasoning: 'The three hero carousel images have empty alt attributes, which is both an accessibility gap and a missed image-search signal.',
       facts: ['3 of 3 hero images have alt="".'],
       impactSize: 'low',
@@ -176,7 +199,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
       title: 'Shipping and Returns pages share an identical title tag',
       category: 'Technical SEO',
       status: 'dismissed',
-      url: 'https://aurora-outdoor.example/pages/shipping',
+      url: `https://${domain}/pages/shipping`,
       reasoning: 'Both utility pages are titled "Aurora Outdoor Co." with no page-specific text — low priority since neither targets organic traffic.',
       facts: ['Both pages share the exact title string.'],
       impactSize: 'low',
@@ -289,7 +312,7 @@ export async function seedSampleProject(store: FoundationStore, orgId: string, u
   await store.createContentBrief(brief)
 
   const events: ActivityEvent[] = [
-    { id: randomUUID(), orgId, projectId: project.id, type: 'scout.discovery_completed', summary: 'Scout finished crawling aurora-outdoor.example — 142 pages, 2 critical issues found.', missionId: null, recommendationId: null, agentRole: 'scout', actorId: null, detail: null, at: iso(60 * 5) },
+    { id: randomUUID(), orgId, projectId: project.id, type: 'scout.discovery_completed', summary: `Scout finished crawling ${domain} — 142 pages, 2 critical issues found.`, missionId: null, recommendationId: null, agentRole: 'scout', actorId: null, detail: null, at: iso(60 * 5) },
     { id: randomUUID(), orgId, projectId: project.id, type: 'recommendation.generated', summary: `${recommendations.length} recommendations generated from the latest scan.`, missionId: null, recommendationId: null, agentRole: 'atlas', actorId: null, detail: null, at: iso(60 * 5 - 1) },
     { id: randomUUID(), orgId, projectId: project.id, type: 'approval.granted', summary: 'Title tag fix on /packs/summit-40l approved.', missionId: recommendations[3].issueId, recommendationId: recommendations[3].id, agentRole: 'operator', actorId: userId, detail: null, at: iso(60 * 4) },
     { id: randomUUID(), orgId, projectId: project.id, type: 'deployment.finished', summary: 'Deployed and verified the title tag fix on /packs/summit-40l (simulated).', missionId: recommendations[3].issueId, recommendationId: recommendations[3].id, agentRole: 'operator', actorId: userId, detail: null, at: iso(60 * 3) },
