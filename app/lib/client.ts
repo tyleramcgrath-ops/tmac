@@ -486,6 +486,45 @@ export const api = {
     }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
 
+  // ── Executive Brief (Headquarters, Milestone 6) — aggregates the Mission
+  // Queue, Agent Roster, Activity Stream, and Mission Atlas into one
+  // normalized "read this first" briefing. Not a new intelligence source. ──
+  getExecutiveBrief: (projectId: string) => req<{ brief: ExecutiveBriefDTO }>(`/api/projects/${projectId}/brief`),
+
+  // ── Live Agent Roster (Headquarters, Milestone 1) ──
+  getAgentRoster: (projectId: string) => req<{ roster: AgentRosterDTO }>(`/api/projects/${projectId}/agents/roster`),
+
+  // ── Mission Queue (Headquarters, Milestone 2) — the single source of
+  // truth for work: every recommendation's real lifecycle. ──
+  getMissionQueue: (projectId: string) => req<{ queue: MissionQueueDTO }>(`/api/projects/${projectId}/missions`),
+
+  // ── Mission Operations (Headquarters, Milestone 4) — "where is my work
+  // right now?" A projection of the same Mission, timestamped by the
+  // Activity Stream's real events. Not a diagram of its own truth. ──
+  getMissionOperations: (projectId: string, missionId: string) =>
+    req<{ operations: MissionOperationsDTO }>(`/api/projects/${projectId}/missions/${missionId}/operations`),
+
+  // ── Command Bar (Headquarters, Milestone 3) — a registered, enumerable
+  // set of actions, not a chatbot. `confirmed` must be sent as a second,
+  // separate call for Level 2/3 actions — never combined with the plan. ──
+  // ── Activity Stream (Headquarters, Milestone 3.5 architectural refinement)
+  // — the single event log every real domain action writes to. Not a UI
+  // timeline of its own; every future consumer (notification center,
+  // mission history, timeline) reads this instead of re-deriving history. ──
+  getActivity: (projectId: string, opts?: { limit?: number; types?: ActivityEventType[] }) => {
+    const qs = new URLSearchParams()
+    if (opts?.limit) qs.set('limit', String(opts.limit))
+    if (opts?.types?.length) qs.set('types', opts.types.join(','))
+    const suffix = qs.toString() ? `?${qs.toString()}` : ''
+    return req<{ events: ActivityEventDTO[] }>(`/api/projects/${projectId}/activity${suffix}`)
+  },
+
+  runCommand: (projectId: string, commandReq: CommandRequestDTO) =>
+    req<{ result: CommandResultDTO }>(`/api/projects/${projectId}/commands`, {
+      method: 'POST',
+      body: JSON.stringify(commandReq),
+    }),
+
   // ── Rank tracking history ──
   listTrackedKeywords: (projectId: string) =>
     req<{ keywords: TrackedKeywordDTO[] }>(`/api/projects/${projectId}/rankings/keywords`),
@@ -715,6 +754,181 @@ export interface AtlasSnapshotDTO {
   changes: { category: string; subject: string; note: string; evidence: EvidenceDTO }[]
   briefing: MorningBriefingDTO
   grades: Record<EvidenceGradeDTO, number>
+}
+
+// ── Executive Brief (Headquarters, Milestone 6) ─────────────────────────────
+export type BriefEvidenceKind = 'mission' | 'agent' | 'metric' | 'activity'
+export interface BriefEvidenceRefDTO {
+  kind: BriefEvidenceKind
+  id: string
+  label: string
+}
+export interface BriefItemDTO {
+  text: string
+  why: string | null
+  evidence: BriefEvidenceRefDTO[]
+}
+export type AttentionSeverity = 'blocked' | 'pending-approval' | 'verification-failed' | 'canceled'
+export interface AttentionItemDTO extends BriefItemDTO {
+  severity: AttentionSeverity
+}
+export interface PerformanceMetricDTO {
+  label: string
+  value: string
+  deltaLabel: string | null
+  source: string
+}
+export interface DataSourceStatusDTO {
+  name: string
+  available: boolean
+  reason: string | null
+}
+export interface ExecutiveBriefDTO {
+  generatedAt: string
+  project: { id: string; name: string }
+  executiveSummary: string
+  priorities: BriefItemDTO[]
+  recentProgress: BriefItemDTO[]
+  attentionRequired: AttentionItemDTO[]
+  performance: { metrics: PerformanceMetricDTO[]; note: string | null }
+  recommendation: { text: string; reasoning: string; evidence: BriefEvidenceRefDTO[] } | null
+  dataSources: DataSourceStatusDTO[]
+}
+
+// ── Live Agent Roster (Headquarters, Milestone 1) ───────────────────────────
+export type AgentId = 'scout' | 'atlas' | 'forge' | 'operator' | 'sentinel'
+export type AgentRuntimeStatus =
+  | 'idle' | 'active' | 'waiting-for-approval' | 'blocked' | 'failed' | 'verifying' | 'completed'
+export interface AgentRuntimeStateDTO {
+  agentId: AgentId
+  name: string
+  role: string
+  status: AgentRuntimeStatus
+  currentActivity: string | null
+  project: { id: string; name: string } | null
+  // Only ever a real, measurable number — null whenever no genuine figure exists.
+  progress: number | null
+  sourceWorkflow: 'scan' | 'atlas-intelligence' | 'content-studio' | 'operator-deploy' | 'verification'
+  evidenceAt: string | null
+  blockingReason: string | null
+  lastCompletedAction: string | null
+}
+export interface AgentRosterDTO {
+  generatedAt: string
+  agents: AgentRuntimeStateDTO[]
+}
+
+// ── Mission Queue (Headquarters, Milestone 2) ───────────────────────────────
+export type MissionStage =
+  | 'discovered' | 'scored' | 'planned' | 'waiting-for-approval' | 'approved'
+  | 'executing' | 'deploying' | 'verifying' | 'completed' | 'failed' | 'retry'
+export interface MissionDTO {
+  id: string
+  recommendationId: string
+  title: string
+  category: string
+  severity: 'critical' | 'warning' | 'info'
+  stage: MissionStage
+  currentAgent: AgentId | null
+  project: { id: string; name: string }
+  createdAt: string
+  updatedAt: string
+  confidence: number
+  expectedImpactSize: 'high' | 'medium' | 'low'
+  blockingReason: string | null
+  deployment: { id: string; postUrl: string; status: string } | null
+}
+export interface MissionQueueSummaryDTO {
+  total: number
+  waitingForApproval: number
+  approved: number
+  active: number
+  completed: number
+  failed: number
+  retry: number
+}
+export interface MissionQueueDTO {
+  generatedAt: string
+  missions: MissionDTO[]
+  currentMission: MissionDTO | null
+  summary: MissionQueueSummaryDTO
+}
+
+// ── Mission Operations (Headquarters, Milestone 4) ──────────────────────────
+export type MissionPhase = 'discovery' | 'analysis' | 'planning' | 'approval' | 'deployment' | 'verification' | 'complete'
+export type MissionOutcome = 'in-progress' | 'completed' | 'canceled' | 'retrying'
+export interface MissionPhaseStepDTO {
+  phase: MissionPhase
+  status: 'done' | 'current' | 'pending'
+  owner: AgentId | null
+  enteredAt: string | null
+  elapsedMs: number | null
+}
+export interface MissionOperationsDTO {
+  missionId: string
+  title: string
+  outcome: MissionOutcome
+  currentPhase: MissionPhase
+  confidence: number
+  blockingReason: string | null
+  nextAction: string
+  steps: MissionPhaseStepDTO[]
+}
+
+// ── Command Bar (Headquarters, Milestone 3) ─────────────────────────────────
+export type CommandActionType =
+  | 'summarize-project' | 'list-approvals' | 'list-active-missions' | 'list-blocked-missions'
+  | 'list-completed-today' | 'explain-mission' | 'scout-findings' | 'atlas-recommendation'
+  | 'list-deployments' | 'list-failed' | 'mission-detail' | 'next-best-action'
+  | 'preview-change' | 'verify-deployment' | 'search-project'
+  | 'prioritize-mission' | 'pause-mission' | 'resume-mission' | 'focus-mission'
+  | 'approve-mission' | 'deploy-mission' | 'retry-mission' | 'cancel-mission' | 'rollback-deployment'
+export type CommandRiskLevel = 'read-only' | 'reversible' | 'consequential'
+export type CommandExecutionStatus =
+  | 'pending-confirmation' | 'executed' | 'rejected-permission' | 'rejected-unsupported' | 'rejected-invalid' | 'failed'
+export interface CommandRequestDTO {
+  commandId: string
+  raw: string
+  missionId?: string | null
+  confirmed?: boolean
+  params?: Record<string, unknown>
+}
+export interface CommandResultDTO {
+  commandId: string
+  raw: string
+  intent: CommandActionType | 'unsupported'
+  riskLevel: CommandRiskLevel | null
+  projectId: string
+  missionId: string | null
+  targetResource: string | null
+  requestedParams: Record<string, unknown>
+  permission: 'allowed' | 'denied'
+  confirmationRequired: boolean
+  status: CommandExecutionStatus
+  message: string
+  evidence: unknown
+  auditedAt: string | null
+}
+
+// ── Activity Stream (Headquarters, Milestone 3.5) ───────────────────────────
+export type ActivityEventType =
+  | 'mission.created' | 'recommendation.generated' | 'mission.prioritized' | 'approval.requested'
+  | 'approval.granted' | 'mission.paused' | 'mission.resumed' | 'mission.canceled' | 'mission.retried'
+  | 'deployment.started' | 'deployment.finished' | 'verification.passed' | 'verification.failed'
+  | 'rollback.started' | 'rollback.finished' | 'agent.active' | 'agent.idle' | 'command.executed'
+  | 'command.failed' | 'atlas.recommendation_updated' | 'scout.discovery_completed'
+export interface ActivityEventDTO {
+  id: string
+  orgId: string
+  projectId: string
+  type: ActivityEventType
+  summary: string
+  missionId: string | null
+  recommendationId: string | null
+  agentRole: string | null
+  actorId: string | null
+  detail: string | null
+  at: string
 }
 
 export interface DiffSeg {

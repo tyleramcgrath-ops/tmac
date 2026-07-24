@@ -6,6 +6,8 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import type { FoundationStore } from './store'
 import type {
+  ActivityEvent,
+  ActivityEventType,
   AiCitationSnapshot,
   AtlasHistory,
   AuditLogEntry,
@@ -48,6 +50,7 @@ type Collections = {
   schedules: Schedule[]
   feedback: PilotFeedback[]
   audit: AuditLogEntry[]
+  activity: ActivityEvent[]
   trackedKeywords: TrackedKeyword[]
   rankSnapshots: RankSnapshot[]
   trackedAiQueries: TrackedAiQuery[]
@@ -73,6 +76,7 @@ const EMPTY: Collections = {
   schedules: [],
   feedback: [],
   audit: [],
+  activity: [],
   trackedKeywords: [],
   rankSnapshots: [],
   trackedAiQueries: [],
@@ -503,6 +507,19 @@ export class FileFoundationStore implements FoundationStore {
   async listAudit(orgId: string, limit = 100) {
     return (await this.read('audit'))
       .filter((e) => e.orgId === orgId)
+      .sort((a, b) => b.at.localeCompare(a.at))
+      .slice(0, limit)
+  }
+
+  // activity stream
+  async appendActivity(event: ActivityEvent) {
+    await this.mutate('activity', (all) => ({ data: [...all, event] }))
+  }
+  async listActivity(projectId: string, opts?: { limit?: number; types?: ActivityEventType[] }) {
+    const limit = opts?.limit ?? 200
+    const types = opts?.types
+    return (await this.read('activity'))
+      .filter((e) => e.projectId === projectId && (!types || types.includes(e.type)))
       .sort((a, b) => b.at.localeCompare(a.at))
       .slice(0, limit)
   }

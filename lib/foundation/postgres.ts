@@ -15,6 +15,8 @@ import { Pool } from 'pg'
 import { runMigrations } from './migrate'
 import type { FoundationStore } from './store'
 import type {
+  ActivityEvent,
+  ActivityEventType,
   AiCitationSnapshot,
   AtlasHistory,
   AuditLogEntry,
@@ -111,6 +113,11 @@ const TABLES = {
     pk: ['id'],
     keys: (a: AuditLogEntry) => ({ id: a.id, org_id: a.orgId, at: a.at }),
   } as TableDesc<AuditLogEntry>,
+  activity: {
+    name: 'rf_activity',
+    pk: ['id'],
+    keys: (a: ActivityEvent) => ({ id: a.id, org_id: a.orgId, project_id: a.projectId, type: a.type, at: a.at }),
+  } as TableDesc<ActivityEvent>,
   feedback: {
     name: 'rf_feedback',
     pk: ['id'],
@@ -583,6 +590,24 @@ export class PostgresFoundationStore implements FoundationStore {
   async listAudit(orgId: string, limit = 100) {
     return this.rows<AuditLogEntry>('SELECT data FROM rf_audit WHERE org_id=$1 ORDER BY at DESC LIMIT $2', [
       orgId,
+      limit,
+    ])
+  }
+
+  // ── Activity stream ─────────────────────────────────────────────────────────
+  async appendActivity(event: ActivityEvent) {
+    await this.ins(TABLES.activity, event)
+  }
+  async listActivity(projectId: string, opts?: { limit?: number; types?: ActivityEventType[] }) {
+    const limit = opts?.limit ?? 200
+    if (opts?.types && opts.types.length > 0) {
+      return this.rows<ActivityEvent>(
+        'SELECT data FROM rf_activity WHERE project_id=$1 AND type = ANY($2) ORDER BY at DESC LIMIT $3',
+        [projectId, opts.types, limit]
+      )
+    }
+    return this.rows<ActivityEvent>('SELECT data FROM rf_activity WHERE project_id=$1 ORDER BY at DESC LIMIT $2', [
+      projectId,
       limit,
     ])
   }

@@ -1,7 +1,21 @@
 import { audit, enforceRateLimit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { coordinateProject } from '@/lib/foundation/agents/service'
-import type { RecommendationStatus } from '@/lib/foundation/types'
+import { RECOMMENDATION_TRANSITIONS } from '@/lib/foundation/reco/transitions'
+import { emitActivity } from '@/lib/foundation/activity/emit'
+import type { ActivityEventType, RecommendationStatus } from '@/lib/foundation/types'
+
+// The subset of transitions reachable from this general-purpose route that
+// map cleanly onto a single Activity Stream event type. Transitions this
+// route allows but that don't map here (e.g. into 'deployed'/'verified') are
+// always driven by the deploy/rollback pipeline instead, which emits its own
+// deployment.*/verification.* events at the source — never duplicated here.
+const ACTIVITY_FOR_STATUS: Partial<Record<RecommendationStatus, ActivityEventType>> = {
+  accepted: 'approval.granted',
+  dismissed: 'mission.paused',
+  rejected: 'mission.canceled',
+  open: 'mission.resumed',
+}
 
 export const runtime = 'nodejs'
 
@@ -24,20 +38,6 @@ export const GET = handled(async (request, { params }) => {
   const ordered = [...coordinated].sort((a, b) => rank(a) - rank(b))
   return Response.json({ recommendations: ordered, agents: reports, memory, metrics })
 })
-
-// User-driven transitions. 'deployed'/'verified'/'rolled_back' are set by the
-// WordPress execution flow, not by this endpoint, so they are terminal here.
-const VALID_TRANSITIONS: Record<RecommendationStatus, RecommendationStatus[]> = {
-  open: ['accepted', 'modified', 'rejected', 'dismissed'],
-  accepted: ['open', 'modified', 'rejected', 'dismissed'],
-  modified: ['accepted', 'open', 'rejected', 'dismissed'],
-  rejected: ['open'],
-  dismissed: ['open'],
-  deployed: ['verified', 'rolled_back'],
-  verified: ['rolled_back'],
-  rolled_back: ['open'],
-  regressed: ['accepted', 'modified', 'rejected', 'dismissed'],
-}
 
 export const PATCH = handled(async (request, { params }) => {
   enforceRateLimit(request, 'recs-write', 120)
@@ -71,7 +71,7 @@ export const PATCH = handled(async (request, { params }) => {
 
   if (hasStatus) {
     const to = body.status as RecommendationStatus
-    if (!VALID_TRANSITIONS[rec.status]?.includes(to)) {
+    if (!RECOMMENDATION_TRANSITIONS[rec.status]?.includes(to)) {
       return Response.json({ error: `Cannot move a ${rec.status} recommendation to ${to}.` }, { status: 400 })
     }
     // History is append-only — the full decision trail is preserved (A8).
@@ -91,5 +91,19 @@ export const PATCH = handled(async (request, { params }) => {
     rec.id,
     hasStatus ? `${rec.title}: → ${rec.status}` : `${rec.title}: priority=${rec.userPriority ?? 'cleared'}`
   )
+  if (hasStatus) {
+    const activityType = ACTIVITY_FOR_STATUS[rec.status]
+    if (activityType) {
+      await emitActivity(store, {
+        orgId: project.orgId,
+        projectId,
+        type: activityType,
+        summary: `"${rec.title}" is now ${rec.status}.`,
+        missionId: rec.issueId,
+        recommendationId: rec.id,
+        actorId: user.id,
+      })
+    }
+  }
   return Response.json({ recommendation: rec })
 })

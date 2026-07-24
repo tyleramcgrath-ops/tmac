@@ -37,7 +37,7 @@ export async function persistScanRecommendations(
   store: Pick<FoundationStore, 'listRecommendations' | 'createRecommendations' | 'updateRecommendation'>,
   projectId: string,
   incoming: Recommendation[]
-): Promise<{ created: number; updated: number; regressed: Recommendation[] }> {
+): Promise<{ created: number; updated: number; regressed: Recommendation[]; createdRecs: Recommendation[] }> {
   const existing = await store.listRecommendations(projectId)
   const byIssue = new Map<string, Recommendation>()
   for (const r of existing) if (r.issueId) byIssue.set(r.issueId, r)
@@ -62,7 +62,7 @@ export async function persistScanRecommendations(
     }
   }
   if (toCreate.length) await store.createRecommendations(toCreate)
-  return { created: toCreate.length, updated, regressed }
+  return { created: toCreate.length, updated, regressed, createdRecs: toCreate }
 }
 
 export type { SelfEvaluation }

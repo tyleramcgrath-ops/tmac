@@ -1,0 +1,464 @@
+/* =====================================================================
+   NORTH STAR HEADQUARTERS — production plate + live 3D compass + UI
+   The room is a fixed architectural photograph. Only the compass, UI,
+   depth parallax, and ambient accents are live.
+   ===================================================================== */
+:root {
+  --mx: 0; --my: 0;
+  --serif: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
+}
+* { box-sizing: border-box; }
+
+.ns-room {
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background: #03040a;
+  font-family: var(--serif);
+  user-select: none;
+  cursor: default;
+}
+
+/* ---- the plate: fixed architectural photograph, razor sharp ---- */
+.ns-plate-layer {
+  position: absolute; inset: 0;
+  /* the room breathes -- an almost imperceptible, non-looping-feeling drift */
+  animation: ns-room-breathe 19s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes ns-room-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.007); } }
+.ns-plate {
+  position: absolute; inset: -2.4%;
+  background-image: url('/environment-plates/north-star-room.jpg');
+  background-size: cover; background-position: center 42%;
+  /* elegant, high-momentum parallax that settles to stillness when the mouse stops */
+  transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 4px), 0) scale(1.02);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), filter 2s ease;
+  will-change: transform;
+}
+/* time-of-day grade on the plate -- sharp, never a flat tint. Coordinated
+   with the sky/ambient/ceiling/floor layers and the compass lighting. */
+[data-time='dawn'] .ns-plate { filter: brightness(1.1) contrast(1.01) saturate(1.05) hue-rotate(-6deg); }
+[data-time='day']  .ns-plate { filter: brightness(1.2) contrast(1.0) saturate(0.97) hue-rotate(-2deg); }
+[data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
+[data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
+
+/* --- coordinated environment layers (all transition together ~1.5s) --- */
+.ns-sky, .ns-ambient, .ns-ceilglow, .ns-platglow {
+  position: absolute; inset: 0; pointer-events: none;
+  transition: opacity 1.5s ease, background 1.5s ease;
+}
+/* sky tint over the window band -- brightens/colors the exterior by hour */
+.ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
+  background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
+[data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(150,185,230,0.3); --sky-mid: rgba(205,222,242,0.2); }
+[data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
+[data-time='night'] .ns-sky { opacity: 0; }
+/* ambient colour temperature wash */
+.ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
+[data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
+[data-time='day']  .ns-ambient { opacity: 1; background: rgba(214,228,244,0.2); }
+[data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
+[data-time='night'] .ns-ambient { opacity: 0; }
+/* gold ceiling constellation intensity */
+.ns-ceilglow { z-index: 2; mix-blend-mode: screen; opacity: 0.55;
+  background: radial-gradient(120% 42% at 50% -6%, rgba(255,196,120,0.5), rgba(255,180,110,0.14) 40%, transparent 66%); }
+[data-time='dawn'] .ns-ceilglow { opacity: 0.3; }
+[data-time='day']  .ns-ceilglow { opacity: 0.12; }
+[data-time='dusk'] .ns-ceilglow { opacity: 0.5; }
+[data-time='night'] .ns-ceilglow { opacity: 0.7; }
+/* platform / floor glow, warmest at night, and reacts to the compass */
+.ns-platglow { z-index: 3; mix-blend-mode: screen; opacity: 0.3;
+  background: radial-gradient(34% 22% at 50% 62%, rgba(255,200,130,0.3), transparent 70%);
+  transition: opacity 1.2s ease; }
+[data-time='day'] .ns-platglow { opacity: 0.12; }
+
+/* --- compass-state room reactions (independent of time-of-day) --- */
+[data-compass-state='listening'] .ns-platglow { opacity: 0.5; }
+[data-compass-state='thinking']  .ns-ceilglow { opacity: 0.85; }
+[data-compass-state='speaking']  .ns-platglow { opacity: 0.55; }
+[data-compass-state='deploying'] .ns-platglow { opacity: 1; transition: opacity 0.5s ease; }
+[data-compass-state='deploying'] .ns-ceilglow { opacity: 1; }
+[data-compass-state='success']   .ns-platglow { opacity: 0.7; }
+[data-compass-state='warning']   .ns-platglow { opacity: 0.4; background: radial-gradient(34% 22% at 50% 62%, rgba(255,168,80,0.34), transparent 70%); }
+
+/* a warm room-lift during deploying/success (subtle, not a flat wash) */
+.ns-roomlift { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(90% 90% at 50% 46%, rgba(255,224,176,0.16), transparent 72%); transition: opacity 0.6s ease; }
+[data-compass-state='deploying'] .ns-roomlift { opacity: 1; }
+[data-compass-state='success']   .ns-roomlift { opacity: 0.7; }
+
+/* screen-space bloom around the compass during active states (compass only) */
+.ns-bloom { position: absolute; left: 50%; top: 50%; width: 66vh; height: 66vh; transform: translate(-50%,-50%);
+  z-index: 5; pointer-events: none; opacity: 0; mix-blend-mode: screen; transition: opacity 0.6s ease;
+  background: radial-gradient(circle closest-side at 50% 50%, rgba(255,232,186,0.5) 0%, rgba(255,206,138,0.2) 32%, transparent 78%); }
+[data-compass-state='hover']    .ns-bloom { opacity: 0.15; }
+[data-compass-state='listening'].ns-bloom, [data-compass-state='listening'] .ns-bloom { opacity: 0.28; }
+[data-compass-state='thinking'] .ns-bloom { opacity: 0.3; }
+[data-compass-state='speaking'] .ns-bloom { opacity: 0.4; }
+[data-compass-state='deploying'] .ns-bloom { opacity: 0.85; transition: opacity 0.4s ease; }
+[data-compass-state='success']  .ns-bloom { opacity: 0.6; }
+[data-compass-state='warning']  .ns-bloom { opacity: 0.25; background: radial-gradient(circle closest-side at 50% 50%, rgba(255,180,96,0.42) 0%, transparent 78%); }
+
+/* cinema mode: deepen edges + lift compass contrast, keep everything sharp */
+[data-cinema] .ns-vignette { background:
+  radial-gradient(120% 90% at 50% 44%, transparent 40%, rgba(1,2,5,0.55) 100%),
+  linear-gradient(180deg, rgba(1,2,5,0.7) 0%, transparent 18%, transparent 68%, rgba(1,2,5,0.82) 100%); }
+[data-cinema] .ns-status, [data-cinema] .ns-principles, [data-cinema] .ns-hint { opacity: 0.35; }
+
+/* hidden developer state panel */
+.ns-dev { position: fixed; left: 12px; bottom: 12px; z-index: 40; display: none; flex-wrap: wrap; gap: 5px; max-width: 340px;
+  padding: 8px; border: 1px solid rgba(240,205,130,0.3); border-radius: 8px; background: rgba(6,7,12,0.86); backdrop-filter: blur(6px); }
+html[data-dev] .ns-dev { display: flex; }
+.ns-dev button { font: 11px var(--serif); letter-spacing: 0.08em; text-transform: uppercase; color: #e8cf9d;
+  background: rgba(30,24,14,0.7); border: 1px solid rgba(214,170,98,0.35); border-radius: 4px; padding: 4px 8px; cursor: pointer; }
+.ns-dev button:hover { background: rgba(60,46,22,0.8); }
+.ns-dev b { width: 100%; font: 9px var(--serif); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(226,208,172,0.5); font-weight: 400; }
+
+/* mid-depth atmosphere + top/bottom cinematic vignette (a subtle depth cue) */
+.ns-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 44%, transparent 52%, rgba(2,3,8,0.34) 100%),
+    linear-gradient(180deg, rgba(2,3,8,0.5) 0%, transparent 16%, transparent 72%, rgba(2,3,8,0.66) 100%);
+  transform: translate3d(calc(var(--mx) * -4px), calc(var(--my) * -2px), 0);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- the live 3D compass, seated on the platform ---- */
+.ns-compass {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 58vh; height: 58vh;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;   /* clicks handled by the hit target below */
+}
+/* contact shadow where the instrument meets the table */
+.ns-contact {
+  position: absolute;
+  left: 50%; top: 62.5%;
+  width: 18vh; height: 4vh;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,0.62), rgba(0,0,0,0.3) 52%, transparent 74%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+/* invisible click/focus target over the instrument -- wakes the room */
+.ns-core-hit {
+  position: absolute; left: 50%; top: 50%;
+  width: 28vh; height: 40vh;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+  border-radius: 50%;
+}
+.ns-core-hit:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 6px; }
+
+/* foreground floor darkening -- the nearest depth layer, most parallax */
+.ns-fore {
+  position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: radial-gradient(90% 55% at 50% 118%, rgba(3,4,9,0.85), transparent 60%);
+  transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -6px), 0);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ns-particles { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.6; }
+
+/* ---- UI: HTML/CSS, sharp at every resolution, floating above ---- */
+.ns-status {
+  position: absolute; left: clamp(1.2rem,2.6vw,2.6rem); top: clamp(1.1rem,2.6vh,2.2rem);
+  z-index: 8; display: flex; flex-direction: column; gap: 0.35rem; pointer-events: none;
+  animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 0.9s;
+}
+.ns-status-time { font-size: clamp(0.85rem,1.3vw,1.15rem); letter-spacing: 0.3em; color: #e8cf9d; text-shadow: 0 0 14px rgba(232,182,104,0.35), 0 1px 8px rgba(0,0,0,0.9); }
+.ns-status-line { font-size: clamp(0.44rem,0.68vw,0.58rem); letter-spacing: 0.34em; text-transform: uppercase; color: rgba(226,208,172,0.5); }
+
+.ns-brand {
+  position: absolute; left: 50%; top: 3.4%; transform: translateX(-50%);
+  z-index: 7; text-align: center; pointer-events: none;
+  animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 0.7s;
+}
+.ns-brand h1 { margin: 0; font-size: clamp(0.95rem,1.8vw,1.5rem); font-weight: 400; letter-spacing: 0.5em; text-indent: 0.5em; color: #eed09a; text-shadow: 0 0 20px rgba(232,182,104,0.4), 0 2px 12px rgba(0,0,0,0.9); text-transform: uppercase; }
+.ns-brand p { margin: 0.4rem 0 0; font-size: clamp(0.46rem,0.75vw,0.62rem); letter-spacing: 0.58em; text-indent: 0.58em; text-transform: uppercase; color: rgba(238,224,196,0.68); }
+
+.ns-controls {
+  position: absolute; right: clamp(1.2rem,2.6vw,2.6rem); top: clamp(1.1rem,2.6vh,2.2rem);
+  z-index: 9; display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem;
+  animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 1.2s;
+}
+.ns-timectl { display: flex; gap: clamp(0.6rem,1vw,1.1rem); }
+.ns-timectl button, .ns-cinema {
+  margin: 0; padding: 0.25rem 0.1rem; border: 0; border-bottom: 1px solid transparent; background: none; cursor: pointer;
+  font-family: var(--serif); font-size: clamp(0.44rem,0.66vw,0.56rem); letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(216,198,164,0.5); text-shadow: 0 1px 8px rgba(0,0,0,0.9); transition: color 0.4s ease, border-color 0.4s ease;
+}
+.ns-timectl button:hover, .ns-cinema:hover { color: rgba(240,216,158,0.9); }
+.ns-timectl button[aria-pressed='true'] { color: #eed09a; border-bottom-color: rgba(232,182,104,0.7); }
+.ns-timectl button:focus-visible, .ns-cinema:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
+
+/* panels rise from the table on wake */
+.ns-panels {
+  position: absolute; left: 50%; bottom: clamp(3.2rem,10vh,7rem); transform: translateX(-50%);
+  z-index: 8; display: flex; gap: clamp(0.7rem,1.2vw,1.4rem); justify-content: center;
+  pointer-events: none; visibility: hidden; transition: visibility 0s 0.9s;
+}
+.ns-panels.up { visibility: visible; pointer-events: auto; transition: visibility 0s; }
+.ns-panel {
+  width: clamp(196px,16.8vw,254px); padding: clamp(0.95rem,1.45vw,1.35rem) clamp(1rem,1.5vw,1.4rem);
+  border: 1px solid rgba(210,170,102,0.24); border-top-color: rgba(238,206,140,0.5); border-radius: 9px;
+  background: linear-gradient(180deg, rgba(10,10,14,0.72), rgba(6,6,9,0.82));
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 26px 56px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.4);
+  opacity: 0; transform: translateY(44px) scale(0.975);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.ns-panels.up .ns-panel { opacity: 1; transform: translateY(0) scale(1); }
+.ns-panel-eyebrow { margin: 0; font-size: clamp(0.42rem,0.62vw,0.54rem); letter-spacing: 0.34em; text-transform: uppercase; color: rgba(240,205,130,0.85); }
+.ns-panel h2 { margin: 0.45rem 0 0; font-size: clamp(0.82rem,1.1vw,1.02rem); font-weight: 400; letter-spacing: 0.03em; color: #f2e8d2; }
+.ns-panel-body { margin: 0.5rem 0 0; font-size: clamp(0.66rem,0.85vw,0.8rem); line-height: 1.55; color: rgba(226,214,188,0.78); }
+.ns-spark { display: block; width: 100%; height: auto; margin-top: 0.55rem; }
+.ns-chips { list-style: none; margin: 0.55rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.ns-chips li { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; padding: 0.28rem 0.5rem; border: 1px solid rgba(210,170,102,0.22); border-radius: 6px; background: rgba(20,16,10,0.42); font-size: clamp(0.58rem,0.76vw,0.7rem); color: rgba(226,214,188,0.85); }
+.ns-chips b { font-weight: 400; white-space: nowrap; color: #ecc276; font-variant-numeric: tabular-nums; }
+
+/* Morning briefing (Milestone 6) — a compact merged priorities/attention
+   list; dot color is the only visual distinction (gold = priority, red =
+   attention), keeping the panel legible at its fixed width. */
+.ns-brief-list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.28rem; }
+.ns-brief-list li { display: flex; align-items: center; gap: 0.5rem; padding: 0.26rem 0.5rem; border: 1px solid rgba(210,170,102,0.18); border-radius: 6px; background: rgba(20,16,10,0.32); }
+.ns-brief-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ecc276; }
+.ns-brief-list li[data-kind='attention'] .ns-brief-dot { background: #e08a7a; }
+.ns-brief-text { flex: 1; min-width: 0; font-size: clamp(0.56rem,0.72vw,0.66rem); color: rgba(226,214,188,0.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-brief-sources { opacity: 0.55; font-size: clamp(0.5rem,0.64vw,0.58rem); }
+.ns-approve { margin-top: 0.7rem; padding: 0.45rem 0.95rem; border: 1px solid rgba(238,205,135,0.5); border-radius: 6px; background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; font-family: var(--serif); font-size: clamp(0.48rem,0.66vw,0.58rem); letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, opacity 0.4s ease; }
+.ns-approve:hover:not(:disabled) { background: linear-gradient(180deg, rgba(240,190,110,0.32), rgba(170,126,58,0.18)); }
+.ns-approve:focus-visible { outline: 1px solid rgba(240,205,130,0.8); outline-offset: 3px; }
+.ns-approve[data-state='working'] { opacity: 0.7; cursor: wait; }
+.ns-approve[data-state='done'] { border-color: rgba(158,214,150,0.55); background: rgba(58,88,50,0.22); color: #d2e8c2; cursor: default; }
+
+.ns-hint {
+  position: absolute; left: 50%; bottom: 12%; transform: translateX(-50%); z-index: 7; margin: 0;
+  font-size: clamp(0.5rem,0.72vw,0.62rem); letter-spacing: 0.55em; text-indent: 0.55em; text-transform: uppercase;
+  color: rgba(240,214,150,0.7); text-shadow: 0 0 12px rgba(0,0,0,0.9);
+  animation: ns-hint 4s ease-in-out infinite; transition: opacity 0.8s ease; pointer-events: none;
+}
+.ns-hint[data-hidden] { opacity: 0 !important; animation: none; }
+@keyframes ns-hint { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+
+.ns-principles {
+  position: absolute; bottom: clamp(1.2rem,3.6vh,2.4rem); inset-inline: clamp(1.4rem,6vw,5rem);
+  z-index: 8; display: flex; justify-content: space-between; gap: 1.5rem;
+}
+.ns-principles button { margin: 0; padding: 0.4rem 0.2rem; border: 0; background: none; cursor: pointer; font-family: var(--serif); font-size: clamp(0.5rem,0.76vw,0.62rem); letter-spacing: 0.32em; text-transform: uppercase; color: rgba(216,198,164,0.6); text-shadow: 0 1px 10px rgba(0,0,0,0.95); transition: color 0.5s ease; }
+.ns-principles button:hover, .ns-principles button:focus-visible { color: rgba(244,222,168,0.95); }
+.ns-principles button:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 4px; }
+.ns-principles b { font-weight: 400; color: rgba(244,216,148,0.95); }
+
+@keyframes ns-in { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 920px) {
+  .ns-timectl { display: none; }
+  .ns-principles { justify-content: center; }
+  .ns-principles button:not(:first-child) { display: none; }
+  .ns-panels { flex-direction: column; align-items: center; gap: 0.6rem; bottom: 8vh; }
+  .ns-panel { width: min(78vw, 340px); }
+  .ns-compass { width: 60vw; height: 60vw; top: 36%; }
+  .ns-core-hit { width: 46vw; height: 52vw; top: 36%; }
+  .ns-contact { top: 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-plate, .ns-vignette, .ns-fore { transition: none !important; transform: none !important; }
+  .ns-panel { transition-duration: 0.01ms !important; }
+  .ns-hint { animation: none; }
+}
+
+/* =====================================================================
+   COMPASS EXPERIENCE — extended states drive the room
+   ===================================================================== */
+/* room-spanning light column for executing / deploying */
+.ns-beam {
+  position: absolute; left: 50%; top: 0; width: 15vw; height: 100%;
+  transform: translateX(-50%); z-index: 5; pointer-events: none; opacity: 0;
+  mix-blend-mode: screen; transition: opacity 0.5s ease;
+  /* two soft cores + a faint wide falloff, then blurred so there are no edges */
+  background:
+    radial-gradient(22% 46% at 50% 50%, rgba(255,250,232,0.7), rgba(255,240,206,0.14) 55%, transparent 78%),
+    linear-gradient(90deg, transparent 6%, rgba(255,238,202,0.16) 34%, rgba(255,248,224,0.5) 50%, rgba(255,238,202,0.16) 66%, transparent 94%);
+  filter: blur(11px);
+  -webkit-mask: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 14%, #000 36%, #000 64%, rgba(0,0,0,0.4) 86%, transparent 100%);
+          mask: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 14%, #000 36%, #000 64%, rgba(0,0,0,0.4) 86%, transparent 100%);
+}
+[data-compass-state='executing'] .ns-beam { opacity: 0.34; }
+[data-compass-state='deploying'] .ns-beam { opacity: 0.72; transition: opacity 0.4s ease; }
+
+/* platform + ceiling reactions for the new states */
+[data-compass-state='planning']  .ns-ceilglow { opacity: 0.5; }
+[data-compass-state='planning']  .ns-platglow { opacity: 0.42; }
+[data-compass-state='executing'] .ns-platglow { opacity: 0.75; }
+[data-compass-state='executing'] .ns-ceilglow { opacity: 0.92; }
+[data-compass-state='verifying'] .ns-platglow { opacity: 0.5; }
+[data-compass-state='verifying'] .ns-ceilglow { opacity: 0.72; }
+[data-compass-state='error']     .ns-platglow { opacity: 0.36; background: radial-gradient(34% 22% at 50% 62%, rgba(255,132,72,0.3), transparent 70%); }
+[data-compass-state='offline']   .ns-ceilglow { opacity: 0.14; }
+[data-compass-state='offline']   .ns-platglow { opacity: 0.05; }
+/* offline gently powers the room down */
+.ns-offline { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: rgba(3,5,10,0.42); transition: opacity 1.4s ease; }
+[data-compass-state='offline'] .ns-offline { opacity: 1; }
+
+/* bloom tints for the new states */
+[data-compass-state='planning']  .ns-bloom { opacity: 0.3; background: radial-gradient(circle closest-side at 50% 50%, rgba(200,222,255,0.42) 0%, transparent 78%); }
+[data-compass-state='executing'] .ns-bloom { opacity: 0.55; }
+[data-compass-state='verifying'] .ns-bloom { opacity: 0.32; background: radial-gradient(circle closest-side at 50% 50%, rgba(196,228,240,0.44) 0%, transparent 78%); }
+[data-compass-state='error']     .ns-bloom { opacity: 0.22; background: radial-gradient(circle closest-side at 50% 50%, rgba(255,150,80,0.42) 0%, transparent 78%); }
+[data-compass-state='offline']   .ns-bloom { opacity: 0; }
+
+/* status dot reflects what North Star is doing */
+.ns-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 0.55em; vertical-align: middle;
+  background: #7fd88f; color: #7fd88f; box-shadow: 0 0 8px currentColor; transition: background 0.5s ease, color 0.5s ease; }
+[data-compass-state='hover'] .ns-status-dot, [data-compass-state='listening'] .ns-status-dot { background:#8fd0ff; color:#8fd0ff; }
+[data-compass-state='thinking'] .ns-status-dot, [data-compass-state='planning'] .ns-status-dot { background:#ffcf6a; color:#ffcf6a; }
+[data-compass-state='executing'] .ns-status-dot, [data-compass-state='deploying'] .ns-status-dot { background:#c79bff; color:#c79bff; }
+[data-compass-state='verifying'] .ns-status-dot { background:#9fe6d8; color:#9fe6d8; }
+[data-compass-state='success'] .ns-status-dot { background:#7fd88f; color:#7fd88f; }
+[data-compass-state='warning'] .ns-status-dot { background:#ffb45e; color:#ffb45e; }
+[data-compass-state='error'] .ns-status-dot { background:#ff8a4a; color:#ff8a4a; }
+[data-compass-state='offline'] .ns-status-dot { background:#6b7488; color:#6b7488; box-shadow:none; }
+
+/* progress bar inside the approvals panel during a deployment */
+.ns-progress { margin-top: 0.7rem; height: 4px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; opacity: 0; transition: opacity 0.4s ease; }
+.ns-progress.on { opacity: 1; }
+.ns-progress-bar { height: 100%; width: 0%; border-radius: 3px; background: linear-gradient(90deg, #d8a24a, #ffe6a4); box-shadow: 0 0 10px rgba(255,206,120,0.5); transition: width 0.3s ease; }
+.ns-progress-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.4rem; font-size: clamp(0.5rem,0.68vw,0.6rem); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(226,214,188,0.6); opacity: 0; transition: opacity 0.4s ease; }
+.ns-progress-row.on { opacity: 1; }
+.ns-progress-row b { color: #ecc276; font-variant-numeric: tabular-nums; }
+
+/* =====================================================================
+   PHASE 2 — additive only: real-data loading states for the panels above.
+   No existing selector is modified.
+   ===================================================================== */
+@keyframes ns-indeterminate { 0% { transform: translateX(-60%); } 100% { transform: translateX(220%); } }
+.ns-progress-bar.indeterminate { width: 40% !important; animation: ns-indeterminate 1.1s ease-in-out infinite; }
+
+@keyframes ns-skeleton-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.7; } }
+.ns-skeleton-line { display: block; height: 0.85em; border-radius: 4px; background: rgba(226,214,188,0.14); animation: ns-skeleton-pulse 1.6s ease-in-out infinite; }
+
+/* dark hold behind the auth gate, before the room mounts — same tone as .ns-room */
+.ns-gate { position: fixed; inset: 0; background: #03040a; }
+
+/* live agent roster — mirrors .ns-chips' shape with a status dot + pill */
+.ns-agents { list-style: none; margin: 0.55rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.ns-agents li { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.5rem; border: 1px solid rgba(210,170,102,0.22); border-radius: 6px; background: rgba(20,16,10,0.42); }
+.ns-agents-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: rgba(226,214,188,0.35); }
+.ns-agents-name { font-size: clamp(0.58rem,0.76vw,0.7rem); color: rgba(226,214,188,0.9); white-space: nowrap; }
+.ns-agents-activity { flex: 1; min-width: 0; font-size: clamp(0.52rem,0.68vw,0.62rem); color: rgba(226,214,188,0.6); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-agents-status { font-weight: 400; white-space: nowrap; font-size: clamp(0.5rem,0.64vw,0.58rem); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(226,214,188,0.5); }
+.ns-agents li[data-status='active'] .ns-agents-dot, .ns-agents li[data-status='verifying'] .ns-agents-dot { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-agents li[data-status='waiting-for-approval'] .ns-agents-dot { background: #9ec6e0; }
+.ns-agents li[data-status='failed'] .ns-agents-dot, .ns-agents li[data-status='blocked'] .ns-agents-dot { background: #e08a7a; }
+.ns-agents li[data-status='completed'] .ns-agents-dot { background: #9ed6a0; }
+.ns-agents li[data-status='active'] .ns-agents-status, .ns-agents li[data-status='verifying'] .ns-agents-status { color: #ecc276; }
+.ns-agents li[data-status='failed'] .ns-agents-status, .ns-agents li[data-status='blocked'] .ns-agents-status { color: #e08a7a; }
+
+/* mission queue — summary counters + a short recent-missions list */
+.ns-missions-summary { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.35rem; }
+.ns-missions-summary li { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; padding: 0.35rem 0.2rem; border: 1px solid rgba(210,170,102,0.2); border-radius: 6px; background: rgba(20,16,10,0.36); }
+.ns-missions-summary b { font-size: clamp(0.72rem,0.95vw,0.86rem); color: #ecc276; font-variant-numeric: tabular-nums; font-weight: 400; }
+.ns-missions-summary span { font-size: clamp(0.42rem,0.56vw,0.5rem); letter-spacing: 0.06em; text-transform: uppercase; color: rgba(226,214,188,0.55); text-align: center; }
+.ns-missions-list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.28rem; }
+.ns-missions-list li { display: flex; align-items: center; gap: 0.5rem; padding: 0.26rem 0.5rem; border: 1px solid rgba(210,170,102,0.18); border-radius: 6px; background: rgba(20,16,10,0.32); }
+.ns-missions-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: rgba(226,214,188,0.35); }
+.ns-missions-title { flex: 1; min-width: 0; font-size: clamp(0.54rem,0.7vw,0.64rem); color: rgba(226,214,188,0.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-missions-stage { font-weight: 400; white-space: nowrap; font-size: clamp(0.48rem,0.6vw,0.55rem); letter-spacing: 0.06em; text-transform: uppercase; color: rgba(226,214,188,0.5); }
+.ns-missions-list li[data-stage='waiting-for-approval'] .ns-missions-dot, .ns-missions-list li[data-stage='approved'] .ns-missions-dot { background: #9ec6e0; }
+.ns-missions-list li[data-stage='executing'] .ns-missions-dot, .ns-missions-list li[data-stage='deploying'] .ns-missions-dot, .ns-missions-list li[data-stage='verifying'] .ns-missions-dot { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-missions-list li[data-stage='completed'] .ns-missions-dot { background: #9ed6a0; }
+.ns-missions-list li[data-stage='failed'] .ns-missions-dot, .ns-missions-list li[data-stage='retry'] .ns-missions-dot { background: #e08a7a; }
+.ns-missions-list li[data-stage='failed'] .ns-missions-stage, .ns-missions-list li[data-stage='retry'] .ns-missions-stage { color: #e08a7a; }
+
+/* Mission Operations (Milestone 4) — "where is my work right now?" A single
+   mission's real phase-by-phase history, not a pipeline diagram. */
+.ns-ops-outcome { font-size: clamp(0.42rem,0.56vw,0.5rem); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; color: rgba(226,214,188,0.55); vertical-align: middle; }
+.ns-ops-outcome[data-outcome='completed'] { color: #9ed6a0; }
+.ns-ops-outcome[data-outcome='canceled'] { color: #e08a7a; }
+.ns-ops-outcome[data-outcome='retrying'] { color: #e0b27a; }
+.ns-ops-flow { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; align-items: center; gap: 0; }
+.ns-ops-flow li { flex: 1; display: flex; align-items: center; position: relative; }
+.ns-ops-flow li::after { content: ''; flex: 1; height: 1px; background: rgba(210,170,102,0.22); }
+.ns-ops-flow li:last-child::after { display: none; }
+.ns-ops-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: rgba(226,214,188,0.25); border: 1px solid rgba(210,170,102,0.3); }
+.ns-ops-flow li[data-status='done'] .ns-ops-dot { background: #9ed6a0; border-color: #9ed6a0; }
+.ns-ops-flow li[data-status='done']::after { background: #9ed6a0; opacity: 0.4; }
+.ns-ops-flow li[data-status='current'] .ns-ops-dot { background: #ecc276; border-color: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-ops-current { margin: 0.5rem 0 0; font-size: clamp(0.6rem,0.78vw,0.72rem); letter-spacing: 0.02em; color: #ecc276; }
+
+/* Command Bar overlay (Milestone 3) — a keyboard-first control surface, not
+   a persistent shell element. Opened by "/" or the "command" principle;
+   closes on Esc. Additive only — no frozen room/compass selector touched. */
+.ns-cmdbar { position: fixed; inset: 0; z-index: 40; display: flex; align-items: flex-start; justify-content: center; padding-top: 14vh; background: rgba(3,4,10,0.55); backdrop-filter: blur(3px); }
+.ns-cmdbar-inner { width: min(560px, 90vw); border: 1px solid rgba(210,170,102,0.32); border-radius: 10px; background: linear-gradient(180deg, rgba(12,12,17,0.94), rgba(7,7,10,0.97)); box-shadow: 0 30px 70px rgba(0,0,0,0.6); padding: 1.1rem 1.2rem 0.9rem; font-family: var(--serif); }
+.ns-cmdbar-context { display: flex; gap: 0.5rem; align-items: baseline; font-size: clamp(0.5rem,0.66vw,0.6rem); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(226,214,188,0.55); margin-bottom: 0.6rem; }
+.ns-cmdbar-mission { color: #ecc276; }
+.ns-cmdbar-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(210,170,102,0.28); border-radius: 7px; padding: 0.6rem 0.75rem; font-family: var(--serif); font-size: clamp(0.78rem,1vw,0.9rem); color: #f2e8d2; outline: none; }
+.ns-cmdbar-input:focus-visible { border-color: rgba(240,205,130,0.7); }
+.ns-cmdbar-input::placeholder { color: rgba(226,214,188,0.4); }
+.ns-cmdbar-confirm { margin-top: 0.7rem; padding: 0.7rem 0.8rem; border-radius: 7px; border: 1px solid rgba(210,170,102,0.3); background: rgba(30,24,14,0.5); }
+.ns-cmdbar-confirm p { margin: 0 0 0.6rem; font-size: clamp(0.68rem,0.86vw,0.78rem); color: rgba(226,214,188,0.9); line-height: 1.5; }
+.ns-cmdbar-confirm[data-risk='consequential'] { border-color: rgba(224,138,122,0.45); background: rgba(40,20,16,0.5); }
+.ns-cmdbar-confirm-actions { display: flex; gap: 0.5rem; }
+.ns-cmdbar-confirm-actions button { font-family: var(--serif); font-size: clamp(0.5rem,0.64vw,0.58rem); letter-spacing: 0.14em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; border: 1px solid rgba(238,205,135,0.5); background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; }
+.ns-cmdbar-confirm-actions button:last-child { border-color: rgba(226,214,188,0.25); background: transparent; color: rgba(226,214,188,0.7); }
+.ns-cmdbar-history { list-style: none; margin: 0.7rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; max-height: 30vh; overflow-y: auto; }
+.ns-cmdbar-history li { padding: 0.4rem 0.55rem; border-radius: 6px; background: rgba(255,255,255,0.03); }
+.ns-cmdbar-raw { display: block; font-size: clamp(0.56rem,0.72vw,0.64rem); color: rgba(226,214,188,0.5); }
+.ns-cmdbar-msg { display: block; margin-top: 0.15rem; font-size: clamp(0.66rem,0.84vw,0.76rem); color: rgba(226,214,188,0.92); }
+.ns-cmdbar-history li[data-status='failed'] .ns-cmdbar-msg, .ns-cmdbar-history li[data-status='rejected-permission'] .ns-cmdbar-msg { color: #e08a7a; }
+.ns-cmdbar-hint { margin: 0.7rem 0 0; font-size: clamp(0.48rem,0.6vw,0.54rem); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(226,214,188,0.35); text-align: right; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-progress-bar.indeterminate, .ns-skeleton-line { animation: none; }
+}
+
+/* =====================================================================
+   CINEMATIC ARRIVAL — the room sleeps, then wakes on first touch
+   ===================================================================== */
+.ns-sleep {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 45%, rgba(5,7,13,0.8), rgba(2,3,7,0.93) 72%);
+  opacity: 0.9; transition: opacity 3.4s ease;
+}
+[data-phase='awake'] .ns-sleep { opacity: 0; }
+[data-phase='asleep'][data-aware] .ns-sleep { opacity: 0.83; transition: opacity 1.6s ease; }
+[data-quick] .ns-sleep { transition-duration: 1.7s; }
+
+/* the whole UI stays absent until the room wakes, then reveals in sequence */
+.ns-brand, .ns-status, .ns-controls, .ns-principles { opacity: 0; animation: none !important; transition: opacity 1.5s ease; }
+[data-phase='awake'] .ns-brand { opacity: 1; transition-delay: 3.3s; }
+[data-phase='awake'] .ns-status { opacity: 1; transition-delay: 3.7s; }
+[data-phase='awake'] .ns-controls { opacity: 1; transition-delay: 4.1s; }
+[data-phase='awake'] .ns-principles { opacity: 1; transition-delay: 4.4s; }
+[data-quick][data-phase='awake'] .ns-brand { transition-delay: 0.9s; }
+[data-quick][data-phase='awake'] .ns-status { transition-delay: 1.1s; }
+[data-quick][data-phase='awake'] .ns-controls { transition-delay: 1.3s; }
+[data-quick][data-phase='awake'] .ns-principles { transition-delay: 1.5s; }
+[data-cinema] .ns-status, [data-cinema] .ns-principles { transition: opacity 0.4s ease; }
+
+/* North Star's spoken welcome */
+.ns-welcome {
+  position: absolute; left: 50%; top: 25%; transform: translateX(-50%) translateY(-8px);
+  z-index: 10; pointer-events: none; text-align: center; white-space: nowrap;
+  font-family: var(--serif); font-size: clamp(0.9rem, 1.6vw, 1.4rem);
+  letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase;
+  color: #f0dcae; text-shadow: 0 0 24px rgba(232,182,104,0.45), 0 2px 14px rgba(0,0,0,0.9);
+  opacity: 0; transition: opacity 1.5s ease, transform 1.5s ease;
+}
+.ns-welcome.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* imperceptible dither that prevents 8-bit gradient banding on large,
+   high-bit-depth displays (a 6K XDR shows banding a laptop hides) */
+.ns-dither { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0.02; mix-blend-mode: overlay; }
+.ns-dither rect { width: 100%; height: 100%; }
