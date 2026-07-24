@@ -17,6 +17,7 @@ import { detectTrafficDecay } from '../../../../lib/foundation/reco/traffic-deca
 import { findLowCtrOutliers } from '../../../../lib/foundation/reco/ctr-outliers'
 import { findLowConversionOutliers } from '../../../../lib/foundation/reco/conversion-outliers'
 import { detectChannelConcentration } from '../../../../lib/foundation/reco/channel-concentration'
+import { detectMobileGap } from '../../../../lib/foundation/reco/mobile-gap'
 
 const GRADE_TONE: Record<EvidenceGradeDTO, string> = {
   observed: 'text-[var(--rf-green)] border-[var(--rf-green)]/40',
@@ -497,11 +498,20 @@ function BreakdownTables({ projectId }: { projectId: string }) {
 
   const toBreakdownRows = (rows: GscBreakdownRowDTO[]) => rows.map((r) => ({ key: r.key, clicks: r.clicks, impressions: r.impressions, ctr: r.ctr, position: r.position }))
 
+  const mobileGap = data.gscDevice.ok ? detectMobileGap(data.gscDevice.rows) : null
+
   return (
-    <div className="grid gap-2 sm:grid-cols-3">
-      {data.gscDevice.ok ? <BreakdownTable title="Search Console — by device" keyLabel="Device" rows={toBreakdownRows(data.gscDevice.rows)} /> : <p className="text-[11px] text-[var(--rf-faint)]">Device breakdown unavailable: {data.gscDevice.reason}</p>}
-      {data.gscCountry.ok ? <BreakdownTable title="Search Console — by country" keyLabel="Country" rows={toBreakdownRows(data.gscCountry.rows)} /> : <p className="text-[11px] text-[var(--rf-faint)]">Country breakdown unavailable: {data.gscCountry.reason}</p>}
-      {data.ga4Channel.ok ? <Ga4ChannelTable rows={data.ga4Channel.rows} /> : <p className="text-[11px] text-[var(--rf-faint)]">Channel breakdown unavailable: {data.ga4Channel.reason}</p>}
+    <div className="space-y-2">
+      {mobileGap && (
+        <p className="rounded-lg bg-yellow-500/10 px-3 py-2 text-[11px] text-yellow-300">
+          Mobile ranks {mobileGap.gap.toFixed(1)} positions worse than desktop on average (mobile {mobileGap.mobilePosition.toFixed(1)} vs desktop {mobileGap.desktopPosition.toFixed(1)}) — worth checking mobile load speed, layout, and interstitials.
+        </p>
+      )}
+      <div className="grid gap-2 sm:grid-cols-3">
+        {data.gscDevice.ok ? <BreakdownTable title="Search Console — by device" keyLabel="Device" rows={toBreakdownRows(data.gscDevice.rows)} /> : <p className="text-[11px] text-[var(--rf-faint)]">Device breakdown unavailable: {data.gscDevice.reason}</p>}
+        {data.gscCountry.ok ? <BreakdownTable title="Search Console — by country" keyLabel="Country" rows={toBreakdownRows(data.gscCountry.rows)} /> : <p className="text-[11px] text-[var(--rf-faint)]">Country breakdown unavailable: {data.gscCountry.reason}</p>}
+        {data.ga4Channel.ok ? <Ga4ChannelTable rows={data.ga4Channel.rows} /> : <p className="text-[11px] text-[var(--rf-faint)]">Channel breakdown unavailable: {data.ga4Channel.reason}</p>}
+      </div>
     </div>
   )
 }
