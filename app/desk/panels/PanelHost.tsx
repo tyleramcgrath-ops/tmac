@@ -9,14 +9,16 @@ import type { CompassState } from '../compass'
 import BriefingPanel from './briefing/BriefingPanel'
 import OpportunitiesPanel from './opportunities/OpportunitiesPanel'
 import ApprovalsPanel from './approvals/ApprovalsPanel'
+import AgentRosterPanel from './agents/AgentRosterPanel'
 
-const DELAYS = ['0ms', '130ms', '260ms']
+const DELAYS = ['0ms', '130ms', '260ms', '390ms']
 
 export default function PanelHost({
   projectId,
   projectsResolved,
   panelsUp,
   onCompassState,
+  onAgentSignal,
 }: {
   projectId: string | null
   // true once the flagship-project lookup has finished — lets panels tell
@@ -25,6 +27,9 @@ export default function PanelHost({
   projectsResolved: boolean
   panelsUp: boolean
   onCompassState: (s: CompassState) => void
+  // ambient signal derived from real roster deltas — distinct from
+  // onCompassState, which the approve flow calls directly and authoritatively.
+  onAgentSignal: (s: CompassState | null) => void
 }) {
   return (
     <>
@@ -40,6 +45,14 @@ export default function PanelHost({
           projectsResolved={projectsResolved}
           panelsUp={panelsUp}
           onCompassState={onCompassState}
+        />
+      </article>
+      <article className="ns-panel" style={{ transitionDelay: DELAYS[3] }}>
+        <AgentRosterPanel
+          projectId={projectId}
+          projectsResolved={projectsResolved}
+          panelsUp={panelsUp}
+          onCompassSignal={onAgentSignal}
         />
       </article>
     </>

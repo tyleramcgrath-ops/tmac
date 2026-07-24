@@ -486,6 +486,9 @@ export const api = {
     }),
   getAtlas: (projectId: string) => req<{ snapshot: AtlasSnapshotDTO }>(`/api/projects/${projectId}/atlas`),
 
+  // ── Live Agent Roster (Headquarters, Milestone 1) ──
+  getAgentRoster: (projectId: string) => req<{ roster: AgentRosterDTO }>(`/api/projects/${projectId}/agents/roster`),
+
   // ── Rank tracking history ──
   listTrackedKeywords: (projectId: string) =>
     req<{ keywords: TrackedKeywordDTO[] }>(`/api/projects/${projectId}/rankings/keywords`),
@@ -715,6 +718,29 @@ export interface AtlasSnapshotDTO {
   changes: { category: string; subject: string; note: string; evidence: EvidenceDTO }[]
   briefing: MorningBriefingDTO
   grades: Record<EvidenceGradeDTO, number>
+}
+
+// ── Live Agent Roster (Headquarters, Milestone 1) ───────────────────────────
+export type AgentId = 'scout' | 'atlas' | 'forge' | 'operator' | 'sentinel'
+export type AgentRuntimeStatus =
+  | 'idle' | 'active' | 'waiting-for-approval' | 'blocked' | 'failed' | 'verifying' | 'completed'
+export interface AgentRuntimeStateDTO {
+  agentId: AgentId
+  name: string
+  role: string
+  status: AgentRuntimeStatus
+  currentActivity: string | null
+  project: { id: string; name: string } | null
+  // Only ever a real, measurable number — null whenever no genuine figure exists.
+  progress: number | null
+  sourceWorkflow: 'scan' | 'atlas-intelligence' | 'content-studio' | 'operator-deploy' | 'verification'
+  evidenceAt: string | null
+  blockingReason: string | null
+  lastCompletedAction: string | null
+}
+export interface AgentRosterDTO {
+  generatedAt: string
+  agents: AgentRuntimeStateDTO[]
 }
 
 export interface DiffSeg {

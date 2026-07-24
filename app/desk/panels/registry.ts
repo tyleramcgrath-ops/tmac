@@ -5,6 +5,6 @@
 // base — Phase 2 sub-milestones b–f) should use `React.lazy` here instead,
 // per the performance guardrails in the Phase 2 plan.
 
-export type PanelId = 'briefing' | 'opportunities' | 'approvals'
+export type PanelId = 'briefing' | 'opportunities' | 'approvals' | 'agents'
 
-export const HOME_PANELS: readonly PanelId[] = ['briefing', 'opportunities', 'approvals']
+export const HOME_PANELS: readonly PanelId[] = ['briefing', 'opportunities', 'approvals', 'agents']

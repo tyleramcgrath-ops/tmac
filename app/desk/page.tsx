@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { initCompass, type CompassApi, type CompassState, type TimeMode } from './compass'
 import { AuthProvider, useAuth } from '../lib/auth-context'
@@ -83,10 +83,14 @@ function DeskRoom() {
   const quickRef = useRef(false)
   const panelsUpRef = useRef(false)
   const awakeRef = useRef(false)
+  const compassStateRef = useRef<CompassState>('asleep')
   const userNameRef = useRef('there')
   useEffect(() => {
     userNameRef.current = user?.name || 'there'
   }, [user])
+  useEffect(() => {
+    compassStateRef.current = compassState
+  }, [compassState])
   const setPhase = (p: Phase) => { phaseRef.current = p; setPhaseState(p) }
 
   const WT = (ms: number, fn: () => void) => { wakeTimers.current.push(setTimeout(fn, ms)) }
@@ -236,6 +240,21 @@ function DeskRoom() {
 
   useEffect(() => () => { clearWT() }, [])
 
+  // Ambient signal from real agent-roster deltas (see _lib/agent-signal.ts).
+  // Only applies while the compass is otherwise idle/hover — never stomps on
+  // the user-triggered approve flow's own executing/deploying/verifying
+  // sequence, which owns C() directly and authoritatively.
+  const onAgentSignal = useCallback((s: CompassState | null) => {
+    if (!s) return
+    if (phaseRef.current !== 'awake') return
+    if (compassStateRef.current !== 'idle' && compassStateRef.current !== 'hover') return
+    C(s)
+    window.setTimeout(() => {
+      if (compassStateRef.current === s) C('idle')
+    }, 4000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // principles: heart/command call the briefing; interface shows the thinking arc
   const onPrinciple = (k: 'heart' | 'command' | 'interface') => {
     if (phaseRef.current !== 'awake') return
@@ -353,6 +372,7 @@ function DeskRoom() {
             projectsResolved={!projectsLoading}
             panelsUp={panelsUp}
             onCompassState={C}
+            onAgentSignal={onAgentSignal}
           />
         </section>
 
