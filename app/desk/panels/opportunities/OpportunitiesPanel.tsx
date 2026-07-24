@@ -66,8 +66,12 @@ export default function OpportunitiesPanel({
 
   return (
     <>
-      <p className="ns-panel-eyebrow">Opportunities</p>
+      <div className="ns-panel-head">
+        <p className="ns-panel-eyebrow">Opportunities</p>
+        <p className="ns-panel-status">{open.length ? 'Ready' : 'Clear'}</p>
+      </div>
       <h2>{open.length ? `${open.length} quick win${open.length > 1 ? 's' : ''} in reach.` : 'Nothing waiting right now.'}</h2>
+      <hr className="ns-panel-divider" />
       {open.length > 0 && (
         <ul className="ns-chips">
           {open.map((r) => (

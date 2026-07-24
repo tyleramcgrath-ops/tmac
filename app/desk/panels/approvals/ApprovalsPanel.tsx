@@ -124,8 +124,12 @@ export default function ApprovalsPanel({
 
   return (
     <>
-      <p className="ns-panel-eyebrow">Approvals</p>
+      <div className="ns-panel-head">
+        <p className="ns-panel-eyebrow">Approvals</p>
+        <p className="ns-panel-status">{approve === 'done' ? 'Verified' : target ? 'Waiting' : 'Clear'}</p>
+      </div>
       <h2>{approve === 'done' ? 'Done. Verified by read-back.' : target ? 'One fix awaits your word.' : 'Nothing waiting on you.'}</h2>
+      <hr className="ns-panel-divider" />
       <p className="ns-panel-body">
         {approve === 'done'
           ? 'The correction is live. The Core confirmed the change on the page itself.'

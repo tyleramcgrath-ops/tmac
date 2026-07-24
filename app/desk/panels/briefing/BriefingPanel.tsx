@@ -130,19 +130,18 @@ export default function BriefingPanel({
   const spark = gscTrend ? buildSparkline(gscTrend) : null
   const connectedSources = brief.dataSources.filter((s) => s.available).length
 
-  // Priorities and attention items share one compact list — a priority is a
-  // real next action, an attention item is a real thing blocking progress.
-  // Distinguished by dot color (gold vs red), not by separate lists, so the
-  // panel stays legible at its fixed width (a 7-column layout overflowed
-  // illegibly in Milestone 4 — this panel keeps that lesson).
-  const topItems = [
-    ...brief.priorities.slice(0, 2).map((p) => ({ kind: 'priority' as const, text: p.text })),
-    ...brief.attentionRequired.slice(0, 2).map((a) => ({ kind: 'attention' as const, text: a.text })),
-  ].slice(0, 3)
+  const findSource = (name: string) => brief.dataSources.find((s) => s.name === name)
+  const searchConsole = findSource('Search Console')
+  const analytics = findSource('Analytics (GA4)')
+  const gscMetric = brief.performance.metrics.find((m) => m.source === 'Search Console')
+  const ga4Metric = brief.performance.metrics.find((m) => m.source === 'Analytics (GA4)')
 
   return (
     <>
-      <p className="ns-panel-eyebrow">Morning briefing</p>
+      <div className="ns-panel-head">
+        <p className="ns-panel-eyebrow">Morning briefing</p>
+        <p className="ns-panel-status">{connectedSources} of {brief.dataSources.length} sources</p>
+      </div>
       <h2>{brief.executiveSummary}</h2>
       {spark && (
         <svg className="ns-spark" viewBox="0 0 120 36" aria-hidden>
@@ -157,20 +156,32 @@ export default function BriefingPanel({
           <circle cx="120" cy={spark.lastY} r="2.2" fill="#ffe2a4" />
         </svg>
       )}
-      {topItems.length > 0 && (
-        <ul className="ns-brief-list">
-          {topItems.map((item, i) => (
-            <li key={i} data-kind={item.kind}>
-              <span className="ns-brief-dot" aria-hidden />
-              <span className="ns-brief-text">{item.text}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      <hr className="ns-panel-divider" />
+      <ul className="ns-kv-list">
+        <li className="ns-kv-row">
+          <span className="ns-kv-label">Priorities</span>
+          <span className="ns-kv-value">{brief.priorities.length ? brief.priorities[0].text : 'None waiting'}</span>
+        </li>
+        <li className="ns-kv-row">
+          <span className="ns-kv-label">Attention</span>
+          <span className="ns-kv-value">{brief.attentionRequired.length ? `${brief.attentionRequired.length} item${brief.attentionRequired.length === 1 ? '' : 's'}` : 'None'}</span>
+        </li>
+        <li className="ns-kv-row">
+          <span className="ns-kv-label">Search Console</span>
+          <span className="ns-kv-value" data-unavailable={searchConsole?.available ? undefined : true}>
+            {searchConsole?.available && gscMetric ? `${gscMetric.value} clicks` : 'Requires Search Console'}
+          </span>
+        </li>
+        <li className="ns-kv-row">
+          <span className="ns-kv-label">Analytics</span>
+          <span className="ns-kv-value" data-unavailable={analytics?.available ? undefined : true}>
+            {analytics?.available && ga4Metric ? `${ga4Metric.value} sessions` : 'Requires GA4 connection'}
+          </span>
+        </li>
+      </ul>
       <p className="ns-panel-body">
         {brief.recommendation ? brief.recommendation.text : 'No strong signal yet — not enough evidence for a confident recommendation.'}
       </p>
-      <p className="ns-panel-body ns-brief-sources">{connectedSources} of {brief.dataSources.length} data sources connected.</p>
     </>
   )
 }

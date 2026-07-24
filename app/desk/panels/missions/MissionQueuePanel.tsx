@@ -76,7 +76,10 @@ export default function MissionQueuePanel({
 
   return (
     <>
-      <p className="ns-panel-eyebrow">Mission queue</p>
+      <div className="ns-panel-head">
+        <p className="ns-panel-eyebrow">Mission queue</p>
+        <p className="ns-panel-status">{summary.total === 0 ? 'Empty' : `${summary.total} total`}</p>
+      </div>
       <h2>
         {currentMission
           ? `"${currentMission.title}" — ${STAGE_LABEL[currentMission.stage]}.`
@@ -84,6 +87,7 @@ export default function MissionQueuePanel({
             ? 'No missions yet.'
             : 'The queue is clear.'}
       </h2>
+      <hr className="ns-panel-divider" />
       <ul className="ns-missions-summary">
         <li><b>{summary.waitingForApproval}</b><span>Awaiting approval</span></li>
         <li><b>{summary.active}</b><span>In flight</span></li>
