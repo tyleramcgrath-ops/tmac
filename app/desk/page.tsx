@@ -1,7 +1,11 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { initCompass, type CompassApi, type CompassState, type TimeMode } from './compass'
+import { AuthProvider, useAuth } from '../lib/auth-context'
+import { useDeskContext } from './_lib/use-desk-context'
+import PanelHost from './panels/PanelHost'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -9,23 +13,6 @@ import { initCompass, type CompassApi, type CompassState, type TimeMode } from '
    is North Star's operating heart, with coordinated room lighting and UI.
    Cinematic arrival: the room sleeps, then wakes on the first touch.
    ===================================================================== */
-
-// sparkline — a smooth curve through the points (quadratics to midpoints)
-const TREND = [22, 24, 23, 26, 25, 28, 27, 30, 29, 33, 34, 38, 37, 41]
-const PTS = TREND.map((v, i) => [
-  +(i * 120 / (TREND.length - 1)).toFixed(1),
-  +(34 - (v - 20) * 1.35).toFixed(1),
-] as [number, number])
-const SPARK_D = (() => {
-  let dd = `M ${PTS[0][0]} ${PTS[0][1]}`
-  for (let si = 1; si < PTS.length; si++) {
-    const xc = (PTS[si - 1][0] + PTS[si][0]) / 2
-    const yc = (PTS[si - 1][1] + PTS[si][1]) / 2
-    dd += ` Q ${PTS[si - 1][0]} ${PTS[si - 1][1]} ${xc.toFixed(2)} ${yc.toFixed(2)}`
-  }
-  dd += ` L ${PTS[PTS.length - 1][0]} ${PTS[PTS.length - 1][1]}`
-  return dd
-})()
 
 const TIME_WORD: Record<TimeMode, string> = { dawn: 'Dawn', day: 'Day', dusk: 'Dusk', night: 'Night' }
 const STATE_LABEL: Partial<Record<CompassState, string>> = {
@@ -38,33 +25,53 @@ const STATE_LABEL: Partial<Record<CompassState, string>> = {
 const TIMES: TimeMode[] = ['dawn', 'day', 'dusk', 'night']
 const DEV_STATES: CompassState[] = ['idle', 'hover', 'listening', 'thinking', 'planning', 'executing', 'deploying', 'verifying', 'success', 'warning', 'error', 'offline']
 
-type ApproveState = 'idle' | 'working' | 'done'
 type Phase = 'asleep' | 'waking' | 'awake'
 
-function greeting() {
+function greeting(name: string) {
   const h = new Date().getHours()
-  return h < 5 ? 'Still here, Tyler' : h < 12 ? 'Good morning, Tyler' : h < 17 ? 'Good afternoon, Tyler' : 'Good evening, Tyler'
+  return h < 5 ? `Still here, ${name}` : h < 12 ? `Good morning, ${name}` : h < 17 ? `Good afternoon, ${name}` : `Good evening, ${name}`
 }
 
 export default function NorthStar() {
+  return (
+    <AuthProvider>
+      <DeskGate>
+        <DeskRoom />
+      </DeskGate>
+    </AuthProvider>
+  )
+}
+
+// Gate: resolves the session before the Three.js scene ever mounts. Redirects
+// unauthenticated visitors to /login?next=/desk. While loading, holds the same
+// dark tone as the room itself (`.ns-gate`) rather than a mismatched spinner.
+function DeskGate({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth()
+  const router = useRouter()
+  useEffect(() => {
+    if (!loading && !user) router.replace('/login?next=/desk')
+  }, [loading, user, router])
+  if (loading || !user) return <div className="ns-gate" aria-hidden />
+  return <>{children}</>
+}
+
+function DeskRoom() {
+  const { user } = useAuth()
+  const { projectId, loading: projectsLoading } = useDeskContext(true)
+
   const roomRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const hitRef = useRef<HTMLButtonElement>(null)
   const api = useRef<CompassApi | null>(null)
-  const progTimer = useRef<ReturnType<typeof setInterval> | null>(null)
   const wakeTimers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   const [timeMode, setTimeMode] = useState<TimeMode>('night')
   const [compassState, setCompassState] = useState<CompassState>('asleep')
   const [awake, setAwake] = useState(false)
   const [panelsUp, setPanelsUp] = useState(false)
-  const [approve, setApprove] = useState<ApproveState>('idle')
   const [cinema, setCinema] = useState(false)
   const [dev, setDev] = useState(false)
   const [clock, setClock] = useState<string | null>(null)
-  const [progOn, setProgOn] = useState(false)
-  const [progPct, setProgPct] = useState(0)
-  const [progTask, setProgTask] = useState('Deploying')
   const [phase, setPhaseState] = useState<Phase>('asleep')
   const [quick, setQuickState] = useState(false)
   const [aware, setAware] = useState(false)
@@ -76,12 +83,19 @@ export default function NorthStar() {
   const quickRef = useRef(false)
   const panelsUpRef = useRef(false)
   const awakeRef = useRef(false)
+  const userNameRef = useRef('there')
+  useEffect(() => {
+    userNameRef.current = user?.name || 'there'
+  }, [user])
   const setPhase = (p: Phase) => { phaseRef.current = p; setPhaseState(p) }
 
   const WT = (ms: number, fn: () => void) => { wakeTimers.current.push(setTimeout(fn, ms)) }
   const clearWT = () => { wakeTimers.current.forEach(clearTimeout); wakeTimers.current = [] }
   const persist = (t: TimeMode) => {
-    try { localStorage.setItem('ns-hq', JSON.stringify({ visited: true, timeMode: t })) } catch {}
+    try {
+      const saved = JSON.parse(localStorage.getItem('ns-hq') || '{}')
+      localStorage.setItem('ns-hq', JSON.stringify({ ...saved, visited: true, timeMode: t }))
+    } catch {}
   }
 
   const C = (s: CompassState) => { setCompassState(s); api.current?.setState(s) }
@@ -92,11 +106,10 @@ export default function NorthStar() {
 
   const callPanels = (v: boolean) => {
     panelsUpRef.current = v; setPanelsUp(v)
-    if (!v) setApprove('idle')
   }
 
   const showWelcome = () => {
-    setWelcomeText(greeting()); setWelcomeShow(true)
+    setWelcomeText(greeting(userNameRef.current)); setWelcomeShow(true)
     WT(3800, () => setWelcomeShow(false))
   }
 
@@ -221,34 +234,7 @@ export default function NorthStar() {
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
-  useEffect(() => () => {
-    if (progTimer.current) clearInterval(progTimer.current)
-    clearWT()
-  }, [])
-
-  // the approval drives a full working sequence the compass and UI both narrate
-  const runApprove = () => {
-    if (approve !== 'idle') return
-    setApprove('working'); setProgOn(true); setProgTask('Deploying'); setProgPct(0)
-    C('executing')
-    window.setTimeout(() => {
-      C('deploying')
-      const start = Date.now(), dur = 2400
-      if (progTimer.current) clearInterval(progTimer.current)
-      progTimer.current = setInterval(() => {
-        const p = Math.min(100, (Date.now() - start) / dur * 100)
-        setProgPct(p)
-        if (p >= 100) {
-          if (progTimer.current) clearInterval(progTimer.current)
-          C('verifying'); setProgTask('Verifying')
-          window.setTimeout(() => {
-            setApprove('done'); C('success')
-            window.setTimeout(() => { setProgOn(false); C(awakeRef.current ? 'listening' : 'idle') }, 2600)
-          }, 1000)
-        }
-      }, 60)
-    }, 700)
-  }
+  useEffect(() => () => { clearWT() }, [])
 
   // principles: heart/command call the briefing; interface shows the thinking arc
   const onPrinciple = (k: 'heart' | 'command' | 'interface') => {
@@ -362,43 +348,12 @@ export default function NorthStar() {
         </div>
 
         <section className={`ns-panels${panelsUp ? ' up' : ''}`} aria-hidden={!panelsUp} aria-label="Today's intelligence">
-          <article className="ns-panel" style={{ transitionDelay: '0ms' }}>
-            <p className="ns-panel-eyebrow">Morning briefing</p><h2>Your week, understood.</h2>
-            <svg className="ns-spark" viewBox="0 0 120 36" aria-hidden>
-              <defs>
-                <linearGradient id="ns-spark-fill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="rgba(240,200,120,0.35)" /><stop offset="1" stopColor="rgba(240,200,120,0)" />
-                </linearGradient>
-              </defs>
-              <path d={`${SPARK_D} L 120 36 L 0 36 Z`} fill="url(#ns-spark-fill)" stroke="none" />
-              <path d={SPARK_D} fill="none" stroke="#ecc276" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" />
-              <circle cx="120" cy={PTS[PTS.length - 1][1]} r="2.2" fill="#ffe2a4" />
-            </svg>
-            <p className="ns-panel-body">Traffic is up 12%. Two pages gained ground overnight. Nothing needs you before coffee.</p>
-          </article>
-          <article className="ns-panel" style={{ transitionDelay: '130ms' }}>
-            <p className="ns-panel-eyebrow">Opportunities</p><h2>Three quick wins in reach.</h2>
-            <ul className="ns-chips">
-              <li><span>pricing questions</span><b>#11 → #6</b></li>
-              <li><span>how it works</span><b>#13 → #7</b></li>
-              <li><span>best near me</span><b>#12 → #8</b></li>
-            </ul>
-            <p className="ns-panel-body">Three page-two keywords sit within striking distance. The Core has drafted the moves.</p>
-          </article>
-          <article className="ns-panel" style={{ transitionDelay: '260ms' }}>
-            <p className="ns-panel-eyebrow">Approvals</p>
-            <h2>{approve === 'done' ? 'Done. Verified by read-back.' : 'One fix awaits your word.'}</h2>
-            <p className="ns-panel-body">
-              {approve === 'done'
-                ? 'The correction is live. The Core confirmed the change on the page itself.'
-                : 'A prepared correction rests on the table. Approve it, and the work is done for you.'}
-            </p>
-            <button type="button" className="ns-approve" data-state={approve} disabled={approve !== 'idle'} onClick={runApprove}>
-              {approve === 'idle' ? 'Approve the fix' : approve === 'working' ? 'Deploying…' : 'Verified ✓'}
-            </button>
-            <div className={`ns-progress${progOn ? ' on' : ''}`}><div className="ns-progress-bar" style={{ width: `${progPct}%` }} /></div>
-            <div className={`ns-progress-row${progOn ? ' on' : ''}`}><span>{progTask}</span><b>{Math.round(progPct)}%</b></div>
-          </article>
+          <PanelHost
+            projectId={projectId}
+            projectsResolved={!projectsLoading}
+            panelsUp={panelsUp}
+            onCompassState={C}
+          />
         </section>
 
         <p className="ns-hint" data-hidden="" aria-hidden>Touch the compass</p>

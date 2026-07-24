@@ -328,6 +328,23 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-progress-row b { color: #ecc276; font-variant-numeric: tabular-nums; }
 
 /* =====================================================================
+   PHASE 2 — additive only: real-data loading states for the panels above.
+   No existing selector is modified.
+   ===================================================================== */
+@keyframes ns-indeterminate { 0% { transform: translateX(-60%); } 100% { transform: translateX(220%); } }
+.ns-progress-bar.indeterminate { width: 40% !important; animation: ns-indeterminate 1.1s ease-in-out infinite; }
+
+@keyframes ns-skeleton-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.7; } }
+.ns-skeleton-line { display: block; height: 0.85em; border-radius: 4px; background: rgba(226,214,188,0.14); animation: ns-skeleton-pulse 1.6s ease-in-out infinite; }
+
+/* dark hold behind the auth gate, before the room mounts — same tone as .ns-room */
+.ns-gate { position: fixed; inset: 0; background: #03040a; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-progress-bar.indeterminate, .ns-skeleton-line { animation: none; }
+}
+
+/* =====================================================================
    CINEMATIC ARRIVAL — the room sleeps, then wakes on first touch
    ===================================================================== */
 .ns-sleep {
