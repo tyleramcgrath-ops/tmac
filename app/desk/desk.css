@@ -1,705 +1,318 @@
 /* =====================================================================
-   NORTH STAR HEADQUARTERS — THE BOARD ITSELF, ALIVE
-   The vision-board render is the room (a full-bleed plate); this file
-   adds the living light and the interface that rides it: the Core's
-   turning rings, the wake pulse, the rising glass panels, the three
-   principles, the station line, and the grain that fuses everything
-   into one exposure.
+   NORTH STAR HEADQUARTERS — production plate + live 3D compass + UI
+   The room is a fixed architectural photograph. Only the compass, UI,
+   depth parallax, and ambient accents are live.
    ===================================================================== */
-
-.hz-root {
-  --mx: 0;
-  --my: 0;
-  --hz-serif: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
+:root {
+  --mx: 0; --my: 0;
+  --serif: 'Didot', 'Bodoni 72', 'Bodoni MT', 'Cochin', 'Times New Roman', Georgia, serif;
 }
+* { box-sizing: border-box; }
 
-.hz-plate-root {
+.ns-room {
   position: relative;
   height: 100dvh;
   width: 100%;
   overflow: hidden;
-  background: #050505;
-  cursor: default;
+  background: #03040a;
+  font-family: var(--serif);
   user-select: none;
-  font-family: var(--hz-serif);
-}
-
-/* ---------------------------------------------------------------------
-   The render — full bleed, with a long cinematic drift
-   --------------------------------------------------------------------- */
-
-.hz-plate-drift {
-  position: absolute;
-  inset: 0;
-  animation: hz-drift-slow 75s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes hz-drift-slow {
-  from { transform: scale(1); }
-  to { transform: scale(1.018); }
-}
-
-.hz-plate {
-  position: absolute;
-  inset: -1.5%;
-  background-image: url('/environment-plates/board-hero.png');
-  background-size: cover;
-  background-position: center;
-  transform: translate3d(calc(var(--mx) * 5px), calc(var(--my) * 3px), 0);
-  will-change: transform;
-  animation: hz-plate-in 2.2s cubic-bezier(0.22, 0.8, 0.24, 1) both;
-}
-@keyframes hz-plate-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* quiets the sheet label baked into the render's top-left corner —
-   reads as the dome's own vignette, not a patch */
-.hz-plate-patch {
-  position: absolute;
-  left: -3%;
-  top: -3%;
-  width: 17%;
-  height: 19%;
-  background:
-    radial-gradient(78% 70% at 30% 28%, #010102 0%, #010102 55%, rgba(1, 1, 2, 0.75) 72%, transparent 90%);
-  filter: blur(4px);
-  pointer-events: none;
-}
-
-/* the station line, engraved where the label used to be */
-.hz-status {
-  position: absolute;
-  left: clamp(1.2rem, 2.6vw, 2.6rem);
-  top: clamp(1.1rem, 2.6vh, 2.2rem);
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  pointer-events: none;
-  animation: hz-live-in 2.4s cubic-bezier(0.22, 0.8, 0.24, 1) both 1.1s;
-}
-.hz-status-time {
-  font-size: clamp(0.85rem, 1.3vw, 1.15rem);
-  letter-spacing: 0.3em;
-  color: #e8cf9d;
-  text-shadow: 0 0 14px rgba(232, 182, 104, 0.4), 0 1px 8px rgba(0, 0, 0, 0.9);
-}
-.hz-status-line {
-  font-size: clamp(0.44rem, 0.68vw, 0.58rem);
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: rgba(226, 208, 172, 0.55);
-}
-
-/* the name in the dome, live and razor sharp */
-.hz-brand {
-  position: absolute;
-  left: 50%;
-  top: 3.6%;
-  transform: translateX(-50%);
-  z-index: 5;
-  text-align: center;
-  pointer-events: none;
-  animation: hz-live-in 2.4s cubic-bezier(0.22, 0.8, 0.24, 1) both 0.8s;
-}
-.hz-brand svg {
-  width: clamp(20px, 2.4vw, 34px);
-  margin: 0 auto 0.5rem;
-  display: block;
-  filter: drop-shadow(0 0 8px rgba(232, 182, 104, 0.6));
-}
-.hz-brand h1 {
-  margin: 0;
-  font-size: clamp(0.9rem, 1.75vw, 1.45rem);
-  font-weight: 400;
-  letter-spacing: 0.52em;
-  text-indent: 0.52em;
-  color: #eed09a;
-  text-shadow: 0 0 20px rgba(232, 182, 104, 0.45), 0 2px 12px rgba(0, 0, 0, 0.9);
-  text-transform: uppercase;
-}
-.hz-brand p {
-  margin: 0.4rem 0 0;
-  font-size: clamp(0.46rem, 0.75vw, 0.62rem);
-  letter-spacing: 0.6em;
-  text-indent: 0.6em;
-  text-transform: uppercase;
-  color: rgba(238, 224, 196, 0.72);
-}
-
-/* =====================================================================
-   THE LIVE CORE — a button: touch it and the room wakes
-   ===================================================================== */
-
-.hz-live {
-  position: absolute;
-  aspect-ratio: 1;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  transform: translate(-50%, -50%) translate3d(calc(var(--mx) * -8px), calc(var(--my) * -5px), 0);
-  will-change: transform;
-  transition: filter 0.9s ease;
-  animation: hz-live-in 2.6s cubic-bezier(0.22, 0.8, 0.24, 1) both 0.5s;
-}
-.hz-live:focus-visible {
-  outline: 1px solid rgba(240, 205, 130, 0.8);
-  outline-offset: 8px;
-  border-radius: 50%;
-}
-[data-awake] .hz-live { filter: brightness(1.18) saturate(1.05); }
-[data-focus='heart'] .hz-live { filter: brightness(1.3) saturate(1.1); }
-
-.hz-live > span { display: block; }
-@keyframes hz-live-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.hz-live-halo {
-  position: absolute;
-  inset: -60%;
-  background: radial-gradient(circle at 50% 52%, rgba(255, 202, 126, 0.2), rgba(255, 182, 106, 0.07) 34%, transparent 62%);
-  animation: hz-breathe 7s ease-in-out infinite;
-  transition: transform 0.9s ease;
-}
-[data-awake] .hz-live-halo { transform: scale(1.15); }
-
-.hz-live-scene {
-  position: absolute;
-  inset: 6%;
-  perspective: 900px;
-}
-
-.hz-live-gimbal {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  animation: hz-slew 92s linear infinite reverse;
-}
-.hz-live-sphere {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  animation: hz-slew 44s linear infinite;
-}
-@keyframes hz-slew {
-  from { transform: rotateX(-10deg) rotateY(0turn); }
-  to { transform: rotateX(-10deg) rotateY(1turn); }
-}
-
-.hz-lring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid rgba(240, 205, 130, 0.5);
-  box-shadow:
-    inset 0 0 6px rgba(255, 222, 152, 0.3),
-    0 0 8px rgba(232, 182, 104, 0.3);
-}
-.hz-lring.m1 { transform: rotateY(52deg); border-color: rgba(226, 184, 106, 0.42); }
-.hz-lring.m2 { transform: rotateY(115deg); border-color: rgba(246, 210, 134, 0.55); }
-.hz-lring.eq {
-  inset: 9%;
-  transform: rotateX(76deg);
-  border-width: 2px;
-  border-color: rgba(250, 216, 142, 0.55);
-  box-shadow:
-    inset 0 0 7px rgba(255, 224, 156, 0.35),
-    0 0 10px rgba(240, 190, 110, 0.35);
-}
-.hz-lring.t1 { inset: 5%; transform: rotateX(60deg) rotateY(30deg); border-width: 1px; border-color: rgba(224, 180, 100, 0.35); box-shadow: none; }
-.hz-lring.outer {
-  inset: -5%;
-  border-width: 1.5px;
-  border-color: rgba(236, 192, 114, 0.45);
-  transform: rotateY(90deg);
-}
-
-/* a slow lens flare drifting across the star */
-.hz-live-flare {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 130%;
-  height: 4%;
-  transform: translate(-50%, -50%);
-  background: linear-gradient(90deg, transparent, rgba(255, 220, 156, 0.14) 32%, rgba(255, 230, 174, 0.26) 50%, rgba(255, 220, 156, 0.14) 68%, transparent);
-  filter: blur(4px);
-  animation: hz-breathe 9s ease-in-out infinite;
-}
-
-/* the wake pulse — one ring of light crossing outward on each touch */
-.hz-pulse {
-  position: absolute;
-  inset: -4%;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 222, 152, 0.75);
-  box-shadow: 0 0 18px rgba(240, 196, 116, 0.5);
-  animation: hz-pulse 1.15s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
-  pointer-events: none;
-}
-@keyframes hz-pulse {
-  from { transform: scale(0.5); opacity: 0.95; }
-  to { transform: scale(2); opacity: 0; }
-}
-
-@keyframes hz-breathe {
-  0%, 100% { opacity: 0.75; }
-  50% { opacity: 1; }
-}
-
-/* =====================================================================
-   THE ANSWERS — horizon and dome lighting up for their principles
-   ===================================================================== */
-
-.hz-horizonline {
-  position: absolute;
-  left: 24%;
-  right: 24%;
-  top: 60.5%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 206, 130, 0.75) 30%, rgba(255, 226, 164, 0.95) 50%, rgba(255, 206, 130, 0.75) 70%, transparent);
-  filter: blur(1px);
-  opacity: 0;
-  transition: opacity 0.7s ease;
-  pointer-events: none;
-}
-[data-focus='command'] .hz-horizonline { opacity: 1; }
-
-.hz-domespark {
-  position: absolute;
-  inset: 2% 20% 78%;
-  opacity: 0;
-  transition: opacity 0.7s ease;
-  pointer-events: none;
-}
-[data-focus='interface'] .hz-domespark { opacity: 1; }
-.hz-domespark i {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff2cf, rgba(240, 200, 120, 0.4) 60%, transparent);
-  box-shadow: 0 0 12px rgba(255, 220, 150, 0.9);
-  animation: hz-spark 1.6s ease-in-out infinite alternate;
-}
-.hz-domespark i:nth-child(1) { left: 12%; top: 42%; }
-.hz-domespark i:nth-child(2) { left: 34%; top: 16%; animation-delay: -0.5s; }
-.hz-domespark i:nth-child(3) { left: 55%; top: 55%; animation-delay: -0.9s; }
-.hz-domespark i:nth-child(4) { left: 74%; top: 25%; animation-delay: -1.2s; }
-.hz-domespark i:nth-child(5) { left: 90%; top: 48%; animation-delay: -0.3s; }
-@keyframes hz-spark {
-  from { transform: scale(0.8); opacity: 0.6; }
-  to { transform: scale(1.25); opacity: 1; }
-}
-
-/* =====================================================================
-   THE INTERFACE — glass panels rising from the table
-   ===================================================================== */
-
-.hz-panels {
-  position: absolute;
-  left: 50%;
-  top: 66%;
-  transform: translateX(-50%);
-  z-index: 7;
-  display: flex;
-  gap: clamp(0.7rem, 1.2vw, 1.4rem);
-  justify-content: center;
-  pointer-events: none;
-  visibility: hidden;
-  transition: visibility 0s 0.9s;
-}
-.hz-panels.up {
-  visibility: visible;
-  pointer-events: auto;
-  transition: visibility 0s;
-}
-
-.hz-panel {
-  width: clamp(190px, 16.5vw, 250px);
-  padding: clamp(0.8rem, 1.3vw, 1.2rem) clamp(0.9rem, 1.4vw, 1.3rem);
-  border: 1px solid rgba(214, 170, 98, 0.4);
-  border-top-color: rgba(244, 208, 132, 0.8);
-  border-radius: 6px;
-  background: linear-gradient(180deg, rgba(10, 10, 13, 0.58), rgba(6, 6, 8, 0.72));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 24px rgba(214, 160, 90, 0.08);
-  opacity: 0;
-  transform: translateY(46px) scale(0.97);
-  transition: opacity 0.7s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.7s cubic-bezier(0.22, 0.8, 0.24, 1);
-}
-.hz-panels.up .hz-panel {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.hz-panel-eyebrow {
-  margin: 0;
-  font-size: clamp(0.42rem, 0.62vw, 0.54rem);
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: rgba(240, 205, 130, 0.85);
-}
-.hz-panel h2 {
-  margin: 0.45rem 0 0;
-  font-size: clamp(0.82rem, 1.1vw, 1.02rem);
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  color: #f2e8d2;
-}
-.hz-panel-body {
-  margin: 0.5rem 0 0;
-  font-size: clamp(0.66rem, 0.85vw, 0.8rem);
-  line-height: 1.55;
-  color: rgba(226, 214, 188, 0.78);
-}
-
-/* the invitation, until the first touch */
-.hz-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 11.5%;
-  transform: translateX(-50%);
-  z-index: 6;
-  margin: 0;
-  font-size: clamp(0.5rem, 0.72vw, 0.62rem);
-  letter-spacing: 0.55em;
-  text-indent: 0.55em;
-  text-transform: uppercase;
-  color: rgba(240, 214, 150, 0.75);
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
-  animation: hz-hint 4s ease-in-out infinite;
-  transition: opacity 0.8s ease;
-  pointer-events: none;
-}
-.hz-hint[data-hidden] { opacity: 0 !important; animation: none; }
-@keyframes hz-hint {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 0.95; }
-}
-
-/* =====================================================================
-   THE PRINCIPLES — three lines that light their own elements
-   ===================================================================== */
-
-.hz-principles {
-  position: absolute;
-  bottom: clamp(1.2rem, 3.6vh, 2.4rem);
-  inset-inline: clamp(1.4rem, 6vw, 5rem);
-  z-index: 8;
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-.hz-principles button {
-  margin: 0;
-  padding: 0.4rem 0.2rem;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  font-family: var(--hz-serif);
-  font-size: clamp(0.5rem, 0.76vw, 0.62rem);
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: rgba(216, 198, 164, 0.62);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.95);
-  transition: color 0.5s ease;
-}
-.hz-principles button:hover,
-.hz-principles button:focus-visible {
-  color: rgba(244, 222, 168, 0.95);
-}
-.hz-principles button:focus-visible {
-  outline: 1px solid rgba(240, 205, 130, 0.7);
-  outline-offset: 4px;
-}
-.hz-principles b {
-  font-weight: 400;
-  color: rgba(244, 216, 148, 0.95);
-}
-
-@media (max-width: 920px) {
-  .hz-principles { justify-content: center; }
-  .hz-principles button:not(:first-child) { display: none; }
-  .hz-panels {
-    top: 58%;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  .hz-panel { width: min(78vw, 340px); }
-}
-
-/* =====================================================================
-   THE FRAME — breath and grain over the whole exposure
-   ===================================================================== */
-
-.hz-plate-breathe {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  background: radial-gradient(46% 50% at 50% 55%, rgba(255, 190, 116, 0.08), transparent 70%);
-  animation: hz-breathe 11s ease-in-out infinite;
-}
-
-.hz-plate-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
-}
-
-/* =====================================================================
-   THE HOUR — the render regrades itself for dawn, day, dusk, night
-   ===================================================================== */
-
-.hz-plate { transition: filter 2.5s ease; }
-[data-time='dawn'] .hz-plate { filter: brightness(0.97) saturate(0.92) hue-rotate(4deg); }
-[data-time='day'] .hz-plate { filter: brightness(1.14) saturate(0.9) contrast(0.98); }
-[data-time='night'] .hz-plate { filter: brightness(0.62) saturate(0.78) contrast(1.06); }
-
-.hz-tint {
-  position: absolute;
-  inset: -1.5%;
-  opacity: 0;
-  transition: opacity 2.5s ease;
-  pointer-events: none;
-}
-.hz-tint.dawn {
-  background: linear-gradient(180deg, rgba(150, 140, 190, 0.16), rgba(240, 160, 140, 0.12) 60%, transparent);
-  mix-blend-mode: screen;
-}
-.hz-tint.day {
-  background: linear-gradient(180deg, rgba(170, 196, 236, 0.16), rgba(200, 214, 240, 0.08) 55%, transparent);
-  mix-blend-mode: screen;
-}
-.hz-tint.night {
-  background: linear-gradient(180deg, rgba(8, 12, 34, 0.5), rgba(6, 9, 26, 0.36) 55%, rgba(5, 7, 20, 0.46));
-  mix-blend-mode: multiply;
-}
-[data-time='dawn'] .hz-tint.dawn { opacity: 1; }
-[data-time='day'] .hz-tint.day { opacity: 1; }
-[data-time='night'] .hz-tint.night { opacity: 1; }
-/* at night the Core carries the room */
-[data-time='night'] .hz-live { filter: brightness(1.28) saturate(1.08); }
-
-/* the hour control + cinema, quiet in the corner */
-.hz-controls {
-  position: absolute;
-  right: clamp(1.2rem, 2.6vw, 2.6rem);
-  top: clamp(1.1rem, 2.6vh, 2.2rem);
-  z-index: 9;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.55rem;
-  animation: hz-live-in 2.4s cubic-bezier(0.22, 0.8, 0.24, 1) both 1.3s;
-}
-.hz-timectl { display: flex; gap: clamp(0.6rem, 1vw, 1.1rem); }
-.hz-timectl button,
-.hz-cinema {
-  margin: 0;
-  padding: 0.25rem 0.1rem;
-  border: 0;
-  border-bottom: 1px solid transparent;
-  background: none;
-  cursor: pointer;
-  font-family: var(--hz-serif);
-  font-size: clamp(0.44rem, 0.66vw, 0.56rem);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(216, 198, 164, 0.5);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
-  transition: color 0.4s ease, border-color 0.4s ease;
-}
-.hz-timectl button:hover,
-.hz-cinema:hover { color: rgba(240, 216, 158, 0.9); }
-.hz-timectl button[aria-pressed='true'] {
-  color: #eed09a;
-  border-bottom-color: rgba(232, 182, 104, 0.7);
-}
-.hz-timectl button:focus-visible,
-.hz-cinema:focus-visible {
-  outline: 1px solid rgba(240, 205, 130, 0.7);
-  outline-offset: 3px;
-}
-
-/* =====================================================================
-   THE TELESCOPE — look through it and the horizon comes close
-   ===================================================================== */
-
-.hz-scope-spot {
-  position: absolute;
-  left: 5%;
-  top: 52%;
-  width: 9%;
-  height: 20%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  z-index: 6;
-}
-.hz-scope-spot:focus-visible {
-  outline: 1px solid rgba(240, 205, 130, 0.6);
-  outline-offset: -4px;
-  border-radius: 10px;
-}
-
-.hz-lens {
-  position: absolute;
-  left: 17%;
-  top: 24%;
-  width: clamp(180px, 30vh, 300px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(220, 178, 104, 0.85);
-  box-shadow:
-    0 22px 50px rgba(0, 0, 0, 0.65),
-    0 0 24px rgba(216, 168, 96, 0.25),
-    inset 0 0 30px rgba(0, 0, 0, 0.7);
-  opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  pointer-events: none;
-  z-index: 8;
-}
-[data-lens] .hz-lens {
-  opacity: 1;
-  transform: scale(1);
-}
-.hz-lens-view {
-  position: absolute;
-  inset: 0;
-  background-image: url('/environment-plates/board-hero.png');
-  background-size: 300%;
-  background-position: 50% 55%;
-}
-.hz-lens-h,
-.hz-lens-v {
-  position: absolute;
-  background: rgba(232, 196, 120, 0.4);
-}
-.hz-lens-h { left: 6%; right: 6%; top: 50%; height: 1px; }
-.hz-lens-v { top: 6%; bottom: 6%; left: 50%; width: 1px; }
-
-/* =====================================================================
-   THE DOME DRAWS ITSELF — constellation line for the third principle
-   ===================================================================== */
-
-.hz-domedraw {
-  position: absolute;
-  inset: 2% 20% 78%;
-  width: 60%;
-  height: 20%;
-  pointer-events: none;
-}
-.hz-domedraw polyline {
-  fill: none;
-  stroke: rgba(240, 205, 130, 0.55);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 150;
-  stroke-dashoffset: 150;
-  opacity: 0;
-  transition: stroke-dashoffset 1.4s ease 0.1s, opacity 0.5s ease;
-}
-[data-focus='interface'] .hz-domedraw polyline {
-  stroke-dashoffset: 0;
-  opacity: 1;
-}
-
-/* =====================================================================
-   INSIDE THE PANELS — trend, targets, and the grant of approval
-   ===================================================================== */
-
-.hz-spark {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-top: 0.55rem;
-}
-
-.hz-chips {
-  list-style: none;
-  margin: 0.55rem 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-.hz-chips li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.8rem;
-  padding: 0.28rem 0.5rem;
-  border: 1px solid rgba(214, 170, 98, 0.28);
-  border-radius: 4px;
-  background: rgba(22, 17, 10, 0.4);
-  font-size: clamp(0.58rem, 0.76vw, 0.7rem);
-  color: rgba(226, 214, 188, 0.85);
-}
-.hz-chips b {
-  font-weight: 400;
-  white-space: nowrap;
-  color: #ecc276;
-  font-variant-numeric: tabular-nums;
-}
-
-.hz-approve {
-  margin-top: 0.7rem;
-  padding: 0.45rem 0.95rem;
-  border: 1px solid rgba(240, 205, 130, 0.65);
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(214, 164, 90, 0.22), rgba(150, 110, 50, 0.12));
-  color: #f4dfae;
-  font-family: var(--hz-serif);
-  font-size: clamp(0.48rem, 0.66vw, 0.58rem);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, opacity 0.4s ease;
-}
-.hz-approve:hover:not(:disabled) {
-  background: linear-gradient(180deg, rgba(240, 190, 110, 0.32), rgba(170, 126, 58, 0.18));
-}
-.hz-approve:focus-visible {
-  outline: 1px solid rgba(240, 205, 130, 0.8);
-  outline-offset: 3px;
-}
-.hz-approve[data-state='working'] { opacity: 0.7; cursor: wait; }
-.hz-approve[data-state='done'] {
-  border-color: rgba(158, 214, 150, 0.55);
-  background: rgba(58, 88, 50, 0.22);
-  color: #d2e8c2;
   cursor: default;
 }
 
+/* ---- the plate: fixed architectural photograph, razor sharp ---- */
+.ns-plate-layer { position: absolute; inset: 0; }
+.ns-plate {
+  position: absolute; inset: -2.4%;
+  background-image: url('/environment-plates/north-star-room.jpg');
+  background-size: cover; background-position: center 42%;
+  /* extremely subtle eased parallax -- depth felt, not seen */
+  transform: translate3d(calc(var(--mx) * 7px), calc(var(--my) * 4px), 0) scale(1.02);
+  transition: transform 0.5s cubic-bezier(0.22, 0.8, 0.24, 1), filter 2s ease;
+  will-change: transform;
+}
+/* time-of-day grade on the plate -- sharp, never a flat tint. Coordinated
+   with the sky/ambient/ceiling/floor layers and the compass lighting. */
+[data-time='dawn'] .ns-plate { filter: brightness(1.1) contrast(1.01) saturate(1.05) hue-rotate(-6deg); }
+[data-time='day']  .ns-plate { filter: brightness(1.2) contrast(1.0) saturate(0.97) hue-rotate(-2deg); }
+[data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
+[data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
+
+/* --- coordinated environment layers (all transition together ~1.5s) --- */
+.ns-sky, .ns-ambient, .ns-ceilglow, .ns-platglow {
+  position: absolute; inset: 0; pointer-events: none;
+  transition: opacity 1.5s ease, background 1.5s ease;
+}
+/* sky tint over the window band -- brightens/colors the exterior by hour */
+.ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
+  background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
+[data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(150,185,230,0.3); --sky-mid: rgba(205,222,242,0.2); }
+[data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
+[data-time='night'] .ns-sky { opacity: 0; }
+/* ambient colour temperature wash */
+.ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
+[data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
+[data-time='day']  .ns-ambient { opacity: 1; background: rgba(214,228,244,0.2); }
+[data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
+[data-time='night'] .ns-ambient { opacity: 0; }
+/* gold ceiling constellation intensity */
+.ns-ceilglow { z-index: 2; mix-blend-mode: screen; opacity: 0.55;
+  background: radial-gradient(120% 42% at 50% -6%, rgba(255,196,120,0.5), rgba(255,180,110,0.14) 40%, transparent 66%); }
+[data-time='dawn'] .ns-ceilglow { opacity: 0.3; }
+[data-time='day']  .ns-ceilglow { opacity: 0.12; }
+[data-time='dusk'] .ns-ceilglow { opacity: 0.5; }
+[data-time='night'] .ns-ceilglow { opacity: 0.7; }
+/* platform / floor glow, warmest at night, and reacts to the compass */
+.ns-platglow { z-index: 3; mix-blend-mode: screen; opacity: 0.3;
+  background: radial-gradient(34% 22% at 50% 62%, rgba(255,200,130,0.3), transparent 70%);
+  transition: opacity 1.2s ease; }
+[data-time='day'] .ns-platglow { opacity: 0.12; }
+
+/* --- compass-state room reactions (independent of time-of-day) --- */
+[data-compass-state='listening'] .ns-platglow { opacity: 0.5; }
+[data-compass-state='thinking']  .ns-ceilglow { opacity: 0.85; }
+[data-compass-state='speaking']  .ns-platglow { opacity: 0.55; }
+[data-compass-state='deploying'] .ns-platglow { opacity: 1; transition: opacity 0.5s ease; }
+[data-compass-state='deploying'] .ns-ceilglow { opacity: 1; }
+[data-compass-state='success']   .ns-platglow { opacity: 0.7; }
+[data-compass-state='warning']   .ns-platglow { opacity: 0.4; background: radial-gradient(34% 22% at 50% 62%, rgba(255,168,80,0.34), transparent 70%); }
+
+/* a warm room-lift during deploying/success (subtle, not a flat wash) */
+.ns-roomlift { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(90% 90% at 50% 46%, rgba(255,224,176,0.16), transparent 72%); transition: opacity 0.6s ease; }
+[data-compass-state='deploying'] .ns-roomlift { opacity: 1; }
+[data-compass-state='success']   .ns-roomlift { opacity: 0.7; }
+
+/* screen-space bloom around the compass during active states (compass only) */
+.ns-bloom { position: absolute; left: 50%; top: 50%; width: 66vh; height: 66vh; transform: translate(-50%,-50%);
+  z-index: 5; pointer-events: none; opacity: 0; mix-blend-mode: screen; transition: opacity 0.6s ease;
+  background: radial-gradient(circle closest-side at 50% 50%, rgba(255,232,186,0.5) 0%, rgba(255,206,138,0.2) 32%, transparent 78%); }
+[data-compass-state='hover']    .ns-bloom { opacity: 0.15; }
+[data-compass-state='listening'].ns-bloom, [data-compass-state='listening'] .ns-bloom { opacity: 0.28; }
+[data-compass-state='thinking'] .ns-bloom { opacity: 0.3; }
+[data-compass-state='speaking'] .ns-bloom { opacity: 0.4; }
+[data-compass-state='deploying'] .ns-bloom { opacity: 0.85; transition: opacity 0.4s ease; }
+[data-compass-state='success']  .ns-bloom { opacity: 0.6; }
+[data-compass-state='warning']  .ns-bloom { opacity: 0.25; background: radial-gradient(circle closest-side at 50% 50%, rgba(255,180,96,0.42) 0%, transparent 78%); }
+
+/* cinema mode: deepen edges + lift compass contrast, keep everything sharp */
+[data-cinema] .ns-vignette { background:
+  radial-gradient(120% 90% at 50% 44%, transparent 40%, rgba(1,2,5,0.55) 100%),
+  linear-gradient(180deg, rgba(1,2,5,0.7) 0%, transparent 18%, transparent 68%, rgba(1,2,5,0.82) 100%); }
+[data-cinema] .ns-status, [data-cinema] .ns-principles, [data-cinema] .ns-hint { opacity: 0.35; }
+
+/* hidden developer state panel */
+.ns-dev { position: fixed; left: 12px; bottom: 12px; z-index: 40; display: none; flex-wrap: wrap; gap: 5px; max-width: 340px;
+  padding: 8px; border: 1px solid rgba(240,205,130,0.3); border-radius: 8px; background: rgba(6,7,12,0.86); backdrop-filter: blur(6px); }
+html[data-dev] .ns-dev { display: flex; }
+.ns-dev button { font: 11px var(--serif); letter-spacing: 0.08em; text-transform: uppercase; color: #e8cf9d;
+  background: rgba(30,24,14,0.7); border: 1px solid rgba(214,170,98,0.35); border-radius: 4px; padding: 4px 8px; cursor: pointer; }
+.ns-dev button:hover { background: rgba(60,46,22,0.8); }
+.ns-dev b { width: 100%; font: 9px var(--serif); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(226,208,172,0.5); font-weight: 400; }
+
+/* mid-depth atmosphere + top/bottom cinematic vignette (a subtle depth cue) */
+.ns-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 44%, transparent 52%, rgba(2,3,8,0.34) 100%),
+    linear-gradient(180deg, rgba(2,3,8,0.5) 0%, transparent 16%, transparent 72%, rgba(2,3,8,0.66) 100%);
+  transform: translate3d(calc(var(--mx) * -4px), calc(var(--my) * -2px), 0);
+  transition: transform 0.6s ease;
+}
+
+/* ---- the live 3D compass, seated on the platform ---- */
+.ns-compass {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 58vh; height: 58vh;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;   /* clicks handled by the hit target below */
+}
+/* contact shadow where the instrument meets the table */
+.ns-contact {
+  position: absolute;
+  left: 50%; top: 62.5%;
+  width: 18vh; height: 4vh;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,0.62), rgba(0,0,0,0.3) 52%, transparent 74%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+/* invisible click/focus target over the instrument -- wakes the room */
+.ns-core-hit {
+  position: absolute; left: 50%; top: 50%;
+  width: 28vh; height: 40vh;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+  border-radius: 50%;
+}
+.ns-core-hit:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 6px; }
+
+/* foreground floor darkening -- the nearest depth layer, most parallax */
+.ns-fore {
+  position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: radial-gradient(90% 55% at 50% 118%, rgba(3,4,9,0.85), transparent 60%);
+  transform: translate3d(calc(var(--mx) * -12px), calc(var(--my) * -7px), 0);
+  transition: transform 0.5s ease;
+}
+
+.ns-particles { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.6; }
+
+/* ---- UI: HTML/CSS, sharp at every resolution, floating above ---- */
+.ns-status {
+  position: absolute; left: clamp(1.2rem,2.6vw,2.6rem); top: clamp(1.1rem,2.6vh,2.2rem);
+  z-index: 8; display: flex; flex-direction: column; gap: 0.35rem; pointer-events: none;
+  animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 0.9s;
+}
+.ns-status-time { font-size: clamp(0.85rem,1.3vw,1.15rem); letter-spacing: 0.3em; color: #e8cf9d; text-shadow: 0 0 14px rgba(232,182,104,0.35), 0 1px 8px rgba(0,0,0,0.9); }
+.ns-status-line { font-size: clamp(0.44rem,0.68vw,0.58rem); letter-spacing: 0.34em; text-transform: uppercase; color: rgba(226,208,172,0.5); }
+
+.ns-brand {
+  position: absolute; left: 50%; top: 3.4%; transform: translateX(-50%);
+  z-index: 7; text-align: center; pointer-events: none;
+  animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 0.7s;
+}
+.ns-brand h1 { margin: 0; font-size: clamp(0.95rem,1.8vw,1.5rem); font-weight: 400; letter-spacing: 0.5em; text-indent: 0.5em; color: #eed09a; text-shadow: 0 0 20px rgba(232,182,104,0.4), 0 2px 12px rgba(0,0,0,0.9); text-transform: uppercase; }
+.ns-brand p { margin: 0.4rem 0 0; font-size: clamp(0.46rem,0.75vw,0.62rem); letter-spacing: 0.58em; text-indent: 0.58em; text-transform: uppercase; color: rgba(238,224,196,0.68); }
+
+.ns-controls {
+  position: absolute; right: clamp(1.2rem,2.6vw,2.6rem); top: clamp(1.1rem,2.6vh,2.2rem);
+  z-index: 9; display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem;
+  animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 1.2s;
+}
+.ns-timectl { display: flex; gap: clamp(0.6rem,1vw,1.1rem); }
+.ns-timectl button, .ns-cinema {
+  margin: 0; padding: 0.25rem 0.1rem; border: 0; border-bottom: 1px solid transparent; background: none; cursor: pointer;
+  font-family: var(--serif); font-size: clamp(0.44rem,0.66vw,0.56rem); letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(216,198,164,0.5); text-shadow: 0 1px 8px rgba(0,0,0,0.9); transition: color 0.4s ease, border-color 0.4s ease;
+}
+.ns-timectl button:hover, .ns-cinema:hover { color: rgba(240,216,158,0.9); }
+.ns-timectl button[aria-pressed='true'] { color: #eed09a; border-bottom-color: rgba(232,182,104,0.7); }
+.ns-timectl button:focus-visible, .ns-cinema:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
+
+/* panels rise from the table on wake */
+.ns-panels {
+  position: absolute; left: 50%; bottom: clamp(3.2rem,10vh,7rem); transform: translateX(-50%);
+  z-index: 8; display: flex; gap: clamp(0.7rem,1.2vw,1.4rem); justify-content: center;
+  pointer-events: none; visibility: hidden; transition: visibility 0s 0.9s;
+}
+.ns-panels.up { visibility: visible; pointer-events: auto; transition: visibility 0s; }
+.ns-panel {
+  width: clamp(190px,16.5vw,250px); padding: clamp(0.8rem,1.3vw,1.2rem) clamp(0.9rem,1.4vw,1.3rem);
+  border: 1px solid rgba(214,170,98,0.35); border-top-color: rgba(244,208,132,0.7); border-radius: 6px;
+  background: linear-gradient(180deg, rgba(9,9,13,0.72), rgba(5,5,8,0.82));
+  backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.6), 0 0 24px rgba(214,160,90,0.06);
+  opacity: 0; transform: translateY(46px) scale(0.97);
+  transition: opacity 0.7s cubic-bezier(0.22,0.8,0.24,1), transform 0.7s cubic-bezier(0.22,0.8,0.24,1);
+}
+.ns-panels.up .ns-panel { opacity: 1; transform: translateY(0) scale(1); }
+.ns-panel-eyebrow { margin: 0; font-size: clamp(0.42rem,0.62vw,0.54rem); letter-spacing: 0.34em; text-transform: uppercase; color: rgba(240,205,130,0.85); }
+.ns-panel h2 { margin: 0.45rem 0 0; font-size: clamp(0.82rem,1.1vw,1.02rem); font-weight: 400; letter-spacing: 0.03em; color: #f2e8d2; }
+.ns-panel-body { margin: 0.5rem 0 0; font-size: clamp(0.66rem,0.85vw,0.8rem); line-height: 1.55; color: rgba(226,214,188,0.78); }
+.ns-spark { display: block; width: 100%; height: auto; margin-top: 0.55rem; }
+.ns-chips { list-style: none; margin: 0.55rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
+.ns-chips li { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; padding: 0.28rem 0.5rem; border: 1px solid rgba(214,170,98,0.26); border-radius: 4px; background: rgba(22,17,10,0.4); font-size: clamp(0.58rem,0.76vw,0.7rem); color: rgba(226,214,188,0.85); }
+.ns-chips b { font-weight: 400; white-space: nowrap; color: #ecc276; font-variant-numeric: tabular-nums; }
+.ns-approve { margin-top: 0.7rem; padding: 0.45rem 0.95rem; border: 1px solid rgba(240,205,130,0.6); border-radius: 4px; background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; font-family: var(--serif); font-size: clamp(0.48rem,0.66vw,0.58rem); letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, opacity 0.4s ease; }
+.ns-approve:hover:not(:disabled) { background: linear-gradient(180deg, rgba(240,190,110,0.32), rgba(170,126,58,0.18)); }
+.ns-approve:focus-visible { outline: 1px solid rgba(240,205,130,0.8); outline-offset: 3px; }
+.ns-approve[data-state='working'] { opacity: 0.7; cursor: wait; }
+.ns-approve[data-state='done'] { border-color: rgba(158,214,150,0.55); background: rgba(58,88,50,0.22); color: #d2e8c2; cursor: default; }
+
+.ns-hint {
+  position: absolute; left: 50%; bottom: 12%; transform: translateX(-50%); z-index: 7; margin: 0;
+  font-size: clamp(0.5rem,0.72vw,0.62rem); letter-spacing: 0.55em; text-indent: 0.55em; text-transform: uppercase;
+  color: rgba(240,214,150,0.7); text-shadow: 0 0 12px rgba(0,0,0,0.9);
+  animation: ns-hint 4s ease-in-out infinite; transition: opacity 0.8s ease; pointer-events: none;
+}
+.ns-hint[data-hidden] { opacity: 0 !important; animation: none; }
+@keyframes ns-hint { 0%,100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+
+.ns-principles {
+  position: absolute; bottom: clamp(1.2rem,3.6vh,2.4rem); inset-inline: clamp(1.4rem,6vw,5rem);
+  z-index: 8; display: flex; justify-content: space-between; gap: 1.5rem;
+}
+.ns-principles button { margin: 0; padding: 0.4rem 0.2rem; border: 0; background: none; cursor: pointer; font-family: var(--serif); font-size: clamp(0.5rem,0.76vw,0.62rem); letter-spacing: 0.32em; text-transform: uppercase; color: rgba(216,198,164,0.6); text-shadow: 0 1px 10px rgba(0,0,0,0.95); transition: color 0.5s ease; }
+.ns-principles button:hover, .ns-principles button:focus-visible { color: rgba(244,222,168,0.95); }
+.ns-principles button:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 4px; }
+.ns-principles b { font-weight: 400; color: rgba(244,216,148,0.95); }
+
+@keyframes ns-in { from { opacity: 0; } to { opacity: 1; } }
+
 @media (max-width: 920px) {
-  .hz-timectl { display: none; }
-  .hz-lens { left: 50%; transform: translateX(-50%) scale(0.92); }
-  [data-lens] .hz-lens { transform: translateX(-50%) scale(1); }
+  .ns-timectl { display: none; }
+  .ns-principles { justify-content: center; }
+  .ns-principles button:not(:first-child) { display: none; }
+  .ns-panels { flex-direction: column; align-items: center; gap: 0.6rem; bottom: 8vh; }
+  .ns-panel { width: min(78vw, 340px); }
+  .ns-compass { width: 60vw; height: 60vw; top: 36%; }
+  .ns-core-hit { width: 46vw; height: 52vw; top: 36%; }
+  .ns-contact { top: 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hz-plate-root *,
-  .hz-plate-root *::before,
-  .hz-plate-root *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-  .hz-panel { transition-duration: 0.01ms !important; }
-  .hz-domedraw polyline { transition-duration: 0.01ms !important; }
+  .ns-plate, .ns-vignette, .ns-fore { transition: none !important; transform: none !important; }
+  .ns-panel { transition-duration: 0.01ms !important; }
+  .ns-hint { animation: none; }
 }
+
+/* =====================================================================
+   COMPASS EXPERIENCE — extended states drive the room
+   ===================================================================== */
+/* room-spanning light column for executing / deploying */
+.ns-beam {
+  position: absolute; left: 50%; top: 0; width: 4.5vw; height: 100%;
+  transform: translateX(-50%); z-index: 5; pointer-events: none; opacity: 0;
+  mix-blend-mode: screen; transition: opacity 0.5s ease;
+  background: linear-gradient(90deg, transparent, rgba(255,232,186,0.4) 42%, rgba(255,248,224,0.92) 50%, rgba(255,232,186,0.4) 58%, transparent);
+  -webkit-mask: linear-gradient(180deg, transparent 3%, #000 28%, #000 72%, transparent 97%);
+          mask: linear-gradient(180deg, transparent 3%, #000 28%, #000 72%, transparent 97%);
+}
+[data-compass-state='executing'] .ns-beam { opacity: 0.34; }
+[data-compass-state='deploying'] .ns-beam { opacity: 0.72; transition: opacity 0.4s ease; }
+
+/* platform + ceiling reactions for the new states */
+[data-compass-state='planning']  .ns-ceilglow { opacity: 0.5; }
+[data-compass-state='planning']  .ns-platglow { opacity: 0.42; }
+[data-compass-state='executing'] .ns-platglow { opacity: 0.75; }
+[data-compass-state='executing'] .ns-ceilglow { opacity: 0.92; }
+[data-compass-state='verifying'] .ns-platglow { opacity: 0.5; }
+[data-compass-state='verifying'] .ns-ceilglow { opacity: 0.72; }
+[data-compass-state='error']     .ns-platglow { opacity: 0.36; background: radial-gradient(34% 22% at 50% 62%, rgba(255,132,72,0.3), transparent 70%); }
+[data-compass-state='offline']   .ns-ceilglow { opacity: 0.14; }
+[data-compass-state='offline']   .ns-platglow { opacity: 0.05; }
+/* offline gently powers the room down */
+.ns-offline { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; background: rgba(3,5,10,0.42); transition: opacity 1.4s ease; }
+[data-compass-state='offline'] .ns-offline { opacity: 1; }
+
+/* bloom tints for the new states */
+[data-compass-state='planning']  .ns-bloom { opacity: 0.3; background: radial-gradient(circle closest-side at 50% 50%, rgba(200,222,255,0.42) 0%, transparent 78%); }
+[data-compass-state='executing'] .ns-bloom { opacity: 0.55; }
+[data-compass-state='verifying'] .ns-bloom { opacity: 0.32; background: radial-gradient(circle closest-side at 50% 50%, rgba(196,228,240,0.44) 0%, transparent 78%); }
+[data-compass-state='error']     .ns-bloom { opacity: 0.22; background: radial-gradient(circle closest-side at 50% 50%, rgba(255,150,80,0.42) 0%, transparent 78%); }
+[data-compass-state='offline']   .ns-bloom { opacity: 0; }
+
+/* status dot reflects what North Star is doing */
+.ns-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 0.55em; vertical-align: middle;
+  background: #7fd88f; color: #7fd88f; box-shadow: 0 0 8px currentColor; transition: background 0.5s ease, color 0.5s ease; }
+[data-compass-state='hover'] .ns-status-dot, [data-compass-state='listening'] .ns-status-dot { background:#8fd0ff; color:#8fd0ff; }
+[data-compass-state='thinking'] .ns-status-dot, [data-compass-state='planning'] .ns-status-dot { background:#ffcf6a; color:#ffcf6a; }
+[data-compass-state='executing'] .ns-status-dot, [data-compass-state='deploying'] .ns-status-dot { background:#c79bff; color:#c79bff; }
+[data-compass-state='verifying'] .ns-status-dot { background:#9fe6d8; color:#9fe6d8; }
+[data-compass-state='success'] .ns-status-dot { background:#7fd88f; color:#7fd88f; }
+[data-compass-state='warning'] .ns-status-dot { background:#ffb45e; color:#ffb45e; }
+[data-compass-state='error'] .ns-status-dot { background:#ff8a4a; color:#ff8a4a; }
+[data-compass-state='offline'] .ns-status-dot { background:#6b7488; color:#6b7488; box-shadow:none; }
+
+/* progress bar inside the approvals panel during a deployment */
+.ns-progress { margin-top: 0.7rem; height: 4px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; opacity: 0; transition: opacity 0.4s ease; }
+.ns-progress.on { opacity: 1; }
+.ns-progress-bar { height: 100%; width: 0%; border-radius: 3px; background: linear-gradient(90deg, #d8a24a, #ffe6a4); box-shadow: 0 0 10px rgba(255,206,120,0.5); transition: width 0.3s ease; }
+.ns-progress-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.4rem; font-size: clamp(0.5rem,0.68vw,0.6rem); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(226,214,188,0.6); opacity: 0; transition: opacity 0.4s ease; }
+.ns-progress-row.on { opacity: 1; }
+.ns-progress-row b { color: #ecc276; font-variant-numeric: tabular-nums; }

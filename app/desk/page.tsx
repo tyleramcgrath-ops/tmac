@@ -1,394 +1,297 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { initCompass, type CompassApi, type CompassState, type TimeMode } from './compass'
 
 /* =====================================================================
-   NORTH STAR HEADQUARTERS — THE BOARD ITSELF, ALIVE
-   The page IS the vision-board render, with a living layer on top.
-
-   The room's features:
-   - THE CORE IS THE HEART — touch it and the room wakes: the halo
-     widens, a pulse crosses the rings, the interface rises.
-   - THE HORIZON IS THE COMMAND — three glass panels rise from the
-     table: a briefing with its trend drawn in light, opportunities
-     with their targets, and an approval you can actually grant — the
-     grant sends the light back to the Core and the room reports the
-     work done.
-   - THE STARS ARE THE INTERFACE — invoke the third principle and the
-     dome draws its constellation.
-   - THE ROOM KEEPS TIME — the render regrades itself for dawn, day,
-     dusk, and night (auto from your clock; override in the corner or
-     via ?time=night). A station line narrates the room's state.
-   - THE TELESCOPE WORKS — look through it and the horizon comes close.
-   - Cinema mode (fullscreen), idle attractor pulse, ?awake=1 deep
-     link, parallax, drift, grain, reduced-motion support throughout.
+   NORTH STAR HEADQUARTERS
+   A fixed architectural plate + a live 3D brass compass (Three.js) that
+   is North Star's operating heart, with coordinated room lighting and UI.
    ===================================================================== */
 
-const PLATE = {
-  coreX: 50.1,
-  coreY: 54.2,
-  coreD: 21.5,
-}
-
-const PANELS = {
-  briefing: {
-    eyebrow: 'Morning briefing',
-    title: 'Your week, understood',
-    body: 'Traffic is up 12%. Two pages gained ground overnight. Nothing needs you before coffee.',
-  },
-  opportunities: {
-    eyebrow: 'Opportunities',
-    title: 'Three quick wins in reach',
-    body: 'Three page-two keywords sit within striking distance. The Core has drafted the moves.',
-  },
-  approvals: {
-    eyebrow: 'Approvals',
-    title: 'One fix awaits your word',
-    body: 'A prepared correction rests on the table. Approve it, and the work is done for you.',
-  },
-} as const
-
-// the briefing's trend, drawn in light (a fortnight of sessions)
 const TREND = [22, 24, 23, 26, 25, 28, 27, 30, 29, 33, 34, 38, 37, 41]
-const TREND_PATH = TREND.map((v, i) => `${i === 0 ? 'M' : 'L'} ${(i * (120 / (TREND.length - 1))).toFixed(1)} ${(34 - (v - 20) * 1.35).toFixed(1)}`).join(' ')
-
-const TARGETS = [
-  { q: 'pricing questions', from: 11, to: 6 },
-  { q: 'how it works', from: 13, to: 7 },
-  { q: 'best near me', from: 12, to: 8 },
-]
-
-type FocusKey = 'heart' | 'command' | 'interface' | null
-type TimeMode = 'dawn' | 'day' | 'dusk' | 'night'
-type ApproveState = 'idle' | 'working' | 'done'
+const PTS = TREND.map((v, i) => [(i * 120 / (TREND.length - 1)).toFixed(1), (34 - (v - 20) * 1.35).toFixed(1)] as const)
+const SPARK_D = PTS.map((p, i) => `${i ? 'L ' : 'M '}${p[0]} ${p[1]}`).join(' ')
 
 const TIME_WORD: Record<TimeMode, string> = { dawn: 'Dawn', day: 'Day', dusk: 'Dusk', night: 'Night' }
+const STATE_LABEL: Record<CompassState, string> = {
+  idle: '', hover: '', listening: 'Listening…',
+  thinking: 'Analyzing patterns & market signals…', planning: 'Drafting the plan…',
+  executing: 'Executing optimizations…', deploying: 'Deploying across your ecosystem…',
+  verifying: 'Verifying by read-back…', success: 'Mission accomplished',
+  warning: 'Attention needed', error: 'Action paused — review required', offline: 'Systems offline',
+}
+const TIMES: TimeMode[] = ['dawn', 'day', 'dusk', 'night']
+const DEV_STATES: CompassState[] = ['idle', 'hover', 'listening', 'thinking', 'planning', 'executing', 'deploying', 'verifying', 'success', 'warning', 'error', 'offline']
 
-export default function BoardHero() {
-  const rootRef = useRef<HTMLDivElement>(null)
-  const raf = useRef(0)
+type ApproveState = 'idle' | 'working' | 'done'
+
+export default function NorthStar() {
+  const roomRef = useRef<HTMLElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const api = useRef<CompassApi | null>(null)
+  const rafRef = useRef(0)
   const lastTouch = useRef(Date.now())
+  const progTimer = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const [timeMode, setTimeMode] = useState<TimeMode>('night')
+  const [compassState, setCompassState] = useState<CompassState>('idle')
   const [awake, setAwake] = useState(false)
-  const [touched, setTouched] = useState(false)
-  const [focus, setFocus] = useState<FocusKey>(null)
-  const [clock, setClock] = useState<string | null>(null)
-  const [timeMode, setTimeMode] = useState<TimeMode>('dusk')
-  const [lens, setLens] = useState(false)
-  const [cinema, setCinema] = useState(false)
   const [approve, setApprove] = useState<ApproveState>('idle')
-  const [pulseKey, setPulseKey] = useState(0)
+  const [cinema, setCinema] = useState(false)
+  const [dev, setDev] = useState(false)
+  const [clock, setClock] = useState<string | null>(null)
+  const [progOn, setProgOn] = useState(false)
+  const [progPct, setProgPct] = useState(0)
+  const [progTask, setProgTask] = useState('Deploying')
 
-  useEffect(() => () => cancelAnimationFrame(raf.current), [])
-
-  // the dome keeps the time — client-only, so hydration always matches
+  // boot the 3D compass
   useEffect(() => {
-    const tick = () =>
-      setClock(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+    if (!canvasRef.current) return
+    const c = initCompass(canvasRef.current)
+    api.current = c
+    c.setTime('night')
+    c.setState('idle')
+    return () => c.dispose()
+  }, [])
+
+  // clock
+  useEffect(() => {
+    const tick = () => setClock(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
     tick()
     const t = setInterval(tick, 30_000)
     return () => clearInterval(t)
   }, [])
 
-  // the room reads your hour (and honors ?time= and ?awake=1 deep links)
+  // dev panel attribute (press D)
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const t = params.get('time') as TimeMode | null
-    if (t && ['dawn', 'day', 'dusk', 'night'].includes(t)) {
-      setTimeMode(t)
-    } else {
-      const h = new Date().getHours()
-      setTimeMode(h < 5 ? 'night' : h < 9 ? 'dawn' : h < 17 ? 'day' : h < 21 ? 'dusk' : 'night')
-    }
-    if (params.get('awake') === '1') {
-      setAwake(true)
-      setTouched(true)
-    }
+    if (dev) document.documentElement.setAttribute('data-dev', '')
+    else document.documentElement.removeAttribute('data-dev')
+  }, [dev])
+  useEffect(() => {
+    if (/[?&]dev=1/.test(window.location.search)) setDev(true)
   }, [])
 
-  // Esc returns the room to rest
+  // subtle pointer parallax
   useEffect(() => {
-    if (!awake) return
+    let raf = 0
+    const onMove = (e: PointerEvent) => {
+      lastTouch.current = Date.now()
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const el = roomRef.current
+        if (!el) return
+        el.style.setProperty('--mx', ((e.clientX / window.innerWidth - 0.5) * 2).toFixed(3))
+        el.style.setProperty('--my', ((e.clientY / window.innerHeight - 0.5) * 2).toFixed(3))
+      })
+    }
+    window.addEventListener('pointermove', onMove)
+    return () => { window.removeEventListener('pointermove', onMove); cancelAnimationFrame(raf) }
+  }, [])
+
+  // keyboard: Esc rests the room, D toggles the dev panel
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setAwake(false)
+      if (e.key === 'Escape' && awake) wake(false)
+      if (e.key === 'd' || e.key === 'D') setDev((v) => !v)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [awake])
 
-  // the approval resets when the interface goes back to rest
-  useEffect(() => {
-    if (!awake) setApprove('idle')
-  }, [awake])
-
-  // left alone, the Core quietly asks for attention
+  // idle attractor
   useEffect(() => {
     const t = setInterval(() => {
-      if (!awake && Date.now() - lastTouch.current > 25_000) {
-        setPulseKey((k) => k + 1)
-        lastTouch.current = Date.now()
-      }
+      if (!awake && Date.now() - lastTouch.current > 24_000) { api.current?.flare(); lastTouch.current = Date.now() }
     }, 5_000)
     return () => clearInterval(t)
   }, [awake])
 
-  // cinema mode follows the real fullscreen state
-  useEffect(() => {
-    const onFs = () => setCinema(Boolean(document.fullscreenElement))
-    document.addEventListener('fullscreenchange', onFs)
-    return () => document.removeEventListener('fullscreenchange', onFs)
-  }, [])
+  useEffect(() => () => { if (progTimer.current) clearInterval(progTimer.current); cancelAnimationFrame(rafRef.current) }, [])
 
-  const onPointerMove = (e: React.PointerEvent) => {
+  const C = (s: CompassState) => { setCompassState(s); api.current?.setState(s) }
+
+  const setTime = (t: TimeMode) => { setTimeMode(t); api.current?.setTime(t) }
+
+  const wake = (v: boolean) => {
     lastTouch.current = Date.now()
-    const el = rootRef.current
-    if (!el) return
-    const mx = (e.clientX / window.innerWidth - 0.5) * 2
-    const my = (e.clientY / window.innerHeight - 0.5) * 2
-    cancelAnimationFrame(raf.current)
-    raf.current = requestAnimationFrame(() => {
-      el.style.setProperty('--mx', mx.toFixed(3))
-      el.style.setProperty('--my', my.toFixed(3))
-    })
+    setAwake(v)
+    if (v) C('listening')
+    else { setApprove('idle'); C('idle') }
   }
 
-  const wake = useCallback(() => {
-    lastTouch.current = Date.now()
-    setTouched(true)
-    setPulseKey((k) => k + 1)
-    setAwake((v) => !v)
-  }, [])
-
-  const grantApproval = () => {
+  const runApprove = () => {
     if (approve !== 'idle') return
-    setApprove('working')
-    setPulseKey((k) => k + 1)
-    window.setTimeout(() => setApprove('done'), 1400)
+    setApprove('working'); setProgOn(true); setProgTask('Deploying'); setProgPct(0)
+    C('executing')
+    window.setTimeout(() => {
+      C('deploying')
+      const start = Date.now(), dur = 2400
+      if (progTimer.current) clearInterval(progTimer.current)
+      progTimer.current = setInterval(() => {
+        const p = Math.min(100, (Date.now() - start) / dur * 100)
+        setProgPct(p)
+        if (p >= 100) {
+          if (progTimer.current) clearInterval(progTimer.current)
+          C('verifying'); setProgTask('Verifying')
+          window.setTimeout(() => {
+            setApprove('done'); C('success')
+            window.setTimeout(() => { setProgOn(false); C(awake ? 'listening' : 'idle') }, 2600)
+          }, 1000)
+        }
+      }, 60)
+    }, 700)
   }
 
-  const toggleCinema = () => {
-    if (document.fullscreenElement) void document.exitFullscreen()
-    else void document.documentElement.requestFullscreen?.()
+  const runInterface = () => {
+    C('thinking')
+    window.setTimeout(() => C('planning'), 1600)
+    window.setTimeout(() => C('verifying'), 3400)
+    window.setTimeout(() => C(awake ? 'listening' : 'idle'), 5200)
   }
+
+  // ambient dust motes — nearest, most-parallax depth layer
+  useEffect(() => {
+    const c = document.getElementById('ns-particles') as HTMLCanvasElement | null
+    if (!c) return
+    const g = c.getContext('2d')!
+    const P = Array.from({ length: 46 }, () => ({ x: Math.random(), y: Math.random(), z: 0.3 + Math.random() * 0.7, r: 0.5 + Math.random() * 1.4, s: (Math.random() - 0.5) * 0.00006 }))
+    const size = () => { c.width = window.innerWidth; c.height = window.innerHeight }
+    size(); window.addEventListener('resize', size)
+    let raf = 0
+    const draw = () => {
+      g.clearRect(0, 0, c.width, c.height)
+      const el = roomRef.current
+      const mx = parseFloat(el?.style.getPropertyValue('--mx') || '0') || 0
+      const my = parseFloat(el?.style.getPropertyValue('--my') || '0') || 0
+      for (const p of P) {
+        p.y += p.s; if (p.y < -0.02) p.y = 1.02; if (p.y > 1.02) p.y = -0.02
+        const x = (p.x + mx * 0.02 * p.z) * c.width, y = (p.y + my * 0.02 * p.z) * c.height
+        g.beginPath(); g.arc(x, y, p.r * p.z, 0, 7)
+        g.fillStyle = `rgba(255,224,170,${0.1 + 0.16 * p.z})`; g.fill()
+      }
+      raf = requestAnimationFrame(draw)
+    }
+    draw()
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', size) }
+  }, [])
 
   const statusLine =
-    approve === 'done' && awake
-      ? 'The work is done · Verified'
-      : awake
-        ? `${TIME_WORD[timeMode]} · The room is listening`
-        : `${TIME_WORD[timeMode]} · Clear · The room is calm`
+    compassState === 'idle' || compassState === 'hover'
+      ? `${TIME_WORD[timeMode]}${awake ? ' · The room is listening' : ' · Clear · The room is calm'}`
+      : STATE_LABEL[compassState] || `${TIME_WORD[timeMode]} · The room is listening`
 
   return (
-    <main
-      ref={rootRef}
-      className="hz-plate-root"
-      data-awake={awake || undefined}
-      data-focus={focus ?? undefined}
-      data-time={timeMode}
-      data-lens={lens || undefined}
-      onPointerMove={onPointerMove}
-    >
-      {/* the render, full bleed — the room is the image */}
-      <div className="hz-plate-drift">
-        <div className="hz-plate" aria-label="North Star Headquarters — the command table at dusk" role="img" />
-        {/* the hour, laid over the render as light */}
-        <div className="hz-tint dawn" aria-hidden="true" />
-        <div className="hz-tint day" aria-hidden="true" />
-        <div className="hz-tint night" aria-hidden="true" />
-      </div>
-
-      {/* quiets the sheet label baked into the render's top-left corner */}
-      <div className="hz-plate-patch" aria-hidden="true" />
-
-      {/* the station line */}
-      <div className="hz-status">
-        <span className="hz-status-time">{clock ?? '––:––'}</span>
-        <span className="hz-status-line">{statusLine}</span>
-      </div>
-
-      {/* the hour control + cinema, quiet in the opposite corner */}
-      <div className="hz-controls">
-        <div className="hz-timectl" role="group" aria-label="Set the room's hour">
-          {(['dawn', 'day', 'dusk', 'night'] as const).map((t) => (
-            <button key={t} type="button" aria-pressed={timeMode === t} onClick={() => setTimeMode(t)}>
-              {TIME_WORD[t]}
-            </button>
-          ))}
-        </div>
-        <button type="button" className="hz-cinema" onClick={toggleCinema} aria-pressed={cinema}>
-          {cinema ? 'Exit cinema' : 'Cinema'}
-        </button>
-      </div>
-
-      {/* the dome carries the name, set live so it stays razor sharp */}
-      <header className="hz-brand">
-        <svg viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M50 4 L55.5 44.5 L96 50 L55.5 55.5 L50 96 L44.5 55.5 L4 50 L44.5 44.5 Z" fill="#e8c988" />
-          <circle cx="50" cy="50" r="3.4" fill="#fff6dd" />
-        </svg>
-        <h1>North Star</h1>
-        <p>Headquarters</p>
-      </header>
-
-      {/* THE CORE — touch it and the room wakes */}
-      <button
-        type="button"
-        className="hz-live"
-        style={{
-          left: `${PLATE.coreX}%`,
-          top: `${PLATE.coreY}%`,
-          width: `${PLATE.coreD}vh`,
-        }}
-        onClick={wake}
-        aria-expanded={awake}
-        aria-label={awake ? 'Return the room to rest' : 'Touch the Core to wake the room'}
+    <>
+      <main
+        ref={roomRef}
+        className="ns-room"
+        data-time={timeMode}
+        data-cinema={cinema ? '' : undefined}
       >
-        <span className="hz-live-halo" aria-hidden="true" />
-        <span className="hz-live-scene" aria-hidden="true">
-          <span className="hz-live-gimbal">
-            <span className="hz-lring outer" />
-            <span className="hz-live-sphere">
-              <span className="hz-lring m1" />
-              <span className="hz-lring m2" />
-              <span className="hz-lring eq" />
-              <span className="hz-lring t1" />
-            </span>
-          </span>
-        </span>
-        <span className="hz-live-flare" aria-hidden="true" />
-        {pulseKey > 0 && <span key={pulseKey} className="hz-pulse" aria-hidden="true" />}
-      </button>
+        <div className="ns-plate-layer"><div className="ns-plate" role="img" aria-label="North Star Headquarters" /></div>
+        <div className="ns-sky" aria-hidden />
+        <div className="ns-ambient" aria-hidden />
+        <div className="ns-ceilglow" aria-hidden />
+        <div className="ns-platglow" aria-hidden />
+        <div className="ns-roomlift" aria-hidden />
+        <div className="ns-offline" aria-hidden />
+        <div className="ns-vignette" aria-hidden />
 
-      {/* THE TELESCOPE — look through it and the horizon comes close */}
-      <button
-        type="button"
-        className="hz-scope-spot"
-        onMouseEnter={() => setLens(true)}
-        onMouseLeave={() => setLens(false)}
-        onFocus={() => setLens(true)}
-        onBlur={() => setLens(false)}
-        onClick={() => setLens((v) => !v)}
-        aria-pressed={lens}
-        aria-label="Look through the telescope"
-      />
-      <div className="hz-lens" aria-hidden="true">
-        <div className="hz-lens-view" />
-        <i className="hz-lens-h" />
-        <i className="hz-lens-v" />
-      </div>
+        <div className="ns-contact" aria-hidden />
+        <div className="ns-beam" aria-hidden />
+        <canvas ref={canvasRef} className="ns-compass" aria-hidden />
+        <div className="ns-bloom" aria-hidden />
+        <button
+          type="button"
+          className="ns-core-hit"
+          aria-label="Touch the compass to wake the room"
+          aria-expanded={awake}
+          onClick={() => wake(!awake)}
+          onMouseEnter={() => api.current?.hover(true)}
+          onMouseLeave={() => api.current?.hover(false)}
+          onFocus={() => api.current?.hover(true)}
+          onBlur={() => api.current?.hover(false)}
+        />
 
-      {/* the horizon answers when THE COMMAND is invoked */}
-      <div className="hz-horizonline" aria-hidden="true" />
+        <div className="ns-fore" aria-hidden />
+        <canvas id="ns-particles" className="ns-particles" aria-hidden />
 
-      {/* the dome answers when THE INTERFACE is invoked — and draws itself */}
-      <div className="hz-domespark" aria-hidden="true">
-        <i /><i /><i /><i /><i />
-      </div>
-      <svg className="hz-domedraw" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <polyline points="12,42 34,16 55,55 74,25 90,48" />
-      </svg>
+        <div className="ns-status">
+          <span className="ns-status-time">{clock ?? '––:––'}</span>
+          <span className="ns-status-line"><span className="ns-status-dot" aria-hidden />{statusLine}</span>
+        </div>
 
-      {/* THE INTERFACE — intelligence rising from the table */}
-      <section className={`hz-panels${awake ? ' up' : ''}`} aria-hidden={!awake} aria-label="Today's intelligence">
-        <article className="hz-panel">
-          <p className="hz-panel-eyebrow">{PANELS.briefing.eyebrow}</p>
-          <h2>{PANELS.briefing.title}</h2>
-          <svg className="hz-spark" viewBox="0 0 120 36" aria-hidden="true">
-            <defs>
-              <linearGradient id="hz-spark-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="rgba(240,200,120,0.35)" />
-                <stop offset="1" stopColor="rgba(240,200,120,0)" />
-              </linearGradient>
-            </defs>
-            <path d={`${TREND_PATH} L 120 36 L 0 36 Z`} fill="url(#hz-spark-fill)" stroke="none" />
-            <path d={TREND_PATH} fill="none" stroke="#ecc276" strokeWidth="1.4" />
-            <circle cx="120" cy={34 - (TREND[TREND.length - 1] - 20) * 1.35} r="2.2" fill="#ffe2a4" />
-          </svg>
-          <p className="hz-panel-body">{PANELS.briefing.body}</p>
-        </article>
+        <header className="ns-brand">
+          <h1>North Star</h1><p>Headquarters</p>
+        </header>
 
-        <article className="hz-panel">
-          <p className="hz-panel-eyebrow">{PANELS.opportunities.eyebrow}</p>
-          <h2>{PANELS.opportunities.title}</h2>
-          <ul className="hz-chips">
-            {TARGETS.map((t) => (
-              <li key={t.q}>
-                <span>{t.q}</span>
-                <b>#{t.from} → #{t.to}</b>
-              </li>
+        <div className="ns-controls">
+          <div className="ns-timectl" role="group" aria-label="Set the room's hour">
+            {TIMES.map((t) => (
+              <button key={t} type="button" data-t={t} aria-pressed={timeMode === t} onClick={() => setTime(t)}>{TIME_WORD[t]}</button>
             ))}
-          </ul>
-          <p className="hz-panel-body">{PANELS.opportunities.body}</p>
-        </article>
-
-        <article className="hz-panel">
-          <p className="hz-panel-eyebrow">{PANELS.approvals.eyebrow}</p>
-          <h2>{approve === 'done' ? 'Done. Verified by read-back.' : PANELS.approvals.title}</h2>
-          <p className="hz-panel-body">
-            {approve === 'done'
-              ? 'The correction is live. The Core confirmed the change on the page itself.'
-              : PANELS.approvals.body}
-          </p>
-          <button
-            type="button"
-            className="hz-approve"
-            data-state={approve}
-            onClick={grantApproval}
-            disabled={approve !== 'idle'}
-          >
-            {approve === 'idle' ? 'Approve the fix' : approve === 'working' ? 'Deploying…' : 'Verified ✓'}
+          </div>
+          <button type="button" className="ns-cinema" aria-pressed={cinema} onClick={() => setCinema((v) => !v)}>
+            {cinema ? 'Exit cinema' : 'Cinema'}
           </button>
-        </article>
-      </section>
+        </div>
 
-      {/* the invitation, until the first touch */}
-      <p className="hz-hint" data-hidden={touched || undefined} aria-hidden="true">
-        Touch the core
-      </p>
+        <section className={`ns-panels${awake ? ' up' : ''}`} aria-hidden={!awake} aria-label="Today's intelligence">
+          <article className="ns-panel" style={{ transitionDelay: '0ms' }}>
+            <p className="ns-panel-eyebrow">Morning briefing</p><h2>Your week, understood.</h2>
+            <svg className="ns-spark" viewBox="0 0 120 36" aria-hidden>
+              <defs>
+                <linearGradient id="ns-spark-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="rgba(240,200,120,0.35)" /><stop offset="1" stopColor="rgba(240,200,120,0)" />
+                </linearGradient>
+              </defs>
+              <path d={`${SPARK_D} L 120 36 L 0 36 Z`} fill="url(#ns-spark-fill)" stroke="none" />
+              <path d={SPARK_D} fill="none" stroke="#ecc276" strokeWidth="1.4" />
+              <circle cx="120" cy={PTS[PTS.length - 1][1]} r="2.2" fill="#ffe2a4" />
+            </svg>
+            <p className="ns-panel-body">Traffic is up 12%. Two pages gained ground overnight. Nothing needs you before coffee.</p>
+          </article>
+          <article className="ns-panel" style={{ transitionDelay: '130ms' }}>
+            <p className="ns-panel-eyebrow">Opportunities</p><h2>Three quick wins in reach.</h2>
+            <ul className="ns-chips">
+              <li><span>pricing questions</span><b>#11 → #6</b></li>
+              <li><span>how it works</span><b>#13 → #7</b></li>
+              <li><span>best near me</span><b>#12 → #8</b></li>
+            </ul>
+            <p className="ns-panel-body">Three page-two keywords sit within striking distance. The Core has drafted the moves.</p>
+          </article>
+          <article className="ns-panel" style={{ transitionDelay: '260ms' }}>
+            <p className="ns-panel-eyebrow">Approvals</p>
+            <h2>{approve === 'done' ? 'Done. Verified by read-back.' : 'One fix awaits your word.'}</h2>
+            <p className="ns-panel-body">
+              {approve === 'done'
+                ? 'The correction is live. The Core confirmed the change on the page itself.'
+                : 'A prepared correction rests on the table. Approve it, and the work is done for you.'}
+            </p>
+            <button type="button" className="ns-approve" data-state={approve} disabled={approve !== 'idle'} onClick={runApprove}>
+              {approve === 'idle' ? 'Approve the fix' : approve === 'working' ? 'Deploying…' : 'Verified ✓'}
+            </button>
+            <div className={`ns-progress${progOn ? ' on' : ''}`}><div className="ns-progress-bar" style={{ width: `${progPct}%` }} /></div>
+            <div className={`ns-progress-row${progOn ? ' on' : ''}`}><span>{progTask}</span><b>{Math.round(progPct)}%</b></div>
+          </article>
+        </section>
 
-      {/* the three principles — each lights its element as you pass */}
-      <nav className="hz-principles" aria-label="The three principles">
-        <button
-          type="button"
-          onMouseEnter={() => setFocus('heart')}
-          onMouseLeave={() => setFocus(null)}
-          onFocus={() => setFocus('heart')}
-          onBlur={() => setFocus(null)}
-          onClick={wake}
-        >
-          The core is the <b>heart</b>.
-        </button>
-        <button
-          type="button"
-          onMouseEnter={() => setFocus('command')}
-          onMouseLeave={() => setFocus(null)}
-          onFocus={() => setFocus('command')}
-          onBlur={() => setFocus(null)}
-          onClick={wake}
-        >
-          The horizon is the <b>command</b>.
-        </button>
-        <button
-          type="button"
-          onMouseEnter={() => setFocus('interface')}
-          onMouseLeave={() => setFocus(null)}
-          onFocus={() => setFocus('interface')}
-          onBlur={() => setFocus(null)}
-        >
-          The stars are the <b>interface</b>.
-        </button>
-      </nav>
+        <p className="ns-hint" data-hidden={awake ? '' : undefined} aria-hidden>Touch the compass</p>
 
-      {/* the room breathes: slow warmth over the whole frame */}
-      <div className="hz-plate-breathe" aria-hidden="true" />
+        <nav className="ns-principles" aria-label="The three principles">
+          <button type="button" onClick={() => wake(!awake)}>The core is the <b>heart</b>.</button>
+          <button type="button" onClick={() => wake(!awake)}>The horizon is the <b>command</b>.</button>
+          <button type="button" onClick={runInterface}>The stars are the <b>interface</b>.</button>
+        </nav>
+      </main>
 
-      {/* film grain, so plate and light read as one exposure */}
-      <svg className="hz-plate-grain" aria-hidden="true">
-        <filter id="hz-grain-f">
-          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#hz-grain-f)" />
-      </svg>
-    </main>
+      <div className="ns-dev" aria-hidden={!dev}>
+        <b>compass state · press D to hide</b>
+        {DEV_STATES.map((s) => (
+          <button key={s} onClick={() => C(s)}>{s}</button>
+        ))}
+      </div>
+    </>
   )
 }
