@@ -252,11 +252,22 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-cards {
   position: absolute; right: clamp(1rem,2.4vw,2.2rem); top: clamp(4.4rem,9vh,6.5rem);
   width: clamp(272px,20vw,318px); display: flex; flex-direction: column; gap: 0.9rem;
+  /* Never let the card stack run off the bottom of the screen on shorter
+     viewports (e.g. 1366x768) — leaves clearance above the mission strip/
+     console, same max-height + scroll pattern .ns-drawer already uses. */
+  max-height: calc(100vh - clamp(4.4rem,9vh,6.5rem) - 7rem);
 }
 .ns-card {
   padding: 1.05rem 1.2rem; opacity: 0; transform: translateX(16px);
   transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  min-height: 0; overflow-y: auto;
 }
+/* Agent Roster's content is short and fixed (5 agents) — keep it at its
+   natural height. Morning Briefing is the variable-length one, so it
+   absorbs whatever space is left within .ns-cards' max-height and scrolls
+   internally instead of the roster losing rows it didn't need to. */
+.ns-card:first-child { flex: none; }
+.ns-card:last-child { flex: 1 1 auto; }
 .ns-hud.up .ns-card { opacity: 1; transform: translateX(0); }
 .ns-hud.up .ns-card:nth-child(2) { transition-delay: 0.08s; }
 
@@ -379,7 +390,7 @@ html[data-dev] .ns-dev { display: flex; }
   .ns-principles { justify-content: center; }
   .ns-principles button:not(:first-child) { display: none; }
   .ns-rail { display: none; }
-  .ns-cards { left: 50%; right: auto; transform: translateX(-50%); top: auto; bottom: 15vh; width: min(84vw, 340px); }
+  .ns-cards { left: 50%; right: auto; transform: translateX(-50%); top: auto; bottom: 15vh; width: min(84vw, 340px); max-height: 70vh; }
   .ns-strip, .ns-console { width: min(84vw, 340px); }
   .ns-drawer { left: 50%; transform: translateY(-50%) translateX(-50%); width: min(84vw, 340px); }
   .ns-hud.up .ns-drawer.open { transform: translateY(-50%) translateX(-50%); }
