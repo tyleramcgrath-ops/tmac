@@ -200,30 +200,125 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-timectl button[aria-pressed='true'] { color: #eed09a; border-bottom-color: rgba(232,182,104,0.7); }
 .ns-timectl button:focus-visible, .ns-cinema:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
 
-/* panels rise from the table on wake */
-.ns-panels {
-  position: absolute; left: 50%; bottom: clamp(2.4rem,7vh,5rem); transform: translateX(-50%);
-  z-index: 8; display: flex; flex-wrap: wrap; gap: clamp(0.9rem,1.4vw,1.6rem); justify-content: center;
-  width: min(94vw, 1180px);
+/* ============================================================
+   The interface — a rail (left), two glanceable cards (right),
+   a mission strip + command console (bottom), all "around" the
+   room rather than covering it. Rises/fades on wake-summon via
+   .ns-hud.up; each region keeps its own restrained chrome. */
+.ns-hud {
+  position: absolute; inset: 0; z-index: 8;
   pointer-events: none; visibility: hidden; transition: visibility 0s 0.9s;
 }
-.ns-panels.up { visibility: visible; pointer-events: auto; transition: visibility 0s; }
-.ns-panel {
-  width: clamp(266px,22vw,344px); padding: clamp(1.3rem,1.9vw,1.7rem) clamp(1.4rem,2vw,1.8rem);
-  border: 1px solid rgba(210,170,102,0.24); border-top-color: rgba(238,206,140,0.5); border-radius: 11px;
-  background: linear-gradient(180deg, rgba(10,10,14,0.78), rgba(6,6,9,0.87));
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 26px 56px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.4);
-  opacity: 0; transform: translateY(44px) scale(0.975);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+.ns-hud.up { visibility: visible; pointer-events: none; transition: visibility 0s; }
+.ns-hud.up > * { pointer-events: auto; }
+.ns-hud.up .ns-drawer:not(.open) { pointer-events: none; }
+
+/* Shared glass-panel chrome — a restrained surface, not a dashboard tile.
+   Anything using it (cards, drawer, console, rail) reads as one material. */
+.ns-glass {
+  border: 1px solid rgba(210,170,102,0.22); border-top-color: rgba(238,206,140,0.42); border-radius: 10px;
+  background: linear-gradient(180deg, rgba(8,9,13,0.66), rgba(5,6,9,0.76));
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.42), 0 2px 8px rgba(0,0,0,0.34);
 }
-.ns-panels.up .ns-panel { opacity: 1; transform: translateY(0) scale(1); }
+
 .ns-panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem; }
 .ns-panel-eyebrow { margin: 0; font-size: clamp(0.5rem,0.7vw,0.6rem); letter-spacing: 0.3em; text-transform: uppercase; color: rgba(240,205,130,0.85); }
 .ns-panel-status { margin: 0; font-size: clamp(0.44rem,0.6vw,0.52rem); letter-spacing: 0.18em; text-transform: uppercase; color: rgba(226,214,188,0.45); white-space: nowrap; }
 .ns-panel-divider { margin: 0.85rem 0 0; border: none; border-top: 1px solid rgba(210,170,102,0.16); }
 .ns-panel h2 { margin: 0.6rem 0 0; font-size: clamp(0.98rem,1.25vw,1.16rem); font-weight: 400; letter-spacing: 0.02em; line-height: 1.4; color: #f2e8d2; }
 .ns-panel-body { margin: 0.65rem 0 0; font-size: clamp(0.72rem,0.92vw,0.86rem); line-height: 1.6; color: rgba(226,214,188,0.78); }
+
+/* ---- left command rail: pure wayfinding, thin, never covers the Compass ---- */
+.ns-rail {
+  position: absolute; left: clamp(1rem,2.4vw,2.2rem); top: 50%; transform: translateY(-50%) translateX(-16px);
+  width: clamp(150px,11vw,182px); padding: 1rem 0.2rem;
+  opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.ns-hud.up .ns-rail { opacity: 1; transform: translateY(-50%) translateX(0); }
+.ns-rail-item {
+  display: flex; align-items: center; gap: 0.55rem; width: 100%; margin: 0 0 0.3rem; padding: 0.5rem 0.7rem;
+  border: none; border-left: 2px solid transparent; border-radius: 0 6px 6px 0; background: none; cursor: pointer;
+  font-family: var(--serif); font-size: clamp(0.58rem,0.76vw,0.68rem); letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(216,200,168,0.62); text-align: left; transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.ns-rail-item:hover { color: #f0e2bc; background: rgba(20,16,10,0.35); }
+.ns-rail-item[aria-pressed='true'] { color: #f5edda; border-left-color: rgba(238,206,140,0.75); background: rgba(20,16,10,0.42); }
+.ns-rail-item:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 2px; }
+.ns-rail-dot { flex: none; width: 6px; height: 6px; margin-left: auto; border-radius: 50%; background: rgba(226,214,188,0.25); }
+.ns-rail-dot[data-live='true'] { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+
+/* ---- right glanceable cards: Agent Status, Morning Brief ---- */
+.ns-cards {
+  position: absolute; right: clamp(1rem,2.4vw,2.2rem); top: clamp(4.4rem,9vh,6.5rem);
+  width: clamp(272px,20vw,318px); display: flex; flex-direction: column; gap: 0.9rem;
+}
+.ns-card {
+  padding: 1.05rem 1.2rem; opacity: 0; transform: translateX(16px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.ns-hud.up .ns-card { opacity: 1; transform: translateX(0); }
+.ns-hud.up .ns-card:nth-child(2) { transition-delay: 0.08s; }
+
+/* ---- bottom mission strip: one real line, not a card ---- */
+.ns-strip {
+  position: absolute; left: 50%; bottom: clamp(4.6rem,11vh,6.4rem); transform: translateX(-50%) translateY(10px);
+  width: min(60vw, 560px); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.7rem;
+  opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.12s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.12s;
+}
+.ns-hud.up .ns-strip { opacity: 1; transform: translateX(-50%) translateY(0); }
+.ns-strip-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: rgba(226,214,188,0.3); transition: background 0.4s ease, box-shadow 0.4s ease; }
+.ns-strip-dot[data-live='true'] { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-strip-text { flex: 1; min-width: 0; font-size: clamp(0.62rem,0.8vw,0.72rem); color: rgba(226,214,188,0.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ns-strip-meta { flex: none; font-size: clamp(0.54rem,0.7vw,0.6rem); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(226,214,188,0.5); }
+
+/* ---- bottom command console: always docked, never a modal ---- */
+.ns-console {
+  position: absolute; left: 50%; bottom: clamp(1.6rem,4.5vh,2.6rem); transform: translateX(-50%) translateY(10px);
+  width: min(60vw, 560px); display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem 0.5rem 1rem;
+  opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1) 0.18s, transform 0.8s cubic-bezier(0.16,1,0.3,1) 0.18s;
+}
+.ns-hud.up .ns-console { opacity: 1; transform: translateX(-50%) translateY(0); }
+.ns-console-input {
+  flex: 1; min-width: 0; border: none; background: none; color: #f0e6cd;
+  font-family: var(--serif); font-size: clamp(0.68rem,0.86vw,0.78rem);
+}
+.ns-console-input::placeholder { color: rgba(226,214,188,0.4); }
+.ns-console-input:focus { outline: none; }
+.ns-console-btn {
+  flex: none; padding: 0.4rem 0.85rem; border: 1px solid rgba(238,205,135,0.45); border-radius: 6px;
+  background: linear-gradient(180deg, rgba(214,164,90,0.2), rgba(150,110,50,0.1)); color: #f4dfae;
+  font-family: var(--serif); font-size: clamp(0.5rem,0.66vw,0.56rem); letter-spacing: 0.14em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.3s ease, opacity 0.3s ease;
+}
+.ns-console-btn:hover:not(:disabled) { background: linear-gradient(180deg, rgba(240,190,110,0.3), rgba(170,126,58,0.16)); }
+.ns-console-btn:disabled { opacity: 0.4; cursor: default; }
+.ns-console-note {
+  position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 0.6rem;
+  width: min(60vw, 560px); padding: 0.7rem 0.9rem; font-size: clamp(0.6rem,0.78vw,0.7rem); line-height: 1.5; color: rgba(226,214,188,0.85);
+}
+.ns-console-note[data-risk='consequential'] { border-color: rgba(224,138,127,0.5); }
+.ns-console-note[data-status='failed'], .ns-console-note[data-status='rejected-permission'] { border-color: rgba(224,138,127,0.5); }
+.ns-console-actions { margin-top: 0.6rem; display: flex; gap: 0.5rem; }
+.ns-console-actions button {
+  padding: 0.32rem 0.7rem; border-radius: 5px; font-family: var(--serif); font-size: clamp(0.5rem,0.64vw,0.55rem);
+  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.3s ease;
+}
+.ns-console-actions button:first-child { border: 1px solid rgba(238,205,135,0.5); background: linear-gradient(180deg, rgba(214,164,90,0.24), rgba(150,110,50,0.12)); color: #f4dfae; }
+.ns-console-actions button:last-child { border: 1px solid rgba(210,170,102,0.25); background: none; color: rgba(226,214,188,0.65); }
+
+/* ---- drawer: rail-triggered content, floats beside the rail, never a full modal ---- */
+.ns-drawer {
+  position: absolute; left: clamp(1rem,2.4vw,2.2rem); top: 50%; transform: translateY(-50%) translateX(-10px);
+  width: clamp(300px,24vw,380px); max-height: 62vh; overflow-y: auto; padding: 1.2rem 1.35rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.ns-drawer.open { opacity: 1; pointer-events: auto; transform: translateY(-50%) translateX(0); }
+.ns-drawer-close {
+  position: absolute; top: 0.7rem; right: 0.7rem; width: 22px; height: 22px; display: grid; place-items: center;
+  border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 0.9rem; line-height: 1;
+}
+.ns-drawer-close:hover { color: #f0e2bc; }
 
 /* Roomy row list — icon, bold title, wrapping description, status dot far
    right. Shared by the Agent Roster and anywhere else a "who/what's doing
@@ -283,8 +378,11 @@ html[data-dev] .ns-dev { display: flex; }
   .ns-timectl { display: none; }
   .ns-principles { justify-content: center; }
   .ns-principles button:not(:first-child) { display: none; }
-  .ns-panels { flex-direction: column; align-items: center; gap: 0.6rem; bottom: 8vh; }
-  .ns-panel { width: min(78vw, 340px); }
+  .ns-rail { display: none; }
+  .ns-cards { left: 50%; right: auto; transform: translateX(-50%); top: auto; bottom: 15vh; width: min(84vw, 340px); }
+  .ns-strip, .ns-console { width: min(84vw, 340px); }
+  .ns-drawer { left: 50%; transform: translateY(-50%) translateX(-50%); width: min(84vw, 340px); }
+  .ns-hud.up .ns-drawer.open { transform: translateY(-50%) translateX(-50%); }
   .ns-compass { width: 60vw; height: 60vw; top: 36%; }
   .ns-core-hit { width: 46vw; height: 52vw; top: 36%; }
   .ns-contact { top: 50%; }
@@ -399,29 +497,6 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-ops-flow li[data-status='done']::after { background: #9ed6a0; opacity: 0.4; }
 .ns-ops-flow li[data-status='current'] .ns-ops-dot { background: #ecc276; border-color: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
 .ns-ops-current { margin: 0.7rem 0 0; font-size: clamp(0.72rem,0.92vw,0.84rem); letter-spacing: 0.02em; color: #ecc276; }
-
-/* Command Bar overlay (Milestone 3) — a keyboard-first control surface, not
-   a persistent shell element. Opened by "/" or the "command" principle;
-   closes on Esc. Additive only — no frozen room/compass selector touched. */
-.ns-cmdbar { position: fixed; inset: 0; z-index: 40; display: flex; align-items: flex-start; justify-content: center; padding-top: 14vh; background: rgba(3,4,10,0.55); backdrop-filter: blur(3px); }
-.ns-cmdbar-inner { width: min(560px, 90vw); border: 1px solid rgba(210,170,102,0.32); border-radius: 10px; background: linear-gradient(180deg, rgba(12,12,17,0.94), rgba(7,7,10,0.97)); box-shadow: 0 30px 70px rgba(0,0,0,0.6); padding: 1.1rem 1.2rem 0.9rem; font-family: var(--serif); }
-.ns-cmdbar-context { display: flex; gap: 0.5rem; align-items: baseline; font-size: clamp(0.5rem,0.66vw,0.6rem); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(226,214,188,0.55); margin-bottom: 0.6rem; }
-.ns-cmdbar-mission { color: #ecc276; }
-.ns-cmdbar-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(210,170,102,0.28); border-radius: 7px; padding: 0.6rem 0.75rem; font-family: var(--serif); font-size: clamp(0.78rem,1vw,0.9rem); color: #f2e8d2; outline: none; }
-.ns-cmdbar-input:focus-visible { border-color: rgba(240,205,130,0.7); }
-.ns-cmdbar-input::placeholder { color: rgba(226,214,188,0.4); }
-.ns-cmdbar-confirm { margin-top: 0.7rem; padding: 0.7rem 0.8rem; border-radius: 7px; border: 1px solid rgba(210,170,102,0.3); background: rgba(30,24,14,0.5); }
-.ns-cmdbar-confirm p { margin: 0 0 0.6rem; font-size: clamp(0.68rem,0.86vw,0.78rem); color: rgba(226,214,188,0.9); line-height: 1.5; }
-.ns-cmdbar-confirm[data-risk='consequential'] { border-color: rgba(224,138,122,0.45); background: rgba(40,20,16,0.5); }
-.ns-cmdbar-confirm-actions { display: flex; gap: 0.5rem; }
-.ns-cmdbar-confirm-actions button { font-family: var(--serif); font-size: clamp(0.5rem,0.64vw,0.58rem); letter-spacing: 0.14em; text-transform: uppercase; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; border: 1px solid rgba(238,205,135,0.5); background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; }
-.ns-cmdbar-confirm-actions button:last-child { border-color: rgba(226,214,188,0.25); background: transparent; color: rgba(226,214,188,0.7); }
-.ns-cmdbar-history { list-style: none; margin: 0.7rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; max-height: 30vh; overflow-y: auto; }
-.ns-cmdbar-history li { padding: 0.4rem 0.55rem; border-radius: 6px; background: rgba(255,255,255,0.03); }
-.ns-cmdbar-raw { display: block; font-size: clamp(0.56rem,0.72vw,0.64rem); color: rgba(226,214,188,0.5); }
-.ns-cmdbar-msg { display: block; margin-top: 0.15rem; font-size: clamp(0.66rem,0.84vw,0.76rem); color: rgba(226,214,188,0.92); }
-.ns-cmdbar-history li[data-status='failed'] .ns-cmdbar-msg, .ns-cmdbar-history li[data-status='rejected-permission'] .ns-cmdbar-msg { color: #e08a7a; }
-.ns-cmdbar-hint { margin: 0.7rem 0 0; font-size: clamp(0.48rem,0.6vw,0.54rem); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(226,214,188,0.35); text-align: right; }
 
 @media (prefers-reduced-motion: reduce) {
   .ns-progress-bar.indeterminate, .ns-skeleton-line { animation: none; }

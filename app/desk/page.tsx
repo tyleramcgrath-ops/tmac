@@ -6,7 +6,6 @@ import { initCompass, type CompassApi, type CompassState, type TimeMode } from '
 import { AuthProvider, useAuth } from '../lib/auth-context'
 import { useDeskContext } from './_lib/use-desk-context'
 import PanelHost from './panels/PanelHost'
-import CommandBarOverlay from './panels/command/CommandBarOverlay'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -58,11 +57,12 @@ function DeskGate({ children }: { children: React.ReactNode }) {
 
 function DeskRoom() {
   const { user } = useAuth()
-  const { project, projectId, loading: projectsLoading } = useDeskContext(true)
+  const { projectId, loading: projectsLoading } = useDeskContext(true)
 
   const roomRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const hitRef = useRef<HTMLButtonElement>(null)
+  const consoleInputRef = useRef<HTMLInputElement>(null)
   const api = useRef<CompassApi | null>(null)
   const wakeTimers = useRef<ReturnType<typeof setTimeout>[]>([])
 
@@ -70,7 +70,6 @@ function DeskRoom() {
   const [compassState, setCompassState] = useState<CompassState>('asleep')
   const [awake, setAwake] = useState(false)
   const [panelsUp, setPanelsUp] = useState(false)
-  const [commandBarOpen, setCommandBarOpen] = useState(false)
   const [cinema, setCinema] = useState(false)
   const [dev, setDev] = useState(false)
   const [clock, setClock] = useState<string | null>(null)
@@ -243,7 +242,8 @@ function DeskRoom() {
       if (!typing && (e.key === 'd' || e.key === 'D')) setDev((d) => !d)
       if (!typing && e.key === '/' && phaseRef.current === 'awake') {
         e.preventDefault()
-        setCommandBarOpen(true)
+        callPanels(true)
+        window.setTimeout(() => consoleInputRef.current?.focus(), 50)
       }
     }
     document.addEventListener('keydown', onKey)
@@ -272,7 +272,11 @@ function DeskRoom() {
   const onPrinciple = (k: 'heart' | 'command' | 'interface') => {
     if (phaseRef.current !== 'awake') return
     if (k === 'heart') { callPanels(!panelsUpRef.current); api.current?.flare() }
-    else if (k === 'command') { setCommandBarOpen((v) => !v); api.current?.flare() }
+    else if (k === 'command') {
+      callPanels(true)
+      api.current?.flare()
+      window.setTimeout(() => consoleInputRef.current?.focus(), 50)
+    }
     else {
       C('thinking')
       window.setTimeout(() => C('planning'), 1600)
@@ -380,15 +384,14 @@ function DeskRoom() {
           </button>
         </div>
 
-        <section className={`ns-panels${panelsUp ? ' up' : ''}`} aria-hidden={!panelsUp} aria-label="Today's intelligence">
-          <PanelHost
-            projectId={projectId}
-            projectsResolved={!projectsLoading}
-            panelsUp={panelsUp}
-            onCompassState={C}
-            onAgentSignal={onAgentSignal}
-          />
-        </section>
+        <PanelHost
+          projectId={projectId}
+          projectsResolved={!projectsLoading}
+          panelsUp={panelsUp}
+          onCompassState={C}
+          onAgentSignal={onAgentSignal}
+          consoleInputRef={consoleInputRef}
+        />
 
         <p className="ns-hint" data-hidden="" aria-hidden>Touch the compass</p>
         <p className={`ns-welcome${welcomeShow ? ' show' : ''}`} aria-hidden>{welcomeText}</p>
@@ -398,14 +401,6 @@ function DeskRoom() {
           <button type="button" onClick={() => onPrinciple('command')}>The horizon is the <b>command</b>.</button>
           <button type="button" onClick={() => onPrinciple('interface')}>The stars are the <b>interface</b>.</button>
         </nav>
-
-        <CommandBarOverlay
-          open={commandBarOpen}
-          onClose={() => setCommandBarOpen(false)}
-          projectId={projectId}
-          projectName={project?.name ?? null}
-          onCompassState={C}
-        />
       </main>
 
       <div className="ns-dev" aria-hidden={!dev}>
