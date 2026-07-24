@@ -3,20 +3,22 @@
    Restrained machined brass when idle; an inner light system awakens
    through the working states. Room time-of-day is driven separately.
    Framework-agnostic: initCompass(canvas) returns an imperative API.
+   Ported 1:1 from the reference artifact.
    ===================================================================== */
 import * as THREE from 'three'
 
 export type CompassState =
-  | 'idle' | 'hover' | 'listening' | 'thinking' | 'planning'
-  | 'executing' | 'deploying' | 'verifying' | 'success'
+  | 'asleep' | 'awakening' | 'idle' | 'hover' | 'listening' | 'thinking'
+  | 'planning' | 'executing' | 'deploying' | 'verifying' | 'success'
   | 'warning' | 'error' | 'offline'
 export type TimeMode = 'dawn' | 'day' | 'dusk' | 'night'
 
 export interface CompassApi {
   setState: (s: CompassState) => void
   setTime: (t: TimeMode) => void
-  hover: (on: boolean) => void
+  dolly: (mode: 'in' | 'back') => void
   flare: () => void
+  hover: (on: boolean) => void
   getState: () => CompassState
   dispose: () => void
 }
@@ -30,8 +32,9 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
 
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100)
-  camera.position.set(0, 0.16, 11.3)
+  camera.position.set(0, 0.16, 12.1)   // starts dollied back; wake glides it in
   camera.lookAt(0, 0, 0)
+  let camCur = 12.1, camTarget = 12.1
 
   function envTexture() {
     const c = document.createElement('canvas'); c.width = 1024; c.height = 512
@@ -41,12 +44,12 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     grd.addColorStop(0.52, '#3a2f1c'); grd.addColorStop(0.57, '#7a5a24')
     grd.addColorStop(0.63, '#22242f'); grd.addColorStop(1.0, '#020306')
     g.fillStyle = grd; g.fillRect(0, 0, 1024, 512)
-    const key = g.createRadialGradient(512, 150, 20, 512, 150, 320)
-    key.addColorStop(0, 'rgba(255,232,190,0.95)'); key.addColorStop(1, 'rgba(255,232,190,0)')
-    g.fillStyle = key; g.fillRect(0, 0, 1024, 512)
-    const rim = g.createRadialGradient(120, 200, 10, 120, 200, 260)
-    rim.addColorStop(0, 'rgba(120,150,210,0.5)'); rim.addColorStop(1, 'rgba(120,150,210,0)')
-    g.fillStyle = rim; g.fillRect(0, 0, 1024, 512)
+    const key2 = g.createRadialGradient(512, 150, 20, 512, 150, 320)
+    key2.addColorStop(0, 'rgba(255,232,190,0.95)'); key2.addColorStop(1, 'rgba(255,232,190,0)')
+    g.fillStyle = key2; g.fillRect(0, 0, 1024, 512)
+    const rim2 = g.createRadialGradient(120, 200, 10, 120, 200, 260)
+    rim2.addColorStop(0, 'rgba(120,150,210,0.5)'); rim2.addColorStop(1, 'rgba(120,150,210,0)')
+    g.fillStyle = rim2; g.fillRect(0, 0, 1024, 512)
     g.fillStyle = 'rgba(255,210,140,0.85)'
     for (let i = 0; i < 90; i++) {
       const x = (Math.abs(Math.sin(i * 12.9898) * 43758.5) % 1) * 1024
@@ -105,7 +108,7 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
 
   const housing = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.03, 16, 48), brassEdge); housing.position.z = 0.58; compass.add(housing)
 
-  const starCore = new THREE.Mesh(new THREE.SphereGeometry(0.11, 24, 24), new THREE.MeshBasicMaterial({ color: 0xfff6e0 }))
+  const starCore = new THREE.Mesh(new THREE.SphereGeometry(0.11, 24, 24), new THREE.MeshBasicMaterial({ color: 0xfff6e0, toneMapped: false }))
   starCore.material.depthTest = false; starCore.renderOrder = 11; starCore.position.z = 0.6; compass.add(starCore)
 
   function starSprite() {
@@ -118,15 +121,15 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     for (let k = 0; k < 4; k++) { g.rotate(Math.PI / 2); const lg = g.createLinearGradient(0, 0, 0, -96); lg.addColorStop(0, 'rgba(255,246,220,0.92)'); lg.addColorStop(1, 'rgba(255,222,162,0)'); g.fillStyle = lg; g.beginPath(); g.moveTo(-3.5, 0); g.lineTo(0, -96); g.lineTo(3.5, 0); g.closePath(); g.fill() }
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t
   }
-  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: starSprite(), blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, transparent: true }))
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: starSprite(), blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, transparent: true, toneMapped: false }))
   glow.scale.set(2.6, 2.6, 1); glow.position.z = 0.6; glow.renderOrder = 10; compass.add(glow)
 
-  // deploying light-column
-  const beamMat = new THREE.MeshBasicMaterial({ color: 0xffe8bc, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide })
+  // the deploying light-column (3D cylinders stay off; the shaft is soft CSS light).
+  const beamMat = new THREE.MeshBasicMaterial({ color: 0xffe8bc, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false })
   const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 9, 28, 1, true), beamMat); beam.renderOrder = 9; compass.add(beam)
-  const beamCoreMat = new THREE.MeshBasicMaterial({ color: 0xfffceb, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false })
+  const beamCoreMat = new THREE.MeshBasicMaterial({ color: 0xfffceb, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })
   const beamCore = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 9, 20, 1, true), beamCoreMat); beamCore.renderOrder = 9; compass.add(beamCore)
-  const baseFlare = new THREE.Sprite(new THREE.SpriteMaterial({ map: starSprite(), color: 0xffe6bc, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, transparent: true, opacity: 0 }))
+  const baseFlare = new THREE.Sprite(new THREE.SpriteMaterial({ map: starSprite(), color: 0xffe6bc, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, transparent: true, opacity: 0, toneMapped: false }))
   baseFlare.position.y = -1.9; baseFlare.scale.set(3.4, 1.6, 1); baseFlare.renderOrder = 9; compass.add(baseFlare)
 
   const amb = new THREE.AmbientLight(0x35415f, 0.5); scene.add(amb)
@@ -137,6 +140,8 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
 
   type SP = { outer: number; inner: number; star: number; glow: number; rise: number; chan: number; key: number; orbit: number; beam: number; align: number; temp: [number, number, number]; pulse: string }
   const STATES: Record<CompassState, SP> = {
+    asleep:    { outer: 0.012, inner: 0.007, star: 0.5, glow: 1.5, rise: -0.04, chan: 0.0, key: 0.32, orbit: 0.0, beam: 0.0, align: 0.1, temp: [255, 214, 166], pulse: 'heartbeat' },
+    awakening: { outer: 0.16, inner: 0.22, star: 3.3, glow: 4.7, rise: 0.22, chan: 1.9, key: 3.05, orbit: 1.1, beam: 0.22, align: 0.92, temp: [255, 240, 212], pulse: 'rise' },
     idle:      { outer: 0.06, inner: 0.038, star: 1.0, glow: 2.5, rise: 0.0, chan: 0.06, key: 2.1, orbit: 0.0, beam: 0.0, align: 0.0, temp: [255, 226, 176], pulse: 'breath' },
     hover:     { outer: 0.075, inner: 0.05, star: 1.4, glow: 2.9, rise: 0.05, chan: 0.30, key: 2.35, orbit: 0.25, beam: 0.0, align: 0.0, temp: [255, 230, 186], pulse: 'breath' },
     listening: { outer: 0.05, inner: 0.11, star: 1.9, glow: 3.2, rise: 0.09, chan: 0.6, key: 2.5, orbit: 0.45, beam: 0.0, align: 0.35, temp: [255, 220, 165], pulse: 'listen' },
@@ -151,7 +156,7 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     offline:   { outer: 0.012, inner: 0.008, star: 0.22, glow: 1.3, rise: -0.02, chan: 0.0, key: 1.15, orbit: 0.0, beam: 0.0, align: 0.15, temp: [150, 162, 182], pulse: 'off' },
   }
   let stateName: CompassState = 'idle'
-  const cur = { star: 1, glow: 2.5, rise: 0, chan: 0.06, key: 2.1, orbit: 0, r: 255, g: 226, b: 176, outer: 0.06, inner: 0.038, beam: 0, align: 0 }
+  const cur = { star: 1, glow: 2.5, rise: 0, chan: 0.06, key: 2.1, orbit: 0, r: 255, g: 226, b: 176, outer: 0.06, inner: 0.038, beam: 0, align: 0, sexp: 1, envI: 1 }
   let flash = 0
 
   function setState(name: CompassState) {
@@ -210,9 +215,10 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     m3.rotation.x = lerp(0.35, 0.0, cur.align)
     m2.rotation.y = lerp(Math.PI / 3, Math.PI / 2, cur.align * 0.5)
 
-    pt.x += (target.x - pt.x) * 0.06; pt.y += (target.y - pt.y) * 0.06
-    compass.rotation.x = pt.y * 0.15 - 0.05; compass.rotation.y = pt.x * 0.20
-    compass.position.y = cur.rise
+    // high-momentum cursor tilt that eases to perfect stillness when the mouse stops
+    pt.x += (target.x - pt.x) * 0.035; pt.y += (target.y - pt.y) * 0.035
+    compass.rotation.x = pt.y * 0.12 - 0.05; compass.rotation.y = pt.x * 0.16
+    compass.position.y = cur.rise + Math.sin(t * 0.5) * 0.02   // gentle idle float
 
     let pf = 1
     if (S.pulse === 'breath') pf = 1 + Math.sin(t * 1.6) * 0.05
@@ -226,10 +232,12 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     else if (S.pulse === 'warn') pf = 1 + 0.16 * Math.sin(t * 1.15) * (Math.sin(t * 0.4) > -0.2 ? 1 : 0.35)
     else if (S.pulse === 'error') pf = 1 + 0.14 * Math.sin(t * 0.85) * (Math.sin(t * 0.31) > 0 ? 1 : 0.45)
     else if (S.pulse === 'off') pf = 1 + Math.sin(t * 0.4) * 0.03
+    else if (S.pulse === 'heartbeat') { const hb = t % 3.4; pf = 1 + 0.5 * Math.exp(-Math.pow((hb - 0.35) / 0.16, 2)) + 0.32 * Math.exp(-Math.pow((hb - 0.72) / 0.16, 2)) }
 
     const starI = cur.star * pf + flash * 1.6
     col.setRGB(cur.r / 255, cur.g / 255, cur.b / 255)
-    starCore.material.color.copy(col); starCore.scale.setScalar(0.8 + starI * 0.22 + flash * 0.5)
+    starCore.material.color.copy(col).multiplyScalar(Math.min(1, 0.42 + starI * 0.42))
+    starCore.scale.setScalar(0.7 + starI * 0.22 + flash * 0.5)
     glow.material.color.copy(col)
     const gs = Math.min(3.9, cur.glow * 0.5 + starI * 0.22) + flash * 0.7
     glow.scale.set(gs, gs, 1)
@@ -243,18 +251,27 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     else orbitLight.position.set(Math.cos(t * 1.4) * 2.0, Math.sin(t * 0.9) * 1.2, Math.sin(t * 1.4) * 2.0)
 
     const beamV = cur.beam
-    beamMat.opacity = beamV * 0.5; beamMat.color.copy(col)
-    beam.scale.set(1, 0.6 + beamV * 0.8, 1)
-    beamCoreMat.opacity = beamV * 0.85; beamCore.scale.set(1, 0.6 + beamV * 0.8, 1)
-    baseFlare.material.opacity = beamV * 0.9; baseFlare.material.color.copy(col)
-    baseFlare.scale.set(2.6 + beamV * 1.6, 1.2 + beamV * 0.8, 1)
+    beamMat.opacity = 0; beamCoreMat.opacity = 0
+    baseFlare.material.opacity = beamV * 0.8; baseFlare.material.color.copy(col)
+    baseFlare.scale.set(2.8 + beamV * 1.8, 1.2 + beamV * 0.8, 1)
 
     key.intensity = cur.key; key.color.setRGB(timeTarget.keyC[0] / 255, timeTarget.keyC[1] / 255, timeTarget.keyC[2] / 255)
 
     timeCur.exp = lerp(timeCur.exp, timeTarget.exp, k * 0.6); timeCur.ai = lerp(timeCur.ai, timeTarget.ambI, k * 0.6)
     timeCur.ar = lerp(timeCur.ar, timeTarget.amb[0], k * 0.6); timeCur.ag = lerp(timeCur.ag, timeTarget.amb[1], k * 0.6); timeCur.ab = lerp(timeCur.ab, timeTarget.amb[2], k * 0.6)
-    renderer.toneMappingExposure = timeCur.exp
+    // asleep dims the whole instrument to a faint outline; the star stays lit
+    const sexpT = (stateName === 'asleep') ? 0.42 : 1
+    cur.sexp = lerp(cur.sexp, sexpT, k * 0.5)
+    renderer.toneMappingExposure = timeCur.exp * cur.sexp
+    const envT = (stateName === 'asleep') ? 0.24 : 1
+    cur.envI = lerp(cur.envI, envT, k * 0.5)
+    brass.envMapIntensity = 1.5 * cur.envI; brassEdge.envMapIntensity = 1.7 * cur.envI
+    brassDark.envMapIntensity = 1.1 * cur.envI; mech.envMapIntensity = 0.6 * cur.envI
     amb.intensity = timeCur.ai; amb.color.setRGB(timeCur.ar / 255, timeCur.ag / 255, timeCur.ab / 255)
+
+    // the room reveals itself: a slow, almost imperceptible dolly forward
+    camCur = lerp(camCur, camTarget, k * 0.4)
+    camera.position.z = camCur
 
     renderer.render(scene, camera)
   }
@@ -263,6 +280,7 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
   return {
     setState,
     setTime,
+    dolly: (mode: 'in' | 'back') => { camTarget = mode === 'in' ? 11.3 : 12.1 },
     flare: () => { flash = 1.0 },
     hover: (on: boolean) => { if (on) { if (stateName === 'idle') setState('hover') } else { if (stateName === 'hover') setState('idle') } },
     getState: () => stateName,

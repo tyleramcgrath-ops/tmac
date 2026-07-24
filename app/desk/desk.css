@@ -21,14 +21,20 @@
 }
 
 /* ---- the plate: fixed architectural photograph, razor sharp ---- */
-.ns-plate-layer { position: absolute; inset: 0; }
+.ns-plate-layer {
+  position: absolute; inset: 0;
+  /* the room breathes -- an almost imperceptible, non-looping-feeling drift */
+  animation: ns-room-breathe 19s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes ns-room-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.007); } }
 .ns-plate {
   position: absolute; inset: -2.4%;
   background-image: url('/environment-plates/north-star-room.jpg');
   background-size: cover; background-position: center 42%;
-  /* extremely subtle eased parallax -- depth felt, not seen */
-  transform: translate3d(calc(var(--mx) * 7px), calc(var(--my) * 4px), 0) scale(1.02);
-  transition: transform 0.5s cubic-bezier(0.22, 0.8, 0.24, 1), filter 2s ease;
+  /* elegant, high-momentum parallax that settles to stillness when the mouse stops */
+  transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 4px), 0) scale(1.02);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), filter 2s ease;
   will-change: transform;
 }
 /* time-of-day grade on the plate -- sharp, never a flat tint. Coordinated
@@ -118,7 +124,7 @@ html[data-dev] .ns-dev { display: flex; }
     radial-gradient(120% 90% at 50% 44%, transparent 52%, rgba(2,3,8,0.34) 100%),
     linear-gradient(180deg, rgba(2,3,8,0.5) 0%, transparent 16%, transparent 72%, rgba(2,3,8,0.66) 100%);
   transform: translate3d(calc(var(--mx) * -4px), calc(var(--my) * -2px), 0);
-  transition: transform 0.6s ease;
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ---- the live 3D compass, seated on the platform ---- */
@@ -156,8 +162,8 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-fore {
   position: absolute; inset: 0; pointer-events: none; z-index: 3;
   background: radial-gradient(90% 55% at 50% 118%, rgba(3,4,9,0.85), transparent 60%);
-  transform: translate3d(calc(var(--mx) * -12px), calc(var(--my) * -7px), 0);
-  transition: transform 0.5s ease;
+  transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -6px), 0);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ns-particles { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0.6; }
@@ -202,13 +208,13 @@ html[data-dev] .ns-dev { display: flex; }
 }
 .ns-panels.up { visibility: visible; pointer-events: auto; transition: visibility 0s; }
 .ns-panel {
-  width: clamp(190px,16.5vw,250px); padding: clamp(0.8rem,1.3vw,1.2rem) clamp(0.9rem,1.4vw,1.3rem);
-  border: 1px solid rgba(214,170,98,0.35); border-top-color: rgba(244,208,132,0.7); border-radius: 6px;
-  background: linear-gradient(180deg, rgba(9,9,13,0.72), rgba(5,5,8,0.82));
-  backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
-  box-shadow: 0 18px 44px rgba(0,0,0,0.6), 0 0 24px rgba(214,160,90,0.06);
-  opacity: 0; transform: translateY(46px) scale(0.97);
-  transition: opacity 0.7s cubic-bezier(0.22,0.8,0.24,1), transform 0.7s cubic-bezier(0.22,0.8,0.24,1);
+  width: clamp(196px,16.8vw,254px); padding: clamp(0.95rem,1.45vw,1.35rem) clamp(1rem,1.5vw,1.4rem);
+  border: 1px solid rgba(210,170,102,0.24); border-top-color: rgba(238,206,140,0.5); border-radius: 9px;
+  background: linear-gradient(180deg, rgba(10,10,14,0.72), rgba(6,6,9,0.82));
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 26px 56px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.4);
+  opacity: 0; transform: translateY(44px) scale(0.975);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
 }
 .ns-panels.up .ns-panel { opacity: 1; transform: translateY(0) scale(1); }
 .ns-panel-eyebrow { margin: 0; font-size: clamp(0.42rem,0.62vw,0.54rem); letter-spacing: 0.34em; text-transform: uppercase; color: rgba(240,205,130,0.85); }
@@ -216,9 +222,9 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-panel-body { margin: 0.5rem 0 0; font-size: clamp(0.66rem,0.85vw,0.8rem); line-height: 1.55; color: rgba(226,214,188,0.78); }
 .ns-spark { display: block; width: 100%; height: auto; margin-top: 0.55rem; }
 .ns-chips { list-style: none; margin: 0.55rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.3rem; }
-.ns-chips li { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; padding: 0.28rem 0.5rem; border: 1px solid rgba(214,170,98,0.26); border-radius: 4px; background: rgba(22,17,10,0.4); font-size: clamp(0.58rem,0.76vw,0.7rem); color: rgba(226,214,188,0.85); }
+.ns-chips li { display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem; padding: 0.28rem 0.5rem; border: 1px solid rgba(210,170,102,0.22); border-radius: 6px; background: rgba(20,16,10,0.42); font-size: clamp(0.58rem,0.76vw,0.7rem); color: rgba(226,214,188,0.85); }
 .ns-chips b { font-weight: 400; white-space: nowrap; color: #ecc276; font-variant-numeric: tabular-nums; }
-.ns-approve { margin-top: 0.7rem; padding: 0.45rem 0.95rem; border: 1px solid rgba(240,205,130,0.6); border-radius: 4px; background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; font-family: var(--serif); font-size: clamp(0.48rem,0.66vw,0.58rem); letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, opacity 0.4s ease; }
+.ns-approve { margin-top: 0.7rem; padding: 0.45rem 0.95rem; border: 1px solid rgba(238,205,135,0.5); border-radius: 6px; background: linear-gradient(180deg, rgba(214,164,90,0.22), rgba(150,110,50,0.12)); color: #f4dfae; font-family: var(--serif); font-size: clamp(0.48rem,0.66vw,0.58rem); letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: background 0.4s ease, border-color 0.4s ease, color 0.4s ease, opacity 0.4s ease; }
 .ns-approve:hover:not(:disabled) { background: linear-gradient(180deg, rgba(240,190,110,0.32), rgba(170,126,58,0.18)); }
 .ns-approve:focus-visible { outline: 1px solid rgba(240,205,130,0.8); outline-offset: 3px; }
 .ns-approve[data-state='working'] { opacity: 0.7; cursor: wait; }
@@ -266,12 +272,16 @@ html[data-dev] .ns-dev { display: flex; }
    ===================================================================== */
 /* room-spanning light column for executing / deploying */
 .ns-beam {
-  position: absolute; left: 50%; top: 0; width: 4.5vw; height: 100%;
+  position: absolute; left: 50%; top: 0; width: 15vw; height: 100%;
   transform: translateX(-50%); z-index: 5; pointer-events: none; opacity: 0;
   mix-blend-mode: screen; transition: opacity 0.5s ease;
-  background: linear-gradient(90deg, transparent, rgba(255,232,186,0.4) 42%, rgba(255,248,224,0.92) 50%, rgba(255,232,186,0.4) 58%, transparent);
-  -webkit-mask: linear-gradient(180deg, transparent 3%, #000 28%, #000 72%, transparent 97%);
-          mask: linear-gradient(180deg, transparent 3%, #000 28%, #000 72%, transparent 97%);
+  /* two soft cores + a faint wide falloff, then blurred so there are no edges */
+  background:
+    radial-gradient(22% 46% at 50% 50%, rgba(255,250,232,0.7), rgba(255,240,206,0.14) 55%, transparent 78%),
+    linear-gradient(90deg, transparent 6%, rgba(255,238,202,0.16) 34%, rgba(255,248,224,0.5) 50%, rgba(255,238,202,0.16) 66%, transparent 94%);
+  filter: blur(11px);
+  -webkit-mask: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 14%, #000 36%, #000 64%, rgba(0,0,0,0.4) 86%, transparent 100%);
+          mask: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 14%, #000 36%, #000 64%, rgba(0,0,0,0.4) 86%, transparent 100%);
 }
 [data-compass-state='executing'] .ns-beam { opacity: 0.34; }
 [data-compass-state='deploying'] .ns-beam { opacity: 0.72; transition: opacity 0.4s ease; }
@@ -316,3 +326,43 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-progress-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.4rem; font-size: clamp(0.5rem,0.68vw,0.6rem); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(226,214,188,0.6); opacity: 0; transition: opacity 0.4s ease; }
 .ns-progress-row.on { opacity: 1; }
 .ns-progress-row b { color: #ecc276; font-variant-numeric: tabular-nums; }
+
+/* =====================================================================
+   CINEMATIC ARRIVAL — the room sleeps, then wakes on first touch
+   ===================================================================== */
+.ns-sleep {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 45%, rgba(5,7,13,0.8), rgba(2,3,7,0.93) 72%);
+  opacity: 0.9; transition: opacity 3.4s ease;
+}
+[data-phase='awake'] .ns-sleep { opacity: 0; }
+[data-phase='asleep'][data-aware] .ns-sleep { opacity: 0.83; transition: opacity 1.6s ease; }
+[data-quick] .ns-sleep { transition-duration: 1.7s; }
+
+/* the whole UI stays absent until the room wakes, then reveals in sequence */
+.ns-brand, .ns-status, .ns-controls, .ns-principles { opacity: 0; animation: none !important; transition: opacity 1.5s ease; }
+[data-phase='awake'] .ns-brand { opacity: 1; transition-delay: 3.3s; }
+[data-phase='awake'] .ns-status { opacity: 1; transition-delay: 3.7s; }
+[data-phase='awake'] .ns-controls { opacity: 1; transition-delay: 4.1s; }
+[data-phase='awake'] .ns-principles { opacity: 1; transition-delay: 4.4s; }
+[data-quick][data-phase='awake'] .ns-brand { transition-delay: 0.9s; }
+[data-quick][data-phase='awake'] .ns-status { transition-delay: 1.1s; }
+[data-quick][data-phase='awake'] .ns-controls { transition-delay: 1.3s; }
+[data-quick][data-phase='awake'] .ns-principles { transition-delay: 1.5s; }
+[data-cinema] .ns-status, [data-cinema] .ns-principles { transition: opacity 0.4s ease; }
+
+/* North Star's spoken welcome */
+.ns-welcome {
+  position: absolute; left: 50%; top: 25%; transform: translateX(-50%) translateY(-8px);
+  z-index: 10; pointer-events: none; text-align: center; white-space: nowrap;
+  font-family: var(--serif); font-size: clamp(0.9rem, 1.6vw, 1.4rem);
+  letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase;
+  color: #f0dcae; text-shadow: 0 0 24px rgba(232,182,104,0.45), 0 2px 14px rgba(0,0,0,0.9);
+  opacity: 0; transition: opacity 1.5s ease, transform 1.5s ease;
+}
+.ns-welcome.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* imperceptible dither that prevents 8-bit gradient banding on large,
+   high-bit-depth displays (a 6K XDR shows banding a laptop hides) */
+.ns-dither { position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0.02; mix-blend-mode: overlay; }
+.ns-dither rect { width: 100%; height: 100%; }
