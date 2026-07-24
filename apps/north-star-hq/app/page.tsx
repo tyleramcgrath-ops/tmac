@@ -1,11 +1,11 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { initCompass, type CompassApi, type CompassState, type TimeMode } from './compass'
 import { AuthProvider, useAuth } from './lib/auth-context'
 import { useDeskContext } from './_lib/use-desk-context'
 import PanelHost from './panels/PanelHost'
+import OnboardingWizard from './onboarding-wizard'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -42,22 +42,21 @@ export default function NorthStar() {
   )
 }
 
-// Gate: resolves the session before the Three.js scene ever mounts. Redirects
-// unauthenticated visitors to /login. While loading, holds the same dark tone
-// as the room itself (`.ns-gate`) rather than a mismatched spinner.
+// Gate: resolves the session before the Three.js scene ever mounts. While
+// loading, holds the same dark tone as the room itself (`.ns-gate`) rather
+// than a mismatched spinner. There is no login screen to redirect to — a
+// brand-new (unauthenticated) visitor mounts the room same as anyone else;
+// DeskRoom itself layers the first-launch onboarding wizard on top of the
+// still-sleeping room until an account exists.
 function DeskGate({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth()
-  const router = useRouter()
-  useEffect(() => {
-    if (!loading && !user) router.replace('/login')
-  }, [loading, user, router])
-  if (loading || !user) return <div className="ns-gate" aria-hidden />
+  const { loading } = useAuth()
+  if (loading) return <div className="ns-gate" aria-hidden />
   return <>{children}</>
 }
 
 function DeskRoom() {
-  const { user } = useAuth()
-  const { projectId, loading: projectsLoading } = useDeskContext(true)
+  const { user, refresh } = useAuth()
+  const { projectId, loading: projectsLoading } = useDeskContext(!!user)
 
   const roomRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -88,6 +87,14 @@ function DeskRoom() {
   const userNameRef = useRef('there')
   useEffect(() => {
     userNameRef.current = user?.name || 'there'
+  }, [user])
+  // Blocks the generic "click anywhere wakes the room" behavior while the
+  // onboarding wizard owns the room's awakening (it calls runWake() itself
+  // once activation succeeds) — otherwise a stray click on a wizard field
+  // would wake the room out from under it.
+  const hasUserRef = useRef(false)
+  useEffect(() => {
+    hasUserRef.current = !!user
   }, [user])
   useEffect(() => {
     compassStateRef.current = compassState
@@ -157,6 +164,15 @@ function DeskRoom() {
     C('idle'); finishWake(); showWelcome(); persist(timeModeRef.current)
   }
 
+  // Onboarding wizard's "Enter Headquarters" — the account now exists
+  // (activateOnboarding already succeeded); pick up the new session, then
+  // run the same wake cinematic a returning user's first click would.
+  const onOnboarded = async () => {
+    hasUserRef.current = true
+    await refresh()
+    runWake()
+  }
+
   // keep a ref of the current time so persist() from timers has the live value
   const timeModeRef = useRef<TimeMode>('night')
   useEffect(() => { timeModeRef.current = timeMode }, [timeMode])
@@ -218,7 +234,7 @@ function DeskRoom() {
   // dark room -> wake; during the wake -> skip; awake + on the compass -> call/dismiss
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (phaseRef.current === 'asleep') { runWake(); return }
+      if (phaseRef.current === 'asleep' && hasUserRef.current) { runWake(); return }
       if (phaseRef.current === 'waking') { skipWake(); return }
       if (e.target === hitRef.current) {
         callPanels(!panelsUpRef.current); C('listening'); WT(1500, () => C('idle'))
@@ -392,6 +408,8 @@ function DeskRoom() {
           onAgentSignal={onAgentSignal}
           consoleInputRef={consoleInputRef}
         />
+
+        {!user && <OnboardingWizard onActivated={onOnboarded} />}
 
         <p className="ns-hint" data-hidden="" aria-hidden>Touch the compass</p>
         <p className={`ns-welcome${welcomeShow ? ' show' : ''}`} aria-hidden>{welcomeText}</p>
