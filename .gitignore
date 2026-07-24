@@ -47,3 +47,4 @@ next-env.d.ts
 /test-results
 /playwright-report
 apps/reloop/package-lock.json
+apps/north-star-hq/package-lock.json
