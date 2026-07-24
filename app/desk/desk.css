@@ -370,6 +370,22 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-missions-list li[data-stage='failed'] .ns-missions-dot, .ns-missions-list li[data-stage='retry'] .ns-missions-dot { background: #e08a7a; }
 .ns-missions-list li[data-stage='failed'] .ns-missions-stage, .ns-missions-list li[data-stage='retry'] .ns-missions-stage { color: #e08a7a; }
 
+/* Mission Operations (Milestone 4) — "where is my work right now?" A single
+   mission's real phase-by-phase history, not a pipeline diagram. */
+.ns-ops-outcome { font-size: clamp(0.42rem,0.56vw,0.5rem); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; color: rgba(226,214,188,0.55); vertical-align: middle; }
+.ns-ops-outcome[data-outcome='completed'] { color: #9ed6a0; }
+.ns-ops-outcome[data-outcome='canceled'] { color: #e08a7a; }
+.ns-ops-outcome[data-outcome='retrying'] { color: #e0b27a; }
+.ns-ops-flow { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; align-items: center; gap: 0; }
+.ns-ops-flow li { flex: 1; display: flex; align-items: center; position: relative; }
+.ns-ops-flow li::after { content: ''; flex: 1; height: 1px; background: rgba(210,170,102,0.22); }
+.ns-ops-flow li:last-child::after { display: none; }
+.ns-ops-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; background: rgba(226,214,188,0.25); border: 1px solid rgba(210,170,102,0.3); }
+.ns-ops-flow li[data-status='done'] .ns-ops-dot { background: #9ed6a0; border-color: #9ed6a0; }
+.ns-ops-flow li[data-status='done']::after { background: #9ed6a0; opacity: 0.4; }
+.ns-ops-flow li[data-status='current'] .ns-ops-dot { background: #ecc276; border-color: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-ops-current { margin: 0.5rem 0 0; font-size: clamp(0.6rem,0.78vw,0.72rem); letter-spacing: 0.02em; color: #ecc276; }
+
 /* Command Bar overlay (Milestone 3) — a keyboard-first control surface, not
    a persistent shell element. Opened by "/" or the "command" principle;
    closes on Esc. Additive only — no frozen room/compass selector touched. */

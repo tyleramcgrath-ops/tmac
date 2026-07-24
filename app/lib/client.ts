@@ -493,6 +493,12 @@ export const api = {
   // truth for work: every recommendation's real lifecycle. ──
   getMissionQueue: (projectId: string) => req<{ queue: MissionQueueDTO }>(`/api/projects/${projectId}/missions`),
 
+  // ── Mission Operations (Headquarters, Milestone 4) — "where is my work
+  // right now?" A projection of the same Mission, timestamped by the
+  // Activity Stream's real events. Not a diagram of its own truth. ──
+  getMissionOperations: (projectId: string, missionId: string) =>
+    req<{ operations: MissionOperationsDTO }>(`/api/projects/${projectId}/missions/${missionId}/operations`),
+
   // ── Command Bar (Headquarters, Milestone 3) — a registered, enumerable
   // set of actions, not a chatbot. `confirmed` must be sent as a second,
   // separate call for Level 2/3 actions — never combined with the plan. ──
@@ -802,6 +808,27 @@ export interface MissionQueueDTO {
   missions: MissionDTO[]
   currentMission: MissionDTO | null
   summary: MissionQueueSummaryDTO
+}
+
+// ── Mission Operations (Headquarters, Milestone 4) ──────────────────────────
+export type MissionPhase = 'discovery' | 'analysis' | 'planning' | 'approval' | 'deployment' | 'verification' | 'complete'
+export type MissionOutcome = 'in-progress' | 'completed' | 'canceled' | 'retrying'
+export interface MissionPhaseStepDTO {
+  phase: MissionPhase
+  status: 'done' | 'current' | 'pending'
+  owner: AgentId | null
+  enteredAt: string | null
+  elapsedMs: number | null
+}
+export interface MissionOperationsDTO {
+  missionId: string
+  title: string
+  outcome: MissionOutcome
+  currentPhase: MissionPhase
+  confidence: number
+  blockingReason: string | null
+  nextAction: string
+  steps: MissionPhaseStepDTO[]
 }
 
 // ── Command Bar (Headquarters, Milestone 3) ─────────────────────────────────

@@ -11,8 +11,9 @@ import OpportunitiesPanel from './opportunities/OpportunitiesPanel'
 import ApprovalsPanel from './approvals/ApprovalsPanel'
 import AgentRosterPanel from './agents/AgentRosterPanel'
 import MissionQueuePanel from './missions/MissionQueuePanel'
+import MissionOperationsPanel from './operations/MissionOperationsPanel'
 
-const DELAYS = ['0ms', '130ms', '260ms', '390ms', '520ms']
+const DELAYS = ['0ms', '130ms', '260ms', '390ms', '520ms', '650ms']
 
 export default function PanelHost({
   projectId,
@@ -58,6 +59,9 @@ export default function PanelHost({
       </article>
       <article className="ns-panel" style={{ transitionDelay: DELAYS[4] }}>
         <MissionQueuePanel projectId={projectId} projectsResolved={projectsResolved} panelsUp={panelsUp} />
+      </article>
+      <article className="ns-panel" style={{ transitionDelay: DELAYS[5] }}>
+        <MissionOperationsPanel projectId={projectId} projectsResolved={projectsResolved} panelsUp={panelsUp} />
       </article>
     </>
   )
