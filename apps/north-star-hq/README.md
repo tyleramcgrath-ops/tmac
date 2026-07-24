@@ -27,10 +27,13 @@ data**, not live integrations:
 - Google Search Console / Analytics ("Live Trends") are never connected in
   this app, so those panels always show their honest "not connected" state
   rather than fabricated numbers.
-- Storage is a local JSON file store (`.data/foundation/`, gitignored) — see
-  `lib/foundation/store.ts`. On a serverless platform (e.g. Vercel) this
-  directory is not guaranteed to persist across instances/cold starts; each
-  instance re-starts from an empty store, and a fresh signup reseeds it.
+- Storage is a local JSON file store — see `lib/foundation/store.ts`.
+  Defaults to a directory under the OS temp dir (serverless platforms like
+  Vercel Functions ship a read-only filesystem outside of `/tmp`, so a
+  repo-relative path would fail there). This is not guaranteed to persist
+  across instances/cold starts; each instance re-starts from an empty store,
+  and a fresh signup reseeds it. Override with `FOUNDATION_DATA_DIR` to pin a
+  specific location (e.g. a repo-relative path for easier local inspection).
 
 ## Getting started
 

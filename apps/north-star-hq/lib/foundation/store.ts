@@ -1,11 +1,16 @@
-// Persistent store for the foundation layer.
+// Persistent store for the foundation layer — always the seeded, file-backed
+// FoundationStore (see env.ts / seed.ts). No Postgres path here.
 //
-// Postgres (`pg`) when DATABASE_URL/POSTGRES_URL is set — the production
-// path. Otherwise a durable JSON file store under .data/ (same pattern the
-// seo-intel app ships with): real server-side persistence with no external
-// service, suitable for a single-node deployment and for tests. localStorage
-// is never the source of truth for any entity defined here.
+// Defaults to a directory under the OS temp dir, not a repo-relative path:
+// serverless platforms (Vercel Functions included) ship a read-only
+// filesystem outside of /tmp, so `.data/foundation` would throw on every
+// write there. os.tmpdir() is writable both locally and on Vercel, at the
+// cost of being ephemeral per-instance on Vercel — an accepted tradeoff for
+// seeded demo data (see store.ts's getStore() comment and the README).
+// Override with FOUNDATION_DATA_DIR to pin a specific location.
 
+import { tmpdir } from 'os'
+import { join } from 'path'
 import type {
   ActivityEvent,
   ActivityEventType,
@@ -151,7 +156,7 @@ let cached: FoundationStore | null = null
 export async function getStore(): Promise<FoundationStore> {
   if (cached) return cached
   const { FileFoundationStore } = await import('./filestore')
-  cached = new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || '.data/foundation')
+  cached = new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || join(tmpdir(), 'north-star-hq-foundation'))
   return cached
 }
 
