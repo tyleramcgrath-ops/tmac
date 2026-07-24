@@ -233,7 +233,24 @@ function buildOperator(project: Project, missionQueue: MissionQueueSnapshot, now
       lastCompletedAction: null,
     }
   }
-  const waiting = mine.filter((m) => m.stage === 'waiting-for-approval' || m.stage === 'approved')
+  // Distinct from the awaiting-approval case below: an 'approved' mission is
+  // no longer waiting on the USER — it's queued for Operator to deploy. That
+  // is real, actionable work, not idle waiting, so it reads as 'active'
+  // rather than reusing the "awaiting your approval" message (which would be
+  // false the moment someone approves it).
+  const readyToDeploy = mine.filter((m) => m.stage === 'approved')
+  if (readyToDeploy.length > 0) {
+    return {
+      ...base,
+      status: 'active',
+      currentActivity: `${readyToDeploy.length} mission${readyToDeploy.length === 1 ? '' : 's'} approved — ready to deploy.`,
+      progress: null,
+      evidenceAt: readyToDeploy[0].updatedAt,
+      blockingReason: null,
+      lastCompletedAction: null,
+    }
+  }
+  const waiting = mine.filter((m) => m.stage === 'waiting-for-approval')
   if (waiting.length > 0) {
     return {
       ...base,

@@ -493,6 +493,15 @@ export const api = {
   // truth for work: every recommendation's real lifecycle. ──
   getMissionQueue: (projectId: string) => req<{ queue: MissionQueueDTO }>(`/api/projects/${projectId}/missions`),
 
+  // ── Command Bar (Headquarters, Milestone 3) — a registered, enumerable
+  // set of actions, not a chatbot. `confirmed` must be sent as a second,
+  // separate call for Level 2/3 actions — never combined with the plan. ──
+  runCommand: (projectId: string, commandReq: CommandRequestDTO) =>
+    req<{ result: CommandResultDTO }>(`/api/projects/${projectId}/commands`, {
+      method: 'POST',
+      body: JSON.stringify(commandReq),
+    }),
+
   // ── Rank tracking history ──
   listTrackedKeywords: (projectId: string) =>
     req<{ keywords: TrackedKeywordDTO[] }>(`/api/projects/${projectId}/rankings/keywords`),
@@ -781,6 +790,41 @@ export interface MissionQueueDTO {
   missions: MissionDTO[]
   currentMission: MissionDTO | null
   summary: MissionQueueSummaryDTO
+}
+
+// ── Command Bar (Headquarters, Milestone 3) ─────────────────────────────────
+export type CommandActionType =
+  | 'summarize-project' | 'list-approvals' | 'list-active-missions' | 'list-blocked-missions'
+  | 'list-completed-today' | 'explain-mission' | 'scout-findings' | 'atlas-recommendation'
+  | 'list-deployments' | 'list-failed' | 'mission-detail' | 'next-best-action'
+  | 'preview-change' | 'verify-deployment'
+  | 'prioritize-mission' | 'pause-mission' | 'resume-mission' | 'focus-mission'
+  | 'approve-mission' | 'deploy-mission' | 'retry-mission' | 'cancel-mission' | 'rollback-deployment'
+export type CommandRiskLevel = 'read-only' | 'reversible' | 'consequential'
+export type CommandExecutionStatus =
+  | 'pending-confirmation' | 'executed' | 'rejected-permission' | 'rejected-unsupported' | 'rejected-invalid' | 'failed'
+export interface CommandRequestDTO {
+  commandId: string
+  raw: string
+  missionId?: string | null
+  confirmed?: boolean
+  params?: Record<string, unknown>
+}
+export interface CommandResultDTO {
+  commandId: string
+  raw: string
+  intent: CommandActionType | 'unsupported'
+  riskLevel: CommandRiskLevel | null
+  projectId: string
+  missionId: string | null
+  targetResource: string | null
+  requestedParams: Record<string, unknown>
+  permission: 'allowed' | 'denied'
+  confirmationRequired: boolean
+  status: CommandExecutionStatus
+  message: string
+  evidence: unknown
+  auditedAt: string | null
 }
 
 export interface DiffSeg {

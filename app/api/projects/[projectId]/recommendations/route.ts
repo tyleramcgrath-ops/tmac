@@ -1,6 +1,7 @@
 import { audit, enforceRateLimit, handled, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { coordinateProject } from '@/lib/foundation/agents/service'
+import { RECOMMENDATION_TRANSITIONS } from '@/lib/foundation/reco/transitions'
 import type { RecommendationStatus } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
@@ -24,20 +25,6 @@ export const GET = handled(async (request, { params }) => {
   const ordered = [...coordinated].sort((a, b) => rank(a) - rank(b))
   return Response.json({ recommendations: ordered, agents: reports, memory, metrics })
 })
-
-// User-driven transitions. 'deployed'/'verified'/'rolled_back' are set by the
-// WordPress execution flow, not by this endpoint, so they are terminal here.
-const VALID_TRANSITIONS: Record<RecommendationStatus, RecommendationStatus[]> = {
-  open: ['accepted', 'modified', 'rejected', 'dismissed'],
-  accepted: ['open', 'modified', 'rejected', 'dismissed'],
-  modified: ['accepted', 'open', 'rejected', 'dismissed'],
-  rejected: ['open'],
-  dismissed: ['open'],
-  deployed: ['verified', 'rolled_back'],
-  verified: ['rolled_back'],
-  rolled_back: ['open'],
-  regressed: ['accepted', 'modified', 'rejected', 'dismissed'],
-}
 
 export const PATCH = handled(async (request, { params }) => {
   enforceRateLimit(request, 'recs-write', 120)
@@ -71,7 +58,7 @@ export const PATCH = handled(async (request, { params }) => {
 
   if (hasStatus) {
     const to = body.status as RecommendationStatus
-    if (!VALID_TRANSITIONS[rec.status]?.includes(to)) {
+    if (!RECOMMENDATION_TRANSITIONS[rec.status]?.includes(to)) {
       return Response.json({ error: `Cannot move a ${rec.status} recommendation to ${to}.` }, { status: 400 })
     }
     // History is append-only — the full decision trail is preserved (A8).

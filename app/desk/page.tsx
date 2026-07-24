@@ -6,6 +6,7 @@ import { initCompass, type CompassApi, type CompassState, type TimeMode } from '
 import { AuthProvider, useAuth } from '../lib/auth-context'
 import { useDeskContext } from './_lib/use-desk-context'
 import PanelHost from './panels/PanelHost'
+import CommandBarOverlay from './panels/command/CommandBarOverlay'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -57,7 +58,7 @@ function DeskGate({ children }: { children: React.ReactNode }) {
 
 function DeskRoom() {
   const { user } = useAuth()
-  const { projectId, loading: projectsLoading } = useDeskContext(true)
+  const { project, projectId, loading: projectsLoading } = useDeskContext(true)
 
   const roomRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -69,6 +70,7 @@ function DeskRoom() {
   const [compassState, setCompassState] = useState<CompassState>('asleep')
   const [awake, setAwake] = useState(false)
   const [panelsUp, setPanelsUp] = useState(false)
+  const [commandBarOpen, setCommandBarOpen] = useState(false)
   const [cinema, setCinema] = useState(false)
   const [dev, setDev] = useState(false)
   const [clock, setClock] = useState<string | null>(null)
@@ -228,11 +230,21 @@ function DeskRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Esc dismisses the briefing once it's been called
+  // Esc dismisses the briefing once it's been called; "/" opens the Command
+  // Bar (keyboard-first, per the Milestone 3 spec). All single-letter/slash
+  // shortcuts are ignored while an actual text input has focus (e.g. typing
+  // "needs" into the Command Bar contains a "d" — without this guard it would
+  // bubble up and toggle the dev panel mid-sentence).
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName
+      const typing = tag === 'INPUT' || tag === 'TEXTAREA'
       if (e.key === 'Escape' && phaseRef.current === 'awake' && panelsUpRef.current) callPanels(false)
-      if (e.key === 'd' || e.key === 'D') setDev((d) => !d)
+      if (!typing && (e.key === 'd' || e.key === 'D')) setDev((d) => !d)
+      if (!typing && e.key === '/' && phaseRef.current === 'awake') {
+        e.preventDefault()
+        setCommandBarOpen(true)
+      }
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
@@ -255,10 +267,12 @@ function DeskRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // principles: heart/command call the briefing; interface shows the thinking arc
+  // principles: heart calls the briefing; command opens the Command Bar;
+  // interface shows the thinking arc
   const onPrinciple = (k: 'heart' | 'command' | 'interface') => {
     if (phaseRef.current !== 'awake') return
-    if (k !== 'interface') { callPanels(!panelsUpRef.current); api.current?.flare() }
+    if (k === 'heart') { callPanels(!panelsUpRef.current); api.current?.flare() }
+    else if (k === 'command') { setCommandBarOpen((v) => !v); api.current?.flare() }
     else {
       C('thinking')
       window.setTimeout(() => C('planning'), 1600)
@@ -384,6 +398,14 @@ function DeskRoom() {
           <button type="button" onClick={() => onPrinciple('command')}>The horizon is the <b>command</b>.</button>
           <button type="button" onClick={() => onPrinciple('interface')}>The stars are the <b>interface</b>.</button>
         </nav>
+
+        <CommandBarOverlay
+          open={commandBarOpen}
+          onClose={() => setCommandBarOpen(false)}
+          projectId={projectId}
+          projectName={project?.name ?? null}
+          onCompassState={C}
+        />
       </main>
 
       <div className="ns-dev" aria-hidden={!dev}>
