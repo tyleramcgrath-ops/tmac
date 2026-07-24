@@ -6,6 +6,8 @@ import { AuthProvider, useAuth } from './lib/auth-context'
 import { useDeskContext } from './_lib/use-desk-context'
 import PanelHost from './panels/PanelHost'
 import OnboardingWizard from './onboarding-wizard'
+import LiveMonitor from './live-monitor'
+import { VoiceProvider, useVoice } from './_lib/use-voice'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -35,9 +37,11 @@ function greeting(name: string) {
 export default function NorthStar() {
   return (
     <AuthProvider>
-      <DeskGate>
-        <DeskRoom />
-      </DeskGate>
+      <VoiceProvider>
+        <DeskGate>
+          <DeskRoom />
+        </DeskGate>
+      </VoiceProvider>
     </AuthProvider>
   )
 }
@@ -77,6 +81,7 @@ function DeskRoom() {
   const [aware, setAware] = useState(false)
   const [welcomeText, setWelcomeText] = useState('')
   const [welcomeShow, setWelcomeShow] = useState(false)
+  const voice = useVoice()
 
   // refs mirror state for the once-attached document listeners (avoid stale closures)
   const phaseRef = useRef<Phase>('asleep')
@@ -121,7 +126,9 @@ function DeskRoom() {
   }
 
   const showWelcome = () => {
-    setWelcomeText(greeting(userNameRef.current)); setWelcomeShow(true)
+    const g = greeting(userNameRef.current)
+    setWelcomeText(g); setWelcomeShow(true)
+    voice.speak(g)
     WT(3800, () => setWelcomeShow(false))
   }
 
@@ -383,6 +390,7 @@ function DeskRoom() {
         <div className="ns-status">
           <span className="ns-status-time">{clock ?? '--:--'}</span>
           <span className="ns-status-line"><span className="ns-status-dot" aria-hidden />{statusLine}</span>
+          <LiveMonitor projectId={projectId} enabled={phase === 'awake'} />
         </div>
 
         <header className="ns-brand">
@@ -395,9 +403,16 @@ function DeskRoom() {
               <button key={t} type="button" data-t={t} aria-pressed={timeMode === t} onClick={() => setTime(t)}>{TIME_WORD[t]}</button>
             ))}
           </div>
-          <button type="button" className="ns-cinema" aria-pressed={cinema} onClick={() => setCinema((v) => !v)}>
-            {cinema ? 'Exit cinema' : 'Cinema'}
-          </button>
+          <div className="ns-controls-row">
+            <button type="button" className="ns-cinema" aria-pressed={cinema} onClick={() => setCinema((v) => !v)}>
+              {cinema ? 'Exit cinema' : 'Cinema'}
+            </button>
+            {voice.supported && (
+              <button type="button" className="ns-voice" aria-pressed={voice.enabled} onClick={() => voice.setEnabled(!voice.enabled)}>
+                {voice.enabled ? 'Voice on' : 'Voice off'}
+              </button>
+            )}
+          </div>
         </div>
 
         <PanelHost

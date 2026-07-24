@@ -190,15 +190,15 @@ html[data-dev] .ns-dev { display: flex; }
   z-index: 9; display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem;
   animation: ns-in 2.2s cubic-bezier(0.22,0.8,0.24,1) both 1.2s;
 }
-.ns-timectl { display: flex; gap: clamp(0.6rem,1vw,1.1rem); }
-.ns-timectl button, .ns-cinema {
+.ns-timectl, .ns-controls-row { display: flex; gap: clamp(0.6rem,1vw,1.1rem); }
+.ns-timectl button, .ns-cinema, .ns-voice {
   margin: 0; padding: 0.25rem 0.1rem; border: 0; border-bottom: 1px solid transparent; background: none; cursor: pointer;
   font-family: var(--serif); font-size: clamp(0.44rem,0.66vw,0.56rem); letter-spacing: 0.3em; text-transform: uppercase;
   color: rgba(216,198,164,0.5); text-shadow: 0 1px 8px rgba(0,0,0,0.9); transition: color 0.4s ease, border-color 0.4s ease;
 }
-.ns-timectl button:hover, .ns-cinema:hover { color: rgba(240,216,158,0.9); }
-.ns-timectl button[aria-pressed='true'] { color: #eed09a; border-bottom-color: rgba(232,182,104,0.7); }
-.ns-timectl button:focus-visible, .ns-cinema:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
+.ns-timectl button:hover, .ns-cinema:hover, .ns-voice:hover { color: rgba(240,216,158,0.9); }
+.ns-timectl button[aria-pressed='true'], .ns-voice[aria-pressed='true'] { color: #eed09a; border-bottom-color: rgba(232,182,104,0.7); }
+.ns-timectl button:focus-visible, .ns-cinema:focus-visible, .ns-voice:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
 
 /* ============================================================
    The interface — a rail (left), two glanceable cards (right),
@@ -633,3 +633,36 @@ html[data-dev] .ns-dev { display: flex; }
 @media (max-width: 560px) {
   .ns-onboard-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* =====================================================================
+   INTEGRATIONS PANEL — Connect Google (real OAuth, see IntegrationsPanel)
+   ===================================================================== */
+.ns-integ-btn {
+  flex: none; padding: 0.32rem 0.7rem; border: 1px solid rgba(210,170,102,0.32); border-radius: 5px;
+  background: rgba(255,255,255,0.02); color: rgba(226,214,188,0.8);
+  font-family: var(--serif); font-size: clamp(0.48rem,0.62vw,0.52rem); letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.25s ease, border-color 0.25s ease;
+}
+.ns-integ-btn:hover:not(:disabled) { border-color: rgba(238,206,140,0.55); color: #f0e2bc; }
+.ns-integ-btn:disabled { opacity: 0.5; cursor: default; }
+.ns-integ-notice {
+  margin: 0.7rem 0 0; padding: 0.55rem 0.75rem; border-radius: 6px; border: 1px solid rgba(158,214,160,0.3);
+  background: rgba(158,214,160,0.08); font-size: clamp(0.62rem,0.8vw,0.7rem); line-height: 1.5; color: rgba(200,232,200,0.9);
+}
+.ns-integ-notice.err { border-color: rgba(224,138,127,0.4); background: rgba(224,138,127,0.08); color: rgba(240,200,192,0.92); }
+
+/* =====================================================================
+   LIVE MONITOR — real ambient "watching your site" indicator (see
+   live-monitor.tsx). Polls the real Activity Stream; never decorative.
+   ===================================================================== */
+.ns-livemon {
+  margin: 0.15rem 0 0; font-size: clamp(0.42rem,0.6vw,0.5rem); letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(226,208,172,0.4);
+}
+.ns-livemon-dot {
+  display: inline-block; width: 5px; height: 5px; margin-right: 0.6em; border-radius: 50%; vertical-align: middle;
+  background: #9ed6a0; box-shadow: 0 0 5px rgba(158,214,160,0.7);
+  animation: ns-livemon-breathe 2.6s ease-in-out infinite;
+}
+.ns-livemon[data-pulse] .ns-livemon-dot { animation-duration: 0.7s; }
+@keyframes ns-livemon-breathe { 0%, 100% { opacity: 0.45; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }

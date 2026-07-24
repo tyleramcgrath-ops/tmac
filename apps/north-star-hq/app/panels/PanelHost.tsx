@@ -21,6 +21,7 @@ import ApprovalsPanel from './approvals/ApprovalsPanel'
 import MissionQueuePanel from './missions/MissionQueuePanel'
 import MissionOperationsPanel from './operations/MissionOperationsPanel'
 import HistoryPanel from './history/HistoryPanel'
+import IntegrationsPanel from './integrations/IntegrationsPanel'
 
 type DrawerId = Exclude<RailDestination, 'search'>
 
@@ -29,6 +30,7 @@ const DRAWER_LABEL: Record<DrawerId, string> = {
   approvals: 'Approvals',
   missions: 'Missions',
   history: 'History',
+  integrations: 'Integrations',
 }
 
 export default function PanelHost({
@@ -101,6 +103,9 @@ export default function PanelHost({
       </Drawer>
       <Drawer open={drawer === 'history'} label={DRAWER_LABEL.history} onClose={() => setDrawer(null)}>
         <HistoryPanel projectId={projectId} enabled={panelsUp && drawer === 'history'} />
+      </Drawer>
+      <Drawer open={drawer === 'integrations'} label={DRAWER_LABEL.integrations} onClose={() => setDrawer(null)}>
+        <IntegrationsPanel projectId={projectId} />
       </Drawer>
     </div>
   )

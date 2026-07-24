@@ -10,6 +10,7 @@
 import { useEffect, useState } from 'react'
 import { api, ApiError, type ExecutiveBriefDTO, type GoogleTrendsDTO } from '../../lib/client'
 import type { CompassState } from '../../compass'
+import { useVoice } from '../../_lib/use-voice'
 
 // Smooth quadratic-curve sparkline through real GSC click points — mirrors
 // the curve-building approach used by the room's own SVG elements, just fed
@@ -46,6 +47,7 @@ export default function BriefingPanel({
   const [trends, setTrends] = useState<GoogleTrendsDTO | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const voice = useVoice()
 
   useEffect(() => {
     if (!projectId) {
@@ -78,6 +80,7 @@ export default function BriefingPanel({
           setBrief(briefRes.brief)
           setTrends(trend)
           onCompassState?.('success')
+          voice.speak(briefRes.brief.executiveSummary)
         } catch (err) {
           if (!cancelled) {
             setError(err instanceof ApiError ? err.message : 'Could not load the morning briefing.')
