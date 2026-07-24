@@ -1,19 +1,35 @@
 'use client'
 
-// Renders the always-on-view panel group inside the existing `.ns-panel`
-// wrapper contract (className, `.up` gating via the parent's class, staggered
-// `transitionDelay`) — the CSS transition contract in desk.css is untouched;
-// only the panels' content is now data-driven instead of hardcoded.
+// The HUD — the summoned interface layer that sits around the Compass
+// instead of covering it: a left wayfinding rail, two always-visible glass
+// cards on the right (Agent Status, Morning Brief), a bottom Mission strip
+// and command console, and rail-triggered drawers for the deeper views
+// (Opportunities, Approvals, Missions, History). Every region keeps the
+// same `.ns-hud`/`.up` visibility contract the old `.ns-panels` section
+// used — only what's inside it changed.
 
+import { useState } from 'react'
 import type { CompassState } from '../compass'
-import BriefingPanel from './briefing/BriefingPanel'
+import CommandRail, { type RailDestination } from './rail/CommandRail'
+import AgentStatusCard from './cards/AgentStatusCard'
+import MorningBriefCard from './cards/MorningBriefCard'
+import MissionStrip from './strip/MissionStrip'
+import CommandConsole from './console/CommandConsole'
+import Drawer from './drawer/Drawer'
 import OpportunitiesPanel from './opportunities/OpportunitiesPanel'
 import ApprovalsPanel from './approvals/ApprovalsPanel'
-import AgentRosterPanel from './agents/AgentRosterPanel'
 import MissionQueuePanel from './missions/MissionQueuePanel'
 import MissionOperationsPanel from './operations/MissionOperationsPanel'
+import HistoryPanel from './history/HistoryPanel'
 
-const DELAYS = ['0ms', '130ms', '260ms', '390ms', '520ms', '650ms']
+type DrawerId = Exclude<RailDestination, 'search'>
+
+const DRAWER_LABEL: Record<DrawerId, string> = {
+  opportunities: 'Opportunities',
+  approvals: 'Approvals',
+  missions: 'Missions',
+  history: 'History',
+}
 
 export default function PanelHost({
   projectId,
@@ -21,48 +37,71 @@ export default function PanelHost({
   panelsUp,
   onCompassState,
   onAgentSignal,
+  consoleInputRef,
 }: {
   projectId: string | null
-  // true once the flagship-project lookup has finished — lets panels tell
-  // "still resolving which project" apart from "resolved to no project"
-  // (both look like `projectId === null`) instead of skeleton-pulsing forever.
   projectsResolved: boolean
   panelsUp: boolean
   onCompassState: (s: CompassState) => void
   // ambient signal derived from real roster deltas — distinct from
-  // onCompassState, which the approve flow calls directly and authoritatively.
+  // onCompassState, which approve/command flows call directly and authoritatively.
   onAgentSignal: (s: CompassState | null) => void
+  consoleInputRef: React.RefObject<HTMLInputElement | null>
 }) {
+  const [drawer, setDrawer] = useState<DrawerId | null>(null)
+
+  function handleOpen(id: RailDestination) {
+    if (id === 'search') {
+      consoleInputRef.current?.focus()
+      return
+    }
+    setDrawer((d) => (d === id ? null : id))
+  }
+
   return (
-    <>
-      <article className="ns-panel" style={{ transitionDelay: DELAYS[0] }}>
-        <BriefingPanel projectId={projectId} projectsResolved={projectsResolved} onCompassState={onCompassState} />
-      </article>
-      <article className="ns-panel" style={{ transitionDelay: DELAYS[1] }}>
+    <div className={`ns-hud${panelsUp ? ' up' : ''}`} aria-hidden={!panelsUp} aria-label="Command interface">
+      <CommandRail projectId={projectId} panelsUp={panelsUp} active={drawer} onOpen={handleOpen} />
+
+      <div className="ns-cards">
+        <AgentStatusCard
+          projectId={projectId}
+          projectsResolved={projectsResolved}
+          panelsUp={panelsUp}
+          onAgentSignal={onAgentSignal}
+        />
+        <MorningBriefCard projectId={projectId} projectsResolved={projectsResolved} onCompassState={onCompassState} />
+      </div>
+
+      <MissionStrip projectId={projectId} panelsUp={panelsUp} />
+      <CommandConsole projectId={projectId} panelsUp={panelsUp} onCompassState={onCompassState} inputRef={consoleInputRef} />
+
+      <Drawer open={drawer === 'opportunities'} label={DRAWER_LABEL.opportunities} onClose={() => setDrawer(null)}>
         <OpportunitiesPanel projectId={projectId} projectsResolved={projectsResolved} />
-      </article>
-      <article className="ns-panel" style={{ transitionDelay: DELAYS[2] }}>
+      </Drawer>
+      <Drawer open={drawer === 'approvals'} label={DRAWER_LABEL.approvals} onClose={() => setDrawer(null)}>
         <ApprovalsPanel
           projectId={projectId}
           projectsResolved={projectsResolved}
-          panelsUp={panelsUp}
+          panelsUp={panelsUp && drawer === 'approvals'}
           onCompassState={onCompassState}
         />
-      </article>
-      <article className="ns-panel" style={{ transitionDelay: DELAYS[3] }}>
-        <AgentRosterPanel
+      </Drawer>
+      <Drawer open={drawer === 'missions'} label={DRAWER_LABEL.missions} onClose={() => setDrawer(null)}>
+        <MissionQueuePanel
           projectId={projectId}
           projectsResolved={projectsResolved}
-          panelsUp={panelsUp}
-          onCompassSignal={onAgentSignal}
+          panelsUp={panelsUp && drawer === 'missions'}
         />
-      </article>
-      <article className="ns-panel" style={{ transitionDelay: DELAYS[4] }}>
-        <MissionQueuePanel projectId={projectId} projectsResolved={projectsResolved} panelsUp={panelsUp} />
-      </article>
-      <article className="ns-panel" style={{ transitionDelay: DELAYS[5] }}>
-        <MissionOperationsPanel projectId={projectId} projectsResolved={projectsResolved} panelsUp={panelsUp} />
-      </article>
-    </>
+        <hr className="ns-panel-divider" />
+        <MissionOperationsPanel
+          projectId={projectId}
+          projectsResolved={projectsResolved}
+          panelsUp={panelsUp && drawer === 'missions'}
+        />
+      </Drawer>
+      <Drawer open={drawer === 'history'} label={DRAWER_LABEL.history} onClose={() => setDrawer(null)}>
+        <HistoryPanel projectId={projectId} enabled={panelsUp && drawer === 'history'} />
+      </Drawer>
+    </div>
   )
 }

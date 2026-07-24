@@ -112,10 +112,12 @@ export default function MissionOperationsPanel({
 
   return (
     <>
-      <p className="ns-panel-eyebrow">Mission operations</p>
-      <h2>
-        &ldquo;{operations.title}&rdquo; <span className="ns-ops-outcome" data-outcome={operations.outcome}>{OUTCOME_LABEL[operations.outcome]}</span>
-      </h2>
+      <div className="ns-panel-head">
+        <p className="ns-panel-eyebrow">Mission operations</p>
+        <p className="ns-panel-status" data-outcome={operations.outcome}>{OUTCOME_LABEL[operations.outcome]}</p>
+      </div>
+      <h2>&ldquo;{operations.title}&rdquo;</h2>
+      <hr className="ns-panel-divider" />
       <ol className="ns-ops-flow" aria-label="Mission phase progress">
         {operations.steps.map((step) => (
           <li key={step.phase} data-status={step.status} title={PHASE_LABEL[step.phase]}>

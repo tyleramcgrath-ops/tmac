@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import { api, ApiError, type AgentRosterDTO } from '../../../lib/client'
+import { Telescope, Map, Hammer, Rocket, ShieldCheck } from 'lucide-react'
+import { api, ApiError, type AgentId, type AgentRosterDTO } from '../../../lib/client'
 import { useLivePoll } from '../../_lib/use-live-poll'
 import { deriveCompassSignal } from '../../_lib/agent-signal'
 import type { CompassState } from '../../compass'
@@ -14,6 +15,14 @@ const STATUS_LABEL: Record<string, string> = {
   failed: 'Attention',
   verifying: 'Verifying',
   completed: 'Done',
+}
+
+const AGENT_ICON: Record<AgentId, typeof Telescope> = {
+  scout: Telescope,
+  atlas: Map,
+  forge: Hammer,
+  operator: Rocket,
+  sentinel: ShieldCheck,
 }
 
 const POLL_MS = 15_000
@@ -77,7 +86,10 @@ export default function AgentRosterPanel({
 
   return (
     <>
-      <p className="ns-panel-eyebrow">Agent roster</p>
+      <div className="ns-panel-head">
+        <p className="ns-panel-eyebrow">Agent roster</p>
+        <p className="ns-panel-status">{needsAttention ? 'Attention' : 'Watching'}</p>
+      </div>
       <h2>
         {needsAttention
           ? 'One agent needs your attention.'
@@ -85,17 +97,23 @@ export default function AgentRosterPanel({
             ? `${activeCount} agent${activeCount > 1 ? 's' : ''} at work.`
             : 'The room is quiet.'}
       </h2>
-      <ul className="ns-agents">
-        {agents.map((a) => (
-          <li key={a.agentId} data-status={a.status}>
-            <span className="ns-agents-dot" aria-hidden />
-            <span className="ns-agents-name">{a.name}</span>
-            <span className="ns-agents-activity">
-              {a.currentActivity ?? a.lastCompletedAction ?? a.blockingReason ?? 'Nothing yet.'}
-            </span>
-            <b className="ns-agents-status">{STATUS_LABEL[a.status] ?? a.status}</b>
-          </li>
-        ))}
+      <hr className="ns-panel-divider" />
+      <ul className="ns-row-list">
+        {agents.map((a) => {
+          const Icon = AGENT_ICON[a.agentId]
+          return (
+            <li key={a.agentId} className="ns-row" data-status={a.status}>
+              <Icon className="ns-row-icon" strokeWidth={1.5} aria-hidden />
+              <span className="ns-row-text">
+                <b className="ns-row-title">{a.name}</b>
+                <span className="ns-row-desc">
+                  {a.currentActivity ?? a.lastCompletedAction ?? a.blockingReason ?? 'Nothing yet.'}
+                </span>
+              </span>
+              <span className="ns-row-dot" aria-hidden title={STATUS_LABEL[a.status] ?? a.status} />
+            </li>
+          )
+        })}
       </ul>
     </>
   )
