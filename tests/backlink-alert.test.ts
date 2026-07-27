@@ -10,7 +10,14 @@ import { tmpdir } from 'os'
 import path from 'path'
 import { randomUUID } from 'crypto'
 import { FileFoundationStore } from '../lib/foundation/filestore'
-import { buildBacklinkDropEmail, detectBacklinkDrop, notifyBacklinkDrop } from '../lib/foundation/scheduler/backlink-alert'
+import {
+  buildBacklinkDropEmail,
+  buildTrustFlowDropEmail,
+  detectBacklinkDrop,
+  detectTrustFlowDrop,
+  notifyBacklinkDrop,
+  notifyTrustFlowDrop,
+} from '../lib/foundation/scheduler/backlink-alert'
 import type { BacklinkSnapshot, Organization, Project, User } from '../lib/foundation/types'
 
 process.env.APP_SECRET = 'backlink-alert-secret-01'
@@ -84,6 +91,76 @@ describe('notifyBacklinkDrop: emails real org owners, never fabricates recipient
   it('sends nothing when the project org has no owner recipient available', async () => {
     const project = { id: 'p1', orgId: 'no-such-org', domain: 'acme.com', name: 'Acme' } as Project
     const results = await notifyBacklinkDrop(store, project, { from: 120, to: 100, lost: 20 })
+    expect(results).toEqual([])
+  })
+})
+
+function tfSnap(over: Partial<BacklinkSnapshot>): Pick<BacklinkSnapshot, 'available' | 'trustFlow'> {
+  return { available: true, trustFlow: 40, ...over }
+}
+
+describe('detectTrustFlowDrop: real deltas only, never noise', () => {
+  it('flags a meaningful drop in Trust Flow (>= minDrop)', () => {
+    const drop = detectTrustFlowDrop(tfSnap({ trustFlow: 45 }), tfSnap({ trustFlow: 35 }))
+    expect(drop).toEqual({ from: 45, to: 35, lost: 10 })
+  })
+  it('does not flag ordinary noise under the threshold', () => {
+    const drop = detectTrustFlowDrop(tfSnap({ trustFlow: 41 }), tfSnap({ trustFlow: 40 }))
+    expect(drop).toBeNull()
+  })
+  it('does not flag an increase', () => {
+    const drop = detectTrustFlowDrop(tfSnap({ trustFlow: 30 }), tfSnap({ trustFlow: 45 }))
+    expect(drop).toBeNull()
+  })
+  it('never flags when there is no prior snapshot to compare against', () => {
+    expect(detectTrustFlowDrop(null, tfSnap({ trustFlow: 30 }))).toBeNull()
+  })
+  it('never flags against a prior snapshot with no provider configured', () => {
+    const drop = detectTrustFlowDrop(tfSnap({ available: false, trustFlow: null }), tfSnap({ trustFlow: 30 }))
+    expect(drop).toBeNull()
+  })
+  it('never flags when the CURRENT check failed — a failed lookup is not a real drop', () => {
+    const drop = detectTrustFlowDrop(tfSnap({ trustFlow: 45 }), tfSnap({ available: false, trustFlow: null }))
+    expect(drop).toBeNull()
+  })
+})
+
+describe('buildTrustFlowDropEmail: pure, real-data-only content', () => {
+  it('reports the real from/to/lost Trust Flow values', () => {
+    const email = buildTrustFlowDropEmail({ domain: 'acme.com', name: 'Acme' }, { from: 45, to: 35, lost: 10 })
+    expect(email.subject).toContain('dropped 10 points')
+    expect(email.text).toContain('Trust Flow: 45 → 35 (−10)')
+  })
+})
+
+describe('notifyTrustFlowDrop: emails real org owners, never fabricates recipients', () => {
+  let store: FileFoundationStore
+  beforeEach(() => {
+    store = new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-trustflow-alert-')))
+  })
+  afterEach(() => {})
+
+  it('does nothing when there is no drop', async () => {
+    const project = { id: 'p1', orgId: 'o1', domain: 'acme.com', name: 'Acme' } as Project
+    const results = await notifyTrustFlowDrop(store, project, null)
+    expect(results).toEqual([])
+  })
+
+  it('emails every real owner of the project org (logged-only in this environment)', async () => {
+    const owner: User = { id: randomUUID(), email: 'owner@acme.com', name: 'Owner', passwordHash: 'x', tokenVersion: 0, createdAt: new Date().toISOString() }
+    const org: Organization = { id: randomUUID(), name: 'Acme Org', createdAt: new Date().toISOString() }
+    await store.createUser(owner)
+    await store.createOrg(org, owner.id)
+
+    const project: Project = { id: 'p1', orgId: org.id, domain: 'acme.com', name: 'Acme', industry: '', businessProfile: '', goals: [], notes: '', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
+    const results = await notifyTrustFlowDrop(store, project, { from: 45, to: 35, lost: 10 })
+    expect(results).toHaveLength(1)
+    expect(results[0].via).toBe('logged-only')
+  })
+
+  it('sends nothing when the project org has no owner recipient available', async () => {
+    const project = { id: 'p1', orgId: 'no-such-org', domain: 'acme.com', name: 'Acme' } as Project
+    const results = await notifyTrustFlowDrop(store, project, { from: 45, to: 35, lost: 10 })
     expect(results).toEqual([])
   })
 })

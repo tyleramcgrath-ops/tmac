@@ -76,3 +76,68 @@ export async function notifyBacklinkDrop(
   }
   return results
 }
+
+// Trust Flow decline: a distinct signal from referring-domain COUNT — Trust
+// Flow measures link QUALITY, so a site can lose real authority (losing a
+// few high-authority links, gaining many low-quality ones) while its
+// referring-domain count stays flat or even grows. Same real-snapshots-only
+// discipline as detectBacklinkDrop.
+export interface TrustFlowDrop {
+  from: number
+  to: number
+  lost: number
+}
+
+export function detectTrustFlowDrop(
+  previous: Pick<BacklinkSnapshot, 'available' | 'trustFlow'> | null,
+  current: Pick<BacklinkSnapshot, 'available' | 'trustFlow'>,
+  minDrop = 5
+): TrustFlowDrop | null {
+  if (!previous || !previous.available || previous.trustFlow === null) return null
+  if (!current.available || current.trustFlow === null) return null
+  const from = previous.trustFlow
+  const to = current.trustFlow
+  const lost = from - to
+  if (lost < minDrop) return null
+  return { from, to, lost }
+}
+
+export interface TrustFlowDropEmail {
+  subject: string
+  html: string
+  text: string
+}
+
+export function buildTrustFlowDropEmail(project: Pick<Project, 'domain' | 'name'>, drop: TrustFlowDrop): TrustFlowDropEmail {
+  const label = project.name || project.domain
+  const subject = `${label}'s link authority (Trust Flow) dropped ${drop.lost} points`
+  const line = `Trust Flow: ${drop.from} → ${drop.to} (−${drop.lost})`
+  const intro = `RankForge's latest backlink check for ${label} found a real drop in Trust Flow (link quality) since the last check.`
+  const outro = "This is separate from referring-domain count — it can mean a high-authority link was lost even while the total number of linking domains held steady. Check the Backlinks history for the full trend."
+  return {
+    subject,
+    text: `${intro}\n\n${line}\n\n${outro}`,
+    html: `<p>${escapeHtml(intro)}</p><p>${escapeHtml(line)}</p><p>${escapeHtml(outro)}</p>`,
+  }
+}
+
+export async function notifyTrustFlowDrop(
+  store: Pick<FoundationStore, 'listMembers' | 'getUserById'>,
+  project: Project,
+  drop: TrustFlowDrop | null
+): Promise<MailResult[]> {
+  if (!drop) return []
+  const emails = await resolveOwnerEmails(store, project.orgId)
+  if (emails.length === 0) return []
+
+  const content = buildTrustFlowDropEmail(project, drop)
+  const results: MailResult[] = []
+  for (const to of emails) {
+    try {
+      results.push(await sendEmail({ to, subject: content.subject, html: content.html, text: content.text }))
+    } catch (err) {
+      console.warn('[backlink-alert] send failed:', err instanceof Error ? err.message : err)
+    }
+  }
+  return results
+}
