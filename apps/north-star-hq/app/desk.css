@@ -656,6 +656,7 @@ html[data-dev] .ns-dev { display: flex; }
   background: rgba(158,214,160,0.08); font-size: clamp(0.62rem,0.8vw,0.7rem); line-height: 1.5; color: rgba(200,232,200,0.9);
 }
 .ns-integ-notice.err { border-color: rgba(224,138,127,0.4); background: rgba(224,138,127,0.08); color: rgba(240,200,192,0.92); }
+.ns-integ-retry { display: block; margin-top: 0.5rem; }
 
 /* =====================================================================
    LIVE MONITOR — real ambient "watching your site" indicator (see

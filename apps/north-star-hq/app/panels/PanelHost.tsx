@@ -39,6 +39,7 @@ export default function PanelHost({
   panelsUp,
   onCompassState,
   onAgentSignal,
+  onSummon,
   consoleInputRef,
 }: {
   projectId: string | null
@@ -48,6 +49,13 @@ export default function PanelHost({
   // ambient signal derived from real roster deltas — distinct from
   // onCompassState, which approve/command flows call directly and authoritatively.
   onAgentSignal: (s: CompassState | null) => void
+  // Lets a child (Integrations, returning from the Google OAuth round-trip)
+  // ask the room to summon the HUD even if the user hasn't touched the
+  // Compass yet — otherwise the result of a Connect Google attempt lands in
+  // a drawer nobody knows to open (IntegrationsPanel's own ?google= effect
+  // still runs since Drawer keeps children mounted while closed, but a
+  // closed drawer is invisible — see the effect below).
+  onSummon: () => void
   consoleInputRef: React.RefObject<HTMLInputElement | null>
 }) {
   const [drawer, setDrawer] = useState<DrawerId | null>(null)
@@ -58,6 +66,20 @@ export default function PanelHost({
       return
     }
     setDrawer((d) => (d === id ? null : id))
+  }
+
+  // Land the user directly on the Integrations drawer, HUD summoned, when
+  // they arrive back from Google's consent screen (?google=connected|error —
+  // see app/api/oauth/google/callback/route.ts). IntegrationsPanel is the one
+  // that calls this: it already reads the query param on mount, and a
+  // sibling effect here reading window.location.search independently would
+  // race it — React fires a child's effects before its parent's in the same
+  // commit, so IntegrationsPanel's own history.replaceState (which strips
+  // the param) would already have run by the time this component's effect
+  // got to look.
+  function handleGoogleReturn() {
+    setDrawer('integrations')
+    onSummon()
   }
 
   return (
@@ -105,7 +127,7 @@ export default function PanelHost({
         <HistoryPanel projectId={projectId} enabled={panelsUp && drawer === 'history'} />
       </Drawer>
       <Drawer open={drawer === 'integrations'} label={DRAWER_LABEL.integrations} onClose={() => setDrawer(null)}>
-        <IntegrationsPanel projectId={projectId} />
+        <IntegrationsPanel projectId={projectId} onGoogleReturn={handleGoogleReturn} />
       </Drawer>
     </div>
   )

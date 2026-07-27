@@ -16,7 +16,17 @@ const LABEL: Record<IntegrationDTO['kind'], string> = {
   analytics: 'Google Analytics',
 }
 
-export default function IntegrationsPanel({ projectId }: { projectId: string | null }) {
+export default function IntegrationsPanel({
+  projectId,
+  onGoogleReturn,
+}: {
+  projectId: string | null
+  // Called (in addition to setting the notice below) the moment a ?google=
+  // round-trip is detected, so the parent can summon the HUD and open this
+  // drawer even if the page reloaded straight to a sleeping room — see
+  // PanelHost.tsx's handleGoogleReturn.
+  onGoogleReturn?: () => void
+}) {
   const [integrations, setIntegrations] = useState<IntegrationDTO[] | null>(null)
   const [configured, setConfigured] = useState(true)
   const [error, setError] = useState('')
@@ -48,6 +58,7 @@ export default function IntegrationsPanel({ projectId }: { projectId: string | n
     if (!g) return
     if (g === 'connected') setNotice({ ok: true, text: 'Google connected — Search Console & Analytics are now live.' })
     else setNotice({ ok: false, text: `Google connection failed: ${params.get('reason') ?? 'unknown error'}` })
+    onGoogleReturn?.()
     const url = new URL(window.location.href)
     ;['google', 'reason'].forEach((k) => url.searchParams.delete(k))
     window.history.replaceState({}, '', url.toString())
@@ -133,7 +144,16 @@ export default function IntegrationsPanel({ projectId }: { projectId: string | n
         read-only, nothing is ever written back to your Google account.
       </p>
 
-      {notice && <p className={`ns-integ-notice${notice.ok ? '' : ' err'}`}>{notice.text}</p>}
+      {notice && (
+        <p className={`ns-integ-notice${notice.ok ? '' : ' err'}`}>
+          {notice.text}
+          {!notice.ok && configured && (
+            <button type="button" className="ns-integ-btn ns-integ-retry" disabled={busy === 'connect'} onClick={connect}>
+              {busy === 'connect' ? 'Retrying…' : 'Retry'}
+            </button>
+          )}
+        </p>
+      )}
       {error && <p className="ns-integ-notice err">{error}</p>}
 
       {!configured ? (

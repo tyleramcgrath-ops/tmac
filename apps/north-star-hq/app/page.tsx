@@ -180,6 +180,16 @@ function DeskRoom() {
     runWake()
   }
 
+  // A child (Integrations, landing back from Google's consent screen) asks
+  // to be summoned directly — the page reloaded, so the room is asleep
+  // again. Wake it (quick-wake if this browser has visited before) so the
+  // result of Connect Google is actually visible instead of sitting in a
+  // drawer behind a still-sleeping room.
+  const onSummonFromChild = () => {
+    runWake()
+    callPanels(true)
+  }
+
   // keep a ref of the current time so persist() from timers has the live value
   const timeModeRef = useRef<TimeMode>('night')
   useEffect(() => { timeModeRef.current = timeMode }, [timeMode])
@@ -421,6 +431,7 @@ function DeskRoom() {
           panelsUp={panelsUp}
           onCompassState={C}
           onAgentSignal={onAgentSignal}
+          onSummon={onSummonFromChild}
           consoleInputRef={consoleInputRef}
         />
 
