@@ -8,6 +8,7 @@ import type { Job } from '../types'
 import { checkCitation, perplexityApiKey } from '../ai-citations'
 import { hostOf } from '../serp'
 import { detectCitationLosses, notifyCitationLosses } from './ai-citation-alert'
+import { detectCitationPositionDrops, notifyCitationPositionDrops } from './ai-citation-position-alert'
 
 export async function runAiCitationCheckJob(store: FoundationStore, job: Job): Promise<Record<string, unknown>> {
   const project = await store.getProject(job.projectId)
@@ -37,7 +38,7 @@ export async function runAiCitationCheckJob(store: FoundationStore, job: Job): P
   const previous = previousSnapshots.filter((s): s is NonNullable<typeof s> => s !== null)
 
   const checkedAt = new Date().toISOString()
-  const results: { query: string; cited: boolean; available: boolean }[] = []
+  const results: { query: string; cited: boolean; available: boolean; position: number | null }[] = []
   for (const tq of queries) {
     const c = await checkCitation(tq.query, host, key)
     await store.recordAiCitationSnapshot({
@@ -53,11 +54,20 @@ export async function runAiCitationCheckJob(store: FoundationStore, job: Job): P
       message: c.message,
       checkedAt,
     })
-    results.push({ query: tq.query, cited: c.cited, available: c.available })
+    results.push({ query: tq.query, cited: c.cited, available: c.available, position: c.position })
   }
 
   const losses = detectCitationLosses(previous, results)
   const alerted = await notifyCitationLosses(store, project, losses)
+  const positionDrops = detectCitationPositionDrops(previous, results)
+  const positionAlerted = await notifyCitationPositionDrops(store, project, positionDrops)
 
-  return { checked: results.length, results, lost: losses.length, alerted: alerted.length }
+  return {
+    checked: results.length,
+    results,
+    lost: losses.length,
+    alerted: alerted.length,
+    positionDropped: positionDrops.length,
+    positionAlerted: positionAlerted.length,
+  }
 }
