@@ -18,14 +18,14 @@ import { VoiceProvider, useVoice } from './_lib/use-voice'
 
 const TIME_WORD: Record<TimeMode, string> = { dawn: 'Dawn', day: 'Day', dusk: 'Dusk', night: 'Night' }
 const STATE_LABEL: Partial<Record<CompassState, string>> = {
-  idle: '', hover: '', listening: 'Listening…',
+  idle: '', hover: '', listening: 'Listening…', speaking: 'Speaking…',
   thinking: 'Analyzing patterns & market signals…', planning: 'Drafting the plan…',
   executing: 'Executing optimizations…', deploying: 'Deploying across your ecosystem…',
   verifying: 'Verifying by read-back…', success: 'Mission accomplished',
   warning: 'Attention needed', error: 'Action paused — review required', offline: 'Systems offline',
 }
 const TIMES: TimeMode[] = ['dawn', 'day', 'dusk', 'night']
-const DEV_STATES: CompassState[] = ['idle', 'hover', 'listening', 'thinking', 'planning', 'executing', 'deploying', 'verifying', 'success', 'warning', 'error', 'offline']
+const DEV_STATES: CompassState[] = ['idle', 'hover', 'listening', 'speaking', 'thinking', 'planning', 'executing', 'deploying', 'verifying', 'success', 'warning', 'error', 'offline']
 
 type Phase = 'asleep' | 'waking' | 'awake'
 
@@ -300,6 +300,25 @@ function DeskRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // The compass lights up while it is actually talking. voice.speaking is
+  // driven by the utterance's own onstart/onend, so the glow starts and stops
+  // with the audio rather than on a guessed duration.
+  //
+  // Speech may take over a resting or settled compass, but never an
+  // in-progress sequence (thinking/executing/deploying/verifying) that a
+  // panel owns via C() and is still narrating with its own lighting. The
+  // brief in particular lands on 'success' and speaks in the same tick, so
+  // restricting this to idle/hover alone would silence the glow exactly when
+  // the room is reading the morning briefing aloud.
+  useEffect(() => {
+    if (!voice.speaking) return
+    const restable: CompassState[] = ['idle', 'hover', 'success', 'warning', 'error']
+    if (!restable.includes(compassStateRef.current)) return
+    C('speaking')
+    return () => { if (compassStateRef.current === 'speaking') C('idle') }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.speaking])
+
   // principles: heart calls the briefing; command opens the Command Bar;
   // interface shows the thinking arc
   const onPrinciple = (k: 'heart' | 'command' | 'interface') => {
@@ -359,6 +378,7 @@ function DeskRoom() {
         className="ns-room"
         data-time={timeMode}
         data-phase={phase === 'asleep' ? 'asleep' : 'awake'}
+        data-compass-state={compassState}
         data-quick={quick ? '' : undefined}
         data-aware={aware ? '' : undefined}
         data-cinema={cinema ? '' : undefined}

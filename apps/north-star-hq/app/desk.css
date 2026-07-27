@@ -455,6 +455,7 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 0.55em; vertical-align: middle;
   background: #7fd88f; color: #7fd88f; box-shadow: 0 0 8px currentColor; transition: background 0.5s ease, color 0.5s ease; }
 [data-compass-state='hover'] .ns-status-dot, [data-compass-state='listening'] .ns-status-dot { background:#8fd0ff; color:#8fd0ff; }
+[data-compass-state='speaking'] .ns-status-dot { background:#ecc276; color:#ecc276; }
 [data-compass-state='thinking'] .ns-status-dot, [data-compass-state='planning'] .ns-status-dot { background:#ffcf6a; color:#ffcf6a; }
 [data-compass-state='executing'] .ns-status-dot, [data-compass-state='deploying'] .ns-status-dot { background:#c79bff; color:#c79bff; }
 [data-compass-state='verifying'] .ns-status-dot { background:#9fe6d8; color:#9fe6d8; }
