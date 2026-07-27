@@ -7,7 +7,7 @@ import type { FoundationStore } from '../store'
 import type { Job } from '../types'
 import { checkBacklinks, majesticApiKey } from '../backlinks'
 import { hostOf } from '../serp'
-import { detectBacklinkDrop, notifyBacklinkDrop } from './backlink-alert'
+import { detectBacklinkDrop, detectTrustFlowDrop, notifyBacklinkDrop, notifyTrustFlowDrop } from './backlink-alert'
 
 export async function runBacklinkRefreshJob(store: FoundationStore, job: Job): Promise<Record<string, unknown>> {
   const project = await store.getProject(job.projectId)
@@ -43,6 +43,15 @@ export async function runBacklinkRefreshJob(store: FoundationStore, job: Job): P
 
   const drop = detectBacklinkDrop(previous ?? null, snapshot)
   const alerted = await notifyBacklinkDrop(store, project, drop)
+  const tfDrop = detectTrustFlowDrop(previous ?? null, snapshot)
+  const tfAlerted = await notifyTrustFlowDrop(store, project, tfDrop)
 
-  return { checked: true, available: c.available, dropped: drop ? drop.lost : 0, alerted: alerted.length }
+  return {
+    checked: true,
+    available: c.available,
+    dropped: drop ? drop.lost : 0,
+    alerted: alerted.length,
+    trustFlowDropped: tfDrop ? tfDrop.lost : 0,
+    trustFlowAlerted: tfAlerted.length,
+  }
 }
