@@ -9,9 +9,10 @@ import { useEffect, useState } from 'react'
 import { api, ApiError, type MissionQueueDTO } from '../../lib/client'
 import { useLivePoll } from '../../_lib/use-live-poll'
 
-export type RailDestination = 'performance' | 'opportunities' | 'approvals' | 'missions' | 'history' | 'integrations' | 'search'
+export type RailDestination = 'dna' | 'performance' | 'opportunities' | 'approvals' | 'missions' | 'history' | 'integrations' | 'search'
 
 const RAIL: { id: RailDestination; label: string }[] = [
+  { id: 'dna', label: 'Digital DNA' },
   { id: 'performance', label: 'Performance' },
   { id: 'opportunities', label: 'Opportunities' },
   { id: 'approvals', label: 'Approvals' },

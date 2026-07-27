@@ -46,7 +46,7 @@
    that glow down (a "no artificial gold light at midday" idea). Without a
    correspondingly bigger boost here, day ends up reading as the DARKEST time
    instead of the brightest — the actual bug. */
-[data-time='day']  .ns-plate { filter: brightness(1.38) contrast(1.02) saturate(0.94) hue-rotate(-2deg); }
+[data-time='day']  .ns-plate { filter: brightness(1.72) contrast(0.99) saturate(0.98) hue-rotate(-2deg); }
 [data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
 [data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
 
@@ -59,13 +59,13 @@
 .ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
   background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
 [data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
-[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(165,200,240,0.46); --sky-mid: rgba(220,232,248,0.34); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(185,215,248,0.62); --sky-mid: rgba(235,244,255,0.5); }
 [data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
 [data-time='night'] .ns-sky { opacity: 0; }
 /* ambient colour temperature wash */
 .ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
 [data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
-[data-time='day']  .ns-ambient { opacity: 1; background: rgba(222,234,248,0.4); }
+[data-time='day']  .ns-ambient { opacity: 1; background: rgba(236,244,255,0.58); }
 [data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
 [data-time='night'] .ns-ambient { opacity: 0; }
 /* gold ceiling constellation intensity */
@@ -130,8 +130,12 @@ html[data-dev] .ns-dev { display: flex; }
     radial-gradient(120% 90% at 50% 44%, transparent 52%, rgba(2,3,8,0.34) 100%),
     linear-gradient(180deg, rgba(2,3,8,0.5) 0%, transparent 16%, transparent 72%, rgba(2,3,8,0.66) 100%);
   transform: translate3d(calc(var(--mx) * -4px), calc(var(--my) * -2px), 0);
-  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease;
 }
+/* The vignette is a fixed darkening pass tuned for the evening room. At
+   midday it fights the whole point of the hour, so it eases off — the depth
+   cue stays, the gloom doesn't. */
+[data-time='day'] .ns-vignette { opacity: 0.45; }
 
 /* ---- the live 3D compass, seated on the platform ---- */
 .ns-compass {
@@ -331,6 +335,10 @@ html[data-dev] .ns-dev { display: flex; }
   opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .ns-drawer.open { opacity: 1; pointer-events: auto; transform: translateY(-50%) translateX(0); }
+/* The drawer sits directly over the command rail, so it needs to be denser
+   than the shared glass the cards use — at 0.66 the rail's labels read
+   straight through the panel's own text. */
+.ns-drawer.ns-glass { background: linear-gradient(180deg, rgb(9,10,14), rgb(5,6,9)); }
 .ns-drawer-close {
   position: absolute; top: 0.7rem; right: 0.7rem; width: 22px; height: 22px; display: grid; place-items: center;
   border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 0.9rem; line-height: 1;
@@ -808,3 +816,91 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-proj-input:focus { outline: none; border-color: rgba(236,194,118,0.5); }
 .ns-proj-add-row { display: flex; gap: 0.35rem; }
 .ns-proj-error { margin: 0; font-size: clamp(0.44rem,0.6vw,0.52rem); color: #e0a07a; }
+
+/* ── Digital DNA: the helix of what this business is wired into ──────── */
+.ns-dna-identity { margin-top: 0.9rem; }
+.ns-dna-stage { margin-top: 1.1rem; }
+
+.ns-dna {
+  position: relative; width: 100%; max-width: 17rem; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 0.72rem; padding: 0.9rem 0.6rem;
+}
+.ns-dna-rung {
+  position: relative; height: 0.62rem;
+  /* every child shares one cycle; the stagger down the strand is the twist */
+  --dur: 4.4s;
+  --delay: calc(var(--i) * (var(--dur) / -14));
+}
+
+/* A point circling an axis seen edge-on: x = sin(t), depth = cos(t). Scale
+   and opacity track the depth so the near half of the turn reads as nearer. */
+.ns-dna-node {
+  position: absolute; top: 50%; width: 0.58rem; height: 0.58rem; border-radius: 50%;
+  margin-top: -0.29rem; background: rgba(226,214,188,0.32);
+  animation: ns-dna-orbit var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+.ns-dna-node.b { animation-name: ns-dna-orbit-b; }
+
+.ns-dna-bond {
+  position: absolute; top: 50%; left: 0; width: 100%; height: 2px;
+  margin-top: -1px; transform-origin: 50% 50%; border-radius: 2px;
+  background: rgba(226,214,188,0.22);
+  animation: ns-dna-bond var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+/* Connected strands are bonded and lit. An unconnected source keeps its
+   nucleotides but the bond never forms — a visible break in the strand. */
+.ns-dna-rung[data-connected] .ns-dna-node { background: #ecc276; box-shadow: 0 0 10px rgba(236,194,118,0.7), 0 0 22px rgba(236,194,118,0.28); }
+.ns-dna-rung[data-connected] .ns-dna-bond {
+  background: linear-gradient(90deg, rgba(236,194,118,0.2), rgba(255,226,164,0.9), rgba(236,194,118,0.2));
+  box-shadow: 0 0 10px rgba(236,194,118,0.35);
+}
+.ns-dna-rung:not([data-connected]) .ns-dna-bond { background: none; border-top: 1px dashed rgba(226,214,188,0.22); height: 0; }
+
+.ns-dna-rung[data-active] .ns-dna-node { background: #fff0cd; box-shadow: 0 0 12px rgba(255,226,164,0.9); }
+.ns-dna-rung[data-active] .ns-dna-bond { filter: brightness(1.5); }
+.ns-dna-rung { cursor: default; }
+
+@keyframes ns-dna-orbit {
+  0%   { left: 50%; transform: translateX(-50%) scale(1);    opacity: 1; }
+  25%  { left: 100%; transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  50%  { left: 50%; transform: translateX(-50%) scale(0.5);  opacity: 0.35; }
+  75%  { left: 0%;  transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  100% { left: 50%; transform: translateX(-50%) scale(1);    opacity: 1; }
+}
+@keyframes ns-dna-orbit-b {
+  0%   { left: 50%; transform: translateX(-50%) scale(0.5);  opacity: 0.35; }
+  25%  { left: 0%;  transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  50%  { left: 50%; transform: translateX(-50%) scale(1);    opacity: 1; }
+  75%  { left: 100%; transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  100% { left: 50%; transform: translateX(-50%) scale(0.5);  opacity: 0.35; }
+}
+/* Widest exactly when the two nucleotides are furthest apart. */
+@keyframes ns-dna-bond {
+  0%, 50%, 100% { transform: scaleX(0.02); opacity: 0.15; }
+  25%, 75%      { transform: scaleX(1);    opacity: 1; }
+}
+
+.ns-dna-caption {
+  margin: 0.9rem 0 0; text-align: center; min-height: 2.2em;
+  font-size: clamp(0.46rem,0.64vw,0.55rem); line-height: 1.5;
+  color: rgba(226,214,188,0.55);
+}
+.ns-dna-list { margin-top: 0.9rem; gap: 0.7rem; }
+.ns-dna-list .ns-row { cursor: default; }
+.ns-row-desc[data-unavailable] { color: rgba(226,214,188,0.34); font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-dna-node, .ns-dna-bond { animation: none; }
+  .ns-dna-node { left: 50%; transform: translateX(-50%); }
+  .ns-dna-node.a { left: 12%; }
+  .ns-dna-node.b { left: 88%; }
+  .ns-dna-bond { transform: none; opacity: 1; }
+}
+
+/* The corner chrome sits over the ceiling band, which stays dark at every
+   hour, so it keeps its pale treatment — only the status line needed a
+   little more lift now that day is genuinely bright behind it. */
+[data-time='day'] .ns-status-line { color: rgba(238,228,206,0.72); }

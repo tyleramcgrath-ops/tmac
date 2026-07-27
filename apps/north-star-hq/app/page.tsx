@@ -305,16 +305,19 @@ function DeskRoom() {
   // driven by the utterance's own onstart/onend, so the glow starts and stops
   // with the audio rather than on a guessed duration.
   //
-  // Speech may take over a resting or settled compass, but never an
-  // in-progress sequence (thinking/executing/deploying/verifying) that a
-  // panel owns via C() and is still narrating with its own lighting. The
-  // brief in particular lands on 'success' and speaks in the same tick, so
-  // restricting this to idle/hover alone would silence the glow exactly when
-  // the room is reading the morning briefing aloud.
+  // Speech yields only to the states that own a deliberate, user-triggered
+  // sequence and narrate it with their own lighting; everything else it may
+  // take over, because the room talking is the more salient signal.
+  //
+  // This has to be a blocklist. On a full wake the briefing sets 'thinking'
+  // at 4.2s and the greeting speaks at 4.7s, so an allowlist of resting
+  // states silenced the glow precisely when the room was talking — while a
+  // quick wake, with different ordering, worked. That intermittency is what
+  // makes the narrow rule wrong.
   useEffect(() => {
     if (!voice.speaking) return
-    const restable: CompassState[] = ['idle', 'hover', 'success', 'warning', 'error']
-    if (!restable.includes(compassStateRef.current)) return
+    const owned: CompassState[] = ['asleep', 'awakening', 'executing', 'deploying', 'verifying', 'offline']
+    if (owned.includes(compassStateRef.current)) return
     C('speaking')
     return () => { if (compassStateRef.current === 'speaking') C('idle') }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -455,6 +458,7 @@ function DeskRoom() {
         </div>
 
         <PanelHost
+          project={project}
           projectId={projectId}
           projectsResolved={!projectsLoading}
           panelsUp={panelsUp}

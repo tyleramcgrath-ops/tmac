@@ -10,6 +10,7 @@
 
 import { useState } from 'react'
 import type { CompassState } from '../compass'
+import type { ProjectDTO } from '../lib/client'
 import CommandRail, { type RailDestination } from './rail/CommandRail'
 import AgentStatusCard from './cards/AgentStatusCard'
 import MorningBriefCard from './cards/MorningBriefCard'
@@ -23,10 +24,12 @@ import MissionOperationsPanel from './operations/MissionOperationsPanel'
 import HistoryPanel from './history/HistoryPanel'
 import IntegrationsPanel from './integrations/IntegrationsPanel'
 import PerformancePanel from './performance/PerformancePanel'
+import DigitalDnaPanel from './dna/DigitalDnaPanel'
 
 type DrawerId = Exclude<RailDestination, 'search'>
 
 const DRAWER_LABEL: Record<DrawerId, string> = {
+  dna: 'Digital DNA',
   performance: 'Performance',
   opportunities: 'Opportunities',
   approvals: 'Approvals',
@@ -36,6 +39,7 @@ const DRAWER_LABEL: Record<DrawerId, string> = {
 }
 
 export default function PanelHost({
+  project,
   projectId,
   projectsResolved,
   panelsUp,
@@ -44,6 +48,7 @@ export default function PanelHost({
   onSummon,
   consoleInputRef,
 }: {
+  project: ProjectDTO | null
   projectId: string | null
   projectsResolved: boolean
   panelsUp: boolean
@@ -101,6 +106,9 @@ export default function PanelHost({
       <MissionStrip projectId={projectId} panelsUp={panelsUp} />
       <CommandConsole projectId={projectId} panelsUp={panelsUp} onCompassState={onCompassState} inputRef={consoleInputRef} />
 
+      <Drawer open={drawer === 'dna'} label={DRAWER_LABEL.dna} onClose={() => setDrawer(null)}>
+        <DigitalDnaPanel project={project} projectId={projectId} enabled={panelsUp && drawer === 'dna'} />
+      </Drawer>
       <Drawer open={drawer === 'performance'} label={DRAWER_LABEL.performance} onClose={() => setDrawer(null)}>
         <PerformancePanel projectId={projectId} enabled={panelsUp && drawer === 'performance'} />
       </Drawer>
