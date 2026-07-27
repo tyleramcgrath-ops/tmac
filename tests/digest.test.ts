@@ -74,6 +74,17 @@ describe('buildDigestContent: honest, real-data-only summary', () => {
     const withoutOpps = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, undefined, [])
     expect(withoutOpps.text).not.toContain('Keyword opportunities')
   })
+  it('includes real stale critical fixes when provided, and omits the section when there are none', () => {
+    const metrics = computeOperatorMetrics([], [], '2026-07-18')
+    const withStale = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, undefined, undefined, [
+      { id: 'r1', title: 'Missing title tag', acceptedAt: '2026-06-01T00:00:00Z', daysStale: 20 },
+    ])
+    expect(withStale.text).toContain('Stale critical fixes (accepted, never deployed)')
+    expect(withStale.text).toContain('"Missing title tag" — accepted 20 days ago, still not deployed')
+
+    const withoutStale = buildDigestContent({ domain: 'acme.com', name: 'Acme' }, null, metrics, undefined, undefined, undefined, [])
+    expect(withoutStale.text).not.toContain('Stale critical fixes')
+  })
 })
 
 describe('approveLinksFor', () => {
