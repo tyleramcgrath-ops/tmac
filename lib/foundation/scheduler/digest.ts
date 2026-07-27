@@ -14,6 +14,7 @@ import { appBaseUrl } from '../env'
 import { signApproveToken } from './approve-link'
 import { connectedProviderSet } from '../external/service'
 import { findKeywordOpportunities, type KeywordOpportunity } from '../reco/keyword-opportunities'
+import { findStaleCriticalRecommendations, type StaleCriticalRecommendation } from '../reco/stale-critical'
 
 export interface DigestContent {
   subject: string
@@ -68,7 +69,8 @@ export function buildDigestContent(
   metrics: OperatorMetrics,
   outcomes?: OutcomeDigestSummary,
   approveLinks?: ApproveLinkItem[],
-  opportunities?: KeywordOpportunity[]
+  opportunities?: KeywordOpportunity[],
+  staleCritical?: StaleCriticalRecommendation[]
 ): DigestContent {
   const label = project.name || project.domain
   const subject = scan ? `Weekly summary for ${label} — site score ${scan.summary.siteScore}` : `Weekly summary for ${label} — no audit yet`
@@ -120,8 +122,17 @@ export function buildDigestContent(
     ? `<p>Keyword opportunities (real Search Console near-misses):</p><ul>${opps.map((o) => `<li>${escapeHtml(oppLine(o))}</li>`).join('')}</ul>`
     : ''
 
-  const text = `Weekly summary for ${label}\n\n${rowsText(scanLines)}\n\n${rowsText(opLines)}${outcomeTextBlock}${oppTextBlock}${approveTextBlock}\n\nOpen RankForge for the full breakdown.`
-  const html = `<p>Weekly summary for <b>${escapeHtml(label)}</b></p><ul>${rowsHtml(scanLines)}</ul><ul>${rowsHtml(opLines)}</ul>${outcomeHtmlBlock}${oppHtmlBlock}${approveHtmlBlock}<p>Open RankForge for the full breakdown.</p>`
+  const stale = staleCritical ?? []
+  const staleLine = (s: StaleCriticalRecommendation) => `"${s.title}" — accepted ${Math.floor(s.daysStale)} days ago, still not deployed`
+  const staleTextBlock = stale.length
+    ? `\n\nStale critical fixes (accepted, never deployed):\n${stale.map((s) => `- ${staleLine(s)}`).join('\n')}`
+    : ''
+  const staleHtmlBlock = stale.length
+    ? `<p>Stale critical fixes (accepted, never deployed):</p><ul>${stale.map((s) => `<li>${escapeHtml(staleLine(s))}</li>`).join('')}</ul>`
+    : ''
+
+  const text = `Weekly summary for ${label}\n\n${rowsText(scanLines)}\n\n${rowsText(opLines)}${outcomeTextBlock}${staleTextBlock}${oppTextBlock}${approveTextBlock}\n\nOpen RankForge for the full breakdown.`
+  const html = `<p>Weekly summary for <b>${escapeHtml(label)}</b></p><ul>${rowsHtml(scanLines)}</ul><ul>${rowsHtml(opLines)}</ul>${outcomeHtmlBlock}${staleHtmlBlock}${oppHtmlBlock}${approveHtmlBlock}<p>Open RankForge for the full breakdown.</p>`
 
   return { subject, html, text }
 }
@@ -154,6 +165,7 @@ export async function runMonitorDigest(store: FoundationStore, job: Job): Promis
   const outcomes = summarizeDeploymentOutcomes(deployments)
   const pending = recs.filter((r) => r.status === 'accepted')
   const nowMs = Date.now()
+  const staleCritical = findStaleCriticalRecommendations(recs, nowMs)
 
   // Best-effort: Search Console may not be connected, or the fetch may fail
   // — either way the digest still sends with everything else, just without
@@ -173,7 +185,7 @@ export async function runMonitorDigest(store: FoundationStore, job: Job): Promis
     // Each owner's approve links carry THEIR OWN id — the approve route
     // re-verifies that id's project role at click time, so a link is only
     // ever as powerful as the recipient's own current access.
-    const content = buildDigestContent(project, scan, metrics, outcomes, approveLinksFor(project, pending, userId, nowMs), opportunities)
+    const content = buildDigestContent(project, scan, metrics, outcomes, approveLinksFor(project, pending, userId, nowMs), opportunities, staleCritical)
     try {
       results.push(await sendEmail({ to, subject: content.subject, html: content.html, text: content.text }))
     } catch (err) {
