@@ -22,10 +22,12 @@ import MissionQueuePanel from './missions/MissionQueuePanel'
 import MissionOperationsPanel from './operations/MissionOperationsPanel'
 import HistoryPanel from './history/HistoryPanel'
 import IntegrationsPanel from './integrations/IntegrationsPanel'
+import PerformancePanel from './performance/PerformancePanel'
 
 type DrawerId = Exclude<RailDestination, 'search'>
 
 const DRAWER_LABEL: Record<DrawerId, string> = {
+  performance: 'Performance',
   opportunities: 'Opportunities',
   approvals: 'Approvals',
   missions: 'Missions',
@@ -99,6 +101,9 @@ export default function PanelHost({
       <MissionStrip projectId={projectId} panelsUp={panelsUp} />
       <CommandConsole projectId={projectId} panelsUp={panelsUp} onCompassState={onCompassState} inputRef={consoleInputRef} />
 
+      <Drawer open={drawer === 'performance'} label={DRAWER_LABEL.performance} onClose={() => setDrawer(null)}>
+        <PerformancePanel projectId={projectId} enabled={panelsUp && drawer === 'performance'} />
+      </Drawer>
       <Drawer open={drawer === 'opportunities'} label={DRAWER_LABEL.opportunities} onClose={() => setDrawer(null)}>
         <OpportunitiesPanel projectId={projectId} projectsResolved={projectsResolved} />
       </Drawer>
