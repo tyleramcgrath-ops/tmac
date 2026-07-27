@@ -150,7 +150,15 @@ export interface FoundationStore {
   listActivity(projectId: string, opts?: { limit?: number; types?: ActivityEventType[] }): Promise<ActivityEvent[]>
 }
 
-let cached: FoundationStore | null = null
+// The in-flight promise, not the resolved store. Caching only the resolved
+// value left a window between "first caller starts building" and "build
+// finishes" in which every concurrent caller saw null and built its OWN store —
+// and therefore its own Pool. A burst of requests onto one cold instance
+// multiplied connections by the size of the burst (measured: 8 concurrent
+// getStore() calls -> 8 pools), which is how a small managed Postgres runs out
+// of backends. Memoizing the promise makes the Nth caller await the first
+// caller's build instead of racing it.
+let cached: Promise<FoundationStore> | null = null
 
 // Postgres when DATABASE_URL/POSTGRES_URL is set — the production path, and
 // REQUIRED in production: resolveStoreEnv() throws rather than fall back to
@@ -159,21 +167,30 @@ let cached: FoundationStore | null = null
 // between cold starts, surfacing as sporadic "Sign in required." 401s).
 // Locally, an unset DATABASE_URL still gets the file store, defaulting under
 // os.tmpdir() since a repo-relative path is not writable on serverless.
-export async function getStore(): Promise<FoundationStore> {
+export function getStore(): Promise<FoundationStore> {
   if (cached) return cached
-  const { resolveStoreEnv } = await import('./env')
-  const env = resolveStoreEnv()
-  if (env.kind === 'postgres') {
-    const { PostgresFoundationStore } = await import('./postgres')
-    cached = await PostgresFoundationStore.create(env.databaseUrl!)
-  } else {
+  cached = (async () => {
+    const { resolveStoreEnv } = await import('./env')
+    const env = resolveStoreEnv()
+    if (env.kind === 'postgres') {
+      const { PostgresFoundationStore } = await import('./postgres')
+      return PostgresFoundationStore.create(env.databaseUrl!)
+    }
     const { FileFoundationStore } = await import('./filestore')
-    cached = new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || join(tmpdir(), 'north-star-hq-foundation'))
-  }
+    return new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || join(tmpdir(), 'north-star-hq-foundation'))
+  })()
+  // A failed build must not be memoized: a transient DB outage during one cold
+  // start would otherwise poison this instance for its whole lifetime, since
+  // every later caller would re-await the same rejected promise. Clearing lets
+  // the next request retry. The no-op catch only prevents an unhandled
+  // rejection here — callers still see the original error.
+  cached.catch(() => {
+    cached = null
+  })
   return cached
 }
 
 // Test seam: lets tests construct an isolated store.
 export function __setStoreForTests(store: FoundationStore | null) {
-  cached = store
+  cached = store ? Promise.resolve(store) : null
 }

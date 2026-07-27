@@ -169,7 +169,25 @@ export class PostgresFoundationStore implements FoundationStore {
 
   static async create(url: string): Promise<PostgresFoundationStore> {
     const ssl = /localhost|127\.0\.0\.1/.test(url) ? undefined : { rejectUnauthorized: false }
-    const pool = new Pool({ connectionString: url, ssl, max: 5 })
+    const pool = new Pool({
+      connectionString: url,
+      ssl,
+      max: 5,
+      // Every wait here is bounded on purpose. node-pg defaults
+      // connectionTimeoutMillis to 0, meaning pool.connect() queues FOREVER
+      // when no client is free — and runMigrations() calls pool.connect()
+      // while holding a global advisory lock, so one starved checkout used to
+      // pin that lock and stall every other instance until the platform's
+      // 300s function ceiling killed the request. Failing in 10s turns a
+      // silent hang into a 500 we can see and retry.
+      connectionTimeoutMillis: 10_000,
+      // Return idle clients to a small managed Postgres rather than holding
+      // backends open across an idle serverless instance's lifetime.
+      idleTimeoutMillis: 30_000,
+      // Backstop for a query that wedges server-side; without it a single
+      // stuck statement holds its client for the whole function duration.
+      statement_timeout: 20_000,
+    })
     // RC1 reliability fix: node-pg emits 'error' on IDLE clients when the
     // backend drops them (exactly what a Postgres restart / failover does). An
     // unhandled 'error' on the pool's EventEmitter would crash the Node process.
