@@ -31,6 +31,14 @@ export const POST = handled(async (request) => {
     throw new HttpError(403, 'Creating projects requires the admin role.')
   }
 
+  // rf_projects has a unique index on (org_id, domain) for active projects, so
+  // without this the second attempt at a domain surfaces as a raw constraint
+  // violation — a 500 where the user just needs to be told it already exists.
+  const existing = await store.listProjects(orgId)
+  if (existing.some((p) => p.domain === domain)) {
+    throw new HttpError(409, `${domain} is already one of your sites.`)
+  }
+
   const now = new Date().toISOString()
   const project: Project = {
     id: randomUUID(),

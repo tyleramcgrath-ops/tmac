@@ -5,6 +5,7 @@ import { initCompass, type CompassApi, type CompassState, type TimeMode } from '
 import { AuthProvider, useAuth } from './lib/auth-context'
 import { useDeskContext } from './_lib/use-desk-context'
 import PanelHost from './panels/PanelHost'
+import ProjectSwitcher from './panels/ProjectSwitcher'
 import OnboardingWizard from './onboarding-wizard'
 import LiveMonitor from './live-monitor'
 import { VoiceProvider, useVoice } from './_lib/use-voice'
@@ -60,7 +61,7 @@ function DeskGate({ children }: { children: React.ReactNode }) {
 
 function DeskRoom() {
   const { user, refresh } = useAuth()
-  const { projectId, loading: projectsLoading } = useDeskContext(!!user)
+  const { project, projects, projectId, loading: projectsLoading, setProjectId, addProject } = useDeskContext(!!user)
 
   const roomRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -425,6 +426,14 @@ function DeskRoom() {
 
         <header className="ns-brand">
           <h1>North Star</h1><p>Headquarters</p>
+          {phase === 'awake' && (
+            <ProjectSwitcher
+              project={project}
+              projects={projects}
+              onSelect={setProjectId}
+              onAdd={addProject}
+            />
+          )}
         </header>
 
         <div className="ns-controls">

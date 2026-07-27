@@ -740,3 +740,71 @@ html[data-dev] .ns-dev { display: flex; }
   background: linear-gradient(90deg, rgba(236,194,118,0.55), #ecc276);
 }
 .ns-bar-val { font-size: clamp(0.46rem,0.62vw,0.55rem); color: #f2e4c6; text-align: right; }
+
+/* ── Project switcher: which site the room is reporting on ───────────── */
+/* .ns-brand is pointer-events:none so the compass stays clickable through
+   it — the switcher has to opt back in. */
+.ns-proj { position: relative; margin-top: 0.6rem; pointer-events: auto; display: inline-block; }
+.ns-proj-current {
+  appearance: none; cursor: pointer; font: inherit;
+  display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+  border: 1px solid rgba(226,214,188,0.14); border-radius: 0.5rem;
+  background: rgba(18,16,13,0.5); backdrop-filter: blur(6px);
+  padding: 0.3rem 0.8rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.ns-proj-current:hover, .ns-proj-current[aria-expanded='true'] {
+  border-color: rgba(236,194,118,0.4); background: rgba(24,21,16,0.72);
+}
+.ns-proj-name {
+  font-size: clamp(0.46rem,0.66vw,0.56rem); letter-spacing: 0.2em; text-transform: uppercase;
+  color: #eed09a;
+}
+.ns-proj-domain { font-size: clamp(0.4rem,0.56vw,0.48rem); letter-spacing: 0.1em; color: rgba(226,214,188,0.42); }
+
+.ns-proj-menu {
+  position: absolute; top: calc(100% + 0.4rem); left: 50%; transform: translateX(-50%);
+  min-width: 14rem; max-width: min(20rem, 80vw); text-align: left;
+  border: 1px solid rgba(226,214,188,0.16); border-radius: 0.6rem;
+  background: rgba(14,12,10,0.94); backdrop-filter: blur(14px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.6);
+  padding: 0.6rem; z-index: 20;
+}
+.ns-proj-menu-head {
+  margin: 0 0 0.45rem; font-size: clamp(0.4rem,0.55vw,0.47rem);
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(226,214,188,0.4);
+}
+.ns-proj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.ns-proj-item {
+  appearance: none; cursor: pointer; font: inherit; width: 100%; text-align: left;
+  display: flex; flex-direction: column; gap: 0.1rem;
+  border: 0; border-radius: 0.36rem; background: transparent;
+  padding: 0.36rem 0.5rem; transition: background 0.15s ease;
+}
+.ns-proj-item:hover { background: rgba(226,214,188,0.07); }
+.ns-proj-item[aria-checked='true'] { background: rgba(236,194,118,0.13); }
+.ns-proj-item-name { font-size: clamp(0.48rem,0.66vw,0.58rem); color: #f2e4c6; letter-spacing: 0.04em; }
+.ns-proj-item-domain { font-size: clamp(0.42rem,0.56vw,0.5rem); color: rgba(226,214,188,0.42); }
+
+.ns-proj-new, .ns-proj-save, .ns-proj-cancel {
+  appearance: none; cursor: pointer; font: inherit;
+  border-radius: 0.36rem; border: 1px solid rgba(226,214,188,0.16);
+  background: rgba(226,214,188,0.04); color: rgba(226,214,188,0.72);
+  font-size: clamp(0.44rem,0.6vw,0.52rem); letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.36rem 0.6rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.ns-proj-new { width: 100%; margin-top: 0.5rem; }
+.ns-proj-new:hover, .ns-proj-cancel:hover { color: #f2e4c6; border-color: rgba(236,194,118,0.4); }
+.ns-proj-save { background: #ecc276; border-color: #ecc276; color: #1a1712; }
+.ns-proj-save:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.ns-proj-add { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.55rem; }
+.ns-proj-input {
+  font: inherit; font-size: clamp(0.48rem,0.66vw,0.58rem);
+  border: 1px solid rgba(226,214,188,0.18); border-radius: 0.36rem;
+  background: rgba(226,214,188,0.05); color: #f2e4c6; padding: 0.4rem 0.55rem;
+}
+.ns-proj-input::placeholder { color: rgba(226,214,188,0.32); }
+.ns-proj-input:focus { outline: none; border-color: rgba(236,194,118,0.5); }
+.ns-proj-add-row { display: flex; gap: 0.35rem; }
+.ns-proj-error { margin: 0; font-size: clamp(0.44rem,0.6vw,0.52rem); color: #e0a07a; }

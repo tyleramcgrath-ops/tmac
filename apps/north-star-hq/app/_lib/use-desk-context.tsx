@@ -1,13 +1,12 @@
 'use client'
 
-// Resolves which project Headquarters represents: a single "flagship"
-// project per org, auto-selected (not a picker) — see the Phase 2 plan.
-// A stored preference wins so switching projects (once a switcher exists)
-// sticks across visits; otherwise the most recently updated project is a
-// sane default. Never blocks the wake cinematic — callers gate panels on
-// `loading`, not the room/compass.
+// Resolves which project (site) Headquarters is currently representing, and
+// owns the full list so the room can switch between them. The stored
+// preference wins so a switch sticks across visits; otherwise the most
+// recently updated project is a sane default. Never blocks the wake
+// cinematic — callers gate panels on `loading`, not the room/compass.
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { api, type ProjectDTO } from '../lib/client'
 
 const STORAGE_KEY = 'ns-hq'
@@ -30,15 +29,18 @@ function persistProjectId(id: string) {
 
 export interface DeskContext {
   project: ProjectDTO | null
+  projects: ProjectDTO[]
   projectId: string | null
   loading: boolean
   error: string | null
   setProjectId: (id: string) => void
+  addProject: (input: { name: string; domain: string }) => Promise<ProjectDTO>
 }
 
 // `ready` lets the caller delay the fetch until auth has resolved.
 export function useDeskContext(ready: boolean): DeskContext {
   const [project, setProject] = useState<ProjectDTO | null>(null)
+  const [projects, setProjects] = useState<ProjectDTO[]>([])
   const [projectId, setProjectIdState] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -53,6 +55,7 @@ export function useDeskContext(ready: boolean): DeskContext {
         const { projects } = await api.listProjects()
         if (cancelled) return
         projectsRef.current = projects
+        setProjects(projects)
         if (projects.length === 0) {
           setLoading(false)
           return
@@ -74,13 +77,27 @@ export function useDeskContext(ready: boolean): DeskContext {
     }
   }, [ready])
 
-  const setProjectId = (id: string) => {
+  const setProjectId = useCallback((id: string) => {
     const found = projectsRef.current.find((p) => p.id === id)
     if (!found) return
     setProject(found)
     setProjectIdState(id)
     persistProjectId(id)
-  }
+  }, [])
 
-  return { project, projectId, loading, error, setProjectId }
+  // Adds a site and switches to it, so "add" and "now I'm looking at it" are
+  // one action. The caller surfaces any thrown ApiError verbatim — a rejected
+  // domain or a duplicate should say so, not fail silently.
+  const addProject = useCallback(async (input: { name: string; domain: string }) => {
+    const { project: created } = await api.createProject({ name: input.name, domain: input.domain })
+    const next = [...projectsRef.current.filter((p) => p.id !== created.id), created]
+    projectsRef.current = next
+    setProjects(next)
+    setProject(created)
+    setProjectIdState(created.id)
+    persistProjectId(created.id)
+    return created
+  }, [])
+
+  return { project, projects, projectId, loading, error, setProjectId, addProject }
 }
