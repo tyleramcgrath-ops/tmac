@@ -86,14 +86,22 @@ above):
   exists anywhere in the codebase for those three). Google Search Console
   and Analytics genuinely connect for real once activated — see the
   Integrations panel above.
-- Storage is a local JSON file store — see `lib/foundation/store.ts`.
-  Defaults to a directory under the OS temp dir (serverless platforms like
-  Vercel Functions ship a read-only filesystem outside of `/tmp`, so a
-  repo-relative path would fail there). This is not guaranteed to persist
-  across instances/cold starts; each instance re-starts from an empty store,
-  and the next activation reseeds it. Override with `FOUNDATION_DATA_DIR` to
-  pin a specific location (e.g. a repo-relative path for easier local
-  inspection).
+- Storage is **PostgreSQL in production** and a local JSON file store for dev
+  and tests — see `lib/foundation/store.ts` and `resolveStoreEnv` in
+  `env.ts`. Set `DATABASE_URL` (Vercel's Postgres/Neon integration does this
+  automatically; `POSTGRES_URL`/`POSTGRES_PRISMA_URL` also work). Schema
+  migrations in `lib/foundation/migrations/` run themselves on first connect,
+  serialized by a Postgres advisory lock so concurrent cold-starting
+  instances can't race. Unset `DATABASE_URL` locally to use the file store,
+  which defaults under the OS temp dir and honours `FOUNDATION_DATA_DIR`.
+
+  **Production refuses to start without `DATABASE_URL`** rather than fall
+  back to files, and that strictness is deliberate: the file store is
+  per-instance and does not survive a serverless cold start. Relying on it in
+  production meant a session cookie (a stateless signed JWT) stayed valid
+  while the user row it pointed at disappeared, so the deployed app threw
+  sporadic "Sign in required." 401s across every route, silently dropped
+  stored Google OAuth credentials, and forced repeated re-onboarding.
 
 ## Getting started
 
@@ -107,7 +115,16 @@ Open [http://localhost:3100](http://localhost:3100) (port 3100, so it can run
 alongside the root RankForge app on 3000) and walk through the onboarding
 wizard — it drops you into a freshly seeded demo project.
 
+Locally this runs on the file store. To develop against Postgres instead
+(recommended before touching anything storage-related, since that's what
+production uses), point `DATABASE_URL` at any local instance — migrations
+apply themselves on first connect:
+
+```bash
+DATABASE_URL=postgres://postgres@127.0.0.1:5432/northstar npm run dev
+```
+
 ## Stack
 
 Next.js (App Router, Turbopack) · React · TypeScript · Tailwind CSS v4 ·
-Three.js (the compass)
+Three.js (the compass) · PostgreSQL (`pg`)

@@ -1,11 +1,59 @@
 // Environment validation — fail clearly rather than degrade silently.
 //
-// Unlike the RankForge app this was forked from, North Star Headquarters has
-// no Postgres-backed path at all: it always runs on the seeded, file-backed
-// FoundationStore (see store.ts / instrumentation.ts). APP_SECRET is still
-// required for session JWTs and credential encryption.
+// APP_SECRET is required for session JWTs and credential encryption.
+// DATABASE_URL selects the persistent store: Postgres when set, the local
+// file store otherwise (dev/test only) — see resolveStoreEnv below.
 
 export class EnvError extends Error {}
+
+// ── Store selection ─────────────────────────────────────────────────────────
+// This app originally ran file-store-only, defaulting to a directory under
+// os.tmpdir() because a serverless filesystem is read-only outside /tmp. That
+// made every deploy silently unreliable: /tmp is PER-INSTANCE and does not
+// survive a cold start, so a session cookie (a stateless signed JWT) stays
+// valid while the user row it points at vanishes — surfacing as sporadic
+// "Sign in required." 401s across every route, and wiping stored Google OAuth
+// tokens. Postgres is the fix; production refuses to fall back to files.
+export type StoreKind = 'postgres' | 'file'
+
+export interface StoreEnv {
+  kind: StoreKind
+  databaseUrl?: string
+}
+
+function isProduction(): boolean {
+  // Vercel sets VERCEL_ENV=production for prod deployments; otherwise fall
+  // back to NODE_ENV. Preview deployments are treated as needing a DB too,
+  // since they run on the same ephemeral-filesystem platform.
+  return (
+    process.env.VERCEL_ENV === 'production' ||
+    process.env.VERCEL_ENV === 'preview' ||
+    (process.env.NODE_ENV === 'production' && process.env.VERCEL !== undefined)
+  )
+}
+
+export function resolveStoreEnv(): StoreEnv {
+  const databaseUrl =
+    process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL
+
+  if (isProduction()) {
+    if (!databaseUrl) {
+      throw new EnvError(
+        'DATABASE_URL is required in production. North Star Headquarters will not fall back to the ephemeral file store, which silently loses every account, project, and stored Google credential on this platform. Provision a PostgreSQL database and set DATABASE_URL.'
+      )
+    }
+    if (!process.env.APP_SECRET || process.env.APP_SECRET.length < 32) {
+      throw new EnvError(
+        'APP_SECRET (min 32 chars) is required in production for sessions and credential encryption. Generate one with: openssl rand -base64 32'
+      )
+    }
+    return { kind: 'postgres', databaseUrl }
+  }
+
+  // Non-production: Postgres if configured, else the file store for local dev
+  // and tests, where a per-process temp directory is perfectly adequate.
+  return databaseUrl ? { kind: 'postgres', databaseUrl } : { kind: 'file' }
+}
 
 // Google OAuth (Phase H). The Connect-Google flow needs a Google Cloud OAuth
 // client. These are read from env so the deployment owner supplies them in

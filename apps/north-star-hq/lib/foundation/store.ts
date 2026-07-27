@@ -1,13 +1,17 @@
-// Persistent store for the foundation layer — always the seeded, file-backed
-// FoundationStore (see env.ts / seed.ts). No Postgres path here.
+// Persistent store for the foundation layer.
 //
-// Defaults to a directory under the OS temp dir, not a repo-relative path:
-// serverless platforms (Vercel Functions included) ship a read-only
-// filesystem outside of /tmp, so `.data/foundation` would throw on every
-// write there. os.tmpdir() is writable both locally and on Vercel, at the
-// cost of being ephemeral per-instance on Vercel — an accepted tradeoff for
-// seeded demo data (see store.ts's getStore() comment and the README).
-// Override with FOUNDATION_DATA_DIR to pin a specific location.
+// Postgres (`pg`) when DATABASE_URL/POSTGRES_URL is set — the production
+// path, and mandatory in production (see env.ts's resolveStoreEnv, which
+// throws rather than silently degrade). Otherwise a JSON file store for
+// local dev and tests, defaulting under os.tmpdir() because a serverless
+// filesystem is read-only outside /tmp; override with FOUNDATION_DATA_DIR to
+// pin a specific location for easier local inspection.
+//
+// The file store is NOT durable on a serverless platform: /tmp is
+// per-instance and does not survive a cold start. Relying on it in
+// production dropped user rows out from under still-valid session JWTs
+// ("Sign in required." 401s) and wiped stored Google OAuth credentials —
+// which is exactly why production now requires Postgres.
 
 import { tmpdir } from 'os'
 import { join } from 'path'
@@ -148,15 +152,24 @@ export interface FoundationStore {
 
 let cached: FoundationStore | null = null
 
-// North Star Headquarters always runs on seeded, self-contained demo data —
-// there is no Postgres-backed path here (unlike the RankForge app this was
-// forked from). See instrumentation.ts for the seeding step. Note that on a
-// serverless platform this directory is not guaranteed to persist across
-// instances/cold starts — each instance re-seeds to the same baseline.
+// Postgres when DATABASE_URL/POSTGRES_URL is set — the production path, and
+// REQUIRED in production: resolveStoreEnv() throws rather than fall back to
+// the file store, which is per-instance and non-durable on a serverless
+// platform (it silently dropped accounts and stored Google credentials
+// between cold starts, surfacing as sporadic "Sign in required." 401s).
+// Locally, an unset DATABASE_URL still gets the file store, defaulting under
+// os.tmpdir() since a repo-relative path is not writable on serverless.
 export async function getStore(): Promise<FoundationStore> {
   if (cached) return cached
-  const { FileFoundationStore } = await import('./filestore')
-  cached = new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || join(tmpdir(), 'north-star-hq-foundation'))
+  const { resolveStoreEnv } = await import('./env')
+  const env = resolveStoreEnv()
+  if (env.kind === 'postgres') {
+    const { PostgresFoundationStore } = await import('./postgres')
+    cached = await PostgresFoundationStore.create(env.databaseUrl!)
+  } else {
+    const { FileFoundationStore } = await import('./filestore')
+    cached = new FileFoundationStore(process.env.FOUNDATION_DATA_DIR || join(tmpdir(), 'north-star-hq-foundation'))
+  }
   return cached
 }
 
