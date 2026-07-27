@@ -80,6 +80,7 @@ export default function BriefingPanel({
           setBrief(briefRes.brief)
           setTrends(trend)
           onCompassState?.('success')
+          window.setTimeout(() => { if (!cancelled) onCompassState?.('idle') }, 2600)
           voice.speak(briefRes.brief.executiveSummary)
         } catch (err) {
           if (!cancelled) {

@@ -12,7 +12,7 @@
 // ...) — independent per-component state would silently desync the moment
 // more than one component read it.
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 function readEnabled(): boolean {
   try {
@@ -34,6 +34,11 @@ interface VoiceState {
   setEnabled: (v: boolean) => void
   supported: boolean
   speak: (text: string) => void
+  // True only for the actual duration the browser is producing audio (driven
+  // by the SpeechSynthesisUtterance's own onstart/onend/onerror — never a
+  // fixed timer guessing how long a line takes to read), so the Compass's
+  // glow genuinely tracks when it's talking, not a fake loop.
+  speaking: boolean
 }
 
 const Ctx = createContext<VoiceState | null>(null)
@@ -41,33 +46,50 @@ const Ctx = createContext<VoiceState | null>(null)
 export function VoiceProvider({ children }: { children: React.ReactNode }) {
   const [enabled, setEnabledState] = useState(false)
   const [supported, setSupported] = useState(false)
+  const [speaking, setSpeaking] = useState(false)
+
+  // speak() reads these rather than the state values it closes over, so its
+  // identity never changes. The room's wake listener and the briefing effect
+  // both capture speak once on mount — while voice is still off — so a
+  // [enabled]-dependent callback would leave them holding a permanently
+  // muted copy and nothing would ever be spoken aloud.
+  const enabledRef = useRef(false)
+  const supportedRef = useRef(false)
 
   useEffect(() => {
-    setSupported(typeof window !== 'undefined' && 'speechSynthesis' in window)
-    setEnabledState(readEnabled())
+    const sup = typeof window !== 'undefined' && 'speechSynthesis' in window
+    supportedRef.current = sup
+    setSupported(sup)
+    const en = readEnabled()
+    enabledRef.current = en
+    setEnabledState(en)
   }, [])
 
   const setEnabled = useCallback((v: boolean) => {
+    enabledRef.current = v
     setEnabledState(v)
     writeEnabled(v)
-    if (!v && typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel()
+    if (!v && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel()
+      setSpeaking(false)
+    }
   }, [])
 
-  const speak = useCallback(
-    (text: string) => {
-      if (!enabled || !supported || !text) return
-      try {
-        window.speechSynthesis.cancel() // one voice at a time — a new line interrupts the last
-        const u = new SpeechSynthesisUtterance(text)
-        u.rate = 0.98
-        u.pitch = 0.92
-        window.speechSynthesis.speak(u)
-      } catch {}
-    },
-    [enabled, supported]
-  )
+  const speak = useCallback((text: string) => {
+    if (!enabledRef.current || !supportedRef.current || !text) return
+    try {
+      window.speechSynthesis.cancel() // one voice at a time — a new line interrupts the last
+      const u = new SpeechSynthesisUtterance(text)
+      u.rate = 0.98
+      u.pitch = 0.92
+      u.onstart = () => setSpeaking(true)
+      u.onend = () => setSpeaking(false)
+      u.onerror = () => setSpeaking(false)
+      window.speechSynthesis.speak(u)
+    } catch {}
+  }, [])
 
-  return <Ctx.Provider value={{ enabled, setEnabled, supported, speak }}>{children}</Ctx.Provider>
+  return <Ctx.Provider value={{ enabled, setEnabled, supported, speak, speaking }}>{children}</Ctx.Provider>
 }
 
 export function useVoice(): VoiceState {

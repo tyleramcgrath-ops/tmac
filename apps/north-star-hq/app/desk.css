@@ -40,7 +40,13 @@
 /* time-of-day grade on the plate -- sharp, never a flat tint. Coordinated
    with the sky/ambient/ceiling/floor layers and the compass lighting. */
 [data-time='dawn'] .ns-plate { filter: brightness(1.1) contrast(1.01) saturate(1.05) hue-rotate(-6deg); }
-[data-time='day']  .ns-plate { filter: brightness(1.2) contrast(1.0) saturate(0.97) hue-rotate(-2deg); }
+/* Day is the one time the base plate (a fixed night photograph) has no real
+   light source of its own to draw on — dawn/dusk/night all lean on the warm
+   ceiling/floor glow below for their brightness, but day intentionally dials
+   that glow down (a "no artificial gold light at midday" idea). Without a
+   correspondingly bigger boost here, day ends up reading as the DARKEST time
+   instead of the brightest — the actual bug. */
+[data-time='day']  .ns-plate { filter: brightness(1.72) contrast(0.99) saturate(0.98) hue-rotate(-2deg); }
 [data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
 [data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
 
@@ -53,27 +59,27 @@
 .ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
   background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
 [data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
-[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(150,185,230,0.3); --sky-mid: rgba(205,222,242,0.2); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(185,215,248,0.62); --sky-mid: rgba(235,244,255,0.5); }
 [data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
 [data-time='night'] .ns-sky { opacity: 0; }
 /* ambient colour temperature wash */
 .ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
 [data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
-[data-time='day']  .ns-ambient { opacity: 1; background: rgba(214,228,244,0.2); }
+[data-time='day']  .ns-ambient { opacity: 1; background: rgba(236,244,255,0.58); }
 [data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
 [data-time='night'] .ns-ambient { opacity: 0; }
 /* gold ceiling constellation intensity */
 .ns-ceilglow { z-index: 2; mix-blend-mode: screen; opacity: 0.55;
   background: radial-gradient(120% 42% at 50% -6%, rgba(255,196,120,0.5), rgba(255,180,110,0.14) 40%, transparent 66%); }
 [data-time='dawn'] .ns-ceilglow { opacity: 0.3; }
-[data-time='day']  .ns-ceilglow { opacity: 0.12; }
+[data-time='day']  .ns-ceilglow { opacity: 0.34; }
 [data-time='dusk'] .ns-ceilglow { opacity: 0.5; }
 [data-time='night'] .ns-ceilglow { opacity: 0.7; }
 /* platform / floor glow, warmest at night, and reacts to the compass */
 .ns-platglow { z-index: 3; mix-blend-mode: screen; opacity: 0.3;
   background: radial-gradient(34% 22% at 50% 62%, rgba(255,200,130,0.3), transparent 70%);
   transition: opacity 1.2s ease; }
-[data-time='day'] .ns-platglow { opacity: 0.12; }
+[data-time='day'] .ns-platglow { opacity: 0.22; }
 
 /* --- compass-state room reactions (independent of time-of-day) --- */
 [data-compass-state='listening'] .ns-platglow { opacity: 0.5; }
@@ -124,8 +130,12 @@ html[data-dev] .ns-dev { display: flex; }
     radial-gradient(120% 90% at 50% 44%, transparent 52%, rgba(2,3,8,0.34) 100%),
     linear-gradient(180deg, rgba(2,3,8,0.5) 0%, transparent 16%, transparent 72%, rgba(2,3,8,0.66) 100%);
   transform: translate3d(calc(var(--mx) * -4px), calc(var(--my) * -2px), 0);
-  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.5s ease;
 }
+/* The vignette is a fixed darkening pass tuned for the evening room. At
+   midday it fights the whole point of the hour, so it eases off — the depth
+   cue stays, the gloom doesn't. */
+[data-time='day'] .ns-vignette { opacity: 0.45; }
 
 /* ---- the live 3D compass, seated on the platform ---- */
 .ns-compass {
@@ -325,6 +335,10 @@ html[data-dev] .ns-dev { display: flex; }
   opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease;
 }
 .ns-drawer.open { opacity: 1; pointer-events: auto; transform: translateY(-50%) translateX(0); }
+/* The drawer sits directly over the command rail, so it needs to be denser
+   than the shared glass the cards use — at 0.66 the rail's labels read
+   straight through the panel's own text. */
+.ns-drawer.ns-glass { background: linear-gradient(180deg, rgb(9,10,14), rgb(5,6,9)); }
 .ns-drawer-close {
   position: absolute; top: 0.7rem; right: 0.7rem; width: 22px; height: 22px; display: grid; place-items: center;
   border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 0.9rem; line-height: 1;
@@ -449,6 +463,7 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 0.55em; vertical-align: middle;
   background: #7fd88f; color: #7fd88f; box-shadow: 0 0 8px currentColor; transition: background 0.5s ease, color 0.5s ease; }
 [data-compass-state='hover'] .ns-status-dot, [data-compass-state='listening'] .ns-status-dot { background:#8fd0ff; color:#8fd0ff; }
+[data-compass-state='speaking'] .ns-status-dot { background:#ecc276; color:#ecc276; }
 [data-compass-state='thinking'] .ns-status-dot, [data-compass-state='planning'] .ns-status-dot { background:#ffcf6a; color:#ffcf6a; }
 [data-compass-state='executing'] .ns-status-dot, [data-compass-state='deploying'] .ns-status-dot { background:#c79bff; color:#c79bff; }
 [data-compass-state='verifying'] .ns-status-dot { background:#9fe6d8; color:#9fe6d8; }
@@ -650,6 +665,7 @@ html[data-dev] .ns-dev { display: flex; }
   background: rgba(158,214,160,0.08); font-size: clamp(0.62rem,0.8vw,0.7rem); line-height: 1.5; color: rgba(200,232,200,0.9);
 }
 .ns-integ-notice.err { border-color: rgba(224,138,127,0.4); background: rgba(224,138,127,0.08); color: rgba(240,200,192,0.92); }
+.ns-integ-retry { display: block; margin-top: 0.5rem; }
 
 /* =====================================================================
    LIVE MONITOR — real ambient "watching your site" indicator (see
@@ -666,3 +682,225 @@ html[data-dev] .ns-dev { display: flex; }
 }
 .ns-livemon[data-pulse] .ns-livemon-dot { animation-duration: 0.7s; }
 @keyframes ns-livemon-breathe { 0%, 100% { opacity: 0.45; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
+
+/* ── Performance: real Search Console / Analytics charts ─────────────── */
+.ns-perf-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 1rem; }
+.ns-perf-stat { display: flex; flex-direction: column; gap: 0.24rem; }
+.ns-perf-stat-label {
+  font-size: clamp(0.42rem,0.56vw,0.5rem); letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(226,214,188,0.45);
+}
+.ns-perf-stat-value { font-size: clamp(0.9rem,1.5vw,1.25rem); color: #f2e4c6; letter-spacing: 0.01em; }
+
+.ns-perf-tabs { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 1.1rem; }
+.ns-perf-tab {
+  appearance: none; cursor: pointer; border-radius: 999px;
+  border: 1px solid rgba(226,214,188,0.16); background: rgba(226,214,188,0.04);
+  color: rgba(226,214,188,0.6); padding: 0.28rem 0.66rem;
+  font: inherit; font-size: clamp(0.44rem,0.6vw,0.53rem);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.ns-perf-tab:hover { color: rgba(240,228,200,0.85); border-color: rgba(226,214,188,0.3); }
+.ns-perf-tab[aria-selected='true'] {
+  color: #1a1712; background: #ecc276; border-color: #ecc276;
+}
+
+.ns-perf-chart-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem;
+  margin-top: 1.1rem; flex-wrap: wrap;
+}
+.ns-perf-chart-title {
+  margin: 1.1rem 0 0; font-size: clamp(0.44rem,0.6vw,0.52rem); letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(226,214,188,0.55);
+}
+.ns-perf-chart-head .ns-perf-chart-title { margin-top: 0; }
+.ns-perf-note { font-style: normal; color: rgba(226,214,188,0.35); text-transform: none; letter-spacing: 0.06em; }
+.ns-perf-delta { font-size: clamp(0.44rem,0.6vw,0.52rem); letter-spacing: 0.08em; color: rgba(226,214,188,0.5); }
+.ns-perf-delta[data-dir='up'] { color: #9ed6a0; }
+.ns-perf-delta[data-dir='down'] { color: #e0a07a; }
+.ns-perf-footnote { color: rgba(226,214,188,0.4); margin-top: 1rem; }
+
+.ns-chart { margin-top: 0.5rem; }
+.ns-chart-svg { display: block; width: 100%; height: auto; touch-action: none; }
+.ns-chart-line { fill: none; stroke: #ecc276; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.ns-chart-grid { stroke: rgba(226,214,188,0.12); stroke-width: 0.7; }
+.ns-chart-rule { stroke: rgba(236,194,118,0.45); stroke-width: 0.8; stroke-dasharray: 2 2; }
+.ns-chart-dot { fill: #ffe2a4; }
+.ns-chart-axis { fill: rgba(226,214,188,0.4); font-size: 7px; letter-spacing: 0.06em; }
+.ns-chart-empty { margin: 0.6rem 0 0; font-size: clamp(0.5rem,0.7vw,0.6rem); color: rgba(226,214,188,0.45); }
+.ns-chart-readout { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+.ns-chart-readout-label {
+  font-size: clamp(0.44rem,0.6vw,0.52rem); letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(226,214,188,0.45);
+}
+.ns-chart-readout-value { font-size: clamp(0.6rem,0.9vw,0.75rem); color: #f2e4c6; }
+
+.ns-bars { list-style: none; margin: 0.7rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.ns-bar-row { display: grid; grid-template-columns: 5.2rem 1fr 3.2rem; align-items: center; gap: 0.55rem; }
+.ns-bar-key {
+  font-size: clamp(0.46rem,0.62vw,0.55rem); color: rgba(226,214,188,0.6);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ns-bar-track { height: 5px; border-radius: 999px; background: rgba(226,214,188,0.08); overflow: hidden; }
+.ns-bar-fill {
+  display: block; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, rgba(236,194,118,0.55), #ecc276);
+}
+.ns-bar-val { font-size: clamp(0.46rem,0.62vw,0.55rem); color: #f2e4c6; text-align: right; }
+
+/* ── Project switcher: which site the room is reporting on ───────────── */
+/* .ns-brand is pointer-events:none so the compass stays clickable through
+   it — the switcher has to opt back in. */
+.ns-proj { position: relative; margin-top: 0.6rem; pointer-events: auto; display: inline-block; }
+.ns-proj-current {
+  appearance: none; cursor: pointer; font: inherit;
+  display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+  border: 1px solid rgba(226,214,188,0.14); border-radius: 0.5rem;
+  background: rgba(18,16,13,0.5); backdrop-filter: blur(6px);
+  padding: 0.3rem 0.8rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.ns-proj-current:hover, .ns-proj-current[aria-expanded='true'] {
+  border-color: rgba(236,194,118,0.4); background: rgba(24,21,16,0.72);
+}
+.ns-proj-name {
+  font-size: clamp(0.46rem,0.66vw,0.56rem); letter-spacing: 0.2em; text-transform: uppercase;
+  color: #eed09a;
+}
+.ns-proj-domain { font-size: clamp(0.4rem,0.56vw,0.48rem); letter-spacing: 0.1em; color: rgba(226,214,188,0.42); }
+
+.ns-proj-menu {
+  position: absolute; top: calc(100% + 0.4rem); left: 50%; transform: translateX(-50%);
+  min-width: 14rem; max-width: min(20rem, 80vw); text-align: left;
+  border: 1px solid rgba(226,214,188,0.16); border-radius: 0.6rem;
+  background: rgba(14,12,10,0.94); backdrop-filter: blur(14px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.6);
+  padding: 0.6rem; z-index: 20;
+}
+.ns-proj-menu-head {
+  margin: 0 0 0.45rem; font-size: clamp(0.4rem,0.55vw,0.47rem);
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(226,214,188,0.4);
+}
+.ns-proj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.ns-proj-item {
+  appearance: none; cursor: pointer; font: inherit; width: 100%; text-align: left;
+  display: flex; flex-direction: column; gap: 0.1rem;
+  border: 0; border-radius: 0.36rem; background: transparent;
+  padding: 0.36rem 0.5rem; transition: background 0.15s ease;
+}
+.ns-proj-item:hover { background: rgba(226,214,188,0.07); }
+.ns-proj-item[aria-checked='true'] { background: rgba(236,194,118,0.13); }
+.ns-proj-item-name { font-size: clamp(0.48rem,0.66vw,0.58rem); color: #f2e4c6; letter-spacing: 0.04em; }
+.ns-proj-item-domain { font-size: clamp(0.42rem,0.56vw,0.5rem); color: rgba(226,214,188,0.42); }
+
+.ns-proj-new, .ns-proj-save, .ns-proj-cancel {
+  appearance: none; cursor: pointer; font: inherit;
+  border-radius: 0.36rem; border: 1px solid rgba(226,214,188,0.16);
+  background: rgba(226,214,188,0.04); color: rgba(226,214,188,0.72);
+  font-size: clamp(0.44rem,0.6vw,0.52rem); letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.36rem 0.6rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.ns-proj-new { width: 100%; margin-top: 0.5rem; }
+.ns-proj-new:hover, .ns-proj-cancel:hover { color: #f2e4c6; border-color: rgba(236,194,118,0.4); }
+.ns-proj-save { background: #ecc276; border-color: #ecc276; color: #1a1712; }
+.ns-proj-save:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.ns-proj-add { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.55rem; }
+.ns-proj-input {
+  font: inherit; font-size: clamp(0.48rem,0.66vw,0.58rem);
+  border: 1px solid rgba(226,214,188,0.18); border-radius: 0.36rem;
+  background: rgba(226,214,188,0.05); color: #f2e4c6; padding: 0.4rem 0.55rem;
+}
+.ns-proj-input::placeholder { color: rgba(226,214,188,0.32); }
+.ns-proj-input:focus { outline: none; border-color: rgba(236,194,118,0.5); }
+.ns-proj-add-row { display: flex; gap: 0.35rem; }
+.ns-proj-error { margin: 0; font-size: clamp(0.44rem,0.6vw,0.52rem); color: #e0a07a; }
+
+/* ── Digital DNA: the helix of what this business is wired into ──────── */
+.ns-dna-identity { margin-top: 0.9rem; }
+.ns-dna-stage { margin-top: 1.1rem; }
+
+.ns-dna {
+  position: relative; width: 100%; max-width: 17rem; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 0.72rem; padding: 0.9rem 0.6rem;
+}
+.ns-dna-rung {
+  position: relative; height: 0.62rem;
+  /* every child shares one cycle; the stagger down the strand is the twist */
+  --dur: 4.4s;
+  --delay: calc(var(--i) * (var(--dur) / -14));
+}
+
+/* A point circling an axis seen edge-on: x = sin(t), depth = cos(t). Scale
+   and opacity track the depth so the near half of the turn reads as nearer. */
+.ns-dna-node {
+  position: absolute; top: 50%; width: 0.58rem; height: 0.58rem; border-radius: 50%;
+  margin-top: -0.29rem; background: rgba(226,214,188,0.32);
+  animation: ns-dna-orbit var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+.ns-dna-node.b { animation-name: ns-dna-orbit-b; }
+
+.ns-dna-bond {
+  position: absolute; top: 50%; left: 0; width: 100%; height: 2px;
+  margin-top: -1px; transform-origin: 50% 50%; border-radius: 2px;
+  background: rgba(226,214,188,0.22);
+  animation: ns-dna-bond var(--dur) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+/* Connected strands are bonded and lit. An unconnected source keeps its
+   nucleotides but the bond never forms — a visible break in the strand. */
+.ns-dna-rung[data-connected] .ns-dna-node { background: #ecc276; box-shadow: 0 0 10px rgba(236,194,118,0.7), 0 0 22px rgba(236,194,118,0.28); }
+.ns-dna-rung[data-connected] .ns-dna-bond {
+  background: linear-gradient(90deg, rgba(236,194,118,0.2), rgba(255,226,164,0.9), rgba(236,194,118,0.2));
+  box-shadow: 0 0 10px rgba(236,194,118,0.35);
+}
+.ns-dna-rung:not([data-connected]) .ns-dna-bond { background: none; border-top: 1px dashed rgba(226,214,188,0.22); height: 0; }
+
+.ns-dna-rung[data-active] .ns-dna-node { background: #fff0cd; box-shadow: 0 0 12px rgba(255,226,164,0.9); }
+.ns-dna-rung[data-active] .ns-dna-bond { filter: brightness(1.5); }
+.ns-dna-rung { cursor: default; }
+
+@keyframes ns-dna-orbit {
+  0%   { left: 50%; transform: translateX(-50%) scale(1);    opacity: 1; }
+  25%  { left: 100%; transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  50%  { left: 50%; transform: translateX(-50%) scale(0.5);  opacity: 0.35; }
+  75%  { left: 0%;  transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  100% { left: 50%; transform: translateX(-50%) scale(1);    opacity: 1; }
+}
+@keyframes ns-dna-orbit-b {
+  0%   { left: 50%; transform: translateX(-50%) scale(0.5);  opacity: 0.35; }
+  25%  { left: 0%;  transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  50%  { left: 50%; transform: translateX(-50%) scale(1);    opacity: 1; }
+  75%  { left: 100%; transform: translateX(-50%) scale(0.76); opacity: 0.7; }
+  100% { left: 50%; transform: translateX(-50%) scale(0.5);  opacity: 0.35; }
+}
+/* Widest exactly when the two nucleotides are furthest apart. */
+@keyframes ns-dna-bond {
+  0%, 50%, 100% { transform: scaleX(0.02); opacity: 0.15; }
+  25%, 75%      { transform: scaleX(1);    opacity: 1; }
+}
+
+.ns-dna-caption {
+  margin: 0.9rem 0 0; text-align: center; min-height: 2.2em;
+  font-size: clamp(0.46rem,0.64vw,0.55rem); line-height: 1.5;
+  color: rgba(226,214,188,0.55);
+}
+.ns-dna-list { margin-top: 0.9rem; gap: 0.7rem; }
+.ns-dna-list .ns-row { cursor: default; }
+.ns-row-desc[data-unavailable] { color: rgba(226,214,188,0.34); font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-dna-node, .ns-dna-bond { animation: none; }
+  .ns-dna-node { left: 50%; transform: translateX(-50%); }
+  .ns-dna-node.a { left: 12%; }
+  .ns-dna-node.b { left: 88%; }
+  .ns-dna-bond { transform: none; opacity: 1; }
+}
+
+/* The corner chrome sits over the ceiling band, which stays dark at every
+   hour, so it keeps its pale treatment — only the status line needed a
+   little more lift now that day is genuinely bright behind it. */
+[data-time='day'] .ns-status-line { color: rgba(238,228,206,0.72); }

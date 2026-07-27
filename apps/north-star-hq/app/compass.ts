@@ -8,7 +8,7 @@
 import * as THREE from 'three'
 
 export type CompassState =
-  | 'asleep' | 'awakening' | 'idle' | 'hover' | 'listening' | 'thinking'
+  | 'asleep' | 'awakening' | 'idle' | 'hover' | 'listening' | 'speaking' | 'thinking'
   | 'planning' | 'executing' | 'deploying' | 'verifying' | 'success'
   | 'warning' | 'error' | 'offline'
 export type TimeMode = 'dawn' | 'day' | 'dusk' | 'night'
@@ -145,6 +145,10 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     idle:      { outer: 0.06, inner: 0.038, star: 1.0, glow: 2.5, rise: 0.0, chan: 0.06, key: 2.1, orbit: 0.0, beam: 0.0, align: 0.0, temp: [255, 226, 176], pulse: 'breath' },
     hover:     { outer: 0.075, inner: 0.05, star: 1.4, glow: 2.9, rise: 0.05, chan: 0.30, key: 2.35, orbit: 0.25, beam: 0.0, align: 0.0, temp: [255, 230, 186], pulse: 'breath' },
     listening: { outer: 0.05, inner: 0.11, star: 1.9, glow: 3.2, rise: 0.09, chan: 0.6, key: 2.5, orbit: 0.45, beam: 0.0, align: 0.35, temp: [255, 220, 165], pulse: 'listen' },
+    // The Compass visibly talks — driven by real speechSynthesis start/end
+    // events (see _lib/use-voice.tsx), never a decorative loop running on
+    // its own timer.
+    speaking:  { outer: 0.11, inner: 0.16, star: 2.3, glow: 3.7, rise: 0.10, chan: 0.75, key: 2.75, orbit: 0.5, beam: 0.08, align: 0.55, temp: [255, 226, 176], pulse: 'speak' },
     thinking:  { outer: 0.18, inner: 0.30, star: 1.75, glow: 3.1, rise: 0.06, chan: 0.85, key: 2.6, orbit: 1.15, beam: 0.0, align: 0.0, temp: [255, 224, 172], pulse: 'slow' },
     planning:  { outer: 0.08, inner: 0.10, star: 1.85, glow: 3.0, rise: 0.08, chan: 0.9, key: 2.6, orbit: 0.55, beam: 0.05, align: 0.9, temp: [206, 224, 255], pulse: 'plan' },
     executing: { outer: 0.20, inner: 0.24, star: 2.5, glow: 4.0, rise: 0.14, chan: 1.6, key: 2.95, orbit: 1.1, beam: 0.4, align: 0.6, temp: [255, 236, 196], pulse: 'exec' },
@@ -223,6 +227,8 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
     let pf = 1
     if (S.pulse === 'breath') pf = 1 + Math.sin(t * 1.6) * 0.05
     else if (S.pulse === 'listen') pf = 1 + Math.sin(t * 2.2) * 0.10
+    // irregular, syllable-like layering rather than one clean sine — reads as speech, not a metronome
+    else if (S.pulse === 'speak') pf = 1 + 0.12 * Math.sin(t * 3.6) + 0.06 * Math.sin(t * 7.3 + 1.1)
     else if (S.pulse === 'slow') pf = 1 + Math.sin(t * 0.9) * 0.14
     else if (S.pulse === 'plan') pf = 1 + Math.sin(t * 1.2) * 0.07
     else if (S.pulse === 'exec') pf = 1 + 0.11 * Math.sin(t * 4.4) + 0.04 * Math.sin(t * 11)

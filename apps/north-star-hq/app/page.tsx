@@ -5,6 +5,7 @@ import { initCompass, type CompassApi, type CompassState, type TimeMode } from '
 import { AuthProvider, useAuth } from './lib/auth-context'
 import { useDeskContext } from './_lib/use-desk-context'
 import PanelHost from './panels/PanelHost'
+import ProjectSwitcher from './panels/ProjectSwitcher'
 import OnboardingWizard from './onboarding-wizard'
 import LiveMonitor from './live-monitor'
 import { VoiceProvider, useVoice } from './_lib/use-voice'
@@ -18,14 +19,14 @@ import { VoiceProvider, useVoice } from './_lib/use-voice'
 
 const TIME_WORD: Record<TimeMode, string> = { dawn: 'Dawn', day: 'Day', dusk: 'Dusk', night: 'Night' }
 const STATE_LABEL: Partial<Record<CompassState, string>> = {
-  idle: '', hover: '', listening: 'Listening…',
+  idle: '', hover: '', listening: 'Listening…', speaking: 'Speaking…',
   thinking: 'Analyzing patterns & market signals…', planning: 'Drafting the plan…',
   executing: 'Executing optimizations…', deploying: 'Deploying across your ecosystem…',
   verifying: 'Verifying by read-back…', success: 'Mission accomplished',
   warning: 'Attention needed', error: 'Action paused — review required', offline: 'Systems offline',
 }
 const TIMES: TimeMode[] = ['dawn', 'day', 'dusk', 'night']
-const DEV_STATES: CompassState[] = ['idle', 'hover', 'listening', 'thinking', 'planning', 'executing', 'deploying', 'verifying', 'success', 'warning', 'error', 'offline']
+const DEV_STATES: CompassState[] = ['idle', 'hover', 'listening', 'speaking', 'thinking', 'planning', 'executing', 'deploying', 'verifying', 'success', 'warning', 'error', 'offline']
 
 type Phase = 'asleep' | 'waking' | 'awake'
 
@@ -60,7 +61,7 @@ function DeskGate({ children }: { children: React.ReactNode }) {
 
 function DeskRoom() {
   const { user, refresh } = useAuth()
-  const { projectId, loading: projectsLoading } = useDeskContext(!!user)
+  const { project, projects, projectId, loading: projectsLoading, setProjectId, addProject } = useDeskContext(!!user)
 
   const roomRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -180,6 +181,16 @@ function DeskRoom() {
     runWake()
   }
 
+  // A child (Integrations, landing back from Google's consent screen) asks
+  // to be summoned directly — the page reloaded, so the room is asleep
+  // again. Wake it (quick-wake if this browser has visited before) so the
+  // result of Connect Google is actually visible instead of sitting in a
+  // drawer behind a still-sleeping room.
+  const onSummonFromChild = () => {
+    runWake()
+    callPanels(true)
+  }
+
   // keep a ref of the current time so persist() from timers has the live value
   const timeModeRef = useRef<TimeMode>('night')
   useEffect(() => { timeModeRef.current = timeMode }, [timeMode])
@@ -290,6 +301,28 @@ function DeskRoom() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // The compass lights up while it is actually talking. voice.speaking is
+  // driven by the utterance's own onstart/onend, so the glow starts and stops
+  // with the audio rather than on a guessed duration.
+  //
+  // Speech yields only to the states that own a deliberate, user-triggered
+  // sequence and narrate it with their own lighting; everything else it may
+  // take over, because the room talking is the more salient signal.
+  //
+  // This has to be a blocklist. On a full wake the briefing sets 'thinking'
+  // at 4.2s and the greeting speaks at 4.7s, so an allowlist of resting
+  // states silenced the glow precisely when the room was talking — while a
+  // quick wake, with different ordering, worked. That intermittency is what
+  // makes the narrow rule wrong.
+  useEffect(() => {
+    if (!voice.speaking) return
+    const owned: CompassState[] = ['asleep', 'awakening', 'executing', 'deploying', 'verifying', 'offline']
+    if (owned.includes(compassStateRef.current)) return
+    C('speaking')
+    return () => { if (compassStateRef.current === 'speaking') C('idle') }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.speaking])
+
   // principles: heart calls the briefing; command opens the Command Bar;
   // interface shows the thinking arc
   const onPrinciple = (k: 'heart' | 'command' | 'interface') => {
@@ -349,6 +382,7 @@ function DeskRoom() {
         className="ns-room"
         data-time={timeMode}
         data-phase={phase === 'asleep' ? 'asleep' : 'awake'}
+        data-compass-state={compassState}
         data-quick={quick ? '' : undefined}
         data-aware={aware ? '' : undefined}
         data-cinema={cinema ? '' : undefined}
@@ -395,6 +429,14 @@ function DeskRoom() {
 
         <header className="ns-brand">
           <h1>North Star</h1><p>Headquarters</p>
+          {phase === 'awake' && (
+            <ProjectSwitcher
+              project={project}
+              projects={projects}
+              onSelect={setProjectId}
+              onAdd={addProject}
+            />
+          )}
         </header>
 
         <div className="ns-controls">
@@ -416,11 +458,13 @@ function DeskRoom() {
         </div>
 
         <PanelHost
+          project={project}
           projectId={projectId}
           projectsResolved={!projectsLoading}
           panelsUp={panelsUp}
           onCompassState={C}
           onAgentSignal={onAgentSignal}
+          onSummon={onSummonFromChild}
           consoleInputRef={consoleInputRef}
         />
 
