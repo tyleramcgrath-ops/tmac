@@ -30,22 +30,62 @@ hands off to the existing wake cinematic. A returning visitor (session
 cookie still valid) skips straight to the quick-wake — the wizard only ever
 runs once, gated purely on whether a session exists.
 
+## Real Google Search Console / Analytics
+
+Unlike the rest of this app's data, this one is genuinely real, not
+simulated — the room has a full Google OAuth 2.0 flow (`lib/foundation/oauth/
+google.ts`, ported from the root RankForge app along with its
+`lib/foundation/external/providers/google.ts` query layer, neither of which
+were reachable in this app until now). Open the **Integrations** rail
+destination and click **Connect Google**: it's a real consent-screen
+round-trip (`/api/oauth/google/callback`), tokens are stored AES-256-GCM
+encrypted, and once granted, the Morning Briefing's trend sparkline and the
+`/analytics/trend` + `/analytics/breakdown` endpoints start reading your
+actual Search Console/Analytics data instead of their honest "not
+connected" fallback. Needs `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` set
+(see `.env.example`) — unset, the panel says so plainly instead of a dead
+"Connect" button.
+
+Everything else external (AI Search Citations, Competitor Intelligence,
+industry Trends) has real *engine* code already sitting in
+`lib/foundation/external/` from the same fork, but no real provider behind
+it anywhere in this codebase — only `Null`/`Mock` implementations. Building
+those for real needs either third-party API keys (ChatGPT/Perplexity/Gemini
+for citations) or a working crawler (competitors) — a substantially bigger
+project than the Google integration, intentionally left for later rather
+than shipping panels that could only ever show "not connected."
+
+## Ambient monitoring + voice
+
+- **Live monitor** (top-left status line): a real, non-decorative "watching
+  your site" indicator — it polls the actual Activity Stream
+  (`app/live-monitor.tsx`) and shows genuine elapsed time since the last
+  real event. No activity yet ⇒ it says so.
+- **Voice** (top-right toggle): opt-in text-to-speech via the browser's
+  native `speechSynthesis` — no external API/key. The Compass reads the
+  wake greeting, the Morning Briefing's summary, and Command Bar responses
+  aloud. One-way only; there is no microphone/voice input. Shared across
+  every panel via `VoiceProvider` (`app/_lib/use-voice.tsx`) so the toggle
+  in the header actually reaches every consumer — a plain per-component hook
+  here would silently desync the moment more than one component read it.
+
 ## Prototype status
 
-Like `apps/reloop`, this is a fully functional UI running on **seeded/sample
-data**, not live integrations:
+Like `apps/reloop`, most of this app's data is **seeded/sample data**, not
+live integrations (Google Search Console/Analytics being the one exception
+above):
 
 - Every activation seeds a sample project (see `lib/foundation/seed.ts`) —
   some open recommendations, some already "deployed."
 - "Deploying" a fix (Operator approve/deploy, or the Command Bar's
   `deploy-mission`) is simulated — see `lib/foundation/wp-execution.ts`. No
   real WordPress site is ever written to.
-- Google Search Console / Analytics ("Live Trends") are never connected in
-  this app, so those panels always show their honest "not connected" state
-  rather than fabricated numbers.
-- The onboarding wizard's "Connect your data" step is UI-only — every
-  integration always shows "Available," and nothing it does actually
-  connects anything.
+- The onboarding wizard's "Connect your data" step is still UI-only for
+  WordPress / SE Ranking / Semrush — every row shows "Available," and
+  nothing it does actually connects anything (no real backing integration
+  exists anywhere in the codebase for those three). Google Search Console
+  and Analytics genuinely connect for real once activated — see the
+  Integrations panel above.
 - Storage is a local JSON file store — see `lib/foundation/store.ts`.
   Defaults to a directory under the OS temp dir (serverless platforms like
   Vercel Functions ship a read-only filesystem outside of `/tmp`, so a

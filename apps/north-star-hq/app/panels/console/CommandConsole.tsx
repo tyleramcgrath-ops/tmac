@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react'
 import { api, type CommandResultDTO, type MissionDTO } from '../../lib/client'
 import type { CompassState } from '../../compass'
+import { useVoice } from '../../_lib/use-voice'
 
 function genId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID()
@@ -30,6 +31,7 @@ export default function CommandConsole({
   const [result, setResult] = useState<CommandResultDTO | null>(null)
   const [loading, setLoading] = useState(false)
   const [currentMission, setCurrentMission] = useState<MissionDTO | null>(null)
+  const voice = useVoice()
 
   useEffect(() => {
     if (!panelsUp || !projectId) return
@@ -45,6 +47,7 @@ export default function CommandConsole({
   }, [result])
 
   function handleResult(res: CommandResultDTO) {
+    voice.speak(res.message)
     if (res.status === 'pending-confirmation') {
       setPending(res)
       setResult(null)
