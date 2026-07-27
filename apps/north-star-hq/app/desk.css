@@ -40,7 +40,13 @@
 /* time-of-day grade on the plate -- sharp, never a flat tint. Coordinated
    with the sky/ambient/ceiling/floor layers and the compass lighting. */
 [data-time='dawn'] .ns-plate { filter: brightness(1.1) contrast(1.01) saturate(1.05) hue-rotate(-6deg); }
-[data-time='day']  .ns-plate { filter: brightness(1.2) contrast(1.0) saturate(0.97) hue-rotate(-2deg); }
+/* Day is the one time the base plate (a fixed night photograph) has no real
+   light source of its own to draw on — dawn/dusk/night all lean on the warm
+   ceiling/floor glow below for their brightness, but day intentionally dials
+   that glow down (a "no artificial gold light at midday" idea). Without a
+   correspondingly bigger boost here, day ends up reading as the DARKEST time
+   instead of the brightest — the actual bug. */
+[data-time='day']  .ns-plate { filter: brightness(1.38) contrast(1.02) saturate(0.94) hue-rotate(-2deg); }
 [data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
 [data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
 
@@ -53,27 +59,27 @@
 .ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
   background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
 [data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
-[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(150,185,230,0.3); --sky-mid: rgba(205,222,242,0.2); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(165,200,240,0.46); --sky-mid: rgba(220,232,248,0.34); }
 [data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
 [data-time='night'] .ns-sky { opacity: 0; }
 /* ambient colour temperature wash */
 .ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
 [data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
-[data-time='day']  .ns-ambient { opacity: 1; background: rgba(214,228,244,0.2); }
+[data-time='day']  .ns-ambient { opacity: 1; background: rgba(222,234,248,0.4); }
 [data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
 [data-time='night'] .ns-ambient { opacity: 0; }
 /* gold ceiling constellation intensity */
 .ns-ceilglow { z-index: 2; mix-blend-mode: screen; opacity: 0.55;
   background: radial-gradient(120% 42% at 50% -6%, rgba(255,196,120,0.5), rgba(255,180,110,0.14) 40%, transparent 66%); }
 [data-time='dawn'] .ns-ceilglow { opacity: 0.3; }
-[data-time='day']  .ns-ceilglow { opacity: 0.12; }
+[data-time='day']  .ns-ceilglow { opacity: 0.34; }
 [data-time='dusk'] .ns-ceilglow { opacity: 0.5; }
 [data-time='night'] .ns-ceilglow { opacity: 0.7; }
 /* platform / floor glow, warmest at night, and reacts to the compass */
 .ns-platglow { z-index: 3; mix-blend-mode: screen; opacity: 0.3;
   background: radial-gradient(34% 22% at 50% 62%, rgba(255,200,130,0.3), transparent 70%);
   transition: opacity 1.2s ease; }
-[data-time='day'] .ns-platglow { opacity: 0.12; }
+[data-time='day'] .ns-platglow { opacity: 0.22; }
 
 /* --- compass-state room reactions (independent of time-of-day) --- */
 [data-compass-state='listening'] .ns-platglow { opacity: 0.5; }
