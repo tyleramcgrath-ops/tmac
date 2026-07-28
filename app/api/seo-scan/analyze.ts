@@ -1,4 +1,5 @@
 import { isSafeFetchTarget } from './url-guard'
+import { assessPageValidity } from './page-validity'
 // Reusable on-page SEO analysis used by /api/seo-scan.
 //
 // Pure functions over fetched HTML so the same extractor powers both the user's
@@ -599,11 +600,17 @@ export async function fetchHtml(
   // JS rendering) for sites behind Cloudflare/WAF bot protection that a direct
   // datacenter fetch can't pass. Configure SCRAPE_API_TEMPLATE with a {{url}}
   // placeholder, e.g. a ScraperAPI/ScrapingBee/Zyte endpoint including your key.
-  if (template && (BLOCK_STATUSES.has(result.status) || !result.html)) {
+  //
+  // Triggers on the SAME validity check the caller applies afterward — not
+  // just BLOCK_STATUSES/empty-body — so a WAF challenge served with HTTP 200,
+  // or a JS-rendered SPA's near-empty shell HTML (real content, just too
+  // small to analyze), also gets a real retry through the render proxy
+  // instead of silently skipping the fallback the error message promises.
+  if (template && !assessPageValidity(result.html, result.status).ok) {
     try {
       const proxied = template.replace('{{url}}', encodeURIComponent(url))
       const viaProxy = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, 25_000), maxBytes)
-      if (viaProxy.html && !BLOCK_STATUSES.has(viaProxy.status)) {
+      if (assessPageValidity(viaProxy.html, viaProxy.status).ok) {
         // Keep the original target as finalUrl so link analysis stays correct.
         return { html: viaProxy.html, finalUrl: url, status: 200, via: 'proxy', proxyConfigured }
       }
