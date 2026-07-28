@@ -1,0 +1,47 @@
+# Build-context excludes. Anything listed here is invisible to `docker build`.
+
+# Reinstalled in the image; host copies are the wrong platform's binaries.
+node_modules
+.pnpm-store
+
+# Build output — rebuilt inside the image.
+.next
+out
+dist
+
+.git
+.github
+.gitignore
+
+# Secrets must never enter a layer. Real config is injected as environment
+# variables at run time (see COOLIFY_DEPLOYMENT.md).
+.env
+.env.*
+!.env.example
+
+# Local file-store data (used only when DATABASE_URL is unset).
+.data
+
+# Tests and tooling — not needed to build or serve the app.
+tests
+e2e
+playwright.config.ts
+vitest.config.ts
+coverage
+test-results
+playwright-report
+
+.vscode
+.idea
+.DS_Store
+*.log
+
+# Windows launchers.
+start-north-star.bat
+start-north-star.ps1
+
+# NOTE: markdown is deliberately NOT excluded. next.config.ts loads *.md as
+# asset/source and several modules import it as real content --
+# ai/tools/*.md and app/api/{chat,errors}/prompt.md. A blanket `*.md` rule
+# breaks the build with a confusing module-not-found. The root-level design
+# docs ride along; they are a few hundred KB of text and cost nothing.

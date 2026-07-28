@@ -9,7 +9,7 @@ import {
 import { DEFAULT_MODEL, MODEL_NAMES, SUPPORTED_MODELS } from '@/ai/constants'
 import { NextResponse } from 'next/server'
 import { getModelOptions } from '@/ai/gateway'
-import { checkBotId } from 'botid/server'
+import { checkBot } from '@/lib/bot-protection'
 import { tools } from '@/ai/tools'
 import prompt from './prompt.md'
 
@@ -21,7 +21,7 @@ interface BodyData {
 
 export async function POST(req: Request) {
   const [checkResult, { messages, modelId = DEFAULT_MODEL, reasoningEffort }] =
-    await Promise.all([checkBotId(), req.json() as Promise<BodyData>])
+    await Promise.all([checkBot(), req.json() as Promise<BodyData>])
 
   if (checkResult.isBot) {
     return NextResponse.json({ error: `Bot detected` }, { status: 403 })
