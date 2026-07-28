@@ -46,7 +46,7 @@
    that glow down (a "no artificial gold light at midday" idea). Without a
    correspondingly bigger boost here, day ends up reading as the DARKEST time
    instead of the brightest — the actual bug. */
-[data-time='day']  .ns-plate { filter: brightness(1.72) contrast(0.99) saturate(0.98) hue-rotate(-2deg); }
+[data-time='day']  .ns-plate { filter: brightness(1.28) contrast(1.04) saturate(1.0) hue-rotate(-2deg); }
 [data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
 [data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
 
@@ -59,13 +59,16 @@
 .ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
   background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
 [data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
-[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(185,215,248,0.62); --sky-mid: rgba(235,244,255,0.5); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(185,215,248,0.42); --sky-mid: rgba(235,244,255,0.3); }
 [data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
 [data-time='night'] .ns-sky { opacity: 0; }
 /* ambient colour temperature wash */
 .ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
 [data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
-[data-time='day']  .ns-ambient { opacity: 1; background: rgba(236,244,255,0.58); }
+/* A flat full-screen wash is fog, not daylight: at 0.58 it lifted the whole
+   room off black and took the marble and ceiling with it. Kept low, and
+   graded rather than flat, so the light still falls from above. */
+[data-time='day']  .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(236,244,255,0.30), rgba(226,238,255,0.16)); }
 [data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
 [data-time='night'] .ns-ambient { opacity: 0; }
 /* gold ceiling constellation intensity */
@@ -135,7 +138,7 @@ html[data-dev] .ns-dev { display: flex; }
 /* The vignette is a fixed darkening pass tuned for the evening room. At
    midday it fights the whole point of the hour, so it eases off — the depth
    cue stays, the gloom doesn't. */
-[data-time='day'] .ns-vignette { opacity: 0.45; }
+[data-time='day'] .ns-vignette { opacity: 0.62; }
 
 /* ---- the live 3D compass, seated on the platform ---- */
 .ns-compass {
