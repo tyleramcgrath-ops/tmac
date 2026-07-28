@@ -197,6 +197,17 @@ export class PostgresFoundationStore implements FoundationStore {
     pool.on('error', (err) => {
       console.warn('[postgres] idle client error (pool will recover):', err instanceof Error ? err.message : err)
     })
+    // Deployed instances set RF_SKIP_MIGRATE_ON_CONNECT=1 (see vercel.json) and
+    // take their schema from the deploy step instead — `npm run db:migrate`,
+    // which `npm run build` runs before `next build`. Applying schema is a
+    // deploy concern; doing it per cold start put a global advisory lock on the
+    // request path, where one stalled holder blocked every other instance until
+    // the platform's 300s ceiling killed the request.
+    //
+    // Local development leaves the flag unset and still migrates on connect, so
+    // `next dev` against a scratch database needs no extra step. Should the flag
+    // somehow be unset in a deployed environment, this path is still safe: the
+    // steady-state run no longer touches the lock and every wait is bounded.
     if (process.env.RF_SKIP_MIGRATE_ON_CONNECT !== '1') {
       await runMigrations(pool)
     }

@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3100",
-    "build": "next build",
+    "build": "npm run db:migrate && next build",
     "start": "next start -p 3100",
     "lint": "eslint",
+    "db:migrate": "node --experimental-strip-types scripts/migrate.mts",
     "check:db": "node --experimental-strip-types scripts/check-migrations.mts"
   },
   "dependencies": {

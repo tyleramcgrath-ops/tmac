@@ -176,6 +176,44 @@ async function dropAll() {
   await probe.end()
 }
 
+// 7. THE STRUCTURAL FIX. With RF_SKIP_MIGRATE_ON_CONNECT=1 — what deployed
+//    instances run (vercel.json) — creating the store must not touch the
+//    migration path at all. Proven under the worst case the old code had: a
+//    migration genuinely pending AND another session holding the lock. Before,
+//    that combination is exactly what pinned a cold start until the platform
+//    killed it at 300s.
+{
+  const url = await freshDb('nshq_check_skip')
+  const holder = new Pool({ connectionString: url, max: 1 })
+  const hc = await holder.connect()
+  await hc.query(
+    `CREATE TABLE IF NOT EXISTS rf_schema_migrations (version TEXT PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())`
+  )
+  await hc.query('SELECT pg_advisory_lock($1)', [MIGRATION_LOCK_KEY]) // nothing applied yet => work IS pending
+
+  process.env.RF_SKIP_MIGRATE_ON_CONNECT = '1'
+  const { PostgresFoundationStore } = await import('../lib/foundation/postgres.ts')
+  const t0 = Date.now()
+  let built = false
+  try {
+    await PostgresFoundationStore.create(url)
+    built = true
+  } catch {
+    built = false
+  }
+  const ms = Date.now() - t0
+  check('runtime store creation skips migrations entirely', built && ms < 2_000, `${ms}ms`)
+
+  // And it really did skip: nothing was applied while the lock was held.
+  const applied = await hc.query<{ n: string }>(`SELECT count(*)::text n FROM rf_schema_migrations`)
+  check('...applying nothing, leaving schema to the deploy step', applied.rows[0].n === '0', `${applied.rows[0].n} applied`)
+
+  delete process.env.RF_SKIP_MIGRATE_ON_CONNECT
+  await hc.query('SELECT pg_advisory_unlock($1)', [MIGRATION_LOCK_KEY])
+  hc.release()
+  await holder.end()
+}
+
 await dropAll()
 console.log(`\n  ${pass} passed, ${fail} failed`)
 process.exit(fail ? 1 : 0)

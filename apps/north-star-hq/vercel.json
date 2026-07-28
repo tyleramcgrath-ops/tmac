@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "env": {
+    "RF_SKIP_MIGRATE_ON_CONNECT": "1"
+  }
+}
