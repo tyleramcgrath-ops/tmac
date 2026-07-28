@@ -15,10 +15,18 @@ export interface StoreEnv {
 export class EnvError extends Error {}
 
 function isProduction(): boolean {
-  // Vercel sets VERCEL_ENV=production for prod deployments; otherwise fall
-  // back to NODE_ENV. Preview deployments are treated as needing a DB too.
-  return process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview' ||
-    (process.env.NODE_ENV === 'production' && process.env.VERCEL !== undefined)
+  // Vercel sets VERCEL_ENV=production for prod deployments; preview
+  // deployments are treated as needing a DB too. Off-Vercel (Docker/Coolify/
+  // bare metal) neither VERCEL_ENV nor VERCEL exists, so NODE_ENV alone has
+  // to decide: gating this on VERCEL would let a containerised production
+  // deploy fall through to the file store and lose every row on each
+  // redeploy — the exact failure this check exists to prevent. Matches
+  // requireAppSecret(), which already keys off NODE_ENV alone.
+  return (
+    process.env.VERCEL_ENV === 'production' ||
+    process.env.VERCEL_ENV === 'preview' ||
+    process.env.NODE_ENV === 'production'
+  )
 }
 
 // Resolves which store to use and enforces production requirements.

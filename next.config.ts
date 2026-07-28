@@ -2,6 +2,11 @@ import type { NextConfig } from 'next'
 import { withBotId } from 'botid/next/config'
 
 const nextConfig: NextConfig = {
+  // Emits .next/standalone with a self-contained server.js and only the
+  // production dependencies it actually traced. Required for the Docker /
+  // Coolify deployment (see COOLIFY_DEPLOYMENT.md); ignored by Vercel, which
+  // does its own tracing.
+  output: 'standalone',
   webpack(config) {
     config.module.rules.push({
       test: /\.md/,
