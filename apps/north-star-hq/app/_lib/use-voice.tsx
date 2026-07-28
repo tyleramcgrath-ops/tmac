@@ -65,29 +65,66 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
     setEnabledState(en)
   }, [])
 
+  const speak = useCallback((text: string) => {
+    if (!enabledRef.current || !supportedRef.current || !text) return
+    const synth = window.speechSynthesis
+
+    const utter = () => {
+      try {
+        // One voice at a time — a new line interrupts the last. Guarded
+        // rather than unconditional: Chrome drops an utterance that is queued
+        // in the same tick as a cancel() on an already-idle synth, which
+        // silently swallowed the first thing the room ever tried to say.
+        if (synth.speaking || synth.pending) synth.cancel()
+        const u = new SpeechSynthesisUtterance(text)
+        u.rate = 0.98
+        u.pitch = 0.92
+        u.onstart = () => setSpeaking(true)
+        u.onend = () => setSpeaking(false)
+        u.onerror = () => setSpeaking(false)
+        synth.speak(u)
+      } catch {}
+    }
+
+    // Chrome populates getVoices() asynchronously and speaks nothing at all if
+    // asked before the list arrives — the failure mode is silence, with no
+    // error and no onerror, which is exactly what a user reports as "the
+    // voice doesn't work". Wait once for the list, but never block on it: if
+    // 'voiceschanged' doesn't fire, speak anyway on the default voice.
+    if (synth.getVoices().length === 0) {
+      let fired = false
+      const go = () => {
+        if (fired) return
+        fired = true
+        synth.removeEventListener('voiceschanged', go)
+        utter()
+      }
+      synth.addEventListener('voiceschanged', go)
+      window.setTimeout(go, 300)
+      return
+    }
+    utter()
+  }, [])
+
   const setEnabled = useCallback((v: boolean) => {
     enabledRef.current = v
     setEnabledState(v)
     writeEnabled(v)
-    if (!v && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
-      setSpeaking(false)
+    if (!v) {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+        setSpeaking(false)
+      }
+      return
     }
-  }, [])
-
-  const speak = useCallback((text: string) => {
-    if (!enabledRef.current || !supportedRef.current || !text) return
-    try {
-      window.speechSynthesis.cancel() // one voice at a time — a new line interrupts the last
-      const u = new SpeechSynthesisUtterance(text)
-      u.rate = 0.98
-      u.pitch = 0.92
-      u.onstart = () => setSpeaking(true)
-      u.onend = () => setSpeaking(false)
-      u.onerror = () => setSpeaking(false)
-      window.speechSynthesis.speak(u)
-    } catch {}
-  }, [])
+    // Say something the moment it is switched on. Without this the toggle is
+    // unfalsifiable: the only two lines the room speaks unprompted (the wake
+    // greeting and the briefing summary) have both already fired by the time
+    // the control fades in, so turning voice on produced silence that was
+    // indistinguishable from it being broken. Speaking here also lands inside
+    // the click, which is the user gesture browsers want before audio.
+    speak('Voice on. I have the room.')
+  }, [speak])
 
   return <Ctx.Provider value={{ enabled, setEnabled, supported, speak, speaking }}>{children}</Ctx.Provider>
 }
