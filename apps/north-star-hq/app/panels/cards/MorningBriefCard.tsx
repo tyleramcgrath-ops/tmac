@@ -5,19 +5,26 @@
 
 import type { CompassState } from '../../compass'
 import BriefingPanel from '../briefing/BriefingPanel'
+import ExpandableCard from './ExpandableCard'
 
 export default function MorningBriefCard({
   projectId,
   projectsResolved,
   onCompassState,
+  expanded,
+  onExpand,
+  onCollapse,
 }: {
   projectId: string | null
   projectsResolved: boolean
   onCompassState: (s: CompassState) => void
+  expanded: boolean
+  onExpand: () => void
+  onCollapse: () => void
 }) {
   return (
-    <div className="ns-card ns-glass ns-panel">
+    <ExpandableCard expanded={expanded} label="Morning Brief" onExpand={onExpand} onCollapse={onCollapse}>
       <BriefingPanel projectId={projectId} projectsResolved={projectsResolved} onCompassState={onCompassState} />
-    </div>
+    </ExpandableCard>
   )
 }

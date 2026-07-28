@@ -289,6 +289,34 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-hud.up .ns-card { opacity: 1; transform: translateX(0); }
 .ns-hud.up .ns-card:nth-child(2) { transition-delay: 0.08s; }
 
+/* Click-to-enlarge. At its resting ~318px the card is a glance, not a read,
+   so clicking lifts the same element to the centre at the focus-view size the
+   rail drawers use. It is the SAME element, not a second instance — both
+   panels poll, and a duplicate would double the request rate.
+   Every selector here is `.ns-hud.up .ns-card...` on purpose: the rule above
+   is (0,3,0) and would otherwise win and strip the centring transform. */
+.ns-hud.up .ns-card[role='button'] { cursor: zoom-in; }
+.ns-hud.up .ns-card[role='button']:hover { border-color: rgba(238,205,135,0.34); }
+.ns-hud.up .ns-card[role='button']:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
+
+.ns-hud.up .ns-card.expanded {
+  position: fixed; left: 50%; top: 50%; z-index: 11;
+  transform: translate(-50%,-50%);
+  width: min(1040px, 88vw); max-height: 84vh;
+  padding: 1.5rem 1.7rem; overflow-y: auto; cursor: default;
+}
+/* Denser than the shared glass: full-width, the room reads straight through. */
+.ns-hud.up .ns-card.expanded.ns-glass { background: linear-gradient(180deg, rgb(9,10,14), rgb(5,6,9)); }
+.ns-card-close {
+  position: absolute; top: 0.9rem; right: 1rem; width: 26px; height: 26px; display: grid; place-items: center;
+  border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 1.05rem; line-height: 1; z-index: 1;
+}
+.ns-card-close:hover { color: #f0e2bc; }
+/* Both panels put their own status text at the top right of .ns-panel-head,
+   which is exactly where the close button lands — "3 of 8 sources" was
+   running under the ×. */
+.ns-hud.up .ns-card.expanded .ns-panel-head { padding-right: 2.1rem; }
+
 /* ---- bottom mission strip: one real line, not a card ---- */
 .ns-strip {
   position: absolute; left: 50%; bottom: clamp(4.6rem,11vh,6.4rem); transform: translateX(-50%) translateY(10px);
@@ -439,6 +467,11 @@ html[data-dev] .ns-dev { display: flex; }
   .ns-principles button:not(:first-child) { display: none; }
   .ns-rail { display: none; }
   .ns-cards { left: 50%; right: auto; transform: translateX(-50%); top: auto; bottom: 15vh; width: min(84vw, 340px); max-height: 70vh; }
+  /* A transformed ancestor makes position:fixed resolve against IT rather than
+     the viewport, which would leave the enlarged card off-centre here. The
+     collapsed sibling shifts left as a result, but it sits under the scrim. */
+  .ns-cards.has-expanded { transform: none; }
+  .ns-hud.up .ns-card.expanded { width: 92vw; max-height: 88vh; padding: 1.2rem 1.2rem; }
   .ns-strip, .ns-console { width: min(84vw, 340px); }
   /* Already centred at every width — on a phone just take the room. */
   .ns-drawer { width: 92vw; max-height: 88vh; padding: 1.1rem 1.1rem 1.25rem; }
