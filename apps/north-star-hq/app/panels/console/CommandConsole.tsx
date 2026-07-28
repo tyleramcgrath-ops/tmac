@@ -39,10 +39,15 @@ export default function CommandConsole({
   }, [panelsUp, projectId])
 
   // A settled result reads for a few seconds, then clears itself — a real
-  // answer to what was asked, not a persistent history log.
+  // answer to what was asked, not a persistent history log. The dwell scales
+  // with length because a conversational answer is several times longer than
+  // a template line, and a fixed 6s would clear it mid-sentence — including
+  // out from under the voice still reading it aloud.
   useEffect(() => {
     if (!result) return
-    const t = window.setTimeout(() => setResult(null), 6000)
+    const words = result.message.trim().split(/\s+/).length
+    const dwell = Math.min(24000, Math.max(6000, words * 420))
+    const t = window.setTimeout(() => setResult(null), dwell)
     return () => window.clearTimeout(t)
   }, [result])
 

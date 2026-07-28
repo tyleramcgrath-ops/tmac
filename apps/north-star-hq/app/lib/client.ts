@@ -893,7 +893,7 @@ export interface CommandRequestDTO {
 export interface CommandResultDTO {
   commandId: string
   raw: string
-  intent: CommandActionType | 'unsupported'
+  intent: CommandActionType | 'unsupported' | 'conversational-answer'
   riskLevel: CommandRiskLevel | null
   projectId: string
   missionId: string | null

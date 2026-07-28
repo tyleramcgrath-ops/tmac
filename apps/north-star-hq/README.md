@@ -69,6 +69,39 @@ than shipping panels that could only ever show "not connected."
   in the header actually reaches every consumer — a plain per-component hook
   here would silently desync the moment more than one component read it.
 
+## What the Compass can answer
+
+The console has two answer paths, and the split is a safety boundary, not a
+performance one.
+
+**Registered actions** (`lib/foundation/commands/classify.ts`) are matched
+deterministically against a fixed vocabulary and executed by
+`commands/engine.ts` through the real recommendation/operator pipelines.
+Everything that mutates lives here — approve, deploy, retry, cancel, pause,
+resume, prioritise, roll back — and it is the *only* path that can act. No
+model is involved at any point.
+
+**Unrecognised input** used to hit a dead end ("I don't recognize that one
+yet"). It now reaches `commands/converse.ts`, which answers in the Compass's
+own words from a snapshot of the project's real state — missions, stages,
+blocking reasons, agent activity, deployments. That path is read-only by
+construction: the model is given no tools, and its reply is only ever
+displayed and spoken. It is told to decline anything the snapshot doesn't
+cover rather than guess, and to redirect action requests to the command word
+that triggers the deterministic path.
+
+Set `AI_GATEWAY_API_KEY` to enable it (same Vercel AI Gateway the root app
+uses). Without it — or if the gateway errors or is slow — `converse()`
+returns null and the console falls back to the previous canned message, so
+the room never depends on the model being up. `NSHQ_COMPASS_MODEL` overrides
+the model; the default is `anthropic/claude-sonnet-4.6`, chosen over the root
+suite's Opus default because this answer is spoken aloud to someone waiting.
+
+`npm run check:compass` covers both halves: that every mutating verb still
+classifies to the deterministic path, and — when a key is present — that the
+model answers from state, declines what the state doesn't cover, never claims
+to have acted, and ignores instructions embedded in project data.
+
 ## Prototype status
 
 Like `apps/reloop`, most of this app's data is **seeded/sample data**, not
