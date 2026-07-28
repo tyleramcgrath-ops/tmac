@@ -1,0 +1,67 @@
+# Run the production container locally, with its database, in one command:
+#
+#   docker compose up --build
+#
+# This builds the same Dockerfile Coolify would build and runs it against a
+# real Postgres, so it exercises the production code path (NODE_ENV=production
+# is set in the image) rather than the dev server. Useful both as a local
+# deployment and as a rehearsal before pointing a server at this repo.
+#
+# For day-to-day development use `pnpm dev` instead — it has hot reload and
+# does not require Docker.
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rankforge
+      POSTGRES_PASSWORD: rankforge_local
+      POSTGRES_DB: rankforge
+    volumes:
+      # Named volume, so data survives `docker compose down` (but not
+      # `down -v`, which is the intentional way to start clean).
+      - rankforge-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U rankforge -d rankforge']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # Not published to the host by default — the app reaches it over the
+    # compose network. Uncomment to inspect it with psql/TablePlus.
+    # ports:
+    #   - '5432:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Compose resolves the db service by name on its own network.
+      DATABASE_URL: postgresql://rankforge:rankforge_local@db:5432/rankforge
+      # Required, min 32 chars, and deliberately NOT defaulted here: a secret
+      # committed to the repo is one `docker compose up` away from protecting
+      # a real deployment. Generate one into a local .env file (see below).
+      APP_SECRET: '${APP_SECRET:?Set APP_SECRET in a .env file next to this compose file. Generate one with `openssl rand -base64 32`}'
+      APP_BASE_URL: http://localhost:3000
+      # Optional. Set to enable the scheduler; then trigger a tick with:
+      #   curl -X POST localhost:3000/api/internal/cron -H "Authorization: Bearer $CRON_SECRET"
+      CRON_SECRET: ${CRON_SECRET:-}
+      # Optional integrations — see .env.example. Unset means the feature
+      # honestly reports itself as not configured.
+      AI_GATEWAY_API_KEY: ${AI_GATEWAY_API_KEY:-}
+      PAGESPEED_API_KEY: ${PAGESPEED_API_KEY:-}
+      SERPAPI_KEY: ${SERPAPI_KEY:-}
+      PERPLEXITY_API_KEY: ${PERPLEXITY_API_KEY:-}
+      MAJESTIC_API_KEY: ${MAJESTIC_API_KEY:-}
+      SCRAPE_API_TEMPLATE: ${SCRAPE_API_TEMPLATE:-}
+      NEXT_PUBLIC_RF_ENABLE_ATLAS: ${NEXT_PUBLIC_RF_ENABLE_ATLAS:-}
+    ports:
+      - '3000:3000'
+
+volumes:
+  rankforge-db:

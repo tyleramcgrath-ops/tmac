@@ -31,6 +31,10 @@ coverage
 test-results
 playwright-report
 
+# Compose orchestrates the image; it is not an input to building it.
+docker-compose.yml
+docker-compose.*.yml
+
 .vscode
 .idea
 .DS_Store

@@ -13,6 +13,7 @@ This document covers running it as a container on [Coolify](https://coolify.io).
 | `next.config.ts` | `output: 'standalone'` so the runtime image carries only traced production deps. |
 | `lib/bot-protection.ts` | Platform-aware BotID wrapper — see [What does not work off Vercel](#what-does-not-work-off-vercel). |
 | `lib/foundation/env.ts` | Production detection no longer keys off Vercel-only env vars. |
+| `docker-compose.yml` | Run the image plus Postgres locally with one command. |
 
 ### Why the `env.ts` change matters
 
@@ -26,6 +27,37 @@ scans and recommendations on each release — with no error. Production is now
 determined by `NODE_ENV=production` alone (matching `requireAppSecret()`,
 which already worked that way), so a container without `DATABASE_URL` fails
 loudly at startup instead. Vercel behaviour is unchanged.
+
+## Running it locally instead
+
+You do not need Coolify — or a server — to run this container. `docker-compose.yml`
+brings up the image plus a Postgres:
+
+```bash
+# once: generate the secret into a .env file beside docker-compose.yml
+echo "APP_SECRET=$(openssl rand -base64 32)" >> .env
+
+docker compose up --build
+```
+
+Then open <http://localhost:3000>. Compose refuses to start without
+`APP_SECRET` rather than falling back to a default, since a secret committed
+to a repo tends to end up protecting something real.
+
+This runs the *production* code path (the image sets `NODE_ENV=production`)
+against a real database, which makes it the closest rehearsal of a Coolify
+deploy you can get without a server. `docker compose down` stops it and keeps
+the data; `docker compose down -v` discards the database too.
+
+For everyday development keep using `pnpm dev` — hot reload, no Docker, and
+the file store instead of Postgres.
+
+Running **Coolify itself** locally is a different proposition: its installer
+supports Ubuntu LTS only, so on Windows or macOS it needs a Linux VM or WSL2,
+it wants ports 80/443/8000 permanently, and without a public domain it cannot
+issue TLS certificates. It is worth doing only to practise the workflow —
+for actually running the app on your own machine, the Compose file above does
+the same job with none of that.
 
 ## Prerequisites
 
