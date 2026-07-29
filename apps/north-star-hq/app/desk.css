@@ -409,8 +409,17 @@ html[data-dev] .ns-dev { display: flex; }
 
 /* Roomy row list — icon, bold title, wrapping description, status dot far
    right. Shared by the Agent Roster and anywhere else a "who/what's doing
-   this" list appears. */
-.ns-row-list { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.1rem; }
+   this" list appears.
+   Capped to a reading measure, not left to fill the container: these rows
+   hold a short title and a one-line description, and every consumer now also
+   renders inside a ~1040px focus view (the expanded cards and every rail
+   drawer). Without a cap, flex:1 on .ns-row-text stretches that short text
+   across the full width, leaving a wide dead gap between the description and
+   the status dot on the far right — same text, same dot, just a much emptier-
+   looking row. Capping the LIST (not just the text) keeps the dot close to
+   the text it belongs to; the unused width becomes ordinary margin instead
+   of blank space inside the row. Verified against real content at 1040px. */
+.ns-row-list { list-style: none; margin: 1rem 0 0; padding: 0; max-width: 640px; display: flex; flex-direction: column; gap: 1.1rem; }
 .ns-row { display: flex; align-items: flex-start; gap: 0.7rem; }
 .ns-row-icon { flex: none; width: 15px; height: 15px; margin-top: 0.15rem; color: rgba(226,192,132,0.75); }
 .ns-row-text { flex: 1; min-width: 0; }

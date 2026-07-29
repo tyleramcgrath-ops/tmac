@@ -27,13 +27,24 @@ export default function Drawer({
 }) {
   // Escape closes, matching the scrim click. Bound only while open so the
   // seven mounted-but-closed drawers don't all race to handle the same key.
+  //
+  // Registered on the CAPTURE phase and stops propagation — the room
+  // (page.tsx) has its own bubble-phase Escape listener on `document` that
+  // collapses the entire HUD whenever panels are up. A bubble-phase listener
+  // here would fire AFTER that one (document is reached before window on the
+  // way back up), so Escape would close this drawer AND wipe the whole room
+  // in the same keystroke. Capture fires window -> document -> target, i.e.
+  // before the room ever sees the event, so stopping it here means "closing
+  // the drawer" and "leaving the room" stay two separate keystrokes.
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key !== 'Escape') return
+      e.stopPropagation()
+      onClose()
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('keydown', onKey, { capture: true })
+    return () => window.removeEventListener('keydown', onKey, { capture: true })
   }, [open, onClose])
 
   return (

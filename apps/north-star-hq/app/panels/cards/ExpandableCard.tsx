@@ -30,13 +30,25 @@ export default function ExpandableCard({
 }) {
   const ref = useRef<HTMLDivElement>(null)
 
+  // Capture phase + stopPropagation, not the more obvious bubble-phase
+  // listener: page.tsx has its own bubble-phase Escape handler on `document`
+  // that collapses the ENTIRE HUD whenever panels are up. A bubble listener
+  // here fires after that one (document is reached before window on the way
+  // back up), so Escape would collapse this card and wipe the whole room in
+  // one keystroke — confirmed by driving it in a real browser: closing card
+  // one this way left `.ns-hud` without `.up`, so a second card could no
+  // longer be clicked at all. Capture fires window -> document -> target, so
+  // stopping it here keeps "close the card" and "leave the room" as two
+  // separate keystrokes. Same fix applied in Drawer.tsx for the same reason.
   useEffect(() => {
     if (!expanded) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onCollapse()
+      if (e.key !== 'Escape') return
+      e.stopPropagation()
+      onCollapse()
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('keydown', onKey, { capture: true })
+    return () => window.removeEventListener('keydown', onKey, { capture: true })
   }, [expanded, onCollapse])
 
   function onClick(e: React.MouseEvent) {
