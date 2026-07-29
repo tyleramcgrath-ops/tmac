@@ -24,6 +24,15 @@ export async function resolveOwnerEmails(
   return (await resolveOwners(store, orgId)).map((o) => o.email)
 }
 
+// Quotes are escaped too: the digest interpolates escaped values inside
+// `<a href="...">`, and a surviving double quote closes the attribute and
+// turns the rest of the value into markup. Ampersand must come first so an
+// escape sequence is not re-formed out of the ones that follow.
 export function escapeHtml(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 }
