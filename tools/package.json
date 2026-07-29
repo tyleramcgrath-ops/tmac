@@ -1,0 +1,14 @@
+{
+  "name": "site-clone-tools",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Captures a live site with Playwright and rebuilds it as a static theme.",
+  "type": "module",
+  "scripts": {
+    "setup": "npm install && npx playwright install --with-deps chromium",
+    "clone": "node clone.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.48.0"
+  }
+}
