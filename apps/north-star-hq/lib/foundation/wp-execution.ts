@@ -387,13 +387,37 @@ export async function rollbackWpDeployment(opts: {
   // Content changes restore the captured before-body verbatim.
   if (dep.after.content !== undefined) restore.content = dep.before.content
 
-  await wpFetch(opts.connection, `/${dep.postType}/${dep.postId}`, {
-    method: 'POST',
-    body: updatePayload(opts.connection, restore),
-  })
-
-  // Verify the rollback took.
-  const afterRead = await readPost(opts.connection, dep.postType, dep.postId)
+  // Unlike executeWpDeployment (whose own throw is caught by its one caller,
+  // deploy-one.ts, which then emits a resolving activity event), rollback is
+  // called from both the batch-rollback route and the single-deployment
+  // path, and a bare throw here left rollback.started with no matching
+  // finished/failed event — the Activity Stream showed an eternal "Operator
+  // is rolling back…" with no resolution, even though the API response
+  // itself reported the failure correctly. Emit the resolution here, once,
+  // regardless of caller, then rethrow so existing error handling elsewhere
+  // is unchanged.
+  let afterRead: { title: string; metaDescription: string }
+  try {
+    await wpFetch(opts.connection, `/${dep.postType}/${dep.postId}`, {
+      method: 'POST',
+      body: updatePayload(opts.connection, restore),
+    })
+    // Verify the rollback took.
+    afterRead = await readPost(opts.connection, dep.postType, dep.postId)
+  } catch (err) {
+    if (project) {
+      await emitActivity(store, {
+        orgId: project.orgId,
+        projectId: dep.projectId,
+        type: 'rollback.finished',
+        summary: `Rollback of ${dep.postUrl} failed: ${err instanceof Error ? err.message : 'unknown error'}.`,
+        recommendationId: dep.recommendationId ?? null,
+        agentRole: 'operator',
+        actorId: opts.actorId,
+      })
+    }
+    throw err
+  }
   const titleOk = restore.title === undefined ? true : afterRead.title === restore.title
   const metaOk =
     restore.metaDescription === undefined ? true : afterRead.metaDescription === restore.metaDescription

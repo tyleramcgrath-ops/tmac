@@ -6,7 +6,7 @@
 // only the chrome changed from an overlay dialog to an always-docked bar.
 
 import { useEffect, useState } from 'react'
-import { api, type CommandResultDTO, type MissionDTO } from '../../lib/client'
+import { api, ApiError, type CommandResultDTO, type MissionDTO } from '../../lib/client'
 import type { CompassState } from '../../compass'
 import { useVoice } from '../../_lib/use-voice'
 
@@ -30,6 +30,7 @@ export default function CommandConsole({
   const [pending, setPending] = useState<CommandResultDTO | null>(null)
   const [result, setResult] = useState<CommandResultDTO | null>(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [currentMission, setCurrentMission] = useState<MissionDTO | null>(null)
   const voice = useVoice()
 
@@ -52,6 +53,7 @@ export default function CommandConsole({
   }, [result])
 
   function handleResult(res: CommandResultDTO) {
+    setError('')
     voice.speak(res.message)
     if (res.status === 'pending-confirmation') {
       setPending(res)
@@ -71,6 +73,7 @@ export default function CommandConsole({
   async function submit(raw: string) {
     if (!projectId || !raw.trim() || loading) return
     setLoading(true)
+    setError('')
     onCompassState('thinking')
     try {
       const { result } = await api.runCommand(projectId, {
@@ -80,7 +83,8 @@ export default function CommandConsole({
         confirmed: false,
       })
       handleResult(result)
-    } catch {
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not reach North Star. Try again.')
       onCompassState('warning')
     } finally {
       setLoading(false)
@@ -90,6 +94,7 @@ export default function CommandConsole({
   async function confirm() {
     if (!projectId || !pending || loading) return
     setLoading(true)
+    setError('')
     onCompassState('executing')
     try {
       const { result } = await api.runCommand(projectId, {
@@ -99,7 +104,8 @@ export default function CommandConsole({
         confirmed: true,
       })
       handleResult(result)
-    } catch {
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not reach North Star. Try again.')
       onCompassState('error')
       setPending(null)
     } finally {
@@ -119,6 +125,7 @@ export default function CommandConsole({
       else void submit(input)
     } else if (e.key === 'Escape') {
       if (result) setResult(null)
+      if (error) setError('')
       e.currentTarget.blur()
     }
   }
@@ -126,7 +133,7 @@ export default function CommandConsole({
   return (
     <div className="ns-console ns-glass" aria-label="North Star command console">
       {pending && (
-        <div className="ns-console-note ns-glass" data-risk={pending.riskLevel ?? undefined}>
+        <div className="ns-console-note ns-glass" data-risk={pending.riskLevel ?? undefined} role="status" aria-live="polite">
           <p>{pending.message}</p>
           <div className="ns-console-actions">
             <button type="button" onClick={() => void confirm()} disabled={loading}>
@@ -139,8 +146,18 @@ export default function CommandConsole({
         </div>
       )}
       {!pending && result && (
-        <div className="ns-console-note ns-glass" data-status={result.status}>
+        <div
+          className="ns-console-note ns-glass"
+          data-status={result.status}
+          role={result.status === 'failed' || result.status === 'rejected-permission' ? 'alert' : 'status'}
+          aria-live={result.status === 'failed' || result.status === 'rejected-permission' ? 'assertive' : 'polite'}
+        >
           <p>{result.message}</p>
+        </div>
+      )}
+      {!pending && !result && error && (
+        <div className="ns-console-note ns-glass" data-status="failed" role="alert" aria-live="assertive">
+          <p>{error}</p>
         </div>
       )}
       <input

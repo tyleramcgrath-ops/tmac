@@ -53,6 +53,7 @@ function check(name: string, ok: boolean, detail = '') {
 const USERNAME = 'nshq-check'
 const PASSWORD = 'app-password-not-real'
 let dropsMeta = false
+let failNextPost = false
 const posts = new Map<number, { title: string; content: string; excerpt: string; meta: Record<string, string>; link: string }>()
 posts.set(42, { title: 'Original Title', content: 'Original body.', excerpt: '', meta: { rank_math_description: 'Original description.' }, link: 'http://TESTHOST/best-tents' })
 
@@ -118,6 +119,11 @@ const server = createServer((req, res) => {
       return
     }
     if (req.method === 'POST') {
+      if (failNextPost) {
+        failNextPost = false
+        send(500, { code: 'internal_server_error' })
+        return
+      }
       let body = ''
       req.on('data', (c) => (body += c))
       req.on('end', () => {
@@ -210,6 +216,24 @@ const rolledBack = await rollbackWpDeployment({ deployment: dep, connection: con
 check('rollback reports rolled_back', rolledBack.status === 'rolled_back', rolledBack.status)
 check('rollback actually restored the real title on the fake site', posts.get(42)!.title === 'Original Title', posts.get(42)!.title)
 check('rollback restored the real meta description', posts.get(42)!.meta.rank_math_description === 'Original description.')
+
+// ── 5b. A rollback that fails mid-flight still resolves in the Activity
+// Stream — not just in the caller's error response. Before the fix, a throw
+// here left a 'rollback.started' event with no matching finished/failed
+// event, so the stream showed an eternal "Operator is rolling back…".
+failNextPost = true
+let rollbackThrew = false
+let rollbackThrowMsg = ''
+try {
+  await rollbackWpDeployment({ deployment: dep2, connection: conn, actorId: 'check-script' })
+} catch (err) {
+  rollbackThrew = true
+  rollbackThrowMsg = err instanceof Error ? err.message : String(err)
+}
+check('a rollback that fails on the live write still throws (never a false success)', rollbackThrew, rollbackThrowMsg)
+const rollbackActivity = await store.listActivity(projectId, { types: ['rollback.finished'] })
+const failureEvent = rollbackActivity.find((e) => /failed/i.test(e.summary))
+check('...and a rollback.finished activity records the failure, so the stream resolves', Boolean(failureEvent), failureEvent ? failureEvent.summary : 'no matching event')
 
 // ── 6. The SSRF guard is actually wired into the request path, not just present in source ──
 const metadataConn = { ...conn, siteUrl: 'http://169.254.169.254' }

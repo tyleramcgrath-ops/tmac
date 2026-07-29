@@ -35,6 +35,7 @@ export default function IntegrationsPanel({
   const [sites, setSites] = useState<{ siteUrl: string; permissionLevel: string }[] | null>(null)
 
   const [wp, setWp] = useState<WpConnectionDTO | null | undefined>(undefined)
+  const [wpLoadError, setWpLoadError] = useState('')
   const [wpNotice, setWpNotice] = useState<{ ok: boolean; text: string } | null>(null)
   const [wpForm, setWpForm] = useState({ siteUrl: '', username: '', appPassword: '' })
   const [wpBusy, setWpBusy] = useState(false)
@@ -51,8 +52,13 @@ export default function IntegrationsPanel({
     try {
       const res = await api.getWordpress(projectId)
       setWp(res.connection)
-    } catch {
-      setWp(null)
+      setWpLoadError('')
+    } catch (err) {
+      // A real load failure (500, auth, network) is not the same as "no
+      // connection exists" — collapsing them into wp=null would render the
+      // connect form over what might be a perfectly good existing
+      // connection, inviting the user to "reconnect" over a load error.
+      setWpLoadError(err instanceof ApiError ? err.message : 'Could not load your WordPress connection.')
     }
   }
 
@@ -268,7 +274,16 @@ export default function IntegrationsPanel({
         </p>
       )}
 
-      {wp === undefined ? null : wp ? (
+      {wpLoadError && (
+        <p className="ns-integ-notice err" role="alert">
+          {wpLoadError}
+          <button type="button" className="ns-integ-btn ns-integ-retry" onClick={load}>
+            Retry
+          </button>
+        </p>
+      )}
+
+      {wpLoadError ? null : wp === undefined ? null : wp ? (
         <ul className="ns-row-list">
           <li className="ns-row" data-status="completed">
             <span className="ns-row-dot" aria-hidden />
