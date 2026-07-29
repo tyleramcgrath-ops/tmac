@@ -20,12 +20,10 @@ export async function runAiCitationCheckJob(store: FoundationStore, job: Job): P
   const key = perplexityApiKey()
   if (!key) return { checked: 0, note: 'PERPLEXITY_API_KEY not configured — no snapshots taken' }
 
-  let host: string
-  try {
-    host = hostOf(project.domain)
-  } catch {
-    return { checked: 0, note: 'project domain is not a valid URL/host' }
-  }
+  // hostOf returns '' for a domain it cannot parse; an empty host silently
+  // matches nothing, which downstream reads as a real loss. Bail out instead.
+  const host = hostOf(project.domain)
+  if (!host) return { checked: 0, note: 'project domain is not a valid URL/host' }
 
   // The most recent REAL snapshot per query, taken BEFORE this run's new
   // ones are recorded — the only honest baseline to compare a loss against.

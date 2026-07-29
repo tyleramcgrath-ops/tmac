@@ -30,12 +30,8 @@ export const POST = handled(async (request, { params }) => {
   const key = majesticApiKey()
   if (!key) return Response.json({ error: 'Connect a backlink provider (set MAJESTIC_API_KEY) to check your backlink profile.' }, { status: 400 })
 
-  let host: string
-  try {
-    host = hostOf(project.domain)
-  } catch {
-    return Response.json({ error: 'Project domain is not a valid host.' }, { status: 400 })
-  }
+  const host = hostOf(project.domain)
+  if (!host) return Response.json({ error: 'Project domain is not a valid host.' }, { status: 400 })
   const c = await checkBacklinks(host, key)
   const snapshot = {
     id: randomUUID(), projectId, available: c.available,

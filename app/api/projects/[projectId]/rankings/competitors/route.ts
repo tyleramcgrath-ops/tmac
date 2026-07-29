@@ -35,13 +35,10 @@ export const GET = handled(async (request, { params }) => {
   const trackedKeywords = keywords.slice(0, MAX_KEYWORDS)
   const trackedCompetitors = competitors.slice(0, MAX_COMPETITORS)
 
-  let ourHost: string
-  try {
-    ourHost = hostOf(project.domain)
-  } catch {
-    throw new HttpError(400, 'Project domain is not a valid host.')
-  }
-  const competitorHosts = trackedCompetitors.map((c) => ({ label: c.label || c.domain, host: (() => { try { return hostOf(c.domain) } catch { return null } })() }))
+  const ourHost = hostOf(project.domain)
+  if (!ourHost) throw new HttpError(400, 'Project domain is not a valid host.')
+  // An unparseable competitor domain is skipped, not treated as "never ranks".
+  const competitorHosts = trackedCompetitors.map((c) => ({ label: c.label || c.domain, host: hostOf(c.domain) || null }))
 
   const rows = await Promise.all(
     trackedKeywords.map(async (k) => {

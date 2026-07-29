@@ -122,3 +122,42 @@ describe('automated AI citation checking', () => {
     expect(snapshots).toHaveLength(1)
   })
 })
+
+// hostOf returns '' for a domain it cannot parse. An empty brand domain
+// matches no citation source, so every tracked query would record "not cited"
+// — which the citation-loss alert reads as a real loss and emails about.
+describe('AI citation checking with an unusable project domain', () => {
+  let store2: FileFoundationStore
+
+  beforeEach(() => {
+    store2 = new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-ai-cit-badhost-')))
+    process.env = { ...ORIGINAL_ENV }
+  })
+  afterEach(() => {
+    __setStoreForTests(null)
+    vi.unstubAllGlobals()
+    process.env = { ...ORIGINAL_ENV }
+  })
+
+  it('checks nothing, calls no API, and records no snapshot', async () => {
+    process.env.PERPLEXITY_API_KEY = 'test-key'
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify(perplexityResponse('https://acme.com/a')), { status: 200 }))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const owner: User = { id: randomUUID(), email: 'owner3@acme.com', name: 'Owner', passwordHash: 'x', tokenVersion: 0, createdAt: now() }
+    const org: Organization = { id: randomUUID(), name: 'Acme Org', createdAt: now() }
+    await store2.createUser(owner)
+    await store2.createOrg(org, owner.id)
+    const project: Project = { id: randomUUID(), orgId: org.id, domain: 'not a domain', name: 'Acme', industry: '', businessProfile: '', goals: [], notes: '', createdAt: now(), updatedAt: now() }
+    await store2.createProject(project)
+    await store2.addTrackedAiQuery({ id: randomUUID(), projectId: project.id, query: 'best crm', addedBy: 'u', createdAt: now() })
+
+    const job: Job = { id: randomUUID(), orgId: org.id, projectId: project.id, kind: 'ai_citation_check', status: 'running', runAt: now(), payload: {}, attempts: 1, maxAttempts: 3, lockedAt: now(), lockedBy: 'r', lastError: null, result: null, createdAt: now(), updatedAt: now() }
+    const result = await runAiCitationCheckJob(store2, job)
+
+    expect(result.checked).toBe(0)
+    expect(String(result.note)).toMatch(/host|domain/i)
+    expect(fetchMock).not.toHaveBeenCalled()
+    expect(await store2.listAiCitationSnapshots(project.id, 'best crm')).toHaveLength(0)
+  })
+})

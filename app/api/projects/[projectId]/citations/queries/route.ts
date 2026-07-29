@@ -36,12 +36,8 @@ export const POST = handled(async (request, { params }) => {
     if (!tracked) throw new HttpError(404, 'That query is not tracked.')
     const key = perplexityApiKey()
     if (!key) return Response.json({ error: 'Connect Perplexity (set PERPLEXITY_API_KEY) to check AI citations.' }, { status: 400 })
-    let host: string
-    try {
-      host = hostOf(project.domain)
-    } catch {
-      throw new HttpError(400, 'Project domain is not a valid host.')
-    }
+    const host = hostOf(project.domain)
+    if (!host) throw new HttpError(400, 'Project domain is not a valid host.')
     const c = await checkCitation(query, host, key)
     const snapshot = {
       id: randomUUID(), projectId, query, engine: 'perplexity' as const,
