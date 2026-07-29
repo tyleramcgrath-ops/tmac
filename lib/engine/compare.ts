@@ -23,6 +23,14 @@ export function buildContentGap(
   const userPage = user.page
   const userText = userPage?.contentText.toLowerCase() ?? ''
   const userTokens = new Set(tokenize(userText))
+  // Word-boundary view of the same text. Competitor phrases and question words
+  // arrive already tokenized and single-spaced, so testing them as a raw
+  // substring of userText is wrong in both directions: "roof, repair" on the
+  // page fails to match the phrase "roof repair" (a phrase the customer is
+  // then told to add, though it is already there), while the word "roof"
+  // matches inside "roofing" (a question scored as answered when it is not).
+  const userWordText = ` ${tokenize(userText).join(' ')} `
+  const hasWords = (s: string) => userWordText.includes(` ${tokenize(s).join(' ')} `)
 
   // Terms that appear across multiple competitors but not on the user page.
   const termAppearances = new Map<string, { docs: number; total: number }>()
@@ -48,7 +56,7 @@ export function buildContentGap(
     }
   }
   const missingPhrases: TermFrequency[] = [...phraseAppearances.entries()]
-    .filter(([phrase, docs]) => docs >= 2 && !userText.includes(phrase))
+    .filter(([phrase, docs]) => docs >= 2 && !hasWords(phrase))
     .sort((a, b) => b[1] - a[1])
     .slice(0, 15)
     .map(([term, count]) => ({ term, count }))
@@ -58,7 +66,7 @@ export function buildContentGap(
   for (const q of serp?.peopleAlsoAsk ?? []) candidateQuestions.add(q)
   for (const c of crawled) for (const q of c.page?.faqQuestions ?? []) candidateQuestions.add(q)
   const missingQuestions = [...candidateQuestions]
-    .filter((q) => !questionAnswered(q, userText, userPage?.faqQuestions ?? []))
+    .filter((q) => !questionAnswered(q, hasWords, userPage?.faqQuestions ?? []))
     .slice(0, 12)
 
   // Heading topics competitors cover that the user lacks.
@@ -113,13 +121,14 @@ export function buildContentGap(
   }
 }
 
-function questionAnswered(question: string, userText: string, userFaqs: string[]): boolean {
+function questionAnswered(question: string, hasWords: (s: string) => boolean, userFaqs: string[]): boolean {
   const qNorm = normalizeHeading(question)
   if (userFaqs.some((f) => normalizeHeading(f) === qNorm)) return true
-  // consider answered if most meaningful words of the question appear in the content
+  // consider answered if most meaningful words of the question appear in the
+  // content — as whole words, not as fragments of unrelated longer ones
   const words = tokenize(question).filter((w) => w.length > 3)
   if (words.length === 0) return true
-  const present = words.filter((w) => userText.includes(w)).length
+  const present = words.filter((w) => hasWords(w)).length
   return present / words.length >= 0.8
 }
 
