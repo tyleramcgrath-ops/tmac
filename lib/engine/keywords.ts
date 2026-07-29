@@ -75,6 +75,18 @@ export function topPhrases(text: string, limit = 20): TermFrequency[] {
     .map(([term, count]) => ({ term, count }))
 }
 
+// decodeURIComponent throws URIError on a stray "%" — a real URL like
+// /save-50%-off is not valid percent-encoding. Left unguarded that aborts the
+// analysis of the entire page, so fall back to the raw URL, which still
+// matches every keyword that was not percent-encoded to begin with.
+function decodeUrlForMatching(url: string): string {
+  try {
+    return decodeURIComponent(url)
+  } catch {
+    return url
+  }
+}
+
 export function analyzeKeywords(page: PageExtraction, keyword: string): KeywordAnalysis {
   const occurrences = countOccurrences(page.contentText, keyword)
   const totalWords = Math.max(page.wordCount, 1)
@@ -86,7 +98,7 @@ export function analyzeKeywords(page: PageExtraction, keyword: string): KeywordA
     inH1: page.h1.some((h) => includesKeyword(h, keyword)),
     inFirst100Words: includesKeyword(page.firstWords, keyword),
     inH2s: page.headings.some((h) => h.level === 2 && includesKeyword(h.text, keyword)),
-    inUrl: includesKeyword(decodeURIComponent(page.finalUrl).replace(/[-_/.]/g, ' '), keyword),
+    inUrl: includesKeyword(decodeUrlForMatching(page.finalUrl).replace(/[-_/.]/g, ' '), keyword),
     inImageAlt: page.images.altSample.some((alt) => includesKeyword(alt, keyword)),
     occurrences,
     density: Number((((occurrences * keywordWordLen) / totalWords) * 100).toFixed(2)),
