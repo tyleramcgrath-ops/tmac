@@ -121,7 +121,7 @@ export default function AgentRosterPanel({
         <p className="ns-panel-eyebrow">Agent roster</p>
         <p className="ns-panel-status">{needsAttention ? 'Attention' : 'Watching'}</p>
       </div>
-      <h2>
+      <h2 aria-live="polite">
         {needsAttention
           ? 'One agent needs your attention.'
           : activeCount > 0
@@ -149,6 +149,7 @@ export default function AgentRosterPanel({
                 </span>
               </span>
               <span className="ns-row-dot" aria-hidden title={STATUS_LABEL[a.status] ?? a.status} />
+              <span className="ns-sr-only">{STATUS_LABEL[a.status] ?? a.status}</span>
             </li>
           )
         })}

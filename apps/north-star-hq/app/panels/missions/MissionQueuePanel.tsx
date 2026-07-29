@@ -80,7 +80,7 @@ export default function MissionQueuePanel({
         <p className="ns-panel-eyebrow">Mission queue</p>
         <p className="ns-panel-status">{summary.total === 0 ? 'Empty' : `${summary.total} total`}</p>
       </div>
-      <h2>
+      <h2 aria-live="polite">
         {currentMission
           ? `"${currentMission.title}" — ${STAGE_LABEL[currentMission.stage]}.`
           : summary.total === 0
