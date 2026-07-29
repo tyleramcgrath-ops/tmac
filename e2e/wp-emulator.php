@@ -19,7 +19,7 @@ function load($f) {
   if (!file_exists($f)) {
     return [10 => [
       'id' => 10, 'title' => 'Original Title', 'excerpt' => 'Original meta',
-      'content' => '<p>Original body</p>', 'aioseo' => 'Original meta',
+      'content' => '<p>Original body</p>', 'aioseo' => 'Original meta', 'aioseoTitle' => '',
       'slug' => 'services', 'type' => 'pages', 'link' => 'http://127.0.0.1/services',
     ]];
   }
@@ -93,6 +93,8 @@ if (preg_match('#/wp-json/wp/v2/(pages|posts)/(\d+)#', $path, $m)) {
     if (getenv('WP_DROP_META') !== '1') {
       if (isset($body['aioseo_meta_data']['description'])) $p['aioseo'] = $body['aioseo_meta_data']['description'];
       if (isset($body['meta']['_aioseo_description'])) $p['aioseo'] = $body['meta']['_aioseo_description'];
+      if (isset($body['aioseo_meta_data']['title'])) $p['aioseoTitle'] = $body['aioseo_meta_data']['title'];
+      if (isset($body['meta']['_aioseo_title'])) $p['aioseoTitle'] = $body['meta']['_aioseo_title'];
     }
     $state[$id] = $p; save($STATE, $state);
   }
@@ -101,8 +103,8 @@ if (preg_match('#/wp-json/wp/v2/(pages|posts)/(\d+)#', $path, $m)) {
     'title' => ['raw' => $p['title'], 'rendered' => $p['title']],
     'excerpt' => ['raw' => $p['excerpt']],
     'content' => ['raw' => $p['content'], 'rendered' => $p['content']],
-    'aioseo_meta_data' => ['description' => $p['aioseo']],
-    'meta' => ['_aioseo_description' => $p['aioseo']],
+    'aioseo_meta_data' => ['description' => $p['aioseo'], 'title' => $p['aioseoTitle']],
+    'meta' => ['_aioseo_description' => $p['aioseo'], '_aioseo_title' => $p['aioseoTitle']],
     'link' => $p['link'],
   ]);
   exit;

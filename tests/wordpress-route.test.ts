@@ -20,7 +20,7 @@ import type { Recommendation, WpConnection } from '../lib/foundation/types'
 process.env.APP_SECRET = 'wp-route-secret-123'
 
 let store: FileFoundationStore
-const post = { id: 10, title: 'Old Title', excerpt: 'Old', aioseoDescription: 'Old', content: '<p>x</p>', link: 'https://wp.test/services' }
+const post = { id: 10, title: 'Old Title', excerpt: 'Old', aioseoDescription: 'Old', aioseoTitle: '', content: '<p>x</p>', link: 'https://wp.test/services' }
 
 function fakeWp(url: string, init?: RequestInit): Response {
   const method = init?.method ?? 'GET'
@@ -32,8 +32,14 @@ function fakeWp(url: string, init?: RequestInit): Response {
       const b = JSON.parse((init?.body as string) ?? '{}')
       if (b.title !== undefined) post.title = b.title
       if (b.aioseo_meta_data?.description !== undefined) post.aioseoDescription = b.aioseo_meta_data.description
+      if (b.aioseo_meta_data?.title !== undefined) post.aioseoTitle = b.aioseo_meta_data.title
     }
-    return j({ id: 10, title: { raw: post.title }, excerpt: { raw: post.excerpt }, content: { raw: post.content }, aioseo_meta_data: { description: post.aioseoDescription }, meta: { _aioseo_description: post.aioseoDescription }, link: post.link })
+    return j({
+      id: 10, title: { raw: post.title }, excerpt: { raw: post.excerpt }, content: { raw: post.content },
+      aioseo_meta_data: { description: post.aioseoDescription, title: post.aioseoTitle },
+      meta: { _aioseo_description: post.aioseoDescription, _aioseo_title: post.aioseoTitle },
+      link: post.link,
+    })
   }
   return j({ message: 'nf' }, 404)
 }
@@ -44,6 +50,7 @@ function cookieFrom(res: Response) {
 
 beforeEach(() => {
   post.title = 'Old Title'
+  post.aioseoTitle = ''
   __resetRateLimits()
   store = new FileFoundationStore(mkdtempSync(path.join(tmpdir(), 'rf-wpr-')))
   __setStoreForTests(store)

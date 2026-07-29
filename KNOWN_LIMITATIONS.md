@@ -35,9 +35,17 @@ a pilot customer should both have. **RC2 status is noted inline.**
   is honestly reported `verify_failed`. A companion snippet/MU-plugin to expose
   these keys is planned. AIOSEO and Rank Math expose their fields for REST and
   are covered by the test double; verify on the first live customer of each.
-- **SEO title vs post title:** the "SEO title" edit writes the native WordPress
-  post title (live-validated), not a per-plugin title override. Per-plugin title
-  overrides (`rank_math_title`, `_yoast_wpseo_title`) are a planned enhancement.
+- **Per-plugin SEO-title overrides — RESOLVED.** A title edit now writes both
+  the native WordPress post title (live-validated) *and* the detected
+  plugin's own title-override field (`rank_math_title`, `_yoast_wpseo_title`,
+  AIOSEO `aioseo_meta_data.title`/`_aioseo_title`) — the field a plugin
+  actually renders in `<title>` once set, which would otherwise silently
+  override RankForge's native-title write. Read-back verification checks
+  the override field independently of the native title (native writes are
+  reliable enough that comparing native title alone would hide a plugin
+  that silently drops the override write); covered by the test double. Not
+  yet proven against a live AIOSEO/Rank Math/Yoast install (same caveat as
+  meta-description writes above).
 
 ## Missing features (do not exist)
 - **Explicit organization creation** — an org is auto-created at signup; there is
@@ -50,13 +58,6 @@ a pilot customer should both have. **RC2 status is noted inline.**
   is a KPI panel, not a briefing.
 - **Onboarding / first-run guidance** — no wizard, checklist, or tour.
 - **Password reset / account recovery** — not present (follows from no email).
-
-## Built but not surfaced to the user (hidden / not wired)
-- **GSC data in Atlas** — fetched into `snapshot.gsc` but never rendered.
-- **GA4 data in Atlas** — fetched into `snapshot.analytics` but never rendered.
-- **Atlas change-detection** — `assembleAtlas` supports a prior snapshot for
-  "what changed overnight," but the route never persists/passes one, so the
-  threats/opportunities-from-diffs are always empty.
 
 ## Operational / robustness limitations
 - **Rate limiting — expanded at RC2.** Now covers signup, login, oauth-start,

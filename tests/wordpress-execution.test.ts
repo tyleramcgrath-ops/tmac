@@ -26,6 +26,11 @@ interface FakePost {
   aioseoDescription: string
   rankMathDescription: string
   yoastDescription: string
+  // Per-plugin SEO-title overrides — empty until a deploy (or a pre-existing
+  // site customization, seeded directly in a test) ever sets one.
+  aioseoTitle: string
+  rankMathTitle: string
+  yoastTitle: string
   link: string
 }
 
@@ -49,6 +54,9 @@ class FakeWordPress {
       aioseoDescription: 'Original meta',
       rankMathDescription: 'Original RM meta',
       yoastDescription: 'Original Yoast meta',
+      aioseoTitle: '',
+      rankMathTitle: '',
+      yoastTitle: '',
       link: 'https://wp.test/services',
     })
   }
@@ -82,17 +90,32 @@ class FakeWordPress {
         if (body.meta?._yoast_wpseo_metadesc !== undefined && !this.dropMeta) {
           post.yoastDescription = body.meta._yoast_wpseo_metadesc
         }
+        if (body.aioseo_meta_data?.title !== undefined && !this.dropMeta) {
+          post.aioseoTitle = body.aioseo_meta_data.title
+        }
+        if (body.meta?._aioseo_title !== undefined && !this.dropMeta) {
+          post.aioseoTitle = body.meta._aioseo_title
+        }
+        if (body.meta?.rank_math_title !== undefined && !this.dropMeta) {
+          post.rankMathTitle = body.meta.rank_math_title
+        }
+        if (body.meta?._yoast_wpseo_title !== undefined && !this.dropMeta) {
+          post.yoastTitle = body.meta._yoast_wpseo_title
+        }
       }
       return json({
         id: 10,
         title: { raw: post.title, rendered: post.title },
         excerpt: { raw: post.excerpt },
         content: { raw: post.content, rendered: post.content },
-        aioseo_meta_data: { description: post.aioseoDescription },
+        aioseo_meta_data: { description: post.aioseoDescription, title: post.aioseoTitle },
         meta: {
           _aioseo_description: post.aioseoDescription,
+          _aioseo_title: post.aioseoTitle,
           rank_math_description: post.rankMathDescription,
+          rank_math_title: post.rankMathTitle,
           _yoast_wpseo_metadesc: post.yoastDescription,
+          _yoast_wpseo_title: post.yoastTitle,
         },
         link: post.link,
       })
@@ -261,6 +284,151 @@ describe('WordPress deploy + read-back verification', () => {
     })
     expect(dep.status).toBe('verified')
     expect(wp.posts.get(10)!.excerpt).toBe('Core excerpt description')
+  })
+})
+
+describe('per-plugin SEO-title override (planned enhancement, now implemented)', () => {
+  it('a title change also writes the Rank Math title-override field, not just the native title', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('rankmath'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'Rank Math SEO Title' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization (Rank Math)',
+    })
+    expect(dep.status).toBe('verified')
+    expect(dep.verification?.titleMatches).toBe(true)
+    // Both fields actually landed on the live site — not just the record.
+    expect(wp.posts.get(10)!.title).toBe('Rank Math SEO Title')
+    expect(wp.posts.get(10)!.rankMathTitle).toBe('Rank Math SEO Title')
+  })
+
+  it('a title change also writes the Yoast title-override field', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('yoast'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'Yoast SEO Title' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization (Yoast)',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.title).toBe('Yoast SEO Title')
+    expect(wp.posts.get(10)!.yoastTitle).toBe('Yoast SEO Title')
+  })
+
+  it('a title change also writes the AIOSEO title-override field', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connection(true), // aioseo=true
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'AIOSEO SEO Title' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization (AIOSEO)',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.title).toBe('AIOSEO SEO Title')
+    expect(wp.posts.get(10)!.aioseoTitle).toBe('AIOSEO SEO Title')
+  })
+
+  it('core (no SEO plugin) writes only the native title — there is no override field to write', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('core'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'Core Title' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization (core)',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.title).toBe('Core Title')
+    expect(wp.posts.get(10)!.rankMathTitle).toBe('')
+    expect(wp.posts.get(10)!.yoastTitle).toBe('')
+    expect(wp.posts.get(10)!.aioseoTitle).toBe('')
+  })
+
+  it('a title AND a meta description in the same deploy both land, without one clobbering the other', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('rankmath'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'Combined Title', metaDescription: 'Combined description' },
+      approvedBy: 'user-1',
+      reason: 'Title + meta optimization',
+    })
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.rankMathTitle).toBe('Combined Title')
+    expect(wp.posts.get(10)!.rankMathDescription).toBe('Combined description')
+  })
+
+  it('a plugin that silently drops the title-override write surfaces as verify_failed, never a false success', async () => {
+    wp.dropMeta = true
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('yoast'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'Should Not Verify' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization (Yoast, dropped)',
+    })
+    // The native title write is unaffected by dropMeta (only meta-field writes
+    // are dropped), so it DID change — but the override field the plugin
+    // actually renders from did not, and read-back must catch that.
+    expect(wp.posts.get(10)!.title).toBe('Should Not Verify')
+    expect(wp.posts.get(10)!.yoastTitle).toBe('')
+    expect(dep.status).toBe('verify_failed')
+    expect(dep.verification?.titleMatches).toBe(false)
+  })
+
+  it('a pre-existing plugin title override (set before RankForge ever touched the post) does not block verification once overwritten', async () => {
+    // "before" stays the native title (unaffected by whatever the override
+    // field held previously) — only the write/verify path is plugin-aware.
+    wp.posts.get(10)!.rankMathTitle = 'Pre-existing Manual SEO Title'
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('rankmath'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'New Title' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization',
+    })
+    expect(dep.before.title).toBe('Original Title')
+    expect(dep.status).toBe('verified')
+    expect(wp.posts.get(10)!.rankMathTitle).toBe('New Title')
+  })
+
+  it('rollback restores the title override field along with the native title', async () => {
+    const dep = await executeWpDeployment({
+      projectId: 'proj-wp',
+      orgId: 'org-wp',
+      connection: connectionWith('rankmath'),
+      postId: 10,
+      postType: 'pages',
+      changes: { title: 'Temporary Title' },
+      approvedBy: 'user-1',
+      reason: 'Title optimization',
+    })
+    expect(wp.posts.get(10)!.rankMathTitle).toBe('Temporary Title')
+
+    const rolled = await rollbackWpDeployment({ deployment: dep, connection: connectionWith('rankmath'), actorId: 'user-2' })
+    expect(rolled.status).toBe('rolled_back')
+    expect(wp.posts.get(10)!.title).toBe('Original Title')
+    expect(wp.posts.get(10)!.rankMathTitle).toBe('Original Title')
   })
 })
 
