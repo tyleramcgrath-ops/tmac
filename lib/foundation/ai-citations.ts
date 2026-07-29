@@ -49,8 +49,21 @@ export async function checkCitation(query: string, brandDomain: string, apiKey: 
   if (!res.ok) {
     return { available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, message: `Perplexity returned HTTP ${res.status}.` }
   }
-  const data = (await res.json()) as { citations?: string[]; search_results?: { url?: string }[] }
-  const sources = (data.citations ?? data.search_results?.map((s) => s.url ?? '') ?? []).filter(Boolean) as string[]
+  let data: { citations?: string[]; search_results?: { url?: string }[] }
+  try {
+    data = (await res.json()) as typeof data
+  } catch {
+    // A 200 carrying an HTML error page would otherwise throw out of here and
+    // abort the whole scheduled citation run, not just this one query.
+    return { available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, message: 'Perplexity returned a response that was not JSON.' }
+  }
+  // Newer responses carry BOTH keys, sometimes with an empty citations array
+  // beside a populated search_results. Preferring whichever list actually has
+  // entries keeps an empty array from reading as "no sources" — which would
+  // report a lost citation that was never lost.
+  const fromCitations = (data.citations ?? []).filter(Boolean)
+  const fromResults = (data.search_results ?? []).map((s) => s.url ?? '').filter(Boolean)
+  const sources = fromCitations.length > 0 ? fromCitations : fromResults
   let position: number | null = null
   let citedUrl: string | null = null
   sources.forEach((url, i) => {

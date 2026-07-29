@@ -30,16 +30,21 @@ export async function fetchKeywordPosition(keyword: string, host: string, apiKey
     if (!res.ok) return { keyword, position: null, url: null, topResult: null }
     const data = await res.json()
     const organic: { link?: string; position?: number }[] = Array.isArray(data?.organic_results) ? data.organic_results : []
-    const match = organic.find((r) => {
+    const index = organic.findIndex((r) => {
       try {
-        return r.link && new URL(r.link).hostname.replace(/^www\./, '') === host
+        return !!r.link && new URL(r.link).hostname.replace(/^www\./, '') === host
       } catch {
         return false
       }
     })
+    const match = index >= 0 ? organic[index] : undefined
     return {
       keyword,
-      position: match?.position ?? null,
+      // When the API omits an explicit position, fall back to the result's
+      // rank in the organic list. Reporting null while also reporting the URL
+      // says "found it but it isn't ranking", which is self-contradictory and
+      // registers downstream as a rank drop.
+      position: match ? match.position ?? index + 1 : null,
       url: match?.link ?? null,
       topResult: organic[0]?.link ?? null,
     }
@@ -49,6 +54,14 @@ export async function fetchKeywordPosition(keyword: string, host: string, apiKey
 }
 
 export function hostOf(domainOrUrl: string): string {
-  const u = /^https?:\/\//.test(domainOrUrl) ? domainOrUrl : `https://${domainOrUrl}`
-  return new URL(u).hostname.replace(/^www\./, '')
+  // The scheme test is case-insensitive: an uppercase "HTTP://" that failed to
+  // match used to get a second scheme prefixed onto it, and the parse then
+  // reported the host as "http".
+  const u = /^https?:\/\//i.test(domainOrUrl) ? domainOrUrl : `https://${domainOrUrl}`
+  try {
+    return new URL(u).hostname.replace(/^www\./, '')
+  } catch {
+    // A malformed stored domain must not throw out of a scheduled run.
+    return ''
+  }
 }
