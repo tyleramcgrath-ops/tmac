@@ -10,7 +10,8 @@
     "db:migrate": "node --experimental-strip-types scripts/migrate.mts",
     "check:db": "node --experimental-strip-types scripts/check-migrations.mts",
     "check:refresh": "node --experimental-strip-types scripts/check-refresh.mts",
-    "check:compass": "node --experimental-strip-types scripts/check-compass.mts"
+    "check:compass": "node --experimental-strip-types scripts/check-compass.mts",
+    "check:wordpress": "node --experimental-strip-types scripts/check-wordpress.mts"
   },
   "dependencies": {
     "@ai-sdk/gateway": "3.0.59",
