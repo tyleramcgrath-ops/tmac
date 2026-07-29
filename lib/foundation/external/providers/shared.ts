@@ -15,6 +15,10 @@ export function statusFor(id: string, kind: ProviderKind, config: ProviderConfig
     if (config.failMode === 'unauthorized') { state = 'unauthorized'; detail = 'Credentials rejected — rotate the API key.' }
     else if (config.failMode === 'rate-limited') { state = 'rate-limited'; detail = 'Provider rate limit reached — retry later.' }
     else if (config.failMode === 'error') { state = 'error'; detail = 'Provider returned an error.' }
+    // guard() refuses every data call when the credential is missing, so
+    // reporting 'connected' here would paint a green badge on a provider that
+    // can serve nothing. The two must agree.
+    else if (!config.credential) { state = 'unauthorized'; detail = 'Connected but no credential stored — reconnect the provider.' }
     else { state = 'connected'; detail = 'Connected.' }
   }
   return { id, kind, state, detail, lastCheckedAt: now }
