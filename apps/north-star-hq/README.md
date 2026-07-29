@@ -46,6 +46,33 @@ connected" fallback. Needs `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` set
 (see `.env.example`) — unset, the panel says so plainly instead of a dead
 "Connect" button.
 
+## Real WordPress connect + deploy
+
+Also genuinely real, not simulated: connect the **Integrations** panel's
+**Connect WordPress** form (an application password, never your account
+password — `app/api/projects/[projectId]/wordpress/route.ts`) and Operator's
+approve/deploy path writes to that live site for real
+(`lib/foundation/wp-execution.ts`, ported from the root RankForge app).
+Connecting validates the credentials against the live site before storing
+anything (AES-256-GCM encrypted at rest); every deploy is verified by
+re-reading the page after writing, and a plugin that silently drops part of a
+write is reported `verify_failed`, never a false success. Outbound requests
+to the site go through the same SSRF guard as the root app
+(`lib/foundation/url-guard.ts`) — private/loopback/cloud-metadata addresses
+and non-standard ports are refused before any request is made.
+
+Every onboarded org starts with a **seeded demo connection** pointed at a
+fictional site (`lib/foundation/seed.ts`), so the panel has something to show
+immediately. Disconnect it from the Integrations panel to connect a real
+site — the connect form only renders once no connection exists.
+`npm run check:wordpress` drives the real PUT/GET/DELETE route handlers
+(real Request objects, real signed session cookies) plus the underlying
+execution/rollback functions against a local HTTP test double standing in
+for the WordPress REST API — proving the transport, auth, verification, and
+rollback logic end to end. It does not prove any specific real
+WordPress/plugin combination behaves the same way; that remains unproven in
+this environment.
+
 Everything else external (AI Search Citations, Competitor Intelligence,
 industry Trends) has real *engine* code already sitting in
 `lib/foundation/external/` from the same fork, but no real provider behind
@@ -105,20 +132,21 @@ to have acted, and ignores instructions embedded in project data.
 ## Prototype status
 
 Like `apps/reloop`, most of this app's data is **seeded/sample data**, not
-live integrations (Google Search Console/Analytics being the one exception
-above):
+live integrations (Google Search Console/Analytics and WordPress being the
+exceptions above):
 
 - Every activation seeds a sample project (see `lib/foundation/seed.ts`) —
-  some open recommendations, some already "deployed."
-- "Deploying" a fix (Operator approve/deploy, or the Command Bar's
-  `deploy-mission`) is simulated — see `lib/foundation/wp-execution.ts`. No
-  real WordPress site is ever written to.
+  some open recommendations, some already "deployed," and a fictional
+  WordPress connection so the Integrations panel and Operator have something
+  to show immediately. Disconnect it to connect a real site.
 - The onboarding wizard's "Connect your data" step is still UI-only for
-  WordPress / SE Ranking / Semrush — every row shows "Available," and
-  nothing it does actually connects anything (no real backing integration
-  exists anywhere in the codebase for those three). Google Search Console
-  and Analytics genuinely connect for real once activated — see the
-  Integrations panel above.
+  SE Ranking / Semrush — every row shows "Available," and nothing it does
+  actually connects anything (no real backing integration exists anywhere in
+  the codebase for those two). Google Search Console, Analytics, and
+  WordPress genuinely connect for real once activated — see the Integrations
+  panel above. WordPress specifically has no in-wizard connect action (the
+  wizard's WordPress row is still just informational); connecting happens in
+  the Integrations panel afterward, same as Google.
 - Storage is **PostgreSQL in production** and a local JSON file store for dev
   and tests — see `lib/foundation/store.ts` and `resolveStoreEnv` in
   `env.ts`. Set `DATABASE_URL` (Vercel's Postgres/Neon integration does this
