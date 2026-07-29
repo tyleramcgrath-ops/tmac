@@ -118,7 +118,11 @@ export function buildMissionOperations(mission: Mission, events: ActivityEvent[]
       elapsedMs = Math.max(0, new Date(nowIso).getTime() - new Date(at).getTime())
     } else if (at && status === 'done') {
       const nextAt = enteredAt[MISSION_PHASES[i + 1]]
-      elapsedMs = nextAt ? Math.max(0, new Date(nextAt).getTime() - new Date(at).getTime()) : 0
+      // Null, not 0, when the next phase has no real timestamp — a mission can
+      // reach deployment with no approval.granted event (an auto-approved
+      // policy deploy emits none), and "0ms" would claim the phase was
+      // instant when the truth is that we cannot say.
+      elapsedMs = nextAt ? Math.max(0, new Date(nextAt).getTime() - new Date(at).getTime()) : null
     }
     return { phase, status, owner: PHASE_OWNER[phase], enteredAt: at, elapsedMs }
   })
