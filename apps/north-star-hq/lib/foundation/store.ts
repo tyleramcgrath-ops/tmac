@@ -115,6 +115,7 @@ export interface FoundationStore {
   // wordpress
   upsertWpConnection(conn: WpConnection): Promise<void>
   getWpConnection(projectId: string): Promise<WpConnection | null>
+  deleteWpConnection(projectId: string): Promise<void>
   createWpDeployment(dep: WpDeployment): Promise<void>
   getWpDeployment(id: string): Promise<WpDeployment | null>
   updateWpDeployment(dep: WpDeployment): Promise<void>

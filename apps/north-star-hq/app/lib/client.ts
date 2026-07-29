@@ -190,6 +190,13 @@ export interface IntegrationDTO {
   connectedAt: string | null
   updatedAt: string | null
 }
+// WordPress connection status — never carries the application password.
+export interface WpConnectionDTO {
+  siteUrl: string
+  username: string
+  aioseo: boolean
+  seoPlugin: 'aioseo' | 'rankmath' | 'yoast' | 'core'
+}
 export type ScheduleKind = 'scheduled_scan' | 'monitor' | 'competitor_refresh' | 'rank_tracking' | 'ai_citation_check' | 'backlink_refresh'
 export interface ScheduleDTO {
   id: string
@@ -350,6 +357,20 @@ export const api = {
   getGoogleBreakdowns: (projectId: string) =>
     req<GoogleBreakdownsDTO>(`/api/projects/${projectId}/analytics/breakdown`),
 
+  // WordPress connection (Operator's deploy/rollback already call the real
+  // wp-execution.ts functions once a connection exists — this is what creates
+  // it: validates the application password against the live site before
+  // storing it, same as Google Connect never trusts a token on faith).
+  getWordpress: (projectId: string) =>
+    req<{ connection: WpConnectionDTO | null; deployments: DeploymentDTO[] }>(`/api/projects/${projectId}/wordpress`),
+  connectWordpress: (projectId: string, input: { siteUrl: string; username: string; appPassword: string }) =>
+    req<{ connection: WpConnectionDTO }>(`/api/projects/${projectId}/wordpress`, {
+      method: 'PUT',
+      body: JSON.stringify(input),
+    }),
+  disconnectWordpress: (projectId: string) =>
+    req<{ ok: true }>(`/api/projects/${projectId}/wordpress`, { method: 'DELETE' }),
+
   // automation / scheduler
   getSchedule: (projectId: string) =>
     req<{ schedules: ScheduleDTO[]; jobs: JobDTO[] }>(`/api/projects/${projectId}/schedule`),
@@ -360,70 +381,6 @@ export const api = {
     }),
   clearSchedule: (projectId: string, kind: ScheduleKind = 'scheduled_scan') =>
     req<{ ok: boolean }>(`/api/projects/${projectId}/schedule?kind=${kind}`, { method: 'DELETE' }),
-
-  // wordpress
-  getWordpress: (projectId: string) =>
-    req<{ connection: { siteUrl: string; username: string; aioseo: boolean; seoPlugin?: 'aioseo' | 'rankmath' | 'yoast' | 'core' } | null; deployments: DeploymentDTO[] }>(
-      `/api/projects/${projectId}/wordpress`
-    ),
-  resolveWpTarget: (projectId: string, url: string) =>
-    req<{ resolved: boolean; target: { postId: number; postType: string; title: string } | null }>(
-      `/api/projects/${projectId}/wordpress`,
-      { method: 'POST', body: JSON.stringify({ action: 'resolve', url }) }
-    ),
-  // Browse & one-click / bulk optimize (restored classic flow). 'all' returns
-  // every page AND post so both can be listed and bulk-optimized together.
-  listWordpressItems: (projectId: string, postType: 'posts' | 'pages' | 'all') =>
-    req<{ items: { id: number; type: 'posts' | 'pages'; link: string; title: string; status: string }[] }>(
-      `/api/projects/${projectId}/wordpress`,
-      { method: 'POST', body: JSON.stringify({ action: 'list', postType }) }
-    ),
-  getWordpressItem: (projectId: string, postType: 'posts' | 'pages', postId: number) =>
-    req<{ post: { postId: number; postType: 'posts' | 'pages'; title: string; metaDescription: string; content: string; link: string } }>(
-      `/api/projects/${projectId}/wordpress`,
-      { method: 'POST', body: JSON.stringify({ action: 'get', postType, postId }) }
-    ),
-  forgeRewrite: (input: { url: string; currentTitle: string; currentMeta: string; excerpt: string }) =>
-    req<{ seoTitle?: string; metaDescription?: string; jsonLd?: string; schemaType?: string; rationale?: string }>(
-      '/api/forge/rewrite',
-      { method: 'POST', body: JSON.stringify(input) }
-    ),
-  connectWordpress: (projectId: string, siteUrl: string, username: string, appPassword: string) =>
-    req<{ connection: { siteUrl: string; username: string; aioseo: boolean } }>(
-      `/api/projects/${projectId}/wordpress`,
-      { method: 'PUT', body: JSON.stringify({ siteUrl, username, appPassword }) }
-    ),
-  deployWordpress: (
-    projectId: string,
-    input: {
-      postId: number
-      postType: string
-      title?: string
-      metaDescription?: string
-      jsonLd?: string
-      internalLinks?: { url: string; anchor: string }[]
-      reason: string
-      recommendationId?: string
-    }
-  ) =>
-    req<{ deployment: DeploymentDTO }>(`/api/projects/${projectId}/wordpress`, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'deploy', ...input }),
-    }),
-  rollbackWordpress: (projectId: string, deploymentId: string) =>
-    req<{ deployment: DeploymentDTO }>(`/api/projects/${projectId}/wordpress`, {
-      method: 'POST',
-      body: JSON.stringify({ action: 'rollback', deploymentId }),
-    }),
-  // Explicit, one-click install of an SEO plugin when none is detected. An
-  // expected, honest failure (e.g. the host blocks direct plugin installs)
-  // surfaces as ApiError with the real reason as its message — same pattern
-  // as connectWordpress/deployWordpress.
-  installWordpressPlugin: (projectId: string, plugin: 'yoast' | 'aioseo') =>
-    req<{ ok: true; seoPlugin: 'aioseo' | 'rankmath' | 'yoast' | 'core' }>(
-      `/api/projects/${projectId}/wordpress`,
-      { method: 'POST', body: JSON.stringify({ action: 'install-plugin', plugin }) }
-    ),
 
   // ── Operator (Phase D) ──
   operatorPreview: (projectId: string, recommendationIds?: string[]) =>

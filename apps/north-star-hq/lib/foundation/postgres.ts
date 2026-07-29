@@ -495,6 +495,9 @@ export class PostgresFoundationStore implements FoundationStore {
     const r = await this.rows<WpConnection>('SELECT data FROM rf_wp_connections WHERE project_id=$1', [projectId])
     return r[0] ?? null
   }
+  async deleteWpConnection(projectId: string) {
+    await this.pool.query('DELETE FROM rf_wp_connections WHERE project_id=$1', [projectId])
+  }
   async createWpDeployment(dep: WpDeployment) {
     await this.ins(TABLES.wpDep, dep)
   }

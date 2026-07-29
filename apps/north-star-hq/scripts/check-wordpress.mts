@@ -32,9 +32,11 @@ process.env.APP_SECRET = process.env.APP_SECRET ?? 'check-wordpress-test-secret-
 
 const { FileFoundationStore } = await import('../lib/foundation/filestore.ts')
 const { __setStoreForTests } = await import('../lib/foundation/store.ts')
-const { encryptSecret } = await import('../lib/foundation/crypto.ts')
+const { encryptSecret, decryptSecret } = await import('../lib/foundation/crypto.ts')
+const { sessionCookieFor } = await import('../lib/foundation/auth.ts')
 const { __setTrustedHostsForTests } = await import('../lib/foundation/url-guard.ts')
 const { detectSeoPlugin, executeWpDeployment, resolveWpTarget, rollbackWpDeployment } = await import('../lib/foundation/wp-execution.ts')
+const { PUT: wpConnectPUT, GET: wpConnectGET, DELETE: wpConnectDELETE } = await import('../app/api/projects/[projectId]/wordpress/route.ts')
 
 let pass = 0
 let fail = 0
@@ -79,6 +81,15 @@ const server = createServer((req, res) => {
     res.end(JSON.stringify({ code: 'rest_forbidden', message: 'bad credentials' }))
     return
   }
+  // The connect route (app/api/projects/[projectId]/wordpress/route.ts)
+  // probes this exact endpoint to validate credentials against the live site
+  // before ever storing a connection — a real WordPress REST API always has
+  // it once authenticated.
+  if (url.pathname === '/wp-json/wp/v2/users/me') {
+    send(200, { id: 1, name: USERNAME })
+    return
+  }
+
   const listMatch = url.pathname.match(/^\/wp-json\/wp\/v2\/(posts|pages)$/)
   if (listMatch && req.method === 'GET') {
     const slug = url.searchParams.get('slug')
@@ -214,6 +225,83 @@ try {
   blockReason = err instanceof Error ? err.message : String(err)
 }
 check('a connection pointed at cloud metadata is refused before any request', blockedCorrectly, blockReason)
+
+// ── 7. The real PUT/GET route handlers, end to end ──────────────────────────
+// Everything above drives wp-execution.ts directly. This section drives the
+// actual exported route handlers (app/api/projects/[projectId]/wordpress/
+// route.ts) with real Request objects and a real signed session cookie — the
+// same objects Next.js would construct from an HTTP request — to prove the
+// connect UI's one real gap (there was no way to ever create a WpConnection)
+// is now closed end to end, not just at the library layer.
+const adminId = randomUUID()
+const memberId = randomUUID()
+const routeOrgId = randomUUID()
+const routeProjectId = randomUUID()
+await store.createUser({ id: adminId, email: 'admin@check.test', name: 'Admin', passwordHash: 'x', createdAt: now })
+await store.createUser({ id: memberId, email: 'member@check.test', name: 'Member', passwordHash: 'x', createdAt: now })
+await store.createOrg({ id: routeOrgId, name: 'Check Org', createdAt: now }, adminId)
+await store.addMember({ orgId: routeOrgId, userId: memberId, role: 'member', createdAt: now })
+await store.createProject({
+  id: routeProjectId, orgId: routeOrgId, domain: 'route-check.test', name: 'Route Check', industry: '', businessProfile: '', goals: [], notes: '', createdAt: now, updatedAt: now,
+})
+const adminCookie = await sessionCookieFor(adminId)
+const memberCookie = await sessionCookieFor(memberId)
+const cookieHeader = (setCookie: string) => setCookie.split(';')[0]
+
+function wpRequest(body: unknown, cookie: string, method = 'PUT') {
+  return new Request(`http://localhost/api/projects/${routeProjectId}/wordpress`, {
+    method,
+    headers: { 'content-type': 'application/json', cookie: cookieHeader(cookie) },
+    body: method === 'GET' ? undefined : JSON.stringify(body),
+  })
+}
+const ctx = { params: Promise.resolve({ projectId: routeProjectId }) }
+
+const badCreds = await wpConnectPUT(wpRequest({ siteUrl, username: USERNAME, appPassword: 'wrong-password' }, adminCookie), ctx)
+check('PUT with wrong credentials fails honestly, never silently succeeds', badCreds.status === 502, String(badCreds.status))
+
+const memberDenied = await wpConnectPUT(wpRequest({ siteUrl, username: USERNAME, appPassword: PASSWORD }, memberCookie), ctx)
+check('PUT is refused for a member (admin role required to connect)', memberDenied.status === 403, String(memberDenied.status))
+
+const noConnBeforeConnect = await wpConnectGET(wpRequest(null, memberCookie, 'GET'), ctx)
+const noConnBody = await noConnBeforeConnect.json()
+check('GET reports no connection before one is created', noConnBody.connection === null, JSON.stringify(noConnBody.connection))
+
+const okConnect = await wpConnectPUT(wpRequest({ siteUrl, username: USERNAME, appPassword: PASSWORD }, adminCookie), ctx)
+const okBody = await okConnect.json()
+check('PUT with real credentials against the live site succeeds', okConnect.status === 200, String(okConnect.status))
+check('...and the response never carries the password', !JSON.stringify(okBody).includes(PASSWORD))
+
+const persistedConn = await store.getWpConnection(routeProjectId)
+check('a WpConnection actually persisted to the store', Boolean(persistedConn), persistedConn ? 'found' : 'missing')
+check('the stored password is encrypted, not plaintext', persistedConn ? !persistedConn.appPasswordEnc.includes(PASSWORD) : false)
+check('...and round-trips back to the real password via decryptSecret', persistedConn ? decryptSecret(persistedConn.appPasswordEnc) === PASSWORD : false)
+
+const afterConnect = await wpConnectGET(wpRequest(null, memberCookie, 'GET'), ctx)
+const afterBody = await afterConnect.json()
+check('GET (as a plain member) now shows the connection, minus the password', afterBody.connection?.siteUrl === siteUrl && !('appPassword' in afterBody.connection) && !('appPasswordEnc' in afterBody.connection), JSON.stringify(afterBody.connection))
+
+const metadataAttempt = await wpConnectPUT(wpRequest({ siteUrl: 'http://169.254.169.254', username: 'x', appPassword: 'y' }, adminCookie), ctx)
+check('PUT refuses to even probe an unsafe (cloud-metadata) siteUrl', metadataAttempt.status === 400, String(metadataAttempt.status))
+
+// ── 8. Disconnect — the only way past a seeded/demo connection to a real one ─
+const deleteDenied = await wpConnectDELETE(wpRequest(null, memberCookie, 'DELETE'), ctx)
+check('DELETE is refused for a member (admin role required)', deleteDenied.status === 403, String(deleteDenied.status))
+
+const deleteOk = await wpConnectDELETE(wpRequest(null, adminCookie, 'DELETE'), ctx)
+check('DELETE (as admin) succeeds', deleteOk.status === 200, String(deleteOk.status))
+
+const afterDelete = await store.getWpConnection(routeProjectId)
+check('...and the connection is actually gone from the store', afterDelete === null, afterDelete ? 'still present' : 'gone')
+
+const getAfterDelete = await wpConnectGET(wpRequest(null, memberCookie, 'GET'), ctx)
+const getAfterDeleteBody = await getAfterDelete.json()
+check('GET now reports no connection, so a real PUT can replace it', getAfterDeleteBody.connection === null, JSON.stringify(getAfterDeleteBody.connection))
+
+// The site itself was never mutated by disconnect — reconnecting must reuse
+// the same live credentials without re-probing anything destructive.
+const reconnect = await wpConnectPUT(wpRequest({ siteUrl, username: USERNAME, appPassword: PASSWORD }, adminCookie), ctx)
+check('a real PUT after disconnect succeeds — the seeded/demo connection no longer blocks it', reconnect.status === 200, String(reconnect.status))
 
 server.close()
 rmSync(dataDir, { recursive: true, force: true })
