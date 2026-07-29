@@ -180,16 +180,66 @@ function PagesTable({ pages, onSelect }: { pages: PageResult[]; onSelect: (p: Pa
   )
 }
 
+// Page detail, opened by clicking a row in PagesTable. Presented as a large
+// CENTERED modal: it used to slide in as a 448px full-height panel pinned to
+// the right edge, which made the score tiles and the fix list cramped and
+// easy to miss entirely. Escape and a backdrop click both close it.
 function PageDrawer({ page, onClose }: { page: PageResult; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  const scores: [string, number][] = [
+    ['Overall', page.overall],
+    ['Technical', page.scores.technical],
+    ['Content', page.scores.content],
+    ['Schema', page.scores.schema],
+  ]
+
   return (
-    <div className="fixed inset-0 z-[100] flex justify-end bg-black/60 backdrop-blur-sm" onClick={onClose}>
-      <div className="rf-card flex h-full w-full max-w-md flex-col overflow-hidden rounded-none" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-4 py-3"><span className="truncate text-sm font-medium text-white">{pathOf(page.url)}</span><button onClick={onClose} className="rf-btn-ghost grid h-8 w-8 shrink-0 place-items-center rounded-lg"><X className="h-4 w-4" /></button></div>
-        <div className="overflow-y-auto p-4">
-          <div className="grid grid-cols-4 gap-2 text-center">{([['Overall', page.overall], ['Tech', page.scores.technical], ['Content', page.scores.content], ['Schema', page.scores.schema]] as [string, number][]).map(([k, v]) => <div key={k} className="rf-card p-2"><p className={`text-lg font-semibold ${scoreColor(v)}`}>{v}</p><p className="text-[10px] text-[var(--rf-faint)]">{k}</p></div>)}</div>
-          <a href={page.url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--rf-blue-bright)] hover:text-white">Open page <ExternalLink className="h-3 w-3" /></a>
-          <h4 className="mt-5 text-sm font-semibold text-white">Fixes for this page ({page.fixes.length})</h4>
-          <ul className="mt-2 space-y-1.5">{page.fixes.length === 0 ? <li className="text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> Clean — no issues.</li> : page.fixes.map((f, i) => <li key={i} className="flex items-start gap-2.5 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-3 py-2 text-sm"><SevIcon s={f.severity} /><span><span className="text-[var(--rf-text)]">{f.title}</span><span className="block text-[11px] text-[var(--rf-faint)]">{f.category}</span></span></li>)}</ul>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm sm:p-8" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Page detail: ${pathOf(page.url)}`}
+        className="rf-card rf-topline flex max-h-[88vh] w-full max-w-4xl flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--rf-card-line)] px-6 py-4">
+          <div className="min-w-0">
+            <p className="text-[11px] uppercase tracking-wider text-[var(--rf-faint)]">Page detail</p>
+            <p className="truncate text-base font-semibold text-white">{pathOf(page.url)}</p>
+          </div>
+          <button onClick={onClose} aria-label="Close page detail" className="rf-btn-ghost grid h-9 w-9 shrink-0 place-items-center rounded-lg"><X className="h-4 w-4" /></button>
+        </div>
+        <div className="overflow-y-auto px-6 py-5">
+          <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4">
+            {scores.map(([k, v]) => (
+              <div key={k} className="rf-card px-3 py-4">
+                <p className={`text-3xl font-semibold ${scoreColor(v)}`}>{v}</p>
+                <p className="mt-1 text-xs text-[var(--rf-faint)]">{k}</p>
+              </div>
+            ))}
+          </div>
+          <a href={page.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--rf-blue-bright)] hover:text-white">Open page <ExternalLink className="h-3.5 w-3.5" /></a>
+          <h4 className="mt-7 text-base font-semibold text-white">Fixes for this page ({page.fixes.length})</h4>
+          <ul className="mt-3 space-y-2">
+            {page.fixes.length === 0 ? (
+              <li className="text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> Clean — no issues.</li>
+            ) : (
+              page.fixes.map((f, i) => (
+                <li key={i} className="flex items-start gap-3 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-4 py-3 text-sm">
+                  <SevIcon s={f.severity} />
+                  <span>
+                    <span className="text-[15px] text-[var(--rf-text)]">{f.title}</span>
+                    <span className="mt-0.5 block text-xs text-[var(--rf-faint)]">{f.category}</span>
+                  </span>
+                </li>
+              ))
+            )}
+          </ul>
         </div>
       </div>
     </div>
