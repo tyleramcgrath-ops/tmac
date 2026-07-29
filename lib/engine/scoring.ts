@@ -76,10 +76,21 @@ function scoreContent(user: PageAnalysis, gap: ContentGap | null) {
   if (!user.page || user.page.crawlError) {
     return entry('content', 'Content', 0, 'Your page could not be crawled, so content could not be evaluated.')
   }
-  const gapScore = gap?.contentGapScore ?? 50
-  const score = clamp(100 - gapScore)
   const wc = user.page.wordCount
   const median = gap?.competitorMedianWordCount ?? 0
+  // No gap object, or a gap built from zero crawlable competitors, means there
+  // was nothing to compare against. Scoring that as "0 terms missing, median 0
+  // words" turns an absent comparison into a perfect content score and a clean
+  // bill of health. Neutral-50-and-say-so, like authority and speed already do.
+  if (!gap || median === 0) {
+    return entry(
+      'content', 'Content', 50,
+      `Your page has ${wc.toLocaleString()} words, but no competitor page could be crawled for comparison — ` +
+        'content gap analysis is unavailable. This neutral score does not reflect real data.'
+    )
+  }
+  const gapScore = gap.contentGapScore
+  const score = clamp(100 - gapScore)
   return entry(
     'content', 'Content',
     score,
