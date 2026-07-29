@@ -16,12 +16,10 @@ export async function runBacklinkRefreshJob(store: FoundationStore, job: Job): P
   const key = majesticApiKey()
   if (!key) return { checked: false, note: 'MAJESTIC_API_KEY not configured — no snapshot taken' }
 
-  let host: string
-  try {
-    host = hostOf(project.domain)
-  } catch {
-    return { checked: false, note: 'project domain is not a valid URL/host' }
-  }
+  // hostOf returns '' for a domain it cannot parse; an empty host silently
+  // matches nothing, which downstream reads as a real loss. Bail out instead.
+  const host = hostOf(project.domain)
+  if (!host) return { checked: false, note: 'project domain is not a valid URL/host' }
 
   // The most recent REAL snapshot, taken BEFORE this run's new one is
   // recorded — the only honest baseline to compare a drop against.

@@ -19,12 +19,12 @@ export async function runRankTrackingJob(store: FoundationStore, job: Job): Prom
   const key = serpApiKey()
   if (!key) return { checked: 0, note: 'SERPAPI_KEY not configured — no snapshots taken' }
 
-  let host: string
-  try {
-    host = hostOf(project.domain)
-  } catch {
-    return { checked: 0, note: 'project domain is not a valid URL/host' }
-  }
+  // hostOf returns '' for a domain it cannot parse. An empty host matches no
+  // SERP result, so every keyword would record position null — which
+  // detectRankDrops reads as "fell off the rankings" and emails the owners
+  // about. Bail out instead of manufacturing a site-wide ranking collapse.
+  const host = hostOf(project.domain)
+  if (!host) return { checked: 0, note: 'project domain is not a valid URL/host' }
 
   // The most recent REAL snapshot per keyword, taken BEFORE this run's new
   // ones are recorded — the only honest baseline to compare a drop against.

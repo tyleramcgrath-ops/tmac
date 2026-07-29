@@ -18,12 +18,8 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Invalid request body.' }, { status: 400 })
   }
 
-  let host = ''
-  try {
-    host = hostOf(String(body.domain ?? ''))
-  } catch {
-    return Response.json({ error: 'Enter a valid domain.' }, { status: 400 })
-  }
+  const host = hostOf(String(body.domain ?? ''))
+  if (!host) return Response.json({ error: 'Enter a valid domain.' }, { status: 400 })
 
   const keywords = (Array.isArray(body.keywords) ? body.keywords : [])
     .map((k) => String(k).trim())
