@@ -15,10 +15,20 @@ export interface StoreEnv {
 export class EnvError extends Error {}
 
 function isProduction(): boolean {
-  // Vercel sets VERCEL_ENV=production for prod deployments; otherwise fall
-  // back to NODE_ENV. Preview deployments are treated as needing a DB too.
-  return process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview' ||
-    (process.env.NODE_ENV === 'production' && process.env.VERCEL !== undefined)
+  // `next build` runs with NODE_ENV=production on a developer's machine. It is
+  // a compile, not a deployment, and must not demand deployment credentials —
+  // Next marks it with NEXT_PHASE, which is the only reliable way to tell the
+  // two apart.
+  if (process.env.NEXT_PHASE === 'phase-production-build') return false
+  // Vercel sets VERCEL_ENV=production for prod deployments; preview
+  // deployments need a real database too. Off Vercel, NODE_ENV=production is
+  // the signal — a self-hosted deploy would lose data on the ephemeral file
+  // store exactly as a Vercel one would, so it gets the same requirements.
+  return (
+    process.env.VERCEL_ENV === 'production' ||
+    process.env.VERCEL_ENV === 'preview' ||
+    process.env.NODE_ENV === 'production'
+  )
 }
 
 // Resolves which store to use and enforces production requirements.
@@ -95,7 +105,11 @@ export function stripeConfig(): StripeConfig | null {
   const secretKey = process.env.STRIPE_SECRET_KEY
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
   if (!secretKey || !webhookSecret) return null
-  const priceCents = Number(process.env.STRIPE_PRICE_CENTS) || 4900
+  // A malformed or non-positive override would otherwise reach Stripe as the
+  // amount to charge. Fall back to the default rather than bill a nonsense
+  // figure.
+  const override = Number(process.env.STRIPE_PRICE_CENTS)
+  const priceCents = Number.isFinite(override) && override > 0 ? Math.round(override) : 4900
   return { secretKey, webhookSecret, priceCents, priceLabel: process.env.STRIPE_PRICE_LABEL || 'RankForge Pro' }
 }
 
