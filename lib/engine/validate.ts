@@ -39,12 +39,24 @@ export function validateUrl(raw: string): ValidationResult {
   return { ok: true, value: parsed.toString() }
 }
 
+// The crawler calls this on every redirect hop before it fetches, so anything
+// this returns false for is somewhere the server will connect to on behalf of
+// a URL the site being crawled controls. Known limitation: the check is on the
+// hostname, so a public name that RESOLVES to a private address (DNS
+// rebinding) still passes — closing that needs resolution-time filtering.
 export function isPrivateHostname(host: string): boolean {
   const lower = host.toLowerCase()
-  if (lower === 'localhost' || lower.endsWith('.localhost') || lower.endsWith('.local') || lower.endsWith('.internal')) {
+  if (
+    lower === 'localhost' ||
+    lower.endsWith('.localhost') ||
+    lower.endsWith('.local') ||
+    lower.endsWith('.internal') ||
+    lower === 'home.arpa' ||
+    lower.endsWith('.home.arpa')
+  ) {
     return true
   }
-  // IPv4 private/loopback/link-local ranges
+  // IPv4 ranges that are not public internet.
   const ipv4 = lower.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/)
   if (ipv4) {
     const [a, b] = [Number(ipv4[1]), Number(ipv4[2])]
@@ -52,6 +64,11 @@ export function isPrivateHostname(host: string): boolean {
     if (a === 172 && b >= 16 && b <= 31) return true
     if (a === 192 && b === 168) return true
     if (a === 169 && b === 254) return true
+    // Shared address space (RFC 6598) — carrier-grade NAT, and common inside
+    // cloud networks. Not public, so a redirect there leaves the internet.
+    if (a === 100 && b >= 64 && b <= 127) return true
+    // Multicast (224/4), reserved (240/4), and the broadcast address.
+    if (a >= 224) return true
     return false
   }
   // IPv6 literals
@@ -68,7 +85,7 @@ export function validateKeyword(raw: string): ValidationResult {
 }
 
 export function validateCountry(raw: string): ValidationResult {
-  const country = (raw ?? 'us').trim().toLowerCase()
+  const country = (raw || 'us').trim().toLowerCase()
   if (!/^[a-z]{2}$/.test(country)) return { ok: false, error: 'Country must be a 2-letter code (e.g. us, gb, de).' }
   return { ok: true, value: country }
 }
