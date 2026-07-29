@@ -112,19 +112,38 @@ export type JobHandler = (job: Job) => Promise<Record<string, unknown> | void>
 export type Handlers = Partial<Record<JobKind, JobHandler>>
 
 // Enqueue a Job for every schedule that is due, and roll its nextRunAt forward.
-export async function materializeDueSchedules(store: FoundationStore, now: Date): Promise<number> {
+// Each schedule is materialized in isolation, exactly as runDueJobs isolates
+// each job. This loop runs FIRST inside tick(), so anything that escapes it
+// also stops every due job from being drained — one tenant's unusable cron
+// (nextCronTime throws on a 5-field expression that never matches, e.g. Feb
+// 30) would otherwise halt the scheduler for every other tenant. A schedule
+// that fails is left untouched, so it stays due and is retried next pass
+// rather than being silently advanced past its window.
+export async function materializeDueSchedules(
+  store: FoundationStore,
+  now: Date
+): Promise<{ materialized: number; failed: number }> {
   const due = await store.listDueSchedules(now.toISOString())
+  let materialized = 0
+  let failed = 0
   for (const s of due) {
-    await store.enqueueJob(makeJob({ orgId: s.orgId, projectId: s.projectId, kind: s.kind, runAt: now, now }))
-    const next: Schedule = {
-      ...s,
-      lastRunAt: now.toISOString(),
-      nextRunAt: nextCronTime(s.cron, now).toISOString(),
-      updatedAt: now.toISOString(),
+    try {
+      // Compute the next run BEFORE enqueuing, so a schedule that cannot be
+      // advanced never produces a job it would then re-produce every pass.
+      const nextRunAt = nextCronTime(s.cron, now).toISOString()
+      await store.enqueueJob(makeJob({ orgId: s.orgId, projectId: s.projectId, kind: s.kind, runAt: now, now }))
+      const next: Schedule = { ...s, lastRunAt: now.toISOString(), nextRunAt, updatedAt: now.toISOString() }
+      await store.upsertSchedule(next)
+      materialized++
+    } catch (err) {
+      failed++
+      console.error(
+        `[scheduler] could not materialize schedule ${s.id} (project ${s.projectId}, kind ${s.kind}, cron "${s.cron}"):`,
+        err instanceof Error ? err.message : err
+      )
     }
-    await store.upsertSchedule(next)
   }
-  return due.length
+  return { materialized, failed }
 }
 
 // Claim due jobs and run each handler. Success → succeeded (+result). Failure →
@@ -168,9 +187,9 @@ export async function runDueJobs(
 export async function tick(
   store: FoundationStore,
   opts: { now: Date; runnerId: string; handlers: Handlers; limit?: number }
-): Promise<{ reaped: number; materialized: number; ran: number; succeeded: number; failed: number; retried: number }> {
+): Promise<{ reaped: number; materialized: number; materializeFailed: number; ran: number; succeeded: number; failed: number; retried: number }> {
   const reaped = await store.requeueStaleJobs(new Date(opts.now.getTime() - LEASE_MS).toISOString())
-  const materialized = await materializeDueSchedules(store, opts.now)
+  const { materialized, failed: materializeFailed } = await materializeDueSchedules(store, opts.now)
   const run = await runDueJobs(store, opts.now, opts.runnerId, opts.handlers, opts.limit)
-  return { reaped, materialized, ...run }
+  return { reaped, materialized, materializeFailed, ...run }
 }

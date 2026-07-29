@@ -109,7 +109,7 @@ describe('automated backlink refresh', () => {
     }
     await store.upsertSchedule(due)
 
-    expect(await materializeDueSchedules(store, nowDate)).toBe(1)
+    expect(await materializeDueSchedules(store, nowDate)).toEqual({ materialized: 1, failed: 0 })
     const outcome = await runDueJobs(store, nowDate, 'test-runner', productionHandlers())
     expect(outcome.succeeded).toBe(1)
     expect(outcome.failed).toBe(0)
