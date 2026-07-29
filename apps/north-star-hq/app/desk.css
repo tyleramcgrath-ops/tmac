@@ -425,8 +425,28 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-row-text { flex: 1; min-width: 0; }
 .ns-row-title { display: block; font-size: clamp(0.72rem,0.92vw,0.84rem); color: #f0e6cd; }
 .ns-row-desc { display: block; margin-top: 0.2rem; font-size: clamp(0.66rem,0.84vw,0.76rem); line-height: 1.5; color: rgba(226,214,188,0.6); }
+/* Real elapsed time since a persisted timestamp (see AgentRosterPanel's
+   formatElapsed) — never shown next to a finished or idle row, only while
+   the backend reports the agent genuinely active/verifying. Tabular figures
+   so the ticking seconds don't shift the text after it as they change width. */
+.ns-row-elapsed { color: rgba(236,194,118,0.85); font-variant-numeric: tabular-nums; }
 .ns-row-dot { flex: none; width: 7px; height: 7px; margin-top: 0.35rem; border-radius: 50%; background: rgba(226,214,188,0.3); }
-.ns-row[data-status='active'] .ns-row-dot, .ns-row[data-status='verifying'] .ns-row-dot { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-row[data-status='active'] .ns-row-dot, .ns-row[data-status='verifying'] .ns-row-dot {
+  background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6);
+  /* Motion reserved for genuine live work: every other status (waiting,
+     failed, completed, idle) gets a static dot below. A breathing glow,
+     not a hard blink — same restrained amplitude the compass itself uses
+     for its own 'breath'/'listen' pulses (compass.ts), so this reads as
+     the same instrument rather than a different UI language. */
+  animation: ns-row-pulse 1.8s ease-in-out infinite;
+}
+@keyframes ns-row-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+  50% { opacity: 0.55; box-shadow: 0 0 10px rgba(236,194,118,0.85); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ns-row[data-status='active'] .ns-row-dot, .ns-row[data-status='verifying'] .ns-row-dot { animation: none; }
+}
 .ns-row[data-status='waiting-for-approval'] .ns-row-dot { background: #9ec6e0; }
 .ns-row[data-status='failed'] .ns-row-dot, .ns-row[data-status='blocked'] .ns-row-dot { background: #e08a7a; }
 .ns-row[data-status='completed'] .ns-row-dot, .ns-row[data-status='done'] .ns-row-dot { background: #9ed6a0; }
