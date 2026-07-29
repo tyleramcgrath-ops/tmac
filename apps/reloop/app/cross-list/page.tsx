@@ -108,18 +108,19 @@ export default function CrossListPage() {
           </div>
 
           <div className="space-y-4 lg:col-span-3">
-            <Field label="Title" value={draft.title} onChange={(v) => setDraft({ ...draft, title: v })} />
+            <Field id="draft-title" label="Title" value={draft.title} onChange={(v) => setDraft({ ...draft, title: v })} />
             <div className="grid grid-cols-2 gap-4">
-              <Field label="Brand" value={draft.brand} onChange={(v) => setDraft({ ...draft, brand: v })} />
-              <Field label="Size" value={draft.size} onChange={(v) => setDraft({ ...draft, size: v })} />
+              <Field id="draft-brand" label="Brand" value={draft.brand} onChange={(v) => setDraft({ ...draft, brand: v })} />
+              <Field id="draft-size" label="Size" value={draft.size} onChange={(v) => setDraft({ ...draft, size: v })} />
             </div>
-            <Field label="Category" value={draft.category} onChange={(v) => setDraft({ ...draft, category: v })} />
-            <Field label="Condition" value={draft.condition} onChange={(v) => setDraft({ ...draft, condition: v })} />
+            <Field id="draft-category" label="Category" value={draft.category} onChange={(v) => setDraft({ ...draft, category: v })} />
+            <Field id="draft-condition" label="Condition" value={draft.condition} onChange={(v) => setDraft({ ...draft, condition: v })} />
             <div>
-              <label className="font-mono text-[11px] uppercase tracking-wider text-ink-mute">
+              <label htmlFor="draft-description" className="font-mono text-[11px] uppercase tracking-wider text-ink-mute">
                 Description
               </label>
               <textarea
+                id="draft-description"
                 value={draft.description}
                 onChange={(e) => setDraft({ ...draft, description: e.target.value })}
                 rows={4}
@@ -157,7 +158,9 @@ export default function CrossListPage() {
               return (
                 <button
                   key={p.id}
+                  type="button"
                   disabled={publishing}
+                  aria-pressed={isSelected}
                   onClick={() => togglePlatform(p.id)}
                   className={`flex items-center justify-between rounded-xl border px-4 py-3.5 text-left transition-colors ${
                     isSelected ? "border-accent/50 bg-accent/[0.05]" : "border-border"
@@ -190,7 +193,11 @@ export default function CrossListPage() {
               Publish to {selected.length} platform{selected.length === 1 ? "" : "s"} →
             </button>
           ) : (
-            <div className="mt-6 rounded-xl border border-border-soft px-4 py-3 text-center font-mono text-[13px] text-ink-dim">
+            <div
+              className="mt-6 rounded-xl border border-border-soft px-4 py-3 text-center font-mono text-[13px] text-ink-dim"
+              role="status"
+              aria-live="polite"
+            >
               {allLive ? (
                 <span className="text-accent">
                   ✓ Live on {selected.length} platform{selected.length === 1 ? "" : "s"}. One listing, no manual re-posting.
@@ -207,20 +214,23 @@ export default function CrossListPage() {
 }
 
 function Field({
+  id,
   label,
   value,
   onChange,
 }: {
+  id: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
 }) {
   return (
     <div>
-      <label className="font-mono text-[11px] uppercase tracking-wider text-ink-mute">
+      <label htmlFor={id} className="font-mono text-[11px] uppercase tracking-wider text-ink-mute">
         {label}
       </label>
       <input
+        id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="mt-1.5 w-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-ink outline-none focus:border-accent"

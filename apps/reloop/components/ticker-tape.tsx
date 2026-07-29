@@ -23,7 +23,7 @@ function TickerRow() {
 
 export function TickerTape() {
   return (
-    <div className="overflow-hidden border-y border-border/80 bg-surface py-3">
+    <div className="overflow-hidden border-y border-border/80 bg-surface py-3" aria-hidden="true">
       <div className="marquee-track">
         <TickerRow />
         <TickerRow />
