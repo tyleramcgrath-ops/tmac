@@ -51,7 +51,21 @@ export function runCrossPageRules(rawPages: PageSignals[], rawBlocked: unknown[]
   // isn't reported as a "duplicate" of its own canonical.
   const pages = rawPages.filter((p) => !p.duplicateOf)
   const out: CrossPageFinding[] = []
-  const strip = (u: string) => u.split('#')[0].replace(/\/$/, '')
+  // Identity key for "is this the same page?". Sites routinely link to
+  // themselves in more than one spelling — http vs https, www vs bare, with or
+  // without a trailing slash — and treating those as different pages both
+  // invents orphans (nothing "links" to the page) and hides broken links (the
+  // dead target never matches). Query strings are kept: ?id=2 is a real page.
+  const strip = (u: string) => {
+    const bare = u.split('#')[0]
+    try {
+      const parsed = new URL(bare)
+      const host = parsed.hostname.toLowerCase().replace(/^www\./, '')
+      return `${host}${parsed.pathname.replace(/\/$/, '')}${parsed.search}`
+    } catch {
+      return bare.replace(/\/$/, '')
+    }
+  }
 
   // ── Duplicate titles ──
   for (const [value, urls] of duplicates(pages, 'title')) {
@@ -107,8 +121,13 @@ export function runCrossPageRules(rawPages: PageSignals[], rawBlocked: unknown[]
   const inbound = new Map<string, number>()
   for (const p of pages) inbound.set(strip(p.url), 0)
   for (const p of pages) {
+    const self = strip(p.url)
     for (const t of p.internalTargets ?? []) {
       const k = strip(t)
+      // A self-link is not an inbound link. Breadcrumbs, "you are here" nav,
+      // and paginators emit one routinely; counting it would make every page
+      // permanently non-orphaned.
+      if (k === self) continue
       if (inbound.has(k)) inbound.set(k, (inbound.get(k) ?? 0) + 1)
     }
   }
@@ -154,9 +173,10 @@ export function runCrossPageRules(rawPages: PageSignals[], rawBlocked: unknown[]
   // → status 0) are NOT counted — those aren't the site's broken links, and
   // flagging them would fabricate a defect from an environment artifact.
   const blocked = coerceBlocked(rawBlocked)
-  const errorTargets = new Map<string, number>() // normalized url → HTTP status
+  // normalized key → the URL as the crawler fetched it, plus its HTTP status
+  const errorTargets = new Map<string, { url: string; status: number }>()
   for (const b of blocked) {
-    if (b.status >= 400) errorTargets.set(strip(b.url), b.status)
+    if (b.status >= 400) errorTargets.set(strip(b.url), { url: b.url, status: b.status })
   }
   if (errorTargets.size > 0) {
     // target url → set of source pages that link to it
@@ -176,7 +196,10 @@ export function runCrossPageRules(rawPages: PageSignals[], rawBlocked: unknown[]
       const elements = [...linkedFrom.entries()]
         .sort((a, b) => b[1].size - a[1].size)
         .slice(0, 10)
-        .map(([target, sources]) => `${target} (HTTP ${errorTargets.get(target)}) — linked from ${sources.size} page${sources.size === 1 ? '' : 's'}`)
+        .map(([target, sources]) => {
+          const hit = errorTargets.get(target)
+          return `${hit?.url ?? target} (HTTP ${hit?.status}) — linked from ${sources.size} page${sources.size === 1 ? '' : 's'}`
+        })
       out.push({
         ruleId: 'broken-internal-links',
         issueScope: 'site',
