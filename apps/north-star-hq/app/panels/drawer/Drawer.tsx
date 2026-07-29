@@ -12,7 +12,8 @@
 // full-bleed element with pointer events left on would swallow every click in
 // the room.
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { useModalFocus } from '../../_lib/use-modal-focus'
 
 export default function Drawer({
   open,
@@ -25,6 +26,9 @@ export default function Drawer({
   onClose: () => void
   children: React.ReactNode
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useModalFocus(open, ref)
+
   // Escape closes, matching the scrim click. Bound only while open so the
   // seven mounted-but-closed drawers don't all race to handle the same key.
   //
@@ -49,8 +53,21 @@ export default function Drawer({
 
   return (
     <>
-      <div className={`ns-scrim${open ? ' open' : ''}`} onClick={onClose} aria-hidden />
+      {/* preventDefault on mousedown, not click: a click on any non-focusable
+          element natively blurs whatever currently has focus (here, the
+          drawer's own close button) to <body> as part of the browser's
+          default mousedown handling — before this onClick, or React, ever
+          runs. useModalFocus then sees focus already moved and correctly
+          (by its own rule) declines to steal it back, reading a native
+          side-effect of THIS click as if the user had deliberately focused
+          something else. preventDefault on mousedown suppresses that default
+          entirely, so closing via the scrim restores focus exactly like
+          Escape or the × button already did. Confirmed missing in a real
+          browser: without this, scrim-click was the one close path that
+          left focus on <body>. */}
+      <div className={`ns-scrim${open ? ' open' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={onClose} aria-hidden />
       <div
+        ref={ref}
         className={`ns-drawer ns-glass ns-panel${open ? ' open' : ''}`}
         role="dialog"
         aria-modal={open || undefined}

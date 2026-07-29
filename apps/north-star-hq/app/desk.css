@@ -307,9 +307,25 @@ html[data-dev] .ns-dev { display: flex; }
 }
 /* Denser than the shared glass: full-width, the room reads straight through. */
 .ns-hud.up .ns-card.expanded.ns-glass { background: linear-gradient(180deg, rgb(9,10,14), rgb(5,6,9)); }
+/* Always mounted (see ExpandableCard.tsx), hidden the same way Drawer.tsx
+   hides its own close button while shut: opacity + pointer-events, NOT
+   display:none. display:none looked like the obvious choice and was tried
+   first — it removes the button from hit-testing and the accessibility
+   tree in one rule, which is exactly right — but setting display:none on
+   whatever element currently HOLDS FOCUS blurs it to <body> synchronously,
+   the same as unmounting it. Confirmed in a real browser: it broke focus-
+   restore-on-close identically to the unmounted version, because from the
+   focus system's perspective the two are the same event. opacity does not
+   trigger that blur, which is exactly why Drawer.tsx's own close button —
+   opacity-hidden, never display:none — never had this problem. The button
+   sits absolutely-positioned with no defined position while collapsed
+   (.ns-card has no `position` set); harmless, since opacity:0 makes it
+   invisible regardless of where it lands. */
+.ns-card:not(.expanded) .ns-card-close { opacity: 0; pointer-events: none; }
 .ns-card-close {
   position: absolute; top: 0.9rem; right: 1rem; width: 26px; height: 26px; display: grid; place-items: center;
   border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 1.05rem; line-height: 1; z-index: 1;
+  transition: opacity 0.3s ease;
 }
 .ns-card-close:hover { color: #f0e2bc; }
 /* Both panels put their own status text at the top right of .ns-panel-head,

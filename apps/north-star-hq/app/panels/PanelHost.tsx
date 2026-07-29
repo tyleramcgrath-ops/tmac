@@ -99,8 +99,12 @@ export default function PanelHost({
       <CommandRail projectId={projectId} panelsUp={panelsUp} active={drawer} onOpen={handleOpen} />
 
       {/* Sits outside .ns-cards: that container is a positioned column on the
-          right, so a scrim inside it could never cover the room. */}
-      <div className={`ns-scrim${card ? ' open' : ''}`} onClick={() => setCard(null)} aria-hidden />
+          right, so a scrim inside it could never cover the room.
+          preventDefault on mousedown (not click): without it, clicking the
+          scrim natively blurs the card's focused close button to <body>
+          before onClick/React ever runs — see the identical comment in
+          Drawer.tsx, same bug, same fix, confirmed the same way. */}
+      <div className={`ns-scrim${card ? ' open' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => setCard(null)} aria-hidden />
 
       <div className={`ns-cards${card ? ' has-expanded' : ''}`}>
         <AgentStatusCard

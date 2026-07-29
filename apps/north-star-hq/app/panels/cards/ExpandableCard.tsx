@@ -14,6 +14,7 @@
 // was actually aiming at is worse than not expanding at all.
 
 import { useEffect, useRef } from 'react'
+import { useModalFocus } from '../../_lib/use-modal-focus'
 
 export default function ExpandableCard({
   expanded,
@@ -29,6 +30,7 @@ export default function ExpandableCard({
   children: React.ReactNode
 }) {
   const ref = useRef<HTMLDivElement>(null)
+  useModalFocus(expanded, ref)
 
   // Capture phase + stopPropagation, not the more obvious bubble-phase
   // listener: page.tsx has its own bubble-phase Escape handler on `document`
@@ -60,6 +62,17 @@ export default function ExpandableCard({
     // click that isn't on a real control — without this the card never
     // expands at all.
     if (control && control !== ref.current) return
+    // useModalFocus captures document.activeElement to restore on close.
+    // For Drawer.tsx the trigger is always a distinct rail <button>, which
+    // reliably receives native focus on click. Here the card IS its own
+    // trigger, and a plain div[tabIndex=0] does not pick up native
+    // click-focus as reliably — confirmed in a real browser: without this
+    // line, restoreRef captured something other than the card, so closing
+    // it never returned focus to it (this was masked earlier by a second,
+    // now-fixed bug where the close button's display:none blurred focus to
+    // <body> regardless, making the two bugs indistinguishable until fixed
+    // one at a time). Focusing explicitly makes the capture deterministic.
+    ;(e.currentTarget as HTMLElement).focus()
     onExpand()
   }
 
@@ -68,12 +81,26 @@ export default function ExpandableCard({
       ref={ref}
       className={`ns-card ns-glass ns-panel${expanded ? ' expanded' : ''}`}
       onClick={onClick}
-      // Only a control when it is one: collapsed it enlarges on click, so it
-      // announces itself as a button. Expanded it is just the content, and the
-      // explicit close below is the control.
-      role={expanded ? undefined : 'button'}
-      tabIndex={expanded ? undefined : 0}
-      aria-label={expanded ? undefined : `Enlarge ${label}`}
+      // Two different roles for the same element depending on state, not an
+      // oversight: collapsed it IS the trigger control (announces itself as
+      // a button you can activate). Expanded it becomes the dialog itself —
+      // previously it was neither, with no dialog semantics at all once
+      // opened, unlike Drawer.tsx's rail panels which already had this.
+      role={expanded ? 'dialog' : 'button'}
+      aria-modal={expanded || undefined}
+      // -1, not undefined, while expanded: -1 keeps the element
+      // programmatically focusable (just out of Tab order), so it stays a
+      // legitimate focus target. Removing the attribute entirely makes
+      // Chromium treat it as no-longer-focusable and blur it to <body> the
+      // instant this element is the one currently focused — which it always
+      // is right after a click expands it. That blur happens synchronously
+      // during React's commit, before useModalFocus's effect ever runs, so
+      // it silently poisoned the "restore focus to the trigger on close"
+      // behaviour below every single time. Confirmed by removing this and
+      // watching restoreRef capture <body> instead of the card in a real
+      // browser, every time.
+      tabIndex={expanded ? -1 : 0}
+      aria-label={expanded ? label : `Enlarge ${label}`}
       onKeyDown={(e) => {
         if (expanded) return
         if (e.key === 'Enter' || e.key === ' ') {
@@ -82,11 +109,24 @@ export default function ExpandableCard({
         }
       }}
     >
-      {expanded && (
-        <button type="button" className="ns-card-close" onClick={onCollapse} aria-label={`Close ${label}`}>
-          ×
-        </button>
-      )}
+      {/* Always mounted, hidden via CSS while collapsed — not conditional on
+          `expanded`. This close button holds focus while the card is open,
+          and unmounting it on collapse blurs it to <body> as part of that
+          same DOM removal, before useModalFocus's cleanup effect ever gets
+          to see where focus was and restore it. Confirmed in a real browser:
+          with it conditionally rendered, closing the card left focus on
+          <body> every time; Drawer.tsx's close button was never conditional
+          in the first place, which is why that one already worked. */}
+      <button
+        type="button"
+        className="ns-card-close"
+        onClick={onCollapse}
+        aria-label={`Close ${label}`}
+        tabIndex={expanded ? 0 : -1}
+        aria-hidden={!expanded}
+      >
+        ×
+      </button>
       {children}
     </div>
   )
