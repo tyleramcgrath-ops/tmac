@@ -6,6 +6,11 @@ import type { CrawlResult, HeadingNode, PageExtraction, SchemaItem } from './typ
 // crawl result so it is fully unit-testable.
 
 const CONTENT_TEXT_LIMIT = 60_000 // chars of body text kept for analysis
+// Elements that imply a word boundary when the markup carries no whitespace.
+const BLOCK_ELEMENTS =
+  'br, p, div, li, tr, td, th, section, article, header, footer, aside, nav, ' +
+  'blockquote, pre, figcaption, dt, dd, h1, h2, h3, h4, h5, h6, option, label'
+
 const CTA_PATTERNS =
   /\b(get started|sign up|signup|subscribe|buy now|add to cart|free trial|start free|contact us|request (a )?demo|book (a )?(call|demo)|download|learn more|get a quote|try (it|now|free))\b/i
 
@@ -14,9 +19,22 @@ export function extractPage(crawl: CrawlResult): PageExtraction {
   if (!crawl.html) return base
 
   const $ = cheerio.load(crawl.html)
+
+  // Sample insecure subresources BEFORE stripping scripts and styles below —
+  // an insecure <script src="http://"> is ACTIVE mixed content, the kind
+  // browsers block outright, and a check that ran after the strip could never
+  // see one.
+  const https = crawl.finalUrl.startsWith('https://')
+  const mixedContent =
+    https && $('img[src^="http://"], script[src^="http://"], link[href^="http://"][rel="stylesheet"], iframe[src^="http://"], source[src^="http://"], audio[src^="http://"], video[src^="http://"]').length > 0
+
   $('script:not([type="application/ld+json"]), style, noscript, svg, iframe').remove()
 
-  const finalUrl = safeUrl(crawl.finalUrl)
+  // Resolve links against the final URL; fall back to the requested URL when
+  // the final one is unusable, so a bad redirect target does not drop every
+  // link on the page and report it as having none.
+  const finalUrl = safeUrl(crawl.finalUrl) ?? safeUrl(crawl.url)
+  const linkBase = finalUrl?.toString()
 
   // ── Head tags ──
   const title = cleanText($('head title').first().text()) || null
@@ -50,6 +68,12 @@ export function extractPage(crawl: CrawlResult): PageExtraction {
 
   // ── Main content text ──
   const contentRoot = pickContentRoot($)
+  // cheerio's .text() concatenates raw text nodes, so on markup with no
+  // whitespace between block elements (any minified page) "<p>roof
+  // repair</p><p>in denver</p>" becomes "roof repairin denver" — under-counting
+  // words and breaking keyword matching on the joined pair. Give every block
+  // boundary an explicit space first.
+  contentRoot.find(BLOCK_ELEMENTS).after(' ')
   const contentText = cleanText(contentRoot.text()).slice(0, CONTENT_TEXT_LIMIT)
   const words = contentText.split(/\s+/).filter(Boolean)
   const wordCount = words.length
@@ -77,7 +101,7 @@ export function extractPage(crawl: CrawlResult): PageExtraction {
     const href = $(el).attr('href')
     if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:') || href.startsWith('tel:')) return
     try {
-      const abs = new URL(href, crawl.finalUrl)
+      const abs = new URL(href, linkBase)
       if (abs.protocol !== 'http:' && abs.protocol !== 'https:') return
       const host = abs.hostname.replace(/^www\./, '')
       if (host === pageHost) {
@@ -125,18 +149,16 @@ export function extractPage(crawl: CrawlResult): PageExtraction {
     return /contact|email|enquir|inquir|message|subscribe|newsletter|quote|demo/i.test(formHtml) || $(f).find('input[type="email"]').length > 0
   })
 
+  // ctaSample is capped for payload size; ctaCount stays the real total, so a
+  // page with 30 calls to action does not report 15.
   const ctaSample: string[] = []
+  let ctaCount = 0
   $('a, button, input[type="submit"]').each((_, el) => {
     const text = cleanText($(el).text() || $(el).attr('value') || '')
-    if (text && text.length < 60 && CTA_PATTERNS.test(text) && ctaSample.length < 15 && !ctaSample.includes(text)) {
-      ctaSample.push(text)
-    }
+    if (!text || text.length >= 60 || !CTA_PATTERNS.test(text)) return
+    ctaCount++
+    if (ctaSample.length < 15 && !ctaSample.includes(text)) ctaSample.push(text)
   })
-
-  const https = crawl.finalUrl.startsWith('https://')
-  const mixedContent =
-    https &&
-    ($('img[src^="http://"], script[src^="http://"], link[href^="http://"][rel="stylesheet"]').length > 0)
 
   return {
     ...base,
@@ -170,7 +192,7 @@ export function extractPage(crawl: CrawlResult): PageExtraction {
     publishedDate,
     modifiedDate,
     hasContactForm,
-    ctaCount: ctaSample.length,
+    ctaCount,
     ctaSample,
   }
 }
