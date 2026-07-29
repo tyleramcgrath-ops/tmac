@@ -15,7 +15,7 @@ export interface DeployOneResult {
   recommendationId: string
   ok: boolean
   dryRun?: boolean
-  stage?: 'lookup' | 'signals' | 'safety' | 'fixgen' | 'approval' | 'connection' | 'resolve' | 'deploy'
+  stage?: 'lookup' | 'signals' | 'safety' | 'fixgen' | 'edit' | 'approval' | 'connection' | 'resolve' | 'deploy'
   error?: string
   blocked?: boolean
   requiresApproval?: boolean
@@ -25,6 +25,37 @@ export interface DeployOneResult {
   verified?: boolean
   reopened?: boolean
   note?: string
+}
+
+// Hard ceilings for a hand-edited value. Deliberately far above the
+// generator's targets (60 chars for a title, 155 for a description) — a human
+// is allowed to overrule the SEO guidance, but a value this long is a paste
+// accident or a payload, not an intent.
+const EDIT_MAX = { title: 200, metaDescription: 500 } as const
+
+// Validate an operator-supplied replacement for the generated value. This runs
+// on the ONLY path that writes it to a live page, so the checks are about
+// damage, not style: never blank the tag, never smuggle markup or control
+// characters into a plain-text field. Returns null when the value is safe.
+export function validateEditedValue(kind: 'title' | 'metaDescription', value: string): string | null {
+  const field = kind === 'title' ? 'title' : 'meta description'
+  if (value.trim() === '') {
+    return `Edited ${field} is empty — deploying it would erase the live ${field}.`
+  }
+  if (/[\r\n]/.test(value)) {
+    return `Edited ${field} contains a line break; this field is a single line of text.`
+  }
+  // eslint-disable-next-line no-control-regex
+  if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)) {
+    return `Edited ${field} contains control characters.`
+  }
+  if (/<[a-z/!]/i.test(value)) {
+    return `Edited ${field} contains HTML markup; this field is plain text.`
+  }
+  if (value.length > EDIT_MAX[kind]) {
+    return `Edited ${field} is too long (${value.length} chars, max ${EDIT_MAX[kind]}).`
+  }
+  return null
 }
 
 // Advance/reopen the recommendation's status per the deployment's real
@@ -67,6 +98,17 @@ export async function deployOneRecommendation(input: {
 
   const approved = decision.decision === 'auto-approved' || approve
   if (!approved) return { recommendationId: rec.id, ok: false, stage: 'approval', requiresApproval: true, reason: decision.reason }
+
+  // Gate the hand-edited value BEFORE the dry-run short-circuit: a preview
+  // that reports ok for a value the live deploy would refuse is worse than no
+  // preview at all.
+  if (typeof editedValue === 'string') {
+    if (fix.contentTransform) {
+      return { recommendationId: rec.id, ok: false, stage: 'edit', error: 'This fix rewrites page body content; a single edited value cannot be applied to it.' }
+    }
+    const problem = validateEditedValue(fix.kind === 'title' ? 'title' : 'metaDescription', editedValue)
+    if (problem) return { recommendationId: rec.id, ok: false, stage: 'edit', error: problem }
+  }
 
   const value = typeof editedValue === 'string' ? editedValue : fix.proposedValue
   const changes = fix.contentTransform ? { contentTransform: fix.contentTransform } : fix.kind === 'title' ? { title: value } : { metaDescription: value }
