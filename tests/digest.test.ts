@@ -209,7 +209,7 @@ describe('the monitor JobKind is fully wired: schedule -> job -> real handler', 
     await store.upsertSchedule(due)
 
     const materialized = await materializeDueSchedules(store, now)
-    expect(materialized).toBe(1)
+    expect(materialized).toEqual({ materialized: 1, failed: 0 })
 
     const outcome = await runDueJobs(store, now, 'test-runner', productionHandlers())
     expect(outcome.succeeded).toBe(1)

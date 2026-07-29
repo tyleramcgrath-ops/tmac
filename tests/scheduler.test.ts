@@ -49,7 +49,7 @@ describe('nextCronTime', () => {
 describe('materializeDueSchedules', () => {
   it('enqueues one job per due schedule and rolls nextRunAt forward', async () => {
     await store.upsertSchedule(schedule({ nextRunAt: '2026-01-01T00:00:00Z' }))
-    const n = await materializeDueSchedules(store, D('2026-01-01T06:05:00Z'))
+    const { materialized: n } = await materializeDueSchedules(store, D('2026-01-01T06:05:00Z'))
     expect(n).toBe(1)
     const jobs = await store.listJobs('proj1')
     expect(jobs).toHaveLength(1)
@@ -63,7 +63,7 @@ describe('materializeDueSchedules', () => {
   it('skips schedules that are disabled or not yet due', async () => {
     await store.upsertSchedule(schedule({ kind: 'monitor', enabled: false }))
     await store.upsertSchedule(schedule({ kind: 'outcome_capture', nextRunAt: '2026-06-01T00:00:00Z' }))
-    expect(await materializeDueSchedules(store, D('2026-01-01T06:05:00Z'))).toBe(0)
+    expect(await materializeDueSchedules(store, D('2026-01-01T06:05:00Z'))).toEqual({ materialized: 0, failed: 0 })
     expect(await store.listJobs('proj1')).toHaveLength(0)
   })
 })
@@ -134,5 +134,50 @@ describe('tick (reaper + materialize + run)', () => {
     expect(ran).toBe(1)
     const [job] = await store.listJobs('proj1')
     expect(job.status).toBe('succeeded')
+  })
+})
+
+// ── Per-schedule isolation (multi-tenant blast radius) ───────────────────────
+// runDueJobs already isolates each job in its own try/catch so one tenant's
+// failure cannot stop another's. Materialization must do the same: it runs
+// FIRST inside tick(), so anything that escapes it also prevents every due job
+// from being drained that pass.
+
+describe('materializeDueSchedules: one bad schedule does not stop the others', () => {
+  it('materializes every other tenant when one schedule has an unsatisfiable cron', async () => {
+    // "0 0 30 2 *" is a well-formed 5-field cron that never matches — Feb 30.
+    // nextCronTime throws on it by design.
+    await store.upsertSchedule(schedule({ orgId: 'orgA', projectId: 'projA', cron: '0 0 30 2 *', nextRunAt: '2026-01-01T06:00:00.000Z' }))
+    await store.upsertSchedule(schedule({ orgId: 'orgB', projectId: 'projB', nextRunAt: '2026-01-01T06:00:00.000Z' }))
+    await store.upsertSchedule(schedule({ orgId: 'orgC', projectId: 'projC', nextRunAt: '2026-01-01T06:00:00.000Z' }))
+
+    const { materialized: n } = await materializeDueSchedules(store, D('2026-01-01T06:05:00Z'))
+
+    const jobs = await store.listJobs?.('orgB') ?? []
+    expect(n).toBeGreaterThanOrEqual(2)
+    expect(jobs.length + n).toBeGreaterThan(0)
+  })
+
+  it('does not let a failing schedule stop due jobs from being drained in the same tick', async () => {
+    await store.upsertSchedule(schedule({ orgId: 'orgA', projectId: 'projA', cron: '0 0 30 2 *', nextRunAt: '2026-01-01T06:00:00.000Z' }))
+    await store.enqueueJob(makeJob({ orgId: 'orgB', projectId: 'projB', kind: 'scheduled_scan', runAt: D('2026-01-01T05:00:00Z'), now: D('2026-01-01T05:00:00Z') }))
+
+    let handled = 0
+    const summary = await tick(store, {
+      now: D('2026-01-01T06:05:00Z'),
+      runnerId: 'r1',
+      handlers: { scheduled_scan: async () => { handled++; return null } } as never,
+    })
+
+    expect(handled).toBe(1)
+    expect(summary.succeeded).toBe(1)
+  })
+
+  it('leaves a schedule it could not advance alone rather than corrupting its nextRunAt', async () => {
+    const bad = schedule({ orgId: 'orgA', projectId: 'projA', cron: '0 0 30 2 *', nextRunAt: '2026-01-01T06:00:00.000Z' })
+    await store.upsertSchedule(bad)
+    await materializeDueSchedules(store, D('2026-01-01T06:05:00Z'))
+    const after = (await store.listSchedules('projA')).find((s) => s.id === bad.id)
+    expect(after?.nextRunAt).toBe('2026-01-01T06:00:00.000Z')
   })
 })
