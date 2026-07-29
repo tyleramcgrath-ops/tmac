@@ -187,7 +187,7 @@ export default function IntegrationsPanel({
       </p>
 
       {notice && (
-        <p className={`ns-integ-notice${notice.ok ? '' : ' err'}`}>
+        <p className={`ns-integ-notice${notice.ok ? '' : ' err'}`} role="status" aria-live="polite">
           {notice.text}
           {!notice.ok && configured && (
             <button type="button" className="ns-integ-btn ns-integ-retry" disabled={busy === 'connect'} onClick={connect}>
@@ -196,7 +196,7 @@ export default function IntegrationsPanel({
           )}
         </p>
       )}
-      {error && <p className="ns-integ-notice err">{error}</p>}
+      {error && <p className="ns-integ-notice err" role="alert">{error}</p>}
 
       {!configured ? (
         <p className="ns-integ-notice">Google connection isn&rsquo;t configured on this deployment yet (needs GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET).</p>
@@ -263,7 +263,9 @@ export default function IntegrationsPanel({
       </p>
 
       {wpNotice && (
-        <p className={`ns-integ-notice${wpNotice.ok ? '' : ' err'}`}>{wpNotice.text}</p>
+        <p className={`ns-integ-notice${wpNotice.ok ? '' : ' err'}`} role={wpNotice.ok ? 'status' : 'alert'} aria-live={wpNotice.ok ? 'polite' : 'assertive'}>
+          {wpNotice.text}
+        </p>
       )}
 
       {wp === undefined ? null : wp ? (
@@ -284,7 +286,9 @@ export default function IntegrationsPanel({
         </ul>
       ) : (
         <form onSubmit={connectWp} className="ns-onboard-actions" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.6rem' }}>
+          <label className="ns-sr-only" htmlFor="wp-site-url">WordPress site URL</label>
           <input
+            id="wp-site-url"
             type="url"
             required
             placeholder="https://yoursite.com"
@@ -292,7 +296,9 @@ export default function IntegrationsPanel({
             onChange={(e) => setWpForm({ ...wpForm, siteUrl: e.target.value })}
             className="ns-onboard-input"
           />
+          <label className="ns-sr-only" htmlFor="wp-username">WordPress username</label>
           <input
+            id="wp-username"
             type="text"
             required
             placeholder="WordPress username"
@@ -300,13 +306,16 @@ export default function IntegrationsPanel({
             onChange={(e) => setWpForm({ ...wpForm, username: e.target.value })}
             className="ns-onboard-input"
           />
+          <label className="ns-sr-only" htmlFor="wp-app-password">WordPress application password</label>
           <input
+            id="wp-app-password"
             type="password"
             required
             placeholder="Application password"
             value={wpForm.appPassword}
             onChange={(e) => setWpForm({ ...wpForm, appPassword: e.target.value })}
             className="ns-onboard-input"
+            autoComplete="off"
           />
           <button type="submit" className="ns-onboard-primary" disabled={wpBusy}>
             {wpBusy ? 'Connecting…' : 'Connect WordPress'}
