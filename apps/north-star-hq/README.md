@@ -103,6 +103,29 @@ above):
   sporadic "Sign in required." 401s across every route, silently dropped
   stored Google OAuth credentials, and forced repeated re-onboarding.
 
+## Scheduled jobs
+
+`lib/foundation/migrations/006_jobs.sql` creates a `rf_jobs`/`rf_schedules`
+queue (forked from the root RankForge app's design) and `store.ts` has full
+CRUD for it, but nothing enqueues a schedule yet — the queue exists, ready for
+the first real recurring job.
+
+What *is* wired up: `lib/foundation/scheduler/engine.ts` (`tick()`: reap stale
+locks → materialize due schedules → drain due jobs, ported verbatim from the
+root app) and `app/api/internal/cron/route.ts`, guarded by a `CRON_SECRET`
+bearer check. Vercel's Hobby plan doesn't support platform crons, so
+`.github/workflows/scheduler-cron-north-star.yml` polls that route every 15
+minutes instead — the root app's `scheduler-cron.yml` uses the same
+workaround for its own `/api/internal/cron` (see `SCHEDULER_DESIGN.md` §7 at
+the repo root). Requires the `NORTH_STAR_CRON_SECRET` repo secret (matching
+this project's `CRON_SECRET` env var) and, optionally, a
+`NORTH_STAR_CRON_APP_URL` repo variable if the production URL ever changes
+from `https://north-star-hq.vercel.app`.
+
+`lib/foundation/scheduler/handlers.ts` is currently an empty registry — add a
+handler there, keyed by `JobKind`, the day this app needs its first scheduled
+job (a mission or briefing refresh, most likely).
+
 ## Getting started
 
 ```bash
