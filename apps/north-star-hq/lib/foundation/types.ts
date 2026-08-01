@@ -541,6 +541,10 @@ export type ActivityEventType =
   | 'command.failed'
   | 'atlas.recommendation_updated'
   | 'scout.discovery_completed'
+  // A tracked external metric moved materially between two scheduled
+  // refreshes (see refresh/daily.ts). Distinct from atlas.recommendation_updated:
+  // this reports observed change in the world, not a change in our advice.
+  | 'atlas.metric_changed'
 
 export interface ActivityEvent {
   id: string

@@ -46,6 +46,33 @@ connected" fallback. Needs `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` set
 (see `.env.example`) — unset, the panel says so plainly instead of a dead
 "Connect" button.
 
+## Real WordPress connect + deploy
+
+Also genuinely real, not simulated: connect the **Integrations** panel's
+**Connect WordPress** form (an application password, never your account
+password — `app/api/projects/[projectId]/wordpress/route.ts`) and Operator's
+approve/deploy path writes to that live site for real
+(`lib/foundation/wp-execution.ts`, ported from the root RankForge app).
+Connecting validates the credentials against the live site before storing
+anything (AES-256-GCM encrypted at rest); every deploy is verified by
+re-reading the page after writing, and a plugin that silently drops part of a
+write is reported `verify_failed`, never a false success. Outbound requests
+to the site go through the same SSRF guard as the root app
+(`lib/foundation/url-guard.ts`) — private/loopback/cloud-metadata addresses
+and non-standard ports are refused before any request is made.
+
+Every onboarded org starts with a **seeded demo connection** pointed at a
+fictional site (`lib/foundation/seed.ts`), so the panel has something to show
+immediately. Disconnect it from the Integrations panel to connect a real
+site — the connect form only renders once no connection exists.
+`npm run check:wordpress` drives the real PUT/GET/DELETE route handlers
+(real Request objects, real signed session cookies) plus the underlying
+execution/rollback functions against a local HTTP test double standing in
+for the WordPress REST API — proving the transport, auth, verification, and
+rollback logic end to end. It does not prove any specific real
+WordPress/plugin combination behaves the same way; that remains unproven in
+this environment.
+
 Everything else external (AI Search Citations, Competitor Intelligence,
 industry Trends) has real *engine* code already sitting in
 `lib/foundation/external/` from the same fork, but no real provider behind
@@ -69,23 +96,57 @@ than shipping panels that could only ever show "not connected."
   in the header actually reaches every consumer — a plain per-component hook
   here would silently desync the moment more than one component read it.
 
+## What the Compass can answer
+
+The console has two answer paths, and the split is a safety boundary, not a
+performance one.
+
+**Registered actions** (`lib/foundation/commands/classify.ts`) are matched
+deterministically against a fixed vocabulary and executed by
+`commands/engine.ts` through the real recommendation/operator pipelines.
+Everything that mutates lives here — approve, deploy, retry, cancel, pause,
+resume, prioritise, roll back — and it is the *only* path that can act. No
+model is involved at any point.
+
+**Unrecognised input** used to hit a dead end ("I don't recognize that one
+yet"). It now reaches `commands/converse.ts`, which answers in the Compass's
+own words from a snapshot of the project's real state — missions, stages,
+blocking reasons, agent activity, deployments. That path is read-only by
+construction: the model is given no tools, and its reply is only ever
+displayed and spoken. It is told to decline anything the snapshot doesn't
+cover rather than guess, and to redirect action requests to the command word
+that triggers the deterministic path.
+
+Set `AI_GATEWAY_API_KEY` to enable it (same Vercel AI Gateway the root app
+uses). Without it — or if the gateway errors or is slow — `converse()`
+returns null and the console falls back to the previous canned message, so
+the room never depends on the model being up. `NSHQ_COMPASS_MODEL` overrides
+the model; the default is `anthropic/claude-sonnet-4.6`, chosen over the root
+suite's Opus default because this answer is spoken aloud to someone waiting.
+
+`npm run check:compass` covers both halves: that every mutating verb still
+classifies to the deterministic path, and — when a key is present — that the
+model answers from state, declines what the state doesn't cover, never claims
+to have acted, and ignores instructions embedded in project data.
+
 ## Prototype status
 
 Like `apps/reloop`, most of this app's data is **seeded/sample data**, not
-live integrations (Google Search Console/Analytics being the one exception
-above):
+live integrations (Google Search Console/Analytics and WordPress being the
+exceptions above):
 
 - Every activation seeds a sample project (see `lib/foundation/seed.ts`) —
-  some open recommendations, some already "deployed."
-- "Deploying" a fix (Operator approve/deploy, or the Command Bar's
-  `deploy-mission`) is simulated — see `lib/foundation/wp-execution.ts`. No
-  real WordPress site is ever written to.
+  some open recommendations, some already "deployed," and a fictional
+  WordPress connection so the Integrations panel and Operator have something
+  to show immediately. Disconnect it to connect a real site.
 - The onboarding wizard's "Connect your data" step is still UI-only for
-  WordPress / SE Ranking / Semrush — every row shows "Available," and
-  nothing it does actually connects anything (no real backing integration
-  exists anywhere in the codebase for those three). Google Search Console
-  and Analytics genuinely connect for real once activated — see the
-  Integrations panel above.
+  SE Ranking / Semrush — every row shows "Available," and nothing it does
+  actually connects anything (no real backing integration exists anywhere in
+  the codebase for those two). Google Search Console, Analytics, and
+  WordPress genuinely connect for real once activated — see the Integrations
+  panel above. WordPress specifically has no in-wizard connect action (the
+  wizard's WordPress row is still just informational); connecting happens in
+  the Integrations panel afterward, same as Google.
 - Storage is **PostgreSQL in production** and a local JSON file store for dev
   and tests — see `lib/foundation/store.ts` and `resolveStoreEnv` in
   `env.ts`. Set `DATABASE_URL` (Vercel's Postgres/Neon integration does this

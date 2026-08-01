@@ -172,7 +172,7 @@ export function initCompass(canvas: HTMLCanvasElement): CompassApi {
 
   const TIME_LIGHT: Record<TimeMode, { exp: number; amb: [number, number, number]; ambI: number; keyC: [number, number, number] }> = {
     dawn:  { exp: 1.09, amb: [0x4a, 0x50, 0x6e], ambI: 0.6, keyC: [255, 224, 190] },
-    day:   { exp: 1.17, amb: [0x60, 0x6c, 0x86], ambI: 0.9, keyC: [255, 246, 232] },
+    day:   { exp: 1.11, amb: [0x58, 0x63, 0x7c], ambI: 0.7, keyC: [255, 244, 228] },
     dusk:  { exp: 1.15, amb: [0x4a, 0x40, 0x46], ambI: 0.6, keyC: [255, 216, 168] },
     night: { exp: 1.05, amb: [0x30, 0x3c, 0x58], ambI: 0.5, keyC: [255, 230, 186] },
   }

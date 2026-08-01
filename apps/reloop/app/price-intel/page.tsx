@@ -6,14 +6,25 @@ import { DEFAULT_QUERY, SAMPLE_RESULTS } from "@/lib/sample-data";
 
 const QUICK_SEARCHES = Object.keys(SAMPLE_RESULTS);
 
+// Normalizes apostrophe variants (curly vs straight vs dropped, e.g. "levis"
+// for "levi's") and collapses whitespace, so a trivial typing difference
+// against this prototype's small sample set doesn't read as "no results" —
+// the goal is still an honest "no comps found" when the item genuinely
+// isn't in the sample data, not a false match on something unrelated.
+function normalize(s: string): string {
+  return s.toLowerCase().replace(/['’]/g, "").replace(/\s+/g, " ").trim();
+}
+
 export default function PriceIntelPage() {
   const [query, setQuery] = useState(DEFAULT_QUERY);
   const [submitted, setSubmitted] = useState(DEFAULT_QUERY);
 
   const result = useMemo(() => {
-    const key = Object.keys(SAMPLE_RESULTS).find((k) =>
-      submitted.toLowerCase().includes(k) || k.includes(submitted.toLowerCase())
-    );
+    const needle = normalize(submitted);
+    const key = Object.keys(SAMPLE_RESULTS).find((k) => {
+      const hay = normalize(k);
+      return needle.includes(hay) || hay.includes(needle);
+    });
     return key ? SAMPLE_RESULTS[key] : null;
   }, [submitted]);
 
@@ -38,7 +49,11 @@ export default function PriceIntelPage() {
         }}
         className="mt-8 flex flex-col gap-3 sm:flex-row"
       >
+        <label htmlFor="price-intel-search" className="sr-only">
+          Search for an item to price
+        </label>
         <input
+          id="price-intel-search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="e.g. Levi's 501, New Balance 990, Carhartt Detroit Jacket"
@@ -66,6 +81,16 @@ export default function PriceIntelPage() {
           </button>
         ))}
       </div>
+
+      {/* Concise announcement of the search outcome — the full result card
+          below is too long to read aloud in full on every search. */}
+      <p className="sr-only" role="status" aria-live="polite">
+        {result
+          ? `Found pricing for ${result.query}: suggested price $${result.suggestedPriceLow} to $${result.suggestedPriceHigh}.`
+          : submitted
+            ? `No comps found for "${submitted}".`
+            : ""}
+      </p>
 
       {result ? (
         <div className="card-soft rise mt-12 rounded-2xl border border-border/70 bg-surface p-8">

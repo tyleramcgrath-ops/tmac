@@ -71,7 +71,12 @@ export default function ApprovalsPanel({
       onCompassState('deploying')
       const { results } = await api.operatorDeploy(projectId, [{ recommendationId: target.id, approve: true }])
       const result = results[0]
-      if (!result?.ok) throw new Error(result?.error ?? 'The deploy did not complete.')
+      // deployOneRecommendation only sets .error for early-exit stages
+      // (safety/connection/resolve/exception); a real verify_failed carries
+      // its specific reason in .note instead (see lib/foundation/operator/
+      // pipeline.ts's outcomeForDeployment) — falling straight to the
+      // generic string would hide it.
+      if (!result?.ok) throw new Error(result?.error ?? result?.note ?? 'The deploy did not complete.')
       setProgTask('Verifying')
       onCompassState('verifying')
       setProgPct(100)

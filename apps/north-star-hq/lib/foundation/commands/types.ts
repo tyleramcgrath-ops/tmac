@@ -58,7 +58,13 @@ export interface CommandRequest {
 export interface CommandResult {
   commandId: string
   raw: string
-  intent: CommandActionType | 'unsupported'
+  // 'conversational-answer' is deliberately NOT a CommandActionType: it is
+  // not a registered, executable action, it is the Compass answering a
+  // question in its own words from real state (see converse.ts). Keeping it
+  // out of the union is what preserves the exhaustive RISK_LEVEL and
+  // REQUIRED_ROLE maps in engine.ts — a model-authored reply can never
+  // acquire a risk level or a role, because it can never execute.
+  intent: CommandActionType | 'unsupported' | 'conversational-answer'
   riskLevel: CommandRiskLevel | null
   projectId: string
   missionId: string | null

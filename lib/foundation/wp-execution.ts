@@ -45,6 +45,17 @@ const META_DESC_KEY: Record<Exclude<SeoPlugin, 'core' | 'aioseo'>, string> = {
   yoast: '_yoast_wpseo_metadesc',
 }
 
+// Per-plugin SEO-title override keys — the field a plugin's own SEO
+// framework renders in <title> instead of the native post title, once set.
+// Same read/write symmetry as META_DESC_KEY: writing here is what makes a
+// title change hold on a site where the plugin already overrides <title>,
+// and reading it back (in preference to the native title, when non-empty)
+// is what lets verification catch a plugin that silently drops the write.
+const META_TITLE_KEY: Record<Exclude<SeoPlugin, 'core' | 'aioseo'>, string> = {
+  rankmath: 'rank_math_title',
+  yoast: '_yoast_wpseo_title',
+}
+
 // The set of fields a deployment may change. title/metaDescription are direct
 // writes; contentTransform (Phase H) is applied to the LIVE post body at deploy
 // time and produces the `content` write.
@@ -60,6 +71,15 @@ interface WpPostSnapshot {
   metaDescription: string
   content: string
   link: string
+  // The plugin's own SEO-title override field, read directly (never falling
+  // back to the native title) — null when the plugin has no such field
+  // ('core'), otherwise the field's raw value, possibly ''. Verification
+  // deliberately keeps this separate from `title` rather than merging them:
+  // the native title write is extremely reliable and almost always
+  // succeeds, so a merged "prefer override, else native" read would let a
+  // plugin that silently drops the override write hide behind the native
+  // title matching — exactly the false-'verified' this app never allows.
+  titleOverride: string | null
 }
 
 // Resolves a page URL (e.g. a recommendation's affected URL) to a WordPress
@@ -222,28 +242,34 @@ function snapshotFrom(raw: Record<string, unknown>, plugin: SeoPlugin): WpPostSn
   const title = (raw.title as { raw?: string; rendered?: string } | undefined) ?? {}
   const content = (raw.content as { raw?: string; rendered?: string } | undefined) ?? {}
   const meta = (raw.meta as Record<string, unknown> | undefined) ?? {}
-  const aioseoMeta = (raw.aioseo_meta_data as { description?: string } | undefined) ?? {}
+  const aioseoMeta = (raw.aioseo_meta_data as { title?: string; description?: string } | undefined) ?? {}
   // Read the meta description from the field the active plugin actually uses,
   // so "before" reflects what the site renders (and matches "after" at verify).
   let metaDescription: string
+  let titleOverride: string | null
   switch (plugin) {
     case 'aioseo':
       metaDescription = aioseoMeta.description ?? (meta._aioseo_description as string) ?? ''
+      titleOverride = aioseoMeta.title ?? (meta._aioseo_title as string) ?? ''
       break
     case 'rankmath':
       metaDescription = (meta[META_DESC_KEY.rankmath] as string) ?? ''
+      titleOverride = (meta[META_TITLE_KEY.rankmath] as string) ?? ''
       break
     case 'yoast':
       metaDescription = (meta[META_DESC_KEY.yoast] as string) ?? ''
+      titleOverride = (meta[META_TITLE_KEY.yoast] as string) ?? ''
       break
     default:
       metaDescription = (raw.excerpt as { raw?: string } | undefined)?.raw ?? ''
+      titleOverride = null // core has no plugin title-override field
   }
   return {
     title: title.raw ?? title.rendered ?? '',
     metaDescription,
     content: content.raw ?? content.rendered ?? '',
     link: (raw.link as string) ?? '',
+    titleOverride,
   }
 }
 
@@ -350,7 +376,10 @@ export async function createWpDraftPost(
     throw new Error('WordPress did not return a valid post id for the new draft.')
   }
   const after = await readPost(conn, postType, postId)
-  const verified = after.title === fields.title && (fields.metaDescription === undefined || after.metaDescription === fields.metaDescription)
+  const verified =
+    after.title === fields.title &&
+    (after.titleOverride === null || after.titleOverride === fields.title) &&
+    (fields.metaDescription === undefined || after.metaDescription === fields.metaDescription)
   return {
     postId,
     postType,
@@ -367,31 +396,58 @@ function updatePayload(
   changes: WpChanges
 ): Record<string, unknown> {
   const payload: Record<string, unknown> = {}
-  // Title is written to the native post title for every plugin — that behaviour
-  // is live-validated (RC2) and, absent a per-plugin title override, the post
-  // title is what renders in the <title> tag.
+  // Title is always written to the native post title — that behaviour is
+  // live-validated (RC2) and is what every theme falls back to. Also routed
+  // below, alongside metaDescription, to the plugin's own SEO-title override
+  // field: on a site where the plugin already renders its override in
+  // <title>, writing only the native title would silently not take.
   if (changes.title !== undefined) payload.title = changes.title
   if (changes.content !== undefined) payload.content = changes.content
+  const plugin = pluginOf(conn)
+  // Built incrementally rather than as separate per-field payload.meta /
+  // payload.aioseo_meta_data assignments — title and metaDescription can
+  // both be present in the same change, and a naive second assignment would
+  // silently clobber the first instead of merging into it.
+  const meta: Record<string, unknown> = {}
+  const aioseoMeta: Record<string, unknown> = {}
+  if (changes.title !== undefined) {
+    switch (plugin) {
+      case 'aioseo':
+        aioseoMeta.title = changes.title
+        meta._aioseo_title = changes.title
+        break
+      case 'rankmath':
+        meta[META_TITLE_KEY.rankmath] = changes.title
+        break
+      case 'yoast':
+        meta[META_TITLE_KEY.yoast] = changes.title
+        break
+      default:
+        break // core: the native title written above is the only title there is
+    }
+  }
   if (changes.metaDescription !== undefined) {
     // Route the meta description to the field the detected plugin renders from.
     // Read-back verification (executeWpDeployment step 3) confirms it persisted,
     // so a plugin that blocks the write surfaces as verify_failed, never a false
     // success.
-    switch (pluginOf(conn)) {
+    switch (plugin) {
       case 'aioseo':
-        payload.aioseo_meta_data = { description: changes.metaDescription }
-        payload.meta = { _aioseo_description: changes.metaDescription }
+        aioseoMeta.description = changes.metaDescription
+        meta._aioseo_description = changes.metaDescription
         break
       case 'rankmath':
-        payload.meta = { [META_DESC_KEY.rankmath]: changes.metaDescription }
+        meta[META_DESC_KEY.rankmath] = changes.metaDescription
         break
       case 'yoast':
-        payload.meta = { [META_DESC_KEY.yoast]: changes.metaDescription }
+        meta[META_DESC_KEY.yoast] = changes.metaDescription
         break
       default:
         payload.excerpt = changes.metaDescription
     }
   }
+  if (Object.keys(meta).length > 0) payload.meta = meta
+  if (Object.keys(aioseoMeta).length > 0) payload.aioseo_meta_data = aioseoMeta
   return payload
 }
 
@@ -478,7 +534,14 @@ export async function executeWpDeployment(opts: {
   // 3. Verify by re-reading the live values — never trust the write response.
   try {
     const afterRead = await readPost(opts.connection, opts.postType, opts.postId)
-    const titleMatches = changes.title === undefined ? null : afterRead.title === changes.title
+    // Native title AND (when the plugin has one) its own title-override
+    // field both have to match — checking native alone would miss a plugin
+    // that silently drops the override write, since the native write is
+    // reliable and would match regardless.
+    const titleMatches =
+      changes.title === undefined
+        ? null
+        : afterRead.title === changes.title && (afterRead.titleOverride === null || afterRead.titleOverride === changes.title)
     const metaMatches =
       changes.metaDescription === undefined
         ? null

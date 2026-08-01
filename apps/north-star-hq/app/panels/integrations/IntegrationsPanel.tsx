@@ -8,8 +8,8 @@
 // `configured` (no GOOGLE_CLIENT_ID/SECRET on this deployment) is checked so
 // the button is never shown if it would just dead-end.
 
-import { useEffect, useState } from 'react'
-import { api, ApiError, type IntegrationDTO } from '../../lib/client'
+import { useEffect, useState, type FormEvent } from 'react'
+import { api, ApiError, type IntegrationDTO, type WpConnectionDTO } from '../../lib/client'
 
 const LABEL: Record<IntegrationDTO['kind'], string> = {
   'search-console': 'Google Search Console',
@@ -34,6 +34,12 @@ export default function IntegrationsPanel({
   const [notice, setNotice] = useState<{ ok: boolean; text: string } | null>(null)
   const [sites, setSites] = useState<{ siteUrl: string; permissionLevel: string }[] | null>(null)
 
+  const [wp, setWp] = useState<WpConnectionDTO | null | undefined>(undefined)
+  const [wpLoadError, setWpLoadError] = useState('')
+  const [wpNotice, setWpNotice] = useState<{ ok: boolean; text: string } | null>(null)
+  const [wpForm, setWpForm] = useState({ siteUrl: '', username: '', appPassword: '' })
+  const [wpBusy, setWpBusy] = useState(false)
+
   const load = async () => {
     if (!projectId) return
     try {
@@ -42,6 +48,17 @@ export default function IntegrationsPanel({
       setConfigured(res.configured)
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Could not load integrations.')
+    }
+    try {
+      const res = await api.getWordpress(projectId)
+      setWp(res.connection)
+      setWpLoadError('')
+    } catch (err) {
+      // A real load failure (500, auth, network) is not the same as "no
+      // connection exists" — collapsing them into wp=null would render the
+      // connect form over what might be a perfectly good existing
+      // connection, inviting the user to "reconnect" over a load error.
+      setWpLoadError(err instanceof ApiError ? err.message : 'Could not load your WordPress connection.')
     }
   }
 
@@ -109,6 +126,37 @@ export default function IntegrationsPanel({
     }
   }
 
+  async function connectWp(e: FormEvent) {
+    e.preventDefault()
+    if (!projectId) return
+    setWpBusy(true)
+    setWpNotice(null)
+    try {
+      const res = await api.connectWordpress(projectId, wpForm)
+      setWp(res.connection)
+      setWpForm({ siteUrl: '', username: '', appPassword: '' })
+      setWpNotice({ ok: true, text: `Connected to ${res.connection.siteUrl}${res.connection.seoPlugin ? ` — detected ${res.connection.seoPlugin}` : ''}.` })
+    } catch (err) {
+      setWpNotice({ ok: false, text: err instanceof ApiError ? err.message : 'Could not connect to WordPress.' })
+    } finally {
+      setWpBusy(false)
+    }
+  }
+
+  async function disconnectWp() {
+    if (!projectId) return
+    setWpBusy(true)
+    setWpNotice(null)
+    try {
+      await api.disconnectWordpress(projectId)
+      setWp(null)
+    } catch (err) {
+      setWpNotice({ ok: false, text: err instanceof ApiError ? err.message : 'Could not disconnect WordPress.' })
+    } finally {
+      setWpBusy(false)
+    }
+  }
+
   async function pickSite(siteUrl: string) {
     if (!projectId) return
     setBusy('pick')
@@ -145,7 +193,7 @@ export default function IntegrationsPanel({
       </p>
 
       {notice && (
-        <p className={`ns-integ-notice${notice.ok ? '' : ' err'}`}>
+        <p className={`ns-integ-notice${notice.ok ? '' : ' err'}`} role="status" aria-live="polite">
           {notice.text}
           {!notice.ok && configured && (
             <button type="button" className="ns-integ-btn ns-integ-retry" disabled={busy === 'connect'} onClick={connect}>
@@ -154,7 +202,7 @@ export default function IntegrationsPanel({
           )}
         </p>
       )}
-      {error && <p className="ns-integ-notice err">{error}</p>}
+      {error && <p className="ns-integ-notice err" role="alert">{error}</p>}
 
       {!configured ? (
         <p className="ns-integ-notice">Google connection isn&rsquo;t configured on this deployment yet (needs GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET).</p>
@@ -211,6 +259,83 @@ export default function IntegrationsPanel({
             </div>
           )}
         </>
+      )}
+
+      <hr className="ns-panel-divider" />
+      <h2>Connect WordPress</h2>
+      <p className="ns-panel-body">
+        Lets Operator publish approved fixes directly to your live site — application password only, never your
+        account password, encrypted at rest. Every deploy is verified by re-reading the page after writing.
+      </p>
+
+      {wpNotice && (
+        <p className={`ns-integ-notice${wpNotice.ok ? '' : ' err'}`} role={wpNotice.ok ? 'status' : 'alert'} aria-live={wpNotice.ok ? 'polite' : 'assertive'}>
+          {wpNotice.text}
+        </p>
+      )}
+
+      {wpLoadError && (
+        <p className="ns-integ-notice err" role="alert">
+          {wpLoadError}
+          <button type="button" className="ns-integ-btn ns-integ-retry" onClick={load}>
+            Retry
+          </button>
+        </p>
+      )}
+
+      {wpLoadError ? null : wp === undefined ? null : wp ? (
+        <ul className="ns-row-list">
+          <li className="ns-row" data-status="completed">
+            <span className="ns-row-dot" aria-hidden />
+            <span className="ns-row-text">
+              <span className="ns-row-title">{wp.siteUrl}</span>
+              <span className="ns-row-desc">
+                Connected as {wp.username}
+                {wp.seoPlugin ? ` — ${wp.seoPlugin}` : ''}
+              </span>
+            </span>
+            <button type="button" className="ns-integ-btn" disabled={wpBusy} onClick={disconnectWp}>
+              {wpBusy ? '…' : 'Disconnect'}
+            </button>
+          </li>
+        </ul>
+      ) : (
+        <form onSubmit={connectWp} className="ns-onboard-actions" style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.6rem' }}>
+          <label className="ns-sr-only" htmlFor="wp-site-url">WordPress site URL</label>
+          <input
+            id="wp-site-url"
+            type="url"
+            required
+            placeholder="https://yoursite.com"
+            value={wpForm.siteUrl}
+            onChange={(e) => setWpForm({ ...wpForm, siteUrl: e.target.value })}
+            className="ns-onboard-input"
+          />
+          <label className="ns-sr-only" htmlFor="wp-username">WordPress username</label>
+          <input
+            id="wp-username"
+            type="text"
+            required
+            placeholder="WordPress username"
+            value={wpForm.username}
+            onChange={(e) => setWpForm({ ...wpForm, username: e.target.value })}
+            className="ns-onboard-input"
+          />
+          <label className="ns-sr-only" htmlFor="wp-app-password">WordPress application password</label>
+          <input
+            id="wp-app-password"
+            type="password"
+            required
+            placeholder="Application password"
+            value={wpForm.appPassword}
+            onChange={(e) => setWpForm({ ...wpForm, appPassword: e.target.value })}
+            className="ns-onboard-input"
+            autoComplete="off"
+          />
+          <button type="submit" className="ns-onboard-primary" disabled={wpBusy}>
+            {wpBusy ? 'Connecting…' : 'Connect WordPress'}
+          </button>
+        </form>
       )}
     </div>
   )

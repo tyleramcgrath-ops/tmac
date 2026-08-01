@@ -1,0 +1,48 @@
+name: North Star HQ daily refresh
+
+# Vercel's Hobby plan doesn't support platform crons, so this workflow is the
+# trigger for north-star-hq's /api/internal/cron — the same arrangement the
+# root RankForge app uses (see scheduler-cron.yml).
+#
+# One run re-assembles every project's Mission Atlas from live providers,
+# stores the snapshot, and records what materially moved since yesterday. It is
+# idempotent and safe to over-fire.
+#
+# Requires two repo configuration values (Settings -> Secrets and variables ->
+# Actions):
+#   - Secret   NSHQ_CRON_SECRET — must exactly match CRON_SECRET on the
+#                                 north-star-hq Vercel project.
+#   - Variable NSHQ_APP_URL     — production URL (optional; defaults below).
+#
+# Runs at 06:00 UTC so a refresh has landed before the morning briefing is
+# read. GitHub's scheduler can delay firings under load and disables schedules
+# after 60 days without repo activity — acceptable here, since a late refresh
+# degrades to yesterday's snapshot rather than to wrong numbers.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call /api/internal/cron
+        env:
+          CRON_SECRET: ${{ secrets.NSHQ_CRON_SECRET }}
+          APP_URL: ${{ vars.NSHQ_APP_URL }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::NSHQ_CRON_SECRET repo secret is not set (Settings -> Secrets and variables -> Actions). The daily refresh will not run until it is configured, and must match CRON_SECRET on the Vercel project."
+            exit 1
+          fi
+          url="${APP_URL:-https://north-star-hq.vercel.app}/api/internal/cron"
+          status=$(curl -sS -o response.json -w '%{http_code}' -X POST "$url" -H "Authorization: Bearer $CRON_SECRET")
+          echo "HTTP $status"
+          cat response.json
+          echo
+          if [ "$status" != "200" ]; then
+            echo "::error::Daily refresh failed with HTTP $status"
+            exit 1
+          fi

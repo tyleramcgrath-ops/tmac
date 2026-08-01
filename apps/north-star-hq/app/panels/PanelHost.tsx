@@ -66,12 +66,17 @@ export default function PanelHost({
   consoleInputRef: React.RefObject<HTMLInputElement | null>
 }) {
   const [drawer, setDrawer] = useState<DrawerId | null>(null)
+  // Which right-hand card is enlarged to the centre of the room, if any.
+  const [card, setCard] = useState<'agents' | 'brief' | null>(null)
 
   function handleOpen(id: RailDestination) {
     if (id === 'search') {
       consoleInputRef.current?.focus()
       return
     }
+    // A rail drawer and an enlarged card would otherwise stack on the same
+    // spot, each with its own scrim.
+    setCard(null)
     setDrawer((d) => (d === id ? null : id))
   }
 
@@ -93,14 +98,32 @@ export default function PanelHost({
     <div className={`ns-hud${panelsUp ? ' up' : ''}`} aria-hidden={!panelsUp} aria-label="Command interface">
       <CommandRail projectId={projectId} panelsUp={panelsUp} active={drawer} onOpen={handleOpen} />
 
-      <div className="ns-cards">
+      {/* Sits outside .ns-cards: that container is a positioned column on the
+          right, so a scrim inside it could never cover the room.
+          preventDefault on mousedown (not click): without it, clicking the
+          scrim natively blurs the card's focused close button to <body>
+          before onClick/React ever runs — see the identical comment in
+          Drawer.tsx, same bug, same fix, confirmed the same way. */}
+      <div className={`ns-scrim${card ? ' open' : ''}`} onMouseDown={(e) => e.preventDefault()} onClick={() => setCard(null)} aria-hidden />
+
+      <div className={`ns-cards${card ? ' has-expanded' : ''}`}>
         <AgentStatusCard
           projectId={projectId}
           projectsResolved={projectsResolved}
           panelsUp={panelsUp}
           onAgentSignal={onAgentSignal}
+          expanded={card === 'agents'}
+          onExpand={() => setCard('agents')}
+          onCollapse={() => setCard(null)}
         />
-        <MorningBriefCard projectId={projectId} projectsResolved={projectsResolved} onCompassState={onCompassState} />
+        <MorningBriefCard
+          projectId={projectId}
+          projectsResolved={projectsResolved}
+          onCompassState={onCompassState}
+          expanded={card === 'brief'}
+          onExpand={() => setCard('brief')}
+          onCollapse={() => setCard(null)}
+        />
       </div>
 
       <MissionStrip projectId={projectId} panelsUp={panelsUp} />

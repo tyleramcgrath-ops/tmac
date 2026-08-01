@@ -21,6 +21,7 @@ import { rollbackWpDeployment } from '../wp-execution'
 import { emitActivity } from '../activity/emit'
 import { searchProject } from '../search/engine'
 import { classifyCommand } from './classify'
+import { converse, isConverseConfigured } from './converse'
 import type { CommandActionType, CommandExecutionStatus, CommandRequest, CommandResult, CommandRiskLevel } from './types'
 
 export type { CommandActionType, CommandRequest, CommandResult } from './types'
@@ -129,15 +130,57 @@ async function emitCommandOutcome(ctx: CommandContext, req: CommandRequest, r: C
   return r
 }
 
+const UNSUPPORTED_MESSAGE =
+  "I don't recognize that one yet. Try: \"what needs my approval\", \"what is North Star working on\", \"show blocked missions\", \"summarize this project\", \"find <keyword>\", or \"what should I do next\"."
+
+// The current real state — computed fresh, never cached, same philosophy as
+// coordinateProject()'s own doc comment. Shared by the registered-action path
+// and the conversational one so both answer from an identical snapshot.
+async function loadState(ctx: CommandContext) {
+  const [coordination, deployments, scans, jobs, contentBriefs, atlasHistory] = await Promise.all([
+    coordinateProject(ctx.store, ctx.project),
+    ctx.store.listWpDeployments(ctx.project.id),
+    ctx.store.listScans(ctx.project.id, 5),
+    ctx.store.listJobs(ctx.project.id, 20),
+    ctx.store.listContentBriefs(ctx.project.id),
+    ctx.store.getAtlasHistory(ctx.project.id),
+  ])
+  const missionQueue = buildMissionQueue({ project: { id: ctx.project.id, name: ctx.project.name }, coordination, deployments })
+  const roster = buildAgentRoster({ project: ctx.project, scans, jobs, contentBriefs, atlasHistory, missionQueue })
+  return { missionQueue, roster, deployments, contentBriefs }
+}
+
+// Unregistered input: rather than refusing outright, the Compass answers in
+// its own words from the same real state the read handlers use. Read-only by
+// construction — the model has no tools and its reply is only ever displayed
+// and spoken (see converse.ts). Falls back to the honest refusal whenever the
+// model is unconfigured or unavailable, so this path can never leave the
+// operator staring at nothing.
+async function answerConversationally(ctx: CommandContext, req: CommandRequest): Promise<CommandResult> {
+  const refusal = result(req, { intent: 'unsupported', status: 'rejected-unsupported', message: UNSUPPORTED_MESSAGE })
+  if (!isConverseConfigured()) return refusal
+
+  try {
+    const { missionQueue, roster, deployments } = await loadState(ctx)
+    const answer = await converse(req.raw, { project: ctx.project, missionQueue, roster, deployments })
+    if (!answer) return refusal
+    return result(req, {
+      intent: 'conversational-answer',
+      riskLevel: 'read-only',
+      status: 'executed',
+      message: answer.text,
+      evidence: { model: answer.model, stateCapturedAt: missionQueue.generatedAt },
+    })
+  } catch (err) {
+    console.error('[commands] conversational answer failed:', err)
+    return refusal
+  }
+}
+
 export async function runCommand(ctx: CommandContext, req: CommandRequest): Promise<CommandResult> {
   const classified = classifyCommand(req.raw)
   if (classified.action === 'unsupported') {
-    return emitCommandOutcome(ctx, req, result(req, {
-      intent: 'unsupported',
-      status: 'rejected-unsupported',
-      message:
-        "I don't recognize that one yet. Try: \"what needs my approval\", \"what is North Star working on\", \"show blocked missions\", \"summarize this project\", \"find <keyword>\", or \"what should I do next\".",
-    }))
+    return emitCommandOutcome(ctx, req, await answerConversationally(ctx, req))
   }
 
   const action = classified.action
@@ -154,18 +197,7 @@ export async function runCommand(ctx: CommandContext, req: CommandRequest): Prom
     }))
   }
 
-  // Everything below needs the current real state — computed fresh, never
-  // cached, same philosophy as coordinateProject()'s own doc comment.
-  const [coordination, deployments, scans, jobs, contentBriefs, atlasHistory] = await Promise.all([
-    coordinateProject(ctx.store, ctx.project),
-    ctx.store.listWpDeployments(ctx.project.id),
-    ctx.store.listScans(ctx.project.id, 5),
-    ctx.store.listJobs(ctx.project.id, 20),
-    ctx.store.listContentBriefs(ctx.project.id),
-    ctx.store.getAtlasHistory(ctx.project.id),
-  ])
-  const missionQueue = buildMissionQueue({ project: { id: ctx.project.id, name: ctx.project.name }, coordination, deployments })
-  const roster = buildAgentRoster({ project: ctx.project, scans, jobs, contentBriefs, atlasHistory, missionQueue })
+  const { missionQueue, roster, deployments, contentBriefs } = await loadState(ctx)
 
   const needsMission: CommandActionType[] = [
     'explain-mission', 'mission-detail', 'prioritize-mission', 'pause-mission', 'resume-mission',

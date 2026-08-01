@@ -41,8 +41,14 @@ const MATCHERS: Matcher[] = [
   { action: 'prioritize-mission', test: (n) => any(n, 'prioriti') },
   { action: 'focus-mission', test: (n) => has(n, 'create') && has(n, 'mission') },
   { action: 'explain-mission', test: (n) => has(n, 'why') && any(n, 'blocked', 'stuck', 'waiting') },
-  { action: 'mission-detail', test: (n) => has(n, 'mission') && any(n, 'show', 'detail', 'about', '#') },
+  // Ahead of 'mission-detail': "show blocked missions" contains both 'mission'
+  // and 'show', so the detail matcher used to swallow it and answer "I could
+  // not find that mission" — for a phrase the engine's own help text tells
+  // people to type. A plural listing is the commoner reading of any sentence
+  // mentioning blocked work; naming one specific blocked mission still lands
+  // on 'explain-mission' above, which is checked first.
   { action: 'list-blocked-missions', test: (n) => any(n, 'blocked') },
+  { action: 'mission-detail', test: (n) => has(n, 'mission') && any(n, 'show', 'detail', 'about', '#') },
   { action: 'list-completed-today', test: (n) => has(n, 'completed') && has(n, 'today') },
   { action: 'list-failed', test: (n) => has(n, 'failed') || (has(n, 'what') && has(n, 'fail')) },
   { action: 'list-approvals', test: (n) => has(n, 'approval') },

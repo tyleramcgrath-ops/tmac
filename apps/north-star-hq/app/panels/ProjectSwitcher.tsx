@@ -98,20 +98,24 @@ export default function ProjectSwitcher({
 
           {adding ? (
             <form className="ns-proj-add" onSubmit={submit}>
+              <label className="ns-sr-only" htmlFor="proj-add-name">Site name</label>
               <input
+                id="proj-add-name"
                 className="ns-proj-input"
                 placeholder="Site name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 autoFocus
               />
+              <label className="ns-sr-only" htmlFor="proj-add-domain">Site domain</label>
               <input
+                id="proj-add-domain"
                 className="ns-proj-input"
                 placeholder="example.com"
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
               />
-              {error && <p className="ns-proj-error">{error}</p>}
+              {error && <p className="ns-proj-error" role="alert">{error}</p>}
               <div className="ns-proj-add-row">
                 <button type="submit" className="ns-proj-save" disabled={busy || !domain.trim()}>
                   {busy ? 'Adding…' : 'Add site'}

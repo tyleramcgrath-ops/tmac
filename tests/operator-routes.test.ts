@@ -23,10 +23,10 @@ import type { Recommendation, Scan, WpConnection } from '../lib/foundation/types
 
 process.env.APP_SECRET = 'operator-routes-secret'
 
-const posts: Record<number, { title: string; excerpt: string; aioseo: string; content: string; slug: string; type: string }> = {}
+const posts: Record<number, { title: string; excerpt: string; aioseo: string; aioseoTitle: string; content: string; slug: string; type: string }> = {}
 let dropTitle = false
 function resetWp() {
-  posts[10] = { title: 'Old Title', excerpt: 'Old', aioseo: 'Old', content: '<p>x</p>', slug: 'roof-repair', type: 'pages' }
+  posts[10] = { title: 'Old Title', excerpt: 'Old', aioseo: 'Old', aioseoTitle: '', content: '<p>x</p>', slug: 'roof-repair', type: 'pages' }
   dropTitle = false
 }
 function fakeWp(url: string, init?: RequestInit): Response {
@@ -42,8 +42,14 @@ function fakeWp(url: string, init?: RequestInit): Response {
       const b = JSON.parse((init?.body as string) ?? '{}')
       if (b.title !== undefined && !dropTitle) p.title = b.title
       if (b.aioseo_meta_data?.description !== undefined) p.aioseo = b.aioseo_meta_data.description
+      if (b.aioseo_meta_data?.title !== undefined && !dropTitle) p.aioseoTitle = b.aioseo_meta_data.title
     }
-    return j({ id: 10, title: { raw: p.title }, excerpt: { raw: p.excerpt }, content: { raw: p.content }, aioseo_meta_data: { description: p.aioseo }, meta: { _aioseo_description: p.aioseo }, link: 'https://wp.test/roof-repair' })
+    return j({
+      id: 10, title: { raw: p.title }, excerpt: { raw: p.excerpt }, content: { raw: p.content },
+      aioseo_meta_data: { description: p.aioseo, title: p.aioseoTitle },
+      meta: { _aioseo_description: p.aioseo, _aioseo_title: p.aioseoTitle },
+      link: 'https://wp.test/roof-repair',
+    })
   }
   return j({ code: 'nf' }, 404)
 }

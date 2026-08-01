@@ -5,7 +5,7 @@
 // demo series: if Google isn't connected, or returns nothing for the window,
 // this panel says exactly that instead of drawing a plausible-looking line.
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { api, ApiError, type GoogleTrendsDTO, type GoogleBreakdownsDTO } from '../../lib/client'
 import { LineChart, BarRows, delta, formatValue, type MetricKind, type Series } from './chart'
 
@@ -42,6 +42,24 @@ export default function PerformancePanel({
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [metric, setMetric] = useState<GscMetric>('clicks')
+  const tabRefs = useRef<Record<GscMetric, HTMLButtonElement | null>>({ clicks: null, impressions: null, ctr: null, position: null })
+
+  // WAI-ARIA APG tab pattern's keyboard contract: arrow keys move both focus
+  // and the roving tabindex, wrapping at the ends; activation is automatic
+  // (matches the existing click-to-switch behavior) rather than requiring a
+  // separate Enter/Space.
+  function onTabKeyDown(e: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let nextIndex: number | null = null
+    if (e.key === 'ArrowRight') nextIndex = (index + 1) % GSC_METRICS.length
+    else if (e.key === 'ArrowLeft') nextIndex = (index - 1 + GSC_METRICS.length) % GSC_METRICS.length
+    else if (e.key === 'Home') nextIndex = 0
+    else if (e.key === 'End') nextIndex = GSC_METRICS.length - 1
+    if (nextIndex === null) return
+    e.preventDefault()
+    const next = GSC_METRICS[nextIndex]
+    setMetric(next.id)
+    tabRefs.current[next.id]?.focus()
+  }
 
   useEffect(() => {
     if (!projectId || !enabled) return
@@ -136,28 +154,35 @@ export default function PerformancePanel({
           </div>
 
           <div className="ns-perf-tabs" role="tablist" aria-label="Search Console metric">
-            {GSC_METRICS.map((m) => (
+            {GSC_METRICS.map((m, i) => (
               <button
                 key={m.id}
+                ref={(el) => { tabRefs.current[m.id] = el }}
+                id={`ns-perf-tab-${m.id}`}
                 type="button"
                 role="tab"
                 aria-selected={metric === m.id}
+                aria-controls={`ns-perf-panel-${m.id}`}
+                tabIndex={metric === m.id ? 0 : -1}
                 className="ns-perf-tab"
                 onClick={() => setMetric(m.id)}
+                onKeyDown={(e) => onTabKeyDown(e, i)}
               >
                 {m.label}
               </button>
             ))}
           </div>
 
-          <div className="ns-perf-chart-head">
-            <span className="ns-perf-chart-title">
-              Search Console · {active.label}
-              {active.note && <em className="ns-perf-note"> ({active.note})</em>}
-            </span>
-            <Delta series={gscSeries} invert={metric === 'position'} />
+          <div id={`ns-perf-panel-${active.id}`} role="tabpanel" aria-labelledby={`ns-perf-tab-${active.id}`} tabIndex={0}>
+            <div className="ns-perf-chart-head">
+              <span className="ns-perf-chart-title">
+                Search Console · {active.label}
+                {active.note && <em className="ns-perf-note"> ({active.note})</em>}
+              </span>
+              <Delta series={gscSeries} invert={metric === 'position'} />
+            </div>
+            <LineChart series={gscSeries} kind={active.kind} label={active.label} />
           </div>
-          <LineChart series={gscSeries} kind={active.kind} label={active.label} />
         </>
       )}
 

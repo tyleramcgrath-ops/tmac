@@ -374,6 +374,9 @@ export class FileFoundationStore implements FoundationStore {
   async getWpConnection(projectId: string) {
     return (await this.read('wpConnections')).find((c) => c.projectId === projectId) ?? null
   }
+  async deleteWpConnection(projectId: string) {
+    await this.mutate('wpConnections', (all) => ({ data: all.filter((c) => c.projectId !== projectId) }))
+  }
   async createWpDeployment(dep: WpDeployment) {
     await this.mutate('wpDeployments', (all) => ({ data: [...all, dep] }))
   }

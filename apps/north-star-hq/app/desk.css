@@ -46,7 +46,7 @@
    that glow down (a "no artificial gold light at midday" idea). Without a
    correspondingly bigger boost here, day ends up reading as the DARKEST time
    instead of the brightest — the actual bug. */
-[data-time='day']  .ns-plate { filter: brightness(1.72) contrast(0.99) saturate(0.98) hue-rotate(-2deg); }
+[data-time='day']  .ns-plate { filter: brightness(1.28) contrast(1.04) saturate(1.0) hue-rotate(-2deg); }
 [data-time='dusk'] .ns-plate { filter: brightness(1.16) contrast(1.04) saturate(1.14) hue-rotate(8deg) sepia(0.06); }
 [data-time='night'] .ns-plate { filter: brightness(1.0) contrast(1.0) saturate(1.0); }
 
@@ -59,13 +59,16 @@
 .ns-sky { z-index: 1; opacity: 0; mix-blend-mode: screen;
   background: linear-gradient(180deg, transparent 12%, var(--sky-top, transparent) 26%, var(--sky-mid, transparent) 44%, transparent 56%); }
 [data-time='dawn'] .ns-sky { opacity: 1; --sky-top: rgba(120,150,205,0.24); --sky-mid: rgba(255,190,150,0.22); }
-[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(185,215,248,0.62); --sky-mid: rgba(235,244,255,0.5); }
+[data-time='day']  .ns-sky { opacity: 1; --sky-top: rgba(185,215,248,0.42); --sky-mid: rgba(235,244,255,0.3); }
 [data-time='dusk'] .ns-sky { opacity: 1; --sky-top: rgba(90,90,150,0.24); --sky-mid: rgba(255,150,90,0.34); }
 [data-time='night'] .ns-sky { opacity: 0; }
 /* ambient colour temperature wash */
 .ns-ambient { z-index: 2; opacity: 0; mix-blend-mode: soft-light; }
 [data-time='dawn'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(150,170,220,0.32), rgba(255,200,160,0.26)); }
-[data-time='day']  .ns-ambient { opacity: 1; background: rgba(236,244,255,0.58); }
+/* A flat full-screen wash is fog, not daylight: at 0.58 it lifted the whole
+   room off black and took the marble and ceiling with it. Kept low, and
+   graded rather than flat, so the light still falls from above. */
+[data-time='day']  .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(236,244,255,0.30), rgba(226,238,255,0.16)); }
 [data-time='dusk'] .ns-ambient { opacity: 1; background: linear-gradient(180deg, rgba(255,180,120,0.4), rgba(120,70,60,0.4)); }
 [data-time='night'] .ns-ambient { opacity: 0; }
 /* gold ceiling constellation intensity */
@@ -135,7 +138,7 @@ html[data-dev] .ns-dev { display: flex; }
 /* The vignette is a fixed darkening pass tuned for the evening room. At
    midday it fights the whole point of the hour, so it eases off — the depth
    cue stays, the gloom doesn't. */
-[data-time='day'] .ns-vignette { opacity: 0.45; }
+[data-time='day'] .ns-vignette { opacity: 0.62; }
 
 /* ---- the live 3D compass, seated on the platform ---- */
 .ns-compass {
@@ -222,6 +225,11 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-hud.up { visibility: visible; pointer-events: none; transition: visibility 0s; }
 .ns-hud.up > * { pointer-events: auto; }
 .ns-hud.up .ns-drawer:not(.open) { pointer-events: none; }
+/* Same guard, and load-bearing: `.ns-hud.up > *` above turns pointer events
+   back on for every direct child, which out-specifies the `.ns-scrim` base
+   rule. Without this the seven closed scrims cover the room and nothing —
+   compass, rail, console — can be clicked at all. */
+.ns-hud.up .ns-scrim:not(.open) { pointer-events: none; }
 
 /* Shared glass-panel chrome — a restrained surface, not a dashboard tile.
    Anything using it (cards, drawer, console, rail) reads as one material. */
@@ -281,6 +289,50 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-hud.up .ns-card { opacity: 1; transform: translateX(0); }
 .ns-hud.up .ns-card:nth-child(2) { transition-delay: 0.08s; }
 
+/* Click-to-enlarge. At its resting ~318px the card is a glance, not a read,
+   so clicking lifts the same element to the centre at the focus-view size the
+   rail drawers use. It is the SAME element, not a second instance — both
+   panels poll, and a duplicate would double the request rate.
+   Every selector here is `.ns-hud.up .ns-card...` on purpose: the rule above
+   is (0,3,0) and would otherwise win and strip the centring transform. */
+.ns-hud.up .ns-card[role='button'] { cursor: zoom-in; }
+.ns-hud.up .ns-card[role='button']:hover { border-color: rgba(238,205,135,0.34); }
+.ns-hud.up .ns-card[role='button']:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
+
+.ns-hud.up .ns-card.expanded {
+  position: fixed; left: 50%; top: 50%; z-index: 11;
+  transform: translate(-50%,-50%);
+  width: min(1040px, 88vw); max-height: 84vh;
+  padding: 1.5rem 1.7rem; overflow-y: auto; cursor: default;
+}
+/* Denser than the shared glass: full-width, the room reads straight through. */
+.ns-hud.up .ns-card.expanded.ns-glass { background: linear-gradient(180deg, rgb(9,10,14), rgb(5,6,9)); }
+/* Always mounted (see ExpandableCard.tsx), hidden the same way Drawer.tsx
+   hides its own close button while shut: opacity + pointer-events, NOT
+   display:none. display:none looked like the obvious choice and was tried
+   first — it removes the button from hit-testing and the accessibility
+   tree in one rule, which is exactly right — but setting display:none on
+   whatever element currently HOLDS FOCUS blurs it to <body> synchronously,
+   the same as unmounting it. Confirmed in a real browser: it broke focus-
+   restore-on-close identically to the unmounted version, because from the
+   focus system's perspective the two are the same event. opacity does not
+   trigger that blur, which is exactly why Drawer.tsx's own close button —
+   opacity-hidden, never display:none — never had this problem. The button
+   sits absolutely-positioned with no defined position while collapsed
+   (.ns-card has no `position` set); harmless, since opacity:0 makes it
+   invisible regardless of where it lands. */
+.ns-card:not(.expanded) .ns-card-close { opacity: 0; pointer-events: none; }
+.ns-card-close {
+  position: absolute; top: 0.9rem; right: 1rem; width: 26px; height: 26px; display: grid; place-items: center;
+  border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 1.05rem; line-height: 1; z-index: 1;
+  transition: opacity 0.3s ease;
+}
+.ns-card-close:hover { color: #f0e2bc; }
+/* Both panels put their own status text at the top right of .ns-panel-head,
+   which is exactly where the close button lands — "3 of 8 sources" was
+   running under the ×. */
+.ns-hud.up .ns-card.expanded .ns-panel-head { padding-right: 2.1rem; }
+
 /* ---- bottom mission strip: one real line, not a card ---- */
 .ns-strip {
   position: absolute; left: 50%; bottom: clamp(4.6rem,11vh,6.4rem); transform: translateX(-50%) translateY(10px);
@@ -328,34 +380,89 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-console-actions button:first-child { border: 1px solid rgba(238,205,135,0.5); background: linear-gradient(180deg, rgba(214,164,90,0.24), rgba(150,110,50,0.12)); color: #f4dfae; }
 .ns-console-actions button:last-child { border: 1px solid rgba(210,170,102,0.25); background: none; color: rgba(226,214,188,0.65); }
 
-/* ---- drawer: rail-triggered content, floats beside the rail, never a full modal ---- */
-.ns-drawer {
-  position: absolute; left: clamp(1rem,2.4vw,2.2rem); top: 50%; transform: translateY(-50%) translateX(-10px);
-  width: clamp(300px,24vw,380px); max-height: 62vh; overflow-y: auto; padding: 1.2rem 1.35rem;
-  opacity: 0; pointer-events: none; transition: opacity 0.4s ease, transform 0.4s ease;
+/* ---- drawer: rail-triggered focus view, centred and large over a scrim ---- */
+/* Seven drawers are mounted at once so their panels keep their data. Every
+   closed one therefore has a full-bleed scrim sitting over the room — these
+   MUST stay pointer-events:none until open, or the room becomes unclickable. */
+.ns-scrim {
+  position: absolute; inset: 0; z-index: 10;
+  background: radial-gradient(120% 90% at 50% 45%, rgba(3,4,7,0.52), rgba(2,3,5,0.88));
+  backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none; transition: opacity 0.45s ease;
 }
-.ns-drawer.open { opacity: 1; pointer-events: auto; transform: translateY(-50%) translateX(0); }
-/* The drawer sits directly over the command rail, so it needs to be denser
-   than the shared glass the cards use — at 0.66 the rail's labels read
-   straight through the panel's own text. */
+.ns-scrim.open { opacity: 1; pointer-events: auto; }
+
+.ns-drawer {
+  position: absolute; left: 50%; top: 50%; z-index: 11;
+  transform: translate(-50%,-50%) scale(0.972);
+  width: min(1040px, 88vw); max-height: 84vh;
+  display: flex; flex-direction: column; padding: 1.3rem 1.6rem 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.42s cubic-bezier(0.22,0.61,0.36,1);
+}
+.ns-drawer.open { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%) scale(1); }
+/* Denser than the shared glass the cards use: at 0.66 the room reads straight
+   through the panel's own text, and a full-width panel shows far more of it. */
 .ns-drawer.ns-glass { background: linear-gradient(180deg, rgb(9,10,14), rgb(5,6,9)); }
+
+/* Header stays put while the body scrolls — at this size the title scrolling
+   away leaves you in an unlabelled slab. min-height:0 is what actually lets
+   the body scroll inside a flex column. */
+.ns-drawer-head {
+  flex: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-bottom: 0.85rem; border-bottom: 1px solid rgba(210,170,102,0.16);
+}
+.ns-drawer-title {
+  margin: 0; font-family: var(--serif); font-size: clamp(0.58rem,0.8vw,0.68rem);
+  letter-spacing: 0.3em; text-transform: uppercase; color: rgba(240,205,130,0.9);
+}
+.ns-drawer-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-top: 1.05rem; }
 .ns-drawer-close {
-  position: absolute; top: 0.7rem; right: 0.7rem; width: 22px; height: 22px; display: grid; place-items: center;
-  border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 0.9rem; line-height: 1;
+  flex: none; width: 26px; height: 26px; display: grid; place-items: center;
+  border: none; background: none; color: rgba(226,214,188,0.5); cursor: pointer; font-size: 1.05rem; line-height: 1;
 }
 .ns-drawer-close:hover { color: #f0e2bc; }
 
 /* Roomy row list — icon, bold title, wrapping description, status dot far
    right. Shared by the Agent Roster and anywhere else a "who/what's doing
-   this" list appears. */
-.ns-row-list { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 1.1rem; }
+   this" list appears.
+   Capped to a reading measure, not left to fill the container: these rows
+   hold a short title and a one-line description, and every consumer now also
+   renders inside a ~1040px focus view (the expanded cards and every rail
+   drawer). Without a cap, flex:1 on .ns-row-text stretches that short text
+   across the full width, leaving a wide dead gap between the description and
+   the status dot on the far right — same text, same dot, just a much emptier-
+   looking row. Capping the LIST (not just the text) keeps the dot close to
+   the text it belongs to; the unused width becomes ordinary margin instead
+   of blank space inside the row. Verified against real content at 1040px. */
+.ns-row-list { list-style: none; margin: 1rem 0 0; padding: 0; max-width: 640px; display: flex; flex-direction: column; gap: 1.1rem; }
 .ns-row { display: flex; align-items: flex-start; gap: 0.7rem; }
 .ns-row-icon { flex: none; width: 15px; height: 15px; margin-top: 0.15rem; color: rgba(226,192,132,0.75); }
 .ns-row-text { flex: 1; min-width: 0; }
 .ns-row-title { display: block; font-size: clamp(0.72rem,0.92vw,0.84rem); color: #f0e6cd; }
 .ns-row-desc { display: block; margin-top: 0.2rem; font-size: clamp(0.66rem,0.84vw,0.76rem); line-height: 1.5; color: rgba(226,214,188,0.6); }
+/* Real elapsed time since a persisted timestamp (see AgentRosterPanel's
+   formatElapsed) — never shown next to a finished or idle row, only while
+   the backend reports the agent genuinely active/verifying. Tabular figures
+   so the ticking seconds don't shift the text after it as they change width. */
+.ns-row-elapsed { color: rgba(236,194,118,0.85); font-variant-numeric: tabular-nums; }
 .ns-row-dot { flex: none; width: 7px; height: 7px; margin-top: 0.35rem; border-radius: 50%; background: rgba(226,214,188,0.3); }
-.ns-row[data-status='active'] .ns-row-dot, .ns-row[data-status='verifying'] .ns-row-dot { background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+.ns-row[data-status='active'] .ns-row-dot, .ns-row[data-status='verifying'] .ns-row-dot {
+  background: #ecc276; box-shadow: 0 0 6px rgba(236,194,118,0.6);
+  /* Motion reserved for genuine live work: every other status (waiting,
+     failed, completed, idle) gets a static dot below. A breathing glow,
+     not a hard blink — same restrained amplitude the compass itself uses
+     for its own 'breath'/'listen' pulses (compass.ts), so this reads as
+     the same instrument rather than a different UI language. */
+  animation: ns-row-pulse 1.8s ease-in-out infinite;
+}
+@keyframes ns-row-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(236,194,118,0.6); }
+  50% { opacity: 0.55; box-shadow: 0 0 10px rgba(236,194,118,0.85); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ns-row[data-status='active'] .ns-row-dot, .ns-row[data-status='verifying'] .ns-row-dot { animation: none; }
+}
 .ns-row[data-status='waiting-for-approval'] .ns-row-dot { background: #9ec6e0; }
 .ns-row[data-status='failed'] .ns-row-dot, .ns-row[data-status='blocked'] .ns-row-dot { background: #e08a7a; }
 .ns-row[data-status='completed'] .ns-row-dot, .ns-row[data-status='done'] .ns-row-dot { background: #9ed6a0; }
@@ -405,9 +512,14 @@ html[data-dev] .ns-dev { display: flex; }
   .ns-principles button:not(:first-child) { display: none; }
   .ns-rail { display: none; }
   .ns-cards { left: 50%; right: auto; transform: translateX(-50%); top: auto; bottom: 15vh; width: min(84vw, 340px); max-height: 70vh; }
+  /* A transformed ancestor makes position:fixed resolve against IT rather than
+     the viewport, which would leave the enlarged card off-centre here. The
+     collapsed sibling shifts left as a result, but it sits under the scrim. */
+  .ns-cards.has-expanded { transform: none; }
+  .ns-hud.up .ns-card.expanded { width: 92vw; max-height: 88vh; padding: 1.2rem 1.2rem; }
   .ns-strip, .ns-console { width: min(84vw, 340px); }
-  .ns-drawer { left: 50%; transform: translateY(-50%) translateX(-50%); width: min(84vw, 340px); }
-  .ns-hud.up .ns-drawer.open { transform: translateY(-50%) translateX(-50%); }
+  /* Already centred at every width — on a phone just take the room. */
+  .ns-drawer { width: 92vw; max-height: 88vh; padding: 1.1rem 1.1rem 1.25rem; }
   .ns-compass { width: 60vw; height: 60vw; top: 36%; }
   .ns-core-hit { width: 46vw; height: 52vw; top: 36%; }
   .ns-contact { top: 50%; }
@@ -608,6 +720,12 @@ html[data-dev] .ns-dev { display: flex; }
   width: 100%; padding: 0.75rem 0.9rem; border: 1px solid rgba(210,170,102,0.28); border-radius: 8px;
   background: rgba(4,5,8,0.5); color: #f4ecd9; font-family: var(--serif); font-size: clamp(0.9rem,1.2vw,1.02rem);
   outline: none; transition: border-color 0.3s ease;
+}
+/* Visually hidden but announced by screen readers — for real <label>s paired
+   with inputs styled to rely on their placeholder visually. */
+.ns-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 .ns-onboard-input::placeholder { color: rgba(226,214,188,0.32); }
 .ns-onboard-input:focus { border-color: rgba(238,206,140,0.65); }

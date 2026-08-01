@@ -69,6 +69,13 @@ export default function SafeBuyPage() {
           </button>
         </div>
 
+        {/* Announces just the current step as the demo advances — the full
+            visual list below stays a plain region so a screen reader isn't
+            forced to re-read all four steps on every 900ms tick. */}
+        <p className="sr-only" role="status" aria-live="polite">
+          {activeStep >= 0 && STEPS[activeStep] ? `Step ${activeStep + 1}: ${STEPS[activeStep].title}` : ""}
+        </p>
+
         <div className="mt-6 space-y-0">
           {STEPS.map((s, i) => {
             const done = i < activeStep;
