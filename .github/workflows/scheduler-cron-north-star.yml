@@ -1,23 +1,24 @@
 name: North Star scheduler tick
 
 # Vercel's Hobby plan doesn't support platform crons, so this workflow is the
-# trigger for North Star HQ's /api/internal/cron instead — the same
-# workaround the root RankForge app uses (see .github/workflows/scheduler-cron.yml
-# and SCHEDULER_DESIGN.md §7). Every run does bounded work (reap stale locks ->
+# trigger for North Star HQ's /api/internal/cron instead — the same workaround
+# the root RankForge app uses (see .github/workflows/scheduler-cron.yml and
+# SCHEDULER_DESIGN.md §7). Every run does bounded work (reap stale locks ->
 # materialize due schedules -> drain a few due jobs) and is safe to over-fire —
-# job claiming is atomic. 15 min matches the root app's cadence. GitHub's own
-# scheduler can delay firings under load and disables schedules after 60 days
-# with no repo activity — acceptable for now.
+# job claiming is atomic. 15 min matches the root app's cadence.
 #
 # Requires two repo configuration values (Settings -> Secrets and variables ->
 # Actions), distinct from the root app's CRON_SECRET/CRON_APP_URL since this
 # targets a separate Vercel project:
 #   - Secret  NORTH_STAR_CRON_SECRET — must exactly match the CRON_SECRET set
-#                                       on the north-star-hq Vercel project
-#                                       (Settings -> Environment Variables).
+#                                       on the north-star-hq Vercel project.
 #   - Variable NORTH_STAR_CRON_APP_URL — the production URL, e.g.
 #                                         https://north-star-hq.vercel.app
-#                                         (optional; falls back to that default below).
+#                                         (optional; falls back to that default).
+#
+# The tick itself lives in .github/actions/scheduler-tick so this and the
+# RankForge trigger cannot drift apart — this workflow was originally forked
+# from an older copy of that one and inherited a bug already fixed there.
 
 on:
   schedule:
@@ -28,21 +29,11 @@ jobs:
   tick:
     runs-on: ubuntu-latest
     steps:
-      - name: Call /api/internal/cron
-        env:
-          CRON_SECRET: ${{ secrets.NORTH_STAR_CRON_SECRET }}
-          APP_URL: ${{ vars.NORTH_STAR_CRON_APP_URL }}
-        run: |
-          if [ -z "$CRON_SECRET" ]; then
-            echo "::error::NORTH_STAR_CRON_SECRET repo secret is not set (Settings -> Secrets and variables -> Actions). Skipping — the scheduler will not run until it's configured."
-            exit 1
-          fi
-          url="${APP_URL:-https://north-star-hq.vercel.app}/api/internal/cron"
-          status=$(curl -sS -o response.json -w '%{http_code}' -X POST "$url" -H "Authorization: Bearer $CRON_SECRET")
-          echo "HTTP $status"
-          cat response.json
-          echo
-          if [ "$status" != "200" ]; then
-            echo "::error::Cron tick failed with HTTP $status"
-            exit 1
-          fi
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/scheduler-tick
+        with:
+          app-name: North Star
+          cron-secret: ${{ secrets.NORTH_STAR_CRON_SECRET }}
+          secret-name: NORTH_STAR_CRON_SECRET
+          app-url: ${{ vars.NORTH_STAR_CRON_APP_URL }}
+          default-app-url: https://north-star-hq.vercel.app

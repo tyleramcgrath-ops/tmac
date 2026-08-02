@@ -12,16 +12,13 @@ name: RankForge scheduler tick
 # Requires two repo configuration values (Settings -> Secrets and variables ->
 # Actions):
 #   - Secret  CRON_SECRET   — must exactly match the CRON_SECRET set on the
-#                             Vercel project (Settings -> Environment Variables).
+#                             tmac Vercel project (Settings -> Environment
+#                             Variables).
 #   - Variable CRON_APP_URL — the production URL, e.g. https://tmac-nu.vercel.app
 #                             (optional; falls back to that default below).
 #
-# Failure policy: an UNCONFIGURED scheduler is a deployment state, not a broken
-# run — it warns and passes, so it does not email a failure every cycle for a
-# setting nobody has chosen yet. The warning and the job summary still say
-# plainly that no scheduled work is running. A CONFIGURED scheduler that cannot
-# complete a tick is a real failure and still fails the job, after retrying
-# transient network/5xx errors.
+# The tick itself lives in .github/actions/scheduler-tick so this and the North
+# Star trigger cannot drift apart.
 
 on:
   schedule:
@@ -32,77 +29,11 @@ jobs:
   tick:
     runs-on: ubuntu-latest
     steps:
-      - name: Call /api/internal/cron
-        env:
-          CRON_SECRET: ${{ secrets.CRON_SECRET }}
-          APP_URL: ${{ vars.CRON_APP_URL }}
-        run: |
-          set -uo pipefail
-
-          url="${APP_URL:-https://tmac-nu.vercel.app}/api/internal/cron"
-
-          if [ -z "${CRON_SECRET}" ]; then
-            echo "::warning::CRON_SECRET is not set, so the RankForge scheduler is NOT running — no scheduled scans, rank checks, backlink refreshes, AI-citation checks or weekly digests are happening. Set the CRON_SECRET repo secret (Settings -> Secrets and variables -> Actions) to the same value as CRON_SECRET on the Vercel project to turn it on."
-            {
-              echo "### Scheduler not configured — nothing was run"
-              echo
-              echo "\`CRON_SECRET\` is not set as a repository secret, so this workflow has nothing to authenticate with."
-              echo
-              echo "**Nothing scheduled is running in production** until it is set: no scheduled scans, rank tracking, backlink refreshes, AI-citation checks or weekly digest emails."
-              echo
-              echo "To enable it:"
-              echo "1. Copy the \`CRON_SECRET\` value from the Vercel project (Settings -> Environment Variables)."
-              echo "2. Add it here as a repository secret named \`CRON_SECRET\` (Settings -> Secrets and variables -> Actions)."
-              echo "3. Re-run this workflow to confirm. Once configured, a tick that genuinely fails will fail this job loudly."
-            } >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-
-          # Configured: a tick that cannot complete IS a real failure. Retry
-          # first so one network blip or cold start does not page anyone.
-          status="000"
-          for attempt in 1 2 3; do
-            # Clear the body first: curl leaves the previous attempt's file in
-            # place when a later one cannot connect, which would print a stale
-            # response next to a failed status.
-            rm -f response.json
-            if ! status=$(curl -sS --max-time 120 -o response.json -w '%{http_code}' \
-              -X POST "$url" -H "Authorization: Bearer $CRON_SECRET"); then
-              # curl already writes 000 for a request that never completed;
-              # normalise so the status is exactly that and not doubled.
-              status="000"
-            fi
-            echo "attempt $attempt: HTTP $status"
-            if [ -s response.json ]; then cat response.json; echo; fi
-
-            if [ "$status" = "200" ]; then
-              {
-                echo "### Scheduler tick completed"
-                if [ -s response.json ]; then
-                  echo '```json'
-                  cat response.json
-                  echo
-                  echo '```'
-                fi
-              } >> "$GITHUB_STEP_SUMMARY"
-              exit 0
-            fi
-
-            # 401 means the secret does not match the one on Vercel. Retrying
-            # cannot fix that, so fail immediately with a message that says so.
-            if [ "$status" = "401" ]; then
-              echo "::error::Cron tick was rejected (HTTP 401) — the CRON_SECRET repo secret does not match the CRON_SECRET on the Vercel project."
-              exit 1
-            fi
-
-            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 10)); fi
-          done
-
-          hint=""
-          if [ "$status" = "000" ]; then
-            hint=" The request never completed — the deployment may be unreachable."
-          elif [ "$status" = "503" ]; then
-            hint=" HTTP 503 from this endpoint means CRON_SECRET is not set on the Vercel project itself."
-          fi
-          echo "::error::Cron tick failed after 3 attempts (last status HTTP $status).${hint}"
-          exit 1
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/scheduler-tick
+        with:
+          app-name: RankForge
+          cron-secret: ${{ secrets.CRON_SECRET }}
+          secret-name: CRON_SECRET
+          app-url: ${{ vars.CRON_APP_URL }}
+          default-app-url: https://tmac-nu.vercel.app
