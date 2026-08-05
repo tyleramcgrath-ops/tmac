@@ -88,6 +88,11 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
   const enabledRef = useRef(false)
   const supportedRef = useRef(false)
   const voiceNameRef = useRef('')
+  // The neural voice served by /api/compass/speak, and the element currently
+  // playing it — held so a new line can cut off the previous one, matching
+  // speechSynthesis.cancel()'s "one voice at a time" behaviour.
+  const neuralVoiceRef = useRef('en-US-GuyNeural')
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
   const [voiceName, setVoiceNameState] = useState('')
@@ -155,13 +160,62 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
     enabledRef.current = v
     setEnabledState(v)
     writeEnabled(v)
-    if (!v && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
+    if (!v && typeof window !== 'undefined') {
+      // Both paths — muting has to silence neural audio too, not just the
+      // browser synth, or turning voice off mid-reply keeps talking.
+      try {
+        audioRef.current?.pause()
+        audioRef.current = null
+      } catch {}
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel()
       setSpeaking(false)
     }
   }, [])
 
-  const speak = useCallback((text: string) => {
+  // Neural speech first, browser synth as the fallback. /api/compass/speak
+  // reaches Edge's neural voices, which sound like a person; speechSynthesis
+  // is whatever the OS ships, which on Windows is a legacy formant voice. The
+  // route is an unofficial endpoint and can fail (403 from datacenter IPs, for
+  // one), so failure here is expected rather than exceptional — it degrades
+  // silently instead of leaving the room mute.
+  const speakNeural = useCallback(async (text: string): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/compass/speak', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voice: neuralVoiceRef.current }),
+      })
+      if (!res.ok) return false
+      const blob = await res.blob()
+      if (!blob.size) return false
+
+      // A user gesture already unlocked audio (they clicked the compass), so
+      // play() should not be blocked by autoplay policy here.
+      const url = URL.createObjectURL(blob)
+      const el = new Audio(url)
+      audioRef.current?.pause()
+      audioRef.current = el
+
+      return await new Promise<boolean>((resolve) => {
+        const done = (ok: boolean) => {
+          URL.revokeObjectURL(url)
+          setSpeaking(false)
+          if (audioRef.current === el) audioRef.current = null
+          resolve(ok)
+        }
+        el.onplay = () => setSpeaking(true)
+        el.onended = () => done(true)
+        // An error *after* playback started is not worth restarting in the
+        // robot voice — the user already heard it.
+        el.onerror = () => done(el.currentTime > 0)
+        el.play().catch(() => done(false))
+      })
+    } catch {
+      return false
+    }
+  }, [])
+
+  const speakBrowser = useCallback((text: string) => {
     if (!enabledRef.current || !supportedRef.current || !text) return
     try {
       window.speechSynthesis.cancel() // one voice at a time — a new line interrupts the last
@@ -178,6 +232,19 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
       window.speechSynthesis.speak(u)
     } catch {}
   }, [])
+
+  // Declared after both so neither is referenced before its initialiser.
+  const speak = useCallback(
+    (text: string) => {
+      if (!enabledRef.current || !supportedRef.current || !text) return
+      void speakNeural(text).then((ok) => {
+        // Re-check enabled: the neural round trip takes a moment, and the user
+        // may have muted the room while it was in flight.
+        if (!ok && enabledRef.current) speakBrowser(text)
+      })
+    },
+    [speakNeural, speakBrowser],
+  )
 
   return (
     <Ctx.Provider value={{ enabled, setEnabled, supported, speak, speaking, voices, voiceName, setVoiceName }}>
