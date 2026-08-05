@@ -132,6 +132,19 @@ function DeskRoom() {
   const chatRef = useRef(chat)
   useEffect(() => { chatRef.current = chat })
 
+  // The dialogue overlay. history is capped at a dozen turns by the hook, so
+  // scanning it backwards each render is cheap and avoids duplicating state.
+  const heardLast = [...chat.history].reverse().find((m) => m.role === 'user')?.content ?? ''
+  const saidLast = [...chat.history].reverse().find((m) => m.role === 'assistant')?.content ?? ''
+  const dialogueStatus = chat.error
+    ? chat.error
+    : chat.busy
+      ? 'Thinking…'
+      : chat.listening
+        ? 'Listening…'
+        : ''
+  const dialogueShow = Boolean(dialogueStatus || heardLast || saidLast)
+
   const setTime = (t: TimeMode) => { setTimeMode(t); api.current?.setTime(t); persist(t) }
 
   const finishWake = () => { awakeRef.current = true; setAwake(true) }
@@ -502,6 +515,14 @@ function DeskRoom() {
 
         <p className="ns-hint" data-hidden="" aria-hidden>Touch the compass</p>
         <p className={`ns-welcome${welcomeShow ? ' show' : ''}`} aria-hidden>{welcomeText}</p>
+
+        <div className={`ns-dialogue${dialogueShow ? ' show' : ''}`} aria-live="polite">
+          {dialogueStatus && (
+            <div className="ns-d-status" data-error={chat.error ? '1' : undefined}>{dialogueStatus}</div>
+          )}
+          {heardLast && <div className="ns-d-you">&ldquo;{heardLast}&rdquo;</div>}
+          {saidLast && <div className="ns-d-said">{saidLast}</div>}
+        </div>
 
         <nav className="ns-principles" aria-label="The three principles">
           <button type="button" onClick={() => onPrinciple('heart')}>The core is the <b>heart</b>.</button>

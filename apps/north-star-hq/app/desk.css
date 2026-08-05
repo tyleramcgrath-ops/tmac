@@ -904,3 +904,30 @@ html[data-dev] .ns-dev { display: flex; }
    hour, so it keeps its pale treatment — only the status line needed a
    little more lift now that day is genuinely bright behind it. */
 [data-time='day'] .ns-status-line { color: rgba(238,228,206,0.72); }
+
+/* Compass dialogue — what it heard, and what it answered. Without this the
+   only cue that the microphone is open is the compass glow, which is easy to
+   miss and impossible to verify; a room that listens silently reads as broken. */
+.ns-dialogue {
+  position: absolute; left: 50%; bottom: 21%; transform: translateX(-50%);
+  z-index: 10; pointer-events: none; text-align: center;
+  width: min(680px, 84vw); display: flex; flex-direction: column; gap: 0.55rem;
+  opacity: 0; transition: opacity 0.45s ease;
+}
+.ns-dialogue.show { opacity: 1; }
+.ns-dialogue .ns-d-status {
+  font-family: var(--serif); font-size: clamp(0.62rem, 0.9vw, 0.74rem);
+  letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase;
+  color: rgba(232, 182, 104, 0.72);
+}
+.ns-dialogue .ns-d-status[data-error='1'] { color: rgba(226, 138, 118, 0.9); }
+.ns-dialogue .ns-d-you {
+  font-family: var(--serif); font-size: clamp(0.72rem, 1vw, 0.84rem);
+  letter-spacing: 0.14em; color: rgba(214, 205, 188, 0.5);
+}
+.ns-dialogue .ns-d-said {
+  font-family: var(--serif); font-size: clamp(0.86rem, 1.35vw, 1.05rem);
+  line-height: 1.55; color: #f0dcae;
+  text-shadow: 0 0 22px rgba(232, 182, 104, 0.32), 0 2px 12px rgba(0, 0, 0, 0.85);
+}
+[data-cinema] .ns-dialogue { opacity: 0; }

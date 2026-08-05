@@ -30,6 +30,10 @@ export interface CompassChat {
   listen: () => void
   stop: () => void
   busy: boolean
+  // True while the microphone is genuinely open, straight from the recognizer.
+  // The room needs this to tell the user it is listening — without it the only
+  // cue is the compass glow, which is easy to miss and impossible to trust.
+  listening: boolean
   error: string | null
   history: ChatTurn[]
   // Hands-free. When on, the mic reopens after each spoken reply — but only
@@ -198,6 +202,7 @@ export function useCompassChat(onState: (s: CompassState) => void): CompassChat 
     listen,
     stop,
     busy,
+    listening: mic.listening,
     error,
     history,
     conversation,
