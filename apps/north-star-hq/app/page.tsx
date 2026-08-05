@@ -9,6 +9,7 @@ import ProjectSwitcher from './panels/ProjectSwitcher'
 import OnboardingWizard from './onboarding-wizard'
 import LiveMonitor from './live-monitor'
 import { VoiceProvider, useVoice } from './_lib/use-voice'
+import { MicProvider } from './_lib/use-mic'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -39,9 +40,11 @@ export default function NorthStar() {
   return (
     <AuthProvider>
       <VoiceProvider>
-        <DeskGate>
-          <DeskRoom />
-        </DeskGate>
+        <MicProvider>
+          <DeskGate>
+            <DeskRoom />
+          </DeskGate>
+        </MicProvider>
       </VoiceProvider>
     </AuthProvider>
   )
