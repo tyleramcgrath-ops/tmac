@@ -520,6 +520,7 @@ function DeskRoom() {
           onCompassState={C}
           onAgentSignal={onAgentSignal}
           onSummon={onSummonFromChild}
+          onAsk={chat.ask}
           consoleInputRef={consoleInputRef}
         />
 

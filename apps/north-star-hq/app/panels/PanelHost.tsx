@@ -46,6 +46,7 @@ export default function PanelHost({
   onCompassState,
   onAgentSignal,
   onSummon,
+  onAsk,
   consoleInputRef,
 }: {
   project: ProjectDTO | null
@@ -63,6 +64,10 @@ export default function PanelHost({
   // still runs since Drawer keeps children mounted while closed, but a
   // closed drawer is invisible — see the effect below).
   onSummon: () => void
+  // Falls through to the Compass (Hermes) for anything the command engine
+  // can't answer, so the console is one box for both rather than two places
+  // to type depending on which system owns the question.
+  onAsk: (text: string) => Promise<void>
   consoleInputRef: React.RefObject<HTMLInputElement | null>
 }) {
   const [drawer, setDrawer] = useState<DrawerId | null>(null)
@@ -104,7 +109,7 @@ export default function PanelHost({
       </div>
 
       <MissionStrip projectId={projectId} panelsUp={panelsUp} />
-      <CommandConsole projectId={projectId} panelsUp={panelsUp} onCompassState={onCompassState} inputRef={consoleInputRef} />
+      <CommandConsole projectId={projectId} panelsUp={panelsUp} onCompassState={onCompassState} onAsk={onAsk} inputRef={consoleInputRef} />
 
       <Drawer open={drawer === 'dna'} label={DRAWER_LABEL.dna} onClose={() => setDrawer(null)}>
         <DigitalDnaPanel project={project} projectId={projectId} enabled={panelsUp && drawer === 'dna'} />
