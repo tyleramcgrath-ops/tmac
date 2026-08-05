@@ -36,7 +36,15 @@ export interface CompassChat {
   // once speechSynthesis has genuinely finished, never on a timer.
   conversation: boolean
   setConversation: (v: boolean) => void
+  // Mic availability and opt-in, surfaced here so the room can render one
+  // control next to its voice toggle without also importing useMic.
   supported: boolean
+  enabled: boolean
+  setEnabled: (v: boolean) => void
+  // True when a click can actually start a turn. The room falls back to its
+  // old cosmetic 'listening' flash when this is false, so a browser without
+  // SpeechRecognition still gets feedback instead of a dead compass.
+  ready: boolean
 }
 
 export function useCompassChat(onState: (s: CompassState) => void): CompassChat {
@@ -132,19 +140,34 @@ export function useCompassChat(onState: (s: CompassState) => void): CompassChat 
     [listen, mic],
   )
 
-  // Reflect the live stage on the compass, but only while we own it.
+  // Reflect the live stage on the compass, but only the stages nothing else
+  // owns. page.tsx already maps voice.speaking -> 'speaking' behind a blocklist
+  // that protects deliberate sequences ('awakening', 'deploying', ...), and
+  // that rule is load-bearing — asserting 'speaking' here too would make two
+  // writers for one state and quietly override it. So this hook claims exactly
+  // two: 'listening' while the microphone is genuinely open, and 'thinking'
+  // while a request is in flight.
+  //
+  // The release is also deferred while the room is talking, so the reply's
+  // glow isn't cut short by our 'idle'.
   useEffect(() => {
-    const engaged = busy || voice.speaking || mic.listening
-    if (engaged) {
+    if (busy) {
       engagedRef.current = true
-      onStateRef.current(busy ? 'thinking' : voice.speaking ? 'speaking' : 'listening')
-    } else if (engagedRef.current) {
+      onStateRef.current('thinking')
+      return
+    }
+    if (mic.listening) {
+      engagedRef.current = true
+      onStateRef.current('listening')
+      return
+    }
+    if (engagedRef.current && !voice.speaking) {
       // One release, then silence — so ambient roster signals aren't stomped
       // on every render by a hook that has nothing to say.
       engagedRef.current = false
       onStateRef.current('idle')
     }
-  }, [busy, voice.speaking, mic.listening])
+  }, [busy, mic.listening, voice.speaking])
 
   // Hands-free re-arm, gated on a real speaking → silent transition rather
   // than on `speaking` merely being false (which is also true before the
@@ -180,5 +203,8 @@ export function useCompassChat(onState: (s: CompassState) => void): CompassChat 
     conversation,
     setConversation,
     supported: mic.supported,
+    enabled: mic.enabled,
+    setEnabled: mic.setEnabled,
+    ready: mic.supported && mic.enabled,
   }
 }

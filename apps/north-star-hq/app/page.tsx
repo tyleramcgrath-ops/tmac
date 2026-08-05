@@ -10,6 +10,7 @@ import OnboardingWizard from './onboarding-wizard'
 import LiveMonitor from './live-monitor'
 import { VoiceProvider, useVoice } from './_lib/use-voice'
 import { MicProvider } from './_lib/use-mic'
+import { useCompassChat } from './_lib/use-compass-chat'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -120,6 +121,16 @@ function DeskRoom() {
   }
 
   const C = (s: CompassState) => { setCompassState(s); api.current?.setState(s) }
+
+  // Ask the Compass anything. C goes straight in so the hook lights
+  // 'listening'/'thinking' on the same compass the room already drives; it
+  // deliberately leaves 'speaking' to the blocklisted effect further down.
+  const chat = useCompassChat(C)
+  // The global click listener is mounted once with [] deps, so it has to read
+  // the live chat through a ref rather than close over the first render's copy
+  // — the same discipline phaseRef/panelsUpRef already use here.
+  const chatRef = useRef(chat)
+  useEffect(() => { chatRef.current = chat })
 
   const setTime = (t: TimeMode) => { setTimeMode(t); api.current?.setTime(t); persist(t) }
 
@@ -258,7 +269,12 @@ function DeskRoom() {
       if (phaseRef.current === 'asleep' && hasUserRef.current) { runWake(); return }
       if (phaseRef.current === 'waking') { skipWake(); return }
       if (e.target === hitRef.current) {
-        callPanels(!panelsUpRef.current); C('listening'); WT(1500, () => C('idle'))
+        callPanels(!panelsUpRef.current)
+        // Real listening when the mic is available and opted in; the old
+        // 1.5s cosmetic flash otherwise, so a browser without
+        // SpeechRecognition (Firefox, Safari) still answers the click.
+        if (chatRef.current.ready) chatRef.current.listen()
+        else { C('listening'); WT(1500, () => C('idle')) }
       }
     }
     document.addEventListener('click', onClick, true)
@@ -455,6 +471,17 @@ function DeskRoom() {
             {voice.supported && (
               <button type="button" className="ns-voice" aria-pressed={voice.enabled} onClick={() => voice.setEnabled(!voice.enabled)}>
                 {voice.enabled ? 'Voice on' : 'Voice off'}
+              </button>
+            )}
+            {chat.supported && (
+              <button
+                type="button"
+                className="ns-voice"
+                aria-pressed={chat.enabled}
+                title={chat.enabled ? 'Click the compass to speak' : 'Enable the microphone'}
+                onClick={() => chat.setEnabled(!chat.enabled)}
+              >
+                {chat.enabled ? 'Ask on' : 'Ask off'}
               </button>
             )}
           </div>
