@@ -210,6 +210,23 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-timectl button[aria-pressed='true'], .ns-voice[aria-pressed='true'] { color: #eed09a; border-bottom-color: rgba(232,182,104,0.7); }
 .ns-timectl button:focus-visible, .ns-cinema:focus-visible, .ns-voice:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
 
+/* Voice picker. Inherits the control row's type so it reads as one of the
+   room's controls rather than an OS widget dropped into it; the option list
+   itself is drawn by the OS and cannot be styled, hence the explicit dark
+   background so it is legible on Windows. */
+.ns-voicepick {
+  margin: 0; padding: 0.25rem 0.1rem; border: 0; border-bottom: 1px solid transparent;
+  background: none; cursor: pointer; max-width: 12rem;
+  font-family: var(--serif); font-size: clamp(0.44rem,0.66vw,0.56rem);
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(216,198,164,0.5); text-shadow: 0 1px 8px rgba(0,0,0,0.9);
+  transition: color 0.4s ease, border-color 0.4s ease;
+  -webkit-appearance: none; appearance: none; text-overflow: ellipsis;
+}
+.ns-voicepick:hover { color: rgba(240,216,158,0.9); }
+.ns-voicepick:focus-visible { outline: 1px solid rgba(240,205,130,0.7); outline-offset: 3px; }
+.ns-voicepick option { background: #0d1016; color: #e8dcc2; letter-spacing: normal; text-transform: none; }
+
 /* ============================================================
    The interface — a rail (left), two glanceable cards (right),
    a mission strip + command console (bottom), all "around" the

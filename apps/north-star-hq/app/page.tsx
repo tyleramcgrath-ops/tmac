@@ -497,6 +497,18 @@ function DeskRoom() {
                 {chat.enabled ? 'Ask on' : 'Ask off'}
               </button>
             )}
+            {voice.enabled && voice.voices.length > 0 && (
+              <select
+                className="ns-voicepick"
+                aria-label="Compass voice"
+                value={voice.voiceName}
+                onChange={(e) => voice.setVoiceName(e.target.value)}
+              >
+                {voice.voices.map((v) => (
+                  <option key={v.name} value={v.name}>{v.name}</option>
+                ))}
+              </select>
+            )}
           </div>
         </div>
 
