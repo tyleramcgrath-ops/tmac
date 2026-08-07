@@ -948,3 +948,74 @@ html[data-dev] .ns-dev { display: flex; }
   text-shadow: 0 0 22px rgba(232, 182, 104, 0.32), 0 2px 12px rgba(0, 0, 0, 0.85);
 }
 [data-cinema] .ns-dialogue { opacity: 0; }
+
+/* ---- AI Access (GEO audit) ------------------------------------------------
+   Crawler-access rows reuse .ns-row, so only the access-state dot colours are
+   new. Deliberately three states, not two: "unlisted" (no rule mentions this
+   bot) is a different fact from "allowed" and must not borrow its colour. */
+.ns-row[data-access='allowed'] .ns-row-dot { background: #9ed6a0; }
+.ns-row[data-access='blocked'] .ns-row-dot { background: #e08a7a; box-shadow: 0 0 6px rgba(224,138,122,0.55); }
+.ns-row[data-access='unlisted'] .ns-row-dot { background: rgba(226,214,188,0.32); }
+
+.ns-geo-scores { display: flex; gap: 1.4rem; margin-top: 0.9rem; }
+.ns-geo-score { display: flex; flex-direction: column; gap: 0.2rem; }
+.ns-geo-score-value {
+  font-family: var(--serif); font-size: clamp(1.1rem,1.7vw,1.5rem); color: #ecc276; font-variant-numeric: tabular-nums;
+}
+/* An unobserved score is italic muted text reading "Unknown" — never a zero,
+   never a dash that could be misread as a bad number. */
+.ns-geo-score-value[data-unknown] {
+  font-size: clamp(0.72rem,1vw,0.86rem); font-style: italic; color: rgba(226,214,188,0.42);
+}
+.ns-geo-score-label {
+  font-size: clamp(0.5rem,0.66vw,0.58rem); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(226,214,188,0.45);
+}
+.ns-geo-formula {
+  margin: 0.6rem 0 0; font-size: clamp(0.56rem,0.72vw,0.64rem); line-height: 1.55; color: rgba(226,214,188,0.42);
+}
+
+.ns-geo-findings { list-style: none; margin: 0.9rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.ns-geo-findings li {
+  padding: 0.6rem 0.75rem; border: 1px solid rgba(210,170,102,0.22); border-left-width: 2px; border-radius: 7px;
+  background: rgba(20,16,10,0.42); display: flex; flex-direction: column; gap: 0.3rem;
+}
+.ns-geo-findings li[data-severity='critical'] { border-left-color: #e08a7a; }
+.ns-geo-findings li[data-severity='warning'] { border-left-color: #ecc276; }
+.ns-geo-findings li[data-severity='info'] { border-left-color: rgba(226,214,188,0.35); }
+.ns-geo-findings b { font-weight: 400; font-size: clamp(0.68rem,0.86vw,0.78rem); color: rgba(226,214,188,0.92); }
+.ns-geo-findings span { font-size: clamp(0.6rem,0.78vw,0.68rem); line-height: 1.5; color: rgba(226,214,188,0.7); }
+.ns-geo-findings code {
+  font-size: clamp(0.56rem,0.72vw,0.62rem); line-height: 1.45; color: rgba(236,194,118,0.8);
+  white-space: pre-wrap; word-break: break-word;
+}
+
+/* ---- Scenario -------------------------------------------------------------
+   Layout order is load-bearing: exposure and arithmetic first, then measured
+   history, then `unknowns` — which gets the same weight as the results
+   because the absence of a predicted score is the point, not a gap. */
+.ns-scn-picks { list-style: none; margin: 0.9rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; max-height: 34vh; overflow-y: auto; }
+.ns-scn-picks label { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.45rem 0.6rem; border-radius: 6px; cursor: pointer; transition: background 0.25s ease; }
+.ns-scn-picks label:hover { background: rgba(236,194,118,0.07); }
+.ns-scn-picks input { margin-top: 0.25rem; accent-color: #ecc276; cursor: pointer; }
+.ns-scn-pick-text { display: flex; flex-direction: column; gap: 0.15rem; }
+.ns-scn-pick-text b { font-weight: 400; font-size: clamp(0.68rem,0.86vw,0.78rem); color: rgba(226,214,188,0.9); }
+.ns-scn-pick-text span { font-size: clamp(0.54rem,0.7vw,0.6rem); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(226,214,188,0.42); }
+
+.ns-scn-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+.ns-scn-heading { margin: 0.9rem 0 0; font-size: clamp(0.5rem,0.66vw,0.58rem); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(226,214,188,0.45); }
+
+.ns-scn-list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.ns-scn-list li { display: flex; flex-direction: column; gap: 0.25rem; }
+.ns-scn-list b { font-weight: 400; font-size: clamp(0.68rem,0.86vw,0.78rem); color: #ecc276; font-variant-numeric: tabular-nums; }
+.ns-scn-list span { font-size: clamp(0.58rem,0.76vw,0.66rem); line-height: 1.5; color: rgba(226,214,188,0.62); }
+
+.ns-scn-unknowns { list-style: none; margin: 0.6rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; }
+.ns-scn-unknowns li {
+  padding-left: 0.85rem; position: relative;
+  font-size: clamp(0.6rem,0.78vw,0.68rem); line-height: 1.55; color: rgba(226,214,188,0.68);
+}
+.ns-scn-unknowns li::before { content: '—'; position: absolute; left: 0; color: rgba(226,214,188,0.35); }
+
+/* ---- Spoken briefing control ---- */
+.ns-brief-audio { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+.ns-brief-audio-note { font-size: clamp(0.54rem,0.7vw,0.6rem); color: rgba(226,214,188,0.45); }

@@ -24,6 +24,8 @@ import MissionOperationsPanel from './operations/MissionOperationsPanel'
 import HistoryPanel from './history/HistoryPanel'
 import IntegrationsPanel from './integrations/IntegrationsPanel'
 import PerformancePanel from './performance/PerformancePanel'
+import GeoPanel from './geo/GeoPanel'
+import ScenarioPanel from './scenario/ScenarioPanel'
 import DigitalDnaPanel from './dna/DigitalDnaPanel'
 
 type DrawerId = Exclude<RailDestination, 'search'>
@@ -31,7 +33,9 @@ type DrawerId = Exclude<RailDestination, 'search'>
 const DRAWER_LABEL: Record<DrawerId, string> = {
   dna: 'Digital DNA',
   performance: 'Performance',
+  geo: 'AI Access',
   opportunities: 'Opportunities',
+  scenario: 'Scenario',
   approvals: 'Approvals',
   missions: 'Missions',
   history: 'History',
@@ -117,8 +121,14 @@ export default function PanelHost({
       <Drawer open={drawer === 'performance'} label={DRAWER_LABEL.performance} onClose={() => setDrawer(null)}>
         <PerformancePanel projectId={projectId} enabled={panelsUp && drawer === 'performance'} />
       </Drawer>
+      <Drawer open={drawer === 'geo'} label={DRAWER_LABEL.geo} onClose={() => setDrawer(null)}>
+        <GeoPanel projectId={projectId} enabled={panelsUp && drawer === 'geo'} />
+      </Drawer>
       <Drawer open={drawer === 'opportunities'} label={DRAWER_LABEL.opportunities} onClose={() => setDrawer(null)}>
         <OpportunitiesPanel projectId={projectId} projectsResolved={projectsResolved} />
+      </Drawer>
+      <Drawer open={drawer === 'scenario'} label={DRAWER_LABEL.scenario} onClose={() => setDrawer(null)}>
+        <ScenarioPanel projectId={projectId} enabled={panelsUp && drawer === 'scenario'} />
       </Drawer>
       <Drawer open={drawer === 'approvals'} label={DRAWER_LABEL.approvals} onClose={() => setDrawer(null)}>
         <ApprovalsPanel
