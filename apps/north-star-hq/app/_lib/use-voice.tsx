@@ -93,6 +93,10 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
   // speechSynthesis.cancel()'s "one voice at a time" behaviour.
   const neuralVoiceRef = useRef('en-US-GuyNeural')
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  // Monotonic "who owns the voice right now" counter. Bumped by every speak();
+  // any in-flight neural request or pending fallback holding an older token
+  // has been superseded and must stay silent.
+  const speakTokenRef = useRef(0)
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
   const [voiceName, setVoiceNameState] = useState('')
@@ -178,7 +182,8 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
   // route is an unofficial endpoint and can fail (403 from datacenter IPs, for
   // one), so failure here is expected rather than exceptional — it degrades
   // silently instead of leaving the room mute.
-  const speakNeural = useCallback(async (text: string): Promise<boolean> => {
+  const speakNeural = useCallback(async (text: string, token: number): Promise<boolean> => {
+    const current = () => speakTokenRef.current === token
     try {
       const res = await fetch('/api/compass/speak', {
         method: 'POST',
@@ -188,6 +193,10 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
       if (!res.ok) return false
       const blob = await res.blob()
       if (!blob.size) return false
+      // A newer line started while this audio was being fetched. Playing it now
+      // would talk over the newer one, so it is dropped rather than queued —
+      // the Compass says the latest thing, not everything.
+      if (!current()) return true
 
       // A user gesture already unlocked audio (they clicked the compass), so
       // play() should not be blocked by autoplay policy here.
@@ -197,14 +206,24 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
       audioRef.current = el
 
       return await new Promise<boolean>((resolve) => {
+        let settled = false
         const done = (ok: boolean) => {
+          // `pause` and `ended` can both fire for one playback, and speak()
+          // pauses this element when a newer line supersedes it — so this has
+          // to be idempotent or it revokes a URL twice and clobbers the newer
+          // utterance's speaking state.
+          if (settled) return
+          settled = true
           URL.revokeObjectURL(url)
-          setSpeaking(false)
+          if (current()) setSpeaking(false)
           if (audioRef.current === el) audioRef.current = null
           resolve(ok)
         }
         el.onplay = () => setSpeaking(true)
         el.onended = () => done(true)
+        // Superseded by a newer line — report success so the caller does not
+        // "recover" by reading this stale text in the robot voice.
+        el.onpause = () => done(el.ended || !current() || el.currentTime > 0)
         // An error *after* playback started is not worth restarting in the
         // robot voice — the user already heard it.
         el.onerror = () => done(el.currentTime > 0)
@@ -234,13 +253,31 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   // Declared after both so neither is referenced before its initialiser.
+  //
+  // One voice at a time, across BOTH paths. Every call supersedes the last and
+  // silences whatever is currently talking. Without the token, a neural
+  // request that fails *after* a newer line has already started playing would
+  // fall back to the browser synth and you would hear two voices reading two
+  // different sentences at once — the room talking over itself.
   const speak = useCallback(
     (text: string) => {
       if (!enabledRef.current || !supportedRef.current || !text) return
-      void speakNeural(text).then((ok) => {
+      const token = ++speakTokenRef.current
+
+      try {
+        audioRef.current?.pause()
+        audioRef.current = null
+      } catch {}
+      try {
+        window.speechSynthesis.cancel()
+      } catch {}
+
+      void speakNeural(text, token).then((ok) => {
         // Re-check enabled: the neural round trip takes a moment, and the user
-        // may have muted the room while it was in flight.
-        if (!ok && enabledRef.current) speakBrowser(text)
+        // may have muted the room while it was in flight. Re-check the token
+        // too: a newer line has already claimed the voice, and falling back
+        // here would speak over it.
+        if (!ok && enabledRef.current && speakTokenRef.current === token) speakBrowser(text)
       })
     },
     [speakNeural, speakBrowser],
