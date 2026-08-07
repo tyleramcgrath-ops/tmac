@@ -484,6 +484,24 @@ export const api = {
   // normalized "read this first" briefing. Not a new intelligence source. ──
   getExecutiveBrief: (projectId: string) => req<{ brief: ExecutiveBriefDTO }>(`/api/projects/${projectId}/brief`),
 
+  // The same brief, rewritten to be heard rather than read. Returns a script,
+  // not audio — see app/api/projects/[projectId]/brief/audio/route.ts for why.
+  getSpokenBrief: (projectId: string) =>
+    req<{ spoken: SpokenBriefDTO; generatedAt: string }>(`/api/projects/${projectId}/brief/audio`),
+
+  // ── GEO audit — live robots.txt + AI-crawler access, plus the structured
+  // data census from the last crawl. The one part of AI visibility a site
+  // controls outright. ──
+  getGeoAudit: (projectId: string) => req<GeoAuditDTO>(`/api/projects/${projectId}/geo`),
+
+  // ── Scenario simulation — POST because it carries a selection, not because
+  // it writes anything. Deliberately returns no predicted score. ──
+  simulate: (projectId: string, recommendationIds: string[]) =>
+    req<SimulationDTO>(`/api/projects/${projectId}/simulate`, {
+      method: 'POST',
+      body: JSON.stringify({ recommendationIds }),
+    }),
+
   // ── Live Agent Roster (Headquarters, Milestone 1) ──
   getAgentRoster: (projectId: string) => req<{ roster: AgentRosterDTO }>(`/api/projects/${projectId}/agents/roster`),
 
@@ -991,4 +1009,72 @@ export interface OperatorPolicyDTO {
   autoApprove: { title?: string; metaDescription?: string; schema?: string }
   maxAutoApprovePages: number
   alwaysRequireApproval?: string[]
+}
+
+// ── GEO audit (AI crawler access + entity grounding) ────────────────────────
+// Mirrors lib/foundation/geo/engine.ts. Scores are `number | null`, and null
+// means "not observed" — never zero. The UI must render null as "unknown",
+// because a site whose robots.txt could not be fetched has unknown access, not
+// bad access.
+export type CrawlerAccessDTO = 'allowed' | 'blocked' | 'unlisted'
+export interface CrawlerVerdictDTO {
+  bot: string
+  access: CrawlerAccessDTO
+  matchedRule?: string
+  matchedGroup?: string
+}
+export interface GeoFindingDTO {
+  id: string
+  severity: 'critical' | 'warning' | 'info'
+  title: string
+  detail: string
+  evidence: string
+}
+export interface GeoAuditDTO {
+  domain: string
+  checkedAt: string
+  robots: { status: 'found' | 'absent' | 'unreachable'; url: string; detail?: string }
+  crawlers: CrawlerVerdictDTO[]
+  schema: {
+    pagesAnalyzed: number
+    pagesWithAnySchema: number
+    types: { type: string; pages: number }[]
+    missingEntityTypes: string[]
+  } | null
+  findings: GeoFindingDTO[]
+  scores: { access: number | null; grounding: number | null; overall: number | null; formula: string }
+}
+
+// ── Scenario simulation ────────────────────────────────────────────────────
+// Note what is absent: there is no projected score of any kind. See
+// lib/foundation/simulate/engine.ts — nothing here can predict rank movement,
+// so nothing here pretends to.
+export interface SimulationDTO {
+  selected: { count: number; ruleIds: string[]; unknownIds: string[] }
+  exposure: {
+    pagesTouched: number
+    pagesCrawled: number
+    sampleUrls: string[]
+    keywordsTracked: number
+    keywordsOnTouchedPages: { keyword: string; position: number | null; url: string }[]
+  }
+  deterministic: { metric: string; before: number; after: number; basis: string }[]
+  baseRates: {
+    ruleId: string
+    observations: number
+    measured: number
+    medianClicksDelta: number | null
+    medianPositionDelta: number | null
+    caveat: string
+  }[]
+  unknowns: string[]
+}
+
+// ── Spoken briefing ────────────────────────────────────────────────────────
+export interface SpokenBriefDTO {
+  script: string
+  sections: { heading: string; text: string }[]
+  charCount: number
+  truncated: boolean
+  omittedItems: number
 }

@@ -19,11 +19,15 @@ export default function CommandConsole({
   projectId,
   panelsUp,
   onCompassState,
+  onAsk,
   inputRef,
 }: {
   projectId: string | null
   panelsUp: boolean
   onCompassState: (s: CompassState) => void
+  // The Compass (Hermes). Used when the command engine can't take the
+  // question — no project selected, the call threw, or it came back 'failed'.
+  onAsk: (text: string) => Promise<void>
   inputRef: React.RefObject<HTMLInputElement | null>
 }) {
   const [input, setInput] = useState('')
@@ -63,8 +67,27 @@ export default function CommandConsole({
     else onCompassState('idle')
   }
 
+  // Hand the question to the Compass and clear the box. It owns its own
+  // compass states and speaks the reply, so nothing here narrates on its
+  // behalf — two writers on one compass is what makes it flicker.
+  async function askCompass(raw: string) {
+    setPending(null)
+    setResult(null)
+    setInput('')
+    await onAsk(raw)
+  }
+
   async function submit(raw: string) {
-    if (!projectId || !raw.trim() || loading) return
+    if (!raw.trim() || loading) return
+
+    // No project means the command engine has nothing to act on, but the
+    // question is still a perfectly good question — send it straight on
+    // rather than silently doing nothing, which is how this box read before.
+    if (!projectId) {
+      await askCompass(raw)
+      return
+    }
+
     setLoading(true)
     onCompassState('thinking')
     try {
@@ -74,9 +97,21 @@ export default function CommandConsole({
         missionId: currentMission?.id ?? null,
         confirmed: false,
       })
+      // 'failed' means the engine understood the shape and couldn't do it —
+      // usually because it isn't a command at all, just a question. Let the
+      // Compass answer instead of showing a dead end.
+      if (result.status === 'failed') {
+        setLoading(false)
+        await askCompass(raw)
+        return
+      }
       handleResult(result)
     } catch {
-      onCompassState('warning')
+      // A thrown call is the engine being unavailable, not the user being
+      // wrong. Same fallback.
+      setLoading(false)
+      await askCompass(raw)
+      return
     } finally {
       setLoading(false)
     }

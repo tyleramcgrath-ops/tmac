@@ -11,6 +11,7 @@
   "dependencies": {
     "jose": "6.0.12",
     "lucide-react": "0.528.0",
+    "msedge-tts": "2.0.7",
     "next": "16.2.10",
     "pg": "^8.22.0",
     "react": "19.2.4",

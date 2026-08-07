@@ -29,11 +29,43 @@ function writeEnabled(v: boolean) {
   } catch {}
 }
 
+// Windows and Chrome both ship two tiers of voice. The legacy ones
+// ("Microsoft David Desktop", "Microsoft Zira") are the flat, robotic
+// formant-synthesis voices from a decade ago; the modern ones are neural and
+// carry "Natural", "Online", or "Google" in their name. speechSynthesis hands
+// out a legacy voice by default, which is why an unconfigured room sounds like
+// a 1998 screen reader. Rank rather than hard-code: the exact names differ by
+// OS version and locale, and a missing hard-coded voice would fall back to the
+// worst option silently.
+function rankVoice(v: SpeechSynthesisVoice): number {
+  const n = v.name.toLowerCase()
+  let score = 0
+  if (/natural/.test(n)) score += 100
+  if (/online/.test(n)) score += 60
+  if (/google/.test(n)) score += 50
+  if (/aria|jenny|guy|ryan|sonia/.test(n)) score += 20 // the good neural set
+  if (/desktop|david|zira|mark/.test(n)) score -= 60   // legacy formant voices
+  if (v.lang?.toLowerCase().startsWith('en')) score += 15
+  if (v.localService) score -= 5                       // remote ones sound better
+  return score
+}
+
+function pickBest(voices: SpeechSynthesisVoice[]): string {
+  if (!voices.length) return ''
+  return [...voices].sort((a, b) => rankVoice(b) - rankVoice(a))[0]?.name ?? ''
+}
+
 interface VoiceState {
   enabled: boolean
   setEnabled: (v: boolean) => void
   supported: boolean
   speak: (text: string) => void
+  // Every voice the browser offers, best-sounding first, plus the chosen one.
+  // Surfaced so the room can let someone pick rather than being stuck with
+  // whatever the OS defaults to.
+  voices: SpeechSynthesisVoice[]
+  voiceName: string
+  setVoiceName: (name: string) => void
   // True only for the actual duration the browser is producing audio (driven
   // by the SpeechSynthesisUtterance's own onstart/onend/onerror — never a
   // fixed timer guessing how long a line takes to read), so the Compass's
@@ -55,6 +87,19 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
   // muted copy and nothing would ever be spoken aloud.
   const enabledRef = useRef(false)
   const supportedRef = useRef(false)
+  const voiceNameRef = useRef('')
+  // The neural voice served by /api/compass/speak, and the element currently
+  // playing it — held so a new line can cut off the previous one, matching
+  // speechSynthesis.cancel()'s "one voice at a time" behaviour.
+  const neuralVoiceRef = useRef('en-US-GuyNeural')
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  // Monotonic "who owns the voice right now" counter. Bumped by every speak();
+  // any in-flight neural request or pending fallback holding an older token
+  // has been superseded and must stay silent.
+  const speakTokenRef = useRef(0)
+
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [voiceName, setVoiceNameState] = useState('')
 
   useEffect(() => {
     const sup = typeof window !== 'undefined' && 'speechSynthesis' in window
@@ -65,21 +110,139 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
     setEnabledState(en)
   }, [])
 
+  // getVoices() is empty on first call in Chrome and fills in asynchronously,
+  // so this has to run on voiceschanged as well as on mount — reading once
+  // would leave the list permanently empty and fall back to the default voice.
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
+
+    const load = () => {
+      const all = window.speechSynthesis.getVoices()
+      if (!all.length) return
+      const sorted = [...all].sort((a, b) => rankVoice(b) - rankVoice(a))
+      setVoices(sorted)
+
+      // Honour a saved choice only while that voice still exists — voices come
+      // and go with OS updates and network state, and a stale name would
+      // silently resolve to nothing and play the default.
+      let saved = ''
+      try {
+        saved = String(JSON.parse(localStorage.getItem('ns-hq') || '{}').voiceName || '')
+      } catch {}
+      const chosen = saved && all.some((v) => v.name === saved) ? saved : pickBest(all)
+      voiceNameRef.current = chosen
+      setVoiceNameState(chosen)
+    }
+
+    load()
+    window.speechSynthesis.addEventListener('voiceschanged', load)
+    return () => window.speechSynthesis.removeEventListener('voiceschanged', load)
+  }, [])
+
+  const setVoiceName = useCallback((name: string) => {
+    voiceNameRef.current = name
+    setVoiceNameState(name)
+    try {
+      const saved = JSON.parse(localStorage.getItem('ns-hq') || '{}')
+      localStorage.setItem('ns-hq', JSON.stringify({ ...saved, voiceName: name }))
+    } catch {}
+    // Preview it, so choosing from a list of opaque names is not guesswork.
+    if (enabledRef.current && supportedRef.current) {
+      try {
+        window.speechSynthesis.cancel()
+        const u = new SpeechSynthesisUtterance('Compass online.')
+        const v = window.speechSynthesis.getVoices().find((x) => x.name === name)
+        if (v) u.voice = v
+        u.rate = 0.98
+        u.pitch = 0.92
+        window.speechSynthesis.speak(u)
+      } catch {}
+    }
+  }, [])
+
   const setEnabled = useCallback((v: boolean) => {
     enabledRef.current = v
     setEnabledState(v)
     writeEnabled(v)
-    if (!v && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
+    if (!v && typeof window !== 'undefined') {
+      // Both paths — muting has to silence neural audio too, not just the
+      // browser synth, or turning voice off mid-reply keeps talking.
+      try {
+        audioRef.current?.pause()
+        audioRef.current = null
+      } catch {}
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel()
       setSpeaking(false)
     }
   }, [])
 
-  const speak = useCallback((text: string) => {
+  // Neural speech first, browser synth as the fallback. /api/compass/speak
+  // reaches Edge's neural voices, which sound like a person; speechSynthesis
+  // is whatever the OS ships, which on Windows is a legacy formant voice. The
+  // route is an unofficial endpoint and can fail (403 from datacenter IPs, for
+  // one), so failure here is expected rather than exceptional — it degrades
+  // silently instead of leaving the room mute.
+  const speakNeural = useCallback(async (text: string, token: number): Promise<boolean> => {
+    const current = () => speakTokenRef.current === token
+    try {
+      const res = await fetch('/api/compass/speak', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voice: neuralVoiceRef.current }),
+      })
+      if (!res.ok) return false
+      const blob = await res.blob()
+      if (!blob.size) return false
+      // A newer line started while this audio was being fetched. Playing it now
+      // would talk over the newer one, so it is dropped rather than queued —
+      // the Compass says the latest thing, not everything.
+      if (!current()) return true
+
+      // A user gesture already unlocked audio (they clicked the compass), so
+      // play() should not be blocked by autoplay policy here.
+      const url = URL.createObjectURL(blob)
+      const el = new Audio(url)
+      audioRef.current?.pause()
+      audioRef.current = el
+
+      return await new Promise<boolean>((resolve) => {
+        let settled = false
+        const done = (ok: boolean) => {
+          // `pause` and `ended` can both fire for one playback, and speak()
+          // pauses this element when a newer line supersedes it — so this has
+          // to be idempotent or it revokes a URL twice and clobbers the newer
+          // utterance's speaking state.
+          if (settled) return
+          settled = true
+          URL.revokeObjectURL(url)
+          if (current()) setSpeaking(false)
+          if (audioRef.current === el) audioRef.current = null
+          resolve(ok)
+        }
+        el.onplay = () => setSpeaking(true)
+        el.onended = () => done(true)
+        // Superseded by a newer line — report success so the caller does not
+        // "recover" by reading this stale text in the robot voice.
+        el.onpause = () => done(el.ended || !current() || el.currentTime > 0)
+        // An error *after* playback started is not worth restarting in the
+        // robot voice — the user already heard it.
+        el.onerror = () => done(el.currentTime > 0)
+        el.play().catch(() => done(false))
+      })
+    } catch {
+      return false
+    }
+  }, [])
+
+  const speakBrowser = useCallback((text: string) => {
     if (!enabledRef.current || !supportedRef.current || !text) return
     try {
       window.speechSynthesis.cancel() // one voice at a time — a new line interrupts the last
       const u = new SpeechSynthesisUtterance(text)
+      // Read from the ref, not state — speak()'s identity has to stay stable
+      // for the listeners that captured it on mount (see above).
+      const chosen = window.speechSynthesis.getVoices().find((v) => v.name === voiceNameRef.current)
+      if (chosen) u.voice = chosen
       u.rate = 0.98
       u.pitch = 0.92
       u.onstart = () => setSpeaking(true)
@@ -89,7 +252,42 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, [])
 
-  return <Ctx.Provider value={{ enabled, setEnabled, supported, speak, speaking }}>{children}</Ctx.Provider>
+  // Declared after both so neither is referenced before its initialiser.
+  //
+  // One voice at a time, across BOTH paths. Every call supersedes the last and
+  // silences whatever is currently talking. Without the token, a neural
+  // request that fails *after* a newer line has already started playing would
+  // fall back to the browser synth and you would hear two voices reading two
+  // different sentences at once — the room talking over itself.
+  const speak = useCallback(
+    (text: string) => {
+      if (!enabledRef.current || !supportedRef.current || !text) return
+      const token = ++speakTokenRef.current
+
+      try {
+        audioRef.current?.pause()
+        audioRef.current = null
+      } catch {}
+      try {
+        window.speechSynthesis.cancel()
+      } catch {}
+
+      void speakNeural(text, token).then((ok) => {
+        // Re-check enabled: the neural round trip takes a moment, and the user
+        // may have muted the room while it was in flight. Re-check the token
+        // too: a newer line has already claimed the voice, and falling back
+        // here would speak over it.
+        if (!ok && enabledRef.current && speakTokenRef.current === token) speakBrowser(text)
+      })
+    },
+    [speakNeural, speakBrowser],
+  )
+
+  return (
+    <Ctx.Provider value={{ enabled, setEnabled, supported, speak, speaking, voices, voiceName, setVoiceName }}>
+      {children}
+    </Ctx.Provider>
+  )
 }
 
 export function useVoice(): VoiceState {
