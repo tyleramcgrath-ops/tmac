@@ -32,6 +32,7 @@ export default function IntegrationsPanel({
   const [error, setError] = useState('')
   const [busy, setBusy] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ ok: boolean; text: string } | null>(null)
+  const [propertyInput, setPropertyInput] = useState('')
   const [sites, setSites] = useState<{ siteUrl: string; permissionLevel: string }[] | null>(null)
 
   const load = async () => {
@@ -104,6 +105,31 @@ export default function IntegrationsPanel({
       if (res.error) setError(res.error)
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Could not list Search Console properties.')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  // GA4 has no equivalent of Search Console's site list here: listing
+  // properties needs the Analytics Admin API enabled as a third Google API,
+  // which is more setup than typing one number. The property id is on the GA4
+  // Admin screen under Property Settings; the API wants it as
+  // `properties/<id>`, so the bare number is accepted and prefixed here.
+  async function saveProperty() {
+    if (!projectId) return
+    const raw = propertyInput.trim().replace(/^properties\//, '')
+    if (!/^\d+$/.test(raw)) {
+      setError('A GA4 property id is all digits — find it in Google Analytics under Admin, Property Settings.')
+      return
+    }
+    setBusy('property')
+    setError('')
+    try {
+      await api.setIntegrationResource(projectId, 'analytics', `properties/${raw}`)
+      await load()
+      setPropertyInput('')
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not set the Analytics property.')
     } finally {
       setBusy(null)
     }
@@ -208,6 +234,33 @@ export default function IntegrationsPanel({
                   ))}
                 </ul>
               )}
+            </div>
+          )}
+
+          {analytics?.status === 'connected' && (
+            <div style={{ marginTop: '0.9rem' }}>
+              <label className="ns-integ-prop">
+                <span className="ns-row-desc">
+                  {analytics.resourceId
+                    ? `Analytics property: ${analytics.resourceId}`
+                    : 'Analytics needs a GA4 property id before it can read anything.'}
+                </span>
+                <span className="ns-integ-prop-row">
+                  <input
+                    className="ns-onboard-input"
+                    inputMode="numeric"
+                    placeholder="e.g. 123456789"
+                    value={propertyInput}
+                    onChange={(e) => setPropertyInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') void saveProperty()
+                    }}
+                  />
+                  <button type="button" className="ns-integ-btn" disabled={busy === 'property'} onClick={saveProperty}>
+                    {busy === 'property' ? 'Saving…' : analytics.resourceId ? 'Change' : 'Use this'}
+                  </button>
+                </span>
+              </label>
             </div>
           )}
         </>

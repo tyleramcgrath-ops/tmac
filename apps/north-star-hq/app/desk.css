@@ -1028,3 +1028,12 @@ html[data-dev] .ns-dev { display: flex; }
 .ns-runscan-note { font-size: clamp(0.54rem,0.7vw,0.6rem); color: rgba(226,214,188,0.5); font-variant-numeric: tabular-nums; }
 .ns-runscan-note[data-phase='error'] { color: #e08a7a; }
 .ns-runscan-note[data-phase='done'] { color: #9ed6a0; }
+
+/* ---- GA4 property entry (Integrations) ------------------------------------
+   Search Console gets a picker because its site list comes from an API this
+   deployment already calls. Listing GA4 properties needs the Analytics Admin
+   API enabled separately — more setup than typing one number, so the id is
+   entered by hand and normalized to `properties/<id>` server-side. */
+.ns-integ-prop { display: flex; flex-direction: column; gap: 0.45rem; }
+.ns-integ-prop-row { display: flex; gap: 0.5rem; align-items: center; }
+.ns-integ-prop-row input { flex: 1 1 auto; min-width: 0; }
