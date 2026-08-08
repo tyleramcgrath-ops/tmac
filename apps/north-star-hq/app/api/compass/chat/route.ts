@@ -24,6 +24,26 @@ interface ChatTurn {
   content: string
 }
 
+// Prepended to a spoken turn. Two jobs: correct the agent's reasonable but
+// wrong assumption that it is text-only, and get it to write for the ear.
+// Markdown, bullet lists and URLs are fine on a screen and unlistenable when
+// a text-to-speech voice reads them out character by character.
+const SPOKEN_CONTEXT = {
+  role: 'system' as const,
+  content: [
+    'This is a spoken conversation. The user is talking to you out loud: their words were transcribed',
+    'from a microphone, and your reply will be read aloud in the room by a text-to-speech voice.',
+    'You are not a text-only interface here — you are being heard, and you will be heard.',
+    '',
+    'Write for the ear. Short sentences. No markdown, asterisks, bullet lists, headings, code blocks,',
+    'or URLs — a voice reads those literally and they sound like noise. Say a page by its name, never',
+    'its address. Keep it to a few sentences unless asked for more.',
+    '',
+    'The transcript can contain speech-recognition errors. If a word looks garbled, ask rather than',
+    'guessing at what it meant.',
+  ].join(' '),
+}
+
 export const POST = handled(async (request) => {
   const user = await requireUser(request)
 
@@ -56,6 +76,13 @@ export const POST = handled(async (request) => {
 
   if (clean.length === 0) throw new HttpError(400, 'Nothing to send.')
 
+  // A spoken turn arrives here as plain text, which is all the agent would
+  // otherwise see — so it concludes it is a text-only interface and says so,
+  // while the user is talking to it out loud. This says what the transport
+  // cannot: the words were heard, the reply will be heard, and prose written
+  // for a screen sounds like noise when a voice reads it.
+  const outgoing = body.spoken === true ? [SPOKEN_CONTEXT, ...clean] : clean
+
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
 
@@ -69,7 +96,7 @@ export const POST = handled(async (request) => {
         Authorization: `Bearer ${key}`,
         'X-Hermes-Session-Id': sessionIdFor(user.id),
       },
-      body: JSON.stringify({ model: 'hermes-agent', messages: clean }),
+      body: JSON.stringify({ model: 'hermes-agent', messages: outgoing }),
     })
   } catch (err) {
     // An agent turn that runs tools can legitimately take a while; distinguish

@@ -26,7 +26,7 @@ export interface ChatTurn {
 }
 
 export interface CompassChat {
-  ask: (text: string) => Promise<void>
+  ask: (text: string, heard?: boolean) => Promise<void>
   listen: () => void
   stop: () => void
   busy: boolean
@@ -75,7 +75,7 @@ export function useCompassChat(onState: (s: CompassState) => void): CompassChat 
   })
 
   const ask = useCallback(
-    async (text: string) => {
+    async (text: string, heard = false) => {
       const clean = text.trim()
       if (!clean || busyRef.current) return
 
@@ -91,7 +91,12 @@ export function useCompassChat(onState: (s: CompassState) => void): CompassChat 
         const res = await fetch('/api/compass/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: next }),
+          // Tell the agent it is in a spoken conversation whenever either end
+          // is audio: the words arrived from the microphone, or the reply will
+          // be read aloud. Without this it only ever sees text and reasonably
+          // concludes it is a text-only interface — and writes markdown, URLs
+          // and bullet lists that sound like noise when spoken.
+          body: JSON.stringify({ messages: next, spoken: heard || voice.enabled }),
         })
         const data = (await res.json().catch(() => null)) as
           | { reply?: string; error?: string }
@@ -126,7 +131,7 @@ export function useCompassChat(onState: (s: CompassState) => void): CompassChat 
     // loop until the tab is closed.
     if (busyRef.current || voice.speaking) return
     mic.start((text) => {
-      void ask(text)
+      void ask(text, true)
     })
   }, [ask, mic, voice.speaking])
 
