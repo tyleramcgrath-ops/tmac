@@ -26,6 +26,8 @@ import {
 } from '../../oauth/google'
 
 const GSC_ENDPOINT = 'https://searchconsole.googleapis.com/webmasters/v3/sites'
+// Admin API, not the Data API — listing properties is an admin read.
+const GA4_ADMIN_ENDPOINT = 'https://analyticsadmin.googleapis.com/v1beta/accountSummaries'
 const GA4_ENDPOINT = 'https://analyticsdata.googleapis.com/v1beta/properties'
 
 export interface GoogleProviderDeps {
@@ -147,6 +149,42 @@ export async function listSearchConsoleSites(deps: GoogleProviderDeps): Promise<
       source: 'gsc',
       fetchedAt: new Date(deps.nowMs).toISOString(),
     }
+  } catch (err) {
+    return failureFrom(err)
+  }
+}
+
+// List every GA4 property this OAuth account can actually read. Without this
+// the property id has to be typed from the GA4 admin screen, and pasting one
+// the connected account cannot access fails at query time with "does not have
+// access to this property" — a mistake a picker makes impossible, because a
+// property only appears here if the account can see it.
+//
+// Requires the Google Analytics Admin API to be enabled on the Cloud project.
+// The analytics.readonly scope already covers it; no reconsent is needed.
+export interface Ga4PropertyEntry { propertyId: string; displayName: string; account: string }
+interface Ga4AccountSummaries {
+  accountSummaries?: {
+    displayName?: string
+    propertySummaries?: { property?: string; displayName?: string }[]
+  }[]
+}
+
+export async function listAnalyticsProperties(deps: GoogleProviderDeps): Promise<ProviderOutcome<Ga4PropertyEntry[]>> {
+  try {
+    const token = await freshToken(deps)
+    const json = (await getJson(`${GA4_ADMIN_ENDPOINT}?pageSize=200`, token, deps.fetchImpl)) as Ga4AccountSummaries
+    const out: Ga4PropertyEntry[] = []
+    for (const acct of json.accountSummaries ?? []) {
+      for (const prop of acct.propertySummaries ?? []) {
+        // `property` comes back as "properties/123456789"; the rest of the app
+        // stores and sends the bare id.
+        const id = (prop.property ?? '').replace(/^properties\//, '').trim()
+        if (!id) continue
+        out.push({ propertyId: id, displayName: prop.displayName ?? id, account: acct.displayName ?? '' })
+      }
+    }
+    return { ok: true, data: out, grade: 'observed', source: 'ga4', fetchedAt: new Date(deps.nowMs).toISOString() }
   } catch (err) {
     return failureFrom(err)
   }

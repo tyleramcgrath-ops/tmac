@@ -33,6 +33,7 @@ export default function IntegrationsPanel({
   const [busy, setBusy] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ ok: boolean; text: string } | null>(null)
   const [propertyInput, setPropertyInput] = useState('')
+  const [properties, setProperties] = useState<{ propertyId: string; displayName: string; account: string }[] | null>(null)
   const [sites, setSites] = useState<{ siteUrl: string; permissionLevel: string }[] | null>(null)
 
   const load = async () => {
@@ -116,6 +117,37 @@ export default function IntegrationsPanel({
   // Admin screen under Property Settings. Stored as bare digits — the GA4
   // endpoint already carries the `/properties` segment, so storing the
   // prefixed form produced `/properties/properties%2F<id>` and a 400.
+  async function loadProperties() {
+    if (!projectId) return
+    setBusy('properties')
+    setError('')
+    try {
+      const res = await api.listGoogleAnalyticsProperties(projectId)
+      setProperties(res.properties)
+      // A reason beats an empty list: "Analytics Admin API not enabled" is
+      // actionable, "no properties found" sends the user hunting in GA4.
+      if (res.error) setError(res.error)
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not list Analytics properties.')
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  async function pickProperty(propertyId: string) {
+    if (!projectId) return
+    setBusy('pick')
+    try {
+      await api.setIntegrationResource(projectId, 'analytics', propertyId)
+      await load()
+      setProperties(null)
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not set the Analytics property.')
+    } finally {
+      setBusy(null)
+    }
+  }
+
   async function saveProperty() {
     if (!projectId) return
     const raw = propertyInput.trim().replace(/^properties\//, '')
@@ -240,17 +272,59 @@ export default function IntegrationsPanel({
 
           {analytics?.status === 'connected' && (
             <div style={{ marginTop: '0.9rem' }}>
-              <label className="ns-integ-prop">
+              <button type="button" className="ns-integ-btn" disabled={busy === 'properties'} onClick={loadProperties}>
+                {busy === 'properties'
+                  ? 'Loading…'
+                  : analytics.resourceId
+                    ? 'Change Analytics property'
+                    : 'Choose Analytics property'}
+              </button>
+
+              {properties && properties.length > 0 && (
+                <ul className="ns-row-list" style={{ marginTop: '0.6rem' }}>
+                  {properties.map((pr) => (
+                    <li key={pr.propertyId} className="ns-row">
+                      <span className="ns-row-text">
+                        <span className="ns-row-title">{pr.displayName}</span>
+                        <span className="ns-row-desc">
+                          {pr.account ? `${pr.account} · ` : ''}
+                          {pr.propertyId}
+                        </span>
+                      </span>
+                      <button
+                        type="button"
+                        className="ns-integ-btn"
+                        disabled={busy === 'pick'}
+                        onClick={() => pickProperty(pr.propertyId)}
+                      >
+                        Use this
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {properties && properties.length === 0 && (
+                <p className="ns-row-desc" style={{ marginTop: '0.6rem' }}>
+                  This Google account can&rsquo;t read any GA4 property. Add it as a user in Google Analytics, or
+                  enter the id by hand below.
+                </p>
+              )}
+
+              {/* Manual entry stays as the escape hatch: listing properties
+                  needs the Analytics Admin API enabled, and someone who
+                  can't or won't enable it still needs a way in. */}
+              <label className="ns-integ-prop" style={{ marginTop: '0.6rem' }}>
                 <span className="ns-row-desc">
                   {analytics.resourceId
-                    ? `Analytics property: ${analytics.resourceId}`
-                    : 'Analytics needs a GA4 property id before it can read anything.'}
+                    ? `Current property: ${analytics.resourceId}`
+                    : 'No property selected — Analytics can\u2019t read anything yet.'}
                 </span>
                 <span className="ns-integ-prop-row">
                   <input
                     className="ns-onboard-input"
                     inputMode="numeric"
-                    placeholder="e.g. 123456789"
+                    placeholder="or type the id, e.g. 123456789"
                     value={propertyInput}
                     onChange={(e) => setPropertyInput(e.target.value)}
                     onKeyDown={(e) => {
@@ -258,7 +332,7 @@ export default function IntegrationsPanel({
                     }}
                   />
                   <button type="button" className="ns-integ-btn" disabled={busy === 'property'} onClick={saveProperty}>
-                    {busy === 'property' ? 'Saving…' : analytics.resourceId ? 'Change' : 'Use this'}
+                    {busy === 'property' ? 'Saving…' : 'Set'}
                   </button>
                 </span>
               </label>

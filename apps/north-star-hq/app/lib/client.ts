@@ -339,6 +339,10 @@ export const api = {
   // Verified Search Console properties for the connected account — used to pick
   // the resourceId override without guessing (a Domain-property guess 403s an
   // account that only has access to the URL-prefix property).
+  listGoogleAnalyticsProperties: (projectId: string) =>
+    req<{ properties: { propertyId: string; displayName: string; account: string }[]; error?: string }>(
+      `/api/projects/${projectId}/integrations/google/properties`
+    ),
   listGoogleSearchConsoleSites: (projectId: string) =>
     req<{ sites: { siteUrl: string; permissionLevel: string }[]; error?: string }>(
       `/api/projects/${projectId}/integrations/google/sites`

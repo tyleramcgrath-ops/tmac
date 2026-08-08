@@ -20,7 +20,7 @@ import { NullSearchConsoleProvider } from './providers/search-console'
 import { NullAnalyticsProvider } from './providers/analytics'
 import { NullTrendProvider } from './providers/trends'
 import { NullBacklinkProvider } from './providers/backlinks'
-import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry, type GscTrendPoint, type Ga4TrendPoint, type GscBreakdownRow, type Ga4ChannelRow } from './providers/google'
+import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, listAnalyticsProperties, type GscSiteEntry, type Ga4PropertyEntry, type GscTrendPoint, type Ga4TrendPoint, type GscBreakdownRow, type Ga4ChannelRow } from './providers/google'
 import type { FoundationStore } from '../store'
 import { googleOAuthConfig } from '../env'
 import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
@@ -121,6 +121,28 @@ export async function connectedProviderSet(
 // user guess the exact resourceId string that avoids a 403. Returns an error
 // reason when Search Console isn't connected or OAuth isn't configured — the
 // route turns that into a clear message rather than an empty-but-successful list.
+// Mirror of listGoogleSearchConsoleProperties for GA4. Same contract: a
+// readable reason on failure, never an empty list standing in for an error.
+export async function listGoogleAnalyticsProperties(
+  store: FoundationStore,
+  projectId: string,
+  nowMs: number
+): Promise<{ ok: true; properties: Ga4PropertyEntry[] } | { ok: false; reason: string }> {
+  const config = googleOAuthConfig()
+  if (!config) return { ok: false, reason: 'Google OAuth is not configured on this deployment.' }
+  const ga = await store.getProviderConnection(projectId, 'analytics')
+  if (!ga || ga.status !== 'connected') return { ok: false, reason: 'Analytics is not connected for this project.' }
+  let bundle: GoogleTokenBundle
+  try {
+    bundle = decodeTokenBundle(ga.credentialEnc)
+  } catch {
+    return { ok: false, reason: 'Stored Google credential could not be read — reconnect Google.' }
+  }
+  const outcome = await listAnalyticsProperties(googleDeps(store, projectId, 'analytics', bundle, config, nowMs))
+  if (!outcome.ok) return { ok: false, reason: outcome.detail }
+  return { ok: true, properties: outcome.data }
+}
+
 export async function listGoogleSearchConsoleProperties(
   store: FoundationStore,
   projectId: string,
