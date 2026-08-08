@@ -97,6 +97,12 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
   // any in-flight neural request or pending fallback holding an older token
   // has been superseded and must stay silent.
   const speakTokenRef = useRef(0)
+  // Has neural speech ever actually played in this session? Once it has, a
+  // later neural failure must NOT fall back to the browser synth. Falling back
+  // mid-conversation swaps the voice's gender and accent between sentences,
+  // and any bug that lets both paths run at once is heard as two people
+  // talking over each other. Silence for one line beats that.
+  const neuralWorkedRef = useRef(false)
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
   const [voiceName, setVoiceNameState] = useState('')
@@ -219,7 +225,10 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
           if (audioRef.current === el) audioRef.current = null
           resolve(ok)
         }
-        el.onplay = () => setSpeaking(true)
+        el.onplay = () => {
+          neuralWorkedRef.current = true
+          setSpeaking(true)
+        }
         el.onended = () => done(true)
         // Superseded by a newer line — report success so the caller does not
         // "recover" by reading this stale text in the robot voice.
@@ -273,11 +282,17 @@ export function VoiceProvider({ children }: { children: React.ReactNode }) {
       } catch {}
 
       void speakNeural(text, token).then((ok) => {
+        if (ok) return
         // Re-check enabled: the neural round trip takes a moment, and the user
         // may have muted the room while it was in flight. Re-check the token
         // too: a newer line has already claimed the voice, and falling back
         // here would speak over it.
-        if (!ok && enabledRef.current && speakTokenRef.current === token) speakBrowser(text)
+        if (!enabledRef.current || speakTokenRef.current !== token) return
+        // The browser synth is a cold-start fallback only — for a room where
+        // neural speech never worked at all. Once it has worked, this line
+        // stays silent rather than answering in a different person's voice.
+        if (neuralWorkedRef.current) return
+        speakBrowser(text)
       })
     },
     [speakNeural, speakBrowser],
