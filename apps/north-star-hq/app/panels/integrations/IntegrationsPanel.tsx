@@ -113,8 +113,9 @@ export default function IntegrationsPanel({
   // GA4 has no equivalent of Search Console's site list here: listing
   // properties needs the Analytics Admin API enabled as a third Google API,
   // which is more setup than typing one number. The property id is on the GA4
-  // Admin screen under Property Settings; the API wants it as
-  // `properties/<id>`, so the bare number is accepted and prefixed here.
+  // Admin screen under Property Settings. Stored as bare digits — the GA4
+  // endpoint already carries the `/properties` segment, so storing the
+  // prefixed form produced `/properties/properties%2F<id>` and a 400.
   async function saveProperty() {
     if (!projectId) return
     const raw = propertyInput.trim().replace(/^properties\//, '')
@@ -125,7 +126,7 @@ export default function IntegrationsPanel({
     setBusy('property')
     setError('')
     try {
-      await api.setIntegrationResource(projectId, 'analytics', `properties/${raw}`)
+      await api.setIntegrationResource(projectId, 'analytics', raw)
       await load()
       setPropertyInput('')
     } catch (err) {

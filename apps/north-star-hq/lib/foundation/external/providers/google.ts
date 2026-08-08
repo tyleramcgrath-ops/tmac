@@ -280,6 +280,15 @@ export interface Ga4ChannelRow { channel: string; sessions: number; engagedSessi
 export class GoogleAnalyticsProvider implements AnalyticsProvider {
   readonly kind = 'analytics' as const
   constructor(readonly id: string, private readonly deps: GoogleProviderDeps, private readonly propertyId: string | null) {}
+
+  // GA4_ENDPOINT already ends in `/properties`, so this contributes ONLY the
+  // numeric id. A stored `properties/123` would otherwise be appended whole —
+  // and encodeURIComponent escapes its slash to %2F, which Google rejects with
+  // "Invalid property ID: properties%2F...". Both forms are accepted because
+  // the id is entered by hand.
+  private resourcePath(): string {
+    return encodeURIComponent((this.propertyId ?? '').replace(/^properties\//, '').trim())
+  }
   status(): ProviderStatus {
     if (!this.propertyId) {
       return { id: this.id, kind: 'analytics', state: 'error', detail: 'Connected, but no GA4 property selected yet.', lastCheckedAt: new Date(this.deps.nowMs).toISOString() }
@@ -292,7 +301,7 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
-      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const url = `${GA4_ENDPOINT}/${this.resourcePath()}:runReport`
       // GA4 renamed "conversions" to "key events" in 2024, and its Data API now
       // treats the two metric names as aliases of the same underlying field —
       // requesting both in one report is rejected as "duplicate metrics". Ask
@@ -333,7 +342,7 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
-      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const url = `${GA4_ENDPOINT}/${this.resourcePath()}:runReport`
       const json = (await postJson(url, token, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'date' }],
@@ -364,7 +373,7 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
-      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const url = `${GA4_ENDPOINT}/${this.resourcePath()}:runReport`
       const json = (await postJson(url, token, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'sessionDefaultChannelGroup' }],
