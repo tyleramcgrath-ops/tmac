@@ -108,6 +108,7 @@ export default function PanelHost({
           projectsResolved={projectsResolved}
           panelsUp={panelsUp}
           onAgentSignal={onAgentSignal}
+          domain={project?.domain ?? null}
         />
         <MorningBriefCard projectId={projectId} projectsResolved={projectsResolved} onCompassState={onCompassState} />
       </div>

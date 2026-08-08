@@ -1019,3 +1019,12 @@ html[data-dev] .ns-dev { display: flex; }
 /* ---- Spoken briefing control ---- */
 .ns-brief-audio { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
 .ns-brief-audio-note { font-size: clamp(0.54rem,0.7vw,0.6rem); color: rgba(226,214,188,0.45); }
+
+/* ---- Run a scan -----------------------------------------------------------
+   The roster's one write action. Progress text is a real page count from the
+   crawler, never an animated percentage — so it can stall visibly on a slow
+   site rather than lie about being 60% done. */
+.ns-runscan { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+.ns-runscan-note { font-size: clamp(0.54rem,0.7vw,0.6rem); color: rgba(226,214,188,0.5); font-variant-numeric: tabular-nums; }
+.ns-runscan-note[data-phase='error'] { color: #e08a7a; }
+.ns-runscan-note[data-phase='done'] { color: #9ed6a0; }
