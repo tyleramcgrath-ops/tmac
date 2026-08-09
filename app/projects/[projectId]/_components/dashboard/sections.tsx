@@ -14,6 +14,7 @@ import {
   type Analytics, type PageResult, type PageSpeed, type Severity, type Dup,
   pathOf, scoreColor, gradeInfo,
 } from './analytics'
+import { KeywordIntelligence } from './keywords'
 import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
 import { BulkFixBar } from '../BulkFixBar'
 import {
@@ -355,6 +356,9 @@ export function Schema({ a, pages, projectId }: { a: Analytics; pages: PageResul
 interface RankResp { available: boolean; note?: string; rows?: { keyword: string; position: number | null; url: string | null }[]; summary?: { tracked: number; top3: number; top10: number; avg: number | null } }
 export function Rankings({ domain, projectId }: { domain: string; projectId: string }) {
   const [kw, setKw] = useState(''); const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle'); const [resp, setResp] = useState<RankResp | null>(null); const [error, setError] = useState<string | null>(null)
+  // Bumped whenever the keyword table adds a tracked keyword, so the rank
+  // tracking panel below re-reads instead of showing a stale list.
+  const [trackedRev, setTrackedRev] = useState(0)
   const track = async () => {
     const keywords = kw.split('\n').map((k) => k.trim()).filter(Boolean)
     if (!domain.trim()) { setError('This project has no domain set.'); setStatus('error'); return }
@@ -363,14 +367,19 @@ export function Rankings({ domain, projectId }: { domain: string; projectId: str
     try { const res = await fetch('/api/rankings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain, keywords }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Failed.'); setStatus('error'); return } setResp(json); setStatus('done') } catch { setError('Network error.'); setStatus('error') }
   }
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      {/* Everything Google already knows about this site's keywords, first —
+          it is real observed data over 28 days. The manual SERP check below is
+          a point-in-time spot check, useful but far narrower. */}
+      <KeywordIntelligence projectId={projectId} onTrack={() => setTrackedRev((n) => n + 1)} />
+
       <div className="rf-card p-4"><p className="text-sm font-semibold text-white">Check keyword rankings now</p><p className="mt-1 text-xs text-[var(--rf-muted)]">One keyword per line. Live Google positions for <span className="text-white">{domain || 'your domain'}</span>.</p><textarea value={kw} onChange={(e) => setKw(e.target.value)} rows={4} placeholder={'best crm software\nai crm tools'} className="rf-card mt-3 w-full resize-y bg-transparent p-3 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /><button onClick={track} disabled={status === 'loading'} className="rf-btn-primary mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">{status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Checking…</> : 'Check positions'}</button>{error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}</div>
       {status === 'done' && resp && !resp.available && <ConnectNote title="Live rank tracking needs a SERP API key" note={resp.note} envVar="SERPAPI_KEY" />}
       {status === 'done' && resp?.available && resp.rows && <>
         <div className="grid grid-cols-3 gap-3"><Stat label="Tracked" numeric={resp.summary?.tracked ?? 0} /><Stat label="Top 10" numeric={resp.summary?.top10 ?? 0} tone={TONE.info} /><Stat label="Avg. position" value={resp.summary?.avg != null ? String(resp.summary.avg) : '—'} tone="text-[var(--rf-green)]" /></div>
         <div className="rf-card overflow-hidden"><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Keyword</th><th className="px-4 py-2 font-medium">Position</th><th className="px-4 py-2 font-medium">URL</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{resp.rows.map((r) => <tr key={r.keyword} className="hover:bg-white/[0.02]"><td className="px-4 py-2.5 text-[var(--rf-text)]">{r.keyword}</td><td className="px-4 py-2.5 rf-mono font-semibold text-white">{r.position != null ? `#${r.position}` : <span className="text-[var(--rf-faint)]">—</span>}</td><td className="max-w-[240px] truncate px-4 py-2.5">{r.url ? <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-muted)] hover:text-white">{pathOf(r.url)}</a> : <span className="text-[var(--rf-faint)]">—</span>}</td></tr>)}</tbody></table></div></div>
       </>}
-      <RankingHistory projectId={projectId} />
+      <RankingHistory projectId={projectId} refreshKey={trackedRev} />
       <CompetitorRankComparison projectId={projectId} />
     </div>
   )
@@ -400,7 +409,7 @@ function Sparkline({ points }: { points: (number | null)[] }) {
   )
 }
 
-function RankingHistory({ projectId }: { projectId: string }) {
+function RankingHistory({ projectId, refreshKey = 0 }: { projectId: string; refreshKey?: number }) {
   const [keywords, setKeywords] = useState<TrackedKeywordDTO[] | null>(null)
   const [snapshots, setSnapshots] = useState<RankSnapshotDTO[]>([])
   const [newKeyword, setNewKeyword] = useState('')
@@ -416,7 +425,8 @@ function RankingHistory({ projectId }: { projectId: string }) {
       setError(e instanceof ApiError ? e.message : 'Could not load rank history.')
     }
   }, [projectId])
-  useEffect(() => { void load() }, [load])
+  // refreshKey changes when the keyword table above tracks something new.
+  useEffect(() => { void load() }, [load, refreshKey])
 
   async function add() {
     const keyword = newKeyword.trim()

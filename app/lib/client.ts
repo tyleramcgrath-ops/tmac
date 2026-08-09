@@ -550,6 +550,11 @@ export const api = {
   compareCompetitorRankings: (projectId: string) =>
     req<CompetitorRankComparisonDTO>(`/api/projects/${projectId}/rankings/competitors`),
 
+  // Every keyword Search Console has for this site, rolled up and analysed —
+  // the Rankings tab's decision surface.
+  keywordIntelligence: (projectId: string) =>
+    req<KeywordIntelligenceDTO>(`/api/projects/${projectId}/rankings/search-console`),
+
   // ── AI citation tracking ──
   listTrackedAiQueries: (projectId: string) =>
     req<{ queries: TrackedAiQueryDTO[] }>(`/api/projects/${projectId}/citations/queries`),
@@ -669,6 +674,47 @@ export interface CompetitorRankComparisonDTO {
   competitorsCompared?: number
   competitorsTotal?: number
   rows?: { keyword: string; us: number | null; competitors: { label: string; position: number | null }[] }[]
+}
+// The Search Console keyword corpus, rolled up per keyword and joined to GA4.
+// Mirrors KeywordIntelligence in lib/foundation/external/service.ts.
+export type PositionBandDTO = 'top3' | 'page1' | 'striking' | 'deep'
+export interface KeywordRowDTO {
+  query: string
+  clicks: number
+  impressions: number
+  ctr: number
+  position: number
+  bestPage: string
+  pageCount: number
+  band: PositionBandDTO
+  tracked: boolean
+  // The LANDING PAGE's outcome, not the keyword's — GA4 cannot attribute a
+  // session to a query, and this codebase does not pretend otherwise.
+  landing: { sessions: number; conversions: number; revenue: number | null } | null
+}
+export interface KeywordIntelligenceDTO {
+  range: { from: string; to: string } | null
+  unavailable: string | null
+  fetchedAt: string | null
+  summary: {
+    keywords: number
+    pages: number
+    clicks: number
+    impressions: number
+    ctr: number | null
+    avgPosition: number | null
+    bands: Record<PositionBandDTO, number>
+    clickConcentration: number | null
+  } | null
+  keywords: KeywordRowDTO[]
+  opportunities: { query: string; page: string; position: number; impressions: number; clicks: number; ctr: number }[]
+  cannibalization: { query: string; totalImpressions: number; pages: { page: string; impressions: number; clicks: number; position: number }[] }[]
+  lowCtr: { query: string; page: string; position: number; impressions: number; ctr: number; cohortMedianCtr: number }[]
+  devices: { key: string; clicks: number; impressions: number; ctr: number; position: number }[]
+  mobileGap: { mobilePosition: number; desktopPosition: number; gap: number } | null
+  countries: { key: string; clicks: number; impressions: number; ctr: number; position: number }[]
+  analyticsUnavailable: string | null
+  trackedKeywords: number
 }
 export interface TrackedAiQueryDTO {
   id: string

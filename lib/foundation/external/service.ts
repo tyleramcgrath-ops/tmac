@@ -21,6 +21,18 @@ import { NullAnalyticsProvider } from './providers/analytics'
 import { NullTrendProvider } from './providers/trends'
 import { NullBacklinkProvider } from './providers/backlinks'
 import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry, type GscTrendPoint, type Ga4TrendPoint, type GscBreakdownRow, type Ga4ChannelRow } from './providers/google'
+import {
+  rollUpKeywords,
+  summarizeKeywords,
+  attachLandingOutcomes,
+  type KeywordRollup,
+  type KeywordSummary,
+  type LandingPageOutcome,
+} from '../reco/keyword-intelligence'
+import { findKeywordOpportunities, type KeywordOpportunity } from '../reco/keyword-opportunities'
+import { findKeywordCannibalization, type CannibalizedQuery } from '../reco/keyword-cannibalization'
+import { findLowCtrOutliers, type CtrOutlier } from '../reco/ctr-outliers'
+import { detectMobileGap, type MobileGap } from '../reco/mobile-gap'
 import type { FoundationStore } from '../store'
 import { googleOAuthConfig } from '../env'
 import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
@@ -193,6 +205,93 @@ export async function fetchGoogleBreakdowns(
     gscDevice: deviceOutcome.ok ? { ok: true, rows: deviceOutcome.data } : { ok: false, reason: deviceOutcome.detail },
     gscCountry: countryOutcome.ok ? { ok: true, rows: countryOutcome.data } : { ok: false, reason: countryOutcome.detail },
     ga4Channel: channelOutcome.ok ? { ok: true, rows: channelOutcome.data } : { ok: false, reason: channelOutcome.detail },
+  }
+}
+
+// ── Keyword intelligence (Rankings tab) ──────────────────────────────────────
+// The whole Search Console keyword corpus, rolled up per keyword and run
+// through the analysis engines that already exist (opportunities /
+// cannibalization / low-CTR / mobile gap), plus the GA4 outcome for each
+// keyword's landing page. ONE call, so the Rankings tab is a decision surface
+// instead of six disconnected panels.
+//
+// Every section degrades on its own. Search Console disconnected → the whole
+// keyword view says so and the analyses come back empty (never invented);
+// Analytics disconnected → keywords still render, just without landing-page
+// outcomes. Neither failure hides the other's data.
+
+const KEYWORD_CORPUS_ROW_LIMIT = 5000
+
+export interface KeywordIntelligence {
+  range: { from: string; to: string } | null
+  /** Why the keyword corpus is missing, when it is. Null when GSC returned. */
+  unavailable: string | null
+  fetchedAt: string | null
+  summary: KeywordSummary | null
+  keywords: (KeywordRollup & { landing: LandingPageOutcome | null })[]
+  opportunities: KeywordOpportunity[]
+  cannibalization: CannibalizedQuery[]
+  lowCtr: CtrOutlier[]
+  devices: GscBreakdownRow[]
+  mobileGap: MobileGap | null
+  countries: GscBreakdownRow[]
+  /** Null when GA4 isn't connected — so the UI can say "connect Analytics to
+   *  see what these keywords actually earn" instead of showing empty columns. */
+  analyticsUnavailable: string | null
+  trackedKeywords: number
+}
+
+export async function assembleKeywordIntelligence(
+  store: FoundationStore,
+  projectId: string,
+  project: { domain: string },
+  nowMs: number
+): Promise<KeywordIntelligence> {
+  const { searchConsole, analytics } = await resolveGoogleProviders(store, projectId, project, nowMs)
+
+  const disconnectedGsc = { ok: false as const, reason: 'disconnected' as const, detail: 'Search Console is not connected for this project.' }
+  const disconnectedGa4 = { ok: false as const, reason: 'disconnected' as const, detail: 'Google Analytics is not connected for this project.' }
+
+  const [reportOutcome, deviceOutcome, countryOutcome, ga4Outcome, tracked] = await Promise.all([
+    searchConsole ? searchConsole.fetchReport(project.domain, { rowLimit: KEYWORD_CORPUS_ROW_LIMIT }) : Promise.resolve(disconnectedGsc),
+    searchConsole ? searchConsole.fetchBreakdown('device') : Promise.resolve(disconnectedGsc),
+    searchConsole ? searchConsole.fetchBreakdown('country') : Promise.resolve(disconnectedGsc),
+    analytics ? analytics.fetchReport('') : Promise.resolve(disconnectedGa4),
+    store.listTrackedKeywords(projectId),
+  ])
+
+  const empty: KeywordIntelligence = {
+    range: null,
+    unavailable: reportOutcome.ok ? null : reportOutcome.detail,
+    fetchedAt: reportOutcome.ok ? reportOutcome.fetchedAt : null,
+    summary: null,
+    keywords: [],
+    opportunities: [],
+    cannibalization: [],
+    lowCtr: [],
+    devices: deviceOutcome.ok ? deviceOutcome.data : [],
+    mobileGap: deviceOutcome.ok ? detectMobileGap(deviceOutcome.data) : null,
+    countries: countryOutcome.ok ? countryOutcome.data : [],
+    analyticsUnavailable: ga4Outcome.ok ? null : ga4Outcome.detail,
+    trackedKeywords: tracked.length,
+  }
+  if (!reportOutcome.ok) return empty
+
+  const rows = reportOutcome.data.rows
+  const rollups = rollUpKeywords(rows, tracked.map((k) => k.keyword))
+  const withLanding = attachLandingOutcomes(rollups, ga4Outcome.ok ? ga4Outcome.data.pages : [])
+
+  return {
+    ...empty,
+    range: reportOutcome.data.range,
+    summary: summarizeKeywords(rollups),
+    keywords: withLanding,
+    // The analyses below run on the RAW (query, page) rows, not the rollups —
+    // cannibalization and CTR outliers are page-level findings by definition,
+    // and collapsing pages first would destroy exactly the signal they look for.
+    opportunities: findKeywordOpportunities(rows, 25),
+    cannibalization: findKeywordCannibalization(rows, 25),
+    lowCtr: findLowCtrOutliers(rows, 25),
   }
 }
 
