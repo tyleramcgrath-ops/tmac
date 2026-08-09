@@ -133,6 +133,7 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
   let proxyWasConfigured = false
   let proxyWasUsed = false
   let proxyHttpStatus: number | undefined
+  let proxyErrorDetail: string | undefined
 
   while (
     frontier.length > 0 &&
@@ -152,10 +153,10 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
     const results = await Promise.all(
       slice.map(async (pageUrl) => {
         try {
-          const { html, finalUrl, status, via, proxyConfigured, proxyStatus } = await fetchHtml(pageUrl, PER_PAGE_TIMEOUT)
-          return { pageUrl, html, finalUrl, status, via, proxyConfigured, proxyStatus }
+          const { html, finalUrl, status, via, proxyConfigured, proxyStatus, proxyError } = await fetchHtml(pageUrl, PER_PAGE_TIMEOUT)
+          return { pageUrl, html, finalUrl, status, via, proxyConfigured, proxyStatus, proxyError }
         } catch {
-          return { pageUrl, html: '', finalUrl: pageUrl, status: 0, via: 'failed' as const, proxyConfigured: false, proxyStatus: undefined }
+          return { pageUrl, html: '', finalUrl: pageUrl, status: 0, via: 'failed' as const, proxyConfigured: false, proxyStatus: undefined, proxyError: undefined }
         }
       })
     )
@@ -176,6 +177,7 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
           proxyWasConfigured = r.proxyConfigured === true
           proxyWasUsed = r.via === 'proxy'
           proxyHttpStatus = r.proxyStatus
+          proxyErrorDetail = r.proxyError
         }
         continue
       }
@@ -251,8 +253,12 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
             ? proxyWasUsed
               ? 'The scraping proxy was used and its response was blocked too — the protection is beating the proxy. Try a proxy tier with JS rendering, or allow this crawler in the site\u2019s WAF.'
               : `A scraping proxy is configured but did not return a usable page${
-                  proxyHttpStatus !== undefined ? ` (it answered HTTP ${proxyHttpStatus})` : ' (it never answered)'
-                }. 401 means a bad key, 403 or 429 means quota, anything else means it relayed the block. Check the key, the remaining quota, and that the template still contains {{url}}.`
+                  proxyHttpStatus !== undefined
+                    ? ` (it answered HTTP ${proxyHttpStatus} — 401 is a bad key, 403 or 429 is quota, anything else means it relayed the block)`
+                    : proxyErrorDetail
+                      ? ` (${proxyErrorDetail})`
+                      : ' (it never answered)'
+                }. Check the key, the remaining quota, and that the template still contains {{url}}. A rendering proxy can need longer than the 45s default — raise it with SCRAPE_API_TIMEOUT_MS.`
             : 'Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another domain.')
         : 'Could not crawl that site. Check the domain and make sure it is publicly accessible.',
       blocked,

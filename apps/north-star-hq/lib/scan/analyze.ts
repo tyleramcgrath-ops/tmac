@@ -575,6 +575,11 @@ export interface FetchResult {
   // challenge page all look identical to the operator — the failure was
   // swallowed and the direct result kept.
   proxyStatus?: number
+  // Why the proxy never produced a status: 'timeout', or the transport error.
+  // A render-and-residential fetch legitimately takes 30-60s, so a timeout is
+  // the most likely proxy failure and the one with a completely different fix
+  // from a network error — they must not read the same.
+  proxyError?: string
 }
 
 export async function fetchHtml(
@@ -612,22 +617,33 @@ export async function fetchHtml(
   // small to analyze), also gets a real retry through the render proxy
   // instead of silently skipping the fallback the error message promises.
   let proxyStatus: number | undefined
+  let proxyError: string | undefined
   if (template && !assessPageValidity(result.html, result.status).ok) {
+    // Residential + JS-rendering proxy requests are slow by nature — 30-60s is
+    // normal, not pathological. The direct-fetch timeout is far too short for
+    // one, and using it made every rendered fetch look like a dead proxy.
+    // Bounded well under the crawl route's 60s maxDuration.
+    const proxyTimeout = Number(process.env.SCRAPE_API_TIMEOUT_MS) || 45_000
     try {
       const proxied = template.replace('{{url}}', encodeURIComponent(url))
-      const viaProxy = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, 25_000), maxBytes)
+      const viaProxy = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, proxyTimeout), maxBytes)
       proxyStatus = viaProxy.status
       if (assessPageValidity(viaProxy.html, viaProxy.status).ok) {
         // Keep the original target as finalUrl so link analysis stays correct.
         return { html: viaProxy.html, finalUrl: url, status: 200, via: 'proxy', proxyConfigured, proxyStatus }
       }
-    } catch {
-      /* keep the direct result, but proxyStatus stays undefined = never answered */
+    } catch (err) {
+      proxyError =
+        err instanceof Error && err.name === 'AbortError'
+          ? `timed out after ${Math.round(Math.max(timeoutMs, proxyTimeout) / 1000)}s`
+          : err instanceof Error
+            ? err.message.slice(0, 120)
+            : 'unknown transport error'
     }
   }
 
   if (!result.html || result.status >= 400) via = 'failed'
-  return { ...result, via, proxyConfigured, proxyStatus }
+  return { ...result, via, proxyConfigured, proxyStatus, proxyError }
 }
 
 async function fetchOnce(
