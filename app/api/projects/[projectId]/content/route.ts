@@ -14,6 +14,7 @@ import { audit, enforceRateLimit, handled, HttpError, requireProjectRole, requir
 import { getStore } from '@/lib/foundation/store'
 import { latestScanPages } from '@/lib/foundation/operator/context'
 import { buildContentPrompt, fetchSerpForKeyword, findContentGaps, markCompetitors, sanitizeContentHtml } from '@/lib/foundation/content/brief'
+import { assembleContentPlan } from '@/lib/foundation/content/plan'
 import { createWpDraftPost } from '@/lib/foundation/wp-execution'
 import type { ContentBrief } from '@/lib/foundation/types'
 
@@ -32,8 +33,15 @@ const draftSchema = z.object({
 export const GET = handled(async (request, { params }) => {
   const user = await requireUser(request)
   const { projectId } = await params
-  await requireProjectRole(user, projectId, 'member')
+  const { project } = await requireProjectRole(user, projectId, 'member')
   const store = await getStore()
+
+  // The content plan: what to write next, joined from Search Console demand,
+  // the latest crawl's word counts, and tracked competitors. Superset of the
+  // gaps view below, which stays for the existing caller.
+  if (new URL(request.url).searchParams.get('plan') === '1') {
+    return Response.json(await assembleContentPlan(store, projectId, project, Date.now()))
+  }
 
   // Content gaps: real competitor pages we have nothing comparable to, ranked
   // by topic distinctness. Pure token-overlap over already-crawled data — no

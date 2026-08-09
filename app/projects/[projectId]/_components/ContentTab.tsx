@@ -6,9 +6,10 @@
 // as a WordPress draft, which is itself verified by read-back.
 
 import { useCallback, useEffect, useState } from 'react'
-import { FileText, Lightbulb, Loader2, PenSquare, Rocket, Sparkles, Trash2, X } from 'lucide-react'
-import { api, ApiError, type ContentBriefDTO, type ContentGapDTO } from '../../../lib/client'
+import { FileText, Loader2, PenSquare, Rocket, Sparkles, Trash2, X } from 'lucide-react'
+import { api, ApiError, type ContentBriefDTO } from '../../../lib/client'
 import { EmptyState, Field, inputClass, Spinner } from '../../../lib/ui'
+import { ContentPlan } from './ContentPlan'
 
 function statusTone(status: ContentBriefDTO['status']): string {
   switch (status) {
@@ -23,10 +24,8 @@ function statusTone(status: ContentBriefDTO['status']): string {
 
 export function ContentTab({ projectId }: { projectId: string }) {
   const [briefs, setBriefs] = useState<ContentBriefDTO[] | null>(null)
-  const [gaps, setGaps] = useState<ContentGapDTO[] | null>(null)
   const [keyword, setKeyword] = useState('')
   const [busy, setBusy] = useState(false)
-  const [draftingGap, setDraftingGap] = useState<string | null>(null)
   const [error, setError] = useState('')
   const [open, setOpen] = useState<ContentBriefDTO | null>(null)
 
@@ -42,9 +41,6 @@ export function ContentTab({ projectId }: { projectId: string }) {
   useEffect(() => {
     void load()
   }, [load])
-  useEffect(() => {
-    api.getContentGaps(projectId).then(({ gaps }) => setGaps(gaps)).catch(() => setGaps([]))
-  }, [projectId])
 
   async function generate(overrideKeyword?: string) {
     const kw = (overrideKeyword ?? keyword).trim()
@@ -60,14 +56,7 @@ export function ContentTab({ projectId }: { projectId: string }) {
       setError(err instanceof ApiError ? err.message : 'Content generation failed.')
     } finally {
       setBusy(false)
-      setDraftingGap(null)
     }
-  }
-
-  async function draftGap(gap: ContentGapDTO) {
-    setDraftingGap(gap.url)
-    await generate(gap.title)
-    setGaps((g) => (g ?? []).filter((x) => x.url !== gap.url))
   }
 
   async function discard(id: string) {
@@ -81,6 +70,10 @@ export function ContentTab({ projectId }: { projectId: string }) {
 
   return (
     <div className="space-y-5">
+      {/* The decision comes first. Choosing what to write is the hard part;
+          drafting it was never the bottleneck. */}
+      <ContentPlan projectId={projectId} busy={busy} onDraft={(topic) => generate(topic)} />
+
       <div className="rf-card rf-topline p-5">
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-[var(--rf-violet)]" />
@@ -113,33 +106,6 @@ export function ContentTab({ projectId }: { projectId: string }) {
         </div>
         {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
       </div>
-
-      {gaps && gaps.length > 0 && (
-        <div className="rf-card overflow-hidden">
-          <div className="flex items-center gap-2 border-b border-[var(--rf-card-line)] px-4 py-2.5">
-            <Lightbulb className="h-3.5 w-3.5 text-[var(--rf-amber)]" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Content gaps — topics your competitors cover that you don’t</span>
-          </div>
-          <div className="divide-y divide-[var(--rf-card-line)]">
-            {gaps.map((g) => (
-              <div key={g.url} className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm">
-                <div className="min-w-0">
-                  <p className="truncate text-white">{g.title}</p>
-                  <p className="mt-0.5 truncate text-[11px] text-[var(--rf-faint)]">from {g.competitorDomain}</p>
-                </div>
-                <button
-                  onClick={() => draftGap(g)}
-                  disabled={busy}
-                  className="rf-btn-ghost inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-medium disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {draftingGap === g.url ? <Loader2 className="h-3 w-3 animate-spin" /> : <PenSquare className="h-3 w-3" />}
-                  {draftingGap === g.url ? 'Drafting…' : 'Draft this'}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {briefs === null ? (
         <Spinner label="Loading content briefs…" />
