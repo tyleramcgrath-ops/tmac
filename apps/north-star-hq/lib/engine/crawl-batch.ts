@@ -126,6 +126,13 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
   const blocked: BlockedResult[] = []
   const queued = new Set<string>(frontier)
   let blockedHome = false
+  // Whether a scraping proxy was configured when the homepage was attempted.
+  // Without this the "blocked" message tells the operator to set
+  // SCRAPE_API_TEMPLATE even when they already have — which reads as the fix
+  // not working, when in fact the proxy ran and was blocked too.
+  let proxyWasConfigured = false
+  let proxyWasUsed = false
+  let proxyHttpStatus: number | undefined
 
   while (
     frontier.length > 0 &&
@@ -145,10 +152,10 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
     const results = await Promise.all(
       slice.map(async (pageUrl) => {
         try {
-          const { html, finalUrl, status } = await fetchHtml(pageUrl, PER_PAGE_TIMEOUT)
-          return { pageUrl, html, finalUrl, status }
+          const { html, finalUrl, status, via, proxyConfigured, proxyStatus } = await fetchHtml(pageUrl, PER_PAGE_TIMEOUT)
+          return { pageUrl, html, finalUrl, status, via, proxyConfigured, proxyStatus }
         } catch {
-          return { pageUrl, html: '', finalUrl: pageUrl, status: 0 }
+          return { pageUrl, html: '', finalUrl: pageUrl, status: 0, via: 'failed' as const, proxyConfigured: false, proxyStatus: undefined }
         }
       })
     )
@@ -164,7 +171,12 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
           reason: validity.reason ?? 'unknown',
           detail: validity.detail ?? '',
         })
-        if (r.pageUrl === stripHash(start)) blockedHome = true
+        if (r.pageUrl === stripHash(start)) {
+          blockedHome = true
+          proxyWasConfigured = r.proxyConfigured === true
+          proxyWasUsed = r.via === 'proxy'
+          proxyHttpStatus = r.proxyStatus
+        }
         continue
       }
 
@@ -233,7 +245,15 @@ export async function runCrawlBatch(input: CrawlBatchInput): Promise<CrawlBatchR
     const homeBlock = blocked.find((b) => b.url === stripHash(start))
     return {
       error: blockedHome
-        ? `This site could not be read: ${homeBlock?.detail ?? 'the homepage is blocked (403).'} No audit was generated — blocked pages are never scored. Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another domain.`
+        ? `This site could not be read: ${homeBlock?.detail ?? 'the homepage is blocked (403).'} ` +
+          'No audit was generated — blocked pages are never scored. ' +
+          (proxyWasConfigured
+            ? proxyWasUsed
+              ? 'The scraping proxy was used and its response was blocked too — the protection is beating the proxy. Try a proxy tier with JS rendering, or allow this crawler in the site\u2019s WAF.'
+              : `A scraping proxy is configured but did not return a usable page${
+                  proxyHttpStatus !== undefined ? ` (it answered HTTP ${proxyHttpStatus})` : ' (it never answered)'
+                }. 401 means a bad key, 403 or 429 means quota, anything else means it relayed the block. Check the key, the remaining quota, and that the template still contains {{url}}.`
+            : 'Set SCRAPE_API_TEMPLATE to enable the proxy fallback, or try another domain.')
         : 'Could not crawl that site. Check the domain and make sure it is publicly accessible.',
       blocked,
       status: 502,

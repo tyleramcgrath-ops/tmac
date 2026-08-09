@@ -570,6 +570,11 @@ export interface FetchResult {
   status: number
   via: FetchVia
   proxyConfigured: boolean
+  // The proxy's own HTTP status, when one was attempted. Without this a bad
+  // key (401), an exhausted quota (403/429) and a proxy that simply relayed a
+  // challenge page all look identical to the operator — the failure was
+  // swallowed and the direct result kept.
+  proxyStatus?: number
 }
 
 export async function fetchHtml(
@@ -606,21 +611,23 @@ export async function fetchHtml(
   // or a JS-rendered SPA's near-empty shell HTML (real content, just too
   // small to analyze), also gets a real retry through the render proxy
   // instead of silently skipping the fallback the error message promises.
+  let proxyStatus: number | undefined
   if (template && !assessPageValidity(result.html, result.status).ok) {
     try {
       const proxied = template.replace('{{url}}', encodeURIComponent(url))
       const viaProxy = await fetchOnce(proxied, BROWSER_UA, Math.max(timeoutMs, 25_000), maxBytes)
+      proxyStatus = viaProxy.status
       if (assessPageValidity(viaProxy.html, viaProxy.status).ok) {
         // Keep the original target as finalUrl so link analysis stays correct.
-        return { html: viaProxy.html, finalUrl: url, status: 200, via: 'proxy', proxyConfigured }
+        return { html: viaProxy.html, finalUrl: url, status: 200, via: 'proxy', proxyConfigured, proxyStatus }
       }
     } catch {
-      /* keep the direct result */
+      /* keep the direct result, but proxyStatus stays undefined = never answered */
     }
   }
 
   if (!result.html || result.status >= 400) via = 'failed'
-  return { ...result, via, proxyConfigured }
+  return { ...result, via, proxyConfigured, proxyStatus }
 }
 
 async function fetchOnce(
