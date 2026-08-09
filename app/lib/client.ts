@@ -586,6 +586,10 @@ export const api = {
     req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
   getContentGaps: (projectId: string) =>
     req<{ gaps: ContentGapDTO[] }>(`/api/projects/${projectId}/content?gaps=1`),
+  // What to write next, joined from Search Console demand + the latest crawl's
+  // word counts + tracked competitors.
+  getContentPlan: (projectId: string) =>
+    req<ContentPlanDTO>(`/api/projects/${projectId}/content?plan=1`),
   generateContentBrief: (projectId: string, keyword: string) =>
     req<{ brief: ContentBriefDTO }>(`/api/projects/${projectId}/content`, {
       method: 'POST',
@@ -601,6 +605,34 @@ export const api = {
 }
 
 // ── Content Studio DTOs ──────────────────────────────────────────────────────
+export type ContentActionDTO = 'consolidate' | 'expand' | 'answer' | 'create' | 'competitor-gap'
+export interface ContentOpportunityDTO {
+  id: string
+  action: ContentActionDTO
+  topic: string
+  reason: string
+  impressions: number
+  clicks: number
+  position: number | null
+  targetPage: string | null
+  targetWordCount: number | null
+  pagesInvolved: string[]
+  // Ordering only — deliberately NOT a traffic projection.
+  score: number
+}
+export interface ContentPlanDTO {
+  opportunities: ContentOpportunityDTO[]
+  summary: {
+    total: number
+    byAction: Record<ContentActionDTO, number>
+    addressableImpressions: number | null
+  }
+  searchConsoleUnavailable: string | null
+  hasCrawl: boolean
+  pagesCrawled: number
+  competitorsTracked: number
+  range: { from: string; to: string } | null
+}
 export interface ContentGapDTO {
   title: string
   url: string
