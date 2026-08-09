@@ -9,6 +9,8 @@ import ProjectSwitcher from './panels/ProjectSwitcher'
 import OnboardingWizard from './onboarding-wizard'
 import LiveMonitor from './live-monitor'
 import { VoiceProvider, useVoice } from './_lib/use-voice'
+import { MicProvider } from './_lib/use-mic'
+import { useCompassChat } from './_lib/use-compass-chat'
 
 /* =====================================================================
    NORTH STAR HEADQUARTERS
@@ -39,9 +41,11 @@ export default function NorthStar() {
   return (
     <AuthProvider>
       <VoiceProvider>
-        <DeskGate>
-          <DeskRoom />
-        </DeskGate>
+        <MicProvider>
+          <DeskGate>
+            <DeskRoom />
+          </DeskGate>
+        </MicProvider>
       </VoiceProvider>
     </AuthProvider>
   )
@@ -117,6 +121,29 @@ function DeskRoom() {
   }
 
   const C = (s: CompassState) => { setCompassState(s); api.current?.setState(s) }
+
+  // Ask the Compass anything. C goes straight in so the hook lights
+  // 'listening'/'thinking' on the same compass the room already drives; it
+  // deliberately leaves 'speaking' to the blocklisted effect further down.
+  const chat = useCompassChat(C)
+  // The global click listener is mounted once with [] deps, so it has to read
+  // the live chat through a ref rather than close over the first render's copy
+  // — the same discipline phaseRef/panelsUpRef already use here.
+  const chatRef = useRef(chat)
+  useEffect(() => { chatRef.current = chat })
+
+  // The dialogue overlay. history is capped at a dozen turns by the hook, so
+  // scanning it backwards each render is cheap and avoids duplicating state.
+  const heardLast = [...chat.history].reverse().find((m) => m.role === 'user')?.content ?? ''
+  const saidLast = [...chat.history].reverse().find((m) => m.role === 'assistant')?.content ?? ''
+  const dialogueStatus = chat.error
+    ? chat.error
+    : chat.busy
+      ? 'Thinking…'
+      : chat.listening
+        ? 'Listening…'
+        : ''
+  const dialogueShow = Boolean(dialogueStatus || heardLast || saidLast)
 
   const setTime = (t: TimeMode) => { setTimeMode(t); api.current?.setTime(t); persist(t) }
 
@@ -255,7 +282,12 @@ function DeskRoom() {
       if (phaseRef.current === 'asleep' && hasUserRef.current) { runWake(); return }
       if (phaseRef.current === 'waking') { skipWake(); return }
       if (e.target === hitRef.current) {
-        callPanels(!panelsUpRef.current); C('listening'); WT(1500, () => C('idle'))
+        callPanels(!panelsUpRef.current)
+        // Real listening when the mic is available and opted in; the old
+        // 1.5s cosmetic flash otherwise, so a browser without
+        // SpeechRecognition (Firefox, Safari) still answers the click.
+        if (chatRef.current.ready) chatRef.current.listen()
+        else { C('listening'); WT(1500, () => C('idle')) }
       }
     }
     document.addEventListener('click', onClick, true)
@@ -454,6 +486,29 @@ function DeskRoom() {
                 {voice.enabled ? 'Voice on' : 'Voice off'}
               </button>
             )}
+            {chat.supported && (
+              <button
+                type="button"
+                className="ns-voice"
+                aria-pressed={chat.enabled}
+                title={chat.enabled ? 'Click the compass to speak' : 'Enable the microphone'}
+                onClick={() => chat.setEnabled(!chat.enabled)}
+              >
+                {chat.enabled ? 'Ask on' : 'Ask off'}
+              </button>
+            )}
+            {voice.enabled && voice.voices.length > 0 && (
+              <select
+                className="ns-voicepick"
+                aria-label="Compass voice"
+                value={voice.voiceName}
+                onChange={(e) => voice.setVoiceName(e.target.value)}
+              >
+                {voice.voices.map((v) => (
+                  <option key={v.name} value={v.name}>{v.name}</option>
+                ))}
+              </select>
+            )}
           </div>
         </div>
 
@@ -465,6 +520,7 @@ function DeskRoom() {
           onCompassState={C}
           onAgentSignal={onAgentSignal}
           onSummon={onSummonFromChild}
+          onAsk={chat.ask}
           consoleInputRef={consoleInputRef}
         />
 
@@ -472,6 +528,14 @@ function DeskRoom() {
 
         <p className="ns-hint" data-hidden="" aria-hidden>Touch the compass</p>
         <p className={`ns-welcome${welcomeShow ? ' show' : ''}`} aria-hidden>{welcomeText}</p>
+
+        <div className={`ns-dialogue${dialogueShow ? ' show' : ''}`} aria-live="polite">
+          {dialogueStatus && (
+            <div className="ns-d-status" data-error={chat.error ? '1' : undefined}>{dialogueStatus}</div>
+          )}
+          {heardLast && <div className="ns-d-you">&ldquo;{heardLast}&rdquo;</div>}
+          {saidLast && <div className="ns-d-said">{saidLast}</div>}
+        </div>
 
         <nav className="ns-principles" aria-label="The three principles">
           <button type="button" onClick={() => onPrinciple('heart')}>The core is the <b>heart</b>.</button>

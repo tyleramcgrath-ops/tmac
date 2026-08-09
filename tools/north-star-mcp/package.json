@@ -1,0 +1,12 @@
+{
+  "name": "north-star-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Exposes North Star's read API to a Hermes agent over MCP",
+  "bin": { "north-star-mcp": "server.mjs" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.4.3"
+  }
+}

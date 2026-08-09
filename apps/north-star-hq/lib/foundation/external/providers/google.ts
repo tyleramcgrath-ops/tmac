@@ -26,6 +26,8 @@ import {
 } from '../../oauth/google'
 
 const GSC_ENDPOINT = 'https://searchconsole.googleapis.com/webmasters/v3/sites'
+// Admin API, not the Data API — listing properties is an admin read.
+const GA4_ADMIN_ENDPOINT = 'https://analyticsadmin.googleapis.com/v1beta/accountSummaries'
 const GA4_ENDPOINT = 'https://analyticsdata.googleapis.com/v1beta/properties'
 
 export interface GoogleProviderDeps {
@@ -147,6 +149,42 @@ export async function listSearchConsoleSites(deps: GoogleProviderDeps): Promise<
       source: 'gsc',
       fetchedAt: new Date(deps.nowMs).toISOString(),
     }
+  } catch (err) {
+    return failureFrom(err)
+  }
+}
+
+// List every GA4 property this OAuth account can actually read. Without this
+// the property id has to be typed from the GA4 admin screen, and pasting one
+// the connected account cannot access fails at query time with "does not have
+// access to this property" — a mistake a picker makes impossible, because a
+// property only appears here if the account can see it.
+//
+// Requires the Google Analytics Admin API to be enabled on the Cloud project.
+// The analytics.readonly scope already covers it; no reconsent is needed.
+export interface Ga4PropertyEntry { propertyId: string; displayName: string; account: string }
+interface Ga4AccountSummaries {
+  accountSummaries?: {
+    displayName?: string
+    propertySummaries?: { property?: string; displayName?: string }[]
+  }[]
+}
+
+export async function listAnalyticsProperties(deps: GoogleProviderDeps): Promise<ProviderOutcome<Ga4PropertyEntry[]>> {
+  try {
+    const token = await freshToken(deps)
+    const json = (await getJson(`${GA4_ADMIN_ENDPOINT}?pageSize=200`, token, deps.fetchImpl)) as Ga4AccountSummaries
+    const out: Ga4PropertyEntry[] = []
+    for (const acct of json.accountSummaries ?? []) {
+      for (const prop of acct.propertySummaries ?? []) {
+        // `property` comes back as "properties/123456789"; the rest of the app
+        // stores and sends the bare id.
+        const id = (prop.property ?? '').replace(/^properties\//, '').trim()
+        if (!id) continue
+        out.push({ propertyId: id, displayName: prop.displayName ?? id, account: acct.displayName ?? '' })
+      }
+    }
+    return { ok: true, data: out, grade: 'observed', source: 'ga4', fetchedAt: new Date(deps.nowMs).toISOString() }
   } catch (err) {
     return failureFrom(err)
   }
@@ -280,6 +318,15 @@ export interface Ga4ChannelRow { channel: string; sessions: number; engagedSessi
 export class GoogleAnalyticsProvider implements AnalyticsProvider {
   readonly kind = 'analytics' as const
   constructor(readonly id: string, private readonly deps: GoogleProviderDeps, private readonly propertyId: string | null) {}
+
+  // GA4_ENDPOINT already ends in `/properties`, so this contributes ONLY the
+  // numeric id. A stored `properties/123` would otherwise be appended whole —
+  // and encodeURIComponent escapes its slash to %2F, which Google rejects with
+  // "Invalid property ID: properties%2F...". Both forms are accepted because
+  // the id is entered by hand.
+  private resourcePath(): string {
+    return encodeURIComponent((this.propertyId ?? '').replace(/^properties\//, '').trim())
+  }
   status(): ProviderStatus {
     if (!this.propertyId) {
       return { id: this.id, kind: 'analytics', state: 'error', detail: 'Connected, but no GA4 property selected yet.', lastCheckedAt: new Date(this.deps.nowMs).toISOString() }
@@ -292,7 +339,7 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
-      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const url = `${GA4_ENDPOINT}/${this.resourcePath()}:runReport`
       // GA4 renamed "conversions" to "key events" in 2024, and its Data API now
       // treats the two metric names as aliases of the same underlying field —
       // requesting both in one report is rejected as "duplicate metrics". Ask
@@ -333,7 +380,7 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
-      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const url = `${GA4_ENDPOINT}/${this.resourcePath()}:runReport`
       const json = (await postJson(url, token, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'date' }],
@@ -364,7 +411,7 @@ export class GoogleAnalyticsProvider implements AnalyticsProvider {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
-      const url = `${GA4_ENDPOINT}/${encodeURIComponent(this.propertyId)}:runReport`
+      const url = `${GA4_ENDPOINT}/${this.resourcePath()}:runReport`
       const json = (await postJson(url, token, {
         dateRanges: [{ startDate: from, endDate: to }],
         dimensions: [{ name: 'sessionDefaultChannelGroup' }],

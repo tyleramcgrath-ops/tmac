@@ -8,7 +8,7 @@
 // the real request is in flight; it never fabricates progress.
 
 import { useEffect, useState } from 'react'
-import { api, ApiError, type ExecutiveBriefDTO, type GoogleTrendsDTO } from '../../lib/client'
+import { api, ApiError, type ExecutiveBriefDTO, type GoogleTrendsDTO, type SpokenBriefDTO } from '../../lib/client'
 import type { CompassState } from '../../compass'
 import { useVoice } from '../../_lib/use-voice'
 
@@ -47,7 +47,27 @@ export default function BriefingPanel({
   const [trends, setTrends] = useState<GoogleTrendsDTO | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [spoken, setSpoken] = useState<SpokenBriefDTO | null>(null)
+  const [fetchingAudio, setFetchingAudio] = useState(false)
   const voice = useVoice()
+
+  // The full briefing, read aloud. Distinct from the one-line summary the
+  // panel speaks on load: this is every section, rewritten for the ear by the
+  // server (URLs become phrases, "+12%" becomes "up 12 percent"). Fetched on
+  // demand rather than with the brief, because most visits never press it.
+  async function listen() {
+    if (!projectId || fetchingAudio) return
+    setFetchingAudio(true)
+    try {
+      const { spoken: s } = await api.getSpokenBrief(projectId)
+      setSpoken(s)
+      voice.speak(s.script)
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : 'Could not build the spoken briefing.')
+    } finally {
+      setFetchingAudio(false)
+    }
+  }
 
   useEffect(() => {
     if (!projectId) {
@@ -186,6 +206,20 @@ export default function BriefingPanel({
       <p className="ns-panel-body">
         {brief.recommendation ? brief.recommendation.text : 'No strong signal yet — not enough evidence for a confident recommendation.'}
       </p>
+
+      <div className="ns-brief-audio">
+        <button type="button" className="ns-console-btn" onClick={listen} disabled={fetchingAudio || !voice.enabled}>
+          {fetchingAudio ? 'Preparing…' : voice.speaking ? 'Reading…' : 'Read the full briefing'}
+        </button>
+        {!voice.enabled && <span className="ns-brief-audio-note">Turn voice on to hear it.</span>}
+        {/* A listener can't see that items were cut, so the count is shown to
+            anyone watching the screen too — the script says it aloud as well. */}
+        {spoken?.truncated && (
+          <span className="ns-brief-audio-note">
+            {spoken.omittedItems} item{spoken.omittedItems === 1 ? '' : 's'} did not fit and were not read.
+          </span>
+        )}
+      </div>
     </>
   )
 }
