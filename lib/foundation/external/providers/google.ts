@@ -168,13 +168,19 @@ export class GoogleSearchConsoleProvider implements SearchConsoleProvider {
   status(): ProviderStatus {
     return statusFor(this.id, 'search-console', { connected: true, credential: 'oauth' }, new Date(this.deps.nowMs).toISOString())
   }
-  async fetchReport(_domain: string): Promise<ProviderOutcome<GscReport>> {
+  // `rowLimit` defaults to the 100 rows the Atlas snapshot needs. The Rankings
+  // keyword view asks for far more, because a rolled-up per-keyword table and a
+  // striking-distance list are only as complete as the corpus behind them —
+  // 100 (query, page) pairs can collapse to a couple of dozen keywords. GSC
+  // caps a single request at 25,000 rows.
+  async fetchReport(_domain: string, opts?: { rowLimit?: number }): Promise<ProviderOutcome<GscReport>> {
     try {
       const token = await freshToken(this.deps)
       const from = ymd(this.deps.nowMs - 28 * 24 * 3600 * 1000)
       const to = ymd(this.deps.nowMs)
       const url = `${GSC_ENDPOINT}/${encodeURIComponent(this.site)}/searchAnalytics/query`
-      const json = (await postJson(url, token, { startDate: from, endDate: to, dimensions: ['query', 'page'], rowLimit: 100 }, this.deps.fetchImpl)) as GscApiResponse
+      const rowLimit = Math.min(Math.max(1, Math.floor(opts?.rowLimit ?? 100)), 25000)
+      const json = (await postJson(url, token, { startDate: from, endDate: to, dimensions: ['query', 'page'], rowLimit }, this.deps.fetchImpl)) as GscApiResponse
       const rows: GscRow[] = (json.rows ?? []).map((r) => ({
         query: r.keys[0] ?? '',
         page: r.keys[1] ?? '',
