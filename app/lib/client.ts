@@ -581,6 +581,11 @@ export const api = {
   checkBacklinksNow: (projectId: string) =>
     req<{ snapshot: BacklinkSnapshotDTO }>(`/api/projects/${projectId}/backlinks`, { method: 'POST' }),
 
+  // Which earning pages are starved of internal links, and what should link
+  // to them — the crawl's link graph joined to Search Console performance.
+  getLinkEquity: (projectId: string) =>
+    req<LinkEquityPlanDTO>(`/api/projects/${projectId}/internal-links`),
+
   // ── Content Studio ──
   listContentBriefs: (projectId: string) =>
     req<{ briefs: ContentBriefDTO[] }>(`/api/projects/${projectId}/content`),
@@ -605,6 +610,28 @@ export const api = {
 }
 
 // ── Content Studio DTOs ──────────────────────────────────────────────────────
+export interface LinkEquityRowDTO {
+  url: string
+  title: string | null
+  clicks: number
+  impressions: number
+  position: number
+  queries: number
+  topQuery: string
+  inboundLinks: number
+  demandRank: number
+  linkRank: number
+  gap: number
+  suggestions: { from: string; fromTitle: string; anchor: string }[]
+}
+export interface LinkEquityPlanDTO {
+  rows: LinkEquityRowDTO[]
+  searchConsoleUnavailable: string | null
+  hasCrawl: boolean
+  pagesCrawled: number
+  uncrawledEarners: { page: string; impressions: number }[]
+  range: { from: string; to: string } | null
+}
 export type ContentActionDTO = 'consolidate' | 'expand' | 'answer' | 'create' | 'competitor-gap'
 export interface ContentOpportunityDTO {
   id: string

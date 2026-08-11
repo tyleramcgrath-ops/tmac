@@ -3,6 +3,7 @@ import {
   bandOf,
   rollUpKeywords,
   summarizeKeywords,
+  rollUpPages,
   pathKey,
   attachLandingOutcomes,
   type GscKeywordRow,
@@ -224,5 +225,56 @@ describe('attachLandingOutcomes', () => {
   it('leaves every keyword null when GA4 is not connected (empty page list)', () => {
     const rollups = rollUpKeywords([row({ query: 'k', page: 'https://example.com/x', impressions: 10 })])
     expect(attachLandingOutcomes(rollups, []).every((r) => r.landing === null)).toBe(true)
+  })
+})
+
+describe('rollUpPages', () => {
+  it('rolls the same corpus up by page instead of by keyword', () => {
+    const out = rollUpPages([
+      row({ query: 'a', page: '/x', clicks: 5, impressions: 100 }),
+      row({ query: 'b', page: '/x', clicks: 1, impressions: 50 }),
+      row({ query: 'c', page: '/y', clicks: 2, impressions: 30 }),
+    ])
+    expect(out).toHaveLength(2)
+    const x = out.find((p) => p.page === '/x')!
+    expect(x.clicks).toBe(6)
+    expect(x.impressions).toBe(150)
+    expect(x.queries).toBe(2)
+  })
+
+  it('names the query that puts the page in front of the most people', () => {
+    const [p] = rollUpPages([
+      row({ query: 'rare', page: '/x', impressions: 10 }),
+      row({ query: 'the big one', page: '/x', impressions: 5000 }),
+    ])
+    expect(p.topQuery).toBe('the big one')
+  })
+
+  it('weights page position by impressions', () => {
+    const [p] = rollUpPages([
+      row({ page: '/x', query: 'a', impressions: 5000, position: 3 }),
+      row({ page: '/x', query: 'b', impressions: 5, position: 90 }),
+    ])
+    expect(p.position).toBeLessThan(5)
+  })
+
+  it('recomputes page CTR from totals rather than averaging rows', () => {
+    const [p] = rollUpPages([
+      row({ page: '/x', query: 'a', clicks: 1, impressions: 2, ctr: 0.5 }),
+      row({ page: '/x', query: 'b', clicks: 0, impressions: 9998, ctr: 0 }),
+    ])
+    expect(p.ctr).toBeCloseTo(1 / 10000, 8)
+  })
+
+  it('skips rows with no page rather than inventing an empty one', () => {
+    expect(rollUpPages([row({ page: '', query: 'a', impressions: 10 })])).toEqual([])
+  })
+
+  it('sorts by impressions', () => {
+    const out = rollUpPages([
+      row({ page: '/small', query: 'a', impressions: 10 }),
+      row({ page: '/big', query: 'b', impressions: 900 }),
+    ])
+    expect(out.map((p) => p.page)).toEqual(['/big', '/small'])
   })
 })
