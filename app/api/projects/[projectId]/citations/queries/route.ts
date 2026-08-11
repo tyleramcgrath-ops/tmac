@@ -42,7 +42,8 @@ export const POST = handled(async (request, { params }) => {
     const snapshot = {
       id: randomUUID(), projectId, query, engine: 'perplexity' as const,
       available: c.available, cited: c.cited, position: c.position, citedUrl: c.citedUrl,
-      sourceCount: c.sourceCount, message: c.message, checkedAt: new Date().toISOString(),
+      sourceCount: c.sourceCount, sources: c.sources, answer: c.answer,
+      message: c.message, checkedAt: new Date().toISOString(),
     }
     await store.recordAiCitationSnapshot(snapshot)
     return Response.json({ snapshot })

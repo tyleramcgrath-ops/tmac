@@ -49,6 +49,8 @@ export async function runAiCitationCheckJob(store: FoundationStore, job: Job): P
       position: c.position,
       citedUrl: c.citedUrl,
       sourceCount: c.sourceCount,
+      sources: c.sources,
+      answer: c.answer,
       message: c.message,
       checkedAt,
     })

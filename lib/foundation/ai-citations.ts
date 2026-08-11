@@ -4,13 +4,34 @@
 // Google AI Overviews) exposes a public API that returns its grounding
 // sources, so we don't fabricate a check for them.
 
+// One source the answer engine actually used, in the order it cited them.
+export interface CitedSource {
+  url: string
+  host: string
+  position: number
+}
+
 export interface CitationCheck {
   available: boolean
   cited: boolean
   position: number | null
   citedUrl: string | null
   sourceCount: number
+  // EVERY source behind the answer, not only ours. The API always returned
+  // these; until now the check threw away everyone else's and asked only "were
+  // we cited?". Keeping them is what makes "who won instead" answerable.
+  sources: CitedSource[]
+  // The answer text itself, so the UI can show what the engine actually said
+  // rather than only whether a link appeared in it. Truncated — this is
+  // evidence for a human to read, not a document to store.
+  answer: string
   message?: string
+}
+
+const MAX_ANSWER_CHARS = 1200
+
+function fail(message: string): CitationCheck {
+  return { available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, sources: [], answer: '', message }
 }
 
 export function perplexityApiKey(): string | null {
@@ -44,18 +65,22 @@ export async function checkCitation(query: string, brandDomain: string, apiKey: 
       signal: AbortSignal.timeout(30_000),
     })
   } catch (err) {
-    return { available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, message: `Could not reach Perplexity: ${err instanceof Error ? err.message : 'network error'}` }
+    return fail(`Could not reach Perplexity: ${err instanceof Error ? err.message : 'network error'}`)
   }
   if (!res.ok) {
-    return { available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, message: `Perplexity returned HTTP ${res.status}.` }
+    return fail(`Perplexity returned HTTP ${res.status}.`)
   }
-  let data: { citations?: string[]; search_results?: { url?: string }[] }
+  let data: {
+    citations?: string[]
+    search_results?: { url?: string }[]
+    choices?: { message?: { content?: string } }[]
+  }
   try {
     data = (await res.json()) as typeof data
   } catch {
     // A 200 carrying an HTML error page would otherwise throw out of here and
     // abort the whole scheduled citation run, not just this one query.
-    return { available: false, cited: false, position: null, citedUrl: null, sourceCount: 0, message: 'Perplexity returned a response that was not JSON.' }
+    return fail('Perplexity returned a response that was not JSON.')
   }
   // Newer responses carry BOTH keys, sometimes with an empty citations array
   // beside a populated search_results. Preferring whichever list actually has
@@ -72,5 +97,15 @@ export async function checkCitation(query: string, brandDomain: string, apiKey: 
       citedUrl = url
     }
   })
-  return { available: true, cited: position !== null, position, citedUrl, sourceCount: sources.length }
+  const cited: CitedSource[] = sources.map((url, i) => ({ url, host: hostOf(url), position: i + 1 }))
+  const answer = (data.choices?.[0]?.message?.content ?? '').slice(0, MAX_ANSWER_CHARS)
+  return {
+    available: true,
+    cited: position !== null,
+    position,
+    citedUrl,
+    sourceCount: sources.length,
+    sources: cited,
+    answer,
+  }
 }

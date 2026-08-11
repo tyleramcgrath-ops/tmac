@@ -289,6 +289,12 @@ export interface AiCitationSnapshot {
   position: number | null
   citedUrl: string | null
   sourceCount: number
+  // Every source behind the answer, in the order the engine cited them —
+  // including everyone else's. Optional because snapshots recorded before this
+  // existed have none, and an absent list must not read as "no sources".
+  sources?: { url: string; host: string; position: number }[]
+  // What the engine actually said. Optional for the same reason.
+  answer?: string
   message?: string
   checkedAt: string
 }
