@@ -555,6 +555,11 @@ export const api = {
   keywordIntelligence: (projectId: string) =>
     req<KeywordIntelligenceDTO>(`/api/projects/${projectId}/rankings/search-console`),
 
+  // Who answer engines actually cite for this project's prompts, and what to
+  // try next. Reads stored snapshots only — no live engine call.
+  getAiSearchPlan: (projectId: string) =>
+    req<AiSearchPlanDTO>(`/api/projects/${projectId}/citations/landscape`),
+
   // ── AI citation tracking ──
   listTrackedAiQueries: (projectId: string) =>
     req<{ queries: TrackedAiQueryDTO[] }>(`/api/projects/${projectId}/citations/queries`),
@@ -610,6 +615,55 @@ export const api = {
 }
 
 // ── Content Studio DTOs ──────────────────────────────────────────────────────
+// The AI search landscape — who answer engines cite, and what to try next.
+export interface CitedDomainDTO {
+  host: string
+  isUs: boolean
+  isCompetitor: boolean
+  timesCited: number
+  queries: string[]
+  bestPosition: number
+  avgPosition: number
+  shareOfVoice: number
+}
+export interface QueryComparisonDTO {
+  query: string
+  checkedAt: string
+  weAreCited: boolean
+  ourPosition: number | null
+  citedInstead: { host: string; url: string; position: number; isCompetitor: boolean }[]
+  answer: string
+  sourceCount: number
+}
+export interface PromptSuggestionDTO {
+  prompt: string
+  sourceQuery: string
+  impressions: number
+  position: number
+  shape: 'question' | 'comparison' | 'recommendation'
+  reason: string
+}
+export interface QueryGuidanceDTO {
+  query: string
+  weAreCited: boolean
+  observations: { label: string; detail: string }[]
+  ourPage: { url: string; title?: string; wordCount?: number; hasFaq?: boolean } | null
+}
+export interface AiSearchPlanDTO {
+  landscape: {
+    queriesTracked: number
+    queriesAnalysed: number
+    queriesWhereWeAppear: number
+    domains: CitedDomainDTO[]
+    comparisons: QueryComparisonDTO[]
+  }
+  guidance: QueryGuidanceDTO[]
+  prompts: PromptSuggestionDTO[]
+  competitorsTracked: number
+  promptsUnavailable: string | null
+  hasSourceData: boolean
+  hasCrawl: boolean
+}
 export interface LinkEquityRowDTO {
   url: string
   title: string | null

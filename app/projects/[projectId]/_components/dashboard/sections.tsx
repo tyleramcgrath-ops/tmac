@@ -16,6 +16,7 @@ import {
 } from './analytics'
 import { KeywordIntelligence } from './keywords'
 import { LinkEquity } from './link-equity'
+import { AiLandscape } from './ai-landscape'
 import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
 import { BulkFixBar } from '../BulkFixBar'
 import {
@@ -640,6 +641,9 @@ export function Backlinks({ projectId }: { projectId: string }) {
 
 export function AiCitations({ projectId }: { projectId: string }) {
   const [queries, setQueries] = useState<TrackedAiQueryDTO[] | null>(null)
+  // Bumped when the landscape's suggestion list tracks a new prompt, so the
+  // tracked-query list below re-reads instead of going stale.
+  const [promptRev, setPromptRev] = useState(0)
   const [snapshots, setSnapshots] = useState<AiCitationSnapshotDTO[]>([])
   const [newQuery, setNewQuery] = useState('')
   const [error, setError] = useState('')
@@ -654,7 +658,7 @@ export function AiCitations({ projectId }: { projectId: string }) {
       setError(e instanceof ApiError ? e.message : 'Could not load AI citation data.')
     }
   }, [projectId])
-  useEffect(() => { void load() }, [load])
+  useEffect(() => { void load() }, [load, promptRev])
 
   async function add() {
     const query = newQuery.trim()
@@ -681,6 +685,14 @@ export function AiCitations({ projectId }: { projectId: string }) {
 
   return (
     <div className="space-y-4">
+      <AiLandscape
+        projectId={projectId}
+        onTrackPrompt={async (prompt) => {
+          await api.addTrackedAiQuery(projectId, prompt)
+          setPromptRev((n) => n + 1)
+        }}
+      />
+
       <div className="rf-card p-4">
         <p className="text-sm font-semibold text-white">Track AI-answer citations</p>
         <p className="mt-1 text-xs text-[var(--rf-muted)]">Add a question people ask AI assistants. Each check asks Perplexity (the only AI engine with a public API that returns real sources) and records whether your domain was cited.</p>
