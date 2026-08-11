@@ -23,10 +23,12 @@ import { NullBacklinkProvider } from './providers/backlinks'
 import { GoogleSearchConsoleProvider, GoogleAnalyticsProvider, listSearchConsoleSites, type GscSiteEntry, type GscTrendPoint, type Ga4TrendPoint, type GscBreakdownRow, type Ga4ChannelRow } from './providers/google'
 import {
   rollUpKeywords,
+  rollUpPages,
   summarizeKeywords,
   attachLandingOutcomes,
   type KeywordRollup,
   type KeywordSummary,
+  type PageRollup,
   type LandingPageOutcome,
 } from '../reco/keyword-intelligence'
 import { findKeywordOpportunities, type KeywordOpportunity } from '../reco/keyword-opportunities'
@@ -229,6 +231,9 @@ export interface KeywordIntelligence {
   fetchedAt: string | null
   summary: KeywordSummary | null
   keywords: (KeywordRollup & { landing: LandingPageOutcome | null })[]
+  /** The same corpus rolled up by PAGE — which of the site's pages actually
+   *  earn anything. Drives internal-link equity and pruning decisions. */
+  pages: PageRollup[]
   opportunities: KeywordOpportunity[]
   cannibalization: CannibalizedQuery[]
   lowCtr: CtrOutlier[]
@@ -266,6 +271,7 @@ export async function assembleKeywordIntelligence(
     fetchedAt: reportOutcome.ok ? reportOutcome.fetchedAt : null,
     summary: null,
     keywords: [],
+    pages: [],
     opportunities: [],
     cannibalization: [],
     lowCtr: [],
@@ -286,6 +292,7 @@ export async function assembleKeywordIntelligence(
     range: reportOutcome.data.range,
     summary: summarizeKeywords(rollups),
     keywords: withLanding,
+    pages: rollUpPages(rows),
     // The analyses below run on the RAW (query, page) rows, not the rollups —
     // cannibalization and CTR outliers are page-level findings by definition,
     // and collapsing pages first would destroy exactly the signal they look for.

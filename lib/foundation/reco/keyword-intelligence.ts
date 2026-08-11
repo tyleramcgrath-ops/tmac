@@ -129,6 +129,54 @@ export function rollUpKeywords(rows: GscKeywordRow[], trackedKeywords: Iterable<
   return rollups.sort((a, b) => b.impressions - a.impressions || b.clicks - a.clicks)
 }
 
+// ── The same corpus, rolled up the other way ─────────────────────────────────
+
+export interface PageRollup {
+  page: string
+  clicks: number
+  impressions: number
+  ctr: number
+  /** Impression-weighted mean position across every query this page ranks for. */
+  position: number
+  /** How many distinct queries bring Google to this page. */
+  queries: number
+  /** The query that puts this page in front of the most people. */
+  topQuery: string
+}
+
+/**
+ * Roll the corpus up by PAGE instead of by keyword — which query earned what is
+ * the keyword view's question; "which of my pages actually earn anything" is a
+ * different one, and the answer drives internal linking, pruning, and where to
+ * spend effort.
+ */
+export function rollUpPages(rows: GscKeywordRow[]): PageRollup[] {
+  const byPage = new Map<string, GscKeywordRow[]>()
+  for (const r of rows) {
+    if (!r.page) continue
+    const list = byPage.get(r.page) ?? []
+    list.push(r)
+    byPage.set(r.page, list)
+  }
+
+  const out: PageRollup[] = []
+  for (const [pageUrl, list] of byPage) {
+    const clicks = list.reduce((n, r) => n + r.clicks, 0)
+    const impressions = list.reduce((n, r) => n + r.impressions, 0)
+    const top = list.slice().sort((a, b) => b.impressions - a.impressions || b.clicks - a.clicks)[0]
+    out.push({
+      page: pageUrl,
+      clicks,
+      impressions,
+      ctr: impressions > 0 ? clicks / impressions : 0,
+      position: round1(weightedPosition(list)),
+      queries: new Set(list.map((r) => r.query)).size,
+      topQuery: top?.query ?? '',
+    })
+  }
+  return out.sort((a, b) => b.impressions - a.impressions || b.clicks - a.clicks)
+}
+
 // ── Joining Analytics onto keywords ──────────────────────────────────────────
 // GSC identifies a page by full URL (https://example.com/pricing/); GA4
 // identifies the same page by path (/pricing). Joining them naively matches

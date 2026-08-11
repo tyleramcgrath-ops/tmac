@@ -15,6 +15,7 @@ import {
   pathOf, scoreColor, gradeInfo,
 } from './analytics'
 import { KeywordIntelligence } from './keywords'
+import { LinkEquity } from './link-equity'
 import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
 import { BulkFixBar } from '../BulkFixBar'
 import {
@@ -301,7 +302,10 @@ export function Links({ a, pages, projectId }: { a: Analytics; pages: PageResult
         <Stat label="Avg. inbound links" value={String(a.links.avgInbound)} icon={TrendingUp} />
         <Stat label="Most-linked page" value={a.links.topLinked[0] ? `${a.links.topLinked[0].count}` : '—'} tone="text-[var(--rf-cyan)]" />
       </div>
+      {/* Structure first (who is unreachable), then value (who deserves the
+          authority). The second question is the one that moves rankings. */}
       <InternalLinksPanel projectId={projectId} targets={targets} />
+      <LinkEquity projectId={projectId} />
       <LinkList title="Most-linked pages (internal authority)" rows={a.links.topLinked.map((t) => [pathOf(t.url), `${t.count} inbound`, t.url])} empty="Run an audit to map internal links." />
     </div>
   )
