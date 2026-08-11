@@ -230,6 +230,9 @@ export default function ContactLanding() {
                       Try it yourself
                       <ArrowRight size={16} aria-hidden="true" />
                     </Link>
+                    <Link href="/contact/compare" className="ctc-btn ctc-btn-quiet ctc-btn-lg">
+                      Compare the alternatives
+                    </Link>
                   </div>
                 </div>
               </Reveal>

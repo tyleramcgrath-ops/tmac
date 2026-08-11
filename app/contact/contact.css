@@ -2179,3 +2179,450 @@ button.ctc-probe:hover .ctc-probe-chevron {
   border-radius: var(--r-xs);
   padding: 1px 4px;
 }
+
+/* =====================================================================
+   Comparison pages
+   ===================================================================== */
+.ctc-compare-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--s-7) var(--s-7);
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(70% 60% at 82% 0%, rgba(255, 90, 34, 0.13) 0%, transparent 60%),
+    var(--bg);
+}
+
+.ctc-crumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-faint);
+}
+.ctc-crumbs a {
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color var(--d-2) var(--e-out);
+}
+.ctc-crumbs a:hover {
+  color: var(--ember);
+}
+.ctc-crumbs [aria-current='page'] {
+  color: var(--text-muted);
+}
+
+/* One column, generous measure — these pages are for reading. */
+.ctc-compare-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+  padding-block: var(--s-8) var(--s-9);
+}
+@media (max-width: 720px) {
+  .ctc-compare-body {
+    gap: var(--s-7);
+    padding-block: var(--s-6) var(--s-8);
+  }
+}
+
+.ctc-prose {
+  font-size: var(--t-md);
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+.ctc-prose + .ctc-prose {
+  margin-top: var(--s-4);
+}
+
+.ctc-inline-link {
+  color: var(--ember);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ctc-inline-link:hover {
+  color: var(--ember-2);
+}
+
+/* ---- The matrix ---------------------------------------------------- */
+.ctc-matrix-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+.ctc-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+.ctc-matrix thead th {
+  padding: var(--s-4);
+  text-align: left;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--bg-2);
+  vertical-align: bottom;
+}
+.ctc-matrix-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.ctc-matrix-brand-rival {
+  color: var(--text-muted);
+}
+.ctc-matrix-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ember);
+  flex: none;
+}
+.ctc-matrix tbody th {
+  width: 22%;
+  padding: var(--s-4);
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-faint);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.ctc-matrix-cell {
+  width: 39%;
+  padding: var(--s-4);
+  border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.ctc-matrix-cell-ours {
+  background: rgba(255, 90, 34, 0.035);
+}
+.ctc-matrix-cell-win {
+  color: var(--text);
+}
+.ctc-matrix tbody tr:last-child th,
+.ctc-matrix tbody tr:last-child td {
+  border-bottom: 0;
+}
+.ctc-matrix-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: -5px;
+  background: var(--surface-2);
+  color: var(--text-faint);
+}
+.ctc-matrix-cell-win .ctc-matrix-mark {
+  background: var(--win-wash);
+  color: var(--win);
+}
+.ctc-matrix-value {
+  display: inline;
+}
+/* Only shown once the table collapses into cards. */
+.ctc-matrix-key {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .ctc-matrix,
+  .ctc-matrix tbody,
+  .ctc-matrix tr,
+  .ctc-matrix td,
+  .ctc-matrix tbody th {
+    display: block;
+    width: 100%;
+  }
+  .ctc-matrix thead {
+    display: none;
+  }
+  .ctc-matrix tbody tr {
+    border-bottom: 1px solid var(--line-strong);
+    padding: var(--s-4) 0;
+  }
+  .ctc-matrix tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .ctc-matrix tbody th {
+    padding: 0 var(--s-4) var(--s-2);
+    border-bottom: 0;
+    color: var(--text);
+    font-size: var(--t-2xs);
+  }
+  .ctc-matrix-cell {
+    border-left: 0;
+    border-bottom: 0;
+    padding: var(--s-2) var(--s-4);
+  }
+  .ctc-matrix-cell-ours {
+    background: transparent;
+  }
+  .ctc-matrix-key {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-faint);
+    margin-bottom: 3px;
+  }
+  .ctc-matrix-cell-ours .ctc-matrix-key {
+    color: var(--ember);
+  }
+}
+
+/* ---- Pros and cons -------------------------------------------------- */
+.ctc-proscons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  align-items: stretch;
+}
+@media (max-width: 760px) {
+  .ctc-proscons {
+    grid-template-columns: 1fr;
+  }
+}
+.ctc-proscons-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  height: 100%;
+  padding: var(--s-5);
+}
+.ctc-proscons-card-accent {
+  border-color: var(--ember-line);
+  background: linear-gradient(180deg, rgba(255, 90, 34, 0.06), transparent 34%), var(--surface);
+}
+.ctc-proscons-list ul {
+  list-style: none;
+  margin: var(--s-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.ctc-proscons-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+.ctc-proscons-list svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+/* ---- Verdict split -------------------------------------------------- */
+.ctc-choose {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 640px) {
+  .ctc-choose {
+    grid-template-columns: 1fr;
+  }
+}
+.ctc-choose-col p {
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* ---- CTA block ------------------------------------------------------ */
+.ctc-compare-cta {
+  position: relative;
+  overflow: hidden;
+  padding: var(--s-7);
+  border: 1px solid var(--ember-line);
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(70% 120% at 12% 0%, rgba(255, 90, 34, 0.16) 0%, transparent 62%),
+    var(--surface);
+}
+@media (max-width: 640px) {
+  .ctc-compare-cta {
+    padding: var(--s-5);
+  }
+}
+
+/* ---- Hub grid ------------------------------------------------------- */
+.ctc-comparegrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ctc-comparegrid > * {
+  height: 100%;
+}
+@media (max-width: 940px) {
+  .ctc-comparegrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 620px) {
+  .ctc-comparegrid {
+    grid-template-columns: 1fr;
+  }
+}
+.ctc-comparecard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  height: 100%;
+  padding: var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text);
+  transition:
+    transform var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out),
+    background-color var(--d-2) var(--e-out);
+}
+.ctc-comparecard:hover {
+  transform: translateY(-3px);
+  border-color: var(--ember-line);
+  background: var(--surface-hi);
+}
+.ctc-comparecard-title {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  letter-spacing: -0.022em;
+  line-height: 1.2;
+}
+.ctc-comparecard-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: var(--s-3);
+  font-size: var(--t-xs);
+  color: var(--ember);
+}
+.ctc-comparecard:hover .ctc-comparecard-go svg {
+  transform: translateX(3px);
+}
+.ctc-comparecard-go svg {
+  transition: transform var(--d-2) var(--e-out);
+}
+
+/* ---- Cross-links ---------------------------------------------------- */
+.ctc-morelist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (max-width: 720px) {
+  .ctc-morelist {
+    grid-template-columns: 1fr;
+  }
+}
+.ctc-morelink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color var(--d-2) var(--e-out), background-color var(--d-2) var(--e-out);
+}
+.ctc-morelink:hover {
+  border-color: var(--ember-line);
+  background: var(--surface-hi);
+}
+.ctc-morelink-title {
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+
+/* FAQ styling is shared with the marketing page. */
+.ctc-faq {
+  border-bottom: 1px solid var(--line);
+}
+.ctc-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--t-md);
+  font-weight: 500;
+  transition: color var(--d-2) var(--e-out);
+}
+.ctc-faq summary::-webkit-details-marker {
+  display: none;
+}
+.ctc-faq summary:hover {
+  color: var(--ember);
+}
+.ctc-faq-mark {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+.ctc-faq-mark::before,
+.ctc-faq-mark::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+  transition: transform var(--d-2) var(--e-out);
+}
+.ctc-faq-mark::before {
+  inset: 6px 0 6px 0;
+  height: 1.5px;
+}
+.ctc-faq-mark::after {
+  inset: 0 6px 0 6px;
+  width: 1.5px;
+}
+.ctc-faq[open] .ctc-faq-mark::after {
+  transform: scaleY(0);
+}
+.ctc-faq[open] summary {
+  color: var(--ember);
+}
+.ctc-faq > p {
+  padding-bottom: var(--s-4);
+  max-width: 62ch;
+}

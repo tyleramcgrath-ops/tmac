@@ -9,8 +9,8 @@ const LINKS = [
   { href: '/contact#results', label: 'Results' },
   { href: '/contact#services', label: 'Services' },
   { href: '/contact/app', label: 'LLM SEO tool' },
+  { href: '/contact/compare', label: 'Compare' },
   { href: '/contact#process', label: 'Process' },
-  { href: '/contact#testimonials', label: 'Testimonials' },
 ]
 
 export function SiteNav() {
@@ -113,6 +113,7 @@ export function SiteFooter() {
             title="Tools"
             links={[
               { href: '/contact/app', label: 'LLM visibility scan' },
+              { href: '/contact/compare', label: 'Compare AI visibility tools' },
               { href: '/contact/signin', label: 'Client login' },
               { href: '/contact/signup', label: 'Create account' },
             ]}
