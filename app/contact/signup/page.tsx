@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { AuthScreen } from '../_components/auth'
 
 export const metadata: Metadata = {
-  title: 'Create account — Contact',
-  description: 'Start with the people you already have.',
+  title: 'Create account — Contact Studios',
+  description: 'Start with a free LLM visibility scan.',
 }
 
 export default function SignUpPage() {

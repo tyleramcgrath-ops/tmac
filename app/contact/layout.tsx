@@ -4,9 +4,9 @@ import { Fraunces, Instrument_Sans, JetBrains_Mono } from 'next/font/google'
 import { StoreProvider } from './_lib/store'
 import './contact.css'
 
-// Fraunces carries the editorial voice (soft optical axis, a little wonk at
-// display sizes); Instrument Sans keeps the interface crisp underneath it;
-// JetBrains Mono handles labels and every number in the product.
+// Fraunces carries the editorial voice and makes the big result figures feel
+// authored rather than dashboarded; Instrument Sans keeps the interface crisp
+// underneath it; JetBrains Mono handles labels and tabular data.
 const display = Fraunces({
   subsets: ['latin'],
   display: 'swap',
@@ -27,9 +27,9 @@ const mono = JetBrains_Mono({
   variable: '--ctc-font-mono',
 })
 
-const title = 'Contact — the network you already have'
+const title = 'Contact Studios — the search agency built for what’s next'
 const description =
-  'Contact keeps every person you have met in one place and tells you, each week, exactly who to reconnect with and why. Powered by Claude.'
+  'SEO, content and video for the age of AI search. Scan how your brand ranks inside ChatGPT answers — free, and generated live.'
 
 export const metadata: Metadata = {
   title,

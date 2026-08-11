@@ -23,7 +23,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
   const isSignup = mode === 'signup'
 
   const [name, setName] = useState('')
-  const [role, setRole] = useState('')
+  const [company, setCompany] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<Errors>({})
@@ -49,7 +49,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
     signIn({
       name: name.trim() || email.split('@')[0].replace(/[._-]+/g, ' '),
       email: email.trim(),
-      role: role.trim() || 'Founder',
+      company: company.trim(),
       createdAt: Date.now(),
     })
     setStatus('done')
@@ -59,10 +59,10 @@ export function AuthScreen({ mode }: { mode: Mode }) {
   return (
     <div className="ctc-auth">
       {/* Left: the ink panel */}
-      <aside className="ctc-auth-aside ctc-ink-band ctc-on-ink ctc-grain">
+      <aside className="ctc-auth-aside ctc-grain">
         <div className="ctc-auth-aside-inner">
-          <Link href="/contact" style={{ textDecoration: 'none', color: 'var(--paper)' }}>
-            <Wordmark onInk />
+          <Link href="/contact" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Wordmark />
           </Link>
 
           <div className="ctc-stack ctc-g5" style={{ marginTop: 'auto' }}>
@@ -70,24 +70,24 @@ export function AuthScreen({ mode }: { mode: Mode }) {
               style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'var(--t-2xl)',
-                lineHeight: 1.15,
-                letterSpacing: '-0.028em',
-                maxWidth: '18ch',
+                lineHeight: 1.12,
+                letterSpacing: '-0.03em',
+                maxWidth: '17ch',
               }}
             >
-              The people you already know are the whole advantage.
+              Your buyers stopped searching. They started asking.
             </p>
             <ul className="ctc-stack ctc-g3" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
               {[
-                '24 people waiting in your workspace',
-                'A brief reasoned by Claude, not a template',
-                'Nothing sends without you reading it first',
+                'Six buyer questions, written for your category',
+                'Answers generated live — never a canned result',
+                'Every scan saved so you can track the movement',
               ].map((line) => (
                 <li key={line} className="ctc-row ctc-g2" style={{ alignItems: 'flex-start' }}>
                   <Check
                     size={15}
                     aria-hidden="true"
-                    style={{ color: 'var(--ember-bright)', flex: 'none', marginTop: 3 }}
+                    style={{ color: 'var(--ember)', flex: 'none', marginTop: 3 }}
                   />
                   <span className="ctc-muted" style={{ fontSize: 'var(--t-sm)' }}>
                     {line}
@@ -112,13 +112,15 @@ export function AuthScreen({ mode }: { mode: Mode }) {
           </Link>
 
           <div className="ctc-stack ctc-g2" style={{ marginBottom: 'var(--s-6)' }}>
-            <span className="ctc-eyebrow">{isSignup ? 'Create account' : 'Welcome back'}</span>
+            <span className="ctc-eyebrow ctc-eyebrow-ember">
+              {isSignup ? 'Create account' : 'Client login'}
+            </span>
             <h1 className="ctc-h2" style={{ fontSize: 'var(--t-2xl)' }}>
-              {isSignup ? 'Start with the people you have.' : 'Sign in to your network.'}
+              {isSignup ? 'Start with a free scan.' : 'Welcome back.'}
             </h1>
             <p className="ctc-muted" style={{ fontSize: 'var(--t-sm)' }}>
               {isSignup
-                ? 'No card, no email confirmation. Your network stays on this device.'
+                ? 'No card, no sales call to unlock the tool. Your scans stay on this device.'
                 : 'Any email and an eight-character password will do — accounts here are local to your browser.'}
             </p>
           </div>
@@ -133,16 +135,16 @@ export function AuthScreen({ mode }: { mode: Mode }) {
                   onChange={setName}
                   error={errors.name}
                   autoComplete="name"
-                  placeholder="Rosa Almeida"
+                  placeholder="Dylan Glines"
                 />
                 <Field
-                  id="role"
-                  label="What you do (optional)"
-                  value={role}
-                  onChange={setRole}
-                  autoComplete="organization-title"
-                  placeholder="Founder, Tessellate"
-                  hint="Used to set the voice of your drafts."
+                  id="company"
+                  label="Company (optional)"
+                  value={company}
+                  onChange={setCompany}
+                  autoComplete="organization"
+                  placeholder="Botany Farms"
+                  hint="We prefill your scans with it."
                 />
               </>
             ) : null}
@@ -155,7 +157,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
               onChange={setEmail}
               error={errors.email}
               autoComplete="email"
-              placeholder="you@studio.com"
+              placeholder="you@brand.com"
             />
             <Field
               id="password"
@@ -176,7 +178,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
             >
               {status === 'working' ? (
                 <>
-                  <Spinner /> Setting up your workspace
+                  <Spinner /> Setting up your account
                 </>
               ) : status === 'done' ? (
                 <>
@@ -192,9 +194,9 @@ export function AuthScreen({ mode }: { mode: Mode }) {
 
             <p aria-live="polite" className="ctc-sr">
               {status === 'working'
-                ? 'Setting up your workspace'
+                ? 'Setting up your account'
                 : status === 'done'
-                  ? 'Signed in, redirecting to your workspace'
+                  ? 'Signed in, opening the scanner'
                   : ''}
             </p>
           </form>
@@ -206,7 +208,7 @@ export function AuthScreen({ mode }: { mode: Mode }) {
             <span className="ctc-faint">{isSignup ? 'Already have an account?' : 'New here?'}</span>
             <Link
               href={isSignup ? '/contact/signin' : '/contact/signup'}
-              style={{ color: 'var(--ember)', textDecoration: 'none', fontWeight: 500 }}
+              style={{ color: 'var(--ember)', textDecoration: 'none', fontWeight: 600 }}
             >
               {isSignup ? 'Sign in' : 'Create one'}
             </Link>
@@ -214,11 +216,11 @@ export function AuthScreen({ mode }: { mode: Mode }) {
 
           <div className="ctc-well" style={{ padding: 'var(--s-3) var(--s-4)', marginTop: 'var(--s-5)' }}>
             <p className="ctc-faint" style={{ fontSize: 'var(--t-xs)', lineHeight: 1.5 }}>
-              Prefer to look around first?{' '}
-              <Link href="/contact/app" style={{ color: 'var(--ink-muted)' }}>
-                Open the workspace as a guest
+              Just want the tool?{' '}
+              <Link href="/contact/app" style={{ color: 'var(--text)' }}>
+                Run a scan as a guest
               </Link>{' '}
-              — it is already seeded with a full network.
+              — no account needed to see your score.
             </p>
           </div>
         </div>

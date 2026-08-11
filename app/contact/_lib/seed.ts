@@ -1,344 +1,228 @@
-import type { Person } from './types'
+import type { ScanInput } from './types'
 
-// A realistic starter network. Every screen in Contact is designed to be
-// looked at with data in it, so a fresh account is seeded with a plausible
-// operator's network — 24 people across investors, ex-colleagues, customers
-// and loose ties, with the kind of half-remembered context that makes a
-// reconnection note land.
-//
-// Names and companies here are invented for the demo.
+// Case-study figures and client names as published on the Contact Studios
+// site. Grouped so the results wall can lead with the strongest number.
+export interface CaseStudy {
+  client: string
+  services: string[]
+  headline: { value: string; label: string }
+  support: { value: string; label: string }[]
+  /** Weight in the results grid — one hero, the rest secondary. */
+  size?: 'hero' | 'wide' | 'normal'
+}
 
-export const SEED_PEOPLE: Person[] = [
+export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: 'p_hala_qadri',
-    name: 'Hala Qadri',
-    role: 'Partner',
-    company: 'Ostium Capital',
-    context: 'Led our seed round. Introduced by Marcus at the 2024 Fieldnote dinner.',
-    notes:
-      'Wants a quarterly update, hates decks. Asked to be told early if we ever raise a Series A. Two kids, sails on weekends.',
-    tags: ['investor', 'board-adjacent'],
-    lastContact: '2026-05-02',
-    channel: 'email',
-    circle: 'inner',
-    location: 'London',
+    client: 'Delta Munchies',
+    services: ['SEO', 'Content strategy', 'Content writing', 'Content management'],
+    headline: { value: '$3.4M', label: 'Revenue generated' },
+    support: [
+      { value: '54,510', label: 'Transactions' },
+      { value: '847,221', label: 'Users' },
+    ],
+    size: 'hero',
   },
   {
-    id: 'p_marcus_bell',
-    name: 'Marcus Bell',
-    role: 'Founder',
-    company: 'Fieldnote',
-    context: 'Ran the founder dinner where we met Hala. We swap intros constantly.',
-    notes:
-      'Building in the same space but one layer down — no conflict. Owes me nothing; I owe him the Ostium intro.',
-    tags: ['founder', 'connector'],
-    lastContact: '2026-07-28',
-    channel: 'text',
-    circle: 'inner',
-    location: 'London',
+    client: 'Shopify',
+    services: ['Video production', 'Video SEO', 'YouTube strategy'],
+    headline: { value: '20.3M', label: 'Views' },
+    support: [
+      { value: '405,000', label: 'Subscribers generated' },
+      { value: '149,000', label: 'Leads generated' },
+    ],
+    size: 'wide',
   },
   {
-    id: 'p_yuki_tanaka',
-    name: 'Yuki Tanaka',
-    role: 'VP Engineering',
-    company: 'Halcyon Systems',
-    context: 'Worked together at Beacon Row for three years. She hired me, technically.',
-    notes:
-      'Best systems thinker I know. Said in passing she was getting restless at Halcyon after the reorg.',
-    tags: ['ex-colleague', 'hiring-target'],
-    lastContact: '2026-02-14',
-    channel: 'email',
-    circle: 'active',
-    location: 'Berlin',
+    client: 'Botany Farms',
+    services: ['SEO', 'Content strategy', 'Content writing'],
+    headline: { value: '$2.1M', label: 'Revenue generated' },
+    support: [
+      { value: '24,729', label: 'Transactions' },
+      { value: '608,934', label: 'Users' },
+    ],
   },
   {
-    id: 'p_dara_okonkwo',
-    name: 'Dara Okonkwo',
-    role: 'Head of Design',
-    company: 'Tessellate',
-    context: 'Met at a type design workshop in Lisbon. Two long coffees since.',
-    notes:
-      'Freelanced for us on the first brand pass. Wants to go in-house somewhere small again. Deeply into archival print.',
-    tags: ['design', 'hiring-target'],
-    lastContact: '2026-04-09',
-    channel: 'linkedin',
-    circle: 'active',
-    location: 'Lisbon',
+    client: 'Causal',
+    services: ['SEO', 'Content strategy', 'Content management'],
+    headline: { value: '1.07M', label: 'Monthly visitors' },
+    support: [
+      { value: '$82,000', label: 'Monthly traffic value' },
+      { value: '8,800', label: 'Top-3 positions' },
+    ],
   },
   {
-    id: 'p_priya_raman',
-    name: 'Priya Raman',
-    role: 'COO',
-    company: 'Northwind Logistics',
-    context: 'Our third customer. Signed after a 20-minute call, still our loudest advocate.',
-    notes:
-      'Renewal is in the autumn. Complained once about the CSV export and has never mentioned it again.',
-    tags: ['customer', 'renewal'],
-    lastContact: '2026-06-19',
-    channel: 'call',
-    circle: 'active',
-    location: 'Chicago',
+    client: 'FOCL',
+    services: ['SEO', 'Content strategy', 'Content writing'],
+    headline: { value: '$1.8M', label: 'Revenue generated' },
+    support: [
+      { value: '23,102', label: 'Transactions' },
+      { value: '602,992', label: 'Users' },
+    ],
   },
   {
-    id: 'p_tomas_lindqvist',
-    name: 'Tomás Lindqvist',
-    role: 'Angel investor',
-    company: 'Independent',
-    context: 'Wrote the first cheque, before there was a product. Old boss of Yuki.',
-    notes:
-      'Prefers a phone call to anything written. Has strong opinions about pricing and is usually right.',
-    tags: ['investor', 'advisor'],
-    lastContact: '2025-11-30',
-    channel: 'call',
-    circle: 'dormant',
-    location: 'Stockholm',
+    client: 'HØJ',
+    services: ['SEO', 'Content strategy', 'Content management'],
+    headline: { value: '1.3M', label: 'Users from search' },
+    support: [
+      { value: '800+', label: '#1 rankings' },
+      { value: '550,000', label: 'Monthly page views' },
+    ],
   },
   {
-    id: 'p_amelia_ross',
-    name: 'Amelia Ross',
-    role: 'Reporter',
-    company: 'The Ledger',
-    context: 'Covered our launch. Reached out first, which almost never happens.',
-    notes:
-      'Writing a longer piece on relationship software this year. Asked to be kept in the loop on funding news.',
-    tags: ['press'],
-    lastContact: '2026-03-21',
-    channel: 'email',
-    circle: 'active',
-    location: 'New York',
+    client: 'Herb',
+    services: ['SEO', 'Affiliate marketing'],
+    headline: { value: '$40K', label: 'Monthly affiliate revenue' },
+    support: [
+      { value: '8,500', label: 'Top-10 rankings' },
+      { value: '670', label: '#1 rankings' },
+    ],
   },
   {
-    id: 'p_kwame_mensah',
-    name: 'Kwame Mensah',
-    role: 'Staff Engineer',
-    company: 'Beacon Row',
-    context: 'Sat next to me for two years. Reviewed most of my worst code.',
-    notes:
-      'Turned down a role here in 2025 because of timing, not fit. Said "ask me again in a year." It has been a year.',
-    tags: ['ex-colleague', 'hiring-target'],
-    lastContact: '2025-09-12',
-    channel: 'text',
-    circle: 'dormant',
-    location: 'Accra',
-  },
-  {
-    id: 'p_elena_vasquez',
-    name: 'Elena Vásquez',
-    role: 'GM, Platform',
-    company: 'Cadence Retail',
-    context: 'Pilot customer that stalled when her budget froze in Q1.',
-    notes:
-      'Told me the freeze lifts at the start of the new fiscal year. That was July. Never followed up.',
-    tags: ['customer', 'stalled-deal'],
-    lastContact: '2026-01-27',
-    channel: 'email',
-    circle: 'dormant',
-    location: 'Madrid',
-  },
-  {
-    id: 'p_ravi_shah',
-    name: 'Ravi Shah',
-    role: 'Principal',
-    company: 'Meridian Ventures',
-    context: 'Passed on the seed, kindly and with real reasons. Kept in touch anyway.',
-    notes:
-      'Said the pass was about stage, not thesis. Asked for a nudge when we hit 1,000 paying teams.',
-    tags: ['investor', 'next-round'],
-    lastContact: '2026-06-04',
-    channel: 'email',
-    circle: 'active',
-    location: 'San Francisco',
-  },
-  {
-    id: 'p_nadia_haddad',
-    name: 'Nadia Haddad',
-    role: 'Head of Talent',
-    company: 'Ostium Capital',
-    context: "Hala's talent partner. Ran two candidate loops for us for free.",
-    notes: 'Extremely fast on senior design candidates. Prefers a short brief over a job spec.',
-    tags: ['talent', 'investor-network'],
-    lastContact: '2026-05-16',
-    channel: 'email',
-    circle: 'active',
-    location: 'London',
-  },
-  {
-    id: 'p_ben_stroud',
-    name: 'Ben Stroud',
-    role: 'Founder',
-    company: 'Quarry',
-    context: 'YC batchmate. We shipped our first versions the same week.',
-    notes:
-      'Raised a Series A in the spring. Offered intros to his investors and I never took him up on it.',
-    tags: ['founder', 'peer'],
-    lastContact: '2026-04-30',
-    channel: 'text',
-    circle: 'active',
-    location: 'San Francisco',
-  },
-  {
-    id: 'p_sofia_martins',
-    name: 'Sofia Martins',
-    role: 'Director of Ops',
-    company: 'Northwind Logistics',
-    context: "Priya's deputy and the person who actually uses the product daily.",
-    notes: 'Files the best bug reports we get. Has never once asked for anything in return.',
-    tags: ['customer', 'power-user'],
-    lastContact: '2026-07-11',
-    channel: 'email',
-    circle: 'active',
-    location: 'Chicago',
-  },
-  {
-    id: 'p_ibrahim_kone',
-    name: 'Ibrahim Koné',
-    role: 'CTO',
-    company: 'Lantern Health',
-    context: 'Met on a panel about data retention. We disagreed publicly and got on privately.',
-    notes: 'Deals with the same compliance pain we do. Wanted to compare notes on SOC 2.',
-    tags: ['peer', 'technical'],
-    lastContact: '2026-02-02',
-    channel: 'linkedin',
-    circle: 'dormant',
-    location: 'Paris',
-  },
-  {
-    id: 'p_lena_fischer',
-    name: 'Lena Fischer',
-    role: 'Head of Growth',
-    company: 'Tessellate',
-    context: 'Dara introduced us. One very good walk around a park in Lisbon.',
-    notes: 'Ran the growth motion we are about to attempt. Said to call before we hire an agency.',
-    tags: ['advisor', 'growth'],
-    lastContact: '2026-03-08',
-    channel: 'email',
-    circle: 'active',
-    location: 'Lisbon',
-  },
-  {
-    id: 'p_hugo_almeida',
-    name: 'Hugo Almeida',
-    role: 'Engineering Manager',
-    company: 'Halcyon Systems',
-    context: 'Yuki brought him along to dinner in Berlin. Talked for four hours.',
-    notes: 'Wants to move into a founding-engineer role but is waiting on a vest date in November.',
-    tags: ['hiring-target'],
-    lastContact: '2026-01-18',
-    channel: 'linkedin',
-    circle: 'dormant',
-    location: 'Berlin',
-  },
-  {
-    id: 'p_claire_devon',
-    name: 'Claire Devon',
-    role: 'General Counsel',
-    company: 'Beacon Row',
-    context: 'Untangled our first enterprise contract as a favour.',
-    notes: 'Said to come back before we do anything with EU data residency. We are about to.',
-    tags: ['legal', 'ex-colleague'],
-    lastContact: '2025-12-05',
-    channel: 'email',
-    circle: 'dormant',
-    location: 'Dublin',
-  },
-  {
-    id: 'p_dmitri_orlov',
-    name: 'Dmitri Orlov',
-    role: 'Founder',
-    company: 'Sable',
-    context: 'Cold email from him, three years ago, that turned into a real friendship.',
-    notes: 'Shut Sable down in June. Has not said what is next. Probably needs a check-in, not a pitch.',
-    tags: ['founder', 'friend'],
-    lastContact: '2026-06-28',
-    channel: 'text',
-    circle: 'active',
-    location: 'Tbilisi',
-  },
-  {
-    id: 'p_grace_oyelaran',
-    name: 'Grace Oyelaran',
-    role: 'Head of Partnerships',
-    company: 'Cadence Retail',
-    context: "Elena's colleague. Met once, at their offsite, briefly.",
-    notes: 'Owns the integrations roadmap on their side. The stalled pilot probably runs through her now.',
-    tags: ['customer', 'stalled-deal'],
-    lastContact: '2026-01-27',
-    channel: 'email',
-    circle: 'dormant',
-    location: 'Madrid',
-  },
-  {
-    id: 'p_theo_lambert',
-    name: 'Théo Lambert',
-    role: 'Product Lead',
-    company: 'Quarry',
-    context: "Ben's first product hire. We do a monthly product swap that we keep skipping.",
-    notes: 'Sharpest critic of our onboarding. Offered to run a teardown and I never scheduled it.',
-    tags: ['peer', 'product'],
-    lastContact: '2026-05-25',
-    channel: 'call',
-    circle: 'active',
-    location: 'Paris',
-  },
-  {
-    id: 'p_anika_sen',
-    name: 'Anika Sen',
-    role: 'Data Lead',
-    company: 'Lantern Health',
-    context: 'Wrote the paper on relationship decay we quote in every deck.',
-    notes: 'Replied to my first email in eleven minutes. Curious about what we are building on top of her work.',
-    tags: ['research', 'advisor'],
-    lastContact: '2026-04-17',
-    channel: 'email',
-    circle: 'active',
-    location: 'Bangalore',
-  },
-  {
-    id: 'p_owen_pryce',
-    name: 'Owen Pryce',
-    role: 'Recruiter',
-    company: 'Independent',
-    context: 'Placed two of our first five engineers. Takes a lower fee for early teams.',
-    notes: 'Checks in every quarter without fail. I am usually the one who is slow to reply.',
-    tags: ['talent'],
-    lastContact: '2026-07-02',
-    channel: 'email',
-    circle: 'active',
-    location: 'Manchester',
-  },
-  {
-    id: 'p_mira_kalinski',
-    name: 'Mira Kalinski',
-    role: 'CFO',
-    company: 'Halcyon Systems',
-    context: 'Sat opposite me at the Fieldnote dinner. Explained venture debt on a napkin.',
-    notes: 'Offered to review our model any time. Has not been asked. Nine months ago now.',
-    tags: ['finance', 'advisor'],
-    lastContact: '2025-10-22',
-    channel: 'email',
-    circle: 'dormant',
-    location: 'Zurich',
-  },
-  {
-    id: 'p_sam_iyer',
-    name: 'Sam Iyer',
-    role: 'Head of Engineering',
-    company: 'Northwind Logistics',
-    context: 'Ran our security review. Brutal, fair, and fast.',
-    notes: 'Said their board wants a case study from a vendor this year. We would qualify.',
-    tags: ['customer', 'technical'],
-    lastContact: '2026-06-30',
-    channel: 'email',
-    circle: 'active',
-    location: 'Toronto',
+    client: 'TubeBuddy',
+    services: ['Video production', 'Video SEO', 'YouTube strategy'],
+    headline: { value: '3.6M', label: 'Views' },
+    support: [
+      { value: '57%', label: 'YoY subscriber growth' },
+      { value: '160', label: 'Short videos produced' },
+    ],
   },
 ]
 
-/** A handful of intents that make the demo immediately legible. */
-export const INTENT_SUGGESTIONS = [
-  'I want to hire a founding designer in the next six weeks',
-  'We open a Series A conversation in October — warm the room',
-  'Revive the deals that stalled in the spring',
-  'I have three free evenings in Berlin next month',
-  'Nothing specific. Who am I quietly losing?',
+export const CLIENT_LOGOS = [
+  'Shopify',
+  'Delta Munchies',
+  'Botany Farms',
+  'FOCL',
+  'HØJ',
+  'Herb',
+  'Causal',
+  'TubeBuddy',
+  'Dragon Hemp',
+  'Alexsei',
+  'Landish',
+  'Broya',
 ]
+
+export interface Service {
+  name: string
+  body: string
+}
+
+export const SERVICES: Service[] = [
+  {
+    name: 'Search market analysis',
+    body: 'We size the real opportunity — in Google and in the models — before you spend a pound against it.',
+  },
+  {
+    name: '"New" search strategy',
+    body: 'One strategy that captures your search market wherever the searching actually happens.',
+  },
+  {
+    name: 'Technical SEO',
+    body: 'A site that crawls cleanly for search engines and parses cleanly for language models.',
+  },
+  {
+    name: 'Content writing',
+    body: 'Research-led writing, edited and published — built for the reader and the algorithm at once.',
+  },
+  {
+    name: 'Image creation',
+    body: 'Original visuals that look like your brand and are optimised to be found.',
+  },
+  {
+    name: 'LLM SEO',
+    body: 'The work that gets you named inside ChatGPT, AI Overviews and the rest of the new front page.',
+  },
+]
+
+export interface ProcessStep {
+  title: string
+  body: string
+}
+
+export const PROCESS: ProcessStep[] = [
+  {
+    title: 'Real-time, tactical strategy',
+    body: 'Talk to your strategist in a shared channel, not a monthly call. Keyword lists, outlines and technical fixes as they happen.',
+  },
+  {
+    title: 'All your content, one dashboard',
+    body: 'See what is being written, what is live and what is next — in a library that stays searchable.',
+  },
+  {
+    title: 'End-to-end production',
+    body: 'We research, write and edit the posts that rank, and turn readers into leads.',
+  },
+  {
+    title: 'Optimised and published',
+    body: 'Custom imagery, meta written, then published straight to your blog on schedule.',
+  },
+]
+
+export interface Testimonial {
+  quote: string
+  name: string
+  role: string
+}
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote:
+      'Contact helped us scale our SEO content from the ground up. Now search is our biggest ROI marketing channel by far — $3 million generated and growing.',
+    name: 'Dylan Glines',
+    role: 'CEO, Botany Farms',
+  },
+  {
+    quote:
+      'Thanks to their SEO content strategy, our shop went from 30k visitors per month to 150k. We got to sit back and watch content go live and generate traffic like crazy.',
+    name: 'Simon Folmann',
+    role: 'CEO, HØJ',
+  },
+  {
+    quote: 'Our traffic has already doubled. The ROI on their content is off the charts.',
+    name: 'Shaun Nguyen',
+    role: 'PR Director, Delta Munchies',
+  },
+  {
+    quote:
+      'Contact is easily within the top 1% of SEO and content marketing talent out there.',
+    name: 'Mark Doble',
+    role: 'CEO, Alexsei',
+  },
+]
+
+/** Prefilled so the scanner is never a blank page. */
+export const EXAMPLE_SCANS: (ScanInput & { label: string })[] = [
+  {
+    label: 'DTC wellness',
+    brand: 'Botany Farms',
+    domain: 'botanyfarms.com',
+    category: 'hemp-derived CBD and THC gummies, flower and pre-rolls sold direct to consumer',
+    competitors: ['Delta Munchies', 'FOCL', 'Charlotte’s Web'],
+    market: 'United States',
+  },
+  {
+    label: 'B2B SaaS',
+    brand: 'Causal',
+    domain: 'causal.app',
+    category: 'financial modelling and planning software for startup finance teams',
+    competitors: ['Pigment', 'Mosaic', 'Runway'],
+    market: 'United States',
+  },
+  {
+    label: 'Creator tooling',
+    brand: 'TubeBuddy',
+    domain: 'tubebuddy.com',
+    category: 'YouTube channel management, keyword research and thumbnail testing tools',
+    competitors: ['VidIQ', 'Morningfame'],
+    market: 'Global',
+  },
+]
+
+export const EMPTY_SCAN: ScanInput = {
+  brand: '',
+  domain: '',
+  category: '',
+  competitors: [],
+  market: 'United States',
+}

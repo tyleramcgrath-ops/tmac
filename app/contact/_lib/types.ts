@@ -1,99 +1,130 @@
-// Domain types for Contact. Shared by the client workspace and the two
-// AI routes, so the model's output and the UI can never drift apart.
+// Domain types for the LLM visibility scanner. Shared by the workspace and
+// the three AI routes so the model's output and the UI can never drift.
 
-export type Channel = 'email' | 'text' | 'call' | 'linkedin' | 'in-person'
+export type Intent = 'discovery' | 'comparison' | 'transactional' | 'reputation'
 
-export type Urgency = 'now' | 'this-week' | 'soon'
+export type Sentiment = 'positive' | 'neutral' | 'negative' | 'absent'
 
-export type Circle = 'inner' | 'active' | 'dormant'
+export interface ScanInput {
+  brand: string
+  domain: string
+  /** What the brand actually sells — the category a buyer would search in. */
+  category: string
+  competitors: string[]
+  market: string
+}
 
-/** A person in your network. `lastContact` is an ISO date (YYYY-MM-DD). */
-export interface Person {
+/** One buyer question, and what the model said when asked it cold. */
+export interface Probe {
   id: string
-  name: string
-  role: string
-  company: string
-  /** Where you met / how you know them — the memory that makes a note land. */
-  context: string
-  /** Free-form notes: what they care about, what they're working on. */
-  notes: string
-  tags: string[]
-  lastContact: string
-  /** How you usually talk to them. */
-  channel: Channel
-  circle: Circle
-  location?: string
-  /** True when the user added them by hand in this session. */
-  custom?: boolean
+  prompt: string
+  intent: Intent
+  /** Why this question is worth tracking. */
+  why: string
+  status: 'pending' | 'running' | 'done' | 'error'
+  /** The model's unprimed answer — it was never told which brand we track. */
+  answer?: string
+  mentioned?: boolean
+  /** 1-based position in the answer's recommendations, null when absent. */
+  position?: number | null
+  sentiment?: Sentiment
+  /** Every brand the answer named, in the order it named them. */
+  brandsNamed?: string[]
+  /** The sentence that mentions the brand, quoted from the answer. */
+  evidence?: string
+  /** One line on why it landed where it did. */
+  note?: string
+  error?: string
 }
 
-/** One prioritised reconnection, as returned by the model. */
-export interface Pick {
-  personId: string
-  rank: number
-  /** 0–100. How alive the relationship is right now. */
-  warmth: number
-  urgency: Urgency
-  /** Six words or so — the reason at a glance. */
-  headline: string
-  /** Two or three sentences: why this person, why now. */
-  reason: string
-  talkingPoints: string[]
-  channel: Channel
-  /** A first line the user could actually send. */
-  opener: string
+export interface Action {
+  title: string
+  why: string
+  effort: 'low' | 'medium' | 'high'
+  impact: 'low' | 'medium' | 'high'
 }
 
-export interface Brief {
+export interface Plan {
+  verdict: string
+  actions: Action[]
+}
+
+export interface Scan {
   id: string
   createdAt: number
-  intent: string
-  summary: string
-  picks: Pick[]
-  /** Model note on who was deliberately left out and why. */
-  passedOver?: string
+  input: ScanInput
+  probes: Probe[]
+  plan?: Plan
   model?: string
-}
-
-export type Tone = 'warm' | 'direct' | 'playful' | 'formal'
-
-export interface Draft {
-  id: string
-  personId: string
-  personName: string
-  channel: Channel
-  tone: Tone
-  intent: string
-  body: string
-  createdAt: number
-  sent?: boolean
 }
 
 export interface Account {
   name: string
   email: string
-  /** Used to sign drafts and set the voice. */
-  role: string
+  company: string
   createdAt: number
 }
 
-export const CHANNEL_LABEL: Record<Channel, string> = {
-  email: 'Email',
-  text: 'Text',
-  call: 'Call',
-  linkedin: 'LinkedIn',
-  'in-person': 'In person',
+export const INTENT_LABEL: Record<Intent, string> = {
+  discovery: 'Discovery',
+  comparison: 'Comparison',
+  transactional: 'Ready to buy',
+  reputation: 'Reputation',
 }
 
-export const URGENCY_LABEL: Record<Urgency, string> = {
-  now: 'Reach out today',
-  'this-week': 'This week',
-  soon: 'Soon',
+export const SENTIMENT_LABEL: Record<Sentiment, string> = {
+  positive: 'Recommended',
+  neutral: 'Listed',
+  negative: 'Caveated',
+  absent: 'Not mentioned',
 }
 
-export const TONE_LABEL: Record<Tone, string> = {
-  warm: 'Warm',
-  direct: 'Direct',
-  playful: 'Playful',
-  formal: 'Formal',
+/**
+ * Visibility score, computed here rather than asked of the model — the same
+ * inputs must always produce the same number.
+ *
+ * Each answered probe scores 0–100: presence is most of it, position is worth
+ * a decreasing bonus, and the model's framing adjusts it either way.
+ */
+export function scoreProbe(probe: Probe): number {
+  if (!probe.mentioned) return 0
+  const position = probe.position ?? 4
+  const placement = position <= 1 ? 40 : position === 2 ? 30 : position === 3 ? 22 : 14
+  const framing =
+    probe.sentiment === 'positive' ? 20 : probe.sentiment === 'negative' ? -10 : 8
+  return Math.max(0, Math.min(100, 40 + placement + framing))
+}
+
+export function scoreScan(probes: Probe[]): number {
+  const done = probes.filter((probe) => probe.status === 'done')
+  if (done.length === 0) return 0
+  return Math.round(done.reduce((total, probe) => total + scoreProbe(probe), 0) / done.length)
+}
+
+export function scoreBand(score: number): { label: string; tone: 'win' | 'warn' | 'miss' } {
+  if (score >= 65) return { label: 'Strong', tone: 'win' }
+  if (score >= 35) return { label: 'Patchy', tone: 'warn' }
+  if (score > 0) return { label: 'Thin', tone: 'miss' }
+  return { label: 'Invisible', tone: 'miss' }
+}
+
+/** Who the models actually recommend, counted across every answer. */
+export function shareOfVoice(
+  probes: Probe[],
+  brand: string
+): { name: string; count: number; isBrand: boolean }[] {
+  const tally = new Map<string, number>()
+  for (const probe of probes) {
+    for (const named of probe.brandsNamed ?? []) {
+      const key = named.trim()
+      if (!key) continue
+      tally.set(key, (tally.get(key) ?? 0) + 1)
+    }
+  }
+  const normalise = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '')
+  const brandKey = normalise(brand)
+  return [...tally.entries()]
+    .map(([name, count]) => ({ name, count, isBrand: normalise(name) === brandKey }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+    .slice(0, 8)
 }

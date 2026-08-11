@@ -2,54 +2,36 @@
 
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from 'react'
-import { SEED_PEOPLE } from './seed'
-import type { Account, Brief, Draft, Person } from './types'
+import type { Account, Scan } from './types'
 
-// Contact keeps its state on the device. There is no server-side account in
-// this build: the workspace is real and fully interactive, and everything a
-// user creates (people, briefs, drafts, "sent" history) survives a reload via
-// localStorage. Only the AI calls go to the server.
+// The scanner keeps its history on the device. There is no server-side
+// account in this build: the workspace is fully interactive and every scan
+// you run survives a reload via localStorage. Only the model calls leave
+// the browser.
 
-const KEY = 'contact.so:v1'
+const KEY = 'contact.studios:v1'
 
 interface Persisted {
   account: Account | null
-  people: Person[]
-  briefs: Brief[]
-  drafts: Draft[]
-  dismissed: string[]
+  scans: Scan[]
 }
 
-const EMPTY: Persisted = {
-  account: null,
-  people: SEED_PEOPLE,
-  briefs: [],
-  drafts: [],
-  dismissed: [],
-}
+const EMPTY: Persisted = { account: null, scans: [] }
 
 interface StoreValue extends Persisted {
   /** False until localStorage has been read — used to gate skeletons. */
   ready: boolean
   signIn: (account: Account) => void
   signOut: () => void
-  addPerson: (person: Person) => void
-  updatePerson: (id: string, patch: Partial<Person>) => void
-  removePerson: (id: string) => void
-  addBrief: (brief: Brief) => void
-  saveDraft: (draft: Draft) => void
-  markDraftSent: (id: string) => void
-  removeDraft: (id: string) => void
-  dismiss: (personId: string) => void
-  undismissAll: () => void
-  resetDemo: () => void
+  saveScan: (scan: Scan) => void
+  removeScan: (id: string) => void
+  clearScans: () => void
 }
 
 const StoreContext = createContext<StoreValue | null>(null)
@@ -60,13 +42,7 @@ function read(): Persisted {
     const raw = window.localStorage.getItem(KEY)
     if (!raw) return EMPTY
     const parsed = JSON.parse(raw) as Partial<Persisted>
-    return {
-      account: parsed.account ?? null,
-      people: parsed.people?.length ? parsed.people : SEED_PEOPLE,
-      briefs: parsed.briefs ?? [],
-      drafts: parsed.drafts ?? [],
-      dismissed: parsed.dismissed ?? [],
-    }
+    return { account: parsed.account ?? null, scans: parsed.scans ?? [] }
   } catch {
     return EMPTY
   }
@@ -91,55 +67,22 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     }
   }, [state, ready])
 
-  const patch = useCallback((fn: (prev: Persisted) => Persisted) => {
-    setState(fn)
-  }, [])
-
   const value = useMemo<StoreValue>(
     () => ({
       ...state,
       ready,
-      signIn: (account) => patch((p) => ({ ...p, account })),
-      signOut: () => patch((p) => ({ ...p, account: null })),
-      addPerson: (person) => patch((p) => ({ ...p, people: [person, ...p.people] })),
-      updatePerson: (id, next) =>
-        patch((p) => ({
-          ...p,
-          people: p.people.map((person) => (person.id === id ? { ...person, ...next } : person)),
+      signIn: (account) => setState((prev) => ({ ...prev, account })),
+      signOut: () => setState((prev) => ({ ...prev, account: null })),
+      saveScan: (scan) =>
+        setState((prev) => ({
+          ...prev,
+          scans: [scan, ...prev.scans.filter((item) => item.id !== scan.id)].slice(0, 20),
         })),
-      removePerson: (id) =>
-        patch((p) => ({ ...p, people: p.people.filter((person) => person.id !== id) })),
-      addBrief: (brief) => patch((p) => ({ ...p, briefs: [brief, ...p.briefs].slice(0, 12) })),
-      saveDraft: (draft) =>
-        patch((p) => ({
-          ...p,
-          drafts: [draft, ...p.drafts.filter((d) => d.id !== draft.id)].slice(0, 60),
-        })),
-      markDraftSent: (id) =>
-        patch((p) => {
-          const draft = p.drafts.find((d) => d.id === id)
-          const today = new Date().toISOString().slice(0, 10)
-          return {
-            ...p,
-            drafts: p.drafts.map((d) => (d.id === id ? { ...d, sent: true } : d)),
-            // Sending is the one action that changes the network itself.
-            people: draft
-              ? p.people.map((person) =>
-                  person.id === draft.personId ? { ...person, lastContact: today } : person
-                )
-              : p.people,
-          }
-        }),
-      removeDraft: (id) => patch((p) => ({ ...p, drafts: p.drafts.filter((d) => d.id !== id) })),
-      dismiss: (personId) =>
-        patch((p) => ({ ...p, dismissed: [...new Set([...p.dismissed, personId])] })),
-      undismissAll: () => patch((p) => ({ ...p, dismissed: [] })),
-      resetDemo: () => {
-        const account = state.account
-        setState({ ...EMPTY, account })
-      },
+      removeScan: (id) =>
+        setState((prev) => ({ ...prev, scans: prev.scans.filter((scan) => scan.id !== id) })),
+      clearScans: () => setState((prev) => ({ ...prev, scans: [] })),
     }),
-    [state, ready, patch]
+    [state, ready]
   )
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

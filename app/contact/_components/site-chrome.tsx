@@ -6,9 +6,11 @@ import { Menu, X } from 'lucide-react'
 import { Wordmark } from './primitives'
 
 const LINKS = [
-  { href: '/contact#how', label: 'How it works' },
-  { href: '/contact#craft', label: 'The brief' },
-  { href: '/contact#pricing', label: 'Pricing' },
+  { href: '/contact#results', label: 'Results' },
+  { href: '/contact#services', label: 'Services' },
+  { href: '/contact/app', label: 'LLM SEO tool' },
+  { href: '/contact#process', label: 'Process' },
+  { href: '/contact#testimonials', label: 'Testimonials' },
 ]
 
 export function SiteNav() {
@@ -30,37 +32,15 @@ export function SiteNav() {
   }, [open])
 
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        borderBottom: `1px solid ${lifted ? 'var(--line)' : 'transparent'}`,
-        background: lifted ? 'rgba(247,243,234,0.86)' : 'transparent',
-        backdropFilter: lifted ? 'saturate(180%) blur(12px)' : 'none',
-        transition: 'background-color var(--d-2) var(--e-out), border-color var(--d-2) var(--e-out)',
-      }}
-    >
-      <div
-        className="ctc-wrap ctc-between"
-        style={{ height: 68, gap: 'var(--s-5)' }}
-      >
-        <Link href="/contact" aria-label="Contact — home" style={{ textDecoration: 'none' }}>
+    <header className={`ctc-nav ${lifted ? 'ctc-nav-lifted' : ''}`}>
+      <div className="ctc-wrap ctc-between" style={{ height: 72, gap: 'var(--s-5)' }}>
+        <Link href="/contact" aria-label="Contact Studios — home" style={{ textDecoration: 'none' }}>
           <Wordmark />
         </Link>
 
         <nav aria-label="Primary" className="ctc-row ctc-g5 ctc-nav-desktop">
           {LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="ctc-navlink"
-              style={{
-                fontSize: 'var(--t-sm)',
-                color: 'var(--ink-muted)',
-                textDecoration: 'none',
-              }}
-            >
+            <Link key={link.href} href={link.href} className="ctc-navlink">
               {link.label}
             </Link>
           ))}
@@ -68,10 +48,10 @@ export function SiteNav() {
 
         <div className="ctc-row ctc-g2 ctc-nav-desktop">
           <Link href="/contact/signin" className="ctc-btn ctc-btn-ghost ctc-btn-sm">
-            Sign in
+            Client login
           </Link>
-          <Link href="/contact/signup" className="ctc-btn ctc-btn-primary ctc-btn-sm">
-            Start free
+          <Link href="/contact#book" className="ctc-btn ctc-btn-ember ctc-btn-sm">
+            Let&rsquo;s talk
           </Link>
         </div>
 
@@ -80,7 +60,7 @@ export function SiteNav() {
           className="ctc-btn ctc-btn-quiet ctc-btn-sm ctc-nav-mobile"
           aria-expanded={open}
           aria-controls="ctc-mobile-menu"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen((value) => !value)}
         >
           {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
           <span className="ctc-sr">{open ? 'Close menu' : 'Open menu'}</span>
@@ -88,51 +68,18 @@ export function SiteNav() {
       </div>
 
       {open ? (
-        <div
-          id="ctc-mobile-menu"
-          className="ctc-pop"
-          style={{
-            position: 'fixed',
-            inset: '68px 0 0',
-            background: 'var(--paper)',
-            padding: 'var(--s-5)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--s-2)',
-            zIndex: 49,
-          }}
-        >
+        <div id="ctc-mobile-menu" className="ctc-mobile-menu ctc-pop">
           {LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--t-xl)',
-                color: 'var(--ink)',
-                textDecoration: 'none',
-                padding: 'var(--s-3) 0',
-                borderBottom: '1px solid var(--line)',
-              }}
-            >
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="ctc-mobile-link">
               {link.label}
             </Link>
           ))}
           <div className="ctc-stack ctc-g3" style={{ marginTop: 'var(--s-4)' }}>
-            <Link
-              href="/contact/signin"
-              className="ctc-btn ctc-btn-quiet ctc-btn-lg"
-              onClick={() => setOpen(false)}
-            >
-              Sign in
+            <Link href="/contact/signin" className="ctc-btn ctc-btn-quiet ctc-btn-lg" onClick={() => setOpen(false)}>
+              Client login
             </Link>
-            <Link
-              href="/contact/signup"
-              className="ctc-btn ctc-btn-primary ctc-btn-lg"
-              onClick={() => setOpen(false)}
-            >
-              Start free
+            <Link href="/contact#book" className="ctc-btn ctc-btn-ember ctc-btn-lg" onClick={() => setOpen(false)}>
+              Let&rsquo;s talk
             </Link>
           </div>
         </div>
@@ -143,59 +90,48 @@ export function SiteNav() {
 
 export function SiteFooter() {
   return (
-    <footer
-      className="ctc-on-ink"
-      style={{ background: 'var(--ink)', color: 'var(--paper)', paddingBlock: 'var(--s-8)' }}
-    >
+    <footer className="ctc-footer">
       <div className="ctc-wrap">
         <div className="ctc-footer-grid">
           <div className="ctc-stack ctc-g3" style={{ maxWidth: 320 }}>
-            <span style={{ color: 'var(--paper)' }}>
-              <Wordmark onInk />
-            </span>
+            <Wordmark />
             <p className="ctc-muted" style={{ fontSize: 'var(--t-sm)' }}>
-              The network you already have. Kept warm, on purpose.
+              The search agency built for what&rsquo;s next.
             </p>
           </div>
 
           <FooterCol
-            title="Product"
+            title="Navigation"
             links={[
-              { href: '/contact#how', label: 'How it works' },
-              { href: '/contact#craft', label: 'The brief' },
-              { href: '/contact#pricing', label: 'Pricing' },
-              { href: '/contact/app', label: 'Open workspace' },
+              { href: '/contact#results', label: 'Results' },
+              { href: '/contact#services', label: 'Services' },
+              { href: '/contact#process', label: 'Process' },
+              { href: '/contact#book', label: 'Book a call' },
             ]}
           />
           <FooterCol
-            title="Account"
+            title="Tools"
             links={[
+              { href: '/contact/app', label: 'LLM visibility scan' },
+              { href: '/contact/signin', label: 'Client login' },
               { href: '/contact/signup', label: 'Create account' },
-              { href: '/contact/signin', label: 'Sign in' },
             ]}
           />
           <FooterCol
-            title="Elsewhere"
+            title="Company"
             links={[
-              { href: '/contact#faq', label: 'Questions' },
-              { href: '/contact#pricing', label: 'For teams' },
+              { href: '/contact#testimonials', label: 'Testimonials' },
+              { href: '/contact#book', label: 'Careers' },
             ]}
           />
         </div>
 
-        <div
-          className="ctc-between ctc-wrapflex ctc-g3"
-          style={{
-            marginTop: 'var(--s-7)',
-            paddingTop: 'var(--s-4)',
-            borderTop: '1px solid var(--line-ink)',
-          }}
-        >
+        <div className="ctc-footer-base">
           <p className="ctc-faint" style={{ fontSize: 'var(--t-xs)' }}>
-            © {new Date().getFullYear()} Contact. A design and engineering study.
+            © {new Date().getFullYear()} Contact Studios Inc. A design and engineering study.
           </p>
           <p className="ctc-faint ctc-num" style={{ fontSize: 'var(--t-2xs)', letterSpacing: '0.08em' }}>
-            BRIEFS WRITTEN BY CLAUDE · REVIEW BEFORE SENDING
+            SCANS RUN LIVE ON CLAUDE
           </p>
         </div>
       </div>
@@ -203,30 +139,14 @@ export function SiteFooter() {
   )
 }
 
-function FooterCol({
-  title,
-  links,
-}: {
-  title: string
-  links: { href: string; label: string }[]
-}) {
+function FooterCol({ title, links }: { title: string; links: { href: string; label: string }[] }) {
   return (
     <div className="ctc-stack ctc-g3">
-      <h2 className="ctc-eyebrow" style={{ fontFamily: 'var(--font-mono)' }}>
-        {title}
-      </h2>
+      <h2 className="ctc-eyebrow">{title}</h2>
       <ul className="ctc-stack ctc-g2" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
         {links.map((link) => (
           <li key={link.label}>
-            <Link
-              href={link.href}
-              style={{
-                fontSize: 'var(--t-sm)',
-                color: 'rgba(247,243,234,0.72)',
-                textDecoration: 'none',
-              }}
-              className="ctc-footlink"
-            >
+            <Link href={link.href} className="ctc-footlink">
               {link.label}
             </Link>
           </li>

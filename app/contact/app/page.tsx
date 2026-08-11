@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { Workspace } from '../_components/workspace'
 
 export const metadata: Metadata = {
-  title: 'Workspace — Contact',
-  description: 'Your network, and who to reach out to this week.',
+  title: 'LLM visibility scan — Contact Studios',
+  description: 'See how your brand ranks inside AI answers.',
 }
 
 export default function WorkspacePage() {

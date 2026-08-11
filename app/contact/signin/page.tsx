@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { AuthScreen } from '../_components/auth'
 
 export const metadata: Metadata = {
-  title: 'Sign in — Contact',
-  description: 'Sign in to your network.',
+  title: 'Client login — Contact Studios',
+  description: 'Sign in to your Contact Studios account.',
 }
 
 export default function SignInPage() {
