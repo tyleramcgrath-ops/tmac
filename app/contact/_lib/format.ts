@@ -1,12 +1,13 @@
 import type { Probe, Sentiment } from './types'
 
 export function timeAgoFromMs(ms: number, now: number = Date.now()): string {
-  const mins = Math.round((now - ms) / 60_000)
+  // Floor, not round: 30 seconds ago is "just now", not "1m ago".
+  const mins = Math.floor((now - ms) / 60_000)
   if (mins < 1) return 'just now'
   if (mins < 60) return `${mins}m ago`
-  const hours = Math.round(mins / 60)
+  const hours = Math.floor(mins / 60)
   if (hours < 24) return `${hours}h ago`
-  const days = Math.round(hours / 24)
+  const days = Math.floor(hours / 24)
   if (days < 30) return `${days}d ago`
   return `${Math.round(days / 30)}mo ago`
 }

@@ -3,6 +3,10 @@
 
 export type Intent = 'discovery' | 'comparison' | 'transactional' | 'reputation'
 
+/** Which assistant a scan was run against. Declared here, not imported from
+ *  the server module, so the client bundle never pulls in provider code. */
+export type EngineId = 'claude' | 'gpt' | 'grok'
+
 export type Sentiment = 'positive' | 'neutral' | 'negative' | 'absent'
 
 export interface ScanInput {
@@ -52,6 +56,7 @@ export interface Plan {
 export interface Scan {
   id: string
   createdAt: number
+  engine?: EngineId
   input: ScanInput
   probes: Probe[]
   plan?: Plan

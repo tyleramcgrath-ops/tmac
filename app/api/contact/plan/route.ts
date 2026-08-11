@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
+import { generateObject } from 'ai'
 import { z } from 'zod'
-import { CONTACT_MODEL, getClient, toErrorResponse } from '@/lib/contact/model'
+import { rateLimit, rateLimitResponse, resolveAnalyst, toErrorResponse } from '@/lib/contact/model'
 
 export const runtime = 'nodejs'
 export const maxDuration = 120
@@ -12,6 +13,7 @@ export const maxDuration = 120
 const Body = z.object({
   brand: z.string().min(1).max(80),
   category: z.string().max(200).default(''),
+  engine: z.string().max(20).default('claude'),
   score: z.number().min(0).max(100),
   results: z
     .array(
@@ -32,62 +34,32 @@ const Body = z.object({
 const EFFORT = ['low', 'medium', 'high'] as const
 
 const Result = z.object({
-  verdict: z.string(),
+  verdict: z
+    .string()
+    .describe(
+      'Two or three sentences to the brand owner: where they actually stand, who is beating them, and the single biggest reason why. Direct, specific, no cheerleading.'
+    ),
   actions: z
     .array(
       z.object({
-        title: z.string(),
-        why: z.string(),
+        title: z.string().describe('The job, stated as work to be done. Under ten words.'),
+        why: z
+          .string()
+          .describe('One or two sentences tying this to what the scan found. Cite the pattern, not a generality.'),
         effort: z.enum(EFFORT),
         impact: z.enum(EFFORT),
       })
     )
-    .min(1),
+    .min(1)
+    .describe('Three to five pieces of work, most valuable first.'),
 })
 
-const PLAN_TOOL = {
-  name: 'deliver_plan',
-  description: 'Return the verdict and the work that would fix it.',
-  input_schema: {
-    type: 'object' as const,
-    properties: {
-      verdict: {
-        type: 'string',
-        description:
-          'Two or three sentences to the brand owner: where they actually stand in LLM answers, who is beating them, and the single biggest reason why. Direct, specific, no cheerleading.',
-      },
-      actions: {
-        type: 'array',
-        description: 'Three to five pieces of work, most valuable first.',
-        items: {
-          type: 'object',
-          properties: {
-            title: {
-              type: 'string',
-              description: 'The job, stated as work to be done. Under ten words.',
-            },
-            why: {
-              type: 'string',
-              description:
-                'One or two sentences tying this to what the scan actually found. Cite the pattern, not a generality.',
-            },
-            effort: { type: 'string', enum: [...EFFORT] },
-            impact: { type: 'string', enum: [...EFFORT] },
-          },
-          required: ['title', 'why', 'effort', 'impact'],
-        },
-      },
-    },
-    required: ['verdict', 'actions'],
-  },
-}
+const SYSTEM = `You are a senior strategist at Contact Studios, a search agency that gets brands cited inside AI assistant answers.
 
-const SYSTEM = `You are a senior strategist at Contact Studios, a search agency that gets brands cited inside LLM answers.
+You are handed the results of a live visibility scan. You tell the client the truth about it, then what you would do.
 
-You are handed the results of a live visibility scan and you tell the client the truth about it, then what you would do.
-
-How LLM visibility is actually won — reason from this, do not recite it:
-- Models repeat what the wider web already agrees on. Being named in listicles, roundups, comparisons and reviews on sites the model trusts is what puts a brand in the answer.
+How this visibility is actually won — reason from this, do not recite it:
+- Models repeat what the wider web already agrees on. Being named in listicles, roundups, comparisons and reviews on sources the model trusts is what puts a brand in the answer.
 - Third-party corroboration beats owned content. A brand's own pages rarely make it into a recommendation; being the brand others name does.
 - Structured, specific, comparable facts get quoted: prices, specs, use cases, who it is for.
 - Reputation questions are won by review presence and by the absence of unanswered complaints.
@@ -100,6 +72,12 @@ Rules:
 - Never promise rankings or revenue.`
 
 export async function POST(req: Request) {
+  const limit = rateLimit(req, 2)
+  if (!limit.ok) {
+    const { status, body, headers } = rateLimitResponse(limit.retryAfter)
+    return NextResponse.json(body, { status, headers })
+  }
+
   let parsed: z.infer<typeof Body>
   try {
     parsed = Body.parse(await req.json())
@@ -114,7 +92,7 @@ export async function POST(req: Request) {
     )
   }
 
-  const { brand, category, score, results } = parsed
+  const { brand, category, score, results, engine } = parsed
 
   const table = results
     .map((row, index) =>
@@ -134,53 +112,31 @@ export async function POST(req: Request) {
   const prompt = [
     `Brand: ${brand}`,
     category ? `Category: ${category}` : '',
+    `Assistant measured: ${engine}`,
     `Visibility score: ${score}/100. Mentioned in ${mentions} of ${results.length} answers.`,
     '',
     'The scan:',
     '',
     table,
-    '',
-    'Return the verdict and the work via the deliver_plan tool.',
   ]
     .filter(Boolean)
     .join('\n')
 
   try {
-    const client = getClient()
-    const message = await client.messages.create({
-      model: CONTACT_MODEL,
-      max_tokens: 2048,
-      temperature: 0.5,
+    const { model, modelId } = resolveAnalyst()
+    const { object } = await generateObject({
+      model,
+      schema: Result,
       system: SYSTEM,
-      tools: [PLAN_TOOL],
-      tool_choice: { type: 'tool', name: PLAN_TOOL.name },
-      messages: [{ role: 'user', content: prompt }],
+      prompt,
+      temperature: 0.5,
+      maxRetries: 2,
     })
 
-    const toolUse = message.content.find((block) => block.type === 'tool_use')
-    if (!toolUse || toolUse.type !== 'tool_use') {
-      return NextResponse.json(
-        { code: 'no_output', error: 'No plan came back.', detail: 'Try generating it again.' },
-        { status: 502 }
-      )
-    }
-
-    const result = Result.safeParse(toolUse.input)
-    if (!result.success) {
-      return NextResponse.json(
-        {
-          code: 'bad_output',
-          error: 'The plan came back malformed.',
-          detail: result.error.issues[0]?.message,
-        },
-        { status: 502 }
-      )
-    }
-
     return NextResponse.json({
-      verdict: result.data.verdict,
-      actions: result.data.actions.slice(0, 5),
-      model: message.model,
+      verdict: object.verdict,
+      actions: object.actions.slice(0, 5),
+      model: modelId,
     })
   } catch (error) {
     const { status, body } = toErrorResponse(error)

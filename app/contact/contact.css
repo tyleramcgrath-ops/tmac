@@ -1623,6 +1623,43 @@
   }
 }
 
+/* Segmented control — used for picking which assistant to measure. */
+.ctc-segment {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+}
+.ctc-segment-btn {
+  min-height: 32px;
+  padding: 0 var(--s-4);
+  border: 0;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--d-1) var(--e-out),
+    color var(--d-1) var(--e-out);
+}
+.ctc-segment-btn:hover:not(:disabled) {
+  color: var(--text);
+}
+.ctc-segment-btn[aria-pressed='true'] {
+  background: var(--surface-hi);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--ember-line);
+}
+.ctc-segment-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .ctc-suggestion {
   padding: 6px 12px;
   border-radius: var(--r-full);
@@ -2115,4 +2152,30 @@ button.ctc-probe:hover .ctc-probe-chevron {
   border-radius: var(--r-xs);
   padding: 0 3px;
   font-weight: 600;
+}
+
+/* A quiet, non-blocking notice — used when the scanner has no credential. */
+.ctc-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border: 1px solid var(--warn);
+  border-radius: var(--r-sm);
+  background: var(--warn-wash);
+  color: var(--text);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+.ctc-notice svg {
+  color: var(--warn);
+  flex: none;
+  margin-top: 3px;
+}
+.ctc-notice code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: rgba(248, 244, 236, 0.09);
+  border-radius: var(--r-xs);
+  padding: 1px 4px;
 }

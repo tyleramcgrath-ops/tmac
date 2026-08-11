@@ -1,12 +1,13 @@
 'use client'
 
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ArrowRight,
   Check,
   ChevronRight,
   RotateCcw,
   Search,
+  TriangleAlert as WarnIcon,
   Sparkles,
   TriangleAlert,
   X,
@@ -20,6 +21,7 @@ import {
   scoreBand,
   scoreScan,
   shareOfVoice,
+  type EngineId,
   type Plan,
   type Probe,
   type Scan,
@@ -49,6 +51,9 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
     market: 'United States',
   })
   const [competitorText, setCompetitorText] = useState('')
+  const [engine, setEngine] = useState<EngineId>('claude')
+  const [engines, setEngines] = useState<{ id: EngineId; label: string }[] | null>(null)
+  const [configured, setConfigured] = useState<boolean | null>(null)
   const [scan, setScan] = useState<Scan | null>(null)
   const [phase, setPhase] = useState<'idle' | 'prompts' | 'probing' | 'plan' | 'done'>('idle')
   const [error, setError] = useState<ApiError | null>(null)
@@ -57,6 +62,27 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
   const reportRef = useRef<HTMLDivElement>(null)
 
   const running = phase === 'prompts' || phase === 'probing' || phase === 'plan'
+
+  // Ask the server what it can actually measure before offering the choice.
+  useEffect(() => {
+    let live = true
+    fetch('/api/contact/engines')
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        if (!live || !payload) return
+        setEngines(payload.engines ?? [])
+        setConfigured(Boolean(payload.configured))
+        if (payload.engines?.length && !payload.engines.some((item: { id: EngineId }) => item.id === 'claude')) {
+          setEngine(payload.engines[0].id)
+        }
+      })
+      .catch(() => {
+        if (live) setEngines([])
+      })
+    return () => {
+      live = false
+    }
+  }, [])
 
   const applyExample = (example: (typeof EXAMPLE_SCANS)[number]) => {
     setInput({
@@ -133,6 +159,7 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
     const initial: Scan = {
       id: newId('s'),
       createdAt: Date.now(),
+      engine,
       input: scanInput,
       probes: prompts.map((item) => ({
         id: newId('p'),
@@ -168,6 +195,7 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
               brand,
               domain: scanInput.domain,
               market: scanInput.market,
+              engine,
             }),
           })
           const payload = await response.json()
@@ -211,6 +239,7 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
         body: JSON.stringify({
           brand,
           category,
+          engine,
           score,
           results: answered.map((probe) => ({
             prompt: probe.prompt,
@@ -233,7 +262,70 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
     setScan(finished)
     saveScan(finished)
     setPhase('done')
-  }, [competitorText, input, saveScan])
+  }, [competitorText, engine, input, saveScan])
+
+  /** Re-ask a single question that failed, without re-running the whole scan. */
+  const retryProbe = useCallback(
+    async (probeId: string) => {
+      if (!scan) return
+      const index = scan.probes.findIndex((probe) => probe.id === probeId)
+      if (index < 0) return
+
+      setScan((prev) =>
+        prev
+          ? {
+              ...prev,
+              probes: prev.probes.map((probe) =>
+                probe.id === probeId ? { ...probe, status: 'running', error: undefined } : probe
+              ),
+            }
+          : prev
+      )
+
+      try {
+        const response = await fetch('/api/contact/probe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: scan.probes[index].prompt,
+            brand: scan.input.brand,
+            domain: scan.input.domain,
+            market: scan.input.market,
+            engine: scan.engine ?? engine,
+          }),
+        })
+        const payload = await response.json()
+        setScan((prev) => {
+          if (!prev) return prev
+          const probes = prev.probes.map((probe) =>
+            probe.id === probeId
+              ? response.ok
+                ? { ...probe, status: 'done' as const, error: undefined, ...payload }
+                : { ...probe, status: 'error' as const, error: (payload as ApiError).error }
+              : probe
+          )
+          const next = { ...prev, probes }
+          // A retry changes the score, so the saved copy has to change with it.
+          saveScan(next)
+          return next
+        })
+      } catch (err) {
+        setScan((prev) =>
+          prev
+            ? {
+                ...prev,
+                probes: prev.probes.map((probe) =>
+                  probe.id === probeId
+                    ? { ...probe, status: 'error' as const, error: (err as Error).message }
+                    : probe
+                ),
+              }
+            : prev
+        )
+      }
+    },
+    [engine, saveScan, scan]
+  )
 
   const stop = () => {
     abortRef.current?.abort()
@@ -334,6 +426,39 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
             </div>
           </div>
 
+          {engines && engines.length > 1 ? (
+            <div className="ctc-row ctc-g2 ctc-wrapflex" style={{ marginTop: 'var(--s-4)' }}>
+              <span className="ctc-label" style={{ alignSelf: 'center' }} id="engine-label">
+                Measure
+              </span>
+              <div className="ctc-segment" role="group" aria-labelledby="engine-label">
+                {engines.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className="ctc-segment-btn"
+                    aria-pressed={engine === option.id}
+                    disabled={running}
+                    onClick={() => setEngine(option.id)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          {configured === false ? (
+            <div className="ctc-notice" role="status" style={{ marginTop: 'var(--s-4)' }}>
+              <WarnIcon size={14} aria-hidden="true" />
+              <span>
+                No model credential is configured, so a scan cannot run. Set{' '}
+                <code>AI_GATEWAY_API_KEY</code> or <code>ANTHROPIC_API_KEY</code> to switch the
+                scanner on — saved scans still open.
+              </span>
+            </div>
+          ) : null}
+
           <div className="ctc-row ctc-g2 ctc-wrapflex" style={{ marginTop: 'var(--s-4)' }}>
             <span className="ctc-label" style={{ alignSelf: 'center' }}>
               Try one
@@ -375,7 +500,8 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
                 type="button"
                 className="ctc-btn ctc-btn-ember ctc-btn-lg"
                 onClick={run}
-                disabled={running}
+                disabled={running || configured === false}
+                title={configured === false ? 'No model credential is configured' : undefined}
               >
                 {running ? (
                   <>
@@ -402,7 +528,12 @@ export function Scanner({ onOpenProbe }: { onOpenProbe: (probe: Probe, brand: st
       {phase === 'prompts' ? <PromptsSkeleton /> : null}
 
       {scan ? (
-        <Report scan={scan} phase={phase} onOpenProbe={(probe) => onOpenProbe(probe, scan.input.brand)} />
+        <Report
+          scan={scan}
+          phase={phase}
+          onOpenProbe={(probe) => onOpenProbe(probe, scan.input.brand)}
+          onRetryProbe={retryProbe}
+        />
       ) : null}
     </div>
   )
@@ -414,10 +545,12 @@ function Report({
   scan,
   phase,
   onOpenProbe,
+  onRetryProbe,
 }: {
   scan: Scan
   phase: string
   onOpenProbe: (probe: Probe) => void
+  onRetryProbe: (probeId: string) => void
 }) {
   const done = scan.probes.filter((probe) => probe.status === 'done')
   const score = scoreScan(scan.probes)
@@ -538,7 +671,13 @@ function Report({
         </div>
         <ul className="ctc-stack ctc-g3" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
           {scan.probes.map((probe, index) => (
-            <ProbeRow key={probe.id} probe={probe} index={index} onOpen={() => onOpenProbe(probe)} />
+            <ProbeRow
+              key={probe.id}
+              probe={probe}
+              index={index}
+              onOpen={() => onOpenProbe(probe)}
+              onRetry={() => onRetryProbe(probe.id)}
+            />
           ))}
         </ul>
       </div>
@@ -576,10 +715,12 @@ function ProbeRow({
   probe,
   index,
   onOpen,
+  onRetry,
 }: {
   probe: Probe
   index: number
   onOpen: () => void
+  onRetry: () => void
 }) {
   if (probe.status === 'pending' || probe.status === 'running') {
     return (
@@ -604,11 +745,19 @@ function ProbeRow({
         <span className="ctc-probe-state" style={{ color: 'var(--miss)' }}>
           <TriangleAlert size={14} aria-hidden="true" />
         </span>
-        <div className="ctc-stack ctc-g1 ctc-grow">
+        <div className="ctc-stack ctc-g2 ctc-grow">
           <span className="ctc-probe-prompt">{probe.prompt}</span>
           <span className="ctc-faint" style={{ fontSize: 'var(--t-xs)' }}>
             {probe.error ?? 'This question failed.'}
           </span>
+          <button
+            type="button"
+            className="ctc-btn ctc-btn-quiet ctc-btn-sm"
+            style={{ alignSelf: 'flex-start' }}
+            onClick={onRetry}
+          >
+            <RotateCcw size={12} aria-hidden="true" /> Ask it again
+          </button>
         </div>
       </li>
     )

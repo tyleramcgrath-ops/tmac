@@ -14,6 +14,7 @@
     "test:e2e": "bash scripts/e2e.sh"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.109",
     "@ai-sdk/gateway": "3.0.59",
     "@ai-sdk/openai": "3.0.37",
     "@ai-sdk/provider": "3.0.8",
