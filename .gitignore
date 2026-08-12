@@ -44,6 +44,9 @@ next-env.d.ts
 # seo-intel engine local dev store (FileStore)
 .data/
 
+# seo-god skill local state: secrets, run markers, scratch (seo-god.json IS committed)
+.seo-god/
+
 /test-results
 /playwright-report
 apps/reloop/package-lock.json
