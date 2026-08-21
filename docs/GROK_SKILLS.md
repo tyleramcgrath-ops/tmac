@@ -64,14 +64,46 @@ ship.
 It ships a scanner for the mechanical tells, usable on its own:
 
 ```bash
-node skills/remove-ai-marks/scripts/scan.mjs path/to/post.md
+node skills/remove-ai-marks/scripts/scan.mjs path/to/post.md        # report
+node skills/remove-ai-marks/scripts/scan.mjs --fix path/to/post.md  # strip invisibles
 ```
 
 The scanner reports line-numbered hits and exits non-zero when it finds any, so it
-works in a pre-publish check. It skips code fences, indented code, inline code
-spans, and block quotes. Structural tells (rule-of-three padding, symmetric
-bullets, sections that restate their own heading) need a reader; the skill covers
-those.
+works in a pre-publish check. Wording tells are checked in prose only, skipping code
+fences, indented code, inline code spans, and block quotes. Invisible characters are
+hunted everywhere, code included: a hidden payload ships regardless of what it is
+nested inside. Structural tells (rule-of-three padding, symmetric bullets, sections
+that restate their own heading) need a reader; the skill covers those.
+
+`--fix` strips the invisible class: zero-width and format controls, soft hyphens,
+bidi controls, variation selectors, and the Unicode Tags block (U+E0000–U+E007F),
+which can carry an arbitrary hidden payload. Emoji joiners and presentation
+selectors are preserved, and no-break spaces become ordinary spaces.
+
+## Runtime enforcement
+
+The skill covers text you are authoring by hand. Content this app generates is
+cleaned automatically by `lib/strip-invisible.ts`, applied at every point where
+model output leaves the system:
+
+| Path | What it emits |
+| --- | --- |
+| `app/api/forge/rewrite/route.ts` | SEO title, meta description, JSON-LD deployed to WordPress |
+| `app/api/projects/[projectId]/content/route.ts` | Blog post drafts, cleaned before they are stored |
+| `app/api/forge/route.ts` | Streamed chat text, cleaned in flight |
+| `app/api/errors/route.ts` | Error explanations |
+| `ai/tools/generate-files/get-contents.ts` | Files written into the sandbox |
+
+`app/api/chat/route.ts` is not covered. It emits a structured UI message stream
+with tool-call parts, so sanitizing it needs a different hook than the others.
+
+`tests/strip-invisible.test.ts` covers both implementations and asserts they agree,
+since the skill's scanner carries its own copy of the character set to stay portable
+to other repos.
+
+Statistical watermarking, carried in word choice rather than in the bytes, is
+outside what any of this can do. So is metadata in non-text formats: image C2PA /
+content credentials, EXIF, PDF producer fields, Office document properties.
 
 ## Adding a skill
 

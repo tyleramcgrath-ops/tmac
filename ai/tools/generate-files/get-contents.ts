@@ -1,6 +1,7 @@
 import { streamText, Output, type ModelMessage } from 'ai'
 import { getModelOptions } from '@/ai/gateway'
 import { Deferred } from '@/lib/deferred'
+import { stripInvisibleDeep } from '@/lib/strip-invisible'
 import z from 'zod/v3'
 
 export type File = z.infer<typeof fileSchema>
@@ -69,9 +70,10 @@ export async function* getContents(
         .flatMap((f) => (f?.path ? [f.path] : []))
     )
 
+    // Files are written into the sandbox as-is, so clean them on the way out.
     const files = items.files
       .slice(generated.length, items.files.length - 2)
-      .map((file) => fileSchema.parse(file))
+      .map((file) => stripInvisibleDeep(fileSchema.parse(file)))
 
     if (files.length > 0) {
       yield { files, paths, written }
@@ -87,7 +89,7 @@ export async function* getContents(
   }
 
   const written = generated.map((file) => file.path)
-  const files = raceResult.files.slice(generated.length)
+  const files = raceResult.files.slice(generated.length).map(stripInvisibleDeep)
   const paths = written.concat(files.map((file) => file.path))
   if (files.length > 0) {
     yield { files, written, paths }

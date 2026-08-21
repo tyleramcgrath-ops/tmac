@@ -17,6 +17,9 @@ claims, the facts, the numbers, or the ordering of the argument, it is out of sc
 2. **Scan.** Run `node skills/remove-ai-marks/scripts/scan.mjs <file>` for a line-numbered
    inventory of mechanical tells. It catches lexical and typographic marks; it does not
    catch structural ones. Use it as a checklist, not as the review.
+   `--fix` rewrites the file with the invisible characters stripped — that class is
+   mechanical and safe to automate. Wording tells stay manual, because deciding whether
+   *robust* is the right word takes a reader.
 3. **Edit in three passes**, in this order — structure first, because fixing structure
    deletes sentences you would otherwise have spent time polishing:
    - **Structural**: paragraph shape, list shape, section rhythm
@@ -100,10 +103,25 @@ sure, or cut. *comprehensive* → cut. *seamless* → cut, or say what does not 
   surrounding product voice already uses them.
 - **Curly-quote and dash inconsistency.** A document that mixes `"` with `"…"`, or `-`
   with `–` and `—`, was assembled from generated fragments. Normalize to one convention.
-- **Non-breaking spaces and zero-width characters** (U+00A0, U+200B, U+FEFF) pasted from a
-  chat UI. Strip them.
+- **Invisible characters.** Zero-width and format controls (U+200B–U+200F, U+2060–U+2064,
+  U+2066–U+206F), soft hyphens, bidi embedding controls, variation selectors, and the
+  **Unicode Tags block (U+E0000–U+E007F)**, which can carry an arbitrary hidden payload
+  through text that looks completely ordinary. Strip all of them; `--fix` does it.
+  Two exceptions the tooling already knows: a zero-width joiner *between two emoji* and a
+  variation selector *after* one are holding a glyph together, not marking the text.
+  No-break spaces (U+00A0, U+202F) become ordinary spaces rather than vanishing.
 - **Bold scattered mid-sentence** for emphasis on ordinary words. Remove; keep bold for
   genuine labels and UI strings.
+
+## What this cannot do
+
+Statistical watermarking — the kind embedded in a model's token choices rather than in the
+bytes — is not detectable or removable by any of this, and no text transform can promise
+otherwise. Heavy rewriting weakens it; nothing here guarantees its absence. Say that
+plainly rather than implying a clean scan means unwatermarked.
+
+Non-text formats are also out of scope: image C2PA / content credentials, EXIF, PDF
+producer fields, and Office document metadata all need their own tooling.
 
 ## Do not
 

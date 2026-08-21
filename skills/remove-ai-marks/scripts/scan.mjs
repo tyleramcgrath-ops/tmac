@@ -1,11 +1,58 @@
 #!/usr/bin/env node
-// Line-numbered inventory of mechanical AI tells in a text file.
-// Lexical and typographic marks only — structural tells (rule-of-three, symmetric
-// bullets, heading restatement) need a reader. Usage: node scan.mjs <file>...
-import { readFileSync } from 'node:fs'
+// Line-numbered inventory of mechanical AI tells in a text file, and a --fix
+// mode that strips the invisible ones in place.
+//
+//   node scan.mjs <file>...          report tells, exit non-zero if any
+//   node scan.mjs --fix <file>...    rewrite files with invisible chars removed
+//
+// Lexical and typographic marks only — structural tells (rule-of-three,
+// symmetric bullets, heading restatement) need a reader. --fix touches only the
+// invisible characters; the wording tells are a judgement call and stay manual.
+import { readFileSync, writeFileSync } from 'node:fs'
+import { pathToFileURL } from 'node:url'
 
 // Regions the skill treats as verbatim: fenced code, inline code, block quotes.
 const FENCE = /^\s*(```|~~~)/
+
+// Invisible characters that carry a fingerprint through generated text. The
+// tags block (U+E0000-E007F) is the one that encodes arbitrary hidden payloads.
+// Kept in sync with lib/strip-invisible.ts by tests/strip-invisible.test.ts.
+const INVISIBLE =
+  /[\u00AD\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\u206A-\u206F\uFEFF\uFE00-\uFE0F]|[\u{E0000}-\u{E007F}]|[\u{E0100}-\u{E01EF}]/gu
+
+// Invisible but meaning-bearing as spacing: reported, and replaced rather than
+// deleted by --fix.
+const SPACE_LIKE = /[\u00A0\u202F]/g
+
+const PICTOGRAPHIC = /\p{Extended_Pictographic}/u
+
+// A joiner between two pictographs, or a variation selector after one, is part
+// of an emoji sequence rather than a mark. Left alone.
+function isEmojiMachinery(text, index, char) {
+  const cp = char.codePointAt(0)
+  const prev = [...text.slice(0, index)].pop()
+  if (cp === 0x200d) {
+    const next = [...text.slice(index + char.length)][0]
+    return Boolean(prev && next && PICTOGRAPHIC.test(prev) && PICTOGRAPHIC.test(next))
+  }
+  if (cp === 0xfe0e || cp === 0xfe0f) return Boolean(prev && PICTOGRAPHIC.test(prev))
+  return false
+}
+
+/** Removes invisible characters, keeping emoji sequences intact. */
+export function stripInvisible(text) {
+  let removed = 0
+  const spaced = text.replace(SPACE_LIKE, () => {
+    removed++
+    return ' '
+  })
+  const out = spaced.replace(INVISIBLE, (char, index) => {
+    if (isEmojiMachinery(spaced, index, char)) return char
+    removed++
+    return ''
+  })
+  return { text: out, removed }
+}
 
 const RULES = [
   {
@@ -50,8 +97,13 @@ const RULES = [
   },
   {
     id: 'invisible-char',
-    label: 'non-breaking space or zero-width character',
-    re: /[ ​‌‍﻿]/g,
+    label: 'invisible character (zero-width, format control, or tags block)',
+    re: INVISIBLE,
+  },
+  {
+    id: 'nbsp',
+    label: 'no-break space',
+    re: SPACE_LIKE,
   },
   {
     id: 'bold-lead-bullet',
@@ -85,14 +137,23 @@ function proseLines(text) {
 }
 
 function scan(file) {
-  const lines = proseLines(readFileSync(file, 'utf8'))
+  const source = readFileSync(file, 'utf8')
+  const lines = proseLines(source)
   const prose = lines.map(([, l]) => l).join('\n')
   const words = prose.split(/\s+/).filter(Boolean).length
   const findings = new Map()
 
   for (const rule of RULES) {
-    for (const [n, line] of lines) {
+    // Invisible characters are hunted everywhere, including code and quotes —
+    // a hidden payload ships regardless of what it is nested inside.
+    const scope =
+      rule.id === 'invisible-char' || rule.id === 'nbsp'
+        ? source.split('\n').map((line, i) => [i + 1, line])
+        : lines
+    for (const [n, line] of scope) {
       for (const m of line.matchAll(rule.re)) {
+        // An emoji's own joiners and variation selectors are not a mark.
+        if (rule.id === 'invisible-char' && isEmojiMachinery(line, m.index, m[0])) continue
         const hits = findings.get(rule.id) ?? []
         hits.push({ n, text: m[0].trim() || JSON.stringify(m[0]), label: rule.label })
         findings.set(rule.id, hits)
@@ -124,11 +185,37 @@ function scan(file) {
   return total + dense.length
 }
 
-const files = process.argv.slice(2)
+function fix(file) {
+  const source = readFileSync(file, 'utf8')
+  const { text, removed } = stripInvisible(source)
+  if (removed) writeFileSync(file, text)
+  console.log(
+    removed ? `${file} — removed ${removed} invisible character${removed === 1 ? '' : 's'}` : `${file} — clean`
+  )
+  return removed
+}
+
+// Guarded so the exported helpers can be imported without running the CLI.
+const invokedDirectly =
+  process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href
+
+if (invokedDirectly) {
+const argv = process.argv.slice(2)
+const shouldFix = argv.includes('--fix')
+const files = argv.filter((a) => a !== '--fix')
 if (!files.length) {
-  console.error('usage: node scan.mjs <file>...')
+  console.error('usage: node scan.mjs [--fix] <file>...')
   process.exit(2)
 }
+
+if (shouldFix) {
+  let removed = 0
+  for (const f of files) removed += fix(f)
+  if (removed) console.log('\nWording tells are left alone — re-run without --fix and edit those by hand.')
+  process.exit(0)
+}
+
 let found = 0
 for (const f of files) found += scan(f)
 process.exit(found ? 1 : 0)
+}
