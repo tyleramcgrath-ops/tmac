@@ -2,6 +2,7 @@ import { Models } from '@/ai/constants'
 import { NextResponse } from 'next/server'
 import { checkBotId } from 'botid/server'
 import { generateText, Output } from 'ai'
+import { stripInvisibleDeep } from '@/lib/strip-invisible'
 import { linesSchema, resultSchema } from '@/components/error-monitor/schemas'
 import prompt from './prompt.md'
 
@@ -32,7 +33,7 @@ export async function POST(req: Request) {
     output: Output.object({ schema: resultSchema }),
   })
 
-  return NextResponse.json(result.output, {
+  return NextResponse.json(stripInvisibleDeep(result.output), {
     status: 200,
   })
 }
