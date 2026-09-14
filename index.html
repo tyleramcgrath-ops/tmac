@@ -11,6 +11,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="envue.css?v=4">
+<style>
+/* Solution cards — embedded to bypass CDN cache */
+.solution-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+.solution-card{display:flex;flex-direction:column;padding:36px 30px 32px;border-radius:18px;overflow:hidden;position:relative;text-decoration:none;color:#fff!important;transition:transform 250ms,box-shadow 250ms}
+.solution-card.sc--cam{background:linear-gradient(150deg,#061e3a 0%,#0b2d58 100%)!important;border-top:3px solid #3b82f6}
+.solution-card.sc--gps{background:linear-gradient(150deg,#041a18 0%,#083028 100%)!important;border-top:3px solid #10b981}
+.solution-card.sc--asset{background:linear-gradient(150deg,#1c1504 0%,#2e2108 100%)!important;border-top:3px solid #f59e0b}
+.solution-card.sc--fuel{background:linear-gradient(150deg,#1a0508 0%,#2c0c10 100%)!important;border-top:3px solid #f43f5e}
+.solution-card h3{font-size:22px;color:#fff!important;margin-bottom:10px;font-weight:700;line-height:1.25}
+.solution-card p{font-size:15px;color:rgba(233,241,248,0.68)!important;line-height:1.6;flex:1}
+.solution-card-icon{display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);margin-bottom:22px;color:#fff}
+.solution-card-link{display:inline-flex;align-items:center;gap:6px;margin-top:22px;font-size:14px;font-weight:700;color:#7fb4f0!important}
+.solution-card:hover{transform:translateY(-5px);box-shadow:0 22px 60px rgba(0,0,0,0.32)}
+@media(max-width:960px){.solution-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.solution-cards{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 
@@ -631,28 +647,51 @@
   </section>
 
   <!-- ── CUSTOMER STORIES ────────────────────────────────────── -->
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head section-head--compact">
+  <section class=”section stories-section”>
+    <div class=”wrap”>
+      <div class=”section-head section-head--compact”>
         <div>
-          <span class="eyebrow">Customer stories</span>
+          <span class=”eyebrow”>Customer stories</span>
           <h2>Fleets that made the switch.</h2>
         </div>
-        <a class="text-link" href="results.html">Read the case studies <span>→</span></a>
+        <a class=”text-link” href=”results.html”>Read the case studies <span>→</span></a>
       </div>
 
-      <div class=”quote-grid”>
-        <div class=”quote-card reveal”>
+      <div class=”story-grid”>
+        <div class=”story-card story-card--featured”>
+          <div class=”story-card-metric”><strong>$0</strong><span>Recovery cost after stolen vehicle located in minutes</span></div>
           <blockquote>”When our truck was stolen, we had the exact GPS location within minutes. The vehicle was recovered the same day. That one recovery paid for three years of the platform.”</blockquote>
-          <cite><strong>Don Siegel, Fleet Manager</strong>Cooper Electric Supply Co.</cite>
+          <div class=”story-card-footer”>
+            <div class=”story-avatar”>DS</div>
+            <div>
+              <strong>Don Siegel</strong>
+              <span>Fleet Manager · Cooper Electric Supply Co.</span>
+            </div>
+          </div>
         </div>
-        <div class=”quote-card reveal” style=”--d:1”>
+
+        <div class=”story-card”>
+          <div class=”story-card-metric”><strong>$12K</strong><span>Repair avoided through predictive maintenance alert</span></div>
           <blockquote>”The engine diagnostic alerts caught a failure before it happened. We avoided a $12,000 repair with zero downtime. Predictive maintenance paid for our entire contract.”</blockquote>
-          <cite><strong>Operations Director</strong>AGL Welding Supply Co.</cite>
+          <div class=”story-card-footer”>
+            <div class=”story-avatar”>AG</div>
+            <div>
+              <strong>Operations Director</strong>
+              <span>AGL Welding Supply Co.</span>
+            </div>
+          </div>
         </div>
-        <div class=”quote-card reveal” style=”--d:2”>
+
+        <div class=”story-card”>
+          <div class=”story-card-metric”><strong>4 yrs</strong><span>Ongoing operational partnership with quarterly reviews</span></div>
           <blockquote>”This isn’t a vendor relationship; it’s a genuine operational partnership. They deployed with us, trained our team, and continue to optimize alongside us every quarter.”</blockquote>
-          <cite><strong>Brian Beamer, CEO</strong>B-4 Transport Company</cite>
+          <div class=”story-card-footer”>
+            <div class=”story-avatar”>BB</div>
+            <div>
+              <strong>Brian Beamer</strong>
+              <span>CEO · B-4 Transport Company</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -775,6 +775,51 @@ input[type="range"]::-moz-range-thumb {
 .post-card .read { margin-top: auto; font-weight: 600; color: var(--brand); }
 
 /* ── TESTIMONIAL ────────────────────────────────────────────── */
+/* ── STORY CARDS (customer testimonials) ────────────────────── */
+.story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+.story-card {
+  display: flex; flex-direction: column;
+  background: var(--bg-deep);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-lg);
+  padding: 0;
+  overflow: hidden;
+}
+.story-card--featured { border-top: 3px solid var(--brand); }
+.story-card:not(.story-card--featured):nth-child(2) { border-top: 3px solid #10b981; }
+.story-card:not(.story-card--featured):nth-child(3) { border-top: 3px solid #f59e0b; }
+.story-card-metric {
+  display: flex; align-items: center; gap: 16px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.story-card-metric strong {
+  font-size: 34px; font-weight: 800; color: #fff;
+  line-height: 1; letter-spacing: -0.03em; flex-shrink: 0;
+}
+.story-card-metric span {
+  font-size: 13px; color: rgba(233,241,248,0.55); line-height: 1.4;
+}
+.story-card blockquote {
+  font-size: 15.5px; color: rgba(233,241,248,0.80);
+  line-height: 1.68; font-style: italic;
+  padding: 24px 28px; flex: 1;
+}
+.story-card-footer {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px 28px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.story-avatar {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: var(--brand); color: #fff;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.03em;
+}
+.story-card-footer strong { display: block; font-size: 14px; color: #fff; font-weight: 600; }
+.story-card-footer span { font-size: 12.5px; color: rgba(233,241,248,0.45); }
+
+/* legacy quote-card kept for inner pages */
 .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .quote-card {
   position: relative;
@@ -785,19 +830,7 @@ input[type="range"]::-moz-range-thumb {
   padding: 40px 32px 32px;
   overflow: hidden;
 }
-.quote-card::before {
-  content: '\201C';
-  position: absolute; top: 12px; right: 24px;
-  font-size: 96px; line-height: 1;
-  color: var(--brand); opacity: 0.18;
-  font-family: Georgia, serif;
-  pointer-events: none;
-}
-.quote-card blockquote {
-  font-size: 16px; color: rgba(233,241,248,0.82);
-  line-height: 1.68; margin-bottom: 28px;
-  font-style: italic;
-}
+.quote-card blockquote { font-size: 16px; color: rgba(233,241,248,0.82); line-height: 1.68; margin-bottom: 28px; font-style: italic; }
 .quote-card cite { display: block; font-style: normal; font-size: 13.5px; color: rgba(255,255,255,0.45); }
 .quote-card cite strong { display: block; color: rgba(255,255,255,0.82); font-weight: 600; font-size: 14px; margin-bottom: 2px; }
 
@@ -1220,7 +1253,7 @@ input[type="range"]::-moz-range-thumb {
   .proof-card-large img { height: 260px; }
   .tools-grid { grid-template-columns: 1fr; }
   .sector-cards { grid-template-columns: 1fr 1fr; }
-  .post-grid, .quote-grid, .feature-trio { grid-template-columns: 1fr 1fr; }
+  .post-grid, .quote-grid, .feature-trio, .story-grid { grid-template-columns: 1fr 1fr; }
   .feature-split { grid-template-columns: 1fr; gap: 32px; }
   .feature-split--flip .feature-split-media { order: 0; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
@@ -1244,7 +1277,7 @@ input[type="range"]::-moz-range-thumb {
   .stat-band strong { font-size: 32px; }
 
   .section-head, .section-head--compact { grid-template-columns: 1fr; gap: 18px; align-items: start; margin-bottom: 36px; }
-  .proof-grid, .sector-cards, .post-grid, .quote-grid, .feature-trio { grid-template-columns: 1fr; }
+  .proof-grid, .sector-cards, .post-grid, .quote-grid, .feature-trio, .story-grid { grid-template-columns: 1fr; }
   .command-images .float { display: none; }
   .command-images { margin-bottom: 0; }
   .tool-card, .rollout-panel { padding: 26px; }
