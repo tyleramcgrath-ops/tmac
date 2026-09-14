@@ -249,6 +249,13 @@
 
   /* ── Solution card backgrounds (JS override as final fallback) ─ */
   (function cardBgs() {
+    var sc = document.querySelector('.solution-cards');
+    if (sc) {
+      sc.style.setProperty('display', 'grid', 'important');
+      sc.style.setProperty('grid-template-columns', 'repeat(4,1fr)', 'important');
+      sc.style.setProperty('gap', '20px', 'important');
+      sc.style.setProperty('margin-top', '48px', 'important');
+    }
     var map = {
       'sc--cam':   { bg: 'linear-gradient(150deg,#061e3a,#0b2d58)', border: '3px solid #3b82f6' },
       'sc--gps':   { bg: 'linear-gradient(150deg,#041a18,#083028)', border: '3px solid #10b981' },
