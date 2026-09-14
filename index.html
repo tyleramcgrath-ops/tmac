@@ -436,6 +436,16 @@ h1, h2, h3, h4, h5 {
 .sol-card--feature .sol-body { padding: 28px 32px 32px; }
 .sol-card--feature .sol-body h3 { font-size: 20px; }
 
+/* Card 6 (EV Fleet) — full-width closer so the grid ends flush */
+.sol-card--wide {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: 360px 1fr; align-items: stretch;
+}
+.sol-card--wide .sol-photo img { height: 100%; min-height: 210px; }
+.sol-card--wide .sol-body { align-self: center; padding: 28px 32px; }
+.sol-card--wide .sol-body h3 { font-size: 20px; }
+.sol-card--wide .sol-body p { max-width: 60ch; }
+
 .sol-icon {
   width: 36px; height: 36px; border-radius: 8px;
   background: var(--blue-lt); border: 1px solid var(--blue-md);
@@ -643,11 +653,69 @@ footer {
 .divider { height: 1px; background: var(--border); }
 
 /* ── RESPONSIVE ── */
+/* ── MOBILE NAV (burger + panel) ── */
+.nav-burger {
+  display: none;
+  width: 44px; height: 44px;
+  flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  border-radius: var(--r);
+  background: oklch(100% 0 0 / 0.08);
+  border: 1px solid oklch(100% 0 0 / 0.2);
+  transition: background 180ms var(--ease-out), border-color 180ms var(--ease-out);
+}
+.nav-burger span {
+  display: block; width: 18px; height: 2px; border-radius: 2px;
+  background: oklch(99% 0.005 220);
+  transition: transform 220ms var(--ease-out), opacity 140ms var(--ease-out), background 180ms var(--ease-out);
+}
+.nav.nav--scrolled .nav-burger,
+.nav.nav--menu-open .nav-burger { background: var(--bg2); border-color: var(--border2); }
+.nav.nav--scrolled .nav-burger span,
+.nav.nav--menu-open .nav-burger span { background: var(--ink); }
+.nav.nav--menu-open .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav.nav--menu-open .nav-burger span:nth-child(2) { opacity: 0; }
+.nav.nav--menu-open .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav.nav--menu-open {
+  background: oklch(99% 0.005 220 / 0.96);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+.nav.nav--menu-open .nav-logo img { filter: none; }
+
+.mobile-menu {
+  position: fixed; top: 72px; left: 0; right: 0; z-index: 99;
+  background: oklch(99% 0.005 220 / 0.98);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 18px 44px oklch(15% 0.03 243 / 0.14);
+  padding: 10px 28px 26px;
+  max-height: calc(100dvh - 72px); overflow-y: auto;
+  opacity: 0; transform: translateY(-10px); pointer-events: none;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+.mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.mm-link {
+  display: block; padding: 14px 2px;
+  font-family: 'Lexend', sans-serif; font-size: 16px; font-weight: 600;
+  color: var(--ink); border-bottom: 1px solid var(--border);
+  transition: color 150ms var(--ease-out);
+}
+.mm-link:hover { color: var(--blue); }
+.mm-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 22px; }
+.mm-actions .btn { width: 100%; justify-content: center; }
+.mm-actions .btn-ghost { color: var(--slate); border-color: var(--border2); }
+.mm-actions .btn-ghost:hover { background: var(--bg2); color: var(--ink); }
+
 @media (max-width: 1024px) {
   .nav, .section, footer { padding-left: 28px; padding-right: 28px; }
   .trust-bar { padding-left: 28px; padding-right: 28px; }
-  .hero { padding: 140px 28px 0; }
-  .hero-content { padding-bottom: 200px; }
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+  .nav-right .btn-ghost { display: none; }
+  .hero { padding: 140px 28px 320px; }
+  .hero-content { order: 2; padding-bottom: 0; }
+  .hero-dots { position: static; order: 3; margin: 24px 0 0; }
   .hero-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 24px 0; padding: 24px 28px; }
   .hero-strip .hstat { padding: 0 16px; }
   .hero-strip .hstat:nth-child(2n) { border-right: none; }
@@ -655,6 +723,9 @@ footer {
   .feat-split { grid-template-columns: 1fr; }
   .sol-grid, .ind-grid { grid-template-columns: 1fr 1fr; }
   .sol-card--feature { grid-column: 1 / -1; grid-row: auto; }
+  .sol-card--wide { grid-template-columns: 280px 1fr; }
+  .ind-card:nth-child(1), .ind-card:nth-child(2), .ind-card:nth-child(3),
+  .ind-card:nth-child(4), .ind-card:nth-child(5), .ind-card:nth-child(6) { grid-column: auto; }
   .ind-card:nth-child(1), .ind-card:nth-child(6) { grid-column: 1 / -1; }
   .results-layout { grid-template-columns: 1fr; }
   .result-panel { position: static; }
@@ -665,11 +736,17 @@ footer {
   .tcard--featured { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .nav-links { display: none; }
-  .hero { padding-top: 110px; }
+  .hero { min-height: auto; padding: 110px 28px 0; }
   .hero h1 { font-size: 44px; }
+  .hero-content { padding-bottom: 32px; }
+  .hero-dots { margin: 0 0 28px; }
+  .hero-strip { position: static; order: 4; margin: 0 -28px; }
   .hero-strip-inner { grid-template-columns: 1fr 1fr; }
   .sol-grid, .ind-grid { grid-template-columns: 1fr; }
+  .ind-card:nth-child(1), .ind-card:nth-child(2), .ind-card:nth-child(3),
+  .ind-card:nth-child(4), .ind-card:nth-child(5), .ind-card:nth-child(6) { grid-column: auto; }
+  .sol-card--wide { grid-template-columns: 1fr; }
+  .sol-card--wide .sol-photo img { height: 200px; min-height: 0; }
   .footer-grid { grid-template-columns: 1fr; }
 }
 
@@ -700,8 +777,25 @@ footer {
   <nav class="nav-right">
     <a href="tel:8002011169" class="btn btn-ghost">(800) 201-1169</a>
     <a href="#demo" class="btn btn-primary">Get a Demo</a>
+    <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 </header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a class="mm-link" href="solutions.html">Solutions</a>
+  <a class="mm-link" href="results.html">Results</a>
+  <a class="mm-link" href="industries.html">Industries</a>
+  <a class="mm-link" href="partners.html">Partners</a>
+  <a class="mm-link" href="resources.html">Resources</a>
+  <a class="mm-link" href="company.html">Company</a>
+  <div class="mm-actions">
+    <a href="#demo" class="btn btn-primary btn-lg">Get a Demo</a>
+    <a href="tel:8002011169" class="btn btn-ghost btn-lg">Call (800) 201-1169</a>
+  </div>
+</div>
 
 <!-- HERO (full-bleed) -->
 <section class="hero">
@@ -1239,7 +1333,7 @@ footer {
       </div>
 
       <!-- Card 6 -->
-      <div class="sol-card fade-in" style="--i:5">
+      <div class="sol-card sol-card--wide fade-in" style="--i:5">
         <div class="sol-photo">
           <img src="https://images.unsplash.com/photo-1744884275743-4b075af04f62?auto=format&fit=crop&w=600&h=200&q=80" alt="Night driving dashboard" loading="lazy">
         </div>
@@ -1541,6 +1635,35 @@ updateNav();
 window.addEventListener('scroll', updateNav, { passive: true });
 
 // ── Scroll fade-in (Emil stagger)
+// ── Mobile menu
+(function() {
+  const burger = document.getElementById('navBurger');
+  const menu   = document.getElementById('mobileMenu');
+  const bar    = document.querySelector('.nav');
+  if (!burger || !menu || !bar) return;
+
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    bar.classList.toggle('nav--menu-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  burger.addEventListener('click', e => {
+    e.stopPropagation();
+    setOpen(!menu.classList.contains('open'));
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('click', e => {
+    if (menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); burger.focus(); }
+  });
+  window.matchMedia('(min-width: 1025px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
+})();
+
 const obs = new IntersectionObserver(
   entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
   { threshold: 0.07 }
