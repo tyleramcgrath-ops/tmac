@@ -803,7 +803,7 @@ input[type="range"]::-moz-range-thumb {
 .story-card blockquote {
   font-size: 15.5px; color: rgba(233,241,248,0.80);
   line-height: 1.68; font-style: italic;
-  padding: 24px 28px; flex: 1;
+  padding: 24px 28px; flex: 1; margin: 0;
 }
 .story-card-footer {
   display: flex; align-items: center; gap: 14px;
