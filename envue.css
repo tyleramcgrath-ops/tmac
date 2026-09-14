@@ -438,6 +438,7 @@ h1, h2, h3, h4 {
   margin-top: 48px;
 }
 .solution-card {
+  --accent: #3b82f6;
   display: flex; flex-direction: column;
   padding: 36px 30px 32px;
   border-radius: var(--r-lg);
@@ -445,28 +446,35 @@ h1, h2, h3, h4 {
   position: relative;
   text-decoration: none;
   color: #fff;
+  background: linear-gradient(160deg, #0e2742 0%, #091a2d 100%);
+  border-top: 3px solid var(--accent);
   transition: transform 250ms var(--ease), box-shadow 250ms var(--ease);
 }
-/* Unique gradient bg per card */
-.solution-card.sc--cam  { background-color: #0b2d58 !important; background-image: linear-gradient(150deg, #061e3a 0%, #0b2d58 100%) !important; border-top: 3px solid #3b82f6; }
-.solution-card.sc--gps  { background-color: #083028 !important; background-image: linear-gradient(150deg, #041a18 0%, #083028 100%) !important; border-top: 3px solid #10b981; }
-.solution-card.sc--asset { background-color: #2e2108 !important; background-image: linear-gradient(150deg, #1c1504 0%, #2e2108 100%) !important; border-top: 3px solid #f59e0b; }
-.solution-card.sc--fuel  { background-color: #2c0c10 !important; background-image: linear-gradient(150deg, #1a0508 0%, #2c0c10 100%) !important; border-top: 3px solid #f43f5e; }
-/* Decorative glow orb */
+/* One surface, one accent per card */
+.solution-card.sc--cam   { --accent: #3b82f6; }
+.solution-card.sc--gps   { --accent: #10b981; }
+.solution-card.sc--asset { --accent: #f0a63c; }
+.solution-card.sc--fuel  { --accent: #f2647c; }
+/* Accent glow bloom */
 .solution-card::before {
   content: '';
-  position: absolute; bottom: -60px; right: -60px;
-  width: 200px; height: 200px; border-radius: 50%;
-  background: rgba(255,255,255,0.03);
+  position: absolute; bottom: -80px; right: -80px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.13;
   pointer-events: none;
+  transition: opacity 250ms var(--ease);
 }
+.solution-card:hover::before { opacity: 0.22; }
+.solution-card > * { position: relative; z-index: 1; }
 .solution-card:hover { transform: translateY(-5px); box-shadow: 0 22px 60px rgba(0,0,0,0.32); }
 .solution-card-icon {
+  position: relative;
   display: inline-flex; align-items: center; justify-content: center;
   width: 50px; height: 50px; border-radius: 14px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.16);
-  margin-bottom: 22px; color: #fff;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  margin-bottom: 22px; color: var(--accent);
 }
 .solution-card h3 { font-size: 22px; color: #fff; margin-bottom: 10px; font-weight: 700; line-height: 1.25; }
 .solution-card p { font-size: 15px; color: rgba(233,241,248,0.68); line-height: 1.6; flex: 1; }
@@ -878,10 +886,11 @@ input[type="range"]::-moz-range-thumb {
 /* Compact two-column layout */
 .geotab-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.05fr 0.95fr;
   gap: 72px;
-  align-items: center;
+  align-items: start;
 }
+.geotab-side { display: flex; flex-direction: column; gap: 24px; }
 .geotab-copy .eyebrow { color: #7fb4f0; margin-bottom: 14px; }
 .geotab-copy h2 {
   color: #fff;
@@ -900,7 +909,6 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: var(--r);
   overflow: hidden;
-  margin-bottom: 32px;
 }
 .geotab-stat {
   padding: 18px 20px;
@@ -923,18 +931,18 @@ input[type="range"]::-moz-range-thumb {
 /* Feature list */
 .geotab-checklist { list-style: none; margin-bottom: 32px; }
 .geotab-checklist li {
-  display: flex; gap: 12px; align-items: flex-start;
-  padding: 10px 0;
+  position: relative;
+  padding: 12px 0 12px 30px;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   font-size: 15px;
   color: rgba(233, 241, 248, 0.78);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .geotab-checklist li:last-child { border-bottom: none; }
 .geotab-checklist li::before {
   content: '';
-  flex-shrink: 0;
-  width: 18px; height: 18px; margin-top: 2px;
+  position: absolute; left: 0; top: 15px;
+  width: 18px; height: 18px;
   border-radius: 50%;
   background: rgba(0, 86, 179, 0.25);
   border: 1.5px solid rgba(0, 142, 255, 0.5);
@@ -943,65 +951,53 @@ input[type="range"]::-moz-range-thumb {
 }
 .geotab-checklist li strong { color: #fff; font-weight: 600; }
 
-/* Award photo panel */
+/* Partner credential panel */
 .geotab-award-panel {
-  display: flex; flex-direction: column;
-  align-items: stretch; gap: 20px;
-  padding: 40px 36px;
+  padding: 30px 32px 28px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.12);
-  border-top: 3px solid #f0b429;
   border-radius: var(--r-lg);
 }
-.award-trophy {
-  display: flex; align-items: center; gap: 20px;
+.award-eyebrow {
+  display: block; margin-bottom: 14px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #7fb4f0;
 }
-.award-trophy-icon {
-  display: flex; align-items: center; justify-content: center;
-  width: 80px; height: 80px; border-radius: 50%;
-  background: linear-gradient(135deg, #f0b429 0%, #d97706 100%);
-  color: #fff; flex-shrink: 0;
-  box-shadow: 0 8px 32px rgba(240,180,41,0.4);
+.award-headline {
+  padding-bottom: 18px; margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
 }
-.award-trophy-text strong {
-  display: block; font-size: 22px; font-weight: 800;
-  color: #fff; line-height: 1.1; letter-spacing: -0.02em;
+.award-headline strong {
+  display: block; font-size: 21px; font-weight: 700;
+  color: #fff; line-height: 1.2; letter-spacing: -0.02em;
 }
-.award-trophy-text span {
-  font-size: 13px; color: #f0b429; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.08em;
+.award-headline span {
+  display: block; margin-top: 5px;
+  font-size: 13px; color: rgba(233,241,248,0.55); font-weight: 500;
 }
-.award-details p {
-  font-size: 15px; color: rgba(233,241,248,0.70); line-height: 1.65;
-  font-style: italic;
+.award-quote {
+  font-size: 14.5px; color: rgba(233,241,248,0.68);
+  line-height: 1.65; margin-bottom: 20px;
 }
 .award-badge-row {
-  display: flex; gap: 10px; flex-wrap: wrap;
+  display: flex; gap: 8px; flex-wrap: wrap;
 }
 .award-badge {
   display: inline-flex; align-items: center;
-  padding: 6px 14px;
+  padding: 6px 13px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.14);
   border-radius: var(--r-pill);
   font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.70);
   white-space: nowrap;
 }
-.award-badge--gold {
-  background: rgba(240,180,41,0.12);
-  border-color: rgba(240,180,41,0.35);
-  color: #f0b429;
-}
 
 @media (max-width: 920px) {
   .geotab-layout { grid-template-columns: 1fr; gap: 48px; }
-  .geotab-award-panel { flex-direction: row; justify-content: center; align-items: center; }
-  .geotab-award-img { max-width: 180px; }
   .geotab-stats { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 600px) {
   .geotab-stats { grid-template-columns: repeat(2, 1fr); }
-  .geotab-award-panel { flex-direction: column; }
 }
 
 /* ── PARTNERS ───────────────────────────────────────────────── */
