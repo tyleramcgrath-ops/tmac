@@ -247,6 +247,23 @@
     nums.forEach(n => io.observe(n));
   })();
 
+  /* ── Solution card backgrounds (JS override as final fallback) ─ */
+  (function cardBgs() {
+    var map = {
+      'sc--cam':   { bg: 'linear-gradient(150deg,#061e3a,#0b2d58)', border: '3px solid #3b82f6' },
+      'sc--gps':   { bg: 'linear-gradient(150deg,#041a18,#083028)', border: '3px solid #10b981' },
+      'sc--asset': { bg: 'linear-gradient(150deg,#1c1504,#2e2108)', border: '3px solid #f59e0b' },
+      'sc--fuel':  { bg: 'linear-gradient(150deg,#1a0508,#2c0c10)', border: '3px solid #f43f5e' }
+    };
+    Object.keys(map).forEach(function(cls) {
+      $$('.' + cls).forEach(function(el) {
+        el.style.setProperty('background', map[cls].bg, 'important');
+        el.style.setProperty('border-top', map[cls].border, 'important');
+        el.style.setProperty('color', '#fff', 'important');
+      });
+    });
+  })();
+
   /* ── Scroll reveal ───────────────────────────────────────── */
   (function reveal() {
     const items = $$('.reveal');
