@@ -278,9 +278,9 @@ h1, h2, h3, h4 {
 /* ── HERO ───────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 460px;
+  min-height: 700px;
   display: flex; align-items: center;
-  padding: 60px 0 44px;
+  padding: 110px 0 80px;
   overflow: hidden;
   isolation: isolate;
   background: var(--bg-deep);
@@ -308,16 +308,17 @@ h1, h2, h3, h4 {
 @keyframes heroIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 .hero h1 {
-  font-size: clamp(40px, 5.4vw, 66px);
+  font-size: clamp(48px, 6.4vw, 80px);
   color: #fff;
-  letter-spacing: -0.03em;
-  margin-bottom: 20px;
+  letter-spacing: -0.04em;
+  margin-bottom: 22px;
 }
 .hero h1 span { color: #6fb3f5; display: block; }
 .hero p {
-  font-size: clamp(17px, 1.3vw, 19px);
-  color: rgba(233, 241, 248, 0.82);
-  max-width: 60ch;
+  font-size: clamp(18px, 1.4vw, 21px);
+  color: rgba(233, 241, 248, 0.85);
+  max-width: 58ch;
+  line-height: 1.65;
 }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
@@ -634,6 +635,68 @@ input[type="range"]::-moz-range-thumb {
 .quote-card blockquote { font-size: 17px; color: var(--ink-2); line-height: 1.6; margin-bottom: 22px; }
 .quote-card cite { display: block; font-style: normal; font-size: 14.5px; color: var(--muted); }
 .quote-card cite strong { display: block; color: var(--ink); font-weight: 600; }
+
+/* ── GEOTAB PARTNERSHIP ─────────────────────────────────────── */
+.geotab-section { background: var(--bg-deep); color: #fff; }
+.geotab-section .eyebrow { color: var(--brand-lt); }
+.geotab-section h2 { color: #fff; margin-bottom: 18px; }
+.geotab-section p { color: rgba(233, 241, 248, 0.80); max-width: 60ch; margin-bottom: 28px; }
+.geotab-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 64px;
+  align-items: start;
+}
+.geotab-badge {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--r-lg);
+  padding: 36px 32px;
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+}
+.geotab-logos {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 16px 0 20px;
+  flex-wrap: wrap;
+}
+.geotab-plus {
+  font-size: 28px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+}
+.geotab-svg-logo { vertical-align: middle; }
+.geotab-tagline { color: rgba(233, 241, 248, 0.72); font-size: 14px; line-height: 1.6; }
+.geotab-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.geotab-stat {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--r);
+  padding: 16px 20px;
+}
+.geotab-stat strong { display: block; font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; color: #fff; }
+.geotab-stat span { font-size: 13px; color: rgba(233, 241, 248, 0.65); }
+.geotab-features { list-style: none; margin-bottom: 32px; }
+.geotab-features li {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 15px;
+  color: rgba(233, 241, 248, 0.80);
+  line-height: 1.6;
+}
+.geotab-features li:last-child { border-bottom: none; }
+.geotab-features li strong { color: #fff; }
+@media (max-width: 860px) {
+  .geotab-inner { grid-template-columns: 1fr; }
+  .geotab-badge { position: static; }
+}
 
 /* ── FINAL CTA ──────────────────────────────────────────────── */
 .final-cta { background: var(--bg-deep); color: #fff; padding: 92px 0; }
