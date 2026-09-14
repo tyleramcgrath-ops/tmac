@@ -389,14 +389,14 @@ h1, h2, h3, h4 {
   align-items: end;
   margin-bottom: 56px;
 }
-.section-head h2 { font-size: clamp(44px, 5.5vw, 76px); line-height: 1.06; }
+.section-head h2 { font-size: clamp(38px, 4.5vw, 60px); line-height: 1.06; }
 .section-head p { font-size: 17px; color: var(--slate); }
 .section-head--compact { grid-template-columns: 1fr auto; align-items: center; }
 .section-head--center { grid-template-columns: 1fr; justify-items: center; text-align: center; max-width: 720px; margin-inline: auto; }
 
 /* ── COMMAND (copy + image collage) ─────────────────────────── */
 .command-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 72px; align-items: center; }
-.command-copy h2 { font-size: clamp(44px, 5.5vw, 74px); line-height: 1.06; margin-bottom: 22px; }
+.command-copy h2 { font-size: clamp(38px, 4.5vw, 60px); line-height: 1.06; margin-bottom: 22px; }
 .command-points { display: grid; gap: 10px; margin-top: 36px; }
 .command-points > div {
   display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: center;
@@ -492,7 +492,7 @@ h1, h2, h3, h4 {
   align-items: center;
 }
 .results-banner .eyebrow { color: #7fb4f0; }
-.results-banner h2 { color: #fff; font-size: clamp(40px, 4.8vw, 64px); margin-bottom: 16px; line-height: 1.06; }
+.results-banner h2 { color: #fff; font-size: clamp(34px, 4.2vw, 54px); margin-bottom: 16px; line-height: 1.06; }
 .results-banner p { color: rgba(233,241,248,0.78); font-size: 17px; line-height: 1.7; margin-bottom: 32px; max-width: 50ch; }
 .results-banner-stats {
   display: grid;
@@ -696,7 +696,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* ── ROLLOUT ────────────────────────────────────────────────── */
 .rollout-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
-.rollout-copy h2 { font-size: clamp(40px, 4.8vw, 62px); line-height: 1.06; margin-bottom: 16px; }
+.rollout-copy h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.06; margin-bottom: 16px; }
 .rollout-steps { display: grid; gap: 2px; margin-top: 32px; }
 .rollout-steps button {
   display: grid; grid-template-columns: 46px 1fr; align-items: center; gap: 14px;
@@ -783,6 +783,23 @@ input[type="range"]::-moz-range-thumb {
 .quote-card blockquote { font-size: 17px; color: var(--ink-2); line-height: 1.6; margin-bottom: 22px; }
 .quote-card cite { display: block; font-style: normal; font-size: 14.5px; color: var(--muted); }
 .quote-card cite strong { display: block; color: var(--ink); font-weight: 600; }
+
+/* ── VIDEO SECTION ──────────────────────────────────────────── */
+.video-section { background: var(--bg-deep); padding: 80px 0; }
+.video-section .section-head { color: #fff; }
+.video-section .section-head h2 { color: #fff; }
+.video-section .section-head p { color: rgba(255,255,255,0.65); }
+.video-embed-wrap {
+  position: relative; width: 100%; max-width: 960px; margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+}
+.video-embed-wrap iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: 0;
+}
 
 /* ── GEOTAB PARTNERSHIP ─────────────────────────────────────── */
 .geotab-section {
