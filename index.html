@@ -145,10 +145,11 @@
         </div>
       </div>
     </div>
+    <div class="hero-fade" aria-hidden="true"></div>
   </section>
 
   <!-- ── CREDIBILITY ─────────────────────────────────────────── -->
-  <section aria-label="Fleet results at a glance">
+  <section class="stat-float" aria-label="Fleet results at a glance">
     <div class="wrap">
       <div class="stat-band">
         <div><strong><span data-count="31">31</span>%</strong><span>Fewer reportable accidents</span></div>
@@ -173,9 +174,9 @@
         </div>
       </div>
       <div class="command-images reveal" style="--d:1">
-        <img class="main" src="images/fleet-aerial.jpg" alt="Aerial view of a truck fleet yard" loading="lazy">
+        <img class="main" src="images/ev-fleet.webp" alt="Modern electric fleet vehicles at a charging depot" loading="lazy">
         <img class="float top" src="images/delivery-van.jpg" alt="Delivery driver loading a van" loading="lazy">
-        <img class="float bottom" src="images/truck-driver.jpg" alt="Truck driver in cab" loading="lazy">
+        <img class="float bottom" src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80" alt="Truck driver on the highway" loading="lazy">
       </div>
     </div>
   </section>
@@ -193,7 +194,7 @@
 
       <div class="proof-grid">
         <article class="proof-card-large reveal">
-          <img src="images/truck-driver.jpg" alt="Fleet driver in cab" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1591792111137-5b8219d5fad6?auto=format&fit=crop&w=900&q=80" alt="Fleet trucks on a highway route" loading="lazy">
           <span>Control</span>
           <h3>Fewer phone calls to find a truck.</h3>
           <p>Dispatch sees routes, stops, deviations and critical alerts from one shared base — so the answer to “where is it?” stops costing anyone an afternoon.</p>
@@ -201,7 +202,7 @@
         </article>
 
         <article class="reveal" style="--d:1">
-          <img src="images/delivery-van.jpg" alt="Delivery van at a warehouse" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Fleet operations manager at a dispatch console" loading="lazy">
           <span>Adoption</span>
           <h3>Data the team will actually use.</h3>
           <p>Training, role-based reporting and quarterly reviews that turn a platform into an operating habit.</p>
@@ -209,7 +210,7 @@
         </article>
 
         <article class="reveal" style="--d:2">
-          <img src="images/fleet-depot-bw.jpg" alt="Fleet of trucks at a depot" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1566473965997-3de9c817e938?auto=format&fit=crop&w=800&q=80" alt="Truck refueling at a depot" loading="lazy">
           <span>Results</span>
           <h3>Better calls on the next route.</h3>
           <p>Visibility that cuts waste, shortens response time and protects the margin on every mile you run.</p>
@@ -308,25 +309,102 @@
   <!-- ── GEOTAB PARTNERSHIP ──────────────────────────────────── -->
   <section class="section geotab-section" id="geotab-platform">
     <div class="wrap">
-      <div class="geotab-inner">
-        <div class="geotab-badge-col">
-          <div class="geotab-badge reveal">
-            <span class="eyebrow eyebrow--light">Certified Reseller &amp; Integrator</span>
-            <div class="geotab-logos">
-              <img src="images/envue-logo.png" alt="EnVue Telematics" width="160" height="46" loading="lazy">
-              <span class="geotab-plus">+</span>
-              <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Geotab" class="geotab-svg-logo" width="120" height="40">
-                <text x="0" y="32" font-family="Arial, sans-serif" font-weight="700" font-size="32" fill="#ffffff">Geotab</text>
-              </svg>
-            </div>
-            <p class="geotab-tagline">World's largest open telematics platform — deployed and supported by EnVue Telematics.</p>
-          </div>
+
+      <div class="geotab-head">
+        <span class="eyebrow reveal">Powered by Geotab</span>
+        <h2 class="reveal">The world's largest open<br>telematics platform.</h2>
+        <p class="reveal">50,000+ fleets. 300+ integrations. 4.7 billion data records daily. Geotab's MyGeotab is the open, scalable foundation every EnVue deployment is built on — so your fleet connects to the systems you already run on day one.</p>
+      </div>
+
+      <div class="geotab-body">
+
+        <!-- Platform ecosystem diagram -->
+        <div class="geotab-diagram reveal">
+          <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" class="geotab-ecosystem-svg" role="img" aria-label="Geotab platform integration ecosystem">
+            <defs>
+              <radialGradient id="gctr" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#3399ff"/>
+                <stop offset="100%" stop-color="#0056b3"/>
+              </radialGradient>
+              <radialGradient id="gnd" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#122038"/>
+                <stop offset="100%" stop-color="#0b1628"/>
+              </radialGradient>
+              <filter id="cglow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="8" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="nglow" x="-25%" y="-25%" width="150%" height="150%">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <!-- Decorative rings -->
+            <circle cx="240" cy="240" r="205" fill="none" stroke="rgba(0,86,179,0.10)" stroke-width="1" stroke-dasharray="6 12"/>
+            <circle cx="240" cy="240" r="148" fill="none" stroke="rgba(0,86,179,0.16)" stroke-width="1" stroke-dasharray="4 8"/>
+            <circle cx="240" cy="240" r="84"  fill="none" stroke="rgba(0,142,255,0.22)" stroke-width="1"/>
+
+            <!-- Spoke lines to nodes (r≈185) -->
+            <line x1="240" y1="240" x2="425" y2="240" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="371" y2="371" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="240" y2="425" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="109" y2="371" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="55"  y2="240" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="109" y2="109" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="240" y2="55"  stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <line x1="240" y1="240" x2="371" y2="109" stroke="rgba(0,102,255,0.28)" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+            <!-- Center hub -->
+            <circle cx="240" cy="240" r="66" fill="url(#gctr)" filter="url(#cglow)"/>
+            <circle cx="240" cy="240" r="63" fill="url(#gctr)"/>
+            <text x="240" y="234" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-weight="800" font-size="18" letter-spacing="0.3">Geotab</text>
+            <text x="240" y="254" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-family="Arial,sans-serif" font-size="10.5">Open Platform</text>
+
+            <!-- Node: GPS Tracking (0°) -->
+            <circle cx="425" cy="240" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="425" y="236" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">GPS</text>
+            <text x="425" y="251" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Tracking</text>
+
+            <!-- Node: AI Video (45°) -->
+            <circle cx="371" cy="371" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="371" y="367" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">AI Video</text>
+            <text x="371" y="382" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Dash Cams</text>
+
+            <!-- Node: HOS/ELD (90°) -->
+            <circle cx="240" cy="425" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="240" y="421" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">HOS/ELD</text>
+            <text x="240" y="436" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Compliance</text>
+
+            <!-- Node: Fuel (135°) -->
+            <circle cx="109" cy="371" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="109" y="367" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">Fuel</text>
+            <text x="109" y="382" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Management</text>
+
+            <!-- Node: Dispatch (180°) -->
+            <circle cx="55" cy="240" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="55" y="236" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">Dispatch</text>
+            <text x="55" y="251" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Integration</text>
+
+            <!-- Node: Maintenance (225°) -->
+            <circle cx="109" cy="109" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="109" y="105" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">Predictive</text>
+            <text x="109" y="120" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Maintenance</text>
+
+            <!-- Node: Asset Tracking (270°) -->
+            <circle cx="240" cy="55" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="240" y="51" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">Asset</text>
+            <text x="240" y="66" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Tracking</text>
+
+            <!-- Node: Marketplace (315°) -->
+            <circle cx="371" cy="109" r="36" fill="url(#gnd)" stroke="rgba(0,142,255,0.45)" stroke-width="1.5" filter="url(#nglow)"/>
+            <text x="371" y="105" text-anchor="middle" fill="rgba(255,255,255,0.92)" font-family="Arial,sans-serif" font-weight="700" font-size="11">300+</text>
+            <text x="371" y="120" text-anchor="middle" fill="rgba(255,255,255,0.50)" font-family="Arial,sans-serif" font-size="9.5">Integrations</text>
+          </svg>
         </div>
 
-        <div class="geotab-content-col">
-          <span class="eyebrow reveal">Powered by Geotab</span>
-          <h2 class="reveal">The open platform behind every EnVue solution.</h2>
-          <p class="reveal">Geotab's MyGeotab is the foundation of your EnVue deployment — an open, scalable fleet management platform with over 300 marketplace integrations, real-time data rules, and compliance tools trusted by 50,000+ fleets worldwide.</p>
+        <!-- Stats + features + badge -->
+        <div class="geotab-detail">
 
           <div class="geotab-stats reveal">
             <div class="geotab-stat">
@@ -347,17 +425,32 @@
             </div>
           </div>
 
-          <ul class="geotab-features reveal">
-            <li><strong>MyGeotab Dashboard</strong> — Real-time visibility, trips, exceptions, and driver scores in one view.</li>
-            <li><strong>Marketplace &amp; SDK</strong> — Connect payroll, ERP, dispatch and compliance systems via open APIs.</li>
-            <li><strong>Rules &amp; Exceptions Engine</strong> — Configure hundreds of triggers: speeding, idling, harsh braking, zone violations.</li>
-            <li><strong>HOS &amp; Compliance</strong> — ELD, IFTA, driver vehicle inspection reports, and regulatory reporting.</li>
-            <li><strong>Scalable Architecture</strong> — From 5 vehicles to 50,000, the same platform scales without rearchitecting.</li>
+          <ul class="geotab-checklist reveal">
+            <li><strong>MyGeotab Dashboard</strong> — Live map, trips, exceptions and driver scores in one shared view.</li>
+            <li><strong>Marketplace &amp; Open SDK</strong> — Connect payroll, ERP, dispatch and compliance via 300+ open integrations.</li>
+            <li><strong>Rules &amp; Exceptions Engine</strong> — Configure triggers for speeding, idling, harsh events and zone violations.</li>
+            <li><strong>HOS, ELD &amp; IFTA</strong> — Built-in compliance reporting, driver inspection records and regulatory exports.</li>
+            <li><strong>Scales from 5 to 50,000</strong> — Same platform, same interface — no rearchitecting as your fleet grows.</li>
           </ul>
+
+          <div class="geotab-badge-row reveal">
+            <div class="geotab-badge-logos">
+              <img src="images/envue-logo.png" alt="EnVue Telematics" loading="lazy">
+              <span class="geotab-badge-sep">×</span>
+              <svg viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg" aria-label="Geotab" width="90" height="27">
+                <text x="0" y="24" font-family="Arial,sans-serif" font-weight="800" font-size="26" fill="white">Geotab</text>
+              </svg>
+            </div>
+            <div class="geotab-badge-text">
+              <strong>Certified Reseller &amp; Integrator</strong>
+              EnVue deploys, supports and customises Geotab for commercial fleets across North America.
+            </div>
+          </div>
 
           <a class="button button-primary reveal" href="geotab.html">Explore the Geotab Platform <span>→</span></a>
         </div>
       </div>
+
     </div>
   </section>
 
