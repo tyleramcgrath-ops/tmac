@@ -788,6 +788,51 @@ input[type="range"]::-moz-range-thumb {
   .geotab-stats { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── PARTNERS ───────────────────────────────────────────────── */
+.partners-section .section-head--center p { max-width: 56ch; }
+.partner-categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.partner-category {
+  background: var(--bg);
+  padding: 28px 28px 24px;
+}
+.partner-cat-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 14px;
+}
+.partner-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.partner-list span {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-2);
+  padding: 7px 12px;
+  background: var(--bg-soft);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  transition: border-color 160ms var(--ease), color 160ms var(--ease);
+}
+.partner-list span:hover { border-color: var(--brand-mid); color: var(--brand); }
+.partner-cta { text-align: center; padding-top: 8px; }
+@media (max-width: 860px) { .partner-categories { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .partner-categories { grid-template-columns: 1fr; } }
+
 /* ── FINAL CTA ──────────────────────────────────────────────── */
 .final-cta { background: var(--bg-deep); color: #fff; padding: 92px 0; }
 .final-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
