@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="envue.css">
+<link rel="stylesheet" href="envue.css?v=3">
 </head>
 <body>
 
@@ -295,7 +295,7 @@
       </div>
 
       <div class=”solution-cards”>
-        <a class=”solution-card sc--cam reveal” href=”dash-cams.html”>
+        <a class=”solution-card sc--cam” href=”dash-cams.html”>
           <div class=”solution-card-icon” aria-hidden=”true”>
             <svg width=”22” height=”22” viewBox=”0 0 24 24” fill=”none” stroke=”currentColor” stroke-width=”2” stroke-linecap=”round” stroke-linejoin=”round”><circle cx=”12” cy=”12” r=”3”/><path d=”M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z”/></svg>
           </div>
@@ -304,7 +304,7 @@
           <span class=”solution-card-link”>Learn more <span>→</span></span>
         </a>
 
-        <a class=”solution-card sc--gps reveal” href=”gps-tracking.html” style=”--d:1”>
+        <a class=”solution-card sc--gps” href=”gps-tracking.html”>
           <div class=”solution-card-icon” aria-hidden=”true”>
             <svg width=”22” height=”22” viewBox=”0 0 24 24” fill=”none” stroke=”currentColor” stroke-width=”2” stroke-linecap=”round” stroke-linejoin=”round”><path d=”M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z”/><circle cx=”12” cy=”10” r=”3”/></svg>
           </div>
@@ -313,7 +313,7 @@
           <span class=”solution-card-link”>Learn more <span>→</span></span>
         </a>
 
-        <a class=”solution-card sc--asset reveal” href=”equipment-management.html” style=”--d:2”>
+        <a class=”solution-card sc--asset” href=”equipment-management.html”>
           <div class=”solution-card-icon” aria-hidden=”true”>
             <svg width=”22” height=”22” viewBox=”0 0 24 24” fill=”none” stroke=”currentColor” stroke-width=”2” stroke-linecap=”round” stroke-linejoin=”round”><rect x=”2” y=”7” width=”20” height=”14” rx=”2”/><path d=”M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2”/><line x1=”12” y1=”12” x2=”12” y2=”16”/><line x1=”10” y1=”14” x2=”14” y2=”14”/></svg>
           </div>
@@ -322,7 +322,7 @@
           <span class=”solution-card-link”>Learn more <span>→</span></span>
         </a>
 
-        <a class=”solution-card sc--fuel reveal” href=”fuel-management.html” style=”--d:3”>
+        <a class=”solution-card sc--fuel” href=”fuel-management.html”>
           <div class=”solution-card-icon” aria-hidden=”true”>
             <svg width=”22” height=”22” viewBox=”0 0 24 24” fill=”none” stroke=”currentColor” stroke-width=”2” stroke-linecap=”round” stroke-linejoin=”round”><path d=”M3 22V8l9-6 9 6v14”/><path d=”M9 22V12h6v10”/></svg>
           </div>
@@ -454,76 +454,44 @@
   <section class="section geotab-section" id="geotab-platform">
     <div class="wrap">
 
-      <div class="geotab-head">
-        <span class="eyebrow reveal">Powered by Geotab</span>
-        <h2 class="reveal">The world's largest open<br>telematics platform.</h2>
-        <p class="reveal">50,000+ fleets. 300+ integrations. 4.7 billion data records daily. Geotab's MyGeotab is the open, scalable foundation every EnVue deployment is built on — so your fleet connects to the systems you already run on day one.</p>
-      </div>
+      <div class="geotab-layout">
 
-      <div class="geotab-body">
+        <!-- Left: copy + stats + checklist + CTA -->
+        <div class="geotab-copy">
+          <span class="eyebrow reveal">Powered by Geotab</span>
+          <h2 class="reveal" style="--d:1">The world's largest open telematics platform.</h2>
+          <p class="reveal" style="--d:2">50,000+ fleets. 300+ integrations. 4.7 billion data records daily. EnVue deploys and supports your operation on the same open platform as the largest fleets in the world.</p>
 
-        <!-- Fleet photo -->
-        <div class="geotab-visual reveal">
-          <img src="images/fleet-aerial.jpg" alt="Fleet depot aerial view" loading="lazy">
-          <div class="geotab-visual-badge">
-            <svg viewBox="0 0 100 28" xmlns="http://www.w3.org/2000/svg" aria-label="Geotab" width="80" height="22">
-              <text x="0" y="22" font-family="Arial,sans-serif" font-weight="800" font-size="24" fill="white">Geotab</text>
-            </svg>
-            <span>Certified Reseller &amp; Integrator</span>
-          </div>
-        </div>
-
-        <!-- Stats + features + badge -->
-        <div class="geotab-detail">
-
-          <div class="geotab-stats reveal">
-            <div class="geotab-stat">
-              <strong>50,000+</strong>
-              <span>Fleets worldwide</span>
-            </div>
-            <div class="geotab-stat">
-              <strong>300+</strong>
-              <span>Marketplace integrations</span>
-            </div>
-            <div class="geotab-stat">
-              <strong>4.7B+</strong>
-              <span>Data records daily</span>
-            </div>
-            <div class="geotab-stat">
-              <strong>#1</strong>
-              <span>Telematics platform</span>
-            </div>
+          <div class="geotab-stats reveal" style="--d:2">
+            <div class="geotab-stat"><strong>50K+</strong><span>Fleets worldwide</span></div>
+            <div class="geotab-stat"><strong>300+</strong><span>Integrations</span></div>
+            <div class="geotab-stat"><strong>4.7B+</strong><span>Data records daily</span></div>
+            <div class="geotab-stat"><strong>#1</strong><span>Telematics platform</span></div>
           </div>
 
-          <ul class="geotab-checklist reveal">
-            <li><strong>MyGeotab Dashboard</strong> — Live map, trips, exceptions and driver scores in one shared view.</li>
-            <li><strong>Marketplace &amp; Open SDK</strong> — Connect payroll, ERP, dispatch and compliance via 300+ open integrations.</li>
-            <li><strong>Rules &amp; Exceptions Engine</strong> — Configure triggers for speeding, idling, harsh events and zone violations.</li>
-            <li><strong>HOS, ELD &amp; IFTA</strong> — Built-in compliance reporting, driver inspection records and regulatory exports.</li>
-            <li><strong>Scales from 5 to 50,000</strong> — Same platform, same interface — no rearchitecting as your fleet grows.</li>
+          <ul class="geotab-checklist reveal" style="--d:3">
+            <li><strong>MyGeotab Dashboard</strong> — Live map, trips, exceptions and driver scores.</li>
+            <li><strong>300+ Marketplace integrations</strong> — Payroll, ERP, dispatch and compliance on day one.</li>
+            <li><strong>HOS, ELD &amp; IFTA</strong> — Compliance reporting, inspection records, regulatory exports.</li>
+            <li><strong>Scales from 5 to 50,000</strong> — Same platform, same interface as your fleet grows.</li>
           </ul>
 
-          <a class="button button-primary reveal" href="geotab.html">Explore the Geotab Platform <span>→</span></a>
+          <a class="button button-primary reveal" style="--d:4" href="geotab.html">Explore the Geotab Platform <span>→</span></a>
         </div>
+
+        <!-- Right: award photo -->
+        <div class="geotab-award-panel reveal" style="--d:1">
+          <div class="geotab-award-img">
+            <img src="images/geotab-award.jpg" alt="EnVue Geotab Connect Innovation Award 2023" loading="lazy">
+          </div>
+          <div class="geotab-award-caption">
+            <strong>Geotab Connect Innovation Award</strong>
+            <span>Awarded to fewer than 100 partners worldwide — recognizing outstanding fleet outcomes and platform innovation.</span>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </section>
-
-  <!-- ── AWARD CALLOUT ─────────────────────────────────────────── -->
-  <section class="section section--soft">
-    <div class="wrap">
-      <div class="award-callout reveal">
-        <div class="award-callout-icon" aria-hidden="true">🏆</div>
-        <div class="award-callout-copy">
-          <span class="eyebrow">Recognition</span>
-          <h3>EnVue Wins Innovation Award at Geotab Connect</h3>
-          <p>EnVue Telematics was recognized with Geotab's Innovation Award for outstanding deployment outcomes, customer results and contribution to the Geotab partner ecosystem — one of fewer than 100 recipients worldwide.</p>
-        </div>
-        <div class="award-callout-link">
-          <a class="button button-primary" href="company.html">Learn about EnVue <span>→</span></a>
-        </div>
-      </div>
     </div>
   </section>
 
