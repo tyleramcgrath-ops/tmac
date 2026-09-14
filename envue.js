@@ -85,24 +85,6 @@
     start();
   })();
 
-  /* ── Solution tabs ───────────────────────────────────────── */
-  (function solutionTabs() {
-    const wrap = $('#solutionTabs');
-    if (!wrap) return;
-
-    const buttons = $$('.tab-buttons button', wrap);
-    const panels  = $$('.tab-panel', wrap);
-
-    buttons.forEach(btn => btn.addEventListener('click', () => {
-      buttons.forEach(b => {
-        const on = b === btn;
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-selected', on ? 'true' : 'false');
-      });
-      panels.forEach(p => p.classList.toggle('active', p.id === 'tab-' + btn.dataset.tab));
-    }));
-  })();
-
   /* ── Rollout steps ───────────────────────────────────────── */
   (function rollout() {
     const steps = $$('.rollout-steps button');

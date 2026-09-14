@@ -52,7 +52,7 @@ svg { display: inline-block; flex-shrink: 0; }
   /* Rhythm */
   --wrap: 1240px;
   --gutter: 40px;
-  --section: 104px;
+  --section: 88px;
   --header-h: 76px;
   --ticker-h: 38px;
 }
@@ -387,9 +387,9 @@ h1, h2, h3, h4 {
 .section-head {
   display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px;
   align-items: end;
-  margin-bottom: 56px;
+  margin-bottom: 44px;
 }
-.section-head h2 { font-size: clamp(38px, 4.5vw, 60px); line-height: 1.06; }
+.section-head h2 { font-size: clamp(32px, 3.4vw, 46px); line-height: 1.12; }
 .section-head p { font-size: 17px; color: var(--slate); }
 .section-head--compact { grid-template-columns: 1fr auto; align-items: center; }
 .section-head--center { grid-template-columns: 1fr; justify-items: center; text-align: center; max-width: 720px; margin-inline: auto; }
