@@ -278,9 +278,9 @@ h1, h2, h3, h4 {
 /* ── HERO ───────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: 660px;
+  min-height: 460px;
   display: flex; align-items: center;
-  padding: 88px 0 56px;
+  padding: 60px 0 44px;
   overflow: hidden;
   isolation: isolate;
   background: var(--bg-deep);
@@ -390,7 +390,7 @@ h1, h2, h3, h4 {
 
 .command-images { position: relative; }
 .command-images .main {
-  width: 100%; aspect-ratio: 4 / 3.1; object-fit: cover;
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
   border-radius: var(--r-lg);
 }
 .command-images .float {
@@ -414,8 +414,8 @@ h1, h2, h3, h4 {
   transition: box-shadow 220ms var(--ease), transform 220ms var(--ease);
 }
 .proof-grid article:hover { box-shadow: 0 18px 44px rgba(12, 27, 42, 0.1); transform: translateY(-3px); }
-.proof-grid img { width: 100%; height: 210px; object-fit: cover; }
-.proof-card-large img { height: 320px; }
+.proof-grid img { width: 100%; height: 160px; object-fit: cover; }
+.proof-card-large img { height: 220px; }
 .proof-grid article > span {
   display: inline-block; align-self: flex-start;
   margin: 22px 26px 0;
@@ -449,7 +449,7 @@ h1, h2, h3, h4 {
   display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center;
   animation: heroIn 420ms var(--ease) both;
 }
-.tab-panel img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r-lg); }
+.tab-panel img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; border-radius: var(--r-lg); }
 .tab-panel .number {
   display: block; font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--brand); margin-bottom: 14px;
@@ -521,7 +521,7 @@ input[type="range"]::-moz-range-thumb {
 
 .video-card { border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
 .video-feed { position: relative; }
-.video-feed img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.video-feed img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
 .video-feed .record {
   position: absolute; top: 14px; left: 14px;
   background: rgba(12, 27, 42, 0.76); color: #ff6b6b;
@@ -589,7 +589,7 @@ input[type="range"]::-moz-range-thumb {
 .sector-cards a {
   position: relative; z-index: 0;
   display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 320px; padding: 24px;
+  min-height: 220px; padding: 24px;
   border-radius: var(--r-lg); overflow: hidden;
   color: #fff;
 }
