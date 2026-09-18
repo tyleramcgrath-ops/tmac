@@ -517,8 +517,9 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
   box-shadow:0 18px 44px -26px rgba(12,42,71,.4),0 2px 8px -4px rgba(12,42,71,.1);
   font-family:var(--body);font-weight:400;
   font-size:clamp(15px,1.55vw,20px);line-height:1.35;
-  /* opened up a little, so it reads as something being typed rather than set */
-  letter-spacing:.012em;word-spacing:.22em;
+  /* the spans already render real spaces between them; word-spacing on top
+     of that doubled every gap */
+  letter-spacing:.01em;
   text-align:left;color:#202124;
 }
 /* the magnifier, drawn rather than shipped */
