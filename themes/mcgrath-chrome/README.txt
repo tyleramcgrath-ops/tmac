@@ -134,11 +134,19 @@ theme's template gets stamped onto a page that already had its own content and
 heading. The slugs above are distinct enough that the theme builds its own
 pages and leaves yours alone.
 
-All eight live in one place, mcg_slugs() in inc/content.php, and every link and
-menu in the theme refers to the key rather than the slug. Change a slug there
-and the whole theme follows; change it in the WordPress editor instead and the
-theme will find the page anyway, because it looks pages up by slug at render
-time.
+Those are only the slugs the pages are CREATED at. Rename any of them in
+WordPress afterwards and every link in the theme follows, because a page is
+identified by its page template, not by its address. The one exception is a
+page with no template of its own — the front page and the posts page — which
+the theme reads from Settings > Reading instead.
+
+Renaming an existing page is not something activation does. It names the pages
+it creates and leaves everything else alone, so changing a slug in the theme
+has no effect on a site that is already set up. If the theme's pages are still
+on older addresses, an admin notice lists them and offers to rename them in one
+click; WordPress records the old address and redirects it, so nothing that
+links to them breaks. Ignoring that notice is a perfectly good answer — the
+links work either way.
 
 
 EDITING COPY

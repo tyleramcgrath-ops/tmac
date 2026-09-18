@@ -10,13 +10,14 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
- * The slug each page lives at, keyed by a short name the theme uses internally.
+ * The slug each page is created at, keyed by a short name the theme uses.
  *
- * Templates and links refer to the key, never the slug, so a slug can be
- * changed here alone. "about", "contact" and the like are the slugs a site is
- * most likely to already have, and activation reuses a page it finds rather
- * than creating one, so generic slugs meant the theme stamped its template
- * onto somebody's existing page. These are distinct enough not to collide.
+ * This is only the starting slug. Nothing in the theme depends on a page
+ * staying at it — see mcg_page_id() — so these can be renamed in WordPress
+ * afterwards and every link follows. They avoid "about" and "contact" because
+ * those are the slugs a site is most likely to already have, and activation
+ * reuses a page it finds rather than creating one, which would stamp the
+ * theme's template onto somebody's existing page.
  */
 function mcg_slugs() {
 	return array(
@@ -31,17 +32,77 @@ function mcg_slugs() {
 	);
 }
 
-/** The slug for a key, or the key itself if it is already a slug. */
+/** The page template each key is identified by. */
+function mcg_templates() {
+	return array(
+		'seo'       => 'template-seo.php',
+		'webdesign' => 'template-webdesign.php',
+		'aeo'       => 'template-aeo.php',
+		'about'     => 'template-about.php',
+		'contact'   => 'template-contact.php',
+		'vault'     => 'template-vault.php',
+	);
+}
+
+/** The slug a key is created at, or the key itself if it is not one of ours. */
 function mcg_slug( $key ) {
 	$slugs = mcg_slugs();
 	return isset( $slugs[ $key ] ) ? $slugs[ $key ] : $key;
 }
 
-/** A site URL for a known page key, falling back to the slug itself. */
+/**
+ * The page ID for a key.
+ *
+ * The page template is what identifies a page, not its slug — a slug is the
+ * owner's to change, and looking pages up by one meant renaming a page in
+ * WordPress silently broke every link the theme pointed at it. Falls back to
+ * the slug for the two pages that carry no template of their own.
+ *
+ * @return int Page ID, or 0 when the page does not exist.
+ */
+function mcg_page_id( $key ) {
+	static $cache = array();
+
+	if ( isset( $cache[ $key ] ) ) {
+		return $cache[ $key ];
+	}
+
+	$id = 0;
+
+	if ( 'home' === $key ) {
+		$id = (int) get_option( 'page_on_front' );
+	} elseif ( 'blog' === $key ) {
+		$id = (int) get_option( 'page_for_posts' );
+	}
+
+	$templates = mcg_templates();
+	if ( ! $id && isset( $templates[ $key ] ) ) {
+		$found = get_pages( array(
+			'meta_key'    => '_wp_page_template',
+			'meta_value'  => $templates[ $key ],
+			'number'      => 1,
+			'post_status' => 'publish,private',
+		) );
+		if ( $found ) {
+			$id = (int) $found[0]->ID;
+		}
+	}
+
+	if ( ! $id ) {
+		$page = get_page_by_path( mcg_slug( $key ) );
+		if ( $page ) {
+			$id = (int) $page->ID;
+		}
+	}
+
+	$cache[ $key ] = $id;
+	return $id;
+}
+
+/** A site URL for a known page key, falling back to its starting slug. */
 function mcg_url( $key ) {
-	$slug = mcg_slug( $key );
-	$page = get_page_by_path( $slug );
-	return $page ? get_permalink( $page ) : home_url( '/' . $slug . '/' );
+	$id = mcg_page_id( $key );
+	return $id ? get_permalink( $id ) : home_url( '/' . mcg_slug( $key ) . '/' );
 }
 
 /**
