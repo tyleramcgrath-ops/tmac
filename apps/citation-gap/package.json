@@ -1,0 +1,9 @@
+{
+  "name": "citation-gap",
+  "private": true,
+  "engines": { "node": "22.x" },
+  "dependencies": {
+    "@sparticuz/chromium": "149.0.0",
+    "puppeteer-core": "25.9.0"
+  }
+}

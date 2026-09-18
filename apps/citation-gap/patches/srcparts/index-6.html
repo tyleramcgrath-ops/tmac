@@ -1,0 +1,410 @@
+    const short=depth-targetsUsed.length-Math.min(ownHits,depth)-Math.min(dedupedN,depth);
+    if(short>0) dispositions.push({code:'SERP_SHORT',domain:'(google)',count:short,reason:'Google returned only '+head.organic.length+' organic results for this query; '+short+' requested slot'+(short===1?'':'s')+' had no page to fill'});
+    let comps=[], failed=[];
+    if(sc){ comps=sc.comps||[]; failed=sc.failed||[]; (sc.dispositions||[]).forEach(function(d){ if(!dispositions.some(function(x){return x.code===d.code&&x.domain===d.domain;})) dispositions.push(d); }); for(let i=0;i<depth;i++) tick(); say(''); say('Competitor pages reused from the last scan: '+comps.length+' used'+(failed.length?', '+failed.length+' not used':''),'dim'); }
+    else { say(''); say('Reading the top '+depth+' pages…'); }
+    for(let i=0;i<(sc?0:targetsUsed.length);i+=3){
+      const batch=targetsUsed.slice(i,i+3);
+      const got=await Promise.all(batch.map(function(t){
+        return api('/api/page',{url:t.url,keyword:kw}).catch(function(e){return {error:String(e)};}); }));
+      got.forEach(function(pg,j){
+        tick();
+        const t=batch[j];
+        if(pg.error||!pg.wordCount){ const code=/timed out|timeout/i.test(pg.error||'')?'TIMEOUT':'FAILED'; say('  ✗ '+t.domain+' — '+(pg.error||'no content'),'no'); failed.push({domain:t.domain,reason:pg.error||'no content',code:code,url:t.url,position:t.position}); return; }
+        // Minimum-content gate: a page with 82 words and no headings is a failed or JS-gated
+        // fetch that passed the "readable" check, and it would drag every median down.
+        const headingsN=(pg.h1Count||0)+(pg.h2Count||0)+(pg.h3Count||0);
+        if(pg.wordCount<COMP_FLOOR_WORDS || headingsN===0){
+          const why=pg.wordCount+' main-content words, '+headingsN+' headings — below the '+COMP_FLOOR_WORDS+'-word / 1-heading floor; likely a script-gated or blocked fetch';
+          say('  ✗ '+t.domain+' — EXCLUDED, UNREADABLE: '+why,'no'); failed.push({domain:t.domain,reason:why,code:'BELOW_MIN_CONTENT',excluded:true,servedWords:pg.wordCount,servedHeadings:headingsN,url:t.url,position:t.position}); return; }
+        pg.domain=t.domain; pg.position=t.position; pg.wordBasis='served'; comps.push(pg);
+        say('  ✓ #'+t.position+'  '+t.domain+'  '+pg.wordCount+'w  h3:'+pg.h3Count+'  stats:'+pg.statCount,'ok');
+      });
+    }
+    // Rendered basis: every competitor is rendered and its word count replaced by the painted +
+    // reachable figure; a page that cannot be rendered cannot share the basis and is dropped.
+    if(renderAll && !sc && comps.length){
+      say(''); say('Rendering '+comps.length+' competitor page'+(comps.length===1?'':'s')+' for the rendered basis…');
+      for(let i=0;i<comps.length;i+=2){
+        const batch=comps.slice(i,i+2);
+        const got=await Promise.all(batch.map(function(c){ return api('/api/render',{url:c.url||('https://'+c.domain+'/'),wait:'1500'}).catch(function(e){return {ok:false,error:String(e)};}); }));
+        got.forEach(function(rr,j){ const c=batch[j];
+          if(rr&&rr.ok&&rr.renderedWords){ c.wordCountServed=c.wordCount; c.wordCount=rr.renderedWords.scored!=null?rr.renderedWords.scored:(rr.renderedWords.main||0); c.wordBasis='rendered'; c.wordPainted=rr.renderedWords.main; c.wordReachable=rr.renderedWords.reachable?rr.renderedWords.reachable.main:0; say('  ✓ '+c.domain+' — rendered '+c.wordCount+'w ('+c.wordPainted+' painted + '+c.wordReachable+' reachable; served '+c.wordCountServed+')','ok'); }
+          else { c._dropBasis=(rr&&rr.error)||'no result'; say('  ✗ '+c.domain+' — could not render ('+c._dropBasis+'); cannot share the rendered basis, excluded','no'); }
+        });
+      }
+      comps.filter(function(c){return c._dropBasis;}).forEach(function(c){ failed.push({domain:c.domain,reason:'could not be rendered for the rendered basis: '+c._dropBasis,code:'BASIS_MISMATCH',url:c.url,position:c.position}); });
+      comps=comps.filter(function(c){return !c._dropBasis;});
+    }
+    // A page that looks empty when served may simply be script-built. Before excluding it,
+    // render it and measure the rendered DOM with the same rules — a JS-heavy competitor must
+    // not read as sparse (or as bloated) just because of the extraction path.
+    let rescued=sc?(sc.rescued||[]):[];
+    const thin=sc?[]:failed.filter(function(f){return f.excluded;}).slice(0,4);
+    if(thin.length){
+      say(''); say('Re-checking '+thin.length+' thin competitor page'+(thin.length===1?'':'s')+' in a browser (served HTML may be script-gated)…');
+      for(let i=0;i<thin.length;i++){ const f=thin[i];
+        let rr=null; try{ rr=await api('/api/render',{url:f.url,wait:'1500',parse:'1',keyword:kw}); }catch(e){ rr=null; }
+        if(rr&&rr.ok&&rr.parsed){
+          const pr=rr.parsed; const hn=(pr.h1Count||0)+(pr.h2Count||0)+(pr.h3Count||0);
+          const rmain=rr.renderedWords?rr.renderedWords.main:0;
+          const rw=Math.max(pr.wordCount||0, rmain);
+          if(rw>=COMP_FLOOR_WORDS && hn>0){
+            const rscored=rr.renderedWords&&rr.renderedWords.scored!=null?rr.renderedWords.scored:rmain;
+            if(renderAll){
+              // Rendered basis: the rescued page shares it and is used.
+              pr.domain=f.domain; pr.position=f.position; pr.wordCountServed=f.servedWords; pr.wordCount=rscored; pr.wordBasis='rendered'; pr.wordPainted=rmain; pr.wordReachable=rr.renderedWords&&rr.renderedWords.reachable?rr.renderedWords.reachable.main:0;
+              pr.rescued={servedWords:f.servedWords,renderedMain:rmain,renderedDomRule:rr.parsed.wordCount};
+              comps.push(pr); failed.splice(failed.indexOf(f),1);
+              rescued.push({domain:f.domain,position:f.position,servedWords:f.servedWords,renderedWords:pr.wordCount,renderedMain:rmain,headings:hn,used:true});
+              say('  ✓ #'+f.position+'  '+f.domain+' — rendered: '+pr.wordCount+'w, '+hn+' headings (served HTML gave '+f.servedWords+'w: script-gated). Used on the rendered basis.','ok');
+            } else {
+              // Served basis: a page that only reads in a browser cannot share it. Not averaged in.
+              f.code='BASIS_MISMATCH'; f.reason='served HTML gave '+f.servedWords+' words (script-gated); rendered in a browser it reads '+rscored+' words, '+hn+' headings — a different measurement basis from the other competitors, so it is NOT used on the served basis. Tick “Render every competitor” to use it.';
+              rescued.push({domain:f.domain,position:f.position,servedWords:f.servedWords,renderedWords:rscored,renderedMain:rmain,headings:hn,used:false});
+              say('  ✗ #'+f.position+'  '+f.domain+' — reads in a browser ('+rscored+'w, '+hn+' headings) but not in served HTML: BASIS_MISMATCH, not mixed into the served-basis median','hi');
+            }
+          } else { f.reason+='; rendered in a browser too: '+rw+' words, '+hn+' headings — still below the floor'; say('  ✗ '+f.domain+' — rendered too: '+rw+'w, '+hn+' headings; still excluded','no'); }
+        } else say('  ✗ '+f.domain+' — could not render ('+((rr&&rr.error)||'no result')+'); stays excluded','no');
+      }
+      comps.sort(function(a,b){return (a.position||0)-(b.position||0);});
+    }
+    if(comps.length<2) throw new Error('Only '+comps.length+' competitor page(s) could be read. Most sites blocked the request. Try a different keyword.');
+    // Sample arithmetic, closed: every failed page becomes a disposition line with its code.
+    if(!sc) failed.forEach(function(f){ dispositions.push({code:f.code||(f.excluded?'BELOW_MIN_CONTENT':'FAILED'),domain:f.domain,count:1,reason:f.reason}); });
+    const accounted=comps.length+dispositions.reduce(function(n,d){return n+(d.count||1);},0);
+    const unaccounted=depth-accounted;
+    if(unaccounted!==0) dispositions.push({code:'UNACCOUNTED',domain:'?',count:unaccounted,reason:unaccounted>0?'requested slots with no recorded disposition — a scanner bookkeeping gap, not a page fact':'more pages used than requested (a rescued page re-entered the sample)'});
+    const sample={requested:depth,used:comps.length,dispositions:dispositions,unaccounted:unaccounted};
+    say('  sample: '+depth+' requested → '+comps.length+' used, '+dispositions.reduce(function(n,d){return n+(d.count||1);},0)+' not used'+(unaccounted?' · UNACCOUNTED '+unaccounted:''), unaccounted?'no':'dim');
+
+    say(''); say('Rendering your page in a real browser (computed styles, scrolled, 2.5 s settle)…');
+    let rendered=null, renderError='';
+    try{
+      const rr0=await api('/api/render',{url:url,wait:'2500',parse:'1',keyword:kw});
+      if(rr0&&rr0.ok){ rendered=rr0;
+        say('  rendered in '+(rr0.renderMs/1000).toFixed(1)+' s · '+rr0.visibleTextElements+' visible text elements · '+(rr0.hiddenByContext?(rr0.hiddenContentCount||0)+' content elements hidden by computed style ('+(rr0.hiddenCount-(rr0.hiddenContentCount||0))+' more hidden by design)':rr0.hiddenCount+' hidden by computed style')+(rr0.gating&&rr0.gating.stillHidden?' · '+rr0.gating.stillHidden+' animation wrappers still hidden':''), (rr0.hiddenByContext?rr0.hiddenContentCount:rr0.hiddenCount)?'hi':'ok');
+        if(rr0.gate){ const g=rr0.gate;
+          if(g.state==='none') say('  gate self-check: no entrance-animation markers on the page','dim');
+          else say('  gate self-check: '+gateLine(g)+' — '+(g.state==='released'?'released, hidden findings are credible':g.state==='partial'?'the residual is real and listed':'DID NOT RELEASE, hidden content behind it is unverified, not asserted'), g.state==='released'?'ok':'hi'); }
+        if(rr0.pageErrors&&rr0.pageErrors.length) say('  page threw '+rr0.pageErrors.length+' JavaScript error(s): '+rr0.pageErrors[0].slice(0,80),'hi');
+      } else { renderError=(rr0&&rr0.error)||'no result'; say('  ✗ could not render: '+renderError+' — continuing with served HTML only','no'); }
+    }catch(e){ renderError=String(e.message||e); say('  ✗ render unavailable: '+renderError+' — continuing with served HTML only','no'); }
+    tick();
+    const wcheck=wordCheck(mine,rendered,basis.kind);
+    if(wcheck) say('  word count: '+wordCheckText(wcheck), wcheck.basisDifference?'hi':'dim');
+    if(wcheck){ mine.wordCountServed=mine.wordCount; mine.wordRendered=wcheck.rendered; mine.wordPainted=wcheck.renderedMain; mine.wordReachable=wcheck.reachable; }
+    if(basis.kind==='rendered'){
+      if(!wcheck) throw new Error('Rendered basis requested but this page could not be rendered; the comparison cannot share one basis. Untick “Render every competitor” or retry.');
+      mine.wordCount=wcheck.rendered; mine.wordScored='rendered'; mine.wordBasis='rendered';
+    } else { mine.wordScored='served'; mine.wordBasis='served'; }
+    // P12 assertion: exactly one word-count basis across this page and every competitor used.
+    const bases=new Set([mine.wordBasis].concat(comps.map(function(c){return c.wordBasis||'served';})));
+    if(bases.size!==1) throw new Error('Mixed measurement bases in one comparison ('+Array.from(bases).join(', ')+') — the scan refuses to build a median from two bases.');
+    say('  measurement basis: '+basis.label+' for this page and all '+comps.length+' competitors (asserted)','dim');
+    const reconcile=reconcileHidden(mine,rendered);
+    if(reconcile&&reconcile.relocated.length) reconcile.relocated.forEach(function(c){ say('  CONTAINER RELOCATED — <'+c.tag+' class="'+c.cls+'"> is '+c.reason+' in served HTML but holds '+c.renderedHeadings+' of its '+c.servedHeadings+' served headings after render; the widget moved its content into the visible DOM','hi'); });
+    if(rendered&&rendered.gate&&rendered.gate.late&&rendered.gate.late.count) say('  '+rendered.gate.lateSummary, rendered.gate.late.hidden?'hi':'dim');
+    const diff=renderDiff(mine,rendered);
+    if(diff){
+      if(diff.important.length) say('  '+diff.important.length+' hidden element(s) carry a CTA, price, statistic, heading or form','no');
+      if(diff.visibleNotServedCount) say('  '+diff.visibleNotServedCount+' visible line(s) are script-injected, absent from served HTML','hi');
+    }
+
+    say(''); say('Scoring…');
+    const m=medians(comps);
+    const cats=categoryEntities(comps,ownDomain);
+    const rk=scoreRank(mine,m), rs=rk[0], rr=rk[1];
+    // Visible text from the render decides PRESENT vs PRESENT BUT HIDDEN — only when the
+    // render's self-check passed; a stuck gate says nothing about what a visitor sees.
+    const vis = rendered ? {text:rendered.innerText||'', reliable:!(rendered.gate&&rendered.gate.state==='stuck')} : null;
+    const an=scoreAnswer(mine,m,cov,cats,vis), as=an[0], ar=an[1], missing=an[2], states=an[3]||[];
+    const serpDomains=head.organic.map(function(o){return o.domain;});
+    const missingInfo=cats.filter(function(g){return missing.indexOf(g.canonical)!==-1;}).map(function(g){
+      const st=states.find(function(s){return s.canonical===g.canonical;});
+      return {term:g.canonical,variants:g.variants,df:g.df,state:st?st.state:'ABSENT',bucket:classifyTerm(g.canonical,serpDomains,mine.siteLinkText,ownDomain)}; });
+    const hiddenTerms=missingInfo.filter(function(x){return x.state==='PRESENT BUT HIDDEN';}).length;
+    if(hiddenTerms) say('  '+hiddenTerms+' category term(s) are in the HTML but hidden from visitors — scored as missing','hi');
+    const band=looBand(comps,mine,cov,ownDomain,vis);
+    const brand=(ownDomain.split('.')[0]||'').replace(/\b\w/g,function(ch){return ch.toUpperCase();});
+    const rowMap=function(rows){ const o={}; rows.forEach(function(x){ o[x.key]={earned:x.earned,mine:x.mine,target:x.target}; }); return o; };
+    // P20 — computed BEFORE buildFixes (not after, where the rest of the diff lives) because a
+    // task must be able to see what THIS scan's own delta already credited, so it never
+    // recommends undoing a gain the scorer just measured in the same report (the h3Fragmented
+    // false-fire this fixes). Needs only rank/answer/rows/snap, none of which depend on fixes.
+    const pageChangedNow = prevEntry ? prevEntry.fingerprint!==fpNow : false;
+    const preAttr = prevEntry ? attributeScore(prevEntry,
+      {rank:rs, version:SCANNER_VERSION, basis:basis.kind, snap:snapshotOf(mine,rendered), rows:{rank:rowMap(rr),answer:rowMap(ar)}},
+      m, pageChangedNow) : null;
+    let fixes=buildFixes(mine,m,rr,ar,kw,cats,missing,brand,{diff:diff,rendered:rendered,missingInfo:missingInfo,band:band,wordCheck:wcheck,reconcile:reconcile,attribution:preAttr?preAttr.answer:null});
+    barEl.style.width='100%';
+    say('  RANK '+rs+'/100   ANSWER '+as+'/100'+(band?'   (bands '+band.rank[0]+'–'+band.rank[1]+' / '+band.answer[0]+'–'+band.answer[1]+')':''),'hi');
+    const softN=fixes.filter(function(f){return f._soft;}).length;
+    if(softN) say('  '+softN+' task target(s) are SOFT — their median moves when one competitor is dropped','dim');
+
+    const stamp=new Date().toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+    const prev=prevEntry;
+    const slim=function(c){ const o={}; Object.keys(c).forEach(function(k){ if(k==='bodyText'||k==='siteLinkText'||k==='servedBlocks'||k==='outline') return; o[k]=c[k]; }); return o; };
+    const serpCache={head:head,cov:cov,comps:comps.map(slim),failed:failed,rescued:rescued,dispositions:dispositions.filter(function(d){return d.code!=='UNACCOUNTED';}),savedAt:sc?sc.savedAt:Date.now()};
+    const volatile=diff ? volatileHistory(loadHistoryAll(url,kw), diff.volatile) : null;
+    const cur={url:url,kw:kw,stamp:stamp,ts:Date.now(),version:SCANNER_VERSION,rank:rs,answer:as,n:m.total,medianWords:m.wordCount,
+               medians:{wordCount:m.wordCount,h2Count:m.h2Count,h3Count:m.h3Count,listCount:m.listCount,statCount:m.statCount,questionHeadingCount:m.questionHeadingCount,kwInTitleN:m.kwInTitleN,kwInH1N:m.kwInH1N,faqN:m.faqN,tableN:m.tableN,schemaN:m.schemaN,total:m.total},
+               rows:{rank:rowMap(rr),answer:rowMap(ar)}, basis:basis.kind,
+               volatile:diff?diff.volatile.map(function(v){return v.text;}):[],
+               serpCache:serpCache, reusedFrom:reused?reused.stamp:null,
+               fingerprint:fpNow,snap:snapshotOf(mine,rendered),
+               fixes:fixes.map(function(f){return {key:f.key,title:f.title,items:f._items||[],body:String(f.body||'').slice(0,900),code:String(f.code||'').slice(0,600),severity:f.severity,effort:f.effort,engine:f.engine,pts:f._pts,hours:f._hours,extra:!!f._extra,section:f._section};}),
+               rendered:!!rendered, gate:rendered&&rendered.gate?{state:rendered.gate.state,summary:gateLine(rendered.gate),atLoad:{markers:rendered.gate.atLoad.markers},afterScroll:{hidden:rendered.gate.afterScroll.hidden},releasedCount:rendered.gate.releasedCount}:null};
+    const changes=diffScans(prev,cur,mine,{rendered:rendered,diff:diff,medians:m});
+    if(changes){
+      say('  compared with the previous scan of this page ('+changes.prevStamp+'): page '+(changes.pageChanged?'changed':'unchanged')+' · '+changes.resolved.length+' resolved · '+changes.added.length+' new · '+changes.carried+' unchanged · '+changes.withdrawn.length+' withdrawn · '+changes.stillPresent.length+' still present · '+changes.unverified.length+' unverified', (changes.withdrawn.length||changes.stillPresent.length)?'hi':'dim');
+      if(changes.pageChanged&&changes.changedLines) changes.changedLines.slice(0,6).forEach(function(l){ say('    changed: '+l,'dim'); });
+      if(changes.versionChanged) say('  scanner rules changed since that scan ('+changes.prevVersion+' → '+changes.curVersion+'): every disappeared finding was re-verified item by item','dim');
+      if(changes.attribution&&changes.rank[0]!==changes.rank[1]) changes.attribution.lines.forEach(function(l){ say('    Rank '+(l.delta>0?'+':l.delta<0?'−':'')+Math.abs(l.delta)+' from '+l.cause+l.note,'dim'); });
+      changes.stillPresent.forEach(function(c){ say('  ✗ carried forward, STILL PRESENT: '+c.title+' — '+c.check,'no'); });
+      changes.resolved.forEach(function(c){ say('  ✓ resolved: '+c.title+' — '+c.check,'ok'); });
+    }
+    saveHistory(url,kw,cur);
+    fixes=carryForward(fixes,changes);
+
+    render({keyword:kw,url:url,ownDomain:ownDomain,ownPosition:ownPosition,gl:gl,hl:hl,brand:brand,
+            page:mine,competitors:comps,medians:m,coverage:cov,rankScore:rs,answerScore:as,
+            rankRows:rr,answerRows:ar,fixes:fixes,missing:missing,missingInfo:missingInfo,headAio:head.aiOverview,
+            rendered:rendered,renderError:renderError,diff:diff,band:band,failed:failed,rescued:rescued,depthRequested:depth,changes:changes,
+            sample:sample,reused:reused,reconcile:reconcile,basis:basis,volatile:volatile,
+            wordCheck:wcheck,stamp:stamp,demo:false});
+  }catch(e){
+    fail(String(e.message||e));
+    say('STOPPED — '+String(e.message||e),'no');
+  }finally{
+    S.running=false; $('#btnRun').disabled=false; $('#btnRun').textContent='Run the scan';
+  }
+}
+</script>
+
+<script>
+"use strict";
+const ARC=263.9;
+const CLAUDE_URL='https://claude.ai/new';
+
+function verdictOf(n){
+  if(n>=75) return ['STRONG','ok'];
+  if(n>=50) return ['CLOSE','warn'];
+  if(n>=30) return ['WEAK','warn'];
+  return ['CRITICAL','crit'];
+}
+function gauge(score,cls,label,sub,color,id){
+  const v=verdictOf(score);
+  return '<div class="gauge '+cls+'"><span class="lab">'+esc(label)+'</span>'
+    +'<svg viewBox="0 0 200 118" role="img" aria-label="'+esc(label)+' '+score+' out of 100">'
+    +'<path d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var(--sunk)" stroke-width="15" stroke-linecap="round"/>'
+    +'<path class="arcfill" id="arc-'+id+'" d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var('+color+')" '
+    +'stroke-width="15" stroke-linecap="round" stroke-dasharray="0 '+ARC+'"/>'
+    +'<text x="16" y="115" fill="var(--faint)" font-family="IBM Plex Mono" font-size="10">0</text>'
+    +'<text x="176" y="115" fill="var(--faint)" font-family="IBM Plex Mono" font-size="10">100</text></svg>'
+    +'<div class="gnum" id="num-'+id+'" style="color:var('+color+')">0</div>'
+    +'<span class="verdict pill '+v[1]+'">'+v[0]+'</span>'
+    +'<p class="gsub">'+esc(sub)+'</p></div>';
+}
+function tableRows(rows, spread, band){
+  spread=spread||{};
+  const SP={wordCount:'wordCount',h3Count:'h3Count',h2Count:'h2Count',listCount:'listCount',stats:'statCount',questionHeadings:'questionHeadingCount'};
+  return rows.map(function(r){
+    const cls = r.pct>=85?'ok' : r.pct>=40?'warn' : 'crit';
+    const pill= r.pct>=85?'PASS': r.pct>=40?'FIX'  : 'CRITICAL';
+    const note= r.note ? '<br><span class="mono" style="font-size:11px;color:var(--faint)">'+esc(r.note.slice(0,150))+'</span>' : '';
+    const mb = SP[r.key]&&band&&band.medians&&band.medians[SP[r.key]] ? band.medians[SP[r.key]] : null;
+    const sp = SP[r.key]&&spread[SP[r.key]] ? '<small>spread '+spread[SP[r.key]].min.toLocaleString()+'–'+spread[SP[r.key]].max.toLocaleString()
+      +(mb ? (mb[0]===mb[1] ? ' · median stable' : ' · median '+mb[0].toLocaleString()+'–'+mb[1].toLocaleString()+' SOFT') : '')+'</small>' : '';
+    return '<tr class="'+cls+'"><td class="sig">'+esc(r.label)+note+'</td>'
+      +'<td class="n you">'+esc(r.mine)+'</td><td class="n">'+esc(r.target)+sp+'</td>'
+      +'<td class="n">'+r.earned+'/'+r.weight+'</td>'
+      +'<td><span class="pill '+cls+'">'+pill+'</span></td></tr>';
+  }).join('');
+}
+function bars(cov, own){
+  const total=cov.queries||1;
+  let list=cov.domains.slice(0,14);
+  if(!list.some(function(x){return x[0]===own;})){
+    const mm=cov.domains.filter(function(x){return x[0]===own;});
+    list=list.slice(0,13).concat(mm.length?mm:[[own,0]]);
+  }
+  const rows=list.map(function(x){ const d=x[0], n=x[1];
+    return '<div class="row'+(d===own?' me':'')+'"><span class="name">'+esc(d)+'</span>'
+      +'<div class="track"><div class="fill" data-w="'+(n/total*100).toFixed(1)+'"></div></div>'
+      +'<span class="val">'+n+'/'+total+'</span></div>'; }).join('');
+  return [rows,'<div class="ticks"><span>0</span><span>'+Math.floor(total/2)+'</span><span>'+total+'</span></div>'];
+}
+
+function methodKv(d){
+  const p=d.page, m=d.medians, r=d.rendered, sp=m.spread||{}, b=d.band;
+  const failed=d.failed||[];
+  return 'Fetch mode ......... '+(r?'served HTML + rendered DOM (headless Chromium, computed styles read)':'served HTML only'+(d.renderError?' — render failed: '+d.renderError:''))+'\n'
+    +'Fetched URL ........ exactly as given; no cache-busting parameter; Cache-Control: no-cache'+'\n'
+    +(r?'Render wait ........ '+r.waitMs+' ms after '+r.waitStrategy+', scrolled: '+(r.scrolled?'yes':'no')+', then '+Math.max(600,Math.round(r.waitMs/2))+' ms; '+r.renderMs+' ms total'+(r.pageErrors&&r.pageErrors.length?'; page threw '+r.pageErrors.length+' JS error(s)':'')+'\n'
+      +'Render input ....... '+((r.gate&&r.gate.interaction)||'window.scrollTo only')+'; viewport 1366×900\n'
+      +'Gate self-check .... '+gateLine(r.gate)+(r.gate&&r.gate.state!=='none'?' — '+gateVerdict(r.gate):'')+(r.gate&&r.gate.method?' · '+r.gate.method:'')+'\n':'')
+    +'Word count rule .... '+(p.wordRule||'main content only; nav, header, footer, aside and form stripped')+'\n'
+    +'Region used ........ '+(p.wordRegion||'main content')+' · whole page would read '+Number(p.pageWordCount||p.wordCount).toLocaleString()+'\n'
+    +'Text fingerprint ... sha256 '+(p.textSha256||'n/a')+'\n'
+    +'Block definition ... '+(p.blockRule||'outermost element carrying an entrance-animation marker, containing text')+'\n'
+    +'Heading rule ....... '+(p.headingRule||'headings inside post-feed, loop or carousel widgets are TEMPLATE; the rest EDITORIAL')+'\n'
+    +'Hidden containers .. '+((p.hiddenContainers&&p.hiddenContainers.length)?p.hiddenContainers.length+' declared-hidden element(s): '+p.hiddenContainers.slice(0,4).map(function(c){return '<'+c.tag+(c.cls?' .'+c.cls.split(' ')[0]:'')+'> '+c.reason+', '+c.words+'w, '+c.headings+' heading(s)';}).join('; '):'none')+'\n'
+    +'Scanner version .... '+SCANNER_VERSION+' (history records the version; a disappeared finding across a version change is re-verified item by item)\n'
+    +'Measurement basis .. '+(d.basis?d.basis.label:'served HTML')+' for this page and every competitor used (asserted; a page on the other basis is BASIS_MISMATCH, never averaged in)\n'
+    +'Word count check ... '+(d.wordCheck ? wordCheckText(d.wordCheck)+' · A = served '+d.wordCheck.servedRegion+' (regex parser) · B = rendered same boundary, painted + reachable · whole page (served HTML) '+Number(p.pageWordCount||d.wordCheck.served).toLocaleString()+' · whole page (rendered, painted) '+d.wordCheck.renderedPage.toLocaleString() : 'rendered count not available')+'\n'
+    +(d.wordCheck&&compositionLines(d.wordCheck).length?compositionLines(d.wordCheck).join('\n')+'\n':'')
+    +'Effort model ....... 1 day = 6 hours, half day = 3 hours; Section B labels: HIGH ≥ 10 pts/hr, MEDIUM ≥ 5, else LOW; CRITICAL reserved for Section A\n'
+    +'Competitor sample .. '+(d.depthRequested||m.total)+' requested → '+m.total+' used'+(failed.length?' · not used: '+failed.map(function(f){return f.domain+' ('+(f.excluded?'EXCLUDED — UNREADABLE: ':'')+f.reason+')';}).join('; '):'')+((d.rescued&&d.rescued.length)?' · rendered instead of served: '+d.rescued.map(function(f){return f.domain+' ('+f.servedWords+'w served → '+f.renderedWords+'w rendered)';}).join('; '):'')+'\n'
+    +'Content floor ...... competitors under '+COMP_FLOOR_WORDS+' main-content words or with no headings are excluded as unreadable\n'
+    +'Word count spread .. '+(sp.wordCount?sp.wordCount.min.toLocaleString()+' / '+sp.wordCount.median.toLocaleString()+' / '+sp.wordCount.max.toLocaleString()+' (min / median / max)':'n/a')+'\n'
+    +'Score confidence ... '+(b?'Rank '+b.rank[0]+'–'+b.rank[1]+', Answer '+b.answer[0]+'–'+b.answer[1]+' — leave one competitor out, rescore, repeat. A move inside the band between scans is sample noise.':'not computed (fewer than 3 competitor pages)')+'\n'
+    +'Median confidence .. '+(b&&b.medians?['wordCount','h2Count','h3Count','questionHeadingCount','statCount','listCount'].map(function(k){return k+' '+medText(b,m,k);}).join(' · '):'n/a');
+}
+function renderedSection(d){
+  const p=d.page, df=d.diff, r=d.rendered;
+  const head='<section><span class="eyebrow">Engine three</span><h2>Rendered vs served <span class="tag r">what a visitor sees</span></h2>';
+  if(!df){
+    return head+'<p>'+(d.renderError
+      ? 'The page could not be rendered in a browser this time ('+esc(d.renderError)+'). Everything above is from the served HTML; '
+        +((p.animationGatedCount||0)>0 ? p.animationGatedCount+' entrance-animation block'+(p.animationGatedCount===1?'':'s')+' ('+(p.animationGatedElements||0)+' elements) could not be checked and appear as a verify task.' : 'no entrance-animation wrappers were found to check.')
+      : 'This report was produced without a browser render, so anything a stylesheet hides from visitors is not checked here.')+'</p></section>';
+  }
+  const pill=function(k){ return '<span class="pill '+(/call to action|price|statistic|form/.test(k)?'crit':k==='heading'?'warn':'ok')+'">'+esc(k)+'</span>'; };
+  const rows=df.hidden.slice(0,30).map(function(h){
+    return '<div class="row2'+(df.priority.indexOf(h)!==-1?' pri':'')+'"><div>'+pill(h.kind)+'</div><div>“'+esc(h.text.slice(0,140))+'”'
+      +'<div class="why">'+esc(h.reason)+(h.gated?' · inside an entrance-animation wrapper':'')+(/^display:none|ancestor display:none/.test(h.reason)&&!h.gated?' · often a modal, tab or menu — verify':'')+'</div></div></div>';
+  }).join('');
+  const inj=df.visibleNotServed.slice(0,12).map(function(x){return '<div class="row2"><div><span class="pill warn">script-injected</span></div><div>“'+esc(x.text.slice(0,140))+'”</div></div>';}).join('')
+    +(d.volatile&&d.volatile.rows.length ? d.volatile.rows.slice(0,10).map(function(x){return '<div class="row2"><div><span class="pill ok">volatile</span></div><div>“'+esc(x.text.slice(0,120))+'”<div class="why">third-party / widget text, seen '+x.seen+' of '+x.of+' scans'+(x.present?'':' — absent this scan')+(x.host?' · from '+esc(x.host):'')+' — varies by time or session; not a page finding and never a NEW / RESOLVED / WITHDRAWN entry</div></div></div>';}).join('') : '');
+  const notVis=df.servedNotVisible.slice(0,10).map(function(x){return '<div class="row2"><div><span class="pill ok">served only</span></div><div>“'+esc(x.text.slice(0,140))+'”<div class="why">'+(x.inDom?'in the DOM but never in visible text':'removed from the DOM by script')+'</div></div></div>';}).join('');
+  const unv=df.unverified.slice(0,10).map(function(h){return '<div class="row2"><div><span class="pill warn">'+(h.late?'late / unverified':'unverified')+'</span></div><div>“'+esc(h.text.slice(0,140))+'”<div class="why">'+(h.late?'inside a marker a widget inserted after first paint; still '+esc(h.reason)+' after a targeted scroll — a real browser may reveal it on the first scroll. Verify by eye, not asserted.':'behind an entrance-animation gate that did not release in this render — verify by eye, not asserted')+'</div></div></div>';}).join('')
+    +(d.reconcile&&d.reconcile.relocated.length ? d.reconcile.relocated.map(function(c){return '<div class="row2"><div><span class="pill crit">container relocated</span></div><div>&lt;'+esc(c.tag)+(c.cls?' class="'+esc(c.cls)+'"':'')+'&gt; is '+esc(c.reason)+' in served HTML but holds '+c.renderedHeadings+' of its '+c.servedHeadings+' served headings after render.<div class="why">The widget moved its content into the visible DOM. Any finding calling this content “hidden from visitors” is wrong for this page.</div></div></div>';}).join('') : '');
+  const g=df.gate;
+  const gateHtml = g ? (g.state==='none'
+      ? 'Gate self-check: no entrance-animation markers on the page. '
+      : 'Gate self-check: <b>'+esc(gateLine(g))+'</b> — '
+        +(g.state==='released'?'every marked element was re-read visible, so hidden findings below are credible. ':g.state==='partial'?'the elements still hidden were re-read by identity after a down pass, a reverse pass and a settle; they are real residuals and listed as findings. ':'<b>nothing released</b>. That is the signature of a headless render that never fired the reveal, not of a broken page, so nothing behind it is asserted as hidden. '))
+    : 'Gate self-check not available on this render. ';
+  return head
+    +'<p>The page was loaded in headless Chromium at 1366×900 with reduced motion off, given real mouse and wheel input, left '+r.waitMs+' ms after '+esc(r.waitStrategy)+', scrolled to the bottom so every observer could fire, and read back with computed styles. '+gateHtml
+    +'<b>'+df.hiddenCount+'</b> content element'+(df.hiddenCount===1?'':'s')+' still carried text no visitor can see; <b>'+df.visibleNotServedCount+'</b> visible line'+(df.visibleNotServedCount===1?'':'s')+' exist only after JavaScript runs. '
+    +(df.byDesignCount?'Another <b>'+df.byDesignCount+'</b> hidden element'+(df.byDesignCount===1?' is':'s are')+' hidden by design ('+esc(Object.keys(df.byContext).filter(function(k){return k!=='content';}).map(function(k){return df.byContext[k]+' '+({navigation:'menu items',carousel:'carousel slides',dialog:'dialog/popup',tab:'tab/accordion','screen-reader':'screen-reader-only'}[k]||k);}).join(', '))+') and are not findings. ':'')
+    +'Entrance-animation markers: '+(p.animationGatedElements||0)+' in the served HTML'+(g&&g.state!=='none'?', '+g.afterScroll.markers+' still carrying the marker after render':', '+df.gating.inDom+' still carrying the marker after render')+' (the class is removed when the animation fires; the element never leaves the DOM).'
+    +(df.counters.length?' Counters after render: '+esc(df.counters.slice(0,6).map(function(c){return (c.label?'“'+c.label.slice(0,36)+'”':'counter')+' shows '+c.renderedText+(c.renderedText!==c.toValue?' (target '+c.toValue+')':'')+(c.visible?'':' (hidden)');}).join(', '))+'.':'')+'</p>'
+    +'<div class="diff">'+(rows||'<div class="row2"><div><span class="pill ok">clear</span></div><div>Nothing in the served HTML is hidden from visitors by computed style.</div></div>')
+    +(df.hidden.length>30?'<div class="row2"><div></div><div>… and '+(df.hidden.length-30)+' more in the work order</div></div>':'')
+    +unv+notVis+inj+'</div></section>';
+}
+
+function render(d){
+  S.lastData=d;
+  const p=d.page,m=d.medians,cov=d.coverage;
+  const bb=bars(cov,d.ownDomain), barRows=bb[0], ticks=bb[1];
+  d.brand = d.brand || (d.ownDomain.split('.')[0]||'Your Brand').replace(/\b\w/g,function(c){return c.toUpperCase();});
+  d.rankReconcile = scoreReconciliation(d.rankRows, d.fixes, 'Rank score');
+  d.answerReconcile = scoreReconciliation(d.answerRows, d.fixes, 'Answer score');
+
+  let thesis='<b>Rank '+d.rankScore+' / Answer '+d.answerScore+'.</b> Two scores because these are two different races.';
+  if(cov.domains.length){
+    const topDom=cov.domains[0][0], topN=cov.domains[0][1];
+    const match=d.competitors.filter(function(c){return c.domain===topDom;})[0];
+    if(match&&match.statCount>p.statCount){
+      thesis='<b>The finding that matters:</b> '+esc(topDom)+' takes <b>'+topN+' of '+cov.queries
+        +'</b> answer-intent queries. Its page carries <b>'+match.statCount+' quantified claims</b>; yours carries <b>'
+        +p.statCount+'</b>. Authority wins rankings. Extractable specificity wins citations. '
+        +'They are separate races, and the second one is winnable faster.';
+    }
+  }
+
+  const crit=d.fixes.filter(function(f){return f.severity==='CRITICAL';}).length;
+  const quick=d.fixes.filter(function(f){return f.effort==='15 MIN'||f.effort==='30 MIN'||f.effort==='1 HR';}).length;
+
+  let lastSec='';
+  const fixHtml=d.fixes.map(function(f,i){
+    const sev = (f.severity==='CRITICAL')?'crit' : (f.severity==='HIGH')?'warn':'ok';
+    const sevCls = (f.severity==='CRITICAL')?'sev-crit' : (f.severity==='HIGH')?'sev-high':'';
+    const sec=f._section||(f._extra?'OUT-OF-SCORE':'IN-SCORE');
+    let secHtml='';
+    if(sec!==lastSec){ lastSec=sec;
+      secHtml = sec==='OUT-OF-SCORE'
+        ? '<div class="secline"><b>Section A — outside the score tables.</b> Visitor-facing and integrity defects with a fixed weight; ranked by weight per hour. Putting these ahead of Section B is a judgement call, not arithmetic.</div>'
+        : '<div class="secline"><b>Section B — in-score.</b> Each recovers points from the Rank or Answer table; ranked by points per hour, which you can check against the tables above.</div>'; }
+    return secHtml+'<div class="fix '+sevCls+'"><div class="idx"></div><div class="body">'
+      +'<div class="meta"><span class="pill '+sev+'">'+esc(f.severity)+'</span>'
+      +'<span class="pill warn">'+esc(f.effort)+'</span><span class="pill ok">'+esc(f.engine)+'</span>'+(f._soft?'<span class="pill warn">SOFT TARGET</span>':'')+(f._carried?'<span class="pill crit">CARRIED — '+esc(f._carried)+'</span>':'')+'<span class="pill ok">'+esc(impactText(f))+'</span></div>'
+      +'<h3>'+esc(f.title)+'</h3><p>'+esc(f.body)+'</p>'
+      +(f.code?'<div class="do">'+esc(f.code)+'</div>':'')
+      +'<button class="ptoggle" type="button" aria-expanded="false" data-i="'+i+'">'
+        +'<span class="car">▾</span> Get the Claude prompt for this</button>'
+      +'<div class="pbox" data-box="'+i+'">'
+        +'<div class="phead"><span>Paste this into Claude</span><div class="grp">'
+          +'<button class="cpy" data-copy="'+i+'">Copy prompt</button>'
+          +'<a class="open-claude" href="'+CLAUDE_URL+'" target="_blank" rel="noopener">Open Claude ↗</a>'
+        +'</div></div>'
+        +'<pre class="ptext" data-text="'+i+'"></pre>'
+      +'</div>'
+      +'</div></div>';
+  }).join('');
+
+  let aioHtml;
+  if(d.headAio){
+    const chips=d.headAio.sources.slice(0,18).map(function(s){return '<span class="chip">'+esc(s.domain)+'</span>';}).join('')
+      || '<span class="chip">no outbound sources listed</span>';
+    aioHtml='<section><span class="eyebrow">Pulled live from the results page</span>'
+      +'<h2>AI Overview for the head term <span class="tag a">answer layer</span></h2>'
+      +'<p>These are the domains Google actually credited in its own answer.</p>'
+      +'<div class="targets">'+chips+'</div>'
+      +(d.headAio.text?'<div class="aio">'+esc(d.headAio.text.slice(0,2200))+'</div>':'')+'</section>';
+  } else {
+    aioHtml='<section><span class="eyebrow">Pulled live from the results page</span>'
+      +'<h2>AI Overview for the head term <span class="tag a">answer layer</span></h2>'
+      +'<p>No AI Overview rendered for this term today. That is a finding, not a failure — this query is '
+      +'still answered by ten blue links. The coverage chart above is where the category’s answer layer lives.</p></section>';
+  }
+
+  const html =
+   (d.demo?'<div class="banner"><b>Sample report.</b> Built from a real scan of envuetelematics.com for “AI dash cam for fleets”, '
+     +'run 2 September 2026; the browser-render section illustrates the hidden-content pattern that scan family surfaced. Every prompt below '
+     +'is live, so copy one and try it. Add your own API key in Settings to scan any page.</div>':'')
+  +'<div class="targets">'
+    +'<span class="chip">TARGET <b>'+esc(d.url)+'</b></span>'
+    +'<span class="chip">KEYWORD <b>'+esc(d.keyword)+'</b></span>'
+    +'<span class="chip">SERP SET <b>'+m.total+' pages</b></span>'
+    +'<span class="chip">ANSWER SET <b>'+cov.queries+' questions</b></span>'
+    +'<span class="chip">YOUR POSITION <b>'+esc(d.ownPosition)+'</b></span></div>'
+  +'<div class="scores">'
+    +gauge(d.rankScore,'rk','Rank Score — classic top 10',(d.band?'Confidence band '+d.band.rank[0]+'–'+d.band.rank[1]+' (leave-one-out, n='+d.band.n+'). ':'')+'How closely your page matches the pages beating it.','--rank','rk')
+    +gauge(d.answerScore,'an','Answer Score — AI citation readiness',(d.band?'Confidence band '+d.band.answer[0]+'–'+d.band.answer[1]+'. ':'')+'Whether your page carries what answer engines quote.','--answer','an')
+  +'</div>'
+  +'<div class="strip">'
+    +'<div><b>'+d.fixes.length+'</b><span>changes</span></div>'
+    +'<div><b style="color:var(--crit)">'+crit+'</b><span>critical</span></div>'
+    +'<div><b style="color:var(--pass)">'+quick+'</b><span>under an hour</span></div>'
+    +'<div><b>'+cov.mine+'/'+cov.queries+'</b><span>answer coverage</span></div>'
+    +'<div><b>'+p.statCount+' vs '+m.statCount+'</b><span>quantified claims</span></div>'
+  +'</div>'
+  +'<div class="thesis">'+thesis+'</div>'
+  +(d.reused ? '<div class="banner"><b>No change since your last scan ('+esc(d.reused.stamp)+').</b> Page fingerprint identical; Google results, competitor pages and medians reused (age '+d.reused.ageHours+' h) — no search credits spent. The page itself was re-fetched and re-rendered. Tick “Force a full rescan” to re-fetch Google.</div>' : '')
+  +(d.changes ? '<div class="banner"><b>Compared with your last scan of this page ('+esc(d.changes.prevStamp)+').</b> Page '
+      +(d.changes.pageChanged?'<b>changed</b>':'unchanged')+' · Rank '+d.changes.rank[0]+' → '+d.changes.rank[1]+(d.changes.attribution&&d.changes.rank[0]!==d.changes.rank[1]&&d.changes.attribution.lines.length?' ('+esc(d.changes.attribution.lines.map(function(l){return (l.delta>0?'+':l.delta<0?'−':'')+Math.abs(l.delta)+' '+l.cause;}).join(', '))+(d.changes.attribution.recomputed&&d.changes.attribution.rulesChanged?'; under '+esc(d.changes.attribution.recomputed.version)+' rules on today’s sample: '+d.changes.attribution.recomputed.score:'')+')':'')+' · Answer '+d.changes.answer[0]+' → '+d.changes.answer[1]
+      +' · '+d.changes.carried+' unchanged'
+      +(d.changes.resolved.length?' · '+d.changes.resolved.length+' resolved ('+esc(d.changes.resolved.map(function(f){return f.title;}).join('; ').slice(0,200))+')':'')
+      +(d.changes.added.length?' · '+d.changes.added.length+' new':'')
+      +(d.changes.withdrawn.length?' · <b>'+d.changes.withdrawn.length+' withdrawn as a false positive</b> ('+esc(d.changes.withdrawn.map(function(f){return f.title+' — '+f.why;}).join('; ').slice(0,320))+')':'')
+      +(d.changes.stillPresent.length?' · <b>'+d.changes.stillPresent.length+' re-verified as still present</b> and carried forward ('+esc(d.changes.stillPresent.map(function(f){return f.title+' — '+f.check;}).join('; ').slice(0,320))+')':'')
+      +(d.changes.unverified.length?' · '+d.changes.unverified.length+' could not be re-checked and carried forward':'')
+      +(d.changes.pageChanged&&d.changes.changedLines&&d.changes.changedLines.length?' · what changed: '+esc(d.changes.changedLines.slice(0,4).join(' · ').slice(0,400)):'')
+      +(d.changes.versionChanged?' · scanner rules changed ('+esc(d.changes.prevVersion)+' → '+esc(d.changes.curVersion)+'); disappeared findings were re-verified item by item':'')
+      +(d.band&&!d.changes.pageChanged&&Math.abs(d.changes.rank[1]-d.changes.rank[0])<=(d.band.rank[1]-d.band.rank[0])?' · the Rank move is inside the confidence band: sample noise, not progress':'')
+      +'</div>' : '')
+  +'<section><span class="eyebrow">Where you actually stand</span>'
+    +'<h2>Answer-layer coverage <span class="tag a">'+cov.queries+'-question set</span></h2>'
+    +'<p>Every question was run live. A domain scores a point for each question where it was cited in the '
+    +'AI Overview or surfaced organically.</p>'
+    +'<div class="chart"><div class="rows">'+barRows+'</div>'
+    +'<div class="axis"><span></span>'+ticks+'<span></span></div>'
+    +'<p class="caption">Questions tested: '+esc(cov.questions.join('  ·  '))+'</p></div></section>'
+  +aioHtml
+  +'<section><span class="eyebrow">Engine one</span>'
+    +'<h2>On-page diff vs the top '+m.total+' <span class="tag r">rank layer</span></h2>'

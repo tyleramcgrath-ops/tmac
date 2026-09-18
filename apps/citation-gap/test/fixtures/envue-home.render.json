@@ -1,0 +1,603 @@
+{
+"title": "Enhance Fleet Safety & Efficiency with Smarter AI Telematics",
+"h1": [
+"Smarter Fleet Telematics Management"
+],
+"h2Count": 9,
+"h3Count": 19,
+"innerTextTruncated": false,
+"innerTextWordCount": 1445,
+"renderedWords": {
+"page": 643,
+"main": 566,
+"mainRegion": "<main>",
+"innerTextMain": 1359,
+"innerTextPage": 1445,
+"textContentMain": 2937,
+"textContentPage": 6324,
+"carousels": [
+{
+"selector": ".owl-item.cloned",
+"label": "Owl clone",
+"count": 30,
+"painted": 0,
+"textContentWords": 616,
+"innerTextWords": 374,
+"paintedWords": 0
+},
+{
+"selector": ".owl-item:not(.cloned)",
+"label": "Owl item",
+"count": 30,
+"painted": 1,
+"textContentWords": 616,
+"innerTextWords": 374,
+"paintedWords": 48
+},
+{
+"selector": ".ue-carousel-item",
+"label": "Unlimited Elements carousel item",
+"count": 44,
+"painted": 0,
+"textContentWords": 308,
+"innerTextWords": 0,
+"paintedWords": 0
+},
+{
+"selector": ".uc_classic_carousel_placeholder",
+"label": "Unlimited Elements placeholder",
+"count": 44,
+"painted": 0,
+"textContentWords": 308,
+"innerTextWords": 0,
+"paintedWords": 0
+}
+],
+"rule": "painted text of the attached, rendered DOM after scroll + settle: every text node whose ancestors are all displayed, visible, opaque, not hidden/aria-hidden/inert, laid out (client rects) and not parked outside an overflow-clipping ancestor; main = <main>; tokens with a letter or digit count as words. innerText and textContent are printed beside it for comparison, never scored."
+},
+"renderedHeadings": {
+"h1": 1,
+"h2": 9,
+"h3": 16,
+"h1Total": 1,
+"h2Total": 9,
+"h3Total": 19
+},
+"headingList": [
+{
+"level": 3,
+"text": "Fleet Distracted Driving: How Telematics Helps Managers Identify Risk Before a Crash",
+"painted": false,
+"why": "visibility:hidden",
+"top": 419
+},
+{
+"level": 3,
+"text": "Fleet Preventive Maintenance Scheduling: How Telematics Helps You Know What Needs Service and When",
+"painted": false,
+"why": "visibility:hidden",
+"top": 419
+},
+{
+"level": 3,
+"text": "Fleet Fuel Theft: How Telematics Helps Detect Fuel Card Fraud and Unauthorized Fuel Use",
+"painted": false,
+"why": "visibility:hidden",
+"top": 419
+},
+{
+"level": 1,
+"text": "Smarter Fleet Telematics Management",
+"painted": true,
+"why": "",
+"top": 394
+},
+{
+"level": 2,
+"text": "Let Us Be Your Strategic Partner!",
+"painted": true,
+"why": "",
+"top": 963
+},
+{
+"level": 2,
+"text": "Our Telematics Solutions Drive Results",
+"painted": true,
+"why": "",
+"top": 1228
+},
+{
+"level": 5,
+"text": "Safer Journeys. Informed Decisions.",
+"painted": true,
+"why": "",
+"top": 1588
+},
+{
+"level": 2,
+"text": "EnVue Telematics Difference",
+"painted": true,
+"why": "",
+"top": 1764
+},
+{
+"level": 3,
+"text": "Safety",
+"painted": true,
+"why": "",
+"top": 1964
+},
+{
+"level": 3,
+"text": "Productivity",
+"painted": true,
+"why": "",
+"top": 1964
+},
+{
+"level": 3,
+"text": "Optimization",
+"painted": true,
+"why": "",
+"top": 1964
+},
+{
+"level": 3,
+"text": "Sustainability",
+"painted": true,
+"why": "",
+"top": 2350
+},
+{
+"level": 3,
+"text": "Compliance",
+"painted": true,
+"why": "",
+"top": 2350
+},
+{
+"level": 3,
+"text": "Expandability",
+"painted": true,
+"why": "",
+"top": 2350
+},
+{
+"level": 2,
+"text": "Measurable Results",
+"painted": true,
+"why": "",
+"top": 2761
+},
+{
+"level": 3,
+"text": "Reduction In Accidents",
+"painted": true,
+"why": "",
+"top": 2859
+},
+{
+"level": 3,
+"text": "Fewer accidents per million miles",
+"painted": true,
+"why": "",
+"top": 2977
+},
+{
+"level": 3,
+"text": "Improvement in MPG",
+"painted": true,
+"why": "",
+"top": 3096
+},
+{
+"level": 3,
+"text": "Decrease in maintenance costs (cents per mile)",
+"painted": true,
+"why": "",
+"top": 3214
+},
+{
+"level": 2,
+"text": "Industries We Support",
+"painted": true,
+"why": "",
+"top": 3450
+},
+{
+"level": 2,
+"text": "EnVue Telematics Wins Innovation Award at Geotab Connect",
+"painted": true,
+"why": "",
+"top": 4688
+},
+{
+"level": 2,
+"text": "Integrated Solutions",
+"painted": true,
+"why": "",
+"top": 5226
+},
+{
+"level": 4,
+"text": "What Our Customers Are Saying",
+"painted": true,
+"why": "",
+"top": 5597
+},
+{
+"level": 4,
+"text": "TECHNOLOGY PARTNERS",
+"painted": true,
+"why": "",
+"top": 5597
+},
+{
+"level": 2,
+"text": "Recent Articles",
+"painted": true,
+"why": "",
+"top": 6286
+},
+{
+"level": 3,
+"text": "Fleet Distracted Driving: How Telematics Helps Managers Identify Risk Before a Crash",
+"painted": true,
+"why": "",
+"top": 6621
+},
+{
+"level": 3,
+"text": "Fleet Preventive Maintenance Scheduling: How Telematics Helps You Know What Needs Service and When",
+"painted": true,
+"why": "",
+"top": 6621
+},
+{
+"level": 3,
+"text": "Fleet Fuel Theft: How Telematics Helps Detect Fuel Card Fraud and Unauthorized Fuel Use",
+"painted": true,
+"why": "",
+"top": 6621
+},
+{
+"level": 3,
+"text": "Fleet Fuel Management: How Telematics Helps Reduce Fuel Costs and Improve Efficiency",
+"painted": true,
+"why": "",
+"top": 7035
+},
+{
+"level": 3,
+"text": "Construction Equipment Fleet Management: How Telematics Helps Control Costs and Improve Utilization",
+"painted": true,
+"why": "",
+"top": 7035
+},
+{
+"level": 3,
+"text": "Construction Fleet Safety: How Telematics Helps Reduce Risk on the Road and Jobsite",
+"painted": true,
+"why": "",
+"top": 7035
+},
+{
+"level": 2,
+"text": "Powered By",
+"painted": true,
+"why": "",
+"top": 7789
+},
+{
+"level": 4,
+"text": "Quick Links",
+"painted": true,
+"why": "",
+"top": 7609
+},
+{
+"level": 4,
+"text": "Company",
+"painted": true,
+"why": "",
+"top": 7609
+},
+{
+"level": 4,
+"text": "Get In Touch!",
+"painted": true,
+"why": "",
+"top": 7609
+}
+],
+"hiddenNow": [
+{
+"tag": "div",
+"cls": "uc-template-wrapper",
+"headings": 0,
+"words": 0,
+"display": "none"
+},
+{
+"tag": "svg",
+"cls": "[object SVGAnimatedString]",
+"headings": 0,
+"words": 0,
+"display": "none"
+}
+],
+"hidden": [
+{
+"text": "Skip to content",
+"tag": "a",
+"reason": "positioned off-screen",
+"kind": "screen-reader-only",
+"context": "screen-reader",
+"gated": false,
+"cls": "skip-link screen-reader-text"
+},
+{
+"text": "Facebook",
+"tag": "span",
+"reason": "positioned off-screen",
+"kind": "screen-reader-only",
+"context": "screen-reader",
+"gated": false,
+"cls": "elementor-screen-only"
+},
+{
+"text": "X-twitter",
+"tag": "span",
+"reason": "positioned off-screen",
+"kind": "screen-reader-only",
+"context": "screen-reader",
+"gated": false,
+"cls": "elementor-screen-only"
+},
+{
+"text": "Linkedin",
+"tag": "span",
+"reason": "positioned off-screen",
+"kind": "screen-reader-only",
+"context": "screen-reader",
+"gated": false,
+"cls": "elementor-screen-only"
+},
+{
+"text": "Dash cams",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "GPS Tracking",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Equipment Management",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Maintenance",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Fuel Management",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Electric Vehicles",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Powered by Geotab",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Safety",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Productivity",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Optimization",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Sustainability",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Compliance",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Expandability",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Construction",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Trucking & Transportation",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+},
+{
+"text": "Leasing & Rental",
+"tag": "div",
+"reason": "visibility:hidden",
+"kind": "call to action",
+"context": "navigation",
+"gated": false,
+"cls": "ue-link-item-title ue-title"
+}
+],
+"hiddenCount": 132,
+"visibleTextElements": 138,
+"hiddenByKind": {
+"screen-reader-only": 18,
+"call to action": 69,
+"text": 45
+},
+"hiddenByContext": {
+"screen-reader": 18,
+"navigation": 72,
+"carousel": 42
+},
+"hiddenContentCount": 0,
+"gating": {
+"inDom": 0,
+"stillHidden": 0,
+"bySelector": {}
+},
+"counters": [
+{
+"toValue": "31",
+"renderedText": "31",
+"label": "Reduction In Accidents",
+"visible": true
+},
+{
+"toValue": "21",
+"renderedText": "21",
+"label": "Fewer accidents per million miles",
+"visible": true
+},
+{
+"toValue": "7",
+"renderedText": "7",
+"label": "Improvement in MPG",
+"visible": true
+},
+{
+"toValue": "6",
+"renderedText": "6",
+"label": "Decrease in maintenance costs (cents per mile)",
+"visible": true
+}
+],
+"scripts": {
+"delayedByOptimizer": 0,
+"totalScripts": 95,
+"elementorFrontend": true,
+"jQuery": true
+},
+"scrollHeight": 8077,
+"ok": true,
+"url": "https://envuetelematics.com/",
+"finalUrl": "https://envuetelematics.com/",
+"readyState": "complete",
+"waitStrategy": "networkidle2",
+"waitMs": 2500,
+"scrolled": true,
+"scrollSteps": 16,
+"gate": {
+"atLoad": {
+"markers": 35,
+"hidden": 35,
+"bySelector": {
+".elementor-invisible": {
+"markers": 35,
+"hidden": 35
+}
+}
+},
+"afterScroll": {
+"markers": 0,
+"hidden": 0,
+"tracked": 35
+},
+"tracked": 35,
+"releasedCount": 35,
+"residualCount": 0,
+"residual": [],
+"released": 35,
+"state": "released",
+"summary": "35 markers at first paint \u2192 35/35 released, 0 still hidden",
+"method": "every marked element tagged at first paint and re-read by identity after a down pass, a reverse pass and a settle, regardless of scroll position",
+"interaction": "mouse move + wheel scroll (16 steps down, then back up) + key press; prefers-reduced-motion: no-preference"
+},
+"renderMs": 16900,
+"pageErrors": [
+"elementorModules is not defined",
+"Unexpected end of input"
+],
+"consoleErrors": 2,
+"notes": []
+}

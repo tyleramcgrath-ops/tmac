@@ -1,0 +1,375 @@
+'- An unverifiable number that stays live on a commercial page is a bigger liability than a\n'+
+'  missing one, so treat "I could not verify this" as a real finding, not a failure to report.\n\n'+
+'OUTPUT\nA table: claim | where it appears | verifiable from what I gave you? | what would make it\n'+
+'defensible.';
+
+  case 'schemaMismatch': return head('Your job is to reconcile FAQPage structured data with the FAQ content actually visible on the page.')+
+'THE PROBLEM (measured)\n'+
+'This page publishes '+((p.schemaTopLevel||p.schemaTypes||[]).join(', ')||'structured data')+'. Every declared item that\n'+
+'Google requires to be visibly supported was string-matched against the page text:\n\n'+
+claimLines(p)+'\n\n'+
+'The scan found '+p.questionHeadingCount+' visible question heading'+(p.questionHeadingCount===1?'':'s')+' on the page itself.\n'+
+'Structured data has to describe what a visitor can actually see — Google treats a schema/content\n'+
+'mismatch as a policy violation, not a cosmetic detail, and it can cost the rich result entirely.\n\n'+
+NO_INVENT+'\n\n'+
+'TASK\n'+
+'STEP 1. Ask me to paste the current FAQPage JSON-LD and the current visible page copy.\n'+
+'STEP 2. Match every question in the schema to a visible question-and-answer on the page. List any\n'+
+'schema entry with no visible counterpart, and any visible Q&A missing from the schema.\n'+
+'STEP 3. If this work order also includes a task adding new visible question headings, treat those\n'+
+'as part of this job, not a separate one — every new heading needs a matching schema entry, added\n'+
+'at the same time it goes live, not after.\n'+
+'STEP 4. Produce the corrected JSON-LD.\n\n'+
+'RULES\n'+
+'- Never leave a schema entry with no visible match on the page.\n'+
+'- Every answer in the schema must match the visible answer text — not a rewritten version of it.\n\n'+
+'OUTPUT\nThe mismatch list first, then the corrected JSON-LD block, ready to paste. Then a two-line\n'+
+'note on how to verify it with Google Rich Results Test.';
+
+  default: return head('Your job is to improve one aspect of a page.')+
+'TASK\n'+fix.title+'\n\n'+fix.body+'\n\n'+(fix.code?('MEASURED\n'+fix.code+'\n\n'):'')+
+NO_INVENT+'\n\nAsk me for the current page copy first, then produce the change, ready to paste.';
+  }
+}
+
+function masterPrompt(d){
+  const c={url:d.url,keyword:d.keyword,brand:d.brand,gl:d.gl,hl:d.hl,page:d.page,
+           medians:d.medians,missing:d.missing,missingInfo:d.missingInfo,rendered:d.rendered,diff:d.diff};
+  const p=d.page, m=d.medians, r=d.rendered, df=d.diff, band=d.band, sp=m.spread||{}, wc=d.wordCheck||null;
+  // Computed here rather than read off d.rankReconcile/d.answerReconcile: masterPrompt must
+  // stand on its own (tests and any other caller build a `d` without going through render()),
+  // never depend on a side effect render() happens to have run first.
+  const rankReconcile = d.rankReconcile || (d.rankRows ? scoreReconciliation(d.rankRows, d.fixes, 'Rank score') : null);
+  const answerReconcile = d.answerReconcile || (d.answerRows ? scoreReconciliation(d.answerRows, d.fixes, 'Answer score') : null);
+  const line=(a,b,cc,dd)=>'  '+String(a).padEnd(28)+String(b).padStart(11)+String(cc).padStart(14)+(dd!=null?String(dd).padStart(17):'');
+  const rng=(k)=> sp[k] ? (sp[k].min.toLocaleString()+'–'+sp[k].max.toLocaleString()) : '';
+  const mrng=(k)=> band&&band.medians&&band.medians[k] ? (band.medians[k][0]===band.medians[k][1] ? 'stable' : band.medians[k][0].toLocaleString()+'–'+band.medians[k][1].toLocaleString()+' SOFT') : '';
+  const fmt=(n)=>Number(n||0).toLocaleString();
+  const wl=(txt,indent)=>{ // wrap long rule text at ~92 cols
+    const words=String(txt).split(' '), out=[]; let cur='';
+    words.forEach(function(w){ if((cur+' '+w).length>92){ out.push(cur); cur=w; } else cur=cur?cur+' '+w:w; });
+    if(cur) out.push(cur); return out.join('\n'+indent);
+  };
+  const failed=(d.failed||[]);
+
+  let out =
+(d.demo
+ ? '!! SAMPLE DATA - DO NOT ACT ON THIS !!\n'+
+   'This work order came from the app’s built-in example, not a live scan of your site.\n'+
+   'Every figure below is illustrative. Run a real scan before using any of it.\n\n'
+ : '')+
+'# SEO AND AI-VISIBILITY WORK ORDER\n\n'+
+(d.reused ? '## NO CHANGE SINCE LAST SCAN ('+d.reused.stamp+')\n'+
+  'Page fingerprint identical — sha256 '+(p.textSha256||'').slice(0,8)+'…\n'+
+  'Competitor medians reused from that scan (age: '+d.reused.ageHours+' hours). No SERP credits spent.\n'+
+  'Open tasks: '+d.fixes.length+(d.reused.tasks===d.fixes.length?' (unchanged)':' (was '+d.reused.tasks+')')+'. Rank '+d.rankScore+' · Answer '+d.answerScore+'.\n'+
+  'The page was re-fetched and re-rendered on this scan; only the Google results and competitor pages are reused.\n'+
+  'Run a full rescan: tick “Force a full rescan” in the scan form.\n\n' : '')+
+ctxBlock(c)+'\n'+
+'Audit date ......... '+d.stamp+'\n'+
+'Rank Score ......... '+d.rankScore+'/100   (how closely this page matches the pages beating it'+(band?'; '+bandText(band,'rank'):'')+')\n'+
+'Answer Score ....... '+d.answerScore+'/100   (whether AI answer engines can quote it'+(band?'; '+bandText(band,'answer'):'')+')\n\n'+
+
+'## METHODOLOGY\n'+
+'Every figure in this work order is reproducible from these rules. Check the method before the\n'+
+'numbers; a number without its method cannot be verified.\n\n'+
+'  Fetch mode ......... '+(r ? 'served HTML + rendered DOM (headless Chromium, computed styles read)' : 'served HTML only'+(d.renderError?' — render failed: '+d.renderError:''))+'\n'+
+'  Fetched URL ........ exactly as given, no cache-busting parameter added; freshness requested\n'+
+'                       via Cache-Control: no-cache header'+(p.finalUrl&&p.finalUrl!==p.fetchedUrl&&p.finalUrl!==d.url?'; redirected to '+p.finalUrl:'')+'\n'+
+(r ? '  Render wait ........ '+fmt(r.waitMs)+' ms after '+r.waitStrategy+', scrolled to bottom: '+(r.scrolled?'yes ('+r.scrollSteps+' steps)':'no')+', then '+fmt(Math.max(600,Math.round(r.waitMs/2)))+' ms more\n'+
+   '  Render input ....... '+((r.gate&&r.gate.interaction)||'window.scrollTo only (older render)')+'; viewport 1366×900\n'+
+   '  Gate self-check .... '+gateLine(r.gate)+(r.gate&&r.gate.state!=='none'?'\n                       '+gateVerdict(r.gate):'')+'\n'+
+   (r.gate&&r.gate.method ? '                       Method: '+r.gate.method+'\n' : '')+
+   (r.gate&&r.gate.residual&&r.gate.residual.length ? r.gate.residual.slice(0,8).map(function(x){return '                       still hidden: ['+(x.cta?'call to action':x.tag)+'] “'+(x.ctaText||x.text).slice(0,70)+'” — '+x.reason+(x.stillMarked?', marker class still present':'');}).join('\n')+'\n' : '')
+   : '  Render wait ........ n/a (not rendered)\n')+
+'  Word count rule .... '+wl(p.wordRule||'main content only; nav, header, footer, aside and form stripped','                       ')+'\n'+
+'                       Region used on this page: '+(p.wordRegion||'main content')+'\n'+
+'  Text fingerprint ... sha256 '+(p.textSha256||'(not available)')+'\n'+
+'                       The stripped text is downloadable from the report ("Download counted text");\n'+
+'                       apply the rule above to it and you get exactly '+fmt(p.wordCount)+'.\n'+
+'  Block definition ... '+wl(p.blockRule||'the outermost element carrying an entrance-animation marker that contains text','                       ')+'\n'+
+'  Measurement basis .. '+(d.basis&&d.basis.kind==='rendered' ? 'RENDERED (painted + reachable) for every page in the comparison — this page and all '+m.total+' competitors were rendered.' : 'SERVED HTML for every page in the comparison (this page and all '+m.total+' competitors). The rendered figure for this page is printed beside it and never mixed into the median.')+'\n'+
+'                       One basis per comparison is asserted at scan time; a page that could only be measured on the other basis is\n'+
+'                       excluded with the disposition BASIS_MISMATCH rather than averaged in. Tick “Render every competitor” for the rendered basis.\n'+
+'  Word count check ... '+(wc
+   ? (wc.basisDifference
+      ? 'BASIS DIFFERENCE '+wc.diffPct+'% — served '+fmt(wc.served)+' · rendered '+fmt(wc.rendered)+' ('+fmt(wc.renderedMain)+' painted + '+fmt(wc.reachable)+' reachable).\n'+
+        '                       Two quantities, not one unreliable number. The difference is: '+wl(wc.explain||'carousel + script-mounted content','                       ')+'.\n'+
+        '                       SCORED FIGURE: '+wc.scored+' ('+fmt(wc.scoredWords)+') — the basis every page in this comparison shares. Any task derived from\n'+
+        '                       the word count is capped at HIGH while this difference stands (P14).\n'
+      : 'served '+fmt(wc.served)+' · rendered '+fmt(wc.rendered)+' ('+fmt(wc.renderedMain)+' painted + '+fmt(wc.reachable)+' reachable) · '+wc.diffPct+'% apart — counts consistent. Scored figure: '+wc.scored+' ('+fmt(wc.scoredWords)+').\n')+
+     '                       A = served HTML, '+wc.servedRegion+', regex parser · B = rendered page, same boundary ('+wc.renderedRegion+'), painted text (one tree walk; every text node whose ancestors all pass display / visibility / opacity / hidden / client-rect / clip tests) plus REACHABLE text (off-stage carousel slides and closed tab panels with a painted sibling; clones excluded)\n'+
+     '                       for comparison only: innerText '+fmt(wc.innerTextMain||0)+' · textContent '+fmt(wc.textContentMain||0)+(wc.renderedDomRule!=null?' · rendered DOM under the served rules '+fmt(wc.renderedDomRule):'')+'\n'+
+     '                       whole page (served HTML) '+fmt(p.pageWordCount||wc.served)+' · whole page (rendered, painted) '+fmt(wc.renderedPage)+'\n'
+     +(wc.gateStuck?'                       The render gate did not release on this scan, so the rendered figure excludes gated content.\n':'')
+     +(compositionLines(wc).length?compositionLines(wc).map(function(l){return '  '+l;}).join('\n')+'\n':'')
+   : 'rendered count not available on this scan; the served figure stands alone and is unverified\n')+
+'  Carousel clones .... '+(cloneLines(p,r).length?cloneLines(p,r).join('\n                       '):'none matched')+'\n'+
+'  Competitor sample .. '+(d.sample ? d.sample.requested+' requested → '+d.sample.used+' used, '+d.sample.dispositions.reduce(function(n,x){return n+(x.count||1);},0)+' not used'+(d.sample.dispositions.length?':':'')+'\n'+
+     d.sample.dispositions.map(function(x){return '                       '+(x.code+(x.count>1?' ×'+x.count:'')).padEnd(22)+x.domain+' — '+x.reason;}).join('\n')+(d.sample.dispositions.length?'\n':'')+
+     (d.sample.unaccounted?'                       UNACCOUNTED '+d.sample.unaccounted+' — the arithmetic does not close; treat every median as provisional.\n':'                       arithmetic closes: used + dispositions = requested\n')
+   : (d.depthRequested||m.total)+' requested → '+m.total+' used'+(failed.length?', '+failed.length+' not used:':'')+'\n'+
+     (failed.length ? failed.map(function(f){return '                       '+(f.excluded?'EXCLUDED — UNREADABLE  ':'FAILED  ')+f.domain+' — '+f.reason;}).join('\n')+'\n' : ''))+
+   ((d.rescued&&d.rescued.length) ? d.rescued.map(function(f){return '                       RENDERED  '+f.domain+' — served HTML gave '+fmt(f.servedWords)+' words (script-gated); rendered in a browser: '+fmt(f.renderedWords)+' words, '+f.headings+' headings. '+(f.used?'USED (rendered basis).':'NOT USED on the served basis (BASIS_MISMATCH); would be used under “Render every competitor”.');}).join('\n')+'\n' : '')+
+'                       Effort model: 1 day = 6 hours, half day = 3 hours; pts/hr figures use it.\n'+
+'                       Minimum-content gate: a page under '+COMP_FLOOR_WORDS+' main-content words or with no headings is a failed or\n'+
+'                       script-gated fetch, not a competitor, and is excluded so it cannot drag every median down.\n'+
+'                       word count min/median/max '+(sp.wordCount?fmt(sp.wordCount.min)+' / '+fmt(sp.wordCount.median)+' / '+fmt(sp.wordCount.max):'n/a')+'\n'+
+'  Score confidence ... '+(band ? 'Rank '+band.rank[0]+'–'+band.rank[1]+', Answer '+band.answer[0]+'–'+band.answer[1]+' — leave-one-out across the '+band.n+' competitor pages.\n'+
+'                       A move inside that band between scans is sample noise, not progress.' : 'not computed (fewer than 3 competitor pages)')+'\n'+
+'  Median confidence .. '+(band&&band.medians ? 'each median below carries its leave-one-out range; a task whose median moves\n'+
+'                       when one competitor is dropped is marked SOFT TARGET and its number may change next scan.' : 'not computed')+'\n'+
+'  Heading rule ....... '+wl(p.headingRule||'headings inside post-feed, loop or carousel widgets are TEMPLATE; the rest EDITORIAL','                       ')+'\n'+
+'  Hidden containers .. '+((p.hiddenContainers&&p.hiddenContainers.length)
+   ? p.hiddenContainers.length+' element'+(p.hiddenContainers.length===1?'':'s')+' the served HTML itself hides, excluded from the word count, headings inside them labelled HIDDEN and still counted:\n'
+     +p.hiddenContainers.slice(0,6).map(function(c){return '                       <'+c.tag+(c.cls?' class="'+c.cls+'"':'')+'> — '+c.reason+' — '+c.words+' words, '+c.headings+' heading'+(c.headings===1?'':'s')+(c.headingTexts&&c.headingTexts.length?' ('+c.headingTexts.slice(0,3).join('; ').slice(0,160)+')':'');}).join('\n')+(p.hiddenContainers.length>6?'\n                       … and '+(p.hiddenContainers.length-6)+' more':'')
+   : 'none declared in the served HTML')+'\n'+
+(d.reconcile && (d.reconcile.details.length||d.reconcile.relocated.length) ? '  After render ....... '+relocationLines(d.reconcile).join('\n                       ')+'\n' : '')+
+(r&&r.gate&&r.gate.late&&r.gate.late.count ? '  Late markers ....... '+r.gate.lateSummary+(r.gate.late.hidden&&r.gate.late.residual&&r.gate.late.residual.length?'\n'+r.gate.late.residual.slice(0,6).map(function(x){return '                       LATE / UNVERIFIED: “'+x.text.slice(0,70)+'” — '+x.reason+' at y='+x.top;}).join('\n'):'')+'\n' : '')+
+'\n'+
+
+(df ?
+'## RENDERED-VS-SERVED DIFF\n'+
+'Text in HTML but invisible to humans ....... '+df.hiddenCount+' element'+(df.hiddenCount===1?'':'s')+' by computed style'+
+  (Object.keys(df.byKind).length?'  ('+Object.keys(df.byKind).map(function(k){return df.byKind[k]+' '+k;}).join(', ')+')':'')+'\n'+
+(df.hidden.length ? df.hidden.slice(0,25).map(function(h){return '    ['+h.kind+'] “'+h.text.slice(0,80)+'” — '+h.reason+(h.gated?' (entrance-animation wrapper)':'');}).join('\n')+(df.hidden.length>25?'\n    … and '+(df.hidden.length-25)+' more':'')+'\n' : '    none\n')+
+'  Hidden by design, NOT findings ............ '+df.byDesignCount+' element'+(df.byDesignCount===1?'':'s')+
+  (df.byDesignCount?'  ('+Object.keys(df.byContext).filter(function(k){return k!=='content';}).map(function(k){return df.byContext[k]+' '+({navigation:'in menus',carousel:'carousel slides waiting their turn',dialog:'in closed dialogs/popups',tab:'in collapsed tabs/accordions','screen-reader':'screen-reader-only text'}[k]||k);}).join(', ')+')':'')+'\n'+
+'  Served text blocks never appearing in visible text: '+df.servedNotVisibleCount+
+  (df.servedNotVisible.length?'\n'+df.servedNotVisible.slice(0,12).map(function(x){return '    “'+x.text.slice(0,80)+'”'+(x.inDom?'':' (removed from the DOM by script)');}).join('\n'):'')+'\n'+
+'Text visible but absent from served HTML ... '+df.visibleNotServedCount+' line'+(df.visibleNotServedCount===1?'':'s')+' (script-injected page content; invisible to any crawler that does not run JavaScript)\n'+
+(df.visibleNotServed.length ? df.visibleNotServed.slice(0,12).map(function(x){return '    “'+x.text.slice(0,80)+'”';}).join('\n')+(df.visibleNotServed.length>12?'\n    … and '+(df.visibleNotServed.length-12)+' more':'')+'\n' : '')+
+(d.volatile ? '  VOLATILE (third-party widget, may vary by time/session — not a page finding) '+d.volatile.rows.filter(function(x){return x.present;}).length+' line'+(d.volatile.rows.filter(function(x){return x.present;}).length===1?'':'s')+' this scan\n'+
+  (d.volatile.rows.length ? d.volatile.rows.slice(0,14).map(function(x){return '    “'+x.text.slice(0,60)+'”'.padEnd(64-Math.min(x.text.length,60))+' seen '+x.seen+'/'+x.of+' scans'+(x.present?'':' — absent this scan')+(x.host?' · from '+x.host:'')+(x.where?' · in '+x.where:'')+(!x.present||x.host?'':' · '+x.how);}).join('\n')+'\n' : '    none\n')+
+  '    Detection: DOM insertions are attributed to the script host that made them'+(df.injectHook?'':' (hook did not install on this page; pattern match only)')+'; a body-level container named like a chat, cookie or consent widget also counts. Volatile lines never enter NEW / RESOLVED / WITHDRAWN; they carry a seen-in-N-of-M counter instead'+(d.volatile.trackingSince?' (tracking since '+d.volatile.trackingSince+')':' (tracking starts with this scan)')+'. This scan ran at '+d.stamp+'.\n' : '')+
+(df.gateStuck ?
+'  UNVERIFIED (gate did not release) ........ '+df.unverifiedCount+' element'+(df.unverifiedCount===1?'':'s')+' inside entrance-animation wrappers stayed hidden, but so did every\n'+
+'    marker on the page ('+gateLine(df.gate)+'). That is the signature of a render that never fired the\n'+
+'    reveal, not of a broken page. Reported for manual verification only, NOT as hidden content:\n'+
+(df.unverified.filter(function(h){return !h.late;}).slice(0,12).map(function(h){return '    ['+h.kind+'] “'+h.text.slice(0,80)+'”';}).join('\n')+(df.unverified.length>12?'\n    … and '+(df.unverified.length-12)+' more':''))+'\n' : '')+
+(df.late&&df.late.count ?
+'  LATE / UNVERIFIED (inserted after first paint) '+df.late.hidden+' of '+df.late.count+' marker'+(df.late.count===1?'':'s')+' a widget mounted after first paint stayed hidden after a targeted\n'+
+'    scroll. The identity check never saw them at load, and a real browser may reveal them on the first scroll, so they are\n'+
+'    reported for manual verification only, NOT as hidden content:\n'+
+(df.unverified.filter(function(h){return h.late;}).slice(0,10).map(function(h){return '    ['+h.kind+'] “'+h.text.slice(0,80)+'” — '+h.reason;}).join('\n'))+'\n' : '')+
+(d.reconcile&&d.reconcile.relocated.length ? d.reconcile.relocated.map(function(c){return '  CONTAINER RELOCATED — <'+c.tag+(c.cls?' class="'+c.cls+'"':'')+'> is '+c.reason+' in served HTML but holds '+c.renderedHeadings+' of its '+c.servedHeadings+'\n    served headings after render. Its content was moved into the visible DOM by a widget. Findings that call this\n    content "hidden from visitors" are WRONG for this page. Re-verify before acting.';}).join('\n')+'\n' : '')+
+'Entrance-animation markers ................. '+(p.animationGatedElements||0)+' elements carry one in served HTML ('+(p.animationGatedCount||0)+' outermost blocks with text)'+
+  (df.gate&&df.gate.state!=='none' ? '; in the browser: '+gateLine(df.gate)+' ('+df.gate.afterScroll.markers+' still carrying the marker class)' : '; '+df.gating.inDom+' still carrying the marker after render, '+df.gating.stillHidden+' hidden')+'\n'+
+'                                             (an element never leaves the DOM when its animation fires — the marker class is removed)\n'+
+'Counter widgets ............................ '+(p.counterCount||0)+' in served HTML'+((p.countersWithoutCaption||0)?' ('+p.countersWithoutCaption+' without a caption the parser could find)':'')+(df.counters.length?'; after render ('+df.counters.length+'): '+df.counters.map(function(x){return (x.label?'“'+x.label.slice(0,40)+'”':'counter')+' shows '+x.renderedText+(x.renderedText!==x.toValue?' (target '+x.toValue+')':'')+(x.visible?'':' (hidden)');}).slice(0,8).join(', '):'')+'\n\n'
+: (d.renderError ?
+'## RENDERED-VS-SERVED DIFF\n'+
+'Not available: the page could not be rendered in a browser ('+d.renderError+'). The rest of this\n'+
+'work order is from served HTML only. Item 5 of STEP 0 applies in full.\n\n' : ''))+
+
+(d.changes ?
+'## CHANGES SINCE THE LAST SCAN ('+d.changes.prevStamp+')\n'+
+'  Page content ....... '+(d.changes.pageChanged?'CHANGED':'unchanged — same title, H1, meta, heading counts and text fingerprint')+'\n'+
+(d.changes.pageChanged ? (d.changes.changedLines===null ? '                       what changed: not itemised — the previous scan predates change logging; only the fingerprint is available\n'
+   : d.changes.changedLines.length ? d.changes.changedLines.map(function(l){return '                       what changed: '+l+'\n';}).join('') : '                       what changed: nothing enumerable (see fingerprint note)\n') : '')+
+(d.changes.versionChanged ? '  Scanner rules ...... CHANGED since that scan ('+d.changes.prevVersion+' → '+d.changes.curVersion+'). A finding that disappeared was re-verified item by item; none is marked RESOLVED on the rule change alone.\n' : '')+
+'  Rank Score ......... '+d.changes.rank[0]+' → '+d.changes.rank[1]+(d.changes.rank[1]!==d.changes.rank[0]?'  ('+(d.changes.rank[1]-d.changes.rank[0]>0?'+':'')+(d.changes.rank[1]-d.changes.rank[0])+')':'')+(band&&!d.changes.pageChanged&&Math.abs(d.changes.rank[1]-d.changes.rank[0])<=(band.rank[1]-band.rank[0])?'  (inside the confidence band: sample noise, not movement)':'')+'\n'+
+(d.changes.rank[1]!==d.changes.rank[0] ? (d.changes.attribution&&d.changes.attribution.lines.length ? attributionLines(d.changes.attribution).join('\n')+'\n' : '                     not attributable: the previous scan predates attribution logging (pre-10.5)\n') : '')+
+'  Answer Score ....... '+d.changes.answer[0]+' → '+d.changes.answer[1]+(d.changes.answer[1]!==d.changes.answer[0]?'  ('+(d.changes.answer[1]-d.changes.answer[0]>0?'+':'')+(d.changes.answer[1]-d.changes.answer[0])+')':'')+(band&&!d.changes.pageChanged&&Math.abs(d.changes.answer[1]-d.changes.answer[0])<=(band.answer[1]-band.answer[0])?'  (inside the confidence band: sample noise, not movement)':'')+'\n'+
+(d.changes.answer[1]!==d.changes.answer[0] ? (d.changes.attribution&&d.changes.attribution.answer.length ? d.changes.attribution.answer.map(function(a){return '                     '+(a.delta>0?'+':'−')+Math.abs(a.delta)+'  '+a.key+' row — '+a.cause;}).join('\n')+'\n' : '                     row-level attribution not available (previous scan pre-10.5)\n') : '')+
+'  Competitor sample .. '+d.changes.n[0]+' → '+d.changes.n[1]+' pages; median word count '+fmt(d.changes.medianWords[0])+' → '+fmt(d.changes.medianWords[1])+'\n'+
+'  RESOLVED SINCE LAST SCAN ... '+(d.changes.resolved.length ? '\n'+d.changes.resolved.map(function(f){return '    “'+f.title+'”'+(f.items&&f.items.length?' ['+f.items.slice(0,3).join('; ')+']':'')+'\n      evidence: '+f.why;}).join('\n')+'\n' : 'none\n')+
+'  STILL PRESENT (re-verified) '+(d.changes.stillPresent.length ? '\n'+d.changes.stillPresent.map(function(f){return '    “'+f.title+'”'+(f.items&&f.items.length?' ['+f.items.slice(0,3).join('; ')+']':'')+'\n      '+f.why;}).join('\n')+'\n' : 'none\n')+
+(d.changes.unverified.length ? '  UNVERIFIED (carried) ....... \n'+d.changes.unverified.map(function(f){return '    “'+f.title+'”\n      '+f.why;}).join('\n')+'\n' : '')+
+'  NEW SINCE LAST SCAN ........ '+(d.changes.added.length ? '\n'+d.changes.added.map(function(f){return '    “'+f.title+'”';}).join('\n')+'\n' : 'none\n')+
+'  UNCHANGED .................. '+d.changes.carried+' task'+(d.changes.carried===1?'':'s')+' carried forward\n'+
+'  WITHDRAWN .................. '+(d.changes.withdrawn.length ? '\n'+d.changes.withdrawn.map(function(f){return '    “'+f.title+'”'+(f.items&&f.items.length?' ['+f.items.slice(0,3).join('; ')+']':'')+'\n      why: '+f.why;}).join('\n')+'\n' : 'none\n')+
+'  RESOLVED is claimed only when the exact check that produced the finding was re-run on this\n'+
+'  fetch and came back clean; “the page changed” is never evidence on its own. STILL PRESENT is a\n'+
+'  task that fell off the list (a rule or sample change) while its items are still on the page —\n'+
+'  it is carried into the tasks below, never closed. A WITHDRAWN task is one this tool reported\n'+
+'  last time and now believes was a false positive — the page did not change, so the finding\n'+
+'  could not have been fixed; it was a render or sample difference. If you acted on one, check\n'+
+'  that edit. A tool that silently dropped its own bad findings would teach you not to trust the\n'+
+'  good ones, so they are listed here instead.\n\n'
+: '')+
+
+'## STEP 0 - VERIFY BEFORE YOU DO ANYTHING\n'+
+'This baseline came from an automated scan. Check it before you act on it.\n\n'+
+'1. Open EXACTLY this URL: '+d.url+'\n'+
+'   Not the homepage. Not a similar page. If the URL you can reach differs in any way, or you\n'+
+'   cannot open it at all, say so and stop.\n'+
+'2. Compare what you actually see against the MEASURED BASELINE below.\n'+
+'3. If ANY figure differs from the baseline, STOP. Do not start Task 1. List every difference\n'+
+'   as "baseline says X, I see Y" and ask me which is correct.\n'+
+'   Never write "confirmed" or "all accurate" beside numbers that do not match. A disagreement\n'+
+'   is a finding, not a formality — and it usually means one of us is looking at the wrong page.\n'+
+(r
+ ? '4. The baseline figures are read from the served HTML; a rendered copy was also checked, so\n'+
+   '   counter widgets and script-injected content are accounted for (see RENDERED-VS-SERVED DIFF).\n'+
+   '   If you still find content on the live page that is missing from the baseline, flag it.\n'+
+   '5. Content the browser check found hidden from visitors is listed above. If you see it on the\n'+
+   '   live page with your own eyes, say so — a rendering difference between browsers is itself\n'+
+   '   a finding worth recording.\n\n'
+ : '4. This scan reads the page as the server sends it, without running JavaScript. Figures inside\n'+
+   '   animated counters, tabs, accordions or script-injected content may exist on the page and be\n'+
+   '   missing from the baseline. If you find some, flag them: they are also invisible to any\n'+
+   '   crawler that does not execute JavaScript, which is a problem worth fixing in its own right.\n'+
+   '5. The scan cannot see rendered CSS. If something is present in the HTML but hidden from human\n'+
+   '   visitors on the live page, say so — that is a real defect the scan is blind to.\n\n')+
+'## DO NOT MAKE THIS WORSE\n'+
+(d.rankScore>=75
+ ? 'This page already scores '+d.rankScore+'/100 on Rank — close to parity with what is already\n'+
+   'ranking. From here the dominant risk is regression, not stagnation. Treat every change below as\n'+
+   'one you must be able to undo, not just one you must be able to justify.\n'
+ : '')+
+'- Do not change the URL.\n'+
+'- Do not edit the title tag or H1 without telling me the exact before/after and why — both carry\n'+
+'  ranking signal on their own, separate from anything else on this list.\n'+
+'- The ROLLBACK SNAPSHOT below is the restore point. Before any edit, confirm it still matches.\n\n'+
+'## ROLLBACK SNAPSHOT (as measured '+d.stamp+')\n'+
+'Paste these back to undo. Everything here is the current live value, not a suggestion.\n\n'+
+'  Title tag .......... '+(p.httpTitle||'(empty)')+'\n'+
+'  Meta description ... '+(p.metaDescription||'(empty)')+'\n'+
+'  H1 ................. '+((p.h1&&p.h1[0])||'(none)')+'\n'+
+'  Canonical .......... '+(p.canonical||'(none)')+'\n'+
+'  Heading outline .... '+((p.outline&&p.outline.length)
+   ? '\n'+p.outline.slice(0,80).map(function(h){return '    '+'  '.repeat(Math.max(h.level-1,0))+'H'+h.level+'  '+h.text;}).join('\n')+(p.outline.length>80?'\n    … '+(p.outline.length-80)+' more headings':'')
+   : '(ask me to paste it — the scan did not capture an ordered outline)')+'\n\n'+
+'## HOW I WANT YOU TO WORK\n'+
+'There are '+d.fixes.length+' tasks below in two explicitly ranked sections. Section A (OUT-OF-SCORE) is\n'+
+'visitor-facing and integrity defects that sit outside the two 100-point tables; each carries a\n'+
+'fixed weight, not table points. Section B (IN-SCORE) recovers points from the Rank and Answer\n'+
+'tables and is ordered by points per hour — arithmetic you can check. Ordering WITHIN each\n'+
+'section is arithmetic; ordering A before B is a judgement call, stated as such: a demo button a\n'+
+'visitor cannot see costs revenue now, a missing H3 does not. Work them in order. After each task,\n'+
+'show me the finished output and stop. Wait for me to say go before starting the next one.\n'+
+'Effort model: 1 day = 6 hours, half day = 3 hours, then 2 hrs / 1 hr / 30 min / 15 min. All pts/hr figures use\n'+
+'this. Section B labels are a pure function of pts/hr: HIGH ≥ 10, MEDIUM ≥ 5, otherwise LOW. CRITICAL is reserved\n'+
+'for Section A — something wrong on a live commercial page, not something merely absent.\n\n'+
+NO_INVENT+'\n\n'+
+'Before you start Task 1, ask me for two things: the current page copy, and the current\n'+
+'heading outline (or confirm the ROLLBACK SNAPSHOT outline is still current). Almost every\n'+
+'task below needs them.\n\n'+
+'## MEASURED BASELINE\n'+
+'From a live scan of the top '+m.total+' Google results for this keyword. SPREAD is min–max across them;\n'+
+'a median with a wide spread is a soft target, not a hard one.\n\n'+
+line('SIGNAL','THIS PAGE','TOP-'+m.total+' MEDIAN','SPREAD (MIN–MAX)')+'   MEDIAN RANGE (leave-one-out)\n'+
+'  '+'-'.repeat(100)+'\n'+
+line('Body word count', fmt(p.wordCount)+(wc?' '+wc.scored+' · '+(wc.scored==='served'?fmt(wc.rendered)+' rendered':fmt(wc.served)+' served'):''), fmt(m.wordCount), rng('wordCount'))+'   '+mrng('wordCount')+(wc&&wc.basisDifference?'   BASIS DIFFERENCE '+wc.diffPct+'% ('+(wc.explain?wc.explain.split(';')[0]:'carousel + script-mounted')+')':'')+(overParityNote(p.wordCount,m.wordCount)?'\n  NOTE — '+overParityNote(p.wordCount,m.wordCount):'')+'\n'+
+line('H2 sections', p.h2Count+(p.h2Template?' ('+p.h2Template+' feed)':''), m.h2Count, rng('h2Count'))+'   '+mrng('h2Count')+'\n'+
+line('H3 subheadings', p.h3Count+(p.h3Template?' ('+p.h3Template+' feed)':''), m.h3Count, rng('h3Count'))+'   '+mrng('h3Count')+'\n'+
+line('Question-shaped headings', p.questionHeadingCount, m.questionHeadingCount, rng('questionHeadingCount'))+'   '+mrng('questionHeadingCount')+'\n'+
+line('Quantified claims', p.statCount, m.statCount, rng('statCount'))+'   '+mrng('statCount')+'\n'+
+line('Lists', p.listCount, m.listCount, rng('listCount'))+'   '+mrng('listCount')+'\n'+
+line('Tables', p.tableCount, m.tableN+' of '+m.total, '')+'\n'+
+line('Keyword in title tag', p.kwInTitle?'yes':'NO', m.kwInTitleN+' of '+m.total, '')+'\n'+
+line('Keyword in H1', p.kwInH1?'yes':'NO', m.kwInH1N+' of '+m.total, '')+'\n'+
+line('FAQ/Product/Service schema', (p.hasFaqSchema||p.hasProductSchema)?'yes':'NO', m.schemaN+' of '+m.total, '')+'\n\n'+
+'Word count follows the rule in METHODOLOGY (main content only, so a whole-page count reads\n'+
+'higher — whole page (served HTML) '+fmt(p.pageWordCount||p.wordCount)+(wc?', whole page (rendered, painted) '+fmt(wc.renderedPage):'')+'). '+(wc?'The scored word count is the '+wc.scored.toUpperCase()+' figure ('+fmt(wc.scoredWords)+'), the basis every page in the comparison shares'+(wc.basisDifference?'; the rendered figure differs by '+wc.diffPct+'% — see Word count check':'')+'. ':'')+'Quantified claims are figures inside a sentence; a bare\n'+
+'number lifted out of a widget is not counted twice.\n\n'+
+'Current title tag: "'+(p.httpTitle||'(empty)')+'"\n'+
+'Current H1: "'+((p.h1&&p.h1[0])||'(none found)')+'"\n'+
+'Current meta description: "'+(p.metaDescription||'(empty)')+'"\n'+
+(p.schemaTopLevel
+ ? 'Schema, top-level entities ('+p.schemaTopLevel.length+'): '+(p.schemaTopLevel.join(', ')||'none')+'\n'+
+   'Schema, nested sub-objects ('+(p.schemaNested||[]).length+'): '+((p.schemaNested||[]).join(', ')||'none')+'\n'+
+   ((p.schemaClaims||[]).length ? 'Schema items checked against page text: '+(p.schemaClaims.length-p.schemaClaimsAbsent)+' present, '+p.schemaClaimsAbsent+' absent\n' : '')
+ : 'Schema types found: '+((p.schemaTypes||[]).join(', ')||'none')+'\n')+
+'\nA note on targets: aim for PARITY with the median, never more. Overshooting a median is how\n'+
+'a page ends up padded with filler that dilutes it.\n\n';
+
+  if(d.missingInfo && d.missingInfo.length){
+    out += '## CATEGORY VOCABULARY THIS PAGE IS MISSING\n'+
+    'Concepts appearing across several pages that outrank this one, absent here. One line per\n'+
+    'concept; surface forms in brackets. Presence was checked against the served HTML AND the\n'+
+    'rendered visible text'+(d.diff&&d.diff.gateStuck?' (render self-check failed, so visibility is unverified on this scan)':'')+':\n'+
+    '  PRESENT BUT HIDDEN = in the HTML, invisible to a visitor — scored as missing until visible\n'+
+    '  ABSENT             = not on the page at all\n'+
+    vocabLines(c)+'\n'+
+    'OWN STACK = named elsewhere on this site (navigation, links, product pages) but not on this page\n'+
+    '            — the business already offers it and the page never says so. Usually the best term here.\n'+
+    'VOCABULARY = category language. Use judgement; I would rather you exclude a term than force it.\n'+
+    'COMPETITOR = a domain ranking for this keyword. Do not add unless a real comparison exists.\n\n';
+  } else if(d.missing && d.missing.length){
+    out += '## CATEGORY VOCABULARY THIS PAGE IS MISSING\n'+
+    'Terms appearing across several pages that outrank this one, absent here:\n'+
+    '  '+d.missing.slice(0,24).join(', ')+'\n'+
+    'Some of these will be competitor brands or adjacent products that would be wrong to add.\n'+
+    'Use judgement — I would rather you exclude a term than force it.\n\n';
+  }
+
+  out += '## THE TASKS\n\n';
+  let lastSection='';
+  d.fixes.forEach(function(f,i){
+    const sec=f._section||(f._extra?'OUT-OF-SCORE':'IN-SCORE');
+    if(sec!==lastSection){
+      out += (sec==='OUT-OF-SCORE'
+        ? '### SECTION A — OUT-OF-SCORE (visitor-facing and integrity defects; fixed weight, ranked by weight per hour)\n\n'
+        : '### SECTION B — IN-SCORE (recovers Rank/Answer points; ranked by points per hour)\n\n');
+      lastSection=sec;
+    }
+    out += '### Task '+(i+1)+' — '+f.title+(f._soft?'  [SOFT TARGET]':'')+'\n'+
+      '['+f.severity+' · about '+f.effort.toLowerCase()+' · '+impactText(f)+']\n\n'+
+      'Why: '+f.body+'\n'+
+      (f.code ? '\nMeasured:\n'+f.code.split('\n').map(function(l){return '  '+l;}).join('\n')+'\n' : '')+
+      '\nDo this: '+taskLine(f,c)+'\n\n';
+  });
+
+  out += '## SCORE RECONCILIATION\n'+
+  'Every point below 100 on either table is either claimed by a task above or declared\n'+
+  'unreachable here — so "nothing left to do" and "the tool ran out of ideas" never read the\n'+
+  'same in this report.\n\n'+
+  (rankReconcile ? '  '+reconcileText(rankReconcile)+'\n\n' : '')+
+  (answerReconcile ? '  '+reconcileText(answerReconcile)+'\n\n' : '');
+
+  out += '## WHEN YOU ARE DONE\n'+
+  'Give me a single checklist of every change, grouped by where it goes: title tag, head section,\n'+
+  'page body, structured data. That is what I will hand to whoever edits the site.\n\n'+
+  'Then list, in one place, every fact you needed from me and did not get.\n';
+  return out;
+}
+
+// "+8 pts ANSWER, about 16 pts/hr" - the arithmetic behind the task order, shown so it can be
+// argued with. Signals outside the two 100-point tables show their weight instead.
+function impactText(f){
+  const pts=Math.round(f._pts||0), hrs=f._hours||1;
+  const perHr=Math.round((f._pts||0)/Math.max(hrs,0.15));
+  if(f._extra) return 'weight '+pts+' outside the score tables, affects '+f.engine.toLowerCase()+' · ≈'+perHr+' pts/hr';
+  return '+'+pts+' pts on '+f.engine+' · ≈'+perHr+' pts/hr';
+}
+
+function taskLine(f,c){
+  const m=c.medians, p=c.page, kw=c.keyword;
+  switch(f.key){
+    case 'kwInTitle': return 'Write 5 title tags, 50-60 characters, "'+kw+'" in the first 35 characters, ending " | '+c.brand+'". Show the character count for each and recommend one.';
+    case 'kwInH1': return 'Write 5 H1 options under 70 characters that contain "'+kw+'" and describe the page rather than sell it. Recommend one.';
+    case 'hiddenContent': return 'Give me the one-minute reproduction on the live page, then the diagnosis — stuck entrance animation, or a modal/tab that is meant to be closed — then the fix: page builder first, scoped CSS second, global override last with its cost stated. Anything hidden that is intentional, say so and move on.';
+    case 'animGate': return 'Give me a one-minute check to confirm whether this content is actually visible on the live page, then the fix — page builder first, scoped CSS second, global override last with its cost stated. Do not assume it is broken before I confirm.';
+    case 'jsStats': return 'Rewrite the '+(p.jsHiddenStatCount||0)+' counter figures as plain server-rendered text so they exist in the HTML without JavaScript. Use the recovered values exactly; confirm their source with me first.';
+    case 'stats': return 'Ask me for the real figures FIRST — customer, metric, timeframe, permission to name them — and suggest which '+Math.max(m.statCount-p.statCount,1)+' metrics would be most persuasive. Write nothing until I answer. If I have no data, give me a collection plan instead.';
+    case 'questionHeadings': return 'Write '+qNeed(p,m)+' question heading'+(qNeed(p,m)===1?'':'s')+', each followed by a 35-50 word answer that answers the question in its first sentence. Flag any figure you need from me rather than inventing one.';
+    case 'h3Count': return 'Produce a full heading outline taking the page to about '+m.h3Count+' H3s, with a word budget beside each.';
+    case 'wordCount': return 'Do not write to a word count. List the specific buyer questions about "'+kw+'" this page leaves unanswered, using only the current copy plus facts I give you. Answer each one in as many words as it genuinely takes, then total the result — if it lands short of '+m.wordCount.toLocaleString()+' words, tell me what real gaps remain rather than padding to close the gap.';
+    case 'h3Fragmented': return 'Merge the current H3s into the '+m.h3Count+' subheadings that each carry a genuinely distinct idea; show old-to-new mapping. Do this before any task that adds new headings.';
+    case 'claimsAudit': return 'For each of the '+p.statCount+' quantified claims already on the page, tell me what you can and cannot verify from what I give you, and ask for the source, date and permission to publish for anything unverified. Flag, do not delete.';
+    case 'schemaMismatch': return 'Work from the PRESENT/ABSENT list above: for every ABSENT item either put the content on the page or take it out of the JSON-LD, list every mismatch in either direction, and produce corrected JSON-LD. If this list also adds new question headings, fold them into this task rather than leaving the schema to catch up later.';
+    case 'table': return 'Ask me for the real specs, then build a comparison table as clean semantic HTML — rows are options, columns are dimensions, every cell a concrete value.';
+    case 'schema': return 'Ask me for the FAQ content and product details, then produce only the JSON-LD the page content actually supports. If there is no FAQ on the page, say it has to be written first. If there are service categories rather than priced products, use Service and tell me what Product would need.';
+    case 'entities': return 'Start with the OWN STACK terms — confirm each with me, then work them in. Then judge the VOCABULARY terms. Leave COMPETITOR terms out unless I say otherwise. Show before/after sentences for every term you add.';
+    case 'listCount': return 'Find prose that should be lists and rewrite it as clean HTML lists with parallel grammar.';
+    case 'kwInMeta': return 'Write 5 meta descriptions, 140-155 characters, containing "'+kw+'", each with its character count.';
+    case 'h2Count': return 'Propose a revised H2 structure covering the buyer journey for "'+kw+'".';
+    case 'dupHeadings': return f._template
+      ? 'Do not touch the page body. In the widget that produces the SECOND feed, either set the title element\'s HTML tag to H4 (or a non-heading element), or set the query offset so the two feeds return non-overlapping posts. Do not delete the posts and do not retitle them — the titles are correct. Confirm which feed is second by its position on the page.'
+      : 'For each repeated heading text listed above, keep the editorial copy and remove or retitle the others; show me the before/after outline with the duplicates gone and nothing else changed.';
+    case 'counterCaptionHeadings': return 'This is a widget/markup setting, not a content edit. For each counter caption listed above, change its tag to a <div> or <span> (or use the widget\'s own "caption element" setting if it has one). Keep the text exactly as-is, and do not touch any other heading — the pillars and the question headings stay untouched.';
+    default: return 'Read the measured figures for this item above, tell me exactly what you would change on the page and why, and show the before/after. Do not write anything until I confirm the facts you need.';
+  }
+}
+</script>
+
+<script>
+"use strict";
+const qNeed = (p,m) => m.questionHeadingCount>0 ? Math.max(m.questionHeadingCount-p.questionHeadingCount,1) : Math.max(3-p.questionHeadingCount,1);
+function buildFixes(p,m,rr,ar,kw,cats,missing,brand,opts){
+  opts=opts||{};
+  const diff=opts.diff||null, rendered=!!(opts.rendered&&opts.rendered.ok), missingInfo=opts.missingInfo||[];
+  const by={}; rr.concat(ar).forEach(function(x){ by[x.key]=x; });
+  const gap=function(k){ return by[k]&&by[k].pct<85?by[k]:null; };
