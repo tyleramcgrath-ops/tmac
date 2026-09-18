@@ -182,31 +182,74 @@ function pt_seed_bodies() {
 function pt_seed_about_body() {
 	return pt_blocks(
 		array(
-			array( 'p', __( 'Palm Tree Surf runs surf lessons, fishing charters, boat tours, wildlife trips and private days out of Tamarindo, on the Guanacaste coast of Costa Rica. Everything we do starts within a few minutes of this beach.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Palm Tree Surf is a surf and tour school in Tamarindo, on the Guanacaste coast of Costa Rica. We run surf lessons, fishing charters, boat tours, estuary and wildlife trips, inland adventure days, and private days built around whoever is coming. Everything starts within a few minutes of this beach, and everything is run by people who are in this water every week.', 'palmtreesurf' ) ),
 
-			array( 'h2', __( 'Why we are on this beach', 'palmtreesurf' ) ),
-			array( 'p', __( 'Tamarindo is a rare piece of coast. The main break is sand-bottom, not reef, so it rolls instead of dumping and it forgives the mistakes every learner makes. Deep water sits close enough that a fishing charter can be inshore at the points or offshore in blue water without a long run. Behind the beach, the estuary opens into protected mangrove channels that are busy with birds and howler monkeys at first light. And the water is warm all year, so nobody owns a wetsuit here.', 'palmtreesurf' ) ),
-			array( 'p', __( 'That is a lot of different days out inside a very small area, which is why one company can run all of it properly rather than subcontracting half of it to strangers.', 'palmtreesurf' ) ),
+			array( 'h2', __( 'Why Tamarindo is the right place to do all of this', 'palmtreesurf' ) ),
+			array( 'p', __( 'Most beach towns are good at one thing. Tamarindo is unusual because several very different days out sit inside a few kilometres of each other, and that is the whole reason this school exists in the shape it does.', 'palmtreesurf' ) ),
+			array( 'p', __( 'The main break is sand-bottom rather than reef. That single fact is why Tamarindo became a teaching beach: the wave rolls instead of dumping, the bottom forgives the falls every learner takes, and there is nothing under you to be afraid of. The water sits warm all year, so nobody owns a wetsuit here and nobody cuts a session short because they got cold.', 'palmtreesurf' ) ),
+			array( 'p', __( 'A few hundred metres north, the Tamarindo estuary opens into mangrove channels inside a protected wildlife refuge — flat water, deep shade, and the loudest howler monkeys you will hear on the trip. Offshore, the seabed drops away quickly, so a fishing boat can work the rocky points inshore or run out to blue water without burning half the day getting there. And an hour inland the dry forest starts, with waterfalls and river crossings that most visitors never see because they never leave the sand.', 'palmtreesurf' ) ),
+			array( 'p', __( 'One town, four completely different days. That is rare, and it is what lets us build a week that does not repeat itself.', 'palmtreesurf' ) ),
 
-			array( 'h2', __( 'How we like to work', 'palmtreesurf' ) ),
-			array( 'p', __( 'Small groups, local guides, and an honest answer when something is not right for you. If the surf is wrong for a first lesson that morning, we will say so and move you rather than take your money and put you in it. If you ask for a day that we do not think will work, we will tell you why and suggest what will.', 'palmtreesurf' ) ),
-			array( 'p', __( 'We would rather have a guest who comes back and tells three friends than a full boat on a bad day.', 'palmtreesurf' ) ),
+			array( 'h2', __( 'Surf lessons', 'palmtreesurf' ) ),
+			array( 'p', __( 'This is what we are best known for. A first lesson starts on the sand — safety, where to lie on the board, how to read what the water in front of you is doing, and the pop-up drilled until it stops being a thought and becomes a movement. Then we go into the whitewater, where your instructor puts you into waves until you are catching them on your own.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Most people stand up in their first session. That is not a sales line, it is what a forgiving sand-bottom beach break with a small group and warm water produces. What separates a good first lesson from a bad one is not the wave — it is how many waves you actually get, and whether anyone is close enough to correct you on each of them. That is why we keep groups small.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Past the first session, the work changes. It stops being about balance and starts being about reading: where the wave is going to break, which way to angle, when to commit. Intermediate coaching is mostly video-free, in-water, one correction at a time. If you have plateaued somewhere — you can stand but you cannot turn, or you keep getting caught behind the peak — say so when you book and we will put you with someone who will fix exactly that.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Boards, leashes and rash guards come with every lesson, sized to you rather than handed out at random. Bring swimwear, reef-safe sunscreen, water and a towel.', 'palmtreesurf' ) ),
 
-			array( 'h2', __( 'What we run', 'palmtreesurf' ) ),
+			array( 'h2', __( 'Fishing charters', 'palmtreesurf' ) ),
+			array( 'p', __( 'Because deep water is close, you get a genuine choice rather than one default trip. Inshore runs work the rocky points and headlands along the coast — shorter, calmer, good for a first time out or for anyone unsure about their sea legs. Offshore pushes into blue water for the pelagic species, and that is a full day if you want to do it properly rather than spend the trip travelling.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Rods, terminal tackle and bait are aboard, and every charter goes out with a captain and a mate who fish this coast year-round. You can turn up with sunscreen and a hat and nothing else. Bring your own gear if you would rather.', 'palmtreesurf' ) ),
+			array( 'p', __( 'What is running changes through the year. If a particular species is the reason you are coming, ask us before you lock the date in — we would rather tell you honestly that a month is wrong for it than take the booking and watch you have a flat day. Costa Rica requires a sport fishing licence; tell us when you book and we will sort it with you.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'Boat tours', 'palmtreesurf' ) ),
+			array( 'p', __( 'The coastline here is mostly headland and small bay, and a good deal of it has no road to it at all. From the water you get the whole line of it — the cliffs, the empty sand, the point where the estuary opens out — and coves you simply cannot reach on foot.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Most tours build in a swim and snorkel stop somewhere calm, with gear aboard, then time the run home so you are offshore as the light goes. That last hour is the reason people book these, and it is the thing everyone photographs. Snorkelling is optional and plenty of people stay on the boat; no skill is needed for any of it.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Bring a layer. It cools off quickly once the sun is down and the boat is moving.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'Estuary and wildlife trips', 'palmtreesurf' ) ),
+			array( 'p', __( 'Two hundred metres behind a busy surf town, the estuary runs back into mangrove channels inside a protected refuge, and it is a completely different place — quiet, shaded, and full of birds.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Go at first light. The howler monkeys are calling, the herons and kingfishers are working the channels, the water is glass, and the heat has not arrived. By mid-morning the wind comes up and most of it has gone quiet again, which is why a trip that leaves at a civilised hour is not the same trip at all.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Guided rather than rented, and the difference matters: a naturalist can find and name what you are looking at, and knows the refuge rules on distance and noise. Commonly you will see howler monkeys, herons, kingfishers, crabs and iguanas, and sometimes crocodiles at a distance. Nothing is guaranteed — it is wild, which is the point. Kayak or paddleboard, both on flat water; if you can sit in a kayak you can do this.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'Inland adventure days', 'palmtreesurf' ) ),
+			array( 'p', __( 'Guanacaste is not only coastline. An hour inland the dry forest starts, and with it waterfalls, swimming holes, river crossings and ridge roads. These are the half and full days that fill a flat surf day, or break up a week on the beach with something that involves a bit more dirt.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Green-season rain changes what is passable from week to week, so routes get adjusted on the day by someone who knows which crossings are up rather than cancelled by someone reading a schedule. Closed shoes, a change of clothes and a dry bag.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'Private and custom days', 'palmtreesurf' ) ),
+			array( 'p', __( 'Some people learn faster one-to-one. Some groups want a day built around a birthday, an anniversary, or a family where the ages run from eight to sixty-eight and nobody wants to be split up. That is what this is for.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Tell us who is coming, what they can already do, and how long you are here. We will come back with a plan — surf, water, inland, or a mix — and keep the same guide with you through it, which is the part that makes a multi-day booking actually progress instead of turning into five separate first lessons.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'What we think makes a day good', 'palmtreesurf' ) ),
+			array( 'p', __( 'Every operator in this town will tell you they are the best. Rather than claim it, here is what we actually optimise for, so you can judge whether it matches what you want out of a day.', 'palmtreesurf' ) ),
 			array( 'list', array(
-				__( 'Surf lessons — first-ever pop-ups through to coaching for people already catching unbroken waves.', 'palmtreesurf' ),
-				__( 'Fishing charters — inshore along the points and headlands, or offshore into blue water, half day or full day.', 'palmtreesurf' ),
-				__( 'Boat tours — coastal runs, snorkel stops and the sunset return.', 'palmtreesurf' ),
-				__( 'Wildlife and nature — estuary and mangrove trips at first light, when there is actually something to see.', 'palmtreesurf' ),
-				__( 'Adventure — waterfalls, backroads and the dry forest inland, for the day the surf is flat.', 'palmtreesurf' ),
-				__( 'Private and custom — one instructor, one guide, and a week built around your group instead of a timetable.', 'palmtreesurf' ),
+				__( 'Small groups. More waves each, and a guide who can see everyone. This is the single biggest difference between a good session and a forgettable one.', 'palmtreesurf' ),
+				__( 'Local guides. Sandbars move, tides shift, the estuary changes through the year. Someone who is in this water weekly is worth more than any equipment list.', 'palmtreesurf' ),
+				__( 'Conditions decide, not the calendar. If the water is wrong for your group that morning, we move you. Nobody is put in conditions that do not suit their level.', 'palmtreesurf' ),
+				__( 'Gear that gets checked between sessions, not once a season, and sized to the person using it.', 'palmtreesurf' ),
+				__( 'Straight answers. If a month is wrong for the fish you want, or a trip is not right for your group, we will say so before you book rather than after.', 'palmtreesurf' ),
+				__( 'English and Spanish, both, from the office through to the water.', 'palmtreesurf' ),
 			) ),
 
-			array( 'h2', __( 'Who this suits', 'palmtreesurf' ) ),
-			array( 'p', __( 'People who have never surfed and are slightly nervous about it. Families where the ages run from eight to sixty-eight. Couples who want one good day on the water rather than a packed itinerary. Surfers who already know what they are doing and just want someone who knows where the sandbar is this month. All of those are normal here.', 'palmtreesurf' ) ),
+			array( 'h2', __( 'Booking, and what happens next', 'palmtreesurf' ) ),
+			array( 'p', __( 'Send the form on any experience, or message us with your dates and who is coming. We come back with a time that suits the tide and the conditions that week, what to bring and where to meet. Payment is arranged once those details are settled — nothing is taken before you know what you are actually getting.', 'palmtreesurf' ) ),
+			array( 'p', __( 'If the weather turns, we move you rather than run something that is not worth your time.', 'palmtreesurf' ) ),
 
 			array( 'h2', __( 'Add your own story here', 'palmtreesurf' ) ),
-			array( 'p', __( 'This page is yours to make specific. Who started it, what year you arrived, what you did before, the reason you stayed — that is the part no competitor can copy, and it is the strongest trust signal a small local operator has, both for visitors and for search engines. Edit this page in Pages → About and replace this section with it.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Everything above is true of the place and of how this school is meant to run, but it is not yet personal. The part no competitor can copy is yours: who started it, what year you arrived, what you did before, why you stayed, the guests you still hear from. Edit this page under Pages → About and replace this last section with it. It is the strongest trust signal a small local operator has, for visitors and for search engines alike.', 'palmtreesurf' ) ),
+		)
+	);
+}
+
+/**
+ * Intro copy for the operator sign-up page.
+ *
+ * @return string
+ */
+function pt_seed_operators_body() {
+	return pt_blocks(
+		array(
+			array( 'p', __( 'We work with a small number of local operators on the Guanacaste coast — surf schools, captains, naturalist guides and drivers — and list their tours here for visitors who are already looking for exactly what they run.', 'palmtreesurf' ) ),
+			array( 'p', __( 'If you run tours in or around Tamarindo and you do it properly, we would like to hear from you. Applying takes about five minutes, costs nothing and commits you to nothing.', 'palmtreesurf' ) ),
 		)
 	);
 }

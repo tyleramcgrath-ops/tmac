@@ -29,15 +29,22 @@ function pt_logo_url( $file ) {
 /**
  * Print the site logo.
  *
+ * PNG rather than SVG deliberately. The supplied SVGs set the wordmark as live
+ * <text> in Montserrat — a font this site does not load — so every browser
+ * rendered it in its own fallback and the logo came out looking nothing like
+ * the artwork. The PNGs carry the type baked in.
+ *
+ * @param string $variant 'auto' swaps on header state, 'light' forces the
+ *                        reversed mark for a dark background.
  * @return string
  */
-function pt_site_logo() {
-	if ( has_custom_logo() ) {
+function pt_site_logo( $variant = 'auto' ) {
+	if ( has_custom_logo() && 'auto' === $variant ) {
 		return get_custom_logo();
 	}
 
-	$light = pt_logo_url( 'logo-horizontal-reversed.svg' );
-	$dark  = pt_logo_url( 'logo-horizontal.svg' );
+	$light = pt_logo_url( 'logo-horizontal-reversed.png' );
+	$dark  = pt_logo_url( 'logo-horizontal.png' );
 
 	if ( ! $light || ! $dark ) {
 		// Fall back to the mark and wordmark, so the header is never empty.
@@ -56,10 +63,22 @@ function pt_site_logo() {
 		get_bloginfo( 'name' )
 	);
 
+	// On a dark surface only the reversed mark is ever right.
+	if ( 'light' === $variant ) {
+		return sprintf(
+			'<a class="site-logo site-logo--image" href="%1$s" rel="home">'
+			. '<img class="site-logo__img" src="%2$s" alt="%3$s" width="638" height="160" loading="lazy" decoding="async" />'
+			. '</a>',
+			esc_url( home_url( '/' ) ),
+			esc_url( $light ),
+			esc_attr( $alt )
+		);
+	}
+
 	return sprintf(
 		'<a class="site-logo site-logo--image" href="%1$s" rel="home">'
-		. '<img class="site-logo__img site-logo__img--light" src="%2$s" alt="%4$s" width="1600" height="420" />'
-		. '<img class="site-logo__img site-logo__img--dark" src="%3$s" alt="" aria-hidden="true" width="1600" height="420" />'
+		. '<img class="site-logo__img site-logo__img--light" src="%2$s" alt="%4$s" width="638" height="160" fetchpriority="high" decoding="async" />'
+		. '<img class="site-logo__img site-logo__img--dark" src="%3$s" alt="" aria-hidden="true" width="638" height="160" decoding="async" />'
 		. '</a>',
 		esc_url( home_url( '/' ) ),
 		esc_url( $light ),
@@ -108,7 +127,7 @@ add_action( 'login_head', 'pt_print_favicons', 2 );
  * Use the wave mark on the login screen too.
  */
 function pt_login_logo() {
-	$url = pt_logo_url( 'logo-horizontal.svg' );
+	$url = pt_logo_url( 'logo-horizontal.png' );
 
 	if ( ! $url ) {
 		return;

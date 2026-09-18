@@ -47,6 +47,49 @@ function pt_taxonomy_template( $template ) {
 }
 add_filter( 'taxonomy_template', 'pt_taxonomy_template' );
 
+
+/**
+ * Whether this request is a search scoped to experiences.
+ *
+ * The homepage hero search posts `post_type=experience`, so a visitor looking
+ * for "surf lesson" expects experiences back, not blog posts.
+ *
+ * @return bool
+ */
+function pt_is_experience_search() {
+	if ( ! is_search() ) {
+		return false;
+	}
+
+	$post_type = get_query_var( 'post_type' );
+
+	if ( is_array( $post_type ) ) {
+		return in_array( PT_EXPERIENCE_POST_TYPE, $post_type, true );
+	}
+
+	return PT_EXPERIENCE_POST_TYPE === $post_type;
+}
+
+/**
+ * Render an experiences search through the experiences listing.
+ *
+ * Without this the hero search lands on search.php — the blog layout — which is
+ * not what someone who just typed "sunset boat tour" is looking for.
+ *
+ * @param string $template Template WordPress resolved.
+ * @return string
+ */
+function pt_search_template( $template ) {
+	if ( ! pt_is_experience_search() ) {
+		return $template;
+	}
+
+	$listing = locate_template( 'archive-experience.php' );
+
+	return $listing ? $listing : $template;
+}
+add_filter( 'search_template', 'pt_search_template' );
+
 /**
  * Drop the "Category:" / "Skill level:" prefix from the archive title.
  *

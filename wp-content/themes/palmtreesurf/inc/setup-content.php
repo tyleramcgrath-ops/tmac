@@ -267,6 +267,12 @@ function pt_seed_content() {
 	$blog_id    = pt_seed_page( __( 'Journal', 'palmtreesurf' ), 'journal' );
 	$about_id   = pt_seed_page( __( 'About', 'palmtreesurf' ), 'about', pt_seed_about_body(), 'page-templates/page-about.php' );
 	$gallery_id = pt_seed_page( __( 'Gallery', 'palmtreesurf' ), 'gallery', '', 'page-templates/page-gallery.php' );
+	$operator_id = pt_seed_page(
+		__( 'List Your Tours', 'palmtreesurf' ),
+		'list-your-tours',
+		pt_seed_operators_body(),
+		'page-templates/page-operators.php'
+	);
 	$contact_id = pt_seed_page(
 		__( 'Contact', 'palmtreesurf' ),
 		'contact',
@@ -440,6 +446,7 @@ function pt_seed_content() {
 			'experiences' => get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ),
 			'about'       => $about_id,
 			'gallery'     => $gallery_id,
+			'operators'   => $operator_id,
 			'journal'     => $blog_id,
 			'contact'     => $contact_id,
 			'privacy'     => $privacy_id,

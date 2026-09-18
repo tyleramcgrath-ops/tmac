@@ -14,13 +14,8 @@ defined( 'ABSPATH' ) || exit;
 			<div class="site-footer__cols">
 
 				<div class="site-footer__col site-footer__col--brand">
-					<a class="site-logo site-logo--light" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-						<?php echo pt_get_icon( 'palm', 'site-logo__mark' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
-						<span class="site-logo__text">
-							<span class="site-logo__name"><?php esc_html_e( 'Palm Tree', 'palmtreesurf' ); ?></span>
-							<span class="site-logo__sub"><?php esc_html_e( 'Surf', 'palmtreesurf' ); ?></span>
-						</span>
-					</a>
+					<?php // Reversed mark: the footer is always deep ocean. ?>
+					<?php echo pt_site_logo( 'light' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in pt_site_logo(). ?>
 
 					<?php
 					$pt_statement = get_bloginfo( 'description' );

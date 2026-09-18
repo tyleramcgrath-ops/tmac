@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto('http://127.0.0.1:8899/learn-to-surf-tamarindo-beginners-guide/', { waitUntil: 'networkidle' });
+await p.screenshot({ path: '/tmp/shots/post-top.png' });
+await p.evaluate(() => window.scrollTo(0, 700)); await p.waitForTimeout(600);
+await p.screenshot({ path: '/tmp/shots/post-toc.png' });
+await p.goto('http://127.0.0.1:8899/journal/', { waitUntil: 'networkidle' });
+await p.screenshot({ path: '/tmp/shots/journal.png' });
+await b.close(); console.log('ok');

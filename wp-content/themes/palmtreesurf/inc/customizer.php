@@ -86,8 +86,16 @@ function pt_defaults() {
 function pt_mod( $key ) {
 	$defaults = pt_defaults();
 	$default  = isset( $defaults[ $key ] ) ? $defaults[ $key ] : '';
+	$value    = (string) get_theme_mod( $key, $default );
 
-	return (string) get_theme_mod( $key, $default );
+	/**
+	 * Filter a Customizer value. inc/i18n.php uses this to serve the Spanish
+	 * companion value when Spanish is the active language.
+	 *
+	 * @param string $value Value.
+	 * @param string $key   Theme mod name.
+	 */
+	return (string) apply_filters( 'pt_mod_value', $value, $key );
 }
 
 /**
@@ -266,8 +274,64 @@ function pt_customize_register( $wp_customize ) {
 					'description' => $description,
 				)
 			);
+
+			/*
+			 * A Spanish companion for every text field, shown only while the
+			 * bilingual mode is switched on. pt_mod() picks these up on its
+			 * own, so no template changes.
+			 */
+			if ( ! in_array( $type, array( 'text', 'textarea' ), true ) || ! pt_bilingual_enabled() ) {
+				continue;
+			}
+
+			$wp_customize->add_setting(
+				$key . '_es',
+				array(
+					'default'           => '',
+					'sanitize_callback' => $sanitize,
+					'transport'         => 'refresh',
+				)
+			);
+
+			$wp_customize->add_control(
+				$key . '_es',
+				array(
+					/* translators: %s: the English field's label. */
+					'label'       => sprintf( __( '%s — Español', 'palmtreesurf' ), $label ),
+					'section'     => $section_id,
+					'type'        => 'textarea' === $type ? 'textarea' : 'text',
+					'description' => __( 'Leave empty to show the English text to Spanish visitors.', 'palmtreesurf' ),
+				)
+			);
 		}
 	}
+
+	/* The switch that turns the theme's bilingual mode on. */
+	$wp_customize->add_section(
+		'pt_language',
+		array(
+			'title'       => __( 'Language', 'palmtreesurf' ),
+			'panel'       => 'pt_panel',
+			'description' => __( 'Adds an EN/ES toggle to the header and a Spanish box to every page, post and experience. Anything you have not translated keeps showing in English. If you install Polylang or WPML, this switches itself off and defers to them.', 'palmtreesurf' ),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'pt_enable_spanish',
+		array(
+			'default'           => false,
+			'sanitize_callback' => 'rest_sanitize_boolean',
+		)
+	);
+
+	$wp_customize->add_control(
+		'pt_enable_spanish',
+		array(
+			'label'   => __( 'Offer the site in Spanish', 'palmtreesurf' ),
+			'section' => 'pt_language',
+			'type'    => 'checkbox',
+		)
+	);
 
 	$wp_customize->add_setting(
 		'pt_hero_image',

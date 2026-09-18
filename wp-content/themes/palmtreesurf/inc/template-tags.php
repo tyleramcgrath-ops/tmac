@@ -233,6 +233,11 @@ function pt_whatsapp_url( $message = '' ) {
  * WPML when present and renders nothing otherwise.
  */
 function pt_language_switcher() {
+	// The theme's own bilingual mode, when the client has switched it on.
+	if ( function_exists( 'pt_render_language_toggle' ) && pt_render_language_toggle() ) {
+		return;
+	}
+
 	// Polylang.
 	if ( function_exists( 'pll_the_languages' ) ) {
 		$langs = pll_the_languages( array( 'raw' => 1 ) );
@@ -270,4 +275,44 @@ function pt_language_switcher() {
 			echo '</div>';
 		}
 	}
+}
+
+/**
+ * The URL of the page currently being rendered.
+ *
+ * `wp_get_referer()` deliberately returns false when the referer matches the
+ * current request, which is exactly the case for a form that posts to itself —
+ * so using it as a redirect target bounced people to the homepage after
+ * submitting. Resolving the queried object is reliable for every template.
+ *
+ * @return string
+ */
+function pt_current_url() {
+	if ( is_singular() || is_page() ) {
+		$url = get_permalink( get_queried_object_id() );
+
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	if ( is_post_type_archive() ) {
+		$url = get_post_type_archive_link( get_query_var( 'post_type' ) );
+
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	if ( is_tax() || is_category() || is_tag() ) {
+		$url = get_term_link( get_queried_object() );
+
+		if ( $url && ! is_wp_error( $url ) ) {
+			return $url;
+		}
+	}
+
+	$referer = wp_get_referer();
+
+	return $referer ? $referer : home_url( '/' );
 }

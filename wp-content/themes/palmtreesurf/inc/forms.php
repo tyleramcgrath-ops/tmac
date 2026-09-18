@@ -67,7 +67,7 @@ function pt_handle_enquiry() {
 		return;
 	}
 
-	$redirect = wp_get_referer() ? wp_get_referer() : home_url( '/' );
+	$redirect = pt_current_url();
 
 	$nonce = isset( $_POST['pt_enquiry_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['pt_enquiry_nonce'] ) ) : '';
 	if ( ! wp_verify_nonce( $nonce, 'pt_enquiry' ) ) {

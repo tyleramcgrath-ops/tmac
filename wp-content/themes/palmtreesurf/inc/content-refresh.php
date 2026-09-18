@@ -77,9 +77,15 @@ function pt_placeholder_markers() {
  */
 function pt_refreshable_pages() {
 	return array(
-		'about' => array(
+		'about'           => array(
 			'content'  => pt_seed_about_body(),
 			'template' => 'page-templates/page-about.php',
+		),
+		'list-your-tours' => array(
+			'content'  => pt_seed_operators_body(),
+			'template' => 'page-templates/page-operators.php',
+			'title'    => __( 'List Your Tours', 'palmtreesurf' ),
+			'create'   => true,
 		),
 	);
 }
@@ -97,6 +103,26 @@ function pt_refresh_seeded_pages() {
 
 	foreach ( pt_refreshable_pages() as $slug => $spec ) {
 		$page = get_page_by_path( $slug );
+
+		// A page added in a later release will not exist yet on an older site.
+		if ( ! $page instanceof WP_Post && ! empty( $spec['create'] ) ) {
+			$new_id = wp_insert_post(
+				array(
+					'post_type'    => 'page',
+					'post_title'   => $spec['title'],
+					'post_name'    => $slug,
+					'post_content' => $spec['content'],
+					'post_status'  => 'publish',
+				)
+			);
+
+			if ( ! is_wp_error( $new_id ) && $new_id ) {
+				update_post_meta( $new_id, '_wp_page_template', $spec['template'] );
+				pt_stamp_seeded( $new_id, $spec['content'] );
+			}
+
+			continue;
+		}
 
 		if ( ! $page instanceof WP_Post ) {
 			continue;
@@ -141,7 +167,7 @@ add_action( 'init', 'pt_refresh_seeded_pages', 995 );
 function pt_menu_pages() {
 	return array(
 		'primary' => array( 'about', 'gallery', 'journal', 'contact' ),
-		'footer'  => array( 'about', 'gallery', 'journal', 'contact' ),
+		'footer'  => array( 'about', 'gallery', 'journal', 'contact', 'list-your-tours' ),
 		'legal'   => array( 'privacy-policy' ),
 	);
 }

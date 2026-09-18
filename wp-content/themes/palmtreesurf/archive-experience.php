@@ -29,6 +29,7 @@ $pt_copy   = $pt_is_tax ? pt_term_copy( $pt_term ) : array();
 // The hub only shows its category blocks when nobody has filtered it.
 $pt_filtered = ! $pt_is_tax && ( is_search() || ! empty( $_GET['experience_type'] ) || ! empty( $_GET['s'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $pt_hub      = ! $pt_is_tax && ! $pt_filtered;
+$pt_search   = get_search_query();
 ?>
 <section class="page-hero<?php echo $pt_is_tax ? ' page-hero--term' : ''; ?>">
 	<div class="page-hero__media" aria-hidden="true">
@@ -52,6 +53,19 @@ $pt_hub      = ! $pt_is_tax && ! $pt_filtered;
 			<?php if ( $pt_term && $pt_term->description ) : ?>
 				<div class="page-hero__lede"><?php echo wp_kses_post( wpautop( $pt_term->description ) ); ?></div>
 			<?php endif; ?>
+		<?php elseif ( $pt_search ) : ?>
+			<h1 class="page-hero__title">
+				<?php
+				printf(
+					/* translators: %s: search term. */
+					esc_html__( 'Searching for &ldquo;%s&rdquo;', 'palmtreesurf' ),
+					esc_html( $pt_search )
+				);
+				?>
+			</h1>
+			<p class="page-hero__lede">
+				<?php esc_html_e( 'Experiences matching your search. Clear it to browse everything we run.', 'palmtreesurf' ); ?>
+			</p>
 		<?php else : ?>
 			<h1 class="page-hero__title"><?php esc_html_e( 'Experiences in Tamarindo', 'palmtreesurf' ); ?></h1>
 			<p class="page-hero__lede">

@@ -183,7 +183,16 @@
 		}
 
 		var triggers = Array.prototype.slice.call( gallery.querySelectorAll( '[data-pt-lightbox]' ) );
+
+		// Prefer the full-size URL the tile carries: the grid loads a small
+		// crop, and enlarging that would show a soft image.
 		var sources = triggers.map( function ( trigger ) {
+			var full = trigger.getAttribute( 'data-pt-full' );
+
+			if ( full ) {
+				return { src: full, alt: trigger.getAttribute( 'data-pt-alt' ) || '' };
+			}
+
 			var img = trigger.querySelector( 'img' );
 			return img ? { src: img.currentSrc || img.src, alt: img.alt } : null;
 		} );
