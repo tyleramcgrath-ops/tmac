@@ -67,18 +67,16 @@ The live site is deployed by the **`citation-gap-web`** project
 (`prj_eIRZinlGrCpHHzWt0OyiYqi3bePp`), linked to `tyleramcgrath-ops/tmac` with root directory
 `apps/citation-gap`, Node 22.x, Vercel Authentication off. A merge to `main` builds and deploys it.
 
-The live URL currently points at `dpl_EYdEnJNmiRKz7zuLtg4hLSiBdc8k`, the production build of
-`main` at `a7841b53`.
-
 **One manual step remains on every deploy, until a dashboard fix is done.**
 `citation-gap.vercel.app` is still registered to the older, unlinked `citation-gap` project, so a
 new production deploy lands on `citation-gap-web.vercel.app` and the live URL stays pointed at
 whatever deployment it was last aliased to. Re-point it with `assign_alias` (alias
 `citation-gap.vercel.app` → the new deployment id).
 
-To remove that step for good: in the Vercel dashboard, delete the old `citation-gap` project — or
-just remove the domain from it — then add `citation-gap.vercel.app` to `citation-gap-web`. After
-that a merge to `main` is the whole deploy.
+To remove that step for good: in the Vercel dashboard, remove `citation-gap.vercel.app` from the old
+`citation-gap` project — or delete that project, though that also destroys the rollback deployment
+below — then add the domain to `citation-gap-web`. After that a merge to `main` is the whole deploy.
+Renaming the old project does **not** free the domain; that was tried and failed (see v10.7).
 
 Rollback at any time: assign `citation-gap.vercel.app` to `dpl_HwoQcbWBd8SumqhQTuPM4yz7GEt3`, the
 8 Sep pre-redesign production build.
