@@ -61,11 +61,25 @@ a green PR.
 ## Deploying
 
 Vercel builds with `node build.js` and serves `public/` plus the `api/` functions
-(`vercel.json`). Two things to know:
+(`vercel.json`).
 
-- The project has **no git connection yet**. Deploys so far were direct file uploads, and that is
-  what broke: the upload carried 7 of the ~30 files the old build needed. Pointing the Vercel
-  project at this repo with root directory `apps/citation-gap` makes a merge to `main` the deploy.
-- **A green build log is not proof.** It said "integrity verified" for four days while shipping a
-  front end four days stale. After any deploy, read the deployed bytes — fetch `/` and check for
-  something only the new version has — and call `/api/render?url=…` against a real page.
+The live site is deployed by the **`citation-gap-web`** project
+(`prj_eIRZinlGrCpHHzWt0OyiYqi3bePp`), linked to `tyleramcgrath-ops/tmac` with root directory
+`apps/citation-gap`, Node 22.x, Vercel Authentication off. A merge to `main` builds and deploys it.
+
+**One manual step remains on every deploy, until a dashboard fix is done.**
+`citation-gap.vercel.app` is still registered to the older, unlinked `citation-gap` project, so a
+new production deploy lands on `citation-gap-web.vercel.app` and the live URL stays pointed at
+whatever deployment it was last aliased to. Re-point it with `assign_alias` (alias
+`citation-gap.vercel.app` → the new deployment id).
+
+To remove that step for good: in the Vercel dashboard, delete the old `citation-gap` project — or
+just remove the domain from it — then add `citation-gap.vercel.app` to `citation-gap-web`. After
+that a merge to `main` is the whole deploy.
+
+Rollback at any time: assign `citation-gap.vercel.app` to `dpl_HwoQcbWBd8SumqhQTuPM4yz7GEt3`, the
+8 Sep pre-redesign production build.
+
+**A green build log is not proof.** It said "integrity verified" for four days while shipping a
+front end four days stale. After any deploy, read the deployed bytes — fetch `/` and confirm its
+sha256 matches `index.html` — and call `/api/render?url=…` against a real page.

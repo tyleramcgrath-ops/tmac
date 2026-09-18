@@ -1,7 +1,11 @@
 # The Citation Gap — web app
 
 **Live: https://citation-gap.vercel.app**
-Vercel project `citation-gap`, team `team_6bNIz3y0Q62nzicOciNA6Q2w`. SSO off, publicly shareable.
+Team `team_6bNIz3y0Q62nzicOciNA6Q2w`. SSO off, publicly shareable. Served since v10.7 by the
+git-linked project **`citation-gap-web`** (`prj_eIRZinlGrCpHHzWt0OyiYqi3bePp`, repo
+`tyleramcgrath-ops/tmac`, root directory `apps/citation-gap`); the original `citation-gap` project
+still owns the `citation-gap.vercel.app` domain registration and the URL is pinned to the current
+deployment by alias. See "How the URL is wired" in v10.7 before deploying.
 
 ## Use
 The marketing homepage is the front door; **Launch the tool** drops it into the app, and the
@@ -115,6 +119,43 @@ volatile tracking, carry-forward — all unchanged by this pass. `test/demo-flow
 errors; the one console error is this sandbox's proxy refusing the Google Fonts `<link>`
 (`ERR_CERT_AUTHORITY_INVALID`), the same pre-existing environment fact v10.5 saw as
 `ERR_TUNNEL_CONNECTION_FAILED`, and it is now reported separately rather than counted as a failure.
+
+**Deployed, and verified against the deployed bytes rather than the build log.**
+`dpl_6CuzevPFb2wsxgd6fG6ooDaLHdgh`, built from `a348f20` in 8 s, build log "integrity verified"
+with all 8 files listed. What the live URL actually serves:
+
+- `https://citation-gap.vercel.app/` → HTTP 200, 298,117 bytes, sha256
+  `981b45798d598f89999fabcd82055d7170dffb42240625a3cbe0afc6fd463c95` — **byte-identical to
+  `index.html` in this repo**, and containing `#homeScreen`, `#splash` and `.sidebar`, none of
+  which the previous production deployment had. The redesign is live.
+- `/api/render?url=https://envuetelematics.com` → `ok: true`, gate self-check **35/35 released,
+  0 residual**, `reachable.main` **326** — both exactly the figures v10.5 recorded. Painted words
+  read `main` 552 / `page` 629 against v10.5's 566 / 643; `api/render.impl.js` is byte-identical to
+  the file that produced those numbers (sha256 `51ab73d7…`), so the ~2% is the live page and slide
+  position ten days on, not this pass. The only page error is EnVue's own
+  `elementorModules is not defined`, the same one v10.5 flagged as the site's, not the scanner's.
+  No `PAINT_SKIP`, no `ReferenceError`.
+- `/api/page?url=https://example.com` on the live hostname → full structured JSON. The functions
+  are wired under the alias, not just under the deployment URL.
+
+**How the URL is wired — read this before the next deploy.** The original `citation-gap` project
+could not be used: connecting a repo to an existing Vercel project is a dashboard-only action, and
+every API route to it is closed (`create_git_project` → 409 "already exists", and it does not
+reconnect an unlinked project; `create_api_keys` → 403; a `gitSource` deployment into an unlinked
+project is accepted, resolves the commit, then stalls in `INITIALIZING` forever because there is no
+repo to clone). So the app is deployed by a second, git-linked project, `citation-gap-web`, and
+`citation-gap.vercel.app` was re-pointed at its deployment with `assign_alias`.
+
+That alias is **pinned to one deployment**. `citation-gap.vercel.app` is still registered as a
+project domain of the old `citation-gap` project — `add_project_domain` on the new project returns
+409 `duplicate-team-registration` — so a future production deploy of `citation-gap-web` will take
+`citation-gap-web.vercel.app` and **will not move the live URL**. Until that is fixed, every deploy
+needs the alias re-pointed. The one-time fix, in the dashboard: delete the old `citation-gap`
+project (or remove the domain from it), then add `citation-gap.vercel.app` to `citation-gap-web` —
+after which merging to `main` deploys the live site with no manual step.
+
+Rollback: the previous production deployment is `dpl_HwoQcbWBd8SumqhQTuPM4yz7GEt3` (the 8 Sep
+v10.5 build). Re-assigning the alias to it puts the old site back in one call.
 
 ## v10.5 — Scanner Patch Spec v2, P10–P17 — and a production bug shipped, then caught (8 Sep 2026)
 
@@ -820,9 +861,11 @@ and honest bot-challenge reporting.
 
 ## Next
 - Custom domain **thecitationgap.com**
-- ~~Connect to GitHub so edits are a push~~ — done in v10.7: the project lives at
-  `apps/citation-gap` in `tyleramcgrath-ops/tmac`. What is left is pointing the Vercel project at
-  it (root directory `apps/citation-gap`) so a merge to `main` deploys
+- ~~Connect to GitHub so edits are a push~~ — done in v10.7: `apps/citation-gap` in
+  `tyleramcgrath-ops/tmac`, deployed by the git-linked project `citation-gap-web`
+- **Move `citation-gap.vercel.app` onto `citation-gap-web`** (dashboard: drop it from the old
+  `citation-gap` project, add it to the new one). Until then the live URL is an alias pinned to one
+  deployment and does not follow a merge — see v10.7
 - Saved scans + score movement over time as an account feature (the retainer hook) — the
   browser-local history in v9 is the prototype
 - Multi-keyword batch; weekly monitoring across the five tracked sites
