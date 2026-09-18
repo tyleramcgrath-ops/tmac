@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.8.0' );
+define( 'PT_VERSION', '1.9.0' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.
@@ -52,6 +52,7 @@ $pt_includes = array(
 	'inc/blocks.php',           // Editor colours and block patterns.
 	'inc/booking.php',          // Booking CTAs and plugin handoff.
 	'inc/forms.php',            // Contact enquiry fallback.
+	'inc/assistant.php',        // Booking assistant widget.
 	'inc/operators.php',        // Operator applications.
 	'inc/schema.php',           // JSON-LD structured data.
 	'inc/schema-site.php',      // Organization, WebSite and list schema.

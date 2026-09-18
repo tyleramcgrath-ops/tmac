@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 function pt_defaults() {
 	return array(
 		'pt_phone'                => '{{PT_PHONE}}',
-		'pt_whatsapp'             => '{{PT_WHATSAPP}}',
+		'pt_whatsapp'             => '15612624570',
 		'pt_email'                => '{{PT_EMAIL}}',
 		'pt_address'              => "Tamarindo, Guanacaste\nCosta Rica",
 		'pt_hours'                => '{{PT_HOURS}}',
@@ -37,6 +37,7 @@ function pt_defaults() {
 		'pt_hero_tagline'         => __( 'Surf. Explore. Discover.', 'palmtreesurf' ),
 		'pt_hero_text'            => __( 'Surf lessons, fishing charters, boat tours and wildlife trips, booked with local guides in one place. Your Tamarindo adventure starts here.', 'palmtreesurf' ),
 		'pt_hero_corner'          => __( 'Pura Vida Every Day', 'palmtreesurf' ),
+		'pt_assistant_greeting'   => '',
 
 		/*
 		 * Trust row. Each of these is a claim about how the business operates,
@@ -305,6 +306,51 @@ function pt_customize_register( $wp_customize ) {
 			);
 		}
 	}
+
+	/* The booking assistant. */
+	$wp_customize->add_section(
+		'pt_assistant',
+		array(
+			'title'       => __( 'Booking Assistant', 'palmtreesurf' ),
+			'panel'       => 'pt_panel',
+			'description' => __( 'A chat bubble that answers questions from this site\'s own FAQs and experience pages, then sends people to the booking form or WhatsApp. It only ever repeats what is written on the site, so it cannot invent a price or a departure time.', 'palmtreesurf' ),
+		)
+	);
+
+	$wp_customize->add_setting(
+		'pt_assistant_on',
+		array(
+			'default'           => true,
+			'sanitize_callback' => 'rest_sanitize_boolean',
+		)
+	);
+
+	$wp_customize->add_control(
+		'pt_assistant_on',
+		array(
+			'label'   => __( 'Show the booking assistant', 'palmtreesurf' ),
+			'section' => 'pt_assistant',
+			'type'    => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'pt_assistant_greeting',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'sanitize_textarea_field',
+		)
+	);
+
+	$wp_customize->add_control(
+		'pt_assistant_greeting',
+		array(
+			'label'       => __( 'Opening message', 'palmtreesurf' ),
+			'section'     => 'pt_assistant',
+			'type'        => 'textarea',
+			'description' => __( 'Leave empty to use the default.', 'palmtreesurf' ),
+		)
+	);
 
 	/* The switch that turns the theme's bilingual mode on. */
 	$wp_customize->add_section(

@@ -54,7 +54,7 @@ if ( ! $pt_cta_url ) {
 
 		<?php if ( $pt_cta_text ) : ?>
 			<p class="hero__actions">
-				<a class="btn btn--primary btn--large" href="<?php echo esc_url( $pt_cta_url ); ?>">
+				<a class="btn btn--primary btn--lg" href="<?php echo esc_url( $pt_cta_url ); ?>">
 					<?php echo esc_html( $pt_cta_text ); ?>
 				</a>
 			</p>

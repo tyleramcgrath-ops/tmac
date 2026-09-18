@@ -1,6 +1,6 @@
 # Spanish (Costa Rica) translation for the Palm Tree Surf theme.
-# Interface strings only. Long-form page and article copy is translated
-# per page in wp-admin, so nothing here is machine-translated.
+# Interface strings and the shared FAQ. Long-form page and article copy is
+# translated per page in wp-admin, so nothing here is machine-translated.
 msgid ""
 msgstr ""
 "Project-Id-Version: Palm Tree Surf\n"
@@ -47,6 +47,12 @@ msgstr "Todo el equipo incluido"
 msgid "All levels"
 msgstr "Todos los niveles"
 
+msgid "Answers come from this site. For prices, availability and anything specific, message us."
+msgstr "Las respuestas salen de este sitio. Para precios, disponibilidad y cualquier detalle, escríbanos."
+
+msgid "Answers from this site, or a real person on WhatsApp"
+msgstr "Respuestas de este sitio, o una persona real por WhatsApp"
+
 msgid "Anything not answered here — just ask."
 msgstr "¿Algo que no esté aquí? Solo pregúntenos."
 
@@ -56,8 +62,14 @@ msgstr "Postular"
 msgid "Apply to list your tours"
 msgstr "Postule para listar sus tours"
 
+msgid "As soon as your dates are set. We can usually still put something together at short notice, but the choice is wider earlier."
+msgstr "En cuanto tenga sus fechas. Casi siempre podemos armar algo con poca anticipación, pero entre más temprano, más opciones hay."
+
 msgid "Ask on WhatsApp"
-msgstr "Pregúntenos por WhatsApp"
+msgstr "Preguntar por WhatsApp"
+
+msgid "Ask us anything"
+msgstr "Pregúntenos lo que sea"
 
 msgid "Before you apply"
 msgstr "Antes de postular"
@@ -70,6 +82,9 @@ msgstr "Principiante"
 
 msgid "Best season"
 msgstr "Mejor temporada"
+
+msgid "Best time to visit"
+msgstr "Mejor época para venir"
 
 msgid "Boat Tours"
 msgstr "Tours en bote"
@@ -89,11 +104,17 @@ msgstr "Reserve una experiencia"
 msgid "Book online in minutes"
 msgstr "Reserve en línea en minutos"
 
+msgid "Book this"
+msgstr "Reservar esto"
+
 msgid "Book your session"
 msgstr "Reserve su sesión"
 
 msgid "Booking"
 msgstr "Reservas"
+
+msgid "Booking Assistant"
+msgstr "Asistente de reservas"
 
 msgid "Booking takes three steps"
 msgstr "Reservar toma tres pasos"
@@ -112,6 +133,9 @@ msgstr "Ver todo"
 
 msgid "Browse experiences"
 msgstr "Ver experiencias"
+
+msgid "Can you take families and mixed groups?"
+msgstr "¿Reciben familias y grupos mixtos?"
 
 msgid "Captain"
 msgstr "Capitán"
@@ -148,6 +172,12 @@ msgstr "Contacto"
 
 msgid "Contact details"
 msgstr "Datos de contacto"
+
+msgid "Do I need any experience?"
+msgstr "¿Necesito experiencia?"
+
+msgid "Do you speak English?"
+msgstr "¿Hablan inglés?"
 
 msgid "Duration"
 msgstr "Duración"
@@ -215,6 +245,9 @@ msgstr "Primera vez"
 msgid "Fishing Charters"
 msgstr "Pesca deportiva"
 
+msgid "For most of what we run, no. Surf lessons start from never having stood on a board, boat tours and estuary trips need nothing at all, and fishing charters are rigged and run by the crew. Where something does need experience, the experience page says so."
+msgstr "Para casi todo lo que ofrecemos, no. Las clases de surf empiezan desde nunca haberse parado en una tabla, los tours en bote y los del estero no requieren nada, y en la pesca la tripulación arma y maneja todo. Cuando algo sí requiere experiencia, la página de esa experiencia lo dice."
+
 msgid "Free cancellation 24h"
 msgstr "Cancelación gratuita 24 h"
 
@@ -254,11 +287,20 @@ msgstr "Guía"
 msgid "Guides"
 msgstr "Guías"
 
+msgid "Hi! Ask me anything about surfing, fishing or getting out on the water here — or I can put you straight through to a person."
+msgstr "¡Hola! Pregúnteme lo que quiera sobre surf, pesca o salir al agua aquí, o lo comunico de una vez con una persona."
+
 msgid "Home"
 msgstr "Inicio"
 
 msgid "Hours"
 msgstr "Horario"
+
+msgid "How do I pay?"
+msgstr "¿Cómo pago?"
+
+msgid "How far ahead should I book?"
+msgstr "¿Con cuánta anticipación debo reservar?"
 
 msgid "How it works"
 msgstr "Cómo funciona"
@@ -268,6 +310,12 @@ msgstr "Cómo se desarrolla el día"
 
 msgid "How we run it"
 msgstr "Cómo trabajamos"
+
+msgid "I do not have that one written down. A person can answer it properly — shall I pass it on?"
+msgstr "Esa no la tengo escrita. Una persona se la puede responder bien: ¿se la paso?"
+
+msgid "I have never surfed"
+msgstr "Nunca he surfeado"
 
 msgid "Instructors"
 msgstr "Instructores"
@@ -392,8 +440,14 @@ msgstr "Un solo lugar en el que los visitantes ya confían"
 msgid "Open menu"
 msgstr "Abrir menú"
 
+msgid "Open the booking assistant"
+msgstr "Abrir el asistente de reservas"
+
 msgid "Opening hours"
 msgstr "Horario de atención"
+
+msgid "Opening message"
+msgstr "Mensaje de bienvenida"
 
 msgid "Or message us on WhatsApp"
 msgstr "O escríbanos por WhatsApp"
@@ -515,17 +569,29 @@ msgstr "Vea lo que ofrecemos"
 msgid "Select any photo to view it full size."
 msgstr "Seleccione cualquier foto para verla en tamaño completo."
 
+msgid "Send"
+msgstr "Enviar"
+
 msgid "Send application"
 msgstr "Enviar solicitud"
 
 msgid "Send enquiry"
 msgstr "Enviar consulta"
 
+msgid "Send the booking form first. We confirm the details with you, and payment is arranged once that is settled — nothing is taken before you know the time, the meeting point and what is included."
+msgstr "Primero envíe el formulario de reserva. Confirmamos los detalles con usted y el pago se coordina después: no se cobra nada antes de que sepa la hora, el punto de encuentro y qué incluye."
+
 msgid "Send us a message"
 msgstr "Envíenos un mensaje"
 
 msgid "Short answer:"
 msgstr "Respuesta corta:"
+
+msgid "Show me everything"
+msgstr "Muéstreme todo"
+
+msgid "Show the booking assistant"
+msgstr "Mostrar el asistente de reservas"
 
 msgid "Sign Up"
 msgstr "Registrarse"
@@ -572,6 +638,9 @@ msgstr "Clases de surf, pesca deportiva, tours en bote y viajes de vida silvestr
 msgid "Surf. Explore. Discover."
 msgstr "Surfee. Explore. Descubra."
 
+msgid "Swimwear, reef-safe sunscreen, a hat, water and a towel will cover nearly everything. Anything specific to your trip is listed on its own page, and we send it again when we confirm."
+msgstr "Traje de baño, protector solar que no dañe el arrecife, gorra, agua y toalla cubren casi todo. Lo específico de su actividad aparece en su propia página, y se lo reenviamos al confirmar."
+
 msgid "Tamarindo"
 msgstr "Tamarindo"
 
@@ -611,11 +680,17 @@ msgstr "La página que buscaba no está aquí. Pruebe con una búsqueda o vuelva
 msgid "The short version"
 msgstr "En resumen"
 
+msgid "There is no bad time. The dry months are sunnier and busier; the green season is quieter, greener and has bigger swell, with rain that usually comes in the afternoon. Tell us when you can travel and we will tell you honestly what that period is like."
+msgstr "No hay mala época. Los meses secos son más soleados y concurridos; la época verde es más tranquila, más verde y con más marejada, con lluvia que suele caer por la tarde. Díganos cuándo puede viajar y le decimos con franqueza cómo es ese periodo."
+
 msgid "There is nothing here yet. Please check back soon."
 msgstr "Todavía no hay nada aquí. Vuelva pronto."
 
 msgid "Things people ask before they book"
 msgstr "Lo que la gente pregunta antes de reservar"
+
+msgid "Type your question…"
+msgstr "Escriba su pregunta…"
 
 msgid "Unforgettable Experiences"
 msgstr "Experiencias inolvidables"
@@ -635,17 +710,29 @@ msgstr "Temperatura del agua"
 msgid "Wave size"
 msgstr "Tamaño de la ola"
 
+msgid "We move you to a better tide or another day. We would rather reschedule than run a session that is not worth your time."
+msgstr "Lo movemos a una mejor marea o a otro día. Preferimos reprogramar antes que hacer una sesión que no valga su tiempo."
+
 msgid "We read every application. Nothing you send here is published on the site, and we will not pass your details on."
 msgstr "Leemos todas las solicitudes. Nada de lo que envíe aquí se publica en el sitio y no compartiremos sus datos."
 
 msgid "What are you looking for?"
 msgstr "¿Qué está buscando?"
 
+msgid "What can I do with kids?"
+msgstr "¿Qué puedo hacer con niños?"
+
+msgid "What happens if the weather is bad?"
+msgstr "¿Qué pasa si el clima está malo?"
+
 msgid "What is included"
 msgstr "Qué incluye"
 
 msgid "What people say"
 msgstr "Lo que dicen"
+
+msgid "What should I bring?"
+msgstr "¿Qué debo llevar?"
 
 msgid "What to bring"
 msgstr "Qué llevar"
@@ -655,6 +742,9 @@ msgstr "Escríbanos por WhatsApp"
 
 msgid "When"
 msgstr "Cuándo"
+
+msgid "When is the best time of year to come?"
+msgstr "¿Cuál es la mejor época del año para venir?"
 
 msgid "Where to find us"
 msgstr "Dónde encontrarnos"
@@ -670,6 +760,15 @@ msgstr "Por qué listar con nosotros"
 
 msgid "Wildlife & Nature"
 msgstr "Vida silvestre y naturaleza"
+
+msgid "Yes, and it is one of the most common things we are asked for. Tell us the ages, who has done what before and how confident everyone is in water, and we will build the day around that rather than splitting the group up."
+msgstr "Sí, y es de lo que más nos piden. Díganos las edades, quién ha hecho qué antes y qué tan cómodos se sienten en el agua, y armamos el día alrededor de eso en vez de separar al grupo."
+
+msgid "Yes. English and Spanish, both."
+msgstr "Sí. Inglés y español, los dos."
+
+msgid "You"
+msgstr "Usted"
 
 msgid "You just sent an enquiry. Give us a minute before sending another."
 msgstr "Acaba de enviar una consulta. Espere un momento antes de enviar otra."

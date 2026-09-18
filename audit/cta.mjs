@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto('http://127.0.0.1:8899/', { waitUntil: 'networkidle' });
+await p.evaluate(() => document.querySelector('.cta-band')?.scrollIntoView({block:'center'}));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/shots/cta.png' });
+await p.evaluate(() => document.querySelector('.split')?.scrollIntoView({block:'center'}));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/shots/split.png' });
+await p.evaluate(() => document.querySelector('.location')?.scrollIntoView({block:'center'}));
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/shots/location.png' });
+await b.close(); console.log('ok');

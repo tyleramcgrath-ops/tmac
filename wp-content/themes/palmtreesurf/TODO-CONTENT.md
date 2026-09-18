@@ -404,3 +404,60 @@ pages, so nothing breaks.
 
 The long-form pages were set to a 760px measure, which reads narrow on a desktop
 screen. Guides, FAQs and the article body now run to 880px.
+
+---
+
+## 12. Added in v1.9.0 — the assistant, WhatsApp, and five unstyled components
+
+### Your WhatsApp number is live
+
+**+1 561 262 4570** is set as the default, so the floating WhatsApp button, the
+footer link, the closing call to action and the contact page button are all
+switched on. Change it under **Customize → Palm Tree Surf → Contact Details**.
+
+### The booking assistant
+
+A chat bubble, bottom right. It answers questions from **this site's own FAQs
+and experience pages**, then sends people to the booking form or straight to
+your WhatsApp with their question already typed.
+
+**It is a matcher, not a language model, and that is deliberate.** It can only
+ever repeat text that is already written on this site, so it cannot invent a
+price, promise a departure time or make up a cancellation policy — which is
+exactly what a chatbot pointed at a booking page will eventually do. It needs no
+API key and costs nothing per conversation.
+
+If you later want a real AI behind it, the seam is built: return a URL from the
+`pt_assistant_endpoint` filter and the widget posts questions there first,
+falling back to the local matcher if the request fails.
+
+Controls are under **Customize → Palm Tree Surf → Booking Assistant** — switch it
+off, or change the opening message.
+
+### Five components had no CSS at all
+
+An audit comparing every class used in the templates against the stylesheet
+found five blocks that shipped with markup and no rules, so each fell back to
+unstyled browser defaults:
+
+- **The closing call to action** — this is the one you spotted. Its photograph
+  rendered as a plain block *above* the text instead of behind it. The text now
+  sits on the image with a scrim strong enough to stay readable over that
+  bright sunset.
+- **Split features** — images stacked at full size instead of sitting beside
+  the prose with an inset.
+- **The trust bar**, **the location section** and **the map placeholder** — all
+  browser defaults.
+
+`btn--large` was also a typo for the theme's `btn--lg`, so that button was
+rendering at default size.
+
+This is the same root cause as the gallery and the finder button in earlier
+releases. The audit is worth re-running after any new component.
+
+### Spanish
+
+The assistant interface and the shared FAQ it answers from are translated, so
+with Spanish switched on the bubble speaks Spanish. The category-specific FAQs
+and the long-form articles are still English until written — the ES column on
+the Pages and Posts lists shows what remains.

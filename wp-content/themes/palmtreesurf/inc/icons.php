@@ -22,6 +22,7 @@ function pt_icon_paths() {
 	return array(
 		'palm'      => '<path d="M12 21V11" ' . $stroke . '/><path d="M12 11c-2.6-2.4-5.6-2.6-7.6-1 1-2.7 4.3-3.6 7.6-1.4" ' . $stroke . '/><path d="M12 11c2.6-2.4 5.6-2.6 7.6-1-1-2.7-4.3-3.6-7.6-1.4" ' . $stroke . '/><path d="M12 8.6C12 5.5 13.8 3.2 16.4 3c-1.3 1.3-1.9 3-1.7 4.6" ' . $stroke . '/><path d="M9 21h6" ' . $stroke . '/>',
 		'search'    => '<circle cx="11" cy="11" r="6.5" ' . $stroke . '/><path d="m16 16 4.5 4.5" ' . $stroke . '/>',
+		'chat'      => '<path d="M20 15.5a2.5 2.5 0 0 1-2.5 2.5H9l-4 3v-3H6.5A2.5 2.5 0 0 1 4 15.5v-8A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5Z" ' . $stroke . '/><path d="M8.5 10.5h7" ' . $stroke . '/><path d="M8.5 13.5h4" ' . $stroke . '/>',
 		'surf'      => '<path d="M4 20c4-1 6-4 7-7s1.5-6 1.5-9c3 2 5 5 5 9 0 4-3.5 7-8 7Z" ' . $stroke . '/><path d="M3 21c2.5 0 3.5-1.5 5-1.5" ' . $stroke . '/>',
 		'boat'      => '<path d="M3 17h18l-2.2 3.3a1.5 1.5 0 0 1-1.2.7H6.4a1.5 1.5 0 0 1-1.2-.7Z" ' . $stroke . '/><path d="M5.5 17V9.5L12 7l6.5 2.5V17" ' . $stroke . '/><path d="M12 7V3" ' . $stroke . '/>',
 		'food'      => '<path d="M6 3v8a2 2 0 0 0 4 0V3" ' . $stroke . '/><path d="M8 11v10" ' . $stroke . '/><path d="M17 3c-1.5 1.3-2.2 3-2.2 5.2 0 1.6.8 2.6 2.2 2.8V21" ' . $stroke . '/>',
