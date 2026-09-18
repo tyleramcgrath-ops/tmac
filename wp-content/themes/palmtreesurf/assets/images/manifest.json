@@ -1,178 +1,277 @@
 {
-  "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
-  "hero-home": {
-    "w": 2400,
-    "h": 900,
-    "ratio": "auto",
-    "role": "Homepage hero background",
-    "alt": "Surfer carrying a board along the beach at sunset in Tamarindo",
-    "file": "female-surfer-beach-hero.jpg",
-    "option": "pt_hero_image",
-    "note": "Clean standalone hero photograph. No text, logo or UI."
-  },
-  "hero-video": {
-    "w": 1920,
-    "h": 1080,
-    "ratio": "16:9",
-    "role": "Homepage hero loop, mp4 + webm, under 4MB, 8-12s",
-    "file": null
-  },
-  "exp-card-1": {
-    "w": 800,
-    "h": 600,
-    "ratio": "4:3",
-    "role": "Experience card thumbnail",
-    "alt": "",
-    "file": null
-  },
-  "exp-card-2": {
-    "w": 800,
-    "h": 600,
-    "ratio": "4:3",
-    "role": "Experience card thumbnail",
-    "alt": "",
-    "file": null
-  },
-  "exp-card-3": {
-    "w": 800,
-    "h": 600,
-    "ratio": "4:3",
-    "role": "Experience card thumbnail",
-    "alt": "",
-    "file": null
-  },
-  "split-1-primary": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Split feature, tall image",
-    "alt": "Private surf coaching session on the sand",
-    "file": "private-surf-coaching.jpg"
-  },
-  "split-1-offset": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Split feature, overlapping inset",
-    "alt": "Snorkelling over a tropical reef",
-    "file": "snorkeling-tropical-underwater.jpg"
-  },
-  "split-2-primary": {
-    "w": 2400,
-    "h": 1600,
-    "ratio": "auto",
-    "role": "Second split feature, tall image",
-    "alt": "Catamaran under sail at sunset",
-    "file": "sunset-catamaran-tour.jpg"
-  },
-  "split-2-offset": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Second split feature, inset",
-    "alt": "ATV on a jungle track near a waterfall",
-    "file": "atv-waterfall-adventure.jpg"
-  },
-  "gallery-1": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Gallery tile",
-    "alt": "Group surf lesson on the beach at Tamarindo",
-    "file": "group-lesson-beach.jpg"
-  },
-  "gallery-2": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Gallery tile",
-    "alt": "Kayak and boards at the surf tent",
-    "file": "kayak-surf-tent.jpg"
-  },
-  "gallery-3": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Gallery tile",
-    "alt": "Instructor demonstrating the pop-up stance",
-    "file": "instructor-popup-stance.jpg"
-  },
-  "gallery-4": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Gallery tile",
-    "alt": "Group briefing on the sand before paddling out",
-    "file": "group-instruction-sand.jpg"
-  },
-  "gallery-5": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Gallery tile",
-    "alt": "Sea turtle gliding over the reef",
-    "file": "sea-turtle-wildlife-underwater.jpg"
-  },
-  "gallery-6": {
-    "w": 1600,
-    "h": 1067,
-    "ratio": "auto",
-    "role": "Gallery tile",
-    "alt": "Beachfront yoga at sunrise",
-    "file": "beachfront-yoga-wellness.jpg"
-  },
-  "cta-bg": {
-    "w": 2400,
-    "h": 1036,
-    "ratio": "auto",
-    "role": "Lifestyle closing band background",
-    "alt": "Palms and surfboards above the ocean at sunset",
-    "file": "sunset-palm-ocean-lifestyle-banner.jpg",
-    "note": "Clean standalone banner photograph."
-  },
-  "story-banner": {
-    "w": 2400,
-    "h": 893,
-    "ratio": "auto",
-    "role": "Story band and experiences listing hero",
-    "alt": "Aerial view of the Tamarindo coastline",
-    "file": "tamarindo-aerial-coastal-banner.jpg",
-    "note": "Clean standalone banner photograph."
-  },
-  "instructor-1": {
-    "w": 800,
-    "h": 1067,
-    "ratio": "3:4",
-    "role": "Instructor portrait 1",
-    "alt": "",
-    "file": null,
-    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
-  },
-  "instructor-2": {
-    "w": 800,
-    "h": 1067,
-    "ratio": "3:4",
-    "role": "Instructor portrait 2",
-    "alt": "",
-    "file": null,
-    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
-  },
-  "instructor-3": {
-    "w": 800,
-    "h": 1067,
-    "ratio": "3:4",
-    "role": "Instructor portrait 3",
-    "alt": "",
-    "file": null,
-    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
-  },
-  "instructor-4": {
-    "w": 800,
-    "h": 1067,
-    "ratio": "3:4",
-    "role": "Instructor portrait 4",
-    "alt": "",
-    "file": null,
-    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
-  }
+ "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
+ "hero-home": {
+  "w": 1672,
+  "h": 941,
+  "ratio": "16:9",
+  "role": "Homepage hero background",
+  "alt": "Surfer walking into the water with a board at sunset in Tamarindo",
+  "file": "female-surfer-sunset-hero.jpg",
+  "option": "pt_hero_image",
+  "note": "Requested hero image. Clean standalone photograph, no text or UI."
+ },
+ "hero-video": {
+  "w": 1920,
+  "h": 1080,
+  "ratio": "16:9",
+  "role": "Homepage hero loop, mp4 + webm, under 4MB, 8-12s",
+  "file": null
+ },
+ "exp-card-1": {
+  "w": 800,
+  "h": 600,
+  "ratio": "4:3",
+  "role": "Experience card thumbnail",
+  "alt": "",
+  "file": null
+ },
+ "exp-card-2": {
+  "w": 800,
+  "h": 600,
+  "ratio": "4:3",
+  "role": "Experience card thumbnail",
+  "alt": "",
+  "file": null
+ },
+ "exp-card-3": {
+  "w": 800,
+  "h": 600,
+  "ratio": "4:3",
+  "role": "Experience card thumbnail",
+  "alt": "",
+  "file": null
+ },
+ "split-1-primary": {
+  "w": 2400,
+  "h": 900,
+  "ratio": "auto",
+  "role": "Split feature, tall image",
+  "alt": "Surfer carrying a board along the beach at sunset",
+  "file": "female-surfer-beach-hero.jpg"
+ },
+ "split-1-offset": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Split feature, overlapping inset",
+  "alt": "Snorkelling over a tropical reef",
+  "file": "snorkeling-tropical-underwater.jpg"
+ },
+ "split-2-primary": {
+  "w": 2400,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Second split feature, tall image",
+  "alt": "Catamaran under sail at sunset",
+  "file": "sunset-catamaran-tour.jpg"
+ },
+ "split-2-offset": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Second split feature, inset",
+  "alt": "ATV on a jungle track near a waterfall",
+  "file": "atv-waterfall-adventure.jpg"
+ },
+ "gallery-1": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Group surf lesson on the beach at Tamarindo",
+  "file": "group-lesson-beach.jpg"
+ },
+ "gallery-2": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Kayak and boards at the surf tent",
+  "file": "kayak-surf-tent.jpg"
+ },
+ "gallery-3": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Instructor demonstrating the pop-up stance",
+  "file": "instructor-popup-stance.jpg"
+ },
+ "gallery-4": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Group briefing on the sand before paddling out",
+  "file": "group-instruction-sand.jpg"
+ },
+ "gallery-5": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Sea turtle gliding over the reef",
+  "file": "sea-turtle-wildlife-underwater.jpg"
+ },
+ "gallery-6": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Beachfront yoga at sunrise",
+  "file": "beachfront-yoga-wellness.jpg"
+ },
+ "cta-bg": {
+  "w": 2400,
+  "h": 1036,
+  "ratio": "auto",
+  "role": "Lifestyle closing band background",
+  "alt": "Palms and surfboards above the ocean at sunset",
+  "file": "sunset-palm-ocean-lifestyle-banner.jpg",
+  "note": "Clean standalone banner photograph."
+ },
+ "story-banner": {
+  "w": 2400,
+  "h": 893,
+  "ratio": "auto",
+  "role": "Story band and experiences listing hero",
+  "alt": "Aerial view of the Tamarindo coastline",
+  "file": "tamarindo-aerial-coastal-banner.jpg",
+  "note": "Clean standalone banner photograph."
+ },
+ "instructor-1": {
+  "w": 800,
+  "h": 1067,
+  "ratio": "3:4",
+  "role": "Instructor portrait 1",
+  "alt": "",
+  "file": null,
+  "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+ },
+ "instructor-2": {
+  "w": 800,
+  "h": 1067,
+  "ratio": "3:4",
+  "role": "Instructor portrait 2",
+  "alt": "",
+  "file": null,
+  "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+ },
+ "instructor-3": {
+  "w": 800,
+  "h": 1067,
+  "ratio": "3:4",
+  "role": "Instructor portrait 3",
+  "alt": "",
+  "file": null,
+  "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+ },
+ "instructor-4": {
+  "w": 800,
+  "h": 1067,
+  "ratio": "3:4",
+  "role": "Instructor portrait 4",
+  "alt": "",
+  "file": null,
+  "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+ },
+ "tax-surf-lessons": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Header photo for the surf lessons archive",
+  "alt": "A learner riding whitewater on a soft-top board at Tamarindo",
+  "file": "beginner-surf-lesson-action.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-fishing-charters": {
+  "w": 1125,
+  "h": 1500,
+  "ratio": "auto",
+  "role": "Header photo for the fishing charters archive",
+  "alt": "Boats and gear staged at the beach launch point",
+  "file": "kayak-surf-tent.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-boat-tours": {
+  "w": 2400,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Header photo for the boat tours archive",
+  "alt": "A catamaran on the water off the Guanacaste coast at sunset",
+  "file": "sunset-catamaran-tour.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-wildlife-nature": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Header photo for the wildlife nature archive",
+  "alt": "A sea turtle in clear water off the Costa Rican coast",
+  "file": "sea-turtle-wildlife-underwater.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-adventure": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Header photo for the adventure archive",
+  "alt": "A waterfall in the dry forest inland from Tamarindo",
+  "file": "atv-waterfall-adventure.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-private-custom": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Header photo for the private custom archive",
+  "alt": "An instructor coaching one surfer in the shallows",
+  "file": "private-surf-coaching.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-first-timer": {
+  "w": 1500,
+  "h": 2000,
+  "ratio": "auto",
+  "role": "Header photo for the first timer archive",
+  "alt": "A first surf lesson starting on the sand",
+  "file": "group-lesson-beach.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-beginner": {
+  "w": 1125,
+  "h": 1500,
+  "ratio": "auto",
+  "role": "Header photo for the beginner archive",
+  "alt": "An instructor walking a group through the pop-up on the sand",
+  "file": "group-instruction-sand.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-intermediate": {
+  "w": 1600,
+  "h": 1067,
+  "ratio": "auto",
+  "role": "Header photo for the intermediate archive",
+  "alt": "A surfer turning on an unbroken wave",
+  "file": "intermediate-surf-action.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-advanced": {
+  "w": 1500,
+  "h": 2000,
+  "ratio": "auto",
+  "role": "Header photo for the advanced archive",
+  "alt": "A surfer set in a low stance on a wave",
+  "file": "instructor-popup-stance.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ },
+ "tax-all-levels": {
+  "w": 2400,
+  "h": 893,
+  "ratio": "auto",
+  "role": "Header photo for the all levels archive",
+  "alt": "Aerial view of the Tamarindo coastline",
+  "file": "tamarindo-aerial-coastal-banner.jpg",
+  "note": "Overridden per term by the Header photo field on the term edit screen."
+ }
 }

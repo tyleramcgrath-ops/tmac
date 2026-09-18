@@ -297,12 +297,86 @@
 		} );
 	}
 
+	/**
+	 * Keep the category chip bar in step with the section on screen, and make
+	 * the chips scroll themselves into view on a narrow screen.
+	 *
+	 * Anchors already work with no JavaScript; this only adds the highlight.
+	 */
+	function initCategoryNav() {
+		var nav = document.querySelector( '[data-cat-nav]' );
+		var sections = document.querySelectorAll( '[data-cat-section]' );
+
+		if ( ! nav || ! sections.length || ! ( 'IntersectionObserver' in window ) ) {
+			return;
+		}
+
+		var chips = {};
+
+		Array.prototype.forEach.call( nav.querySelectorAll( '[data-cat-link]' ), function ( chip ) {
+			chips[ chip.getAttribute( 'data-cat-link' ) ] = chip;
+		} );
+
+		function setCurrent( slug ) {
+			Array.prototype.forEach.call( nav.querySelectorAll( '.cat-chip' ), function ( chip ) {
+				chip.classList.remove( 'is-current' );
+			} );
+
+			var chip = chips[ slug ];
+
+			if ( ! chip ) {
+				return;
+			}
+
+			chip.classList.add( 'is-current' );
+
+			// Nudge it into view without scrolling the page itself.
+			var track = nav.querySelector( '.cat-nav__inner' );
+
+			if ( track && track.scrollWidth > track.clientWidth ) {
+				var left = chip.offsetLeft - ( track.clientWidth / 2 ) + ( chip.offsetWidth / 2 );
+				track.scrollTo( { left: left, behavior: 'smooth' } );
+			}
+		}
+
+		var visible = {};
+
+		var observer = new IntersectionObserver(
+			function ( entries ) {
+				entries.forEach( function ( entry ) {
+					visible[ entry.target.getAttribute( 'data-cat-section' ) ] = entry.isIntersecting
+						? entry.boundingClientRect.top
+						: null;
+				} );
+
+				// The topmost section still in the band wins.
+				var current = null;
+				var best = Infinity;
+
+				Object.keys( visible ).forEach( function ( slug ) {
+					if ( null !== visible[ slug ] && visible[ slug ] < best ) {
+						best = visible[ slug ];
+						current = slug;
+					}
+				} );
+
+				setCurrent( current || 'all' );
+			},
+			{ rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+		);
+
+		Array.prototype.forEach.call( sections, function ( section ) {
+			observer.observe( section );
+		} );
+	}
+
 	function boot() {
 		initHeader();
 		initMenu();
 		initReveal();
 		initLightbox();
 		initMap();
+		initCategoryNav();
 	}
 
 	if ( 'loading' === document.readyState ) {

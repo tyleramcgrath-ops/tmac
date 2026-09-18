@@ -13,8 +13,9 @@ defined( 'ABSPATH' ) || exit;
 
 $pt_id       = get_the_ID();
 $pt_badge    = pt_field( $pt_id, 'badge' );
-$pt_rating   = pt_field( $pt_id, 'rating' );
-$pt_reviews  = (int) pt_field( $pt_id, 'review_count' );
+$pt_summary  = pt_rating_summary( $pt_id );
+$pt_rating   = $pt_summary['count'] ? number_format_i18n( $pt_summary['average'], 1 ) : '';
+$pt_reviews  = (int) $pt_summary['count'];
 $pt_price    = pt_field( $pt_id, 'price_from' );
 $pt_suffix   = pt_field( $pt_id, 'price_suffix' );
 $pt_duration = pt_field( $pt_id, 'duration' );

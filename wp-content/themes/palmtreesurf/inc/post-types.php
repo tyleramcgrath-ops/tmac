@@ -39,7 +39,8 @@ function pt_register_post_types() {
 			),
 			'menu_icon'     => 'dashicons-palmtree',
 			'menu_position' => 20,
-			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ),
+			// 'comments' is how reviews are stored — see inc/reviews.php.
+			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes', 'comments' ),
 			'show_in_rest'  => true,
 			'rest_base'     => 'experiences',
 		)

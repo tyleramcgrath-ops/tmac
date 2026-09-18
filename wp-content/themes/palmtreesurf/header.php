@@ -35,19 +35,7 @@ $pt_overlay = is_front_page() && ! is_paged();
 		<div class="site-header__inner container">
 
 			<div class="site-branding">
-				<?php
-				if ( has_custom_logo() ) {
-					the_custom_logo();
-				} else {
-					printf(
-						'<a class="site-logo" href="%1$s" rel="home">%2$s<span class="site-logo__text"><span class="site-logo__name">%3$s</span><span class="site-logo__sub">%4$s</span></span></a>',
-						esc_url( home_url( '/' ) ),
-						pt_get_icon( 'palm', 'site-logo__mark' ),
-						esc_html__( 'Palm Tree', 'palmtreesurf' ),
-						esc_html__( 'Surf', 'palmtreesurf' )
-					);
-				}
-				?>
+				<?php echo pt_site_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in pt_site_logo(). ?>
 			</div>
 
 			<nav id="site-navigation" class="site-nav" aria-label="<?php esc_attr_e( 'Primary', 'palmtreesurf' ); ?>">

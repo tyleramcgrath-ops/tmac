@@ -179,3 +179,69 @@ in the design board but are **not** part of this build, by your decision. Nothin
 them: there is no restaurant data in this WordPress install, and inventing businesses, ratings or
 inventory would have broken the brief's own rules. Adding a vertical later is a taxonomy term or a new
 post type, not a rewrite.
+
+---
+
+## 9. Added in v1.5.0 — reviews, categories, logo, About
+
+### The rating system is live, and starts empty
+
+Visitors can now leave a star rating and a review on any experience. Reviews ride on WordPress
+comments, so they arrive under **Comments** in wp-admin with a **Rating** column, and every one is
+**held for moderation** — nothing publishes itself. The score, the distribution bars and the
+`AggregateRating` schema are all computed from approved reviews only.
+
+Two things follow from that:
+
+- **A new experience shows no stars.** That is correct. It says "No reviews yet" until someone
+  leaves one. Do not put numbers in the manual rating fields to fill the gap.
+- **The manual `Rating` / `Review count` fields still work**, and are only for an aggregate you are
+  carrying over from somewhere you already collect reviews. The moment one real review is approved,
+  the real figure takes over. The three surf lessons still carry the figures from your old site —
+  confirm they are current, or clear them and let the real reviews build.
+
+To let reviews publish without moderation (not recommended), a plugin or child theme can filter
+`pt_moderate_reviews`.
+
+### Category pages
+
+`/experiences/category/<name>/` used to fall through to the blog layout. They are now full pages:
+photo header, the category's own description, an intro, highlights, a "good to know" panel, the
+results grid with filters, an FAQ and links to the other categories.
+
+- **The description under the title is editable** at **Experiences → Categories → edit**. The theme
+  writes a starter description once, and never touches it again after you edit it.
+- **The header photo is editable** on the same screen ("Header photo"). Leave it empty to use the
+  photo the theme ships for that category.
+- The intro, highlights, "good to know" and FAQ are theme copy keyed to the category slug. They are
+  filterable (`pt_term_copy_map`) but are not in the admin — tell me if you want them editable there.
+
+### The experiences hub
+
+`/experiences/` is now a browsable hub: a sticky category bar, then one section per category. A
+category link from the menu or the homepage jumps you to that section with everything else still
+above and below, so nobody has to back out to a menu to look at something else. Each section links
+on to the full category page.
+
+### Logo
+
+The logo package is bundled with the theme, so it is branded with no upload. The reversed version
+shows over a hero, the full-colour one once the header sticks, and the favicons and the wp-admin
+login screen use it too. Uploading a logo under **Customize → Site Identity** overrides all of it.
+
+### About page
+
+The About page is now a designed page (hero, story, a facts panel, the three booking steps, how
+days are run safely, guides, an eight-question FAQ, location, CTA) instead of a column of
+placeholder text. **The story itself is still yours to write** — the last section of the page body
+says so. Everything above it is real and general; the specific history is the part that will
+actually rank and convert, and only you have it.
+
+### Still outstanding
+
+- No photograph exists for **Fishing Charters**; its card and header reuse the beach-launch photo.
+- No real guide portraits: the four guides render as brand panels.
+- `exp-card-1..3` and `hero-video` slots are still empty.
+- The trust row under the hero now reads "Book online in minutes / Local Tamarindo guides / Small
+  groups / English & Español". **Confirm all four are true of how you operate** — they are claims,
+  and they are editable under **Customize → Front Page Hero**.

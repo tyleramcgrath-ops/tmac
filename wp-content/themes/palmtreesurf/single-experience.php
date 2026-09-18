@@ -181,6 +181,8 @@ while ( have_posts() ) :
 		</div>
 	</article>
 
+	<?php comments_template( '/template-parts/components/reviews.php' ); ?>
+
 	<?php get_template_part( 'template-parts/components/related' ); ?>
 	<?php
 endwhile;

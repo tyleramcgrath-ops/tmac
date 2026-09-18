@@ -57,17 +57,17 @@ function pt_local_business_schema() {
 		}
 	}
 
-	$phone = pt_mod( 'pt_phone' );
+	$phone = pt_filled( 'pt_phone' );
 	if ( $phone ) {
 		$data['telephone'] = $phone;
 	}
 
-	$email = pt_mod( 'pt_email' );
+	$email = pt_filled( 'pt_email' );
 	if ( $email && is_email( $email ) ) {
 		$data['email'] = $email;
 	}
 
-	$address = pt_mod( 'pt_address' );
+	$address = pt_filled( 'pt_address' );
 	if ( $address ) {
 		$data['address'] = array(
 			'@type'           => 'PostalAddress',
@@ -80,7 +80,7 @@ function pt_local_business_schema() {
 
 	$social = array();
 	foreach ( array( 'pt_instagram', 'pt_facebook', 'pt_tripadvisor', 'pt_youtube' ) as $key ) {
-		$url = pt_mod( $key );
+		$url = pt_filled( $key );
 		if ( $url ) {
 			$social[] = $url;
 		}
@@ -123,19 +123,14 @@ function pt_experience_schema( $post_id ) {
 		);
 	}
 
-	// Only ever emitted from real stored values.
-	$rating  = pt_field( $post_id, 'rating' );
-	$reviews = (int) pt_field( $post_id, 'review_count' );
-
-	if ( $rating && $reviews > 0 ) {
-		$data['aggregateRating'] = array(
-			'@type'       => 'AggregateRating',
-			'ratingValue' => $rating,
-			'reviewCount' => $reviews,
-		);
-	}
-
-	return $data;
+	/*
+	 * AggregateRating and the individual Review nodes are added by
+	 * inc/reviews.php, from approved reviews only. Never invented here.
+	 *
+	 * @param array $data    Product schema so far.
+	 * @param int   $post_id Experience ID.
+	 */
+	return apply_filters( 'pt_experience_schema', $data, $post_id );
 }
 
 /**

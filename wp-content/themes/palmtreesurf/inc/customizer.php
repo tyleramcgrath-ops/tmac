@@ -34,8 +34,8 @@ function pt_defaults() {
 		// Hero.
 		'pt_hero_script'          => __( 'Tamarindo', 'palmtreesurf' ),
 		'pt_hero_heading'         => __( 'Live Different.', 'palmtreesurf' ),
-		'pt_hero_tagline'         => __( 'Surf. Eat. Explore. Discover.', 'palmtreesurf' ),
-		'pt_hero_text'            => __( 'Book local experiences, find your wave and get out on the water. Your Tamarindo adventure starts here.', 'palmtreesurf' ),
+		'pt_hero_tagline'         => __( 'Surf. Explore. Discover.', 'palmtreesurf' ),
+		'pt_hero_text'            => __( 'Surf lessons, fishing charters, boat tours and wildlife trips, booked with local guides in one place. Your Tamarindo adventure starts here.', 'palmtreesurf' ),
 		'pt_hero_corner'          => __( 'Pura Vida Every Day', 'palmtreesurf' ),
 
 		/*
@@ -44,9 +44,9 @@ function pt_defaults() {
 		 * or bilingual support here unless it is actually true.
 		 */
 		'pt_trust_1'              => __( 'Book online in minutes', 'palmtreesurf' ),
-		'pt_trust_2'              => __( 'Local guides', 'palmtreesurf' ),
+		'pt_trust_2'              => __( 'Local Tamarindo guides', 'palmtreesurf' ),
 		'pt_trust_3'              => __( 'Small groups', 'palmtreesurf' ),
-		'pt_trust_4'              => '',
+		'pt_trust_4'              => __( 'English & Español', 'palmtreesurf' ),
 
 		// Story banner. Stats are empty on purpose - see TODO-CONTENT.md.
 		'pt_story_script'         => __( 'Good Times', 'palmtreesurf' ),

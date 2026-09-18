@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.4.0' );
+define( 'PT_VERSION', '1.5.0' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.
@@ -38,17 +38,22 @@ $pt_includes = array(
 	'inc/template-functions.php', // Body classes and other filters.
 	'inc/class-pt-nav-walker.php', // Nav menu markup.
 	'inc/icons.php',            // Inline SVG icons.
+	'inc/branding.php',         // Logo and favicons.
 	'inc/images.php',           // Manifest-driven image slots.
 	'inc/post-types.php',       // Experiences, testimonials, instructors.
 	'inc/fields.php',           // Experience detail fields.
+	'inc/taxonomy-content.php', // Category archives: routing, copy, term images.
+	'inc/reviews.php',          // Star ratings from moderated visitor reviews.
 	'inc/customizer.php',       // Contact details, social links, footer.
 	'inc/blocks.php',           // Editor colours and block patterns.
 	'inc/booking.php',          // Booking CTAs and plugin handoff.
 	'inc/forms.php',            // Contact enquiry fallback.
 	'inc/schema.php',           // JSON-LD structured data.
 	'inc/seo.php',              // Meta tags and SEO-plugin cooperation.
+	'inc/about-content.php',    // About page copy and FAQ.
 	'inc/seed-copy.php',        // Starter long-form copy.
 	'inc/setup-content.php',    // First-run pages, menus and sample content.
+	'inc/content-refresh.php',  // Bring untouched seeded pages forward on update.
 	'inc/media-sync.php',       // Assign bundled photography on upgrade.
 );
 

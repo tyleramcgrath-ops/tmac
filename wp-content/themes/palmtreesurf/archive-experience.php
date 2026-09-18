@@ -1,9 +1,19 @@
 <?php
 /**
- * Experiences listing — approved mockup.
+ * Experiences — the hub, and every category and skill-level page.
  *
- * Photo hero, filter bar overlapping its lower edge, then sidebar facets beside
- * a responsive results grid.
+ * Two modes share this file, because they share the same furniture:
+ *
+ * - Hub (/experiences/). A photo hero, the finder, a sticky category bar and
+ *   then one anchored block per category. Arriving from a category link drops
+ *   you at that block with everything else still above and below you, so you
+ *   can keep browsing instead of backing out to a menu. A filtered request
+ *   (search, finder, skill level) falls back to a plain results grid, because
+ *   at that point the visitor has told us what they want.
+ *
+ * - Category (/experiences/category/surf-lessons/). The same hero and bar, then
+ *   the term's own copy, the full result grid with facets, and the supporting
+ *   sections that give the page something to rank on.
  *
  * @package PalmTreeSurf
  */
@@ -13,24 +23,39 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 $pt_is_tax = is_tax();
+$pt_term   = $pt_is_tax ? get_queried_object() : null;
+$pt_copy   = $pt_is_tax ? pt_term_copy( $pt_term ) : array();
+
+// The hub only shows its category blocks when nobody has filtered it.
+$pt_filtered = ! $pt_is_tax && ( is_search() || ! empty( $_GET['experience_type'] ) || ! empty( $_GET['s'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$pt_hub      = ! $pt_is_tax && ! $pt_filtered;
 ?>
-<section class="page-hero">
+<section class="page-hero<?php echo $pt_is_tax ? ' page-hero--term' : ''; ?>">
 	<div class="page-hero__media" aria-hidden="true">
-		<?php pt_image( 'story-banner' ); ?>
+		<?php
+		if ( $pt_is_tax ) {
+			pt_term_image( $pt_term );
+		} else {
+			pt_image( 'story-banner', array( 'priority' => true ) );
+		}
+		?>
 	</div>
 
 	<div class="page-hero__inner container">
-		<?php if ( ! $pt_is_tax ) : ?>
-			<p class="page-hero__script"><?php esc_html_e( 'Explore', 'palmtreesurf' ); ?></p>
-		<?php endif; ?>
+		<p class="page-hero__script">
+			<?php echo esc_html( $pt_is_tax ? __( 'Tamarindo', 'palmtreesurf' ) : __( 'Explore', 'palmtreesurf' ) ); ?>
+		</p>
 
 		<?php if ( $pt_is_tax ) : ?>
 			<?php the_archive_title( '<h1 class="page-hero__title">', '</h1>' ); ?>
-			<?php the_archive_description( '<div class="page-hero__lede">', '</div>' ); ?>
+
+			<?php if ( $pt_term && $pt_term->description ) : ?>
+				<div class="page-hero__lede"><?php echo wp_kses_post( wpautop( $pt_term->description ) ); ?></div>
+			<?php endif; ?>
 		<?php else : ?>
-			<h1 class="page-hero__title"><?php esc_html_e( 'Tamarindo', 'palmtreesurf' ); ?></h1>
+			<h1 class="page-hero__title"><?php esc_html_e( 'Experiences in Tamarindo', 'palmtreesurf' ); ?></h1>
 			<p class="page-hero__lede">
-				<?php esc_html_e( 'Surf lessons, fishing charters, boat tours, wildlife adventures and more.', 'palmtreesurf' ); ?>
+				<?php esc_html_e( 'Surf lessons, fishing charters, boat tours and wildlife trips, run by people who live here. Pick a category below.', 'palmtreesurf' ); ?>
 			</p>
 		<?php endif; ?>
 	</div>
@@ -40,43 +65,143 @@ $pt_is_tax = is_tax();
 	<?php get_template_part( 'template-parts/components/filter-panel' ); ?>
 </div>
 
+<?php get_template_part( 'template-parts/components/category-nav' ); ?>
+
 <div class="container">
 	<?php get_template_part( 'template-parts/components/breadcrumbs' ); ?>
+</div>
 
-	<div class="listing">
-		<?php get_template_part( 'template-parts/components/facets' ); ?>
+<?php if ( $pt_hub ) : ?>
 
-		<div class="listing__results">
-			<div class="listing__head">
-				<p class="listing__count">
-					<?php
-					global $wp_query;
-					$pt_total = (int) $wp_query->found_posts;
-					printf(
-						/* translators: %s: number of experiences. */
-						esc_html( _n( '%s experience', '%s experiences', $pt_total, 'palmtreesurf' ) ),
-						esc_html( number_format_i18n( $pt_total ) )
-					);
-					?>
-				</p>
-			</div>
+	<?php
+	$pt_types = get_terms(
+		array(
+			'taxonomy'   => 'experience_type',
+			'hide_empty' => true,
+			'orderby'    => 'name',
+		)
+	);
+	?>
 
-			<?php if ( have_posts() ) : ?>
-				<div class="card-grid" data-reveal-group>
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						get_template_part( 'template-parts/components/card', 'experience' );
-					endwhile;
-					?>
+	<?php if ( $pt_types && ! is_wp_error( $pt_types ) ) : ?>
+		<div class="cat-sections">
+			<?php foreach ( $pt_types as $pt_type ) : ?>
+				<?php
+				get_template_part(
+					'template-parts/components/category',
+					'section',
+					array( 'term' => $pt_type )
+				);
+				?>
+			<?php endforeach; ?>
+		</div>
+	<?php else : ?>
+		<div class="container"><?php get_template_part( 'template-parts/content', 'none' ); ?></div>
+	<?php endif; ?>
+
+<?php else : ?>
+
+	<?php if ( $pt_is_tax && ! empty( $pt_copy['intro'] ) ) : ?>
+		<section class="tax-intro">
+			<div class="container tax-intro__inner">
+				<div class="tax-intro__prose prose">
+					<?php foreach ( $pt_copy['intro'] as $pt_paragraph ) : ?>
+						<p><?php echo esc_html( $pt_paragraph ); ?></p>
+					<?php endforeach; ?>
 				</div>
 
-				<?php pt_pagination(); ?>
-			<?php else : ?>
-				<?php get_template_part( 'template-parts/content', 'none' ); ?>
-			<?php endif; ?>
+				<?php if ( ! empty( $pt_copy['know'] ) ) : ?>
+					<aside class="tax-know">
+						<h2 class="tax-know__title"><?php esc_html_e( 'Good to know', 'palmtreesurf' ); ?></h2>
+						<ul class="tax-know__list">
+							<?php foreach ( $pt_copy['know'] as $pt_point ) : ?>
+								<li><?php echo esc_html( $pt_point ); ?></li>
+							<?php endforeach; ?>
+						</ul>
+					</aside>
+				<?php endif; ?>
+			</div>
+		</section>
+	<?php endif; ?>
+
+	<?php if ( $pt_is_tax && ! empty( $pt_copy['highlights'] ) ) : ?>
+		<section class="section section--sand tax-highlights">
+			<div class="container">
+				<ul class="tax-highlights__list" data-reveal-group>
+					<?php foreach ( $pt_copy['highlights'] as $pt_highlight ) : ?>
+						<li class="tax-highlight" data-reveal>
+							<h3 class="tax-highlight__title"><?php echo esc_html( $pt_highlight[0] ); ?></h3>
+							<p class="tax-highlight__text"><?php echo esc_html( $pt_highlight[1] ); ?></p>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		</section>
+	<?php endif; ?>
+
+	<div class="container" id="results">
+		<div class="listing">
+			<?php get_template_part( 'template-parts/components/facets' ); ?>
+
+			<div class="listing__results">
+				<div class="listing__head">
+					<p class="listing__count">
+						<?php
+						global $wp_query;
+						$pt_total = (int) $wp_query->found_posts;
+						printf(
+							/* translators: %s: number of experiences. */
+							esc_html( _n( '%s experience', '%s experiences', $pt_total, 'palmtreesurf' ) ),
+							esc_html( number_format_i18n( $pt_total ) )
+						);
+						?>
+					</p>
+				</div>
+
+				<?php if ( have_posts() ) : ?>
+					<div class="card-grid" data-reveal-group>
+						<?php
+						while ( have_posts() ) :
+							the_post();
+							get_template_part( 'template-parts/components/card', 'experience' );
+						endwhile;
+						?>
+					</div>
+
+					<?php pt_pagination(); ?>
+				<?php else : ?>
+					<?php get_template_part( 'template-parts/content', 'none' ); ?>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
-</div>
+
+	<?php if ( $pt_is_tax && ! empty( $pt_copy['faq'] ) ) : ?>
+		<section class="section tax-faq">
+			<div class="container container--narrow">
+				<header class="section__header">
+					<p class="eyebrow"><?php esc_html_e( 'Questions', 'palmtreesurf' ); ?></p>
+					<h2 class="section__title"><?php esc_html_e( 'Before you book', 'palmtreesurf' ); ?></h2>
+				</header>
+
+				<div class="faq">
+					<?php foreach ( $pt_copy['faq'] as $pt_index => $pt_pair ) : ?>
+						<details class="faq__item"<?php echo 0 === $pt_index ? ' open' : ''; ?>>
+							<summary><?php echo esc_html( $pt_pair[0] ); ?></summary>
+							<div class="faq__answer"><p><?php echo esc_html( $pt_pair[1] ); ?></p></div>
+						</details>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+
+	<?php if ( $pt_is_tax ) : ?>
+		<?php get_template_part( 'template-parts/components/category-others', null, array( 'current' => $pt_term ) ); ?>
+	<?php endif; ?>
+
+<?php endif; ?>
+
+<?php get_template_part( 'template-parts/home/cta' ); ?>
 <?php
 get_footer();

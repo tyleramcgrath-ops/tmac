@@ -182,12 +182,31 @@ function pt_seed_bodies() {
 function pt_seed_about_body() {
 	return pt_blocks(
 		array(
-			array( 'p', __( 'Palm Tree Surf runs surf lessons, fishing charters, boat tours and wildlife trips out of Tamarindo on the Guanacaste coast of Costa Rica.', 'palmtreesurf' ) ),
-			array( 'h2', __( 'Replace this section with your story', 'palmtreesurf' ) ),
-			array( 'p', __( 'This page is a placeholder and should be rewritten by whoever runs the business. The things that convert on an about page are specific: who you are, how long you have been on this beach, why you started, and what a guest can expect from you that they would not get elsewhere.', 'palmtreesurf' ) ),
-			array( 'p', __( 'Search engines reward this page too. A real, detailed about page with your actual history is one of the stronger trust signals a small local operator has.', 'palmtreesurf' ) ),
-			array( 'h2', __( 'Why Tamarindo', 'palmtreesurf' ) ),
-			array( 'p', __( 'Tamarindo works for visitors because so much sits close together: a forgiving beach break for learners, deeper water for fishing within a short run, and a protected mangrove estuary a few minutes away. Warm water year round means no wetsuits and longer time in the water.', 'palmtreesurf' ) ),
+			array( 'p', __( 'Palm Tree Surf runs surf lessons, fishing charters, boat tours, wildlife trips and private days out of Tamarindo, on the Guanacaste coast of Costa Rica. Everything we do starts within a few minutes of this beach.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'Why we are on this beach', 'palmtreesurf' ) ),
+			array( 'p', __( 'Tamarindo is a rare piece of coast. The main break is sand-bottom, not reef, so it rolls instead of dumping and it forgives the mistakes every learner makes. Deep water sits close enough that a fishing charter can be inshore at the points or offshore in blue water without a long run. Behind the beach, the estuary opens into protected mangrove channels that are busy with birds and howler monkeys at first light. And the water is warm all year, so nobody owns a wetsuit here.', 'palmtreesurf' ) ),
+			array( 'p', __( 'That is a lot of different days out inside a very small area, which is why one company can run all of it properly rather than subcontracting half of it to strangers.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'How we like to work', 'palmtreesurf' ) ),
+			array( 'p', __( 'Small groups, local guides, and an honest answer when something is not right for you. If the surf is wrong for a first lesson that morning, we will say so and move you rather than take your money and put you in it. If you ask for a day that we do not think will work, we will tell you why and suggest what will.', 'palmtreesurf' ) ),
+			array( 'p', __( 'We would rather have a guest who comes back and tells three friends than a full boat on a bad day.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'What we run', 'palmtreesurf' ) ),
+			array( 'list', array(
+				__( 'Surf lessons — first-ever pop-ups through to coaching for people already catching unbroken waves.', 'palmtreesurf' ),
+				__( 'Fishing charters — inshore along the points and headlands, or offshore into blue water, half day or full day.', 'palmtreesurf' ),
+				__( 'Boat tours — coastal runs, snorkel stops and the sunset return.', 'palmtreesurf' ),
+				__( 'Wildlife and nature — estuary and mangrove trips at first light, when there is actually something to see.', 'palmtreesurf' ),
+				__( 'Adventure — waterfalls, backroads and the dry forest inland, for the day the surf is flat.', 'palmtreesurf' ),
+				__( 'Private and custom — one instructor, one guide, and a week built around your group instead of a timetable.', 'palmtreesurf' ),
+			) ),
+
+			array( 'h2', __( 'Who this suits', 'palmtreesurf' ) ),
+			array( 'p', __( 'People who have never surfed and are slightly nervous about it. Families where the ages run from eight to sixty-eight. Couples who want one good day on the water rather than a packed itinerary. Surfers who already know what they are doing and just want someone who knows where the sandbar is this month. All of those are normal here.', 'palmtreesurf' ) ),
+
+			array( 'h2', __( 'Add your own story here', 'palmtreesurf' ) ),
+			array( 'p', __( 'This page is yours to make specific. Who started it, what year you arrived, what you did before, the reason you stayed — that is the part no competitor can copy, and it is the strongest trust signal a small local operator has, both for visitors and for search engines. Edit this page in Pages → About and replace this section with it.', 'palmtreesurf' ) ),
 		)
 	);
 }

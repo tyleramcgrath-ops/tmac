@@ -118,6 +118,11 @@ function pt_seed_page( $title, $slug, $content = '', $template = '' ) {
 		update_post_meta( $page_id, '_wp_page_template', $template );
 	}
 
+	// Stamp what the theme wrote, so a later update can tell edits apart.
+	if ( $content && function_exists( 'pt_stamp_seeded' ) ) {
+		pt_stamp_seeded( $page_id, $content );
+	}
+
 	return (int) $page_id;
 }
 
@@ -260,7 +265,7 @@ function pt_seed_content() {
 	);
 
 	$blog_id    = pt_seed_page( __( 'Journal', 'palmtreesurf' ), 'journal' );
-	$about_id   = pt_seed_page( __( 'About', 'palmtreesurf' ), 'about', pt_seed_about_body() );
+	$about_id   = pt_seed_page( __( 'About', 'palmtreesurf' ), 'about', pt_seed_about_body(), 'page-templates/page-about.php' );
 	$gallery_id = pt_seed_page( __( 'Gallery', 'palmtreesurf' ), 'gallery', '', 'page-templates/page-gallery.php' );
 	$contact_id = pt_seed_page(
 		__( 'Contact', 'palmtreesurf' ),
