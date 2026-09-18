@@ -1157,3 +1157,128 @@ body.menu-open { overflow: hidden; }
 .availability__mon { font-size: 0.7rem; text-transform: uppercase; color: var(--pt-ink-500); }
 .availability__left { font-size: 0.65rem; font-weight: var(--pt-weight-medium); color: var(--pt-sunset-600); }
 .availability__note { margin: 0; font-size: var(--pt-small); color: var(--pt-ink-500); }
+
+/* =======================================================================
+ * Design pass 1.1 — editorial layout, cleaner cards, signature gradient
+ * Everything below intentionally overrides the earlier, more conventional
+ * treatment. Tokens only; no literal colour values.
+ * ==================================================================== */
+
+/* Signature motif: a short gradient rule under every eyebrow. */
+.eyebrow { position: relative; display: inline-block; padding-bottom: var(--pt-space-xs); }
+
+.eyebrow::after {
+	content: "";
+	position: absolute;
+	left: 0; bottom: 0;
+	width: 2.5rem; height: 3px;
+	border-radius: var(--pt-radius-pill);
+	background: var(--pt-grad-brand);
+}
+
+/* Hero: left-aligned editorial block instead of centred-everything. */
+.hero { text-align: left; }
+.hero__inner--editorial { max-width: 100%; }
+.hero__title { max-width: 16ch; margin-bottom: var(--pt-space-md); }
+.hero__text { margin-inline: 0; max-width: 44ch; }
+.hero__actions { justify-content: flex-start; }
+.hero__trust { justify-content: flex-start; gap: var(--pt-space-sm) var(--pt-space-md); }
+
+.hero__trust li {
+	padding: var(--pt-space-xs) var(--pt-space-md);
+	border: 1px solid var(--pt-glass-border);
+	border-radius: var(--pt-radius-pill);
+	background: var(--pt-glass-bg);
+	backdrop-filter: blur(6px);
+	color: var(--pt-white);
+}
+
+.hero__eyebrow { color: var(--pt-white); }
+.hero__eyebrow::after { width: 3.5rem; }
+
+@media (min-width: 1024px) {
+	.hero__inner--editorial { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: var(--pt-space-2xl); align-items: end; }
+	.hero__inner--editorial > .hero__eyebrow,
+	.hero__inner--editorial > .hero__title { grid-column: 1; }
+	.hero__inner--editorial > .hero__text,
+	.hero__inner--editorial > .hero__actions,
+	.hero__inner--editorial > .hero__trust { grid-column: 1; }
+}
+
+/* Section headers read left, not centred — less template, more editorial. */
+.section__header { max-width: 46ch; margin-inline: 0; text-align: left; }
+.section__header p { margin-inline: 0; }
+.section__lede { max-width: 52ch; }
+.section__more { text-align: left; }
+.section__title { max-width: 18ch; }
+
+/* Cards: drop the heavy shadow for a crisp bordered card with an inset image. */
+.card {
+	background: var(--pt-white);
+	border: 1px solid var(--pt-sand-200);
+	border-radius: var(--pt-radius-lg);
+	box-shadow: none;
+	padding: var(--pt-space-xs);
+	transition: transform var(--pt-dur) var(--pt-ease), border-color var(--pt-dur) var(--pt-ease), box-shadow var(--pt-dur) var(--pt-ease);
+}
+
+.card:hover, .card:focus-within {
+	transform: translateY(-6px);
+	border-color: var(--pt-ocean-300);
+	box-shadow: var(--pt-shadow-hover);
+}
+
+.card__media { border-radius: var(--pt-radius-md); }
+.card__body { padding: var(--pt-space-md) var(--pt-space-sm) var(--pt-space-sm); }
+.card__title { letter-spacing: -0.02em; }
+
+.card__badge {
+	top: var(--pt-space-md); left: var(--pt-space-md);
+	backdrop-filter: blur(4px);
+	letter-spacing: 0.02em;
+}
+
+.card__rating { right: var(--pt-space-md); bottom: var(--pt-space-md); border: 1px solid var(--pt-sand-200); }
+
+/* Price reads as the strongest thing in the meta row. */
+.card__price {
+	font-family: var(--pt-font-display);
+	font-size: var(--pt-body-lg);
+	font-weight: var(--pt-weight-heading);
+	letter-spacing: -0.02em;
+}
+
+.card__meta { align-items: baseline; padding-top: var(--pt-space-sm); border-top: 1px solid var(--pt-sand-200); }
+
+/* Finder panel: lighter, less boxed-in. */
+.finder { border-radius: var(--pt-radius-lg); box-shadow: var(--pt-shadow-card); }
+.finder__title { letter-spacing: -0.02em; }
+.finder__badge { background: var(--pt-grad-action); color: var(--pt-white); }
+
+/* Buttons: tighter, more confident. */
+.btn { letter-spacing: -0.01em; }
+.btn--primary { box-shadow: var(--pt-shadow-card); }
+
+/* Trust bar reads as one clean strip rather than a floating slab. */
+.trust-bar__list { border: 1px solid var(--pt-sand-200); box-shadow: var(--pt-shadow-card); border-radius: var(--pt-radius-lg); }
+
+/* Split feature: bolder, tighter headline. */
+.split__title { max-width: 16ch; letter-spacing: -0.025em; }
+
+/* Dark sections get the gradient motif too. */
+.section--dark .eyebrow::after { background: var(--pt-grad-brand); }
+
+/* Quote cards: lighter, less "boxed". */
+.quote { border-radius: var(--pt-radius-lg); }
+.quote__body { font-family: var(--pt-font-display); font-weight: 500; letter-spacing: -0.015em; line-height: 1.4; }
+
+/* Instructors: cleaner, borderless. */
+.instructor { background: transparent; box-shadow: none; }
+.instructor__media { border-radius: var(--pt-radius-lg); }
+.instructor__body { padding: var(--pt-space-sm) 0 0; }
+
+/* Footer headings get the motif, at a smaller scale. */
+.site-footer__heading { letter-spacing: -0.015em; }
+
+/* Breathing room: a touch more air between stacked sections. */
+.section { padding-block: clamp(4.5rem, 10vw, 8.5rem); }

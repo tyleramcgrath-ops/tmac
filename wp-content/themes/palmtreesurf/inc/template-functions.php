@@ -145,3 +145,14 @@ function pt_print_footer_scripts() {
 	}
 }
 add_action( 'wp_footer', 'pt_print_footer_scripts', 99 );
+
+/**
+ * Print a version marker in the page source.
+ *
+ * Makes "did the theme update actually apply?" answerable with View Source
+ * instead of guesswork, which matters when a host layers caching on top.
+ */
+function pt_version_marker() {
+	printf( "\n<!-- Palm Tree Surf theme v%s -->\n", esc_html( PT_VERSION ) );
+}
+add_action( 'wp_head', 'pt_version_marker', 1 );

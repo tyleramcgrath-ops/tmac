@@ -58,29 +58,36 @@ add_filter( 'wp_resource_hints', 'pt_resource_hints', 10, 2 );
 function pt_enqueue_assets() {
 	wp_enqueue_style( 'pt-fonts', pt_fonts_url(), array(), null );
 
+	/*
+	 * Every asset is versioned by its OWN modification time. Versioning one
+	 * file by another's timestamp - or pinning to a constant - means an edited
+	 * stylesheet keeps its old URL, and any caching host or CDN goes on serving
+	 * the previous file. That looks exactly like "the design did not change".
+	 */
+
 	// Tokens first: every other rule reads from the custom properties it defines.
 	wp_enqueue_style(
 		'pt-tokens',
 		PT_URI . 'assets/css/tokens.css',
 		array( 'pt-fonts' ),
-		pt_asset_version( 'assets/css/main.css' )
+		pt_asset_version( 'assets/css/tokens.css' )
 	);
 
 	wp_enqueue_style(
 		'pt-main',
 		PT_URI . 'assets/css/main.css',
 		array( 'pt-tokens' ),
-		PT_VERSION
+		pt_asset_version( 'assets/css/main.css' )
 	);
 
 	// Keeps the WordPress theme header discoverable to child themes and tools.
-	wp_enqueue_style( 'pt-style', get_stylesheet_uri(), array( 'pt-main' ), PT_VERSION );
+	wp_enqueue_style( 'pt-style', get_stylesheet_uri(), array( 'pt-main' ), pt_asset_version( 'style.css' ) );
 
 	wp_enqueue_script(
 		'pt-main',
 		PT_URI . 'assets/js/main.js',
 		array(),
-		PT_VERSION,
+		pt_asset_version( 'assets/js/main.js' ),
 		true
 	);
 

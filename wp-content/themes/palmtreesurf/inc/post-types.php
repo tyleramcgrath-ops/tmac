@@ -199,6 +199,55 @@ function pt_on_activation() {
 }
 
 /**
+ * Force the taxonomy rules ahead of the post type's own rules.
+ *
+ * `experiences/category/<term>` sits underneath the `experiences` archive slug,
+ * so WordPress's generated rule `experiences/([^/]+)` can swallow it and 404.
+ * Registration order fixes that most of the time; an explicit rule added at the
+ * top of the table fixes it every time, including when another plugin adds
+ * rules after us.
+ */
+function pt_add_taxonomy_rules() {
+	$map = array(
+		'category' => 'experience_type',
+		'level'    => 'skill_level',
+	);
+
+	foreach ( $map as $segment => $taxonomy ) {
+		// Paged archive first: the more specific pattern must win.
+		add_rewrite_rule(
+			'^experiences/' . $segment . '/([^/]+)/page/?([0-9]{1,})/?$',
+			'index.php?' . $taxonomy . '=$matches[1]&paged=$matches[2]',
+			'top'
+		);
+
+		add_rewrite_rule(
+			'^experiences/' . $segment . '/([^/]+)/?$',
+			'index.php?' . $taxonomy . '=$matches[1]',
+			'top'
+		);
+	}
+}
+add_action( 'init', 'pt_add_taxonomy_rules', 11 );
+
+/**
+ * Flush when the theme's version changes, not only when it is switched on.
+ *
+ * Uploading a new zip over an existing theme never fires `after_switch_theme`,
+ * so an update would otherwise keep serving the old rewrite rules until someone
+ * re-saved permalinks by hand. Comparing a stored version catches that.
+ */
+function pt_maybe_flush_on_update() {
+	if ( get_option( 'pt_rules_version' ) === PT_VERSION ) {
+		return;
+	}
+
+	update_option( 'pt_rules_version', PT_VERSION );
+	flush_rewrite_rules();
+}
+add_action( 'init', 'pt_maybe_flush_on_update', 998 );
+
+/**
  * Flush once on the first request after activation.
  *
  * Runs late on init so both taxonomies and post types have registered.

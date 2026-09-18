@@ -25,7 +25,7 @@ $pt_video   = pt_filled( 'pt_hero_video_url' );
 		<?php endif; ?>
 	</div>
 
-	<div class="hero__inner container">
+	<div class="hero__inner container hero__inner--editorial">
 		<?php if ( $pt_eyebrow ) : ?>
 			<p class="hero__eyebrow" data-reveal><?php echo esc_html( $pt_eyebrow ); ?></p>
 		<?php endif; ?>
