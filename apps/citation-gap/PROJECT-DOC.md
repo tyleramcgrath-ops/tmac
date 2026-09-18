@@ -146,6 +146,11 @@ project is accepted, resolves the commit, then stalls in `INITIALIZING` forever 
 repo to clone). So the app is deployed by a second, git-linked project, `citation-gap-web`, and
 `citation-gap.vercel.app` was re-pointed at its deployment with `assign_alias`.
 
+**Since the merge of #148**, `main` carries the app and `citation-gap-web` builds it on every
+push: `dpl_EYdEnJNmiRKz7zuLtg4hLSiBdc8k` (production, from `main` at `a7841b53`) is what
+`citation-gap.vercel.app` now serves — re-verified byte-for-byte after the alias was moved onto it.
+The first branch build, `dpl_6Cuzev…`, is superseded.
+
 That alias is **pinned to one deployment**. `citation-gap.vercel.app` is still registered as a
 project domain of the old `citation-gap` project — `add_project_domain` on the new project returns
 409 `duplicate-team-registration` — so a future production deploy of `citation-gap-web` will take
