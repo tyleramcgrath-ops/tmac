@@ -58,8 +58,14 @@ while ( have_posts() ) :
 					<p class="section__lede"><?php echo esc_html( get_the_excerpt() ); ?></p>
 				<?php endif; ?>
 
-				<?php the_content(); ?>
-
+				<?php
+				/*
+				 * What is included and what to bring come before the prose on
+				 * purpose: they are what someone decides on. The description,
+				 * the itinerary and the FAQ are what they read afterwards, and
+				 * they belong below the booking form rather than in front of it.
+				 */
+				?>
 				<?php if ( pt_field( $pt_id, 'includes' ) ) : ?>
 					<h2><?php esc_html_e( 'What is included', 'palmtreesurf' ); ?></h2>
 					<?php pt_experience_list( $pt_id, 'includes', 'checklist' ); ?>
@@ -69,6 +75,20 @@ while ( have_posts() ) :
 					<h2><?php esc_html_e( 'What to bring', 'palmtreesurf' ); ?></h2>
 					<?php pt_experience_list( $pt_id, 'bring', 'checklist' ); ?>
 				<?php endif; ?>
+
+				<div id="booking">
+					<?php
+					pt_booking_form(
+						array(
+							'experience' => $pt_id,
+							'title'      => __( 'Request this experience', 'palmtreesurf' ),
+							'location'   => 'experience-single',
+						)
+					);
+					?>
+				</div>
+
+				<?php the_content(); ?>
 
 				<?php if ( $pt_itinerary ) : ?>
 					<h2><?php esc_html_e( 'How the day runs', 'palmtreesurf' ); ?></h2>
@@ -94,18 +114,6 @@ while ( have_posts() ) :
 						<?php endforeach; ?>
 					</div>
 				<?php endif; ?>
-
-				<div id="booking">
-					<?php
-					pt_booking_form(
-						array(
-							'experience' => $pt_id,
-							'title'      => __( 'Request this experience', 'palmtreesurf' ),
-							'location'   => 'experience-single',
-						)
-					);
-					?>
-				</div>
 			</div>
 
 			<aside class="booking-card" aria-label="<?php esc_attr_e( 'Booking', 'palmtreesurf' ); ?>">

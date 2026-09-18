@@ -64,9 +64,20 @@ function pt_page_untouched( $page ) {
  * @return array<int, string>
  */
 function pt_placeholder_markers() {
+	/*
+	 * Every phrase the theme has ever seeded as placeholder copy, across all
+	 * releases. This list being incomplete is not cosmetic: a page whose
+	 * placeholder text is not recognised is treated as client-written and is
+	 * never refreshed, which is exactly why sites installed on 1.0 kept
+	 * showing "Tell your story here" long after the real About copy shipped.
+	 * Add to this list, never remove from it.
+	 */
 	return array(
+		'Tell your story here',
 		'Replace this section with your story',
 		'This page is a placeholder and should be rewritten',
+		'Replace this with your privacy policy',
+		'Questions before you book? Send us a message and we will reply within 24 hours.',
 	);
 }
 

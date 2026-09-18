@@ -12,8 +12,12 @@
  *   at that point the visitor has told us what they want.
  *
  * - Category (/experiences/category/surf-lessons/). The same hero and bar, then
- *   the term's own copy, the full result grid with facets, and the supporting
- *   sections that give the page something to rank on.
+ *   the results.
+ *
+ * Order matters here. Someone landing on a category page came to see what is
+ * available, so the results come first and the editorial copy — the intro, the
+ * highlights, the FAQ — sits underneath where it still earns its keep in search
+ * without pushing the bookable list below the fold.
  *
  * @package PalmTreeSurf
  */
@@ -31,7 +35,7 @@ $pt_filtered = ! $pt_is_tax && ( is_search() || ! empty( $_GET['experience_type'
 $pt_hub      = ! $pt_is_tax && ! $pt_filtered;
 $pt_search   = get_search_query();
 ?>
-<section class="page-hero<?php echo $pt_is_tax ? ' page-hero--term' : ''; ?>">
+<section class="page-hero page-hero--compact<?php echo $pt_is_tax ? ' page-hero--term' : ''; ?>">
 	<div class="page-hero__media" aria-hidden="true">
 		<?php
 		if ( $pt_is_tax ) {
@@ -51,7 +55,10 @@ $pt_search   = get_search_query();
 			<?php the_archive_title( '<h1 class="page-hero__title">', '</h1>' ); ?>
 
 			<?php if ( $pt_term && $pt_term->description ) : ?>
-				<div class="page-hero__lede"><?php echo wp_kses_post( wpautop( $pt_term->description ) ); ?></div>
+				<?php // One line here; the full description runs below the results. ?>
+				<p class="page-hero__lede">
+					<?php echo esc_html( wp_trim_words( wp_strip_all_tags( $pt_term->description ), 16 ) ); ?>
+				</p>
 			<?php endif; ?>
 		<?php elseif ( $pt_search ) : ?>
 			<h1 class="page-hero__title">
@@ -69,7 +76,7 @@ $pt_search   = get_search_query();
 		<?php else : ?>
 			<h1 class="page-hero__title"><?php esc_html_e( 'Experiences in Tamarindo', 'palmtreesurf' ); ?></h1>
 			<p class="page-hero__lede">
-				<?php esc_html_e( 'Surf lessons, fishing charters, boat tours and wildlife trips, run by people who live here. Pick a category below.', 'palmtreesurf' ); ?>
+				<?php esc_html_e( 'Surf lessons, fishing charters, boat tours and wildlife trips, run by people who live here.', 'palmtreesurf' ); ?>
 			</p>
 		<?php endif; ?>
 	</div>
@@ -87,95 +94,11 @@ $pt_search   = get_search_query();
 
 <?php if ( $pt_hub ) : ?>
 
-	<?php
-	$pt_types = get_terms(
-		array(
-			'taxonomy'   => 'experience_type',
-			'hide_empty' => true,
-			'orderby'    => 'name',
-		)
-	);
-	?>
-
-	<section class="tax-intro">
-		<div class="container tax-intro__inner">
-			<div class="tax-intro__prose prose">
-				<p>
-					<?php esc_html_e( 'Everything below runs within a few kilometres of Tamarindo beach. The surf breaks over sand rather than reef, which is why this became a teaching beach; the estuary behind the town sits inside a protected wildlife refuge; deep water is close enough that a fishing boat can be inshore or offshore without a long run; and the dry forest inland has the waterfalls.', 'palmtreesurf' ); ?>
-				</p>
-				<p>
-					<?php esc_html_e( 'Pick a category to see everything in it, or use the finder above if you already know your dates. If you are not sure what suits your group, say so when you message us — it is a normal question and we would rather answer it before you book than after.', 'palmtreesurf' ); ?>
-				</p>
-			</div>
-
-			<aside class="tax-know">
-				<h2 class="tax-know__title"><?php esc_html_e( 'Good to know', 'palmtreesurf' ); ?></h2>
-				<ul class="tax-know__list">
-					<li><?php esc_html_e( 'Book water activities for the morning — the wind builds through the day.', 'palmtreesurf' ); ?></li>
-					<li><?php esc_html_e( 'Water sits in the high twenties Celsius all year. No wetsuit needed, ever.', 'palmtreesurf' ); ?></li>
-					<li><?php esc_html_e( 'Nothing here needs prior experience unless its page says so.', 'palmtreesurf' ); ?></li>
-					<li><?php esc_html_e( 'Conditions decide. If a day is wrong for your group, we move you rather than run it.', 'palmtreesurf' ); ?></li>
-				</ul>
-			</aside>
-		</div>
-	</section>
-
-	<?php if ( $pt_types && ! is_wp_error( $pt_types ) ) : ?>
-		<div class="cat-sections">
-			<?php foreach ( $pt_types as $pt_type ) : ?>
-				<?php
-				get_template_part(
-					'template-parts/components/category',
-					'section',
-					array( 'term' => $pt_type )
-				);
-				?>
-			<?php endforeach; ?>
-		</div>
-	<?php else : ?>
-		<div class="container"><?php get_template_part( 'template-parts/content', 'none' ); ?></div>
-	<?php endif; ?>
+	<?php get_template_part( 'template-parts/components/experience-tiles' ); ?>
 
 <?php else : ?>
 
-	<?php if ( $pt_is_tax && ! empty( $pt_copy['intro'] ) ) : ?>
-		<section class="tax-intro">
-			<div class="container tax-intro__inner">
-				<div class="tax-intro__prose prose">
-					<?php foreach ( $pt_copy['intro'] as $pt_paragraph ) : ?>
-						<p><?php echo esc_html( $pt_paragraph ); ?></p>
-					<?php endforeach; ?>
-				</div>
-
-				<?php if ( ! empty( $pt_copy['know'] ) ) : ?>
-					<aside class="tax-know">
-						<h2 class="tax-know__title"><?php esc_html_e( 'Good to know', 'palmtreesurf' ); ?></h2>
-						<ul class="tax-know__list">
-							<?php foreach ( $pt_copy['know'] as $pt_point ) : ?>
-								<li><?php echo esc_html( $pt_point ); ?></li>
-							<?php endforeach; ?>
-						</ul>
-					</aside>
-				<?php endif; ?>
-			</div>
-		</section>
-	<?php endif; ?>
-
-	<?php if ( $pt_is_tax && ! empty( $pt_copy['highlights'] ) ) : ?>
-		<section class="section section--sand tax-highlights">
-			<div class="container">
-				<ul class="tax-highlights__list" data-reveal-group>
-					<?php foreach ( $pt_copy['highlights'] as $pt_highlight ) : ?>
-						<li class="tax-highlight" data-reveal>
-							<h3 class="tax-highlight__title"><?php echo esc_html( $pt_highlight[0] ); ?></h3>
-							<p class="tax-highlight__text"><?php echo esc_html( $pt_highlight[1] ); ?></p>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		</section>
-	<?php endif; ?>
-
+	<?php // The results, first. ?>
 	<div class="container" id="results">
 		<div class="listing">
 			<?php get_template_part( 'template-parts/components/facets' ); ?>
@@ -213,6 +136,54 @@ $pt_search   = get_search_query();
 		</div>
 	</div>
 
+	<?php if ( $pt_is_tax && ! empty( $pt_copy['highlights'] ) ) : ?>
+		<section class="section section--sand tax-highlights">
+			<div class="container">
+				<ul class="tax-highlights__list" data-reveal-group>
+					<?php foreach ( $pt_copy['highlights'] as $pt_highlight ) : ?>
+						<li class="tax-highlight" data-reveal>
+							<h2 class="tax-highlight__title"><?php echo esc_html( $pt_highlight[0] ); ?></h2>
+							<p class="tax-highlight__text"><?php echo esc_html( $pt_highlight[1] ); ?></p>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</div>
+		</section>
+	<?php endif; ?>
+
+	<?php if ( $pt_is_tax && ! empty( $pt_copy['intro'] ) ) : ?>
+		<section class="tax-intro">
+			<div class="container tax-intro__inner">
+				<div class="tax-intro__prose prose">
+					<h2 class="tax-intro__title">
+						<?php
+						printf(
+							/* translators: %s: category name. */
+							esc_html__( 'About %s in Tamarindo', 'palmtreesurf' ),
+							esc_html( $pt_term ? $pt_term->name : '' )
+						);
+						?>
+					</h2>
+
+					<?php foreach ( $pt_copy['intro'] as $pt_paragraph ) : ?>
+						<p><?php echo esc_html( $pt_paragraph ); ?></p>
+					<?php endforeach; ?>
+				</div>
+
+				<?php if ( ! empty( $pt_copy['know'] ) ) : ?>
+					<aside class="tax-know">
+						<h2 class="tax-know__title"><?php esc_html_e( 'Good to know', 'palmtreesurf' ); ?></h2>
+						<ul class="tax-know__list">
+							<?php foreach ( $pt_copy['know'] as $pt_point ) : ?>
+								<li><?php echo esc_html( $pt_point ); ?></li>
+							<?php endforeach; ?>
+						</ul>
+					</aside>
+				<?php endif; ?>
+			</div>
+		</section>
+	<?php endif; ?>
+
 	<?php if ( $pt_is_tax && ! empty( $pt_copy['faq'] ) ) : ?>
 		<section class="section tax-faq">
 			<div class="container container--narrow">
@@ -240,6 +211,31 @@ $pt_search   = get_search_query();
 <?php endif; ?>
 
 <?php if ( $pt_hub ) : ?>
+	<?php // Editorial copy for the hub, below the categories for the same reason. ?>
+	<section class="tax-intro">
+		<div class="container tax-intro__inner">
+			<div class="tax-intro__prose prose">
+				<h2 class="tax-intro__title"><?php esc_html_e( 'Why everything here is within a few kilometres', 'palmtreesurf' ); ?></h2>
+				<p>
+					<?php esc_html_e( 'Everything above runs within a few kilometres of Tamarindo beach. The surf breaks over sand rather than reef, which is why this became a teaching beach; the estuary behind the town sits inside a protected wildlife refuge; deep water is close enough that a fishing boat can be inshore or offshore without a long run; and the dry forest inland has the waterfalls.', 'palmtreesurf' ); ?>
+				</p>
+				<p>
+					<?php esc_html_e( 'If you are not sure what suits your group, say so when you message us — it is a normal question and we would rather answer it before you book than after.', 'palmtreesurf' ); ?>
+				</p>
+			</div>
+
+			<aside class="tax-know">
+				<h2 class="tax-know__title"><?php esc_html_e( 'Good to know', 'palmtreesurf' ); ?></h2>
+				<ul class="tax-know__list">
+					<li><?php esc_html_e( 'Book water activities for the morning — the wind builds through the day.', 'palmtreesurf' ); ?></li>
+					<li><?php esc_html_e( 'Water sits in the high twenties Celsius all year. No wetsuit needed, ever.', 'palmtreesurf' ); ?></li>
+					<li><?php esc_html_e( 'Nothing here needs prior experience unless its page says so.', 'palmtreesurf' ); ?></li>
+					<li><?php esc_html_e( 'Conditions decide. If a day is wrong for your group, we move you rather than run it.', 'palmtreesurf' ); ?></li>
+				</ul>
+			</aside>
+		</div>
+	</section>
+
 	<?php get_template_part( 'template-parts/home/faq' ); ?>
 <?php endif; ?>
 

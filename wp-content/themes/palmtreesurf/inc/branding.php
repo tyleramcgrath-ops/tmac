@@ -43,8 +43,17 @@ function pt_site_logo( $variant = 'auto' ) {
 		return get_custom_logo();
 	}
 
-	$light = pt_logo_url( 'logo-horizontal-reversed.png' );
-	$dark  = pt_logo_url( 'logo-horizontal.png' );
+	/*
+	 * The brand lockup is stacked: mark above a three-line wordmark. At a
+	 * height a nav bar can carry, that wordmark is a few pixels tall and
+	 * unreadable, so the header uses a horizontal lockup built from the same
+	 * artwork and the footer, which has the room, uses the stacked one.
+	 */
+	$stacked = 'stacked' === $variant;
+	$light   = pt_logo_url( $stacked ? 'logo-stacked-reversed.png' : 'logo-horizontal-reversed.png' );
+	$dark    = pt_logo_url( $stacked ? 'logo-stacked.png' : 'logo-horizontal.png' );
+	$width   = $stacked ? 353 : 774;
+	$height  = $stacked ? 320 : 160;
 
 	if ( ! $light || ! $dark ) {
 		// Fall back to the mark and wordmark, so the header is never empty.
@@ -64,26 +73,32 @@ function pt_site_logo( $variant = 'auto' ) {
 	);
 
 	// On a dark surface only the reversed mark is ever right.
-	if ( 'light' === $variant ) {
+	if ( 'light' === $variant || $stacked ) {
 		return sprintf(
-			'<a class="site-logo site-logo--image" href="%1$s" rel="home">'
-			. '<img class="site-logo__img" src="%2$s" alt="%3$s" width="638" height="160" loading="lazy" decoding="async" />'
+			'<a class="site-logo site-logo--image%5$s" href="%1$s" rel="home">'
+			. '<img class="site-logo__img" src="%2$s" alt="%3$s" width="%6$d" height="%7$d" loading="lazy" decoding="async" />'
 			. '</a>',
 			esc_url( home_url( '/' ) ),
 			esc_url( $light ),
-			esc_attr( $alt )
+			esc_attr( $alt ),
+			'',
+			$stacked ? ' site-logo--stacked' : '',
+			$width,
+			$height
 		);
 	}
 
 	return sprintf(
 		'<a class="site-logo site-logo--image" href="%1$s" rel="home">'
-		. '<img class="site-logo__img site-logo__img--light" src="%2$s" alt="%4$s" width="638" height="160" fetchpriority="high" decoding="async" />'
-		. '<img class="site-logo__img site-logo__img--dark" src="%3$s" alt="" aria-hidden="true" width="638" height="160" decoding="async" loading="lazy" />'
+		. '<img class="site-logo__img site-logo__img--light" src="%2$s" alt="%4$s" width="%5$d" height="%6$d" fetchpriority="high" decoding="async" />'
+		. '<img class="site-logo__img site-logo__img--dark" src="%3$s" alt="" aria-hidden="true" width="%5$d" height="%6$d" decoding="async" loading="lazy" />'
 		. '</a>',
 		esc_url( home_url( '/' ) ),
 		esc_url( $light ),
 		esc_url( $dark ),
-		esc_attr( $alt )
+		esc_attr( $alt ),
+		$width,
+		$height
 	);
 }
 

@@ -379,6 +379,88 @@
 		} );
 	}
 
+	/**
+	 * Filter the tiled experience grid in place.
+	 *
+	 * The chips are real links to the category pages, so this only intercepts
+	 * them when the grid is actually on the page. Without JavaScript they keep
+	 * working as links.
+	 */
+	function initTileFilter() {
+		var grid = document.querySelector( '[data-tiles]' );
+		var nav = document.querySelector( '[data-cat-nav]' );
+
+		if ( ! grid || ! nav ) {
+			return;
+		}
+
+		var tiles = Array.prototype.slice.call( grid.querySelectorAll( '[data-tile-cats]' ) );
+		var chips = Array.prototype.slice.call( nav.querySelectorAll( '[data-cat-link]' ) );
+		var hint = document.querySelector( '[data-tiles-hint]' );
+		var empty = document.querySelector( '[data-tiles-empty]' );
+		var clear = document.querySelector( '[data-tiles-clear]' );
+
+		function apply( slug ) {
+			var shown = 0;
+
+			tiles.forEach( function ( tile ) {
+				var cats = ( tile.getAttribute( 'data-tile-cats' ) || '' ).split( ' ' );
+				var show = 'all' === slug || cats.indexOf( slug ) !== -1;
+
+				tile.hidden = ! show;
+
+				if ( show ) {
+					shown++;
+				}
+			} );
+
+			chips.forEach( function ( chip ) {
+				chip.classList.toggle( 'is-current', chip.getAttribute( 'data-cat-link' ) === slug );
+			} );
+
+			if ( hint ) {
+				hint.hidden = 'all' === slug;
+			}
+
+			if ( empty ) {
+				empty.hidden = shown > 0;
+			}
+		}
+
+		chips.forEach( function ( chip ) {
+			chip.addEventListener( 'click', function ( event ) {
+				var slug = chip.getAttribute( 'data-cat-link' );
+
+				if ( ! slug ) {
+					return;
+				}
+
+				event.preventDefault();
+				apply( slug );
+
+				// Keep the choice in the URL without adding a history entry
+				// for every chip press.
+				if ( window.history && window.history.replaceState ) {
+					window.history.replaceState( null, '', 'all' === slug ? '#all' : '#' + slug );
+				}
+			} );
+		} );
+
+		if ( clear ) {
+			clear.addEventListener( 'click', function () {
+				apply( 'all' );
+			} );
+		}
+
+		// Honour a category in the URL on arrival, which is how the header nav
+		// and the footer links land here.
+		var hash = ( window.location.hash || '' ).replace( '#', '' );
+
+		if ( hash && hash !== 'all' ) {
+			apply( hash );
+		}
+	}
+
 	function boot() {
 		initHeader();
 		initMenu();
@@ -386,6 +468,7 @@
 		initLightbox();
 		initMap();
 		initCategoryNav();
+		initTileFilter();
 	}
 
 	if ( 'loading' === document.readyState ) {

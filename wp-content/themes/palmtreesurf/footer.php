@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="site-footer__col site-footer__col--brand">
 					<?php // Reversed mark: the footer is always deep ocean. ?>
-					<?php echo pt_site_logo( 'light' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in pt_site_logo(). ?>
+					<?php echo pt_site_logo( 'stacked' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in pt_site_logo(). ?>
 
 					<?php
 					$pt_statement = get_bloginfo( 'description' );

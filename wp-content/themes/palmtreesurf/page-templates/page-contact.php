@@ -25,8 +25,7 @@ while ( have_posts() ) :
 
 		<div class="container location__inner" style="padding-bottom:var(--pt-section-y)">
 			<div>
-				<div class="entry__content"><?php the_content(); ?></div>
-
+				<?php // The form first — it is what someone came here to use. ?>
 				<div id="booking">
 					<?php
 					pt_booking_form(
@@ -37,6 +36,8 @@ while ( have_posts() ) :
 					);
 					?>
 				</div>
+
+				<div class="entry__content" style="padding-top:var(--pt-space-xl)"><?php the_content(); ?></div>
 			</div>
 
 			<aside class="booking-card" aria-label="<?php esc_attr_e( 'Contact details', 'palmtreesurf' ); ?>">

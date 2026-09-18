@@ -342,3 +342,65 @@ same attachment IDs so nothing breaks.
 - No real guide portraits — the four guides render as brand panels.
 - The hero trust row and the finder's "Free cancellation 24h" line are claims
   about how you operate. **Confirm all of them**, under Customize.
+
+---
+
+## 11. Added in v1.8.0 — new logo, page order, tiled experiences
+
+### The logo you sent is now the logo
+
+The swatch label ("6 / MINIMAL") is cropped off, the cream card background is
+gone, and the artwork is delivered as transparent PNGs.
+
+Your lockup is **stacked** — mark above a three-line wordmark. At a height a
+navigation bar can carry, that wordmark would be a few pixels tall and
+unreadable, so there are two lockups built from your artwork:
+
+- **Header**: a horizontal version, mark left and the three lines right.
+- **Footer**: the full stacked lockup, where there is vertical room for it.
+
+Both in full colour and reversed-for-dark. The favicons and the wp-admin login
+screen use the mark on its own.
+
+### The About page — fixed, and why it was stuck
+
+It was still showing *"Tell your story here: who runs Palm Tree Surf…"*. The
+theme only rewrites a seeded page it can prove nobody has edited, and it
+recognises that by matching known placeholder phrases. **That phrase was not in
+the list**, so your page looked client-written and was skipped every update.
+The list now covers every placeholder the theme has ever shipped, and the About
+page picks up the full copy on this update.
+
+### Information first, reading material second
+
+Category and experience pages were front-loading editorial copy and pushing the
+bookable content down the page. Reordered:
+
+- **Category pages** — hero, finder, category bar, then **the results**. The
+  highlights, the longer description, the FAQ and the other categories all sit
+  below them. The hero lede is trimmed to one line and the hero itself is
+  shorter.
+- **Experience pages** — the excerpt, then **what is included and what to
+  bring**, then **the booking form**. The full description, the itinerary and
+  the FAQ follow underneath.
+- **Contact** — the form first, the practical notes after it.
+- **The hub** — the categories first, the editorial band and the FAQ after.
+
+Nothing was deleted. Everything that was there is still there, further down,
+where it still does its job for search.
+
+### Experiences tiled together
+
+`/experiences/` was one full-width section per category, which meant six screens
+of scrolling to see what you sell. It is now a single dense grid — four across
+on a wide screen, three on a tablet, two on a phone — so the whole offering is
+visible at once.
+
+The category chips now **filter that grid in place** rather than jumping you
+down the page. With JavaScript off they stay ordinary links to the category
+pages, so nothing breaks.
+
+### Article width
+
+The long-form pages were set to a 760px measure, which reads narrow on a desktop
+screen. Guides, FAQs and the article body now run to 880px.
