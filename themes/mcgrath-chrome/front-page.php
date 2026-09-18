@@ -19,7 +19,7 @@ get_header();
 	     dissolves leftward into the paper, so the headline sits on clean ground
 	     and the dashboard floats over open water. -->
 	<div class="heroPhoto" aria-hidden="true">
-		<?php mcg_plate( 'hero', '', '0% 12%', '115% auto' ); ?>
+		<?php mcg_plate( 'hero', '', '18% 4%', '118% auto' ); ?>
 		<span class="veil"></span>
 	</div>
 
