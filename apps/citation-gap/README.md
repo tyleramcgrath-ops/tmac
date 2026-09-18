@@ -67,6 +67,9 @@ The live site is deployed by the **`citation-gap-web`** project
 (`prj_eIRZinlGrCpHHzWt0OyiYqi3bePp`), linked to `tyleramcgrath-ops/tmac` with root directory
 `apps/citation-gap`, Node 22.x, Vercel Authentication off. A merge to `main` builds and deploys it.
 
+The live URL currently points at `dpl_EYdEnJNmiRKz7zuLtg4hLSiBdc8k`, the production build of
+`main` at `a7841b53`.
+
 **One manual step remains on every deploy, until a dashboard fix is done.**
 `citation-gap.vercel.app` is still registered to the older, unlinked `citation-gap` project, so a
 new production deploy lands on `citation-gap-web.vercel.app` and the live URL stays pointed at
