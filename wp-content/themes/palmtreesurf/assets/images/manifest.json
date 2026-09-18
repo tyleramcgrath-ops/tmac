@@ -1,14 +1,14 @@
 {
   "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
   "hero-home": {
-    "w": 1672,
-    "h": 756,
+    "w": 2400,
+    "h": 900,
     "ratio": "auto",
-    "role": "Homepage hero background, aerial Tamarindo coastline at sunset",
-    "alt": "Aerial view of Tamarindo beach and coastline at sunset",
-    "file": "tamarindo-aerial.jpg",
+    "role": "Homepage hero background",
+    "alt": "Surfer carrying a board along the beach at sunset in Tamarindo",
+    "file": "female-surfer-beach-hero.jpg",
     "option": "pt_hero_image",
-    "note": "Cropped from the approved board's aerial plate, above the logo and script overlay band. Clean photographic plate, no baked text."
+    "note": "Clean standalone hero photograph. No text, logo or UI."
   },
   "hero-video": {
     "w": 1920,
@@ -42,100 +42,137 @@
     "file": null
   },
   "split-1-primary": {
-    "w": 800,
-    "h": 1000,
-    "ratio": "4:5",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Split feature, tall image",
-    "alt": "Instructor teaching the pop-up stance on the sand",
-    "file": "instructor-popup-stance.jpg"
+    "alt": "Private surf coaching session on the sand",
+    "file": "private-surf-coaching.jpg"
   },
   "split-1-offset": {
-    "w": 440,
-    "h": 330,
-    "ratio": "4:3",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Split feature, overlapping inset",
-    "alt": "Surf and beach tent with boards and kayaks",
-    "file": "kayak-surf-tent.jpg"
+    "alt": "Snorkelling over a tropical reef",
+    "file": "snorkeling-tropical-underwater.jpg"
   },
   "split-2-primary": {
-    "w": 800,
-    "h": 1000,
-    "ratio": "4:5",
+    "w": 2400,
+    "h": 1600,
+    "ratio": "auto",
     "role": "Second split feature, tall image",
-    "alt": "Group lesson briefing on the sand",
-    "file": "group-instruction-sand.jpg"
+    "alt": "Catamaran under sail at sunset",
+    "file": "sunset-catamaran-tour.jpg"
   },
   "split-2-offset": {
-    "w": 440,
-    "h": 330,
-    "ratio": "4:3",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Second split feature, inset",
-    "alt": "",
-    "file": null
+    "alt": "ATV on a jungle track near a waterfall",
+    "file": "atv-waterfall-adventure.jpg"
   },
   "gallery-1": {
-    "w": 1200,
-    "h": 1200,
-    "ratio": "1:1",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "Surf lesson group on the beach",
+    "alt": "Group surf lesson on the beach at Tamarindo",
     "file": "group-lesson-beach.jpg"
   },
   "gallery-2": {
-    "w": 1200,
-    "h": 1200,
-    "ratio": "1:1",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Gallery tile",
     "alt": "Kayak and boards at the surf tent",
     "file": "kayak-surf-tent.jpg"
   },
   "gallery-3": {
-    "w": 1200,
-    "h": 1200,
-    "ratio": "1:1",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "Instructor demonstrating the pop-up",
+    "alt": "Instructor demonstrating the pop-up stance",
     "file": "instructor-popup-stance.jpg"
   },
   "gallery-4": {
-    "w": 1200,
-    "h": 1200,
-    "ratio": "1:1",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "Group briefing before paddling out",
+    "alt": "Group briefing on the sand before paddling out",
     "file": "group-instruction-sand.jpg"
   },
   "gallery-5": {
-    "w": 1200,
-    "h": 1200,
-    "ratio": "1:1",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "",
-    "file": null
+    "alt": "Sea turtle gliding over the reef",
+    "file": "sea-turtle-wildlife-underwater.jpg"
   },
   "gallery-6": {
-    "w": 1200,
-    "h": 1200,
-    "ratio": "1:1",
+    "w": 1600,
+    "h": 1067,
+    "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "",
-    "file": null
+    "alt": "Beachfront yoga at sunrise",
+    "file": "beachfront-yoga-wellness.jpg"
   },
   "cta-bg": {
-    "w": 1920,
-    "h": 900,
+    "w": 2400,
+    "h": 1036,
     "ratio": "auto",
-    "role": "Final call to action background",
-    "alt": "",
-    "file": null
+    "role": "Lifestyle closing band background",
+    "alt": "Palms and surfboards above the ocean at sunset",
+    "file": "sunset-palm-ocean-lifestyle-banner.jpg",
+    "note": "Clean standalone banner photograph."
   },
   "story-banner": {
-    "w": 707,
-    "h": 565,
+    "w": 2400,
+    "h": 893,
     "ratio": "auto",
     "role": "Story band and experiences listing hero",
-    "alt": "Surfer carrying a board at the water's edge at sunset",
-    "file": "surfer-sunset.jpg",
-    "note": "Largest text-free rectangle available from the approved hero board. Low resolution: request a clean full-width plate to replace."
+    "alt": "Aerial view of the Tamarindo coastline",
+    "file": "tamarindo-aerial-coastal-banner.jpg",
+    "note": "Clean standalone banner photograph."
+  },
+  "instructor-1": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 1",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "instructor-2": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 2",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "instructor-3": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 3",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "instructor-4": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 4",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
   }
 }

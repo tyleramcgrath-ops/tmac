@@ -36,8 +36,11 @@ if ( ! $pt_query->have_posts() ) {
 
 		<ul class="instructors__grid" data-reveal-group>
 			<?php
+			$pt_index = 0;
+
 			while ( $pt_query->have_posts() ) :
 				$pt_query->the_post();
+				++$pt_index;
 				$pt_role = pt_field( get_the_ID(), 'role' );
 				$pt_bio  = pt_field( get_the_ID(), 'bio_short' );
 				$pt_cert = pt_field( get_the_ID(), 'certifications' );
@@ -47,7 +50,8 @@ if ( ! $pt_query->have_posts() ) {
 						<?php if ( has_post_thumbnail() ) : ?>
 							<?php the_post_thumbnail( 'pt-portrait', array( 'loading' => 'lazy' ) ); ?>
 						<?php else : ?>
-							<?php pt_image( 'split-1-primary' ); ?>
+							<?php // Own slot per guide: never repeat one photo down the row. ?>
+							<?php pt_image( 'instructor-' . min( 4, $pt_index ) ); ?>
 						<?php endif; ?>
 					</div>
 					<div class="instructor__body">
