@@ -50,6 +50,8 @@ while ( have_posts() ) :
 			</div>
 		</header>
 
+		<?php get_template_part( 'template-parts/components/breadcrumbs' ); ?>
+
 		<div class="container exp-layout">
 			<div class="exp-content container--narrow">
 				<?php if ( has_excerpt() ) : ?>
@@ -133,6 +135,14 @@ while ( have_posts() ) :
 					</dl>
 				<?php endif; ?>
 
+				<?php
+				get_template_part(
+					'template-parts/components/availability',
+					null,
+					array( 'post_id' => $pt_id )
+				);
+				?>
+
 				<a class="btn btn--primary btn--block" href="#booking" data-cta-location="experience-sticky-card">
 					<?php esc_html_e( 'Check availability', 'palmtreesurf' ); ?>
 				</a>
@@ -170,6 +180,8 @@ while ( have_posts() ) :
 			</a>
 		</div>
 	</article>
+
+	<?php get_template_part( 'template-parts/components/related' ); ?>
 	<?php
 endwhile;
 

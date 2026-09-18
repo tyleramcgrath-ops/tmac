@@ -46,6 +46,8 @@ $pt_includes = array(
 	'inc/booking.php',          // Booking CTAs and plugin handoff.
 	'inc/forms.php',            // Contact enquiry fallback.
 	'inc/schema.php',           // JSON-LD structured data.
+	'inc/seo.php',              // Meta tags and SEO-plugin cooperation.
+	'inc/seed-copy.php',        // Starter long-form copy.
 	'inc/setup-content.php',    // First-run pages, menus and sample content.
 );
 

@@ -1075,3 +1075,85 @@ body.menu-open { overflow: hidden; }
 
 	.reveal-ready [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* ---------------------------------------------------------- Breadcrumbs */
+
+.breadcrumbs { padding-block: var(--pt-space-sm); font-size: var(--pt-small); }
+
+.breadcrumbs__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--pt-space-xs);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	color: var(--pt-ink-500);
+}
+
+.breadcrumbs__item + .breadcrumbs__item::before {
+	content: "/";
+	margin-right: var(--pt-space-xs);
+	color: var(--pt-sand-200);
+}
+
+.breadcrumbs a { color: var(--pt-ink-500); text-decoration: none; }
+.breadcrumbs a:hover { color: var(--pt-ocean-500); text-decoration: underline; }
+
+/* -------------------------------------------------- Availability chips */
+
+.availability { margin-bottom: var(--pt-space-md); }
+
+.availability__label {
+	display: flex;
+	align-items: center;
+	gap: var(--pt-space-xs);
+	margin: 0 0 var(--pt-space-sm);
+	max-width: none;
+	font-size: var(--pt-eyebrow);
+	font-weight: var(--pt-weight-medium);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--pt-ink-500);
+}
+
+.availability__dot {
+	width: 8px;
+	height: 8px;
+	border-radius: var(--pt-radius-pill);
+	background: var(--pt-ocean-500);
+	flex: none;
+}
+
+.availability__dates {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--pt-space-xs);
+	margin: 0 0 var(--pt-space-xs);
+	padding: 0;
+	list-style: none;
+}
+
+.availability__date a {
+	display: grid;
+	justify-items: center;
+	gap: 1px;
+	min-width: 56px;
+	padding: var(--pt-space-xs);
+	border: 1.5px solid var(--pt-sand-200);
+	border-radius: var(--pt-radius-sm);
+	color: var(--pt-ink-900);
+	text-decoration: none;
+	line-height: 1.2;
+	transition: border-color var(--pt-dur) var(--pt-ease), background var(--pt-dur) var(--pt-ease);
+}
+
+.availability__date a:hover {
+	border-color: var(--pt-ocean-500);
+	background: var(--pt-sand-100);
+}
+
+.availability__day { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--pt-ink-500); }
+.availability__num { font-family: var(--pt-font-display); font-size: var(--pt-body-lg); font-weight: var(--pt-weight-heading); }
+.availability__mon { font-size: 0.7rem; text-transform: uppercase; color: var(--pt-ink-500); }
+.availability__left { font-size: 0.65rem; font-weight: var(--pt-weight-medium); color: var(--pt-sunset-600); }
+.availability__note { margin: 0; font-size: var(--pt-small); color: var(--pt-ink-500); }

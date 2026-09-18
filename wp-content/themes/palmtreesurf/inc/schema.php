@@ -240,8 +240,16 @@ function pt_breadcrumb_schema() {
  * Print the structured data for the current view.
  */
 function pt_print_schema() {
-	pt_print_jsonld( pt_local_business_schema() );
-	pt_print_jsonld( pt_breadcrumb_schema() );
+	/*
+	 * AIOSEO, Yoast and Rank Math all emit LocalBusiness and BreadcrumbList.
+	 * Emitting a second copy competes with theirs, so those are theirs when a
+	 * plugin is active. Product/Offer and FAQPage for a custom post type are
+	 * not covered by the free tiers, so the theme keeps those either way.
+	 */
+	if ( ! function_exists( 'pt_seo_plugin_active' ) || ! pt_seo_plugin_active() ) {
+		pt_print_jsonld( pt_local_business_schema() );
+		pt_print_jsonld( pt_breadcrumb_schema() );
+	}
 
 	if ( is_singular( PT_EXPERIENCE_POST_TYPE ) ) {
 		$post_id = get_queried_object_id();

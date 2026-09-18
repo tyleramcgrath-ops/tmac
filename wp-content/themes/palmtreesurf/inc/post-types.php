@@ -87,7 +87,7 @@ function pt_register_post_types() {
 		)
 	);
 }
-add_action( 'init', 'pt_register_post_types' );
+add_action( 'init', 'pt_register_post_types', 10 );
 
 /**
  * Register the experience taxonomies.
@@ -135,7 +135,7 @@ function pt_register_taxonomies() {
 		)
 	);
 }
-add_action( 'init', 'pt_register_taxonomies' );
+add_action( 'init', 'pt_register_taxonomies', 9 );
 
 /**
  * Starter taxonomy terms.
@@ -189,11 +189,29 @@ function pt_seed_terms() {
  * Register everything and flush permalinks once on activation.
  */
 function pt_on_activation() {
-	pt_register_post_types();
 	pt_register_taxonomies();
+	pt_register_post_types();
 	pt_seed_terms();
+
+	// Defer the flush to the next init, once every rule is definitely registered.
+	update_option( 'pt_needs_flush', 1 );
 	flush_rewrite_rules();
 }
+
+/**
+ * Flush once on the first request after activation.
+ *
+ * Runs late on init so both taxonomies and post types have registered.
+ */
+function pt_maybe_flush() {
+	if ( ! get_option( 'pt_needs_flush' ) ) {
+		return;
+	}
+
+	delete_option( 'pt_needs_flush' );
+	flush_rewrite_rules();
+}
+add_action( 'init', 'pt_maybe_flush', 999 );
 add_action( 'after_switch_theme', 'pt_on_activation' );
 
 /**

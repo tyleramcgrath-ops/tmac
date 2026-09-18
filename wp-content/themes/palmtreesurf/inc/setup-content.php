@@ -260,11 +260,7 @@ function pt_seed_content() {
 	);
 
 	$blog_id    = pt_seed_page( __( 'Journal', 'palmtreesurf' ), 'journal' );
-	$about_id   = pt_seed_page(
-		__( 'About', 'palmtreesurf' ),
-		'about',
-		'<!-- wp:paragraph --><p>' . esc_html__( 'Tell your story here: who runs Palm Tree Surf, how long you have been on this coast, and why guests should trust you with their first wave.', 'palmtreesurf' ) . '</p><!-- /wp:paragraph -->'
-	);
+	$about_id   = pt_seed_page( __( 'About', 'palmtreesurf' ), 'about', pt_seed_about_body() );
 	$gallery_id = pt_seed_page( __( 'Gallery', 'palmtreesurf' ), 'gallery', '', 'page-templates/page-gallery.php' );
 	$contact_id = pt_seed_page(
 		__( 'Contact', 'palmtreesurf' ),
@@ -300,12 +296,19 @@ function pt_seed_content() {
 			continue;
 		}
 
+		$slug   = sanitize_title( $item['title'] );
+		$bodies = pt_seed_bodies();
+		$body   = isset( $bodies[ $slug ] )
+			? $bodies[ $slug ]
+			: '<!-- wp:paragraph --><p>' . esc_html( isset( $item['excerpt'] ) ? $item['excerpt'] : '' ) . '</p><!-- /wp:paragraph -->';
+
 		$post_id = wp_insert_post(
 			array(
 				'post_type'    => PT_EXPERIENCE_POST_TYPE,
 				'post_title'   => $item['title'],
+				'post_name'    => $slug,
 				'post_excerpt' => isset( $item['excerpt'] ) ? $item['excerpt'] : '',
-				'post_content' => '<!-- wp:paragraph --><p>' . esc_html( isset( $item['excerpt'] ) ? $item['excerpt'] : '' ) . '</p><!-- /wp:paragraph -->',
+				'post_content' => $body,
 				'post_status'  => 'publish',
 				'menu_order'   => $index,
 			)

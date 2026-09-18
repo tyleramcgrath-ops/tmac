@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 get_header();
 ?>
+<?php get_template_part( 'template-parts/components/breadcrumbs' ); ?>
 <div class="container">
 	<header class="page-header">
 		<?php if ( is_tax() ) : ?>

@@ -8,6 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'entry entry--page' ); ?>>
+	<?php get_template_part( 'template-parts/components/breadcrumbs' ); ?>
 	<header class="page-header">
 		<div class="container">
 			<?php the_title( '<h1 class="page-title">', '</h1>' ); ?>
