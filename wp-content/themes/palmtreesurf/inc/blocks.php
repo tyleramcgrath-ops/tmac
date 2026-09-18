@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * The values mirror the custom properties in assets/css/main.css, so a colour
  * changed there must be changed here too.
  */
-function pts_editor_tokens() {
+function pt_editor_tokens() {
 	add_theme_support(
 		'editor-color-palette',
 		array(
@@ -76,12 +76,12 @@ function pts_editor_tokens() {
 		)
 	);
 }
-add_action( 'after_setup_theme', 'pts_editor_tokens' );
+add_action( 'after_setup_theme', 'pt_editor_tokens' );
 
 /**
  * Register a pattern category and the starter marketing patterns.
  */
-function pts_register_patterns() {
+function pt_register_patterns() {
 	if ( ! function_exists( 'register_block_pattern_category' ) ) {
 		return;
 	}
@@ -122,8 +122,8 @@ function pts_register_patterns() {
 		array(
 			'title'      => __( 'Booking enquiry form', 'palmtreesurf' ),
 			'categories' => array( 'palmtreesurf' ),
-			'content'    => '<!-- wp:shortcode -->[pts_enquiry_form]<!-- /wp:shortcode -->',
+			'content'    => '<!-- wp:shortcode -->[pt_enquiry_form]<!-- /wp:shortcode -->',
 		)
 	);
 }
-add_action( 'init', 'pts_register_patterns' );
+add_action( 'init', 'pt_register_patterns' );

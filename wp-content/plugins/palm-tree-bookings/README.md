@@ -20,11 +20,36 @@ theme itself stays plugin-free.
 - **Attributes bookings.** Records which page and which CTA section produced the booking, plus UTM
   parameters, so you can see what actually converts.
 
+## Scheduling and availability
+
+Each experience carries its own schedule, edited on the experience itself under
+**Availability & Schedule**:
+
+- **Days it runs** and **start times** (one per line, 24-hour). Leave times empty for an all-day
+  excursion with no set start.
+- **Guests per slot** — capacity at one start time.
+- **Minimum notice** — slots closer than this stop being offered.
+- **Bookable how far ahead** — the booking horizon.
+- **Season** — a month-day range that may cross the new year.
+- **Blackout dates** — closures, holidays, maintenance.
+
+The box previews the next open dates so a misconfiguration is visible before anyone tries to book.
+
+**Bookings consume capacity.** The booking form only offers dates and times that are actually open,
+and a slot disappears once it fills. Cancelling a booking releases its seats. Capacity is re-checked
+server-side at submission against live counts, so two people filling the form at the same moment
+cannot both take the final seat — the second gets told the slot just went.
+
+**Bookings → Schedule** shows what is actually happening day by day: time, experience, customer,
+guest count and status, for the next 7 / 14 / 30 / 90 days. Cancelled bookings drop out.
+
+The picker is progressive enhancement. With JavaScript off the time select stays empty, the booking
+is still accepted, and staff confirm the time by reply.
+
 ## What it does not do yet
 
-**No live availability calendar and no online card payment.** Customers request; you confirm. If you
-need a customer to see open slots and pay a deposit online, this needs a gateway add-on (below) or an
-established booking plugin instead.
+**No online card payment** until a gateway is added (see below). Customers request and you confirm;
+availability and capacity are enforced, but money is collected by you.
 
 ## Spam handling
 
@@ -65,6 +90,7 @@ live:
 
 | Piece | Status |
 | --- | --- |
+| Availability, capacity and schedules | Working |
 | Quote and deposit per booking | Calculated on every booking now |
 | Payment ledger, idempotent on gateway reference | Working; manual payments log through it |
 | Payment status, separate from booking status | Working |
@@ -128,6 +154,7 @@ interface is Stripe-specific.
 | --- | --- | --- |
 | `ptb_field_groups` | filter | Add, remove or reorder customer-facing fields |
 | `ptb_experience_post_type` | filter | Point the experience picker at a different post type |
+| `ptb_blocking_statuses` | filter | Which booking statuses hold a seat |
 | `ptb_quote` | filter | Replace quote maths with real pricing rules |
 | `ptb_deposit` | filter | Replace deposit maths |
 | `ptb_currency` | filter | Override the currency |

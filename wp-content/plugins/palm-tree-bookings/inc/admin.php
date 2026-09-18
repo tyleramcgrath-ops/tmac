@@ -374,7 +374,12 @@ function ptb_column_content( $column, $post_id ) {
 			break;
 
 		case 'ptb_date':
-			echo esc_html( ptb_get( $post_id, 'date_primary' ) );
+			$slot = ptb_get( $post_id, 'slot_time' );
+			printf(
+				'%1$s%2$s',
+				esc_html( ptb_get( $post_id, 'date_primary' ) ),
+				$slot ? '<br /><span class="description">' . esc_html( ptb_format_time( $slot ) ) . '</span>' : ''
+			);
 			break;
 
 		case 'ptb_party':

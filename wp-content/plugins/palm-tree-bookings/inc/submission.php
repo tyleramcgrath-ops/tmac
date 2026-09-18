@@ -67,6 +67,23 @@ function ptb_handle_submission() {
 		$errors[] = __( 'Your preferred date is in the past.', 'palm-tree-bookings' );
 	}
 
+	/*
+	 * Capacity check. Runs last, against live counts, so two people filling the
+	 * form at once cannot both take the final seat.
+	 */
+	$experience_id = (int) $values['experience'];
+	$party         = max( 1, (int) $values['party_adults'] ) + (int) $values['party_children'];
+
+	if ( $experience_id && $values['date_primary'] && function_exists( 'ptb_slots_for_date' ) ) {
+		$slots = ptb_slots_for_date( $experience_id, $values['date_primary'] );
+
+		if ( $slots ) {
+			if ( ! ptb_slot_has_room( $experience_id, $values['date_primary'], $values['slot_time'], $party ) ) {
+				$errors[] = __( 'That time just filled up or is no longer available. Please pick another.', 'palm-tree-bookings' );
+			}
+		}
+	}
+
 	if ( $errors ) {
 		ptb_redirect_with_state( $redirect, $values, $errors );
 	}

@@ -41,9 +41,9 @@ defined( 'ABSPATH' ) || exit;
 					);
 				}
 
-				$pts_tagline = get_bloginfo( 'description', 'display' );
-				if ( $pts_tagline ) {
-					printf( '<p class="site-description">%s</p>', esc_html( $pts_tagline ) );
+				$pt_tagline = get_bloginfo( 'description', 'display' );
+				if ( $pt_tagline ) {
+					printf( '<p class="site-description">%s</p>', esc_html( $pt_tagline ) );
 				}
 				?>
 			</div>
@@ -63,17 +63,17 @@ defined( 'ABSPATH' ) || exit;
 							'menu_class'     => 'nav',
 							'container'      => false,
 							'depth'          => 2,
-							'walker'         => new PTS_Nav_Walker(),
+							'walker'         => new PT_Nav_Walker(),
 						)
 					);
 				}
 
-				$pts_cta_label = pts_mod( 'pts_header_cta_text' );
-				if ( $pts_cta_label ) {
+				$pt_cta_label = pt_mod( 'pt_header_cta_text' );
+				if ( $pt_cta_label ) {
 					printf(
 						'<a class="btn btn--primary site-nav__cta" href="%1$s">%2$s</a>',
-						esc_url( pts_booking_url() ),
-						esc_html( $pts_cta_label )
+						esc_url( pt_booking_url() ),
+						esc_html( $pt_cta_label )
 					);
 				}
 				?>

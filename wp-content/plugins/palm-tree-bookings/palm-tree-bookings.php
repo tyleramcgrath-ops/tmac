@@ -32,6 +32,8 @@ require_once PTB_DIR . 'inc/admin.php';
 require_once PTB_DIR . 'inc/export.php';
 require_once PTB_DIR . 'inc/settings.php';
 require_once PTB_DIR . 'inc/payments.php';
+require_once PTB_DIR . 'inc/availability.php';
+require_once PTB_DIR . 'inc/schedule-admin.php';
 
 /**
  * Register the post type on activation so its rewrite rules exist immediately.

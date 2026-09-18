@@ -15,45 +15,45 @@ defined( 'ABSPATH' ) || exit;
 				<h2 class="site-footer__heading"><?php esc_html_e( 'Get in touch', 'palmtreesurf' ); ?></h2>
 
 				<?php
-				$pts_address = pts_mod( 'pts_address' );
-				if ( $pts_address ) {
-					printf( '<address class="site-footer__address">%s</address>', nl2br( esc_html( $pts_address ) ) );
+				$pt_address = pt_mod( 'pt_address' );
+				if ( $pt_address ) {
+					printf( '<address class="site-footer__address">%s</address>', nl2br( esc_html( $pt_address ) ) );
 				}
 
-				$pts_phone = pts_mod( 'pts_phone' );
-				if ( $pts_phone ) {
+				$pt_phone = pt_mod( 'pt_phone' );
+				if ( $pt_phone ) {
 					printf(
 						'<p><a href="tel:%1$s">%2$s</a></p>',
-						esc_attr( preg_replace( '/[^\d+]/', '', $pts_phone ) ),
-						esc_html( $pts_phone )
+						esc_attr( preg_replace( '/[^\d+]/', '', $pt_phone ) ),
+						esc_html( $pt_phone )
 					);
 				}
 
-				$pts_email = pts_mod( 'pts_email' );
-				if ( $pts_email && is_email( $pts_email ) ) {
+				$pt_email = pt_mod( 'pt_email' );
+				if ( $pt_email && is_email( $pt_email ) ) {
 					printf(
 						'<p><a href="%1$s">%2$s</a></p>',
-						esc_url( 'mailto:' . $pts_email ),
-						esc_html( $pts_email )
+						esc_url( 'mailto:' . $pt_email ),
+						esc_html( $pt_email )
 					);
 				}
 
-				$pts_hours = pts_mod( 'pts_hours' );
-				if ( $pts_hours ) {
-					printf( '<p class="site-footer__hours">%s</p>', nl2br( esc_html( $pts_hours ) ) );
+				$pt_hours = pt_mod( 'pt_hours' );
+				if ( $pt_hours ) {
+					printf( '<p class="site-footer__hours">%s</p>', nl2br( esc_html( $pt_hours ) ) );
 				}
 
-				$pts_map = pts_mod( 'pts_map_url' );
-				if ( $pts_map ) {
+				$pt_map = pt_mod( 'pt_map_url' );
+				if ( $pt_map ) {
 					printf(
 						'<p><a href="%1$s" rel="noopener" target="_blank">%2$s</a></p>',
-						esc_url( $pts_map ),
+						esc_url( $pt_map ),
 						esc_html__( 'Find us on the map', 'palmtreesurf' )
 					);
 				}
 
-				pts_whatsapp_link();
-				pts_social_links();
+				pt_whatsapp_link();
+				pt_social_links();
 				?>
 			</div>
 
@@ -82,9 +82,9 @@ defined( 'ABSPATH' ) || exit;
 		<div class="site-footer__bar">
 			<div class="container">
 				<?php
-				$pts_footer_text = pts_mod( 'pts_footer_text' );
-				if ( $pts_footer_text ) {
-					printf( '<p class="site-footer__text">%s</p>', esc_html( $pts_footer_text ) );
+				$pt_footer_text = pt_mod( 'pt_footer_text' );
+				if ( $pt_footer_text ) {
+					printf( '<p class="site-footer__text">%s</p>', esc_html( $pt_footer_text ) );
 				}
 
 				printf(

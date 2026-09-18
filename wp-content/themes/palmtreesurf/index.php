@@ -29,7 +29,7 @@ get_header();
 				?>
 			</div>
 
-			<?php pts_pagination(); ?>
+			<?php pt_pagination(); ?>
 
 		<?php else : ?>
 			<?php get_template_part( 'template-parts/content', 'none' ); ?>

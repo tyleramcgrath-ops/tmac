@@ -32,6 +32,11 @@ function ptb_field_groups() {
 					'type'     => 'date',
 					'required' => true,
 				),
+				'slot_time'      => array(
+					'label'    => __( 'Start time', 'palm-tree-bookings' ),
+					'type'     => 'slot',
+					'hint'     => __( 'Times shown are the ones still open on your chosen date.', 'palm-tree-bookings' ),
+				),
 				'date_alt'       => array(
 					'label' => __( 'Alternative date', 'palm-tree-bookings' ),
 					'type'  => 'date',
@@ -291,6 +296,10 @@ function ptb_sanitize_value( $raw, $field ) {
 			$value = sanitize_text_field( $raw );
 			return preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ? $value : '';
 
+		case 'slot':
+			$value = sanitize_text_field( $raw );
+			return preg_match( '/^\d{2}:\d{2}$/', $value ) ? $value : '';
+
 		case 'select':
 			$value   = sanitize_text_field( $raw );
 			$options = isset( $field['options'] ) ? $field['options'] : array();
@@ -323,6 +332,10 @@ function ptb_display_value( $key, $value ) {
 
 	if ( 'select' === $field['type'] && isset( $field['options'][ $value ] ) ) {
 		return $field['options'][ $value ];
+	}
+
+	if ( 'slot' === $field['type'] && $value ) {
+		return function_exists( 'ptb_format_time' ) ? ptb_format_time( $value ) : $value;
 	}
 
 	if ( 'experience' === $field['type'] && is_numeric( $value ) ) {

@@ -16,39 +16,39 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return array<string, array{label: string, type: string, required: bool, sanitize: string}>
  */
-function pts_enquiry_fields() {
+function pt_enquiry_fields() {
 	return array(
-		'pts_name'    => array(
+		'pt_name'    => array(
 			'label'    => __( 'Your name', 'palmtreesurf' ),
 			'type'     => 'text',
 			'required' => true,
 			'sanitize' => 'sanitize_text_field',
 		),
-		'pts_email'   => array(
+		'pt_email'   => array(
 			'label'    => __( 'Email', 'palmtreesurf' ),
 			'type'     => 'email',
 			'required' => true,
 			'sanitize' => 'sanitize_email',
 		),
-		'pts_phone'   => array(
+		'pt_phone'   => array(
 			'label'    => __( 'Phone or WhatsApp', 'palmtreesurf' ),
 			'type'     => 'tel',
 			'required' => false,
 			'sanitize' => 'sanitize_text_field',
 		),
-		'pts_date'    => array(
+		'pt_date'    => array(
 			'label'    => __( 'Preferred date', 'palmtreesurf' ),
 			'type'     => 'date',
 			'required' => false,
 			'sanitize' => 'sanitize_text_field',
 		),
-		'pts_guests'  => array(
+		'pt_guests'  => array(
 			'label'    => __( 'Number of people', 'palmtreesurf' ),
 			'type'     => 'number',
 			'required' => false,
 			'sanitize' => 'absint',
 		),
-		'pts_message' => array(
+		'pt_message' => array(
 			'label'    => __( 'Tell us what you are looking for', 'palmtreesurf' ),
 			'type'     => 'textarea',
 			'required' => true,
@@ -62,35 +62,35 @@ function pts_enquiry_fields() {
  *
  * Redirects back to the form with a status flag so a refresh never resubmits.
  */
-function pts_handle_enquiry() {
-	if ( ! isset( $_POST['pts_enquiry_submit'] ) ) {
+function pt_handle_enquiry() {
+	if ( ! isset( $_POST['pt_enquiry_submit'] ) ) {
 		return;
 	}
 
 	$redirect = wp_get_referer() ? wp_get_referer() : home_url( '/' );
 
-	$nonce = isset( $_POST['pts_enquiry_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['pts_enquiry_nonce'] ) ) : '';
-	if ( ! wp_verify_nonce( $nonce, 'pts_enquiry' ) ) {
+	$nonce = isset( $_POST['pt_enquiry_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['pt_enquiry_nonce'] ) ) : '';
+	if ( ! wp_verify_nonce( $nonce, 'pt_enquiry' ) ) {
 		wp_safe_redirect( add_query_arg( 'enquiry', 'error', $redirect ) );
 		exit;
 	}
 
 	// Honeypot: real visitors never fill this in.
-	if ( ! empty( $_POST['pts_website'] ) ) {
+	if ( ! empty( $_POST['pt_website'] ) ) {
 		wp_safe_redirect( add_query_arg( 'enquiry', 'sent', $redirect ) );
 		exit;
 	}
 
 	// Throttle repeat submissions from the same address.
 	$ip  = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-	$key = 'pts_enquiry_' . md5( $ip );
+	$key = 'pt_enquiry_' . md5( $ip );
 	if ( $ip && get_transient( $key ) ) {
 		wp_safe_redirect( add_query_arg( 'enquiry', 'throttled', $redirect ) );
 		exit;
 	}
 
 	$values = array();
-	foreach ( pts_enquiry_fields() as $name => $field ) {
+	foreach ( pt_enquiry_fields() as $name => $field ) {
 		$raw             = isset( $_POST[ $name ] ) ? wp_unslash( $_POST[ $name ] ) : '';
 		$values[ $name ] = call_user_func( $field['sanitize'], $raw );
 
@@ -100,20 +100,20 @@ function pts_handle_enquiry() {
 		}
 	}
 
-	if ( ! is_email( $values['pts_email'] ) ) {
+	if ( ! is_email( $values['pt_email'] ) ) {
 		wp_safe_redirect( add_query_arg( 'enquiry', 'invalid', $redirect ) );
 		exit;
 	}
 
-	$package = isset( $_POST['pts_package'] ) ? sanitize_text_field( wp_unslash( $_POST['pts_package'] ) ) : '';
+	$package = isset( $_POST['pt_package'] ) ? sanitize_text_field( wp_unslash( $_POST['pt_package'] ) ) : '';
 
-	$to = pts_mod( 'pts_email' );
+	$to = pt_mod( 'pt_email' );
 	if ( ! $to || ! is_email( $to ) ) {
 		$to = get_option( 'admin_email' );
 	}
 
 	$lines = array();
-	foreach ( pts_enquiry_fields() as $name => $field ) {
+	foreach ( pt_enquiry_fields() as $name => $field ) {
 		if ( '' === (string) $values[ $name ] ) {
 			continue;
 		}
@@ -127,7 +127,7 @@ function pts_handle_enquiry() {
 	$subject = sprintf(
 		/* translators: %s: visitor name. */
 		__( 'Booking enquiry from %s', 'palmtreesurf' ),
-		$values['pts_name']
+		$values['pt_name']
 	);
 
 	$sent = wp_mail(
@@ -136,7 +136,7 @@ function pts_handle_enquiry() {
 		implode( "\n", $lines ),
 		array(
 			'Content-Type: text/plain; charset=UTF-8',
-			'Reply-To: ' . $values['pts_name'] . ' <' . $values['pts_email'] . '>',
+			'Reply-To: ' . $values['pt_name'] . ' <' . $values['pt_email'] . '>',
 		)
 	);
 
@@ -147,14 +147,14 @@ function pts_handle_enquiry() {
 	wp_safe_redirect( add_query_arg( 'enquiry', $sent ? 'sent' : 'error', $redirect ) . '#enquiry' );
 	exit;
 }
-add_action( 'template_redirect', 'pts_handle_enquiry' );
+add_action( 'template_redirect', 'pt_handle_enquiry' );
 
 /**
  * Status message for the current request, if any.
  *
  * @return array{type: string, text: string}|null
  */
-function pts_enquiry_notice() {
+function pt_enquiry_notice() {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only status flag set by our own redirect.
 	$status = isset( $_GET['enquiry'] ) ? sanitize_key( wp_unslash( $_GET['enquiry'] ) ) : '';
 
@@ -181,14 +181,14 @@ function pts_enquiry_notice() {
  * @param array $atts Shortcode attributes.
  * @return string
  */
-function pts_enquiry_form( $atts = array() ) {
+function pt_enquiry_form( $atts = array() ) {
 	$atts = shortcode_atts(
 		array(
 			'package' => '',
 			'title'   => __( 'Book your session', 'palmtreesurf' ),
 		),
 		$atts,
-		'pts_enquiry_form'
+		'pt_enquiry_form'
 	);
 
 	ob_start();
@@ -198,7 +198,7 @@ function pts_enquiry_form( $atts = array() ) {
 			<h2 class="enquiry__title"><?php echo esc_html( $atts['title'] ); ?></h2>
 		<?php endif; ?>
 
-		<?php $notice = pts_enquiry_notice(); ?>
+		<?php $notice = pt_enquiry_notice(); ?>
 		<?php if ( $notice ) : ?>
 			<p class="notice notice--<?php echo esc_attr( $notice['type'] ); ?>" role="status">
 				<?php echo esc_html( $notice['text'] ); ?>
@@ -206,15 +206,15 @@ function pts_enquiry_form( $atts = array() ) {
 		<?php endif; ?>
 
 		<form class="enquiry__form" method="post" action="">
-			<?php wp_nonce_field( 'pts_enquiry', 'pts_enquiry_nonce' ); ?>
-			<input type="hidden" name="pts_package" value="<?php echo esc_attr( $atts['package'] ); ?>" />
+			<?php wp_nonce_field( 'pt_enquiry', 'pt_enquiry_nonce' ); ?>
+			<input type="hidden" name="pt_package" value="<?php echo esc_attr( $atts['package'] ); ?>" />
 
 			<p class="enquiry__hp" aria-hidden="true">
 				<label for="pts-website"><?php esc_html_e( 'Leave this field empty', 'palmtreesurf' ); ?></label>
-				<input type="text" id="pts-website" name="pts_website" tabindex="-1" autocomplete="off" />
+				<input type="text" id="pts-website" name="pt_website" tabindex="-1" autocomplete="off" />
 			</p>
 
-			<?php foreach ( pts_enquiry_fields() as $name => $field ) : ?>
+			<?php foreach ( pt_enquiry_fields() as $name => $field ) : ?>
 				<p class="enquiry__field enquiry__field--<?php echo esc_attr( $field['type'] ); ?>">
 					<label for="<?php echo esc_attr( $name ); ?>">
 						<?php echo esc_html( $field['label'] ); ?>
@@ -231,7 +231,7 @@ function pts_enquiry_form( $atts = array() ) {
 			<?php endforeach; ?>
 
 			<p class="enquiry__actions">
-				<button class="btn btn--primary" type="submit" name="pts_enquiry_submit" value="1">
+				<button class="btn btn--primary" type="submit" name="pt_enquiry_submit" value="1">
 					<?php esc_html_e( 'Send enquiry', 'palmtreesurf' ); ?>
 				</button>
 			</p>
@@ -240,4 +240,4 @@ function pts_enquiry_form( $atts = array() ) {
 	<?php
 	return (string) ob_get_clean();
 }
-add_shortcode( 'pts_enquiry_form', 'pts_enquiry_form' );
+add_shortcode( 'pt_enquiry_form', 'pt_enquiry_form' );

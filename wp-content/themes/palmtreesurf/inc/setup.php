@@ -10,8 +10,8 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Register theme features with WordPress.
  */
-function pts_setup() {
-	load_theme_textdomain( 'palmtreesurf', PTS_DIR . 'languages' );
+function pt_setup() {
+	load_theme_textdomain( 'palmtreesurf', PT_DIR . 'languages' );
 
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'title-tag' );
@@ -50,20 +50,20 @@ function pts_setup() {
 	// 3:2 card used by package grids and the blog index.
 	add_image_size( 'pts-card', 800, 533, true );
 }
-add_action( 'after_setup_theme', 'pts_setup' );
+add_action( 'after_setup_theme', 'pt_setup' );
 
 /**
  * Set the content width used by oEmbeds and wide images.
  */
-function pts_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'pts_content_width', 760 );
+function pt_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'pt_content_width', 760 );
 }
-add_action( 'after_setup_theme', 'pts_content_width', 0 );
+add_action( 'after_setup_theme', 'pt_content_width', 0 );
 
 /**
  * Register the widget areas used by the footer and the blog sidebar.
  */
-function pts_widgets_init() {
+function pt_widgets_init() {
 	register_sidebar(
 		array(
 			'name'          => __( 'Blog Sidebar', 'palmtreesurf' ),
@@ -88,4 +88,4 @@ function pts_widgets_init() {
 		)
 	);
 }
-add_action( 'widgets_init', 'pts_widgets_init' );
+add_action( 'widgets_init', 'pt_widgets_init' );

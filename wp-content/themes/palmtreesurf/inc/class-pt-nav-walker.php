@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Renders the primary menu with BEM classes and accessible submenus.
  */
-class PTS_Nav_Walker extends Walker_Nav_Menu {
+class PT_Nav_Walker extends Walker_Nav_Menu {
 
 	/**
 	 * Open a submenu list.

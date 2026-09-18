@@ -18,8 +18,8 @@ get_header();
 		<?php get_search_form(); ?>
 
 		<p>
-			<a class="btn btn--primary" href="<?php echo esc_url( get_post_type_archive_link( PTS_PACKAGE_POST_TYPE ) ); ?>">
-				<?php esc_html_e( 'Browse packages', 'palmtreesurf' ); ?>
+			<a class="btn btn--primary" href="<?php echo esc_url( get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ) ); ?>">
+				<?php esc_html_e( 'Browse experiences', 'palmtreesurf' ); ?>
 			</a>
 		</p>
 	</section>

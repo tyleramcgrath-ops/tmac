@@ -1,6 +1,10 @@
 <?php
 /**
- * Surf packages: the bookable lessons, tours and custom experiences.
+ * Content model: experiences, testimonials, instructors.
+ *
+ * Experiences are the whole product: surf lessons, fishing charters, boat
+ * tours, wildlife trips and custom trips. Category is a taxonomy rather than a
+ * hardcoded list, so adding a vertical later is a term, not a release.
  *
  * @package PalmTreeSurf
  */
@@ -8,63 +12,111 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Register the package post type and its taxonomies.
+ * Register the post types.
  */
-function pts_register_post_types() {
+function pt_register_post_types() {
 	register_post_type(
-		PTS_PACKAGE_POST_TYPE,
+		PT_EXPERIENCE_POST_TYPE,
 		array(
 			'labels'        => array(
-				'name'               => __( 'Surf Packages', 'palmtreesurf' ),
-				'singular_name'      => __( 'Surf Package', 'palmtreesurf' ),
-				'add_new_item'       => __( 'Add New Package', 'palmtreesurf' ),
-				'edit_item'          => __( 'Edit Package', 'palmtreesurf' ),
-				'new_item'           => __( 'New Package', 'palmtreesurf' ),
-				'view_item'          => __( 'View Package', 'palmtreesurf' ),
-				'search_items'       => __( 'Search Packages', 'palmtreesurf' ),
-				'not_found'          => __( 'No packages yet.', 'palmtreesurf' ),
-				'not_found_in_trash' => __( 'No packages in the trash.', 'palmtreesurf' ),
-				'all_items'          => __( 'All Packages', 'palmtreesurf' ),
-				'menu_name'          => __( 'Packages', 'palmtreesurf' ),
+				'name'               => __( 'Experiences', 'palmtreesurf' ),
+				'singular_name'      => __( 'Experience', 'palmtreesurf' ),
+				'add_new_item'       => __( 'Add New Experience', 'palmtreesurf' ),
+				'edit_item'          => __( 'Edit Experience', 'palmtreesurf' ),
+				'new_item'           => __( 'New Experience', 'palmtreesurf' ),
+				'view_item'          => __( 'View Experience', 'palmtreesurf' ),
+				'search_items'       => __( 'Search Experiences', 'palmtreesurf' ),
+				'not_found'          => __( 'No experiences yet.', 'palmtreesurf' ),
+				'not_found_in_trash' => __( 'No experiences in the trash.', 'palmtreesurf' ),
+				'all_items'          => __( 'All Experiences', 'palmtreesurf' ),
+				'menu_name'          => __( 'Experiences', 'palmtreesurf' ),
 			),
 			'public'        => true,
-			'has_archive'   => 'packages',
+			'has_archive'   => 'experiences',
 			'rewrite'       => array(
-				'slug'       => 'packages',
+				'slug'       => 'experiences',
 				'with_front' => false,
 			),
 			'menu_icon'     => 'dashicons-palmtree',
 			'menu_position' => 20,
 			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ),
 			'show_in_rest'  => true,
-			'rest_base'     => 'packages',
+			'rest_base'     => 'experiences',
 		)
 	);
 
+	register_post_type(
+		'testimonial',
+		array(
+			'labels'        => array(
+				'name'          => __( 'Testimonials', 'palmtreesurf' ),
+				'singular_name' => __( 'Testimonial', 'palmtreesurf' ),
+				'add_new_item'  => __( 'Add New Testimonial', 'palmtreesurf' ),
+				'edit_item'     => __( 'Edit Testimonial', 'palmtreesurf' ),
+				'all_items'     => __( 'Testimonials', 'palmtreesurf' ),
+				'menu_name'     => __( 'Testimonials', 'palmtreesurf' ),
+			),
+			'public'        => false,
+			'show_ui'       => true,
+			'show_in_menu'  => true,
+			'menu_icon'     => 'dashicons-format-quote',
+			'menu_position' => 21,
+			'supports'      => array( 'title', 'page-attributes' ),
+			'show_in_rest'  => true,
+		)
+	);
+
+	register_post_type(
+		'instructor',
+		array(
+			'labels'        => array(
+				'name'          => __( 'Instructors', 'palmtreesurf' ),
+				'singular_name' => __( 'Instructor', 'palmtreesurf' ),
+				'add_new_item'  => __( 'Add New Instructor', 'palmtreesurf' ),
+				'edit_item'     => __( 'Edit Instructor', 'palmtreesurf' ),
+				'all_items'     => __( 'Instructors', 'palmtreesurf' ),
+				'menu_name'     => __( 'Instructors', 'palmtreesurf' ),
+			),
+			'public'        => false,
+			'show_ui'       => true,
+			'show_in_menu'  => true,
+			'menu_icon'     => 'dashicons-groups',
+			'menu_position' => 22,
+			'supports'      => array( 'title', 'thumbnail', 'page-attributes' ),
+			'show_in_rest'  => true,
+		)
+	);
+}
+add_action( 'init', 'pt_register_post_types' );
+
+/**
+ * Register the experience taxonomies.
+ */
+function pt_register_taxonomies() {
 	register_taxonomy(
-		'pts_package_type',
-		PTS_PACKAGE_POST_TYPE,
+		'experience_type',
+		PT_EXPERIENCE_POST_TYPE,
 		array(
 			'labels'            => array(
-				'name'          => __( 'Package Types', 'palmtreesurf' ),
-				'singular_name' => __( 'Package Type', 'palmtreesurf' ),
-				'add_new_item'  => __( 'Add New Package Type', 'palmtreesurf' ),
-				'menu_name'     => __( 'Types', 'palmtreesurf' ),
+				'name'          => __( 'Categories', 'palmtreesurf' ),
+				'singular_name' => __( 'Category', 'palmtreesurf' ),
+				'add_new_item'  => __( 'Add New Category', 'palmtreesurf' ),
+				'menu_name'     => __( 'Categories', 'palmtreesurf' ),
 			),
 			'public'            => true,
 			'hierarchical'      => true,
 			'show_admin_column' => true,
 			'show_in_rest'      => true,
 			'rewrite'           => array(
-				'slug'       => 'package-type',
+				'slug'       => 'experiences/category',
 				'with_front' => false,
 			),
 		)
 	);
 
 	register_taxonomy(
-		'pts_skill_level',
-		PTS_PACKAGE_POST_TYPE,
+		'skill_level',
+		PT_EXPERIENCE_POST_TYPE,
 		array(
 			'labels'            => array(
 				'name'          => __( 'Skill Levels', 'palmtreesurf' ),
@@ -77,39 +129,52 @@ function pts_register_post_types() {
 			'show_admin_column' => true,
 			'show_in_rest'      => true,
 			'rewrite'           => array(
-				'slug'       => 'skill-level',
+				'slug'       => 'experiences/level',
 				'with_front' => false,
 			),
 		)
 	);
 }
-add_action( 'init', 'pts_register_post_types' );
+add_action( 'init', 'pt_register_taxonomies' );
 
 /**
- * Seed the starter taxonomy terms the first time the theme is activated.
+ * Starter taxonomy terms.
  *
- * Only ever runs once, and never overwrites terms the client has edited.
+ * Deliberately broader than surf. Food delivery, nightlife and transportation
+ * are out of scope for this build, so they are not seeded — but nothing here
+ * prevents adding them later as terms or as their own post type.
+ *
+ * @return array<string, array<int, string>>
  */
-function pts_seed_terms() {
-	if ( get_option( 'pts_terms_seeded' ) ) {
-		return;
-	}
-
-	$seed = array(
-		'pts_package_type' => array(
+function pt_seed_terms_map() {
+	return array(
+		'experience_type' => array(
 			__( 'Surf Lessons', 'palmtreesurf' ),
-			__( 'Ocean Tours', 'palmtreesurf' ),
-			__( 'Custom Experiences', 'palmtreesurf' ),
+			__( 'Fishing Charters', 'palmtreesurf' ),
+			__( 'Boat Tours', 'palmtreesurf' ),
+			__( 'Wildlife & Nature', 'palmtreesurf' ),
+			__( 'Adventure', 'palmtreesurf' ),
+			__( 'Private & Custom', 'palmtreesurf' ),
 		),
-		'pts_skill_level'  => array(
+		'skill_level'     => array(
+			__( 'All Levels', 'palmtreesurf' ),
+			__( 'First Timer', 'palmtreesurf' ),
 			__( 'Beginner', 'palmtreesurf' ),
 			__( 'Intermediate', 'palmtreesurf' ),
 			__( 'Advanced', 'palmtreesurf' ),
-			__( 'All Levels', 'palmtreesurf' ),
 		),
 	);
+}
 
-	foreach ( $seed as $taxonomy => $terms ) {
+/**
+ * Seed the starter terms once, and never overwrite client edits after that.
+ */
+function pt_seed_terms() {
+	if ( get_option( 'pt_terms_seeded' ) ) {
+		return;
+	}
+
+	foreach ( pt_seed_terms_map() as $taxonomy => $terms ) {
 		foreach ( $terms as $term ) {
 			if ( ! term_exists( $term, $taxonomy ) ) {
 				wp_insert_term( $term, $taxonomy );
@@ -117,23 +182,24 @@ function pts_seed_terms() {
 		}
 	}
 
-	update_option( 'pts_terms_seeded', 1 );
+	update_option( 'pt_terms_seeded', 1 );
 }
 
 /**
- * Flush rewrite rules once on activation so /packages/ resolves immediately.
+ * Register everything and flush permalinks once on activation.
  */
-function pts_on_activation() {
-	pts_register_post_types();
-	pts_seed_terms();
+function pt_on_activation() {
+	pt_register_post_types();
+	pt_register_taxonomies();
+	pt_seed_terms();
 	flush_rewrite_rules();
 }
-add_action( 'after_switch_theme', 'pts_on_activation' );
+add_action( 'after_switch_theme', 'pt_on_activation' );
 
 /**
- * Leave the permalink table clean for the next theme.
+ * Leave the rewrite table clean for the next theme.
  */
-function pts_on_deactivation() {
+function pt_on_deactivation() {
 	flush_rewrite_rules();
 }
-add_action( 'switch_theme', 'pts_on_deactivation' );
+add_action( 'switch_theme', 'pt_on_deactivation' );

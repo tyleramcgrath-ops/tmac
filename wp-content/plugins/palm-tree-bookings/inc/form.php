@@ -70,6 +70,19 @@ function ptb_render_field( $key, $field, $values = array() ) {
 			ptb_render_experience_field( $id, $name, $value, $required );
 			break;
 
+		case 'slot':
+			/*
+			 * Populated by form.js once an experience and date are chosen. With
+			 * JavaScript off it stays a plain empty select and the server still
+			 * accepts the booking, then staff confirm the time by reply.
+			 */
+			printf(
+				'<select %1$s class="ptb-input" data-ptb-slots><option value="">%2$s</option></select>',
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				esc_html__( 'Choose an experience and date first', 'palm-tree-bookings' )
+			);
+			break;
+
 		case 'checkbox':
 			printf(
 				'<label class="ptb-check"><input type="checkbox" id="%1$s" name="%2$s" value="1"%3$s /> <span>%4$s</span></label>',
@@ -291,5 +304,18 @@ function ptb_query_param( $key ) {
 function ptb_enqueue() {
 	wp_enqueue_style( 'ptb-form', PTB_URL . 'assets/css/form.css', array(), PTB_VERSION );
 	wp_enqueue_script( 'ptb-form', PTB_URL . 'assets/js/form.js', array(), PTB_VERSION, true );
+
+	wp_localize_script(
+		'ptb-form',
+		'ptbAvailability',
+		array(
+			'endpoint' => rest_url( 'ptb/v1/availability' ),
+			'loading'  => __( 'Checking availability…', 'palm-tree-bookings' ),
+			'none'     => __( 'No times left on that date', 'palm-tree-bookings' ),
+			'choose'   => __( 'Choose a time', 'palm-tree-bookings' ),
+			'prompt'   => __( 'Choose an experience and date first', 'palm-tree-bookings' ),
+			'left'     => __( '%1$s — %2$d left', 'palm-tree-bookings' ),
+		)
+	);
 }
 add_action( 'wp_enqueue_scripts', 'ptb_enqueue' );

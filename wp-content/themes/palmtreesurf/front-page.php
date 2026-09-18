@@ -30,9 +30,9 @@ get_template_part( 'template-parts/section', 'hero' );
 <?php endif; ?>
 
 <?php
-$pts_packages = new WP_Query(
+$pt_experiences = new WP_Query(
 	array(
-		'post_type'           => PTS_PACKAGE_POST_TYPE,
+		'post_type'           => PT_EXPERIENCE_POST_TYPE,
 		'posts_per_page'      => 6,
 		'orderby'             => array(
 			'menu_order' => 'ASC',
@@ -43,7 +43,7 @@ $pts_packages = new WP_Query(
 	)
 );
 
-if ( $pts_packages->have_posts() ) :
+if ( $pt_experiences->have_posts() ) :
 	?>
 	<section class="section section--packages">
 		<div class="container">
@@ -53,16 +53,16 @@ if ( $pts_packages->have_posts() ) :
 
 			<div class="package-grid">
 				<?php
-				while ( $pts_packages->have_posts() ) :
-					$pts_packages->the_post();
-					get_template_part( 'template-parts/card', 'package' );
+				while ( $pt_experiences->have_posts() ) :
+					$pt_experiences->the_post();
+					get_template_part( 'template-parts/components/card', 'experience' );
 				endwhile;
 				?>
 			</div>
 
 			<p class="section__more">
-				<a class="btn" href="<?php echo esc_url( get_post_type_archive_link( PTS_PACKAGE_POST_TYPE ) ); ?>">
-					<?php esc_html_e( 'See all packages', 'palmtreesurf' ); ?>
+				<a class="btn" href="<?php echo esc_url( get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ) ); ?>">
+					<?php esc_html_e( 'See all experiences', 'palmtreesurf' ); ?>
 				</a>
 			</p>
 		</div>
@@ -74,7 +74,7 @@ endif;
 
 <section class="section section--enquiry">
 	<div class="container container--narrow">
-		<?php echo pts_enquiry_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside the template. ?>
+		<?php echo pt_enquiry_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside the template. ?>
 	</div>
 </section>
 

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * @param array $classes Existing body classes.
  * @return array
  */
-function pts_body_classes( $classes ) {
+function pt_body_classes( $classes ) {
 	if ( ! is_singular() ) {
 		$classes[] = 'hfeed';
 	}
@@ -32,60 +32,60 @@ function pts_body_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'pts_body_classes' );
+add_filter( 'body_class', 'pt_body_classes' );
 
 /**
  * Print the pingback URL for singular views that accept pings.
  */
-function pts_pingback_header() {
+function pt_pingback_header() {
 	if ( is_singular() && pings_open() ) {
 		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
 	}
 }
-add_action( 'wp_head', 'pts_pingback_header' );
+add_action( 'wp_head', 'pt_pingback_header' );
 
 /**
  * Use the theme excerpt length on archives.
  *
  * @return int
  */
-function pts_excerpt_length() {
+function pt_excerpt_length() {
 	return 28;
 }
-add_filter( 'excerpt_length', 'pts_excerpt_length' );
+add_filter( 'excerpt_length', 'pt_excerpt_length' );
 
 /**
  * Replace the default excerpt ellipsis.
  *
  * @return string
  */
-function pts_excerpt_more() {
+function pt_excerpt_more() {
 	return '&hellip;';
 }
-add_filter( 'excerpt_more', 'pts_excerpt_more' );
+add_filter( 'excerpt_more', 'pt_excerpt_more' );
 
 /**
  * Show packages on the packages archive without pagination gaps.
  *
  * @param WP_Query $query Query being prepared.
  */
-function pts_adjust_queries( $query ) {
+function pt_adjust_queries( $query ) {
 	if ( is_admin() || ! $query->is_main_query() ) {
 		return;
 	}
 
-	if ( $query->is_post_type_archive( PTS_PACKAGE_POST_TYPE ) || $query->is_tax( array( 'pts_package_type', 'pts_skill_level' ) ) ) {
+	if ( $query->is_post_type_archive( PT_EXPERIENCE_POST_TYPE ) || $query->is_tax( array( 'experience_type', 'skill_level' ) ) ) {
 		$query->set( 'posts_per_page', 12 );
 		$query->set( 'orderby', array( 'menu_order' => 'ASC', 'title' => 'ASC' ) );
 	}
 }
-add_action( 'pre_get_posts', 'pts_adjust_queries' );
+add_action( 'pre_get_posts', 'pt_adjust_queries' );
 
 /**
  * Print the Google Analytics tag built from the configured measurement ID.
  */
-function pts_print_analytics() {
-	$ga_id = pts_mod( 'pts_ga_id' );
+function pt_print_analytics() {
+	$ga_id = pt_mod( 'pt_ga_id' );
 
 	if ( ! $ga_id || ! preg_match( '/^G-[A-Z0-9]+$/i', $ga_id ) ) {
 		return;
@@ -100,13 +100,13 @@ function pts_print_analytics() {
 		wp_json_encode( $ga_id )
 	);
 }
-add_action( 'wp_head', 'pts_print_analytics', 20 );
+add_action( 'wp_head', 'pt_print_analytics', 20 );
 
 /**
  * Print the Meta Pixel tag built from the configured pixel ID.
  */
-function pts_print_pixel() {
-	$pixel_id = preg_replace( '/\D/', '', pts_mod( 'pts_pixel_id' ) );
+function pt_print_pixel() {
+	$pixel_id = preg_replace( '/\D/', '', pt_mod( 'pt_pixel_id' ) );
 
 	if ( ! $pixel_id ) {
 		return;
@@ -117,31 +117,31 @@ function pts_print_pixel() {
 		wp_json_encode( $pixel_id )
 	);
 }
-add_action( 'wp_head', 'pts_print_pixel', 21 );
+add_action( 'wp_head', 'pt_print_pixel', 21 );
 
 /**
  * Print the administrator-authored header scripts.
  *
  * The value is stored only by users with unfiltered_html (see
- * pts_sanitize_scripts) and is deliberately printed verbatim.
+ * pt_sanitize_scripts) and is deliberately printed verbatim.
  */
-function pts_print_head_scripts() {
-	$scripts = pts_mod( 'pts_head_scripts' );
+function pt_print_head_scripts() {
+	$scripts = pt_mod( 'pt_head_scripts' );
 
 	if ( $scripts ) {
 		echo $scripts; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Raw markup saved by an unfiltered_html user by design.
 	}
 }
-add_action( 'wp_head', 'pts_print_head_scripts', 99 );
+add_action( 'wp_head', 'pt_print_head_scripts', 99 );
 
 /**
  * Print the administrator-authored footer scripts.
  */
-function pts_print_footer_scripts() {
-	$scripts = pts_mod( 'pts_footer_scripts' );
+function pt_print_footer_scripts() {
+	$scripts = pt_mod( 'pt_footer_scripts' );
 
 	if ( $scripts ) {
 		echo $scripts; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Raw markup saved by an unfiltered_html user by design.
 	}
 }
-add_action( 'wp_footer', 'pts_print_footer_scripts', 99 );
+add_action( 'wp_footer', 'pt_print_footer_scripts', 99 );

@@ -28,49 +28,49 @@ while ( have_posts() ) :
 					<?php the_content(); ?>
 				</div>
 
-				<?php echo pts_enquiry_form( array( 'title' => __( 'Send us a message', 'palmtreesurf' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside the template. ?>
+				<?php echo pt_enquiry_form( array( 'title' => __( 'Send us a message', 'palmtreesurf' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside the template. ?>
 			</div>
 
 			<aside class="layout__sidebar contact-details">
 				<?php
-				$pts_address = pts_mod( 'pts_address' );
-				if ( $pts_address ) {
+				$pt_address = pt_mod( 'pt_address' );
+				if ( $pt_address ) {
 					printf(
 						'<h2>%1$s</h2><address>%2$s</address>',
 						esc_html__( 'Where to find us', 'palmtreesurf' ),
-						nl2br( esc_html( $pts_address ) )
+						nl2br( esc_html( $pt_address ) )
 					);
 				}
 
-				$pts_phone = pts_mod( 'pts_phone' );
-				if ( $pts_phone ) {
+				$pt_phone = pt_mod( 'pt_phone' );
+				if ( $pt_phone ) {
 					printf(
 						'<p><a href="tel:%1$s">%2$s</a></p>',
-						esc_attr( preg_replace( '/[^\d+]/', '', $pts_phone ) ),
-						esc_html( $pts_phone )
+						esc_attr( preg_replace( '/[^\d+]/', '', $pt_phone ) ),
+						esc_html( $pt_phone )
 					);
 				}
 
-				$pts_email = pts_mod( 'pts_email' );
-				if ( $pts_email && is_email( $pts_email ) ) {
+				$pt_email = pt_mod( 'pt_email' );
+				if ( $pt_email && is_email( $pt_email ) ) {
 					printf(
 						'<p><a href="%1$s">%2$s</a></p>',
-						esc_url( 'mailto:' . $pts_email ),
-						esc_html( $pts_email )
+						esc_url( 'mailto:' . $pt_email ),
+						esc_html( $pt_email )
 					);
 				}
 
-				$pts_hours = pts_mod( 'pts_hours' );
-				if ( $pts_hours ) {
+				$pt_hours = pt_mod( 'pt_hours' );
+				if ( $pt_hours ) {
 					printf(
 						'<h2>%1$s</h2><p>%2$s</p>',
 						esc_html__( 'Hours', 'palmtreesurf' ),
-						nl2br( esc_html( $pts_hours ) )
+						nl2br( esc_html( $pt_hours ) )
 					);
 				}
 
-				pts_whatsapp_link();
-				pts_social_links();
+				pt_whatsapp_link();
+				pt_social_links();
 				?>
 			</aside>
 		</div>

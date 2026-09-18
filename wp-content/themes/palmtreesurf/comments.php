@@ -16,13 +16,13 @@ if ( post_password_required() ) {
 	<?php if ( have_comments() ) : ?>
 		<h2 class="comments__title">
 			<?php
-			$pts_count = get_comments_number();
+			$pt_count = get_comments_number();
 			printf(
 				esc_html(
 					/* translators: %s: comment count. */
-					_n( '%s comment', '%s comments', $pts_count, 'palmtreesurf' )
+					_n( '%s comment', '%s comments', $pt_count, 'palmtreesurf' )
 				),
-				esc_html( number_format_i18n( $pts_count ) )
+				esc_html( number_format_i18n( $pt_count ) )
 			);
 			?>
 		</h2>

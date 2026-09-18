@@ -15,30 +15,30 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return array<string, string>
  */
-function pts_defaults() {
+function pt_defaults() {
 	return array(
-		'pts_phone'           => '',
-		'pts_whatsapp'        => '',
-		'pts_email'           => '',
-		'pts_address'         => __( 'Tamarindo, Guanacaste, Costa Rica', 'palmtreesurf' ),
-		'pts_hours'           => '',
-		'pts_map_url'         => '',
-		'pts_instagram'       => '',
-		'pts_facebook'        => '',
-		'pts_tripadvisor'     => '',
-		'pts_youtube'         => '',
-		'pts_booking_url'     => '',
-		'pts_header_cta_text' => __( 'Book Now', 'palmtreesurf' ),
-		'pts_hero_eyebrow'    => '',
-		'pts_hero_heading'    => '',
-		'pts_hero_text'       => '',
-		'pts_hero_cta_text'   => __( 'Book Your Adventure', 'palmtreesurf' ),
-		'pts_hero_cta_url'    => '',
-		'pts_footer_text'     => '',
-		'pts_ga_id'           => '',
-		'pts_pixel_id'        => '',
-		'pts_head_scripts'    => '',
-		'pts_footer_scripts'  => '',
+		'pt_phone'           => '',
+		'pt_whatsapp'        => '',
+		'pt_email'           => '',
+		'pt_address'         => __( 'Tamarindo, Guanacaste, Costa Rica', 'palmtreesurf' ),
+		'pt_hours'           => '',
+		'pt_map_url'         => '',
+		'pt_instagram'       => '',
+		'pt_facebook'        => '',
+		'pt_tripadvisor'     => '',
+		'pt_youtube'         => '',
+		'pt_booking_url'     => '',
+		'pt_header_cta_text' => __( 'Book Now', 'palmtreesurf' ),
+		'pt_hero_eyebrow'    => '',
+		'pt_hero_heading'    => '',
+		'pt_hero_text'       => '',
+		'pt_hero_cta_text'   => __( 'Book Your Adventure', 'palmtreesurf' ),
+		'pt_hero_cta_url'    => '',
+		'pt_footer_text'     => '',
+		'pt_ga_id'           => '',
+		'pt_pixel_id'        => '',
+		'pt_head_scripts'    => '',
+		'pt_footer_scripts'  => '',
 	);
 }
 
@@ -48,8 +48,8 @@ function pts_defaults() {
  * @param string $key Theme mod name.
  * @return string
  */
-function pts_mod( $key ) {
-	$defaults = pts_defaults();
+function pt_mod( $key ) {
+	$defaults = pt_defaults();
 	$default  = isset( $defaults[ $key ] ) ? $defaults[ $key ] : '';
 
 	return (string) get_theme_mod( $key, $default );
@@ -60,7 +60,7 @@ function pts_mod( $key ) {
  *
  * @return bool
  */
-function pts_can_edit_scripts() {
+function pt_can_edit_scripts() {
 	return current_user_can( 'unfiltered_html' );
 }
 
@@ -69,12 +69,12 @@ function pts_can_edit_scripts() {
  *
  * @param WP_Customize_Manager $wp_customize Customizer instance.
  */
-function pts_customize_register( $wp_customize ) {
+function pt_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogname' )->transport        = 'postMessage';
 	$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
 
 	$wp_customize->add_panel(
-		'pts_panel',
+		'pt_panel',
 		array(
 			'title'    => __( 'Palm Tree Surf', 'palmtreesurf' ),
 			'priority' => 30,
@@ -86,55 +86,55 @@ function pts_customize_register( $wp_customize ) {
 	 * dozen lines of add_setting/add_control boilerplate.
 	 */
 	$sections = array(
-		'pts_contact'  => array(
+		'pt_contact'  => array(
 			'title'    => __( 'Contact Details', 'palmtreesurf' ),
 			'controls' => array(
-				'pts_phone'    => array( __( 'Phone number', 'palmtreesurf' ), 'text' ),
-				'pts_whatsapp' => array( __( 'WhatsApp number', 'palmtreesurf' ), 'text', __( 'Digits and country code only, e.g. 50688887777.', 'palmtreesurf' ) ),
-				'pts_email'    => array( __( 'Email address', 'palmtreesurf' ), 'email' ),
-				'pts_address'  => array( __( 'Address', 'palmtreesurf' ), 'textarea' ),
-				'pts_hours'    => array( __( 'Opening hours', 'palmtreesurf' ), 'textarea' ),
-				'pts_map_url'  => array( __( 'Map link', 'palmtreesurf' ), 'url' ),
+				'pt_phone'    => array( __( 'Phone number', 'palmtreesurf' ), 'text' ),
+				'pt_whatsapp' => array( __( 'WhatsApp number', 'palmtreesurf' ), 'text', __( 'Digits and country code only, e.g. 50688887777.', 'palmtreesurf' ) ),
+				'pt_email'    => array( __( 'Email address', 'palmtreesurf' ), 'email' ),
+				'pt_address'  => array( __( 'Address', 'palmtreesurf' ), 'textarea' ),
+				'pt_hours'    => array( __( 'Opening hours', 'palmtreesurf' ), 'textarea' ),
+				'pt_map_url'  => array( __( 'Map link', 'palmtreesurf' ), 'url' ),
 			),
 		),
-		'pts_social'   => array(
+		'pt_social'   => array(
 			'title'    => __( 'Social Links', 'palmtreesurf' ),
 			'controls' => array(
-				'pts_instagram'   => array( __( 'Instagram URL', 'palmtreesurf' ), 'url' ),
-				'pts_facebook'    => array( __( 'Facebook URL', 'palmtreesurf' ), 'url' ),
-				'pts_tripadvisor' => array( __( 'Tripadvisor URL', 'palmtreesurf' ), 'url' ),
-				'pts_youtube'     => array( __( 'YouTube URL', 'palmtreesurf' ), 'url' ),
+				'pt_instagram'   => array( __( 'Instagram URL', 'palmtreesurf' ), 'url' ),
+				'pt_facebook'    => array( __( 'Facebook URL', 'palmtreesurf' ), 'url' ),
+				'pt_tripadvisor' => array( __( 'Tripadvisor URL', 'palmtreesurf' ), 'url' ),
+				'pt_youtube'     => array( __( 'YouTube URL', 'palmtreesurf' ), 'url' ),
 			),
 		),
-		'pts_booking'  => array(
+		'pt_booking'  => array(
 			'title'    => __( 'Booking', 'palmtreesurf' ),
 			'controls' => array(
-				'pts_booking_url'     => array( __( 'Booking system URL', 'palmtreesurf' ), 'url', __( 'Where the Book Now buttons point. Leave empty to use the enquiry form.', 'palmtreesurf' ) ),
-				'pts_header_cta_text' => array( __( 'Header button label', 'palmtreesurf' ), 'text' ),
+				'pt_booking_url'     => array( __( 'Booking system URL', 'palmtreesurf' ), 'url', __( 'Where the Book Now buttons point. Leave empty to use the enquiry form.', 'palmtreesurf' ) ),
+				'pt_header_cta_text' => array( __( 'Header button label', 'palmtreesurf' ), 'text' ),
 			),
 		),
-		'pts_hero'     => array(
+		'pt_hero'     => array(
 			'title'    => __( 'Front Page Hero', 'palmtreesurf' ),
 			'controls' => array(
-				'pts_hero_eyebrow'  => array( __( 'Eyebrow text', 'palmtreesurf' ), 'text' ),
-				'pts_hero_heading'  => array( __( 'Heading', 'palmtreesurf' ), 'text' ),
-				'pts_hero_text'     => array( __( 'Supporting text', 'palmtreesurf' ), 'textarea' ),
-				'pts_hero_cta_text' => array( __( 'Button label', 'palmtreesurf' ), 'text' ),
-				'pts_hero_cta_url'  => array( __( 'Button link', 'palmtreesurf' ), 'url' ),
+				'pt_hero_eyebrow'  => array( __( 'Eyebrow text', 'palmtreesurf' ), 'text' ),
+				'pt_hero_heading'  => array( __( 'Heading', 'palmtreesurf' ), 'text' ),
+				'pt_hero_text'     => array( __( 'Supporting text', 'palmtreesurf' ), 'textarea' ),
+				'pt_hero_cta_text' => array( __( 'Button label', 'palmtreesurf' ), 'text' ),
+				'pt_hero_cta_url'  => array( __( 'Button link', 'palmtreesurf' ), 'url' ),
 			),
 		),
-		'pts_footer'   => array(
+		'pt_footer'   => array(
 			'title'    => __( 'Footer', 'palmtreesurf' ),
 			'controls' => array(
-				'pts_footer_text' => array( __( 'Footer text', 'palmtreesurf' ), 'textarea' ),
+				'pt_footer_text' => array( __( 'Footer text', 'palmtreesurf' ), 'textarea' ),
 			),
 		),
-		'pts_tracking' => array(
+		'pt_tracking' => array(
 			'title'       => __( 'Analytics & Tracking', 'palmtreesurf' ),
 			'description' => __( 'Enter IDs rather than script tags where possible. The theme builds the tags for you.', 'palmtreesurf' ),
 			'controls'    => array(
-				'pts_ga_id'    => array( __( 'Google Analytics measurement ID', 'palmtreesurf' ), 'text', __( 'Example: G-XXXXXXXXXX', 'palmtreesurf' ) ),
-				'pts_pixel_id' => array( __( 'Meta Pixel ID', 'palmtreesurf' ), 'text', __( 'Digits only.', 'palmtreesurf' ) ),
+				'pt_ga_id'    => array( __( 'Google Analytics measurement ID', 'palmtreesurf' ), 'text', __( 'Example: G-XXXXXXXXXX', 'palmtreesurf' ) ),
+				'pt_pixel_id' => array( __( 'Meta Pixel ID', 'palmtreesurf' ), 'text', __( 'Digits only.', 'palmtreesurf' ) ),
 			),
 		),
 	);
@@ -144,7 +144,7 @@ function pts_customize_register( $wp_customize ) {
 			$section_id,
 			array(
 				'title'       => $section['title'],
-				'panel'       => 'pts_panel',
+				'panel'       => 'pt_panel',
 				'description' => isset( $section['description'] ) ? $section['description'] : '',
 			)
 		);
@@ -167,7 +167,7 @@ function pts_customize_register( $wp_customize ) {
 					$sanitize = 'sanitize_text_field';
 			}
 
-			$defaults = pts_defaults();
+			$defaults = pt_defaults();
 
 			$wp_customize->add_setting(
 				$key,
@@ -191,7 +191,7 @@ function pts_customize_register( $wp_customize ) {
 	}
 
 	$wp_customize->add_setting(
-		'pts_hero_image',
+		'pt_hero_image',
 		array(
 			'default'           => '',
 			'sanitize_callback' => 'absint',
@@ -200,10 +200,10 @@ function pts_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		new WP_Customize_Media_Control(
 			$wp_customize,
-			'pts_hero_image',
+			'pt_hero_image',
 			array(
 				'label'     => __( 'Hero image', 'palmtreesurf' ),
-				'section'   => 'pts_hero',
+				'section'   => 'pt_hero',
 				'mime_type' => 'image',
 			)
 		)
@@ -213,19 +213,19 @@ function pts_customize_register( $wp_customize ) {
 	 * Raw script fields are the one place a Customizer value reaches the page
 	 * unescaped, so they are only registered for users who may post raw HTML.
 	 */
-	if ( pts_can_edit_scripts() ) {
+	if ( pt_can_edit_scripts() ) {
 		$wp_customize->add_section(
-			'pts_scripts',
+			'pt_scripts',
 			array(
 				'title'       => __( 'Custom Scripts', 'palmtreesurf' ),
-				'panel'       => 'pts_panel',
+				'panel'       => 'pt_panel',
 				'description' => __( 'Pasted markup is printed as-is. Only add code you trust.', 'palmtreesurf' ),
 			)
 		);
 
 		$script_fields = array(
-			'pts_head_scripts'   => __( 'Header scripts (before </head>)', 'palmtreesurf' ),
-			'pts_footer_scripts' => __( 'Footer scripts (before </body>)', 'palmtreesurf' ),
+			'pt_head_scripts'   => __( 'Header scripts (before </head>)', 'palmtreesurf' ),
+			'pt_footer_scripts' => __( 'Footer scripts (before </body>)', 'palmtreesurf' ),
 		);
 
 		foreach ( $script_fields as $key => $label ) {
@@ -233,7 +233,7 @@ function pts_customize_register( $wp_customize ) {
 				$key,
 				array(
 					'default'           => '',
-					'sanitize_callback' => 'pts_sanitize_scripts',
+					'sanitize_callback' => 'pt_sanitize_scripts',
 				)
 			);
 
@@ -241,14 +241,14 @@ function pts_customize_register( $wp_customize ) {
 				$key,
 				array(
 					'label'   => $label,
-					'section' => 'pts_scripts',
+					'section' => 'pt_scripts',
 					'type'    => 'textarea',
 				)
 			);
 		}
 	}
 }
-add_action( 'customize_register', 'pts_customize_register' );
+add_action( 'customize_register', 'pt_customize_register' );
 
 /**
  * Keep raw script markup, but only from users allowed to save it.
@@ -258,8 +258,8 @@ add_action( 'customize_register', 'pts_customize_register' );
  * @param string $value Submitted markup.
  * @return string
  */
-function pts_sanitize_scripts( $value ) {
-	if ( ! pts_can_edit_scripts() ) {
+function pt_sanitize_scripts( $value ) {
+	if ( ! pt_can_edit_scripts() ) {
 		return '';
 	}
 

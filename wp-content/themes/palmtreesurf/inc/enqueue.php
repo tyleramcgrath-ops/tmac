@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return string
  */
-function pts_fonts_url() {
+function pt_fonts_url() {
 	return 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap';
 }
 
@@ -26,7 +26,7 @@ function pts_fonts_url() {
  * @param string $relation_type  Relation type being printed.
  * @return array
  */
-function pts_resource_hints( $urls, $relation_type ) {
+function pt_resource_hints( $urls, $relation_type ) {
 	if ( 'preconnect' === $relation_type ) {
 		$urls[] = array( 'href' => 'https://fonts.googleapis.com' );
 		$urls[] = array(
@@ -37,42 +37,42 @@ function pts_resource_hints( $urls, $relation_type ) {
 
 	return $urls;
 }
-add_filter( 'wp_resource_hints', 'pts_resource_hints', 10, 2 );
+add_filter( 'wp_resource_hints', 'pt_resource_hints', 10, 2 );
 
 /**
  * Enqueue front-end styles and scripts.
  */
-function pts_enqueue_assets() {
-	wp_enqueue_style( 'pts-fonts', pts_fonts_url(), array(), null );
+function pt_enqueue_assets() {
+	wp_enqueue_style( 'pt-fonts', pt_fonts_url(), array(), null );
 
 	// Tokens first: every other rule reads from the custom properties it defines.
 	wp_enqueue_style(
-		'pts-tokens',
-		PTS_URI . 'assets/css/tokens.css',
-		array( 'pts-fonts' ),
-		PTS_VERSION
+		'pt-tokens',
+		PT_URI . 'assets/css/tokens.css',
+		array( 'pt-fonts' ),
+		PT_VERSION
 	);
 
 	wp_enqueue_style(
-		'pts-main',
-		PTS_URI . 'assets/css/main.css',
-		array( 'pts-tokens' ),
-		PTS_VERSION
+		'pt-main',
+		PT_URI . 'assets/css/main.css',
+		array( 'pt-tokens' ),
+		PT_VERSION
 	);
 
 	// Keeps the WordPress theme header discoverable to child themes and tools.
-	wp_enqueue_style( 'pts-style', get_stylesheet_uri(), array( 'pts-main' ), PTS_VERSION );
+	wp_enqueue_style( 'pt-style', get_stylesheet_uri(), array( 'pt-main' ), PT_VERSION );
 
 	wp_enqueue_script(
-		'pts-main',
-		PTS_URI . 'assets/js/main.js',
+		'pt-main',
+		PT_URI . 'assets/js/main.js',
 		array(),
-		PTS_VERSION,
+		PT_VERSION,
 		true
 	);
 
 	wp_localize_script(
-		'pts-main',
+		'pt-main',
 		'ptsL10n',
 		array(
 			'openMenu'  => __( 'Open menu', 'palmtreesurf' ),
@@ -84,13 +84,13 @@ function pts_enqueue_assets() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'pts_enqueue_assets' );
+add_action( 'wp_enqueue_scripts', 'pt_enqueue_assets' );
 
 /**
  * Load the front-end fonts and editor styles inside the block editor so the
  * admin preview matches the rendered page.
  */
-function pts_editor_assets() {
-	add_editor_style( array( pts_fonts_url(), 'assets/css/tokens.css', 'assets/css/editor.css' ) );
+function pt_editor_assets() {
+	add_editor_style( array( pt_fonts_url(), 'assets/css/tokens.css', 'assets/css/editor.css' ) );
 }
-add_action( 'after_setup_theme', 'pts_editor_assets' );
+add_action( 'after_setup_theme', 'pt_editor_assets' );

@@ -10,10 +10,10 @@ defined( 'ABSPATH' ) || exit;
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'entry entry--single' ); ?>>
 	<header class="entry__header">
 		<?php the_title( '<h1 class="entry__title">', '</h1>' ); ?>
-		<?php pts_posted_on(); ?>
+		<?php pt_posted_on(); ?>
 	</header>
 
-	<?php pts_post_thumbnail(); ?>
+	<?php pt_post_thumbnail(); ?>
 
 	<div class="entry__content">
 		<?php
