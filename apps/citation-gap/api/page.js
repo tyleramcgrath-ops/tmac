@@ -1,4 +1,3 @@
-// Thin entry point. The implementation is written to api/page.impl.js by build.js at build
-// time from an immutable, hash-verified staging URL (see build.js), so a production deploy
-// carries a few small files instead of re-sending every function body inline.
+// Thin entry point. The implementation lives in api/page.impl.js, a committed file whose hash
+// build.js verifies before anything ships (see build.js and ship-manifest.json).
 module.exports = require('./page.impl.js');

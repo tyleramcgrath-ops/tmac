@@ -1,3 +1,3 @@
-// Thin entry point. The implementation is written to api/render.impl.js by build.js at build
-// time from an immutable, hash-verified staging URL (see build.js).
+// Thin entry point. The implementation lives in api/render.impl.js, a committed file whose hash
+// build.js verifies before anything ships (see build.js and ship-manifest.json).
 module.exports = require('./render.impl.js');

@@ -4,6 +4,7 @@ const { chromium } = require(require('path').join(require('child_process').execS
 const http = require('http'), fs = require('fs'), path = require('path'), url = require('url');
 process.env.CHROME_PATH = '/opt/pw-browsers/chromium';
 const pageHandler = require('../api/page.js'), renderHandler = require('../api/render.js');
+const { enterApp } = require('./enter-app.js');
 
 (async () => {
   const root = path.join(__dirname, '..');
@@ -44,8 +45,13 @@ const pageHandler = require('../api/page.js'), renderHandler = require('../api/r
   pg.on('console', (m) => { if (m.type() === 'error' && !/ERR_TUNNEL|net::/.test(m.text())) errors.push('console: ' + m.text()); });
   await pg.goto('http://127.0.0.1:' + port + '/');
   await pg.waitForSelector('#report.on');
+  // Walk the real front door once, clicks and all, so a homepage or splash layer left painted
+  // over the scanner fails here instead of as a mystery click timeout further down.
+  console.log('front door:', JSON.stringify(await enterApp(pg)));
   await pg.evaluate(() => { localStorage.setItem('cg.key', 'x'); localStorage.removeItem('cg.hist'); });
   await pg.reload(); await pg.waitForSelector('#report.on');
+  // The identity survived the reload, so the splash stays down; the homepage always reopens.
+  await enterApp(pg);
   const run = async () => {
     await pg.fill('#url', 'http://127.0.0.1:' + port + '/site/');
     await pg.fill('#kw', 'telematics');

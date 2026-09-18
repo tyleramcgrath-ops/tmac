@@ -4,32 +4,114 @@
 Vercel project `citation-gap`, team `team_6bNIz3y0Q62nzicOciNA6Q2w`. SSO off, publicly shareable.
 
 ## Use
-Settings → paste a SerpApi key → **Save key** → enter URL + keyword → Run the scan.
+The marketing homepage is the front door; **Launch the tool** drops it into the app, and the
+workspace splash takes any email (it is stored locally to personalise the sidebar — there is no
+account system behind it). Then: Settings → paste a SerpApi key → **Save key** → enter URL +
+keyword → Run the scan.
 Free tier 250 searches/month; a scan costs ~7, so ≈35 scans free.
 **see a finished example** loads a real report with no key.
 
 ## Architecture
 ```
-index.html      UI + scoring + prompt generation + scan history (browser-side)
-api/serp.js     one Google query, normalized across SerpApi and Serper
-api/page.js     3-line stub → api/page.impl.js (written at build time from a hash-verified staging URL, v10.5): fetch + parse any URL as served, zero dependencies
-api/render.js   3-line stub → api/render.impl.js (same mechanism, v10.5): headless Chromium with real input; painted-text word counts via a shared paint library, gate self-check by identity, late-marker pass, script-attribution injection hook, probe=, html=1, parse=1
-api/serp.js     shipped inline (small)
-build.js        fail-closed assembler: verifies every file by sha256 before anything ships (v9); fetches the function bodies (v10.4) and the index patches from immutable preview URLs, or inlines them via `file:` when a fresh preview URL isn't reliably fetchable at build time (v10.5)
-patches/        line-hunk patches applied to the staged index.html at build time; chain v9.1 → v10 → v10.1 → v10.2 → v10.3 → v10.4 → v10.5
-test/           regression.js (145 checks incl. the frozen EnVue fixture), scan-flow.js (P9 reuse path), demo-flow.js — run with CHROME_PATH=/opt/pw-browsers/chromium
+index.html       the whole front end, one file: marketing homepage, app shell (sidebar,
+                 workspace splash, Projects), scanner UI, scoring, prompt generation,
+                 scan history (browser-side). The source of truth — nothing is assembled.
+api/serp.js      one Google query, normalized across SerpApi and Serper
+api/page.js      3-line stub → api/page.impl.js (v10.6): fetch + parse any URL as served,
+                 zero dependencies
+api/render.js    3-line stub → api/render.impl.js (v10.5): headless Chromium with real
+                 input; painted-text word counts via a shared paint library, gate
+                 self-check by identity, late-marker pass, script-attribution injection
+                 hook, probe=, html=1, parse=1
+build.js         fail-closed guard (v10.7): verifies every shipped file against
+                 ship-manifest.json by sha256, then copies index.html to public/. No
+                 network, no assembly. `node build.js --seal` re-records the hashes.
+ship-manifest.json  the sealed hash of every file a working deployment needs
+test/            build-guard.js (the deploy guard itself), regression.js (157 checks incl.
+                 the frozen EnVue fixture), scan-flow.js (real scan through local
+                 fixtures), demo-flow.js, enter-app.js (the shared front-door walk) —
+                 run with CHROME_PATH=/opt/pw-browsers/chromium, or `npm test`
 ```
 No framework. Only two npm deps (`@sparticuz/chromium`, `puppeteer-core`), used by `api/render.js`
 alone. The browser orchestrates the scan one call at a time so no serverless function can hit a
 timeout; the render call is the one slow step (5–10 s on a heavy page) and fails soft.
 
-**Deploy constraint, and how it is now handled:** `deploy_to_vercel` replaces the ENTIRE
-deployment; a partial or truncated payload used to take the site down (v6, v7, v8 below — every
-pass). As of v9 that cannot happen: `build.js` verifies each file and the assembled `index.html`
-against pinned hashes and **fails the build on any mismatch, leaving the previous production
-deployment live**. See the v9 section for the mechanism and how to ship a change. Local working
-copy: `/home/claude/cgweb` (session workspace; the live site plus the staged parts and patches are
-the durable source of truth).
+**Deploy guard.** The site used to be shipped by a tool that replaced the entire deployment with an
+inline payload, and a truncated payload took the site down more than once (v6, v7, v8 below — every
+pass). v9 fixed that by hashing everything and failing the build on any mismatch. v10.7 keeps the
+guard and drops the machinery the old transport forced: index.html is no longer split into seven
+embeddable parts under `patches/srcparts/`, and the function bodies are no longer re-fetched from
+pinned preview URLs and patched at build time. They are ordinary committed files. What remains is
+the useful half — nothing ships unless every file in `ship-manifest.json` is present and matches its
+recorded hash, so a missing or stale file fails the build and the previous production deployment
+stays live. See v10.7 for why that mattered and what it had been hiding.
+
+## v10.7 — the redesign had never shipped, and the build was why (18 Sep 2026)
+
+**Lead with what went wrong.** The SaaS redesign and the marketing homepage were written into
+`index.html` on 14 Sep and never reached production. Every deploy after that either failed, or
+succeeded while shipping the *old* front end — and nothing said so. Two separate faults, both in
+the deploy path, neither in the app:
+
+1. **The build shipped a stale copy of the front end.** `build.js` did not ship `index.html`. It
+   assembled `public/index.html` by concatenating seven files under `patches/srcparts/` and
+   checking the result against a pinned hash. Those parts were last written on 8 Sep. The redesign
+   went into `index.html` on 14 Sep and into the parts never. The two diverged by 20,725 bytes —
+   the whole redesign — and because the parts still matched *their own* recorded hash, the build
+   reported "integrity verified" every single time. The guard was verifying the wrong file. A
+   clean build log meant nothing about what was in the deployment, which is the v10.5 lesson over
+   again, one level further up.
+2. **Then the builds started failing outright.** The last five deploy attempts (18 Sep,
+   `dpl_GFVsDy54gSv7rpWBZWQnoKnnq9o2` and four before it) all ended
+   `Error: Command "node build.js" exited with 1`, with `INTEGRITY FAIL: patches/srcparts/index-1.html
+   is missing` through `index-7.html`, plus `patches/render-v10.5.json`. The build log above them
+   reads `Downloading 7 deployment files` — the upload carried 7 files of the 30-odd the build
+   needed. The old inline-payload transport could not carry a file set this size, which is exactly
+   what the parts-and-patches machinery existed to work around. It had run out of road.
+
+The guard did do its job in the second case: production never broke, it just stopped moving. The
+site that has been live this whole time is the pre-redesign UI.
+
+**The fix: delete the machinery the old transport forced, keep the guard.** The project is in git
+now (`apps/citation-gap` in `tyleramcgrath-ops/tmac`), so files no longer travel through a payload
+that can truncate.
+
+- `index.html` is the source of truth again and ships as itself. `patches/srcparts/` (seven stale
+  parts) and the spent `patches/*.json` chain are deleted — they are in git history at the import
+  commit if they are ever wanted.
+- `api/page.impl.js` and `api/render.impl.js` are committed files rather than bodies re-fetched
+  from pinned Vercel preview URLs and patched at build time. The bytes are unchanged: the
+  committed files are exactly what the old chain produced (`page.impl.js` sha256 `062f9c62…`,
+  `render.impl.js` sha256 `51ab73d7…`, both matching the recorded post-patch results). No network
+  call in the build at all now, so the v10.5 "a fresh preview URL can be blocked by Vercel
+  Authentication" hazard is gone with it.
+- `build.js` verifies every shipped file against `ship-manifest.json` and fails closed on a missing
+  file, a changed file, a file in the manifest that is no longer shipped, or a missing manifest.
+  `node build.js --seal` re-records the hashes and prints what moved — sealing is a deliberate act,
+  so an unsealed change fails the build instead of shipping.
+- The manifest lists the eight files a working deployment needs, which is the direct answer to
+  "the deploy went out missing files": a missing one is now a named build failure, not a subtly
+  broken site.
+
+**The redesign's front door was never exercised by a test either.** The new marketing homepage
+(`#homeScreen`) covers the app until a launch control is clicked, and the workspace splash
+(`#splash`) sits behind it. Both browser flows predate it: `scan-flow.js` timed out clicking
+`#btnRun` through the homepage overlay, and `demo-flow.js` screenshotted the front door instead of
+the app. `test/enter-app.js` now walks that path for real — click "Launch the tool", sign in
+through the splash — and asserts both layers are gone *and* that `#btnRun` is the element actually
+at its own coordinates, so a layer left painted over the scanner fails as itself rather than as a
+mystery click timeout.
+
+**Verification.** `test/build-guard.js`: 17/17 — a clean build reproduces `index.html` byte for
+byte; a missing `index.html`, `api/render.impl.js` or `api/serp.js` fails the build and writes
+nothing; an unsealed edit to a function body or to the front end fails the build (the exact drift
+above, now caught); sealing re-records it and the build then ships the new bytes; a missing
+manifest fails closed. `test/regression.js`: 157/157. `test/scan-flow.js`: SCAN FLOW OK — real
+Chromium scan, P9 reuse with zero SERP credits spent, P12 basis toggling, P13 attribution, P16
+volatile tracking, carry-forward — all unchanged by this pass. `test/demo-flow.js`: zero page
+errors; the one console error is this sandbox's proxy refusing the Google Fonts `<link>`
+(`ERR_CERT_AUTHORITY_INVALID`), the same pre-existing environment fact v10.5 saw as
+`ERR_TUNNEL_CONNECTION_FAILED`, and it is now reported separately rather than counted as a failure.
 
 ## v10.5 — Scanner Patch Spec v2, P10–P17 — and a production bug shipped, then caught (8 Sep 2026)
 
@@ -729,11 +811,15 @@ and honest bot-challenge reporting.
   code path (v8 lesson) — a real scan must be checked too.
 - Every score/measurement pass gets its own live-render check before being called done (v10.5
   lesson): a clean build is not proof a feature works — only calling it against a real page is.
+- And the same rule one level up (v10.7 lesson): a clean build is not proof the deployment carries
+  the change either. The build reported "integrity verified" for four days while shipping a front
+  end four days stale. Read the deployed bytes, not the build log.
 
 ## Next
 - Custom domain **thecitationgap.com**
-- Connect to GitHub so edits are a push — still worth doing, though the v9 fail-closed build has
-  removed the outage risk that made this urgent
+- ~~Connect to GitHub so edits are a push~~ — done in v10.7: the project lives at
+  `apps/citation-gap` in `tyleramcgrath-ops/tmac`. What is left is pointing the Vercel project at
+  it (root directory `apps/citation-gap`) so a merge to `main` deploys
 - Saved scans + score movement over time as an account feature (the retainer hook) — the
   browser-local history in v9 is the prototype
 - Multi-keyword batch; weekly monitoring across the five tracked sites
