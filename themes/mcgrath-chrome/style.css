@@ -283,12 +283,14 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .heroScene{position:relative;min-width:0;}
 
 .tag{
-  /* Anchored to the left edge of this column, not offset from the right. The
-     tower sits at about two thirds across the photograph at every width, and
-     this column starts at half, so the words are always clear of it. Measuring
-     in from the right put them straight over the lantern. */
+  /* To the right of the light, which is where it belongs, but pushed far
+     enough across to clear it. The photograph fills the width, so the tower
+     lands at the same fraction across at every size — a shade under 70% — and
+     this column starts at 50%. Offsetting in viewport widths keeps the words
+     past the tower as the screen grows, which a fixed inset from the right
+     edge did not: at 1975px it printed straight over the lantern. */
   display:block;width:max-content;max-width:100%;
-  margin:0 auto clamp(34px,7vw,118px) 0;
+  margin:0 auto clamp(34px,7vw,118px) clamp(120px,21.5vw,560px);
   text-align:left;position:relative;
   font-family:var(--body);font-weight:600;font-size:clamp(9px,.78vw,10.5px);
   letter-spacing:.2em;text-transform:uppercase;color:var(--navy);line-height:2.15;
