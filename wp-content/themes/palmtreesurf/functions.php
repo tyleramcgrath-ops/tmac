@@ -37,6 +37,7 @@ $pt_includes = array(
 	'inc/template-tags.php',    // Reusable output helpers.
 	'inc/template-functions.php', // Body classes and other filters.
 	'inc/class-pt-nav-walker.php', // Nav menu markup.
+	'inc/icons.php',            // Inline SVG icons.
 	'inc/images.php',           // Manifest-driven image slots.
 	'inc/post-types.php',       // Experiences, testimonials, instructors.
 	'inc/fields.php',           // Experience detail fields.
@@ -45,6 +46,7 @@ $pt_includes = array(
 	'inc/booking.php',          // Booking CTAs and plugin handoff.
 	'inc/forms.php',            // Contact enquiry fallback.
 	'inc/schema.php',           // JSON-LD structured data.
+	'inc/setup-content.php',    // First-run pages, menus and sample content.
 );
 
 foreach ( $pt_includes as $pt_include ) {

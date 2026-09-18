@@ -176,3 +176,27 @@ function pt_image_sizes() {
 	add_image_size( 'pt-gallery', 1200, 1200, false );
 }
 add_action( 'after_setup_theme', 'pt_image_sizes' );
+
+/**
+ * URL for the hero poster image, used as the video poster.
+ *
+ * @return string
+ */
+function pt_hero_poster_url() {
+	$attachment_id = (int) get_theme_mod( 'pt_hero_image', 0 );
+
+	if ( $attachment_id ) {
+		$url = wp_get_attachment_image_url( $attachment_id, 'pt-hero' );
+		if ( $url ) {
+			return $url;
+		}
+	}
+
+	$slot = pt_image_slot( 'hero-home' );
+
+	if ( $slot && ! empty( $slot['file'] ) && file_exists( PT_DIR . 'assets/images/src/' . $slot['file'] ) ) {
+		return PT_URI . 'assets/images/src/' . rawurlencode( $slot['file'] );
+	}
+
+	return '';
+}

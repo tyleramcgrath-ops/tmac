@@ -8,6 +8,19 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Asset version tied to file modification time, so a changed file busts cache
+ * without a manual version bump (section 11).
+ *
+ * @param string $relative Path relative to the theme root.
+ * @return string
+ */
+function pt_asset_version( $relative ) {
+	$path = PT_DIR . $relative;
+
+	return file_exists( $path ) ? (string) filemtime( $path ) : PT_VERSION;
+}
+
+/**
  * Build the Google Fonts URL for Inter.
  *
  * Kept in one function so the front end and the block editor request the same
@@ -50,7 +63,7 @@ function pt_enqueue_assets() {
 		'pt-tokens',
 		PT_URI . 'assets/css/tokens.css',
 		array( 'pt-fonts' ),
-		PT_VERSION
+		pt_asset_version( 'assets/css/main.css' )
 	);
 
 	wp_enqueue_style(
@@ -77,6 +90,10 @@ function pt_enqueue_assets() {
 		array(
 			'openMenu'  => __( 'Open menu', 'palmtreesurf' ),
 			'closeMenu' => __( 'Close menu', 'palmtreesurf' ),
+			'close'     => __( 'Close', 'palmtreesurf' ),
+			'prev'      => __( 'Previous image', 'palmtreesurf' ),
+			'next'      => __( 'Next image', 'palmtreesurf' ),
+			'map'       => __( 'Map of our location', 'palmtreesurf' ),
 		)
 	);
 

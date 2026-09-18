@@ -2,10 +2,16 @@
 /**
  * Document head and site header.
  *
+ * The header is transparent over the hero on the front page and solid
+ * everywhere else. The swap to solid is driven by an IntersectionObserver on a
+ * 1px sentinel rather than a scroll listener (VISUAL-SPEC.md section 7.1).
+ *
  * @package PalmTreeSurf
  */
 
 defined( 'ABSPATH' ) || exit;
+
+$pt_overlay = is_front_page() && ! is_paged();
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -15,35 +21,27 @@ defined( 'ABSPATH' ) || exit;
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class( $pt_overlay ? 'has-overlay-header' : 'has-solid-header' ); ?>>
 <?php wp_body_open(); ?>
 
-<a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'palmtreesurf' ); ?></a>
+<a class="skip-link" href="#main"><?php esc_html_e( 'Skip to content', 'palmtreesurf' ); ?></a>
+
+<?php // Sentinel the header observer watches. Never visible. ?>
+<div class="header-sentinel" aria-hidden="true"></div>
 
 <div id="page" class="site">
-	<header id="masthead" class="site-header">
+	<header id="masthead" class="site-header<?php echo $pt_overlay ? '' : ' is-stuck is-static'; ?>">
 		<div class="site-header__inner container">
 			<div class="site-branding">
 				<?php
 				if ( has_custom_logo() ) {
 					the_custom_logo();
-				} elseif ( is_front_page() ) {
-					printf(
-						'<h1 class="site-title"><a href="%1$s" rel="home">%2$s</a></h1>',
-						esc_url( home_url( '/' ) ),
-						esc_html( get_bloginfo( 'name' ) )
-					);
 				} else {
 					printf(
-						'<p class="site-title"><a href="%1$s" rel="home">%2$s</a></p>',
+						'<a class="site-logo" href="%1$s" rel="home"><span class="site-logo__mark" aria-hidden="true"></span><span class="site-logo__text">%2$s</span></a>',
 						esc_url( home_url( '/' ) ),
 						esc_html( get_bloginfo( 'name' ) )
 					);
-				}
-
-				$pt_tagline = get_bloginfo( 'description', 'display' );
-				if ( $pt_tagline ) {
-					printf( '<p class="site-description">%s</p>', esc_html( $pt_tagline ) );
 				}
 				?>
 			</div>
@@ -67,16 +65,29 @@ defined( 'ABSPATH' ) || exit;
 						)
 					);
 				}
-
-				$pt_cta_label = pt_mod( 'pt_header_cta_text' );
-				if ( $pt_cta_label ) {
-					printf(
-						'<a class="btn btn--primary site-nav__cta" href="%1$s">%2$s</a>',
-						esc_url( pt_booking_url() ),
-						esc_html( $pt_cta_label )
-					);
-				}
 				?>
+
+				<div class="site-nav__actions">
+					<?php
+					$pt_wa = pt_whatsapp_url();
+					if ( $pt_wa ) {
+						printf(
+							'<a class="site-nav__wa" href="%1$s" rel="noopener" target="_blank" title="%2$s"><span class="screen-reader-text">%2$s</span><span aria-hidden="true">%3$s</span></a>',
+							esc_url( $pt_wa ),
+							esc_attr__( 'Message us on WhatsApp', 'palmtreesurf' ),
+							esc_html__( 'WhatsApp', 'palmtreesurf' )
+						);
+					}
+
+					pt_booking_button(
+						array(
+							'label'    => pt_filled( 'pt_header_cta_text' ) ? pt_filled( 'pt_header_cta_text' ) : __( 'Book Now', 'palmtreesurf' ),
+							'location' => 'header',
+							'class'    => 'btn btn--primary btn--sm',
+						)
+					);
+					?>
+				</div>
 			</nav>
 		</div>
 	</header>

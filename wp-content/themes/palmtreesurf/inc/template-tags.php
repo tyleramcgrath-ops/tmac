@@ -168,3 +168,59 @@ function pt_whatsapp_link() {
 		esc_html__( 'Message us on WhatsApp', 'palmtreesurf' )
 	);
 }
+
+/**
+ * A Customizer value, but blank if it still holds an unfilled {{PT_*}} token.
+ *
+ * Section 12 wants placeholders greppable, and the client needs to see what to
+ * fill in. Both are satisfied by storing the token as the setting default and
+ * hiding it at render time, so a visitor never sees {{PT_PHONE}} on the page.
+ *
+ * @param string $key Theme mod name.
+ * @return string
+ */
+function pt_filled( $key ) {
+	$value = pt_mod( $key );
+
+	return preg_match( '/\{\{\s*PT_[A-Z_]+\s*\}\}/', $value ) ? '' : $value;
+}
+
+/**
+ * Whether any of the given Customizer values are filled in.
+ *
+ * Lets a section skip itself rather than render an empty shell (section 7.10).
+ *
+ * @param array $keys Theme mod names.
+ * @return bool
+ */
+function pt_any_filled( $keys ) {
+	foreach ( $keys as $key ) {
+		if ( '' !== pt_filled( $key ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * A WhatsApp deep link, or '' when no number is configured.
+ *
+ * @param string $message Optional pre-filled message.
+ * @return string
+ */
+function pt_whatsapp_url( $message = '' ) {
+	$number = preg_replace( '/\D/', '', pt_filled( 'pt_whatsapp' ) );
+
+	if ( ! $number ) {
+		return '';
+	}
+
+	$url = 'https://wa.me/' . $number;
+
+	if ( $message ) {
+		$url = add_query_arg( 'text', rawurlencode( $message ), $url );
+	}
+
+	return $url;
+}

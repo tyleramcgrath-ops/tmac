@@ -1,44 +1,40 @@
 /*
- * Block editor styles. Mirrors the typography and palette tokens from
- * main.css so the admin preview matches the rendered page.
+ * Block editor styles.
+ *
+ * tokens.css is loaded alongside this file by add_editor_style(), so the
+ * editor inherits the same custom properties as the front end and no value is
+ * duplicated here.
  */
 
 .editor-styles-wrapper {
-	--pts-ocean: #0b4f6c;
-	--pts-lagoon: #1b9aaa;
-	--pts-sunset: #f4784f;
-	--pts-sand: #f6efe6;
-	--pts-ink: #14202b;
-	--pts-muted: #5b6b78;
-
-	font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-	font-size: 18px;
-	line-height: 1.65;
-	color: var(--pts-ink);
+	font-family: var(--pt-font-body);
+	font-size: var(--pt-body);
+	line-height: 1.7;
+	color: var(--pt-ink-700);
+	background: var(--pt-sand-50);
 }
 
 .editor-styles-wrapper h1,
 .editor-styles-wrapper h2,
 .editor-styles-wrapper h3 {
-	font-weight: 800;
-	letter-spacing: -0.02em;
-	line-height: 1.15;
+	font-family: var(--pt-font-display);
+	font-weight: var(--pt-weight-heading);
+	color: var(--pt-ink-900);
+	line-height: 1.12;
+	letter-spacing: -0.015em;
 }
 
-.editor-styles-wrapper h1 { font-size: 2.75rem; }
-.editor-styles-wrapper h2 { font-size: 2rem; }
-.editor-styles-wrapper h3 { font-size: 1.4rem; }
+.editor-styles-wrapper h1 { font-size: var(--pt-h1); }
+.editor-styles-wrapper h2 { font-size: var(--pt-h2); }
+.editor-styles-wrapper h3 { font-size: var(--pt-h3); }
 
-.editor-styles-wrapper a { color: var(--pts-ocean); }
+.editor-styles-wrapper p { max-width: 68ch; }
+.editor-styles-wrapper a { color: var(--pt-ocean-500); }
 
 .editor-styles-wrapper .wp-block-button__link {
-	border-radius: 999px;
-	background: var(--pts-sunset);
-	font-weight: 600;
-	padding: 0.85em 1.6em;
-}
-
-.editor-styles-wrapper .pts-cta {
-	padding: 3rem 2rem;
-	border-radius: 12px;
+	border-radius: var(--pt-radius-pill);
+	background: var(--pt-sunset-500);
+	color: var(--pt-white);
+	font-weight: var(--pt-weight-medium);
+	padding: var(--pt-space-sm) var(--pt-space-lg);
 }

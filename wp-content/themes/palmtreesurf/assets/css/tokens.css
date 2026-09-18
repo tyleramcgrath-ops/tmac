@@ -87,6 +87,19 @@
 	--pt-shadow-hover: 0 4px 8px rgba(18, 41, 63, .06), 0 20px 48px rgba(18, 41, 63, .14);
 	--pt-shadow-panel: 0 1px 2px rgba(18, 41, 63, .04), 0 8px 24px rgba(18, 41, 63, .06);
 
+	/* --- Translucent layers --------------------------------------------- */
+	/* Declared here so no rule elsewhere needs a literal colour value. */
+	--pt-glass-bg:      rgba(255, 255, 255, .10);
+	--pt-glass-border:  rgba(255, 255, 255, .18);
+	--pt-glass-hover:   rgba(255, 255, 255, .16);
+	--pt-on-dark:       rgba(255, 255, 255, .88);
+	--pt-on-dark-muted: rgba(255, 255, 255, .66);
+	--pt-rule-light:    rgba(255, 255, 255, .14);
+	--pt-scrim-nav:     linear-gradient(180deg, rgba(16, 42, 56, .55), rgba(16, 42, 56, 0));
+	--pt-scrim-cta:     rgba(15, 41, 66, .74);
+	--pt-scrim-card:    linear-gradient(180deg, rgba(15, 41, 66, 0) 35%, rgba(15, 41, 66, .88) 100%);
+	--pt-focus-ring:    0 0 0 3px var(--pt-ocean-500);
+
 	/* --- Motion --------------------------------------------------------- */
 	--pt-ease: cubic-bezier(.22, .61, .36, 1);
 	--pt-dur:  240ms;
