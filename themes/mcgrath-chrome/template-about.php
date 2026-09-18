@@ -15,7 +15,7 @@ get_header();
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'One Person, Not an Agency', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'Tyler McGrath. Search and web work for Jupiter and the surrounding area, done by the person you talk to.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_glyph( 'about' ); ?>
+		<?php mcg_page_art( 'about', 'The Jupiter shoreline' ); ?>
 	</div>
 </section>
 

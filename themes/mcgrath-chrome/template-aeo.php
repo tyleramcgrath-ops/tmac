@@ -15,7 +15,7 @@ get_header();
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Get Cited by AI, Not Just Ranked', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'When a buyer asks ChatGPT, Gemini, Perplexity or a Google AI Overview who to call in Jupiter, three names come back. This is the work that makes one of them yours.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_glyph( 'aeo' ); ?>
+		<?php mcg_page_art( 'aeo', 'Search queries from Google, ChatGPT, Gemini and Perplexity converging on one brand' ); ?>
 	</div>
 </section>
 

@@ -15,7 +15,7 @@ get_header();
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'SEO Company in Jupiter, FL', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'Local and national search work for businesses in Jupiter, Palm Beach Gardens and Tequesta. Run by the person who does it, priced in the open, with no long contract.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_glyph( 'seo' ); ?>
+		<?php mcg_page_art( 'seo', 'Jupiter Inlet lighthouse over a rising chart of search rankings' ); ?>
 	</div>
 </section>
 

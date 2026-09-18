@@ -19,7 +19,7 @@ get_header();
 	     dissolves leftward into the paper, so the headline sits on clean ground
 	     and the dashboard floats over open water. -->
 	<div class="heroPhoto" aria-hidden="true">
-		<?php mcg_plate( 'hero', '', '18% 4%', '118% auto' ); ?>
+		<?php mcg_plate( 'hero', '', '50% 34%' ); ?>
 		<span class="veil"></span>
 	</div>
 
@@ -343,7 +343,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 
 <!-- ======================= JUPITER ROOTS ========================= -->
 <section class="roots" id="home-base">
-	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots', '', '62% 46%' ); ?></div>
+	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots', '', '50% 50%' ); ?></div>
 
 	<div class="rootsBody">
 		<div class="rv">
@@ -371,14 +371,6 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 				<?php endforeach; ?>
 			</ul>
 
-			<div class="flMap" aria-hidden="true">
-				<svg viewBox="0 0 150 190">
-					<path class="land" d="M14 12h66l6 18 10 8 6 22 12 10 8 20-2 24-10 26-10 22-12 18-14 8-10-4-4-14 6-18 8-18 4-20-6-16-14-10-20-6-16-12-8-16-2-18 2-24Z"/>
-					<circle class="ring" cx="112" cy="118" r="11"/>
-					<circle class="pin" cx="112" cy="118" r="4.4"/>
-				</svg>
-				<span class="script"><?php esc_html_e( 'Jupiter, FL', 'mcgrath-chrome' ); ?></span>
-			</div>
 		</div>
 	</div>
 </section>

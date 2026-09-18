@@ -44,37 +44,39 @@ WHAT IS IN IT
   renders the service cards, so none of them can disagree.
 
 
-PHOTOGRAPHY
------------
-The Jupiter Inlet light ships with the theme and is used twice: the panel top
-right of the hero, and the panel beside "Jupiter roots". Replace either one by
-dropping your own file over it:
+ARTWORK
+-------
+Every image the theme ships lives in assets/img/ and is replaced by dropping a
+file over it. Nothing else needs touching.
 
-    assets/img/hero.jpg    the panel top right of the hero
-    assets/img/roots.jpg   the panel beside "Jupiter roots"
-    assets/img/ocean.jpg   behind the closing call to action (not shipped; a
-                           drawn night-water scene stands in until you add one)
+    hero.webp            the photograph the homepage hero stands on
+    roots.webp           the panel beside "Jupiter roots"
+    page-seo.webp        opens the SEO page
+    page-webdesign.webp  opens the Web Design page
+    page-aeo.webp        opens the AI Visibility page
+    page-about.webp      opens the About page
+    page-contact.webp    opens the Contact page
+    page-writing.webp    opens the blog index, archives and search
+    ocean.*              behind the closing call to action — not shipped; a
+                         drawn night-water scene stands in until you add one
 
-.webp, .jpg, .jpeg and .png all work, checked in that order. Landscape, around
-1600px wide, is the right shape — the shipped file is 633px, which is fine at
-normal resolution but will soften on a retina screen, so a larger original is
-worth swapping in.
+.webp, .jpg, .jpeg and .png all work, checked in that order. The page artwork is
+square and shown at about 420px, so around 900px wide is plenty. The hero is
+wide and shown full width, so 1600-1920px suits it.
 
-Both panels crop to fill, so a replacement photo may need re-aiming. Each call
-in front-page.php takes a background-position and a background-size:
+Any page with no artwork falls back to a drawn line figure rather than an empty
+column, so adding a page never leaves a hole.
 
-    mcg_plate( 'hero',  '', '100% 0%', 'auto 150%' );
-    mcg_plate( 'roots', '', '62% 46%' );
+The two photographic panels crop to fill, so a replacement may need re-aiming.
+Each call in front-page.php takes a background-position, and optionally a
+background-size:
 
-In the position, the first number is horizontal and the second vertical. Raise
-the first to move the subject left, raise the second to move it up.
+    mcg_plate( 'hero',  '', '50% 34%' );
+    mcg_plate( 'roots', '', '50% 50%' );
 
-The size is normally left off, which means "cover" — the whole frame filled
-with the least possible crop, and the sharpest result. The hero passes
-"auto 150%" instead because the shipped photo has the light on the right, where
-the three words sit; pushing in gives the room to slide it out from under them.
-A photo with the light already on the left, and sky on the right, does not need
-that: drop the fourth argument and the panel will be sharper for it.
+First number is horizontal, second vertical. Raise the first to move the subject
+left, raise the second to move it up. The size is normally left off, which means
+"cover" — the whole frame filled with the least crop, and the sharpest result.
 
 LOGO
 ----

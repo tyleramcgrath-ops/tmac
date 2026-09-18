@@ -326,3 +326,31 @@ function mcg_social() {
 	}
 	return $out;
 }
+
+/**
+ * A page's opening figure. Uses the artwork in assets/img/page-{name}.* when it
+ * is there, and falls back to the drawn glyph when it is not — so a page never
+ * opens on an empty column, and swapping art is a file drop.
+ *
+ * @param string $name seo | webdesign | aeo | about | contact | writing
+ * @param string $alt  Alternative text; empty marks it decorative.
+ */
+function mcg_page_art( $name, $alt = '' ) {
+	$dir = get_template_directory() . '/assets/img/';
+	$uri = get_template_directory_uri() . '/assets/img/';
+
+	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
+		$file = 'page-' . $name . '.' . $ext;
+		if ( file_exists( $dir . $file ) ) {
+			printf(
+				'<figure class="pArt"><img src="%s" alt="%s" width="900" height="880" loading="lazy" decoding="async"%s></figure>',
+				esc_url( $uri . $file ),
+				esc_attr( $alt ),
+				$alt ? '' : ' aria-hidden="true"'
+			);
+			return;
+		}
+	}
+
+	mcg_glyph( $name );
+}
