@@ -146,18 +146,26 @@ project is accepted, resolves the commit, then stalls in `INITIALIZING` forever 
 repo to clone). So the app is deployed by a second, git-linked project, `citation-gap-web`, and
 `citation-gap.vercel.app` was re-pointed at its deployment with `assign_alias`.
 
-**Since the merge of #148**, `main` carries the app and `citation-gap-web` builds it on every
-push: `dpl_EYdEnJNmiRKz7zuLtg4hLSiBdc8k` (production, from `main` at `a7841b53`) is what
-`citation-gap.vercel.app` now serves — re-verified byte-for-byte after the alias was moved onto it.
-The first branch build, `dpl_6Cuzev…`, is superseded.
+**Since the merge of #148**, `main` carries the app and `citation-gap-web` builds it on every push.
+Which deployment the live URL serves is not written down here on purpose — it changes every deploy;
+read it with `list_aliases` on the project, or `get_deployment` on what that returns.
 
 That alias is **pinned to one deployment**. `citation-gap.vercel.app` is still registered as a
 project domain of the old `citation-gap` project — `add_project_domain` on the new project returns
 409 `duplicate-team-registration` — so a future production deploy of `citation-gap-web` will take
 `citation-gap-web.vercel.app` and **will not move the live URL**. Until that is fixed, every deploy
-needs the alias re-pointed. The one-time fix, in the dashboard: delete the old `citation-gap`
-project (or remove the domain from it), then add `citation-gap.vercel.app` to `citation-gap-web` —
-after which merging to `main` deploys the live site with no manual step.
+needs the alias re-pointed. The one-time fix is in the dashboard: remove `citation-gap.vercel.app` from
+the old `citation-gap` project (or delete that project), then add it to `citation-gap-web` — after
+which merging to `main` deploys the live site with no manual step.
+
+**Renaming the old project does not do it — this was tried and it failed.** The theory was that
+`<name>.vercel.app` follows the project name, so renaming `citation-gap` to `citation-gap-legacy`
+would release the domain for the new project to claim. It does not: the domain registration is
+independent of the project name, and with the old project renamed,
+`add_project_domain` still returned 409 `duplicate-team-registration`, now naming
+`citation-gap-legacy` as the holder. The rename was reverted and the live URL was unaffected
+throughout. Do not spend time on that route; the only ways out are the dashboard or deleting the old
+project, and deleting it also destroys the rollback deployment below.
 
 Rollback: the previous production deployment is `dpl_HwoQcbWBd8SumqhQTuPM4yz7GEt3` (the 8 Sep
 v10.5 build). Re-assigning the alias to it puts the old site back in one call.
