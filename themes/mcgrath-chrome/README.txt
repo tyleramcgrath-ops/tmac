@@ -169,6 +169,28 @@ Everything else on inner pages is normal WordPress content, edited in the block
 editor. Body copy, headings, lists, quotes and images are all styled.
 
 
+IF THE LINKS GO TO THE WRONG PAGES
+----------------------------------
+Appearance > McGrath Chrome shows what the theme can actually see: the page
+every section resolves to, any duplicate pages carrying the same template, and
+where each navigation item really points.
+
+The navigation is the usual suspect. It is a WordPress menu, stored in the
+database, not something the theme generates — so its links are whatever the
+menu says, and a menu built under a previous theme keeps pointing at that
+theme's pages no matter what this one does. The screen marks any item that is
+not one of the theme's pages, and a button rebuilds the Primary and Footer
+menus from the right pages with short labels. It empties those menus first, so
+if either holds links worth keeping, edit it by hand under Appearance > Menus
+instead.
+
+Duplicate pages are the other one. If the theme was set up more than once, or
+set up again after the page slugs changed, a second page can end up carrying
+the same template. The theme uses the OLDEST of them, on the grounds that the
+original is the one with the history and the inbound links. The screen lists
+the extras so they can be deleted or redirected.
+
+
 THE VAULT
 ---------
 It ships locked with a password generated when the theme is activated — a fixed

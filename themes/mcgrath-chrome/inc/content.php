@@ -32,6 +32,22 @@ function mcg_slugs() {
 	);
 }
 
+/**
+ * Every page carrying a given template, oldest first.
+ *
+ * More than one is a problem worth seeing rather than hiding, so this returns
+ * all of them and the caller decides.
+ */
+function mcg_pages_using_template( $template ) {
+	return get_pages( array(
+		'meta_key'    => '_wp_page_template',
+		'meta_value'  => $template,
+		'post_status' => 'publish,private,draft',
+		'sort_column' => 'ID',
+		'sort_order'  => 'ASC',
+	) );
+}
+
 /** The page template each key is identified by. */
 function mcg_templates() {
 	return array(
@@ -77,12 +93,11 @@ function mcg_page_id( $key ) {
 
 	$templates = mcg_templates();
 	if ( ! $id && isset( $templates[ $key ] ) ) {
-		$found = get_pages( array(
-			'meta_key'    => '_wp_page_template',
-			'meta_value'  => $templates[ $key ],
-			'number'      => 1,
-			'post_status' => 'publish,private',
-		) );
+		// Oldest first, and deliberately so: if a site ended up with two pages
+		// carrying the same template, the original is the one with the history
+		// and the links, so it wins. get_pages() defaults to ordering by title,
+		// which would have picked one arbitrarily.
+		$found = mcg_pages_using_template( $templates[ $key ] );
 		if ( $found ) {
 			$id = (int) $found[0]->ID;
 		}

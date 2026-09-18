@@ -12,6 +12,7 @@ define( 'MCG_VERSION', '2.0.0' );
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
 require_once get_template_directory() . '/inc/contact-form.php';
+require_once get_template_directory() . '/inc/diagnostics.php';
 
 function mcg_setup() {
 	add_theme_support( 'title-tag' );
