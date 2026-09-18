@@ -169,11 +169,26 @@ Everything else on inner pages is normal WordPress content, edited in the block
 editor. Body copy, headings, lists, quotes and images are all styled.
 
 
-IF THE LINKS GO TO THE WRONG PAGES
-----------------------------------
-Appearance > McGrath Chrome shows what the theme can actually see: the page
-every section resolves to, any duplicate pages carrying the same template, and
-where each navigation item really points.
+IF THE PAGES LOOK WRONG OR THE LINKS GO SOMEWHERE ODD
+-----------------------------------------------------
+Appearance > McGrath Chrome. It compares what the theme expects against what is
+on the site and names the problem for each page, with one button to fix them.
+
+The usual one: a page shows only its title on an empty band. That page is not
+running the theme's template, so WordPress falls back to the generic one. It
+happens to any page the theme did not create itself — an About page that was
+already there, for instance. "Adopting" it assigns the template. The page keeps
+its ID, its address, its content and every menu item and inbound link already
+pointing at it; only the layout changes.
+
+A menu item stores the PAGE, not the link, so moving a page to a new address
+updates the menu on its own — there is nothing to re-point by hand. That is why
+the screen offers to fix the pages without moving them first, and moving them
+second: an address that has been live for years and collected links is usually
+worth more than a tidier one.
+
+The screen also shows the page every section resolves to, any duplicate pages
+carrying the same template, and where each navigation item really points.
 
 The navigation is the usual suspect. It is a WordPress menu, stored in the
 database, not something the theme generates — so its links are whatever the

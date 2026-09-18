@@ -40,6 +40,161 @@ function mcg_owned_page_ids() {
 	return $ids;
 }
 
+/**
+ * What each of the theme's pages needs, given what is actually on the site.
+ *
+ * Four states, and every one of them has turned up in practice:
+ *
+ *   ok      the page exists, carries the template and sits on its slug
+ *   adopt   a page exists but is not running the theme's template, so it
+ *           renders through the generic page.php — a bare title on an empty
+ *           band. This is what "the menu goes to the old page" looks like.
+ *   rename  it has the template but is still on an older address
+ *   create  nothing matches, so the theme has no page to point at
+ *
+ * A page is matched by template first, then by the slug the theme uses now,
+ * then by the slugs it has used before. Adopting keeps the existing page, with
+ * its ID, its history and every menu item and inbound link already pointing at
+ * it; the template renders the theme's copy and then whatever was in the body.
+ *
+ * @return array key => array( action, page, target_slug, target_title )
+ */
+function mcg_page_plan() {
+	$slugs     = mcg_slugs();
+	$legacy    = mcg_legacy_slugs();
+	$templates = mcg_templates();
+	$map       = mcg_pages_map();
+	$plan      = array();
+	$claimed   = array();
+
+	foreach ( $templates as $key => $template ) {
+		$target = $slugs[ $key ];
+		$page   = null;
+
+		// 1. a page already running this template, oldest first.
+		foreach ( mcg_pages_using_template( $template ) as $candidate ) {
+			if ( ! isset( $claimed[ $candidate->ID ] ) ) {
+				$page = $candidate;
+				break;
+			}
+		}
+
+		// 2. the slug the theme uses now, then the ones it used before.
+		if ( ! $page ) {
+			$tries = array_merge( array( $target ), isset( $legacy[ $key ] ) ? $legacy[ $key ] : array() );
+			foreach ( $tries as $slug ) {
+				$found = get_page_by_path( $slug );
+				if ( $found && ! isset( $claimed[ $found->ID ] ) ) {
+					$page = $found;
+					break;
+				}
+			}
+		}
+
+		$title = isset( $map[ $target ]['title'] ) ? $map[ $target ]['title'] : '';
+
+		if ( ! $page ) {
+			$plan[ $key ] = array(
+				'action'       => 'create',
+				'page'         => null,
+				'target_slug'  => $target,
+				'target_title' => $title,
+			);
+			continue;
+		}
+
+		$claimed[ $page->ID ] = true;
+
+		$has_template = get_post_meta( $page->ID, '_wp_page_template', true ) === $template;
+		$on_slug      = $page->post_name === $target;
+
+		if ( ! $has_template ) {
+			$action = 'adopt';
+		} elseif ( ! $on_slug ) {
+			$action = 'rename';
+		} else {
+			$action = 'ok';
+		}
+
+		$plan[ $key ] = array(
+			'action'       => $action,
+			'page'         => $page,
+			'target_slug'  => $target,
+			'target_title' => $title,
+		);
+	}
+
+	return $plan;
+}
+
+/**
+ * Apply the plan.
+ *
+ * @param bool $rename Also move pages onto the theme's slugs. Off by default:
+ *                     an address that has been live and collecting links is
+ *                     worth more than a tidier one, so moving it is a choice.
+ */
+function mcg_apply_page_plan( $rename = false ) {
+	$templates = mcg_templates();
+	$map       = mcg_pages_map();
+
+	foreach ( mcg_page_plan() as $key => $item ) {
+		$template = $templates[ $key ];
+
+		if ( 'create' === $item['action'] ) {
+			$id = wp_insert_post( array(
+				'post_title'   => $item['target_title'],
+				'post_name'    => $item['target_slug'],
+				'post_status'  => 'publish',
+				'post_type'    => 'page',
+				'post_excerpt' => isset( $map[ $item['target_slug'] ]['excerpt'] ) ? $map[ $item['target_slug'] ]['excerpt'] : '',
+			) );
+
+			if ( ! is_wp_error( $id ) && $id ) {
+				update_post_meta( $id, '_wp_page_template', $template );
+
+				if ( 'vault' === $key ) {
+					$pass = wp_generate_password( 12, false );
+					wp_update_post( array( 'ID' => $id, 'post_password' => $pass ) );
+					set_transient( 'mcg_vault_pass', $pass, DAY_IN_SECONDS );
+				}
+			}
+			continue;
+		}
+
+		if ( ! $item['page'] ) {
+			continue;
+		}
+
+		if ( 'adopt' === $item['action'] ) {
+			update_post_meta( $item['page']->ID, '_wp_page_template', $template );
+		}
+
+		if ( $rename && $item['page']->post_name !== $item['target_slug'] ) {
+			$taken = get_page_by_path( $item['target_slug'] );
+			if ( ! $taken || (int) $taken->ID === (int) $item['page']->ID ) {
+				wp_update_post( array(
+					'ID'         => $item['page']->ID,
+					'post_name'  => $item['target_slug'],
+					'post_title' => $item['target_title'] ? $item['target_title'] : $item['page']->post_title,
+				) );
+			}
+		}
+	}
+}
+
+/** Handle the apply link. */
+function mcg_maybe_apply_plan() {
+	if ( ! isset( $_GET['mcg_fix_pages'] ) || ! current_user_can( 'edit_theme_options' ) ) {
+		return;
+	}
+	check_admin_referer( 'mcg_fix_pages' );
+	mcg_apply_page_plan( ! empty( $_GET['rename'] ) );
+	wp_safe_redirect( admin_url( 'themes.php?page=mcg-chrome&applied=1' ) );
+	exit;
+}
+add_action( 'admin_init', 'mcg_maybe_apply_plan' );
+
 /** Point the menus at the theme's pages. */
 function mcg_repair_menus() {
 	$locations = get_nav_menu_locations();
@@ -117,6 +272,87 @@ function mcg_diagnostics_screen() {
 
 		<?php if ( isset( $_GET['fixed'] ) ) : ?>
 			<div class="notice notice-success"><p><?php esc_html_e( 'The menus now point at the pages below.', 'mcgrath-chrome' ); ?></p></div>
+		<?php endif; ?>
+		<?php if ( isset( $_GET['applied'] ) ) : ?>
+			<div class="notice notice-success"><p><?php esc_html_e( 'Done. Check the pages below, then clear your cache before looking at the live site.', 'mcgrath-chrome' ); ?></p></div>
+		<?php endif; ?>
+
+		<?php
+		$plan    = mcg_page_plan();
+		$todo    = array_filter( $plan, function ( $i ) { return 'ok' !== $i['action']; } );
+		$renames = array_filter( $plan, function ( $i ) { return $i['page'] && $i['page']->post_name !== $i['target_slug']; } );
+		$names   = mcg_key_names();
+		?>
+
+		<?php if ( $todo ) : ?>
+			<h2><?php esc_html_e( 'These pages need attention', 'mcgrath-chrome' ); ?></h2>
+			<table class="widefat striped" style="max-width:900px">
+				<thead><tr>
+					<th><?php esc_html_e( 'Section', 'mcgrath-chrome' ); ?></th>
+					<th><?php esc_html_e( 'Page', 'mcgrath-chrome' ); ?></th>
+					<th><?php esc_html_e( 'What is wrong', 'mcgrath-chrome' ); ?></th>
+				</tr></thead>
+				<tbody>
+				<?php foreach ( $todo as $key => $item ) : ?>
+					<tr>
+						<td><strong><?php echo esc_html( isset( $names[ $key ] ) ? $names[ $key ] : $key ); ?></strong></td>
+						<td>
+							<?php if ( $item['page'] ) : ?>
+								<a href="<?php echo esc_url( get_edit_post_link( $item['page']->ID ) ); ?>"><?php echo esc_html( $item['page']->post_title ); ?></a>
+								<code>/<?php echo esc_html( $item['page']->post_name ); ?>/</code>
+							<?php else : ?>
+								<em><?php esc_html_e( 'does not exist', 'mcgrath-chrome' ); ?></em>
+							<?php endif; ?>
+						</td>
+						<td>
+							<?php if ( 'adopt' === $item['action'] ) : ?>
+								<span style="color:#b32d2e"><?php esc_html_e( 'Not using the theme\'s template, so it renders as a bare title with an empty page under it. Adopting it keeps the page, its address and every link already pointing at it — only the layout changes.', 'mcgrath-chrome' ); ?></span>
+							<?php elseif ( 'rename' === $item['action'] ) : ?>
+								<?php
+								printf(
+									/* translators: %s: the slug the page would move to. */
+									esc_html__( 'Correct layout, still on its older address. It would move to /%s/.', 'mcgrath-chrome' ),
+									esc_html( $item['target_slug'] )
+								);
+								?>
+							<?php else : ?>
+								<?php
+								printf(
+									/* translators: %s: the slug the page would be created at. */
+									esc_html__( 'Nothing on the site matches, so the theme has no page to link to. It would be created at /%s/.', 'mcgrath-chrome' ),
+									esc_html( $item['target_slug'] )
+								);
+								?>
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+
+			<p>
+				<a class="button button-primary button-hero"
+					href="<?php echo esc_url( wp_nonce_url( admin_url( 'themes.php?mcg_fix_pages=1' ), 'mcg_fix_pages' ) ); ?>">
+					<?php esc_html_e( 'Fix these pages', 'mcgrath-chrome' ); ?>
+				</a>
+			</p>
+			<p class="description" style="max-width:70ch">
+				<?php esc_html_e( 'This keeps every address exactly as it is. Existing pages are adopted rather than replaced, so nothing that links to them breaks and nothing is deleted.', 'mcgrath-chrome' ); ?>
+			</p>
+
+			<?php if ( $renames ) : ?>
+				<p>
+					<a class="button"
+						href="<?php echo esc_url( wp_nonce_url( admin_url( 'themes.php?mcg_fix_pages=1&rename=1' ), 'mcg_fix_pages' ) ); ?>">
+						<?php esc_html_e( 'Fix these pages and move them to the new addresses', 'mcgrath-chrome' ); ?>
+					</a>
+				</p>
+				<p class="description" style="max-width:70ch">
+					<?php esc_html_e( 'The same, but also moves each page onto the theme\'s address. The menu follows on its own, because a menu item stores the page rather than the link. WordPress redirects the old address to the new one. An address that has been live for years and collected links is usually worth keeping, so this is the second button rather than the first.', 'mcgrath-chrome' ); ?>
+				</p>
+			<?php endif; ?>
+		<?php else : ?>
+			<div class="notice notice-success inline"><p><?php esc_html_e( 'Every page is present and using the right template.', 'mcgrath-chrome' ); ?></p></div>
 		<?php endif; ?>
 
 		<h2><?php esc_html_e( 'The pages the theme is using', 'mcgrath-chrome' ); ?></h2>

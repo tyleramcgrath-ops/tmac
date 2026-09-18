@@ -48,6 +48,24 @@ function mcg_pages_using_template( $template ) {
 	) );
 }
 
+/**
+ * Slugs these pages have shipped at before, or commonly already sit at.
+ *
+ * A site set up under an earlier version has its pages at these. Without them
+ * the theme cannot recognise a page it created itself two versions ago, and
+ * would build a second one alongside it.
+ */
+function mcg_legacy_slugs() {
+	return array(
+		'seo'       => array( 'seo-jupiter-fl', 'seo' ),
+		'webdesign' => array( 'web-design-jupiter', 'web-design' ),
+		'aeo'       => array( 'ai-visibility', 'answer-engine-optimization' ),
+		'about'     => array( 'about', 'about-us' ),
+		'contact'   => array( 'contact', 'contact-us' ),
+		'vault'     => array( 'vault', 'the-vault' ),
+	);
+}
+
 /** The page template each key is identified by. */
 function mcg_templates() {
 	return array(
@@ -103,10 +121,22 @@ function mcg_page_id( $key ) {
 		}
 	}
 
+	// The slug the theme uses now, then the ones it has used before. Without
+	// the second part, a site whose pages predate a slug change has every link
+	// pointing at an address that does not exist yet.
 	if ( ! $id ) {
-		$page = get_page_by_path( mcg_slug( $key ) );
-		if ( $page ) {
-			$id = (int) $page->ID;
+		$legacy = mcg_legacy_slugs();
+		$tries  = array_merge(
+			array( mcg_slug( $key ) ),
+			isset( $legacy[ $key ] ) ? $legacy[ $key ] : array()
+		);
+
+		foreach ( $tries as $slug ) {
+			$page = get_page_by_path( $slug );
+			if ( $page ) {
+				$id = (int) $page->ID;
+				break;
+			}
 		}
 	}
 
