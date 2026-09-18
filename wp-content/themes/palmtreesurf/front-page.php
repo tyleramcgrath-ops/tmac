@@ -34,7 +34,6 @@ if ( is_page() && have_posts() ) {
 }
 
 get_template_part( 'template-parts/home/testimonials' );
-get_template_part( 'template-parts/home/instructors' );
 get_template_part( 'template-parts/home/lifestyle' );
 get_template_part( 'template-parts/home/faq' );
 
