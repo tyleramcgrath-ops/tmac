@@ -9,11 +9,13 @@ get_header();
 ?>
 
 <section class="phero">
-	<canvas id="chrome"></canvas>
 	<div class="pin">
-		<span class="mono"><?php esc_html_e( 'Who you are hiring', 'mcgrath-chrome' ); ?></span>
-		<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'One Person, Not an Agency', 'mcgrath-chrome' ); ?></h1>
-		<p class="sub"><?php esc_html_e( 'Tyler McGrath. Search and web work for Jupiter and the surrounding area, done by the person you talk to.', 'mcgrath-chrome' ); ?></p>
+		<div class="pheroTxt">
+			<span class="mono"><?php esc_html_e( 'Who you are hiring', 'mcgrath-chrome' ); ?></span>
+			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'One Person, Not an Agency', 'mcgrath-chrome' ); ?></h1>
+			<p class="sub"><?php esc_html_e( 'Tyler McGrath. Search and web work for Jupiter and the surrounding area, done by the person you talk to.', 'mcgrath-chrome' ); ?></p>
+		</div>
+		<?php mcg_glyph( 'about' ); ?>
 	</div>
 </section>
 

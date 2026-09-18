@@ -67,3 +67,100 @@ function mcg_icon( $name, $extra = '' ) {
 		. $set[ $name ] // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
 		. '</svg>';
 }
+
+/**
+ * Page glyphs. Each inner page gets its own drawn figure rather than the same
+ * decorative field on every one, so the section you are in is legible before
+ * you read a word. Line work only, on the brand palette, no images.
+ *
+ * @param string $name seo | webdesign | aeo | about | contact | writing
+ */
+function mcg_glyph( $name ) {
+	$glyphs = array(
+
+		/* Ranking positions climbing, with one of them taken. */
+		'seo' => '
+			<g class="g-line">
+				<path d="M20 150 H180"/><path d="M20 150 V20"/>
+			</g>
+			<g class="g-bar">
+				<rect x="36"  y="112" width="20" height="38" rx="3"/>
+				<rect x="68"  y="92"  width="20" height="58" rx="3"/>
+				<rect x="100" y="66"  width="20" height="84" rx="3"/>
+			</g>
+			<rect class="g-fill" x="132" y="34" width="20" height="116" rx="3"/>
+			<g class="g-accent">
+				<circle cx="142" cy="24" r="9"/>
+				<path class="g-tick" d="m138 24 3 3 5.5-6"/>
+			</g>
+			<path class="g-dash" d="M36 122 L78 100 L110 74 L142 42"/>',
+
+		/* A page being composed: frame, header, columns. */
+		'webdesign' => '
+			<g class="g-line">
+				<rect x="18" y="26" width="164" height="128" rx="8"/>
+				<path d="M18 52 H182"/>
+			</g>
+			<g class="g-dot"><circle cx="32" cy="39" r="3.4"/><circle cx="44" cy="39" r="3.4"/><circle cx="56" cy="39" r="3.4"/></g>
+			<rect class="g-fill" x="32" y="66" width="62" height="44" rx="4"/>
+			<g class="g-line">
+				<path d="M106 70 H168"/><path d="M106 82 H150"/>
+				<path d="M32 124 H94"/><path d="M32 136 H72"/>
+			</g>
+			<rect class="g-accent-fill" x="106" y="118" width="46" height="22" rx="5"/>',
+
+		/* One question, several engines answering it. */
+		'aeo' => '
+			<g class="g-line">
+				<path d="M100 60 L44 112"/><path d="M100 60 L100 118"/>
+				<path d="M100 60 L156 112"/>
+			</g>
+			<circle class="g-fill" cx="100" cy="46" r="17"/>
+			<g class="g-node">
+				<circle cx="44" cy="124" r="13"/>
+				<circle cx="100" cy="130" r="13"/>
+				<circle cx="156" cy="124" r="13"/>
+			</g>
+			<g class="g-accent">
+				<circle cx="100" cy="46" r="26"/>
+				<path class="g-spark" d="M100 20v-9M100 81v9M74 46h-9M126 46h9"/>
+			</g>',
+
+		/* One person: a mark, and the ground it stands on. */
+		'about' => '
+			<g class="g-line">
+				<circle cx="100" cy="74" r="44"/>
+				<path d="M34 152a66 66 0 0 1 132 0"/>
+			</g>
+			<circle class="g-fill" cx="100" cy="74" r="22"/>
+			<g class="g-accent"><circle cx="100" cy="74" r="58"/></g>',
+
+		/* A place on a map, and the rings that reach out from it. */
+		'contact' => '
+			<g class="g-accent">
+				<circle cx="100" cy="92" r="62"/><circle cx="100" cy="92" r="42"/>
+			</g>
+			<g class="g-line"><path d="M100 18v18M100 148v18M26 92h18M156 92h18"/></g>
+			<path class="g-fill" d="M100 58c14 0 25 11 25 25 0 18-25 44-25 44S75 101 75 83c0-14 11-25 25-25Z"/>
+			<circle class="g-hole" cx="100" cy="83" r="9"/>',
+
+		/* Something written down. */
+		'writing' => '
+			<g class="g-line">
+				<path d="M44 24h84l32 32v120H44Z"/><path d="M128 24v32h32"/>
+			</g>
+			<g class="g-line">
+				<path d="M62 88h76"/><path d="M62 106h76"/><path d="M62 124h48"/>
+			</g>
+			<rect class="g-accent-fill" x="62" y="142" width="34" height="8" rx="4"/>',
+	);
+
+	if ( empty( $glyphs[ $name ] ) ) {
+		return;
+	}
+
+	echo '<div class="glyph glyph--' . esc_attr( $name ) . '" aria-hidden="true">'
+		. '<svg viewBox="0 0 200 180" fill="none">'
+		. $glyphs[ $name ] // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static markup.
+		. '</svg></div>';
+}

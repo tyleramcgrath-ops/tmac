@@ -10,8 +10,9 @@
 <footer class="site-foot gut">
 	<div class="footIn">
 		<a class="footBrand" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-			<b>MMG</b>
-			<i><?php echo esc_html( mcg_opt( 'mcg_brand_line', 'McGrath Marketing Group' ) ); ?></i>
+			<img class="mark" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo.png' ); ?>"
+				alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="1109" height="612" loading="lazy">
+			<span><?php echo esc_html( mcg_opt( 'mcg_brand_line', 'McGrath Marketing Group' ) ); ?></span>
 		</a>
 
 		<nav class="footNav" aria-label="<?php esc_attr_e( 'Footer', 'mcgrath-chrome' ); ?>">

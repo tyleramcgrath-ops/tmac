@@ -9,11 +9,13 @@ get_header();
 ?>
 
 <section class="phero">
-	<canvas id="chrome"></canvas>
 	<div class="pin">
-		<span class="mono"><?php esc_html_e( 'Answer engine optimization', 'mcgrath-chrome' ); ?></span>
-		<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Get Cited by AI, Not Just Ranked', 'mcgrath-chrome' ); ?></h1>
-		<p class="sub"><?php esc_html_e( 'When a buyer asks ChatGPT, Gemini, Perplexity or a Google AI Overview who to call in Jupiter, three names come back. This is the work that makes one of them yours.', 'mcgrath-chrome' ); ?></p>
+		<div class="pheroTxt">
+			<span class="mono"><?php esc_html_e( 'Answer engine optimization', 'mcgrath-chrome' ); ?></span>
+			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Get Cited by AI, Not Just Ranked', 'mcgrath-chrome' ); ?></h1>
+			<p class="sub"><?php esc_html_e( 'When a buyer asks ChatGPT, Gemini, Perplexity or a Google AI Overview who to call in Jupiter, three names come back. This is the work that makes one of them yours.', 'mcgrath-chrome' ); ?></p>
+		</div>
+		<?php mcg_glyph( 'aeo' ); ?>
 	</div>
 </section>
 

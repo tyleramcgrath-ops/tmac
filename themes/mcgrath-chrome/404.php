@@ -9,10 +9,11 @@ get_header();
 ?>
 
 <section class="phero">
-	<canvas id="chrome"></canvas>
 	<div class="pin">
-		<span class="mono"><?php esc_html_e( 'Error 404', 'mcgrath-chrome' ); ?></span>
-		<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'That page is not here', 'mcgrath-chrome' ); ?></h1>
+		<div class="pheroTxt">
+			<span class="mono"><?php esc_html_e( 'Error 404', 'mcgrath-chrome' ); ?></span>
+			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'That page is not here', 'mcgrath-chrome' ); ?></h1>
+		</div>
 	</div>
 </section>
 

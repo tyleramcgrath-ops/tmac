@@ -225,7 +225,7 @@ function mcg_scene( $night = false ) {
 /** The four-up stat strip under the hero. */
 function mcg_strip() {
 	return array(
-		array( 'icon' => 'calendar', 'value' => '14+ Years',      'label' => 'Experience' ),
+		array( 'icon' => 'calendar', 'value' => '19+ Years',      'label' => 'Experience' ),
 		array( 'icon' => 'bars',     'value' => 'SEO + AI Search','label' => "Ahead of What's Next" ),
 		array( 'icon' => 'pin',      'value' => 'Jupiter, FL',    'label' => 'Local Roots. Real Relationships.' ),
 		array( 'icon' => 'globe',    'value' => 'National Reach', 'label' => 'Results Without Boundaries.' ),
@@ -284,14 +284,14 @@ function mcg_platforms() {
 /** The featured case study. */
 function mcg_case() {
 	return array(
-		'client'  => mcg_opt( 'mcg_case_client', 'Jupiter Medical Center' ),
-		'unit'    => mcg_opt( 'mcg_case_unit', 'Orthopedic Institute' ),
-		'summary' => mcg_opt( 'mcg_case_summary', 'A comprehensive SEO, content and technical strategy that significantly increased organic visibility, patient inquiries and keyword rankings.' ),
-		'headline'=> mcg_opt( 'mcg_case_headline', 'Expert Orthopedic Care for a Higher Standard of Living' ),
+		'client'  => mcg_opt( 'mcg_case_client', 'A multi-location' ),
+		'unit'    => mcg_opt( 'mcg_case_unit', 'healthcare practice' ),
+		'summary' => mcg_opt( 'mcg_case_summary', 'Technical repair first, then the pages that answer what patients actually search for, then the profiles and citations that decide the map. The shape most engagements take, and the range of movement they produce.' ),
+		'headline'=> mcg_opt( 'mcg_case_headline', 'Expert Care, Close to Home' ),
 		'stats'   => array(
-			array( 'value' => 184, 'label' => 'Organic Traffic' ),
-			array( 'value' => 312, 'label' => 'Keyword Rankings' ),
-			array( 'value' => 67,  'label' => 'New Patient Inquiries' ),
+			array( 'value' => 180, 'label' => 'Organic Traffic' ),
+			array( 'value' => 260, 'label' => 'Keyword Rankings' ),
+			array( 'value' => 70,  'label' => 'Enquiries' ),
 		),
 	);
 }
@@ -308,12 +308,6 @@ function mcg_roots() {
 /** What the free audit reports on. */
 function mcg_audit_checks() {
 	return array( 'SEO performance', 'AI search visibility', 'Technical issues', 'Growth opportunities' );
-}
-
-/** Client wordmarks. Swap for real SVGs in assets/img when you have them. */
-function mcg_logos() {
-	$raw = mcg_opt( 'mcg_logos', "Jupiter Medical Center\nSouth Florida Orthopaedics\nThe Kessler Collection\nTire King Service Centers\nSeacoast Bank\nNorthern Trust" );
-	return array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', $raw ) ) );
 }
 
 /** Social profiles. An empty URL drops the icon from the footer. */

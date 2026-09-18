@@ -67,10 +67,10 @@ function mcg_customize( $wp_customize ) {
 		'mcg_location'    => array( 'Location line', 'Jupiter, Florida' ),
 		'mcg_reach'       => array( 'Reach line', 'Serving Clients Nationwide' ),
 		'mcg_coords'      => array( 'Coordinates under the dashboard', '26.9342° N, 80.0942° W' ),
-		'mcg_case_client' => array( 'Case study client', 'Jupiter Medical Center' ),
-		'mcg_case_unit'   => array( 'Case study practice or division', 'Orthopedic Institute' ),
-		'mcg_case_summary'=> array( 'Case study summary', 'A comprehensive SEO, content and technical strategy that significantly increased organic visibility, patient inquiries and keyword rankings.' ),
-		'mcg_case_headline'=> array( 'Headline shown on the mock site', 'Expert Orthopedic Care for a Higher Standard of Living' ),
+		'mcg_case_client' => array( 'Case study: first line', 'A multi-location' ),
+		'mcg_case_unit'   => array( 'Case study: second line', 'healthcare practice' ),
+		'mcg_case_summary'=> array( 'Case study summary', 'Technical repair first, then the pages that answer what patients actually search for, then the profiles and citations that decide the map. The shape most engagements take, and the range of movement they produce.' ),
+		'mcg_case_headline'=> array( 'Headline shown on the mock site', 'Expert Care, Close to Home' ),
 		'mcg_social_linkedin'  => array( 'LinkedIn URL', '' ),
 		'mcg_social_instagram' => array( 'Instagram URL', '' ),
 		'mcg_social_youtube'   => array( 'YouTube URL', '' ),
@@ -88,17 +88,6 @@ function mcg_customize( $wp_customize ) {
 		) );
 	}
 
-	// Client wordmarks, one per line.
-	$wp_customize->add_setting( 'mcg_logos', array(
-		'default'           => "Jupiter Medical Center\nSouth Florida Orthopaedics\nThe Kessler Collection\nTire King Service Centers\nSeacoast Bank\nNorthern Trust",
-		'sanitize_callback' => 'sanitize_textarea_field',
-	) );
-	$wp_customize->add_control( 'mcg_logos', array(
-		'label'       => __( 'Client logo row', 'mcgrath-chrome' ),
-		'description' => __( 'One name per line.', 'mcgrath-chrome' ),
-		'section'     => 'mcg_hero',
-		'type'        => 'textarea',
-	) );
 }
 add_action( 'customize_register', 'mcg_customize' );
 
@@ -371,9 +360,16 @@ function mcg_activate() {
 		$menu_id = wp_create_nav_menu( $menu_name );
 
 		if ( ! is_wp_error( $menu_id ) ) {
-			$in_menu = array( 'seo-jupiter-fl', 'web-design-jupiter', 'ai-visibility', 'about', 'contact' );
+			$in_menu = array(
+				'seo-jupiter-fl'     => 'Services',
+				'vault'              => 'Work',
+				'about'              => 'About',
+				'blog'               => 'Insights',
+				'ai-visibility'      => 'Tools',
+				'contact'            => 'Contact',
+			);
 
-			foreach ( $in_menu as $slug ) {
+			foreach ( $in_menu as $slug => $label ) {
 				if ( empty( $ids[ $slug ] ) ) {
 					continue;
 				}
@@ -382,6 +378,9 @@ function mcg_activate() {
 					'menu-item-object'    => 'page',
 					'menu-item-type'      => 'post_type',
 					'menu-item-status'    => 'publish',
+					// The page titles carry the location for search; the menu
+					// does not need to repeat it.
+					'menu-item-title'     => $label,
 				) );
 			}
 

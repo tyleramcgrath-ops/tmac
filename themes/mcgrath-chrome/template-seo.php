@@ -9,11 +9,13 @@ get_header();
 ?>
 
 <section class="phero">
-	<canvas id="chrome"></canvas>
 	<div class="pin">
-		<span class="mono"><?php esc_html_e( 'Search engine optimization', 'mcgrath-chrome' ); ?></span>
-		<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'SEO Company in Jupiter, FL', 'mcgrath-chrome' ); ?></h1>
-		<p class="sub"><?php esc_html_e( 'Local and national search work for businesses in Jupiter, Palm Beach Gardens and Tequesta. Run by the person who does it, priced in the open, with no long contract.', 'mcgrath-chrome' ); ?></p>
+		<div class="pheroTxt">
+			<span class="mono"><?php esc_html_e( 'Search engine optimization', 'mcgrath-chrome' ); ?></span>
+			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'SEO Company in Jupiter, FL', 'mcgrath-chrome' ); ?></h1>
+			<p class="sub"><?php esc_html_e( 'Local and national search work for businesses in Jupiter, Palm Beach Gardens and Tequesta. Run by the person who does it, priced in the open, with no long contract.', 'mcgrath-chrome' ); ?></p>
+		</div>
+		<?php mcg_glyph( 'seo' ); ?>
 	</div>
 </section>
 

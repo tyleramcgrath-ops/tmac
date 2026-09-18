@@ -9,10 +9,12 @@ get_header();
 ?>
 
 <section class="phero">
-	<canvas id="chrome"></canvas>
 	<div class="pin">
-		<span class="mono"><?php esc_html_e( 'Notes on search', 'mcgrath-chrome' ); ?></span>
-		<h1 data-tag="&lt;h1&gt;"><?php echo esc_html( is_home() && ! is_front_page() ? get_the_title( get_option( 'page_for_posts' ) ) : __( 'Writing', 'mcgrath-chrome' ) ); ?></h1>
+		<div class="pheroTxt">
+			<span class="mono"><?php esc_html_e( 'Notes on search', 'mcgrath-chrome' ); ?></span>
+			<h1 data-tag="&lt;h1&gt;"><?php echo esc_html( is_home() && ! is_front_page() ? get_the_title( get_option( 'page_for_posts' ) ) : __( 'Writing', 'mcgrath-chrome' ) ); ?></h1>
+		</div>
+		<?php mcg_glyph( 'writing' ); ?>
 	</div>
 </section>
 

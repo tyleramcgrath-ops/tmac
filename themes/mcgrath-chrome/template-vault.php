@@ -17,7 +17,7 @@ while ( have_posts() ) :
 		?>
 		<section class="vault">
 			<div class="vaultIn">
-				<img class="vlogo" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo.png' ); ?>" alt="" aria-hidden="true" width="720" height="400">
+				<img class="vlogo" src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo.png' ); ?>" alt="" aria-hidden="true" width="1109" height="612">
 				<div class="vaultRing" aria-hidden="true"><span></span></div>
 				<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Restricted', 'mcgrath-chrome' ); ?></h1>
 				<p>

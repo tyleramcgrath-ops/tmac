@@ -9,11 +9,13 @@ get_header();
 ?>
 
 <section class="phero">
-	<canvas id="chrome"></canvas>
 	<div class="pin">
-		<span class="mono"><?php esc_html_e( 'One call, no pitch', 'mcgrath-chrome' ); ?></span>
-		<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Get a Free Jupiter SEO Audit', 'mcgrath-chrome' ); ?></h1>
-		<p class="sub"><?php esc_html_e( 'I will look at your rankings, your site health and whether AI answers mention you at all, then send back the three things worth fixing first. It costs nothing and you keep the findings either way.', 'mcgrath-chrome' ); ?></p>
+		<div class="pheroTxt">
+			<span class="mono"><?php esc_html_e( 'One call, no pitch', 'mcgrath-chrome' ); ?></span>
+			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Get a Free Jupiter SEO Audit', 'mcgrath-chrome' ); ?></h1>
+			<p class="sub"><?php esc_html_e( 'I will look at your rankings, your site health and whether AI answers mention you at all, then send back the three things worth fixing first. It costs nothing and you keep the findings either way.', 'mcgrath-chrome' ); ?></p>
+		</div>
+		<?php mcg_glyph( 'contact' ); ?>
 	</div>
 </section>
 

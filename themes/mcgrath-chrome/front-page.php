@@ -68,7 +68,10 @@ get_header();
 
 				<div class="dashBody" aria-hidden="true">
 					<div class="dashNav">
-						<span class="dlogo">MMG<small><?php echo esc_html( mcg_opt( 'mcg_brand_line', 'McGrath Marketing Group' ) ); ?></small></span>
+						<span class="dlogo">
+							<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo.png' ); ?>"
+								alt="" width="1109" height="612">
+						</span>
 						<ul>
 							<li class="on">Overview</li>
 							<li>Search Visibility</li>
@@ -279,6 +282,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 
 		<div class="caseBody">
 			<div class="rv">
+				<span class="caseTag"><?php esc_html_e( 'Representative engagement', 'mcgrath-chrome' ); ?></span>
 				<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_case['client'] ); ?><br><?php echo esc_html( $mcg_case['unit'] ); ?></h3>
 				<p><?php echo esc_html( $mcg_case['summary'] ); ?></p>
 				<a class="btn onDark" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>"><?php esc_html_e( 'View Full Case Study', 'mcgrath-chrome' ); ?></a>
@@ -298,13 +302,13 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 					<div class="lapBar"><i></i><i></i><i></i><b></b></div>
 					<div class="lapSite">
 						<div class="lapNav">
-							<span class="lm"><?php echo esc_html( $mcg_case['client'] ); ?></span>
+							<span class="lm"><?php esc_html_e( 'Example Site', 'mcgrath-chrome' ); ?></span>
 							<span class="lk"><i></i><i></i><i></i><span class="lb"></span></span>
 						</div>
 						<div class="lapHero">
 							<h4><?php echo esc_html( $mcg_case['headline'] ); ?></h4>
-							<p><?php esc_html_e( 'Personalised, evidence-led orthopedic care from a team recognised across the region for outcomes that last.', 'mcgrath-chrome' ); ?></p>
-							<span class="lcta"><?php esc_html_e( 'Request an Appointment', 'mcgrath-chrome' ); ?></span>
+							<p><?php esc_html_e( 'A clear offer, a fast page and a path to the enquiry — the shape most of this work takes.', 'mcgrath-chrome' ); ?></p>
+							<span class="lcta"><?php esc_html_e( 'Get in Touch', 'mcgrath-chrome' ); ?></span>
 						</div>
 					</div>
 				</div>
@@ -412,18 +416,6 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 	</div>
 </section>
 
-<!-- =========================== LOGO ROW ========================== -->
-<section class="logos gut" aria-label="<?php esc_attr_e( 'Selected clients', 'mcgrath-chrome' ); ?>">
-	<div class="logosIn rv">
-		<span class="eyebrow"><?php esc_html_e( 'Trusted by industry leaders', 'mcgrath-chrome' ); ?></span>
-		<div class="logoRow">
-			<?php foreach ( mcg_logos() as $mcg_logo ) : ?>
-				<span><?php echo esc_html( $mcg_logo ); ?></span>
-			<?php endforeach; ?>
-		</div>
-	</div>
-</section>
-
 <!-- ============================= CTA ============================= -->
 <section class="cta gut" id="cta">
 	<?php mcg_plate( 'ocean', 'night' ); ?>
@@ -432,7 +424,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 	<div class="ctaIn rv">
 		<span class="eyebrow"><?php esc_html_e( 'Let’s build what’s next', 'mcgrath-chrome' ); ?></span>
 		<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'A Smarter, Stronger Future for Your Business.', 'mcgrath-chrome' ); ?></h2>
-		<p><?php esc_html_e( 'Whether you are in Jupiter, across Florida, or nationwide, MMG is ready to help you grow.', 'mcgrath-chrome' ); ?></p>
+		<p><?php esc_html_e( 'Whether you are in Jupiter, across Florida, or nationwide, we are ready to help you grow.', 'mcgrath-chrome' ); ?></p>
 		<div class="ctaBtns">
 			<a class="btn light" href="<?php echo esc_url( mcg_url( 'contact' ) ); ?>" data-mag><?php esc_html_e( 'Start a Project', 'mcgrath-chrome' ); ?></a>
 			<a class="btn onDark" href="mailto:<?php echo esc_attr( mcg_opt( 'mcg_email', 'tyler@mcgrathmarketinggroup.com' ) ); ?>"><?php esc_html_e( 'Let’s Talk', 'mcgrath-chrome' ); ?></a>

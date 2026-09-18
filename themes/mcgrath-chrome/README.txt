@@ -9,7 +9,7 @@ WHAT IS IN IT
 * Homepage. Hero with a live-looking visibility dashboard drawn in markup (not
   an image, so it stays sharp and a crawler can read it), a four-up stat strip,
   the dissolve, four service cards, a featured case study, the Jupiter section,
-  FAQ, the free audit form, a client logo row and the closing call to action.
+  FAQ, the free audit form and the closing call to action.
 
 * The dissolve. A real page of blue links — live DOM text, so it is crawlable
   and screen-reader friendly — is sampled into particles, flown across the
@@ -27,7 +27,12 @@ WHAT IS IN IT
 
 * Inner pages. Page templates for SEO Services, Web Design, AI Visibility,
   About, Contact and The Vault, plus blog index, single, search, archive and
-  404 — all on the new palette.
+  404 — all on the new palette. Each one opens with its own drawn figure rather
+  than the same decorative field: ranking positions on SEO, a page being
+  composed on Web Design, one question answered by several engines on AI
+  Visibility, a mark and its ground on About, a place on a map on Contact.
+  They are line work on the brand palette, defined in inc/icons.php, so adding
+  a page means adding a glyph there and calling mcg_glyph() in the template.
 
 * Local SEO built in: ProfessionalService schema with the full service area on
   every page; on the front page, FAQPage schema generated from the same array
@@ -69,10 +74,17 @@ that: drop the fourth argument and the panel will be sharper for it.
 
 LOGO
 ----
-The wordmark is set in type (MMG plus the sub-line), so there is nothing to
-export. To use a real mark instead: Appearance > Customize > Site Identity >
-Logo. A custom logo set there replaces the wordmark in the header. Set the Site
+The MG mark ships in assets/img/logo.png and is used in the header, the footer,
+the dashboard in the hero and on the vault door. There is only one file: on dark
+surfaces it is inverted in CSS, and in crawler view it is tinted green, so there
+is no second asset to keep in sync.
+
+To swap it without touching code: Appearance > Customize > Site Identity > Logo.
+A custom logo set there replaces the bundled mark in the header. Set the Site
 Icon in the same panel for the browser tab and the search-result favicon.
+
+The name beside the mark is the "Wordmark sub-line" string in Appearance >
+Customize > Homepage & brand.
 
 
 INSTALL
@@ -113,10 +125,12 @@ not normal page content lives there:
   * the dissolve heading and paragraph
   * the search query shown in the dissolve, the question it lands on, and the
     highlighted end of that question
-  * the case study: client, division, summary and the headline on the mock site
+  * the case study: both name lines, the summary and the headline on the mock
+    site. It ships as a deliberately unnamed, representative engagement with
+    round numbers — put a real client in before launch, or leave it as the
+    illustration it is
   * the wordmark sub-line, the footer tagline, contact email, location, reach
     line and the coordinates
-  * the client logo row, one name per line
   * LinkedIn, Instagram and YouTube URLs. Leave one blank and its icon does not
     render — there are no dead links in the footer.
 
