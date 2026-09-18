@@ -45,10 +45,18 @@ add_filter( 'wp_resource_hints', 'pts_resource_hints', 10, 2 );
 function pts_enqueue_assets() {
 	wp_enqueue_style( 'pts-fonts', pts_fonts_url(), array(), null );
 
+	// Tokens first: every other rule reads from the custom properties it defines.
+	wp_enqueue_style(
+		'pts-tokens',
+		PTS_URI . 'assets/css/tokens.css',
+		array( 'pts-fonts' ),
+		PTS_VERSION
+	);
+
 	wp_enqueue_style(
 		'pts-main',
 		PTS_URI . 'assets/css/main.css',
-		array( 'pts-fonts' ),
+		array( 'pts-tokens' ),
 		PTS_VERSION
 	);
 
@@ -83,6 +91,6 @@ add_action( 'wp_enqueue_scripts', 'pts_enqueue_assets' );
  * admin preview matches the rendered page.
  */
 function pts_editor_assets() {
-	add_editor_style( array( pts_fonts_url(), 'assets/css/editor.css' ) );
+	add_editor_style( array( pts_fonts_url(), 'assets/css/tokens.css', 'assets/css/editor.css' ) );
 }
 add_action( 'after_setup_theme', 'pts_editor_assets' );
