@@ -283,17 +283,19 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .heroScene{position:relative;min-width:0;}
 
 .tag{
-  /* the light stands at the right of this photograph, so the words sit to its
-     left over open sky rather than across the tower */
+  /* Anchored to the left edge of this column, not offset from the right. The
+     tower sits at about two thirds across the photograph at every width, and
+     this column starts at half, so the words are always clear of it. Measuring
+     in from the right put them straight over the lantern. */
   display:block;width:max-content;max-width:100%;
-  margin:0 clamp(140px,13vw,210px) clamp(34px,7vw,118px) auto;
-  text-align:right;position:relative;
+  margin:0 auto clamp(34px,7vw,118px) 0;
+  text-align:left;position:relative;
   font-family:var(--body);font-weight:600;font-size:clamp(9px,.78vw,10.5px);
   letter-spacing:.2em;text-transform:uppercase;color:var(--navy);line-height:2.15;
   text-shadow:0 1px 3px rgba(255,255,255,.9),0 2px 14px rgba(255,255,255,.75);
 }
 .tag::before{
-  content:"";position:absolute;right:-34px;top:-26px;width:calc(100% + 78px);height:calc(100% + 54px);
+  content:"";position:absolute;left:-34px;top:-26px;width:calc(100% + 78px);height:calc(100% + 54px);
   border-radius:50%;z-index:-1;
   background:radial-gradient(closest-side,rgba(255,255,255,.62),rgba(255,255,255,0) 76%);
 }
