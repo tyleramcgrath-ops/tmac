@@ -461,3 +461,21 @@ The assistant interface and the shared FAQ it answers from are translated, so
 with Spanish switched on the bubble speaks Spanish. The category-specific FAQs
 and the long-form articles are still English until written — the ES column on
 the Pages and Posts lists shows what remains.
+
+---
+
+## 13. Fixed in v1.9.1 — the language toggle only worked one way
+
+Clicking **ES** switched to Spanish; clicking **EN** did nothing.
+
+The English link pointed at the plain URL with no `?lang=` on it, which looked
+tidier and was wrong: with no parameter in the request the theme falls back to
+the language stored in the visitor's cookie — still Spanish — so the site
+switched to Spanish and could never switch back.
+
+Both links now carry the parameter. Choosing English clears the stored
+preference and redirects to the clean URL, so the English page stays canonical
+and query-string free, which is what the hreflang tags point at.
+
+Tested both directions and across page loads: Spanish sticks while browsing,
+English sticks while browsing, and switching back works from any page.

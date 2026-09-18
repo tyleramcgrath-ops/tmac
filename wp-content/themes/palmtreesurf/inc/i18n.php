@@ -127,8 +127,23 @@ function pt_remember_language() {
 	}
 
 	$lang = pt_current_language();
+	$path = COOKIEPATH ? COOKIEPATH : '/';
 
-	setcookie( 'pt_lang', $lang, time() + MONTH_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN, is_ssl(), true );
+	/*
+	 * English is the site's default, so it is remembered by clearing the cookie
+	 * rather than storing "en", and the visitor is sent to the clean URL. That
+	 * keeps the English page canonical and query-string free, which is what the
+	 * hreflang tags point at.
+	 */
+	if ( 'en' === $lang ) {
+		setcookie( 'pt_lang', '', time() - YEAR_IN_SECONDS, $path, COOKIE_DOMAIN, is_ssl(), true );
+		unset( $_COOKIE['pt_lang'] );
+
+		wp_safe_redirect( remove_query_arg( 'lang' ) );
+		exit;
+	}
+
+	setcookie( 'pt_lang', $lang, time() + MONTH_IN_SECONDS, $path, COOKIE_DOMAIN, is_ssl(), true );
 }
 add_action( 'template_redirect', 'pt_remember_language', 1 );
 
@@ -463,7 +478,14 @@ function pt_render_language_toggle() {
 	echo '<div class="lang-switch" role="group" aria-label="' . esc_attr__( 'Language', 'palmtreesurf' ) . '">';
 
 	foreach ( pt_languages() as $code => $language ) {
-		$url = 'en' === $code ? $base : add_query_arg( 'lang', $code, $base );
+		/*
+		 * Both links carry ?lang=. Linking English to the bare URL looks
+		 * tidier and does not work: with no parameter the request falls
+		 * through to the stored preference, which is still Spanish, so the
+		 * toggle could switch to Spanish and never switch back. The redirect
+		 * in pt_remember_language() strips the parameter again afterwards.
+		 */
+		$url = add_query_arg( 'lang', $code, $base );
 
 		printf(
 			'<a class="lang-switch__item%1$s" href="%2$s" hreflang="%3$s" lang="%3$s"%4$s><span class="screen-reader-text">%5$s</span><span aria-hidden="true">%6$s</span></a>',
