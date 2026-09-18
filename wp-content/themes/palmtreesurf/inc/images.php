@@ -113,15 +113,27 @@ function pt_image( $slot, $args = array() ) {
 		$file = PT_DIR . 'assets/images/src/' . $definition['file'];
 
 		if ( file_exists( $file ) ) {
+			/*
+			 * Serve the pre-sized variants when they exist, so a phone does not
+			 * download a 1920px banner. Without this every device gets the
+			 * full-size file, which dominates page weight on mobile.
+			 */
+			$srcset = function_exists( 'pt_bundled_srcset' )
+				? pt_bundled_srcset( $definition['file'], $width )
+				: '';
+
+			$sizes = $args['sizes'] ? $args['sizes'] : '100vw';
+
 			printf(
-				'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" class="%5$s" loading="%6$s" decoding="async"%7$s />',
+				'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" class="%5$s" loading="%6$s" decoding="async"%7$s%8$s />',
 				esc_url( PT_URI . 'assets/images/src/' . rawurlencode( $definition['file'] ) ),
 				$width,
 				$height,
 				esc_attr( $args['alt'] ),
 				esc_attr( $class ),
 				esc_attr( $args['priority'] ? 'eager' : $args['loading'] ),
-				$args['priority'] ? ' fetchpriority="high"' : ''
+				$args['priority'] ? ' fetchpriority="high"' : '',
+				$srcset ? ' srcset="' . esc_attr( $srcset ) . '" sizes="' . esc_attr( $sizes ) . '"' : ''
 			);
 			return;
 		}
@@ -185,6 +197,14 @@ function pt_image_sizes() {
 	add_image_size( 'pt-hero', 1920, 1080, true );
 	add_image_size( 'pt-portrait', 800, 1067, true );
 	add_image_size( 'pt-gallery', 1200, 1200, false );
+
+	/*
+	 * Half-width companions. Without a smaller crop in the same aspect ratio
+	 * WordPress has nothing to put in the srcset, so a phone downloads the
+	 * 800px card image for a 300px slot however good the `sizes` hint is.
+	 */
+	add_image_size( 'pt-card-sm', 400, 300, true );
+	add_image_size( 'pt-portrait-sm', 400, 534, true );
 }
 add_action( 'after_setup_theme', 'pt_image_sizes' );
 

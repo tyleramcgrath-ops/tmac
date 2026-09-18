@@ -81,6 +81,10 @@ function pt_refreshable_pages() {
 			'content'  => pt_seed_about_body(),
 			'template' => 'page-templates/page-about.php',
 		),
+		'contact'         => array(
+			'content'  => pt_seed_contact_body(),
+			'template' => 'page-templates/page-contact.php',
+		),
 		'list-your-tours' => array(
 			'content'  => pt_seed_operators_body(),
 			'template' => 'page-templates/page-operators.php',

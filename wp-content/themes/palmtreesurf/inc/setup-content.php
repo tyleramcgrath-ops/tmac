@@ -276,7 +276,7 @@ function pt_seed_content() {
 	$contact_id = pt_seed_page(
 		__( 'Contact', 'palmtreesurf' ),
 		'contact',
-		'<!-- wp:paragraph --><p>' . esc_html__( 'Questions before you book? Send us a message and we will reply within 24 hours.', 'palmtreesurf' ) . '</p><!-- /wp:paragraph -->',
+		pt_seed_contact_body(),
 		'page-templates/page-contact.php'
 	);
 	$privacy_id = pt_seed_page(

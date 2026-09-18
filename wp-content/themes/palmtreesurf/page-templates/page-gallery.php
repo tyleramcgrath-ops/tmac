@@ -23,9 +23,18 @@ while ( have_posts() ) :
 			</div>
 		</header>
 
-		<?php if ( trim( wp_strip_all_tags( get_the_content() ) ) ) : ?>
-			<div class="container container--narrow entry__content"><?php the_content(); ?></div>
-		<?php endif; ?>
+		<div class="container container--narrow entry__content" style="padding-top:var(--pt-space-md)">
+			<?php if ( trim( wp_strip_all_tags( get_the_content() ) ) ) : ?>
+				<?php the_content(); ?>
+			<?php else : ?>
+				<p>
+					<?php esc_html_e( 'Photographs from real sessions on this beach — first lessons, charters, estuary mornings and the sunsets people come back for. No stock photography and nothing staged.', 'palmtreesurf' ); ?>
+				</p>
+				<p>
+					<?php esc_html_e( 'If you have been out with us and want your photos taken down, or you would like the full-resolution files from your session, just message us and we will sort it.', 'palmtreesurf' ); ?>
+				</p>
+			<?php endif; ?>
+		</div>
 
 		<?php get_template_part( 'template-parts/home/gallery' ); ?>
 

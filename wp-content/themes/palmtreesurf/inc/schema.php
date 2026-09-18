@@ -211,6 +211,51 @@ function pt_breadcrumb_schema() {
 			'name'     => get_the_title(),
 			'item'     => get_permalink(),
 		);
+	} elseif ( is_tax( pt_experience_taxonomies() ) ) {
+		$archive = get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE );
+
+		if ( $archive ) {
+			$items[] = array(
+				'@type'    => 'ListItem',
+				'position' => 2,
+				'name'     => __( 'Experiences', 'palmtreesurf' ),
+				'item'     => $archive,
+			);
+		}
+
+		$term = get_queried_object();
+		$link = $term instanceof WP_Term ? get_term_link( $term ) : '';
+
+		if ( $term instanceof WP_Term && ! is_wp_error( $link ) ) {
+			$items[] = array(
+				'@type'    => 'ListItem',
+				'position' => count( $items ) + 1,
+				'name'     => $term->name,
+				'item'     => $link,
+			);
+		}
+	} elseif ( is_post_type_archive( PT_EXPERIENCE_POST_TYPE ) ) {
+		$archive = get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE );
+
+		if ( $archive ) {
+			$items[] = array(
+				'@type'    => 'ListItem',
+				'position' => 2,
+				'name'     => __( 'Experiences', 'palmtreesurf' ),
+				'item'     => $archive,
+			);
+		}
+	} elseif ( is_home() && ! is_front_page() ) {
+		$blog = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : '';
+
+		if ( $blog ) {
+			$items[] = array(
+				'@type'    => 'ListItem',
+				'position' => 2,
+				'name'     => get_the_title( get_option( 'page_for_posts' ) ),
+				'item'     => $blog,
+			);
+		}
 	} elseif ( is_singular() ) {
 		$items[] = array(
 			'@type'    => 'ListItem',

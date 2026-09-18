@@ -253,3 +253,27 @@ function pt_seed_operators_body() {
 		)
 	);
 }
+
+/**
+ * Body copy for the contact page.
+ *
+ * @return string
+ */
+function pt_seed_contact_body() {
+	return pt_blocks(
+		array(
+			array( 'p', __( 'Questions before you book? Send the form and a real person will answer it. We reply to everything, usually the same day.', 'palmtreesurf' ) ),
+			array( 'p', __( 'The more you tell us, the more useful the reply. Dates, how many people, what everyone has done before, and anything we should know about swimming confidence or mobility all help us put you on the right trip at the right tide rather than just the next available slot.', 'palmtreesurf' ) ),
+			array( 'h2', __( 'What to tell us', 'palmtreesurf' ) ),
+			array( 'list', array(
+				__( 'The dates you are in Tamarindo, even if they are not fixed yet.', 'palmtreesurf' ),
+				__( 'How many people are coming, and their rough ages.', 'palmtreesurf' ),
+				__( 'What you are hoping to do — or that you are not sure, which is a perfectly good answer.', 'palmtreesurf' ),
+				__( 'Anything relevant about swimming confidence, seasickness, injuries or mobility.', 'palmtreesurf' ),
+			) ),
+			array( 'h2', __( 'Where we are', 'palmtreesurf' ) ),
+			array( 'p', __( 'Tamarindo, in the province of Guanacaste on the Pacific coast of Costa Rica. The nearest international airport is Liberia, generally an hour and a half to two hours away by road. San José is around four to five hours by car, or a short domestic flight.', 'palmtreesurf' ) ),
+			array( 'p', __( 'The town itself is walkable — you do not need a car to reach the beach, dinner or a lesson. A car is useful only for inland trips and neighbouring beaches.', 'palmtreesurf' ) ),
+		)
+	);
+}

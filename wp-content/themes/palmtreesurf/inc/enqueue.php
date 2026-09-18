@@ -21,42 +21,46 @@ function pt_asset_version( $relative ) {
 }
 
 /**
- * Build the Google Fonts URL for Inter.
+ * The stylesheet declaring the self-hosted fonts.
  *
- * Kept in one function so the front end and the block editor request the same
- * weights and never download two different subsets.
+ * Kept in one function so the front end and the block editor load the same one.
  *
  * @return string
  */
 function pt_fonts_url() {
-	return 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap';
+	return PT_URI . 'assets/css/fonts.css';
 }
 
 /**
- * Preconnect to the Google Fonts hosts so the stylesheet resolves sooner.
+ * Preload the font files the first screen actually uses.
  *
- * @param array  $urls           URLs to print for the given relation.
- * @param string $relation_type  Relation type being printed.
- * @return array
+ * Only the latin subsets, and only the two families in the hero. A preload for
+ * a file the page does not end up using is a wasted request, so latin-ext is
+ * deliberately left to load on demand.
  */
-function pt_resource_hints( $urls, $relation_type ) {
-	if ( 'preconnect' === $relation_type ) {
-		$urls[] = array( 'href' => 'https://fonts.googleapis.com' );
-		$urls[] = array(
-			'href'        => 'https://fonts.gstatic.com',
-			'crossorigin' => 'anonymous',
+function pt_preload_fonts() {
+	$fonts = array( 'manrope-latin.woff2', 'dancing-script-latin.woff2' );
+
+	foreach ( $fonts as $font ) {
+		$path = PT_DIR . 'assets/fonts/' . $font;
+
+		if ( ! file_exists( $path ) ) {
+			continue;
+		}
+
+		printf(
+			'<link rel="preload" as="font" type="font/woff2" href="%s" crossorigin />' . "\n",
+			esc_url( PT_URI . 'assets/fonts/' . $font )
 		);
 	}
-
-	return $urls;
 }
-add_filter( 'wp_resource_hints', 'pt_resource_hints', 10, 2 );
+add_action( 'wp_head', 'pt_preload_fonts', 1 );
 
 /**
  * Enqueue front-end styles and scripts.
  */
 function pt_enqueue_assets() {
-	wp_enqueue_style( 'pt-fonts', pt_fonts_url(), array(), null );
+	wp_enqueue_style( 'pt-fonts', pt_fonts_url(), array(), pt_asset_version( 'assets/css/fonts.css' ) );
 
 	/*
 	 * Every asset is versioned by its OWN modification time. Versioning one
@@ -80,15 +84,21 @@ function pt_enqueue_assets() {
 		pt_asset_version( 'assets/css/main.css' )
 	);
 
-	// Keeps the WordPress theme header discoverable to child themes and tools.
-	wp_enqueue_style( 'pt-style', get_stylesheet_uri(), array( 'pt-main' ), pt_asset_version( 'style.css' ) );
+	/*
+	 * style.css is deliberately NOT enqueued. It holds the theme header and
+	 * nothing else, so loading it costs a request and delivers no CSS. A child
+	 * theme's own style.css is enqueued by WordPress regardless.
+	 */
 
 	wp_enqueue_script(
 		'pt-main',
 		PT_URI . 'assets/js/main.js',
 		array(),
 		pt_asset_version( 'assets/js/main.js' ),
-		true
+		array(
+			'strategy'  => 'defer',
+			'in_footer' => true,
+		)
 	);
 
 	wp_localize_script(

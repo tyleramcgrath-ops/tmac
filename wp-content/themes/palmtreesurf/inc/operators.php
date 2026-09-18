@@ -565,3 +565,38 @@ function pt_operator_faq() {
 		)
 	);
 }
+
+/**
+ * FAQPage schema for the operator page, mirroring the visible accordion.
+ */
+function pt_print_operator_schema() {
+	if ( ! is_page_template( 'page-templates/page-operators.php' ) ) {
+		return;
+	}
+
+	$entities = array();
+
+	foreach ( pt_operator_faq() as $pair ) {
+		$entities[] = array(
+			'@type'          => 'Question',
+			'name'           => $pair[0],
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text'  => $pair[1],
+			),
+		);
+	}
+
+	if ( ! $entities ) {
+		return;
+	}
+
+	pt_print_jsonld(
+		array(
+			'@context'   => 'https://schema.org',
+			'@type'      => 'FAQPage',
+			'mainEntity' => $entities,
+		)
+	);
+}
+add_action( 'wp_head', 'pt_print_operator_schema', 35 );

@@ -97,6 +97,29 @@ $pt_search   = get_search_query();
 	);
 	?>
 
+	<section class="tax-intro">
+		<div class="container tax-intro__inner">
+			<div class="tax-intro__prose prose">
+				<p>
+					<?php esc_html_e( 'Everything below runs within a few kilometres of Tamarindo beach. The surf breaks over sand rather than reef, which is why this became a teaching beach; the estuary behind the town sits inside a protected wildlife refuge; deep water is close enough that a fishing boat can be inshore or offshore without a long run; and the dry forest inland has the waterfalls.', 'palmtreesurf' ); ?>
+				</p>
+				<p>
+					<?php esc_html_e( 'Pick a category to see everything in it, or use the finder above if you already know your dates. If you are not sure what suits your group, say so when you message us — it is a normal question and we would rather answer it before you book than after.', 'palmtreesurf' ); ?>
+				</p>
+			</div>
+
+			<aside class="tax-know">
+				<h2 class="tax-know__title"><?php esc_html_e( 'Good to know', 'palmtreesurf' ); ?></h2>
+				<ul class="tax-know__list">
+					<li><?php esc_html_e( 'Book water activities for the morning — the wind builds through the day.', 'palmtreesurf' ); ?></li>
+					<li><?php esc_html_e( 'Water sits in the high twenties Celsius all year. No wetsuit needed, ever.', 'palmtreesurf' ); ?></li>
+					<li><?php esc_html_e( 'Nothing here needs prior experience unless its page says so.', 'palmtreesurf' ); ?></li>
+					<li><?php esc_html_e( 'Conditions decide. If a day is wrong for your group, we move you rather than run it.', 'palmtreesurf' ); ?></li>
+				</ul>
+			</aside>
+		</div>
+	</section>
+
 	<?php if ( $pt_types && ! is_wp_error( $pt_types ) ) : ?>
 		<div class="cat-sections">
 			<?php foreach ( $pt_types as $pt_type ) : ?>
@@ -214,6 +237,10 @@ $pt_search   = get_search_query();
 		<?php get_template_part( 'template-parts/components/category-others', null, array( 'current' => $pt_term ) ); ?>
 	<?php endif; ?>
 
+<?php endif; ?>
+
+<?php if ( $pt_hub ) : ?>
+	<?php get_template_part( 'template-parts/home/faq' ); ?>
 <?php endif; ?>
 
 <?php get_template_part( 'template-parts/home/cta' ); ?>

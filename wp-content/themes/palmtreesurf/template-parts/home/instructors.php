@@ -48,10 +48,10 @@ if ( ! $pt_query->have_posts() ) {
 				<li class="instructor" data-reveal>
 					<div class="instructor__media">
 						<?php if ( has_post_thumbnail() ) : ?>
-							<?php the_post_thumbnail( 'pt-portrait', array( 'loading' => 'lazy' ) ); ?>
+							<?php the_post_thumbnail( 'pt-portrait', array( 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(min-width: 1000px) 320px, (min-width: 700px) 45vw, 92vw' ) ); ?>
 						<?php else : ?>
 							<?php // Own slot per guide: never repeat one photo down the row. ?>
-							<?php pt_image( 'instructor-' . min( 4, $pt_index ) ); ?>
+							<?php pt_image( 'instructor-' . min( 4, $pt_index ), array( 'sizes' => '(min-width: 1000px) 300px, 45vw' ) ); ?>
 						<?php endif; ?>
 					</div>
 					<div class="instructor__body">

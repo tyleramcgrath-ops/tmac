@@ -52,7 +52,7 @@ if ( ! $pt_query->have_posts() ) {
 					<a class="tall-card__link" href="<?php the_permalink(); ?>">
 						<span class="tall-card__media">
 							<?php if ( has_post_thumbnail() ) : ?>
-								<?php the_post_thumbnail( 'pt-portrait', array( 'loading' => 'lazy' ) ); ?>
+								<?php the_post_thumbnail( 'pt-portrait', array( 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(min-width: 1000px) 320px, (min-width: 700px) 45vw, 92vw' ) ); ?>
 							<?php else : ?>
 								<?php pt_image( 'split-1-primary' ); ?>
 							<?php endif; ?>

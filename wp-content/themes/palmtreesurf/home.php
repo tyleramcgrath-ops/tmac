@@ -33,6 +33,15 @@ $pt_page = get_option( 'page_for_posts' ) ? get_post( get_option( 'page_for_post
 	<?php get_template_part( 'template-parts/components/breadcrumbs' ); ?>
 </div>
 
+<div class="container container--narrow entry__content" style="padding-top:var(--pt-space-xl)">
+	<p>
+		<?php esc_html_e( 'These are the answers we end up giving over and over — in the shop, on the boat, and in the emails people send before they book. Rather than repeat them one at a time, they are written out properly here.', 'palmtreesurf' ); ?>
+	</p>
+	<p>
+		<?php esc_html_e( 'Everything is specific to this coast. When a guide says the wind builds through the morning, or that a particular month is wrong for the fish you are after, that comes from working these waters rather than from a general travel article. Where something is genuinely uncertain — what you will see on a wildlife trip, what the surf will do next week — it says so.', 'palmtreesurf' ); ?>
+	</p>
+</div>
+
 <div class="container journal-list">
 	<?php if ( have_posts() ) : ?>
 		<div class="card-grid card-grid--3" data-reveal-group>

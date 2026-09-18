@@ -78,7 +78,7 @@ function pt_site_logo( $variant = 'auto' ) {
 	return sprintf(
 		'<a class="site-logo site-logo--image" href="%1$s" rel="home">'
 		. '<img class="site-logo__img site-logo__img--light" src="%2$s" alt="%4$s" width="638" height="160" fetchpriority="high" decoding="async" />'
-		. '<img class="site-logo__img site-logo__img--dark" src="%3$s" alt="" aria-hidden="true" width="638" height="160" decoding="async" />'
+		. '<img class="site-logo__img site-logo__img--dark" src="%3$s" alt="" aria-hidden="true" width="638" height="160" decoding="async" loading="lazy" />'
 		. '</a>',
 		esc_url( home_url( '/' ) ),
 		esc_url( $light ),

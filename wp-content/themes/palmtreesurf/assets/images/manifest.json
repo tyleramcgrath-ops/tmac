@@ -42,8 +42,8 @@
   "file": null
  },
  "split-1-primary": {
-  "w": 2400,
-  "h": 900,
+  "w": 1920,
+  "h": 720,
   "ratio": "auto",
   "role": "Split feature, tall image",
   "alt": "Surfer carrying a board along the beach at sunset",
@@ -58,8 +58,8 @@
   "file": "snorkeling-tropical-underwater.jpg"
  },
  "split-2-primary": {
-  "w": 2400,
-  "h": 1600,
+  "w": 1920,
+  "h": 1280,
   "ratio": "auto",
   "role": "Second split feature, tall image",
   "alt": "Catamaran under sail at sunset",
@@ -74,32 +74,32 @@
   "file": "atv-waterfall-adventure.jpg"
  },
  "gallery-1": {
-  "w": 1600,
-  "h": 1067,
+  "w": 1500,
+  "h": 2000,
   "ratio": "auto",
   "role": "Gallery tile",
   "alt": "Group surf lesson on the beach at Tamarindo",
   "file": "group-lesson-beach.jpg"
  },
  "gallery-2": {
-  "w": 1600,
-  "h": 1067,
+  "w": 1125,
+  "h": 1500,
   "ratio": "auto",
   "role": "Gallery tile",
   "alt": "Kayak and boards at the surf tent",
   "file": "kayak-surf-tent.jpg"
  },
  "gallery-3": {
-  "w": 1600,
-  "h": 1067,
+  "w": 1500,
+  "h": 2000,
   "ratio": "auto",
   "role": "Gallery tile",
   "alt": "Instructor demonstrating the pop-up stance",
   "file": "instructor-popup-stance.jpg"
  },
  "gallery-4": {
-  "w": 1600,
-  "h": 1067,
+  "w": 1125,
+  "h": 1500,
   "ratio": "auto",
   "role": "Gallery tile",
   "alt": "Group briefing on the sand before paddling out",
@@ -122,8 +122,8 @@
   "file": "beachfront-yoga-wellness.jpg"
  },
  "cta-bg": {
-  "w": 2400,
-  "h": 1036,
+  "w": 1920,
+  "h": 829,
   "ratio": "auto",
   "role": "Lifestyle closing band background",
   "alt": "Palms and surfboards above the ocean at sunset",
@@ -131,8 +131,8 @@
   "note": "Clean standalone banner photograph."
  },
  "story-banner": {
-  "w": 2400,
-  "h": 893,
+  "w": 1920,
+  "h": 714,
   "ratio": "auto",
   "role": "Story band and experiences listing hero",
   "alt": "Aerial view of the Tamarindo coastline",
@@ -194,8 +194,8 @@
   "note": "Overridden per term by the Header photo field on the term edit screen."
  },
  "tax-boat-tours": {
-  "w": 2400,
-  "h": 1600,
+  "w": 1920,
+  "h": 1280,
   "ratio": "auto",
   "role": "Header photo for the boat tours archive",
   "alt": "A catamaran on the water off the Guanacaste coast at sunset",
@@ -266,8 +266,8 @@
   "note": "Overridden per term by the Header photo field on the term edit screen."
  },
  "tax-all-levels": {
-  "w": 2400,
-  "h": 893,
+  "w": 1920,
+  "h": 714,
   "ratio": "auto",
   "role": "Header photo for the all levels archive",
   "alt": "Aerial view of the Tamarindo coastline",

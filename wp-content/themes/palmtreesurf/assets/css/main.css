@@ -1784,6 +1784,32 @@ ul, ol { margin: 0 0 var(--pt-space-sm); padding-left: 1.25rem; }
 .form-notice--success { background: var(--pt-warm-sand); border-left: 4px solid var(--pt-teal); color: var(--pt-ink); }
 .form-notice--error { background: var(--pt-warm-sand); border-left: 4px solid var(--pt-coral); color: var(--pt-ink); }
 
+
+/* ------------------------------------------------------- Homepage intro */
+
+.home-intro__inner {
+	display: grid;
+	gap: var(--pt-space-lg);
+	grid-template-columns: 1fr;
+	align-items: start;
+}
+
+@media (min-width: 900px) {
+	.home-intro__inner { grid-template-columns: 1.5fr 0.9fr; gap: var(--pt-space-xl); }
+}
+
+.home-intro__prose p { color: var(--pt-ink-700); font-size: var(--pt-body-lg); line-height: 1.75; max-width: 62ch; }
+.home-intro__actions { margin-top: var(--pt-space-md); }
+
+.home-intro__facts {
+	padding: var(--pt-space-md);
+	border: 1px solid var(--pt-line);
+	border-radius: var(--pt-radius-md);
+	background: var(--pt-warm-sand);
+}
+
+.home-intro__facts-title { font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pt-muted); margin-bottom: var(--pt-space-sm); }
+
 /* ------------------------------------------------------- Scroll reveal */
 
 .reveal-ready [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity 600ms var(--pt-ease), transform 600ms var(--pt-ease); }

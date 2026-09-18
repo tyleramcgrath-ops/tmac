@@ -143,13 +143,24 @@ function pt_gallery_thumb( $image, $priority = false ) {
 		return;
 	}
 
+	$srcset = '';
+
+	if ( $image['slot'] ) {
+		$definition = pt_image_slot( $image['slot'] );
+
+		if ( $definition && ! empty( $definition['file'] ) && function_exists( 'pt_bundled_srcset' ) ) {
+			$srcset = pt_bundled_srcset( $definition['file'], (int) $image['width'] );
+		}
+	}
+
 	printf(
-		'<img class="gallery__img" src="%1$s" width="%2$d" height="%3$d" alt="%4$s" loading="%5$s" decoding="async" />',
+		'<img class="gallery__img" src="%1$s" width="%2$d" height="%3$d" alt="%4$s" loading="%5$s" decoding="async"%6$s />',
 		esc_url( $image['full'] ),
 		(int) $image['width'],
 		(int) $image['height'],
 		esc_attr( $image['alt'] ),
-		esc_attr( $priority ? 'eager' : 'lazy' )
+		esc_attr( $priority ? 'eager' : 'lazy' ),
+		$srcset ? ' srcset="' . esc_attr( $srcset ) . '" sizes="' . esc_attr( $sizes ) . '"' : ''
 	);
 }
 

@@ -45,7 +45,7 @@ if ( ! $pt_terms || is_wp_error( $pt_terms ) ) {
 				<li class="cat-tile" data-reveal>
 					<a class="cat-tile__link" href="<?php echo esc_url( $pt_link ); ?>">
 						<span class="cat-tile__media">
-							<?php pt_image( $pt_slot ? $pt_slot : 'story-banner' ); ?>
+							<?php pt_image( $pt_slot ? $pt_slot : 'story-banner', array( 'sizes' => '(min-width: 1000px) 260px, (min-width: 560px) 45vw, 90vw' ) ); ?>
 						</span>
 						<span class="cat-tile__body">
 							<span class="cat-tile__name"><?php echo esc_html( $pt_term->name ); ?></span>

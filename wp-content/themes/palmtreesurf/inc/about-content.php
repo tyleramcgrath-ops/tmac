@@ -142,13 +142,18 @@ function pt_about_faq() {
  * FAQPage schema for the about page.
  */
 function pt_print_about_schema() {
-	if ( ! is_page_template( 'page-templates/page-about.php' ) ) {
+	$on_about = is_page_template( 'page-templates/page-about.php' );
+	$on_front = is_front_page();
+
+	if ( ! $on_about && ! $on_front ) {
 		return;
 	}
 
+	// The homepage shows the first six; the markup must match what is visible.
+	$pairs    = $on_front && ! $on_about ? array_slice( pt_about_faq(), 0, 6 ) : pt_about_faq();
 	$entities = array();
 
-	foreach ( pt_about_faq() as $pair ) {
+	foreach ( $pairs as $pair ) {
 		$entities[] = array(
 			'@type'          => 'Question',
 			'name'           => $pair[0],
@@ -172,3 +177,27 @@ function pt_print_about_schema() {
 	);
 }
 add_action( 'wp_head', 'pt_print_about_schema', 32 );
+
+/**
+ * The quick-facts panel on the homepage.
+ *
+ * Facts about the place and the conditions, which are true regardless of who
+ * runs the tours. Nothing here is a claim about this business.
+ *
+ * @return array<int, array<int, string>>
+ */
+function pt_home_facts() {
+	return apply_filters(
+		'pt_home_facts',
+		array(
+			array( __( 'Where', 'palmtreesurf' ), __( 'Tamarindo, Guanacaste, on the Pacific coast of Costa Rica', 'palmtreesurf' ) ),
+			array( __( 'Nearest airport', 'palmtreesurf' ), __( 'Liberia (LIR), around 1.5 to 2 hours by road', 'palmtreesurf' ) ),
+			array( __( 'Water temperature', 'palmtreesurf' ), __( 'High twenties Celsius year round. No wetsuit needed', 'palmtreesurf' ) ),
+			array( __( 'The break', 'palmtreesurf' ), __( 'Sand-bottom beach break — forgiving for beginners', 'palmtreesurf' ) ),
+			array( __( 'Dry season', 'palmtreesurf' ), __( 'Roughly December to April. Sunniest and busiest', 'palmtreesurf' ) ),
+			array( __( 'Green season', 'palmtreesurf' ), __( 'Roughly May to November. Quieter, greener, bigger surf', 'palmtreesurf' ) ),
+			array( __( 'Best time of day', 'palmtreesurf' ), __( 'Mornings, before the wind builds', 'palmtreesurf' ) ),
+			array( __( 'Languages', 'palmtreesurf' ), __( 'English and Spanish', 'palmtreesurf' ) ),
+		)
+	);
+}

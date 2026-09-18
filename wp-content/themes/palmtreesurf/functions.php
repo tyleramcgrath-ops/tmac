@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.6.0' );
+define( 'PT_VERSION', '1.7.0' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.
@@ -34,6 +34,7 @@ define( 'PT_EXPERIENCE_POST_TYPE', 'experience' );
 $pt_includes = array(
 	'inc/setup.php',            // Theme supports, menus, image sizes.
 	'inc/enqueue.php',          // Styles and scripts.
+	'inc/performance.php',      // Front-end performance.
 	'inc/template-tags.php',    // Reusable output helpers.
 	'inc/template-functions.php', // Body classes and other filters.
 	'inc/posts.php',            // Journal post helpers.
@@ -53,6 +54,7 @@ $pt_includes = array(
 	'inc/forms.php',            // Contact enquiry fallback.
 	'inc/operators.php',        // Operator applications.
 	'inc/schema.php',           // JSON-LD structured data.
+	'inc/schema-site.php',      // Organization, WebSite and list schema.
 	'inc/seo.php',              // Meta tags and SEO-plugin cooperation.
 	'inc/about-content.php',    // About page copy and FAQ.
 	'inc/seed-copy.php',        // Starter long-form copy.

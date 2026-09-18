@@ -15,6 +15,7 @@ get_header();
 get_template_part( 'template-parts/home/hero' );
 get_template_part( 'template-parts/home/category-rail' );
 get_template_part( 'template-parts/home/experiences' );
+get_template_part( 'template-parts/home/intro' );
 get_template_part( 'template-parts/home/story-banner' );
 get_template_part( 'template-parts/home/favorites' );
 
@@ -35,5 +36,6 @@ if ( is_page() && have_posts() ) {
 get_template_part( 'template-parts/home/testimonials' );
 get_template_part( 'template-parts/home/instructors' );
 get_template_part( 'template-parts/home/lifestyle' );
+get_template_part( 'template-parts/home/faq' );
 
 get_footer();

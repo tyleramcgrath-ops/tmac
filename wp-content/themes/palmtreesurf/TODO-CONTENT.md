@@ -245,3 +245,100 @@ actually rank and convert, and only you have it.
 - The trust row under the hero now reads "Book online in minutes / Local Tamarindo guides / Small
   groups / English & Español". **Confirm all four are true of how you operate** — they are claims,
   and they are editable under **Customize → Front Page Hero**.
+
+---
+
+## 10. Added in v1.7.0 — logo, gallery, blog, operators, Spanish, speed
+
+### The logo was wrong, and why
+
+The SVGs in the package set the wordmark as live `<text>` in Montserrat — a font
+this site does not load — so every browser drew it in its own fallback and it
+looked nothing like your artwork. The theme now ships the **PNG** versions,
+which have the type baked in, trimmed of their padding. Full colour once the
+header sticks, reversed over a hero, and reversed in the footer. Upload a logo
+under **Customize → Site Identity** to override all of it.
+
+### Gallery
+
+Now a proper grid with a lightbox. **You can manage it**: add a Gallery block to
+the Gallery page and those images take over, in your order. Leave the page empty
+and it falls back to the photos bundled with the theme.
+
+### Five blog posts, published
+
+Under **Posts**, in a "Tamarindo Guides" category, each over 2,000 words with a
+featured image, a short-answer summary, an FAQ and Article + FAQPage schema:
+
+- Learning to Surf in Tamarindo: A Complete Beginner's Guide
+- The Best Time to Visit Tamarindo: A Month-by-Month Guide
+- Sport Fishing in Tamarindo: What You'll Catch, and When
+- The Tamarindo Estuary: What You'll See, and Why You Go at Dawn
+- Things to Do in Tamarindo: A Five-Day Plan
+
+They are written from general knowledge of this coast and these activities. **No
+post states a price, a guarantee or a certification**, because the theme does not
+know yours. Read them before they go out — if anything does not match how you
+operate, change it, they are ordinary posts.
+
+WordPress's "Hello world!" sample post is moved to the trash on update, but only
+while it is still the untouched default.
+
+### Operator sign-up — **Operators** in the admin menu
+
+`/list-your-tours/`. Companies submit their business, tours, capacity, languages,
+insurance, permits and certifications. Applications arrive under **Operators** as
+records you can review, with status and columns, not as an email that gets lost.
+Applicants get an automatic acknowledgement; you get a notification with a link
+straight to the application.
+
+**Commercial terms are deliberately unanswered.** The FAQ says the terms are set
+out in writing when you reply. Do not let the theme invent a commission rate —
+edit that answer once you have decided, via the `pt_operator_faq` filter or by
+telling me what it should say.
+
+### Spanish — off until you switch it on
+
+**Customize → Palm Tree Surf → Language → "Offer the site in Spanish".**
+
+Once on: an EN/ES toggle in the header, the whole interface in Spanish, and a
+**Español** box on every page, post and experience for the title, short
+description and body. Categories get Spanish names on their edit screens.
+Anything you have not translated shows in English rather than half-translated.
+hreflang tags are emitted so both versions get indexed.
+
+The interface translation is done. **The page and article bodies are not** —
+those are yours, and there is an ES column on the Pages and Posts lists showing
+what still needs doing. If you install Polylang or WPML, this switches itself
+off and defers to them.
+
+### Speed
+
+Measured on a mobile viewport against the local build:
+
+| Page | Before | After |
+| --- | --- | --- |
+| Home | 1,084 KB | 426 KB |
+| Category | 603 KB | 282 KB |
+| Blog post | 386 KB | 339 KB |
+
+Third-party requests went from two hosts to **none**. What changed: fonts are
+self-hosted (latin and latin-ext only, both variable, so four files cover every
+weight), the hero is preloaded with the same srcset the page uses so it is not
+downloaded twice, bundled photos ship at 480/768/1200/1600 as well as full size,
+the originals were re-encoded and capped at 1920px, half-width card and portrait
+crops were added so a phone stops downloading 800px images for 300px slots, and
+WordPress's emoji script, oEmbed discovery, RSD/wlwmanifest links and the block
+library stylesheet on non-block pages were removed.
+
+**Media already in your library is refreshed on update** — the theme overwrites
+the seeded files with the smaller versions and regenerates the crops, keeping the
+same attachment IDs so nothing breaks.
+
+### Still outstanding
+
+- No photograph exists for **Fishing Charters**; its card and header reuse the
+  beach-launch photo.
+- No real guide portraits — the four guides render as brand panels.
+- The hero trust row and the finder's "Free cancellation 24h" line are claims
+  about how you operate. **Confirm all of them**, under Customize.

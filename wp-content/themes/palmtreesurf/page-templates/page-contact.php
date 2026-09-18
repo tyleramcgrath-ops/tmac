@@ -91,6 +91,25 @@ while ( have_posts() ) :
 			</aside>
 		</div>
 	</article>
+	<?php get_template_part( 'template-parts/components/how-it-works' ); ?>
+
+	<section class="section section--sand">
+		<div class="container container--narrow">
+			<header class="section__header">
+				<p class="eyebrow"><?php esc_html_e( 'Questions', 'palmtreesurf' ); ?></p>
+				<h2 class="section__title"><?php esc_html_e( 'Things people ask before they book', 'palmtreesurf' ); ?></h2>
+			</header>
+
+			<div class="faq">
+				<?php foreach ( pt_about_faq() as $pt_index => $pt_pair ) : ?>
+					<details class="faq__item"<?php echo 0 === $pt_index ? ' open' : ''; ?>>
+						<summary><?php echo esc_html( $pt_pair[0] ); ?></summary>
+						<div class="faq__answer"><p><?php echo esc_html( $pt_pair[1] ); ?></p></div>
+					</details>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
 	<?php
 endwhile;
 

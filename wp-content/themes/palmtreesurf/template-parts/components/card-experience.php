@@ -25,7 +25,7 @@ $pt_level    = get_the_term_list( $pt_id, 'skill_level', '', ', ' );
 	<a class="card__link" href="<?php the_permalink(); ?>">
 		<div class="card__media">
 			<?php if ( has_post_thumbnail() ) : ?>
-				<?php the_post_thumbnail( 'pt-card', array( 'loading' => 'lazy', 'decoding' => 'async' ) ); ?>
+				<?php the_post_thumbnail( 'pt-card', array( 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(min-width: 1000px) 380px, (min-width: 700px) 45vw, 92vw' ) ); ?>
 			<?php else : ?>
 				<?php pt_image( 'exp-card-1' ); ?>
 			<?php endif; ?>
