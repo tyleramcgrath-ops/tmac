@@ -307,7 +307,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 						</div>
 						<div class="lapHero">
 							<h4><?php echo esc_html( $mcg_case['headline'] ); ?></h4>
-							<p><?php esc_html_e( 'A clear offer, a fast page and a path to the enquiry — the shape most of this work takes.', 'mcgrath-chrome' ); ?></p>
+							<p><?php esc_html_e( 'A fast page, a clear offer and a short path to the enquiry.', 'mcgrath-chrome' ); ?></p>
 							<span class="lcta"><?php esc_html_e( 'Get in Touch', 'mcgrath-chrome' ); ?></span>
 						</div>
 					</div>

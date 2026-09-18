@@ -284,10 +284,10 @@ function mcg_platforms() {
 /** The featured case study. */
 function mcg_case() {
 	return array(
-		'client'  => mcg_opt( 'mcg_case_client', 'A multi-location' ),
-		'unit'    => mcg_opt( 'mcg_case_unit', 'healthcare practice' ),
-		'summary' => mcg_opt( 'mcg_case_summary', 'Technical repair first, then the pages that answer what patients actually search for, then the profiles and citations that decide the map. The shape most engagements take, and the range of movement they produce.' ),
-		'headline'=> mcg_opt( 'mcg_case_headline', 'Expert Care, Close to Home' ),
+		'client'  => mcg_opt( 'mcg_case_client', 'What a year of' ),
+		'unit'    => mcg_opt( 'mcg_case_unit', 'this work moves' ),
+		'summary' => mcg_opt( 'mcg_case_summary', 'Technical repair first, then the pages that answer what buyers actually search for, then the profiles and citations that decide the map. The shape most engagements take, and the range of movement they produce.' ),
+		'headline'=> mcg_opt( 'mcg_case_headline', 'A Clear Offer, Easy to Find' ),
 		'stats'   => array(
 			array( 'value' => 180, 'label' => 'Organic Traffic' ),
 			array( 'value' => 260, 'label' => 'Keyword Rankings' ),
