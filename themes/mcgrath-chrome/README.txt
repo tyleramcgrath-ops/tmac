@@ -150,10 +150,16 @@ editor. Body copy, headings, lists, quotes and images are all styled.
 
 THE VAULT
 ---------
-It ships locked with the password "jupiter". Change it: edit the Vault page,
-open Summary on the right, Visibility > Password protected, set your own. Put
-client work in the page body. Locked, visitors get the vault door. Unlocked,
-they get your work. It is noindex and stays out of the menu.
+It ships locked with a password generated when the theme is activated — a fixed
+one would be published in the theme's source and would not be a password at all.
+The setup notice in the admin shows it ONCE. Write it down there, or change it:
+edit the Vault page, open Summary on the right, Visibility > Password protected,
+set your own. If you miss the notice, just set a new password the same way.
+
+Put client work in the page body. Locked, visitors get the vault door. Unlocked,
+they get your work. It is noindex and stays out of the menu, and since the
+featured project section was removed nothing on the homepage links to it, so
+add a link yourself if you want one.
 
 
 THE AUDIT FORM

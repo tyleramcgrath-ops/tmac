@@ -452,9 +452,13 @@ function mcg_activate() {
 
 			$ids[ $slug ] = $id;
 
-			// The vault ships locked. Change the password in the page editor.
+			// The vault ships locked, with a password generated per install.
+			// A fixed one would be published in the theme's source, which is
+			// not a password at all. It is shown once in the setup notice.
 			if ( 'vault' === $slug ) {
-				wp_update_post( array( 'ID' => $id, 'post_password' => 'jupiter' ) );
+				$pass = wp_generate_password( 12, false );
+				wp_update_post( array( 'ID' => $id, 'post_password' => $pass ) );
+				set_transient( 'mcg_vault_pass', $pass, DAY_IN_SECONDS );
 			}
 		}
 
@@ -467,12 +471,17 @@ function mcg_activate() {
 		}
 	}
 
-	// Static front page and a separate posts page.
-	if ( isset( $ids['home'] ) ) {
+	// Static front page and a separate posts page — but never over the top of a
+	// site that already has them. front-page.php takes the front page either
+	// way, static or posts index, and it renders nothing from the loop, so
+	// repointing a live site's homepage buys nothing and orphans whatever was
+	// there. Same for the posts page, where repointing would move the blog's
+	// archive URL out from under existing links.
+	if ( isset( $ids['home'] ) && 'page' !== get_option( 'show_on_front' ) ) {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', $ids['home'] );
 	}
-	if ( isset( $ids['blog'] ) ) {
+	if ( isset( $ids['blog'] ) && ! get_option( 'page_for_posts' ) ) {
 		update_option( 'page_for_posts', $ids['blog'] );
 	}
 
@@ -545,11 +554,18 @@ function mcg_activated_notice() {
 	delete_transient( 'mcg_activated' );
 	?>
 	<div class="notice notice-success is-dismissible">
-		<p><strong>McGrath Chrome is set up.</strong> Pages created and assigned: home, SEO, Web Design,
-		AI Visibility, About, Contact, The Vault and the blog. The primary menu is built and the front
-		page is set.</p>
-		<p>The Vault is password protected with <code>jupiter</code>. Change it in the page editor under
-		Summary &rarr; Visibility.</p>
+		<p><strong>McGrath Chrome is set up.</strong> Any of these pages that did not already exist have
+		been created and assigned a template: home, SEO, Web Design, AI Visibility, About, Contact,
+		The Vault and the blog. An existing front page or posts page is left exactly as it was.</p>
+		<?php $mcg_pass = get_transient( 'mcg_vault_pass' ); ?>
+		<?php if ( $mcg_pass ) : ?>
+			<?php delete_transient( 'mcg_vault_pass' ); ?>
+			<p>The Vault is password protected with <code><?php echo esc_html( $mcg_pass ); ?></code> —
+			<strong>this is shown once</strong>. Change it, or write it down, in the page editor under
+			Summary &rarr; Visibility.</p>
+		<?php endif; ?>
+		<p>Next: check <em>Settings &rarr; Reading</em>, assign your menu under <em>Appearance &rarr; Menus</em>,
+		and fill in <em>Appearance &rarr; Customize &rarr; Homepage &amp; brand</em>.</p>
 	</div>
 	<?php
 }
