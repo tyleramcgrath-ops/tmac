@@ -11,6 +11,7 @@ define( 'MCG_VERSION', '2.0.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
+require_once get_template_directory() . '/inc/contact-form.php';
 
 function mcg_setup() {
 	add_theme_support( 'title-tag' );
@@ -68,6 +69,9 @@ function mcg_customize( $wp_customize ) {
 		'mcg_location'    => array( 'Location line', 'Jupiter, Florida' ),
 		'mcg_reach'       => array( 'Reach line', 'Serving Clients Nationwide' ),
 		'mcg_coords'      => array( 'Coordinates under the dashboard', '26.9342° N, 80.0942° W' ),
+		'mcg_price_audit'  => array( 'SEO page price: one-off audit', 'On request' ),
+		'mcg_price_month'  => array( 'SEO page price: monthly SEO', 'On request' ),
+		'mcg_price_launch' => array( 'SEO page price: local launch', 'Fixed scope, on request' ),
 		'mcg_case_client' => array( 'Case study: first line', 'What a year of' ),
 		'mcg_case_unit'   => array( 'Case study: second line', 'this work moves' ),
 		'mcg_case_summary'=> array( 'Case study summary', 'Technical repair first, then the pages that answer what buyers actually search for, then the profiles and citations that decide the map. The shape most engagements take, and the range of movement they produce.' ),
@@ -107,11 +111,10 @@ add_filter( 'body_class', 'mcg_body_class' );
 /** Fallback menu when none is assigned yet. */
 function mcg_fallback_menu() {
 	$pages = array(
-		'seo-jupiter-fl'      => 'Services',
-		'vault'               => 'Work',
+		'seo-jupiter-fl'      => 'SEO',
+		'web-design-jupiter'  => 'Web Design',
+		'ai-visibility'       => 'AI Visibility',
 		'about'               => 'About',
-		'blog'                => 'Insights',
-		'ai-visibility'       => 'Tools',
 		'contact'             => 'Contact',
 	);
 	echo '<ul>';
@@ -264,37 +267,37 @@ function mcg_pages_map() {
 			'title'    => 'SEO Company in Jupiter, FL',
 			'template' => 'template-seo.php',
 			'excerpt'  => 'Local and technical SEO for businesses in Jupiter, Palm Beach Gardens and Tequesta.',
-			'content'  => '<!-- wp:paragraph --><p>Add anything else you want on this page here. Everything above it is built by the theme.</p><!-- /wp:paragraph -->',
+			'content'  => '',
 		),
 		'web-design-jupiter' => array(
 			'title'    => 'Web Design in Jupiter, FL',
 			'template' => 'template-webdesign.php',
 			'excerpt'  => 'Custom WordPress websites for Palm Beach County businesses, built to convert and to rank.',
-			'content'  => '<!-- wp:paragraph --><p>Add anything else you want on this page here. Everything above it is built by the theme.</p><!-- /wp:paragraph -->',
+			'content'  => '',
 		),
 		'ai-visibility' => array(
 			'title'    => 'AI Visibility & Answer Engine Optimization',
 			'template' => 'template-aeo.php',
 			'excerpt'  => 'Get named when buyers ask ChatGPT, Gemini, Perplexity or a Google AI Overview.',
-			'content'  => '<!-- wp:paragraph --><p>Add anything else you want on this page here. Everything above it is built by the theme.</p><!-- /wp:paragraph -->',
+			'content'  => '',
 		),
 		'about' => array(
 			'title'    => 'About',
 			'template' => 'template-about.php',
 			'excerpt'  => 'One person, not an agency. Who you are hiring and how the work runs.',
-			'content'  => '<!-- wp:paragraph --><p>Add anything else you want on this page here. Everything above it is built by the theme.</p><!-- /wp:paragraph -->',
+			'content'  => '',
 		),
 		'contact' => array(
 			'title'    => 'Contact',
 			'template' => 'template-contact.php',
 			'excerpt'  => 'Request a free Jupiter SEO audit. One call, no pitch.',
-			'content'  => '<!-- wp:paragraph --><p>Drop your contact form shortcode here and it will render inside the page.</p><!-- /wp:paragraph -->',
+			'content'  => '',
 		),
 		'vault' => array(
 			'title'    => 'The Vault',
 			'template' => 'template-vault.php',
 			'excerpt'  => '',
-			'content'  => '<!-- wp:paragraph --><p>Client work goes here. Only people with the password can read it.</p><!-- /wp:paragraph -->',
+			'content'  => '',
 		),
 		'blog' => array(
 			'title'    => 'Notes on Search',
@@ -362,11 +365,10 @@ function mcg_activate() {
 
 		if ( ! is_wp_error( $menu_id ) ) {
 			$in_menu = array(
-				'seo-jupiter-fl'     => 'Services',
-				'vault'              => 'Work',
+				'seo-jupiter-fl'     => 'SEO',
+				'web-design-jupiter' => 'Web Design',
+				'ai-visibility'      => 'AI Visibility',
 				'about'              => 'About',
-				'blog'               => 'Insights',
-				'ai-visibility'      => 'Tools',
 				'contact'            => 'Contact',
 			);
 
@@ -390,6 +392,16 @@ function mcg_activate() {
 			$locations['footer']  = $menu_id;
 			set_theme_mod( 'nav_menu_locations', $locations );
 		}
+	}
+
+	// WordPress's default blogname otherwise shows up in page titles, the
+	// footer and the schema. Only set it if nobody has chosen one.
+	$blogname = get_option( 'blogname' );
+	if ( '' === trim( (string) $blogname ) || 'My WordPress' === $blogname || 'My Site' === $blogname ) {
+		update_option( 'blogname', 'McGrath Marketing Group' );
+	}
+	if ( 'Just another WordPress site' === get_option( 'blogdescription' ) ) {
+		update_option( 'blogdescription', 'SEO, AI search and web design in Jupiter, Florida' );
 	}
 
 	// Pretty permalinks, so /contact/ resolves instead of 404ing.

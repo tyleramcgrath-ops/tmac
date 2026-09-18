@@ -16,6 +16,37 @@ function mcg_url( $slug ) {
 }
 
 /**
+ * A bare <img> for one of the shipped photographs, sized by its container.
+ *
+ * Every photograph in the set is 3:2, so the caller only ever has to choose a
+ * frame ratio; the image is cropped to it rather than letterboxed.
+ *
+ * @param string $name  File basename inside assets/img, without extension.
+ * @param string $alt   Alt text. Empty marks the image decorative.
+ * @param string $class Extra classes for the <img>.
+ * @param bool   $eager Skip lazy loading, for anything above the fold.
+ */
+function mcg_img( $name, $alt = '', $class = '', $eager = false ) {
+	$dir = get_template_directory() . '/assets/img/';
+	$uri = get_template_directory_uri() . '/assets/img/';
+
+	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
+		if ( file_exists( $dir . $name . '.' . $ext ) ) {
+			printf(
+				'<img src="%s" alt="%s"%s width="1200" height="800" decoding="async"%s%s>',
+				esc_url( $uri . $name . '.' . $ext ),
+				esc_attr( $alt ),
+				$alt ? '' : ' aria-hidden="true"',
+				$class ? ' class="' . esc_attr( $class ) . '"' : '',
+				$eager ? ' fetchpriority="high"' : ' loading="lazy"'
+			);
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * A photographic plate.
  *
  * If a real photo exists at assets/img/{$name}.jpg (or .webp) it is used.
@@ -237,6 +268,8 @@ function mcg_services() {
 	return array(
 		array(
 			'icon'   => 'search',
+			'img'    => 'page-seo',
+			'alt'    => 'The Jupiter Inlet light above a rising curve of search rankings',
 			'title'  => 'SEO',
 			'sub'    => 'Own traditional search.',
 			'url'    => 'seo-jupiter-fl',
@@ -245,6 +278,8 @@ function mcg_services() {
 		),
 		array(
 			'icon'   => 'sparkle',
+			'img'    => 'page-aeo',
+			'alt'    => 'Search bars from four AI engines converging on a single brand panel',
 			'title'  => 'AI Search / GEO / AEO',
 			'sub'    => 'Get cited. Get recommended.',
 			'url'    => 'ai-visibility',
@@ -253,6 +288,8 @@ function mcg_services() {
 		),
 		array(
 			'icon'   => 'monitor',
+			'img'    => 'page-webdesign',
+			'alt'    => 'A laptop and phone on a seawall showing the same coastal site',
 			'title'  => 'Web Design & Development',
 			'sub'    => 'Websites built to perform.',
 			'url'    => 'web-design-jupiter',
@@ -261,6 +298,8 @@ function mcg_services() {
 		),
 		array(
 			'icon'   => 'chart',
+			'img'    => 'page-analytics',
+			'alt'    => 'A laptop and a notebook of wireframes on a sunlit desk by the water',
 			'title'  => 'Analytics & Conversion',
 			'sub'    => 'Turn traffic into revenue.',
 			'url'    => 'contact',
@@ -337,20 +376,36 @@ function mcg_social() {
  */
 function mcg_page_art( $name, $alt = '' ) {
 	$dir = get_template_directory() . '/assets/img/';
-	$uri = get_template_directory_uri() . '/assets/img/';
 
 	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
-		$file = 'page-' . $name . '.' . $ext;
-		if ( file_exists( $dir . $file ) ) {
-			printf(
-				'<figure class="pArt"><img src="%s" alt="%s" width="900" height="880" loading="lazy" decoding="async"%s></figure>',
-				esc_url( $uri . $file ),
-				esc_attr( $alt ),
-				$alt ? '' : ' aria-hidden="true"'
-			);
+		if ( file_exists( $dir . 'page-' . $name . '.' . $ext ) ) {
+			echo '<figure class="pArt">';
+			mcg_img( 'page-' . $name, $alt, '', true );
+			echo '</figure>';
 			return;
 		}
 	}
 
+	// no photograph shipped for this page yet: fall back to the drawn figure.
 	mcg_glyph( $name );
+}
+
+/**
+ * A wide photograph inside the body of a page, with an optional caption.
+ *
+ * @param string $name    File basename inside assets/img.
+ * @param string $alt     Alt text.
+ * @param string $caption Optional caption drawn over the foot of the frame.
+ */
+function mcg_body_art( $name, $alt = '', $caption = '' ) {
+	if ( ! file_exists( get_template_directory() . '/assets/img/' . $name . '.webp' ) ) {
+		return;
+	}
+
+	echo '<figure class="bodyArt rv">';
+	mcg_img( $name, $alt );
+	if ( $caption ) {
+		echo '<figcaption>' . esc_html( $caption ) . '</figcaption>';
+	}
+	echo '</figure>';
 }

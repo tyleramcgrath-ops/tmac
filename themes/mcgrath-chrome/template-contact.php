@@ -8,14 +8,31 @@
 get_header();
 ?>
 
-<section class="phero">
+<section class="phero solo">
 	<div class="pin">
 		<div class="pheroTxt">
 			<span class="mono"><?php esc_html_e( 'One call, no pitch', 'mcgrath-chrome' ); ?></span>
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Get a Free Jupiter SEO Audit', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'I will look at your rankings, your site health and whether AI answers mention you at all, then send back the three things worth fixing first. It costs nothing and you keep the findings either way.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_page_art( 'contact', 'A nautical chart of the Palm Beach coast with Jupiter marked' ); ?>
+	</div>
+</section>
+
+<!-- the enquiry itself: the form beside the chart, contact details beneath -->
+<section class="enqSec gut">
+	<div class="enqIn">
+		<div class="enqLeft rv">
+			<span class="eyebrow"><?php esc_html_e( 'Tell me what you need', 'mcgrath-chrome' ); ?></span>
+			<?php mcg_contact_form(); ?>
+		</div>
+
+		<figure class="enqMap rv" data-d="1">
+			<?php mcg_img( 'page-contact', __( 'A chart of the Palm Beach coast with Jupiter, Florida marked', 'mcgrath-chrome' ) ); ?>
+			<?php // the chart already names the town, so the caption adds the fix, not a repeat. ?>
+			<figcaption>
+				<span><?php echo esc_html( mcg_opt( 'mcg_coords', '26.9342° N, 80.0942° W' ) ); ?></span>
+			</figcaption>
+		</figure>
 	</div>
 </section>
 

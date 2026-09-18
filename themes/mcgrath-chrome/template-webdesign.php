@@ -15,7 +15,7 @@ get_header();
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'Web Design in Jupiter, FL', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'Custom WordPress sites for Palm Beach County businesses. Fast, built to rank from launch day, and handed over so you own every part of it.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_page_art( 'webdesign', 'A laptop on a Jupiter seawall showing a coastal website' ); ?>
+		<?php mcg_page_art( 'webdesign', 'A laptop and phone on a seawall showing the same site at both sizes' ); ?>
 	</div>
 </section>
 
@@ -40,6 +40,14 @@ get_header();
 			<p><?php esc_html_e( 'Every redesign here starts with a crawl of the current site, a map of what it earns today, and a redirect plan written before a single page is designed.', 'mcgrath-chrome' ); ?></p>
 		</div>
 	</div>
+
+	<?php
+	mcg_body_art(
+		'art-mobile',
+		__( 'The same site shown on two phones, beside the shoreline it was designed for', 'mcgrath-chrome' ),
+		__( 'Every build is drawn at phone width first, then opened out.', 'mcgrath-chrome' )
+	);
+	?>
 
 	<div class="split rv">
 		<div>

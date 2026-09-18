@@ -229,7 +229,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 </section>
 
 <!-- =========================== SERVICES =========================== -->
-<section class="sec gut lens" id="services">
+<section class="sec gut lens svcSec" id="services">
 	<div class="lensX" id="lensX" aria-hidden="true">
 		<span class="d">&lt;!-- what a crawler reads on this section --&gt;</span>
 		<span>&lt;section id="services"&gt;</span>
@@ -252,7 +252,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 		<div class="shead rv">
 			<div class="sheadL">
 				<span class="eyebrow"><?php esc_html_e( 'Our services', 'mcgrath-chrome' ); ?></span>
-				<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Four disciplines. One accountable team.', 'mcgrath-chrome' ); ?></h2>
+				<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Four disciplines. One person accountable.', 'mcgrath-chrome' ); ?></h2>
 			</div>
 			<a class="alink" href="<?php echo esc_url( mcg_url( 'contact' ) ); ?>">
 				<?php esc_html_e( 'Start a project', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
@@ -262,16 +262,19 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 		<div class="svcGrid">
 			<?php foreach ( mcg_services() as $mcg_i => $mcg_svc ) : ?>
 				<a class="svcCard rv<?php echo $mcg_svc['accent'] ? ' accent' : ''; ?>"
-					data-d="<?php echo (int) $mcg_i; ?>" href="<?php echo esc_url( mcg_url( $mcg_svc['url'] ) ); ?>">
-					<span class="num"><?php echo esc_html( sprintf( '%02d', $mcg_i + 1 ) ); ?></span>
-					<span class="ico"><?php mcg_icon( $mcg_svc['icon'] ); ?></span>
-					<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_svc['title'] ); ?></h3>
-					<p><?php echo esc_html( $mcg_svc['sub'] ); ?></p>
-					<ul>
-						<?php foreach ( $mcg_svc['items'] as $mcg_item ) : ?>
-							<li><?php echo esc_html( $mcg_item ); ?></li>
-						<?php endforeach; ?>
-					</ul>
+					data-d="<?php echo (int) $mcg_i % 2; ?>" href="<?php echo esc_url( mcg_url( $mcg_svc['url'] ) ); ?>">
+					<span class="svcPic">
+						<?php mcg_img( $mcg_svc['img'], $mcg_svc['alt'] ); ?>
+						<span class="num"><?php echo esc_html( sprintf( '%02d', $mcg_i + 1 ) ); ?></span>
+					</span>
+					<span class="svcTxt">
+						<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_svc['title'] ); ?></h3>
+						<p><?php echo esc_html( $mcg_svc['sub'] ); ?></p>
+						<!-- the disciplines stay on the page as one thin line, so the card
+						     reads as a picture and a promise but the terms are still here. -->
+						<span class="svcTags"><?php echo esc_html( implode( ' · ', $mcg_svc['items'] ) ); ?></span>
+						<span class="svcGo"><?php esc_html_e( 'Explore', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span></span>
+					</span>
 				</a>
 			<?php endforeach; ?>
 		</div>
@@ -343,7 +346,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 
 <!-- ======================= JUPITER ROOTS ========================= -->
 <section class="roots" id="home-base">
-	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots', '', '50% 50%' ); ?></div>
+	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots', '', '50% 46%' ); ?></div>
 
 	<div class="rootsBody">
 		<div class="rv">
@@ -375,8 +378,46 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 	</div>
 </section>
 
+<!-- =========================== INSIGHTS ========================== -->
+<?php
+// Only render if there is something to point at, so the section never ships
+// as an empty shelf on a site with no posts yet.
+$mcg_posts = get_posts( array( 'numberposts' => 3, 'post_status' => 'publish' ) );
+if ( $mcg_posts ) :
+	?>
+<section class="insights sec gut" id="insights">
+	<div class="insIn">
+		<figure class="insPic rv">
+			<?php mcg_img( 'page-writing', __( 'An open magazine spread of Jupiter coastline photography on a sunlit table', 'mcgrath-chrome' ) ); ?>
+		</figure>
+
+		<div class="insBody rv" data-d="1">
+			<span class="eyebrow"><?php esc_html_e( 'Insights', 'mcgrath-chrome' ); ?></span>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Notes on search.', 'mcgrath-chrome' ); ?></h2>
+			<p><?php esc_html_e( 'What is actually changing in search and what it means for a business in Palm Beach County. Written as it happens, not rewritten from someone else.', 'mcgrath-chrome' ); ?></p>
+
+			<ul class="insList">
+				<?php foreach ( $mcg_posts as $mcg_p ) : ?>
+					<li>
+						<a href="<?php echo esc_url( get_permalink( $mcg_p ) ); ?>">
+							<span class="insDate"><?php echo esc_html( get_the_date( 'M j, Y', $mcg_p ) ); ?></span>
+							<span class="insTitle"><?php echo esc_html( get_the_title( $mcg_p ) ); ?></span>
+							<span class="arw" aria-hidden="true">&rarr;</span>
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+			<a class="alink" href="<?php echo esc_url( mcg_url( 'blog' ) ); ?>">
+				<?php esc_html_e( 'All insights', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
+			</a>
+		</div>
+	</div>
+</section>
+<?php endif; ?>
+
 <!-- ============================= FAQ ============================= -->
-<section class="sec gut" id="faq">
+<section class="sec gut faqSec" id="faq">
 	<div class="head rv" style="margin-bottom:clamp(20px,3vw,34px);">
 		<div class="sheadL">
 			<span class="eyebrow"><?php esc_html_e( 'Straight answers', 'mcgrath-chrome' ); ?></span>
@@ -410,6 +451,9 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 		</div>
 
 		<div class="auditSide rv" data-d="1">
+			<figure class="auditPic">
+				<?php mcg_img( 'page-analytics', __( 'A laptop showing a live site, beside a notebook of wireframes', 'mcgrath-chrome' ) ); ?>
+			</figure>
 			<ul class="checks2">
 				<?php foreach ( mcg_audit_checks() as $mcg_c ) : ?>
 					<li><?php mcg_icon( 'check' ); ?><?php echo esc_html( $mcg_c ); ?></li>

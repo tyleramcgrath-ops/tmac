@@ -15,7 +15,7 @@ get_header();
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'SEO Company in Jupiter, FL', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'Local and national search work for businesses in Jupiter, Palm Beach Gardens and Tequesta. Run by the person who does it, priced in the open, with no long contract.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_page_art( 'seo', 'Jupiter Inlet lighthouse over a rising chart of search rankings' ); ?>
+		<?php mcg_page_art( 'seo', 'The Jupiter Inlet light standing over a rising curve of search rankings' ); ?>
 	</div>
 </section>
 
@@ -61,7 +61,7 @@ get_header();
 	<div class="tiers rv">
 		<div class="tier">
 			<h3><?php esc_html_e( 'One-off audit', 'mcgrath-chrome' ); ?></h3>
-			<span class="price"><?php esc_html_e( 'From [YOUR PRICE]', 'mcgrath-chrome' ); ?></span>
+			<span class="price"><?php echo esc_html( mcg_opt( 'mcg_price_audit', 'On request' ) ); ?></span>
 			<ul>
 				<li><?php esc_html_e( 'Technical, local and content review', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Competitor comparison', 'mcgrath-chrome' ); ?></li>
@@ -70,7 +70,7 @@ get_header();
 		</div>
 		<div class="tier feature">
 			<h3><?php esc_html_e( 'Monthly SEO', 'mcgrath-chrome' ); ?></h3>
-			<span class="price"><?php esc_html_e( 'From [YOUR PRICE] per month', 'mcgrath-chrome' ); ?></span>
+			<span class="price"><?php echo esc_html( mcg_opt( 'mcg_price_month', 'On request' ) ); ?></span>
 			<ul>
 				<li><?php esc_html_e( 'Local and organic run together', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Content shipped every month', 'mcgrath-chrome' ); ?></li>
@@ -80,7 +80,7 @@ get_header();
 		</div>
 		<div class="tier">
 			<h3><?php esc_html_e( 'Local launch', 'mcgrath-chrome' ); ?></h3>
-			<span class="price"><?php esc_html_e( 'Fixed scope, from [YOUR PRICE]', 'mcgrath-chrome' ); ?></span>
+			<span class="price"><?php echo esc_html( mcg_opt( 'mcg_price_launch', 'Fixed scope, on request' ) ); ?></span>
 			<ul>
 				<li><?php esc_html_e( 'Profile, citations and location pages', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Schema and tracking setup', 'mcgrath-chrome' ); ?></li>

@@ -51,18 +51,25 @@ file over it. Nothing else needs touching.
 
     hero.webp            the photograph the homepage hero stands on
     roots.webp           the panel beside "Jupiter roots"
-    page-seo.webp        opens the SEO page
-    page-webdesign.webp  opens the Web Design page
-    page-aeo.webp        opens the AI Visibility page
-    page-about.webp      opens the About page
-    page-contact.webp    opens the Contact page
-    page-writing.webp    opens the blog index, archives and search
+    page-seo.webp        SEO page header, and the first homepage service card
+    page-webdesign.webp  Web Design page header, and the third service card
+    page-aeo.webp        AI Visibility page header, and the second service card
+    page-analytics.webp  the fourth service card, and the visibility audit
+    page-about.webp      About page header
+    page-contact.webp    the chart beside the enquiry form
+    page-writing.webp    the Insights section, the blog index, archives, search
+    art-mobile.webp      inside the Web Design page, under the first split
     ocean.*              behind the closing call to action — not shipped; a
                          drawn night-water scene stands in until you add one
 
-.webp, .jpg, .jpeg and .png all work, checked in that order. The page artwork is
-square and shown at about 420px, so around 900px wide is plenty. The hero is
-wide and shown full width, so 1600-1920px suits it.
+.webp, .jpg, .jpeg and .png all work, checked in that order. Every photograph in
+the set is 3:2 and every frame crops to a fixed ratio, so the pages line up with
+each other; keep a replacement at 3:2 and it will drop straight in. Page headers
+are shown at roughly half the header, so about 1200px wide is plenty. The hero
+and the roots panel run full width, so 1300-1600px suits them.
+
+A service card and the page it links to share one file on purpose: the card is a
+preview of that page. Replace the file and both change together.
 
 Any page with no artwork falls back to a drawn line figure rather than an empty
 column, so adding a page never leaves a hole.
@@ -156,8 +163,38 @@ they get your work. It is noindex and stays out of the menu.
 THE AUDIT FORM
 --------------
 The homepage audit form is a GET to /contact/ with the address in ?site=. It
-does not run an audit on its own. Point it at a real tool, or read the
-parameter on the contact page and prefill your form with it.
+does not run an audit on its own. The contact page reads that parameter and
+prefills the Website field with it, so somebody who starts on the homepage does
+not type their address twice. To run a real audit, point the form at a tool.
+
+
+THE ENQUIRY FORM
+----------------
+The contact page ships a working form. It posts to admin-post.php, checks a
+nonce, drops anything that fills the hidden honeypot field, and mails the result
+with wp_mail. The reply-to is set to whoever sent it, so replying from your
+inbox goes to them.
+
+Mail goes to the Contact email under Appearance > Customize > Homepage & brand,
+and falls back to the site admin address if that is blank.
+
+wp_mail on shared hosting is often unreliable and mail sent that way frequently
+lands in spam. Install an SMTP plugin and send through a real mailbox or a
+transactional provider. Until you do, test it once and confirm it arrives before
+relying on it.
+
+After sending, the visitor comes back to the form with ?enquiry=sent (or =error)
+and sees a message above it. Nothing is stored in the database; if you want a
+record of enquiries, use a form plugin instead and drop its shortcode into the
+page content, which still renders below the form.
+
+
+PRICING
+-------
+The three price lines on the SEO page are Customizer fields, under Homepage &
+brand: "SEO page price: one-off audit", "monthly SEO" and "local launch". They
+ship reading "On request" rather than a made-up number. Put your real figures in
+before the page goes live, or leave them as they are.
 
 
 RANKING NOTES
