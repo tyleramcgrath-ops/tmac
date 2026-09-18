@@ -14,9 +14,12 @@ WHAT IS IN IT
 * The dissolve. A real page of blue links — live DOM text, so it is crawlable
   and screen-reader friendly — is sampled into particles, flown across the
   screen as you scroll, and reassembled as the question a buyer now asks a
-  model. It lands on a shortlist of who gets cited. Nothing else in the section
-  moves: the type turning into pixels is the whole animation, and the colour
-  behind it simply settles from paper to blue as the last particles arrive.
+  model. It lands on an answer panel: the answer itself, and under it the
+  sources it drew on, with your own domain cited first. The panel is drawn
+  generically — an answer and its sources — rather than as a copy of any one
+  engine's branding. Nothing else in the section moves: the type turning into
+  pixels is the whole animation, and the colour behind it simply settles from
+  paper to blue as the last particles arrive.
 
 * Crawler view. The switch in the header flips the whole site into the layer a
   machine reads: monospace, heading tags exposed, colours inverted. The
@@ -123,8 +126,8 @@ not normal page content lives there:
   * the hero kicker, the three headline lines, the paragraph and the trust line
   * the three lines over the photograph
   * the dissolve heading and paragraph
-  * the search query shown in the dissolve, the question it lands on, and the
-    highlighted end of that question
+  * the search query shown in the dissolve, the question it lands on, the
+    highlighted end of that question, and the answer shown underneath it
   * the case study: both name lines, the summary and the headline on the mock
     site. It ships as a deliberately unnamed, representative engagement with
     round numbers — put a real client in before launch, or leave it as the

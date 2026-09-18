@@ -207,10 +207,23 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 				</p>
 			</div>
 
-			<div class="dcites" id="dcites">
-				<span class="cite first"><u><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></u> cited first</span>
-				<span class="cite"><u>directory-site.com</u> listing</span>
-				<span class="cite"><u>review-site.com</u> rankings</span>
+			<!-- Where the pixels land: the answer surface itself, not just the
+			     question. Styled generically — an answer panel with its sources —
+			     rather than as a copy of any one engine's branding. -->
+			<div class="answer" id="dcites">
+				<div class="answerCard">
+					<span class="answerBadge">
+						<?php mcg_icon( 'sparkle' ); ?><?php esc_html_e( 'AI answer', 'mcgrath-chrome' ); ?>
+					</span>
+					<p class="answerBody"><?php echo esc_html( mcg_opt( 'mcg_answer_body', 'A handful of companies get named for this search. The one at the top of the answer is the one with the clearest service pages, consistent local citations, and a presence on the sources these models already trust.' ) ); ?></p>
+
+					<span class="answerSrcLabel"><?php esc_html_e( 'Sources', 'mcgrath-chrome' ); ?></span>
+					<div class="answerSrc">
+						<span class="cite first"><i class="fv"></i><u><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></u></span>
+						<span class="cite"><i class="fv"></i><u>directory-site.com</u></span>
+						<span class="cite"><i class="fv"></i><u>review-site.com</u></span>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

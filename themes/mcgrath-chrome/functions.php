@@ -61,6 +61,7 @@ function mcg_customize( $wp_customize ) {
 		'mcg_hero_query'  => array( 'Search query shown in the dissolve', 'seo company jupiter fl' ),
 		'mcg_hero_ask'    => array( 'The question it lands on (words before the highlight)', 'Who is the best SEO company in' ),
 		'mcg_hero_mark'   => array( 'Highlighted end of the question', 'Jupiter, FL?' ),
+		'mcg_answer_body' => array( 'The answer shown under the question', 'A handful of companies get named for this search. The one at the top of the answer is the one with the clearest service pages, consistent local citations, and a presence on the sources these models already trust.' ),
 		'mcg_brand_line'  => array( 'Wordmark sub-line', 'McGrath Marketing Group' ),
 		'mcg_tagline'     => array( 'Footer tagline', 'A Higher Visibility. A Brighter Tomorrow.' ),
 		'mcg_email'       => array( 'Contact email', 'tyler@mcgrathmarketinggroup.com' ),
