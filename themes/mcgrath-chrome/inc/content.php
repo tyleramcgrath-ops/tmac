@@ -9,8 +9,37 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-/** A site URL for a known page slug, falling back to the slug itself. */
-function mcg_url( $slug ) {
+/**
+ * The slug each page lives at, keyed by a short name the theme uses internally.
+ *
+ * Templates and links refer to the key, never the slug, so a slug can be
+ * changed here alone. "about", "contact" and the like are the slugs a site is
+ * most likely to already have, and activation reuses a page it finds rather
+ * than creating one, so generic slugs meant the theme stamped its template
+ * onto somebody's existing page. These are distinct enough not to collide.
+ */
+function mcg_slugs() {
+	return array(
+		'home'      => 'home',
+		'seo'       => 'seo-jupiter-fl',
+		'webdesign' => 'web-design-jupiter',
+		'aeo'       => 'ai-search-optimization',
+		'about'     => 'about-tyler-mcgrath',
+		'contact'   => 'free-seo-audit',
+		'vault'     => 'vault',
+		'blog'      => 'blog',
+	);
+}
+
+/** The slug for a key, or the key itself if it is already a slug. */
+function mcg_slug( $key ) {
+	$slugs = mcg_slugs();
+	return isset( $slugs[ $key ] ) ? $slugs[ $key ] : $key;
+}
+
+/** A site URL for a known page key, falling back to the slug itself. */
+function mcg_url( $key ) {
+	$slug = mcg_slug( $key );
 	$page = get_page_by_path( $slug );
 	return $page ? get_permalink( $page ) : home_url( '/' . $slug . '/' );
 }
@@ -272,7 +301,7 @@ function mcg_services() {
 			'alt'    => 'The Jupiter Inlet light above a rising curve of search rankings',
 			'title'  => 'SEO',
 			'sub'    => 'Own traditional search.',
-			'url'    => 'seo-jupiter-fl',
+			'url'    => 'seo',
 			'accent' => false,
 			'items'  => array( 'Keyword Strategy', 'Technical SEO', 'Content & Authority', 'Local SEO' ),
 		),
@@ -282,7 +311,7 @@ function mcg_services() {
 			'alt'    => 'Search bars from four AI engines converging on a single brand panel',
 			'title'  => 'AI Search / GEO / AEO',
 			'sub'    => 'Get cited. Get recommended.',
-			'url'    => 'ai-visibility',
+			'url'    => 'aeo',
 			'accent' => true,
 			'items'  => array( 'ChatGPT, Gemini, Perplexity', 'AI Overviews', 'Entity Optimization', 'Digital PR & Brand Authority' ),
 		),
@@ -292,7 +321,7 @@ function mcg_services() {
 			'alt'    => 'A laptop and phone on a seawall showing the same coastal site',
 			'title'  => 'Web Design & Development',
 			'sub'    => 'Websites built to perform.',
-			'url'    => 'web-design-jupiter',
+			'url'    => 'webdesign',
 			'accent' => false,
 			'items'  => array( 'Custom, Conversion-Focused Design', 'Lightning Fast & SEO Ready', 'CMS Flexibility', 'Ongoing Support' ),
 		),

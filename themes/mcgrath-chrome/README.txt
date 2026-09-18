@@ -113,19 +113,32 @@ INSTALL
 
 WHAT GETS CREATED
 -----------------
-     Page                              Slug                  Template
-     --------------------------------  --------------------  --------------
-     SEO & Web Design in Jupiter, FL   home                  front page
-     SEO Company in Jupiter, FL        seo-jupiter-fl        SEO Services
-     Web Design in Jupiter, FL         web-design-jupiter    Web Design
-     AI Visibility                     ai-visibility         AI Visibility
-     About                             about                 About
-     Contact                           contact               Contact
-     The Vault                         vault                 The Vault
-     Notes on Search                   blog                  posts page
+     Page                              Slug                    Template
+     --------------------------------  ----------------------  --------------
+     SEO & Web Design in Jupiter, FL   home                    front page
+     SEO Company in Jupiter, FL        seo-jupiter-fl          SEO Services
+     Web Design in Jupiter, FL         web-design-jupiter      Web Design
+     AI Search Optimization            ai-search-optimization  AI Visibility
+     About Tyler McGrath               about-tyler-mcgrath     About
+     Free SEO Audit                    free-seo-audit          Contact
+     The Vault                         vault                   The Vault
+     Notes on Search                   blog                    posts page
 
 Nothing is duplicated if you run it twice, and a template you changed by hand
 is left alone.
+
+Activation reuses a page it finds at one of those slugs rather than creating a
+second one — which is why none of them is simply "about" or "contact". Those
+are the slugs a site is most likely to already have, and reusing one means the
+theme's template gets stamped onto a page that already had its own content and
+heading. The slugs above are distinct enough that the theme builds its own
+pages and leaves yours alone.
+
+All eight live in one place, mcg_slugs() in inc/content.php, and every link and
+menu in the theme refers to the key rather than the slug. Change a slug there
+and the whole theme follows; change it in the WordPress editor instead and the
+theme will find the page anyway, because it looks pages up by slug at render
+time.
 
 
 EDITING COPY

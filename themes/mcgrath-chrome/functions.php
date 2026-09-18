@@ -106,14 +106,13 @@ add_filter( 'body_class', 'mcg_body_class' );
 
 /** Fallback menu when none is assigned yet. */
 function mcg_fallback_menu() {
+	$s      = mcg_slugs();
 	$labels = mcg_nav_labels();
-	$pages  = array(
-		'seo-jupiter-fl'     => $labels['seo-jupiter-fl'],
-		'web-design-jupiter' => $labels['web-design-jupiter'],
-		'ai-visibility'      => $labels['ai-visibility'],
-		'about'              => $labels['about'],
-		'contact'            => $labels['contact'],
-	);
+	$pages  = array();
+
+	foreach ( array( 'seo', 'webdesign', 'aeo', 'about', 'contact' ) as $key ) {
+		$pages[ $s[ $key ] ] = $labels[ $s[ $key ] ];
+	}
 	echo '<ul>';
 	foreach ( $pages as $slug => $label ) {
 		echo '<li><a href="' . esc_url( home_url( '/' . $slug . '/' ) ) . '">' . esc_html( $label ) . '</a></li>';
@@ -128,14 +127,16 @@ function mcg_fallback_menu() {
  * menu does not need to repeat it and long labels wrap and crowd the header.
  */
 function mcg_nav_labels() {
+	$s = mcg_slugs();
+
 	return array(
-		'seo-jupiter-fl'     => __( 'SEO', 'mcgrath-chrome' ),
-		'web-design-jupiter' => __( 'Web Design', 'mcgrath-chrome' ),
-		'ai-visibility'      => __( 'AI Visibility', 'mcgrath-chrome' ),
-		'about'              => __( 'About', 'mcgrath-chrome' ),
-		'contact'            => __( 'Contact', 'mcgrath-chrome' ),
-		'vault'              => __( 'Work', 'mcgrath-chrome' ),
-		'blog'               => __( 'Insights', 'mcgrath-chrome' ),
+		$s['seo']       => __( 'SEO', 'mcgrath-chrome' ),
+		$s['webdesign'] => __( 'Web Design', 'mcgrath-chrome' ),
+		$s['aeo']       => __( 'AI Visibility', 'mcgrath-chrome' ),
+		$s['about']     => __( 'About', 'mcgrath-chrome' ),
+		$s['contact']   => __( 'Contact', 'mcgrath-chrome' ),
+		$s['vault']     => __( 'Work', 'mcgrath-chrome' ),
+		$s['blog']      => __( 'Insights', 'mcgrath-chrome' ),
 	);
 }
 
@@ -336,50 +337,52 @@ add_action( 'wp_head', 'mcg_hide_vault', 1 );
  * ===================================================================== */
 
 function mcg_pages_map() {
+	$s = mcg_slugs();
+
 	return array(
-		'home' => array(
+		$s['home'] => array(
 			'title'    => 'SEO & Web Design in Jupiter, FL',
 			'template' => '',
 			'excerpt'  => 'SEO, web design and answer engine optimization for businesses in Jupiter, Florida.',
 			'content'  => '',
 		),
-		'seo-jupiter-fl' => array(
+		$s['seo'] => array(
 			'title'    => 'SEO Company in Jupiter, FL',
 			'template' => 'template-seo.php',
 			'excerpt'  => 'Local and technical SEO for businesses in Jupiter, Palm Beach Gardens and Tequesta.',
 			'content'  => '',
 		),
-		'web-design-jupiter' => array(
+		$s['webdesign'] => array(
 			'title'    => 'Web Design in Jupiter, FL',
 			'template' => 'template-webdesign.php',
 			'excerpt'  => 'Custom WordPress websites for Palm Beach County businesses, built to convert and to rank.',
 			'content'  => '',
 		),
-		'ai-visibility' => array(
-			'title'    => 'AI Visibility & Answer Engine Optimization',
+		$s['aeo'] => array(
+			'title'    => 'AI Search Optimization',
 			'template' => 'template-aeo.php',
 			'excerpt'  => 'Get named when buyers ask ChatGPT, Gemini, Perplexity or a Google AI Overview.',
 			'content'  => '',
 		),
-		'about' => array(
-			'title'    => 'About',
+		$s['about'] => array(
+			'title'    => 'About Tyler McGrath',
 			'template' => 'template-about.php',
 			'excerpt'  => 'One person, not an agency. Who you are hiring and how the work runs.',
 			'content'  => '',
 		),
-		'contact' => array(
-			'title'    => 'Contact',
+		$s['contact'] => array(
+			'title'    => 'Free SEO Audit',
 			'template' => 'template-contact.php',
 			'excerpt'  => 'Request a free Jupiter SEO audit. One call, no pitch.',
 			'content'  => '',
 		),
-		'vault' => array(
+		$s['vault'] => array(
 			'title'    => 'The Vault',
 			'template' => 'template-vault.php',
 			'excerpt'  => '',
 			'content'  => '',
 		),
-		'blog' => array(
+		$s['blog'] => array(
 			'title'    => 'Notes on Search',
 			'template' => '',
 			'excerpt'  => '',
@@ -455,7 +458,7 @@ function mcg_activate() {
 			// The vault ships locked, with a password generated per install.
 			// A fixed one would be published in the theme's source, which is
 			// not a password at all. It is shown once in the setup notice.
-			if ( 'vault' === $slug ) {
+			if ( mcg_slug( 'vault' ) === $slug ) {
 				$pass = wp_generate_password( 12, false );
 				wp_update_post( array( 'ID' => $id, 'post_password' => $pass ) );
 				set_transient( 'mcg_vault_pass', $pass, DAY_IN_SECONDS );
@@ -477,12 +480,12 @@ function mcg_activate() {
 	// repointing a live site's homepage buys nothing and orphans whatever was
 	// there. Same for the posts page, where repointing would move the blog's
 	// archive URL out from under existing links.
-	if ( isset( $ids['home'] ) && 'page' !== get_option( 'show_on_front' ) ) {
+	if ( isset( $ids[ mcg_slug( 'home' ) ] ) && 'page' !== get_option( 'show_on_front' ) ) {
 		update_option( 'show_on_front', 'page' );
-		update_option( 'page_on_front', $ids['home'] );
+		update_option( 'page_on_front', $ids[ mcg_slug( 'home' ) ] );
 	}
-	if ( isset( $ids['blog'] ) && ! get_option( 'page_for_posts' ) ) {
-		update_option( 'page_for_posts', $ids['blog'] );
+	if ( isset( $ids[ mcg_slug( 'blog' ) ] ) && ! get_option( 'page_for_posts' ) ) {
+		update_option( 'page_for_posts', $ids[ mcg_slug( 'blog' ) ] );
 	}
 
 	// Primary menu, built once.
@@ -493,14 +496,13 @@ function mcg_activate() {
 		$menu_id = wp_create_nav_menu( $menu_name );
 
 		if ( ! is_wp_error( $menu_id ) ) {
+			$slugs   = mcg_slugs();
 			$labels  = mcg_nav_labels();
-			$in_menu = array(
-				'seo-jupiter-fl'     => $labels['seo-jupiter-fl'],
-				'web-design-jupiter' => $labels['web-design-jupiter'],
-				'ai-visibility'      => $labels['ai-visibility'],
-				'about'              => $labels['about'],
-				'contact'            => $labels['contact'],
-			);
+			$in_menu = array();
+
+			foreach ( array( 'seo', 'webdesign', 'aeo', 'about', 'contact' ) as $key ) {
+				$in_menu[ $slugs[ $key ] ] = $labels[ $slugs[ $key ] ];
+			}
 
 			foreach ( $in_menu as $slug => $label ) {
 				if ( empty( $ids[ $slug ] ) ) {
@@ -576,7 +578,9 @@ add_action( 'admin_notices', 'mcg_activated_notice' );
  * will never fire again. This offers a one-click rerun from the admin.
  */
 function mcg_setup_is_done() {
-	foreach ( array( 'seo-jupiter-fl', 'web-design-jupiter', 'contact' ) as $slug ) {
+	$s = mcg_slugs();
+
+	foreach ( array( $s['seo'], $s['webdesign'], $s['contact'] ) as $slug ) {
 		if ( ! get_page_by_path( $slug ) ) {
 			return false;
 		}

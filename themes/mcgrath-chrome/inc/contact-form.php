@@ -16,7 +16,7 @@ function mcg_contact_return( $state ) {
 	$back = wp_get_referer();
 
 	if ( ! $back ) {
-		$page = get_page_by_path( 'contact' );
+		$page = get_page_by_path( mcg_slug( 'contact' ) );
 		$back = $page ? get_permalink( $page ) : home_url( '/contact/' );
 	}
 
