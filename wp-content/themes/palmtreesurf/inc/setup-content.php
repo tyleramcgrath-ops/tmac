@@ -365,10 +365,13 @@ function pt_seed_content() {
 		}
 	}
 
-	// Use a real photo for the hero rather than a grey placeholder.
-	if ( $first_image ) {
-		set_theme_mod( 'pt_hero_image', $first_image );
-	}
+	/*
+	 * The hero is NOT pinned to a seeded photo. Those uploads are portrait 3:4
+	 * and the hero slot is a full-bleed landscape; the manifest ships a proper
+	 * landscape plate for it. Leaving this unset lets the manifest win, while a
+	 * hero image the client picks themselves still overrides everything.
+	 */
+	unset( $first_image );
 
 	/* ---------------------------------------------------- Instructors */
 

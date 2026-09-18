@@ -244,6 +244,26 @@ function pt_maybe_flush_on_update() {
 
 	update_option( 'pt_rules_version', PT_VERSION );
 	flush_rewrite_rules();
+	pt_release_seeded_hero();
+}
+
+/**
+ * Release a hero image that the seeder pinned, so the manifest plate can win.
+ *
+ * Only clears an attachment the seeder itself sideloaded (those carry
+ * `_pt_seed_source`). A hero the client chose in the Customizer is never
+ * touched.
+ */
+function pt_release_seeded_hero() {
+	$attachment_id = (int) get_theme_mod( 'pt_hero_image', 0 );
+
+	if ( ! $attachment_id ) {
+		return;
+	}
+
+	if ( get_post_meta( $attachment_id, '_pt_seed_source', true ) ) {
+		remove_theme_mod( 'pt_hero_image' );
+	}
 }
 add_action( 'init', 'pt_maybe_flush_on_update', 998 );
 

@@ -1,14 +1,14 @@
 {
   "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
   "hero-home": {
-    "w": 1920,
-    "h": 1080,
-    "ratio": "16:9",
-    "role": "Homepage hero background",
-    "alt": "Surf lesson group on the beach at Tamarindo",
-    "file": "group-lesson-beach.jpg",
+    "w": 1672,
+    "h": 756,
+    "ratio": "auto",
+    "role": "Homepage hero background, aerial Tamarindo coastline at sunset",
+    "alt": "Aerial view of Tamarindo beach and coastline at sunset",
+    "file": "tamarindo-aerial.jpg",
     "option": "pt_hero_image",
-    "note": "Source is portrait 3:4, cropped by object-fit. A true landscape hero frame is still wanted."
+    "note": "Cropped from the approved board's aerial plate, above the logo and script overlay band. Clean photographic plate, no baked text."
   },
   "hero-video": {
     "w": 1920,
@@ -130,11 +130,12 @@
     "file": null
   },
   "story-banner": {
-    "w": 2000,
-    "h": 900,
+    "w": 707,
+    "h": 565,
     "ratio": "auto",
-    "role": "Tamarindo story banner, aerial coastline",
-    "alt": "Aerial view of the Tamarindo coastline",
-    "file": null
+    "role": "Story band and experiences listing hero",
+    "alt": "Surfer carrying a board at the water's edge at sunset",
+    "file": "surfer-sunset.jpg",
+    "note": "Largest text-free rectangle available from the approved hero board. Low resolution: request a clean full-width plate to replace."
   }
 }
