@@ -14,8 +14,9 @@ WHAT IS IN IT
 * The dissolve. A real page of blue links — live DOM text, so it is crawlable
   and screen-reader friendly — is sampled into particles, flown across the
   screen as you scroll, and reassembled as the question a buyer now asks a
-  model. It lands on a shortlist of who gets cited. A hand-written WebGL chrome
-  field fades in behind it. Three narration beats run alongside.
+  model. It lands on a shortlist of who gets cited. Nothing else in the section
+  moves: the type turning into pixels is the whole animation, and the colour
+  behind it simply settles from paper to blue as the last particles arrive.
 
 * Crawler view. The switch in the header flips the whole site into the layer a
   machine reads: monospace, heading tags exposed, colours inverted. The
@@ -36,17 +37,28 @@ WHAT IS IN IT
 
 PHOTOGRAPHY
 -----------
-The Jupiter scenes ship as drawn SVG so the theme is never waiting on a photo
-shoot. Drop real photography in and it takes over automatically — no code
-change, no settings:
+The Jupiter Inlet light ships with the theme and is used twice: the panel top
+right of the hero, and the panel beside "Jupiter roots". Replace either one by
+dropping your own file over it:
 
     assets/img/hero.jpg    the panel top right of the hero
     assets/img/roots.jpg   the panel beside "Jupiter roots"
-    assets/img/ocean.jpg   behind the closing call to action
+    assets/img/ocean.jpg   behind the closing call to action (not shipped; a
+                           drawn night-water scene stands in until you add one)
 
 .webp, .jpg, .jpeg and .png all work, checked in that order. Landscape, around
-1600px wide, is the right shape.
+1600px wide, is the right shape — the shipped file is 633px, which is fine at
+normal resolution but will soften on a retina screen, so a larger original is
+worth swapping in.
 
+Both panels crop to fill, so a replacement photo may need re-aiming. Each call
+in front-page.php takes a background-position as its third argument:
+
+    mcg_plate( 'hero',  '', '64% 38%' );
+    mcg_plate( 'roots', '', '62% 46%' );
+
+First number is horizontal, second vertical. Raise the first to move the
+subject left, raise the second to move it up.
 
 LOGO
 ----
@@ -137,9 +149,8 @@ NOTES
   device pixel ratio, and honours prefers-reduced-motion — with motion reduced
   it skips straight to the answer instead of animating — but on very old
   hardware you may want to drop the WebGL layer.
-* The dashboard, the laptop mock, the charts, the icons and the Jupiter scenes
-  are all markup or inline SVG. The only images the theme loads are the ones you
-  add yourself.
+* The dashboard, the laptop mock, the charts and the icons are all markup or
+  inline SVG, so the only image the page loads is the photograph itself.
 * The results page in the dissolve is real DOM text, so it is crawlable and
   screen reader friendly. It is styled as a generic results page, not a copy of
   any search engine's branding.

@@ -24,17 +24,20 @@ function mcg_url( $slug ) {
  *
  * @param string $name  File basename: hero, roots or ocean.
  * @param string $class Extra classes, e.g. "night".
+ * @param string $focus background-position for the photo, so a replacement
+ *                      shot can be re-aimed without touching the stylesheet.
  */
-function mcg_plate( $name, $class = '' ) {
+function mcg_plate( $name, $class = '', $focus = '50% 50%' ) {
 	$dir = get_template_directory() . '/assets/img/';
 	$uri = get_template_directory_uri() . '/assets/img/';
 
 	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
 		if ( file_exists( $dir . $name . '.' . $ext ) ) {
 			printf(
-				'<div class="ph bg %s" style="background-image:url(%s)"><span class="grade"></span></div>',
+				'<div class="ph bg %s" style="background-image:url(%s);background-position:%s"><span class="grade"></span></div>',
 				esc_attr( $class ),
-				esc_url( $uri . $name . '.' . $ext )
+				esc_url( $uri . $name . '.' . $ext ),
+				esc_attr( $focus )
 			);
 			return;
 		}
@@ -323,13 +326,4 @@ function mcg_social() {
 		}
 	}
 	return $out;
-}
-
-/** The three narration beats that run while the pixels fly. */
-function mcg_dissolve_steps() {
-	return array(
-		array( 'head' => 'Ten blue links.', 'sub' => 'What search used to be' ),
-		array( 'head' => 'The page comes apart.', 'sub' => 'Every pixel is in motion' ),
-		array( 'head' => 'One answer.', 'sub' => 'And a shortlist of who gets named' ),
-	);
 }

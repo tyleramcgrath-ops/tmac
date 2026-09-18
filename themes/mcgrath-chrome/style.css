@@ -47,6 +47,7 @@ Tags: custom-menu, custom-logo, custom-background, featured-images, threaded-com
   --script:"Caveat","Segoe Script",cursive;
 
   --gut:clamp(20px,5vw,72px);
+  --navh:76px;
   --maxw:1320px;
   --r:14px;
   --r-lg:22px;
@@ -54,11 +55,15 @@ Tags: custom-menu, custom-logo, custom-background, featured-images, threaded-com
 }
 
 *{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+/* clip, not hidden: clip keeps the bled photo panel off the scrollbar
+   without turning the page into a scroll container, which would break
+   the sticky header. overflow-x:hidden stays as the older fallback. */
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip;}
 body{
   margin:0;background:var(--cream);color:var(--ink);
   font-family:var(--body);font-weight:400;font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;overflow-x:clip;
 }
 h1,h2,h3,h4{font-family:var(--display);font-weight:500;letter-spacing:-.022em;line-height:1.04;margin:0;text-wrap:balance;color:var(--navy);}
 p{margin:0;}
@@ -133,7 +138,7 @@ a{color:inherit;text-decoration:none;}
 body.is-front .nav:not(.stuck){background:transparent;backdrop-filter:none;}
 .nav.stuck{border-bottom-color:var(--line);box-shadow:0 10px 30px -26px rgba(12,42,71,.5);}
 .navIn{
-  max-width:var(--maxw);margin-inline:auto;height:76px;
+  max-width:var(--maxw);margin-inline:auto;height:var(--navh);
   display:flex;align-items:center;justify-content:space-between;gap:24px;
 }
 .brand{display:flex;align-items:center;gap:10px;}
@@ -175,10 +180,11 @@ body.is-front .nav:not(.stuck){background:transparent;backdrop-filter:none;}
 /* crawler switch */
 .vmode{
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  background:transparent;color:var(--ink-45);border:1px solid var(--line);border-radius:999px;
+  background:rgba(255,255,255,.72);backdrop-filter:blur(8px);
+  color:var(--ink-70);border:1px solid rgba(12,42,71,.16);border-radius:999px;
   padding:9px 13px;cursor:pointer;transition:color .25s,border-color .25s,background .25s;
 }
-.vmode:hover{color:var(--navy);border-color:var(--navy);}
+.vmode:hover{background:#fff;color:var(--navy);border-color:var(--navy);}
 .vmode:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
 body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--navy);}
 
@@ -207,7 +213,9 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 /* =====================================================================
    4. HERO
    ===================================================================== */
-.hero{position:relative;overflow:hidden;padding-block:clamp(38px,5vw,64px) clamp(48px,6vw,86px);}
+/* no overflow clip here: the photo panel runs up past the header to the top
+   of the page, and the panel does its own clipping. */
+.hero{position:relative;padding-block:clamp(38px,5vw,64px) clamp(48px,6vw,86px);}
 .heroIn{
   max-width:var(--maxw);margin-inline:auto;position:relative;z-index:2;
   display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
@@ -246,18 +254,30 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 
 /* hero scene : lighthouse plate + dashboard ------------------------- */
 .heroScene{position:relative;min-width:0;}
+/* The panel runs from the very top of the page — the bar floats over it —
+   so the whole photograph is on screen, not half of it behind the header. */
 .heroPlate{
-  position:absolute;top:calc(-1 * (clamp(38px,5vw,64px) + 76px));right:calc(-1 * var(--gut));
-  width:min(52%,530px);height:clamp(330px,35vw,470px);
-  border-bottom-left-radius:160px 112px;overflow:hidden;z-index:0;
+  position:absolute;top:calc(-1 * var(--navh));right:calc(-1 * var(--gut));
+  width:min(46%,590px);height:clamp(300px,28vw,396px);
+  border-bottom-left-radius:150px 104px;overflow:hidden;z-index:0;
 }
 .heroPlate .ph{transition:transform .1s linear;will-change:transform;}
 .heroPlate .ph{position:absolute;inset:0;}
 .heroPlate .tag{
-  position:absolute;right:calc(var(--gut) + 14px);top:calc(var(--gut) + 172px);z-index:3;text-align:right;
+  position:absolute;left:clamp(18px,2.2vw,30px);right:auto;
+  top:calc(var(--navh) + clamp(18px,2.4vw,32px));z-index:3;text-align:left;
   font-family:var(--body);font-weight:600;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  color:#fff;line-height:2.2;text-shadow:0 1px 3px rgba(6,22,40,.55),0 2px 22px rgba(6,22,40,.7);
+  color:#fff;line-height:2.2;
+  text-shadow:0 1px 2px rgba(6,22,40,.75),0 2px 10px rgba(6,22,40,.65),0 4px 30px rgba(6,22,40,.5);
 }
+/* a soft scrim so the three lines stay legible whatever photo goes in */
+.heroPlate .tag::before{
+  content:"";position:absolute;left:-30px;top:-24px;width:calc(100% + 70px);height:calc(100% + 50px);
+  border-radius:50%;z-index:-1;
+  background:radial-gradient(closest-side,rgba(8,26,48,.4),rgba(8,26,48,0) 78%);
+}
+/* below the widest layout the panel steps back so the menu never lands on it */
+@media(max-width:1360px){.heroPlate{width:min(38%,470px);}}
 @media(max-width:980px){.heroPlate{display:none;}}
 
 .dash{
@@ -397,7 +417,10 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .heroSeq{height:340vh;position:relative;background:var(--cream);}
 .hstage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--cream);}
 .hstage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
-.hchrome{opacity:0;transition:opacity .4s linear;}
+/* The only thing that moves in this section is the type turning into pixels.
+   This is a still colour that settles in behind the answer as they land. */
+.hbg{position:absolute;inset:0;opacity:0;transition:opacity .45s linear;
+  background:radial-gradient(112% 82% at 50% 34%,#EDF3FC 0%,#DAE7F7 46%,#C2D8F0 78%,#AFCAE9 100%);}
 .hmorph{z-index:2;opacity:0;transition:opacity .16s linear;}
 .hoverlay{position:absolute;inset:0;z-index:3;pointer-events:none;}
 .hoverlay a{pointer-events:auto;}
@@ -406,26 +429,12 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .htitle{
   position:absolute;left:0;top:50%;transform:translateY(-50%);
   width:min(42%,520px);padding-left:max(var(--gut),calc(50vw - var(--maxw)/2));
-  transition:opacity .5s ease,transform .7s var(--ease);
+  transition:opacity .5s ease;
 }
 .htitle h2{font-size:clamp(30px,3.8vw,54px);letter-spacing:-.028em;margin-top:16px;}
 .htitle p{margin-top:20px;max-width:40ch;font-size:clamp(14px,1.15vw,16px);line-height:1.66;color:var(--ink-70);}
 .htitle .alink{margin-top:26px;}
-.htitle.out{opacity:0;transform:translateY(-50%) translateX(-32px);}
-
-/* narration that swaps as the pixels fly */
-.qlabels{position:absolute;top:clamp(86px,13vh,146px);left:0;right:0;pointer-events:none;}
-.qlab{
-  position:absolute;left:0;right:0;padding-inline:var(--gut);text-align:center;display:block;
-  opacity:0;transition:opacity .55s ease;
-  font-family:var(--body);font-weight:600;font-size:10.5px;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--ink-45);
-}
-.qlab b{
-  display:block;margin-bottom:12px;font-family:var(--display);font-weight:500;
-  font-size:clamp(19px,2.5vw,32px);letter-spacing:-.025em;color:var(--navy);text-transform:none;
-}
-.qlab.is-on{opacity:1;}
+.htitle.out{opacity:0;}
 
 /* the page of blue links, real DOM text, right side of the stage */
 .serp{
@@ -465,13 +474,13 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .dcites{
   position:absolute;left:0;right:0;bottom:clamp(52px,10vh,110px);padding-inline:var(--gut);
   display:flex;flex-wrap:wrap;gap:10px;justify-content:center;opacity:0;
-  transition:opacity .6s ease,transform .6s var(--ease);transform:translateY(12px);
+  transition:opacity .6s ease;
 }
-.dcites.is-on{opacity:1;transform:none;}
+.dcites.is-on{opacity:1;}
 .cite{
-  display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;
+  display:flex;align-items:center;gap:9px;border:1px solid #C6D6EA;border-radius:999px;
   padding:9px 16px;font-family:var(--mono);font-size:11.5px;color:var(--ink-70);
-  background:rgba(255,255,255,.84);backdrop-filter:blur(6px);
+  background:#fff;
 }
 .cite u{text-decoration:none;color:var(--navy);font-weight:500;}
 .cite.first{background:var(--navy);color:#C9D6E6;border-color:var(--navy);}
@@ -485,7 +494,6 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
   .htitle p,.htitle .alink{display:none;}
   .serp{top:auto;bottom:6vh;left:var(--gut);right:var(--gut);width:auto;transform:none;}
   .res:nth-of-type(n+4){display:none;}
-  .qlabels{display:none;}
 }
 
 /* =====================================================================
@@ -786,7 +794,8 @@ body.crawl h1,body.crawl h2,body.crawl h3,body.crawl h4{letter-spacing:0;font-we
 body.crawl .nav{background:rgba(6,8,10,.9);}
 body.crawl .heroCopy h1{font-size:clamp(22px,3vw,40px);}
 body.crawl .qtext p{font-size:clamp(18px,2.6vw,34px);letter-spacing:0;}
-body.crawl .hchrome,body.crawl .lensX,body.crawl .cta canvas{display:none;}
+body.crawl .lensX,body.crawl .cta canvas{display:none;}
+body.crawl .hbg{background:#081009;}
 body.crawl [data-tag]::before{
   content:attr(data-tag) " ";color:var(--ink-45);font-size:.5em;vertical-align:super;letter-spacing:.06em;
 }
@@ -794,7 +803,7 @@ body.crawl .sbar{background:#0A120D;border-color:#14291C;box-shadow:none;}
 body.crawl .sbar span,body.crawl .rtitle span{color:#9FF3B8;}
 body.crawl .rurl span,body.crawl .rsnip span{color:#5FBE80;}
 body.crawl .fav{background:#14291C;}
-body.crawl .cite{background:#0A120D;}
+body.crawl .cite{background:#0A120D;border-color:#1F5236;}
 body.crawl .qtext .mk{background:#9FF3B8;color:#06080A;}
 body.crawl .case,body.crawl .cta,body.crawl .site-foot{background:#06080A;color:#5FBE80;}
 body.crawl .case::before,body.crawl .cta::after{display:none;}
@@ -840,6 +849,7 @@ body.crawl .navcta{background:#0A120D;color:#9FF3B8;border-color:#1F5236;}
   .js .rv{opacity:1!important;transform:none!important;}
   .heroSeq{height:auto;}
   .hstage{position:static;height:min(88vh,780px);}
+  .hbg{opacity:1;}
   .htitle.out{opacity:1;transform:translateY(-50%);}
   .cursor{display:none!important;}
 }

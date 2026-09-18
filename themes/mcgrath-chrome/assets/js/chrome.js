@@ -70,6 +70,7 @@
       if(!reduce) requestAnimationFrame(loop);
     })(t0);
   }
+  /* inner-page heroes and the closing CTA only; the dissolve no longer uses it */
   field(document.getElementById('chrome'),false);
   field(document.getElementById('chrome2'),true);
 
@@ -390,11 +391,9 @@
     ctx.putImageData(img,0,0);
   }
 
-  var labs=[].slice.call(sec.querySelectorAll('.qlab')),
-      cites=document.getElementById('dcites'),
+  var cites=document.getElementById('dcites'),
       title=document.getElementById('htitle'),
-
-      chrome=document.getElementById('chrome'),
+      bg=document.getElementById('hbg'),
       serpEl=document.getElementById('serp'),
       qEl=document.getElementById('qtext'),
       shown=-1,raf=0,target=0,cur=0;
@@ -407,14 +406,12 @@
     var idx = local<0.06 ? 0 : (local<0.74 ? 1 : 2);
     if(idx!==shown){
       shown=idx;
-      labs.forEach(function(l){
-        l.classList.toggle('is-on', l.getAttribute('data-step')===String(idx));
-      });
       if(title) title.classList.toggle('out', idx>0);
     }
 
     if(cites) cites.classList.toggle('is-on', local>0.92);
-    if(chrome) chrome.style.opacity = String(Math.max(0,Math.min((local-0.70)/0.26,1)) * 0.52);
+    /* the colour behind the answer settles in as the last particles land */
+    if(bg) bg.style.opacity = String(Math.max(0,Math.min((local-0.68)/0.28,1)));
   }
 
   function progress(){
@@ -440,7 +437,7 @@
     build();
     if(reduce){paint(1);setStage(1);if(cites)cites.classList.add('is-on');cv.style.opacity='0';
       if(serpEl)serpEl.style.opacity='0';if(qEl)qEl.style.opacity='1';
-      if(chrome)chrome.style.opacity='0.9';return;}
+      if(bg)bg.style.opacity='1';return;}
     paint(0);setStage(0);
     window.addEventListener('scroll',onScroll,{passive:true});
     onScroll();

@@ -16,7 +16,7 @@ get_header();
 <!-- ============================ HERO ============================ -->
 <section class="hero gut" id="hero">
 	<div class="heroPlate" aria-hidden="true">
-		<?php mcg_plate( 'hero' ); ?>
+		<?php mcg_plate( 'hero', '', '64% 38%' ); ?>
 		<span class="tag">
 			<?php echo esc_html( mcg_opt( 'mcg_plate_l1', 'Higher Visibility' ) ); ?><br>
 			<?php echo esc_html( mcg_opt( 'mcg_plate_l2', 'Stronger Businesses' ) ); ?><br>
@@ -147,7 +147,7 @@ get_header();
      ===================================================================== -->
 <section class="heroSeq" id="heroSeq" aria-labelledby="shiftHead">
 	<div class="hstage">
-		<canvas id="chrome" class="hchrome" aria-hidden="true"></canvas>
+		<div class="hbg" id="hbg" aria-hidden="true"></div>
 		<canvas id="morph" class="hmorph" aria-hidden="true"></canvas>
 
 		<div class="hoverlay">
@@ -156,14 +156,6 @@ get_header();
 				<h2 id="shiftHead" data-tag="&lt;h2&gt;"><?php echo esc_html( mcg_opt( 'mcg_shift_head', 'Search changed. We changed with it.' ) ); ?></h2>
 				<p><?php echo esc_html( mcg_opt( 'mcg_shift_sub', 'A modern marketing partner for a multi-platform world. From Google to AI search, we help brands show up, stand out and grow — with strategies built for what is next.' ) ); ?></p>
 				<a class="alink" href="#services"><?php esc_html_e( 'Our Services', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span></a>
-			</div>
-
-			<div class="qlabels" aria-hidden="true">
-				<?php foreach ( mcg_dissolve_steps() as $mcg_i => $mcg_step ) : ?>
-					<span class="qlab<?php echo 0 === $mcg_i ? ' is-on' : ''; ?>" data-step="<?php echo (int) $mcg_i; ?>">
-						<b><?php echo esc_html( $mcg_step['head'] ); ?></b><?php echo esc_html( $mcg_step['sub'] ); ?>
-					</span>
-				<?php endforeach; ?>
 			</div>
 
 			<div class="serp" id="serp">
@@ -330,7 +322,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 
 <!-- ======================= JUPITER ROOTS ========================= -->
 <section class="roots" id="home-base">
-	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots' ); ?></div>
+	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots', '', '62% 46%' ); ?></div>
 
 	<div class="rootsBody">
 		<div class="rv">
