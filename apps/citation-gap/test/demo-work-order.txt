@@ -1,0 +1,343 @@
+!! SAMPLE DATA - DO NOT ACT ON THIS !!
+This work order came from the app’s built-in example, not a live scan of your site.
+Every figure below is illustrative. Run a real scan before using any of it.
+
+# SEO AND AI-VISIBILITY WORK ORDER
+
+CONTEXT
+Page to edit ....... https://envuetelematics.com/dash-cams/
+Target keyword ..... "AI dash cam for fleets"
+Brand .............. EnVue Telematics
+Market ............. US / EN
+Measured against ... the 8 pages currently ranking for this keyword
+Audit date ......... September 2, 2026 at 9:14 AM PDT
+Rank Score ......... 37/100   (how closely this page matches the pages beating it; band 36–38 across competitor samples)
+Answer Score ....... 35/100   (whether AI answer engines can quote it; stable across competitor samples)
+
+## METHODOLOGY
+Every figure in this work order is reproducible from these rules. Check the method before the
+numbers; a number without its method cannot be verified.
+
+  Fetch mode ......... served HTML + rendered DOM (headless Chromium, computed styles read)
+  Fetched URL ........ exactly as given, no cache-busting parameter added; freshness requested
+                       via Cache-Control: no-cache header
+  Render wait ........ 2,500 ms after networkidle2, scrolled to bottom: yes (9 steps), then 1,250 ms more
+  Render input ....... mouse move + wheel scroll (9 steps down, then back up) + key press; prefers-reduced-motion: no-preference; viewport 1366×900
+  Gate self-check .... 9 markers at first paint → 7/9 released, 2 still hidden (“Get a Free Demo”, “Annual Reportable Accidents Reduced By 31%”)
+                       PARTIALLY RELEASED — the 2 still hidden are real residuals, listed as findings
+                       Method: every marked element tagged at first paint and re-read by identity after a down pass, a reverse pass and a settle, regardless of scroll position
+                       still hidden: [call to action] “Get a Free Demo” — visibility:hidden, marker class still present
+                       still hidden: [div] “Annual Reportable Accidents Reduced By 31%” — visibility:hidden, marker class still present
+  Word count rule .... Region: the first <main> or <article> whose text exceeds 500 characters, otherwise <body>
+                       with <nav>, <header>, <footer>, <aside> and <form> removed. <script>, <style>, <noscript>,
+                       <svg> and comments are dropped; every tag is removed, so alt text, aria-labels, title
+                       attributes and other attribute values are NOT counted; HTML entities are decoded; whitespace
+                       is collapsed. The text is split on whitespace and a token counts as a word only if it
+                       contains at least one letter or digit (so a lone dash or pipe is not a word). Hyphenated
+                       compounds are one word; numerals are words.
+                       Region used on this page: <main>
+  Text fingerprint ... sha256 3f1c9e0b7a2d4c8e5f6a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60
+                       The stripped text is downloadable from the report ("Download counted text");
+                       apply the rule above to it and you get exactly 1,100.
+  Block definition ... A block is the OUTERMOST element carrying an entrance-animation marker (class
+                       elementor-invisible, wpb_animate_when_almost_visible, wow, animate__animated, or a data-aos
+                       attribute) that contains text. A gated element nested inside another gated element is
+                       counted within its parent, not separately. The raw element count is every element carrying a
+                       marker, nested or not.
+  Measurement basis .. SERVED HTML for every page in the comparison (this page and all 8 competitors). The rendered figure for this page is printed beside it and never mixed into the median.
+                       One basis per comparison is asserted at scan time; a page that could only be measured on the other basis is
+                       excluded with the disposition BASIS_MISMATCH rather than averaged in. Tick “Render every competitor” for the rendered basis.
+  Word count check ... served 1,100 · rendered 960 (960 painted + 0 reachable) · 13% apart — counts consistent. Scored figure: served (1,100).
+                       A = served HTML, <main>, regex parser · B = rendered page, same boundary (<main>), painted text (one tree walk; every text node whose ancestors all pass display / visibility / opacity / hidden / client-rect / clip tests) plus REACHABLE text (off-stage carousel slides and closed tab panels with a painted sibling; clones excluded)
+                       for comparison only: innerText 0 · textContent 0
+                       whole page (served HTML) 1,290 · whole page (rendered, painted) 1,040
+  Carousel clones .... 0 matched in served HTML (a runtime carousel builds its clones after load; see the rendered accounting)
+  Competitor sample .. 9 requested → 8 used, 1 not used:
+                       FAILED  fleetio.com — HTTP 403
+                       Effort model: 1 day = 6 hours, half day = 3 hours; pts/hr figures use it.
+                       Minimum-content gate: a page under 300 main-content words or with no headings is a failed or
+                       script-gated fetch, not a competitor, and is excluded so it cannot drag every median down.
+                       word count min/median/max 1,100 / 2,800 / 8,500
+  Score confidence ... Rank 36–38, Answer 35–35 — leave-one-out across the 8 competitor pages.
+                       A move inside that band between scans is sample noise, not progress.
+  Median confidence .. each median below carries its leave-one-out range; a task whose median moves
+                       when one competitor is dropped is marked SOFT TARGET and its number may change next scan.
+  Heading rule ....... headings inside post-feed, loop or carousel widgets are TEMPLATE; the rest EDITORIAL
+  Hidden containers .. none declared in the served HTML
+
+## RENDERED-VS-SERVED DIFF
+Text in HTML but invisible to humans ....... 2 elements by computed style  (1 call to action, 1 statistic)
+    [call to action] “Get a Free Demo” — visibility:hidden (entrance-animation wrapper)
+    [statistic] “Annual Reportable Accidents Reduced By 31%” — ancestor visibility:hidden (entrance-animation wrapper)
+  Hidden by design, NOT findings ............ 39 elements  (33 in menus, 6 carousel slides waiting their turn)
+  Served text blocks never appearing in visible text: 2
+    “Get a Free Demo”
+    “Annual Reportable Accidents Reduced By 31%”
+Text visible but absent from served HTML ... 1 line (script-injected page content; invisible to any crawler that does not run JavaScript)
+    “Drivers coached this quarter: 1,240 sessions logged by the platform”
+Entrance-animation markers ................. 9 elements carry one in served HTML (2 outermost blocks with text); in the browser: 9 markers at first paint → 7/9 released, 2 still hidden (“Get a Free Demo”, “Annual Reportable Accidents Reduced By 31%”) (2 still carrying the marker class)
+                                             (an element never leaves the DOM when its animation fires — the marker class is removed)
+Counter widgets ............................ 1 in served HTML; after render (1): “Annual Reportable Accidents Reduced By” shows 31 (hidden)
+
+## STEP 0 - VERIFY BEFORE YOU DO ANYTHING
+This baseline came from an automated scan. Check it before you act on it.
+
+1. Open EXACTLY this URL: https://envuetelematics.com/dash-cams/
+   Not the homepage. Not a similar page. If the URL you can reach differs in any way, or you
+   cannot open it at all, say so and stop.
+2. Compare what you actually see against the MEASURED BASELINE below.
+3. If ANY figure differs from the baseline, STOP. Do not start Task 1. List every difference
+   as "baseline says X, I see Y" and ask me which is correct.
+   Never write "confirmed" or "all accurate" beside numbers that do not match. A disagreement
+   is a finding, not a formality — and it usually means one of us is looking at the wrong page.
+4. The baseline figures are read from the served HTML; a rendered copy was also checked, so
+   counter widgets and script-injected content are accounted for (see RENDERED-VS-SERVED DIFF).
+   If you still find content on the live page that is missing from the baseline, flag it.
+5. Content the browser check found hidden from visitors is listed above. If you see it on the
+   live page with your own eyes, say so — a rendering difference between browsers is itself
+   a finding worth recording.
+
+## DO NOT MAKE THIS WORSE
+- Do not change the URL.
+- Do not edit the title tag or H1 without telling me the exact before/after and why — both carry
+  ranking signal on their own, separate from anything else on this list.
+- The ROLLBACK SNAPSHOT below is the restore point. Before any edit, confirm it still matches.
+
+## ROLLBACK SNAPSHOT (as measured September 2, 2026 at 9:14 AM PDT)
+Paste these back to undo. Everything here is the current live value, not a suggestion.
+
+  Title tag .......... Enhance Fleet Safety and Efficiency with Video-Based Systems
+  Meta description ... Discover how video-based safety systems like AI dash cams and HD imagery enhance driver safety and reduce fleet risks effectively.
+  H1 ................. Video-based safety systems lower risk profile
+  Canonical .......... (none)
+  Heading outline .... 
+    H1  Video-based safety systems lower risk profile
+      H2  Why video telematics
+      H2  How AI dash cams coach drivers
+      H2  What does an AI dash cam cost?
+      H2  Get a free demo
+
+## HOW I WANT YOU TO WORK
+There are 11 tasks below in two explicitly ranked sections. Section A (OUT-OF-SCORE) is
+visitor-facing and integrity defects that sit outside the two 100-point tables; each carries a
+fixed weight, not table points. Section B (IN-SCORE) recovers points from the Rank and Answer
+tables and is ordered by points per hour — arithmetic you can check. Ordering WITHIN each
+section is arithmetic; ordering A before B is a judgement call, stated as such: a demo button a
+visitor cannot see costs revenue now, a missing H3 does not. Work them in order. After each task,
+show me the finished output and stop. Wait for me to say go before starting the next one.
+Effort model: 1 day = 6 hours, half day = 3 hours, then 2 hrs / 1 hr / 30 min / 15 min. All pts/hr figures use
+this. Section B labels are a pure function of pts/hr: HIGH ≥ 10, MEDIUM ≥ 5, otherwise LOW. CRITICAL is reserved
+for Section A — something wrong on a live commercial page, not something merely absent.
+
+ABSOLUTE RULE — DO NOT INVENT ANYTHING
+Never make up a statistic, customer name, price, certification, award, product
+capability, or comparison claim. If a task needs a fact you were not given, stop and
+ask me for it. A plausible-sounding invented number on a commercial page is a legal
+and reputational problem, not a helpful guess.
+
+Before you start Task 1, ask me for two things: the current page copy, and the current
+heading outline (or confirm the ROLLBACK SNAPSHOT outline is still current). Almost every
+task below needs them.
+
+## MEASURED BASELINE
+From a live scan of the top 8 Google results for this keyword. SPREAD is min–max across them;
+a median with a wide spread is a soft target, not a hard one.
+
+  SIGNAL                        THIS PAGE  TOP-8 MEDIAN SPREAD (MIN–MAX)   MEDIAN RANGE (leave-one-out)
+  ----------------------------------------------------------------------------------------------------
+  Body word count             1,100 served · 960 rendered         2,800      1,100–8,500   2,400–3,200 SOFT
+  H2 sections                          12            10             5–13   9–11 SOFT
+  H3 subheadings                        0            13             0–23   12–14 SOFT
+  Question-shaped headings              4             5              0–8   stable
+  Quantified claims                     0             6              0–6   stable
+  Lists                                 4             7             2–12   stable
+  Tables                                0        2 of 8                 
+  Keyword in title tag                 NO        7 of 8                 
+  Keyword in H1                        NO        8 of 8                 
+  FAQ/Product/Service schema          yes        3 of 8                 
+
+Word count follows the rule in METHODOLOGY (main content only, so a whole-page count reads
+higher — whole page (served HTML) 1,290, whole page (rendered, painted) 1,040). The scored word count is the SERVED figure (1,100), the basis every page in the comparison shares. Quantified claims are figures inside a sentence; a bare
+number lifted out of a widget is not counted twice.
+
+Current title tag: "Enhance Fleet Safety and Efficiency with Video-Based Systems"
+Current H1: "Video-based safety systems lower risk profile"
+Current meta description: "Discover how video-based safety systems like AI dash cams and HD imagery enhance driver safety and reduce fleet risks effectively."
+Schema, top-level entities (4): BreadcrumbList, FAQPage, Organization, WebPage
+Schema, nested sub-objects (3): Answer, ListItem, Question
+Schema items checked against page text: 1 present, 2 absent
+
+A note on targets: aim for PARITY with the median, never more. Overshooting a median is how
+a page ends up padded with filler that dilutes it.
+
+## CATEGORY VOCABULARY THIS PAGE IS MISSING
+Concepts appearing across several pages that outrank this one, absent here. One line per
+concept; surface forms in brackets. Presence was checked against the served HTML AND the
+rendered visible text:
+  PRESENT BUT HIDDEN = in the HTML, invisible to a visitor — scored as missing until visible
+  ABSENT             = not on the page at all
+  OWN STACK
+    • [ABSENT] Geotab  — on 8 of 8 ranking pages
+    • [ABSENT] ELD  — on 8 of 8 ranking pages
+  VOCABULARY
+    • [PRESENT BUT HIDDEN] Driver Coaching  — on 8 of 8 ranking pages
+    • [PRESENT BUT HIDDEN] Fleet Safety  — on 8 of 8 ranking pages
+    • [ABSENT] DVIR  — on 8 of 8 ranking pages
+    • [PRESENT BUT HIDDEN] GPS  — on 8 of 8 ranking pages
+    • [ABSENT] FMCSA  — on 7 of 8 ranking pages
+    • [ABSENT] HOS  — on 7 of 8 ranking pages
+    • [ABSENT] ADAS  — on 6 of 8 ranking pages
+    • [ABSENT] Distracted Driving  — on 5 of 8 ranking pages
+    • [ABSENT] Collision  — on 5 of 8 ranking pages
+    • [ABSENT] Insurance  — on 5 of 8 ranking pages
+  COMPETITOR
+    • [ABSENT] Samsara  — on 8 of 8 ranking pages
+    • [ABSENT] SureCam  — on 8 of 8 ranking pages
+    • [ABSENT] Motive  — on 8 of 8 ranking pages
+    • [ABSENT] Lytx  — on 8 of 8 ranking pages
+OWN STACK = named elsewhere on this site (navigation, links, product pages) but not on this page
+            — the business already offers it and the page never says so. Usually the best term here.
+VOCABULARY = category language. Use judgement; I would rather you exclude a term than force it.
+COMPETITOR = a domain ranking for this keyword. Do not add unless a real comparison exists.
+
+## THE TASKS
+
+### SECTION A — OUT-OF-SCORE (visitor-facing and integrity defects; fixed weight, ranked by weight per hour)
+
+### Task 1 — Make 2 pieces of hidden content visible to visitors (1 call to action)
+[CRITICAL · about 30 min · weight 45 outside the score tables, affects human visitors · ≈90 pts/hr]
+
+Why: The page was rendered in a real browser with mouse and wheel input, scrolled, and left to settle; the render’s own self-check re-read every marked element by identity: 9 markers at first paint → 7/9 released, 2 still hidden (“Get a Free Demo”, “Annual Reportable Accidents Reduced By 31%”). Afterwards these elements still carried text that the computed style hides from every visitor while it sits readable in the served HTML. Most sit inside entrance-animation wrappers whose reveal never fired. A demo button, a price or a statistic a visitor cannot see costs revenue directly, which puts this above every content task. The diff lists 2 hidden content elements in total; this task covers the 2 that are calls to action, headings, statistics, prices or forms. 39 other hidden elements were excluded as hidden by design (menu items, carousel slides, closed dialogs, tabs, screen-reader text).
+
+Measured:
+  measured in browser → 1 call to action, 1 statistic
+  still hidden after render  → [call to action] Get a Free Demo — visibility:hidden
+              [statistic] Annual Reportable Accidents Reduced By 31% — ancestor visibility:hidden
+
+Do this: Give me the one-minute reproduction on the live page, then the diagnosis — stuck entrance animation, or a modal/tab that is meant to be closed — then the fix: page builder first, scoped CSS second, global override last with its cost stated. Anything hidden that is intentional, say so and move on.
+
+### Task 2 — Reconcile 2 schema items with no visible counterpart on the page
+[HIGH · about 30 min · weight 12 outside the score tables, affects answer · ≈24 pts/hr]
+
+Why: Each declared FAQ question and answer, product, offer, review and rating was string-matched against the page text. 2 of 3 are not on the page at all — the structured data describes content a visitor cannot see. That is a structured-data policy risk, not a cosmetic one. It also means anything this list adds as new question headings has to be reflected in the JSON-LD, or the mismatch gets worse instead of better.
+
+Measured:
+  top-level → BreadcrumbList, FAQPage, Organization, WebPage
+  visible Q headings → 4
+  absent → [FAQ question] Can dash cams lower my insurance premium?
+           [FAQ answer] Many carriers offer discounts for fleets running video-based
+
+Do this: Work from the PRESENT/ABSENT list above: for every ABSENT item either put the content on the page or take it out of the JSON-LD, list every mismatch in either direction, and produce corrected JSON-LD. If this list also adds new question headings, fold them into this task rather than leaving the schema to catch up later.
+
+### SECTION B — IN-SCORE (recovers Rank/Answer points; ranked by points per hour)
+
+### Task 3 — Put the head term in the title tag
+[HIGH · about 15 min · +20 pts on RANK + ANSWER · ≈100 pts/hr]
+
+Why: 7 of 8 ranking pages lead with it. Yours does not contain “AI dash cam for fleets” at all. Cheapest fix on this list.
+
+Measured:
+  now  → Enhance Fleet Safety and Efficiency with Video-Based Systems
+  set  → AI Dash Cam For Fleets | EnVue Telematics
+
+Do this: Write 5 title tags, 50-60 characters, "AI dash cam for fleets" in the first 35 characters, ending " | EnVue Telematics". Show the character count for each and recommend one.
+
+### Task 4 — Rewrite the H1 to name the thing
+[HIGH · about 15 min · +15 pts on RANK · ≈75 pts/hr]
+
+Why: 8 of 8 ranking pages put the term in the H1. Yours states a benefit where the category name belongs.
+
+Measured:
+  now  → Video-based safety systems lower risk profile
+  set  → AI Dash Cam For Fleets
+
+Do this: Write 5 H1 options under 70 characters that contain "AI dash cam for fleets" and describe the page rather than sell it. Recommend one.
+
+### Task 5 — Add 6 quantified, attributable outcomes
+[MEDIUM · about half day · +30 pts on ANSWER · ≈8 pts/hr]
+
+Why: The highest-leverage change available. Answer engines quote figures they can attribute. With none on the page there is nothing to lift.
+
+Measured:
+  pattern  → [figure] [outcome] — [named customer], [timeframe]
+  you have → 0   median → 6   spread → 0–6
+
+Do this: Ask me for the real figures FIRST — customer, metric, timeframe, permission to name them — and suggest which 6 metrics would be most persuasive. Write nothing until I answer. If I have no data, give me a collection plan instead.
+
+### Task 6 — Add a spec comparison table
+[MEDIUM · about 2 hrs · +15 pts on ANSWER · ≈8 pts/hr]
+
+Why: The most cleanly extractable structure on a page — an answer engine can lift a row without parsing prose, regardless of how many of the ranking pages happen to run one. Right now that is 2 of 8 — not yet the norm here, which is exactly why a clean table stands out rather than just matching the pack.
+
+Do this: Ask me for the real specs, then build a comparison table as clean semantic HTML — rows are options, columns are dimensions, every cell a concrete value.
+
+### Task 7 — Cover the category’s shared vocabulary — 3 terms are already on the page but hidden from visitors
+[LOW · about 2 hrs · +9 pts on ANSWER · ≈4 pts/hr]
+
+Why: These concepts appear across multiple ranking pages — the language the topic is discussed in. A page missing them reads as off-topic to a retrieval model. 3 of them (Driver Coaching, Fleet Safety, GPS) are in the served HTML but the browser render found them hidden from visitors — a crawler sees them, a person does not. They are scored as NOT covered until they are visible; the hidden-content task restores them, which makes this the cheapest part of this list. 2 of them (Geotab, ELD) are named elsewhere on this site but never on this page: the business already offers them and the page does not say so. 4 are competitor brands and are listed only so you know to leave them out.
+
+Measured:
+  present but hidden → Driver Coaching, Fleet Safety, GPS
+  own stack   → Geotab, ELD
+  vocabulary  → Driver Coaching, Fleet Safety, DVIR, GPS, FMCSA, HOS, ADAS, Distracted Driving, Collision, Insurance
+  competitors → Samsara, SureCam, Motive, Lytx  (do not add)
+
+Do this: Start with the OWN STACK terms — confirm each with me, then work them in. Then judge the VOCABULARY terms. Leave COMPETITOR terms out unless I say otherwise. Show before/after sentences for every term you add.
+
+### Task 8 — Add scannable lists
+[LOW · about 1 hr · +4 pts on RANK · ≈4 pts/hr]
+
+Why: Extractable structure, and it lifts dwell time.
+
+Measured:
+  you have → 4   median → 7
+
+Do this: Find prose that should be lists and rewrite it as clean HTML lists with parallel grammar.
+
+### Task 9 — Build out H3 subheading depth  [SOFT TARGET]
+[LOW · about 1 day · +10 pts on RANK + ANSWER · ≈2 pts/hr]
+
+Why: Subheading depth is how ranking pages carry detail without becoming a wall of text.
+
+Measured:
+  you have → 0   median → 13   add → 13
+  SOFT TARGET → median 13 moves between 12 and 14 when any one competitor is left out; the number may change on the next scan
+
+Do this: Produce a full heading outline taking the page to about 13 H3s, with a word budget beside each.
+
+### Task 10 — Close the 1,700-word gap by answering real questions, not hitting a quota  [SOFT TARGET]
+[LOW · about 1 day · +9 pts on RANK · ≈2 pts/hr]
+
+Why: Parity with the median, not maximum — and not a word count to write toward. A quota produces filler, which is the opposite of what closes a rank gap. List the buyer questions this page leaves unanswered, answer each one properly, and let the word count fall out of that. Both figures for this page: 1,100 served, 960 rendered (960 painted + 0 reachable). The gap is measured from the served figure because that is the basis every page in this comparison shares.
+
+Measured:
+  you have → 1,100 served (scored) · 960 rendered   target → 2,800   gap → 1,700
+  ranking pages run 1,100–8,500 words; the median is a soft target
+  SOFT TARGET → median 2,800 moves between 2,400 and 3,200 when any one competitor is left out; the number may change on the next scan
+
+Do this: Do not write to a word count. List the specific buyer questions about "AI dash cam for fleets" this page leaves unanswered, using only the current copy plus facts I give you. Answer each one in as many words as it genuinely takes, then total the result — if it lands short of 2,800 words, tell me what real gaps remain rather than padding to close the gap.
+
+### Task 11 — Add 1 question-shaped subheading
+[LOW · about half day · +4 pts on RANK + ANSWER · ≈1 pts/hr]
+
+Why: Each is a retrieval hook: the question a buyer types, answered in the 40 words directly beneath it. Also closes the word gap with substance instead of padding.
+
+Measured:
+  you have → 4   median → 5   spread → 0–8
+
+Do this: Write 1 question heading, each followed by a 35-50 word answer that answers the question in its first sentence. Flag any figure you need from me rather than inventing one.
+
+## SCORE RECONCILIATION
+Every point below 100 on either table is either claimed by a task above or declared
+unreachable here — so "nothing left to do" and "the tool ran out of ideas" never read the
+same in this report.
+
+  Rank score is 36.6/100 (63.4 points short of 100). 63.4 points claimed by a task above.
+
+  Answer score is 35.4/100 (64.6 points short of 100). 57.9 points claimed by a task above; 6.7 points declared unreachable this scan — no task exists for Observed answer-set coverage (33%, 6.7 pts short), each already at or above the threshold that generates a task, so the shortfall is fractional, not a missing idea.
+
+## WHEN YOU ARE DONE
+Give me a single checklist of every change, grouped by where it goes: title tag, head section,
+page body, structured data. That is what I will hand to whoever edits the site.
+
+Then list, in one place, every fact you needed from me and did not get.

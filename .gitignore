@@ -48,3 +48,8 @@ next-env.d.ts
 /playwright-report
 apps/reloop/package-lock.json
 apps/north-star-hq/package-lock.json
+
+# citation-gap app deps
+apps/citation-gap/node_modules
+apps/citation-gap/public
+apps/citation-gap/test/*.png
