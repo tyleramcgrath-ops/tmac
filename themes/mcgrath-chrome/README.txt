@@ -15,12 +15,12 @@ WHAT IS IN IT
   and screen-reader friendly — is sampled into particles, flown across the
   screen as you scroll, and reassembled as the question a buyer now asks a
   model. It lands in a search field, with the question sitting in it as though
-  it has just been typed, and the result that comes back underneath: your own
-  domain, title and snippet. Both the field and the result are drawn generically
-  rather than as a copy of any one engine's branding. Nothing else in the
-  section moves: the type turning into pixels is the whole animation, and the
-  colour behind it simply settles from paper to blue as the last particles
-  arrive.
+  it has just been typed, and an overview settling in underneath: the answer on
+  the left, the sources it drew on listed alongside it, your own domain first.
+  Both the field and the overview are drawn generically rather than as a copy of
+  any one engine's branding. Nothing else in the section moves: the type turning
+  into pixels is the whole animation, and the colour behind it simply settles
+  from paper to blue as the last particles arrive.
 
 * Crawler view. The switch in the header flips the whole site into the layer a
   machine reads: monospace, heading tags exposed, colours inverted. The
@@ -128,8 +128,8 @@ not normal page content lives there:
   * the three lines over the photograph
   * the dissolve heading and paragraph
   * the search query shown in the dissolve, the question it lands on, the
-    highlighted end of that question, and the title and snippet of the result
-    that comes back
+    highlighted end of that question, and the overview that comes back (which
+    accepts <b> tags)
   * the case study: both name lines, the summary and the headline on the mock
     site. It ships as a deliberately unnamed, representative engagement with
     round numbers — put a real client in before launch, or leave it as the

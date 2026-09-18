@@ -506,7 +506,7 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
    pixels land on the typed text itself; the field around it appears with it. */
 .qtext{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  padding-inline:var(--gut);padding-bottom:clamp(116px,17vh,168px);
+  padding-inline:var(--gut);padding-bottom:clamp(148px,23vh,204px);
   opacity:0;transition:opacity .16s linear;
 }
 .qtext p{
@@ -541,34 +541,62 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 /* inside a search field the whole query is just typed text */
 .qtext .mk{background:none;color:#202124;padding:0;border-radius:0;}
 
-/* ---- what comes back: one result, and it is yours ---- */
+/* ---- what comes back: the overview, and the sources beside it ---- */
 .askResult{
-  position:absolute;left:0;right:0;top:calc(50% - 6px);
+  position:absolute;left:0;right:0;top:calc(50% - 45px);
   padding-inline:var(--gut);display:flex;justify-content:center;
-  opacity:0;transform:translateY(10px) scale(.985);
+  opacity:0;transform:translateY(10px) scale(.987);
   transition:opacity .5s var(--ease),transform .5s var(--ease);
   pointer-events:none;
 }
 .askResult.is-on{opacity:1;transform:none;}
-.resCard{
-  width:min(100%,720px);background:#fff;border:1px solid #E3E8EE;border-radius:14px;
-  padding:clamp(16px,1.9vw,22px) clamp(20px,2.3vw,28px);
-  box-shadow:0 26px 58px -34px rgba(12,42,71,.44),0 3px 12px -7px rgba(12,42,71,.12);
-  text-align:left;font-family:Arial,Helvetica,sans-serif;
+.ovCard{
+  width:min(100%,780px);background:#fff;border:1px solid #E3E8EE;border-radius:16px;
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(196px,22vw,250px);
+  box-shadow:0 28px 62px -34px rgba(12,42,71,.46),0 3px 12px -7px rgba(12,42,71,.12);
+  text-align:left;overflow:hidden;
 }
-.resUrl{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4D5156;}
-.resUrl .fv{
-  width:19px;height:19px;border-radius:50%;flex:0 0 auto;
-  background:var(--navy);
+.ovMain{padding:clamp(20px,2.2vw,26px);min-width:0;}
+.ovHead{
+  display:flex;align-items:center;gap:9px;
+  font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);
 }
-.resTitle{
-  display:block;margin-top:5px;font-size:clamp(17px,1.65vw,21px);line-height:1.28;
-  color:#1A0DAB;
+.ovDot{
+  width:15px;height:15px;border-radius:50%;flex:0 0 auto;display:block;
+  background:linear-gradient(135deg,var(--blue),var(--blue-lt));
 }
-.resSnip{
-  display:block;margin-top:5px;font-size:13.5px;line-height:1.5;color:#4D5156;max-width:62ch;
+.ovBody{
+  margin-top:13px;font-size:clamp(13.5px,1.12vw,15.5px);line-height:1.68;color:var(--ink);
 }
+.ovBody b{font-weight:600;color:var(--navy);}
 
+.ovRail{
+  border-left:1px solid #EDF1F6;background:#FBFCFE;
+  padding:clamp(18px,2vw,23px) clamp(16px,1.6vw,20px);min-width:0;
+}
+.ovRailLab{
+  display:block;font-size:9.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-45);
+}
+.railItem{
+  display:flex;align-items:flex-start;gap:8px;margin-top:12px;
+  font-size:11px;line-height:1.35;color:#4D5156;min-width:0;
+}
+/* a long domain wraps rather than being cut off — chasing the rail width
+   across breakpoints never quite covered every size */
+.railItem b{
+  font-weight:600;color:var(--navy);font-size:11px;
+  min-width:0;white-space:normal;overflow-wrap:anywhere;
+}
+.railItem.first b{color:var(--blue);}
+.railItem .fv{width:13px;height:13px;border-radius:50%;background:#C6D2DF;display:block;flex:0 0 auto;margin-top:1px;}
+.railItem.first .fv{background:var(--blue);}
+
+/* the rail needs real width for a long domain; below this it stacks under */
+@media(max-width:860px){
+  .ovCard{grid-template-columns:minmax(0,1fr);}
+  .ovRail{border-left:0;border-top:1px solid #EDF1F6;}
+}
 @media(max-width:980px){
   .heroSeq{height:300vh;}
   .htitle{width:auto;right:0;top:clamp(104px,16vh,170px);transform:none;
@@ -875,11 +903,13 @@ body.crawl .qtext p::before{border-color:#3F8A5C;}
 body.crawl .qtext p::after{background:#3F8A5C;}
 body.crawl .qtext .mk{background:none;color:#9FF3B8;}
 body.crawl .qtext .mk::after{background:#5FBE80;}
-body.crawl .resCard{background:#0A120D;border-color:#14291C;box-shadow:none;}
-body.crawl .resUrl,body.crawl .resSnip{color:#5FBE80;}
-body.crawl .resTitle{color:#9FF3B8;}
-body.crawl .resUrl .fv{background:#1F5236;}
-body.crawl .qtext .mk{background:#9FF3B8;color:#06080A;}
+body.crawl .ovCard{background:#0A120D;border-color:#14291C;box-shadow:none;}
+body.crawl .ovRail{background:#081009;border-left-color:#14291C;border-top-color:#14291C;}
+body.crawl .ovBody{color:#5FBE80;}
+body.crawl .ovBody b,body.crawl .railItem b{color:#9FF3B8;}
+body.crawl .railItem{color:#5FBE80;}
+body.crawl .railItem .fv{background:#1F5236;}
+body.crawl .ovDot{background:#9FF3B8;}
 body.crawl .case,body.crawl .cta,body.crawl .site-foot{background:#06080A;color:#5FBE80;}
 body.crawl .case::before,body.crawl .cta::after{display:none;}
 body.crawl .case h2,body.crawl .cta h2,body.crawl .footBrand b{color:#9FF3B8;}

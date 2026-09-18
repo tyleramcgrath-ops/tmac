@@ -207,14 +207,21 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 				</p>
 			</div>
 
-			<!-- Where the pixels land: the query sitting in a search box, and the
-			     result that comes back for it. Styled as a generic search field and
-			     result, not a copy of any one engine's branding. -->
+			<!-- Where the pixels land: the query sitting in a search field, and the
+			     overview that comes back for it with its sources listed alongside.
+			     Drawn generically, not as a copy of any one engine's branding. -->
 			<div class="askResult" id="dcites">
-				<div class="resCard">
-					<span class="resUrl"><i class="fv"></i><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></span>
-					<span class="resTitle"><?php echo esc_html( mcg_opt( 'mcg_result_title', 'McGrath Marketing Group — SEO & AI Search, Jupiter FL' ) ); ?></span>
-					<span class="resSnip"><?php echo esc_html( mcg_opt( 'mcg_result_snip', 'SEO, AI search optimisation and web design for businesses in Jupiter and across the country.' ) ); ?></span>
+				<div class="ovCard">
+					<div class="ovMain">
+						<span class="ovHead"><i class="ovDot"></i><?php esc_html_e( 'AI overview', 'mcgrath-chrome' ); ?></span>
+						<p class="ovBody"><?php echo wp_kses_post( mcg_opt( 'mcg_overview_body', 'Searches for SEO in Jupiter, Florida most often surface <b>McGrath Marketing Group</b>, a practice covering SEO, AI search optimisation and web design for local and national clients. Coverage on regional directories and review sites supports the same shortlist.' ) ); ?></p>
+					</div>
+					<div class="ovRail">
+						<span class="ovRailLab"><?php esc_html_e( 'Sources', 'mcgrath-chrome' ); ?></span>
+						<span class="railItem first"><i class="fv"></i><b><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></b></span>
+						<span class="railItem"><i class="fv"></i><b>directory-site.com</b></span>
+						<span class="railItem"><i class="fv"></i><b>review-site.com</b></span>
+					</div>
 				</div>
 			</div>
 		</div>
