@@ -889,12 +889,46 @@ ul, ol { margin: 0 0 var(--pt-space-sm); padding-left: 1.25rem; }
 
 /* ------------------------------------------------------ Image fallbacks */
 
+/*
+ * Empty photo slots render as a designed brand surface rather than a grey box,
+ * so the site is presentable before the photography arrives. Layered gradients
+ * give it depth without shipping a fake photograph.
+ */
 .pt-image--placeholder {
-	display: grid; place-items: center; width: 100%;
-	background: var(--pt-warm-sand);
-	color: var(--pt-muted);
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 100%; height: 100%;
+	background:
+		radial-gradient(120% 90% at 18% 12%, rgba(89, 214, 200, .30) 0%, rgba(89, 214, 200, 0) 55%),
+		radial-gradient(100% 80% at 88% 92%, rgba(241, 184, 91, .22) 0%, rgba(241, 184, 91, 0) 60%),
+		linear-gradient(155deg, var(--pt-ocean-navy) 0%, var(--pt-deep-ocean) 62%, var(--pt-ink) 100%);
+	overflow: hidden;
+}
+
+/* A soft horizon band, so large panels do not read as flat colour. */
+.pt-image--placeholder::after {
+	content: "";
+	position: absolute;
+	left: -10%; right: -10%; bottom: 18%;
+	height: 42%;
+	background: radial-gradient(60% 100% at 50% 0%, rgba(24, 185, 180, .26) 0%, rgba(24, 185, 180, 0) 70%);
+	transform: rotate(-4deg);
+	pointer-events: none;
+}
+
+.pt-image__slot {
+	position: relative;
+	z-index: 1;
+	padding: 0.35rem 0.75rem;
+	border: 1px solid var(--pt-glass-border);
+	border-radius: var(--pt-radius-pill);
+	background: var(--pt-glass-bg);
+	color: var(--pt-on-dark-muted);
 	font-family: ui-monospace, monospace;
-	font-size: 0.75rem; text-align: center; line-height: 1.4;
+	font-size: 0.7rem;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
 }
 
 /* ------------------------------------------------------- Scroll reveal */

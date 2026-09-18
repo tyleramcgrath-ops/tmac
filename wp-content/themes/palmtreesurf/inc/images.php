@@ -127,20 +127,31 @@ function pt_image( $slot, $args = array() ) {
 		}
 	}
 
-	// 3. A placeholder occupying the exact box the photo will.
+	/*
+	 * 3. A designed brand panel occupying the exact box the photo will.
+	 *
+	 * Deliberately not a grey debug box: the client shows this site to people
+	 * before the photography lands, so an empty slot should read as an
+	 * intentional brand surface. The slot key is only rendered for logged-in
+	 * editors, who need to know which slot to fill.
+	 */
+	$show_key = is_user_logged_in() && current_user_can( 'edit_posts' );
+
 	printf(
-		'<div class="%1$s pt-image--placeholder" style="aspect-ratio:%2$d/%3$d" role="img" aria-label="%4$s"><span>%5$s<br />%2$d&times;%3$d</span></div>',
+		'<div class="%1$s pt-image--placeholder" style="aspect-ratio:%2$d/%3$d" role="img" aria-label="%4$s">%5$s</div>',
 		esc_attr( $class ),
 		$width,
 		$height,
 		esc_attr(
 			sprintf(
 				/* translators: %s: image slot description. */
-				__( 'Photo coming soon: %s', 'palmtreesurf' ),
+				__( 'Photograph coming soon: %s', 'palmtreesurf' ),
 				isset( $definition['role'] ) ? $definition['role'] : $slot
 			)
 		),
-		esc_html( $slot )
+		$show_key
+			? '<span class="pt-image__slot">' . esc_html( $slot ) . ' &middot; ' . (int) $width . '&times;' . (int) $height . '</span>'
+			: ''
 	);
 }
 
