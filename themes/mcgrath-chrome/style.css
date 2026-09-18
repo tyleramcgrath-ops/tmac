@@ -502,58 +502,71 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .rsnip span{display:block;font-size:13px;line-height:1.44;color:#4D5156;}
 
 /* the question the pixels land on */
+/* The query, sitting in a search field. This is the particle target, so the
+   pixels land on the typed text itself; the field around it appears with it. */
 .qtext{
-  position:absolute;inset:0 0 auto;top:clamp(64px,12vh,124px);
-  display:flex;align-items:flex-start;justify-content:center;
-  padding-inline:var(--gut);opacity:0;transition:opacity .16s linear;
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding-inline:var(--gut);padding-bottom:clamp(116px,17vh,168px);
+  opacity:0;transition:opacity .16s linear;
 }
 .qtext p{
-  font-family:var(--display);font-weight:500;
-  font-size:clamp(25px,4.1vw,52px);line-height:1.2;letter-spacing:-.028em;
-  text-align:center;max-width:min(92%,900px);color:var(--navy);
+  position:relative;display:block;
+  width:min(100%,720px);
+  padding:clamp(18px,2.2vw,24px) clamp(22px,2.4vw,30px) clamp(18px,2.2vw,24px) clamp(50px,5vw,62px);
+  background:#fff;border:1px solid #DDE2E8;border-radius:999px;
+  box-shadow:0 18px 44px -26px rgba(12,42,71,.4),0 2px 8px -4px rgba(12,42,71,.1);
+  font-family:var(--body);font-weight:400;
+  font-size:clamp(15px,1.55vw,20px);line-height:1.35;
+  /* opened up a little, so it reads as something being typed rather than set */
+  letter-spacing:.012em;word-spacing:.22em;
+  text-align:left;color:#202124;
 }
-.qtext span{display:inline-block;line-height:1.22;}
-.qtext .mk{background:var(--blue);color:#fff;padding:2px 14px;border-radius:10px;}
+/* the magnifier, drawn rather than shipped */
+.qtext p::before{
+  content:"";position:absolute;left:clamp(20px,2.1vw,26px);top:50%;
+  width:15px;height:15px;margin-top:-9px;border-radius:50%;
+  border:2px solid #9AA0A6;
+}
+.qtext p::after{
+  content:"";position:absolute;left:clamp(32px,3.2vw,38px);top:50%;margin-top:3px;
+  width:7px;height:2px;border-radius:2px;background:#9AA0A6;transform:rotate(45deg);
+}
+.qtext span{display:inline-block;line-height:1.35;}
+/* the caret sitting at the end of what has been typed */
+.qtext .mk::after{
+  content:"";display:inline-block;width:1.5px;height:1.05em;margin-left:.3em;
+  vertical-align:-.16em;background:#5F6368;
+}
+/* inside a search field the whole query is just typed text */
+.qtext .mk{background:none;color:#202124;padding:0;border-radius:0;}
 
-/* ---- the payoff: the answer surface the question lands on ----
-   Deliberately generic: an answer panel with its sources, not a copy of any
-   one engine's chrome. The question above it is the particle target, so it
-   stays where the pixels put it and this settles in underneath. */
-.answer{
-  position:absolute;left:0;right:0;top:clamp(224px,33vh,344px);
+/* ---- what comes back: one result, and it is yours ---- */
+.askResult{
+  position:absolute;left:0;right:0;top:calc(50% - 6px);
   padding-inline:var(--gut);display:flex;justify-content:center;
-  opacity:0;transition:opacity .6s ease;pointer-events:none;
+  opacity:0;transform:translateY(10px) scale(.985);
+  transition:opacity .5s var(--ease),transform .5s var(--ease);
+  pointer-events:none;
 }
-.answer.is-on{opacity:1;}
-.answerCard{
-  width:min(100%,660px);background:#fff;border:1px solid #D9E3F0;border-radius:16px;
-  padding:clamp(18px,2.2vw,26px) clamp(20px,2.4vw,30px) clamp(16px,2vw,22px);
-  box-shadow:0 26px 60px -34px rgba(12,42,71,.42),0 4px 14px -8px rgba(12,42,71,.12);
-  text-align:left;
+.askResult.is-on{opacity:1;transform:none;}
+.resCard{
+  width:min(100%,720px);background:#fff;border:1px solid #E3E8EE;border-radius:14px;
+  padding:clamp(16px,1.9vw,22px) clamp(20px,2.3vw,28px);
+  box-shadow:0 26px 58px -34px rgba(12,42,71,.44),0 3px 12px -7px rgba(12,42,71,.12);
+  text-align:left;font-family:Arial,Helvetica,sans-serif;
 }
-.answerBadge{
-  display:inline-flex;align-items:center;gap:7px;
-  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);
+.resUrl{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#4D5156;}
+.resUrl .fv{
+  width:19px;height:19px;border-radius:50%;flex:0 0 auto;
+  background:var(--navy);
 }
-.answerBadge svg{width:15px;height:15px;color:var(--blue);}
-.answerBody{
-  margin-top:11px;font-size:clamp(13.5px,1.15vw,15.5px);line-height:1.62;color:var(--ink);
+.resTitle{
+  display:block;margin-top:5px;font-size:clamp(17px,1.65vw,21px);line-height:1.28;
+  color:#1A0DAB;
 }
-.answerSrcLabel{
-  display:block;margin-top:16px;padding-top:14px;border-top:1px solid #E7EDF5;
-  font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-45);
+.resSnip{
+  display:block;margin-top:5px;font-size:13.5px;line-height:1.5;color:#4D5156;max-width:62ch;
 }
-.answerSrc{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
-.cite{
-  display:inline-flex;align-items:center;gap:8px;border:1px solid #DCE6F2;border-radius:999px;
-  padding:7px 13px;font-family:var(--mono);font-size:11px;color:var(--ink-70);background:#F7FAFD;
-}
-.cite .fv{width:12px;height:12px;border-radius:50%;background:#C6D2DF;display:block;flex:0 0 auto;}
-.cite u{text-decoration:none;color:var(--navy);font-weight:500;}
-/* the one that matters is filled in, the way a first citation reads */
-.cite.first{background:var(--navy);border-color:var(--navy);color:#BFD0E4;}
-.cite.first u{color:#fff;}
-.cite.first .fv{background:var(--blue-lt);}
 
 @media(max-width:980px){
   .heroSeq{height:300vh;}
@@ -856,10 +869,15 @@ body.crawl .sbar{background:#0A120D;border-color:#14291C;box-shadow:none;}
 body.crawl .sbar span,body.crawl .rtitle span{color:#9FF3B8;}
 body.crawl .rurl span,body.crawl .rsnip span{color:#5FBE80;}
 body.crawl .fav{background:#14291C;}
-body.crawl .cite{background:#0A120D;border-color:#1F5236;}
-body.crawl .cite .fv{background:#1F5236;}
-body.crawl .answerCard{background:#0A120D;border-color:#14291C;box-shadow:none;}
-body.crawl .answerSrcLabel{border-top-color:#14291C;}
+body.crawl .qtext p{background:#0A120D;border-color:#14291C;color:#9FF3B8;box-shadow:none;}
+body.crawl .qtext p::before{border-color:#3F8A5C;}
+body.crawl .qtext p::after{background:#3F8A5C;}
+body.crawl .qtext .mk{background:none;color:#9FF3B8;}
+body.crawl .qtext .mk::after{background:#5FBE80;}
+body.crawl .resCard{background:#0A120D;border-color:#14291C;box-shadow:none;}
+body.crawl .resUrl,body.crawl .resSnip{color:#5FBE80;}
+body.crawl .resTitle{color:#9FF3B8;}
+body.crawl .resUrl .fv{background:#1F5236;}
 body.crawl .qtext .mk{background:#9FF3B8;color:#06080A;}
 body.crawl .case,body.crawl .cta,body.crawl .site-foot{background:#06080A;color:#5FBE80;}
 body.crawl .case::before,body.crawl .cta::after{display:none;}
