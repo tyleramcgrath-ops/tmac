@@ -1,0 +1,7 @@
+{
+  "buildCommand": "node build.js",
+  "outputDirectory": "public",
+  "functions": {
+    "api/render.js": { "maxDuration": 60 }
+  }
+}

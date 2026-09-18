@@ -1,0 +1,38 @@
+{
+  "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
+  "sealedAt": "2026-09-18T21:18:46.958Z",
+  "files": {
+    "index.html": {
+      "sha256": "981b45798d598f89999fabcd82055d7170dffb42240625a3cbe0afc6fd463c95",
+      "bytes": 298117
+    },
+    "api/page.js": {
+      "sha256": "72b1e21ea6a569415f9cadf5c80ea074a292c03fbe319543e584da86d9c87d74",
+      "bytes": 221
+    },
+    "api/page.impl.js": {
+      "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
+      "bytes": 47439
+    },
+    "api/render.js": {
+      "sha256": "0ec2b88318a34d4040293c898aecb947fdae8d1980513ca1bfd54c1956fe2c23",
+      "bytes": 225
+    },
+    "api/render.impl.js": {
+      "sha256": "51ab73d7f3ee72af707e14149f360031ec681c33eb21c03461237055e953c612",
+      "bytes": 58811
+    },
+    "api/serp.js": {
+      "sha256": "552381689142f313c8b522f4799315c8ff5c925aad76bbec1ee9805a9dcd1de2",
+      "bytes": 5734
+    },
+    "package.json": {
+      "sha256": "890751191765fbe4ff31efbbaba4731554e214f639817b4122d21d3ac2df9ebe",
+      "bytes": 379
+    },
+    "vercel.json": {
+      "sha256": "25c19aed114d05744bfded9f9568bb922f0d9f8f9dd5de0c5d3d8df46a2d316e",
+      "bytes": 134
+    }
+  }
+}
