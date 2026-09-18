@@ -72,40 +72,10 @@ function mcg_customize( $wp_customize ) {
 		'mcg_price_audit'  => array( 'SEO page price: one-off audit', 'On request' ),
 		'mcg_price_month'  => array( 'SEO page price: monthly SEO', 'On request' ),
 		'mcg_price_launch' => array( 'SEO page price: local launch', 'Fixed scope, on request' ),
-		'mcg_case_client'  => array( 'Case study: client or project name', '' ),
-		'mcg_case_head'    => array( 'Case study: headline', 'The shape a local search engagement takes' ),
-		'mcg_case_meta'    => array( 'Case study: industry, location and services', 'Jupiter, Florida · SEO, web design and AI visibility' ),
-		'mcg_case_summary' => array( 'Case study: the paragraph', 'A local business usually arrives with a site that is slow on a phone, service pages too thin to rank and a Google Business Profile nobody has touched since it was claimed. The work runs in that order: repair what blocks crawling and speed, write the pages that answer what buyers actually search for, then align the profile, citations and schema that decide the map.' ),
-		'mcg_case_shot_url'=> array( 'Case study: address shown on the screenshot', '' ),
-		'mcg_case_timeframe'=> array( 'Case study: results timeframe, e.g. First 12 months', '' ),
-		'mcg_case_m1v'     => array( 'Verified result 1: figure', '' ),
-		'mcg_case_m1l'     => array( 'Verified result 1: label', '' ),
-		'mcg_case_m2v'     => array( 'Verified result 2: figure', '' ),
-		'mcg_case_m2l'     => array( 'Verified result 2: label', '' ),
-		'mcg_case_m3v'     => array( 'Verified result 3: figure', '' ),
-		'mcg_case_m3l'     => array( 'Verified result 3: label', '' ),
-		'mcg_case_d1'      => array( 'Illustrative deliverable 1', 'Crawl, speed and index health repaired first' ),
-		'mcg_case_d2'      => array( 'Illustrative deliverable 2', 'Service and location pages written, not spun' ),
-		'mcg_case_d3'      => array( 'Illustrative deliverable 3', 'Profile, citations and schema brought into line' ),
 		'mcg_social_linkedin'  => array( 'LinkedIn URL', '' ),
 		'mcg_social_instagram' => array( 'Instagram URL', '' ),
 		'mcg_social_youtube'   => array( 'YouTube URL', '' ),
 	);
-
-	// The one switch that is not a string: whether the case study describes real,
-	// verified client work. Off, the section labels itself illustrative and shows
-	// deliverables instead of numbers, so nothing unearned is ever presented as a
-	// result.
-	$wp_customize->add_setting( 'mcg_case_verified', array(
-		'default'           => false,
-		'sanitize_callback' => 'mcg_sanitize_bool',
-	) );
-	$wp_customize->add_control( 'mcg_case_verified', array(
-		'label'       => __( 'Case study: these are real, verified client results', 'mcgrath-chrome' ),
-		'description' => __( 'Leave this off unless the figures below are a real client\'s, measured over a stated timeframe, and you have their permission. Off, the section is labelled "Illustrative Project" and shows deliverables instead.', 'mcgrath-chrome' ),
-		'section'     => 'mcg_hero',
-		'type'        => 'checkbox',
-	) );
 
 	foreach ( $fields as $id => $meta ) {
 		$wp_customize->add_setting( $id, array(
@@ -121,11 +91,6 @@ function mcg_customize( $wp_customize ) {
 
 }
 add_action( 'customize_register', 'mcg_customize' );
-
-/** Checkbox sanitiser. */
-function mcg_sanitize_bool( $v ) {
-	return (bool) $v;
-}
 
 /** Helper: a customizer string with its default. */
 function mcg_opt( $key, $fallback = '' ) {

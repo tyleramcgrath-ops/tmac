@@ -4,8 +4,8 @@
  *
  * Hero with a live visibility dashboard, the stat strip, the scroll-driven
  * dissolve that shatters a page of blue links and reassembles it as the
- * question a buyer asks a model, services, a featured case study, the Jupiter
- * section, FAQ, the free audit, client logos and the closing CTA.
+ * question a buyer asks a model, services, the Jupiter section, insights,
+ * FAQ, the free audit and the closing CTA.
  *
  * @package mcgrath-chrome
  */
@@ -278,82 +278,6 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 				</a>
 			<?php endforeach; ?>
 		</div>
-	</div>
-</section>
-
-<!-- ========================= CASE STUDY ========================== -->
-<?php
-$mcg_case = mcg_case();
-$mcg_shot = mcg_case_shot();
-?>
-
-<section class="case sec gut<?php echo $mcg_shot ? '' : ' noShot'; ?>" id="work">
-	<div class="caseIn">
-		<div class="caseHead rv">
-			<span class="eyebrow"><?php esc_html_e( 'Selected Work', 'mcgrath-chrome' ); ?></span>
-			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Visibility that drives business.', 'mcgrath-chrome' ); ?></h2>
-			<a class="alink" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>">
-				<?php esc_html_e( 'View all case studies', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
-			</a>
-		</div>
-
-		<div class="caseGrid">
-			<div class="caseDetail rv">
-				<span class="caseLabel<?php echo $mcg_case['verified'] ? ' isReal' : ''; ?>">
-					<?php echo esc_html( $mcg_case['label'] ); ?>
-				</span>
-				<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_case['head'] ); ?></h3>
-				<p class="caseMeta"><?php echo esc_html( $mcg_case['meta'] ); ?></p>
-				<p class="caseText"><?php echo esc_html( $mcg_case['summary'] ); ?></p>
-				<a class="alink caseGo" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>">
-					<?php esc_html_e( 'View case study', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
-				</a>
-			</div>
-
-			<?php if ( $mcg_shot ) : ?>
-				<figure class="caseShot rv" data-d="1">
-					<div class="shotBar" aria-hidden="true">
-						<i></i><i></i><i></i>
-						<?php if ( $mcg_case['shot_url'] ) : ?>
-							<span class="shotUrl"><?php echo esc_html( $mcg_case['shot_url'] ); ?></span>
-						<?php endif; ?>
-					</div>
-					<img src="<?php echo esc_url( $mcg_shot ); ?>"
-						alt="<?php esc_attr_e( 'The finished website for this project', 'mcgrath-chrome' ); ?>"
-						width="1400" height="1050" loading="lazy" decoding="async">
-				</figure>
-			<?php endif; ?>
-		</div>
-
-		<?php if ( $mcg_case['verified'] && $mcg_case['metrics'] ) : ?>
-			<div class="caseResults rv" data-d="2">
-				<?php foreach ( $mcg_case['metrics'] as $mcg_m ) : ?>
-					<div class="caseResult">
-						<b><?php echo esc_html( $mcg_m['value'] ); ?></b>
-						<span><?php echo esc_html( $mcg_m['label'] ); ?></span>
-					</div>
-				<?php endforeach; ?>
-			</div>
-			<p class="caseFoot rv" data-d="3"><?php
-				printf(
-					/* translators: %s: the period the figures were measured over. */
-					esc_html__( 'Measured over %s.', 'mcgrath-chrome' ),
-					esc_html( $mcg_case['timeframe'] )
-				);
-			?></p>
-		<?php elseif ( $mcg_case['deliverables'] ) : ?>
-			<!-- No verified client figures, so the strip carries what the work
-			     involves rather than numbers nobody can stand behind. -->
-			<div class="caseResults isWork rv" data-d="2">
-				<?php foreach ( $mcg_case['deliverables'] as $mcg_i => $mcg_d ) : ?>
-					<div class="caseResult">
-						<b><?php echo esc_html( sprintf( '%02d', $mcg_i + 1 ) ); ?></b>
-						<span><?php echo esc_html( $mcg_d ); ?></span>
-					</div>
-				<?php endforeach; ?>
-			</div>
-			<p class="caseFoot rv" data-d="3"><?php esc_html_e( 'An illustrative engagement, not a client record. Real client results are published here once a client agrees to them.', 'mcgrath-chrome' ); ?></p>
-		<?php endif; ?>
 	</div>
 </section>
 

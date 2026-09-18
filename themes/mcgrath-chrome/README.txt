@@ -8,8 +8,8 @@ WHAT IS IN IT
 -------------
 * Homepage. Hero with a live-looking visibility dashboard drawn in markup (not
   an image, so it stays sharp and a crawler can read it), a four-up stat strip,
-  the dissolve, four service cards, a featured case study, the Jupiter section,
-  FAQ, the free audit form and the closing call to action.
+  the dissolve, four image-led service cards, the Jupiter section, an insights
+  band, the FAQ, the free audit form and the closing call to action.
 
 * The dissolve. A real page of blue links — live DOM text, so it is crawlable
   and screen-reader friendly — is sampled into particles, flown across the
@@ -139,10 +139,6 @@ not normal page content lives there:
   * the search query shown in the dissolve, the question it lands on, the
     highlighted end of that question, and the overview that comes back (which
     accepts <b> tags)
-  * the case study: both name lines, the summary and the headline on the mock
-    site. It ships as a deliberately unnamed, representative engagement with
-    round numbers — put a real client in before launch, or leave it as the
-    illustration it is
   * the wordmark sub-line, the footer tagline, contact email, location, reach
     line and the coordinates
   * LinkedIn, Instagram and YouTube URLs. Leave one blank and its icon does not
@@ -158,48 +154,6 @@ It ships locked with the password "jupiter". Change it: edit the Vault page,
 open Summary on the right, Visibility > Password protected, set your own. Put
 client work in the page body. Locked, visitors get the vault door. Unlocked,
 they get your work. It is noindex and stays out of the menu.
-
-
-THE FEATURED CASE STUDY
------------------------
-The section has two modes and will not blur them.
-
-By default it is an ILLUSTRATIVE PROJECT. It says so on a label, the strip
-carries three deliverables — statements about what the work involves, true
-regardless of client — and a footnote says plainly that it is not a client
-record. Nothing unearned is presented as a result.
-
-To publish a real one, go to Appearance > Customize > Homepage & brand and:
-
-    1. Fill in "Case study: client or project name". This replaces the
-       Illustrative Project label, so use the name you have permission to use.
-    2. Fill in all three "Verified result" figure and label pairs.
-    3. Fill in "Case study: results timeframe", e.g. "First 12 months". The
-       section prints "Measured over ..." beneath the figures, because a
-       percentage without a period behind it is not a result.
-    4. Tick "these are real, verified client results".
-
-Every one of those has to hold. Miss any of them and the section falls back to
-illustrative rather than showing two real numbers and one invented one. The
-figures are never written into the page's schema, only into the visible copy.
-
-THE SCREENSHOT
---------------
-Drop a picture of the finished site at:
-
-    assets/img/case-shot.webp    (.jpg, .jpeg and .png also work)
-
-It renders inside a plain browser frame beside the project details, and it is
-the section's main visual. Around 1400px wide suits it; any height works, the
-frame follows the image.
-
-Nothing stands in for it. With no file there the section runs one column wide
-and the prose moves alongside the heading instead. That is deliberate: a drawn
-mock-up of a website that does not exist is the thing that costs a case study
-its credibility.
-
-"Case study: address shown on the screenshot" puts a URL in the frame's address
-bar. Leave it empty and the bar stays blank.
 
 
 THE AUDIT FORM
