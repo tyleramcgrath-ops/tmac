@@ -31,12 +31,10 @@
 
 		<nav aria-label="<?php esc_attr_e( 'Primary', 'mcgrath-chrome' ); ?>" id="primaryNav">
 			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'primary',
-				'container'      => false,
-				'depth'          => 1,
-				'fallback_cb'    => 'mcg_fallback_menu',
-			) );
+			// The theme's own pages, linked directly. A WordPress menu stores
+			// page IDs, so a menu built under a previous site goes on pointing
+			// at that site's pages no matter what this theme does.
+			mcg_nav();
 			?>
 		</nav>
 

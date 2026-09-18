@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.0.0' );
+define( 'MCG_VERSION', '2.1.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -106,6 +106,30 @@ function mcg_body_class( $classes ) {
 add_filter( 'body_class', 'mcg_body_class' );
 
 /** Fallback menu when none is assigned yet. */
+/**
+ * The navigation.
+ *
+ * Rendered from the theme's own pages rather than from a WordPress menu. A
+ * menu item stores a page ID, so a menu built under whatever site was here
+ * before goes on pointing at that site's pages however the theme is changed.
+ * The links below always lead to this theme's pages.
+ */
+function mcg_nav() {
+	$labels = mcg_nav_labels();
+	$slugs  = mcg_slugs();
+
+	echo '<ul>';
+	foreach ( array( 'seo', 'webdesign', 'aeo', 'about', 'contact' ) as $key ) {
+		printf(
+			'<li%s><a href="%s">%s</a></li>',
+			mcg_page_id( $key ) && is_page( mcg_page_id( $key ) ) ? ' class="current"' : '',
+			esc_url( mcg_url( $key ) ),
+			esc_html( $labels[ $slugs[ $key ] ] )
+		);
+	}
+	echo '</ul>';
+}
+
 function mcg_fallback_menu() {
 	$s      = mcg_slugs();
 	$labels = mcg_nav_labels();

@@ -183,6 +183,40 @@ function mcg_apply_page_plan( $rename = false ) {
 	}
 }
 
+/**
+ * Build any of the theme's pages that are missing, once.
+ *
+ * The navigation links to the theme's pages, so they have to exist or those
+ * links lead nowhere. Activation only fires on a theme switch, and uploading a
+ * new version of the same theme is not one, so this covers the gap. It runs in
+ * the admin only, once, and creates — it never edits or claims a page that is
+ * already there.
+ */
+function mcg_ensure_pages() {
+	if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) ) {
+		return;
+	}
+
+	if ( get_option( 'mcg_pages_built' ) === MCG_VERSION ) {
+		return;
+	}
+
+	$missing = false;
+	foreach ( mcg_page_plan() as $item ) {
+		if ( 'create' === $item['action'] ) {
+			$missing = true;
+			break;
+		}
+	}
+
+	if ( $missing ) {
+		mcg_apply_page_plan( false );
+	}
+
+	update_option( 'mcg_pages_built', MCG_VERSION );
+}
+add_action( 'admin_init', 'mcg_ensure_pages', 20 );
+
 /** Handle the apply link. */
 function mcg_maybe_apply_plan() {
 	if ( ! isset( $_GET['mcg_fix_pages'] ) || ! current_user_can( 'edit_theme_options' ) ) {

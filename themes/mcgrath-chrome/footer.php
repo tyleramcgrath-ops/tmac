@@ -17,12 +17,10 @@
 
 		<nav class="footNav" aria-label="<?php esc_attr_e( 'Footer', 'mcgrath-chrome' ); ?>">
 			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'footer',
-				'container'      => false,
-				'depth'          => 1,
-				'fallback_cb'    => 'mcg_fallback_menu',
-			) );
+			// The theme's own pages, linked directly. A WordPress menu stores
+			// page IDs, so a menu built under a previous site goes on pointing
+			// at that site's pages no matter what this theme does.
+			mcg_nav();
 			?>
 		</nav>
 
