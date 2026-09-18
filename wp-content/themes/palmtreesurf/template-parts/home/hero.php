@@ -1,83 +1,92 @@
 <?php
 /**
- * Homepage hero (section 6.1).
+ * Homepage hero — approved mockup.
+ *
+ * Script "Tamarindo" accent, large headline, supporting line, universal search
+ * and a four-item trust row.
+ *
+ * The trust items are Customizer fields with deliberately modest defaults. The
+ * brief is explicit that a price guarantee or bilingual support may only be
+ * claimed if it is operationally true, so none of those claims are hardcoded.
  *
  * @package PalmTreeSurf
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$pt_eyebrow = pt_filled( 'pt_hero_eyebrow' );
+$pt_script  = pt_filled( 'pt_hero_script' );
 $pt_heading = pt_filled( 'pt_hero_heading' );
-$pt_accent  = pt_filled( 'pt_hero_heading_accent' );
+$pt_tagline = pt_filled( 'pt_hero_tagline' );
 $pt_text    = pt_filled( 'pt_hero_text' );
-$pt_video   = pt_filled( 'pt_hero_video_url' );
+$pt_accent  = pt_filled( 'pt_hero_corner' );
+
+$pt_trust = array_filter(
+	array(
+		array( 'bolt', pt_filled( 'pt_trust_1' ) ),
+		array( 'experts', pt_filled( 'pt_trust_2' ) ),
+		array( 'shield', pt_filled( 'pt_trust_3' ) ),
+		array( 'globe', pt_filled( 'pt_trust_4' ) ),
+	),
+	function ( $item ) {
+		return '' !== $item[1];
+	}
+);
 ?>
-<section class="hero" data-reveal-group>
+<section class="hero">
 	<div class="hero__media">
-		<?php if ( $pt_video ) : ?>
-			<?php // Poster carries the LCP; the video only loads above 768px via CSS. ?>
-			<video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( pt_hero_poster_url() ); ?>">
-				<source src="<?php echo esc_url( $pt_video ); ?>" type="video/mp4" />
-			</video>
-		<?php else : ?>
-			<?php pt_image( 'hero-home', array( 'priority' => true, 'class' => 'hero__image' ) ); ?>
-		<?php endif; ?>
+		<?php pt_image( 'hero-home', array( 'priority' => true, 'class' => 'hero__image' ) ); ?>
 	</div>
 
-	<div class="hero__inner container hero__inner--editorial">
-		<?php if ( $pt_eyebrow ) : ?>
-			<p class="hero__eyebrow" data-reveal><?php echo esc_html( $pt_eyebrow ); ?></p>
+	<div class="hero__inner container">
+		<?php if ( $pt_script ) : ?>
+			<p class="hero__script"><?php echo esc_html( $pt_script ); ?></p>
 		<?php endif; ?>
 
-		<h1 class="hero__title" data-reveal>
-			<?php echo esc_html( $pt_heading ? $pt_heading : get_bloginfo( 'name' ) ); ?>
-			<?php if ( $pt_accent ) : ?>
-				<span class="hero__accent"><?php echo esc_html( $pt_accent ); ?></span>
-			<?php endif; ?>
-		</h1>
+		<h1 class="hero__title"><?php echo esc_html( $pt_heading ? $pt_heading : get_bloginfo( 'name' ) ); ?></h1>
+
+		<?php if ( $pt_tagline ) : ?>
+			<p class="hero__tagline"><?php echo esc_html( $pt_tagline ); ?></p>
+		<?php endif; ?>
 
 		<?php if ( $pt_text ) : ?>
-			<p class="hero__text" data-reveal><?php echo esc_html( $pt_text ); ?></p>
+			<p class="hero__text"><?php echo esc_html( $pt_text ); ?></p>
 		<?php endif; ?>
 
-		<p class="hero__actions" data-reveal>
-			<?php
-			pt_booking_button(
-				array(
-					'label'    => pt_filled( 'pt_hero_cta_text' ) ? pt_filled( 'pt_hero_cta_text' ) : __( 'Book Your Session', 'palmtreesurf' ),
-					'location' => 'hero',
-					'class'    => 'btn btn--primary btn--lg',
-				)
-			);
-			?>
-			<a class="btn btn--ghost btn--lg" href="<?php echo esc_url( get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ) ); ?>">
-				<?php esc_html_e( 'View Experiences', 'palmtreesurf' ); ?>
-			</a>
-		</p>
+		<?php // A real search: submits to the experiences archive. ?>
+		<form class="hero-search" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<label class="screen-reader-text" for="hero-search-field">
+				<?php esc_html_e( 'Search experiences', 'palmtreesurf' ); ?>
+			</label>
+			<?php echo pt_get_icon( 'search', 'hero-search__icon', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
+			<input
+				type="search"
+				id="hero-search-field"
+				name="s"
+				class="hero-search__field"
+				placeholder="<?php esc_attr_e( 'What are you looking for?', 'palmtreesurf' ); ?>"
+				value="<?php echo esc_attr( get_search_query() ); ?>"
+			/>
+			<input type="hidden" name="post_type" value="<?php echo esc_attr( PT_EXPERIENCE_POST_TYPE ); ?>" />
+			<button class="btn btn--primary hero-search__submit" type="submit">
+				<?php esc_html_e( 'Search', 'palmtreesurf' ); ?>
+			</button>
+		</form>
 
-		<?php
-		$pt_trust = array_filter(
-			array(
-				pt_filled( 'pt_years' ) ? sprintf( /* translators: %s: number of years. */ __( '%s years in Tamarindo', 'palmtreesurf' ), pt_filled( 'pt_years' ) ) : '',
-				pt_filled( 'pt_cert_body' ) ? pt_filled( 'pt_cert_body' ) : '',
-				pt_filled( 'pt_rating' ) && pt_filled( 'pt_review_count' )
-					? sprintf(
-						/* translators: 1: rating, 2: review count. */
-						__( '%1$s stars from %2$s reviews', 'palmtreesurf' ),
-						pt_filled( 'pt_rating' ),
-						pt_filled( 'pt_review_count' )
-					)
-					: '',
-			)
-		);
-		?>
-		<?php if ( $pt_trust ) : ?>
-			<ul class="hero__trust" data-reveal>
-				<?php foreach ( $pt_trust as $pt_item ) : ?>
-					<li><?php echo esc_html( $pt_item ); ?></li>
-				<?php endforeach; ?>
-			</ul>
+		<?php if ( $pt_accent ) : ?>
+			<p class="hero__corner"><?php echo esc_html( $pt_accent ); ?></p>
 		<?php endif; ?>
 	</div>
+
+	<?php if ( $pt_trust ) : ?>
+		<div class="hero__trustbar">
+			<ul class="hero__trust container">
+				<?php foreach ( $pt_trust as $pt_item ) : ?>
+					<li>
+						<?php echo pt_get_icon( $pt_item[0], '', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
+						<span><?php echo esc_html( $pt_item[1] ); ?></span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php endif; ?>
 </section>

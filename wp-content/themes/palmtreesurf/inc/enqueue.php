@@ -29,7 +29,7 @@ function pt_asset_version( $relative ) {
  * @return string
  */
 function pt_fonts_url() {
-	return 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap';
+	return 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap';
 }
 
 /**

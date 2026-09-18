@@ -30,17 +30,42 @@ function pt_defaults() {
 		'pt_youtube'              => '',
 		'pt_booking_url'          => '',
 		'pt_header_cta_text'      => __( 'Book Now', 'palmtreesurf' ),
-		'pt_hero_eyebrow'         => __( 'Tamarindo · Guanacaste · Costa Rica', 'palmtreesurf' ),
-		'pt_hero_heading'         => __( 'Book Experiences.', 'palmtreesurf' ),
-		'pt_hero_heading_accent'  => __( 'Live Pura Vida.', 'palmtreesurf' ),
-		'pt_hero_text'            => __( 'Surf lessons, fishing charters, boat tours and wildlife adventures in Tamarindo — led by local certified guides.', 'palmtreesurf' ),
-		'pt_hero_cta_text'        => __( 'Book Your Session', 'palmtreesurf' ),
-		'pt_hero_cta_url'         => '',
-		'pt_hero_video_url'       => '',
-		'pt_years'                => '{{PT_YEARS}}',
-		'pt_cert_body'            => '{{PT_CERT_BODY}}',
-		'pt_rating'               => '{{PT_RATING}}',
-		'pt_review_count'         => '{{PT_REVIEW_COUNT}}',
+
+		// Hero.
+		'pt_hero_script'          => __( 'Tamarindo', 'palmtreesurf' ),
+		'pt_hero_heading'         => __( 'Live Different.', 'palmtreesurf' ),
+		'pt_hero_tagline'         => __( 'Surf. Eat. Explore. Discover.', 'palmtreesurf' ),
+		'pt_hero_text'            => __( 'Book local experiences, find your wave and get out on the water. Your Tamarindo adventure starts here.', 'palmtreesurf' ),
+		'pt_hero_corner'          => __( 'Pura Vida Every Day', 'palmtreesurf' ),
+
+		/*
+		 * Trust row. Each of these is a claim about how the business operates,
+		 * so they are editable and start modest. Do not state a price guarantee
+		 * or bilingual support here unless it is actually true.
+		 */
+		'pt_trust_1'              => __( 'Book online in minutes', 'palmtreesurf' ),
+		'pt_trust_2'              => __( 'Local guides', 'palmtreesurf' ),
+		'pt_trust_3'              => __( 'Small groups', 'palmtreesurf' ),
+		'pt_trust_4'              => '',
+
+		// Story banner. Stats are empty on purpose - see TODO-CONTENT.md.
+		'pt_story_script'         => __( 'Good Times', 'palmtreesurf' ),
+		'pt_story_heading'        => __( 'Are Closer Than You Think.', 'palmtreesurf' ),
+		'pt_story_video'          => '',
+		'pt_stat_1_value'         => '',
+		'pt_stat_1_label'         => '',
+		'pt_stat_2_value'         => '',
+		'pt_stat_2_label'         => '',
+		'pt_stat_3_value'         => '',
+		'pt_stat_3_label'         => '',
+
+		// Lifestyle close.
+		'pt_lifestyle_heading'    => __( 'More Than a Destination. A Way of Life.', 'palmtreesurf' ),
+		'pt_lifestyle_text'       => __( 'Palm Tree Surf connects you with the real Tamarindo — the people, the water and the pura vida pace of it.', 'palmtreesurf' ),
+		'pt_lifestyle_script'     => __( 'Pura Vida Always', 'palmtreesurf' ),
+		'pt_lifestyle_cta_text'   => __( 'Explore Tamarindo', 'palmtreesurf' ),
+		'pt_lifestyle_cta_url'    => '',
+
 		'pt_best_season'          => __( 'December to April', 'palmtreesurf' ),
 		'pt_wave_size'            => '{{PT_WAVE_SIZE}}',
 		'pt_water_temp'           => __( '26-29°C year round', 'palmtreesurf' ),
@@ -127,17 +152,46 @@ function pt_customize_register( $wp_customize ) {
 		'pt_hero'     => array(
 			'title'    => __( 'Front Page Hero', 'palmtreesurf' ),
 			'controls' => array(
-				'pt_hero_eyebrow'  => array( __( 'Eyebrow text', 'palmtreesurf' ), 'text' ),
-				'pt_hero_heading'  => array( __( 'Heading', 'palmtreesurf' ), 'text' ),
-				'pt_hero_text'     => array( __( 'Supporting text', 'palmtreesurf' ), 'textarea' ),
-				'pt_hero_cta_text' => array( __( 'Button label', 'palmtreesurf' ), 'text' ),
-				'pt_hero_cta_url'        => array( __( 'Button link', 'palmtreesurf' ), 'url' ),
-				'pt_hero_heading_accent' => array( __( 'Heading accent line', 'palmtreesurf' ), 'text', __( 'Rendered in the brand gradient beneath the heading.', 'palmtreesurf' ) ),
-				'pt_hero_video_url'      => array( __( 'Hero video URL', 'palmtreesurf' ), 'url', __( 'Optional MP4. Desktop only; mobile gets the image.', 'palmtreesurf' ) ),
-				'pt_years'               => array( __( 'Years operating', 'palmtreesurf' ), 'text' ),
-				'pt_cert_body'           => array( __( 'Certification body', 'palmtreesurf' ), 'text' ),
-				'pt_rating'              => array( __( 'Average rating', 'palmtreesurf' ), 'text', __( 'Only shown with a review count. Leave as the placeholder until you have real numbers.', 'palmtreesurf' ) ),
-				'pt_review_count'        => array( __( 'Review count', 'palmtreesurf' ), 'text' ),
+				'pt_hero_script'  => array( __( 'Script accent', 'palmtreesurf' ), 'text', __( 'Short handwritten line above the headline.', 'palmtreesurf' ) ),
+				'pt_hero_heading' => array( __( 'Headline', 'palmtreesurf' ), 'text' ),
+				'pt_hero_tagline' => array( __( 'Tagline', 'palmtreesurf' ), 'text' ),
+				'pt_hero_text'    => array( __( 'Supporting copy', 'palmtreesurf' ), 'textarea' ),
+				'pt_hero_corner'  => array( __( 'Corner script accent', 'palmtreesurf' ), 'text' ),
+			),
+		),
+		'pt_trust'    => array(
+			'title'       => __( 'Trust Row', 'palmtreesurf' ),
+			'description' => __( 'Four short claims under the hero. Only state something here if it is actually true of how you operate — a price guarantee or bilingual support in particular. Leave a field empty to hide it.', 'palmtreesurf' ),
+			'controls'    => array(
+				'pt_trust_1' => array( __( 'Item one', 'palmtreesurf' ), 'text' ),
+				'pt_trust_2' => array( __( 'Item two', 'palmtreesurf' ), 'text' ),
+				'pt_trust_3' => array( __( 'Item three', 'palmtreesurf' ), 'text' ),
+				'pt_trust_4' => array( __( 'Item four', 'palmtreesurf' ), 'text' ),
+			),
+		),
+		'pt_story'    => array(
+			'title'       => __( 'Story Banner', 'palmtreesurf' ),
+			'description' => __( 'Stats are empty until you supply real numbers. Do not publish counts you cannot back up.', 'palmtreesurf' ),
+			'controls'    => array(
+				'pt_story_script'  => array( __( 'Script accent', 'palmtreesurf' ), 'text' ),
+				'pt_story_heading' => array( __( 'Heading', 'palmtreesurf' ), 'text' ),
+				'pt_story_video'   => array( __( 'Story video URL', 'palmtreesurf' ), 'url', __( 'Leave empty and the button becomes a normal link instead.', 'palmtreesurf' ) ),
+				'pt_stat_1_value'  => array( __( 'Stat 1 value', 'palmtreesurf' ), 'text' ),
+				'pt_stat_1_label'  => array( __( 'Stat 1 label', 'palmtreesurf' ), 'text' ),
+				'pt_stat_2_value'  => array( __( 'Stat 2 value', 'palmtreesurf' ), 'text' ),
+				'pt_stat_2_label'  => array( __( 'Stat 2 label', 'palmtreesurf' ), 'text' ),
+				'pt_stat_3_value'  => array( __( 'Stat 3 value', 'palmtreesurf' ), 'text' ),
+				'pt_stat_3_label'  => array( __( 'Stat 3 label', 'palmtreesurf' ), 'text' ),
+			),
+		),
+		'pt_lifestyle' => array(
+			'title'    => __( 'Lifestyle Close', 'palmtreesurf' ),
+			'controls' => array(
+				'pt_lifestyle_heading'  => array( __( 'Heading', 'palmtreesurf' ), 'text' ),
+				'pt_lifestyle_text'     => array( __( 'Copy', 'palmtreesurf' ), 'textarea' ),
+				'pt_lifestyle_script'   => array( __( 'Script accent', 'palmtreesurf' ), 'text' ),
+				'pt_lifestyle_cta_text' => array( __( 'Button label', 'palmtreesurf' ), 'text' ),
+				'pt_lifestyle_cta_url'  => array( __( 'Button link', 'palmtreesurf' ), 'url' ),
 			),
 		),
 		'pt_footer'   => array(

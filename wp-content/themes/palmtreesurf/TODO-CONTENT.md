@@ -139,3 +139,43 @@ bookings for slots you do not run.
   `assets/fonts/` to drop the third-party connection and the GDPR question. Not done.
 - **Live-site bug** — the Pangas Beach Club card on the current site renders alt text instead of its
   image. Unrelated to this theme, but worth fixing there.
+
+---
+
+## 8. Added by the approved-redesign build (v1.2.0)
+
+### Claims in the hero trust row — verify before launch
+
+Customize → Palm Tree Surf → **Trust Row**. Four short claims sit under the hero. They default to
+modest, factual phrasing. The design board shows "Best Price Guarantee" and "Support in English &
+Español" — **neither is set**, because the brief is explicit that those may only be stated if they are
+operationally true. Set them yourself if they are.
+
+### Story banner statistics — empty on purpose
+
+Customize → Palm Tree Surf → **Story Banner**. The board shows "200+ Local Experiences", "5,000+ Happy
+Travelers" and "24/7 Local Support". Those are comp values and were **not** carried across. Each stat
+is an empty field and the block hides its stats until you fill them with real numbers.
+
+The "Watch Our Story" button only appears once a real video URL is set; until then it renders as a
+normal link to the experiences archive.
+
+### Images still needed for the redesign
+
+| Slot | Size | Used by |
+| --- | --- | --- |
+| `hero-home` | 1920×1080 landscape | Homepage hero — currently a cropped portrait |
+| `story-banner` | 2000×900 | Story band and the experiences listing hero |
+| `cta-bg` | 1920×900 | Lifestyle closing band |
+
+The reference crops in the redesign package are extracted from a generated design board. They are
+useful for framing and composition and are **not** production photography, so none of them were
+installed as site images.
+
+### Marketplace verticals not built
+
+Food delivery, events, transportation, gift vouchers, vendor onboarding and customer accounts appear
+in the design board but are **not** part of this build, by your decision. Nothing was stubbed for
+them: there is no restaurant data in this WordPress install, and inventing businesses, ratings or
+inventory would have broken the brief's own rules. Adding a vertical later is a taxonomy term or a new
+post type, not a rewrite.

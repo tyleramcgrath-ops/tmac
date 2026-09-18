@@ -1,9 +1,6 @@
 <?php
 /**
- * Site footer.
- *
- * Four columns on desktop, stacked on mobile. The address block is the same
- * NAP the LocalBusiness schema emits (VISUAL-SPEC.md section 5.5).
+ * Site footer — deep ocean, four columns, per the approved mockup.
  *
  * @package PalmTreeSurf
  */
@@ -18,8 +15,11 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="site-footer__col site-footer__col--brand">
 					<a class="site-logo site-logo--light" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-						<span class="site-logo__mark" aria-hidden="true"></span>
-						<span class="site-logo__text"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
+						<?php echo pt_get_icon( 'palm', 'site-logo__mark' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
+						<span class="site-logo__text">
+							<span class="site-logo__name"><?php esc_html_e( 'Palm Tree', 'palmtreesurf' ); ?></span>
+							<span class="site-logo__sub"><?php esc_html_e( 'Surf', 'palmtreesurf' ); ?></span>
+						</span>
 					</a>
 
 					<?php
@@ -33,13 +33,13 @@ defined( 'ABSPATH' ) || exit;
 				</div>
 
 				<div class="site-footer__col">
-					<h2 class="site-footer__heading"><?php esc_html_e( 'Experiences', 'palmtreesurf' ); ?></h2>
+					<h2 class="site-footer__heading"><?php esc_html_e( 'Explore Tamarindo', 'palmtreesurf' ); ?></h2>
 					<?php
 					$pt_types = get_terms(
 						array(
 							'taxonomy'   => 'experience_type',
 							'hide_empty' => false,
-							'number'     => 8,
+							'number'     => 7,
 						)
 					);
 
@@ -47,23 +47,14 @@ defined( 'ABSPATH' ) || exit;
 						?>
 						<ul class="site-footer__list">
 							<?php foreach ( $pt_types as $pt_type ) : ?>
-								<li>
-									<a href="<?php echo esc_url( get_term_link( $pt_type ) ); ?>">
-										<?php echo esc_html( $pt_type->name ); ?>
-									</a>
-								</li>
+								<li><a href="<?php echo esc_url( get_term_link( $pt_type ) ); ?>"><?php echo esc_html( $pt_type->name ); ?></a></li>
 							<?php endforeach; ?>
-							<li>
-								<a href="<?php echo esc_url( get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ) ); ?>">
-									<strong><?php esc_html_e( 'All experiences', 'palmtreesurf' ); ?></strong>
-								</a>
-							</li>
 						</ul>
 					<?php endif; ?>
 				</div>
 
 				<div class="site-footer__col">
-					<h2 class="site-footer__heading"><?php esc_html_e( 'Company', 'palmtreesurf' ); ?></h2>
+					<h2 class="site-footer__heading"><?php esc_html_e( 'Support', 'palmtreesurf' ); ?></h2>
 					<?php
 					if ( has_nav_menu( 'footer' ) ) {
 						wp_nav_menu(
@@ -79,29 +70,15 @@ defined( 'ABSPATH' ) || exit;
 				</div>
 
 				<div class="site-footer__col">
-					<h2 class="site-footer__heading"><?php esc_html_e( 'Visit Us', 'palmtreesurf' ); ?></h2>
+					<h2 class="site-footer__heading"><?php esc_html_e( 'Get in touch', 'palmtreesurf' ); ?></h2>
 
 					<?php
-					$pt_address = pt_filled( 'pt_address' );
-					if ( $pt_address ) {
-						printf( '<address class="site-footer__address">%s</address>', nl2br( esc_html( $pt_address ) ) );
-					}
-
 					$pt_phone = pt_filled( 'pt_phone' );
 					if ( $pt_phone ) {
 						printf(
 							'<p><a href="tel:%1$s">%2$s</a></p>',
 							esc_attr( preg_replace( '/[^\d+]/', '', $pt_phone ) ),
 							esc_html( $pt_phone )
-						);
-					}
-
-					$pt_wa = pt_whatsapp_url();
-					if ( $pt_wa ) {
-						printf(
-							'<p><a href="%1$s" rel="noopener" target="_blank">%2$s</a></p>',
-							esc_url( $pt_wa ),
-							esc_html__( 'WhatsApp us', 'palmtreesurf' )
 						);
 					}
 
@@ -114,20 +91,32 @@ defined( 'ABSPATH' ) || exit;
 						);
 					}
 
+					$pt_wa = pt_whatsapp_url();
+					if ( $pt_wa ) {
+						printf(
+							'<p><a href="%1$s" rel="noopener" target="_blank">%2$s</a></p>',
+							esc_url( $pt_wa ),
+							esc_html__( 'WhatsApp us', 'palmtreesurf' )
+						);
+					}
+
 					$pt_hours = pt_filled( 'pt_hours' );
 					if ( $pt_hours ) {
 						printf( '<p class="site-footer__hours">%s</p>', nl2br( esc_html( $pt_hours ) ) );
 					}
-
-					$pt_map = pt_filled( 'pt_map_url' );
-					if ( $pt_map ) {
-						printf(
-							'<p><a href="%1$s" rel="noopener" target="_blank">%2$s</a></p>',
-							esc_url( $pt_map ),
-							esc_html__( 'Open in maps', 'palmtreesurf' )
-						);
-					}
 					?>
+
+					<p class="site-footer__cta">
+						<?php
+						pt_booking_button(
+							array(
+								'label'    => __( 'Book an experience', 'palmtreesurf' ),
+								'location' => 'footer',
+								'class'    => 'btn btn--primary btn--sm',
+							)
+						);
+						?>
+					</p>
 				</div>
 
 			</div>
@@ -158,6 +147,11 @@ defined( 'ABSPATH' ) || exit;
 					);
 				}
 				?>
+
+				<p class="site-footer__place">
+					<?php echo pt_get_icon( 'pin', '', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static SVG. ?>
+					<?php esc_html_e( 'Tamarindo, Costa Rica', 'palmtreesurf' ); ?>
+				</p>
 			</div>
 		</div>
 	</footer>

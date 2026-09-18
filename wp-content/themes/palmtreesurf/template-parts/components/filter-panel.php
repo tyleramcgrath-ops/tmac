@@ -24,10 +24,10 @@ $pt_sel_date  = isset( $_GET['when'] ) ? sanitize_text_field( wp_unslash( $_GET[
 $pt_sel_party = isset( $_GET['guests'] ) ? absint( $_GET['guests'] ) : 2;
 // phpcs:enable
 ?>
-<form class="finder" method="get" action="<?php echo esc_url( get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ) ); ?>">
+<form class="finder<?php echo is_post_type_archive( PT_EXPERIENCE_POST_TYPE ) || is_tax() ? ' finder--overlap' : ''; ?>" method="get" action="<?php echo esc_url( get_post_type_archive_link( PT_EXPERIENCE_POST_TYPE ) ); ?>">
 	<div class="finder__head">
 		<h2 class="finder__title"><?php esc_html_e( 'Find Your Experience', 'palmtreesurf' ); ?></h2>
-		<span class="finder__badge"><?php esc_html_e( 'Instant enquiry', 'palmtreesurf' ); ?></span>
+		<span class="finder__badge"><?php esc_html_e( 'Fast reply', 'palmtreesurf' ); ?></span>
 	</div>
 
 	<div class="finder__fields">

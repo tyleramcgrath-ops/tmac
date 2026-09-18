@@ -1,24 +1,140 @@
 {
   "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
-
-  "hero-home":       { "w": 1920, "h": 1080, "ratio": "16:9", "role": "Homepage hero background", "alt": "Surf lesson group on the beach at Tamarindo", "file": "group-lesson-beach.jpg", "option": "pt_hero_image", "note": "Source is portrait 3:4, cropped by object-fit. A true landscape hero frame is still wanted." },
-  "hero-video":      { "w": 1920, "h": 1080, "ratio": "16:9", "role": "Homepage hero loop, mp4 + webm, under 4MB, 8-12s", "file": null },
-
-  "exp-card-1":      { "w": 800, "h": 600, "ratio": "4:3", "role": "Experience card thumbnail", "alt": "", "file": null },
-  "exp-card-2":      { "w": 800, "h": 600, "ratio": "4:3", "role": "Experience card thumbnail", "alt": "", "file": null },
-  "exp-card-3":      { "w": 800, "h": 600, "ratio": "4:3", "role": "Experience card thumbnail", "alt": "", "file": null },
-
-  "split-1-primary": { "w": 800, "h": 1000, "ratio": "4:5", "role": "Split feature, tall image", "alt": "Instructor teaching the pop-up stance on the sand", "file": "instructor-popup-stance.jpg" },
-  "split-1-offset":  { "w": 440, "h": 330, "ratio": "4:3", "role": "Split feature, overlapping inset", "alt": "Surf and beach tent with boards and kayaks", "file": "kayak-surf-tent.jpg" },
-  "split-2-primary": { "w": 800, "h": 1000, "ratio": "4:5", "role": "Second split feature, tall image", "alt": "Group lesson briefing on the sand", "file": "group-instruction-sand.jpg" },
-  "split-2-offset":  { "w": 440, "h": 330, "ratio": "4:3", "role": "Second split feature, inset", "alt": "", "file": null },
-
-  "gallery-1":       { "w": 1200, "h": 1200, "ratio": "1:1", "role": "Gallery tile", "alt": "Surf lesson group on the beach", "file": "group-lesson-beach.jpg" },
-  "gallery-2":       { "w": 1200, "h": 1200, "ratio": "1:1", "role": "Gallery tile", "alt": "Kayak and boards at the surf tent", "file": "kayak-surf-tent.jpg" },
-  "gallery-3":       { "w": 1200, "h": 1200, "ratio": "1:1", "role": "Gallery tile", "alt": "Instructor demonstrating the pop-up", "file": "instructor-popup-stance.jpg" },
-  "gallery-4":       { "w": 1200, "h": 1200, "ratio": "1:1", "role": "Gallery tile", "alt": "Group briefing before paddling out", "file": "group-instruction-sand.jpg" },
-  "gallery-5":       { "w": 1200, "h": 1200, "ratio": "1:1", "role": "Gallery tile", "alt": "", "file": null },
-  "gallery-6":       { "w": 1200, "h": 1200, "ratio": "1:1", "role": "Gallery tile", "alt": "", "file": null },
-
-  "cta-bg":          { "w": 1920, "h": 900, "ratio": "auto", "role": "Final call to action background", "alt": "", "file": null }
+  "hero-home": {
+    "w": 1920,
+    "h": 1080,
+    "ratio": "16:9",
+    "role": "Homepage hero background",
+    "alt": "Surf lesson group on the beach at Tamarindo",
+    "file": "group-lesson-beach.jpg",
+    "option": "pt_hero_image",
+    "note": "Source is portrait 3:4, cropped by object-fit. A true landscape hero frame is still wanted."
+  },
+  "hero-video": {
+    "w": 1920,
+    "h": 1080,
+    "ratio": "16:9",
+    "role": "Homepage hero loop, mp4 + webm, under 4MB, 8-12s",
+    "file": null
+  },
+  "exp-card-1": {
+    "w": 800,
+    "h": 600,
+    "ratio": "4:3",
+    "role": "Experience card thumbnail",
+    "alt": "",
+    "file": null
+  },
+  "exp-card-2": {
+    "w": 800,
+    "h": 600,
+    "ratio": "4:3",
+    "role": "Experience card thumbnail",
+    "alt": "",
+    "file": null
+  },
+  "exp-card-3": {
+    "w": 800,
+    "h": 600,
+    "ratio": "4:3",
+    "role": "Experience card thumbnail",
+    "alt": "",
+    "file": null
+  },
+  "split-1-primary": {
+    "w": 800,
+    "h": 1000,
+    "ratio": "4:5",
+    "role": "Split feature, tall image",
+    "alt": "Instructor teaching the pop-up stance on the sand",
+    "file": "instructor-popup-stance.jpg"
+  },
+  "split-1-offset": {
+    "w": 440,
+    "h": 330,
+    "ratio": "4:3",
+    "role": "Split feature, overlapping inset",
+    "alt": "Surf and beach tent with boards and kayaks",
+    "file": "kayak-surf-tent.jpg"
+  },
+  "split-2-primary": {
+    "w": 800,
+    "h": 1000,
+    "ratio": "4:5",
+    "role": "Second split feature, tall image",
+    "alt": "Group lesson briefing on the sand",
+    "file": "group-instruction-sand.jpg"
+  },
+  "split-2-offset": {
+    "w": 440,
+    "h": 330,
+    "ratio": "4:3",
+    "role": "Second split feature, inset",
+    "alt": "",
+    "file": null
+  },
+  "gallery-1": {
+    "w": 1200,
+    "h": 1200,
+    "ratio": "1:1",
+    "role": "Gallery tile",
+    "alt": "Surf lesson group on the beach",
+    "file": "group-lesson-beach.jpg"
+  },
+  "gallery-2": {
+    "w": 1200,
+    "h": 1200,
+    "ratio": "1:1",
+    "role": "Gallery tile",
+    "alt": "Kayak and boards at the surf tent",
+    "file": "kayak-surf-tent.jpg"
+  },
+  "gallery-3": {
+    "w": 1200,
+    "h": 1200,
+    "ratio": "1:1",
+    "role": "Gallery tile",
+    "alt": "Instructor demonstrating the pop-up",
+    "file": "instructor-popup-stance.jpg"
+  },
+  "gallery-4": {
+    "w": 1200,
+    "h": 1200,
+    "ratio": "1:1",
+    "role": "Gallery tile",
+    "alt": "Group briefing before paddling out",
+    "file": "group-instruction-sand.jpg"
+  },
+  "gallery-5": {
+    "w": 1200,
+    "h": 1200,
+    "ratio": "1:1",
+    "role": "Gallery tile",
+    "alt": "",
+    "file": null
+  },
+  "gallery-6": {
+    "w": 1200,
+    "h": 1200,
+    "ratio": "1:1",
+    "role": "Gallery tile",
+    "alt": "",
+    "file": null
+  },
+  "cta-bg": {
+    "w": 1920,
+    "h": 900,
+    "ratio": "auto",
+    "role": "Final call to action background",
+    "alt": "",
+    "file": null
+  },
+  "story-banner": {
+    "w": 2000,
+    "h": 900,
+    "ratio": "auto",
+    "role": "Tamarindo story banner, aerial coastline",
+    "alt": "Aerial view of the Tamarindo coastline",
+    "file": null
+  }
 }

@@ -224,3 +224,50 @@ function pt_whatsapp_url( $message = '' ) {
 
 	return $url;
 }
+
+/**
+ * Print a language switcher, but only when there is something to switch to.
+ *
+ * The approved design shows an EN/ES control. Rendering one on a site with no
+ * translation layer would be a dead control, so this defers to Polylang or
+ * WPML when present and renders nothing otherwise.
+ */
+function pt_language_switcher() {
+	// Polylang.
+	if ( function_exists( 'pll_the_languages' ) ) {
+		$langs = pll_the_languages( array( 'raw' => 1 ) );
+
+		if ( is_array( $langs ) && count( $langs ) > 1 ) {
+			echo '<div class="lang-switch">';
+			foreach ( $langs as $lang ) {
+				printf(
+					'<a class="lang-switch__item%1$s" href="%2$s">%3$s</a>',
+					! empty( $lang['current_lang'] ) ? ' is-current' : '',
+					esc_url( $lang['url'] ),
+					esc_html( strtoupper( $lang['slug'] ) )
+				);
+			}
+			echo '</div>';
+		}
+
+		return;
+	}
+
+	// WPML.
+	if ( function_exists( 'icl_get_languages' ) ) {
+		$langs = icl_get_languages( 'skip_missing=0' );
+
+		if ( is_array( $langs ) && count( $langs ) > 1 ) {
+			echo '<div class="lang-switch">';
+			foreach ( $langs as $lang ) {
+				printf(
+					'<a class="lang-switch__item%1$s" href="%2$s">%3$s</a>',
+					! empty( $lang['active'] ) ? ' is-current' : '',
+					esc_url( $lang['url'] ),
+					esc_html( strtoupper( $lang['language_code'] ) )
+				);
+			}
+			echo '</div>';
+		}
+	}
+}
