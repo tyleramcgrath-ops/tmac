@@ -193,7 +193,7 @@ function mcg_faqs() {
 	return array(
 		array(
 			'q' => 'How much does SEO cost in Jupiter, FL?',
-			'a' => 'Most local SEO work in this market runs between a few hundred and a few thousand a month depending on how competitive the term is and how much content the site needs. My own starting points are listed on the services pages rather than hidden behind a discovery call. If a company will not give you a number before a meeting, that is a sales process, not a pricing model.',
+			'a' => 'Most local SEO work in this market runs between a few hundred and a few thousand a month depending on how competitive the term is and how much content the site needs. Ask and you will get a number before a meeting rather than after one. If a company will not quote you until you have sat through a discovery call, that is a sales process, not a pricing model.',
 		),
 		array(
 			'q' => 'How long before I see results from SEO?',
