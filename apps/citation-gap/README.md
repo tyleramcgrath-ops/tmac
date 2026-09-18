@@ -54,6 +54,10 @@ npm run seal      # re-record the hashes; prints exactly which files moved
 
 Skipping the seal is not a way to ship faster — it is a failed build.
 
+CI enforces this: `.github/workflows/build.yml` runs `pnpm build` in this directory on every pull
+request, which is `node build.js`, which fails on an unsealed change. A stale front end cannot reach
+a green PR.
+
 ## Deploying
 
 Vercel builds with `node build.js` and serves `public/` plus the `api/` functions

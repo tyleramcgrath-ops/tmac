@@ -80,7 +80,17 @@ console.log('\n4. Sealing re-records the change, and the build then ships the ne
   fs.rmSync(dir, { recursive: true, force: true });
 }
 
-console.log('\n5. A missing manifest fails closed');
+console.log('\n5. Sealing an unchanged tree leaves the manifest alone');
+{
+  const dir = sandbox();
+  const before = fs.readFileSync(path.join(dir, 'ship-manifest.json'), 'utf8');
+  const r = run(dir, ['--seal']);
+  ok(r.code === 0 && /nothing to seal/.test(r.out), 'a no-op seal says so', r.out);
+  ok(fs.readFileSync(path.join(dir, 'ship-manifest.json'), 'utf8') === before, 'and does not rewrite the file, so it is not a diff to explain');
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+
+console.log('\n6. A missing manifest fails closed');
 {
   const dir = sandbox();
   fs.unlinkSync(path.join(dir, 'ship-manifest.json'));

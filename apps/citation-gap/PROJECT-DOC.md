@@ -102,11 +102,14 @@ through the splash — and asserts both layers are gone *and* that `#btnRun` is 
 at its own coordinates, so a layer left painted over the scanner fails as itself rather than as a
 mystery click timeout.
 
-**Verification.** `test/build-guard.js`: 17/17 — a clean build reproduces `index.html` byte for
+**Verification.** `test/build-guard.js`: 19/19 — a clean build reproduces `index.html` byte for
 byte; a missing `index.html`, `api/render.impl.js` or `api/serp.js` fails the build and writes
 nothing; an unsealed edit to a function body or to the front end fails the build (the exact drift
 above, now caught); sealing re-records it and the build then ships the new bytes; a missing
-manifest fails closed. `test/regression.js`: 157/157. `test/scan-flow.js`: SCAN FLOW OK — real
+manifest fails closed; and a seal with nothing to record leaves the manifest untouched rather
+than producing a diff with only a new timestamp in it. CI runs the guard too — `apps/citation-gap`
+is now in the repo's build matrix, so `node build.js` runs on every pull request and an unsealed
+front end cannot reach a green PR. `test/regression.js`: 157/157. `test/scan-flow.js`: SCAN FLOW OK — real
 Chromium scan, P9 reuse with zero SERP credits spent, P12 basis toggling, P13 attribution, P16
 volatile tracking, carry-forward — all unchanged by this pass. `test/demo-flow.js`: zero page
 errors; the one console error is this sandbox's proxy refusing the Google Fonts `<link>`

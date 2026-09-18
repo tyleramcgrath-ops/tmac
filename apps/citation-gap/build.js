@@ -69,6 +69,12 @@ function seal() {
   }
   let prev = {};
   try { prev = JSON.parse(fs.readFileSync(MANIFEST, 'utf8')).files || {}; } catch (e) {}
+  // A seal that records nothing new leaves the file alone, so `--seal` on an unchanged tree does
+  // not show up as a diff for a reviewer to wonder about.
+  if (JSON.stringify(prev) === JSON.stringify(entries)) {
+    console.log('nothing to seal; ' + rel(MANIFEST) + ' already matches all ' + SHIPPED.length + ' files');
+    return;
+  }
   for (const file of SHIPPED) {
     const was = prev[file], now = entries[file];
     if (!was) console.log('  + ' + file + ' (' + now.bytes + ' bytes)');
