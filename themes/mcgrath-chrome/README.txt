@@ -160,6 +160,48 @@ client work in the page body. Locked, visitors get the vault door. Unlocked,
 they get your work. It is noindex and stays out of the menu.
 
 
+THE FEATURED CASE STUDY
+-----------------------
+The section has two modes and will not blur them.
+
+By default it is an ILLUSTRATIVE PROJECT. It says so on a label, the strip
+carries three deliverables — statements about what the work involves, true
+regardless of client — and a footnote says plainly that it is not a client
+record. Nothing unearned is presented as a result.
+
+To publish a real one, go to Appearance > Customize > Homepage & brand and:
+
+    1. Fill in "Case study: client or project name". This replaces the
+       Illustrative Project label, so use the name you have permission to use.
+    2. Fill in all three "Verified result" figure and label pairs.
+    3. Fill in "Case study: results timeframe", e.g. "First 12 months". The
+       section prints "Measured over ..." beneath the figures, because a
+       percentage without a period behind it is not a result.
+    4. Tick "these are real, verified client results".
+
+Every one of those has to hold. Miss any of them and the section falls back to
+illustrative rather than showing two real numbers and one invented one. The
+figures are never written into the page's schema, only into the visible copy.
+
+THE SCREENSHOT
+--------------
+Drop a picture of the finished site at:
+
+    assets/img/case-shot.webp    (.jpg, .jpeg and .png also work)
+
+It renders inside a plain browser frame beside the project details, and it is
+the section's main visual. Around 1400px wide suits it; any height works, the
+frame follows the image.
+
+Nothing stands in for it. With no file there the section runs one column wide
+and the prose moves alongside the heading instead. That is deliberate: a drawn
+mock-up of a website that does not exist is the thing that costs a case study
+its credibility.
+
+"Case study: address shown on the screenshot" puts a URL in the frame's address
+bar. Leave it empty and the bar stays blank.
+
+
 THE AUDIT FORM
 --------------
 The homepage audit form is a GET to /contact/ with the address in ?site=. It

@@ -282,65 +282,78 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 </section>
 
 <!-- ========================= CASE STUDY ========================== -->
-<?php $mcg_case = mcg_case(); ?>
-<section class="case sec gut" id="work">
+<?php
+$mcg_case = mcg_case();
+$mcg_shot = mcg_case_shot();
+?>
+
+<section class="case sec gut<?php echo $mcg_shot ? '' : ' noShot'; ?>" id="work">
 	<div class="caseIn">
-		<div class="shead rv">
-			<div class="sheadL">
-				<span class="eyebrow"><?php esc_html_e( 'Featured case study', 'mcgrath-chrome' ); ?></span>
-				<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Real Strategies. Real Results.', 'mcgrath-chrome' ); ?></h2>
-			</div>
+		<div class="caseHead rv">
+			<span class="eyebrow"><?php esc_html_e( 'Selected Work', 'mcgrath-chrome' ); ?></span>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Visibility that drives business.', 'mcgrath-chrome' ); ?></h2>
 			<a class="alink" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>">
 				<?php esc_html_e( 'View all case studies', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
 			</a>
 		</div>
 
-		<div class="caseBody">
-			<div class="rv">
-				<span class="caseTag"><?php esc_html_e( 'Representative engagement', 'mcgrath-chrome' ); ?></span>
-				<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_case['client'] ); ?><br><?php echo esc_html( $mcg_case['unit'] ); ?></h3>
-				<p><?php echo esc_html( $mcg_case['summary'] ); ?></p>
-				<a class="btn onDark" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>"><?php esc_html_e( 'View Full Case Study', 'mcgrath-chrome' ); ?></a>
+		<div class="caseGrid">
+			<div class="caseDetail rv">
+				<span class="caseLabel<?php echo $mcg_case['verified'] ? ' isReal' : ''; ?>">
+					<?php echo esc_html( $mcg_case['label'] ); ?>
+				</span>
+				<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_case['head'] ); ?></h3>
+				<p class="caseMeta"><?php echo esc_html( $mcg_case['meta'] ); ?></p>
+				<p class="caseText"><?php echo esc_html( $mcg_case['summary'] ); ?></p>
+				<a class="alink caseGo" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>">
+					<?php esc_html_e( 'View case study', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
+				</a>
 			</div>
 
-			<div class="caseStats rv" data-d="1">
-				<?php foreach ( $mcg_case['stats'] as $mcg_st ) : ?>
-					<div class="caseStat">
-						<b data-count="<?php echo (int) $mcg_st['value']; ?>" data-prefix="+" data-suffix="%">+<?php echo (int) $mcg_st['value']; ?>%</b>
-						<span><?php echo esc_html( $mcg_st['label'] ); ?></span>
+			<?php if ( $mcg_shot ) : ?>
+				<figure class="caseShot rv" data-d="1">
+					<div class="shotBar" aria-hidden="true">
+						<i></i><i></i><i></i>
+						<?php if ( $mcg_case['shot_url'] ) : ?>
+							<span class="shotUrl"><?php echo esc_html( $mcg_case['shot_url'] ); ?></span>
+						<?php endif; ?>
+					</div>
+					<img src="<?php echo esc_url( $mcg_shot ); ?>"
+						alt="<?php esc_attr_e( 'The finished website for this project', 'mcgrath-chrome' ); ?>"
+						width="1400" height="1050" loading="lazy" decoding="async">
+				</figure>
+			<?php endif; ?>
+		</div>
+
+		<?php if ( $mcg_case['verified'] && $mcg_case['metrics'] ) : ?>
+			<div class="caseResults rv" data-d="2">
+				<?php foreach ( $mcg_case['metrics'] as $mcg_m ) : ?>
+					<div class="caseResult">
+						<b><?php echo esc_html( $mcg_m['value'] ); ?></b>
+						<span><?php echo esc_html( $mcg_m['label'] ); ?></span>
 					</div>
 				<?php endforeach; ?>
 			</div>
-
-			<div class="lap rv" data-d="2" aria-hidden="true">
-				<div class="lapScreen">
-					<div class="lapBar"><i></i><i></i><i></i><b></b></div>
-					<div class="lapSite">
-						<div class="lapNav">
-							<span class="lm"><?php esc_html_e( 'Example Site', 'mcgrath-chrome' ); ?></span>
-							<span class="lk"><i></i><i></i><i></i><span class="lb"></span></span>
-						</div>
-						<div class="lapHero">
-							<h4><?php echo esc_html( $mcg_case['headline'] ); ?></h4>
-							<p><?php esc_html_e( 'A fast page, a clear offer and a short path to the enquiry.', 'mcgrath-chrome' ); ?></p>
-							<span class="lcta"><?php esc_html_e( 'Get in Touch', 'mcgrath-chrome' ); ?></span>
-						</div>
+			<p class="caseFoot rv" data-d="3"><?php
+				printf(
+					/* translators: %s: the period the figures were measured over. */
+					esc_html__( 'Measured over %s.', 'mcgrath-chrome' ),
+					esc_html( $mcg_case['timeframe'] )
+				);
+			?></p>
+		<?php elseif ( $mcg_case['deliverables'] ) : ?>
+			<!-- No verified client figures, so the strip carries what the work
+			     involves rather than numbers nobody can stand behind. -->
+			<div class="caseResults isWork rv" data-d="2">
+				<?php foreach ( $mcg_case['deliverables'] as $mcg_i => $mcg_d ) : ?>
+					<div class="caseResult">
+						<b><?php echo esc_html( sprintf( '%02d', $mcg_i + 1 ) ); ?></b>
+						<span><?php echo esc_html( $mcg_d ); ?></span>
 					</div>
-				</div>
-				<div class="lapBase"></div>
-
-				<div class="floatCard">
-					<span class="fl"><?php esc_html_e( 'Organic Traffic', 'mcgrath-chrome' ); ?></span>
-					<span class="fv">28.4K</span>
-					<span class="fd">164%</span>
-					<svg viewBox="0 0 100 40" preserveAspectRatio="none">
-						<path class="ln" d="M2,35 L18,32 L34,27 L50,25 L66,14 L82,10 L96,4"/>
-						<circle class="dot" cx="96" cy="4" r="3.4"/>
-					</svg>
-					<span class="xs"><i>Jan</i><i>Feb</i><i>Mar</i><i>Apr</i><i>May</i><i>Jun</i></span>
-				</div>
+				<?php endforeach; ?>
 			</div>
-		</div>
+			<p class="caseFoot rv" data-d="3"><?php esc_html_e( 'An illustrative engagement, not a client record. Real client results are published here once a client agrees to them.', 'mcgrath-chrome' ); ?></p>
+		<?php endif; ?>
 	</div>
 </section>
 
