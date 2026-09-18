@@ -14,17 +14,16 @@ get_header();
 ?>
 
 <!-- ============================ HERO ============================ -->
-<section class="hero gut" id="hero">
-	<div class="heroPlate" aria-hidden="true">
-		<?php mcg_plate( 'hero', '', '100% 0%', 'auto 150%' ); ?>
-		<span class="tag">
-			<?php echo esc_html( mcg_opt( 'mcg_plate_l1', 'Higher Visibility' ) ); ?><br>
-			<?php echo esc_html( mcg_opt( 'mcg_plate_l2', 'Stronger Businesses' ) ); ?><br>
-			<?php echo esc_html( mcg_opt( 'mcg_plate_l3', 'A Brighter Tomorrow' ) ); ?>
-		</span>
+<section class="hero" id="hero">
+	<!-- The photograph is the hero. It bleeds off the top, right and bottom and
+	     dissolves leftward into the paper, so the headline sits on clean ground
+	     and the dashboard floats over open water. -->
+	<div class="heroPhoto" aria-hidden="true">
+		<?php mcg_plate( 'hero', '', '58% 4%' ); ?>
+		<span class="veil"></span>
 	</div>
 
-	<div class="heroIn">
+	<div class="heroIn gut">
 		<div class="heroCopy">
 			<span class="eyebrow"><?php echo esc_html( mcg_opt( 'mcg_hero_kicker', 'Jupiter, Florida · Serving Clients Nationwide' ) ); ?></span>
 
@@ -52,6 +51,12 @@ get_header();
 		</div>
 
 		<div class="heroScene">
+			<span class="tag" aria-hidden="true">
+				<?php echo esc_html( mcg_opt( 'mcg_plate_l1', 'Higher Visibility' ) ); ?><br>
+				<?php echo esc_html( mcg_opt( 'mcg_plate_l2', 'Stronger Businesses' ) ); ?><br>
+				<?php echo esc_html( mcg_opt( 'mcg_plate_l3', 'A Brighter Tomorrow' ) ); ?>
+			</span>
+
 			<!-- The dashboard is drawn in markup, not shipped as an image, so it
 			     stays sharp on every screen and readable to a crawler. -->
 			<div class="dash rv" role="img"

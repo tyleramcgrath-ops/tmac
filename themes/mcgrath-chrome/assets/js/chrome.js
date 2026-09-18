@@ -147,15 +147,6 @@
     });
   }
 
-  /* ---------------- hero photo drift ---------------- */
-  var plate=document.querySelector('.heroPlate .ph');
-  if(plate && !reduce){
-    window.addEventListener('scroll',function(){
-      var y=Math.min(window.scrollY,700);
-      plate.style.transform='translateY('+(y*0.07)+'px) scale('+(1+y*0.00012)+')';
-    },{passive:true});
-  }
-
   /* ---------------- magnetic buttons ---------------- */
   if(window.matchMedia('(pointer:fine)').matches && !reduce){
     [].slice.call(document.querySelectorAll('[data-mag]')).forEach(function(el){
