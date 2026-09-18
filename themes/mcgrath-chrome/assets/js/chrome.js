@@ -156,17 +156,8 @@
     },{passive:true});
   }
 
-  /* ---------------- cursor + magnetic ---------------- */
-  var cur=document.getElementById('cur'),cx=-100,cy=-100,dx=-100,dy=-100;
-  if(cur && window.matchMedia('(pointer:fine)').matches && !reduce){
-    cur.classList.add('on');
-    window.addEventListener('pointermove',function(e){dx=e.clientX;dy=e.clientY;},{passive:true});
-    (function ring(){cx+=(dx-cx)*.16;cy+=(dy-cy)*.16;
-      cur.style.transform='translate('+(cx-17)+'px,'+(cy-17)+'px)';requestAnimationFrame(ring);})();
-    [].slice.call(document.querySelectorAll('a,button,.svcCard,.svcRow,.plat')).forEach(function(el){
-      el.addEventListener('pointerenter',function(){cur.classList.add('grow');});
-      el.addEventListener('pointerleave',function(){cur.classList.remove('grow');});
-    });
+  /* ---------------- magnetic buttons ---------------- */
+  if(window.matchMedia('(pointer:fine)').matches && !reduce){
     [].slice.call(document.querySelectorAll('[data-mag]')).forEach(function(el){
       el.addEventListener('pointermove',function(e){
         var r=el.getBoundingClientRect();

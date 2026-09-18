@@ -15,7 +15,6 @@
 <?php wp_body_open(); ?>
 
 <a class="skip-link" href="#main"><?php esc_html_e( 'Skip to content', 'mcgrath-chrome' ); ?></a>
-<div class="cursor" id="cur" aria-hidden="true"></div>
 
 <header class="nav gut" id="siteNav">
 	<div class="navIn">

@@ -26,18 +26,23 @@ function mcg_url( $slug ) {
  * @param string $class Extra classes, e.g. "night".
  * @param string $focus background-position for the photo, so a replacement
  *                      shot can be re-aimed without touching the stylesheet.
+ * @param string $zoom  background-size. "cover" fits the whole frame with the
+ *                      least crop; a value like "auto 135%" pushes in so the
+ *                      subject can be moved further across the frame, which a
+ *                      photo with its subject on the wrong side needs.
  */
-function mcg_plate( $name, $class = '', $focus = '50% 50%' ) {
+function mcg_plate( $name, $class = '', $focus = '50% 50%', $zoom = 'cover' ) {
 	$dir = get_template_directory() . '/assets/img/';
 	$uri = get_template_directory_uri() . '/assets/img/';
 
 	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
 		if ( file_exists( $dir . $name . '.' . $ext ) ) {
 			printf(
-				'<div class="ph bg %s" style="background-image:url(%s);background-position:%s"><span class="grade"></span></div>',
+				'<div class="ph bg %s" style="background-image:url(%s);background-position:%s;background-size:%s"><span class="grade"></span></div>',
 				esc_attr( $class ),
 				esc_url( $uri . $name . '.' . $ext ),
-				esc_attr( $focus )
+				esc_attr( $focus ),
+				esc_attr( $zoom )
 			);
 			return;
 		}

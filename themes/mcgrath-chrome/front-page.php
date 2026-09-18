@@ -16,7 +16,7 @@ get_header();
 <!-- ============================ HERO ============================ -->
 <section class="hero gut" id="hero">
 	<div class="heroPlate" aria-hidden="true">
-		<?php mcg_plate( 'hero', '', '64% 38%' ); ?>
+		<?php mcg_plate( 'hero', '', '100% 0%', 'auto 150%' ); ?>
 		<span class="tag">
 			<?php echo esc_html( mcg_opt( 'mcg_plate_l1', 'Higher Visibility' ) ); ?><br>
 			<?php echo esc_html( mcg_opt( 'mcg_plate_l2', 'Stronger Businesses' ) ); ?><br>

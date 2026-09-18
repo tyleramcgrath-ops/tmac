@@ -52,13 +52,20 @@ normal resolution but will soften on a retina screen, so a larger original is
 worth swapping in.
 
 Both panels crop to fill, so a replacement photo may need re-aiming. Each call
-in front-page.php takes a background-position as its third argument:
+in front-page.php takes a background-position and a background-size:
 
-    mcg_plate( 'hero',  '', '64% 38%' );
+    mcg_plate( 'hero',  '', '100% 0%', 'auto 150%' );
     mcg_plate( 'roots', '', '62% 46%' );
 
-First number is horizontal, second vertical. Raise the first to move the
-subject left, raise the second to move it up.
+In the position, the first number is horizontal and the second vertical. Raise
+the first to move the subject left, raise the second to move it up.
+
+The size is normally left off, which means "cover" — the whole frame filled
+with the least possible crop, and the sharpest result. The hero passes
+"auto 150%" instead because the shipped photo has the light on the right, where
+the three words sit; pushing in gives the room to slide it out from under them.
+A photo with the light already on the left, and sky on the right, does not need
+that: drop the fourth argument and the panel will be sharper for it.
 
 LOGO
 ----
