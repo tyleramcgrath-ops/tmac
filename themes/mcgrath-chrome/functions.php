@@ -218,7 +218,39 @@ function mcg_faqs() {
  * Structured data. LocalBusiness on every page so the business, the area served
  * and the services are machine readable; FAQPage on the front page.
  */
+/**
+ * Whether the theme should emit its own structured data.
+ *
+ * Yoast, Rank Math and the rest publish their own Organization, LocalBusiness
+ * and FAQ graph. Two competing sets on one page is worse than either alone, so
+ * the theme stands down when one of them is active. Force it either way with
+ * the mcg_output_schema filter.
+ */
+function mcg_should_output_schema() {
+	$seo_plugins = array(
+		'WPSEO_VERSION',     // Yoast SEO
+		'RANK_MATH_VERSION', // Rank Math
+		'AIOSEO_VERSION',    // All in One SEO
+		'SEOPRESS_VERSION',  // SEOPress
+		'SLIM_SEO_VER',      // Slim SEO
+	);
+
+	$output = true;
+	foreach ( $seo_plugins as $const ) {
+		if ( defined( $const ) ) {
+			$output = false;
+			break;
+		}
+	}
+
+	return (bool) apply_filters( 'mcg_output_schema', $output );
+}
+
 function mcg_schema() {
+	if ( ! mcg_should_output_schema() ) {
+		return;
+	}
+
 	$biz = array(
 		'@context'    => 'https://schema.org',
 		'@type'       => 'ProfessionalService',
