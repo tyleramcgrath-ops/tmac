@@ -452,7 +452,7 @@ if ( $mcg_posts ) :
 
 		<div class="auditSide rv" data-d="1">
 			<figure class="auditPic">
-				<?php mcg_img( 'page-analytics', __( 'A laptop showing a live site, beside a notebook of wireframes', 'mcgrath-chrome' ) ); ?>
+				<?php mcg_img( 'art-mobile', __( 'A site shown on two phones beside the shoreline', 'mcgrath-chrome' ) ); ?>
 			</figure>
 			<ul class="checks2">
 				<?php foreach ( mcg_audit_checks() as $mcg_c ) : ?>

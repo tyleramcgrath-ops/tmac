@@ -299,7 +299,7 @@ function mcg_services() {
 		array(
 			'icon'   => 'chart',
 			'img'    => 'page-analytics',
-			'alt'    => 'A laptop and a notebook of wireframes on a sunlit desk by the water',
+			'alt'    => 'Brand sheets, colour swatches and coastal prints laid out on a desk',
 			'title'  => 'Analytics & Conversion',
 			'sub'    => 'Turn traffic into revenue.',
 			'url'    => 'contact',

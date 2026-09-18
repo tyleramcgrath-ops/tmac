@@ -110,12 +110,13 @@ add_filter( 'body_class', 'mcg_body_class' );
 
 /** Fallback menu when none is assigned yet. */
 function mcg_fallback_menu() {
-	$pages = array(
-		'seo-jupiter-fl'      => 'SEO',
-		'web-design-jupiter'  => 'Web Design',
-		'ai-visibility'       => 'AI Visibility',
-		'about'               => 'About',
-		'contact'             => 'Contact',
+	$labels = mcg_nav_labels();
+	$pages  = array(
+		'seo-jupiter-fl'     => $labels['seo-jupiter-fl'],
+		'web-design-jupiter' => $labels['web-design-jupiter'],
+		'ai-visibility'      => $labels['ai-visibility'],
+		'about'              => $labels['about'],
+		'contact'            => $labels['contact'],
 	);
 	echo '<ul>';
 	foreach ( $pages as $slug => $label ) {
@@ -123,6 +124,57 @@ function mcg_fallback_menu() {
 	}
 	echo '</ul>';
 }
+
+/**
+ * The short label each page uses in the navigation.
+ *
+ * The page titles carry the location because that is what search reads; the
+ * menu does not need to repeat it and long labels wrap and crowd the header.
+ */
+function mcg_nav_labels() {
+	return array(
+		'seo-jupiter-fl'     => __( 'SEO', 'mcgrath-chrome' ),
+		'web-design-jupiter' => __( 'Web Design', 'mcgrath-chrome' ),
+		'ai-visibility'      => __( 'AI Visibility', 'mcgrath-chrome' ),
+		'about'              => __( 'About', 'mcgrath-chrome' ),
+		'contact'            => __( 'Contact', 'mcgrath-chrome' ),
+		'vault'              => __( 'Work', 'mcgrath-chrome' ),
+		'blog'               => __( 'Insights', 'mcgrath-chrome' ),
+	);
+}
+
+/**
+ * Shorten menu labels at render time.
+ *
+ * Setting the labels only when the menu is first created missed every site
+ * whose menu already existed, which is most of them. Doing it here fixes the
+ * menu without anybody having to re-run setup, and only where the label is
+ * still the page title — a label somebody typed themselves is left alone.
+ *
+ * @param array $items Menu items.
+ * @return array
+ */
+function mcg_short_nav_labels( $items ) {
+	$labels = mcg_nav_labels();
+
+	foreach ( $items as $item ) {
+		if ( 'post_type' !== $item->type || empty( $item->object_id ) ) {
+			continue;
+		}
+
+		$slug = get_post_field( 'post_name', $item->object_id );
+		if ( ! isset( $labels[ $slug ] ) ) {
+			continue;
+		}
+
+		if ( $item->title === get_the_title( $item->object_id ) ) {
+			$item->title = $labels[ $slug ];
+		}
+	}
+
+	return $items;
+}
+add_filter( 'wp_nav_menu_objects', 'mcg_short_nav_labels' );
 
 /** Service areas, used by the homepage and by the schema below. */
 function mcg_areas() {
@@ -308,6 +360,46 @@ function mcg_pages_map() {
 	);
 }
 
+/**
+ * The setup notes earlier versions of this theme planted in page bodies.
+ *
+ * They were meant as a hint in the editor and ended up rendering on the live
+ * site. Listed verbatim so they can be matched exactly and nothing anybody has
+ * actually written gets touched.
+ */
+function mcg_stale_page_content() {
+	return array(
+		'<!-- wp:paragraph --><p>Add anything else you want on this page here. Everything above it is built by the theme.</p><!-- /wp:paragraph -->',
+		'<!-- wp:paragraph --><p>Drop your contact form shortcode here and it will render inside the page.</p><!-- /wp:paragraph -->',
+		'<!-- wp:paragraph --><p>Client work goes here. Only people with the password can read it.</p><!-- /wp:paragraph -->',
+	);
+}
+
+/** Pages whose body is still one of those notes, untouched. */
+function mcg_stale_pages() {
+	$stale = mcg_stale_page_content();
+	$found = array();
+
+	foreach ( array_keys( mcg_pages_map() ) as $slug ) {
+		$page = get_page_by_path( $slug );
+		if ( $page && in_array( trim( $page->post_content ), $stale, true ) ) {
+			$found[] = $page;
+		}
+	}
+
+	return $found;
+}
+
+/** Empty those bodies. Exact matches only. */
+function mcg_clear_stale_pages() {
+	foreach ( mcg_stale_pages() as $page ) {
+		wp_update_post( array(
+			'ID'           => $page->ID,
+			'post_content' => '',
+		) );
+	}
+}
+
 function mcg_activate() {
 	$ids = array();
 
@@ -364,12 +456,13 @@ function mcg_activate() {
 		$menu_id = wp_create_nav_menu( $menu_name );
 
 		if ( ! is_wp_error( $menu_id ) ) {
+			$labels  = mcg_nav_labels();
 			$in_menu = array(
-				'seo-jupiter-fl'     => 'SEO',
-				'web-design-jupiter' => 'Web Design',
-				'ai-visibility'      => 'AI Visibility',
-				'about'              => 'About',
-				'contact'            => 'Contact',
+				'seo-jupiter-fl'     => $labels['seo-jupiter-fl'],
+				'web-design-jupiter' => $labels['web-design-jupiter'],
+				'ai-visibility'      => $labels['ai-visibility'],
+				'about'              => $labels['about'],
+				'contact'            => $labels['contact'],
 			);
 
 			foreach ( $in_menu as $slug => $label ) {
@@ -393,6 +486,8 @@ function mcg_activate() {
 			set_theme_mod( 'nav_menu_locations', $locations );
 		}
 	}
+
+	mcg_clear_stale_pages();
 
 	// WordPress's default blogname otherwise shows up in page titles, the
 	// footer and the schema. Only set it if nobody has chosen one.
@@ -459,6 +554,57 @@ function mcg_setup_notice() {
 	<?php
 }
 add_action( 'admin_notices', 'mcg_setup_notice' );
+
+/**
+ * Offer to clear the leftover setup notes.
+ *
+ * The notice above only appears when the pages are missing, so a site that was
+ * set up by an earlier version never saw an invitation to tidy this up.
+ */
+function mcg_stale_notice() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	$pages = mcg_stale_pages();
+	if ( ! $pages ) {
+		return;
+	}
+
+	$names = array();
+	foreach ( $pages as $page ) {
+		$names[] = get_the_title( $page );
+	}
+
+	$url = wp_nonce_url( admin_url( 'themes.php?mcg_tidy=1' ), 'mcg_tidy' );
+	?>
+	<div class="notice notice-warning">
+		<p><strong>McGrath Chrome:</strong>
+			<?php
+			printf(
+				/* translators: %s: comma separated list of page titles. */
+				esc_html__( 'these pages still show the setup note this theme used to add, and it is visible to visitors: %s. Everything the page needs is built by the template, so the note can go.', 'mcgrath-chrome' ),
+				'<em>' . esc_html( implode( ', ', $names ) ) . '</em>'
+			);
+			?>
+		</p>
+		<p><a class="button button-primary" href="<?php echo esc_url( $url ); ?>"><?php esc_html_e( 'Remove the setup notes', 'mcgrath-chrome' ); ?></a></p>
+	</div>
+	<?php
+}
+add_action( 'admin_notices', 'mcg_stale_notice' );
+
+/** Handle the tidy-up link. */
+function mcg_maybe_tidy() {
+	if ( ! isset( $_GET['mcg_tidy'] ) || ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	check_admin_referer( 'mcg_tidy' );
+	mcg_clear_stale_pages();
+	wp_safe_redirect( admin_url( 'themes.php' ) );
+	exit;
+}
+add_action( 'admin_init', 'mcg_maybe_tidy' );
 
 function mcg_maybe_run_setup() {
 	if ( ! isset( $_GET['mcg_setup'] ) || ! current_user_can( 'manage_options' ) ) {
