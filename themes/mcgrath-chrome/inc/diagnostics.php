@@ -190,6 +190,9 @@ function mcg_maybe_apply_plan() {
 	}
 	check_admin_referer( 'mcg_fix_pages' );
 	mcg_apply_page_plan( ! empty( $_GET['rename'] ) );
+	// The pages are no use if the navigation still points at the old site's,
+	// so the one button finishes the job.
+	mcg_repair_menus();
 	wp_safe_redirect( admin_url( 'themes.php?page=mcg-chrome&applied=1' ) );
 	exit;
 }
@@ -306,7 +309,7 @@ function mcg_diagnostics_screen() {
 						</td>
 						<td>
 							<?php if ( 'adopt' === $item['action'] ) : ?>
-								<span style="color:#b32d2e"><?php esc_html_e( 'Not using the theme\'s template, so it renders as a bare title with an empty page under it. Adopting it keeps the page, its address and every link already pointing at it — only the layout changes.', 'mcgrath-chrome' ); ?></span>
+								<span style="color:#b32d2e"><?php esc_html_e( 'This is one of the theme\'s own pages but it is not running its template, so it renders as a bare title. The template will be assigned; nothing else about the page changes.', 'mcgrath-chrome' ); ?></span>
 							<?php elseif ( 'rename' === $item['action'] ) : ?>
 								<?php
 								printf(
@@ -333,11 +336,11 @@ function mcg_diagnostics_screen() {
 			<p>
 				<a class="button button-primary button-hero"
 					href="<?php echo esc_url( wp_nonce_url( admin_url( 'themes.php?mcg_fix_pages=1' ), 'mcg_fix_pages' ) ); ?>">
-					<?php esc_html_e( 'Fix these pages', 'mcgrath-chrome' ); ?>
+					<?php esc_html_e( 'Build the theme\'s pages and fix the menu', 'mcgrath-chrome' ); ?>
 				</a>
 			</p>
 			<p class="description" style="max-width:70ch">
-				<?php esc_html_e( 'This keeps every address exactly as it is. Existing pages are adopted rather than replaced, so nothing that links to them breaks and nothing is deleted.', 'mcgrath-chrome' ); ?>
+				<?php esc_html_e( 'Builds the theme\'s pages at its own addresses and points the Primary and Footer menus at them. Pages belonging to whatever site was here before are not touched, moved or deleted — they keep their addresses and their content, they are simply no longer in the menu.', 'mcgrath-chrome' ); ?>
 			</p>
 
 			<?php if ( $renames ) : ?>

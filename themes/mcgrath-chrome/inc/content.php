@@ -49,20 +49,19 @@ function mcg_pages_using_template( $template ) {
 }
 
 /**
- * Slugs these pages have shipped at before, or commonly already sit at.
+ * Slugs THIS THEME has shipped its own pages at before.
  *
- * A site set up under an earlier version has its pages at these. Without them
- * the theme cannot recognise a page it created itself two versions ago, and
- * would build a second one alongside it.
+ * Only slugs the theme itself created. Not "about", not "contact" — those
+ * belong to whatever site was here first, they carry its content, and the
+ * theme has no business claiming them. It builds its own pages at its own
+ * addresses and leaves the old ones alone.
  */
 function mcg_legacy_slugs() {
 	return array(
-		'seo'       => array( 'seo-jupiter-fl', 'seo' ),
-		'webdesign' => array( 'web-design-jupiter', 'web-design' ),
-		'aeo'       => array( 'ai-visibility', 'answer-engine-optimization' ),
-		'about'     => array( 'about', 'about-us' ),
-		'contact'   => array( 'contact', 'contact-us' ),
-		'vault'     => array( 'vault', 'the-vault' ),
+		'seo'       => array( 'seo-jupiter-fl' ),
+		'webdesign' => array( 'web-design-jupiter' ),
+		'aeo'       => array( 'ai-visibility' ),
+		'vault'     => array( 'vault' ),
 	);
 }
 
