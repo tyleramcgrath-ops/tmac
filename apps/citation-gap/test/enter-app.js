@@ -1,11 +1,7 @@
-// The front door added in the SaaS redesign: a marketing homepage (#homeScreen, z-index 150)
-// covers everything until a launch control is clicked, and a workspace splash (#splash) sits
-// behind it until an identity is stored. Both of the browser flows have to walk through that
-// door before they can touch the scanner, so the walk lives here once.
-//
-// Real path by default: click the nav's "Launch the tool", then sign in through the splash
-// form, and assert both layers are actually gone. A flow that only wants to get past it can
-// pass { real: false } to seed localStorage and skip the clicks.
+// The front door added in the SaaS redesign: a marketing homepage (#homeScreen) covers everything
+// until a launch control is clicked. Behind it is an optional workspace panel (#splash) that must
+// NOT block the way in — clicking "Run a scan" is a promise to show the scan form, so anything
+// standing between the click and #btnRun is a bug, and this helper is where it gets caught.
 const IDENTITY = 'test@citationgap.local';
 
 async function enterApp(pg, opts) {
@@ -14,24 +10,16 @@ async function enterApp(pg, opts) {
     await pg.waitForSelector('#homeScreen:not([hidden])');
     await pg.click('.mkt-nav .mkt-btn.primary');
     await pg.waitForSelector('#homeScreen[hidden]', { state: 'attached' });
-    if (await pg.$('#splash:not([hidden])')) {
-      await pg.fill('#splashEmail', IDENTITY);
-      await pg.fill('#splashPass', 'not-checked-by-anything');
-      await pg.click('.splash-enter');
-    }
   } else {
-    await pg.evaluate((id) => {
-      try { localStorage.setItem('cg.identity', id); } catch (e) {}
+    await pg.evaluate(() => {
       var h = document.querySelector('#homeScreen'); if (h) h.hidden = true;
       var s = document.querySelector('#splash'); if (s) s.hidden = true;
-    }, IDENTITY);
+    });
   }
-  await pg.waitForSelector('#splash[hidden]', { state: 'attached' });
   const state = await pg.evaluate(() => ({
     home: !!(document.querySelector('#homeScreen') || {}).hidden,
+    // the workspace panel must still be down: a free scan does not ask who you are first
     splash: !!(document.querySelector('#splash') || {}).hidden,
-    // the scan controls must be reachable, not just present: a layer still painted over them
-    // is the bug this helper exists to catch.
     reachable: (function () {
       var b = document.querySelector('#btnRun'); if (!b) return false;
       b.scrollIntoView({ block: 'center' });
@@ -42,9 +30,38 @@ async function enterApp(pg, opts) {
     })()
   }));
   if (!state.home || !state.splash || !state.reachable) {
-    throw new Error('enterApp: front door did not open — ' + JSON.stringify(state));
+    throw new Error('enterApp: front door did not open cleanly — ' + JSON.stringify(state));
   }
   return state;
 }
 
-module.exports = { enterApp, IDENTITY };
+// The workspace panel is opt-in: Sign in opens it, and it can always be dismissed without
+// naming yourself. Exercised once by demo-flow so the opt-in path cannot rot unnoticed.
+async function workspacePanel(pg) {
+  // Sign in is also a launch control, so each click drops the homepage behind it; the panel has to
+  // be re-opened from a re-shown front door rather than from a hidden one.
+  const openPanel = async () => {
+    await pg.evaluate(() => { var h = document.querySelector('#homeScreen'); if (h) h.hidden = false; });
+    await pg.waitForSelector('.mkt-signin', { state: 'visible' });
+    await pg.click('.mkt-signin');
+    await pg.waitForSelector('#splash:not([hidden])');
+  };
+  await openPanel();
+  const hasPassword = await pg.$('#splashPass');
+  await pg.click('#splashSkip');
+  await pg.waitForSelector('#splash[hidden]', { state: 'attached' });
+  const skipped = await pg.evaluate(() => {
+    try { return !localStorage.getItem('cg.identity'); } catch (e) { return true; }
+  });
+  await openPanel();
+  await pg.fill('#splashEmail', IDENTITY);
+  await pg.click('.splash-enter');
+  await pg.waitForSelector('#splash[hidden]', { state: 'attached' });
+  const named = await pg.evaluate(() => ({
+    stored: (function () { try { return localStorage.getItem('cg.identity'); } catch (e) { return null; } })(),
+    sidebar: (document.querySelector('#sideUserEmail') || {}).textContent
+  }));
+  return { askedForPassword: !!hasPassword, skipLeavesNoIdentity: skipped, named };
+}
+
+module.exports = { enterApp, workspacePanel, IDENTITY };

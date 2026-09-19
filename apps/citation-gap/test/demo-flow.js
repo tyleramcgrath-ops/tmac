@@ -1,7 +1,7 @@
 // Loads index.html in Chromium, runs the demo, checks for console errors, dumps the work order.
 const { chromium } = require(require('path').join(require('child_process').execSync('npm root -g').toString().trim(),'playwright'));
 const http=require('http'), fs=require('fs'), path=require('path');
-const { enterApp }=require('./enter-app.js');
+const { enterApp, workspacePanel }=require('./enter-app.js');
 (async()=>{
   const root=path.join(__dirname,'..');
   const srv=http.createServer((req,res)=>{ const f=path.join(root,'index.html'); res.setHeader('content-type','text/html'); res.end(fs.readFileSync(f)); });
@@ -21,6 +21,12 @@ const { enterApp }=require('./enter-app.js');
   // The marketing homepage covers the demo report until a launch control is clicked; walk it
   // for real so the screenshot below is of the app and not of the front door.
   console.log('front door:',JSON.stringify(await enterApp(page)));
+  // the opt-in workspace panel: no password field, skippable, and it remembers a name when given one
+  const wp=await workspacePanel(page);
+  console.log('workspace panel:',JSON.stringify(wp));
+  if(wp.askedForPassword) errors.push('workspace panel is asking for a password again');
+  if(!wp.skipLeavesNoIdentity) errors.push('skip stored an identity anyway');
+  if(wp.named.stored!=='test@citationgap.local') errors.push('naming the workspace did not stick');
   // expand every prompt toggle and click every copy button
   const n=await page.$$eval('.ptoggle',els=>{ els.forEach(e=>e.click()); return els.length; });
   await page.$$eval('.cpy',els=>els.forEach(e=>e.click()));
