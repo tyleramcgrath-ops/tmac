@@ -1,0 +1,825 @@
+# Spanish (Costa Rica) translation for the Palm Tree Surf theme.
+# Interface strings and the shared FAQ. Long-form page and article copy is
+# translated per page in wp-admin, so nothing here is machine-translated.
+msgid ""
+msgstr ""
+"Project-Id-Version: Palm Tree Surf\n"
+"Report-Msgid-Bugs-To: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_CR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "%s out of 5"
+msgstr "%s de 5"
+
+msgid "About"
+msgstr "Sobre nosotros"
+
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgid "Adventure"
+msgstr "Aventura"
+
+msgid "All"
+msgstr "Todo"
+
+msgid "All %s"
+msgstr "Todo en %s"
+
+msgid "All Experiences"
+msgstr "Todas las experiencias"
+
+msgid "All Levels"
+msgstr "Todos los niveles"
+
+msgid "All categories"
+msgstr "Todas las categorías"
+
+msgid "All gear included"
+msgstr "Todo el equipo incluido"
+
+msgid "All levels"
+msgstr "Todos los niveles"
+
+msgid "Answers come from this site. For prices, availability and anything specific, message us."
+msgstr "Las respuestas salen de este sitio. Para precios, disponibilidad y cualquier detalle, escríbanos."
+
+msgid "Answers from this site, or a real person on WhatsApp"
+msgstr "Respuestas de este sitio, o una persona real por WhatsApp"
+
+msgid "Anything not answered here — just ask."
+msgstr "¿Algo que no esté aquí? Solo pregúntenos."
+
+msgid "Apply"
+msgstr "Postular"
+
+msgid "Apply to list your tours"
+msgstr "Postule para listar sus tours"
+
+msgid "As soon as your dates are set. We can usually still put something together at short notice, but the choice is wider earlier."
+msgstr "En cuanto tenga sus fechas. Casi siempre podemos armar algo con poca anticipación, pero entre más temprano, más opciones hay."
+
+msgid "Ask on WhatsApp"
+msgstr "Preguntar por WhatsApp"
+
+msgid "Ask us anything"
+msgstr "Pregúntenos lo que sea"
+
+msgid "Before you apply"
+msgstr "Antes de postular"
+
+msgid "Before you book"
+msgstr "Antes de reservar"
+
+msgid "Beginner"
+msgstr "Principiante"
+
+msgid "Best season"
+msgstr "Mejor temporada"
+
+msgid "Best time to visit"
+msgstr "Mejor época para venir"
+
+msgid "Boat Tours"
+msgstr "Tours en bote"
+
+msgid "Book"
+msgstr "Reservar"
+
+msgid "Book Now"
+msgstr "Reservar"
+
+msgid "Book Your Session"
+msgstr "Reserve su sesión"
+
+msgid "Book an experience"
+msgstr "Reserve una experiencia"
+
+msgid "Book online in minutes"
+msgstr "Reserve en línea en minutos"
+
+msgid "Book this"
+msgstr "Reservar esto"
+
+msgid "Book your session"
+msgstr "Reserve su sesión"
+
+msgid "Booking"
+msgstr "Reservas"
+
+msgid "Booking Assistant"
+msgstr "Asistente de reservas"
+
+msgid "Booking takes three steps"
+msgstr "Reservar toma tres pasos"
+
+msgid "Breadcrumb"
+msgstr "Ruta de navegación"
+
+msgid "Browse All Experiences"
+msgstr "Ver todas las experiencias"
+
+msgid "Browse by category"
+msgstr "Explorar por categoría"
+
+msgid "Browse everything"
+msgstr "Ver todo"
+
+msgid "Browse experiences"
+msgstr "Ver experiencias"
+
+msgid "Can you take families and mixed groups?"
+msgstr "¿Reciben familias y grupos mixtos?"
+
+msgid "Captain"
+msgstr "Capitán"
+
+msgid "Captain and mate"
+msgstr "Capitán y marinero"
+
+msgid "Categories"
+msgstr "Categorías"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Certifications"
+msgstr "Certificaciones"
+
+msgid "Certified instructors"
+msgstr "Instructores certificados"
+
+msgid "Check availability"
+msgstr "Ver disponibilidad"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Close menu"
+msgstr "Cerrar menú"
+
+msgid "Comments are closed."
+msgstr "Los comentarios están cerrados."
+
+msgid "Contact"
+msgstr "Contacto"
+
+msgid "Contact details"
+msgstr "Datos de contacto"
+
+msgid "Do I need any experience?"
+msgstr "¿Necesito experiencia?"
+
+msgid "Do you speak English?"
+msgstr "¿Hablan inglés?"
+
+msgid "Duration"
+msgstr "Duración"
+
+msgid "Email"
+msgstr "Correo electrónico"
+
+msgid "Email address"
+msgstr "Correo electrónico"
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Enlarge image"
+msgstr "Ampliar imagen"
+
+msgid "Enlarge: %s"
+msgstr "Ampliar: %s"
+
+msgid "Enquire"
+msgstr "Consultar"
+
+msgid "Español"
+msgstr "Español"
+
+msgid "Experience categories"
+msgstr "Categorías de experiencias"
+
+msgid "Experiences"
+msgstr "Experiencias"
+
+msgid "Experiences in Tamarindo"
+msgstr "Experiencias en Tamarindo"
+
+msgid "Experiences matching your search. Clear it to browse everything we run."
+msgstr "Experiencias que coinciden con su búsqueda. Bórrela para ver todo lo que ofrecemos."
+
+msgid "Explore"
+msgstr "Explorar"
+
+msgid "Explore Tamarindo"
+msgstr "Explore Tamarindo"
+
+msgid "FAQ"
+msgstr "Preguntas frecuentes"
+
+msgid "Fast reply"
+msgstr "Respuesta rápida"
+
+msgid "Filter experiences"
+msgstr "Filtrar experiencias"
+
+msgid "Find Experiences"
+msgstr "Buscar experiencias"
+
+msgid "Find Your Experience"
+msgstr "Encuentre su experiencia"
+
+msgid "Find us"
+msgstr "Encuéntrenos"
+
+msgid "First Timer"
+msgstr "Primera vez"
+
+msgid "Fishing Charters"
+msgstr "Pesca deportiva"
+
+msgid "For most of what we run, no. Surf lessons start from never having stood on a board, boat tours and estuary trips need nothing at all, and fishing charters are rigged and run by the crew. Where something does need experience, the experience page says so."
+msgstr "Para casi todo lo que ofrecemos, no. Las clases de surf empiezan desde nunca haberse parado en una tabla, los tours en bote y los del estero no requieren nada, y en la pesca la tripulación arma y maneja todo. Cuando algo sí requiere experiencia, la página de esa experiencia lo dice."
+
+msgid "Free cancellation 24h"
+msgstr "Cancelación gratuita 24 h"
+
+msgid "Frequently asked questions"
+msgstr "Preguntas frecuentes"
+
+msgid "From"
+msgstr "Desde"
+
+msgid "From $%s"
+msgstr "Desde $%s"
+
+msgid "From application to listed"
+msgstr "De la solicitud al listado"
+
+msgid "Gallery"
+msgstr "Galería"
+
+msgid "Get in touch"
+msgstr "Contáctenos"
+
+msgid "Good to know"
+msgstr "Bueno saber"
+
+msgid "Group size"
+msgstr "Tamaño del grupo"
+
+msgid "Guest reviews"
+msgstr "Reseñas de huéspedes"
+
+msgid "Guests"
+msgstr "Personas"
+
+msgid "Guide"
+msgstr "Guía"
+
+msgid "Guides"
+msgstr "Guías"
+
+msgid "Hi! Ask me anything about surfing, fishing or getting out on the water here — or I can put you straight through to a person."
+msgstr "¡Hola! Pregúnteme lo que quiera sobre surf, pesca o salir al agua aquí, o lo comunico de una vez con una persona."
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Hours"
+msgstr "Horario"
+
+msgid "How do I pay?"
+msgstr "¿Cómo pago?"
+
+msgid "How far ahead should I book?"
+msgstr "¿Con cuánta anticipación debo reservar?"
+
+msgid "How it works"
+msgstr "Cómo funciona"
+
+msgid "How the day runs"
+msgstr "Cómo se desarrolla el día"
+
+msgid "How we run it"
+msgstr "Cómo trabajamos"
+
+msgid "I do not have that one written down. A person can answer it properly — shall I pass it on?"
+msgstr "Esa no la tengo escrita. Una persona se la puede responder bien: ¿se la paso?"
+
+msgid "I have never surfed"
+msgstr "Nunca he surfeado"
+
+msgid "Instructors"
+msgstr "Instructores"
+
+msgid "Intermediate"
+msgstr "Intermedio"
+
+msgid "Itinerary"
+msgstr "Itinerario"
+
+msgid "Journal"
+msgstr "Blog"
+
+msgid "Keep looking"
+msgstr "Siga explorando"
+
+msgid "Keep reading"
+msgstr "Siga leyendo"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Leave a comment"
+msgstr "Deje un comentario"
+
+msgid "Leave a review"
+msgstr "Deje una reseña"
+
+msgid "Level"
+msgstr "Nivel"
+
+msgid "List Your Tours"
+msgstr "Liste sus tours"
+
+msgid "Live Different."
+msgstr "Viva diferente."
+
+msgid "Load map"
+msgstr "Cargar mapa"
+
+msgid "Local Tamarindo guides"
+msgstr "Guías locales de Tamarindo"
+
+msgid "Local certified guides"
+msgstr "Guías locales certificados"
+
+msgid "Local guides"
+msgstr "Guías locales"
+
+msgid "Log Out"
+msgstr "Cerrar sesión"
+
+msgid "Login"
+msgstr "Ingresar"
+
+msgid "Map of our location"
+msgstr "Mapa de nuestra ubicación"
+
+msgid "Meet the team"
+msgstr "Conozca al equipo"
+
+msgid "Message us on WhatsApp"
+msgstr "Escríbanos por WhatsApp"
+
+msgid "Minimum age"
+msgstr "Edad mínima"
+
+msgid "Minutes"
+msgstr "Minutos"
+
+msgid "More Tamarindo guides"
+msgstr "Más guías de Tamarindo"
+
+msgid "Most Popular"
+msgstr "Más popular"
+
+msgid "My Account"
+msgstr "Mi cuenta"
+
+msgid "Naturalist guide"
+msgstr "Guía naturalista"
+
+msgid "Newer comments"
+msgstr "Comentarios más recientes"
+
+msgid "Newer reviews"
+msgstr "Reseñas más recientes"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Next available"
+msgstr "Próxima disponibilidad"
+
+msgid "Next image"
+msgstr "Imagen siguiente"
+
+msgid "No matches for that search. Try another wording."
+msgstr "No hay resultados para esa búsqueda. Intente con otras palabras."
+
+msgid "No reviews yet. If you have been out with us, yours would be the first."
+msgstr "Aún no hay reseñas. Si ya salió con nosotros, la suya sería la primera."
+
+msgid "Number of people"
+msgstr "Número de personas"
+
+msgid "Older comments"
+msgstr "Comentarios anteriores"
+
+msgid "Older reviews"
+msgstr "Reseñas anteriores"
+
+msgid "On the water"
+msgstr "En el agua"
+
+msgid "On this page"
+msgstr "En esta página"
+
+msgid "One place visitors already trust"
+msgstr "Un solo lugar en el que los visitantes ya confían"
+
+msgid "Open menu"
+msgstr "Abrir menú"
+
+msgid "Open the booking assistant"
+msgstr "Abrir el asistente de reservas"
+
+msgid "Opening hours"
+msgstr "Horario de atención"
+
+msgid "Opening message"
+msgstr "Mensaje de bienvenida"
+
+msgid "Or message us on WhatsApp"
+msgstr "O escríbanos por WhatsApp"
+
+msgid "Other experiences"
+msgstr "Otras experiencias"
+
+msgid "Other things to do here"
+msgstr "Otras cosas que hacer aquí"
+
+msgid "Page navigation"
+msgstr "Navegación de páginas"
+
+msgid "Partner"
+msgstr "Alianzas"
+
+msgid "Phone number"
+msgstr "Teléfono"
+
+msgid "Phone or WhatsApp"
+msgstr "Teléfono o WhatsApp"
+
+msgid "Photo gallery"
+msgstr "Galería de fotos"
+
+msgid "Photos of your session"
+msgstr "Fotos de su sesión"
+
+msgid "Planning a trip to Tamarindo?"
+msgstr "¿Está planeando un viaje a Tamarindo?"
+
+msgid "Please choose a star rating before submitting your review."
+msgstr "Elija una calificación con estrellas antes de enviar su reseña."
+
+msgid "Please fill in your name, email and message."
+msgstr "Complete su nombre, correo electrónico y mensaje."
+
+msgid "Preferred date"
+msgstr "Fecha preferida"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Previous image"
+msgstr "Imagen anterior"
+
+msgid "Privacy Policy"
+msgstr "Política de privacidad"
+
+msgid "Private & Custom"
+msgstr "Privado y a medida"
+
+msgid "Pura Vida Every Day"
+msgstr "Pura Vida todos los días"
+
+msgid "Questions"
+msgstr "Preguntas"
+
+msgid "Questions before you book? Send us a message and we will reply within 24 hours."
+msgstr "¿Tiene preguntas antes de reservar? Escríbanos y le respondemos en menos de 24 horas."
+
+msgid "Rated %1$s out of 5 from %2$s reviews"
+msgstr "Calificado %1$s de 5 según %2$s reseñas"
+
+msgid "Rating"
+msgstr "Calificación"
+
+msgid "Rating out of 5"
+msgstr "Calificación sobre 5"
+
+msgid "Rating required"
+msgstr "Calificación obligatoria"
+
+msgid "Read more"
+msgstr "Leer más"
+
+msgid "Ready to get in the water?"
+msgstr "¿Listo para entrar al agua?"
+
+msgid "Real days, real guests"
+msgstr "Días reales, huéspedes reales"
+
+msgid "Request this experience"
+msgstr "Solicite esta experiencia"
+
+msgid "Request your booking"
+msgstr "Solicite su reserva"
+
+msgid "Results for %s"
+msgstr "Resultados para %s"
+
+msgid "Reviews"
+msgstr "Reseñas"
+
+msgid "Reviews are read before they go live, so yours will not appear straight away. Your email address is never published."
+msgstr "Leemos las reseñas antes de publicarlas, así que la suya no aparecerá de inmediato. Su correo electrónico nunca se publica."
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Search experiences"
+msgstr "Buscar experiencias"
+
+msgid "Search this site"
+msgstr "Buscar en el sitio"
+
+msgid "Search&hellip;"
+msgstr "Buscar&hellip;"
+
+msgid "Searching for &ldquo;%s&rdquo;"
+msgstr "Buscando &ldquo;%s&rdquo;"
+
+msgid "See all experiences"
+msgstr "Ver todas las experiencias"
+
+msgid "See what we run"
+msgstr "Vea lo que ofrecemos"
+
+msgid "Select any photo to view it full size."
+msgstr "Seleccione cualquier foto para verla en tamaño completo."
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Send application"
+msgstr "Enviar solicitud"
+
+msgid "Send enquiry"
+msgstr "Enviar consulta"
+
+msgid "Send the booking form first. We confirm the details with you, and payment is arranged once that is settled — nothing is taken before you know the time, the meeting point and what is included."
+msgstr "Primero envíe el formulario de reserva. Confirmamos los detalles con usted y el pago se coordina después: no se cobra nada antes de que sepa la hora, el punto de encuentro y qué incluye."
+
+msgid "Send us a message"
+msgstr "Envíenos un mensaje"
+
+msgid "Short answer:"
+msgstr "Respuesta corta:"
+
+msgid "Show me everything"
+msgstr "Muéstreme todo"
+
+msgid "Show the booking assistant"
+msgstr "Mostrar el asistente de reservas"
+
+msgid "Sign Up"
+msgstr "Registrarse"
+
+msgid "Skill level"
+msgstr "Nivel"
+
+msgid "Skip to content"
+msgstr "Ir al contenido"
+
+msgid "Small groups"
+msgstr "Grupos pequeños"
+
+msgid "Snorkel gear"
+msgstr "Equipo de snorkel"
+
+msgid "Something else"
+msgstr "Otra cosa"
+
+msgid "Something went wrong sending that. Please try again, or email us directly."
+msgstr "Algo salió mal al enviarlo. Inténtelo de nuevo o escríbanos directamente."
+
+msgid "Sorry, that did not send. Please email or WhatsApp us instead."
+msgstr "Lo sentimos, no se pudo enviar. Escríbanos por correo o WhatsApp."
+
+msgid "Submit review"
+msgstr "Enviar reseña"
+
+msgid "Support"
+msgstr "Ayuda"
+
+msgid "Surf Lessons"
+msgstr "Clases de surf"
+
+msgid "Surf lessons, fishing charters, boat tours and wildlife trips, booked with local guides in one place. Your Tamarindo adventure starts here."
+msgstr "Clases de surf, pesca deportiva, tours en bote y viajes de vida silvestre, con guías locales y en un solo lugar. Su aventura en Tamarindo empieza aquí."
+
+msgid "Surf lessons, fishing charters, boat tours and wildlife trips, run by people who live here. Pick a category below."
+msgstr "Clases de surf, pesca deportiva, tours en bote y viajes de vida silvestre, con gente que vive aquí. Elija una categoría."
+
+msgid "Surf lessons, fishing charters, boat tours and wildlife trips, run out of Tamarindo on the Guanacaste coast."
+msgstr "Clases de surf, pesca deportiva, tours en bote y viajes de vida silvestre desde Tamarindo, en la costa de Guanacaste."
+
+msgid "Surf. Explore. Discover."
+msgstr "Surfee. Explore. Descubra."
+
+msgid "Swimwear, reef-safe sunscreen, a hat, water and a towel will cover nearly everything. Anything specific to your trip is listed on its own page, and we send it again when we confirm."
+msgstr "Traje de baño, protector solar que no dañe el arrecife, gorra, agua y toalla cubren casi todo. Lo específico de su actividad aparece en su propia página, y se lo reenviamos al confirmar."
+
+msgid "Tamarindo"
+msgstr "Tamarindo"
+
+msgid "Tell us about your tours"
+msgstr "Cuéntenos sobre sus tours"
+
+msgid "Tell us what you are looking for"
+msgstr "Cuéntenos qué está buscando"
+
+msgid "Tell us your dates and how many are coming. We reply within 24 hours with availability."
+msgstr "Díganos sus fechas y cuántas personas vienen. Le respondemos en menos de 24 horas con la disponibilidad."
+
+msgid "Tell us your dates and who is coming, and we will put the week together with you — surf, water, wildlife or all of it."
+msgstr "Díganos sus fechas y quiénes vienen, y armamos la semana con usted: surf, agua, vida silvestre o todo junto."
+
+msgid "Testimonials"
+msgstr "Testimonios"
+
+msgid "Thank you — your application is in. We read every one, and we will come back to you by email."
+msgstr "Gracias: recibimos su solicitud. Leemos todas y le responderemos por correo."
+
+msgid "Thanks — your review is with us and will appear once we have read it."
+msgstr "Gracias: recibimos su reseña y aparecerá una vez que la hayamos leído."
+
+msgid "Thanks. We have your enquiry and will reply shortly."
+msgstr "Gracias. Recibimos su consulta y le responderemos pronto."
+
+msgid "That looks like a duplicate. Give it a few minutes before sending again."
+msgstr "Parece un envío duplicado. Espere unos minutos antes de enviarlo de nuevo."
+
+msgid "That page has drifted off"
+msgstr "Esa página se fue con la corriente"
+
+msgid "The page you were after is not here. Try a search, or head back to the packages."
+msgstr "La página que buscaba no está aquí. Pruebe con una búsqueda o vuelva a las experiencias."
+
+msgid "The short version"
+msgstr "En resumen"
+
+msgid "There is no bad time. The dry months are sunnier and busier; the green season is quieter, greener and has bigger swell, with rain that usually comes in the afternoon. Tell us when you can travel and we will tell you honestly what that period is like."
+msgstr "No hay mala época. Los meses secos son más soleados y concurridos; la época verde es más tranquila, más verde y con más marejada, con lluvia que suele caer por la tarde. Díganos cuándo puede viajar y le decimos con franqueza cómo es ese periodo."
+
+msgid "There is nothing here yet. Please check back soon."
+msgstr "Todavía no hay nada aquí. Vuelva pronto."
+
+msgid "Things people ask before they book"
+msgstr "Lo que la gente pregunta antes de reservar"
+
+msgid "Type your question…"
+msgstr "Escriba su pregunta…"
+
+msgid "Unforgettable Experiences"
+msgstr "Experiencias inolvidables"
+
+msgid "View All"
+msgstr "Ver todo"
+
+msgid "View the map"
+msgstr "Ver el mapa"
+
+msgid "Water temp"
+msgstr "Temp. del agua"
+
+msgid "Water temperature"
+msgstr "Temperatura del agua"
+
+msgid "Wave size"
+msgstr "Tamaño de la ola"
+
+msgid "We move you to a better tide or another day. We would rather reschedule than run a session that is not worth your time."
+msgstr "Lo movemos a una mejor marea o a otro día. Preferimos reprogramar antes que hacer una sesión que no valga su tiempo."
+
+msgid "We read every application. Nothing you send here is published on the site, and we will not pass your details on."
+msgstr "Leemos todas las solicitudes. Nada de lo que envíe aquí se publica en el sitio y no compartiremos sus datos."
+
+msgid "What are you looking for?"
+msgstr "¿Qué está buscando?"
+
+msgid "What can I do with kids?"
+msgstr "¿Qué puedo hacer con niños?"
+
+msgid "What happens if the weather is bad?"
+msgstr "¿Qué pasa si el clima está malo?"
+
+msgid "What is included"
+msgstr "Qué incluye"
+
+msgid "What people say"
+msgstr "Lo que dicen"
+
+msgid "What should I bring?"
+msgstr "¿Qué debo llevar?"
+
+msgid "What to bring"
+msgstr "Qué llevar"
+
+msgid "WhatsApp us"
+msgstr "Escríbanos por WhatsApp"
+
+msgid "When"
+msgstr "Cuándo"
+
+msgid "When is the best time of year to come?"
+msgstr "¿Cuál es la mejor época del año para venir?"
+
+msgid "Where to find us"
+msgstr "Dónde encontrarnos"
+
+msgid "Where we surf"
+msgstr "Dónde surfeamos"
+
+msgid "Why book with us"
+msgstr "Por qué reservar con nosotros"
+
+msgid "Why list with us"
+msgstr "Por qué listar con nosotros"
+
+msgid "Wildlife & Nature"
+msgstr "Vida silvestre y naturaleza"
+
+msgid "Yes, and it is one of the most common things we are asked for. Tell us the ages, who has done what before and how confident everyone is in water, and we will build the day around that rather than splitting the group up."
+msgstr "Sí, y es de lo que más nos piden. Díganos las edades, quién ha hecho qué antes y qué tan cómodos se sienten en el agua, y armamos el día alrededor de eso en vez de separar al grupo."
+
+msgid "Yes. English and Spanish, both."
+msgstr "Sí. Inglés y español, los dos."
+
+msgid "You"
+msgstr "Usted"
+
+msgid "You just sent an enquiry. Give us a minute before sending another."
+msgstr "Acaba de enviar una consulta. Espere un momento antes de enviar otra."
+
+msgid "You might also like"
+msgstr "También le puede interesar"
+
+msgid "Your guides"
+msgstr "Sus guías"
+
+msgid "Your name"
+msgstr "Su nombre"
+
+msgid "Your rating"
+msgstr "Su calificación"
+
+msgid "Your review"
+msgstr "Su reseña"
+
+msgid "per person"
+msgstr "por persona"
+
+msgid "© %1$s %2$s. All rights reserved."
+msgstr "© %1$s %2$s. Todos los derechos reservados."
+
+msgid "%d guest"
+msgid_plural "%d guests"
+msgstr[0] "%d persona"
+msgstr[1] "%d personas"
+
+msgid "%s experience"
+msgid_plural "%s experiences"
+msgstr[0] "%s experiencia"
+msgstr[1] "%s experiencias"
+
+msgid "%s min read"
+msgid_plural "%s min read"
+msgstr[0] "%s min de lectura"
+msgstr[1] "%s min de lectura"
+
+msgid "%s minute read"
+msgid_plural "%s minute read"
+msgstr[0] "%s minuto de lectura"
+msgstr[1] "%s minutos de lectura"
+
+msgid "%s review"
+msgid_plural "%s reviews"
+msgstr[0] "%s reseña"
+msgstr[1] "%s reseñas"
+
+msgid "%s star"
+msgid_plural "%s stars"
+msgstr[0] "%s estrella"
+msgstr[1] "%s estrellas"

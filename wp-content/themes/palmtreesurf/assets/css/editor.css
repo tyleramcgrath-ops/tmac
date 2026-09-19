@@ -1,0 +1,40 @@
+/*
+ * Block editor styles.
+ *
+ * tokens.css is loaded alongside this file by add_editor_style(), so the
+ * editor inherits the same custom properties as the front end and no value is
+ * duplicated here.
+ */
+
+.editor-styles-wrapper {
+	font-family: var(--pt-font-body);
+	font-size: var(--pt-body);
+	line-height: 1.7;
+	color: var(--pt-ink-700);
+	background: var(--pt-sand-50);
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3 {
+	font-family: var(--pt-font-display);
+	font-weight: var(--pt-weight-heading);
+	color: var(--pt-ink-900);
+	line-height: 1.12;
+	letter-spacing: -0.015em;
+}
+
+.editor-styles-wrapper h1 { font-size: var(--pt-h1); }
+.editor-styles-wrapper h2 { font-size: var(--pt-h2); }
+.editor-styles-wrapper h3 { font-size: var(--pt-h3); }
+
+.editor-styles-wrapper p { max-width: 68ch; }
+.editor-styles-wrapper a { color: var(--pt-ocean-500); }
+
+.editor-styles-wrapper .wp-block-button__link {
+	border-radius: var(--pt-radius-pill);
+	background: var(--pt-sunset-500);
+	color: var(--pt-white);
+	font-weight: var(--pt-weight-medium);
+	padding: var(--pt-space-sm) var(--pt-space-lg);
+}
