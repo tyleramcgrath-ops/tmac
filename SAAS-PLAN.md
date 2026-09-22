@@ -279,6 +279,11 @@ not try to make a serverless function out of it. It is loaded two ways:
   `module.exports`. The tail that does this is guarded by `typeof module`, so it is
   inert in a page.
 
+`buildFixes` — the work order — moved too, with `qNeed` and `resolveRefs`. The scan job
+has to produce the same *tasks* as the browser, not merely the same two numbers, and all
+three are pure: no DOM, no network, no storage. That is the whole pure surface a scan
+needs; 65 exports now.
+
 `$`, the DOM helper, is deliberately **not** exported: nothing in a scan job should be
 reaching for a selector, and its absence from the module surface is asserted.
 
@@ -375,12 +380,32 @@ seats when a customer asks for seats.
    treat it as a function. The browser loads it with `<script src="/score.js">`; the scan
    job will `require()` it. `build-guard.js` now asserts the two surfaces agree, including
    that `scoreRank` and `scoreAnswer` return identical results through both.
-2. Neon + schema + migrations.
+2. Neon + schema + migrations. **Everything below is blocked on this.**
 3. Magic-link auth end to end.
 4. Projects and scans persisted server-side; the app reads them when logged in and
    falls back to browser storage when not.
 5. `scan_jobs` + `/api/tick` + cron. **Test this against a real multi-minute scan
    before selling it** — it is the load-bearing wall of both paid tiers.
+
+   A note on why this waits for step 2 rather than being built ahead of it. `runScan` is
+   one linear 26KB async function closing over about twenty locals; turning it into
+   resumable steps means every one of those (`head`, `mine`, `cov`, `perDomain` — a `Map`,
+   so not even JSON — `dispositions`, `comps`, `failed`, `targetsUsed`, `basis`, `reused`)
+   becomes part of a serialized payload. The step boundaries and that payload's shape are
+   the design, and they should be settled against a real `scan_jobs` row and a real
+   60-second function, not guessed at and then bent to fit.
+
+   The phases themselves are already confirmed against the code: `runScan` calls
+   `/api/page` once, `/api/serp` once, `/api/serp` × *nq*, `/api/page` × *depth* in
+   batches of three, `/api/render` for the competitors, `/api/render` for the rescues,
+   `/api/render` for the target, then scores — exactly the eight steps in §4.
+
+   When it is built it should be **one implementation with two drivers**, the way
+   `score.js` is one implementation with two loaders: the step functions take an injected
+   caller and an injected reporter, the browser passes `say`/`tick` and loops them to
+   completion, the tick passes no-ops and runs exactly one. Reimplementing the sequencing
+   separately server-side would put the work order and the progress log back into two
+   copies, which is the thing step 1 just finished undoing.
 6. Encrypted `search_keys`.
 7. Schedules.
 8. Stripe + webhook + portal.
