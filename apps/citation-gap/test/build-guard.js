@@ -14,8 +14,17 @@ const ok = (cond, name, extra) => { if (cond) { pass++; console.log('  ok   ' + 
 // handed without touching the real one.
 function sandbox() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cg-build-'));
-  for (const f of ['build.js', 'ship-manifest.json', 'index.html', 'score.js', 'package.json', 'vercel.json']) {
-    fs.copyFileSync(path.join(ROOT, f), path.join(dir, f));
+  // The file list comes from the manifest rather than being repeated here. It used to be a
+  // literal, and adding a shipped file then broke this fixture with an error about the new file
+  // being "missing" — which is the exact drift between two lists that the guard under test
+  // exists to catch, reproduced inside its own test. Reading the manifest means the sandbox can
+  // never fall behind what is shipped.
+  const shipped = Object.keys(JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'ship-manifest.json'), 'utf8')).files || {});
+  for (const f of ['build.js', 'ship-manifest.json'].concat(shipped)) {
+    const dst = path.join(dir, f);
+    fs.mkdirSync(path.dirname(dst), { recursive: true });
+    fs.copyFileSync(path.join(ROOT, f), dst);
   }
   // api/ has subdirectories now (api/auth/*), so this copies the tree rather than its top level.
   fs.cpSync(path.join(ROOT, 'api'), path.join(dir, 'api'), { recursive: true });
