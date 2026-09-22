@@ -213,7 +213,13 @@ function pt_mod_spanish( $value, $key ) {
 
 	$spanish = (string) get_theme_mod( $key . '_es', '' );
 
-	return '' !== trim( $spanish ) ? $spanish : $value;
+	if ( '' !== trim( $spanish ) ) {
+		return $spanish;
+	}
+
+	// No Spanish entered for this setting, so fall back to the catalogue, which
+	// knows the values the theme ships as defaults.
+	return pt_translate_seeded( $value );
 }
 add_filter( 'pt_mod_value', 'pt_mod_spanish', 10, 2 );
 
@@ -230,6 +236,116 @@ function pt_translatable_post_types() {
 }
 
 /**
+ * Translate a value that the seeder wrote into the database in English.
+ *
+ * Seeded content — an experience's inclusions, its itinerary, its FAQ — is
+ * stored as plain post meta, so the locale filter never touches it and it
+ * stayed English while the interface around it turned Spanish. Every one of
+ * those lines was written as a `__()` string in the seed definitions, so the
+ * catalogue already knows them: looking each line up at render time turns them
+ * over without writing a second copy of anything into the database.
+ *
+ * Lines are looked up individually because these fields are one item per line.
+ * A line the catalogue does not know — anything the client typed themselves —
+ * comes back exactly as it went in, which is the behaviour we want: the theme
+ * must never mangle words it was not given a translation for.
+ *
+ * @param string $value Stored value.
+ * @return string
+ */
+function pt_translate_seeded( $value ) {
+	if ( is_admin() || '' === $value || ! pt_bilingual_enabled() || 'es' !== pt_current_language() ) {
+		return $value;
+	}
+
+	if ( false === strpos( $value, "\n" ) ) {
+		return translate( $value, 'palmtreesurf' );
+	}
+
+	$lines = explode( "\n", $value );
+
+	foreach ( $lines as $index => $line ) {
+		$trimmed = trim( $line );
+
+		if ( '' !== $trimmed ) {
+			$lines[ $index ] = translate( $trimmed, 'palmtreesurf' );
+		}
+	}
+
+	return implode( "\n", $lines );
+}
+
+/**
+ * Translate seeded copy inside a block of HTML, one text run at a time.
+ *
+ * Page and experience bodies are stored as block markup assembled from many
+ * separate `__()` paragraphs, so the body as a whole never matches a catalogue
+ * entry even though every paragraph in it does. Looking up each text run
+ * individually turns the whole page over without a second copy of the body
+ * being written into the database.
+ *
+ * Anything the catalogue does not know is left exactly as it was, so a page the
+ * client has written themselves passes through untouched.
+ *
+ * @param string $html Markup.
+ * @return string
+ */
+function pt_translate_seeded_html( $html ) {
+	if ( is_admin() || '' === $html || ! pt_bilingual_enabled() || 'es' !== pt_current_language() ) {
+		return $html;
+	}
+
+	return (string) preg_replace_callback(
+		'/>([^<>]+)</',
+		function ( $matches ) {
+			$raw     = $matches[1];
+			$trimmed = trim( $raw );
+
+			// Too short to be a sentence, or pure punctuation: leave it alone.
+			if ( strlen( $trimmed ) < 3 ) {
+				return $matches[0];
+			}
+
+			$translated = translate( $trimmed, 'palmtreesurf' );
+
+			if ( $translated === $trimmed ) {
+				return $matches[0];
+			}
+
+			return '>' . str_replace( $trimmed, $translated, $raw ) . '<';
+		},
+		$html
+	);
+}
+
+/**
+ * Lend the theme's Spanish catalogue to the booking plugin.
+ *
+ * The plugin ships no translations and is deliberately left untouched between
+ * releases, so its form would stay English inside an otherwise Spanish page.
+ * Rather than fork it, its strings are looked up in the theme's own catalogue
+ * whenever the plugin has no translation of its own. If the plugin ever ships
+ * Spanish, its translation arrives already resolved and this leaves it be.
+ *
+ * @param string $translated Translated text.
+ * @param string $text       Original text.
+ * @param string $domain     Text domain.
+ * @return string
+ */
+function pt_lend_catalogue( $translated, $text, $domain ) {
+	if ( 'palm-tree-bookings' !== $domain || $translated !== $text ) {
+		return $translated;
+	}
+
+	if ( is_admin() || ! pt_bilingual_enabled() || 'es' !== pt_current_language() ) {
+		return $translated;
+	}
+
+	return translate( $text, 'palmtreesurf' );
+}
+add_filter( 'gettext', 'pt_lend_catalogue', 10, 3 );
+
+/**
  * Swap in the Spanish title when one exists.
  *
  * @param string   $title   Title.
@@ -243,7 +359,12 @@ function pt_translate_title( $title, $post_id = null ) {
 
 	$spanish = get_post_meta( $post_id, 'pt_es_title', true );
 
-	return '' !== trim( (string) $spanish ) ? $spanish : $title;
+	if ( '' !== trim( (string) $spanish ) ) {
+		return $spanish;
+	}
+
+	// No hand-written translation, so try the catalogue — seeded titles are in it.
+	return pt_translate_seeded( $title );
 }
 add_filter( 'the_title', 'pt_translate_title', 10, 2 );
 
@@ -261,7 +382,8 @@ function pt_translate_content( $content ) {
 	$spanish = get_post_meta( get_the_ID(), 'pt_es_content', true );
 
 	if ( '' === trim( (string) $spanish ) ) {
-		return $content;
+		// No hand-written Spanish body, so translate the seeded copy in place.
+		return pt_translate_seeded_html( $content );
 	}
 
 	return wpautop( wp_kses_post( $spanish ) );
@@ -282,7 +404,11 @@ function pt_translate_excerpt( $excerpt, $post = null ) {
 
 	$spanish = get_post_meta( $post->ID, 'pt_es_excerpt', true );
 
-	return '' !== trim( (string) $spanish ) ? $spanish : $excerpt;
+	if ( '' !== trim( (string) $spanish ) ) {
+		return $spanish;
+	}
+
+	return pt_translate_seeded( $excerpt );
 }
 add_filter( 'get_the_excerpt', 'pt_translate_excerpt', 10, 2 );
 
@@ -553,7 +679,12 @@ add_filter( 'nav_menu_item_title', 'pt_translate_menu_title', 10, 2 );
 function pt_term_name_es( $term_id, $fallback ) {
 	$spanish = get_term_meta( $term_id, 'pt_es_name', true );
 
-	return '' !== trim( (string) $spanish ) ? $spanish : $fallback;
+	if ( '' !== trim( (string) $spanish ) ) {
+		return $spanish;
+	}
+
+	// Seeded category names are in the catalogue, so fall back to it.
+	return pt_translate_seeded( $fallback );
 }
 
 /**
@@ -586,7 +717,11 @@ function pt_translate_term_description( $description, $term_id ) {
 
 	$spanish = get_term_meta( (int) $term_id, 'pt_es_description', true );
 
-	return '' !== trim( (string) $spanish ) ? $spanish : $description;
+	if ( '' !== trim( (string) $spanish ) ) {
+		return $spanish;
+	}
+
+	return pt_translate_seeded( $description );
 }
 add_filter( 'term_description', 'pt_translate_term_description', 10, 2 );
 
@@ -755,3 +890,35 @@ function pt_seed_term_translations() {
 	}
 }
 add_action( 'init', 'pt_seed_term_translations', 997 );
+
+/**
+ * Warn when Spanish is switched on but WordPress itself has no Spanish.
+ *
+ * The theme, the category copy, the tours and the booking form all come from
+ * this theme's own catalogue and turn over the moment the toggle is used. A
+ * handful of strings do not: the comment form's "Save my name, email…", the
+ * password-protected notice, and similar come from WordPress core, and core
+ * only has Spanish if its language pack has been installed. Setting the locale
+ * through a filter does not fetch one.
+ *
+ * Installing it is a thirty-second job and it is not something a theme should
+ * do behind the client's back, so this says so rather than doing it.
+ */
+function pt_core_language_notice() {
+	if ( ! current_user_can( 'install_languages' ) || ! pt_bilingual_enabled() ) {
+		return;
+	}
+
+	$installed = get_available_languages();
+
+	if ( array_intersect( array( 'es_CR', 'es_ES', 'es_MX' ), $installed ) ) {
+		return;
+	}
+
+	printf(
+		'<div class="notice notice-warning"><p><strong>%1$s</strong> %2$s</p></div>',
+		esc_html__( 'Spanish is switched on, but WordPress has no Spanish installed.', 'palmtreesurf' ),
+		esc_html__( 'This theme translates itself, the tours and the booking form. A few strings come from WordPress instead — the comment form is the one visitors see. Go to Settings → General, set Site Language to Español de Costa Rica, save, then set it back to English. That downloads the Spanish files once and those strings follow the toggle from then on.', 'palmtreesurf' )
+	);
+}
+add_action( 'admin_notices', 'pt_core_language_notice' );

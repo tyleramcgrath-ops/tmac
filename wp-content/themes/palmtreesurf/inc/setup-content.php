@@ -446,7 +446,9 @@ function pt_seed_content() {
 	/* ---------------------------------------------------- Instructors */
 
 	$instructors = array(
-		array( __( 'Lead Instructor', 'palmtreesurf' ), __( 'Head Coach', 'palmtreesurf' ), __( 'Grew up on this beach and has been coaching here for years.', 'palmtreesurf' ) ),
+		// Ezekiel is a real, named person. The role is what the client told us;
+		// the bio stays empty rather than inventing a history for him.
+		array( 'Ezekiel', __( 'Guide and Lead Instructor', 'palmtreesurf' ), '' ),
 		array( __( 'Surf Guide', 'palmtreesurf' ), __( 'Instructor', 'palmtreesurf' ), __( 'Specialises in first-timers and nervous beginners.', 'palmtreesurf' ) ),
 		array( __( 'Boat Captain', 'palmtreesurf' ), __( 'Captain', 'palmtreesurf' ), __( 'Runs the fishing charters and sunset tours.', 'palmtreesurf' ) ),
 		array( __( 'Naturalist Guide', 'palmtreesurf' ), __( 'Guide', 'palmtreesurf' ), __( 'Leads the estuary and mangrove wildlife trips.', 'palmtreesurf' ) ),

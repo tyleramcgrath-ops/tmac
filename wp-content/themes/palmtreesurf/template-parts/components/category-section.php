@@ -45,6 +45,11 @@ $pt_link  = get_term_link( $pt_term );
 $pt_link  = is_wp_error( $pt_link ) ? '' : $pt_link;
 $pt_copy  = pt_term_copy( $pt_term );
 $pt_lede  = $pt_term->description ? $pt_term->description : ( isset( $pt_copy['description'] ) ? $pt_copy['description'] : '' );
+
+// The raw term property skips the term_description filter, so translate it here.
+if ( function_exists( 'pt_translate_seeded' ) ) {
+	$pt_lede = pt_translate_seeded( $pt_lede );
+}
 $pt_total = (int) $pt_query->found_posts;
 ?>
 <section class="cat-section" id="<?php echo esc_attr( $pt_term->slug ); ?>" data-cat-section="<?php echo esc_attr( $pt_term->slug ); ?>">

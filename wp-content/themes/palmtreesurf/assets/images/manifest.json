@@ -1,14 +1,14 @@
 {
  "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
  "hero-home": {
-  "w": 1600,
-  "h": 1200,
+  "w": 2400,
+  "h": 1600,
   "ratio": "16:9",
   "role": "Homepage hero background",
   "alt": "The kayak fleet lined up on the sand before a tour at Tamarindo",
-  "file": "kayak-fleet-beach.jpg",
+  "file": "hero-kayak-fleet.jpg",
   "option": "pt_hero_image",
-  "note": "The client’s own photograph. A hero image set in the Customizer still overrides it."
+  "note": "The client's own photograph, cut for the hero. A Customizer hero image still overrides it."
  },
  "hero-video": {
   "w": 1920,
@@ -267,20 +267,20 @@
   "file": "fishing-grouper.jpg"
  },
  "cta-bg": {
-  "w": 1600,
-  "h": 1200,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Lifestyle closing band background",
-  "alt": "Three surf students on the beach with their boards",
-  "file": "surf-students-with-boards.jpg"
+  "alt": "Surf students on the beach with their boards",
+  "file": "banner-surf-students.jpg"
  },
  "story-banner": {
-  "w": 1600,
-  "h": 1200,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Story band and experiences listing hero",
   "alt": "A group of guests with their kayaks at the end of a tour",
-  "file": "kayak-group-guests.jpg"
+  "file": "banner-kayak-group.jpg"
  },
  "instructor-1": {
   "w": 800,
@@ -319,110 +319,111 @@
   "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
  },
  "tax-surf-lessons": {
-  "w": 1500,
-  "h": 2000,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the surf lessons archive",
-  "alt": "An instructor demonstrating the pop-up on the sand",
-  "file": "instructor-popup-stance.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "alt": "A group surf lesson gathered on the beach at Tamarindo",
+  "file": "banner-surf-lesson.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-kayak-tours": {
   "ratio": "auto",
   "role": "Header photo for the kayak tours archive",
-  "w": 1440,
-  "h": 1080,
-  "alt": "Two guides with paddles and kayaks ready on the sand",
-  "file": "kayak-guides-paddles.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "w": 1920,
+  "h": 640,
+  "alt": "The kayak fleet lined up on the sand before a tour",
+  "file": "banner-kayak-fleet.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-fishing-charters": {
   "w": 1600,
-  "h": 1200,
+  "h": 533,
   "ratio": "auto",
   "role": "Header photo for the fishing charters archive",
   "alt": "The charter boat at anchor off Tamarindo",
-  "file": "fishing-charter-boat.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "file": "banner-fishing-boat.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-boat-tours": {
-  "w": 940,
-  "h": 604,
+  "w": 1600,
+  "h": 533,
   "ratio": "auto",
   "role": "Header photo for the boat tours archive",
-  "alt": "The boat anchored below a headland on the Guanacaste coast",
-  "file": "fishing-boat-headland.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "alt": "Working a rod from the boat off the Guanacaste coast",
+  "file": "banner-fishing-troll.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-wildlife-nature": {
-  "w": 1600,
-  "h": 900,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the wildlife nature archive",
   "alt": "A crocodile in the Tamarindo estuary, seen from the water",
-  "file": "estuary-crocodile.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "file": "banner-crocodile.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-adventure": {
-  "w": 1600,
-  "h": 1200,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the adventure archive",
   "alt": "The kayak fleet lined up on the sand before a tour",
-  "file": "kayak-fleet-beach.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "file": "banner-kayak-fleet.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-private-custom": {
-  "w": 1125,
-  "h": 1500,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the private custom archive",
-  "alt": "A small group receiving surf instruction on the sand",
-  "file": "group-instruction-sand.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "alt": "A group surf lesson gathered on the beach",
+  "file": "banner-surf-lesson.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-first-timer": {
-  "w": 1500,
-  "h": 2000,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the first timer archive",
-  "alt": "A beginner group lesson gathered on the beach",
-  "file": "group-lesson-beach.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "alt": "A group surf lesson gathered on the beach",
+  "file": "banner-surf-lesson.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-beginner": {
-  "w": 1200,
-  "h": 1600,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the beginner archive",
-  "alt": "Surf students sitting with their boards during the beach briefing",
-  "file": "surf-lesson-group-briefing.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "alt": "Surf students on the beach with their boards",
+  "file": "banner-surf-students.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-intermediate": {
-  "w": 1500,
-  "h": 2000,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the intermediate archive",
-  "alt": "An instructor demonstrating the pop-up on the sand",
-  "file": "instructor-popup-stance.jpg",
-  "note": "Overridden per term by the Header photo field on the term edit screen."
+  "alt": "Surf students on the beach with their boards",
+  "file": "banner-surf-students.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-advanced": {
-  "w": 1500,
-  "h": 2000,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the advanced archive",
-  "alt": "",
-  "file": null,
-  "note": "No client photograph exists for this yet. Renders a brand panel until one does."
+  "alt": "Surf students on the beach with their boards",
+  "file": "banner-surf-students.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  },
  "tax-all-levels": {
-  "w": 1600,
-  "h": 1200,
+  "w": 1920,
+  "h": 640,
   "ratio": "auto",
   "role": "Header photo for the all levels archive",
   "alt": "A group of guests with their kayaks at the end of a tour",
-  "file": "kayak-group-guests.jpg"
+  "file": "banner-kayak-group.jpg",
+  "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
  }
 }

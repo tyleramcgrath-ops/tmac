@@ -37,6 +37,7 @@ function pt_backfill_content() {
 
 	pt_backfill_terms();
 	pt_backfill_experiences();
+	pt_backfill_guide_names();
 	pt_drop_retired_images();
 }
 add_action( 'init', 'pt_backfill_content', 996 );
@@ -136,4 +137,67 @@ function pt_drop_retired_images() {
 	 * immediately rather than on some later upgrade.
 	 */
 	delete_option( 'pt_media_version' );
+}
+
+/**
+ * Rename a seeded guide once the client tells us who it actually is.
+ *
+ * The seeder shipped four guides titled by role — "Lead Instructor", "Surf
+ * Guide" and so on — as stand-ins. When a real name arrives it is mapped here,
+ * and the stand-in is renamed in place so the guide keeps its ID, its photo and
+ * anything else already attached to it.
+ *
+ * Only a post still carrying the exact stand-in title is touched. Once somebody
+ * has renamed a guide themselves the title no longer matches and this leaves it
+ * alone for good.
+ *
+ * @return void
+ */
+function pt_backfill_guide_names() {
+	$names = array(
+		// Stand-in title => real name.
+		'Lead Instructor' => 'Ezekiel',
+	);
+
+	foreach ( $names as $placeholder => $name ) {
+		$found = get_posts(
+			array(
+				'post_type'      => 'instructor',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'title'          => $placeholder,
+			)
+		);
+
+		if ( ! $found ) {
+			continue;
+		}
+
+		$guide = $found[0];
+
+		wp_update_post(
+			array(
+				'ID'         => $guide->ID,
+				'post_title' => $name,
+			)
+		);
+
+		// Give the guide the role the client stated, unless they set one already.
+		$role    = (string) get_post_meta( $guide->ID, '_pt_role', true );
+		$stand_in = array( '', 'Head Coach', 'Lead Instructor' );
+
+		if ( in_array( $role, $stand_in, true ) ) {
+			update_post_meta( $guide->ID, '_pt_role', 'Guide and Lead Instructor' );
+		}
+
+		/*
+		 * The stand-in bio described an invented person. Clear it rather than
+		 * leave a fictional history attached to somebody real.
+		 */
+		$bio = (string) get_post_meta( $guide->ID, '_pt_bio_short', true );
+
+		if ( false !== strpos( $bio, 'Grew up on this beach' ) ) {
+			delete_post_meta( $guide->ID, '_pt_bio_short' );
+		}
+	}
 }

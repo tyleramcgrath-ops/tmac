@@ -50,6 +50,7 @@ function pt_experience_photo_sets() {
 			'kayak-surf-tent.jpg',
 		),
 		'mangrove-kayak-tour'      => array(
+			'banner-mangrove.jpg',
 			'estuary-mangrove-kayak.jpg',
 			'estuary-mangrove-paddlers.jpg',
 			'estuary-kayaks-mangrove-shore.jpg',

@@ -136,7 +136,20 @@ function pt_booking_form( $args = array() ) {
 	);
 
 	if ( pt_has_booking_plugin() ) {
-		echo ptb_render_form( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside the plugin template.
+		/*
+		 * The plugin escapes its own output. In Spanish mode the markup is run
+		 * through the theme's catalogue on the way out, which catches the one
+		 * thing the gettext bridge cannot: the experience names in the picker,
+		 * which the plugin reads straight off $post->post_title and so never
+		 * pass through the_title.
+		 */
+		$form = ptb_render_form( $args );
+
+		if ( function_exists( 'pt_translate_seeded_html' ) ) {
+			$form = pt_translate_seeded_html( $form );
+		}
+
+		echo $form; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside the plugin template.
 		return;
 	}
 

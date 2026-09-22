@@ -129,7 +129,15 @@ function pt_field_map() {
  * @return string
  */
 function pt_field( $post_id, $key ) {
-	return (string) get_post_meta( $post_id, '_pt_' . $key, true );
+	$value = (string) get_post_meta( $post_id, '_pt_' . $key, true );
+
+	/*
+	 * Seeded values are stored in English. In Spanish mode they are looked up
+	 * in the catalogue on the way out, so inclusions, itineraries and FAQs
+	 * turn over with the rest of the page instead of staying English inside a
+	 * translated layout.
+	 */
+	return function_exists( 'pt_translate_seeded' ) ? pt_translate_seeded( $value ) : $value;
 }
 
 /**

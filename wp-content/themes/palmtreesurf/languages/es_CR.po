@@ -794,6 +794,1989 @@ msgstr "por persona"
 msgid "© %1$s %2$s. All rights reserved."
 msgstr "© %1$s %2$s. Todos los derechos reservados."
 
+msgid "About %s in Tamarindo"
+msgstr "Sobre %s en Tamarindo"
+
+msgid "Why everything here is within a few kilometres"
+msgstr "Por qué todo aquí está a pocos kilómetros"
+
+msgid "Nothing here needs prior experience unless its page says so."
+msgstr "Nada de esto requiere experiencia previa, salvo que su página lo indique."
+
+msgid "Book water activities for the morning — the wind builds through the day."
+msgstr "Reserve las actividades acuáticas para la mañana: el viento aumenta con el correr del día."
+
+msgid "Water sits in the high twenties Celsius all year. No wetsuit needed, ever."
+msgstr "El agua se mantiene cerca de los 28 °C todo el año. Nunca hace falta traje de neopreno."
+
+msgid "Conditions decide. If a day is wrong for your group, we move you rather than run it."
+msgstr "Las condiciones mandan. Si un día no es el adecuado para su grupo, lo reprogramamos en lugar de salir igual."
+
+msgid "Surf lessons, fishing charters, boat tours and wildlife trips, run by people who live here."
+msgstr "Clases de surf, pesca deportiva, tours en bote y salidas de fauna, a cargo de gente que vive aquí."
+
+msgid "If you are not sure what suits your group, say so when you message us — it is a normal question and we would rather answer it before you book than after."
+msgstr "Si no está seguro de qué le conviene a su grupo, díganoslo cuando nos escriba: es una consulta habitual y preferimos responderla antes de la reserva y no después."
+
+msgid "Everything above runs within a few kilometres of Tamarindo beach. The surf breaks over sand rather than reef, which is why this became a teaching beach; the estuary behind the town sits inside a protected wildlife refuge; deep water is close enough that a fishing boat can be inshore or offshore without a long run; and the dry forest inland has the waterfalls."
+msgstr "Todo lo anterior ocurre a pocos kilómetros de la playa de Tamarindo. El oleaje rompe sobre arena y no sobre arrecife, y por eso esta se volvió una playa de aprendizaje; el estero detrás del pueblo está dentro de un refugio de vida silvestre protegido; la profundidad está lo bastante cerca como para que un bote de pesca trabaje costa adentro o mar afuera sin navegar durante horas; y el bosque seco tierra adentro tiene las cataratas."
+
+msgid "Tamarindo, Costa Rica"
+msgstr "Tamarindo, Costa Rica"
+
+msgid "Primary"
+msgstr "Principal"
+
+msgid "Practical guides to surfing, fishing, wildlife and getting the most out of a week on the Guanacaste coast. Written by people who are in this water every day."
+msgstr "Guías prácticas sobre surf, pesca, fauna y cómo aprovechar al máximo una semana en la costa de Guanacaste. Escritas por gente que se mete en esta agua todos los días."
+
+msgid "These are the answers we end up giving over and over — in the shop, on the boat, and in the emails people send before they book. Rather than repeat them one at a time, they are written out properly here."
+msgstr "Estas son las respuestas que terminamos dando una y otra vez: en la tienda, en el bote y en los correos que la gente manda antes de reservar. En vez de repetirlas de una en una, aquí están escritas como corresponde."
+
+msgid "Everything is specific to this coast. When a guide says the wind builds through the morning, or that a particular month is wrong for the fish you are after, that comes from working these waters rather than from a general travel article. Where something is genuinely uncertain — what you will see on a wildlife trip, what the surf will do next week — it says so."
+msgstr "Todo es específico de esta costa. Cuando una guía dice que el viento aumenta durante la mañana, o que cierto mes no es el adecuado para el pez que busca, eso viene de trabajar estas aguas y no de un artículo de viajes genérico. Y cuando algo es realmente incierto —qué verá en una salida de fauna, qué hará el oleaje la próxima semana— así lo decimos."
+
+msgid "Ink"
+msgstr "Tinta"
+
+msgid "Sand"
+msgstr "Arena"
+
+msgid "Ocean"
+msgstr "Océano"
+
+msgid "White"
+msgstr "Blanco"
+
+msgid "Small"
+msgstr "Pequeño"
+
+msgid "Large"
+msgstr "Grande"
+
+msgid "Lagoon"
+msgstr "Laguna"
+
+msgid "Sunset"
+msgstr "Atardecer"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Display"
+msgstr "Titulares"
+
+msgid "Palm Tree Surf"
+msgstr "Palm Tree Surf"
+
+msgid "Call to action band"
+msgstr "Banda de llamada a la acción"
+
+msgid "Booking enquiry form"
+msgstr "Formulario de solicitud de reserva"
+
+msgid "Three feature columns"
+msgstr "Tres columnas destacadas"
+
+msgid "Describe the first thing that sets your sessions apart."
+msgstr "Describa lo primero que distingue a sus sesiones."
+
+msgid "Describe the third thing that sets your sessions apart."
+msgstr "Describa lo tercero que distingue a sus sesiones."
+
+msgid "Describe the second thing that sets your sessions apart."
+msgstr "Describa lo segundo que distingue a sus sesiones."
+
+msgid "Surf"
+msgstr "Surf"
+
+msgid "%s home"
+msgstr "Inicio de %s"
+
+msgid "Palm Tree"
+msgstr "Palm Tree"
+
+msgid "Show submenu"
+msgstr "Mostrar submenú"
+
+msgid "Footer"
+msgstr "Pie de página"
+
+msgid "Filmed on one of our trips."
+msgstr "Grabado en una de nuestras salidas."
+
+msgid "Your browser cannot play this video."
+msgstr "Su navegador no puede reproducir este video."
+
+msgid "Package"
+msgstr "Paquete"
+
+msgid "Leave this field empty"
+msgstr "Deje este campo vacío"
+
+msgid "Booking enquiry from %s"
+msgstr "Solicitud de reserva de %s"
+
+msgid "ES"
+msgstr "ES"
+
+msgid "Body in Spanish"
+msgstr "Cuerpo en español"
+
+msgid "Name in Spanish"
+msgstr "Nombre en español"
+
+msgid "Title in Spanish"
+msgstr "Título en español"
+
+msgid "No Spanish version yet"
+msgstr "Aún sin versión en español"
+
+msgid "Description in Spanish"
+msgstr "Descripción en español"
+
+msgid "Spanish version written"
+msgstr "Versión en español escrita"
+
+msgid "Short description in Spanish"
+msgstr "Descripción corta en español"
+
+msgid "Leave empty and Spanish visitors see the English version."
+msgstr "Déjelo vacío y los visitantes en español verán la versión en inglés."
+
+msgid "Plain paragraphs separated by a blank line. Basic HTML is allowed."
+msgstr "Párrafos simples separados por una línea en blanco. Se permite HTML básico."
+
+msgid "Leave any field empty and Spanish visitors see the English version of it. Nothing here is machine-translated."
+msgstr "Deje cualquier campo vacío y los visitantes en español verán su versión en inglés. Nada de esto está traducido automáticamente."
+
+msgid "Photograph coming soon: %s"
+msgstr "Fotografía próximamente: %s"
+
+msgid "The charter boat offshore with the rods out"
+msgstr "El bote de pesca mar afuera con las cañas puestas"
+
+msgid "A beginner group lesson gathered on the beach"
+msgstr "Una clase grupal para principiantes reunida en la playa"
+
+msgid "An instructor demonstrating the pop-up on the sand"
+msgstr "Un instructor demostrando el pop-up sobre la arena"
+
+msgid "A small group receiving surf instruction on the sand"
+msgstr "Un grupo pequeño recibiendo instrucción de surf sobre la arena"
+
+msgid "Two guides with paddles and kayaks ready on the sand"
+msgstr "Dos guías con remos y kayaks listos sobre la arena"
+
+msgid "Two guests paddling a kayak through the mangrove channel"
+msgstr "Dos visitantes remando en kayak por el canal de manglar"
+
+msgid "A white-faced capuchin in the branches above the estuary"
+msgstr "Un mono carablanca entre las ramas sobre el estero"
+
+msgid "Instructor"
+msgstr "Instructor"
+
+msgid "Experience"
+msgstr "Experiencia"
+
+msgid "Kayak Tours"
+msgstr "Tours en Kayak"
+
+msgid "Testimonial"
+msgstr "Testimonio"
+
+msgid "Skill Level"
+msgstr "Nivel"
+
+msgid "Skill Levels"
+msgstr "Niveles"
+
+msgid "New Experience"
+msgstr "Nueva experiencia"
+
+msgid "Edit Experience"
+msgstr "Editar experiencia"
+
+msgid "View Experience"
+msgstr "Ver experiencia"
+
+msgid "Edit Instructor"
+msgstr "Editar instructor"
+
+msgid "Edit Testimonial"
+msgstr "Editar testimonio"
+
+msgid "Add New Category"
+msgstr "Añadir nueva categoría"
+
+msgid "Add New Experience"
+msgstr "Añadir nueva experiencia"
+
+msgid "Search Experiences"
+msgstr "Buscar experiencias"
+
+msgid "Add New Instructor"
+msgstr "Añadir nuevo instructor"
+
+msgid "No experiences yet."
+msgstr "Aún no hay experiencias."
+
+msgid "Add New Testimonial"
+msgstr "Añadir nuevo testimonio"
+
+msgid "Add New Skill Level"
+msgstr "Añadir nuevo nivel"
+
+msgid "No experiences in the trash."
+msgstr "No hay experiencias en la papelera."
+
+msgid "Comment"
+msgstr "Comentario"
+
+msgid "Experience categories in Tamarindo"
+msgstr "Categorías de experiencias en Tamarindo"
+
+msgid "Kayak or paddleboard?"
+msgstr "¿Kayak o tabla de remo?"
+
+msgid "%s in Tamarindo, Costa Rica. Small groups, local certified guides, gear included. Check dates and book online."
+msgstr "%s en Tamarindo, Costa Rica. Grupos pequeños, guías locales certificados, equipo incluido. Consulte fechas y reserve en línea."
+
+msgid "Book surf lessons, fishing charters, boat tours and wildlife trips in Tamarindo, Costa Rica with local certified guides."
+msgstr "Reserve clases de surf, pesca deportiva, tours en bote y salidas de fauna en Tamarindo, Costa Rica, con guías locales certificados."
+
+msgid "Legal Menu"
+msgstr "Menú legal"
+
+msgid "Footer Menu"
+msgstr "Menú del pie de página"
+
+msgid "Primary Menu"
+msgstr "Menú principal"
+
+msgid "Blog Sidebar"
+msgstr "Barra lateral del blog"
+
+msgid "Shown beside posts and archives."
+msgstr "Se muestra junto a las entradas y los archivos."
+
+msgid "Shown in the footer, beside the contact details."
+msgstr "Se muestra en el pie de página, junto a los datos de contacto."
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Instagram"
+msgstr "Instagram"
+
+msgid "Tripadvisor"
+msgstr "Tripadvisor"
+
+msgid "Pura Vida"
+msgstr "Pura Vida"
+
+msgid "Safety is the boring part we take seriously"
+msgstr "La seguridad es la parte aburrida que nos tomamos en serio"
+
+msgid "None of this is exciting to read, and all of it is why days go well."
+msgstr "Nada de esto es emocionante de leer, y todo esto es la razón por la que los días salen bien."
+
+msgid "Want photos like these of your own session?"
+msgstr "¿Quiere fotos así de su propia sesión?"
+
+msgid "If you have been out with us and want your photos taken down, or you would like the full-resolution files from your session, just message us and we will sort it."
+msgstr "Si salió con nosotros y quiere que retiremos sus fotos, o si desea los archivos en alta resolución de su sesión, escríbanos y lo resolvemos."
+
+msgid "Photographs from real sessions on this beach — first lessons, charters, estuary mornings and the sunsets people come back for. No stock photography and nothing staged."
+msgstr "Fotografías de sesiones reales en esta playa: primeras clases, salidas de pesca, mañanas en el estero y los atardeceres por los que la gente vuelve. Sin fotos de banco de imágenes y nada montado."
+
+msgid "Run tours in Guanacaste? List them here and reach visitors who are already looking for exactly what you do."
+msgstr "¿Opera tours en Guanacaste? Publíquelos aquí y llegue a visitantes que ya están buscando exactamente lo que usted hace."
+
+msgid "It takes about five minutes. Everything marked with a star is needed; the rest helps us understand what you run."
+msgstr "Toma unos cinco minutos. Todo lo marcado con asterisco es obligatorio; el resto nos ayuda a entender qué opera."
+
+msgid "Photos from %s"
+msgstr "Fotos de %s"
+
+msgid "Hi! I am interested in %s."
+msgstr "¡Hola! Me interesa %s."
+
+msgid "Pick any date in the form below — these are just the soonest."
+msgstr "Elija cualquier fecha en el formulario de abajo: estas son solo las más próximas."
+
+msgid "Show all categories"
+msgstr "Mostrar todas las categorías"
+
+msgid "Nothing in that category yet. Choose another, or show all."
+msgstr "Todavía no hay nada en esa categoría. Elija otra o muéstrelas todas."
+
+msgid "Leave this empty"
+msgstr "Deje esto vacío"
+
+msgid "Some required details were missing or an email address did not look right. Please check and send again."
+msgstr "Faltaban datos obligatorios o una dirección de correo no parecía correcta. Revise y envíe de nuevo, por favor."
+
+msgid "Nothing found"
+msgstr "No se encontró nada"
+
+msgid "Hi! I would like to book an experience."
+msgstr "¡Hola! Me gustaría reservar una experiencia."
+
+msgid "From world-class waves to wildlife and open water — discover the best of Tamarindo with locals who know it."
+msgstr "De olas de talla mundial a fauna y mar abierto: descubra lo mejor de Tamarindo con locales que lo conocen."
+
+msgid "read the full story"
+msgstr "lea la historia completa"
+
+msgid "More about how we run things —"
+msgstr "Más sobre cómo hacemos las cosas —"
+
+msgid "Tamarindo Favorites"
+msgstr "Favoritos de Tamarindo"
+
+msgid "Handpicked by locals. Loved by travellers."
+msgstr "Elegidos por locales. Queridos por viajeros."
+
+msgid "Browse every experience"
+msgstr "Ver todas las experiencias"
+
+msgid "One town, four completely different days on the water"
+msgstr "Un pueblo, cuatro días en el agua completamente distintos"
+
+msgid "Tamarindo is unusual. Most beach towns are good at one thing; here, several very different days out sit within a few kilometres of each other, and that is the whole reason this school runs what it runs."
+msgstr "Tamarindo es poco común. La mayoría de los pueblos costeros son buenos para una sola cosa; aquí, varias salidas muy distintas están a pocos kilómetros entre sí, y esa es toda la razón por la que esta escuela ofrece lo que ofrece."
+
+msgid "You can learn to surf in the morning, paddle a mangrove channel at dawn the next day, and be offshore for sunset that evening, without moving where you are staying. That combination is rare, and it is what a week here is actually for."
+msgstr "Puede aprender a surfear por la mañana, remar un canal de manglar al amanecer del día siguiente y estar mar afuera al atardecer esa misma tarde, sin cambiar de alojamiento. Esa combinación es rara, y es para lo que realmente sirve una semana aquí."
+
+msgid "The main break is sand-bottom rather than reef, so the wave rolls instead of dumping and the bottom forgives the falls every learner takes. That single fact is why Tamarindo became a teaching beach. The water sits in the high twenties Celsius all year, so nobody owns a wetsuit and nobody cuts a session short because they got cold."
+msgstr "El pico principal tiene fondo de arena y no de arrecife, así que la ola rueda en vez de reventar de golpe y el fondo perdona las caídas que todo principiante se lleva. Ese solo hecho es la razón por la que Tamarindo se volvió una playa de aprendizaje. El agua se mantiene cerca de los 28 °C todo el año, así que nadie tiene traje de neopreno y nadie acorta una sesión por frío."
+
+msgid "A few hundred metres north, the estuary opens into mangrove channels inside a protected wildlife refuge — flat water, deep shade, and howler monkeys at first light. Offshore, the seabed drops away quickly, so a boat can work the rocky points inshore or run out to blue water without spending half the day travelling. An hour inland, the dry forest starts, with waterfalls and river crossings most visitors never see."
+msgstr "Unos cientos de metros al norte, el estero se abre en canales de manglar dentro de un refugio de vida silvestre protegido: agua plana, sombra densa y monos congo al amanecer. Mar afuera, el fondo cae rápido, así que un bote puede trabajar las puntas rocosas cerca de la costa o salir a agua azul sin pasar medio día navegando. A una hora tierra adentro empieza el bosque seco, con cataratas y cruces de río que la mayoría de los visitantes nunca ve."
+
+msgid "Tamarindo, Guanacaste"
+msgstr "Tamarindo, Guanacaste"
+
+msgid "Loads Google Maps, which sets its own cookies."
+msgstr "Carga Google Maps, que instala sus propias cookies."
+
+msgid "Add a map embed URL in Customize → Palm Tree Surf → Contact Details."
+msgstr "Añada una URL de mapa en Personalizar → Palm Tree Surf → Datos de contacto."
+
+msgid "Tamarindo has a long, forgiving sandbar break with a gentle shoulder, which is why it is one of the best places in Costa Rica to stand up for the first time. Warm water year round means no wetsuit and longer sessions."
+msgstr "Tamarindo tiene un banco de arena largo y benévolo, con un hombro suave, y por eso es uno de los mejores lugares de Costa Rica para pararse por primera vez. El agua tibia todo el año significa nada de neopreno y sesiones más largas."
+
+msgid "Watch Our Story"
+msgstr "Vea nuestra historia"
+
+msgid "Rated %d out of 5"
+msgstr "Calificado %d de 5"
+
+msgid "Small group ratio"
+msgstr "Proporción de grupo reducido"
+
+msgid "Free photos of your session"
+msgstr "Fotos gratis de su sesión"
+
+msgid "What"
+msgstr "Qué"
+
+msgid "Where"
+msgstr "Dónde"
+
+msgid "Season"
+msgstr "Temporada"
+
+msgid "Languages"
+msgstr "Idiomas"
+
+msgid "The break"
+msgstr "El pico"
+
+msgid "Talk to us"
+msgstr "Hable con nosotros"
+
+msgid "Dry season"
+msgstr "Temporada seca"
+
+msgid "Who it suits"
+msgstr "Para quién es"
+
+msgid "Green season"
+msgstr "Temporada verde"
+
+msgid "Nearest airport"
+msgstr "Aeropuerto más cercano"
+
+msgid "Best time of day"
+msgstr "Mejor hora del día"
+
+msgid "You turn up and go"
+msgstr "Usted llega y sale al agua"
+
+msgid "English and Spanish"
+msgstr "Español e inglés"
+
+msgid "Gear that is checked"
+msgstr "Equipo revisado"
+
+msgid "Tell us what you want"
+msgstr "Cuéntenos qué quiere"
+
+msgid "We confirm the details"
+msgstr "Confirmamos los detalles"
+
+msgid "Guides who know this coast"
+msgstr "Guías que conocen esta costa"
+
+msgid "Mornings, before the wind builds"
+msgstr "Por la mañana, antes de que suba el viento"
+
+msgid "Tamarindo, Guanacaste, Costa Rica"
+msgstr "Tamarindo, Guanacaste, Costa Rica"
+
+msgid "Year round. Warm water, no wetsuits"
+msgstr "Todo el año. Agua tibia, sin trajes de neopreno"
+
+msgid "Conditions decide, not the calendar"
+msgstr "Mandan las condiciones, no el calendario"
+
+msgid "Liberia (LIR), around 1.5 to 2 hours by road"
+msgstr "Liberia (LIR), a una hora y media o dos por carretera"
+
+msgid "Roughly December to April. Sunniest and busiest"
+msgstr "De diciembre a abril, aproximadamente. Más sol y más gente"
+
+msgid "Sand-bottom beach break — forgiving for beginners"
+msgstr "Beach break de fondo de arena: benévolo para principiantes"
+
+msgid "High twenties Celsius year round. No wetsuit needed"
+msgstr "Cerca de los 28 °C todo el año. No hace falta neopreno"
+
+msgid "Roughly May to November. Quieter, greener, bigger surf"
+msgstr "De mayo a noviembre, aproximadamente. Más tranquilo, más verde, más oleaje"
+
+msgid "Tamarindo, Guanacaste, on the Pacific coast of Costa Rica"
+msgstr "Tamarindo, Guanacaste, en la costa pacífica de Costa Rica"
+
+msgid "Surf lessons, fishing charters, boat tours, wildlife trips and private days"
+msgstr "Clases de surf, pesca deportiva, tours en bote, salidas de fauna y días privados"
+
+msgid "First timers through to experienced surfers, families and mixed-ability groups"
+msgstr "Desde quienes nunca han surfeado hasta surfistas con experiencia, familias y grupos de niveles mixtos"
+
+msgid "Gear is ready when you arrive. Your guide runs the safety briefing, and the rest of the day is the part you came for."
+msgstr "El equipo está listo cuando usted llega. Su guía da la charla de seguridad y el resto del día es aquello por lo que vino."
+
+msgid "Sandbars move, tides shift and the estuary changes through the year. Local guides are worth more here than any equipment list."
+msgstr "Los bancos de arena se mueven, las mareas cambian y el estero varía a lo largo del año. Aquí un guía local vale más que cualquier lista de equipo."
+
+msgid "Fewer people per guide is the single thing that most changes how a session goes — more attention, more waves, and someone who can actually see everyone."
+msgstr "Menos personas por guía es lo que más cambia cómo sale una sesión: más atención, más olas y alguien que de verdad puede ver a todo el mundo."
+
+msgid "We come back with a time that works for the tide and the conditions that week, what to bring, and where to meet. Nothing is charged until the details are settled."
+msgstr "Le respondemos con una hora que funcione con la marea y las condiciones de esa semana, qué llevar y dónde encontrarnos. No se cobra nada hasta que los detalles estén cerrados."
+
+msgid "Sooner is better in the busy months, especially for private days and full-day charters. Short notice is often still fine — message us and we will tell you what is open."
+msgstr "En los meses de más movimiento, cuanto antes mejor, sobre todo para días privados y salidas de día completo. Con poca antelación suele haber espacio igual: escríbanos y le decimos qué hay disponible."
+
+msgid "Boards, leashes, vests and tackle get looked at between sessions, not once a season. Tell us about sizes and any medical issue when you book so the right kit is waiting."
+msgstr "Las tablas, los inventos, los chalecos y el equipo de pesca se revisan entre sesiones, no una vez por temporada. Cuéntenos tallas y cualquier tema médico al reservar para que el equipo correcto esté listo."
+
+msgid "If the surf, the swell or the weather is wrong for your group on the day, we move you rather than push you out in it. Nobody is put in water that does not suit their level."
+msgstr "Si el oleaje, el swell o el clima no son los adecuados para su grupo ese día, lo reprogramamos en lugar de sacarlo al agua igual. A nadie se le mete en agua que no corresponde a su nivel."
+
+msgid "Pick an experience and send the form, or message us with your dates and who is coming. If you are not sure what suits your group, say so — that is a normal question and we will answer it straight."
+msgstr "Elija una experiencia y envíe el formulario, o escríbanos con sus fechas y quiénes vienen. Si no está seguro de qué le conviene a su grupo, dígalo: es una consulta habitual y le respondemos de frente."
+
+msgid "Legal"
+msgstr "Legal"
+
+msgid "2 hours"
+msgstr "2 horas"
+
+msgid "Premium"
+msgstr "Premium"
+
+msgid "3 hours"
+msgstr "3 horas"
+
+msgid "2.5 hours"
+msgstr "2.5 horas"
+
+msgid "90 minutes"
+msgstr "90 minutos"
+
+msgid "Head Coach"
+msgstr "Entrenador principal"
+
+msgid "Surf Guide"
+msgstr "Guía de surf"
+
+msgid "Turtle Tour"
+msgstr "Tour de Tortugas"
+
+msgid "Local guide"
+msgstr "Guía local"
+
+msgid "Water bottle"
+msgstr "Botella de agua"
+
+msgid "Boat Captain"
+msgstr "Capitán"
+
+msgid "City, Country"
+msgstr "Ciudad, país"
+
+msgid "Up to 6 guests"
+msgstr "Hasta 6 personas"
+
+msgid "Up to 4 guests"
+msgstr "Hasta 4 personas"
+
+msgid "Fishing Charter"
+msgstr "Pesca Deportiva"
+
+msgid "Lead Instructor"
+msgstr "Instructor principal"
+
+msgid "Half or full day"
+msgstr "Medio día o día completo"
+
+msgid "Private, 1 guest"
+msgstr "Privado, 1 persona"
+
+msgid "Sunset Boat Tour"
+msgstr "Tour en Bote al Atardecer"
+
+msgid "Insect repellent"
+msgstr "Repelente de insectos"
+
+msgid "Naturalist Guide"
+msgstr "Guía naturalista"
+
+msgid "Island Kayak Tour"
+msgstr "Tour en Kayak a las Islas"
+
+msgid "Mangrove Kayak Tour"
+msgstr "Tour en Kayak por el Manglar"
+
+msgid "Swimwear and a towel"
+msgstr "Traje de baño y toalla"
+
+msgid "Private Surf Coaching"
+msgstr "Clases Privadas de Surf"
+
+msgid "Rods, tackle and bait"
+msgstr "Cañas, equipo y carnada"
+
+msgid "Water and soft drinks"
+msgstr "Agua y refrescos"
+
+msgid "Surf Lesson — Beginner"
+msgstr "Clase de Surf — Principiante"
+
+msgid "Drinks and fresh fruit"
+msgstr "Bebidas y fruta fresca"
+
+msgid "Video or photo feedback"
+msgstr "Retroalimentación en video o foto"
+
+msgid "Estuary & Wildlife Trip"
+msgstr "Salida al Estero y Fauna"
+
+msgid "Sample Review — replace"
+msgstr "Reseña de ejemplo — reemplazar"
+
+msgid "Surf Lesson — Intermediate"
+msgstr "Clase de Surf — Intermedio"
+
+msgid "Guide for the whole paddle"
+msgstr "Guía durante todo el recorrido"
+
+msgid "Soft-top board sized to you"
+msgstr "Tabla soft-top a su medida"
+
+msgid "Board matched to your level"
+msgstr "Tabla acorde a su nivel"
+
+msgid "Kayak, paddle and life vest"
+msgstr "Kayak, remo y chaleco salvavidas"
+
+msgid "Beach safety and pop-up coaching"
+msgstr "Seguridad en playa y entrenamiento del pop-up"
+
+msgid "Rash guard and reef-safe sunscreen"
+msgstr "Licra y bloqueador que no daña el arrecife"
+
+msgid "Kayak or paddleboard and life vest"
+msgstr "Kayak o tabla de remo y chaleco salvavidas"
+
+msgid "Session plan built around your goals"
+msgstr "Plan de sesión armado según sus objetivos"
+
+msgid "Wave selection and paddling technique"
+msgstr "Selección de olas y técnica de remada"
+
+msgid "Dedicated coach for the whole session"
+msgstr "Entrenador dedicado durante toda la sesión"
+
+msgid "Swimwear, a hat and reef-safe sunscreen"
+msgstr "Traje de baño, gorra y bloqueador que no daña el arrecife"
+
+msgid "Boats and gear at the beach launch point"
+msgstr "Botes y equipo en el punto de salida de la playa"
+
+msgid "Wrap up | Photos and what to work on next"
+msgstr "Cierre | Fotos y en qué trabajar la próxima vez"
+
+msgid "Runs the fishing charters and sunset tours."
+msgstr "Lleva las salidas de pesca y los tours al atardecer."
+
+msgid "Leads the estuary and mangrove wildlife trips."
+msgstr "Dirige las salidas de fauna por el estero y el manglar."
+
+msgid "Arrival | Meet your guide, get sized for a board"
+msgstr "Llegada | Conozca a su guía y reciba su tabla"
+
+msgid "On the sand | Safety briefing and pop-up practice"
+msgstr "En la arena | Charla de seguridad y práctica del pop-up"
+
+msgid "Small group receiving surf instruction on the sand"
+msgstr "Grupo pequeño recibiendo instrucción de surf sobre la arena"
+
+msgid "Specialises in first-timers and nervous beginners."
+msgstr "Se especializa en primerizos y principiantes nerviosos."
+
+msgid "Beginner surf lesson group on the beach at Tamarindo"
+msgstr "Clase grupal de surf para principiantes en la playa de Tamarindo"
+
+msgid "In the water | Guided waves with in-water corrections"
+msgstr "En el agua | Olas guiadas con correcciones dentro del agua"
+
+msgid "Instructor demonstrating the pop-up stance on a surfboard"
+msgstr "Instructor demostrando la postura del pop-up sobre una tabla"
+
+msgid "Grew up on this beach and has been coaching here for years."
+msgstr "Creció en esta playa y lleva años enseñando aquí."
+
+msgid "Paddle out from the beach to the rock islands off Tamarindo."
+msgstr "Reme desde la playa hasta las islas rocosas frente a Tamarindo."
+
+msgid "One-on-one sessions tailored to exactly what you want to improve."
+msgstr "Sesiones uno a uno enfocadas exactamente en lo que quiere mejorar."
+
+msgid "Cruise the coastline as the light drops, with a swim and snorkel stop."
+msgstr "Recorra la costa mientras cae la luz, con parada para nadar y hacer esnórquel."
+
+msgid "Paddle the quiet channels of the estuary, in among the mangrove roots."
+msgstr "Reme por los canales tranquilos del estero, entre las raíces del manglar."
+
+msgid "Half and full-day charters off the Guanacaste coast with local captains."
+msgstr "Salidas de medio día y día completo frente a la costa de Guanacaste con capitanes locales."
+
+msgid "Refine your technique, read waves better and start surfing on the shoulder."
+msgstr "Afine su técnica, lea mejor las olas y empiece a surfear en el hombro."
+
+msgid "Paddle the mangroves at first light, when the birds and howlers are loudest."
+msgstr "Reme por el manglar al amanecer, cuando las aves y los monos congo están más activos."
+
+msgid "Learn the fundamentals with certified instructors on a forgiving sandbar break."
+msgstr "Aprenda los fundamentos con instructores certificados en un banco de arena benévolo."
+
+msgid "A guided trip to see the sea turtles that come ashore on this stretch of coast."
+msgstr "Una salida guiada para ver las tortugas marinas que desovan en este tramo de costa."
+
+msgid "Replace this with a real guest review from Google or Tripadvisor, with permission."
+msgstr "Reemplace esto con una reseña real de un cliente, de Google o Tripadvisor, con su permiso."
+
+msgid "Replace this with a real guest review. Reviews mentioning a specific guide or moment convert best."
+msgstr "Reemplace esto con una reseña real de un cliente. Las que mencionan a un guía o un momento concreto son las que mejor funcionan."
+
+msgid "What if the surf is too big? | Your guide moves the group to a sheltered peak, or reschedules at no cost."
+msgstr "¿Y si el oleaje está muy grande? | Su guía lleva al grupo a un pico más protegido, o reprograma sin costo."
+
+msgid "Replace this with a real guest review. Keep it to two or three sentences and name the experience they booked."
+msgstr "Reemplace esto con una reseña real de un cliente. Que tenga dos o tres frases y mencione la experiencia que reservó."
+
+msgid "Replace this with your privacy policy. It must describe what the booking form collects and how long you keep it."
+msgstr "Reemplace esto con su política de privacidad. Debe describir qué datos recoge el formulario de reserva y cuánto tiempo se conservan."
+
+msgid "Do I need to be a strong swimmer? | You should be comfortable in waist-deep water. Tell us about any non-swimmers and we will adjust."
+msgstr "¿Tengo que nadar bien? | Debe sentirse cómodo con el agua a la cintura. Avísenos si alguien no sabe nadar y lo ajustamos."
+
+msgid "Guide and Lead Instructor"
+msgstr "Guía e instructor principal"
+
+msgid "Remove"
+msgstr "Quitar"
+
+msgid "Header photo"
+msgstr "Foto de cabecera"
+
+msgid "Choose photo"
+msgstr "Elegir foto"
+
+msgid "Sunset timing"
+msgstr "La hora del atardecer"
+
+msgid "Multi-day plans"
+msgstr "Planes de varios días"
+
+msgid "How rough is it?"
+msgstr "¿Qué tan brusco es?"
+
+msgid "Local instructors"
+msgstr "Instructores locales"
+
+msgid "Guided throughout"
+msgstr "Guiado de principio a fin"
+
+msgid "Easy for all ages"
+msgstr "Fácil para todas las edades"
+
+msgid "What will we see?"
+msgstr "¿Qué vamos a ver?"
+
+msgid "Can children come?"
+msgstr "¿Pueden ir niños?"
+
+msgid "Good on a flat day"
+msgstr "Ideal para un día sin olas"
+
+msgid "One-to-one coaching"
+msgstr "Entrenamiento uno a uno"
+
+msgid "No experience needed"
+msgstr "No se requiere experiencia"
+
+msgid "Inshore and offshore"
+msgstr "Costa adentro y mar afuera"
+
+msgid "Beaches with no road"
+msgstr "Playas sin acceso por carretera"
+
+msgid "Is it safe for kids?"
+msgstr "¿Es seguro para niños?"
+
+msgid "Do I need a licence?"
+msgstr "¿Necesito licencia?"
+
+msgid "Mixed-ability groups"
+msgstr "Grupos de niveles mixtos"
+
+msgid "Will we see wildlife?"
+msgstr "¿Veremos fauna?"
+
+msgid "Do I need experience?"
+msgstr "¿Necesito experiencia?"
+
+msgid "Swim and snorkel stop"
+msgstr "Parada para nadar y hacer esnórquel"
+
+msgid "Do I have to snorkel?"
+msgstr "¿Tengo que hacer esnórquel?"
+
+msgid "Tackle and bait aboard"
+msgstr "Equipo y carnada a bordo"
+
+msgid "First-light departures"
+msgstr "Salidas al amanecer"
+
+msgid "Sand-bottom beach break"
+msgstr "Beach break de fondo de arena"
+
+msgid "Guided, not just rented"
+msgstr "Guiado, no solo alquilado"
+
+msgid "Built around your dates"
+msgstr "Armado según sus fechas"
+
+msgid "Backroads and dry forest"
+msgstr "Caminos rurales y bosque seco"
+
+msgid "Kayaks and vests included"
+msgstr "Kayaks y chalecos incluidos"
+
+msgid "Which tour should I pick?"
+msgstr "¿Cuál tour debería elegir?"
+
+msgid "Can we keep what we catch?"
+msgstr "¿Podemos quedarnos con lo que pesquemos?"
+
+msgid "Can children take a lesson?"
+msgstr "¿Pueden los niños tomar clase?"
+
+msgid "Protected mangrove channels"
+msgstr "Canales de manglar protegidos"
+
+msgid "How far ahead should I ask?"
+msgstr "¿Con cuánta antelación debo consultar?"
+
+msgid "Two routes, one meeting point"
+msgstr "Dos rutas, un punto de encuentro"
+
+msgid "Waterfalls and swimming holes"
+msgstr "Cataratas y pozas para nadar"
+
+msgid "Boards and safety gear included"
+msgstr "Tablas y equipo de seguridad incluidos"
+
+msgid "Do I need to have kayaked before?"
+msgstr "¿Necesito haber remado en kayak antes?"
+
+msgid "Is it suitable for young children?"
+msgstr "¿Es apto para niños pequeños?"
+
+msgid "What happens if the weather turns?"
+msgstr "¿Qué pasa si cambia el clima?"
+
+msgid "What if the surf is flat or too big?"
+msgstr "¿Y si no hay olas o están muy grandes?"
+
+msgid "Have never surfed. Is that a problem?"
+msgstr "Nunca he surfeado. ¿Es un problema?"
+
+msgid "Can we combine it with a surf lesson?"
+msgstr "¿Se puede combinar con una clase de surf?"
+
+msgid "Can you combine activities in one day?"
+msgstr "¿Pueden combinar actividades en un mismo día?"
+
+msgid "Anchored in calm water, with gear aboard."
+msgstr "Fondeados en agua calma, con el equipo a bordo."
+
+msgid "Fresh water, shade and a break from the heat."
+msgstr "Agua dulce, sombra y un descanso del calor."
+
+msgid "The hour that actually has the wildlife in it."
+msgstr "La hora en la que de verdad se ve la fauna."
+
+msgid "Can you handle a group where nobody has surfed?"
+msgstr "¿Pueden con un grupo donde nadie ha surfeado?"
+
+msgid "Yes. That is one of the most common private bookings."
+msgstr "Sí. Es una de las reservas privadas más frecuentes."
+
+msgid "Flat water. If you can sit in a kayak you can do this."
+msgstr "Agua plana. Si puede sentarse en un kayak, puede hacerlo."
+
+msgid "Narrow, shaded water inside the refuge behind the beach."
+msgstr "Agua angosta y sombreada dentro del refugio detrás de la playa."
+
+msgid "The inland side of Guanacaste, away from the coast road."
+msgstr "El lado interior de Guanacaste, lejos de la carretera costera."
+
+msgid "Coves along this coast are reachable only from the water."
+msgstr "A varias calas de esta costa solo se llega desde el agua."
+
+msgid "Reef-safe sunscreen only if you plan to get in the water."
+msgstr "Bloqueador que no daña el arrecife, solo si piensa meterse al agua."
+
+msgid "When the surf is not working, this is where the day goes."
+msgstr "Cuando el oleaje no acompaña, el día se va para acá."
+
+msgid "Someone who knows which crossings are passable this week."
+msgstr "Alguien que sabe qué cruces están transitables esta semana."
+
+msgid "A naturalist who can find and name what you are looking at."
+msgstr "Un naturalista capaz de encontrar y nombrar lo que está viendo."
+
+msgid "No. The stop is optional and the boat is comfortable to stay on."
+msgstr "No. La parada es opcional y el bote es cómodo para quedarse a bordo."
+
+msgid "We work back from when you are here and what the tides are doing."
+msgstr "Partimos de las fechas en que usted está aquí y de cómo están las mareas."
+
+msgid "Bring insect repellent, a hat and a dry bag for a phone or camera."
+msgstr "Lleve repelente, gorra y una bolsa seca para el teléfono o la cámara."
+
+msgid "Every correction is yours. The fastest way to move past a plateau."
+msgstr "Cada corrección es para usted. La forma más rápida de superar un estancamiento."
+
+msgid "Islands out front or mangroves behind. Tell us which when you book."
+msgstr "Islas al frente o manglares por detrás. Díganos cuál al reservar."
+
+msgid "The route is planned so the light is behind you on the way back in."
+msgstr "La ruta se planea para que la luz quede a su espalda en el regreso."
+
+msgid "A guide paddles with the group rather than sending you off with a map."
+msgstr "Un guía rema con el grupo, en vez de mandarlo con un mapa."
+
+msgid "Sit-on-tops are hard to capsize and easy to climb back onto if you do."
+msgstr "Los kayaks sit-on-top son difíciles de volcar y fáciles de volver a subir si pasa."
+
+msgid "Closed shoes, not flip-flops. Bring a change of clothes and a dry bag."
+msgstr "Zapato cerrado, no chancletas. Lleve una muda de ropa y una bolsa seca."
+
+msgid "Families and friends who are not all at the same level, kept together."
+msgstr "Familias y amigos que no están todos en el mismo nivel, sin tener que separarse."
+
+msgid "Sit-on-top singles and doubles, paddles and life vests are all provided."
+msgstr "Kayaks sit-on-top sencillos y dobles, remos y chalecos: todo incluido."
+
+msgid "A half day suits a first trip. A full day is what offshore really needs."
+msgstr "Medio día está bien para una primera salida. Mar afuera realmente pide un día completo."
+
+msgid "No skill needed. Snorkelling is optional — plenty of people stay aboard."
+msgstr "No hace falta destreza. El esnórquel es opcional: mucha gente se queda a bordo."
+
+msgid "A week that actually progresses, instead of five separate first lessons."
+msgstr "Una semana que de verdad avanza, en vez de cinco primeras clases sueltas."
+
+msgid "Tell us about any back or neck problems before you book a rough-road trip."
+msgstr "Cuéntenos si alguien tiene problemas de espalda o cuello antes de reservar una salida por camino difícil."
+
+msgid "Work the points close in, or run out to blue water. Tell us which you want."
+msgstr "Trabajar las puntas cerca de la costa o salir a agua azul. Díganos qué prefiere."
+
+msgid "Yes, on flat water with a guide and life vests. Tell us ages when you book."
+msgstr "Sí, en agua plana, con guía y chalecos. Indíquenos las edades al reservar."
+
+msgid "People who surf this beach daily and know where the sandbars sit this month."
+msgstr "Gente que surfea esta playa a diario y sabe dónde están los bancos de arena este mes."
+
+msgid "Crew who read this coast daily and will put you where the fish are that week."
+msgstr "Tripulación que lee esta costa a diario y lo pondrá donde está el pez esa semana."
+
+msgid "It varies by trip. Ask us and we will match one to what your group is up for."
+msgstr "Varía según la salida. Consúltenos y le proponemos la que calce con su grupo."
+
+msgid "Soft-top boards sized to you, leash and rash guard. Bring sunscreen and water."
+msgstr "Tablas soft-top a su medida, invento y licra. Traiga bloqueador y agua."
+
+msgid "Take a hat, reef-safe sunscreen and water. There is no shade out at the islands."
+msgstr "Lleve gorra, bloqueador que no daña el arrecife y agua. En las islas no hay sombra."
+
+msgid "The captain calls it. If a trip cannot run safely we move it rather than push it."
+msgstr "El capitán decide. Si una salida no puede hacerse con seguridad, la reprogramamos en vez de forzarla."
+
+msgid "Rods, terminal tackle and bait are provided. Bring your own gear if you prefer it."
+msgstr "Cañas, aparejos y carnada están incluidos. Traiga su propio equipo si lo prefiere."
+
+msgid "Private days book out first in the busy months. Ask early if your dates are fixed."
+msgstr "Los días privados se llenan primero en temporada alta. Consulte con tiempo si sus fechas son fijas."
+
+msgid "Reef-safe sunscreen, a hat and water are the three things people most often forget."
+msgstr "Bloqueador que no daña el arrecife, gorra y agua son las tres cosas que más se olvidan."
+
+msgid "If you are prone to seasickness, take something before you board rather than after."
+msgstr "Si se marea con facilidad, tome algo antes de abordar y no después."
+
+msgid "Yes, on separate days or split across one. Message us and we will lay the week out."
+msgstr "Sí, en días distintos o repartido en uno. Escríbanos y le armamos la semana."
+
+msgid "No reef, no rocks. Falling off is part of learning here, and the bottom forgives it."
+msgstr "Sin arrecife ni rocas. Caerse es parte de aprender aquí, y el fondo lo perdona."
+
+msgid "Fewer people per instructor means more waves and more corrections that actually land."
+msgstr "Menos personas por instructor significa más olas y más correcciones que de verdad sirven."
+
+msgid "Yes, in a double with an adult. Tell us ages when you book so the right boats are ready."
+msgstr "Sí, en un doble con un adulto. Indíquenos las edades al reservar para tener los botes correctos listos."
+
+msgid "Bring a layer. It cools off quickly once the sun is down and you are moving on the water."
+msgstr "Lleve una prenda extra. Refresca rápido cuando baja el sol y uno va navegando."
+
+msgid "No. The guide runs through paddling and what to do if you come off before anybody launches."
+msgstr "No. El guía explica cómo remar y qué hacer si se cae, antes de que nadie entre al agua."
+
+msgid "Generally yes. Tell us their ages when you book so the crew has the right life vests aboard."
+msgstr "Por lo general sí. Indíquenos sus edades al reservar para que la tripulación lleve los chalecos adecuados."
+
+msgid "Tell us in advance if anyone in the group cannot swim, so the crew can plan the stop around it."
+msgstr "Avísenos con antelación si alguien del grupo no sabe nadar, para que la tripulación planee la parada en consecuencia."
+
+msgid "The refuge has rules about distance and noise. Your guide will explain them before you set off."
+msgstr "El refugio tiene reglas de distancia y ruido. Su guía las explicará antes de salir."
+
+msgid "Often, but it is wild and nothing is promised. The estuary is where most of the sightings happen."
+msgstr "A menudo, pero es fauna silvestre y no se promete nada. El estero es donde ocurre la mayoría de los avistamientos."
+
+msgid "Green-season rain changes what is passable. Routes get adjusted on the day rather than cancelled."
+msgstr "La lluvia de temporada verde cambia lo que es transitable. Las rutas se ajustan el mismo día, no se cancelan."
+
+msgid "Anything you want in the day that is not listed here, ask. If we cannot run it, we know who does."
+msgstr "Si quiere algo en su día que no aparezca aquí, pregunte. Si no lo hacemos nosotros, sabemos quién lo hace."
+
+msgid "Costa Rica requires a sport fishing licence. Tell us when you book and we will sort it out with you."
+msgstr "Costa Rica exige licencia de pesca deportiva. Avísenos al reservar y lo gestionamos con usted."
+
+msgid "No. The crew rig everything and will walk you through the fight. Plenty of first-time anglers go out."
+msgstr "No. La tripulación arma todo y lo acompaña durante la pelea. Salen muchos pescadores primerizos."
+
+msgid "Tides shape the session. Message us and we will point you at the hours that suit your level that week."
+msgstr "Las mareas marcan la sesión. Escríbanos y le indicamos las horas que convienen a su nivel esa semana."
+
+msgid "Wildlife is wild. Guides know where animals usually are, and no trip can promise a particular species."
+msgstr "La fauna es silvestre. Los guías saben dónde suelen estar los animales, y ninguna salida puede prometer una especie concreta."
+
+msgid "Swimwear, reef-safe sunscreen, water and a towel. Boards, leashes and rash guards come with the lesson."
+msgstr "Traje de baño, bloqueador que no daña el arrecife, agua y toalla. Las tablas, inventos y licras vienen con la clase."
+
+msgid "Inland Guanacaste — waterfalls, backroads and dry forest. The trips that get you off the beach for a day."
+msgstr "Guanacaste tierra adentro: cataratas, caminos rurales y bosque seco. Las salidas que lo sacan de la playa por un día."
+
+msgid "You do not need to be a strong swimmer to start, but you should be comfortable in waist-deep moving water."
+msgstr "No hace falta nadar muy bien para empezar, pero sí sentirse cómodo con el agua en movimiento a la altura de la cintura."
+
+msgid "We move the session to a better tide or another day. Nobody is put in water that does not suit their level."
+msgstr "Movemos la sesión a una marea mejor o a otro día. A nadie se le mete en agua que no corresponde a su nivel."
+
+msgid "No. Most first lessons here are with people who have never touched a board. The session is built around that."
+msgstr "No. La mayoría de las primeras clases aquí son con gente que nunca ha tocado una tabla. La sesión se arma pensando en eso."
+
+msgid "Shown behind the title at the top of this category page. Leave empty to use the photo the theme ships for it."
+msgstr "Se muestra detrás del título en la parte superior de esta página de categoría. Déjelo vacío para usar la foto que trae el tema."
+
+msgid "Either. Kayaks are steadier and easier for a first time; paddleboards give you a higher view into the channels."
+msgstr "Cualquiera de los dos. El kayak es más estable y más fácil la primera vez; la tabla de remo da una vista más alta hacia los canales."
+
+msgid "For anything you drive yourself, yes — bring it with you. Guided trips where you are a passenger do not need one."
+msgstr "Para cualquier cosa que conduzca usted mismo, sí: tráigala. Las salidas guiadas donde va de pasajero no la requieren."
+
+msgid "The more you tell us up front — ages, swimming confidence, what people have done before — the better the plan comes back."
+msgstr "Cuanto más nos cuente de entrada —edades, confianza nadando, qué ha hecho cada quien antes—, mejor le regresa el plan."
+
+msgid "Some species yes, some are catch-and-release under Costa Rican rules. The captain will tell you which is which on the day."
+msgstr "Algunas especies sí; otras son de captura y liberación según las reglas de Costa Rica. El capitán le dirá cuál es cuál ese día."
+
+msgid "Usually, depending on tides and travel time. Send us the day you have in mind and we will tell you honestly whether it fits."
+msgstr "Por lo general sí, según las mareas y los tiempos de traslado. Mándenos el día que tiene en mente y le decimos con franqueza si calza."
+
+msgid "You surf. You want the right sandbar, the right tide and someone who knows this coast well enough to save you the guesswork."
+msgstr "Usted surfea. Quiere el banco de arena correcto, la marea correcta y alguien que conozca esta costa lo suficiente para ahorrarle las adivinanzas."
+
+msgid "Nothing here needs prior experience, and nothing here is dull if you have some. Bring a mixed group without splitting it up."
+msgstr "Nada de esto requiere experiencia previa, y nada de esto aburre si ya la tiene. Traiga un grupo mixto sin tener que dividirlo."
+
+msgid "See the Guanacaste coastline from the water. Sunset cruises, snorkel stops and coastal runs to beaches you cannot reach on foot."
+msgstr "Vea la costa de Guanacaste desde el agua. Paseos al atardecer, paradas de esnórquel y recorridos costeros hasta playas a las que no se llega a pie."
+
+msgid "Never done it before. Experiences built for a first session, where the instructor assumes nothing and the water is chosen to suit."
+msgstr "Nunca lo ha hecho. Experiencias pensadas para una primera sesión, donde el instructor no da nada por sentado y el agua se elige a la medida."
+
+msgid "Sunscreen, a hat, sunglasses and a light long-sleeve layer. Food and drinks depend on the charter — check the trip you are booking."
+msgstr "Bloqueador, gorra, lentes de sol y una prenda liviana de manga larga. La comida y las bebidas dependen de la salida: revise la que está reservando."
+
+msgid "Mangroves for calm water, birds and wildlife. Islands for open water, a bit of swell and somewhere to swim. Neither is harder than the other."
+msgstr "Manglares para agua calma, aves y fauna. Islas para mar abierto, algo de oleaje y un lugar donde nadar. Ninguno es más difícil que el otro."
+
+msgid "These are the half and full-day trips to fill a flat surf day, or to break up a week on the beach with something that involves a bit more dirt."
+msgstr "Estas son las salidas de medio día y día completo para llenar un día sin olas, o para romper una semana de playa con algo que lleva un poco más de tierra."
+
+msgid "You have had a go, you can stand up some of the time, and you want the next piece. Sessions that build on a first lesson instead of repeating it."
+msgstr "Ya lo intentó, se para algunas veces y quiere el siguiente paso. Sesiones que construyen sobre una primera clase en vez de repetirla."
+
+msgid "Catching unbroken waves and looking for direction, timing and turns. Coaching that works on what you are already doing rather than on the basics."
+msgstr "Agarrar olas sin romper y buscar dirección, timing y giros. Entrenamiento que trabaja sobre lo que ya hace, y no sobre lo básico."
+
+msgid "One instructor, one guide, your schedule. Private coaching and custom-built days for couples, families and groups who want the trip shaped around them."
+msgstr "Un instructor, un guía, su horario. Entrenamiento privado y días a la medida para parejas, familias y grupos que quieren la salida armada en torno a ellos."
+
+msgid "The estuary is tidal, so the mangrove route runs to the tide rather than to the clock. Departure times move through the month — ask when you pick a date."
+msgstr "El estero es de marea, así que la ruta del manglar se rige por la marea y no por el reloj. Las horas de salida cambian a lo largo del mes: consulte al elegir fecha."
+
+msgid "Yes, with an instructor in the water alongside them. Tell us their age and swimming confidence when you book so we size the board and the group correctly."
+msgstr "Sí, con un instructor en el agua a su lado. Indíquenos su edad y su confianza nadando al reservar, para dimensionar bien la tabla y el grupo."
+
+msgid "Seasons move. What is running offshore in one month is not what is running in another — ask us before you pick a date if a particular species matters to you."
+msgstr "Las temporadas cambian. Lo que corre mar afuera un mes no es lo que corre en otro: consúltenos antes de elegir fecha si le importa una especie en particular."
+
+msgid "The estuary has crocodiles in it. They are the reason people come, and the reason the guide decides where the group gets out of the boats and where it does not."
+msgstr "En el estero hay cocodrilos. Son la razón por la que la gente viene, y la razón por la que el guía decide dónde se baja el grupo de los botes y dónde no."
+
+msgid "Most tours build in a swim and snorkel stop in calmer water, then time the return so you are offshore as the light drops. That last hour is the reason people book these."
+msgstr "La mayoría de los tours incluyen una parada para nadar y hacer esnórquel en agua más calma, y luego calculan el regreso para que usted esté mar afuera cuando cae la luz. Esa última hora es la razón por la que la gente los reserva."
+
+msgid "Commonly howler monkeys, herons, kingfishers, crabs and iguanas, and sometimes crocodiles at a distance. Nothing is guaranteed — that is what makes it worth going early."
+msgstr "Normalmente monos congo, garzas, martines pescadores, cangrejos e iguanas, y a veces cocodrilos a distancia. Nada está garantizado: por eso vale la pena ir temprano."
+
+msgid "Some people learn faster one-to-one. Some groups want a day built around a birthday, an anniversary or a family that ranges from eight to sixty-eight. That is what this is for."
+msgstr "Hay quien aprende más rápido uno a uno. Hay grupos que quieren un día armado en torno a un cumpleaños, un aniversario o una familia que va de los ocho a los sesenta y ocho años. Para eso es esto."
+
+msgid "Charters go out with a captain and mate who fish this stretch of coast year-round. Rods, tackle and bait are aboard, so you can turn up with sunscreen and a hat and nothing else."
+msgstr "Las salidas van con un capitán y un marinero que pescan este tramo de costa todo el año. Las cañas, el equipo y la carnada van a bordo, así que puede llegar con bloqueador y gorra y nada más."
+
+msgid "The estuary, the mangroves and the dry forest behind Tamarindo. Early-morning paddles and guided trips, when the birds and howler monkeys are loudest and the heat has not arrived."
+msgstr "El estero, los manglares y el bosque seco detrás de Tamarindo. Remadas al amanecer y salidas guiadas, cuando las aves y los monos congo están más ruidosos y todavía no llega el calor."
+
+msgid "Fish the Guanacaste coast with captains who work these waters every week. Inshore runs along the rocky points and headlands, or offshore into blue water — tackle, bait and crew aboard."
+msgstr "Pesque la costa de Guanacaste con capitanes que trabajan estas aguas todas las semanas. Salidas costa adentro por las puntas rocosas y los cabos, o mar afuera hacia agua azul: equipo, carnada y tripulación a bordo."
+
+msgid "Tell us who is coming, what they can already do and how much time you have, and we will put the days together — surf, water, inland, or a mix — and keep the same guide with you through it."
+msgstr "Cuéntenos quiénes vienen, qué saben hacer ya y cuánto tiempo tienen, y nosotros armamos los días —surf, agua, tierra adentro o una mezcla— y le dejamos el mismo guía durante todo el proceso."
+
+msgid "Guanacaste is not only coastline. An hour inland the dry forest starts, and with it the waterfalls, river crossings and ridge roads that most visitors never see because they stay on the sand."
+msgstr "Guanacaste no es solo costa. A una hora tierra adentro empieza el bosque seco, y con él las cataratas, los cruces de río y los caminos de altura que la mayoría de los visitantes nunca ve porque se queda en la arena."
+
+msgid "Go at first light. The howler monkeys are calling, the herons and kingfishers are working the channels, and the water is glass. By mid-morning the wind comes up and most of it has gone quiet again."
+msgstr "Vaya al amanecer. Los monos congo están aullando, las garzas y los martines pescadores trabajan los canales y el agua está como un espejo. A media mañana sube el viento y casi todo vuelve a quedarse quieto."
+
+msgid "Learn to surf in Tamarindo, on a long sand-bottom beach break that forgives mistakes. Lessons run with local instructors, soft-top boards and small groups, from a first-ever pop-up through to sharpening a turn."
+msgstr "Aprenda a surfear en Tamarindo, en un beach break largo de fondo de arena que perdona los errores. Las clases van con instructores locales, tablas soft-top y grupos pequeños, desde el primer pop-up de su vida hasta afinar un giro."
+
+msgid "The coast north and south of Tamarindo is mostly headland and small bay, and a lot of it has no road to it. From the water you get the whole line of it — the cliffs, the empty sand, the places the estuary opens out."
+msgstr "La costa al norte y al sur de Tamarindo es en su mayoría cabos y bahías pequeñas, y a buena parte no llega ninguna carretera. Desde el agua se ve toda la línea: los acantilados, la arena vacía, los puntos donde el estero se abre."
+
+msgid "Behind the beach, the Tamarindo estuary runs back into mangrove channels that sit inside a protected wildlife refuge. It is a different place from the surf town two hundred metres away — quiet, shaded, and busy with birds."
+msgstr "Detrás de la playa, el estero de Tamarindo se adentra en canales de manglar que están dentro de un refugio de vida silvestre protegido. Es un lugar distinto del pueblo surfista que queda doscientos metros más allá: silencioso, sombreado y lleno de aves."
+
+msgid "The water off Tamarindo drops away quickly, so both inshore and offshore fishing are within reach of the same launch. Inshore runs work the rocky points and headlands close to the coast. Offshore trips push out to blue water, where the pelagic species are."
+msgstr "El agua frente a Tamarindo se hace profunda rápido, así que tanto la pesca costera como la de altura quedan al alcance de la misma salida. Las salidas costeras trabajan las puntas rocosas y los cabos cerca de la costa. Las de altura empujan hacia agua azul, donde están las especies pelágicas."
+
+msgid "Tamarindo sits between two very different bits of water, and the kayak tours go one way or the other. Out front is open ocean with rock islands a short paddle offshore. Behind the beach is the river mouth, which opens into a estuary threaded with mangrove channels."
+msgstr "Tamarindo está entre dos cuerpos de agua muy distintos, y los tours en kayak van hacia uno o hacia el otro. Al frente está el mar abierto, con islas rocosas a una remada corta de la costa. Detrás de la playa está la boca del río, que se abre en un estero atravesado por canales de manglar."
+
+msgid "Two ways to paddle Tamarindo. The island tour launches off the beach and works the rock islands offshore; the mangrove tour goes the other way, into the quiet channels of the estuary. Kayaks, paddles and vests are provided, and a guide stays with the group throughout."
+msgstr "Dos maneras de remar Tamarindo. El tour a las islas sale desde la playa y recorre las islas rocosas mar afuera; el tour del manglar va en sentido contrario, hacia los canales tranquilos del estero. Kayaks, remos y chalecos están incluidos, y un guía acompaña al grupo todo el tiempo."
+
+msgid "Tamarindo is one of the easiest places in Costa Rica to start surfing. The break is sand-bottom rather than reef, the wave rolls rather than dumps, and the water is warm enough year-round that nobody needs a wetsuit. That combination is why the town became a teaching beach in the first place."
+msgstr "Tamarindo es uno de los lugares más fáciles de Costa Rica para empezar a surfear. El pico tiene fondo de arena y no arrecife, la ola rueda en vez de reventar de golpe, y el agua es lo bastante tibia todo el año como para que nadie necesite neopreno. Esa combinación es la razón por la que el pueblo se volvió una playa de aprendizaje."
+
+msgid "A lesson starts on the sand with safety, positioning and the pop-up, then moves into the whitewater where the instructor pushes you into waves until you are catching them yourself. Most people stand up in their first session. From there, the progression is about reading the wave rather than balancing on the board."
+msgstr "La clase empieza en la arena con seguridad, posición y el pop-up, y luego pasa a la espuma, donde el instructor lo empuja a las olas hasta que las agarra solo. La mayoría se para en su primera sesión. De ahí en adelante, el avance se trata de leer la ola más que de mantener el equilibrio sobre la tabla."
+
+msgid "Neither trip asks for experience. Sit-on-top kayaks are stable and easy to get back onto, the guide sets the pace to whoever is slowest, and doubles mean a stronger paddler can carry someone who is not. If you would rather stay flat water, take the mangroves; if you want swell under you and somewhere to swim, take the islands."
+msgstr "Ninguna de las dos salidas exige experiencia. Los kayaks sit-on-top son estables y fáciles de volver a subir, el guía marca el ritmo del más lento, y los dobles permiten que alguien con más fuerza lleve a quien no la tiene. Si prefiere quedarse en agua plana, tome el manglar; si quiere oleaje debajo y un lugar donde nadar, tome las islas."
+
+msgid "No"
+msgstr "No"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "Select…"
+msgstr "Seleccione…"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Approved"
+msgstr "Aprobada"
+
+msgid "Received"
+msgstr "Recibida"
+
+msgid "Operators"
+msgstr "Operadores"
+
+msgid "Submitted"
+msgstr "Enviada"
+
+msgid "Your tours"
+msgstr "Sus tours"
+
+msgid "Application"
+msgstr "Solicitud"
+
+msgid "Applications"
+msgstr "Solicitudes"
+
+msgid "Company name"
+msgstr "Nombre de la empresa"
+
+msgid "Contact name"
+msgstr "Nombre de contacto"
+
+msgid "What you run"
+msgstr "Qué opera"
+
+msgid "Anything else"
+msgstr "Algo más"
+
+msgid "Send the form"
+msgstr "Enviar el formulario"
+
+msgid "Years operating"
+msgstr "Años operando"
+
+msgid "e.g. 1-6 guests"
+msgstr "p. ej. 1-6 personas"
+
+msgid "Applying for it"
+msgstr "En trámite"
+
+msgid "Review it here:"
+msgstr "Revísela aquí:"
+
+msgid "Where you operate"
+msgstr "Dónde opera"
+
+msgid "English, Spanish…"
+msgstr "Español, inglés…"
+
+msgid "We check and talk"
+msgstr "Revisamos y conversamos"
+
+msgid "Review Application"
+msgstr "Revisar solicitud"
+
+msgid "Typical group size"
+msgstr "Tamaño habitual del grupo"
+
+msgid "Your tours go live"
+msgstr "Sus tours se publican"
+
+msgid "About your business"
+msgstr "Sobre su negocio"
+
+msgid "Link to your photos"
+msgstr "Enlace a sus fotos"
+
+msgid "Operator Application"
+msgstr "Solicitud de operador"
+
+msgid "No applications yet."
+msgstr "Aún no hay solicitudes."
+
+msgid "Guide certifications"
+msgstr "Certificaciones de los guías"
+
+msgid "Operator Applications"
+msgstr "Solicitudes de operadores"
+
+msgid "Operator application: %s"
+msgstr "Solicitud de operador: %s"
+
+msgid "Visitors already looking"
+msgstr "Visitantes que ya están buscando"
+
+msgid "Website or social profile"
+msgstr "Sitio web o perfil en redes"
+
+msgid "Months you do not operate"
+msgstr "Meses en los que no opera"
+
+msgid "Enquiries straight to you"
+msgstr "Consultas directo a usted"
+
+msgid "Vetted, not a free-for-all"
+msgstr "Con filtro, no abierto a cualquiera"
+
+msgid "Languages your guides speak"
+msgstr "Idiomas que hablan sus guías"
+
+msgid "Local, not a global platform"
+msgstr "Local, no una plataforma global"
+
+msgid "Insurance, permits and safety"
+msgstr "Seguros, permisos y seguridad"
+
+msgid "We have your application — %s"
+msgstr "Recibimos su solicitud — %s"
+
+msgid "Do I need liability insurance?"
+msgstr "¿Necesito seguro de responsabilidad civil?"
+
+msgid "Your own page, properly written"
+msgstr "Su propia página, bien escrita"
+
+msgid "Reviews that are actually yours"
+msgstr "Reseñas que de verdad son suyas"
+
+msgid "What does it cost to be listed?"
+msgstr "¿Cuánto cuesta aparecer en la lista?"
+
+msgid "Tamarindo, Playa Grande, Nosara…"
+msgstr "Tamarindo, Playa Grande, Nosara…"
+
+msgid "Do you carry liability insurance?"
+msgstr "¿Cuenta con seguro de responsabilidad civil?"
+
+msgid "How do bookings and payment work?"
+msgstr "¿Cómo funcionan las reservas y el pago?"
+
+msgid "Can I list tours outside Tamarindo?"
+msgstr "¿Puedo publicar tours fuera de Tamarindo?"
+
+msgid "How long does it take to hear back?"
+msgstr "¿Cuánto tardan en responder?"
+
+msgid "What makes your tours worth listing?"
+msgstr "¿Qué hace que valga la pena publicar sus tours?"
+
+msgid "What if I only run tours part of the year?"
+msgstr "¿Y si solo opero parte del año?"
+
+msgid "Permits, licences or registrations you hold"
+msgstr "Permisos, licencias o registros que posee"
+
+msgid "I am a one-person operation. Is that a problem?"
+msgstr "Soy una operación de una sola persona. ¿Es un problema?"
+
+msgid "One per line: name, how long it runs, and roughly what you charge."
+msgstr "Uno por línea: nombre, cuánto dura y aproximadamente cuánto cobra."
+
+msgid "Lifeguard, first aid, naturalist guide, captain licence, and so on."
+msgstr "Salvavidas, primeros auxilios, guía naturalista, licencia de capitán, etcétera."
+
+msgid "For example ICT tourism registration, boat licence, or a guide certification."
+msgstr "Por ejemplo, declaratoria turística del ICT, licencia de navegación o certificación de guía."
+
+msgid "A shared folder or album is easiest. Please do not send attachments by email."
+msgstr "Lo más sencillo es una carpeta o un álbum compartido. Por favor no envíe archivos adjuntos por correo."
+
+msgid "Beginner surf lesson — 2 hours — $60 per person\\\nSunset catamaran — 2.5 hours — $95 per person"
+msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
+
+msgid "Set the status to Approved once you have checked them out. Nothing here is published on the site."
+msgstr "Cambie el estado a Aprobada una vez que los haya verificado. Nada de esto se publica en el sitio."
+
+msgid "Tell us who you are, what you run, and how you handle insurance and safety. Five minutes, and you can leave the optional parts blank."
+msgstr "Cuéntenos quién es, qué opera y cómo maneja los seguros y la seguridad. Cinco minutos, y puede dejar en blanco las partes opcionales."
+
+msgid "A real person reads it. We will usually come back with a few questions, and if we have not worked with you before we will want to meet."
+msgstr "Lo lee una persona de verdad. Por lo general volvemos con algunas preguntas y, si no hemos trabajado antes con usted, querremos conocerlo."
+
+msgid "You will be dealing with people in Tamarindo who know your beach, your season and your business, not a support queue in another timezone."
+msgstr "Tratará con gente en Tamarindo que conoce su playa, su temporada y su negocio, no con una fila de soporte en otra zona horaria."
+
+msgid "We build the pages with you — photos, descriptions, times and capacity — and enquiries start arriving with everything you need to answer them."
+msgstr "Armamos las páginas con usted —fotos, descripciones, horarios y capacidad— y las consultas empiezan a llegar con todo lo que necesita para responderlas."
+
+msgid "Yes, if they are within reasonable reach of visitors staying here — the wider Guanacaste coast and inland. Tell us where you operate on the form."
+msgstr "Sí, si quedan a un alcance razonable para quienes se hospedan aquí: la costa de Guanacaste en general y tierra adentro. Indique en el formulario dónde opera."
+
+msgid "Guests leave a star rating on the experience they booked. Every review is read before it publishes, and the score is only ever built from real ones."
+msgstr "Los clientes dejan una calificación en la experiencia que reservaron. Cada reseña se lee antes de publicarse, y la nota se construye únicamente con reseñas reales."
+
+msgid "Not at all. Small local operators are exactly who this is for. What matters is that you run a safe, well-organised trip, not how many boats you own."
+msgstr "Para nada. Los operadores locales pequeños son exactamente el público de esto. Lo que importa es que su salida sea segura y bien organizada, no cuántos botes tenga."
+
+msgid "You will get an automatic acknowledgement immediately so you know it arrived. A real reply follows once we have been through the application properly."
+msgstr "Recibirá un acuse automático de inmediato para saber que llegó. La respuesta de verdad llega una vez que hayamos revisado la solicitud como corresponde."
+
+msgid "That is normal on this coast. There is a field on the form for the months you do not operate, and listings can be set to show availability accordingly."
+msgstr "Eso es normal en esta costa. El formulario tiene un campo para los meses en que no opera, y las publicaciones pueden configurarse para mostrar la disponibilidad según eso."
+
+msgid "Booking requests come through with dates, group size and contact details already filled in, so you are answering a real enquiry rather than chasing one."
+msgstr "Las solicitudes de reserva llegan con las fechas, el tamaño del grupo y los datos de contacto ya completos, así que usted responde una consulta real en vez de andar persiguiéndola."
+
+msgid "Each listing gets a real page with photos, what is included, how long it runs and its own booking form, built to be found in search rather than buried in a directory."
+msgstr "Cada publicación tiene una página real con fotos, qué incluye, cuánto dura y su propio formulario de reserva, pensada para encontrarse en buscadores y no para quedar enterrada en un directorio."
+
+msgid "It is the first thing we ask about. If you are in the process of arranging it, say so on the form rather than leaving it blank — we would rather have the real picture."
+msgstr "Es lo primero que preguntamos. Si está en proceso de gestionarlo, indíquelo en el formulario en vez de dejarlo en blanco: preferimos tener el panorama real."
+
+msgid "We ask about insurance, permits and certifications because visitors are trusting this list. A directory anyone can join is worth nothing to the operators already doing it properly."
+msgstr "Preguntamos por seguros, permisos y certificaciones porque los visitantes confían en esta lista. Un directorio al que cualquiera puede entrar no vale nada para los operadores que ya lo hacen bien."
+
+msgid "We will set out the commercial terms in writing when we come back to you, before anything is agreed. Send the application first — there is no cost to apply and no obligation either way."
+msgstr "Le presentaremos los términos comerciales por escrito cuando le respondamos, antes de acordar nada. Envíe primero la solicitud: postularse no tiene costo ni obligación para ninguna de las partes."
+
+msgid "People arrive here searching for surf lessons, charters and wildlife trips in Tamarindo specifically. You are not competing for attention — you are answering a question someone already asked."
+msgstr "La gente llega aquí buscando clases de surf, salidas de pesca y tours de fauna en Tamarindo específicamente. Usted no compite por atención: está respondiendo una pregunta que alguien ya hizo."
+
+msgid "Enquiries come to you with the dates, group size and contact details attached. How payment is handled is part of the terms we agree with you, and it is settled in writing before you are listed."
+msgstr "Las consultas le llegan con las fechas, el tamaño del grupo y los datos de contacto adjuntos. Cómo se maneja el pago forma parte de los términos que acordamos con usted, y queda por escrito antes de publicarlo."
+
+msgid "Hi %1\\$s,\\\n\\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\\n\\\nIf anything changes in the meantime, just reply to this email."
+msgstr "Hola %1\\$s:\\\n\\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\\n\\\nSi algo cambia mientras tanto, solo responda a este correo."
+
+msgid "Boards"
+msgstr "Tablas"
+
+msgid "Boat tours"
+msgstr "Tours en bote"
+
+msgid "What you see"
+msgstr "Qué se ve"
+
+msgid "Effort level"
+msgstr "Nivel de esfuerzo"
+
+msgid "Surf lessons"
+msgstr "Clases de surf"
+
+msgid "Where we are"
+msgstr "Dónde estamos"
+
+msgid "Practical notes"
+msgstr "Notas prácticas"
+
+msgid "Why first light"
+msgstr "Por qué al amanecer"
+
+msgid "What to tell us"
+msgstr "Qué contarnos"
+
+msgid "What you work on"
+msgstr "En qué se trabaja"
+
+msgid "For first-timers"
+msgstr "Para primerizos"
+
+msgid "What lives there"
+msgstr "Qué vive ahí"
+
+msgid "Fishing charters"
+msgstr "Pesca deportiva"
+
+msgid "Catch and release"
+msgstr "Captura y liberación"
+
+msgid "What should I wear?"
+msgstr "¿Qué debo ponerme?"
+
+msgid "How the session runs"
+msgstr "Cómo transcurre la sesión"
+
+msgid "Inland adventure days"
+msgstr "Días de aventura tierra adentro"
+
+msgid "Who this lesson is for"
+msgstr "Para quién es esta clase"
+
+msgid "What the day looks like"
+msgstr "Cómo es el día"
+
+msgid "Private and custom days"
+msgstr "Días privados y a la medida"
+
+msgid "Add your own story here"
+msgstr "Agregue aquí su propia historia"
+
+msgid "Will I actually stand up?"
+msgstr "¿De verdad me voy a parar?"
+
+msgid "Estuary and wildlife trips"
+msgstr "Salidas al estero y de fauna"
+
+msgid "Do I need to bring a board?"
+msgstr "¿Tengo que llevar tabla?"
+
+msgid "What to expect from the ocean"
+msgstr "Qué esperar del mar"
+
+msgid "Good reasons to book privately"
+msgstr "Buenas razones para reservar en privado"
+
+msgid "What we think makes a day good"
+msgstr "Qué creemos que hace bueno un día"
+
+msgid "Booking, and what happens next"
+msgstr "La reserva y qué pasa después"
+
+msgid "How it differs from a group lesson"
+msgstr "En qué se diferencia de una clase grupal"
+
+msgid "Questions people ask before booking"
+msgstr "Preguntas que la gente hace antes de reservar"
+
+msgid "Why the coaching matters more than the hours"
+msgstr "Por qué el acompañamiento importa más que las horas"
+
+msgid "You would rather not learn in front of a group"
+msgstr "Prefiere no aprender delante de un grupo"
+
+msgid "Reading a set and choosing which wave to go for"
+msgstr "Leer una serie y elegir a qué ola ir"
+
+msgid "How many people are coming, and their rough ages."
+msgstr "Cuántas personas vienen y sus edades aproximadas."
+
+msgid "Reef-safe sunscreen only, applied before you board"
+msgstr "Solo bloqueador que no daña el arrecife, aplicado antes de abordar"
+
+msgid "Why Tamarindo is the right place to do all of this"
+msgstr "Por qué Tamarindo es el lugar indicado para todo esto"
+
+msgid "You want video or photo feedback of your own surfing"
+msgstr "Quiere retroalimentación en video o foto de su propio surf"
+
+msgid "Angling along the face instead of straight to the beach"
+msgstr "Correr por la pared de la ola en vez de ir derecho a la playa"
+
+msgid "Timing the take-off so you are not too early or too late"
+msgstr "Calcular el take-off para no entrar ni muy temprano ni muy tarde"
+
+msgid "You are returning to surfing after an injury or a long gap"
+msgstr "Vuelve al surf después de una lesión o de mucho tiempo sin practicar"
+
+msgid "You have plateaued and cannot tell what you are doing wrong"
+msgstr "Se estancó y no logra identificar qué está haciendo mal"
+
+msgid "Line-up etiquette, priority and how not to drop in on someone"
+msgstr "Etiqueta en el line-up, prioridad y cómo no cruzarse a otro surfista"
+
+msgid "Bring a layer — it cools off on the water once the sun is down"
+msgstr "Lleve una prenda extra: en el agua refresca cuando baja el sol"
+
+msgid "The dates you are in Tamarindo, even if they are not fixed yet."
+msgstr "Las fechas en que está en Tamarindo, aunque todavía no sean definitivas."
+
+msgid "Paddling technique and getting out through the break efficiently"
+msgstr "Técnica de remada y cómo salir por el pico de manera eficiente"
+
+msgid "English and Spanish, both, from the office through to the water."
+msgstr "Español e inglés, los dos, desde la oficina hasta el agua."
+
+msgid "Sunset times shift through the year, so departure moves with them"
+msgstr "La hora del atardecer cambia a lo largo del año, y la salida se mueve con ella"
+
+msgid "You are nervous in the ocean and want someone beside you the whole time"
+msgstr "El mar lo pone nervioso y quiere a alguien al lado todo el tiempo"
+
+msgid "Anything relevant about swimming confidence, seasickness, injuries or mobility."
+msgstr "Cualquier cosa relevante sobre confianza nadando, mareo, lesiones o movilidad."
+
+msgid "Bring a layer. It cools off quickly once the sun is down and the boat is moving."
+msgstr "Lleve una prenda extra. Refresca rápido cuando baja el sol y el bote va navegando."
+
+msgid "What you are hoping to do — or that you are not sure, which is a perfectly good answer."
+msgstr "Qué le gustaría hacer, o que todavía no está seguro, que es una respuesta perfectamente válida."
+
+msgid "If the weather turns, we move you rather than run something that is not worth your time."
+msgstr "Si el clima cambia, lo reprogramamos en vez de hacer algo que no vale su tiempo."
+
+msgid "Gear that gets checked between sessions, not once a season, and sized to the person using it."
+msgstr "Equipo que se revisa entre sesiones, no una vez por temporada, y ajustado a quien lo usa."
+
+msgid "No. Boards are included and matched to your height and weight, which is why we ask for those when you book."
+msgstr "No. Las tablas están incluidas y se ajustan a su estatura y peso, que es justamente por lo que se los pedimos al reservar."
+
+msgid "One town, four completely different days. That is rare, and it is what lets us build a week that does not repeat itself."
+msgstr "Un pueblo, cuatro días completamente distintos. Eso es raro, y es lo que nos permite armar una semana que no se repite."
+
+msgid "Questions before you book? Send the form and a real person will answer it. We reply to everything, usually the same day."
+msgstr "¿Dudas antes de reservar? Envíe el formulario y le responderá una persona de verdad. Contestamos todo, normalmente el mismo día."
+
+msgid "Small groups. More waves each, and a guide who can see everyone. This is the single biggest difference between a good session and a forgettable one."
+msgstr "Grupos pequeños. Más olas para cada quien y un guía que puede ver a todos. Esta es la mayor diferencia entre una buena sesión y una olvidable."
+
+msgid "Your guide will point out things you would paddle straight past. Bring binoculars if you have them, and a dry bag for anything that must not get wet."
+msgstr "Su guía le señalará cosas por las que usted pasaría remando de largo. Lleve binoculares si tiene, y una bolsa seca para lo que no deba mojarse."
+
+msgid "Straight answers. If a month is wrong for the fish you want, or a trip is not right for your group, we will say so before you book rather than after."
+msgstr "Respuestas francas. Si un mes no es el adecuado para el pez que busca, o una salida no le calza a su grupo, se lo diremos antes de la reserva y no después."
+
+msgid "Low. The water is sheltered and flat, and you set the pace. If you can sit upright and move your arms, you can do this trip. Children do it regularly."
+msgstr "Bajo. El agua es protegida y plana, y usted marca el ritmo. Si puede sentarse derecho y mover los brazos, puede hacer esta salida. Los niños la hacen con frecuencia."
+
+msgid "Local guides. Sandbars move, tides shift, the estuary changes through the year. Someone who is in this water weekly is worth more than any equipment list."
+msgstr "Guías locales. Los bancos de arena se mueven, las mareas cambian, el estero varía a lo largo del año. Alguien que se mete en esta agua cada semana vale más que cualquier lista de equipo."
+
+msgid "The town itself is walkable — you do not need a car to reach the beach, dinner or a lesson. A car is useful only for inland trips and neighbouring beaches."
+msgstr "El pueblo se recorre a pie: no hace falta carro para llegar a la playa, a cenar o a una clase. El carro solo sirve para las salidas tierra adentro y las playas vecinas."
+
+msgid "Boards, leashes and rash guards come with every lesson, sized to you rather than handed out at random. Bring swimwear, reef-safe sunscreen, water and a towel."
+msgstr "Las tablas, los inventos y las licras vienen con cada clase, ajustados a usted y no repartidos al azar. Traiga traje de baño, bloqueador que no daña el arrecife, agua y toalla."
+
+msgid "Conditions decide, not the calendar. If the water is wrong for your group that morning, we move you. Nobody is put in conditions that do not suit their level."
+msgstr "Mandan las condiciones, no el calendario. Si el agua no es la adecuada para su grupo esa mañana, lo reprogramamos. A nadie se le pone en condiciones que no corresponden a su nivel."
+
+msgid "Most first-timers do, at least briefly. Standing is the easy part — staying up takes a few sessions. Nobody should promise you a specific outcome on a moving ocean."
+msgstr "La mayoría de los primerizos sí, aunque sea un momento. Pararse es lo fácil; mantenerse arriba toma algunas sesiones. Nadie debería prometerle un resultado concreto sobre un mar en movimiento."
+
+msgid "It also means the plan can change mid-session. If the thing holding you back turns out to be your paddling rather than your pop-up, the whole session can pivot to that."
+msgstr "También significa que el plan puede cambiar a mitad de sesión. Si lo que lo está frenando resulta ser la remada y no el pop-up, toda la sesión puede girar hacia eso."
+
+msgid "Billfish are released as a matter of course. Talk to the crew about what is in season and what is reasonable to keep — they know the local rules and will tell you straight."
+msgstr "Los peces pico se liberan por norma. Hable con la tripulación sobre qué está en temporada y qué es razonable conservar: conocen las reglas locales y se lo dirán de frente."
+
+msgid "If you run tours in or around Tamarindo and you do it properly, we would like to hear from you. Applying takes about five minutes, costs nothing and commits you to nothing."
+msgstr "Si opera tours en Tamarindo o sus alrededores y lo hace bien, nos gustaría saber de usted. Postularse toma unos cinco minutos, no cuesta nada y no lo compromete a nada."
+
+msgid "Children can join with a parent. If anyone in your group is a nervous swimmer, tell us when you book and we will pair them with a guide who stays alongside them the whole session."
+msgstr "Los niños pueden participar con un adulto. Si alguien de su grupo nada con inseguridad, avísenos al reservar y lo emparejamos con un guía que se quede a su lado toda la sesión."
+
+msgid "If you are prone to seasickness, take something before you leave rather than once you are out — it works far better that way. Mornings are generally the flattest water of the day."
+msgstr "Si se marea con facilidad, tome algo antes de salir y no cuando ya esté mar adentro: funciona mucho mejor así. Las mañanas suelen tener el agua más plana del día."
+
+msgid "Every operator in this town will tell you they are the best. Rather than claim it, here is what we actually optimise for, so you can judge whether it matches what you want out of a day."
+msgstr "Todos los operadores de este pueblo le dirán que son los mejores. En vez de afirmarlo, aquí está lo que de verdad priorizamos, para que usted juzgue si calza con lo que espera de un día."
+
+msgid "Swimwear you can move in, and something that will not come off in the water. A rash guard is provided — the sun here is stronger than most visitors expect, and you will be in it for a while."
+msgstr "Traje de baño con el que pueda moverse y que no se le salga en el agua. La licra está incluida: el sol aquí es más fuerte de lo que la mayoría espera, y va a estar un buen rato bajo él."
+
+msgid "Two hundred metres behind a busy surf town, the estuary runs back into mangrove channels inside a protected refuge, and it is a completely different place — quiet, shaded, and full of birds."
+msgstr "A doscientos metros de un pueblo surfista movido, el estero se adentra en canales de manglar dentro de un refugio protegido, y es un lugar completamente distinto: silencioso, sombreado y lleno de aves."
+
+msgid "Wildlife is active at dawn and settles as the day heats up. The water is also flattest early, which makes paddling easy for people who have never done it. By mid-morning the same channel can look empty."
+msgstr "La fauna está activa al amanecer y se aquieta conforme el día calienta. El agua también está más plana temprano, lo que facilita remar a quien nunca lo ha hecho. A media mañana ese mismo canal puede verse vacío."
+
+msgid "Most beach towns are good at one thing. Tamarindo is unusual because several very different days out sit inside a few kilometres of each other, and that is the whole reason this school exists in the shape it does."
+msgstr "La mayoría de los pueblos costeros son buenos para una sola cosa. Tamarindo es poco común porque varias salidas muy distintas están a pocos kilómetros entre sí, y esa es toda la razón por la que esta escuela existe como existe."
+
+msgid "Some people learn faster one-to-one. Some groups want a day built around a birthday, an anniversary, or a family where the ages run from eight to sixty-eight and nobody wants to be split up. That is what this is for."
+msgstr "Hay quien aprende más rápido uno a uno. Hay grupos que quieren un día armado en torno a un cumpleaños, un aniversario o una familia cuyas edades van de los ocho a los sesenta y ocho años y donde nadie quiere separarse. Para eso es esto."
+
+msgid "You move to a board matched to your level rather than a beginner soft-top — usually something with less volume that turns more easily. If you are between sizes, your guide will have you try two and feel the difference."
+msgstr "Pasa a una tabla acorde a su nivel en vez de una soft-top de principiante, normalmente algo con menos volumen que gira más fácil. Si está entre dos tallas, su guía le hará probar ambas para que sienta la diferencia."
+
+msgid "We work with a small number of local operators on the Guanacaste coast — surf schools, captains, naturalist guides and drivers — and list their tours here for visitors who are already looking for exactly what they run."
+msgstr "Trabajamos con un número reducido de operadores locales de la costa de Guanacaste —escuelas de surf, capitanes, guías naturalistas y choferes— y publicamos aquí sus tours para visitantes que ya están buscando exactamente lo que ellos ofrecen."
+
+msgid "In a group, a guide splits attention across several people and the session runs at the pace of the group. Privately, every wave is yours and the feedback is continuous. Sessions tend to cover far more ground in the same time."
+msgstr "En grupo, el guía reparte su atención entre varias personas y la sesión va al ritmo del grupo. En privado, cada ola es suya y la retroalimentación es continua. Las sesiones suelen avanzar mucho más en el mismo tiempo."
+
+msgid "Rocky headlands, empty beaches you cannot reach by road, and — depending on the season and plain luck — turtles, rays and dolphins. Nobody can promise wildlife on a given evening, and anyone who does is selling you something."
+msgstr "Cabos rocosos, playas vacías a las que no se llega por carretera y —según la temporada y la pura suerte— tortugas, rayas y delfines. Nadie puede prometer fauna en una tarde concreta, y quien lo haga le está vendiendo algo."
+
+msgid "Rods, terminal tackle and bait are aboard, and every charter goes out with a captain and a mate who fish this coast year-round. You can turn up with sunscreen and a hat and nothing else. Bring your own gear if you would rather."
+msgstr "Las cañas, los aparejos y la carnada van a bordo, y cada salida lleva un capitán y un marinero que pescan esta costa todo el año. Puede llegar con bloqueador y gorra y nada más. Traiga su propio equipo si lo prefiere."
+
+msgid "You can stand up and ride whitewater, and now you want to get out past the break, read what the ocean is doing, and ride an unbroken wave. That gap is where most surfers stall for years on their own. A focused session closes it much faster."
+msgstr "Ya se para y corre la espuma, y ahora quiere salir más allá del pico, leer lo que está haciendo el mar y correr una ola sin romper. En ese salto es donde la mayoría se estanca durante años por su cuenta. Una sesión enfocada lo acorta muchísimo."
+
+msgid "Green-season rain changes what is passable from week to week, so routes get adjusted on the day by someone who knows which crossings are up rather than cancelled by someone reading a schedule. Closed shoes, a change of clothes and a dry bag."
+msgstr "La lluvia de temporada verde cambia lo transitable de una semana a otra, así que las rutas las ajusta el mismo día alguien que sabe qué cruces están abiertos, en vez de cancelarlas alguien leyendo un horario. Zapato cerrado, muda de ropa y bolsa seca."
+
+msgid "On the sand you cover the essentials: how to lie on the board, where to put your hands, how to pop up, and the safety rules that matter — how to fall flat, how to protect your head, and how to spot other surfers. That part is short on purpose."
+msgstr "En la arena se ve lo esencial: cómo acostarse en la tabla, dónde poner las manos, cómo hacer el pop-up y las reglas de seguridad que importan: cómo caer de plano, cómo protegerse la cabeza y cómo ubicar a otros surfistas. Esa parte es corta a propósito."
+
+msgid "The water off Guanacaste drops away quickly, which means productive fishing grounds are a short run from the beach rather than a long offshore slog. Half-day trips leave early and are back before the afternoon heat; full days push further out."
+msgstr "El agua frente a Guanacaste se hace profunda rápido, lo que significa que las zonas productivas quedan a poca navegación de la playa y no a una larga travesía. Las salidas de medio día parten temprano y regresan antes del calor de la tarde; las de día completo empujan más afuera."
+
+msgid "This is the low-effort option: good for families, for mixed groups where not everyone wants to surf, and for a first evening when you have just arrived and want to get your bearings. Snorkelling is optional — plenty of people stay on the boat."
+msgstr "Esta es la opción de menor esfuerzo: buena para familias, para grupos mixtos donde no todos quieren surfear, y para una primera tarde en la que acaba de llegar y quiere ubicarse. El esnórquel es opcional: mucha gente se queda en el bote."
+
+msgid "Then you are in the water. Your guide pushes you into whitewater waves first, calling when to paddle, and corrects your stance between waves rather than afterwards. Most people stand up in their first session. Plenty ride a wave all the way in."
+msgstr "Después ya está en el agua. Su guía primero lo empuja a las olas de espuma, avisándole cuándo remar, y le corrige la postura entre ola y ola, no al final. La mayoría se para en su primera sesión. Muchos corren una ola hasta la orilla."
+
+msgid "One guide, one surfer, and a session built entirely around what you want to fix. Private coaching suits people who learn faster without an audience, surfers working on something specific, and anyone who simply wants the ocean time to be theirs."
+msgstr "Un guía, un surfista y una sesión armada por completo en torno a lo que usted quiere corregir. El entrenamiento privado le sirve a quien aprende más rápido sin público, a surfistas trabajando algo específico y a quien simplemente quiere que el tiempo en el mar sea suyo."
+
+msgid "The estuary behind Tamarindo is a mangrove system and a protected habitat, and it is a completely different environment from the open beach a few hundred metres away. Going in early, quietly, and under paddle power is how you actually see anything."
+msgstr "El estero detrás de Tamarindo es un sistema de manglar y un hábitat protegido, un entorno completamente distinto de la playa abierta que queda a unos cientos de metros. Entrar temprano, en silencio y a remo es la forma de ver algo de verdad."
+
+msgid "Tamarindo, in the province of Guanacaste on the Pacific coast of Costa Rica. The nearest international airport is Liberia, generally an hour and a half to two hours away by road. San José is around four to five hours by car, or a short domestic flight."
+msgstr "Tamarindo, en la provincia de Guanacaste, en la costa pacífica de Costa Rica. El aeropuerto internacional más cercano es Liberia, por lo general a una hora y media o dos por carretera. San José está a unas cuatro o cinco horas en carro, o a un vuelo doméstico corto."
+
+msgid "You do not need experience or your own gear. Tell the crew it is your first trip and they will walk you through how to hold the rod, when to let line run, and how to bring a fish in without losing it. It is a normal thing to book with no background at all."
+msgstr "No necesita experiencia ni equipo propio. Dígale a la tripulación que es su primera salida y le explicarán cómo sostener la caña, cuándo soltar línea y cómo traer un pez sin perderlo. Es de lo más normal reservar sin ningún antecedente."
+
+msgid "The coastline here is mostly headland and small bay, and a good deal of it has no road to it at all. From the water you get the whole line of it — the cliffs, the empty sand, the point where the estuary opens out — and coves you simply cannot reach on foot."
+msgstr "La costa aquí es en su mayoría cabos y bahías pequeñas, y a buena parte no llega ninguna carretera. Desde el agua se ve toda la línea —los acantilados, la arena vacía, el punto donde se abre el estero— y calas a las que sencillamente no se llega a pie."
+
+msgid "You meet your guide on the beach and get sized for a board. Beginners ride soft-top longboards — they are stable, they float, and they do not hurt when they bump you. Your guide checks the tide and picks the stretch of beach that is working best that morning."
+msgstr "Se encuentra con su guía en la playa y le asignan una tabla a su medida. Los principiantes usan longboards soft-top: son estables, flotan y no lastiman si lo golpean. Su guía revisa la marea y elige el tramo de playa que mejor está funcionando esa mañana."
+
+msgid "Mangrove systems like this one support wading birds, kingfishers, crabs, and howler monkeys in the canopy along the banks. Crocodiles live in these waters too, which is exactly why you go with a guide who knows the channel and keeps the group in the right places."
+msgstr "Los manglares como este albergan aves zancudas, martines pescadores, cangrejos y monos congo en el dosel a lo largo de las orillas. En estas aguas también viven cocodrilos, que es precisamente por lo que se va con un guía que conoce el canal y mantiene al grupo en los lugares correctos."
+
+msgid "The coastline north and south of Tamarindo is mostly undeveloped, and the easiest way to see it is from the water in the last two hours of light. The boat runs along the shore, stops somewhere sheltered for a swim and a snorkel, and turns for home as the sun drops."
+msgstr "La costa al norte y al sur de Tamarindo está en su mayoría sin desarrollar, y la forma más fácil de verla es desde el agua en las últimas dos horas de luz. El bote recorre la orilla, se detiene en algún lugar protegido para nadar y hacer esnórquel, y pone rumbo de regreso cuando cae el sol."
+
+msgid "The more you tell us, the more useful the reply. Dates, how many people, what everyone has done before, and anything we should know about swimming confidence or mobility all help us put you on the right trip at the right tide rather than just the next available slot."
+msgstr "Cuanto más nos cuente, más útil será la respuesta. Las fechas, cuántas personas, qué ha hecho cada quien antes y cualquier cosa que debamos saber sobre confianza nadando o movilidad nos ayudan a ubicarlo en la salida correcta y en la marea correcta, y no simplemente en el siguiente espacio libre."
+
+msgid "Guanacaste is not only coastline. An hour inland the dry forest starts, and with it waterfalls, swimming holes, river crossings and ridge roads. These are the half and full days that fill a flat surf day, or break up a week on the beach with something that involves a bit more dirt."
+msgstr "Guanacaste no es solo costa. A una hora tierra adentro empieza el bosque seco, y con él las cataratas, las pozas, los cruces de río y los caminos de altura. Estas son las salidas de medio día y día completo que llenan un día sin olas, o que rompen una semana de playa con algo que lleva un poco más de tierra."
+
+msgid "This is the right session if you have never surfed, or tried once years ago and want to start again properly. You do not need to be an athlete. You do need to be comfortable in water around waist to chest deep, and happy to fall in a few times — everyone does, and the water is warm."
+msgstr "Esta es la sesión indicada si nunca ha surfeado, o si lo intentó una vez hace años y quiere empezar de nuevo como corresponde. No hace falta ser atleta. Sí hace falta sentirse cómodo con el agua entre la cintura y el pecho, y estar dispuesto a caerse unas cuantas veces: a todos les pasa, y el agua es tibia."
+
+msgid "You leave from the beach in the morning, when the water is usually calmest. The crew sets lines once you reach the grounds and handles the technical work — rigging, bait, and getting a fish to the boat if you hook something large. You do as much or as little of the work as you want."
+msgstr "Se sale desde la playa por la mañana, cuando el agua suele estar más calma. La tripulación tira las líneas al llegar a la zona y se encarga de lo técnico: armar los aparejos, la carnada y traer el pez al bote si engancha algo grande. Usted participa tanto o tan poco como quiera."
+
+msgid "Go at first light. The howler monkeys are calling, the herons and kingfishers are working the channels, the water is glass, and the heat has not arrived. By mid-morning the wind comes up and most of it has gone quiet again, which is why a trip that leaves at a civilised hour is not the same trip at all."
+msgstr "Vaya al amanecer. Los monos congo están aullando, las garzas y los martines pescadores trabajan los canales, el agua está como un espejo y todavía no llega el calor. A media mañana sube el viento y casi todo se queda quieto otra vez, que es por lo que una salida a una hora más cómoda no es en absoluto la misma salida."
+
+msgid "Tell us who is coming, what they can already do, and how long you are here. We will come back with a plan — surf, water, inland, or a mix — and keep the same guide with you through it, which is the part that makes a multi-day booking actually progress instead of turning into five separate first lessons."
+msgstr "Cuéntenos quiénes vienen, qué saben hacer ya y cuánto tiempo están aquí. Le responderemos con un plan —surf, agua, tierra adentro o una mezcla— y le dejaremos el mismo guía durante todo el proceso, que es lo que hace que una reserva de varios días de verdad avance en vez de convertirse en cinco primeras clases sueltas."
+
+msgid "Send the form on any experience, or message us with your dates and who is coming. We come back with a time that suits the tide and the conditions that week, what to bring and where to meet. Payment is arranged once those details are settled — nothing is taken before you know what you are actually getting."
+msgstr "Envíe el formulario de cualquier experiencia, o escríbanos con sus fechas y quiénes vienen. Le respondemos con una hora que calce con la marea y las condiciones de esa semana, qué llevar y dónde encontrarnos. El pago se coordina una vez cerrados esos detalles: no se cobra nada antes de que usted sepa qué está recibiendo."
+
+msgid "Conditions change with the tide and swell, so no two mornings are identical. Smaller, cleaner conditions are usually better for learning, and your guide will move the group or adjust the plan to find them. Surf is weather — if a day is genuinely unsafe for beginners, we would rather reschedule you than put you in it."
+msgstr "Las condiciones cambian con la marea y el swell, así que no hay dos mañanas iguales. Las condiciones pequeñas y limpias suelen ser mejores para aprender, y su guía moverá al grupo o ajustará el plan para encontrarlas. El surf es clima: si un día es realmente inseguro para principiantes, preferimos reprogramarlo antes que meterlo en eso."
+
+msgid "Most tours build in a swim and snorkel stop somewhere calm, with gear aboard, then time the run home so you are offshore as the light goes. That last hour is the reason people book these, and it is the thing everyone photographs. Snorkelling is optional and plenty of people stay on the boat; no skill is needed for any of it."
+msgstr "La mayoría de los tours incluyen una parada para nadar y hacer esnórquel en algún lugar calmo, con el equipo a bordo, y luego calculan el regreso para que usted esté mar afuera cuando se va la luz. Esa última hora es la razón por la que la gente los reserva, y es lo que todo el mundo fotografía. El esnórquel es opcional y mucha gente se queda en el bote; nada de esto requiere destreza."
+
+msgid "Most intermediate surfers repeat the same handful of mistakes because nobody is watching from the outside. A guide in the water with you sees that you are paddling with your head down, or popping up on your knees first, and tells you between waves while it is still fresh. One session of that is worth a lot of unsupervised ones."
+msgstr "La mayoría de los surfistas intermedios repite el mismo puñado de errores porque nadie los está viendo desde afuera. Un guía en el agua con usted nota que rema con la cabeza baja, o que se levanta primero de rodillas, y se lo dice entre olas mientras todavía está fresco. Una sesión así vale por muchas sin supervisión."
+
+msgid "What is running changes through the year. If a particular species is the reason you are coming, ask us before you lock the date in — we would rather tell you honestly that a month is wrong for it than take the booking and watch you have a flat day. Costa Rica requires a sport fishing licence; tell us when you book and we will sort it with you."
+msgstr "Lo que corre cambia a lo largo del año. Si una especie en particular es la razón de su viaje, consúltenos antes de fijar la fecha: preferimos decirle con franqueza que un mes no es el adecuado, en vez de tomar la reserva y verlo tener un día en blanco. Costa Rica exige licencia de pesca deportiva; avísenos al reservar y la gestionamos con usted."
+
+msgid "This is what we are best known for. A first lesson starts on the sand — safety, where to lie on the board, how to read what the water in front of you is doing, and the pop-up drilled until it stops being a thought and becomes a movement. Then we go into the whitewater, where your instructor puts you into waves until you are catching them on your own."
+msgstr "Esto es por lo que más nos conocen. Una primera clase empieza en la arena: seguridad, dónde acostarse en la tabla, cómo leer lo que está haciendo el agua frente a usted, y el pop-up practicado hasta que deja de ser un pensamiento y se vuelve un movimiento. Después entramos a la espuma, donde su instructor lo mete en olas hasta que las agarra solo."
+
+msgid "The main break is sand-bottom rather than reef. That single fact is why Tamarindo became a teaching beach: the wave rolls instead of dumping, the bottom forgives the falls every learner takes, and there is nothing under you to be afraid of. The water sits warm all year, so nobody owns a wetsuit here and nobody cuts a session short because they got cold."
+msgstr "El pico principal tiene fondo de arena y no arrecife. Ese solo hecho es la razón por la que Tamarindo se volvió una playa de aprendizaje: la ola rueda en vez de reventar de golpe, el fondo perdona las caídas que todo principiante se lleva, y no hay nada debajo a lo que temerle. El agua se mantiene tibia todo el año, así que aquí nadie tiene neopreno y nadie acorta una sesión por frío."
+
+msgid "If you have never stood on a surfboard, Tamarindo is one of the kinder places in the world to try. The main beach breaks over sand rather than reef, the waves roll in long and slow, and the water sits warm enough all year that nobody needs a wetsuit. A beginner lesson here is about catching real waves on day one, not spending an hour being lectured on the sand."
+msgstr "Si nunca se ha parado en una tabla de surf, Tamarindo es uno de los lugares más amables del mundo para intentarlo. La playa principal rompe sobre arena y no sobre arrecife, las olas entran largas y lentas, y el agua se mantiene lo bastante tibia todo el año como para que nadie necesite neopreno. Una clase de principiante aquí se trata de agarrar olas de verdad desde el primer día, no de pasar una hora recibiendo una charla en la arena."
+
+msgid "Palm Tree Surf is a surf and tour school in Tamarindo, on the Guanacaste coast of Costa Rica. We run surf lessons, fishing charters, boat tours, estuary and wildlife trips, inland adventure days, and private days built around whoever is coming. Everything starts within a few minutes of this beach, and everything is run by people who are in this water every week."
+msgstr "Palm Tree Surf es una escuela de surf y tours en Tamarindo, en la costa de Guanacaste, Costa Rica. Ofrecemos clases de surf, pesca deportiva, tours en bote, salidas al estero y de fauna, días de aventura tierra adentro y días privados armados en torno a quien venga. Todo empieza a pocos minutos de esta playa, y todo lo lleva gente que se mete en esta agua cada semana."
+
+msgid "Most people stand up in their first session. That is not a sales line, it is what a forgiving sand-bottom beach break with a small group and warm water produces. What separates a good first lesson from a bad one is not the wave — it is how many waves you actually get, and whether anyone is close enough to correct you on each of them. That is why we keep groups small."
+msgstr "La mayoría se para en su primera sesión. Eso no es un argumento de venta: es lo que produce un beach break benévolo de fondo de arena, con un grupo pequeño y agua tibia. Lo que separa una buena primera clase de una mala no es la ola, sino cuántas olas agarra de verdad y si hay alguien lo bastante cerca para corregirlo en cada una. Por eso mantenemos los grupos pequeños."
+
+msgid "Because deep water is close, you get a genuine choice rather than one default trip. Inshore runs work the rocky points and headlands along the coast — shorter, calmer, good for a first time out or for anyone unsure about their sea legs. Offshore pushes into blue water for the pelagic species, and that is a full day if you want to do it properly rather than spend the trip travelling."
+msgstr "Como la profundidad está cerca, usted tiene una elección real y no una única salida por defecto. Las salidas costeras trabajan las puntas rocosas y los cabos a lo largo de la costa: más cortas, más calmas, buenas para una primera vez o para quien no esté seguro de su resistencia al mareo. Las de altura empujan hacia agua azul en busca de especies pelágicas, y eso es un día completo si quiere hacerlo bien en vez de pasarse la salida navegando."
+
+msgid "Guided rather than rented, and the difference matters: a naturalist can find and name what you are looking at, and knows the refuge rules on distance and noise. Commonly you will see howler monkeys, herons, kingfishers, crabs and iguanas, and sometimes crocodiles at a distance. Nothing is guaranteed — it is wild, which is the point. Kayak or paddleboard, both on flat water; if you can sit in a kayak you can do this."
+msgstr "Guiado y no alquilado, y la diferencia importa: un naturalista puede encontrar y nombrar lo que usted está viendo, y conoce las reglas del refugio sobre distancia y ruido. Lo habitual es ver monos congo, garzas, martines pescadores, cangrejos e iguanas, y a veces cocodrilos a distancia. Nada está garantizado: es fauna silvestre, que es justamente la gracia. Kayak o tabla de remo, ambos en agua plana; si puede sentarse en un kayak, puede hacerlo."
+
+msgid "Everything above is true of the place and of how this school is meant to run, but it is not yet personal. The part no competitor can copy is yours: who started it, what year you arrived, what you did before, why you stayed, the guests you still hear from. Edit this page under Pages → About and replace this last section with it. It is the strongest trust signal a small local operator has, for visitors and for search engines alike."
+msgstr "Todo lo anterior es cierto del lugar y de cómo se supone que funciona esta escuela, pero todavía no es personal. La parte que ningún competidor puede copiar es la suya: quién la empezó, en qué año llegó, a qué se dedicaba antes, por qué se quedó, los clientes de los que todavía sabe. Edite esta página en Páginas → Sobre nosotros y reemplace esta última sección con eso. Es la señal de confianza más fuerte que tiene un operador local pequeño, tanto para los visitantes como para los buscadores."
+
+msgid "Past the first session, the work changes. It stops being about balance and starts being about reading: where the wave is going to break, which way to angle, when to commit. Intermediate coaching is mostly video-free, in-water, one correction at a time. If you have plateaued somewhere — you can stand but you cannot turn, or you keep getting caught behind the peak — say so when you book and we will put you with someone who will fix exactly that."
+msgstr "Pasada la primera sesión, el trabajo cambia. Deja de tratarse del equilibrio y empieza a tratarse de la lectura: dónde va a romper la ola, hacia qué lado angular, cuándo comprometerse. El entrenamiento intermedio es en su mayoría sin video, dentro del agua, una corrección a la vez. Si se estancó en algo —se para pero no logra girar, o lo agarra siempre por detrás del pico— dígalo al reservar y lo pondremos con alguien que corrija exactamente eso."
+
+msgid "A few hundred metres north, the Tamarindo estuary opens into mangrove channels inside a protected wildlife refuge — flat water, deep shade, and the loudest howler monkeys you will hear on the trip. Offshore, the seabed drops away quickly, so a fishing boat can work the rocky points inshore or run out to blue water without burning half the day getting there. And an hour inland the dry forest starts, with waterfalls and river crossings that most visitors never see because they never leave the sand."
+msgstr "Unos cientos de metros al norte, el estero de Tamarindo se abre en canales de manglar dentro de un refugio de vida silvestre protegido: agua plana, sombra densa y los monos congo más ruidosos que escuchará en todo el viaje. Mar afuera, el fondo cae rápido, así que un bote de pesca puede trabajar las puntas rocosas cerca de la costa o salir a agua azul sin quemar medio día en el trayecto. Y a una hora tierra adentro empieza el bosque seco, con cataratas y cruces de río que la mayoría de los visitantes nunca ve porque nunca sale de la arena."
+
+msgid "Choose a time"
+msgstr "Elija una hora"
+
+msgid "Request received"
+msgstr "Solicitud recibida"
+
+msgid "%1$s — %2$d left"
+msgstr "%1$s — quedan %2$d"
+
+msgid "Send booking request"
+msgstr "Enviar solicitud de reserva"
+
+msgid "Select an experience…"
+msgstr "Seleccione una experiencia…"
+
+msgid "Checking availability…"
+msgstr "Consultando disponibilidad…"
+
+msgid "No times left on that date"
+msgstr "No quedan horarios en esa fecha"
+
+msgid "Not sure yet — help me choose"
+msgstr "Aún no sé — ayúdenme a elegir"
+
+msgid "Please check the fields below."
+msgstr "Revise los campos de abajo, por favor."
+
+msgid "Choose an experience and date first"
+msgstr "Elija primero una experiencia y una fecha"
+
+msgid "This sends a request, not a confirmed booking. We reply to confirm availability."
+msgstr "Esto envía una solicitud, no una reserva confirmada. Le respondemos para confirmar la disponibilidad."
+
+msgid "Other"
+msgstr "Otro"
+
+msgid "Adults"
+msgstr "Adultos"
+
+msgid "Google"
+msgstr "Google"
+
+msgid "Hi %s,"
+msgstr "Hola %s:"
+
+msgid "Sunrise"
+msgstr "Amanecer"
+
+msgid "Morning"
+msgstr "Mañana"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Any time"
+msgstr "Cualquier hora"
+
+msgid "Flexible"
+msgstr "Flexible"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "date TBC"
+msgstr "fecha por confirmar"
+
+msgid "Your trip"
+msgstr "Su viaje"
+
+msgid "Afternoon"
+msgstr "Tarde"
+
+msgid "Logistics"
+msgstr "Logística"
+
+msgid "Full name"
+msgstr "Nombre completo"
+
+msgid "Start time"
+msgstr "Hora de inicio"
+
+msgid "Phone call"
+msgstr "Llamada telefónica"
+
+msgid "Time of day"
+msgstr "Momento del día"
+
+msgid "Mixed group"
+msgstr "Grupo mixto"
+
+msgid "Who is surfing"
+msgstr "Quién va a surfear"
+
+msgid "Surfer details"
+msgstr "Datos de los surfistas"
+
+msgid "Select&hellip;"
+msgstr "Seleccione&hellip;"
+
+msgid "Experience TBC"
+msgstr "Experiencia por confirmar"
+
+msgid "Next open dates"
+msgstr "Próximas fechas disponibles"
+
+msgid "%s is required."
+msgstr "%s es obligatorio."
+
+msgid "Alternative date"
+msgstr "Fecha alternativa"
+
+msgid "Phone / WhatsApp"
+msgstr "Teléfono / WhatsApp"
+
+msgid "Friend or family"
+msgstr "Un amigo o familiar"
+
+msgid "Which experience?"
+msgstr "¿Cuál experiencia?"
+
+msgid "Children under 12"
+msgstr "Niños menores de 12"
+
+msgid "Leaving Tamarindo"
+msgstr "Salida de Tamarindo"
+
+msgid "Our hotel or host"
+msgstr "Nuestro hotel o anfitrión"
+
+msgid "Surfing experience"
+msgstr "Experiencia en surf"
+
+msgid "%1$s — %2$s — %3$s"
+msgstr "%1$s — %2$s — %3$s"
+
+msgid "Never surfed before"
+msgstr "Nunca he surfeado"
+
+msgid "Unknown experience."
+msgstr "Experiencia desconocida."
+
+msgid "Walked past the shop"
+msgstr "Pasé frente a la tienda"
+
+msgid "Arriving in Tamarindo"
+msgstr "Llegada a Tamarindo"
+
+msgid "Best way to reach you"
+msgstr "Mejor forma de contactarlo"
+
+msgid "Where are you staying?"
+msgstr "¿Dónde se hospeda?"
+
+msgid "I would like hotel pickup"
+msgstr "Me gustaría que me recojan en el hotel"
+
+msgid "Here is what you sent us:"
+msgstr "Esto es lo que nos envió:"
+
+msgid "Include your country code."
+msgstr "Incluya el código de su país."
+
+msgid "How did you hear about us?"
+msgstr "¿Cómo se enteró de nosotros?"
+
+msgid "Hotel or area in Tamarindo."
+msgstr "Hotel o zona en Tamarindo."
+
+msgid "We have your booking request"
+msgstr "Recibimos su solicitud de reserva"
+
+msgid "Questions or special requests"
+msgstr "Preguntas o solicitudes especiales"
+
+msgid "Your preferred date is in the past."
+msgstr "Su fecha preferida ya pasó."
+
+msgid "Injuries, medical notes or non-swimmers"
+msgstr "Lesiones, notas médicas o personas que no nadan"
+
+msgid "That email address does not look right."
+msgstr "Esa dirección de correo no parece correcta."
+
+msgid "Ana, 34, 165cm, 60kg\\\nSam, 11, 140cm, 35kg"
+msgstr "Ana, 34, 165 cm, 60 kg\\\nSam, 11, 140 cm, 35 kg"
+
+msgid "Send me occasional surf reports and offers"
+msgstr "Envíenme de vez en cuando reportes de surf y ofertas"
+
+msgid "Helps us place you if your first choice is full."
+msgstr "Nos ayuda a ubicarlo si su primera opción está llena."
+
+msgid "Anything your instructor should know for safety."
+msgstr "Cualquier cosa que su instructor deba saber por seguridad."
+
+msgid "Your session expired. Please send the form again."
+msgstr "Su sesión expiró. Envíe el formulario de nuevo, por favor."
+
+msgid "Times shown are the ones still open on your chosen date."
+msgstr "Los horarios mostrados son los que siguen disponibles en la fecha elegida."
+
+msgid "Sorry, we could not save that. Please email or WhatsApp us instead."
+msgstr "Lo sentimos, no pudimos guardarlo. Escríbanos por correo o WhatsApp."
+
+msgid "You just sent a request. Please wait a minute before sending another."
+msgstr "Acaba de enviar una solicitud. Espere un minuto antes de enviar otra."
+
+msgid "That time just filled up or is no longer available. Please pick another."
+msgstr "Ese horario se acaba de llenar o ya no está disponible. Elija otro, por favor."
+
+msgid "One person per line: name, age, height, weight. We use this to size boards and wetsuits before you arrive."
+msgstr "Una persona por línea: nombre, edad, estatura, peso. Lo usamos para preparar las tablas y los trajes antes de que llegue."
+
+msgid "Thanks — we have your request. We reply within 24 hours to confirm availability."
+msgstr "Gracias, ya tenemos su solicitud. Respondemos en menos de 24 horas para confirmar la disponibilidad."
+
+msgid "English & Español"
+msgstr "English & Español"
+
+msgid "Good Times"
+msgstr "Los buenos momentos"
+
+msgid "Are Closer Than You Think."
+msgstr "Están más cerca de lo que cree."
+
+msgid "More Than a Destination. A Way of Life."
+msgstr "Más que un destino. Una forma de vida."
+
+msgid "Palm Tree Surf connects you with the real Tamarindo — the people, the water and the pura vida pace of it."
+msgstr "Palm Tree Surf lo conecta con el Tamarindo de verdad: su gente, su agua y su ritmo pura vida."
+
+msgid "Pura Vida Always"
+msgstr "Pura Vida siempre"
+
+msgid "December to April"
+msgstr "De diciembre a abril"
+
+msgid "26-29°C year round"
+msgstr "26-29 °C todo el año"
+
+msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
+msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
+
+msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
+msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
+
+msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
+msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
+
 msgid "%d guest"
 msgid_plural "%d guests"
 msgstr[0] "%d persona"
@@ -823,3 +2806,4 @@ msgid "%s star"
 msgid_plural "%s stars"
 msgstr[0] "%s estrella"
 msgstr[1] "%s estrellas"
+

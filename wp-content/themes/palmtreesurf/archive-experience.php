@@ -57,7 +57,13 @@ $pt_search   = get_search_query();
 			<?php if ( $pt_term && $pt_term->description ) : ?>
 				<?php // One line here; the full description runs below the results. ?>
 				<p class="page-hero__lede">
-					<?php echo esc_html( wp_trim_words( wp_strip_all_tags( $pt_term->description ), 16 ) ); ?>
+					<?php
+					// Translate before trimming: a truncated sentence matches no catalogue entry.
+					$pt_lede_full = function_exists( 'pt_translate_seeded' )
+						? pt_translate_seeded( $pt_term->description )
+						: $pt_term->description;
+					echo esc_html( wp_trim_words( wp_strip_all_tags( $pt_lede_full ), 16 ) );
+					?>
 				</p>
 			<?php endif; ?>
 		<?php elseif ( $pt_search ) : ?>
