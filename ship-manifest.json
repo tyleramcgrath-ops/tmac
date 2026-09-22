@@ -1,6 +1,6 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-22T19:43:59.743Z",
+  "sealedAt": "2026-09-22T20:19:13.329Z",
   "files": {
     "index.html": {
       "sha256": "96379a0a6e7fc6a8307df5573c81052e2952137fa497b5164386b6e008f14e95",
@@ -46,6 +46,14 @@
       "sha256": "ea088377f35150a52aeb11555c1871b0a3a7916623f7ae31c8eada1a086786e9",
       "bytes": 2387
     },
+    "api/tick.js": {
+      "sha256": "129a3ffe6ccc563c2af7626b6db94254f543655ac0fd0dfe5761103e5f3792de",
+      "bytes": 4121
+    },
+    "api/account.js": {
+      "sha256": "ccef907d30697a9ea712d973822fae4fd4f0b86abf5f0882d1f255c1c63f5c3a",
+      "bytes": 3006
+    },
     "lib/page.impl.js": {
       "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
       "bytes": 47439
@@ -55,8 +63,8 @@
       "bytes": 58816
     },
     "lib/db.js": {
-      "sha256": "94f6d7f3b2dd42663b0c7723a7156c446c069d8953ae43228df490deb19dde4e",
-      "bytes": 2340
+      "sha256": "cd27d4114990f1f693d333dac38508cdc52a5715d44b018d4e7e465b76d7a3a3",
+      "bytes": 3107
     },
     "lib/auth.js": {
       "sha256": "472fa560a59f3b9f7428502ac1dbf50455f2ffb5eaf00096ddff643f629c082d",
@@ -70,13 +78,25 @@
       "sha256": "ba5662e4bdfb2350929206df1a99409421ff6533057e745891392120c7b496f1",
       "bytes": 8689
     },
+    "lib/keys.js": {
+      "sha256": "d7b683fe0efbe54a5883b6d005b4d846a08006a23ff33338df8ed95ec32549a8",
+      "bytes": 4863
+    },
+    "lib/scan-job.js": {
+      "sha256": "eeeef62e1775e5309bcba139332ec406fc499e670779f3c82be70db850dcda7d",
+      "bytes": 12993
+    },
+    "lib/tick.js": {
+      "sha256": "777457961e050536cca0922a69f7169e4e79f24fe832edb70a7d27fe226968f0",
+      "bytes": 15663
+    },
     "package.json": {
-      "sha256": "86f91650ba66daa1d374d8ceae0918e21979fbc7e4342f271e65ba0a5d13c312",
-      "bytes": 501
+      "sha256": "1cd69a07994b014ed02f78eec3de6be69aaf8ba0bab14dc6697c50aad3bb5c16",
+      "bytes": 568
     },
     "vercel.json": {
-      "sha256": "25c19aed114d05744bfded9f9568bb922f0d9f8f9dd5de0c5d3d8df46a2d316e",
-      "bytes": 134
+      "sha256": "2e3ad046d1057d70145cc338d2561c1c7581ab5312d399eeaac7589ae6183ff6",
+      "bytes": 247
     }
   }
 }

@@ -2,6 +2,10 @@
   "buildCommand": "node build.js",
   "outputDirectory": "public",
   "functions": {
-    "api/render.js": { "maxDuration": 60 }
-  }
+    "api/render.js": { "maxDuration": 60 },
+    "api/tick.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    { "path": "/api/tick", "schedule": "0 3 * * *" }
+  ]
 }
