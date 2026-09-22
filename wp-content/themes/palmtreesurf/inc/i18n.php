@@ -346,6 +346,38 @@ function pt_lend_catalogue( $translated, $text, $domain ) {
 add_filter( 'gettext', 'pt_lend_catalogue', 10, 3 );
 
 /**
+ * The same loan for counted strings.
+ *
+ * `_n()` fires `ngettext`, not `gettext`, so the singular bridge above never
+ * sees a line like "2 adults" and the live price panel stayed half English
+ * while the rest of the page turned over.
+ *
+ * @param string $translated Translation as it stands.
+ * @param string $single     Singular source text.
+ * @param string $plural     Plural source text.
+ * @param int    $number     The count deciding which form is used.
+ * @param string $domain     Text domain.
+ * @return string
+ */
+function pt_lend_catalogue_plural( $translated, $single, $plural, $number, $domain ) {
+	if ( 'palm-tree-bookings' !== $domain ) {
+		return $translated;
+	}
+
+	// Untouched means the plugin had no Spanish of its own to offer.
+	if ( $translated !== $single && $translated !== $plural ) {
+		return $translated;
+	}
+
+	if ( is_admin() || ! pt_bilingual_enabled() || 'es' !== pt_current_language() ) {
+		return $translated;
+	}
+
+	return _n( $single, $plural, $number, 'palmtreesurf' );
+}
+add_filter( 'ngettext', 'pt_lend_catalogue_plural', 10, 5 );
+
+/**
  * Swap in the Spanish title when one exists.
  *
  * @param string   $title   Title.

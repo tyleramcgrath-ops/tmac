@@ -2777,6 +2777,36 @@ msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$
 msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
 msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
 
+msgid "Your price"
+msgstr "Su precio"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "%s departure"
+msgstr "Salida de las %s"
+
+msgid "%1$s deposit (%2$d%%) to confirm"
+msgstr "Depósito de %1$s (%2$d %%) para confirmar"
+
+msgid "Estimated total. We confirm the final price when we reply."
+msgstr "Total estimado. Confirmamos el precio final cuando le respondamos."
+
+msgid "There is nothing to pay on this booking."
+msgstr "No hay nada que pagar en esta reserva."
+
+msgid "Stripe has no secret key set."
+msgstr "Stripe no tiene configurada una clave secreta."
+
+msgid "Stripe did not return a checkout URL."
+msgstr "Stripe no devolvió un enlace de pago."
+
+msgid "Stripe refused the request."
+msgstr "Stripe rechazó la solicitud."
+
+msgid "Stripe sent a response we could not read."
+msgstr "Stripe envió una respuesta que no pudimos leer."
+
 msgid "%d guest"
 msgid_plural "%d guests"
 msgstr[0] "%d persona"
@@ -2807,3 +2837,22 @@ msgid_plural "%s stars"
 msgstr[0] "%s estrella"
 msgstr[1] "%s estrellas"
 
+msgid "%d adult"
+msgid_plural "%d adults"
+msgstr[0] "%d adulto"
+msgstr[1] "%d adultos"
+
+msgid "%d child"
+msgid_plural "%d children"
+msgstr[0] "%d niño"
+msgstr[1] "%d niños"
+
+msgid "%d extra guest"
+msgid_plural "%d extra guests"
+msgstr[0] "%d persona adicional"
+msgstr[1] "%d personas adicionales"
+
+msgid "Charter, up to %d guest"
+msgid_plural "Charter, up to %d guests"
+msgstr[0] "Charter, hasta %d persona"
+msgstr[1] "Charter, hasta %d personas"

@@ -212,3 +212,37 @@
 		animation-duration: 0.01ms;
 	}
 }
+
+/* Live price panel, built by quote.js. */
+.ptb-quote {
+	margin: 1.25rem 0;
+	padding: 1rem 1.15rem;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 14px;
+	background: rgba(0, 0, 0, 0.02);
+}
+.ptb-quote__heading {
+	margin: 0 0 0.6rem;
+	font-weight: 700;
+	font-size: 0.95rem;
+	letter-spacing: 0.01em;
+}
+.ptb-quote__row {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.3rem 0;
+	font-size: 0.95rem;
+}
+.ptb-quote__total {
+	margin-top: 0.4rem;
+	padding-top: 0.6rem;
+	border-top: 1px solid rgba(0, 0, 0, 0.12);
+	font-weight: 700;
+	font-size: 1.05rem;
+}
+.ptb-quote__note {
+	margin: 0.5rem 0 0;
+	font-size: 0.85rem;
+	opacity: 0.75;
+}

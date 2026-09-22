@@ -37,22 +37,50 @@ grep -rn "{{PT_" wp-content/themes/palmtreesurf
 
 ---
 
-## 2. Prices — deliberately empty
+## 2. Prices — made up, and flagged as made up
 
-Every experience has an empty **Price from** field. No price was guessed.
+**This changed in v1.12.0.** Every experience now carries a price, and **none of
+them came from you.** They were invented so the quote, the deposit and the Stripe
+checkout could be built and tested end to end. They are not a suggestion of what
+to charge.
 
-Set them per experience under **Experiences → edit → Details**. Until a price is set, the card and
-the booking card simply omit the price row rather than showing a placeholder — and the booking
-plugin's quote falls back to zero, so a booking still captures correctly.
+Every made-up price is labelled. You will see it in three places, and all three
+clear themselves as you save real rates:
 
-| Experience | Needs |
+- **Pricing** in the admin menu — a red *Made-up price* under each tour's name.
+- A red warning at the top of that screen listing every tour still affected.
+- The same warning on the Experiences list.
+
+Set your real rates in **Pricing**. It is one screen with every tour, grouped by
+category, and a **Save all prices** button. Editing a tour individually still
+works — **Experiences → edit → Pricing** writes the same numbers.
+
+Two ways to price a tour. Fill in one or the other, never both:
+
+| | Use it for | Fields |
+| --- | --- | --- |
+| **Per person** | lessons, kayak tours, wildlife trips | Price per adult, Price per child |
+| **Flat rate** | charters, private hire | Flat rate, People it covers, Extra person rate |
+
+If a flat rate is set it wins and the per-person rates are ignored.
+
+**Start time surcharges** are added once per booking, not per person, and only
+when the customer picks that time. One per line, as `17:00 | 15`. The Sunset
+Boat Tour ships with `17:00 | 10` as a worked example — replace or delete it.
+
+The current made-up figures, so you know what to overwrite:
+
+| Experience | Made-up rate |
 | --- | --- |
-| Surf Lesson — Beginner | price per person |
-| Surf Lesson — Intermediate | price per person |
-| Private Surf Coaching | price per session |
-| Fishing Charter | half-day and full-day price |
-| Sunset Boat Tour | price per person |
-| Estuary & Wildlife Trip | price per person |
+| Surf Lesson — Beginner | 65 adult / 55 child |
+| Surf Lesson — Intermediate | 75 adult / 65 child |
+| Private Surf Coaching | 120 adult |
+| Island Kayak Tour | 55 adult / 40 child |
+| Mangrove Kayak Tour | 60 adult / 45 child |
+| Estuary & Wildlife Trip | 70 adult / 50 child |
+| Turtle Tour | 80 adult / 60 child |
+| Sunset Boat Tour | 90 adult / 65 child, +10 at 17:00 |
+| Fishing Charter | 650 flat for 4, 85 per extra guest |
 
 ---
 
@@ -491,3 +519,88 @@ and query-string free, which is what the hreflang tags point at.
 
 Tested both directions and across page loads: Spanish sticks while browsing,
 English sticks while browsing, and switching back works from any page.
+
+---
+
+## 14. Added in v1.12.0 — your photos, two new tours, prices, Stripe, full Spanish
+
+### Every photo on the site is now one of yours
+
+All stock and generated photography is gone. The gallery, the experience cards,
+the category banners and the hero are built from the files you sent. Nine banner
+crops were cut from your originals specifically for the wide strips at the top of
+each page, which is what fixed the blurring and the bad alignment.
+
+One image could not be used: the Pacific Lounge shot. It is a screenshot rather
+than a photo, it carries a Google copyright notice, and the boat in it is another
+operator's branded vessel (P-14097). Send the original file and written
+permission and it goes in.
+
+### Two new tours, and the kayak split
+
+**Kayak Tours** is a new category holding **Island Kayak Tour** and **Mangrove
+Kayak Tour**. **Turtle Tour** was added under Wildlife & Nature. All three have
+copy, photos, prices and a booking form, and all three carry made-up prices —
+see section 2.
+
+### Ezekiel is the lead instructor
+
+Listed as **Guide and Lead Instructor**. The portrait came through inline in
+chat rather than as a file, so it could not be bundled into the theme. Upload it
+under **Instructors → Ezekiel → Featured image** and it appears everywhere he is
+shown.
+
+### Photos and video on each experience page
+
+Each experience page now has a gallery of its own photos below the description.
+The Estuary & Wildlife Trip has a video.
+
+Two 1080p clips you sent could not be bundled — they are too large to ship inside
+a theme. Upload them to **Media**, then paste the URL into **Experiences → edit →
+Video URL** and they play on the page.
+
+### A live price on the booking form
+
+As a customer picks a tour, party size and start time, the form shows a running
+total with the breakdown, the deposit and a note that the figure is an estimate
+confirmed on reply.
+
+The price is always worked out on the server, never in the browser, so what a
+customer is shown and what they would be charged cannot drift apart. With
+JavaScript off the form behaves exactly as it did before.
+
+### Stripe
+
+**Settings → Stripe payments.** Paste a secret key and a webhook signing secret
+and card payment is live; leave them empty and nothing changes — bookings stay
+request-and-reply as they are today.
+
+The webhook URL to paste into the Stripe dashboard is printed on that settings
+page. Signatures are verified before anything is recorded, so a forged
+notification cannot mark a booking paid.
+
+Set your real prices before switching this on.
+
+### One plugin, not two — **you must re-upload it**
+
+Pricing and Stripe live in the booking plugin, not the theme, because they are
+about taking money rather than about how the site looks. That means **Palm Tree
+Bookings 2.0.0 replaces the copy you installed** — deactivate and delete the old
+one, then upload the new zip. Your bookings, schedules and settings are stored in
+the database and survive the swap.
+
+### Spanish, properly this time
+
+Switching to ES previously left tour descriptions, category text, form labels and
+button text in English. Every one of those now translates.
+
+This was measured rather than assumed: a script renders each page in both
+languages and counts the lines that come back byte-identical. Across ten pages
+that count went from 165 to 2, and both survivors are correct — one is the
+Tamarindo address, which is the same in both languages, and the other is a
+WordPress core string from the comment form.
+
+That last one needs WordPress's own Spanish files, which only it can install.
+There is a notice in the admin telling you the fix: **Settings → General**, set
+Site Language to *Español de Costa Rica*, save, set it back to English. That
+downloads the files once and the string follows the toggle from then on.

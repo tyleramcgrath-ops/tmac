@@ -317,5 +317,17 @@ function ptb_enqueue() {
 			'left'     => __( '%1$s — %2$d left', 'palm-tree-bookings' ),
 		)
 	);
+
+	wp_enqueue_script( 'ptb-quote', PTB_URL . 'assets/js/quote.js', array(), PTB_VERSION, true );
+
+	wp_localize_script(
+		'ptb-quote',
+		'ptbQuote',
+		array(
+			'endpoint' => rest_url( 'ptb/v1/quote' ),
+			'heading'  => __( 'Your price', 'palm-tree-bookings' ),
+			'total'    => __( 'Total', 'palm-tree-bookings' ),
+		)
+	);
 }
 add_action( 'wp_enqueue_scripts', 'ptb_enqueue' );

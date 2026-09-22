@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  * @return array<string, array<string, array<string, mixed>>>
  */
 function pt_field_map() {
-	return array(
+	$map = array(
 		PT_EXPERIENCE_POST_TYPE => array(
 			'price_from'   => array(
 				'label' => __( 'Price from', 'palmtreesurf' ),
@@ -119,6 +119,14 @@ function pt_field_map() {
 			),
 		),
 	);
+
+	/**
+	 * Filter the editable fields, so a module can add its own without
+	 * editing this map. Pricing uses it.
+	 *
+	 * @param array $map Post type to field definitions.
+	 */
+	return apply_filters( 'pt_field_map', $map );
 }
 
 /**
