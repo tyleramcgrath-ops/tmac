@@ -67,9 +67,18 @@ true for Practice. The copy has to become tier-scoped, something like:
 > inside the job that calls your provider, and never sent to your browser again, not
 > even to show you what you typed.*
 
-**This needs your sign-off before the schema is fixed.** It is a change to the
-product's stated posture on the one thing this tool asks people to trust it with, and
-it is not mine to make quietly. See §9.
+**Signed off, 22 Sep 2026.** The FAQ is now tier-scoped and live: the free tier keeps
+the absolute promise, and the paid tiers state plainly what is held, how it is
+protected, and that it is never pooled or used for anything but that customer's own
+scans. The schema below is therefore fixed.
+
+The guarantees that copy makes are binding on the implementation:
+
+- encrypted at rest, secret held outside the database
+- decrypted only inside the scan job, never in an HTTP response
+- **never returned to the browser, not even masked** — the UI shows `last4` from its
+  own column and nothing else
+- deleting the key stops the schedules, and that path must actually work
 
 ---
 
@@ -365,16 +374,10 @@ Steps 1-5 are the real build. 6-9 are comparatively mechanical. Nothing between 
 | `RESEND_API_KEY` | **the one you have not been told about** — magic links and alerts both need to send mail |
 | `SEARCH_KEY_SECRET` | 32 random bytes, I generate it, it goes in the environment and nowhere else |
 
-**One decision, and it is the blocking one:**
+**Both open decisions are now closed:**
 
-Scheduled scans require storing the customer's SerpApi key on the server, encrypted.
-The live FAQ currently promises the key *never leaves their browser*. Rewriting that
-promise is a change to the product's privacy posture, so it is yours to make, not
-mine. §2 has proposed replacement copy. The schema is not fixed until you have
-looked at it.
-
-**One small thing:** the waitlist buttons on both paid tiers link to
-`hello@thecitationgap.com`, which does not exist. Anyone clicking "Join the waitlist"
-right now is mailing a void. Either point it at a real address or replace it with a
-form that writes to Neon — which is arguably better anyway, since it is also the
-first customer list.
+- **Key storage — decided.** Store it encrypted and scope the promise by tier. The
+  FAQ is rewritten and live; §2 records what that copy commits us to.
+- **Waitlist — decided.** Both buttons now point at a real address. Worth replacing
+  with a form writing to Neon once the database is connected: it is a better capture
+  path and it keeps a personal address off a public page that scrapers read.
