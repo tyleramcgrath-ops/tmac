@@ -12,10 +12,18 @@
 <meta property="og:url" content="https://citation-gap.vercel.app/">
 <meta property="og:title" content="Citation Gap — rank in the top 10, get cited by the AI Overview too">
 <meta property="og:description" content="Scores your page against the live top 10 and against Google's AI Overview, then hands back a ranked, costed work order. Free on your own search key.">
+<meta property="og:image" content="https://citation-gap.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Citation Gap — you rank third, the answer box quotes someone else. Measures the rank layer and the answer layer against the live top 10.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://citation-gap.vercel.app/og.png">
 <meta name="twitter:title" content="Citation Gap — rank in the top 10, get cited by the AI Overview too">
 <meta name="twitter:description" content="Two scores from one scan: top-ten parity, and whether an answer engine can quote you at all.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#F5F2EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
@@ -38,6 +46,11 @@
 --shadow-lg:0 2px 4px rgba(14,22,28,.06),0 22px 50px -22px rgba(14,22,28,.30);}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+/* The app's topbar is sticky, so anything scrolled to with block:'start' lands underneath it.
+   That includes the report, which the scanner scrolls to the moment a real scan finishes — the
+   one moment the customer is actually looking. Reserving the bar's height here fixes every
+   scrollIntoView and every anchor at once, rather than each call site remembering to. */
+html{scroll-padding-top:84px}
 body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
 font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1040px;margin:0 auto;padding:0 22px 90px;display:flex;flex-direction:column;gap:30px}
@@ -476,8 +489,54 @@ html{background:var(--shell)}
   border-bottom:1px solid transparent;transition:border-color .18s,color .18s}
 .mkt-navlinks a:hover{color:var(--ink);border-bottom-color:var(--ink)}
 .mkt-navcta{display:flex;align-items:center;gap:10px}
-@media(max-width:900px){.mkt-navlinks{display:none}}
-@media(max-width:520px){.mkt-nav .mkt-btn.ghost{display:none}}
+
+/* Below 900px the inline links have nowhere to sit, so they move into a disclosure panel rather
+   than simply vanishing — which is what used to happen: on a phone there was no route to Pricing
+   at all, and below 520px no route to Sign in either, which stranded returning customers on the
+   one page that is supposed to let them back in. */
+.mkt-burger{display:none;align-items:center;gap:9px;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+  border:1px solid var(--rule-2);border-radius:2px;padding:12px 15px;background:transparent}
+.mkt-burger .bars{display:grid;gap:3.5px;width:14px}
+.mkt-burger .bars i{display:block;height:1.5px;background:currentColor;
+  transition:transform .2s cubic-bezier(.2,.7,.3,1),opacity .15s}
+.mkt-burger[aria-expanded="true"] .bars i:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.mkt-burger[aria-expanded="true"] .bars i:nth-child(2){opacity:0}
+.mkt-burger[aria-expanded="true"] .bars i:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+.mkt-menu{position:absolute;top:100%;left:0;right:0;z-index:21;background:var(--paper);
+  border-bottom:1px solid var(--rule);box-shadow:0 20px 44px -30px rgba(21,19,15,.55);
+  padding:4px clamp(20px,5vw,64px) 20px;display:flex;flex-direction:column}
+.mkt-menu[hidden]{display:none}
+.mkt-menu a{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:16px 0;
+  border-bottom:1px solid var(--rule);transition:color .18s}
+.mkt-menu a:hover,.mkt-menu a:focus-visible{color:var(--ink)}
+.mkt-menu .mkt-btn{margin-top:18px;width:100%}
+@media(max-width:900px){.mkt-navlinks{display:none}.mkt-burger{display:inline-flex}}
+/* The inline Sign in still steps aside when the bar gets tight; it is in the menu by then. */
+@media(max-width:520px){.mkt-navcta .mkt-btn.ghost{display:none}}
+/* On a narrow phone the bar has room for a mark, a menu and one call to action, and not a pixel
+   more — so the menu drops its word and keeps its icon, and the wordmark stops wrapping. */
+@media(max-width:560px){
+  .mkt-nav{gap:10px;padding-left:16px;padding-right:16px}
+  .mkt-burger{padding:11px;gap:0}
+  .mkt-burger .word{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .mkt-nav .mark{font-size:18px;white-space:nowrap}
+  .mkt-navcta .mkt-btn.primary{padding:11px 13px;font-size:11px}
+}
+/* 320px is still a phone people hold. Everything in the bar gives up a little so the call to
+   action stays whole rather than running off the edge. */
+@media(max-width:360px){
+  .mkt-nav{gap:8px;padding-left:12px;padding-right:12px}
+  .mkt-nav .dish{width:26px;height:26px}
+  .mkt-nav .dish svg{width:15px;height:15px}
+  .mkt-nav .brand{gap:8px}
+  .mkt-nav .mark{font-size:16px}
+  .mkt-burger{padding:10px}
+  .mkt-navcta{gap:7px}
+  .mkt-navcta .mkt-btn.primary{padding:10px 11px;font-size:10.5px;letter-spacing:.05em}
+}
+@media(min-width:901px){.mkt-menu{display:none}}
 
 /* ---- buttons: ink slabs, no gradients ---- */
 .mkt-btn{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.08em;
@@ -766,8 +825,17 @@ p.mkt-note b{display:block;color:var(--ink-2);font-weight:500;letter-spacing:.12
       <a href="#mkt-pricing">Pricing</a>
     </div>
     <div class="mkt-navcta">
+      <button class="mkt-burger" id="mktMenuBtn" aria-expanded="false" aria-controls="mktMenu" aria-label="Menu">
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="word">Menu</span></button>
       <button class="mkt-btn ghost mkt-launch mkt-signin">Sign in</button>
       <button class="mkt-btn primary mkt-launch">Run a scan</button>
+    </div>
+    <div class="mkt-menu" id="mktMenu" hidden>
+      <a href="#mkt-compare">The gap</a>
+      <a href="#mkt-features">What it measures</a>
+      <a href="#mkt-how">How it works</a>
+      <a href="#mkt-pricing">Pricing</a>
+      <button class="mkt-btn ghost mkt-launch mkt-signin">Sign in</button>
     </div>
   </nav>
 
@@ -2485,7 +2553,37 @@ loadDemo();
   function $(s){ return document.querySelector(s); }
   var home=$('#homeScreen');
   function goHome(){ if(home){ home.hidden=false; home.scrollTop=0; } window.scrollTo(0,0); }
-  function enterApp(){ if(home) home.hidden=true; }
+  function enterApp(){ var m=$('#mktMenu'), b=$('#mktMenuBtn');
+    if(m){ m.hidden=true; } if(b){ b.setAttribute('aria-expanded','false'); }
+    if(home) home.hidden=true; }
+  // The small-screen menu. Every way out of it closes it: choosing a link, pressing Escape,
+  // clicking away, or the viewport growing back past the breakpoint that created it — a panel
+  // left open behind a widened window is the usual way this control goes wrong.
+  var menuBtn=$('#mktMenuBtn'), menu=$('#mktMenu');
+  function setMenu(open){
+    if(!menuBtn||!menu) return;
+    menu.hidden=!open;
+    menuBtn.setAttribute('aria-expanded',open?'true':'false');
+  }
+  if(menuBtn&&menu){
+    menuBtn.addEventListener('click',function(e){
+      e.stopPropagation();
+      setMenu(menu.hidden);
+    });
+    menu.addEventListener('click',function(e){ if(e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&!menu.hidden){ setMenu(false); menuBtn.focus(); }
+    });
+    document.addEventListener('click',function(e){
+      if(!menu.hidden&&!menu.contains(e.target)&&e.target!==menuBtn) setMenu(false);
+    });
+    if(window.matchMedia){
+      var wide=window.matchMedia('(min-width:901px)');
+      var onWide=function(m){ if(m.matches) setMenu(false); };
+      wide.addEventListener?wide.addEventListener('change',onWide):wide.addListener(onWide);
+    }
+  }
+
   document.querySelectorAll('.mkt-launch').forEach(function(b){ b.addEventListener('click',enterApp); });
   // "Sign in" is the only control that opens the workspace panel; every other launch control
   // drops straight onto the scan form, which is what the button promised.

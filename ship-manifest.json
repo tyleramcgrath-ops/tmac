@@ -1,14 +1,26 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-22T20:19:13.329Z",
+  "sealedAt": "2026-09-22T21:48:41.482Z",
   "files": {
     "index.html": {
-      "sha256": "96379a0a6e7fc6a8307df5573c81052e2952137fa497b5164386b6e008f14e95",
-      "bytes": 177690
+      "sha256": "9b54cb704145068e2def9583af81da35ffa25189f8725c9bfafecf542473aa75",
+      "bytes": 183512
     },
     "score.js": {
       "sha256": "cfe5979cc0c355edc49875313d7db972464ad1987aa8a3ac603780cf3d5e9d4d",
       "bytes": 163559
+    },
+    "og.png": {
+      "sha256": "ee129cb285a4c6bfb4679c988abdf3acb4406040ce8c1c228d33cc45f4a8d8d4",
+      "bytes": 70900
+    },
+    "icon.svg": {
+      "sha256": "2b31599dd18b23e9ac7fdf574cd1adb15db043ae1a7b5af1e71b0a3d6f94bc21",
+      "bytes": 438
+    },
+    "apple-touch-icon.png": {
+      "sha256": "fbc6ad2c6922860cd8c95ff6282505ea39fa7712cfd200112d62a980a84e6605",
+      "bytes": 3649
     },
     "api/page.js": {
       "sha256": "dc2c2279821eb379b86ddd79eae1309ff980c8c2bf97bfeff9bbdd75112cfcf0",
@@ -91,8 +103,8 @@
       "bytes": 15663
     },
     "package.json": {
-      "sha256": "1cd69a07994b014ed02f78eec3de6be69aaf8ba0bab14dc6697c50aad3bb5c16",
-      "bytes": 568
+      "sha256": "23c04ff6a264f49627b9b6af6220e33e01b144be2ab784231a63b0c3a77187b4",
+      "bytes": 594
     },
     "vercel.json": {
       "sha256": "2e3ad046d1057d70145cc338d2561c1c7581ab5312d399eeaac7589ae6183ff6",

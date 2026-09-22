@@ -42,6 +42,9 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 const SHIPPED = [
   'index.html',        // the whole front end: app shell, scanner, marketing homepage
   'score.js',          // scoring/history/prompts, shared by the browser and the scan job
+  'og.png',            // the social card; rebuilt by tools/make-assets.js, never by hand
+  'icon.svg',          // the wordmark's dish, as the favicon
+  'apple-touch-icon.png', // the same mark for an iOS home screen, which ignores SVG favicons
   'api/page.js',       // endpoint → lib/page.impl.js
   'api/render.js',     // endpoint → lib/render.impl.js
   'api/serp.js',       // one Google query, normalized across SerpApi and Serper
@@ -161,7 +164,10 @@ function build() {
   // Everything the page loads over the network has to reach public/, not just the page itself.
   // index.html asks for /score.js; a public/ that has the page but not the script is a site that
   // loads and then does nothing, which is exactly the class of failure this guard exists to stop.
-  const STATIC = ['index.html', 'score.js'];
+  // index.html links all of these by absolute path, so each one has to land in public/ beside
+  // the page. A card the crawler 404s on is worse than no card at all: the share renders blank
+  // and the failure is invisible from inside the app.
+  const STATIC = ['index.html', 'score.js', 'og.png', 'icon.svg', 'apple-touch-icon.png'];
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const written = [];
   for (const file of STATIC) {
