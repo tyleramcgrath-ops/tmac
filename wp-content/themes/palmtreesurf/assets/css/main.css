@@ -798,6 +798,15 @@ ul, ol { margin: 0 0 var(--pt-space-sm); padding-left: 1.25rem; }
 .exp-content > * + * { margin-top: var(--pt-space-md); }
 .exp-content h2 { font-size: 1.35rem; margin-top: var(--pt-space-xl); }
 
+/* Experience video — click to play, so it costs nothing until it is wanted. */
+.exp-video { margin: var(--pt-space-xl) 0 0; }
+.exp-video__player {
+	display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
+	background: var(--pt-ink); border-radius: var(--pt-radius-lg);
+	box-shadow: var(--pt-shadow-panel); object-fit: cover;
+}
+.exp-video__caption { margin-top: var(--pt-space-xs); color: var(--pt-muted); font-size: var(--pt-small); }
+
 .booking-card { padding: var(--pt-space-lg); background: var(--pt-white); border: 1px solid var(--pt-line); border-radius: var(--pt-radius-lg); box-shadow: var(--pt-shadow-panel); }
 .booking-card__price { margin: 0 0 var(--pt-space-sm); font-family: var(--pt-font-display); font-size: 1.6rem; font-weight: 800; color: var(--pt-ink); letter-spacing: -0.03em; }
 .booking-card__price span { font-size: var(--pt-small); font-weight: 500; color: var(--pt-muted); }

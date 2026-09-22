@@ -151,6 +151,7 @@ function pt_seed_terms_map() {
 	return array(
 		'experience_type' => array(
 			__( 'Surf Lessons', 'palmtreesurf' ),
+			__( 'Kayak Tours', 'palmtreesurf' ),
 			__( 'Fishing Charters', 'palmtreesurf' ),
 			__( 'Boat Tours', 'palmtreesurf' ),
 			__( 'Wildlife & Nature', 'palmtreesurf' ),

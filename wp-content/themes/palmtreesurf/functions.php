@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.10.0' );
+define( 'PT_VERSION', '1.11.0' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.
@@ -62,6 +62,8 @@ $pt_includes = array(
 	'inc/seed-posts.php',       // Long-form journal articles.
 	'inc/setup-content.php',    // First-run pages, menus and sample content.
 	'inc/content-refresh.php',  // Bring untouched seeded pages forward on update.
+	'inc/experience-media.php', // Per-experience photo sets and video.
+	'inc/content-backfill.php', // Carry new terms and tours onto an older install.
 	'inc/media-sync.php',       // Assign bundled photography on upgrade.
 );
 

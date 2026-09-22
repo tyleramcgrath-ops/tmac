@@ -40,6 +40,11 @@ function pt_field_map() {
 				'type'  => 'text',
 				'hint'  => __( 'Example: Up to 4 guests', 'palmtreesurf' ),
 			),
+			'video_url'    => array(
+				'label' => __( 'Video URL', 'palmtreesurf' ),
+				'type'  => 'url',
+				'hint'  => __( 'Optional. Paste the URL of an MP4 uploaded to the Media Library to show it on this page.', 'palmtreesurf' ),
+			),
 			'min_age'      => array(
 				'label' => __( 'Minimum age', 'palmtreesurf' ),
 				'type'  => 'text',

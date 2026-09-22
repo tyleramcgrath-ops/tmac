@@ -72,63 +72,49 @@ they are current — they feed the `AggregateRating` schema, which must reflect 
 
 ## 4. Photography
 
-Photos you supplied are in the theme and sideloaded into the Media Library on activation.
-Every unfilled slot renders a correctly-sized brand panel, so the layout is already final and
-adding a photo changes nothing but the photo.
+**Every photograph in the theme is the operator's own.** The stock and AI-generated plates that
+shipped with earlier versions — the sunset hero, the reef turtle, the catamaran, the ATV waterfall,
+the beach yoga, the snorkelling pair, the three polished surf-lesson shots and the two banners —
+were removed in 1.11.0 and are not coming back. Twenty-six real photographs replace them.
 
-**Supplied and in use:**
-
-| File | Used for |
+| Group | Files |
 | --- | --- |
-| `group-lesson-beach.jpg` | Hero background, Beginner lesson, gallery |
-| `instructor-popup-stance.jpg` | Intermediate lesson, split feature, gallery |
-| `group-instruction-sand.jpg` | Private coaching, second split feature, gallery |
-| `kayak-surf-tent.jpg` | Fishing charter, split inset, gallery |
+| Surf | `group-lesson-beach`, `instructor-popup-stance`, `group-instruction-sand`, `surf-lesson-group-briefing`, `surf-students-with-boards` |
+| Kayak, island | `kayak-guides-paddles`, `kayak-fleet-beach`, `kayak-group-guests`, `kayak-surf-tent` |
+| Kayak, mangrove | `estuary-mangrove-kayak`, `estuary-mangrove-paddlers`, `estuary-kayaks-mangrove-shore` |
+| Estuary wildlife | `estuary-crocodile`, `estuary-crocodile-surfacing`, `estuary-capuchin-monkey`, `estuary-capuchin-troop` |
+| Fishing | `fishing-charter-boat`, `fishing-boat-headland`, `fishing-boat-rods-out`, `fishing-trolling-wake`, `fishing-sailfish-release`, `fishing-marlin-release`, `fishing-mahi-mahi`, `fishing-yellowfin-tuna`, `fishing-anglers-tuna`, `fishing-grouper` |
 
-**Second batch (estuary, wildlife and kayak tours) — added in 1.10.0:**
+How they were prepared: EXIF stripped, which removes the GPS coordinates the phones recorded;
+capped at 1600px; 480/768/1200/1600 variants generated so a phone never pulls a full-size file;
+and `kayak-guides-paddles` cropped to remove an "Island Tour" caption burned into the corner.
+No shipped photo carries baked-in text.
 
-| File | Used for |
-| --- | --- |
-| `estuary-mangrove-kayak.jpg` | Estuary & Wildlife Trip featured image |
-| `estuary-mangrove-paddlers.jpg` | Gallery |
-| `estuary-kayaks-mangrove-shore.jpg` | Experience card fallback, gallery |
-| `estuary-crocodile.jpg` | Wildlife & Nature category header, gallery |
-| `estuary-crocodile-surfacing.jpg` | Gallery |
-| `estuary-capuchin-monkey.jpg` | Gallery |
-| `estuary-capuchin-troop.jpg` | Gallery |
-| `surf-lesson-group-briefing.jpg` | Experience card fallback, gallery |
-| `surf-students-with-boards.jpg` | Gallery |
-| `kayak-fleet-beach.jpg` | Experience card fallback |
-| `kayak-group-guests.jpg` | Gallery |
-| `kayak-guides-paddles.jpg` | Gallery |
-
-These are the operator's own photographs of real tours and real guests. Two notes on how they
-were prepared: `kayak-guides-paddles.jpg` had an "Island Tour" caption burned into the top-right
-corner, so the top quarter was cropped away — no shipped photo carries baked-in text. All of them
-were re-encoded without EXIF, which strips the GPS coordinates the phone recorded.
+**Where they appear.** Each experience now carries its own photo set, shown below the booking form
+through the same grid and lightbox as the main gallery — eight photographs on the fishing charter,
+five on the estuary trip, four on each kayak tour and each surf lesson. The main gallery runs to
+24 tiles. `pt_experience_photo_sets()` in `inc/experience-media.php` is the map.
 
 **Still needed:**
 
-| Slot | Size | Ratio | What it should show |
-| --- | --- | --- | --- |
-| Fishing Charters | 1600×1067 | wide | **The one real gap.** No fishing photograph exists in either batch, so the charter card and category header still borrow the kayak beach-launch shot. A boat, rods or a catch would fix the only place the site shows something other than what is being sold. |
-| `hero-video` | 1920×1080 | 16:9 | Optional 8–12s loop, under 4MB, muted. Two clips came with the second batch but neither was wired in — see the note below. |
-| Instructor portraits 1–4 | 800×1067 | 3:4 | One per named guide. Deliberately still empty: the supplied photos show guests and unidentified staff, and captioning someone as a named instructor needs their say-so, not a guess. |
-| Boat Tours | 1920×1280 | wide | The catamaran photo is from the first batch and was not shot on one of these tours. Replace when a real one exists. |
+| Slot | What it should show |
+| --- | --- |
+| Instructor portraits 1–4 | Deliberately empty. The supplied photos show guests and staff nobody has identified, and captioning someone as a named instructor needs their say-so. Send names against faces and they go straight in. |
+| Turtle Tour | The tour exists; no turtle photograph does. Its card falls back to a generic experience photo. |
+| Sunset Boat Tour | Borrows the fishing boat at anchor. It is the right boat and the right coast, but it is not a sunset cruise. |
+| `tax-advanced` | No photograph of advanced surfing. Renders a brand panel. |
+| `hero-video` | Empty on purpose — see below. |
 
-**Two video clips arrived with the second batch and are not in the theme.** The `hero-video` slot
-wants 8–12 seconds under 4MB; the clips are 2.4MB and 19MB of handheld estuary footage. Neither is
-cut to length and the larger one is far over budget, so wiring either in unedited would have made
-the homepage heavier than the whole rest of the page. Say the word and they can be trimmed,
-re-encoded and dropped into the slot.
+**Video.** Two clips were supplied: 2.4MB at 848×480 running 24s, and 18MB at 1920×1080 running
+14.5s. The smaller one ships as `assets/video/estuary-crocodile.mp4` and plays on the Estuary &
+Wildlife Trip and Mangrove Kayak Tour pages. It is `preload="none"` behind a poster frame, so it
+costs a visitor nothing until they press play, and it never autoplays.
 
-To add one: drop the file in `assets/images/src/`, then set `file` and `alt` for that slot in
-`assets/images/manifest.json`. Or upload to the Media Library and set it as the featured image,
-which wins over the bundled file.
-
-Write real alt text for each — it is both accessibility and SEO.
-
----
+The 1080p clip is **not** bundled: 18MB in a theme zip is more than the rest of the theme put
+together, and theme files get re-uploaded and backed up repeatedly. Upload it to the Media Library
+instead and paste its URL into the **Video URL** field on any experience — that field wins over the
+bundled clip. The same applies to any future footage. `hero-video` stays empty because filling it
+needs a clip trimmed to 8–12 seconds under 4MB, and no video tooling was available here to cut one.
 
 ## 5. Copy needing a real writer
 

@@ -90,6 +90,8 @@ while ( have_posts() ) :
 
 				<?php the_content(); ?>
 
+				<?php pt_experience_video( $pt_id ); ?>
+
 				<?php if ( $pt_itinerary ) : ?>
 					<h2><?php esc_html_e( 'How the day runs', 'palmtreesurf' ); ?></h2>
 					<dl class="conditions">
@@ -174,6 +176,31 @@ while ( have_posts() ) :
 				<?php endif; ?>
 			</aside>
 		</div>
+
+		<?php
+		/*
+		 * This experience's own photographs, below the booking form and the
+		 * description. Reuses the gallery grid and lightbox rather than
+		 * defining a second one, so there is one component to style.
+		 */
+		$pt_photos = pt_experience_gallery_images( $pt_id );
+
+		if ( $pt_photos ) {
+			get_template_part(
+				'template-parts/home/gallery',
+				null,
+				array(
+					'images'  => $pt_photos,
+					'eyebrow' => __( 'On the water', 'palmtreesurf' ),
+					'heading' => sprintf(
+						/* translators: %s: experience title. */
+						__( 'Photos from %s', 'palmtreesurf' ),
+						get_the_title()
+					),
+				)
+			);
+		}
+		?>
 
 		<div class="book-bar">
 			<p class="book-bar__price">

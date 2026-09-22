@@ -140,6 +140,30 @@ function pt_term_copy_map() {
 				array( __( 'What if the surf is flat or too big?', 'palmtreesurf' ), __( 'We move the session to a better tide or another day. Nobody is put in water that does not suit their level.', 'palmtreesurf' ) ),
 			),
 		),
+		'kayak-tours'      => array(
+			'description' => __( 'Two ways to paddle Tamarindo. The island tour launches off the beach and works the rock islands offshore; the mangrove tour goes the other way, into the quiet channels of the estuary. Kayaks, paddles and vests are provided, and a guide stays with the group throughout.', 'palmtreesurf' ),
+			'intro'       => array(
+				__( 'Tamarindo sits between two very different bits of water, and the kayak tours go one way or the other. Out front is open ocean with rock islands a short paddle offshore. Behind the beach is the river mouth, which opens into a estuary threaded with mangrove channels.', 'palmtreesurf' ),
+				__( 'Neither trip asks for experience. Sit-on-top kayaks are stable and easy to get back onto, the guide sets the pace to whoever is slowest, and doubles mean a stronger paddler can carry someone who is not. If you would rather stay flat water, take the mangroves; if you want swell under you and somewhere to swim, take the islands.', 'palmtreesurf' ),
+			),
+			'highlights'  => array(
+				array( __( 'Two routes, one meeting point', 'palmtreesurf' ), __( 'Islands out front or mangroves behind. Tell us which when you book.', 'palmtreesurf' ) ),
+				array( __( 'Kayaks and vests included', 'palmtreesurf' ), __( 'Sit-on-top singles and doubles, paddles and life vests are all provided.', 'palmtreesurf' ) ),
+				array( __( 'Guided throughout', 'palmtreesurf' ), __( 'A guide paddles with the group rather than sending you off with a map.', 'palmtreesurf' ) ),
+				array( __( 'No experience needed', 'palmtreesurf' ), __( 'Sit-on-tops are hard to capsize and easy to climb back onto if you do.', 'palmtreesurf' ) ),
+			),
+			'know'        => array(
+				__( 'The estuary is tidal, so the mangrove route runs to the tide rather than to the clock. Departure times move through the month — ask when you pick a date.', 'palmtreesurf' ),
+				__( 'The estuary has crocodiles in it. They are the reason people come, and the reason the guide decides where the group gets out of the boats and where it does not.', 'palmtreesurf' ),
+				__( 'Take a hat, reef-safe sunscreen and water. There is no shade out at the islands.', 'palmtreesurf' ),
+			),
+			'faq'         => array(
+				array( __( 'Which tour should I pick?', 'palmtreesurf' ), __( 'Mangroves for calm water, birds and wildlife. Islands for open water, a bit of swell and somewhere to swim. Neither is harder than the other.', 'palmtreesurf' ) ),
+				array( __( 'Do I need to have kayaked before?', 'palmtreesurf' ), __( 'No. The guide runs through paddling and what to do if you come off before anybody launches.', 'palmtreesurf' ) ),
+				array( __( 'Can children come?', 'palmtreesurf' ), __( 'Yes, in a double with an adult. Tell us ages when you book so the right boats are ready.', 'palmtreesurf' ) ),
+				array( __( 'Will we see wildlife?', 'palmtreesurf' ), __( 'Often, but it is wild and nothing is promised. The estuary is where most of the sightings happen.', 'palmtreesurf' ) ),
+			),
+		),
 		'fishing-charters' => array(
 			'description' => __( 'Fish the Guanacaste coast with captains who work these waters every week. Inshore runs along the rocky points and headlands, or offshore into blue water — tackle, bait and crew aboard.', 'palmtreesurf' ),
 			'intro'       => array(

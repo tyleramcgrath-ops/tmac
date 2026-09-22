@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$pt_images = pt_gallery_images();
+$pt_images = isset( $args['images'] ) ? $args['images'] : pt_gallery_images();
 
 // Nothing real to show, so nothing renders (section 7.10).
 if ( count( $pt_images ) < 2 ) {

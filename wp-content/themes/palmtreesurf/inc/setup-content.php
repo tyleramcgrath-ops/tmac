@@ -230,6 +230,47 @@ function pt_seed_experiences() {
 			),
 		),
 		array(
+			'title'    => __( 'Island Kayak Tour', 'palmtreesurf' ),
+			'excerpt'  => __( 'Paddle out from the beach to the rock islands off Tamarindo.', 'palmtreesurf' ),
+			'type'     => __( 'Kayak Tours', 'palmtreesurf' ),
+			'level'    => __( 'All Levels', 'palmtreesurf' ),
+			'image'    => 'kayak-guides-paddles.jpg',
+			'alt'      => __( 'Two guides with paddles and kayaks ready on the sand', 'palmtreesurf' ),
+			'includes' => array(
+				__( 'Kayak, paddle and life vest', 'palmtreesurf' ),
+				__( 'Guide for the whole paddle', 'palmtreesurf' ),
+			),
+			'bring'    => array(
+				__( 'Swimwear, a hat and reef-safe sunscreen', 'palmtreesurf' ),
+				__( 'Water bottle', 'palmtreesurf' ),
+			),
+		),
+		array(
+			'title'    => __( 'Mangrove Kayak Tour', 'palmtreesurf' ),
+			'excerpt'  => __( 'Paddle the quiet channels of the estuary, in among the mangrove roots.', 'palmtreesurf' ),
+			'type'     => __( 'Kayak Tours', 'palmtreesurf' ),
+			'level'    => __( 'All Levels', 'palmtreesurf' ),
+			'image'    => 'estuary-mangrove-kayak.jpg',
+			'alt'      => __( 'Two guests paddling a kayak through the mangrove channel', 'palmtreesurf' ),
+			'includes' => array(
+				__( 'Kayak, paddle and life vest', 'palmtreesurf' ),
+				__( 'Guide for the whole paddle', 'palmtreesurf' ),
+			),
+			'bring'    => array(
+				__( 'Swimwear, a hat and reef-safe sunscreen', 'palmtreesurf' ),
+				__( 'Insect repellent', 'palmtreesurf' ),
+			),
+		),
+		array(
+			'title'    => __( 'Turtle Tour', 'palmtreesurf' ),
+			'excerpt'  => __( 'A guided trip to see the sea turtles that come ashore on this stretch of coast.', 'palmtreesurf' ),
+			'type'     => __( 'Wildlife & Nature', 'palmtreesurf' ),
+			'level'    => __( 'All Levels', 'palmtreesurf' ),
+			'includes' => array(
+				__( 'Local guide', 'palmtreesurf' ),
+			),
+		),
+		array(
 			'title'    => __( 'Estuary & Wildlife Trip', 'palmtreesurf' ),
 			'excerpt'  => __( 'Paddle the mangroves at first light, when the birds and howlers are loudest.', 'palmtreesurf' ),
 			'type'     => __( 'Wildlife & Nature', 'palmtreesurf' ),
@@ -243,6 +284,88 @@ function pt_seed_experiences() {
 			),
 		),
 	);
+}
+
+/**
+ * Create one experience from a seed definition.
+ *
+ * Split out of the seeder so the backfill can reuse it: the seeder only ever
+ * runs once, so an install set up by an earlier version would otherwise never
+ * receive an experience added to the definitions later.
+ *
+ * @param array $item  Seed definition.
+ * @param int   $index Menu order.
+ * @return int Post ID, or 0 when it already exists or could not be created.
+ */
+function pt_insert_experience( $item, $index = 0 ) {
+	if ( get_page_by_path( sanitize_title( $item['title'] ), OBJECT, PT_EXPERIENCE_POST_TYPE ) ) {
+		return 0;
+	}
+
+	$slug   = sanitize_title( $item['title'] );
+	$bodies = pt_seed_bodies();
+	$body   = isset( $bodies[ $slug ] )
+		? $bodies[ $slug ]
+		: '<!-- wp:paragraph --><p>' . esc_html( isset( $item['excerpt'] ) ? $item['excerpt'] : '' ) . '</p><!-- /wp:paragraph -->';
+
+	$post_id = wp_insert_post(
+		array(
+			'post_type'    => PT_EXPERIENCE_POST_TYPE,
+			'post_title'   => $item['title'],
+			'post_name'    => $slug,
+			'post_excerpt' => isset( $item['excerpt'] ) ? $item['excerpt'] : '',
+			'post_content' => $body,
+			'post_status'  => 'publish',
+			'menu_order'   => $index,
+		)
+	);
+
+	if ( is_wp_error( $post_id ) || ! $post_id ) {
+		return 0;
+	}
+
+	if ( ! empty( $item['type'] ) ) {
+		wp_set_object_terms( $post_id, $item['type'], 'experience_type' );
+	}
+
+	if ( ! empty( $item['level'] ) ) {
+		wp_set_object_terms( $post_id, $item['level'], 'skill_level' );
+	}
+
+	$fields = array(
+		'duration'     => isset( $item['duration'] ) ? $item['duration'] : '',
+		'group_size'   => isset( $item['group'] ) ? $item['group'] : '',
+		'badge'        => isset( $item['badge'] ) ? $item['badge'] : '',
+		'rating'       => isset( $item['rating'] ) ? $item['rating'] : '',
+		'review_count' => isset( $item['reviews'] ) ? $item['reviews'] : '',
+		'price_suffix' => __( 'per person', 'palmtreesurf' ),
+		'includes'     => isset( $item['includes'] ) ? implode( "\n", $item['includes'] ) : '',
+		'bring'        => isset( $item['bring'] ) ? implode( "\n", $item['bring'] ) : '',
+		'itinerary'    => isset( $item['itinerary'] ) ? implode( "\n", $item['itinerary'] ) : '',
+		'faq'          => isset( $item['faq'] ) ? implode( "\n", $item['faq'] ) : '',
+	);
+
+	foreach ( $fields as $key => $value ) {
+		if ( '' !== $value ) {
+			update_post_meta( $post_id, '_pt_' . $key, $value );
+		}
+	}
+
+	// A sensible default schedule so availability works out of the box.
+	update_post_meta( $post_id, '_ptb_sched_days', '0,1,2,3,4,5,6' );
+	update_post_meta( $post_id, '_ptb_sched_times', "07:00\n09:30\n14:00" );
+	update_post_meta( $post_id, '_ptb_sched_capacity', 6 );
+	update_post_meta( $post_id, '_ptb_sched_lead', 12 );
+	update_post_meta( $post_id, '_ptb_sched_window', 365 );
+
+	if ( ! empty( $item['image'] ) ) {
+		$attachment_id = pt_sideload_theme_image( $item['image'], isset( $item['alt'] ) ? $item['alt'] : '' );
+
+		if ( $attachment_id ) {
+			set_post_thumbnail( $post_id, $attachment_id );
+		}
+	}
+	return (int) $post_id;
 }
 
 /**
@@ -305,76 +428,10 @@ function pt_seed_content() {
 	$first_image = 0;
 
 	foreach ( pt_seed_experiences() as $index => $item ) {
-		if ( get_page_by_path( sanitize_title( $item['title'] ), OBJECT, PT_EXPERIENCE_POST_TYPE ) ) {
-			continue;
-		}
+		$post_id = pt_insert_experience( $item, $index );
 
-		$slug   = sanitize_title( $item['title'] );
-		$bodies = pt_seed_bodies();
-		$body   = isset( $bodies[ $slug ] )
-			? $bodies[ $slug ]
-			: '<!-- wp:paragraph --><p>' . esc_html( isset( $item['excerpt'] ) ? $item['excerpt'] : '' ) . '</p><!-- /wp:paragraph -->';
-
-		$post_id = wp_insert_post(
-			array(
-				'post_type'    => PT_EXPERIENCE_POST_TYPE,
-				'post_title'   => $item['title'],
-				'post_name'    => $slug,
-				'post_excerpt' => isset( $item['excerpt'] ) ? $item['excerpt'] : '',
-				'post_content' => $body,
-				'post_status'  => 'publish',
-				'menu_order'   => $index,
-			)
-		);
-
-		if ( is_wp_error( $post_id ) || ! $post_id ) {
-			continue;
-		}
-
-		if ( ! empty( $item['type'] ) ) {
-			wp_set_object_terms( $post_id, $item['type'], 'experience_type' );
-		}
-
-		if ( ! empty( $item['level'] ) ) {
-			wp_set_object_terms( $post_id, $item['level'], 'skill_level' );
-		}
-
-		$fields = array(
-			'duration'     => isset( $item['duration'] ) ? $item['duration'] : '',
-			'group_size'   => isset( $item['group'] ) ? $item['group'] : '',
-			'badge'        => isset( $item['badge'] ) ? $item['badge'] : '',
-			'rating'       => isset( $item['rating'] ) ? $item['rating'] : '',
-			'review_count' => isset( $item['reviews'] ) ? $item['reviews'] : '',
-			'price_suffix' => __( 'per person', 'palmtreesurf' ),
-			'includes'     => isset( $item['includes'] ) ? implode( "\n", $item['includes'] ) : '',
-			'bring'        => isset( $item['bring'] ) ? implode( "\n", $item['bring'] ) : '',
-			'itinerary'    => isset( $item['itinerary'] ) ? implode( "\n", $item['itinerary'] ) : '',
-			'faq'          => isset( $item['faq'] ) ? implode( "\n", $item['faq'] ) : '',
-		);
-
-		foreach ( $fields as $key => $value ) {
-			if ( '' !== $value ) {
-				update_post_meta( $post_id, '_pt_' . $key, $value );
-			}
-		}
-
-		// A sensible default schedule so availability works out of the box.
-		update_post_meta( $post_id, '_ptb_sched_days', '0,1,2,3,4,5,6' );
-		update_post_meta( $post_id, '_ptb_sched_times', "07:00\n09:30\n14:00" );
-		update_post_meta( $post_id, '_ptb_sched_capacity', 6 );
-		update_post_meta( $post_id, '_ptb_sched_lead', 12 );
-		update_post_meta( $post_id, '_ptb_sched_window', 365 );
-
-		if ( ! empty( $item['image'] ) ) {
-			$attachment_id = pt_sideload_theme_image( $item['image'], isset( $item['alt'] ) ? $item['alt'] : '' );
-
-			if ( $attachment_id ) {
-				set_post_thumbnail( $post_id, $attachment_id );
-
-				if ( ! $first_image ) {
-					$first_image = $attachment_id;
-				}
-			}
+		if ( $post_id && ! $first_image ) {
+			$first_image = (int) get_post_thumbnail_id( $post_id );
 		}
 	}
 

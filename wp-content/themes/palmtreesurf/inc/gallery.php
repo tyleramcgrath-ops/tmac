@@ -67,7 +67,7 @@ function pt_gallery_images( $limit = 24 ) {
 	}
 
 	// 2. The bundled slots.
-	for ( $i = 1; $i <= 16; $i++ ) {
+	for ( $i = 1; $i <= 24; $i++ ) {
 		$slot = 'gallery-' . $i;
 
 		if ( ! pt_image_exists( $slot ) ) {
@@ -151,6 +151,9 @@ function pt_gallery_thumb( $image, $priority = false ) {
 		if ( $definition && ! empty( $definition['file'] ) && function_exists( 'pt_bundled_srcset' ) ) {
 			$srcset = pt_bundled_srcset( $definition['file'], (int) $image['width'] );
 		}
+	} elseif ( ! empty( $image['file'] ) && function_exists( 'pt_bundled_srcset' ) ) {
+		// A per-experience set names its file directly rather than a slot.
+		$srcset = pt_bundled_srcset( $image['file'], (int) $image['width'] );
 	}
 
 	printf(

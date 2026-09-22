@@ -18,33 +18,43 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Experience slug to bundled photograph.
  *
- * Fishing Charter is deliberately absent: the asset set has no fishing
- * photograph, and putting a snorkelling or boat shot on a fishing charter would
- * misrepresent what is being sold.
+ * Sunset Boat Tour and Turtle Tour are deliberately absent. Every photograph
+ * the theme ships is the operator's own, and none of them show a sunset cruise
+ * or a turtle. Those two fall back to a card photograph until a real one
+ * exists, because borrowing a fishing shot for a sunset cruise misrepresents
+ * what is being sold.
  *
  * @return array<string, array{file: string, alt: string}>
  */
 function pt_experience_photo_map() {
 	return array(
 		'surf-lesson-beginner'     => array(
-			'file' => 'beginner-surf-lesson-action.jpg',
-			'alt'  => __( 'Beginner surf lesson group on the beach', 'palmtreesurf' ),
+			'file' => 'group-lesson-beach.jpg',
+			'alt'  => __( 'A beginner group lesson gathered on the beach', 'palmtreesurf' ),
 		),
 		'surf-lesson-intermediate' => array(
-			'file' => 'intermediate-surf-action.jpg',
-			'alt'  => __( 'Surfer riding a wave at Tamarindo', 'palmtreesurf' ),
+			'file' => 'instructor-popup-stance.jpg',
+			'alt'  => __( 'An instructor demonstrating the pop-up on the sand', 'palmtreesurf' ),
 		),
 		'private-surf-coaching'    => array(
-			'file' => 'private-surf-coaching.jpg',
-			'alt'  => __( 'One-to-one surf coaching on the sand', 'palmtreesurf' ),
+			'file' => 'group-instruction-sand.jpg',
+			'alt'  => __( 'A small group receiving surf instruction on the sand', 'palmtreesurf' ),
 		),
-		'sunset-boat-tour'         => array(
-			'file' => 'sunset-catamaran-tour.jpg',
-			'alt'  => __( 'Catamaran under sail at sunset', 'palmtreesurf' ),
+		'island-kayak-tour'        => array(
+			'file' => 'kayak-guides-paddles.jpg',
+			'alt'  => __( 'Two guides with paddles and kayaks ready on the sand', 'palmtreesurf' ),
 		),
-		'estuary-wildlife-trip'    => array(
+		'mangrove-kayak-tour'      => array(
 			'file' => 'estuary-mangrove-kayak.jpg',
 			'alt'  => __( 'Two guests paddling a kayak through the mangrove channel', 'palmtreesurf' ),
+		),
+		'fishing-charter'          => array(
+			'file' => 'fishing-boat-rods-out.jpg',
+			'alt'  => __( 'The charter boat offshore with the rods out', 'palmtreesurf' ),
+		),
+		'estuary-wildlife-trip'    => array(
+			'file' => 'estuary-capuchin-monkey.jpg',
+			'alt'  => __( 'A white-faced capuchin in the branches above the estuary', 'palmtreesurf' ),
 		),
 	);
 }
