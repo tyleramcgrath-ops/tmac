@@ -3,9 +3,9 @@
 // Always answers the same way. "We sent a link if that address has an account" is not politeness
 // — differing responses turn this endpoint into a way to ask whether a given person is a
 // customer, which is a disclosure the customer never agreed to.
-const db = require('../db.js');
-const auth = require('../auth.impl.js');
-const mail = require('../mail.impl.js');
+const db = require('../../lib/db.js');
+const auth = require('../../lib/auth.js');
+const mail = require('../../lib/mail.js');
 
 const SAME_ANSWER = { ok: true, message: 'If that address can sign in, a link is on its way.' };
 
