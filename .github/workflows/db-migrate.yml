@@ -46,15 +46,57 @@ jobs:
           test -f "$F" || { echo "::error::$F not found"; exit 1; }
           echo "will apply $F ($(wc -l < "$F") lines)"
 
-      - name: Apply
+      # Neon hands you its credentials as a block of KEY=value lines, so the value that ends up in
+      # the secret often arrives carrying its own "DATABASE_URL=" prefix, or wrapped in quotes, or
+      # with a trailing newline. psql treats anything that is not a URI as a database NAME and
+      # falls back to the local unix socket, failing with a message about /var/run/postgresql that
+      # says nothing about the real cause. Normalise here, and reject clearly if it still is not a
+      # connection URI, so the next person gets told what is actually wrong.
+      - name: Normalise the connection string
         env:
           # Set this in Settings → Secrets and variables → Actions. Use Neon's POOLED string.
-          DATABASE_URL: ${{ secrets.CITATION_GAP_DATABASE_URL }}
+          RAW: ${{ secrets.CITATION_GAP_DATABASE_URL }}
         run: |
-          if [ -z "$DATABASE_URL" ]; then
+          if [ -z "$RAW" ]; then
             echo "::error::CITATION_GAP_DATABASE_URL secret is not set on this repository."
             exit 1
           fi
+
+          U="$RAW"
+          # A pasted block: keep only the line that carries a connection URI.
+          U="$(printf '%s' "$U" | tr -d '\r' | grep -m1 -E 'postgres(ql)?://' || printf '%s' "$U")"
+          # Drop a leading KEY= from whichever line Neon labelled it with.
+          U="${U#DATABASE_URL=}"; U="${U#DATABASE_URL_UNPOOLED=}"
+          U="${U#POSTGRES_URL=}"; U="${U#POSTGRES_URL_NON_POOLING=}"
+          # Trim surrounding whitespace and quotes.
+          U="$(printf '%s' "$U" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
+                                      -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//")"
+
+          case "$U" in
+            postgres://*|postgresql://*) ;;
+            *)
+              echo "::error::CITATION_GAP_DATABASE_URL is not a connection URI. It must start with postgresql:// — paste only the URI itself, without the leading 'DATABASE_URL=' that Neon shows beside it."
+              exit 1
+              ;;
+          esac
+
+          # The secret's masking covers the exact stored string; once a prefix is stripped the
+          # remainder is a different string and would print in the clear. Mask it explicitly.
+          echo "::add-mask::$U"
+          echo "PGURL=$U" >> "$GITHUB_ENV"
+
+          # Say which endpoint was resolved without revealing credentials, so a wrong host or a
+          # non-pooled string is visible in the log.
+          HOST="$(printf '%s' "$U" | sed -E 's#^[^:]+://[^@]*@([^/?]+).*#\1#')"
+          echo "endpoint: $HOST"
+          case "$HOST" in
+            *-pooler.*) echo "pooling: yes" ;;
+            *) echo "::warning::this is NOT the pooled endpoint; serverless functions will exhaust connections under load" ;;
+          esac
+
+      - name: Apply
+        run: |
+          DATABASE_URL="$PGURL"
 
           # 001_init.sql is wrapped in BEGIN/COMMIT, so it is all-or-nothing: either the nine
           # tables are there or none are. That makes this check sound rather than a guess about
@@ -71,9 +113,8 @@ jobs:
           fi
 
       - name: Report what is there now
-        env:
-          DATABASE_URL: ${{ secrets.CITATION_GAP_DATABASE_URL }}
         run: |
+          DATABASE_URL="$PGURL"
           echo "--- tables ---"
           psql "$DATABASE_URL" -c "\dt"
           echo "--- the trigger that keeps the FAQ's promise ---"
