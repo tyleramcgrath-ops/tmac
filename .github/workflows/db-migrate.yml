@@ -1,0 +1,83 @@
+# Apply a Citation Gap database migration to Neon.
+#
+# This exists because of a specific constraint: the agent session that writes these migrations
+# cannot reach Neon at all — the environment's egress policy denies *.neon.tech and TCP 5432 — so
+# it can neither apply a migration nor read back what happened. A GitHub Actions runner can do
+# both. The connection string stays in repository secrets, never in a chat transcript and never in
+# the agent's environment, and the run log is the shared record of what was applied.
+#
+# Manual trigger only. Schema changes are deliberate acts; nothing here should fire on a push.
+name: DB migrate (Citation Gap)
+
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: 'Migration file under apps/citation-gap/db/'
+        required: true
+        default: '001_init.sql'
+      confirm:
+        description: 'Type APPLY to confirm you mean to change the schema'
+        required: true
+        default: ''
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse unless confirmed
+        if: inputs.confirm != 'APPLY'
+        run: |
+          echo "::error::confirm was '${{ inputs.confirm }}', not APPLY — nothing was run."
+          exit 1
+
+      - uses: actions/checkout@v4
+
+      - name: Ensure psql is present
+        run: |
+          if ! command -v psql >/dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+          fi
+          psql --version
+
+      - name: Check the migration file exists
+        run: |
+          F="apps/citation-gap/db/${{ inputs.file }}"
+          test -f "$F" || { echo "::error::$F not found"; exit 1; }
+          echo "will apply $F ($(wc -l < "$F") lines)"
+
+      - name: Apply
+        env:
+          # Set this in Settings → Secrets and variables → Actions. Use Neon's POOLED string.
+          DATABASE_URL: ${{ secrets.CITATION_GAP_DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::CITATION_GAP_DATABASE_URL secret is not set on this repository."
+            exit 1
+          fi
+
+          # 001_init.sql is wrapped in BEGIN/COMMIT, so it is all-or-nothing: either the nine
+          # tables are there or none are. That makes this check sound rather than a guess about
+          # a half-applied state.
+          HAVE=$(psql "$DATABASE_URL" -At -c \
+            "SELECT count(*) FROM information_schema.tables WHERE table_schema='public';")
+          echo "tables already present: $HAVE"
+
+          if [ "$HAVE" != "0" ] && [ "${{ inputs.file }}" = "001_init.sql" ]; then
+            echo "::notice::schema already applied ($HAVE tables) — 001_init.sql is not re-runnable, skipping."
+          else
+            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "apps/citation-gap/db/${{ inputs.file }}"
+            echo "::notice::applied ${{ inputs.file }}"
+          fi
+
+      - name: Report what is there now
+        env:
+          DATABASE_URL: ${{ secrets.CITATION_GAP_DATABASE_URL }}
+        run: |
+          echo "--- tables ---"
+          psql "$DATABASE_URL" -c "\dt"
+          echo "--- the trigger that keeps the FAQ's promise ---"
+          psql "$DATABASE_URL" -At -c \
+            "SELECT tgname FROM pg_trigger WHERE NOT tgisinternal;"
+          echo "--- scan_jobs shape ---"
+          psql "$DATABASE_URL" -c "\d scan_jobs"
