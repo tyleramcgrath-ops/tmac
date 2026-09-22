@@ -36,6 +36,15 @@ function pt_backfill_content() {
 	}
 
 	pt_backfill_terms();
+
+	/*
+	 * Renames run before anything creates an experience. pt_backfill_experiences()
+	 * adds whatever the seed definitions describe and is missing, and those
+	 * definitions now carry the new names — so creating first would make a
+	 * second "Catamaran Tour" and leave the real one, bookings and all,
+	 * renamed to catamaran-tour-2 beside it.
+	 */
+	pt_backfill_tour_lineup();
 	pt_backfill_experiences();
 	pt_backfill_guide_names();
 	pt_drop_retired_images();
@@ -198,6 +207,162 @@ function pt_backfill_guide_names() {
 
 		if ( false !== strpos( $bio, 'Grew up on this beach' ) ) {
 			delete_post_meta( $guide->ID, '_pt_bio_short' );
+		}
+	}
+}
+
+/**
+ * Bring an existing site onto the 2026 tour line-up.
+ *
+ * The seeder only runs on a fresh install, so a site set up earlier keeps the
+ * old names, the old copy and the old inclusions forever. These are the same
+ * tours renamed and described properly rather than new ones, so they are
+ * updated in place: the post IDs, their bookings and their URLs survive.
+ *
+ * @return int How many experiences were changed.
+ */
+function pt_backfill_tour_lineup() {
+	/*
+	 * Old title => new title. The surf lessons map by how they were sold
+	 * rather than by name: the old beginner lesson was the group one, and the
+	 * intermediate lesson was the small-group rate.
+	 */
+	$renames = array(
+		'Sunset Boat Tour'          => 'Catamaran Tour',
+		'Estuary & Wildlife Trip'   => 'Safari Boat',
+		'Estuary &amp; Wildlife Trip' => 'Safari Boat',
+		'Surf Lesson — Beginner'    => 'Group Surf Lesson',
+		'Surf Lesson — Intermediate' => 'Semi-Private Surf Lesson',
+		'Private Surf Coaching'     => 'Private Surf Lesson',
+	);
+
+	$changed = 0;
+
+	foreach ( $renames as $old => $new ) {
+		$post = pt_find_experience_by_title( $old );
+
+		if ( ! $post ) {
+			continue;
+		}
+
+		/*
+		 * Somebody may have made the new one by hand already. Renaming onto it
+		 * would take a "-2" slug and leave two of the same tour, so leave the
+		 * old one alone and let a person decide which to keep.
+		 */
+		if ( pt_find_experience_by_title( $new ) ) {
+			continue;
+		}
+
+		wp_update_post(
+			array(
+				'ID'         => $post->ID,
+				'post_title' => $new,
+				'post_name'  => sanitize_title( $new ),
+			)
+		);
+
+		++$changed;
+	}
+
+	/*
+	 * Now re-apply the copy. Every tour's inclusions, duration and summary
+	 * were rewritten from what the operator actually sells, so the old text is
+	 * not worth preserving — but anything they have edited by hand on top of a
+	 * seeded value would be, which is why this runs once per version rather
+	 * than on every load.
+	 */
+	foreach ( pt_seed_experiences() as $item ) {
+		$post = pt_find_experience_by_title( $item['title'] );
+
+		if ( ! $post ) {
+			// Genuinely new in this release, so create it.
+			pt_insert_experience( $item, 0 );
+			++$changed;
+
+			continue;
+		}
+
+		pt_refresh_experience_copy( $post->ID, $item );
+		++$changed;
+	}
+
+	return $changed;
+}
+
+/**
+ * An experience by its exact title.
+ *
+ * @param string $title Title.
+ * @return WP_Post|null
+ */
+function pt_find_experience_by_title( $title ) {
+	$found = get_posts(
+		array(
+			'post_type'        => PT_EXPERIENCE_POST_TYPE,
+			'post_status'      => 'any',
+			'posts_per_page'   => 1,
+			'title'            => $title,
+			'suppress_filters' => true,
+		)
+	);
+
+	return $found ? $found[0] : null;
+}
+
+/**
+ * Write a seed definition's copy onto an experience that already exists.
+ *
+ * Only the descriptive fields. Prices are left alone because the operator sets
+ * those, and the schedule is left alone because they may have tuned it.
+ *
+ * @param int                  $post_id Experience ID.
+ * @param array<string, mixed> $item    Seed definition.
+ */
+function pt_refresh_experience_copy( $post_id, $item ) {
+	if ( ! empty( $item['excerpt'] ) ) {
+		wp_update_post(
+			array(
+				'ID'           => $post_id,
+				'post_excerpt' => $item['excerpt'],
+			)
+		);
+	}
+
+	if ( ! empty( $item['type'] ) ) {
+		wp_set_object_terms( $post_id, $item['type'], 'experience_type' );
+	}
+
+	if ( ! empty( $item['level'] ) ) {
+		wp_set_object_terms( $post_id, $item['level'], 'skill_level' );
+	}
+
+	$fields = array(
+		'duration'   => isset( $item['duration'] ) ? $item['duration'] : '',
+		'group_size' => isset( $item['group'] ) ? $item['group'] : '',
+		'includes'   => isset( $item['includes'] ) ? implode( "\n", $item['includes'] ) : '',
+		'bring'      => isset( $item['bring'] ) ? implode( "\n", $item['bring'] ) : '',
+		'faq'        => isset( $item['faq'] ) ? implode( "\n", $item['faq'] ) : '',
+	);
+
+	foreach ( $fields as $key => $value ) {
+		if ( '' !== $value ) {
+			update_post_meta( $post_id, '_pt_' . $key, $value );
+		}
+	}
+
+	/*
+	 * The three lessons that were replaced carried an invented rating and
+	 * review count. Nothing on this site should show a score nobody gave it.
+	 */
+	delete_post_meta( $post_id, '_pt_rating' );
+	delete_post_meta( $post_id, '_pt_review_count' );
+
+	if ( ! empty( $item['image'] ) ) {
+		$attachment_id = pt_sideload_theme_image( $item['image'], isset( $item['alt'] ) ? $item['alt'] : '' );
+
+		if ( $attachment_id ) {
+			set_post_thumbnail( $post_id, $attachment_id );
 		}
 	}
 }

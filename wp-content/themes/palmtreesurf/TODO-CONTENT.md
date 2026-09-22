@@ -37,50 +37,45 @@ grep -rn "{{PT_" wp-content/themes/palmtreesurf
 
 ---
 
-## 2. Prices — made up, and flagged as made up
+## 2. Prices — yours, as you gave them
 
-**This changed in v1.12.0.** Every experience now carries a price, and **none of
-them came from you.** They were invented so the quote, the deposit and the Stripe
-checkout could be built and tested end to end. They are not a suggestion of what
-to charge.
+**This changed in v1.13.0.** The made-up figures are gone. Every tour now carries
+the price you sent, and nothing on the site is flagged as invented any more.
 
-Every made-up price is labelled. You will see it in three places, and all three
-clear themselves as you save real rates:
+Change them under **Pricing** in the admin menu: one screen, every tour, grouped
+by category, with a **Save all prices and options** button at the bottom. The
+same numbers can also be edited on the tour itself, under **Pricing** in the
+editor — they are two views of one set of rates.
 
-- **Pricing** in the admin menu — a red *Made-up price* under each tour's name.
-- A red warning at the top of that screen listing every tour still affected.
-- The same warning on the Experiences list.
-
-Set your real rates in **Pricing**. It is one screen with every tour, grouped by
-category, and a **Save all prices** button. Editing a tour individually still
-works — **Experiences → edit → Pricing** writes the same numbers.
-
-Two ways to price a tour. Fill in one or the other, never both:
-
-| | Use it for | Fields |
+| Tour | Price | Length |
 | --- | --- | --- |
-| **Per person** | lessons, kayak tours, wildlife trips | Price per adult, Price per child |
-| **Flat rate** | charters, private hire | Flat rate, People it covers, Extra person rate |
+| Private Surf Lesson | 85 for one person | 2 hours |
+| Semi-Private Surf Lesson | 65 per person, 2 maximum | 2 hours |
+| Group Surf Lesson | 55 per person, 3 or more | 2 hours |
+| Catamaran Tour | 85 adult, 55 child | 5 hours |
+| Island Kayak Tour | 75 per person, children the same | 2.5 hours |
+| Mangrove Kayak Tour | 75 per person, children the same | 2.5 hours |
+| Safari Boat | 55 per person | 2.5 hours, tide-dependent |
+| Turtle Tour | 65 per person | 4 to 5 hours, leaves 5pm |
+| Fishing Charter | 1300 full day, 1000 three-quarter, 800 half | up to 5 guests |
 
-If a flat rate is set it wins and the per-person rates are ignored.
+**One thing to confirm:** you wrote "65 for a boat" for the Turtle Tour. It is
+set as **65 per person**, because every other tour is priced per person and 65
+for a whole 4–5 hour boat would be far below everything else. If it really is
+65 for the boat however many come, change it to a trip option charged *for the
+whole trip* — a two-minute edit on the Pricing screen.
 
-**Start time surcharges** are added once per booking, not per person, and only
-when the customer picks that time. One per line, as `17:00 | 15`. The Sunset
-Boat Tour ships with `17:00 | 10` as a worked example — replace or delete it.
+### Two ways a tour can be priced
 
-The current made-up figures, so you know what to overwrite:
+1. **Per person.** An adult rate, and a child rate if children pay less. The
+   booking form multiplies by the party size.
+2. **Trip options.** For a tour sold more than one way — the charter's full,
+   three-quarter and half day. Each option has its own price, length and list
+   of what is included, and the customer picks one on the booking form. An
+   option can be charged per person or for the whole trip.
 
-| Experience | Made-up rate |
-| --- | --- |
-| Surf Lesson — Beginner | 65 adult / 55 child |
-| Surf Lesson — Intermediate | 75 adult / 65 child |
-| Private Surf Coaching | 120 adult |
-| Island Kayak Tour | 55 adult / 40 child |
-| Mangrove Kayak Tour | 60 adult / 45 child |
-| Estuary & Wildlife Trip | 70 adult / 50 child |
-| Turtle Tour | 80 adult / 60 child |
-| Sunset Boat Tour | 90 adult / 65 child, +10 at 17:00 |
-| Fishing Charter | 650 flat for 4, 85 per extra guest |
+If a tour has options, they replace the adult and child rates rather than adding
+to them. Only the Fishing Charter uses them today; any tour can.
 
 ---
 
@@ -630,3 +625,61 @@ site reads, is what caused this.
 
 Set prices in **Pricing**, or in the **Pricing** panel on the tour itself. Both
 write the same rates.
+
+---
+
+## 16. Added in v1.13.0 — your prices, the new line-up, and what is included
+
+### Tours renamed
+
+**Sunset Boat Tour** is now **Catamaran Tour**. **Estuary & Wildlife Trip** is
+now **Safari Boat**. These are the same tours renamed in place, so their
+bookings and their pages carry over; only the web address changes to match the
+new name.
+
+### Surf lessons restructured
+
+The old Beginner, Intermediate and Private Coaching lessons are replaced by
+**Private**, **Semi-Private** and **Group** — priced by how many come rather
+than by how well they surf, which is how you actually sell them. All three run
+two hours.
+
+The three old lessons carried a star rating and a review count that were
+invented before you had any reviews. Those are deleted, not carried over.
+
+### What is included, on every tour
+
+Every tour now lists what the price covers, and each says it departs Tamarindo
+and that hotel pickup can be arranged. The Fishing Charter's three options each
+carry their own list, so the half day correctly says a sandwich where the full
+day says lunch.
+
+### Trip options
+
+A new **Trip options** panel, on the Pricing screen and on each tour. Use it for
+any tour sold more than one way. The booking form grows a "Which option?"
+dropdown when a tour has them and stays as it was when it does not, and the
+running price follows the choice.
+
+### Photographs
+
+The five turtle photographs you sent are on the **Turtle Tour** — the nesting
+shots under red light, which are the tour itself rather than a stand-in. They
+replaced the stock underwater turtle, which is no longer in the theme; say the
+word and it comes back.
+
+The catamaran photograph is on the **Catamaran Tour** as you asked. It is the
+generated image rather than a photograph of your boat, so it is worth replacing
+with your own when you have one — guests who book a specific boat notice.
+
+### Video
+
+`Video.mov` is on the Turtle Tour. It arrived with the turtle photographs, so
+that is where it went — **worth checking**, because the clip cannot be played in
+the environment this was built in.
+
+Two clips from 14 May, `clip-2025-05-14-a.mp4` and `clip-2025-05-14-b.mp4`, are
+bundled in the theme but not yet on any tour, because there is no way to tell
+what they show. Tell me which tours they belong to and they go on in a line
+each, or upload them to **Media** and paste the URL into the tour's **Video
+URL** field yourself.

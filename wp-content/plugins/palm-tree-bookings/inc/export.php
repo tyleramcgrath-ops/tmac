@@ -138,7 +138,7 @@ function ptb_maybe_export() {
 					break;
 
 				default:
-					$row[] = ptb_display_value( $key, ptb_get( $booking->ID, $key ) );
+					$row[] = ptb_display_value( $key, ptb_get( $booking->ID, $key ), $booking->ID );
 			}
 		}
 

@@ -70,6 +70,19 @@ function ptb_render_field( $key, $field, $values = array() ) {
 			ptb_render_experience_field( $id, $name, $value, $required );
 			break;
 
+		case 'trip_option':
+			/*
+			 * Hidden until the chosen experience turns out to have options,
+			 * which form.js fills in. Most tours are sold one way and showing
+			 * an empty "which option?" on those is noise.
+			 */
+			printf(
+				'<select %1$s class="ptb-input" data-ptb-trip-options hidden><option value="">%2$s</option></select>',
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				esc_html__( 'Choose an experience first', 'palm-tree-bookings' )
+			);
+			break;
+
 		case 'slot':
 			/*
 			 * Populated by form.js once an experience and date are chosen. With
@@ -325,6 +338,7 @@ function ptb_enqueue() {
 		'ptbQuote',
 		array(
 			'endpoint' => rest_url( 'ptb/v1/quote' ),
+			'options'  => rest_url( 'ptb/v1/options' ),
 			'heading'  => __( 'Your price', 'palm-tree-bookings' ),
 			'total'    => __( 'Total', 'palm-tree-bookings' ),
 		)

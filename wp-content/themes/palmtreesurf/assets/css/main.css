@@ -2208,3 +2208,87 @@ body.menu-open { overflow: hidden; }
 	*, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 	.reveal-ready [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Trip options
+   ------------------------------------------------------------------ */
+
+/* Sits above "what is included" on tours sold more than one way, so the
+   comparison is the first thing read rather than a single list that does not
+   apply to whichever option they end up choosing. */
+.trip-options {
+	margin: 0 0 var(--pt-space-lg);
+}
+
+.trip-options__grid {
+	display: grid;
+	gap: var(--pt-space-sm);
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	margin: 0 0 var(--pt-space-sm);
+}
+
+.trip-option {
+	padding: var(--pt-space-sm);
+	border: 1px solid var(--pt-line);
+	border-radius: var(--pt-radius-md);
+	background: #fff;
+}
+
+.trip-option__name {
+	margin: 0 0 0.25rem;
+	font-size: var(--pt-h4, 1.125rem);
+}
+
+.trip-option__price {
+	margin: 0 0 0.35rem;
+	font-family: var(--pt-font-display);
+	font-size: 1.5rem;
+	line-height: 1.1;
+	color: var(--pt-ink);
+}
+
+.trip-option__price span {
+	display: block;
+	font-family: var(--pt-font-body);
+	font-size: 0.8125rem;
+	font-weight: 400;
+	color: var(--pt-ink-500);
+}
+
+.trip-option__meta {
+	margin: 0 0 0.6rem;
+	font-size: 0.875rem;
+	color: var(--pt-ink-500);
+}
+
+.trip-option__includes {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 0.9375rem;
+}
+
+.trip-option__includes li {
+	position: relative;
+	padding: 0 0 0 1.25rem;
+	margin: 0 0 0.3rem;
+}
+
+/* Matches the tick used by .checklist elsewhere, so an option's inclusions and
+   the tour's read as one kind of thing. */
+.trip-option__includes li::before {
+	content: "";
+	position: absolute;
+	top: 0.45em;
+	left: 0;
+	width: 0.5rem;
+	height: 0.28rem;
+	border-left: 2px solid var(--pt-ocean-500);
+	border-bottom: 2px solid var(--pt-ocean-500);
+	transform: rotate(-45deg);
+}
+
+.trip-options__note {
+	margin: 0;
+	font-size: 0.875rem;
+	color: var(--pt-ink-500);
+}

@@ -53,6 +53,15 @@ function ptb_field_groups() {
 						'sunset'    => __( 'Sunset', 'palm-tree-bookings' ),
 					),
 				),
+				'trip_option'    => array(
+					/*
+					 * Filled in by the form script once an experience is
+					 * chosen, since the options belong to the tour. Tours sold
+					 * one way only have none and the field hides itself.
+					 */
+					'label' => __( 'Which option?', 'palm-tree-bookings' ),
+					'type'  => 'trip_option',
+				),
 				'party_adults'   => array(
 					'label'    => __( 'Adults', 'palm-tree-bookings' ),
 					'type'     => 'number',
@@ -317,7 +326,7 @@ function ptb_sanitize_value( $raw, $field ) {
  * @param string $value Stored value.
  * @return string
  */
-function ptb_display_value( $key, $value ) {
+function ptb_display_value( $key, $value, $booking_id = 0 ) {
 	$fields = ptb_fields();
 
 	if ( ! isset( $fields[ $key ] ) ) {
@@ -336,6 +345,18 @@ function ptb_display_value( $key, $value ) {
 
 	if ( 'slot' === $field['type'] && $value ) {
 		return function_exists( 'ptb_format_time' ) ? ptb_format_time( $value ) : $value;
+	}
+
+	/*
+	 * Stored as the option's position, so staff reading a booking, and the
+	 * customer reading their confirmation, would otherwise see "1" where they
+	 * need to read "Half day".
+	 */
+	if ( 'trip_option' === $field['type'] && '' !== $value && $booking_id && function_exists( 'ptb_option_at' ) ) {
+		$experience = (int) ptb_get( $booking_id, 'experience' );
+		$option     = $experience ? ptb_option_at( $experience, (int) $value ) : null;
+
+		return $option ? $option['label'] : (string) $value;
 	}
 
 	if ( 'experience' === $field['type'] && is_numeric( $value ) ) {

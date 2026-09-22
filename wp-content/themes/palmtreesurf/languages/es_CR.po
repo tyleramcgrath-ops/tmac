@@ -2768,15 +2768,6 @@ msgstr "De diciembre a abril"
 msgid "26-29°C year round"
 msgstr "26-29 °C todo el año"
 
-msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
-msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
-
-msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
-msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
-
-msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
-msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
-
 msgid "Your price"
 msgstr "Su precio"
 
@@ -2806,6 +2797,231 @@ msgstr "Stripe rechazó la solicitud."
 
 msgid "Stripe sent a response we could not read."
 msgstr "Stripe envió una respuesta que no pudimos leer."
+
+msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
+msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
+
+msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
+msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
+
+msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
+msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
+
+msgid "Private Surf Lesson"
+msgstr "Clase Privada de Surf"
+
+msgid "Semi-Private Surf Lesson"
+msgstr "Clase Semiprivada de Surf"
+
+msgid "Group Surf Lesson"
+msgstr "Clase Grupal de Surf"
+
+msgid "Catamaran Tour"
+msgstr "Tour en Catamarán"
+
+msgid "Safari Boat"
+msgstr "Safari en Bote"
+
+msgid "Two hours of one-to-one coaching, pitched at exactly where your surfing is."
+msgstr "Dos horas de instrucción individual, al nivel exacto de su surf."
+
+msgid "Two of you, one instructor, two hours. The pair rate for friends and couples."
+msgstr "Dos personas, un instructor, dos horas. La tarifa en pareja para amigos y parejas."
+
+msgid "Three or more of you learning together for two hours, at the per-person rate."
+msgstr "Tres o más personas aprendiendo juntas durante dos horas, con tarifa por persona."
+
+msgid "Full, three-quarter and half-day charters off the Guanacaste coast, up to five aboard."
+msgstr "Charters de día completo, tres cuartos de día y medio día frente a la costa de Guanacaste, hasta cinco personas a bordo."
+
+msgid "Five hours aboard the catamaran with an open bar, lunch buffet and everything to play with in the water."
+msgstr "Cinco horas a bordo del catamarán con bar abierto, bufé de almuerzo y todo para disfrutar en el agua."
+
+msgid "Two and a half hours paddling out to Captain Island, with snorkelling once you are there."
+msgstr "Dos horas y media remando hasta la Isla Capitán, con snorkel al llegar."
+
+msgid "Two and a half hours through the mangrove channels, with a trail walk and the wildlife that lives in there."
+msgstr "Dos horas y media por los canales del manglar, con una caminata por el sendero y la fauna que vive ahí."
+
+msgid "An evening run up the coast to a beach where the turtles hatch, leaving Tamarindo at 5pm."
+msgstr "Una salida al anochecer por la costa hasta una playa donde nacen las tortugas, saliendo de Tamarindo a las 5 p. m."
+
+msgid "Two and a half hours out on the water watching for wildlife. Departure times follow the tide."
+msgstr "Dos horas y media en el agua observando la fauna. Las horas de salida dependen de la marea."
+
+msgid "Your own instructor for the full two hours"
+msgstr "Su propio instructor durante las dos horas completas"
+
+msgid "One instructor between the two of you"
+msgstr "Un instructor para los dos"
+
+msgid "Instruction for the full two hours"
+msgstr "Instrucción durante las dos horas completas"
+
+msgid "Board and rash guard sized to you"
+msgstr "Tabla y licra a su medida"
+
+msgid "Boards and rash guards sized to each of you"
+msgstr "Tablas y licras a la medida de cada uno"
+
+msgid "Board and rash guard sized to each guest"
+msgstr "Tabla y licra a la medida de cada persona"
+
+msgid "Departs Tamarindo — hotel pickup can be arranged"
+msgstr "Sale de Tamarindo — se puede coordinar transporte desde el hotel"
+
+msgid "Departs Tamarindo at 5pm — hotel pickup can be arranged"
+msgstr "Sale de Tamarindo a las 5 p. m. — se puede coordinar transporte desde el hotel"
+
+msgid "Fruit, water and beers"
+msgstr "Fruta, agua y cervezas"
+
+msgid "Lunch on the full and three-quarter day, a sandwich on the half day"
+msgstr "Almuerzo en el día completo y en los tres cuartos de día; un sándwich en el medio día"
+
+msgid "Open bar"
+msgstr "Bar abierto"
+
+msgid "Lunch buffet"
+msgstr "Bufé de almuerzo"
+
+msgid "Snacks and fresh fruit"
+msgstr "Bocadillos y fruta fresca"
+
+msgid "Snorkelling gear"
+msgstr "Equipo de snorkel"
+
+msgid "Paddle board and kayak"
+msgstr "Tabla de remo y kayak"
+
+msgid "Water toys"
+msgstr "Juguetes acuáticos"
+
+msgid "Guided tour of Captain Island"
+msgstr "Tour guiado por la Isla Capitán"
+
+msgid "Guided tour of the mangroves"
+msgstr "Tour guiado por los manglares"
+
+msgid "A walk on the trail"
+msgstr "Una caminata por el sendero"
+
+msgid "Fresh fruit and water"
+msgstr "Fruta fresca y agua"
+
+msgid "Guided boat trip"
+msgstr "Paseo guiado en bote"
+
+msgid "Boat from Tamarindo to the turtle beach and back"
+msgstr "Bote desde Tamarindo hasta la playa de las tortugas y de regreso"
+
+msgid "Local guide for the whole evening"
+msgstr "Guía local durante toda la noche"
+
+msgid "Reef-safe sunscreen"
+msgstr "Protector solar que no daña el arrecife"
+
+msgid "Your own drinks"
+msgstr "Sus propias bebidas"
+
+msgid "A layer for after dark"
+msgstr "Un abrigo para después del anochecer"
+
+msgid "5 hours"
+msgstr "5 horas"
+
+msgid "4 to 5 hours"
+msgstr "4 a 5 horas"
+
+msgid "Half, three-quarter or full day"
+msgstr "Medio día, tres cuartos de día o día completo"
+
+msgid "1 guest"
+msgstr "1 persona"
+
+msgid "2 guests maximum"
+msgstr "Máximo 2 personas"
+
+msgid "3 guests or more"
+msgstr "3 personas o más"
+
+msgid "5 guests maximum"
+msgstr "Máximo 5 personas"
+
+msgid "Full day"
+msgstr "Día completo"
+
+msgid "Three-quarter day"
+msgstr "Tres cuartos de día"
+
+msgid "Half day"
+msgstr "Medio día"
+
+msgid "Lunch"
+msgstr "Almuerzo"
+
+msgid "A sandwich"
+msgstr "Un sándwich"
+
+msgid "Fruit and water"
+msgstr "Fruta y agua"
+
+msgid "Beers"
+msgstr "Cervezas"
+
+msgid "Ways to book this"
+msgstr "Formas de reservar"
+
+msgid "for the trip"
+msgstr "por el viaje"
+
+msgid "Which option?"
+msgstr "¿Cuál opción?"
+
+msgid "Choose an experience first"
+msgstr "Elija primero una experiencia"
+
+msgid "Choose your option on the booking form below and the price updates as you go."
+msgstr "Elija su opción en el formulario de reserva abajo y el precio se actualiza al instante."
+
+msgid "%1$s — %2$s for the trip"
+msgstr "%1$s — %2$s por el viaje"
+
+msgid "%1$s — %2$s per person"
+msgstr "%1$s — %2$s por persona"
+
+msgid "Is there food on the trip? | No. Eat before you come aboard, and bring your own drinks for the evening."
+msgstr "¿Hay comida en el viaje? | No. Coma antes de abordar y traiga sus propias bebidas para la noche."
+
+msgid "What time do we get back? | The trip runs four to five hours from the 5pm departure, so expect to be back late evening."
+msgstr "¿A qué hora regresamos? | El viaje dura de cuatro a cinco horas desde la salida de las 5 p. m., así que el regreso es ya entrada la noche."
+
+msgid "What time does it leave? | It depends on the tide, so the departure moves day to day. Tell us your date and we will confirm the time."
+msgstr "¿A qué hora sale? | Depende de la marea, así que la salida cambia cada día. Díganos su fecha y le confirmamos la hora."
+
+msgid "A nesting turtle on the beach at night under a guide's red light"
+msgstr "Una tortuga anidando en la playa de noche bajo la luz roja del guía"
+
+msgid "Catamaran under sail off the Guanacaste coast at sunset"
+msgstr "Catamarán navegando frente a la costa de Guanacaste al atardecer"
+
+msgid "Surf instructor coaching a student on the sand at Tamarindo"
+msgstr "Instructor de surf enseñando a un estudiante en la arena de Tamarindo"
+
+msgid "Two surf students listening to a briefing before paddling out"
+msgstr "Dos estudiantes de surf escuchando las indicaciones antes de entrar al agua"
+
+msgid "Group surf lesson on the beach at Tamarindo"
+msgstr "Clase grupal de surf en la playa de Tamarindo"
+
+msgid "Boats and gear at the beach launch point in Tamarindo"
+msgstr "Botes y equipo en el punto de salida de la playa en Tamarindo"
+
+msgid "Boat moving through the estuary channel at Tamarindo"
+msgstr "Bote avanzando por el canal del estero en Tamarindo"
+
+msgid "A capuchin monkey in the mangroves of the Tamarindo estuary"
+msgstr "Un mono carablanca en los manglares del estero de Tamarindo"
 
 msgid "%d guest"
 msgid_plural "%d guests"
@@ -2856,3 +3072,14 @@ msgid "Charter, up to %d guest"
 msgid_plural "Charter, up to %d guests"
 msgstr[0] "Charter, hasta %d persona"
 msgstr[1] "Charter, hasta %d personas"
+
+
+msgid "Up to %d guest"
+msgid_plural "Up to %d guests"
+msgstr[0] "Hasta %d persona"
+msgstr[1] "Hasta %d personas"
+
+msgid "%1$s — %2$d guest"
+msgid_plural "%1$s — %2$d guests"
+msgstr[0] "%1$s — %2$d persona"
+msgstr[1] "%1$s — %2$d personas"

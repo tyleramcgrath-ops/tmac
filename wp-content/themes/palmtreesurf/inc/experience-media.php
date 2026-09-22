@@ -27,18 +27,18 @@ defined( 'ABSPATH' ) || exit;
  */
 function pt_experience_photo_sets() {
 	return array(
-		'surf-lesson-beginner'     => array(
+		'group-surf-lesson'        => array(
 			'group-lesson-beach.jpg',
 			'surf-lesson-group-briefing.jpg',
 			'group-instruction-sand.jpg',
 			'surf-students-with-boards.jpg',
 		),
-		'surf-lesson-intermediate' => array(
+		'semi-private-surf-lesson' => array(
 			'instructor-popup-stance.jpg',
 			'surf-students-with-boards.jpg',
 			'group-instruction-sand.jpg',
 		),
-		'private-surf-coaching'    => array(
+		'private-surf-lesson'      => array(
 			'group-instruction-sand.jpg',
 			'instructor-popup-stance.jpg',
 			'group-lesson-beach.jpg',
@@ -56,12 +56,19 @@ function pt_experience_photo_sets() {
 			'estuary-kayaks-mangrove-shore.jpg',
 			'estuary-capuchin-monkey.jpg',
 		),
-		'estuary-wildlife-trip'    => array(
+		'safari-boat'              => array(
 			'estuary-crocodile.jpg',
 			'estuary-capuchin-monkey.jpg',
 			'estuary-crocodile-surfacing.jpg',
 			'estuary-capuchin-troop.jpg',
 			'estuary-mangrove-kayak.jpg',
+		),
+		'turtle-tour'              => array(
+			'turtle-nesting-red-light.jpg',
+			'turtle-nest-guide-light.jpg',
+			'turtle-beach-night-stars.jpg',
+			'turtle-returning-to-sea.jpg',
+			'turtle-tracks-night-beach.jpg',
 		),
 		'fishing-charter'          => array(
 			'fishing-charter-boat.jpg',
@@ -91,13 +98,23 @@ function pt_experience_photo_sets() {
  */
 function pt_experience_video_map() {
 	return array(
-		'estuary-wildlife-trip' => array(
+		'safari-boat'         => array(
 			'file'   => 'estuary-crocodile.mp4',
 			'poster' => 'estuary-crocodile.jpg',
 		),
-		'mangrove-kayak-tour'   => array(
+		'mangrove-kayak-tour' => array(
 			'file'   => 'estuary-crocodile.mp4',
 			'poster' => 'estuary-crocodile.jpg',
+		),
+		/*
+		 * Shipped in the same batch as the turtle photographs, so it is that
+		 * tour's footage. Worth confirming: the clip cannot be played in this
+		 * environment, so the pairing comes from how it arrived rather than
+		 * from watching it.
+		 */
+		'turtle-tour'         => array(
+			'file'   => 'turtle-tour.mp4',
+			'poster' => 'turtle-nesting-red-light.jpg',
 		),
 	);
 }

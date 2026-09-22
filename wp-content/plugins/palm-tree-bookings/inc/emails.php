@@ -27,7 +27,7 @@ function ptb_booking_summary( $booking_id, $internal = false ) {
 				continue;
 			}
 
-			$group_lines[] = $field['label'] . ': ' . ptb_display_value( $key, $value );
+			$group_lines[] = $field['label'] . ': ' . ptb_display_value( $key, $value, $booking_id );
 		}
 
 		if ( $group_lines ) {

@@ -27,10 +27,89 @@
 		var adults = form.querySelector( '[name="ptb[party_adults]"]' );
 		var children = form.querySelector( '[name="ptb[party_children]"]' );
 		var slot = form.querySelector( '[name="ptb[slot_time]"]' );
+		var trip = form.querySelector( '[data-ptb-trip-options]' );
 
 		if ( ! experience || ! adults ) {
 			return;
 		}
+
+		var tripToken = 0;
+
+		// Tours sold more than one way carry options; the picker only exists
+		// for those, and stays hidden on the rest.
+		function loadOptions() {
+			if ( ! trip || ! config.options ) {
+				return;
+			}
+
+			var id = parseInt( experience.value, 10 );
+			var mine = ++tripToken;
+
+			if ( ! id ) {
+				hideTrip();
+				return;
+			}
+
+			fetch( config.options + '?experience=' + encodeURIComponent( String( id ) ), {
+				headers: { Accept: 'application/json' }
+			} )
+				.then( function ( response ) {
+					return response.ok ? response.json() : null;
+				} )
+				.then( function ( data ) {
+					if ( mine !== tripToken ) {
+						return;
+					}
+
+					var list = ( data && data.options ) || [];
+
+					if ( ! list.length ) {
+						hideTrip();
+						refresh();
+						return;
+					}
+
+					trip.innerHTML = '';
+
+					list.forEach( function ( option ) {
+						var el = document.createElement( 'option' );
+						el.value = String( option.index );
+						el.textContent = option.summary;
+						trip.appendChild( el );
+					} );
+
+					trip.hidden = false;
+					setTripVisible( true );
+					refresh();
+				} )
+				.catch( function () {
+					if ( mine === tripToken ) {
+						hideTrip();
+					}
+				} );
+		}
+
+		function hideTrip() {
+			if ( ! trip ) {
+				return;
+			}
+
+			trip.innerHTML = '';
+			trip.hidden = true;
+			setTripVisible( false );
+		}
+
+		// The label and hint sit in a wrapper around the select, so hiding the
+		// select alone would leave a stray "Which option?" behind.
+		function setTripVisible( visible ) {
+			var field = trip.closest( '.ptb-field' ) || trip.parentNode;
+
+			if ( field && field !== form ) {
+				field.hidden = ! visible;
+			}
+		}
+
+		hideTrip();
 
 		var panel = document.createElement( 'div' );
 		panel.className = 'ptb-quote';
@@ -64,6 +143,10 @@
 				time: ( slot && slot.value ) || ''
 			} );
 
+			if ( trip && ! trip.hidden && trip.value !== '' ) {
+				params.set( 'option', trip.value );
+			}
+
 			// Only the newest request may paint, so a slow reply cannot
 			// overwrite a fresher price.
 			var mine = ++token;
@@ -94,7 +177,7 @@
 				} );
 		}
 
-		[ experience, adults, children, slot ].forEach( function ( field ) {
+		[ experience, adults, children, slot, trip ].forEach( function ( field ) {
 			if ( ! field ) {
 				return;
 			}
@@ -103,6 +186,9 @@
 			field.addEventListener( 'input', refresh );
 		} );
 
+		experience.addEventListener( 'change', loadOptions );
+
+		loadOptions();
 		refresh();
 	}
 

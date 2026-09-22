@@ -66,6 +66,19 @@ while ( have_posts() ) :
 				 * they belong below the booking form rather than in front of it.
 				 */
 				?>
+				<?php
+				/*
+				 * Options first, when there are any: on a tour sold three ways
+				 * a single "what is included" list would be describing a trip
+				 * the customer has not chosen yet.
+				 */
+				get_template_part(
+					'template-parts/components/trip-options',
+					null,
+					array( 'id' => $pt_id )
+				);
+				?>
+
 				<?php if ( pt_field( $pt_id, 'includes' ) ) : ?>
 					<h2><?php esc_html_e( 'What is included', 'palmtreesurf' ); ?></h2>
 					<?php pt_experience_list( $pt_id, 'includes', 'checklist' ); ?>

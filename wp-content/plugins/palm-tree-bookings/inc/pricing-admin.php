@@ -81,8 +81,16 @@ function ptb_pricing_handle_save() {
 		return 'denied';
 	}
 
-	$rows = isset( $_POST['ptb_rates'] ) ? (array) wp_unslash( $_POST['ptb_rates'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized per field below.
-	$saved = 0;
+	$rows       = isset( $_POST['ptb_rates'] ) ? (array) wp_unslash( $_POST['ptb_rates'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized per field below.
+	$options_in = isset( $_POST['ptb_screen_options'] ) ? (array) wp_unslash( $_POST['ptb_screen_options'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized in ptb_normalise_option().
+	$saved      = 0;
+
+	// A tour whose options were all cleared still needs its row visited.
+	foreach ( array_keys( $options_in ) as $with_options ) {
+		if ( ! isset( $rows[ $with_options ] ) ) {
+			$rows[ $with_options ] = array();
+		}
+	}
 
 	foreach ( $rows as $post_id => $values ) {
 		$post_id = (int) $post_id;
@@ -119,6 +127,16 @@ function ptb_pricing_handle_save() {
 			} else {
 				update_post_meta( $post_id, '_pt_' . $key, $value );
 			}
+		}
+
+		/*
+		 * Options ride along in the same submit, so a tour sold three ways is
+		 * edited on the same screen as one sold a single way.
+		 */
+		if ( isset( $options_in[ $post_id ] ) && function_exists( 'ptb_save_options' ) ) {
+			ptb_save_options( $post_id, (array) $options_in[ $post_id ] );
+
+			$changed = true;
 		}
 
 		/*
@@ -244,7 +262,9 @@ function ptb_pricing_screen() {
 					</table>
 				<?php endforeach; ?>
 
-				<?php submit_button( __( 'Save all prices', 'palm-tree-bookings' ) ); ?>
+				<?php ptb_pricing_options_section( $grouped ); ?>
+
+				<?php submit_button( __( 'Save all prices and options', 'palm-tree-bookings' ) ); ?>
 			</form>
 		<?php endif; ?>
 
@@ -290,5 +310,81 @@ function ptb_pricing_screen() {
 			</p>
 		</div>
 	</div>
+	<?php
+}
+
+/**
+ * The trip options, on the same screen as the rates.
+ *
+ * The per-experience box can do this too, but it lives in the block editor's
+ * collapsed meta-box drawer — a poor home for the thing an operator changes
+ * most often. Prices and the options that carry them belong together.
+ *
+ * @param array<string, array<int, WP_Post>> $grouped Experiences by category.
+ */
+function ptb_pricing_options_section( $grouped ) {
+	if ( ! function_exists( 'ptb_options' ) ) {
+		return;
+	}
+
+	$posts = array();
+
+	foreach ( $grouped as $group ) {
+		foreach ( $group as $post ) {
+			$posts[] = $post;
+		}
+	}
+	?>
+	<h2><?php esc_html_e( 'Tours sold more than one way', 'palm-tree-bookings' ); ?></h2>
+
+	<p>
+		<?php esc_html_e( 'Use these when a tour has more than one price — a full day and a half day, or private and group rates. Each option carries its own price, length and inclusions, and the customer picks one when booking. A tour with no options is priced by the adult and child rates above.', 'palm-tree-bookings' ); ?>
+	</p>
+
+	<?php foreach ( $posts as $post ) : ?>
+		<?php $options = ptb_options( $post->ID ); ?>
+
+		<details<?php echo $options ? ' open' : ''; ?> style="margin:0 0 10px;border:1px solid #c3c4c7;border-radius:4px;background:#fff">
+			<summary style="padding:10px 14px;cursor:pointer;font-weight:600">
+				<?php echo esc_html( $post->post_title ); ?>
+				<span style="font-weight:400;color:#646970">
+					&mdash;
+					<?php
+					echo esc_html(
+						$options
+							? sprintf(
+								/* translators: %d: number of options. */
+								_n( '%d option', '%d options', count( $options ), 'palm-tree-bookings' ),
+								count( $options )
+							)
+							: __( 'one price', 'palm-tree-bookings' )
+					);
+					?>
+				</span>
+			</summary>
+
+			<div style="padding:0 14px" data-ptb-options>
+				<?php
+				if ( $options ) {
+					foreach ( $options as $index => $option ) {
+						ptb_options_row( $index, $option, 'ptb_screen_options[' . (int) $post->ID . ']' );
+					}
+				} else {
+					ptb_options_row( 0, null, 'ptb_screen_options[' . (int) $post->ID . ']' );
+				}
+				?>
+			</div>
+
+			<p style="padding:0 14px 14px">
+				<button type="button" class="button" data-ptb-add-option><?php esc_html_e( 'Add another option', 'palm-tree-bookings' ); ?></button>
+			</p>
+
+			<script type="text/template" data-ptb-option-template>
+				<?php ptb_options_row( '__INDEX__', null, 'ptb_screen_options[' . (int) $post->ID . ']' ); ?>
+			</script>
+		</details>
+	<?php endforeach; ?>
+
+	<?php ptb_options_admin_assets(); ?>
 	<?php
 }

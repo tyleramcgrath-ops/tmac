@@ -680,8 +680,8 @@ function pt_seed_post_map() {
 			'title'   => __( 'The Tamarindo Estuary: What You\'ll See, and Why You Go at Dawn', 'palmtreesurf' ),
 			'excerpt' => __( 'Howler monkeys, herons, kingfishers and crocodiles in a protected mangrove refuge minutes from the beach — and why the hour you go changes everything.', 'palmtreesurf' ),
 			'body'    => 'pt_post_estuary',
-			'image'   => 'sea-turtle-wildlife-underwater.jpg',
-			'alt'     => __( 'A sea turtle in clear water off the Costa Rican coast', 'palmtreesurf' ),
+			'image'   => 'estuary-capuchin-monkey.jpg',
+			'alt'     => __( 'A capuchin monkey in the mangroves of the Tamarindo estuary', 'palmtreesurf' ),
 		),
 		array(
 			'slug'    => 'things-to-do-tamarindo-5-day-itinerary',

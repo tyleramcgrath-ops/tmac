@@ -35,7 +35,7 @@ function ptb_render_request_box( $post ) {
 			if ( '' === $value ) {
 				continue;
 			}
-			$rows[ $field['label'] ] = ptb_display_value( $key, $value );
+			$rows[ $field['label'] ] = ptb_display_value( $key, $value, $post->ID );
 		}
 
 		if ( ! $rows ) {
