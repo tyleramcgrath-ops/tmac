@@ -2,8 +2,8 @@
 //
 // The row goes first. Clearing only the cookie would leave a session id that still resolves for
 // anyone who copied it, which is the difference between signing out and appearing to.
-const db = require('../db.js');
-const auth = require('../auth.impl.js');
+const db = require('../../lib/db.js');
+const auth = require('../../lib/auth.js');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST only' }); return; }
