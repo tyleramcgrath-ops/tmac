@@ -49,11 +49,14 @@ const SHIPPED = [
   'api/auth/redeem.js',   // GET   open the link, mint the session
   'api/auth/me.js',       // GET   who the cookie belongs to
   'api/auth/logout.js',   // POST  end the session
+  'api/projects.js',      // GET/POST/PATCH/DELETE  projects, ?id= rather than a dynamic route
+  'api/scans.js',         // GET/POST              the history behind a project
   'lib/page.impl.js',  // fetch + parse any URL as served (v10.6)
   'lib/render.impl.js',// headless Chromium render + paint measurement (v10.5)
   'lib/db.js',         // one pool, sized for serverless, pointed at Neon's pooled endpoint
   'lib/auth.js',       // magic-link auth: token issue, single-use redemption, sessions, cookie
   'lib/mail.js',       // sends the login link via Resend
+  'lib/store.js',      // projects and scans; ownership lives in every WHERE clause
   'package.json',
   'vercel.json'
 ];
