@@ -48,3 +48,8 @@ next-env.d.ts
 /playwright-report
 apps/reloop/package-lock.json
 apps/north-star-hq/package-lock.json
+
+# packaged theme and plugin builds — rebuildable from wp-content/, so the
+# repo does not carry a 22MB zip per release
+/palmtreesurf-*.zip
+/palm-tree-bookings-*.zip
