@@ -4,7 +4,12 @@
 // stands up a server routes static requests through here, so adding the next shipped static file
 // is one edit rather than three.
 const fs = require('fs'), path = require('path');
-const STATIC = { '/score.js': ['score.js', 'text/javascript'] };
+const STATIC = {
+  '/score.js': ['score.js', 'text/javascript'],
+  '/og.png': ['og.png', 'image/png'],
+  '/icon.svg': ['icon.svg', 'image/svg+xml'],
+  '/apple-touch-icon.png': ['apple-touch-icon.png', 'image/png']
+};
 
 // Returns true when it answered the request; the caller carries on otherwise.
 function serveStatic(pathname, res, root) {
