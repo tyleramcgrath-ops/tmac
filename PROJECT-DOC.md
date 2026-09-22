@@ -50,6 +50,53 @@ the useful half — nothing ships unless every file in `ship-manifest.json` is p
 recorded hash, so a missing or stale file fails the build and the previous production deployment
 stays live. See v10.7 for why that mattered and what it had been hiding.
 
+## v10.8 — the front door shipped, and the retainer hook got built (22 Sep 2026)
+
+**The homepage was replaced and is live.** The old front door was a dark SaaS template with
+gradient buttons, six rounded cards and no pricing at all — nothing on it could be sold. It is now
+built as the calibration report for an instrument: warm paper stock, ink, hairlines, tabular
+figures, Instrument Serif over IBM Plex, and a drafting dimension line measuring the real distance
+between the two scores, because that gap is the product. The palette is declared on `.homescreen`
+rather than borrowed from the app tokens, so the in-app theme toggle cannot alter it; the app
+behind it stays dark on purpose.
+
+It carries the monetisation surface that was missing entirely: three tiers, an FAQ answering what a
+buyer actually asks, and a panel stating the four rules the tool holds itself to. The free tier is
+marked available, the two paid tiers are marked in build and collect a waitlist rather than money
+for something unfinished.
+
+**The conversion leak behind it is closed.** Clicking "Run a free scan" landed on an email *and
+password* form for an account that does not exist, whose own note admitted any email gets you in.
+Launch controls now go straight to the scan form; the workspace panel is opt-in (only "Sign in"
+opens it), asks for a name rather than a password, and can be skipped outright.
+
+**Score movement over time now exists** — the retainer hook the "Next" list has carried since v9.
+Clicking a project opens its history: both scores plotted across every stored scan on one shared
+0–100 axis, with a crosshair and per-scan tooltip, direct end labels so identity never rests on
+colour alone, and a table underneath giving the same figures with per-scan deltas, open task counts
+and recoverable points. It reads `cg.hist` — the scanner's own store — and records nothing new, so
+the plotted line is the same data the reports were written from. One scan is reported as a reading,
+not drawn as a trend.
+
+The chart's two line colours are the in-band dark-surface steps of the same brand hues the app uses
+for Rank and Answer (`#2E9FC4` / `#C98407`): the entity keeps its colour, stepped to sit correctly
+against the chart surface. Validated rather than eyeballed — OKLCH L inside the 0.48–0.67 dark band,
+CVD ΔE 20.6 under protanopia and 24.6 under normal vision, contrast over 3:1. The app's own
+`--rank` / `--answer` are too light for that band and were left untouched, since they are correct
+for gauges and score type against the app's surfaces.
+
+**Pricing honesty.** Score movement runs in the browser, so it cannot be gated and is therefore
+free — it moved to the Scan tier on the pricing page the moment it shipped. Practice keeps what
+genuinely needs a server behind it: pooled search credits, sync, scheduled re-scans, and history
+beyond the six scans localStorage holds. The general rule, worth remembering before designing any
+further tier: **anything that can run in the browser cannot be gated, so it cannot be sold.**
+
+**Verification.** `test/history-flow.js` (new): 17/17 — two series on one shared axis, a marker per
+scan per series, both direct-labelled, the legend stating net movement, the table agreeing with the
+chart row for row including deltas and the first scan having none, the crosshair and tooltip
+reporting that scan's own figures, and a single scan refusing to be drawn as a trend. Plus
+build-guard 19/19, regression 157/157, scan-flow OK, demo-flow zero page errors.
+
 ## v10.7 — the redesign had never shipped, and the build was why (18 Sep 2026)
 
 **Lead with what went wrong.** The SaaS redesign and the marketing homepage were written into
