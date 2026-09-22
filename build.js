@@ -19,7 +19,7 @@
 // the hash recorded for it, so a missing or stale file fails the build and leaves the previous
 // production deployment live.
 //
-//   node build.js          verify the manifest, then write public/index.html
+//   node build.js          verify the manifest, then write the static files into public/
 //   node build.js --seal   re-record the hashes after an intentional change, and print the diff
 //
 // Sealing is a deliberate act: change a shipped file, run the tests, then seal and commit the
@@ -36,6 +36,7 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 // build, which is the specific failure this project kept shipping: a deploy with files left out.
 const SHIPPED = [
   'index.html',        // the whole front end: app shell, scanner, marketing homepage
+  'score.js',          // scoring/history/prompts, shared by the browser and the scan job
   'api/page.js',       // stub → page.impl.js
   'api/page.impl.js',  // fetch + parse any URL as served (v10.6)
   'api/render.js',     // stub → render.impl.js
@@ -110,15 +111,25 @@ function build() {
   for (const file of Object.keys(want)) if (SHIPPED.indexOf(file) === -1) { console.error('INTEGRITY FAIL: ' + file + ' is in the manifest but not in the shipped list — run `node build.js --seal`'); bad++; }
   if (bad) { console.error(bad + ' problem(s); nothing written. The previous production deployment stays live.'); process.exit(1); }
 
-  const index = read('index.html');
+  // Everything the page loads over the network has to reach public/, not just the page itself.
+  // index.html asks for /score.js; a public/ that has the page but not the script is a site that
+  // loads and then does nothing, which is exactly the class of failure this guard exists to stop.
+  const STATIC = ['index.html', 'score.js'];
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(path.join(OUT_DIR, 'index.html'), index);
-  const wrote = fs.readFileSync(path.join(OUT_DIR, 'index.html'));
-  if (sha(wrote) !== want['index.html'].sha256) {
-    console.error('INTEGRITY FAIL: public/index.html was written but reads back as sha256 ' + sha(wrote));
-    process.exit(1);
+  const written = [];
+  for (const file of STATIC) {
+    const out = path.join(OUT_DIR, file);
+    fs.writeFileSync(out, read(file));
+    // Read it back rather than trusting the write: this is the last point where a truncated or
+    // partial file can still be caught before it goes live.
+    const wrote = fs.readFileSync(out);
+    if (sha(wrote) !== want[file].sha256) {
+      console.error('INTEGRITY FAIL: public/' + file + ' was written but reads back as sha256 ' + sha(wrote));
+      process.exit(1);
+    }
+    written.push('public/' + file + ' (' + wrote.length + ' bytes, sha256 ' + sha(wrote) + ')');
   }
-  console.log('integrity verified; public/index.html written (' + wrote.length + ' bytes, sha256 ' + sha(wrote) + ')');
+  console.log('integrity verified; ' + written.join('; ') + ' written');
 }
 
 process.argv.indexOf('--seal') !== -1 ? seal() : build();

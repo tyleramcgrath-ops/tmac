@@ -9,7 +9,11 @@ let pass = 0, fail = 0;
 const ok = (cond, name, extra) => { if (cond) { pass++; console.log('  ok   ' + name); } else { fail++; console.log('  FAIL ' + name + (extra ? ' — ' + extra : '')); } };
 const read = (f) => fs.readFileSync(path.join(__dirname, f), 'utf8');
 
-// Load the browser-side scoring/prompt/buildFixes scripts from index.html into a sandbox.
+// Load the browser-side scoring/prompt/buildFixes code into a sandbox, the same way and in the
+// same order a browser does: score.js first as a classic external script, then the inline blocks
+// from index.html. Running the real file rather than require()ing it is deliberate — it is the
+// browser's path that these assertions are about, and a module wrapper would hide a name that
+// only works because it is global.
 function loadApp() {
   const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   const scripts = []; const re = /<script>([\s\S]*?)<\/script>/g; let m;
@@ -17,8 +21,8 @@ function loadApp() {
   const ctx = { console, document: { querySelector: () => null, querySelectorAll: () => [], getElementById: () => null, addEventListener() {} },
     window: {}, localStorage: { getItem: () => null, setItem() {} }, performance: { now: () => 0 }, requestAnimationFrame() {}, navigator: {} };
   vm.createContext(ctx);
-  vm.runInContext(scripts[0], ctx);   // scoring + prompts
-  vm.runInContext(scripts[1], ctx);   // buildFixes + scan flow (no DOM calls at load)
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'score.js'), 'utf8'), ctx);  // scoring + history + prompts
+  vm.runInContext(scripts[0], ctx);   // buildFixes + scan flow (no DOM calls at load)
   return ctx;
 }
 

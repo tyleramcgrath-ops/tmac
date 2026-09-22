@@ -14,7 +14,7 @@ const ok = (cond, name, extra) => { if (cond) { pass++; console.log('  ok   ' + 
 // handed without touching the real one.
 function sandbox() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cg-build-'));
-  for (const f of ['build.js', 'ship-manifest.json', 'index.html', 'package.json', 'vercel.json']) {
+  for (const f of ['build.js', 'ship-manifest.json', 'index.html', 'score.js', 'package.json', 'vercel.json']) {
     fs.copyFileSync(path.join(ROOT, f), path.join(dir, f));
   }
   fs.mkdirSync(path.join(dir, 'api'));
@@ -97,6 +97,71 @@ console.log('\n6. A missing manifest fails closed');
   const r = run(dir);
   ok(r.code !== 0 && /ship-manifest\.json is missing/.test(r.out), 'no manifest means no build');
   fs.rmSync(dir, { recursive: true, force: true });
+}
+
+console.log('\n7. score.js ships, and the two ways it is loaded give the same answers');
+{
+  const dir = sandbox();
+  const r = run(dir);
+  ok(r.code === 0 && /ok score\.js/.test(r.out), 'the build verifies score.js', r.out);
+  // The page asks for /score.js. A public/ holding the page but not the script is a site that
+  // loads and then does nothing — the exact shape of failure this guard exists to catch.
+  ok(fs.existsSync(path.join(dir, 'public', 'score.js')), 'and writes it into public/ alongside the page');
+  ok(fs.readFileSync(path.join(dir, 'public', 'score.js'), 'utf8') === fs.readFileSync(path.join(ROOT, 'score.js'), 'utf8'),
+     'byte for byte');
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+{
+  const dir = sandbox();
+  fs.unlinkSync(path.join(dir, 'score.js'));
+  const r = run(dir);
+  ok(r.code !== 0 && /score\.js is missing/.test(r.out), 'a deploy without score.js fails instead of shipping a dead page', r.out);
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+{
+  const dir = sandbox();
+  fs.appendFileSync(path.join(dir, 'score.js'), '\n// tampered\n');
+  const r = run(dir);
+  ok(r.code !== 0 && /INTEGRITY FAIL: score\.js sha256/.test(r.out), 'an unsealed edit to score.js fails the build', r.out);
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+{
+  // The reason this file exists at all: a scheduled scan and a scan the customer is watching must
+  // produce the same numbers. The browser gets these names as globals from a classic script; the
+  // scan job gets them off module.exports. If those two surfaces ever diverge, the scores diverge,
+  // so the equivalence is asserted rather than assumed.
+  const vm = require('vm');
+  const src = fs.readFileSync(path.join(ROOT, 'score.js'), 'utf8');
+  const ctx = { console, document: {}, window: {}, localStorage: {}, navigator: {} };
+  vm.createContext(ctx);
+  vm.runInContext(src, ctx);
+  const node = require(path.join(ROOT, 'score.js'));
+
+  const exported = Object.keys(node);
+  ok(exported.length > 50, 'the module exports the scoring surface (' + exported.length + ' names)');
+  const missing = exported.filter((n) => vm.runInContext('typeof ' + n, ctx) === 'undefined');
+  ok(missing.length === 0, 'every exported name is also a global when loaded as a classic script', missing.join(', '));
+
+  // `$` is the browser's DOM helper. Exporting it would invite the scan job to call it, so its
+  // absence from the module surface is the point, not an oversight.
+  ok(exported.indexOf('$') === -1, 'the DOM helper is deliberately not on the server-side surface');
+
+  // Same inputs through both surfaces, same output — the property that actually matters.
+  const p = { wordCount: 900, h2Count: 5, h3Count: 4, listCount: 3, statCount: 6, questionHeadingCount: 3,
+              kwInTitle: true, kwInH1: true, kwInMeta: true, schemaTopLevel: ['FAQPage'], schemaClaims: [],
+              tableCount: 1, entities: [], counters: [], jsHiddenStats: [], jsHiddenStatCount: 0 };
+  const m = { wordCount: 800, h2Count: 4, h3Count: 3, listCount: 2, statCount: 5, questionHeadingCount: 2 };
+  const viaNode = JSON.stringify(node.scoreRank(p, m));
+  ctx.__p = p; ctx.__m = m;
+  const viaBrowser = vm.runInContext('JSON.stringify(scoreRank(__p, __m))', ctx);
+  ok(viaNode === viaBrowser, 'scoreRank gives an identical result through both', viaNode + ' vs ' + viaBrowser);
+
+  const cov = { mine: 4, queries: 6, peerMedian: 3 };
+  const cats = [{ canonical: 'fleet telematics', variants: ['telematics'] }, { canonical: 'driver safety', variants: [] }];
+  ctx.__cov = cov; ctx.__cats = cats;
+  const aNode = JSON.stringify(node.scoreAnswer(p, m, cov, cats, null));
+  const aBrowser = vm.runInContext('JSON.stringify(scoreAnswer(__p, __m, __cov, __cats, null))', ctx);
+  ok(aNode === aBrowser, 'and so does scoreAnswer, entity matching and all', aNode.slice(0, 80) + ' vs ' + aBrowser.slice(0, 80));
 }
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
