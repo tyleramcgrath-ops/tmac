@@ -24,6 +24,24 @@ test/                build guard, regression suite, and two real-Chromium flows
 
 No framework. Two npm deps (`@sparticuz/chromium`, `puppeteer-core`), used by `api/render.js` alone.
 
+## The front door
+
+`index.html` carries two designs on purpose. The marketing homepage (`#homeScreen`, every `.mkt-`
+rule) is a warm paper "calibration report" with its own palette declared on `.homescreen` — it does
+not read the app's theme tokens, so the in-app light/dark toggle cannot alter it. The app behind it
+stays dark. The site is the spec sheet; the app is the instrument switched on.
+
+Two things there are product decisions, not styling, and should be changed deliberately:
+
+- **Prices** (`$0` / `$39` / `$149`) are anchors, not researched positions. They live in the
+  `.mkt-tier` blocks.
+- **The waitlist links** point at `hello@thecitationgap.com`, which does not exist yet. Either set
+  that mailbox up or repoint the two `mailto:` links before sending anyone to the page.
+
+The workspace panel (`#splash`) is opt-in by design: a launch control goes straight to the scan
+form, and only **Sign in** opens the panel. It asks for a name, never a password, because there is
+no account behind it — putting a password box in front of a free tool is a toll gate, not security.
+
 ## Working on it
 
 ```bash

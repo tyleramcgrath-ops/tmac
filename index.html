@@ -3,12 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Citation Gap — SEO &amp; AI Answer Audit</title>
-<meta name="description" content="Scan the live top 10 and the AI answer layer for any keyword. Get two scores, an ordered list of what to change, and a ready-to-paste Claude prompt for every fix.">
+<title>Citation Gap — rank in the top 10, get cited by the AI Overview too</title>
+<meta name="description" content="You rank third and the AI Overview quotes someone else. Citation Gap scores your page against the live top 10 and the answer layer, then hands back a ranked work order — every fix costed, with a prompt to paste into Claude. Free on your own search key.">
+<link rel="canonical" href="https://citation-gap.vercel.app/">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Citation Gap">
+<meta property="og:url" content="https://citation-gap.vercel.app/">
+<meta property="og:title" content="Citation Gap — rank in the top 10, get cited by the AI Overview too">
+<meta property="og:description" content="Scores your page against the live top 10 and against Google's AI Overview, then hands back a ranked, costed work order. Free on your own search key.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Citation Gap — rank in the top 10, get cited by the AI Overview too">
+<meta name="twitter:description" content="Two scores from one scan: top-ten parity, and whether an answer engine can quote you at all.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
 :root{--ground:#0A0E16;--surface:#121826;--surface-2:#182032;--sunk:#0D1220;--ink:#EDF1F7;--slate:#96A3B8;
 --faint:#63708A;--hairline:#212B40;--rank:#4CC9F0;--rank-2:#7BE0FF;--rank-soft:#0F2A3A;--answer:#FFB020;
@@ -326,10 +336,13 @@ html{background:var(--shell)}
 .splash-sub{font-size:13px;color:var(--slate);margin-top:4px}
 .splash-form{display:flex;flex-direction:column;gap:13px}
 .splash-form .field{display:flex;flex-direction:column;gap:6px}
-.splash-enter{background:linear-gradient(135deg,var(--accent),var(--rank));color:#fff;padding:13px;
+.splash-enter{background:var(--rank);color:#04171d;padding:13px;
   border-radius:9px;font-family:Archivo;font-weight:700;font-size:14.5px;margin-top:4px;
   box-shadow:0 8px 20px -10px var(--accent);transition:filter .15s,transform .12s;text-align:center}
-.splash-enter:hover{filter:brightness(1.08)}
+.splash-enter:hover{filter:brightness(1.1)}
+.splash-skip{width:100%;padding:11px;margin-top:2px;background:none;border:1px solid var(--hairline);
+  border-radius:9px;color:var(--slate);font-size:13px;transition:border-color .15s,color .15s}
+.splash-skip:hover{border-color:var(--slate);color:var(--ink)}
 .splash-enter:active{transform:translateY(1px)}
 .splash-note{font-size:11.5px;color:var(--faint);text-align:center;margin-top:16px}
 /* ---- Projects ---- */
@@ -363,263 +376,624 @@ html{background:var(--shell)}
 .proj-empty .dish svg{width:22px;height:22px}
 .proj-empty p{max-width:40ch}
 
-/* ---- Marketing homepage (front door in front of the app) ---- */
-.homescreen{position:fixed;inset:0;z-index:150;background:var(--ground);overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* ---- Marketing homepage (front door in front of the app) ----------------------------------
+   Design note: the app is an instrument, so the front door is its calibration report. Warm
+   paper stock, ink, hairlines, tabular figures, dimension lines. Deliberately NOT the dark
+   product UI behind it — the site is the spec sheet, the app is the instrument switched on.
+   Own palette, independent of the app's theme tokens, so the theme toggle cannot alter it. */
+.homescreen{position:fixed;inset:0;z-index:150;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  --paper:#F5F2EC;--paper-2:#EDE8DE;--paper-3:#E4DED1;--ink:#15130F;--ink-2:#46423A;
+  --quiet:#7D7666;--rule:#D5CEBE;--rule-2:#C3BAA6;
+  --rank:#0C5A6B;--rank-soft:#DCE9EC;--answer:#A2560A;--answer-soft:#F3E6D4;
+  --crit:#9E2B1E;--crit-soft:#F2E0DC;--pass:#2C6647;
+  background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.6;
+  font-variant-numeric:normal}
 .homescreen[hidden]{display:none}
-.mkt-nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;
-  gap:18px;padding:16px clamp(20px,4vw,52px);background:color-mix(in srgb,var(--ground) 86%,transparent);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline)}
-.mkt-navlinks{display:flex;align-items:center;gap:26px}
-.mkt-navlinks a{font-size:13.5px;font-weight:500;color:var(--slate);transition:color .15s}
-.mkt-navlinks a:hover{color:var(--ink)}
-.mkt-navcta{display:flex;align-items:center;gap:12px}
-@media(max-width:760px){.mkt-navlinks{display:none}}
-.mkt-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,52px)}
-.mkt-btn{font-family:Archivo;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:9px;
-  white-space:nowrap;transition:filter .15s,transform .12s,background .15s,border-color .15s}
-.mkt-btn:active{transform:translateY(1px)}
-.mkt-btn.primary{background:linear-gradient(135deg,var(--accent),var(--rank));color:#fff;
-  box-shadow:0 8px 20px -10px var(--accent)}
-.mkt-btn.primary:hover{filter:brightness(1.08)}
-.mkt-btn.ghost{border:1px solid var(--hairline);color:var(--slate);background:transparent}
-.mkt-btn.ghost:hover{border-color:var(--rank);color:var(--rank)}
-.mkt-hero{position:relative;overflow:hidden;padding:clamp(52px,8vw,96px) 0 clamp(40px,6vw,64px)}
-.mkt-hero::before{content:"";position:absolute;inset:-50% 45% 45% -25%;pointer-events:none;
-  background:radial-gradient(60% 60% at 26% 40%,var(--rank-soft) 0%,transparent 68%);opacity:.9}
-.mkt-hero::after{content:"";position:absolute;inset:-35% -25% 35% 40%;pointer-events:none;
-  background:radial-gradient(55% 55% at 65% 45%,var(--accent-soft) 0%,transparent 66%);opacity:.75}
-.mkt-hero .mkt-wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:52px;align-items:center}
-@media(max-width:920px){.mkt-hero .mkt-wrap{grid-template-columns:1fr}}
-.mkt-hero h1{font-size:clamp(32px,4.6vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.06;margin-bottom:18px}
-.mkt-hero h1 span{background:linear-gradient(100deg,var(--rank),var(--answer));-webkit-background-clip:text;
-  background-clip:text;-webkit-text-fill-color:transparent}
-.mkt-hero p.lead{font-size:17.5px;color:var(--slate);max-width:56ch;margin-bottom:26px}
-.mkt-herobtns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px}
-.mkt-microcopy{font-size:12.5px;color:var(--faint)}
-.mkt-previewcard{background:var(--surface);border:1px solid var(--hairline);border-radius:16px;
-  padding:22px 22px 20px;box-shadow:var(--shadow-lg)}
-.mkt-previewhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.mkt-previewhead span{font-family:Archivo;font-size:10.5px;font-weight:600;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--faint)}
-.mkt-previewhead b{font-family:"IBM Plex Mono";font-size:11px;color:var(--slate)}
-.mkt-gaugerow{display:flex;gap:16px}
-.mkt-gauge{flex:1;text-align:center}
-.mkt-gauge svg{width:100%;max-width:150px;height:auto}
-.mkt-gauge .gnum{font-family:Archivo;font-weight:800;font-size:30px;letter-spacing:-.03em;margin-top:-6px}
-.mkt-gauge .glab{font-family:Archivo;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
-.mkt-findlist{display:flex;flex-direction:column;gap:8px;margin-top:16px;border-top:1px solid var(--hairline);padding-top:14px}
-.mkt-find{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--slate)}
-.mkt-find .pill{flex:none;font-family:"IBM Plex Mono";font-size:9.5px;font-weight:600;letter-spacing:.05em;
-  padding:2px 7px;border-radius:5px;margin-top:1px}
-.mkt-find .pill.crit{background:var(--crit-soft);color:var(--crit)}
-.mkt-find .pill.high{background:var(--answer-soft);color:var(--warn)}
-.mkt-find .pill.med{background:var(--pass-soft);color:var(--pass)}
-.mkt-band{padding:clamp(46px,7vw,72px) 0}
-.mkt-band.alt{background:var(--surface-2)}
-.mkt-eyebrow{font-family:Archivo;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--faint);margin-bottom:10px;display:block}
-.mkt-band h2{font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.02em;text-wrap:balance;margin-bottom:14px}
-.mkt-band p.sub{font-size:15.5px;color:var(--slate);max-width:68ch}
-.mkt-compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
-@media(max-width:700px){.mkt-compare{grid-template-columns:1fr}}
-.mkt-ccol{background:var(--surface);border:1px solid var(--hairline);border-radius:13px;padding:22px}
-.mkt-ccol.old{opacity:.86}
-.mkt-ccol.new{border-color:var(--rank);box-shadow:0 0 0 1px var(--rank-soft)}
-.mkt-ccol h3{font-family:Archivo;font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.mkt-cdot{width:8px;height:8px;border-radius:50%;flex:none}
-.mkt-cdot.old{background:var(--faint)}
-.mkt-cdot.new{background:var(--rank)}
-.mkt-ccol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.mkt-ccol li{font-size:13.5px;color:var(--slate);padding-left:20px;position:relative}
-.mkt-ccol.old li::before{content:"–";position:absolute;left:0;color:var(--faint)}
-.mkt-ccol.new li::before{content:"✓";position:absolute;left:0;color:var(--rank);font-weight:700}
-.mkt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:32px}
-.mkt-fcard{background:var(--surface);border:1px solid var(--hairline);border-radius:14px;padding:24px;
-  box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .12s}
-.mkt-fcard:hover{border-color:var(--accent);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
-.mkt-ficon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:16px}
-.mkt-ficon svg{width:19px;height:19px}
-.mkt-ficon.rk{background:var(--rank-soft);color:var(--rank)}
-.mkt-ficon.an{background:var(--answer-soft);color:var(--answer)}
-.mkt-ficon.ac{background:var(--accent-soft);color:var(--accent)}
-.mkt-fcard h3{font-family:Archivo;font-size:15.5px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
-.mkt-fcard p{font-size:13.5px;color:var(--slate);max-width:none}
-.mkt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:34px;counter-reset:mktstep}
-@media(max-width:860px){.mkt-steps{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.mkt-steps{grid-template-columns:1fr}}
-.mkt-step{position:relative;padding-top:6px}
-.mkt-step .num{counter-increment:mktstep;font-family:Archivo;font-weight:800;font-size:13px;color:#fff;
-  width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,var(--accent),var(--rank));margin-bottom:14px}
-.mkt-step .num::before{content:counter(mktstep)}
-.mkt-step h4{font-family:Archivo;font-size:14.5px;font-weight:700;margin-bottom:6px}
-.mkt-step p{font-size:13px;color:var(--slate)}
-.mkt-cta{background:linear-gradient(135deg,var(--rank),var(--accent));border-radius:18px;padding:clamp(32px,5vw,52px);
-  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;box-shadow:var(--shadow-lg);
-  color:#fff}
-.mkt-cta h2{font-size:clamp(21px,2.6vw,28px);font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-.02em}
-.mkt-cta p{color:rgba(255,255,255,.88);font-size:14.5px;max-width:52ch}
-.mkt-cta .mkt-btn.primary{background:#fff;color:var(--rank);box-shadow:none}
-.mkt-cta .mkt-btn.primary:hover{background:rgba(255,255,255,.92);filter:none}
-.mkt-foot{border-top:1px solid var(--hairline);padding:34px 0 44px}
-.mkt-footrow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
-.mkt-footbrand{display:flex;align-items:center;gap:10px}
-.mkt-footbrand .mark{font-family:Archivo;font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
-.mkt-footnote{font-size:12px;color:var(--faint);max-width:46ch;line-height:1.6}
-.mkt-footlinks{display:flex;gap:20px;flex-wrap:wrap}
-.mkt-footlinks a{font-size:12.5px;color:var(--slate)}
-.mkt-footlinks a:hover{color:var(--rank)}
+.homescreen{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){.homescreen{scroll-behavior:auto}}
+/* paper grain — atmosphere without an image request */
+.homescreen::before{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.36'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply}
+.homescreen h1,.homescreen h2,.homescreen h3,.homescreen h4{font-family:"Instrument Serif",Georgia,serif;
+  font-weight:400;letter-spacing:-.01em;line-height:1.04;text-wrap:balance;color:var(--ink)}
+.homescreen p{max-width:none;color:var(--ink-2)}
+.homescreen em{font-style:italic}
+.mkt-wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px);position:relative;width:100%}
+.homescreen section{display:block}
+.mkt-mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.mkt-tag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--quiet)}
+
+/* ---- nav ---- */
+.mkt-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;padding:14px clamp(20px,5vw,64px);background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.mkt-nav .brand{display:flex;align-items:center;gap:11px}
+.mkt-nav .dish{width:30px;height:30px;border-radius:0;background:var(--ink);display:grid;place-items:center}
+.mkt-nav .dish svg{width:17px;height:17px}
+.mkt-nav .mark{font-family:"Instrument Serif",Georgia,serif;font-size:21px;letter-spacing:0;color:var(--ink)}
+.mkt-nav .mark em{font-style:italic;color:var(--rank)}
+.mkt-navlinks{display:flex;align-items:center;gap:30px}
+.mkt-navlinks a{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding-bottom:2px;
+  border-bottom:1px solid transparent;transition:border-color .18s,color .18s}
+.mkt-navlinks a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.mkt-navcta{display:flex;align-items:center;gap:10px}
+@media(max-width:900px){.mkt-navlinks{display:none}}
+@media(max-width:520px){.mkt-nav .mkt-btn.ghost{display:none}}
+
+/* ---- buttons: ink slabs, no gradients ---- */
+.mkt-btn{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;padding:12px 20px;border-radius:2px;white-space:nowrap;position:relative;
+  display:inline-flex;align-items:center;justify-content:center;line-height:1.25;text-decoration:none;
+  transition:transform .14s cubic-bezier(.2,.7,.3,1),background .18s,color .18s,box-shadow .18s}
+.mkt-btn.primary{background:var(--ink);color:var(--paper);box-shadow:3px 3px 0 var(--rule-2)}
+.mkt-btn.primary:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--rule-2)}
+.mkt-btn.primary:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--rule-2)}
+.mkt-btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--rule-2)}
+.mkt-btn.ghost:hover{border-color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.mkt-btn.lg{padding:15px 26px;font-size:12.5px}
+
+/* ---- hero ---- */
+.mkt-hero{padding:clamp(40px,5.6vw,72px) 0 clamp(28px,3.6vw,40px);position:relative;overflow:hidden}
+/* faint drafting grid, fading out — the sheet the instrument is plotted on */
+.mkt-hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(120% 90% at 78% 0%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(120% 90% at 78% 0%,#000 0%,transparent 72%)}
+.mkt-hero .mkt-wrap{position:relative;z-index:1}
+.mkt-kicker{display:inline-flex;align-items:center;gap:9px;margin-bottom:26px}
+.mkt-kicker i{width:6px;height:6px;border-radius:50%;background:var(--pass);flex:none;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--pass) 18%,transparent);animation:mktpulse 2.6s ease-in-out infinite}
+@keyframes mktpulse{0%,100%{opacity:1}50%{opacity:.35}}
+.mkt-hero h1{font-size:clamp(38px,6.4vw,80px);max-width:17ch;margin-bottom:22px}
+.mkt-hero h1 .gapword{font-style:italic;color:var(--rank);position:relative;white-space:nowrap}
+.mkt-hero h1 .gapword::after{content:"";position:absolute;left:0;right:0;bottom:.1em;height:2px;
+  background:var(--answer);transform:scaleX(0);transform-origin:left;
+  animation:mktunderline 1.1s cubic-bezier(.2,.7,.3,1) .5s forwards}
+@keyframes mktunderline{to{transform:scaleX(1)}}
+.mkt-herobody{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,64px);
+  align-items:end}
+@media(max-width:860px){.mkt-herobody{grid-template-columns:1fr;gap:26px}}
+.mkt-lead{font-size:clamp(16px,1.35vw,18.5px);color:var(--ink-2);max-width:54ch}
+.mkt-lead b{color:var(--ink);font-weight:600}
+.mkt-herobtns{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 14px}
+.mkt-microcopy{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;color:var(--quiet);
+  line-height:1.7;max-width:46ch}
+/* the running spec block in the hero's right column */
+.mkt-spec{border-top:1px solid var(--ink);padding-top:14px}
+.mkt-specrow{display:flex;justify-content:space-between;gap:16px;padding:7px 0;
+  border-bottom:1px solid var(--rule);font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px}
+.mkt-specrow dt{color:var(--quiet);letter-spacing:.04em;text-transform:uppercase;font-size:10.5px;padding-top:2px}
+.mkt-specrow dd{margin:0;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---- the signature: a dimension line measuring the gap ---- */
+.mkt-plot{margin-top:clamp(36px,4.4vw,58px);border:1px solid var(--rule-2);background:#FBF9F5;
+  box-shadow:6px 6px 0 color-mix(in srgb,var(--rule-2) 45%,transparent);position:relative}
+.mkt-plothead{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:13px 20px;border-bottom:1px solid var(--rule)}
+.mkt-plothead b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;font-weight:500;color:var(--ink)}
+.mkt-plotbody{padding:clamp(26px,5vw,54px) clamp(20px,4vw,48px) clamp(22px,3vw,34px);position:relative}
+p.mkt-note{position:absolute;left:clamp(20px,4vw,48px);top:clamp(26px,5vw,54px);max-width:32ch;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;line-height:1.85;color:var(--quiet);letter-spacing:.02em;
+  border-left:1px solid var(--rule-2);padding-left:12px}
+p.mkt-note b{display:block;color:var(--ink-2);font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  font-size:9.5px;margin-bottom:5px}
+@media(max-width:860px){p.mkt-note{position:static;max-width:none;margin-bottom:26px}}
+.mkt-track{position:relative;height:210px}
+/* Geometry, bottom-up: 0 dimension label · 22 dimension bar · 52 axis labels · 76 the axis.
+   The stems double as drafting extension lines, running from each plotted dot down past the
+   axis to the dimension bar, which is where a real dimension annotation sits. */
+.mkt-axis{position:absolute;left:0;right:0;bottom:76px;height:1px;background:var(--ink)}
+.mkt-axis i{position:absolute;top:0;width:1px;height:6px;background:var(--rule-2)}
+.mkt-axis i.maj{height:11px;background:var(--ink-2)}
+.mkt-axlab{position:absolute;top:15px;transform:translateX(-50%);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;color:var(--quiet)}
+.mkt-axlab.e{transform:none}.mkt-axlab.e.r{transform:translateX(-100%)}
+.mkt-mark{position:absolute;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;animation:mktrise .9s cubic-bezier(.2,.7,.3,1) backwards}
+@keyframes mktrise{from{opacity:0;transform:translate(-50%,14px)}}
+.mkt-mark .val{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(40px,5.2vw,62px);line-height:.88;
+  color:currentColor;font-variant-numeric:tabular-nums}
+.mkt-mark .lab{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--quiet);margin:9px 0 10px;white-space:nowrap}
+.mkt-mark .dot{width:11px;height:11px;border-radius:50%;background:currentColor;
+  box-shadow:0 0 0 4px #FBF9F5;z-index:1}
+.mkt-mark .stem{width:1.5px;background:currentColor;opacity:.45;flex:1;min-height:44px;margin-top:-2px}
+.mkt-mark.rank{color:var(--rank);animation-delay:.25s}
+.mkt-mark.answer{color:var(--answer);animation-delay:.42s}
+/* the dimension annotation itself */
+.mkt-dim{position:absolute;bottom:22px;height:1px;animation:mktfade .7s ease .95s backwards}
+@keyframes mktfade{from{opacity:0}}
+.mkt-dim .bar{position:absolute;left:0;right:0;top:0;height:1px;background:var(--ink)}
+.mkt-dim .arw{position:absolute;top:-4.5px;width:0;height:0;
+  border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+.mkt-dim .arw.l{left:0;border-left:9px solid var(--ink)}
+.mkt-dim .arw.r{right:0;border-right:9px solid var(--ink)}
+.mkt-dim .dlab{position:absolute;left:50%;top:15px;transform:translateX(-50%);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink);white-space:nowrap;font-weight:500}
+.mkt-bars{display:none;flex-direction:column;gap:20px}
+.mkt-bar .brow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px}
+.mkt-bar .blab{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--quiet)}
+.mkt-bar .bval{font-family:"Instrument Serif",Georgia,serif;font-size:42px;line-height:.9;
+  font-variant-numeric:tabular-nums}
+.mkt-bar .btrack{height:8px;background:var(--paper-3);position:relative}
+.mkt-bar .btrack i{position:absolute;left:0;top:0;bottom:0;display:block;
+  animation:mktgrow 1s cubic-bezier(.2,.7,.3,1) .3s backwards}
+@keyframes mktgrow{from{width:0!important}}
+.mkt-bar.answer .bval{color:var(--answer)}.mkt-bar.answer .btrack i{background:var(--answer)}
+.mkt-bar.rank .bval{color:var(--rank)}.mkt-bar.rank .btrack i{background:var(--rank)}
+.mkt-bargap{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-top:1px solid var(--ink);padding-top:11px;margin-top:2px}
+.mkt-bargap span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink)}
+.mkt-bargap b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;font-weight:500;color:var(--ink)}
+@media(max-width:620px){
+  .mkt-track{display:none}
+  .mkt-bars{display:flex}
+}
+.mkt-plotfoot{border-top:1px solid var(--rule);padding:13px 20px;display:flex;gap:18px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;color:var(--quiet)}
+.mkt-plotfoot span{display:flex;align-items:center;gap:7px}
+.mkt-plotfoot s{width:14px;height:2px;flex:none;text-decoration:none}
+
+/* ---- section furniture ---- */
+.mkt-band{display:block;padding:clamp(56px,8vw,104px) 0;position:relative}
+.mkt-band.rule{border-top:1px solid var(--rule)}
+.mkt-band.alt{background:var(--paper-2)}
+.mkt-band.ink{background:var(--ink);color:var(--paper-2)}
+.mkt-band.ink h2,.mkt-band.ink h3{color:var(--paper)}
+.mkt-band.ink p{color:#B8B2A4}
+.mkt-head{max-width:66ch;margin-bottom:clamp(34px,4vw,52px)}
+.mkt-head .mkt-tag{display:block;margin-bottom:16px}
+.mkt-band h2{font-size:clamp(30px,4.4vw,54px);margin-bottom:18px;max-width:20ch}
+.mkt-band .sub{font-size:16.5px;color:var(--ink-2);max-width:62ch}
+.mkt-band.ink .sub{color:#B8B2A4}
+
+/* ---- the two-column ledger (classic audit vs this) ---- */
+.mkt-ledger{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule-2);background:#FBF9F5}
+@media(max-width:760px){.mkt-ledger{grid-template-columns:1fr}}
+.mkt-lcol{padding:26px clamp(18px,2.4vw,30px)}
+.mkt-lcol+.mkt-lcol{border-left:1px solid var(--rule-2)}
+@media(max-width:760px){.mkt-lcol+.mkt-lcol{border-left:0;border-top:1px solid var(--rule-2)}}
+.mkt-lcol.now{background:color-mix(in srgb,var(--rank-soft) 55%,#FBF9F5)}
+.mkt-lcol h3{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--quiet);margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule);font-weight:500}
+.mkt-lcol.now h3{color:var(--rank);border-bottom-color:color-mix(in srgb,var(--rank) 30%,transparent)}
+.mkt-lcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px}
+.mkt-lcol li{font-size:14.5px;color:var(--ink-2);padding-left:26px;position:relative;line-height:1.55}
+.mkt-lcol li::before{position:absolute;left:0;top:0;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px}
+.mkt-lcol.past li::before{content:"—";color:var(--quiet)}
+.mkt-lcol.now li::before{content:"✓";color:var(--rank);font-weight:600}
+.mkt-lcol.now li{color:var(--ink)}
+
+/* ---- what it measures: a spec sheet, not a card grid ---- */
+.mkt-specs{border-top:1px solid var(--ink)}
+.mkt-srow{display:grid;grid-template-columns:auto minmax(0,22ch) minmax(0,1fr);gap:clamp(16px,3vw,40px);
+  padding:clamp(20px,2.4vw,28px) 0;border-bottom:1px solid var(--rule);align-items:start;
+  transition:background .2s,padding-left .2s}
+.mkt-srow:hover{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+@media(max-width:760px){.mkt-srow{grid-template-columns:auto 1fr;gap:10px 16px}
+  .mkt-srow p{grid-column:2/3}}
+.mkt-srow .idx{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--quiet);
+  padding-top:5px;font-variant-numeric:tabular-nums}
+.mkt-srow h3{font-size:clamp(20px,2.1vw,25px);line-height:1.12}
+.mkt-srow .unit{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;margin-top:8px;font-weight:500}
+.mkt-srow .unit.rk{color:var(--rank)}
+.mkt-srow .unit.an{color:var(--answer)}
+.mkt-srow .unit.bo{color:var(--quiet)}
+.mkt-srow p{font-size:14.5px;color:var(--ink-2);max-width:62ch}
+
+/* ---- how it works ---- */
+.mkt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink);
+  counter-reset:mktstep}
+@media(max-width:900px){.mkt-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.mkt-steps{grid-template-columns:1fr}}
+.mkt-step{padding:26px clamp(14px,2vw,26px) 30px;border-right:1px solid var(--rule);position:relative}
+.mkt-step:last-child{border-right:0}
+@media(max-width:900px){.mkt-step:nth-child(2n){border-right:0}
+  .mkt-step:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+@media(max-width:560px){.mkt-step{border-right:0;border-bottom:1px solid var(--rule)}}
+.mkt-step::before{counter-increment:mktstep;content:counter(mktstep,decimal-leading-zero);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--quiet);display:block;margin-bottom:18px}
+.mkt-step::after{content:"";position:absolute;top:-1px;left:0;width:26px;height:3px;background:var(--ink)}
+.mkt-step h4{font-size:19px;margin-bottom:9px;line-height:1.16}
+.mkt-step p{font-size:13.5px;color:var(--ink-2)}
+
+/* ---- the honesty panel (on ink) ---- */
+.mkt-vows{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
+  background:#2B2721;border:1px solid #2B2721;margin-top:clamp(28px,3.4vw,42px)}
+.mkt-vow{background:var(--ink);padding:24px 22px}
+.mkt-vow b{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:#8C8577;margin-bottom:11px;font-weight:500}
+.mkt-vow p{font-size:14px;color:#CEC8BA;line-height:1.6}
+.mkt-vow p em{color:var(--paper);font-style:normal;border-bottom:1px solid #575046}
+
+/* ---- pricing ---- */
+.mkt-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule-2);background:#FBF9F5}
+@media(max-width:920px){.mkt-tiers{grid-template-columns:1fr}}
+.mkt-tier{padding:30px clamp(20px,2.4vw,30px) 32px;border-right:1px solid var(--rule-2);display:flex;
+  flex-direction:column;position:relative}
+.mkt-tier:last-child{border-right:0}
+@media(max-width:920px){.mkt-tier{border-right:0;border-bottom:1px solid var(--rule-2)}
+  .mkt-tier:last-child{border-bottom:0}}
+.mkt-tier.feature{background:color-mix(in srgb,var(--rank-soft) 42%,#FBF9F5)}
+.mkt-tier .tname{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--quiet);font-weight:500}
+.mkt-tier.feature .tname{color:var(--rank)}
+.mkt-tier .tprice{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(44px,5vw,58px);line-height:1;
+  margin:16px 0 4px;display:flex;align-items:baseline;gap:8px}
+.mkt-tier .tprice sub{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--quiet);
+  vertical-align:baseline;bottom:0;letter-spacing:.06em}
+.mkt-tier .tnote{font-size:13.5px;color:var(--ink-2);min-height:42px;margin-bottom:20px;max-width:34ch}
+.mkt-tier ul{list-style:none;margin:0 0 26px;padding:20px 0 0;border-top:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:11px;flex:1}
+.mkt-tier li{font-size:13.5px;color:var(--ink-2);padding-left:22px;position:relative;line-height:1.5}
+.mkt-tier li::before{content:"+";position:absolute;left:0;top:-1px;color:var(--rank);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px}
+.mkt-tier li.off{color:var(--quiet)}
+.mkt-tier li.off::before{content:"–";color:var(--rule-2)}
+.mkt-tier .mkt-btn{width:100%;display:flex}
+.mkt-status{position:absolute;top:0;right:0;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;background:var(--answer-soft);color:var(--answer);
+  border-left:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
+.mkt-status.live{background:var(--rank-soft);color:var(--rank)}
+.mkt-pricenote{margin-top:22px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+  color:var(--quiet);line-height:1.75;max-width:78ch}
+.mkt-pricenote a{color:var(--rank)}
+
+/* ---- FAQ ---- */
+.mkt-faq{border-top:1px solid var(--ink);max-width:none}
+.mkt-q{border-bottom:1px solid var(--rule)}
+.mkt-q summary{list-style:none;cursor:pointer;padding:22px 40px 22px 0;position:relative;
+  font-family:"Instrument Serif",Georgia,serif;font-size:clamp(19px,2vw,24px);color:var(--ink);
+  transition:color .18s}
+.mkt-q summary::-webkit-details-marker{display:none}
+.mkt-q summary:hover{color:var(--rank)}
+.mkt-q summary::after{content:"";position:absolute;right:6px;top:50%;width:11px;height:11px;
+  border-right:1.5px solid var(--quiet);border-bottom:1.5px solid var(--quiet);
+  transform:translateY(-70%) rotate(45deg);transition:transform .22s}
+.mkt-q[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+.mkt-q .ans{padding:0 0 24px;font-size:14.5px;color:var(--ink-2);max-width:72ch}
+.mkt-q .ans p+p{margin-top:12px}
+.mkt-q .ans code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;
+  background:var(--paper-3);padding:1px 5px}
+
+/* ---- closing ---- */
+.mkt-close{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,4vw,56px);align-items:end}
+@media(max-width:780px){.mkt-close{grid-template-columns:1fr;align-items:start}}
+.mkt-close h2{font-size:clamp(34px,5.6vw,66px);max-width:14ch;margin-bottom:14px}
+.mkt-close p{font-size:16px;max-width:46ch}
+
+/* ---- footer ---- */
+.mkt-foot{border-top:1px solid var(--rule);padding:40px 0 52px;background:var(--paper)}
+.mkt-footrow{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:flex-start}
+.mkt-footbrand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.mkt-footbrand .dish{width:24px;height:24px;background:var(--ink);display:grid;place-items:center}
+.mkt-footbrand .dish svg{width:13px;height:13px}
+.mkt-footbrand .mark{font-family:"Instrument Serif",Georgia,serif;font-size:17px}
+.mkt-footnote{font-size:12.5px;color:var(--quiet);max-width:52ch;line-height:1.7}
+.mkt-footlinks{display:flex;gap:26px;flex-wrap:wrap}
+.mkt-footlinks a{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent}
+.mkt-footlinks a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* ---- scroll reveal (opt-in, disabled for reduced motion) ---- */
+.mkt-rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.mkt-rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .homescreen *,.homescreen *::before,.homescreen *::after{animation:none!important;transition:none!important}
+  .mkt-rv{opacity:1;transform:none}
+  .mkt-hero h1 .gapword::after{transform:scaleX(1)}
+}
 </style>
 </head>
 <body>
 <div id="homeScreen" class="homescreen">
   <nav class="mkt-nav">
     <div class="brand">
-      <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-        stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/>
+      <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2"
+        stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#F5F2EC" stroke="none"/>
         <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
       <span class="mark">Citation <em>Gap</em></span>
     </div>
     <div class="mkt-navlinks">
-      <a href="#mkt-features">What it does</a>
+      <a href="#mkt-compare">The gap</a>
+      <a href="#mkt-features">What it measures</a>
       <a href="#mkt-how">How it works</a>
-      <a href="#mkt-compare">Why not just IBP</a>
+      <a href="#mkt-pricing">Pricing</a>
     </div>
     <div class="mkt-navcta">
-      <button class="mkt-btn ghost mkt-launch">Sign in</button>
-      <button class="mkt-btn primary mkt-launch">Launch the tool</button>
+      <button class="mkt-btn ghost mkt-launch mkt-signin">Sign in</button>
+      <button class="mkt-btn primary mkt-launch">Run a scan</button>
     </div>
   </nav>
 
   <header class="mkt-hero">
     <div class="mkt-wrap">
-      <div>
-        <span class="kicker"><i></i>LIVE GOOGLE + AI OVERVIEW DATA</span>
-        <h1>Rank in the top 10. <span>Get cited by the AI Overview too.</span></h1>
-        <p class="lead">Citation Gap reads the live Google results and Google's AI Overview for any keyword, scores your page against both, and hands you a ranked, prioritized list of exactly what to change — every item with a ready-to-paste Claude prompt.</p>
-        <div class="mkt-herobtns">
-          <button class="mkt-btn primary mkt-launch">Launch the tool →</button>
-          <button class="mkt-btn ghost mkt-launch">See a sample audit</button>
-        </div>
-        <div class="mkt-microcopy">No install. Runs in your browser. Bring your own SerpApi or Serper key — 250 free searches a month.</div>
-      </div>
-      <div class="mkt-previewcard" aria-hidden="true">
-        <div class="mkt-previewhead"><span>Sample scan</span><b>envuetelematics.com</b></div>
-        <div class="mkt-gaugerow">
-          <div class="mkt-gauge">
-            <svg viewBox="0 0 200 118"><path d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var(--sunk)" stroke-width="15" stroke-linecap="round"/>
-            <path d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var(--rank)" stroke-width="15" stroke-linecap="round" stroke-dasharray="216.4 263.9"/></svg>
-            <div class="gnum" style="color:var(--rank)">82</div>
-            <div class="glab">Rank score</div>
+      <span class="mkt-kicker"><i></i><span class="mkt-tag">Live Google &amp; AI Overview data</span></span>
+      <h1>You rank third. The answer box <span class="gapword">quotes someone else</span>.</h1>
+      <div class="mkt-herobody">
+        <div>
+          <p class="mkt-lead">Google now answers the question before anyone clicks. Citation Gap reads the live top ten <b>and</b> the AI Overview for your keyword, scores your page against both, and hands back a ranked work order — every item costed in points recovered per hour, with a prompt you can paste straight into Claude.</p>
+          <div class="mkt-herobtns">
+            <button class="mkt-btn primary lg mkt-launch">Run a free scan →</button>
+            <button class="mkt-btn ghost lg mkt-launch">See a finished report</button>
           </div>
-          <div class="mkt-gauge">
-            <svg viewBox="0 0 200 118"><path d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var(--sunk)" stroke-width="15" stroke-linecap="round"/>
-            <path d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var(--answer)" stroke-width="15" stroke-linecap="round" stroke-dasharray="168.9 263.9"/></svg>
-            <div class="gnum" style="color:var(--answer)">64</div>
-            <div class="glab">Answer score</div>
+          <p class="mkt-microcopy">No install, no card. Runs in your browser on your own SerpApi or Serper key — the free tier covers about 35 scans a month.</p>
+        </div>
+        <dl class="mkt-spec">
+          <div class="mkt-specrow"><dt>Measures</dt><dd>Rank layer + answer layer</dd></div>
+          <div class="mkt-specrow"><dt>Sample</dt><dd>Live top 10, fetched fresh</dd></div>
+          <div class="mkt-specrow"><dt>Render check</dt><dd>Headless Chromium</dd></div>
+          <div class="mkt-specrow"><dt>Output</dt><dd>Ranked work order</dd></div>
+          <div class="mkt-specrow"><dt>Scan time</dt><dd>~60 seconds</dd></div>
+        </dl>
+      </div>
+
+      <figure class="mkt-plot" aria-label="Sample scan: rank score 82, answer score 64, an 18 point citation gap">
+        <div class="mkt-plothead">
+          <span class="mkt-tag">Sample scan · envuetelematics.com</span>
+          <b class="mkt-mono">"ai dash cam for fleets"</b>
+        </div>
+        <div class="mkt-plotbody">
+          <p class="mkt-note"><b>Method</b>Both layers scored 0–100 against the ten pages Google is
+            ranking for this query right now. The distance between them is the citation gap: the
+            traffic you have earned on one layer and are not collecting on the other.</p>
+          <div class="mkt-track">
+            <div class="mkt-mark answer" style="left:64%">
+              <span class="val">64</span><span class="lab">Answer score</span>
+              <span class="dot"></span><span class="stem"></span>
+            </div>
+            <div class="mkt-mark rank" style="left:82%">
+              <span class="val">82</span><span class="lab">Rank score</span>
+              <span class="dot"></span><span class="stem"></span>
+            </div>
+            <div class="mkt-dim" style="left:64%;right:18%">
+              <span class="bar"></span><span class="arw l"></span><span class="arw r"></span>
+              <span class="dlab">The gap · 18 pts</span>
+            </div>
+            <div class="mkt-axis">
+              <i style="left:0"></i><i class="maj" style="left:0"></i>
+              <i style="left:10%"></i><i style="left:20%"></i><i class="maj" style="left:25%"></i>
+              <i style="left:30%"></i><i style="left:40%"></i><i class="maj" style="left:50%"></i>
+              <i style="left:60%"></i><i style="left:70%"></i><i class="maj" style="left:75%"></i>
+              <i style="left:80%"></i><i style="left:90%"></i><i class="maj" style="left:100%"></i>
+              <span class="mkt-axlab e" style="left:0">0</span>
+              <span class="mkt-axlab" style="left:25%">25</span>
+              <span class="mkt-axlab" style="left:50%">50</span>
+              <span class="mkt-axlab" style="left:75%">75</span>
+              <span class="mkt-axlab e r" style="left:100%">100</span>
+            </div>
+          </div>
+          <div class="mkt-bars" aria-hidden="true">
+            <div class="mkt-bar answer">
+              <div class="brow"><span class="blab">Answer score</span><span class="bval">64</span></div>
+              <div class="btrack"><i style="width:64%"></i></div>
+            </div>
+            <div class="mkt-bar rank">
+              <div class="brow"><span class="blab">Rank score</span><span class="bval">82</span></div>
+              <div class="btrack"><i style="width:82%"></i></div>
+            </div>
+            <div class="mkt-bargap"><span>The gap</span><b>18 pts</b></div>
           </div>
         </div>
-        <div class="mkt-findlist">
-          <div class="mkt-find"><span class="pill crit">CRITICAL</span> Add 4 quantified, attributable claims — nothing on the page for an AI Overview to quote</div>
-          <div class="mkt-find"><span class="pill high">HIGH</span> Put "AI dash cam for fleets" in the title tag — 6 of 8 ranking pages lead with it</div>
-          <div class="mkt-find"><span class="pill med">MEDIUM</span> Add a spec comparison table — the most cleanly extractable structure on the page</div>
-        </div>
-      </div>
+        <figcaption class="mkt-plotfoot">
+          <span><s style="background:#0C5A6B"></s>Rank layer — parity with the pages beating you</span>
+          <span><s style="background:#A2560A"></s>Answer layer — whether an engine can quote you</span>
+          <span>Both scored from one scan.</span>
+        </figcaption>
+      </figure>
     </div>
   </header>
 
-  <section class="mkt-band" id="mkt-compare">
+  <section class="mkt-band alt rule" id="mkt-compare">
     <div class="mkt-wrap">
-      <span class="mkt-eyebrow">Why this exists</span>
-      <h2>Classic SEO audits stopped at ten blue links.</h2>
-      <p class="sub">Tools like IBP's Top 10 Optimizer were built to match your on-page code to whatever ranked in classic organic search. That race still matters — but Google now answers a huge share of queries directly, in an AI Overview that cites some pages and ignores others entirely. Optimizing for one race and ignoring the other leaves half the traffic on the table.</p>
-      <div class="mkt-compare">
-        <div class="mkt-ccol old">
-          <h3><span class="mkt-cdot old"></span>Classic on-page audit</h3>
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">Why this exists</span>
+        <h2>Classic audits stop at ten blue links.</h2>
+        <p class="sub">On-page tools were built to match your markup to whatever ranked in classic organic search. That race still matters. But a growing share of queries never produce a click at all — they produce an answer, assembled from pages the engine decided it could quote. Optimising for one race and ignoring the other leaves half the traffic on the table, and no classic audit will tell you it happened.</p>
+      </div>
+      <div class="mkt-ledger mkt-rv">
+        <div class="mkt-lcol past">
+          <h3>A classic on-page audit</h3>
           <ul>
             <li>Checks title, meta, H1–H6, keyword density</li>
-            <li>Compares word count to the ranking pages</li>
-            <li>No idea whether Google's AI Overview cites you</li>
-            <li>No idea whether the page even renders for a visitor</li>
-            <li>A static checklist, run once</li>
+            <li>Compares word count against the ranking pages</li>
+            <li>Silent on whether the AI Overview cites you</li>
+            <li>Silent on whether the page even renders for a visitor</li>
+            <li>A static checklist, run once, never re-verified</li>
           </ul>
         </div>
-        <div class="mkt-ccol new">
-          <h3><span class="mkt-cdot new"></span>Citation Gap</h3>
+        <div class="mkt-lcol now">
+          <h3>Citation Gap</h3>
           <ul>
-            <li>Everything a classic audit checks, against the live top 10</li>
-            <li>A second score for AI-answer citation readiness</li>
-            <li>Tests the actual AI Overview and People Also Ask, live</li>
-            <li>Headless-browser render catches content hidden from visitors</li>
-            <li>Tracks every scan over time — resolved, new, still present</li>
+            <li>Everything a classic audit checks, against the live top ten</li>
+            <li>A second score for whether an answer engine can quote you</li>
+            <li>Queries the real AI Overview and People Also Ask</li>
+            <li>Renders your page in a real browser and diffs it against the source</li>
+            <li>Re-verifies every finding on the next scan before calling it fixed</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="mkt-band alt" id="mkt-features">
+  <section class="mkt-band" id="mkt-features">
     <div class="mkt-wrap">
-      <span class="mkt-eyebrow">What it does</span>
-      <h2>One scan, two scores, a ranked list of fixes.</h2>
-      <p class="sub">Everything below runs off one URL and one keyword. No manual competitor research, no separate rank tracker, no guessing what the AI Overview actually rewards.</p>
-      <div class="mkt-grid">
-        <div class="mkt-fcard">
-          <span class="mkt-ficon rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
-          <h3>Rank Score — live top 10 parity</h3>
-          <p>Fetches and parses the pages actually ranking for your keyword right now, then scores your title, H1, word count, heading depth, lists, FAQ blocks and schema against their median — not a rule of thumb.</p>
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">What it measures</span>
+        <h2>One URL, one keyword, six instruments.</h2>
+        <p class="sub">No manual competitor research, no second rank tracker, no guessing at what the answer layer rewards. Every figure below is measured on the page as it exists right now.</p>
+      </div>
+      <div class="mkt-specs mkt-rv">
+        <div class="mkt-srow">
+          <span class="idx">01</span>
+          <h3>Top-ten parity<span class="unit rk">Rank layer</span></h3>
+          <p>Fetches and parses the pages actually ranking for your keyword, then scores your title, H1, word count, heading depth, lists, tables and schema against their median — a measured target, not a rule of thumb.</p>
         </div>
-        <div class="mkt-fcard">
-          <span class="mkt-ficon an"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-          <h3>Answer Score — AI citation readiness</h3>
-          <p>Runs the actual query against Google's AI Overview and People Also Ask, checks whether you're cited, and scores quantified claims, question headings, tables, schema and category vocabulary the way an answer engine actually lifts them.</p>
+        <div class="mkt-srow">
+          <span class="idx">02</span>
+          <h3>Citation readiness<span class="unit an">Answer layer</span></h3>
+          <p>Runs the real query against the AI Overview and People Also Ask, checks whether you are cited, and scores the things an engine actually lifts: quantified claims, attributable statistics, question headings, comparison tables and category vocabulary.</p>
         </div>
-        <div class="mkt-fcard">
-          <span class="mkt-ficon ac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3>Rendered vs. served diff</h3>
-          <p>Loads your page in a real headless browser, scrolls it, and reads the computed styles. Catches a stuck entrance animation or a script-gated counter hiding a call to action or a statistic from real visitors — invisible to a text-only crawl.</p>
+        <div class="mkt-srow">
+          <span class="idx">03</span>
+          <h3>Rendered versus served<span class="unit bo">Both layers</span></h3>
+          <p>Loads your page in a real headless browser, scrolls it, settles it, and reads the computed styles. A stuck entrance animation or a script-gated counter can hide a call to action from every visitor while a text-only crawl reports it present. This catches that.</p>
         </div>
-        <div class="mkt-fcard">
-          <span class="mkt-ficon rk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></span>
-          <h3>A ranked work order, not a checklist</h3>
-          <p>Every finding is ordered by points recovered per hour of work, split into visitor-facing defects and score-recovering tasks. Copy the master prompt, or one prompt per task, straight into Claude.</p>
+        <div class="mkt-srow">
+          <span class="idx">04</span>
+          <h3>A costed work order<span class="unit bo">Output</span></h3>
+          <p>Every finding is ordered by points recovered per hour of work and split into visitor-facing defects and score-recovering tasks. Each one carries the exact numbers behind it and a prompt written to be pasted into Claude without editing.</p>
         </div>
-        <div class="mkt-fcard">
-          <span class="mkt-ficon an"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-          <h3>Projects — scan history that means something</h3>
-          <p>Every page and keyword you scan is saved right in your browser. Re-scan later and see exactly what got resolved, what's still present, and what's genuinely new — never just "the page changed."</p>
+        <div class="mkt-srow">
+          <span class="idx">05</span>
+          <h3>Change since last scan<span class="unit bo">History</span></h3>
+          <p>Re-scan and each previous finding is re-checked against the fresh page. Resolved is only ever claimed when the finding's own test comes back clean — a page that merely changed is reported as changed, not fixed.</p>
         </div>
-        <div class="mkt-fcard">
-          <span class="mkt-ficon ac"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-          <h3>Confidence bands, not false precision</h3>
-          <p>Leave-one-out resampling across your competitor set shows how far each score could move on sample noise alone, so a 2-point change between scans doesn't get mistaken for progress.</p>
+        <div class="mkt-srow">
+          <span class="idx">06</span>
+          <h3>Confidence bands<span class="unit bo">Method</span></h3>
+          <p>Leave-one-out resampling across the competitor set shows how far each score could move on sample noise alone, so a two-point drift between scans is never mistaken for progress.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="mkt-band" id="mkt-how">
+  <section class="mkt-band alt rule" id="mkt-how">
     <div class="mkt-wrap">
-      <span class="mkt-eyebrow">How it works</span>
-      <h2>Four steps, no setup.</h2>
-      <div class="mkt-steps">
-        <div class="mkt-step"><span class="num"></span><h4>Paste your page + keyword</h4><p>The URL you want to rank, and the phrase you want to rank it for.</p></div>
-        <div class="mkt-step"><span class="num"></span><h4>We read the live top 10 + AI Overview</h4><p>Real Google results and the actual AI Overview, fetched fresh, not cached rules.</p></div>
-        <div class="mkt-step"><span class="num"></span><h4>Get two scores and a diff</h4><p>Rank Score, Answer Score, and exactly which signals are short and by how much.</p></div>
-        <div class="mkt-step"><span class="num"></span><h4>Work the list</h4><p>Paste each prompt into Claude, ship the fix, re-scan to confirm it stuck.</p></div>
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">How it works</span>
+        <h2>Four steps. No setup.</h2>
+      </div>
+      <div class="mkt-steps mkt-rv">
+        <div class="mkt-step"><h4>Paste a page and a keyword</h4><p>The URL you want to rank, and the phrase you want to rank it for. Nothing else to configure.</p></div>
+        <div class="mkt-step"><h4>It reads the live results</h4><p>The real top ten and the real AI Overview, fetched fresh at scan time — never a cached rule about what Google likes.</p></div>
+        <div class="mkt-step"><h4>Two scores and a diff</h4><p>Where you sit on each layer, which signals fall short, by how much, and what that is costing you in points.</p></div>
+        <div class="mkt-step"><h4>Work the list, re-scan</h4><p>Paste each prompt into Claude, ship the change, scan again. The next report tells you what actually stuck.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="mkt-band">
+  <section class="mkt-band ink">
     <div class="mkt-wrap">
-      <div class="mkt-cta">
-        <div>
-          <h2>See your own gap.</h2>
-          <p>Bring a URL, a keyword, and a free SerpApi or Serper key. The first scan takes about a minute.</p>
-        </div>
-        <button class="mkt-btn primary mkt-launch">Launch the tool →</button>
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag" style="color:#8C8577">The rules it holds itself to</span>
+        <h2>An instrument that lies is worse than no instrument.</h2>
+        <p class="sub">This tool is built to be usable in front of a paying client, which means it is built to refuse rather than to flatter. These are enforced in the code, not promised in the copy.</p>
       </div>
+      <div class="mkt-vows mkt-rv">
+        <div class="mkt-vow"><b>No estimated numbers</b><p>Every figure comes from an actual fetch, render or query. Nothing on a report is <em>modelled</em>, inferred or filled in.</p></div>
+        <div class="mkt-vow"><b>Every number states its method</b><p>Word counts name their boundary and their source. You can <em>reproduce any figure</em> by hand if you want to.</p></div>
+        <div class="mkt-vow"><b>Fixed means re-tested</b><p>A finding is only marked resolved when its own check re-runs clean. Otherwise it says <em>withdrawn</em>, and why.</p></div>
+        <div class="mkt-vow"><b>It says when it cannot tell</b><p>Bot protection, a blocked fetch, a render that never fired — all reported as <em>unknown</em> rather than guessed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band rule" id="mkt-pricing">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">Pricing</span>
+        <h2>Free while you bring the key.</h2>
+        <p class="sub">The scanner runs entirely in your browser against your own search API key, so the full tool costs nothing to use and always will. The paid tiers exist for the parts that need a server behind them: hosted search credits, scans that run while you sleep, and history that follows you between machines.</p>
+      </div>
+      <div class="mkt-tiers mkt-rv">
+        <div class="mkt-tier">
+          <span class="mkt-status live">Available now</span>
+          <span class="tname">Scan</span>
+          <div class="tprice">$0<sub>forever</sub></div>
+          <p class="tnote">The whole instrument, on your own SerpApi or Serper key.</p>
+          <ul>
+            <li>Unlimited scans on your key</li>
+            <li>Both scores and the full work order</li>
+            <li>Rendered-versus-served diff</li>
+            <li>Per-task prompts and a master prompt</li>
+            <li>Scan history stored in this browser</li>
+          </ul>
+          <button class="mkt-btn ghost mkt-launch">Start scanning</button>
+        </div>
+        <div class="mkt-tier feature">
+          <span class="mkt-status">In build</span>
+          <span class="tname">Practice</span>
+          <div class="tprice">$39<sub>/month</sub></div>
+          <p class="tnote">For the consultant who bills for this and wants it to keep watch.</p>
+          <ul>
+            <li>Search credits included — no key to manage</li>
+            <li>Projects synced across your machines</li>
+            <li>Weekly automatic re-scans</li>
+            <li>Score movement charted over time</li>
+            <li>Multi-keyword batches per page</li>
+          </ul>
+          <a class="mkt-btn primary mkt-waitlist" href="mailto:hello@thecitationgap.com?subject=Citation%20Gap%20Practice%20waitlist&amp;body=I'd%20like%20early%20access%20to%20the%20Practice%20tier." style="text-align:center;text-decoration:none;display:block">Join the waitlist</a>
+        </div>
+        <div class="mkt-tier">
+          <span class="mkt-status">In build</span>
+          <span class="tname">Agency</span>
+          <div class="tprice">$149<sub>/month</sub></div>
+          <p class="tnote">For the shop running this across a roster of client sites.</p>
+          <ul>
+            <li>Everything in Practice</li>
+            <li>25 sites under weekly monitoring</li>
+            <li>Client-ready reports, your logo on them</li>
+            <li>Alerts when a score moves past its band</li>
+            <li>Shared workspace for your team</li>
+          </ul>
+          <a class="mkt-btn ghost mkt-waitlist" href="mailto:hello@thecitationgap.com?subject=Citation%20Gap%20Agency%20waitlist&amp;body=I'd%20like%20early%20access%20to%20the%20Agency%20tier." style="text-align:center;text-decoration:none;display:block">Join the waitlist</a>
+        </div>
+      </div>
+      <p class="mkt-pricenote mkt-rv">Straight about where this stands: the free tier is live and complete — everything listed above it works today. The two paid tiers are being built, and the button puts you on the list rather than taking your money for something that is not finished yet.</p>
+    </div>
+  </section>
+
+  <section class="mkt-band alt rule">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">Questions</span>
+        <h2>The things people ask first.</h2>
+      </div>
+      <div class="mkt-faq mkt-rv">
+        <details class="mkt-q"><summary>Do I need an API key to try it?</summary><div class="ans">
+          <p>Yes, for a live scan — a free SerpApi or Serper account gives you 250 searches a month, and a scan spends about seven of them, so roughly 35 scans. The key is stored in your browser and sent only to the search provider.</p>
+          <p>If you just want to see the output first, <b>See a finished report</b> loads a complete real audit with no key at all.</p>
+        </div></details>
+        <details class="mkt-q"><summary>How is this different from Ahrefs, Semrush or Surfer?</summary><div class="ans">
+          <p>Those measure the rank layer, and they measure it well across a whole site. This measures one page against both layers at once, including the one they do not report on: whether Google's AI Overview can actually quote you, tested by running the query.</p>
+          <p>It is a scalpel, not a suite. Most people run it on the handful of pages that matter.</p>
+        </div></details>
+        <details class="mkt-q"><summary>Where does my data go?</summary><div class="ans">
+          <p>The scan is orchestrated in your browser. Your key lives in this browser's storage and is never sent anywhere except the search provider you chose. Scan history is stored locally too — clearing site data clears it.</p>
+          <p>The two server functions exist only to fetch a page and to render one in a headless browser; neither keeps what it read.</p>
+        </div></details>
+        <details class="mkt-q"><summary>Is the AI Overview result stable enough to act on?</summary><div class="ans">
+          <p>Not perfectly, and the tool says so rather than pretending otherwise. AI Overviews are non-deterministic, so one scan is directional. Every score carries a confidence band from leave-one-out resampling across the competitor set, so you can see how much of a movement is sample noise before you act on it.</p>
+        </div></details>
+        <details class="mkt-q"><summary>Can I put the report in front of a client?</summary><div class="ans">
+          <p>That is what it is shaped for. Every finding prints the numbers behind it and the method used to get them, and the report distinguishes a visitor-facing defect from a score-recovering task, so the conversation is about the page rather than about the tool.</p>
+          <p>Logo'd, client-branded exports are part of the Agency tier being built.</p>
+        </div></details>
+        <details class="mkt-q"><summary>What does it refuse to do?</summary><div class="ans">
+          <p>Estimate. If a site sits behind bot protection, or a render never fires, or a competitor page cannot be read, it reports that page as unreadable and excludes it from the median rather than filling the hole with a guess. The sample arithmetic is printed on every report so you can see exactly what was counted.</p>
+        </div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band rule">
+    <div class="mkt-wrap mkt-close mkt-rv">
+      <div>
+        <h2>Find out what the answer box knows about you.</h2>
+        <p class="sub">A URL, a keyword, and about a minute. The first scan usually explains a lot.</p>
+      </div>
+      <button class="mkt-btn primary lg mkt-launch">Run a free scan →</button>
     </div>
   </section>
 
@@ -628,18 +1002,19 @@ html{background:var(--shell)}
       <div class="mkt-footrow">
         <div>
           <div class="mkt-footbrand">
-            <span class="dish" aria-hidden="true" style="width:26px;height:26px"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-              stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/>
+            <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2"
+              stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#F5F2EC" stroke="none"/>
               <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
             <span class="mark">Citation Gap</span>
           </div>
-          <p class="mkt-footnote" style="margin-top:12px">Live data via SerpApi or Serper. No ranking or AI Overview figure on this site is estimated — every number comes from an actual scan.</p>
+          <p class="mkt-footnote">Live data via SerpApi or Serper. No ranking or AI Overview figure on this site is estimated — every number shown comes from an actual scan of the page named beside it.</p>
         </div>
         <div class="mkt-footlinks">
-          <a href="#mkt-features">What it does</a>
+          <a href="#mkt-compare">The gap</a>
+          <a href="#mkt-features">What it measures</a>
           <a href="#mkt-how">How it works</a>
-          <a href="#mkt-compare">Why not just IBP</a>
-          <a href="javascript:void(0)" class="mkt-launch">Launch the tool</a>
+          <a href="#mkt-pricing">Pricing</a>
+          <a href="javascript:void(0)" class="mkt-launch">Run a scan</a>
         </div>
       </div>
     </div>
@@ -652,22 +1027,20 @@ html{background:var(--shell)}
         stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/>
         <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
       <div>
-        <h2>Welcome to Citation Gap</h2>
-        <div class="splash-sub">Sign in to your workspace</div>
+        <h2>Name this workspace</h2>
+        <div class="splash-sub">So your projects have your name on them</div>
       </div>
     </div>
     <form class="splash-form" id="splashForm">
       <div class="field">
-        <label for="splashEmail">Email</label>
-        <input id="splashEmail" type="email" placeholder="you@youragency.com" autocomplete="email">
+        <label for="splashEmail">Your email or name</label>
+        <input id="splashEmail" type="text" placeholder="you@youragency.com" autocomplete="email">
       </div>
-      <div class="field">
-        <label for="splashPass">Password</label>
-        <input id="splashPass" type="password" placeholder="••••••••" autocomplete="current-password">
-      </div>
-      <button type="submit" class="splash-enter">Sign in</button>
+      <button type="submit" class="splash-enter">Continue</button>
+      <button type="button" class="splash-skip" id="splashSkip">Skip — just let me scan</button>
     </form>
-    <div class="splash-note">This workspace lives in your browser only — any email gets you in.</div>
+    <div class="splash-note">There is no account and no password. This is stored in this browser only,
+      to label your projects and nothing else. It is never sent anywhere.</div>
   </div>
 </div>
 <div class="scrim" id="scrim"></div>
@@ -3541,19 +3914,25 @@ loadDemo();
     var e=''; try{ e=localStorage.getItem('cg.identity')||''; }catch(err){}
     paintUser(e);
   }
-  var savedId=''; try{ savedId=localStorage.getItem('cg.identity')||''; }catch(err){}
-  if(savedId) openApp(); else splash.hidden=false;
+  // Nobody is made to name a workspace before they can scan: the panel never blocks the way in.
+  // It opens only when asked for — the front door's Sign in control, or after a reset — because
+  // there is no account behind it and a password box in front of a free tool is just a toll gate.
+  openApp();
+  window.cgShowWorkspacePanel=function(){ if(splash) splash.hidden=false; };
   var splashForm=$('#splashForm');
   if(splashForm) splashForm.addEventListener('submit',function(e){
     e.preventDefault();
     var email=$('#splashEmail').value.trim();
-    try{ localStorage.setItem('cg.identity',email); }catch(err){}
+    try{ if(email) localStorage.setItem('cg.identity',email); }catch(err){}
     openApp();
   });
+  var splashSkip=$('#splashSkip');
+  if(splashSkip) splashSkip.addEventListener('click',function(){ openApp(); });
   var btnSignout=$('#btnSignout');
   if(btnSignout) btnSignout.addEventListener('click',function(){
     try{ localStorage.removeItem('cg.identity'); }catch(err){}
-    splash.hidden=false;
+    paintUser('');
+    if(splash) splash.hidden=false;
   });
 
   // --- Sidebar nav / mobile menu ---
@@ -3649,13 +4028,30 @@ loadDemo();
 (function(){
   function $(s){ return document.querySelector(s); }
   var home=$('#homeScreen');
-  function goHome(){ if(home) home.hidden=false; window.scrollTo(0,0); }
+  function goHome(){ if(home){ home.hidden=false; home.scrollTop=0; } window.scrollTo(0,0); }
   function enterApp(){ if(home) home.hidden=true; }
   document.querySelectorAll('.mkt-launch').forEach(function(b){ b.addEventListener('click',enterApp); });
+  // "Sign in" is the only control that opens the workspace panel; every other launch control
+  // drops straight onto the scan form, which is what the button promised.
+  document.querySelectorAll('.mkt-signin').forEach(function(b){
+    b.addEventListener('click',function(){ if(window.cgShowWorkspacePanel) window.cgShowWorkspacePanel(); });
+  });
   var sideBrand=document.querySelector('.sidebar .brand');
   if(sideBrand){ sideBrand.style.cursor='pointer'; sideBrand.addEventListener('click',goHome); }
   var mobBrand=document.querySelector('.mobtop .mark');
   if(mobBrand){ mobBrand.style.cursor='pointer'; mobBrand.addEventListener('click',goHome); }
+
+  // Section reveals. The homescreen is its own scroll container (position:fixed), so it is the
+  // observer root rather than the viewport. No observer, no reduced-motion preference, or no
+  // JS at all: everything is simply shown, because .mkt-rv is only hidden once this runs.
+  var rv=[].slice.call(document.querySelectorAll('.mkt-rv'));
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(!rv.length) return;
+  if(reduce||!window.IntersectionObserver||!home){ rv.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{root:home,rootMargin:'0px 0px -12% 0px',threshold:.08});
+  rv.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
