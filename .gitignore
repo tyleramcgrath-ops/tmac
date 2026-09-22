@@ -49,6 +49,11 @@ next-env.d.ts
 apps/reloop/package-lock.json
 apps/north-star-hq/package-lock.json
 
+# citation-gap app deps
+apps/citation-gap/node_modules
+apps/citation-gap/public
+apps/citation-gap/test/*.png
+
 # packaged theme and plugin builds — rebuildable from wp-content/, so the
 # repo does not carry a 22MB zip per release
 /palmtreesurf-*.zip

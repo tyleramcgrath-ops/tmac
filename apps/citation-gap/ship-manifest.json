@@ -1,0 +1,102 @@
+{
+  "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
+  "sealedAt": "2026-09-22T20:19:13.329Z",
+  "files": {
+    "index.html": {
+      "sha256": "96379a0a6e7fc6a8307df5573c81052e2952137fa497b5164386b6e008f14e95",
+      "bytes": 177690
+    },
+    "score.js": {
+      "sha256": "cfe5979cc0c355edc49875313d7db972464ad1987aa8a3ac603780cf3d5e9d4d",
+      "bytes": 163559
+    },
+    "api/page.js": {
+      "sha256": "dc2c2279821eb379b86ddd79eae1309ff980c8c2bf97bfeff9bbdd75112cfcf0",
+      "bytes": 449
+    },
+    "api/render.js": {
+      "sha256": "4c5189867766abe834539d6961c9a53e5673d8c47d5a2193d07625234de4aeeb",
+      "bytes": 230
+    },
+    "api/serp.js": {
+      "sha256": "552381689142f313c8b522f4799315c8ff5c925aad76bbec1ee9805a9dcd1de2",
+      "bytes": 5734
+    },
+    "api/auth/request.js": {
+      "sha256": "73ad17166aa0711913ca35b232da9746f318d3cf974e546f4bfaa7708559866d",
+      "bytes": 1819
+    },
+    "api/auth/redeem.js": {
+      "sha256": "4f33d8a80f3a576499f2d71ead4f6374b278e184dd8d3356759d8f0ff0550935",
+      "bytes": 1367
+    },
+    "api/auth/me.js": {
+      "sha256": "bd8596b3ab2dff0e4df29ceeab2574a00d464405ff31911cdf5b430ac9d7bbdc",
+      "bytes": 867
+    },
+    "api/auth/logout.js": {
+      "sha256": "5fc6a363d797d969c1f0ae6268d9c37520439850f1c3550fbc74301cceb82a93",
+      "bytes": 886
+    },
+    "api/projects.js": {
+      "sha256": "24c7956edb281d15452f6d6d52f82fa409e31ce786334b4a9db3efce315ecea7",
+      "bytes": 3166
+    },
+    "api/scans.js": {
+      "sha256": "ea088377f35150a52aeb11555c1871b0a3a7916623f7ae31c8eada1a086786e9",
+      "bytes": 2387
+    },
+    "api/tick.js": {
+      "sha256": "129a3ffe6ccc563c2af7626b6db94254f543655ac0fd0dfe5761103e5f3792de",
+      "bytes": 4121
+    },
+    "api/account.js": {
+      "sha256": "ccef907d30697a9ea712d973822fae4fd4f0b86abf5f0882d1f255c1c63f5c3a",
+      "bytes": 3006
+    },
+    "lib/page.impl.js": {
+      "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
+      "bytes": 47439
+    },
+    "lib/render.impl.js": {
+      "sha256": "f3507dbaf9b0bba5b918ab56395c4b2eaf2c09091dbb7fd1fc8d11bc05df063c",
+      "bytes": 58816
+    },
+    "lib/db.js": {
+      "sha256": "cd27d4114990f1f693d333dac38508cdc52a5715d44b018d4e7e465b76d7a3a3",
+      "bytes": 3107
+    },
+    "lib/auth.js": {
+      "sha256": "472fa560a59f3b9f7428502ac1dbf50455f2ffb5eaf00096ddff643f629c082d",
+      "bytes": 5814
+    },
+    "lib/mail.js": {
+      "sha256": "2c7c2147d96b3a3375b8dfbaed0298c3aeff7781d2727e70cc33b7beac32a11d",
+      "bytes": 1753
+    },
+    "lib/store.js": {
+      "sha256": "ba5662e4bdfb2350929206df1a99409421ff6533057e745891392120c7b496f1",
+      "bytes": 8689
+    },
+    "lib/keys.js": {
+      "sha256": "d7b683fe0efbe54a5883b6d005b4d846a08006a23ff33338df8ed95ec32549a8",
+      "bytes": 4863
+    },
+    "lib/scan-job.js": {
+      "sha256": "eeeef62e1775e5309bcba139332ec406fc499e670779f3c82be70db850dcda7d",
+      "bytes": 12993
+    },
+    "lib/tick.js": {
+      "sha256": "777457961e050536cca0922a69f7169e4e79f24fe832edb70a7d27fe226968f0",
+      "bytes": 15663
+    },
+    "package.json": {
+      "sha256": "1cd69a07994b014ed02f78eec3de6be69aaf8ba0bab14dc6697c50aad3bb5c16",
+      "bytes": 568
+    },
+    "vercel.json": {
+      "sha256": "2e3ad046d1057d70145cc338d2561c1c7581ab5312d399eeaac7589ae6183ff6",
+      "bytes": 247
+    }
+  }
+}

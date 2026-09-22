@@ -1,0 +1,2514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Citation Gap — rank in the top 10, get cited by the AI Overview too</title>
+<meta name="description" content="You rank third and the AI Overview quotes someone else. Citation Gap scores your page against the live top 10 and the answer layer, then hands back a ranked work order — every fix costed, with a prompt to paste into Claude. Free on your own search key.">
+<link rel="canonical" href="https://citation-gap.vercel.app/">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Citation Gap">
+<meta property="og:url" content="https://citation-gap.vercel.app/">
+<meta property="og:title" content="Citation Gap — rank in the top 10, get cited by the AI Overview too">
+<meta property="og:description" content="Scores your page against the live top 10 and against Google's AI Overview, then hands back a ranked, costed work order. Free on your own search key.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Citation Gap — rank in the top 10, get cited by the AI Overview too">
+<meta name="twitter:description" content="Two scores from one scan: top-ten parity, and whether an answer engine can quote you at all.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+:root{--ground:#0A0E16;--surface:#121826;--surface-2:#182032;--sunk:#0D1220;--ink:#EDF1F7;--slate:#96A3B8;
+--faint:#63708A;--hairline:#212B40;--rank:#4CC9F0;--rank-2:#7BE0FF;--rank-soft:#0F2A3A;--answer:#FFB020;
+--answer-2:#FFCB66;--answer-soft:#332309;--crit:#FF6B6B;--warn:#FFC152;--pass:#3ED9A0;--crit-soft:#341316;
+--pass-soft:#0C3226;--ok-ring:rgba(62,217,160,.28);
+--accent:#8C7CF6;--accent-2:#B7A9FF;--accent-soft:#1B1733;
+--shell:#070A10;--shell-2:#0D1320;--shell-hair:#1B2436;
+--shadow:0 1px 2px rgba(0,0,0,.45),0 10px 30px -16px rgba(0,0,0,.7);
+--shadow-lg:0 2px 4px rgba(0,0,0,.5),0 26px 60px -24px rgba(0,0,0,.85);}
+:root[data-theme="light"]{--ground:#F1F4F7;--surface:#FFFFFF;--surface-2:#E9EEF2;--sunk:#DFE6EC;--ink:#0E161C;--slate:#4E5F6B;
+--faint:#7A8994;--hairline:#D6DEE5;--rank:#0E5C78;--rank-2:#1B7E9E;--rank-soft:#DFEDF3;--answer:#A85F00;
+--answer-2:#D07C05;--answer-soft:#FBEBD5;--crit:#AE231C;--warn:#9E5C00;--pass:#176844;--crit-soft:#F9E2E0;
+--pass-soft:#DEEFE7;--ok-ring:rgba(23,104,68,.25);
+--accent:#6D5BD0;--accent-2:#8C7CF6;--accent-soft:#EDEAFC;
+--shell:#0E161C;--shell-2:#141C23;--shell-hair:#25313B;
+--shadow:0 1px 2px rgba(14,22,28,.05),0 10px 30px -16px rgba(14,22,28,.22);
+--shadow-lg:0 2px 4px rgba(14,22,28,.06),0 22px 50px -22px rgba(14,22,28,.30);}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px 90px;display:flex;flex-direction:column;gap:30px}
+h1,h2,h3{font-family:Archivo,ui-sans-serif,system-ui,sans-serif;text-wrap:balance;margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+p{margin:0;max-width:68ch;color:var(--slate)}p strong{color:var(--ink);font-weight:600}
+a{color:var(--rank)}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--rank);outline-offset:2px}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+gap:14px;flex-wrap:wrap;padding:14px 0;margin-bottom:-8px;
+background:color-mix(in srgb,var(--ground) 86%,transparent);backdrop-filter:blur(12px);
+border-bottom:1px solid var(--hairline)}
+.brand{display:flex;align-items:center;gap:11px}
+.dish{width:30px;height:30px;flex:none;border-radius:8px;background:linear-gradient(140deg,var(--rank),var(--rank-2));
+display:grid;place-items:center;box-shadow:0 0 0 1px rgba(255,255,255,.14) inset}
+.dish svg{width:17px;height:17px;display:block}
+.mark{font-family:Archivo;font-weight:800;font-size:13.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);line-height:1.2}
+.mark em{font-style:normal;color:var(--answer)}
+.mark small{display:block;font-family:"IBM Plex Sans";font-size:10.5px;letter-spacing:.02em;
+text-transform:none;color:var(--faint);font-weight:400;margin-top:1px}
+.ghost{border:1px solid var(--hairline);color:var(--slate);padding:8px 15px;border-radius:7px;font-size:13px;
+background:var(--surface);transition:border-color .15s,color .15s,transform .12s}
+.ghost:hover{border-color:var(--rank);color:var(--rank)}
+.ghost:active{transform:translateY(1px)}
+.hero{position:relative;padding:38px 0 4px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-60% 40% 40% -20%;pointer-events:none;
+background:radial-gradient(60% 60% at 26% 46%,var(--rank-soft) 0%,transparent 68%);opacity:.85}
+.hero::after{content:"";position:absolute;inset:-40% -25% 30% 45%;pointer-events:none;
+background:radial-gradient(55% 55% at 60% 40%,var(--answer-soft) 0%,transparent 66%);opacity:.7}
+.hero>*{position:relative}
+.kicker{display:inline-flex;align-items:center;gap:7px;font-family:"IBM Plex Mono";font-size:11.5px;
+letter-spacing:.06em;color:var(--rank);background:var(--rank-soft);border-radius:100px;padding:5px 13px;margin-bottom:16px}
+.kicker i{width:6px;height:6px;border-radius:50%;background:var(--pass);box-shadow:0 0 0 3px var(--ok-ring);
+display:block;animation:blip 2.4s ease-in-out infinite}
+@keyframes blip{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{font-size:clamp(30px,5vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:12px}
+.hero h1 span{background:linear-gradient(100deg,var(--rank),var(--answer));-webkit-background-clip:text;
+background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:16.5px;max-width:62ch}
+.card{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;padding:24px;box-shadow:var(--shadow)}
+.form{display:flex;flex-direction:column;gap:15px}
+.field{display:flex;flex-direction:column;gap:6px}
+label{font-family:Archivo;font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--slate)}
+input,select{font-family:"IBM Plex Sans";font-size:15px;padding:12px 14px;border:1px solid var(--hairline);
+border-radius:8px;background:var(--sunk);color:var(--ink);width:100%;transition:border-color .15s,background .15s}
+input:hover,select:hover{border-color:var(--slate)}
+input::placeholder{color:var(--faint)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.run{background:linear-gradient(135deg,var(--rank),var(--rank-2));color:#fff;padding:15px 30px;border-radius:9px;
+font-family:Archivo;font-weight:700;font-size:15px;letter-spacing:.01em;box-shadow:0 6px 18px -8px var(--rank);
+transition:transform .12s,box-shadow .15s,filter .15s}
+.run:hover{filter:brightness(1.08);box-shadow:0 10px 24px -10px var(--rank)}
+.run:active{transform:translateY(1px)}
+.run:disabled{opacity:.55;cursor:not-allowed;filter:none;box-shadow:none}
+.actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:2px}
+.linkbtn{color:var(--rank);text-decoration:underline;text-underline-offset:3px;padding:0;font-size:14px}
+.hint{font-size:12.5px;color:var(--faint)}
+.hint b{color:var(--slate)}
+.settings{display:none;flex-direction:column;gap:16px;border-top:1px solid var(--hairline);margin-top:20px;padding-top:20px}
+.settings.open{display:flex}
+.radios{display:flex;gap:11px;flex-wrap:wrap}
+.radio{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--hairline);border-radius:9px;
+padding:12px 14px;flex:1;min-width:215px;cursor:pointer;background:var(--sunk);transition:border-color .15s,background .15s}
+.radio.sel{border-color:var(--rank);background:var(--rank-soft)}
+.radio input{width:auto;margin-top:3px}
+.radio b{display:block;font-size:13.5px;font-weight:600;color:var(--ink)}
+.radio span{font-size:12px;color:var(--slate);line-height:1.45}
+.keyrow{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
+.keyrow input{flex:1;min-width:220px}
+.save{background:var(--rank);color:#fff;padding:0 22px;border-radius:8px;font-family:Archivo;font-weight:600;
+font-size:14px;white-space:nowrap;transition:background .2s,transform .12s}
+.save:hover{filter:brightness(1.1)}
+.save:active{transform:translateY(1px)}
+.save.done{background:var(--pass)}
+.saved{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--pass);font-weight:500}
+.saved.on{display:flex}
+.saved svg{width:14px;height:14px}
+.forget{color:var(--faint);text-decoration:underline;font-size:12.5px;padding:0}
+.forget:hover{color:var(--crit)}
+.progress{display:none}
+.progress.on{display:block}
+.log{font-family:"IBM Plex Mono";font-size:12.5px;line-height:1.85;background:var(--sunk);
+border-radius:9px;padding:16px 18px;max-height:340px;overflow:auto}
+.log div{white-space:pre-wrap;word-break:break-word}
+.log .ok{color:var(--pass)}.log .no{color:var(--crit)}.log .hi{color:var(--answer);font-weight:600}
+.log .dim{color:var(--faint)}
+.bar{height:5px;background:var(--sunk);border-radius:3px;overflow:hidden;margin-top:15px}
+.bar i{display:block;height:100%;width:0;border-radius:3px;
+background:linear-gradient(90deg,var(--rank),var(--answer));transition:width .45s cubic-bezier(.4,0,.2,1)}
+.report{display:none;flex-direction:column;gap:34px}
+.report.on{display:flex}
+.banner{background:var(--answer-soft);border:1px solid var(--answer);border-radius:9px;padding:12px 16px;
+font-size:13px;color:var(--ink)}
+.targets{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:"IBM Plex Mono";font-size:12px;padding:6px 11px;border:1px solid var(--hairline);
+border-radius:6px;color:var(--slate);background:var(--surface);word-break:break-all}
+.chip b{color:var(--ink);font-weight:600}
+.scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.gauge{position:relative;background:var(--surface);border:1px solid var(--hairline);border-radius:12px;
+padding:22px 22px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:5px;overflow:hidden}
+.gauge::before{content:"";position:absolute;inset:0 0 auto 0;height:3px}
+.gauge.rk::before{background:linear-gradient(90deg,var(--rank),var(--rank-2))}
+.gauge.an::before{background:linear-gradient(90deg,var(--answer),var(--answer-2))}
+.gauge .lab{font-family:Archivo;font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--slate)}
+.gauge svg{width:100%;height:auto;max-width:236px;align-self:center;margin:4px 0 -4px}
+.gauge .arcfill{transition:stroke-dasharray 1.1s cubic-bezier(.3,.9,.3,1)}
+.gnum{font-family:Archivo;font-weight:800;font-size:48px;letter-spacing:-.04em;line-height:1;text-align:center;
+font-variant-numeric:tabular-nums}
+.verdict{align-self:center;font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.06em;padding:3px 10px;
+border-radius:100px;margin-top:8px}
+.gsub{text-align:center;font-size:13px;color:var(--slate);min-height:36px;margin-top:6px}
+.strip{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--hairline);border-radius:11px;
+background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.strip div{flex:1;min-width:132px;padding:15px 18px;border-right:1px solid var(--hairline)}
+.strip div:last-child{border-right:none}
+.strip b{display:block;font-family:Archivo;font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.strip span{font-size:11.5px;color:var(--faint);letter-spacing:.03em;text-transform:uppercase;font-family:Archivo;font-weight:600}
+.thesis{background:var(--surface-2);border-left:3px solid var(--answer);padding:17px 20px;
+border-radius:0 9px 9px 0;font-size:15.5px;color:var(--ink)}
+section{display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-family:Archivo;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+h2{font-size:23px;font-weight:700;letter-spacing:-.018em}
+h2 .tag{font-size:11px;font-family:"IBM Plex Mono";vertical-align:middle;margin-left:9px;padding:3px 8px;
+border-radius:5px;letter-spacing:.04em;font-weight:500}
+.tag.r{background:var(--rank-soft);color:var(--rank)}.tag.a{background:var(--answer-soft);color:var(--answer)}
+.chart{background:var(--surface);border:1px solid var(--hairline);border-radius:11px;padding:22px;
+box-shadow:var(--shadow);overflow-x:auto}
+.rows{display:grid;gap:9px;min-width:430px}
+.row{display:grid;grid-template-columns:172px 1fr 52px;align-items:center;gap:13px}
+.row .name{font-size:13.5px;text-align:right;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row.me .name{color:var(--ink);font-weight:600}
+.track{height:22px;background:var(--sunk);border-radius:5px;overflow:hidden}
+.fill{height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,var(--rank),var(--rank-2));
+transition:width .9s cubic-bezier(.3,.9,.3,1)}
+.row.me .fill{background:linear-gradient(90deg,var(--crit),var(--crit))}
+.row .val{font-family:"IBM Plex Mono";font-size:12.5px;color:var(--slate);font-variant-numeric:tabular-nums}
+.row.me .val{color:var(--crit);font-weight:600}
+.axis{display:grid;grid-template-columns:172px 1fr 52px;gap:13px;margin-top:11px;min-width:430px}
+.ticks{display:flex;justify-content:space-between;font-family:"IBM Plex Mono";font-size:11px;color:var(--faint);
+border-top:1px solid var(--hairline);padding-top:6px}
+.caption{font-size:12.5px;color:var(--faint);max-width:70ch;margin-top:13px}
+.tablewrap{overflow-x:auto;border:1px solid var(--hairline);border-radius:11px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+th{font-family:Archivo;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);
+text-align:left;padding:13px 15px;border-bottom:1px solid var(--hairline);white-space:nowrap}
+th.n,td.n{text-align:right;font-family:"IBM Plex Mono";font-variant-numeric:tabular-nums}
+td{padding:12px 15px;border-bottom:1px solid var(--hairline);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.sig{border-left:3px solid transparent}
+tr.crit td.sig{border-left-color:var(--crit)}tr.warn td.sig{border-left-color:var(--warn)}tr.ok td.sig{border-left-color:var(--pass)}
+.you{font-family:"IBM Plex Mono";font-weight:600}
+tr.crit .you{color:var(--crit)}tr.warn .you{color:var(--warn)}tr.ok .you{color:var(--pass)}
+.pill{display:inline-block;font-family:"IBM Plex Mono";font-size:10.5px;padding:3px 8px;border-radius:5px;letter-spacing:.04em}
+.pill.crit{background:var(--crit-soft);color:var(--crit)}.pill.warn{background:var(--answer-soft);color:var(--warn)}
+.pill.ok{background:var(--pass-soft);color:var(--pass)}
+.master{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+background:linear-gradient(135deg,var(--rank),var(--rank-2));border-radius:12px;padding:20px 24px;
+box-shadow:var(--shadow-lg);color:#fff}
+.master h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:3px}
+.master p{color:rgba(255,255,255,.86);font-size:13.5px;max-width:56ch}
+.master .btns{display:flex;gap:10px;flex-wrap:wrap;flex:none}
+.wbtn{background:rgba(255,255,255,.16);color:#fff;padding:11px 18px;border-radius:8px;font-weight:600;
+font-size:13.5px;font-family:Archivo;white-space:nowrap;transition:background .15s,transform .12s;
+border:1px solid rgba(255,255,255,.24)}
+.wbtn:hover{background:rgba(255,255,255,.26)}
+.wbtn:active{transform:translateY(1px)}
+.wbtn.solid{background:#fff;color:var(--rank);border-color:#fff}
+.wbtn.solid:hover{background:rgba(255,255,255,.9)}
+.wbtn.done{background:var(--pass);border-color:var(--pass);color:#fff}
+.fixes{display:flex;flex-direction:column;gap:11px;counter-reset:fx}
+.fix{position:relative;background:var(--surface);border:1px solid var(--hairline);border-radius:11px;
+padding:18px 20px 18px 18px;display:grid;grid-template-columns:32px 1fr;gap:15px;box-shadow:var(--shadow);
+transition:box-shadow .2s,border-color .2s}
+.fix:hover{box-shadow:var(--shadow-lg)}
+.fix .idx{counter-increment:fx;font-family:Archivo;font-weight:700;font-size:14px;color:#fff;
+background:var(--slate);width:27px;height:27px;border-radius:7px;display:flex;align-items:center;
+justify-content:center;margin-top:2px;flex:none}
+.fix.sev-crit .idx{background:var(--crit)}
+.fix.sev-high .idx{background:var(--warn)}
+.fix .idx::before{content:counter(fx)}
+.fix .body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.fix h3{font-size:16.5px;font-weight:700;letter-spacing:-.01em}
+.fix .meta{display:flex;gap:7px;flex-wrap:wrap}
+.fix p{font-size:14px;max-width:64ch}
+.do{font-family:"IBM Plex Mono";font-size:12.5px;background:var(--sunk);border-radius:7px;padding:11px 13px;
+color:var(--ink);overflow-x:auto;white-space:pre-wrap;word-break:break-word;line-height:1.55}
+.ptoggle{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:2px;
+border:1px solid var(--rank);color:var(--rank);background:var(--rank-soft);padding:8px 14px;border-radius:8px;
+font-size:13px;font-weight:600;font-family:Archivo;transition:background .15s}
+.ptoggle .car{transition:transform .2s;display:inline-block}
+.ptoggle[aria-expanded="true"] .car{transform:rotate(180deg)}
+.pbox{display:none;border:1px solid var(--hairline);border-radius:9px;overflow:hidden;background:var(--sunk)}
+.pbox.open{display:block}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+padding:9px 13px;background:var(--surface-2);border-bottom:1px solid var(--hairline)}
+.phead span{font-family:Archivo;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.phead .grp{display:flex;gap:8px;align-items:center}
+.cpy{border:1px solid var(--hairline);background:var(--surface);color:var(--slate);padding:6px 13px;
+border-radius:6px;font-size:12.5px;font-weight:600;transition:all .15s}
+.cpy:hover{border-color:var(--rank);color:var(--rank)}
+.cpy.done{background:var(--pass);border-color:var(--pass);color:#fff}
+.open-claude{font-size:12.5px;color:var(--rank);text-decoration:none;font-weight:600;white-space:nowrap}
+.open-claude:hover{text-decoration:underline}
+.ptext{margin:0;padding:14px 16px;font-family:"IBM Plex Mono";font-size:12px;line-height:1.7;color:var(--ink);
+white-space:pre-wrap;word-break:break-word;max-height:400px;overflow:auto}
+.aio{background:var(--answer-soft);border-radius:9px;padding:15px 17px;font-size:13.5px;color:var(--ink);
+max-height:280px;overflow:auto;white-space:pre-wrap}
+.method{font-size:12.5px;color:var(--faint);max-width:72ch}.method b{color:var(--slate);font-weight:600}
+.exportbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:18px 0 0;border-top:1px solid var(--hairline)}
+.exportbar input{max-width:260px}
+footer{border-top:1px solid var(--hairline);padding-top:20px;font-size:12.5px;color:var(--faint);
+display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+.err{background:var(--crit-soft);color:var(--crit);border-radius:9px;padding:14px 17px;font-size:14px;display:none}
+.err.on{display:block}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--ink);color:var(--ground);
+padding:11px 20px;border-radius:9px;font-size:13.5px;font-weight:500;box-shadow:var(--shadow-lg);
+opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:80}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:560px){.row,.axis{grid-template-columns:112px 1fr 46px}.row .name{font-size:12px}
+  .master{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}
+  .fill,.gauge .arcfill{transition:none!important}}
+@media print{
+  .topbar,.hero,.setup,.progress,.exportbar,.noprint,.ptoggle,.pbox,.master{display:none!important}
+  body{background:#fff}.wrap{padding:0;max-width:none}
+  .card,.chart,.tablewrap,.fix,.gauge,.strip{box-shadow:none;break-inside:avoid}
+  section{break-inside:avoid}
+}
+.diff{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.diff .row2{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:start;padding:9px 12px;background:var(--sunk);border-radius:7px;font-size:13px}
+.diff .row2 .why{font-family:"IBM Plex Mono";font-size:11px;color:var(--faint);margin-top:3px}
+.diff .row2.pri{border-left:3px solid var(--crit)}
+.secline{font-size:13px;color:var(--slate);padding:10px 14px;border-left:3px solid var(--rank);background:var(--surface-2);border-radius:0 8px 8px 0;margin-top:6px}
+.secline b{color:var(--ink)}
+.kv{font-family:"IBM Plex Mono";font-size:12px;line-height:1.75;color:var(--slate);white-space:pre-wrap;word-break:break-word}
+.kv b{color:var(--faint);font-weight:500}
+.band{font-family:"IBM Plex Mono";font-size:11px;color:var(--faint);display:block;margin-top:-4px}
+td.n small{display:block;font-family:"IBM Plex Mono";font-size:10.5px;color:var(--faint)}
+
+/* ---- App shell: sidebar, mobile top bar, view switching, login splash, projects ---- */
+html{background:var(--shell)}
+.shell{display:flex;min-height:100vh;background:var(--ground)}
+.sidebar{width:250px;flex:none;background:var(--shell);border-right:1px solid var(--shell-hair);
+  display:flex;flex-direction:column;padding:20px 16px;gap:22px;position:sticky;top:0;align-self:flex-start;
+  height:100vh;z-index:50}
+.sidebar .brand{padding:0 6px}
+.sidebar .mark small{color:var(--faint)}
+.side-nav{display:flex;flex-direction:column;gap:3px;flex:1;margin-top:6px}
+.side-link{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;font-size:13.5px;
+  font-weight:500;color:var(--slate);transition:background .15s,color .15s;text-align:left;width:100%}
+.side-link svg{width:17px;height:17px;flex:none;opacity:.85}
+.side-link:hover{background:var(--surface-2);color:var(--ink)}
+.side-link.active{background:linear-gradient(120deg,var(--accent-soft),transparent 85%);color:var(--ink);
+  box-shadow:inset 3px 0 0 var(--accent)}
+.side-foot{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--shell-hair);padding-top:14px}
+.side-user{display:flex;align-items:center;gap:10px;padding:6px;min-width:0}
+.avatar{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--rank));
+  display:grid;place-items:center;color:#fff;font-family:Archivo;font-weight:700;font-size:12.5px;flex:none}
+.side-user .who{min-width:0}
+.side-user b{display:block;font-size:12.5px;color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}
+.side-user span{display:block;font-size:11px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:150px}
+.side-signout{font-size:11.5px;color:var(--faint);text-align:left;padding:2px 6px}
+.side-signout:hover{color:var(--crit)}
+.main{flex:1;min-width:0}
+.main .wrap{max-width:1040px;padding-top:8px}
+.topbar .brand{display:none}
+.viewtitle{font-family:Archivo;font-weight:700;font-size:15px;color:var(--ink)}
+.mobtop{display:none}
+.scrim{display:none;position:fixed;inset:0;background:rgba(2,4,8,.6);z-index:49;backdrop-filter:blur(1px)}
+.scrim.on{display:block}
+@media(max-width:880px){
+  .shell{display:block}
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:transform .2s ease}
+  .sidebar.open{transform:translateX(0)}
+  .mobtop{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--shell);
+    border-bottom:1px solid var(--shell-hair);position:sticky;top:0;z-index:45}
+  .mobtop .mark{font-size:12px}
+  .burger{width:34px;height:34px;border-radius:8px;background:var(--surface-2);display:grid;place-items:center;flex:none}
+  .burger svg{width:18px;height:18px;display:block}
+}
+.card{border-radius:14px}
+.view{display:none}
+.view.active{display:block}
+/* ---- Login splash ---- */
+.splash{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(65% 55% at 25% 15%,var(--rank-soft) 0%,transparent 62%),
+             radial-gradient(60% 50% at 85% 85%,var(--accent-soft) 0%,transparent 60%),var(--shell);padding:20px}
+.splash[hidden]{display:none}
+.splash-card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--hairline);
+  border-radius:16px;padding:34px 30px;box-shadow:var(--shadow-lg)}
+.splash-brand{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:26px;text-align:center}
+.splash-brand .dish{width:42px;height:42px;border-radius:11px}
+.splash-brand .dish svg{width:22px;height:22px}
+.splash h2{font-size:20px;font-weight:700;margin-top:2px}
+.splash-sub{font-size:13px;color:var(--slate);margin-top:4px}
+.splash-form{display:flex;flex-direction:column;gap:13px}
+.splash-form .field{display:flex;flex-direction:column;gap:6px}
+.splash-enter{background:var(--rank);color:#04171d;padding:13px;
+  border-radius:9px;font-family:Archivo;font-weight:700;font-size:14.5px;margin-top:4px;
+  box-shadow:0 8px 20px -10px var(--accent);transition:filter .15s,transform .12s;text-align:center}
+.splash-enter:hover{filter:brightness(1.1)}
+.splash-skip{width:100%;padding:11px;margin-top:2px;background:none;border:1px solid var(--hairline);
+  border-radius:9px;color:var(--slate);font-size:13px;transition:border-color .15s,color .15s}
+.splash-skip:hover{border-color:var(--slate);color:var(--ink)}
+.splash-enter:active{transform:translateY(1px)}
+.splash-note{font-size:11.5px;color:var(--faint);text-align:center;margin-top:16px}
+/* ---- Projects ---- */
+.projects-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.projects-head h1{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.projects-head p{margin-top:4px}
+.newproj{background:linear-gradient(135deg,var(--accent),var(--rank));color:#fff;padding:11px 18px;
+  border-radius:8px;font-family:Archivo;font-weight:600;font-size:13.5px;white-space:nowrap;flex:none;
+  box-shadow:0 6px 18px -8px var(--accent);transition:filter .15s,transform .12s}
+.newproj:hover{filter:brightness(1.08)}
+.newproj:active{transform:translateY(1px)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
+.proj-grid[hidden],.proj-detail[hidden]{display:none}
+/* ---- Project history: score movement over time ------------------------------------------
+   Two series on ONE 0–100 axis (both scores already share that scale — never a second axis).
+   Chart line colours are the in-band dark-surface steps of the same two brand hues the rest
+   of the app uses for Rank and Answer: the entity keeps its colour, stepped to sit correctly
+   against the dark chart surface (OKLCH L 0.48–0.67, CVD ΔE 20.6 protan / 24.6 normal). */
+.proj-detail{--c-rank:#2E9FC4;--c-answer:#C98407}
+.proj-back{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--slate);
+  margin-bottom:16px;padding:6px 10px;border-radius:8px;border:1px solid var(--hairline);background:var(--surface)}
+.proj-back:hover{color:var(--ink);border-color:var(--slate)}
+.pd-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:20px}
+.pd-head h2{font-family:Archivo;font-size:21px;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+.pd-head .site{font-family:"IBM Plex Mono";font-size:12px;color:var(--faint)}
+.pd-rescan{background:var(--rank);color:#04171d;font-weight:700;font-size:13px;padding:10px 16px;border-radius:9px}
+.pd-rescan:hover{filter:brightness(1.1)}
+.pd-card{background:var(--surface);border:1px solid var(--hairline);border-radius:13px;padding:20px 20px 16px;
+  margin-bottom:16px;box-shadow:var(--shadow)}
+.pd-cardhead{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.pd-cardhead h3{font-family:Archivo;font-size:14px;font-weight:700}
+.pd-legend{display:flex;gap:16px;flex-wrap:wrap}
+.pd-legend span{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--slate)}
+.pd-legend i{width:14px;height:2px;border-radius:1px;flex:none}
+.pd-chartwrap{position:relative;margin-top:14px}
+.pd-chart{width:100%;height:auto;display:block;overflow:visible;touch-action:pan-y}
+.pd-chart .grid{stroke:var(--hairline);stroke-width:1}
+.pd-chart .axlab{fill:var(--faint);font-family:"IBM Plex Mono";font-size:9.5px}
+.pd-chart .ser{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.pd-chart .dot{stroke:var(--surface);stroke-width:2}
+.pd-chart .endlab{font-family:Archivo;font-weight:800;font-size:13px}
+.pd-chart .cross{stroke:var(--slate);stroke-width:1;stroke-dasharray:3 3;opacity:0}
+.pd-chart .hit{fill:transparent;cursor:crosshair}
+.pd-chart.on .cross{opacity:.7}
+.pd-tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .12s;background:var(--shell);
+  border:1px solid var(--shell-hair);border-radius:9px;padding:9px 11px;font-size:12px;color:var(--ink);
+  box-shadow:var(--shadow-lg);white-space:nowrap;z-index:5;transform:translate(-50%,-100%)}
+.pd-tip.on{opacity:1}
+.pd-tip b{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--faint);display:block;margin-bottom:6px;font-weight:500}
+.pd-tip .row{display:flex;align-items:center;gap:8px;margin-top:3px}
+.pd-tip .row i{width:9px;height:9px;border-radius:50%;flex:none}
+.pd-tip .row s{text-decoration:none;color:var(--slate);margin-left:auto;padding-left:14px;font-family:"IBM Plex Mono";font-size:11px}
+.pd-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.pd-table th{text-align:left;font-family:"IBM Plex Mono";font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);font-weight:500;padding:0 10px 9px 0;border-bottom:1px solid var(--hairline);white-space:nowrap}
+.pd-table td{padding:10px 10px 10px 0;border-bottom:1px solid var(--hairline);color:var(--slate);vertical-align:top}
+.pd-table tr:last-child td{border-bottom:0}
+.pd-table .num{font-family:"IBM Plex Mono";font-variant-numeric:tabular-nums;color:var(--ink)}
+.pd-table .up{color:var(--pass)}.pd-table .down{color:var(--crit)}.pd-table .flat{color:var(--faint)}
+.pd-note{font-size:12.5px;color:var(--faint);line-height:1.65;margin-top:12px}
+.pd-note b{color:var(--slate);font-weight:600}
+.pd-solo{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:8px 0 4px}
+.pd-solo .big{display:flex;gap:26px}
+.pd-solo .big div{display:flex;flex-direction:column;gap:3px}
+.pd-solo .big b{font-family:Archivo;font-weight:800;font-size:32px;letter-spacing:-.02em}
+.pd-solo .big span{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);font-family:"IBM Plex Mono"}
+.proj-card{text-align:left;background:var(--surface);border:1px solid var(--hairline);border-radius:13px;
+  padding:19px;display:flex;flex-direction:column;gap:13px;box-shadow:var(--shadow);
+  transition:border-color .15s,box-shadow .15s,transform .12s}
+.proj-card:hover{border-color:var(--accent);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.proj-card .kw{font-family:Archivo;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--ink)}
+.proj-card .site{font-size:12px;color:var(--faint);font-family:"IBM Plex Mono";overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.proj-scores{display:flex;gap:20px}
+.proj-scores div{display:flex;flex-direction:column;gap:2px}
+.proj-scores b{font-family:Archivo;font-weight:800;font-size:21px;letter-spacing:-.02em}
+.proj-scores span{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);
+  font-family:Archivo;font-weight:600}
+.proj-scores .rk b{color:var(--rank)}
+.proj-scores .an b{color:var(--answer)}
+.proj-when{font-size:11.5px;color:var(--faint);margin-top:auto}
+.proj-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:70px 24px;border:1px dashed var(--hairline);border-radius:14px;text-align:center}
+.proj-empty .dish{width:44px;height:44px;border-radius:12px}
+.proj-empty .dish svg{width:22px;height:22px}
+.proj-empty p{max-width:40ch}
+
+/* ---- Marketing homepage (front door in front of the app) ----------------------------------
+   Design note: the app is an instrument, so the front door is its calibration report. Warm
+   paper stock, ink, hairlines, tabular figures, dimension lines. Deliberately NOT the dark
+   product UI behind it — the site is the spec sheet, the app is the instrument switched on.
+   Own palette, independent of the app's theme tokens, so the theme toggle cannot alter it. */
+.homescreen{position:fixed;inset:0;z-index:150;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  --paper:#F5F2EC;--paper-2:#EDE8DE;--paper-3:#E4DED1;--ink:#15130F;--ink-2:#46423A;
+  --quiet:#7D7666;--rule:#D5CEBE;--rule-2:#C3BAA6;
+  --rank:#0C5A6B;--rank-soft:#DCE9EC;--answer:#A2560A;--answer-soft:#F3E6D4;
+  --crit:#9E2B1E;--crit-soft:#F2E0DC;--pass:#2C6647;
+  background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.6;
+  font-variant-numeric:normal}
+.homescreen[hidden]{display:none}
+.homescreen{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){.homescreen{scroll-behavior:auto}}
+/* paper grain — atmosphere without an image request */
+.homescreen::before{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.36'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply}
+.homescreen h1,.homescreen h2,.homescreen h3,.homescreen h4{font-family:"Instrument Serif",Georgia,serif;
+  font-weight:400;letter-spacing:-.01em;line-height:1.04;text-wrap:balance;color:var(--ink)}
+.homescreen p{max-width:none;color:var(--ink-2)}
+.homescreen em{font-style:italic}
+.mkt-wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px);position:relative;width:100%}
+.homescreen section{display:block}
+.mkt-mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.mkt-tag{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--quiet)}
+
+/* ---- nav ---- */
+.mkt-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  gap:18px;padding:14px clamp(20px,5vw,64px);background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.mkt-nav .brand{display:flex;align-items:center;gap:11px}
+.mkt-nav .dish{width:30px;height:30px;border-radius:0;background:var(--ink);display:grid;place-items:center}
+.mkt-nav .dish svg{width:17px;height:17px}
+.mkt-nav .mark{font-family:"Instrument Serif",Georgia,serif;font-size:21px;letter-spacing:0;color:var(--ink)}
+.mkt-nav .mark em{font-style:italic;color:var(--rank)}
+.mkt-navlinks{display:flex;align-items:center;gap:30px}
+.mkt-navlinks a{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding-bottom:2px;
+  border-bottom:1px solid transparent;transition:border-color .18s,color .18s}
+.mkt-navlinks a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.mkt-navcta{display:flex;align-items:center;gap:10px}
+@media(max-width:900px){.mkt-navlinks{display:none}}
+@media(max-width:520px){.mkt-nav .mkt-btn.ghost{display:none}}
+
+/* ---- buttons: ink slabs, no gradients ---- */
+.mkt-btn{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;font-weight:500;letter-spacing:.08em;
+  text-transform:uppercase;padding:12px 20px;border-radius:2px;white-space:nowrap;position:relative;
+  display:inline-flex;align-items:center;justify-content:center;line-height:1.25;text-decoration:none;
+  transition:transform .14s cubic-bezier(.2,.7,.3,1),background .18s,color .18s,box-shadow .18s}
+.mkt-btn.primary{background:var(--ink);color:var(--paper);box-shadow:3px 3px 0 var(--rule-2)}
+.mkt-btn.primary:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--rule-2)}
+.mkt-btn.primary:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--rule-2)}
+.mkt-btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--rule-2)}
+.mkt-btn.ghost:hover{border-color:var(--ink);background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.mkt-btn.lg{padding:15px 26px;font-size:12.5px}
+
+/* ---- hero ---- */
+.mkt-hero{padding:clamp(40px,5.6vw,72px) 0 clamp(28px,3.6vw,40px);position:relative;overflow:hidden}
+/* faint drafting grid, fading out — the sheet the instrument is plotted on */
+.mkt-hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(120% 90% at 78% 0%,#000 0%,transparent 72%);
+  mask-image:radial-gradient(120% 90% at 78% 0%,#000 0%,transparent 72%)}
+.mkt-hero .mkt-wrap{position:relative;z-index:1}
+.mkt-kicker{display:inline-flex;align-items:center;gap:9px;margin-bottom:26px}
+.mkt-kicker i{width:6px;height:6px;border-radius:50%;background:var(--pass);flex:none;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--pass) 18%,transparent);animation:mktpulse 2.6s ease-in-out infinite}
+@keyframes mktpulse{0%,100%{opacity:1}50%{opacity:.35}}
+.mkt-hero h1{font-size:clamp(38px,6.4vw,80px);max-width:17ch;margin-bottom:22px}
+.mkt-hero h1 .gapword{font-style:italic;color:var(--rank);position:relative;white-space:nowrap}
+.mkt-hero h1 .gapword::after{content:"";position:absolute;left:0;right:0;bottom:.1em;height:2px;
+  background:var(--answer);transform:scaleX(0);transform-origin:left;
+  animation:mktunderline 1.1s cubic-bezier(.2,.7,.3,1) .5s forwards}
+@keyframes mktunderline{to{transform:scaleX(1)}}
+.mkt-herobody{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,64px);
+  align-items:end}
+@media(max-width:860px){.mkt-herobody{grid-template-columns:1fr;gap:26px}}
+.mkt-lead{font-size:clamp(16px,1.35vw,18.5px);color:var(--ink-2);max-width:54ch}
+.mkt-lead b{color:var(--ink);font-weight:600}
+.mkt-herobtns{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 14px}
+.mkt-microcopy{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;color:var(--quiet);
+  line-height:1.7;max-width:46ch}
+/* the running spec block in the hero's right column */
+.mkt-spec{border-top:1px solid var(--ink);padding-top:14px}
+.mkt-specrow{display:flex;justify-content:space-between;gap:16px;padding:7px 0;
+  border-bottom:1px solid var(--rule);font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px}
+.mkt-specrow dt{color:var(--quiet);letter-spacing:.04em;text-transform:uppercase;font-size:10.5px;padding-top:2px}
+.mkt-specrow dd{margin:0;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---- the signature: a dimension line measuring the gap ---- */
+.mkt-plot{margin-top:clamp(36px,4.4vw,58px);border:1px solid var(--rule-2);background:#FBF9F5;
+  box-shadow:6px 6px 0 color-mix(in srgb,var(--rule-2) 45%,transparent);position:relative}
+.mkt-plothead{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;
+  padding:13px 20px;border-bottom:1px solid var(--rule)}
+.mkt-plothead b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;font-weight:500;color:var(--ink)}
+.mkt-plotbody{padding:clamp(26px,5vw,54px) clamp(20px,4vw,48px) clamp(22px,3vw,34px);position:relative}
+p.mkt-note{position:absolute;left:clamp(20px,4vw,48px);top:clamp(26px,5vw,54px);max-width:32ch;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;line-height:1.85;color:var(--quiet);letter-spacing:.02em;
+  border-left:1px solid var(--rule-2);padding-left:12px}
+p.mkt-note b{display:block;color:var(--ink-2);font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  font-size:9.5px;margin-bottom:5px}
+@media(max-width:860px){p.mkt-note{position:static;max-width:none;margin-bottom:26px}}
+.mkt-track{position:relative;height:210px}
+/* Geometry, bottom-up: 0 dimension label · 22 dimension bar · 52 axis labels · 76 the axis.
+   The stems double as drafting extension lines, running from each plotted dot down past the
+   axis to the dimension bar, which is where a real dimension annotation sits. */
+.mkt-axis{position:absolute;left:0;right:0;bottom:76px;height:1px;background:var(--ink)}
+.mkt-axis i{position:absolute;top:0;width:1px;height:6px;background:var(--rule-2)}
+.mkt-axis i.maj{height:11px;background:var(--ink-2)}
+.mkt-axlab{position:absolute;top:15px;transform:translateX(-50%);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;color:var(--quiet)}
+.mkt-axlab.e{transform:none}.mkt-axlab.e.r{transform:translateX(-100%)}
+.mkt-mark{position:absolute;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;animation:mktrise .9s cubic-bezier(.2,.7,.3,1) backwards}
+@keyframes mktrise{from{opacity:0;transform:translate(-50%,14px)}}
+.mkt-mark .val{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(40px,5.2vw,62px);line-height:.88;
+  color:currentColor;font-variant-numeric:tabular-nums}
+.mkt-mark .lab{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--quiet);margin:9px 0 10px;white-space:nowrap}
+.mkt-mark .dot{width:11px;height:11px;border-radius:50%;background:currentColor;
+  box-shadow:0 0 0 4px #FBF9F5;z-index:1}
+.mkt-mark .stem{width:1.5px;background:currentColor;opacity:.45;flex:1;min-height:44px;margin-top:-2px}
+.mkt-mark.rank{color:var(--rank);animation-delay:.25s}
+.mkt-mark.answer{color:var(--answer);animation-delay:.42s}
+/* the dimension annotation itself */
+.mkt-dim{position:absolute;bottom:22px;height:1px;animation:mktfade .7s ease .95s backwards}
+@keyframes mktfade{from{opacity:0}}
+.mkt-dim .bar{position:absolute;left:0;right:0;top:0;height:1px;background:var(--ink)}
+.mkt-dim .arw{position:absolute;top:-4.5px;width:0;height:0;
+  border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+.mkt-dim .arw.l{left:0;border-left:9px solid var(--ink)}
+.mkt-dim .arw.r{right:0;border-right:9px solid var(--ink)}
+.mkt-dim .dlab{position:absolute;left:50%;top:15px;transform:translateX(-50%);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink);white-space:nowrap;font-weight:500}
+.mkt-bars{display:none;flex-direction:column;gap:20px}
+.mkt-bar .brow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px}
+.mkt-bar .blab{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--quiet)}
+.mkt-bar .bval{font-family:"Instrument Serif",Georgia,serif;font-size:42px;line-height:.9;
+  font-variant-numeric:tabular-nums}
+.mkt-bar .btrack{height:8px;background:var(--paper-3);position:relative}
+.mkt-bar .btrack i{position:absolute;left:0;top:0;bottom:0;display:block;
+  animation:mktgrow 1s cubic-bezier(.2,.7,.3,1) .3s backwards}
+@keyframes mktgrow{from{width:0!important}}
+.mkt-bar.answer .bval{color:var(--answer)}.mkt-bar.answer .btrack i{background:var(--answer)}
+.mkt-bar.rank .bval{color:var(--rank)}.mkt-bar.rank .btrack i{background:var(--rank)}
+.mkt-bargap{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-top:1px solid var(--ink);padding-top:11px;margin-top:2px}
+.mkt-bargap span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink)}
+.mkt-bargap b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;font-weight:500;color:var(--ink)}
+@media(max-width:620px){
+  .mkt-track{display:none}
+  .mkt-bars{display:flex}
+}
+.mkt-plotfoot{border-top:1px solid var(--rule);padding:13px 20px;display:flex;gap:18px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;color:var(--quiet)}
+.mkt-plotfoot span{display:flex;align-items:center;gap:7px}
+.mkt-plotfoot s{width:14px;height:2px;flex:none;text-decoration:none}
+
+/* ---- section furniture ---- */
+.mkt-band{display:block;padding:clamp(56px,8vw,104px) 0;position:relative}
+.mkt-band.rule{border-top:1px solid var(--rule)}
+.mkt-band.alt{background:var(--paper-2)}
+.mkt-band.ink{background:var(--ink);color:var(--paper-2)}
+.mkt-band.ink h2,.mkt-band.ink h3{color:var(--paper)}
+.mkt-band.ink p{color:#B8B2A4}
+.mkt-head{max-width:66ch;margin-bottom:clamp(34px,4vw,52px)}
+.mkt-head .mkt-tag{display:block;margin-bottom:16px}
+.mkt-band h2{font-size:clamp(30px,4.4vw,54px);margin-bottom:18px;max-width:20ch}
+.mkt-band .sub{font-size:16.5px;color:var(--ink-2);max-width:62ch}
+.mkt-band.ink .sub{color:#B8B2A4}
+
+/* ---- the two-column ledger (classic audit vs this) ---- */
+.mkt-ledger{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule-2);background:#FBF9F5}
+@media(max-width:760px){.mkt-ledger{grid-template-columns:1fr}}
+.mkt-lcol{padding:26px clamp(18px,2.4vw,30px)}
+.mkt-lcol+.mkt-lcol{border-left:1px solid var(--rule-2)}
+@media(max-width:760px){.mkt-lcol+.mkt-lcol{border-left:0;border-top:1px solid var(--rule-2)}}
+.mkt-lcol.now{background:color-mix(in srgb,var(--rank-soft) 55%,#FBF9F5)}
+.mkt-lcol h3{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--quiet);margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule);font-weight:500}
+.mkt-lcol.now h3{color:var(--rank);border-bottom-color:color-mix(in srgb,var(--rank) 30%,transparent)}
+.mkt-lcol ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px}
+.mkt-lcol li{font-size:14.5px;color:var(--ink-2);padding-left:26px;position:relative;line-height:1.55}
+.mkt-lcol li::before{position:absolute;left:0;top:0;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px}
+.mkt-lcol.past li::before{content:"—";color:var(--quiet)}
+.mkt-lcol.now li::before{content:"✓";color:var(--rank);font-weight:600}
+.mkt-lcol.now li{color:var(--ink)}
+
+/* ---- what it measures: a spec sheet, not a card grid ---- */
+.mkt-specs{border-top:1px solid var(--ink)}
+.mkt-srow{display:grid;grid-template-columns:auto minmax(0,22ch) minmax(0,1fr);gap:clamp(16px,3vw,40px);
+  padding:clamp(20px,2.4vw,28px) 0;border-bottom:1px solid var(--rule);align-items:start;
+  transition:background .2s,padding-left .2s}
+.mkt-srow:hover{background:color-mix(in srgb,var(--ink) 3%,transparent)}
+@media(max-width:760px){.mkt-srow{grid-template-columns:auto 1fr;gap:10px 16px}
+  .mkt-srow p{grid-column:2/3}}
+.mkt-srow .idx{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--quiet);
+  padding-top:5px;font-variant-numeric:tabular-nums}
+.mkt-srow h3{font-size:clamp(20px,2.1vw,25px);line-height:1.12}
+.mkt-srow .unit{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;margin-top:8px;font-weight:500}
+.mkt-srow .unit.rk{color:var(--rank)}
+.mkt-srow .unit.an{color:var(--answer)}
+.mkt-srow .unit.bo{color:var(--quiet)}
+.mkt-srow p{font-size:14.5px;color:var(--ink-2);max-width:62ch}
+
+/* ---- how it works ---- */
+.mkt-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink);
+  counter-reset:mktstep}
+@media(max-width:900px){.mkt-steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.mkt-steps{grid-template-columns:1fr}}
+.mkt-step{padding:26px clamp(14px,2vw,26px) 30px;border-right:1px solid var(--rule);position:relative}
+.mkt-step:last-child{border-right:0}
+@media(max-width:900px){.mkt-step:nth-child(2n){border-right:0}
+  .mkt-step:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+@media(max-width:560px){.mkt-step{border-right:0;border-bottom:1px solid var(--rule)}}
+.mkt-step::before{counter-increment:mktstep;content:counter(mktstep,decimal-leading-zero);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--quiet);display:block;margin-bottom:18px}
+.mkt-step::after{content:"";position:absolute;top:-1px;left:0;width:26px;height:3px;background:var(--ink)}
+.mkt-step h4{font-size:19px;margin-bottom:9px;line-height:1.16}
+.mkt-step p{font-size:13.5px;color:var(--ink-2)}
+
+/* ---- the honesty panel (on ink) ---- */
+.mkt-vows{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
+  background:#2B2721;border:1px solid #2B2721;margin-top:clamp(28px,3.4vw,42px)}
+.mkt-vow{background:var(--ink);padding:24px 22px}
+.mkt-vow b{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:#8C8577;margin-bottom:11px;font-weight:500}
+.mkt-vow p{font-size:14px;color:#CEC8BA;line-height:1.6}
+.mkt-vow p em{color:var(--paper);font-style:normal;border-bottom:1px solid #575046}
+
+/* ---- pricing ---- */
+.mkt-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule-2);background:#FBF9F5}
+@media(max-width:920px){.mkt-tiers{grid-template-columns:1fr}}
+.mkt-tier{padding:30px clamp(20px,2.4vw,30px) 32px;border-right:1px solid var(--rule-2);display:flex;
+  flex-direction:column;position:relative}
+.mkt-tier:last-child{border-right:0}
+@media(max-width:920px){.mkt-tier{border-right:0;border-bottom:1px solid var(--rule-2)}
+  .mkt-tier:last-child{border-bottom:0}}
+.mkt-tier.feature{background:color-mix(in srgb,var(--rank-soft) 42%,#FBF9F5)}
+.mkt-tier .tname{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--quiet);font-weight:500}
+.mkt-tier.feature .tname{color:var(--rank)}
+.mkt-tier .tprice{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(44px,5vw,58px);line-height:1;
+  margin:16px 0 4px;display:flex;align-items:baseline;gap:8px}
+.mkt-tier .tprice sub{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;color:var(--quiet);
+  vertical-align:baseline;bottom:0;letter-spacing:.06em}
+.mkt-tier .tnote{font-size:13.5px;color:var(--ink-2);min-height:42px;margin-bottom:20px;max-width:34ch}
+.mkt-tier ul{list-style:none;margin:0 0 26px;padding:20px 0 0;border-top:1px solid var(--rule);
+  display:flex;flex-direction:column;gap:11px;flex:1}
+.mkt-tier li{font-size:13.5px;color:var(--ink-2);padding-left:22px;position:relative;line-height:1.5}
+.mkt-tier li::before{content:"+";position:absolute;left:0;top:-1px;color:var(--rank);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px}
+.mkt-tier li.off{color:var(--quiet)}
+.mkt-tier li.off::before{content:"–";color:var(--rule-2)}
+.mkt-tier .mkt-btn{width:100%;display:flex}
+.mkt-status{position:absolute;top:0;right:0;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;background:var(--answer-soft);color:var(--answer);
+  border-left:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2)}
+.mkt-status.live{background:var(--rank-soft);color:var(--rank)}
+.mkt-pricenote{margin-top:22px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+  color:var(--quiet);line-height:1.75;max-width:78ch}
+.mkt-pricenote a{color:var(--rank)}
+
+/* ---- FAQ ---- */
+.mkt-faq{border-top:1px solid var(--ink);max-width:none}
+.mkt-q{border-bottom:1px solid var(--rule)}
+.mkt-q summary{list-style:none;cursor:pointer;padding:22px 40px 22px 0;position:relative;
+  font-family:"Instrument Serif",Georgia,serif;font-size:clamp(19px,2vw,24px);color:var(--ink);
+  transition:color .18s}
+.mkt-q summary::-webkit-details-marker{display:none}
+.mkt-q summary:hover{color:var(--rank)}
+.mkt-q summary::after{content:"";position:absolute;right:6px;top:50%;width:11px;height:11px;
+  border-right:1.5px solid var(--quiet);border-bottom:1.5px solid var(--quiet);
+  transform:translateY(-70%) rotate(45deg);transition:transform .22s}
+.mkt-q[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+.mkt-q .ans{padding:0 0 24px;font-size:14.5px;color:var(--ink-2);max-width:72ch}
+.mkt-q .ans p+p{margin-top:12px}
+.mkt-q .ans code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;
+  background:var(--paper-3);padding:1px 5px}
+
+/* ---- closing ---- */
+.mkt-close{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,4vw,56px);align-items:end}
+@media(max-width:780px){.mkt-close{grid-template-columns:1fr;align-items:start}}
+.mkt-close h2{font-size:clamp(34px,5.6vw,66px);max-width:14ch;margin-bottom:14px}
+.mkt-close p{font-size:16px;max-width:46ch}
+
+/* ---- footer ---- */
+.mkt-foot{border-top:1px solid var(--rule);padding:40px 0 52px;background:var(--paper)}
+.mkt-footrow{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:flex-start}
+.mkt-footbrand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.mkt-footbrand .dish{width:24px;height:24px;background:var(--ink);display:grid;place-items:center}
+.mkt-footbrand .dish svg{width:13px;height:13px}
+.mkt-footbrand .mark{font-family:"Instrument Serif",Georgia,serif;font-size:17px}
+.mkt-footnote{font-size:12.5px;color:var(--quiet);max-width:52ch;line-height:1.7}
+.mkt-footlinks{display:flex;gap:26px;flex-wrap:wrap}
+.mkt-footlinks a{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent}
+.mkt-footlinks a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* ---- scroll reveal (opt-in, disabled for reduced motion) ---- */
+.mkt-rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.mkt-rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .homescreen *,.homescreen *::before,.homescreen *::after{animation:none!important;transition:none!important}
+  .mkt-rv{opacity:1;transform:none}
+  .mkt-hero h1 .gapword::after{transform:scaleX(1)}
+}
+</style>
+</head>
+<body>
+<div id="homeScreen" class="homescreen">
+  <nav class="mkt-nav">
+    <div class="brand">
+      <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2"
+        stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#F5F2EC" stroke="none"/>
+        <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
+      <span class="mark">Citation <em>Gap</em></span>
+    </div>
+    <div class="mkt-navlinks">
+      <a href="#mkt-compare">The gap</a>
+      <a href="#mkt-features">What it measures</a>
+      <a href="#mkt-how">How it works</a>
+      <a href="#mkt-pricing">Pricing</a>
+    </div>
+    <div class="mkt-navcta">
+      <button class="mkt-btn ghost mkt-launch mkt-signin">Sign in</button>
+      <button class="mkt-btn primary mkt-launch">Run a scan</button>
+    </div>
+  </nav>
+
+  <header class="mkt-hero">
+    <div class="mkt-wrap">
+      <span class="mkt-kicker"><i></i><span class="mkt-tag">Live Google &amp; AI Overview data</span></span>
+      <h1>You rank third. The answer box <span class="gapword">quotes someone else</span>.</h1>
+      <div class="mkt-herobody">
+        <div>
+          <p class="mkt-lead">Google now answers the question before anyone clicks. Citation Gap reads the live top ten <b>and</b> the AI Overview for your keyword, scores your page against both, and hands back a ranked work order — every item costed in points recovered per hour, with a prompt you can paste straight into Claude.</p>
+          <div class="mkt-herobtns">
+            <button class="mkt-btn primary lg mkt-launch">Run a free scan →</button>
+            <button class="mkt-btn ghost lg mkt-launch">See a finished report</button>
+          </div>
+          <p class="mkt-microcopy">No install, no card. Runs in your browser on your own SerpApi or Serper key — the free tier covers about 35 scans a month.</p>
+        </div>
+        <dl class="mkt-spec">
+          <div class="mkt-specrow"><dt>Measures</dt><dd>Rank layer + answer layer</dd></div>
+          <div class="mkt-specrow"><dt>Sample</dt><dd>Live top 10, fetched fresh</dd></div>
+          <div class="mkt-specrow"><dt>Render check</dt><dd>Headless Chromium</dd></div>
+          <div class="mkt-specrow"><dt>Output</dt><dd>Ranked work order</dd></div>
+          <div class="mkt-specrow"><dt>Scan time</dt><dd>~60 seconds</dd></div>
+        </dl>
+      </div>
+
+      <figure class="mkt-plot" aria-label="Sample scan: rank score 82, answer score 64, an 18 point citation gap">
+        <div class="mkt-plothead">
+          <span class="mkt-tag">Sample scan · envuetelematics.com</span>
+          <b class="mkt-mono">"ai dash cam for fleets"</b>
+        </div>
+        <div class="mkt-plotbody">
+          <p class="mkt-note"><b>Method</b>Both layers scored 0–100 against the ten pages Google is
+            ranking for this query right now. The distance between them is the citation gap: the
+            traffic you have earned on one layer and are not collecting on the other.</p>
+          <div class="mkt-track">
+            <div class="mkt-mark answer" style="left:64%">
+              <span class="val">64</span><span class="lab">Answer score</span>
+              <span class="dot"></span><span class="stem"></span>
+            </div>
+            <div class="mkt-mark rank" style="left:82%">
+              <span class="val">82</span><span class="lab">Rank score</span>
+              <span class="dot"></span><span class="stem"></span>
+            </div>
+            <div class="mkt-dim" style="left:64%;right:18%">
+              <span class="bar"></span><span class="arw l"></span><span class="arw r"></span>
+              <span class="dlab">The gap · 18 pts</span>
+            </div>
+            <div class="mkt-axis">
+              <i style="left:0"></i><i class="maj" style="left:0"></i>
+              <i style="left:10%"></i><i style="left:20%"></i><i class="maj" style="left:25%"></i>
+              <i style="left:30%"></i><i style="left:40%"></i><i class="maj" style="left:50%"></i>
+              <i style="left:60%"></i><i style="left:70%"></i><i class="maj" style="left:75%"></i>
+              <i style="left:80%"></i><i style="left:90%"></i><i class="maj" style="left:100%"></i>
+              <span class="mkt-axlab e" style="left:0">0</span>
+              <span class="mkt-axlab" style="left:25%">25</span>
+              <span class="mkt-axlab" style="left:50%">50</span>
+              <span class="mkt-axlab" style="left:75%">75</span>
+              <span class="mkt-axlab e r" style="left:100%">100</span>
+            </div>
+          </div>
+          <div class="mkt-bars" aria-hidden="true">
+            <div class="mkt-bar answer">
+              <div class="brow"><span class="blab">Answer score</span><span class="bval">64</span></div>
+              <div class="btrack"><i style="width:64%"></i></div>
+            </div>
+            <div class="mkt-bar rank">
+              <div class="brow"><span class="blab">Rank score</span><span class="bval">82</span></div>
+              <div class="btrack"><i style="width:82%"></i></div>
+            </div>
+            <div class="mkt-bargap"><span>The gap</span><b>18 pts</b></div>
+          </div>
+        </div>
+        <figcaption class="mkt-plotfoot">
+          <span><s style="background:#0C5A6B"></s>Rank layer — parity with the pages beating you</span>
+          <span><s style="background:#A2560A"></s>Answer layer — whether an engine can quote you</span>
+          <span>Both scored from one scan.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="mkt-band alt rule" id="mkt-compare">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">Why this exists</span>
+        <h2>Classic audits stop at ten blue links.</h2>
+        <p class="sub">On-page tools were built to match your markup to whatever ranked in classic organic search. That race still matters. But a growing share of queries never produce a click at all — they produce an answer, assembled from pages the engine decided it could quote. Optimising for one race and ignoring the other leaves half the traffic on the table, and no classic audit will tell you it happened.</p>
+      </div>
+      <div class="mkt-ledger mkt-rv">
+        <div class="mkt-lcol past">
+          <h3>A classic on-page audit</h3>
+          <ul>
+            <li>Checks title, meta, H1–H6, keyword density</li>
+            <li>Compares word count against the ranking pages</li>
+            <li>Silent on whether the AI Overview cites you</li>
+            <li>Silent on whether the page even renders for a visitor</li>
+            <li>A static checklist, run once, never re-verified</li>
+          </ul>
+        </div>
+        <div class="mkt-lcol now">
+          <h3>Citation Gap</h3>
+          <ul>
+            <li>Everything a classic audit checks, against the live top ten</li>
+            <li>A second score for whether an answer engine can quote you</li>
+            <li>Queries the real AI Overview and People Also Ask</li>
+            <li>Renders your page in a real browser and diffs it against the source</li>
+            <li>Re-verifies every finding on the next scan before calling it fixed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band" id="mkt-features">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">What it measures</span>
+        <h2>One URL, one keyword, six instruments.</h2>
+        <p class="sub">No manual competitor research, no second rank tracker, no guessing at what the answer layer rewards. Every figure below is measured on the page as it exists right now.</p>
+      </div>
+      <div class="mkt-specs mkt-rv">
+        <div class="mkt-srow">
+          <span class="idx">01</span>
+          <h3>Top-ten parity<span class="unit rk">Rank layer</span></h3>
+          <p>Fetches and parses the pages actually ranking for your keyword, then scores your title, H1, word count, heading depth, lists, tables and schema against their median — a measured target, not a rule of thumb.</p>
+        </div>
+        <div class="mkt-srow">
+          <span class="idx">02</span>
+          <h3>Citation readiness<span class="unit an">Answer layer</span></h3>
+          <p>Runs the real query against the AI Overview and People Also Ask, checks whether you are cited, and scores the things an engine actually lifts: quantified claims, attributable statistics, question headings, comparison tables and category vocabulary.</p>
+        </div>
+        <div class="mkt-srow">
+          <span class="idx">03</span>
+          <h3>Rendered versus served<span class="unit bo">Both layers</span></h3>
+          <p>Loads your page in a real headless browser, scrolls it, settles it, and reads the computed styles. A stuck entrance animation or a script-gated counter can hide a call to action from every visitor while a text-only crawl reports it present. This catches that.</p>
+        </div>
+        <div class="mkt-srow">
+          <span class="idx">04</span>
+          <h3>A costed work order<span class="unit bo">Output</span></h3>
+          <p>Every finding is ordered by points recovered per hour of work and split into visitor-facing defects and score-recovering tasks. Each one carries the exact numbers behind it and a prompt written to be pasted into Claude without editing.</p>
+        </div>
+        <div class="mkt-srow">
+          <span class="idx">05</span>
+          <h3>Change since last scan<span class="unit bo">History</span></h3>
+          <p>Re-scan and each previous finding is re-checked against the fresh page. Resolved is only ever claimed when the finding's own test comes back clean — a page that merely changed is reported as changed, not fixed.</p>
+        </div>
+        <div class="mkt-srow">
+          <span class="idx">06</span>
+          <h3>Confidence bands<span class="unit bo">Method</span></h3>
+          <p>Leave-one-out resampling across the competitor set shows how far each score could move on sample noise alone, so a two-point drift between scans is never mistaken for progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band alt rule" id="mkt-how">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">How it works</span>
+        <h2>Four steps. No setup.</h2>
+      </div>
+      <div class="mkt-steps mkt-rv">
+        <div class="mkt-step"><h4>Paste a page and a keyword</h4><p>The URL you want to rank, and the phrase you want to rank it for. Nothing else to configure.</p></div>
+        <div class="mkt-step"><h4>It reads the live results</h4><p>The real top ten and the real AI Overview, fetched fresh at scan time — never a cached rule about what Google likes.</p></div>
+        <div class="mkt-step"><h4>Two scores and a diff</h4><p>Where you sit on each layer, which signals fall short, by how much, and what that is costing you in points.</p></div>
+        <div class="mkt-step"><h4>Work the list, re-scan</h4><p>Paste each prompt into Claude, ship the change, scan again. The next report tells you what actually stuck.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band ink">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag" style="color:#8C8577">The rules it holds itself to</span>
+        <h2>An instrument that lies is worse than no instrument.</h2>
+        <p class="sub">This tool is built to be usable in front of a paying client, which means it is built to refuse rather than to flatter. These are enforced in the code, not promised in the copy.</p>
+      </div>
+      <div class="mkt-vows mkt-rv">
+        <div class="mkt-vow"><b>No estimated numbers</b><p>Every figure comes from an actual fetch, render or query. Nothing on a report is <em>modelled</em>, inferred or filled in.</p></div>
+        <div class="mkt-vow"><b>Every number states its method</b><p>Word counts name their boundary and their source. You can <em>reproduce any figure</em> by hand if you want to.</p></div>
+        <div class="mkt-vow"><b>Fixed means re-tested</b><p>A finding is only marked resolved when its own check re-runs clean. Otherwise it says <em>withdrawn</em>, and why.</p></div>
+        <div class="mkt-vow"><b>It says when it cannot tell</b><p>Bot protection, a blocked fetch, a render that never fired — all reported as <em>unknown</em> rather than guessed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band rule" id="mkt-pricing">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">Pricing</span>
+        <h2>Free while you bring the key.</h2>
+        <p class="sub">The scanner runs entirely in your browser against your own search API key, so the full tool costs nothing to use and always will. You always bring your own search key. The paid tiers exist for the parts that need a server behind them: scans that run while you sleep, history that follows you between machines, and a note when a score moves.</p>
+      </div>
+      <div class="mkt-tiers mkt-rv">
+        <div class="mkt-tier">
+          <span class="mkt-status live">Available now</span>
+          <span class="tname">Scan</span>
+          <div class="tprice">$0<sub>forever</sub></div>
+          <p class="tnote">The whole instrument, on your own SerpApi or Serper key.</p>
+          <ul>
+            <li>Unlimited scans on your key</li>
+            <li>Both scores and the full work order</li>
+            <li>Rendered-versus-served diff</li>
+            <li>Per-task prompts and a master prompt</li>
+            <li>Scan history stored in this browser</li>
+            <li>Score movement charted across your last six scans</li>
+          </ul>
+          <button class="mkt-btn ghost mkt-launch">Start scanning</button>
+        </div>
+        <div class="mkt-tier feature">
+          <span class="mkt-status">In build</span>
+          <span class="tname">Practice</span>
+          <div class="tprice">$39<sub>/month</sub></div>
+          <p class="tnote">For the consultant who bills for this and wants it to keep watch.</p>
+          <ul>
+            <li>Your own search key, run on a schedule</li>
+            <li>Projects synced across your machines</li>
+            <li>Weekly automatic re-scans</li>
+            <li>Full history, not just the last six scans</li>
+            <li>Multi-keyword batches per page</li>
+          </ul>
+          <a class="mkt-btn primary mkt-waitlist" href="mailto:tyleramcgrath@gmail.com?subject=Citation%20Gap%20Practice%20waitlist&amp;body=I'd%20like%20early%20access%20to%20the%20Practice%20tier." style="text-align:center;text-decoration:none;display:block">Join the waitlist</a>
+        </div>
+        <div class="mkt-tier">
+          <span class="mkt-status">In build</span>
+          <span class="tname">Agency</span>
+          <div class="tprice">$149<sub>/month</sub></div>
+          <p class="tnote">For the shop running this across a roster of client sites.</p>
+          <ul>
+            <li>Everything in Practice</li>
+            <li>25 sites under weekly monitoring</li>
+            <li>Client-ready reports, your logo on them</li>
+            <li>Alerts when a score moves past its band</li>
+            <li>Shared workspace for your team</li>
+          </ul>
+          <a class="mkt-btn ghost mkt-waitlist" href="mailto:tyleramcgrath@gmail.com?subject=Citation%20Gap%20Agency%20waitlist&amp;body=I'd%20like%20early%20access%20to%20the%20Agency%20tier." style="text-align:center;text-decoration:none;display:block">Join the waitlist</a>
+        </div>
+      </div>
+      <p class="mkt-pricenote mkt-rv">Straight about where this stands: the free tier is live and complete — everything listed above it works today. The two paid tiers are being built, and the button puts you on the list rather than taking your money for something that is not finished yet.</p>
+    </div>
+  </section>
+
+  <section class="mkt-band alt rule">
+    <div class="mkt-wrap">
+      <div class="mkt-head mkt-rv">
+        <span class="mkt-tag">Questions</span>
+        <h2>The things people ask first.</h2>
+      </div>
+      <div class="mkt-faq mkt-rv">
+        <details class="mkt-q"><summary>Do I need an API key to try it?</summary><div class="ans">
+          <p>Yes, for a live scan — a free SerpApi or Serper account gives you 250 searches a month, and a scan spends about seven of them, so roughly 35 scans. The key is stored in your browser and sent only to the search provider.</p>
+          <p>If you just want to see the output first, <b>See a finished report</b> loads a complete real audit with no key at all.</p>
+        </div></details>
+        <details class="mkt-q"><summary>How is this different from Ahrefs, Semrush or Surfer?</summary><div class="ans">
+          <p>Those measure the rank layer, and they measure it well across a whole site. This measures one page against both layers at once, including the one they do not report on: whether Google's AI Overview can actually quote you, tested by running the query.</p>
+          <p>It is a scalpel, not a suite. Most people run it on the handful of pages that matter.</p>
+        </div></details>
+        <details class="mkt-q"><summary>Where does my data go?</summary><div class="ans">
+          <p><b>On the free tier, nothing leaves your machine but the search itself.</b> The scan is orchestrated in your browser. Your key lives in this browser's storage and is never sent anywhere except the search provider you chose. Scan history is stored locally too — clearing site data clears it.</p>
+          <p><b>On the paid tiers, when they ship, one thing changes.</b> A scheduled scan has to run while your browser is closed, so it cannot ask your browser for the key — you store one with us instead. It is encrypted at rest with a secret kept outside the database, decrypted only inside the job that calls your provider, and never sent back to your browser, not even to show you what you typed. You see the last four characters and nothing more. Delete it and the schedules stop. It is still your key on your provider account; we never pool it, resell it, or run anything on it but your own scans.</p>
+          <p>The two server functions exist only to fetch a page and to render one in a headless browser; neither keeps what it read.</p>
+        </div></details>
+        <details class="mkt-q"><summary>Is the AI Overview result stable enough to act on?</summary><div class="ans">
+          <p>Not perfectly, and the tool says so rather than pretending otherwise. AI Overviews are non-deterministic, so one scan is directional. Every score carries a confidence band from leave-one-out resampling across the competitor set, so you can see how much of a movement is sample noise before you act on it.</p>
+        </div></details>
+        <details class="mkt-q"><summary>Can I put the report in front of a client?</summary><div class="ans">
+          <p>That is what it is shaped for. Every finding prints the numbers behind it and the method used to get them, and the report distinguishes a visitor-facing defect from a score-recovering task, so the conversation is about the page rather than about the tool.</p>
+          <p>Logo'd, client-branded exports are part of the Agency tier being built.</p>
+        </div></details>
+        <details class="mkt-q"><summary>What does it refuse to do?</summary><div class="ans">
+          <p>Estimate. If a site sits behind bot protection, or a render never fires, or a competitor page cannot be read, it reports that page as unreadable and excludes it from the median rather than filling the hole with a guess. The sample arithmetic is printed on every report so you can see exactly what was counted.</p>
+        </div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-band rule">
+    <div class="mkt-wrap mkt-close mkt-rv">
+      <div>
+        <h2>Find out what the answer box knows about you.</h2>
+        <p class="sub">A URL, a keyword, and about a minute. The first scan usually explains a lot.</p>
+      </div>
+      <button class="mkt-btn primary lg mkt-launch">Run a free scan →</button>
+    </div>
+  </section>
+
+  <footer class="mkt-foot">
+    <div class="mkt-wrap">
+      <div class="mkt-footrow">
+        <div>
+          <div class="mkt-footbrand">
+            <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#F5F2EC" stroke-width="2"
+              stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#F5F2EC" stroke="none"/>
+              <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
+            <span class="mark">Citation Gap</span>
+          </div>
+          <p class="mkt-footnote">Live data via SerpApi or Serper. No ranking or AI Overview figure on this site is estimated — every number shown comes from an actual scan of the page named beside it.</p>
+        </div>
+        <div class="mkt-footlinks">
+          <a href="#mkt-compare">The gap</a>
+          <a href="#mkt-features">What it measures</a>
+          <a href="#mkt-how">How it works</a>
+          <a href="#mkt-pricing">Pricing</a>
+          <a href="javascript:void(0)" class="mkt-launch">Run a scan</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+<div id="splash" class="splash" hidden>
+  <div class="splash-card">
+    <div class="splash-brand">
+      <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+        stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/>
+        <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
+      <div>
+        <h2>Name this workspace</h2>
+        <div class="splash-sub">So your projects have your name on them</div>
+      </div>
+    </div>
+    <form class="splash-form" id="splashForm">
+      <div class="field">
+        <label for="splashEmail">Your email or name</label>
+        <input id="splashEmail" type="text" placeholder="you@youragency.com" autocomplete="email">
+      </div>
+      <button type="submit" class="splash-enter">Continue</button>
+      <button type="button" class="splash-skip" id="splashSkip">Skip — just let me scan</button>
+    </form>
+    <div class="splash-note">There is no account and no password. This is stored in this browser only,
+      to label your projects and nothing else. It is never sent anywhere.</div>
+  </div>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+        stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/>
+        <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
+      <span class="mark">Citation <em>Gap</em><small>Rank the top 10. Get cited by AI.</small></span>
+    </div>
+    <nav class="side-nav">
+      <button class="side-link active" data-view="scan" id="navScan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        New scan
+      </button>
+      <button class="side-link" data-view="projects" id="navProjects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Projects
+      </button>
+      <button class="side-link" id="navSettings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </nav>
+    <div class="side-foot">
+      <div class="side-user">
+        <span class="avatar" id="avatarInitial">·</span>
+        <div class="who"><b id="sideUserName">Guest</b><span id="sideUserEmail">Local workspace</span></div>
+      </div>
+      <button class="side-signout" id="btnSignout">Sign out</button>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="mobtop">
+      <button class="burger" id="burger" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <span class="mark">Citation <em>Gap</em></span>
+    </div>
+    <div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="dish" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+        stroke-linecap="round"><path d="M4 20 L11 13"/><circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/>
+        <path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>
+      <span class="mark">Citation <em>Gap</em><small>Rank the top 10. Get cited by AI.</small></span>
+    </div>
+    <span class="viewtitle" id="viewTitle">New scan</span>
+    <button class="ghost" id="btnSettings">Settings</button>
+  </div>
+
+  <div class="view active" id="viewScan">
+  <div class="hero">
+    <span class="kicker"><i></i>LIVE GOOGLE + AI OVERVIEW DATA</span>
+    <h1>What do I change <span>to rank for this?</span></h1>
+    <p>Put in a page and a keyword. This reads the live Google top 10, pulls the AI Overview and every source
+    it cites, then hands you the exact changes — each one with a ready-made prompt you paste straight into Claude.</p>
+  </div>
+
+  <div class="card setup">
+    <div class="form">
+      <div class="field">
+        <label for="url">Your page</label>
+        <input id="url" type="url" placeholder="https://yoursite.com/the-page-you-want-to-rank" autocomplete="url">
+      </div>
+      <div class="field">
+        <label for="kw">Keyword or phrase</label>
+        <input id="kw" type="text" placeholder="the phrase you want to rank for">
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="gl">Country</label>
+          <select id="gl">
+            <option value="us">United States</option><option value="ca">Canada</option>
+            <option value="gb">United Kingdom</option><option value="mx">Mexico</option>
+            <option value="au">Australia</option><option value="de">Germany</option>
+            <option value="es">Spain</option><option value="cr">Costa Rica</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="hl">Language</label>
+          <select id="hl">
+            <option value="en">English</option><option value="es">Spanish</option>
+            <option value="fr">French</option><option value="de">German</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="run" id="btnRun">Run the scan</button>
+        <button class="linkbtn" id="btnDemo">or see a finished example</button>
+      </div>
+      <div class="hint" id="keyHint"></div>
+    </div>
+
+    <div class="settings" id="settings">
+      <div class="field">
+        <label>Search data provider</label>
+        <div class="radios">
+          <label class="radio sel" id="rSerpapi">
+            <input type="radio" name="prov" value="serpapi" checked>
+            <span><b>SerpApi &nbsp;·&nbsp; recommended</b>
+            Full AI Overview with every cited source. 250 free searches a month —
+            <a href="https://serpapi.com/users/sign_up" target="_blank" rel="noopener">get a key</a>.</span>
+          </label>
+          <label class="radio" id="rSerper">
+            <input type="radio" name="prov" value="serper">
+            <span><b>Serper &nbsp;·&nbsp; cheaper</b>
+            Much lower cost, 2,500 free queries, but only partial AI Overview data —
+            <a href="https://serper.dev" target="_blank" rel="noopener">get a key</a>.</span>
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="apikey">API key</label>
+        <div class="keyrow">
+          <input id="apikey" type="password" placeholder="paste your key here" autocomplete="off" spellcheck="false">
+          <button class="save" id="btnSaveKey">Save key</button>
+        </div>
+        <div class="keyrow" style="margin-top:2px">
+          <span class="saved" id="savedFlag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Key saved in this browser</span>
+          <button class="forget" id="btnForget" style="display:none">forget it</button>
+        </div>
+        <span class="hint">Stored in this browser only. It goes to your own server function and straight to the
+        provider — never stored anywhere else.</span>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="depth">Competitor pages to analyse</label>
+          <select id="depth"><option>10</option><option>8</option><option>5</option></select>
+        </div>
+        <div class="field">
+          <label for="nq">Buyer questions to test</label>
+          <select id="nq"><option>6</option><option>4</option><option>8</option><option>0</option></select>
+        </div>
+      </div>
+      <span class="hint">Each scan costs roughly <b id="costNote">7</b> searches against your plan.</span>
+      <label class="hint" style="display:block;margin-top:6px"><input type="checkbox" id="force"> Force a full rescan (re-fetch Google even if the page has not changed since the last scan within 7 days)</label>
+      <label class="hint" style="display:block;margin-top:6px"><input type="checkbox" id="renderAll"> Render every competitor (one measurement basis — painted + reachable — for every page in the comparison; slower, about 15 s per page)</label>
+    </div>
+  </div>
+
+  <div class="err" id="err"></div>
+
+  <div class="progress card" id="progress">
+    <div class="log" id="log"></div>
+    <div class="bar"><i id="barFill"></i></div>
+  </div>
+
+  <div class="report" id="report"></div>
+
+  </div>
+
+  <div class="view" id="viewProjects">
+    <div class="projects-head">
+      <div>
+        <h1>Projects</h1>
+        <p>Every page and keyword you've scanned in this browser, with its latest scores.</p>
+      </div>
+      <button class="newproj" id="btnNewProject">+ New scan</button>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+    <div class="proj-detail" id="projDetail" hidden></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="/score.js"></script>
+
+<script>
+"use strict";
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._h); t._h=setTimeout(function(){ t.classList.remove('on'); },2200);
+}
+function copyText(text, btn, label){
+  const done=function(){
+    if(btn){ const old=btn.textContent; btn.textContent='Copied'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent=old; btn.classList.remove('done'); },1800); }
+    toast(label||'Prompt copied — paste it into Claude');
+  };
+  const legacy=function(){
+    const ta=document.createElement('textarea');
+    ta.value=text; ta.setAttribute('readonly','');
+    ta.style.position='fixed'; ta.style.top='-1000px';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }
+    catch(e){ toast('Could not copy — select the text and copy manually'); }
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(legacy);
+  } else legacy();
+}
+
+const S = { running:false, brand:'', lastData:null };
+const logEl=$('#log'), barEl=$('#barFill'), errEl=$('#err');
+let steps=0, stepsDone=0;
+
+function say(msg, cls){
+  const d=document.createElement('div');
+  if(cls) d.className=cls;
+  d.textContent=msg;
+  logEl.appendChild(d); logEl.scrollTop=logEl.scrollHeight;
+}
+function tick(){ stepsDone++; barEl.style.width=Math.min(100,(stepsDone/Math.max(steps,1))*100)+'%'; }
+function fail(msg){ errEl.textContent=msg; errEl.classList.add('on'); }
+function clearErr(){ errEl.classList.remove('on'); errEl.textContent=''; }
+const provider = () => (document.querySelector('input[name=prov]:checked')||{}).value || 'serpapi';
+function syncRadios(){
+  $('#rSerpapi').classList.toggle('sel', provider()==='serpapi');
+  $('#rSerper').classList.toggle('sel', provider()==='serper');
+}
+function keyIsSaved(){ try{ return !!localStorage.getItem('cg.key'); }catch(e){ return false; } }
+function reflectKeyState(){
+  const saved=keyIsSaved();
+  $('#savedFlag').classList.toggle('on', saved);
+  $('#btnForget').style.display = saved ? 'inline' : 'none';
+  const has = !!$('#apikey').value.trim();
+  $('#keyHint').innerHTML = saved
+    ? 'Key saved — ready to scan. It stays saved until you clear it.'
+    : (has ? 'Press <b>Save key</b> so you only have to do this once.'
+           : 'You need a free search API key first — open <b>Settings</b> (top right). Takes about a minute. '
+             + 'Or press <b>see a finished example</b> to view a real report with no key at all.');
+  const nq = parseInt($('#nq').value,10)||0;
+  $('#costNote').textContent = 1+nq;
+}
+function saveKey(){
+  const v=$('#apikey').value.trim();
+  if(!v){ toast('Paste a key first'); $('#apikey').focus(); return; }
+  try{
+    localStorage.setItem('cg.key', v);
+    localStorage.setItem('cg.provider', provider());
+  }catch(e){ toast('This browser is blocking storage — the key will not persist'); return; }
+  const b=$('#btnSaveKey'); b.textContent='Saved'; b.classList.add('done');
+  setTimeout(function(){ b.textContent='Save key'; b.classList.remove('done'); },1900);
+  reflectKeyState();
+  toast('API key saved in this browser');
+}
+function forgetKey(){
+  try{ localStorage.removeItem('cg.key'); }catch(e){}
+  $('#apikey').value='';
+  reflectKeyState();
+  toast('API key cleared');
+}
+function loadSettings(){
+  try{
+    const k=localStorage.getItem('cg.key'); if(k) $('#apikey').value=k;
+    const pv=localStorage.getItem('cg.provider')||'serpapi';
+    document.querySelectorAll('input[name=prov]').forEach(function(r){ r.checked=(r.value===pv); });
+    const u=localStorage.getItem('cg.url'); if(u) $('#url').value=u;
+    const w=localStorage.getItem('cg.kw'); if(w) $('#kw').value=w;
+  }catch(e){}
+  syncRadios(); reflectKeyState();
+}
+function rememberScan(){
+  try{
+    localStorage.setItem('cg.url',$('#url').value.trim());
+    localStorage.setItem('cg.kw',$('#kw').value.trim());
+    localStorage.setItem('cg.provider',provider());
+  }catch(e){}
+}
+
+async function api(path, params){
+  const q = new URLSearchParams(params).toString();
+  const r = await fetch(path+'?'+q);
+  if(!r.ok && r.status!==400) throw new Error('Server error '+r.status);
+  return r.json();
+}
+
+async function runScan(){
+  if(S.running) return;
+  clearErr();
+  const url=$('#url').value.trim(), kw=$('#kw').value.trim();
+  const key=$('#apikey').value.trim(), prov=provider();
+  const gl=$('#gl').value, hl=$('#hl').value;
+  const depth=parseInt($('#depth').value,10)||10;
+  const nq=parseInt($('#nq').value,10);
+
+  if(!url||!kw){ fail('Fill in both the page URL and the keyword.'); return; }
+  if(!/^https?:\/\//i.test(url)){ fail('The page URL needs to start with http:// or https://'); return; }
+  if(!key){ fail('No API key yet. Open Settings (top right), paste one in, and press Save key — SerpApi gives you 250 free searches a month.');
+    $('#settings').classList.add('open'); $('#apikey').focus(); return; }
+  if(!keyIsSaved()) saveKey();
+  rememberScan();
+
+  S.running=true; $('#btnRun').disabled=true; $('#btnRun').textContent='Scanning…';
+  $('#report').classList.remove('on'); $('#report').innerHTML='';
+  logEl.innerHTML=''; $('#progress').classList.add('on');
+  stepsDone=0; steps = 1 + Math.max(nq,0) + depth + 2;
+  barEl.style.width='0%';
+
+  let ownDomain=''; try{ ownDomain=new URL(url).hostname.replace(/^www\./,'').toLowerCase(); }catch(e){}
+
+  try{
+    // The page is read FIRST: if its text fingerprint matches the last scan (under 7 days old)
+    // the stored SERP, competitor set and medians are reused and no search credits are spent.
+    say('Reading your page…');
+    const mine=await api('/api/page',{url:url,keyword:kw,full:'1'});
+    tick();
+    if(mine.error||!mine.wordCount) throw new Error('Could not read your page: '+(mine.error||'no content found'));
+    say('  '+mine.wordCount.toLocaleString()+' words · '+mine.h2Count+' h2 · '+mine.h3Count+' h3 · '+
+        mine.statCount+' quantified claims · schema: '+((mine.schemaTopLevel||mine.schemaTypes||[]).slice(0,3).join(', ')||'none'),'dim');
+    if((mine.schemaClaimsAbsent||0)>0)
+      say('  '+mine.schemaClaimsAbsent+' schema item(s) declared but not found in the page text','hi');
+    if((mine.animationGatedCount||0)>0)
+      say('  '+mine.animationGatedElements+' entrance-animation elements ('+mine.animationGatedCount+' outermost blocks with text) — checking in a browser next','dim');
+    if((mine.jsHiddenStatCount||0)>0)
+      say('  '+mine.jsHiddenStatCount+' figures exist only in counter attributes, absent from the served text','hi');
+    const force=!!($('#force')&&$('#force').checked);
+    // P12 — one measurement basis for the whole comparison. Served HTML for every page unless
+    // every page is rendered; the choice is asserted before anything is scored.
+    const renderAll=!!($('#renderAll')&&$('#renderAll').checked);
+    const basis={kind:renderAll?'rendered':'served', label:renderAll?'rendered (painted + reachable)':'served HTML (regex parser)'};
+    mine.wordBasis='served';
+    const prevEntry=loadHistory(url,kw);
+    const fpNow=fingerprintOf(mine);
+    const REUSE_MS=7*24*3600*1000;
+    let reused=null;
+    if(!force && prevEntry && prevEntry.serpCache && prevEntry.fingerprint===fpNow && (prevEntry.basis||'served')===basis.kind && (Date.now()-(prevEntry.ts||0))<REUSE_MS){
+      reused={stamp:prevEntry.stamp, ageHours:Math.round((Date.now()-prevEntry.ts)/36e5), fingerprint:(mine.textSha256||'').slice(0,8), rank:prevEntry.rank, answer:prevEntry.answer, tasks:(prevEntry.fixes||[]).length};
+      say(''); say('NO CHANGE SINCE LAST SCAN ('+prevEntry.stamp+') — page fingerprint identical (sha256 '+reused.fingerprint+'…). Reusing that scan\'s Google results, competitor pages and medians (age: '+reused.ageHours+' h). No SERP credits spent. Tick “Force a full rescan” to re-fetch.','hi');
+    }
+    const sc=reused?prevEntry.serpCache:null;
+    let head;
+    if(sc){ head=sc.head; tick(); }
+    else {
+      say(''); say('Reading Google for “'+kw+'”…');
+      head = await api('/api/serp',{q:kw,key:key,provider:prov,gl:gl,hl:hl,num:Math.max(depth,10)});
+      if(head.error) throw new Error(head.error);
+      tick();
+    }
+    say('  '+head.organic.length+' organic results'+(sc?' (reused)':''),'dim');
+    if(head.aiOverview){
+      say('  AI Overview found — '+head.aiOverview.sources.length+' sources cited','hi');
+      head.aiOverview.sources.slice(0,8).forEach(function(s){ say('     · '+s.domain,'dim'); });
+    } else say('  no AI Overview on this query today','dim');
+    say('  People Also Ask: '+head.paa.length+' questions','dim');
+
+    let ownPosition='not in top '+depth;
+    for(let i=0;i<head.organic.length;i++){
+      if(head.organic[i].domain===ownDomain){ ownPosition='#'+head.organic[i].position; break; } }
+    say('  your position: '+ownPosition, ownPosition.charAt(0)==='#'?'ok':'no');
+
+    const perDomain=new Map();
+    let cov={queries:0,questions:[],domains:[],mine:0,peerMedian:1};
+    if(sc){ cov=sc.cov||cov; for(let i=0;i<Math.max(nq,0);i++) tick(); say('  answer layer: '+cov.queries+' buyer questions reused from the last scan','dim'); }
+    else if(nq>0){
+      const tpl=['what is '+kw+' and how does it work','how much does '+kw+' cost',
+                 'do '+kw+' actually work','best '+kw,kw+' vs alternatives which is better','is '+kw+' worth it'];
+      const seen=new Set(), qs=[];
+      const pool=head.paa.concat(tpl);
+      for(let i=0;i<pool.length;i++){
+        const k=pool[i].toLowerCase().replace(/\W+/g,' ').trim();
+        if(k&&!seen.has(k)){ seen.add(k); qs.push(pool[i]); }
+        if(qs.length>=nq) break;
+      }
+      say(''); say('Testing the answer layer across '+qs.length+' buyer questions…');
+      for(let i=0;i<qs.length;i++){
+        const s=await api('/api/serp',{q:qs[i],key:key,provider:prov,gl:gl,hl:hl,num:10});
+        tick();
+        if(s.error){ say('  ✗ '+qs[i]+' — '+s.error,'no'); continue; }
+        const hits=new Set(s.organic.map(function(o){return o.domain;}));
+        if(s.aiOverview) s.aiOverview.sources.forEach(function(x){ hits.add(x.domain); });
+        hits.forEach(function(d){ perDomain.set(d,(perDomain.get(d)||0)+1); });
+        const isMine=hits.has(ownDomain);
+        say('  '+(i+1)+'. '+(s.aiOverview?'[AIO] ':'[   ] ')+qs[i].slice(0,58)+(isMine?'   ← you':''), isMine?'ok':'');
+      }
+      const ranked=Array.from(perDomain.entries()).sort(function(a,b){return b[1]-a[1];});
+      const peers=ranked.filter(function(x){return x[0]!==ownDomain;}).slice(0,10).map(function(x){return x[1];});
+      cov={queries:qs.length,questions:qs,domains:ranked,mine:perDomain.get(ownDomain)||0,
+           peerMedian:peers.length?Math.round(median(peers)):1};
+      say('  you appeared in '+cov.mine+' of '+qs.length+'; peer median '+cov.peerMedian,
+          cov.mine>=cov.peerMedian?'ok':'no');
+    }
+
+    // Every requested slot is accounted for: used, or one disposition line with a reason code.
+    // requested = used + sum(disposition counts), asserted at emit time; a remainder is printed
+    // as UNACCOUNTED rather than swallowed.
+    const dispositions=[];
+    const ownHits=head.organic.filter(function(r){return r.domain===ownDomain;}).length;
+    const seenDom=new Set(); const targets=[]; let dedupedN=0;
+    head.organic.forEach(function(r){ if(r.domain===ownDomain) return; if(seenDom.has(r.domain)){ dedupedN++; if(dispositions.length<40) dispositions.push({code:'DEDUPED',domain:r.domain,count:1,reason:'same domain as an earlier result ('+r.url.replace(/^https?:\/\/(www\.)?/,'').slice(0,60)+')'}); return; } seenDom.add(r.domain); targets.push(r); });
+    const targetsUsed=targets.slice(0,depth);
+    if(ownHits) dispositions.push({code:'NOT_A_COMPETITOR',domain:ownDomain,count:Math.min(ownHits,depth),reason:'your own domain, position '+ownPosition});
+    const short=depth-targetsUsed.length-Math.min(ownHits,depth)-Math.min(dedupedN,depth);
+    if(short>0) dispositions.push({code:'SERP_SHORT',domain:'(google)',count:short,reason:'Google returned only '+head.organic.length+' organic results for this query; '+short+' requested slot'+(short===1?'':'s')+' had no page to fill'});
+    let comps=[], failed=[];
+    if(sc){ comps=sc.comps||[]; failed=sc.failed||[]; (sc.dispositions||[]).forEach(function(d){ if(!dispositions.some(function(x){return x.code===d.code&&x.domain===d.domain;})) dispositions.push(d); }); for(let i=0;i<depth;i++) tick(); say(''); say('Competitor pages reused from the last scan: '+comps.length+' used'+(failed.length?', '+failed.length+' not used':''),'dim'); }
+    else { say(''); say('Reading the top '+depth+' pages…'); }
+    for(let i=0;i<(sc?0:targetsUsed.length);i+=3){
+      const batch=targetsUsed.slice(i,i+3);
+      const got=await Promise.all(batch.map(function(t){
+        return api('/api/page',{url:t.url,keyword:kw}).catch(function(e){return {error:String(e)};}); }));
+      got.forEach(function(pg,j){
+        tick();
+        const t=batch[j];
+        if(pg.error||!pg.wordCount){ const code=/timed out|timeout/i.test(pg.error||'')?'TIMEOUT':'FAILED'; say('  ✗ '+t.domain+' — '+(pg.error||'no content'),'no'); failed.push({domain:t.domain,reason:pg.error||'no content',code:code,url:t.url,position:t.position}); return; }
+        // Minimum-content gate: a page with 82 words and no headings is a failed or JS-gated
+        // fetch that passed the "readable" check, and it would drag every median down.
+        const headingsN=(pg.h1Count||0)+(pg.h2Count||0)+(pg.h3Count||0);
+        if(pg.wordCount<COMP_FLOOR_WORDS || headingsN===0){
+          const why=pg.wordCount+' main-content words, '+headingsN+' headings — below the '+COMP_FLOOR_WORDS+'-word / 1-heading floor; likely a script-gated or blocked fetch';
+          say('  ✗ '+t.domain+' — EXCLUDED, UNREADABLE: '+why,'no'); failed.push({domain:t.domain,reason:why,code:'BELOW_MIN_CONTENT',excluded:true,servedWords:pg.wordCount,servedHeadings:headingsN,url:t.url,position:t.position}); return; }
+        pg.domain=t.domain; pg.position=t.position; pg.wordBasis='served'; comps.push(pg);
+        say('  ✓ #'+t.position+'  '+t.domain+'  '+pg.wordCount+'w  h3:'+pg.h3Count+'  stats:'+pg.statCount,'ok');
+      });
+    }
+    // Rendered basis: every competitor is rendered and its word count replaced by the painted +
+    // reachable figure; a page that cannot be rendered cannot share the basis and is dropped.
+    if(renderAll && !sc && comps.length){
+      say(''); say('Rendering '+comps.length+' competitor page'+(comps.length===1?'':'s')+' for the rendered basis…');
+      for(let i=0;i<comps.length;i+=2){
+        const batch=comps.slice(i,i+2);
+        const got=await Promise.all(batch.map(function(c){ return api('/api/render',{url:c.url||('https://'+c.domain+'/'),wait:'1500'}).catch(function(e){return {ok:false,error:String(e)};}); }));
+        got.forEach(function(rr,j){ const c=batch[j];
+          if(rr&&rr.ok&&rr.renderedWords){ c.wordCountServed=c.wordCount; c.wordCount=rr.renderedWords.scored!=null?rr.renderedWords.scored:(rr.renderedWords.main||0); c.wordBasis='rendered'; c.wordPainted=rr.renderedWords.main; c.wordReachable=rr.renderedWords.reachable?rr.renderedWords.reachable.main:0; say('  ✓ '+c.domain+' — rendered '+c.wordCount+'w ('+c.wordPainted+' painted + '+c.wordReachable+' reachable; served '+c.wordCountServed+')','ok'); }
+          else { c._dropBasis=(rr&&rr.error)||'no result'; say('  ✗ '+c.domain+' — could not render ('+c._dropBasis+'); cannot share the rendered basis, excluded','no'); }
+        });
+      }
+      comps.filter(function(c){return c._dropBasis;}).forEach(function(c){ failed.push({domain:c.domain,reason:'could not be rendered for the rendered basis: '+c._dropBasis,code:'BASIS_MISMATCH',url:c.url,position:c.position}); });
+      comps=comps.filter(function(c){return !c._dropBasis;});
+    }
+    // A page that looks empty when served may simply be script-built. Before excluding it,
+    // render it and measure the rendered DOM with the same rules — a JS-heavy competitor must
+    // not read as sparse (or as bloated) just because of the extraction path.
+    let rescued=sc?(sc.rescued||[]):[];
+    const thin=sc?[]:failed.filter(function(f){return f.excluded;}).slice(0,4);
+    if(thin.length){
+      say(''); say('Re-checking '+thin.length+' thin competitor page'+(thin.length===1?'':'s')+' in a browser (served HTML may be script-gated)…');
+      for(let i=0;i<thin.length;i++){ const f=thin[i];
+        let rr=null; try{ rr=await api('/api/render',{url:f.url,wait:'1500',parse:'1',keyword:kw}); }catch(e){ rr=null; }
+        if(rr&&rr.ok&&rr.parsed){
+          const pr=rr.parsed; const hn=(pr.h1Count||0)+(pr.h2Count||0)+(pr.h3Count||0);
+          const rmain=rr.renderedWords?rr.renderedWords.main:0;
+          const rw=Math.max(pr.wordCount||0, rmain);
+          if(rw>=COMP_FLOOR_WORDS && hn>0){
+            const rscored=rr.renderedWords&&rr.renderedWords.scored!=null?rr.renderedWords.scored:rmain;
+            if(renderAll){
+              // Rendered basis: the rescued page shares it and is used.
+              pr.domain=f.domain; pr.position=f.position; pr.wordCountServed=f.servedWords; pr.wordCount=rscored; pr.wordBasis='rendered'; pr.wordPainted=rmain; pr.wordReachable=rr.renderedWords&&rr.renderedWords.reachable?rr.renderedWords.reachable.main:0;
+              pr.rescued={servedWords:f.servedWords,renderedMain:rmain,renderedDomRule:rr.parsed.wordCount};
+              comps.push(pr); failed.splice(failed.indexOf(f),1);
+              rescued.push({domain:f.domain,position:f.position,servedWords:f.servedWords,renderedWords:pr.wordCount,renderedMain:rmain,headings:hn,used:true});
+              say('  ✓ #'+f.position+'  '+f.domain+' — rendered: '+pr.wordCount+'w, '+hn+' headings (served HTML gave '+f.servedWords+'w: script-gated). Used on the rendered basis.','ok');
+            } else {
+              // Served basis: a page that only reads in a browser cannot share it. Not averaged in.
+              f.code='BASIS_MISMATCH'; f.reason='served HTML gave '+f.servedWords+' words (script-gated); rendered in a browser it reads '+rscored+' words, '+hn+' headings — a different measurement basis from the other competitors, so it is NOT used on the served basis. Tick “Render every competitor” to use it.';
+              rescued.push({domain:f.domain,position:f.position,servedWords:f.servedWords,renderedWords:rscored,renderedMain:rmain,headings:hn,used:false});
+              say('  ✗ #'+f.position+'  '+f.domain+' — reads in a browser ('+rscored+'w, '+hn+' headings) but not in served HTML: BASIS_MISMATCH, not mixed into the served-basis median','hi');
+            }
+          } else { f.reason+='; rendered in a browser too: '+rw+' words, '+hn+' headings — still below the floor'; say('  ✗ '+f.domain+' — rendered too: '+rw+'w, '+hn+' headings; still excluded','no'); }
+        } else say('  ✗ '+f.domain+' — could not render ('+((rr&&rr.error)||'no result')+'); stays excluded','no');
+      }
+      comps.sort(function(a,b){return (a.position||0)-(b.position||0);});
+    }
+    if(comps.length<2) throw new Error('Only '+comps.length+' competitor page(s) could be read. Most sites blocked the request. Try a different keyword.');
+    // Sample arithmetic, closed: every failed page becomes a disposition line with its code.
+    if(!sc) failed.forEach(function(f){ dispositions.push({code:f.code||(f.excluded?'BELOW_MIN_CONTENT':'FAILED'),domain:f.domain,count:1,reason:f.reason}); });
+    const accounted=comps.length+dispositions.reduce(function(n,d){return n+(d.count||1);},0);
+    const unaccounted=depth-accounted;
+    if(unaccounted!==0) dispositions.push({code:'UNACCOUNTED',domain:'?',count:unaccounted,reason:unaccounted>0?'requested slots with no recorded disposition — a scanner bookkeeping gap, not a page fact':'more pages used than requested (a rescued page re-entered the sample)'});
+    const sample={requested:depth,used:comps.length,dispositions:dispositions,unaccounted:unaccounted};
+    say('  sample: '+depth+' requested → '+comps.length+' used, '+dispositions.reduce(function(n,d){return n+(d.count||1);},0)+' not used'+(unaccounted?' · UNACCOUNTED '+unaccounted:''), unaccounted?'no':'dim');
+
+    say(''); say('Rendering your page in a real browser (computed styles, scrolled, 2.5 s settle)…');
+    let rendered=null, renderError='';
+    try{
+      const rr0=await api('/api/render',{url:url,wait:'2500',parse:'1',keyword:kw});
+      if(rr0&&rr0.ok){ rendered=rr0;
+        say('  rendered in '+(rr0.renderMs/1000).toFixed(1)+' s · '+rr0.visibleTextElements+' visible text elements · '+(rr0.hiddenByContext?(rr0.hiddenContentCount||0)+' content elements hidden by computed style ('+(rr0.hiddenCount-(rr0.hiddenContentCount||0))+' more hidden by design)':rr0.hiddenCount+' hidden by computed style')+(rr0.gating&&rr0.gating.stillHidden?' · '+rr0.gating.stillHidden+' animation wrappers still hidden':''), (rr0.hiddenByContext?rr0.hiddenContentCount:rr0.hiddenCount)?'hi':'ok');
+        if(rr0.gate){ const g=rr0.gate;
+          if(g.state==='none') say('  gate self-check: no entrance-animation markers on the page','dim');
+          else say('  gate self-check: '+gateLine(g)+' — '+(g.state==='released'?'released, hidden findings are credible':g.state==='partial'?'the residual is real and listed':'DID NOT RELEASE, hidden content behind it is unverified, not asserted'), g.state==='released'?'ok':'hi'); }
+        if(rr0.pageErrors&&rr0.pageErrors.length) say('  page threw '+rr0.pageErrors.length+' JavaScript error(s): '+rr0.pageErrors[0].slice(0,80),'hi');
+      } else { renderError=(rr0&&rr0.error)||'no result'; say('  ✗ could not render: '+renderError+' — continuing with served HTML only','no'); }
+    }catch(e){ renderError=String(e.message||e); say('  ✗ render unavailable: '+renderError+' — continuing with served HTML only','no'); }
+    tick();
+    const wcheck=wordCheck(mine,rendered,basis.kind);
+    if(wcheck) say('  word count: '+wordCheckText(wcheck), wcheck.basisDifference?'hi':'dim');
+    if(wcheck){ mine.wordCountServed=mine.wordCount; mine.wordRendered=wcheck.rendered; mine.wordPainted=wcheck.renderedMain; mine.wordReachable=wcheck.reachable; }
+    if(basis.kind==='rendered'){
+      if(!wcheck) throw new Error('Rendered basis requested but this page could not be rendered; the comparison cannot share one basis. Untick “Render every competitor” or retry.');
+      mine.wordCount=wcheck.rendered; mine.wordScored='rendered'; mine.wordBasis='rendered';
+    } else { mine.wordScored='served'; mine.wordBasis='served'; }
+    // P12 assertion: exactly one word-count basis across this page and every competitor used.
+    const bases=new Set([mine.wordBasis].concat(comps.map(function(c){return c.wordBasis||'served';})));
+    if(bases.size!==1) throw new Error('Mixed measurement bases in one comparison ('+Array.from(bases).join(', ')+') — the scan refuses to build a median from two bases.');
+    say('  measurement basis: '+basis.label+' for this page and all '+comps.length+' competitors (asserted)','dim');
+    const reconcile=reconcileHidden(mine,rendered);
+    if(reconcile&&reconcile.relocated.length) reconcile.relocated.forEach(function(c){ say('  CONTAINER RELOCATED — <'+c.tag+' class="'+c.cls+'"> is '+c.reason+' in served HTML but holds '+c.renderedHeadings+' of its '+c.servedHeadings+' served headings after render; the widget moved its content into the visible DOM','hi'); });
+    if(rendered&&rendered.gate&&rendered.gate.late&&rendered.gate.late.count) say('  '+rendered.gate.lateSummary, rendered.gate.late.hidden?'hi':'dim');
+    const diff=renderDiff(mine,rendered);
+    if(diff){
+      if(diff.important.length) say('  '+diff.important.length+' hidden element(s) carry a CTA, price, statistic, heading or form','no');
+      if(diff.visibleNotServedCount) say('  '+diff.visibleNotServedCount+' visible line(s) are script-injected, absent from served HTML','hi');
+    }
+
+    say(''); say('Scoring…');
+    const m=medians(comps);
+    const cats=categoryEntities(comps,ownDomain);
+    const rk=scoreRank(mine,m), rs=rk[0], rr=rk[1];
+    // Visible text from the render decides PRESENT vs PRESENT BUT HIDDEN — only when the
+    // render's self-check passed; a stuck gate says nothing about what a visitor sees.
+    const vis = rendered ? {text:rendered.innerText||'', reliable:!(rendered.gate&&rendered.gate.state==='stuck')} : null;
+    const an=scoreAnswer(mine,m,cov,cats,vis), as=an[0], ar=an[1], missing=an[2], states=an[3]||[];
+    const serpDomains=head.organic.map(function(o){return o.domain;});
+    const missingInfo=cats.filter(function(g){return missing.indexOf(g.canonical)!==-1;}).map(function(g){
+      const st=states.find(function(s){return s.canonical===g.canonical;});
+      return {term:g.canonical,variants:g.variants,df:g.df,state:st?st.state:'ABSENT',bucket:classifyTerm(g.canonical,serpDomains,mine.siteLinkText,ownDomain)}; });
+    const hiddenTerms=missingInfo.filter(function(x){return x.state==='PRESENT BUT HIDDEN';}).length;
+    if(hiddenTerms) say('  '+hiddenTerms+' category term(s) are in the HTML but hidden from visitors — scored as missing','hi');
+    const band=looBand(comps,mine,cov,ownDomain,vis);
+    const brand=(ownDomain.split('.')[0]||'').replace(/\b\w/g,function(ch){return ch.toUpperCase();});
+    const rowMap=function(rows){ const o={}; rows.forEach(function(x){ o[x.key]={earned:x.earned,mine:x.mine,target:x.target}; }); return o; };
+    // P20 — computed BEFORE buildFixes (not after, where the rest of the diff lives) because a
+    // task must be able to see what THIS scan's own delta already credited, so it never
+    // recommends undoing a gain the scorer just measured in the same report (the h3Fragmented
+    // false-fire this fixes). Needs only rank/answer/rows/snap, none of which depend on fixes.
+    const pageChangedNow = prevEntry ? prevEntry.fingerprint!==fpNow : false;
+    const preAttr = prevEntry ? attributeScore(prevEntry,
+      {rank:rs, version:SCANNER_VERSION, basis:basis.kind, snap:snapshotOf(mine,rendered), rows:{rank:rowMap(rr),answer:rowMap(ar)}},
+      m, pageChangedNow) : null;
+    let fixes=buildFixes(mine,m,rr,ar,kw,cats,missing,brand,{diff:diff,rendered:rendered,missingInfo:missingInfo,band:band,wordCheck:wcheck,reconcile:reconcile,attribution:preAttr?preAttr.answer:null});
+    barEl.style.width='100%';
+    say('  RANK '+rs+'/100   ANSWER '+as+'/100'+(band?'   (bands '+band.rank[0]+'–'+band.rank[1]+' / '+band.answer[0]+'–'+band.answer[1]+')':''),'hi');
+    const softN=fixes.filter(function(f){return f._soft;}).length;
+    if(softN) say('  '+softN+' task target(s) are SOFT — their median moves when one competitor is dropped','dim');
+
+    const stamp=new Date().toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+    const prev=prevEntry;
+    const slim=function(c){ const o={}; Object.keys(c).forEach(function(k){ if(k==='bodyText'||k==='siteLinkText'||k==='servedBlocks'||k==='outline') return; o[k]=c[k]; }); return o; };
+    const serpCache={head:head,cov:cov,comps:comps.map(slim),failed:failed,rescued:rescued,dispositions:dispositions.filter(function(d){return d.code!=='UNACCOUNTED';}),savedAt:sc?sc.savedAt:Date.now()};
+    const volatile=diff ? volatileHistory(loadHistoryAll(url,kw), diff.volatile) : null;
+    const cur={url:url,kw:kw,stamp:stamp,ts:Date.now(),version:SCANNER_VERSION,rank:rs,answer:as,n:m.total,medianWords:m.wordCount,
+               medians:{wordCount:m.wordCount,h2Count:m.h2Count,h3Count:m.h3Count,listCount:m.listCount,statCount:m.statCount,questionHeadingCount:m.questionHeadingCount,kwInTitleN:m.kwInTitleN,kwInH1N:m.kwInH1N,faqN:m.faqN,tableN:m.tableN,schemaN:m.schemaN,total:m.total},
+               rows:{rank:rowMap(rr),answer:rowMap(ar)}, basis:basis.kind,
+               volatile:diff?diff.volatile.map(function(v){return v.text;}):[],
+               serpCache:serpCache, reusedFrom:reused?reused.stamp:null,
+               fingerprint:fpNow,snap:snapshotOf(mine,rendered),
+               fixes:fixes.map(function(f){return {key:f.key,title:f.title,items:f._items||[],body:String(f.body||'').slice(0,900),code:String(f.code||'').slice(0,600),severity:f.severity,effort:f.effort,engine:f.engine,pts:f._pts,hours:f._hours,extra:!!f._extra,section:f._section};}),
+               rendered:!!rendered, gate:rendered&&rendered.gate?{state:rendered.gate.state,summary:gateLine(rendered.gate),atLoad:{markers:rendered.gate.atLoad.markers},afterScroll:{hidden:rendered.gate.afterScroll.hidden},releasedCount:rendered.gate.releasedCount}:null};
+    const changes=diffScans(prev,cur,mine,{rendered:rendered,diff:diff,medians:m});
+    if(changes){
+      say('  compared with the previous scan of this page ('+changes.prevStamp+'): page '+(changes.pageChanged?'changed':'unchanged')+' · '+changes.resolved.length+' resolved · '+changes.added.length+' new · '+changes.carried+' unchanged · '+changes.withdrawn.length+' withdrawn · '+changes.stillPresent.length+' still present · '+changes.unverified.length+' unverified', (changes.withdrawn.length||changes.stillPresent.length)?'hi':'dim');
+      if(changes.pageChanged&&changes.changedLines) changes.changedLines.slice(0,6).forEach(function(l){ say('    changed: '+l,'dim'); });
+      if(changes.versionChanged) say('  scanner rules changed since that scan ('+changes.prevVersion+' → '+changes.curVersion+'): every disappeared finding was re-verified item by item','dim');
+      if(changes.attribution&&changes.rank[0]!==changes.rank[1]) changes.attribution.lines.forEach(function(l){ say('    Rank '+(l.delta>0?'+':l.delta<0?'−':'')+Math.abs(l.delta)+' from '+l.cause+l.note,'dim'); });
+      changes.stillPresent.forEach(function(c){ say('  ✗ carried forward, STILL PRESENT: '+c.title+' — '+c.check,'no'); });
+      changes.resolved.forEach(function(c){ say('  ✓ resolved: '+c.title+' — '+c.check,'ok'); });
+    }
+    saveHistory(url,kw,cur);
+    fixes=carryForward(fixes,changes);
+
+    render({keyword:kw,url:url,ownDomain:ownDomain,ownPosition:ownPosition,gl:gl,hl:hl,brand:brand,
+            page:mine,competitors:comps,medians:m,coverage:cov,rankScore:rs,answerScore:as,
+            rankRows:rr,answerRows:ar,fixes:fixes,missing:missing,missingInfo:missingInfo,headAio:head.aiOverview,
+            rendered:rendered,renderError:renderError,diff:diff,band:band,failed:failed,rescued:rescued,depthRequested:depth,changes:changes,
+            sample:sample,reused:reused,reconcile:reconcile,basis:basis,volatile:volatile,
+            wordCheck:wcheck,stamp:stamp,demo:false});
+  }catch(e){
+    fail(String(e.message||e));
+    say('STOPPED — '+String(e.message||e),'no');
+  }finally{
+    S.running=false; $('#btnRun').disabled=false; $('#btnRun').textContent='Run the scan';
+  }
+}
+</script>
+
+<script>
+"use strict";
+const ARC=263.9;
+const CLAUDE_URL='https://claude.ai/new';
+
+function verdictOf(n){
+  if(n>=75) return ['STRONG','ok'];
+  if(n>=50) return ['CLOSE','warn'];
+  if(n>=30) return ['WEAK','warn'];
+  return ['CRITICAL','crit'];
+}
+function gauge(score,cls,label,sub,color,id){
+  const v=verdictOf(score);
+  return '<div class="gauge '+cls+'"><span class="lab">'+esc(label)+'</span>'
+    +'<svg viewBox="0 0 200 118" role="img" aria-label="'+esc(label)+' '+score+' out of 100">'
+    +'<path d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var(--sunk)" stroke-width="15" stroke-linecap="round"/>'
+    +'<path class="arcfill" id="arc-'+id+'" d="M16,100 A84,84 0 0 1 184,100" fill="none" stroke="var('+color+')" '
+    +'stroke-width="15" stroke-linecap="round" stroke-dasharray="0 '+ARC+'"/>'
+    +'<text x="16" y="115" fill="var(--faint)" font-family="IBM Plex Mono" font-size="10">0</text>'
+    +'<text x="176" y="115" fill="var(--faint)" font-family="IBM Plex Mono" font-size="10">100</text></svg>'
+    +'<div class="gnum" id="num-'+id+'" style="color:var('+color+')">0</div>'
+    +'<span class="verdict pill '+v[1]+'">'+v[0]+'</span>'
+    +'<p class="gsub">'+esc(sub)+'</p></div>';
+}
+function tableRows(rows, spread, band){
+  spread=spread||{};
+  const SP={wordCount:'wordCount',h3Count:'h3Count',h2Count:'h2Count',listCount:'listCount',stats:'statCount',questionHeadings:'questionHeadingCount'};
+  return rows.map(function(r){
+    const cls = r.pct>=85?'ok' : r.pct>=40?'warn' : 'crit';
+    const pill= r.pct>=85?'PASS': r.pct>=40?'FIX'  : 'CRITICAL';
+    const note= r.note ? '<br><span class="mono" style="font-size:11px;color:var(--faint)">'+esc(r.note.slice(0,150))+'</span>' : '';
+    const mb = SP[r.key]&&band&&band.medians&&band.medians[SP[r.key]] ? band.medians[SP[r.key]] : null;
+    const sp = SP[r.key]&&spread[SP[r.key]] ? '<small>spread '+spread[SP[r.key]].min.toLocaleString()+'–'+spread[SP[r.key]].max.toLocaleString()
+      +(mb ? (mb[0]===mb[1] ? ' · median stable' : ' · median '+mb[0].toLocaleString()+'–'+mb[1].toLocaleString()+' SOFT') : '')+'</small>' : '';
+    return '<tr class="'+cls+'"><td class="sig">'+esc(r.label)+note+'</td>'
+      +'<td class="n you">'+esc(r.mine)+'</td><td class="n">'+esc(r.target)+sp+'</td>'
+      +'<td class="n">'+r.earned+'/'+r.weight+'</td>'
+      +'<td><span class="pill '+cls+'">'+pill+'</span></td></tr>';
+  }).join('');
+}
+function bars(cov, own){
+  const total=cov.queries||1;
+  let list=cov.domains.slice(0,14);
+  if(!list.some(function(x){return x[0]===own;})){
+    const mm=cov.domains.filter(function(x){return x[0]===own;});
+    list=list.slice(0,13).concat(mm.length?mm:[[own,0]]);
+  }
+  const rows=list.map(function(x){ const d=x[0], n=x[1];
+    return '<div class="row'+(d===own?' me':'')+'"><span class="name">'+esc(d)+'</span>'
+      +'<div class="track"><div class="fill" data-w="'+(n/total*100).toFixed(1)+'"></div></div>'
+      +'<span class="val">'+n+'/'+total+'</span></div>'; }).join('');
+  return [rows,'<div class="ticks"><span>0</span><span>'+Math.floor(total/2)+'</span><span>'+total+'</span></div>'];
+}
+
+function methodKv(d){
+  const p=d.page, m=d.medians, r=d.rendered, sp=m.spread||{}, b=d.band;
+  const failed=d.failed||[];
+  return 'Fetch mode ......... '+(r?'served HTML + rendered DOM (headless Chromium, computed styles read)':'served HTML only'+(d.renderError?' — render failed: '+d.renderError:''))+'\n'
+    +'Fetched URL ........ exactly as given; no cache-busting parameter; Cache-Control: no-cache'+'\n'
+    +(r?'Render wait ........ '+r.waitMs+' ms after '+r.waitStrategy+', scrolled: '+(r.scrolled?'yes':'no')+', then '+Math.max(600,Math.round(r.waitMs/2))+' ms; '+r.renderMs+' ms total'+(r.pageErrors&&r.pageErrors.length?'; page threw '+r.pageErrors.length+' JS error(s)':'')+'\n'
+      +'Render input ....... '+((r.gate&&r.gate.interaction)||'window.scrollTo only')+'; viewport 1366×900\n'
+      +'Gate self-check .... '+gateLine(r.gate)+(r.gate&&r.gate.state!=='none'?' — '+gateVerdict(r.gate):'')+(r.gate&&r.gate.method?' · '+r.gate.method:'')+'\n':'')
+    +'Word count rule .... '+(p.wordRule||'main content only; nav, header, footer, aside and form stripped')+'\n'
+    +'Region used ........ '+(p.wordRegion||'main content')+' · whole page would read '+Number(p.pageWordCount||p.wordCount).toLocaleString()+'\n'
+    +'Text fingerprint ... sha256 '+(p.textSha256||'n/a')+'\n'
+    +'Block definition ... '+(p.blockRule||'outermost element carrying an entrance-animation marker, containing text')+'\n'
+    +'Heading rule ....... '+(p.headingRule||'headings inside post-feed, loop or carousel widgets are TEMPLATE; the rest EDITORIAL')+'\n'
+    +'Hidden containers .. '+((p.hiddenContainers&&p.hiddenContainers.length)?p.hiddenContainers.length+' declared-hidden element(s): '+p.hiddenContainers.slice(0,4).map(function(c){return '<'+c.tag+(c.cls?' .'+c.cls.split(' ')[0]:'')+'> '+c.reason+', '+c.words+'w, '+c.headings+' heading(s)';}).join('; '):'none')+'\n'
+    +'Scanner version .... '+SCANNER_VERSION+' (history records the version; a disappeared finding across a version change is re-verified item by item)\n'
+    +'Measurement basis .. '+(d.basis?d.basis.label:'served HTML')+' for this page and every competitor used (asserted; a page on the other basis is BASIS_MISMATCH, never averaged in)\n'
+    +'Word count check ... '+(d.wordCheck ? wordCheckText(d.wordCheck)+' · A = served '+d.wordCheck.servedRegion+' (regex parser) · B = rendered same boundary, painted + reachable · whole page (served HTML) '+Number(p.pageWordCount||d.wordCheck.served).toLocaleString()+' · whole page (rendered, painted) '+d.wordCheck.renderedPage.toLocaleString() : 'rendered count not available')+'\n'
+    +(d.wordCheck&&compositionLines(d.wordCheck).length?compositionLines(d.wordCheck).join('\n')+'\n':'')
+    +'Effort model ....... 1 day = 6 hours, half day = 3 hours; Section B labels: HIGH ≥ 10 pts/hr, MEDIUM ≥ 5, else LOW; CRITICAL reserved for Section A\n'
+    +'Competitor sample .. '+(d.depthRequested||m.total)+' requested → '+m.total+' used'+(failed.length?' · not used: '+failed.map(function(f){return f.domain+' ('+(f.excluded?'EXCLUDED — UNREADABLE: ':'')+f.reason+')';}).join('; '):'')+((d.rescued&&d.rescued.length)?' · rendered instead of served: '+d.rescued.map(function(f){return f.domain+' ('+f.servedWords+'w served → '+f.renderedWords+'w rendered)';}).join('; '):'')+'\n'
+    +'Content floor ...... competitors under '+COMP_FLOOR_WORDS+' main-content words or with no headings are excluded as unreadable\n'
+    +'Word count spread .. '+(sp.wordCount?sp.wordCount.min.toLocaleString()+' / '+sp.wordCount.median.toLocaleString()+' / '+sp.wordCount.max.toLocaleString()+' (min / median / max)':'n/a')+'\n'
+    +'Score confidence ... '+(b?'Rank '+b.rank[0]+'–'+b.rank[1]+', Answer '+b.answer[0]+'–'+b.answer[1]+' — leave one competitor out, rescore, repeat. A move inside the band between scans is sample noise.':'not computed (fewer than 3 competitor pages)')+'\n'
+    +'Median confidence .. '+(b&&b.medians?['wordCount','h2Count','h3Count','questionHeadingCount','statCount','listCount'].map(function(k){return k+' '+medText(b,m,k);}).join(' · '):'n/a');
+}
+function renderedSection(d){
+  const p=d.page, df=d.diff, r=d.rendered;
+  const head='<section><span class="eyebrow">Engine three</span><h2>Rendered vs served <span class="tag r">what a visitor sees</span></h2>';
+  if(!df){
+    return head+'<p>'+(d.renderError
+      ? 'The page could not be rendered in a browser this time ('+esc(d.renderError)+'). Everything above is from the served HTML; '
+        +((p.animationGatedCount||0)>0 ? p.animationGatedCount+' entrance-animation block'+(p.animationGatedCount===1?'':'s')+' ('+(p.animationGatedElements||0)+' elements) could not be checked and appear as a verify task.' : 'no entrance-animation wrappers were found to check.')
+      : 'This report was produced without a browser render, so anything a stylesheet hides from visitors is not checked here.')+'</p></section>';
+  }
+  const pill=function(k){ return '<span class="pill '+(/call to action|price|statistic|form/.test(k)?'crit':k==='heading'?'warn':'ok')+'">'+esc(k)+'</span>'; };
+  const rows=df.hidden.slice(0,30).map(function(h){
+    return '<div class="row2'+(df.priority.indexOf(h)!==-1?' pri':'')+'"><div>'+pill(h.kind)+'</div><div>“'+esc(h.text.slice(0,140))+'”'
+      +'<div class="why">'+esc(h.reason)+(h.gated?' · inside an entrance-animation wrapper':'')+(/^display:none|ancestor display:none/.test(h.reason)&&!h.gated?' · often a modal, tab or menu — verify':'')+'</div></div></div>';
+  }).join('');
+  const inj=df.visibleNotServed.slice(0,12).map(function(x){return '<div class="row2"><div><span class="pill warn">script-injected</span></div><div>“'+esc(x.text.slice(0,140))+'”</div></div>';}).join('')
+    +(d.volatile&&d.volatile.rows.length ? d.volatile.rows.slice(0,10).map(function(x){return '<div class="row2"><div><span class="pill ok">volatile</span></div><div>“'+esc(x.text.slice(0,120))+'”<div class="why">third-party / widget text, seen '+x.seen+' of '+x.of+' scans'+(x.present?'':' — absent this scan')+(x.host?' · from '+esc(x.host):'')+' — varies by time or session; not a page finding and never a NEW / RESOLVED / WITHDRAWN entry</div></div></div>';}).join('') : '');
+  const notVis=df.servedNotVisible.slice(0,10).map(function(x){return '<div class="row2"><div><span class="pill ok">served only</span></div><div>“'+esc(x.text.slice(0,140))+'”<div class="why">'+(x.inDom?'in the DOM but never in visible text':'removed from the DOM by script')+'</div></div></div>';}).join('');
+  const unv=df.unverified.slice(0,10).map(function(h){return '<div class="row2"><div><span class="pill warn">'+(h.late?'late / unverified':'unverified')+'</span></div><div>“'+esc(h.text.slice(0,140))+'”<div class="why">'+(h.late?'inside a marker a widget inserted after first paint; still '+esc(h.reason)+' after a targeted scroll — a real browser may reveal it on the first scroll. Verify by eye, not asserted.':'behind an entrance-animation gate that did not release in this render — verify by eye, not asserted')+'</div></div></div>';}).join('')
+    +(d.reconcile&&d.reconcile.relocated.length ? d.reconcile.relocated.map(function(c){return '<div class="row2"><div><span class="pill crit">container relocated</span></div><div>&lt;'+esc(c.tag)+(c.cls?' class="'+esc(c.cls)+'"':'')+'&gt; is '+esc(c.reason)+' in served HTML but holds '+c.renderedHeadings+' of its '+c.servedHeadings+' served headings after render.<div class="why">The widget moved its content into the visible DOM. Any finding calling this content “hidden from visitors” is wrong for this page.</div></div></div>';}).join('') : '');
+  const g=df.gate;
+  const gateHtml = g ? (g.state==='none'
+      ? 'Gate self-check: no entrance-animation markers on the page. '
+      : 'Gate self-check: <b>'+esc(gateLine(g))+'</b> — '
+        +(g.state==='released'?'every marked element was re-read visible, so hidden findings below are credible. ':g.state==='partial'?'the elements still hidden were re-read by identity after a down pass, a reverse pass and a settle; they are real residuals and listed as findings. ':'<b>nothing released</b>. That is the signature of a headless render that never fired the reveal, not of a broken page, so nothing behind it is asserted as hidden. '))
+    : 'Gate self-check not available on this render. ';
+  return head
+    +'<p>The page was loaded in headless Chromium at 1366×900 with reduced motion off, given real mouse and wheel input, left '+r.waitMs+' ms after '+esc(r.waitStrategy)+', scrolled to the bottom so every observer could fire, and read back with computed styles. '+gateHtml
+    +'<b>'+df.hiddenCount+'</b> content element'+(df.hiddenCount===1?'':'s')+' still carried text no visitor can see; <b>'+df.visibleNotServedCount+'</b> visible line'+(df.visibleNotServedCount===1?'':'s')+' exist only after JavaScript runs. '
+    +(df.byDesignCount?'Another <b>'+df.byDesignCount+'</b> hidden element'+(df.byDesignCount===1?' is':'s are')+' hidden by design ('+esc(Object.keys(df.byContext).filter(function(k){return k!=='content';}).map(function(k){return df.byContext[k]+' '+({navigation:'menu items',carousel:'carousel slides',dialog:'dialog/popup',tab:'tab/accordion','screen-reader':'screen-reader-only'}[k]||k);}).join(', '))+') and are not findings. ':'')
+    +'Entrance-animation markers: '+(p.animationGatedElements||0)+' in the served HTML'+(g&&g.state!=='none'?', '+g.afterScroll.markers+' still carrying the marker after render':', '+df.gating.inDom+' still carrying the marker after render')+' (the class is removed when the animation fires; the element never leaves the DOM).'
+    +(df.counters.length?' Counters after render: '+esc(df.counters.slice(0,6).map(function(c){return (c.label?'“'+c.label.slice(0,36)+'”':'counter')+' shows '+c.renderedText+(c.renderedText!==c.toValue?' (target '+c.toValue+')':'')+(c.visible?'':' (hidden)');}).join(', '))+'.':'')+'</p>'
+    +'<div class="diff">'+(rows||'<div class="row2"><div><span class="pill ok">clear</span></div><div>Nothing in the served HTML is hidden from visitors by computed style.</div></div>')
+    +(df.hidden.length>30?'<div class="row2"><div></div><div>… and '+(df.hidden.length-30)+' more in the work order</div></div>':'')
+    +unv+notVis+inj+'</div></section>';
+}
+
+function render(d){
+  S.lastData=d;
+  const p=d.page,m=d.medians,cov=d.coverage;
+  const bb=bars(cov,d.ownDomain), barRows=bb[0], ticks=bb[1];
+  d.brand = d.brand || (d.ownDomain.split('.')[0]||'Your Brand').replace(/\b\w/g,function(c){return c.toUpperCase();});
+  d.rankReconcile = scoreReconciliation(d.rankRows, d.fixes, 'Rank score');
+  d.answerReconcile = scoreReconciliation(d.answerRows, d.fixes, 'Answer score');
+
+  let thesis='<b>Rank '+d.rankScore+' / Answer '+d.answerScore+'.</b> Two scores because these are two different races.';
+  if(cov.domains.length){
+    const topDom=cov.domains[0][0], topN=cov.domains[0][1];
+    const match=d.competitors.filter(function(c){return c.domain===topDom;})[0];
+    if(match&&match.statCount>p.statCount){
+      thesis='<b>The finding that matters:</b> '+esc(topDom)+' takes <b>'+topN+' of '+cov.queries
+        +'</b> answer-intent queries. Its page carries <b>'+match.statCount+' quantified claims</b>; yours carries <b>'
+        +p.statCount+'</b>. Authority wins rankings. Extractable specificity wins citations. '
+        +'They are separate races, and the second one is winnable faster.';
+    }
+  }
+
+  const crit=d.fixes.filter(function(f){return f.severity==='CRITICAL';}).length;
+  const quick=d.fixes.filter(function(f){return f.effort==='15 MIN'||f.effort==='30 MIN'||f.effort==='1 HR';}).length;
+
+  let lastSec='';
+  const fixHtml=d.fixes.map(function(f,i){
+    const sev = (f.severity==='CRITICAL')?'crit' : (f.severity==='HIGH')?'warn':'ok';
+    const sevCls = (f.severity==='CRITICAL')?'sev-crit' : (f.severity==='HIGH')?'sev-high':'';
+    const sec=f._section||(f._extra?'OUT-OF-SCORE':'IN-SCORE');
+    let secHtml='';
+    if(sec!==lastSec){ lastSec=sec;
+      secHtml = sec==='OUT-OF-SCORE'
+        ? '<div class="secline"><b>Section A — outside the score tables.</b> Visitor-facing and integrity defects with a fixed weight; ranked by weight per hour. Putting these ahead of Section B is a judgement call, not arithmetic.</div>'
+        : '<div class="secline"><b>Section B — in-score.</b> Each recovers points from the Rank or Answer table; ranked by points per hour, which you can check against the tables above.</div>'; }
+    return secHtml+'<div class="fix '+sevCls+'"><div class="idx"></div><div class="body">'
+      +'<div class="meta"><span class="pill '+sev+'">'+esc(f.severity)+'</span>'
+      +'<span class="pill warn">'+esc(f.effort)+'</span><span class="pill ok">'+esc(f.engine)+'</span>'+(f._soft?'<span class="pill warn">SOFT TARGET</span>':'')+(f._carried?'<span class="pill crit">CARRIED — '+esc(f._carried)+'</span>':'')+'<span class="pill ok">'+esc(impactText(f))+'</span></div>'
+      +'<h3>'+esc(f.title)+'</h3><p>'+esc(f.body)+'</p>'
+      +(f.code?'<div class="do">'+esc(f.code)+'</div>':'')
+      +'<button class="ptoggle" type="button" aria-expanded="false" data-i="'+i+'">'
+        +'<span class="car">▾</span> Get the Claude prompt for this</button>'
+      +'<div class="pbox" data-box="'+i+'">'
+        +'<div class="phead"><span>Paste this into Claude</span><div class="grp">'
+          +'<button class="cpy" data-copy="'+i+'">Copy prompt</button>'
+          +'<a class="open-claude" href="'+CLAUDE_URL+'" target="_blank" rel="noopener">Open Claude ↗</a>'
+        +'</div></div>'
+        +'<pre class="ptext" data-text="'+i+'"></pre>'
+      +'</div>'
+      +'</div></div>';
+  }).join('');
+
+  let aioHtml;
+  if(d.headAio){
+    const chips=d.headAio.sources.slice(0,18).map(function(s){return '<span class="chip">'+esc(s.domain)+'</span>';}).join('')
+      || '<span class="chip">no outbound sources listed</span>';
+    aioHtml='<section><span class="eyebrow">Pulled live from the results page</span>'
+      +'<h2>AI Overview for the head term <span class="tag a">answer layer</span></h2>'
+      +'<p>These are the domains Google actually credited in its own answer.</p>'
+      +'<div class="targets">'+chips+'</div>'
+      +(d.headAio.text?'<div class="aio">'+esc(d.headAio.text.slice(0,2200))+'</div>':'')+'</section>';
+  } else {
+    aioHtml='<section><span class="eyebrow">Pulled live from the results page</span>'
+      +'<h2>AI Overview for the head term <span class="tag a">answer layer</span></h2>'
+      +'<p>No AI Overview rendered for this term today. That is a finding, not a failure — this query is '
+      +'still answered by ten blue links. The coverage chart above is where the category’s answer layer lives.</p></section>';
+  }
+
+  const html =
+   (d.demo?'<div class="banner"><b>Sample report.</b> Built from a real scan of envuetelematics.com for “AI dash cam for fleets”, '
+     +'run 2 September 2026; the browser-render section illustrates the hidden-content pattern that scan family surfaced. Every prompt below '
+     +'is live, so copy one and try it. Add your own API key in Settings to scan any page.</div>':'')
+  +'<div class="targets">'
+    +'<span class="chip">TARGET <b>'+esc(d.url)+'</b></span>'
+    +'<span class="chip">KEYWORD <b>'+esc(d.keyword)+'</b></span>'
+    +'<span class="chip">SERP SET <b>'+m.total+' pages</b></span>'
+    +'<span class="chip">ANSWER SET <b>'+cov.queries+' questions</b></span>'
+    +'<span class="chip">YOUR POSITION <b>'+esc(d.ownPosition)+'</b></span></div>'
+  +'<div class="scores">'
+    +gauge(d.rankScore,'rk','Rank Score — classic top 10',(d.band?'Confidence band '+d.band.rank[0]+'–'+d.band.rank[1]+' (leave-one-out, n='+d.band.n+'). ':'')+'How closely your page matches the pages beating it.','--rank','rk')
+    +gauge(d.answerScore,'an','Answer Score — AI citation readiness',(d.band?'Confidence band '+d.band.answer[0]+'–'+d.band.answer[1]+'. ':'')+'Whether your page carries what answer engines quote.','--answer','an')
+  +'</div>'
+  +'<div class="strip">'
+    +'<div><b>'+d.fixes.length+'</b><span>changes</span></div>'
+    +'<div><b style="color:var(--crit)">'+crit+'</b><span>critical</span></div>'
+    +'<div><b style="color:var(--pass)">'+quick+'</b><span>under an hour</span></div>'
+    +'<div><b>'+cov.mine+'/'+cov.queries+'</b><span>answer coverage</span></div>'
+    +'<div><b>'+p.statCount+' vs '+m.statCount+'</b><span>quantified claims</span></div>'
+  +'</div>'
+  +'<div class="thesis">'+thesis+'</div>'
+  +(d.reused ? '<div class="banner"><b>No change since your last scan ('+esc(d.reused.stamp)+').</b> Page fingerprint identical; Google results, competitor pages and medians reused (age '+d.reused.ageHours+' h) — no search credits spent. The page itself was re-fetched and re-rendered. Tick “Force a full rescan” to re-fetch Google.</div>' : '')
+  +(d.changes ? '<div class="banner"><b>Compared with your last scan of this page ('+esc(d.changes.prevStamp)+').</b> Page '
+      +(d.changes.pageChanged?'<b>changed</b>':'unchanged')+' · Rank '+d.changes.rank[0]+' → '+d.changes.rank[1]+(d.changes.attribution&&d.changes.rank[0]!==d.changes.rank[1]&&d.changes.attribution.lines.length?' ('+esc(d.changes.attribution.lines.map(function(l){return (l.delta>0?'+':l.delta<0?'−':'')+Math.abs(l.delta)+' '+l.cause;}).join(', '))+(d.changes.attribution.recomputed&&d.changes.attribution.rulesChanged?'; under '+esc(d.changes.attribution.recomputed.version)+' rules on today’s sample: '+d.changes.attribution.recomputed.score:'')+')':'')+' · Answer '+d.changes.answer[0]+' → '+d.changes.answer[1]
+      +' · '+d.changes.carried+' unchanged'
+      +(d.changes.resolved.length?' · '+d.changes.resolved.length+' resolved ('+esc(d.changes.resolved.map(function(f){return f.title;}).join('; ').slice(0,200))+')':'')
+      +(d.changes.added.length?' · '+d.changes.added.length+' new':'')
+      +(d.changes.withdrawn.length?' · <b>'+d.changes.withdrawn.length+' withdrawn as a false positive</b> ('+esc(d.changes.withdrawn.map(function(f){return f.title+' — '+f.why;}).join('; ').slice(0,320))+')':'')
+      +(d.changes.stillPresent.length?' · <b>'+d.changes.stillPresent.length+' re-verified as still present</b> and carried forward ('+esc(d.changes.stillPresent.map(function(f){return f.title+' — '+f.check;}).join('; ').slice(0,320))+')':'')
+      +(d.changes.unverified.length?' · '+d.changes.unverified.length+' could not be re-checked and carried forward':'')
+      +(d.changes.pageChanged&&d.changes.changedLines&&d.changes.changedLines.length?' · what changed: '+esc(d.changes.changedLines.slice(0,4).join(' · ').slice(0,400)):'')
+      +(d.changes.versionChanged?' · scanner rules changed ('+esc(d.changes.prevVersion)+' → '+esc(d.changes.curVersion)+'); disappeared findings were re-verified item by item':'')
+      +(d.band&&!d.changes.pageChanged&&Math.abs(d.changes.rank[1]-d.changes.rank[0])<=(d.band.rank[1]-d.band.rank[0])?' · the Rank move is inside the confidence band: sample noise, not progress':'')
+      +'</div>' : '')
+  +'<section><span class="eyebrow">Where you actually stand</span>'
+    +'<h2>Answer-layer coverage <span class="tag a">'+cov.queries+'-question set</span></h2>'
+    +'<p>Every question was run live. A domain scores a point for each question where it was cited in the '
+    +'AI Overview or surfaced organically.</p>'
+    +'<div class="chart"><div class="rows">'+barRows+'</div>'
+    +'<div class="axis"><span></span>'+ticks+'<span></span></div>'
+    +'<p class="caption">Questions tested: '+esc(cov.questions.join('  ·  '))+'</p></div></section>'
+  +aioHtml
+  +'<section><span class="eyebrow">Engine one</span>'
+    +'<h2>On-page diff vs the top '+m.total+' <span class="tag r">rank layer</span></h2>'
+    +'<p>Every ranking page was fetched and parsed. “Median” is the middle value across them — '
+    +'the target is parity, not maximum.</p>'
+    +'<div class="tablewrap"><table><thead><tr><th>Signal</th><th class="n">You</th><th class="n">Median</th>'
+    +'<th class="n">Points</th><th>Status</th></tr></thead><tbody>'+tableRows(d.rankRows,m.spread,d.band)+'</tbody></table></div>'
+    +'<p class="caption">'+esc(reconcileText(d.rankReconcile))+'</p></section>'
+  +'<section><span class="eyebrow">Engine two</span>'
+    +'<h2>Citation-readiness diff <span class="tag a">answer layer</span></h2>'
+    +'<p>The signals separating a page an answer engine quotes from one it skims past. Weighted toward '
+    +'what is <strong>extractable</strong> — a machine has to lift a claim cleanly and attribute it.</p>'
+    +'<div class="tablewrap"><table><thead><tr><th>Signal</th><th class="n">You</th><th class="n">Median</th>'
+    +'<th class="n">Points</th><th>Status</th></tr></thead><tbody>'+tableRows(d.answerRows,m.spread,d.band)+'</tbody></table></div>'
+    +'<p class="caption">'+esc(reconcileText(d.answerReconcile))+'</p></section>'
+  +renderedSection(d)
+  +'<section><span class="eyebrow">Ordered by impact per hour, not by severity</span>'
+    +'<h2>'+d.fixes.length+' changes, in the order to make them</h2>'
+    +'<div class="master noprint"><div>'
+      +'<h3>Hand the whole job to Claude</h3>'
+      +'<p>One prompt containing all '+d.fixes.length+' changes in order, with the measured baseline, a verification '
+      +'step, and a hard instruction never to invent a statistic. Paste it into Claude and work down the list.</p>'
+    +'</div><div class="btns">'
+      +'<button class="wbtn solid" id="btnMaster">Copy the full work order</button>'
+      +'<a class="wbtn" href="'+CLAUDE_URL+'" target="_blank" rel="noopener">Open Claude ↗</a>'
+      +'<button class="wbtn" id="btnMasterTxt">Download .txt</button>'
+    +'</div></div>'
+    +'<div class="fixes">'+fixHtml+'</div></section>'
+  +'<section><span class="eyebrow">How this was produced</span><h2>Method</h2>'
+    +'<div class="card"><p class="method"><b>Live data.</b> Google was queried through a search data provider '
+    +'for the head term and every buyer question — organic results, AI Overview and its cited sources, and '
+    +'People Also Ask. Each ranking page was then fetched and parsed directly. No figure here is estimated. '
+    +'Scan run '+esc(d.stamp)+' against '+esc(String(d.gl||'us').toUpperCase())+'/'+esc(String(d.hl||'en').toUpperCase())+'.</p>'
+    +'<div class="kv">'+esc(methodKv(d))+'</div>'
+    +'<p class="method" style="margin-top:12px"><b>Known limits.</b> AI Overviews are non-deterministic — the same query renders one '
+    +'for one visitor and not another, so treat a single scan as directional and re-run over time. Coverage '
+    +'counts AI Overview citations and organic presence together. The baseline figures are read from the served HTML; '
+    +(d.rendered?'the rendered check above catches what CSS and JavaScript change after that. ':'when the browser render is unavailable, a stylesheet rule hiding something is invisible to the scan. ')
+    +'Schema detection covers JSON-LD only.</p>'
+    +(p.bodyText?'<div class="btns" style="margin-top:12px"><button class="wbtn" id="btnText">Download counted text</button></div>':'')
+    +'</div></section>'
+  +'<div class="exportbar noprint">'
+    +'<input id="brandName" type="text" placeholder="Your agency name (for the PDF)" value="'+esc(S.brand)+'">'
+    +'<button class="ghost" id="btnPrint">Save as PDF</button>'
+    +'<button class="ghost" id="btnJson">Download raw data</button></div>'
+  +'<footer><span id="footBrand">The Citation Gap · '+esc(d.url)+'</span>'
+    +'<span class="mono">RANK '+d.rankScore+' / ANSWER '+d.answerScore+'</span></footer>';
+
+  const R=$('#report'); R.innerHTML=html; R.classList.add('on');
+
+  const ctx={url:d.url,keyword:d.keyword,brand:d.brand,gl:d.gl,hl:d.hl,page:p,
+             medians:m,missing:d.missing||[],missingInfo:d.missingInfo||[],coverage:cov,
+             rendered:d.rendered||null,diff:d.diff||null};
+  d.fixes.forEach(function(f,i){
+    const txt=promptFor(f,ctx);
+    f._prompt=txt;
+    const el=R.querySelector('[data-text="'+i+'"]');
+    if(el) el.textContent=txt;
+  });
+  const master=masterPrompt(d);
+
+  R.querySelectorAll('.ptoggle').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      const i=btn.getAttribute('data-i');
+      const box=R.querySelector('[data-box="'+i+'"]');
+      const open=box.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open?'true':'false');
+      btn.lastChild.textContent = open ? ' Hide the prompt' : ' Get the Claude prompt for this';
+    });
+  });
+  R.querySelectorAll('.cpy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      const i=+btn.getAttribute('data-copy');
+      copyText(d.fixes[i]._prompt, btn, 'Prompt copied — paste it into Claude');
+    });
+  });
+  $('#btnMaster').addEventListener('click',function(){
+    copyText(master, $('#btnMaster'), 'Full work order copied — '+d.fixes.length+' tasks');
+  });
+  $('#btnMasterTxt').addEventListener('click',function(){
+    const blob=new Blob([master],{type:'text/plain'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=d.keyword.replace(/\W+/g,'-').toLowerCase()+'-work-order.txt';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+  const bt=$('#btnText'); if(bt) bt.addEventListener('click',function(){
+    const blob=new Blob([p.bodyText||''],{type:'text/plain'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download=d.keyword.replace(/\W+/g,'-').toLowerCase()+'-counted-text.txt'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  $('#btnPrint').addEventListener('click',function(){
+    const n=$('#brandName').value.trim(); S.brand=n;
+    $('#footBrand').textContent=(n||'The Citation Gap')+' · '+d.url;
+    document.title=(n?n+' — ':'')+d.keyword+' audit';
+    window.print();
+  });
+  $('#btnJson').addEventListener('click',function(){
+    const clean=JSON.parse(JSON.stringify(d));
+    (clean.fixes||[]).forEach(function(f){ delete f._rank; });
+    const blob=new Blob([JSON.stringify(clean,null,2)],{type:'application/json'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=d.keyword.replace(/\W+/g,'-').toLowerCase()+'-scan.json';
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  animate(d);
+  if(!d.demo) R.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function animate(d){
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const setArc=function(id,score){
+    const el=document.getElementById('arc-'+id);
+    if(el) el.setAttribute('stroke-dasharray',(ARC*Math.max(0,Math.min(100,score))/100).toFixed(1)+' '+ARC);
+  };
+  const countUp=function(id,score){
+    const el=document.getElementById('num-'+id);
+    if(!el) return;
+    if(reduce){ el.textContent=score; return; }
+    const t0=performance.now(), dur=1000;
+    (function step(now){
+      const k=Math.min(1,(now-t0)/dur);
+      el.textContent=Math.round(score*(1-Math.pow(1-k,3)));
+      if(k<1) requestAnimationFrame(step); else el.textContent=score;
+    })(t0);
+  };
+  const go=function(){
+    setArc('rk',d.rankScore); setArc('an',d.answerScore);
+    countUp('rk',d.rankScore); countUp('an',d.answerScore);
+    document.querySelectorAll('#report .fill').forEach(function(f){ f.style.width=f.getAttribute('data-w')+'%'; });
+  };
+  if(reduce) go(); else requestAnimationFrame(function(){ setTimeout(go,60); });
+}
+</script>
+
+<script>
+"use strict";
+const SHARED = ['Samsara','Geotab','Motive','Lytx','SureCam','Dash Cam','Fleet Safety','Driver Coaching',
+  'GPS','DVIR','ELD','FMCSA','HOS','ADAS','Video Telematics','Collision','Distracted Driving','Insurance'];
+
+function demoComp(domain,position,wordCount,h2,h3,lists,stats,tables,q,kwT,kwH1,schema,ents){
+  return {domain:domain,position:position,wordCount:wordCount,h2Count:h2,h3Count:h3,listCount:lists,
+    statCount:stats,tableCount:tables,questionHeadingCount:q,kwInTitle:kwT,kwInH1:kwH1,kwInMeta:true,
+    hasFaqSchema:schema,hasProductSchema:schema,schemaTypes:schema?['FAQPage','Product']:[],
+    entities:ents,httpTitle:'',h1:[],metaDescription:'',stats:[]};
+}
+
+function loadDemo(){
+  clearErr();
+  const kw='AI dash cam for fleets';
+  const comps=[
+    demoComp('samsara.com',1,8500,13,23,12,6,0,6,true,true,true,SHARED),
+    demoComp('gomotive.com',2,2400,12,12,4,6,0,5,true,true,false,SHARED),
+    demoComp('geotab.com',3,3800,13,22,12,5,1,6,true,true,true,SHARED),
+    demoComp('lytx.com',4,1100,5,0,2,0,0,0,true,true,false,SHARED.slice(0,11)),
+    demoComp('surecam.com',5,2400,6,11,7,6,0,4,false,true,false,SHARED.slice(0,14)),
+    demoComp('safetytrack.com',6,2400,8,0,12,4,1,5,true,true,false,SHARED.slice(0,13)),
+    demoComp('samsara.com',7,3200,11,14,7,6,0,0,true,true,true,SHARED),
+    demoComp('oxmaint.com',8,3200,9,23,7,6,0,8,true,true,false,SHARED)
+  ];
+  const mine={
+    domain:'envuetelematics.com',
+    httpTitle:'Enhance Fleet Safety and Efficiency with Video-Based Systems',
+    h1:['Video-based safety systems lower risk profile'],
+    metaDescription:'Discover how video-based safety systems like AI dash cams and HD imagery enhance driver safety and reduce fleet risks effectively.',
+    wordCount:1100,pageWordCount:1290,h2Count:12,h3Count:0,listCount:4,statCount:0,tableCount:0,
+    questionHeadingCount:4,kwInTitle:false,kwInH1:false,kwInMeta:true,
+    hasFaqSchema:true,hasProductSchema:false,schemaTypes:['Answer','BreadcrumbList','FAQPage','ListItem','Organization','Question','WebPage'],
+    schemaTopLevel:['BreadcrumbList','FAQPage','Organization','WebPage'],schemaNested:['Answer','ListItem','Question'],
+    schemaClaims:[{kind:'FAQ question',text:'What is an AI dash cam?',present:true,matched:'full text'},
+      {kind:'FAQ question',text:'Can dash cams lower my insurance premium?',present:false,matched:'full text'},
+      {kind:'FAQ answer',text:'Many carriers offer discounts for fleets running video-based safety systems.',present:false,matched:'full text'}],
+    schemaClaimsAbsent:2,stats:[],
+    wordRegion:'<main>',textSha256:'3f1c9e0b7a2d4c8e5f6a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60',
+    wordRule:'Region: the first <main> or <article> whose text exceeds 500 characters, otherwise <body> with <nav>, <header>, <footer>, <aside> and <form> removed. <script>, <style>, <noscript>, <svg> and comments are dropped; every tag is removed, so alt text, aria-labels, title attributes and other attribute values are NOT counted; HTML entities are decoded; whitespace is collapsed. The text is split on whitespace and a token counts as a word only if it contains at least one letter or digit (so a lone dash or pipe is not a word). Hyphenated compounds are one word; numerals are words.',
+    blockRule:'A block is the OUTERMOST element carrying an entrance-animation marker (class elementor-invisible, wpb_animate_when_almost_visible, wow, animate__animated, or a data-aos attribute) that contains text. A gated element nested inside another gated element is counted within its parent, not separately. The raw element count is every element carrying a marker, nested or not.',
+    outline:[{level:1,text:'Video-based safety systems lower risk profile'},{level:2,text:'Why video telematics'},{level:2,text:'How AI dash cams coach drivers'},
+      {level:2,text:'What does an AI dash cam cost?'},{level:2,text:'Get a free demo'}],
+    counters:[{value:'31',display:'31%',label:'Annual Reportable Accidents Reduced By 31%',elementText:'31',fromValue:'31',toValue:'31',textIsValue:true,inServedText:true}],
+    counterCount:1,jsHiddenStats:[],jsHiddenStatCount:0,
+    animationGated:[{framework:'Elementor entrance animation',carries:'call to action',sample:'Get a Free Demo',words:4},
+      {framework:'Elementor entrance animation',carries:'statistic',sample:'Annual Reportable Accidents Reduced By 31%',words:6}],
+    animationGatedCount:2,animationGatedElements:9,
+    servedBlocks:['Video-based safety systems lower risk profile','Get a Free Demo','Annual Reportable Accidents Reduced By 31%','Why video telematics','How AI dash cams coach drivers'],
+    bodyText:'Video-based safety systems lower risk profile. Why video telematics. How AI dash cams coach drivers. Fleet Safety GPS Driver Coaching.',
+    siteLinkText:'Geotab Marketplace | geotab | dash cams | ELD compliance | eld',
+    entities:['Fleet Safety','GPS','Driver Coaching']
+  };
+  // Illustrative browser render: the pattern seen on a real Elementor page whose entrance
+  // animation never fired - a demo button and a statistic hidden from visitors.
+  const rendered={ok:true,waitMs:2500,waitStrategy:'networkidle2',scrolled:true,scrollSteps:9,renderMs:6800,
+    visibleTextElements:214,hiddenCount:41,hiddenByKind:{'call to action':34,'statistic':1,'text':6},
+    hiddenByContext:{content:2,navigation:33,carousel:6},hiddenContentCount:2,
+    hidden:[{text:'Get a Free Demo',tag:'a',reason:'visibility:hidden',kind:'call to action',context:'content',gated:true,cls:'elementor-button'},
+            {text:'Annual Reportable Accidents Reduced By 31%',tag:'div',reason:'ancestor visibility:hidden',kind:'statistic',context:'content',gated:true,cls:'elementor-counter-title'},
+            {text:'Equipment Management',tag:'div',reason:'visibility:hidden',kind:'call to action',context:'navigation',gated:false,cls:'ue-link-item-title'},
+            {text:'I would recommend them to any fleet manager.',tag:'p',reason:'positioned off-screen',kind:'text',context:'carousel',gated:false,cls:'swiper-slide'}],
+    gating:{inDom:9,stillHidden:2,bySelector:{'.elementor-invisible':{inDom:9,stillHidden:2}}},
+    counters:[{toValue:'31',renderedText:'31',label:'Annual Reportable Accidents Reduced By',visible:false}],
+    gate:{atLoad:{markers:9,hidden:9},afterScroll:{markers:2,hidden:2,tracked:9},tracked:9,releasedCount:7,residualCount:2,released:7,state:'partial',
+      residual:[{id:'3',text:'Get a Free Demo',tag:'a',reason:'visibility:hidden',stillMarked:true,cls:'elementor-invisible elementor-button',cta:true,ctaText:'Get a Free Demo',top:1180},{id:'6',text:'Annual Reportable Accidents Reduced By 31%',tag:'div',reason:'visibility:hidden',stillMarked:true,cls:'elementor-invisible',cta:false,ctaText:'',top:2410}],
+      summary:'9 markers at first paint → 7/9 released, 2 still hidden (“Get a Free Demo”, “Annual Reportable Accidents Reduced By 31%”)',
+      method:'every marked element tagged at first paint and re-read by identity after a down pass, a reverse pass and a settle, regardless of scroll position',
+      interaction:'mouse move + wheel scroll (9 steps down, then back up) + key press; prefers-reduced-motion: no-preference'},
+    renderedWords:{page:1040,main:960,mainRegion:'<main>',rule:'innerText of the attached, rendered DOM after scroll + settle'},
+    renderedHeadings:{h1:1,h2:8,h3:14,h1Total:1,h2Total:9,h3Total:19},
+    innerText:'Video-based safety systems lower risk profile\nWhy video telematics\nHow AI dash cams coach drivers\nDrivers coached this quarter: 1,240 sessions logged by the platform\n',
+    domText:'Video-based safety systems lower risk profile Get a Free Demo Annual Reportable Accidents Reduced By 31% Why video telematics How AI dash cams coach drivers Drivers coached this quarter: 1,240 sessions logged by the platform',
+    pageErrors:[],consoleErrors:0};
+  const cov={queries:6,questions:[
+      'how much does an AI dash cam cost for a fleet per vehicle',
+      'do AI dash cams actually reduce fleet accidents',
+      'what is an AI dash cam and how does it work for fleets',
+      'AI dash cam vs regular dash cam fleet which is better',
+      'best AI dash cam for fleets','AI dash cam fleet safety camera system'],
+    domains:[['gomotive.com',4],['geotab.com',4],['oxmaint.com',4],['samsara.com',3],['lytx.com',3],
+      ['surecam.com',3],['safetytrack.com',3],['intellishift.com',2],['fleetistics.com',2],
+      ['envuetelematics.com',1]],
+    mine:1,peerMedian:3};
+
+  const m=medians(comps);
+  const cats=categoryEntities(comps,'envuetelematics.com');
+  const rk=scoreRank(mine,m), rs=rk[0], rr=rk[1];
+  const vis={text:rendered.innerText,reliable:true};
+  const an=scoreAnswer(mine,m,cov,cats,vis), as=an[0], ar=an[1], missing=an[2], states=an[3]||[];
+  const diff=renderDiff(mine,rendered);
+  const serpDomains=comps.map(function(c){return c.domain;});
+  const missingInfo=cats.filter(function(g){return missing.indexOf(g.canonical)!==-1;}).map(function(g){
+    const st=states.find(function(s){return s.canonical===g.canonical;});
+    return {term:g.canonical,variants:g.variants,df:g.df,state:st?st.state:'ABSENT',bucket:classifyTerm(g.canonical,serpDomains,mine.siteLinkText,'envuetelematics.com')}; });
+  const band=looBand(comps,mine,cov,'envuetelematics.com',vis);
+  const wcheck=wordCheck(mine,rendered);
+  const fixes=buildFixes(mine,m,rr,ar,kw,cats,missing,'EnVue Telematics',{diff:diff,rendered:rendered,missingInfo:missingInfo,band:band,wordCheck:wcheck});
+
+  render({keyword:kw,url:'https://envuetelematics.com/dash-cams/',ownDomain:'envuetelematics.com',wordCheck:wcheck,
+    ownPosition:'not in top 10',gl:'us',hl:'en',brand:'EnVue Telematics',page:mine,competitors:comps,
+    medians:m,coverage:cov,rankScore:rs,answerScore:as,rankRows:rr,answerRows:ar,fixes:fixes,missing:missing,
+    missingInfo:missingInfo,rendered:rendered,diff:diff,band:band,failed:[{domain:'fleetio.com',reason:'HTTP 403'}],depthRequested:9,
+    headAio:{text:'AI dash cams use onboard computer vision to detect unsafe driving behaviour in real time — '
+      +'phone use, following distance, drowsiness — and alert the driver before an incident occurs. Fleets '
+      +'deploying them report measurable reductions in collision frequency and insurance cost.',
+      sources:[{domain:'samsara.com'},{domain:'geotab.com'},{domain:'gomotive.com'},{domain:'oxmaint.com'},
+               {domain:'lytx.com'},{domain:'surecam.com'}]},
+    stamp:'September 2, 2026 at 9:14 AM PDT',demo:true});
+}
+
+$('#btnSettings').addEventListener('click',function(){
+  const s=$('#settings'); s.classList.toggle('open');
+  if(s.classList.contains('open')){ $('#apikey').focus(); s.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+});
+$('#btnRun').addEventListener('click',runScan);
+$('#btnDemo').addEventListener('click',loadDemo);
+$('#btnSaveKey').addEventListener('click',saveKey);
+$('#btnForget').addEventListener('click',forgetKey);
+$('#apikey').addEventListener('input',reflectKeyState);
+$('#apikey').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); saveKey(); } });
+$('#nq').addEventListener('change',reflectKeyState);
+document.querySelectorAll('input[name=prov]').forEach(function(r){
+  r.addEventListener('change',function(){ syncRadios(); try{ localStorage.setItem('cg.provider',provider()); }catch(e){} });
+});
+['url','kw'].forEach(function(id){
+  $('#'+id).addEventListener('keydown',function(e){ if(e.key==='Enter') runScan(); });
+});
+
+loadSettings();
+loadDemo();
+</script>
+<script>
+"use strict";
+// ---- App shell: workspace splash, sidebar nav, Projects (reads the scanner's own cg.hist store) ----
+(function(){
+  function $(s){ return document.querySelector(s); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  // --- Workspace splash. Cosmetic entry point — this is a single-browser local tool, not a
+  // real account system, so nothing here is checked against a server. Any email gets you in;
+  // it's stored locally only, to personalise the sidebar.
+  var splash=$('#splash');
+  function initials(email){
+    var name=(email||'').split('@')[0].replace(/[^a-zA-Z0-9]+/g,' ').trim();
+    if(!name) return '·';
+    var parts=name.split(' ').filter(Boolean);
+    return (parts[0].charAt(0)+(parts[1]?parts[1].charAt(0):(parts[0].charAt(1)||''))).toUpperCase();
+  }
+  function paintUser(email){
+    $('#sideUserName').textContent=email?email.split('@')[0]:'Guest';
+    $('#sideUserEmail').textContent=email||'Local workspace';
+    $('#avatarInitial').textContent=initials(email);
+  }
+  function openApp(){
+    splash.hidden=true;
+    var e=''; try{ e=localStorage.getItem('cg.identity')||''; }catch(err){}
+    paintUser(e);
+  }
+  // Nobody is made to name a workspace before they can scan: the panel never blocks the way in.
+  // It opens only when asked for — the front door's Sign in control, or after a reset — because
+  // there is no account behind it and a password box in front of a free tool is just a toll gate.
+  openApp();
+  window.cgShowWorkspacePanel=function(){ if(splash) splash.hidden=false; };
+  var splashForm=$('#splashForm');
+  if(splashForm) splashForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=$('#splashEmail').value.trim();
+    try{ if(email) localStorage.setItem('cg.identity',email); }catch(err){}
+    openApp();
+  });
+  var splashSkip=$('#splashSkip');
+  if(splashSkip) splashSkip.addEventListener('click',function(){ openApp(); });
+  var btnSignout=$('#btnSignout');
+  if(btnSignout) btnSignout.addEventListener('click',function(){
+    try{ localStorage.removeItem('cg.identity'); }catch(err){}
+    paintUser('');
+    if(splash) splash.hidden=false;
+  });
+
+  // --- Sidebar nav / mobile menu ---
+  var sidebar=$('#sidebar'), scrim=$('#scrim'), burger=$('#burger');
+  function closeMenu(){ if(sidebar)sidebar.classList.remove('open'); if(scrim)scrim.classList.remove('on'); }
+  function openMenu(){ if(sidebar)sidebar.classList.add('open'); if(scrim)scrim.classList.add('on'); }
+  if(burger) burger.addEventListener('click',openMenu);
+  if(scrim) scrim.addEventListener('click',closeMenu);
+
+  var VIEWS={scan:{el:$('#viewScan'),title:'New scan',nav:$('#navScan')},
+             projects:{el:$('#viewProjects'),title:'Projects',nav:$('#navProjects')}};
+  function showView(name){
+    Object.keys(VIEWS).forEach(function(k){
+      var v=VIEWS[k];
+      v.el.classList.toggle('active',k===name);
+      v.nav.classList.toggle('active',k===name);
+    });
+    var vt=$('#viewTitle'); if(vt) vt.textContent=VIEWS[name].title;
+    if(name==='projects') renderProjects();
+    closeMenu();
+    window.scrollTo(0,0);
+  }
+  $('#navScan').addEventListener('click',function(){ showView('scan'); });
+  $('#navProjects').addEventListener('click',function(){ showView('projects'); });
+  var navSettingsBtn=$('#navSettings');
+  if(navSettingsBtn) navSettingsBtn.addEventListener('click',function(){
+    showView('scan');
+    var s=$('#settings'); s.classList.add('open');
+    setTimeout(function(){ s.scrollIntoView({behavior:'smooth',block:'nearest'}); },50);
+  });
+  var btnNewProject=$('#btnNewProject');
+  if(btnNewProject) btnNewProject.addEventListener('click',function(){ showView('scan'); });
+
+  // --- Projects: one card per url+keyword pair that has been scanned at least once, read
+  // straight from cg.hist (the scanner's own per-page history store — no new storage format).
+  function loadAllProjects(){
+    var all={}; try{ all=JSON.parse(localStorage.getItem('cg.hist')||'{}'); }catch(err){ all={}; }
+    var rows=[];
+    Object.keys(all).forEach(function(key){
+      var arr=all[key]||[]; if(!arr.length) return;
+      var last=arr[arr.length-1];
+      // Older entries (saved before this field existed) fall back to the folded key text.
+      var url=last.url||key.split('|')[0], kw=last.kw||key.split('|')[1];
+      rows.push({key:key,url:url,keyword:kw,rank:last.rank,answer:last.answer,ts:last.ts||0,scans:arr.length});
+    });
+    rows.sort(function(a,b){ return b.ts-a.ts; });
+    return rows;
+  }
+  function timeAgo(ts){
+    if(!ts) return 'a while ago';
+    var s=Math.max(0,(Date.now()-ts)/1000);
+    if(s<3600) return Math.max(1,Math.round(s/60))+'m ago';
+    if(s<86400) return Math.round(s/3600)+'h ago';
+    if(s<86400*30) return Math.round(s/86400)+'d ago';
+    return Math.round(s/(86400*30))+'mo ago';
+  }
+  function renderProjects(){
+    var grid=$('#projGrid'); if(!grid) return;
+    if(detail){ detail.hidden=true; detail.innerHTML=''; }
+    grid.hidden=false;
+    var rows=loadAllProjects();
+    grid.innerHTML='';
+    if(!rows.length){
+      var empty=document.createElement('div');
+      empty.className='proj-empty';
+      empty.innerHTML='<span class="dish" aria-hidden="true" style="background:linear-gradient(140deg,var(--rank),var(--rank-2));display:grid;place-items:center;border-radius:12px">'
+        +'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 20 L11 13"/>'
+        +'<circle cx="12.5" cy="11.5" r="3.4" fill="#fff" stroke="none"/><path d="M14.5 6.2a7 7 0 0 1 3.3 3.3M16.2 2.6a11 11 0 0 1 5.2 5.2"/></svg></span>'
+        +'<h3 style="font-size:16px;font-weight:700">No projects yet</h3>'
+        +'<p class="hint">Run your first scan and it will show up here — every page and keyword you check is saved as a project, right in this browser.</p>';
+      grid.appendChild(empty);
+      return;
+    }
+    rows.forEach(function(r){
+      var card=document.createElement('button');
+      card.type='button'; card.className='proj-card';
+      var host=r.url; try{ host=new URL(r.url).hostname.replace(/^www\./,''); }catch(err){}
+      card.innerHTML='<div><div class="kw">'+esc(r.keyword)+'</div><div class="site">'+esc(host)+'</div></div>'
+        +'<div class="proj-scores"><div class="rk"><b>'+(r.rank!=null?r.rank:'–')+'</b><span>Rank score</span></div>'
+        +'<div class="an"><b>'+(r.answer!=null?r.answer:'–')+'</b><span>Answer score</span></div></div>'
+        +'<div class="proj-when">Last scanned '+esc(timeAgo(r.ts))+'</div>';
+      card.addEventListener('click',function(){ openProject(r.key); });
+      grid.appendChild(card);
+    });
+  }
+
+  // --- Project detail: score movement over time.
+  // The retainer question is "did the work move the number", and the answer is only credible
+  // if it is plotted from the same stored scans the report was written from. Nothing new is
+  // recorded for this view — it reads cg.hist, the scanner's own history store.
+  var detail=$('#projDetail'), grid=$('#projGrid');
+  function scansFor(key){
+    var all={}; try{ all=JSON.parse(localStorage.getItem('cg.hist')||'{}'); }catch(err){ return []; }
+    return (all[key]||[]).slice();
+  }
+  function shortDate(ts){
+    if(!ts) return '—';
+    try{ return new Date(ts).toLocaleDateString(undefined,{month:'short',day:'numeric'}); }catch(e){ return '—'; }
+  }
+  function delta(cur,prev){
+    if(prev==null||cur==null) return {txt:'—',cls:'flat'};
+    var d=cur-prev;
+    if(!d) return {txt:'no change',cls:'flat'};
+    return {txt:(d>0?'+':'')+d,cls:d>0?'up':'down'};
+  }
+  function openProject(key){
+    var scans=scansFor(key);
+    if(!scans.length){ showView('scan'); return; }
+    var last=scans[scans.length-1];
+    var url=last.url||key.split('|')[0], kw=last.kw||key.split('|')[1];
+    var host=url; try{ host=new URL(url).hostname.replace(/^www\./,''); }catch(err){}
+
+    detail.innerHTML='';
+    var back=document.createElement('button');
+    back.type='button'; back.className='proj-back'; back.textContent='← All projects';
+    back.addEventListener('click',closeProject);
+    detail.appendChild(back);
+
+    var head=document.createElement('div');
+    head.className='pd-head';
+    head.innerHTML='<div><h2>'+esc(kw)+'</h2><div class="site">'+esc(host)+'</div></div>';
+    var rescan=document.createElement('button');
+    rescan.type='button'; rescan.className='pd-rescan'; rescan.textContent='Re-scan this page';
+    rescan.addEventListener('click',function(){
+      $('#url').value=url; $('#kw').value=kw; showView('scan');
+      setTimeout(function(){ $('#url').scrollIntoView({behavior:'smooth',block:'center'}); },50);
+    });
+    head.appendChild(rescan);
+    detail.appendChild(head);
+
+    detail.appendChild(scans.length>1?movementCard(scans):soloCard(last));
+    detail.appendChild(tableCard(scans));
+
+    grid.hidden=true; detail.hidden=false;
+    var ph=$('.projects-head p');
+    if(ph) ph.textContent='Score movement for this page, plotted from every scan stored in this browser.';
+  }
+  function closeProject(){
+    detail.hidden=true; detail.innerHTML=''; grid.hidden=false;
+    var ph=$('.projects-head p');
+    if(ph) ph.textContent="Every page and keyword you've scanned in this browser, with its latest scores.";
+  }
+
+  // One scan is a reading, not a trend — say so rather than drawing a line through one point.
+  function soloCard(last){
+    var card=document.createElement('div');
+    card.className='pd-card';
+    card.innerHTML='<div class="pd-cardhead"><h3>One scan so far</h3></div>'
+      +'<div class="pd-solo"><div class="big">'
+      +'<div><b style="color:var(--rank)">'+(last.rank!=null?last.rank:'–')+'</b><span>Rank score</span></div>'
+      +'<div><b style="color:var(--answer)">'+(last.answer!=null?last.answer:'–')+'</b><span>Answer score</span></div>'
+      +'</div></div>'
+      +'<p class="pd-note">Movement needs a second reading. Work the list, ship a change, then '
+      +'<b>re-scan this page</b> — the next scan plots here and each finding is re-checked against '
+      +'the fresh page before anything is called resolved.</p>';
+    return card;
+  }
+
+  function movementCard(scans){
+    var card=document.createElement('div');
+    card.className='pd-card';
+    var first=scans[0], last=scans[scans.length-1];
+    var dR=delta(last.rank,first.rank), dA=delta(last.answer,first.answer);
+    card.innerHTML='<div class="pd-cardhead"><h3>Score movement · '+scans.length+' scans</h3>'
+      +'<div class="pd-legend">'
+      +'<span><i style="background:var(--c-rank)"></i>Rank '+dR.txt+'</span>'
+      +'<span><i style="background:var(--c-answer)"></i>Answer '+dA.txt+'</span>'
+      +'</div></div>';
+    var wrap=document.createElement('div');
+    wrap.className='pd-chartwrap';
+    wrap.appendChild(chart(scans,wrap));
+    card.appendChild(wrap);
+    card.insertAdjacentHTML('beforeend','<p class="pd-note">Both scores share one 0–100 axis. '
+      +'A move smaller than the scan\u2019s confidence band is sample noise, not progress — the band '
+      +'is printed on each report.</p>');
+    return card;
+  }
+
+  // Inline SVG: two series, one axis, markers with a surface ring, direct end labels, and a
+  // crosshair + tooltip driven by one hit rect per scan.
+  function chart(scans,wrap){
+    var NS='http://www.w3.org/2000/svg';
+    var W=760,H=240,L=34,R=44,T=18,B=30;
+    var iw=W-L-R, ih=H-T-B;
+    var svg=document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.setAttribute('class','pd-chart');
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label','Rank and Answer scores across '+scans.length+' scans. The table below lists the same figures.');
+    function mk(n,a){ var e=document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); return e; }
+    var x=function(i){ return L+(scans.length===1?iw/2:iw*i/(scans.length-1)); };
+    var y=function(v){ return T+ih-(Math.max(0,Math.min(100,v||0))/100)*ih; };
+
+    [0,25,50,75,100].forEach(function(v){
+      svg.appendChild(mk('line',{x1:L,x2:L+iw,y1:y(v),y2:y(v),'class':'grid'}));
+      var t=mk('text',{x:L-8,y:y(v)+3,'class':'axlab','text-anchor':'end'}); t.textContent=v; svg.appendChild(t);
+    });
+    scans.forEach(function(sc,i){
+      var t=mk('text',{x:x(i),y:H-9,'class':'axlab','text-anchor':'middle'});
+      t.textContent=shortDate(sc.ts); svg.appendChild(t);
+    });
+    var cross=mk('line',{y1:T,y2:T+ih,'class':'cross'}); svg.appendChild(cross);
+
+    var series=[{k:'rank',c:'var(--c-rank)',lab:'Rank'},{k:'answer',c:'var(--c-answer)',lab:'Answer'}];
+    series.forEach(function(s){
+      var pts=scans.map(function(sc,i){ return x(i)+','+y(sc[s.k]); }).join(' ');
+      svg.appendChild(mk('polyline',{points:pts,'class':'ser',stroke:s.c}));
+    });
+    series.forEach(function(s){
+      scans.forEach(function(sc,i){
+        svg.appendChild(mk('circle',{cx:x(i),cy:y(sc[s.k]),r:4.5,fill:s.c,'class':'dot'}));
+      });
+      // direct label on the last point, so identity never rests on colour alone
+      var t=mk('text',{x:x(scans.length-1)+9,y:y(last(scans)[s.k])+4,'class':'endlab',fill:s.c});
+      t.textContent=last(scans)[s.k]!=null?last(scans)[s.k]:'–';
+      svg.appendChild(t);
+    });
+
+    var tip=document.createElement('div');
+    tip.className='pd-tip'; wrap.appendChild(tip);
+    scans.forEach(function(sc,i){
+      var half=scans.length>1?iw/(scans.length-1)/2:iw/2;
+      var hit=mk('rect',{x:Math.max(L,x(i)-half),y:T,width:Math.min(half*2,iw),height:ih,'class':'hit'});
+      function show(){
+        cross.setAttribute('x1',x(i)); cross.setAttribute('x2',x(i));
+        svg.classList.add('on');
+        tip.innerHTML='<b>'+esc(sc.stamp||shortDate(sc.ts))+'</b>'
+          +'<div class="row"><i style="background:var(--c-rank)"></i>Rank<s>'+(sc.rank!=null?sc.rank:'–')+'</s></div>'
+          +'<div class="row"><i style="background:var(--c-answer)"></i>Answer<s>'+(sc.answer!=null?sc.answer:'–')+'</s></div>'
+          +'<div class="row" style="color:var(--faint)">Open tasks<s>'+((sc.fixes||[]).length)+'</s></div>';
+        tip.style.left=(x(i)/W*100)+'%';
+        tip.style.top=(Math.min(y(sc.rank),y(sc.answer))-14)+'px';
+        tip.classList.add('on');
+      }
+      function hide(){ svg.classList.remove('on'); tip.classList.remove('on'); }
+      hit.addEventListener('mouseenter',show);
+      hit.addEventListener('mousemove',show);
+      hit.addEventListener('mouseleave',hide);
+      svg.appendChild(hit);
+    });
+    return svg;
+  }
+  function last(a){ return a[a.length-1]; }
+
+  // The same figures as a table: the chart's accessible twin, and the thing a consultant
+  // actually pastes into a client update.
+  function tableCard(scans){
+    var card=document.createElement('div');
+    card.className='pd-card';
+    var rows='';
+    scans.slice().reverse().forEach(function(sc,idx){
+      var i=scans.length-1-idx, prev=i>0?scans[i-1]:null;
+      var dR=delta(sc.rank,prev&&prev.rank), dA=delta(sc.answer,prev&&prev.answer);
+      var pts=(sc.fixes||[]).reduce(function(a,f){ return a+(f.pts||0); },0);
+      rows+='<tr><td class="num">'+esc(shortDate(sc.ts))+'</td>'
+        +'<td class="num">'+(sc.rank!=null?sc.rank:'–')+'</td><td class="'+dR.cls+'">'+dR.txt+'</td>'
+        +'<td class="num">'+(sc.answer!=null?sc.answer:'–')+'</td><td class="'+dA.cls+'">'+dA.txt+'</td>'
+        +'<td class="num">'+((sc.fixes||[]).length)+'</td>'
+        +'<td class="num">'+Math.round(pts)+'</td></tr>';
+    });
+    card.innerHTML='<div class="pd-cardhead"><h3>Every scan</h3></div>'
+      +'<table class="pd-table"><thead><tr><th>Scan</th><th>Rank</th><th>Δ</th><th>Answer</th><th>Δ</th>'
+      +'<th>Open tasks</th><th>Points recoverable</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      +'<p class="pd-note">Newest first. Scans are kept per page and keyword, '
+      +'<b>last six in this browser</b> — clearing site data clears them.</p>';
+    return card;
+  }
+})();
+</script>
+<script>
+"use strict";
+// ---- Marketing homepage: front door in front of the app; any launch control drops it ----
+(function(){
+  function $(s){ return document.querySelector(s); }
+  var home=$('#homeScreen');
+  function goHome(){ if(home){ home.hidden=false; home.scrollTop=0; } window.scrollTo(0,0); }
+  function enterApp(){ if(home) home.hidden=true; }
+  document.querySelectorAll('.mkt-launch').forEach(function(b){ b.addEventListener('click',enterApp); });
+  // "Sign in" is the only control that opens the workspace panel; every other launch control
+  // drops straight onto the scan form, which is what the button promised.
+  document.querySelectorAll('.mkt-signin').forEach(function(b){
+    b.addEventListener('click',function(){ if(window.cgShowWorkspacePanel) window.cgShowWorkspacePanel(); });
+  });
+  var sideBrand=document.querySelector('.sidebar .brand');
+  if(sideBrand){ sideBrand.style.cursor='pointer'; sideBrand.addEventListener('click',goHome); }
+  var mobBrand=document.querySelector('.mobtop .mark');
+  if(mobBrand){ mobBrand.style.cursor='pointer'; mobBrand.addEventListener('click',goHome); }
+
+  // Section reveals. The homescreen is its own scroll container (position:fixed), so it is the
+  // observer root rather than the viewport. No observer, no reduced-motion preference, or no
+  // JS at all: everything is simply shown, because .mkt-rv is only hidden once this runs.
+  var rv=[].slice.call(document.querySelectorAll('.mkt-rv'));
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(!rv.length) return;
+  if(reduce||!window.IntersectionObserver||!home){ rv.forEach(function(el){ el.classList.add('in'); }); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{root:home,rootMargin:'0px 0px -12% 0px',threshold:.08});
+  rv.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
