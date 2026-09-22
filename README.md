@@ -55,17 +55,23 @@ become real once a server holds something the user cannot get for themselves.
 | Score movement charted over time | Scan | **live** | — (it runs client-side, so it is free) |
 | Multi-keyword batches | Practice | not built | client-side; gating it needs auth |
 | Client-branded reports | Agency | not built | mostly client-side; gating needs auth |
-| Pooled search credits, no key | Practice | not built | server-held key + quota + auth + billing |
+| Scheduled scans on the user's own key | Practice | not built | encrypted server-side key storage + auth |
 | Projects synced across machines | Practice | not built | auth + database |
 | Full history beyond six scans | Practice | not built | auth + database |
 | Weekly automatic re-scans | Practice | not built | scheduler + **server-side scan orchestration** |
 | 25 sites monitored, alerts | Agency | not built | the above + an email provider |
+
+There are **no pooled credits on any tier** — every customer brings their own SerpApi or Serper
+key, paid tiers included. What the paid tiers sell is the scan running while the tab is closed.
 | Shared workspace | Agency | not built | auth + organisations |
 
 The hard one is **weekly re-scans**. Today the browser orchestrates a scan one call at a time,
 precisely so no serverless function can hit its timeout (see the architecture note above). Running
 a scan while nobody is watching means re-implementing that orchestration server-side, inside the
 60-second function limit — a queue and a state machine, not a cron job that calls one endpoint.
+
+**`SAAS-PLAN.md` is the build spec for all of this** — schema, the resumable scan job, auth,
+Stripe, and the open questions that block it.
 
 ## Working on it
 

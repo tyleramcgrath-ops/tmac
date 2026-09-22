@@ -929,4 +929,10 @@ and honest bot-challenge reporting.
 - Saved scans + score movement over time as an account feature (the retainer hook) — the
   browser-local history in v9 is the prototype
 - Multi-keyword batch; weekly monitoring across the five tracked sites
+- **Practice and Agency** — decided 22 Sep 2026: Neon, Stripe, **no pooled credits** (every
+  customer brings their own SerpApi key on every tier), self-serve SerpApi signup. The build
+  spec is `SAAS-PLAN.md`: schema, the resumable `scan_jobs` state machine that runs a
+  multi-minute scan through 60-second functions, magic-link auth, Stripe webhooks, and the
+  one blocking question — scheduled scans need the key stored server-side, which contradicts
+  the FAQ's current promise that it never leaves the browser
 </content>
