@@ -42,6 +42,31 @@ The workspace panel (`#splash`) is opt-in by design: a launch control goes strai
 form, and only **Sign in** opens the panel. It asks for a name, never a password, because there is
 no account behind it — putting a password box in front of a free tool is a toll gate, not security.
 
+## Tiers, and what each one actually needs
+
+The pricing page sells three tiers. The rule that decides which features can live in which tier:
+**anything that runs in the browser cannot be gated, so it cannot be sold.** The paid tiers only
+become real once a server holds something the user cannot get for themselves.
+
+| Feature | Tier | State | Needs |
+| --- | --- | --- | --- |
+| Both scores, full work order, render diff | Scan | **live** | — |
+| Scan history, last six, this browser | Scan | **live** | — |
+| Score movement charted over time | Scan | **live** | — (it runs client-side, so it is free) |
+| Multi-keyword batches | Practice | not built | client-side; gating it needs auth |
+| Client-branded reports | Agency | not built | mostly client-side; gating needs auth |
+| Pooled search credits, no key | Practice | not built | server-held key + quota + auth + billing |
+| Projects synced across machines | Practice | not built | auth + database |
+| Full history beyond six scans | Practice | not built | auth + database |
+| Weekly automatic re-scans | Practice | not built | scheduler + **server-side scan orchestration** |
+| 25 sites monitored, alerts | Agency | not built | the above + an email provider |
+| Shared workspace | Agency | not built | auth + organisations |
+
+The hard one is **weekly re-scans**. Today the browser orchestrates a scan one call at a time,
+precisely so no serverless function can hit its timeout (see the architecture note above). Running
+a scan while nobody is watching means re-implementing that orchestration server-side, inside the
+60-second function limit — a queue and a state machine, not a cron job that calls one endpoint.
+
 ## Working on it
 
 ```bash
