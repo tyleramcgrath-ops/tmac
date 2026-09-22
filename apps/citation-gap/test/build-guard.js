@@ -17,8 +17,8 @@ function sandbox() {
   for (const f of ['build.js', 'ship-manifest.json', 'index.html', 'score.js', 'package.json', 'vercel.json']) {
     fs.copyFileSync(path.join(ROOT, f), path.join(dir, f));
   }
-  fs.mkdirSync(path.join(dir, 'api'));
-  for (const f of fs.readdirSync(path.join(ROOT, 'api'))) fs.copyFileSync(path.join(ROOT, 'api', f), path.join(dir, 'api', f));
+  // api/ has subdirectories now (api/auth/*), so this copies the tree rather than its top level.
+  fs.cpSync(path.join(ROOT, 'api'), path.join(dir, 'api'), { recursive: true });
   return dir;
 }
 function run(dir, args) {

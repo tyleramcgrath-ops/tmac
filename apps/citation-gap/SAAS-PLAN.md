@@ -355,9 +355,47 @@ emailed → redemption checks the hash, checks `expires_at`, sets `used_at`, min
 
 Storing only the hash means a database leak yields no usable login links.
 
-**This needs an email provider.** Resend is the smallest fit. It is a credential you
-have not been asked for yet, and it is needed twice — magic links, and Agency alerts.
-See §9.
+### Built and tested, 22 Sep 2026
+
+| file | what |
+|---|---|
+| `api/db.js` | one pool, `max: 1`, pointed at Neon's pooled endpoint |
+| `api/auth.impl.js` | issue, redeem, resolve, end; cookie construction and parsing |
+| `api/mail.impl.js` | the Resend POST |
+| `api/auth/{request,redeem,me,logout}.js` | the four endpoints |
+
+`max: 1` is not a default and is the point of that file. Each invocation is its own
+process with its own pool, so a pool of ten means ten connections per concurrent
+invocation — which is how a serverless app exhausts a database it barely uses. The
+pooled endpoint does the real multiplexing.
+
+`test/auth.js` runs all of it against a throwaway PostgreSQL with the real schema, over
+TCP with node-postgres, which is the driver path production uses. 38 assertions. The
+properties it covers are the ones that fail *silently*:
+
+- **the token is never stored.** The test reads `login_tokens.token_hash` back and
+  asserts it does not equal the token and does equal its sha256. A token stored in the
+  clear still logs people in, so nothing about normal use would reveal the mistake.
+- **a link works exactly once.** Redemption takes a row lock and stamps `used_at` inside
+  one transaction; the second attempt is refused and no second session appears. A link
+  that can be redeemed twice still logs the first person in.
+- **expiry is what stops a session**, checked by expiring it, confirming it stops
+  resolving, then un-expiring it and confirming it comes back — otherwise the test would
+  pass just as well if something unrelated were doing the rejecting.
+- **signing out deletes the row**, not just the cookie. Clearing only the cookie leaves a
+  session id that still resolves for anyone who copied it.
+- **a lookalike cookie name** (`not_cg_session`) is not mistaken for the session.
+- **one person cannot become two accounts** — `Mixed@Case.com` and `mixed@case.COM`
+  resolve to one row.
+
+Two deliberate choices in the endpoints. `/api/auth/request` answers identically whether
+or not the address has an account, because differing responses turn it into a way to ask
+whether a given person is a customer. And a failed send returns a generic error rather
+than the provider's reason, for the same reason.
+
+**Still needs `RESEND_API_KEY`.** Everything above works without it; the send throws at
+the point of use rather than silently succeeding. `APP_ORIGIN` is optional and falls back
+to the forwarded host.
 
 ---
 
@@ -415,7 +453,10 @@ seats when a customer asks for seats.
    `db/001_init.sql`, tested against a real PostgreSQL by `test/schema.js` (21 assertions).
    What still needs `DATABASE_URL` is pointing it at Neon and running it; the SQL itself is
    no longer a guess.
-3. Magic-link auth end to end.
+3. ~~Magic-link auth end to end.~~ **Built 22 Sep 2026** — `api/auth.impl.js` plus four
+   endpoints (`request`, `redeem`, `me`, `logout`), `api/db.js`, `api/mail.impl.js`.
+   38 assertions in `test/auth.js` against a real PostgreSQL running `001_init.sql`.
+   **Cannot send mail until `RESEND_API_KEY` is set** — everything else works.
 4. Projects and scans persisted server-side; the app reads them when logged in and
    falls back to browser storage when not.
 5. `scan_jobs` + `/api/tick` + cron. **Test this against a real multi-minute scan
