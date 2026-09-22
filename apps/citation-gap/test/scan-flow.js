@@ -4,7 +4,7 @@ const { chromium } = require(require('path').join(require('child_process').execS
 const http = require('http'), fs = require('fs'), path = require('path'), url = require('url');
 process.env.CHROME_PATH = '/opt/pw-browsers/chromium';
 const pageHandler = require('../api/page.js'), renderHandler = require('../api/render.js');
-const { enterApp } = require('./enter-app.js');
+const { enterApp, serveStatic } = require('./enter-app.js');
 
 (async () => {
   const root = path.join(__dirname, '..');
@@ -20,6 +20,7 @@ const { enterApp } = require('./enter-app.js');
   const srv = http.createServer(async (req, res) => {
     const u = url.parse(req.url, true);
     const send = (o) => { res.setHeader('content-type', 'application/json'); res.end(JSON.stringify(o)); };
+    if (serveStatic(u.pathname, res, root)) return;
     if (u.pathname === '/') { res.setHeader('content-type', 'text/html'); return res.end(fs.readFileSync(path.join(root, 'index.html'))); }
     // A third-party chat widget (served from a different host: localhost vs 127.0.0.1) whose
     // status line is present on odd loads only — the P16 volatile case.

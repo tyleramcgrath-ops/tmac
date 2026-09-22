@@ -3,7 +3,7 @@
 // table has to agree with the chart. Seeds cg.hist, opens the view, and checks both.
 const { chromium } = require(require('path').join(require('child_process').execSync('npm root -g').toString().trim(),'playwright'));
 const http = require('http'), fs = require('fs'), path = require('path');
-const { enterApp } = require('./enter-app.js');
+const { enterApp, serveStatic } = require('./enter-app.js');
 
 let pass = 0, fail = 0;
 const ok = (c, name, extra) => { if (c) { pass++; console.log('  ok   ' + name); } else { fail++; console.log('  FAIL ' + name + (extra ? ' — ' + extra : '')); } };
@@ -12,7 +12,7 @@ const SCANS = [[34, 46, 31, 14], [24, 58, 39, 11], [15, 63, 52, 9], [8, 71, 58, 
 
 (async () => {
   const root = path.join(__dirname, '..');
-  const srv = http.createServer((q, r) => { r.setHeader('content-type', 'text/html'); r.end(fs.readFileSync(path.join(root, 'index.html'))); });
+  const srv = http.createServer((q, r) => { if (serveStatic(require('url').parse(q.url).pathname, r, root)) return; r.setHeader('content-type', 'text/html'); r.end(fs.readFileSync(path.join(root, 'index.html'))); });
   await new Promise((r) => srv.listen(0, r));
   const port = srv.address().port;
   const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });

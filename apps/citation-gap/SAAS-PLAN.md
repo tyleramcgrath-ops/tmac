@@ -67,9 +67,18 @@ true for Practice. The copy has to become tier-scoped, something like:
 > inside the job that calls your provider, and never sent to your browser again, not
 > even to show you what you typed.*
 
-**This needs your sign-off before the schema is fixed.** It is a change to the
-product's stated posture on the one thing this tool asks people to trust it with, and
-it is not mine to make quietly. See §9.
+**Signed off, 22 Sep 2026.** The FAQ is now tier-scoped and live: the free tier keeps
+the absolute promise, and the paid tiers state plainly what is held, how it is
+protected, and that it is never pooled or used for anything but that customer's own
+scans. The schema below is therefore fixed.
+
+The guarantees that copy makes are binding on the implementation:
+
+- encrypted at rest, secret held outside the database
+- decrypted only inside the scan job, never in an HTTP response
+- **never returned to the browser, not even masked** — the UI shows `last4` from its
+  own column and nothing else
+- deleting the key stops the schedules, and that path must actually work
 
 ---
 
@@ -252,20 +261,46 @@ This gives crash-safety for free: a job that dies at step 4 cursor 5 resumes at 
 cursor 5, with four phases of work already banked in `payload`. `attempts` bounds the
 retries; past the bound the job fails with `last_error` and the customer sees why.
 
-### Sharing the scoring code
+### Sharing the scoring code — done, 22 Sep 2026
 
-Scoring currently lives inside `index.html`, in one of the six `<script>` blocks that
-`regression.js` executes in a VM. The tick needs the same logic, and **having two
-copies is how the two scores start disagreeing.**
+Scoring used to live inside `index.html`, in the first of six `<script>` blocks. The
+tick needs the same logic, and **having two copies is how the two scores start
+disagreeing** — a customer who reads one score in the app and a different one in their
+weekly email has no reason to trust either.
 
-The existing `api/page.js` → `api/page.impl.js` stub pattern is the precedent: extract
-scoring into `api/score.impl.js`, have both the browser and the tick load it. The
-build guard's `SHIPPED` list grows by one file. `regression.js` keeps running against
-the same source it always has, so this is a move, not a rewrite, and the 157 existing
-assertions are the proof it landed intact.
+That block is now `score.js`, at the app root rather than under `api/` so Vercel does
+not try to make a serverless function out of it. It is loaded two ways:
 
-**The script order inside `index.html` must not change** — `regression.js` runs
-`scripts[0]` and `scripts[1]` in a VM by index.
+- **the browser** — `<script src="/score.js">` in `index.html`. A classic script with
+  no `defer`/`async`, so it blocks, executes in order before the inline blocks below
+  it, and puts all 62 declarations in the global lexical scope exactly as when it was
+  inline. Nothing about how the page behaves changed.
+- **the scan job** — `require('./score.js')`, reading the same names off
+  `module.exports`. The tail that does this is guarded by `typeof module`, so it is
+  inert in a page.
+
+`$`, the DOM helper, is deliberately **not** exported: nothing in a scan job should be
+reaching for a selector, and its absence from the module surface is asserted.
+
+What proves it: the 157 regression assertions, unchanged, now running against
+`score.js` loaded into the VM ahead of the inline blocks — the browser's own load order
+rather than a `require`, because it is the browser path they are about. Plus ten new
+assertions in `build-guard.js`: that the build verifies and ships the file, that a
+missing or unsealed `score.js` fails the build rather than shipping a dead page, that
+every exported name is also a global under the classic-script path, and that
+`scoreRank` and `scoreAnswer` return byte-identical JSON through both surfaces. An
+end-to-end scan through the extracted file returns the same rank 20 / answer 15 and the
+same eleven tasks it did before the move.
+
+**Script indices inside `index.html` shifted by one** — there are now five inline
+blocks, not six, and `regression.js` loads `score.js` then `scripts[0]`. Anything else
+reading those blocks by index needs the same adjustment.
+
+A test server that serves `index.html` for every path now answers `/score.js` with the
+page itself, which the browser tries to execute as JavaScript — leaving none of the
+scoring globals defined and an app that silently does nothing. All three browser flows
+route static requests through one `serveStatic` helper in `test/enter-app.js` so the
+next shipped static file is one edit instead of three.
 
 ---
 
@@ -335,7 +370,11 @@ seats when a customer asks for seats.
 
 ## 8. Order of work
 
-1. `api/score.impl.js` — extract scoring, prove it with the existing 157 assertions.
+1. ~~Extract scoring, prove it with the existing 157 assertions.~~ **Done 22 Sep 2026** —
+   it landed as `score.js` at the app root rather than under `api/`, so Vercel does not
+   treat it as a function. The browser loads it with `<script src="/score.js">`; the scan
+   job will `require()` it. `build-guard.js` now asserts the two surfaces agree, including
+   that `scoreRank` and `scoreAnswer` return identical results through both.
 2. Neon + schema + migrations.
 3. Magic-link auth end to end.
 4. Projects and scans persisted server-side; the app reads them when logged in and
@@ -365,16 +404,10 @@ Steps 1-5 are the real build. 6-9 are comparatively mechanical. Nothing between 
 | `RESEND_API_KEY` | **the one you have not been told about** — magic links and alerts both need to send mail |
 | `SEARCH_KEY_SECRET` | 32 random bytes, I generate it, it goes in the environment and nowhere else |
 
-**One decision, and it is the blocking one:**
+**Both open decisions are now closed:**
 
-Scheduled scans require storing the customer's SerpApi key on the server, encrypted.
-The live FAQ currently promises the key *never leaves their browser*. Rewriting that
-promise is a change to the product's privacy posture, so it is yours to make, not
-mine. §2 has proposed replacement copy. The schema is not fixed until you have
-looked at it.
-
-**One small thing:** the waitlist buttons on both paid tiers link to
-`hello@thecitationgap.com`, which does not exist. Anyone clicking "Join the waitlist"
-right now is mailing a void. Either point it at a real address or replace it with a
-form that writes to Neon — which is arguably better anyway, since it is also the
-first customer list.
+- **Key storage — decided.** Store it encrypted and scope the promise by tier. The
+  FAQ is rewritten and live; §2 records what that copy commits us to.
+- **Waitlist — decided.** Both buttons now point at a real address. Worth replacing
+  with a form writing to Neon once the database is connected: it is a better capture
+  path and it keeps a personal address off a public page that scrapers read.
