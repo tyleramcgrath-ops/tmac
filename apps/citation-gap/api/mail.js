@@ -1,3 +1,0 @@
-// Thin entry point. The implementation lives in api/mail.impl.js, a committed file whose hash
-// build.js verifies before anything ships (see build.js and ship-manifest.json).
-module.exports = require('./mail.impl.js');
