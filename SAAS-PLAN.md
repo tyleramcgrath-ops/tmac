@@ -178,6 +178,37 @@ alerts                                    -- Agency
 
 The `scan_jobs` table is the interesting one and gets its own section.
 
+### It is written, and it is tested against a real database
+
+`db/001_init.sql` is the schema above as runnable SQL, and `test/schema.js` stands up an
+actual PostgreSQL cluster in a temp directory, applies it, and asserts against the result.
+That is not ceremony. The two things this schema has to get right both fail *silently*:
+
+- A claim query without `SKIP LOCKED` does not error. Two ticks quietly do the same work
+  twice, and the customer pays for both in search credits.
+- A key deletion that leaves a schedule enabled does not error either. It goes on running
+  on a credential the customer believes they revoked — which is the one thing the FAQ
+  explicitly promises will not happen.
+
+So both are asserted. Two claimers run concurrently, one holding its row inside an open
+transaction, and the test checks the second takes a *different* job rather than blocking;
+a third with nothing available comes away empty rather than waiting; and a job whose
+invocation died is reclaimed once its lock goes stale.
+
+### The FAQ's promise is a trigger, not a convention
+
+"Delete it and the schedules stop" is a promise to a customer about their own credentials,
+so `search_key_deleted_stops_schedules` enforces it in the database rather than leaving it
+to whichever code path happens to delete the row remembering to do it too. The test deletes
+a key and checks the schedule is disabled — and that the projects and their history survive,
+because it is the key that goes, not the work.
+
+Every `CHECK` is asserted by trying to violate it: a 13-byte GCM iv, a five-character
+`last4`, a ninth step name, a negative cursor, a weekly schedule with no day, a score of
+101, a second job on one scan, a second account on the same email in different case. A
+constraint that is present but not enforced looks exactly like one that works, right up
+until bad data arrives.
+
 ---
 
 ## 4. The hard part: running a scan inside a 60-second function
@@ -380,7 +411,10 @@ seats when a customer asks for seats.
    treat it as a function. The browser loads it with `<script src="/score.js">`; the scan
    job will `require()` it. `build-guard.js` now asserts the two surfaces agree, including
    that `scoreRank` and `scoreAnswer` return identical results through both.
-2. Neon + schema + migrations. **Everything below is blocked on this.**
+2. ~~Neon + schema + migrations.~~ **Schema written and proven, 22 Sep 2026** —
+   `db/001_init.sql`, tested against a real PostgreSQL by `test/schema.js` (21 assertions).
+   What still needs `DATABASE_URL` is pointing it at Neon and running it; the SQL itself is
+   no longer a guess.
 3. Magic-link auth end to end.
 4. Projects and scans persisted server-side; the app reads them when logged in and
    falls back to browser storage when not.
