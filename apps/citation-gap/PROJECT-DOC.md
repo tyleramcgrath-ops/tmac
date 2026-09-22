@@ -17,9 +17,16 @@ Free tier 250 searches/month; a scan costs ~7, so ≈35 scans free.
 
 ## Architecture
 ```
-index.html       the whole front end, one file: marketing homepage, app shell (sidebar,
-                 workspace splash, Projects), scanner UI, scoring, prompt generation,
-                 scan history (browser-side). The source of truth — nothing is assembled.
+index.html       the front end: marketing homepage, app shell (sidebar, workspace splash,
+                 Projects), scanner UI, the scan flow. The source of truth — nothing is
+                 assembled.
+score.js         scoring, history and prompt generation (v10.9), loaded two ways: the
+                 browser gets it as `<script src="/score.js">`, a classic script, so every
+                 declaration lands in the global lexical scope exactly as it did when this
+                 was index.html's first inline block; the scan job will `require()` it and
+                 read the same names off module.exports. One copy, because a scheduled scan
+                 and a watched scan have to produce the same two numbers. build-guard.js
+                 asserts the two surfaces agree.
 api/serp.js      one Google query, normalized across SerpApi and Serper
 api/page.js      3-line stub → api/page.impl.js (v10.6): fetch + parse any URL as served,
                  zero dependencies

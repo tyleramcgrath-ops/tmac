@@ -261,20 +261,46 @@ This gives crash-safety for free: a job that dies at step 4 cursor 5 resumes at 
 cursor 5, with four phases of work already banked in `payload`. `attempts` bounds the
 retries; past the bound the job fails with `last_error` and the customer sees why.
 
-### Sharing the scoring code
+### Sharing the scoring code — done, 22 Sep 2026
 
-Scoring currently lives inside `index.html`, in one of the six `<script>` blocks that
-`regression.js` executes in a VM. The tick needs the same logic, and **having two
-copies is how the two scores start disagreeing.**
+Scoring used to live inside `index.html`, in the first of six `<script>` blocks. The
+tick needs the same logic, and **having two copies is how the two scores start
+disagreeing** — a customer who reads one score in the app and a different one in their
+weekly email has no reason to trust either.
 
-The existing `api/page.js` → `api/page.impl.js` stub pattern is the precedent: extract
-scoring into `api/score.impl.js`, have both the browser and the tick load it. The
-build guard's `SHIPPED` list grows by one file. `regression.js` keeps running against
-the same source it always has, so this is a move, not a rewrite, and the 157 existing
-assertions are the proof it landed intact.
+That block is now `score.js`, at the app root rather than under `api/` so Vercel does
+not try to make a serverless function out of it. It is loaded two ways:
 
-**The script order inside `index.html` must not change** — `regression.js` runs
-`scripts[0]` and `scripts[1]` in a VM by index.
+- **the browser** — `<script src="/score.js">` in `index.html`. A classic script with
+  no `defer`/`async`, so it blocks, executes in order before the inline blocks below
+  it, and puts all 62 declarations in the global lexical scope exactly as when it was
+  inline. Nothing about how the page behaves changed.
+- **the scan job** — `require('./score.js')`, reading the same names off
+  `module.exports`. The tail that does this is guarded by `typeof module`, so it is
+  inert in a page.
+
+`$`, the DOM helper, is deliberately **not** exported: nothing in a scan job should be
+reaching for a selector, and its absence from the module surface is asserted.
+
+What proves it: the 157 regression assertions, unchanged, now running against
+`score.js` loaded into the VM ahead of the inline blocks — the browser's own load order
+rather than a `require`, because it is the browser path they are about. Plus ten new
+assertions in `build-guard.js`: that the build verifies and ships the file, that a
+missing or unsealed `score.js` fails the build rather than shipping a dead page, that
+every exported name is also a global under the classic-script path, and that
+`scoreRank` and `scoreAnswer` return byte-identical JSON through both surfaces. An
+end-to-end scan through the extracted file returns the same rank 20 / answer 15 and the
+same eleven tasks it did before the move.
+
+**Script indices inside `index.html` shifted by one** — there are now five inline
+blocks, not six, and `regression.js` loads `score.js` then `scripts[0]`. Anything else
+reading those blocks by index needs the same adjustment.
+
+A test server that serves `index.html` for every path now answers `/score.js` with the
+page itself, which the browser tries to execute as JavaScript — leaving none of the
+scoring globals defined and an app that silently does nothing. All three browser flows
+route static requests through one `serveStatic` helper in `test/enter-app.js` so the
+next shipped static file is one edit instead of three.
 
 ---
 
@@ -344,7 +370,11 @@ seats when a customer asks for seats.
 
 ## 8. Order of work
 
-1. `api/score.impl.js` — extract scoring, prove it with the existing 157 assertions.
+1. ~~Extract scoring, prove it with the existing 157 assertions.~~ **Done 22 Sep 2026** —
+   it landed as `score.js` at the app root rather than under `api/`, so Vercel does not
+   treat it as a function. The browser loads it with `<script src="/score.js">`; the scan
+   job will `require()` it. `build-guard.js` now asserts the two surfaces agree, including
+   that `scoreRank` and `scoreAnswer` return identical results through both.
 2. Neon + schema + migrations.
 3. Magic-link auth end to end.
 4. Projects and scans persisted server-side; the app reads them when logged in and
