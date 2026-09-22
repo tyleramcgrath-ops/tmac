@@ -75,7 +75,24 @@ jobs:
           case "$U" in
             postgres://*|postgresql://*) ;;
             *)
-              echo "::error::CITATION_GAP_DATABASE_URL is not a connection URI. It must start with postgresql:// — paste only the URI itself, without the leading 'DATABASE_URL=' that Neon shows beside it."
+              # Describe the value's SHAPE without printing any of it. Every fact below is a
+              # length, a count or a yes/no, which is enough to identify what was pasted and not
+              # enough to reconstruct it. Guessing across CI round trips is slower and worse.
+              has() { case "$RAW" in *"$1"*) echo yes ;; *) echo no ;; esac; }
+              echo "::error::CITATION_GAP_DATABASE_URL does not contain a connection URI."
+              echo "what the secret looks like (no contents shown):"
+              echo "  bytes ............ ${#RAW}"
+              echo "  lines ............ $(printf '%s\n' "$RAW" | wc -l | tr -d ' ')"
+              echo "  has '://' ........ $(has '://')"
+              echo "  has 'postgres' ... $(has postgres)"
+              echo "  has '@' .......... $(has '@')"
+              echo "  has 'neon.tech' .. $(has neon.tech)"
+              echo "  has '=' .......... $(has '=')"
+              echo "  starts 'npg_' .... $(case "$RAW" in npg_*) echo yes ;; *) echo no ;; esac)"
+              echo ""
+              echo "it should be the single line Neon labels DATABASE_URL, starting postgresql://"
+              echo "and ending ...neon.tech/neondb?...  — the URI only, not the 'DATABASE_URL=' label,"
+              echo "and not the password on its own."
               exit 1
               ;;
           esac
