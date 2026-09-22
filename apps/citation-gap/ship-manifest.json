@@ -1,10 +1,10 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-19T03:36:06.113Z",
+  "sealedAt": "2026-09-22T14:54:22.981Z",
   "files": {
     "index.html": {
-      "sha256": "7ea8f9aa65ea656b6f4f519b5fd340676e536e7331d791bf8ee857dadac95485",
-      "bytes": 323929
+      "sha256": "2de1f08b1aafd979a233ccf8f86241e40ac2d607982acedd4d0efa2614c48700",
+      "bytes": 337739
     },
     "api/page.js": {
       "sha256": "72b1e21ea6a569415f9cadf5c80ea074a292c03fbe319543e584da86d9c87d74",
@@ -27,8 +27,8 @@
       "bytes": 5734
     },
     "package.json": {
-      "sha256": "890751191765fbe4ff31efbbaba4731554e214f639817b4122d21d3ac2df9ebe",
-      "bytes": 379
+      "sha256": "835531412f7041781d5550b24beb2d27ad01582eb3f7c0bd1839440634b84377",
+      "bytes": 414
     },
     "vercel.json": {
       "sha256": "25c19aed114d05744bfded9f9568bb922f0d9f8f9dd5de0c5d3d8df46a2d316e",
