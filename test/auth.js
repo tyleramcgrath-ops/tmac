@@ -11,7 +11,7 @@ const { execFileSync } = require('child_process');
 const { Client } = require('pg');
 
 const ROOT = path.join(__dirname, '..');
-const auth = require(path.join(ROOT, 'api', 'auth.impl.js'));
+const auth = require(path.join(ROOT, 'lib', 'auth.js'));
 
 let pass = 0, fail = 0;
 const ok = (c, name, extra) => { if (c) { pass++; console.log('  ok   ' + name); } else { fail++; console.log('  FAIL ' + name + (extra ? ' — ' + extra : '')); } };
@@ -50,7 +50,7 @@ let started = false, client = null;
 
     client = new Client({ host: '127.0.0.1', port: PORT, user: 'postgres', database: 'cg' });
     await client.connect();
-    // The same shape api/db.js exposes, so auth.impl.js runs the queries it will run in production.
+    // The same shape lib/db.js exposes, so lib/auth.js runs the queries it will run in production.
     const db = {
       query: (t, p) => client.query(t, p),
       tx: async (fn) => {

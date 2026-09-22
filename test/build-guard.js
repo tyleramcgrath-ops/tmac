@@ -19,6 +19,9 @@ function sandbox() {
   }
   // api/ has subdirectories now (api/auth/*), so this copies the tree rather than its top level.
   fs.cpSync(path.join(ROOT, 'api'), path.join(dir, 'api'), { recursive: true });
+  // lib/ holds the implementation modules the api/ stubs require; a sandbox without it fails the
+  // build for a reason that has nothing to do with the case under test.
+  fs.cpSync(path.join(ROOT, 'lib'), path.join(dir, 'lib'), { recursive: true });
   return dir;
 }
 function run(dir, args) {
@@ -40,7 +43,7 @@ console.log('\n1. A clean build reproduces index.html exactly');
 }
 
 console.log('\n2. A missing file fails the build instead of shipping without it');
-for (const victim of ['index.html', 'api/render.impl.js', 'api/serp.js']) {
+for (const victim of ['index.html', 'lib/render.impl.js', 'api/serp.js']) {
   const dir = sandbox();
   fs.unlinkSync(path.join(dir, victim));
   const r = run(dir);
@@ -52,9 +55,9 @@ for (const victim of ['index.html', 'api/render.impl.js', 'api/serp.js']) {
 console.log('\n3. A file that changed without being re-sealed fails the build');
 {
   const dir = sandbox();
-  fs.appendFileSync(path.join(dir, 'api', 'page.impl.js'), '\n// drifted\n');
+  fs.appendFileSync(path.join(dir, 'lib', 'page.impl.js'), '\n// drifted\n');
   const r = run(dir);
-  ok(r.code !== 0 && /INTEGRITY FAIL: api\/page\.impl\.js sha256/.test(r.out), 'an unsealed edit to a function body fails the build', r.out.trim().split('\n')[0]);
+  ok(r.code !== 0 && /INTEGRITY FAIL: lib\/page\.impl\.js sha256/.test(r.out), 'an unsealed edit to a function body fails the build', r.out.trim().split('\n')[0]);
   fs.rmSync(dir, { recursive: true, force: true });
 }
 {
@@ -99,7 +102,28 @@ console.log('\n6. A missing manifest fails closed');
   fs.rmSync(dir, { recursive: true, force: true });
 }
 
-console.log('\n7. score.js ships, and the two ways it is loaded give the same answers');
+console.log('\n7. The serverless function ceiling is enforced before a deploy can hit it');
+{
+  const dir = sandbox();
+  const r = run(dir);
+  ok(r.code === 0 && /ok \d+\/12 serverless functions/.test(r.out), 'the build counts them and says so', r.out);
+  const n = Number((r.out.match(/ok (\d+)\/12 serverless functions/) || [])[1]);
+  ok(n > 0 && n <= 12, 'and the count is within what the Hobby plan allows', String(n));
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+{
+  // Thirteen is the number that was actually rejected, after a build and a test run both went
+  // green. Padding api/ to that count here proves the guard catches it at build time instead.
+  const dir = sandbox();
+  for (let i = 0; i < 13; i++) fs.writeFileSync(path.join(dir, 'api', 'pad' + i + '.js'), 'module.exports=()=>{};\n');
+  const r = run(dir);
+  ok(r.code !== 0 && /serverless functions under api\//.test(r.out),
+     'too many functions fails the build rather than the deployment', r.out.trim().split('\n').pop());
+  ok(!fs.existsSync(path.join(dir, 'public', 'index.html')), 'and nothing is written');
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+
+console.log('\n8. score.js ships, and the two ways it is loaded give the same answers');
 {
   const dir = sandbox();
   const r = run(dir);

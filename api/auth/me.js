@@ -2,8 +2,8 @@
 //
 // 200 with {user: null} rather than 401: the front end asks this on load to decide what to
 // render, and a signed-out visitor is an ordinary state, not an error.
-const db = require('../db.js');
-const auth = require('../auth.impl.js');
+const db = require('../../lib/db.js');
+const auth = require('../../lib/auth.js');
 
 module.exports = async function handler(req, res) {
   try {

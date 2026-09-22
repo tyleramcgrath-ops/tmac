@@ -3,8 +3,8 @@
 // Arrived at by clicking a link in an email, so it answers with a redirect and a cookie rather
 // than JSON. Every failure lands on the app with a reason in the query string; none of them say
 // whether the token ever existed.
-const db = require('../db.js');
-const auth = require('../auth.impl.js');
+const db = require('../../lib/db.js');
+const auth = require('../../lib/auth.js');
 
 module.exports = async function handler(req, res) {
   const token = (req.query && req.query.token) || '';

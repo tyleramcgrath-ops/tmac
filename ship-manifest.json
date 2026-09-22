@@ -1,6 +1,6 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-22T18:58:01.076Z",
+  "sealedAt": "2026-09-22T19:04:36.736Z",
   "files": {
     "index.html": {
       "sha256": "96379a0a6e7fc6a8307df5573c81052e2952137fa497b5164386b6e008f14e95",
@@ -11,56 +11,52 @@
       "bytes": 163559
     },
     "api/page.js": {
-      "sha256": "72b1e21ea6a569415f9cadf5c80ea074a292c03fbe319543e584da86d9c87d74",
-      "bytes": 221
-    },
-    "api/page.impl.js": {
-      "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
-      "bytes": 47439
+      "sha256": "dc2c2279821eb379b86ddd79eae1309ff980c8c2bf97bfeff9bbdd75112cfcf0",
+      "bytes": 449
     },
     "api/render.js": {
-      "sha256": "0ec2b88318a34d4040293c898aecb947fdae8d1980513ca1bfd54c1956fe2c23",
-      "bytes": 225
-    },
-    "api/render.impl.js": {
-      "sha256": "51ab73d7f3ee72af707e14149f360031ec681c33eb21c03461237055e953c612",
-      "bytes": 58811
+      "sha256": "4c5189867766abe834539d6961c9a53e5673d8c47d5a2193d07625234de4aeeb",
+      "bytes": 230
     },
     "api/serp.js": {
       "sha256": "552381689142f313c8b522f4799315c8ff5c925aad76bbec1ee9805a9dcd1de2",
       "bytes": 5734
     },
-    "api/db.js": {
+    "api/auth/request.js": {
+      "sha256": "73ad17166aa0711913ca35b232da9746f318d3cf974e546f4bfaa7708559866d",
+      "bytes": 1819
+    },
+    "api/auth/redeem.js": {
+      "sha256": "4f33d8a80f3a576499f2d71ead4f6374b278e184dd8d3356759d8f0ff0550935",
+      "bytes": 1367
+    },
+    "api/auth/me.js": {
+      "sha256": "bd8596b3ab2dff0e4df29ceeab2574a00d464405ff31911cdf5b430ac9d7bbdc",
+      "bytes": 867
+    },
+    "api/auth/logout.js": {
+      "sha256": "5fc6a363d797d969c1f0ae6268d9c37520439850f1c3550fbc74301cceb82a93",
+      "bytes": 886
+    },
+    "lib/page.impl.js": {
+      "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
+      "bytes": 47439
+    },
+    "lib/render.impl.js": {
+      "sha256": "f3507dbaf9b0bba5b918ab56395c4b2eaf2c09091dbb7fd1fc8d11bc05df063c",
+      "bytes": 58816
+    },
+    "lib/db.js": {
       "sha256": "94f6d7f3b2dd42663b0c7723a7156c446c069d8953ae43228df490deb19dde4e",
       "bytes": 2340
     },
-    "api/auth.impl.js": {
+    "lib/auth.js": {
       "sha256": "472fa560a59f3b9f7428502ac1dbf50455f2ffb5eaf00096ddff643f629c082d",
       "bytes": 5814
     },
-    "api/mail.js": {
-      "sha256": "66026827a836e006217e4e0c2db8fe66184aced7c5f5fd4b21d7ee4bbddb5212",
-      "bytes": 221
-    },
-    "api/mail.impl.js": {
+    "lib/mail.js": {
       "sha256": "2c7c2147d96b3a3375b8dfbaed0298c3aeff7781d2727e70cc33b7beac32a11d",
       "bytes": 1753
-    },
-    "api/auth/request.js": {
-      "sha256": "3afce0a2be548d02ea2c192a7c09ca19188bab628ede2e317f49a1705849c65c",
-      "bytes": 1808
-    },
-    "api/auth/redeem.js": {
-      "sha256": "7e4c16c911d3da4ee408f9073cd0971530a3d55883181439c17d1a1734845021",
-      "bytes": 1358
-    },
-    "api/auth/me.js": {
-      "sha256": "c8ecf3b939784a587ca7c0c9645dbbad9c274a0af466338a8704aff570858799",
-      "bytes": 858
-    },
-    "api/auth/logout.js": {
-      "sha256": "792316ad24217b579f0641e893f291c9822f97e3c15781b4002bd9c500685ac6",
-      "bytes": 877
     },
     "package.json": {
       "sha256": "5c76c93ce73f2a2de9c9cb2080a4e02c01529347a43243b1585d24d09a390fcc",

@@ -34,25 +34,32 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
 // Everything a working deployment needs. A file listed here and missing from disk is a failed
 // build, which is the specific failure this project kept shipping: a deploy with files left out.
+// Vercel turns every .js under api/ into a serverless function, and the Hobby plan allows
+// twelve per deployment. Implementation modules are not endpoints, so they live in lib/ and the
+// stubs in api/ reach across to them: seven functions instead of thirteen. test/build-guard.js
+// asserts the count, because exceeding it fails at deploy time rather than at build time — the
+// build goes green, the tests go green, and the deployment is rejected afterwards.
 const SHIPPED = [
   'index.html',        // the whole front end: app shell, scanner, marketing homepage
   'score.js',          // scoring/history/prompts, shared by the browser and the scan job
-  'api/page.js',       // stub → page.impl.js
-  'api/page.impl.js',  // fetch + parse any URL as served (v10.6)
-  'api/render.js',     // stub → render.impl.js
-  'api/render.impl.js',// headless Chromium render + paint measurement (v10.5)
+  'api/page.js',       // endpoint → lib/page.impl.js
+  'api/render.js',     // endpoint → lib/render.impl.js
   'api/serp.js',       // one Google query, normalized across SerpApi and Serper
-  'api/db.js',         // one pool, sized for serverless, pointed at Neon's pooled endpoint
-  'api/auth.impl.js',  // magic-link auth: token issue, single-use redemption, sessions, cookie
-  'api/mail.js',       // stub → mail.impl.js
-  'api/mail.impl.js',  // sends the login link via Resend
   'api/auth/request.js',  // POST  ask for a link
   'api/auth/redeem.js',   // GET   open the link, mint the session
   'api/auth/me.js',       // GET   who the cookie belongs to
   'api/auth/logout.js',   // POST  end the session
+  'lib/page.impl.js',  // fetch + parse any URL as served (v10.6)
+  'lib/render.impl.js',// headless Chromium render + paint measurement (v10.5)
+  'lib/db.js',         // one pool, sized for serverless, pointed at Neon's pooled endpoint
+  'lib/auth.js',       // magic-link auth: token issue, single-use redemption, sessions, cookie
+  'lib/mail.js',       // sends the login link via Resend
   'package.json',
   'vercel.json'
 ];
+
+// The ceiling Vercel enforces at deploy time, asserted here so it is caught before a merge.
+const MAX_FUNCTIONS = 12;
 
 function read(file) {
   const p = path.join(ROOT, file);
@@ -98,6 +105,18 @@ function seal() {
   console.log('sealed ' + SHIPPED.length + ' files into ' + rel(MANIFEST));
 }
 
+// Every .js anywhere under api/, which is exactly what Vercel counts.
+function countFunctions(dir) {
+  let n = 0;
+  if (!fs.existsSync(dir)) return 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) n += countFunctions(p);
+    else if (entry.name.endsWith('.js')) n++;
+  }
+  return n;
+}
+
 function build() {
   if (!fs.existsSync(MANIFEST)) {
     console.error('INTEGRITY FAIL: ' + rel(MANIFEST) + ' is missing — run `node build.js --seal`');
@@ -117,6 +136,18 @@ function build() {
   // A file in the manifest that is no longer shipped means the two lists have drifted; say so
   // rather than quietly ignoring it.
   for (const file of Object.keys(want)) if (SHIPPED.indexOf(file) === -1) { console.error('INTEGRITY FAIL: ' + file + ' is in the manifest but not in the shipped list — run `node build.js --seal`'); bad++; }
+  // Counted from disk rather than from SHIPPED: a stray .js dropped into api/ becomes a function
+  // whether or not anyone remembered to ship it, and it is the count on disk that Vercel rejects.
+  const fnCount = countFunctions(path.join(ROOT, 'api'));
+  if (fnCount > MAX_FUNCTIONS) {
+    console.error('INTEGRITY FAIL: ' + fnCount + ' serverless functions under api/, and Vercel\'s '
+      + 'Hobby plan allows ' + MAX_FUNCTIONS + '. The deployment would be rejected after a green '
+      + 'build. Move whatever is not an endpoint into lib/.');
+    bad++;
+  } else {
+    console.log('ok ' + fnCount + '/' + MAX_FUNCTIONS + ' serverless functions under api/');
+  }
+
   if (bad) { console.error(bad + ' problem(s); nothing written. The previous production deployment stays live.'); process.exit(1); }
 
   // Everything the page loads over the network has to reach public/, not just the page itself.
