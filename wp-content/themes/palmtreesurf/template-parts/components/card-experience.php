@@ -27,7 +27,14 @@ $pt_level    = get_the_term_list( $pt_id, 'skill_level', '', ', ' );
 			<?php if ( has_post_thumbnail() ) : ?>
 				<?php the_post_thumbnail( 'pt-card', array( 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(min-width: 1000px) 380px, (min-width: 700px) 45vw, 92vw' ) ); ?>
 			<?php else : ?>
-				<?php pt_image( 'exp-card-1' ); ?>
+				<?php
+				/*
+				 * No featured image yet. Rotate through the three card slots so a
+				 * grid of photo-less experiences does not repeat one photo down
+				 * the whole column.
+				 */
+				pt_image( 'exp-card-' . ( ( $pt_id % 3 ) + 1 ) );
+				?>
 			<?php endif; ?>
 
 			<?php if ( $pt_badge ) : ?>

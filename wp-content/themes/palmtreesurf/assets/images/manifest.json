@@ -18,28 +18,28 @@
   "file": null
  },
  "exp-card-1": {
-  "w": 800,
-  "h": 600,
-  "ratio": "4:3",
+  "w": 1200,
+  "h": 1600,
+  "ratio": "3:4",
   "role": "Experience card thumbnail",
-  "alt": "",
-  "file": null
+  "alt": "Surf students sitting with their boards during the beach briefing at Tamarindo",
+  "file": "surf-lesson-group-briefing.jpg"
  },
  "exp-card-2": {
-  "w": 800,
-  "h": 600,
-  "ratio": "4:3",
+  "w": 899,
+  "h": 1599,
+  "ratio": "auto",
   "role": "Experience card thumbnail",
-  "alt": "",
-  "file": null
+  "alt": "Kayaks pulled up on the shore beneath the mangroves",
+  "file": "estuary-kayaks-mangrove-shore.jpg"
  },
  "exp-card-3": {
-  "w": 800,
-  "h": 600,
+  "w": 1600,
+  "h": 1200,
   "ratio": "4:3",
   "role": "Experience card thumbnail",
-  "alt": "",
-  "file": null
+  "alt": "The kayak fleet lined up on the sand before a tour",
+  "file": "kayak-fleet-beach.jpg"
  },
  "split-1-primary": {
   "w": 1920,
@@ -120,6 +120,86 @@
   "role": "Gallery tile",
   "alt": "Beachfront yoga at sunrise",
   "file": "beachfront-yoga-wellness.jpg"
+ },
+ "gallery-7": {
+  "w": 1200,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "A pair of guests paddling deeper into the mangrove channel",
+  "file": "estuary-mangrove-paddlers.jpg"
+ },
+ "gallery-8": {
+  "w": 900,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "A white-faced capuchin monkey in the branches above the estuary",
+  "file": "estuary-capuchin-monkey.jpg"
+ },
+ "gallery-9": {
+  "w": 1600,
+  "h": 900,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "A crocodile in the Tamarindo estuary, seen from the water",
+  "file": "estuary-crocodile.jpg"
+ },
+ "gallery-10": {
+  "w": 1600,
+  "h": 1200,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Three surf students on the beach with their boards",
+  "file": "surf-students-with-boards.jpg"
+ },
+ "gallery-11": {
+  "w": 1600,
+  "h": 1200,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "A group of guests with their kayaks at the end of a tour",
+  "file": "kayak-group-guests.jpg"
+ },
+ "gallery-12": {
+  "w": 1440,
+  "h": 1080,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Two guides with paddles and kayaks ready on the sand",
+  "file": "kayak-guides-paddles.jpg"
+ },
+ "gallery-13": {
+  "w": 900,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "A capuchin moving through the canopy above the water",
+  "file": "estuary-capuchin-troop.jpg"
+ },
+ "gallery-14": {
+  "w": 900,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "A crocodile surfacing in the estuary channel",
+  "file": "estuary-crocodile-surfacing.jpg"
+ },
+ "gallery-15": {
+  "w": 899,
+  "h": 1599,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Kayaks pulled up on the shore beneath the mangroves",
+  "file": "estuary-kayaks-mangrove-shore.jpg"
+ },
+ "gallery-16": {
+  "w": 1200,
+  "h": 1600,
+  "ratio": "auto",
+  "role": "Gallery tile",
+  "alt": "Surf students sitting with their boards during the beach briefing",
+  "file": "surf-lesson-group-briefing.jpg"
  },
  "cta-bg": {
   "w": 1920,
@@ -204,11 +284,11 @@
  },
  "tax-wildlife-nature": {
   "w": 1600,
-  "h": 1067,
+  "h": 900,
   "ratio": "auto",
   "role": "Header photo for the wildlife nature archive",
-  "alt": "A sea turtle in clear water off the Costa Rican coast",
-  "file": "sea-turtle-wildlife-underwater.jpg",
+  "alt": "A crocodile in the Tamarindo estuary, seen from the water",
+  "file": "estuary-crocodile.jpg",
   "note": "Overridden per term by the Header photo field on the term edit screen."
  },
  "tax-adventure": {

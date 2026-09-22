@@ -43,8 +43,8 @@ function pt_experience_photo_map() {
 			'alt'  => __( 'Catamaran under sail at sunset', 'palmtreesurf' ),
 		),
 		'estuary-wildlife-trip'    => array(
-			'file' => 'sea-turtle-wildlife-underwater.jpg',
-			'alt'  => __( 'Sea turtle gliding over the reef', 'palmtreesurf' ),
+			'file' => 'estuary-mangrove-kayak.jpg',
+			'alt'  => __( 'Two guests paddling a kayak through the mangrove channel', 'palmtreesurf' ),
 		),
 	);
 }

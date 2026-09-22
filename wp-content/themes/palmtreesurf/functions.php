@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.9.2' );
+define( 'PT_VERSION', '1.10.0' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.

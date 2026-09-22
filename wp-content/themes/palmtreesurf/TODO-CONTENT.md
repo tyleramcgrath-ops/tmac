@@ -72,8 +72,8 @@ they are current — they feed the `AggregateRating` schema, which must reflect 
 
 ## 4. Photography
 
-Four real photos you supplied are in the theme and sideloaded into the Media Library on activation.
-Every other slot renders a correctly-sized grey placeholder, so the layout is already final and
+Photos you supplied are in the theme and sideloaded into the Media Library on activation.
+Every unfilled slot renders a correctly-sized brand panel, so the layout is already final and
 adding a photo changes nothing but the photo.
 
 **Supplied and in use:**
@@ -85,17 +85,42 @@ adding a photo changes nothing but the photo.
 | `group-instruction-sand.jpg` | Private coaching, second split feature, gallery |
 | `kayak-surf-tent.jpg` | Fishing charter, split inset, gallery |
 
-**Still needed.** All four supplied photos are portrait 3:4, so wide slots currently crop them:
+**Second batch (estuary, wildlife and kayak tours) — added in 1.10.0:**
+
+| File | Used for |
+| --- | --- |
+| `estuary-mangrove-kayak.jpg` | Estuary & Wildlife Trip featured image |
+| `estuary-mangrove-paddlers.jpg` | Gallery |
+| `estuary-kayaks-mangrove-shore.jpg` | Experience card fallback, gallery |
+| `estuary-crocodile.jpg` | Wildlife & Nature category header, gallery |
+| `estuary-crocodile-surfacing.jpg` | Gallery |
+| `estuary-capuchin-monkey.jpg` | Gallery |
+| `estuary-capuchin-troop.jpg` | Gallery |
+| `surf-lesson-group-briefing.jpg` | Experience card fallback, gallery |
+| `surf-students-with-boards.jpg` | Gallery |
+| `kayak-fleet-beach.jpg` | Experience card fallback |
+| `kayak-group-guests.jpg` | Gallery |
+| `kayak-guides-paddles.jpg` | Gallery |
+
+These are the operator's own photographs of real tours and real guests. Two notes on how they
+were prepared: `kayak-guides-paddles.jpg` had an "Island Tour" caption burned into the top-right
+corner, so the top quarter was cropped away — no shipped photo carries baked-in text. All of them
+were re-encoded without EXIF, which strips the GPS coordinates the phone recorded.
+
+**Still needed:**
 
 | Slot | Size | Ratio | What it should show |
 | --- | --- | --- | --- |
-| `hero-home` | 1920×1080 | 16:9 | **Landscape** hero frame. Currently a cropped portrait. Highest-impact fix. |
-| `hero-video` | 1920×1080 | 16:9 | Optional 8–12s loop, under 4MB, muted |
-| `exp-card-1/2/3` | 800×600 | 4:3 | Per-experience card photos — fishing, boat tour, wildlife have none |
-| `split-2-offset` | 440×330 | 4:3 | Inset for the second split feature |
-| `gallery-5`, `gallery-6` | 1200×1200 | 1:1 | Two more gallery tiles |
-| `cta-bg` | 1920×900 | wide | Final call-to-action background |
-| Instructor portraits | 800×1067 | 3:4 | One per guide, four seeded with no photo |
+| Fishing Charters | 1600×1067 | wide | **The one real gap.** No fishing photograph exists in either batch, so the charter card and category header still borrow the kayak beach-launch shot. A boat, rods or a catch would fix the only place the site shows something other than what is being sold. |
+| `hero-video` | 1920×1080 | 16:9 | Optional 8–12s loop, under 4MB, muted. Two clips came with the second batch but neither was wired in — see the note below. |
+| Instructor portraits 1–4 | 800×1067 | 3:4 | One per named guide. Deliberately still empty: the supplied photos show guests and unidentified staff, and captioning someone as a named instructor needs their say-so, not a guess. |
+| Boat Tours | 1920×1280 | wide | The catamaran photo is from the first batch and was not shot on one of these tours. Replace when a real one exists. |
+
+**Two video clips arrived with the second batch and are not in the theme.** The `hero-video` slot
+wants 8–12 seconds under 4MB; the clips are 2.4MB and 19MB of handheld estuary footage. Neither is
+cut to length and the larger one is far over budget, so wiring either in unedited would have made
+the homepage heavier than the whole rest of the page. Say the word and they can be trimmed,
+re-encoded and dropped into the slot.
 
 To add one: drop the file in `assets/images/src/`, then set `file` and `alt` for that slot in
 `assets/images/manifest.json`. Or upload to the Media Library and set it as the featured image,
@@ -240,7 +265,8 @@ actually rank and convert, and only you have it.
 ### Still outstanding
 
 - No photograph exists for **Fishing Charters**; its card and header reuse the beach-launch photo.
-- No real guide portraits: the four guides render as brand panels.
+- No real guide portraits: the four guides render as brand panels. The second photo batch shows
+  guests and unidentified staff, which is not the same thing as a captioned portrait.
 - `exp-card-1..3` and `hero-video` slots are still empty.
 - The trust row under the hero now reads "Book online in minutes / Local Tamarindo guides / Small
   groups / English & Español". **Confirm all four are true of how you operate** — they are claims,

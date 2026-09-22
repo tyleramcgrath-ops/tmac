@@ -235,6 +235,8 @@ function pt_seed_experiences() {
 			'type'     => __( 'Wildlife & Nature', 'palmtreesurf' ),
 			'level'    => __( 'All Levels', 'palmtreesurf' ),
 			'duration' => __( '3 hours', 'palmtreesurf' ),
+			'image'    => 'estuary-mangrove-kayak.jpg',
+			'alt'      => __( 'Two guests paddling a kayak through the mangrove channel', 'palmtreesurf' ),
 			'includes' => array(
 				__( 'Kayak or paddleboard and life vest', 'palmtreesurf' ),
 				__( 'Naturalist guide', 'palmtreesurf' ),

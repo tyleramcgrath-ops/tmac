@@ -67,7 +67,7 @@ function pt_gallery_images( $limit = 24 ) {
 	}
 
 	// 2. The bundled slots.
-	for ( $i = 1; $i <= 12; $i++ ) {
+	for ( $i = 1; $i <= 16; $i++ ) {
 		$slot = 'gallery-' . $i;
 
 		if ( ! pt_image_exists( $slot ) ) {
