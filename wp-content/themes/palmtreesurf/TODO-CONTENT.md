@@ -604,3 +604,29 @@ That last one needs WordPress's own Spanish files, which only it can install.
 There is a notice in the admin telling you the fix: **Settings → General**, set
 Site Language to *Español de Costa Rica*, save, set it back to English. That
 downloads the files once and the string follows the toggle from then on.
+
+---
+
+## 15. Fixed in v1.12.1 — the sidebar price ignored the Pricing screen
+
+Changing a price on the **Pricing** screen did not change the price shown on the
+experience page's booking sidebar.
+
+There were two separate price fields. The tour's rates lived in **Pricing**, but
+the advertised "From $…" figure came from a **Price from** box in the theme,
+stored separately, which nothing updated when a rate changed.
+
+It was worse than a stale sidebar. That same field fed seven places — both
+booking panels, the tour cards on the home page and every category page, the
+details row, the booking assistant, and the Schema.org markup Google reads. A
+price changed on the Pricing screen moved none of them, so the site could
+advertise one figure and quote another.
+
+The "From" figure is now worked out from the rates themselves — the adult rate,
+or the flat rate for a charter — so there is only ever one number to change.
+The theme's separate **Price from** box is gone from the experience editor,
+because two boxes that look like they set the same number, only one of which the
+site reads, is what caused this.
+
+Set prices in **Pricing**, or in the **Pricing** panel on the tour itself. Both
+write the same rates.

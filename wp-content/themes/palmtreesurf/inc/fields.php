@@ -137,6 +137,19 @@ function pt_field_map() {
  * @return string
  */
 function pt_field( $post_id, $key ) {
+	/*
+	 * The advertised from-price is derived from the booking plugin's rates
+	 * rather than stored beside them. Editing a price on the Pricing screen
+	 * has to move the figure on the card, the sidebar and the schema markup
+	 * too — otherwise a visitor is shown one number and quoted another, which
+	 * is the drift having a single set of rates was meant to prevent.
+	 */
+	if ( 'price_from' === $key && function_exists( 'ptb_price_from' ) ) {
+		$derived = ptb_price_from( $post_id );
+
+		return $derived > 0 ? pt_format_price_number( $derived ) : '';
+	}
+
 	$value = (string) get_post_meta( $post_id, '_pt_' . $key, true );
 
 	/*
@@ -146,6 +159,27 @@ function pt_field( $post_id, $key ) {
 	 * translated layout.
 	 */
 	return function_exists( 'pt_translate_seeded' ) ? pt_translate_seeded( $value ) : $value;
+}
+
+
+/**
+ * A rate as the price field used to be typed: whole numbers bare, otherwise
+ * two decimals.
+ *
+ * Deliberately not localised. Two of the callers are not display: the schema
+ * markup puts this straight into JSON-LD, where schema.org requires a plain
+ * number, and the booking quote casts it to float. A locale that writes 1.234,56
+ * would be invalid in the first and silently truncate in the second.
+ *
+ * @param float $amount Amount.
+ * @return string
+ */
+function pt_format_price_number( $amount ) {
+	$amount = (float) $amount;
+
+	return ( floor( $amount ) === $amount )
+		? (string) (int) $amount
+		: number_format( $amount, 2, '.', '' );
 }
 
 /**

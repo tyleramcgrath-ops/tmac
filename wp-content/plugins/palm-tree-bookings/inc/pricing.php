@@ -378,6 +378,41 @@ function ptb_has_price( $post_id ) {
 	return false;
 }
 
+/**
+ * The headline "from" figure for an experience.
+ *
+ * The site shows a from-price in seven places — the booking sidebar, the cards,
+ * the schema markup, the assistant. Those used to read a price_from field that
+ * was stored separately from the rates the booking is actually quoted at, so
+ * changing a price on the Pricing screen left the advertised figure stale and a
+ * customer could be shown one number and charged another.
+ *
+ * So it is derived here instead: the cheapest per-head rate a booking could
+ * start at, or the flat rate for a charter. price_from remains only as the
+ * fallback for a site running the theme without this plugin.
+ *
+ * @param int $post_id Experience ID.
+ * @return float The headline rate, or 0.0 when none is set.
+ */
+function ptb_price_from( $post_id ) {
+	$flat = ptb_price_value( $post_id, 'price_flat' );
+
+	// A flat rate wins over the per-person rates wherever it is set, and the
+	// whole-booking figure is what the customer is quoted.
+	if ( $flat > 0 ) {
+		return $flat;
+	}
+
+	$adult = ptb_price_value( $post_id, 'price_adult' );
+
+	if ( $adult > 0 ) {
+		return $adult;
+	}
+
+	// Nothing priced through this plugin, so leave whatever the theme holds.
+	return ptb_price_value( $post_id, 'price_from' );
+}
+
 /* -------------------------------------------------------------------------
  * Live quote endpoint, so the form can price before anything is submitted
  * ---------------------------------------------------------------------- */

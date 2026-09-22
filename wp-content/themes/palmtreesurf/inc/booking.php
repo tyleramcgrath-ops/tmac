@@ -172,6 +172,29 @@ function pt_booking_post_type() {
 add_filter( 'ptb_experience_post_type', 'pt_booking_post_type' );
 
 /**
+ * Drop the theme's Price from box once the booking plugin owns pricing.
+ *
+ * Leaving it on screen gives an operator two boxes that look like they set the
+ * same number, only one of which the site reads — so editing the wrong one
+ * appears to do nothing, which is exactly the report this fixes. The stored
+ * value stays in the database untouched and is used again if the plugin is
+ * ever deactivated.
+ *
+ * @param array<string, array<string, array<string, mixed>>> $map Field map.
+ * @return array<string, array<string, array<string, mixed>>>
+ */
+function pt_drop_duplicate_price_field( $map ) {
+	if ( ! function_exists( 'ptb_price_from' ) ) {
+		return $map;
+	}
+
+	unset( $map[ PT_EXPERIENCE_POST_TYPE ]['price_from'] );
+
+	return $map;
+}
+add_filter( 'pt_field_map', 'pt_drop_duplicate_price_field' );
+
+/**
  * Feed the plugin real prices from the experience fields.
  *
  * Stored as minor units, per the plugin's money model.
