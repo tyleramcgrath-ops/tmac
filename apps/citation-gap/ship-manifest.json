@@ -1,10 +1,10 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-22T14:54:22.981Z",
+  "sealedAt": "2026-09-22T15:08:51.960Z",
   "files": {
     "index.html": {
-      "sha256": "2de1f08b1aafd979a233ccf8f86241e40ac2d607982acedd4d0efa2614c48700",
-      "bytes": 337739
+      "sha256": "3e5ca0aa106d75c00282db1ffe061542c9eed9c6e511fc434afe98c02c2a8a9e",
+      "bytes": 337775
     },
     "api/page.js": {
       "sha256": "72b1e21ea6a569415f9cadf5c80ea074a292c03fbe319543e584da86d9c87d74",
