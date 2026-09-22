@@ -1,6 +1,6 @@
 # SEO AND AI-VISIBILITY WORK ORDER
 
-## NO CHANGE SINCE LAST SCAN (September 18, 2026 at 9:19 PM UTC)
+## NO CHANGE SINCE LAST SCAN (September 19, 2026 at 3:36 AM UTC)
 Page fingerprint identical — sha256 e6eda8c5…
 Competitor medians reused from that scan (age: 0 hours). No SERP credits spent.
 Open tasks: 12 (was 13). Rank 20 · Answer 15.
@@ -8,12 +8,12 @@ The page was re-fetched and re-rendered on this scan; only the Google results an
 Run a full rescan: tick “Force a full rescan” in the scan form.
 
 CONTEXT
-Page to edit ....... http://127.0.0.1:43865/site/
+Page to edit ....... http://127.0.0.1:33529/site/
 Target keyword ..... "telematics"
 Brand .............. 127
 Market ............. US / EN
 Measured against ... the 3 pages currently ranking for this keyword
-Audit date ......... September 18, 2026 at 9:19 PM UTC
+Audit date ......... September 19, 2026 at 3:36 AM UTC
 Rank Score ......... 20/100   (how closely this page matches the pages beating it; stable across competitor samples)
 Answer Score ....... 15/100   (whether AI answer engines can quote it; stable across competitor samples)
 
@@ -62,7 +62,7 @@ numbers; a number without its method cannot be verified.
                        A = served HTML, <body> minus nav/header/footer/aside/form, regex parser · B = rendered page, same boundary (<body> minus nav/header/footer/aside/form), painted text (one tree walk; every text node whose ancestors all pass display / visibility / opacity / hidden / client-rect / clip tests) plus REACHABLE text (off-stage carousel slides and closed tab panels with a painted sibling; clones excluded)
                        for comparison only: innerText 74 · textContent 136 · rendered DOM under the served rules 85
                        whole page (served HTML) 79 · whole page (rendered, painted) 55
-  Painted words, <body> minus nav/header/footer/aside/form ...... 48 total (measured at settle, 7.5 s after navigation, 2026-09-18T21:19:30.432Z)
+  Painted words, <body> minus nav/header/footer/aside/form ...... 48 total (measured at settle, 7.5 s after navigation, 2026-09-19T03:36:45.346Z)
                                35 body copy
                                13 carousel (0 painted slide(s); 0 more reachable = 0 words; 1 clones excluded)
                                0 feed / loop grid
@@ -125,12 +125,12 @@ Text visible but absent from served HTML ... 2 lines (script-injected page conte
   VOLATILE (third-party widget, may vary by time/session — not a page finding) 1 line this scan
     “Chat with EnVue Telematics”                                      seen 2/2 scans · from localhost · in #crisp-chatbox
     “We are online”                                                   seen 1/2 scans — absent this scan
-    Detection: DOM insertions are attributed to the script host that made them; a body-level container named like a chat, cookie or consent widget also counts. Volatile lines never enter NEW / RESOLVED / WITHDRAWN; they carry a seen-in-N-of-M counter instead (tracking since September 18, 2026 at 9:19 PM UTC). This scan ran at September 18, 2026 at 9:19 PM UTC.
+    Detection: DOM insertions are attributed to the script host that made them; a body-level container named like a chat, cookie or consent widget also counts. Volatile lines never enter NEW / RESOLVED / WITHDRAWN; they carry a seen-in-N-of-M counter instead (tracking since September 19, 2026 at 3:36 AM UTC). This scan ran at September 19, 2026 at 3:36 AM UTC.
 Entrance-animation markers ................. 2 elements carry one in served HTML (2 outermost blocks with text); in the browser: 2 markers at first paint → 1/2 released, 1 still hidden (“Get a Free Demo”) (1 still carrying the marker class)
                                              (an element never leaves the DOM when its animation fires — the marker class is removed)
 Counter widgets ............................ 1 in served HTML; after render (1): “Annual Reportable Accidents Reduced By 3” shows 31 (hidden)
 
-## CHANGES SINCE THE LAST SCAN (September 18, 2026 at 9:19 PM UTC)
+## CHANGES SINCE THE LAST SCAN (September 19, 2026 at 3:36 AM UTC)
   Page content ....... unchanged — same title, H1, meta, heading counts and text fingerprint
   Scanner rules ...... CHANGED since that scan (10.2 → 10.5). A finding that disappeared was re-verified item by item; none is marked RESOLVED on the rule change alone.
   Rank Score ......... 20 → 20  (inside the confidence band: sample noise, not movement)
@@ -155,7 +155,7 @@ Counter widgets ............................ 1 in served HTML; after render (1):
 ## STEP 0 - VERIFY BEFORE YOU DO ANYTHING
 This baseline came from an automated scan. Check it before you act on it.
 
-1. Open EXACTLY this URL: http://127.0.0.1:43865/site/
+1. Open EXACTLY this URL: http://127.0.0.1:33529/site/
    Not the homepage. Not a similar page. If the URL you can reach differs in any way, or you
    cannot open it at all, say so and stop.
 2. Compare what you actually see against the MEASURED BASELINE below.
@@ -176,7 +176,7 @@ This baseline came from an automated scan. Check it before you act on it.
   ranking signal on their own, separate from anything else on this list.
 - The ROLLBACK SNAPSHOT below is the restore point. Before any edit, confirm it still matches.
 
-## ROLLBACK SNAPSHOT (as measured September 18, 2026 at 9:19 PM UTC)
+## ROLLBACK SNAPSHOT (as measured September 19, 2026 at 3:36 AM UTC)
 Paste these back to undo. Everything here is the current live value, not a suggestion.
 
   Title tag .......... Render fixture
