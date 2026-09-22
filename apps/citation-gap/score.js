@@ -1520,10 +1520,296 @@ function taskLine(f,c){
   }
 }
 
+// ---- The work order -------------------------------------------------------
+// buildFixes turns a scored page plus its competitor medians into the ordered list of tasks.
+// It is pure — no DOM, no network, no storage — and it moved here with the scores because the
+// scan job has to produce the same work order as the browser, not merely the same two numbers.
+const qNeed = (p,m) => m.questionHeadingCount>0 ? Math.max(m.questionHeadingCount-p.questionHeadingCount,1) : Math.max(3-p.questionHeadingCount,1);
+function buildFixes(p,m,rr,ar,kw,cats,missing,brand,opts){
+  opts=opts||{};
+  const diff=opts.diff||null, rendered=!!(opts.rendered&&opts.rendered.ok), missingInfo=opts.missingInfo||[];
+  const by={}; rr.concat(ar).forEach(function(x){ by[x.key]=x; });
+  const gap=function(k){ return by[k]&&by[k].pct<85?by[k]:null; };
+  const kwT = kw.replace(/\b\w/g,function(ch){return ch.toUpperCase();});
+  const f=[];
+  if(gap('kwInTitle')) f.push({key:'kwInTitle',title:'Put the head term in the title tag',
+    body:m.kwInTitleN+' of '+m.total+' ranking pages lead with it. Yours does not contain “'+kw+'” at all. Cheapest fix on this list.',
+    code:'now  → '+(p.httpTitle||'(empty)')+'\nset  → '+kwT+' | '+(brand||'Your Brand')});
+  if(gap('kwInH1')) f.push({key:'kwInH1',title:'Rewrite the H1 to name the thing',
+    body:m.kwInH1N+' of '+m.total+' ranking pages put the term in the H1. Yours states a benefit where the category name belongs.',
+    code:'now  → '+((p.h1&&p.h1[0])||'(no H1)')+'\nset  → '+kwT});
+
+  // Content a visitor cannot see, measured in a real browser. Outranks everything — but only
+  // when the render's own self-check passed (the animation gate released). One number per
+  // concept: diff.hiddenCount is every hidden content element; this task narrows to the
+  // kinds that cost revenue and says how many plain-text elements it leaves aside.
+  if(diff && (diff.priority.length || diff.important.length)){
+    const items=diff.priority.length?diff.priority:diff.important;
+    const ctas=items.filter(function(h){return h.kind==='call to action';}).length;
+    const kinds={}; items.forEach(function(h){kinds[h.kind]=(kinds[h.kind]||0)+1;});
+    const plain=Math.max(diff.hiddenCount-items.length,0);
+    f.push({key:'hiddenContent',
+      title:'Make '+items.length+' piece'+(items.length===1?'':'s')+' of hidden content visible to visitors'+(ctas?' ('+ctas+' call'+(ctas===1?'':'s')+' to action)':''),
+      body:'The page was rendered in a real browser with mouse and wheel input, scrolled, and left to settle; the render’s own self-check re-read every marked element by identity: '+gateLine(diff.gate)+'. Afterwards these elements still carried text that the computed style hides from every visitor while it sits readable in the served HTML. '
+        +(items.some(function(h){return h.gated;})?'Most sit inside entrance-animation wrappers whose reveal never fired. ':'')
+        +'A demo button, a price or a statistic a visitor cannot see costs revenue directly, which puts this above every content task.'
+        +' The diff lists '+diff.hiddenCount+' hidden content element'+(diff.hiddenCount===1?'':'s')+' in total; this task covers the '+items.length+' that are calls to action, headings, statistics, prices or forms'+(plain?', and leaves aside '+plain+' plain-text element'+(plain===1?'':'s')+' inside the same wrappers, which the same fix restores':'')+'.'
+        +(diff.byDesignCount?' '+diff.byDesignCount+' other hidden element'+(diff.byDesignCount===1?' was':'s were')+' excluded as hidden by design (menu items, carousel slides, closed dialogs, tabs, screen-reader text).':''),
+      code:'measured in browser → '+Object.keys(kinds).map(function(k){return kinds[k]+' '+k;}).join(', ')+(plain?'  (+ '+plain+' plain text, not in this task’s count)':'')
+        +'\nstill hidden after render'+(items.length>5?' (first 5 of '+items.length+')':'')+'  → '
+        +items.slice(0,5).map(function(h){return '['+h.kind+'] '+h.text.slice(0,60)+' — '+h.reason;}).join('\n            '),
+      _items:items.slice(0,6).map(function(h){return h.text.slice(0,60);})});
+  }
+
+  const hiddenCounters=(p.counters||[]).filter(function(c){return !c.inServedText;});
+  if((p.jsHiddenStatCount||0)>0) f.push({key:'jsStats',
+    title:'Render your '+p.jsHiddenStatCount+' counter statistic'+(p.jsHiddenStatCount===1?'':'s')+' as real text',
+    body:'These figures exist only inside counter-widget attributes — checked per counter: the served element text, data-from-value and data-to-value were all read, and the value appears nowhere in the text the server sends. Any crawler or answer engine that does not execute JS cannot read them at all.'
+      +(rendered?' The browser render confirms the figure only appears once the script runs.':''),
+    code:'served text contains → '+(hiddenCounters.length?hiddenCounters.slice(0,4).map(function(c){return c.elementText===''?'(empty)':'“'+c.elementText+'”';}).join(', '):'nothing')
+      +'\nrecovered from attrs'
+      +((p.jsHiddenStatCount||0)>6?' (first 6 of '+p.jsHiddenStatCount+')':'')+'  → '
+      +(p.jsHiddenStats||[]).slice(0,6).join('\n                        ')});
+
+  // Without a render, animation wrappers are a VERIFY item. With one, the render either
+  // confirmed them hidden (hiddenContent above), showed them visible (no task), or — the
+  // case the self-check exists for — never released the gate at all, which says nothing
+  // about the live page and is reported as exactly that.
+  const gateStuck = !!(diff && diff.gateStuck);
+  if((!rendered || gateStuck) && (p.animationGatedCount||0)>0){
+    const g=p.animationGated||[];
+    const withStats=g.filter(function(x){return x.carries==='statistic';}).length;
+    f.push({key:'animGate',
+      title:(gateStuck?'Verify by eye: ':'Check ')+g.length+' block'+(g.length>1?'s':'')+' behind an entrance animation'+(gateStuck?' (the render could not confirm either way)':''),
+      body:'These sit inside animation wrappers that start hidden and are revealed by JavaScript'
+        +(withStats?', and '+withStats+' of them contain a statistic':'')
+        +'. When that reveal fails — a script error, a deferred bundle, an observer that never fires — the content stays invisible to visitors while remaining perfectly readable to crawlers. '
+        +(gateStuck
+          ? 'The browser render ran, but its self-check failed: '+gateLine(diff.gate)+' — nothing released in this render. Headless browsers sometimes never fire the observer that a real browser fires, so this MAY NOT reproduce for a visitor. It is reported as unverified, not as a defect: open the live page and look.'
+          : 'The browser check that would settle this did not run on this scan, so open the live page and confirm you can actually see them.'),
+      code:'framework → '+((g[0]&&g[0].framework)||'entrance animation')+'\nelements with the marker → '+(p.animationGatedElements||g.length)+'   outermost blocks with text → '+g.length
+        +(gateStuck?'\nrender self-check → '+gateLine(diff.gate)+': gate did NOT release':'')
+        +'\naffected'+(g.length>4?' (first 4 of '+g.length+')':'')+'  → '
+        +g.slice(0,4).map(function(x){return '['+x.carries+'] '+x.sample.slice(0,60);}).join('\n            '),
+      _items:g.slice(0,6).map(function(x){return x.sample.slice(0,60);})});
+  }
+  if(gap('stats')) f.push({key:'stats',title:'Add '+Math.max(m.statCount-p.statCount,1)+' quantified, attributable outcomes',
+    body:'The highest-leverage change available. Answer engines quote figures they can attribute. With none on the page there is nothing to lift.',
+    code:'pattern  → [figure] [outcome] — [named customer], [timeframe]\nyou have → '+p.statCount+'   median → '+m.statCount+(m.spread&&m.spread.statCount?'   spread → '+m.spread.statCount.min+'–'+m.spread.statCount.max:'')});
+  if(gap('questionHeadings')){
+    const zero = m.questionHeadingCount===0;
+    f.push({key:'questionHeadings',
+    title:'Add '+qNeed(p,m)+' question-shaped subheading'+(qNeed(p,m)===1?'':'s')+(zero?' (optional — none of the ranking pages have any)':''),
+    body:(zero
+      ? 'Not a parity task: the ranking-set median is 0, so nothing here says the pages beating you do this. It is recommended on answer-layer grounds only — an answer engine lifts the sentence beneath a question heading more readily than a paragraph — and it is ranked accordingly. Skip it if the page is at parity elsewhere and the outline is already tight.'
+      : 'Each is a retrieval hook: the question a buyer types, answered in the 40 words directly beneath it. Also closes the word gap with substance instead of padding.')
+      +'{{ref:h3Fragmented: This page is already over-fragmented on subheadings — do [[ref]] (the consolidation task) first, so these do not just add to the pile.}}',
+    code:'you have → '+p.questionHeadingCount+'   median → '+m.questionHeadingCount+(m.spread&&m.spread.questionHeadingCount?'   spread → '+m.spread.questionHeadingCount.min+'–'+m.spread.questionHeadingCount.max:'')+(zero?'\nbasis → answer-layer recommendation, not parity':''),
+    _demote:zero});
+  }
+  if(gap('h3Count')) f.push({key:'h3Count',title:'Build out H3 subheading depth',
+    body:'Subheading depth is how ranking pages carry detail without becoming a wall of text.',
+    code:'you have → '+p.h3Count+'   median → '+m.h3Count+'   add → '+Math.max(m.h3Count-p.h3Count,0)});
+  if(gap('wordCount')){ const add=Math.max(m.wordCount-p.wordCount,0); const wc=opts.wordCheck||null;
+    f.push({key:'wordCount',title:'Close the '+add.toLocaleString()+'-word gap by answering real questions, not hitting a quota',
+    body:'Parity with the median, not maximum — and not a word count to write toward. A quota produces filler, which is the opposite of what closes a rank gap. List the buyer questions this page leaves unanswered, answer each one properly, and let the word count fall out of that.'
+      +(wc?' Both figures for this page: '+wc.served.toLocaleString()+' served, '+wc.rendered.toLocaleString()+' rendered ('+wc.renderedMain.toLocaleString()+' painted + '+wc.reachable.toLocaleString()+' reachable). The gap is measured from the '+wc.scored+' figure because that is the basis every page in this comparison shares'+(wc.basisDifference?'; the two bases differ by '+wc.diffPct+'% on this page ('+(wc.explain||'carousel + script-mounted content')+'), which is why the severity is capped':'')+'.':''),
+    code:'you have → '+p.wordCount.toLocaleString()+(wc?' '+wc.scored+' (scored) · '+(wc.scored==='served'?wc.rendered.toLocaleString()+' rendered':wc.served.toLocaleString()+' served'):'')+'   target → '+m.wordCount.toLocaleString()+'   gap → '+add.toLocaleString()+(m.spread&&m.spread.wordCount?'\nranking pages run '+m.spread.wordCount.min.toLocaleString()+'–'+m.spread.wordCount.max.toLocaleString()+' words; the median is a soft target':'')+(wc&&wc.basisDifference?'\nbasis difference → '+wc.diffPct+'% between served and rendered ('+(wc.explain||'carousel + script-mounted')+'); scored on '+wc.scored:'')}); }
+  // Duplicated headings (responsive or carousel cloning, a feed repeating a title that is
+  // also in the body) are a defect in their own right, counted once per extra copy.
+  const dups=(p.headingDuplicates||[]);
+  if((p.headingDuplicateCount||0)>0){
+    const reloc=opts.reconcile||null;
+    const relocated=reloc&&reloc.headingStates?dups.filter(function(d){return reloc.headingStates[foldT(d.text)]==='RELOCATED_VISIBLE';}).length:0;
+    const anyTemplate=dups.some(function(d){return d.inTemplate;});
+    const hiddenNote=dups.some(function(d){return d.hiddenCopies;})
+      ? (relocated===dups.length
+          ? 'The served HTML keeps '+dups.reduce(function(n,d){return n+(d.hiddenCopies||0);},0)+' of the copies inside a display:none template wrapper that the widget empties at mount — after render every copy is painted (see CONTAINER RELOCATED in the rendered diff), so a visitor sees them all. '
+          : 'Some copies sit inside a container the HTML itself hides (display:none or a hidden attribute); the render says which of them a visitor actually sees. ')
+      : '';
+    if(anyTemplate){
+      // Generated by a loop / feed widget: an editor cannot remove these in the page body.
+      f.push({key:'dupHeadings',_template:true,title:p.headingDuplicateCount+' duplicated heading'+(p.headingDuplicateCount===1?'':'s')+' produced by a loop/feed widget ('+dups.length+' distinct text'+(dups.length===1?'':'s')+')',
+      body:'These headings are generated by a post-feed widget, not typed by an author. Two feeds on this page query the same posts, so each title renders twice. '+hiddenNote+'This is a widget configuration change, not a content edit — editing the page body will not remove them, and the ranking impact of a feed repeating a title is close to nil, which is why this sits low with a small weight.',
+      code:'total headings → '+((p.h2Count||0)+(p.h3Count||0))+' (h2+h3)   unique → '+((p.h2Unique||p.h2Count||0)+(p.h3Unique||p.h3Count||0))+((p.h3Hidden||0)+(p.h2Hidden||0)?'   in hidden containers (served) → '+((p.h3Hidden||0)+(p.h2Hidden||0)):'')+(relocated?'   relocated by a widget, painted after render → '+relocated:'')+'\nrepeated'+(dups.length>4?' (first 4 of '+dups.length+')':'')+' → '+dups.slice(0,4).map(function(d){return 'H'+d.level+' ×'+d.count+(d.near?' (near-duplicate)':'')+' [feed]'+(d.hiddenCopies?' ['+d.hiddenCopies+' served cop'+(d.hiddenCopies===1?'y':'ies')+' in a hidden wrapper'+(reloc&&reloc.headingStates&&reloc.headingStates[foldT(d.text)]==='RELOCATED_VISIBLE'?', painted after render':'')+']':'')+' “'+d.text.slice(0,60)+'”';}).join('\n           ')
+        +'\nfix → in the widget that produces the SECOND feed: (a) set the title element\'s HTML tag to H4 or a non-heading element, or (b) set the query offset so the two feeds return non-overlapping posts. Do not delete or retitle the posts.',
+      _items:dups.slice(0,6).map(function(d){return d.text.slice(0,60);})});
+    } else {
+      f.push({key:'dupHeadings',title:'Remove '+p.headingDuplicateCount+' duplicated heading'+(p.headingDuplicateCount===1?'':'s')+' ('+dups.length+' distinct text'+(dups.length===1?'':'s')+' repeated)',
+      body:'The same heading text appears more than once at the same level, and none of the copies is generated by a feed or carousel widget. '+hiddenNote+'Duplicate headings blur the outline for crawlers and answer engines and usually mean a responsive clone or a heading typed twice. Keep one copy — the editorial one — and remove or retitle the rest.',
+      code:'total headings → '+((p.h2Count||0)+(p.h3Count||0))+' (h2+h3)   unique → '+((p.h2Unique||p.h2Count||0)+(p.h3Unique||p.h3Count||0))+((p.h3Hidden||0)+(p.h2Hidden||0)?'   in hidden containers → '+((p.h3Hidden||0)+(p.h2Hidden||0)):'')+'\nrepeated'+(dups.length>4?' (first 4 of '+dups.length+')':'')+' → '+dups.slice(0,4).map(function(d){return 'H'+d.level+' ×'+d.count+(d.near?' (near-duplicate)':'')+(d.hiddenCopies?' ['+d.hiddenCopies+' cop'+(d.hiddenCopies===1?'y':'ies')+' in a hidden container]':'')+' “'+d.text.slice(0,60)+'”';}).join('\n           '),
+      _items:dups.slice(0,6).map(function(d){return d.text.slice(0,60);})});
+    }
+  }
+  // Consolidation targets are set against EDITORIAL headings only: a post-feed title cannot
+  // be merged without changing the feed, and a duplicate is removed, not merged. Two more
+  // exclusions, both added after a real false-fire: a counter/stat caption marked up as an
+  // H2/H3 is a label, not a subheading idea (its own task below is the real fix, never a
+  // merge target); and a question-shaped H3 is ALWAYS protected from the mergeable pool — it
+  // is actively earning ANSWER_W.questionHeadings points right now, so a "reduce headings"
+  // task must never recommend cutting into it regardless of whether this exact scan happened
+  // to log the credit (attribution needs a prior scan to compare against; the risk of merging
+  // a question heading away does not). When this scan's own delta DID just credit the gain
+  // (attributeScore/attribution), the task says so explicitly instead of just protecting
+  // silently — without this a page that just earned +20 Answer points for adding question
+  // headings gets told, in the same breath, to merge them back out.
+  const h3Ed = (p.h3Editorial!=null ? p.h3Editorial : p.h3Count), h3Tpl = (p.h3Template||0);
+  const h3CC = p.h3CounterCaptions||0;
+  const qH3 = p.questionHeadingCountH3||0;
+  const qCreditedThisScan = !!(opts.attribution && opts.attribution.some(function(a){return a.key==='questionHeadings' && a.delta>0;}));
+  const h3EdUniqueRaw = Math.max(h3Ed - dups.filter(function(d){return d.level===3 && !d.inTemplate;}).reduce(function(s,d){return s+d.count-1;},0), 0);
+  const h3Protected = h3CC + qH3;
+  const h3EdUnique = Math.max(h3EdUniqueRaw - h3Protected, 0);
+  if(h3EdUnique > Math.max(Math.round(m.h3Count*1.5), m.h3Count+6)){
+    f.push({key:'h3Fragmented',title:'Consolidate '+h3EdUnique+' editorial H3s down toward '+m.h3Count+(h3Tpl||h3Protected||p.h3Count!==h3EdUniqueRaw?' ('+p.h3Count+' total: '+h3Tpl+' template/feed'+(h3CC?', '+h3CC+' counter caption':'')+(qH3?', '+qH3+' question heading':'')+(p.h3Count-h3Tpl-h3EdUniqueRaw>0?', '+(p.h3Count-h3Tpl-h3EdUniqueRaw)+' duplicate':'')+' protected/excluded)':''),
+    body:'This page runs far more subheadings than the pages beating it ('+h3EdUnique+' mergeable editorial H3s vs a median of '+m.h3Count+'; '+p.h3Count+' H3s in total, of which '+h3Tpl+' are generated by a post-feed or carousel widget and cannot be merged by an editor'
+      +(h3CC?', '+h3CC+' are counter/stat captions marked up as headings (see the separate task below — demote, do not merge)':'')
+      +(qH3?', and '+qH3+' are question-shaped headings that earn points on the Answer-score table right now'+(qCreditedThisScan?' — this scan\'s own delta just credited the gain from adding them':'')+' (protected — merging them would cost those points, not just fragment the outline)':'')
+      +(p.h3Count-h3Tpl-h3EdUniqueRaw>0?', and '+(p.h3Count-h3Tpl-h3EdUniqueRaw)+' are duplicates handled by the duplicate-heading task':'')
+      +'). That is not extra structure — it is a fragmented outline that loses both buyers and crawlers. Do this before adding a single new heading from the other tasks on this list, or the count only gets worse.',
+    code:'mergeable editorial H3s → '+h3EdUnique+'   template/feed H3s → '+h3Tpl+(h3CC?'   counter captions (protected) → '+h3CC:'')+(qH3?'   question headings (protected) → '+qH3+(qCreditedThisScan?' [credited this scan]':''):'')+'   total → '+p.h3Count+'\nmedian → '+m.h3Count+'   over by (mergeable) → '+(h3EdUnique-m.h3Count)});
+  }
+  // A counter/stat caption ("Reduction In Accidents", "31%") marked up as an H2/H3 is a
+  // widget-configuration issue, not a content edit: demote the tag, touch nothing else. This
+  // is the legitimate, low-cost version of "too many headings" - it never merges a real
+  // section or a question heading, and it is reported even when h3Fragmented above does not
+  // fire (the census is still inflated either way).
+  const ccHeadings=(p.counterCaptionHeadings||[]);
+  if(ccHeadings.length){
+    f.push({key:'counterCaptionHeadings',title:'Demote '+ccHeadings.length+' counter caption'+(ccHeadings.length===1?'':'s')+' out of the heading outline',
+    body:'These are stat labels beside an animated counter ("'+ccHeadings.slice(0,3).map(function(h){return h.text.slice(0,40);}).join('", "')+'"'+(ccHeadings.length>3?', …':'')+'), not subheadings carrying their own idea — they were just marked up with an H'+ccHeadings[0].level+' tag instead of a <div> or <span>. Demoting them is a widget/markup change: it does not touch page content, does not affect the pillars or question headings above, and brings the heading census down to what an editor actually wrote.',
+    code:'counter caption headings → '+ccHeadings.length+' → '+ccHeadings.slice(0,6).map(function(h){return 'H'+h.level+' “'+h.text.slice(0,60)+'”';}).join('\n                            ')
+      +'\nfix → change the tag on each to a <div> or <span> (or the widget\'s "caption element" setting if it exposes one); keep the text exactly as-is.'});
+  }
+  if(p.statCount>0 && p.statCount>=m.statCount){
+    f.push({key:'claimsAudit',title:'Verify the '+p.statCount+' quantified claims already on the page',
+    body:'This page already carries more quantified claims than the pages beating it ('+p.statCount+' vs a median of '+m.statCount+'), which is why no new-statistics task appears on this list. That is exactly why these need auditing rather than writing: each one needs a real, checkable source behind it. An unverified figure already live on a commercial page is a bigger risk than a missing one.',
+    code:'you have → '+p.statCount+'   median → '+m.statCount+'\nclaims'+(p.stats&&p.stats.length>4?' (first 4 of '+p.stats.length+')':'')+' → '+(p.stats||[]).slice(0,4).map(function(x){return x.slice(0,70);}).join('\n         ')});
+  }
+  // Schema is checked item by item against the page text. Any ABSENT item is a mismatch.
+  const absent=(p.schemaClaims||[]).filter(function(x){return !x.present;});
+  if(absent.length || (p.hasFaqSchema && p.questionHeadingCount<2)){
+    f.push({key:'schemaMismatch',title:absent.length
+      ? 'Reconcile '+absent.length+' schema item'+(absent.length===1?'':'s')+' with no visible counterpart on the page'
+      : 'Reconcile FAQPage schema with the FAQ content actually on the page',
+    body:(absent.length
+      ? 'Each declared FAQ question and answer, product, offer, review and rating was string-matched against the page text. '+absent.length+' of '+(p.schemaClaims||[]).length+' are not on the page at all — the structured data describes content a visitor cannot see.'
+      : 'This page publishes FAQPage structured data but carries only '+p.questionHeadingCount+' visible question heading'+(p.questionHeadingCount===1?'':'s')+'.')
+      +' That is a structured-data policy risk, not a cosmetic one. It also means anything this list adds as new question headings has to be reflected in the JSON-LD, or the mismatch gets worse instead of better.',
+    code:'top-level → '+((p.schemaTopLevel||p.schemaTypes||[]).slice(0,8).join(', ')||'none')+'\nvisible Q headings → '+p.questionHeadingCount
+      +(absent.length?'\nabsent'+(absent.length>4?' (first 4 of '+absent.length+')':'')+' → '+absent.slice(0,4).map(function(x){return '['+x.kind+'] '+x.text.slice(0,60);}).join('\n         '):'')});
+  }
+  if(gap('table')) f.push({key:'table',title:'Add a spec comparison table',
+    body:'The most cleanly extractable structure on a page — an answer engine can lift a row without parsing prose, regardless of how many of the ranking pages happen to run one. Right now that is '+m.tableN+' of '+m.total+' — not yet the norm here, which is exactly why a clean table stands out rather than just matching the pack.',code:''});
+  if(gap('schema')) f.push({key:'schema',title:'Mark up the FAQ and the products',
+    body:'Structured data makes content you already have machine-readable. Best result-to-effort ratio in the answer column — but only for content the page really carries.',
+    code:'found → '+((p.schemaTopLevel||p.schemaTypes||[]).slice(0,8).join(', ')||'no JSON-LD')+'\nadd   → FAQPage, Product or Service'});
+  if(gap('entities')&&missing.length){
+    const own=missingInfo.filter(function(x){return x.bucket==='OWN STACK';}).map(function(x){return x.term;});
+    const comp=missingInfo.filter(function(x){return x.bucket==='COMPETITOR';}).map(function(x){return x.term;});
+    const voc=missingInfo.filter(function(x){return x.bucket==='VOCABULARY';}).map(function(x){return x.term;});
+    const hid=missingInfo.filter(function(x){return x.state==='PRESENT BUT HIDDEN';}).map(function(x){return x.term;});
+    f.push({key:'entities',title:'Cover the category’s shared vocabulary'+(hid.length?' — '+hid.length+' term'+(hid.length===1?' is':'s are')+' already on the page but hidden from visitors':(own.length?' — starting with '+own.length+' term'+(own.length===1?'':'s')+' this site already sells':'')),
+    body:'These concepts appear across multiple ranking pages — the language the topic is discussed in. A page missing them reads as off-topic to a retrieval model.'
+      +(hid.length?' '+hid.length+' of them ('+hid.slice(0,4).join(', ')+') are in the served HTML but the browser render found them hidden from visitors — a crawler sees them, a person does not. They are scored as NOT covered until they are visible; the hidden-content task restores them, which makes this the cheapest part of this list.':'')
+      +(own.length?' '+(own.length===1?'One of them ('+own[0]+') is':own.length+' of them ('+own.slice(0,3).join(', ')+') are')+' named elsewhere on this site but never on this page: the business already offers '+(own.length===1?'it':'them')+' and the page does not say so.':'')
+      +(comp.length?' '+comp.length+' are competitor brands and are listed only so you know to leave them out.':''),
+    code:(hid.length?'present but hidden → '+hid.slice(0,10).join(', ')+'\n':'')
+        +(own.length?'own stack   → '+own.slice(0,10).join(', ')+'\n':'')
+        +(voc.length?'vocabulary  → '+voc.slice(0,14).join(', ')+'\n':'')
+        +(comp.length?'competitors → '+comp.slice(0,8).join(', ')+'  (do not add)':'')
+        +(!missingInfo.length?'missing → '+missing.slice(0,16).join(', '):'')});
+  }
+  if(gap('listCount')) f.push({key:'listCount',title:'Add scannable lists',
+    body:'Extractable structure, and it lifts dwell time.',
+    code:'you have → '+p.listCount+'   median → '+m.listCount});
+  if(gap('h2Count')) f.push({key:'h2Count',title:'Add H2 sections',
+    body:'Section count sits below the ranking set.',
+    code:'you have → '+p.h2Count+'   median → '+m.h2Count});
+  if(gap('kwInMeta')) f.push({key:'kwInMeta',title:'Put the head term in the meta description',
+    body:'Does not move rankings directly. It moves click-through, which does.',
+    code:'now → '+((p.metaDescription||'(empty)').slice(0,130))});
+  f.forEach(function(x){ let meta=FIX_META[x.key]||['MEDIUM',1,'RANK'];
+    if(x._template) meta=['LOW',0.25,'RANK'];
+    const row=by[x.key];
+    // Impact per hour has to be the points actually recoverable, not the category's
+    // full weight. A row already earning 12 of its 15 points only has 3 left to give -
+    // ranking it as if all 15 were on the table is what let a near-satisfied RANK task
+    // outrank a badly-behind ANSWER task that had far more real room to gain.
+    const extra = W_EXTRA[x.key]!=null;
+    let pts = extra ? W_EXTRA[x.key] : (row ? Math.max(row.weight-row.earned,0) : 5);
+    if(x._template) pts = 3;
+    // A recommendation the ranking set does not support is worth half its table points.
+    if(x._demote) pts = pts/2;
+    // Severity follows the same logic: a boolean signal (absent/present) keeps the
+    // table's designation, but a partial signal downgrades once most of its points are
+    // already earned - a 3-of-15-point gap should not read as urgently as a 15-of-15 one.
+    let sev = meta[0];
+    const perHr = pts/Math.max(meta[1],0.15);
+    // P15 — an IN-SCORE label is a pure function of the number that orders the section:
+    // points per hour. CRITICAL is reserved for Section A (integrity defects on a live page).
+    if(!extra){ sev = perHr>=10 ? 'HIGH' : perHr>=5 ? 'MEDIUM' : 'LOW'; }
+    else {
+      const order = ['MEDIUM','HIGH','CRITICAL'];
+      if(row && row.weight>0){ const pctEarned=row.pct; let steps=0; if(pctEarned>=65) steps=2; else if(pctEarned>=40) steps=1; if(steps){ const idx=Math.max(order.indexOf(sev)-steps,0); sev=order[idx]; } }
+    }
+    if(x._demote) sev = sev==='HIGH' ? 'MEDIUM' : sev;
+    if(x._template) sev='LOW';
+    // P14 — a task derived from a metric whose two measurement bases differ by more than 20%
+    // never carries a severity above HIGH, and says why.
+    const wcB=opts.wordCheck||null;
+    if(wcB && wcB.basisDifference && FIX_METRIC[x.key]==='wordCount'){
+      if(sev==='CRITICAL') sev='HIGH';
+      x._basisCap={pct:wcB.diffPct, scored:wcB.scored};
+      x.code=(x.code?x.code+'\n':'')+'severity note → derived from a metric with a '+wcB.diffPct+'% basis difference (served vs rendered); capped at HIGH. Resolve the basis (render every page, or accept served) before committing a day to it.';
+    }
+    x.severity=sev; x.effort=effortLabel(meta[1]); x.engine=meta[2];
+    x._pts=pts; x._hours=meta[1]; x._extra=extra;
+    x._rank=perHr;
+    // SOFT TARGET: the median this task aims at moves when one competitor is dropped.
+    const mk=FIX_METRIC[x.key], mb=opts.band&&opts.band.medians&&mk?opts.band.medians[mk]:null;
+    if(mb && mb[0]!==mb[1] && (mb[1]-mb[0])>=Math.max(1,0.1*(m[mk]||0))){
+      x._soft={metric:mk, median:m[mk], range:mb};
+      x.code=(x.code?x.code+'\n':'')+'SOFT TARGET → median '+Number(m[mk]).toLocaleString()+' moves between '+Number(mb[0]).toLocaleString()+' and '+Number(mb[1]).toLocaleString()+' when any one competitor is left out; the number may change on the next scan';
+    }
+  });
+  // Two lists, two units. IN-SCORE tasks recover points from the two 100-point tables and
+  // are ranked by points per hour - arithmetic anyone can check. OUT-OF-SCORE tasks carry
+  // a fixed weight instead, so their order against the in-score list is a judgement call,
+  // stated as such. Hidden content stays first: a demo button a visitor cannot see is
+  // losing revenue right now.
+  const outOf=f.filter(function(x){return x._extra;}).sort(function(a,b){return b._rank-a._rank;});
+  const inScore=f.filter(function(x){return !x._extra;}).sort(function(a,b){return b._rank-a._rank;});
+  const hi=outOf.findIndex(function(x){return x.key==='hiddenContent';});
+  if(hi>0){ const h=outOf.splice(hi,1)[0]; outOf.unshift(h); }
+  outOf.forEach(function(x){ x._section='OUT-OF-SCORE'; });
+  inScore.forEach(function(x){ x._section='IN-SCORE'; });
+  return resolveRefs(outOf.concat(inScore));
+}
+// A clause that names another task is rendered only when that task is in the emitted list,
+// with its final number; otherwise the whole clause is dropped. Never a description of a task
+// that does not exist.
+function resolveRefs(list){
+  list.forEach(function(x,i){ x.number=i+1; });
+  list.forEach(function(x){
+    ['body','code'].forEach(function(k){
+      if(typeof x[k]!=='string' || x[k].indexOf('{{ref:')===-1) return;
+      x[k]=x[k].replace(/\{\{ref:([a-zA-Z0-9]+):\s*([\s\S]*?)\}\}/g, function(m,key,text){
+        const t=list.find(function(y){return y.key===key;});
+        return t ? text.replace(/\[\[ref\]\]/g,'Task '+t.number) : '';
+      }).replace(/\s{2,}/g,' ').trim();
+    });
+  });
+  return list;
+}
+
 // Node sees `module`; the browser does not, so this is inert in a page and is the whole of the
 // server-side surface.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
+    qNeed,
+    buildFixes,
+    resolveRefs,
     RANK_W,
     ANSWER_W,
     FIX_META,
