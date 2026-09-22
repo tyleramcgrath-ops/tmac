@@ -338,6 +338,36 @@ scoring globals defined and an app that silently does nothing. All three browser
 route static requests through one `serveStatic` helper in `test/enter-app.js` so the
 next shipped static file is one edit instead of three.
 
+### Ownership lives in the WHERE clause
+
+One rule runs through every query in `lib/store.js`: never fetch a row and then check who owns
+it. That is two steps, and the second is the one somebody forgets. `WHERE id = $1 AND user_id
+= $2` cannot be forgotten and cannot race, and it returns zero rows for "does not exist" and
+"is not yours" alike — which is also the right answer, because telling them apart confirms that
+a project id exists.
+
+Recording a scan uses `INSERT ... SELECT ... WHERE p.user_id = $7` for the same reason: the row
+is only created when the project belongs to the caller, in the statement that creates it.
+
+`test/store.js` tries **every read and every write twice** — once as the owner, once as a
+stranger — because a missing ownership check looks exactly like a working endpoint until two
+customers exist, and by then the leak has happened.
+
+### What the plans actually allow
+
+- **Free** cannot keep projects on the server at all. That is the product: the free tier runs
+  in the browser and keeps its history there.
+- **past_due keeps working.** A card that failed on Tuesday should not stop Wednesday's work.
+- **canceled** stops writes but not reads: history someone paid to accumulate stays readable.
+- **Agency is capped at 25**, the number the pricing page states, and the refusal says so and
+  says archiving frees a slot — which the test then does.
+- **Practice is uncapped**, because the pricing page states no limit for it. See §10.
+
+### Archiving, not deleting
+
+`archived_at` hides a project from the list and stops its schedule. The scans survive and stay
+readable. A customer tidying up should not lose the score history they were paying to build.
+
 ---
 
 ## 5. Auth
@@ -457,8 +487,10 @@ seats when a customer asks for seats.
    endpoints (`request`, `redeem`, `me`, `logout`), `api/db.js`, `api/mail.impl.js`.
    38 assertions in `test/auth.js` against a real PostgreSQL running `001_init.sql`.
    **Cannot send mail until `RESEND_API_KEY` is set** — everything else works.
-4. Projects and scans persisted server-side; the app reads them when logged in and
-   falls back to browser storage when not.
+4. ~~Projects and scans persisted server-side.~~ **Built 22 Sep 2026** — `lib/store.js`,
+   `api/projects.js`, `api/scans.js`. 48 assertions in `test/store.js`. Wiring the front
+   end to read them when signed in, and fall back to browser storage when not, is what
+   remains of this step.
 5. `scan_jobs` + `/api/tick` + cron. **Test this against a real multi-minute scan
    before selling it** — it is the load-bearing wall of both paid tiers.
 
@@ -511,3 +543,16 @@ Steps 1-5 are the real build. 6-9 are comparatively mechanical. Nothing between 
 - **Waitlist — decided.** Both buttons now point at a real address. Worth replacing
   with a form writing to Neon once the database is connected: it is a better capture
   path and it keeps a personal address off a public page that scrapers read.
+
+---
+
+## 10. One gap in the pricing copy
+
+The Agency tier says **"25 sites under weekly monitoring"**, so 25 is enforced. The Practice
+tier says nothing about how many projects it includes, so nothing is enforced — implementing a
+cap the page does not promise would be charging for something and then withholding it.
+
+That leaves nothing stopping a Practice customer at $39 from running a hundred sites, which is
+the same workload Agency charges $149 for. The fix is a copy decision rather than a code one:
+either state a Practice limit on the page and I will enforce it, or accept that the tiers are
+separated by seats and features rather than by volume.
