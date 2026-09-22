@@ -42,6 +42,14 @@ const SHIPPED = [
   'api/render.js',     // stub → render.impl.js
   'api/render.impl.js',// headless Chromium render + paint measurement (v10.5)
   'api/serp.js',       // one Google query, normalized across SerpApi and Serper
+  'api/db.js',         // one pool, sized for serverless, pointed at Neon's pooled endpoint
+  'api/auth.impl.js',  // magic-link auth: token issue, single-use redemption, sessions, cookie
+  'api/mail.js',       // stub → mail.impl.js
+  'api/mail.impl.js',  // sends the login link via Resend
+  'api/auth/request.js',  // POST  ask for a link
+  'api/auth/redeem.js',   // GET   open the link, mint the session
+  'api/auth/me.js',       // GET   who the cookie belongs to
+  'api/auth/logout.js',   // POST  end the session
   'package.json',
   'vercel.json'
 ];
