@@ -292,6 +292,49 @@ This gives crash-safety for free: a job that dies at step 4 cursor 5 resumes at 
 cursor 5, with four phases of work already banked in `payload`. `attempts` bounds the
 retries; past the bound the job fails with `last_error` and the customer sees why.
 
+### Built and tested, 22 Sep 2026
+
+`lib/scan-job.js` is the eight-phase machine, `lib/tick.js` is the queue around it, and
+`api/tick.js` is the endpoint. 28 assertions in `test/scan-job.js` drive a whole scan
+against the same fixtures the browser runs on and land on the browser's own numbers —
+rank 20, answer 15, eleven tasks — which is the only evidence worth having that the two
+paths agree. 50 more in `test/tick.js` drive the queue against a real PostgreSQL.
+
+Three places where what got built differs from the sketch above, each for a reason:
+
+- **A tick runs as many steps as its budget allows, not exactly one.** The *step
+  function* still does exactly one unit of work, and that is where crash-safety comes
+  from — `stepOnce` is what the tests hold to one page fetch, one search or one render.
+  But a tick that did one step and returned would need 25 invocations and 25 cold starts
+  to finish a scan that fits comfortably in two. So the tick loops `stepOnce` against a
+  45-second deadline, **saving after every step**, and hands the rest to the next tick.
+  A killed function loses one step, exactly as it would have.
+
+  A tick that has claimed a job always runs at least one step, even with no budget left.
+  The deadline is measured from the top of the invocation, so a slow claim can eat the
+  whole budget before the first step — and a tick that claims a job, does nothing and
+  puts it back has spent a round trip to move the queue zero places.
+
+- **`SKIP LOCKED` is not what keeps two ticks apart.** The claim above is one
+  auto-committed statement, so its row lock is gone the moment it returns — and a job
+  being worked on is `running`, which the claim's own `WHERE` still matches. Written
+  without the `locked_at` window, two concurrent ticks take the *same* job and run one
+  scan twice on the customer's credits. `test/tick.js` caught exactly that. The lease is
+  what holds the row; `SKIP LOCKED` only covers two claims racing inside one instant.
+  The lease is `TICK_BUDGET_MS + 60s`, so it always outlasts a tick that is still working.
+
+- **The cron is daily, not every minute.** Hobby allows one invocation a day, so the
+  chain of hand-offs is the engine and the cron is only a sweep for a chain that died —
+  a stranded job waits up to a day rather than forever. A minute-by-minute sweep is one
+  of the things a Pro plan buys, if it ever becomes worth it.
+
+Two failure paths are worth naming because they are what a customer actually experiences:
+a job that fails backs off `2^attempts` seconds to a five-minute cap, and past
+`max_attempts` it gives up and **writes the reason onto the scan**. A scan that simply
+never finishes is the worst thing to hand someone waiting for it. And a job whose key has
+been deleted fails immediately rather than retrying twenty times, because waiting will not
+bring the key back.
+
 ### Sharing the scoring code — done, 22 Sep 2026
 
 Scoring used to live inside `index.html`, in the first of six `<script>` blocks. The
@@ -491,8 +534,14 @@ seats when a customer asks for seats.
    `api/projects.js`, `api/scans.js`. 48 assertions in `test/store.js`. Wiring the front
    end to read them when signed in, and fall back to browser storage when not, is what
    remains of this step.
-5. `scan_jobs` + `/api/tick` + cron. **Test this against a real multi-minute scan
-   before selling it** — it is the load-bearing wall of both paid tiers.
+5. ~~`scan_jobs` + `/api/tick` + cron.~~ **Built 22 Sep 2026** — `lib/scan-job.js`,
+   `lib/tick.js`, `api/tick.js`. 78 assertions across `test/scan-job.js` and
+   `test/tick.js`. §4 records what it does and the three places it departs from the
+   sketch below. It has not yet been run against the real internet on real Neon: the
+   fixtures prove the numbers and the queue, not the wall-clock.
+
+   What follows is the reasoning from before it was built, kept because the payload
+   shape it worried about is the thing that turned out to matter.
 
    A note on why this waits for step 2 rather than being built ahead of it. `runScan` is
    one linear 26KB async function closing over about twenty locals; turning it into
@@ -513,21 +562,26 @@ seats when a customer asks for seats.
    completion, the tick passes no-ops and runs exactly one. Reimplementing the sequencing
    separately server-side would put the work order and the progress log back into two
    copies, which is the thing step 1 just finished undoing.
-6. Encrypted `search_keys`.
+6. ~~Encrypted `search_keys`.~~ **Built 22 Sep 2026** — `lib/keys.js` and
+   `api/account.js`. AES-256-GCM, per-row IV, the secret outside the database.
+   35 assertions in `test/keys.js`, each written as a property of the stored row rather
+   than of the code that wrote it: the bytes must not contain the key, a wrong secret
+   must not decrypt them, a flipped bit must fail rather than reach a provider, and
+   `describeKey` must have no path to the plaintext at all.
 7. Schedules.
 8. Stripe + webhook + portal.
 9. Flip Practice from "In build" to "Available now".
 10. Agency: alerts, branded reports, 25 projects.
 11. Teams and seats, only if asked for.
 
-Steps 1-5 are the real build. 6-9 are comparatively mechanical. Nothing between 1 and
+Steps 1-6 are done. 7-9 are comparatively mechanical. Nothing between 1 and
 8 should change what the free tier does.
 
 ---
 
 ## 9. What I need from you
 
-**Three credentials, plus one I generate:**
+**Three credentials, plus two I generate:**
 
 | | |
 |---|---|
@@ -535,6 +589,7 @@ Steps 1-5 are the real build. 6-9 are comparatively mechanical. Nothing between 
 | `STRIPE_SECRET_KEY` + `STRIPE_WEBHOOK_SECRET` + two price IDs | from the Stripe dashboard |
 | `RESEND_API_KEY` | **the one you have not been told about** — magic links and alerts both need to send mail |
 | `SEARCH_KEY_SECRET` | 32 random bytes, I generate it, it goes in the environment and nowhere else |
+| `CRON_SECRET` | 32 random bytes, likewise. Without it `/api/tick` answers 503 rather than opening: it is a machine that fetches arbitrary URLs and spends a customer's search credits on request, so there is no safe way to answer it unguarded. |
 
 **Both open decisions are now closed:**
 

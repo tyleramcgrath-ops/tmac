@@ -51,12 +51,17 @@ const SHIPPED = [
   'api/auth/logout.js',   // POST  end the session
   'api/projects.js',      // GET/POST/PATCH/DELETE  projects, ?id= rather than a dynamic route
   'api/scans.js',         // GET/POST              the history behind a project
+  'api/tick.js',          // POST                  queue a scan, and move the queue along
+  'api/account.js',       // GET/POST/DELETE       the account and the search key it scans with
   'lib/page.impl.js',  // fetch + parse any URL as served (v10.6)
   'lib/render.impl.js',// headless Chromium render + paint measurement (v10.5)
   'lib/db.js',         // one pool, sized for serverless, pointed at Neon's pooled endpoint
   'lib/auth.js',       // magic-link auth: token issue, single-use redemption, sessions, cookie
   'lib/mail.js',       // sends the login link via Resend
   'lib/store.js',      // projects and scans; ownership lives in every WHERE clause
+  'lib/keys.js',       // the customer's own search key, encrypted with a secret outside the db
+  'lib/scan-job.js',   // the resumable scan: eight phases, one unit of work at a time
+  'lib/tick.js',       // claiming, banking, resuming, backing off and giving up
   'package.json',
   'vercel.json'
 ];
