@@ -214,7 +214,7 @@
   <div class="partner-directory">
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/moveev/")); ?>">
         <div class="partner-dir-name">MoveEV</div>
-        <div class="partner-dir-desc">Data-driven EV fleet readiness — identifies which vehicles to electrify first and models total cost of ownership for each switch.</div>
+        <div class="partner-dir-desc">ReimburseEV&trade; accurate, tax-free EV home charging reimbursements, plus data-driven EV fleet readiness and total cost of ownership planning.</div>
         <span class="partner-dir-link">Learn more →</span>
       </a>
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/greater-than/")); ?>">

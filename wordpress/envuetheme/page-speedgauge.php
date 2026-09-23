@@ -86,6 +86,77 @@
   </div>
 </div></section>
 
+<section class="section section--tint"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Data-Driven Analytics</span>
+    <h2 class="reveal" style="--d:1">Improve driver and fleet performance.</h2>
+    <p class="reveal" style="--d:2">SpeedGauge offers data-driven analytics focused on improving driver behavior and supporting better fleet performance. Its technology solutions save costs, motivate drivers, empower managers, and provide accountability for executives. Thousands of fleets in the United States and Canada use SpeedGauge analytics &mdash; designed to inform, not overwhelm, and to offer drivers a hand rather than point a finger.</p>
+  </div></div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/GaugeMyFleet-process.webp" alt="SpeedGauge Gauge My Fleet process" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Gauge My Fleet</span>
+      <h2>80 rating variables. One Driver Safety Score.</h2>
+      <p>Gauge My Fleet collects, analyzes, and interprets commercial fleet performance data from telematics devices, ELDs, dash cams, mobile apps, and more. It layers in trip-specific data from 80 different rating variables to create Driver Safety Scores for individual drivers, including the fleet FAIR Score&reg;.</p>
+      <ul class="check-list">
+        <li>Time of day and traffic dynamics</li>
+        <li>Vehicle characteristics and safety equipment</li>
+        <li>Load types</li>
+        <li>Road conditions and route history</li>
+      </ul>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/SpeedGauge-Safety-Center.webp" alt="SpeedGauge Safety Center reporting interface" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">SpeedGauge Safety Center</span>
+      <h2>The gold standard for driving behavior analytics.</h2>
+      <p>Safety Center focuses on improving the driver behaviors that impact over-the-road performance, fuel economy, and other factors &mdash; supporting better decisions on vehicle and route selection and the types of driver training to deliver.</p>
+      <a class="text-link" href="https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-SpeedGauge-Safety-Center.pdf" target="_blank" rel="noopener">Download the Safety Center spec sheet &rarr;</a>
+    </div>
+  </div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/FAIR-Score-768x432-1.webp" alt="SpeedGauge FAIR Score rating for fleet safety" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Fleet FAIR Score&reg;</span>
+      <h2>Know where your fleet stands.</h2>
+      <p>A FAIR Score&reg; lets you quickly evaluate current risk exposure based on real-time analysis. Rather than focusing on one driver, it evaluates an entire fleet against a driver risk index of similar fleets and gives regular updates that help managers improve safety and risk management.</p>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/3-Driver-Center-Driver-App_v2.png.webp" alt="SpeedGauge Driver Center and driver mobile app" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">SpeedGauge Driver Center</span>
+      <h2>Transparency, communication, and a better team.</h2>
+      <p>Driver Center provides up-to-the-minute data on driver performance &mdash; both information on driver behavior and motivation to improve. Managers get a quick overview of driver performance and critical speed limit compliance.</p>
+      <a class="text-link" href="https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-SpeedGauge-DriverApp.pdf" target="_blank" rel="noopener">Download the Driver App spec sheet &rarr;</a>
+    </div>
+  </div>
+
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Advantages</span>
+    <h2 class="reveal" style="--d:1">Why fleets use SpeedGauge analytics.</h2>
+  </div></div>
+  <ul class="check-list check-list--2col reveal">
+    <li>A better way to coach, train, and incentivize drivers</li>
+    <li>Improved driver safety and fewer speeding incidents</li>
+    <li>Increased revenue and improved efficiency</li>
+    <li>Reduced collisions, injuries, and losses</li>
+    <li>Lower operational, insurance, and legal costs</li>
+    <li>Reduced mechanical wear and tear</li>
+    <li>Protection for your brand and reputation</li>
+    <li>Improved CSA safety score</li>
+    <li>Meeting customer contractor compliance requirements</li>
+  </ul>
+  <div class="cta-strip">
+    <div>
+      <h3>Try SpeedGauge free for 30 days.</h3>
+      <p>See SpeedGauge analytics on your own fleet data before you commit.</p>
+    </div>
+    <a class="button-white" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free 30 Day Trial &rarr;</a>
+  </div>
+</div></section>
+
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>

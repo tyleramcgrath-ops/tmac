@@ -21,8 +21,8 @@
 
 <section aria-label="Stats"><div class="wrap"><div class="stat-band">
   <div><strong>Five Keys</strong><span>Proven curriculum</span></div>
-  <div><strong>Data-Targeted</strong><span>Highest risk drivers</span></div>
-  <div><strong>Measured</strong><span>Before and after</span></div>
+  <div><strong>15 Languages</strong><span>Core e-learning content</span></div>
+  <div><strong>250,000+</strong><span>Drivers trained yearly</span></div>
   <div><strong>24/7</strong><span>EnVue support</span></div>
 </div></div></section>
 
@@ -82,6 +82,44 @@
         <li>Insurance documentation support from certified training completion records</li>
         <li>Long-term habit formation producing lasting safety improvement well after completion</li>
       </ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="section section--tint"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">E-Learning Training Courses</span>
+    <h2 class="reveal" style="--d:1">A global leader in driver training for more than 70 years.</h2>
+    <p class="reveal" style="--d:2">Smith System teaches drivers a new approach, giving them the knowledge and tools to make better decisions behind the wheel. By integrating driver training with telematics, predictive risk analysis, and driver scoring metrics, Smith System provides E-learning and classroom content in multiple languages, serving fleets on every continent and training more than 250,000 drivers every year.</p>
+  </div></div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Smith-System-E-learning.png.webp" alt="Smith System e-learning driver education platform" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">E-Learning From Smith System</span>
+      <h2>Learn the Smith5Keys&reg; at your own pace.</h2>
+      <p>Online training courses introduce and reinforce the Smith5Keys&reg; for safe driving. Companies that use E-learning have significantly reduced motor vehicle crash rates, lowered company costs, and saved lives.</p>
+      <ul class="check-list">
+        <li><strong>Core Content</strong> &mdash; a comprehensive review of the Smith5Keys&reg;, available for small/midsize vehicles or trucks/large vehicles, in 15 languages</li>
+        <li><strong>The Driving Series</strong> &mdash; courses on weather, distracted driving, drowsy driving, and driving technology</li>
+        <li><strong>The Arrive Alive Series</strong> &mdash; short training modules on critical and relevant driver safety topics</li>
+        <li><strong>160 additional courses</strong> covering DOT compliance, workplace safety, HR/leadership development, and health &amp; wellness</li>
+      </ul>
+      <a class="text-link" href="https://envuetelematics.com/wp-content/uploads/2025/01/Smith-System-Course-Brochure.pdf" target="_blank" rel="noopener">Download the Smith System Course Brochure &rarr;</a>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/On-the-Road-Training.jpg.webp" alt="Smith System on-the-road professional driver training" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Defensive Driving Training</span>
+      <h2>Proven methods, in person or online.</h2>
+      <p>Smith System training is built on its proven Five Keys to Defensive Driving, used by millions of drivers worldwide and trusted by leading fleets around the world.</p>
+      <ul class="check-list">
+        <li>Defensive driving training with proven methods to avoid collisions and reduce risk</li>
+        <li>In-person and online training options for fleets of all sizes</li>
+        <li>Driver behavior coaching tools to reinforce safer habits</li>
+        <li>Risk management programs that reduce liability and improve safety outcomes</li>
+      </ul>
+      <a class="text-link" href="https://www.smith-system.com/" target="_blank" rel="noopener">Visit the Smith System official website &rarr;</a>
     </div>
   </div>
 </div></section>
