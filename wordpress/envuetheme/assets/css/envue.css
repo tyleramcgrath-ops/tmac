@@ -3074,3 +3074,32 @@ input[type="range"]::-moz-range-thumb {
 
 /* homepage keeps its original bottom-aligned section heads */
 body.home .section-head { align-items: end; }
+
+/* Demo request form in the bottom CTA (inner pages) */
+.final-cta--form .final-grid { grid-template-columns: 1fr 1.05fr; align-items: start; }
+.final-cta--form h2 { margin: 10px 0 18px; }
+.final-cta--form .demo-call { font-size: 16px; margin-bottom: 0; }
+.final-cta--form .demo-call a { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.demo-form-card {
+  background: #fff; color: var(--ink); border-radius: var(--r-lg); padding: 30px 30px 26px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.final-cta .demo-form-card p { color: var(--slate); font-size: 15px; margin-bottom: 0; }
+.demo-form-card .wpforms-container { margin: 0 !important; }
+.demo-form-card .wpforms-field-label { color: var(--ink) !important; font-weight: 600 !important; }
+.demo-form-card input[type="text"], .demo-form-card input[type="email"], .demo-form-card input[type="tel"],
+.demo-form-card input[type="number"], .demo-form-card select, .demo-form-card textarea {
+  width: 100% !important; max-width: 100% !important; border: 1px solid var(--line-2) !important;
+  border-radius: var(--r-sm) !important; padding: 11px 13px !important; font: inherit !important;
+}
+.demo-form-card input:focus, .demo-form-card select:focus, .demo-form-card textarea:focus {
+  border-color: var(--brand) !important; outline: 2px solid var(--brand-lt) !important;
+}
+.demo-form-card button[type="submit"], .demo-form-card .wpforms-submit {
+  background: var(--brand) !important; color: #fff !important; border: 0 !important;
+  border-radius: var(--r-sm) !important; padding: 14px 26px !important; font-weight: 700 !important; font-size: 16px !important;
+  width: 100%;
+}
+.demo-form-card button[type="submit"]:hover, .demo-form-card .wpforms-submit:hover { background: var(--brand-dk) !important; }
+@media (max-width: 960px) { .final-cta--form .final-grid { grid-template-columns: 1fr; } }
+@media (max-width: 580px) { .demo-form-card { padding: 22px 18px; } }

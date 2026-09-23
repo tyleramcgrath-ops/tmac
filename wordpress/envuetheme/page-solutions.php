@@ -81,12 +81,11 @@ echo envue_faq_section([
 ], 'FAQ: EnVue Fleet Management Solutions');
 ?>
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Fleet Solutions</span><h2>Build the fleet program you actually need.</h2></div>
-  <div><p>Contact EnVue Telematics for a free assessment. We will identify your highest-impact opportunities and design a multi-solution program configured for your specific fleet, industry, and goals.</p>
-  <div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Fleet Solutions</span><h2>Build the fleet program you actually need.</h2>
+    <p>Contact EnVue Telematics for a free assessment. We will identify your highest-impact opportunities and design a multi-solution program configured for your specific fleet, industry, and goals.</p>
+    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
+  </div>
+  <div><?php echo envue_demo_form(); ?></div>
 </div></section>
 <?php get_footer(); ?>

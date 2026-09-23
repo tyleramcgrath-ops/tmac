@@ -142,12 +142,11 @@
 </style>
 
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Free Complexity Audit</span><h2>Stop managing silos. Start leading a unified fleet.</h2></div>
-  <div><p>Discover how EnVue can harmonize your mixed assets and contractors into a single high-performance dashboard. Schedule your free 15-minute complexity audit today.</p>
-  <div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Claim My Mixed Fleet Audit <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Free Complexity Audit</span><h2>Stop managing silos. Start leading a unified fleet.</h2>
+    <p>Discover how EnVue can harmonize your mixed assets and contractors into a single high-performance dashboard. Schedule your free 15-minute complexity audit today.</p>
+    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
+  </div>
+  <div><?php echo envue_demo_form(); ?></div>
 </div></section>
 <?php get_footer(); ?>

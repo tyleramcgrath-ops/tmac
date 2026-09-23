@@ -118,7 +118,7 @@
 
     <div class="header-actions">
       <a class="header-phone" href="tel:8002011169">(800) 201-1169</a>
-      <a class="button button-primary" href="#demo">Get a Demo</a>
+      <a class="button button-primary" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Demo</a>
       <button class="mobile-toggle" id="mobileToggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
         <span></span><span></span>
       </button>
@@ -213,7 +213,7 @@
       <a href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get In Touch</a>
       <a href="<?php echo esc_url(home_url('/events-calendar/')); ?>">Events</a>
     </div>
-    <a class="button button-primary" href="#demo">Get a Demo</a>
+    <a class="button button-primary" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Demo</a>
     <a class="header-phone" href="tel:8002011169">(800) 201-1169</a>
   </div>
 </header>

@@ -74,11 +74,11 @@ echo envue_faq_section([
 ?>
 
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Get started</span><h2>Connect your fleet.</h2></div>
-  <div><p>Contact one of our expert fleet advisors for a free demo and integration planning session.</p><div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Get started</span><h2>Connect your fleet.</h2>
+    <p>Contact one of our expert fleet advisors for a free demo and integration planning session.</p>
+    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
+  </div>
+  <div><?php echo envue_demo_form(); ?></div>
 </div></section>
 <?php get_footer(); ?>

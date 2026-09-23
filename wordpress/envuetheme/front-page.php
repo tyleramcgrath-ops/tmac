@@ -36,7 +36,7 @@
         </div>
 
         <div class="hero-actions">
-          <a class="button button-primary button-lg" href="#demo">Get a Free Demo <span>→</span></a>
+          <a class="button button-primary button-lg" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Free Demo <span>→</span></a>
           <a class="button button-ghost button-lg" href="#platform">See the platform</a>
         </div>
 

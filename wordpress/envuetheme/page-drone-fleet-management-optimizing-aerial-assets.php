@@ -48,12 +48,11 @@
 </div></section>
 
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Drone Fleet Management</span><h2>Take your fleet to new heights.</h2></div>
-  <div><p>Speak with our drone specialists today about integrating aerial assets into your broader fleet operations.</p>
-  <div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Speak with Our Drone Specialists <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Drone Fleet Management</span><h2>Take your fleet to new heights.</h2>
+    <p>Speak with our drone specialists today about integrating aerial assets into your broader fleet operations.</p>
+    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
+  </div>
+  <div><?php echo envue_demo_form(); ?></div>
 </div></section>
 <?php get_footer(); ?>

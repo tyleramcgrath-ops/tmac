@@ -150,12 +150,11 @@
 </div></section>
 
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Free Discovery Session</span><h2>Which Safety Program is Right for Your Fleet?</h2></div>
-  <div><p>Our consultants are ready to audit your current safety maturity and design your path to excellence. Schedule your free 15-minute discovery session today.</p>
-  <div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Claim My Discovery Call <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Free Discovery Session</span><h2>Which Safety Program is Right for Your Fleet?</h2>
+    <p>Our consultants are ready to audit your current safety maturity and design your path to excellence. Schedule your free 15-minute discovery session today.</p>
+    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
+  </div>
+  <div><?php echo envue_demo_form(); ?></div>
 </div></section>
 <?php get_footer(); ?>
