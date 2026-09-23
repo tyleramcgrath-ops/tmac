@@ -36,9 +36,6 @@ function pt_experience_photo_sets() {
 		'private-surf-lesson'      => array(
 			'instructor-popup-stance.jpg',
 		),
-		'semi-private-surf-lesson' => array(
-			'surf-students-with-boards.jpg',
-		),
 		'island-kayak-tour'        => array(
 			'kayak-fleet-beach.jpg',
 			'kayak-group-guests.jpg',

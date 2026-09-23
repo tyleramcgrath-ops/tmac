@@ -150,6 +150,24 @@ function pt_field( $post_id, $key ) {
 		return $derived > 0 ? pt_format_price_number( $derived ) : '';
 	}
 
+	/*
+	 * "per person" was a stored string set to the same value on every tour,
+	 * which meant a charter sold at 1300 for the whole boat advertised itself
+	 * as "From $1,300 per person". Derived from how the tour is actually
+	 * charged, it cannot say the wrong thing.
+	 */
+	if ( 'price_suffix' === $key && function_exists( 'pt_price_is_per_person' ) ) {
+		$per_person = pt_price_is_per_person( $post_id );
+
+		if ( null === $per_person ) {
+			return (string) get_post_meta( $post_id, '_pt_price_suffix', true );
+		}
+
+		return $per_person
+			? __( 'per person', 'palmtreesurf' )
+			: __( 'for the trip', 'palmtreesurf' );
+	}
+
 	$value = (string) get_post_meta( $post_id, '_pt_' . $key, true );
 
 	/*

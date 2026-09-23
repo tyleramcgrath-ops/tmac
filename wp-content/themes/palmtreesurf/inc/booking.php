@@ -223,3 +223,48 @@ function pt_booking_quote( $quote, $booking_id ) {
 	return (int) round( $price * 100 ) * $people;
 }
 add_filter( 'ptb_quote', 'pt_booking_quote', 10, 2 );
+
+/**
+ * Whether a tour's headline price is per head or for the whole trip.
+ *
+ * A charter at 1300 for up to five people and a lesson at 55 each are both
+ * "From $…", and only this decides whether the words after it are true.
+ *
+ * @param int $post_id Experience ID.
+ * @return bool|null True for per person, false for the whole trip, null when
+ *                   the booking plugin is not present to say.
+ */
+function pt_price_is_per_person( $post_id ) {
+	if ( ! function_exists( 'ptb_options' ) || ! function_exists( 'ptb_price_value' ) ) {
+		return null;
+	}
+
+	$options = ptb_options( $post_id );
+
+	if ( $options ) {
+		/*
+		 * The cheapest option is the one the "From" price quotes, so it is the
+		 * one the suffix has to describe.
+		 */
+		$cheapest = null;
+
+		foreach ( $options as $option ) {
+			$price = (float) $option['price'];
+
+			if ( $price <= 0 ) {
+				continue;
+			}
+
+			if ( null === $cheapest || $price < (float) $cheapest['price'] ) {
+				$cheapest = $option;
+			}
+		}
+
+		if ( $cheapest ) {
+			return 'person' === $cheapest['mode'];
+		}
+	}
+
+	// No options: a flat rate covers the booking, anything else is per head.
+	return ptb_price_value( $post_id, 'price_flat' ) <= 0;
+}

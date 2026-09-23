@@ -48,6 +48,7 @@ function pt_backfill_content() {
 	pt_backfill_experiences();
 	pt_backfill_guide_names();
 	pt_backfill_post_images();
+	pt_backfill_drop_renamed_twins();
 	pt_drop_retired_images();
 }
 add_action( 'init', 'pt_backfill_content', 996 );
@@ -420,4 +421,80 @@ function pt_backfill_post_images() {
 	}
 
 	return $fixed;
+}
+
+/**
+ * Clear up tours left behind by the rename.
+ *
+ * An earlier release created the renamed tours before it renamed the old ones,
+ * so a site that installed it ended up with both: "Catamaran Tour" beside the
+ * "Sunset Boat Tour" it was supposed to replace, same photograph, same copy,
+ * listed twice on the experiences page. Ordering the migration correctly stops
+ * it happening again but does nothing about the sites where it already has.
+ *
+ * The leftover is trashed rather than deleted. It is the operator's content and
+ * may carry bookings, and a migration that permanently removes a tour because
+ * it believes it is a duplicate is a migration that will one day be wrong.
+ *
+ * @return int How many leftovers were trashed.
+ */
+function pt_backfill_drop_renamed_twins() {
+	$pairs = array(
+		'Sunset Boat Tour'            => 'Catamaran Tour',
+		'Estuary & Wildlife Trip'     => 'Safari Boat',
+		'Estuary &amp; Wildlife Trip' => 'Safari Boat',
+		'Surf Lesson — Beginner'      => 'Group Surf Lesson',
+		'Surf Lesson — Intermediate'  => 'Semi-Private Surf Lesson',
+		'Private Surf Coaching'       => 'Private Surf Lesson',
+	);
+
+	$trashed = 0;
+
+	foreach ( $pairs as $old_title => $new_title ) {
+		$old = pt_find_experience_by_title( $old_title );
+		$new = pt_find_experience_by_title( $new_title );
+
+		// Only a pair is a problem. One on its own is just the tour.
+		if ( ! $old || ! $new || $old->ID === $new->ID ) {
+			continue;
+		}
+
+		/*
+		 * Keep whichever the customer would recognise, and hand any bookings on
+		 * the old one over to it so nothing is orphaned behind a trashed post.
+		 */
+		pt_move_bookings( $old->ID, $new->ID );
+
+		wp_trash_post( $old->ID );
+		++$trashed;
+	}
+
+	return $trashed;
+}
+
+/**
+ * Point bookings at a different experience.
+ *
+ * @param int $from Experience being retired.
+ * @param int $to   Experience taking its place.
+ */
+function pt_move_bookings( $from, $to ) {
+	if ( ! function_exists( 'ptb_get' ) ) {
+		return;
+	}
+
+	$bookings = get_posts(
+		array(
+			'post_type'      => 'ptb_booking',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_key'       => '_ptb_experience', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value'     => (int) $from, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+		)
+	);
+
+	foreach ( $bookings as $booking_id ) {
+		update_post_meta( $booking_id, '_ptb_experience', (int) $to );
+	}
 }

@@ -23,8 +23,8 @@
     "h": 1600,
     "ratio": "3:4",
     "role": "Experience card thumbnail",
-    "alt": "Surf students sitting with their boards during the beach briefing",
-    "file": "surf-lesson-group-briefing.jpg"
+    "alt": "Surf instructor coaching a student on the sand at Tamarindo",
+    "file": "group-instruction-sand.jpg"
   },
   "exp-card-2": {
     "w": 899,
@@ -103,8 +103,8 @@
     "h": 1600,
     "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "Surf students sitting with their boards during the beach briefing",
-    "file": "surf-lesson-group-briefing.jpg"
+    "alt": "The kayak fleet lined up on the sand at Tamarindo",
+    "file": "banner-kayak-fleet.jpg"
   },
   "gallery-5": {
     "w": 1600,

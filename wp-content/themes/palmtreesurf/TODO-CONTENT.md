@@ -742,3 +742,41 @@ you said to use AI I have instead recut and reallocated your own photographs.
 Everything on the site is now either your photograph or the one generated
 catamaran image you asked to keep. If you want AI images made, send them over
 and they drop straight in.
+
+---
+
+## 18. Fixed in v1.14.1 — the duplicate tour and the charter's price
+
+Three things you spotted on the live site.
+
+### Two Catamaran Tours
+
+**Sunset Boat Tour** and **Catamaran Tour** were the same tour listed twice,
+with the same photograph and the same description. That is my bug: an earlier
+release created the renamed tours *before* renaming the old ones, so both ended
+up on the site. I fixed the ordering, but that only stopped it happening again
+— it did nothing about the copy already sitting on your site.
+
+Installing this version clears it up. The leftover tour is moved to **Trash**,
+not deleted, and any booking attached to it is moved across to the tour that
+remains, so nothing is lost. If you want it gone for good, empty the trash.
+
+### "From $800 per person" on the fishing charter
+
+The charter is $800 for the whole boat, not per person, and the site was saying
+otherwise on the card and in the booking panel. Every tour carried the same
+hard-coded "per person" label regardless of how it is actually sold.
+
+It now reads the pricing: per-head tours say **per person**, the charter says
+**for the trip**. It cannot say the wrong thing because it is no longer a
+separate setting that can drift from the price.
+
+### The two surf lessons had the same photo
+
+They were two frames of the same moment, a second apart, saved under different
+names — so a filename check saw two photos and a customer saw one. The duplicate
+frame has been removed from the theme and the Semi-Private lesson has a photo of
+its own.
+
+Every photograph in the theme is now compared against every other by content,
+not by filename. There are no near-identical pairs left.

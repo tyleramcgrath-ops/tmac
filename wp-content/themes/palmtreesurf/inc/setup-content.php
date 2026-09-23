@@ -163,8 +163,8 @@ function pt_seed_experiences() {
 			'level'    => __( 'All Levels', 'palmtreesurf' ),
 			'duration' => __( '2 hours', 'palmtreesurf' ),
 			'group'    => __( '2 guests maximum', 'palmtreesurf' ),
-			'image'    => 'surf-lesson-group-briefing.jpg',
-			'alt'      => __( 'Two surf students listening to a briefing before paddling out', 'palmtreesurf' ),
+			'image'    => 'surf-students-with-boards.jpg',
+			'alt'      => __( 'Surf students carrying their boards down to the water at Tamarindo', 'palmtreesurf' ),
 			'includes' => array(
 				__( 'One instructor between the two of you', 'palmtreesurf' ),
 				__( 'Boards and rash guards sized to each of you', 'palmtreesurf' ),
