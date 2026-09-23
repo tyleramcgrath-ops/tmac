@@ -74,7 +74,7 @@
     <div class="reveal">
       <span class="eyebrow">Program 2 &middot; Continuous Excellence</span>
       <h2>The Video-Based Coaching Program</h2>
-      <p>Data without coaching is just liability. Insurance providers and adjusters want to see that you didn&rsquo;t just &lsquo;see&rsquo; a risk&mdash;you &lsquo;acted&rsquo; on it. Our Video-Based Coaching Program is a structured engagement that turns AI-detected clips into measurable performance gains. This program is the foundation of your defense against <a href="<?php echo esc_url(home_url("/how-to-defend-your-fleet-against-nuclear-verdicts-with-synchronized-telematics-data/")); ?>">high-stakes legal claims</a>.</p>
+      <p>Data without coaching is just liability. Insurance providers and adjusters want to see that you didn&rsquo;t just &lsquo;see&rsquo; a risk&mdash;you &lsquo;acted&rsquo; on it. Our Video-Based Coaching Program is a structured engagement that turns AI-detected clips into measurable performance gains. This program is the foundation of your defense against high-stakes legal claims.</p>
     </div>
     <div class="reveal" style="--d:1">
       <ul class="check-list">

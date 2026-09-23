@@ -13,7 +13,6 @@
     <p>Use our interactive tools below to discover your potential savings and find the perfect telematics configuration for your unique business needs.</p>
     <div class="hero-actions">
       <a class="button button-primary button-lg" href="#roi-calculator">Generate Savings Report <span>&rarr;</span></a>
-      <a class="button button-ghost button-lg" href="#innovation-library">Fleet Innovation Library</a>
     </div>
   </div>
 </section>
@@ -116,52 +115,7 @@
   </div>
 </div></section>
 
-<section class="section" id="innovation-library"><div class="wrap">
-  <div class="section-head"><div>
-    <span class="eyebrow reveal">Resource Library</span>
-    <h2 class="reveal" style="--d:1">3. 2026 Fleet Innovation Library</h2>
-  </div><div class="reveal" style="--d:2">
-    <p>Access our complete directory of research and insights to stay ahead of the curve. These resources provide in-depth analysis of the technologies shaping the future of transportation.</p>
-  </div></div>
-  <div class="fot-library reveal">
-    <ul class="check-list">
-      <li><a href="<?php echo esc_url(home_url("/the-rise-of-logistics-as-a-service-laas-how-telematics-is-enabling-the-subscription-based-fleet-model/")); ?>">The Rise of Logistics-as-a-Service (LaaS)</a></li>
-      <li><a href="<?php echo esc_url(home_url("/wearable-exoskeletons-and-integrated-telematics-empowering-the-industrial-athlete/")); ?>">Wearable Exoskeletons in Logistics</a></li>
-      <li><a href="<?php echo esc_url(home_url("/autonomous-mobile-refueling-units-the-future-of-refuel-on-the-go-for-green-fleets/")); ?>">Autonomous Mobile Refueling Units</a></li>
-      <li><a href="<?php echo esc_url(home_url("/telematics-for-urban-vertical-farms-logistics-orchestrating-the-farm-to-fork-transition/")); ?>">Telematics for Urban Vertical Farms</a></li>
-      <li><a href="<?php echo esc_url(home_url("/ai-powered-predictive-tire-performance-eliminating-blowouts-via-real-time-intelligence/")); ?>">Predictive Tire Performance AI</a></li>
-      <li><a href="<?php echo esc_url(home_url("/the-impact-of-digital-twins-on-fleet-remarketing-increasing-asset-resale-value/")); ?>">Digital Twins in Fleet Remarketing</a></li>
-      <li><a href="<?php echo esc_url(home_url("/ai-powered-predictive-chassis-integrity-monitoring-structural-health-in-real-time/")); ?>">Predictive Chassis Integrity</a></li>
-      <li><a href="<?php echo esc_url(home_url("/telematics-for-urban-vertical-warehouses-optimizing-multi-story-fulfillment/")); ?>">Urban Vertical Warehouses</a></li>
-      <li><a href="<?php echo esc_url(home_url("/predictive-analytics-in-last-mile-logistics-reducing-failure-rates-via-real-time-data/")); ?>">Last-Mile Predictive Analytics</a></li>
-      <li><a href="<?php echo esc_url(home_url("/the-role-of-telematics-in-hydrogen-fuel-cell-fleet-management-2026-outlook/")); ?>">Hydrogen Fuel Cell Management</a></li>
-    </ul>
-    <ul class="check-list">
-      <li><a href="<?php echo esc_url(home_url("/advanced-biometrics-for-driver-wellness-and-alertness-monitoring-2026/")); ?>">Advanced Driver Biometrics</a></li>
-      <li><a href="<?php echo esc_url(home_url("/5g-edge-computing-in-fleet-management-the-low-latency-revolution/")); ?>">5G &amp; Edge Computing</a></li>
-      <li><a href="<?php echo esc_url(home_url("/integrated-telematics-for-mixed-heavy-equipment-fleets-optimizing-utilization/")); ?>">Mixed Heavy Equipment Fleets</a></li>
-      <li><a href="<?php echo esc_url(home_url("/fleet-electrification-readiness-using-telematics-for-ev-transition-simulations/")); ?>">Fleet Electrification Readiness</a></li>
-      <li><a href="<?php echo esc_url(home_url("/smart-city-integration-how-v2i-telematics-reduces-urban-congestion/")); ?>">Smart City V2I Integration</a></li>
-      <li><a href="<?php echo esc_url(home_url("/cold-chain-telematics-ensuring-compliance-via-real-time-temperature-monitoring/")); ?>">Cold Chain Compliance</a></li>
-      <li><a href="<?php echo esc_url(home_url("/automated-hos-and-eld-compliance-reducing-audit-risk-via-real-time-data/")); ?>">Automated HOS Compliance</a></li>
-      <li><a href="<?php echo esc_url(home_url("/behavior-based-automated-driver-coaching-the-predictive-coach-advantage/")); ?>">Predictive Coach Advantage</a></li>
-      <li><a href="<?php echo esc_url(home_url("/accident-reconstruction-analytics-speeding-up-claims-via-xtract-and-geotab/")); ?>">Accident Reconstruction Analytics</a></li>
-      <li><a href="<?php echo esc_url(home_url("/asset-tracking-for-high-value-cargo-preventing-theft-via-ruggedized-sensors/")); ?>">Asset Tracking for High-Value Cargo</a></li>
-    </ul>
-    <ul class="check-list">
-      <li><a href="<?php echo esc_url(home_url("/preventative-maintenance-scheduling-using-telematics-to-extend-vehicle-life/")); ?>">Preventative Maintenance Scheduling</a></li>
-      <li><a href="<?php echo esc_url(home_url("/fuel-theft-detection-and-prevention-strategies-for-commercial-fleets/")); ?>">Fuel Theft Detection</a></li>
-      <li><a href="<?php echo esc_url(home_url("/driver-retention-strategies-using-telematics-to-build-a-meritocratic-safety-culture/")); ?>">Driver Retention Culture</a></li>
-      <li><a href="<?php echo esc_url(home_url("/insurance-meritocracy-using-telematics-data-to-lower-commercial-premiums/")); ?>">Insurance Meritocracy</a></li>
-      <li><a href="<?php echo esc_url(home_url("/modular-container-tracking-in-multi-modal-logistics-2026-standards/")); ?>">Modular Container Tracking</a></li>
-      <li><a href="<?php echo esc_url(home_url("/real-time-video-telematics-exonerating-drivers-via-ai-video-dash-cams/")); ?>">Real-Time Video Telematics</a></li>
-      <li><a href="<?php echo esc_url(home_url("/ifta-reporting-automation-reducing-clerical-overhead-via-gps-data/")); ?>">IFTA Reporting Automation</a></li>
-      <li><a href="<?php echo esc_url(home_url("/dvir-workflow-optimization-improving-uptime-via-digital-inspections/")); ?>">DVIR Workflow Optimization</a></li>
-      <li><a href="<?php echo esc_url(home_url("/remote-diagnostics-for-diesel-engines-predicting-fault-codes-via-telematics/")); ?>">Remote Diesel Diagnostics</a></li>
-      <li><a href="<?php echo esc_url(home_url("/the-future-of-connected-trailers-integrating-smart-hub-telematics/")); ?>">Future of Connected Trailers</a></li>
-    </ul>
-  </div>
-</div></section>
+
 
 <script>
 (function(){

@@ -20,7 +20,7 @@
     <span class="eyebrow reveal">Overview</span>
     <h2 class="reveal" style="--d:1">More than a camera that just records.</h2>
   </div><div class="reveal" style="--d:2">
-    <p>An <strong><a href="<?php echo esc_url(home_url("/dash-cams/")); ?>">AI dash cam</a></strong> is a connected camera that uses onboard machine learning to detect risky driving (e.g., distraction, tailgating) and automatically flag or coach events. Unlike standard cameras that just record, AI models run on the device or in the cloud to generate alerts, protect context with dual-facing video, and feed scorecards for safety, exoneration, and insurance savings. Learn how these tools provide <a href="<?php echo esc_url(home_url("/5-ways-telematics-data-can-substantially-lower-your-fleet-insurance-premiums/")); ?>">insurance savings for fleets</a>.</p>
+    <p>An <strong><a href="<?php echo esc_url(home_url("/dash-cams/")); ?>">AI dash cam</a></strong> is a connected camera that uses onboard machine learning to detect risky driving (e.g., distraction, tailgating) and automatically flag or coach events. Unlike standard cameras that just record, AI models run on the device or in the cloud to generate alerts, protect context with dual-facing video, and feed scorecards for safety, exoneration, and insurance savings. Learn how these tools provide insurance savings for fleets.</p>
   </div></div>
 </div></section>
 

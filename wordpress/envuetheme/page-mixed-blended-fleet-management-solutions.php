@@ -35,7 +35,7 @@
   <div class="fcx-trio">
     <div class="fcx-card reveal" style="--d:1">
       <h3>Liability and Brand Risk</h3>
-      <p>If a third-party contractor is involved in a severe accident while hauling your cargo, your brand is still at risk in the eyes of the public and the legal system. Without data, you have no way to prove that the contractor met your rigorous safety standards. This is a primary driver of <a href="<?php echo esc_url(home_url("/how-to-defend-your-fleet-against-nuclear-verdicts-with-synchronized-telematics-data/")); ?>">Nuclear Verdicts</a>.</p>
+      <p>If a third-party contractor is involved in a severe accident while hauling your cargo, your brand is still at risk in the eyes of the public and the legal system. Without data, you have no way to prove that the contractor met your rigorous safety standards. This is a primary driver of Nuclear Verdicts.</p>
     </div>
     <div class="fcx-card reveal" style="--d:2">
       <h3>Inconsistent Customer Experience</h3>
@@ -116,7 +116,7 @@
     <div class="reveal" style="--d:1">
       <span class="eyebrow">Maintenance</span>
       <h2>Maintenance Orchestration for Mixed Assets</h2>
-      <p>Managing maintenance becomes exponentially harder when assets have different service requirements and warranty terms. We integrate Geotab&rsquo;s engine diagnostics with <a href="<?php echo esc_url(home_url("/industries-fleet-complexity-solutions/integration-architecture-tech-stacks/")); ?>">maintenance hubs like Fleetio</a> to automate the work order lifecycle. For owned assets, we trigger predictive repairs based on <a href="<?php echo esc_url(home_url("/decoding-vehicle-diagnostics-a-fleet-managers-guide-to-obd-dtc-codes/")); ?>">OBD-II fault codes</a>. For leased assets, we ensure you are adhering to the lessor&rsquo;s service schedule to avoid costly end-of-lease penalties and ensure maximum asset uptime.</p>
+      <p>Managing maintenance becomes exponentially harder when assets have different service requirements and warranty terms. We integrate Geotab&rsquo;s engine diagnostics with <a href="<?php echo esc_url(home_url("/industries-fleet-complexity-solutions/integration-architecture-tech-stacks/")); ?>">maintenance hubs like Fleetio</a> to automate the work order lifecycle. For owned assets, we trigger predictive repairs based on OBD-II fault codes. For leased assets, we ensure you are adhering to the lessor&rsquo;s service schedule to avoid costly end-of-lease penalties and ensure maximum asset uptime.</p>
     </div>
   </div>
 </div></section>

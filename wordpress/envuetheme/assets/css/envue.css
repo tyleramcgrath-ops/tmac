@@ -3032,3 +3032,14 @@ input[type="range"]::-moz-range-thumb {
   .post-nav > div:last-child { text-align: left; }
   .search-inline { flex-direction: column; }
 }
+
+/* Mobile overflow guards (v6) */
+.hero { overflow: hidden; }
+.feature-split > *, .final-grid > *, .cta-strip > *, .section-head > *, .tools-grid > * { min-width: 0; }
+@media (max-width: 760px) {
+  main table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media (max-width: 580px) {
+  .button, .button-white { white-space: normal; text-align: center; max-width: 100%; }
+  .geotab-h-stats { flex-wrap: wrap; row-gap: 16px; }
+}

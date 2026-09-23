@@ -103,6 +103,21 @@
         <li>Battery-powered trackers on high-value non-powered equipment most likely to be stolen</li></ul></div>
   </div>
 </div></section>
+<section class="section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Increased Awareness</span>
+    <h2 class="reveal" style="--d:1">Visibility, productivity, and security across every job site.</h2>
+    <p class="reveal" style="--d:2">Improve productivity, safety, and security across your job site with real-time insights, engine diagnostics, and effective equipment management.</p>
+  </div></div>
+  <div class="feature-trio">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>Visibility</h3><p>Quickly locate your vehicles with real-time locational awareness, streamline operations by analyzing overused and underused assets, and keep tabs on equipment with rugged trackers for powered and non-powered assets.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></div><h3>Productivity</h3><p>Prioritize maintenance with diagnostic trouble codes and other engine data, contain costs by monitoring fuel use and idling, and boost efficiency with engine hours and PTO usage.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>Security</h3><p>Set boundaries with geofences for job sites and other landmarks, eliminate improper activity with alerts when a vehicle or asset moves day or night, and track utilization with customized reporting.</p></div>
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3>Driver and Operator Safety</h3><p>Deploy AI dash cams and safety programs to monitor risky behaviors and coach safer operations.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></div><h3>Compliance Support</h3><p>Automate DVIRs, inspection reports, and Hours of Service with compliance solutions.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18M3 22h12M6 7h6"/><path d="M15 10h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/></svg></div><h3>Fuel Usage and Theft Prevention</h3><p>Track fuel consumption, flag suspicious activity, and cut waste with fuel management tools.</p></div>
+  </div>
+</div></section>
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>
@@ -119,6 +134,8 @@
 </div></section>
 <?php
 echo envue_faq_section([
+    'Does construction telematics work across multiple job sites?' => '<p>Yes. GPS tracking and telematics give contractors centralized visibility of all vehicles and equipment across multiple sites.</p>',
+    'Can I track both vehicles and heavy machinery?' => '<p>Yes. EnVue equipment management solutions cover bulldozers, loaders, generators, trailers, and more.</p>',
     'What GPS equipment does EnVue deploy for construction fleets?' => '<p>EnVue deploys Geotab GO devices in powered construction equipment including excavators, dozers, wheel loaders, and fleet vehicles. For non-powered assets including trailers, generators, compressors, and portable equipment, EnVue deploys battery-powered Geotab asset trackers that provide GPS location without requiring engine connection. All assets appear on one unified MyGeotab map.</p>',
     'Can EnVue track non-powered construction equipment?' => '<p>Yes. EnVue deploys battery-powered Geotab asset trackers on non-powered equipment including trailers, generators, light towers, compressors, and other portable high-value assets. These trackers provide real-time GPS location and movement alerts without any engine connection required, extending telematics visibility to the full range of construction fleet inventory.</p>',
     'How does geofencing work for construction job sites?' => '<p>EnVue configures Geotab geofences around each active job site by drawing virtual boundaries on the map. When any tracked asset enters or exits the geofenced area, Geotab logs the timestamp automatically and triggers configurable alerts. After-hours movement alerts — when equipment moves outside the geofence during non-work hours — are the most critical construction theft detection tool available.</p>',

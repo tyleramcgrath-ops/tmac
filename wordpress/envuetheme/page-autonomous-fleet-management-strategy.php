@@ -10,7 +10,6 @@
     <p>As the transportation industry moves toward a driverless future, <strong>autonomous fleet management</strong> is becoming a critical area of focus for forward-thinking businesses. EnVue Telematics is at the forefront of this transition, helping fleets prepare for the integration of self-driving technology and AI-driven operations.</p>
     <div class="hero-actions">
       <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get Your Roadmap <span>&rarr;</span></a>
-      <a class="button button-ghost button-lg" href="<?php echo esc_url(home_url("/autonomous-fleet-management-the-future-of-connected-vehicles/")); ?>">The Future of Connected Vehicles</a>
     </div>
   </div>
 </section>
@@ -49,7 +48,7 @@
 
 <?php
 echo envue_faq_section([
-    'What is autonomous fleet management?' => '<p>Autonomous vehicle fleet management refers to the oversight and coordination of a group of vehicles that can operate with varying levels of human intervention, from Level 2 driver assistance to fully autonomous Level 5 trucks. Learn more in <a href="' . esc_url(home_url('/autonomous-fleet-management-the-future-of-connected-vehicles/')) . '">Autonomous Fleet Management: The Future of Connected Vehicles</a>.</p>',
+    'What is autonomous fleet management?' => '<p>Autonomous vehicle fleet management refers to the oversight and coordination of a group of vehicles that can operate with varying levels of human intervention, from Level 2 driver assistance to fully autonomous Level 5 trucks.</p>',
     'What are the benefits of autonomous fleets?' => '<p>Key benefits include enhanced safety by eliminating human error, increased fuel efficiency, labor optimization for repetitive tasks, and a reduced carbon footprint.</p>',
 ], 'Autonomous Fleet Management FAQ');
 ?>

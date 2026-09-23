@@ -58,8 +58,10 @@
       <h3>Expert Guides</h3>
       <ul class="check-list">
         <li><a href="<?php echo esc_url(home_url("/resources/what-is-a-fleet-ai-dash-cam/")); ?>">What is a Fleet AI Dash Cam?</a></li>
-        <li><a href="<?php echo esc_url(home_url("/how-ai-dash-cams-are-revolutionizing-fleet-safety-in-2026/")); ?>">AI Dash Cams &amp; Fleet Safety in 2026</a></li>
-        <li><a href="<?php echo esc_url(home_url("/top-10-ai-fleet-management-trends-for-2026-the-ultimate-guide-for-fleet-managers/")); ?>">Top 10 AI Fleet Trends for 2026</a></li>
+        <li><a href="<?php echo esc_url(home_url("/fleet-telematics-glossary/")); ?>">Fleet Telematics Glossary</a></li>
+        <li><a href="<?php echo esc_url(home_url("/driver-success-privacy-resource-center/")); ?>">Driver Success &amp; Privacy Resource Center</a></li>
+        <li><a href="<?php echo esc_url(home_url("/commercial-driver-safety-safe-passing-rules-guide/")); ?>">Safe Passing Rules for Commercial Drivers</a></li>
+        <li><a href="<?php echo esc_url(home_url("/industries-fleet-complexity-solutions/")); ?>">Fleet Complexity Solutions Guides</a></li>
       </ul>
     </div>
     <div class="res-hub-col reveal">

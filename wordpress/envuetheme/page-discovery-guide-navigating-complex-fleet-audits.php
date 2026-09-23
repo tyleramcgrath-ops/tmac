@@ -58,7 +58,7 @@
     <div class="fcx-phase-head">
       <span class="fcx-step-num">Phase 2</span>
       <h2>The Safety and Risk Maturity Audit</h2>
-      <p>Safety data is only useful if it is actionable and audit-proof. In this phase, we audit your risk profile and your ability to defend against catastrophic liability in a <a href="<?php echo esc_url(home_url("/how-to-defend-your-fleet-against-nuclear-verdicts-with-synchronized-telematics-data/")); ?>">formal legal environment</a>.</p>
+      <p>Safety data is only useful if it is actionable and audit-proof. In this phase, we audit your risk profile and your ability to defend against catastrophic liability in a formal legal environment.</p>
     </div>
     <div class="fcx-card">
       <h3>Risk Discovery Question Bank</h3>

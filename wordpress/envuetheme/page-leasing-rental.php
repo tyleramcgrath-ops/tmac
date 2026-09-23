@@ -48,6 +48,31 @@
         <li>Fuel efficiency tracking supporting fuel policy enforcement and billing</li>
         <li>Digital vehicle condition records from Whip Around integration at checkout and return</li></ul></div>
   </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Preventive-Maintenance-1-panorama-635x0-1.webp" alt="Automated maintenance scheduling for rental fleets" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Optimized Maintenance Scheduling</span>
+      <h2>Keep Every Asset Rental-Ready</h2>
+      <p>Automating preventive maintenance schedules ensures service is performed on time, quickly identifies needed repairs, and schedules them to minimize downtime &mdash; keeping pickups, vans, box trucks, and equipment ready as they move between home base, contract, and service during short-term rental and seasonal leasing cycles.</p>
+      <ul class="check-list">
+        <li>Triage reporting of engine fault codes</li>
+        <li>Capture service history</li>
+        <li>Track costs for parts and service</li>
+        <li>Filter by tasks, status, date, and more</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+<section class="section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Keep Your Rental Business on Track</span>
+    <h2 class="reveal" style="--d:1">Visibility, protection, and accountability for every rental.</h2>
+  </div></div>
+  <div class="feature-trio">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>Detailed Locational Visibility</h3><p>Live map view with route history, customized email and text alerts, advanced routing and scheduling tools, and tracking of arrivals, departures, pickups, and deliveries.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>Better Protect Your Business</h3><p>Motion-sensor detection, after-hours usage and tamper monitoring, detection of improper moonlighting, and faster recovery to fight misuse and fraud.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3>Driver Behavior and AI Dash Cams</h3><p>Monitor speed, harsh braking, and risky driving, and capture incidents with AI dash cams for liability protection and safer behavior.</p></div>
+  </div>
 </div></section>
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
@@ -65,6 +90,8 @@
 </div></section>
 <?php
 echo envue_faq_section([
+    'Can telematics reduce insurance costs for leasing companies?' => '<p>Yes. By proving safe vehicle usage and lowering accident rates, telematics can help companies negotiate lower premiums.</p>',
+    'Does telematics work for both rental vehicles and equipment?' => '<p>Yes. EnVue equipment management covers both vehicles and heavy equipment &mdash; powered or non-powered &mdash; in one platform.</p>',
     'How does GPS tracking help leasing and rental fleets?' => '<p>Geotab GPS tracking gives leasing and rental fleet managers real-time visibility into every vehicle location and status, whether with a customer, on the lot, or in maintenance. Geofencing and boundary alerts enforce geographic contract terms. GPS-verified odometer data eliminates mileage disputes at return. After-hours movement alerts detect unauthorized use outside rental periods.</p>',
     'Does EnVue help recover overdue rental vehicles?' => '<p>Yes. Geotab GPS fleet tracking provides real-time vehicle location for every tracked asset, enabling rapid recovery coordination when rental vehicles are not returned on schedule. Real-time location is shared with recovery teams, reducing the time and cost of overdue vehicle recovery compared to operations without GPS visibility.</p>',
     'How does GPS eliminate mileage disputes in leasing?' => '<p>Geotab GPS tracking continuously records cumulative mileage from vehicle departure through return, creating a verifiable GPS-derived odometer record that neither party can dispute. This eliminates the most common source of lease return conflict — disagreements about actual miles driven when vehicle odometer and customer estimates differ.</p>',

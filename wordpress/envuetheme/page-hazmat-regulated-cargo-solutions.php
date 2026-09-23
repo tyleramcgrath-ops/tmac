@@ -51,7 +51,7 @@
       <span class="eyebrow">02 &middot; Safety Monitoring</span>
       <h2>High-Fidelity Safety Monitoring: Roll-Over Prevention</h2>
       <p>For a hazmat tanker, a minor speeding event or a sharp turn isn&rsquo;t just a safety infraction&mdash;it&rsquo;s a rollover risk. Traditional telematics thresholds are often too high for liquid bulk loads. EnVue implements custom-tuned safety scorecards that prioritize &lsquo;Low-Threshold&rsquo; alerts for lateral G-force and speed.</p>
-      <p>We use AI-driven sensors to monitor for &lsquo;Shadow Indicators&rsquo; of risk, such as repeated instances of late-braking or frequent stability control activations. By correcting these behaviors through our <a href="<?php echo esc_url(home_url("/productized-safety-offerings-from-implementation-to-excellence/")); ?>">Video-Based Coaching Program</a>, we help you prevent the high-consequence incidents that lead to <a href="<?php echo esc_url(home_url("/how-to-defend-your-fleet-against-nuclear-verdicts-with-synchronized-telematics-data/")); ?>">Nuclear Verdicts</a>.</p>
+      <p>We use AI-driven sensors to monitor for &lsquo;Shadow Indicators&rsquo; of risk, such as repeated instances of late-braking or frequent stability control activations. By correcting these behaviors through our <a href="<?php echo esc_url(home_url("/productized-safety-offerings-from-implementation-to-excellence/")); ?>">Video-Based Coaching Program</a>, we help you prevent the high-consequence incidents that lead to Nuclear Verdicts.</p>
     </div>
   </div>
 

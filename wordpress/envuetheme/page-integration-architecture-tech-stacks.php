@@ -50,7 +50,7 @@
     <div class="fcx-card reveal" style="--d:3">
       <span class="fcx-step-num">Operational Brain</span>
       <h3>Your TMS</h3>
-      <p>We push telematics data into leading <a href="<?php echo esc_url(home_url("/tms-and-logistics-software-integration-the-multiplier-for-fleet-roi/")); ?>">Transportation Management Systems (TMS)</a> to automate dispatching, manifest management, and high-fidelity customer ETAs. This is what we call the &lsquo;Visibility Multiplier.&rsquo;</p>
+      <p>We push telematics data into leading Transportation Management Systems (TMS) to automate dispatching, manifest management, and high-fidelity customer ETAs. This is what we call the &lsquo;Visibility Multiplier.&rsquo;</p>
     </div>
   </div>
 </div></section>

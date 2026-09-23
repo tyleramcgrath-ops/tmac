@@ -41,7 +41,7 @@
       <span class="eyebrow">Pillar 1 &middot; PTO Monitoring</span>
       <h2>Specialized Sensor Integration</h2>
       <p>For a utility fleet, the &lsquo;Vehicle&rsquo; is often just a platform for the &lsquo;Equipment.&rsquo; Monitoring the Power Take-Off (PTO) is critical for both safety and maintenance. EnVue&rsquo;s Geotab-powered devices integrate with specialized sensors to track exactly when and how your auxiliary equipment is being used.</p>
-      <p>Are your bucket truck booms being operated without the outriggers deployed? Is a salt spreader active outside of its assigned route? By monitoring these inputs, we help you prevent mechanical failure and ensure that specialized equipment is being used according to safety protocols. This data is essential for accurate <a href="<?php echo esc_url(home_url("/decoding-vehicle-diagnostics-a-fleet-managers-guide-to-obd-dtc-codes/")); ?>">DTC diagnostic monitoring</a> of the secondary systems.</p>
+      <p>Are your bucket truck booms being operated without the outriggers deployed? Is a salt spreader active outside of its assigned route? By monitoring these inputs, we help you prevent mechanical failure and ensure that specialized equipment is being used according to safety protocols. This data is essential for accurate DTC diagnostic monitoring of the secondary systems.</p>
     </div>
   </div>
 

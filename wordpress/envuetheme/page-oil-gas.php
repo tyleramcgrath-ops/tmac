@@ -49,6 +49,21 @@
         <li>Vehicle diagnostic monitoring for harsh-use equipment maintenance scheduling</li></ul></div>
   </div>
 </div></section>
+<section class="section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Improve Your Oil and Gas Operation</span>
+    <h2 class="reveal" style="--d:1">Safety, efficiency, and compliance for upstream operations.</h2>
+    <p class="reveal" style="--d:2">Real-time locational awareness of vehicles and personnel for drilling, exploration, pipeline, and service operations.</p>
+  </div></div>
+  <div class="feature-trio">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div><h3>Safety</h3><p>Understand how drivers move around a site, monitor performance with scorecards and coaching, and stay in communication with personnel even in remote locations.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><h3>Efficiency</h3><p>An integrated solution that eliminates data silos, with custom reports tailored to your needs that drive a significant reduction in operating costs.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></div><h3>Compliance</h3><p>ELDs that help drivers avoid Hours of Service violations, programs that keep CSA driver scores below the FMCSA investigative threshold, and maintenance schedules that keep vehicles safe.</p></div>
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3>Safety and AI Dash Cams</h3><p>Dash cams and driver safety programs reduce accidents, detect fatigue, and protect against liability.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></div><h3>Predictive Maintenance</h3><p>Identify mechanical issues early and reduce costly downtime and project delays.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18M3 22h12M6 7h6"/><path d="M15 10h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/></svg></div><h3>Fuel Monitoring</h3><p>Cut fuel waste with idling reports, route optimization, and fraud prevention.</p></div>
+  </div>
+</div></section>
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>
@@ -65,6 +80,8 @@
 </div></section>
 <?php
 echo envue_faq_section([
+    'How does telematics improve oilfield fleet safety?' => '<p>Telematics provides real-time driver monitoring, AI dash cams, and alerts for risky behavior, helping reduce accidents and protect crews.</p>',
+    'What assets can be tracked in oil and gas operations?' => '<p>Beyond vehicles, companies can track trailers, pumps, generators, and heavy equipment with asset management.</p>',
     'Does EnVue GPS work in remote oil and gas locations?' => '<p>Geotab GPS hardware is designed for remote operating environments. For areas with reliable cellular coverage, Geotab provides real-time tracking through the standard cellular network. For extremely remote locations where cellular is unavailable, EnVue can deploy Geotab satellite connectivity options that provide location updates via satellite communications. Contact EnVue to discuss specific coverage requirements for your operating areas.</p>',
     'How does EnVue protect lone workers in oil and gas field operations?' => '<p>EnVue deploys Ok Alone lone worker safety integrated with Geotab GPS. Ok Alone provides automated check-in schedules with configurable intervals, real-time GPS location for every active field worker, man-down detection through device accelerometers, and emergency alert buttons. When a check-in is missed, supervisors receive an immediate alert with the last known GPS location for emergency dispatch.</p>',
     'Does EnVue handle ELD compliance for oil and gas vehicles?' => '<p>Yes. EnVue deploys Geotab Drive ELD for commercial vehicles in oil and gas fleets that are subject to the FMCSA ELD mandate. Geotab Drive is FMCSA-approved and automates HOS logging, manages unassigned driving time, and generates roadside inspection packages. Many oil and gas support vehicles including heavy trucks, tankers, and equipment haulers require FMCSA ELD compliance.</p>',

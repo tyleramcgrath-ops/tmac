@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Trucking fleet management" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/trucking-transportation-fleet-2026-scaled.jpg" alt="Trucking fleet management" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/industries/")); ?>">Industries</a> / <a href="<?php echo esc_url(home_url("/trucking-transportation/")); ?>">Trucking</a></nav>
     <span class="eyebrow eyebrow--light">Trucking and Transportation</span>
@@ -103,6 +103,21 @@
         <li>Fuel card GPS matching through FleetCor or Coast Pay for fraud detection and expense control</li></ul></div>
   </div>
 </div></section>
+<section class="section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">A Complete Solution</span>
+    <h2 class="reveal" style="--d:1">Improve productivity, reduce risk, and comply with mandates.</h2>
+    <p class="reveal" style="--d:2">EnVue Telematics supports your operation with a leading fleet solution for long-haul trucking, regional transport, and last-mile delivery carriers of all sizes.</p>
+  </div></div>
+  <div class="feature-trio">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></div><h3>Improve Compliance</h3><p>ELD solutions certified in both the U.S. and Canada, with a comprehensive view of driver availability and unassigned logs, plus detailed inspection reporting with defect checklists.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><h3>Reduce Risky Driving</h3><p>AI-based video systems detect hazards and alert drivers in real time, in-cab alerts and automated workflows support coaching, and accurate accident reconstruction helps prevent repeat incidents.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8a3 3 0 0 0 0-6H8a3 3 0 0 1 0-6h8"/></svg></div><h3>Boost Efficiency</h3><p>Real-time visibility through location tracking, geofences, breadcrumb trails, and engine status, with routes optimized using detailed stops and waypoints for pickup and delivery.</p></div>
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></div><h3>Predictive Maintenance</h3><p>Keep trucks on the road longer with fault codes and diagnostics that prevent breakdowns.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="14" height="10" rx="1"/><path d="M15 9h4l3 3v4h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></div><h3>Cargo and Asset Tracking</h3><p>Track trailers and freight with equipment management to ensure goods arrive safely and on time.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h3>Accurate ETAs</h3><p>Monitor trucks in real time, view routes, and give customers accurate ETAs and delivery updates.</p></div>
+  </div>
+</div></section>
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>
@@ -119,6 +134,8 @@
 </div></section>
 <?php
 echo envue_faq_section([
+    'How does telematics help trucking companies?' => '<p>Telematics helps trucking fleets improve safety, reduce costs, automate compliance, and track vehicles and cargo in real time.</p>',
+    'Can telematics reduce trucking fuel costs?' => '<p>Yes. By optimizing routes, reducing idle time, and monitoring fuel transactions, fleets can save significantly on fuel expenses.</p>',
     'What ELD does EnVue deploy for trucking fleets?' => '<p>EnVue deploys Geotab Drive ELD, listed on the FMCSA registered ELD provider list, for commercial trucking fleets subject to the ELD mandate. Geotab Drive automates HOS logging, manages unassigned driving time, and generates roadside inspection packages — with DVIR and Drivewyze bypass available in the same driver app.</p>',
     'How does EnVue help trucking fleets reduce insurance costs?' => '<p>EnVue reduces trucking fleet insurance costs primarily through AI dash cam deployment from Lytx, Surfsight, or Samsara. Documented video evidence resolves false claims faster with lower settlements, reducing total claim costs. Measurable accident reduction from AI coaching and GPS behavior monitoring gives insurers concrete evidence for premium review. Many trucking fleets report insurance premium reductions within the first year of AI dash cam deployment.</p>',
     'Does EnVue deploy Drivewyze for trucking fleets?' => '<p>Yes. EnVue activates Drivewyze PreClear in your existing Geotab account — no additional hardware or transponder required. Drivewyze is available through the Geotab Drive app drivers already use for ELD, providing legal weigh station bypass at 900+ sites across 47 states and Canadian provinces based on your carrier safety score.</p>',
