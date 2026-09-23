@@ -140,7 +140,7 @@
       <div class="reveal">
         <span class="eyebrow">Safety Program Details</span>
         <h2>How EnVue Safety Programs Deliver Results</h2>
-        <p>AI dash cam deployment from Lytx, Netradyne, and Surfsight through EnVue produces measurable accident reduction within the first year. Combined with Geotab driver behavior monitoring and predictive risk scoring, EnVue safety programs consistently produce fleet-wide results that translate into lower insurance costs, reduced downtime, and documented improvement stakeholders and insurers recognize.</p>
+        <p>AI dash cam deployment from Lytx and Netradyne through EnVue produces measurable accident reduction within the first year. Combined with Geotab driver behavior monitoring and predictive risk scoring, EnVue safety programs consistently produce fleet-wide results that translate into lower insurance costs, reduced downtime, and documented improvement stakeholders and insurers recognize.</p>
         <ul class="check-list">
           <li>31% fewer annual reportable accidents and 21% fewer accidents per million miles</li>
           <li>Insurance premium reductions of 10–20% with documented safety programs</li>

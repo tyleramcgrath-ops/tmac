@@ -46,11 +46,11 @@
     <div class="reveal">
       <span class="eyebrow">Geotab Marketplace</span>
       <h2>300+ Integrations on One Open Platform</h2>
-      <p>Geotab Marketplace offers more than 300 verified third-party integrations covering routing and dispatch, fuel management, dash cam video telematics, driver training, tire pressure monitoring, maintenance management, ERP and dispatch software, and sustainability tools. All Marketplace apps connect to the same Geotab GPS and vehicle data, eliminating data silos across fleet operations. EnVue deploys and configures Marketplace integrations as part of your Geotab implementation — including Lytx, Netradyne, Surfsight, Elite EXTRA, FleetCor, ProMiles, Fleetio, and dozens more.</p>
+      <p>Geotab Marketplace offers more than 300 verified third-party integrations covering routing and dispatch, fuel management, dash cam video telematics, driver training, tire pressure monitoring, maintenance management, ERP and dispatch software, and sustainability tools. All Marketplace apps connect to the same Geotab GPS and vehicle data, eliminating data silos across fleet operations. EnVue deploys and configures Marketplace integrations as part of your Geotab implementation — including Lytx, Netradyne, Elite EXTRA, FleetCor, ProMiles, Fleetio, and dozens more.</p>
       <ul class="check-list">
         <li>300+ verified Marketplace integrations across every fleet operations category</li>
         <li>All integrations share the same GPS and vehicle data — no duplicate data entry</li>
-        <li>Video telematics: Lytx, Netradyne, Surfsight, Samsara, Azuga</li>
+        <li>Video telematics: Lytx, Netradyne, Samsara, Azuga</li>
         <li>Routing and dispatch: Elite EXTRA, Route4Me, Drivewyze</li>
         <li>Fuel and maintenance: FleetCor, ProMiles, Fleetio, CarAdvise, Whip Around</li>
       </ul>

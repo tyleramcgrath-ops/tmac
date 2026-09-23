@@ -144,3 +144,10 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - PageSpeed's "Minify CSS / Minify JavaScript / Reduce unused … / Avoid long main-thread tasks — Error!" lines are
   Lighthouse failing to calculate those audits (a PageSpeed glitch), not site errors; re-running usually clears them.
 - "Legacy JavaScript" comes from plugin scripts (jQuery/WPForms/Elementor), not the theme.
+
+## v6.10.3 — Surfsight removed (no longer a partner)
+- Deleted the Surfsight page template and removed Surfsight from the Partners menu (desktop + mobile), the Partners page,
+  and every product list / FAQ that named it (Dash Cams, Safety, Trucking, Geotab, Solutions, FAQs, Results, Resources).
+- /surfsight/ now permanently redirects (301) to /dash-cams/, so old links and Google results land somewhere useful.
+- In WordPress: trash the "Surfsight" page (Pages → Surfsight → Trash) so it drops out of the AIOSEO sitemap.
+  The redirect keeps working after it's trashed.

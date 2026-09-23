@@ -64,7 +64,6 @@
               <a href="<?php echo esc_url(home_url("/lytx/")); ?>"><strong>Lytx</strong><small>Video telematics &amp; AI dash cams.</small></a>
               <a href="<?php echo esc_url(home_url("/netradyne/")); ?>"><strong>Netradyne</strong><small>Driver.i® vision-based safety.</small></a>
               <a href="<?php echo esc_url(home_url("/mobileye/")); ?>"><strong>Mobileye</strong><small>Advanced collision avoidance.</small></a>
-              <a href="<?php echo esc_url(home_url("/surfsight/")); ?>"><strong>Surfsight</strong><small>AI-powered dash cam platform.</small></a>
               <a href="<?php echo esc_url(home_url("/samsara/")); ?>"><strong>Samsara</strong><small>Connected fleet management.</small></a>
               <a href="<?php echo esc_url(home_url("/azuga/")); ?>"><strong>Azuga</strong><small>GPS tracking &amp; safety cameras.</small></a>
             </div>
@@ -189,7 +188,6 @@
               <a href="<?php echo esc_url(home_url("/lytx/")); ?>">Lytx</a>
               <a href="<?php echo esc_url(home_url("/netradyne/")); ?>">Netradyne</a>
               <a href="<?php echo esc_url(home_url("/mobileye/")); ?>">Mobileye</a>
-              <a href="<?php echo esc_url(home_url("/surfsight/")); ?>">Surfsight</a>
               <a href="<?php echo esc_url(home_url("/samsara/")); ?>">Samsara</a>
             </div>
           </div>

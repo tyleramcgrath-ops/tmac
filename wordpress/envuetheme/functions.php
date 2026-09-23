@@ -122,7 +122,6 @@ function envue_template_map() {
         // Partner / Comparison pages
         'lytx'                    => 'page-lytx.php',
         'netradyne'               => 'page-netradyne.php',
-        'surfsight'               => 'page-surfsight.php',
         'samsara'                 => 'page-samsara.php',
         'azuga'                   => 'page-azuga.php',
         'mobileye'                => 'page-mobileye.php',
@@ -261,6 +260,22 @@ function envue_canonical_slug_for( $tpl, $slug ) {
     }
     return '';
 }
+
+/* Retired pages (partners EnVue no longer works with) 301 to the closest live page,
+   whether or not the old WordPress page still exists. Add a slug here to retire it. */
+function envue_retired_pages() {
+    return [
+        'surfsight' => '/dash-cams/',
+    ];
+}
+add_action( 'template_redirect', function () {
+    $map  = envue_retired_pages();
+    $path = envue_request_path();
+    if ( isset( $map[ $path ] ) ) {
+        wp_safe_redirect( home_url( $map[ $path ] ), 301 );
+        exit;
+    }
+}, 1 );
 
 /* The slug the current request is rendering, for pages and fallback routes. */
 function envue_current_slug() {
@@ -444,7 +459,6 @@ function envue_partner_logo( $slug, $name, $size = 'normal' ) {
         'lytx'                      => "$BASE/2024/12/lytx-1-1.png.webp",
         'netradyne'                 => "$BASE/2024/12/Netradyne-logo-300x51-1.webp",
         'mobileye'                  => "$BASE/2024/12/Mobileye-1.png.webp",
-        'surfsight'                 => "$BASE/2024/12/Surfsight.png.webp",
         'samsara'                   => "$BASE/2024/12/Samsara.png.webp",
         'azuga'                     => "$BASE/2024/12/Azuga-2.png.webp",
         'elite-extra'               => "$BASE/2024/12/Elite-Extra-1.png.webp",
@@ -644,7 +658,6 @@ function envue_seo_meta() {
         'lytx'                      => [ 'Lytx Video Telematics & Fleet Safety | EnVue Telematics Partner', 'Maximize fleet safety with Lytx AI-powered dash cams and video telematics. Deployed and supported by EnVue Telematics — Geotab Elite Specialized Partner.' ],
         'netradyne'                 => [ 'Netradyne Driver.i® Vision Safety Camera | EnVue Telematics Partner', 'Deploy Netradyne Driver.i® — the AI vision safety system that rewards positive driving. Integrated with Geotab by EnVue Telematics.' ],
         'mobileye'                  => [ 'Mobileye ADAS Collision Avoidance for Fleets | EnVue Telematics', 'Advanced collision avoidance for commercial fleets. Mobileye ADAS detects forward collisions, lane departures, and pedestrians. Deployed by EnVue.' ],
-        'surfsight'                 => [ 'Surfsight AI Dash Cams & Cloud Video Telematics | EnVue Partner', 'AI-powered dash cams with cloud video access and real-time coaching. Surfsight fleet safety deployed and supported by EnVue Telematics.' ],
         'samsara'                   => [ 'Samsara Connected Fleet Management & Safety | EnVue Telematics', 'GPS tracking, AI dash cams, and ELD compliance from Samsara. Enhanced with EnVue Telematics consulting and 24/7 US-based support.' ],
         'azuga'                     => [ 'Azuga GPS Tracking, Dash Cams & Driver Rewards | EnVue Partner', 'Azuga fleet telematics with GPS tracking, AI cameras, and driver rewards program. Deployed and supported by EnVue Telematics.' ],
         'elite-extra'               => [ 'Elite EXTRA Route Optimization & Dispatch | EnVue Telematics', 'Smart dispatch and last-mile route optimization from Elite EXTRA, integrated with Geotab GPS fleet tracking by EnVue Telematics.' ],
@@ -744,7 +757,7 @@ function envue_seo_output( $slug, $url, $title, $desc, $img ) {
     // ── BreadcrumbList (inner pages) ──────────────────────────────
     if ( $slug && !is_front_page() ) {
         $page_name = get_queried_object_id() ? get_the_title( get_queried_object_id() ) : ucwords( str_replace( '-', ' ', $slug ) );
-        $partner_slugs = ['lytx','netradyne','mobileye','surfsight','samsara','azuga','elite-extra','route4me','drivewyze','fleetcor','coast-pay','fleetio','whip-around','car-advise','promiles','smith-system','speedgauge','safety-first','lifesaver-mobile','predictive-coach','phillips-connect','sensata-technologies','origo','ok-alone','moveev','greater-than','craig-safety-technologies','xtract'];
+        $partner_slugs = ['lytx','netradyne','mobileye','samsara','azuga','elite-extra','route4me','drivewyze','fleetcor','coast-pay','fleetio','whip-around','car-advise','promiles','smith-system','speedgauge','safety-first','lifesaver-mobile','predictive-coach','phillips-connect','sensata-technologies','origo','ok-alone','moveev','greater-than','craig-safety-technologies','xtract'];
         $industry_slugs = ['construction','trucking-transportation','field-services','oil-gas','government','leasing-rental'];
         $solution_slugs = ['powered-by-geotab','expandability','dash-cams','gps-tracking','equipment-management','maintenance','fuel-management','geotab','safety','productivity','optimization','sustainability','compliance','electric-vehicles'];
 

@@ -123,7 +123,7 @@
           <h3>Building a Fleet Safety Program That Actually Reduces Accidents</h3>
           <p>AI dash cam technology transforms fleet safety management — but programs reduce accidents, not equipment alone. Covers event detection, driver coaching, predictive risk scoring, and insurance documentation.</p>
           <ul class="check-list" style="margin-top:1rem;">
-            <li>AI dash cam buying guide: Lytx, Netradyne, Surfsight, and Samsara compared</li>
+            <li>AI dash cam buying guide: Lytx, Netradyne, and Samsara compared</li>
             <li>Driver coaching program design for lasting behavioral improvement</li>
             <li>Fleet safety ROI documentation for insurance premium discussions</li>
             <li>Video evidence best practices for liability protection</li>

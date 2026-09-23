@@ -71,11 +71,6 @@
         <div class="partner-dir-desc">Advanced Driver Assistance Systems (ADAS) that detect pedestrians, lane departures, and forward collisions in real time.</div>
         <span class="partner-dir-link">Learn more →</span>
       </a>
-    <a class="partner-dir-card" href="<?php echo esc_url(home_url("/surfsight/")); ?>">
-        <div class="partner-dir-name">Surfsight</div>
-        <div class="partner-dir-desc">AI-powered dash cams with cloud-based video, event detection, and real-time in-cab alerts for distracted and risky driving.</div>
-        <span class="partner-dir-link">Learn more →</span>
-      </a>
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/samsara/")); ?>">
         <div class="partner-dir-name">Samsara</div>
         <div class="partner-dir-desc">Connected fleet management combining GPS tracking, AI dash cams, ELD compliance, and fuel efficiency monitoring.</div>
@@ -269,10 +264,10 @@
 
 <?php
 echo envue_faq_section([
-    'Who are EnVue Telematics technology partners?' => '<p>EnVue Telematics partners with leading fleet technology providers across AI dash cams, maintenance management, fuel management, compliance, routing, EV planning, and safety categories. Key partners include Lytx, Netradyne, Surfsight, Mobileye, Samsara, Fleetio, FleetCor, ProMiles, Drivewyze, Elite EXTRA, Route4Me, MoveEV, Greater Than, and others — all integrated with the Geotab platform that serves as the foundation for every EnVue fleet program.</p>',
+    'Who are EnVue Telematics technology partners?' => '<p>EnVue Telematics partners with leading fleet technology providers across AI dash cams, maintenance management, fuel management, compliance, routing, EV planning, and safety categories. Key partners include Lytx, Netradyne, Mobileye, Samsara, Fleetio, FleetCor, ProMiles, Drivewyze, Elite EXTRA, Route4Me, MoveEV, Greater Than, and others — all integrated with the Geotab platform that serves as the foundation for every EnVue fleet program.</p>',
     'How does EnVue decide which technology partners to work with?' => '<p>EnVue selects technology partners based on demonstrated performance in commercial fleet deployments, compatibility with the Geotab platform, quality of integration, and track record of customer results. Every partner EnVue recommends has been evaluated in real fleet operations and delivers measurable value on top of the Geotab foundation.</p>',
     'Do I need to purchase partner technology separately from EnVue?' => '<p>No. EnVue manages the complete technology ecosystem for your fleet program — hardware procurement, software licensing, platform configuration, integration setup, and ongoing support. You work with one team and one invoice rather than coordinating separately with multiple technology vendors. This is one of the key advantages of working with EnVue as your fleet technology partner.</p>',
-    'Does EnVue recommend specific AI dash cam partners?' => '<p>EnVue deploys AI dash cameras from Lytx, Netradyne, Surfsight, and Samsara. Each camera platform has different strengths in terms of event detection capability, driver coaching workflow, video storage, and analytics depth. EnVue evaluates your specific safety program goals, fleet size, and budget during the discovery process and recommends the camera platform best suited to your operation.</p>',
+    'Does EnVue recommend specific AI dash cam partners?' => '<p>EnVue deploys AI dash cameras from Lytx, Netradyne, and Samsara. Each camera platform has different strengths in terms of event detection capability, driver coaching workflow, video storage, and analytics depth. EnVue evaluates your specific safety program goals, fleet size, and budget during the discovery process and recommends the camera platform best suited to your operation.</p>',
     'Can EnVue add partner integrations to an existing Geotab fleet?' => '<p>Yes. If you are already running Geotab fleet tracking, EnVue can evaluate your current setup and recommend partner integrations that would add the most value. Common additions to existing Geotab deployments include AI dash cams, Fleetio maintenance management, ProMiles IFTA automation, and route optimization platforms — all of which integrate directly with your existing Geotab GPS data.</p>',
     'How do EnVue partner integrations work technically?' => '<p>Most EnVue partner integrations connect to Geotab through the Geotab Marketplace, which provides vetted, pre-built connectors between Geotab and third-party platforms. Data flows automatically between systems based on configured rules — for example, Geotab fault codes triggering Fleetio work orders, or GPS mileage feeding ProMiles IFTA reports. Custom integrations use the Geotab open API for platforms not available through the Marketplace.</p>'
 ], 'FAQ: EnVue Technology Partners');

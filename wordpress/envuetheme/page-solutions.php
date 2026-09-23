@@ -30,7 +30,7 @@
     <?php
     $solutions = [
       ['GPS Tracking', 'Real-time vehicle location, driver behavior monitoring, geofencing, and fleet analytics on Geotab.', '/gps-tracking/', 'Location &amp; Visibility'],
-      ['AI Dash Cams', 'Lytx, Netradyne, Surfsight, and Samsara video telematics with in-cab coaching and liability protection.', '/dash-cams/', 'Driver Safety'],
+      ['AI Dash Cams', 'Lytx, Netradyne, and Samsara video telematics with in-cab coaching and liability protection.', '/dash-cams/', 'Driver Safety'],
       ['Fleet Safety', 'Comprehensive safety programs combining AI cameras, GPS behavior data, predictive risk, and training.', '/safety/', 'Safety Program'],
       ['Fleet Maintenance', 'Geotab fault code monitoring and Fleetio maintenance management for predictive, data-driven service.', '/maintenance/', 'Asset Reliability'],
       ['Fuel Management', 'Idle reduction, GPS-matched fuel card fraud detection, and ProMiles IFTA automation.', '/fuel-management/', 'Cost Reduction'],
