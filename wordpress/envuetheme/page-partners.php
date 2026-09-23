@@ -36,6 +36,20 @@
   </div>
 </nav>
 
+<section class="section"><div class="wrap">
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/GO9-Plug-and-Play-Device2-768x512.png.webp" alt="Geotab GO9 plug-and-play telematics device" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Powered by Geotab</span>
+      <h2>Simplified resources for your fleet.</h2>
+      <p>Using a consultative approach, we choose from a range of third-party solutions to create an integrated telematics system tailored for your fleet operations, with expert, hands-on support through selection, implementation, and operation.</p>
+      <p>Our solutions are underpinned by Geotab&rsquo;s GO, a plug-and-play tracking device, and MyGeotab, a cloud-based platform with detailed reporting, and we select solutions from the Geotab Marketplace. We&rsquo;ve been recognized as a Geotab Innovation award winner for helping small businesses make the most of Geotab&rsquo;s technology.</p>
+      <a class="text-link" href="<?php echo esc_url(home_url("/powered-by-geotab/")); ?>">Learn more about Geotab &rarr;</a>
+      <p>The partners below are a snapshot; we have a range of options available. If you have a particular brand in mind, <a href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">reach out for a complimentary demo</a>.</p>
+    </div>
+  </div>
+</div></section>
+
 <section class="section" id="video-safety"><div class="wrap">
   <div class="section-head">
     <div><span class="eyebrow reveal">Video Safety</span><h2 class="reveal" style="--d:1">AI dash cams and driver monitoring.</h2></div>
@@ -227,6 +241,29 @@
         <div class="partner-dir-desc">Fleet data extraction and reporting — custom dashboards and automated reports for every stakeholder in the operation.</div>
         <span class="partner-dir-link">Learn more →</span>
       </a>
+  </div>
+</div></section>
+
+<style>
+.assoc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem;align-items:center;margin-top:2rem}
+.assoc-logo{display:flex;align-items:center;justify-content:center;padding:1rem;background:#fff;border-radius:12px;min-height:96px}
+.assoc-logo img{max-width:100%;max-height:64px;height:auto;object-fit:contain}
+</style>
+<section class="section" id="associations"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Association Partners</span>
+    <h2 class="reveal" style="--d:1">Proud member of industry associations.</h2>
+  </div></div>
+  <div class="assoc-grid reveal">
+    <a class="assoc-logo" href="https://www.afla.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Automotive-Fleet-Leasing-Association.png.webp" alt="Automotive Fleet Leasing Association logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://flpma.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/FPMA.png.webp" alt="FPMA logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://www.floridatrucking.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Florida-Trucking-Association.png.webp" alt="Florida Trucking Association logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://www.nafa.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/National-Association-of-Fleet-Administrators.png.webp" alt="National Association of Fleet Administrators logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://www.iltrucking.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/illinois-trucking.png.webp" alt="Illinois Trucking Association logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://www.nctrucking.com/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/nc-trucking.png.webp" alt="North Carolina Trucking Association logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://www.texastrucking.com/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/TXTA.png.webp" alt="Texas Trucking Association logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://www.jointerra.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Terra.png.webp" alt="TERRA electronics reuse and recycling alliance logo" loading="lazy"></a>
+    <a class="assoc-logo" href="https://nytrucks.org/" target="_blank" rel="noopener"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/tani.png.webp" alt="Trucking Association of New York logo" loading="lazy"></a>
   </div>
 </div></section>
 
