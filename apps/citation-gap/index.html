@@ -1109,7 +1109,7 @@ p.mkt-note b{display:block;color:var(--paper-2);font-weight:500;letter-spacing:.
           <p class="tnote">For the consultant who bills for this and wants it to keep watch.</p>
           <ul>
             <li>Your own search key, run on a schedule</li>
-            <li>Projects synced across your machines</li>
+            <li>Up to 10 projects, synced across your machines</li>
             <li>Weekly automatic re-scans</li>
             <li>Full history, not just the last six scans</li>
             <li>Multi-keyword batches per page</li>
@@ -1123,7 +1123,7 @@ p.mkt-note b{display:block;color:var(--paper-2);font-weight:500;letter-spacing:.
           <p class="tnote">For the shop running this across a roster of client sites.</p>
           <ul>
             <li>Everything in Practice</li>
-            <li>25 sites under weekly monitoring</li>
+            <li>Unlimited sites under weekly monitoring</li>
             <li>Client-ready reports, your logo on them</li>
             <li>Alerts when a score moves past its band</li>
             <li>Shared workspace for your team</li>
@@ -2370,6 +2370,12 @@ window.cgAccount = (function(){
       },function(){ return null; });
     });
   }
+  // A plan limit is the one refusal in this module a customer has to hear about. Everything else
+  // here fails quietly on purpose — the report is already on screen, drawn from local storage —
+  // but silence on a full plan means the new project simply never appears in the list and
+  // nothing says why. Told once per page load: it stays true for every scan after this one, and
+  // repeating it each time would be nagging rather than informing.
+  var capSaid=false;
   function findOrCreate(url,keyword){
     return projects(true).then(function(list){
       if(!list) return null;
@@ -2377,8 +2383,17 @@ window.cgAccount = (function(){
       if(hit) return hit;
       var name=''; try{ name=new URL(url).hostname.replace(/^www\./,''); }catch(e){ name=keyword; }
       return api('/api/projects',{method:'POST',body:JSON.stringify({name:name,url:url,keyword:keyword})})
-        .then(function(r){ projectCache=null; return (r.ok&&r.body&&r.body.project)||null; },
-              function(){ return null; });
+        .then(function(r){
+          projectCache=null;
+          if(r.ok&&r.body&&r.body.project){ capSaid=false; return r.body.project; }
+          // 409 is the project cap. Archiving one clears it, so the flag resets on the next
+          // create that works.
+          if(r.status===409&&r.body&&r.body.error&&!capSaid){
+            capSaid=true;
+            try{ if(typeof toast==='function') toast(r.body.error); }catch(e){}
+          }
+          return null;
+        }, function(){ return null; });
     });
   }
 
