@@ -1,26 +1,26 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-22T21:48:41.482Z",
+  "sealedAt": "2026-09-23T09:49:03.862Z",
   "files": {
     "index.html": {
-      "sha256": "9b54cb704145068e2def9583af81da35ffa25189f8725c9bfafecf542473aa75",
-      "bytes": 183512
+      "sha256": "4d299092203f41f93ee8b1a6cb71483d44fb3d436ec65651a9e9757f727d49ea",
+      "bytes": 187682
     },
     "score.js": {
       "sha256": "cfe5979cc0c355edc49875313d7db972464ad1987aa8a3ac603780cf3d5e9d4d",
       "bytes": 163559
     },
     "og.png": {
-      "sha256": "ee129cb285a4c6bfb4679c988abdf3acb4406040ce8c1c228d33cc45f4a8d8d4",
-      "bytes": 70900
+      "sha256": "c06993aa191014a25ca0dd87f9e8caac451660d044fce46ccebdc2935b3ee482",
+      "bytes": 133066
     },
     "icon.svg": {
-      "sha256": "2b31599dd18b23e9ac7fdf574cd1adb15db043ae1a7b5af1e71b0a3d6f94bc21",
-      "bytes": 438
+      "sha256": "470b763fe5a9096a5a49d96ed2e19ac52c220416dbb15a9c9dc9c95f748528bf",
+      "bytes": 652
     },
     "apple-touch-icon.png": {
-      "sha256": "fbc6ad2c6922860cd8c95ff6282505ea39fa7712cfd200112d62a980a84e6605",
-      "bytes": 3649
+      "sha256": "598e3543c6f924bb6162e60f2ea5561f196b9f177e605ed8d3982c8bfeda5c72",
+      "bytes": 10008
     },
     "api/page.js": {
       "sha256": "dc2c2279821eb379b86ddd79eae1309ff980c8c2bf97bfeff9bbdd75112cfcf0",
