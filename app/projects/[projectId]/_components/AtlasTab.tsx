@@ -646,7 +646,8 @@ function CtrOutlierPanel({ o }: { o: ObservationDTO<GscReportDTO> }) {
                   <td className="max-w-[140px] truncate px-2">{r.page}</td>
                   <td className="px-2">{r.position.toFixed(1)}</td>
                   <td className="px-2">{(r.ctr * 100).toFixed(1)}%</td>
-                  <td className="pl-2">{(r.cohortMedianCtr * 100).toFixed(1)}%</td>
+                  {/* An absolute finding has no peer baseline by design. */}
+                  <td className="pl-2">{r.cohortMedianCtr == null ? <span className="text-[var(--rf-faint)]">never clicked</span> : `${(r.cohortMedianCtr * 100).toFixed(1)}%`}</td>
                 </tr>
               ))}
             </tbody>
@@ -722,7 +723,7 @@ function ConversionOutlierPanel({ o }: { o: ObservationDTO<Ga4ReportDTO> }) {
   )
 }
 
-function GoogleIntegrationCard({ projectId, it, onDisconnect, onSaveResource }: { projectId: string; it: IntegrationDTO; onDisconnect: () => void; onSaveResource: (v: string) => void }) {
+export function GoogleIntegrationCard({ projectId, it, onDisconnect, onSaveResource }: { projectId: string; it: IntegrationDTO; onDisconnect: () => void; onSaveResource: (v: string) => void }) {
   const [resource, setResource] = useState(it.resourceId ?? '')
   const connected = it.status === 'connected'
   const tone = connected ? 'text-[var(--rf-green)]' : it.status === 'error' ? 'text-yellow-300' : 'text-[var(--rf-faint)]'
