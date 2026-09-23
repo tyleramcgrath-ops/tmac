@@ -9,9 +9,9 @@
       <a href="<?php echo esc_url(home_url("/our-partners/")); ?>">Partners</a> /
       <a href="<?php echo esc_url(home_url("/xtract/")); ?>">Xtract</a>
     </nav>
-    <span class="eyebrow eyebrow--light">Data and Reporting Partner</span>
-    <h1>Xtract Fleet Reporting: Turn Geotab Data Into Business Intelligence.</h1>
-    <p>Xtract connects to Geotab and delivers automated custom reports, executive dashboards, and scheduled data delivery, transforming raw fleet telematics data into the business intelligence each stakeholder actually needs.</p>
+    <span class="eyebrow eyebrow--light">Claims &amp; Incident Partner</span>
+    <h1>Xtract: Protect Drivers, Resolve Claims, and Stay in Control Every Step of the Way.</h1>
+    <p>Xtract brings together telematics, dashcam, AI automation, and enriched data sources into one platform to help fleets manage incidents and claims &mdash; from first notice of loss to resolution. Fully integrated with Geotab and deployed by EnVue Telematics.</p>
     <div class="hero-actions">
       <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
       <a class="button button-ghost button-lg" href="<?php echo esc_url(home_url("/our-partners/")); ?>">All Partners</a>
@@ -20,68 +20,77 @@
 </section>
 
 <section aria-label="Stats"><div class="wrap"><div class="stat-band">
-  <div><strong>Custom Reports</strong><span>Any stakeholder</span></div>
-  <div><strong>Auto Delivery</strong><span>Scheduled email</span></div>
-  <div><strong>Geotab Data</strong><span>All metrics</span></div>
+  <div><strong>eFNOL</strong><span>Automated first notice</span></div>
+  <div><strong>98%</strong><span>Driver satisfaction</span></div>
+  <div><strong>12K+</strong><span>Police departments</span></div>
   <div><strong>24/7</strong><span>EnVue support</span></div>
 </div></div></section>
 
-<?php echo envue_partner_logo('xtract', 'Xtract'); ?>
+<div class="partner-logo-block"><img src="https://envuetelematics.com/wp-content/uploads/2025/05/Xtract_logo-02.webp" alt="Xtract claims automation official logo" loading="eager"></div>
 
 <section class="section"><div class="wrap">
   <div class="section-head"><div>
     <span class="eyebrow reveal">About Xtract</span>
     <h2 class="reveal" style="--d:1">Xtract &amp; EnVue Telematics.</h2>
   </div><div class="reveal" style="--d:2">
-    <p>Geotab generates vast amounts of valuable fleet data across GPS location, driver behavior, fuel consumption, diagnostic fault codes, compliance status, and more. The challenge most fleet operations face is not data availability but data delivery, getting the right metrics to the right person in the right format on the right schedule. Xtract solves this by extracting exactly the data each stakeholder needs from Geotab and delivering it automatically without requiring manual assembly.</p>
+    <p>Xtract is a crash data and claims management platform that turns accident data into actionable insights in minutes. By digitally reconstructing crashes using telematics and driver data, Xtract helps fleets manage claims faster, reduce fraud, and cut insurance costs. EnVue Telematics works with Xtract to integrate crash analytics into fleet safety and compliance programs &mdash; delivering real-time accident insights that protect drivers, improve claims outcomes, and reduce liability.</p>
   </div></div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="Xtract capabilities" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/06/xtract2.webp" alt="Xtract real-time fleet incident analytics and reporting" loading="lazy"></div>
     <div class="reveal">
-      <span class="eyebrow">Reporting Capabilities</span>
-      <h2>Xtract Core Capabilities</h2>
-      <p>Xtract connects to Geotab and creates customizable report templates for each stakeholder audience including driver scorecards for safety managers, cost-per-mile summaries for operations directors, executive KPI dashboards for fleet leadership, and automated compliance reports for regulatory teams.</p>
+      <span class="eyebrow">Instant Incident Response</span>
+      <h2>Instant incident response, the moment it happens.</h2>
+      <p>Xtract automates the first notice of loss (eFNOL) with real-time alerts, incident reconstructions, and driver-safe outreach &mdash; all without manual driver reporting. Integrated within the Geotab Drive&reg; app or accessible via a shared web link, Xtract gives fleet managers instant access to the data they need to make quick, informed decisions after an incident.</p>
       <ul class="check-list">
-        <li>Custom report and dashboard creation from any available Geotab telematics data</li>
-        <li>Automated report scheduling with email delivery to any stakeholder on any cadence</li>
-        <li>Role-based reporting for driver scorecards, manager dashboards, and executive summaries</li>
-        <li>Fuel efficiency, idle reduction, and cost-per-mile reporting by vehicle and fleet</li>
-        <li>Compliance reporting for HOS, IFTA, maintenance, and inspection records</li>
-        <li>Data export in CSV, Excel, and API formats for BI tool integration</li>
-        <li>Historical trend analysis for long-term fleet performance measurement and comparison</li>
+        <li>Real-time notifications and visual reconstruction</li>
+        <li>98% driver satisfaction rate</li>
+        <li>Immediate post-incident support to drivers</li>
       </ul>
     </div>
   </div>
-
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Integrated-Workflows-panorama-635x0-1.webp" alt="EnVue and Xtract integration" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/06/xtract3.webp" alt="Xtract fleet accident reconstruction and claims automation" loading="lazy"></div>
     <div class="reveal">
-      <span class="eyebrow">EnVue Integration</span>
-      <h2>How EnVue and Xtract Work Together</h2>
-      <p>EnVue configures Xtract reporting templates around your specific fleet KPIs, stakeholder audiences, and delivery schedules. When new Geotab capabilities are added to your account, EnVue updates Xtract reporting to include the expanded data streams automatically.</p>
+      <span class="eyebrow">Claims Management</span>
+      <h2>Resolve claims faster. Cut costs immediately.</h2>
+      <p>Xtract aggregates telematics, dashcam footage, witness statements, and repair data into one powerful platform to handle claims. Fleets save on operational overhead and indemnity by resolving claims faster, with stronger evidence to reduce liability and protect against nuclear verdicts.</p>
       <ul class="check-list">
-        <li>Connect Xtract to Geotab for automated extraction of GPS, behavior, and compliance data</li>
-        <li>Build executive summaries, manager dashboards, and driver scorecards from one platform</li>
-        <li>Schedule automated reports to any stakeholder on daily, weekly, or monthly cadence</li>
-        <li>Export to Power BI, Tableau, or other BI tools for advanced corporate analysis</li>
-        <li>EnVue configures report templates, trains reporting teams, and provides 24/7 support</li>
+        <li>Immediate OpEx and indemnity savings</li>
+        <li>Fully integrated claims management</li>
+        <li>Automated third-party/witness data capture</li>
+        <li>Higher success rates in disputed claims</li>
       </ul>
     </div>
   </div>
-
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="Xtract results" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/06/xtract4.webp" alt="Xtract fleet claims automation dashboard" loading="lazy"></div>
     <div class="reveal">
-      <span class="eyebrow">Reporting Outcomes</span>
-      <h2>Measurable Fleet Impact</h2>
-      <p>Fleets using Xtract through EnVue eliminate the manual data assembly that consumes fleet manager time every reporting cycle because reports are built once, configured correctly, and delivered automatically on schedule to every stakeholder.</p>
+      <span class="eyebrow">Powerful Technology, Simple Integration</span>
+      <h2>Fully embedded into MyGeotab&trade;.</h2>
+      <p>Xtract supports flexible deployment via web application or QR code and integrates with all major dashcam providers and external platforms, including police report databases and third-party repair and claims software.</p>
       <ul class="check-list">
-        <li>Weekly reporting time eliminated through automated data extraction and scheduled delivery</li>
-        <li>Executive stakeholders receive fleet KPI summaries formatted for leadership review</li>
-        <li>Consistent reports from a single verified Geotab data source eliminate version discrepancies</li>
-        <li>BI tool integration enables fleet data in corporate dashboards alongside other business metrics</li>
+        <li>Integrated with 12K+ police departments for report automation</li>
+        <li>Dashcam and smartphone video support</li>
+        <li>Replay mode for sharing incident reports with insurers</li>
+        <li>Flexible setup that works for fleets of any size</li>
       </ul>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/06/xtract1.webp" alt="Xtract fleet claims process and integrated solutions" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">How EnVue and Xtract Work Together</span>
+      <h2>Crash data, connected to your safety program.</h2>
+      <p>Xtract provides the crash data technology, while EnVue Telematics ensures fleets maximize its value by integrating it with telematics, compliance, and safety programs.</p>
+      <ul class="check-list">
+        <li>Pair accident insights with <a href="<?php echo esc_url(home_url("/dash-cams/")); ?>">AI dash cams</a> for comprehensive evidence</li>
+        <li>Incorporate reconstruction data into <a href="<?php echo esc_url(home_url("/safety/")); ?>">fleet safety programs</a> for coaching and prevention</li>
+        <li>Link claims data with <a href="<?php echo esc_url(home_url("/compliance/")); ?>">compliance solutions</a> for DOT/FMCSA reporting</li>
+        <li>Use analytics alongside <a href="<?php echo esc_url(home_url("/gps-tracking/")); ?>">GPS fleet tracking</a> to strengthen visibility</li>
+        <li>Expert EnVue consulting for smoother rollout and claims integration</li>
+      </ul>
+      <a class="text-link" href="https://xtract360.com/" target="_blank" rel="noopener">Visit the Xtract official website &rarr;</a>
     </div>
   </div>
 </div></section>
@@ -93,14 +102,14 @@
     <p class="reveal" style="--d:2">Fleets deploying Xtract through EnVue Telematics see tangible improvements in safety, cost, and operational efficiency within the first 90 days of deployment.</p>
   </div></div>
   <ul class="check-list check-list--2col reveal">
-      <li><strong>Better decisions</strong> &mdash; Every stakeholder gets data formatted for their specific role</li>
-      <li><strong>Time savings</strong> &mdash; Automated delivery eliminates weekly manual report assembly</li>
-      <li><strong>Executive visibility</strong> &mdash; KPI summary and operational detail delivered to right audience</li>
-      <li><strong>Data integrity</strong> &mdash; Consistent reports from one verified Geotab source of truth</li>
-      <li><strong>Flexible delivery</strong> &mdash; Email, dashboard, or export on any reporting schedule</li>
-      <li><strong>ROI documentation</strong> &mdash; Automated reports quantify safety, fuel, and compliance savings</li>
-      <li><strong>BI integration</strong> &mdash; CSV, Excel, and API export for Power BI, Tableau, and others</li>
-      <li><strong>Scalable reporting</strong> &mdash; Add new KPIs and metrics as fleet capabilities expand</li>
+      <li><strong>Faster claims resolution</strong> &mdash; Digital evidence reduces time spent on disputes</li>
+      <li><strong>Lower insurance costs</strong> &mdash; Accurate data reduces liability and premiums</li>
+      <li><strong>Better safety outcomes</strong> &mdash; Reconstruction insights guide coaching and prevention</li>
+      <li><strong>Fraud protection</strong> &mdash; Strong data prevents false or inflated claims</li>
+      <li><strong>Driver protection</strong> &mdash; Immediate post-incident support with 98% driver satisfaction</li>
+      <li><strong>Automated eFNOL</strong> &mdash; First notice of loss without manual driver reporting</li>
+      <li><strong>Nuclear verdict defense</strong> &mdash; Stronger evidence reduces liability exposure</li>
+      <li><strong>Scalable integration</strong> &mdash; Works across small fleets to large enterprise operations</li>
   </ul>
   <div class="cta-strip">
     <div>
@@ -113,12 +122,12 @@
 
 <?php
 echo envue_faq_section([
-    'What is Xtract?' => '<p>Xtract is a fleet data extraction and reporting platform connecting to Geotab to generate custom reports, dashboards, and automated data deliveries for fleet managers, executives, compliance teams, and other stakeholders. It transforms raw telematics data into formatted business intelligence each person needs, delivered automatically on schedule.</p>',
-    'What reports can Xtract generate from Geotab?' => '<p>Xtract generates any report from data available in Geotab including driver behavior scorecards, vehicle utilization reports, fuel efficiency and idle reduction summaries, HOS compliance records, maintenance history, IFTA data exports, incident documentation, and executive KPI dashboards.</p>',
-    'Does Xtract support automated report delivery?' => '<p>Yes. Xtract supports scheduled automated delivery via email to any recipients on any cadence including daily, weekly, monthly, or custom schedules, with different templates delivered to different stakeholder audiences automatically.</p>',
-    'Does Xtract work with business intelligence tools?' => '<p>Yes. Xtract exports data in CSV, Excel, and API formats compatible with BI platforms including Power BI, Tableau, and Looker, allowing fleet data to flow into existing corporate dashboards.</p>',
-    'How does Xtract reduce fleet manager workload?' => '<p>Xtract automates the most time-consuming fleet reporting tasks. Reports configured once are delivered automatically on schedule, freeing managers from weekly manual data assembly and stakeholder distribution.</p>',
-    'How does EnVue configure Xtract?' => '<p>EnVue connects Xtract to your Geotab account, designs report templates for each stakeholder audience, configures delivery schedules and recipient lists, trains your fleet management team, and provides 24/7 support for modifications and new stakeholder requirements.</p>'
+    'What is Xtract?' => '<p>Xtract is a crash data and claims management platform that brings together telematics, dashcam video, AI automation, and enriched data sources to help fleets manage incidents and claims from first notice of loss to resolution. It digitally reconstructs crashes using telematics and driver data so fleets can resolve claims faster and reduce liability.</p>',
+    'What is eFNOL?' => '<p>eFNOL is electronic first notice of loss. Xtract automates it with real-time alerts, incident reconstructions, and driver-safe outreach, so fleet managers learn about an incident immediately without relying on manual driver reporting.</p>',
+    'Does Xtract work with Geotab?' => '<p>Yes. Xtract is fully embedded into MyGeotab and integrated within the Geotab Drive app, and it can also be accessed via a shared web link or QR code.</p>',
+    'Does Xtract work with my dashcams?' => '<p>Xtract integrates with all major dashcam providers and supports smartphone video, alongside external platforms such as police report databases (12K+ police departments) and third-party repair and claims software.</p>',
+    'How does Xtract reduce claims costs?' => '<p>Xtract aggregates telematics, dashcam footage, witness statements, and repair data to resolve claims faster with stronger evidence. That delivers OpEx and indemnity savings, higher success rates in disputed claims, fraud reduction, and protection against nuclear verdicts.</p>',
+    'How does EnVue deploy Xtract?' => '<p>EnVue integrates Xtract with your Geotab account and dash cams, incorporates reconstruction data into your fleet safety and coaching programs, links claims data with compliance reporting, and provides consulting and support for rollout and claims integration.</p>'
 ], 'Frequently Asked Questions About Xtract');
 ?>
 

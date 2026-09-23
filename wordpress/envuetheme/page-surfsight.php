@@ -86,6 +86,53 @@
   </div>
 </div></section>
 
+<section class="section section--tint"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Surfsight by Lytx</span>
+    <h2 class="reveal" style="--d:1">The next step in fleet safety.</h2>
+    <p class="reveal" style="--d:2">AI-powered video telematics gives fleets of all sizes a powerful platform to save lives and reduce safety-related costs. The AI-12 cloud-connected dashcam captures road and cabin simultaneously to detect distracted drivers and dangerous driving events, with instant access to live video, video events, and recordings.</p>
+  </div></div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Surfsight-Front-Rear-Facing-Dashcam-768x523.png.webp" alt="Surfsight AI-12 front and rear facing dashcam" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Surfsight AI-12 Dashcam</span>
+      <h2>Best-in-class live video at an entry-level price.</h2>
+      <p>Surfsight AI-12 offers fleets best-in-class live video telematics at an entry-level price point &mdash; without sacrificing quality. Designed for commercial vehicles, it is rugged tested and future proof, letting fleets grow without swapping hardware for additional features or cameras. Installation takes about 10 minutes, with multiple power options and a built-in WiFi hotspot to connect devices and cameras.</p>
+      <a class="text-link" href="https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-Surfsight-AI-12-Spec-Sheet.pdf" target="_blank" rel="noopener">Download the AI-12 Spec Sheet &rarr;</a>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Surfsight-Cloud-Dashboard-1-768x427.png.webp" alt="Surfsight cloud management dashboard for fleets" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Cloud Management Dashboard</span>
+      <h2>Leave no room for speculation.</h2>
+      <p>Instantly view live video and review near misses, collisions, harsh driving events, distracted driving, cargo situations, and driver and passenger assaults. View crisp HD live video of the road and driver simultaneously.</p>
+      <ul class="check-list">
+        <li>Full HD footage uploaded automatically to the cloud and stored for 30 days</li>
+        <li>Play and retrieve footage captured on the SD card directly from the dashboard</li>
+        <li>Securely share video inside and outside your network with a simple URL link</li>
+      </ul>
+      <a class="text-link" href="https://envuetelematics.com/wp-content/uploads/2025/01/Surfsight-AI-12-Product-Brochure.pdf" target="_blank" rel="noopener">Download the AI-12 Product Brochure &rarr;</a>
+    </div>
+  </div>
+
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Why Choose Surfsight</span>
+    <h2 class="reveal" style="--d:1">AI dash cam solutions built to scale.</h2>
+  </div></div>
+  <div class="feature-trio">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Entry-Level Price Point</h3><p>Without sacrificing quality for price &mdash; allowing any fleet size to transform to a video-connected fleet.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h3>Support</h3><p>Dedicated personal support and training by an experienced team.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div><h3>Best-in-Class Live Video</h3><p>Over two decades&rsquo; experience developing real-time video technology.</p></div>
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Future Proof</h3><p>Grows with your fleet &mdash; no need to swap hardware for software upgrades or additional features.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></div><h3>Simplified Installation</h3><p>Designed for a quick 10-minute in-cab installation.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h3>Scales Up</h3><p>Add up to 4 auxiliary cameras (6 total), wired or connected via the built-in WiFi hotspot.</p></div>
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><h3>Distracted Driving Detection</h3><p>Captures road and cabin simultaneously, with improved facial recognition that works day or night.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h3>Built-In 4G WiFi Hotspot</h3><p>Easily connect all your devices.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Spec Sheets &amp; More</h3><p><a href="https://envuetelematics.com/wp-content/uploads/2025/01/Envue-Surfsight-AI-Camera-Solution.pdf" target="_blank" rel="noopener">AI Camera Solution</a> &middot; Auxiliary Cameras <a href="https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-Surfsight-Auxiliary-Cameras-Spec-Sheet-1-of-3.pdf" target="_blank" rel="noopener">1</a>, <a href="https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-Surfsight-Auxiliary-Cameras-Spec-Sheet-2-of-3.pdf" target="_blank" rel="noopener">2</a>, <a href="https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-Surfsight-Auxiliary-Cameras-Spec-Sheet-3-of-3.pdf" target="_blank" rel="noopener">3</a></p></div>
+  </div>  <p class="reveal" style="text-align:center;margin-top:28px"><a class="text-link" href="https://surfsight.net/" target="_blank" rel="noopener">Visit the Surfsight official website &rarr;</a></p>
+</div></section>
+
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>

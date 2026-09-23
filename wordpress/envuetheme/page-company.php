@@ -47,8 +47,8 @@
       <div class="company-timeline-label">Launched EnVue Mexico, extending fleet coverage to Monterrey and beyond</div>
     </div>
     <div class="company-timeline-item">
-      <div class="company-timeline-year">2024</div>
-      <div class="company-timeline-label">Geotab Innovation Award winner for outstanding fleet technology deployment</div>
+      <div class="company-timeline-year">2023</div>
+      <div class="company-timeline-label">Geotab Innovation Award, Small Business Partner category, at Geotab Connect in Orlando</div>
     </div>
   </div>
 </div></section>
@@ -61,12 +61,12 @@
     </div>
     <div class="reveal">
       <span class="eyebrow">Geotab Partnership</span>
-      <h2>Geotab Elite Specialized Partner Since Our Founding</h2>
+      <h2>Geotab Elite Specialized Partner</h2>
       <p>EnVue Telematics holds Geotab Elite Specialized Partner certification — the highest tier in the Geotab channel partner program. This certification reflects our proven depth of technical expertise, deployment experience, and customer satisfaction with the Geotab platform. We have implemented Geotab for commercial fleet operations across construction, trucking, field services, oil and gas, government, distribution, and healthcare.</p>
       <ul class="check-list">
         <li>Geotab Elite Specialized Partner — highest level of channel certification</li>
         <li>Deep technical expertise in MyGeotab configuration and Marketplace integration</li>
-        <li>Geotab Innovation Award winner for outstanding platform deployment</li>
+        <li>2023 Geotab Innovation Award for helping small businesses get the most out of Geotab technology</li>
         <li>US and Mexico coverage on one unified Geotab platform</li>
       </ul>
     </div>
@@ -206,8 +206,8 @@ function envue_team_card( $initials, $name, $title, $bio, $linkedin = '', $delay
       "Gwen has been in the transportation industry for over a decade and is a results-driven, growth-focused marketing executive with extensive experience in leading high-impact marketing strategies, including enhancing brand visibility, implementing targeted social media campaigns, accelerating lead generation, launching new product lines, and managing corporate communications.",
       'https://www.linkedin.com/in/gwen-stewart-moore/', 3, 'https://envuetelematics.com/wp-content/uploads/2024/12/Gwen-Headshot-1-1-scaled.jpg');
 
-    envue_team_card('TM','Tyler McGrath','SEO & Web Director',
-      "Tyler comes to us with nearly two decades of experience as a highly skilled internet marketer and search engine optimization expert with a mission to drive targeted traffic and ensure businesses achieve objectives. Specialized in crafting innovative strategies to optimize online presence, boost brand awareness, and generate quality leads.",
+    envue_team_card('TM','Tyler McGrath','SEO and Web Manager',
+      "Tyler comes to us with 15 years of experience as a highly skilled internet marketer and search engine optimization expert with a mission to drive targeted traffic and ensure businesses achieve objectives. Specialized in crafting innovative strategies to optimize online presence, boost brand awareness, and generate quality leads.",
       'https://www.linkedin.com/in/tyler-mcgrath-seo-specialist/', 0, 'https://envuetelematics.com/wp-content/uploads/2024/12/ChatGPT-Image-Apr-24-2026-10_59_39-AM-scaled.jpg');
     ?>
   </div>

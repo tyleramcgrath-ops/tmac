@@ -22,7 +22,7 @@
 <section class="section"><div class="wrap">
   <div class="section-head"><div>
     <span class="eyebrow reveal">Overview</span>
-    <h2 class="reveal" style="--d:1">Fleet Productivity for commercial fleets.</h2>
+    <h2 class="reveal" style="--d:1">Pinpoint every vehicle and driver on a live map.</h2>
   </div><div class="reveal" style="--d:2"><p>Fleet productivity improvement is not about pushing drivers harder — it is about removing the operational friction that wastes their time. EnVue Telematics deploys Geotab GPS fleet tracking alongside Elite EXTRA or Route4Me route optimization, digital dispatch workflows, and utilization analytics to help fleet managers identify and eliminate the inefficiencies that reduce daily output without increasing operational strain on drivers.</p></div></div>
   <div class="feature-split">
     <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Productivity-Map.png.webp" alt="GPS Visibility That Makes Dispatch Faster and More Accurate" loading="lazy"></div>
@@ -57,6 +57,41 @@
         <li>Job costing data from GPS time-on-site and arrival and departure timestamps</li></ul>
     </div>
   </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Equipment-Management-panorama-635x0-1.webp" alt="Managing construction equipment and assets efficiently" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Equipment Management</span>
+      <h2>Locate, Redeploy, and Protect Heavy Equipment and Non-Powered Assets</h2>
+      <p>Effective heavy equipment management means locating and redeploying assets as needed while tracking usage and maintenance schedules. Monitoring equipment usage identifies misuse that leads to unnecessary downtime, costly repairs, and safety hazards &mdash; and tracking non-powered assets such as generators ensures they are available when needed and properly maintained.</p>
+      <ul class="check-list">
+        <li>Locate and redeploy heavy equipment across job sites</li>
+        <li>Identify improper use before it causes downtime or repairs</li>
+        <li>Track non-powered assets such as generators</li>
+        <li>Monitor how often trailers, tools, and powered assets are used</li>
+      </ul>
+    </div>
+  </div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/GPS-Tracking-panorama-635x0-1.webp" alt="Fleet management reports and notifications" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Fleet Management Reports</span>
+      <h2>Insights, Notifications, and KPIs That Support Organizational Goals</h2>
+      <p>Detailed reports reveal the performance of individual vehicles, drivers, and the entire fleet, highlighting problem areas such as low fuel efficiency, delayed maintenance, or unsafe driving. Customizable text and email notifications alert managers to events like low fuel, upcoming maintenance, or unsafe behavior, and simple charts and graphs make fuel usage, maintenance cost, and driver performance trends easy to act on.</p>
+      <ul class="check-list">
+        <li>Customizable text and email alerts for key events</li>
+        <li>Route and schedule deviation alerts and unauthorized-use detection</li>
+        <li>Job and task tracking with arrival and departure times</li>
+        <li>Time-on-site, route efficiency, and performance reports</li>
+        <li>Eliminate paper-based and manual workflows through integration</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="check-list check-list--2col reveal" style="margin-top:40px;">
+    <li><strong>1. Collect data</strong> &mdash; Gather information on vehicle usage, routes, and driver behavior</li>
+    <li><strong>2. Analyze performance</strong> &mdash; Spot inefficiencies in time, fuel use, and routing</li>
+    <li><strong>3. Take action</strong> &mdash; Adjust assignments, schedules, and driver coaching</li>
+    <li><strong>4. Measure results</strong> &mdash; Track KPIs like utilization, downtime, and job completion rates</li>
+  </ul>
 </div></section>
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
@@ -74,6 +109,8 @@
 </div></section>
 <?php
 echo envue_faq_section([
+    'Do productivity tools work with small fleets?' => '<p>Yes. EnVue solutions scale to fleets of all sizes, from a few vehicles to thousands.</p>',
+    'Can I track both vehicle and equipment productivity?' => '<p>Yes. By integrating equipment management, you can measure utilization across both vehicles and powered assets.</p>',
     'How does GPS tracking improve fleet productivity?' => '<p>GPS fleet tracking improves productivity primarily through dispatch optimization and accountability. Dispatchers with real-time vehicle location can assign the closest available vehicle to each job, reducing response time and increasing daily job completion. Driver accountability from GPS records also reduces time theft, excessive personal use, and the indirect productivity losses that come from inadequate visibility.</p>',
     'How much can route optimization increase daily delivery capacity?' => '<p>Route optimization results vary by fleet type, current route efficiency, and geographic spread of stops. Most fleets EnVue deploys route optimization for see 20-40% increases in daily stop completion using the same vehicles and drivers — because optimal sequencing eliminates the miles driven between stops that add up to hours of lost productive time each shift.</p>',
     'How does fleet utilization data help reduce costs?' => '<p>Geotab utilization reporting identifies which vehicles in the fleet are genuinely underutilized relative to their costs. For a vehicle costing $800 per month in payments, insurance, and maintenance, if data shows it is active only 20% of the time, the cost-per-productive-hour is far higher than the fleet average. Utilization data makes these costs visible and supports decisions to right-size the fleet, replace underused vehicles, or redeploy assets to higher-need areas.</p>',

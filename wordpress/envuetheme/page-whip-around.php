@@ -86,6 +86,74 @@
   </div>
 </div></section>
 
+<section class="section section--tint"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Fleet Maintenance Platform</span>
+    <h2 class="reveal" style="--d:1">A complete fleet maintenance software platform.</h2>
+    <p class="reveal" style="--d:2">Whip Around is the most user-friendly fleet maintenance solution for drivers, mechanics, and managers &mdash; with solutions for any sized fleet across maintenance, compliance, reporting, and inspections. Instantly access and analyze real-time data to make informed decisions about your vehicle inspection and fleet maintenance processes.</p>
+  </div></div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Preventative-Maintenance.png.webp" alt="Whip Around preventive maintenance module" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Comprehensive Fleet Maintenance</span>
+      <h2>Get your team on the same page.</h2>
+      <p>Improve communication and automate your maintenance workload with a fleet maintenance system you can trust.</p>
+      <ul class="check-list">
+        <li>Preventative maintenance scheduling</li>
+        <li>Work orders</li>
+        <li>Parts &amp; inventory tracking</li>
+        <li>Service history</li>
+        <li>Mechanic sign-off</li>
+      </ul>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Cloud-storage-reporting.png.webp" alt="Whip Around cloud storage and reporting interface" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Rapid Vehicle Inspections</span>
+      <h2>Faster inspections without the paper.</h2>
+      <p>Easily manage and track daily inspections while reducing the cost (and mess) of paper forms.</p>
+      <ul class="check-list">
+        <li>Vehicle inspection app</li>
+        <li>Custom digital forms</li>
+        <li>Photo capture</li>
+        <li>Mileage &amp; hours tracking</li>
+        <li>Cloud storage &amp; easy reporting</li>
+      </ul>
+    </div>
+  </div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Service-History.png.webp" alt="Whip Around service history and maintenance reporting" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Complete Fleet DOT Compliance</span>
+      <h2>Stay ahead of DOT requirements.</h2>
+      <p>Whip Around identifies risks and preventive maintenance issues in real time to keep your fleet DOT-compliant.</p>
+      <ul class="check-list">
+        <li>Driver Vehicle Inspection Reports (DVIR)</li>
+        <li>Vehicle maintenance BASIC compliance (CSA/DOT)</li>
+        <li>Digital record retention</li>
+        <li>Roadside document access</li>
+        <li>DOT audit or monthly maintenance reporting</li>
+      </ul>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Whip-Around-1-768x437.png.webp" alt="Whip Around mobile application and analytics" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Robust Analytics and Reporting</span>
+      <h2>Put your fleet data to work for you.</h2>
+      <p>Access data trends or drill down into specific information by asset, then customize and export what you need to communicate with stakeholders. Whip Around integrates with your other fleet management systems so you can unlock the power of your fleet data and make even smarter decisions.</p>
+      <ul class="check-list">
+        <li>Fleet manager dashboard</li>
+        <li>Operational &amp; maintenance reporting</li>
+        <li>Trending analysis</li>
+        <li>DOT audit or monthly maintenance reporting</li>
+      </ul>
+      <a class="text-link" href="https://whiparound.com/" target="_blank" rel="noopener">Visit the Whip Around website &rarr;</a>
+    </div>
+  </div>
+</div></section>
+
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>

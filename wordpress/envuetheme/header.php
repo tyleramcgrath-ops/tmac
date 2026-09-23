@@ -79,6 +79,7 @@
               <a href="<?php echo esc_url(home_url("/safety-first/")); ?>"><strong>SafetyFirst</strong><small>Fleet risk management.</small></a>
               <a href="<?php echo esc_url(home_url("/lifesaver-mobile/")); ?>"><strong>LifeSaver Mobile</strong><small>Mobile phone distraction prevention.</small></a>
               <a href="<?php echo esc_url(home_url("/predictive-coach/")); ?>"><strong>Predictive Coach</strong><small>AI-driven driver coaching.</small></a>
+              <a href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>"><strong>Craig Safety Technologies</strong><small>DQ files &amp; compliance management.</small></a>
               <span class="dropdown-cat" style="margin-top:1.25rem">Assets &amp; Equipment</span>
               <a href="<?php echo esc_url(home_url("/phillips-connect/")); ?>"><strong>Phillips Connect</strong><small>Smart trailer tracking.</small></a>
               <a href="<?php echo esc_url(home_url("/sensata-technologies/")); ?>"><strong>Sensata Technologies</strong><small>Trailer TPMS &amp; telematics.</small></a>
@@ -89,7 +90,6 @@
               <span class="dropdown-cat">EV &amp; Sustainability</span>
               <a href="<?php echo esc_url(home_url("/moveev/")); ?>"><strong>MoveEV</strong><small>EV fleet readiness &amp; management.</small></a>
               <a href="<?php echo esc_url(home_url("/greater-than/")); ?>"><strong>Greater Than</strong><small>AI risk &amp; sustainability scoring.</small></a>
-              <a href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>"><strong>Craig Safety Technologies</strong><small>Vehicle fire suppression.</small></a>
               <span class="dropdown-cat" style="margin-top:1.25rem">Data &amp; More</span>
               <a href="<?php echo esc_url(home_url("/xtract/")); ?>"><strong>Xtract</strong><small>Fleet data extraction &amp; reporting.</small></a>
               <a href="<?php echo esc_url(home_url("/our-partners/")); ?>"><strong>View All Partners →</strong><small>Complete partner directory.</small></a>
@@ -182,6 +182,7 @@
       <a href="<?php echo esc_url(home_url("/safety-first/")); ?>">SafetyFirst</a>
       <a href="<?php echo esc_url(home_url("/lifesaver-mobile/")); ?>">LifeSaver Mobile</a>
       <a href="<?php echo esc_url(home_url("/predictive-coach/")); ?>">Predictive Coach</a>
+      <a href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>">Craig Safety Technologies</a>
       <span class="mobile-sub-label">Assets &amp; Equipment</span>
       <a href="<?php echo esc_url(home_url("/phillips-connect/")); ?>">Phillips Connect</a>
       <a href="<?php echo esc_url(home_url("/sensata-technologies/")); ?>">Sensata Technologies</a>
@@ -190,7 +191,6 @@
       <span class="mobile-sub-label">EV &amp; Sustainability</span>
       <a href="<?php echo esc_url(home_url("/moveev/")); ?>">MoveEV</a>
       <a href="<?php echo esc_url(home_url("/greater-than/")); ?>">Greater Than</a>
-      <a href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>">Craig Safety Technologies</a>
       <span class="mobile-sub-label">Other</span>
       <a href="<?php echo esc_url(home_url("/azuga/")); ?>">Azuga</a>
       <a href="<?php echo esc_url(home_url("/promiles/")); ?>">ProMiles</a>
