@@ -1,0 +1,1931 @@
+[
+ {
+  "id": 7102,
+  "name": "RIDE",
+  "slug": "ride",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/ride/",
+  "sku": "",
+  "short_description": "",
+  "description": "",
+  "on_sale": false,
+  "prices": {
+   "price": "0",
+   "regular_price": "0",
+   "sale_price": "0",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 7103,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-300x300.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-600x600.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643-600x600.png 600w, https://dripclothingcompany.com/wp-content/uploads/2026/03/856b5e41-76e1-4928-bea9-b426181c6643.png 1024w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "856b5e41-76e1-4928-bea9-b426181c6643",
+    "alt": ""
+   },
+   {
+    "id": 7104,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-300x300.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-600x600.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af-600x600.png 600w, https://dripclothingcompany.com/wp-content/uploads/2026/03/fd5ba01a-f05a-4dc3-8b25-7acf150849af.png 1024w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "fd5ba01a-f05a-4dc3-8b25-7acf150849af",
+    "alt": ""
+   }
+  ],
+  "categories": [],
+  "tags": [],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": false,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Read more",
+   "description": "Read more about \u201cRIDE\u201d",
+   "url": "https://dripclothingcompany.com/product/ride/",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/7102",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=7102&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 7099,
+  "name": "FLOW",
+  "slug": "flow",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/flow/",
+  "sku": "",
+  "short_description": "",
+  "description": "",
+  "on_sale": false,
+  "prices": {
+   "price": "0",
+   "regular_price": "0",
+   "sale_price": "0",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 7100,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-200x300.png 200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-683x1024.png 683w, https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-600x900.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/406bfd61-b8a7-4951-9b30-0ba21c2e19c3-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "406bfd61-b8a7-4951-9b30-0ba21c2e19c3",
+    "alt": ""
+   },
+   {
+    "id": 7101,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-200x300.png 200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-683x1024.png 683w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-600x900.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4910c309-5070-4497-a86f-e51ce38747fa-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "4910c309-5070-4497-a86f-e51ce38747fa",
+    "alt": ""
+   }
+  ],
+  "categories": [],
+  "tags": [],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": false,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Read more",
+   "description": "Read more about \u201cFLOW\u201d",
+   "url": "https://dripclothingcompany.com/product/flow/",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/7099",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=7099&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 7096,
+  "name": "WAVE",
+  "slug": "wave",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/wave/",
+  "sku": "",
+  "short_description": "",
+  "description": "",
+  "on_sale": false,
+  "prices": {
+   "price": "0",
+   "regular_price": "0",
+   "sale_price": "0",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 7097,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-200x300.png 200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-683x1024.png 683w, https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-600x900.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/1d759b2c-afa7-4ddb-84fb-2e321e90696b-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "1d759b2c-afa7-4ddb-84fb-2e321e90696b",
+    "alt": ""
+   },
+   {
+    "id": 7098,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-200x300.png 200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-683x1024.png 683w, https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-600x900.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/a7123711-cc28-42d5-bf8b-49cc43cb9e6d-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "a7123711-cc28-42d5-bf8b-49cc43cb9e6d",
+    "alt": ""
+   }
+  ],
+  "categories": [],
+  "tags": [],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": false,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Read more",
+   "description": "Read more about \u201cWAVE\u201d",
+   "url": "https://dripclothingcompany.com/product/wave/",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/7096",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=7096&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6981,
+  "name": "DRIP Shatter Wave Back Tee \u2013 Black",
+  "slug": "drip-shatter-wave-back-tee-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-shatter-wave-back-tee-black/",
+  "sku": "DRIP-TEE-006",
+  "short_description": "Cresting wave graphic with sharp fractured detail on black.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "3199",
+   "regular_price": "4299",
+   "sale_price": "3199",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>42.99</span></del> Original price was: $42.99.</span>$</span>31.99</span></ins>Current price is: $31.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6905,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/5b43b749-09b5-4465-80f0-534e356d8999-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "5b43b749-09b5-4465-80f0-534e356d8999",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 77,
+    "name": "drip, tee, wave, shatter, back print",
+    "slug": "drip-tee-wave-shatter-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-wave-shatter-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Shatter Wave Back Tee \u2013 Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6981",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6981",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6981&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6980,
+  "name": "DRIP Liquid Burst Back Tee \u2013 Black",
+  "slug": "drip-liquid-burst-back-tee-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-liquid-burst-back-tee-black/",
+  "sku": "DRIP-TEE-005",
+  "short_description": "High-energy abstract liquid burst back print on black.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "3199",
+   "regular_price": "4299",
+   "sale_price": "3199",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>42.99</span></del> Original price was: $42.99.</span>$</span>31.99</span></ins>Current price is: $31.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6904,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/4cfecb65-192e-44a4-9d34-fe010d6ea6ea-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "4cfecb65-192e-44a4-9d34-fe010d6ea6ea",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 76,
+    "name": "drip, tee, abstract, liquid burst, back print",
+    "slug": "drip-tee-abstract-liquid-burst-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-abstract-liquid-burst-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Liquid Burst Back Tee \u2013 Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6980",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6980",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6980&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6979,
+  "name": "DRIP Minimal Fade Back Tee \u2013 White",
+  "slug": "drip-minimal-fade-back-tee-white",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-minimal-fade-back-tee-white/",
+  "sku": "DRIP-TEE-004",
+  "short_description": "Ultra-minimal faded line graphic across the upper back.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2999",
+   "regular_price": "3999",
+   "sale_price": "2999",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>39.99</span></del> Original price was: $39.99.</span>$</span>29.99</span></ins>Current price is: $29.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6903,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-300x300.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-600x600.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405-600x600.png 600w, https://dripclothingcompany.com/wp-content/uploads/2026/03/3fc47768-f9ed-476d-913b-0f23ee495405.png 1024w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "3fc47768-f9ed-476d-913b-0f23ee495405",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 75,
+    "name": "drip, tee, minimal, faded line, back print",
+    "slug": "drip-tee-minimal-faded-line-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-minimal-faded-line-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Minimal Fade Back Tee \u2013 White\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6979",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6979",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6979&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6977,
+  "name": "DRIP Silver Ribbon Back Tee \u2013 Black",
+  "slug": "drip-silver-ribbon-back-tee-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-silver-ribbon-back-tee-black/",
+  "sku": "DRIP-TEE-002",
+  "short_description": "Layered silver ribbon back graphic on a black tee.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder pricing, stock, and attributes are included so you can edit later before publishing.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2999",
+   "regular_price": "3999",
+   "sale_price": "2999",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>39.99</span></del> Original price was: $39.99.</span>$</span>29.99</span></ins>Current price is: $29.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6899,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/2e2b9bf6-0973-44dc-922f-2a99d3bc38b5-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "2e2b9bf6-0973-44dc-922f-2a99d3bc38b5",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 73,
+    "name": "drip, tee, ribbon, monochrome, back print",
+    "slug": "drip-tee-ribbon-monochrome-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-ribbon-monochrome-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Silver Ribbon Back Tee \u2013 Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6977",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6977",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6977&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6976,
+  "name": "DRIP Shoreline Minimal Back Tee \u2013 Lifestyle",
+  "slug": "drip-shoreline-minimal-back-tee-lifestyle",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-shoreline-minimal-back-tee-lifestyle/",
+  "sku": "DRIP-TEE-001",
+  "short_description": "Minimal shoreline-inspired back graphic on a white tee.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder pricing, stock, and attributes are included so you can edit later before publishing.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2999",
+   "regular_price": "3999",
+   "sale_price": "2999",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>39.99</span></del> Original price was: $39.99.</span>$</span>29.99</span></ins>Current price is: $29.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6895,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/0c560c7b-f891-4158-84b7-b7a5a11b4497-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "0c560c7b-f891-4158-84b7-b7a5a11b4497",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 72,
+    "name": "drip, tee, minimal, shoreline, back print",
+    "slug": "drip-tee-minimal-shoreline-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-minimal-shoreline-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Shoreline Minimal Back Tee \u2013 Lifestyle\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6976",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6976",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6976&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6983,
+  "name": "DRIP Monochrome Wave Back Tee \u2013 White",
+  "slug": "drip-monochrome-wave-back-tee-white",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-monochrome-wave-back-tee-white/",
+  "sku": "DRIP-TEE-008",
+  "short_description": "Bold monochrome wave back print on a white tee.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "3199",
+   "regular_price": "4299",
+   "sale_price": "3199",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>42.99</span></del> Original price was: $42.99.</span>$</span>31.99</span></ins>Current price is: $31.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6916,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-300x300.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-600x600.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363-600x600.png 600w, https://dripclothingcompany.com/wp-content/uploads/2026/03/79c335c9-8604-46bf-80d4-6e9aa572b363.png 1024w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "79c335c9-8604-46bf-80d4-6e9aa572b363",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 81,
+    "name": "drip, tee, wave, monochrome, back print",
+    "slug": "drip-tee-wave-monochrome-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-wave-monochrome-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Monochrome Wave Back Tee \u2013 White\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6983",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6983",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6983&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6987,
+  "name": "DRIP Line + Drop Detail Tee \u2013 Closeup",
+  "slug": "drip-line-drop-detail-tee-closeup",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-line-drop-detail-tee-closeup/",
+  "sku": "DRIP-REF-012",
+  "short_description": "Reference closeup showing stitch/detail treatment on black tee.</p>",
+  "description": "Draft/reference product row created from a detail image. Keep, merge, or delete after import as needed.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "999",
+   "regular_price": "1499",
+   "sale_price": "999",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>14.99</span></del> Original price was: $14.99.</span>$</span>9.99</span></ins>Current price is: $9.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6928,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/237fa31d-b2d0-44cf-b47f-46fc87245985-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "237fa31d-b2d0-44cf-b47f-46fc87245985",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 84,
+    "name": "Details",
+    "slug": "details",
+    "link": "https://dripclothingcompany.com/product-category/reference/details/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 85,
+    "name": "drip, reference, detail, closeup, line, drop icon",
+    "slug": "drip-reference-detail-closeup-line-drop-icon",
+    "link": "https://dripclothingcompany.com/product-tag/drip-reference-detail-closeup-line-drop-icon/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": true,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Line + Drop Detail Tee \u2013 Closeup\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6987",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 1,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6987",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6987&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6988,
+  "name": "DRIP Brushstroke Back Tee \u2013 White",
+  "slug": "drip-brushstroke-back-tee-white",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-brushstroke-back-tee-white/",
+  "sku": "DRIP-TEE-013",
+  "short_description": "Minimal brushstroke sweep graphic placed high on the back.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2799",
+   "regular_price": "3799",
+   "sale_price": "2799",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>37.99</span></del> Original price was: $37.99.</span>$</span>27.99</span></ins>Current price is: $27.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6931,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/583bded8-f6de-401e-9f59-1e9b2abbe788-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "583bded8-f6de-401e-9f59-1e9b2abbe788",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 86,
+    "name": "drip, tee, brushstroke, minimal, back print",
+    "slug": "drip-tee-brushstroke-minimal-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-brushstroke-minimal-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Brushstroke Back Tee \u2013 White\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6988",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6988",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6988&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6990,
+  "name": "DRIP Classic Wave Back Tee \u2013 Black",
+  "slug": "drip-classic-wave-back-tee-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-classic-wave-back-tee-black/",
+  "sku": "DRIP-TEE-015",
+  "short_description": "Classic monochrome wave back print on black.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "3199",
+   "regular_price": "4299",
+   "sale_price": "3199",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>42.99</span></del> Original price was: $42.99.</span>$</span>31.99</span></ins>Current price is: $31.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6935,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/54393e58-b728-4ec5-8836-238b9b149179-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "54393e58-b728-4ec5-8836-238b9b149179",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 81,
+    "name": "drip, tee, wave, monochrome, back print",
+    "slug": "drip-tee-wave-monochrome-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-wave-monochrome-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Classic Wave Back Tee \u2013 Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6990",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6990",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6990&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6991,
+  "name": "DRIP Drop Icon Cap Set \u2013 White + Black",
+  "slug": "drip-drop-icon-cap-set-white-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-drop-icon-cap-set-white-black/",
+  "sku": "DRIP-HAT-016",
+  "short_description": "Dad-cap style mockup set featuring the DRIP drop icon.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2499",
+   "regular_price": "3299",
+   "sale_price": "2499",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>32.99</span></del> Original price was: $32.99.</span>$</span>24.99</span></ins>Current price is: $24.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6943,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/c638e356-a39f-4120-8e88-62dc9f3d832b-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "c638e356-a39f-4120-8e88-62dc9f3d832b",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 90,
+    "name": "Hats",
+    "slug": "hats",
+    "link": "https://dripclothingcompany.com/product-category/accessories/hats/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 91,
+    "name": "drip, hat, cap, drop icon, accessories",
+    "slug": "drip-hat-cap-drop-icon-accessories",
+    "link": "https://dripclothingcompany.com/product-tag/drip-hat-cap-drop-icon-accessories/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Drop Icon Cap Set \u2013 White + Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6991",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6991",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6991&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6992,
+  "name": "DRIP Salt Line Back Tee \u2013 Black",
+  "slug": "drip-salt-line-back-tee-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-salt-line-back-tee-black/",
+  "sku": "DRIP-TEE-017",
+  "short_description": "Minimal horizontal salt-line style back print on black.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2799",
+   "regular_price": "3799",
+   "sale_price": "2799",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>37.99</span></del> Original price was: $37.99.</span>$</span>27.99</span></ins>Current price is: $27.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6964,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/cb6d399a-0f8f-4462-bf67-b9912bae5d34-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "cb6d399a-0f8f-4462-bf67-b9912bae5d34",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 92,
+    "name": "drip, tee, minimal, salt line, back print",
+    "slug": "drip-tee-minimal-salt-line-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-minimal-salt-line-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Salt Line Back Tee \u2013 Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6992",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6992",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6992&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6993,
+  "name": "DRIP Ribbon Block Back Tee \u2013 White",
+  "slug": "drip-ribbon-block-back-tee-white",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-ribbon-block-back-tee-white/",
+  "sku": "DRIP-TEE-018",
+  "short_description": "Graphic ribbon block wave treatment across the back.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "2999",
+   "regular_price": "3999",
+   "sale_price": "2999",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>39.99</span></del> Original price was: $39.99.</span>$</span>29.99</span></ins>Current price is: $29.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6969,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-300x300.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-600x600.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719-600x600.png 600w, https://dripclothingcompany.com/wp-content/uploads/2026/03/da197fdd-d68c-47c3-b072-e1805eb31719.png 1024w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "da197fdd-d68c-47c3-b072-e1805eb31719",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 93,
+    "name": "drip, tee, ribbon, block wave, back print",
+    "slug": "drip-tee-ribbon-block-wave-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-ribbon-block-wave-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Ribbon Block Back Tee \u2013 White\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6993",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6993",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6993&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6994,
+  "name": "DRIP Cap Options Sheet \u2013 Black",
+  "slug": "drip-cap-options-sheet-black",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-cap-options-sheet-black/",
+  "sku": "DRIP-REF-019",
+  "short_description": "Reference sheet showing multiple cap/logo finish options.</p>",
+  "description": "Draft/reference product row created from an options sheet image. Keep, merge, or delete after import as needed.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "999",
+   "regular_price": "1499",
+   "sale_price": "999",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>14.99</span></del> Original price was: $14.99.</span>$</span>9.99</span></ins>Current price is: $9.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6970,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-800x800.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d.png 1536w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-1200x800.png 1200w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-300x200.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-1024x683.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-600x400.png 600w",
+    "sizes": "(max-width: 1536px) 100vw, 1536px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db52b3a5-d1a6-432f-a181-231ef94eae4d-150x150.png 150w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "db52b3a5-d1a6-432f-a181-231ef94eae4d",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 79,
+    "name": "Mockups",
+    "slug": "mockups",
+    "link": "https://dripclothingcompany.com/product-category/reference/mockups/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 94,
+    "name": "drip, reference, cap options, mockup sheet",
+    "slug": "drip-reference-cap-options-mockup-sheet",
+    "link": "https://dripclothingcompany.com/product-tag/drip-reference-cap-options-mockup-sheet/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": true,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Cap Options Sheet \u2013 Black\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6994",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 1,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6994",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6994&per_page=10"
+    }
+   ]
+  }
+ },
+ {
+  "id": 6995,
+  "name": "DRIP Abstract Splash Back Tee \u2013 White",
+  "slug": "drip-abstract-splash-back-tee-white",
+  "parent": 0,
+  "type": "simple",
+  "variation": "",
+  "permalink": "https://dripclothingcompany.com/product/drip-abstract-splash-back-tee-white/",
+  "sku": "DRIP-TEE-020",
+  "short_description": "Abstract splash/foam back graphic on a white tee.</p>",
+  "description": "Draft WooCommerce product created from your uploaded mockup. Placeholder values can be changed after import.</p>",
+  "on_sale": true,
+  "prices": {
+   "price": "3199",
+   "regular_price": "4299",
+   "sale_price": "3199",
+   "price_range": null,
+   "currency_code": "USD",
+   "currency_symbol": "$",
+   "currency_minor_unit": 2,
+   "currency_decimal_separator": ".",
+   "currency_thousand_separator": ",",
+   "currency_prefix": "$",
+   "currency_suffix": ""
+  },
+  "price_html": "$</span>42.99</span></del> Original price was: $42.99.</span>$</span>31.99</span></ins>Current price is: $31.99.</span>",
+  "average_rating": "0",
+  "review_count": 0,
+  "images": [
+   {
+    "id": 6971,
+    "src": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15.png",
+    "thumbnail": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-300x300.png",
+    "srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15.png 1024w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-600x600.png 600w",
+    "sizes": "(max-width: 1024px) 100vw, 1024px",
+    "thumbnail_srcset": "https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-300x300.png 300w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-800x800.png 800w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-100x100.png 100w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-150x150.png 150w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15-600x600.png 600w, https://dripclothingcompany.com/wp-content/uploads/2026/03/db68fc87-079a-4a5e-bacf-451c87a85b15.png 1024w",
+    "thumbnail_sizes": "(max-width: 300px) 100vw, 300px",
+    "name": "db68fc87-079a-4a5e-bacf-451c87a85b15",
+    "alt": ""
+   }
+  ],
+  "categories": [
+   {
+    "id": 71,
+    "name": "Tees",
+    "slug": "tees",
+    "link": "https://dripclothingcompany.com/product-category/apparel/tees/"
+   }
+  ],
+  "tags": [
+   {
+    "id": 95,
+    "name": "drip, tee, abstract, splash, back print",
+    "slug": "drip-tee-abstract-splash-back-print",
+    "link": "https://dripclothingcompany.com/product-tag/drip-tee-abstract-splash-back-print/"
+   }
+  ],
+  "brands": [],
+  "attributes": [],
+  "variations": [],
+  "grouped_products": [],
+  "has_options": false,
+  "is_purchasable": true,
+  "is_in_stock": true,
+  "is_on_backorder": false,
+  "low_stock_remaining": null,
+  "stock_availability": {
+   "text": "",
+   "class": "in-stock"
+  },
+  "sold_individually": false,
+  "weight": "",
+  "dimensions": {
+   "length": "",
+   "width": "",
+   "height": ""
+  },
+  "formatted_weight": "N/A",
+  "formatted_dimensions": "N/A",
+  "add_to_cart": {
+   "text": "Add to cart",
+   "description": "Add to cart: \u201cDRIP Abstract Splash Back Tee \u2013 White\u201d",
+   "url": "/wp-json/wc/store/v1/products?per_page=100&add-to-cart=6995",
+   "single_text": "Add to cart",
+   "minimum": 1,
+   "maximum": 9999,
+   "multiple_of": 1
+  },
+  "is_password_protected": false,
+  "extensions": {},
+  "_links": {
+   "self": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products/6995",
+     "targetHints": {
+      "allow": [
+       "GET"
+      ]
+     }
+    }
+   ],
+   "collection": [
+    {
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products"
+    }
+   ],
+   "related": [
+    {
+     "embeddable": true,
+     "href": "https://dripclothingcompany.com/wp-json/wc/store/v1/products?related=6995&per_page=10"
+    }
+   ]
+  }
+ }
+]
