@@ -55,7 +55,11 @@ echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_P
       <span class="eyebrow">Request a Free Fleet Assessment</span>
       <h2>Tell us about your fleet — we&rsquo;ll do the rest.</h2>
 
+      <p>Whether you have questions, need a quote or a free demo of our products, or require support, we&rsquo;re here to assist you. Let EnVue be your strategic partner! We&rsquo;ll empower you to optimize your fleet and drive costs down with advanced telematics. Fill out this form to get a complimentary demo.</p>
+
       <?php echo do_shortcode('[wpforms id="2958" title="false"]'); ?>
+
+      <p class="git-sms-consent">By providing my phone number to EnVue Telematics, I agree and acknowledge that EnVue Telematics may send text messages to my wireless phone number for any purpose. Message and data rates may apply. We will only send one SMS as a reply to you, and you will be able to Opt-out by replying &ldquo;STOP&rdquo;. For more information on how your data will be handled please visit our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
     </div>
 
     <?php /* ── Contact Details ─────────────────────────── */ ?>
@@ -67,17 +71,22 @@ echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_P
           <p style="margin:.25rem 0 0;color:#555;font-size:.9375rem;">US-based support available 24/7</p>
         </div>
         <div>
-          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Email</strong>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Sales</strong>
           <a href="mailto:sales@et-envue.com" style="font-size:1.0625rem;font-weight:600;color:inherit;text-decoration:none;">sales@et-envue.com</a>
           <p style="margin:.25rem 0 0;color:#555;font-size:.9375rem;">We respond within one business day</p>
+        </div>
+        <div>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Support</strong>
+          <a href="mailto:support@et-envue.com" style="font-size:1.0625rem;font-weight:600;color:inherit;text-decoration:none;">support@et-envue.com</a>
+          <p style="margin:.25rem 0 0;color:#555;font-size:.9375rem;">Existing customers: technical and account support</p>
         </div>
         <div>
           <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Office</strong>
           <address style="font-style:normal;line-height:1.7;font-size:.9375rem;">119 West Tyler Street<br>Suite 100<br>Longview, Texas 75601</address>
         </div>
         <div>
-          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">EnVue Mexico</strong>
-          <p style="margin:0;color:#555;font-size:.9375rem;">Spanish-language fleet management for operations in Mexico. Same Geotab platform, same expert support.</p>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Partners</strong>
+          <a href="<?php echo esc_url(home_url('/our-partners/')); ?>" style="font-size:1.0625rem;font-weight:600;color:inherit;">Become a partner &rarr;</a>
         </div>
         <div style="padding:1.25rem;background:var(--c-brand,#0a2e6e);border-radius:8px;color:#fff;margin-top:auto;">
           <p style="margin:0 0 .75rem;font-size:.9375rem;font-weight:600;">Prefer to call? Our experts are standing by.</p>
@@ -89,7 +98,44 @@ echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_P
   </div>
 </div></section>
 
-<section class="section section--soft"><div class="wrap">
+<style>
+.git-sms-consent{margin-top:1.25rem;font-size:.8125rem;line-height:1.6;color:var(--slate);}
+.git-offices{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;}
+.git-office{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;}
+.git-office img{width:100%;height:200px;object-fit:cover;display:block;}
+.git-office-body{padding:24px 28px 28px;}
+.git-office-body h3{font-size:1.125rem;margin-bottom:.75rem;}
+.git-office-body address{font-style:normal;line-height:1.7;color:var(--slate);font-size:.9375rem;}
+.git-office-body a{font-weight:700;color:inherit;text-decoration:none;}
+@media(max-width:760px){.git-offices{grid-template-columns:1fr;}}
+</style>
+<section class="section section--soft" id="offices"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Our Global Offices</span>
+    <h2 class="reveal" style="--d:1">Teams in the United States and Mexico.</h2>
+    <p class="reveal" style="--d:2">Reach out to members of our dedicated teams in the United States and Mexico.</p>
+  </div></div>
+  <div class="git-offices">
+    <div class="git-office reveal">
+      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/usa.jpg" alt="United States service region map" loading="lazy">
+      <div class="git-office-body">
+        <h3>EnVue Telematics (U.S. HQ)</h3>
+        <address>119 West Tyler Street<br>Suite 100<br>Longview, Texas 75601<br>United States</address>
+        <p style="margin-top:.75rem"><a href="tel:8002011169">(800) 201-1169</a></p>
+      </div>
+    </div>
+    <div class="git-office reveal" style="--d:1">
+      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/mexico.jpg" alt="Mexico service region map" loading="lazy">
+      <div class="git-office-body">
+        <h3>EnVueMex Solutions (Mexico)</h3>
+        <address>Blvd. D&iacute;az Ordaz 3102, Piso 2<br>Santa Mar&iacute;a, 64650 Monterrey, N.L.<br>Mexico</address>
+        <p style="margin-top:.75rem"><a href="tel:+528121880258">81-2188-0258</a></p>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Why Contact EnVue</span>
     <h2 class="reveal" style="--d:1">What you get from working with the Geotab Elite Specialized Partner.</h2>
@@ -112,8 +158,8 @@ echo envue_faq_section([
     'How quickly can EnVue deploy fleet telematics?' => '<p>Most EnVue fleet telematics deployments are complete within 2-4 weeks from contract execution through device installation, platform configuration, and driver and manager training. The timeline depends on fleet size, number of locations, and solution complexity. EnVue provides a specific deployment timeline during the solution design phase before any commitment.</p>',
     'Does EnVue work with my existing fleet management software?' => '<p>Geotab integrates with hundreds of third-party platforms through the Geotab Marketplace and open API. EnVue evaluates your existing software during discovery and designs integration where it is available and beneficial. Common integrations include ERP systems, dispatch platforms, fuel card providers, maintenance management software, and payroll systems.</p>',
     'Is there a contract commitment for EnVue fleet management?' => '<p>Contact EnVue Telematics at (800) 201-1169 or sales@et-envue.com to discuss contract terms for your specific deployment. EnVue offers standard subscription terms aligned with typical fleet management investment horizons.</p>',
-    'Does EnVue provide fleet management for Mexico operations?' => '<p>Yes. EnVue Mexico provides Geotab-powered fleet management for commercial operations in Mexico, with Spanish-language support and the same solutions available in the United States. Contact EnVue to discuss fleet management for cross-border or Mexico-based operations.</p>',
-    'How do I reach EnVue customer support after deployment?' => '<p>EnVue provides 24/7 US-based support available by phone at (800) 201-1169 and by email at sales@et-envue.com for all fleet management support needs after deployment.</p>'
+    'Does EnVue provide fleet management for Mexico operations?' => '<p>Yes. EnVue Mexico provides Geotab-powered fleet management for commercial operations in Mexico, with Spanish-language support and the same solutions available in the United States. Our Mexico office, EnVueMex Solutions, is located at Blvd. D&iacute;az Ordaz 3102, Piso 2, Santa Mar&iacute;a, 64650 Monterrey, N.L., and can be reached at 81-2188-0258. Contact EnVue to discuss fleet management for cross-border or Mexico-based operations.</p>',
+    'How do I reach EnVue customer support after deployment?' => '<p>EnVue provides 24/7 US-based support available by phone at (800) 201-1169 and by email at support@et-envue.com for all fleet management support needs after deployment.</p>'
 ], 'FAQ: Contact and Getting Started');
 ?>
 
