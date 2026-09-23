@@ -116,3 +116,9 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
     "More fleet insights" row of 3 related articles from the same category;
   - better article typography (larger intro paragraph, accent bars on headings, styled quotes, lists and tables).
 - On tablets/phones the sidebar drops below the article and the share rail becomes the end-of-article share box.
+
+## v6.9 — cleaner header
+- New slim top bar: "Geotab Elite Specialized Partner · 24/7 US-based support" on the left, phone and social icons on the right.
+  It tucks away when you scroll, so the sticky header stays a single clean row.
+- Main bar is now just logo | menu (evenly spaced, exactly centred) | Get a Demo.
+- Phones/tablets: logo left, Get a Demo + menu button right; phone and social links stay inside the mobile menu.

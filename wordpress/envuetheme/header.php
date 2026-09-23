@@ -10,6 +10,15 @@
 
 <!-- ── HEADER ────────────────────────────────────────────────── -->
 <header class="site-header">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <p class="topbar-note"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.26 6.83.72-5.1 4.6 1.43 6.72L12 16.9l-6.06 3.4 1.43-6.72-5.1-4.6 6.83-.72z"/></svg> Geotab Elite Specialized Partner <span aria-hidden="true">&middot;</span> 24/7 US-based support</p>
+      <div class="topbar-right">
+        <a class="topbar-phone" href="tel:8002011169"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>(800) 201-1169</a>
+        <?php echo envue_social_links( 'social-links--header' ); ?>
+      </div>
+    </div>
+  </div>
   <div class="nav-shell">
     <a class="site-brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="EnVue Telematics">
       <img src="<?php echo get_template_directory_uri(); ?>/assets/images/envue-logo.png" alt="EnVue Telematics" width="200" height="58">
@@ -117,9 +126,7 @@
     </nav>
 
     <div class="header-actions">
-      <a class="header-phone" href="tel:8002011169">(800) 201-1169</a>
       <a class="button button-primary" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Demo</a>
-      <?php echo envue_social_links( 'social-links--header' ); ?>
       <button class="mobile-toggle" id="mobileToggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
         <span></span><span></span>
       </button>
