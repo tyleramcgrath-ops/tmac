@@ -145,7 +145,7 @@ $news = new WP_Query( $args );
       <li><span><strong>Email:</strong>&nbsp;<a href="mailto:sales@et-envue.com">sales@et-envue.com</a></span></li>
       <li><span><strong>Phone:</strong>&nbsp;<a href="tel:8002011169">(800) 201-1169</a></span></li>
       <li><span><strong>Headquarters:</strong>&nbsp;119 West Tyler Street, Suite 100, Longview, Texas 75601</span></li>
-      <li><span><strong>Company background:</strong>&nbsp;<a href="<?php echo esc_url(home_url("/company/")); ?>">About EnVue</a></span></li>
+      <li><span><strong>Company background:</strong>&nbsp;<a href="<?php echo esc_url(home_url("/about-envue/")); ?>">About EnVue</a></span></li>
     </ul>
   </div>
 </div></section>

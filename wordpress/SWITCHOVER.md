@@ -78,3 +78,29 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - Customer testimonials are now one swipeable slider (arrows, dots, keyboard, touch) with smaller stat text instead of two tall grids.
 - Social links (LinkedIn, Facebook, X, YouTube) are in the header on wide screens, in the mobile menu, and in the footer.
 - The homepage has exactly one H1 (the other hero slides use H2).
+
+## v6.6.1
+- Elementor Pro's header/footer hook is guarded so an Elementor Pro update can never crash the theme. (The 2026-09-23 outage
+  was Elementor Pro itself; the theme does not need Elementor Pro, so it can stay deactivated.)
+
+## v6.7 — SEO / AEO / schema
+- Alias URLs (/gps/, /company/, /geotab/, /events/, /faq/, /blog/ …) now 301 to the real page instead of serving a duplicate.
+- /solutions/ (no WP page) gets a proper title, description and og/twitter tags through AIOSEO.
+- One FAQPage per page (the /faqs/ page had 5); FAQ questions are now H3 headings (better for answer engines).
+  Removed a hidden homepage FAQ schema whose questions weren't visible on the page.
+- /events-calendar/ now always uses the theme's Events template, even though the page is set to Elementor's template.
+- Contact page LocalBusiness is linked to AIOSEO's organization (same @id); social links match AIOSEO's profiles.
+- Elementor's front-end scripts no longer load on theme pages (faster); fixed an empty image request on About.
+
+### AIOSEO settings to fix (can't be done from the theme)
+1. Home page and Lytx page → AIOSEO → Schema tab: delete the FAQ schema (its questions aren't on the page; the theme outputs the visible FAQs).
+2. Search Appearance → Global Settings → Knowledge Graph: email sales@et-envue.com, phone +1 800-201-1169, re-pick the logo from the Media Library.
+3. Local SEO → Business Info: address "119 West Tyler Street, Suite 100", phone +1 800-201-1169, email sales@, remove the fax, type ProfessionalService.
+   Check opening hours (Friday currently opens at 9:00, other days 8:00).
+4. Home page → Schema tab → Service: remove the Offer with price 0.
+5. Social Networks → Facebook and Twitter: set a default 1200×630 share image (most pages have no og:image); Facebook → Advanced: pages = "website".
+6. /events-calendar/ and /coast-pay/ → Advanced tab: remove noindex; write real descriptions (current ones are auto-generated filler).
+7. Titles over 60 chars: /faqs/ (also make it about FAQs), /news/, /blog-articles/, /privacy-policy/ ("Envue" → "EnVue"), /about-envue/.
+8. Remove the duplicate google-site-verification tag (it's in AIOSEO Webmaster Tools and in a header-code snippet).
+9. Posts → Categories: rename the "uncategorized" slug to general-fleet-insights, and add a 301 from the old URL in AIOSEO Redirects.
+10. Optional: create a real WP page with slug "solutions" so it appears in the sitemap.

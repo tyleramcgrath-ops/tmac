@@ -24,6 +24,7 @@ $contact_schema = array(
     "url" => home_url("/get-in-touch/"),
     "mainEntity" => array(
         "@type" => "LocalBusiness",
+        "@id" => home_url("/#organization"),
         "name" => "EnVue Telematics",
         "telephone" => "+18002011169",
         "email" => "sales@et-envue.com",

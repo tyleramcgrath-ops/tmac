@@ -343,9 +343,12 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('open');
     // Close all
-    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      const b = el.querySelector('.faq-q'); if (b) b.setAttribute('aria-expanded', 'false');
+    });
     // Toggle current
-    if (!isOpen) item.classList.add('open');
+    if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
   });
 });
 

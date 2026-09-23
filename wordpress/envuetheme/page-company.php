@@ -244,7 +244,7 @@ echo envue_faq_section([
 <!-- Team lightbox -->
 <div id="team-lb" onclick="closeTeamLb(event)" aria-modal="true" role="dialog">
   <button id="team-lb-close" onclick="closeTeamLb()" aria-label="Close photo">&times;</button>
-  <img id="team-lb-img" src="" alt="">
+  <img id="team-lb-img" alt="">
   <span id="team-lb-name"></span>
 </div>
 <script>
@@ -258,7 +258,7 @@ function openTeamLb(src,name){
 function closeTeamLb(e){
   if(!e||e.target!==document.getElementById('team-lb-img')){
     document.getElementById('team-lb').classList.remove('open');
-    document.getElementById('team-lb-img').src='';
+    document.getElementById('team-lb-img').removeAttribute('src');
     document.body.style.overflow='';
   }
 }

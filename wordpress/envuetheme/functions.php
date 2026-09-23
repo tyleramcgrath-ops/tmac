@@ -16,13 +16,13 @@ add_action( 'wp_enqueue_scripts', function () {
         'envue-style',
         get_template_directory_uri() . '/assets/css/envue.css',
         [ 'envue-fonts' ],
-        '16'
+        '17'
     );
     wp_enqueue_script(
         'envue-script',
         get_template_directory_uri() . '/assets/js/envue.js',
         [],
-        '16',
+        '17',
         true
     );
 } );
@@ -171,7 +171,7 @@ function envue_template_map() {
         'events-calendar'         => 'page-events.php',
         'webinars'                => 'page-events.php',
         'trade-shows'             => 'page-events.php',
-        'blog'                    => 'page-resources.php',
+        'blog'                    => 'page-blog-articles.php',
         'insights'                => 'page-resources.php',
         'faqs'                    => 'page-faqs.php',
         'faq'                     => 'page-faqs.php',
@@ -225,7 +225,15 @@ add_filter( 'pre_handle_404', function ( $preempt, $wp_query ) {
     if ( $preempt || is_admin() || ! empty( $wp_query->posts ) ) return $preempt;
     $slug = envue_request_path();
     if ( ! $slug || strpos( $slug, '/' ) !== false ) return $preempt;
-    if ( ! envue_template_for_slug( $slug ) ) return $preempt;
+    $tpl = envue_template_for_slug( $slug );
+    if ( ! $tpl ) return $preempt;
+    // Alias URLs (/gps/, /company/, /faq/…) 301 to the real page that uses the
+    // same template, so search engines never see duplicate pages.
+    $target = envue_canonical_slug_for( $tpl, $slug );
+    if ( $target ) {
+        wp_safe_redirect( home_url( '/' . $target . '/' ), 301 );
+        exit;
+    }
     $GLOBALS['envue_virtual_slug'] = $slug;
     // Clear the "single post" flags WP set while looking for a post with this
     // name, so core (body_class, titles) doesn't expect a post object.
@@ -235,6 +243,24 @@ add_filter( 'pre_handle_404', function ( $preempt, $wp_query ) {
     status_header( 200 );
     return true;
 }, 10, 2 );
+
+/* Slug of a published page that renders the same template as $slug, or ''. */
+function envue_canonical_slug_for( $tpl, $slug ) {
+    $file  = basename( $tpl );
+    // Templates that duplicate another page's content point at that page.
+    $dupes = [ 'page-company.php' => 'about-envue' ];
+    $cands = isset( $dupes[ $file ] ) ? [ $dupes[ $file ] ] : [];
+    $cands[] = preg_replace( '/^page-|\.php$/', '', $file );
+    foreach ( envue_template_map() as $s => $f ) {
+        if ( $f === $file ) $cands[] = $s;
+    }
+    foreach ( array_unique( $cands ) as $c ) {
+        if ( $c === $slug ) continue;
+        $page = get_page_by_path( $c );
+        if ( $page && 'publish' === $page->post_status ) return $c;
+    }
+    return '';
+}
 
 /* The slug the current request is rendering, for pages and fallback routes. */
 function envue_current_slug() {
@@ -262,7 +288,7 @@ add_filter( 'template_include', function ( $template ) {
     }
     $GLOBALS['envue_template'] = basename( $template );
     return $template;
-} );
+}, 99 );
 
 /* ── Strip Elementor front-end CSS ───────────────────────────── */
 // Our custom templates control every pixel of layout and typography.
@@ -297,6 +323,10 @@ add_action( 'wp_enqueue_scripts', function () {
         wp_dequeue_style( $handle );
         wp_deregister_style( $handle );
     }
+    // Elementor's front-end scripts do nothing on theme templates.
+    foreach ( [ 'elementor-frontend', 'elementor-frontend-modules', 'elementor-webpack-runtime', 'elementor-pro-frontend', 'pro-elements-handlers', 'elementor-sticky' ] as $handle ) {
+        wp_dequeue_script( $handle );
+    }
     // Per-page Elementor stylesheet (e.g. elementor-post-7 on the homepage)
     if ( is_singular() ) {
         $pid = 'elementor-post-' . get_queried_object_id();
@@ -304,6 +334,13 @@ add_action( 'wp_enqueue_scripts', function () {
         wp_deregister_style( $pid );
     }
 }, 999 );
+
+add_action( 'wp_print_footer_scripts', function () {
+    if ( envue_needs_elementor_css() ) return;
+    foreach ( [ 'elementor-frontend', 'elementor-frontend-modules', 'elementor-webpack-runtime', 'elementor-pro-frontend', 'pro-elements-handlers', 'elementor-sticky' ] as $handle ) {
+        wp_dequeue_script( $handle );
+    }
+}, 0 );
 
 /* ── Clean wp_head ───────────────────────────────────────────── */
 remove_action( 'wp_head', 'wp_generator' );
@@ -450,26 +487,19 @@ function envue_partner_logo( $slug, $name, $size = 'normal' ) {
 function envue_faq_section( array $faqs, string $heading = 'Frequently Asked Questions' ): string {
     if ( empty($faqs) ) return '';
 
-    // JSON-LD
-    $entities = [];
+    // Questions are collected and printed as ONE FAQPage block in the footer,
+    // so a page with several FAQ sections (e.g. /faqs/) has a single FAQPage.
     foreach ( $faqs as $q => $a ) {
-        $entities[] = [
+        $GLOBALS['envue_faq_entities'][] = [
             '@type'          => 'Question',
-            'name'           => $q,
+            'name'           => wp_strip_all_tags( $q ),
             'acceptedAnswer' => [ '@type' => 'Answer', 'text' => wp_strip_all_tags($a) ],
         ];
     }
-    $schema = [
-        '@context'   => 'https://schema.org',
-        '@type'      => 'FAQPage',
-        'mainEntity' => $entities,
-    ];
-    $json = wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 
-    $chevron = '<svg width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1.5l5 5 5-5" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    $chevron = '<svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5l5 5 5-5" stroke="#374151" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
     ob_start();
-    echo "<script type=\"application/ld+json\">{$json}</script>\n";
     echo '<section class="section faq-section"><div class="wrap">';
     echo '<div class="section-head section-head--center"><div>';
     echo '<span class="eyebrow reveal">FAQ</span>';
@@ -478,13 +508,23 @@ function envue_faq_section( array $faqs, string $heading = 'Frequently Asked Que
     echo '<div class="faq-list">';
     foreach ( $faqs as $q => $a ) {
         echo '<div class="faq-item">';
-        echo '<button class="faq-q">' . esc_html($q) . '<span class="faq-chevron">' . $chevron . '</span></button>';
+        echo '<h3 class="faq-h"><button class="faq-q" type="button" aria-expanded="false">' . esc_html($q) . '<span class="faq-chevron">' . $chevron . '</span></button></h3>';
         echo '<div class="faq-a">' . wp_kses_post($a) . '</div>';
         echo '</div>';
     }
     echo '</div></div></section>';
     return ob_get_clean();
 }
+
+add_action( 'wp_footer', function () {
+    if ( empty( $GLOBALS['envue_faq_entities'] ) ) return;
+    $schema = [
+        '@context'   => 'https://schema.org',
+        '@type'      => 'FAQPage',
+        'mainEntity' => $GLOBALS['envue_faq_entities'],
+    ];
+    echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . "</script>\n";
+}, 20 );
 
 /* ══════════════════════════════════════════════════════════════════════
    SEO META TAGS + PAGE-LEVEL SCHEMA
@@ -502,6 +542,33 @@ add_action( 'wp', function () {
     if ( defined( 'AIOSEO_VERSION' ) || is_admin() ) return;
     add_action( 'wp_head', 'envue_seo_head', 5 );
     add_filter( 'pre_get_document_title', 'envue_seo_title', 20 );
+} );
+
+/* With AIOSEO active, fallback routes (no WP page, e.g. /solutions/) get
+   AIOSEO's generic "EnVue Telematics" title and no description. Feed it ours. */
+function envue_virtual_meta() {
+    $slug = $GLOBALS['envue_virtual_slug'] ?? '';
+    if ( ! $slug ) return null;
+    $meta = envue_seo_meta();
+    return $meta[ $slug ] ?? [ ucwords( str_replace( '-', ' ', $slug ) ) . ' | EnVue Telematics', '' ];
+}
+add_filter( 'aioseo_title', function ( $t ) { $m = envue_virtual_meta(); return $m ? $m[0] : $t; } );
+add_filter( 'aioseo_description', function ( $d ) { $m = envue_virtual_meta(); return ( $m && $m[1] ) ? $m[1] : $d; } );
+add_filter( 'aioseo_facebook_tags', function ( $tags ) {
+    $m = envue_virtual_meta();
+    if ( ! $m || ! is_array( $tags ) ) return $tags;
+    $tags['og:type']  = 'website';
+    $tags['og:title'] = $m[0];
+    $tags['og:url']   = home_url( '/' . $GLOBALS['envue_virtual_slug'] . '/' );
+    if ( $m[1] ) $tags['og:description'] = $m[1];
+    return $tags;
+} );
+add_filter( 'aioseo_twitter_tags', function ( $tags ) {
+    $m = envue_virtual_meta();
+    if ( ! $m || ! is_array( $tags ) ) return $tags;
+    $tags['twitter:title'] = $m[0];
+    if ( $m[1] ) $tags['twitter:description'] = $m[1];
+    return $tags;
 } );
 
 /* Title for the current request from envue_seo_meta(), or '' to let WP decide. */
@@ -640,7 +707,7 @@ function envue_seo_output( $slug, $url, $title, $desc, $img ) {
         'foundingDate' => '2011',
         'areaServed'   => ['US','MX'],
         'address'      => ['@type'=>'PostalAddress','streetAddress'=>'119 West Tyler Street, Suite 100','addressLocality'=>'Longview','addressRegion'=>'TX','postalCode'=>'75601','addressCountry'=>'US'],
-        'sameAs'       => ['https://www.facebook.com/EnVue-Telematics-2245144869080013','https://twitter.com/envuetelematics','https://www.linkedin.com/company/envue-telematics/'],
+        'sameAs'       => ['https://www.facebook.com/EnVueTelematics/','https://twitter.com/envueTelematics','https://www.youtube.com/channel/UC1uN5DwS2FWnXU1WToV6g6g','https://www.linkedin.com/company/envue-telematics/'],
         'knowsAbout'   => ['Fleet Telematics','GPS Fleet Tracking','AI Dash Cams','Geotab','ELD Compliance','Fleet Management','Driver Safety'],
     ];
     echo '<script type="application/ld+json">' . wp_json_encode($org, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) . "</script>\n";
@@ -663,24 +730,6 @@ function envue_seo_output( $slug, $url, $title, $desc, $img ) {
         ];
         echo '<script type="application/ld+json">' . wp_json_encode($website, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) . "</script>\n";
 
-        // FAQPage schema on homepage — extends AEO coverage to highest-traffic page
-        $hp_faqs = [
-            [ 'name' => 'What is EnVue Telematics?', 'text' => 'EnVue Telematics is a Geotab Elite Specialized Partner providing GPS fleet tracking, AI dash cams, ELD compliance, and fleet management consulting for commercial fleets across the United States and Mexico. Founded in 2011 and headquartered in Longview, Texas, with 24/7 US-based support.' ],
-            [ 'name' => 'What fleet sizes does EnVue Telematics serve?', 'text' => 'EnVue Telematics serves commercial fleets of all sizes, from small regional operators to large enterprise fleets with hundreds of vehicles. Solutions scale on the Geotab platform and are configured to the specific operational needs of each fleet.' ],
-            [ 'name' => 'Is EnVue Telematics a Geotab authorized reseller?', 'text' => 'Yes. EnVue Telematics is a Geotab Elite Specialized Partner — the highest tier in the Geotab channel partner certification program. This reflects proven technical expertise, deployment volume, and customer satisfaction with the Geotab platform.' ],
-            [ 'name' => 'What GPS fleet tracking solutions does EnVue offer?', 'text' => 'EnVue Telematics offers real-time GPS fleet tracking, AI dash cams (Lytx, Netradyne, Mobileye), equipment and asset tracking, ELD compliance, fuel management, predictive maintenance, driver safety programs, and 300+ Geotab Marketplace integrations through a single platform.' ],
-            [ 'name' => 'How do I get started with EnVue Telematics?', 'text' => 'Contact EnVue Telematics at (800) 201-1169 or sales@et-envue.com to schedule a free fleet assessment. An EnVue fleet advisor will review your operation, identify high-impact opportunities, and demonstrate the relevant solutions. Most assessments are scheduled within 2-3 business days.' ],
-        ];
-        $hp_faq_schema = [
-            '@context'   => 'https://schema.org',
-            '@type'      => 'FAQPage',
-            'mainEntity' => array_map( fn($f) => [
-                '@type'          => 'Question',
-                'name'           => $f['name'],
-                'acceptedAnswer' => [ '@type' => 'Answer', 'text' => $f['text'] ],
-            ], $hp_faqs ),
-        ];
-        echo '<script type="application/ld+json">' . wp_json_encode($hp_faq_schema, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) . "</script>\n";
     }
 
     // ── BreadcrumbList (inner pages) ──────────────────────────────
@@ -769,9 +818,9 @@ function envue_office_flag( $cc, $kicker, $place ) {
 function envue_social_profiles() {
     return [
         'linkedin' => [ 'LinkedIn', 'https://www.linkedin.com/company/envue-telematics/', '<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.5H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.86h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75v5.29h-4z"/>' ],
-        'facebook' => [ 'Facebook', 'https://www.facebook.com/EnVue-Telematics-2245144869080013', '<path d="M13.5 21.5v-8h2.7l.4-3.2h-3.1V8.3c0-.92.26-1.55 1.58-1.55h1.68V3.9c-.29-.04-1.29-.13-2.45-.13-2.43 0-4.09 1.48-4.09 4.2v2.33H7.5v3.2h2.72v8z"/>' ],
-        'x'        => [ 'X (Twitter)', 'https://twitter.com/envuetelematics', '<path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.2h1.7L7.4 4.73H5.58z"/>' ],
-        'youtube'  => [ 'YouTube', 'https://www.youtube.com/@Envue_Telematics', '<path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/>' ],
+        'facebook' => [ 'Facebook', 'https://www.facebook.com/EnVueTelematics/', '<path d="M13.5 21.5v-8h2.7l.4-3.2h-3.1V8.3c0-.92.26-1.55 1.58-1.55h1.68V3.9c-.29-.04-1.29-.13-2.45-.13-2.43 0-4.09 1.48-4.09 4.2v2.33H7.5v3.2h2.72v8z"/>' ],
+        'x'        => [ 'X (Twitter)', 'https://twitter.com/envueTelematics', '<path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.2h1.7L7.4 4.73H5.58z"/>' ],
+        'youtube'  => [ 'YouTube', 'https://www.youtube.com/channel/UC1uN5DwS2FWnXU1WToV6g6g', '<path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/>' ],
     ];
 }
 function envue_social_links( $class = '' ) {
