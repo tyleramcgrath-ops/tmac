@@ -1,6 +1,6 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-23T10:06:32.570Z",
+  "sealedAt": "2026-09-23T10:33:31.315Z",
   "files": {
     "index.html": {
       "sha256": "89e13de80d3a485fefbaddb012346d53704a01e87d0d14bc046ae5f86d5fa70f",
@@ -58,6 +58,10 @@
       "sha256": "ccef907d30697a9ea712d973822fae4fd4f0b86abf5f0882d1f255c1c63f5c3a",
       "bytes": 3006
     },
+    "api/schedules.js": {
+      "sha256": "d0353aa9ee670215ed847d2df7cc28f5100f87ed8a400940040394cafc614a44",
+      "bytes": 2989
+    },
     "lib/page.impl.js": {
       "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
       "bytes": 47439
@@ -91,12 +95,16 @@
       "bytes": 12993
     },
     "lib/tick.js": {
-      "sha256": "777457961e050536cca0922a69f7169e4e79f24fe832edb70a7d27fe226968f0",
-      "bytes": 15663
+      "sha256": "a14a87c486c101eab5e61cca772a4ce8f99c0343294940fcb1e4f5f2a427fb10",
+      "bytes": 16418
+    },
+    "lib/schedule.js": {
+      "sha256": "8c6937bfe3b743a7d825379b57ca845052ed11c5cc79fe8e903adc6c9fa3eeb8",
+      "bytes": 8081
     },
     "package.json": {
-      "sha256": "23c04ff6a264f49627b9b6af6220e33e01b144be2ab784231a63b0c3a77187b4",
-      "bytes": 594
+      "sha256": "a56a1aae28e14e9329e00503b522ebc750532ae2a001d131056024e2cdf49676",
+      "bytes": 619
     },
     "vercel.json": {
       "sha256": "2e3ad046d1057d70145cc338d2561c1c7581ab5312d399eeaac7589ae6183ff6",
