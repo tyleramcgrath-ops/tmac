@@ -24,9 +24,9 @@ get_header();
 
 	<div class="split rv">
 		<div>
-			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Local SEO', 'mcgrath-chrome' ); ?></h2>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'What is local SEO?', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'Showing up in the map pack when somebody in Abacoa or Jupiter Farms searches for what you sell. That means a Google Business Profile that is actually optimized, consistent citations across the directories that matter in Palm Beach County, location pages that are written rather than spun, and reviews arriving on a schedule instead of in bursts.', 'mcgrath-chrome' ); ?></p>
-			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What local SEO covers', 'mcgrath-chrome' ); ?></h3>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What does local SEO include?', 'mcgrath-chrome' ); ?></h3>
 			<ul class="checks">
 				<li><?php esc_html_e( 'Google Business Profile optimization and posting', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Citation cleanup and NAP consistency', 'mcgrath-chrome' ); ?></li>
@@ -36,9 +36,9 @@ get_header();
 			</ul>
 		</div>
 		<div>
-			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Technical SEO', 'mcgrath-chrome' ); ?></h2>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'What is technical SEO?', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'The unglamorous half. Crawl and index issues, page speed and Core Web Vitals, internal linking, duplicate and thin pages, redirect chains left behind by the last redesign. None of it is exciting and all of it decides whether the content you publish ever gets a chance.', 'mcgrath-chrome' ); ?></p>
-			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What the technical audit covers', 'mcgrath-chrome' ); ?></h3>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What does a technical audit cover?', 'mcgrath-chrome' ); ?></h3>
 			<ul class="checks">
 				<li><?php esc_html_e( 'Full technical audit with a prioritized fix list', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Core Web Vitals and mobile performance', 'mcgrath-chrome' ); ?></li>
@@ -51,18 +51,18 @@ get_header();
 
 	<div class="split rv">
 		<div>
-			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Content that earns the ranking', 'mcgrath-chrome' ); ?></h2>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'What kind of content actually earns a ranking?', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'Pages written for the question behind the search, not for a keyword density target. For a local business that usually means service pages with real detail, comparison and cost pages that answer what buyers are nervous about, and a small number of articles that are genuinely worth linking to.', 'mcgrath-chrome' ); ?></p>
 		</div>
 		<div>
-			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Reporting you can read', 'mcgrath-chrome' ); ?></h2>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'What will the monthly report tell me?', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'One monthly report in plain English: what moved, what did not, what is next, and what it is worth. No forty page PDF of screenshots. If a month was slow you will hear that from me before you notice it yourself.', 'mcgrath-chrome' ); ?></p>
 		</div>
 	</div>
 
 	<div class="tiers rv">
 		<div class="tier">
-			<h3><?php esc_html_e( 'One-off audit', 'mcgrath-chrome' ); ?></h3>
+			<h3><?php esc_html_e( 'What is in a one-off audit?', 'mcgrath-chrome' ); ?></h3>
 			<span class="price"><?php echo esc_html( mcg_opt( 'mcg_price_audit', 'On request' ) ); ?></span>
 			<ul>
 				<li><?php esc_html_e( 'Technical, local and content review', 'mcgrath-chrome' ); ?></li>
@@ -71,7 +71,7 @@ get_header();
 			</ul>
 		</div>
 		<div class="tier feature">
-			<h3><?php esc_html_e( 'Monthly SEO', 'mcgrath-chrome' ); ?></h3>
+			<h3><?php esc_html_e( 'What does monthly SEO include?', 'mcgrath-chrome' ); ?></h3>
 			<span class="price"><?php echo esc_html( mcg_opt( 'mcg_price_month', 'On request' ) ); ?></span>
 			<ul>
 				<li><?php esc_html_e( 'Local and organic run together', 'mcgrath-chrome' ); ?></li>
@@ -81,7 +81,7 @@ get_header();
 			</ul>
 		</div>
 		<div class="tier">
-			<h3><?php esc_html_e( 'Local launch', 'mcgrath-chrome' ); ?></h3>
+			<h3><?php esc_html_e( 'What is a local launch?', 'mcgrath-chrome' ); ?></h3>
 			<span class="price"><?php echo esc_html( mcg_opt( 'mcg_price_launch', 'Fixed scope, on request' ) ); ?></span>
 			<ul>
 				<li><?php esc_html_e( 'Profile, citations and location pages', 'mcgrath-chrome' ); ?></li>
@@ -97,7 +97,7 @@ get_header();
 
 	<?php mcg_questions( 'seo', 'h3' ); ?>
 
-	<?php mcg_faq_block( 'seo', __( 'Questions people ask before they call', 'mcgrath-chrome' ) ); ?>
+	<?php mcg_faq_block( 'seo', __( 'What else do people ask before they call?', 'mcgrath-chrome' ) ); ?>
 
 	<article class="entry rv">
 		<?php while ( have_posts() ) { the_post(); the_content(); } ?>

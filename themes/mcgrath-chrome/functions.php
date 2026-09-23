@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.3.0' );
+define( 'MCG_VERSION', '2.4.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -369,9 +369,18 @@ function mcg_page_schema() {
 	// sells, generated from the arrays that page renders from.
 	$key = mcg_current_key();
 	if ( $key && 'home' !== $key ) {
-		$faqs = mcg_page_faqs();
-		if ( ! empty( $faqs[ $key ] ) ) {
-			mcg_emit_faq_schema( $faqs[ $key ] );
+		// The FAQ accordion plus the question-shaped headings in the body.
+		// Both are visible questions with visible answers, so both belong in
+		// the graph; the audit's rule is that structured data must not
+		// describe content a visitor cannot see, and these are all on the page.
+		$questions = mcg_page_questions();
+		$faqs      = mcg_page_faqs();
+		$items     = array_merge(
+			! empty( $questions[ $key ] ) ? $questions[ $key ] : array(),
+			! empty( $faqs[ $key ] ) ? $faqs[ $key ] : array()
+		);
+		if ( $items ) {
+			mcg_emit_faq_schema( $items );
 		}
 
 		$services = mcg_page_service();

@@ -172,7 +172,7 @@ function mcg_page_table() {
 			),
 		),
 		'seo'       => array(
-			'head' => 'What each part of the work actually moves',
+			'head' => 'Which part of the work moves which result?',
 			'cap'  => 'What each workstream fixes, and how fast to expect it.',
 			'cols' => array( 'Workstream', 'What it fixes', 'Where you see it', 'Pace', 'What I need from you' ),
 			'rows' => array(
@@ -183,7 +183,7 @@ function mcg_page_table() {
 			),
 		),
 		'webdesign' => array(
-			'head' => 'New build, redesign, or keep the one you have',
+			'head' => 'Do I need a new build, a redesign, or neither?',
 			'cap'  => 'What each route starts with, and what you are left holding.',
 			'cols' => array( 'Route', 'Starts with', 'What happens to your URLs', 'What ships', 'Afterwards' ),
 			'rows' => array(
@@ -193,7 +193,7 @@ function mcg_page_table() {
 			),
 		),
 		'aeo'       => array(
-			'head' => 'A search result and an AI answer are not the same thing',
+			'head' => 'How is an AI answer different from a search result?',
 			'cap'  => 'Why a site can rank in the SERPs and never get named in an answer.',
 			'cols' => array( '', 'Classic search result', 'AI answer' ),
 			'rows' => array(
@@ -205,7 +205,7 @@ function mcg_page_table() {
 			),
 		),
 		'about'     => array(
-			'head' => 'Which service fits which problem',
+			'head' => 'Which service fits which problem?',
 			'cap'  => 'The four things this business does, and the problem each one is the answer to.',
 			'cols' => array( 'Service', 'The problem it solves', 'Where it shows up' ),
 			'rows' => array(
@@ -216,7 +216,7 @@ function mcg_page_table() {
 			),
 		),
 		'contact'   => array(
-			'head' => 'What the audit looks at',
+			'head' => 'What does the audit look at?',
 			'cap'  => 'The four parts of a free SEO audit in Jupiter, and what comes back to you for each.',
 			'cols' => array( 'Area', 'What I check', 'What you get back' ),
 			'rows' => array(
