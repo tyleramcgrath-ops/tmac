@@ -16,13 +16,13 @@ add_action( 'wp_enqueue_scripts', function () {
         'envue-style',
         get_template_directory_uri() . '/assets/css/envue.css',
         [ 'envue-fonts' ],
-        '15'
+        '16'
     );
     wp_enqueue_script(
         'envue-script',
         get_template_directory_uri() . '/assets/js/envue.js',
         [],
-        '15',
+        '16',
         true
     );
 } );
@@ -759,4 +759,24 @@ function envue_office_flag( $cc, $kicker, $place ) {
         . '<span class="office-flag__flag"><img src="' . esc_url( $src ) . '" alt="' . esc_attr( 'Flag of ' . ( $names[ $cc ] ?? $cc ) ) . '" width="160" height="120" loading="lazy"></span>'
         . '<span class="office-flag__meta"><small>' . esc_html( $kicker ) . '</small><strong>' . esc_html( $place ) . '</strong></span>'
         . '</div>';
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SOCIAL LINKS — header (wide screens), mobile menu and footer
+══════════════════════════════════════════════════════════════════════ */
+function envue_social_profiles() {
+    return [
+        'linkedin' => [ 'LinkedIn', 'https://www.linkedin.com/company/envue-telematics/', '<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11.5H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.86h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75v5.29h-4z"/>' ],
+        'facebook' => [ 'Facebook', 'https://www.facebook.com/EnVue-Telematics-2245144869080013', '<path d="M13.5 21.5v-8h2.7l.4-3.2h-3.1V8.3c0-.92.26-1.55 1.58-1.55h1.68V3.9c-.29-.04-1.29-.13-2.45-.13-2.43 0-4.09 1.48-4.09 4.2v2.33H7.5v3.2h2.72v8z"/>' ],
+        'x'        => [ 'X (Twitter)', 'https://twitter.com/envuetelematics', '<path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.2h1.7L7.4 4.73H5.58z"/>' ],
+        'youtube'  => [ 'YouTube', 'https://www.youtube.com/@Envue_Telematics', '<path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.28 5 12 5 12 5s-6.28 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.72 19 12 19 12 19s6.28 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/>' ],
+    ];
+}
+function envue_social_links( $class = '' ) {
+    $out = '<ul class="social-links ' . esc_attr( $class ) . '">';
+    foreach ( envue_social_profiles() as $key => $p ) {
+        $out .= '<li><a href="' . esc_url( $p[1] ) . '" target="_blank" rel="noopener me" aria-label="EnVue Telematics on ' . esc_attr( $p[0] ) . '">'
+              . '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="currentColor">' . $p[2] . '</svg></a></li>';
+    }
+    return $out . '</ul>';
 }

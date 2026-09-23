@@ -4,6 +4,7 @@
     <div class="footer-brand">
       <img src="<?php echo get_template_directory_uri(); ?>/assets/images/envue-logo.png" alt="EnVue Telematics" width="200" height="58" loading="lazy">
       <p>AI-powered fleet intelligence for operations leaders who need safety, efficiency and measurable ROI from every vehicle in the fleet.</p>
+      <?php echo envue_social_links( 'social-links--footer' ); ?>
     </div>
     <div>
       <h3>Solutions</h3>

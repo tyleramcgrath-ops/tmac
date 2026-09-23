@@ -348,3 +348,47 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     if (!isOpen) item.classList.add('open');
   });
 });
+
+/* ── Testimonials slider (scroll-snap + arrows/dots) ─────────────── */
+document.querySelectorAll('[data-slider]').forEach(function (slider) {
+  var track = slider.querySelector('.t-track');
+  var prev = slider.querySelector('.t-prev');
+  var next = slider.querySelector('.t-next');
+  var dotsWrap = slider.querySelector('.t-dots');
+  if (!track) return;
+  var cards = track.children;
+  function step() {
+    var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return cards.length ? cards[0].getBoundingClientRect().width + gap : track.clientWidth;
+  }
+  function perView() { return Math.max(1, Math.round(track.clientWidth / step())); }
+  function pages() { return Math.max(1, cards.length - perView() + 1); }
+  function current() { return Math.round(track.scrollLeft / step()); }
+  function buildDots() {
+    if (!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    for (var i = 0; i < pages(); i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Go to testimonial ' + (i + 1));
+      (function (n) { b.addEventListener('click', function () { track.scrollTo({ left: n * step() }); }); })(i);
+      dotsWrap.appendChild(b);
+    }
+    update();
+  }
+  function update() {
+    var c = current(), max = pages() - 1;
+    if (prev) prev.disabled = c <= 0;
+    if (next) next.disabled = c >= max;
+    if (dotsWrap) Array.prototype.forEach.call(dotsWrap.children, function (d, i) { d.classList.toggle('is-active', i === c); });
+  }
+  if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step() }); });
+  if (next) next.addEventListener('click', function () { track.scrollBy({ left: step() }); });
+  track.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); track.scrollBy({ left: step() }); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -step() }); }
+  });
+  var t; track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
+  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(buildDots, 120); });
+  buildDots();
+});

@@ -72,3 +72,9 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   dimensions stamped on every image: no image changes size.
 - Bottom "Get a Demo" sections are back to the original buttons (Get a Free Demo → /get-in-touch/, Call).
   WPForms stays only on pages that had a form before (Get In Touch, audit/landing pages, Verizon, NCTA).
+
+## v6.6
+- Homepage "Why EnVue" icons are forced to a fixed 28px size, so image lazy-loading (EWWW) can no longer shrink or blank them.
+- Customer testimonials are now one swipeable slider (arrows, dots, keyboard, touch) with smaller stat text instead of two tall grids.
+- Social links (LinkedIn, Facebook, X, YouTube) are in the header on wide screens, in the mobile menu, and in the footer.
+- The homepage has exactly one H1 (the other hero slides use H2).

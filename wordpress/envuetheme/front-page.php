@@ -26,12 +26,12 @@
         </div>
         <div class="hero-slide" data-slide="1" aria-hidden="true">
           <span class="eyebrow eyebrow--light">Command center</span>
-          <h1>Control the miles, <span>the risk and the margin.</span></h1>
+          <h2 class="hero-h">Control the miles, <span>the risk and the margin.</span></h2>
           <p>Live telemetry from every vehicle turns the daily run into an operation you can measure: where the cost is, where the risk is, and what to do about both this week.</p>
         </div>
         <div class="hero-slide" data-slide="2" aria-hidden="true">
           <span class="eyebrow eyebrow--light">Local deployment</span>
-          <h1>Technology your team <span>actually uses.</span></h1>
+          <h2 class="hero-h">Technology your team <span>actually uses.</span></h2>
           <p>From the first assessment through quarterly reviews, we stay with the rollout until dispatch, safety and maintenance are each working from the same picture.</p>
         </div>
 
@@ -559,7 +559,8 @@
         <a class="text-link" href="<?php echo esc_url(home_url('/results/')); ?>">See measurable results <span>→</span></a>
       </div>
 
-      <div class="case-study-grid">
+      <div class="t-slider" data-slider>
+        <div class="t-track" tabindex="0" role="region" aria-label="Customer testimonials">
 
         <div class="case-study case-study--featured">
           <span class="case-outcome-tag">Stolen Van Tracked Live</span>
@@ -605,30 +606,62 @@
           </div>
           <a class="case-link" href="<?php echo esc_url(home_url('/customer-success-stories/')); ?>">More customer stories <span>→</span></a>
         </div>
-
-      </div>
-
-      <div class="quote-grid" style="margin-top:20px">
-        <figure class="quote-card reveal">
+        <div class="case-study case-study--quote">
           <blockquote>&ldquo;I would recommend EnVue to any fleet manager or business owner. They really get it.&rdquo;</blockquote>
-          <cite><strong>James Mode</strong>Director, Environmental, Health, and Safety · Nova Compression</cite>
-        </figure>
-        <figure class="quote-card reveal">
+          <div class="case-footer">
+            <div class="story-avatar">JM</div>
+            <div>
+              <strong>James Mode</strong>
+              <span>Director, Environmental, Health, and Safety · Nova Compression</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-study case-study--quote">
           <blockquote>&ldquo;EnVue&rsquo;s program has revolutionized the way we do business. The dash cams alone have saved us thousands of dollars and the customer support is second to none.&rdquo;</blockquote>
-          <cite><strong>Cline E. Everhart</strong>President and Owner · Everhart Transportation Inc.</cite>
-        </figure>
-        <figure class="quote-card reveal">
+          <div class="case-footer">
+            <div class="story-avatar">CE</div>
+            <div>
+              <strong>Cline E. Everhart</strong>
+              <span>President and Owner · Everhart Transportation Inc.</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-study case-study--quote">
           <blockquote>&ldquo;Rhianna and James have been working with me on set up. They are both extremely helpful and don&rsquo;t waste any time getting the job done. I have to say, you and your team are off to a good start showing great support. Thank you for everything.&rdquo;</blockquote>
-          <cite><strong>John McCall</strong>Industrial Products Operations Manager · D&amp;W Diesel</cite>
-        </figure>
-        <figure class="quote-card reveal">
+          <div class="case-footer">
+            <div class="story-avatar">JM</div>
+            <div>
+              <strong>John McCall</strong>
+              <span>Industrial Products Operations Manager · D&amp;W Diesel</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-study case-study--quote">
           <blockquote>&ldquo;I just wanted to thank you and your team at EnVue Telematics for all the help with getting telematics units installed in A-Max&rsquo;s fleet. The GO9 units have been reliable and working with your company has been nothing short of a pleasure. Samantha was always helpful with any updates that were needed and we at A-Max look forward to continuing to work with EnVue in the future.&rdquo;</blockquote>
-          <cite><strong>Jared Cortez</strong>A-MAX Insurance Services, Inc.</cite>
-        </figure>
-        <figure class="quote-card reveal">
+          <div class="case-footer">
+            <div class="story-avatar">JC</div>
+            <div>
+              <strong>Jared Cortez</strong>
+              <span>A-MAX Insurance Services, Inc.</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-study case-study--quote">
           <blockquote>&ldquo;Please know the great service doesn&rsquo;t go unnoticed and is greatly appreciated!&rdquo;</blockquote>
-          <cite><strong>Crista Wrenn</strong>Accounting &amp; Operations · Morehead Pools</cite>
-        </figure>
+          <div class="case-footer">
+            <div class="story-avatar">CW</div>
+            <div>
+              <strong>Crista Wrenn</strong>
+              <span>Accounting &amp; Operations · Morehead Pools</span>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="t-controls">
+          <button class="t-btn t-prev" type="button" aria-label="Previous testimonials">&larr;</button>
+          <div class="t-dots" aria-hidden="true"></div>
+          <button class="t-btn t-next" type="button" aria-label="Next testimonials">&rarr;</button>
+        </div>
       </div>
     </div>
   </section>
