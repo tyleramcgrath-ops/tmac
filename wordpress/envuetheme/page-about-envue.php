@@ -49,7 +49,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Geofences.png.png" alt="Geotab Elite Specialized Partner EnVue" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2026/06/geotab-elite-specialized-partner-1638x2048.png" alt="Geotab Elite Specialized Partner badge awarded to EnVue Telematics" loading="lazy" style="max-height:420px"></div>
     <div class="reveal">
       <span class="eyebrow">Geotab Partnership</span>
       <h2>Geotab Elite Specialized Partner</h2>
