@@ -60,51 +60,27 @@ function mcg_term( $key ) {
 }
 
 /**
- * Two question-shaped headings per page, each answered in the first sentence
- * of the paragraph beneath it.
+ * One question-shaped heading per page, placed near the top and answered in
+ * the first sentence beneath it.
  *
- * Two is deliberate. It matches what the pages ranking for these terms carry;
- * a page stuffed with a dozen question headings reads as written for a parser
- * rather than for a buyer, and the extra ones earn nothing.
+ * One is deliberate: it is the median across the pages ranking for these
+ * terms. A page whose every subheading is a question reads as written for a
+ * parser rather than for a buyer. The homepage carries none at all.
  */
 function mcg_page_questions() {
 	return array(
-		'home'      => array(
-			array(
-				'q' => 'What does a digital marketing agency in Jupiter, FL actually do?',
-				'a' => 'It puts your business in front of people already looking for what you sell. Here that means three things: ranking in the SERPs and the map pack, being named in AI answers, and a website that turns those visits into calls.',
-			),
-			array(
-				'q' => 'Should I fix SEO or rebuild the website first?',
-				'a' => 'Usually SEO first, because a rebuild you did not need is the most expensive way to start. The audit tells you which it is. If the structure, speed and URL layout are sound, the money belongs in content and local visibility instead.',
-			),
-		),
+		// The homepage carries no question heading, by choice.
+		'home'      => array(),
 		'seo'       => array(
 			array(
 				'q' => 'How do you choose an SEO company in Jupiter?',
 				'a' => 'Ask who does the work, what ships each month, and how it gets reported. An SEO company in Jupiter that will not name the person on your account, or will not quote a price before a discovery call, is selling a process rather than an outcome.',
 			),
-			array(
-				'q' => 'How much does an SEO company in Jupiter charge?',
-				'a' => 'It depends on how competitive your terms are and how much the site needs, and you get a number before a meeting rather than after one. Any SEO company in Jupiter that will not quote until you have sat through a discovery call is running a sales process, not a pricing model.',
-			),
-			array(
-				'q' => 'What does local SEO change that national SEO does not?',
-				'a' => 'Local SEO decides whether you appear at all in the map pack and the SERPs somebody sees within a few miles of your door. It runs on your Google Business Profile, citations, reviews and location pages rather than on national authority alone.',
-			),
 		),
 		'webdesign' => array(
 			array(
-				'q' => 'What should a web design company in Jupiter deliver?',
-				'a' => 'A site you own outright, on your hosting, with your logins, that loads fast on a phone and keeps the rankings the old one earned. Anything a web design company in Jupiter cannot hand over at the end was never really yours.',
-			),
-			array(
 				'q' => 'What makes web design in Jupiter, FL different from a template site?',
 				'a' => 'A template is built for everyone, so it carries features you will never use and structure you cannot change. Web design in Jupiter, FL done properly starts from your buyers and your existing URLs, and leaves you owning every part of the result outright.',
-			),
-			array(
-				'q' => 'Will a redesign hurt my search rankings?',
-				'a' => 'It will if the URL structure changes without redirects, which is how most redesigns lose traffic. Crawl the current site first, record what each URL earns in the SERPs today, and write the redirect map before anything is designed.',
 			),
 		),
 		'aeo'       => array(
@@ -112,41 +88,17 @@ function mcg_page_questions() {
 				'q' => 'What is AI search optimization?',
 				'a' => 'AI search optimization is the work that gets your business named and linked when someone asks a model a buying question instead of running a normal search. It shares a foundation with SEO: clean structure, clear claims, and presence on sources those models already read.',
 			),
-			array(
-				'q' => 'Which engines does AI search optimization actually cover?',
-				'a' => 'ChatGPT, Gemini, Perplexity and Google\'s AI Overviews, tracked separately because they read different sources and reach different conclusions from the same question. Treating them as one channel hides the very thing you need to know, which is where each answer came from.',
-			),
-			array(
-				'q' => 'How is it different from ranking in the SERPs?',
-				'a' => 'The SERPs give you ten positions and a second page; an AI answer gives you a paragraph naming two or three businesses and a short source list. There is no page two to fall back to, so the work targets being quotable rather than merely present.',
-			),
 		),
 		'about'     => array(
 			array(
 				'q' => 'What does an SEO consultant in Jupiter, FL do that an agency does not?',
 				'a' => 'You talk to the person doing the work, so nothing is lost between the sales call and the account. An SEO consultant in Jupiter, FL takes fewer clients than an agency, which is the trade: more attention per client, and a real ceiling on volume.',
 			),
-			array(
-				'q' => 'Can one SEO consultant in Jupiter, FL handle national work?',
-				'a' => 'Yes for the technical, content and AI visibility work, which is identical whether a business sells in Palm Beach County or across the United States. No for anything needing large monthly volume or paid media across several platforms at once, and you will be told that rather than sold around it.',
-			),
-			array(
-				'q' => 'How do I know the work is actually being done?',
-				'a' => 'You see what shipped, not a summary of effort. Each month names the pages and URLs that changed, what moved in the SERPs, what did not, and what is next. A month with nothing to show is reported as a month with nothing to show.',
-			),
 		),
 		'contact'   => array(
 			array(
 				'q' => 'What does a free SEO audit in Jupiter include?',
 				'a' => 'Where you rank now, what is technically holding the site back, and whether AI answers name you at all. A free SEO audit in Jupiter here ends with the three fixes worth doing first, in writing, whether or not we work together.',
-			),
-			array(
-				'q' => 'Am I committing to anything by requesting the audit?',
-				'a' => 'No. The findings are yours in writing whether or not anything follows, nothing is held back to force a second conversation, and there is no follow-up sequence. If you do not reply after the call, you will not hear from me again.',
-			),
-			array(
-				'q' => 'Is this a sales call in disguise?',
-				'a' => 'No. The audit is run before we speak, so the call is spent on findings rather than discovery questions. If the honest answer is that your site is fine, or that somebody else suits you better, you will be told that on the call.',
 			),
 		),
 	);
@@ -172,7 +124,7 @@ function mcg_page_table() {
 			),
 		),
 		'seo'       => array(
-			'head' => 'Which part of the work moves which result?',
+			'head' => 'What each part of the work actually moves',
 			'cap'  => 'What each workstream fixes, and how fast to expect it.',
 			'cols' => array( 'Workstream', 'What it fixes', 'Where you see it', 'Pace', 'What I need from you' ),
 			'rows' => array(
@@ -183,7 +135,7 @@ function mcg_page_table() {
 			),
 		),
 		'webdesign' => array(
-			'head' => 'Do I need a new build, a redesign, or neither?',
+			'head' => 'New build, redesign, or keep the one you have',
 			'cap'  => 'What each route starts with, and what you are left holding.',
 			'cols' => array( 'Route', 'Starts with', 'What happens to your URLs', 'What ships', 'Afterwards' ),
 			'rows' => array(
@@ -193,7 +145,7 @@ function mcg_page_table() {
 			),
 		),
 		'aeo'       => array(
-			'head' => 'How is an AI answer different from a search result?',
+			'head' => 'A search result and an AI answer are not the same thing',
 			'cap'  => 'Why a site can rank in the SERPs and never get named in an answer.',
 			'cols' => array( '', 'Classic search result', 'AI answer' ),
 			'rows' => array(
@@ -205,7 +157,7 @@ function mcg_page_table() {
 			),
 		),
 		'about'     => array(
-			'head' => 'Which service fits which problem?',
+			'head' => 'Which service fits which problem',
 			'cap'  => 'The four things this business does, and the problem each one is the answer to.',
 			'cols' => array( 'Service', 'The problem it solves', 'Where it shows up' ),
 			'rows' => array(
@@ -216,7 +168,7 @@ function mcg_page_table() {
 			),
 		),
 		'contact'   => array(
-			'head' => 'What does the audit look at?',
+			'head' => 'What the audit looks at',
 			'cap'  => 'The four parts of a free SEO audit in Jupiter, and what comes back to you for each.',
 			'cols' => array( 'Area', 'What I check', 'What you get back' ),
 			'rows' => array(

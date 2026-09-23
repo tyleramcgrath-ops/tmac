@@ -1,4 +1,4 @@
-=== McGrath Chrome 2.4 ===
+=== McGrath Chrome 2.5 ===
 
 A custom WordPress theme for McGrath Marketing Group.
 Navy and cream editorial design, with the dissolve kept at the centre of it.
@@ -284,13 +284,11 @@ states a price, a statistic, a client name or a date; the SEO table's price
 cells read the Customizer fields, so they show what you set and "On request"
 until you set it.
 
-QUESTION HEADINGS. On the five pages other than the homepage, every H2 and
-H3 is phrased as a question a buyer would ask, and the text directly beneath
-answers it in its first sentence. That is a deliberate house style rather
-than a default; if you ever want statement headings back, the mapping lives
-in inc/page-depth.php and the templates, and the homepage is already written
-that way as a reference. H1s and title tags were left alone, because they
-carry the head terms.
+QUESTION HEADINGS. One per page, placed directly under the H1 and answered in
+the first sentence beneath it. That is the median across the pages ranking for
+these terms; a page whose every subheading is a question reads as written for
+a parser rather than for a buyer. The homepage carries none. Edit them in
+mcg_page_questions() in inc/page-seo.php.
 
 TWO GATES, NOT ONE. The business graph (ProfessionalService) stands down when
 Yoast, Rank Math, All in One SEO, SEOPress or Slim SEO is active, because those
