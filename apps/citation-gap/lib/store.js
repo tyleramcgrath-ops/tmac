@@ -8,11 +8,12 @@
 //
 // db is injected so the tests run these exact statements against a real PostgreSQL.
 const PLAN_LIMITS = {
-  // The pricing page says Agency gets "25 sites under weekly monitoring". It says nothing about
-  // a Practice limit, so there is none here: implementing a cap the page does not promise would
-  // be charging for something and then withholding it.
-  practice: Infinity,
-  agency: 25
+  // These two numbers are the pricing page, restated in code. Practice says "up to 10 projects"
+  // and Agency says "unlimited sites", so that is exactly what is enforced — a cap the page does
+  // not promise would be charging for something and then withholding it, and a promise the code
+  // does not keep is the same thing wearing a nicer hat. Change one, change the other.
+  practice: 10,
+  agency: Infinity
 };
 
 // A plan that can hold server-side projects at all. The free tier is the browser-side tool and
@@ -64,9 +65,14 @@ async function createProject(db, user, input) {
   if (!/^https?:\/\//i.test(url)) return { error: 'The page URL needs to start with http:// or https://', status: 400 };
   if (!keyword) return { error: 'A project needs a keyword to track.', status: 400 };
 
+  // Archived projects do not count, which is why the refusal offers archiving as the way out:
+  // it is a real way out, not a brush-off.
   const limit = PLAN_LIMITS[user.plan];
   if (limit !== Infinity && (await countProjects(db, user.id)) >= limit) {
-    return { error: 'That plan covers ' + limit + ' projects. Archive one, or move up a tier.', status: 409 };
+    return {
+      error: 'That plan covers ' + limit + ' projects. Archive one, or move up to Agency, which is unlimited.',
+      status: 409
+    };
   }
 
   const r = await db.query(
