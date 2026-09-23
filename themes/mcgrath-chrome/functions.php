@@ -7,11 +7,12 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.2.0' );
+define( 'MCG_VERSION', '2.3.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
 require_once get_template_directory() . '/inc/page-seo.php';
+require_once get_template_directory() . '/inc/page-depth.php';
 require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/diagnostics.php';
 
@@ -455,6 +456,76 @@ function mcg_meta_description() {
 	}
 }
 add_action( 'wp_head', 'mcg_meta_description', 2 );
+
+/**
+ * Open Graph and Twitter card tags.
+ *
+ * A link pasted into a message, a group chat or a social post is rendered by
+ * the receiving platform from these tags. Unset, the platform guesses, and a
+ * link to the business arrives looking like an error. The web design page
+ * says the build handles this, so the theme has to actually handle it.
+ *
+ * Gated the same way as the meta description: an SEO plugin publishes its own
+ * Open Graph tags, and two sets on one page is worse than either alone.
+ */
+function mcg_social_tags() {
+	if ( ! mcg_should_output_schema() ) {
+		return;
+	}
+
+	$key   = mcg_current_key();
+	$terms = mcg_page_terms();
+
+	$title = wp_get_document_title();
+	$desc  = '';
+	if ( $key && isset( $terms[ $key ]['meta'] ) ) {
+		$desc = $terms[ $key ]['meta'];
+	} elseif ( is_singular() ) {
+		$desc = (string) get_post_field( 'post_excerpt', get_queried_object_id() );
+	}
+	if ( ! $desc ) {
+		$desc = get_bloginfo( 'description' );
+	}
+
+	$url = is_singular() ? get_permalink() : home_url( '/' );
+
+	// The page's own photograph where it has one, the hero otherwise.
+	$image = '';
+	$dir   = get_template_directory() . '/assets/img/';
+	$uri   = get_template_directory_uri() . '/assets/img/';
+	foreach ( array( 'page-' . $key, 'hero' ) as $name ) {
+		foreach ( array( 'webp', 'jpg', 'png' ) as $ext ) {
+			if ( $name && file_exists( $dir . $name . '.' . $ext ) ) {
+				$image = $uri . $name . '.' . $ext;
+				break 2;
+			}
+		}
+	}
+
+	$tags = array(
+		'og:type'        => is_singular() && ! is_page() ? 'article' : 'website',
+		'og:site_name'   => get_bloginfo( 'name' ),
+		'og:title'       => $title,
+		'og:description' => wp_strip_all_tags( $desc ),
+		'og:url'         => $url,
+		'og:locale'      => 'en_US',
+	);
+	if ( $image ) {
+		$tags['og:image'] = $image;
+	}
+
+	foreach ( $tags as $prop => $val ) {
+		printf( '<meta property="%s" content="%s">' . "\n", esc_attr( $prop ), esc_attr( $val ) );
+	}
+
+	printf( '<meta name="twitter:card" content="%s">' . "\n", $image ? 'summary_large_image' : 'summary' );
+	printf( '<meta name="twitter:title" content="%s">' . "\n", esc_attr( $title ) );
+	printf( '<meta name="twitter:description" content="%s">' . "\n", esc_attr( wp_strip_all_tags( $desc ) ) );
+	if ( $image ) {
+		printf( '<meta name="twitter:image" content="%s">' . "\n", esc_attr( $image ) );
+	}
+}
+add_action( 'wp_head', 'mcg_social_tags', 3 );
 add_action( 'wp_head', 'mcg_schema', 20 );
 
 /** Keep the vault out of search results and sitemaps. */

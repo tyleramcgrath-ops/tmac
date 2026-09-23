@@ -95,6 +95,8 @@ get_header();
 		</div>
 	</div>
 
+	<?php mcg_depth( 'contact' ); ?>
+
 	<?php mcg_table( 'contact' ); ?>
 
 	<?php mcg_questions( 'contact', 'h3' ); ?>

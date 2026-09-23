@@ -68,6 +68,8 @@ get_header();
 		<p><?php esc_html_e( 'Content ships, local signals get maintained, and one report tells you what moved in the SERPs, what did not, and what is next. You deal with me directly throughout, and you can stop at the end of any month.', 'mcgrath-chrome' ); ?></p>
 	</div>
 
+	<?php mcg_depth( 'about' ); ?>
+
 	<?php mcg_table( 'about' ); ?>
 
 	<?php mcg_questions( 'about', 'h3' ); ?>

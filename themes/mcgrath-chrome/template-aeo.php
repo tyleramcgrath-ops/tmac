@@ -70,6 +70,8 @@ get_header();
 		</div>
 	</div>
 
+	<?php mcg_depth( 'aeo' ); ?>
+
 	<?php mcg_table( 'aeo' ); ?>
 
 	<?php mcg_questions( 'aeo', 'h3' ); ?>

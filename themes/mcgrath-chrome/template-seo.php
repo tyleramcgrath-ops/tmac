@@ -91,6 +91,8 @@ get_header();
 		</div>
 	</div>
 
+	<?php mcg_depth( 'seo' ); ?>
+
 	<?php mcg_table( 'seo' ); ?>
 
 	<?php mcg_questions( 'seo', 'h3' ); ?>

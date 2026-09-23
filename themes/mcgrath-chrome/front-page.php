@@ -355,6 +355,7 @@ if ( $mcg_posts ) :
 
 <!-- ================== Where buyers find you + questions ================== -->
 <section class="sec gut">
+	<?php mcg_depth( 'home' ); ?>
 	<?php mcg_table( 'home' ); ?>
 	<?php mcg_questions( 'home', 'h3' ); ?>
 </section>

@@ -35,8 +35,8 @@ function mcg_page_terms() {
 			'meta' => 'Looking for an SEO company in Jupiter? Local, technical and content SEO for Palm Beach County. Clear pricing, monthly reporting, no long contract.',
 		),
 		'webdesign' => array(
-			'term' => 'web design company in Jupiter',
-			'meta' => 'A web design company in Jupiter, FL building fast custom WordPress sites, built to rank from launch day and handed over so you own every part of it.',
+			'term' => 'Web Design in Jupiter, FL',
+			'meta' => 'Web Design in Jupiter, FL: fast custom WordPress sites for Palm Beach County, built to rank from launch day and handed over so you own every part of it.',
 		),
 		'aeo'       => array(
 			'term' => 'AI search optimization',
@@ -71,7 +71,7 @@ function mcg_page_questions() {
 	return array(
 		'home'      => array(
 			array(
-				'q' => 'What does a digital marketing agency in Jupiter actually do?',
+				'q' => 'What does a digital marketing agency in Jupiter, FL actually do?',
 				'a' => 'It puts your business in front of people already looking for what you sell. Here that means three things: ranking in the SERPs and the map pack, being named in AI answers, and a website that turns those visits into calls.',
 			),
 			array(
@@ -85,6 +85,10 @@ function mcg_page_questions() {
 				'a' => 'Ask who does the work, what ships each month, and how it gets reported. An SEO company in Jupiter that will not name the person on your account, or will not quote a price before a discovery call, is selling a process rather than an outcome.',
 			),
 			array(
+				'q' => 'How much does an SEO company in Jupiter charge?',
+				'a' => 'It depends on how competitive your terms are and how much the site needs, and you get a number before a meeting rather than after one. Any SEO company in Jupiter that will not quote until you have sat through a discovery call is running a sales process, not a pricing model.',
+			),
+			array(
 				'q' => 'What does local SEO change that national SEO does not?',
 				'a' => 'Local SEO decides whether you appear at all in the map pack and the SERPs somebody sees within a few miles of your door. It runs on your Google Business Profile, citations, reviews and location pages rather than on national authority alone.',
 			),
@@ -93,6 +97,10 @@ function mcg_page_questions() {
 			array(
 				'q' => 'What should a web design company in Jupiter deliver?',
 				'a' => 'A site you own outright, on your hosting, with your logins, that loads fast on a phone and keeps the rankings the old one earned. Anything a web design company in Jupiter cannot hand over at the end was never really yours.',
+			),
+			array(
+				'q' => 'What makes web design in Jupiter, FL different from a template site?',
+				'a' => 'A template is built for everyone, so it carries features you will never use and structure you cannot change. Web design in Jupiter, FL done properly starts from your buyers and your existing URLs, and leaves you owning every part of the result outright.',
 			),
 			array(
 				'q' => 'Will a redesign hurt my search rankings?',
@@ -105,6 +113,10 @@ function mcg_page_questions() {
 				'a' => 'AI search optimization is the work that gets your business named and linked when someone asks a model a buying question instead of running a normal search. It shares a foundation with SEO: clean structure, clear claims, and presence on sources those models already read.',
 			),
 			array(
+				'q' => 'Which engines does AI search optimization actually cover?',
+				'a' => 'ChatGPT, Gemini, Perplexity and Google\'s AI Overviews, tracked separately because they read different sources and reach different conclusions from the same question. Treating them as one channel hides the very thing you need to know, which is where each answer came from.',
+			),
+			array(
 				'q' => 'How is it different from ranking in the SERPs?',
 				'a' => 'The SERPs give you ten positions and a second page; an AI answer gives you a paragraph naming two or three businesses and a short source list. There is no page two to fall back to, so the work targets being quotable rather than merely present.',
 			),
@@ -115,6 +127,10 @@ function mcg_page_questions() {
 				'a' => 'You talk to the person doing the work, so nothing is lost between the sales call and the account. An SEO consultant in Jupiter, FL takes fewer clients than an agency, which is the trade: more attention per client, and a real ceiling on volume.',
 			),
 			array(
+				'q' => 'Can one SEO consultant in Jupiter, FL handle national work?',
+				'a' => 'Yes for the technical, content and AI visibility work, which is identical whether a business sells in Palm Beach County or across the United States. No for anything needing large monthly volume or paid media across several platforms at once, and you will be told that rather than sold around it.',
+			),
+			array(
 				'q' => 'How do I know the work is actually being done?',
 				'a' => 'You see what shipped, not a summary of effort. Each month names the pages and URLs that changed, what moved in the SERPs, what did not, and what is next. A month with nothing to show is reported as a month with nothing to show.',
 			),
@@ -123,6 +139,10 @@ function mcg_page_questions() {
 			array(
 				'q' => 'What does a free SEO audit in Jupiter include?',
 				'a' => 'Where you rank now, what is technically holding the site back, and whether AI answers name you at all. A free SEO audit in Jupiter here ends with the three fixes worth doing first, in writing, whether or not we work together.',
+			),
+			array(
+				'q' => 'Am I committing to anything by requesting the audit?',
+				'a' => 'No. The findings are yours in writing whether or not anything follows, nothing is held back to force a second conversation, and there is no follow-up sequence. If you do not reply after the call, you will not hear from me again.',
 			),
 			array(
 				'q' => 'Is this a sales call in disguise?',
@@ -323,7 +343,7 @@ function mcg_page_service() {
 			'desc' => 'Local, technical and content SEO for businesses in Jupiter, Palm Beach Gardens and Tequesta. Google Business Profile optimization, citations and location pages, technical audits and Core Web Vitals, schema, and content written for the question behind the search.',
 		),
 		'webdesign' => array(
-			'name' => 'Web Design and Development',
+			'name' => 'Web Design in Jupiter, FL',
 			'type' => 'Web design',
 			'desc' => 'Custom WordPress websites for Palm Beach County businesses, built mobile first, with Core Web Vitals handled before launch, crawlable markup and schema, and a redirect map on every redesign so rankings carry across.',
 		),

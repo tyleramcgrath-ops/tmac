@@ -4,7 +4,7 @@ Theme URI: https://mcgrathmarketinggroup.com
 Author: Tyler McGrath
 Author URI: https://mcgrathmarketinggroup.com
 Description: Custom theme for McGrath Marketing Group, an SEO, AI search and web design company in Jupiter, Florida. Navy and cream editorial design with a live visibility dashboard, a scroll-driven dissolve that shatters a page of blue links into pixels and reassembles them as the question a buyer asks an AI model, a crawler-view toggle, a reveal lens and a password protected vault for client work.
-Version: 2.2.0
+Version: 2.3.0
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -1337,3 +1337,31 @@ body.crawl .cmp tbody th,body.crawl .cmp tbody td{border-bottom-color:rgba(159,2
 @media(prefers-reduced-motion:no-preference){
   .cmpWrap,.qa,.pageFaq{scroll-margin-top:96px;}
 }
+
+/* ============================================================
+   Long-form depth sections (inc/page-depth.php).
+   Two columns on a wide screen so 2,000 words does not read as
+   one endless ribbon; one column on a phone.
+   ============================================================ */
+
+.depth{max-width:var(--maxw);margin:clamp(44px,6.5vw,86px) auto 0;}
+.depth > h2{font-size:clamp(23px,2.8vw,38px);line-height:1.14;margin-bottom:14px;}
+.depthIntro{font-size:clamp(17px,1.35vw,19.5px);line-height:1.62;color:var(--ink-70);
+  max-width:64ch;margin-bottom:clamp(22px,3vw,38px);}
+
+.depthGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:clamp(24px,3.4vw,46px);}
+.depthItem h3{font-size:clamp(18px,1.55vw,21px);line-height:1.3;margin-bottom:10px;
+  color:var(--ink);}
+.depthItem p{font-size:16px;line-height:1.74;color:var(--ink-70);max-width:62ch;}
+.depthItem p + p{margin-top:12px;}
+
+/* A rule above each section so the page reads as chapters rather than one slab. */
+.depth + .depth{border-top:1px solid var(--line-2);padding-top:clamp(36px,5vw,64px);}
+
+@media(max-width:700px){
+  .depthGrid{gap:28px;}
+  .depthItem p{font-size:15.5px;}
+}
+
+body.crawl .depth + .depth{border-top-color:rgba(159,243,184,.16);}
