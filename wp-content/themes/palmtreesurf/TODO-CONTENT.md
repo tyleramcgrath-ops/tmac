@@ -678,11 +678,11 @@ with your own when you have one — guests who book a specific boat notice.
 that is where it went — **worth checking**, because the clip cannot be played in
 the environment this was built in.
 
-Two clips from 14 May, `clip-2025-05-14-a.mp4` and `clip-2025-05-14-b.mp4`, are
-bundled in the theme but not yet on any tour, because there is no way to tell
-what they show. Tell me which tours they belong to and they go on in a line
-each, or upload them to **Media** and paste the URL into the tour's **Video
-URL** field yourself.
+The two clips from 14 May are **not** in the theme. They were not on any tour —
+there is no way to tell what they show from here — and carrying five megabytes
+of unused video pushed the theme past the size a zip can be uploaded at. Put
+them in **Media** and paste the URL into the tour's **Video URL** field, or tell
+me which tours they belong to and they go back in.
 
 ---
 
