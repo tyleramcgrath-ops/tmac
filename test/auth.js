@@ -51,6 +51,10 @@ let started = false, client = null;
     client = new Client({ host: '127.0.0.1', port: PORT, user: 'postgres', database: 'cg' });
     await client.connect();
     // The same shape lib/db.js exposes, so lib/auth.js runs the queries it will run in production.
+    // The endpoint handlers reach for lib/db.js rather than this shim, so it has to resolve to
+    // the same throwaway database. lib/db.js reads DATABASE_URL when its pool is first used.
+    process.env.DATABASE_URL = 'postgresql://postgres@127.0.0.1:' + PORT + '/cg';
+
     const db = {
       query: (t, p) => client.query(t, p),
       tx: async (fn) => {
@@ -184,6 +188,70 @@ let started = false, client = null;
       )).rows[0].c;
       ok(counts === '0/0', 'no orphaned sessions or tokens left behind', counts);
     }
+
+    console.log('\n8. The two endpoints the four used to be');
+    {
+      // request+redeem became /api/auth/link, me+logout became /api/auth/session, because the
+      // Hobby plan allows twelve functions and the rest of the build needs three of them. The
+      // behaviour has to survive the move, so it is asserted at the endpoint, not the library.
+      const link = require(path.join(ROOT, 'api', 'auth', 'link.js'));
+      const session = require(path.join(ROOT, 'api', 'auth', 'session.js'));
+      const call = (handler, rq) => new Promise((resolve) => {
+        const res = {
+          _code: 0, _headers: {},
+          setHeader(k, v) { res._headers[String(k).toLowerCase()] = v; return res; },
+          status(c) { res._code = c; return res; },
+          json(b) { resolve({ code: res._code || 200, body: b, headers: res._headers }); return res; },
+          writeHead(c, h) { res._code = c; Object.assign(res._headers, h || {}); return res; },
+          end() { resolve({ code: res._code, body: null, headers: res._headers }); return res; }
+        };
+        Promise.resolve(handler(rq, res)).catch((e) => resolve({ code: 0, body: { thrown: String(e) } }));
+      });
+      const rq = (extra) => Object.assign({ method: 'GET', query: {}, headers: { host: 'example.test' }, body: {} }, extra);
+
+      const bad = await call(link, rq({ method: 'POST', body: { email: 'not-an-address' } }));
+      ok(bad.code === 400, 'a malformed address is the one thing answered differently', JSON.stringify(bad.body));
+
+      const wrongMethod = await call(link, rq({ method: 'DELETE' }));
+      ok(wrongMethod.code === 405, 'and a method that is neither half of the link is refused');
+
+      // Redeeming is reached by clicking mail, so every outcome is a redirect, and none of them
+      // say whether the token ever existed.
+      const junk = await call(link, rq({ query: { token: 'nope' } }));
+      ok(junk.code === 302 && /signin=invalid/.test(junk.headers.location || ''),
+         'an unknown token lands back in the app saying only invalid', junk.headers.location);
+      ok(!/nope/.test(junk.headers.location || ''), 'without echoing the token into the URL');
+
+      const issued = await auth.issueLoginToken(db, 'endpoint@example.com');
+      const good = await call(link, rq({ query: { token: issued.token } }));
+      ok(good.code === 302 && /signin=ok/.test(good.headers.location || ''), 'a live token redirects as signed in');
+      const cookie = good.headers['set-cookie'] || '';
+      ok(/HttpOnly/i.test(cookie) && /SameSite=Lax/i.test(cookie),
+         'and sets a cookie the page cannot read', cookie.slice(0, 70));
+      const sid = (cookie.match(/^[^=]+=([^;]+)/) || [])[1];
+
+      const second = await call(link, rq({ query: { token: issued.token } }));
+      ok(second.code === 302 && /signin=used/.test(second.headers.location || ''),
+         'the same link twice says used, not invalid — different advice for a different situation');
+
+      const anon = await call(session, rq({ method: 'GET' }));
+      ok(anon.code === 200 && anon.body.user === null,
+         'a signed-out visitor is an ordinary 200 with no user, not a 401 the front end must catch');
+
+      const signedIn = { method: 'GET', headers: { cookie: 'cg_session=' + sid, host: 'example.test' } };
+      const who = await call(session, rq(signedIn));
+      ok(who.code === 200 && who.body.user && who.body.user.email === 'endpoint@example.com',
+         'the cookie resolves to the account', JSON.stringify(who.body.user && who.body.user.email));
+      ok(!JSON.stringify(who.body).includes(sid), 'and the reply does not hand the session id back out');
+
+      const out = await call(session, rq({ method: 'DELETE', headers: signedIn.headers }));
+      ok(out.code === 200, 'signing out answers ok');
+      ok(/Max-Age=0|01 Jan 1970/i.test(out.headers['set-cookie'] || ''), 'and clears the cookie',
+         String(out.headers['set-cookie'] || '').slice(0, 70));
+      const gone = await call(session, rq(signedIn));
+      ok(gone.body.user === null, 'the row is gone too, so a copied cookie is worthless afterwards');
+    }
+
   } finally {
     try { if (client) await client.end(); } catch (e) {}
     try { if (started) sh(`${bin('pg_ctl')} -D ${DATA} -m immediate stop`); } catch (e) {}

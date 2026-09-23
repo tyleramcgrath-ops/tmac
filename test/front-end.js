@@ -19,7 +19,7 @@
 // So each is asserted at the widths people actually hold, rather than eyeballed once.
 const http = require('http'), fs = require('fs'), path = require('path');
 const { execSync } = require('child_process');
-const { serveStatic } = require('./enter-app.js');
+const { serveStatic, serveAccount } = require('./enter-app.js');
 
 const ROOT = path.join(__dirname, '..');
 const WIDTHS = [320, 360, 390, 430, 519, 560, 768, 900, 1280];
@@ -37,7 +37,9 @@ const ok = (c, name, extra) => { if (c) { pass++; console.log('  ok   ' + name);
   }
 
   const srv = http.createServer((req, res) => {
-    if (serveStatic(require('url').parse(req.url).pathname, res, ROOT)) return;
+    const p = require('url').parse(req.url).pathname;
+    if (serveAccount(p, res)) return;
+    if (serveStatic(p, res, ROOT)) return;
     res.setHeader('content-type', 'text/html');
     res.end(fs.readFileSync(path.join(ROOT, 'index.html')));
   });

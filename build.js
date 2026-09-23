@@ -48,10 +48,8 @@ const SHIPPED = [
   'api/page.js',       // endpoint → lib/page.impl.js
   'api/render.js',     // endpoint → lib/render.impl.js
   'api/serp.js',       // one Google query, normalized across SerpApi and Serper
-  'api/auth/request.js',  // POST  ask for a link
-  'api/auth/redeem.js',   // GET   open the link, mint the session
-  'api/auth/me.js',       // GET   who the cookie belongs to
-  'api/auth/logout.js',   // POST  end the session
+  'api/auth/link.js',     // POST ask for a link · GET redeem it
+  'api/auth/session.js',  // GET  who the cookie belongs to · DELETE end it
   'api/projects.js',      // GET/POST/PATCH/DELETE  projects, ?id= rather than a dynamic route
   'api/scans.js',         // GET/POST              the history behind a project
   'api/tick.js',          // POST                  queue a scan, and move the queue along

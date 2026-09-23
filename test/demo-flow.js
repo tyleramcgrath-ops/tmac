@@ -1,10 +1,12 @@
 // Loads index.html in Chromium, runs the demo, checks for console errors, dumps the work order.
 const { chromium } = require(require('path').join(require('child_process').execSync('npm root -g').toString().trim(),'playwright'));
 const http=require('http'), fs=require('fs'), path=require('path');
-const { enterApp, workspacePanel, serveStatic }=require('./enter-app.js');
+const { enterApp, workspacePanel, serveStatic, serveAccount }=require('./enter-app.js');
 (async()=>{
   const root=path.join(__dirname,'..');
-  const srv=http.createServer((req,res)=>{ if(serveStatic(require('url').parse(req.url).pathname,res,root)) return; const f=path.join(root,'index.html'); res.setHeader('content-type','text/html'); res.end(fs.readFileSync(f)); });
+  const srv=http.createServer((req,res)=>{ var p=require('url').parse(req.url).pathname;
+    if(serveAccount(p,res)) return;
+    if(serveStatic(p,res,root)) return; const f=path.join(root,'index.html'); res.setHeader('content-type','text/html'); res.end(fs.readFileSync(f)); });
   await new Promise(r=>srv.listen(0,r)); const port=srv.address().port;
   const browser=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
   const page=await browser.newPage();

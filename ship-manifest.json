@@ -1,10 +1,10 @@
 {
   "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
-  "sealedAt": "2026-09-23T09:49:03.862Z",
+  "sealedAt": "2026-09-23T10:06:32.570Z",
   "files": {
     "index.html": {
-      "sha256": "4d299092203f41f93ee8b1a6cb71483d44fb3d436ec65651a9e9757f727d49ea",
-      "bytes": 187682
+      "sha256": "89e13de80d3a485fefbaddb012346d53704a01e87d0d14bc046ae5f86d5fa70f",
+      "bytes": 198578
     },
     "score.js": {
       "sha256": "cfe5979cc0c355edc49875313d7db972464ad1987aa8a3ac603780cf3d5e9d4d",
@@ -34,21 +34,13 @@
       "sha256": "552381689142f313c8b522f4799315c8ff5c925aad76bbec1ee9805a9dcd1de2",
       "bytes": 5734
     },
-    "api/auth/request.js": {
-      "sha256": "73ad17166aa0711913ca35b232da9746f318d3cf974e546f4bfaa7708559866d",
-      "bytes": 1819
+    "api/auth/link.js": {
+      "sha256": "b8d6d5d927974d80bef018d5fdc207fca07081ebd209c60dde2cd8ef1488215a",
+      "bytes": 3443
     },
-    "api/auth/redeem.js": {
-      "sha256": "4f33d8a80f3a576499f2d71ead4f6374b278e184dd8d3356759d8f0ff0550935",
-      "bytes": 1367
-    },
-    "api/auth/me.js": {
-      "sha256": "bd8596b3ab2dff0e4df29ceeab2574a00d464405ff31911cdf5b430ac9d7bbdc",
-      "bytes": 867
-    },
-    "api/auth/logout.js": {
-      "sha256": "5fc6a363d797d969c1f0ae6268d9c37520439850f1c3550fbc74301cceb82a93",
-      "bytes": 886
+    "api/auth/session.js": {
+      "sha256": "3b58fdd2d3bc4676532f38b0c50a4c4184e180493338d794216f5e39e94c9e11",
+      "bytes": 1984
     },
     "api/projects.js": {
       "sha256": "24c7956edb281d15452f6d6d52f82fa409e31ce786334b4a9db3efce315ecea7",
