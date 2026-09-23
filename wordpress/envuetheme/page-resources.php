@@ -29,6 +29,54 @@
   </div>
 </div>
 
+<!-- Resource Center hub (live /resources/ content) -->
+<style>
+.res-hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px;}
+.res-hub-col{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;}
+.res-hub-col h3{font-size:1.125rem;margin-bottom:14px;}
+.res-hub-col a{color:inherit;font-weight:600;}
+.res-hub-col a:hover{color:var(--brand);}
+@media(max-width:960px){.res-hub-grid{grid-template-columns:1fr;}}
+</style>
+<section class="section section--soft" id="resource-center"><div class="wrap">
+  <div class="section-head"><div>
+    <span class="eyebrow reveal">Fleet Telematics Resource Center</span>
+    <h2 class="reveal" style="--d:1">Guides and tools for fleet decisions.</h2>
+  </div><div class="reveal" style="--d:2">
+    <p>Welcome to the EnVue Telematics Resource Center. Whether you are looking to calculate fleet ROI, understand the latest DOT compliance regulations, or explore AI dash cam technology, we have the expert-led guides and tools you need.</p>
+  </div></div>
+  <div class="res-hub-grid">
+    <div class="res-hub-col reveal">
+      <h3>Interactive Tools</h3>
+      <ul class="check-list">
+        <li><a href="<?php echo esc_url(home_url("/fleet-optimization-tools-resources/")); ?>">Fleet ROI &amp; Savings Calculator</a></li>
+        <li><a href="<?php echo esc_url(home_url("/fleet-optimization-tools-resources/")); ?>">Solution Finder Quiz</a></li>
+        <li><a href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Live Fleet Dashboard Demo</a></li>
+      </ul>
+    </div>
+    <div class="res-hub-col reveal">
+      <h3>Expert Guides</h3>
+      <ul class="check-list">
+        <li><a href="<?php echo esc_url(home_url("/resources/what-is-a-fleet-ai-dash-cam/")); ?>">What is a Fleet AI Dash Cam?</a></li>
+        <li><a href="<?php echo esc_url(home_url("/how-ai-dash-cams-are-revolutionizing-fleet-safety-in-2026/")); ?>">AI Dash Cams &amp; Fleet Safety in 2026</a></li>
+        <li><a href="<?php echo esc_url(home_url("/top-10-ai-fleet-management-trends-for-2026-the-ultimate-guide-for-fleet-managers/")); ?>">Top 10 AI Fleet Trends for 2026</a></li>
+      </ul>
+    </div>
+    <div class="res-hub-col reveal">
+      <h3>Industry Solutions &amp; Integrations</h3>
+      <ul class="check-list">
+        <li><a href="<?php echo esc_url(home_url("/government/")); ?>">Government &amp; Municipal Fleets</a></li>
+        <li><a href="<?php echo esc_url(home_url("/field-services/")); ?>">Field Services &amp; Logistics</a></li>
+        <li><a href="<?php echo esc_url(home_url("/oil-gas/")); ?>">Oil &amp; Gas Operations</a></li>
+        <li><a href="<?php echo esc_url(home_url("/verizon/")); ?>">Verizon Connect Integration</a></li>
+        <li><a href="<?php echo esc_url(home_url("/roadeazy/")); ?>">Unified Fleet Intelligence</a></li>
+        <li><a href="<?php echo esc_url(home_url("/compliance/")); ?>">Compliance &amp; ELD Solutions</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="reveal" style="margin-top:28px"><strong>Need a custom solution?</strong> Our telematics consultants are here to help you navigate the complex world of fleet technology. <a class="text-link" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Contact an expert today <span>&rarr;</span></a></p>
+</div></section>
+
 <!-- Featured resource -->
 <section class="section" id="gps-tracking">
   <div class="wrap">

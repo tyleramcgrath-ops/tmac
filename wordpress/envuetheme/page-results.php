@@ -15,26 +15,81 @@
   </div>
 </section>
 
-<!-- Proof Banner: big numbers first -->
-<div class="proof-banner">
+<!-- Proof Banner: measured results (matches live home page "Measurable Results") -->
+<style>
+.results-proof .proof-banner-inner{grid-template-columns:repeat(4,1fr);}
+@media(max-width:960px){.results-proof .proof-banner-inner{grid-template-columns:repeat(2,1fr);gap:40px;}.results-proof .proof-banner-stat{border-right:none;padding-left:0;}}
+@media(max-width:600px){.results-proof .proof-banner-inner{grid-template-columns:1fr;}}
+</style>
+<div class="proof-banner results-proof">
   <div class="proof-banner-inner">
     <div class="proof-banner-stat reveal">
       <div class="proof-banner-num"><em data-count="31">0</em><em>%</em></div>
-      <div class="proof-banner-label">Accident Reduction</div>
-      <p class="proof-banner-sub">Average first-year reduction for fleets deploying AI dash cams and safety coaching programs.</p>
+      <div class="proof-banner-label">Fewer Reportable Accidents</div>
+      <p class="proof-banner-sub">Annual reportable accidents reduced by 31%.</p>
     </div>
     <div class="proof-banner-stat reveal" style="--d:1">
-      <div class="proof-banner-num"><em data-count="7">0</em><em>%</em></div>
-      <div class="proof-banner-label">Fuel Cost Savings</div>
-      <p class="proof-banner-sub">Typical fuel spend reduction through idle coaching, GPS route optimization, and card fraud elimination.</p>
+      <div class="proof-banner-num"><em data-count="21">0</em><em>%</em></div>
+      <div class="proof-banner-label">Fewer Accidents per Million Miles</div>
+      <p class="proof-banner-sub">Accidents per million miles reduced by 21%.</p>
     </div>
     <div class="proof-banner-stat reveal" style="--d:2">
-      <div class="proof-banner-num"><em data-count="40">0</em><em>%</em></div>
-      <div class="proof-banner-label">Dispatch Efficiency Gain</div>
-      <p class="proof-banner-sub">Improvement in daily job completion rates from real-time GPS dispatch and route optimization.</p>
+      <div class="proof-banner-num"><em data-count="7">0</em><em>%</em></div>
+      <div class="proof-banner-label">Better Fuel Economy</div>
+      <p class="proof-banner-sub">Fuel economy (MPG) improved by 7%.</p>
+    </div>
+    <div class="proof-banner-stat reveal" style="--d:3">
+      <div class="proof-banner-num"><em data-count="6">0</em><em>%</em></div>
+      <div class="proof-banner-label">Lower Maintenance Cost</div>
+      <p class="proof-banner-sub">Maintenance cost (cents per mile) reduced by 6%.</p>
     </div>
   </div>
 </div>
+
+<!-- Safety culture (live /results/ content) -->
+<section class="section" id="safety-culture"><div class="wrap">
+  <div class="section-head"><div>
+    <span class="eyebrow reveal">Foster a Safety Culture Among Your Drivers</span>
+    <h2 class="reveal" style="--d:1">Technology that&rsquo;s focused on you.</h2>
+  </div><div class="reveal" style="--d:2">
+    <p>A full-fledged safety program helps you reduce collisions and near misses, which improves morale, lowers repair costs, and controls insurance spend.</p>
+    <p style="margin-top:14px">EnVue Telematics is dedicated to providing its clients with the best possible support when it comes to risk management initiatives. We understand that your objectives may be hindered by unforeseen risks and challenges, which is why we work closely with our clients to develop effective strategies tailored to their unique needs. Our team of experts utilizes the latest technologies and industry best practices to identify, assess, and mitigate risks, helping you to achieve your mission in a safer and more efficient way.</p>
+  </div></div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/group-of-students.jpg" alt="Fleet drivers in a safety training session" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Dash Cams</span>
+      <h2>AI-powered detection that prevents incidents before they occur</h2>
+      <p>AI-powered detection technology has significantly contributed to reducing the number of risky driving incidents on our roads. Intelligent algorithms monitor both front and rear views of the vehicle to detect potential hazards such as tailgating, near-collisions, and cellphone use while driving, giving drivers an added layer of safety. Multicam systems offer 360-degree visibility, so drivers can be aware of their surroundings and make more informed decisions.</p>
+      <a class="text-link" href="<?php echo esc_url(home_url("/dash-cams/")); ?>">Explore dash cams <span>&rarr;</span></a>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Effective-Driver-Coaching-panorama-635x0-1.webp" alt="Driver coaching workflow with in-cab alerts" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Driver Coaching</span>
+      <h2>A full coaching workflow that keeps drivers in-policy</h2>
+      <p>The full coaching workflow provides drivers with the resources and guidance to comply with all relevant regulations and procedures. In-cab alerts give drivers real-time feedback on their driving performance so they can adjust on the fly, and mobile apps provide two-way communication between drivers and their team. Together, these tools enhance driver safety and compliance, and improve communication and collaboration within the team.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- AI dash cam benefits (live /results/ content) -->
+<section class="section section--soft" id="ai-dash-cam-benefits"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Enhancing Fleet Safety with Telematics Technology</span>
+    <h2 class="reveal" style="--d:1">How AI-driven dash cams change your fleet management strategy.</h2>
+    <p class="reveal" style="--d:2">In the competitive landscape of fleet management, AI-driven dash cams have become essential. They enhance safety and efficiency and provide critical data that drives operational improvements.</p>
+  </div></div>
+  <div class="difference-grid">
+    <div class="diff-card reveal"><h3>Enhanced Driver Safety</h3><p>AI algorithms monitor driver behavior in real time to detect distracted driving, drowsiness, and harsh braking, then alert the driver and fleet manager so corrective action can be taken immediately.</p></div>
+    <div class="diff-card reveal" style="--d:1"><h3>Incident Documentation</h3><p>Clear, high-definition footage serves as unbiased evidence. AI can analyze vehicle speed, impact force, and the sequence of events, which is crucial for insurance claims, legal proceedings, and internal reviews.</p></div>
+    <div class="diff-card reveal" style="--d:2"><h3>Support Engagements with Insurance Carriers</h3><p>Machine learning continuously improves accuracy, identifying patterns and making predictive analyses that turn dash cams from passive recorders into proactive safety and management tools.</p></div>
+    <div class="diff-card reveal"><h3>Future Trends in AI-Driven Telematics</h3><p>From predictive maintenance to advanced driver assistance systems (ADAS), AI and machine learning will continue to drive innovations that improve safety, efficiency, and overall fleet performance.</p></div>
+    <div class="diff-card reveal" style="--d:1"><h3>Custom Reporting</h3><p>Follow driver safety trends: a safety dashboard provides an overview of risky drivers and safety scores.</p></div>
+    <div class="diff-card reveal" style="--d:2"><h3>A Strategic Investment</h3><p>AI-driven dash cams enhance safety, improve operational efficiency, and support regulatory compliance while delivering significant cost savings.</p></div>
+  </div>
+</div></section>
 
 <!-- Outcome cards: Safety -->
 <section class="section result-safety" id="safety-results">
@@ -42,7 +97,7 @@
     <div class="section-head">
       <div>
         <span class="eyebrow reveal">Safety Outcomes</span>
-        <h2 class="reveal" style="--d:1">AI dash cams consistently reduce accidents by 25–35% in year one.</h2>
+        <h2 class="reveal" style="--d:1">Annual reportable accidents reduced by 31%.</h2>
       </div>
       <div class="reveal" style="--d:2">
         <p>In-cab coaching alerts change driver behavior in real time. Video evidence eliminates costly false claims. Driver coaching workflows build habits that last — all measurable and documented from day one.</p>
@@ -51,8 +106,8 @@
     <div class="outcome-timeline">
       <div class="outcome-card reveal">
         <div class="outcome-card-top">
-          <div class="outcome-card-num">25–35<small style="font-size:0.45em;font-weight:800">%</small></div>
-          <span class="outcome-card-unit">Accident Frequency Reduction</span>
+          <div class="outcome-card-num">31<small style="font-size:0.45em;font-weight:800">%</small></div>
+          <span class="outcome-card-unit">Fewer Reportable Accidents</span>
         </div>
         <div class="outcome-card-body">
           <h3>First-year safety program results</h3>
@@ -87,7 +142,7 @@
         <h2>How EnVue Safety Programs Deliver Results</h2>
         <p>AI dash cam deployment from Lytx, Netradyne, and Surfsight through EnVue produces measurable accident reduction within the first year. Combined with Geotab driver behavior monitoring and predictive risk scoring, EnVue safety programs consistently produce fleet-wide results that translate into lower insurance costs, reduced downtime, and documented improvement stakeholders and insurers recognize.</p>
         <ul class="check-list">
-          <li>25–35% accident frequency reduction in year one of AI dash cam deployment</li>
+          <li>31% fewer annual reportable accidents and 21% fewer accidents per million miles</li>
           <li>Insurance premium reductions of 10–20% with documented safety programs</li>
           <li>False liability claim resolution in minutes with GPS-tagged HD video evidence</li>
           <li>Driver behavior improvement sustained 6–12 months after initial coaching</li>
@@ -104,7 +159,7 @@
     <div class="section-head">
       <div>
         <span class="eyebrow reveal">Fuel &amp; Cost Outcomes</span>
-        <h2 class="reveal" style="--d:1">5–10% fuel savings, 20–30% maintenance cost reduction.</h2>
+        <h2 class="reveal" style="--d:1">7% better fuel economy, 6% lower maintenance cost per mile.</h2>
       </div>
       <div class="reveal" style="--d:2">
         <p>Idle reduction, GPS-matched fuel card fraud detection, and predictive maintenance together cut operating costs faster than any single intervention alone.</p>
@@ -113,8 +168,8 @@
     <div class="outcome-timeline">
       <div class="outcome-card reveal">
         <div class="outcome-card-top">
-          <div class="outcome-card-num">5–10<small style="font-size:0.45em;font-weight:800">%</small></div>
-          <span class="outcome-card-unit">Fuel Cost Reduction</span>
+          <div class="outcome-card-num">7<small style="font-size:0.45em;font-weight:800">%</small></div>
+          <span class="outcome-card-unit">Fuel Economy (MPG) Improvement</span>
         </div>
         <div class="outcome-card-body">
           <h3>Idle coaching + route efficiency</h3>
@@ -123,8 +178,8 @@
       </div>
       <div class="outcome-card reveal" style="--d:1">
         <div class="outcome-card-top">
-          <div class="outcome-card-num">20–30<small style="font-size:0.45em;font-weight:800">%</small></div>
-          <span class="outcome-card-unit">Maintenance Cost Reduction</span>
+          <div class="outcome-card-num">6<small style="font-size:0.45em;font-weight:800">%</small></div>
+          <span class="outcome-card-unit">Maintenance Cost per Mile Reduction</span>
         </div>
         <div class="outcome-card-body">
           <h3>Predictive beats reactive</h3>
@@ -147,10 +202,10 @@
       <div class="reveal">
         <span class="eyebrow">Cost Program Details</span>
         <h2>How EnVue Cuts Operating Costs</h2>
-        <p>EnVue fuel management customers consistently achieve 5–10% fuel cost reduction through idle reduction coaching, GPS-matched fuel card fraud elimination, and driver behavior improvement. Predictive maintenance through Geotab diagnostics reduces total maintenance spend by 20–30% vs. calendar-based programs. Utilization reporting enables fleet right-sizing that reduces capital costs without impacting capacity.</p>
+        <p>EnVue customers have improved fuel economy (MPG) by 7% through idle reduction coaching, GPS-matched fuel card fraud elimination, and driver behavior improvement. Predictive maintenance through Geotab diagnostics has reduced maintenance cost by 6% per mile (cents per mile) vs. calendar-based programs. Utilization reporting enables fleet right-sizing that reduces capital costs without impacting capacity.</p>
         <ul class="check-list">
-          <li>5–10% fuel cost reduction from idle reduction, behavior coaching, and fraud elimination</li>
-          <li>20–30% maintenance cost reduction from predictive versus reactive maintenance programs</li>
+          <li>7% fuel economy (MPG) improvement from idle reduction, behavior coaching, and fraud elimination</li>
+          <li>6% maintenance cost (cents per mile) reduction from predictive versus reactive maintenance programs</li>
           <li>Fleet right-sizing decisions supported by objective utilization data</li>
           <li>IFTA administrative cost reduction from automated GPS mileage reporting</li>
           <li>ROI documentation from automated reporting delivered quarterly by EnVue</li>
@@ -175,8 +230,8 @@
     <div class="outcome-timeline">
       <div class="outcome-card reveal">
         <div class="outcome-card-top">
-          <div class="outcome-card-num">40<small style="font-size:0.45em;font-weight:800">%</small></div>
-          <span class="outcome-card-unit">Dispatch Efficiency Gain</span>
+          <div class="outcome-card-num">Live<small style="font-size:0.45em;font-weight:800"> GPS</small></div>
+          <span class="outcome-card-unit">Dispatch Visibility</span>
         </div>
         <div class="outcome-card-body">
           <h3>Real-time technician visibility</h3>
@@ -211,7 +266,7 @@
         <h2>How EnVue Improves Fleet Productivity</h2>
         <p>EnVue productivity program customers report significant improvements in daily operational output. Real-time GPS dispatch enables faster, more accurate job assignment. Route optimization reduces total miles while increasing job completions. Digital proof-of-service eliminates billing disputes. Utilization data drives intelligent asset deployment. The combination consistently produces 20–35% improvement in daily job completion rates for field service and distribution customers.</p>
         <ul class="check-list">
-          <li>40% dispatch efficiency improvement from real-time GPS technician visibility</li>
+          <li>Faster, more accurate dispatch from real-time GPS technician visibility</li>
           <li>20–35% more daily job completions with the same vehicles and workforce</li>
           <li>GPS-verified proof-of-service eliminating billing disputes and customer friction</li>
           <li>Route optimization reducing total miles driven per completed service call</li>
@@ -247,7 +302,7 @@
 
 <?php
 echo envue_faq_section([
-    'What results do EnVue fleet telematics customers typically see?' => '<p>EnVue Telematics customers consistently report accident reductions of 25–35% in the first year of AI dash cam and safety program deployment, fuel cost reductions of 5–10% from idle reduction and behavior coaching, maintenance cost reductions of 20–30% from predictive maintenance programs, and productivity improvements of 20–35% in daily job completion rates from GPS dispatch and route optimization.</p>',
+    'What results do EnVue fleet telematics customers typically see?' => '<p>EnVue Telematics customer results include a 31% reduction in annual reportable accidents, a 21% reduction in accidents per million miles, a 7% improvement in fuel economy (MPG), and a 6% reduction in maintenance cost (cents per mile). Productivity gains from GPS dispatch and route optimization vary by operation and are measured against your pre-deployment baseline.</p>',
     'How quickly do fleet telematics results become measurable?' => '<p>Most EnVue customers see initial measurable results within the first 90 days. Fuel cost reduction from idle coaching typically produces results within weeks of program launch. Safety improvements from AI dash cam coaching become measurable within 60–90 days. Maintenance cost reduction results accumulate over 6–12 months as prevented failures replace emergency repairs.</p>',
     'Does EnVue document and report fleet performance results?' => '<p>Yes. EnVue configures automated reporting that delivers fleet performance metrics to managers and executives on scheduled intervals. EnVue also conducts quarterly business reviews comparing current performance against the baseline established before deployment, documenting the measurable improvement that each program is producing.</p>',
     'How do EnVue results support fleet insurance premium negotiation?' => '<p>EnVue prepares fleet safety documentation packages specifically for insurance premium negotiation. These packages include accident frequency and severity comparison before and after safety program deployment, AI dash cam event trend data showing behavioral improvement, driver coaching completion and behavior improvement records, and comparative benchmarks that demonstrate fleet performance versus industry averages.</p>',

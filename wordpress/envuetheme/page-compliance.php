@@ -20,6 +20,24 @@
   <div><strong>24/7</strong><span>US-based support</span></div>
 </div></div></section>
 <section class="section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Compliance Simplified</span>
+    <h2 class="reveal" style="--d:1">ELDs and digital tools for DOT and OSHA compliance.</h2>
+    <p class="reveal" style="--d:2">Electronic logging devices (ELDs) and other solutions support compliance for DOT and OSHA regulations around hours of service, digital inspections, and IFTA fuel tax reporting.</p>
+  </div></div>
+  <style>.hw-trio img{width:100%;height:190px;object-fit:contain;margin-bottom:8px;}</style>
+  <div class="feature-trio hw-trio">
+    <div class="reveal"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Geotab-Drives-dashboard-is-easy-to-use-on-desktop-or-mobile.png.webp" alt="Geotab Drive dashboard on desktop and mobile" loading="lazy"><h3>Easy-to-Use Dashboard</h3><p>Geotab Drive&rsquo;s dashboard is easy to use on desktop or mobile.</p></div>
+    <div class="reveal" style="--d:1"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/HOS-report-electronically-generates-duty-status.png.webp" alt="HOS report generating driver duty status" loading="lazy"><h3>Electronic HOS Reports</h3><p>The HOS report electronically generates duty status.</p></div>
+    <div class="reveal" style="--d:2"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Logs-are-easy-to-verify-and-roadside-inspection-reports-are-compliant.png.webp" alt="Verified logs and compliant roadside inspection reports" loading="lazy"><h3>Roadside-Ready Logs</h3><p>Logs are easy to verify, and roadside inspection reports are compliant.</p></div>
+  </div>
+  <div class="feature-trio" style="margin-top:24px;">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></div><h3>Integrated Platform</h3><p>Hours of Service, inspections (DVIR), driver identification, state tax reporting (IFTA), CDL screening, and MVR monitoring (CSA).</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div><h3>Stay Up to Date</h3><p>Violation alerts and detailed reports on remaining hours.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/></svg></div><h3>Smart Mobile App</h3><p>Integrates with the Geotab GO device, supports two-way messaging, and runs on third-party tablets (BYOD).</p></div>
+  </div>
+</div></section>
+<section class="section"><div class="wrap">
   <div class="section-head"><div>
     <span class="eyebrow reveal">Fleet Compliance</span>
     <h2 class="reveal" style="--d:1">Automate compliance so your team focuses on operations, not paperwork.</h2>
@@ -85,11 +103,15 @@
     <li><strong>Driver efficiency</strong> &mdash; Automated compliance tools eliminate the paperwork burden on drivers</li>
     <li><strong>DOT inspection ready</strong> &mdash; Roadside inspection packages generated on demand for enforcement stops</li>
     <li><strong>Administrative savings</strong> &mdash; Automated compliance reporting eliminates manual administrative overhead</li>
+    <li><strong>Document management</strong> &mdash; Permits, licenses, and inspection reports stored in one secure platform</li>
     <li><strong>Peace of mind</strong> &mdash; EnVue compliance expertise and 24/7 support always available when needed</li>
   </ul>
 </div></section>
 <?php
 echo envue_faq_section([
+    'What is ELD compliance?' => '<p>ELD compliance refers to the federal mandate requiring commercial drivers to use electronic logging devices to record driving hours and duty status.</p>',
+    'Is the Geotab Drive ELD certified for Canada?' => '<p>Yes. The Geotab ELD solution is certified for use in both the U.S. and Canada, with automatic duty status changes, logs, violations, and hours-remaining visibility in MyGeotab, two-way messaging, and over-the-air firmware updates.</p>',
+    'Can compliance tools prevent violations?' => '<p>Yes. Automated alerts notify managers and drivers before violations occur, helping prevent fines and penalties.</p>',
     'What ELD does EnVue deploy?' => '<p>EnVue Telematics deploys Geotab Drive ELD, which is listed on the FMCSA registered ELD provider list and satisfies all ELD mandate requirements for commercial vehicles subject to HOS regulations. Geotab Drive automates Hours of Service logging, manages unassigned driving time, and generates roadside inspection packages for DOT enforcement stops.</p>',
     'Does EnVue automate IFTA fuel tax reporting?' => '<p>Yes. EnVue integrates ProMiles IFTA reporting with Geotab GPS fleet tracking, automatically extracting state-by-state mileage from trip data and generating quarterly IFTA reports in the format required for state filing. Fleet fuel card purchase data from FleetCor or Coast Pay imports directly for complete reconciliation, reducing quarterly IFTA filing from hours of manual work to a review-and-submit process.</p>',
     'What is DVIR and does EnVue automate it?' => '<p>DVIR stands for Driver Vehicle Inspection Report, the pre-trip and post-trip vehicle inspection that FMCSA requires commercial vehicle operators to complete and document. EnVue deploys Whip Around digital DVIR inspections that guide drivers through required checklists in under two minutes, with mandatory photo capture for defects and automatic escalation to the maintenance team when issues are found.</p>',

@@ -26,6 +26,9 @@
   </div><div class="reveal" style="--d:2">
     <p>EnVue Telematics was founded in 2011 with a single focus: helping commercial fleet operators use telematics technology to reduce costs, improve safety, and operate more efficiently. Today, EnVue Telematics is a leading provider of advanced telematics and custom fleet management technology. As your trusted partner, we support your mission to make your fleet more efficient, and we guide you to smarter technology choices based on our decades of experience and consultative approach. More than a decade later, that focus has not changed. We deploy Geotab-powered fleet management solutions, AI dash cams from Lytx and Netradyne, and a comprehensive suite of fleet technology partner integrations — and we stay engaged through quarterly performance reviews, ongoing support, and continuous program refinement long after the initial implementation is complete.</p>
   </div></div>
+  <div class="video-embed-wrap reveal" style="margin-top:3rem">
+    <iframe src="https://www.youtube.com/embed/vaH6A1NrQd0" title="EnVue Telematics overview video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
   <!-- Milestones (verified against live /about-envue/ and home page) -->
   <div class="company-timeline reveal" style="--d:2; margin-top:3rem;">
     <div class="company-timeline-item">

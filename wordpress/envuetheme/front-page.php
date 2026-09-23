@@ -6,13 +6,13 @@
   <section class="hero" id="heroSlider" aria-label="EnVue Telematics highlights">
     <div class="hero-backgrounds" aria-hidden="true">
       <div class="hero-bg active">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-truck-sunset.webp" alt="" width="1672" height="941" loading="eager" fetchpriority="high">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-truck-sunset.webp" alt="Fleet truck on the highway at sunset" width="1672" height="941" loading="eager" fetchpriority="high">
       </div>
       <div class="hero-bg">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-network.webp" alt="" width="1672" height="941" loading="lazy">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-network.webp" alt="Connected fleet network" width="1672" height="941" loading="lazy">
       </div>
       <div class="hero-bg">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-mixed-fleet.webp" alt="" width="1672" height="941" loading="lazy">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-mixed-fleet.webp" alt="Mixed commercial fleet" width="1672" height="941" loading="lazy">
       </div>
     </div>
     <div class="hero-scrim" aria-hidden="true"></div>

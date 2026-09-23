@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/electric-fleet-truck-2026-scaled-1200x628.jpg" alt="Fleet sustainability ESG" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/sustainable-fleet-transportation-2026.jpg" alt="Fleet sustainability ESG" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/sustainability/")); ?>">Sustainability</a></nav>
     <span class="eyebrow eyebrow--light">Fleet Sustainability</span>
@@ -72,6 +72,24 @@
     </div>
   </div>
 </div></section>
+<section class="section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">The Path to a Greener Operation</span>
+    <h2 class="reveal" style="--d:1">Lower emissions and add EVs and hybrids to your fleet.</h2>
+    <p class="reveal" style="--d:2">Let us guide you toward reducing your carbon footprint by lowering emissions and adding electric vehicles and hybrids to your fleet.</p>
+  </div></div>
+  <div class="feature-trio">
+    <div class="reveal"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-6 7-10 16-10 0 9-4 16-10 16"/><path d="M4 21c3-6 7-9 12-11"/></svg></div><h3>Reduced Tailpipe Emissions</h3><p>Reduced engine idling lowers emissions. Fuel efficiency metrics help you make a case to senior management, and lower operating costs increase profitability.</p></div>
+    <div class="reveal" style="--d:1"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg></div><h3>Seamless EV Implementation</h3><p>EV assessment identifies low-utilization units, flexible adoption supports 300 EV models, and charging infrastructure planning supports rollout.</p></div>
+    <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8a3 3 0 0 0 0-6H8a3 3 0 0 1 0-6h8"/></svg></div><h3>Effective EV Management</h3><p>In-depth EV telematics raise visibility, range-based routing reduces driver anxiety, and detailed charging insights extend range.</p></div>
+  </div>
+  <ul class="check-list check-list--2col reveal" style="margin-top:40px;">
+    <li><strong>1. Measure impact</strong> &mdash; Collect data on fuel use, emissions, and vehicle performance</li>
+    <li><strong>2. Analyze behavior</strong> &mdash; Spot inefficiencies like excessive idling or poor routing</li>
+    <li><strong>3. Take action</strong> &mdash; Transition to EVs, adjust routes, and coach drivers</li>
+    <li><strong>4. Report progress</strong> &mdash; Create ESG-ready reports to showcase results to stakeholders</li>
+  </ul>
+</div></section>
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>
@@ -85,11 +103,14 @@
     <li><strong>Carbon footprint visibility</strong> &mdash; Per-vehicle and per-driver emissions data for accountability and improvement</li>
     <li><strong>Competitive advantage</strong> &mdash; Documented sustainability programs strengthen customer and partner relationships</li>
     <li><strong>Regulatory readiness</strong> &mdash; Emissions data positions fleets for emerging climate disclosure requirements</li>
+    <li><strong>Extended asset life</strong> &mdash; Preventive care keeps vehicles running longer, reducing waste</li>
     <li><strong>Mixed fleet management</strong> &mdash; EVs and ICE vehicles managed on one unified platform after transition</li>
   </ul>
 </div></section>
 <?php
 echo envue_faq_section([
+    'What is a sustainable fleet?' => '<p>A sustainable fleet is one that uses telematics, EVs, and efficiency practices to lower fuel consumption, reduce emissions, and extend asset life.</p>',
+    'Can small fleets adopt sustainability programs?' => '<p>Yes. Whether running 5 or 5,000 vehicles, sustainability practices can scale to fit fleets of any size.</p>',
     'How does EnVue measure fleet CO2 emissions?' => '<p>EnVue measures fleet CO2 emissions using Greater Than AI, which calculates emissions from actual Geotab driving behavior data for every vehicle. Factors include vehicle type, fuel type, speed profiles, acceleration patterns, braking behavior, and idle time, producing accurate per-driver and per-vehicle CO2 metrics suitable for ESG reporting and carbon footprint analysis.</p>',
     'Does EnVue help plan fleet electrification?' => '<p>Yes. EnVue deploys MoveEV for data-driven EV fleet planning. MoveEV analyzes actual Geotab GPS usage data for every vehicle to identify which are best suited for electrification, models total cost of ownership from real usage data, and plans charging infrastructure based on actual depot stop patterns. This data-driven approach prevents the range-to-route mismatches that make EV deployments fail.</p>',
     'What ESG reporting does fleet telematics support?' => '<p>Geotab fleet data and Greater Than AI emissions measurement support ESG reporting across Scope 1 emissions from fleet fuel consumption, idle reduction documentation showing emissions avoided, EV deployment tracking showing emissions displaced, year-over-year carbon footprint trend reporting, and sustainability metrics aligned with investor and regulatory disclosure frameworks.</p>',
