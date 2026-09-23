@@ -1,0 +1,129 @@
+<?php get_header(); ?>
+<main id="main">
+<section class="page-hero">
+  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Contact EnVue Telematics" loading="eager" fetchpriority="high">
+  <div class="wrap">
+    <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get In Touch</a></nav>
+    <span class="eyebrow eyebrow--light">Contact Us</span>
+    <h1>Ready to Get Started? Talk to an EnVue Fleet Expert.</h1>
+    <p>Contact EnVue Telematics for a free fleet assessment and demo. Our fleet management experts are ready to learn about your operation, identify your highest-impact opportunities, and build a solution configured for your specific fleet and goals.</p>
+    <div class="hero-actions">
+      <a class="button button-primary button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+      <a class="button button-ghost button-lg" href="mailto:sales@et-envue.com">Email Us</a>
+    </div>
+  </div>
+</section>
+
+<?php
+// Contact form schema
+$contact_schema = array(
+    "@context" => "https://schema.org",
+    "@type" => "ContactPage",
+    "name" => "Contact EnVue Telematics",
+    "description" => "Contact EnVue Telematics for a free fleet management assessment and demo. Geotab Elite Specialized Partner serving commercial fleets across the United States and Mexico.",
+    "url" => home_url("/get-in-touch/"),
+    "mainEntity" => array(
+        "@type" => "LocalBusiness",
+        "name" => "EnVue Telematics",
+        "telephone" => "+18002011169",
+        "email" => "sales@et-envue.com",
+        "address" => array(
+            "@type" => "PostalAddress",
+            "streetAddress" => "119 West Tyler Street, Suite 100",
+            "addressLocality" => "Longview",
+            "addressRegion" => "TX",
+            "postalCode" => "75601",
+            "addressCountry" => "US"
+        )
+    )
+);
+echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "</script>";
+?>
+
+<section class="section"><div class="wrap">
+  <div class="section-head"><div>
+    <span class="eyebrow reveal">Contact EnVue</span>
+    <h2 class="reveal" style="--d:1">We are ready to help you build a smarter fleet program.</h2>
+  </div><div class="reveal" style="--d:2">
+    <p>Whether you are evaluating GPS fleet tracking for the first time, replacing an underperforming telematics provider, or adding AI dash cams and compliance tools to an existing Geotab deployment, EnVue Telematics has the expertise to build the right program for your fleet. Call us, email us, or submit the contact form and we will be in touch within one business day.</p>
+  </div></div>
+
+  <div class="feature-split">
+
+    <?php /* ── Contact Form ─────────────────────────────── */ ?>
+    <div class="reveal">
+      <span class="eyebrow">Request a Free Fleet Assessment</span>
+      <h2>Tell us about your fleet — we&rsquo;ll do the rest.</h2>
+
+      <?php echo do_shortcode('[wpforms id="2958" title="false"]'); ?>
+    </div>
+
+    <?php /* ── Contact Details ─────────────────────────── */ ?>
+    <div class="feature-split-media">
+      <div style="background:#f8f9fb;border-radius:12px;padding:2.5rem;height:100%;display:flex;flex-direction:column;gap:1.75rem;">
+        <div>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Phone</strong>
+          <a href="tel:8002011169" style="font-size:1.5rem;font-weight:700;color:inherit;text-decoration:none;">(800) 201-1169</a>
+          <p style="margin:.25rem 0 0;color:#555;font-size:.9375rem;">US-based support available 24/7</p>
+        </div>
+        <div>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Email</strong>
+          <a href="mailto:sales@et-envue.com" style="font-size:1.0625rem;font-weight:600;color:inherit;text-decoration:none;">sales@et-envue.com</a>
+          <p style="margin:.25rem 0 0;color:#555;font-size:.9375rem;">We respond within one business day</p>
+        </div>
+        <div>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">Office</strong>
+          <address style="font-style:normal;line-height:1.7;font-size:.9375rem;">119 West Tyler Street<br>Suite 100<br>Longview, Texas 75601</address>
+        </div>
+        <div>
+          <strong style="display:block;font-size:0.8125rem;text-transform:uppercase;letter-spacing:.08em;color:var(--c-brand,#0a2e6e);margin-bottom:.5rem;">EnVue Mexico</strong>
+          <p style="margin:0;color:#555;font-size:.9375rem;">Spanish-language fleet management for operations in Mexico. Same Geotab platform, same expert support.</p>
+        </div>
+        <div style="padding:1.25rem;background:var(--c-brand,#0a2e6e);border-radius:8px;color:#fff;margin-top:auto;">
+          <p style="margin:0 0 .75rem;font-size:.9375rem;font-weight:600;">Prefer to call? Our experts are standing by.</p>
+          <a href="tel:8002011169" style="color:#fff;font-weight:700;text-decoration:none;font-size:1.0625rem;">(800) 201-1169 &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<section class="section section--soft"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Why Contact EnVue</span>
+    <h2 class="reveal" style="--d:1">What you get from working with the Geotab Elite Specialized Partner.</h2>
+  </div></div>
+  <ul class="check-list check-list--2col reveal">
+    <li><strong>No-pressure assessment</strong> &mdash; A real conversation about your fleet, not a scripted sales presentation</li>
+    <li><strong>Expert recommendation</strong> &mdash; Solution designed for your specific fleet, not a standard package</li>
+    <li><strong>Geotab Elite expertise</strong> &mdash; Highest channel certification reflects proven deployment excellence</li>
+    <li><strong>Full platform demo</strong> &mdash; See exactly how your fleet management program will work before committing</li>
+    <li><strong>ROI modeling</strong> &mdash; We model expected results based on your fleet size and operational profile</li>
+    <li><strong>Fast timeline</strong> &mdash; Most deployments complete within 2-4 weeks of contract execution</li>
+    <li><strong>Post-deployment accountability</strong> &mdash; Quarterly reviews keep us responsible for your outcomes</li>
+    <li><strong>24/7 US-based support</strong> &mdash; Real people who know your fleet, available any time</li>
+  </ul>
+</div></section>
+
+<?php
+echo envue_faq_section([
+    'What should I expect from my first call with EnVue Telematics?' => '<p>Your first call with EnVue Telematics is a fleet discovery conversation — not a sales call. We want to understand your vehicle types, how they are operated, your current challenges, compliance requirements, and cost priorities. Based on this conversation, we design a specific solution recommendation and schedule a demo. The call typically runs 45-60 minutes.</p>',
+    'How quickly can EnVue deploy fleet telematics?' => '<p>Most EnVue fleet telematics deployments are complete within 2-4 weeks from contract execution through device installation, platform configuration, and driver and manager training. The timeline depends on fleet size, number of locations, and solution complexity. EnVue provides a specific deployment timeline during the solution design phase before any commitment.</p>',
+    'Does EnVue work with my existing fleet management software?' => '<p>Geotab integrates with hundreds of third-party platforms through the Geotab Marketplace and open API. EnVue evaluates your existing software during discovery and designs integration where it is available and beneficial. Common integrations include ERP systems, dispatch platforms, fuel card providers, maintenance management software, and payroll systems.</p>',
+    'Is there a contract commitment for EnVue fleet management?' => '<p>Contact EnVue Telematics at (800) 201-1169 or sales@et-envue.com to discuss contract terms for your specific deployment. EnVue offers standard subscription terms aligned with typical fleet management investment horizons.</p>',
+    'Does EnVue provide fleet management for Mexico operations?' => '<p>Yes. EnVue Mexico provides Geotab-powered fleet management for commercial operations in Mexico, with Spanish-language support and the same solutions available in the United States. Contact EnVue to discuss fleet management for cross-border or Mexico-based operations.</p>',
+    'How do I reach EnVue customer support after deployment?' => '<p>EnVue provides 24/7 US-based support available by phone at (800) 201-1169 and by email at sales@et-envue.com for all fleet management support needs after deployment.</p>'
+], 'FAQ: Contact and Getting Started');
+?>
+
+</main>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">EnVue Telematics</span><h2>Start your free fleet assessment today.</h2></div>
+  <div><p>Call (800) 201-1169 or email sales@et-envue.com. Our fleet management experts are ready to learn about your operation and design a program that delivers measurable results.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+    <a class="button button-ghost button-lg" href="mailto:sales@et-envue.com">Email Us</a>
+  </div></div>
+</div></section>
+<?php get_footer(); ?>
