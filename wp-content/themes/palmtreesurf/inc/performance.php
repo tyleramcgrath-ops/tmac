@@ -272,12 +272,15 @@ function pt_bundled_image( $file, $alt = '', $width = 1600 ) {
 	$height = $size ? (int) $size[1] : 0;
 	$srcset = pt_bundled_srcset( $file, $width );
 
+	$style = pt_focus_style( '', pt_image_focus( $file ) );
+
 	printf(
-		'<img src="%1$s"%2$s sizes="100vw" width="%3$d"%4$s alt="%5$s" decoding="async" fetchpriority="high" />',
+		'<img src="%1$s"%2$s sizes="100vw" width="%3$d"%4$s alt="%5$s" decoding="async" fetchpriority="high"%6$s />',
 		esc_url( PT_URI . 'assets/images/src/' . rawurlencode( $file ) ),
 		$srcset ? ' srcset="' . esc_attr( $srcset ) . '"' : '',
 		(int) $width,
 		$height ? ' height="' . (int) $height . '"' : '',
-		esc_attr( $alt )
+		esc_attr( $alt ),
+		$style ? ' style="' . esc_attr( $style ) . '"' : ''
 	);
 }

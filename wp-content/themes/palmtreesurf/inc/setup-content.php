@@ -144,8 +144,8 @@ function pt_seed_experiences() {
 			'level'    => __( 'All Levels', 'palmtreesurf' ),
 			'duration' => __( '2 hours', 'palmtreesurf' ),
 			'group'    => __( '1 guest', 'palmtreesurf' ),
-			'image'    => 'group-instruction-sand.jpg',
-			'alt'      => __( 'Surf instructor coaching a student on the sand at Tamarindo', 'palmtreesurf' ),
+			'image'    => 'instructor-popup-stance.jpg',
+			'alt'      => __( 'Instructor demonstrating the pop-up on a board at Tamarindo', 'palmtreesurf' ),
 			'includes' => array(
 				__( 'Your own instructor for the full two hours', 'palmtreesurf' ),
 				__( 'Board and rash guard sized to you', 'palmtreesurf' ),
@@ -281,8 +281,8 @@ function pt_seed_experiences() {
 			'type'     => __( 'Wildlife & Nature', 'palmtreesurf' ),
 			'level'    => __( 'All Levels', 'palmtreesurf' ),
 			'duration' => __( '4 to 5 hours', 'palmtreesurf' ),
-			'image'    => 'turtle-nesting-red-light.jpg',
-			'alt'      => __( 'A nesting turtle on the beach at night under a guide\'s red light', 'palmtreesurf' ),
+			'image'    => 'turtle-beach-night-stars.jpg',
+			'alt'      => __( 'A turtle on the beach at Tamarindo under a night sky full of stars', 'palmtreesurf' ),
 			'includes' => array(
 				__( 'Boat from Tamarindo to the turtle beach and back', 'palmtreesurf' ),
 				__( 'Local guide for the whole evening', 'palmtreesurf' ),

@@ -34,10 +34,9 @@ function pt_experience_photo_sets() {
 		 * shorter rather than padded with a repeat.
 		 */
 		'private-surf-lesson'      => array(
-			'instructor-popup-stance.jpg',
+			'group-instruction-sand.jpg',
 		),
 		'island-kayak-tour'        => array(
-			'kayak-fleet-beach.jpg',
 			'kayak-group-guests.jpg',
 			'kayak-surf-tent.jpg',
 		),
@@ -50,11 +49,17 @@ function pt_experience_photo_sets() {
 			'estuary-capuchin-troop.jpg',
 			'estuary-capuchin-monkey.jpg',
 		),
+		/*
+		 * The two torchlight frames are last. A guide's red lamp is what the
+		 * law requires on a nesting beach and it is the honest picture of the
+		 * evening, but it floods the whole frame red, and leading a gallery
+		 * with it tells a visitor nothing about the tour.
+		 */
 		'turtle-tour'              => array(
-			'turtle-nest-guide-light.jpg',
-			'turtle-beach-night-stars.jpg',
 			'turtle-returning-to-sea.jpg',
 			'turtle-tracks-night-beach.jpg',
+			'turtle-nest-guide-light.jpg',
+			'turtle-nesting-red-light.jpg',
 		),
 		'fishing-charter'          => array(
 			'fishing-charter-boat.jpg',
@@ -94,7 +99,7 @@ function pt_experience_video_map() {
 		 */
 		'turtle-tour'         => array(
 			'file'   => 'turtle-tour.mp4',
-			'poster' => 'turtle-nesting-red-light.jpg',
+			'poster' => 'turtle-returning-to-sea.jpg',
 		),
 	);
 }

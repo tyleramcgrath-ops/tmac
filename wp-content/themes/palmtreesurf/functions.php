@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.14.1' );
+define( 'PT_VERSION', '1.14.2' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.
@@ -35,6 +35,7 @@ $pt_includes = array(
 	'inc/setup.php',            // Theme supports, menus, image sizes.
 	'inc/enqueue.php',          // Styles and scripts.
 	'inc/performance.php',      // Front-end performance.
+	'inc/image-focus.php',      // Where to keep a photo when it is cropped.
 	'inc/template-tags.php',    // Reusable output helpers.
 	'inc/template-functions.php', // Body classes and other filters.
 	'inc/posts.php',            // Journal post helpers.

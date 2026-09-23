@@ -124,8 +124,15 @@ function pt_image( $slot, $args = array() ) {
 
 			$sizes = $args['sizes'] ? $args['sizes'] : '100vw';
 
+			/*
+			 * Bundled photos never pass through the attachment pipeline, so the
+			 * focal point is applied here too — otherwise a banner crops to the
+			 * middle and cuts the subject out.
+			 */
+			$style = pt_focus_style( '', pt_image_focus( $definition['file'] ) );
+
 			printf(
-				'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" class="%5$s" loading="%6$s" decoding="async"%7$s%8$s />',
+				'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" class="%5$s" loading="%6$s" decoding="async"%7$s%8$s%9$s />',
 				esc_url( PT_URI . 'assets/images/src/' . rawurlencode( $definition['file'] ) ),
 				$width,
 				$height,
@@ -133,7 +140,8 @@ function pt_image( $slot, $args = array() ) {
 				esc_attr( $class ),
 				esc_attr( $args['priority'] ? 'eager' : $args['loading'] ),
 				$args['priority'] ? ' fetchpriority="high"' : '',
-				$srcset ? ' srcset="' . esc_attr( $srcset ) . '" sizes="' . esc_attr( $sizes ) . '"' : ''
+				$srcset ? ' srcset="' . esc_attr( $srcset ) . '" sizes="' . esc_attr( $sizes ) . '"' : '',
+				$style ? ' style="' . esc_attr( $style ) . '"' : ''
 			);
 			return;
 		}

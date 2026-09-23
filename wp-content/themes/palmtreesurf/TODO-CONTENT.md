@@ -103,7 +103,7 @@ were removed in 1.11.0 and are not coming back. Twenty-six real photographs repl
 | Group | Files |
 | --- | --- |
 | Surf | `group-lesson-beach`, `instructor-popup-stance`, `group-instruction-sand`, `surf-lesson-group-briefing`, `surf-students-with-boards` |
-| Kayak, island | `kayak-guides-paddles`, `kayak-fleet-beach`, `kayak-group-guests`, `kayak-surf-tent` |
+| Kayak, island | `kayak-guides-paddles`, `kayak-group-guests`, `kayak-surf-tent` |
 | Kayak, mangrove | `estuary-mangrove-kayak`, `estuary-mangrove-paddlers`, `estuary-kayaks-mangrove-shore` |
 | Estuary wildlife | `estuary-crocodile`, `estuary-crocodile-surfacing`, `estuary-capuchin-monkey`, `estuary-capuchin-troop` |
 | Fishing | `fishing-charter-boat`, `fishing-boat-headland`, `fishing-boat-rods-out`, `fishing-trolling-wake`, `fishing-sailfish-release`, `fishing-marlin-release`, `fishing-mahi-mahi`, `fishing-yellowfin-tuna`, `fishing-anglers-tuna`, `fishing-grouper` |
@@ -112,6 +112,25 @@ How they were prepared: EXIF stripped, which removes the GPS coordinates the pho
 capped at 1600px; 480/768/1200/1600 variants generated so a phone never pulls a full-size file;
 and `kayak-guides-paddles` cropped to remove an "Island Tour" caption burned into the corner.
 No shipped photo carries baked-in text.
+
+**Where each one is kept when it is cropped.** Most of these are portrait phone photographs and
+most of the slots are wide bands, so something has to be cut. `inc/image-focus.php` records, for
+each photograph, how far down the frame its subject sits, and both crops anchor on that number —
+the one WordPress makes when it builds `pt-hero` and `pt-card`, and the one the browser makes with
+`object-fit: cover`. Before 1.14.2 both kept the middle of the frame, which on a picture of people
+standing on a beach is their waists, so heroes were running with heads cut off. The numbers were
+read off the photographs rather than guessed: faces detected, then every candidate rendered at the
+hero's aspect ratio and looked at. A photograph that is not listed keeps the middle, which is right
+for a landscape and for anything you upload yourself.
+
+Changing a photograph's focal point needs nothing but the map in that file. On the next page load
+after a version change the theme re-cuts the intermediate sizes, four photographs per request, so
+nobody waits on it.
+
+**No page shows the same photograph twice.** That is checked rather than assumed — every page is
+loaded, every image the browser actually fetched is compared by content, and a crop of a picture
+counts as the same picture. Three files that were the same kayak-fleet shot under different names
+(`hero-kayak-fleet`, `kayak-fleet-beach` and the home hero) were cut back to one in 1.14.2.
 
 **Where they appear.** Each experience now carries its own photo set, shown below the booking form
 through the same grid and lightbox as the main gallery — eight photographs on the fishing charter,
@@ -346,6 +365,12 @@ The interface translation is done. **The page and article bodies are not** —
 those are yours, and there is an ES column on the Pages and Posts lists showing
 what still needs doing. If you install Polylang or WPML, this switches itself
 off and defers to them.
+
+Two other things are still English in the Spanish version and are worth knowing
+about, because neither is visible on screen: the alt text on the photographs,
+and the browser tab title on pages and tours (the heading on the page itself is
+translated). Both matter for how Spanish searches find the site rather than for
+how it reads, so neither is urgent — say the word and they go in.
 
 ### Speed
 

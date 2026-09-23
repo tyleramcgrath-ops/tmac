@@ -8,7 +8,7 @@
     "alt": "The Palm Tree Surf kayak fleet and surf tent on the sand at Tamarindo",
     "file": "hero-tamarindo-beach.jpg",
     "option": "pt_hero_image",
-    "note": "The operator's own shop, recut to 16:9 so the fleet fills the frame instead of sitting above a band of empty sand. A Customizer hero image still overrides it."
+    "note": "The operator's own shop. The fleet shot the site used to carry in three other slots was cut back to this one, so the home page opens on a photograph the visitor does not meet again. A Customizer hero image still overrides it."
   },
   "hero-video": {
     "w": 1920,
@@ -99,12 +99,12 @@
     "file": "group-instruction-sand.jpg"
   },
   "gallery-4": {
-    "w": 1200,
-    "h": 1600,
+    "w": 1920,
+    "h": 1280,
     "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "The kayak fleet lined up on the sand at Tamarindo",
-    "file": "banner-kayak-fleet.jpg"
+    "alt": "The catamaran under sail off Tamarindo as the sun goes down",
+    "file": "sunset-catamaran-tour.jpg"
   },
   "gallery-5": {
     "w": 1600,
@@ -123,12 +123,12 @@
     "file": "kayak-surf-tent.jpg"
   },
   "gallery-7": {
-    "w": 1600,
-    "h": 1200,
+    "w": 960,
+    "h": 1280,
     "ratio": "auto",
     "role": "Gallery tile",
-    "alt": "The kayak fleet lined up on the sand before a tour",
-    "file": "kayak-fleet-beach.jpg"
+    "alt": "A turtle heading back down the sand to the water after nesting",
+    "file": "turtle-returning-to-sea.jpg"
   },
   "gallery-8": {
     "w": 1600,
@@ -364,31 +364,31 @@
     "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
   },
   "tax-adventure": {
-    "w": 1920,
-    "h": 640,
+    "w": 1200,
+    "h": 400,
     "ratio": "auto",
     "role": "Header photo for the adventure archive",
-    "alt": "The kayak fleet lined up on the sand before a tour",
-    "file": "banner-kayak-fleet.jpg",
+    "alt": "Paddling in under the mangroves on the estuary",
+    "file": "banner-mangrove.jpg",
     "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
   },
   "tax-private-custom": {
-    "w": 1920,
-    "h": 640,
+    "w": 1500,
+    "h": 2000,
     "ratio": "auto",
     "role": "Header photo for the private custom archive",
-    "alt": "A group surf lesson gathered on the beach",
-    "file": "banner-surf-lesson.jpg",
-    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+    "alt": "An instructor working one to one with a student on the sand",
+    "file": "instructor-popup-stance.jpg",
+    "note": "Overridden per term by the Header photo field."
   },
   "tax-first-timer": {
-    "w": 1920,
-    "h": 640,
+    "w": 1500,
+    "h": 2000,
     "ratio": "auto",
     "role": "Header photo for the first timer archive",
-    "alt": "A group surf lesson gathered on the beach",
-    "file": "banner-surf-lesson.jpg",
-    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+    "alt": "A first lesson gathered on the beach before going in",
+    "file": "group-lesson-beach.jpg",
+    "note": "Overridden per term by the Header photo field."
   },
   "tax-beginner": {
     "w": 1920,
