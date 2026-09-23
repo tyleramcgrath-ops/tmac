@@ -42,7 +42,9 @@ add_action( 'after_setup_theme', function () {
 // We register the locations but never call do_location(), so the old
 // Elementor header/footer simply never renders.
 add_action( 'elementor/theme/register_locations', function ( $elementor_theme_manager ) {
-    $elementor_theme_manager->register_all_core_location();
+    if ( is_object( $elementor_theme_manager ) && method_exists( $elementor_theme_manager, 'register_all_core_location' ) ) {
+        $elementor_theme_manager->register_all_core_location();
+    }
 } );
 
 /* ── Auto Template Routing ───────────────────────────────────── */
