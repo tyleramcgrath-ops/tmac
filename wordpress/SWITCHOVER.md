@@ -136,3 +136,11 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 ## v6.10.1
 - Homepage Geotab partner badges enlarged so their text is readable: ~205px wide on desktop (was 120px), two per row
   at ~157px on phones (was 88px), with a soft shadow and a small lift on hover.
+
+## v6.10.2 — mobile speed
+- Homepage Geotab badges now load right-sized copies WordPress already made (240px / 768px) instead of the 1638×2048
+  originals — the biggest item in PageSpeed's "Improve image delivery".
+- Early connections to Google Fonts (preconnect) to shorten the render-blocking font request.
+- PageSpeed's "Minify CSS / Minify JavaScript / Reduce unused … / Avoid long main-thread tasks — Error!" lines are
+  Lighthouse failing to calculate those audits (a PageSpeed glitch), not site errors; re-running usually clears them.
+- "Legacy JavaScript" comes from plugin scripts (jQuery/WPForms/Elementor), not the theme.

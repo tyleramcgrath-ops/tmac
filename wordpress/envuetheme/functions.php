@@ -342,6 +342,15 @@ add_action( 'wp_print_footer_scripts', function () {
     }
 }, 0 );
 
+/* Open the Google Fonts connections early (shortens the render-blocking font CSS). */
+add_filter( 'wp_resource_hints', function ( $urls, $relation ) {
+    if ( 'preconnect' === $relation ) {
+        $urls[] = 'https://fonts.googleapis.com';
+        $urls[] = [ 'href' => 'https://fonts.gstatic.com', 'crossorigin' => 'anonymous' ];
+    }
+    return $urls;
+}, 10, 2 );
+
 /* ── Clean wp_head ───────────────────────────────────────────── */
 remove_action( 'wp_head', 'wp_generator' );
 remove_action( 'wp_head', 'rsd_link' );
