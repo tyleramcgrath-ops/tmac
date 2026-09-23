@@ -126,6 +126,17 @@
   </div>
 </div></section>
 
+<section class="video-section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow eyebrow--light reveal">Watch</span>
+    <h2 class="reveal" style="--d:1">Ensure your people are safe 24/7.</h2>
+    <p class="reveal" style="--d:2">See how the OK Alone lone worker solution protects high-risk and remote workers with real-time location monitoring, professional 24/7 emergency response, and flexible check-ins.</p>
+  </div></div>
+  <div class="video-embed-wrap reveal">
+    <iframe src="https://player.vimeo.com/video/931137240?dnt=1" title="OK Alone lone worker safety overview video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+</div></section>
+
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>

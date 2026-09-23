@@ -102,6 +102,32 @@
   </div>
 </div></section>
 
+<section class="video-section"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow eyebrow--light reveal">Watch Coach Max</span>
+    <h2 class="reveal" style="--d:1">From risky driving to real results &mdash; automatically.</h2>
+    <p class="reveal" style="--d:2">Watch how Predictive Coach turns telematics data into safer drivers with automated, behavior-based lessons synced to Geotab.</p>
+  </div></div>
+  <style>.pc-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:960px;margin:24px auto 0}@media (max-width:720px){.pc-video-grid{grid-template-columns:1fr}}</style>
+  <div class="video-embed-wrap reveal">
+    <iframe src="https://www.youtube.com/embed/546yngmsHZo" title="Coach Max introduces Predictive Coach" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+  </div>
+  <div class="pc-video-grid">
+    <div class="video-embed-wrap reveal">
+      <iframe src="https://www.youtube.com/embed/m0rfkyac_Ks" title="Predictive Coach with Coach Max &mdash; video 2 of 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="video-embed-wrap reveal">
+      <iframe src="https://www.youtube.com/embed/--jpG5W7Yd4" title="Predictive Coach with Coach Max &mdash; video 3 of 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="video-embed-wrap reveal">
+      <iframe src="https://www.youtube.com/embed/mcF6AXhMhfo" title="Predictive Coach with Coach Max &mdash; video 4 of 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <div class="video-embed-wrap reveal">
+      <iframe src="https://www.youtube.com/embed/NaBK9Np_iqg" title="Predictive Coach with Coach Max &mdash; video 5 of 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div></section>
+
 <section class="section section--soft"><div class="wrap">
   <div class="section-head section-head--center"><div>
     <span class="eyebrow reveal">Benefits</span>

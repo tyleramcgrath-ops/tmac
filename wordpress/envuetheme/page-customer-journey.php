@@ -19,6 +19,49 @@
   <div><strong>Step 3</strong><span>Full deployment</span></div>
   <div><strong>Step 4</strong><span>Ongoing reviews</span></div>
 </div></div></section>
+<section class="section" id="customer-hub"><div class="wrap">
+  <div class="section-head"><div>
+    <span class="eyebrow reveal">Welcome to Our Customer Hub</span>
+    <h2 class="reveal" style="--d:1">Real people. Real support.</h2>
+  </div><div class="reveal" style="--d:2">
+    <p>Welcome to EnVue&rsquo;s customer hub. We believe the real work starts after implementation. While other providers might disappear once the contract is signed, we view that as just the beginning of our partnership.</p>
+    <p style="margin-top:14px">Over 65% of our staff is made up of support specialists &ndash; we have the bandwidth to dig into the details with you. Whether you run five trucks or five hundred, we tailor our approach to fit your reality. This hands-on care earned us the Geotab Innovation Award, and we are ready to put that same energy into your fleet.</p>
+    <p style="margin-top:14px"><strong>Let&rsquo;s get to work on:</strong></p>
+    <ul class="check-list" style="margin-top:10px">
+      <li>Boosting your efficiency</li>
+      <li>Lowering your fuel spend</li>
+      <li>Improving driver safety</li>
+      <li>Handling federal compliance</li>
+    </ul>
+    <a class="button button-primary" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>" style="margin-top:20px">Start today with a risk-free demo <span>&rarr;</span></a>
+  </div></div>
+</div></section>
+<section class="section section--soft" id="customer-spotlights"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Customer Spotlights</span>
+    <h2 class="reveal" style="--d:1">Fleet challenges solved, in our customers&rsquo; own terms.</h2>
+  </div></div>
+  <div class="feature-split">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Success-Stories-panorama.jpg" alt="Focal Pointe Landscaping fleet management case study" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">Customer Spotlight: Focal Pointe</span>
+      <h2>Solving Fleet Challenges for a Growing Landscaping Leader</h2>
+      <p>Focal Pointe, a Midwest landscaping firm founded in 1997 by John E. Munie, has been successful at transforming itself from its organic &ldquo;word of mouth&rdquo; roots to the competitive landscaping powerhouse it is today.</p>
+      <p>Since the late nineties, Focal Pointe has undergone significant changes, which have resulted in transformative expansion and growth for the company. Currently, they are headquartered in Caseyville, Illinois, but offer full-service commercial and residential landscaping across Illinois, Missouri, Kansas and Oklahoma, escalating their corporate footprint as an industry leader in landscaping.</p>
+      <a class="button button-outline" href="<?php echo esc_url(home_url("/solving-fleet-challenges-for-a-growing-landscaping-leader-focal-pointe-landscaping-a-fleet-management-case-study/")); ?>">Read the Focal Pointe case study &rarr;</a>
+    </div>
+  </div>
+  <div class="feature-split feature-split--flip">
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Lets-Discuss-Your-Fleets-Potentia-panorama.jpg" alt="Crossett Inc. fuel efficiency case study" loading="lazy"></div>
+    <div class="reveal">
+      <span class="eyebrow">A Success Story: Crossett, Inc.</span>
+      <h2>Lower Fuel Costs with Incentives &amp; Coaching</h2>
+      <p>A Pennsylvania fuel hauler saved more than $20,000 in six months by using an EnVue Telematics solution that boosts fuel efficiency.</p>
+      <p>Fuel efficiency software enabled Crossett, Inc. to gain insights into driver behavior, including gear shifting, cruise control, and idling. This proactive approach led to a significant reduction in wasted fuel.</p>
+      <a class="button button-outline" href="https://envuetelematics.com/wp-content/uploads/2025/01/Crossett-Case-Study.pdf" target="_blank" rel="noopener">Read the Crossett case study (PDF) &rarr;</a>
+    </div>
+  </div>
+</div></section>
 <section class="section"><div class="wrap">
   <div class="section-head"><div>
     <span class="eyebrow reveal">The EnVue Process</span>
@@ -57,7 +100,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="EnVue fleet deployment training" loading="eager"></div>
+    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="EnVue fleet deployment training" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Stage 3</span>
       <h2>Deployment and Training: Implementation That Goes Past Device Installation</h2>
@@ -88,6 +131,47 @@
     <li><strong>ROI documentation</strong> &mdash; Quantified results reported quarterly for leadership and board visibility</li>
     <li><strong>Long-term partnership</strong> &mdash; We build programs that get better over time, not just at launch</li>
   </ul>
+</div></section>
+<section class="section" id="success-stories"><div class="wrap">
+  <div class="section-head section-head--center"><div>
+    <span class="eyebrow reveal">Success Stories</span>
+    <h2 class="reveal" style="--d:1">Real voices and experiences.</h2>
+    <p class="reveal" style="--d:2">Gain insights with feedback from our diverse client base. Hear directly from those who benefit from our solutions and understand the tangible value we bring to business operations in many industries.</p>
+  </div></div>
+  <div class="quote-grid">
+    <figure class="quote-card reveal" style="--d:0">
+      <blockquote>&ldquo;I would recommend EnVue to any fleet manager or business owner. They really get it.&rdquo;</blockquote>
+      <cite><strong>James Mode</strong>Director, Environmental, Health, and Safety &middot; Nova Compression</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:1">
+      <blockquote>&ldquo;Please know the great service doesn&rsquo;t go unnoticed and is greatly appreciated!&rdquo;</blockquote>
+      <cite><strong>Crista Wrenn</strong>Accounting &amp; Operations &middot; Morehead Pools</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:2">
+      <blockquote>&ldquo;Rhianna and James have been working with me on set up. They are both extremely helpful and don&rsquo;t waste any time getting the job done. I have to say, you and your team are off to a good start showing great support. Thank you for everything.&rdquo;</blockquote>
+      <cite><strong>John McCall</strong>Industrial Products Operations Manager &middot; D&amp;W Diesel</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:0">
+      <blockquote>&ldquo;I just wanted to thank you and your team at EnVue Telematics for all the help with getting telematics units installed in A-Max&rsquo;s fleet. The GO9 units have been reliable and working with your company has been nothing short of a pleasure. Samantha was always helpful with any updates that were needed and we at A-Max look forward to continuing to work with EnVue in the future.&rdquo;</blockquote>
+      <cite><strong>Jared Cortez</strong>A-MAX Insurance Services, Inc.</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:1">
+      <blockquote>&ldquo;We were watching this live on GPS and we informed the police. We were basically telling the police which way [the thief] was turning, where he was going, how fast he was going, what road he was taking, everything.&rdquo;</blockquote>
+      <cite><strong>Don Siegel</strong>Director of Transportation &middot; Cooper Electric Supply Co.</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:2">
+      <blockquote>&ldquo;The engine health reports are first class. When our vehicles need repairs, we are able to instruct the dealership or repair facility of the fault codes and necessary repairs. They are usually shocked that we can extract that type of granular data from our telematics systems.&rdquo;</blockquote>
+      <cite><strong>Thomas J Fenelon Jr.</strong>Retired Co-founder &middot; AGL Welding Supply Co.</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:0">
+      <blockquote>&ldquo;At B-4 Transport, we had an unfulfilled need in the transportation technology side of our business. EnVue provided us with everything we needed from a hardware perspective and went above and beyond to work with us from a support side.&rdquo;</blockquote>
+      <cite><strong>Brian Beamer</strong>Retired President &middot; B-4 Transport Company, Inc.</cite>
+    </figure>
+    <figure class="quote-card reveal" style="--d:1">
+      <blockquote>&ldquo;EnVue&rsquo;s program has revolutionized the way we do business. The dash cams alone have saved us thousands of dollars and the customer support is second to none.&rdquo;</blockquote>
+      <cite><strong>Cline E. Everhart</strong>President and Owner &middot; Everhart Transportation Inc.</cite>
+    </figure>
+  </div>
 </div></section>
 <?php
 echo envue_faq_section([
