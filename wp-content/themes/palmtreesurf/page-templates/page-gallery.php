@@ -16,12 +16,19 @@ while ( have_posts() ) :
 	the_post();
 	?>
 	<article <?php post_class( 'entry entry--gallery' ); ?>>
-		<header class="page-header">
-			<div class="container">
-				<p class="eyebrow"><?php esc_html_e( 'On the water', 'palmtreesurf' ); ?></p>
-				<?php the_title( '<h1 class="page-title">', '</h1>' ); ?>
-			</div>
-		</header>
+		<?php
+		get_template_part(
+			'template-parts/components/page-header',
+			null,
+			array(
+				'script'   => __( 'On the water', 'palmtreesurf' ),
+				'lede'     => __( 'Photographs from our own trips — every one of them taken on the water off Tamarindo.', 'palmtreesurf' ),
+				// Used nowhere else, so the banner cannot repeat a tile below it.
+				'file'     => 'banner-fishing-boat.jpg',
+				'modifier' => 'gallery',
+			)
+		);
+		?>
 
 		<div class="container container--narrow entry__content" style="padding-top:var(--pt-space-md)">
 			<?php if ( trim( wp_strip_all_tags( get_the_content() ) ) ) : ?>

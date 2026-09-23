@@ -248,3 +248,36 @@ function pt_jpeg_quality() {
 }
 add_filter( 'jpeg_quality', 'pt_jpeg_quality' );
 add_filter( 'wp_editor_set_quality', 'pt_jpeg_quality' );
+
+/**
+ * Render a bundled photograph directly, outside the manifest.
+ *
+ * The manifest exists so a slot can be re-pointed without touching a template,
+ * but a page banner sometimes needs one specific file — typically because the
+ * slot it would otherwise use is already on screen further down the page.
+ *
+ * @param string $file Filename in assets/images/src/.
+ * @param string $alt  Alt text. Empty for a decorative banner.
+ * @param int    $width Intrinsic width to advertise.
+ */
+function pt_bundled_image( $file, $alt = '', $width = 1600 ) {
+	$path = PT_DIR . 'assets/images/src/' . $file;
+
+	if ( ! file_exists( $path ) ) {
+		return;
+	}
+
+	$size   = getimagesize( $path );
+	$width  = $size ? (int) $size[0] : (int) $width;
+	$height = $size ? (int) $size[1] : 0;
+	$srcset = pt_bundled_srcset( $file, $width );
+
+	printf(
+		'<img src="%1$s"%2$s sizes="100vw" width="%3$d"%4$s alt="%5$s" decoding="async" fetchpriority="high" />',
+		esc_url( PT_URI . 'assets/images/src/' . rawurlencode( $file ) ),
+		$srcset ? ' srcset="' . esc_attr( $srcset ) . '"' : '',
+		(int) $width,
+		$height ? ' height="' . (int) $height . '"' : '',
+		esc_attr( $alt )
+	);
+}

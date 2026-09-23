@@ -47,6 +47,7 @@ function pt_backfill_content() {
 	pt_backfill_tour_lineup();
 	pt_backfill_experiences();
 	pt_backfill_guide_names();
+	pt_backfill_post_images();
 	pt_drop_retired_images();
 }
 add_action( 'init', 'pt_backfill_content', 996 );
@@ -365,4 +366,58 @@ function pt_refresh_experience_copy( $post_id, $item ) {
 			set_post_thumbnail( $post_id, $attachment_id );
 		}
 	}
+}
+
+/**
+ * Put a photograph back on every article.
+ *
+ * Three of the five referenced stock files that were deleted when the site
+ * moved to the operator's own photography, so those posts have been running
+ * with no featured image — which is why the Journal showed the same fallback
+ * picture five times in a row.
+ *
+ * @return int How many articles were given an image.
+ */
+function pt_backfill_post_images() {
+	if ( ! function_exists( 'pt_seed_post_map' ) || ! function_exists( 'pt_sideload_theme_image' ) ) {
+		return 0;
+	}
+
+	$fixed = 0;
+
+	foreach ( pt_seed_post_map() as $item ) {
+		if ( empty( $item['slug'] ) || empty( $item['image'] ) ) {
+			continue;
+		}
+
+		$post = get_page_by_path( $item['slug'], OBJECT, 'post' );
+
+		if ( ! $post ) {
+			continue;
+		}
+
+		/*
+		 * Replace a missing image, and also one pointing at a file the theme
+		 * no longer ships — that attachment renders as a broken tile.
+		 */
+		$current = get_post_thumbnail_id( $post->ID );
+		$source  = $current ? (string) get_post_meta( $current, '_pt_seed_source', true ) : '';
+		$stale   = $source && ! file_exists( PT_DIR . 'assets/images/src/' . $source );
+
+		if ( $current && ! $stale && $source === $item['image'] ) {
+			continue;
+		}
+
+		$attachment_id = pt_sideload_theme_image(
+			$item['image'],
+			isset( $item['alt'] ) ? $item['alt'] : ''
+		);
+
+		if ( $attachment_id ) {
+			set_post_thumbnail( $post->ID, $attachment_id );
+			++$fixed;
+		}
+	}
+
+	return $fixed;
 }

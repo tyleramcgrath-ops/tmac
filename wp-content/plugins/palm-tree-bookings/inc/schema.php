@@ -27,6 +27,15 @@ function ptb_field_groups() {
 					'type'     => 'experience',
 					'required' => true,
 				),
+				'trip_option'    => array(
+					/*
+					 * Filled in by the form script once an experience is
+					 * chosen, since the options belong to the tour. Tours sold
+					 * one way only have none and the field hides itself.
+					 */
+					'label' => __( 'Which option?', 'palm-tree-bookings' ),
+					'type'  => 'trip_option',
+				),
 				'date_primary'   => array(
 					'label'    => __( 'Preferred date', 'palm-tree-bookings' ),
 					'type'     => 'date',
@@ -38,11 +47,13 @@ function ptb_field_groups() {
 					'hint'     => __( 'Times shown are the ones still open on your chosen date.', 'palm-tree-bookings' ),
 				),
 				'date_alt'       => array(
+					'form'  => false,
 					'label' => __( 'Alternative date', 'palm-tree-bookings' ),
 					'type'  => 'date',
 					'hint'  => __( 'Helps us place you if your first choice is full.', 'palm-tree-bookings' ),
 				),
 				'time_pref'      => array(
+					'form'  => false,
 					'label'   => __( 'Time of day', 'palm-tree-bookings' ),
 					'type'    => 'select',
 					'options' => array(
@@ -52,15 +63,6 @@ function ptb_field_groups() {
 						'afternoon' => __( 'Afternoon', 'palm-tree-bookings' ),
 						'sunset'    => __( 'Sunset', 'palm-tree-bookings' ),
 					),
-				),
-				'trip_option'    => array(
-					/*
-					 * Filled in by the form script once an experience is
-					 * chosen, since the options belong to the tour. Tours sold
-					 * one way only have none and the field hides itself.
-					 */
-					'label' => __( 'Which option?', 'palm-tree-bookings' ),
-					'type'  => 'trip_option',
 				),
 				'party_adults'   => array(
 					'label'    => __( 'Adults', 'palm-tree-bookings' ),
@@ -77,6 +79,7 @@ function ptb_field_groups() {
 					'max'   => 30,
 				),
 				'skill_level'    => array(
+					'form'  => false,
 					'label'   => __( 'Surfing experience', 'palm-tree-bookings' ),
 					'type'    => 'select',
 					'options' => array(
@@ -93,6 +96,7 @@ function ptb_field_groups() {
 			'label'  => __( 'Who is surfing', 'palm-tree-bookings' ),
 			'fields' => array(
 				'participants' => array(
+					'form'  => false,
 					'label'       => __( 'Surfer details', 'palm-tree-bookings' ),
 					'type'        => 'textarea',
 					'hint'        => __( 'One person per line: name, age, height, weight. We use this to size boards and wetsuits before you arrive.', 'palm-tree-bookings' ),
@@ -100,6 +104,7 @@ function ptb_field_groups() {
 					'rows'        => 4,
 				),
 				'medical'      => array(
+					'form'  => false,
 					'label' => __( 'Injuries, medical notes or non-swimmers', 'palm-tree-bookings' ),
 					'type'  => 'textarea',
 					'hint'  => __( 'Anything your instructor should know for safety.', 'palm-tree-bookings' ),
@@ -111,19 +116,23 @@ function ptb_field_groups() {
 			'label'  => __( 'Logistics', 'palm-tree-bookings' ),
 			'fields' => array(
 				'accommodation'  => array(
+					'form'  => false,
 					'label' => __( 'Where are you staying?', 'palm-tree-bookings' ),
 					'type'  => 'text',
 					'hint'  => __( 'Hotel or area in Tamarindo.', 'palm-tree-bookings' ),
 				),
 				'pickup_needed'  => array(
+					'form'  => false,
 					'label' => __( 'I would like hotel pickup', 'palm-tree-bookings' ),
 					'type'  => 'checkbox',
 				),
 				'arrival_date'   => array(
+					'form'  => false,
 					'label' => __( 'Arriving in Tamarindo', 'palm-tree-bookings' ),
 					'type'  => 'date',
 				),
 				'departure_date' => array(
+					'form'  => false,
 					'label' => __( 'Leaving Tamarindo', 'palm-tree-bookings' ),
 					'type'  => 'date',
 				),
@@ -151,11 +160,13 @@ function ptb_field_groups() {
 					'autocomplete' => 'tel',
 				),
 				'country'           => array(
+					'form'  => false,
 					'label'        => __( 'Country', 'palm-tree-bookings' ),
 					'type'         => 'text',
 					'autocomplete' => 'country-name',
 				),
 				'preferred_contact' => array(
+					'form'  => false,
 					'label'   => __( 'Best way to reach you', 'palm-tree-bookings' ),
 					'type'    => 'select',
 					'options' => array(
@@ -166,15 +177,33 @@ function ptb_field_groups() {
 				),
 			),
 		),
+		/*
+		 * Payment is its own step because it is the only answer that changes
+		 * what happens next, and because "How would you like to pay?" sitting
+		 * under a heading called "Anything else" reads as optional.
+		 */
+		'payment'   => array(
+			'label'  => __( 'Payment', 'palm-tree-bookings' ),
+			'fields' => array(
+				'pay_method'         => array(
+					'label'   => __( 'How would you like to pay?', 'palm-tree-bookings' ),
+					'type'    => 'pay_method',
+					'default' => 'cash',
+				),
+			),
+		),
+
 		'extra'     => array(
 			'label'  => __( 'Anything else', 'palm-tree-bookings' ),
 			'fields' => array(
 				'notes'              => array(
 					'label' => __( 'Questions or special requests', 'palm-tree-bookings' ),
 					'type'  => 'textarea',
-					'rows'  => 4,
+					'rows'  => 3,
+					'hint'  => __( 'Hotel pickup, injuries, non-swimmers, anything at all — optional.', 'palm-tree-bookings' ),
 				),
 				'heard_about'        => array(
+					'form'  => false,
 					'label'   => __( 'How did you hear about us?', 'palm-tree-bookings' ),
 					'type'    => 'select',
 					'options' => array(
@@ -189,6 +218,7 @@ function ptb_field_groups() {
 					),
 				),
 				'marketing_consent'  => array(
+					'form'  => false,
 					'label' => __( 'Send me occasional surf reports and offers', 'palm-tree-bookings' ),
 					'type'  => 'checkbox',
 				),
@@ -357,6 +387,12 @@ function ptb_display_value( $key, $value, $booking_id = 0 ) {
 		$option     = $experience ? ptb_option_at( $experience, (int) $value ) : null;
 
 		return $option ? $option['label'] : (string) $value;
+	}
+
+	if ( 'pay_method' === $field['type'] ) {
+		return ( 'card' === $value )
+			? __( 'Card online', 'palm-tree-bookings' )
+			: __( 'Cash on the day', 'palm-tree-bookings' );
 	}
 
 	if ( 'experience' === $field['type'] && is_numeric( $value ) ) {

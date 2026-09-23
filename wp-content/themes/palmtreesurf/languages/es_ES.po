@@ -2798,15 +2798,6 @@ msgstr "Stripe rechazó la solicitud."
 msgid "Stripe sent a response we could not read."
 msgstr "Stripe envió una respuesta que no pudimos leer."
 
-msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
-msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
-
-msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
-msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
-
-msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
-msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
-
 msgid "Private Surf Lesson"
 msgstr "Clase Privada de Surf"
 
@@ -3023,6 +3014,66 @@ msgstr "Bote avanzando por el canal del estero en Tamarindo"
 msgid "A capuchin monkey in the mangroves of the Tamarindo estuary"
 msgstr "Un mono carablanca en los manglares del estero de Tamarindo"
 
+msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
+msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
+
+msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
+msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
+
+msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
+msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
+
+msgid "How would you like to pay?"
+msgstr "¿Cómo desea pagar?"
+
+msgid "Cash on the day"
+msgstr "Efectivo el mismo día"
+
+msgid "Book now, pay when you arrive."
+msgstr "Reserve ahora y pague al llegar."
+
+msgid "Pay by card now"
+msgstr "Pagar con tarjeta ahora"
+
+msgid "Secure checkout, confirmed straight away."
+msgstr "Pago seguro, confirmado al instante."
+
+msgid "Payment"
+msgstr "Pago"
+
+msgid "Card online"
+msgstr "Tarjeta en línea"
+
+msgid "Book now"
+msgstr "Reservar ahora"
+
+msgid "We confirm your spot by email. Paying by card takes you straight to checkout."
+msgstr "Confirmamos su lugar por correo. Si paga con tarjeta, pasa directo al pago."
+
+msgid "Hotel pickup, injuries, non-swimmers, anything at all — optional."
+msgstr "Transporte desde el hotel, lesiones, personas que no nadan, lo que sea — opcional."
+
+msgid "Photographs from our own trips — every one of them taken on the water off Tamarindo."
+msgstr "Fotografías de nuestros propios viajes — todas tomadas en el agua frente a Tamarindo."
+
+msgid "Message us about any tour and we answer the same day."
+msgstr "Escríbanos sobre cualquier tour y le respondemos el mismo día."
+
+msgid "What we have learned running trips off this coast — the surf, the seasons and the wildlife."
+msgstr "Lo que hemos aprendido haciendo viajes en esta costa — el surf, las temporadas y la fauna."
+
+msgid "From the shop"
+msgstr "Desde la tienda"
+
+msgid "The Palm Tree Surf kayak fleet and surf tent on the sand at Tamarindo"
+msgstr "La flota de kayaks y la carpa de surf de Palm Tree Surf en la arena de Tamarindo"
+
+msgid "A crocodile on the bank of the Tamarindo estuary"
+msgstr "Un cocodrilo en la orilla del estero de Tamarindo"
+
+msgid "Charter boat with rods out off the Guanacaste coast"
+msgstr "Bote de pesca con las cañas listas frente a la costa de Guanacaste"
+
 msgid "%d guest"
 msgid_plural "%d guests"
 msgstr[0] "%d persona"
@@ -3073,7 +3124,6 @@ msgid_plural "Charter, up to %d guests"
 msgstr[0] "Charter, hasta %d persona"
 msgstr[1] "Charter, hasta %d personas"
 
-
 msgid "Up to %d guest"
 msgid_plural "Up to %d guests"
 msgstr[0] "Hasta %d persona"
@@ -3083,3 +3133,4 @@ msgid "%1$s — %2$d guest"
 msgid_plural "%1$s — %2$d guests"
 msgstr[0] "%1$s — %2$d persona"
 msgstr[1] "%1$s — %2$d personas"
+

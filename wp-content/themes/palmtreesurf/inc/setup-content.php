@@ -202,8 +202,8 @@ function pt_seed_experiences() {
 			'level'    => __( 'All Levels', 'palmtreesurf' ),
 			'duration' => __( 'Half, three-quarter or full day', 'palmtreesurf' ),
 			'group'    => __( '5 guests maximum', 'palmtreesurf' ),
-			'image'    => 'kayak-surf-tent.jpg',
-			'alt'      => __( 'Boats and gear at the beach launch point in Tamarindo', 'palmtreesurf' ),
+			'image'    => 'fishing-boat-rods-out.jpg',
+			'alt'      => __( 'Charter boat with rods out off the Guanacaste coast', 'palmtreesurf' ),
 			'includes' => array(
 				__( 'Rods, tackle and bait', 'palmtreesurf' ),
 				__( 'Captain and mate', 'palmtreesurf' ),
@@ -303,8 +303,8 @@ function pt_seed_experiences() {
 			'type'     => __( 'Wildlife & Nature', 'palmtreesurf' ),
 			'level'    => __( 'All Levels', 'palmtreesurf' ),
 			'duration' => __( '2.5 hours', 'palmtreesurf' ),
-			'image'    => 'estuary-mangrove-kayak.jpg',
-			'alt'      => __( 'Boat moving through the estuary channel at Tamarindo', 'palmtreesurf' ),
+			'image'    => 'estuary-crocodile.jpg',
+			'alt'      => __( 'A crocodile on the bank of the Tamarindo estuary', 'palmtreesurf' ),
 			'includes' => array(
 				__( 'Guided boat trip', 'palmtreesurf' ),
 				__( 'Fresh fruit and water', 'palmtreesurf' ),

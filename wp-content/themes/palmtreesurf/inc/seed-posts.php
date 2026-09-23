@@ -656,7 +656,7 @@ function pt_seed_post_map() {
 			'title'   => __( 'Learning to Surf in Tamarindo: A Complete Beginner\'s Guide', 'palmtreesurf' ),
 			'excerpt' => __( 'Why this beach is one of the easiest places in Costa Rica to learn, what a first lesson actually involves, what to bring, and the mistakes that cost beginners waves.', 'palmtreesurf' ),
 			'body'    => 'pt_post_learn_to_surf',
-			'image'   => 'beginner-surf-lesson-action.jpg',
+			'image'   => 'banner-surf-lesson.jpg',
 			'alt'     => __( 'A learner riding whitewater on a soft-top board at Tamarindo', 'palmtreesurf' ),
 		),
 		array(
@@ -664,7 +664,7 @@ function pt_seed_post_map() {
 			'title'   => __( 'The Best Time to Visit Tamarindo, Costa Rica: A Month-by-Month Guide', 'palmtreesurf' ),
 			'excerpt' => __( 'Dry season versus green season, what each month is actually like, how the weather changes each activity, and when to come for waves, wildlife or value.', 'palmtreesurf' ),
 			'body'    => 'pt_post_best_time',
-			'image'   => 'tamarindo-aerial-coastal-banner.jpg',
+			'image'   => 'banner-surf-students.jpg',
 			'alt'     => __( 'Aerial view of the Tamarindo coastline', 'palmtreesurf' ),
 		),
 		array(
@@ -672,7 +672,7 @@ function pt_seed_post_map() {
 			'title'   => __( 'Sport Fishing in Tamarindo: What You\'ll Catch, and When', 'palmtreesurf' ),
 			'excerpt' => __( 'Inshore versus offshore, the species that run on this coast and their rough seasons, licences and conservation, and the questions to ask before booking a charter.', 'palmtreesurf' ),
 			'body'    => 'pt_post_fishing',
-			'image'   => 'kayak-surf-tent.jpg',
+			'image'   => 'banner-fishing-troll.jpg',
 			'alt'     => __( 'Boats and gear staged at the beach launch point in Tamarindo', 'palmtreesurf' ),
 		),
 		array(
@@ -680,7 +680,7 @@ function pt_seed_post_map() {
 			'title'   => __( 'The Tamarindo Estuary: What You\'ll See, and Why You Go at Dawn', 'palmtreesurf' ),
 			'excerpt' => __( 'Howler monkeys, herons, kingfishers and crocodiles in a protected mangrove refuge minutes from the beach — and why the hour you go changes everything.', 'palmtreesurf' ),
 			'body'    => 'pt_post_estuary',
-			'image'   => 'estuary-capuchin-monkey.jpg',
+			'image'   => 'banner-crocodile.jpg',
 			'alt'     => __( 'A capuchin monkey in the mangroves of the Tamarindo estuary', 'palmtreesurf' ),
 		),
 		array(
@@ -688,7 +688,7 @@ function pt_seed_post_map() {
 			'title'   => __( 'Things to Do in Tamarindo: A Five-Day Plan for the Guanacaste Coast', 'palmtreesurf' ),
 			'excerpt' => __( 'A day-by-day plan built around how this coast actually works — mornings on the water, afternoons in the shade, and one day deliberately left free.', 'palmtreesurf' ),
 			'body'    => 'pt_post_five_days',
-			'image'   => 'sunset-palm-ocean-lifestyle-banner.jpg',
+			'image'   => 'banner-mangrove.jpg',
 			'alt'     => __( 'Palm trees over the ocean at sunset on the Guanacaste coast', 'palmtreesurf' ),
 		),
 	);

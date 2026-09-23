@@ -683,3 +683,62 @@ bundled in the theme but not yet on any tour, because there is no way to tell
 what they show. Tell me which tours they belong to and they go on in a line
 each, or upload them to **Media** and paste the URL into the tour's **Video
 URL** field yourself.
+
+---
+
+## 17. Fixed in v1.14.0 — the booking form, the duplicates and the blank headers
+
+### The booking form asked twenty-three questions
+
+It now asks **nine**, and one of those only appears on tours sold more than one
+way. Gone: the surfer sizing table, skill level, medical notes, where you are
+staying, hotel pickup, arrival and departure dates, country, preferred contact
+method, alternative date, time of day, how you heard about us, and the marketing
+opt-in.
+
+What is left is what a booking actually needs: which option, the date, the time,
+how many people, your name, email and phone — and how you want to pay. Hotel
+pickup, injuries and anything else now live in one optional box at the end
+rather than as four separate questions.
+
+On a tour's own page it no longer asks which tour you want. It already knows.
+
+Nothing was deleted from the system: bookings taken on the old form still show
+every answer in the admin, and any retired field can be switched back on.
+
+### Pay by card now, or cash on the day
+
+The last question on the form. **Cash on the day** books it and you settle when
+you arrive. **Pay by card now** sends you straight to the Stripe checkout.
+
+The card option only appears once Stripe keys are set, so the form never offers
+a checkout that does not exist. The booking is saved *before* the payment
+attempt, so a card problem can never lose it.
+
+### No photograph appears twice on a page
+
+Checked automatically across every page of the site: home, experiences, all the
+category pages, every tour, journal, gallery, about and contact. Nine tours,
+nine different photographs, and each tour's gallery is its own.
+
+Four of the five articles had **no image at all** — they pointed at stock files
+deleted when the site moved to your own photography, so the Journal showed the
+same fallback picture five times. All five have their own photograph now.
+
+### Pages no longer open on a blank strip
+
+The Journal, the Gallery and Contact opened straight onto text with no banner,
+while About and Experiences had one. They all use the same banner now, so a page
+added later cannot ship without one.
+
+### The hero
+
+Recut from your own photograph of the shop — the kayak fleet and the surf tent —
+to 16:9, which drops the empty foreground sand the old crop had underneath it,
+with the colour brought back up from the flat midday light.
+
+**A note on images:** I cannot generate pictures in this environment, so where
+you said to use AI I have instead recut and reallocated your own photographs.
+Everything on the site is now either your photograph or the one generated
+catamaran image you asked to keep. If you want AI images made, send them over
+and they drop straight in.

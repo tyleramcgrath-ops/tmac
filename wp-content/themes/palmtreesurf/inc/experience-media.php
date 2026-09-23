@@ -27,44 +27,33 @@ defined( 'ABSPATH' ) || exit;
  */
 function pt_experience_photo_sets() {
 	return array(
-		'group-surf-lesson'        => array(
-			'group-lesson-beach.jpg',
-			'surf-lesson-group-briefing.jpg',
-			'group-instruction-sand.jpg',
-			'surf-students-with-boards.jpg',
+		/*
+		 * Every photograph belongs to exactly one tour. A picture that turns up
+		 * under three different tours tells a visitor the pictures are stock,
+		 * so where there were not enough distinct shots the gallery is simply
+		 * shorter rather than padded with a repeat.
+		 */
+		'private-surf-lesson'      => array(
+			'instructor-popup-stance.jpg',
 		),
 		'semi-private-surf-lesson' => array(
-			'instructor-popup-stance.jpg',
 			'surf-students-with-boards.jpg',
-			'group-instruction-sand.jpg',
-		),
-		'private-surf-lesson'      => array(
-			'group-instruction-sand.jpg',
-			'instructor-popup-stance.jpg',
-			'group-lesson-beach.jpg',
 		),
 		'island-kayak-tour'        => array(
-			'kayak-guides-paddles.jpg',
 			'kayak-fleet-beach.jpg',
 			'kayak-group-guests.jpg',
 			'kayak-surf-tent.jpg',
 		),
 		'mangrove-kayak-tour'      => array(
-			'banner-mangrove.jpg',
-			'estuary-mangrove-kayak.jpg',
 			'estuary-mangrove-paddlers.jpg',
 			'estuary-kayaks-mangrove-shore.jpg',
-			'estuary-capuchin-monkey.jpg',
 		),
 		'safari-boat'              => array(
-			'estuary-crocodile.jpg',
-			'estuary-capuchin-monkey.jpg',
 			'estuary-crocodile-surfacing.jpg',
 			'estuary-capuchin-troop.jpg',
-			'estuary-mangrove-kayak.jpg',
+			'estuary-capuchin-monkey.jpg',
 		),
 		'turtle-tour'              => array(
-			'turtle-nesting-red-light.jpg',
 			'turtle-nest-guide-light.jpg',
 			'turtle-beach-night-stars.jpg',
 			'turtle-returning-to-sea.jpg',
@@ -79,11 +68,9 @@ function pt_experience_photo_sets() {
 			'fishing-trolling-wake.jpg',
 			'fishing-anglers-tuna.jpg',
 			'fishing-grouper.jpg',
-		),
-		'sunset-boat-tour'         => array(
 			'fishing-boat-headland.jpg',
-			'fishing-boat-rods-out.jpg',
 		),
+
 	);
 }
 
@@ -99,10 +86,6 @@ function pt_experience_photo_sets() {
 function pt_experience_video_map() {
 	return array(
 		'safari-boat'         => array(
-			'file'   => 'estuary-crocodile.mp4',
-			'poster' => 'estuary-crocodile.jpg',
-		),
-		'mangrove-kayak-tour' => array(
 			'file'   => 'estuary-crocodile.mp4',
 			'poster' => 'estuary-crocodile.jpg',
 		),

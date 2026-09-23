@@ -174,6 +174,14 @@
 
 		experienceField.addEventListener( 'change', refresh );
 		dateField.addEventListener( 'change', refresh );
+		dateField.addEventListener( 'input', refresh );
+
+		/*
+		 * On a tour's own page the experience is a hidden input, which never
+		 * fires change. Refresh once on load so a date typed straight in finds
+		 * the slots already scoped to the right tour.
+		 */
+		refresh();
 
 		// Restore the picker after a validation error bounced the form back.
 		if ( experienceField.value && dateField.value ) {

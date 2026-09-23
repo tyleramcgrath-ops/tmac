@@ -684,7 +684,22 @@ ul, ol { margin: 0 0 var(--pt-space-sm); padding-left: 1.25rem; }
 
 .page-hero__media { position: absolute; inset: 0; }
 .page-hero__media img, .page-hero__media .pt-image { width: 100%; height: 100%; object-fit: cover; }
-.page-hero__media::after { content: ""; position: absolute; inset: 0; background: var(--pt-scrim-hero); }
+/* A banner sits behind a heading and a paragraph, so it needs a deeper scrim
+   than the home hero, whose text occupies only the left third. Graded from the
+   bottom so the photograph still reads at the top of the frame. */
+.page-hero__media::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(180deg, rgba(8, 40, 50, 0.28) 0%, rgba(8, 40, 50, 0.52) 55%, rgba(8, 40, 50, 0.66) 100%);
+}
+
+.page-hero__title,
+.page-hero__lede,
+.page-hero__script {
+	text-shadow: 0 1px 18px rgba(8, 40, 50, 0.45);
+}
 .page-hero__inner { position: relative; padding-block: var(--pt-space-xl); }
 .page-hero__script { font-size: clamp(2rem, 3.6vw, 3.25rem); margin-bottom: -0.1em; }
 

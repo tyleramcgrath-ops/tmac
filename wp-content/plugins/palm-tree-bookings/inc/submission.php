@@ -197,6 +197,22 @@ function ptb_redirect_with_state( $redirect, $values, $errors ) {
  * @param int    $booking_id Stored booking ID.
  */
 function ptb_redirect_success( $redirect, $booking_id ) {
+	/*
+	 * Someone who chose to pay by card came here to pay, so send them to the
+	 * checkout rather than to a "we will be in touch" message they then have to
+	 * find their way out of. If the gateway is not ready the booking still
+	 * stands and they fall through to the normal confirmation — a payment
+	 * problem must never lose the booking.
+	 */
+	if ( 'card' === (string) ptb_get( $booking_id, 'pay_method' ) && function_exists( 'ptb_active_gateway' ) && ptb_active_gateway() ) {
+		$pay = ptb_pay_url( $booking_id );
+
+		if ( $pay ) {
+			wp_safe_redirect( $pay );
+			exit;
+		}
+	}
+
 	$token = wp_generate_password( 12, false );
 
 	set_transient(

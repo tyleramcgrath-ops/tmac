@@ -246,3 +246,59 @@
 	font-size: 0.85rem;
 	opacity: 0.75;
 }
+
+/* Pay now or pay on the day
+   ------------------------------------------------------------------ */
+
+/* The decision the form leads to, so it reads as a choice between two
+   things rather than as one more question in a list. */
+.ptb-pay {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.ptb-pay__choice {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+	padding: 14px;
+	border: 1px solid #d9d2c4;
+	border-radius: 12px;
+	background: #fff;
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ptb-pay__choice:hover {
+	border-color: #9bb7bf;
+}
+
+/* :has keeps the selected state on the label without any JavaScript.
+   Browsers without it still show the radio itself, so nothing is lost. */
+.ptb-pay__choice:has(input:checked) {
+	border-color: #0f6b7d;
+	box-shadow: inset 0 0 0 1px #0f6b7d;
+}
+
+.ptb-pay__choice input {
+	margin: 2px 0 0;
+	flex: 0 0 auto;
+}
+
+.ptb-pay__body {
+	display: block;
+}
+
+.ptb-pay__title {
+	display: block;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.ptb-pay__note {
+	display: block;
+	margin-top: 2px;
+	font-size: 0.875rem;
+	opacity: 0.75;
+}

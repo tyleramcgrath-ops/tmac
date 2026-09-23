@@ -22,6 +22,24 @@ function ptb_render_field( $key, $field, $values = array() ) {
 	$type     = $field['type'];
 	$describe = ! empty( $field['hint'] ) ? $id . '-hint' : '';
 
+	/*
+	 * A carried-over value has no question to ask, so it gets no wrapper and no
+	 * label — otherwise the tour page shows a labelled "Which experience?" with
+	 * nothing under it.
+	 */
+	if ( 'experience_fixed' === $type ) {
+		// Keeps its id: the availability script looks the experience up by it,
+		// and without one the time picker never loads a single slot.
+		printf(
+			'<input type="hidden" id="%1$s" name="%2$s" value="%3$d" />',
+			esc_attr( $id ),
+			esc_attr( $name ),
+			(int) $value
+		);
+
+		return;
+	}
+
 	$classes = array( 'ptb-field', 'ptb-field--' . sanitize_html_class( $type ) );
 	printf( '<div class="%s">', esc_attr( implode( ' ', $classes ) ) );
 
@@ -68,6 +86,40 @@ function ptb_render_field( $key, $field, $values = array() ) {
 
 		case 'experience':
 			ptb_render_experience_field( $id, $name, $value, $required );
+			break;
+
+		case 'pay_method':
+			/*
+			 * Two cards rather than a dropdown: this is the decision the whole
+			 * form leads to, and it should not look like another question.
+			 * Cash is the default and the only choice offered when card
+			 * payment has not been switched on, so the form never promises a
+			 * checkout that does not exist.
+			 */
+			$ptb_card_ready = function_exists( 'ptb_active_gateway' ) && ptb_active_gateway();
+			$ptb_chosen     = ( 'card' === $value && $ptb_card_ready ) ? 'card' : 'cash';
+
+			echo '<div class="ptb-pay">';
+
+			printf(
+				'<label class="ptb-pay__choice"><input type="radio" name="%1$s" value="cash"%2$s /><span class="ptb-pay__body"><span class="ptb-pay__title">%3$s</span><span class="ptb-pay__note">%4$s</span></span></label>',
+				esc_attr( $name ),
+				checked( $ptb_chosen, 'cash', false ),
+				esc_html__( 'Cash on the day', 'palm-tree-bookings' ),
+				esc_html__( 'Book now, pay when you arrive.', 'palm-tree-bookings' )
+			);
+
+			if ( $ptb_card_ready ) {
+				printf(
+					'<label class="ptb-pay__choice"><input type="radio" name="%1$s" value="card"%2$s /><span class="ptb-pay__body"><span class="ptb-pay__title">%3$s</span><span class="ptb-pay__note">%4$s</span></span></label>',
+					esc_attr( $name ),
+					checked( $ptb_chosen, 'card', false ),
+					esc_html__( 'Pay by card now', 'palm-tree-bookings' ),
+					esc_html__( 'Secure checkout, confirmed straight away.', 'palm-tree-bookings' )
+				);
+			}
+
+			echo '</div>';
 			break;
 
 		case 'trip_option':
@@ -254,11 +306,37 @@ function ptb_render_form( $atts = array() ) {
 					<input type="text" id="ptb-company" name="ptb_company" tabindex="-1" autocomplete="off" />
 				</div>
 
-				<?php foreach ( ptb_field_groups() as $group_key => $group ) : ?>
+				<?php
+				/*
+				 * Only the fields marked for the form. Everything a booking
+				 * does not strictly need to exist was retired: nobody abandons
+				 * a booking because they were not asked their country, but
+				 * plenty abandon one that asks twenty-three questions.
+				 */
+				foreach ( ptb_field_groups() as $group_key => $group ) :
+					$visible = array();
+
+					foreach ( $group['fields'] as $key => $field ) {
+						if ( isset( $field['form'] ) && false === $field['form'] ) {
+							continue;
+						}
+
+						// Shortcode carries the tour, so it needs no question.
+						if ( 'experience' === $key && $atts['experience'] ) {
+							$field['type'] = 'experience_fixed';
+						}
+
+						$visible[ $key ] = $field;
+					}
+
+					if ( ! $visible ) {
+						continue;
+					}
+					?>
 					<fieldset class="ptb-group ptb-group--<?php echo esc_attr( $group_key ); ?>">
 						<legend class="ptb-group__legend"><?php echo esc_html( $group['label'] ); ?></legend>
 						<div class="ptb-group__fields">
-							<?php foreach ( $group['fields'] as $key => $field ) : ?>
+							<?php foreach ( $visible as $key => $field ) : ?>
 								<?php ptb_render_field( $key, $field, $values ); ?>
 							<?php endforeach; ?>
 						</div>
@@ -267,10 +345,10 @@ function ptb_render_form( $atts = array() ) {
 
 				<div class="ptb__actions">
 					<button type="submit" class="ptb-btn">
-						<span class="ptb-btn__label"><?php esc_html_e( 'Send booking request', 'palm-tree-bookings' ); ?></span>
+						<span class="ptb-btn__label"><?php esc_html_e( 'Book now', 'palm-tree-bookings' ); ?></span>
 						<span class="ptb-btn__spinner" aria-hidden="true"></span>
 					</button>
-					<p class="ptb__smallprint"><?php esc_html_e( 'This sends a request, not a confirmed booking. We reply to confirm availability.', 'palm-tree-bookings' ); ?></p>
+					<p class="ptb__smallprint"><?php esc_html_e( 'We confirm your spot by email. Paying by card takes you straight to checkout.', 'palm-tree-bookings' ); ?></p>
 				</div>
 			</form>
 		<?php endif; ?>

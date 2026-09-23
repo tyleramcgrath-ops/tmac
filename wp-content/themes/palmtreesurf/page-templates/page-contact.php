@@ -16,12 +16,18 @@ while ( have_posts() ) :
 	the_post();
 	?>
 	<article <?php post_class( 'entry entry--contact' ); ?>>
-		<header class="page-header">
-			<div class="container">
-				<p class="eyebrow"><?php esc_html_e( 'Get in touch', 'palmtreesurf' ); ?></p>
-				<?php the_title( '<h1 class="page-title">', '</h1>' ); ?>
-			</div>
-		</header>
+		<?php
+		get_template_part(
+			'template-parts/components/page-header',
+			null,
+			array(
+				'script'   => __( 'Get in touch', 'palmtreesurf' ),
+				'lede'     => __( 'Message us about any tour and we answer the same day.', 'palmtreesurf' ),
+				'slot'     => 'split-1-offset',
+				'modifier' => 'contact',
+			)
+		);
+		?>
 
 		<div class="container location__inner" style="padding-bottom:var(--pt-section-y)">
 			<div>
