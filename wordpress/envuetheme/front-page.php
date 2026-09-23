@@ -721,7 +721,7 @@
             <?php if ( has_post_thumbnail() ) : ?>
               <?php the_post_thumbnail( 'medium_large', [ 'loading' => 'lazy', 'alt' => esc_attr( get_the_title() ) ] ); ?>
             <?php else : ?>
-              <span class="news-card-placeholder"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/envue-logo.png' ); ?>" alt="" loading="lazy"></span>
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/images/truck-driver.jpg" alt="<?php echo esc_attr( get_the_title() ); ?>" loading="lazy">
             <?php endif; ?>
           </div>
           <div class="news-card-body">
