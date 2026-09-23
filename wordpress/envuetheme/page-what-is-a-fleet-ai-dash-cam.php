@@ -112,11 +112,12 @@
 </div></section>
 
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Start Your Journey to Fleet Intelligence</span><h2>Reduce your APMM with advanced video intelligence.</h2>
-    <p>Managing fleet complexity is a choice. In 2026, the competitive advantage of an organization is defined by the high-fidelity data it collects and acts upon. AI dash cams are no longer optional&mdash;they are the foundational tool for any outcome-obsessed enterprise. Contact EnVue today for a strategic discovery audit and let our consultants design your unified roadmap to excellence.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Start Your Journey to Fleet Intelligence</span><h2>Reduce your APMM with advanced video intelligence.</h2></div>
+  <div><p>Managing fleet complexity is a choice. In 2026, the competitive advantage of an organization is defined by the high-fidelity data it collects and acts upon. AI dash cams are no longer optional&mdash;they are the foundational tool for any outcome-obsessed enterprise. Contact EnVue today for a strategic discovery audit and let our consultants design your unified roadmap to excellence.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Contact EnVue Today <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

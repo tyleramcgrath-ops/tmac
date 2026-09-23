@@ -48,11 +48,12 @@ echo envue_faq_section([
 ?>
 
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">ProMiles + EnVue</span><h2>Protect your fleet from audit risk.</h2>
-    <p>Speak with an EnVue expert to learn how ProMiles can automate IFTA reporting and reduce administrative overhead for your fleet.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">ProMiles + EnVue</span><h2>Protect your fleet from audit risk.</h2></div>
+  <div><p>Speak with an EnVue expert to learn how ProMiles can automate IFTA reporting and reduce administrative overhead for your fleet.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Book a Free Demo <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

@@ -148,11 +148,12 @@
 </style>
 
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Free Discovery Session</span><h2>Request your complexity audit today.</h2>
-    <p>Stop struggling with disconnected data. Let EnVue&rsquo;s consultants audit your operation and design your unified roadmap. Schedule your free 15-minute discovery session today.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Free Discovery Session</span><h2>Request your complexity audit today.</h2></div>
+  <div><p>Stop struggling with disconnected data. Let EnVue&rsquo;s consultants audit your operation and design your unified roadmap. Schedule your free 15-minute discovery session today.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Claim My Complexity Audit <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

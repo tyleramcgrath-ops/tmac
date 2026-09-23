@@ -145,11 +145,12 @@ echo envue_faq_section([
 ], 'FAQ: Trucking and Transportation Fleet Management');
 ?>
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Trucking</span><h2>Compliance, safety, and visibility for every run.</h2>
-    <p>Get a free trucking fleet assessment from EnVue Telematics. We will review your ELD, IFTA, safety, and operational requirements and build a solution configured for your specific carrier operation.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Trucking</span><h2>Compliance, safety, and visibility for every run.</h2></div>
+  <div><p>Get a free trucking fleet assessment from EnVue Telematics. We will review your ELD, IFTA, safety, and operational requirements and build a solution configured for your specific carrier operation.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

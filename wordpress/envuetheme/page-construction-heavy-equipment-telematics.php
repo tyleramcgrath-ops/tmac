@@ -104,11 +104,12 @@
 </style>
 
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Free Asset Audit</span><h2>Maximize your Yellow Iron ROI.</h2>
-    <p>Discover how EnVue&rsquo;s unified construction solutions can lower your maintenance costs and improve your job costing. Schedule your free 15-minute asset audit today.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Free Asset Audit</span><h2>Maximize your Yellow Iron ROI.</h2></div>
+  <div><p>Discover how EnVue&rsquo;s unified construction solutions can lower your maintenance costs and improve your job costing. Schedule your free 15-minute asset audit today.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Claim My Heavy Equipment Audit <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

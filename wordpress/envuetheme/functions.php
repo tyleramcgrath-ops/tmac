@@ -16,13 +16,13 @@ add_action( 'wp_enqueue_scripts', function () {
         'envue-style',
         get_template_directory_uri() . '/assets/css/envue.css',
         [ 'envue-fonts' ],
-        '14'
+        '15'
     );
     wp_enqueue_script(
         'envue-script',
         get_template_directory_uri() . '/assets/js/envue.js',
         [],
-        '14',
+        '15',
         true
     );
 } );
@@ -746,21 +746,6 @@ add_action( 'init', function () {
     wp_safe_redirect( $redirect );
     exit;
 } );
-
-/* ══════════════════════════════════════════════════════════════════════
-   DEMO REQUEST FORM (bottom "Get a Demo" section on inner pages)
-   Renders WPForms #2958. If WPForms is ever deactivated, falls back to the
-   demo/call buttons so a raw shortcode never shows on the page.
-══════════════════════════════════════════════════════════════════════ */
-function envue_demo_form() {
-    if ( shortcode_exists( 'wpforms' ) ) {
-        return '<div class="demo-form-card">' . do_shortcode( '[wpforms id="2958" title="false"]' ) . '</div>';
-    }
-    return '<div class="hero-actions">'
-        . '<a class="button button-primary button-lg" href="' . esc_url( home_url( '/get-in-touch/' ) ) . '">Get a Free Demo <span>&rarr;</span></a>'
-        . '<a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>'
-        . '</div>';
-}
 
 /* ══════════════════════════════════════════════════════════════════════
    OFFICE CARD HEADER — crisp vector flag + location label

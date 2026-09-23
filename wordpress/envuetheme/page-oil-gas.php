@@ -91,11 +91,12 @@ echo envue_faq_section([
 ], 'FAQ: Oil and Gas Fleet Management');
 ?>
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Oil and Gas</span><h2>Complete visibility for oil and gas fleet operations.</h2>
-    <p>Get a free oil and gas fleet assessment from EnVue Telematics. We will review your remote tracking, lone worker safety, and compliance requirements and configure a solution for your specific upstream or midstream operations.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Oil and Gas</span><h2>Complete visibility for oil and gas fleet operations.</h2></div>
+  <div><p>Get a free oil and gas fleet assessment from EnVue Telematics. We will review your remote tracking, lone worker safety, and compliance requirements and configure a solution for your specific upstream or midstream operations.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

@@ -99,11 +99,12 @@
 </div></section>
 
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Free High-Consequence Safety Audit</span><h2>Secure your high-stakes cargo.</h2>
-    <p>Discover how EnVue&rsquo;s specialized hazmat solutions can protect your fleet and your reputation. Schedule your free 15-minute high-consequence safety audit today.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Free High-Consequence Safety Audit</span><h2>Secure your high-stakes cargo.</h2></div>
+  <div><p>Discover how EnVue&rsquo;s specialized hazmat solutions can protect your fleet and your reputation. Schedule your free 15-minute high-consequence safety audit today.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Speak with a Hazmat Specialist <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

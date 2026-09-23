@@ -115,11 +115,12 @@
 </div></section>
 
 </main>
-<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Geotab GO Focus Plus</span><h2>Ready to evaluate GO Focus Plus?</h2>
-    <p>Let EnVue help you choose the right Geotab video configuration, plan your rollout, and create a safety program your drivers and managers can actually use.</p>
-    <p class="demo-call">Prefer to talk? Call <a href="tel:8002011169">(800) 201-1169</a> &mdash; US-based fleet experts, 24/7.</p>
-  </div>
-  <div><?php echo envue_demo_form(); ?></div>
+<section class="final-cta" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Geotab GO Focus Plus</span><h2>Ready to evaluate GO Focus Plus?</h2></div>
+  <div><p>Let EnVue help you choose the right Geotab video configuration, plan your rollout, and create a safety program your drivers and managers can actually use.</p>
+  <div class="hero-actions">
+    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Custom Quote <span>&rarr;</span></a>
+    <a class="button button-ghost button-lg" href="mailto:support@et-envue.com">Email EnVue</a>
+  </div></div>
 </div></section>
 <?php get_footer(); ?>

@@ -64,3 +64,11 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 4. Keep WPForms and AIOSEO active. Elementor can stay installed (the theme ignores it on its own pages).
 5. Purge SG Cache (and any CDN cache), then spot-check: home, /get-in-touch/ (submit a test form),
    a partner page, a blog post, and a page on your phone.
+
+## v6.5
+- Fixed stretched images on the live site: SiteGround Speed Optimizer's "add missing image dimensions" stamps each
+  file's pixel size onto <img> tags, which overrode the theme's sizing (homepage video card, Dash Cams lineup).
+  One global rule now makes images size from CSS. Every page was re-scanned at desktop and phone widths with
+  dimensions stamped on every image: no image changes size.
+- Bottom "Get a Demo" sections are back to the original buttons (Get a Free Demo → /get-in-touch/, Call).
+  WPForms stays only on pages that had a form before (Get In Touch, audit/landing pages, Verizon, NCTA).
