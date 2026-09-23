@@ -196,27 +196,42 @@ let started = false, client = null;
       ok(junk.error && junk.status === 404, 'a project id that is not a uuid reads as no such project', JSON.stringify(junk));
     }
 
-    console.log('\n8. The 25 the Agency tier promises is the number enforced');
+    console.log('\n8. The limits the pricing page promises are the limits enforced');
     {
-      const ag = await mk('agency@example.com', 'agency');
-      ok(store.PLAN_LIMITS.agency === 25, 'the limit matches the pricing page');
-      for (let i = 0; i < 25; i++) {
-        const r = await store.createProject(db, ag, { name: 'p' + i, url: 'https://p' + i + '.com/', keyword: 'k' });
+      // The page says Practice includes 10 projects and Agency is unlimited. These assertions are
+      // the page, restated: if someone edits one number without the other, this fails.
+      ok(store.PLAN_LIMITS.practice === 10, 'Practice caps at the 10 the page states');
+      ok(store.PLAN_LIMITS.agency === Infinity, 'Agency is uncapped, as the page states');
+
+      const pr = await mk('practice-cap@example.com', 'practice');
+      for (let i = 0; i < 10; i++) {
+        const r = await store.createProject(db, pr, { name: 'p' + i, url: 'https://p' + i + '.com/', keyword: 'k' });
         if (r.error) { ok(false, 'project ' + i + ' should have been allowed', JSON.stringify(r)); break; }
       }
-      ok((await store.countProjects(db, ag.id)) === 25, 'twenty-five are allowed');
-      const over = await store.createProject(db, ag, { name: 'p25', url: 'https://p25.com/', keyword: 'k' });
-      ok(over.error && over.status === 409, 'the twenty-sixth is refused', JSON.stringify(over));
-      ok(/25/.test(over.error), 'and the message says what the limit is', over.error);
+      ok((await store.countProjects(db, pr.id)) === 10, 'ten are allowed');
+      const over = await store.createProject(db, pr, { name: 'p10', url: 'https://p10.com/', keyword: 'k' });
+      ok(over.error && over.status === 409, 'the eleventh is refused', JSON.stringify(over));
+      ok(/10/.test(over.error), 'and the message says what the limit is', over.error);
 
-      // Archiving frees a slot, which is what the refusal tells people to do.
-      const first = (await store.listProjects(db, ag.id)).pop();
-      await store.archiveProject(db, ag.id, first.id);
-      const retry = await store.createProject(db, ag, { name: 'p25', url: 'https://p25.com/', keyword: 'k' });
+      // Archiving frees a slot, which is what the refusal tells people to do. If it did not, the
+      // message would be a lie and the only real way out would be paying more.
+      const first = (await store.listProjects(db, pr.id)).pop();
+      await store.archiveProject(db, pr.id, first.id);
+      const retry = await store.createProject(db, pr, { name: 'p10', url: 'https://p10.com/', keyword: 'k' });
       ok(!retry.error, 'archiving one makes room, as the message said it would', JSON.stringify(retry.error));
 
-      // Practice has no stated limit on the pricing page, so it has none here.
-      ok(store.PLAN_LIMITS.practice === Infinity, 'Practice is uncapped, matching what the page promises');
+      // Unlimited has to be exercised, not just asserted: a stale cap left at 25 would pass the
+      // constant check above only if someone also edited it, but a *different* cap reintroduced
+      // in createProject would not. Go well past the old number.
+      const ag = await mk('agency@example.com', 'agency');
+      let refused = null;
+      for (let i = 0; i < 30; i++) {
+        const r = await store.createProject(db, ag, { name: 'a' + i, url: 'https://a' + i + '.com/', keyword: 'k' });
+        if (r.error) { refused = { i: i, r: r }; break; }
+      }
+      ok(!refused, 'Agency runs past the old 25-project ceiling without being refused',
+        refused ? 'stopped at ' + refused.i + ': ' + JSON.stringify(refused.r) : '');
+      ok((await store.countProjects(db, ag.id)) === 30, 'thirty are held for an Agency account');
     }
 
     console.log('\n9. Deleting an account takes its projects and scans with it');

@@ -56,10 +56,10 @@ become real once a server holds something the user cannot get for themselves.
 | Multi-keyword batches | Practice | not built | client-side; gating it needs auth |
 | Client-branded reports | Agency | not built | mostly client-side; gating needs auth |
 | Scheduled scans on the user's own key | Practice | not built | encrypted server-side key storage + auth |
-| Projects synced across machines | Practice | not built | auth + database |
+| Up to 10 projects, synced across machines | Practice | not built | auth + database |
 | Full history beyond six scans | Practice | not built | auth + database |
 | Weekly automatic re-scans | Practice | not built | scheduler + **server-side scan orchestration** |
-| 25 sites monitored, alerts | Agency | not built | the above + an email provider |
+| Unlimited sites monitored, alerts | Agency | not built | the above + an email provider |
 
 There are **no pooled credits on any tier** — every customer brings their own SerpApi or Serper
 key, paid tiers included. What the paid tiers sell is the scan running while the tab is closed.

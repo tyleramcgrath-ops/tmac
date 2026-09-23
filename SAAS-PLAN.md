@@ -504,14 +504,14 @@ Everything it claims today is true today.
 re-scans on the customer's stored key, full history instead of the last six scans,
 multi-keyword batches. The $39 buys the scheduling and the storage, not search volume.
 
-**Agency — $149/mo.** Everything in Practice, 25 projects under schedule, alerts when
-a score crosses a band, client-ready branded reports, a shared workspace.
+**Agency — $149/mo.** Everything in Practice, unlimited projects under schedule, alerts
+when a score crosses a band, client-ready branded reports, a shared workspace.
 
 The "shared workspace" needs a `teams` / `memberships` pair and turns every
 `user_id` foreign key above into an ownership question. It is the single largest piece
 of work in the whole plan and it is worth **deferring past first revenue** — ship
-Agency initially as 25 projects + alerts + branded reports on a single login, and add
-seats when a customer asks for seats.
+Agency initially as unlimited projects + alerts + branded reports on a single login, and
+add seats when a customer asks for seats.
 
 ---
 
@@ -571,7 +571,7 @@ seats when a customer asks for seats.
 7. Schedules.
 8. Stripe + webhook + portal.
 9. Flip Practice from "In build" to "Available now".
-10. Agency: alerts, branded reports, 25 projects.
+10. Agency: alerts, branded reports.
 11. Teams and seats, only if asked for.
 
 Steps 1-6 are done. 7-9 are comparatively mechanical. Nothing between 1 and
@@ -601,13 +601,17 @@ Steps 1-6 are done. 7-9 are comparatively mechanical. Nothing between 1 and
 
 ---
 
-## 10. One gap in the pricing copy
+## 10. Where the tiers separate on volume
 
-The Agency tier says **"25 sites under weekly monitoring"**, so 25 is enforced. The Practice
-tier says nothing about how many projects it includes, so nothing is enforced — implementing a
-cap the page does not promise would be charging for something and then withholding it.
+Decided 23 Sep 2026, by the owner: **Practice includes 10 projects, Agency is unlimited.**
+The page says so and `PLAN_LIMITS` in `lib/store.js` enforces exactly that, which is the whole
+rule here — a cap the page does not promise is charging for something and then withholding it,
+and a promise the code does not keep is the same thing with better manners. If one moves, the
+other moves in the same commit, and `test/store.js` fails until they agree.
 
-That leaves nothing stopping a Practice customer at $39 from running a hundred sites, which is
-the same workload Agency charges $149 for. The fix is a copy decision rather than a code one:
-either state a Practice limit on the page and I will enforce it, or accept that the tiers are
-separated by seats and features rather than by volume.
+This replaces the gap that stood here before: Practice previously stated no limit, so none was
+enforced, and nothing stopped a $39 customer running the hundred sites Agency charges $149 for.
+Volume is now a real line between the tiers rather than features alone.
+
+Archived projects do not count against the limit, so the over-limit refusal — *archive one, or
+move up to Agency, which is unlimited* — describes a way out that actually works.
