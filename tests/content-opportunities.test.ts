@@ -26,6 +26,7 @@ function cannibal(over: Partial<CannibalizedQuery> = {}): CannibalizedQuery {
       { page: 'https://example.com/pricing', impressions: 600, clicks: 12, position: 9 },
       { page: 'https://example.com/plans', impressions: 300, clicks: 3, position: 17 },
     ],
+    isBrand: false,
     ...over,
   }
 }

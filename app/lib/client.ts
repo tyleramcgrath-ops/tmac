@@ -821,8 +821,10 @@ export interface KeywordIntelligenceDTO {
   } | null
   keywords: KeywordRowDTO[]
   opportunities: { query: string; page: string; position: number; impressions: number; clicks: number; ctr: number }[]
-  cannibalization: { query: string; totalImpressions: number; pages: { page: string; impressions: number; clicks: number; position: number }[] }[]
-  lowCtr: { query: string; page: string; position: number; impressions: number; ctr: number; cohortMedianCtr: number }[]
+  cannibalization: { query: string; totalImpressions: number; isBrand: boolean; pages: { page: string; impressions: number; clicks: number; position: number }[] }[]
+  lowCtr: { query: string; page: string; position: number; impressions: number; clicks: number; ctr: number; cohortMedianCtr: number | null; kind: 'relative' | 'absolute' }[]
+  // Real totals before each list is capped for display.
+  totals: { opportunities: number; cannibalization: number; lowCtr: number; brandCannibalization: number }
   devices: { key: string; clicks: number; impressions: number; ctr: number; position: number }[]
   mobileGap: { mobilePosition: number; desktopPosition: number; gap: number } | null
   countries: { key: string; clicks: number; impressions: number; ctr: number; position: number }[]
