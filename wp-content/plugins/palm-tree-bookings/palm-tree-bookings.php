@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Palm Tree Bookings
  * Description:       Bookings, availability, pricing and payments for surf lessons, tours and custom experiences. Capture requests, manage the schedule, price every tour from one screen, and take payment through Stripe. Lives in a plugin so booking and pricing data survives a theme change.
- * Version:           2.2.0
+ * Version:           2.2.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Text Domain:       palm-tree-bookings
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'PTB_VERSION', '2.2.0' );
+define( 'PTB_VERSION', '2.2.1' );
 define( 'PTB_FILE', __FILE__ );
 define( 'PTB_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PTB_URL', plugin_dir_url( __FILE__ ) );

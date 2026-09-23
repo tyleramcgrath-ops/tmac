@@ -3065,6 +3065,12 @@ msgstr "Un cocodrilo en la orilla del estero de Tamarindo"
 msgid "Charter boat with rods out off the Guanacaste coast"
 msgstr "Bote de pesca con las cañas listas frente a la costa de Guanacaste"
 
+msgid "Instructor demonstrating the pop-up on a board at Tamarindo"
+msgstr "Instructor mostrando el pop-up sobre la tabla en Tamarindo"
+
+msgid "A turtle on the beach at Tamarindo under a night sky full of stars"
+msgstr "Una tortuga en la playa de Tamarindo bajo un cielo nocturno lleno de estrellas"
+
 msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
 msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
 
@@ -3074,11 +3080,20 @@ msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$
 msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
 msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
 
-msgid "Instructor demonstrating the pop-up on a board at Tamarindo"
-msgstr "Instructor mostrando el pop-up sobre la tabla en Tamarindo"
+msgid "Payment received"
+msgstr "Pago recibido"
 
-msgid "A turtle on the beach at Tamarindo under a night sky full of stars"
-msgstr "Una tortuga en la playa de Tamarindo bajo un cielo nocturno lleno de estrellas"
+msgid "Thank you — your card payment went through and your booking is confirmed. A receipt is on its way to your email."
+msgstr "Gracias — su pago con tarjeta se realizó y su reserva está confirmada. El recibo va en camino a su correo."
+
+msgid "Payment not completed"
+msgstr "Pago no completado"
+
+msgid "Nothing has been charged and your booking is still held. You can pay now, or leave it and settle in cash on the day."
+msgstr "No se ha cobrado nada y su reserva sigue apartada. Puede pagar ahora, o dejarlo y pagar en efectivo el mismo día."
+
+msgid "Try the payment again"
+msgstr "Intentar el pago de nuevo"
 
 msgid "%d guest"
 msgid_plural "%d guests"
@@ -3139,3 +3154,4 @@ msgid "%1$s — %2$d guest"
 msgid_plural "%1$s — %2$d guests"
 msgstr[0] "%1$s — %2$d persona"
 msgstr[1] "%1$s — %2$d personas"
+

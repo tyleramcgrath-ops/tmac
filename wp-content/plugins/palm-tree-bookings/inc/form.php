@@ -278,6 +278,27 @@ function ptb_render_form( $atts = array() ) {
 					<h3><?php esc_html_e( 'Request received', 'palm-tree-bookings' ); ?></h3>
 					<p><?php echo esc_html( ptb_confirmation_message() ); ?></p>
 				</div>
+			<?php elseif ( 'paid' === $state['status'] ) : ?>
+				<div class="ptb-notice ptb-notice--success">
+					<h3><?php esc_html_e( 'Payment received', 'palm-tree-bookings' ); ?></h3>
+					<p>
+						<?php esc_html_e( 'Thank you — your card payment went through and your booking is confirmed. A receipt is on its way to your email.', 'palm-tree-bookings' ); ?>
+					</p>
+				</div>
+			<?php elseif ( 'payment_cancelled' === $state['status'] ) : ?>
+				<div class="ptb-notice ptb-notice--error">
+					<h3><?php esc_html_e( 'Payment not completed', 'palm-tree-bookings' ); ?></h3>
+					<p>
+						<?php esc_html_e( 'Nothing has been charged and your booking is still held. You can pay now, or leave it and settle in cash on the day.', 'palm-tree-bookings' ); ?>
+					</p>
+					<?php if ( ! empty( $state['pay_url'] ) ) : ?>
+						<p>
+							<a class="ptb__button" href="<?php echo esc_url( $state['pay_url'] ); ?>">
+								<?php esc_html_e( 'Try the payment again', 'palm-tree-bookings' ); ?>
+							</a>
+						</p>
+					<?php endif; ?>
+				</div>
 			<?php elseif ( $state['errors'] ) : ?>
 				<div class="ptb-notice ptb-notice--error">
 					<p><?php esc_html_e( 'Please check the fields below.', 'palm-tree-bookings' ); ?></p>
@@ -290,7 +311,7 @@ function ptb_render_form( $atts = array() ) {
 			<?php endif; ?>
 		</div>
 
-		<?php if ( 'success' !== $state['status'] ) : ?>
+		<?php if ( ! in_array( $state['status'], array( 'success', 'paid' ), true ) ) : ?>
 			<form class="ptb__form" method="post" action="<?php echo esc_url( ptb_form_action() ); ?>" novalidate>
 				<?php wp_nonce_field( 'ptb_submit', 'ptb_nonce' ); ?>
 				<input type="hidden" name="ptb_submit" value="1" />

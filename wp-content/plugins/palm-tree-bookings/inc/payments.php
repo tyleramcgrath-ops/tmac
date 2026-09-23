@@ -457,6 +457,44 @@ function ptb_booking_by_token( $token ) {
 }
 
 /**
+ * Land a customer coming back from the gateway on a page that says so.
+ *
+ * Reuses the one-shot transient the booking form already reads, so the message
+ * appears in the page by the booking form rather than on a bare error screen.
+ * They are put back on the tour they booked where we know which one it was.
+ *
+ * Nothing here decides whether the money arrived — the gateway's webhook does
+ * that, and it may not have landed yet. The wording reflects the one thing
+ * this request actually knows: the customer came back from the checkout.
+ *
+ * @param int    $booking_id Booking ID.
+ * @param string $status     Form state to show: paid, or payment_cancelled.
+ */
+function ptb_payment_return( $booking_id, $status ) {
+	$state_token = wp_generate_password( 12, false );
+
+	set_transient(
+		'ptb_state_' . $state_token,
+		array(
+			'status'     => $status,
+			'booking_id' => (int) $booking_id,
+			'pay_url'    => 'payment_cancelled' === $status ? ptb_pay_url( $booking_id ) : '',
+		),
+		10 * MINUTE_IN_SECONDS
+	);
+
+	$experience = (int) get_post_meta( $booking_id, '_ptb_experience', true );
+	$destination = $experience ? get_permalink( $experience ) : '';
+
+	if ( ! $destination ) {
+		$destination = home_url( '/' );
+	}
+
+	wp_safe_redirect( add_query_arg( 'ptb', $state_token, $destination ) . '#booking' );
+	exit;
+}
+
+/**
  * Send a customer arriving on a pay link to the gateway checkout.
  */
 function ptb_handle_pay_link() {
@@ -471,6 +509,29 @@ function ptb_handle_pay_link() {
 
 	if ( ! $booking_id ) {
 		wp_die( esc_html__( 'That payment link is not valid. Please ask us for a new one.', 'palm-tree-bookings' ), '', array( 'response' => 404 ) );
+	}
+
+	/*
+	 * A customer coming back from the gateway arrives on this same URL, because
+	 * the gateway's return address is the pay link with a flag on it. Read the
+	 * flag before anything else.
+	 *
+	 * Without this the handler treats the return as a fresh request to pay.
+	 * The gateway tells us about the payment over a webhook, which is
+	 * asynchronous and routinely lands after the browser redirect, so the
+	 * booking still reads as unpaid at the moment the customer gets back —
+	 * and they were sent straight to the checkout a second time, having just
+	 * paid. Anyone who did not notice paid twice.
+	 */
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Flag from our own return URL, acted on only to choose a message.
+	$returned = isset( $_GET['ptb_paid'] ) ? sanitize_text_field( wp_unslash( $_GET['ptb_paid'] ) ) : '';
+
+	if ( '1' === $returned ) {
+		ptb_payment_return( $booking_id, 'paid' );
+	}
+
+	if ( '0' === $returned ) {
+		ptb_payment_return( $booking_id, 'payment_cancelled' );
 	}
 
 	$gateway = ptb_active_gateway();
