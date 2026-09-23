@@ -15,7 +15,7 @@ function wp_enqueue_script( $h, $src ) { $GLOBALS['scripts'][] = $src; }
 function language_attributes() { echo 'lang="en-US"'; }
 function bloginfo( $k ) { echo 'UTF-8'; }
 function get_bloginfo( $k ) { return 'My WordPress'; }
-function wp_head() { do_action( 'wp_enqueue_scripts' ); do_action( 'wp_head' ); $t = $GLOBALS['ROUTE'] ? ucwords( str_replace( '-', ' ', $GLOBALS['ROUTE'] ) ) . ' — Relative Marketing Agency' : 'Relative Marketing Agency'; echo "<title>$t</title>\n<meta name=\"robots\" content=\"noindex, nofollow\">\n"; foreach ( $GLOBALS['styles'] as $s ) echo '<link rel="stylesheet" href="' . htmlspecialchars( $s ) . "\">\n"; }
+function wp_head() { do_action( 'wp_enqueue_scripts' ); do_action( 'wp_head' ); $pages = rma_services() + rma_company_pages(); $r = $GLOBALS['ROUTE']; $t = isset( $pages[ $r ] ) ? $pages[ $r ]['title'] . ' — Relative Marketing Agency' : ( '404' === $r ? 'Page not found — Relative Marketing Agency' : 'Relative Marketing Agency — Strategy. Creativity. Real Growth.' ); echo "<title>$t</title>\n<meta name=\"robots\" content=\"noindex, nofollow\">\n"; foreach ( $GLOBALS['styles'] as $s ) echo '<link rel="stylesheet" href="' . htmlspecialchars( $s ) . "\">\n"; }
 function wp_footer() { foreach ( $GLOBALS['scripts'] as $s ) echo '<script src="' . $s . "\"></script>\n"; }
 function body_class() { echo 'class="' . ( $GLOBALS['ROUTE'] ? 'page' : 'home' ) . '"'; }
 function wp_body_open() {}
