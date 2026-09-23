@@ -92,13 +92,13 @@
     <?php
     $fcx_base = '/industries-fleet-complexity-solutions/';
     $fcx_children = [
-      ['discovery-guide-navigating-complex-fleet-audits', 'Discovery Guide', 'Navigating Complex Fleet Audits', 'Surface the hidden friction, data silos, and revenue leakage in your operation with our three-phase Discovery Audit.'],
-      ['integration-architecture-tech-stacks', 'Integration', 'Integration Architecture &amp; Tech Stacks', 'Unify disconnected fleet software, OEM telematics, and business systems into one reliable source of truth.'],
-      ['hazmat-regulated-cargo-solutions', 'Hazmat', 'Hazmat &amp; Regulated Cargo Solutions', 'Rollover risk, PHMSA compliance, and high-risk scorecards for fleets hauling regulated cargo.'],
-      ['construction-heavy-equipment-telematics', 'Construction', 'Construction &amp; Heavy Equipment Telematics', 'Rugged trackers and utilization audits to fight equipment theft and idling across job sites.'],
-      ['utility-municipal-fleet-solutions', 'Utilities &amp; Municipal', 'Utility &amp; Municipal Fleet Solutions', 'Lone worker safety, G-force sensing, and check-in workflows for utility and public-sector fleets.'],
-      ['cross-border-multi-region-fleet-solutions', 'Cross-Border', 'Cross-Border &amp; Multi-Region Fleet Solutions', 'Border delays, IFTA, and multi-country ELD rulesets managed on one platform.'],
-      ['mixed-blended-fleet-management-solutions', 'Mixed Fleets', 'Mixed &amp; Blended Fleet Management Solutions', 'One high-fidelity standard across company drivers, owner-operators, contractors, and mixed asset classes.'],
+      ['discovery-guide-navigating-complex-fleet-audits', 'Discovery Guide', 'Fleet Complexity Discovery Guide', 'Surface hidden friction, data silos, and revenue leakage with our three-phase Technical, Risk, and Human Discovery Audit.'],
+      ['integration-architecture-tech-stacks', 'Integration', 'Integration Architecture &amp; Tech Stacks', 'Open-platform, Best-of-Breed architecture with Geotab as the core, Fleetio for maintenance, and your TMS as the operational brain.'],
+      ['hazmat-regulated-cargo-solutions', 'Hazmat', 'Hazmat &amp; Regulated Cargo Solutions', 'A High-Consequence Safety Framework: hazmat routing, rollover prevention, BLE cargo monitoring, and PHMSA/FMCSA audit readiness.'],
+      ['construction-heavy-equipment-telematics', 'Construction', 'Construction &amp; Heavy Equipment Telematics', 'Mixed-OEM Yellow Iron orchestration: AEMP 2.0 integration, utilization audits, job-site security, and automated job costing.'],
+      ['utility-municipal-fleet-solutions', 'Utilities &amp; Municipal', 'Utility &amp; Municipal Fleet Solutions', 'A Utility-First Framework for PTO monitoring, lone worker safety, and public accountability and sustainability KPIs.'],
+      ['cross-border-multi-region-fleet-solutions', 'Cross-Border', 'Cross-Border &amp; Multi-Region Fleet Solutions', 'US, Canada, and Mexico HOS rules, IFTA automation, Multi-IMSI connectivity, and border congestion intelligence.'],
+      ['mixed-blended-fleet-management-solutions', 'Mixed Fleets', 'Mixed &amp; Blended Fleet Management Solutions', 'One standard of safety, maintenance, and compliance across owned, leased, owner-operator, and contractor capacity.'],
     ];
     foreach ( $fcx_children as $i => $c ) :
       $url = home_url( $fcx_base . $c[0] . '/' );
