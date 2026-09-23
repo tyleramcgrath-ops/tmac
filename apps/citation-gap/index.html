@@ -336,6 +336,15 @@ html{background:var(--shell)}
 .view{display:none}
 .view.active{display:block}
 /* ---- Login splash ---- */
+.splash-alt{margin-top:18px;padding-top:16px;border-top:1px solid var(--hairline);
+  display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.splash-alt span{font-size:12.5px;color:var(--faint)}
+.splash-linkbtn{color:var(--rank);text-decoration:underline;text-underline-offset:3px;font-size:13.5px;padding:0}
+.splash-linkbtn[disabled]{opacity:.55;cursor:default;text-decoration:none}
+.splash-msg{font-size:12.5px;color:var(--slate);margin:2px 0 0;max-width:40ch}
+.splash-msg[hidden]{display:none}
+.splash-msg.bad{color:var(--crit)}
+.splash-msg.good{color:var(--pass)}
 .splash{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(65% 55% at 25% 15%,var(--rank-soft) 0%,transparent 62%),
              radial-gradient(60% 50% at 85% 85%,var(--accent-soft) 0%,transparent 60%),var(--shell);padding:20px}
@@ -1212,6 +1221,13 @@ p.mkt-note b{display:block;color:var(--paper-2);font-weight:500;letter-spacing:.
       <button type="submit" class="splash-enter">Continue</button>
       <button type="button" class="splash-skip" id="splashSkip">Skip — just let me scan</button>
     </form>
+    <!-- Naming the workspace above is local and always has been: the free tier needs no account.
+         This is the other thing, for the tiers that do — a real sign-in, by link, no password. -->
+    <div class="splash-alt">
+      <span>Have a Practice or Agency account?</span>
+      <button type="button" class="splash-linkbtn" id="splashLink">Email me a sign-in link</button>
+      <p class="splash-msg" id="splashMsg" role="status" aria-live="polite" hidden></p>
+    </div>
     <div class="splash-note">There is no account and no password. This is stored in this browser only,
       to label your projects and nothing else. It is never sent anywhere.</div>
   </div>
@@ -1451,6 +1467,9 @@ function saveKey(){
   try{
     localStorage.setItem('cg.key', v);
     localStorage.setItem('cg.provider', provider());
+    // A scheduled scan has no browser to take the key from, so a paying account keeps an
+    // encrypted copy server-side. Everyone else's key never leaves this machine.
+    try{ if(window.cgAccount) window.cgAccount.saveKey(provider(), v); }catch(e){}
   }catch(e){ toast('This browser is blocking storage — the key will not persist'); return; }
   const b=$('#btnSaveKey'); b.textContent='Saved'; b.classList.add('done');
   setTimeout(function(){ b.textContent='Save key'; b.classList.remove('done'); },1900);
@@ -1770,6 +1789,9 @@ async function runScan(){
       changes.resolved.forEach(function(c){ say('  ✓ resolved: '+c.title+' — '+c.check,'ok'); });
     }
     saveHistory(url,kw,cur);
+    // The report is already on screen and drawn from the local store; the server copy is what
+    // lets a schedule and another machine see it, so it is sent after the fact and never waited on.
+    try{ if(window.cgAccount) window.cgAccount.mirrorScan(url,kw,cur); }catch(e){}
     fixes=carryForward(fixes,changes);
 
     render({keyword:kw,url:url,ownDomain:ownDomain,ownPosition:ownPosition,gl:gl,hl:hl,brand:brand,
@@ -2281,6 +2303,133 @@ loadDemo();
 </script>
 <script>
 "use strict";
+// ---- The account, when there is one --------------------------------------------------------
+//
+// The free tier has never needed a server and still does not: it names its workspace in
+// localStorage and keeps its history there. Everything here is the other path — a real account,
+// signed in by link, whose projects and scans live in Postgres so a schedule can run against
+// them while the browser is closed.
+//
+// The rule it follows everywhere: the server is authoritative when it answers, and the browser
+// is the fallback when it does not. A signed-out visitor, an unpaid plan, or a server that is
+// simply down all land on the same local path rather than on an error, because the scanner
+// itself never needed the server to work.
+window.cgAccount = (function(){
+  "use strict";
+  var cached=null, fetched=false;
+
+  function api(path,opts){
+    var o=Object.assign({credentials:'same-origin'},opts||{});
+    o.headers=Object.assign({'content-type':'application/json'},o.headers||{});
+    return fetch(path,o).then(function(r){
+      return r.text().then(function(t){
+        var body={}; try{ body=t?JSON.parse(t):{}; }catch(e){ body={}; }
+        return {ok:r.ok,status:r.status,body:body};
+      });
+    });
+  }
+
+  // One lookup per page load. Everything that wants to know who you are shares this promise
+  // rather than each asking, so signing in is one request and not five.
+  var pending=null;
+  function session(force){
+    if(fetched && !force) return Promise.resolve(cached);
+    if(pending && !force) return pending;
+    pending=api('/api/auth/session').then(function(r){
+      cached=(r.body&&r.body.user)||null; fetched=true; pending=null; return cached;
+    },function(){ cached=null; fetched=true; pending=null; return null; });
+    return pending;
+  }
+
+  // Mirrors lib/store.js's canPersist, and for the same reason: a failed payment on Tuesday
+  // should not throw away Wednesday's work, but a cancelled plan is over.
+  function canPersist(u){
+    if(!u) return false;
+    if(u.plan!=='practice'&&u.plan!=='agency') return false;
+    return u.planStatus==='active'||u.planStatus==='past_due';
+  }
+
+  function signIn(email){
+    return api('/api/auth/link',{method:'POST',body:JSON.stringify({email:email})});
+  }
+  function signOut(){
+    return api('/api/auth/session',{method:'DELETE'}).then(function(){ cached=null; fetched=true; });
+  }
+
+  // --- projects and scans ---------------------------------------------------------------
+  // The browser's history is keyed by url|keyword; the server keys by project id. This is the
+  // one place the two are reconciled, by looking for a project with the same url and keyword
+  // before making another one — otherwise every scan would open a duplicate project.
+  var projectCache=null;
+  function projects(force){
+    if(projectCache&&!force) return Promise.resolve(projectCache);
+    return session().then(function(u){
+      if(!canPersist(u)) return null;
+      return api('/api/projects').then(function(r){
+        projectCache=(r.ok&&r.body&&r.body.projects)||null; return projectCache;
+      },function(){ return null; });
+    });
+  }
+  function findOrCreate(url,keyword){
+    return projects(true).then(function(list){
+      if(!list) return null;
+      var hit=list.filter(function(p){ return p.url===url&&p.keyword===keyword; })[0];
+      if(hit) return hit;
+      var name=''; try{ name=new URL(url).hostname.replace(/^www\./,''); }catch(e){ name=keyword; }
+      return api('/api/projects',{method:'POST',body:JSON.stringify({name:name,url:url,keyword:keyword})})
+        .then(function(r){ projectCache=null; return (r.ok&&r.body&&r.body.project)||null; },
+              function(){ return null; });
+    });
+  }
+
+  // Called after every finished scan. Deliberately fire-and-forget: the report is already on
+  // screen and drawn from the local store, so a server that is slow or down must not hold it up
+  // or surface an error for something the customer did not ask for.
+  function mirrorScan(url,keyword,entry){
+    return session().then(function(u){
+      if(!canPersist(u)) return null;
+      return findOrCreate(url,keyword).then(function(proj){
+        if(!proj) return null;
+        return api('/api/scans',{method:'POST',body:JSON.stringify({
+          projectId:proj.id, rank:entry.rank, answer:entry.answer,
+          fingerprint:entry.fingerprint||null, findings:entry.findings||null, trigger:'manual'
+        })});
+      });
+    }).catch(function(){ return null; });
+  }
+
+  // The Projects view asks for this. Null means "no server answer" — not "no projects" — and the
+  // caller falls back to the browser's own store rather than showing an empty shelf.
+  function serverProjects(){
+    return projects(true).then(function(list){
+      if(!list) return null;
+      return Promise.all(list.map(function(p){
+        return api('/api/scans?project='+encodeURIComponent(p.id)+'&limit=6').then(function(r){
+          var scans=(r.ok&&r.body&&r.body.scans)||[];
+          var last=scans[0]||null;
+          return {key:p.url+'|'+p.keyword, id:p.id, url:p.url, keyword:p.keyword,
+                  rank:last?last.rank:null, answer:last?last.answer:null,
+                  ts:last&&last.finishedAt?Date.parse(last.finishedAt):0,
+                  scans:scans.length, server:true};
+        },function(){ return {key:p.url+'|'+p.keyword,id:p.id,url:p.url,keyword:p.keyword,
+                              rank:null,answer:null,ts:0,scans:0,server:true}; });
+      }));
+    }).catch(function(){ return null; });
+  }
+
+  // The search key. Saved to the server only when an account can actually use it — a schedule
+  // running while the browser is closed is the only reason it is held at all.
+  function saveKey(provider,key){
+    return session().then(function(u){
+      if(!canPersist(u)) return null;
+      return api('/api/account',{method:'POST',body:JSON.stringify({provider:provider,key:key})});
+    }).catch(function(){ return null; });
+  }
+
+  return {session:session,canPersist:canPersist,signIn:signIn,signOut:signOut,
+          mirrorScan:mirrorScan,serverProjects:serverProjects,saveKey:saveKey,api:api};
+})();
+
 // ---- App shell: workspace splash, sidebar nav, Projects (reads the scanner's own cg.hist store) ----
 (function(){
   function $(s){ return document.querySelector(s); }
@@ -2305,6 +2454,12 @@ loadDemo();
     splash.hidden=true;
     var e=''; try{ e=localStorage.getItem('cg.identity')||''; }catch(err){}
     paintUser(e);
+    // A real account outranks the locally-typed name: paint it the moment the server answers.
+    try{
+      window.cgAccount.session().then(function(u){
+        if(u&&u.email){ paintUser(u.email); $('#sideUserEmail').textContent=u.email; }
+      });
+    }catch(err){}
   }
   // Nobody is made to name a workspace before they can scan: the panel never blocks the way in.
   // It opens only when asked for — the front door's Sign in control, or after a reset — because
@@ -2320,9 +2475,49 @@ loadDemo();
   });
   var splashSkip=$('#splashSkip');
   if(splashSkip) splashSkip.addEventListener('click',function(){ openApp(); });
+
+  var splashLink=$('#splashLink'), splashMsg=$('#splashMsg');
+  function say(text,cls){
+    if(!splashMsg) return;
+    splashMsg.textContent=text; splashMsg.hidden=!text;
+    splashMsg.className='splash-msg'+(cls?' '+cls:'');
+  }
+  if(splashLink) splashLink.addEventListener('click',function(){
+    var email=($('#splashEmail').value||'').trim();
+    if(!email||email.indexOf('@')<0){ say('Put your email address in the box above first.','bad'); return; }
+    splashLink.disabled=true; say('Sending…');
+    window.cgAccount.signIn(email).then(function(r){
+      splashLink.disabled=false;
+      // The endpoint answers the same way whether or not the address has an account, so this
+      // message has to as well — anything more specific turns it into a way to ask who is a
+      // customer.
+      if(r.status===400) say((r.body&&r.body.error)||'That does not look like an email address.','bad');
+      else if(r.ok) say((r.body&&r.body.message)||'If that address can sign in, a link is on its way.','good');
+      else say('Could not send the link just now. Try again shortly.','bad');
+    },function(){ splashLink.disabled=false; say('Could not reach the server. Try again shortly.','bad'); });
+  });
+
+  // Landing back from a link: say what happened, then take the marker out of the URL so a
+  // refresh does not repeat the message.
+  (function(){
+    var m=/[?&]signin=([a-z]+)/.exec(location.search||''); if(!m) return;
+    var WHY={ok:['You are signed in.','good'],
+             expired:['That link has expired — ask for another.','bad'],
+             used:['That link was already used. If you are not signed in, ask for another.','bad'],
+             invalid:['That link is not valid — ask for another.','bad'],
+             error:['Something went wrong signing you in. Try again shortly.','bad']};
+    var w=WHY[m[1]]||WHY.error;
+    if(m[1]!=='ok'&&splash) splash.hidden=false;
+    say(w[0],w[1]);
+    try{ history.replaceState(null,'',location.pathname); }catch(e){}
+    if(m[1]==='ok'){ try{ window.cgAccount.session(true).then(function(u){ if(u) openApp(); }); }catch(e){} }
+  })();
   var btnSignout=$('#btnSignout');
   if(btnSignout) btnSignout.addEventListener('click',function(){
     try{ localStorage.removeItem('cg.identity'); }catch(err){}
+    // Clearing the local name is not signing out of an account; the row has to go as well, or a
+    // copied cookie still resolves.
+    try{ window.cgAccount.signOut(); }catch(err){}
     paintUser('');
     if(splash) splash.hidden=false;
   });
@@ -2382,10 +2577,22 @@ loadDemo();
     return Math.round(s/(86400*30))+'mo ago';
   }
   function renderProjects(){
+    // Paint what this browser knows immediately, then let the server correct it if it has an
+    // answer. Waiting on the network first would leave the view empty for a signed-out visitor
+    // whose projects were never on a server in the first place.
+    paintProjects(loadAllProjects());
+    try{
+      window.cgAccount.serverProjects().then(function(rows){
+        // null means the server did not answer, or this account has nowhere to store projects —
+        // neither of which is "you have no projects", so the local view stands.
+        if(rows) paintProjects(rows);
+      });
+    }catch(e){}
+  }
+  function paintProjects(rows){
     var grid=$('#projGrid'); if(!grid) return;
     if(detail){ detail.hidden=true; detail.innerHTML=''; }
     grid.hidden=false;
-    var rows=loadAllProjects();
     grid.innerHTML='';
     if(!rows.length){
       var empty=document.createElement('div');
