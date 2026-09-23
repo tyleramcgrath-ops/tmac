@@ -253,7 +253,7 @@
 
       <div class="difference-grid">
         <div class="diff-card reveal" style="--d:0">
-          <div class="diff-card-icon"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/safety.svg" alt="Driver safety icon" width="28" height="28" loading="lazy"></div>
+          <div class="diff-card-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg></div>
           <h3>Safety</h3>
           <ul>
             <li>Protect your drivers and vehicles.</li>
@@ -265,7 +265,7 @@
           <a class="text-link" href="<?php echo esc_url(home_url('/safety/')); ?>" style="margin-top:16px;display:inline-flex">Explore safety <span>&rarr;</span></a>
         </div>
         <div class="diff-card reveal" style="--d:1">
-          <div class="diff-card-icon"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/productivity.svg" alt="Fleet productivity icon" width="28" height="28" loading="lazy"></div>
+          <div class="diff-card-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 16.5a8 8 0 1 1 15 0"/><path d="M12 12.5l4-4"/><circle cx="12" cy="13" r="1.4" fill="currentColor"/><path d="M3.5 20h17"/></svg></div>
           <h3>Productivity</h3>
           <ul>
             <li>Get real-time visibility.</li>
@@ -277,7 +277,7 @@
           <a class="text-link" href="<?php echo esc_url(home_url('/productivity/')); ?>" style="margin-top:16px;display:inline-flex">Explore productivity <span>&rarr;</span></a>
         </div>
         <div class="diff-card reveal" style="--d:2">
-          <div class="diff-card-icon"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/optimization.svg" alt="Operational optimization icon" width="28" height="28" loading="lazy"></div>
+          <div class="diff-card-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 20h17"/><path d="M5 16l4.5-5 3.5 3 6-7"/><path d="M14.5 7H19v4.5"/></svg></div>
           <h3>Optimization</h3>
           <ul>
             <li>Lower operating costs.</li>
@@ -289,7 +289,7 @@
           <a class="text-link" href="<?php echo esc_url(home_url('/optimization/')); ?>" style="margin-top:16px;display:inline-flex">Explore optimization <span>&rarr;</span></a>
         </div>
         <div class="diff-card reveal" style="--d:0">
-          <div class="diff-card-icon"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/sustainability.svg" alt="Environmental sustainability icon" width="28" height="28" loading="lazy"></div>
+          <div class="diff-card-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19c0-8 5.5-13 15-14-1 9.5-6 15-14 15"/><path d="M5 19c3-4 6-6.5 9.5-8.5"/></svg></div>
           <h3>Sustainability</h3>
           <ul>
             <li>Reduce carbon footprint.</li>
@@ -301,7 +301,7 @@
           <a class="text-link" href="<?php echo esc_url(home_url('/sustainability/')); ?>" style="margin-top:16px;display:inline-flex">Explore sustainability <span>&rarr;</span></a>
         </div>
         <div class="diff-card reveal" style="--d:1">
-          <div class="diff-card-icon"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/compliance.svg" alt="Regulatory compliance icon" width="28" height="28" loading="lazy"></div>
+          <div class="diff-card-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5"/><path d="M8.8 12.8l2.2 2.2 4.2-4.4"/></svg></div>
           <h3>Compliance</h3>
           <ul>
             <li>Follow U.S. DOT, FMCSA, and FDA rules.</li>
@@ -313,7 +313,7 @@
           <a class="text-link" href="<?php echo esc_url(home_url('/compliance/')); ?>" style="margin-top:16px;display:inline-flex">Explore compliance <span>&rarr;</span></a>
         </div>
         <div class="diff-card reveal" style="--d:2">
-          <div class="diff-card-icon"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/expandability.svg" alt="System expandability icon" width="28" height="28" loading="lazy"></div>
+          <div class="diff-card-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><path d="M17 14v6M14 17h6"/></svg></div>
           <h3>Expandability</h3>
           <ul>
             <li>Utilize an advanced, secure device.</li>

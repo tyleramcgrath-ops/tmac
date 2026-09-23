@@ -16,13 +16,13 @@ add_action( 'wp_enqueue_scripts', function () {
         'envue-style',
         get_template_directory_uri() . '/assets/css/envue.css',
         [ 'envue-fonts' ],
-        '20'
+        '21'
     );
     wp_enqueue_script(
         'envue-script',
         get_template_directory_uri() . '/assets/js/envue.js',
         [],
-        '20',
+        '21',
         true
     );
 } );

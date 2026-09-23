@@ -122,3 +122,13 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   It tucks away when you scroll, so the sticky header stays a single clean row.
 - Main bar is now just logo | menu (evenly spaced, exactly centred) | Get a Demo.
 - Phones/tablets: logo left, Get a Demo + menu button right; phone and social links stay inside the mobile menu.
+
+## v6.10 — icons, stat cards, mobile polish
+- Homepage "Safety / Productivity / Optimization…" cards: new crisp built-in icons on bold blue gradient tiles (60px),
+  replacing the faint uploaded SVGs.
+- Stat cards under every hero are centred with even spacing on desktop and phone; long words (e.g. "Pre-negotiated")
+  shrink to fit their box instead of overflowing.
+- Mobile menu rebuilt: tidy dropdown sections (Solutions split into Products / Outcomes; Partners grouped by category
+  in two columns), one section open at a time, full-screen white panel, Get a Demo + phone + socials at the bottom.
+- Mobile sweep of all pages: fixed the savings-calculator "USD" label spilling out and a cut-off button on
+  /expandability/; buttons now wrap instead of overflowing on small screens.

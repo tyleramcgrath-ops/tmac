@@ -21,7 +21,14 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       document.body.style.overflow = open ? 'hidden' : '';
+      const hdr = menu.closest('.site-header');
+      if (hdr) hdr.classList.toggle('menu-open', open);
+      if (!open) $$('details[open]', menu).forEach(d => { d.open = false; });
     };
+    // one section open at a time
+    $$('details.m-group', menu).forEach(d => d.addEventListener('toggle', () => {
+      if (d.open) $$('details.m-group', menu).forEach(o => { if (o !== d) o.open = false; });
+    }));
 
     toggle.addEventListener('click', e => {
       e.stopPropagation();
@@ -457,4 +464,21 @@ document.querySelectorAll('[data-slider]').forEach(function (slider) {
       }
     });
   });
+})();
+
+/* ── Stat bands: shrink a value only if a long word overflows its cell ── */
+(function () {
+  const vals = Array.from(document.querySelectorAll('.stat-band strong'));
+  if (!vals.length) return;
+  const fit = () => vals.forEach(el => {
+    el.style.fontSize = '';
+    let size = parseFloat(getComputedStyle(el).fontSize);
+    while (el.scrollWidth > el.clientWidth + 1 && size > 16) {
+      size -= 1;
+      el.style.fontSize = size + 'px';
+    }
+  });
+  fit();
+  let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(fit, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 })();

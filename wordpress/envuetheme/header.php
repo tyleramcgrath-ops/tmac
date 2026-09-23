@@ -134,96 +134,148 @@
   </div>
 
   <div class="mobile-menu" id="mobileMenu" hidden>
-    <ul class="menu">
-      <li><a href="<?php echo esc_url(home_url('/solutions/')); ?>">Solutions</a></li>
-    </ul>
-    <div class="mobile-sub">
-      <a href="<?php echo esc_url(home_url('/dash-cams/')); ?>">AI Dash Cams</a>
-      <a href="<?php echo esc_url(home_url('/gps-tracking/')); ?>">GPS Tracking</a>
-      <a href="<?php echo esc_url(home_url('/equipment-management/')); ?>">Equipment &amp; Assets</a>
-      <a href="<?php echo esc_url(home_url('/maintenance/')); ?>">Maintenance</a>
-      <a href="<?php echo esc_url(home_url('/fuel-management/')); ?>">Fuel Management</a>
-      <a href="<?php echo esc_url(home_url('/powered-by-geotab/')); ?>">Powered by Geotab</a>
-      <a href="<?php echo esc_url(home_url('/electric-vehicles/')); ?>">Electric Vehicles</a>
-      <a href="<?php echo esc_url(home_url('/safety/')); ?>">Safety</a>
-      <a href="<?php echo esc_url(home_url('/productivity/')); ?>">Productivity</a>
-      <a href="<?php echo esc_url(home_url('/optimization/')); ?>">Optimization</a>
-      <a href="<?php echo esc_url(home_url('/sustainability/')); ?>">Sustainability</a>
-      <a href="<?php echo esc_url(home_url('/compliance/')); ?>">Compliance</a>
-      <a href="<?php echo esc_url(home_url('/expandability/')); ?>">Expandability</a>
+    <nav class="m-nav" aria-label="Mobile">
+      <details class="m-group">
+        <summary>Solutions<svg class="m-chev" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="m-panel">
+          <a class="m-all" href="<?php echo esc_url(home_url('/solutions/')); ?>">All solutions <span>&rarr;</span></a>
+          <div class="m-sub">
+            <span class="m-sub-label">Products</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url('/dash-cams/')); ?>">AI Dash Cams</a>
+              <a href="<?php echo esc_url(home_url('/gps-tracking/')); ?>">GPS Tracking</a>
+              <a href="<?php echo esc_url(home_url('/equipment-management/')); ?>">Equipment &amp; Assets</a>
+              <a href="<?php echo esc_url(home_url('/maintenance/')); ?>">Maintenance</a>
+              <a href="<?php echo esc_url(home_url('/fuel-management/')); ?>">Fuel Management</a>
+              <a href="<?php echo esc_url(home_url('/powered-by-geotab/')); ?>">Powered by Geotab</a>
+              <a href="<?php echo esc_url(home_url('/electric-vehicles/')); ?>">Electric Vehicles</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">Outcomes</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url('/safety/')); ?>">Safety</a>
+              <a href="<?php echo esc_url(home_url('/productivity/')); ?>">Productivity</a>
+              <a href="<?php echo esc_url(home_url('/optimization/')); ?>">Optimization</a>
+              <a href="<?php echo esc_url(home_url('/sustainability/')); ?>">Sustainability</a>
+              <a href="<?php echo esc_url(home_url('/compliance/')); ?>">Compliance</a>
+              <a href="<?php echo esc_url(home_url('/expandability/')); ?>">Expandability</a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <a class="m-link" href="<?php echo esc_url(home_url('/results/')); ?>">Results</a>
+      <details class="m-group">
+        <summary>Industries<svg class="m-chev" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="m-panel">
+          <a class="m-all" href="<?php echo esc_url(home_url('/industries/')); ?>">All industries <span>&rarr;</span></a>
+          <div class="m-links">
+            <a href="<?php echo esc_url(home_url('/construction/')); ?>">Construction</a>
+            <a href="<?php echo esc_url(home_url('/trucking-transportation/')); ?>">Trucking</a>
+            <a href="<?php echo esc_url(home_url('/field-services/')); ?>">Field Services</a>
+            <a href="<?php echo esc_url(home_url('/oil-gas/')); ?>">Oil &amp; Gas</a>
+            <a href="<?php echo esc_url(home_url('/government/')); ?>">Government</a>
+            <a href="<?php echo esc_url(home_url('/leasing-rental/')); ?>">Leasing &amp; Rental</a>
+          </div>
+        </div>
+      </details>
+      <details class="m-group">
+        <summary>Partners<svg class="m-chev" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="m-panel">
+          <a class="m-all" href="<?php echo esc_url(home_url("/our-partners/")); ?>">All partners <span>&rarr;</span></a>
+          <div class="m-sub">
+            <span class="m-sub-label">Video Safety</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/lytx/")); ?>">Lytx</a>
+              <a href="<?php echo esc_url(home_url("/netradyne/")); ?>">Netradyne</a>
+              <a href="<?php echo esc_url(home_url("/mobileye/")); ?>">Mobileye</a>
+              <a href="<?php echo esc_url(home_url("/surfsight/")); ?>">Surfsight</a>
+              <a href="<?php echo esc_url(home_url("/samsara/")); ?>">Samsara</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">Routing &amp; Dispatch</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/elite-extra/")); ?>">Elite EXTRA</a>
+              <a href="<?php echo esc_url(home_url("/route4me/")); ?>">Route4Me</a>
+              <a href="<?php echo esc_url(home_url("/drivewyze/")); ?>">Drivewyze</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">Fuel &amp; Maintenance</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/fleetcor/")); ?>">FleetCor</a>
+              <a href="<?php echo esc_url(home_url("/coast-pay/")); ?>">Coast Pay</a>
+              <a href="<?php echo esc_url(home_url("/fleetio/")); ?>">Fleetio</a>
+              <a href="<?php echo esc_url(home_url("/whip-around/")); ?>">Whip Around</a>
+              <a href="<?php echo esc_url(home_url("/car-advise/")); ?>">CarAdvise</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">Safety &amp; Compliance</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/smith-system/")); ?>">Smith System</a>
+              <a href="<?php echo esc_url(home_url("/speedgauge/")); ?>">SpeedGauge</a>
+              <a href="<?php echo esc_url(home_url("/safety-first/")); ?>">SafetyFirst</a>
+              <a href="<?php echo esc_url(home_url("/lifesaver-mobile/")); ?>">LifeSaver Mobile</a>
+              <a href="<?php echo esc_url(home_url("/predictive-coach/")); ?>">Predictive Coach</a>
+              <a href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>">Craig Safety Technologies</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">Assets &amp; Equipment</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/phillips-connect/")); ?>">Phillips Connect</a>
+              <a href="<?php echo esc_url(home_url("/sensata-technologies/")); ?>">Sensata Technologies</a>
+              <a href="<?php echo esc_url(home_url("/origo/")); ?>">ORIGOInspect</a>
+              <a href="<?php echo esc_url(home_url("/ok-alone/")); ?>">Ok Alone</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">EV &amp; Sustainability</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/moveev/")); ?>">MoveEV</a>
+              <a href="<?php echo esc_url(home_url("/greater-than/")); ?>">Greater Than</a>
+            </div>
+          </div>
+          <div class="m-sub">
+            <span class="m-sub-label">Other</span>
+            <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/azuga/")); ?>">Azuga</a>
+              <a href="<?php echo esc_url(home_url("/promiles/")); ?>">ProMiles</a>
+              <a href="<?php echo esc_url(home_url("/xtract/")); ?>">Xtract</a>
+            </div>
+          </div>
+        </div>
+      </details>
+      <details class="m-group">
+        <summary>Resources<svg class="m-chev" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="m-panel">
+          <a class="m-all" href="<?php echo esc_url(home_url('/resources/')); ?>">All resources <span>&rarr;</span></a>
+          <div class="m-links">
+            <a href="<?php echo esc_url(home_url('/blog-articles/')); ?>">Blog Articles</a>
+            <a href="<?php echo esc_url(home_url('/news/')); ?>">News</a>
+            <a href="<?php echo esc_url(home_url('/faqs/')); ?>">FAQs</a>
+          </div>
+        </div>
+      </details>
+      <details class="m-group">
+        <summary>Company<svg class="m-chev" viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="m-panel">
+          <div class="m-links">
+            <a href="<?php echo esc_url(home_url('/about-envue/')); ?>">About EnVue</a>
+            <a href="<?php echo esc_url(home_url('/customer-journey/')); ?>">Customer Journey</a>
+            <a href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get In Touch</a>
+            <a href="<?php echo esc_url(home_url('/events-calendar/')); ?>">Events</a>
+          </div>
+        </div>
+      </details>
+    </nav>
+    <div class="m-foot">
+      <a class="button button-primary" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Demo</a>
+      <a class="header-phone" href="tel:8002011169">(800) 201-1169</a>
+      <?php echo envue_social_links( 'social-links--mobile' ); ?>
     </div>
-    <ul class="menu">
-      <li><a href="<?php echo esc_url(home_url('/results/')); ?>">Results</a></li>
-      <li><a href="<?php echo esc_url(home_url('/industries/')); ?>">Industries</a></li>
-    </ul>
-    <div class="mobile-sub">
-      <a href="<?php echo esc_url(home_url('/construction/')); ?>">Construction</a>
-      <a href="<?php echo esc_url(home_url('/trucking-transportation/')); ?>">Trucking</a>
-      <a href="<?php echo esc_url(home_url('/field-services/')); ?>">Field Services</a>
-      <a href="<?php echo esc_url(home_url('/oil-gas/')); ?>">Oil &amp; Gas</a>
-      <a href="<?php echo esc_url(home_url('/government/')); ?>">Government</a>
-      <a href="<?php echo esc_url(home_url('/leasing-rental/')); ?>">Leasing &amp; Rental</a>
-    </div>
-    <ul class="menu">
-      <li><a href="<?php echo esc_url(home_url("/our-partners/")); ?>">Partners</a></li>
-    </ul>
-    <div class="mobile-sub">
-      <span class="mobile-sub-label">Video Safety</span>
-      <a href="<?php echo esc_url(home_url("/lytx/")); ?>">Lytx</a>
-      <a href="<?php echo esc_url(home_url("/netradyne/")); ?>">Netradyne</a>
-      <a href="<?php echo esc_url(home_url("/mobileye/")); ?>">Mobileye</a>
-      <a href="<?php echo esc_url(home_url("/surfsight/")); ?>">Surfsight</a>
-      <a href="<?php echo esc_url(home_url("/samsara/")); ?>">Samsara</a>
-      <span class="mobile-sub-label">Routing &amp; Dispatch</span>
-      <a href="<?php echo esc_url(home_url("/elite-extra/")); ?>">Elite EXTRA</a>
-      <a href="<?php echo esc_url(home_url("/route4me/")); ?>">Route4Me</a>
-      <a href="<?php echo esc_url(home_url("/drivewyze/")); ?>">Drivewyze</a>
-      <span class="mobile-sub-label">Fuel &amp; Maintenance</span>
-      <a href="<?php echo esc_url(home_url("/fleetcor/")); ?>">FleetCor</a>
-      <a href="<?php echo esc_url(home_url("/coast-pay/")); ?>">Coast Pay</a>
-      <a href="<?php echo esc_url(home_url("/fleetio/")); ?>">Fleetio</a>
-      <a href="<?php echo esc_url(home_url("/whip-around/")); ?>">Whip Around</a>
-      <a href="<?php echo esc_url(home_url("/car-advise/")); ?>">CarAdvise</a>
-      <span class="mobile-sub-label">Safety &amp; Compliance</span>
-      <a href="<?php echo esc_url(home_url("/smith-system/")); ?>">Smith System</a>
-      <a href="<?php echo esc_url(home_url("/speedgauge/")); ?>">SpeedGauge</a>
-      <a href="<?php echo esc_url(home_url("/safety-first/")); ?>">SafetyFirst</a>
-      <a href="<?php echo esc_url(home_url("/lifesaver-mobile/")); ?>">LifeSaver Mobile</a>
-      <a href="<?php echo esc_url(home_url("/predictive-coach/")); ?>">Predictive Coach</a>
-      <a href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>">Craig Safety Technologies</a>
-      <span class="mobile-sub-label">Assets &amp; Equipment</span>
-      <a href="<?php echo esc_url(home_url("/phillips-connect/")); ?>">Phillips Connect</a>
-      <a href="<?php echo esc_url(home_url("/sensata-technologies/")); ?>">Sensata Technologies</a>
-      <a href="<?php echo esc_url(home_url("/origo/")); ?>">ORIGOInspect</a>
-      <a href="<?php echo esc_url(home_url("/ok-alone/")); ?>">Ok Alone</a>
-      <span class="mobile-sub-label">EV &amp; Sustainability</span>
-      <a href="<?php echo esc_url(home_url("/moveev/")); ?>">MoveEV</a>
-      <a href="<?php echo esc_url(home_url("/greater-than/")); ?>">Greater Than</a>
-      <span class="mobile-sub-label">Other</span>
-      <a href="<?php echo esc_url(home_url("/azuga/")); ?>">Azuga</a>
-      <a href="<?php echo esc_url(home_url("/promiles/")); ?>">ProMiles</a>
-      <a href="<?php echo esc_url(home_url("/xtract/")); ?>">Xtract</a>
-    </div>
-    <ul class="menu">
-      <li><a href="<?php echo esc_url(home_url('/resources/')); ?>">Resources</a></li>
-    </ul>
-    <div class="mobile-sub">
-      <a href="<?php echo esc_url(home_url('/blog-articles/')); ?>">Blog Articles</a>
-      <a href="<?php echo esc_url(home_url('/news/')); ?>">News</a>
-      <a href="<?php echo esc_url(home_url('/faqs/')); ?>">FAQs</a>
-    </div>
-    <ul class="menu">
-      <li><a href="<?php echo esc_url(home_url('/about-envue/')); ?>">Company</a></li>
-    </ul>
-    <div class="mobile-sub">
-      <a href="<?php echo esc_url(home_url('/about-envue/')); ?>">About EnVue</a>
-      <a href="<?php echo esc_url(home_url('/customer-journey/')); ?>">Customer Journey</a>
-      <a href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get In Touch</a>
-      <a href="<?php echo esc_url(home_url('/events-calendar/')); ?>">Events</a>
-    </div>
-    <a class="button button-primary" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Demo</a>
-    <a class="header-phone" href="tel:8002011169">(800) 201-1169</a>
-    <?php echo envue_social_links( 'social-links--mobile' ); ?>
   </div>
 </header>
 <script>
