@@ -21,7 +21,7 @@
 .sa-offices{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
 @media(max-width:760px){.sa-offices{grid-template-columns:1fr;}}
 .sa-office{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;}
-.sa-office img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.sa-office > img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
 .sa-office-body{padding:24px 28px;}
 .sa-office-body h3{margin:0 0 .75rem;font-size:1.2rem;color:var(--ink);}
 .sa-office-body address{font-style:normal;color:var(--slate);line-height:1.7;}
@@ -65,7 +65,7 @@
   </div></div>
   <div class="sa-offices">
     <div class="sa-office reveal">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/usa.jpg" alt="United States official service region visualization" loading="lazy">
+      <?php echo envue_office_flag( 'us', 'U.S. Headquarters', 'Longview, Texas' ); ?>
       <div class="sa-office-body">
         <h3>EnVue Telematics (U.S. HQ)</h3>
         <address>119 West Tyler Street<br>Suite 100<br>Longview, Texas 75601<br>United States</address>
@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="sa-office reveal" style="--d:1">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/mexico.jpg" alt="Mexico official service region visualization" loading="lazy">
+      <?php echo envue_office_flag( 'mx', 'Mexico Operations', 'Monterrey, Nuevo León' ); ?>
       <div class="sa-office-body">
         <h3>EnVueMex Solutions (Mexico)</h3>
         <address>Blvd. D&iacute;az Ordaz 3102, Piso 2<br>Santa Mar&iacute;a, 64650 Monterrey, N.L.<br>Mexico</address>

@@ -49,3 +49,18 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - Photos are free-license Unsplash images served from Unsplash's CDN (images.unsplash.com) with responsive
   `srcset`, so nothing needs to be uploaded to the Media Library.
 - Logos, product shots, app screenshots and partner graphics are unchanged.
+
+## v6.4 — portable, ready for the live site
+- No staging/dev URLs anywhere in the theme; every internal link is built from the site's own address
+  (`home_url()`), so the same zip works on staging and on envuetelematics.com without edits.
+- Page images reference `envuetelematics.com/wp-content/uploads/...` (already on the live site) or Unsplash's CDN;
+  flags and the logo are bundled inside the theme. Nothing needs to be uploaded to the Media Library.
+- Removed unused leftover files (old theme.js / theme.css / inner.css and 3 unused images).
+
+### Going live on envuetelematics.com
+1. Back up the live site (SiteGround → Backups) so you can roll back in one click.
+2. Appearance → Themes → Add New → Upload `envuetheme-final-v6.4.zip` → Activate.
+3. Settings → Permalinks → Save (no changes needed — this refreshes the URL rules).
+4. Keep WPForms and AIOSEO active. Elementor can stay installed (the theme ignores it on its own pages).
+5. Purge SG Cache (and any CDN cache), then spot-check: home, /get-in-touch/ (submit a test form),
+   a partner page, a blog post, and a page on your phone.

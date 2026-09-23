@@ -3103,3 +3103,38 @@ body.home .section-head { align-items: end; }
 .demo-form-card button[type="submit"]:hover, .demo-form-card .wpforms-submit:hover { background: var(--brand-dk) !important; }
 @media (max-width: 960px) { .final-cta--form .final-grid { grid-template-columns: 1fr; } }
 @media (max-width: 580px) { .demo-form-card { padding: 22px 18px; } }
+
+/* Office cards: vector flag header */
+.office-flag {
+  position: relative; display: flex; align-items: center; gap: 22px;
+  padding: 34px 30px; min-height: 190px; overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(0, 86, 179, 0.55) 0%, rgba(0, 86, 179, 0) 55%),
+    linear-gradient(135deg, #0f2740 0%, var(--bg-deep) 100%);
+}
+.office-flag::before {  /* faint map-grid texture */
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 60%);
+}
+.office-flag__flag {
+  position: relative; flex: 0 0 auto; width: 150px; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.14);
+  transform: perspective(700px) rotateY(12deg) rotateX(3deg);
+}
+.office-flag__flag img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.office-flag__flag::after {  /* soft fabric sheen */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 32%, rgba(0,0,0,0.14) 62%, rgba(255,255,255,0.12) 82%, rgba(0,0,0,0.1) 100%);
+}
+.office-flag__meta { display: flex; flex-direction: column; gap: 6px; color: #fff; min-width: 0; }
+.office-flag__meta small { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #7fb4f0; }
+.office-flag__meta strong { font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; }
+@media (max-width: 480px) {
+  .office-flag { padding: 26px 20px; gap: 16px; min-height: 0; }
+  .office-flag__flag { width: 112px; }
+  .office-flag__meta strong { font-size: 18px; }
+}

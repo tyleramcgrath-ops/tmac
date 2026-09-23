@@ -102,7 +102,7 @@ echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_P
 .git-sms-consent{margin-top:1.25rem;font-size:.8125rem;line-height:1.6;color:var(--slate);}
 .git-offices{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px;}
 .git-office{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;}
-.git-office img{width:100%;height:200px;object-fit:cover;display:block;}
+.git-office > img{width:100%;height:200px;object-fit:cover;display:block;}
 .git-office-body{padding:24px 28px 28px;}
 .git-office-body h3{font-size:1.125rem;margin-bottom:.75rem;}
 .git-office-body address{font-style:normal;line-height:1.7;color:var(--slate);font-size:.9375rem;}
@@ -117,7 +117,7 @@ echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_P
   </div></div>
   <div class="git-offices">
     <div class="git-office reveal">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/usa.jpg" alt="United States service region map" loading="lazy">
+      <?php echo envue_office_flag( 'us', 'U.S. Headquarters', 'Longview, Texas' ); ?>
       <div class="git-office-body">
         <h3>EnVue Telematics (U.S. HQ)</h3>
         <address>119 West Tyler Street<br>Suite 100<br>Longview, Texas 75601<br>United States</address>
@@ -125,7 +125,7 @@ echo "<script type='application/ld+json'>" . json_encode($contact_schema, JSON_P
       </div>
     </div>
     <div class="git-office reveal" style="--d:1">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/mexico.jpg" alt="Mexico service region map" loading="lazy">
+      <?php echo envue_office_flag( 'mx', 'Mexico Operations', 'Monterrey, Nuevo León' ); ?>
       <div class="git-office-body">
         <h3>EnVueMex Solutions (Mexico)</h3>
         <address>Blvd. D&iacute;az Ordaz 3102, Piso 2<br>Santa Mar&iacute;a, 64650 Monterrey, N.L.<br>Mexico</address>

@@ -1,7 +1,7 @@
 <?php
 /**
  * EnVue Telematics WordPress Theme
- * Ported from https://tyleramcgrath-ops.github.io/tmac/
+ * Custom theme for envuetelematics.com
  */
 
 /* ── Styles & Scripts ────────────────────────────────────────── */
@@ -16,13 +16,13 @@ add_action( 'wp_enqueue_scripts', function () {
         'envue-style',
         get_template_directory_uri() . '/assets/css/envue.css',
         [ 'envue-fonts' ],
-        '13'
+        '14'
     );
     wp_enqueue_script(
         'envue-script',
         get_template_directory_uri() . '/assets/js/envue.js',
         [],
-        '13',
+        '14',
         true
     );
 } );
@@ -759,5 +759,19 @@ function envue_demo_form() {
     return '<div class="hero-actions">'
         . '<a class="button button-primary button-lg" href="' . esc_url( home_url( '/get-in-touch/' ) ) . '">Get a Free Demo <span>&rarr;</span></a>'
         . '<a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>'
+        . '</div>';
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   OFFICE CARD HEADER — crisp vector flag + location label
+   Used on /get-in-touch/ and /safety-assessment/. Flags: flag-icons (MIT),
+   bundled in assets/images/flags/.
+══════════════════════════════════════════════════════════════════════ */
+function envue_office_flag( $cc, $kicker, $place ) {
+    $names = [ 'us' => 'United States', 'mx' => 'Mexico' ];
+    $src   = get_template_directory_uri() . '/assets/images/flags/' . $cc . '.svg';
+    return '<div class="office-flag">'
+        . '<span class="office-flag__flag"><img src="' . esc_url( $src ) . '" alt="' . esc_attr( 'Flag of ' . ( $names[ $cc ] ?? $cc ) ) . '" width="160" height="120" loading="lazy"></span>'
+        . '<span class="office-flag__meta"><small>' . esc_html( $kicker ) . '</small><strong>' . esc_html( $place ) . '</strong></span>'
         . '</div>';
 }
