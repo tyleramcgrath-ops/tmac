@@ -54,6 +54,9 @@ const SHIPPED = [
   'api/scans.js',         // GET/POST              the history behind a project
   'api/tick.js',          // POST                  queue a scan, and move the queue along
   'api/account.js',       // GET/POST/DELETE       the account and the search key it scans with
+  'api/schedules.js',     // GET/PUT/DELETE        scans that run while the browser is closed
+  'api/stripe.js',        // POST                  a checkout or portal URL, never a grant
+  'api/stripe-webhook.js',// POST                  the only thing that writes a plan
   'lib/page.impl.js',  // fetch + parse any URL as served (v10.6)
   'lib/render.impl.js',// headless Chromium render + paint measurement (v10.5)
   'lib/db.js',         // one pool, sized for serverless, pointed at Neon's pooled endpoint
@@ -63,6 +66,8 @@ const SHIPPED = [
   'lib/keys.js',       // the customer's own search key, encrypted with a secret outside the db
   'lib/scan-job.js',   // the resumable scan: eight phases, one unit of work at a time
   'lib/tick.js',       // claiming, banking, resuming, backing off and giving up
+  'lib/schedule.js',   // when a scan is due, and turning that into a queued job
+  'lib/stripe.js',     // checkout, portal, and the signature check the plan depends on
   'package.json',
   'vercel.json'
 ];
