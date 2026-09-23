@@ -44,5 +44,6 @@ function get_the_content() { return ''; } function the_content() {}
 function the_title() { echo ucwords( str_replace( '-', ' ', $GLOBALS['ROUTE'] ) ); }
 function post_class( $c = '' ) { echo 'class="' . $c . '"'; }
 function __( $s ) { return $s; }
+function wp_list_pluck( $list, $field ) { return array_column( $list, $field ); }
 require $THEME . '/functions.php';
 if ( '' === $ROUTE ) { include $THEME . '/front-page.php'; } elseif ( '404' === $ROUTE ) { include $THEME . '/404.php'; } else { include $THEME . '/page.php'; }

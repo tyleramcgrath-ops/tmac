@@ -68,10 +68,12 @@ $rma_stages   = array(
 
 		<div class="trust">
 			<p class="trust-label">Trusted by ambitious brands worldwide</p>
-			<div class="marquee" aria-label="growthly, Brightly, aventa, scaleup, LUMEN">
+			<div class="marquee" role="img" aria-label="<?php echo esc_attr( implode( ', ', wp_list_pluck( rma_clients(), 'name' ) ) ); ?>">
 				<div class="marquee-track" aria-hidden="true">
 					<?php for ( $rma_loop = 0; $rma_loop < 4; $rma_loop++ ) : ?>
-						<span class="logo-a">growthly</span><span class="logo-b">Brightly</span><span class="logo-c">aventa</span><span class="logo-d">scaleup</span><span class="logo-e">LUMEN</span>
+						<?php foreach ( rma_clients() as $slug => $client ) : ?>
+							<img class="client-logo" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/clients/' . $slug . '.png' ); ?>" alt="" style="--h:<?php echo (int) $client['height']; ?>px" height="<?php echo (int) $client['height']; ?>" decoding="async">
+						<?php endforeach; ?>
 					<?php endfor; ?>
 				</div>
 			</div>

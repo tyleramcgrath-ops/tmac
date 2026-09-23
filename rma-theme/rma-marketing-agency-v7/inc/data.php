@@ -91,6 +91,38 @@ function rma_company_pages() {
 }
 
 /**
+ * The clients in the homepage logo strip. Logos are white silhouettes in
+ * assets/images/clients; height is tuned per logo so they read at the same
+ * visual weight.
+ *
+ * @return array<string, array{name: string, height: int}>
+ */
+function rma_clients() {
+	return array(
+		'envue-telematics'     => array(
+			'name'   => 'EnVue Telematics',
+			'height' => 40,
+		),
+		'envuemex'             => array(
+			'name'   => 'EnVueMex Solutions',
+			'height' => 30,
+		),
+		'centris'              => array(
+			'name'   => 'Centris',
+			'height' => 30,
+		),
+		'centris-intelligence' => array(
+			'name'   => 'Centris Intelligence',
+			'height' => 22,
+		),
+		'truepoint-systems'    => array(
+			'name'   => 'TruePoint Systems',
+			'height' => 34,
+		),
+	);
+}
+
+/**
  * Link to one of the site's pages by slug.
  *
  * @param string $slug Page slug, or '' for home.

@@ -1100,28 +1100,25 @@ em {
 
 .marquee-track {
 	display: flex;
-	gap: clamp(48px, 8vw, 110px);
+	align-items: center;
+	gap: clamp(48px, 7vw, 96px);
 	width: max-content;
 	animation: marquee 40s linear infinite;
 }
 
-.marquee-track span {
-	color: rgba(214, 230, 245, 0.55);
-	font-size: clamp(1.4rem, 2.4vw, 2rem);
-	font-weight: 700;
-	letter-spacing: -0.03em;
-	white-space: nowrap;
-	transition: color 0.3s;
+.client-logo {
+	flex-shrink: 0;
+	width: auto;
+	height: var(--h, 32px);
+	opacity: 0.62;
+	transition: opacity 0.3s;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
-.marquee:hover .marquee-track span {
-	color: rgba(214, 230, 245, 0.8);
+.marquee:hover .client-logo {
+	opacity: 0.9;
 }
-
-.marquee-track .logo-b { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 2.8vw, 2.3rem); }
-.marquee-track .logo-c { font-weight: 300; letter-spacing: 0.1em; text-transform: lowercase; }
-.marquee-track .logo-d { font-family: var(--mono); font-weight: 600; letter-spacing: -0.06em; }
-.marquee-track .logo-e { font-weight: 900; letter-spacing: 0.24em; }
 
 @keyframes marquee {
 	to { transform: translateX(-50%); }
@@ -3271,7 +3268,7 @@ em {
 		width: auto;
 	}
 
-	.marquee-track span:nth-child(n + 6) {
+	.marquee-track .client-logo:nth-child(n + 6) {
 		display: none;
 	}
 }
