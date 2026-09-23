@@ -596,10 +596,28 @@ and card payment is live; leave them empty and nothing changes — bookings stay
 request-and-reply as they are today.
 
 The webhook URL to paste into the Stripe dashboard is printed on that settings
-page. Signatures are verified before anything is recorded, so a forged
-notification cannot mark a booking paid.
+page, along with the four events to subscribe it to. Signatures are verified
+before anything is recorded, so a forged notification cannot mark a booking
+paid, and a captured one cannot be replayed later.
 
-Set your real prices before switching this on.
+**The signing secret is not optional.** Without it every notification Stripe
+sends is rejected — money is taken and no booking is ever marked paid. The
+settings page says so in red if you save a secret key without one.
+
+**Tax.** Nothing is calculated until you answer one question on that page:
+whether the prices on the site already include tax, or tax is added at
+checkout. It has no default, because a tour listed at $85 is charged $85 on one
+answer and more than $85 on the other, and only you know which your numbers
+are. Stripe also needs tax registrations set up on its own Tax screen, or it
+has nothing to charge. Turning it on starts asking customers for a billing
+address, because a tax cannot be worked out without knowing where someone is.
+
+**Refunds.** Refund from the Stripe dashboard as you normally would; the
+booking picks it up and stops claiming it is paid.
+
+Set your real prices before switching this on, and take one test-mode payment
+end to end before a real one — the Stripe calls could not be exercised against
+Stripe from the build environment.
 
 ### One plugin, not two — **you must re-upload it**
 

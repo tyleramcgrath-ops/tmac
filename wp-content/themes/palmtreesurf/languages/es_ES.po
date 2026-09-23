@@ -3071,15 +3071,6 @@ msgstr "Instructor mostrando el pop-up sobre la tabla en Tamarindo"
 msgid "A turtle on the beach at Tamarindo under a night sky full of stars"
 msgstr "Una tortuga en la playa de Tamarindo bajo un cielo nocturno lleno de estrellas"
 
-msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
-msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
-
-msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
-msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
-
-msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
-msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
-
 msgid "Payment received"
 msgstr "Pago recibido"
 
@@ -3094,6 +3085,51 @@ msgstr "No se ha cobrado nada y su reserva sigue apartada. Puede pagar ahora, o 
 
 msgid "Try the payment again"
 msgstr "Intentar el pago de nuevo"
+
+msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
+msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
+
+msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
+msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
+
+msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
+msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
+
+msgid "Payments are being taken but nothing is being recorded."
+msgstr "Se están cobrando pagos pero no se está registrando nada."
+
+msgid "A secret key is set, so customers can pay. The signing secret is not, so the notification Stripe sends when they do is rejected as untrustworthy — and no booking will ever be marked paid. Add the webhook below before taking a real payment."
+msgstr "Hay una clave secreta, así que los clientes pueden pagar. El secreto de firma no está puesto, así que el aviso que envía Stripe cuando pagan se rechaza por no ser confiable — y ninguna reserva se marcará como pagada. Agregue el webhook de abajo antes de cobrar un pago real."
+
+msgid "Tax is not being worked out on checkouts, because nobody has said yet whether the prices on the site already include it. Answer that below to turn it on."
+msgstr "No se está calculando el impuesto en los pagos, porque todavía nadie ha dicho si los precios del sitio ya lo incluyen. Responda abajo para activarlo."
+
+msgid "Tax"
+msgstr "Impuesto"
+
+msgid "How tax relates to your listed prices"
+msgstr "Cómo se relaciona el impuesto con sus precios publicados"
+
+msgid "Do not work out tax (leave it exactly as it is today)"
+msgstr "No calcular el impuesto (dejarlo exactamente como está hoy)"
+
+msgid "My prices already include tax — show the tax within the price"
+msgstr "Mis precios ya incluyen el impuesto — mostrar el impuesto dentro del precio"
+
+msgid "Add tax on top of my prices at checkout"
+msgstr "Agregar el impuesto sobre mis precios al pagar"
+
+msgid "Read this one carefully. A tour listed at $85 is charged $85 on the first two settings and more than $85 on the third. Turning either on also asks the customer for a billing address, because Stripe cannot work out a tax without knowing where somebody is."
+msgstr "Lea esto con cuidado. Un tour publicado en $85 se cobra en $85 con las dos primeras opciones y en más de $85 con la tercera. Activar cualquiera de las dos también le pide al cliente una dirección de facturación, porque Stripe no puede calcular un impuesto sin saber dónde está la persona."
+
+msgid "Stripe must also have tax registrations set up on its own Tax settings screen, or it has nothing to charge."
+msgstr "Stripe también debe tener los registros tributarios configurados en su propia pantalla de Impuestos, o no tendrá nada que cobrar."
+
+msgid "In Stripe, add an endpoint at this URL and subscribe it to these four events:"
+msgstr "En Stripe, agregue un endpoint en esta dirección y suscríbalo a estos cuatro eventos:"
+
+msgid "The last one is what keeps a booking from still claiming it is paid after you refund it from the Stripe dashboard."
+msgstr "El último es el que evita que una reserva siga diciendo que está pagada después de que usted la reembolse desde el panel de Stripe."
 
 msgid "%d guest"
 msgid_plural "%d guests"
@@ -3154,4 +3190,3 @@ msgid "%1$s — %2$d guest"
 msgid_plural "%1$s — %2$d guests"
 msgstr[0] "%1$s — %2$d persona"
 msgstr[1] "%1$s — %2$d personas"
-
