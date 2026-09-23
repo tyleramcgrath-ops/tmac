@@ -1,4 +1,4 @@
-=== McGrath Chrome 2.0 ===
+=== McGrath Chrome 2.2 ===
 
 A custom WordPress theme for McGrath Marketing Group.
 Navy and cream editorial design, with the dissolve kept at the centre of it.
@@ -259,6 +259,43 @@ The three price lines on the SEO page are Customizer fields, under Homepage &
 brand: "SEO page price: one-off audit", "monthly SEO" and "local launch". They
 ship reading "On request" rather than a made-up number. Put your real figures in
 before the page goes live, or leave them as they are.
+
+
+PER-PAGE SEARCH CONTENT (inc/page-seo.php)
+-----------------------------------------
+Every page the theme ships targets one head term. inc/page-seo.php holds, per
+page: that term, the meta description, two question-shaped headings with their
+answers, one comparison table and a four-question FAQ. The page renders from
+those arrays and the JSON-LD in the head is built from the same ones, so the
+visible content and the structured data cannot drift apart.
+
+The head terms as shipped:
+
+  Homepage      digital marketing agency in Jupiter, FL
+  SEO           SEO company in Jupiter
+  Web Design    web design company in Jupiter
+  AI Visibility AI search optimization
+  About         SEO consultant in Jupiter, FL
+  Contact       free SEO audit in Jupiter
+
+To change any of them, edit mcg_page_terms() and the matching entries in
+mcg_page_questions(), mcg_page_table() and mcg_page_faqs(). Nothing in that file
+states a price, a statistic, a client name or a date; the SEO table's price
+cells read the Customizer fields, so they show what you set and "On request"
+until you set it.
+
+TWO GATES, NOT ONE. The business graph (ProfessionalService) stands down when
+Yoast, Rank Math, All in One SEO, SEOPress or Slim SEO is active, because those
+plugins publish their own. The page-level graph (FAQPage and Service) ships
+either way, because a plugin has no idea this theme's FAQ arrays exist and does
+not publish them. Turn it off with the mcg_output_page_schema filter if your
+plugin has been configured to emit its own FAQ schema for these pages.
+
+IF YOU RUN AN SEO PLUGIN, IT OWNS THE META DESCRIPTION. The theme only writes
+one when no such plugin is active. With a plugin installed, paste the
+descriptions from mcg_page_terms() into the plugin's field for each page, or
+they will not appear. Override the theme's own output with the
+mcg_meta_description filter.
 
 
 RANKING NOTES

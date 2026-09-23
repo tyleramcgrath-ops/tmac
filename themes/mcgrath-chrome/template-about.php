@@ -30,6 +30,7 @@ get_header();
 		</div>
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Who this suits', 'mcgrath-chrome' ); ?></h2>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'A good fit looks like', 'mcgrath-chrome' ); ?></h3>
 			<ul class="checks">
 				<li><?php esc_html_e( 'Local businesses that need the phone to ring from this area', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Owners who want to talk to the person doing the work', 'mcgrath-chrome' ); ?></li>
@@ -43,12 +44,35 @@ get_header();
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Who this does not suit', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'Companies that need a large team, a media buying department or twenty deliverables a month. One person has a ceiling and pretending otherwise would waste both our time.', 'mcgrath-chrome' ); ?></p>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What I will not do', 'mcgrath-chrome' ); ?></h3>
+			<ul class="checks">
+				<li><?php esc_html_e( 'Take a retainer for work that has nowhere left to go', 'mcgrath-chrome' ); ?></li>
+				<li><?php esc_html_e( 'Promise a position in the SERPs by a particular date', 'mcgrath-chrome' ); ?></li>
+				<li><?php esc_html_e( 'Rebuild a site that did not need rebuilding', 'mcgrath-chrome' ); ?></li>
+				<li><?php esc_html_e( 'Hold your logins, your URLs or your data hostage', 'mcgrath-chrome' ); ?></li>
+			</ul>
 		</div>
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Selected work', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'Client work is kept private out of respect for the businesses involved. If you want to see examples, ask on the call and I will walk you through them directly.', 'mcgrath-chrome' ); ?></p>
 		</div>
 	</div>
+
+	<div class="rv">
+		<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'How an engagement runs', 'mcgrath-chrome' ); ?></h2>
+		<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'The first conversation', 'mcgrath-chrome' ); ?></h3>
+		<p><?php esc_html_e( 'The audit is run before we speak, so the call is spent on what it found rather than on discovery questions. You leave it knowing what is wrong, roughly what it takes to fix, and whether I am the right person to do it.', 'mcgrath-chrome' ); ?></p>
+		<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'The first month', 'mcgrath-chrome' ); ?></h3>
+		<p><?php esc_html_e( 'Technical fixes first, because they are the cheapest wins and everything else depends on them. Alongside that, the pages and URLs that already nearly rank get the attention, since moving something from the bottom of page one beats starting a new page from nothing.', 'mcgrath-chrome' ); ?></p>
+		<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'Every month after', 'mcgrath-chrome' ); ?></h3>
+		<p><?php esc_html_e( 'Content ships, local signals get maintained, and one report tells you what moved in the SERPs, what did not, and what is next. You deal with me directly throughout, and you can stop at the end of any month.', 'mcgrath-chrome' ); ?></p>
+	</div>
+
+	<?php mcg_table( 'about' ); ?>
+
+	<?php mcg_questions( 'about', 'h3' ); ?>
+
+	<?php mcg_faq_block( 'about', __( 'Questions people ask before hiring me', 'mcgrath-chrome' ) ); ?>
 
 	<article class="entry rv">
 		<?php while ( have_posts() ) { the_post(); the_content(); } ?>

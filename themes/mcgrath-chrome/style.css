@@ -1275,3 +1275,65 @@ body.crawl .navcta{background:#0A120D;color:#9FF3B8;border-color:#1F5236;}
   filter:brightness(0) saturate(100%) invert(84%) sepia(22%) saturate(686%) hue-rotate(74deg) brightness(101%) contrast(93%);}
 .vaultOpen{padding-block:clamp(40px,7vw,90px);max-width:var(--maxw);margin-inline:auto;}
 .vaultOpen .mono{color:var(--ink-45);}
+
+/* ============================================================
+   Comparison table, question blocks and the per-page FAQ.
+   Added for the search / answer-engine work order: the table is
+   the most cleanly extractable structure on a page, and the
+   question headings are the retrieval hooks above the answers.
+   ============================================================ */
+
+.cmpWrap{max-width:var(--maxw);margin:clamp(40px,6vw,76px) auto 0;}
+.cmpWrap h2{font-size:clamp(23px,2.8vw,38px);margin-bottom:18px;}
+
+/* A wide table has to survive a phone. Scroll the table, not the page. */
+.cmpScroll{overflow-x:auto;-webkit-overflow-scrolling:touch;
+  border:1px solid var(--line-2);border-radius:var(--r);background:var(--paper);}
+
+.cmp{width:100%;border-collapse:collapse;font-size:15px;line-height:1.55;min-width:760px;}
+.cmp caption{caption-side:top;text-align:left;padding:18px 20px 0;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-45);}
+.cmp thead th{text-align:left;vertical-align:bottom;padding:16px 20px 12px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-45);font-weight:400;border-bottom:1px solid var(--line);}
+.cmp tbody th{text-align:left;vertical-align:top;padding:16px 20px;
+  font-family:var(--display);font-weight:500;font-size:17px;color:var(--ink);
+  border-bottom:1px solid var(--line-2);width:1%;white-space:nowrap;}
+.cmp tbody td{vertical-align:top;padding:16px 20px;color:var(--ink-70);
+  border-bottom:1px solid var(--line-2);}
+.cmp tbody tr:last-child th,.cmp tbody tr:last-child td{border-bottom:0;}
+.cmp tbody tr:nth-child(even){background:var(--warm);}
+
+@media(max-width:700px){
+  /* Narrower type and padding, but the table keeps a floor wide enough that a
+     cell reads as a phrase rather than one word per line. It scrolls inside
+     .cmpScroll, so this never pushes the page sideways. */
+  .cmp{font-size:14px;min-width:700px;}
+  .cmp caption{padding:14px 16px 0;}
+  .cmp thead th{padding:14px 16px 10px;}
+  .cmp tbody th,.cmp tbody td{padding:14px 16px;}
+  .cmp tbody th{white-space:normal;}
+}
+
+/* Question-shaped headings: the question, then the answer directly under it. */
+.qa{max-width:var(--maxw);margin:clamp(40px,6vw,76px) auto 0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:clamp(24px,4vw,52px);}
+.qaItem h2,.qaItem h3{font-size:clamp(20px,2.2vw,27px);margin-bottom:12px;line-height:1.24;}
+.qaItem p{font-size:16.5px;line-height:1.7;color:var(--ink-70);max-width:62ch;}
+
+/* The page FAQ reuses the homepage accordion. */
+.pageFaq{max-width:var(--maxw);margin:clamp(40px,6vw,76px) auto 0;}
+.pageFaq h2{font-size:clamp(23px,2.8vw,38px);margin-bottom:8px;}
+.pageFaq .faq{margin-top:18px;}
+
+/* Crawler view: show the structure, drop the decoration. */
+body.crawl .cmpScroll{background:#04100A;border-color:rgba(159,243,184,.16);}
+body.crawl .cmp tbody tr:nth-child(even){background:rgba(159,243,184,.04);}
+body.crawl .cmp thead th{border-bottom-color:rgba(159,243,184,.24);}
+body.crawl .cmp tbody th,body.crawl .cmp tbody td{border-bottom-color:rgba(159,243,184,.12);}
+
+@media(prefers-reduced-motion:no-preference){
+  .cmpWrap,.qa,.pageFaq{scroll-margin-top:96px;}
+}

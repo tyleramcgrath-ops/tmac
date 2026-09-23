@@ -353,6 +353,12 @@ if ( $mcg_posts ) :
 </section>
 <?php endif; ?>
 
+<!-- ================== Where buyers find you + questions ================== -->
+<section class="sec gut">
+	<?php mcg_table( 'home' ); ?>
+	<?php mcg_questions( 'home', 'h3' ); ?>
+</section>
+
 <!-- ============================= FAQ ============================= -->
 <section class="sec gut faqSec" id="faq">
 	<div class="head rv" style="margin-bottom:clamp(20px,3vw,34px);">

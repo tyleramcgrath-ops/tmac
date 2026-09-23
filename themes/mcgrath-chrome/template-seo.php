@@ -26,6 +26,7 @@ get_header();
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Local SEO', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'Showing up in the map pack when somebody in Abacoa or Jupiter Farms searches for what you sell. That means a Google Business Profile that is actually optimized, consistent citations across the directories that matter in Palm Beach County, location pages that are written rather than spun, and reviews arriving on a schedule instead of in bursts.', 'mcgrath-chrome' ); ?></p>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What local SEO covers', 'mcgrath-chrome' ); ?></h3>
 			<ul class="checks">
 				<li><?php esc_html_e( 'Google Business Profile optimization and posting', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Citation cleanup and NAP consistency', 'mcgrath-chrome' ); ?></li>
@@ -37,6 +38,7 @@ get_header();
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Technical SEO', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'The unglamorous half. Crawl and index issues, page speed and Core Web Vitals, internal linking, duplicate and thin pages, redirect chains left behind by the last redesign. None of it is exciting and all of it decides whether the content you publish ever gets a chance.', 'mcgrath-chrome' ); ?></p>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'What the technical audit covers', 'mcgrath-chrome' ); ?></h3>
 			<ul class="checks">
 				<li><?php esc_html_e( 'Full technical audit with a prioritized fix list', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'Core Web Vitals and mobile performance', 'mcgrath-chrome' ); ?></li>
@@ -88,6 +90,12 @@ get_header();
 			</ul>
 		</div>
 	</div>
+
+	<?php mcg_table( 'seo' ); ?>
+
+	<?php mcg_questions( 'seo', 'h3' ); ?>
+
+	<?php mcg_faq_block( 'seo', __( 'Questions people ask before they call', 'mcgrath-chrome' ) ); ?>
 
 	<article class="entry rv">
 		<?php while ( have_posts() ) { the_post(); the_content(); } ?>

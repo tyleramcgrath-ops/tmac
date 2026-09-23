@@ -7,10 +7,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.1.0' );
+define( 'MCG_VERSION', '2.2.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
+require_once get_template_directory() . '/inc/page-seo.php';
 require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/diagnostics.php';
 
@@ -272,7 +273,26 @@ function mcg_should_output_schema() {
 	return (bool) apply_filters( 'mcg_output_schema', $output );
 }
 
+/**
+ * Whether the theme should emit its PAGE-level structured data.
+ *
+ * Deliberately not the same gate as the business graph. An SEO plugin
+ * publishes Organization, WebSite, WebPage and BreadcrumbList, which is why
+ * the theme stands down on those. It does not publish an FAQPage built from
+ * this theme's FAQ arrays, or a Service describing the page you are on,
+ * because it has no idea those exist. Those two are additive rather than
+ * competing, so they ship either way.
+ *
+ * If a plugin has been configured to output its own FAQ schema for these
+ * pages, turn this off with the mcg_output_page_schema filter.
+ */
+function mcg_should_output_page_schema() {
+	return (bool) apply_filters( 'mcg_output_page_schema', true );
+}
+
 function mcg_schema() {
+	mcg_page_schema();
+
 	if ( ! mcg_should_output_schema() ) {
 		return;
 	}
@@ -312,20 +332,19 @@ function mcg_schema() {
 
 	echo '<script type="application/ld+json">' . wp_json_encode( $biz ) . '</script>' . "\n";
 
+}
+
+/**
+ * FAQPage and Service for the page being rendered, from the same arrays the
+ * page itself renders from.
+ */
+function mcg_page_schema() {
+	if ( ! mcg_should_output_page_schema() ) {
+		return;
+	}
+
 	if ( is_front_page() ) {
-		$faq = array(
-			'@context'   => 'https://schema.org',
-			'@type'      => 'FAQPage',
-			'mainEntity' => array(),
-		);
-		foreach ( mcg_faqs() as $item ) {
-			$faq['mainEntity'][] = array(
-				'@type'          => 'Question',
-				'name'           => $item['q'],
-				'acceptedAnswer' => array( '@type' => 'Answer', 'text' => $item['a'] ),
-			);
-		}
-		echo '<script type="application/ld+json">' . wp_json_encode( $faq ) . '</script>' . "\n";
+		mcg_emit_faq_schema( mcg_faqs() );
 
 		// The four services, generated from the same array the cards render from.
 		$services = array();
@@ -342,8 +361,100 @@ function mcg_schema() {
 			);
 		}
 		echo '<script type="application/ld+json">' . wp_json_encode( $services ) . '</script>' . "\n";
+		return;
+	}
+
+	// Every other page the theme ships: its own FAQ, and the one service it
+	// sells, generated from the arrays that page renders from.
+	$key = mcg_current_key();
+	if ( $key && 'home' !== $key ) {
+		$faqs = mcg_page_faqs();
+		if ( ! empty( $faqs[ $key ] ) ) {
+			mcg_emit_faq_schema( $faqs[ $key ] );
+		}
+
+		$services = mcg_page_service();
+		if ( ! empty( $services[ $key ] ) ) {
+			$svc = $services[ $key ];
+			echo '<script type="application/ld+json">' . wp_json_encode(
+				array(
+					'@context'    => 'https://schema.org',
+					'@type'       => 'Service',
+					'name'        => $svc['name'],
+					'serviceType' => $svc['type'],
+					'description' => $svc['desc'],
+					'url'         => get_permalink(),
+					'provider'    => array( '@id' => home_url( '/#business' ) ),
+					'areaServed'  => array_map(
+						function ( $a ) {
+							return array( '@type' => 'City', 'name' => $a );
+						},
+						mcg_areas()
+					),
+				)
+			) . '</script>' . "\n";
+		}
 	}
 }
+
+/** One FAQPage graph from a list of question/answer pairs. */
+function mcg_emit_faq_schema( $items ) {
+	$faq = array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => array(),
+	);
+	foreach ( $items as $item ) {
+		$faq['mainEntity'][] = array(
+			'@type'          => 'Question',
+			'name'           => $item['q'],
+			'acceptedAnswer' => array( '@type' => 'Answer', 'text' => $item['a'] ),
+		);
+	}
+	echo '<script type="application/ld+json">' . wp_json_encode( $faq ) . '</script>' . "\n";
+}
+
+/**
+ * The meta description.
+ *
+ * Written per page in mcg_page_terms() so the head term appears in it. Stands
+ * down when an SEO plugin is active, for the same reason the schema does: two
+ * descriptions on one page is worse than either alone. A page excerpt the
+ * owner has written always wins over the theme's default.
+ */
+function mcg_meta_description() {
+	if ( ! mcg_should_output_schema() ) {
+		return;
+	}
+
+	$desc = '';
+
+	// The theme's own pages use the description written for their head term.
+	// Deliberately ahead of the excerpt: the excerpt is only set when the page
+	// is first created, so a page that already existed still carries the old
+	// text, and the one place the head term is guaranteed to appear is here.
+	$key   = mcg_current_key();
+	$terms = mcg_page_terms();
+	if ( $key && isset( $terms[ $key ]['meta'] ) ) {
+		$desc = $terms[ $key ]['meta'];
+	}
+
+	// Anything else: the excerpt, then the site tagline.
+	if ( ! $desc && is_singular() ) {
+		$desc = (string) get_post_field( 'post_excerpt', get_queried_object_id() );
+	}
+
+	if ( ! $desc && ( is_home() || is_archive() || is_search() ) ) {
+		$desc = get_bloginfo( 'description' );
+	}
+
+	$desc = apply_filters( 'mcg_meta_description', $desc, $key );
+
+	if ( $desc ) {
+		echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $desc ) ) . '">' . "\n";
+	}
+}
+add_action( 'wp_head', 'mcg_meta_description', 2 );
 add_action( 'wp_head', 'mcg_schema', 20 );
 
 /** Keep the vault out of search results and sitemaps. */
@@ -368,37 +479,37 @@ function mcg_pages_map() {
 		$s['home'] => array(
 			'title'    => 'SEO & Web Design in Jupiter, FL',
 			'template' => '',
-			'excerpt'  => 'SEO, web design and answer engine optimization for businesses in Jupiter, Florida.',
+			'excerpt'  => mcg_page_terms()['home']['meta'],
 			'content'  => '',
 		),
 		$s['seo'] => array(
 			'title'    => 'SEO Company in Jupiter, FL',
 			'template' => 'template-seo.php',
-			'excerpt'  => 'Local and technical SEO for businesses in Jupiter, Palm Beach Gardens and Tequesta.',
+			'excerpt'  => mcg_page_terms()['seo']['meta'],
 			'content'  => '',
 		),
 		$s['webdesign'] => array(
 			'title'    => 'Web Design in Jupiter, FL',
 			'template' => 'template-webdesign.php',
-			'excerpt'  => 'Custom WordPress websites for Palm Beach County businesses, built to convert and to rank.',
+			'excerpt'  => mcg_page_terms()['webdesign']['meta'],
 			'content'  => '',
 		),
 		$s['aeo'] => array(
 			'title'    => 'AI Search Optimization',
 			'template' => 'template-aeo.php',
-			'excerpt'  => 'Get named when buyers ask ChatGPT, Gemini, Perplexity or a Google AI Overview.',
+			'excerpt'  => mcg_page_terms()['aeo']['meta'],
 			'content'  => '',
 		),
 		$s['about'] => array(
 			'title'    => 'About Tyler McGrath',
 			'template' => 'template-about.php',
-			'excerpt'  => 'One person, not an agency. Who you are hiring and how the work runs.',
+			'excerpt'  => mcg_page_terms()['about']['meta'],
 			'content'  => '',
 		),
 		$s['contact'] => array(
 			'title'    => 'Free SEO Audit',
 			'template' => 'template-contact.php',
-			'excerpt'  => 'Request a free Jupiter SEO audit. One call, no pitch.',
+			'excerpt'  => mcg_page_terms()['contact']['meta'],
 			'content'  => '',
 		),
 		$s['vault'] => array(

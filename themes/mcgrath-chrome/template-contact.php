@@ -59,6 +59,7 @@ get_header();
 	<div class="split rv">
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'What happens after you send this', 'mcgrath-chrome' ); ?></h2>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'In order', 'mcgrath-chrome' ); ?></h3>
 			<ul class="checks">
 				<li><?php esc_html_e( 'I run the audit before we speak, so the call is not a discovery session', 'mcgrath-chrome' ); ?></li>
 				<li><?php esc_html_e( 'You get the findings in writing, yours to keep', 'mcgrath-chrome' ); ?></li>
@@ -69,8 +70,36 @@ get_header();
 		<div>
 			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'What to send', 'mcgrath-chrome' ); ?></h2>
 			<p><?php esc_html_e( 'Your website address, the area you want customers from, and the one search term you wish you owned. That is enough to start.', 'mcgrath-chrome' ); ?></p>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'Useful, but not required', 'mcgrath-chrome' ); ?></h3>
+			<ul class="checks">
+				<li><?php esc_html_e( 'Read access to your analytics and Search Console', 'mcgrath-chrome' ); ?></li>
+				<li><?php esc_html_e( 'The businesses you consider your real competition', 'mcgrath-chrome' ); ?></li>
+				<li><?php esc_html_e( 'Anything a previous agency left you, good or bad', 'mcgrath-chrome' ); ?></li>
+			</ul>
 		</div>
 	</div>
+
+	<div class="split rv">
+		<div>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Why the audit is free', 'mcgrath-chrome' ); ?></h2>
+			<p><?php esc_html_e( 'Because it is the fastest way for both of us to find out whether there is work worth doing. If the site is sound and the SERPs already treat it well, that takes an hour to establish and saves you a retainer. If it is not, you can see exactly what is wrong before spending anything.', 'mcgrath-chrome' ); ?></p>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'And what it costs you', 'mcgrath-chrome' ); ?></h3>
+			<p><?php esc_html_e( 'One conversation. The findings are yours in writing either way, and they are just as useful handed to a developer or another agency as they are to me.', 'mcgrath-chrome' ); ?></p>
+		</div>
+		<div>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Who this is for', 'mcgrath-chrome' ); ?></h2>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'Businesses in and around Jupiter', 'mcgrath-chrome' ); ?></h3>
+			<p><?php esc_html_e( 'Proximity decides the map pack, so the local half of the audit is specific to the streets your customers actually search from, not to a county-wide average.', 'mcgrath-chrome' ); ?></p>
+			<h3 data-tag="&lt;h3&gt;"><?php esc_html_e( 'Businesses further out', 'mcgrath-chrome' ); ?></h3>
+			<p><?php esc_html_e( 'Still worth sending. The technical review, the content gaps and the AI visibility check run the same way wherever the business is, and the local portion is built around your area instead of mine.', 'mcgrath-chrome' ); ?></p>
+		</div>
+	</div>
+
+	<?php mcg_table( 'contact' ); ?>
+
+	<?php mcg_questions( 'contact', 'h3' ); ?>
+
+	<?php mcg_faq_block( 'contact', __( 'Questions people ask before sending this', 'mcgrath-chrome' ) ); ?>
 
 	<article class="entry rv">
 		<?php while ( have_posts() ) { the_post(); the_content(); } ?>
