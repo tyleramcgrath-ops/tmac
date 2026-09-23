@@ -413,9 +413,10 @@
   <style>
     .fp-badges { padding: 48px 0 56px; }
     .fp-badges .section-head { margin-bottom: 28px; }
-    .fp-badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-    .fp-badge-row img { width: 120px; height: auto; }
-    @media (max-width: 600px) { .fp-badge-row img { width: 88px; } }
+    .fp-badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 32px; }
+    .fp-badge-row img { width: clamp(150px, 15vw, 205px); height: auto; filter: drop-shadow(0 10px 18px rgba(12,27,42,0.14)); transition: transform 240ms ease; }
+    .fp-badge-row img:hover { transform: translateY(-4px) scale(1.03); }
+    @media (max-width: 600px) { .fp-badge-row { gap: 18px 14px; } .fp-badge-row img { width: calc(50% - 10px); max-width: 170px; } }
   </style>
   <section class="fp-badges" aria-label="Geotab Elite Specialized Partner recognition">
     <div class="wrap">

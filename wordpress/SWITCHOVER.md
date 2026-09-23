@@ -132,3 +132,7 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   in two columns), one section open at a time, full-screen white panel, Get a Demo + phone + socials at the bottom.
 - Mobile sweep of all pages: fixed the savings-calculator "USD" label spilling out and a cut-off button on
   /expandability/; buttons now wrap instead of overflowing on small screens.
+
+## v6.10.1
+- Homepage Geotab partner badges enlarged so their text is readable: ~205px wide on desktop (was 120px), two per row
+  at ~157px on phones (was 88px), with a soft shadow and a small lift on hover.
