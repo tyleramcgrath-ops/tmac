@@ -11,6 +11,20 @@ const STATIC = {
   '/apple-touch-icon.png': ['apple-touch-icon.png', 'image/png']
 };
 
+// The app asks who you are as soon as it loads. In these flows the answer is "nobody" — they
+// exercise the scanner, not an account — and a fixture server that 404s the question turns an
+// ordinary signed-out page load into a console error and fails the run. So the signed-out answer
+// is served properly here rather than being filtered out of the error count downstream.
+//
+// Only this one endpoint needs it: cgAccount short-circuits on a null user, so nothing else in
+// the account surface is ever reached without a session.
+function serveAccount(pathname, res) {
+  if (pathname !== '/api/auth/session') return false;
+  res.setHeader('content-type', 'application/json');
+  res.end(JSON.stringify({ user: null }));
+  return true;
+}
+
 // Returns true when it answered the request; the caller carries on otherwise.
 function serveStatic(pathname, res, root) {
   const hit = STATIC[pathname];
@@ -86,4 +100,4 @@ async function workspacePanel(pg) {
   return { askedForPassword: !!hasPassword, skipLeavesNoIdentity: skipped, named };
 }
 
-module.exports = { enterApp, workspacePanel, serveStatic, IDENTITY };
+module.exports = { enterApp, workspacePanel, serveStatic, serveAccount, IDENTITY };
