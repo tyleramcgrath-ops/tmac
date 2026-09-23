@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Route4Me fleet solution" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1514861736016-646d83403e24?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1514861736016-646d83403e24?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1514861736016-646d83403e24?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1514861736016-646d83403e24?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1514861736016-646d83403e24?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Dashboard GPS unit showing a route while driving" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo esc_url(home_url("/")); ?>">Home</a> /
@@ -37,7 +37,7 @@
   </div></div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Routing-and-Dispatching-1-panorama-635x0-1.webp" alt="Route4Me capabilities" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1777627721192-e61bf44dcda3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1777627721192-e61bf44dcda3?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1777627721192-e61bf44dcda3?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1777627721192-e61bf44dcda3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1777627721192-e61bf44dcda3?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Car dashboard with navigation screen facing an open mountain landscape" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Routing Capabilities</span>
       <h2>Route4Me Core Capabilities</h2>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Integrated-Workflows-panorama-635x0-1.webp" alt="Route4Me results" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1609444074490-a4eb06f5ebf0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1609444074490-a4eb06f5ebf0?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1609444074490-a4eb06f5ebf0?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1609444074490-a4eb06f5ebf0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1609444074490-a4eb06f5ebf0?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver&#x27;s hand on wheel beside an in-dash navigation screen" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Route Outcomes</span>
       <h2>Measurable Fleet Impact</h2>
@@ -109,7 +109,7 @@
     <div class="reveal" style="--d:2"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Revenue</h3><p>Set the maximum revenue per route to ensure a route&rsquo;s total value is not too high to deliver good customer service.</p></div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/gps-tracking-1-panorama-635x0-1.webp" alt="Route4Me route optimization and in-app navigation" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Hand holding a smartphone showing a street map with location pins" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Easy-to-Use Optimization Software</span>
       <h2>Plan, optimize, and navigate &mdash; all in one app.</h2>

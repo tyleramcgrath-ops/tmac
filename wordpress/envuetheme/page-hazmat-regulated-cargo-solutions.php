@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Commercial tanker fleet transporting regulated cargo" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1598114335556-119dbed6b051?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1598114335556-119dbed6b051?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1598114335556-119dbed6b051?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1598114335556-119dbed6b051?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1598114335556-119dbed6b051?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Oil pumpjack in a grassy field under a stormy sky" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/industries-fleet-complexity-solutions/")); ?>">Fleet Complexity Solutions</a> / <span>Hazmat &amp; Regulated Cargo</span></nav>
     <span class="eyebrow eyebrow--light">Hazmat &amp; Regulated Cargo Safety Framework</span>
@@ -36,7 +36,7 @@
 
 <section class="section" id="hazmat-framework"><div class="wrap">
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Routing-and-Dispatching-1-panorama-635x0-1.webp" alt="Hazmat-compliant routing and dispatch" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1780332524558-6c56c0241030?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1780332524558-6c56c0241030?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1780332524558-6c56c0241030?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1780332524558-6c56c0241030?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1780332524558-6c56c0241030?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Blue tanker truck with headlights and marker lights on at dusk" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">01 &middot; Routing</span>
       <h2>Dynamic Hazmat Routing &amp; Restriction Management</h2>
@@ -46,7 +46,7 @@
   </div>
 
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Reduce-Risky-Driving-1-panorama-635x0-1.webp" alt="Rollover prevention safety monitoring" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Pickup truck cab interior with a large touchscreen GPS navigation display" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">02 &middot; Safety Monitoring</span>
       <h2>High-Fidelity Safety Monitoring: Roll-Over Prevention</h2>
@@ -56,7 +56,7 @@
   </div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Visibility-1-panorama-635x0-1.webp" alt="Real-time cargo condition monitoring" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1586828909860-faf5ed195143?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1586828909860-faf5ed195143?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1586828909860-faf5ed195143?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1586828909860-faf5ed195143?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1586828909860-faf5ed195143?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Black semi-truck pulling a stainless tanker trailer on a highway" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">03 &middot; Cargo Monitoring</span>
       <h2>Real-Time Cargo Condition Monitoring (BLE)</h2>

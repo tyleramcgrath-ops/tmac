@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Fleet Productivity: Do More With the Same Resources Through Data and Visibility." loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1605410791216-3d9653a95667?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1605410791216-3d9653a95667?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1605410791216-3d9653a95667?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1605410791216-3d9653a95667?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1605410791216-3d9653a95667?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Gray cargo van parked on a dirt lot among autumn trees" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/productivity/")); ?>">Fleet Productivity</a></nav>
     <span class="eyebrow eyebrow--light">Productivity Solution</span>
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="Right-Size the Fleet and Eliminate Underutilized Asset Costs" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1610477865545-37711c53144d?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1610477865545-37711c53144d?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1610477865545-37711c53144d?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1610477865545-37711c53144d?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1610477865545-37711c53144d?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Row of excavators and heavy equipment parked at a yard" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Utilization Analytics</span><h2>Right-Size the Fleet and Eliminate Underutilized Asset Costs</h2><p>Geotab utilization reporting shows exactly how actively each vehicle in the fleet is being used — active service hours versus parked or idle hours, by vehicle, by driver, and by time period. Fleet managers use this data to identify chronically underutilized vehicles that can be redeployed, eliminated, or replaced with smaller alternatives — directly reducing capital, insurance, and maintenance costs without impacting operational capacity. For fleets with seasonal demand variation, utilization data drives smarter decisions about temporary versus permanent fleet capacity.</p>
       <ul class="check-list">        <li>Vehicle utilization reporting by active hours, idle hours, and parked time</li>
@@ -58,7 +58,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Equipment-Management-panorama-635x0-1.webp" alt="Managing construction equipment and assets efficiently" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1680463990599-9d318aaecf71?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1680463990599-9d318aaecf71?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1680463990599-9d318aaecf71?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1680463990599-9d318aaecf71?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1680463990599-9d318aaecf71?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Yellow excavator working in a large open pit" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Equipment Management</span>
       <h2>Locate, Redeploy, and Protect Heavy Equipment and Non-Powered Assets</h2>
@@ -72,7 +72,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/GPS-Tracking-panorama-635x0-1.webp" alt="Fleet management reports and notifications" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1599658880436-c61792e70672?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1599658880436-c61792e70672?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1599658880436-c61792e70672?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1599658880436-c61792e70672?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1599658880436-c61792e70672?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Hands on a laptop reviewing analytics charts" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Fleet Management Reports</span>
       <h2>Insights, Notifications, and KPIs That Support Organizational Goals</h2>

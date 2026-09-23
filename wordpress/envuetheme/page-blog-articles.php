@@ -11,6 +11,6 @@ $envue_listing = [
     'lede'     => 'Practical fleet management insights from the EnVue Telematics team — GPS tracking, AI dash cams, safety, compliance, fuel, maintenance, and the operational decisions fleet managers face every day.',
     'grid_eb'  => 'Latest Articles',
     'grid_h2'  => 'Insights for modern fleet operations.',
-    'hero_img' => 'https://envuetelematics.com/wp-content/uploads/2026/07/truck-lorry-sunset-768x576.jpg',
+    'hero_img' => 'https://images.unsplash.com/photo-1591696205602-2f950c417cb9?auto=format&fit=crop&w=1920&q=72',
 ];
 require get_template_directory() . '/page-news.php';

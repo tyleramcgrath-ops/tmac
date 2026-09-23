@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Fleet fuel management" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1678903434882-d8bc7782b953?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1678903434882-d8bc7782b953?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1678903434882-d8bc7782b953?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1678903434882-d8bc7782b953?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1678903434882-d8bc7782b953?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Row of fuel pumps under a gas station canopy" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/fuel-management/")); ?>">Fuel Management</a></nav>
     <span class="eyebrow eyebrow--light">Fleet Cost Solution</span>

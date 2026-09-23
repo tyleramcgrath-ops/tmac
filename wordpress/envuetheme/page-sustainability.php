@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/sustainable-fleet-transportation-2026.jpg" alt="Fleet sustainability ESG" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1509390631688-84cd31e9d083?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1509390631688-84cd31e9d083?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1509390631688-84cd31e9d083?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1509390631688-84cd31e9d083?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1509390631688-84cd31e9d083?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Wind turbines over open farmland under a blue sky" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/sustainability/")); ?>">Sustainability</a></nav>
     <span class="eyebrow eyebrow--light">Fleet Sustainability</span>
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Replace-ICE-Vehicles-with-EVs-and-Hybrids-panorama-635x0-1.webp" alt="EV fleet readiness planning" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1594535182308-8ffefbb661e1?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1594535182308-8ffefbb661e1?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1594535182308-8ffefbb661e1?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1594535182308-8ffefbb661e1?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1594535182308-8ffefbb661e1?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Green electric vehicle charging parking space marking" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">EV Transition Planning</span>
       <h2>Data-Driven EV Selection That Avoids Costly Range Mismatches</h2>
@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Effective-EV-Management-1-panorama.webp" alt="Fleet ESG sustainability reporting" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1671785253964-bdb43087ed99?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1671785253964-bdb43087ed99?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1671785253964-bdb43087ed99?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1671785253964-bdb43087ed99?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1671785253964-bdb43087ed99?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="White electric car plugged in to a wall charging station" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">ESG Reporting</span>
       <h2>Documented Sustainability Progress for Stakeholders and Investors</h2>

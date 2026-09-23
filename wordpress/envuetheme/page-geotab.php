@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Geotab fleet telematics platform" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1592659762303-90081d34b277?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Close-up of a dark blue printed circuit board" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/powered-by-geotab/")); ?>">Powered by Geotab</a></nav>
     <span class="eyebrow eyebrow--light">Platform</span>
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/gps-tracking-1-panorama-635x0-1.webp" alt="Geotab Marketplace integrations" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Shallow-focus view of a green single-board computer" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Geotab Marketplace</span>
       <h2>300+ Integrations on One Open Platform</h2>
@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="Geotab Elite Specialized Partner EnVue" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Large team meeting around a long conference table with laptops" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">EnVue as Your Geotab Partner</span>
       <h2>Elite Specialized Certification Means Proven Expert Deployment</h2>

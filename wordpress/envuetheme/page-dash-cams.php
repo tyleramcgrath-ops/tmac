@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="AI fleet dash cams" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1595977910374-793e731cb36e?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1595977910374-793e731cb36e?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1595977910374-793e731cb36e?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1595977910374-793e731cb36e?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1595977910374-793e731cb36e?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="View through a car windshield of a highway at dusk" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/dash-cams/")); ?>">AI Dash Cams</a></nav>
     <span class="eyebrow eyebrow--light">Fleet Safety Solution</span>
@@ -106,7 +106,7 @@
     <p>EnVue Telematics partners with the industry's top AI dash cam providers — Lytx, Geotab GO Focus, Netradyne, Sensata, Mobileye, Surfsight, and Samsara — and integrates every deployment with Geotab GPS fleet tracking. You get the right camera system for your fleet type, operational environment, and safety goals, with expert deployment and 24/7 US-based support that keeps the system working after day one.</p>
   </div></div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="AI dash cam fleet coaching" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1547319784-330d3b12b3bb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1547319784-330d3b12b3bb?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1547319784-330d3b12b3bb?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1547319784-330d3b12b3bb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1547319784-330d3b12b3bb?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Woman truck driver leaning out of her cab window" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">AI Event Detection</span>
       <h2>Detect Risk Before It Becomes an Incident</h2>
@@ -121,7 +121,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Effective-Driver-Coaching-panorama-635x0-1.webp" alt="Fleet dash cam liability protection" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1741495515999-0567609a236e?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1741495515999-0567609a236e?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1741495515999-0567609a236e?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1741495515999-0567609a236e?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1741495515999-0567609a236e?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Row of colorful semi-truck tractors parked side by side" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Liability Protection</span>
       <h2>Video Evidence That Resolves Claims in Minutes</h2>

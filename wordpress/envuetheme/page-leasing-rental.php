@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Leasing and Rental fleet management" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1772440503427-fe71cec89d9b?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1772440503427-fe71cec89d9b?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1772440503427-fe71cec89d9b?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1772440503427-fe71cec89d9b?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1772440503427-fe71cec89d9b?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Aerial view of rows of parked cars in a large lot" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/industries/")); ?>">Industries</a> / <a href="<?php echo esc_url(home_url("/leasing-rental/")); ?>">Leasing and Rental</a></nav>
     <span class="eyebrow eyebrow--light">Leasing and Rental Fleet Management</span>
@@ -41,7 +41,7 @@
         <li>Real-time location for overdue returns and recovery coordination</li></ul></div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/gps-tracking-1-panorama-635x0-1.webp" alt="Eliminate Mileage Disputes With GPS-Verified Odometer Data" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1759256243611-502772ac391b?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1759256243611-502772ac391b?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1759256243611-502772ac391b?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1759256243611-502772ac391b?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1759256243611-502772ac391b?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Smartphone navigation app mounted on a car dashboard" loading="lazy"></div>
     <div class="reveal"><span class="eyebrow">Odometer and Return Automation</span><h2>Eliminate Mileage Disputes With GPS-Verified Odometer Data</h2><p>Mileage disputes at lease return or rental checkout are a persistent source of revenue leakage and customer friction. Geotab provides GPS-derived odometer data that tracks cumulative mileage from the moment a vehicle leaves the lot to the moment it returns. This GPS-verified mileage record eliminates disputes about actual miles driven, supports accurate end-of-lease billing, and provides documentation for excess mileage charges. Automated mileage reports can be configured to deliver to customers or administrators on any schedule.</p><ul class="check-list">        <li>GPS-derived odometer tracking creating verifiable mileage records for every rental</li>
         <li>Automated mileage reporting for lease billing and excess mileage documentation</li>
         <li>Trip history showing every journey with start, end, distance, and duration</li>
@@ -49,7 +49,7 @@
         <li>Digital vehicle condition records from Whip Around integration at checkout and return</li></ul></div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Preventive-Maintenance-1-panorama-635x0-1.webp" alt="Automated maintenance scheduling for rental fleets" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1702146713858-8e7d1cc29fe8?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1702146713858-8e7d1cc29fe8?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1702146713858-8e7d1cc29fe8?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1702146713858-8e7d1cc29fe8?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1702146713858-8e7d1cc29fe8?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Mechanic working underneath a vehicle raised on a red jack stand" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Optimized Maintenance Scheduling</span>
       <h2>Keep Every Asset Rental-Ready</h2>

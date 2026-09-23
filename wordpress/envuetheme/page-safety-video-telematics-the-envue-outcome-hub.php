@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="Commercial driver in a cab monitored by AI video telematics" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1521410843026-323be9ead002?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1521410843026-323be9ead002?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1521410843026-323be9ead002?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1521410843026-323be9ead002?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1521410843026-323be9ead002?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Driver&#x27;s view of a misty highway at night with glowing dashboard" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/safety-video-telematics-the-envue-outcome-hub/")); ?>">AI Video Telematics Hub</a></nav>
     <span class="eyebrow eyebrow--light">The EnVue Outcome Hub</span>
@@ -35,7 +35,7 @@
 <section class="section section--soft"><div class="wrap">
   <div class="feature-split">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Fleet trucks equipped with AI dash cams" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1728288868148-ae0e3207f435?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1728288868148-ae0e3207f435?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1728288868148-ae0e3207f435?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1728288868148-ae0e3207f435?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1728288868148-ae0e3207f435?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Side mirror view with motion blur while driving on a highway" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">The Competitive Reality</span>
@@ -60,7 +60,7 @@
 
   <div class="feature-split">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Synchronized video and telemetry fleet safety dashboard" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1694521787193-9293daeddbaa?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1694521787193-9293daeddbaa?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1694521787193-9293daeddbaa?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1694521787193-9293daeddbaa?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1694521787193-9293daeddbaa?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Construction workers in hi-vis vests and hard hats measuring a block wall" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">01 &middot; Driver Exoneration</span>
@@ -71,7 +71,7 @@
 
   <div class="feature-split feature-split--flip" style="margin-top:3rem;">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="In-cab edge AI camera monitoring driver distraction" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1612787114413-a5e60ede7db8?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1612787114413-a5e60ede7db8?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1612787114413-a5e60ede7db8?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1612787114413-a5e60ede7db8?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1612787114413-a5e60ede7db8?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Worker in high-visibility rain gear and hard hat" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">02 &middot; Edge-AI vs. Cloud Processing</span>
@@ -83,7 +83,7 @@
 
   <div class="feature-split" style="margin-top:3rem;">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/construction.jpg" alt="Fleet manager coaching drivers with video evidence" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1762511879587-f15dcfba4351?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1762511879587-f15dcfba4351?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1762511879587-f15dcfba4351?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1762511879587-f15dcfba4351?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1762511879587-f15dcfba4351?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Construction workers in hi-vis gear on a city street" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">03 &middot; Slashing Claims</span>

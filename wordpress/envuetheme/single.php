@@ -13,7 +13,7 @@ while ( have_posts() ) : the_post();
     $list_name = $is_news ? 'News' : 'Blog Articles';
     $cats      = get_the_category();
     $badge     = $cats ? $cats[0]->name : $list_name;
-    $hero      = has_post_thumbnail() ? get_the_post_thumbnail_url( null, 'full' ) : 'https://envuetelematics.com/wp-content/uploads/2024/12/many-more.jpg';
+    $hero      = has_post_thumbnail() ? get_the_post_thumbnail_url( null, 'full' ) : 'https://images.unsplash.com/photo-1509165131529-1a871efb4a6e?auto=format&fit=crop&w=1920&q=72';
 ?>
 <main id="main">
 

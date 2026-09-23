@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://img.mailinblue.com/8092393/images/content_library/original/685adccb8c4bcdb84001ca71.png" alt="EnVue charter cruise at NCTA" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Audience watching a speaker on a bright screen" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/events-calendar/")); ?>">Events</a> / <a href="<?php echo esc_url(home_url("/set-sail-with-envue-at-ncta/")); ?>">Set Sail with EnVue at NCTA</a></nav>
     <span class="eyebrow eyebrow--light">RSVP &ndash; EnVue Charter Cruise at NCTA</span>

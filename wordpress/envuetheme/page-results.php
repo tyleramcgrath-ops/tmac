@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Fleet telematics results and ROI" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1720811559395-3ed8d1b16649?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1720811559395-3ed8d1b16649?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1720811559395-3ed8d1b16649?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1720811559395-3ed8d1b16649?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1720811559395-3ed8d1b16649?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Red semi-truck with a dry van trailer driving on a country highway under blue sky" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/results/")); ?>">Results</a></nav>
     <span class="eyebrow eyebrow--light">Proven ROI</span>
@@ -56,7 +56,7 @@
     <p style="margin-top:14px">EnVue Telematics is dedicated to providing its clients with the best possible support when it comes to risk management initiatives. We understand that your objectives may be hindered by unforeseen risks and challenges, which is why we work closely with our clients to develop effective strategies tailored to their unique needs. Our team of experts utilizes the latest technologies and industry best practices to identify, assess, and mitigate risks, helping you to achieve your mission in a safer and more efficient way.</p>
   </div></div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/group-of-students.jpg" alt="Fleet drivers in a safety training session" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1497781351393-2fce139ef4cb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1497781351393-2fce139ef4cb?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1497781351393-2fce139ef4cb?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1497781351393-2fce139ef4cb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1497781351393-2fce139ef4cb?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver heading down an open road toward snowy mountains" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Dash Cams</span>
       <h2>AI-powered detection that prevents incidents before they occur</h2>
@@ -65,7 +65,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Effective-Driver-Coaching-panorama-635x0-1.webp" alt="Driver coaching workflow with in-cab alerts" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1635805771545-c5d19dde76d6?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1635805771545-c5d19dde76d6?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1635805771545-c5d19dde76d6?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1635805771545-c5d19dde76d6?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1635805771545-c5d19dde76d6?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Organized tool board of wrenches and pliers in a service shop" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Driver Coaching</span>
       <h2>A full coaching workflow that keeps drivers in-policy</h2>
@@ -136,7 +136,7 @@
       </div>
     </div>
     <div class="feature-split" style="margin-top:52px">
-      <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="Fleet safety results" loading="lazy"></div>
+      <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1501799668029-f7be2fcfc261?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1501799668029-f7be2fcfc261?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1501799668029-f7be2fcfc261?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1501799668029-f7be2fcfc261?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1501799668029-f7be2fcfc261?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Illuminated car dashboard and navigation screen while driving at night" loading="lazy"></div>
       <div class="reveal">
         <span class="eyebrow">Safety Program Details</span>
         <h2>How EnVue Safety Programs Deliver Results</h2>
@@ -198,7 +198,7 @@
       </div>
     </div>
     <div class="feature-split feature-split--flip" style="margin-top:52px">
-      <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="Fuel and cost fleet management" loading="lazy"></div>
+      <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1740957112428-1210d53e93c5?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1740957112428-1210d53e93c5?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1740957112428-1210d53e93c5?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1740957112428-1210d53e93c5?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1740957112428-1210d53e93c5?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Close-up of chrome diesel fuel tanks on a white semi truck" loading="lazy"></div>
       <div class="reveal">
         <span class="eyebrow">Cost Program Details</span>
         <h2>How EnVue Cuts Operating Costs</h2>
@@ -260,7 +260,7 @@
       </div>
     </div>
     <div class="feature-split" style="margin-top:52px">
-      <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Boost-Efficiency-panorama-635x0-1.webp" alt="Fleet productivity results" loading="lazy"></div>
+      <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1592805144716-feeccccef5ac?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1592805144716-feeccccef5ac?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1592805144716-feeccccef5ac?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1592805144716-feeccccef5ac?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1592805144716-feeccccef5ac?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Semi-truck approaching on a highway seen through a side mirror at dusk" loading="lazy"></div>
       <div class="reveal">
         <span class="eyebrow">Productivity Program Details</span>
         <h2>How EnVue Improves Fleet Productivity</h2>

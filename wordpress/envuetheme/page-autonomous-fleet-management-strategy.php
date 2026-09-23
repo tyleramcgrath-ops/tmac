@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/holographic-lidar-dashboard-2026.png" alt="Futuristic 3D holographic LiDAR dashboard for autonomous trucks 2026" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1761133381018-aed5063d22fe?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1761133381018-aed5063d22fe?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1761133381018-aed5063d22fe?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1761133381018-aed5063d22fe?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1761133381018-aed5063d22fe?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Aerial view of a white semi-truck on a rural road through farm fields" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/resources/")); ?>">Resources</a></nav>
     <span class="eyebrow eyebrow--light">Autonomous Fleets</span>
@@ -16,7 +16,7 @@
 
 <section class="section"><div class="wrap">
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2026/03/holographic-lidar-dashboard-2026.png" alt="Futuristic 3D holographic LiDAR dashboard for autonomous trucks 2026" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Laptop showing an analytics dashboard on a glass table" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">The 2026 Autonomous Landscape</span>
       <h2>From Level 2 assistance to Level 5 autonomy.</h2>

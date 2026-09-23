@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="SpeedGauge fleet solution" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1506277204481-fb831bb22403?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1506277204481-fb831bb22403?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1506277204481-fb831bb22403?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1506277204481-fb831bb22403?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1506277204481-fb831bb22403?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Long-exposure light trails on a dark highway at night" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo esc_url(home_url("/")); ?>">Home</a> /
@@ -37,7 +37,7 @@
   </div></div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Reduce-Risky-Driving-1-panorama-635x0-1.webp" alt="SpeedGauge capabilities" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1714009889233-6699f04623ff?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1714009889233-6699f04623ff?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1714009889233-6699f04623ff?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1714009889233-6699f04623ff?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1714009889233-6699f04623ff?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Semi-truck with amber marker lights glowing parked outside a building at night" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Speed Management Features</span>
       <h2>SpeedGauge Core Capabilities</h2>
@@ -55,7 +55,7 @@
   </div>
 
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Integrated-Workflows-panorama-635x0-1.webp" alt="EnVue and SpeedGauge integration" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1575415251129-2bc100297fb6?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1575415251129-2bc100297fb6?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1575415251129-2bc100297fb6?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1575415251129-2bc100297fb6?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1575415251129-2bc100297fb6?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Truck headlights approaching on a dark two-lane road at night" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">EnVue Integration</span>
       <h2>How EnVue and SpeedGauge Work Together</h2>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="SpeedGauge results" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1668532069532-5bf7b1708aa0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1668532069532-5bf7b1708aa0?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1668532069532-5bf7b1708aa0?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1668532069532-5bf7b1708aa0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1668532069532-5bf7b1708aa0?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Truck silhouetted in teal fog under lights at night" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Speed Risk Outcomes</span>
       <h2>Measurable Fleet Impact</h2>

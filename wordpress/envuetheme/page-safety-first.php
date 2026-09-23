@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="SafetyFirst fleet solution" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1745956983820-6e960f7e8472?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Trucks driving away on a divided highway under a sunset sky" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo esc_url(home_url("/")); ?>">Home</a> /
@@ -37,7 +37,7 @@
   </div></div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/group-of-students.jpg" alt="SafetyFirst capabilities" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1609608933803-e5bfa422989f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1609608933803-e5bfa422989f?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1609608933803-e5bfa422989f?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1609608933803-e5bfa422989f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1609608933803-e5bfa422989f?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver&#x27;s view of a gravel road through autumn forest" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Risk Management Features</span>
       <h2>SafetyFirst Core Capabilities</h2>
@@ -55,7 +55,7 @@
   </div>
 
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Effective-Driver-Coaching-panorama-635x0-1.webp" alt="EnVue and SafetyFirst integration" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1596046194141-0b6d9a47f405?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1596046194141-0b6d9a47f405?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1596046194141-0b6d9a47f405?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1596046194141-0b6d9a47f405?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1596046194141-0b6d9a47f405?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driving a Jeep on a highway through desert canyons" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">EnVue Integration</span>
       <h2>How EnVue and SafetyFirst Work Together</h2>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Integrated-Workflows-panorama-635x0-1.webp" alt="SafetyFirst results" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1665740338853-cafe410687fb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1665740338853-cafe410687fb?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1665740338853-cafe410687fb?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1665740338853-cafe410687fb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1665740338853-cafe410687fb?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver&#x27;s view of a straight road toward distant mountains" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Risk Reduction Outcomes</span>
       <h2>Measurable Fleet Impact</h2>

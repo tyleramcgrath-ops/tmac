@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Fleetio fleet solution" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1676018366904-c083ed678e60?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1676018366904-c083ed678e60?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1676018366904-c083ed678e60?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1676018366904-c083ed678e60?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1676018366904-c083ed678e60?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Mechanic working at a bench in a garage workshop with tools and tires" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo esc_url(home_url("/")); ?>">Home</a> /
@@ -37,7 +37,7 @@
   </div></div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Preventive-Maintenance-1-panorama-635x0-1.webp" alt="Fleetio capabilities" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Mechanic&#x27;s hands working on a vehicle undercarriage with wrenches" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Maintenance Platform Features</span>
       <h2>Fleetio Core Capabilities</h2>
@@ -55,7 +55,7 @@
   </div>
 
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Integrated-Workflows-panorama-635x0-1.webp" alt="EnVue and Fleetio integration" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1771340742493-52fbd5476ccb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1771340742493-52fbd5476ccb?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1771340742493-52fbd5476ccb?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1771340742493-52fbd5476ccb?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1771340742493-52fbd5476ccb?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Mechanic in gloves pouring oil into a car engine" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">EnVue Geotab Integration</span>
       <h2>How EnVue and Fleetio Work Together</h2>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="Fleetio results" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1632733711679-529326f6db12?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1632733711679-529326f6db12?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1632733711679-529326f6db12?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1632733711679-529326f6db12?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1632733711679-529326f6db12?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Technician testing a vehicle fuse box under the hood" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Maintenance Outcomes</span>
       <h2>Measurable Fleet Impact</h2>

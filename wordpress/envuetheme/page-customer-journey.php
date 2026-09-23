@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="EnVue Telematics customer journey" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1553775282-20af80779df7?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1553775282-20af80779df7?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1553775282-20af80779df7?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1553775282-20af80779df7?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1553775282-20af80779df7?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Support headset resting beside a laptop" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/customer-journey/")); ?>">Customer Journey</a></nav>
     <span class="eyebrow eyebrow--light">How EnVue Works</span>
@@ -42,7 +42,7 @@
     <h2 class="reveal" style="--d:1">Fleet challenges solved, in our customers&rsquo; own terms.</h2>
   </div></div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Success-Stories-panorama.jpg" alt="Focal Pointe Landscaping fleet management case study" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1560264357-8d9202250f21?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1560264357-8d9202250f21?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1560264357-8d9202250f21?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1560264357-8d9202250f21?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1560264357-8d9202250f21?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Support staff working at computer workstations" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Customer Spotlight: Focal Pointe</span>
       <h2>Solving Fleet Challenges for a Growing Landscaping Leader</h2>
@@ -52,7 +52,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Lets-Discuss-Your-Fleets-Potentia-panorama.jpg" alt="Crossett Inc. fuel efficiency case study" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1622984185506-f72a9aae28f3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1622984185506-f72a9aae28f3?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1622984185506-f72a9aae28f3?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1622984185506-f72a9aae28f3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1622984185506-f72a9aae28f3?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver refueling an SUV at a US gas station with a fuel tanker nearby" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">A Success Story: Crossett, Inc.</span>
       <h2>Lower Fuel Costs with Incentives &amp; Coaching</h2>
@@ -70,7 +70,7 @@
     <p>Most fleet telematics deployments fail to deliver expected results not because the technology is wrong, but because the implementation is incomplete. Devices get installed but configuration is generic. Training happens once but does not reach every driver. Reporting is set up but nobody reviews the data. EnVue Telematics has structured our customer engagement around the four stages that actually determine whether a fleet technology investment produces measurable outcomes — and we stay accountable through all of them.</p>
   </div></div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="EnVue fleet discovery and assessment" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1560264418-c4445382edbc?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1560264418-c4445382edbc?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1560264418-c4445382edbc?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1560264418-c4445382edbc?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1560264418-c4445382edbc?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Team working at computer desks in an open office" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Stage 1</span>
       <h2>Discovery and Assessment: Understanding Your Fleet Before Recommending Anything</h2>
@@ -85,7 +85,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/gps-tracking-1-panorama-635x0-1.webp" alt="EnVue solution design configuration" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Office worker on a desk phone call" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Stage 2</span>
       <h2>Solution Design and Configuration: Built for Your Fleet, Not a Generic Template</h2>
@@ -100,7 +100,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Fleet-Management-Reports-panorama-635x0-1.webp" alt="EnVue fleet deployment training" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1551836022-4c4c79ecde51?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Two colleagues reviewing a tablet at a meeting table" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Stage 3</span>
       <h2>Deployment and Training: Implementation That Goes Past Device Installation</h2>

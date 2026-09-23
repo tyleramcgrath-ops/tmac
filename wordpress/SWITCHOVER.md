@@ -42,3 +42,10 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   LifeSaver) — corrected to match live.
 - Several AIOSEO titles on live are truncated or belong to other pages (car-advise, sensata-technologies,
   fuel-management, industries, fleet-telematics-glossary) — fix in AIOSEO.
+
+## v6.1 — photo cleanup
+- Every inner-page hero now has its own real photograph (no two pages share a hero); AI-looking and copy-pasted
+  photos inside pages were replaced with unique real photos. Homepage is unchanged.
+- Photos are free-license Unsplash images served from Unsplash's CDN (images.unsplash.com) with responsive
+  `srcset`, so nothing needs to be uploaded to the Media Library.
+- Logos, product shots, app screenshots and partner graphics are unchanged.

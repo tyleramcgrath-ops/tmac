@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/electric-fleet-truck-2026-scaled-1200x628.jpg" alt="Electric fleet management EV" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Electric vehicle charging connector plugged into a gray car" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/electric-vehicles/")); ?>">Electric Vehicles</a></nav>
     <span class="eyebrow eyebrow--light">EV Fleet Management</span>
@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Replace-ICE-Vehicles-with-EVs-and-Hybrids-panorama-635x0-1.webp" alt="Mixed EV ICE fleet management Geotab" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1704475336842-0ab3798abf0e?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1704475336842-0ab3798abf0e?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1704475336842-0ab3798abf0e?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1704475336842-0ab3798abf0e?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1704475336842-0ab3798abf0e?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Hand plugging a charging cable into a white electric vehicle" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Mixed Fleet Management</span>
       <h2>EVs and ICE Vehicles on One Unified Geotab Platform</h2>
@@ -72,7 +72,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Greenhouse-Gas-Emissions-panorama.webp" alt="Reducing fleet greenhouse gas emissions" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1704475386627-dcfcd97ed51a?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1704475386627-dcfcd97ed51a?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1704475386627-dcfcd97ed51a?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1704475386627-dcfcd97ed51a?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1704475386627-dcfcd97ed51a?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver connecting a wall-mounted EV charger beside a white car" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Greenhouse Gas Emissions</span>
       <h2>Reduce Your Carbon Footprint and Meet Greening Mandates</h2>

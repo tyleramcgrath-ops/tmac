@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/field-service-fleet-connectivity-2026.jpg" alt="Ok Alone fleet solution" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1509390726584-faaa21c8ac95?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1509390726584-faaa21c8ac95?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1509390726584-faaa21c8ac95?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1509390726584-faaa21c8ac95?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1509390726584-faaa21c8ac95?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Two utility linemen in bucket trucks working on a power pole" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo esc_url(home_url("/")); ?>">Home</a> /
@@ -37,7 +37,7 @@
   </div></div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Security-1-panorama-635x0-1.webp" alt="Ok Alone capabilities" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1759542877886-39d81e8f2eee?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1759542877886-39d81e8f2eee?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1759542877886-39d81e8f2eee?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1759542877886-39d81e8f2eee?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1759542877886-39d81e8f2eee?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Linemen working on a utility pole from a bucket truck" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Lone Worker Safety Features</span>
       <h2>Ok Alone Core Capabilities</h2>
@@ -55,7 +55,7 @@
   </div>
 
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/Integrated-Workflows-panorama-635x0-1.webp" alt="EnVue and Ok Alone integration" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1509390373685-579356742d95?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1509390373685-579356742d95?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1509390373685-579356742d95?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1509390373685-579356742d95?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1509390373685-579356742d95?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Lineman in a bucket truck working on a distribution pole" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">EnVue Integration</span>
       <h2>How EnVue and Ok Alone Work Together</h2>
@@ -71,7 +71,7 @@
   </div>
 
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Better-Protect-Your-Business-1-panorama-742x0-1.webp" alt="Ok Alone results" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1509391265514-544156f068d3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1509391265514-544156f068d3?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1509391265514-544156f068d3?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1509391265514-544156f068d3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1509391265514-544156f068d3?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Lineman in an aerial bucket using a hot stick on power lines" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Worker Safety Outcomes</span>
       <h2>Measurable Fleet Impact</h2>

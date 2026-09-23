@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2025/12/navigation-travel-and-technolo.jpg" alt="Fleet navigation and telematics technology with Verizon Connect" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1521706887145-1c0edacadb25?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1521706887145-1c0edacadb25?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1521706887145-1c0edacadb25?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1521706887145-1c0edacadb25?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1521706887145-1c0edacadb25?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Aerial view of highway traffic passing tree-lined medians" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="<?php echo esc_url(home_url("/")); ?>">Home</a> /
@@ -116,7 +116,7 @@
   </ol>
   <div class="vz-shots reveal">
     <img src="https://envuetelematics.com/wp-content/uploads/2026/02/Screenshot-2026-02-04-115025.jpg" alt="Fleet manager dashboard showing vehicle health metrics and maintenance alerts" loading="lazy">
-    <img src="https://envuetelematics.com/wp-content/uploads/2025/12/navigation-travel-and-technolo.jpg" alt="Unlock fleet efficiency: transform daily operations with telematics" loading="lazy">
+    <img src="https://images.unsplash.com/photo-1637687200791-b3295dd30343?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1637687200791-b3295dd30343?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1637687200791-b3295dd30343?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1637687200791-b3295dd30343?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1637687200791-b3295dd30343?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Red midsize pickup truck driving on a wooded dirt road" loading="lazy">
   </div>
 </div></section>
 

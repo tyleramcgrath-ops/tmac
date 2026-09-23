@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="Professional driver behind the wheel of a fleet vehicle" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1555907188-f9fd038c95d4?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1555907188-f9fd038c95d4?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1555907188-f9fd038c95d4?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1555907188-f9fd038c95d4?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1555907188-f9fd038c95d4?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Driver&#x27;s view through the windshield of semi-trucks approaching on a rural highway" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/driver-success-privacy-resource-center/")); ?>">Driver Success &amp; Privacy Resource Center</a></nav>
     <span class="eyebrow eyebrow--light">Driver Advocacy</span>
@@ -34,7 +34,7 @@
 <section class="section section--soft"><div class="wrap">
   <div class="feature-split">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Commercial truck driver on the highway" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1511561984156-dd4be4355948?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1511561984156-dd4be4355948?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1511561984156-dd4be4355948?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1511561984156-dd4be4355948?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1511561984156-dd4be4355948?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver&#x27;s hand on the steering wheel of a commercial truck" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">The Psychology of Resistance</span>
@@ -88,7 +88,7 @@
 <section class="section section--soft"><div class="wrap">
   <div class="feature-split feature-split--flip">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Fleet safety ecosystem supporting driver recruiting and retention" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1591492964751-4e24cc0f4df9?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1591492964751-4e24cc0f4df9?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1591492964751-4e24cc0f4df9?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1591492964751-4e24cc0f4df9?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1591492964751-4e24cc0f4df9?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Semi-truck cab interior with dashboard gauges and CB radio seen through the window" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">Recruiting &amp; Retention</span>

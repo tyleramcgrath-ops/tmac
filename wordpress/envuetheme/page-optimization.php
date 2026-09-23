@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Fleet Cost Optimization: Reduce Operating Costs With Data-Driven Decisions." loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1642854436838-e439e2ec396e?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1642854436838-e439e2ec396e?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1642854436838-e439e2ec396e?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1642854436838-e439e2ec396e?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1642854436838-e439e2ec396e?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Aerial view of illuminated highway interchanges winding into a city at night" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/optimization/")); ?>">Fleet Optimization</a></nav>
     <span class="eyebrow eyebrow--light">Cost Reduction Solution</span>
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="feature-split">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2025/01/Boost-Efficiency-panorama-635x0-1.webp" alt="Eliminate Underutilized Asset Costs With Data-Backed Decisions" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1666173114990-3b1a531ef82f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1666173114990-3b1a531ef82f?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1666173114990-3b1a531ef82f?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1666173114990-3b1a531ef82f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1666173114990-3b1a531ef82f?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Row of long-nose semi-truck tractors parked in a yard" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Fleet Right-Sizing and Asset Optimization</span><h2>Eliminate Underutilized Asset Costs With Data-Backed Decisions</h2><p>Every underutilized vehicle in the fleet carries full carrying costs — payments, insurance, registration, and maintenance — regardless of how little it is used. Geotab utilization reporting makes these costs visible by showing exactly how actively each vehicle is being used versus sitting idle. For large fleets, eliminating even 5-10% of chronically underutilized vehicles can produce annual savings exceeding six figures while maintaining full operational capacity.</p>
       <ul class="check-list">        <li>Vehicle utilization reporting identifying chronically underused assets for disposal or redeployment</li>

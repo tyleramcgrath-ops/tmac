@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/08/connected-fleet-solutions-hero-scaled.png" alt="Connected fleet solutions with Geotab, GO Focus Plus, Bosch, Predictive Coach and Magtec" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1772440223098-cc23f6f01209?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1772440223098-cc23f6f01209?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1772440223098-cc23f6f01209?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1772440223098-cc23f6f01209?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1772440223098-cc23f6f01209?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Aerial view of parked vans and cars in rows on a lot" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/connected-fleet-solutions/")); ?>">Connected Fleet Solutions</a></nav>
     <span class="eyebrow eyebrow--light">Connected Fleet Solutions</span>

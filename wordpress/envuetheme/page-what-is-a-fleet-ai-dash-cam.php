@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="Driver in a fleet vehicle equipped with an AI dash cam" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1468510634867-6747418867dc?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1468510634867-6747418867dc?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1468510634867-6747418867dc?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1468510634867-6747418867dc?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1468510634867-6747418867dc?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Dashboard and windshield view of a highway at dusk" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/resources/")); ?>">Resources</a> / <a href="<?php echo esc_url(home_url("/resources/what-is-a-fleet-ai-dash-cam/")); ?>">What Is a Fleet AI Dash Cam?</a></nav>
     <span class="eyebrow eyebrow--light">AI Dash Cam Guide</span>
@@ -46,7 +46,7 @@
 <section class="section"><div class="wrap">
   <div class="feature-split">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Edge AI processing on a fleet dash cam" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1672954766589-49f0dd0e106f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1672954766589-49f0dd0e106f?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1672954766589-49f0dd0e106f?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1672954766589-49f0dd0e106f?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1672954766589-49f0dd0e106f?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Group of workers in hard hats and hi-vis vests on site" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">Technical Architecture</span>

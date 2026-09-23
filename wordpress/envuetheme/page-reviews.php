@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2024/12/many-more.jpg" alt="EnVue Telematics customers across trucking, utilities, and construction" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1744843806143-42f4599e29fe?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1744843806143-42f4599e29fe?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1744843806143-42f4599e29fe?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1744843806143-42f4599e29fe?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1744843806143-42f4599e29fe?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Handshake outdoors against an open landscape" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/reviews/")); ?>">Reviews</a></nav>
     <span class="eyebrow eyebrow--light">Reviews</span>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2026/06/smarter-fleet-management-hd-scaled.jpg" alt="Fleet management video content from EnVue Telematics" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1598569125549-c6be1ca0f902?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1598569125549-c6be1ca0f902?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1598569125549-c6be1ca0f902?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1598569125549-c6be1ca0f902?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1598569125549-c6be1ca0f902?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Driver&#x27;s view of a curving two-lane road through dry hills" loading="lazy">
     </div>
   </div>
 </div></section>
@@ -52,7 +52,7 @@
 <section class="section"><div class="wrap">
   <div class="feature-split">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Fleet trucks generating high-fidelity telematics data" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1538688273852-e29027c0c176?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1538688273852-e29027c0c176?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1538688273852-e29027c0c176?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1538688273852-e29027c0c176?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1538688273852-e29027c0c176?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Person working on a laptop with an analytics dashboard" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">&lsquo;High-Fidelity&rsquo; Feedback</span>

@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Commercial truck on the highway protected by synchronized video telematics" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1636652966850-5ac4d02370e9?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1636652966850-5ac4d02370e9?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1636652966850-5ac4d02370e9?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1636652966850-5ac4d02370e9?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1636652966850-5ac4d02370e9?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Stone columns of a courthouse facade" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/the-exoneration-hub-real-stories-real-evidence/")); ?>">The Exoneration Hub</a></nav>
     <span class="eyebrow eyebrow--light">Real Stories, Real Evidence</span>
@@ -37,7 +37,7 @@
 <section class="section section--soft"><div class="wrap">
   <div class="feature-split">
     <div class="feature-split-media">
-      <img src="https://envuetelematics.com/wp-content/uploads/2026/07/person-inside-vehicle-holding.jpg" alt="Commercial driver behind the wheel" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1640236889868-97b4708793d0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1640236889868-97b4708793d0?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1640236889868-97b4708793d0?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1640236889868-97b4708793d0?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1640236889868-97b4708793d0?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Orange traffic cone beside a ladder on a wet street" loading="lazy">
     </div>
     <div class="reveal">
       <span class="eyebrow">The Problem</span>

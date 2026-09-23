@@ -15,7 +15,7 @@ $envue_listing = wp_parse_args( $envue_listing ?? [], [
     'lede'     => 'Company news, partnerships, award announcements, and industry updates from EnVue Telematics — the Geotab Elite Specialized Partner serving commercial fleets across the United States and Mexico.',
     'grid_eb'  => 'Latest News',
     'grid_h2'  => 'Announcements and updates.',
-    'hero_img' => 'https://envuetelematics.com/wp-content/uploads/2025/01/EnVue-Telematics-Offers-Digital-Fleet-Resource-768x512.jpg',
+    'hero_img' => 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1920&q=72',
 ] );
 
 get_header();

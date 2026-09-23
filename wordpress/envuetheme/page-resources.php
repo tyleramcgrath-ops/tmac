@@ -2,7 +2,7 @@
 <main id="main">
 
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="Fleet management resources and guides" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1573166364839-1bfe9196c23e?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1573166364839-1bfe9196c23e?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1573166364839-1bfe9196c23e?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1573166364839-1bfe9196c23e?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1573166364839-1bfe9196c23e?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Team meeting at a long table in a modern conference room" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/resources/")); ?>">Resources</a></nav>
     <span class="eyebrow eyebrow--light">Fleet Management Resources</span>
@@ -85,7 +85,7 @@
     <span class="eyebrow reveal">Featured Resource</span>
     <div class="resources-featured-card reveal" style="--d:1">
       <div class="resources-featured-img">
-        <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="GPS fleet tracking guide" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1625217527288-93919c99650a?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1625217527288-93919c99650a?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1625217527288-93919c99650a?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1625217527288-93919c99650a?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1625217527288-93919c99650a?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Hand holding a smartphone with a map app" loading="lazy">
         <span class="resource-category-badge">GPS Tracking</span>
       </div>
       <div class="resources-featured-body">
@@ -116,7 +116,7 @@
 
       <article class="resource-card reveal" style="--d:1">
         <div class="resource-card-img">
-          <img src="https://envuetelematics.com/wp-content/uploads/2024/12/construction.jpg" alt="Fleet safety and AI dash cam guide" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1764428950296-be81c8decb97?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1764428950296-be81c8decb97?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1764428950296-be81c8decb97?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1764428950296-be81c8decb97?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1764428950296-be81c8decb97?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="View through a rainy windshield at blurred traffic lights" loading="lazy">
           <span class="resource-category-badge">Fleet Safety</span>
         </div>
         <div class="resource-card-body">
@@ -134,7 +134,7 @@
 
       <article class="resource-card reveal" style="--d:2" id="eld-compliance">
         <div class="resource-card-img">
-          <img src="https://envuetelematics.com/wp-content/uploads/2025/01/fleet-management-digital-tools.jpg" alt="ELD compliance guide for commercial fleets" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1761558794306-466448dab4bc?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1761558794306-466448dab4bc?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1761558794306-466448dab4bc?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1761558794306-466448dab4bc?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1761558794306-466448dab4bc?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Hand with pen over a clipboard during an inspection" loading="lazy">
           <span class="resource-category-badge">ELD &amp; Compliance</span>
         </div>
         <div class="resource-card-body">
@@ -152,7 +152,7 @@
 
       <article class="resource-card reveal" style="--d:3" id="fuel-maintenance">
         <div class="resource-card-img">
-          <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Field.jpg" alt="Fuel management and fleet maintenance guide" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1599256630445-67b5772b1204?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1599256630445-67b5772b1204?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1599256630445-67b5772b1204?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1599256630445-67b5772b1204?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1599256630445-67b5772b1204?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Wrenches and hand tools hanging on a garage workshop wall" loading="lazy">
           <span class="resource-category-badge">Fuel &amp; Maintenance</span>
         </div>
         <div class="resource-card-body">
@@ -170,7 +170,7 @@
 
       <article class="resource-card reveal" id="industry-guides">
         <div class="resource-card-img">
-          <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Trucking.jpg" alt="Industry fleet management guides" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1542744173-05336fcc7ad4?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Person reviewing data charts on a laptop" loading="lazy">
           <span class="resource-category-badge">Industry Guides</span>
         </div>
         <div class="resource-card-body">
@@ -188,7 +188,7 @@
 
       <article class="resource-card reveal" style="--d:1" id="technology">
         <div class="resource-card-img">
-          <img src="https://envuetelematics.com/wp-content/uploads/2024/12/Award-Winning-Geotab.jpg" alt="Geotab platform and technology guides" loading="lazy" style="object-fit:contain;background:#f8f9fb;padding:2rem;">
+          <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Laptop displaying data visualizations" loading="lazy" style="object-fit:contain;background:#f8f9fb;padding:2rem;">
           <span class="resource-category-badge">Technology</span>
         </div>
         <div class="resource-card-body">
@@ -206,7 +206,7 @@
 
       <article class="resource-card reveal" style="--d:2">
         <div class="resource-card-img">
-          <img src="https://envuetelematics.com/wp-content/uploads/2024/12/many-more.jpg" alt="Fleet sustainability and EV planning guide" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1646753020826-c518face72ad?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1646753020826-c518face72ad?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1646753020826-c518face72ad?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1646753020826-c518face72ad?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1646753020826-c518face72ad?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Person holding an EV charging connector next to a white car" loading="lazy">
           <span class="resource-category-badge">EV &amp; Sustainability</span>
         </div>
         <div class="resource-card-body">

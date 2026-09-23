@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 <main id="main">
 <section class="page-hero">
-  <img class="page-hero-bg" src="https://envuetelematics.com/wp-content/uploads/2026/03/field-service-fleet-connectivity-2026.jpg" alt="Fleet equipment and asset tracking" loading="eager" fetchpriority="high">
+  <img class="page-hero-bg" src="https://images.unsplash.com/photo-1637669886956-bf0e1cc4f0d3?auto=format&amp;fit=crop&amp;w=1920&amp;q=72" srcset="https://images.unsplash.com/photo-1637669886956-bf0e1cc4f0d3?auto=format&amp;fit=crop&amp;w=768&amp;q=72 768w, https://images.unsplash.com/photo-1637669886956-bf0e1cc4f0d3?auto=format&amp;fit=crop&amp;w=1280&amp;q=72 1280w, https://images.unsplash.com/photo-1637669886956-bf0e1cc4f0d3?auto=format&amp;fit=crop&amp;w=1920&amp;q=72 1920w, https://images.unsplash.com/photo-1637669886956-bf0e1cc4f0d3?auto=format&amp;fit=crop&amp;w=2560&amp;q=72 2560w" sizes="100vw" alt="Excavator working on a misty morning job site" loading="eager" fetchpriority="high">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url(home_url("/")); ?>">Home</a> / <a href="<?php echo esc_url(home_url("/solutions/")); ?>">Solutions</a> / <a href="<?php echo esc_url(home_url("/equipment-management/")); ?>">Equipment Management</a></nav>
     <span class="eyebrow eyebrow--light">Asset Visibility Solution</span>
@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/kuala-lumpur-malaysia-december-9-600nw-772402810.webp" alt="Non-powered asset trailer tracking" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1668597388138-9d1dae099182?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1668597388138-9d1dae099182?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1668597388138-9d1dae099182?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1668597388138-9d1dae099182?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1668597388138-9d1dae099182?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Semi-truck tractors parked in a row, seen from the front" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Non-Powered Asset Tracking</span>
       <h2>Track Trailers, Generators, and Equipment Without Engine Connection</h2>
@@ -89,7 +89,7 @@
     </div>
   </div>
   <div class="feature-split feature-split--flip">
-    <div class="feature-split-media"><img src="https://envuetelematics.com/wp-content/uploads/2024/12/gps-tracking-1-panorama-635x0-1.webp" alt="Fleet asset utilization reporting" loading="lazy"></div>
+    <div class="feature-split-media"><img src="https://images.unsplash.com/photo-1740292228634-f96498e32f27?auto=format&amp;fit=crop&amp;w=1200&amp;q=72" srcset="https://images.unsplash.com/photo-1740292228634-f96498e32f27?auto=format&amp;fit=crop&amp;w=600&amp;q=72 600w, https://images.unsplash.com/photo-1740292228634-f96498e32f27?auto=format&amp;fit=crop&amp;w=900&amp;q=72 900w, https://images.unsplash.com/photo-1740292228634-f96498e32f27?auto=format&amp;fit=crop&amp;w=1200&amp;q=72 1200w, https://images.unsplash.com/photo-1740292228634-f96498e32f27?auto=format&amp;fit=crop&amp;w=1600&amp;q=72 1600w" sizes="(max-width: 960px) 100vw, 50vw" alt="Semi-trucks parked across a large lot with hills behind" loading="lazy"></div>
     <div class="reveal">
       <span class="eyebrow">Utilization and Optimization</span>
       <h2>Make Data-Driven Decisions About Your Asset Inventory</h2>
