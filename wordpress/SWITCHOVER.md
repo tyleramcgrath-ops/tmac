@@ -104,3 +104,15 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 8. Remove the duplicate google-site-verification tag (it's in AIOSEO Webmaster Tools and in a header-code snippet).
 9. Posts → Categories: rename the "uncategorized" slug to general-fleet-insights, and add a 301 from the old URL in AIOSEO Redirects.
 10. Optional: create a real WP page with slug "solutions" so it appears in the sitemap.
+
+## v6.8 — articles
+- Header: social icons now sit to the right of "Get a Demo".
+- Blog posts / news articles redesigned:
+  - reading-progress bar across the top of the screen while you scroll;
+  - sticky share rail (LinkedIn, Facebook, X, email, copy link) beside the article on desktop, plus a share box at the end;
+  - right sidebar: free-assessment CTA, recent articles with thumbnails, follow links, and a sticky "In this article"
+    contents list (built from the article's H2 headings, highlights the section you're reading) with a Get a Demo button;
+  - byline, reading time, "Updated" date when a post was edited later, tags, an EnVue author box, and a
+    "More fleet insights" row of 3 related articles from the same category;
+  - better article typography (larger intro paragraph, accent bars on headings, styled quotes, lists and tables).
+- On tablets/phones the sidebar drops below the article and the share rail becomes the end-of-article share box.

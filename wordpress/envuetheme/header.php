@@ -117,9 +117,9 @@
     </nav>
 
     <div class="header-actions">
-      <?php echo envue_social_links( 'social-links--header' ); ?>
       <a class="header-phone" href="tel:8002011169">(800) 201-1169</a>
       <a class="button button-primary" href="<?php echo esc_url(home_url('/get-in-touch/')); ?>">Get a Demo</a>
+      <?php echo envue_social_links( 'social-links--header' ); ?>
       <button class="mobile-toggle" id="mobileToggle" type="button" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
         <span></span><span></span>
       </button>

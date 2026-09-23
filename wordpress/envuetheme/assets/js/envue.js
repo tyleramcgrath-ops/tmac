@@ -395,3 +395,66 @@ document.querySelectorAll('[data-slider]').forEach(function (slider) {
   window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(buildDots, 120); });
   buildDots();
 });
+
+/* ── Article: reading progress, contents, copy link ────────────── */
+(function () {
+  const body = document.getElementById('post-body');
+  if (!body) return;
+
+  const bar = document.querySelector('.read-progress span');
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = body.getBoundingClientRect();
+    const total = r.height - window.innerHeight * 0.6;
+    const p = Math.min(1, Math.max(0, (-r.top + window.innerHeight * 0.2) / (total > 0 ? total : 1)));
+    if (bar) bar.style.transform = 'scaleX(' + p + ')';
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const toc = document.querySelector('.side-toc');
+  const heads = Array.from(body.querySelectorAll('h2')).filter(h => h.textContent.trim());
+  if (toc && heads.length >= 3) {
+    const list = toc.querySelector('ol');
+    const used = {};
+    heads.forEach((h, i) => {
+      if (!h.id) {
+        let id = h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'section-' + i;
+        while (used[id] || document.getElementById(id)) id += '-' + i;
+        h.id = id;
+      }
+      used[h.id] = true;
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.textContent = h.textContent.trim();
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    toc.hidden = false;
+    const links = Array.from(list.querySelectorAll('a'));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    heads.forEach(h => io.observe(h));
+  }
+
+  document.querySelectorAll('.share-btn--copy').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-copy');
+      const msg = btn.querySelector('.share-copied');
+      const done = () => { if (msg) { msg.textContent = 'Link copied'; setTimeout(() => { msg.textContent = ''; }, 1800); } };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(url).then(done, () => window.prompt('Copy this link:', url));
+      } else {
+        window.prompt('Copy this link:', url);
+      }
+    });
+  });
+})();
