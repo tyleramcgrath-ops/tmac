@@ -396,6 +396,8 @@ export const SiteSchema = z
       .object({
         topbar: z.string().min(1).max(120).optional(),
         cta: z.object({ label: z.string().min(1).max(40), href }).strict().optional(),
+        // The Call / Directions bar pinned to the bottom on phones. On unless false.
+        callBar: z.boolean().optional(),
       })
       .strict()
       .optional(),

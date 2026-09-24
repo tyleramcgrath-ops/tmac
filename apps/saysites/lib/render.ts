@@ -37,7 +37,8 @@ export interface RenderedPage {
 
 export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page]): RenderedPage {
   // The header's call-to-action is a button even when the page has none.
-  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : [])])
+  const bar = callBar(site)
+  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(bar ? ['callbar'] : [])])
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
   const jsonLd = structuredData(site, page, allPages)
@@ -70,6 +71,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     renderHeader(site, page),
     `<main>${page.body.map(renderElement).join('')}</main>`,
     renderFooter(site),
+    bar,
   ].join('')
 
   const html = `<!doctype html><html lang="${esc(site.language)}"><head>${head.join('')}</head><body>${body}</body></html>`
@@ -242,6 +244,23 @@ function renderHeader(site: Site, page: Page): string {
   return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
 }
 
+// On phones, the two things local customers want most, one thumb away:
+// call, and either the header's button (book, quote) or directions.
+function callBar(site: Site): string {
+  const phone = site.business.phone
+  if (!phone || site.header?.callBar === false) return ''
+  const cta = site.header?.cta
+  const a = site.business.address
+  const second =
+    cta && !cta.href.startsWith('tel:')
+      ? `<a class="scb-go" href="${esc(cta.href)}">${esc(cta.label)}</a>`
+      : a
+        ? `<a class="scb-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=${esc(encodeURIComponent(`${a.street}, ${a.city}, ${a.region} ${a.postalCode}`))}" rel="noopener">Directions</a>`
+        : ''
+  const icon = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>'
+  return `<nav class="scb" aria-label="Quick contact"><a class="scb-call" href="${esc(tel(phone))}">${icon}Call</a>${second}</nav>`
+}
+
 // Days in schema.org openingHours order, for the footer's hours list.
 const DAY: Record<string, string> = { Mo: 'Mon', Tu: 'Tue', We: 'Wed', Th: 'Thu', Fr: 'Fri', Sa: 'Sat', Su: 'Sun' }
 
@@ -385,6 +404,12 @@ function widgetCss(used: Set<string>): string {
     css +=
       `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span{display:none}}`
+  if (used.has('callbar'))
+    css +=
+      `.scb{display:none}@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){body{padding-bottom:76px}` +
+      `.scb{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--c-background);border-top:1px solid color-mix(in srgb,var(--c-text) 12%,transparent)}` +
+      `.scb a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:var(--rb);font-weight:700;text-decoration:none}` +
+      `.scb-call{background:var(--c-primary);color:var(--c-background)}.scb-go{border:1.5px solid color-mix(in srgb,var(--c-text) 25%,transparent);color:var(--c-text)}}`
   if (used.has('crop')) css += `img.crop{width:100%;height:auto;object-fit:cover}`
   if (used.has('bg'))
     css +=

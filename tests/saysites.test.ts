@@ -197,7 +197,8 @@ describe('SaySites speed gate', () => {
   it('keeps the home page small', () => {
     const result = checkSpeed(renderPage(sampleSite, sampleHome, samplePages))
     expect(result.htmlBytes).toBeLessThan(15_000)
-    expect(result.cssBytes).toBeLessThan(5_000)
+    // Well under the 30KB budget; this catches accidental bloat.
+    expect(result.cssBytes).toBeLessThan(6_000)
   })
 
   it('fails on scripts, external stylesheets and too many eager images', () => {
@@ -799,5 +800,20 @@ describe('SaySites: share images', async () => {
     const html = renderPage(site, home, pages).html
     expect(html).toContain('<meta name="twitter:card" content="summary_large_image">')
     expect(html).toContain('<meta property="og:image" content="https://images.unsplash.com/')
+  })
+})
+
+describe('SaySites: call bar on phones', () => {
+  const make = () => buildStarterSite({ name: 'Bar Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'bar-co')
+  it('shows Call when there is a phone number, and can be turned off', () => {
+    const { site, pages } = make()
+    const home = pages.find((p) => p.slug === '')!
+    const withPhone = { ...site, business: { ...site.business, phone: '(555) 010-0199' } }
+    const html = renderPage(withPhone, home, pages).html
+    expect(html).toMatch(/<nav class="scb" aria-label="Quick contact"><a class="scb-call" href="tel:[^"]+">/)
+    expect(checkSpeed(renderPage(withPhone, home, pages)).pass).toBe(true)
+    expect(renderPage({ ...withPhone, business: { ...withPhone.business, phone: undefined } }, home, pages).html).not.toContain('class="scb"')
+    const off = SiteSchema.parse({ ...withPhone, header: { ...withPhone.header, callBar: false } })
+    expect(renderPage(off, home, pages).html).not.toContain('class="scb"')
   })
 })

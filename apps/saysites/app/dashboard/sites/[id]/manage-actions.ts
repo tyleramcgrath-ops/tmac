@@ -89,6 +89,7 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
       header: {
         ...(topbar ? { topbar } : {}),
         ...(ctaLabel && s.header?.cta ? { cta: { ...s.header.cta, label: ctaLabel } } : s.header?.cta ? { cta: s.header.cta } : {}),
+        ...(form.get('callBar') ? {} : { callBar: false }),
       },
       tagline: tagline || undefined,
       updatedAt: new Date().toISOString(),
