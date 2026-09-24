@@ -35,3 +35,4 @@
 	.aisa-table thead { display: none; }
 	.aisa-table tr, .aisa-table td { display: block; width: auto !important; }
 }
+.aisa-list { list-style: disc; margin-left: 20px; }

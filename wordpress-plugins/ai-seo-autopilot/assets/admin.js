@@ -384,7 +384,46 @@
 		}
 	}
 
+	/* ---------------- Import / Export tab ---------------- */
+
+	function initExchange() {
+		var exp = $('#aisa-export');
+		if (!exp) { return; }
+		exp.addEventListener('click', function () {
+			var s = $('#aisa-export-status');
+			s.textContent = 'Collecting pages…';
+			post('export').then(function (data) {
+				var blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
+				var a = document.createElement('a');
+				a.href = URL.createObjectURL(blob);
+				a.download = 'site-content-for-claude.json';
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				s.textContent = data.items.length + ' pages exported.';
+			}, function (e) { s.textContent = e.message; });
+		});
+		$('#aisa-import').addEventListener('click', function () {
+			var file = $('#aisa-import-file').files[0];
+			var out = $('#aisa-import-report');
+			if (!file) { out.textContent = 'Choose the file first.'; return; }
+			out.textContent = 'Importing…';
+			file.text().then(function (text) {
+				return post('import', { payload: text, apply: $('#aisa-import-apply').checked ? '1' : '0' });
+			}).then(function (r) {
+				var ok = r.items.filter(function (i) { return i.result === 'stored' || i.result === 'applied'; }).length;
+				var bad = r.items.filter(function (i) { return i.result.indexOf('error') === 0; });
+				out.innerHTML = '<div class="notice notice-success inline"><p>' + ok + ' page(s) imported' +
+					(r.profile ? ', plus the site profile' : '') + '. <a href="?page=ai-seo-autopilot">Review them on the Autopilot tab.</a></p>' +
+					(bad.length ? '<p>' + bad.length + ' problem(s): ' + bad.map(function (b) { return esc(b.type + ' ' + b.id + ' ' + b.result); }).join('; ') + '</p>' : '') + '</div>';
+			}, function (e) {
+				out.innerHTML = '<div class="notice notice-error inline"><p>' + esc(e.message) + '</p></div>';
+			});
+		});
+	}
+
 	document.addEventListener('DOMContentLoaded', function () {
+		initExchange();
 		initAutopilot();
 		initProfile();
 		initMisc();

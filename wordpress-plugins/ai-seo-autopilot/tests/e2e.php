@@ -175,6 +175,46 @@ $fit = AISA_Generator::fit( str_repeat( 'word ', 50 ), 60 );
 aisa_t( mb_strlen( $fit ) <= 60 && 'word' === substr( $fit, -4 ), 'long text is cut at a word boundary', $fit );
 wp_delete_post( $long_id, true );
 
+WP_CLI::line( 'Export / import (no API key)' );
+AISA_Settings::save( [ 'api_key' => '', 'clear_api_key' => 1, 'mode' => 'overwrite' ] );
+$export = AISA_Exchange::export();
+aisa_t( 'aisa-export/1' === $export['format'] && $export['total'] === count( $export['items'] ), 'export lists every page' );
+$wh = null;
+foreach ( $export['items'] as $it ) {
+	if ( $it['id'] === $ids['Teeth Whitening'] ) {
+		$wh = $it;
+	}
+}
+aisa_t( $wh && false !== strpos( $wh['text'], 'whitening' ) && is_array( $wh['current'] ), 'export includes page text and current SEO' );
+delete_option( 'aisa_test_requests' );
+$report = AISA_Exchange::import(
+	[
+		'format' => 'aisa-import/1',
+		'items'  => [
+			[
+				'type'            => 'post',
+				'id'              => $ids['Sample Page'],
+				'title'           => 'Imported Whitening Title | Bright Smile',
+				'description'     => 'Imported description written in a Claude chat, long enough to be a proper meta description for this whitening page. Book today.',
+				'focus_keyphrase' => 'imported whitening',
+				'og_title'        => '',
+				'schema'          => [ 'page_type' => 'WebPage', 'article_type' => 'none', 'service' => [ 'name' => 'Imported Service' ], 'faqs' => [] ],
+			],
+			[ 'type' => 'post', 'id' => 999999, 'title' => 'Nope' ],
+		],
+	]
+);
+aisa_t( 'stored' === $report['items'][0]['result'] && 0 === strpos( $report['items'][1]['result'], 'error' ), 'import stores valid items and rejects unknown ids' );
+aisa_t( ! get_option( 'aisa_test_requests' ), 'import makes no Claude API calls' );
+aisa_t( 'Imported Whitening Title | Bright Smile' !== aisa_seo( $ids['Sample Page'] )['title'], 'import without apply does not touch AIOSEO yet' );
+$prop = AISA_Jobs::get_proposal( 'post', $ids['Sample Page'] );
+aisa_t( 'import' === $prop['model'] && ! isset( $prop['fields']['og_title'] ) && 'Imported Service' === $prop['schema']['service']['name'], 'blank fields are ignored and service schema is kept' );
+AISA_Jobs::apply( 'post', $ids['Sample Page'] );
+aisa_t( 'Imported Whitening Title | Bright Smile' === aisa_seo( $ids['Sample Page'] )['title'], 'applying an imported proposal writes it to AIOSEO without an API key' );
+$report = AISA_Exchange::import( [ 'apply' => true, 'items' => [ [ 'type' => 'post', 'id' => $ids['Contact'], 'title' => 'Imported Contact Title' ] ] ] );
+aisa_t( 'applied' === $report['items'][0]['result'] && 'Imported Contact Title' === aisa_seo( $ids['Contact'] )['title'], 'import with apply writes straight to AIOSEO' );
+AISA_Settings::save( [ 'mode' => 'fill_empty' ] );
+
 WP_CLI::line( '' );
 if ( $GLOBALS['aisa_failures'] ) {
 	WP_CLI::error( $GLOBALS['aisa_failures'] . ' check(s) failed.' );

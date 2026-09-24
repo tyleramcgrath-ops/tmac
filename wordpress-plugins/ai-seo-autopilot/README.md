@@ -29,6 +29,21 @@ Pro-only items are skipped on Lite and switch on by themselves after an upgrade.
    define( 'AISA_ANTHROPIC_API_KEY', 'sk-ant-...' );
    ```
 
+## No API key? Let Claude write it in a chat
+
+You don't need Anthropic API credits. **SEO Autopilot → Import / Export** offers two ways
+to have Claude write the SEO in a normal Claude chat, on your Claude plan:
+
+1. **Connect.** Create an Application Password under **Users → Profile**, then give Claude
+   your site address, your username and that password. Claude reads your pages through
+   `/wp-json/aisa/v1/export` and sends the SEO to `/wp-json/aisa/v1/import`. Both endpoints
+   need an administrator's credentials. Revoke the password when you're done.
+2. **Swap files.** Click **Download site content**, attach the file in your Claude chat, and
+   upload the file Claude gives back with **Import SEO file**.
+
+Either way, the SEO arrives as proposals on the Autopilot tab. You review them and click
+Apply, with the usual backups and restore. Tick **Apply immediately** to skip the review.
+
 ## Use
 
 **SEO Autopilot → Autopilot → Run Autopilot.**

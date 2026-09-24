@@ -49,6 +49,7 @@ define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
 define( 'AUTOMATIC_UPDATER_DISABLED', true );
+define( 'WP_ENVIRONMENT_TYPE', 'local' );
 define( 'WP_HOME', 'http://localhost:' . getenv( 'AISA_TEST_PORT' ) );
 define( 'WP_SITEURL', 'http://localhost:' . getenv( 'AISA_TEST_PORT' ) );
 define( 'WP_HTTP_BLOCK_EXTERNAL', true );
@@ -76,6 +77,15 @@ SERVER=$!
 trap 'kill $SERVER 2>/dev/null || true' EXIT
 sleep 2
 php "$PLUGIN_DIR/tests/frontend-check.php" "http://localhost:$PORT/?page_id=$WHITEN_ID" "http://localhost:$PORT/?p=$POST_ID"
+
+echo "== REST API with an application password"
+APP_PASS=$($WP eval 'echo WP_Application_Passwords::create_new_application_password( 1, [ "name" => "test" ] )[0];' 2>/dev/null)
+code=$(curl -s -o "$WORK/export.json" -w '%{http_code}' -u "admin:$APP_PASS" "http://localhost:$PORT/?rest_route=/aisa/v1/export&limit=2")
+php -r '$d=json_decode(file_get_contents($argv[1]),true); exit(($argv[2]==="200" && $d["format"]==="aisa-export/1" && count($d["items"])===2) ? 0 : 1);' "$WORK/export.json" "$code" && echo "  ok   export over REST ($code)" || { echo "  FAIL export over REST ($code)"; exit 1; }
+code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:$PORT/?rest_route=/aisa/v1/export")
+[ "$code" = "401" ] && echo "  ok   export refuses anonymous requests ($code)" || { echo "  FAIL anonymous export returned $code"; exit 1; }
+code=$(curl -s -o "$WORK/import.json" -w '%{http_code}' -u "admin:$APP_PASS" -H 'Content-Type: application/json' -d "{\"items\":[{\"type\":\"post\",\"id\":$POST_ID,\"title\":\"REST Imported Title\"}]}" "http://localhost:$PORT/?rest_route=/aisa/v1/import")
+grep -q '"stored"' "$WORK/import.json" && echo "  ok   import over REST ($code)" || { echo "  FAIL import over REST ($code): $(cat "$WORK/import.json")"; exit 1; }
 
 if grep -E "PHP (Fatal|Warning|Notice|Deprecated).*ai-seo-autopilot" "$SITE/wp-content/debug.log" 2>/dev/null; then
 	echo "PHP errors from the plugin in debug.log" && exit 1

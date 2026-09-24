@@ -18,7 +18,7 @@ class AISA_Admin {
 		add_action( 'admin_post_aisa_save_settings', [ __CLASS__, 'save_settings' ] );
 		add_filter( 'plugin_action_links_' . plugin_basename( AISA_FILE ), [ __CLASS__, 'action_links' ] );
 
-		foreach ( [ 'targets', 'generate', 'apply', 'restore', 'edit', 'profile_generate', 'profile_apply', 'profile_restore', 'health_run', 'test_api' ] as $action ) {
+		foreach ( [ 'targets', 'generate', 'apply', 'restore', 'edit', 'profile_generate', 'profile_apply', 'profile_restore', 'health_run', 'test_api', 'export', 'import' ] as $action ) {
 			add_action( 'wp_ajax_aisa_' . $action, [ __CLASS__, 'ajax_' . $action ] );
 		}
 	}
@@ -64,7 +64,7 @@ class AISA_Admin {
 				'i18n'           => [
 					'confirmApplyAll' => __( 'Write the proposed SEO to every generated page now? Each page keeps a backup you can restore.', 'ai-seo-autopilot' ),
 					'confirmRestore'  => __( 'Restore the previous SEO values for this item?', 'ai-seo-autopilot' ),
-					'noKey'           => __( 'Add your Anthropic API key on the Settings tab first.', 'ai-seo-autopilot' ),
+					'noKey'           => __( 'Add your Anthropic API key on the Settings tab first, or use the Import / Export tab to have Claude write the SEO in a chat with no API key.', 'ai-seo-autopilot' ),
 				],
 			]
 		);
@@ -82,6 +82,7 @@ class AISA_Admin {
 		$tabs = [
 			'autopilot' => __( 'Autopilot', 'ai-seo-autopilot' ),
 			'profile'   => __( 'Site profile', 'ai-seo-autopilot' ),
+			'exchange'  => __( 'Import / Export', 'ai-seo-autopilot' ),
 			'settings'  => __( 'Settings', 'ai-seo-autopilot' ),
 			'health'    => __( 'Health', 'ai-seo-autopilot' ),
 		];
@@ -255,6 +256,41 @@ class AISA_Admin {
 			echo '<p class="description">' . esc_html( $help ) . '</p>';
 		}
 		echo '</td></tr>';
+	}
+
+	private static function tab_exchange() {
+		$user = wp_get_current_user();
+		?>
+		<div class="aisa-card">
+			<h2><?php esc_html_e( 'Write the SEO without an API key', 'ai-seo-autopilot' ); ?></h2>
+			<p><?php esc_html_e( 'Claude can write your SEO in a normal Claude chat, using your Claude plan instead of Anthropic API credits. Use either option below. Everything imported lands as proposals on the Autopilot tab, where you review it and click Apply, with the usual backups and restore.', 'ai-seo-autopilot' ); ?></p>
+		</div>
+
+		<div class="aisa-card">
+			<h2><?php esc_html_e( 'Option 1: let Claude connect to this site', 'ai-seo-autopilot' ); ?></h2>
+			<ol>
+				<li><?php echo wp_kses_post( sprintf( __( 'Go to <a href="%s">Users → Profile</a>, scroll to <strong>Application Passwords</strong>, type the name "Claude SEO" and click <strong>Add New Application Password</strong>.', 'ai-seo-autopilot' ), esc_url( admin_url( 'profile.php#application-passwords-section' ) ) ) ); ?></li>
+				<li><?php esc_html_e( 'Give Claude these three things:', 'ai-seo-autopilot' ); ?>
+					<ul class="aisa-list">
+						<li><?php echo esc_html__( 'Site address:', 'ai-seo-autopilot' ) . ' <code>' . esc_html( home_url( '/' ) ) . '</code>'; ?></li>
+						<li><?php echo esc_html__( 'Username:', 'ai-seo-autopilot' ) . ' <code>' . esc_html( $user->user_login ) . '</code>'; ?></li>
+						<li><?php esc_html_e( 'The application password WordPress just showed you.', 'ai-seo-autopilot' ); ?></li>
+					</ul>
+				</li>
+				<li><?php esc_html_e( 'When Claude is done, revoke the application password on the same screen. It is separate from your login password and cannot be used to sign in to wp-admin, but while it exists it has your account\'s access to the WordPress API, so treat it like a password.', 'ai-seo-autopilot' ); ?></li>
+			</ol>
+			<p class="description"><?php echo esc_html__( 'Endpoints Claude uses:', 'ai-seo-autopilot' ) . ' <code>' . esc_html( rest_url( AISA_Exchange::NS . '/export' ) ) . '</code>, <code>' . esc_html( rest_url( AISA_Exchange::NS . '/import' ) ) . '</code>'; ?></p>
+		</div>
+
+		<div class="aisa-card">
+			<h2><?php esc_html_e( 'Option 2: swap files', 'ai-seo-autopilot' ); ?></h2>
+			<p><strong>1.</strong> <button class="button" id="aisa-export"><?php esc_html_e( 'Download site content (.json)', 'ai-seo-autopilot' ); ?></button> <span class="aisa-inline-status" id="aisa-export-status"></span></p>
+			<p class="description"><?php esc_html_e( 'Contains your page titles, addresses, current SEO and page text. Attach it in your Claude chat and ask for an AI SEO Autopilot import file.', 'ai-seo-autopilot' ); ?></p>
+			<p><strong>2.</strong> <input type="file" id="aisa-import-file" accept=".json,application/json"> <label><input type="checkbox" id="aisa-import-apply"> <?php esc_html_e( 'Apply to All in One SEO immediately (otherwise review first)', 'ai-seo-autopilot' ); ?></label></p>
+			<p><button class="button button-primary" id="aisa-import"><?php esc_html_e( 'Import SEO file', 'ai-seo-autopilot' ); ?></button></p>
+			<div id="aisa-import-report"></div>
+		</div>
+		<?php
 	}
 
 	private static function tab_settings() {
@@ -499,6 +535,25 @@ class AISA_Admin {
 				'report' => AISA_Health_Check::report(),
 			]
 		);
+	}
+
+	public static function ajax_export() {
+		self::guard();
+		wp_send_json_success( AISA_Exchange::export() );
+	}
+
+	public static function ajax_import() {
+		self::guard();
+		$raw     = isset( $_POST['payload'] ) ? wp_unslash( $_POST['payload'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.NonceVerification.Missing -- JSON, sanitized per field in import().
+		$payload = json_decode( (string) $raw, true );
+		if ( ! is_array( $payload ) ) {
+			wp_send_json_error( [ 'message' => __( 'That file is not valid JSON.', 'ai-seo-autopilot' ) ] );
+		}
+		if ( isset( $_POST['apply'] ) && '1' === $_POST['apply'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			$payload['apply']         = true;
+			$payload['apply_profile'] = true;
+		}
+		wp_send_json_success( AISA_Exchange::import( $payload ) );
 	}
 
 	public static function ajax_test_api() {

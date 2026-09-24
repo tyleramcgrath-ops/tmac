@@ -213,8 +213,21 @@ class AISA_Jobs {
 			return $result;
 		}
 
+		return self::store_proposal( $type, $id, $result, AISA_Settings::get( 'model' ) );
+	}
+
+	/**
+	 * Saves a proposal for review, whether generated here or imported.
+	 *
+	 * @param string $type   Type.
+	 * @param int    $id     ID.
+	 * @param array  $result ['fields' => [...], 'schema' => [...]|null, 'warnings' => []].
+	 * @param string $source Model ID, or "import".
+	 * @return array Row description.
+	 */
+	public static function store_proposal( $type, $id, $result, $source ) {
 		$result['generated_at'] = gmdate( 'c' );
-		$result['model']        = AISA_Settings::get( 'model' );
+		$result['model']        = $source;
 
 		self::meta_set( $type, $id, self::META_PROPOSAL, wp_json_encode( $result ) );
 		self::meta_set( $type, $id, self::META_STATUS, 'generated' );
