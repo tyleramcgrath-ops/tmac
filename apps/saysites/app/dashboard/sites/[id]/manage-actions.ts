@@ -394,3 +394,19 @@ export async function addGalleryToHome(siteId: string) {
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }
+
+// Search engine verification codes. Accepts the bare code or the whole
+// <meta> tag Search Console shows, and keeps just the code.
+export async function saveVerification(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const pick = (k: string) => {
+    const raw = str(form, k, 300)
+    const m = raw.match(/content=["']([^"']+)["']/)
+    return (m ? m[1] : raw).trim()
+  }
+  const google = pick('google')
+  const bing = pick('bing')
+  const ok = (v: string) => !v || /^[\w-]{10,100}$/.test(v)
+  if (!ok(google) || !ok(bing)) return { error: 'That doesn’t look like a verification code. Paste the code, or the whole meta tag.' }
+  await changeSite(siteId, (s) => ({ ...s, verification: google || bing ? { ...(google ? { google } : {}), ...(bing ? { bing } : {}) } : undefined }))
+  return { saved: true }
+}

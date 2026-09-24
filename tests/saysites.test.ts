@@ -696,3 +696,18 @@ describe('SaySites gallery and testimonials', () => {
     expect(PageSchema.safeParse(page).success).toBe(false)
   })
 })
+
+describe('SaySites search engine verification', () => {
+  it('puts the verification tags on the home page only', () => {
+    const site = { ...clone(sampleSite), verification: { google: 'abcDEF123_-xyz789', bing: '0123456789ABCDEF' } }
+    expect(SiteSchema.safeParse(site).success).toBe(true)
+    const home = renderPage(site, sampleHome, samplePages).html
+    expect(home).toContain('<meta name="google-site-verification" content="abcDEF123_-xyz789">')
+    expect(home).toContain('<meta name="msvalidate.01" content="0123456789ABCDEF">')
+    expect(renderPage(site, sampleServices, samplePages).html).not.toContain('google-site-verification')
+  })
+  it('rejects codes that could break out of the tag', () => {
+    const site = { ...clone(sampleSite), verification: { google: 'x"><script>' } }
+    expect(SiteSchema.safeParse(site).success).toBe(false)
+  })
+})

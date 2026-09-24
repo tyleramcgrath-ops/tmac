@@ -48,6 +48,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<meta name="description" content="${esc(page.seo.description)}">`,
     `<link rel="canonical" href="${esc(url)}">`,
     page.seo.noindex ? '<meta name="robots" content="noindex">' : '',
+    page.slug === '' && site.verification?.google ? `<meta name="google-site-verification" content="${esc(site.verification.google)}">` : '',
+    page.slug === '' && site.verification?.bing ? `<meta name="msvalidate.01" content="${esc(site.verification.bing)}">` : '',
     `<link rel="icon" href="${esc(favicon(site))}">`,
     `<meta name="theme-color" content="${esc(site.globals.colors.primary)}">`,
     `<meta property="og:type" content="website">`,

@@ -404,6 +404,12 @@ export const SiteSchema = z
     // Things for sale. Customers pay the owner directly through the owner's
     // own Stripe payment link, so SaySites never touches the money.
     store: StoreSchema.optional(),
+    // Search engine ownership codes (the content of their verification meta
+    // tags), shown on the home page so Search Console can confirm the site.
+    verification: z
+      .object({ google: z.string().regex(/^[\w-]{10,100}$/).optional(), bing: z.string().regex(/^[\w-]{10,100}$/).optional() })
+      .strict()
+      .optional(),
     updatedAt: z.string(),
   })
   .strict()
