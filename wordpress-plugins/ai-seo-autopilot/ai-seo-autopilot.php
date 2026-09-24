@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       AI SEO Autopilot for All in One SEO
  * Description:       Uses Claude to write SEO titles, meta descriptions, keyphrases, social tags and schema for every page, then fills them into All in One SEO (Lite or Pro) in one click. Every change can be previewed and restored.
- * Version:           1.2.1
+ * Version:           1.2.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            TMAC
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'AISA_VERSION', '1.2.1' );
+define( 'AISA_VERSION', '1.2.2' );
 define( 'AISA_FILE', __FILE__ );
 define( 'AISA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AISA_URL', plugin_dir_url( __FILE__ ) );

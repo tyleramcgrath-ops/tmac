@@ -71,17 +71,10 @@ class AISA_Content_Extractor {
 	 * @return string
 	 */
 	private static function stored_content( $post ) {
-		$content = (string) $post->post_content;
-		if ( function_exists( 'do_blocks' ) && has_blocks( $content ) ) {
-			// Some blocks assume a front-end request; never let one break the export.
-			ob_start();
-			try {
-				$content = do_blocks( $content );
-			} catch ( \Throwable $e ) {
-				unset( $e );
-			}
-			ob_end_clean();
-		}
+		// Read the stored HTML directly instead of rendering blocks: rendering runs every
+		// block's code (and WordPress's block parser has run out of memory on real sites with
+		// very large or self-nesting posts). The first 300 KB is far more than SEO needs.
+		$content = mb_strcut( (string) $post->post_content, 0, 300000, 'UTF-8' );
 		return strip_shortcodes( $content );
 	}
 
