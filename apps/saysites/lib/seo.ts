@@ -26,6 +26,29 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
     })
   }
 
+  // Products shown on the page, so Google can show prices and availability.
+  if ([...walk(page.body)].some((el) => el.type === 'products') && site.store?.products.length) {
+    const cur = site.store.currency
+    for (const p of site.store.products) {
+      out.push({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: p.name,
+        ...(p.description ? { description: p.description } : {}),
+        ...(p.image ? { image: /^https?:/.test(p.image.src) ? p.image.src : origin + p.image.src } : {}),
+        brand: { '@type': 'Brand', name: site.business.name },
+        offers: {
+          '@type': 'Offer',
+          price: (p.price / 100).toFixed(2),
+          priceCurrency: cur,
+          availability: p.soldOut ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
+          url: origin + pagePath(page),
+          seller: { '@id': `${origin}/#business` },
+        },
+      })
+    }
+  }
+
   // Breadcrumbs for every page below the home page.
   if (page.slug !== '') {
     const home = allPages.find((p) => p.slug === '')

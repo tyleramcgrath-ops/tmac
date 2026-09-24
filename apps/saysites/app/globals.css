@@ -319,3 +319,23 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .check { display: flex; align-items: center; gap: 8px; font-size: 15px; margin-bottom: 8px; cursor: pointer; }
 .check input { width: 18px; height: 18px; accent-color: var(--ink); }
 .save-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; }
+
+/* Products */
+.currency { display: flex; align-items: center; gap: 8px; }
+.currency .input { width: auto; padding: 7px 10px; }
+.product-form { display: grid; grid-template-columns: 140px 1fr; gap: 20px; margin-top: 12px; }
+@media (max-width: 640px) { .product-form { grid-template-columns: 1fr; } }
+.pf-photo { width: 140px; height: 140px; border-radius: 12px; background: var(--paper); display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line); }
+.pf-photo img { width: 100%; height: 100%; object-fit: cover; }
+.pf-picks { display: flex; flex-wrap: wrap; gap: 6px; margin: -6px 0 16px; }
+.pf-picks button { padding: 0; border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; width: 52px; height: 52px; cursor: pointer; background: var(--paper); }
+.pf-picks button:hover { border-color: var(--ink); }
+.pf-picks img { width: 100%; height: 100%; object-fit: cover; }
+.product-row { padding: 0; }
+.product-row summary { display: grid; grid-template-columns: 44px 1fr auto auto auto; align-items: center; gap: 14px; padding: 12px 18px; cursor: pointer; list-style: none; }
+.product-row summary::-webkit-details-marker { display: none; }
+.product-row summary img, .pr-dot { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: var(--paper); display: grid; place-items: center; font-weight: 700; }
+.product-row[open] summary { border-bottom: 1px solid var(--line); }
+.product-row .product-form, .product-row .del-row { padding: 0 18px 18px; }
+.product-row .del-row { display: flex; justify-content: flex-end; margin-top: -8px; }
+@media (max-width: 640px) { .product-row summary { grid-template-columns: 44px 1fr auto; } .product-row summary .pill, .product-row summary .edit { display: none; } }

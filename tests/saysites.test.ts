@@ -519,3 +519,40 @@ describe('SaySites showcase', async () => {
     expect(html).toContain('Mon–Fri 7am–6pm')
   })
 })
+
+describe('SaySites store', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { formatPrice } = await import('../apps/saysites/lib/render')
+  const { site, pages } = SHOWCASE['field-and-thread']
+  const shop = pages.find((p) => p.slug === 'shop')!
+
+  it('renders product cards with prices, and asks to get in touch without a payment link', () => {
+    const html = renderPage(site, shop, pages).html
+    expect(html).toContain('Heavy flannel shirt')
+    expect(html).toContain('$88')
+    expect(html).toContain('Sold out')
+    expect(html).toContain('href="/contact">Ask about this')
+    expect(checkSpeed(renderPage(site, shop, pages)).pass).toBe(true)
+  })
+
+  it('gives Google product data with price and availability', () => {
+    const ld = structuredData(site, shop, pages) as { '@type': string; name?: string; offers?: { price: string; availability: string } }[]
+    const products = ld.filter((d) => d['@type'] === 'Product')
+    expect(products).toHaveLength(site.store!.products.length)
+    expect(products.find((p) => p.name === 'Merino scarf')!.offers).toMatchObject({ price: '64.00', availability: 'https://schema.org/OutOfStock' })
+  })
+
+  it('only accepts Stripe payment links for checkout', () => {
+    const bad = clone(site)
+    bad.store!.products[0].buyUrl = 'https://evil.example/pay'
+    expect(SiteSchema.safeParse(bad).success).toBe(false)
+    bad.store!.products[0].buyUrl = 'https://buy.stripe.com/test_abc123'
+    expect(SiteSchema.safeParse(bad).success).toBe(true)
+  })
+
+  it('formats prices', () => {
+    expect(formatPrice(900, 'USD')).toBe('$9')
+    expect(formatPrice(1250, 'GBP')).toBe('£12.50')
+    expect(formatPrice(123456, 'USD')).toBe('$1,234.56')
+  })
+})

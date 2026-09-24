@@ -2,7 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
-import { PageSeo, SiteSchema, type Page, type Site } from '@/lib/schema'
+import { randomUUID } from 'crypto'
+import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/schema'
 import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { getStore } from '@/lib/store'
@@ -139,4 +140,109 @@ export async function savePageSeo(siteId: string, pageId: string, _prev: Setting
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Products
+// ---------------------------------------------------------------------------
+
+// Applies a change to the live site and to Sofie's draft (if any), so the two
+// never drift apart.
+async function changeSite(siteId: string, fn: (s: Site) => Site) {
+  const { store, site } = await ownSite(siteId)
+  const next = SiteSchema.parse(JSON.parse(JSON.stringify({ ...fn(site), updatedAt: new Date().toISOString() })))
+  await store.updateSite(next)
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    try {
+      const d = SiteSchema.parse(JSON.parse(JSON.stringify(fn(state.draft.site))))
+      await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, site: d } })
+    } catch {
+      // Leave a draft that can't take the change as it is.
+    }
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return next
+}
+
+export async function saveProduct(siteId: string, productId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const name = str(form, 'name', 120)
+  if (!name) return { error: 'Give the product a name.' }
+  const priceText = str(form, 'price', 20).replace(/[$,£€\s]/g, '')
+  if (!/^\d+(\.\d{1,2})?$/.test(priceText)) return { error: 'Enter a price like 24 or 24.50.' }
+  const price = Math.round(Number(priceText) * 100)
+  const buyUrl = str(form, 'buyUrl', 300)
+  if (buyUrl && !/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/.test(buyUrl)) return { error: 'The buy link should be a Stripe payment link, like https://buy.stripe.com/abc123.' }
+  const imageSrc = str(form, 'imageSrc', 500)
+  if (imageSrc && !/^https:\/\/[^\s]+$/.test(imageSrc)) return { error: 'The photo needs to be a link starting with https://.' }
+  const description = str(form, 'description', 600)
+  const product: Product = {
+    id: productId === 'new' ? `p-${randomUUID().slice(0, 8)}` : productId,
+    name,
+    price,
+    ...(description ? { description } : {}),
+    ...(imageSrc ? { image: { src: imageSrc, alt: str(form, 'imageAlt', 250) || name } } : {}),
+    ...(buyUrl ? { buyUrl } : {}),
+    ...(form.get('soldOut') ? { soldOut: true } : {}),
+  }
+  try {
+    await changeSite(siteId, (s) => {
+      const list = s.store?.products ?? []
+      const products = productId === 'new' ? [...list, product] : list.map((p) => (p.id === productId ? product : p))
+      return { ...s, store: { currency: s.store?.currency ?? 'USD', products } }
+    })
+  } catch {
+    return { error: 'That product couldn’t be saved. Check the details and try again.' }
+  }
+  return { saved: true }
+}
+
+export async function deleteProduct(siteId: string, productId: string) {
+  await changeSite(siteId, (s) => ({ ...s, store: { currency: s.store?.currency ?? 'USD', products: (s.store?.products ?? []).filter((p) => p.id !== productId) } }))
+}
+
+export async function setCurrency(siteId: string, form: FormData) {
+  const currency = str(form, 'currency', 3) as 'USD'
+  await changeSite(siteId, (s) => ({ ...s, store: { currency, products: s.store?.products ?? [] } }))
+}
+
+// Adds a "Shop" page with every product and puts it in the menu.
+export async function addShopPage(siteId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  if (!pages.some((p) => p.slug === 'shop')) {
+    const page: Page = {
+      id: `page_${randomUUID()}`,
+      siteId: site.id,
+      slug: 'shop',
+      name: 'Shop',
+      status: 'published',
+      seo: {
+        title: `Shop ${site.business.name}`.slice(0, 60),
+        description: `Buy from ${site.business.name} online. Prices, photos and secure checkout.`.slice(0, 160),
+      },
+      body: [
+        {
+          id: 'shop',
+          type: 'container',
+          tag: 'section',
+          layout: 'flex',
+          boxed: true,
+          style: { padding: { desktop: { top: 88, right: 24, bottom: 96, left: 24 }, mobile: { top: 48, right: 20, bottom: 56, left: 20 } }, gap: { desktop: 14 } },
+          children: [
+            { id: 'shop-h', type: 'heading', level: 1, text: 'Shop', style: { fontSize: { desktop: 52, mobile: 36 } } },
+            { id: 'shop-t', type: 'text', text: `Order online from ${site.business.name}. Payments go securely through Stripe.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+            { id: 'shop-products', type: 'products', style: { margin: { desktop: { top: 28, right: 0, bottom: 0, left: 0 } } } },
+          ],
+        },
+      ],
+      updatedAt: new Date().toISOString(),
+    }
+    await store.savePage(page, 'owner', user.id, 'Added the Shop page')
+    const state = await store.sofieState(site.id)
+    if (state.draft && !state.draft.pages.some((p) => p.slug === 'shop')) {
+      await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: [...state.draft.pages, page] } })
+    }
+  }
+  await changeSite(siteId, (s) => (s.nav.some((n) => n.href === '/shop') ? s : { ...s, nav: [{ label: 'Shop', href: '/shop' }, ...s.nav].slice(0, 12) }))
 }

@@ -2,7 +2,8 @@
 // same starter code every customer gets, with fixed ids so they never change
 // between deploys, and served from /preview/<subdomain>.
 
-import type { Page, Site } from './schema'
+import { unsplash } from './photos'
+import type { Page, Product, Site } from './schema'
 import { buildStarterSite, type BusinessTypeKey } from './starter'
 
 const NOW = '2026-09-24T00:00:00.000Z'
@@ -12,6 +13,42 @@ const OWNER = SHOWCASE_ORG
 function make(input: Parameters<typeof buildStarterSite>[0], subdomain: string): { site: Site; pages: Page[] } {
   return buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })
 }
+
+// Gives an example site products and a Shop page, so the store can be seen
+// working. No payment links: the buttons ask the visitor to get in touch.
+function withShop(demo: { site: Site; pages: Page[] }, products: Product[], intro: string): { site: Site; pages: Page[] } {
+  const { site, pages } = demo
+  const shop: Page = {
+    id: `${site.id}_shop`,
+    siteId: site.id,
+    slug: 'shop',
+    name: 'Shop',
+    status: 'published',
+    seo: { title: `Shop ${site.business.name} online`.slice(0, 60), description: `${intro} Order online from ${site.business.name}.`.slice(0, 160) },
+    body: [
+      {
+        id: 'shop',
+        type: 'container',
+        tag: 'section',
+        layout: 'flex',
+        boxed: true,
+        style: { padding: { desktop: { top: 88, right: 24, bottom: 96, left: 24 }, mobile: { top: 48, right: 20, bottom: 56, left: 20 } }, gap: { desktop: 14 } },
+        children: [
+          { id: 'shop-h', type: 'heading', level: 1, text: 'Shop', style: { fontSize: { desktop: 52, mobile: 36 } } },
+          { id: 'shop-t', type: 'text', text: intro, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+          { id: 'shop-products', type: 'products', style: { margin: { desktop: { top: 28, right: 0, bottom: 0, left: 0 } } } },
+        ],
+      },
+    ],
+    updatedAt: site.updatedAt,
+  }
+  return {
+    site: { ...site, nav: [{ label: 'Shop', href: '/shop' }, ...site.nav], store: { currency: 'USD', products } },
+    pages: [...pages, shop],
+  }
+}
+
+const img = (id: string, alt: string) => ({ src: unsplash(id, alt, 800, 800).src, alt })
 
 export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
   'rivertown-plumbing': make(
@@ -31,7 +68,7 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
     },
     'rivertown-plumbing'
   ),
-  'rosies-bakery': make(
+  'rosies-bakery': withShop(make(
     {
       name: 'Rosie’s Bakery',
       type: 'bakery',
@@ -46,7 +83,12 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
       tagline: 'Sourdough, cakes and good coffee on SE Division, baked every morning at five.',
     },
     'rosies-bakery'
-  ),
+  ), [
+    { id: 'p-sourdough', name: 'Country sourdough', price: 900, description: 'Our everyday loaf: long-fermented, crackly crust, open crumb.', image: img('1509440159596-0249088772ff', 'Sourdough loaves with wheat') },
+    { id: 'p-pastry-box', name: 'Morning pastry box (6)', price: 2200, description: 'A mix of croissants, buns and whatever came out of the oven best that morning.', image: img('1579697096985-41fe1430e5df', 'Shelves of fresh bread and pastries') },
+    { id: 'p-bread-share', name: 'Weekly bread share', price: 3200, description: 'Four loaves a month, a different bake each Saturday. Pick up at the shop.', image: img('1566698629409-787a68fc5724', 'A basket of bread on a dark table') },
+    { id: 'p-cake', name: 'Celebration cake', price: 5200, description: 'Serves 12. Tell us the flavor and message when you order.' },
+  ], 'Order bread, pastries and cakes for pickup on SE Division.'),
   'salt-and-stone': make(
     {
       name: 'Salt & Stone',
@@ -205,7 +247,7 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
     },
     'hale-and-porter'
   ),
-  'field-and-thread': make(
+  'field-and-thread': withShop(make(
     {
       name: 'Field & Thread',
       type: 'store',
@@ -220,7 +262,12 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
       tagline: 'Well-made clothing and gifts from Vermont makers, on Church Street.',
     },
     'field-and-thread'
-  ),
+  ), [
+    { id: 'p-flannel', name: 'Heavy flannel shirt', price: 8800, description: 'Brushed cotton flannel, cut in Vermont. Warm enough for October mornings.', image: img('1573612664822-d7d347da7b80', 'Clothes on a rack beside a wooden table') },
+    { id: 'p-tee', name: 'Everyday organic tee', price: 3400, description: 'Heavyweight organic cotton in six colors. The one you reach for first.', image: img('1441984904996-e0b6ba687e04', 'Boutique clothing racks') },
+    { id: 'p-card', name: 'Letterpress card set', price: 1800, description: 'Six cards and envelopes, printed a mile from the shop.' },
+    { id: 'p-scarf', name: 'Merino scarf', price: 6400, description: 'Soft, warm and knit in New England.', soldOut: true },
+  ], 'Clothing and gifts from Vermont makers, shipped or ready for pickup on Church Street.'),
 }
 
 // How the gallery groups and describes each example.

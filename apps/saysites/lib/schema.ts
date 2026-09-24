@@ -183,7 +183,13 @@ export const FormWidget = z
   })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget])
+// The site's products (from Site.store), as a grid of cards with prices and
+// buy buttons. Shows all products, or up to "limit".
+export const ProductsWidget = z
+  .object({ ...widgetBase, type: z.literal('products'), limit: z.number().int().min(1).max(100).optional() })
+  .strict()
+
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 
@@ -308,6 +314,29 @@ export const BusinessInfo = z
   .strict()
 export type BusinessInfo = z.infer<typeof BusinessInfo>
 
+export const ProductSchema = z
+  .object({
+    id,
+    name: z.string().min(1).max(120),
+    // In cents, to avoid rounding.
+    price: z.number().int().min(0).max(100_000_000),
+    description: z.string().max(600).optional(),
+    image: z.object({ src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/), alt: z.string().trim().min(1).max(250) }).strict().optional(),
+    // A Stripe Payment Link (buy.stripe.com/...). Without one, the button
+    // asks the visitor to get in touch instead.
+    buyUrl: z.string().regex(/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/, 'use a Stripe payment link (https://buy.stripe.com/...)').optional(),
+    soldOut: z.boolean().optional(),
+  })
+  .strict()
+export type Product = z.infer<typeof ProductSchema>
+
+export const StoreSchema = z
+  .object({
+    currency: z.enum(['USD', 'CAD', 'GBP', 'EUR', 'AUD']),
+    products: z.array(ProductSchema).max(100),
+  })
+  .strict()
+
 export const SiteSchema = z
   .object({
     id: z.string().min(1),
@@ -330,6 +359,9 @@ export const SiteSchema = z
       .optional(),
     // One or two lines about the business, shown in the footer.
     tagline: z.string().max(200).optional(),
+    // Things for sale. Customers pay the owner directly through the owner's
+    // own Stripe payment link, so SaySites never touches the money.
+    store: StoreSchema.optional(),
     updatedAt: z.string(),
   })
   .strict()

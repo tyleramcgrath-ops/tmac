@@ -60,6 +60,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<style>${css}</style>`,
   ].filter(Boolean)
 
+  store = site.store
   const body = [
     renderHeader(site, page),
     `<main>${page.body.map(renderElement).join('')}</main>`,
@@ -73,6 +74,10 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 // ---------------------------------------------------------------------------
 // HTML
 // ---------------------------------------------------------------------------
+
+// The site's products, for the products widget. Set per render; rendering is
+// synchronous, so this can't leak between pages.
+let store: Site['store']
 
 function renderElement(el: Element): string {
   return el.type === 'container' ? renderContainer(el) : renderWidget(el)
@@ -131,7 +136,34 @@ function renderWidget(w: Widget): string {
         .join('')}</div>`
     case 'form':
       return renderForm(w)
+    case 'products':
+      return renderProducts(w)
   }
+}
+
+const SYMBOL: Record<string, string> = { USD: '$', CAD: 'CA$', AUD: 'A$', GBP: '£', EUR: '€' }
+
+export function formatPrice(cents: number, currency: string): string {
+  const whole = cents % 100 === 0
+  return `${SYMBOL[currency] ?? ''}${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 })}`
+}
+
+function renderProducts(w: Extract<Widget, { type: 'products' }>): string {
+  const products = (store?.products ?? []).slice(0, w.limit ?? 100)
+  if (!products.length) return ''
+  const cur = store?.currency ?? 'USD'
+  const cards = products.map((p) => {
+    const img = p.image
+      ? `<img class="pr-img" src="${esc(p.image.src)}"${srcset(p.image.src, 800)} sizes="(max-width: 640px) 100vw, 33vw" alt="${esc(p.image.alt)}" width="800" height="800" loading="lazy" decoding="async">`
+      : `<div class="pr-img pr-none" aria-hidden="true">${esc(p.name.charAt(0))}</div>`
+    const buy = p.soldOut
+      ? `<span class="pr-out">Sold out</span>`
+      : p.buyUrl
+        ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">Buy now</a>`
+        : `<a class="btn btn-outline pr-buy" href="/contact">Ask about this</a>`
+    return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}${buy}</div></article>`
+  })
+  return `<div class="prs ${cls(w.id)}">${cards.join('')}</div>`
 }
 
 const FIELD: Record<(typeof FORM_FIELDS)[number], { label: string; input: string }> = {
@@ -249,6 +281,7 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
       if (el.type === 'button') used.add(`btn-${el.variant}`)
       if (el.type === 'image' && el.aspect) used.add('crop')
       if (el.type === 'form') used.add('button').add('btn-primary')
+      if (el.type === 'products') used.add('button').add('btn-primary').add('btn-outline')
     }
     if (el.style) styleRules(`.${cls(el.id)}`, el.style, byBp)
   }
@@ -321,6 +354,12 @@ function widgetCss(used: Set<string>): string {
       `.bgt{position:absolute;inset:0;z-index:-1;pointer-events:none}.bgt-full{background:rgb(0 0 0/var(--o))}` +
       `.bgt-side{background:linear-gradient(90deg,rgb(0 0 0/var(--o)) 0%,rgb(0 0 0/calc(var(--o)*.72)) 45%,rgb(0 0 0/0) 80%)}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.bgt-side{background:rgb(0 0 0/calc(var(--o)*.85))}}.bgc{position:relative}`
+  if (used.has('products'))
+    css +=
+      `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px}.pr{display:flex;flex-direction:column;gap:12px}` +
+      `.pr-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r);background:var(--c-surface)}.pr-none{display:grid;place-items:center;font:600 3em var(--f-h);color:var(--c-muted)}` +
+      `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1}.pr-name{font-size:1.15em;margin:0}.pr-price{margin:0;font-weight:700;color:var(--c-primary)}.pr-desc{margin:4px 0 0;color:var(--c-muted);font-size:.95em}` +
+      `.pr-buy{align-self:flex-start;margin-top:auto;padding:.65em 1.3em}.pr-body>.pr-buy{margin-top:10px}.pr-out{margin-top:10px;font-weight:600;color:var(--c-muted)}`
   if (used.has('form'))
     css +=
       `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +
