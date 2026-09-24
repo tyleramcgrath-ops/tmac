@@ -285,6 +285,8 @@ export default function Home() {
               <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p><span className="tag live">Live</span></div>
               <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p><span className="tag live">Live</span></div>
               <div><h3>Messages, not missed calls</h3><p>Every site has a contact form. Messages land in your inbox, with reply and call buttons right there.</p><span className="tag live">Live</span></div>
+              <div><h3>A blog that brings people in</h3><p>Write helpful posts, or ask Sofie to draft one. Each gets its own page, a spot in your sitemap and the markup Google looks for.</p><span className="tag live">Live</span></div>
+              <div><h3>Nothing is ever lost</h3><p>Every change is saved as a version, and Sofie’s edits wait in a draft you can undo or throw away before anything goes live.</p><span className="tag live">Live</span></div>
               <div><h3>Google, connected</h3><p>Import your Business Profile and connect Search Console and Analytics in one click.</p><span className="tag">Coming soon</span></div>
               <div><h3>Sell online, keep 100%</h3><p>Add products and a Shop page in minutes. Customers pay you through your own Stripe account, with nothing taken from each sale.</p><span className="tag live">Live</span></div>
             </div>
