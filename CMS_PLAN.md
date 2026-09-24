@@ -378,5 +378,5 @@ Still to do:
 1. Register saysites.com and saysites.ai; run a trademark search.
 2. Submit the Google Business Profile API access request; register the Stripe Connect platform.
 3. The store layer: read and write sites/pages/revisions through the foundation store (Postgres + file).
-4. The renderer deployment: hostname → site → page, served on `*.saysites.com`.
+4. ~~The renderer deployment~~ ✅ Live on the test address **https://saysites.vercel.app** (Vercel project `saysites`, root `apps/saysites`), serving the sample site as a `noindex` preview. Switching to `*.saysites.com` later needs only the domain added in Vercel; no code change.
 5. Sofie's first tools: `update_element`, `add_section`, `set_global_colors`, working on this same tree.
