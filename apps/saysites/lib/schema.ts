@@ -169,7 +169,21 @@ export const FaqWidget = z
   })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget])
+// A contact form. Submissions land in the owner's Messages inbox; the page
+// still ships no JavaScript (a plain HTML form post).
+export const FORM_FIELDS = ['name', 'email', 'phone', 'message'] as const
+export const FormWidget = z
+  .object({
+    ...widgetBase,
+    type: z.literal('form'),
+    fields: z.array(z.enum(FORM_FIELDS)).min(1).max(4),
+    submitLabel: z.string().min(1).max(40),
+    // Shown after a message is sent.
+    thanks: z.string().min(1).max(200).optional(),
+  })
+  .strict()
+
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 

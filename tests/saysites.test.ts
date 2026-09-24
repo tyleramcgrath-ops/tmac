@@ -426,3 +426,75 @@ describe('Sofie', async () => {
     expect(calls).toHaveLength(2)
   })
 })
+
+describe('SaySites contact forms', async () => {
+  const { handleFormPost } = await import('../apps/saysites/lib/serve')
+  const { toWeek, fromWeek } = await import('../apps/saysites/lib/hours')
+
+  async function setup() {
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'o@example.com', name: 'O', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Form Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, `org_${user.id}`, 'form-co')
+    await store.createSite(user.id, site, pages)
+    return { store, bundle: { site, pages, redirects: [] } }
+  }
+  const post = (fields: Record<string, string>, referer = 'https://form-co.saysites.com/contact') => {
+    const body = new URLSearchParams(fields)
+    return new Request('https://form-co.saysites.com/__form', { method: 'POST', body, headers: { referer, 'content-type': 'application/x-www-form-urlencoded' } })
+  }
+
+  it('renders a plain HTML form with a hidden honeypot and no script', async () => {
+    const { bundle } = await setup()
+    const contact = bundle.pages.find((p) => p.slug === 'contact')!
+    const html = renderPage(bundle.site, contact, bundle.pages).html
+    expect(html).toContain('<form class="sform')
+    expect(html).toContain('action="/__form"')
+    expect(html).toContain('name="website"')
+    expect(checkSpeed(renderPage(bundle.site, contact, bundle.pages)).pass).toBe(true)
+  })
+
+  it('stores a message and sends the visitor back to the page', async () => {
+    const { store, bundle } = await setup()
+    const res = await handleFormPost(bundle, post({ form: 'contact-form', name: 'Jamie', email: 'j@example.com', message: 'Leaky tap' }), { preview: false }, store)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('location')).toBe('/contact#sent')
+    const msgs = await store.messagesForSite(bundle.site.id)
+    expect(msgs).toHaveLength(1)
+    expect(msgs[0]).toMatchObject({ name: 'Jamie', email: 'j@example.com', body: 'Leaky tap', page: '/contact', read: false })
+    expect(await store.unreadCount(bundle.site.id)).toBe(1)
+  })
+
+  it('quietly drops bot submissions and rejects unknown forms and bad emails', async () => {
+    const { store, bundle } = await setup()
+    const bot = await handleFormPost(bundle, post({ form: 'contact-form', name: 'x', email: 'x@x.co', message: 'spam', website: 'http://spam' }), { preview: false }, store)
+    expect(bot.status).toBe(303)
+    expect(await store.messagesForSite(bundle.site.id)).toHaveLength(0)
+    expect((await handleFormPost(bundle, post({ form: 'nope', name: 'a', email: 'a@b.co', message: 'hi' }), { preview: false }, store)).status).toBe(404)
+    expect((await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'not-an-email', message: 'hi' }), { preview: false }, store)).status).toBe(422)
+  })
+
+  it('keeps the preview prefix and ignores another site as the referer', async () => {
+    const { store, bundle } = await setup()
+    const base = '/preview/form-co'
+    const ok = await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }, 'https://form-co.saysites.com/preview/form-co/contact'), { preview: true, basePath: base }, store)
+    expect(ok.headers.get('location')).toBe('/preview/form-co/contact#sent')
+    const other = await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }, 'https://evil.example/x'), { preview: false }, store)
+    expect(other.headers.get('location')).toBe('/#sent')
+  })
+
+  it('only lets a site read and change its own messages', async () => {
+    const { store, bundle } = await setup()
+    const m = await store.addMessage({ siteId: bundle.site.id, name: 'a', email: 'a@b.co', phone: '', body: 'hi', page: '/' })
+    await store.setMessageRead('some-other-site', m.id, true)
+    await store.deleteMessage('some-other-site', m.id)
+    expect(await store.messagesForSite(bundle.site.id)).toMatchObject([{ id: m.id, read: false }])
+  })
+
+  it('round-trips opening hours between Google format and per-day rows', () => {
+    const week = toWeek(['Mo-Fr 08:00-17:00', 'Sa 09:00-13:00'])
+    expect(week.We).toEqual({ open: '08:00', close: '17:00' })
+    expect(week.Su).toBeNull()
+    expect(fromWeek(week)).toEqual(['Mo-Fr 08:00-17:00', 'Sa 09:00-13:00'])
+    expect(fromWeek({ ...week, We: null })).toEqual(['Mo-Tu 08:00-17:00', 'Th-Fr 08:00-17:00', 'Sa 09:00-13:00'])
+  })
+})

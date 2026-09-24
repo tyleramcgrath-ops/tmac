@@ -21,6 +21,7 @@ import {
   type Element,
   type ElementStyle,
   type GlobalStyles,
+  FORM_FIELDS,
   type Page,
   type Responsive,
   type Site,
@@ -128,7 +129,33 @@ function renderWidget(w: Widget): string {
       return `<div class="faq ${c}">${w.items
         .map((i) => `<details><summary>${esc(i.question)}</summary><div>${paragraphs(i.answer).map((p) => `<p>${p}</p>`).join('')}</div></details>`)
         .join('')}</div>`
+    case 'form':
+      return renderForm(w)
   }
+}
+
+const FIELD: Record<(typeof FORM_FIELDS)[number], { label: string; input: string }> = {
+  name: { label: 'Your name', input: '<input name="name" autocomplete="name" required maxlength="120">' },
+  email: { label: 'Email', input: '<input name="email" type="email" autocomplete="email" required maxlength="200">' },
+  phone: { label: 'Phone', input: '<input name="phone" type="tel" autocomplete="tel" maxlength="40">' },
+  message: { label: 'How can we help?', input: '<textarea name="message" rows="5" required maxlength="5000"></textarea>' },
+}
+
+// A plain HTML form: no script. The server answers a post with a redirect to
+// "#sent", which reveals the thank-you note through :target, so the cached
+// page never changes. "website" is a honeypot field people never see.
+function renderForm(w: Extract<Widget, { type: 'form' }>): string {
+  const fields = w.fields
+    .map((f) => `<label><span>${FIELD[f].label}${f === 'phone' ? ' <em>(optional)</em>' : ''}</span>${FIELD[f].input}</label>`)
+    .join('')
+  return (
+    `<form class="sform ${cls(w.id)}" method="post" action="/__form">` +
+    `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? 'Thanks! Your message is on its way. We will get back to you soon.')}</p>` +
+    `<input type="hidden" name="form" value="${esc(w.id)}">` +
+    `<label class="sform-hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>` +
+    fields +
+    `<button class="btn btn-primary" type="submit">${esc(w.submitLabel)}</button></form>`
+  )
 }
 
 function renderHeader(site: Site, page: Page): string {
@@ -208,6 +235,7 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
     } else {
       if (el.type === 'button') used.add(`btn-${el.variant}`)
       if (el.type === 'image' && el.aspect) used.add('crop')
+      if (el.type === 'form') used.add('button').add('btn-primary')
     }
     if (el.style) styleRules(`.${cls(el.id)}`, el.style, byBp)
   }
@@ -280,6 +308,13 @@ function widgetCss(used: Set<string>): string {
       `.bgt{position:absolute;inset:0;z-index:-1;pointer-events:none}.bgt-full{background:rgb(0 0 0/var(--o))}` +
       `.bgt-side{background:linear-gradient(90deg,rgb(0 0 0/var(--o)) 0%,rgb(0 0 0/calc(var(--o)*.72)) 45%,rgb(0 0 0/0) 80%)}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.bgt-side{background:rgb(0 0 0/calc(var(--o)*.85))}}.bgc{position:relative}`
+  if (used.has('form'))
+    css +=
+      `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +
+      `.sform input,.sform textarea{font:inherit;font-weight:400;padding:.75em .9em;border:1.5px solid color-mix(in srgb,var(--c-text) 18%,transparent);border-radius:min(var(--r),10px);background:var(--c-background);color:var(--c-text);width:100%}` +
+      `.sform input:focus,.sform textarea:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
+      `.sform-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}` +
+      `.sform-ok{display:none;margin:0;padding:14px 16px;border-radius:min(var(--r),10px);background:color-mix(in srgb,var(--c-primary) 12%,var(--c-background));font-weight:600}.sform-ok:target{display:block}`
   if (used.has('faq')) {
     css +=
       `.faq details{border-bottom:1px solid var(--c-surface);padding:12px 0}` +
@@ -392,5 +427,5 @@ function jsonForScript(data: unknown): string {
 // view) by re-pointing every internal link. Absolute URLs — canonical, og:url,
 // external links — and image sources are left alone.
 export function withBasePath(html: string, basePath: string): string {
-  return html.replaceAll('href="/', `href="${basePath}/`)
+  return html.replaceAll('href="/', `href="${basePath}/`).replaceAll('action="/', `action="${basePath}/`)
 }

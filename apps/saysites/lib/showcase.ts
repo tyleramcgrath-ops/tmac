@@ -6,7 +6,8 @@ import type { Page, Site } from './schema'
 import { buildStarterSite } from './starter'
 
 const NOW = '2026-09-24T00:00:00.000Z'
-const OWNER = 'org_showcase'
+export const SHOWCASE_ORG = 'org_showcase'
+const OWNER = SHOWCASE_ORG
 
 function make(input: Parameters<typeof buildStarterSite>[0], subdomain: string): { site: Site; pages: Page[] } {
   return buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })

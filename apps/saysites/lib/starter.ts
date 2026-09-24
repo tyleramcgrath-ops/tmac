@@ -41,7 +41,7 @@ export const PALETTES: Record<string, { label: string; colors: GlobalStyles['col
   slate: { label: 'Charcoal', colors: { primary: '#1f2937', secondary: '#0b0f14', accent: '#9aa6b2', text: '#111827', muted: '#4b5563', background: '#ffffff', surface: '#f3f4f6' } },
 }
 
-const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
+export const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
   bold: { fonts: { heading: 'sans', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 8, containerWidth: 1180, headingWeight: 800, headingTracking: -0.025, buttonShape: 'rounded' },
   editorial: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.28, radius: 2, containerWidth: 1180, headingWeight: 400, headingTracking: -0.015, buttonShape: 'square', buttonCase: 'upper' },
   warm: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 14, containerWidth: 1160, headingWeight: 500, headingTracking: -0.015, buttonShape: 'pill' },
@@ -484,7 +484,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     status: 'published',
     seo: {
       title: clip(`Contact ${name} | ${cap(t.trade)} in ${city}`, 60),
-      description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Call or email us and we'll get back to you quickly.`, 160),
+      description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Send a message, call or email and we'll get back to you quickly.`, 160),
     },
     body: [
       {
@@ -493,7 +493,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         tag: 'section',
         layout: 'grid',
         columns: { desktop: 2, mobile: 1 },
-        align: 'center',
+        align: 'start',
         boxed: true,
         style: { padding: section, gap: { desktop: 64, mobile: 28 } },
         children: [
@@ -505,7 +505,14 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
             children: [
               { id: 'contact-h', type: 'heading', level: 1, text: `Contact ${name}`, style: { fontSize: { desktop: 52, mobile: 36 } } },
               { id: 'contact-t', type: 'text', text: contactLines.join('\n\n'), style: { fontSize: { desktop: 19 } } },
-              { id: 'contact-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary' },
+              {
+                id: 'contact-form',
+                type: 'form',
+                fields: ['name', 'email', 'phone', 'message'],
+                submitLabel: design === 'editorial' ? 'Send request' : 'Send message',
+                thanks: `Thanks! ${name} has your message and will get back to you soon.`,
+                style: { margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
+              },
             ],
           },
           { id: 'contact-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 1.2, priority: true, style: { borderRadius: design === 'editorial' ? 2 : 14 } },
