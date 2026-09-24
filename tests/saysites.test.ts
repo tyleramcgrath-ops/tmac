@@ -580,3 +580,58 @@ describe('SaySites deleting', () => {
     expect(await store.userById(b.id)).not.toBeNull()
   })
 })
+
+describe('SaySites blog', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { buildPostPage, postBodyText } = await import('../apps/saysites/lib/posts')
+  const { Workspace } = await import('../apps/saysites/lib/sofie')
+  const { site, pages } = SHOWCASE['rivertown-plumbing']
+
+  it('lists posts newest first on /blog and links each one', () => {
+    const blog = pages.find((p) => p.slug === 'blog')!
+    const html = renderPage(site, blog, pages).html
+    const a = html.indexOf('5 signs your water heater')
+    const b = html.indexOf('What to do in the first ten minutes')
+    expect(a).toBeGreaterThan(0)
+    expect(b).toBeGreaterThan(a)
+    expect(html).toContain('href="/blog/5-signs-your-water-heater-is-about-to-give-out"')
+    expect(site.nav.map((n) => n.href)).toContain('/blog')
+  })
+
+  it('gives each post one H1, BlogPosting data and passes the gates', () => {
+    const post = pages.find((p) => p.slug.startsWith('blog/5-signs'))!
+    expect(checkPage(post, pages).filter((i) => i.severity === 'error')).toEqual([])
+    expect(checkSpeed(renderPage(site, post, pages)).pass).toBe(true)
+    const ld = structuredData(site, post, pages) as { '@type': string; datePublished?: string }[]
+    expect(ld.find((d) => d['@type'] === 'BlogPosting')).toMatchObject({ datePublished: '2026-09-10' })
+    expect(sitemapXml(site, pages)).toContain('/blog/5-signs-your-water-heater-is-about-to-give-out')
+  })
+
+  it('turns "## " lines into subheadings and reads the text back for editing', () => {
+    const body = 'First paragraph with enough words to count.\n\n## A subheading\n\nSecond paragraph.'
+    const page = buildPostPage(site, { title: 'Hello there', date: '2026-01-02', body })
+    expect(postBodyText(page)).toBe(body)
+    expect(page.slug).toBe('blog/hello-there')
+    expect(page.post!.excerpt).toBe('First paragraph with enough words to count.')
+  })
+
+  it('lets Sofie write a post, adding /blog and the menu link the first time', () => {
+    const plain = buildStarterSite({ name: 'Blog Co', type: 'plumber', city: 'X', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org', 'blog-co')
+    const ws = new Workspace(plain)
+    ws.writePost({ title: 'Our first post', date: '2026-09-24', body: 'This is our very first post, written to help customers in town.' }, 'Wrote a post')
+    const snap = ws.snapshot()
+    expect(snap.pages.map((p) => p.slug)).toEqual(expect.arrayContaining(['blog', 'blog/our-first-post']))
+    expect(snap.site.nav.map((n) => n.href)).toEqual(['/services', '/blog', '/contact'])
+    expect(ws.problems()).toEqual([])
+  })
+})
+
+describe('SaySites blog subheadings', async () => {
+  const { buildPostPage } = await import('../apps/saysites/lib/posts')
+  it('keeps a paragraph written right under a subheading as body text', () => {
+    const page = buildPostPage(sampleSite, { title: 'T', date: '2026-01-01', body: 'Intro text that is long enough.\n\n## Heading\nBody right under it.' })
+    const inner = page.body[0].children[0] as { children: { type: string; text?: string }[] }
+    expect(inner.children.filter((c) => c.type === 'heading').map((c) => c.text)).toEqual(['T', 'Heading'])
+    expect(inner.children.some((c) => c.type === 'text' && c.text?.includes('Body right under it.'))).toBe(true)
+  })
+})

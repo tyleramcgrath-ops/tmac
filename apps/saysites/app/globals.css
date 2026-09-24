@@ -346,3 +346,13 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .btn-danger { background: var(--red); color: #fff; }
 .btn-danger:hover { background: #8f2a23; }
 .danger-zone { border-color: #eccbc7; }
+
+/* Blog */
+.post-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+@media (max-width: 900px) { .post-layout { grid-template-columns: 1fr; } }
+.row-post { grid-template-columns: 1fr 180px; }
+@media (max-width: 560px) { .row-post { grid-template-columns: 1fr; } }
+.post-body { min-height: 240px; font-size: 16.5px; line-height: 1.6; }
+.pf-picks button.on { border-color: var(--ink); box-shadow: 0 0 0 3px var(--focus-soft); }
+.pf-clear { width: auto !important; padding: 0 12px !important; font: 500 13px var(--font); }
+.ideas { margin: 0 0 12px; padding-left: 18px; font-size: 14.5px; display: grid; gap: 6px; }

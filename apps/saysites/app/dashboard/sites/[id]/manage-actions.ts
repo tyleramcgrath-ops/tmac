@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
+import { buildBlogIndex, buildPostPage } from '@/lib/posts'
 import { randomUUID } from 'crypto'
 import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/schema'
 import { requireUser } from '@/lib/session'
@@ -259,4 +260,56 @@ export async function deleteWebsite(siteId: string, _prev: SettingsState, form: 
   }
   await store.deleteSite(user.id, site.id)
   redirect('/dashboard?deleted=1')
+}
+
+// ---------------------------------------------------------------------------
+// Blog posts
+// ---------------------------------------------------------------------------
+
+// Saves a post (new, or an existing one by page id) and makes sure the site
+// has a /blog page in its menu to list it.
+export async function savePost(siteId: string, pageId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  const title = str(form, 'title', 140)
+  const body = String(form.get('body') ?? '').trim().slice(0, 20_000)
+  const date = str(form, 'date', 10)
+  if (!title) return { error: 'Give the post a title.' }
+  if (body.length < 40) return { error: 'Write a little more: a post needs at least a couple of sentences.' }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { error: 'Pick a date for the post.' }
+  const imageSrc = str(form, 'imageSrc', 500)
+  if (imageSrc && !/^https:\/\/[^\s]+$/.test(imageSrc)) return { error: 'The photo needs to be a link starting with https://.' }
+
+  const pages = await store.pagesForSite(site.id)
+  const existing = pageId === 'new' ? undefined : pages.find((p) => p.id === pageId && p.post)
+  if (pageId !== 'new' && !existing) return { error: 'That post no longer exists.' }
+  let page = buildPostPage(site, { title, date, body, ...(imageSrc ? { image: { src: imageSrc, alt: str(form, 'imageAlt', 250) || title } } : {}) }, existing)
+  // A new post never takes over an existing page's address.
+  if (!existing) {
+    let slug = page.slug
+    for (let n = 2; pages.some((p) => p.slug === slug); n++) slug = `${page.slug}-${n}`
+    page = { ...page, slug }
+  }
+  await store.savePage(page, 'owner', user.id, existing ? 'Edited a blog post' : 'Wrote a blog post')
+  if (!pages.some((p) => p.slug === 'blog')) await store.savePage(buildBlogIndex(site), 'owner', user.id, 'Added the blog')
+
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    const others = state.draft.pages.filter((p) => p.id !== page.id)
+    const withBlog = others.some((p) => p.slug === 'blog') ? others : [...others, buildBlogIndex(site)]
+    await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: [...withBlog, page] } })
+  }
+  await changeSite(siteId, (s) => (s.nav.some((n) => n.href === '/blog') ? s : { ...s, nav: [...s.nav.filter((n) => n.href !== '/contact'), { label: 'Blog', href: '/blog' }, ...s.nav.filter((n) => n.href === '/contact')].slice(0, 12) }))
+  return { saved: true }
+}
+
+export async function deletePost(siteId: string, pageId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  const page = pages.find((p) => p.id === pageId && p.post)
+  if (!page) return
+  // Unpublished rather than erased, so it stays in the page history.
+  await store.savePage({ ...page, status: 'draft', updatedAt: new Date().toISOString() }, 'owner', user.id, 'Removed a blog post')
+  const state = await store.sofieState(site.id)
+  if (state.draft) await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: state.draft.pages.filter((p) => p.id !== page.id) } })
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }

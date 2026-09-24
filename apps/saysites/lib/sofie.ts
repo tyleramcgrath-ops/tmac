@@ -16,6 +16,7 @@ import { checkPage } from './seo'
 import { checkSpeed } from './speed'
 import { renderPage } from './render'
 import { PHOTOS } from './photos'
+import { buildBlogIndex, buildPostPage } from './posts'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -151,6 +152,27 @@ export class Workspace {
     if (!siteOk.success) throw new ToolError(`The menu could not take another link: ${formatZod(siteOk.error)}`)
     this.pages.push(page.data)
     this.site = siteOk.data
+    this.changes.push(summary)
+  }
+
+  // A blog post at /blog/<slug>, plus the /blog list page and menu link the
+  // first time.
+  writePost(input: { title: string; date: string; body: string }, summary: string) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(input.date)) throw new ToolError('date must be YYYY-MM-DD.')
+    if (input.body.trim().length < 40) throw new ToolError('The post body is too short.')
+    let page = buildPostPage(this.site, { title: input.title, date: input.date, body: input.body })
+    let slug = page.slug
+    for (let n = 2; this.pages.some((p) => p.slug === slug); n++) slug = `${page.slug}-${n}`
+    page = { ...page, slug }
+    const parsed = PageSchema.safeParse(page)
+    if (!parsed.success) throw new ToolError(`That post is not valid: ${formatZod(parsed.error)}`)
+    this.pages.push(parsed.data)
+    if (!this.pages.some((p) => p.slug === 'blog')) this.pages.push(buildBlogIndex(this.site))
+    if (!this.site.nav.some((n) => n.href === '/blog')) {
+      const nav = [...this.site.nav.filter((n) => n.href !== '/contact'), { label: 'Blog', href: '/blog' }, ...this.site.nav.filter((n) => n.href === '/contact')]
+      const ok = SiteSchema.safeParse({ ...this.site, nav })
+      if (ok.success) this.site = ok.data
+    }
     this.changes.push(summary)
   }
 
@@ -334,6 +356,23 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   },
 ]
 
+SOFIE_TOOLS.push({
+  name: 'write_post',
+  description:
+    'Publish a blog post to the site (at /blog/<title-slug>, listed on /blog; the /blog page and its menu link are created the first time). Write helpful, specific, honest content for this business\'s customers, 300-700 words. Never invent prices, awards, reviews or facts about the business.',
+  input_schema: {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      title: { type: 'string', description: 'The post title, like a helpful headline.' },
+      date: { type: 'string', description: "YYYY-MM-DD, usually today's date." },
+      body: { type: 'string', description: 'Plain text. Blank line between paragraphs; a line starting with "## " is a subheading.' },
+      summary,
+    },
+    required: ['title', 'date', 'body', 'summary'],
+  },
+})
+
 export function runTool(ws: Workspace, name: string, input: Record<string, unknown>): string {
   const s = String(input.summary ?? 'Updated the site')
   const str = (k: string) => String(input[k] ?? '')
@@ -356,6 +395,9 @@ export function runTool(ws: Workspace, name: string, input: Record<string, unkno
         break
       case 'update_seo':
         ws.updateSeo(str('page'), str('title'), str('description'), s)
+        break
+      case 'write_post':
+        ws.writePost({ title: str('title'), date: str('date'), body: str('body') }, s)
         break
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
@@ -400,7 +442,7 @@ How to work:
 
 The content model (enforced; invalid changes are rejected with a reason, then fix and retry):
 - A page body is an array of top-level containers (sections). Container: {"id","type":"container","tag"?: "section"|"div"|..., "layout":"flex"|"grid", "direction"?: {"desktop":"row"|"column", "mobile"?}, "columns"?: {"desktop":n,"tablet"?:n,"mobile"?:n} (grid), "align"?: "start"|"center"|"end"|"stretch", "justify"?: "start"|"center"|"end"|"between", "boxed"?: true (full-width background, content capped to site width), "backgroundImage"?: {"src","width","height","overlay":0-0.95,"overlayStyle"?:"full"|"side","priority"?:bool}, "style"?, "children":[...] }.
-- Widgets: heading {"id","type":"heading","level":1-6,"text"}; text {"id","type":"text","text"} (blank line = new paragraph); image {"id","type":"image","src","alt" (required, descriptive),"width","height","aspect"?: ratio like 1.5,"priority"?: bool}; button {"id","type":"button","label","href","variant":"primary"|"secondary"|"outline"}; faq {"id","type":"faq","items":[{"question","answer"}]}; products (the site's products from the owner's Products tab, as cards with prices and buy buttons; you cannot add or change products themselves) {"id","type":"products","limit"?: number}; form (a contact form whose messages go to the owner's inbox) {"id","type":"form","fields":["name","email","phone","message"] (any of these, in order),"submitLabel","thanks"?: note shown after sending}.
+- Widgets: heading {"id","type":"heading","level":1-6,"text"}; text {"id","type":"text","text"} (blank line = new paragraph); image {"id","type":"image","src","alt" (required, descriptive),"width","height","aspect"?: ratio like 1.5,"priority"?: bool}; button {"id","type":"button","label","href","variant":"primary"|"secondary"|"outline"}; faq {"id","type":"faq","items":[{"question","answer"}]}; posts (a list of the site's blog posts, newest first; use write_post to add posts) {"id","type":"posts","limit"?: number}; products (the site's products from the owner's Products tab, as cards with prices and buy buttons; you cannot add or change products themselves) {"id","type":"products","limit"?: number}; form (a contact form whose messages go to the owner's inbox) {"id","type":"form","fields":["name","email","phone","message"] (any of these, in order),"submitLabel","thanks"?: note shown after sending}.
 - style (all optional): padding/margin {"desktop":{"top","right","bottom","left"},"mobile"?:{...}}; gap {"desktop":n,"mobile"?:n}; fontSize {"desktop":n,"tablet"?:n,"mobile"?:n}; textAlign {"desktop":"left"|"center"|"right"}; background, color, border: a color token (primary, secondary, accent, text, muted, background, surface) or a hex like "#ffffff"; fontWeight 300-900; borderRadius; maxWidth; letterSpacing (em); textTransform "uppercase"|"none"; fontFamily "heading"|"body".
 - Links (href): "/page-slug", "https://...", "tel:+15551234567", "mailto:...", or "#anchor". Ids: lowercase letters, digits and dashes, unique on the page.
 - Rules the publish gate checks: exactly one level-1 heading per page, headings don't skip levels, every image has alt text, at most one image per page loads eagerly (priority: true, only the first image near the top), titles under 70 characters, descriptions under 170.
@@ -445,7 +487,7 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   messages.push({
     role: 'user',
     content: [
-      { type: 'text', text: `The website as it is right now (JSON):\n${JSON.stringify({ site: ws.site, pages: ws.pages })}` },
+      { type: 'text', text: `Today is ${new Date().toISOString().slice(0, 10)}. The website as it is right now (JSON):\n${JSON.stringify({ site: ws.site, pages: ws.pages })}` },
       { type: 'text', text: input.message },
     ],
   })

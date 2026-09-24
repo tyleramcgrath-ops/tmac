@@ -26,6 +26,22 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
     })
   }
 
+  // A blog post.
+  if (page.post) {
+    out.push({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: page.post.title.slice(0, 110),
+      description: page.post.excerpt,
+      datePublished: page.post.date,
+      dateModified: page.updatedAt.slice(0, 10),
+      mainEntityOfPage: origin + pagePath(page),
+      ...(page.post.image ? { image: /^https?:/.test(page.post.image.src) ? page.post.image.src : origin + page.post.image.src } : {}),
+      author: { '@type': 'Organization', name: site.business.name },
+      publisher: { '@id': `${origin}/#business` },
+    })
+  }
+
   // Products shown on the page, so Google can show prices and availability.
   if ([...walk(page.body)].some((el) => el.type === 'products') && site.store?.products.length) {
     const cur = site.store.currency

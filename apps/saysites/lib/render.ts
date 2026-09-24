@@ -61,6 +61,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   ].filter(Boolean)
 
   store = site.store
+  posts = allPages.filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const body = [
     renderHeader(site, page),
     `<main>${page.body.map(renderElement).join('')}</main>`,
@@ -78,6 +79,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 // The site's products, for the products widget. Set per render; rendering is
 // synchronous, so this can't leak between pages.
 let store: Site['store']
+let posts: Page[] = []
 
 function renderElement(el: Element): string {
   return el.type === 'container' ? renderContainer(el) : renderWidget(el)
@@ -138,7 +140,26 @@ function renderWidget(w: Widget): string {
       return renderForm(w)
     case 'products':
       return renderProducts(w)
+    case 'posts':
+      return renderPosts(w)
   }
+}
+
+export function formatDate(iso: string): string {
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+}
+
+function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {
+  const list = posts.slice(0, w.limit ?? 50)
+  if (!list.length) return `<p class="po-none">New posts are on the way.</p>`
+  const cards = list.map((p) => {
+    const href = pagePath(p)
+    const img = p.post!.image
+      ? `<a href="${esc(href)}" tabindex="-1" aria-hidden="true"><img class="po-img" src="${esc(p.post!.image.src)}"${srcset(p.post!.image.src, 1200)} sizes="(max-width: 640px) 100vw, 33vw" alt="" width="1200" height="800" loading="lazy" decoding="async"></a>`
+      : ''
+    return `<article class="po">${img}<time datetime="${esc(p.post!.date)}">${esc(formatDate(p.post!.date))}</time><h3 class="po-t"><a href="${esc(href)}">${esc(p.post!.title)}</a></h3><p>${esc(p.post!.excerpt)}</p><a class="po-more" href="${esc(href)}">Read more <span aria-hidden="true">→</span></a></article>`
+  })
+  return `<div class="pos ${cls(w.id)}">${cards.join('')}</div>`
 }
 
 const SYMBOL: Record<string, string> = { USD: '$', CAD: 'CA$', AUD: 'A$', GBP: '£', EUR: '€' }
@@ -354,6 +375,11 @@ function widgetCss(used: Set<string>): string {
       `.bgt{position:absolute;inset:0;z-index:-1;pointer-events:none}.bgt-full{background:rgb(0 0 0/var(--o))}` +
       `.bgt-side{background:linear-gradient(90deg,rgb(0 0 0/var(--o)) 0%,rgb(0 0 0/calc(var(--o)*.72)) 45%,rgb(0 0 0/0) 80%)}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.bgt-side{background:rgb(0 0 0/calc(var(--o)*.85))}}.bgc{position:relative}`
+  if (used.has('posts'))
+    css +=
+      `.pos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:36px 28px}.po{display:flex;flex-direction:column;gap:8px}` +
+      `.po-img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r);margin-bottom:8px}.po time{font-size:.85em;color:var(--c-muted);font-weight:600;letter-spacing:.02em}` +
+      `.po-t{font-size:1.35em;margin:0}.po-t a{color:var(--c-text);text-decoration:none}.po-t a:hover{color:var(--c-primary)}.po p{margin:0;color:var(--c-muted)}.po-more{font-weight:600;text-decoration:none;margin-top:4px}.po-none{color:var(--c-muted)}`
   if (used.has('products'))
     css +=
       `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px}.pr{display:flex;flex-direction:column;gap:12px}` +

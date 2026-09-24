@@ -2,7 +2,8 @@
 // same starter code every customer gets, with fixed ids so they never change
 // between deploys, and served from /preview/<subdomain>.
 
-import { unsplash } from './photos'
+import { PHOTOS, unsplash } from './photos'
+import { buildBlogIndex, buildPostPage } from './posts'
 import type { Page, Product, Site } from './schema'
 import { buildStarterSite, type BusinessTypeKey } from './starter'
 
@@ -48,10 +49,22 @@ function withShop(demo: { site: Site; pages: Page[] }, products: Product[], intr
   }
 }
 
+// Gives an example site a blog with a few posts.
+function withBlog(demo: { site: Site; pages: Page[] }, posts: { title: string; date: string; body: string; image?: { src: string; alt: string } }[]): { site: Site; pages: Page[] } {
+  const { site, pages } = demo
+  const fixed = (p: Page, slug: string): Page => ({ ...p, id: `${site.id}_${slug.replace(/\//g, '_')}`, updatedAt: site.updatedAt })
+  const postPages = posts.map((p) => {
+    const page = buildPostPage(site, p)
+    return fixed(page, page.slug)
+  })
+  const nav = [...site.nav.filter((n) => n.href !== '/contact'), { label: 'Blog', href: '/blog' }, ...site.nav.filter((n) => n.href === '/contact')]
+  return { site: { ...site, nav }, pages: [...pages, fixed(buildBlogIndex(site), 'blog'), ...postPages] }
+}
+
 const img = (id: string, alt: string) => ({ src: unsplash(id, alt, 800, 800).src, alt })
 
 export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
-  'rivertown-plumbing': make(
+  'rivertown-plumbing': withBlog(make(
     {
       name: 'Rivertown Plumbing',
       type: 'plumber',
@@ -67,7 +80,52 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
       tagline: 'Family-run plumbers serving Rivertown and the valley since 2009.',
     },
     'rivertown-plumbing'
-  ),
+  ), [
+    {
+      title: '5 signs your water heater is about to give out',
+      date: '2026-09-10',
+      image: { src: PHOTOS.plumber.cards[1].src, alt: PHOTOS.plumber.cards[1].alt },
+      body: `Most water heaters last 8 to 12 years, and they usually warn you before they fail. Catching the signs early means you can replace it on your schedule instead of after a cold shower and a wet basement.
+
+## 1. Rusty or muddy hot water
+If only your hot water looks brown or orange, the inside of the tank may be corroding. Once the tank rusts through, a leak isn't far behind.
+
+## 2. Rumbling and popping
+Sediment settles at the bottom of the tank and hardens. When the burner heats it, you hear rumbling. Flushing can help if it's caught early; if it's been going on for years, the tank is working much harder than it should.
+
+## 3. Water around the base
+Even a small puddle is worth a look. Sometimes it's a loose fitting or the relief valve, which are easy fixes. If the tank itself is weeping, it needs replacing.
+
+## 4. Hot water runs out faster
+If showers are getting shorter, sediment may be taking up room in the tank or a heating element may be failing.
+
+## 5. It's past its tenth birthday
+The date is on the label on the side of the tank. Past ten years, it's worth planning for a replacement before it picks the day for you.
+
+Not sure what you're looking at? Call us and describe it. We'll tell you honestly whether it's a repair or a replacement.`,
+    },
+    {
+      title: 'What to do in the first ten minutes of a burst pipe',
+      date: '2026-08-21',
+      image: { src: PHOTOS.plumber.cards[0].src, alt: PHOTOS.plumber.cards[0].alt },
+      body: `A burst pipe can put hundreds of gallons on the floor in an hour. What you do before the plumber arrives makes the biggest difference to the damage.
+
+## Shut off the water
+Find your main shutoff valve. It's usually where the water line enters the house: in the basement, a utility closet or near the water heater. Turn it clockwise until it stops. It's worth finding it today, before you need it.
+
+## Turn off the electricity near the water
+If water is near outlets, appliances or the electrical panel, switch off power to that area at the breaker, but only if you can reach the panel without standing in water.
+
+## Open the taps
+Open a cold tap at the lowest point in the house to drain the pipes and relieve pressure. Flush toilets to empty them too.
+
+## Move things and take photos
+Move what you can out of the water, and take photos of the damage for your insurer before you start cleaning up.
+
+## Call us
+Tell us what you've shut off and we'll tell you what to do next, and how soon we can be there.`,
+    },
+  ]),
   'rosies-bakery': withShop(make(
     {
       name: 'Rosie’s Bakery',

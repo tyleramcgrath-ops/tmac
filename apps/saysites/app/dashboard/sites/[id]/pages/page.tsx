@@ -12,7 +12,7 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
   const store = getStore()
   const site = await store.siteForUser(user.id, id)
   if (!site) notFound()
-  const pages = await store.pagesForSite(site.id)
+  const pages = (await store.pagesForSite(site.id)).filter((p) => p.status === 'published')
   const nav = site.nav.map((n) => n.href)
   const order = (p: { slug: string }) => (p.slug === '' ? -1 : nav.indexOf(`/${p.slug}`) === -1 ? 99 : nav.indexOf(`/${p.slug}`))
   const rows = [...pages].sort((a, b) => order(a) - order(b)).map((p) => {

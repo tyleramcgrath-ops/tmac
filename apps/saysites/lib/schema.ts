@@ -189,7 +189,12 @@ export const ProductsWidget = z
   .object({ ...widgetBase, type: z.literal('products'), limit: z.number().int().min(1).max(100).optional() })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget])
+// The site's blog posts (pages with post details), newest first.
+export const PostsWidget = z
+  .object({ ...widgetBase, type: z.literal('posts'), limit: z.number().int().min(1).max(50).optional() })
+  .strict()
+
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 
@@ -286,6 +291,16 @@ export const PageSchema = z
     name: z.string().min(1).max(60),
     status: z.enum(['draft', 'published']),
     seo: PageSeo,
+    // Set on blog posts: shown in the posts list and sent to Google.
+    post: z
+      .object({
+        title: z.string().min(1).max(140),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        excerpt: z.string().min(1).max(300),
+        image: z.object({ src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/), alt: z.string().trim().min(1).max(250) }).strict().optional(),
+      })
+      .strict()
+      .optional(),
     body: z.array(ContainerSchema).max(100),
     updatedAt: z.string(),
   })
