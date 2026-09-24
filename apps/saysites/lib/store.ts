@@ -65,6 +65,11 @@ export interface Store {
   redirectsForSite(siteId: string): Promise<Redirect[]>
   sofieState(siteId: string): Promise<SofieState>
   saveSofieState(siteId: string, state: SofieState): Promise<void>
+  // Removes a site and everything under it (pages, revisions, Sofie, messages).
+  deleteSite(ownerId: string, siteId: string): Promise<void>
+  // Removes the user and all of their sites.
+  deleteUser(userId: string): Promise<void>
+  updateUser(userId: string, changes: { name?: string; passwordHash?: string }): Promise<void>
   addMessage(m: NewMessage): Promise<Message>
   messagesForSite(siteId: string, limit?: number): Promise<Message[]>
   // Mark one message read (or unread). Scoped to the site.
@@ -233,6 +238,16 @@ class PgStore implements Store {
   async saveSofieState(siteId: string, state: SofieState) {
     await this.q('INSERT INTO ss_sofie (site_id, data) VALUES ($1,$2) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, state])
   }
+  async deleteSite(ownerId: string, siteId: string) {
+    await this.q('DELETE FROM ss_sites WHERE id = $1 AND owner_id = $2', [siteId, ownerId])
+  }
+  async deleteUser(userId: string) {
+    await this.q('DELETE FROM ss_users WHERE id = $1', [userId])
+  }
+  async updateUser(userId: string, changes: { name?: string; passwordHash?: string }) {
+    if (changes.name) await this.q('UPDATE ss_users SET name = $2 WHERE id = $1', [userId, changes.name])
+    if (changes.passwordHash) await this.q('UPDATE ss_users SET password_hash = $2 WHERE id = $1', [userId, changes.passwordHash])
+  }
   async addMessage(m: NewMessage) {
     const msg: Message = { ...m, id: randomUUID(), createdAt: new Date().toISOString(), read: false }
     await this.q('INSERT INTO ss_messages (id, site_id, data) VALUES ($1,$2,$3)', [msg.id, msg.siteId, msg])
@@ -329,6 +344,24 @@ export class MemoryStore implements Store {
   }
   async saveSofieState(siteId: string, state: SofieState) {
     this.sofie.set(siteId, structuredClone(state))
+  }
+  async deleteSite(ownerId: string, siteId: string) {
+    const s = this.sites.get(siteId)
+    if (!s || s.ownerId !== ownerId) return
+    this.sites.delete(siteId)
+    for (const [id, p] of this.pages) if (p.siteId === siteId) this.pages.delete(id)
+    this.sofie.delete(siteId)
+    this.messages = this.messages.filter((m) => m.siteId !== siteId)
+  }
+  async deleteUser(userId: string) {
+    for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)
+    this.users.delete(userId)
+  }
+  async updateUser(userId: string, changes: { name?: string; passwordHash?: string }) {
+    const u = this.users.get(userId)
+    if (!u) return
+    if (changes.name) u.name = changes.name
+    if (changes.passwordHash) u.passwordHash = changes.passwordHash
   }
   private messages: Message[] = []
   async addMessage(m: NewMessage) {

@@ -2,13 +2,15 @@ import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
 
-export default async function Dashboard() {
+export default async function Dashboard({ searchParams }: { searchParams: Promise<{ deleted?: string }> }) {
+  const { deleted } = await searchParams
   const user = await requireUser()
   const store = getStore()
   const sites = await store.sitesForUser(user.id)
   const unread = await Promise.all(sites.map((s) => store.unreadCount(s.id)))
   return (
     <>
+      {deleted && <p className="notice good">That website has been deleted.</p>}
       <div className="dash-head">
         <div>
           <p className="crumbs">Dashboard</p>

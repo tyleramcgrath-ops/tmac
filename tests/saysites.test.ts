@@ -556,3 +556,27 @@ describe('SaySites store', async () => {
     expect(formatPrice(123456, 'USD')).toBe('$1,234.56')
   })
 })
+
+describe('SaySites deleting', () => {
+  it('deletes a site and its messages, only for its owner, and an account with its sites', async () => {
+    const store = new MemoryStore()
+    const a = await store.createUser({ email: 'a@example.com', name: 'A', passwordHash: 'x' })
+    const b = await store.createUser({ email: 'b@example.com', name: 'B', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Gone Co', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'org', 'gone-co')
+    await store.createSite(a.id, site, pages)
+    await store.addMessage({ siteId: site.id, name: 'n', email: 'e@x.co', phone: '', body: 'hi', page: '/' })
+    await store.deleteSite(b.id, site.id)
+    expect(await store.siteForUser(a.id, site.id)).not.toBeNull()
+    await store.deleteSite(a.id, site.id)
+    expect(await store.siteForUser(a.id, site.id)).toBeNull()
+    expect(await store.pagesForSite(site.id)).toEqual([])
+    expect(await store.messagesForSite(site.id)).toEqual([])
+
+    const again = buildStarterSite({ name: 'Two', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'org', 'two')
+    await store.createSite(a.id, again.site, again.pages)
+    await store.deleteUser(a.id)
+    expect(await store.userById(a.id)).toBeNull()
+    expect(await store.siteBySubdomain('two')).toBeNull()
+    expect(await store.userById(b.id)).not.toBeNull()
+  })
+})

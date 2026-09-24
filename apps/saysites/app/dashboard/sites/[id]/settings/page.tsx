@@ -5,7 +5,8 @@ import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES } from '@/lib/starter'
 import { getStore } from '@/lib/store'
 import { liveUrl } from '@/lib/urls'
-import { saveSettings } from '../manage-actions'
+import { ActionForm } from '@/components/ActionForm'
+import { deleteWebsite, saveSettings } from '../manage-actions'
 
 const DESIGNS = [
   { key: 'bold', label: 'Bold', note: 'Big photo header, strong type. Great for trades.' },
@@ -66,6 +67,13 @@ export default async function SettingsPage({ params }: { params: Promise<{ id: s
               <li>Add an <strong>A</strong> record for <code>@</code> pointing to <code>76.76.21.21</code>.</li>
             </ol>
             <p className="muted small">One-click domain connection, right here, is coming soon.</p>
+          </div>
+          <div className="card danger-zone">
+            <h3>Delete this website</h3>
+            <p className="muted small">Removes the site, its pages, Sofie history, messages and products. It can’t be undone.</p>
+            <ActionForm action={deleteWebsite.bind(null, site.id)} submit="Delete website" danger>
+              <label className="field"><span>Type <strong>{site.business.name}</strong> to confirm</span><input className="input" name="confirm" required autoComplete="off" /></label>
+            </ActionForm>
           </div>
         </aside>
       </div>

@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
 import { randomUUID } from 'crypto'
 import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/schema'
@@ -245,4 +246,17 @@ export async function addShopPage(siteId: string) {
     }
   }
   await changeSite(siteId, (s) => (s.nav.some((n) => n.href === '/shop') ? s : { ...s, nav: [{ label: 'Shop', href: '/shop' }, ...s.nav].slice(0, 12) }))
+}
+
+// ---------------------------------------------------------------------------
+// Delete
+// ---------------------------------------------------------------------------
+
+export async function deleteWebsite(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  if (str(form, 'confirm', 200).toLowerCase() !== site.business.name.trim().toLowerCase()) {
+    return { error: `Type “${site.business.name}” exactly to confirm.` }
+  }
+  await store.deleteSite(user.id, site.id)
+  redirect('/dashboard?deleted=1')
 }

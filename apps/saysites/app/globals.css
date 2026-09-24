@@ -339,3 +339,10 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .product-row .product-form, .product-row .del-row { padding: 0 18px 18px; }
 .product-row .del-row { display: flex; justify-content: flex-end; margin-top: -8px; }
 @media (max-width: 640px) { .product-row summary { grid-template-columns: 44px 1fr auto; } .product-row summary .pill, .product-row summary .edit { display: none; } }
+
+/* Account and delete */
+.narrow { max-width: 720px; }
+.action-form { margin-top: 10px; }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-danger:hover { background: #8f2a23; }
+.danger-zone { border-color: #eccbc7; }
