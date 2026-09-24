@@ -255,10 +255,10 @@ export default function Home() {
                 <a className="b b-light b-block" href="/signup">Start free</a>
               </div>
               <div className="plan">
-                <div className="plan-top"><h3>Store</h3><span className="tag">Coming soon</span></div>
+                <div className="plan-top"><h3>Store</h3><span className="tag live">New</span></div>
                 <div className="amt">$25<small>/month</small></div>
                 <p className="per">For selling online</p>
-                <ul><li>Everything in Site</li><li>Products, cart and checkout</li><li>Paid through your own Stripe</li><li>0% taken from your sales</li><li>Google Shopping listings</li></ul>
+                <ul><li>Everything in Site</li><li>Products and a Shop page</li><li>Paid through your own Stripe</li><li>0% taken from your sales</li><li>Prices Google can read</li></ul>
                 <a className="b b-line b-block" href="/signup">Start free</a>
               </div>
               <div className="plan">
@@ -286,7 +286,7 @@ export default function Home() {
               <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p><span className="tag live">Live</span></div>
               <div><h3>Messages, not missed calls</h3><p>Every site has a contact form. Messages land in your inbox, with reply and call buttons right there.</p><span className="tag live">Live</span></div>
               <div><h3>Google, connected</h3><p>Import your Business Profile and connect Search Console and Analytics in one click.</p><span className="tag">Coming soon</span></div>
-              <div><h3>Sell online, keep 100%</h3><p>Products, cart and checkout through your own Stripe account, with nothing taken from each sale.</p><span className="tag">Coming soon</span></div>
+              <div><h3>Sell online, keep 100%</h3><p>Add products and a Shop page in minutes. Customers pay you through your own Stripe account, with nothing taken from each sale.</p><span className="tag live">Live</span></div>
             </div>
           </div>
         </section>
@@ -299,7 +299,7 @@ export default function Home() {
             </div>
             <div className="qa">
               <details><summary>Do I need any design or tech skills?</summary><p>No. You describe your business and we build the site, then you change anything by asking Sofie: “make the photo darker”, “add our Saturday hours”. A drag-and-drop editor is coming too, for people who like to tinker.</p></details>
-              <details><summary>What does “0% of your sales” mean?</summary><p>When online selling launches, customers pay you through your own Stripe account. Stripe charges its normal card processing fee; SaySites takes nothing on top.</p></details>
+              <details><summary>What does “0% of your sales” mean?</summary><p>Customers pay you through your own Stripe account. Stripe charges its normal card processing fee; SaySites takes nothing on top.</p></details>
               <details><summary>Will my site show up on Google?</summary><p>Every site is built the way Google likes: fast, clean, with proper titles, a sitemap and business details search engines can read. Nobody can promise a #1 spot, but you start with the foundations right.</p></details>
               <details><summary>Can I use my own domain?</summary><p>Yes. Every site gets a free yourname.saysites.com address, and you can connect a domain you own.</p></details>
               <details><summary>What happens after early access?</summary><p>We’ll tell you well before anything changes. Planned pricing is $15 a month for a site and $25 a month for a store, and you can cancel anytime.</p></details>
