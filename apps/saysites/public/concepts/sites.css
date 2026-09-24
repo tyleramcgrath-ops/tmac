@@ -1,0 +1,77 @@
+/* Shared styles for the example customer sites shown inside the concept
+   mockups. Sized in container units so each preview scales as one picture. */
+@font-face { font-family: 'Newsreader'; src: url(fonts/newsreader.woff2) format('woff2'); font-weight: 300 700; font-display: swap; }
+
+.frame { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 24px 60px -24px rgba(0,0,0,.35); }
+.frame-bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: #f1f1ef; border-bottom: 1px solid #e4e3df; }
+.frame-bar i { width: 9px; height: 9px; border-radius: 50%; background: #d6d4cf; }
+.frame-bar span { margin: 0 auto; transform: translateX(-16px); font: 11px/1 ui-sans-serif, system-ui, sans-serif; color: #77736b; background: #fff; padding: 5px 16px; border-radius: 6px; }
+.frame-body { container-type: inline-size; position: relative; }
+.phone { background: #111; border-radius: 28px; padding: 7px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.45); }
+.phone .frame-body { border-radius: 22px; overflow: hidden; }
+.ph { position: relative; overflow: hidden; background: #cfc8bd; }
+.ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Rosie's Bakery */
+.bk { background: #f6f1e9; color: #2b211a; font: 1.5cqw/1.45 ui-sans-serif, system-ui, sans-serif; padding: 0 4.5cqw 4.5cqw; }
+.bk-nav { display: flex; align-items: center; gap: 3cqw; padding: 2.6cqw 0; }
+.bk-nav b { font: 500 3.2cqw/1 'Newsreader', Georgia, serif; margin-right: auto; letter-spacing: -0.01em; }
+.bk-nav span { color: #6d5d50; }
+.bk-nav em, .bk-btns em { font-style: normal; background: #2b211a; color: #f6f1e9; padding: 1.1cqw 2cqw; border-radius: 99px; font-weight: 600; }
+.bk-hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4cqw; align-items: center; }
+.bk-hero small { font-size: 1.3cqw; letter-spacing: .08em; text-transform: uppercase; color: #8a6a4f; }
+.bk-hero h3 { font: 400 6.4cqw/1 'Newsreader', Georgia, serif; letter-spacing: -0.02em; margin: 1.6cqw 0; }
+.bk-hero p { font-size: 1.75cqw; color: #5d4f44; margin: 0 0 2.6cqw; }
+.bk-btns { display: flex; gap: 2cqw; align-items: center; }
+.bk-btns span { font-weight: 600; }
+.bk-hero .ph { aspect-ratio: 1 / .85; border-radius: 1.4cqw; }
+.bk-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4cqw; margin-top: 4cqw; }
+.bk-row .ph { aspect-ratio: 1.5; border-radius: 1.2cqw; }
+.bk-row b { display: block; font: 500 2.1cqw/1.2 'Newsreader', Georgia, serif; margin-top: 1.2cqw; }
+.bk-row span { color: #7a695b; font-size: 1.35cqw; }
+
+/* Rivertown Plumbing */
+.pl { background: #fff; color: #0d1b2a; font: 1.3cqw/1.45 ui-sans-serif, system-ui, sans-serif; }
+.pl-top { display: flex; justify-content: space-between; background: #0f2438; color: #aebccb; padding: .9cqw 3cqw; font-size: 1.15cqw; }
+.pl-top b { color: #fff; }
+.pl-nav { display: flex; align-items: center; gap: 2.8cqw; padding: 1.8cqw 3cqw; border-bottom: 1px solid #e4e8ec; }
+.pl-nav b { margin-right: auto; font-size: 1.9cqw; font-weight: 800; letter-spacing: .01em; }
+.pl-nav span { color: #475669; font-weight: 500; }
+.pl-nav em { font-style: normal; background: #0f2438; color: #fff; padding: 1cqw 2cqw; border-radius: .5cqw; font-weight: 700; }
+.pl-hero { position: relative; aspect-ratio: 2.35; }
+.pl-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,22,36,.9), rgba(10,22,36,.65) 45%, rgba(10,22,36,0) 78%); }
+.pl-copy { position: absolute; z-index: 1; left: 3cqw; top: 50%; transform: translateY(-50%); max-width: 46%; color: #fff; }
+.pl-copy small { font-size: 1.15cqw; letter-spacing: .08em; text-transform: uppercase; color: #c3cfdb; }
+.pl-copy h3 { font-size: 4.8cqw; line-height: 1; font-weight: 800; letter-spacing: -0.03em; margin: 1.4cqw 0; }
+.pl-copy p { font-size: 1.55cqw; color: #cfd8e2; margin: 0 0 2.2cqw; }
+.pl-btns { display: flex; gap: 1.2cqw; }
+.pl-btns em, .pl-btns span { font-style: normal; padding: 1.2cqw 2cqw; border-radius: .5cqw; font-weight: 700; }
+.pl-btns em { background: #fff; color: #0f2438; }
+.pl-btns span { box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); }
+.pl-strip { display: grid; grid-template-columns: repeat(4, 1fr); }
+.pl-strip div { padding: 2cqw 3cqw; border-right: 1px solid #e4e8ec; }
+.pl-strip div:last-child { border: 0; }
+.pl-strip b { display: block; font-size: 1.6cqw; }
+.pl-strip span { color: #5b6878; }
+
+/* Salt & Stone salon */
+.sa { background: #f4efeb; color: #231d1a; font: 1.5cqw/1.45 ui-sans-serif, system-ui, sans-serif; }
+.sa-nav { display: grid; grid-template-columns: 1fr auto 1fr; padding: 2.6cqw 4cqw; align-items: center; color: #6c625c; }
+.sa-nav b { font-size: 2.2cqw; letter-spacing: .3em; color: #231d1a; font-weight: 600; }
+.sa-nav span:last-child { text-align: right; }
+.sa-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 44cqw; }
+.sa-hero .ph { min-height: 44cqw; }
+.sa-copy { padding: 5cqw 4cqw; display: flex; flex-direction: column; justify-content: center; }
+.sa-copy small { font-size: 1.3cqw; letter-spacing: .12em; text-transform: uppercase; color: #8c7b70; }
+.sa-copy h3 { font: 400 5.6cqw/1.02 'Newsreader', Georgia, serif; letter-spacing: -0.02em; margin: 1.6cqw 0 2cqw; }
+.sa-copy p { color: #62574f; font-size: 1.7cqw; margin: 0 0 3cqw; }
+.sa-copy em { align-self: start; font-style: normal; border: 1px solid #231d1a; padding: 1.2cqw 2.6cqw; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: 1.3cqw; }
+
+/* Salon on a phone */
+.sm { background: #f4efeb; color: #231d1a; font: 4cqw/1.4 ui-sans-serif, system-ui, sans-serif; padding-bottom: 7cqw; }
+.sm-nav { display: flex; justify-content: space-between; padding: 10cqw 6cqw 4cqw; }
+.sm-nav b { letter-spacing: .25em; font-weight: 600; font-size: 4cqw; }
+.sm .ph { aspect-ratio: 1; margin: 0 4cqw; }
+.sm h3 { font: 400 10cqw/1.02 'Newsreader', Georgia, serif; margin: 5cqw 6cqw 3cqw; letter-spacing: -0.02em; }
+.sm p { margin: 0 6cqw 5cqw; color: #62574f; }
+.sm em { display: block; margin: 0 6cqw; text-align: center; font-style: normal; background: #231d1a; color: #f4efeb; padding: 3.6cqw; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: 3.4cqw; }
