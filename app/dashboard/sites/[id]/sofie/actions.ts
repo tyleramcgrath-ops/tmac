@@ -79,7 +79,8 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
   after(async () => {
     const current = state.draft ?? live
     try {
-      const result = await askSofie({ snapshot: current, history: state.chat, message: text })
+      const photos = (await store.mediaForSite(site.id)).map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
+      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos })
       const sofie: ChatTurn = { role: 'sofie', text: result.reply, ...(result.changes.length ? { changes: result.changes } : {}), at: new Date().toISOString() }
       await store.saveSofieState(site.id, {
         chat: [...started.chat, sofie].slice(-60),

@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 import path from "node:path";
 
 const nextConfig: NextConfig = {
+  // Photo uploads are resized in the browser first, so a few MB is plenty.
+  experimental: { serverActions: { bodySizeLimit: '4mb' } },
   turbopack: {
     root: path.join(__dirname),
   },

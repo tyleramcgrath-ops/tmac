@@ -46,6 +46,18 @@ export interface Message {
 }
 export type NewMessage = Omit<Message, 'id' | 'createdAt' | 'read'>
 
+// A photo the owner uploaded, served from /u/<id> on every site address.
+export interface Media {
+  id: string
+  siteId: string
+  mime: string
+  width: number
+  height: number
+  alt: string
+  bytes: number
+  createdAt: string
+}
+
 export type RevisionAuthor = 'owner' | 'sofie' | 'operator' | 'import'
 
 export interface Store {
@@ -70,6 +82,11 @@ export interface Store {
   // Removes the user and all of their sites.
   deleteUser(userId: string): Promise<void>
   updateUser(userId: string, changes: { name?: string; passwordHash?: string }): Promise<void>
+  addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'>, data: Buffer): Promise<Media>
+  mediaForSite(siteId: string): Promise<Media[]>
+  // The file itself, for serving. Not scoped: ids are unguessable and files are public.
+  mediaFile(id: string): Promise<{ mime: string; data: Buffer } | null>
+  deleteMedia(siteId: string, id: string): Promise<void>
   addMessage(m: NewMessage): Promise<Message>
   messagesForSite(siteId: string, limit?: number): Promise<Message[]>
   // Mark one message read (or unread). Scoped to the site.
@@ -139,6 +156,17 @@ CREATE TABLE IF NOT EXISTS ss_messages (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_messages_site_idx ON ss_messages (site_id, created_at DESC);
+CREATE TABLE IF NOT EXISTS ss_media (
+  id TEXT PRIMARY KEY,
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  mime TEXT NOT NULL,
+  width INTEGER NOT NULL,
+  height INTEGER NOT NULL,
+  alt TEXT NOT NULL,
+  data BYTEA NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_media_site_idx ON ss_media (site_id, created_at DESC);
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
@@ -237,6 +265,25 @@ class PgStore implements Store {
   }
   async saveSofieState(siteId: string, state: SofieState) {
     await this.q('INSERT INTO ss_sofie (site_id, data) VALUES ($1,$2) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, state])
+  }
+  async addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'>, data: Buffer) {
+    const id = randomUUID().replace(/-/g, '')
+    await this.q('INSERT INTO ss_media (id, site_id, mime, width, height, alt, data) VALUES ($1,$2,$3,$4,$5,$6,$7)', [id, m.siteId, m.mime, m.width, m.height, m.alt, data])
+    return { ...m, id, bytes: data.length, createdAt: new Date().toISOString() }
+  }
+  async mediaForSite(siteId: string) {
+    const rows = await this.q<{ id: string; site_id: string; mime: string; width: number; height: number; alt: string; bytes: number; created_at: string }>(
+      'SELECT id, site_id, mime, width, height, alt, octet_length(data) AS bytes, created_at FROM ss_media WHERE site_id = $1 ORDER BY created_at DESC',
+      [siteId]
+    )
+    return rows.map((r) => ({ id: r.id, siteId: r.site_id, mime: r.mime, width: r.width, height: r.height, alt: r.alt, bytes: Number(r.bytes), createdAt: new Date(r.created_at).toISOString() }))
+  }
+  async mediaFile(id: string) {
+    const r = (await this.q<{ mime: string; data: Buffer }>('SELECT mime, data FROM ss_media WHERE id = $1', [id]))[0]
+    return r ?? null
+  }
+  async deleteMedia(siteId: string, id: string) {
+    await this.q('DELETE FROM ss_media WHERE id = $1 AND site_id = $2', [id, siteId])
   }
   async deleteSite(ownerId: string, siteId: string) {
     await this.q('DELETE FROM ss_sites WHERE id = $1 AND owner_id = $2', [siteId, ownerId])
@@ -345,6 +392,23 @@ export class MemoryStore implements Store {
   async saveSofieState(siteId: string, state: SofieState) {
     this.sofie.set(siteId, structuredClone(state))
   }
+  private media = new Map<string, { meta: Media; data: Buffer }>()
+  async addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'>, data: Buffer) {
+    const meta: Media = { ...m, id: randomUUID().replace(/-/g, ''), bytes: data.length, createdAt: new Date().toISOString() }
+    this.media.set(meta.id, { meta, data })
+    return { ...meta }
+  }
+  async mediaForSite(siteId: string) {
+    return [...this.media.values()].filter((x) => x.meta.siteId === siteId).map((x) => ({ ...x.meta })).reverse()
+  }
+  async mediaFile(id: string) {
+    const x = this.media.get(id)
+    return x ? { mime: x.meta.mime, data: x.data } : null
+  }
+  async deleteMedia(siteId: string, id: string) {
+    const x = this.media.get(id)
+    if (x && x.meta.siteId === siteId) this.media.delete(id)
+  }
   async deleteSite(ownerId: string, siteId: string) {
     const s = this.sites.get(siteId)
     if (!s || s.ownerId !== ownerId) return
@@ -352,6 +416,7 @@ export class MemoryStore implements Store {
     for (const [id, p] of this.pages) if (p.siteId === siteId) this.pages.delete(id)
     this.sofie.delete(siteId)
     this.messages = this.messages.filter((m) => m.siteId !== siteId)
+    for (const [id, x] of this.media) if (x.meta.siteId === siteId) this.media.delete(id)
   }
   async deleteUser(userId: string) {
     for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)

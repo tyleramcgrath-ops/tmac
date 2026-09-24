@@ -150,6 +150,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     editorial: `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
   }[design]
+  // "Other" businesses could be anything, so their intro makes no claims.
+  const introText = input.type === 'other' ? `${name} serves customers across ${place}${services.length ? ` with ${offer}` : ''}. Friendly, local and easy to reach.` : intro
   const more = { bold: 'See our services', editorial: 'View services', warm: 'See what we offer' }[design]
   // Three ways to say it per design, so neighbouring cards don't repeat.
   const cardText = (s: string, i = 0) =>
@@ -175,7 +177,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const heroBlocks = (light: boolean): Element[] => [
     { id: 'hero-kicker', type: 'text', text: eyebrow, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: light ? '#dbe3ec' : 'primary' } },
     { id: 'hero-title', type: 'heading', level: 1, text: headline, style: { fontSize: { desktop: design === 'bold' ? 62 : 58, tablet: 48, mobile: 38 }, maxWidth: 720, margin: { desktop: { top: 6, right: 0, bottom: 4, left: 0 } }, ...(light ? { color: '#ffffff' as const } : {}) } },
-    { id: 'hero-text', type: 'text', text: intro, style: { fontSize: { desktop: 19, mobile: 17 }, maxWidth: 560, color: light ? '#e2e8ef' : 'muted' } },
+    { id: 'hero-text', type: 'text', text: introText, style: { fontSize: { desktop: 19, mobile: 17 }, maxWidth: 560, color: light ? '#e2e8ef' : 'muted' } },
     {
       id: 'hero-actions',
       type: 'container',
