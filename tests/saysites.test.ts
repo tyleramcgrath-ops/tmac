@@ -12,7 +12,12 @@ import {
   type Page,
 } from '../apps/saysites/lib'
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
-import { resolveHost, type SiteSource } from '../apps/saysites/lib/sites'
+import { resolveHost } from '../apps/saysites/lib/sites'
+import { classifyHost } from '../apps/saysites/lib/hosts'
+import { serveSitePath } from '../apps/saysites/lib/serve'
+import { MemoryStore } from '../apps/saysites/lib/store'
+import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
+import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 
 function clone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v))
@@ -237,30 +242,132 @@ describe('SaySites sitemap, robots and redirects', () => {
 })
 
 describe('SaySites host routing', () => {
-  it('serves a site on its saysites.com subdomain, not as a preview', async () => {
-    const m = await resolveHost('rivertown-plumbing.saysites.com')
-    expect(m?.bundle.site.business.name).toBe('Rivertown Plumbing')
-    expect(m?.preview).toBe(false)
-  })
-
-  it('returns nothing for an unknown saysites.com subdomain', async () => {
-    expect(await resolveHost('nobody-here.saysites.com')).toBeNull()
-  })
-
-  it('serves the default site on any other host (the test deployment), as a preview', async () => {
-    const m = await resolveHost('saysites-test.vercel.app')
-    expect(m?.bundle.site.subdomain).toBe('rivertown-plumbing')
-    expect(m?.preview).toBe(true)
-    expect((await resolveHost('localhost:3000'))?.preview).toBe(true)
-  })
-
-  it('serves a customer domain, with or without www', async () => {
-    const custom: SiteSource = {
-      bySubdomain: async () => null,
-      byCustomDomain: async (d) => (d === 'rivertownplumbing.com' ? { site: { ...sampleSite, customDomain: d }, pages: samplePages, redirects: [] } : null),
+  it('sends saysites.com, www, the Vercel test address and localhost to the main app', () => {
+    for (const h of ['saysites.com', 'www.saysites.com', 'saysites.vercel.app', 'saysites-git-main-team.vercel.app', 'localhost:3000', null]) {
+      expect(classifyHost(h).kind).toBe('main')
     }
-    const m = await resolveHost('www.rivertownplumbing.com', custom)
-    expect(m?.bundle.site.customDomain).toBe('rivertownplumbing.com')
-    expect(m?.preview).toBe(false)
+  })
+
+  it('sends subdomains, ss- test addresses and other domains to customer sites', () => {
+    expect(classifyHost('rivertown-plumbing.saysites.com')).toEqual({ kind: 'customer', subdomain: 'rivertown-plumbing', host: 'rivertown-plumbing.saysites.com' })
+    expect(classifyHost('ss-rivertown-plumbing.vercel.app')).toMatchObject({ kind: 'customer', subdomain: 'rivertown-plumbing' })
+    expect(classifyHost('rivertown-plumbing.localhost:3000')).toMatchObject({ kind: 'customer', subdomain: 'rivertown-plumbing' })
+    expect(classifyHost('WWW.RivertownPlumbing.com')).toEqual({ kind: 'customer', subdomain: null, host: 'rivertownplumbing.com' })
+  })
+
+  it('resolves a subdomain to its site; test addresses are previews', async () => {
+    const store = new MemoryStore()
+    const live = await resolveHost('rivertown-plumbing.saysites.com', store)
+    expect(live?.bundle.site.business.name).toBe('Rivertown Plumbing')
+    expect(live?.preview).toBe(false)
+    expect((await resolveHost('ss-rivertown-plumbing.vercel.app', store))?.preview).toBe(true)
+    expect(await resolveHost('nobody-here.saysites.com', store)).toBeNull()
+    expect(await resolveHost('saysites.com', store)).toBeNull()
+  })
+
+  it('resolves a customer domain', async () => {
+    const store = new MemoryStore()
+    const u = await store.createUser({ email: 'a@b.co', name: 'A', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Acme Roofing', type: 'roofer', city: 'Denver', region: 'CO', services: ['Roof repair'], palette: 'slate' }, u.id, 'acme-roofing')
+    await store.createSite(u.id, { ...site, customDomain: 'acmeroofing.com' }, pages)
+    expect((await resolveHost('www.acmeroofing.com', store))?.bundle.site.business.name).toBe('Acme Roofing')
+  })
+})
+
+describe('SaySites serving', () => {
+  const bundle = { site: sampleSite, pages: samplePages, redirects: [{ from: '/old', to: '/services', status: 301 as const }] }
+
+  it('serves pages, sitemap and robots, and 404s the rest', async () => {
+    expect(serveSitePath(bundle, [], { preview: false }).status).toBe(200)
+    expect(serveSitePath(bundle, ['services'], { preview: false }).status).toBe(200)
+    expect(serveSitePath(bundle, ['nope'], { preview: false }).status).toBe(404)
+    expect(await serveSitePath(bundle, ['sitemap.xml'], { preview: false }).text()).toContain('<urlset')
+    expect(await serveSitePath(bundle, ['robots.txt'], { preview: false }).text()).toContain('Allow: /')
+  })
+
+  it('never lets previews be indexed', async () => {
+    const res = serveSitePath(bundle, [], { preview: true })
+    expect(res.headers.get('x-robots-tag')).toBe('noindex')
+    expect(await serveSitePath(bundle, ['robots.txt'], { preview: true }).text()).toContain('Disallow: /')
+  })
+
+  it('follows redirects and prefixes links under a base path', async () => {
+    const r = serveSitePath(bundle, ['old'], { preview: true, basePath: '/preview/rivertown-plumbing' })
+    expect(r.status).toBe(301)
+    expect(r.headers.get('location')).toBe('/preview/rivertown-plumbing/services')
+    const html = await serveSitePath(bundle, [], { preview: true, basePath: '/preview/rivertown-plumbing' }).text()
+    expect(html).toContain('href="/preview/rivertown-plumbing/services"')
+    expect(html).toContain('<link rel="canonical" href="https://rivertown-plumbing.saysites.com/">')
+  })
+})
+
+describe('SaySites accounts', () => {
+  it('hashes and verifies passwords', async () => {
+    const h = await hashPassword('correct-horse-9')
+    expect(h.startsWith('scrypt$')).toBe(true)
+    expect(await verifyPassword('correct-horse-9', h)).toBe(true)
+    expect(await verifyPassword('wrong', h)).toBe(false)
+    expect(await verifyPassword('x', 'garbage')).toBe(false)
+  })
+
+  it('signs sessions that cannot be forged or outlive their expiry', () => {
+    const t = createSessionToken('user-1', 1_000)
+    expect(readSessionToken(t, 2_000)).toBe('user-1')
+    expect(readSessionToken(t, 1_000 + 31 * 86_400_000)).toBeNull()
+    const [payload] = t.split('.')
+    const forged = Buffer.from(JSON.stringify({ uid: 'admin', exp: 9e15 })).toString('base64url') + '.' + t.split('.')[1]
+    expect(readSessionToken(forged, 2_000)).toBeNull()
+    expect(readSessionToken(payload, 2_000)).toBeNull()
+    expect(readSessionToken(undefined)).toBeNull()
+  })
+})
+
+describe('SaySites starter sites', () => {
+  const input = { name: 'Bright Smile Dental', type: 'dentist' as const, city: 'Austin', region: 'TX', phone: '(512) 555-0142', email: 'hi@brightsmile.example', services: ['Cleanings and checkups', 'Teeth whitening', 'Invisalign'], palette: 'forest' as const }
+
+  it('builds a valid three-page site that passes the SEO and speed checks', () => {
+    const { site, pages } = buildStarterSite(input, 'owner-1', 'bright-smile-dental')
+    expect(SiteSchema.parse(site).business.schemaType).toBe('Dentist')
+    expect(pages.map((p) => p.slug)).toEqual(['', 'services', 'contact'])
+    for (const p of pages) {
+      PageSchema.parse(p)
+      expect(checkPage(p, pages).filter((i) => i.severity === 'error')).toEqual([])
+      expect(checkSpeed(renderPage(site, p, pages)).pass).toBe(true)
+    }
+  })
+
+  it('writes local SEO titles and keeps brand names intact', () => {
+    const { pages } = buildStarterSite(input, 'owner-1', 'bright-smile-dental')
+    expect(pages[0].seo.title).toBe('Bright Smile Dental | Dental care in Austin, TX')
+    const html = renderPage(buildStarterSite(input, 'o', 's').site, pages[0], pages).html
+    expect(html).toContain('cleanings and checkups, teeth whitening, Invisalign')
+  })
+
+  it('works without a phone number or services', () => {
+    const { site, pages } = buildStarterSite({ ...input, phone: '', email: '', services: [] }, 'o', 'x')
+    expect(site.nav.map((n) => n.label)).toEqual(['Services', 'Contact'])
+    for (const p of pages) expect(checkPage(p, pages).filter((i) => i.severity === 'error')).toEqual([])
+  })
+
+  it('makes readable subdomains', () => {
+    expect(subdomainFor('Bright Smile Dental')).toBe('bright-smile-dental')
+    expect(subdomainFor("Joe's Café & Bar!")).toBe('joe-s-cafe-and-bar')
+    expect(subdomainFor('!!!')).toBe('my-site')
+  })
+})
+
+describe('SaySites store (memory)', () => {
+  it('keeps each owner’s sites private and records a revision per page', async () => {
+    const store = new MemoryStore()
+    const a = await store.createUser({ email: 'a@x.co', name: 'A', passwordHash: 'h' })
+    const b = await store.createUser({ email: 'b@x.co', name: 'B', passwordHash: 'h' })
+    const { site, pages } = buildStarterSite({ name: 'A Co', type: 'plumber', city: 'C', region: 'D', services: [], palette: 'ocean' }, a.id, 'a-co')
+    await store.createSite(a.id, site, pages)
+    expect((await store.sitesForUser(a.id)).map((s) => s.id)).toEqual([site.id])
+    expect(await store.siteForUser(b.id, site.id)).toBeNull()
+    expect(await store.subdomainTaken('a-co')).toBe(true)
+    expect(await store.subdomainTaken('rivertown-plumbing')).toBe(true)
+    expect(store.revisions).toHaveLength(3)
+    await expect(store.createSite(b.id, { ...site, id: 'other' }, [])).rejects.toThrow()
   })
 })

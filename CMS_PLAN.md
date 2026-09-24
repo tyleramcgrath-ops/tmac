@@ -1,7 +1,7 @@
 # SaySites — Plan and Timeline
 
 **Date:** 2026-09-24 (revised after first decisions)
-**Status:** Phase 0 in progress. The content model, renderer, SEO checks, speed gate and database tables are built (`apps/saysites/lib/`, migration `013_saysites_core.sql`).
+**Status:** Phase 0 in progress. Live on the test address https://saysites.vercel.app: the saysites.com homepage, sign up and log in, a dashboard that builds a starter website from a few facts about the business, and the renderer that serves every site (`apps/saysites/`).
 **Name:** **SaySites**, its own brand (chosen 2026-09-24; domains not yet registered).
 
 ---
@@ -369,14 +369,15 @@ Done:
   pre-publish checks (one H1, heading order, duplicate ids, broken links, title
   length), sitemap, robots, and chain-free 301s on slug change.
 - ✅ `apps/saysites/lib/speed.ts`: the static half of the 95+ gate.
-- ✅ Migration `013_saysites_core.sql`: sites, pages, page revisions (author: owner,
-  Sofie, Operator, import), redirects, media.
+- ✅ Database tables (created by `apps/saysites/lib/store.ts`, in SaySites' own database): users, sites, pages, page revisions (author: owner,
+  Sofie, Operator, import) and redirects.
 - ✅ Sample site (a local plumber): **Lighthouse mobile 100 / 100 / 100 / 100**
   (Performance, Accessibility, Best Practices, SEO); home page 7.5 KB HTML, 3.4 KB CSS.
 
+- ✅ **saysites.com homepage** (what SaySites is, how it works, features with honest "Coming soon" labels, pricing), **sign up / log in**, and a **dashboard**: list your sites, "Tell us about your business" builds Home, Services and Contact pages, and each page shows its SEO and speed checks. Sites can be viewed at `/preview/<name>` until `*.saysites.com` is connected.
+
 Still to do:
 1. Register saysites.com and saysites.ai; run a trademark search.
-2. Submit the Google Business Profile API access request; register the Stripe Connect platform.
-3. The store layer: read and write sites/pages/revisions through the foundation store (Postgres + file).
-4. ~~The renderer deployment~~ ✅ Live on the test address **https://saysites.vercel.app** (Vercel project `saysites`, root `apps/saysites`), serving the sample site as a `noindex` preview. Switching to `*.saysites.com` later needs only the domain added in Vercel; no code change.
-5. Sofie's first tools: `update_element`, `add_section`, `set_global_colors`, working on this same tree.
+2. Connect a database to the `saysites` Vercel project (a free Neon Postgres); until then the test site runs in "test mode" and forgets accounts on restart.
+3. Submit the Google Business Profile API access request; register the Stripe Connect platform.
+4. Sofie's first version: a chat panel next to a live preview with `update_element`, `add_section` and `set_global_colors`, working on this same tree.

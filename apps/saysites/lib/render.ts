@@ -316,3 +316,10 @@ export function esc(s: string): string {
 function jsonForScript(data: unknown): string {
   return JSON.stringify(data).replace(/</g, '\\u003c')
 }
+
+// Serve a rendered page under a path prefix (the dashboard's /preview/<site>
+// view) by re-pointing every internal link. Absolute URLs — canonical, og:url,
+// external links — and image sources are left alone.
+export function withBasePath(html: string, basePath: string): string {
+  return html.replaceAll('href="/', `href="${basePath}/`)
+}
