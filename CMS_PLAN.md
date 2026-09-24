@@ -1,8 +1,8 @@
-# The CMS — Plan and Timeline
+# SaySites — Plan and Timeline
 
 **Date:** 2026-09-24 (revised after first decisions)
 **Status:** Draft. Nothing here is built yet.
-**Working name:** "the CMS". It will be its **own brand**. Name shortlist below.
+**Name:** **SaySites**, its own brand (chosen 2026-09-24; domains not yet registered).
 
 ---
 
@@ -315,27 +315,27 @@ is roughly $29–39/month, and Wix and Squarespace entry plans are roughly $16�
 
 ---
 
-## Name shortlist
+## Name: SaySites
 
-Checked on 2026-09-24 through Vercel's domain registrar. The GoDaddy connector isn't
-connected in this session. Availability is not trademark clearance: search USPTO before
-committing.
+Chosen because it says what the product does: **you say it, it builds your site.**
+Availability checked on 2026-09-24 through GoDaddy and Vercel. An open domain is not
+trademark clearance: run a USPTO search before launch.
 
-| Name | Domain(s) open | Price/yr | Why |
-|---|---|---|---|
-| **TellRank** | tellrank.com **and** tellrank.ai | $11.25 (.com), $80 (.ai, 2-year minimum $160) | "Tell it what you want, it ranks." Says both halves of the pitch, chat and SEO. Both main domains are free. |
-| **TellSites** | tellsites.com | $11.25 | Simple and literal: you tell it, it builds sites. |
-| **SaySites** | saysites.com | $11.25 | The same idea, softer. |
-| SayRank | sayrank.ai (.com taken) | not checked | Close to TellRank, but the .com is gone. |
-| SwiftRank | swiftrank.ai | not checked | The speed angle. |
-| PureSite | puresite.ai | not checked | The clean-code angle. |
+| Domain | Status | Use |
+|---|---|---|
+| **saysites.com** | Available (standard price) | Main site. Register first. |
+| **saysites.ai** | Available | Protect the brand; redirect to .com |
+| saysites.app / .io / .co / .net | Available | Optional brand protection |
+| saysite.com (singular) | **Taken** | Customers may type it; watch for confusion |
+| saysite.ai / .io | Taken | — |
 
-Taken: TellSite, SaySite, SiteSmith, TidySite, PlainSite, CleanRank, Sitely,
-SiteTalk and others. *Recommendation:* **TellRank**, securing both .com and .ai.
+Runner-up names, in case the trademark search turns something up: **TellRank**
+(tellrank.com and .ai), **TellSites** (tellsites.com), **SayBuilt** (.ai/.io),
+**SayMade** (.ai/.co).
 
 ## Still open
 
-- **Pick the name**, then register the domain(s) and file a trademark search.
+- **Register saysites.com** (plus .ai) and run a trademark search on "SaySites".
 - **The assistant's name and face** (like "Angie").
 - **Hosting provider** at scale: Vercel to start, reassessed on cost per site in Phase 6.
 - **Focus.** The repo also has Citation Gap, Reloop and North Star HQ. This is a
@@ -358,7 +358,7 @@ SiteTalk and others. *Recommendation:* **TellRank**, securing both .com and .ai.
 
 ## Next two weeks (concrete)
 
-1. Pick the name from the shortlist and register the domain(s).
+1. Register saysites.com and saysites.ai; run a trademark search.
 2. Submit the Google Business Profile API access request; register the Stripe Connect platform.
 3. Write `lib/cms/schema/` with zod schemas for the element tree (Container plus 5
    widgets, responsive style values), GlobalStyles, Page, Site and Redirect, plus unit tests.
