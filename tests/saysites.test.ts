@@ -10,8 +10,9 @@ import {
   sitemapXml,
   structuredData,
   type Page,
-} from '../lib/saysites'
-import { sampleHome, samplePages, sampleServices, sampleSite } from '../lib/saysites/sample'
+} from '../apps/saysites/lib'
+import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
+import { resolveHost, type SiteSource } from '../apps/saysites/lib/sites'
 
 function clone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v))
@@ -232,5 +233,34 @@ describe('SaySites sitemap, robots and redirects', () => {
     r = redirectsAfterSlugChange(r, 'our-services', 'services')
     expect(r.find((x) => x.from === '/services')).toBeUndefined()
     expect(r.every((x) => x.to === '/services')).toBe(true)
+  })
+})
+
+describe('SaySites host routing', () => {
+  it('serves a site on its saysites.com subdomain, not as a preview', async () => {
+    const m = await resolveHost('rivertown-plumbing.saysites.com')
+    expect(m?.bundle.site.business.name).toBe('Rivertown Plumbing')
+    expect(m?.preview).toBe(false)
+  })
+
+  it('returns nothing for an unknown saysites.com subdomain', async () => {
+    expect(await resolveHost('nobody-here.saysites.com')).toBeNull()
+  })
+
+  it('serves the default site on any other host (the test deployment), as a preview', async () => {
+    const m = await resolveHost('saysites-test.vercel.app')
+    expect(m?.bundle.site.subdomain).toBe('rivertown-plumbing')
+    expect(m?.preview).toBe(true)
+    expect((await resolveHost('localhost:3000'))?.preview).toBe(true)
+  })
+
+  it('serves a customer domain, with or without www', async () => {
+    const custom: SiteSource = {
+      bySubdomain: async () => null,
+      byCustomDomain: async (d) => (d === 'rivertownplumbing.com' ? { site: { ...sampleSite, customDomain: d }, pages: samplePages, redirects: [] } : null),
+    }
+    const m = await resolveHost('www.rivertownplumbing.com', custom)
+    expect(m?.bundle.site.customDomain).toBe('rivertownplumbing.com')
+    expect(m?.preview).toBe(false)
   })
 })

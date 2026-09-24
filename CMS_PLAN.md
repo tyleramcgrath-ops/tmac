@@ -1,7 +1,7 @@
 # SaySites — Plan and Timeline
 
 **Date:** 2026-09-24 (revised after first decisions)
-**Status:** Phase 0 in progress. The content model, renderer, SEO checks, speed gate and database tables are built (`lib/saysites/`, migration `013_saysites_core.sql`).
+**Status:** Phase 0 in progress. The content model, renderer, SEO checks, speed gate and database tables are built (`apps/saysites/lib/`, migration `013_saysites_core.sql`).
 **Name:** **SaySites**, its own brand (chosen 2026-09-24; domains not yet registered).
 
 ---
@@ -359,16 +359,16 @@ Runner-up names, in case the trademark search turns something up: **TellRank**
 ## Next two weeks (concrete)
 
 Done:
-- ✅ `lib/saysites/schema.ts`: zod schemas for the element tree (containers plus 5
+- ✅ `apps/saysites/lib/schema.ts`: zod schemas for the element tree (containers plus 5
   widgets: heading, text, image, button, FAQ), responsive style values, global styles,
   Site, Page and Redirect. Unknown fields, `javascript:` links, non-hex colors and
   images without alt text are rejected.
-- ✅ `lib/saysites/render.ts`: element tree → one lean HTML document with per-page CSS,
+- ✅ `apps/saysites/lib/render.ts`: element tree → one lean HTML document with per-page CSS,
   no JavaScript, system fonts, JSON-LD and a favicon.
-- ✅ `lib/saysites/seo.ts`: LocalBusiness/FAQPage/Breadcrumb structured data,
+- ✅ `apps/saysites/lib/seo.ts`: LocalBusiness/FAQPage/Breadcrumb structured data,
   pre-publish checks (one H1, heading order, duplicate ids, broken links, title
   length), sitemap, robots, and chain-free 301s on slug change.
-- ✅ `lib/saysites/speed.ts`: the static half of the 95+ gate.
+- ✅ `apps/saysites/lib/speed.ts`: the static half of the 95+ gate.
 - ✅ Migration `013_saysites_core.sql`: sites, pages, page revisions (author: owner,
   Sofie, Operator, import), redirects, media.
 - ✅ Sample site (a local plumber): **Lighthouse mobile 100 / 100 / 100 / 100**
