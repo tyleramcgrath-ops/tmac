@@ -80,8 +80,12 @@ class AISA_CLI {
 					$progress->tick();
 					continue;
 				}
+				if ( 'skipped' === $gen['status'] ) {
+					$progress->tick();
+					continue;
+				}
 			}
-			if ( ! $review && 'applied' !== $item['status'] ) {
+			if ( ! $review && 'applied' !== $item['status'] && 'skipped' !== $item['status'] ) {
 				$applied = AISA_Jobs::apply( $item['type'], $item['id'] );
 				if ( is_wp_error( $applied ) ) {
 					$errors++;

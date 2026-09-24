@@ -198,6 +198,12 @@ class AISA_Jobs {
 			if ( ! $post ) {
 				return new WP_Error( 'aisa_not_found', __( 'Post not found.', 'ai-seo-autopilot' ) );
 			}
+			if ( self::already_done_by_person( $id ) ) {
+				// Nothing would be written in fill-empty mode, so don't spend tokens generating.
+				self::meta_set( $type, $id, self::META_STATUS, 'skipped' );
+				self::meta_delete( $type, $id, self::META_ERROR );
+				return self::describe( $type, $id );
+			}
 			$result = AISA_Generator::generate_post( $post );
 		}
 
@@ -215,6 +221,34 @@ class AISA_Jobs {
 		self::meta_delete( $type, $id, self::META_ERROR );
 
 		return self::describe( $type, $id );
+	}
+
+	/**
+	 * Token saver + fill-empty mode: whether a person already wrote this post's title,
+	 * description and focus keyphrase, so a generated proposal could never be applied.
+	 *
+	 * @param int $id Post ID.
+	 * @return bool
+	 */
+	private static function already_done_by_person( $id ) {
+		if ( ! AISA_Settings::token_saver() || 'fill_empty' !== AISA_Settings::get( 'mode' ) ) {
+			return false;
+		}
+		$current = AISA_AIOSEO_Bridge::read( $id );
+		if ( is_wp_error( $current ) ) {
+			return false;
+		}
+		$ours = self::written( 'post', $id );
+		foreach ( [ 'title', 'description', 'focus_keyphrase' ] as $key ) {
+			$now = isset( $current[ $key ] ) ? $current[ $key ] : null;
+			if ( self::is_empty_value( $now ) ) {
+				return false;
+			}
+			if ( isset( $ours[ $key ] ) && AISA_AIOSEO_Bridge::normalize( $ours[ $key ] ) === AISA_AIOSEO_Bridge::normalize( $now ) ) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

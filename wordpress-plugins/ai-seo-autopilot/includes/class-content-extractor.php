@@ -15,9 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AISA_Content_Extractor {
 	/**
 	 * Characters of page text sent per page. SEO metadata only needs the substance of a page,
-	 * and a cap keeps cost predictable on very long pages.
+	 * and a cap keeps cost predictable on very long pages. Token saver mode sends much less:
+	 * the opening of a page says what it is about.
+	 *
+	 * @return int
 	 */
-	const MAX_CHARS = 24000;
+	public static function max_chars() {
+		return AISA_Settings::token_saver() ? 6000 : 24000;
+	}
 
 	/**
 	 * Text for a post. Page builders (Elementor, Divi, etc.) often leave post_content empty,
@@ -40,9 +45,9 @@ class AISA_Content_Extractor {
 
 		$text = apply_filters( 'aisa_post_text', $text, $post );
 
-		$truncated = mb_strlen( $text ) > self::MAX_CHARS;
+		$truncated = mb_strlen( $text ) > self::max_chars();
 		if ( $truncated ) {
-			$text = mb_substr( $text, 0, self::MAX_CHARS );
+			$text = mb_substr( $text, 0, self::max_chars() );
 		}
 
 		return [

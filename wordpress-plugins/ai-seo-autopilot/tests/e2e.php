@@ -5,13 +5,13 @@
  * Requires tests/mock-claude.php installed as a mu-plugin.
  */
 
-$failures = 0;
+// eval-file runs this file inside a function, so the counter must live in $GLOBALS.
+$GLOBALS['aisa_failures'] = 0;
 function aisa_t( $ok, $label, $detail = '' ) {
-	global $failures;
 	if ( $ok ) {
 		WP_CLI::line( "  ok   {$label}" );
 	} else {
-		$failures++;
+		$GLOBALS['aisa_failures']++;
 		WP_CLI::line( "  FAIL {$label}" . ( $detail ? " — {$detail}" : '' ) );
 	}
 }
@@ -31,8 +31,9 @@ WP_CLI::line( 'Environment: WordPress ' . get_bloginfo( 'version' ) . ', AIOSEO 
 
 AISA_Settings::save(
 	[
-		'api_key'    => 'sk-ant-test-key',
-		'model'      => 'claude-opus-5',
+		'api_key'     => 'sk-ant-test-key',
+		'token_saver' => false,
+		'model'       => 'claude-opus-5',
 		'effort'     => 'low',
 		'mode'       => 'fill_empty',
 		'post_types' => [ 'post', 'page' ],
@@ -153,8 +154,29 @@ remove_all_filters( 'aisa_adapters' );
 AISA_AIOSEO_Bridge::reset();
 aisa_t( AISA_Health_Check::run()['ok'], 'self-test recovers once the path works again' );
 
+WP_CLI::line( 'Token saver mode' );
+AISA_Settings::save( [ 'token_saver' => true, 'model' => 'claude-haiku-4-5', 'mode' => 'fill_empty' ] );
+aisa_t( 6000 === AISA_Content_Extractor::max_chars(), 'page text capped at 6,000 characters' );
+$long_id = wp_insert_post( [ 'post_title' => 'Long Page', 'post_status' => 'publish', 'post_type' => 'page', 'post_content' => str_repeat( 'Dental implants replace missing teeth. ', 1500 ) ] );
+delete_option( 'aisa_test_requests' );
+AISA_Jobs::generate( 'post', $long_id );
+$reqs = get_option( 'aisa_test_requests', [] );
+aisa_t( 1 === count( $reqs ), 'one request per page (no second "fix the length" request)', count( $reqs ) . ' requests' );
+aisa_t( mb_strlen( $reqs[0]['body']['messages'][0]['content'] ) < 7000, 'request carries only the capped text', mb_strlen( $reqs[0]['body']['messages'][0]['content'] ) . ' chars' );
+aisa_t( 'claude-haiku-4-5' === $reqs[0]['body']['model'] && ! isset( $reqs[0]['body']['output_config']['effort'] ) && ! isset( $reqs[0]['body']['fallbacks'] ), 'Haiku request has no effort or fallbacks parameters' );
+AISA_AIOSEO_Bridge::write( $long_id, [ 'title' => 'Person Title', 'description' => 'Person description.', 'focus_keyphrase' => 'person phrase' ] );
+delete_post_meta( $long_id, '_aisa_proposal' );
+delete_post_meta( $long_id, '_aisa_written' );
+delete_option( 'aisa_test_requests' );
+$row = AISA_Jobs::generate( 'post', $long_id );
+aisa_t( 'skipped' === $row['status'] && ! get_option( 'aisa_test_requests' ), 'page whose SEO a person wrote is skipped without calling Claude' );
+aisa_t( 'Teeth Whitening in Austin' === AISA_Generator::fit( 'Teeth Whitening in Austin | Bright Smile Dental Clinic Group Of Texas', 45 ), 'over-long title drops the brand suffix', AISA_Generator::fit( 'Teeth Whitening in Austin | Bright Smile Dental Clinic Group Of Texas', 45 ) );
+$fit = AISA_Generator::fit( str_repeat( 'word ', 50 ), 60 );
+aisa_t( mb_strlen( $fit ) <= 60 && 'word' === substr( $fit, -4 ), 'long text is cut at a word boundary', $fit );
+wp_delete_post( $long_id, true );
+
 WP_CLI::line( '' );
-if ( $failures ) {
-	WP_CLI::error( "{$failures} check(s) failed." );
+if ( $GLOBALS['aisa_failures'] ) {
+	WP_CLI::error( $GLOBALS['aisa_failures'] . ' check(s) failed.' );
 }
 WP_CLI::success( 'All checks passed.' );

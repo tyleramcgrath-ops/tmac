@@ -3,7 +3,7 @@ Tags: seo, all in one seo, aioseo, schema, ai
 Requires at least: 6.0
 Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 Uses Claude to write SEO titles, meta descriptions, keyphrases, social tags and schema for every page, then saves them into All in One SEO in one click.
@@ -26,6 +26,10 @@ Requires an Anthropic API key.
 3. Go to SEO Autopilot → Autopilot and click Run Autopilot.
 
 == Changelog ==
+
+= 1.1.0 =
+* Token saver mode, on by default: sends less page text, shortens long titles in code instead of a second request, skips pages whose SEO you already wrote, and processes one page at a time.
+* Claude Haiku 4.5 is now the default model.
 
 = 1.0.0 =
 * First release.

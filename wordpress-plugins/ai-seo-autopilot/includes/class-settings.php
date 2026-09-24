@@ -22,9 +22,9 @@ class AISA_Settings {
 	 */
 	public static function models() {
 		return [
-			'claude-opus-5'    => 'Claude Opus 5 (best quality)',
-			'claude-sonnet-5'  => 'Claude Sonnet 5 (faster, cheaper)',
-			'claude-haiku-4-5' => 'Claude Haiku 4.5 (fastest, cheapest)',
+			'claude-haiku-4-5' => 'Claude Haiku 4.5 (cheapest, fastest; recommended)',
+			'claude-sonnet-5'  => 'Claude Sonnet 5 (better writing, about 2x the cost of Haiku)',
+			'claude-opus-5'    => 'Claude Opus 5 (best writing, about 5x the cost of Haiku)',
 		];
 	}
 
@@ -36,7 +36,8 @@ class AISA_Settings {
 	public static function defaults() {
 		return [
 			'api_key'        => '',
-			'model'          => 'claude-opus-5',
+			'model'          => 'claude-haiku-4-5',
+			'token_saver'    => true,
 			'effort'         => 'low',
 			'post_types'     => [ 'post', 'page' ],
 			'mode'           => 'fill_empty',
@@ -79,6 +80,16 @@ class AISA_Settings {
 	}
 
 	/**
+	 * Whether token saver mode is on: less page text per request, no second "fix the
+	 * length" request, pages that already have SEO are skipped, one page at a time.
+	 *
+	 * @return bool
+	 */
+	public static function token_saver() {
+		return (bool) self::get( 'token_saver' );
+	}
+
+	/**
 	 * Whether the key comes from wp-config.php.
 	 *
 	 * @return bool
@@ -110,12 +121,16 @@ class AISA_Settings {
 
 		if ( isset( $input['model'] ) ) {
 			$model          = sanitize_text_field( wp_unslash( $input['model'] ) );
-			$clean['model'] = array_key_exists( $model, self::models() ) ? $model : 'claude-opus-5';
+			$clean['model'] = array_key_exists( $model, self::models() ) ? $model : 'claude-haiku-4-5';
 		}
 
 		if ( isset( $input['effort'] ) ) {
 			$effort          = sanitize_key( $input['effort'] );
 			$clean['effort'] = in_array( $effort, [ 'low', 'medium', 'high' ], true ) ? $effort : 'low';
+		}
+
+		if ( isset( $input['token_saver'] ) ) {
+			$clean['token_saver'] = ! empty( $input['token_saver'] );
 		}
 
 		if ( isset( $input['mode'] ) ) {

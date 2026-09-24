@@ -61,14 +61,15 @@ class AISA_Generator {
 			$sections[] = "Phone numbers and emails linked on the homepage:\n" . implode( "\n", $contact_bits );
 		}
 
-		$sections[] = "Homepage text:\n" . self::truncate( AISA_Content_Extractor::clean_html( self::main_html( $home_html ) ), 12000 );
+		$saver      = AISA_Settings::token_saver();
+		$sections[] = "Homepage text:\n" . self::truncate( AISA_Content_Extractor::clean_html( self::main_html( $home_html ) ), $saver ? 5000 : 12000 );
 
 		foreach ( self::key_pages() as $page ) {
 			$text       = AISA_Content_Extractor::for_post( $page );
-			$sections[] = sprintf( "Page \"%s\" (%s):\n%s", $page->post_title, get_permalink( $page ), self::truncate( $text['text'], 6000 ) );
+			$sections[] = sprintf( "Page \"%s\" (%s):\n%s", $page->post_title, get_permalink( $page ), self::truncate( $text['text'], $saver ? 2500 : 6000 ) );
 		}
 
-		$sections[] = "Titles of other published pages:\n" . implode( "\n", self::page_titles( 60 ) );
+		$sections[] = "Titles of other published pages:\n" . implode( "\n", self::page_titles( $saver ? 25 : 60 ) );
 
 		$system = self::system_prompt() . "\n\nYou are now building the site profile: the facts about the business behind this website. "
 			. 'Use only facts stated in the material. Leave a field as an empty string when the material does not state it. '
@@ -219,7 +220,7 @@ class AISA_Generator {
 			$lines[] = 'Excerpt: ' . wp_strip_all_tags( $post->post_excerpt );
 		}
 		if ( $content['truncated'] ) {
-			$lines[] = '(Page text below is the first ' . AISA_Content_Extractor::MAX_CHARS . ' characters of a longer page.)';
+			$lines[] = '(Page text below is the first ' . AISA_Content_Extractor::max_chars() . ' characters of a longer page.)';
 		}
 		$lines[] = "Page text:\n" . ( '' !== $content['text'] ? $content['text'] : '(no readable text found)' );
 
@@ -230,7 +231,7 @@ class AISA_Generator {
 			return $out;
 		}
 
-		$problems = self::length_problems( $out );
+		$problems = AISA_Settings::token_saver() ? [] : self::length_problems( $out );
 		if ( $problems ) {
 			// One corrective pass keeps quality high without looping on cost.
 			$retry = AISA_Claude_Client::json(
@@ -243,7 +244,35 @@ class AISA_Generator {
 			}
 		}
 
-		return self::sanitize_page_result( $out );
+		$result = self::sanitize_page_result( $out );
+		if ( AISA_Settings::token_saver() ) {
+			// Instead of a second request, shorten anything over the limit at a word boundary.
+			$result['fields']['title']       = self::fit( $result['fields']['title'], 60 );
+			$result['fields']['description'] = self::fit( $result['fields']['description'], 158 );
+			$result['warnings']              = [];
+		}
+		return $result;
+	}
+
+	/**
+	 * Shortens text to a maximum length at a word boundary, dropping a dangling separator.
+	 *
+	 * @param string $text Text.
+	 * @param int    $max  Max characters.
+	 * @return string
+	 */
+	public static function fit( $text, $max ) {
+		if ( mb_strlen( $text ) <= $max ) {
+			return $text;
+		}
+		// Too long with the brand suffix: drop the suffix first.
+		if ( preg_match( '/^(.*)\s+[|\-–—]\s+[^|\-–—]+$/u', $text, $m ) && mb_strlen( $m[1] ) <= $max ) {
+			return $m[1];
+		}
+		$cut = mb_substr( $text, 0, $max + 1 );
+		$pos = mb_strrpos( $cut, ' ' );
+		$cut = false !== $pos && $pos > $max * 0.6 ? mb_substr( $cut, 0, $pos ) : mb_substr( $text, 0, $max );
+		return rtrim( $cut, " \t,;:|-–—" );
 	}
 
 	/**

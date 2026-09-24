@@ -64,10 +64,20 @@ wp aisa run --review --user=admin   # generate only, then review in the admin
 wp aisa health --user=admin         # compatibility test + diagnostic report
 ```
 
-**Cost and speed.** Each page is one Claude request, occasionally two when the first draft
-misses the length limits. The page text sent is capped at 24,000 characters. Claude Opus 5
-gives the best copy. Sonnet 5 and Haiku 4.5 are cheaper and faster. If your host cuts off
-long requests (timeouts on the Autopilot tab), switch to Sonnet 5 or use WP-CLI.
+**Token saver (on by default).** The default model is Claude Haiku 4.5, the cheapest and
+fastest. With **Token saver** ticked on the Settings tab:
+
+- only the first 6,000 characters of each page are sent (24,000 with it off);
+- the site profile reads less of the homepage, About and Contact pages;
+- a title or description that comes back too long is shortened in code at a word boundary,
+  dropping the brand suffix first, instead of asking Claude a second time;
+- in "fill empty fields" mode, pages whose title, description and keyphrase a person already
+  wrote are skipped before any request is made;
+- one page is processed at a time, which keeps you under API rate limits.
+
+Every page is then exactly one request. For better copy, pick Sonnet 5 or Opus 5 on the
+Settings tab, or untick Token saver. If your host cuts off long requests, keep Haiku or use
+WP-CLI.
 
 ## Staying compatible when AIOSEO updates
 

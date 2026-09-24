@@ -5,7 +5,7 @@
 	var cfg = window.AISA || {};
 	var rows = [];
 	var stopRequested = false;
-	var CONCURRENCY = 3;
+	var CONCURRENCY = cfg.concurrency || 3;
 
 	function $(sel, root) { return (root || document).querySelector(sel); }
 	function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -69,7 +69,7 @@
 	}
 
 	function badge(row) {
-		var map = { generated: ['Ready to apply', 'aisa-warn'], applied: ['Applied', 'aisa-good'], error: ['Error', 'aisa-bad'], restored: ['Restored', 'aisa-muted'] };
+		var map = { generated: ['Ready to apply', 'aisa-warn'], applied: ['Applied', 'aisa-good'], error: ['Error', 'aisa-bad'], restored: ['Restored', 'aisa-muted'], skipped: ['Skipped: already has SEO', 'aisa-muted'] };
 		var b = map[row.status] || ['Not started', 'aisa-muted'];
 		return '<span class="aisa-pill ' + b[1] + '">' + b[0] + '</span>';
 	}
@@ -218,7 +218,7 @@
 		}
 
 		steps.then(function () {
-			var todo = rows.filter(function (r) { return !r.proposal; });
+			var todo = rows.filter(function (r) { return !r.proposal && r.status !== 'skipped'; });
 			return pool(todo, doGenerate, function (d, t) { progress('Writing SEO…', d, t); });
 		}).then(function () {
 			if (review || stopRequested) { return; }

@@ -60,6 +60,7 @@ class AISA_Admin {
 				'hasKey'         => '' !== AISA_Settings::api_key(),
 				'profileApplied' => (bool) get_option( AISA_Generator::PROFILE_OPTION . '_applied' ),
 				'mode'           => AISA_Settings::get( 'mode' ),
+				'concurrency'    => AISA_Settings::token_saver() ? 1 : 3,
 				'i18n'           => [
 					'confirmApplyAll' => __( 'Write the proposed SEO to every generated page now? Each page keeps a backup you can restore.', 'ai-seo-autopilot' ),
 					'confirmRestore'  => __( 'Restore the previous SEO values for this item?', 'ai-seo-autopilot' ),
@@ -291,6 +292,14 @@ class AISA_Admin {
 							<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $s['model'], $id ); ?>><?php echo esc_html( $label ); ?></option>
 						<?php endforeach; ?>
 					</select></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Token saver', 'ai-seo-autopilot' ); ?></th>
+					<td>
+						<input type="hidden" name="aisa[token_saver]" value="0">
+						<label><input type="checkbox" name="aisa[token_saver]" value="1" <?php checked( ! empty( $s['token_saver'] ) ); ?>> <?php esc_html_e( 'Use as few tokens as possible (recommended)', 'ai-seo-autopilot' ); ?></label>
+						<p class="description"><?php esc_html_e( 'Sends only the first 6,000 characters of each page, shortens over-long titles in code instead of asking Claude again, skips pages whose title, description and keyphrase you already wrote, and works on one page at a time so you stay under rate limits. Combined with Haiku 4.5 this uses a small fraction of the tokens of Opus with token saver off.', 'ai-seo-autopilot' ); ?></p>
+					</td>
 				</tr>
 				<tr>
 					<th scope="row"><label for="aisa-effort"><?php esc_html_e( 'Effort', 'ai-seo-autopilot' ); ?></label></th>
