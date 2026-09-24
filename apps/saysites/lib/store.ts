@@ -17,6 +17,10 @@ export interface SofieState {
   chat: ChatTurn[]
   draft: Snapshot | null
   history: Snapshot[]
+  // Set while Sofie works on a message in the background.
+  pending?: { at: string } | null
+  // Why the last message failed; shown until the next action.
+  error?: string | null
 }
 
 export interface User {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useTransition } from 'react'
-import { discardDraft, publishDraft, sendToSofie, undoSofie, type StudioState } from '@/app/dashboard/sites/[id]/sofie/actions'
+import { discardDraft, getStudioState, publishDraft, sendToSofie, undoSofie, type StudioState } from '@/app/dashboard/sites/[id]/sofie/actions'
 import type { ChatTurn } from '@/lib/sofie'
 import { LogoMark } from './Logo'
 
@@ -16,7 +16,6 @@ const IDEAS = [
 export function SofieStudio(props: {
   siteId: string
   siteName: string
-  pages: { slug: string; name: string }[]
   initial: StudioState
   ready: boolean
   // A Talk & Design prompt to send as soon as the studio opens.
@@ -33,7 +32,23 @@ export function SofieStudio(props: {
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight, behavior: 'smooth' })
-  }, [state.chat.length, pending])
+  }, [state.chat.length, pending, state.working])
+
+  // Sofie works in the background; check back until she is done.
+  useEffect(() => {
+    if (!state.working) return
+    const timer = setTimeout(async () => {
+      try {
+        const next = await getStudioState(props.siteId)
+        setState(next)
+        if (!next.working) setVersion((v) => v + 1)
+      } catch {
+        // A missed check is fine; the next render tries again.
+        setState((s) => ({ ...s }))
+      }
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [state, props.siteId])
 
   const started = useRef(false)
   useEffect(() => {
@@ -47,16 +62,25 @@ export function SofieStudio(props: {
   function run(action: () => Promise<StudioState>, message?: string) {
     if (message) setPending(message)
     startTransition(async () => {
-      const next = await action()
-      setState(next)
+      try {
+        const next = await action()
+        setState(next)
+        if (!next.working) setVersion((v) => v + 1)
+      } catch {
+        // The connection dropped; the server may still have the message.
+        try {
+          setState(await getStudioState(props.siteId))
+        } catch {
+          setState((s) => ({ ...s, error: 'Lost the connection. Check your internet and try again.' }))
+        }
+      }
       setPending(null)
-      setVersion((v) => v + 1)
     })
   }
 
   function send(text: string) {
     const t = text.trim()
-    if (!t || busy) return
+    if (!t || busy || state.working) return
     setInput('')
     run(() => sendToSofie(props.siteId, t), t)
   }
@@ -75,23 +99,19 @@ export function SofieStudio(props: {
         </header>
 
         <div className="studio-log" ref={logRef} aria-live="polite">
-          {state.chat.length === 0 && !pending && (
+          {state.chat.length === 0 && !pending && !state.working && (
             <div className="studio-empty">
               <p>Hi! Tell me what you’d like to change, in your own words. I’ll show you the result on the right before anything goes live.</p>
               <div className="studio-ideas">
                 {IDEAS.map((i) => (
-                  <button key={i} type="button" onClick={() => send(i)} disabled={busy || !props.ready}>{i}</button>
+                  <button key={i} type="button" onClick={() => send(i)} disabled={busy || state.working || !props.ready}>{i}</button>
                 ))}
               </div>
             </div>
           )}
           {state.chat.map((t, n) => <Turn key={n} turn={t} />)}
-          {pending && (
-            <>
-              <div className="msg msg-owner">{pending}</div>
-              <div className="msg msg-sofie msg-typing" aria-label="Sofie is working"><i /><i /><i /></div>
-            </>
-          )}
+          {pending && <div className="msg msg-owner">{pending}</div>}
+          {(pending || state.working) && <div className="msg msg-sofie msg-typing" aria-label="Sofie is working"><i /><i /><i /></div>}
         </div>
 
         {state.error && <p className="studio-error" role="alert">{state.error}</p>}
@@ -122,14 +142,14 @@ export function SofieStudio(props: {
             maxLength={2000}
             disabled={!props.ready}
           />
-          <button className="btn btn-primary" type="submit" disabled={busy || !input.trim() || !props.ready}>Send</button>
+          <button className="btn btn-primary" type="submit" disabled={busy || state.working || !input.trim() || !props.ready}>Send</button>
         </form>
       </section>
 
       <section className="studio-view" aria-label="Preview">
         <div className="studio-bar">
           <div className="studio-tabs" role="tablist" aria-label="Pages">
-            {props.pages.map((p) => (
+            {state.pages.map((p) => (
               <button key={p.slug} type="button" role="tab" aria-selected={page === p.slug} onClick={() => setPage(p.slug)}>{p.name}</button>
             ))}
           </div>
@@ -139,9 +159,9 @@ export function SofieStudio(props: {
           </div>
           <div className="studio-actions">
             {state.hasDraft ? <span className="pill warn">Not live yet</span> : <span className="pill ok">Live</span>}
-            <button className="btn btn-ghost btn-sm" type="button" disabled={busy || !state.canUndo} onClick={() => run(() => undoSofie(props.siteId))}>Undo</button>
-            <button className="btn btn-ghost btn-sm" type="button" disabled={busy || !state.hasDraft} onClick={() => confirm('Throw away all unpublished changes?') && run(() => discardDraft(props.siteId))}>Discard</button>
-            <button className="btn btn-primary btn-sm" type="button" disabled={busy || !state.hasDraft} onClick={() => run(() => publishDraft(props.siteId))}>Publish</button>
+            <button className="btn btn-ghost btn-sm" type="button" disabled={busy || state.working || !state.canUndo} onClick={() => run(() => undoSofie(props.siteId))}>Undo</button>
+            <button className="btn btn-ghost btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => confirm('Throw away all unpublished changes?') && run(() => discardDraft(props.siteId))}>Discard</button>
+            <button className="btn btn-primary btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => run(() => publishDraft(props.siteId))}>Publish</button>
           </div>
         </div>
         <div className={`studio-frame studio-${device}`}>
