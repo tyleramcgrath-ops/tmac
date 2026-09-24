@@ -1,0 +1,64 @@
+name: WordPress plugin – AI SEO Autopilot
+
+on:
+  pull_request:
+    paths:
+      - 'wordpress-plugins/**'
+      - '.github/workflows/wp-plugin-aioseo.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'wordpress-plugins/**'
+  # Weekly run against the newest AIOSEO code, so an AIOSEO change that breaks the plugin
+  # shows up here before sites update.
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: latest WordPress + latest AIOSEO (Abilities API)
+            wp: master
+            aioseo: ''
+          - name: WordPress 6.8 + latest AIOSEO (PostSeoService)
+            wp: '6.8.9'
+            aioseo: ''
+          - name: WordPress 6.8 + AIOSEO 4.9.0 (Post model)
+            wp: '6.8.9'
+            aioseo: '4.9.0'
+    name: ${{ matrix.name }}
+    defaults:
+      run:
+        working-directory: wordpress-plugins/ai-seo-autopilot
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_sqlite, sqlite3, mbstring, curl, dom
+          coverage: none
+
+      - name: Lint PHP
+        run: find . -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
+
+      - name: Integration tests
+        env:
+          WP_REF: ${{ matrix.wp }}
+          AIOSEO_REF: ${{ matrix.aioseo }}
+        run: tests/run.sh
+
+      - name: Zip is up to date
+        if: matrix.aioseo == '' && matrix.wp == 'master'
+        run: |
+          ./build-zip.sh
+          mkdir -p /tmp/a /tmp/b
+          unzip -q ../dist/ai-seo-autopilot.zip -d /tmp/a
+          git show HEAD:wordpress-plugins/dist/ai-seo-autopilot.zip > /tmp/committed.zip
+          unzip -q /tmp/committed.zip -d /tmp/b
+          diff -r /tmp/a /tmp/b || { echo "::error::wordpress-plugins/dist/ai-seo-autopilot.zip is stale. Run ./build-zip.sh and commit it."; exit 1; }

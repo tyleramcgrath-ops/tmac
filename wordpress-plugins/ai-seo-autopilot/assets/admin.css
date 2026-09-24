@@ -1,0 +1,37 @@
+.aisa-wrap { max-width: 1200px; }
+.aisa-card { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 16px 20px; margin: 16px 0; }
+.aisa-card h2 { margin-top: 0; }
+.aisa-hero p { font-size: 14px; max-width: 760px; }
+.aisa-status { margin: 8px 0 4px; display: flex; gap: 8px; flex-wrap: wrap; }
+.aisa-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; line-height: 20px; background: #f0f0f1; color: #3c434a; white-space: nowrap; }
+.aisa-good { background: #e7f5ea; color: #00692f; }
+.aisa-bad { background: #fcecec; color: #a00; }
+.aisa-warn { background: #fff4d6; color: #7a5600; }
+.aisa-muted { background: #f0f0f1; color: #646970; }
+.aisa-features summary { cursor: pointer; font-weight: 600; }
+.aisa-features table { margin-top: 12px; }
+.aisa-progress { margin: 12px 0; max-width: 760px; }
+.aisa-bar { height: 8px; background: #f0f0f1; border-radius: 4px; overflow: hidden; }
+.aisa-bar span { display: block; height: 100%; width: 0; background: #2271b1; transition: width .3s; }
+.aisa-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.aisa-table td { vertical-align: top; }
+.aisa-table label { display: block; font-weight: 600; margin-bottom: 8px; }
+.aisa-table input[type=text], .aisa-table textarea { display: block; width: 100%; font-weight: 400; margin-top: 2px; }
+.aisa-col-page { width: 22%; }
+.aisa-col-actions { width: 130px; }
+.aisa-col-actions .button, .aisa-col-actions .button-link { display: block; width: 100%; margin-bottom: 6px; text-align: center; }
+.aisa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.aisa-sub { color: #646970; font-size: 12px; margin: 2px 0 6px; }
+.aisa-now { color: #646970; font-size: 12px; margin-top: 6px; }
+.aisa-count { float: right; font-weight: 400; font-size: 12px; }
+.aisa-count.aisa-ok { color: #00692f; }
+.aisa-count.aisa-over { color: #a00; }
+.aisa-count.aisa-under { color: #7a5600; }
+.aisa-error { color: #a00; font-size: 12px; margin-top: 6px; }
+.aisa-warning { color: #7a5600; font-size: 12px; }
+.aisa-inline-status { margin-left: 8px; color: #646970; }
+@media (max-width: 782px) {
+	.aisa-grid { grid-template-columns: 1fr; }
+	.aisa-table thead { display: none; }
+	.aisa-table tr, .aisa-table td { display: block; width: auto !important; }
+}
