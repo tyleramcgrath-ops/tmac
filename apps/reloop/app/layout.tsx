@@ -1,26 +1,28 @@
 import type { Metadata } from "next";
-import { Fraunces, JetBrains_Mono, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const fraunces = Fraunces({
+// Self-hosted (latin subset, variable weight) rather than next/font/google, so the
+// build never depends on reaching fonts.googleapis.com — that fetch failing is what
+// was breaking CI builds.
+const fraunces = localFont({
   variable: "--font-fraunces",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["300", "400", "500", "600", "700", "900"],
+  src: [
+    { path: "./fonts/fraunces.woff2", weight: "300 900", style: "normal" },
+    { path: "./fonts/fraunces-italic.woff2", weight: "300 900", style: "italic" },
+  ],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const jetbrainsMono = localFont({
   variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  src: [{ path: "./fonts/jetbrains-mono.woff2", weight: "400 700", style: "normal" }],
 });
 
-const manrope = Manrope({
+const manrope = localFont({
   variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  src: [{ path: "./fonts/manrope.woff2", weight: "400 700", style: "normal" }],
 });
 
 export const metadata: Metadata = {

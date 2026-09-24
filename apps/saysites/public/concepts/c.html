@@ -1,0 +1,138 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>SaySites · Concept C</title><link rel="icon" href="logo-mark.svg"><link rel="stylesheet" href="sites.css">
+<style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img{display:block;max-width:100%}
+a{color:inherit}.wrap{max-width:1200px;margin:0 auto;padding:0 24px}.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.logo{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:650;font-size:21px;letter-spacing:-.03em}
+.nav .wrap{display:flex;align-items:center;height:72px;gap:24px}.nav nav{margin-left:auto;display:flex;align-items:center;gap:28px}
+.nav nav a{text-decoration:none}.nav nav a:not(.btn){font-size:15px;opacity:.8}.nav nav a:not(.btn):hover{opacity:1}
+@media(max-width:760px){.hide-sm{display:none}.nav nav{gap:16px}}
+details{border-bottom:1px solid var(--line)}summary{list-style:none;cursor:pointer;padding:22px 40px 22px 0;font-size:19px;font-weight:600;position:relative}
+summary::-webkit-details-marker{display:none}summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:26px;font-weight:300}
+details[open] summary::after{content:"–"}details p{margin:-6px 0 22px;opacity:.75;max-width:640px}
+.foot{padding:36px 0 48px;font-size:14px}.foot .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+.foot nav{display:flex;gap:24px}.foot a{text-decoration:none;opacity:.75}.foot .logo{opacity:1;font-size:18px}
+.plan-top{display:flex;justify-content:space-between;align-items:center}.plan h3{margin:0;font-size:20px}
+.plan ul{list-style:none;padding:0;margin:24px 0 30px;flex:1}.plan li{padding:7px 0;border-top:1px solid var(--line);font-size:15.5px}
+.plan{display:flex;flex-direction:column}.amt{font-size:56px;font-weight:600;letter-spacing:-.04em;margin:22px 0 2px;line-height:1}.amt small{font-size:16px;letter-spacing:0;font-weight:500;opacity:.6;margin-left:3px}
+.per{margin:0;opacity:.65;font-size:15px}.tag{font-size:12px;font-weight:600;padding:4px 9px;border-radius:99px;white-space:nowrap}
+
+:root{--ink:#26231f;--mute:#6f685e;--line:#d9d2c5;--paper:#f3efe7;--card:#faf8f3;--clay:#8c5a3c}
+body{font:18px/1.55 'Newsreader',Georgia,serif;color:var(--ink);background:var(--paper);font-optical-sizing:auto}
+h1,h2,h3{font-weight:400;letter-spacing:-.02em;line-height:1.02;margin:0}
+.logo{font-weight:600;font-size:23px;letter-spacing:-.02em}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:50px;padding:0 24px;font:500 17px/1 inherit;font-family:inherit;border-radius:99px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
+.btn-ink{background:var(--ink);color:var(--paper)}.btn-line{box-shadow:inset 0 0 0 1px var(--ink);background:transparent;color:var(--ink)}.btn-sm{height:40px;padding:0 18px;font-size:16px}
+.nav{border-bottom:1px solid var(--line)}
+.hero{padding:72px 0 96px;border-bottom:1px solid var(--line)}
+.hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.kick{font-size:15px;color:var(--mute);letter-spacing:.02em;margin-bottom:22px;display:block}
+.hero h1{font-size:clamp(52px,7vw,104px);font-weight:350}
+.hero .lede{font-size:21px;color:var(--mute);max-width:520px;margin:28px 0 34px}
+.say{display:flex;gap:8px;border-bottom:1px solid var(--ink);padding-bottom:10px;max-width:560px}
+.say input{flex:1;min-width:0;border:0;background:transparent;font:20px inherit;font-family:inherit;color:var(--ink);outline:none}
+.hero small{display:block;margin-top:16px;color:var(--mute);font-size:15px}
+.collage{position:relative;height:620px}
+.collage .c1{position:absolute;left:0;top:0;width:78%}.collage .c2{position:absolute;right:0;bottom:0;width:31%}
+.collage .c3{position:absolute;left:8%;bottom:30px;width:52%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:16px;box-shadow:0 20px 40px -24px rgba(38,35,31,.35)}
+.collage .c3 b{display:block;font-size:13px;color:var(--mute);font-weight:500;letter-spacing:.04em;margin-bottom:6px}
+section.s{padding:112px 0;border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:260px 1fr;gap:56px}
+.row>.lbl{font-size:15px;color:var(--mute);padding-top:10px}
+.row h2{font-size:clamp(40px,5vw,72px);font-weight:350;max-width:860px}
+.row .intro{font-size:20px;color:var(--mute);max-width:640px;margin:22px 0 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
+.steps div{border-top:1px solid var(--ink);padding-top:18px}.steps b{font-size:15px;color:var(--mute);font-weight:500}
+.steps h3{font-size:30px;margin:14px 0 10px}.steps p{color:var(--mute);margin:0}
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:28px;margin-top:56px}
+.gallery figure{margin:0}.g1{grid-column:1/8}.g2{grid-column:8/13;align-self:end}.g3{grid-column:3/11}
+.gallery figcaption{font-size:16px;color:var(--mute);margin-top:12px}.gallery figcaption b{color:var(--ink);font-weight:500}
+.tbl{margin-top:56px;border-top:1px solid var(--ink)}.tbl div{display:grid;grid-template-columns:1fr 200px 200px;padding:18px 0;border-bottom:1px solid var(--line);font-size:19px}
+.tbl div span:nth-child(2),.tbl div span:nth-child(3){text-align:right}.tbl .h{font-size:14px;color:var(--mute);letter-spacing:.04em}
+.tbl .us{color:var(--clay);font-weight:500}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px;margin-top:40px}
+.feat{border-top:1px solid var(--line);padding:26px 0 30px}.feat h3{font-size:26px;margin-bottom:10px}.feat p{color:var(--mute);margin:0 0 14px;font-size:17px}
+.tag{font-family:inherit;border:1px solid var(--line);color:var(--mute)}.tag.live{border-color:#b9c4b1;color:#4a5e40}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}.plan{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:32px}
+.plan.first{border-color:var(--ink)}.amt{font-weight:400}
+.qa{margin-top:40px;border-top:1px solid var(--ink)}summary{font-weight:500;font-size:22px}
+.last{text-align:center;padding:140px 0}.last h2{font-size:clamp(46px,6.4vw,92px);font-weight:350;margin-bottom:40px}.last .say{margin:0 auto}
+@media(max-width:900px){.hero-in,.row{grid-template-columns:1fr;gap:32px}.collage{height:auto;display:grid;gap:18px}.collage>*{position:static!important;width:100%!important}
+.steps,.feat-grid,.plan-grid{grid-template-columns:1fr}.gallery>*{grid-column:1/-1!important}.tbl div{grid-template-columns:1fr 90px 90px;font-size:16px}}
+</style></head><body>
+<header class="nav"><div class="wrap"><a class="logo" href="#" aria-label="SaySites home"><svg class="mark" width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><g fill="currentColor"><circle cx="19" cy="19" r="7.5"/><path d="M11.5 19C11.5 10.7 17.9 4.7 26.5 4.1v5.2c-5.2.5-9 4.1-9.6 9.7z"/><circle cx="29" cy="29" r="7.5"/><path d="M36.5 29C36.5 37.3 30.1 43.3 21.5 43.9v-5.2c5.2-.5 9-4.1 9.6-9.7z"/></g></svg><span>saysites</span></a><nav><a class="hide-sm" href="#examples">Examples</a><a class="hide-sm" href="#pricing">Pricing</a><a class="hide-sm" href="#faq">FAQ</a><a href="#">Log in</a><a class="btn btn-ink btn-sm" href="#">Start free</a></nav></div></header>
+<section class="hero"><div class="wrap hero-in">
+<div><span class="kick">Websites for local businesses · Early access</span>
+<h1>Tell us about your business. We’ll build the website.</h1>
+<p class="lede">A fast, good-looking site that’s set up for Google, for $15 a month. We never take a cut of your sales.</p>
+<form class="say" onsubmit="return false"><label class="vh" for="idea">What does your business do?</label><input id="idea" placeholder="A family bakery in Portland, Oregon" autocomplete="off"><button class="btn btn-ink" type="submit">Build my site</button></form>
+<small>Free while in early access. No credit card needed.</small></div>
+<div class="collage">
+<div class="c1"><div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>rosies-bakery.saysites.com</span></div><div class="frame-body"><div class="bk">
+  <div class="bk-nav"><b>Rosie’s Bakery</b><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
+  <div class="bk-hero">
+    <div><small>SE Division · Portland</small><h3>Sourdough, baked every morning at five.</h3>
+      <p>Country loaves, celebration cakes and good coffee, a block from the park.</p>
+      <div class="bk-btns"><em>Order for pickup</em><span>Today’s bakes →</span></div></div>
+    <div class="ph " style=""><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=70" alt="" loading="lazy"></div>
+  </div>
+  <div class="bk-row">
+    <div><div class="ph " style=""><img src="https://images.unsplash.com/photo-1579697096985-41fe1430e5df?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy"></div><b>Pastries</b><span>Croissants and buns</span></div>
+    <div><div class="ph " style=""><img src="https://images.unsplash.com/photo-1566698629409-787a68fc5724?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy"></div><b>Bread</b><span>Country, rye, seeded</span></div>
+    <div><div class="ph " style=""><img src="https://images.unsplash.com/photo-1567042661848-7161ce446f85?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy"></div><b>Wholesale</b><span>For cafés nearby</span></div>
+  </div>
+</div></div></div></div>
+<div class="c2"><div class="phone"><div class="frame-body"><div class="sm"><div class="sm-nav"><b>SALT &amp; STONE</b><span>Menu</span></div>
+  <div class="ph " style=""><img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?auto=format&fit=crop&w=500&q=70" alt="" loading="lazy"></div><h3>Hair that grows out beautifully.</h3><p>Color and cuts on Jones Street, Savannah.</p><em>Book a chair</em></div></div></div></div>
+<div class="c3"><b>You said</b>“A family bakery in Portland. Sourdough, cakes and coffee.” Your site is live and set up for Google.</div>
+</div></div></section>
+
+<section class="s" id="how"><div class="wrap">
+<div class="row"><span class="lbl">How it works</span><div><h2>Three steps, and one of them is just talking.</h2></div></div>
+<div class="row"><span></span><div class="steps">
+<div><b>One</b><h3>Say what you do</h3><p>Your business, your town, what you offer. A sentence or two is plenty.</p></div>
+<div><b>Two</b><h3>Get a finished site</h3><p>Home, Services and Contact pages, written for your customers and set up for Google.</p></div>
+<div><b>Three</b><h3>Ask for changes</h3><p>Tell Sofie what to change; you see it first and can undo anything. <span class="tag">Coming soon</span></p></div>
+</div></div></div></section>
+
+<section class="s" id="examples"><div class="wrap">
+<div class="row"><span class="lbl">Examples</span><div><h2>Every business gets its own look.</h2><p class="intro">Design examples of what SaySites makes: a bakery, a plumber and a salon, each written for its own customers.</p></div></div>
+<div class="gallery">
+<figure class="g1"><div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>rivertownplumbing.com</span></div><div class="frame-body"><div class="pl">
+  <div class="pl-top"><span>Licensed and insured · Rivertown and the valley</span><b>(555) 014-2200</b></div>
+  <div class="pl-nav"><b>RIVERTOWN PLUMBING</b><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
+  <div class="pl-hero ph"><img src="https://images.unsplash.com/photo-1749532125405-70950966b0e5?auto=format&fit=crop&w=1400&q=70" alt="" loading="lazy">
+    <div class="pl-copy"><small>Open 24/7 · Same-day callouts</small><h3>Burst pipe? We’re on the way.</h3>
+      <p>Upfront-priced plumbing for homes and small businesses in Rivertown.</p>
+      <div class="pl-btns"><em>Call (555) 014-2200</em><span>Get a free quote</span></div></div>
+  </div>
+  <div class="pl-strip"><div><b>Leaks and bursts</b><span>60-minute response</span></div><div><b>Water heaters</b><span>Repair and install</span></div><div><b>Drains</b><span>Cleared same day</span></div><div><b>Remodels</b><span>Kitchens and baths</span></div></div>
+</div></div></div><figcaption><b>Rivertown Plumbing.</b> Emergency plumber, open 24/7.</figcaption></figure>
+<figure class="g2"><div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>saltandstone.com</span></div><div class="frame-body"><div class="sa">
+  <div class="sa-nav"><span>Services</span><b>SALT &amp; STONE</b><span>Book</span></div>
+  <div class="sa-hero"><div class="ph " style=""><img src="https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?auto=format&fit=crop&w=900&q=70" alt="" loading="lazy"></div>
+    <div class="sa-copy"><small>Jones Street · Savannah</small><h3>Hair that grows out beautifully.</h3>
+      <p>Lived-in color and precise cuts, by appointment.</p><em>Book a chair</em></div>
+  </div>
+</div></div></div><figcaption><b>Salt &amp; Stone.</b> Hair salon in Savannah.</figcaption></figure>
+</div></div></section>
+
+<section class="s" id="pricing"><div class="wrap">
+<div class="row"><span class="lbl">The price</span><div><h2>$15 a month. Everything included, nothing taken.</h2><p class="intro">Other builders charge more for a store, sell the basics as add-ons, and some take a fee on every sale.</p></div></div>
+<div class="tbl"><div class="h"><span>What you need</span><span>Typical builders</span><span>SaySites</span></div>
+<div><span>Website, hosting and SSL</span><span>Included</span><span class="us">Included</span></div>
+<div><span>SEO setup and speed checks</span><span>Apps or add-ons</span><span class="us">Included</span></div>
+<div><span>An assistant that makes changes</span><span>Rarely</span><span class="us">Included</span></div>
+<div><span>Fee on each sale</span><span>Often</span><span class="us">0%</span></div></div>
+<div class="plan-grid"><div class="plan first"><div class="plan-top"><h3>Site</h3></div><div class="amt">$15<small>/mo</small></div><p class="per">For service businesses</p><ul><li>Your full website, built for you</li><li>Your own domain</li><li>SEO and speed built in</li><li>Changes by Sofie</li></ul><a class="btn btn-ink" href="#">Start free</a></div><div class="plan"><div class="plan-top"><h3>Store</h3><span class="tag">Coming soon</span></div><div class="amt">$25<small>/mo</small></div><p class="per">For selling online</p><ul><li>Everything in Site</li><li>Products, cart and checkout</li><li>0% taken from your sales</li><li>Google Shopping listings</li></ul><a class="btn btn-line" href="#">Start free</a></div><div class="plan"><div class="plan-top"><h3>SEO Suite</h3><span class="tag">Add-on</span></div><div class="amt">+$19<small>/mo</small></div><p class="per">Add-on for growing faster</p><ul><li>Rank tracking</li><li>One-click SEO fixes</li><li>Competitor and AI search tracking</li><li>Content plans Sofie writes</li></ul><a class="btn btn-line" href="#">Start free</a></div></div>
+<p style="text-align:center;color:var(--mute);font-size:15px;margin-top:24px">Free during early access. Planned launch prices, cancel anytime.</p>
+</div></section>
+
+<section class="s"><div class="wrap">
+<div class="row"><span class="lbl">What’s inside</span><div><h2>The things SEO pros do, done for you.</h2></div></div>
+<div class="feat-grid"><div class="feat"><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p><span class="tag live">Live</span></div><div class="feat"><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p><span class="tag live">Live</span></div><div class="feat"><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p><span class="tag live">Live</span></div><div class="feat"><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p><span class="tag">Coming soon</span></div><div class="feat"><h3>Google, connected</h3><p>Import your Business Profile and connect Search Console and Analytics in one click.</p><span class="tag">Coming soon</span></div><div class="feat"><h3>Sell online, keep 100%</h3><p>Products, cart and checkout through your own Stripe account, with nothing taken from each sale.</p><span class="tag">Coming soon</span></div></div></div></section>
+
+<section class="s" id="faq"><div class="wrap"><div class="row"><span class="lbl">Questions</span><div class="qa"><details><summary>Do I need any design or tech skills?</summary><p>No. You describe your business and we build the site. When Sofie arrives you’ll change things just by asking, and a drag-and-drop editor is coming for people who like to tinker.</p></details><details><summary>What does “0% of your sales” mean?</summary><p>When online selling launches, customers pay you through your own Stripe account. Stripe charges its normal card fee; SaySites takes nothing on top.</p></details><details><summary>Will my site show up on Google?</summary><p>Every site is built the way Google likes: fast, clean, with proper titles, a sitemap and business details search engines can read. Nobody can promise a #1 spot, but you start with the foundations right.</p></details><details><summary>Can I use my own domain?</summary><p>Yes. Every site gets a free yourname.saysites.com address, and you can connect a domain you own.</p></details></div></div></div></section>
+
+<section class="last"><div class="wrap"><h2>Your website is one sentence away.</h2><form class="say" onsubmit="return false"><label class="vh" for="idea">What does your business do?</label><input id="idea" placeholder="A family bakery in Portland, Oregon" autocomplete="off"><button class="btn btn-ink" type="submit">Build my site</button></form></div></section>
+<footer class="foot"><div class="wrap"><a class="logo" href="#" aria-label="SaySites home"><svg class="mark" width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><g fill="currentColor"><circle cx="19" cy="19" r="7.5"/><path d="M11.5 19C11.5 10.7 17.9 4.7 26.5 4.1v5.2c-5.2.5-9 4.1-9.6 9.7z"/><circle cx="29" cy="29" r="7.5"/><path d="M36.5 29C36.5 37.3 30.1 43.3 21.5 43.9v-5.2c5.2-.5 9-4.1 9.6-9.7z"/></g></svg><span>saysites</span></a><nav><a href="#">Pricing</a><a href="#">FAQ</a><a href="#">Log in</a><a href="#">Start free</a></nav><span>© 2026 SaySites</span></div></footer>
+</body></html>
