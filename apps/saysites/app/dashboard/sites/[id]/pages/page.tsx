@@ -4,7 +4,8 @@ import { checkPage, checkSpeed, pagePath, renderPage, siteOrigin } from '@/lib'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { previewPath } from '@/lib/urls'
-import { savePageSeo } from '../manage-actions'
+import { ActionForm } from '@/components/ActionForm'
+import { savePageSeo, saveVerification } from '../manage-actions'
 
 export default async function PagesPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -30,6 +31,20 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
         </div>
         <a className="btn btn-ghost btn-sm" href={`/dashboard/sites/${site.id}/sofie`}>Add a page with Sofie</a>
       </div>
+      <details className="card verify">
+        <summary><strong>Connect Google Search Console and Bing</strong><span className="muted small">{site.verification?.google || site.verification?.bing ? 'Connected' : 'See how your site does in search'}</span></summary>
+        <ol className="steps-sm">
+          <li>In <a href="https://search.google.com/search-console" target="_blank" rel="noopener">Google Search Console</a>, add a <strong>URL prefix</strong> property for your web address.</li>
+          <li>Choose <strong>HTML tag</strong> and copy the tag it shows you.</li>
+          <li>Paste it below, save, then press Verify in Search Console. Your sitemap is at <code>/sitemap.xml</code>.</li>
+        </ol>
+        <ActionForm action={saveVerification.bind(null, site.id)} submit="Save">
+          <div className="row">
+            <label className="field"><span>Google verification</span><input className="input" name="google" defaultValue={site.verification?.google ?? ''} placeholder='<meta name="google-site-verification" …>' /></label>
+            <label className="field"><span>Bing verification</span><input className="input" name="bing" defaultValue={site.verification?.bing ?? ''} placeholder='<meta name="msvalidate.01" …>' /></label>
+          </div>
+        </ActionForm>
+      </details>
       {rows.map(({ page, issues, speed, kb }) => {
         const errors = issues.filter((i) => i.severity === 'error')
         const tips = issues.filter((i) => i.severity === 'warning')

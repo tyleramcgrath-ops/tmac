@@ -649,3 +649,65 @@ describe('SaySites 404', async () => {
     expect(html).toContain('<meta name="robots" content="noindex">')
   })
 })
+
+describe('SaySites photos', () => {
+  it('stores, lists and deletes a site’s photos, and only that site’s', async () => {
+    const store = new MemoryStore()
+    const m = await store.addMedia({ siteId: 's1', mime: 'image/webp', width: 800, height: 600, alt: 'Van' }, Buffer.from('abc'))
+    expect(m.id).toMatch(/^[a-f0-9]{32}$/)
+    expect(await store.mediaForSite('s1')).toMatchObject([{ id: m.id, bytes: 3 }])
+    expect((await store.mediaFile(m.id))!.mime).toBe('image/webp')
+    await store.deleteMedia('s2', m.id)
+    expect(await store.mediaFile(m.id)).not.toBeNull()
+    await store.deleteMedia('s1', m.id)
+    expect(await store.mediaFile(m.id)).toBeNull()
+  })
+
+  it('shows an uploaded logo in the header and keeps the speed gate happy', () => {
+    const site = { ...clone(sampleSite), business: { ...sampleSite.business, logo: '/u/0123456789abcdef0123456789abcdef' } }
+    const r = renderPage(site, sampleHome, samplePages)
+    expect(r.html).toContain('<img class="sh-logo" src="/u/0123456789abcdef0123456789abcdef"')
+    expect(checkSpeed(r).pass).toBe(true)
+  })
+})
+
+describe('SaySites gallery and testimonials', () => {
+  function withSection(children: unknown[]) {
+    const page = clone(sampleHome)
+    page.body.push({ id: 'extra', type: 'container', tag: 'section', layout: 'flex', boxed: true, children } as never)
+    return PageSchema.parse(page)
+  }
+  it('renders a lazy, sized photo grid and quotes with star ratings', () => {
+    const page = withSection([
+      { id: 'g', type: 'gallery', columns: 2, images: [{ src: '/u/0123456789abcdef0123456789abcdef', alt: 'A new patio', width: 1200, height: 800, caption: 'Patio, 2026' }, { src: 'https://images.unsplash.com/photo-1?w=800', alt: 'A lawn', width: 800, height: 600 }] },
+      { id: 't', type: 'testimonials', items: [{ quote: 'They came the same day.', name: 'Pat', detail: 'Rivertown', stars: 5 }] },
+    ])
+    const r = renderPage(sampleSite, page, samplePages)
+    expect(r.html).toContain('<div class="gal gal-2')
+    expect(r.html).toContain('alt="A new patio" width="1200" height="800" loading="lazy"')
+    expect(r.html).toContain('<figcaption>Patio, 2026</figcaption>')
+    expect(r.html).toContain('aria-label="5 out of 5 stars"')
+    expect(r.html).toContain('<blockquote>They came the same day.</blockquote>')
+    expect(checkSpeed(r).pass).toBe(true)
+  })
+  it('rejects gallery photos without alt text', () => {
+    const page = clone(sampleHome)
+    page.body.push({ id: 'x', type: 'container', layout: 'flex', children: [{ id: 'g', type: 'gallery', images: [{ src: '/a.jpg', alt: ' ', width: 10, height: 10 }] }] } as never)
+    expect(PageSchema.safeParse(page).success).toBe(false)
+  })
+})
+
+describe('SaySites search engine verification', () => {
+  it('puts the verification tags on the home page only', () => {
+    const site = { ...clone(sampleSite), verification: { google: 'abcDEF123_-xyz789', bing: '0123456789ABCDEF' } }
+    expect(SiteSchema.safeParse(site).success).toBe(true)
+    const home = renderPage(site, sampleHome, samplePages).html
+    expect(home).toContain('<meta name="google-site-verification" content="abcDEF123_-xyz789">')
+    expect(home).toContain('<meta name="msvalidate.01" content="0123456789ABCDEF">')
+    expect(renderPage(site, sampleServices, samplePages).html).not.toContain('google-site-verification')
+  })
+  it('rejects codes that could break out of the tag', () => {
+    const site = { ...clone(sampleSite), verification: { google: 'x"><script>' } }
+    expect(SiteSchema.safeParse(site).success).toBe(false)
+  })
+})

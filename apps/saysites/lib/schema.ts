@@ -194,7 +194,34 @@ export const PostsWidget = z
   .object({ ...widgetBase, type: z.literal('posts'), limit: z.number().int().min(1).max(50).optional() })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget])
+const imageSrc = z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/, 'images must be https:// or a /path')
+
+// A grid of photos ("Our work"). Every photo needs alt text and its size.
+export const GalleryWidget = z
+  .object({
+    ...widgetBase,
+    type: z.literal('gallery'),
+    columns: z.number().int().min(2).max(4).optional(),
+    images: z
+      .array(z.object({ src: imageSrc, alt: z.string().trim().min(1, 'images need alt text').max(250), width: z.number().int().positive(), height: z.number().int().positive(), caption: z.string().max(140).optional() }).strict())
+      .min(1)
+      .max(24),
+  })
+  .strict()
+
+// Words from real customers, in their own words. Never invented.
+export const TestimonialsWidget = z
+  .object({
+    ...widgetBase,
+    type: z.literal('testimonials'),
+    items: z
+      .array(z.object({ quote: z.string().min(1).max(600), name: z.string().min(1).max(80), detail: z.string().max(80).optional(), stars: z.number().int().min(1).max(5).optional() }).strict())
+      .min(1)
+      .max(12),
+  })
+  .strict()
+
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget, GalleryWidget, TestimonialsWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 
@@ -377,6 +404,12 @@ export const SiteSchema = z
     // Things for sale. Customers pay the owner directly through the owner's
     // own Stripe payment link, so SaySites never touches the money.
     store: StoreSchema.optional(),
+    // Search engine ownership codes (the content of their verification meta
+    // tags), shown on the home page so Search Console can confirm the site.
+    verification: z
+      .object({ google: z.string().regex(/^[\w-]{10,100}$/).optional(), bing: z.string().regex(/^[\w-]{10,100}$/).optional() })
+      .strict()
+      .optional(),
     updatedAt: z.string(),
   })
   .strict()

@@ -176,7 +176,7 @@ export async function saveProduct(siteId: string, productId: string, _prev: Sett
   const buyUrl = str(form, 'buyUrl', 300)
   if (buyUrl && !/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/.test(buyUrl)) return { error: 'The buy link should be a Stripe payment link, like https://buy.stripe.com/abc123.' }
   const imageSrc = str(form, 'imageSrc', 500)
-  if (imageSrc && !/^https:\/\/[^\s]+$/.test(imageSrc)) return { error: 'The photo needs to be a link starting with https://.' }
+  if (imageSrc && !/^(https:\/\/[^\s]+|\/u\/[a-f0-9]{32})$/.test(imageSrc)) return { error: 'The photo needs to be one of your photos or a link starting with https://.' }
   const description = str(form, 'description', 600)
   const product: Product = {
     id: productId === 'new' ? `p-${randomUUID().slice(0, 8)}` : productId,
@@ -277,7 +277,7 @@ export async function savePost(siteId: string, pageId: string, _prev: SettingsSt
   if (body.length < 40) return { error: 'Write a little more: a post needs at least a couple of sentences.' }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { error: 'Pick a date for the post.' }
   const imageSrc = str(form, 'imageSrc', 500)
-  if (imageSrc && !/^https:\/\/[^\s]+$/.test(imageSrc)) return { error: 'The photo needs to be a link starting with https://.' }
+  if (imageSrc && !/^(https:\/\/[^\s]+|\/u\/[a-f0-9]{32})$/.test(imageSrc)) return { error: 'The photo needs to be one of your photos or a link starting with https://.' }
 
   const pages = await store.pagesForSite(site.id)
   const existing = pageId === 'new' ? undefined : pages.find((p) => p.id === pageId && p.post)
@@ -312,4 +312,101 @@ export async function deletePost(siteId: string, pageId: string) {
   const state = await store.sofieState(site.id)
   if (state.draft) await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: state.draft.pages.filter((p) => p.id !== page.id) } })
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+// ---------------------------------------------------------------------------
+// Photos
+// ---------------------------------------------------------------------------
+
+const MAX_PHOTO_BYTES = 3 * 1024 * 1024
+const MAX_PHOTOS = 80
+const IMAGE_TYPES = ['image/webp', 'image/jpeg', 'image/png']
+
+export interface UploadState {
+  error?: string
+  saved?: boolean
+}
+
+export async function uploadPhoto(siteId: string, _prev: UploadState, form: FormData): Promise<UploadState> {
+  const { store, site } = await ownSite(siteId)
+  const file = form.get('file')
+  if (!(file instanceof File) || file.size === 0) return { error: 'Choose a photo first.' }
+  if (!IMAGE_TYPES.includes(file.type)) return { error: 'Use a JPEG, PNG or WebP photo.' }
+  if (file.size > MAX_PHOTO_BYTES) return { error: 'That photo is too large. Try a smaller one.' }
+  const width = Math.round(Number(form.get('width')))
+  const height = Math.round(Number(form.get('height')))
+  if (!(width > 0 && height > 0 && width <= 4000 && height <= 4000)) return { error: 'That photo couldn’t be read. Try another one.' }
+  if ((await store.mediaForSite(site.id)).length >= MAX_PHOTOS) return { error: `You can keep up to ${MAX_PHOTOS} photos. Delete some to add more.` }
+  const alt = str(form, 'alt', 200) || `Photo from ${site.business.name}`
+  const data = Buffer.from(await file.arrayBuffer())
+  const media = await store.addMedia({ siteId: site.id, mime: file.type, width, height, alt }, data)
+  if (form.get('asLogo')) {
+    await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: `/u/${media.id}` } }))
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: true }
+}
+
+export async function removePhoto(siteId: string, mediaId: string) {
+  const { store, site } = await ownSite(siteId)
+  await store.deleteMedia(site.id, mediaId)
+  if (site.business.logo === `/u/${mediaId}`) await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: undefined } }))
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+export async function setLogo(siteId: string, mediaId: string | null) {
+  const { store, site } = await ownSite(siteId)
+  if (mediaId && !(await store.mediaForSite(site.id)).some((m) => m.id === mediaId)) return
+  await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: mediaId ? `/u/${mediaId}` : undefined } }))
+}
+
+// Puts the latest photos on the home page as an "Our work" gallery (or
+// refreshes the one already there), just above the questions section.
+export async function addGalleryToHome(siteId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const photos = (await store.mediaForSite(site.id)).slice(0, 9)
+  if (!photos.length) return
+  const section: Page['body'][number] = {
+    id: 'our-work',
+    type: 'container',
+    tag: 'section',
+    layout: 'flex',
+    boxed: true,
+    style: { padding: { desktop: { top: 88, right: 24, bottom: 88, left: 24 }, mobile: { top: 52, right: 20, bottom: 52, left: 20 } }, gap: { desktop: 28 } },
+    children: [
+      { id: 'our-work-h', type: 'heading', level: 2, text: 'Our work', style: { fontSize: { desktop: 42, mobile: 30 } } },
+      { id: 'our-work-g', type: 'gallery', columns: photos.length % 2 === 0 && photos.length < 6 ? 2 : 3, images: photos.map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height })) },
+    ],
+  }
+  const place = (body: Page['body']): Page['body'] => {
+    const rest = body.filter((c) => c.id !== 'our-work')
+    const faq = rest.findIndex((c) => c.id === 'faq')
+    const at = faq === -1 ? rest.length : faq
+    return [...rest.slice(0, at), section, ...rest.slice(at)]
+  }
+  const pages = await store.pagesForSite(site.id)
+  const home = pages.find((p) => p.slug === '')
+  if (!home) return
+  await store.savePage({ ...home, body: place(home.body), updatedAt: new Date().toISOString() }, 'owner', user.id, 'Added an Our work gallery')
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: state.draft.pages.map((p) => (p.slug === '' ? { ...p, body: place(p.body) } : p)) } })
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+// Search engine verification codes. Accepts the bare code or the whole
+// <meta> tag Search Console shows, and keeps just the code.
+export async function saveVerification(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const pick = (k: string) => {
+    const raw = str(form, k, 300)
+    const m = raw.match(/content=["']([^"']+)["']/)
+    return (m ? m[1] : raw).trim()
+  }
+  const google = pick('google')
+  const bing = pick('bing')
+  const ok = (v: string) => !v || /^[\w-]{10,100}$/.test(v)
+  if (!ok(google) || !ok(bing)) return { error: 'That doesn’t look like a verification code. Paste the code, or the whole meta tag.' }
+  await changeSite(siteId, (s) => ({ ...s, verification: google || bing ? { ...(google ? { google } : {}), ...(bing ? { bing } : {}) } : undefined }))
+  return { saved: true }
 }

@@ -442,7 +442,7 @@ How to work:
 
 The content model (enforced; invalid changes are rejected with a reason, then fix and retry):
 - A page body is an array of top-level containers (sections). Container: {"id","type":"container","tag"?: "section"|"div"|..., "layout":"flex"|"grid", "direction"?: {"desktop":"row"|"column", "mobile"?}, "columns"?: {"desktop":n,"tablet"?:n,"mobile"?:n} (grid), "align"?: "start"|"center"|"end"|"stretch", "justify"?: "start"|"center"|"end"|"between", "boxed"?: true (full-width background, content capped to site width), "backgroundImage"?: {"src","width","height","overlay":0-0.95,"overlayStyle"?:"full"|"side","priority"?:bool}, "style"?, "children":[...] }.
-- Widgets: heading {"id","type":"heading","level":1-6,"text"}; text {"id","type":"text","text"} (blank line = new paragraph); image {"id","type":"image","src","alt" (required, descriptive),"width","height","aspect"?: ratio like 1.5,"priority"?: bool}; button {"id","type":"button","label","href","variant":"primary"|"secondary"|"outline"}; faq {"id","type":"faq","items":[{"question","answer"}]}; posts (a list of the site's blog posts, newest first; use write_post to add posts) {"id","type":"posts","limit"?: number}; products (the site's products from the owner's Products tab, as cards with prices and buy buttons; you cannot add or change products themselves) {"id","type":"products","limit"?: number}; form (a contact form whose messages go to the owner's inbox) {"id","type":"form","fields":["name","email","phone","message"] (any of these, in order),"submitLabel","thanks"?: note shown after sending}.
+- Widgets: heading {"id","type":"heading","level":1-6,"text"}; text {"id","type":"text","text"} (blank line = new paragraph); image {"id","type":"image","src","alt" (required, descriptive),"width","height","aspect"?: ratio like 1.5,"priority"?: bool}; button {"id","type":"button","label","href","variant":"primary"|"secondary"|"outline"}; faq {"id","type":"faq","items":[{"question","answer"}]}; posts (a list of the site's blog posts, newest first; use write_post to add posts) {"id","type":"posts","limit"?: number}; products (the site's products from the owner's Products tab, as cards with prices and buy buttons; you cannot add or change products themselves) {"id","type":"products","limit"?: number}; gallery (a grid of photos, e.g. "Our work"; prefer the owner's uploaded photos) {"id","type":"gallery","columns"?: 2-4,"images":[{"src","alt","width","height","caption"?}]}; testimonials (ONLY real quotes the owner gave you, word for word; never invent or paraphrase reviews) {"id","type":"testimonials","items":[{"quote","name","detail"?: e.g. town or service,"stars"?: 1-5}]}; form (a contact form whose messages go to the owner's inbox) {"id","type":"form","fields":["name","email","phone","message"] (any of these, in order),"submitLabel","thanks"?: note shown after sending}.
 - style (all optional): padding/margin {"desktop":{"top","right","bottom","left"},"mobile"?:{...}}; gap {"desktop":n,"mobile"?:n}; fontSize {"desktop":n,"tablet"?:n,"mobile"?:n}; textAlign {"desktop":"left"|"center"|"right"}; background, color, border: a color token (primary, secondary, accent, text, muted, background, surface) or a hex like "#ffffff"; fontWeight 300-900; borderRadius; maxWidth; letterSpacing (em); textTransform "uppercase"|"none"; fontFamily "heading"|"body".
 - Links (href): "/page-slug", "https://...", "tel:+15551234567", "mailto:...", or "#anchor". Ids: lowercase letters, digits and dashes, unique on the page.
 - Rules the publish gate checks: exactly one level-1 heading per page, headings don't skip levels, every image has alt text, at most one image per page loads eagerly (priority: true, only the first image near the top), titles under 70 characters, descriptions under 170.
@@ -473,7 +473,7 @@ function createMessage(client: Anthropic, params: CreateParams): Promise<Anthrop
   return create.call(client.beta.messages, params)
 }
 
-export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic }): Promise<SofieResult> {
+export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[] }): Promise<SofieResult> {
   const client = input.client ?? new Anthropic()
   const ws = new Workspace(input.snapshot)
 
@@ -488,6 +488,9 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
     role: 'user',
     content: [
       { type: 'text', text: `Today is ${new Date().toISOString().slice(0, 10)}. The website as it is right now (JSON):\n${JSON.stringify({ site: ws.site, pages: ws.pages })}` },
+      ...(input.photos?.length
+        ? [{ type: 'text' as const, text: `The owner's own uploaded photos. Prefer these over stock photos when they fit (use src, alt, width and height exactly):\n${JSON.stringify(input.photos.slice(0, 40))}` }]
+        : []),
       { type: 'text', text: input.message },
     ],
   })

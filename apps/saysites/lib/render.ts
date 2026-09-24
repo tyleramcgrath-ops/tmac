@@ -48,6 +48,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<meta name="description" content="${esc(page.seo.description)}">`,
     `<link rel="canonical" href="${esc(url)}">`,
     page.seo.noindex ? '<meta name="robots" content="noindex">' : '',
+    page.slug === '' && site.verification?.google ? `<meta name="google-site-verification" content="${esc(site.verification.google)}">` : '',
+    page.slug === '' && site.verification?.bing ? `<meta name="msvalidate.01" content="${esc(site.verification.bing)}">` : '',
     `<link rel="icon" href="${esc(favicon(site))}">`,
     `<meta name="theme-color" content="${esc(site.globals.colors.primary)}">`,
     `<meta property="og:type" content="website">`,
@@ -142,6 +144,16 @@ function renderWidget(w: Widget): string {
       return renderProducts(w)
     case 'posts':
       return renderPosts(w)
+    case 'gallery': {
+      const cols = w.columns ?? 3
+      return `<div class="gal gal-${cols} ${c}">${w.images
+        .map((i) => `<figure><img src="${esc(i.src)}"${srcset(i.src, i.width)} sizes="(max-width: 640px) 100vw, ${Math.round(100 / cols)}vw" alt="${esc(i.alt)}" width="${i.width}" height="${i.height}" loading="lazy" decoding="async">${i.caption ? `<figcaption>${esc(i.caption)}</figcaption>` : ''}</figure>`)
+        .join('')}</div>`
+    }
+    case 'testimonials':
+      return `<div class="tst ${c}">${w.items
+        .map((t) => `<figure>${t.stars ? `<span class="tst-stars" role="img" aria-label="${t.stars} out of 5 stars">${'★'.repeat(t.stars)}${'☆'.repeat(5 - t.stars)}</span>` : ''}<blockquote>${esc(t.quote)}</blockquote><figcaption><strong>${esc(t.name)}</strong>${t.detail ? `<span>${esc(t.detail)}</span>` : ''}</figcaption></figure>`)
+        .join('')}</div>`
   }
 }
 
@@ -222,7 +234,10 @@ function renderHeader(site: Site, page: Page): string {
     ? `<div class="stb"><div class="stb-in"><span>${esc(h.topbar)}</span>${phone ? `<a href="${esc(tel(phone))}">${esc(phone)}</a>` : ''}</div></div>`
     : ''
   const cta = h?.cta ? `<a class="btn btn-primary sh-cta" href="${esc(h.cta.href)}">${esc(h.cta.label)}</a>` : ''
-  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${esc(site.business.name)}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
+  const brand = site.business.logo
+    ? `<img class="sh-logo" src="${esc(site.business.logo)}" alt="${esc(site.business.name)}" width="180" height="44" loading="lazy" decoding="async">`
+    : esc(site.business.name)
+  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
 }
 
 // Days in schema.org openingHours order, for the footer's hours list.
@@ -344,8 +359,8 @@ function baseCss(g: GlobalStyles): string {
     `.sh-in{max-width:var(--w);margin:0 auto;padding:16px 24px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center}` +
     `.sh-brand{font-family:var(--f-h);font-weight:${g.headingWeight ?? 700};letter-spacing:${g.headingTracking ?? -0.01}em;font-size:1.3em;color:var(--c-text);text-decoration:none;margin-right:auto${g.headingCase === 'upper' ? ';text-transform:uppercase' : ''}}` +
     `.sh nav{display:flex;flex-wrap:wrap;gap:8px 22px}.sh nav a{color:var(--c-muted);text-decoration:none;font-weight:500}.sh nav a:hover,.sh nav a[aria-current]{color:var(--c-text)}` +
-    `.sh-cta{padding:.6em 1.2em}` +
-    `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.sh nav{order:3;width:100%}}` +
+    `.sh-cta{padding:.6em 1.2em}.sh-logo{height:44px;width:auto;max-width:220px;object-fit:contain}` +
+    `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.sh-in{padding:12px 18px;gap:10px 14px}.sh-brand{font-size:1.08em;max-width:62%}.sh-logo{height:36px}.sh-cta{padding:.55em .95em;font-size:.88em}.sh nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:18px;scrollbar-width:none;padding-bottom:2px}.sh nav a{white-space:nowrap}}` +
     `.sf{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 72%,transparent);font-size:.95em}` +
     `.sf-in{max-width:var(--w);margin:0 auto;padding:56px 24px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px}` +
     `.sf-in>div{display:flex;flex-direction:column;gap:6px}.sf-in p{margin:4px 0 0;max-width:320px}.sf a{color:inherit;text-decoration:none}.sf a:hover{color:var(--c-background)}` +
@@ -375,6 +390,15 @@ function widgetCss(used: Set<string>): string {
       `.bgt{position:absolute;inset:0;z-index:-1;pointer-events:none}.bgt-full{background:rgb(0 0 0/var(--o))}` +
       `.bgt-side{background:linear-gradient(90deg,rgb(0 0 0/var(--o)) 0%,rgb(0 0 0/calc(var(--o)*.72)) 45%,rgb(0 0 0/0) 80%)}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.bgt-side{background:rgb(0 0 0/calc(var(--o)*.85))}}.bgc{position:relative}`
+  if (used.has('gallery'))
+    css +=
+      `.gal{display:grid;gap:14px}.gal-2{grid-template-columns:repeat(2,minmax(0,1fr))}.gal-3{grid-template-columns:repeat(3,minmax(0,1fr))}.gal-4{grid-template-columns:repeat(4,minmax(0,1fr))}` +
+      `.gal figure{margin:0}.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}.gal figcaption{font-size:.9em;color:var(--c-muted);margin-top:6px}` +
+      `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.gal-3,.gal-4{grid-template-columns:repeat(2,minmax(0,1fr))}}`
+  if (used.has('testimonials'))
+    css +=
+      `.tst{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}.tst figure{margin:0;padding:26px;border-radius:var(--r);background:var(--c-surface);display:flex;flex-direction:column;gap:14px}` +
+      `.tst blockquote{margin:0;font-family:var(--f-h);font-size:1.15em;line-height:1.5;color:var(--c-text)}.tst figcaption{display:flex;flex-direction:column;font-size:.92em;margin-top:auto}.tst figcaption span{color:var(--c-muted)}.tst-stars{color:var(--c-accent);letter-spacing:.12em}`
   if (used.has('posts'))
     css +=
       `.pos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:36px 28px}.po{display:flex;flex-direction:column;gap:8px}` +
