@@ -30,7 +30,17 @@
 			}
 		})('', data || {});
 		return fetch(cfg.ajax, { method: 'POST', credentials: 'same-origin', body: body })
-			.then(function (r) { return r.json().catch(function () { return { success: false, data: { message: 'HTTP ' + r.status } }; }); })
+			.then(function (r) {
+				return r.text().then(function (t) {
+					try { return JSON.parse(t); } catch (e) {
+						// A PHP error page may come before our JSON error report; use the report if it's there.
+						var m = t.match(/\{"success":false[\s\S]*\}\s*$/);
+						if (m) { try { return JSON.parse(m[0]); } catch (e2) {} }
+						var plain = t.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 200);
+						return { success: false, data: { message: 'HTTP ' + r.status + (plain ? ': ' + plain : '') } };
+					}
+				});
+			})
 			.then(function (j) {
 				if (!j || !j.success) {
 					throw new Error((j && j.data && j.data.message) || 'Request failed');
@@ -391,17 +401,59 @@
 		if (!exp) { return; }
 		exp.addEventListener('click', function () {
 			var s = $('#aisa-export-status');
+			var BATCH = 10;
+			var result = null;
+			var problems = [];
+			exp.disabled = true;
 			s.textContent = 'Collecting pages…';
-			post('export').then(function (data) {
-				var blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' });
+
+			function chunk(offset, limit) {
+				return post('export', { offset: offset, limit: limit });
+			}
+			// A failing batch is retried one item at a time, so one bad page can't stop the export.
+			function batch(offset) {
+				return chunk(offset, BATCH).catch(function () {
+					var singles = [];
+					var p = Promise.resolve();
+					for (var k = 0; k < BATCH && (!result || offset + k < result.total); k++) {
+						(function (at) {
+							p = p.then(function () {
+								return chunk(at, 1).then(function (d) { singles.push(d); }, function (e) {
+									problems.push('item #' + (at + 1) + ': ' + e.message);
+								});
+							});
+						})(offset + k);
+					}
+					return p.then(function () {
+						if (!singles.length) { throw new Error(problems[problems.length - 1] || 'Export failed'); }
+						var merged = singles[0];
+						for (var j = 1; j < singles.length; j++) { merged.items = merged.items.concat(singles[j].items); }
+						return merged;
+					});
+				});
+			}
+			function next(offset) {
+				return batch(offset).then(function (d) {
+					if (!result) { result = d; } else { result.items = result.items.concat(d.items); }
+					result.total = d.total;
+					s.textContent = 'Collecting pages… ' + Math.min(offset + BATCH, d.total) + ' / ' + d.total;
+					if (offset + BATCH < d.total) { return next(offset + BATCH); }
+				});
+			}
+			next(0).then(function () {
+				result.offset = 0;
+				result.export_problems = problems;
+				var blob = new Blob([JSON.stringify(result, null, 1)], { type: 'application/json' });
 				var a = document.createElement('a');
 				a.href = URL.createObjectURL(blob);
 				a.download = 'site-content-for-claude.json';
 				document.body.appendChild(a);
 				a.click();
 				a.remove();
-				s.textContent = data.items.length + ' pages exported.';
-			}, function (e) { s.textContent = e.message; });
+				s.textContent = result.items.length + ' pages exported.' + (problems.length ? ' ' + problems.length + ' could not be read and are listed in the file: ' + problems.join(' | ') : '');
+			}, function (e) {
+				s.textContent = 'Export failed: ' + e.message + ' (send this message to Claude).';
+			}).then(function () { exp.disabled = false; });
 		});
 		$('#aisa-import').addEventListener('click', function () {
 			var file = $('#aisa-import-file').files[0];

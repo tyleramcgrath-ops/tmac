@@ -539,7 +539,43 @@ class AISA_Admin {
 
 	public static function ajax_export() {
 		self::guard();
-		wp_send_json_success( AISA_Exchange::export() );
+		if ( function_exists( 'set_time_limit' ) ) {
+			@set_time_limit( 120 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+		}
+		// If PHP dies anyway (memory, a fatal in another plugin), answer with the real reason
+		// instead of a bare HTTP 500, so it can be reported and fixed.
+		// WordPress's own "critical error" page would answer first with HTML and a 500.
+		add_filter( 'wp_fatal_error_handler_enabled', '__return_false' );
+		// Held back so the error report below can still run after PHP runs out of memory.
+		$reserve = str_repeat( ' ', 2 * 1024 * 1024 );
+		register_shutdown_function(
+			function () use ( &$reserve ) {
+				$reserve = null;
+				$err     = error_get_last();
+				if ( ! $err || ! in_array( $err['type'], [ E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR ], true ) ) {
+					return;
+				}
+				while ( ob_get_level() ) {
+					ob_end_clean();
+				}
+				if ( ! headers_sent() ) {
+					status_header( 200 );
+					header( 'Content-Type: application/json; charset=utf-8' );
+				}
+				echo wp_json_encode(
+					[
+						'success' => false,
+						'data'    => [
+							'message' => sprintf( 'PHP error while exporting %s: %s in %s:%d', AISA_Exchange::$current, $err['message'], $err['file'], $err['line'] ),
+							'fatal'   => true,
+						],
+					]
+				);
+			}
+		);
+		$offset = isset( $_POST['offset'] ) ? absint( $_POST['offset'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$limit  = isset( $_POST['limit'] ) ? min( 50, max( 1, absint( $_POST['limit'] ) ) ) : 10; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		wp_send_json_success( AISA_Exchange::export( $offset, $limit ) );
 	}
 
 	public static function ajax_import() {

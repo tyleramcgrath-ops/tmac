@@ -14,6 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class AISA_Content_Extractor {
 	/**
+	 * Set after a fetch of the site's own page fails, so one slow or blocked host doesn't
+	 * make every page in a request wait for a timeout.
+	 *
+	 * @var bool
+	 */
+	private static $fetch_broken = false;
+	/**
 	 * Characters of page text sent per page. SEO metadata only needs the substance of a page,
 	 * and a cap keeps cost predictable on very long pages. Token saver mode sends much less:
 	 * the opening of a page says what it is about.
@@ -35,7 +42,7 @@ class AISA_Content_Extractor {
 		$text   = self::clean_html( self::stored_content( $post ) );
 		$source = 'content';
 
-		if ( mb_strlen( $text ) < 400 && 'publish' === $post->post_status ) {
+		if ( mb_strlen( $text ) < 400 && 'publish' === $post->post_status && ! self::$fetch_broken ) {
 			$rendered = self::rendered_text( get_permalink( $post ) );
 			if ( mb_strlen( $rendered ) > mb_strlen( $text ) ) {
 				$text   = $rendered;
@@ -66,7 +73,14 @@ class AISA_Content_Extractor {
 	private static function stored_content( $post ) {
 		$content = (string) $post->post_content;
 		if ( function_exists( 'do_blocks' ) && has_blocks( $content ) ) {
-			$content = do_blocks( $content );
+			// Some blocks assume a front-end request; never let one break the export.
+			ob_start();
+			try {
+				$content = do_blocks( $content );
+			} catch ( \Throwable $e ) {
+				unset( $e );
+			}
+			ob_end_clean();
 		}
 		return strip_shortcodes( $content );
 	}
@@ -85,11 +99,12 @@ class AISA_Content_Extractor {
 		$response = wp_remote_get(
 			$url,
 			[
-				'timeout'   => 20,
+				'timeout'   => 8,
 				'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
 			]
 		);
 		if ( is_wp_error( $response ) || 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+			self::$fetch_broken = true;
 			return '';
 		}
 

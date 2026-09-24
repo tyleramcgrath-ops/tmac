@@ -18,6 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AISA_Exchange {
 	const NS = 'aisa/v1';
 
+	/**
+	 * The item being exported, reported if PHP dies mid-export.
+	 *
+	 * @var string
+	 */
+	public static $current = '';
+
 	public static function init() {
 		add_action( 'rest_api_init', [ __CLASS__, 'routes' ] );
 	}
@@ -125,15 +132,25 @@ class AISA_Exchange {
 
 		$items = [];
 		foreach ( $slice as $t ) {
-			$current = 'term' === $t['type'] ? AISA_AIOSEO_Bridge::read_term( $t['id'] ) : AISA_AIOSEO_Bridge::read( $t['id'] );
-			$text    = '';
-			$post    = null;
-			if ( 'post' === $t['type'] ) {
-				$post = get_post( $t['id'] );
-				$text = $post ? AISA_Content_Extractor::for_post( $post )['text'] : '';
-			} else {
-				$term = get_term( $t['id'] );
-				$text = $term && ! is_wp_error( $term ) ? wp_strip_all_tags( $term->description ) : '';
+			self::$current = $t['type'] . ' ' . $t['id'] . ' (' . $t['title'] . ')';
+			$error         = '';
+			$post          = 'post' === $t['type'] ? get_post( $t['id'] ) : null;
+			try {
+				$current = 'term' === $t['type'] ? AISA_AIOSEO_Bridge::read_term( $t['id'] ) : AISA_AIOSEO_Bridge::read( $t['id'] );
+			} catch ( \Throwable $e ) {
+				$current = new WP_Error( 'aisa_read', $e->getMessage() );
+			}
+			try {
+				if ( 'post' === $t['type'] ) {
+					$text = $post ? AISA_Content_Extractor::for_post( $post )['text'] : '';
+				} else {
+					$term = get_term( $t['id'] );
+					$text = $term && ! is_wp_error( $term ) ? wp_strip_all_tags( $term->description ) : '';
+				}
+			} catch ( \Throwable $e ) {
+				// Fall back to the raw stored text rather than losing the page.
+				$text  = $post ? mb_substr( AISA_Content_Extractor::clean_html( $post->post_content ), 0, AISA_Content_Extractor::max_chars() ) : '';
+				$error = 'Text extraction failed: ' . $e->getMessage();
 			}
 			$items[] = [
 				'type'      => $t['type'],
@@ -146,8 +163,10 @@ class AISA_Exchange {
 				'status'    => $t['status'],
 				'current'   => is_wp_error( $current ) ? null : $current,
 				'text'      => $text,
+				'error'     => $error,
 			];
 		}
+		self::$current = '';
 
 		return [
 			'format'  => 'aisa-export/1',

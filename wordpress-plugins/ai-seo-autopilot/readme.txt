@@ -3,7 +3,7 @@ Tags: seo, all in one seo, aioseo, schema, ai
 Requires at least: 6.0
 Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 
 Uses Claude to write SEO titles, meta descriptions, keyphrases, social tags and schema for every page, then saves them into All in One SEO in one click.
@@ -26,6 +26,10 @@ Requires an Anthropic API key.
 3. Go to SEO Autopilot → Autopilot and click Run Autopilot.
 
 == Changelog ==
+
+= 1.2.1 =
+* Export works on large or fragile sites: it runs in batches of 10, retries a failing batch page by page, skips a page that crashes PHP (with the reason in the file), and reports the real PHP error instead of a bare HTTP 500.
+* Page-builder template libraries (Elementor etc.) are no longer offered as content.
 
 = 1.2.0 =
 * No API key needed: an Import / Export tab and a REST API (Application Password) let Claude write the SEO in a chat and send it back for review and apply.
