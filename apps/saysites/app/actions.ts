@@ -5,6 +5,7 @@ import { hashPassword, normalizeEmail, validEmail, verifyPassword } from '@/lib/
 import { endSession, requireUser, startSession } from '@/lib/session'
 import { BUSINESS_TYPES, PALETTES, buildStarterSite, subdomainFor, type BusinessTypeKey } from '@/lib/starter'
 import { getStore } from '@/lib/store'
+import { templateFor } from '@/lib/templates'
 
 export interface FormState {
   error?: string
@@ -24,7 +25,9 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
   const user = await store.createUser({ email, name: name.slice(0, 80), passwordHash: await hashPassword(password) })
   await startSession(user.id)
   const idea = str(form, 'idea').slice(0, 200)
-  redirect(idea ? `/dashboard/new?idea=${encodeURIComponent(idea)}` : '/dashboard/new')
+  const template = str(form, 'template').slice(0, 20)
+  const q = new URLSearchParams({ ...(idea ? { idea } : {}), ...(template ? { template } : {}) }).toString()
+  redirect(q ? `/dashboard/new?${q}` : '/dashboard/new')
 }
 
 export async function logIn(_prev: FormState, form: FormData): Promise<FormState> {
@@ -63,11 +66,19 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   let subdomain = base
   for (let n = 2; await store.subdomainTaken(subdomain); n++) subdomain = `${base}-${n}`
 
+  const template = templateFor(str(form, 'template'))
+  const phone = str(form, 'phone').slice(0, 30)
   const { site, pages } = buildStarterSite(
-    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone: str(form, 'phone').slice(0, 30), email, services, palette },
+    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(template ? { design: template.key } : {}) },
     user.id,
     subdomain
   )
   await store.createSite(user.id, site, pages)
+  // Talk & Design: open Sofie with the filled-in prompt, so the owner watches
+  // her design the site. Without Sofie switched on, the template site is ready.
+  if (template && process.env.ANTHROPIC_API_KEY) {
+    const prompt = template.prompt({ name, typeLabel: BUSINESS_TYPES[type].label, city, region, phone, services })
+    redirect(`/dashboard/sites/${site.id}/sofie?talk=${encodeURIComponent(prompt)}`)
+  }
   redirect(`/dashboard/sites/${site.id}?new=1`)
 }

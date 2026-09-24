@@ -7,8 +7,17 @@
 
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
-import { sampleSite, samplePages } from './sample'
+import { SHOWCASE } from './showcase'
 import { PageSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
+import type { ChatTurn, Snapshot } from './sofie'
+
+// Sofie's working state for one site: the chat, plus a draft of her edits
+// (with the steps before it, for undo) that is not live until published.
+export interface SofieState {
+  chat: ChatTurn[]
+  draft: Snapshot | null
+  history: Snapshot[]
+}
 
 export interface User {
   id: string
@@ -35,7 +44,11 @@ export interface Store {
   pagesForSite(siteId: string): Promise<Page[]>
   savePage(page: Page, author: RevisionAuthor, userId: string | null, note?: string): Promise<void>
   redirectsForSite(siteId: string): Promise<Redirect[]>
+  sofieState(siteId: string): Promise<SofieState>
+  saveSofieState(siteId: string, state: SofieState): Promise<void>
 }
+
+export const emptySofieState = (): SofieState => ({ chat: [], draft: null, history: [] })
 
 // ---------------------------------------------------------------------------
 // Postgres
@@ -85,6 +98,11 @@ CREATE TABLE IF NOT EXISTS ss_redirects (
   to_path TEXT NOT NULL,
   status SMALLINT NOT NULL CHECK (status IN (301,302)),
   PRIMARY KEY (site_id, from_path)
+);
+CREATE TABLE IF NOT EXISTS ss_sofie (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 `
 
@@ -139,14 +157,14 @@ class PgStore implements Store {
   }
   async siteBySubdomain(subdomain: string) {
     const r = (await this.q<{ data: Site }>('SELECT data FROM ss_sites WHERE subdomain = $1', [subdomain]))[0]
-    return r ? SiteSchema.parse(r.data) : subdomain === sampleSite.subdomain ? sampleSite : null
+    return r ? SiteSchema.parse(r.data) : SHOWCASE[subdomain]?.site ?? null
   }
   async siteByDomain(domain: string) {
     const r = (await this.q<{ data: Site }>('SELECT data FROM ss_sites WHERE custom_domain = $1', [domain]))[0]
     return r ? SiteSchema.parse(r.data) : null
   }
   async subdomainTaken(subdomain: string) {
-    if (subdomain === sampleSite.subdomain) return true
+    if (SHOWCASE[subdomain]) return true
     return (await this.q('SELECT 1 FROM ss_sites WHERE subdomain = $1', [subdomain])).length > 0
   }
   async updateSite(site: Site) {
@@ -154,7 +172,8 @@ class PgStore implements Store {
     await this.q('UPDATE ss_sites SET data = $2, custom_domain = $3, updated_at = now() WHERE id = $1', [s.id, s, s.customDomain ?? null])
   }
   async pagesForSite(siteId: string) {
-    if (siteId === sampleSite.id) return samplePages
+    const demo = Object.values(SHOWCASE).find((d) => d.site.id === siteId)
+    if (demo) return demo.pages
     return (await this.q<{ data: Page }>('SELECT data FROM ss_pages WHERE site_id = $1 ORDER BY slug', [siteId])).map((r) => PageSchema.parse(r.data))
   }
   async savePage(page: Page, author: RevisionAuthor, userId: string | null, note?: string) {
@@ -171,6 +190,13 @@ class PgStore implements Store {
       to: r.to_path,
       status: r.status as 301 | 302,
     }))
+  }
+  async sofieState(siteId: string) {
+    const r = (await this.q<{ data: SofieState }>('SELECT data FROM ss_sofie WHERE site_id = $1', [siteId]))[0]
+    return r ? r.data : emptySofieState()
+  }
+  async saveSofieState(siteId: string, state: SofieState) {
+    await this.q('INSERT INTO ss_sofie (site_id, data) VALUES ($1,$2) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, state])
   }
 }
 
@@ -214,20 +240,21 @@ export class MemoryStore implements Store {
     return s && s.ownerId === ownerId ? s.site : null
   }
   async siteBySubdomain(subdomain: string) {
-    return [...this.sites.values()].find((s) => s.site.subdomain === subdomain)?.site ?? (subdomain === sampleSite.subdomain ? sampleSite : null)
+    return [...this.sites.values()].find((s) => s.site.subdomain === subdomain)?.site ?? SHOWCASE[subdomain]?.site ?? null
   }
   async siteByDomain(domain: string) {
     return [...this.sites.values()].find((s) => s.site.customDomain === domain)?.site ?? null
   }
   async subdomainTaken(subdomain: string) {
-    return subdomain === sampleSite.subdomain || [...this.sites.values()].some((s) => s.site.subdomain === subdomain)
+    return !!SHOWCASE[subdomain] || [...this.sites.values()].some((s) => s.site.subdomain === subdomain)
   }
   async updateSite(site: Site) {
     const s = this.sites.get(site.id)
     if (s) s.site = SiteSchema.parse(site)
   }
   async pagesForSite(siteId: string) {
-    if (siteId === sampleSite.id) return samplePages
+    const demo = Object.values(SHOWCASE).find((d) => d.site.id === siteId)
+    if (demo) return demo.pages
     return [...this.pages.values()].filter((p) => p.siteId === siteId).sort((a, b) => a.slug.localeCompare(b.slug))
   }
   async savePage(page: Page, author: RevisionAuthor, _userId: string | null, note?: string) {
@@ -237,6 +264,13 @@ export class MemoryStore implements Store {
   }
   async redirectsForSite() {
     return []
+  }
+  private sofie = new Map<string, SofieState>()
+  async sofieState(siteId: string) {
+    return structuredClone(this.sofie.get(siteId) ?? emptySofieState())
+  }
+  async saveSofieState(siteId: string, state: SofieState) {
+    this.sofie.set(siteId, structuredClone(state))
   }
 }
 

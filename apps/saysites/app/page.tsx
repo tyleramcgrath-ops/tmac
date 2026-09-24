@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Logo, LogoMark } from '@/components/Logo'
+import { TEMPLATES } from '@/lib/templates'
 import './home.css'
 
 // saysites.com. A static page with no client JavaScript of its own; motion is
@@ -110,7 +111,7 @@ export default function Home() {
           <Logo />
           <nav aria-label="Main">
             <a className="hide-sm" href="#how">How it works</a>
-            <a className="hide-sm" href="#examples">Examples</a>
+            <a className="hide-sm" href="#examples">Templates</a>
             <a className="hide-sm" href="#pricing">Pricing</a>
             <a href="/login">Log in</a>
             <a className="b b-light b-sm" href="/signup">Start free</a>
@@ -206,24 +207,31 @@ export default function Home() {
           <div className="wrap">
             <div className="head split">
               <div>
-                <p className="kicker">Examples</p>
-                <h2>Sites that look like the business.</h2>
+                <p className="kicker">Talk &amp; Design templates</p>
+                <h2>Pick a look. Say who you are. Done.</h2>
               </div>
-              <p>Every site is written for its own customers and gets its own look. These are design examples of what SaySites is built to make.</p>
+              <p>Each template comes with a ready-made prompt. Fill in your business name, town and services, and Sofie designs your site from it. Then keep talking to change anything.</p>
             </div>
-            <div className="gallery">
-              <figure className="g-wide">
-                <Frame url="rivertownplumbing.com"><Plumber /></Frame>
-                <figcaption><b>Rivertown Plumbing</b><span>Emergency plumber, open 24/7</span><a href="/preview/rivertown-plumbing">See our live sample site →</a></figcaption>
-              </figure>
-              <figure>
-                <Frame url="saltandstone.com"><Salon /></Frame>
-                <figcaption><b>Salt &amp; Stone</b><span>Hair salon, Savannah</span></figcaption>
-              </figure>
-              <figure>
-                <Frame url="rosies-bakery.saysites.com"><Bakery /></Frame>
-                <figcaption><b>Rosie’s Bakery</b><span>Neighborhood bakery, Portland</span></figcaption>
-              </figure>
+            <div className="tpls">
+              {TEMPLATES.map((t, i) => (
+                <article className={`tplrow${i % 2 ? ' flip' : ''}`} key={t.key}>
+                  <div className="tplrow-shot">
+                    <Frame url={`${t.example}.saysites.com`}>{t.key === 'bold' ? <Plumber /> : t.key === 'editorial' ? <Salon /> : <Bakery />}</Frame>
+                  </div>
+                  <div className="tplrow-copy">
+                    <h3>{t.name}</h3>
+                    <p className="tplrow-for">Great for {t.bestFor.toLowerCase()}</p>
+                    <div className="prompt-card">
+                      <span className="prompt-label">The prompt</span>
+                      <p>{t.prompt({}).split(/(\[[^\]]+\])/).map((part, n) => (part.startsWith('[') ? <mark key={n}>{part.slice(1, -1)}</mark> : part))}</p>
+                    </div>
+                    <div className="tplrow-actions">
+                      <a className="b b-dark" href={`/signup?template=${t.key}`}>Use this template</a>
+                      <a className="tplrow-link" href={`/preview/${t.example}`}>See the live example →</a>
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>

@@ -159,15 +159,26 @@
 .home .vis-chat span { margin-left: auto; background: var(--g3); padding: 10px 13px; border-radius: 12px; border-bottom-right-radius: 4px; max-width: 88%; }
 @media (max-width: 900px) { .home .steps { grid-template-columns: 1fr; } .home .steps h3 { margin-top: 24px; } }
 
-/* Example sites */
-.home .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 56px 32px; }
-.home .gallery figure { margin: 0; }
-.home .g-wide { grid-column: 1 / -1; }
-.home .gallery figcaption { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-top: 16px; font-size: 15px; }
-.home .gallery figcaption b { font-weight: 600; }
-.home .gallery figcaption span { color: var(--ink-mu); }
-.home .gallery figcaption a { margin-left: auto; color: var(--ink); font-weight: 500; text-underline-offset: 3px; }
-@media (max-width: 900px) { .home .gallery { grid-template-columns: 1fr; gap: 40px; } }
+/* Talk & Design templates */
+.home .tpls { display: grid; gap: 96px; }
+.home .tplrow { display: grid; grid-template-columns: 1.25fr 1fr; gap: 64px; align-items: center; }
+.home .tplrow.flip .tplrow-shot { order: 2; }
+.home .tplrow-copy h3 { font-size: 34px; letter-spacing: -0.035em; }
+.home .tplrow-for { color: var(--ink-mu); margin: 8px 0 22px; font-size: 16px; }
+.home .prompt-card { background: #fff; border-radius: 16px; padding: 20px 22px; box-shadow: 0 0 0 1px var(--line), 0 20px 40px -30px rgba(18, 19, 22, 0.3); }
+.home .prompt-label { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-mu); }
+.home .prompt-label::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #6f9b83; }
+.home .prompt-card p { margin: 10px 0 0; font-size: 15.5px; line-height: 1.6; }
+.home .prompt-card mark { background: #e7ecf2; color: var(--ink); padding: 1px 6px; border-radius: 5px; font-weight: 600; }
+.home .tplrow-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 22px; }
+.home .b-dark { background: var(--ink); color: #fff; }
+.home .b-dark:hover { background: #000; }
+.home .tplrow-link { color: var(--ink); font-weight: 500; text-underline-offset: 3px; }
+@media (max-width: 900px) {
+  .home .tpls { gap: 64px; }
+  .home .tplrow { grid-template-columns: 1fr; gap: 28px; }
+  .home .tplrow.flip .tplrow-shot { order: 0; }
+}
 
 /* Pricing */
 .home .pricing { background: var(--paper-2); }

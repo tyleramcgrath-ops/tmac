@@ -66,11 +66,11 @@ export default async function SitePage({ params, searchParams }: { params: Promi
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
               <div className="avatar" aria-hidden="true">S</div>
               <h2 style={{ margin: 0 }}>Sofie</h2>
-              <span className="tag">Coming soon</span>
             </div>
-            <p className="muted" style={{ margin: 0 }}>
-              Soon you’ll change anything here by chatting: “make the top darker”, “add a section about emergencies”, “update our hours”. You’ll see each change before it goes live.
+            <p className="muted" style={{ margin: '0 0 16px' }}>
+              Change anything by chatting: “make the top darker”, “add a section about emergencies”, “update our hours”. You see every change before it goes live.
             </p>
+            <a className="btn btn-primary" href={`/dashboard/sites/${site.id}/sofie`}>Open Sofie</a>
           </div>
 
           <div className="card">

@@ -371,3 +371,58 @@ describe('SaySites store (memory)', () => {
     await expect(store.createSite(b.id, { ...site, id: 'other' }, [])).rejects.toThrow()
   })
 })
+
+describe('Sofie', async () => {
+  const { Workspace, runTool, askSofie } = await import('../apps/saysites/lib/sofie')
+  const built = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', phone: '(555) 201-4480', services: ['Leak repair', 'Water heaters'], palette: 'ocean' }, 'o', 'rivertown', { siteId: 'site_t', now: '2026-01-01T00:00:00.000Z' })
+
+  it('edits text, style and site settings through validated tools', () => {
+    const ws = new Workspace(built)
+    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero-title', fields_json: '{"text":"Plumbing done right"}', summary: 'New headline' })).toBe('Done.')
+    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero', fields_json: '{"style":{"padding":{"desktop":{"top":40,"right":24,"bottom":40,"left":24}}}}', summary: 'Tighter hero' })).toBe('Done.')
+    expect(runTool(ws, 'update_site', { changes_json: '{"business":{"hours":["Mo-Fr 08:00-17:00"]},"globals":{"colors":{"primary":"#2f6b4f"}}}', summary: 'Hours and color' })).toBe('Done.')
+    const home = ws.pages.find((p) => p.slug === '')!
+    expect(JSON.stringify(home)).toContain('Plumbing done right')
+    expect(ws.site.business.hours).toEqual(['Mo-Fr 08:00-17:00'])
+    expect(ws.site.globals.colors.primary).toBe('#2f6b4f')
+    expect(ws.site.globals.colors.secondary).toBe(built.site.globals.colors.secondary)
+    expect(ws.changes).toEqual(['New headline', 'Tighter hero', 'Hours and color'])
+    expect(ws.problems()).toEqual([])
+  })
+
+  it('rejects unsafe or invalid changes and leaves the site untouched', () => {
+    const ws = new Workspace(built)
+    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero-cta', fields_json: '{"href":"javascript:alert(1)"}', summary: 'x' })).toMatch(/^Error:/)
+    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero-title', fields_json: '{"type":"text"}', summary: 'x' })).toMatch(/^Error:/)
+    expect(runTool(ws, 'update_site', { changes_json: '{"subdomain":"someone-else"}', summary: 'x' })).toMatch(/^Error:/)
+    expect(runTool(ws, 'insert_elements', { page: 'home', parent_id: '', index: -1, elements_json: '[{"id":"hero","type":"container","layout":"flex","children":[]}]', summary: 'x' })).toMatch(/unique/)
+    expect(runTool(ws, 'update_element', { page: 'nope', id: 'x', fields_json: '{}', summary: 'x' })).toMatch(/no page/i)
+    expect(ws.changes).toEqual([])
+    expect(ws.snapshot()).toEqual(built)
+  })
+
+  it('adds sections and pages, and the publish gate catches broken structure', () => {
+    const ws = new Workspace(built)
+    const section = [{ id: 'hours', type: 'container', tag: 'section', layout: 'flex', boxed: true, children: [{ id: 'hours-h', type: 'heading', level: 2, text: 'Opening hours' }] }]
+    expect(runTool(ws, 'insert_elements', { page: 'home', parent_id: '', index: 2, elements_json: JSON.stringify(section), summary: 'Added hours' })).toBe('Done.')
+    expect(ws.pages[0].body[2].id).toBe('hours')
+    expect(runTool(ws, 'add_page', { slug: 'about', name: 'About', title: 'About Rivertown Plumbing', description: 'Who we are.', body_json: JSON.stringify([{ id: 'a', type: 'container', layout: 'flex', children: [{ id: 'a-h', type: 'heading', level: 1, text: 'About us' }] }]), add_to_nav: true, summary: 'Added About page' })).toBe('Done.')
+    expect(ws.site.nav.map((n) => n.href)).toContain('/about')
+    runTool(ws, 'insert_elements', { page: 'about', parent_id: 'a', index: -1, elements_json: '[{"id":"a-h2","type":"heading","level":1,"text":"Second title"}]', summary: 'x' })
+    expect(ws.problems().join(' ')).toMatch(/about/)
+  })
+
+  it('runs a conversation: tools, then a plain reply', async () => {
+    const script = [
+      { stop_reason: 'tool_use', content: [{ type: 'tool_use', id: 't1', name: 'update_element', input: { page: 'home', id: 'hero-title', fields_json: '{"text":"We fix leaks fast"}', summary: 'Updated the headline' } }] },
+      { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Done! Your headline now says “We fix leaks fast”.' }] },
+    ]
+    const calls: unknown[] = []
+    const client = { beta: { messages: { create: async (req: unknown) => (calls.push(req), script.shift()) } } }
+    const out = await askSofie({ snapshot: built, history: [], message: 'Change the headline', client: client as never })
+    expect(out.reply).toContain('We fix leaks fast')
+    expect(out.changes).toEqual(['Updated the headline'])
+    expect(JSON.stringify(out.snapshot.pages[0])).toContain('We fix leaks fast')
+    expect(calls).toHaveLength(2)
+  })
+})

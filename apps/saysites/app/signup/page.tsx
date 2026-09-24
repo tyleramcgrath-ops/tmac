@@ -6,9 +6,14 @@ import { currentUser } from '@/lib/session'
 
 export const metadata: Metadata = { title: 'Create your account', robots: { index: false } }
 
-export default async function SignUpPage({ searchParams }: { searchParams: Promise<{ idea?: string }> }) {
-  const idea = ((await searchParams).idea ?? '').trim().slice(0, 200)
-  if (await currentUser()) redirect(idea ? `/dashboard/new?idea=${encodeURIComponent(idea)}` : '/dashboard')
+export default async function SignUpPage({ searchParams }: { searchParams: Promise<{ idea?: string; template?: string }> }) {
+  const sp = await searchParams
+  const idea = (sp.idea ?? '').trim().slice(0, 200)
+  const template = (sp.template ?? '').trim().slice(0, 20)
+  if (await currentUser()) {
+    const q = new URLSearchParams({ ...(idea ? { idea } : {}), ...(template ? { template } : {}) }).toString()
+    redirect(q ? `/dashboard/new?${q}` : '/dashboard')
+  }
   return (
     <>
       <TopBar />
@@ -20,7 +25,7 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
           ) : (
             <p className="sub">Create a free account. Next, tell us about your business.</p>
           )}
-          <SignUpForm idea={idea} />
+          <SignUpForm idea={idea} template={template} />
           <p className="switch">Already have an account? <a href="/login">Log in</a></p>
         </div>
       </main>

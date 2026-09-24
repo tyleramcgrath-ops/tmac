@@ -64,6 +64,13 @@ export const GlobalStyles = z
     radius: z.number().min(0).max(48),
     // Max content width in px.
     containerWidth: z.number().min(640).max(1920),
+    // Heading personality: weight, letter-spacing (em) and case. Buttons get a
+    // shape and case. Together these give each site its own voice.
+    headingWeight: z.union([z.literal(400), z.literal(500), z.literal(600), z.literal(700), z.literal(800), z.literal(900)]).optional(),
+    headingTracking: z.number().min(-0.08).max(0.2).optional(),
+    headingCase: z.enum(['none', 'upper']).optional(),
+    buttonShape: z.enum(['square', 'rounded', 'pill']).optional(),
+    buttonCase: z.enum(['none', 'upper']).optional(),
   })
   .strict()
 export type GlobalStyles = z.infer<typeof GlobalStyles>
@@ -89,6 +96,11 @@ export const ElementStyle = z
     textAlign: responsive(z.enum(['left', 'center', 'right'])).optional(),
     borderRadius: px.optional(),
     maxWidth: px.optional(),
+    letterSpacing: z.number().min(-0.1).max(0.5).optional(),
+    textTransform: z.enum(['none', 'uppercase']).optional(),
+    fontFamily: z.enum(['heading', 'body']).optional(),
+    // A hairline border in a color token, e.g. dividers between strip items.
+    border: ColorValue.optional(),
   })
   .strict()
 export type ElementStyle = z.infer<typeof ElementStyle>
@@ -122,7 +134,8 @@ export const ImageWidget = z
   .object({
     ...widgetBase,
     type: z.literal('image'),
-    src: z.string().min(1),
+    // Our own files ("/media/...") or https images; nothing else can load.
+    src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/, 'images must be https:// or a /path'),
     // Required and non-empty: alt text is an SEO + accessibility guard-rail.
     alt: z.string().trim().min(1, 'images need alt text').max(250),
     // Intrinsic size is required so the browser reserves space (no layout shift).
@@ -130,6 +143,8 @@ export const ImageWidget = z
     height: z.number().int().positive(),
     // The first image above the fold should load eagerly; everything else is lazy.
     priority: z.boolean().optional(),
+    // Crop to this width/height ratio (e.g. 1.5 for 3:2) and fill the column.
+    aspect: z.number().min(0.3).max(4).optional(),
   })
   .strict()
 
@@ -176,8 +191,21 @@ export interface Container {
   justify?: 'start' | 'center' | 'end' | 'between'
   // Full-bleed background, content constrained to the global containerWidth.
   boxed?: boolean
+  // A photo behind the content, darkened so text on it stays readable.
+  backgroundImage?: BackgroundImage
   style?: ElementStyle
   children: Element[]
+}
+export interface BackgroundImage {
+  src: string
+  width: number
+  height: number
+  // 0 (no tint) to 0.95. "side" fades from the left, so text there reads and
+  // the photo shows on the right; "full" tints evenly.
+  overlay: number
+  overlayStyle?: 'full' | 'side'
+  position?: string
+  priority?: boolean
 }
 export type Element = Container | Widget
 
@@ -193,6 +221,18 @@ export const ContainerSchema: z.ZodType<Container> = z.lazy(() =>
       align: z.enum(['start', 'center', 'end', 'stretch']).optional(),
       justify: z.enum(['start', 'center', 'end', 'between']).optional(),
       boxed: z.boolean().optional(),
+      backgroundImage: z
+        .object({
+          src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/, 'images must be https:// or a /path'),
+          width: z.number().int().positive(),
+          height: z.number().int().positive(),
+          overlay: z.number().min(0).max(0.95),
+          overlayStyle: z.enum(['full', 'side']).optional(),
+          position: z.string().regex(/^\d{1,3}% \d{1,3}%$/).optional(),
+          priority: z.boolean().optional(),
+        })
+        .strict()
+        .optional(),
       style: ElementStyle.optional(),
       children: z.array(ElementSchema).max(200),
     })
@@ -265,6 +305,17 @@ export const SiteSchema = z
     business: BusinessInfo,
     globals: GlobalStyles,
     nav: z.array(z.object({ label: z.string().min(1).max(40), href }).strict()).max(12),
+    // Optional slim bar above the header ("Licensed and insured · Open 24/7")
+    // and a call-to-action button at the right of the header.
+    header: z
+      .object({
+        topbar: z.string().min(1).max(120).optional(),
+        cta: z.object({ label: z.string().min(1).max(40), href }).strict().optional(),
+      })
+      .strict()
+      .optional(),
+    // One or two lines about the business, shown in the footer.
+    tagline: z.string().max(200).optional(),
     updatedAt: z.string(),
   })
   .strict()
