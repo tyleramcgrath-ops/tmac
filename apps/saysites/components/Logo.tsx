@@ -1,16 +1,16 @@
-export function LogoMark() {
+export function LogoMark({ inverted = false }: { inverted?: boolean }) {
   return (
     <svg className="logo-mark" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M6 4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4h-9l-7 5v-5H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#5b3df5" />
-      <path d="M20.5 11.2c-.9-1.3-2.5-2-4.4-2-2.6 0-4.3 1.3-4.3 3.2 0 1.8 1.4 2.6 3.9 3.1 1.7.4 2.3.7 2.3 1.4 0 .8-.8 1.3-2.1 1.3-1.4 0-2.5-.6-3.2-1.6l-1.7 1.4c1 1.5 2.8 2.3 4.8 2.3 2.8 0 4.6-1.4 4.6-3.5 0-1.9-1.4-2.7-4-3.2-1.6-.3-2.2-.6-2.2-1.3 0-.7.7-1.1 1.8-1.1 1.1 0 2 .4 2.6 1.3z" fill="#fff" />
+      <path d="M6 4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4h-9l-7 5v-5H6a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill={inverted ? '#d4ff3a' : '#121116'} />
+      <path d="M20.5 11.2c-.9-1.3-2.5-2-4.4-2-2.6 0-4.3 1.3-4.3 3.2 0 1.8 1.4 2.6 3.9 3.1 1.7.4 2.3.7 2.3 1.4 0 .8-.8 1.3-2.1 1.3-1.4 0-2.5-.6-3.2-1.6l-1.7 1.4c1 1.5 2.8 2.3 4.8 2.3 2.8 0 4.6-1.4 4.6-3.5 0-1.9-1.4-2.7-4-3.2-1.6-.3-2.2-.6-2.2-1.3 0-.7.7-1.1 1.8-1.1 1.1 0 2 .4 2.6 1.3z" fill={inverted ? '#121116' : '#d4ff3a'} />
     </svg>
   )
 }
 
-export function Logo() {
+export function Logo({ inverted = false }: { inverted?: boolean }) {
   return (
     <a className="logo" href="/" aria-label="SaySites home">
-      <LogoMark />
+      <LogoMark inverted={inverted} />
       SaySites
     </a>
   )

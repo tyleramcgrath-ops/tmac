@@ -7,11 +7,12 @@ function Error({ state }: { state: FormState }) {
   return state.error ? <p className="error" role="alert">{state.error}</p> : null
 }
 
-export function SignUpForm() {
+export function SignUpForm({ idea = '' }: { idea?: string }) {
   const [state, action, pending] = useActionState(signUp, {})
   return (
     <form action={action}>
       <Error state={state} />
+      {idea && <input type="hidden" name="idea" value={idea} />}
       <label className="field"><span>Your name</span><input className="input" name="name" autoComplete="name" required /></label>
       <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" required /></label>
       <label className="field"><span>Password</span><input className="input" name="password" type="password" autoComplete="new-password" minLength={8} required /><small>At least 8 characters.</small></label>
@@ -32,7 +33,7 @@ export function LogInForm() {
   )
 }
 
-export function NewSiteForm({ types, palettes }: { types: [string, string][]; palettes: [string, string, string][] }) {
+export function NewSiteForm({ types, palettes, idea = '' }: { types: [string, string][]; palettes: [string, string, string][]; idea?: string }) {
   const [state, action, pending] = useActionState(createSite, {})
   return (
     <form action={action}>

@@ -23,7 +23,8 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
   if (await store.userByEmail(email)) return { error: 'There is already an account with that email. Try logging in.' }
   const user = await store.createUser({ email, name: name.slice(0, 80), passwordHash: await hashPassword(password) })
   await startSession(user.id)
-  redirect('/dashboard/new')
+  const idea = str(form, 'idea').slice(0, 200)
+  redirect(idea ? `/dashboard/new?idea=${encodeURIComponent(idea)}` : '/dashboard/new')
 }
 
 export async function logIn(_prev: FormState, form: FormData): Promise<FormState> {
