@@ -1,7 +1,7 @@
 # SaySites — Plan and Timeline
 
 **Date:** 2026-09-24 (revised after first decisions)
-**Status:** Draft. Nothing here is built yet.
+**Status:** Phase 0 in progress. The content model, renderer, SEO checks, speed gate and database tables are built (`lib/saysites/`, migration `013_saysites_core.sql`).
 **Name:** **SaySites**, its own brand (chosen 2026-09-24; domains not yet registered).
 
 ---
@@ -15,7 +15,7 @@ Who it's for: the simple business owner who wants a good-looking, modern site wi
 learning a builder, hiring a designer or understanding SEO.
 
 What sells it, in order:
-1. **Talk, don't build.** A friendly chat assistant with a name and face (like "Angie")
+1. **Talk, don't build.** **Sofie**, a friendly chat assistant with a name and a face,
    is the main way to use the product. You tell it what your business is and what you
    want, and it builds the site. After that, "make the header darker", "add my new
    service", "put a sale banner up until Friday" and it's done, the way you work with
@@ -29,7 +29,7 @@ What sells it, in order:
 4. **Cheaper than Shopify, with 0% taken from your sales.**
 
 Two people to win over: the WordPress/SEO person (clean code, real SEO tools) and the
-Shopify/designer person (beautiful themes, easy store). The chat assistant serves both,
+Shopify/designer person (beautiful themes, easy store). Sofie serves both,
 because nobody has to learn anything.
 
 ---
@@ -90,7 +90,7 @@ ourselves into lean HTML. That keeps what Elementor gets wrong out of our sites:
 
 ### 1b. The chat assistant edits the same element tree
 
-The assistant (like "Angie") is not a separate system. It is Claude with tools that
+Sofie is not a separate system. It is Claude with tools that
 read and change the same element tree and global styles the builder uses:
 `add_section`, `update_element`, `set_global_colors`, `create_page`, `add_product`,
 and so on. That means:
@@ -225,7 +225,7 @@ from about 12 months to about **15–16 months**. Each phase ends with something
 - Navigator, undo/redo, draft/publish, revision history.
 - Media library; menus; the "SEO by construction" basics.
 - **The speed gate:** a Lighthouse check on publish; nothing goes live below 95.
-- **The first chat assistant:** a side panel where you describe a change and it edits
+- **Sofie, first version:** a side panel where you describe a change and it edits
   the page, with preview, accept and undo. It starts with the basics (text, colors,
   add/remove/reorder sections) and grows every phase after.
 - **Dogfood:** rebuild the RankForge marketing site in it, mostly by chat.
@@ -260,10 +260,10 @@ missing a feature they use.
 - **AI site generation:** a page plan from keyword research (`lib/engine/keywords.ts`,
   `serp.ts`), then element trees, copy, globals and product descriptions.
 - Auto-verify Search Console, submit the sitemap, create GA4, connect Merchant Center.
-- The assistant goes full power: it gets its name and face, and it can build a whole site
+- Sofie goes full power: she can build a whole site
   from a description, restyle the theme, write copy, add products, create pages and
   generate images ("make this section more premium", "add an FAQ from my reviews").
-  Its output is always schema-validated and speed-gated.
+  Her output is always schema-validated and speed-gated.
 
 **Done when:** a new business goes from sign-up to a live, connected, indexed site in
 under 10 minutes.
@@ -336,7 +336,7 @@ Runner-up names, in case the trademark search turns something up: **TellRank**
 ## Still open
 
 - **Register saysites.com** (plus .ai) and run a trademark search on "SaySites".
-- **The assistant's name and face** (like "Angie").
+- **Sofie's look:** her avatar and voice/tone guide.
 - **Hosting provider** at scale: Vercel to start, reassessed on cost per site in Phase 6.
 - **Focus.** The repo also has Citation Gap, Reloop and North Star HQ. This is a
   15-month build and needs to be the main thing.
@@ -358,11 +358,25 @@ Runner-up names, in case the trademark search turns something up: **TellRank**
 
 ## Next two weeks (concrete)
 
+Done:
+- ✅ `lib/saysites/schema.ts`: zod schemas for the element tree (containers plus 5
+  widgets: heading, text, image, button, FAQ), responsive style values, global styles,
+  Site, Page and Redirect. Unknown fields, `javascript:` links, non-hex colors and
+  images without alt text are rejected.
+- ✅ `lib/saysites/render.ts`: element tree → one lean HTML document with per-page CSS,
+  no JavaScript, system fonts, JSON-LD and a favicon.
+- ✅ `lib/saysites/seo.ts`: LocalBusiness/FAQPage/Breadcrumb structured data,
+  pre-publish checks (one H1, heading order, duplicate ids, broken links, title
+  length), sitemap, robots, and chain-free 301s on slug change.
+- ✅ `lib/saysites/speed.ts`: the static half of the 95+ gate.
+- ✅ Migration `013_saysites_core.sql`: sites, pages, page revisions (author: owner,
+  Sofie, Operator, import), redirects, media.
+- ✅ Sample site (a local plumber): **Lighthouse mobile 100 / 100 / 100 / 100**
+  (Performance, Accessibility, Best Practices, SEO); home page 7.5 KB HTML, 3.4 KB CSS.
+
+Still to do:
 1. Register saysites.com and saysites.ai; run a trademark search.
 2. Submit the Google Business Profile API access request; register the Stripe Connect platform.
-3. Write `lib/cms/schema/` with zod schemas for the element tree (Container plus 5
-   widgets, responsive style values), GlobalStyles, Page, Site and Redirect, plus unit tests.
-4. Add migration `013_cms_core.sql` for the sites, pages, page_revisions, templates,
-   media and redirects tables.
-5. Build the renderer skeleton: hostname → site → render a page from its element tree
-   into lean HTML and CSS.
+3. The store layer: read and write sites/pages/revisions through the foundation store (Postgres + file).
+4. The renderer deployment: hostname → site → page, served on `*.saysites.com`.
+5. Sofie's first tools: `update_element`, `add_section`, `set_global_colors`, working on this same tree.
