@@ -21,6 +21,7 @@ import {
   type Element,
   type ElementStyle,
   type GlobalStyles,
+  FORM_FIELDS,
   type Page,
   type Responsive,
   type Site,
@@ -59,6 +60,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<style>${css}</style>`,
   ].filter(Boolean)
 
+  store = site.store
+  posts = allPages.filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const body = [
     renderHeader(site, page),
     `<main>${page.body.map(renderElement).join('')}</main>`,
@@ -72,6 +75,11 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 // ---------------------------------------------------------------------------
 // HTML
 // ---------------------------------------------------------------------------
+
+// The site's products, for the products widget. Set per render; rendering is
+// synchronous, so this can't leak between pages.
+let store: Site['store']
+let posts: Page[] = []
 
 function renderElement(el: Element): string {
   return el.type === 'container' ? renderContainer(el) : renderWidget(el)
@@ -128,7 +136,79 @@ function renderWidget(w: Widget): string {
       return `<div class="faq ${c}">${w.items
         .map((i) => `<details><summary>${esc(i.question)}</summary><div>${paragraphs(i.answer).map((p) => `<p>${p}</p>`).join('')}</div></details>`)
         .join('')}</div>`
+    case 'form':
+      return renderForm(w)
+    case 'products':
+      return renderProducts(w)
+    case 'posts':
+      return renderPosts(w)
   }
+}
+
+export function formatDate(iso: string): string {
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+}
+
+function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {
+  const list = posts.slice(0, w.limit ?? 50)
+  if (!list.length) return `<p class="po-none">New posts are on the way.</p>`
+  const cards = list.map((p) => {
+    const href = pagePath(p)
+    const img = p.post!.image
+      ? `<a href="${esc(href)}" tabindex="-1" aria-hidden="true"><img class="po-img" src="${esc(p.post!.image.src)}"${srcset(p.post!.image.src, 1200)} sizes="(max-width: 640px) 100vw, 33vw" alt="" width="1200" height="800" loading="lazy" decoding="async"></a>`
+      : ''
+    return `<article class="po">${img}<time datetime="${esc(p.post!.date)}">${esc(formatDate(p.post!.date))}</time><h3 class="po-t"><a href="${esc(href)}">${esc(p.post!.title)}</a></h3><p>${esc(p.post!.excerpt)}</p><a class="po-more" href="${esc(href)}">Read more <span aria-hidden="true">→</span></a></article>`
+  })
+  return `<div class="pos ${cls(w.id)}">${cards.join('')}</div>`
+}
+
+const SYMBOL: Record<string, string> = { USD: '$', CAD: 'CA$', AUD: 'A$', GBP: '£', EUR: '€' }
+
+export function formatPrice(cents: number, currency: string): string {
+  const whole = cents % 100 === 0
+  return `${SYMBOL[currency] ?? ''}${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 })}`
+}
+
+function renderProducts(w: Extract<Widget, { type: 'products' }>): string {
+  const products = (store?.products ?? []).slice(0, w.limit ?? 100)
+  if (!products.length) return ''
+  const cur = store?.currency ?? 'USD'
+  const cards = products.map((p) => {
+    const img = p.image
+      ? `<img class="pr-img" src="${esc(p.image.src)}"${srcset(p.image.src, 800)} sizes="(max-width: 640px) 100vw, 33vw" alt="${esc(p.image.alt)}" width="800" height="800" loading="lazy" decoding="async">`
+      : `<div class="pr-img pr-none" aria-hidden="true">${esc(p.name.charAt(0))}</div>`
+    const buy = p.soldOut
+      ? `<span class="pr-out">Sold out</span>`
+      : p.buyUrl
+        ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">Buy now</a>`
+        : `<a class="btn btn-outline pr-buy" href="/contact">Ask about this</a>`
+    return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}${buy}</div></article>`
+  })
+  return `<div class="prs ${cls(w.id)}">${cards.join('')}</div>`
+}
+
+const FIELD: Record<(typeof FORM_FIELDS)[number], { label: string; input: string }> = {
+  name: { label: 'Your name', input: '<input name="name" autocomplete="name" required maxlength="120">' },
+  email: { label: 'Email', input: '<input name="email" type="email" autocomplete="email" required maxlength="200">' },
+  phone: { label: 'Phone', input: '<input name="phone" type="tel" autocomplete="tel" maxlength="40">' },
+  message: { label: 'How can we help?', input: '<textarea name="message" rows="5" required maxlength="5000"></textarea>' },
+}
+
+// A plain HTML form: no script. The server answers a post with a redirect to
+// "#sent", which reveals the thank-you note through :target, so the cached
+// page never changes. "website" is a honeypot field people never see.
+function renderForm(w: Extract<Widget, { type: 'form' }>): string {
+  const fields = w.fields
+    .map((f) => `<label><span>${FIELD[f].label}${f === 'phone' ? ' <em>(optional)</em>' : ''}</span>${FIELD[f].input}</label>`)
+    .join('')
+  return (
+    `<form class="sform ${cls(w.id)}" method="post" action="/__form">` +
+    `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? 'Thanks! Your message is on its way. We will get back to you soon.')}</p>` +
+    `<input type="hidden" name="form" value="${esc(w.id)}">` +
+    `<label class="sform-hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>` +
+    fields +
+    `<button class="btn btn-primary" type="submit">${esc(w.submitLabel)}</button></form>`
+  )
 }
 
 function renderHeader(site: Site, page: Page): string {
@@ -158,12 +238,25 @@ function renderFooter(site: Site): string {
   if (b.address) contact.push(`<span>${esc(`${b.address.street}, ${b.address.city}, ${b.address.region} ${b.address.postalCode}`)}</span>`)
   if (contact.length) cols.push(`<div><h2 class="sf-h">Contact</h2>${contact.join('')}</div>`)
   if (b.hours?.length) {
-    const rows = b.hours.map((line) => esc(line.replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => DAY[d]).replace(/-(?=[A-Z])/, '–')))
+    const rows = b.hours.map((line) =>
+      esc(
+        line
+          .replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => DAY[d])
+          .replace(/-(?=[A-Z])/, '–')
+          .replace(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/, (_m, h1, m1, h2, m2) => `${clock(+h1, m1)}–${clock(+h2, m2)}`)
+      )
+    )
     cols.push(`<div><h2 class="sf-h">Hours</h2>${rows.map((r) => `<span>${r}</span>`).join('')}</div>`)
   }
   const pages = site.nav.filter((n) => n.href.startsWith('/'))
   if (pages.length) cols.push(`<div><h2 class="sf-h">Pages</h2><a href="/">Home</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
   return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">© ${year} ${esc(b.name)}</div></footer>`
+}
+
+// 17:30 -> "5:30pm", 08:00 -> "8am".
+function clock(h: number, m: string): string {
+  const hour = h % 12 || 12
+  return `${hour}${m === '00' ? '' : `:${m}`}${h < 12 ? 'am' : 'pm'}`
 }
 
 function tel(phone: string): string {
@@ -208,6 +301,8 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
     } else {
       if (el.type === 'button') used.add(`btn-${el.variant}`)
       if (el.type === 'image' && el.aspect) used.add('crop')
+      if (el.type === 'form') used.add('button').add('btn-primary')
+      if (el.type === 'products') used.add('button').add('btn-primary').add('btn-outline')
     }
     if (el.style) styleRules(`.${cls(el.id)}`, el.style, byBp)
   }
@@ -280,6 +375,24 @@ function widgetCss(used: Set<string>): string {
       `.bgt{position:absolute;inset:0;z-index:-1;pointer-events:none}.bgt-full{background:rgb(0 0 0/var(--o))}` +
       `.bgt-side{background:linear-gradient(90deg,rgb(0 0 0/var(--o)) 0%,rgb(0 0 0/calc(var(--o)*.72)) 45%,rgb(0 0 0/0) 80%)}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.bgt-side{background:rgb(0 0 0/calc(var(--o)*.85))}}.bgc{position:relative}`
+  if (used.has('posts'))
+    css +=
+      `.pos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:36px 28px}.po{display:flex;flex-direction:column;gap:8px}` +
+      `.po-img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r);margin-bottom:8px}.po time{font-size:.85em;color:var(--c-muted);font-weight:600;letter-spacing:.02em}` +
+      `.po-t{font-size:1.35em;margin:0}.po-t a{color:var(--c-text);text-decoration:none}.po-t a:hover{color:var(--c-primary)}.po p{margin:0;color:var(--c-muted)}.po-more{font-weight:600;text-decoration:none;margin-top:4px}.po-none{color:var(--c-muted)}`
+  if (used.has('products'))
+    css +=
+      `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px}.pr{display:flex;flex-direction:column;gap:12px}` +
+      `.pr-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r);background:var(--c-surface)}.pr-none{display:grid;place-items:center;font:600 3em var(--f-h);color:var(--c-muted)}` +
+      `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1}.pr-name{font-size:1.15em;margin:0}.pr-price{margin:0;font-weight:700;color:var(--c-primary)}.pr-desc{margin:4px 0 0;color:var(--c-muted);font-size:.95em}` +
+      `.pr-buy{align-self:flex-start;margin-top:auto;padding:.65em 1.3em}.pr-body>.pr-buy{margin-top:10px}.pr-out{margin-top:10px;font-weight:600;color:var(--c-muted)}`
+  if (used.has('form'))
+    css +=
+      `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +
+      `.sform input,.sform textarea{font:inherit;font-weight:400;padding:.75em .9em;border:1.5px solid color-mix(in srgb,var(--c-text) 18%,transparent);border-radius:min(var(--r),10px);background:var(--c-background);color:var(--c-text);width:100%}` +
+      `.sform input:focus,.sform textarea:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
+      `.sform-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}` +
+      `.sform-ok{display:none;margin:0;padding:14px 16px;border-radius:min(var(--r),10px);background:color-mix(in srgb,var(--c-primary) 12%,var(--c-background));font-weight:600}.sform-ok:target{display:block}`
   if (used.has('faq')) {
     css +=
       `.faq details{border-bottom:1px solid var(--c-surface);padding:12px 0}` +
@@ -312,6 +425,8 @@ function containerRules(c: Container, byBp: Record<Breakpoint, Rules>) {
       // Rows share width equally; columns size children to their content.
       // Buttons keep their natural width in both directions.
       add(byBp[bp], `${layoutSel}>:not(.btn)`, d === 'row' ? { flex: '1 1 0', 'min-width': '0' } : { flex: '0 0 auto' })
+      // In a column, a button keeps its own width instead of stretching.
+      if (d === 'column') add(byBp[bp], `${layoutSel}>.btn`, { 'align-self': c.align && c.align !== 'stretch' ? ALIGN[c.align] : 'flex-start' })
     })
   }
   // Gap applies to the layout box, not the outer boxed element.
@@ -392,5 +507,5 @@ function jsonForScript(data: unknown): string {
 // view) by re-pointing every internal link. Absolute URLs — canonical, og:url,
 // external links — and image sources are left alone.
 export function withBasePath(html: string, basePath: string): string {
-  return html.replaceAll('href="/', `href="${basePath}/`)
+  return html.replaceAll('href="/', `href="${basePath}/`).replaceAll('action="/', `action="${basePath}/`)
 }

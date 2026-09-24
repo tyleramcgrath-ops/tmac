@@ -1,0 +1,315 @@
+'use server'
+
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
+import { buildBlogIndex, buildPostPage } from '@/lib/posts'
+import { randomUUID } from 'crypto'
+import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/schema'
+import { requireUser } from '@/lib/session'
+import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
+import { getStore } from '@/lib/store'
+
+async function ownSite(siteId: string) {
+  const user = await requireUser()
+  const store = getStore()
+  const site = await store.siteForUser(user.id, siteId)
+  if (!site) throw new Error('Site not found')
+  return { user, store, site }
+}
+
+const str = (f: FormData, k: string, max = 200) => String(f.get(k) ?? '').trim().slice(0, max)
+
+// ---------------------------------------------------------------------------
+// Messages
+// ---------------------------------------------------------------------------
+
+export async function setRead(siteId: string, messageId: string, read: boolean) {
+  const { store, site } = await ownSite(siteId)
+  await store.setMessageRead(site.id, messageId, read)
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+export async function removeMessage(siteId: string, messageId: string) {
+  const { store, site } = await ownSite(siteId)
+  await store.deleteMessage(site.id, messageId)
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+// ---------------------------------------------------------------------------
+// Settings
+// ---------------------------------------------------------------------------
+
+export interface SettingsState {
+  error?: string
+  saved?: boolean
+}
+
+export async function saveSettings(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const { store, site } = await ownSite(siteId)
+
+  const name = str(form, 'name', 120)
+  if (!name) return { error: 'Your business needs a name.' }
+  const email = str(form, 'email')
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: 'That email address doesn’t look right.' }
+  const street = str(form, 'street'), city = str(form, 'city', 80), region = str(form, 'region', 40), postalCode = str(form, 'postalCode', 20)
+  const anyAddress = street || postalCode
+  if (anyAddress && !(street && city && region && postalCode)) return { error: 'To show your address, fill in the street, city, state and ZIP code.' }
+
+  const week = Object.fromEntries(
+    DAYS.map((d) => [d, form.get(`open-${d}`) ? { open: str(form, `from-${d}`, 5), close: str(form, `to-${d}`, 5) } : null])
+  ) as WeekHours
+  for (const d of DAYS) {
+    const h = week[d]
+    if (h && !(h.open < h.close)) return { error: 'Each open day needs a closing time after its opening time.' }
+  }
+  const hours = fromWeek(week)
+
+  const palette = str(form, 'palette', 20)
+  const design = str(form, 'design', 20) as Design
+  const colors = palette && PALETTES[palette] ? PALETTES[palette].colors : site.globals.colors
+  const looks = design in DESIGN_GLOBALS ? DESIGN_GLOBALS[design] : null
+
+  const topbar = str(form, 'topbar', 120)
+  const ctaLabel = str(form, 'ctaLabel', 40)
+  const tagline = str(form, 'tagline', 200)
+
+  const apply = (s: Site): Site => {
+    const next: Site = {
+      ...s,
+      business: {
+        ...s.business,
+        name,
+        phone: str(form, 'phone', 30) || undefined,
+        email: email || undefined,
+        address: anyAddress ? { street, city, region, postalCode, country: s.business.address?.country ?? 'US' } : undefined,
+        hours: hours.length ? hours : undefined,
+      },
+      globals: { ...s.globals, ...(looks ?? {}), colors },
+      header: {
+        ...(topbar ? { topbar } : {}),
+        ...(ctaLabel && s.header?.cta ? { cta: { ...s.header.cta, label: ctaLabel } } : s.header?.cta ? { cta: s.header.cta } : {}),
+      },
+      tagline: tagline || undefined,
+      updatedAt: new Date().toISOString(),
+    }
+    return SiteSchema.parse(JSON.parse(JSON.stringify(next)))
+  }
+
+  let next: Site
+  try {
+    next = apply(site)
+  } catch {
+    return { error: 'Some of those details aren’t valid. Please check them and try again.' }
+  }
+  await store.updateSite(next)
+  // Keep Sofie's unpublished draft in step, so publishing it later doesn't
+  // undo these settings.
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    try {
+      await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, site: apply(state.draft.site) } })
+    } catch {
+      // A draft that can't take the change keeps its own values.
+    }
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Pages & SEO
+// ---------------------------------------------------------------------------
+
+export async function savePageSeo(siteId: string, pageId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  const page = pages.find((p) => p.id === pageId)
+  if (!page) return { error: 'That page no longer exists.' }
+  const seo = PageSeo.safeParse({
+    ...page.seo,
+    title: str(form, 'title', 70),
+    description: str(form, 'description', 170),
+    noindex: form.get('noindex') ? true : undefined,
+  })
+  if (!seo.success) return { error: 'Give the page a Google title (up to 70 characters) and a description (up to 170).' }
+  const clean = JSON.parse(JSON.stringify(seo.data)) as Page['seo']
+  await store.savePage({ ...page, seo: clean, updatedAt: new Date().toISOString() }, 'owner', user.id, 'Updated Google listing')
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    const draft = { ...state.draft, pages: state.draft.pages.map((p) => (p.id === page.id ? { ...p, seo: clean } : p)) }
+    await store.saveSofieState(site.id, { ...state, draft })
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Products
+// ---------------------------------------------------------------------------
+
+// Applies a change to the live site and to Sofie's draft (if any), so the two
+// never drift apart.
+async function changeSite(siteId: string, fn: (s: Site) => Site) {
+  const { store, site } = await ownSite(siteId)
+  const next = SiteSchema.parse(JSON.parse(JSON.stringify({ ...fn(site), updatedAt: new Date().toISOString() })))
+  await store.updateSite(next)
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    try {
+      const d = SiteSchema.parse(JSON.parse(JSON.stringify(fn(state.draft.site))))
+      await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, site: d } })
+    } catch {
+      // Leave a draft that can't take the change as it is.
+    }
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return next
+}
+
+export async function saveProduct(siteId: string, productId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const name = str(form, 'name', 120)
+  if (!name) return { error: 'Give the product a name.' }
+  const priceText = str(form, 'price', 20).replace(/[$,£€\s]/g, '')
+  if (!/^\d+(\.\d{1,2})?$/.test(priceText)) return { error: 'Enter a price like 24 or 24.50.' }
+  const price = Math.round(Number(priceText) * 100)
+  const buyUrl = str(form, 'buyUrl', 300)
+  if (buyUrl && !/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/.test(buyUrl)) return { error: 'The buy link should be a Stripe payment link, like https://buy.stripe.com/abc123.' }
+  const imageSrc = str(form, 'imageSrc', 500)
+  if (imageSrc && !/^https:\/\/[^\s]+$/.test(imageSrc)) return { error: 'The photo needs to be a link starting with https://.' }
+  const description = str(form, 'description', 600)
+  const product: Product = {
+    id: productId === 'new' ? `p-${randomUUID().slice(0, 8)}` : productId,
+    name,
+    price,
+    ...(description ? { description } : {}),
+    ...(imageSrc ? { image: { src: imageSrc, alt: str(form, 'imageAlt', 250) || name } } : {}),
+    ...(buyUrl ? { buyUrl } : {}),
+    ...(form.get('soldOut') ? { soldOut: true } : {}),
+  }
+  try {
+    await changeSite(siteId, (s) => {
+      const list = s.store?.products ?? []
+      const products = productId === 'new' ? [...list, product] : list.map((p) => (p.id === productId ? product : p))
+      return { ...s, store: { currency: s.store?.currency ?? 'USD', products } }
+    })
+  } catch {
+    return { error: 'That product couldn’t be saved. Check the details and try again.' }
+  }
+  return { saved: true }
+}
+
+export async function deleteProduct(siteId: string, productId: string) {
+  await changeSite(siteId, (s) => ({ ...s, store: { currency: s.store?.currency ?? 'USD', products: (s.store?.products ?? []).filter((p) => p.id !== productId) } }))
+}
+
+export async function setCurrency(siteId: string, form: FormData) {
+  const currency = str(form, 'currency', 3) as 'USD'
+  await changeSite(siteId, (s) => ({ ...s, store: { currency, products: s.store?.products ?? [] } }))
+}
+
+// Adds a "Shop" page with every product and puts it in the menu.
+export async function addShopPage(siteId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  if (!pages.some((p) => p.slug === 'shop')) {
+    const page: Page = {
+      id: `page_${randomUUID()}`,
+      siteId: site.id,
+      slug: 'shop',
+      name: 'Shop',
+      status: 'published',
+      seo: {
+        title: `Shop ${site.business.name}`.slice(0, 60),
+        description: `Buy from ${site.business.name} online. Prices, photos and secure checkout.`.slice(0, 160),
+      },
+      body: [
+        {
+          id: 'shop',
+          type: 'container',
+          tag: 'section',
+          layout: 'flex',
+          boxed: true,
+          style: { padding: { desktop: { top: 88, right: 24, bottom: 96, left: 24 }, mobile: { top: 48, right: 20, bottom: 56, left: 20 } }, gap: { desktop: 14 } },
+          children: [
+            { id: 'shop-h', type: 'heading', level: 1, text: 'Shop', style: { fontSize: { desktop: 52, mobile: 36 } } },
+            { id: 'shop-t', type: 'text', text: `Order online from ${site.business.name}. Payments go securely through Stripe.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+            { id: 'shop-products', type: 'products', style: { margin: { desktop: { top: 28, right: 0, bottom: 0, left: 0 } } } },
+          ],
+        },
+      ],
+      updatedAt: new Date().toISOString(),
+    }
+    await store.savePage(page, 'owner', user.id, 'Added the Shop page')
+    const state = await store.sofieState(site.id)
+    if (state.draft && !state.draft.pages.some((p) => p.slug === 'shop')) {
+      await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: [...state.draft.pages, page] } })
+    }
+  }
+  await changeSite(siteId, (s) => (s.nav.some((n) => n.href === '/shop') ? s : { ...s, nav: [{ label: 'Shop', href: '/shop' }, ...s.nav].slice(0, 12) }))
+}
+
+// ---------------------------------------------------------------------------
+// Delete
+// ---------------------------------------------------------------------------
+
+export async function deleteWebsite(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  if (str(form, 'confirm', 200).toLowerCase() !== site.business.name.trim().toLowerCase()) {
+    return { error: `Type “${site.business.name}” exactly to confirm.` }
+  }
+  await store.deleteSite(user.id, site.id)
+  redirect('/dashboard?deleted=1')
+}
+
+// ---------------------------------------------------------------------------
+// Blog posts
+// ---------------------------------------------------------------------------
+
+// Saves a post (new, or an existing one by page id) and makes sure the site
+// has a /blog page in its menu to list it.
+export async function savePost(siteId: string, pageId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  const title = str(form, 'title', 140)
+  const body = String(form.get('body') ?? '').trim().slice(0, 20_000)
+  const date = str(form, 'date', 10)
+  if (!title) return { error: 'Give the post a title.' }
+  if (body.length < 40) return { error: 'Write a little more: a post needs at least a couple of sentences.' }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return { error: 'Pick a date for the post.' }
+  const imageSrc = str(form, 'imageSrc', 500)
+  if (imageSrc && !/^https:\/\/[^\s]+$/.test(imageSrc)) return { error: 'The photo needs to be a link starting with https://.' }
+
+  const pages = await store.pagesForSite(site.id)
+  const existing = pageId === 'new' ? undefined : pages.find((p) => p.id === pageId && p.post)
+  if (pageId !== 'new' && !existing) return { error: 'That post no longer exists.' }
+  let page = buildPostPage(site, { title, date, body, ...(imageSrc ? { image: { src: imageSrc, alt: str(form, 'imageAlt', 250) || title } } : {}) }, existing)
+  // A new post never takes over an existing page's address.
+  if (!existing) {
+    let slug = page.slug
+    for (let n = 2; pages.some((p) => p.slug === slug); n++) slug = `${page.slug}-${n}`
+    page = { ...page, slug }
+  }
+  await store.savePage(page, 'owner', user.id, existing ? 'Edited a blog post' : 'Wrote a blog post')
+  if (!pages.some((p) => p.slug === 'blog')) await store.savePage(buildBlogIndex(site), 'owner', user.id, 'Added the blog')
+
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    const others = state.draft.pages.filter((p) => p.id !== page.id)
+    const withBlog = others.some((p) => p.slug === 'blog') ? others : [...others, buildBlogIndex(site)]
+    await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: [...withBlog, page] } })
+  }
+  await changeSite(siteId, (s) => (s.nav.some((n) => n.href === '/blog') ? s : { ...s, nav: [...s.nav.filter((n) => n.href !== '/contact'), { label: 'Blog', href: '/blog' }, ...s.nav.filter((n) => n.href === '/contact')].slice(0, 12) }))
+  return { saved: true }
+}
+
+export async function deletePost(siteId: string, pageId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  const page = pages.find((p) => p.id === pageId && p.post)
+  if (!page) return
+  // Unpublished rather than erased, so it stays in the page history.
+  await store.savePage({ ...page, status: 'draft', updatedAt: new Date().toISOString() }, 'owner', user.id, 'Removed a blog post')
+  const state = await store.sofieState(site.id)
+  if (state.draft) await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: state.draft.pages.filter((p) => p.id !== page.id) } })
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}

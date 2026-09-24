@@ -41,7 +41,7 @@ export const PALETTES: Record<string, { label: string; colors: GlobalStyles['col
   slate: { label: 'Charcoal', colors: { primary: '#1f2937', secondary: '#0b0f14', accent: '#9aa6b2', text: '#111827', muted: '#4b5563', background: '#ffffff', surface: '#f3f4f6' } },
 }
 
-const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
+export const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
   bold: { fonts: { heading: 'sans', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 8, containerWidth: 1180, headingWeight: 800, headingTracking: -0.025, buttonShape: 'rounded' },
   editorial: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.28, radius: 2, containerWidth: 1180, headingWeight: 400, headingTracking: -0.015, buttonShape: 'square', buttonCase: 'upper' },
   warm: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 14, containerWidth: 1160, headingWeight: 500, headingTracking: -0.015, buttonShape: 'pill' },
@@ -143,19 +143,33 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   const headline = t.headline.replace('{city}', city).replace('{name}', name)
-  const offer = list.slice(0, 3).map(soften).join(', ')
+  // With no services listed, talk about the trade itself ("roofing").
+  const offer = services.length ? list.slice(0, 3).map(soften).join(', ') : t.trade
   const intro = {
     bold: `${name} helps people across ${place} with ${offer}. Straight answers, fair prices and work done right.`,
     editorial: `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
   }[design]
   const more = { bold: 'See our services', editorial: 'View services', warm: 'See what we offer' }[design]
-  const cardText = (s: string) =>
+  // Three ways to say it per design, so neighbouring cards don't repeat.
+  const cardText = (s: string, i = 0) =>
     ({
-      bold: `${s}, done properly by our team in ${city}. Ask us anything; we're happy to help.`,
-      editorial: `${s}, with time to talk through exactly what you want.`,
-      warm: `${s}, made fresh here in ${city}.`,
-    })[design]
+      bold: [
+        `${s}, done properly by our team in ${city}. Ask us anything; we're happy to help.`,
+        `Clear pricing before we start and a tidy job when we leave. ${cap(soften(s))} you can count on.`,
+        `Local, licensed and quick to respond. Tell us what you need and we'll take it from there.`,
+      ],
+      editorial: [
+        `${s}, with time to talk through exactly what you want.`,
+        `Unhurried appointments and honest advice, so you always know your options.`,
+        `Careful, personal and never rushed. We'll make sure it's right for you.`,
+      ],
+      warm: [
+        `${s}, made fresh here in ${city}.`,
+        `Made by hand in small batches, the way we'd want it ourselves.`,
+        `A local favourite. Come by, say hello and see what's new today.`,
+      ],
+    })[design][i % 3]
   const eyebrow = design === 'bold' ? `${cap(t.trade)} · ${city}` : place
 
   const heroBlocks = (light: boolean): Element[] => [
@@ -183,7 +197,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     children: [
       { id: `svc-${i + 1}-img`, type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect, style: { borderRadius: design === 'editorial' ? 2 : 12, margin: { desktop: { top: 0, right: 0, bottom: 8, left: 0 } } } },
       { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: design === 'bold' ? 22 : 26 } } },
-      { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s), style: { color: 'muted' } },
+      { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted' } },
     ],
   })
 
@@ -211,8 +225,12 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         layout: 'grid',
         columns: { desktop: 3, tablet: 2, mobile: 1 },
         style: { gap: { desktop: 28 } },
-        children: list.slice(0, 6).map((s, i) => card(s, i, photos.cards[i % 3], aspect)),
+        // Three cards, one per photo; the Services page lists everything.
+        children: list.slice(0, 3).map((s, i) => card(s, i, photos.cards[i % 3], aspect)),
       },
+      ...(list.length > 3
+        ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: '/services', variant: 'outline' as const }]
+        : []),
     ],
   })
 
@@ -404,7 +422,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     status: 'published',
     seo: {
       title: clip(`${name} | ${cap(t.trade)} in ${place}`, 60),
-      description: clip(`${name} provides ${t.trade} in ${place}: ${list.slice(0, 3).map(soften).join(', ')}. Friendly, local and easy to reach. Get in touch today.`, 160),
+      description: clip(`${name} provides ${t.trade} in ${place}${services.length ? `: ${list.slice(0, 3).map(soften).join(', ')}` : ''}. Friendly, local and easy to reach. Get in touch today.`, 160),
     },
     body: homeBody,
     updatedAt: now,
@@ -484,7 +502,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     status: 'published',
     seo: {
       title: clip(`Contact ${name} | ${cap(t.trade)} in ${city}`, 60),
-      description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Call or email us and we'll get back to you quickly.`, 160),
+      description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Send a message, call or email and we'll get back to you quickly.`, 160),
     },
     body: [
       {
@@ -493,7 +511,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         tag: 'section',
         layout: 'grid',
         columns: { desktop: 2, mobile: 1 },
-        align: 'center',
+        align: 'start',
         boxed: true,
         style: { padding: section, gap: { desktop: 64, mobile: 28 } },
         children: [
@@ -505,7 +523,14 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
             children: [
               { id: 'contact-h', type: 'heading', level: 1, text: `Contact ${name}`, style: { fontSize: { desktop: 52, mobile: 36 } } },
               { id: 'contact-t', type: 'text', text: contactLines.join('\n\n'), style: { fontSize: { desktop: 19 } } },
-              { id: 'contact-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary' },
+              {
+                id: 'contact-form',
+                type: 'form',
+                fields: ['name', 'email', 'phone', 'message'],
+                submitLabel: design === 'editorial' ? 'Send request' : 'Send message',
+                thanks: `Thanks! ${name} has your message and will get back to you soon.`,
+                style: { margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
+              },
             ],
           },
           { id: 'contact-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 1.2, priority: true, style: { borderRadius: design === 'editorial' ? 2 : 14 } },

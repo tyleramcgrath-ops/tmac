@@ -426,3 +426,226 @@ describe('Sofie', async () => {
     expect(calls).toHaveLength(2)
   })
 })
+
+describe('SaySites contact forms', async () => {
+  const { handleFormPost } = await import('../apps/saysites/lib/serve')
+  const { toWeek, fromWeek } = await import('../apps/saysites/lib/hours')
+
+  async function setup() {
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'o@example.com', name: 'O', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Form Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, `org_${user.id}`, 'form-co')
+    await store.createSite(user.id, site, pages)
+    return { store, bundle: { site, pages, redirects: [] } }
+  }
+  const post = (fields: Record<string, string>, referer = 'https://form-co.saysites.com/contact') => {
+    const body = new URLSearchParams(fields)
+    return new Request('https://form-co.saysites.com/__form', { method: 'POST', body, headers: { referer, 'content-type': 'application/x-www-form-urlencoded' } })
+  }
+
+  it('renders a plain HTML form with a hidden honeypot and no script', async () => {
+    const { bundle } = await setup()
+    const contact = bundle.pages.find((p) => p.slug === 'contact')!
+    const html = renderPage(bundle.site, contact, bundle.pages).html
+    expect(html).toContain('<form class="sform')
+    expect(html).toContain('action="/__form"')
+    expect(html).toContain('name="website"')
+    expect(checkSpeed(renderPage(bundle.site, contact, bundle.pages)).pass).toBe(true)
+  })
+
+  it('stores a message and sends the visitor back to the page', async () => {
+    const { store, bundle } = await setup()
+    const res = await handleFormPost(bundle, post({ form: 'contact-form', name: 'Jamie', email: 'j@example.com', message: 'Leaky tap' }), { preview: false }, store)
+    expect(res.status).toBe(303)
+    expect(res.headers.get('location')).toBe('/contact#sent')
+    const msgs = await store.messagesForSite(bundle.site.id)
+    expect(msgs).toHaveLength(1)
+    expect(msgs[0]).toMatchObject({ name: 'Jamie', email: 'j@example.com', body: 'Leaky tap', page: '/contact', read: false })
+    expect(await store.unreadCount(bundle.site.id)).toBe(1)
+  })
+
+  it('quietly drops bot submissions and rejects unknown forms and bad emails', async () => {
+    const { store, bundle } = await setup()
+    const bot = await handleFormPost(bundle, post({ form: 'contact-form', name: 'x', email: 'x@x.co', message: 'spam', website: 'http://spam' }), { preview: false }, store)
+    expect(bot.status).toBe(303)
+    expect(await store.messagesForSite(bundle.site.id)).toHaveLength(0)
+    expect((await handleFormPost(bundle, post({ form: 'nope', name: 'a', email: 'a@b.co', message: 'hi' }), { preview: false }, store)).status).toBe(404)
+    expect((await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'not-an-email', message: 'hi' }), { preview: false }, store)).status).toBe(422)
+  })
+
+  it('keeps the preview prefix and ignores another site as the referer', async () => {
+    const { store, bundle } = await setup()
+    const base = '/preview/form-co'
+    const ok = await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }, 'https://form-co.saysites.com/preview/form-co/contact'), { preview: true, basePath: base }, store)
+    expect(ok.headers.get('location')).toBe('/preview/form-co/contact#sent')
+    const other = await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }, 'https://evil.example/x'), { preview: false }, store)
+    expect(other.headers.get('location')).toBe('/#sent')
+  })
+
+  it('only lets a site read and change its own messages', async () => {
+    const { store, bundle } = await setup()
+    const m = await store.addMessage({ siteId: bundle.site.id, name: 'a', email: 'a@b.co', phone: '', body: 'hi', page: '/' })
+    await store.setMessageRead('some-other-site', m.id, true)
+    await store.deleteMessage('some-other-site', m.id)
+    expect(await store.messagesForSite(bundle.site.id)).toMatchObject([{ id: m.id, read: false }])
+  })
+
+  it('round-trips opening hours between Google format and per-day rows', () => {
+    const week = toWeek(['Mo-Fr 08:00-17:00', 'Sa 09:00-13:00'])
+    expect(week.We).toEqual({ open: '08:00', close: '17:00' })
+    expect(week.Su).toBeNull()
+    expect(fromWeek(week)).toEqual(['Mo-Fr 08:00-17:00', 'Sa 09:00-13:00'])
+    expect(fromWeek({ ...week, We: null })).toEqual(['Mo-Tu 08:00-17:00', 'Th-Fr 08:00-17:00', 'Sa 09:00-13:00'])
+  })
+})
+
+describe('SaySites showcase', async () => {
+  const { SHOWCASE, SHOWCASE_INFO } = await import('../apps/saysites/lib/showcase')
+  it('every example site is valid, passes the SEO checks and the speed gate', () => {
+    expect(Object.keys(SHOWCASE).sort()).toEqual(Object.keys(SHOWCASE_INFO).sort())
+    for (const [sub, { site, pages }] of Object.entries(SHOWCASE)) {
+      expect(SiteSchema.safeParse(site).success, sub).toBe(true)
+      for (const p of pages) {
+        expect(PageSchema.safeParse(p).success, `${sub}/${p.slug}`).toBe(true)
+        expect(checkPage(p, pages).filter((i) => i.severity === 'error'), `${sub}/${p.slug}`).toEqual([])
+        expect(checkSpeed(renderPage(site, p, pages)).pass, `${sub}/${p.slug}`).toBe(true)
+      }
+    }
+  })
+
+  it('shows 12-hour opening times in the footer', () => {
+    const { site, pages } = SHOWCASE['rivertown-plumbing']
+    const html = renderPage(site, pages[0], pages).html
+    expect(html).toContain('Mon–Fri 7am–6pm')
+  })
+})
+
+describe('SaySites store', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { formatPrice } = await import('../apps/saysites/lib/render')
+  const { site, pages } = SHOWCASE['field-and-thread']
+  const shop = pages.find((p) => p.slug === 'shop')!
+
+  it('renders product cards with prices, and asks to get in touch without a payment link', () => {
+    const html = renderPage(site, shop, pages).html
+    expect(html).toContain('Heavy flannel shirt')
+    expect(html).toContain('$88')
+    expect(html).toContain('Sold out')
+    expect(html).toContain('href="/contact">Ask about this')
+    expect(checkSpeed(renderPage(site, shop, pages)).pass).toBe(true)
+  })
+
+  it('gives Google product data with price and availability', () => {
+    const ld = structuredData(site, shop, pages) as { '@type': string; name?: string; offers?: { price: string; availability: string } }[]
+    const products = ld.filter((d) => d['@type'] === 'Product')
+    expect(products).toHaveLength(site.store!.products.length)
+    expect(products.find((p) => p.name === 'Merino scarf')!.offers).toMatchObject({ price: '64.00', availability: 'https://schema.org/OutOfStock' })
+  })
+
+  it('only accepts Stripe payment links for checkout', () => {
+    const bad = clone(site)
+    bad.store!.products[0].buyUrl = 'https://evil.example/pay'
+    expect(SiteSchema.safeParse(bad).success).toBe(false)
+    bad.store!.products[0].buyUrl = 'https://buy.stripe.com/test_abc123'
+    expect(SiteSchema.safeParse(bad).success).toBe(true)
+  })
+
+  it('formats prices', () => {
+    expect(formatPrice(900, 'USD')).toBe('$9')
+    expect(formatPrice(1250, 'GBP')).toBe('£12.50')
+    expect(formatPrice(123456, 'USD')).toBe('$1,234.56')
+  })
+})
+
+describe('SaySites deleting', () => {
+  it('deletes a site and its messages, only for its owner, and an account with its sites', async () => {
+    const store = new MemoryStore()
+    const a = await store.createUser({ email: 'a@example.com', name: 'A', passwordHash: 'x' })
+    const b = await store.createUser({ email: 'b@example.com', name: 'B', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Gone Co', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'org', 'gone-co')
+    await store.createSite(a.id, site, pages)
+    await store.addMessage({ siteId: site.id, name: 'n', email: 'e@x.co', phone: '', body: 'hi', page: '/' })
+    await store.deleteSite(b.id, site.id)
+    expect(await store.siteForUser(a.id, site.id)).not.toBeNull()
+    await store.deleteSite(a.id, site.id)
+    expect(await store.siteForUser(a.id, site.id)).toBeNull()
+    expect(await store.pagesForSite(site.id)).toEqual([])
+    expect(await store.messagesForSite(site.id)).toEqual([])
+
+    const again = buildStarterSite({ name: 'Two', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'org', 'two')
+    await store.createSite(a.id, again.site, again.pages)
+    await store.deleteUser(a.id)
+    expect(await store.userById(a.id)).toBeNull()
+    expect(await store.siteBySubdomain('two')).toBeNull()
+    expect(await store.userById(b.id)).not.toBeNull()
+  })
+})
+
+describe('SaySites blog', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { buildPostPage, postBodyText } = await import('../apps/saysites/lib/posts')
+  const { Workspace } = await import('../apps/saysites/lib/sofie')
+  const { site, pages } = SHOWCASE['rivertown-plumbing']
+
+  it('lists posts newest first on /blog and links each one', () => {
+    const blog = pages.find((p) => p.slug === 'blog')!
+    const html = renderPage(site, blog, pages).html
+    const a = html.indexOf('5 signs your water heater')
+    const b = html.indexOf('What to do in the first ten minutes')
+    expect(a).toBeGreaterThan(0)
+    expect(b).toBeGreaterThan(a)
+    expect(html).toContain('href="/blog/5-signs-your-water-heater-is-about-to-give-out"')
+    expect(site.nav.map((n) => n.href)).toContain('/blog')
+  })
+
+  it('gives each post one H1, BlogPosting data and passes the gates', () => {
+    const post = pages.find((p) => p.slug.startsWith('blog/5-signs'))!
+    expect(checkPage(post, pages).filter((i) => i.severity === 'error')).toEqual([])
+    expect(checkSpeed(renderPage(site, post, pages)).pass).toBe(true)
+    const ld = structuredData(site, post, pages) as { '@type': string; datePublished?: string }[]
+    expect(ld.find((d) => d['@type'] === 'BlogPosting')).toMatchObject({ datePublished: '2026-09-10' })
+    expect(sitemapXml(site, pages)).toContain('/blog/5-signs-your-water-heater-is-about-to-give-out')
+  })
+
+  it('turns "## " lines into subheadings and reads the text back for editing', () => {
+    const body = 'First paragraph with enough words to count.\n\n## A subheading\n\nSecond paragraph.'
+    const page = buildPostPage(site, { title: 'Hello there', date: '2026-01-02', body })
+    expect(postBodyText(page)).toBe(body)
+    expect(page.slug).toBe('blog/hello-there')
+    expect(page.post!.excerpt).toBe('First paragraph with enough words to count.')
+  })
+
+  it('lets Sofie write a post, adding /blog and the menu link the first time', () => {
+    const plain = buildStarterSite({ name: 'Blog Co', type: 'plumber', city: 'X', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org', 'blog-co')
+    const ws = new Workspace(plain)
+    ws.writePost({ title: 'Our first post', date: '2026-09-24', body: 'This is our very first post, written to help customers in town.' }, 'Wrote a post')
+    const snap = ws.snapshot()
+    expect(snap.pages.map((p) => p.slug)).toEqual(expect.arrayContaining(['blog', 'blog/our-first-post']))
+    expect(snap.site.nav.map((n) => n.href)).toEqual(['/services', '/blog', '/contact'])
+    expect(ws.problems()).toEqual([])
+  })
+})
+
+describe('SaySites blog subheadings', async () => {
+  const { buildPostPage } = await import('../apps/saysites/lib/posts')
+  it('keeps a paragraph written right under a subheading as body text', () => {
+    const page = buildPostPage(sampleSite, { title: 'T', date: '2026-01-01', body: 'Intro text that is long enough.\n\n## Heading\nBody right under it.' })
+    const inner = page.body[0].children[0] as { children: { type: string; text?: string }[] }
+    expect(inner.children.filter((c) => c.type === 'heading').map((c) => c.text)).toEqual(['T', 'Heading'])
+    expect(inner.children.some((c) => c.type === 'text' && c.text?.includes('Body right under it.'))).toBe(true)
+  })
+})
+
+describe('SaySites 404', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  it('answers unknown paths with a 404 in the site’s own look, never indexed', async () => {
+    const { site, pages } = SHOWCASE['salt-and-stone']
+    const res = serveSitePath({ site, pages, redirects: [] }, ['nope'], { preview: false })
+    expect(res.status).toBe(404)
+    expect(res.headers.get('x-robots-tag')).toBe('noindex')
+    const html = await res.text()
+    expect(html).toContain('Salt &amp; Stone')
+    expect(html).toContain('We couldn’t find that page')
+    expect(html).toContain('<meta name="robots" content="noindex">')
+  })
+})
