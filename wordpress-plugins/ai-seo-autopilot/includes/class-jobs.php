@@ -21,6 +21,8 @@ class AISA_Jobs {
 	const META_WRITTEN  = '_aisa_written';
 
 	const SITE_BACKUP = 'aisa_site_backup';
+	// Set when an imported profile is waiting to be saved into AIOSEO.
+	const PROFILE_PENDING = 'aisa_site_profile_pending';
 	const MAX_HISTORY = 5;
 
 	/**
@@ -438,10 +440,12 @@ class AISA_Jobs {
 	/**
 	 * Saves the profile and writes its settings into AIOSEO.
 	 *
-	 * @param array $profile Profile (already sanitized).
+	 * @param array $profile   Profile (already sanitized).
+	 * @param bool  $overwrite Replace values already set in AIOSEO. Used when a person saves the
+	 *                         reviewed profile form; otherwise the Settings mode decides.
 	 * @return array Report: field => "ok" | "kept" | error message.
 	 */
-	public static function apply_profile( $profile ) {
+	public static function apply_profile( $profile, $overwrite = false ) {
 		update_option( AISA_Generator::PROFILE_OPTION, $profile, false );
 
 		$values = [
@@ -463,6 +467,25 @@ class AISA_Jobs {
 		foreach ( AISA_Generator::SOCIAL_KEYS as $k ) {
 			$values[ $k ] = isset( $profile['social'][ $k ] ) ? $profile['social'][ $k ] : '';
 		}
+		if ( 'organization' === $profile['site_represents'] ) {
+			$addr   = isset( $profile['address'] ) ? (array) $profile['address'] : [];
+			$values = array_merge(
+				$values,
+				[
+					'local_name'          => $profile['name'],
+					'local_business_type' => $profile['business_type'],
+					'local_area_served'   => $profile['area_served'],
+					'local_street'        => isset( $addr['street'] ) ? $addr['street'] : '',
+					'local_city'          => isset( $addr['city'] ) ? $addr['city'] : '',
+					'local_region'        => isset( $addr['region'] ) ? $addr['region'] : '',
+					'local_postal_code'   => isset( $addr['postal_code'] ) ? $addr['postal_code'] : '',
+					'local_country'       => isset( $addr['country'] ) ? $addr['country'] : '',
+					'local_phone'         => $profile['phone'],
+					'local_email'         => $profile['email'],
+					'local_price_range'   => $profile['price_range'],
+				]
+			);
+		}
 
 		// With a static front page, the homepage title lives on that page, not in settings.
 		if ( 'page' === get_option( 'show_on_front' ) && get_option( 'page_on_front' ) ) {
@@ -470,7 +493,8 @@ class AISA_Jobs {
 		}
 
 		$map       = AISA_AIOSEO_Bridge::site_option_map();
-		$fill_only = 'fill_empty' === AISA_Settings::get( 'mode' );
+		$fill_only = ! $overwrite && 'fill_empty' === AISA_Settings::get( 'mode' );
+		$no_local  = false;
 		$backup    = get_option( self::SITE_BACKUP, [] );
 		$backup    = is_array( $backup ) ? $backup : [];
 		$report    = [];
@@ -481,6 +505,11 @@ class AISA_Jobs {
 			}
 			$current = AISA_AIOSEO_Bridge::get_option_path( $map[ $key ] );
 			if ( is_wp_error( $current ) ) {
+				// The Local SEO add-on is optional; report its absence once, not per field.
+				if ( 0 === strpos( $key, 'local_' ) && 'aisa_option_missing' === $current->get_error_code() ) {
+					$no_local = true;
+					continue;
+				}
 				$report[ $key ] = $current->get_error_message();
 				continue;
 			}
@@ -505,8 +534,13 @@ class AISA_Jobs {
 			AISA_AIOSEO_Bridge::set_option_path( 'searchAppearance.global.schema.person', 'manual' );
 		}
 
+		if ( $no_local ) {
+			$report['local_seo'] = 'address not saved to Local SEO: the AIOSEO Local SEO add-on is not active (the address is still added to your schema)';
+		}
+
 		update_option( self::SITE_BACKUP, $backup, false );
 		update_option( AISA_Generator::PROFILE_OPTION . '_applied', gmdate( 'c' ), false );
+		delete_option( self::PROFILE_PENDING );
 
 		return $report;
 	}

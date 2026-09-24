@@ -59,6 +59,7 @@ class AISA_Admin {
 				'isPro'          => AISA_AIOSEO_Bridge::is_pro(),
 				'hasKey'         => '' !== AISA_Settings::api_key(),
 				'profileApplied' => (bool) get_option( AISA_Generator::PROFILE_OPTION . '_applied' ),
+				'profilePending' => (bool) get_option( AISA_Jobs::PROFILE_PENDING ),
 				'mode'           => AISA_Settings::get( 'mode' ),
 				'concurrency'    => AISA_Settings::token_saver() ? 1 : 3,
 				'i18n'           => [
@@ -153,6 +154,24 @@ class AISA_Admin {
 			</p>
 		</div>
 
+		<?php if ( get_option( AISA_Jobs::PROFILE_PENDING ) ) : ?>
+			<div class="notice notice-warning inline aisa-profile-pending">
+				<p>
+					<?php
+					echo wp_kses_post(
+						sprintf(
+							/* translators: %s: Site profile tab URL. */
+							__( 'An imported site profile (business name, phone, email, address) is waiting. It is saved to All in One SEO together with "Apply all proposals", or you can <a href="%s">check it on the Site profile tab</a> first.', 'ai-seo-autopilot' ),
+							esc_url( self::url( 'profile' ) )
+						)
+					);
+					?>
+					<button type="button" class="button" id="aisa-profile-apply-saved"><?php esc_html_e( 'Save site profile now', 'ai-seo-autopilot' ); ?></button>
+				</p>
+				<div id="aisa-profile-pending-report"></div>
+			</div>
+		<?php endif; ?>
+
 		<?php self::feature_table( $is_pro ); ?>
 
 		<div class="aisa-card">
@@ -203,6 +222,9 @@ class AISA_Admin {
 				<button class="button" id="aisa-profile-generate"><?php esc_html_e( 'Analyze my site', 'ai-seo-autopilot' ); ?></button>
 				<span class="aisa-inline-status" id="aisa-profile-status"></span>
 			</p>
+			<?php if ( get_option( AISA_Jobs::PROFILE_PENDING ) ) : ?>
+				<div class="notice notice-warning inline"><p><?php esc_html_e( 'The imported profile is shown below and has not been saved to All in One SEO yet. Check it, then click "Save and apply to All in One SEO".', 'ai-seo-autopilot' ); ?></p></div>
+			<?php endif; ?>
 			<form id="aisa-profile-form">
 				<table class="form-table" role="presentation"><tbody>
 				<?php
@@ -511,12 +533,22 @@ class AISA_Admin {
 
 	public static function ajax_profile_apply() {
 		self::guard();
-		$raw     = isset( $_POST['profile'] ) && is_array( $_POST['profile'] ) ? wp_unslash( $_POST['profile'] ) : []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.NonceVerification.Missing -- sanitized below.
-		$profile = AISA_Generator::sanitize_profile( $raw );
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- checked in guard().
+		// "saved" applies the stored profile (e.g. one that was imported); otherwise the form's values.
+		$saved = isset( $_POST['saved'] ) && '1' === $_POST['saved'];
+		$raw   = isset( $_POST['profile'] ) && is_array( $_POST['profile'] ) ? wp_unslash( $_POST['profile'] ) : []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized below.
+		// A person saving the reviewed profile form means "use these values", so they replace
+		// what AIOSEO had. Autopilot's own run follows the fill-empty setting.
+		$overwrite = isset( $_POST['overwrite'] ) && '1' === $_POST['overwrite'];
+		// phpcs:enable
+		$profile = AISA_Generator::sanitize_profile( $saved ? AISA_Generator::profile() : $raw );
+		if ( '' === $profile['name'] && '' === $profile['phone'] && '' === $profile['email'] ) {
+			wp_send_json_error( [ 'message' => __( 'The site profile is empty. Fill it in on the Site profile tab first.', 'ai-seo-autopilot' ) ] );
+		}
 		wp_send_json_success(
 			[
 				'profile' => $profile,
-				'report'  => AISA_Jobs::apply_profile( $profile ),
+				'report'  => AISA_Jobs::apply_profile( $profile, $overwrite ),
 			]
 		);
 	}

@@ -374,6 +374,18 @@ class AISA_AIOSEO_Bridge {
 				'google_places'            => 'social.profiles.urls.googlePlacesUrl',
 				'threads'                  => 'social.profiles.urls.threadsUrl',
 				'bluesky'                  => 'social.profiles.urls.blueskyUrl',
+				// AIOSEO Pro's Local SEO add-on. Skipped when the add-on isn't active.
+				'local_name'               => 'localBusiness.locations.business.name',
+				'local_business_type'      => 'localBusiness.locations.business.businessType',
+				'local_area_served'        => 'localBusiness.locations.business.areaServed',
+				'local_street'             => 'localBusiness.locations.business.address.streetLine1',
+				'local_city'               => 'localBusiness.locations.business.address.city',
+				'local_region'             => 'localBusiness.locations.business.address.state',
+				'local_postal_code'        => 'localBusiness.locations.business.address.zipCode',
+				'local_country'            => 'localBusiness.locations.business.address.country',
+				'local_phone'              => 'localBusiness.locations.business.contact.phone',
+				'local_email'              => 'localBusiness.locations.business.contact.email',
+				'local_price_range'        => 'localBusiness.locations.business.payment.priceRange',
 			]
 		);
 	}
@@ -393,9 +405,10 @@ class AISA_AIOSEO_Bridge {
 			$last  = array_pop( $parts );
 			$node  = aioseo()->options;
 			foreach ( $parts as $part ) {
-				$node = $node->$part;
+				$node = is_object( $node ) ? $node->$part : null;
 			}
-			if ( method_exists( $node, 'has' ) && ! $node->has( $last ) ) {
+			// A group that doesn't exist (e.g. an add-on's settings when the add-on is off).
+			if ( ! is_object( $node ) || ( method_exists( $node, 'has' ) && ! $node->has( $last ) ) ) {
 				return new WP_Error( 'aisa_option_missing', 'AIOSEO option not found: ' . $path );
 			}
 			$node = aioseo()->options;

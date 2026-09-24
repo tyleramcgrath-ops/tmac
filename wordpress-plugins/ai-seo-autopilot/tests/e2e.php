@@ -215,6 +215,23 @@ $report = AISA_Exchange::import( [ 'apply' => true, 'items' => [ [ 'type' => 'po
 aisa_t( 'applied' === $report['items'][0]['result'] && 'Imported Contact Title' === aisa_seo( $ids['Contact'] )['title'], 'import with apply writes straight to AIOSEO' );
 AISA_Settings::save( [ 'mode' => 'fill_empty' ] );
 
+WP_CLI::line( 'Imported site profile' );
+$imported              = $profile;
+$imported['phone']     = '+1-512-555-0199';
+$imported['address']   = [ 'street' => '1200 Congress Ave', 'city' => 'Austin', 'region' => 'TX', 'postal_code' => '78701', 'country' => 'US' ];
+$report                = AISA_Exchange::import( [ 'profile' => $imported, 'items' => [] ] );
+aisa_t( is_string( $report['profile'] ) && get_option( AISA_Jobs::PROFILE_PENDING ), 'imported profile is stored and marked as waiting' );
+aisa_t( '+1-512-555-0142' === aioseo()->options->searchAppearance->global->schema->phone, 'imported profile is not written to AIOSEO before it is applied' );
+$missing = AISA_AIOSEO_Bridge::get_option_path( 'localBusiness.locations.business.address.city' );
+aisa_t( is_wp_error( $missing ) && 'aisa_option_missing' === $missing->get_error_code(), 'missing Local SEO add-on reads as a missing option' );
+$report = AISA_Jobs::apply_profile( AISA_Generator::profile() );
+aisa_t( 'kept' === $report['phone'] && '+1-512-555-0142' === aioseo()->options->searchAppearance->global->schema->phone, 'fill-empty mode keeps the phone already in AIOSEO', wp_json_encode( $report ) );
+aisa_t( isset( $report['local_seo'] ) && ! isset( $report['local_city'] ), 'no Local SEO add-on is reported once, not per field' );
+aisa_t( ! get_option( AISA_Jobs::PROFILE_PENDING ), 'applying the profile clears the waiting flag' );
+$report = AISA_Jobs::apply_profile( AISA_Generator::profile(), true );
+aisa_t( 'ok' === $report['phone'] && '+1-512-555-0199' === aioseo()->options->searchAppearance->global->schema->phone, 'saving the reviewed profile replaces the existing phone', wp_json_encode( $report ) );
+AISA_Jobs::apply_profile( $profile, true );
+
 WP_CLI::line( '' );
 if ( $GLOBALS['aisa_failures'] ) {
 	WP_CLI::error( $GLOBALS['aisa_failures'] . ' check(s) failed.' );

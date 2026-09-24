@@ -226,6 +226,7 @@ class AISA_Exchange {
 				$report['profile'] = AISA_Jobs::apply_profile( $profile );
 			} else {
 				update_option( AISA_Generator::PROFILE_OPTION, $profile, false );
+				update_option( AISA_Jobs::PROFILE_PENDING, 1, false );
 				$report['profile'] = 'saved for review on the Site profile tab';
 			}
 		}

@@ -10,7 +10,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-foreach ( [ 'aisa_settings', 'aisa_compat', 'aisa_health', 'aisa_site_profile', 'aisa_site_profile_applied', 'aisa_site_backup', 'aisa_schema_filter_seen' ] as $option ) {
+foreach ( [ 'aisa_settings', 'aisa_compat', 'aisa_health', 'aisa_site_profile', 'aisa_site_profile_applied', 'aisa_site_profile_pending', 'aisa_site_backup', 'aisa_schema_filter_seen' ] as $option ) {
 	delete_option( $option );
 }
 delete_transient( 'aisa_filter_seen_recent' );

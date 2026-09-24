@@ -49,6 +49,32 @@
 			});
 	}
 
+	/* The result of saving the site profile, as a list. */
+	function profileReportHtml(report, heading) {
+		var lines = Object.keys(report || {}).map(function (k) {
+			var v = report[k];
+			var label = v === 'ok' ? 'saved' : (v === 'kept' ? 'kept the value already in All in One SEO' : v);
+			return '<li><code>' + esc(k) + '</code>: ' + esc(label) + '</li>';
+		});
+		var kept = Object.keys(report || {}).some(function (k) { return report[k] === 'kept'; });
+		return '<div class="notice notice-success inline"><p>' + esc(heading) + '</p><ul>' + lines.join('') + '</ul>' +
+			(kept ? '<p>To replace the kept values, check them on the <a href="?page=ai-seo-autopilot&tab=profile">Site profile tab</a> and click "Save and apply to All in One SEO".</p>' : '') + '</div>';
+	}
+
+	/* Saves the stored (e.g. imported) site profile into AIOSEO. */
+	function applySavedProfile() {
+		return post('profile_apply', { saved: '1' }).then(function (res) {
+			cfg.profilePending = false;
+			cfg.profileApplied = true;
+			var box = $('.aisa-profile-pending');
+			if (box) {
+				box.className = 'aisa-profile-pending';
+				box.innerHTML = profileReportHtml(res.report, 'Site profile saved to All in One SEO.');
+			}
+			return res;
+		});
+	}
+
 	/* Runs fn over items with a small worker pool. */
 	function pool(items, fn, onProgress) {
 		var i = 0, done = 0, active = 0;
@@ -212,7 +238,14 @@
 		var review = $('#aisa-review').checked;
 		var steps = Promise.resolve();
 
-		if (!cfg.profileApplied) {
+		if (cfg.profilePending) {
+			steps = steps.then(function () {
+				progress('Saving the site profile…', 0, 1);
+				return applySavedProfile().then(function () { progress('Business profile saved', 1, 1); }, function (e) {
+					$('.aisa-progress-text').textContent = 'Site profile not saved: ' + e.message;
+				});
+			});
+		} else if (!cfg.profileApplied) {
 			steps = steps.then(function () {
 				progress('Analyzing your business…', 0, 1);
 				return post('profile_generate').then(function (profile) {
@@ -248,11 +281,17 @@
 		stopRequested = false;
 		setBusy(true);
 		var ready = rows.filter(function (r) { return r.status === 'generated'; });
-		pool(ready, function (r) {
-			return doApply(r, $('tr[data-key="' + r.type + '-' + r.id + '"]'));
-		}, function (d, t) { progress('Saving to All in One SEO…', d, t); }).then(function () {
+		var profileNote = '';
+		var steps = cfg.profilePending ? applySavedProfile().then(null, function (e) {
+			profileNote = ' The site profile was not saved: ' + e.message;
+		}) : Promise.resolve();
+		steps.then(function () {
+			return pool(ready, function (r) {
+				return doApply(r, $('tr[data-key="' + r.type + '-' + r.id + '"]'));
+			}, function (d, t) { progress('Saving to All in One SEO…', d, t); });
+		}).then(function () {
 			setBusy(false);
-			$('.aisa-progress-text').textContent = 'Done.';
+			$('.aisa-progress-text').textContent = 'Done.' + profileNote;
 		});
 	}
 
@@ -264,6 +303,16 @@
 
 		$('#aisa-run').addEventListener('click', runAutopilot);
 		$('#aisa-apply-all').addEventListener('click', applyAll);
+		var savedBtn = $('#aisa-profile-apply-saved');
+		if (savedBtn) {
+			savedBtn.addEventListener('click', function () {
+				savedBtn.disabled = true;
+				applySavedProfile().then(null, function (e) {
+					savedBtn.disabled = false;
+					$('#aisa-profile-pending-report').textContent = e.message;
+				});
+			});
+		}
 		$('#aisa-stop').addEventListener('click', function () { stopRequested = true; });
 		$('#aisa-filter').addEventListener('input', renderTable);
 
@@ -340,13 +389,9 @@
 			ev.preventDefault();
 			var report = $('#aisa-profile-report');
 			report.textContent = 'Saving…';
-			post('profile_apply', { profile: readProfile(form) }).then(function (res) {
-				var lines = Object.keys(res.report).map(function (k) {
-					var v = res.report[k];
-					var label = v === 'ok' ? 'saved' : (v === 'kept' ? 'kept your existing value' : v);
-					return '<li><code>' + esc(k) + '</code>: ' + esc(label) + '</li>';
-				});
-				report.innerHTML = '<div class="notice notice-success inline"><p>Saved to All in One SEO.</p><ul>' + lines.join('') + '</ul></div>';
+			post('profile_apply', { profile: readProfile(form), overwrite: '1' }).then(function (res) {
+				cfg.profilePending = false;
+				report.innerHTML = profileReportHtml(res.report, 'Saved to All in One SEO.');
 			}, function (e) {
 				report.innerHTML = '<div class="notice notice-error inline"><p>' + esc(e.message) + '</p></div>';
 			});
@@ -465,9 +510,14 @@
 			}).then(function (r) {
 				var ok = r.items.filter(function (i) { return i.result === 'stored' || i.result === 'applied'; }).length;
 				var bad = r.items.filter(function (i) { return i.result.indexOf('error') === 0; });
-				out.innerHTML = '<div class="notice notice-success inline"><p>' + ok + ' page(s) imported' +
-					(r.profile ? ', plus the site profile' : '') + '. <a href="?page=ai-seo-autopilot">Review them on the Autopilot tab.</a></p>' +
-					(bad.length ? '<p>' + bad.length + ' problem(s): ' + bad.map(function (b) { return esc(b.type + ' ' + b.id + ' ' + b.result); }).join('; ') + '</p>' : '') + '</div>';
+				var profile = '';
+				if (typeof r.profile === 'string') {
+					profile = '<p>Site profile: stored, not yet saved to All in One SEO. It is saved when you click "Apply all proposals" on the Autopilot tab, or <a href="?page=ai-seo-autopilot&tab=profile">check and save it on the Site profile tab</a>.</p>';
+				} else if (r.profile) {
+					profile = profileReportHtml(r.profile, 'Site profile saved to All in One SEO:');
+				}
+				out.innerHTML = '<div class="notice notice-success inline"><p>' + ok + ' page(s) imported. <a href="?page=ai-seo-autopilot">Review them on the Autopilot tab.</a></p>' +
+					(bad.length ? '<p>' + bad.length + ' problem(s): ' + bad.map(function (b) { return esc(b.type + ' ' + b.id + ' ' + b.result); }).join('; ') + '</p>' : '') + '</div>' + profile;
 			}, function (e) {
 				out.innerHTML = '<div class="notice notice-error inline"><p>' + esc(e.message) + '</p></div>';
 			});

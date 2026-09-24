@@ -3,7 +3,7 @@ Tags: seo, all in one seo, aioseo, schema, ai
 Requires at least: 6.0
 Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 
 Uses Claude to write SEO titles, meta descriptions, keyphrases, social tags and schema for every page, then saves them into All in One SEO in one click.
@@ -26,6 +26,11 @@ Requires an Anthropic API key.
 3. Go to SEO Autopilot → Autopilot and click Run Autopilot.
 
 == Changelog ==
+
+= 1.2.3 =
+* An imported site profile is now saved to All in One SEO with "Apply all proposals" (or the new "Save site profile now" button) instead of waiting unseen on the Site profile tab.
+* Saving the reviewed Site profile form replaces the values already in All in One SEO; the import report lists what was saved and what was kept.
+* The address, business type and area served are also written to AIOSEO Pro's Local SEO settings when that add-on is active.
 
 = 1.2.2 =
 * Page text is read from the stored HTML instead of rendering blocks, which ran out of memory on very large or self-nesting posts.
