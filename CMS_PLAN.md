@@ -1,25 +1,25 @@
 # The CMS — Plan and Timeline
 
-**Date:** 2026-09-24
-**Status:** Draft for discussion. Nothing here is built yet.
-**Working name:** "the CMS" (a name is decision D1 below).
+**Date:** 2026-09-24 (revised after first decisions)
+**Status:** Draft. Nothing here is built yet.
+**Working name:** "the CMS". It will be its **own brand**; the name is still open.
 
 ---
 
 ## What we are building
 
-A hosted website builder for small businesses that:
+A hosted website **and online store** builder for small businesses that:
 
-1. **Is as easy as WordPress** to edit, without plugins, updates or hosting to manage.
-2. **Beats Shopify on SEO and design.** Every site is fast, semantic and schema-rich by
-   default, and themes are design systems rather than locked templates.
-3. **Costs less than Shopify** for people who only need a great site that ranks.
+1. **Has Elementor-level design freedom** (drag-and-drop containers and widgets, per-device
+   styling, a theme builder, popups, motion) without WordPress, plugins or hosting to manage.
+2. **Sells products out of the box.** Store, cart and checkout are included; no plugin needed.
+3. **Beats Shopify on SEO and design, and costs less.**
 4. **Sets itself up.** The owner signs in with Google. We import their Google Business
-   Profile, connect Search Console and Analytics, and AI builds the site, theme and first
-   content for them.
-5. **Has RankForge's SEO tools built in.** Recommendations, the Operator's auto-fixes, rank
-   tracking, AI citations, backlinks, competitors and content plans all run on the CMS's
-   own pages. Today they reach sites only through the WordPress connector.
+   Profile, connect Search Console and Analytics, and AI builds the site, theme, first
+   content and product pages.
+5. **Offers the RankForge SEO tools as a paid monthly add-on.** Recommendations, the
+   Operator's one-click fixes, rank tracking, AI citations, backlinks, competitors and
+   content plans all run directly on the CMS's own pages.
 
 The unfair advantage is point 5. Wix, Squarespace and Shopify bolt SEO on as a checklist.
 We already have a real SEO engine, and in our own CMS it can **write the fix directly**
@@ -27,61 +27,110 @@ instead of going through WordPress.
 
 ---
 
-## Core design decisions (recommended)
+## Decisions made
 
-### 1. Pages are structured data, not code
+| # | Decision | Answer |
+|---|---|---|
+| D1 | Brand | **Own brand.** The SEO tools are a **paid monthly add-on** inside it. |
+| D2 | Selling products | **Yes, out of the box** in v1. |
+| D3 | First customers | **Local service businesses and small shops** (GBP-first setup). |
+| D4 | Editor style | **Elementor-level:** drag-and-drop containers and widgets with full style controls. |
 
-Every page is a tree of **blocks** (Hero, Services grid, Reviews, FAQ, Map, Contact
-form, Rich text, …) stored as JSON and validated with `zod`. Themes and AI never write
-HTML or CSS. They produce JSON that must pass a schema.
+---
 
-This one decision makes three things possible:
-- **AI design is safe.** The AI can only output valid blocks and tokens, so it can't break a site.
-- **SEO is guaranteed.** Each block renders the right semantic HTML and schema.org markup,
-  so an owner can't produce a page with no H1 or broken structured data.
-- **SEO fixes are exact.** The Operator changes one field in one block and can verify and
-  roll back that change, which is the same model as `wp-execution.ts` today.
+## Core design decisions
 
-### 2. Themes are design tokens plus section variants
+### 1. Pages are an element tree stored as data, not code
 
-A theme is colors, type scale, fonts, spacing, radius and shadows, plus a few layout
-variants for each block (Hero: split, centered, full-bleed, …). This is how we beat
-Shopify on design. The AI, or the owner, can restyle a whole site by changing tokens,
-and every combination still looks deliberate.
+Like Elementor, a page is **Containers** (flexbox or grid, nestable) that hold
+**Widgets** (Heading, Text, Image, Button, Gallery, Form, Product grid, …). Every element
+has **content settings** and **style settings**, and a style setting can differ per
+device (desktop, tablet, mobile).
 
-### 3. One multi-tenant renderer serves every customer site
+Unlike Elementor, the tree is stored as JSON validated with `zod`, and we render it
+ourselves into lean HTML. That keeps what Elementor gets wrong out of our sites:
+- **No DOM bloat.** Elementor pages are notorious for deep div nesting and heavy CSS/JS.
+  We render the minimum HTML, generate only the CSS a page actually uses, and ship no
+  client JavaScript unless a widget needs it (a slider, a popup, the cart).
+- **AI design is safe.** The AI can only output valid elements, so it can't break a site.
+- **SEO guard-rails.** One H1 per page, alt text required, a heading order that makes
+  sense, and correct schema.org markup for each widget. The builder warns before publish.
+- **SEO fixes are exact.** The Operator changes one field on one element and can verify
+  and roll back the change, the same model as `wp-execution.ts` today.
 
-- An **editor/admin** that lives in the RankForge app. It reuses the existing auth,
-  orgs, teams, projects, billing and scheduler. A CMS site *is* a project.
+### 2. Global styles, then per-element overrides
+
+Global colors, fonts, type scale, spacing and button styles (Elementor calls these
+"Site Settings"). Elements use the globals by default, and the owner can override them
+anywhere. The AI, or the owner, restyles a whole site by changing the globals. A theme
+is a set of globals plus templates.
+
+### 3. One multi-tenant platform
+
+- An **editor/admin** app: the builder, store admin, settings and the SEO add-on. It
+  reuses RankForge's foundation code (auth, orgs, teams, billing, scheduler, Google
+  OAuth) but carries the new brand.
 - A **public renderer**, a separate lean Next.js deployment that looks up the site by
   hostname and serves pages with React Server Components, static caching and on-demand
-  revalidation. It ships no client JavaScript by default, which keeps Core Web Vitals
-  green for every customer.
+  revalidation. That keeps Core Web Vitals green on every customer site.
 - **Custom domains and SSL** go through the host's domains API (the Vercel for
-  Platforms pattern). Keep hosting behind one interface so we can move to cheaper
-  hosting later if cost per site demands it.
-- **Postgres** is the store: sites, pages (JSONB block trees), revisions, media,
-  redirects, themes. It uses the existing migration system (`lib/foundation/migrations`).
+  Platforms pattern), behind one interface so we can move hosts if cost per site demands it.
+- **Postgres** stores sites, pages (JSONB element trees), revisions, templates, media,
+  redirects, products and orders.
 - **Media** lives in object storage (Vercel Blob or S3/R2), resized to AVIF/WebP on upload.
 
-### 4. SEO by construction, not by plugin
+### 4. Commerce is built on Stripe Connect
 
-Built in from day one, with nothing for the owner to configure:
-- Titles, meta descriptions, canonicals and Open Graph, with AI-drafted defaults.
-- `sitemap.xml`, `robots.txt`, and a 301 redirect created automatically on every slug change.
-- schema.org generated from real data: `LocalBusiness` from the Google Business Profile,
-  plus `FAQPage`, `Service`, `BreadcrumbList`, `Article` and `Review`.
-- Image alt text (AI-drafted), lazy loading, responsive sizes.
-- A performance budget enforced at render time.
-- `llms.txt` and clean semantic content for AI search. This ties into the AI citations
-  work we already have.
+Each merchant connects their own Stripe account through **Stripe Connect**, so the money
+goes straight to them. We never hold funds or card data, and PCI is handled by Stripe.
+- Products, variants (size and color), inventory, collections, digital products.
+- Cart and checkout: embedded Stripe Checkout, with Apple Pay and Google Pay.
+- Tax through **Stripe Tax**; shipping zones and rates; discount codes.
+- Orders dashboard, refunds, customer emails (order confirmation, shipped).
+- **SEO advantage:** `Product` schema with price, stock and reviews; clean product URLs;
+  an automatic **Google Merchant Center feed** for free Shopping listings.
 
-### 5. The existing SEO engine plugs in through a CMS adapter
+### 5. SEO by construction, plus the SEO add-on
 
-The Operator already has a deploy → verify → rollback pipeline for WordPress. We add a
-**CMS execution adapter** with the same interface, which writes to our own page store
-instead of the WP REST API. Everything upstream (recommendations, fixgen, safety,
-policy, learning) keeps working unchanged. See Phase 4.
+**Included on every plan:** titles, meta and canonicals; `sitemap.xml`, `robots.txt`
+and `llms.txt`; a 301 redirect created on every slug change; schema.org generated from
+real data (`LocalBusiness` from the GBP, `Product`, `FAQPage`, `Service`,
+`BreadcrumbList`, `Article`); image optimization; a performance budget.
+
+**The SEO add-on (paid monthly):** the RankForge engine, connected through a **CMS
+execution adapter**. That adapter gives the Operator the same deploy → verify → rollback
+interface it has for WordPress, but it writes to our own page store. On top of it: the
+per-page SEO panel in the builder, one-click fixes, rank tracking, AI citations,
+backlinks, competitors, and content plans that become AI-drafted posts.
+
+---
+
+## Elementor feature parity
+
+Elementor features we will match, in the phase each one ships.
+
+| Elementor feature | Our version | Phase |
+|---|---|---|
+| Drag-and-drop editor, live canvas | Same | 1 |
+| Containers (flexbox and grid), nesting | Same | 1 |
+| Core widgets (heading, text, image, button, icon, video, spacer, divider, list, map) | Same | 1 |
+| Style tab: typography, colors, backgrounds, borders, shadows, spacing | Same, bound to globals by default | 1 |
+| Responsive controls per breakpoint, hide on device | Same | 1 |
+| Global colors and fonts (Site Settings) | Same, and AI-generated | 1 |
+| Navigator (layer tree), undo/redo, revision history | Same | 1 |
+| Copy/paste element and style | Same | 2 |
+| Pro widgets (gallery, slider, tabs, accordion, testimonials, pricing table, countdown, reviews) | Same | 2 |
+| Theme Builder: header, footer, single and archive templates, display conditions | Same | 2 |
+| Popup builder with triggers and conditions | Same | 2 |
+| Form builder with actions (email, webhook, lead storage) | Same, plus leads land in the CRM view | 2 |
+| Motion effects, entrance animations, sticky elements | Same, using CSS rather than a JS library where possible | 2 |
+| Template library and saved sections | Same, plus AI-generated sections | 2 |
+| Custom CSS for each element | Same (advanced toggle) | 2 |
+| Dynamic content (fields, business info, product data) | Same | 3 |
+| WooCommerce widgets (product grid, add to cart, cart, checkout) | Native commerce widgets | 3 |
+| Loop builder (repeaters for posts and products) | Same | 3 |
+| AI assistant | Deeper: whole-site setup, restyling, copy, images, SEO | 4 |
+| Custom code and plugin-style add-ons | Later, as a controlled apps API | 7 |
 
 ---
 
@@ -89,154 +138,156 @@ policy, learning) keeps working unchanged. See Phase 4.
 
 | Connection | Status today | What the CMS needs | Blocker to start early |
 |---|---|---|---|
-| Search Console | OAuth, read-only (`webmasters.readonly`) | **Auto-verify** the site (we control the HTML and DNS) and auto-submit the sitemap | Site Verification API scope; Google OAuth app verification for the new scopes |
-| Analytics 4 | OAuth, read-only (`analytics.readonly`) | **Create** the GA4 property and data stream, then inject the tag automatically | `analytics.edit` scope; OAuth verification |
-| Business Profile | Not built | Import name, address, hours, categories, photos, reviews; keep them in sync | **Google must approve API access** (application form, can take weeks). Apply in Phase 0. |
+| Search Console | OAuth, read-only | **Auto-verify** the site (we control the HTML and DNS), auto-submit the sitemap | Site Verification scope; Google OAuth app verification |
+| Analytics 4 | OAuth, read-only | **Create** the GA4 property and data stream, then inject the tag | `analytics.edit` scope; OAuth verification |
+| Business Profile | Not built | Import name, address, hours, categories, photos, reviews; keep them in sync | **Google must approve API access** (application form, can take weeks) |
+| Merchant Center | Not built | Auto product feed for free Shopping listings | Content API scope; OAuth verification |
 
-OAuth verification and GBP API approval are outside our control and take calendar
-time, so both applications go in during Phase 0.
+OAuth verification and GBP API approval take calendar time, so both applications go in
+during Phase 0.
 
 ---
 
 ## Timeline
 
 Assumes one developer working with Claude at close to full-time. At part-time, roughly
-double every estimate. Each phase ends with something usable.
+double every estimate. Adding commerce and Elementor-level editing moved public launch
+from about 12 months to about **15–16 months**. Each phase ends with something usable.
 
 ### Phase 0: Foundations and decisions (weeks 1–3)
-- Settle the open decisions below.
-- **Apply for Google Business Profile API access** and start OAuth verification for the new scopes.
-- Clean up the repo per `ARCHITECTURE_REALITY.md`: archive the orphaned template code so
-  the CMS isn't built next to dead code.
-- Write the specs: content model (site, page, block, revision, media, redirect), block
-  schema v1, theme token schema v1.
-- Set up the renderer deployment skeleton: hostname → site lookup → "hello" page.
+- Choose the brand name and domain.
+- **Apply for Google Business Profile API access**, start OAuth verification, and
+  register as a **Stripe Connect platform**.
+- Clean up the repo per `ARCHITECTURE_REALITY.md`: archive the orphaned template code.
+- Write the specs: element tree schema (container and widget model, responsive style
+  values), global styles schema, content model (site, page, revision, template, media,
+  redirect).
+- Set up the renderer skeleton: hostname → site lookup → render a page from its element tree.
 
-**Done when:** a test site loads on a subdomain from a row in Postgres.
+**Done when:** a test site renders from a row in Postgres on a subdomain.
 
-### Phase 1: Core CMS MVP (months 1–3)
-- Sites, pages, draft/publish, revision history, restore.
-- About 15 core blocks with semantic HTML and schema.org output.
-- A **simple editor**: a sidebar form for each block, a live preview, and reorder,
-  add and remove blocks. This is not drag-and-drop yet.
-- Media library with upload, resizing and alt text.
-- Navigation menus, header and footer.
-- All of the "SEO by construction" list above.
-- **Dogfood:** move the RankForge marketing site onto the CMS.
+### Phase 1: The builder core (months 1–4)
+- Drag-and-drop canvas, containers (flexbox and grid), and about 12 core widgets.
+- Style panel with responsive controls, global colors and fonts.
+- Navigator, undo/redo, draft/publish, revision history.
+- Media library; menus; the "SEO by construction" basics.
+- **Dogfood:** rebuild the RankForge marketing site in it.
 
-**Done when:** we can build and publish a real 5-page business site without touching code.
+**Done when:** we can design and publish a real business site with no code, and it
+scores 95+ on mobile PageSpeed.
 
-### Phase 2: Themes and the visual editor (months 3–5)
-- The theme token system, 4–6 starter themes, and section variants for each block.
-- Visual editing: click-to-edit text on the preview, drag to reorder, and mobile,
-  tablet and desktop preview.
-- Custom domains with automatic SSL; subdomains for free or trial sites.
-- Forms, with leads stored and emailed. Reuse the existing `leads` and widget code.
+### Phase 2: Builder power features (months 4–6)
+- Theme Builder (header, footer, templates, display conditions), popups, form builder.
+- Pro widgets, motion effects, sticky elements, custom CSS, copy/paste styles.
+- Template library and saved sections; 4–6 starter themes.
 - Blog: posts, categories, authors, RSS.
+- Custom domains with automatic SSL.
 
-**Done when:** a non-technical tester can restyle and edit a site with no help.
+**Done when:** an Elementor user can rebuild their current site in our builder without
+missing a feature they use.
 
-### Phase 3: AI setup and Google auto-connect (months 5–7)
+### Phase 3: Commerce (months 6–9)
+- Stripe Connect onboarding for merchants.
+- Products, variants, inventory, collections, digital products.
+- Cart, checkout, Stripe Tax, shipping zones and rates, discount codes.
+- Orders dashboard, refunds, customer emails.
+- Commerce widgets (product grid, add to cart, cart); product and collection templates;
+  dynamic content; loop builder.
+- `Product` schema and the Google Merchant Center feed.
+
+**Done when:** a real shop can sell, ship and refund an order end to end.
+
+### Phase 4: AI setup and Google auto-connect (months 9–11)
 - **Onboarding wizard:** sign in with Google → pick the business → import the GBP →
-  answer 3–5 questions (services, area, tone).
-- **AI site generation:** a page plan from services and locations plus keyword research
-  (`lib/engine/keywords.ts`, `serp.ts`), then page block trees and copy.
-- **AI theme generation:** tokens from the logo and photos, or from a described vibe.
-- Auto-verify Search Console and submit the sitemap; auto-create GA4 and inject the tag.
-- An AI assistant in the editor ("make this section more premium", "add an FAQ from my
-  reviews"). Its output is always schema-validated blocks.
+  answer 3–5 questions.
+- **AI site generation:** a page plan from keyword research (`lib/engine/keywords.ts`,
+  `serp.ts`), then element trees, copy, globals and product descriptions.
+- Auto-verify Search Console, submit the sitemap, create GA4, connect Merchant Center.
+- An AI assistant in the builder ("make this section more premium", "add an FAQ from my
+  reviews"). Its output is always schema-validated.
 
 **Done when:** a new business goes from sign-up to a live, connected, indexed site in
 under 10 minutes.
 
-### Phase 4: The SEO tools come home (months 7–9)
-- **CMS execution adapter** for the Operator: recommendations apply directly to pages,
+### Phase 5: The SEO add-on (months 11–13)
+- **CMS execution adapter** for the Operator: fixes apply directly to pages and products,
   with verification and rollback.
-- An SEO panel inside the editor for each page: real Search Console and GA4 numbers, the
-  open recommendations, and a one-click fix for each.
-- Rank tracking, AI citations, backlinks and competitor monitoring run automatically for
-  every CMS site through the existing scheduler.
-- Content plan → AI draft posts (`lib/foundation/content/*`), with internal links
-  inserted automatically (`link-plan.ts`).
-- Fold `seo-intel`'s stronger crawler and extractor in, as `ARCHITECTURE_REALITY.md`
-  already recommends.
+- An SEO panel in the builder for each page: real Search Console and GA4 numbers, open
+  recommendations, one-click fixes.
+- Rank tracking, AI citations, backlinks and competitors run through the existing scheduler.
+- Content plan → AI draft posts with internal links inserted automatically.
+- Fold in `seo-intel`'s stronger crawler and extractor.
+- Add-on billing: an upgrade inside the app, with a free trial.
 
-**Done when:** a site improves its own rankings from recommendations the owner approves
-with one click.
+**Done when:** a site improves its own rankings from fixes the owner approves with one click.
 
-### Phase 5: Billing, hardening and private beta (months 9–11)
-- Stripe plans and limits (the billing code exists), with metered AI usage.
-- Security review, per-site backups, uptime monitoring.
-- **Abuse handling.** Hosting other people's sites brings phishing, spam and illegal
-  content. We need reporting, takedown and screening of new sites.
+### Phase 6: Billing, hardening and private beta (months 13–15)
+- Plans, limits and metered AI usage through Stripe billing.
+- Security review, backups for each site, uptime monitoring, fraud and chargeback handling.
+- **Abuse handling** for hosted sites and stores (phishing, scam stores): reporting,
+  takedown, and screening of new stores.
 - Help docs, onboarding emails, support inbox.
-- **Private beta with 10–20 real local businesses.**
+- **Private beta with 20–30 real businesses**, some of them selling.
 
-**Done when:** beta customers pay, and none of them need us to fix their site by hand.
+**Done when:** beta customers pay, sell, and never need us to fix their site by hand.
 
-### Phase 6: Public launch and growth (month 12 onward)
-- **WordPress importer.** Our WordPress connector already reads WP sites, so migrating
-  WP users becomes our acquisition channel.
-- Booking and appointments, simple selling (Stripe Checkout for a handful of
-  products or services), multi-location, multi-language.
-- Agency plan with white-label, client sites and reports.
-- A theme marketplace.
+### Phase 7: Public launch and growth (month 15 onward)
+- **Importers as the acquisition channel:** WordPress/Elementor (our WP connector
+  already reads WP sites) and Shopify (products, pages, redirects).
+- Bookings and appointments, subscriptions, multi-location, multi-language.
+- Agency plan: white-label and client sites.
+- Theme and template marketplace; an apps API for third-party add-ons.
 
 ---
 
 ## Pricing direction (to be validated)
 
-The competitor prices below are from memory and need checking before launch. Shopify's
-Basic plan is roughly $29–39/month, and Wix and Squarespace entry plans are roughly
-$16–25/month.
+Competitor prices are from memory and need checking before launch. Shopify's Basic plan
+is roughly $29–39/month, and Wix and Squarespace entry plans are roughly $16–25/month.
 
 | Plan | Target price | Includes |
 |---|---|---|
-| Starter | ~$12–15/mo | 1 site, custom domain, AI setup, Google auto-connect, all built-in SEO |
-| Growth | ~$29/mo | Adds recommendations, Operator one-click fixes, rank tracking, AI content credits |
+| Site | ~$12–15/mo | Full builder, custom domain, AI setup, Google auto-connect, built-in SEO |
+| Store | ~$25/mo | Everything in Site plus commerce. Undercuts Shopify Basic. |
+| **SEO add-on** | **+$15–29/mo** | The RankForge engine: recommendations, one-click fixes, rank tracking, AI citations, content plans |
 | Agency | ~$79+/mo | Multiple sites, white-label, client reports |
 
-**Unit economics to measure in Phase 1:** hosting cost per site per month, and AI cost
-per site setup (likely a few dollars, paid once). Starter must stay profitable with AI
-usage capped.
+**Unit economics to measure in Phase 1:** hosting cost per site, and AI cost per setup.
 
 ---
 
-## Open decisions (to discuss)
+## Still open
 
-- **D1. Name and brand.** Is the CMS part of RankForge, or its own brand with RankForge
-  inside it?
-- **D2. Selling products.** "Cheaper than Shopify" invites commerce comparisons. Full
-  e-commerce (inventory, shipping, tax) is a second product in its own right.
-  *Recommendation:* no store in v1. Add simple payments in Phase 6, then reassess.
-- **D3. Who it's for first.** Local service businesses (plumbers, dentists, salons) fit
-  the GBP-first setup best. *Recommendation:* start there.
-- **D4. Editor style.** Section-based editing (like Squarespace) or freeform
-  drag-anywhere (like Wix)? *Recommendation:* sections, which are easier and harder to
-  make ugly.
-- **D5. Focus.** The repo also has Citation Gap, Reloop and North Star HQ. The CMS is a
-  year-long build and needs to be the main thing.
-- **D6. Hosting provider** at scale: Vercel to start, reassessed on cost per site in Phase 5.
+- **Name and domain** (Phase 0).
+- **Platform fee on sales.** Shopify charges extra when merchants use a different payment
+  provider. Options are 0% as a selling point, or a small fee (0.5–1%) on lower plans.
+  *Recommendation:* 0% on Store; decide before Phase 3.
+- **Hosting provider** at scale: Vercel to start, reassessed on cost per site in Phase 6.
+- **Focus.** The repo also has Citation Gap, Reloop and North Star HQ. This is a
+  15-month build and needs to be the main thing.
 
 ---
 
 ## Biggest risks
 
-1. **The editor.** It's where most of the time and bugs go. Build on a proven library
-   (Tiptap for rich text, dnd-kit for dragging) and never write one from scratch.
-2. **Google approvals** (GBP API, OAuth verification) delay the headline feature, so
-   start them first.
-3. **Hosting and AI cost per site** at a low price point. Measure early.
-4. **Abuse** on hosted sites. Plan for it before public sign-up.
-5. **Scope creep.** Every phase has a "done when" line. Don't start the next phase until it's met.
+1. **The builder.** Elementor has a large team and ten years of work behind it. Build on
+   proven libraries (dnd-kit for dragging, Tiptap for rich text) and ship parity in the
+   order in the table, not all at once.
+2. **Commerce edge cases:** tax, refunds, inventory races, fraud. Lean on Stripe for all of it.
+3. **Google approvals** delay the headline feature, so start them first.
+4. **Hosting and AI cost per site** at a low price point. Measure early.
+5. **Abuse,** especially scam stores. Plan for it before public sign-up.
+6. **Scope creep.** Every phase has a "done when" line. Don't start the next phase until it's met.
 
 ---
 
 ## Next two weeks (concrete)
 
-1. Decide D1–D4 together.
-2. Submit the Google Business Profile API access request.
-3. Write `lib/cms/schema/` with zod schemas for Site, Page, Block (first 5 blocks),
-   ThemeTokens and Redirect, plus unit tests.
-4. Add migration `013_cms_core.sql` for the sites, pages, page_revisions, media and redirects tables.
-5. Build the renderer skeleton: hostname → site → render a page from its block tree.
+1. Shortlist names and check domains.
+2. Submit the Google Business Profile API access request; register the Stripe Connect platform.
+3. Write `lib/cms/schema/` with zod schemas for the element tree (Container plus 5
+   widgets, responsive style values), GlobalStyles, Page, Site and Redirect, plus unit tests.
+4. Add migration `013_cms_core.sql` for the sites, pages, page_revisions, templates,
+   media and redirects tables.
+5. Build the renderer skeleton: hostname → site → render a page from its element tree
+   into lean HTML and CSS.
