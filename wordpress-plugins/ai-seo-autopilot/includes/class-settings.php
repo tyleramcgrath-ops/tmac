@@ -160,9 +160,11 @@ class AISA_Settings {
 	 * @return array<string,string> Slug => label.
 	 */
 	public static function available_post_types() {
+		// Page-builder template libraries are public post types but never real pages.
+		$skip  = apply_filters( 'aisa_excluded_post_types', [ 'attachment', 'elementor_library', 'et_pb_layout', 'fl-builder-template', 'brizy_template', 'ct_template', 'oxy_user_library', 'wp_block', 'wp_template', 'wp_template_part', 'wp_navigation' ] );
 		$types = [];
 		foreach ( get_post_types( [ 'public' => true ], 'objects' ) as $slug => $type ) {
-			if ( 'attachment' === $slug ) {
+			if ( in_array( $slug, $skip, true ) ) {
 				continue;
 			}
 			$types[ $slug ] = $type->labels->name;

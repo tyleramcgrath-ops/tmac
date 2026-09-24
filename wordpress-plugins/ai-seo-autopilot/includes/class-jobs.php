@@ -30,7 +30,8 @@ class AISA_Jobs {
 	 */
 	public static function targets() {
 		$items = [];
-		$types = (array) AISA_Settings::get( 'post_types' );
+		// Intersect so a type saved earlier but now excluded (e.g. a builder template library) is skipped.
+		$types = array_values( array_intersect( (array) AISA_Settings::get( 'post_types' ), array_keys( AISA_Settings::available_post_types() ) ) );
 		if ( $types ) {
 			$ids = get_posts(
 				[
