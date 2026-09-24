@@ -473,7 +473,7 @@ function createMessage(client: Anthropic, params: CreateParams): Promise<Anthrop
   return create.call(client.beta.messages, params)
 }
 
-export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic }): Promise<SofieResult> {
+export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[] }): Promise<SofieResult> {
   const client = input.client ?? new Anthropic()
   const ws = new Workspace(input.snapshot)
 
@@ -488,6 +488,9 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
     role: 'user',
     content: [
       { type: 'text', text: `Today is ${new Date().toISOString().slice(0, 10)}. The website as it is right now (JSON):\n${JSON.stringify({ site: ws.site, pages: ws.pages })}` },
+      ...(input.photos?.length
+        ? [{ type: 'text' as const, text: `The owner's own uploaded photos. Prefer these over stock photos when they fit (use src, alt, width and height exactly):\n${JSON.stringify(input.photos.slice(0, 40))}` }]
+        : []),
       { type: 'text', text: input.message },
     ],
   })

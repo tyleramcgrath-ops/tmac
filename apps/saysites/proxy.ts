@@ -21,5 +21,5 @@ export function proxy(req: NextRequest) {
 export const config = {
   // Everything except Next's own assets. Public files (e.g. /media) are
   // shared by all hosts.
-  matcher: ['/((?!_next/|media/|favicon.ico).*)'],
+  matcher: ['/((?!_next/|media/|u/|favicon.ico).*)'],
 }

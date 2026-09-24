@@ -20,7 +20,8 @@ export default async function ProductsPage({ params }: { params: Promise<{ id: s
   const products = site.store?.products ?? []
   const currency = site.store?.currency ?? 'USD'
   const shown = pages.some((p) => [...walk(p.body)].some((el) => el.type === 'products'))
-  const photos = [...PHOTOS.store.cards, ...PHOTOS.bakery.cards, ...PHOTOS.restaurant.cards].map((p) => ({ src: p.src, alt: p.alt }))
+  const own = (await store.mediaForSite(site.id)).map((m) => ({ src: `/u/${m.id}`, alt: m.alt }))
+  const photos = [...own, ...PHOTOS.store.cards, ...PHOTOS.bakery.cards, ...PHOTOS.restaurant.cards].map((p) => ({ src: p.src, alt: p.alt }))
 
   return (
     <section className="stack">

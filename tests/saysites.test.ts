@@ -649,3 +649,24 @@ describe('SaySites 404', async () => {
     expect(html).toContain('<meta name="robots" content="noindex">')
   })
 })
+
+describe('SaySites photos', () => {
+  it('stores, lists and deletes a site’s photos, and only that site’s', async () => {
+    const store = new MemoryStore()
+    const m = await store.addMedia({ siteId: 's1', mime: 'image/webp', width: 800, height: 600, alt: 'Van' }, Buffer.from('abc'))
+    expect(m.id).toMatch(/^[a-f0-9]{32}$/)
+    expect(await store.mediaForSite('s1')).toMatchObject([{ id: m.id, bytes: 3 }])
+    expect((await store.mediaFile(m.id))!.mime).toBe('image/webp')
+    await store.deleteMedia('s2', m.id)
+    expect(await store.mediaFile(m.id)).not.toBeNull()
+    await store.deleteMedia('s1', m.id)
+    expect(await store.mediaFile(m.id)).toBeNull()
+  })
+
+  it('shows an uploaded logo in the header and keeps the speed gate happy', () => {
+    const site = { ...clone(sampleSite), business: { ...sampleSite.business, logo: '/u/0123456789abcdef0123456789abcdef' } }
+    const r = renderPage(site, sampleHome, samplePages)
+    expect(r.html).toContain('<img class="sh-logo" src="/u/0123456789abcdef0123456789abcdef"')
+    expect(checkSpeed(r).pass).toBe(true)
+  })
+})

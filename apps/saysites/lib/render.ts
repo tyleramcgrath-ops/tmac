@@ -222,7 +222,10 @@ function renderHeader(site: Site, page: Page): string {
     ? `<div class="stb"><div class="stb-in"><span>${esc(h.topbar)}</span>${phone ? `<a href="${esc(tel(phone))}">${esc(phone)}</a>` : ''}</div></div>`
     : ''
   const cta = h?.cta ? `<a class="btn btn-primary sh-cta" href="${esc(h.cta.href)}">${esc(h.cta.label)}</a>` : ''
-  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${esc(site.business.name)}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
+  const brand = site.business.logo
+    ? `<img class="sh-logo" src="${esc(site.business.logo)}" alt="${esc(site.business.name)}" width="180" height="44" loading="lazy" decoding="async">`
+    : esc(site.business.name)
+  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
 }
 
 // Days in schema.org openingHours order, for the footer's hours list.
@@ -344,7 +347,7 @@ function baseCss(g: GlobalStyles): string {
     `.sh-in{max-width:var(--w);margin:0 auto;padding:16px 24px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center}` +
     `.sh-brand{font-family:var(--f-h);font-weight:${g.headingWeight ?? 700};letter-spacing:${g.headingTracking ?? -0.01}em;font-size:1.3em;color:var(--c-text);text-decoration:none;margin-right:auto${g.headingCase === 'upper' ? ';text-transform:uppercase' : ''}}` +
     `.sh nav{display:flex;flex-wrap:wrap;gap:8px 22px}.sh nav a{color:var(--c-muted);text-decoration:none;font-weight:500}.sh nav a:hover,.sh nav a[aria-current]{color:var(--c-text)}` +
-    `.sh-cta{padding:.6em 1.2em}` +
+    `.sh-cta{padding:.6em 1.2em}.sh-logo{height:44px;width:auto;max-width:220px;object-fit:contain}` +
     `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.sh nav{order:3;width:100%}}` +
     `.sf{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 72%,transparent);font-size:.95em}` +
     `.sf-in{max-width:var(--w);margin:0 auto;padding:56px 24px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px}` +

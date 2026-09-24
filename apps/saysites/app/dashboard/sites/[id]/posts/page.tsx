@@ -19,7 +19,8 @@ export default async function PostsPage({ params }: { params: Promise<{ id: stri
   const posts = (await store.pagesForSite(site.id)).filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const type = (Object.entries(BUSINESS_TYPES).find(([, t]) => t.schemaType === site.business.schemaType)?.[0] ?? 'other') as keyof typeof PHOTOS
   const set = PHOTOS[type] ?? PHOTOS.other
-  const photos = [set.hero, ...set.cards].map((p) => ({ src: p.src, alt: p.alt }))
+  const own = (await store.mediaForSite(site.id)).map((m) => ({ src: `/u/${m.id}`, alt: m.alt }))
+  const photos = [...own, set.hero, ...set.cards].map((p) => ({ src: p.src, alt: p.alt }))
   const today = new Date().toISOString().slice(0, 10)
   const ideas = ['Answer the question customers ask you most', `What to expect on a first visit to ${site.business.name}`, 'A recent job you’re proud of, start to finish', 'Seasonal tips for this time of year']
 
