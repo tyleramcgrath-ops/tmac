@@ -635,3 +635,17 @@ describe('SaySites blog subheadings', async () => {
     expect(inner.children.some((c) => c.type === 'text' && c.text?.includes('Body right under it.'))).toBe(true)
   })
 })
+
+describe('SaySites 404', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  it('answers unknown paths with a 404 in the site’s own look, never indexed', async () => {
+    const { site, pages } = SHOWCASE['salt-and-stone']
+    const res = serveSitePath({ site, pages, redirects: [] }, ['nope'], { preview: false })
+    expect(res.status).toBe(404)
+    expect(res.headers.get('x-robots-tag')).toBe('noindex')
+    const html = await res.text()
+    expect(html).toContain('Salt &amp; Stone')
+    expect(html).toContain('We couldn’t find that page')
+    expect(html).toContain('<meta name="robots" content="noindex">')
+  })
+})
