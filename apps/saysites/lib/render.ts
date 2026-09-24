@@ -185,12 +185,25 @@ function renderFooter(site: Site): string {
   if (b.address) contact.push(`<span>${esc(`${b.address.street}, ${b.address.city}, ${b.address.region} ${b.address.postalCode}`)}</span>`)
   if (contact.length) cols.push(`<div><h2 class="sf-h">Contact</h2>${contact.join('')}</div>`)
   if (b.hours?.length) {
-    const rows = b.hours.map((line) => esc(line.replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => DAY[d]).replace(/-(?=[A-Z])/, '–')))
+    const rows = b.hours.map((line) =>
+      esc(
+        line
+          .replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => DAY[d])
+          .replace(/-(?=[A-Z])/, '–')
+          .replace(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/, (_m, h1, m1, h2, m2) => `${clock(+h1, m1)}–${clock(+h2, m2)}`)
+      )
+    )
     cols.push(`<div><h2 class="sf-h">Hours</h2>${rows.map((r) => `<span>${r}</span>`).join('')}</div>`)
   }
   const pages = site.nav.filter((n) => n.href.startsWith('/'))
   if (pages.length) cols.push(`<div><h2 class="sf-h">Pages</h2><a href="/">Home</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
   return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">© ${year} ${esc(b.name)}</div></footer>`
+}
+
+// 17:30 -> "5:30pm", 08:00 -> "8am".
+function clock(h: number, m: string): string {
+  const hour = h % 12 || 12
+  return `${hour}${m === '00' ? '' : `:${m}`}${h < 12 ? 'am' : 'pm'}`
 }
 
 function tel(phone: string): string {
@@ -347,6 +360,8 @@ function containerRules(c: Container, byBp: Record<Breakpoint, Rules>) {
       // Rows share width equally; columns size children to their content.
       // Buttons keep their natural width in both directions.
       add(byBp[bp], `${layoutSel}>:not(.btn)`, d === 'row' ? { flex: '1 1 0', 'min-width': '0' } : { flex: '0 0 auto' })
+      // In a column, a button keeps its own width instead of stretching.
+      if (d === 'column') add(byBp[bp], `${layoutSel}>.btn`, { 'align-self': c.align && c.align !== 'stretch' ? ALIGN[c.align] : 'flex-start' })
     })
   }
   // Gap applies to the layout box, not the outer boxed element.

@@ -498,3 +498,24 @@ describe('SaySites contact forms', async () => {
     expect(fromWeek({ ...week, We: null })).toEqual(['Mo-Tu 08:00-17:00', 'Th-Fr 08:00-17:00', 'Sa 09:00-13:00'])
   })
 })
+
+describe('SaySites showcase', async () => {
+  const { SHOWCASE, SHOWCASE_INFO } = await import('../apps/saysites/lib/showcase')
+  it('every example site is valid, passes the SEO checks and the speed gate', () => {
+    expect(Object.keys(SHOWCASE).sort()).toEqual(Object.keys(SHOWCASE_INFO).sort())
+    for (const [sub, { site, pages }] of Object.entries(SHOWCASE)) {
+      expect(SiteSchema.safeParse(site).success, sub).toBe(true)
+      for (const p of pages) {
+        expect(PageSchema.safeParse(p).success, `${sub}/${p.slug}`).toBe(true)
+        expect(checkPage(p, pages).filter((i) => i.severity === 'error'), `${sub}/${p.slug}`).toEqual([])
+        expect(checkSpeed(renderPage(site, p, pages)).pass, `${sub}/${p.slug}`).toBe(true)
+      }
+    }
+  })
+
+  it('shows 12-hour opening times in the footer', () => {
+    const { site, pages } = SHOWCASE['rivertown-plumbing']
+    const html = renderPage(site, pages[0], pages).html
+    expect(html).toContain('Mon–Fri 7am–6pm')
+  })
+})

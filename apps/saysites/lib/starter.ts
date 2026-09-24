@@ -150,12 +150,25 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
   }[design]
   const more = { bold: 'See our services', editorial: 'View services', warm: 'See what we offer' }[design]
-  const cardText = (s: string) =>
+  // Three ways to say it per design, so neighbouring cards don't repeat.
+  const cardText = (s: string, i = 0) =>
     ({
-      bold: `${s}, done properly by our team in ${city}. Ask us anything; we're happy to help.`,
-      editorial: `${s}, with time to talk through exactly what you want.`,
-      warm: `${s}, made fresh here in ${city}.`,
-    })[design]
+      bold: [
+        `${s}, done properly by our team in ${city}. Ask us anything; we're happy to help.`,
+        `Clear pricing before we start and a tidy job when we leave. ${cap(soften(s))} you can count on.`,
+        `Local, licensed and quick to respond. Tell us what you need and we'll take it from there.`,
+      ],
+      editorial: [
+        `${s}, with time to talk through exactly what you want.`,
+        `Unhurried appointments and honest advice, so you always know your options.`,
+        `Careful, personal and never rushed. We'll make sure it's right for you.`,
+      ],
+      warm: [
+        `${s}, made fresh here in ${city}.`,
+        `Made by hand in small batches, the way we'd want it ourselves.`,
+        `A local favourite. Come by, say hello and see what's new today.`,
+      ],
+    })[design][i % 3]
   const eyebrow = design === 'bold' ? `${cap(t.trade)} · ${city}` : place
 
   const heroBlocks = (light: boolean): Element[] => [
@@ -183,7 +196,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     children: [
       { id: `svc-${i + 1}-img`, type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect, style: { borderRadius: design === 'editorial' ? 2 : 12, margin: { desktop: { top: 0, right: 0, bottom: 8, left: 0 } } } },
       { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: design === 'bold' ? 22 : 26 } } },
-      { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s), style: { color: 'muted' } },
+      { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted' } },
     ],
   })
 
@@ -211,8 +224,12 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         layout: 'grid',
         columns: { desktop: 3, tablet: 2, mobile: 1 },
         style: { gap: { desktop: 28 } },
-        children: list.slice(0, 6).map((s, i) => card(s, i, photos.cards[i % 3], aspect)),
+        // Three cards, one per photo; the Services page lists everything.
+        children: list.slice(0, 3).map((s, i) => card(s, i, photos.cards[i % 3], aspect)),
       },
+      ...(list.length > 3
+        ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: '/services', variant: 'outline' as const }]
+        : []),
     ],
   })
 
