@@ -82,3 +82,38 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   }
   redirect(`/dashboard/sites/${site.id}?new=1`)
 }
+
+// ---------------------------------------------------------------------------
+// Account
+// ---------------------------------------------------------------------------
+
+export interface AccountState {
+  error?: string
+  saved?: string
+}
+
+export async function updateName(_prev: AccountState, form: FormData): Promise<AccountState> {
+  const user = await requireUser()
+  const name = str(form, 'name').slice(0, 80)
+  if (!name) return { error: 'Please enter your name.' }
+  await getStore().updateUser(user.id, { name })
+  return { saved: 'Name saved.' }
+}
+
+export async function changePassword(_prev: AccountState, form: FormData): Promise<AccountState> {
+  const user = await requireUser()
+  const current = String(form.get('current') ?? '')
+  const next = String(form.get('next') ?? '')
+  if (!(await verifyPassword(current, user.passwordHash))) return { error: 'Your current password isn’t right.' }
+  if (next.length < 8) return { error: 'Your new password needs at least 8 characters.' }
+  await getStore().updateUser(user.id, { passwordHash: await hashPassword(next) })
+  return { saved: 'Password changed.' }
+}
+
+export async function deleteAccount(_prev: AccountState, form: FormData): Promise<AccountState> {
+  const user = await requireUser()
+  if (!(await verifyPassword(String(form.get('password') ?? ''), user.passwordHash))) return { error: 'That password isn’t right.' }
+  await getStore().deleteUser(user.id)
+  await endSession()
+  redirect('/?goodbye=1')
+}

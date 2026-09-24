@@ -21,6 +21,7 @@ export async function TopBar({ marketing = false }: { marketing?: boolean }) {
           {user ? (
             <>
               <a href="/dashboard">My sites</a>
+              <a className="hide-sm" href="/dashboard/account">Account</a>
               <form action={logOut}>
                 <button className="btn btn-ghost btn-sm" type="submit">Log out</button>
               </form>

@@ -169,7 +169,32 @@ export const FaqWidget = z
   })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget])
+// A contact form. Submissions land in the owner's Messages inbox; the page
+// still ships no JavaScript (a plain HTML form post).
+export const FORM_FIELDS = ['name', 'email', 'phone', 'message'] as const
+export const FormWidget = z
+  .object({
+    ...widgetBase,
+    type: z.literal('form'),
+    fields: z.array(z.enum(FORM_FIELDS)).min(1).max(4),
+    submitLabel: z.string().min(1).max(40),
+    // Shown after a message is sent.
+    thanks: z.string().min(1).max(200).optional(),
+  })
+  .strict()
+
+// The site's products (from Site.store), as a grid of cards with prices and
+// buy buttons. Shows all products, or up to "limit".
+export const ProductsWidget = z
+  .object({ ...widgetBase, type: z.literal('products'), limit: z.number().int().min(1).max(100).optional() })
+  .strict()
+
+// The site's blog posts (pages with post details), newest first.
+export const PostsWidget = z
+  .object({ ...widgetBase, type: z.literal('posts'), limit: z.number().int().min(1).max(50).optional() })
+  .strict()
+
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 
@@ -266,6 +291,16 @@ export const PageSchema = z
     name: z.string().min(1).max(60),
     status: z.enum(['draft', 'published']),
     seo: PageSeo,
+    // Set on blog posts: shown in the posts list and sent to Google.
+    post: z
+      .object({
+        title: z.string().min(1).max(140),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        excerpt: z.string().min(1).max(300),
+        image: z.object({ src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/), alt: z.string().trim().min(1).max(250) }).strict().optional(),
+      })
+      .strict()
+      .optional(),
     body: z.array(ContainerSchema).max(100),
     updatedAt: z.string(),
   })
@@ -294,6 +329,29 @@ export const BusinessInfo = z
   .strict()
 export type BusinessInfo = z.infer<typeof BusinessInfo>
 
+export const ProductSchema = z
+  .object({
+    id,
+    name: z.string().min(1).max(120),
+    // In cents, to avoid rounding.
+    price: z.number().int().min(0).max(100_000_000),
+    description: z.string().max(600).optional(),
+    image: z.object({ src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/), alt: z.string().trim().min(1).max(250) }).strict().optional(),
+    // A Stripe Payment Link (buy.stripe.com/...). Without one, the button
+    // asks the visitor to get in touch instead.
+    buyUrl: z.string().regex(/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/, 'use a Stripe payment link (https://buy.stripe.com/...)').optional(),
+    soldOut: z.boolean().optional(),
+  })
+  .strict()
+export type Product = z.infer<typeof ProductSchema>
+
+export const StoreSchema = z
+  .object({
+    currency: z.enum(['USD', 'CAD', 'GBP', 'EUR', 'AUD']),
+    products: z.array(ProductSchema).max(100),
+  })
+  .strict()
+
 export const SiteSchema = z
   .object({
     id: z.string().min(1),
@@ -316,6 +374,9 @@ export const SiteSchema = z
       .optional(),
     // One or two lines about the business, shown in the footer.
     tagline: z.string().max(200).optional(),
+    // Things for sale. Customers pay the owner directly through the owner's
+    // own Stripe payment link, so SaySites never touches the money.
+    store: StoreSchema.optional(),
     updatedAt: z.string(),
   })
   .strict()

@@ -31,6 +31,21 @@ export interface User {
   createdAt: string
 }
 
+// A message sent through a contact form on a customer site.
+export interface Message {
+  id: string
+  siteId: string
+  name: string
+  email: string
+  phone: string
+  body: string
+  // The page it was sent from, e.g. "/contact".
+  page: string
+  createdAt: string
+  read: boolean
+}
+export type NewMessage = Omit<Message, 'id' | 'createdAt' | 'read'>
+
 export type RevisionAuthor = 'owner' | 'sofie' | 'operator' | 'import'
 
 export interface Store {
@@ -50,6 +65,19 @@ export interface Store {
   redirectsForSite(siteId: string): Promise<Redirect[]>
   sofieState(siteId: string): Promise<SofieState>
   saveSofieState(siteId: string, state: SofieState): Promise<void>
+  // Removes a site and everything under it (pages, revisions, Sofie, messages).
+  deleteSite(ownerId: string, siteId: string): Promise<void>
+  // Removes the user and all of their sites.
+  deleteUser(userId: string): Promise<void>
+  updateUser(userId: string, changes: { name?: string; passwordHash?: string }): Promise<void>
+  addMessage(m: NewMessage): Promise<Message>
+  messagesForSite(siteId: string, limit?: number): Promise<Message[]>
+  // Mark one message read (or unread). Scoped to the site.
+  setMessageRead(siteId: string, messageId: string, read: boolean): Promise<void>
+  deleteMessage(siteId: string, messageId: string): Promise<void>
+  unreadCount(siteId: string): Promise<number>
+  // Messages received since a time, for rate limiting a site's form.
+  recentMessageCount(siteId: string, since: Date): Promise<number>
 }
 
 export const emptySofieState = (): SofieState => ({ chat: [], draft: null, history: [] })
@@ -103,6 +131,14 @@ CREATE TABLE IF NOT EXISTS ss_redirects (
   status SMALLINT NOT NULL CHECK (status IN (301,302)),
   PRIMARY KEY (site_id, from_path)
 );
+CREATE TABLE IF NOT EXISTS ss_messages (
+  id TEXT PRIMARY KEY,
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  read BOOLEAN NOT NULL DEFAULT false,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_messages_site_idx ON ss_messages (site_id, created_at DESC);
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
@@ -202,6 +238,39 @@ class PgStore implements Store {
   async saveSofieState(siteId: string, state: SofieState) {
     await this.q('INSERT INTO ss_sofie (site_id, data) VALUES ($1,$2) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, state])
   }
+  async deleteSite(ownerId: string, siteId: string) {
+    await this.q('DELETE FROM ss_sites WHERE id = $1 AND owner_id = $2', [siteId, ownerId])
+  }
+  async deleteUser(userId: string) {
+    await this.q('DELETE FROM ss_users WHERE id = $1', [userId])
+  }
+  async updateUser(userId: string, changes: { name?: string; passwordHash?: string }) {
+    if (changes.name) await this.q('UPDATE ss_users SET name = $2 WHERE id = $1', [userId, changes.name])
+    if (changes.passwordHash) await this.q('UPDATE ss_users SET password_hash = $2 WHERE id = $1', [userId, changes.passwordHash])
+  }
+  async addMessage(m: NewMessage) {
+    const msg: Message = { ...m, id: randomUUID(), createdAt: new Date().toISOString(), read: false }
+    await this.q('INSERT INTO ss_messages (id, site_id, data) VALUES ($1,$2,$3)', [msg.id, msg.siteId, msg])
+    return msg
+  }
+  async messagesForSite(siteId: string, limit = 200) {
+    const rows = await this.q<{ data: Message; read: boolean }>('SELECT data, read FROM ss_messages WHERE site_id = $1 ORDER BY created_at DESC LIMIT $2', [siteId, limit])
+    return rows.map((r) => ({ ...r.data, read: r.read }))
+  }
+  async setMessageRead(siteId: string, messageId: string, read: boolean) {
+    await this.q('UPDATE ss_messages SET read = $3 WHERE id = $1 AND site_id = $2', [messageId, siteId, read])
+  }
+  async deleteMessage(siteId: string, messageId: string) {
+    await this.q('DELETE FROM ss_messages WHERE id = $1 AND site_id = $2', [messageId, siteId])
+  }
+  async unreadCount(siteId: string) {
+    const r = await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_messages WHERE site_id = $1 AND NOT read', [siteId])
+    return Number(r[0]?.n ?? 0)
+  }
+  async recentMessageCount(siteId: string, since: Date) {
+    const r = await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_messages WHERE site_id = $1 AND created_at > $2', [siteId, since.toISOString()])
+    return Number(r[0]?.n ?? 0)
+  }
 }
 
 function toUser(r: Record<string, unknown> | undefined): User | null {
@@ -275,6 +344,46 @@ export class MemoryStore implements Store {
   }
   async saveSofieState(siteId: string, state: SofieState) {
     this.sofie.set(siteId, structuredClone(state))
+  }
+  async deleteSite(ownerId: string, siteId: string) {
+    const s = this.sites.get(siteId)
+    if (!s || s.ownerId !== ownerId) return
+    this.sites.delete(siteId)
+    for (const [id, p] of this.pages) if (p.siteId === siteId) this.pages.delete(id)
+    this.sofie.delete(siteId)
+    this.messages = this.messages.filter((m) => m.siteId !== siteId)
+  }
+  async deleteUser(userId: string) {
+    for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)
+    this.users.delete(userId)
+  }
+  async updateUser(userId: string, changes: { name?: string; passwordHash?: string }) {
+    const u = this.users.get(userId)
+    if (!u) return
+    if (changes.name) u.name = changes.name
+    if (changes.passwordHash) u.passwordHash = changes.passwordHash
+  }
+  private messages: Message[] = []
+  async addMessage(m: NewMessage) {
+    const msg: Message = { ...m, id: randomUUID(), createdAt: new Date().toISOString(), read: false }
+    this.messages.unshift(msg)
+    return structuredClone(msg)
+  }
+  async messagesForSite(siteId: string, limit = 200) {
+    return structuredClone(this.messages.filter((m) => m.siteId === siteId).slice(0, limit))
+  }
+  async setMessageRead(siteId: string, messageId: string, read: boolean) {
+    const m = this.messages.find((x) => x.id === messageId && x.siteId === siteId)
+    if (m) m.read = read
+  }
+  async deleteMessage(siteId: string, messageId: string) {
+    this.messages = this.messages.filter((x) => !(x.id === messageId && x.siteId === siteId))
+  }
+  async unreadCount(siteId: string) {
+    return this.messages.filter((m) => m.siteId === siteId && !m.read).length
+  }
+  async recentMessageCount(siteId: string, since: Date) {
+    return this.messages.filter((m) => m.siteId === siteId && Date.parse(m.createdAt) > since.getTime()).length
   }
 }
 
