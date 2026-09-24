@@ -142,6 +142,16 @@ function renderWidget(w: Widget): string {
       return renderProducts(w)
     case 'posts':
       return renderPosts(w)
+    case 'gallery': {
+      const cols = w.columns ?? 3
+      return `<div class="gal gal-${cols} ${c}">${w.images
+        .map((i) => `<figure><img src="${esc(i.src)}"${srcset(i.src, i.width)} sizes="(max-width: 640px) 100vw, ${Math.round(100 / cols)}vw" alt="${esc(i.alt)}" width="${i.width}" height="${i.height}" loading="lazy" decoding="async">${i.caption ? `<figcaption>${esc(i.caption)}</figcaption>` : ''}</figure>`)
+        .join('')}</div>`
+    }
+    case 'testimonials':
+      return `<div class="tst ${c}">${w.items
+        .map((t) => `<figure>${t.stars ? `<span class="tst-stars" role="img" aria-label="${t.stars} out of 5 stars">${'★'.repeat(t.stars)}${'☆'.repeat(5 - t.stars)}</span>` : ''}<blockquote>${esc(t.quote)}</blockquote><figcaption><strong>${esc(t.name)}</strong>${t.detail ? `<span>${esc(t.detail)}</span>` : ''}</figcaption></figure>`)
+        .join('')}</div>`
   }
 }
 
@@ -378,6 +388,15 @@ function widgetCss(used: Set<string>): string {
       `.bgt{position:absolute;inset:0;z-index:-1;pointer-events:none}.bgt-full{background:rgb(0 0 0/var(--o))}` +
       `.bgt-side{background:linear-gradient(90deg,rgb(0 0 0/var(--o)) 0%,rgb(0 0 0/calc(var(--o)*.72)) 45%,rgb(0 0 0/0) 80%)}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.bgt-side{background:rgb(0 0 0/calc(var(--o)*.85))}}.bgc{position:relative}`
+  if (used.has('gallery'))
+    css +=
+      `.gal{display:grid;gap:14px}.gal-2{grid-template-columns:repeat(2,minmax(0,1fr))}.gal-3{grid-template-columns:repeat(3,minmax(0,1fr))}.gal-4{grid-template-columns:repeat(4,minmax(0,1fr))}` +
+      `.gal figure{margin:0}.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}.gal figcaption{font-size:.9em;color:var(--c-muted);margin-top:6px}` +
+      `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.gal-3,.gal-4{grid-template-columns:repeat(2,minmax(0,1fr))}}`
+  if (used.has('testimonials'))
+    css +=
+      `.tst{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}.tst figure{margin:0;padding:26px;border-radius:var(--r);background:var(--c-surface);display:flex;flex-direction:column;gap:14px}` +
+      `.tst blockquote{margin:0;font-family:var(--f-h);font-size:1.15em;line-height:1.5;color:var(--c-text)}.tst figcaption{display:flex;flex-direction:column;font-size:.92em;margin-top:auto}.tst figcaption span{color:var(--c-muted)}.tst-stars{color:var(--c-accent);letter-spacing:.12em}`
   if (used.has('posts'))
     css +=
       `.pos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:36px 28px}.po{display:flex;flex-direction:column;gap:8px}` +

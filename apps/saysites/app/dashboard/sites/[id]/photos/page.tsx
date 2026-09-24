@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { PhotoUpload } from '@/components/PhotoUpload'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
-import { removePhoto, uploadPhoto, setLogo } from '../manage-actions'
+import { addGalleryToHome, removePhoto, setLogo, uploadPhoto } from '../manage-actions'
 
 export default async function PhotosPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -25,6 +25,12 @@ export default async function PhotosPage({ params }: { params: Promise<{ id: str
         <h3>Upload a photo or your logo</h3>
         <PhotoUpload action={uploadPhoto.bind(null, site.id)} logo />
       </div>
+      {photos.length > 0 && (
+        <div className="notice good gallery-cta">
+          <span><strong>Show them off.</strong> Add your latest {Math.min(photos.length, 9)} photo{photos.length > 1 ? 's' : ''} to your home page as an “Our work” gallery.</span>
+          <form action={addGalleryToHome.bind(null, site.id)}><button className="btn btn-primary btn-sm" type="submit">Add to my home page</button></form>
+        </div>
+      )}
       {photos.length === 0 ? (
         <p className="muted">No photos yet.</p>
       ) : (

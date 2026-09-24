@@ -359,3 +359,38 @@ export async function setLogo(siteId: string, mediaId: string | null) {
   if (mediaId && !(await store.mediaForSite(site.id)).some((m) => m.id === mediaId)) return
   await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: mediaId ? `/u/${mediaId}` : undefined } }))
 }
+
+// Puts the latest photos on the home page as an "Our work" gallery (or
+// refreshes the one already there), just above the questions section.
+export async function addGalleryToHome(siteId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const photos = (await store.mediaForSite(site.id)).slice(0, 9)
+  if (!photos.length) return
+  const section: Page['body'][number] = {
+    id: 'our-work',
+    type: 'container',
+    tag: 'section',
+    layout: 'flex',
+    boxed: true,
+    style: { padding: { desktop: { top: 88, right: 24, bottom: 88, left: 24 }, mobile: { top: 52, right: 20, bottom: 52, left: 20 } }, gap: { desktop: 28 } },
+    children: [
+      { id: 'our-work-h', type: 'heading', level: 2, text: 'Our work', style: { fontSize: { desktop: 42, mobile: 30 } } },
+      { id: 'our-work-g', type: 'gallery', columns: photos.length % 2 === 0 && photos.length < 6 ? 2 : 3, images: photos.map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height })) },
+    ],
+  }
+  const place = (body: Page['body']): Page['body'] => {
+    const rest = body.filter((c) => c.id !== 'our-work')
+    const faq = rest.findIndex((c) => c.id === 'faq')
+    const at = faq === -1 ? rest.length : faq
+    return [...rest.slice(0, at), section, ...rest.slice(at)]
+  }
+  const pages = await store.pagesForSite(site.id)
+  const home = pages.find((p) => p.slug === '')
+  if (!home) return
+  await store.savePage({ ...home, body: place(home.body), updatedAt: new Date().toISOString() }, 'owner', user.id, 'Added an Our work gallery')
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    await store.saveSofieState(site.id, { ...state, draft: { ...state.draft, pages: state.draft.pages.map((p) => (p.slug === '' ? { ...p, body: place(p.body) } : p)) } })
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}

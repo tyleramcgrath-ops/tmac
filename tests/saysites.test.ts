@@ -670,3 +670,29 @@ describe('SaySites photos', () => {
     expect(checkSpeed(r).pass).toBe(true)
   })
 })
+
+describe('SaySites gallery and testimonials', () => {
+  function withSection(children: unknown[]) {
+    const page = clone(sampleHome)
+    page.body.push({ id: 'extra', type: 'container', tag: 'section', layout: 'flex', boxed: true, children } as never)
+    return PageSchema.parse(page)
+  }
+  it('renders a lazy, sized photo grid and quotes with star ratings', () => {
+    const page = withSection([
+      { id: 'g', type: 'gallery', columns: 2, images: [{ src: '/u/0123456789abcdef0123456789abcdef', alt: 'A new patio', width: 1200, height: 800, caption: 'Patio, 2026' }, { src: 'https://images.unsplash.com/photo-1?w=800', alt: 'A lawn', width: 800, height: 600 }] },
+      { id: 't', type: 'testimonials', items: [{ quote: 'They came the same day.', name: 'Pat', detail: 'Rivertown', stars: 5 }] },
+    ])
+    const r = renderPage(sampleSite, page, samplePages)
+    expect(r.html).toContain('<div class="gal gal-2')
+    expect(r.html).toContain('alt="A new patio" width="1200" height="800" loading="lazy"')
+    expect(r.html).toContain('<figcaption>Patio, 2026</figcaption>')
+    expect(r.html).toContain('aria-label="5 out of 5 stars"')
+    expect(r.html).toContain('<blockquote>They came the same day.</blockquote>')
+    expect(checkSpeed(r).pass).toBe(true)
+  })
+  it('rejects gallery photos without alt text', () => {
+    const page = clone(sampleHome)
+    page.body.push({ id: 'x', type: 'container', layout: 'flex', children: [{ id: 'g', type: 'gallery', images: [{ src: '/a.jpg', alt: ' ', width: 10, height: 10 }] }] } as never)
+    expect(PageSchema.safeParse(page).success).toBe(false)
+  })
+})

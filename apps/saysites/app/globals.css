@@ -376,3 +376,5 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .photo figcaption { display: grid; gap: 4px; padding: 12px 14px 14px; }
 .photo-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .photo-actions form { margin: 0; }
+.gallery-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.gallery-cta form { margin: 0; }
