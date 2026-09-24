@@ -143,7 +143,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   const headline = t.headline.replace('{city}', city).replace('{name}', name)
-  const offer = list.slice(0, 3).map(soften).join(', ')
+  // With no services listed, talk about the trade itself ("roofing").
+  const offer = services.length ? list.slice(0, 3).map(soften).join(', ') : t.trade
   const intro = {
     bold: `${name} helps people across ${place} with ${offer}. Straight answers, fair prices and work done right.`,
     editorial: `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
@@ -421,7 +422,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     status: 'published',
     seo: {
       title: clip(`${name} | ${cap(t.trade)} in ${place}`, 60),
-      description: clip(`${name} provides ${t.trade} in ${place}: ${list.slice(0, 3).map(soften).join(', ')}. Friendly, local and easy to reach. Get in touch today.`, 160),
+      description: clip(`${name} provides ${t.trade} in ${place}${services.length ? `: ${list.slice(0, 3).map(soften).join(', ')}` : ''}. Friendly, local and easy to reach. Get in touch today.`, 160),
     },
     body: homeBody,
     updatedAt: now,
