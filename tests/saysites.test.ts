@@ -817,3 +817,50 @@ describe('SaySites: call bar on phones', () => {
     expect(renderPage(off, home, pages).html).not.toContain('class="scb"')
   })
 })
+
+describe('SaySites: logos Sofie draws', async () => {
+  const { sanitizeSvg } = await import('../apps/saysites/lib/svg')
+  const { Workspace, runTool } = await import('../apps/saysites/lib/sofie')
+  const LOGO = `<svg viewBox="0 0 320 80"><defs><linearGradient id="g"><stop offset="0" stop-color="#1b4d7a"/></linearGradient></defs><circle cx="40" cy="40" r="30" fill="url(#g)"/><text x="84" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#1b2430">Bar &amp; Co</text></svg>`
+  const ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1b4d7a"/></svg>'
+
+  it('keeps plain shapes and text and adds the namespace', () => {
+    const c = sanitizeSvg(LOGO)
+    expect(c.svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80">')).toBe(true)
+    expect(c.svg).toContain('Bar &amp; Co')
+    expect([c.width, c.height]).toEqual([320, 80])
+  })
+
+  it('rejects anything that could run code, load files or link away', () => {
+    const bad = [
+      '<svg viewBox="0 0 10 10"><script>alert(1)</script></svg>',
+      '<svg viewBox="0 0 10 10" onload="alert(1)"></svg>',
+      '<svg viewBox="0 0 10 10"><style>*{}</style></svg>',
+      '<svg viewBox="0 0 10 10"><image href="https://x.co/a.png"/></svg>',
+      '<svg viewBox="0 0 10 10"><a href="javascript:alert(1)"><rect/></a></svg>',
+      '<svg viewBox="0 0 10 10"><rect fill="url(https://x.co/a)"/></svg>',
+      '<svg viewBox="0 0 10 10"><use href="#a"/></svg>',
+      '<svg viewBox="0 0 10 10"><foreignObject/></svg>',
+      '<!DOCTYPE svg [<!ENTITY x "y">]><svg viewBox="0 0 10 10"></svg>',
+      '<svg viewBox="0 0 10 10"><rect style="fill:red"/></svg>',
+      '<svg viewBox="0 0 10 10"><rect/></svg><svg viewBox="0 0 1 1"></svg>',
+      '<svg><rect/></svg>',
+      '<svg viewBox="0 0 10 10"><g><rect/></svg>',
+    ]
+    for (const b of bad) expect(() => sanitizeSvg(b), b).toThrow()
+  })
+
+  it('puts the logo and icon on the draft and hands back the files', () => {
+    const { site, pages } = buildStarterSite({ name: 'Bar Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'bar-co')
+    const ws = new Workspace({ site, pages })
+    expect(runTool(ws, 'design_logo', { svg: LOGO, icon_svg: ICON, alt: 'Bar Co logo', summary: 'Drew a logo' })).toBe('Done.')
+    expect(ws.site.business.logo).toMatch(/^\/u\/[a-f0-9]{32}$/)
+    expect(ws.site.business.icon).toMatch(/^\/u\/[a-f0-9]{32}$/)
+    expect(ws.media.map((m) => m.mime)).toEqual(['image/svg+xml', 'image/svg+xml'])
+    const html = renderPage(ws.site, pages.find((p) => p.slug === '')!, pages).html
+    expect(html).toContain(`<img class="sh-logo" src="${ws.site.business.logo}"`)
+    expect(html).toContain(`<link rel="icon" href="${ws.site.business.icon}">`)
+    expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 10"><script/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/^Error: The logo can't be used/)
+    expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 80"><rect/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/wider than it is tall/)
+  })
+})

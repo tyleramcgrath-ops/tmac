@@ -302,6 +302,7 @@ function tel(phone: string): string {
 // The business logo when there is one; otherwise an inline SVG monogram in
 // the brand color, so there is never a missing-favicon request.
 function favicon(site: Site): string {
+  if (site.business.icon) return site.business.icon
   if (site.business.logo) return site.business.logo
   const letter = esc(site.business.name.trim().charAt(0).toUpperCase() || 'S')
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${site.globals.colors.primary}"/><text x="32" y="44" font-family="system-ui,sans-serif" font-size="36" font-weight="700" text-anchor="middle" fill="${site.globals.colors.background}">${letter}</text></svg>`

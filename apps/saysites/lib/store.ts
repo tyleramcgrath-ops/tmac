@@ -82,7 +82,7 @@ export interface Store {
   // Removes the user and all of their sites.
   deleteUser(userId: string): Promise<void>
   updateUser(userId: string, changes: { name?: string; passwordHash?: string }): Promise<void>
-  addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'>, data: Buffer): Promise<Media>
+  addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'> & { id?: string }, data: Buffer): Promise<Media>
   mediaForSite(siteId: string): Promise<Media[]>
   // The file itself, for serving. Not scoped: ids are unguessable and files are public.
   mediaFile(id: string): Promise<{ mime: string; data: Buffer } | null>
@@ -285,10 +285,10 @@ class PgStore implements Store {
   async saveSofieState(siteId: string, state: SofieState) {
     await this.q('INSERT INTO ss_sofie (site_id, data) VALUES ($1,$2) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, state])
   }
-  async addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'>, data: Buffer) {
-    const id = randomUUID().replace(/-/g, '')
+  async addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'> & { id?: string }, data: Buffer) {
+    const id = m.id ?? randomUUID().replace(/-/g, '')
     await this.q('INSERT INTO ss_media (id, site_id, mime, width, height, alt, data) VALUES ($1,$2,$3,$4,$5,$6,$7)', [id, m.siteId, m.mime, m.width, m.height, m.alt, data])
-    return { ...m, id, bytes: data.length, createdAt: new Date().toISOString() }
+    return { siteId: m.siteId, mime: m.mime, width: m.width, height: m.height, alt: m.alt, id, bytes: data.length, createdAt: new Date().toISOString() }
   }
   async mediaForSite(siteId: string) {
     const rows = await this.q<{ id: string; site_id: string; mime: string; width: number; height: number; alt: string; bytes: number; created_at: string }>(
@@ -422,8 +422,8 @@ export class MemoryStore implements Store {
     this.sofie.set(siteId, structuredClone(state))
   }
   private media = new Map<string, { meta: Media; data: Buffer }>()
-  async addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'>, data: Buffer) {
-    const meta: Media = { ...m, id: randomUUID().replace(/-/g, ''), bytes: data.length, createdAt: new Date().toISOString() }
+  async addMedia(m: Omit<Media, 'id' | 'createdAt' | 'bytes'> & { id?: string }, data: Buffer) {
+    const meta: Media = { siteId: m.siteId, mime: m.mime, width: m.width, height: m.height, alt: m.alt, id: m.id ?? randomUUID().replace(/-/g, ''), bytes: data.length, createdAt: new Date().toISOString() }
     this.media.set(meta.id, { meta, data })
     return { ...meta }
   }

@@ -351,6 +351,8 @@ export const BusinessInfo = z
     hours: z.array(z.string()).optional(),
     priceRange: z.string().max(10).optional(),
     logo: z.string().optional(),
+    // A square mark for browser tabs and home screens; the logo when missing.
+    icon: z.string().optional(),
     sameAs: z.array(z.string().url()).optional(),
   })
   .strict()

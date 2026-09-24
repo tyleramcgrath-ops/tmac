@@ -342,7 +342,7 @@ export async function uploadPhoto(siteId: string, _prev: UploadState, form: Form
   const data = Buffer.from(await file.arrayBuffer())
   const media = await store.addMedia({ siteId: site.id, mime: file.type, width, height, alt }, data)
   if (form.get('asLogo')) {
-    await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: `/u/${media.id}` } }))
+    await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: `/u/${media.id}`, icon: undefined } }))
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: true }
@@ -351,14 +351,15 @@ export async function uploadPhoto(siteId: string, _prev: UploadState, form: Form
 export async function removePhoto(siteId: string, mediaId: string) {
   const { store, site } = await ownSite(siteId)
   await store.deleteMedia(site.id, mediaId)
-  if (site.business.logo === `/u/${mediaId}`) await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: undefined } }))
+  if (site.business.logo === `/u/${mediaId}` || site.business.icon === `/u/${mediaId}`)
+    await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: s.business.logo === `/u/${mediaId}` ? undefined : s.business.logo, icon: s.business.icon === `/u/${mediaId}` ? undefined : s.business.icon } }))
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }
 
 export async function setLogo(siteId: string, mediaId: string | null) {
   const { store, site } = await ownSite(siteId)
   if (mediaId && !(await store.mediaForSite(site.id)).some((m) => m.id === mediaId)) return
-  await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: mediaId ? `/u/${mediaId}` : undefined } }))
+  await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: mediaId ? `/u/${mediaId}` : undefined, icon: undefined } }))
 }
 
 // Puts the latest photos on the home page as an "Our work" gallery (or
