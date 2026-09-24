@@ -427,6 +427,15 @@ export interface SofieResult {
 
 const MAX_STEPS = 16
 
+// The request goes through this one typed seam so the file also compiles
+// where an older SDK (without the newest request fields) is installed, such
+// as the repository root that type-checks the tests.
+type CreateParams = Record<string, unknown> & { messages: Anthropic.Beta.BetaMessageParam[] }
+function createMessage(client: Anthropic, params: CreateParams): Promise<Anthropic.Beta.BetaMessage> {
+  const create = client.beta.messages.create as unknown as (p: CreateParams) => Promise<Anthropic.Beta.BetaMessage>
+  return create.call(client.beta.messages, params)
+}
+
 export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic }): Promise<SofieResult> {
   const client = input.client ?? new Anthropic()
   const ws = new Workspace(input.snapshot)
@@ -449,9 +458,11 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   let reply = ''
   let gateRounds = 0
   for (let step = 0; step < MAX_STEPS; step++) {
-    const response = await client.beta.messages.create({
+    const response = await createMessage(client, {
       model: SOFIE_MODEL,
       max_tokens: 16000,
+      // Opt into Anthropic's server-side fallback, so a declined request is
+      // retried on a suitable model instead of failing.
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default',
       thinking: { type: 'adaptive' },
