@@ -258,12 +258,13 @@ function cryptoRandom(): string {
 const summary = { type: 'string', description: 'One short sentence for the owner describing this change, e.g. "Added weekend hours to the header".' } as const
 const pageParam = { type: 'string', description: 'Page slug: "home" for the home page, otherwise e.g. "services".' } as const
 
+// Not strict: the API rejects strict mode for this tool set as "Schema is too
+// complex". runTool coerces every input and reports bad JSON back to Sofie.
 export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: 'update_element',
     description:
       'Change fields of one element (widget or container) found by id. Pass only the fields to change as a JSON object string. "style" is merged into the existing style; set a field to null to remove it. Cannot change id, type or children.',
-    strict: true,
     input_schema: {
       type: 'object',
       additionalProperties: false,
@@ -275,7 +276,6 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
     name: 'insert_elements',
     description:
       'Insert new elements. With parent_id "" the elements are new top-level sections (each must be a container, usually tag "section" and boxed). Otherwise they go inside the container with that id. index -1 appends at the end. New ids must be unique on the page.',
-    strict: true,
     input_schema: {
       type: 'object',
       additionalProperties: false,
@@ -286,13 +286,11 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: 'remove_element',
     description: 'Remove one element (and everything inside it) by id.',
-    strict: true,
     input_schema: { type: 'object', additionalProperties: false, properties: { page: pageParam, id: { type: 'string' }, summary }, required: ['page', 'id', 'summary'] },
   },
   {
     name: 'move_element',
     description: 'Move an element one place up or down among its siblings (for sections, that is up or down the page).',
-    strict: true,
     input_schema: {
       type: 'object',
       additionalProperties: false,
@@ -304,13 +302,11 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
     name: 'update_site',
     description:
       'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline. Set a key to null to remove it.',
-    strict: true,
     input_schema: { type: 'object', additionalProperties: false, properties: { changes_json: { type: 'string' }, summary }, required: ['changes_json', 'summary'] },
   },
   {
     name: 'update_seo',
     description: 'Set a page’s Google title (max 60 characters recommended, 70 hard limit) and description (max 160). Pass "" to leave one unchanged.',
-    strict: true,
     input_schema: {
       type: 'object',
       additionalProperties: false,
@@ -321,7 +317,6 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: 'add_page',
     description: 'Create a new page. body_json is a JSON array of top-level section containers; the page needs exactly one level-1 heading.',
-    strict: true,
     input_schema: {
       type: 'object',
       additionalProperties: false,
