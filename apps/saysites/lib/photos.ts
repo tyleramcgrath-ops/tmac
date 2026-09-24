@@ -60,7 +60,7 @@ export const PHOTOS: Record<string, PhotoSet> = {
     ['1643660526741-094639fbe53a', 'Dental chair in a calm treatment room'],
     ['1629909614456-6b1c5c94cecc', 'Waiting area with a couch and a plant'],
   ]),
-  salon: set(['1634449571010-02389ed0f9b0', 'Hair stylist cutting a client’s hair'], [
+  salon: set(['1634449571010-02389ed0f9b0', 'Stylist washing a client’s hair at the basin'], [
     ['1580618672591-eb180b1a973f', 'Stylist blow-drying a client’s hair'],
     ['1633681926022-84c23e8cb2d6', 'Modern salon with black chairs and round mirrors'],
     ['1717160675489-7779f2c91999', 'Client having her hair washed at a salon sink'],
