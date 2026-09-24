@@ -2,7 +2,35 @@
 
 **Date:** 2026-09-24 (revised after first decisions)
 **Status:** Draft. Nothing here is built yet.
-**Working name:** "the CMS". It will be its **own brand**; the name is still open.
+**Working name:** "the CMS". It will be its **own brand**. Name shortlist below.
+
+---
+
+## The pitch
+
+> **Tell it about your business. It builds a clean, fast website that ranks, and
+> changes it whenever you ask. Cheaper than Shopify, and we take 0% of your sales.**
+
+Who it's for: the simple business owner who wants a good-looking, modern site without
+learning a builder, hiring a designer or understanding SEO.
+
+What sells it, in order:
+1. **Talk, don't build.** A friendly chat assistant with a name and face (like "Angie")
+   is the main way to use the product. You tell it what your business is and what you
+   want, and it builds the site. After that, "make the header darker", "add my new
+   service", "put a sale banner up until Friday" and it's done, the way you work with
+   Claude today.
+2. **Always fast, always SEO-clean.** Every published page scores **95+ on mobile
+   PageSpeed**, guaranteed. It's a publish gate, not a goal: a change that would drop a
+   page below 95 is fixed or blocked before it goes live. Clean semantic code and schema
+   come standard.
+3. **A builder when you want to fine-tune.** An Elementor-style editor that's lighter
+   and less clunky, for people (and designers) who want to drag things around themselves.
+4. **Cheaper than Shopify, with 0% taken from your sales.**
+
+Two people to win over: the WordPress/SEO person (clean code, real SEO tools) and the
+Shopify/designer person (beautiful themes, easy store). The chat assistant serves both,
+because nobody has to learn anything.
 
 ---
 
@@ -34,7 +62,9 @@ instead of going through WordPress.
 | D1 | Brand | **Own brand.** The SEO tools are a **paid monthly add-on** inside it. |
 | D2 | Selling products | **Yes, out of the box** in v1. |
 | D3 | First customers | **Local service businesses and small shops** (GBP-first setup). |
-| D4 | Editor style | **Elementor-level:** drag-and-drop containers and widgets with full style controls. |
+| D4 | Editor style | **Chat first**, with an Elementor-style builder (lighter, less clunky) for fine-tuning. |
+| D5 | Platform fee on sales | **0% on every plan.** A headline selling point against Shopify. |
+| D6 | Speed | **95+ mobile PageSpeed on every published page**, enforced at publish. |
 
 ---
 
@@ -57,6 +87,29 @@ ourselves into lean HTML. That keeps what Elementor gets wrong out of our sites:
   sense, and correct schema.org markup for each widget. The builder warns before publish.
 - **SEO fixes are exact.** The Operator changes one field on one element and can verify
   and roll back the change, the same model as `wp-execution.ts` today.
+
+### 1b. The chat assistant edits the same element tree
+
+The assistant (like "Angie") is not a separate system. It is Claude with tools that
+read and change the same element tree and global styles the builder uses:
+`add_section`, `update_element`, `set_global_colors`, `create_page`, `add_product`,
+and so on. That means:
+- Every chat change shows up in the builder, and the reverse is also true.
+- Every change is **previewed before it's applied** ("Here's the darker header, keep it?")
+  and can be undone. Changes are saved as revisions.
+- Every change passes the same schema validation and the **95+ speed gate**, so the AI
+  can't publish something slow or broken.
+- It can see the page (a screenshot of the preview), so "make that button bigger" works.
+- Chat sits in a simple side panel next to a live preview of the site. Voice input comes
+  later.
+
+### 1c. The 95+ speed guarantee is enforced at publish
+
+On every publish, the renderer builds the page and measures it: page weight, JS size,
+image sizes, layout shift, and a Lighthouse run against the preview. If a page would
+score under 95 on mobile, we fix what we can automatically (compress, resize, defer),
+and otherwise show the owner, or the assistant, exactly what to change. Nothing goes
+live below 95.
 
 ### 2. Global styles, then per-element overrides
 
@@ -171,10 +224,14 @@ from about 12 months to about **15–16 months**. Each phase ends with something
 - Style panel with responsive controls, global colors and fonts.
 - Navigator, undo/redo, draft/publish, revision history.
 - Media library; menus; the "SEO by construction" basics.
-- **Dogfood:** rebuild the RankForge marketing site in it.
+- **The speed gate:** a Lighthouse check on publish; nothing goes live below 95.
+- **The first chat assistant:** a side panel where you describe a change and it edits
+  the page, with preview, accept and undo. It starts with the basics (text, colors,
+  add/remove/reorder sections) and grows every phase after.
+- **Dogfood:** rebuild the RankForge marketing site in it, mostly by chat.
 
-**Done when:** we can design and publish a real business site with no code, and it
-scores 95+ on mobile PageSpeed.
+**Done when:** we can design and publish a real business site with no code, partly by
+chatting, and it scores 95+ on mobile PageSpeed.
 
 ### Phase 2: Builder power features (months 4–6)
 - Theme Builder (header, footer, templates, display conditions), popups, form builder.
@@ -203,8 +260,10 @@ missing a feature they use.
 - **AI site generation:** a page plan from keyword research (`lib/engine/keywords.ts`,
   `serp.ts`), then element trees, copy, globals and product descriptions.
 - Auto-verify Search Console, submit the sitemap, create GA4, connect Merchant Center.
-- An AI assistant in the builder ("make this section more premium", "add an FAQ from my
-  reviews"). Its output is always schema-validated.
+- The assistant goes full power: it gets its name and face, and it can build a whole site
+  from a description, restyle the theme, write copy, add products, create pages and
+  generate images ("make this section more premium", "add an FAQ from my reviews").
+  Its output is always schema-validated and speed-gated.
 
 **Done when:** a new business goes from sign-up to a live, connected, indexed site in
 under 10 minutes.
@@ -248,7 +307,7 @@ is roughly $29–39/month, and Wix and Squarespace entry plans are roughly $16�
 | Plan | Target price | Includes |
 |---|---|---|
 | Site | ~$12–15/mo | Full builder, custom domain, AI setup, Google auto-connect, built-in SEO |
-| Store | ~$25/mo | Everything in Site plus commerce. Undercuts Shopify Basic. |
+| Store | ~$25/mo | Everything in Site plus commerce, with **0% taken from sales**. Undercuts Shopify Basic. |
 | **SEO add-on** | **+$15–29/mo** | The RankForge engine: recommendations, one-click fixes, rank tracking, AI citations, content plans |
 | Agency | ~$79+/mo | Multiple sites, white-label, client reports |
 
@@ -256,12 +315,28 @@ is roughly $29–39/month, and Wix and Squarespace entry plans are roughly $16�
 
 ---
 
+## Name shortlist
+
+Checked on 2026-09-24 through Vercel's domain registrar. The GoDaddy connector isn't
+connected in this session. Availability is not trademark clearance: search USPTO before
+committing.
+
+| Name | Domain(s) open | Price/yr | Why |
+|---|---|---|---|
+| **TellRank** | tellrank.com **and** tellrank.ai | $11.25 (.com), $80 (.ai, 2-year minimum $160) | "Tell it what you want, it ranks." Says both halves of the pitch, chat and SEO. Both main domains are free. |
+| **TellSites** | tellsites.com | $11.25 | Simple and literal: you tell it, it builds sites. |
+| **SaySites** | saysites.com | $11.25 | The same idea, softer. |
+| SayRank | sayrank.ai (.com taken) | not checked | Close to TellRank, but the .com is gone. |
+| SwiftRank | swiftrank.ai | not checked | The speed angle. |
+| PureSite | puresite.ai | not checked | The clean-code angle. |
+
+Taken: TellSite, SaySite, SiteSmith, TidySite, PlainSite, CleanRank, Sitely,
+SiteTalk and others. *Recommendation:* **TellRank**, securing both .com and .ai.
+
 ## Still open
 
-- **Name and domain** (Phase 0).
-- **Platform fee on sales.** Shopify charges extra when merchants use a different payment
-  provider. Options are 0% as a selling point, or a small fee (0.5–1%) on lower plans.
-  *Recommendation:* 0% on Store; decide before Phase 3.
+- **Pick the name**, then register the domain(s) and file a trademark search.
+- **The assistant's name and face** (like "Angie").
 - **Hosting provider** at scale: Vercel to start, reassessed on cost per site in Phase 6.
 - **Focus.** The repo also has Citation Gap, Reloop and North Star HQ. This is a
   15-month build and needs to be the main thing.
@@ -283,7 +358,7 @@ is roughly $29–39/month, and Wix and Squarespace entry plans are roughly $16�
 
 ## Next two weeks (concrete)
 
-1. Shortlist names and check domains.
+1. Pick the name from the shortlist and register the domain(s).
 2. Submit the Google Business Profile API access request; register the Stripe Connect platform.
 3. Write `lib/cms/schema/` with zod schemas for the element tree (Container plus 5
    widgets, responsive style values), GlobalStyles, Page, Site and Redirect, plus unit tests.
