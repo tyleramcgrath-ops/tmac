@@ -26,6 +26,7 @@ import {
   type Responsive,
   type Site,
   type Widget,
+  walk,
 } from './schema'
 import { structuredData } from './seo'
 
@@ -57,7 +58,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<meta property="og:description" content="${esc(page.seo.description)}">`,
     `<meta property="og:url" content="${esc(url)}">`,
     `<meta property="og:site_name" content="${esc(site.business.name)}">`,
-    page.seo.ogImage ? `<meta property="og:image" content="${esc(absolute(origin, page.seo.ogImage))}">` : '',
+    `<meta property="og:image" content="${esc(shareImage(site, page))}">`,
+    '<meta name="twitter:card" content="summary_large_image">',
     ...jsonLd.map((d) => `<script type="application/ld+json">${jsonForScript(d)}</script>`),
     `<style>${css}</style>`,
   ].filter(Boolean)
@@ -512,6 +514,25 @@ function cls(id: string): string {
 
 function round(n: number): number {
   return Math.round(n * 10) / 10
+}
+
+// The picture shown when a page is shared on Facebook, iMessage, Slack...
+// The owner's choice, else the post's or page's first photo, else a card
+// drawn from the site's name and colours (/__og).
+export const SHARE_CARD_PATH = '__og'
+export function shareImage(site: Site, page: Page): string {
+  const origin = siteOrigin(site)
+  const first = page.seo.ogImage ?? page.post?.image?.src ?? [...walk(page.body)].find((el) => el.type === 'image')?.src
+  if (!first) return `${origin}/${SHARE_CARD_PATH}?p=${encodeURIComponent(pagePath(page))}`
+  // Stock photos come cropped to the 1200 x 630 shape share previews use.
+  if (first.startsWith('https://images.unsplash.com/')) {
+    const u = new URL(first)
+    u.searchParams.set('w', '1200')
+    u.searchParams.set('h', '630')
+    u.searchParams.set('fit', 'crop')
+    return u.toString()
+  }
+  return absolute(origin, first)
 }
 
 function absolute(origin: string, src: string): string {

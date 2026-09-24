@@ -784,3 +784,20 @@ describe('SaySites: visitor counts', async () => {
     expect(changeLabel(4, 0)).toBe('')
   })
 })
+
+describe('SaySites: share images', async () => {
+  const { shareImage } = await import('../apps/saysites/lib/render')
+  it('uses the owner choice, then the first photo, then a drawn card', () => {
+    const { site, pages } = buildStarterSite({ name: 'Share Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'share-co')
+    const home = pages.find((p) => p.slug === '')!
+    const img = shareImage(site, home)
+    expect(img).toMatch(/^https:\/\/images\.unsplash\.com\/.*w=1200.*h=630/)
+    const own = { ...home, seo: { ...home.seo, ogImage: '/u/0123456789abcdef0123456789abcdef' } }
+    expect(shareImage(site, own)).toBe('https://share-co.saysites.com/u/0123456789abcdef0123456789abcdef')
+    const bare = { ...home, slug: 'about', body: [] }
+    expect(shareImage(site, bare)).toBe('https://share-co.saysites.com/__og?p=%2Fabout')
+    const html = renderPage(site, home, pages).html
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image">')
+    expect(html).toContain('<meta property="og:image" content="https://images.unsplash.com/')
+  })
+})
