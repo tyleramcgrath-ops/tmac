@@ -95,6 +95,18 @@ export interface Store {
   unreadCount(siteId: string): Promise<number>
   // Messages received since a time, for rate limiting a site's form.
   recentMessageCount(siteId: string, since: Date): Promise<number>
+  // One page view on a live site. `day` is YYYY-MM-DD (UTC).
+  recordVisit(siteId: string, day: string, path: string): Promise<void>
+  // Page views per day and page since a day (inclusive).
+  visitsSince(siteId: string, day: string): Promise<Visit[]>
+}
+
+// Page views are counted per day and page, and nothing else: no cookies,
+// no addresses, nothing that identifies a visitor.
+export interface Visit {
+  day: string
+  path: string
+  views: number
 }
 
 export const emptySofieState = (): SofieState => ({ chat: [], draft: null, history: [] })
@@ -167,6 +179,13 @@ CREATE TABLE IF NOT EXISTS ss_media (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_media_site_idx ON ss_media (site_id, created_at DESC);
+CREATE TABLE IF NOT EXISTS ss_visits (
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  day DATE NOT NULL,
+  path TEXT NOT NULL,
+  views INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (site_id, day, path)
+);
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
@@ -318,6 +337,16 @@ class PgStore implements Store {
     const r = await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_messages WHERE site_id = $1 AND created_at > $2', [siteId, since.toISOString()])
     return Number(r[0]?.n ?? 0)
   }
+  async recordVisit(siteId: string, day: string, path: string) {
+    await this.q('INSERT INTO ss_visits (site_id, day, path, views) VALUES ($1,$2,$3,1) ON CONFLICT (site_id, day, path) DO UPDATE SET views = ss_visits.views + 1', [siteId, day, path])
+  }
+  async visitsSince(siteId: string, day: string) {
+    const rows = await this.q<{ day: string; path: string; views: number }>(
+      "SELECT to_char(day, 'YYYY-MM-DD') AS day, path, views FROM ss_visits WHERE site_id = $1 AND day >= $2 ORDER BY day",
+      [siteId, day]
+    )
+    return rows.map((r) => ({ day: r.day, path: r.path, views: Number(r.views) }))
+  }
 }
 
 function toUser(r: Record<string, unknown> | undefined): User | null {
@@ -417,6 +446,7 @@ export class MemoryStore implements Store {
     this.sofie.delete(siteId)
     this.messages = this.messages.filter((m) => m.siteId !== siteId)
     for (const [id, x] of this.media) if (x.meta.siteId === siteId) this.media.delete(id)
+    for (const [k, v] of this.visits) if (v.siteId === siteId) this.visits.delete(k)
   }
   async deleteUser(userId: string) {
     for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)
@@ -449,6 +479,19 @@ export class MemoryStore implements Store {
   }
   async recentMessageCount(siteId: string, since: Date) {
     return this.messages.filter((m) => m.siteId === siteId && Date.parse(m.createdAt) > since.getTime()).length
+  }
+  private visits = new Map<string, Visit & { siteId: string }>()
+  async recordVisit(siteId: string, day: string, path: string) {
+    const key = `${siteId} ${day} ${path}`
+    const v = this.visits.get(key)
+    if (v) v.views++
+    else this.visits.set(key, { siteId, day, path, views: 1 })
+  }
+  async visitsSince(siteId: string, day: string) {
+    return [...this.visits.values()]
+      .filter((v) => v.siteId === siteId && v.day >= day)
+      .map(({ day, path, views }) => ({ day, path, views }))
+      .sort((a, b) => a.day.localeCompare(b.day))
   }
 }
 

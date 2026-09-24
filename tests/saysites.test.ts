@@ -711,3 +711,76 @@ describe('SaySites search engine verification', () => {
     expect(SiteSchema.safeParse(site).success).toBe(false)
   })
 })
+
+describe('SaySites: visitor counts', async () => {
+  const { handleVisit } = await import('../apps/saysites/lib/serve')
+  const { summarizeVisits, changeLabel, daysBefore } = await import('../apps/saysites/lib/visits')
+  const CHROME = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36'
+
+  async function setup() {
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'v@example.com', name: 'V', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Visit Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, `org_${user.id}`, 'visit-co')
+    await store.createSite(user.id, site, pages)
+    return { store, user, bundle: { site, pages, redirects: [] } }
+  }
+  const hit = (p: string, ua = CHROME) => new Request(`https://visit-co.saysites.com/__v?p=${encodeURIComponent(p)}`, { headers: { 'user-agent': ua } })
+
+  it('puts a counter on live pages only, with no script', async () => {
+    const { bundle } = await setup()
+    const live = await serveSitePath(bundle, ['contact'], { preview: false }).text()
+    expect(live).toContain('url(/__v?p=%2Fcontact)')
+    expect(live).not.toMatch(/<script(?! type="application\/ld\+json")/)
+    const preview = await serveSitePath(bundle, ['contact'], { preview: true }).text()
+    expect(preview).not.toContain('__v')
+  })
+
+  it('counts real browsers on real pages and skips bots and junk', async () => {
+    const { store, bundle } = await setup()
+    const res = await handleVisit(bundle, hit('/contact'), store)
+    expect(res.headers.get('content-type')).toBe('image/gif')
+    expect(res.headers.get('cache-control')).toBe('no-store')
+    await handleVisit(bundle, hit('/contact'), store)
+    await handleVisit(bundle, hit('/'), store)
+    await handleVisit(bundle, hit('/', 'Mozilla/5.0 (compatible; Googlebot/2.1)'), store)
+    await handleVisit(bundle, hit('/wp-admin'), store)
+    await handleVisit(bundle, hit('/', ''), store)
+    const today = new Date().toISOString().slice(0, 10)
+    const rows = await store.visitsSince(bundle.site.id, today)
+    expect(rows.sort((a, b) => a.path.localeCompare(b.path))).toEqual([
+      { day: today, path: '/', views: 1 },
+      { day: today, path: '/contact', views: 2 },
+    ])
+  })
+
+  it('forgets counts when the site is deleted', async () => {
+    const { store, user, bundle } = await setup()
+    await handleVisit(bundle, hit('/'), store)
+    await store.deleteSite(user.id, bundle.site.id)
+    expect(await store.visitsSince(bundle.site.id, '2000-01-01')).toEqual([])
+  })
+
+  it('sums up 30 days with empty days filled and a comparison', () => {
+    const today = '2026-03-02'
+    const s = summarizeVisits(
+      [
+        { day: '2026-03-02', path: '/', views: 4 },
+        { day: '2026-03-01', path: '/about', views: 3 },
+        { day: '2026-02-28', path: '/', views: 3 },
+        { day: daysBefore(today, 40), path: '/', views: 5 },
+        { day: daysBefore(today, 90), path: '/', views: 99 },
+      ],
+      today
+    )
+    expect(s.days).toHaveLength(30)
+    expect(s.days[29]).toEqual({ day: '2026-03-02', views: 4 })
+    expect(s.days[0].day).toBe('2026-02-01')
+    expect(s.total).toBe(10)
+    expect(s.today).toBe(4)
+    expect(s.previous).toBe(5)
+    expect(s.pages).toEqual([{ path: '/', views: 7 }, { path: '/about', views: 3 }])
+    expect(changeLabel(10, 5)).toBe('Up 100% on the 30 days before')
+    expect(changeLabel(4, 5)).toBe('Down 20% on the 30 days before')
+    expect(changeLabel(4, 0)).toBe('')
+  })
+})
