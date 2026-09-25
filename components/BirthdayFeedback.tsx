@@ -16,7 +16,7 @@ export function BirthdayFeedback() {
       </div>
       <label><span>What did you think? Be honest.</span><textarea name="text" rows={5} required maxLength={3000} /></label>
       {state.error && <p className="bd-error">{state.error}</p>}
-      <button className="b b-dark" type="submit" disabled={pending}>{pending ? 'Sending…' : 'Send it to Tyler'}</button>
+      <button className="b b-dark" type="submit" disabled={pending}>{pending ? 'Sending…' : 'Send it'}</button>
     </form>
   )
 }

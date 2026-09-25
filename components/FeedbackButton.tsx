@@ -15,7 +15,7 @@ export function FeedbackButton() {
       {open && (
         <form action={action} className="fb-panel card">
           {state.sent ? (
-            <p><strong>Thank you!</strong> Tyler reads every one of these.</p>
+            <p><strong>Thank you!</strong> Every one of these gets read.</p>
           ) : (
             <>
               <label className="field">

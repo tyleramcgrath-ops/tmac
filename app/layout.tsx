@@ -13,7 +13,7 @@ const sans = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://saysites.com'),
   title: { default: 'SaySites: say what your business does, get a website that ranks', template: '%s | SaySites' },
-  description: 'Describe your business in a sentence and SaySites builds a fast, Google-ready website. $15 a month, and 0% of your sales. Ever.',
+  description: 'Describe your business in a sentence and SaySites builds a fast, fully SEO-optimized website. $15 a month, and 0% of your sales. Ever.',
   icons: { icon: '/favicon.svg' },
 }
 

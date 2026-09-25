@@ -125,7 +125,7 @@ export default function Home() {
           <div className="wrap hero-in">
             <p className="eyebrow"><i />Early access · free while we build</p>
             <h1>Your business,<br />online by tonight.</h1>
-            <p className="lede">Tell SaySites what you do. It builds a fast website that’s set up for Google, then changes it whenever you ask. <strong>$15 a month. 0% of your sales.</strong></p>
+            <p className="lede">Tell SaySites what you do. It builds a fast website with its SEO fully optimized, then changes it whenever you ask. <strong>$15 a month. 0% of your sales.</strong></p>
             <SayBox id="idea-top" />
             <ul className="assure"><li>No credit card</li><li>Live in minutes</li><li>Cancel anytime</li></ul>
             <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free →</a></p>
@@ -179,7 +179,8 @@ export default function Home() {
           <div className="wrap">
             <div className="head">
               <p className="kicker">How it works</p>
-              <h2>No templates. No plugins.<br />Just say it.</h2>
+              <h2>Custom-built for you. No plugins.<br />Just say it.</h2>
+              <p className="head-note">Built on years of experience making websites that rank: what search engines look for, what customers need, and what gets them to call.</p>
             </div>
             <ol className="steps">
               <li>
@@ -191,7 +192,7 @@ export default function Home() {
               <li>
                 <span className="n">02</span>
                 <h3>Get a finished site</h3>
-                <p>Home, Services and Contact pages, written for your customers and set up for Google.</p>
+                <p>Home, Services and Contact pages, written for your customers, with every page SEO-optimized from day one.</p>
                 <div className="vis vis-pages"><span>Home</span><span>Services</span><span>Contact</span><span>Sitemap</span></div>
               </li>
               <li>

@@ -41,7 +41,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ id: s
 
       {products.length > 0 && !shown && (
         <div className="notice">
-          <strong>Your products aren’t on your website yet.</strong> Add a Shop page and they’ll appear there, with Google-ready prices.
+          <strong>Your products aren’t on your website yet.</strong> Add a Shop page and they’ll appear there, with prices search engines can read.
           <form action={addShopPage.bind(null, site.id)} style={{ marginTop: 10 }}>
             <button className="btn btn-primary btn-sm" type="submit">Add a Shop page</button>
           </form>
