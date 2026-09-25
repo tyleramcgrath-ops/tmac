@@ -2,28 +2,28 @@
 
 // The birthday page demo: a small copy of the Sofie editor. The owner types,
 // Sofie answers, and the site changes the way it really does: the first
-// build, a warmer look (colours, fonts, buttons), a new header photo, new
-// hours and a Book button, then Publish with the page checks. Decorative
+// build, an upscale look (colours, fonts, buttons), a new header photo, new
+// hours and a Reserve button, then Publish with the page checks. Decorative
 // only; with reduced motion it shows the finished site without playing.
 
 import { useEffect, useRef, useState } from 'react'
 
-// Every dog here is Buju, the founder's French bulldog (the only dog we
-// ever show). Cropped and compressed copies live in public/birthday.
-const HERO = '/birthday/buju-surf.jpg'
-const SIDE = '/birthday/buju-gentleman.jpg'
+const photo = (id: string, w: number, h: number) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=72&w=${w}&h=${h}`
+
+const HERO = photo('1622880833523-7cf1c0bd4296', 1400, 800)
+const SIDE = photo('1604068549290-dea0e4a305ca', 700, 700)
 const CARDS = [
-  { src: '/birthday/buju-happy.jpg', name: 'Full groom', note: 'Bath, cut and style' },
-  { src: '/birthday/buju-nap.jpg', name: 'Bath & brush', note: 'Home and napping by noon' },
-  { src: '/birthday/buju-board.jpg', name: 'Beach-day rinse', note: 'Sand out, shine back' },
+  { src: photo('1599130143407-2a6ff8a196c9', 480, 320), name: 'Wood-fired pizza', note: '90 seconds at 900°' },
+  { src: photo('1516685018646-549198525c1b', 480, 320), name: 'Handmade pasta', note: 'Rolled every afternoon' },
+  { src: photo('1776362441386-c02107b86576', 480, 320), name: 'The room', note: 'Candlelit, 40 seats' },
 ]
 
 // Each step: what the owner types, then what Sofie says and what changed.
 const STEPS = [
-  { ask: 'A dog groomer in Austin, TX', reply: 'Built your site: Home, Services and Contact.', changes: ['3 pages', 'Photos', 'Google details'] },
-  { ask: 'make it warmer and more fun', reply: 'Warmer colours, a friendlier font and rounder buttons.', changes: ['Colours', 'Fonts', 'Buttons'] },
-  { ask: 'use my beach photo of buju up top', reply: 'Made your beach photo of Buju the header, sized to load fast.', changes: ['Header photo', 'Your upload'] },
-  { ask: 'add saturday 9 to 2 and a book button', reply: 'Added Saturday hours, and a Book button on every page.', changes: ['Hours', 'Book button'] },
+  { ask: 'A wood-fired Italian restaurant in Austin', reply: 'Built your site: Home, Menu and Visit.', changes: ['3 pages', 'Photos', 'Google details'] },
+  { ask: 'make it darker and more upscale', reply: 'A dark, candlelit look, a classic serif and sharper buttons.', changes: ['Colours', 'Fonts', 'Buttons'] },
+  { ask: 'put the oven photo up top', reply: 'Made the oven photo your header, sized to load fast.', changes: ['Header photo'] },
+  { ask: 'add sunday brunch 10 to 2 and a reserve button', reply: 'Added Sunday brunch hours, and a Reserve button on every page.', changes: ['Hours', 'Reserve button'] },
 ] as const
 
 type Phase = 'typing' | 'working' | 'done'
@@ -93,33 +93,33 @@ export function BirthdayDemo() {
   }, [])
 
   const s = STEPS[ask]
-  const warm = step >= 2
+  const dark = step >= 2
   return (
-    <div ref={root} className="bdd" aria-hidden="true" data-step={step} data-warm={warm ? '' : undefined}>
+    <div ref={root} className="bdd" aria-hidden="true" data-step={step} data-dark={dark ? '' : undefined}>
       <div className="bdd-tool">
-        <span className="bdd-who"><i />Sofie<em>· Paws &amp; Co.</em></span>
+        <span className="bdd-who"><i />Sofie<em>· Olivo</em></span>
         <span className="bdd-actions"><span>Undo</span><b className={pressed ? 'is-pressed' : ''}>Publish</b></span>
       </div>
 
       <div className="bdd-browser">
-        <div className="bdd-bar"><i /><i /><i /><span>{step >= 5 ? '🔒 ' : ''}pawsandco.saysites.com</span></div>
+        <div className="bdd-bar"><i /><i /><i /><span>{step >= 5 ? '🔒 ' : ''}olivo.saysites.com</span></div>
         <div className="bdd-site">
           {step === 0 && <div className="bdd-skel"><i /><i /><i /><i /></div>}
           <nav className="bdd-nav bdd-in">
-            <b>Paws &amp; Co.</b>
-            <span>Services</span><span>Contact</span>
-            <em className={step >= 4 ? 'is-on bdd-flash' : ''}>Book a groom</em>
+            <b>Olivo<small>wood-fired kitchen</small></b>
+            <span>Menu</span><span>Visit</span>
+            <em className={step >= 4 ? 'is-on bdd-flash' : ''}>Reserve</em>
           </nav>
           <header className={`bdd-hero bdd-in${step === 2 ? ' bdd-flash' : ''}${step >= 3 ? ' is-photo' : ''}`}>
-            <img className="bdd-hero-photo" src={HERO} alt="" width={1400} height={798} />
+            <img className="bdd-hero-photo" src={HERO} alt="" width={1400} height={800} />
             <div className="bdd-hero-text">
-              <small>Dog grooming · Austin, TX</small>
-              <strong>Happy dogs, groomed gently.</strong>
-              <span className="bdd-btn">Book a groom</span>
+              <small>East Austin · Open nightly</small>
+              <strong>Neapolitan pizza, fired at 900°.</strong>
+              <span className="bdd-btn">See the menu</span>
             </div>
-            <img className="bdd-hero-side" src={SIDE} alt="" width={700} height={777} />
+            <img className="bdd-hero-side" src={SIDE} alt="" width={700} height={700} />
           </header>
-          <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Open Saturdays 9:00–2:00</div>
+          <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Sunday brunch 10:00–2:00</div>
           <div className="bdd-cards bdd-in">
             {CARDS.map((c) => (
               <div key={c.name} className="bdd-card">
@@ -129,7 +129,7 @@ export function BirthdayDemo() {
               </div>
             ))}
           </div>
-          <div className={`bdd-live${step >= 5 ? ' is-on' : ''}`}><i>✓</i>Live at pawsandco.saysites.com</div>
+          <div className={`bdd-live${step >= 5 ? ' is-on' : ''}`}><i>✓</i>Live at olivo.saysites.com</div>
         </div>
       </div>
 
