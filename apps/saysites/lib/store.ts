@@ -8,7 +8,7 @@
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
 import { SHOWCASE } from './showcase'
-import { PageSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
+import { PageSchema, RedirectSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
 import type { LeagueSite } from './league'
 import type { ChatTurn, Snapshot } from './sofie'
 
@@ -91,6 +91,8 @@ export interface Store {
   pagesForSite(siteId: string): Promise<Page[]>
   savePage(page: Page, author: RevisionAuthor, userId: string | null, note?: string): Promise<void>
   redirectsForSite(siteId: string): Promise<Redirect[]>
+  // Replaces the site's redirects.
+  saveRedirects(siteId: string, redirects: Redirect[]): Promise<void>
   sofieState(siteId: string): Promise<SofieState>
   saveSofieState(siteId: string, state: SofieState): Promise<void>
   // Removes a site and everything under it (pages, revisions, Sofie, messages).
@@ -310,7 +312,23 @@ class PgStore implements Store {
       to: r.to_path,
       status: r.status as 301 | 302,
     }))
+  }  async saveRedirects(siteId: string, redirects: Redirect[]) {
+    const list = redirects.map((r) => RedirectSchema.parse(r))
+    const client = await this.pool.connect()
+    try {
+      await this.q('SELECT 1')
+      await client.query('BEGIN')
+      await client.query('DELETE FROM ss_redirects WHERE site_id = $1', [siteId])
+      for (const r of list) await client.query('INSERT INTO ss_redirects (site_id, from_path, to_path, status) VALUES ($1,$2,$3,$4) ON CONFLICT (site_id, from_path) DO UPDATE SET to_path = EXCLUDED.to_path, status = EXCLUDED.status', [siteId, r.from, r.to, r.status])
+      await client.query('COMMIT')
+    } catch (e) {
+      await client.query('ROLLBACK')
+      throw e
+    } finally {
+      client.release()
+    }
   }
+
   async sofieState(siteId: string) {
     const r = (await this.q<{ data: SofieState }>('SELECT data FROM ss_sofie WHERE site_id = $1', [siteId]))[0]
     return r ? r.data : emptySofieState()
@@ -469,8 +487,12 @@ export class MemoryStore implements Store {
     this.pages.set(p.id, p)
     this.revisions.push({ pageId: p.id, author, note })
   }
-  async redirectsForSite() {
-    return []
+  private redirects = new Map<string, Redirect[]>()
+  async redirectsForSite(siteId: string) {
+    return structuredClone(this.redirects.get(siteId) ?? [])
+  }
+  async saveRedirects(siteId: string, redirects: Redirect[]) {
+    this.redirects.set(siteId, redirects.map((r) => RedirectSchema.parse(r)))
   }
   private sofie = new Map<string, SofieState>()
   async sofieState(siteId: string) {

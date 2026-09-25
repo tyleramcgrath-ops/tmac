@@ -1084,3 +1084,84 @@ describe('SaySites: standings styles', async () => {
     expect(SiteSchema.safeParse({ ...buildStarterSite({ name: 'A', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'o', 'a').site, league: { public: true, style: 'arena' } }).success).toBe(true)
   })
 })
+
+describe('SaySites: moving an existing website', async () => {
+  const { extract, slugForPath, planImport, discover, importSite, safeFetch, ImportError } = await import('../apps/saysites/lib/importer')
+  const html = (title: string, h1: string, body: string) => `<html><head><title>${title}</title><meta name="description" content="About ${h1}"></head><body><header><nav><a href="/a">A</a></nav></header><main><h1>${h1}</h1>${body}</main><footer><p>© 2026 All rights reserved. Privacy policy.</p></footer><script>var x = 1</script></body></html>`
+  const long = (n: number) => `<p>${'Clear words about this topic for real clients. '.repeat(n)}</p>`
+
+  it('reads the main content, not the menus, scripts or footer', () => {
+    const e = extract(html('Car Accident Lawyers | Firm', 'Car Accident Lawyers in Jackson, MS', `<h3>Early h3</h3>${long(4)}<h2>What to do</h2><ul><li>Call the police</li><li>Get medical care</li></ul><h4>Deep</h4><p>short</p>`))
+    expect(e.title).toBe('Car Accident Lawyers | Firm')
+    expect(e.description).toBe('About Car Accident Lawyers in Jackson, MS')
+    expect(e.h1).toBe('Car Accident Lawyers in Jackson, MS')
+    expect(e.blocks.map((b) => b.kind)).toEqual(['h3', 'p', 'h2', 'li', 'li', 'h3'])
+    expect(JSON.stringify(e)).not.toContain('All rights reserved')
+    expect(JSON.stringify(e)).not.toContain('var x')
+  })
+
+  it('keeps old addresses where it can and redirects the rest', () => {
+    expect(slugForPath('/Personal-Injury/Car_Accidents.html/')).toBe('personal-injury/car-accidents')
+    const { site, pages } = buildStarterSite({ name: 'W Law', type: 'lawyer', city: 'Jackson', region: 'MS', services: ['Injury'], palette: 'slate' }, 'o', 'w-law')
+    const page = (from: string, h1: string, words = 12): { from: string; url: string; extracted: ReturnType<typeof extract> } => ({ from, url: `https://old.example${from}`, extracted: extract(html(h1, h1, long(words))) })
+    const plan = planImport(site, pages, [
+      page('/', 'Home'),
+      page('/contact-us/', 'Contact us'),
+      page('/personal-injury/car-accidents/', 'Car accidents'),
+      page('/About_Us.html', 'About us'),
+      page('/thin', 'Thin', 1),
+    ])
+    expect(plan.pages.map((p) => [p.slug, p.status])).toEqual([['personal-injury/car-accidents', 'draft'], ['about-us', 'draft']])
+    expect(plan.pages[0].source).toBe('https://old.example/personal-injury/car-accidents/')
+    // The old brand in titles becomes the new firm's name.
+    const re = planImport(site, pages, [page('/a', 'Wills - Old Firm LLP'), page('/b', 'Trusts - Old Firm LLP'), page('/c', 'Probate - Old Firm LLP')])
+    expect(re.pages.map((p) => p.seo.title)).toEqual(['Wills - W Law', 'Trusts - W Law', 'Probate - W Law'])
+    expect(plan.redirects).toEqual([
+      { from: '/contact-us', to: '/contact', status: 301 },
+      { from: '/About_Us.html', to: '/about-us', status: 301 },
+    ])
+    expect(plan.skipped.map((s) => s.from)).toEqual(['/thin'])
+    // Imported pages pass the same checks as every other page.
+    for (const p of plan.pages) expect(checkPage(p, [...pages, ...plan.pages]).filter((i) => i.severity === 'error')).toEqual([])
+    expect(plan.pages[0].body[0].children.filter((c) => c.type === 'heading' && c.level === 1)).toHaveLength(1)
+  })
+
+  it('finds pages from the sitemap and reads them', async () => {
+    const site = buildStarterSite({ name: 'W', type: 'lawyer', city: 'J', region: 'MS', services: [], palette: 'slate' }, 'o', 'w').site
+    const files: Record<string, { type: string; body: string }> = {
+      'https://old.example/sitemap.xml': { type: 'application/xml', body: '<sitemapindex><sitemap><loc>https://old.example/page-sitemap.xml</loc></sitemap><sitemap><loc>https://old.example/tag-sitemap.xml</loc></sitemap></sitemapindex>' },
+      'https://old.example/page-sitemap.xml': { type: 'application/xml', body: '<urlset><url><loc>https://old.example/</loc></url><url><loc>https://www.old.example/wills/</loc></url><url><loc>https://other.example/x/</loc></url><url><loc>https://old.example/wp-content/a.pdf</loc></url></urlset>' },
+      'https://old.example/': { type: 'text/html', body: html('Home', 'Home', long(10)) },
+      'https://www.old.example/wills/': { type: 'text/html; charset=utf-8', body: html('Wills', 'Wills and trusts', long(12)) },
+    }
+    const get = async (u: string) => (files[u] ? { url: u, status: 200, ...files[u] } : { url: u, status: 404, type: 'text/html', body: '' })
+    const urls = await discover(new URL('https://old.example/'), get)
+    expect(urls.map((u) => u.href)).toEqual(['https://old.example/', 'https://www.old.example/wills/'])
+    const res = await importSite(site, [], 'old.example', get)
+    expect(res.pages.map((p) => p.slug)).toEqual(['wills'])
+    await expect(importSite(site, [], 'nothing.example', async () => null)).rejects.toBeInstanceOf(ImportError)
+  })
+
+  it('refuses private and local addresses', async () => {
+    await expect(safeFetch('http://127.0.0.1/admin')).rejects.toBeInstanceOf(ImportError)
+    await expect(safeFetch('http://localhost:3000/')).rejects.toBeInstanceOf(ImportError)
+    await expect(safeFetch('http://169.254.169.254/latest/meta-data')).rejects.toBeInstanceOf(ImportError)
+    await expect(safeFetch('file:///etc/passwd')).rejects.toBeInstanceOf(ImportError)
+  })
+
+  it('stores redirects and serves them', async () => {
+    const store = new MemoryStore()
+    await store.saveRedirects('s1', [{ from: '/old', to: '/new', status: 301 }])
+    expect(await store.redirectsForSite('s1')).toEqual([{ from: '/old', to: '/new', status: 301 }])
+  })
+})
+
+describe('SaySites: import skips archives and listings', async () => {
+  const { discover } = await import('../apps/saysites/lib/importer')
+  it('keeps real pages and posts only', async () => {
+    const urls = ['/', '/category/injury/', '/tag/x', '/blog/', '/blog/my-post/', '/cities-pages-sitemap/', '/thank-you/', '/wp-content/uploads/a.jpg', '/page/2/', '/wills/']
+    const body = `<urlset>${urls.map((u) => `<url><loc>https://old.example${u}</loc></url>`).join('')}</urlset>`
+    const got = await discover(new URL('https://old.example/'), async (u) => (u.endsWith('/sitemap.xml') ? { url: u, status: 200, type: 'application/xml', body } : null))
+    expect(got.map((u) => u.pathname)).toEqual(['/', '/blog/my-post/', '/wills/'])
+  })
+})

@@ -10,6 +10,7 @@ import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/s
 import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
+import { ImportError, importSite } from '@/lib/importer'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 
@@ -498,5 +499,55 @@ export async function setLeagueStyle(siteId: string, form: FormData) {
   const style = String(form.get('style') ?? '')
   if (!(LEAGUE_STYLES as readonly string[]).includes(style)) return
   await store.updateSite(SiteSchema.parse({ ...site, league: { public: site.league?.public ?? false, style }, updatedAt: new Date().toISOString() }))
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+// ---------------------------------------------------------------------------
+// Moving from another website
+// ---------------------------------------------------------------------------
+
+export interface MoveResult {
+  error?: string
+  start?: string
+  imported?: { from: string; to: string; title: string }[]
+  mapped?: { from: string; to: string }[]
+  redirects?: number
+  skipped?: { from: string; reason: string }[]
+}
+
+export async function importFromSite(siteId: string, _prev: MoveResult, form: FormData): Promise<MoveResult> {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  try {
+    const plan = await importSite(site, pages, String(form.get('url') ?? '').slice(0, 300))
+    for (const p of plan.pages) await store.savePage(p, 'import', user.id, `Imported from ${p.source}`)
+    // New redirects join the existing ones; an old address already redirected keeps its first target.
+    const existing = await store.redirectsForSite(site.id)
+    const known = new Set(existing.map((r) => r.from))
+    const live = new Set(pages.filter((p) => p.status === 'published').map((p) => (p.slug ? `/${p.slug}` : '/')))
+    const added = plan.redirects.filter((r) => !known.has(r.from) && !live.has(r.from))
+    await store.saveRedirects(site.id, [...existing, ...added])
+    revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+    return {
+      start: plan.start,
+      imported: plan.pages.map((p) => ({ from: new URL(p.source!).pathname, to: `/${p.slug}`, title: p.name })),
+      mapped: plan.mapped,
+      redirects: added.length,
+      skipped: plan.skipped,
+    }
+  } catch (e) {
+    if (e instanceof ImportError) return { error: e.message }
+    console.error('import failed', e)
+    return { error: 'Something went wrong reading that site. Please try again.' }
+  }
+}
+
+// Imported pages wait as drafts; this puts them live, e.g. once the domain points here.
+export async function publishImported(siteId: string) {
+  const { user, store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  for (const p of pages.filter((x) => x.source && x.status === 'draft')) {
+    await store.savePage({ ...p, status: 'published', updatedAt: new Date().toISOString() }, 'owner', user.id, 'Published imported page')
+  }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }

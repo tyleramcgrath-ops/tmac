@@ -29,7 +29,10 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
           <h2>Pages & SEO</h2>
           <p className="muted">How each page shows up on Google, and the checks every page must pass before it goes live.</p>
         </div>
-        <a className="btn btn-ghost btn-sm" href={`/dashboard/sites/${site.id}/sofie`}>Add a page with Sofie</a>
+        <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <a className="btn btn-ghost btn-sm" href={`/dashboard/sites/${site.id}/move`}>Import from my old site</a>
+          <a className="btn btn-ghost btn-sm" href={`/dashboard/sites/${site.id}/sofie`}>Add a page with Sofie</a>
+        </span>
       </div>
       <details className="card verify">
         <summary><strong>Connect Google Search Console and Bing</strong><span className="muted small">{site.verification?.google || site.verification?.bing ? 'Connected' : 'See how your site does in search'}</span></summary>

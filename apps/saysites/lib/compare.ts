@@ -42,7 +42,7 @@ export const COMPARISONS: Comparison[] = [
     weFit: 'SaySites suits a firm that wants a fast, polished site it controls, changed in minutes by asking, for $15 a month with no contract.',
     faq: [
       { q: 'Can I keep my Justia directory profile and use SaySites for my website?', a: 'Yes. A directory profile and your firm’s own website are separate things. Many firms keep directory listings and link them to their own site.' },
-      { q: 'Will moving my website hurt my rankings?', a: 'A careful move keeps what you’ve earned: keep the same domain and recreate pages on the same topics, with the same depth. Sofie can help rebuild your practice area pages and attorney bios in your own words.' },
+      { q: 'Will moving my website hurt my rankings?', a: 'A careful move keeps what you’ve earned. SaySites imports the pages from your current site, keeps the same page addresses wherever it can, and sets up permanent redirects where an address changes. Keep your domain, and Sofie can help polish the imported pages.' },
       { q: 'Is SaySites built on WordPress?', a: 'No. SaySites renders lean pages from its own content model, which is how every page can be held to a 95+ speed score.' },
     ],
     sources: [
@@ -72,7 +72,7 @@ export const COMPARISONS: Comparison[] = [
     weFit: 'SaySites suits a solo or small firm that wants a fast, professional website it owns and controls, without a 12-month commitment or agency fees.',
     faq: [
       { q: 'Can I use SaySites and still run Google Ads?', a: 'Yes. Your ads can point to your SaySites pages. Every page loads fast, which helps both visitors and ad quality.' },
-      { q: 'I’m in a Scorpion contract. Can I prepare a site now?', a: 'Yes. You can build and refine your SaySites site on its free saysites.com address, then point your domain to it when you’re ready.' },
+      { q: 'I’m in a Scorpion contract. Can I prepare a site now?', a: 'Yes. Import your current pages, refine them on your free saysites.com address, and point your domain over when your contract allows. Imported pages wait as drafts until you publish them, so nothing is duplicated in the meantime.' },
       { q: 'Is SaySites an agency?', a: 'No. It’s a website builder with an assistant, Sofie, who makes changes when you ask. There are no account managers or retainers.' },
     ],
     sources: [

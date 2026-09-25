@@ -317,6 +317,9 @@ export const PageSchema = z
     // Breadcrumb label and nav label.
     name: z.string().min(1).max(60),
     status: z.enum(['draft', 'published']),
+    // The address this page was imported from, when it came from the
+    // owner's previous website.
+    source: z.string().url().max(500).optional(),
     seo: PageSeo,
     // Set on blog posts: shown in the posts list and sent to Google.
     post: z

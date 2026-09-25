@@ -40,6 +40,7 @@ export const LAW_FIRMS: Industry = {
   ],
   faq: [
     { q: 'How much does a law firm website cost on SaySites?', a: '$15 a month, with no setup fee and no long-term contract. That includes hosting, your own domain, speed checks, SEO basics and changes by Sofie. It’s free during early access.' },
+    { q: 'Can we move our existing site without losing rankings?', a: 'Yes. Enter your current website’s address and SaySites imports your pages, keeps the same page addresses wherever it can, and sets permanent redirects where one changes. Imported pages wait as drafts until you switch your domain over.' },
     { q: 'Do we own our website and content?', a: 'Yes. Your words, photos, attorney bios and domain are yours. If you ever leave, you take them with you.' },
     { q: 'Does it handle attorney advertising rules?', a: 'Each law firm site includes an attorney advertising notice and a note that information on the site isn’t legal advice, and Sofie never invents results, credentials or reviews. Bar rules vary by state, so the final wording is always yours to review.' },
     { q: 'Can we add a page for every practice area?', a: 'Yes. Ask Sofie for a page on any area you handle and she writes it for your firm and your city. Each page gets its own title and description for Google.' },
