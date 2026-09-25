@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { BirthdayDemo } from '@/components/BirthdayDemo'
 import { BirthdayFeedback } from '@/components/BirthdayFeedback'
 import { MarketingShell } from '@/components/MarketingShell'
 import '../home.css'
@@ -16,12 +17,15 @@ export default function BirthdayPage() {
   return (
     <MarketingShell>
       <section className="page-hero">
-        <div className="wrap">
+        <div className="wrap bd-hero-grid">
+          <div>
           <p className="kicker">My birthday · Monday, September 28</p>
           <h1>For my birthday, build a website with me.</h1>
           <p>No gifts, no cake. All I want is for you to try SaySites, the website builder I’ve been making for small businesses, and tell me what you honestly think. It takes about two minutes and it’s free.</p>
           <p>It’s really simple. You don’t need to know anything about websites: say what the business is, and it’s built. Want something changed? Just ask Sofie, the assistant, the way you’d text a friend. I’ve spent many years learning what websites need and what search engines reward, and all of it is built in.</p>
           <p style={{ marginTop: 28 }}><a className="b b-dark" href="/signup?promo=BIRTHDAY">Build a site for my birthday</a></p>
+          </div>
+          <BirthdayDemo />
         </div>
       </section>
 

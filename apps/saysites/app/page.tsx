@@ -179,7 +179,7 @@ export default function Home() {
           <div className="wrap">
             <div className="head">
               <p className="kicker">How it works</p>
-              <h2>No templates. No plugins.<br />Just say it.</h2>
+              <h2>Custom-built for you. No plugins.<br />Just say it.</h2>
               <p className="head-note">Built on years of experience making websites that rank: what search engines look for, what customers need, and what gets them to call.</p>
             </div>
             <ol className="steps">
