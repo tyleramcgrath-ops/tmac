@@ -161,7 +161,7 @@ export default function Home() {
               <b>Page checks</b>
               <span>Title fits Google</span><span>One main heading</span><span>Business details</span><span>Sitemap</span>
             </div>
-            <p className="product-note">A preview of the SaySites editor. Chatting with Sofie is coming soon.</p>
+            <p className="product-note">A preview of the SaySites editor with Sofie, your assistant.</p>
           </div>
         </section>
 
@@ -287,7 +287,9 @@ export default function Home() {
               <div><h3>Messages, not missed calls</h3><p>Every site has a contact form. Messages land in your inbox, with reply and call buttons right there.</p><span className="tag live">Live</span></div>
               <div><h3>A blog that brings people in</h3><p>Write helpful posts, or ask Sofie to draft one. Each gets its own page, a spot in your sitemap and the markup Google looks for.</p><span className="tag live">Live</span></div>
               <div><h3>Nothing is ever lost</h3><p>Every change is saved as a version, and Sofie’s edits wait in a draft you can undo or throw away before anything goes live.</p><span className="tag live">Live</span></div>
-              <div><h3>Google, connected</h3><p>Import your Business Profile and connect Search Console and Analytics in one click.</p><span className="tag">Coming soon</span></div>
+              <div><h3>Google and Bing, connected</h3><p>Paste one code to prove you own your site in Search Console and Bing Webmaster Tools. Your sitemap is ready for both.</p><span className="tag live">Live</span></div>
+              <div><h3>See who’s visiting</h3><p>Page views per day and your most-read pages, counted without cookies. No cookie banner, nothing slowing you down.</p><span className="tag live">Live</span></div>
+              <div><h3>Your photos, your logo</h3><p>Upload from your phone and they’re resized for speed automatically. Show your work in a gallery and your reviews in their own section.</p><span className="tag live">Live</span></div>
               <div><h3>Sell online, keep 100%</h3><p>Add products and a Shop page in minutes. Customers pay you through your own Stripe account, with nothing taken from each sale.</p><span className="tag live">Live</span></div>
             </div>
           </div>

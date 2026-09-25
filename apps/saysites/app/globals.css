@@ -379,12 +379,35 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .gallery-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .gallery-cta form { margin: 0; }
 
+/* Visitors */
+.stats.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.vchart { position: relative; margin: 8px 0 0; }
+.vchart-max { position: absolute; top: -4px; right: 0; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+.vchart-bars { display: grid; grid-template-columns: repeat(30, minmax(0, 1fr)); align-items: end; height: 200px; border-bottom: 1px solid var(--ink-3); background: linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 50%; padding-top: 14px; }
+.vchart-bars span { position: relative; display: flex; align-items: flex-end; justify-content: center; height: 100%; border-radius: 4px 4px 0 0; }
+.vchart-bars span:hover { background: var(--paper); }
+.vchart-bars i { display: block; width: 62%; max-width: 22px; background: var(--ink-2); border-radius: 3px 3px 0 0; }
+.vchart-bars span:hover i { background: var(--ink); }
+.vchart-bars .now i { background: var(--mint); }
+.vchart-axis { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+.visits-empty { padding: 28px 8px; text-align: center; }
+.visits-empty p { margin: 0 0 4px; }
+.top-pages { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.top-pages li { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 8px; overflow: hidden; }
+.top-pages .tp-bar { position: absolute; inset: 0 auto 0 0; background: var(--mint-soft); z-index: 0; }
+.top-pages .tp-name, .top-pages strong { position: relative; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-pages .tp-name .muted { font-size: 13px; }
+.stat .spark { display: block; width: 100%; height: 22px; margin-top: 4px; }
+.stat .spark path { fill: none; stroke: var(--mint); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+
 /* Phones */
 @media (max-width: 560px) {
+  .vchart-bars { height: 150px; }
   .site-head h1 { font-size: 24px; }
   .site-mono { width: 44px; height: 44px; font-size: 19px; border-radius: 12px; }
   .browser-view { height: 300px; }
   .stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stats.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stat { padding: 10px 12px; }
   .stat strong { font-size: 18px; }
   .stat .muted { display: none; }

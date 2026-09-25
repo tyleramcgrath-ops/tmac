@@ -197,7 +197,8 @@ describe('SaySites speed gate', () => {
   it('keeps the home page small', () => {
     const result = checkSpeed(renderPage(sampleSite, sampleHome, samplePages))
     expect(result.htmlBytes).toBeLessThan(15_000)
-    expect(result.cssBytes).toBeLessThan(5_000)
+    // Well under the 30KB budget; this catches accidental bloat.
+    expect(result.cssBytes).toBeLessThan(6_000)
   })
 
   it('fails on scripts, external stylesheets and too many eager images', () => {
@@ -709,5 +710,157 @@ describe('SaySites search engine verification', () => {
   it('rejects codes that could break out of the tag', () => {
     const site = { ...clone(sampleSite), verification: { google: 'x"><script>' } }
     expect(SiteSchema.safeParse(site).success).toBe(false)
+  })
+})
+
+describe('SaySites: visitor counts', async () => {
+  const { handleVisit } = await import('../apps/saysites/lib/serve')
+  const { summarizeVisits, changeLabel, daysBefore } = await import('../apps/saysites/lib/visits')
+  const CHROME = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36'
+
+  async function setup() {
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'v@example.com', name: 'V', passwordHash: 'x' })
+    const { site, pages } = buildStarterSite({ name: 'Visit Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, `org_${user.id}`, 'visit-co')
+    await store.createSite(user.id, site, pages)
+    return { store, user, bundle: { site, pages, redirects: [] } }
+  }
+  const hit = (p: string, ua = CHROME) => new Request(`https://visit-co.saysites.com/__v?p=${encodeURIComponent(p)}`, { headers: { 'user-agent': ua } })
+
+  it('puts a counter on live pages only, with no script', async () => {
+    const { bundle } = await setup()
+    const live = await serveSitePath(bundle, ['contact'], { preview: false }).text()
+    expect(live).toContain('url(/__v?p=%2Fcontact)')
+    expect(live).not.toMatch(/<script(?! type="application\/ld\+json")/)
+    const preview = await serveSitePath(bundle, ['contact'], { preview: true }).text()
+    expect(preview).not.toContain('__v')
+  })
+
+  it('counts real browsers on real pages and skips bots and junk', async () => {
+    const { store, bundle } = await setup()
+    const res = await handleVisit(bundle, hit('/contact'), store)
+    expect(res.headers.get('content-type')).toBe('image/gif')
+    expect(res.headers.get('cache-control')).toBe('no-store')
+    await handleVisit(bundle, hit('/contact'), store)
+    await handleVisit(bundle, hit('/'), store)
+    await handleVisit(bundle, hit('/', 'Mozilla/5.0 (compatible; Googlebot/2.1)'), store)
+    await handleVisit(bundle, hit('/wp-admin'), store)
+    await handleVisit(bundle, hit('/', ''), store)
+    const today = new Date().toISOString().slice(0, 10)
+    const rows = await store.visitsSince(bundle.site.id, today)
+    expect(rows.sort((a, b) => a.path.localeCompare(b.path))).toEqual([
+      { day: today, path: '/', views: 1 },
+      { day: today, path: '/contact', views: 2 },
+    ])
+  })
+
+  it('forgets counts when the site is deleted', async () => {
+    const { store, user, bundle } = await setup()
+    await handleVisit(bundle, hit('/'), store)
+    await store.deleteSite(user.id, bundle.site.id)
+    expect(await store.visitsSince(bundle.site.id, '2000-01-01')).toEqual([])
+  })
+
+  it('sums up 30 days with empty days filled and a comparison', () => {
+    const today = '2026-03-02'
+    const s = summarizeVisits(
+      [
+        { day: '2026-03-02', path: '/', views: 4 },
+        { day: '2026-03-01', path: '/about', views: 3 },
+        { day: '2026-02-28', path: '/', views: 3 },
+        { day: daysBefore(today, 40), path: '/', views: 5 },
+        { day: daysBefore(today, 90), path: '/', views: 99 },
+      ],
+      today
+    )
+    expect(s.days).toHaveLength(30)
+    expect(s.days[29]).toEqual({ day: '2026-03-02', views: 4 })
+    expect(s.days[0].day).toBe('2026-02-01')
+    expect(s.total).toBe(10)
+    expect(s.today).toBe(4)
+    expect(s.previous).toBe(5)
+    expect(s.pages).toEqual([{ path: '/', views: 7 }, { path: '/about', views: 3 }])
+    expect(changeLabel(10, 5)).toBe('Up 100% on the 30 days before')
+    expect(changeLabel(4, 5)).toBe('Down 20% on the 30 days before')
+    expect(changeLabel(4, 0)).toBe('')
+  })
+})
+
+describe('SaySites: share images', async () => {
+  const { shareImage } = await import('../apps/saysites/lib/render')
+  it('uses the owner choice, then the first photo, then a drawn card', () => {
+    const { site, pages } = buildStarterSite({ name: 'Share Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'share-co')
+    const home = pages.find((p) => p.slug === '')!
+    const img = shareImage(site, home)
+    expect(img).toMatch(/^https:\/\/images\.unsplash\.com\/.*w=1200.*h=630/)
+    const own = { ...home, seo: { ...home.seo, ogImage: '/u/0123456789abcdef0123456789abcdef' } }
+    expect(shareImage(site, own)).toBe('https://share-co.saysites.com/u/0123456789abcdef0123456789abcdef')
+    const bare = { ...home, slug: 'about', body: [] }
+    expect(shareImage(site, bare)).toBe('https://share-co.saysites.com/__og?p=%2Fabout')
+    const html = renderPage(site, home, pages).html
+    expect(html).toContain('<meta name="twitter:card" content="summary_large_image">')
+    expect(html).toContain('<meta property="og:image" content="https://images.unsplash.com/')
+  })
+})
+
+describe('SaySites: call bar on phones', () => {
+  const make = () => buildStarterSite({ name: 'Bar Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'bar-co')
+  it('shows Call when there is a phone number, and can be turned off', () => {
+    const { site, pages } = make()
+    const home = pages.find((p) => p.slug === '')!
+    const withPhone = { ...site, business: { ...site.business, phone: '(555) 010-0199' } }
+    const html = renderPage(withPhone, home, pages).html
+    expect(html).toMatch(/<nav class="scb" aria-label="Quick contact"><a class="scb-call" href="tel:[^"]+">/)
+    expect(checkSpeed(renderPage(withPhone, home, pages)).pass).toBe(true)
+    expect(renderPage({ ...withPhone, business: { ...withPhone.business, phone: undefined } }, home, pages).html).not.toContain('class="scb"')
+    const off = SiteSchema.parse({ ...withPhone, header: { ...withPhone.header, callBar: false } })
+    expect(renderPage(off, home, pages).html).not.toContain('class="scb"')
+  })
+})
+
+describe('SaySites: logos Sofie draws', async () => {
+  const { sanitizeSvg } = await import('../apps/saysites/lib/svg')
+  const { Workspace, runTool } = await import('../apps/saysites/lib/sofie')
+  const LOGO = `<svg viewBox="0 0 320 80"><defs><linearGradient id="g"><stop offset="0" stop-color="#1b4d7a"/></linearGradient></defs><circle cx="40" cy="40" r="30" fill="url(#g)"/><text x="84" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#1b2430">Bar &amp; Co</text></svg>`
+  const ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1b4d7a"/></svg>'
+
+  it('keeps plain shapes and text and adds the namespace', () => {
+    const c = sanitizeSvg(LOGO)
+    expect(c.svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80">')).toBe(true)
+    expect(c.svg).toContain('Bar &amp; Co')
+    expect([c.width, c.height]).toEqual([320, 80])
+  })
+
+  it('rejects anything that could run code, load files or link away', () => {
+    const bad = [
+      '<svg viewBox="0 0 10 10"><script>alert(1)</script></svg>',
+      '<svg viewBox="0 0 10 10" onload="alert(1)"></svg>',
+      '<svg viewBox="0 0 10 10"><style>*{}</style></svg>',
+      '<svg viewBox="0 0 10 10"><image href="https://x.co/a.png"/></svg>',
+      '<svg viewBox="0 0 10 10"><a href="javascript:alert(1)"><rect/></a></svg>',
+      '<svg viewBox="0 0 10 10"><rect fill="url(https://x.co/a)"/></svg>',
+      '<svg viewBox="0 0 10 10"><use href="#a"/></svg>',
+      '<svg viewBox="0 0 10 10"><foreignObject/></svg>',
+      '<!DOCTYPE svg [<!ENTITY x "y">]><svg viewBox="0 0 10 10"></svg>',
+      '<svg viewBox="0 0 10 10"><rect style="fill:red"/></svg>',
+      '<svg viewBox="0 0 10 10"><rect/></svg><svg viewBox="0 0 1 1"></svg>',
+      '<svg><rect/></svg>',
+      '<svg viewBox="0 0 10 10"><g><rect/></svg>',
+    ]
+    for (const b of bad) expect(() => sanitizeSvg(b), b).toThrow()
+  })
+
+  it('puts the logo and icon on the draft and hands back the files', () => {
+    const { site, pages } = buildStarterSite({ name: 'Bar Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'bar-co')
+    const ws = new Workspace({ site, pages })
+    expect(runTool(ws, 'design_logo', { svg: LOGO, icon_svg: ICON, alt: 'Bar Co logo', summary: 'Drew a logo' })).toBe('Done.')
+    expect(ws.site.business.logo).toMatch(/^\/u\/[a-f0-9]{32}$/)
+    expect(ws.site.business.icon).toMatch(/^\/u\/[a-f0-9]{32}$/)
+    expect(ws.media.map((m) => m.mime)).toEqual(['image/svg+xml', 'image/svg+xml'])
+    const html = renderPage(ws.site, pages.find((p) => p.slug === '')!, pages).html
+    expect(html).toContain(`<img class="sh-logo" src="${ws.site.business.logo}"`)
+    expect(html).toContain(`<link rel="icon" href="${ws.site.business.icon}">`)
+    expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 10"><script/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/^Error: The logo can't be used/)
+    expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 80"><rect/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/wider than it is tall/)
   })
 })

@@ -26,6 +26,7 @@ import {
   type Responsive,
   type Site,
   type Widget,
+  walk,
 } from './schema'
 import { structuredData } from './seo'
 
@@ -36,7 +37,8 @@ export interface RenderedPage {
 
 export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page]): RenderedPage {
   // The header's call-to-action is a button even when the page has none.
-  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : [])])
+  const bar = callBar(site)
+  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(bar ? ['callbar'] : [])])
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
   const jsonLd = structuredData(site, page, allPages)
@@ -57,7 +59,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<meta property="og:description" content="${esc(page.seo.description)}">`,
     `<meta property="og:url" content="${esc(url)}">`,
     `<meta property="og:site_name" content="${esc(site.business.name)}">`,
-    page.seo.ogImage ? `<meta property="og:image" content="${esc(absolute(origin, page.seo.ogImage))}">` : '',
+    `<meta property="og:image" content="${esc(shareImage(site, page))}">`,
+    '<meta name="twitter:card" content="summary_large_image">',
     ...jsonLd.map((d) => `<script type="application/ld+json">${jsonForScript(d)}</script>`),
     `<style>${css}</style>`,
   ].filter(Boolean)
@@ -68,6 +71,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     renderHeader(site, page),
     `<main>${page.body.map(renderElement).join('')}</main>`,
     renderFooter(site),
+    bar,
   ].join('')
 
   const html = `<!doctype html><html lang="${esc(site.language)}"><head>${head.join('')}</head><body>${body}</body></html>`
@@ -240,6 +244,23 @@ function renderHeader(site: Site, page: Page): string {
   return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
 }
 
+// On phones, the two things local customers want most, one thumb away:
+// call, and either the header's button (book, quote) or directions.
+function callBar(site: Site): string {
+  const phone = site.business.phone
+  if (!phone || site.header?.callBar === false) return ''
+  const cta = site.header?.cta
+  const a = site.business.address
+  const second =
+    cta && !cta.href.startsWith('tel:')
+      ? `<a class="scb-go" href="${esc(cta.href)}">${esc(cta.label)}</a>`
+      : a
+        ? `<a class="scb-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=${esc(encodeURIComponent(`${a.street}, ${a.city}, ${a.region} ${a.postalCode}`))}" rel="noopener">Directions</a>`
+        : ''
+  const icon = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>'
+  return `<nav class="scb" aria-label="Quick contact"><a class="scb-call" href="${esc(tel(phone))}">${icon}Call</a>${second}</nav>`
+}
+
 // Days in schema.org openingHours order, for the footer's hours list.
 const DAY: Record<string, string> = { Mo: 'Mon', Tu: 'Tue', We: 'Wed', Th: 'Thu', Fr: 'Fri', Sa: 'Sat', Su: 'Sun' }
 
@@ -281,6 +302,7 @@ function tel(phone: string): string {
 // The business logo when there is one; otherwise an inline SVG monogram in
 // the brand color, so there is never a missing-favicon request.
 function favicon(site: Site): string {
+  if (site.business.icon) return site.business.icon
   if (site.business.logo) return site.business.logo
   const letter = esc(site.business.name.trim().charAt(0).toUpperCase() || 'S')
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="${site.globals.colors.primary}"/><text x="32" y="44" font-family="system-ui,sans-serif" font-size="36" font-weight="700" text-anchor="middle" fill="${site.globals.colors.background}">${letter}</text></svg>`
@@ -383,6 +405,12 @@ function widgetCss(used: Set<string>): string {
     css +=
       `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span{display:none}}`
+  if (used.has('callbar'))
+    css +=
+      `.scb{display:none}@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){body{padding-bottom:76px}` +
+      `.scb{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--c-background);border-top:1px solid color-mix(in srgb,var(--c-text) 12%,transparent)}` +
+      `.scb a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:var(--rb);font-weight:700;text-decoration:none}` +
+      `.scb-call{background:var(--c-primary);color:var(--c-background)}.scb-go{border:1.5px solid color-mix(in srgb,var(--c-text) 25%,transparent);color:var(--c-text)}}`
   if (used.has('crop')) css += `img.crop{width:100%;height:auto;object-fit:cover}`
   if (used.has('bg'))
     css +=
@@ -512,6 +540,25 @@ function cls(id: string): string {
 
 function round(n: number): number {
   return Math.round(n * 10) / 10
+}
+
+// The picture shown when a page is shared on Facebook, iMessage, Slack...
+// The owner's choice, else the post's or page's first photo, else a card
+// drawn from the site's name and colours (/__og).
+export const SHARE_CARD_PATH = '__og'
+export function shareImage(site: Site, page: Page): string {
+  const origin = siteOrigin(site)
+  const first = page.seo.ogImage ?? page.post?.image?.src ?? [...walk(page.body)].find((el) => el.type === 'image')?.src
+  if (!first) return `${origin}/${SHARE_CARD_PATH}?p=${encodeURIComponent(pagePath(page))}`
+  // Stock photos come cropped to the 1200 x 630 shape share previews use.
+  if (first.startsWith('https://images.unsplash.com/')) {
+    const u = new URL(first)
+    u.searchParams.set('w', '1200')
+    u.searchParams.set('h', '630')
+    u.searchParams.set('fit', 'crop')
+    return u.toString()
+  }
+  return absolute(origin, first)
 }
 
 function absolute(origin: string, src: string): string {

@@ -351,6 +351,8 @@ export const BusinessInfo = z
     hours: z.array(z.string()).optional(),
     priceRange: z.string().max(10).optional(),
     logo: z.string().optional(),
+    // A square mark for browser tabs and home screens; the logo when missing.
+    icon: z.string().optional(),
     sameAs: z.array(z.string().url()).optional(),
   })
   .strict()
@@ -396,6 +398,8 @@ export const SiteSchema = z
       .object({
         topbar: z.string().min(1).max(120).optional(),
         cta: z.object({ label: z.string().min(1).max(40), href }).strict().optional(),
+        // The Call / Directions bar pinned to the bottom on phones. On unless false.
+        callBar: z.boolean().optional(),
       })
       .strict()
       .optional(),
