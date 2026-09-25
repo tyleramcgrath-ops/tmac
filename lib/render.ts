@@ -586,5 +586,7 @@ function jsonForScript(data: unknown): string {
 // view) by re-pointing every internal link. Absolute URLs — canonical, og:url,
 // external links — and image sources are left alone.
 export function withBasePath(html: string, basePath: string): string {
-  return html.replaceAll('href="/', `href="${basePath}/`).replaceAll('action="/', `action="${basePath}/`)
+  // Uploads (/u/…) and shared media are served at the same address on every
+  // host, so only page links and form actions move under the base path.
+  return html.replace(/href="\/(?!u\/|media\/|_next\/)/g, `href="${basePath}/`).replaceAll('action="/', `action="${basePath}/`)
 }

@@ -14,7 +14,10 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://saysites.com'),
   title: { default: 'SaySites: say what your business does, get a website that ranks', template: '%s | SaySites' },
   description: 'Describe your business in a sentence and SaySites builds a fast, fully SEO-optimized website. $15 a month, and 0% of your sales. Ever.',
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }, { url: '/favicon.png', sizes: '32x32', type: 'image/png' }], apple: '/apple-touch-icon.png' },
+  // The picture shown when someone shares a SaySites link in a text or DM.
+  openGraph: { siteName: 'SaySites', type: 'website', images: [{ url: '/og-home.jpg', width: 1200, height: 630, alt: 'SaySites: Your site. Your say.' }] },
+  twitter: { card: 'summary_large_image', images: ['/og-home.jpg'] },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

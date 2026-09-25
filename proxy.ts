@@ -8,6 +8,14 @@ export function proxy(req: NextRequest) {
   const kind = classifyHost(req.headers.get('host'))
   const { pathname } = req.nextUrl
 
+  // A stray backslash (e.g. "/pricing\\" pasted from a text message) crashes
+  // Next's page lookup. Send it to the clean address instead.
+  if (/%5c|\\/i.test(pathname)) {
+    const url = req.nextUrl.clone()
+    url.pathname = pathname.replace(/%5c|\\/gi, '') || '/'
+    return NextResponse.redirect(url, 308)
+  }
+
   if (kind.kind === 'customer') {
     const url = req.nextUrl.clone()
     url.pathname = `/s-render/${encodeURIComponent(kind.host)}${pathname === '/' ? '' : pathname}`
