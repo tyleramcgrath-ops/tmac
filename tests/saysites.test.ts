@@ -1538,3 +1538,14 @@ describe('feedback earns three months free', () => {
     expect(withFeedbackReward(long, now)!.trialEndsAt).toBe(long.trialEndsAt)
   })
 })
+
+describe('preview base path', () => {
+  it('moves page links under the preview but leaves uploads and media alone', async () => {
+    const { withBasePath } = await import('../apps/saysites/lib/render')
+    const out = withBasePath('<a href="/services">x</a><link rel="icon" href="/u/abc"><img src="/u/abc"><link href="/media/logos/x.svg"><form action="/__form">', '/preview/joes')
+    expect(out).toContain('href="/preview/joes/services"')
+    expect(out).toContain('href="/u/abc"')
+    expect(out).toContain('href="/media/logos/x.svg"')
+    expect(out).toContain('action="/preview/joes/__form"')
+  })
+})
