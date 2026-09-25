@@ -14,7 +14,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const i = industry((await params).slug)
   if (!i) return {}
-  return { title: { absolute: i.title }, description: i.description, alternates: { canonical: `/websites-for/${i.slug}` }, openGraph: { title: i.title, description: i.description } }
+  return { title: { absolute: i.title }, description: i.description, alternates: { canonical: `/websites-for/${i.slug}` }, openGraph: { title: i.title, description: i.description, images: [{ url: '/og-home.jpg', width: 1200, height: 630 }] } }
 }
 
 export default async function IndustryPage({ params }: { params: Promise<{ slug: string }> }) {

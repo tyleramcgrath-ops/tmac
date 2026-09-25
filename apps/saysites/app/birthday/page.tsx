@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   title: 'For my birthday, build a website with me',
   description: 'No gifts. Build a free website on SaySites in two minutes and tell me what you honestly think.',
   robots: { index: false },
-  openGraph: { title: 'For my birthday, build a website with me', description: 'No gifts. Build a free website in two minutes and tell me what you honestly think.' },
+  openGraph: { title: 'For my birthday, build a website with me', description: 'No gifts. Build a free website in two minutes and tell me what you honestly think.', images: [{ url: '/og-birthday.jpg', width: 1200, height: 630, alt: 'For my birthday, build a website with me.' }] },
+  twitter: { card: 'summary_large_image', images: ['/og-birthday.jpg'] },
 }
 
 // Tyler's birthday ask (Monday, September 28): try SaySites, then say what
