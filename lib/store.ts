@@ -447,10 +447,14 @@ class PgStore implements Store {
   async deleteMedia(siteId: string, id: string) {
     await this.q('DELETE FROM ss_media WHERE id = $1 AND site_id = $2', [id, siteId])
   }
+  // Stock photos a deleted site held go back to the pool (ss_photos has no
+  // foreign key, so they'd otherwise stay reserved forever).
   async deleteSite(ownerId: string, siteId: string) {
-    await this.q('DELETE FROM ss_sites WHERE id = $1 AND owner_id = $2', [siteId, ownerId])
+    const r = await this.q('DELETE FROM ss_sites WHERE id = $1 AND owner_id = $2 RETURNING id', [siteId, ownerId])
+    if (r.length) await this.q('DELETE FROM ss_photos WHERE site_id = $1', [siteId])
   }
   async deleteUser(userId: string) {
+    await this.q('DELETE FROM ss_photos WHERE site_id IN (SELECT id FROM ss_sites WHERE owner_id = $1)', [userId])
     await this.q('DELETE FROM ss_users WHERE id = $1', [userId])
   }
   async updateUser(userId: string, changes: { name?: string; passwordHash?: string }) {
@@ -581,12 +585,17 @@ class PgStore implements Store {
     await this.q('INSERT INTO ss_cache (key, data) VALUES ($1,$2) ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, created_at = now()', [key, JSON.stringify(data)])
   }
   async photosTaken(exceptSiteId?: string) {
-    const r = await this.q<{ photo: string }>('SELECT photo FROM ss_photos WHERE site_id <> $1', [exceptSiteId ?? ''])
+    // Only sites that still exist hold a photo (older deletes left rows behind).
+    const r = await this.q<{ photo: string }>('SELECT p.photo FROM ss_photos p JOIN ss_sites s ON s.id = p.site_id WHERE p.site_id <> $1', [exceptSiteId ?? ''])
     return new Set(r.map((x) => x.photo))
   }
   async setSitePhotos(siteId: string, keys: string[]) {
     await this.q('DELETE FROM ss_photos WHERE site_id = $1 AND NOT (photo = ANY($2::text[]))', [siteId, keys])
-    if (keys.length) await this.q('INSERT INTO ss_photos (photo, site_id) SELECT unnest($1::text[]), $2 ON CONFLICT (photo) DO NOTHING', [keys, siteId])
+    if (keys.length)
+      await this.q(
+        'INSERT INTO ss_photos (photo, site_id) SELECT unnest($1::text[]), $2 ON CONFLICT (photo) DO UPDATE SET site_id = EXCLUDED.site_id, created_at = now() WHERE NOT EXISTS (SELECT 1 FROM ss_sites s WHERE s.id = ss_photos.site_id)',
+        [keys, siteId],
+      )
   }
   async recordScore(siteId: string, day: string, score: number) {
     await this.q('INSERT INTO ss_scores (site_id, day, score) VALUES ($1,$2,$3) ON CONFLICT (site_id, day) DO UPDATE SET score = EXCLUDED.score', [siteId, day, score])
@@ -710,6 +719,7 @@ export class MemoryStore implements Store {
     this.messages = this.messages.filter((m) => m.siteId !== siteId)
     for (const [id, x] of this.media) if (x.meta.siteId === siteId) this.media.delete(id)
     for (const [k, v] of this.visits) if (v.siteId === siteId) this.visits.delete(k)
+    for (const [k, site] of this.photos) if (site === siteId) this.photos.delete(k)
     this.logos.delete(siteId)
   }
   async deleteUser(userId: string) {
