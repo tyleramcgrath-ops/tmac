@@ -559,6 +559,11 @@
 .home .bdd-card img { width: 100%; height: 64px; object-fit: cover; display: block; border-radius: calc(var(--s-r) - 3px); transition: border-radius .7s; }
 .home .bdd-card b { font-family: var(--s-hf); font-size: 12.5px; margin-top: 3px; transition: color .7s; }
 .home .bdd-card span { font-size: 10.5px; color: var(--s-mu); }
+.home .bdd-buy { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.home .bdd-card .bdd-buy span { color: var(--s-ink); font-weight: 600; font-size: 11px; transition: color .7s; }
+.home .bdd-buy em { font-style: normal; font-weight: 600; font-size: 10px; color: var(--s-on-acc); background: var(--s-acc); padding: 3px 9px; border-radius: var(--s-btn); transition: background-color .7s, border-radius .7s; }
+.home .bdd-nav .bdd-new { color: var(--s-ink); font-weight: 600; animation: bdd-pop .5s ease both; }
+@keyframes bdd-pop { from { opacity: 0; transform: translateY(-4px); } }
 .home .bdd-live { position: absolute; left: 50%; top: 52px; z-index: 5; display: inline-flex; align-items: center; gap: 7px; background: #121316; color: #fff; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 999px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); opacity: 0; transform: translate(-50%, -8px); transition: opacity .4s, transform .4s; white-space: nowrap; }
 .home .bdd-live i { font-style: normal; display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #3fa66b; font-size: 10px; }
 .home .bdd-live.is-on { opacity: 1; transform: translate(-50%, 0); }
