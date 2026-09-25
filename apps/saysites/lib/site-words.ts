@@ -15,6 +15,7 @@ export interface SiteWords {
   hours: string
   pages: string
   home: string
+  leaveReview: string
   call: string
   directions: string
   quickContact: string
@@ -50,6 +51,7 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     hours: 'Hours',
     pages: 'Pages',
     home: 'Home',
+    leaveReview: 'Leave us a review',
     call: 'Call',
     directions: 'Directions',
     quickContact: 'Quick contact',
@@ -83,6 +85,7 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     hours: 'Horario',
     pages: 'Páginas',
     home: 'Inicio',
+    leaveReview: 'Déjanos una reseña',
     call: 'Llamar',
     directions: 'Cómo llegar',
     quickContact: 'Contacto rápido',

@@ -1212,3 +1212,31 @@ describe('SaySites: free redesign preview', async () => {
     expect(await store.claimPreview(p.id, 'user_2', 'other')).toBe(false)
   })
 })
+
+describe('SaySites: reviews', async () => {
+  const { reviewMessages, checkReviewUrl, googleReviewUrl, reviewLink } = await import('../apps/saysites/lib/reviews')
+  const { visibility } = await import('../apps/saysites/lib/visibility')
+  it('gives every site a /review address, a footer link and honest request messages', () => {
+    const { site, pages } = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: [], palette: 'ocean' }, 'o', 'rivertown-p')
+    const withLink = { ...site, business: { ...site.business, reviewUrl: googleReviewUrl('ChIJabc123') } }
+    expect(withLink.business.reviewUrl).toBe('https://search.google.com/local/writereview?placeid=ChIJabc123')
+    expect(SiteSchema.safeParse(withLink).success).toBe(true)
+    const res = serveSitePath({ site: withLink, pages, redirects: [] }, ['review'], {})
+    expect(res.status).toBe(302)
+    expect(res.headers.get('location')).toBe(withLink.business.reviewUrl)
+    expect(serveSitePath({ site, pages, redirects: [] }, ['review'], {}).status).toBe(404)
+    expect(renderPage(withLink, pages[0], pages).html).toContain('<a href="/review" rel="nofollow">Leave us a review</a>')
+    const msgs = reviewMessages(withLink)
+    expect(msgs.map((m) => m.id)).toEqual(['text', 'email', 'person'])
+    expect(msgs[0].body).toContain(reviewLink(withLink))
+    // Nothing offered in return, nothing that filters for happy customers.
+    for (const m of msgs) expect(m.body).not.toMatch(/discount|free|gift|5 stars|five stars|if you were happy/i)
+    expect(reviewMessages({ ...withLink, language: 'es' })[0].body).toMatch(/^Hola/)
+    expect(checkReviewUrl('g.page/r/abc/review')).toEqual({ url: 'https://g.page/r/abc/review' })
+    expect(checkReviewUrl('http://x.com').error).toBeTruthy()
+    // The review link is an opportunity, and the score still adds up to 100.
+    const v = visibility({ site, pages, seoErrors: 0, seoTips: 0, fast: true, photos: 0, visits30: 0, visitsPrev30: 0, today: '2026-09-25' })
+    expect(v.quests.find((q) => q.id === 'review-link')?.href).toMatch(/\/reviews$/)
+    expect(v.score + v.quests.reduce((n, q) => n + q.points, 0)).toBe(100)
+  })
+})

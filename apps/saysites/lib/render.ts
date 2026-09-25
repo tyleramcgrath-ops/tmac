@@ -273,6 +273,7 @@ function renderFooter(site: Site): string {
   if (b.phone) contact.push(`<a href="${esc(tel(b.phone))}">${esc(b.phone)}</a>`)
   if (b.email) contact.push(`<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>`)
   if (b.address) contact.push(`<span>${esc(`${b.address.street}, ${b.address.city}, ${b.address.region} ${b.address.postalCode}`)}</span>`)
+  if (b.reviewUrl) contact.push(`<a href="/review" rel="nofollow">${esc(t.leaveReview)}</a>`)
   if (contact.length) cols.push(`<div><h2 class="sf-h">${esc(t.contact)}</h2>${contact.join('')}</div>`)
   if (b.hours?.length) {
     const rows = b.hours.map((line) =>

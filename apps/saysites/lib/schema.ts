@@ -359,6 +359,9 @@ export const BusinessInfo = z
     // A square mark for browser tabs and home screens; the logo when missing.
     icon: z.string().optional(),
     sameAs: z.array(z.string().url()).optional(),
+    // Where customers leave a review (usually the Google review link).
+    // The site's /review address forwards here.
+    reviewUrl: z.string().url().startsWith('https://').max(500).optional(),
   })
   .strict()
 export type BusinessInfo = z.infer<typeof BusinessInfo>

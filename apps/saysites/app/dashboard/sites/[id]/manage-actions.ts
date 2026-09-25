@@ -11,6 +11,7 @@ import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
 import { ImportError, importSite } from '@/lib/importer'
+import { checkReviewUrl, googleReviewUrl } from '@/lib/reviews'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 
@@ -550,4 +551,16 @@ export async function publishImported(siteId: string) {
     await store.savePage({ ...p, status: 'published', updatedAt: new Date().toISOString() }, 'owner', user.id, 'Published imported page')
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+}
+
+// ---------------------------------------------------------------------------
+// Reviews
+// ---------------------------------------------------------------------------
+
+export async function saveReviewUrl(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const placeId = str(form, 'placeId', 200)
+  const checked = placeId ? { url: googleReviewUrl(placeId) } : checkReviewUrl(str(form, 'reviewUrl', 500))
+  if (checked.error) return { error: checked.error }
+  await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, reviewUrl: checked.url } }))
+  return { saved: true }
 }

@@ -103,8 +103,9 @@ export function visibility(f: VisibilityFacts): Visibility {
     { id: 'fresh', area: 'Content', points: 5, done: daysSincePost <= 30, title: posts.length ? 'Post something new this month' : 'Keep posting monthly', why: 'Fresh posts show Google your business is active.', href: `${base}/sofie`, sofie: `Write a new blog post for this month, with a seasonal tip about ${trade} in ${town}.` },
     // Trust: what makes a visitor pick you.
     { id: 'logo', area: 'Trust', points: 3, done: !!b.logo, title: 'Add a logo', why: 'A real logo makes a site look established.', href: `${base}/photos` },
-    { id: 'photos', area: 'Trust', points: 4, done: f.photos >= 3, title: 'Upload three photos of your own work', why: 'Real photos beat stock photos for trust and for image search.', href: `${base}/photos` },
-    { id: 'reviews', area: 'Trust', points: 3, done: has(pages, 'testimonials'), title: 'Show what customers say', why: 'Reviews on your site help people choose you.', href: `${base}/sofie`, sofie: 'Add a testimonials section to my home page. Here are some real reviews from customers: ', sofieFill: true },
+    { id: 'photos', area: 'Trust', points: 3, done: f.photos >= 3, title: 'Upload three photos of your own work', why: 'Real photos beat stock photos for trust and for image search.', href: `${base}/photos` },
+    { id: 'review-link', area: 'Trust', points: 2, done: !!b.reviewUrl, title: 'Set up your review link', why: 'More reviews help you rank in local search and help people choose you. Get a QR card and messages ready to send.', href: `${base}/reviews` },
+    { id: 'reviews', area: 'Trust', points: 2, done: has(pages, 'testimonials'), title: 'Show what customers say', why: 'Reviews on your site help people choose you.', href: `${base}/sofie`, sofie: 'Add a testimonials section to my home page. Here are some real reviews from customers: ', sofieFill: true },
     // Momentum: is it working?
     { id: 'traffic', area: 'Momentum', points: 5, done: f.visits30 > 0, title: 'Get your first visitors', why: 'Share your address on Google, Facebook and your van.', href: `${base}/visitors` },
     { id: 'growth', area: 'Momentum', points: 5, done: f.visits30 > 0 && f.visits30 > f.visitsPrev30, title: 'Grow visits over last month', why: 'Everything above feeds this one.', href: `${base}/visitors` },

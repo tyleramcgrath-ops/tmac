@@ -31,6 +31,9 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
 
   const page = pages.find((p) => p.status === 'published' && pagePath(p) === path)
   if (!page) {
+    // yoursite.com/review: a short, permanent address for QR cards and
+    // messages that forwards to wherever the owner collects reviews.
+    if (path === '/review' && site.business.reviewUrl) return new Response(null, { status: 302, headers: { location: site.business.reviewUrl, 'cache-control': 'public, s-maxage=300' } })
     const r = redirects.find((x) => x.from === path)
     if (r) return new Response(null, { status: r.status, headers: { location: (opts.basePath ?? '') + r.to } })
     return siteNotFound(bundle, opts)
