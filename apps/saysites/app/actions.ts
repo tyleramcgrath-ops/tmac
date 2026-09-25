@@ -12,6 +12,8 @@ export interface FormState {
 }
 
 const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim()
+// A redesign preview to claim after signing up or in.
+const claimId = (f: FormData) => (/^[a-f0-9]{16}$/.test(str(f, 'claim')) ? str(f, 'claim') : '')
 
 export async function signUp(_prev: FormState, form: FormData): Promise<FormState> {
   const name = str(form, 'name')
@@ -24,6 +26,8 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
   if (await store.userByEmail(email)) return { error: 'There is already an account with that email. Try logging in.' }
   const user = await store.createUser({ email, name: name.slice(0, 80), passwordHash: await hashPassword(password) })
   await startSession(user.id)
+  const claim = claimId(form)
+  if (claim) redirect(`/redesign/${claim}/claim`)
   const idea = str(form, 'idea').slice(0, 200)
   const template = str(form, 'template').slice(0, 20)
   const q = new URLSearchParams({ ...(idea ? { idea } : {}), ...(template ? { template } : {}) }).toString()
@@ -37,7 +41,8 @@ export async function logIn(_prev: FormState, form: FormData): Promise<FormState
   // Same message either way, so the form doesn't reveal which emails exist.
   if (!user || !(await verifyPassword(password, user.passwordHash))) return { error: 'That email and password don’t match.' }
   await startSession(user.id)
-  redirect('/dashboard')
+  const claim = claimId(form)
+  redirect(claim ? `/redesign/${claim}/claim` : '/dashboard')
 }
 
 export async function logOut(): Promise<void> {

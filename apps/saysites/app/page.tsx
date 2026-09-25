@@ -128,6 +128,7 @@ export default function Home() {
             <p className="lede">Tell SaySites what you do. It builds a fast website that’s set up for Google, then changes it whenever you ask. <strong>$15 a month. 0% of your sales.</strong></p>
             <SayBox id="idea-top" />
             <ul className="assure"><li>No credit card</li><li>Live in minutes</li><li>Cancel anytime</li></ul>
+            <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free →</a></p>
           </div>
         </section>
 

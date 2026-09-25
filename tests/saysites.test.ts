@@ -1124,6 +1124,9 @@ describe('SaySites: moving an existing website', async () => {
     // Imported pages pass the same checks as every other page.
     for (const p of plan.pages) expect(checkPage(p, [...pages, ...plan.pages]).filter((i) => i.severity === 'error')).toEqual([])
     expect(plan.pages[0].body[0].children.filter((c) => c.type === 'heading' && c.level === 1)).toHaveLength(1)
+    // Headings right after the H1 never reuse its id.
+    const withH2 = planImport(site, pages, [{ from: '/x', url: 'https://old.example/x', extracted: extract(html('X', 'X page', `<h2>First</h2>${long(10)}`)) }])
+    expect(checkPage(withH2.pages[0], [...pages, ...withH2.pages]).filter((i) => i.severity === 'error')).toEqual([])
   })
 
   it('finds pages from the sitemap and reads them', async () => {
@@ -1163,5 +1166,49 @@ describe('SaySites: import skips archives and listings', async () => {
     const body = `<urlset>${urls.map((u) => `<url><loc>https://old.example${u}</loc></url>`).join('')}</urlset>`
     const got = await discover(new URL('https://old.example/'), async (u) => (u.endsWith('/sitemap.xml') ? { url: u, status: 200, type: 'application/xml', body } : null))
     expect(got.map((u) => u.pathname)).toEqual(['/', '/blog/my-post/', '/wills/'])
+  })
+})
+
+describe('SaySites: free redesign preview', async () => {
+  const { detectBusiness, guessType, nearestPalette } = await import('../apps/saysites/lib/detect')
+  const { buildPreview, claimFromPreview } = await import('../apps/saysites/lib/redesign')
+  const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebSite', name: 'x' }, { '@type': 'LegalService', name: 'Smith & Lee Law', telephone: '(555) 010-2000', address: { '@type': 'PostalAddress', streetAddress: '1 Main St', addressLocality: 'Dayton', addressRegion: 'OH', postalCode: '45402' } }] })
+  const home = `<html><head><title>Injury Lawyers in Dayton | Smith & Lee Law</title><meta name="theme-color" content="#1b4d7a"><script type="application/ld+json">${ld}</script></head><body><header><nav><a href="/car-accidents/">Car accidents</a><a href="/contact-us/">Contact</a></nav></header><main><h1>Injury Lawyers in Dayton, OH</h1><p>${'We help injured people in Dayton get the answers they need. '.repeat(6)}</p></main><script src="/a.js"></script><script src="/b.js"></script></body></html>`
+  const car = `<html><head><title>CAR ACCIDENT LAWYERS | Smith & Lee Law</title></head><body><main><h1>CAR ACCIDENT LAWYERS</h1><h2>After a crash</h2><p>${'What to do after a car accident in Ohio, step by step, in plain English. '.repeat(8)}</p></main></body></html>`
+  const files: Record<string, string> = { 'https://smithlee.example/': home, 'https://smithlee.example/car-accidents/': car }
+  const get = async (u: string) => (files[u] ? { url: u, status: 200, type: 'text/html', body: files[u] } : null)
+
+  it('reads who the business is from its own site', () => {
+    const d = detectBusiness(home, 'https://smithlee.example/')
+    expect(d).toMatchObject({ name: 'Smith & Lee Law', type: 'lawyer', phone: '(555) 010-2000', street: '1 Main St', city: 'Dayton', region: 'OH', postalCode: '45402', color: '#1b4d7a', palette: 'ocean' })
+    expect(guessType('Rivertown Plumbing | Drain cleaning')).toBe('plumber')
+    expect(guessType('Joe’s Place')).toBe('other')
+    expect(nearestPalette('#2f6b40')).toBe('forest')
+    expect(nearestPalette('#777777')).toBe('slate')
+  })
+
+  it('rebuilds the site without AI, keeps addresses, and reports before and after', async () => {
+    const p = await buildPreview('smithlee.example', get, '0123456789abcdef')
+    expect(p.site.business.name).toBe('Smith & Lee Law')
+    const h1 = [...walk(p.pages.find((x) => x.slug === '')!.body)].find((e) => e.type === 'heading' && e.level === 1)
+    expect(h1 && 'text' in h1 && h1.text).toBe('Injury Lawyers in Dayton, OH')
+    const imported = p.pages.find((x) => x.slug === 'car-accidents')!
+    expect(imported.status).toBe('published')
+    // /contact-us didn't load, so nothing points at it.
+    expect(p.redirects).toEqual([])
+    expect(p.before.scripts).toBe(2)
+    expect(p.after.scripts).toBe(0)
+    expect(p.after.speedPass).toBe(true)
+    expect(p.after.seoErrors).toBe(0)
+    // Claiming makes it the owner's, with imported pages as drafts.
+    const c = claimFromPreview(p, 'user_1', 'smith-lee-law')
+    expect(c.site.orgId).toBe('user_1')
+    expect(c.pages.find((x) => x.slug === 'car-accidents')!.status).toBe('draft')
+    expect(new Set(c.pages.map((x) => x.id)).size).toBe(c.pages.length)
+    const store = new MemoryStore()
+    await store.savePreview(p, 'who')
+    expect(await store.previewCount(new Date(Date.now() - 1000), 'who')).toBe(1)
+    expect(await store.claimPreview(p.id, 'user_1', c.site.id)).toBe(true)
+    expect(await store.claimPreview(p.id, 'user_2', 'other')).toBe(false)
   })
 })

@@ -11,6 +11,7 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
           <nav aria-label="Main">
             <a className="hide-sm" href="/#how">How it works</a>
             <a className="hide-sm" href="/templates">Templates</a>
+            <a className="hide-sm" href="/redesign">Free redesign</a>
             <a className="hide-sm" href="/#pricing">Pricing</a>
             <a href="/login">Log in</a>
             <a className="b b-dark b-sm" href="/signup">Start free</a>
@@ -30,6 +31,7 @@ export function SiteFooter() {
         <Logo />
         <nav aria-label="Footer">
           <a href="/templates">Templates</a>
+          <a href="/redesign">Free redesign</a>
           <a href="/websites-for">By business</a>
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>

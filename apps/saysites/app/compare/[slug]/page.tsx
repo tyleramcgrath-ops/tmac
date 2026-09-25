@@ -62,7 +62,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           <div className="ind-seo">
             <div><h3>When {c.name} fits</h3><p>{c.theyFit}</p></div>
             <div><h3>When SaySites fits</h3><p>{c.weFit}</p></div>
-            <div><a className="b b-dark" href="/websites-for/law-firms">See SaySites for law firms</a></div>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}><a className="b b-dark" href="/redesign">See your site rebuilt, free</a><a className="b b-line" href="/websites-for/law-firms">SaySites for law firms</a></div>
           </div>
         </div>
       </section>

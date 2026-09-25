@@ -8,8 +8,8 @@ import { importFromSite, publishImported } from '../manage-actions'
 // Reading another site can take a while.
 export const maxDuration = 120
 
-export default async function MovePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function MovePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ claimed?: string }> }) {
+  const [{ id }, { claimed }] = await Promise.all([params, searchParams])
   const user = await requireUser()
   const store = getStore()
   const site = await store.siteForUser(user.id, id)
@@ -28,9 +28,13 @@ export default async function MovePage({ params }: { params: Promise<{ id: strin
         </div>
       </div>
 
-      <div className="card">
-        <MoveForm action={importFromSite.bind(null, site.id)} />
-      </div>
+      {claimed ? (
+        <p className="notice good"><strong>Your redesigned site is saved.</strong> Your home, services and contact pages are live on your free address, and the pages we brought over are below as drafts. Publish them when you point your domain here.</p>
+      ) : (
+        <div className="card">
+          <MoveForm action={importFromSite.bind(null, site.id)} />
+        </div>
+      )}
 
       <div className="card">
         <div className="card-head">

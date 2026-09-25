@@ -51,6 +51,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <p>{i.lede}</p>
             <div className="ind-actions">
               <a className="b b-dark" href="/signup">Build my site free</a>
+              <a className="b b-line" href="/redesign">See your current site rebuilt</a>
               <a className="tplrow-link" href={`/preview/${i.example}`}>See a live example →</a>
             </div>
           </div>

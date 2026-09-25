@@ -275,7 +275,7 @@ function body(e: Extracted, idBase: string): Container[] {
       // Headings never skip a level: an h3 before any h2 becomes an h2.
       const level = b.kind === 'h3' && sawH2 ? 3 : 2
       if (level === 2) sawH2 = true
-      children.push({ id: `${idBase}-h${++n}`, type: 'heading', level, text: clip(b.text, 300), style: { maxWidth: 820, fontSize: { desktop: level === 2 ? 32 : 24, mobile: level === 2 ? 26 : 21 }, margin: { desktop: { top: 16, right: 0, bottom: 0, left: 0 } } } })
+      children.push({ id: `${idBase}-s${++n}`, type: 'heading', level, text: clip(b.text, 300), style: { maxWidth: 820, fontSize: { desktop: level === 2 ? 32 : 24, mobile: level === 2 ? 26 : 21 }, margin: { desktop: { top: 16, right: 0, bottom: 0, left: 0 } } } })
     }
   }
   flush()

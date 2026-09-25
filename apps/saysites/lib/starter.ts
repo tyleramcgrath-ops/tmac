@@ -66,6 +66,9 @@ export interface StarterInput {
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
+  // A headline to use instead of the generated one (e.g. the H1 of the
+  // owner's previous site, which is what they already rank for).
+  headline?: string
 }
 
 export interface StarterOptions {
@@ -106,7 +109,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const photos = photosFor(input.type)
   const name = input.name.trim()
   const city = input.city.trim()
-  const place = `${city}, ${input.region.trim()}`
+  const place = input.region.trim() ? `${city}, ${input.region.trim()}` : city
   const services = input.services.map((s) => s.trim()).filter(Boolean).slice(0, 12)
   const list = services.length ? services : [cap(t.trade)]
   const siteId = opts.siteId ?? `site_${randomUUID()}`
@@ -136,7 +139,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       schemaType: t.schemaType,
       ...(phone ? { phone } : {}),
       ...(email ? { email } : {}),
-      ...(input.street && input.postalCode ? { address: { street: input.street, city, region: input.region.trim(), postalCode: input.postalCode, country: 'US' } } : {}),
+      ...(input.street && input.postalCode && input.region.trim() && city ? { address: { street: input.street, city, region: input.region.trim(), postalCode: input.postalCode, country: 'US' } } : {}),
       ...(input.hours?.length ? { hours: input.hours } : {}),
       ...(city ? { area: place } : {}),
     },
@@ -160,8 +163,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
 
   // Law firms lead with what they do and where, the way clients search:
   // "Estate planning and family law attorneys in Columbus."
-  const headline =
-    law && services.length
+  const headline = input.headline?.trim()
+    ? input.headline.trim().slice(0, 160)
+    : law && services.length
       ? `${cap(joinAnd(list.slice(0, 2).map(soften)))} attorneys in ${city}.`
       : t.headline.replace('{city}', city).replace('{name}', name)
   // With no services listed, talk about the trade itself ("roofing").
