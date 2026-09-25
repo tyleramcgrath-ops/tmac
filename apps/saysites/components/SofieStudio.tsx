@@ -125,13 +125,13 @@ export function SofieStudio(props: {
         {state.limit && !noteClosed && (
           <div className="limit-note" role="dialog" aria-modal="true" aria-labelledby="limit-note-h">
             <div className="limit-card">
-              <h2 id="limit-note-h">A note from Tyler</h2>
+              <h2 id="limit-note-h">A note from the founder</h2>
               <p>Thank you for building with SaySites. It’s brand new, and right now it’s a test for friends and family.</p>
               <p>I’m starting out and paying for Sofie myself, so each site gets up to $10 of her help during the test. Yours has used it, which means you really put her to work.</p>
               <p>Everything you made is saved and still yours. You can keep changing text, photos and pages by hand in the other tabs.</p>
               <p>What I’d love most now is your honest feedback: what worked, what didn’t, what you’d pay for. It’s the best gift you could give me.</p>
               <div className="limit-actions">
-                <button type="button" className="btn btn-primary" onClick={() => { setNoteClosed(true); document.querySelector<HTMLButtonElement>('.fb-tab')?.click() }}>Send Tyler feedback</button>
+                <button type="button" className="btn btn-primary" onClick={() => { setNoteClosed(true); document.querySelector<HTMLButtonElement>('.fb-tab')?.click() }}>Send feedback</button>
                 <button type="button" className="btn btn-ghost" onClick={() => setNoteClosed(true)}>Close</button>
               </div>
             </div>

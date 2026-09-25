@@ -28,7 +28,7 @@ export default function TemplatesPage() {
         <div className="wrap">
           <p className="kicker">Templates</p>
           <h1>Real sites, not mockups. Click any one.</h1>
-          <p>Every example below is a working website built by the same code that builds yours: live pages, a contact form, Google-ready titles and a 95+ speed score. Pick a style and Sofie fills it in with your business.</p>
+          <p>Every example below is a working website built by the same code that builds yours: live pages, a contact form, SEO-optimized titles and a 95+ speed score. Pick a style and Sofie fills it in with your business.</p>
         </div>
       </section>
       <section className="gallery">
