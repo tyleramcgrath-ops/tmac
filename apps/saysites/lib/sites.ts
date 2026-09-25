@@ -4,6 +4,7 @@ import { classifyHost } from './hosts'
 import type { Page, Redirect, Site } from './schema'
 import { getStore, type Store } from './store'
 import { isStock, photoUses } from './photo-rules'
+import type { Credit } from './unsplash'
 
 export interface SiteBundle {
   site: Site
@@ -40,4 +41,10 @@ export async function syncSitePhotos(siteId: string, store: Store = getStore()):
   const pages = await store.pagesForSite(siteId)
   const keys = [...new Set(photoUses(pages).filter((u) => isStock(u.src)).map((u) => u.key))]
   await store.setSitePhotos(siteId, keys)
+}
+
+// Keeps only the credits for stock photos the site's live pages still show.
+export function creditsInUse(pages: Page[], known: Credit[]): Credit[] {
+  const used = new Set(photoUses(pages).map((u) => u.key))
+  return [...new Map(known.filter((c) => used.has(c.photo)).map((c) => [c.photo, c])).values()]
 }

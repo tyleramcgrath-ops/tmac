@@ -136,6 +136,9 @@ export interface Store {
   // Records the stock photos a site now uses and releases the rest. Keys
   // another site already holds are left with that site.
   setSitePhotos(siteId: string, keys: string[]): Promise<void>
+  // A small shared cache (e.g. photo search results), fresh for `maxAgeMs`.
+  cacheGet(key: string, maxAgeMs: number): Promise<unknown | null>
+  cacheSet(key: string, data: unknown): Promise<void>
 }
 
 // Page views are counted per day and page, and nothing else: no cookies,
@@ -242,6 +245,11 @@ CREATE TABLE IF NOT EXISTS ss_photos (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_photos_site_idx ON ss_photos (site_id);
+CREATE TABLE IF NOT EXISTS ss_cache (
+  key TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 CREATE TABLE IF NOT EXISTS ss_logo_ideas (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
@@ -448,6 +456,13 @@ class PgStore implements Store {
       : await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_previews WHERE created_at > $1', [since])
     return Number(r[0]?.n ?? 0)
   }
+  async cacheGet(key: string, maxAgeMs: number) {
+    const r = await this.q<{ data: unknown }>('SELECT data FROM ss_cache WHERE key = $1 AND created_at > $2', [key, new Date(Date.now() - maxAgeMs)])
+    return r[0]?.data ?? null
+  }
+  async cacheSet(key: string, data: unknown) {
+    await this.q('INSERT INTO ss_cache (key, data) VALUES ($1,$2) ON CONFLICT (key) DO UPDATE SET data = EXCLUDED.data, created_at = now()', [key, JSON.stringify(data)])
+  }
   async photosTaken(exceptSiteId?: string) {
     const r = await this.q<{ photo: string }>('SELECT photo FROM ss_photos WHERE site_id <> $1', [exceptSiteId ?? ''])
     return new Set(r.map((x) => x.photo))
@@ -648,6 +663,14 @@ export class MemoryStore implements Store {
   }
   async previewCount(since: Date, who?: string) {
     return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
+  }
+  private cache = new Map<string, { data: unknown; at: number }>()
+  async cacheGet(key: string, maxAgeMs: number) {
+    const hit = this.cache.get(key)
+    return hit && hit.at > Date.now() - maxAgeMs ? hit.data : null
+  }
+  async cacheSet(key: string, data: unknown) {
+    this.cache.set(key, { data, at: Date.now() })
   }
   private photos = new Map<string, string>()
   async photosTaken(exceptSiteId?: string) {

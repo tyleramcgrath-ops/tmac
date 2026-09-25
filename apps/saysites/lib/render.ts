@@ -9,6 +9,7 @@
 //     except one optional priority image for the hero.
 //   - Every text value is HTML-escaped; the tree can never inject markup.
 
+import { photoKeysOn } from './photo-rules'
 import { WORDS, wordsFor, type SiteWords } from './site-words'
 import { vibeCheck } from './vibe'
 import {
@@ -74,7 +75,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   const body = [
     renderHeader(site, page),
     `<main>${page.body.map(renderElement).join('')}</main>`,
-    renderFooter(site),
+    renderFooter(site, photoKeysOn(page.body)),
     bar,
   ].join('')
 
@@ -267,7 +268,7 @@ function callBar(site: Site): string {
 }
 
 
-function renderFooter(site: Site): string {
+function renderFooter(site: Site, onPage: Set<string> = new Set()): string {
   const b = site.business
   const year = new Date(site.updatedAt).getUTCFullYear() || new Date().getUTCFullYear()
   const cols: string[] = [`<div><strong class="sf-brand">${esc(b.name)}</strong>${site.tagline ? `<p>${esc(site.tagline)}</p>` : ''}</div>`]
@@ -291,7 +292,14 @@ function renderFooter(site: Site): string {
   const pages = site.nav.filter((n) => n.href.startsWith('/'))
   if (pages.length) cols.push(`<div><h2 class="sf-h">${esc(t.pages)}</h2><a href="/">${esc(t.home)}</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
   const note = site.footerNote ? `<p class="sf-note">${esc(site.footerNote)}</p>` : ''
-  return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">${note}© ${year} ${esc(b.name)}</div></footer>`
+  // Credit for the stock photos on this page, as Unsplash asks.
+  const shown = (site.credits ?? []).filter((c) => onPage.has(c.photo))
+  const people = [...new Map(shown.map((c) => [c.url, c])).values()]
+  const utm = (u: string) => `${u}${u.includes('?') ? '&' : '?'}utm_source=saysites&utm_medium=referral`
+  const credit = people.length
+    ? `<p class="sf-note">${esc(t.photosBy)} ${people.map((c) => `<a href="${esc(utm(c.url))}" rel="nofollow noopener">${esc(c.name)}</a>`).join(', ')} ${esc(t.onUnsplash)} <a href="${esc(utm('https://unsplash.com/'))}" rel="nofollow noopener">Unsplash</a></p>`
+    : ''
+  return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">${note}${credit}© ${year} ${esc(b.name)}</div></footer>`
 }
 
 
