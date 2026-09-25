@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Logo, LogoMark } from '@/components/Logo'
+import { Logo, LogoMark, Wordmark } from '@/components/Logo'
 import { TEMPLATES } from '@/lib/templates'
 import './home.css'
 
@@ -135,7 +135,7 @@ export default function Home() {
           <div className="wrap">
             <div className="app" aria-hidden="true">
               <div className="app-bar">
-                <span className="app-logo"><LogoMark size={18} />saysites</span>
+                <span className="app-logo"><LogoMark size={18} /><Wordmark /></span>
                 <span className="app-site">Rosie’s Bakery</span>
                 <div className="app-tabs"><span className="on">Home</span><span>Services</span><span>Contact</span></div>
                 <span className="app-live"><i />Live</span>
