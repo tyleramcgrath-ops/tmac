@@ -23,9 +23,9 @@ export interface CleanSvg {
   height: number
 }
 
-export function sanitizeSvg(input: string): CleanSvg {
+export function sanitizeSvg(input: string, maxBytes = MAX_BYTES): CleanSvg {
   const src = input.trim().replace(/^<\?xml[^>]*\?>\s*/i, '')
-  if (src.length > MAX_BYTES) throw new SvgError(`The SVG is too big (${src.length} bytes); keep it under ${MAX_BYTES}.`)
+  if (src.length > maxBytes) throw new SvgError(`The SVG is too big (${src.length} bytes); keep it under ${maxBytes}.`)
   if (/<!|<\?/.test(src)) throw new SvgError('No DOCTYPE, CDATA, comments or processing instructions.')
 
   const out: string[] = []
