@@ -126,19 +126,19 @@ export function BirthdayDemo() {
             <em className={step >= 4 ? 'is-on bdd-flash' : ''}>Reserve</em>
           </nav>
           <header className={`bdd-hero bdd-in${step === 2 ? ' bdd-flash' : ''}${step >= 3 ? ' is-photo' : ''}`}>
-            <img className="bdd-hero-photo" {...HERO} alt="" width={1100} height={629} />
+            <img className="bdd-hero-photo" {...HERO} alt="" width={1100} height={629} fetchPriority="low" decoding="async" />
             <div className="bdd-hero-text">
               <small>East Austin · Open nightly</small>
               <strong>Neapolitan pizza, fired at 900°.</strong>
               <span className="bdd-btn">See the menu</span>
             </div>
-            <img className="bdd-hero-side" {...SIDE} alt="" width={480} height={480} />
+            <img className="bdd-hero-side" {...SIDE} alt="" width={480} height={480} fetchPriority="low" decoding="async" />
           </header>
           <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Sunday brunch 10:00–2:00</div>
           <div className={`bdd-cards bdd-in${step === 5 ? ' bdd-flash' : ''}`}>
             {CARDS.map((c, i) => (
               <div key={c.name} className="bdd-card">
-                <img {...c.img} alt="" width={320} height={213} loading="lazy" />
+                <img {...c.img} alt="" width={320} height={213} loading="lazy" decoding="async" />
                 <b>{step >= 5 ? PRODUCTS[i].name : c.name}</b>
                 {step >= 5 ? (
                   <span className="bdd-buy"><span>{PRODUCTS[i].price}</span><em>Buy</em></span>
