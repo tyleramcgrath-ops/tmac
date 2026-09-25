@@ -540,7 +540,6 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .st-score, .st-mom { text-align: right; font-variant-numeric: tabular-nums; }
 .st-mom { font-weight: 700; }
 .league-public { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--line); }
-.league-public .check { margin: 0; flex: 1; min-width: 240px; font-size: 14px; }
 /* The Monday reveal: last week's result under a sealed envelope. */
 .reveal { position: relative; min-height: 132px; margin-bottom: 8px; }
 .reveal-card { display: grid; justify-items: start; gap: 4px; padding: 14px 16px; border-radius: 12px; background: var(--paper); }
@@ -563,6 +562,10 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 @keyframes wax-break { 60% { transform: translate(-50%, -50%) scale(1.15); } to { transform: translate(-50%, -50%) scale(.2); opacity: 0; } }
 @keyframes env-away { to { opacity: 0; transform: translateY(18px); } }
 .vis-card .league-line { font-size: 14px; }
+.compare-invite { display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.compare-invite > div { display: grid; gap: 6px; max-width: 640px; }
+.compare-invite h3 { margin: 0; }
+.league-public form { margin: 0; }
 .quests { list-style: none; margin: 0; padding: 0; display: grid; }
 .quest { display: grid; grid-template-columns: 52px minmax(0, 1fr) 110px auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
 .quest:first-child { border-top: 0; }

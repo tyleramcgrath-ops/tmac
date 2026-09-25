@@ -489,5 +489,5 @@ export async function setLeaguePublic(siteId: string, form: FormData) {
   const { store, site } = await ownSite(siteId)
   await store.updateSite(SiteSchema.parse({ ...site, league: { public: form.get('public') === 'on' }, updatedAt: new Date().toISOString() }))
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
-  revalidatePath('/leaderboard')
+  revalidatePath('/visibility-index')
 }

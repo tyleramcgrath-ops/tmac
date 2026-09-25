@@ -1,8 +1,9 @@
-// Weekly leagues: every site on SaySites is grouped with others in its trade
-// and ranked each week by momentum (how much its Visibility Score rose and
-// how much its traffic grew), not by size, so a new bakery can beat an old
-// one. Standings are anonymous unless an owner chooses to show their name;
-// visitor numbers are never shown to anyone else.
+// Weekly standings: every site on SaySites is grouped with others in its
+// trade and ranked each week by momentum (how much its Visibility Score rose
+// and how much its traffic grew), not by size, so a small practice that does
+// the work can outrank a large one. Comparison is reciprocal: only owners who
+// share their own standing see the others, and visitor numbers are never
+// shown to anyone.
 
 import { daysBefore } from './visits'
 import type { Site } from './schema'
@@ -30,14 +31,14 @@ export interface Standing {
 }
 
 export interface League {
-  // e.g. "Bakery"; "SaySites" for the open league.
+  // e.g. "Bakery"; "All trades" when a trade is too small to stand alone.
   name: string
   trade: string | null
   week: { start: string; end: string }
   standings: Standing[]
 }
 
-// With fewer sites than this in a trade, everyone plays in the open league.
+// With fewer sites than this in a trade, it joins the all-trades standings.
 export const MIN_LEAGUE = 5
 
 // Monday (UTC) of the week `day` is in.
@@ -125,9 +126,9 @@ export function leagues(all: LeagueSite[], start: string, today: string): League
     const topGrowth = Math.max(...sorted.map((r) => r.m.growth))
     const standings = sorted.map((r, i): Standing => {
       const titles: string[] = []
-      if (i === 0 && r.m.momentum > 0) titles.push('Climber of the week')
-      if (r.m.score === topScore && sorted.length > 1) titles.push('Most visible')
-      if (r.m.growth === topGrowth && topGrowth > 0) titles.push('Fastest growing')
+      if (i === 0 && r.m.momentum > 0) titles.push('Greatest gain')
+      if (r.m.score === topScore && sorted.length > 1) titles.push('Highest visibility')
+      if (r.m.growth === topGrowth && topGrowth > 0) titles.push('Fastest growth')
       return { siteId: r.s.site.id, rank: i + 1, ...display(r.s.site), score: r.m.score, gain: r.m.gain, growth: r.m.growth, momentum: r.m.momentum, titles, streak: streak(r.s, start, today) }
     })
     // Ties share a rank.
@@ -140,7 +141,7 @@ export function leagues(all: LeagueSite[], start: string, today: string): League
     if (members.length >= MIN_LEAGUE && trade !== 'LocalBusiness') out.push(build(tradeLabel(trade), trade, members))
     else open.push(...members)
   }
-  if (open.length) out.push(build('SaySites', null, open))
+  if (open.length) out.push(build('All trades', null, open))
   return out.sort((a, b) => b.standings.length - a.standings.length)
 }
 

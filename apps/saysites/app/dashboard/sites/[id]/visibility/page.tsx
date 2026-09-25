@@ -38,7 +38,7 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
       <div className="sec-head">
         <div>
           <h2>Visibility</h2>
-          <p className="muted">How findable your site is on Google, from 0 to 100, and exactly what raises it. Every quest is something that brings real visitors.</p>
+          <p className="muted">How findable your site is on Google, from 0 to 100, and exactly what raises it. Each opportunity follows Google’s guidelines and brings real visitors.</p>
         </div>
       </div>
 
@@ -56,38 +56,38 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
           </ul>
         </div>
         <div className="card vis-league">
-          {last && <LeagueReveal siteId={site.id} week={lastStart} place={ordinal(last.me.rank)} of={last.league.standings.length} league={last.league.name} titles={last.me.titles} />}
+          {last && <LeagueReveal siteId={site.id} week={lastStart} place={ordinal(last.me.rank)} of={last.league.standings.length} league={last.league.trade ? `${tradePlural(last.league.trade)} on SaySites` : 'all trades'} titles={last.me.titles} />}
           {now ? (
             <>
               <div className="card-head">
-                <span className="stat-label">This week · {now.league.name}</span>
+                <span className="stat-label">This week · {leagueTitle}</span>
                 <span className="muted small">{daysLeft === 1 ? 'Closes tonight' : `${daysLeft} days left`}</span>
               </div>
               <div className="league-me">
                 <strong>{ordinal(now.me.rank)}</strong>
                 <span className="muted">of {now.league.standings.length}</span>
-                {now.me.streak > 1 && <span className="league-streak" title="Weeks in a row you gained ground">{now.me.streak}-week streak</span>}
+                {now.me.streak > 1 && <span className="league-streak">{now.me.streak} consecutive weeks of gains</span>}
               </div>
               {climb ? (
                 <p className="small" style={{ margin: 0 }}>
-                  <strong>{climb} Visibility point{climb === 1 ? '' : 's'}</strong> would move you up a place
+                  <strong>{climb} Visibility point{climb === 1 ? '' : 's'}</strong> moves you up one position
                   {climbQuest ? <>: <a href={questLink(climbQuest)}>{climbQuest.title.charAt(0).toLowerCase() + climbQuest.title.slice(1)}</a> is worth +{climbQuest.points}.</> : '.'}
                 </p>
               ) : (
-                <p className="small" style={{ margin: 0 }}><strong>You lead the league.</strong> Keep adding points to hold it until Sunday.</p>
+                <p className="small" style={{ margin: 0 }}><strong>You hold first position.</strong> Standings close Sunday at midnight UTC.</p>
               )}
             </>
           ) : (
-            <p className="muted small">Your first standing appears here as your score is recorded.</p>
+            <p className="muted small">Your first weekly standing appears here once your score has been recorded.</p>
           )}
         </div>
       </div>
 
-      {now && (
+      {now && (site.league?.public ? (
         <div className="card">
           <div className="card-head">
             <h3>{leagueTitle}</h3>
-            <span className="muted small">Ranked by momentum: points gained this week plus traffic growth</span>
+            <span className="muted small">Ranked by weekly gain in organic visibility and traffic</span>
           </div>
           <ol className="standings">
             {table.map((s) => (
@@ -104,24 +104,34 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
               </li>
             ))}
           </ol>
-          <form action={setPublic} className="league-public">
-            <label className="check">
-              <input type="checkbox" name="public" defaultChecked={!!site.league?.public} />
-              <span>Show my business name in the league and on the saysites.com leaderboard, with a link to my site</span>
-            </label>
-            <button className="btn btn-ghost btn-sm" type="submit">Save</button>
-          </form>
-          <p className="muted small" style={{ margin: 0 }}>Other owners never see your visitor numbers, only your score and momentum.</p>
+          <div className="league-public">
+            <p className="muted small" style={{ margin: 0, flex: 1 }}>You share your standing, so you see everyone who shares theirs. Businesses that keep theirs private appear without a name. Visitor numbers are never shown.</p>
+            <form action={setPublic}>
+              <button className="btn btn-ghost btn-sm" type="submit">Stop sharing</button>
+            </form>
+          </div>
         </div>
-      )}
+      ) : (
+        <div className="card compare-invite">
+          <div>
+            <span className="stat-label">Peer comparison</span>
+            <h3>See how you compare with {now.league.standings.length - 1} other {now.league.trade ? tradePlural(now.league.trade) : 'businesses'} on SaySites</h3>
+            <p className="muted small" style={{ margin: 0 }}>Comparison is reciprocal. Share your standing and you’ll see every business that shares theirs, by name, with their Visibility Score and weekly gain. Visitor numbers stay private either way, and you can stop sharing at any time.</p>
+          </div>
+          <form action={setPublic}>
+            <input type="hidden" name="public" value="on" />
+            <button className="btn btn-primary" type="submit">Share and compare</button>
+          </form>
+        </div>
+      ))}
 
       <div className="card">
         <div className="card-head">
-          <h3>Quests</h3>
+          <h3>Opportunities</h3>
           <span className="muted small">{v.quests.length ? `${100 - v.score} points to earn` : 'All done'}</span>
         </div>
         {v.quests.length === 0 ? (
-          <p className="muted">Every quest is complete. Keep posting monthly to hold your score.</p>
+          <p className="muted">Every opportunity is taken. Keep posting monthly to hold your score.</p>
         ) : (
           <ol className="quests">
             {v.quests.map((q) => (

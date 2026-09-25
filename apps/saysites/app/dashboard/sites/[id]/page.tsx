@@ -6,7 +6,7 @@ import { dayString, daysBefore } from '@/lib/visits'
 import { scoreSite } from '@/lib/site-score'
 import { milestones } from '@/lib/milestones'
 import { questLink } from '@/lib/visibility'
-import { leagueFor, leagues, ordinal, weekStart } from '@/lib/league'
+import { leagueFor, leagues, ordinal, tradePlural, weekStart } from '@/lib/league'
 import { ScoreDial } from '@/components/ScoreDial'
 import { Milestones } from '@/components/Milestones'
 
@@ -100,7 +100,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
               <span className="stat-label">Visibility</span>
               {standing && standing.league.standings.length > 1 && (
                 <a className="league-line" href={`${base}/visibility`}>
-                  {ordinal(standing.me.rank)} of {standing.league.standings.length} in the {standing.league.name} league this week
+                  {ordinal(standing.me.rank)} of {standing.league.standings.length} {standing.league.trade ? tradePlural(standing.league.trade) : 'businesses'} on SaySites this week
                 </a>
               )}
               {next ? (
@@ -109,11 +109,11 @@ export default async function SiteOverview({ params, searchParams }: { params: P
                   <span className="muted small">{next.why}</span>
                   <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
                     <a className="btn btn-primary btn-sm" href={questLink(next)}>{next.sofie ? 'Ask Sofie' : 'Do it'}</a>
-                    <a className="btn btn-ghost btn-sm" href={`${base}/visibility`}>All {vis.quests.length} quests</a>
+                    <a className="btn btn-ghost btn-sm" href={`${base}/visibility`}>All {vis.quests.length} opportunities</a>
                   </span>
                 </>
               ) : (
-                <strong>Every quest done. Keep posting monthly to hold your score.</strong>
+                <strong>Every opportunity taken. Keep posting monthly to hold your score.</strong>
               )}
             </div>
           </div>

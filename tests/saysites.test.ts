@@ -983,7 +983,7 @@ describe('SaySites: leagues', async () => {
     const all = leagues([...plumbers, baker], start, '2026-09-25')
     const pl = all.find((l) => l.trade === 'Plumber')!
     expect(pl.standings.map((s) => s.siteId)).toEqual(['s4', 's3', 's2', 's1', 's0'])
-    expect(pl.standings[0].titles).toContain('Climber of the week')
+    expect(pl.standings[0].titles).toContain('Greatest gain')
     expect(pl.standings[0].label).toBe('A plumber in Rivertown')
     const open = all.find((l) => l.trade === null)!
     expect(open.standings[0]).toMatchObject({ siteId: 's99', label: 'Biz 99', isPublic: true, gain: 10 })
