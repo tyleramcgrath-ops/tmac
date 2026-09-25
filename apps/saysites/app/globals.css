@@ -392,7 +392,7 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 @media (prefers-reduced-motion: reduce) { .logo-sketching .dots i { animation: none; } }
 .logo-grid { display: grid; gap: 14px; margin-top: 18px; transition: opacity .2s ease; }
 .logo-grid.dim { opacity: .45; }
-.logo-idea { padding: 0; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+.logo-idea { margin: 0; padding: 0; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
 .logo-idea.chosen { border-color: var(--mint); box-shadow: 0 0 0 2px var(--mint-soft); }
 .logo-stage { background: #fff; border-right: 1px solid var(--line); display: flex; align-items: center; justify-content: center; padding: 34px 32px; min-height: 170px; }
 .logo-big { display: block; height: 96px; width: auto; max-width: 100%; object-fit: contain; }
