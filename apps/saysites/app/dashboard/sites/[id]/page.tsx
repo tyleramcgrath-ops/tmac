@@ -1,11 +1,12 @@
 import { notFound } from 'next/navigation'
-import { checkPage, checkSpeed, renderPage } from '@/lib'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
-import { dayString, daysBefore, summarizeVisits } from '@/lib/visits'
+import { dayString, daysBefore } from '@/lib/visits'
+import { scoreSite } from '@/lib/site-score'
 import { milestones } from '@/lib/milestones'
-import { questLink, visibility } from '@/lib/visibility'
+import { questLink } from '@/lib/visibility'
+import { leagueFor, leagues, ordinal, weekStart } from '@/lib/league'
 import { ScoreDial } from '@/components/ScoreDial'
 import { Milestones } from '@/components/Milestones'
 
@@ -23,31 +24,16 @@ export default async function SiteOverview({ params, searchParams }: { params: P
     store.visitsSince(site.id, daysBefore(today, 59)),
   ])
   const [media, everVisited] = await Promise.all([store.mediaForSite(site.id), store.visitsSince(site.id, '2000-01-01')])
-  const traffic = summarizeVisits(visits, today)
+  // The same checks that gate publishing, summed up.
+  const { errors, tips, fast, traffic, vis } = await scoreSite(store, site, today, pages, media, visits)
   const sparkMax = Math.max(1, ...traffic.days.map((d) => d.views))
   const spark = traffic.days.map((d, i) => `${i ? 'L' : 'M'}${i} ${(20 - (d.views / sparkMax) * 18).toFixed(1)}`).join(' ')
-
-  // The same checks that gate publishing, summed up.
-  const checks = pages.map((p) => ({ issues: checkPage(p, pages), speed: checkSpeed(renderPage(site, p, pages)) }))
-  const errors = checks.reduce((n, c) => n + c.issues.filter((i) => i.severity === 'error').length, 0)
-  const tips = checks.reduce((n, c) => n + c.issues.filter((i) => i.severity === 'warning').length, 0)
-  const fast = checks.every((c) => c.speed.pass)
   const lastSofie = [...sofie.chat].reverse().find((t) => t.role === 'sofie' && t.changes?.length)
   const base = `/dashboard/sites/${site.id}`
   const b = site.business
-
-  const vis = visibility({
-    site,
-    pages,
-    seoErrors: errors,
-    seoTips: tips,
-    fast,
-    photos: media.filter((m) => m.mime !== 'image/svg+xml').length,
-    visits30: traffic.total,
-    visitsPrev30: traffic.previous,
-    today,
-  })
   const next = vis.quests[0]
+  const start = weekStart(today)
+  const standing = leagueFor(leagues(await store.leagueSites(daysBefore(start, 7 * 14)), start, today), site.id)
   const marks = milestones({
     siteName: b.name,
     base,
@@ -112,6 +98,11 @@ export default async function SiteOverview({ params, searchParams }: { params: P
             <ScoreDial siteId={site.id} score={vis.score} band={vis.band} size={128} />
             <div className="vis-next">
               <span className="stat-label">Visibility</span>
+              {standing && standing.league.standings.length > 1 && (
+                <a className="league-line" href={`${base}/visibility`}>
+                  {ordinal(standing.me.rank)} of {standing.league.standings.length} in the {standing.league.name} league this week
+                </a>
+              )}
               {next ? (
                 <>
                   <strong>Next: +{next.points} · {next.title}</strong>

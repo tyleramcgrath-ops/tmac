@@ -416,6 +416,9 @@ export const SiteSchema = z
       .object({ google: z.string().regex(/^[\w-]{10,100}$/).optional(), bing: z.string().regex(/^[\w-]{10,100}$/).optional() })
       .strict()
       .optional(),
+    // Weekly leagues: whether other owners and saysites.com/leaderboard see
+    // the business name. Anonymous unless the owner opts in.
+    league: z.object({ public: z.boolean() }).strict().optional(),
     updatedAt: z.string(),
   })
   .strict()
