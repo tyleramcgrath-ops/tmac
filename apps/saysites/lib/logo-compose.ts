@@ -4,7 +4,7 @@
 // looks the same on every device, with proper kerning), exact measuring,
 // optical centring and even spacing. The output is plain SVG shapes.
 
-import opentype from 'opentype.js'
+import * as opentype from 'opentype.js'
 import { sanitizeSvg, SvgError } from './svg'
 
 // Open-licence typefaces from Google Fonts, each with a clear character.
