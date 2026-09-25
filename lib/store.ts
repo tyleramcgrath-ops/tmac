@@ -152,6 +152,23 @@ export interface Store {
   // What people tell us about SaySites itself (the feedback button).
   addFeedback(f: Feedback): Promise<void>
   feedback(limit: number): Promise<Feedback[]>
+  // Launch-day numbers for the team (admin only): totals, and since a day.
+  launchStats(sinceDay: string): Promise<LaunchStats>
+}
+
+export interface LaunchStats {
+  users: number
+  usersSince: number
+  birthday: number
+  paying: number
+  sites: number
+  sitesSince: number
+  feedback: number
+  feedbackSince: number
+  messagesSince: number
+  viewsSince: number
+  callsSince: number
+  recent: { name: string; email: string; createdAt: string; sites: number; promo?: string; status?: string; reward: boolean }[]
 }
 
 export interface Feedback {
@@ -507,6 +524,37 @@ class PgStore implements Store {
   async feedback(limit: number) {
     return (await this.q<{ data: Feedback }>('SELECT data FROM ss_feedback ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
   }
+  async launchStats(sinceDay: string) {
+    const [t] = await this.q<Record<string, string | null>>(
+      `SELECT
+        (SELECT count(*) FROM ss_users) AS users,
+        (SELECT count(*) FROM ss_users WHERE created_at >= $1::date) AS users_since,
+        (SELECT count(*) FROM ss_billing WHERE data->>'promo' = 'BIRTHDAY') AS birthday,
+        (SELECT count(*) FROM ss_billing WHERE data->>'status' = 'active') AS paying,
+        (SELECT count(*) FROM ss_sites) AS sites,
+        (SELECT count(*) FROM ss_sites WHERE created_at >= $1::date) AS sites_since,
+        (SELECT count(*) FROM ss_feedback) AS feedback,
+        (SELECT count(*) FROM ss_feedback WHERE created_at >= $1::date) AS feedback_since,
+        (SELECT count(*) FROM ss_messages WHERE created_at >= $1::date) AS messages_since,
+        (SELECT coalesce(sum(views), 0) FROM ss_visits WHERE day >= $1::date AND path <> '#call') AS views_since,
+        (SELECT coalesce(sum(views), 0) FROM ss_visits WHERE day >= $1::date AND path = '#call') AS calls_since`,
+      [sinceDay],
+    )
+    const rows = await this.q<{ name: string; email: string; created_at: Date; sites: string; promo: string | null; status: string | null; reward: string | null }>(
+      `SELECT u.name, u.email, u.created_at,
+        (SELECT count(*) FROM ss_sites s WHERE s.owner_id = u.id) AS sites,
+        b.data->>'promo' AS promo, b.data->>'status' AS status, b.data->>'feedbackReward' AS reward
+       FROM ss_users u LEFT JOIN ss_billing b ON b.user_id = u.id
+       ORDER BY u.created_at DESC LIMIT 25`,
+    )
+    const n = (k: string) => Number(t?.[k] ?? 0)
+    return {
+      users: n('users'), usersSince: n('users_since'), birthday: n('birthday'), paying: n('paying'),
+      sites: n('sites'), sitesSince: n('sites_since'), feedback: n('feedback'), feedbackSince: n('feedback_since'),
+      messagesSince: n('messages_since'), viewsSince: n('views_since'), callsSince: n('calls_since'),
+      recent: rows.map((r) => ({ name: r.name, email: r.email, createdAt: new Date(r.created_at).toISOString(), sites: Number(r.sites), promo: r.promo ?? undefined, status: r.status ?? undefined, reward: !!r.reward })),
+    }
+  }
   async billing(userId: string) {
     const r = await this.q<{ data: Billing }>('SELECT data FROM ss_billing WHERE user_id = $1', [userId])
     return r[0]?.data ?? null
@@ -572,7 +620,7 @@ function toUser(r: Record<string, unknown> | undefined): User | null {
 export class MemoryStore implements Store {
   readonly persistent = false
   private users = new Map<string, User>()
-  private sites = new Map<string, { ownerId: string; site: Site }>()
+  private sites = new Map<string, { ownerId: string; site: Site; at?: string }>()
   private pages = new Map<string, Page>()
   readonly revisions: { pageId: string; author: RevisionAuthor; note?: string }[] = []
 
@@ -589,7 +637,7 @@ export class MemoryStore implements Store {
   }
   async createSite(ownerId: string, site: Site, pages: Page[]) {
     if (await this.subdomainTaken(site.subdomain)) throw new Error('subdomain taken')
-    this.sites.set(site.id, { ownerId, site: SiteSchema.parse(site) })
+    this.sites.set(site.id, { ownerId, site: SiteSchema.parse(site), at: new Date().toISOString() })
     for (const p of pages) await this.savePage(p, 'owner', ownerId, 'Site created')
   }
   async sitesForUser(ownerId: string) {
@@ -749,6 +797,33 @@ export class MemoryStore implements Store {
   }
   async saveBilling(userId: string, b: Billing) {
     this.bills.set(userId, b)
+  }
+  async launchStats(sinceDay: string) {
+    const users = [...this.users.values()]
+    const sites = [...this.sites.values()]
+    const bills = [...this.bills.values()]
+    const visits = [...this.visits.values()].filter((v) => v.day >= sinceDay)
+    const since = (at: string) => at.slice(0, 10) >= sinceDay
+    return {
+      users: users.length,
+      usersSince: users.filter((u) => since(u.createdAt)).length,
+      birthday: bills.filter((b) => b.promo === 'BIRTHDAY').length,
+      paying: bills.filter((b) => b.status === 'active').length,
+      sites: sites.length,
+      sitesSince: sites.filter((s) => s.at && since(s.at)).length,
+      feedback: this.notes.length,
+      feedbackSince: this.notes.filter((f) => since(f.at)).length,
+      messagesSince: this.messages.filter((m) => since(m.createdAt)).length,
+      viewsSince: visits.filter((v) => v.path !== '#call').reduce((n, v) => n + v.views, 0),
+      callsSince: visits.filter((v) => v.path === '#call').reduce((n, v) => n + v.views, 0),
+      recent: [...users]
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .slice(0, 25)
+        .map((u) => {
+          const b = this.bills.get(u.id)
+          return { name: u.name, email: u.email, createdAt: u.createdAt, sites: sites.filter((s) => s.ownerId === u.id).length, promo: b?.promo, status: b?.status, reward: !!b?.feedbackReward }
+        }),
+    }
   }
   private usage = new Map<string, { micros: number; messages: number }>()
   async recordUsage(siteId: string, day: string, micros: number) {
