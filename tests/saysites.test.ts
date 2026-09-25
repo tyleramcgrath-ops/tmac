@@ -9,6 +9,7 @@ import {
   robotsTxt,
   sitemapXml,
   structuredData,
+  walk,
   type Page,
 } from '../apps/saysites/lib'
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
@@ -1025,5 +1026,25 @@ describe('SaySites: showcase logos', async () => {
     const home = pages.find((p) => p.slug === '')!
     const json = JSON.stringify(structuredData(site, home, pages))
     expect(json).toContain('"logo":"https://rivertown-plumbing.saysites.com/media/logos/rivertown-plumbing.svg"')
+  })
+})
+
+describe('SaySites: law firm starter', () => {
+  it('builds practice areas, a consultation request and the attorney advertising notice', () => {
+    const { site, pages } = buildStarterSite({ name: 'Hale & Porter Law', type: 'lawyer', city: 'Columbus', region: 'OH', phone: '(555) 614-2290', services: ['Estate planning', 'Family law', 'Real estate closings'], palette: 'slate' }, 'org_x', 'hale-test')
+    expect(pages.map((p) => p.slug)).toEqual(['', 'practice-areas', 'contact'])
+    expect(site.nav[0]).toEqual({ label: 'Practice Areas', href: '/practice-areas' })
+    expect(site.footerNote).toMatch(/Attorney advertising.*not legal advice.*attorney-client relationship.*Prior results/)
+    const home = pages[0]
+    const h1 = [...walk(home.body)].find((e) => e.type === 'heading' && e.level === 1)
+    expect(h1 && 'text' in h1 && h1.text).toBe('Estate planning and family law attorneys in Columbus.')
+    expect(home.seo.title.length).toBeLessThanOrEqual(60)
+    expect(home.seo.title).toContain('Attorneys in Columbus, OH')
+    expect(renderPage(site, home, pages).html).toContain('Attorney advertising.')
+    for (const p of pages) expect(checkPage(p, pages).filter((i) => i.severity === 'error')).toEqual([])
+    // Other trades are unchanged.
+    const plumber = buildStarterSite({ name: 'P', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'o', 'p')
+    expect(plumber.site.footerNote).toBeUndefined()
+    expect(plumber.pages.map((p) => p.slug)).toEqual(['', 'services', 'contact'])
   })
 })

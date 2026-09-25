@@ -111,10 +111,17 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const phone = input.phone?.trim() || undefined
   const email = input.email?.trim() || undefined
   const colors = PALETTES[input.palette]?.colors ?? PALETTES.ocean.colors
+  // Law firms get what legal clients look for: practice areas, a
+  // consultation request, and the notices bar rules expect.
+  const law = input.type === 'lawyer'
+  const svcHref = law ? '/practice-areas' : '/services'
+  const svcLabel = law ? 'Practice Areas' : 'Services'
 
-  const cta = phone
-    ? { label: design === 'bold' ? `Call ${phone}` : 'Call us', href: telHref(phone) }
-    : { label: design === 'editorial' ? 'Book a visit' : 'Get in touch', href: '/contact' }
+  const cta = law
+    ? { label: 'Request a consultation', href: '/contact' }
+    : phone
+      ? { label: design === 'bold' ? `Call ${phone}` : 'Call us', href: telHref(phone) }
+      : { label: design === 'editorial' ? 'Book a visit' : 'Get in touch', href: '/contact' }
 
   const site: Site = {
     id: siteId,
@@ -132,28 +139,40 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     },
     globals: { colors, ...DESIGN_GLOBALS[design] },
     nav: [
-      { label: 'Services', href: '/services' },
+      { label: svcLabel, href: svcHref },
       { label: 'Contact', href: '/contact' },
     ],
-    header: {
-      ...(design === 'bold' ? { topbar: `${cap(t.trade)} for homes and businesses across ${place}` } : {}),
-      cta: phone && design === 'bold' ? { label: 'Call now', href: telHref(phone) } : { label: cta.label, href: cta.href },
-    },
+    header: law
+      ? { topbar: `Serving clients across ${place}`, cta: phone ? { label: `Call ${phone}`, href: telHref(phone) } : { label: cta.label, href: cta.href } }
+      : {
+          ...(design === 'bold' ? { topbar: `${cap(t.trade)} for homes and businesses across ${place}` } : {}),
+          cta: phone && design === 'bold' ? { label: 'Call now', href: telHref(phone) } : { label: cta.label, href: cta.href },
+        },
+    ...(law
+      ? { footerNote: 'Attorney advertising. The information on this website is for general information only and is not legal advice. Contacting us does not create an attorney-client relationship. Prior results do not guarantee a similar outcome.' }
+      : {}),
     tagline: input.tagline?.trim() || `${cap(t.trade)} in ${place}. Friendly, local and easy to reach.`,
     updatedAt: now,
   }
 
-  const headline = t.headline.replace('{city}', city).replace('{name}', name)
+  // Law firms lead with what they do and where, the way clients search:
+  // "Estate planning and family law attorneys in Columbus."
+  const headline =
+    law && services.length
+      ? `${cap(joinAnd(list.slice(0, 2).map(soften)))} attorneys in ${city}.`
+      : t.headline.replace('{city}', city).replace('{name}', name)
   // With no services listed, talk about the trade itself ("roofing").
   const offer = services.length ? list.slice(0, 3).map(soften).join(', ') : t.trade
   const intro = {
     bold: `${name} helps people across ${place} with ${offer}. Straight answers, fair prices and work done right.`,
-    editorial: `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
+    editorial: law
+      ? `${name} helps people across ${place} with ${offer}. We explain where you stand, your options and what it will cost, in plain English, before you decide anything.`
+      : `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
   }[design]
   // "Other" businesses could be anything, so their intro makes no claims.
   const introText = input.type === 'other' ? `${name} serves customers across ${place}${services.length ? ` with ${offer}` : ''}. Friendly, local and easy to reach.` : intro
-  const more = { bold: 'See our services', editorial: 'View services', warm: 'See what we offer' }[design]
+  const more = law ? 'Practice areas' : { bold: 'See our services', editorial: 'View services', warm: 'See what we offer' }[design]
   // Three ways to say it per design, so neighbouring cards don't repeat.
   const cardText = (s: string, i = 0) =>
     ({
@@ -162,11 +181,17 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         `Clear pricing before we start and a tidy job when we leave. ${cap(soften(s))} you can count on.`,
         `Local, licensed and quick to respond. Tell us what you need and we'll take it from there.`,
       ],
-      editorial: [
+      editorial: law
+        ? [
+            `${s}: we’ll explain where you stand and the options open to you, in plain English.`,
+            `Clear advice on ${soften(s)}, and a straight answer on cost before any work begins.`,
+            `Careful, personal representation. You’ll always know what happens next and why.`,
+          ]
+        : [
         `${s}, with time to talk through exactly what you want.`,
         `Unhurried appointments and honest advice, so you always know your options.`,
         `Careful, personal and never rushed. We'll make sure it's right for you.`,
-      ],
+          ],
       warm: [
         `${s}, made fresh here in ${city}.`,
         `Made by hand in small batches, the way we'd want it ourselves.`,
@@ -187,7 +212,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       style: { gap: { desktop: 12 }, margin: { desktop: { top: 14, right: 0, bottom: 0, left: 0 } } },
       children: [
         { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light ? { style: { background: '#ffffff', color: 'secondary' } } : {}) },
-        { id: 'hero-services', type: 'button', label: more, href: '/services', variant: 'outline', ...(light ? { style: { color: '#ffffff' } } : {}) },
+        law && phone
+          ? { id: 'hero-services', type: 'button', label: 'Call now', href: telHref(phone), variant: 'outline' }
+          : { id: 'hero-services', type: 'button', label: more, href: svcHref, variant: 'outline', ...(light ? { style: { color: '#ffffff' } } : {}) },
       ],
     },
   ]
@@ -219,7 +246,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         style: { gap: { desktop: 10 } },
         children: [
           { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: { desktop: 42, mobile: 30 } } },
-          { id: 'services-t', type: 'text', text: `Here's how ${name} can help. Not sure what you need? Just ask.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+          { id: 'services-t', type: 'text', text: law ? `The areas of law ${name} handles. Not sure which applies to you? Ask, and we’ll tell you honestly.` : `Here's how ${name} can help. Not sure what you need? Just ask.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
         ],
       },
       {
@@ -232,7 +259,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         children: list.slice(0, 3).map((s, i) => card(s, i, photos.cards[i % 3], aspect)),
       },
       ...(list.length > 3
-        ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: '/services', variant: 'outline' as const }]
+        ? [{ id: 'services-all', type: 'button' as const, label: law ? `All ${list.length} practice areas` : `All ${list.length} services`, href: svcHref, variant: 'outline' as const }]
         : []),
     ],
   })
@@ -246,15 +273,22 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     boxed: true,
     style: { background: 'surface', padding: section, gap: { desktop: 48, mobile: 20 } },
     children: [
-      { id: 'faq-h', type: 'heading', level: 2, text: 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
+      { id: 'faq-h', type: 'heading', level: 2, text: law ? 'Questions clients ask' : 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
       {
         id: 'faq-list',
         type: 'faq',
-        items: [
+        items: law
+          ? [
+              { question: 'What happens at a consultation?', answer: `We listen to what happened, explain where you stand and the options open to you, and tell you what it would cost before you decide anything.` },
+              { question: 'Is what I tell you confidential?', answer: `Yes, what you tell us in a consultation is kept confidential. Sending a message through this website doesn't create an attorney-client relationship, so please keep sensitive details for when we speak.` },
+              { question: 'How do your fees work?', answer: `It depends on the matter. We explain our fees clearly at the start, in writing, before any work begins.` },
+              { question: 'Which areas do you serve?', answer: `We help clients across ${place} and the surrounding area. Not sure if we can help? Just ask.` },
+            ]
+          : [
           { question: 'Which areas do you serve?', answer: `We work across ${place} and the surrounding area. Not sure if we cover you? Just ask.` },
           { question: 'How do I get a quote?', answer: phone ? `Call us on ${phone} or send a message from our contact page, and we'll get back to you quickly.` : `Send us a message from our contact page and we'll get back to you quickly.` },
           { question: 'How soon can you help?', answer: `Usually quickly. Get in touch and we'll tell you the first time that works for you.` },
-        ],
+            ],
       },
     ],
   }
@@ -268,8 +302,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     align: 'center',
     style: { background: 'secondary', color: 'background', padding: { desktop: pad(88), mobile: pad(56, 20) }, gap: { desktop: 16 }, textAlign: { desktop: 'center' } },
     children: [
-      { id: 'cta-h', type: 'heading', level: 2, text: 'Ready when you are', style: { fontSize: { desktop: 44, mobile: 32 }, color: 'background' } },
-      { id: 'cta-t', type: 'text', text: `Tell us what you need and ${name} will take it from there.`, style: { fontSize: { desktop: 18 }, maxWidth: 520 } },
+      { id: 'cta-h', type: 'heading', level: 2, text: law ? 'Talk to us about your situation' : 'Ready when you are', style: { fontSize: { desktop: 44, mobile: 32 }, color: 'background' } },
+      { id: 'cta-t', type: 'text', text: law ? `Tell us what happened. ${name} will explain your options and the next step.` : `Tell us what you need and ${name} will take it from there.`, style: { fontSize: { desktop: 18 }, maxWidth: 520 } },
       { id: 'cta-btn', type: 'button', label: cta.label, href: cta.href, variant: 'primary', style: { background: 'background', color: 'secondary', margin: { desktop: { top: 10, right: 0, bottom: 0, left: 0 } } } },
     ],
   }
@@ -346,11 +380,37 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         align: 'center',
         style: { padding: { desktop: pad(104), mobile: pad(64, 20) }, textAlign: { desktop: 'center' }, gap: { desktop: 16 } },
         children: [
-          { id: 'intro-h', type: 'heading', level: 2, text: `Unhurried, personal and always honest. That's ${name}.`, style: { fontSize: { desktop: 40, mobile: 28 }, maxWidth: 820 } },
-          { id: 'intro-t', type: 'text', text: `We take the time to listen, explain your options and do the work with care. It's why people across ${city} keep coming back.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 620 } },
+          { id: 'intro-h', type: 'heading', level: 2, text: law ? 'How working with us begins' : `Unhurried, personal and always honest. That's ${name}.`, style: { fontSize: { desktop: 40, mobile: 28 }, maxWidth: 820 } },
+          { id: 'intro-t', type: 'text', text: law ? `No jargon and no pressure. Three simple steps, and you decide at every one.` : `We take the time to listen, explain your options and do the work with care. It's why people across ${city} keep coming back.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 620 } },
+          ...(law
+            ? [
+                {
+                  id: 'steps',
+                  type: 'container' as const,
+                  layout: 'grid' as const,
+                  columns: { desktop: 3, mobile: 1 },
+                  style: { gap: { desktop: 32, mobile: 24 }, margin: { desktop: { top: 32, right: 0, bottom: 0, left: 0 } }, textAlign: { desktop: 'left' as const } },
+                  children: [
+                    ['01', 'Tell us what happened', phone ? `Call ${phone} or send a message. We’ll get back to you promptly.` : 'Send us a message and we’ll get back to you promptly.'],
+                    ['02', 'Understand your options', 'We explain where you stand, what could happen next and what it would cost.'],
+                    ['03', 'Decide with a clear plan', 'If you want our help, we agree the next steps and fees in writing before any work begins.'],
+                  ].map(([n, h, d]): Container => ({
+                    id: `step-${n}`,
+                    type: 'container',
+                    layout: 'flex',
+                    style: { gap: { desktop: 8 }, padding: { desktop: pad(28, 28), mobile: pad(22, 20) }, background: 'surface', borderRadius: 2 },
+                    children: [
+                      { id: `step-${n}-n`, type: 'text', text: n, style: { color: 'primary', fontWeight: 600, fontSize: { desktop: 14 }, letterSpacing: 0.12 } },
+                      { id: `step-${n}-h`, type: 'heading', level: 3, text: h, style: { fontSize: { desktop: 24 } } },
+                      { id: `step-${n}-t`, type: 'text', text: d, style: { color: 'muted' } },
+                    ],
+                  })),
+                },
+              ]
+            : []),
         ],
       },
-      { ...servicesSection('Services', 0.8), style: { padding: { desktop: { top: 0, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 40 } } },
+      { ...servicesSection(law ? 'Practice areas' : 'Services', 0.8), style: { padding: { desktop: { top: 0, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 40 } } },
       faq,
       ctaBand,
     ]
@@ -424,7 +484,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     name: 'Home',
     status: 'published',
     seo: {
-      title: clip(`${name} | ${cap(t.trade)} in ${place}`, 60),
+      title: law && services.length ? clip(`${cap(soften(list[0]))} Attorneys in ${place} | ${name}`, 60) : clip(`${name} | ${cap(t.trade)} in ${place}`, 60),
       description: clip(`${name} provides ${t.trade} in ${place}${services.length ? `: ${list.slice(0, 3).map(soften).join(', ')}` : ''}. Friendly, local and easy to reach. Get in touch today.`, 160),
     },
     body: homeBody,
@@ -448,15 +508,17 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const servicesPage: Page = {
     id: pageId('services'),
     siteId,
-    slug: 'services',
-    name: 'Services',
+    slug: law ? 'practice-areas' : 'services',
+    name: law ? 'Practice Areas' : 'Services',
     status: 'published',
     seo: {
-      title: clip(`${cap(t.trade)} services in ${place} | ${name}`, 60),
-      description: clip(`${list.join(', ')} from ${name}, serving ${place}. Clear pricing and friendly local service.`, 160),
+      title: law ? clip(`Practice Areas | ${name}, ${place}`, 60) : clip(`${cap(t.trade)} services in ${place} | ${name}`, 60),
+      description: law
+        ? clip(`${list.join(', ')}: the areas of law ${name} handles for clients in ${place}. Clear advice and straight answers on cost.`, 160)
+        : clip(`${list.join(', ')} from ${name}, serving ${place}. Clear pricing and friendly local service.`, 160),
     },
     body: [
-      banner('svc-banner', 'Our services', `Here's what ${name} can help you with in ${place}.`),
+      law ? banner('svc-banner', 'Practice areas', `The areas of law ${name} handles for clients across ${place}.`) : banner('svc-banner', 'Our services', `Here's what ${name} can help you with in ${place}.`),
       {
         id: 'svc',
         type: 'container',
@@ -483,7 +545,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                   style: { gap: { desktop: 10 } },
                   children: [
                     { id: `item-${i + 1}-h`, type: 'heading', level: 2, text: s, style: { fontSize: { desktop: 34, mobile: 26 } } },
-                    { id: `item-${i + 1}-t`, type: 'text', text: design === 'bold' ? `${s}: we'll explain your options, give you a clear price and do the job properly.` : `${s}: tell us what you have in mind and we'll take it from there.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
+                    { id: `item-${i + 1}-t`, type: 'text', text: law ? `${s}: we’ll listen, explain where you stand and your options, and give you a straight answer on cost before any work begins.` : design === 'bold' ? `${s}: we'll explain your options, give you a clear price and do the job properly.` : `${s}: tell us what you have in mind and we'll take it from there.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
                   ],
                 },
               ],
@@ -504,7 +566,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     name: 'Contact',
     status: 'published',
     seo: {
-      title: clip(`Contact ${name} | ${cap(t.trade)} in ${city}`, 60),
+      title: law ? clip(`Contact ${name} | Attorneys in ${city}`, 60) : clip(`Contact ${name} | ${cap(t.trade)} in ${city}`, 60),
       description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Send a message, call or email and we'll get back to you quickly.`, 160),
     },
     body: [
@@ -526,12 +588,15 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
             children: [
               { id: 'contact-h', type: 'heading', level: 1, text: `Contact ${name}`, style: { fontSize: { desktop: 52, mobile: 36 } } },
               { id: 'contact-t', type: 'text', text: contactLines.join('\n\n'), style: { fontSize: { desktop: 19 } } },
+              ...(law
+                ? [{ id: 'contact-note', type: 'text' as const, text: 'Sending a message doesn’t create an attorney-client relationship. Please don’t include confidential details until we’ve spoken.', style: { color: 'muted' as const, fontSize: { desktop: 15 } } }]
+                : []),
               {
                 id: 'contact-form',
                 type: 'form',
                 fields: ['name', 'email', 'phone', 'message'],
-                submitLabel: design === 'editorial' ? 'Send request' : 'Send message',
-                thanks: `Thanks! ${name} has your message and will get back to you soon.`,
+                submitLabel: law ? 'Request a consultation' : design === 'editorial' ? 'Send request' : 'Send message',
+                thanks: law ? `Thank you. ${name} has your message and will be in touch soon.` : `Thanks! ${name} has your message and will get back to you soon.`,
                 style: { margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
               },
             ],
@@ -552,6 +617,10 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
 export function soften(s: string): string {
   const [first, ...rest] = s.split(' ')
   return rest.length && /^[A-Z][a-z]+$/.test(first) ? first.toLowerCase() + (rest.length ? ' ' + rest.join(' ') : '') : s
+}
+
+function joinAnd(xs: string[]): string {
+  return xs.length <= 1 ? (xs[0] ?? '') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`
 }
 
 function cap(s: string): string {
