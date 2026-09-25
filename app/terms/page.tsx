@@ -25,6 +25,7 @@ export default function Terms() {
             <li>Only publish content you have the right to use.</li>
             <li>Don’t use SaySites for anything illegal, deceptive or harmful, or to send spam.</li>
             <li>Don’t try to break, overload or get around the security of the service.</li>
+            <li>Every site must follow <a href="https://developers.google.com/search/docs/essentials">Google Search Essentials</a> and Google’s spam policies: no keyword stuffing, hidden text, doorway pages, fake reviews or misleading claims. SaySites is built to earn rankings honestly, and Sofie won’t make changes that break these rules.</li>
           </ul>
           <p>We may take down content or close accounts that break these rules.</p>
           <h2>Sofie</h2>

@@ -107,7 +107,7 @@ export function visibility(f: VisibilityFacts): Visibility {
     { id: 'reviews', area: 'Trust', points: 3, done: has(pages, 'testimonials'), title: 'Show what customers say', why: 'Reviews on your site help people choose you.', href: `${base}/sofie`, sofie: 'Add a testimonials section to my home page. Here are some real reviews from customers: ', sofieFill: true },
     // Momentum: is it working?
     { id: 'traffic', area: 'Momentum', points: 5, done: f.visits30 > 0, title: 'Get your first visitors', why: 'Share your address on Google, Facebook and your van.', href: `${base}/visitors` },
-    { id: 'growth', area: 'Momentum', points: 5, done: f.visits30 > 0 && f.visits30 > f.visitsPrev30, title: 'Grow visits over last month', why: 'Every quest above feeds this one.', href: `${base}/visitors` },
+    { id: 'growth', area: 'Momentum', points: 5, done: f.visits30 > 0 && f.visits30 > f.visitsPrev30, title: 'Grow visits over last month', why: 'Everything above feeds this one.', href: `${base}/visitors` },
   ]
 
   const score = all.reduce((n, q) => n + (q.done ? q.points : 0), 0)

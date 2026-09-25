@@ -324,6 +324,19 @@
 .page-hero h1 { font-size: clamp(44px, 6.4vw, 88px); line-height: .98; letter-spacing: -0.045em; max-width: 900px; }
 .page-hero p { font-size: 19px; color: var(--ink-mu); max-width: 620px; margin: 22px 0 0; }
 .gallery { padding: 0 0 120px; }
+.lb { padding: 0 0 120px; }
+.ix { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.ix caption { text-align: left; caption-side: top; color: var(--ink-mu); font-size: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--ink); }
+.ix th, .ix td { padding: 16px 12px 16px 0; border-bottom: 1px solid var(--line); text-align: right; font-weight: 500; }
+.ix thead th { font-size: 13px; color: var(--ink-mu); font-weight: 500; }
+.ix th:first-child { text-align: left; }
+.ix tbody th { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.ix td { font-size: 18px; }
+@media (max-width: 640px) { .ix thead th:nth-child(4), .ix td:nth-child(4) { display: none; } .ix th, .ix td { padding-right: 8px; } .ix tbody th { font-size: 17px; } }
+.lb-empty { border-top: 1px solid var(--ink); padding-top: 24px; max-width: 620px; }
+.lb-empty h2 { font-size: 30px; margin: 0 0 8px; }
+.lb-empty p { color: var(--ink-mu); margin: 0 0 24px; }
+.lb-note { margin: 56px 0 0; color: var(--ink-mu); font-size: 14px; max-width: 620px; }
 .gal-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
 .gal-filter a { font-size: 14.5px; font-weight: 500; color: var(--ink-mu); text-decoration: none; padding: 7px 14px; border-radius: 99px; box-shadow: inset 0 0 0 1px var(--line); }
 .gal-filter a:hover, .gal-filter a[aria-current] { color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }

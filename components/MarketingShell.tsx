@@ -30,6 +30,7 @@ export function SiteFooter() {
         <Logo />
         <nav aria-label="Footer">
           <a href="/templates">Templates</a>
+          <a href="/visibility-index">The Index</a>
           <a href="/#pricing">Pricing</a>
           <a href="/#faq">FAQ</a>
           <a href="/privacy">Privacy</a>

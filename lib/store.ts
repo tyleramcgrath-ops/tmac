@@ -9,6 +9,7 @@ import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
 import { SHOWCASE } from './showcase'
 import { PageSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
+import type { LeagueSite } from './league'
 import type { ChatTurn, Snapshot } from './sofie'
 
 // Sofie's working state for one site: the chat, plus a draft of her edits
@@ -116,6 +117,10 @@ export interface Store {
   recordVisit(siteId: string, day: string, path: string): Promise<void>
   // Page views per day and page since a day (inclusive).
   visitsSince(siteId: string, day: string): Promise<Visit[]>
+  // Today's Visibility Score, kept once per day for the weekly leagues.
+  recordScore(siteId: string, day: string, score: number): Promise<void>
+  // Every site with a score since `day`, with its scores and daily views.
+  leagueSites(day: string): Promise<LeagueSite[]>
 }
 
 // Page views are counted per day and page, and nothing else: no cookies,
@@ -202,6 +207,12 @@ CREATE TABLE IF NOT EXISTS ss_visits (
   path TEXT NOT NULL,
   views INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (site_id, day, path)
+);
+CREATE TABLE IF NOT EXISTS ss_scores (
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  day DATE NOT NULL,
+  score SMALLINT NOT NULL,
+  PRIMARY KEY (site_id, day)
 );
 CREATE TABLE IF NOT EXISTS ss_logo_ideas (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
@@ -376,6 +387,24 @@ class PgStore implements Store {
     )
     return rows.map((r) => ({ day: r.day, path: r.path, views: Number(r.views) }))
   }
+  async recordScore(siteId: string, day: string, score: number) {
+    await this.q('INSERT INTO ss_scores (site_id, day, score) VALUES ($1,$2,$3) ON CONFLICT (site_id, day) DO UPDATE SET score = EXCLUDED.score', [siteId, day, score])
+  }
+  async leagueSites(day: string) {
+    const [sites, scores, visits] = await Promise.all([
+      this.q<{ data: Site }>('SELECT s.data FROM ss_sites s WHERE EXISTS (SELECT 1 FROM ss_scores c WHERE c.site_id = s.id AND c.day >= $1)', [day]),
+      this.q<{ site_id: string; day: string; score: number }>("SELECT site_id, to_char(day, 'YYYY-MM-DD') AS day, score FROM ss_scores WHERE day >= $1", [day]),
+      this.q<{ site_id: string; day: string; views: string }>("SELECT site_id, to_char(day, 'YYYY-MM-DD') AS day, SUM(views) AS views FROM ss_visits WHERE day >= $1 GROUP BY site_id, day", [day]),
+    ])
+    const out = new Map<string, LeagueSite>()
+    for (const r of sites) {
+      const site = SiteSchema.safeParse(r.data)
+      if (site.success) out.set(site.data.id, { site: site.data, scores: [], visits: [] })
+    }
+    for (const r of scores) out.get(r.site_id)?.scores.push({ day: r.day, score: Number(r.score) })
+    for (const r of visits) out.get(r.site_id)?.visits.push({ day: r.day, views: Number(r.views) })
+    return [...out.values()]
+  }
 }
 
 function toUser(r: Record<string, unknown> | undefined): User | null {
@@ -529,6 +558,23 @@ export class MemoryStore implements Store {
       .filter((v) => v.siteId === siteId && v.day >= day)
       .map(({ day, path, views }) => ({ day, path, views }))
       .sort((a, b) => a.day.localeCompare(b.day))
+  }
+  private scores = new Map<string, { day: string; score: number }[]>()
+  async recordScore(siteId: string, day: string, score: number) {
+    const list = (this.scores.get(siteId) ?? []).filter((s) => s.day !== day)
+    this.scores.set(siteId, [...list, { day, score }])
+  }
+  async leagueSites(day: string) {
+    const out: LeagueSite[] = []
+    for (const [siteId, list] of this.scores) {
+      const site = this.sites.get(siteId)?.site
+      const scores = list.filter((s) => s.day >= day)
+      if (!site || !scores.length) continue
+      const perDay = new Map<string, number>()
+      for (const v of this.visits.values()) if (v.siteId === siteId && v.day >= day) perDay.set(v.day, (perDay.get(v.day) ?? 0) + v.views)
+      out.push({ site, scores: [...scores], visits: [...perDay].map(([d, views]) => ({ day: d, views })) })
+    }
+    return out
   }
 }
 

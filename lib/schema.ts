@@ -416,6 +416,9 @@ export const SiteSchema = z
       .object({ google: z.string().regex(/^[\w-]{10,100}$/).optional(), bing: z.string().regex(/^[\w-]{10,100}$/).optional() })
       .strict()
       .optional(),
+    // Weekly standings: sharing is reciprocal. An owner who shares sees the
+    // named standings of everyone else who shares; private by default.
+    league: z.object({ public: z.boolean() }).strict().optional(),
     updatedAt: z.string(),
   })
   .strict()
