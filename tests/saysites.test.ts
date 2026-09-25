@@ -20,6 +20,10 @@ import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
+import { photoUses, repeatedPhotos } from '../apps/saysites/lib/photo-rules'
+import { typeFromName } from '../apps/saysites/lib/type-hints'
+import { BUSINESS_TYPES, tidyPlace, tidyRegion, tidyServices } from '../apps/saysites/lib/starter'
+import { Workspace, runTool } from '../apps/saysites/lib/sofie'
 
 function clone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v))
@@ -1298,5 +1302,76 @@ describe('Google guidelines list', () => {
       expect(g.how.length).toBeGreaterThan(30)
     }
     expect(GUIDELINES.length).toBeGreaterThanOrEqual(8)
+  })
+})
+
+describe('new site details', () => {
+  it('tidies places and drops services that say nothing', () => {
+    expect(tidyPlace('jupiter')).toBe('Jupiter')
+    expect(tidyPlace('port st. lucie')).toBe('Port St. Lucie')
+    expect(tidyPlace('McKinney')).toBe('McKinney')
+    expect(tidyRegion('fl')).toBe('FL')
+    expect(tidyServices(['everything', ' ', 'drain cleaning', 'All'])).toEqual(['Drain cleaning'])
+  })
+
+  it('reads the kind of business from its name', () => {
+    expect(typeFromName("McGrath Law Firm")).toBe('lawyer')
+    expect(typeFromName('Rivera Roofing')).toBe('roofer')
+    expect(typeFromName('Blue Door')).toBeNull()
+  })
+
+  it('lets Sofie rebuild a site made for the wrong kind of business', async () => {
+    const { site, pages } = buildStarterSite({ name: "T's Law Firm", type: 'electrician', city: 'jupiter', region: 'fl', services: ['everything'], palette: 'forest', phone: '(561) 555-0142' }, 'org_x', 'ts-law-firm')
+    expect(site.business.area).toBe('Jupiter, FL')
+    expect(JSON.stringify(pages)).not.toMatch(/everything/)
+    const ws = new Workspace({ site, pages })
+    const out = await runTool(ws, 'rebuild_site', { type: 'lawyer', services: ['Estate planning', 'Family law'], city: '', region: '', headline: '', summary: 'Rebuilt as a law firm' })
+    expect(out).toBe('Done.')
+    expect(ws.site.business.schemaType).toBe('LegalService')
+    expect(ws.site.business.name).toBe("T's Law Firm")
+    expect(ws.site.business.phone).toBe('(561) 555-0142')
+    expect(ws.site.globals.colors).toEqual(site.globals.colors)
+    expect(ws.site.footerNote).toMatch(/Attorney advertising/)
+    const live = ws.pages.filter((p) => p.status === 'published')
+    expect(live.map((p) => p.slug).sort()).toContain('practice-areas')
+    expect(live.some((p) => p.slug === 'services')).toBe(false)
+    // Same address keeps its page id, so publishing replaces it.
+    expect(ws.pages.find((p) => p.slug === '')!.id).toBe(pages.find((p) => p.slug === '')!.id)
+    expect(JSON.stringify(live)).not.toMatch(/[Ee]lectric/)
+    expect(await runTool(ws, 'rebuild_site', { type: 'wizard', services: [], city: '', region: '', headline: '', summary: 'x' })).toMatch(/^Error: Unknown business type/)
+  })
+})
+
+describe('photo rules', () => {
+  it('never repeats a photo within a starter site', () => {
+    for (const type of Object.keys(BUSINESS_TYPES)) {
+      const { pages } = buildStarterSite({ name: 'X', type: type as never, city: 'A', region: 'B', services: ['One', 'Two', 'Three'], palette: 'ocean' }, 'o', 's')
+      expect(repeatedPhotos(pages)).toEqual([])
+      expect(photoUses(pages).length).toBeGreaterThan(0)
+    }
+  })
+
+  it('leaves out stock photos another customer uses, and keeps pages valid', () => {
+    const first = buildStarterSite({ name: 'A Law', type: 'lawyer', city: 'A', region: 'B', services: ['Wills'], palette: 'ocean' }, 'o', 'a')
+    const taken = new Set(photoUses(first.pages).map((u) => u.key))
+    const second = buildStarterSite({ name: 'B Law', type: 'lawyer', city: 'A', region: 'B', services: ['Wills'], palette: 'ocean' }, 'o', 'b', { taken })
+    expect(photoUses(second.pages).filter((u) => taken.has(u.key))).toEqual([])
+    for (const p of second.pages) expect(PageSchema.safeParse(p).success).toBe(true)
+  })
+
+  it('gives each stock photo to one site in the store', async () => {
+    const store = new MemoryStore()
+    await store.setSitePhotos('s1', ['photo-1', 'photo-2'])
+    await store.setSitePhotos('s2', ['photo-2', 'photo-3'])
+    expect([...(await store.photosTaken('s2'))].sort()).toEqual(['photo-1', 'photo-2'])
+    await store.setSitePhotos('s1', ['photo-1'])
+    expect([...(await store.photosTaken('s1'))]).toEqual(['photo-3'])
+  })
+
+  it('flags a stock photo from another site in Sofie\'s check', () => {
+    const { site, pages } = buildStarterSite({ name: 'X', type: 'plumber', city: 'A', region: 'B', services: [], palette: 'ocean' }, 'o', 's')
+    const key = photoUses(pages)[0].key
+    const ws = new Workspace({ site, pages }, { taken: new Set([key]) })
+    expect(ws.problems().some((p) => p.includes(key))).toBe(true)
   })
 })

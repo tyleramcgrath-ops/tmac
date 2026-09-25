@@ -18,6 +18,8 @@ const IDEAS = [
 export function SofieStudio(props: {
   siteId: string
   siteName: string
+  // Where the published site can be opened right now.
+  viewUrl: string
   initial: StudioState
   ready: boolean
   // A Talk & Design prompt to send as soon as the studio opens.
@@ -165,7 +167,8 @@ export function SofieStudio(props: {
             {state.hasDraft ? <span className="pill warn">Not live yet</span> : <span className="pill ok">Live</span>}
             <button className="btn btn-ghost btn-sm" type="button" disabled={busy || state.working || !state.canUndo} onClick={() => run(() => undoSofie(props.siteId))}>Undo</button>
             <button className="btn btn-ghost btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => confirm('Throw away all unpublished changes?') && run(() => discardDraft(props.siteId))}>Discard</button>
-            <button className="btn btn-primary btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => run(async () => {
+            <a className={`btn btn-sm ${state.hasDraft ? 'btn-ghost' : 'btn-primary'}`} href={props.viewUrl + (page ? `/${page}` : '')} target="_blank" rel="noopener">View live site ↗</a>
+            {state.hasDraft && <button className="btn btn-primary btn-sm" type="button" disabled={busy || state.working} onClick={() => run(async () => {
               const next = await publishDraft(props.siteId)
               // The first publish from Sofie gets its moment, once.
               if (!next.hasDraft && !(readSeen(props.siteId) ?? []).includes('sofie')) {
@@ -173,7 +176,7 @@ export function SofieStudio(props: {
                 celebrate({ title: props.siteName, caption: 'just changed with a sentence.' })
               }
               return next
-            })}>Publish</button>
+            })}>Publish</button>}
           </div>
         </div>
         <div className={`studio-frame studio-${device}`}>
