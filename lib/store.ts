@@ -888,7 +888,14 @@ const g = globalThis as unknown as { __saysitesStore?: Store }
 export function getStore(): Store {
   if (!g.__saysitesStore) {
     const url = process.env.DATABASE_URL
-    g.__saysitesStore = url ? new PgStore(new Pool({ connectionString: url, max: 3 })) : new MemoryStore()
+    g.__saysitesStore = url ? new PgStore(new Pool({ connectionString: pgUrl(url), max: 3 })) : new MemoryStore()
   }
   return g.__saysitesStore
+}
+
+// pg already treats sslmode=require (and prefer, verify-ca) as verify-full,
+// and warns about it on every cold start. Saying verify-full keeps exactly
+// the same security and quiets the warning.
+export function pgUrl(url: string): string {
+  return url.replace(/([?&]sslmode=)(require|prefer|verify-ca)\b/, '$1verify-full')
 }
