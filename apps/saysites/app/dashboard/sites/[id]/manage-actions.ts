@@ -17,7 +17,7 @@ import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
 import { loadAccess } from '@/lib/billing'
-import { costMicros, overCap } from '@/lib/usage'
+import { LIMIT_NOTE, costMicros, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 
 async function ownSite(siteId: string) {
@@ -457,9 +457,11 @@ export async function requestLogoIdeas(siteId: string, ask: string): Promise<Log
   const access = await loadAccess(store, user)
   if (access.locked) return { ...logoView(state), error: 'Your free trial has ended. Start your plan on the Account page to keep designing.' }
   const today = dayString(new Date())
-  const [siteToday, siteTrial, allToday] = await Promise.all([store.siteUsage(site.id, today), store.siteUsage(site.id, dayString(new Date(user.createdAt))), store.dayUsage(today)])
-  const capped = overCap({ siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
-  if (capped) return { ...logoView(state), error: capped }
+  const [siteTotal, siteToday, siteTrial, allToday] = await Promise.all([store.siteUsage(site.id, '2000-01-01'), store.siteUsage(site.id, today), store.siteUsage(site.id, dayString(new Date(user.createdAt))), store.dayUsage(today)])
+  const capped = overCap({ siteTotal: siteTotal.micros, siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
+  if (capped) return { ...logoView(state), error: capped.message }
+  // A round of logo ideas costs about a dollar; keep room so the site stays under its limit.
+  if (siteBudget(siteTotal.micros) < 1.5e6) return { ...logoView(state), error: LIMIT_NOTE }
   const brief = ask.trim().slice(0, 500)
   const started: LogoIdeasState = { ...state, brief, pending: { at: new Date().toISOString() }, error: null }
   await store.saveLogoIdeas(site.id, started)
