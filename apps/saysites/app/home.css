@@ -492,3 +492,4 @@
 .home .bd-thanks { font-size: 18px; }
 .home .fb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 @media (max-width: 700px) { .home .bd-row { grid-template-columns: 1fr; } }
+.home .head-note { max-width: 640px; margin-top: 18px; color: var(--mu); font-size: 18px; line-height: 1.55; }

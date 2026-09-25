@@ -20,6 +20,7 @@ export default function BirthdayPage() {
           <p className="kicker">My birthday · Monday, September 28</p>
           <h1>For my birthday, build a website with me.</h1>
           <p>No gifts, no cake. All I want is for you to try SaySites, the website builder I’ve been making for small businesses, and tell me what you honestly think. It takes about two minutes and it’s free.</p>
+          <p>It’s really simple. You don’t need to know anything about websites: say what the business is, and it’s built. Want something changed? Just ask Sofie, the assistant, the way you’d text a friend. I’ve spent many years learning what websites need and what search engines reward, and all of it is built in.</p>
           <p style={{ marginTop: 28 }}><a className="b b-dark" href="/signup?promo=BIRTHDAY">Build a site for my birthday</a></p>
         </div>
       </section>
@@ -35,7 +36,7 @@ export default function BirthdayPage() {
           </div>
           <ol className="ind-pages">
             <li><span>01</span><div><h3>Make a free account</h3><p>Just a name, an email and a password. No card.</p></div></li>
-            <li><span>02</span><div><h3>Describe the business</h3><p>Pick the kind of business and type a few details. Your site builds itself while you type. Then ask Sofie, the assistant, to change anything in plain words.</p></div></li>
+            <li><span>02</span><div><h3>Describe the business</h3><p>Pick the kind of business and type a few details. Your site builds itself while you type, SEO fully optimized. Then ask Sofie to change anything, in plain words.</p></div></li>
             <li><span>03</span><div><h3>Tell me what you think</h3><p>Press <strong>Feedback</strong> in the bottom corner of your dashboard. What was great, what was confusing, what broke. Blunt is best.</p></div></li>
           </ol>
           <p style={{ marginTop: 28 }}><a className="b b-dark" href="/signup?promo=BIRTHDAY">Start building</a></p>
