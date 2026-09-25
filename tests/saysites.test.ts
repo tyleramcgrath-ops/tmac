@@ -495,7 +495,10 @@ describe('SaySites contact forms', async () => {
     const ok = await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }, 'https://form-co.saysites.com/preview/form-co/contact'), { preview: true, basePath: base }, store)
     expect(ok.headers.get('location')).toBe('/preview/form-co/contact#sent')
     const other = await handleFormPost(bundle, post({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }, 'https://evil.example/x'), { preview: false }, store)
-    expect(other.headers.get('location')).toBe('/#sent')
+    // Another site as the referer, or none at all: back to the form's own page.
+    expect(other.headers.get('location')).toBe('/contact#sent')
+    const bare = new Request('https://form-co.saysites.com/__form', { method: 'POST', body: new URLSearchParams({ form: 'contact-form', name: 'a', email: 'a@b.co', message: 'hi' }), headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+    expect((await handleFormPost(bundle, bare, { preview: false }, store)).headers.get('location')).toBe('/contact#sent')
   })
 
   it('only lets a site read and change its own messages', async () => {
