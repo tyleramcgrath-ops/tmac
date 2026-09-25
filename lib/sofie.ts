@@ -25,7 +25,7 @@ import { BUSINESS_TYPES, buildStarterSite, type BusinessTypeKey } from './starte
 import { isStock, photoKey, photoUses, repeatedPhotos } from './photo-rules'
 import type { Credit, FoundPhoto } from './unsplash'
 import type { PhotoSet } from './photos'
-import type { Tokens } from './usage'
+import { costMicros, type Tokens } from './usage'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -685,7 +685,7 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
   return create.call(client.beta.messages, params)
 }
 
-export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder }): Promise<SofieResult> {
+export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder; budgetMicros?: number }): Promise<SofieResult> {
   const client = input.client ?? new Anthropic()
   const ws = new Workspace(input.snapshot, { taken: input.taken, finder: input.finder })
   const takenHere = PHOTO_KEYS.filter((k) => ws.taken.has(k))
@@ -731,6 +731,11 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
 
     const u = response.usage as Tokens | undefined
     if (u) for (const k of Object.keys(usage) as (keyof typeof usage)[]) usage[k] += u[k] ?? 0
+    // The site's spending limit: stop before another step could pass it.
+    if (input.budgetMicros !== undefined && costMicros(usage) >= input.budgetMicros * 0.85) {
+      reply = ws.changes.length ? 'I’ve made the changes I could; that’s as far as I can go on this site for now. Take a look at the preview.' : 'That’s as far as I can go on this site for now.'
+      break
+    }
     if (response.stop_reason === 'refusal') {
       reply = 'Sorry, I can’t help with that one. Could you put it another way?'
       break
