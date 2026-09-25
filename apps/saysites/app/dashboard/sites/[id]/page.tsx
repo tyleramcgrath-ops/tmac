@@ -4,6 +4,8 @@ import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
 import { dayString, daysBefore, summarizeVisits } from '@/lib/visits'
+import { milestones } from '@/lib/milestones'
+import { Milestones } from '@/components/Milestones'
 
 export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
   const [{ id }, { new: isNew }] = await Promise.all([params, searchParams])
@@ -18,6 +20,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
     store.sofieState(site.id),
     store.visitsSince(site.id, daysBefore(today, 29)),
   ])
+  const [media, everVisited] = await Promise.all([store.mediaForSite(site.id), store.visitsSince(site.id, '2000-01-01')])
   const traffic = summarizeVisits(visits, today)
   const sparkMax = Math.max(1, ...traffic.days.map((d) => d.views))
   const spark = traffic.days.map((d, i) => `${i ? 'L' : 'M'}${i} ${(20 - (d.views / sparkMax) * 18).toFixed(1)}`).join(' ')
@@ -40,6 +43,19 @@ export default async function SiteOverview({ params, searchParams }: { params: P
     { done: tips === 0 && errors === 0, label: 'Clear every SEO tip', href: `${base}/pages` },
   ]
   const doneCount = todo.filter((t) => t.done).length
+  const marks = milestones({
+    siteName: b.name,
+    base,
+    hasLogo: !!b.logo,
+    sofieChanged: sofie.chat.some((t) => t.role === 'sofie' && t.text.startsWith('Published.')),
+    photos: media.filter((m) => m.mime !== 'image/svg+xml').length,
+    visits: everVisited.length,
+    messages: messages.length,
+    posts: pages.filter((p) => p.post).length,
+    products: site.store?.products.length ?? 0,
+    customDomain: site.customDomain,
+    seoClean: errors === 0 && tips === 0,
+  })
 
   return (
     <div className="stack">
@@ -133,6 +149,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
           )}
         </div>
       </div>
+      <Milestones siteId={site.id} siteName={b.name} domain={site.customDomain} isNew={!!isNew} items={marks} />
     </div>
   )
 }

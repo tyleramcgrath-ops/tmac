@@ -34,6 +34,7 @@ export default async function PhotosPage({ params }: { params: Promise<{ id: str
         </div>
         <p className="muted small" style={{ marginTop: 0 }}>No logo yet, or want a fresh one? Sofie sketches three different directions in your colours. Pick the one you like and it goes straight into your header and browser tab. Have your own? Upload it below.</p>
         <LogoIdeas
+          siteId={site.id}
           siteName={site.business.name}
           current={{ logo, icon: site.business.icon }}
           initial={logoIdeas}
