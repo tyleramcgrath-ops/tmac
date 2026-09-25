@@ -6,6 +6,8 @@
 import { serveSitePath } from '@/lib/serve'
 import { currentUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
+import { creditsInUse } from '@/lib/sites'
+import { photoSetFor } from '@/lib/unsplash'
 import { BUSINESS_TYPES, PALETTES, buildStarterSite, type BusinessTypeKey, type Design } from '@/lib/starter'
 
 type Ctx = { params: Promise<{ data: string; slug?: string[] }> }
@@ -26,6 +28,9 @@ export async function GET(_req: Request, ctx: Ctx) {
   if (!(type in BUSINESS_TYPES)) return new Response('Pick a kind of business.', { status: 400 })
   const palette = s('palette', 20)
   const design = s('design', 20) as Design
+  const store = getStore()
+  const taken = await store.photosTaken()
+  const found = await photoSetFor(store, type, taken)
   const { site, pages } = buildStarterSite(
     {
       name: s('name', 120).trim() || 'Your business',
@@ -36,12 +41,14 @@ export async function GET(_req: Request, ctx: Ctx) {
       services: s('services', 1200).split(/\n|,/).map((x) => x.trim().slice(0, 80)).filter(Boolean),
       palette: palette in PALETTES ? palette : 'ocean',
       ...(DESIGNS.includes(design) ? { design } : {}),
+      ...(found ? { photos: found } : {}),
     },
     'preview',
     'preview',
-    { siteId: 'site_preview', now: '2026-01-01T00:00:00.000Z', taken: await getStore().photosTaken() }
+    { siteId: 'site_preview', now: '2026-01-01T00:00:00.000Z', taken }
   )
-  const res = serveSitePath({ site, pages, redirects: [] }, slug, { preview: true, basePath: `/dashboard/new/preview/${data}` })
+  const credits = found ? creditsInUse(pages, found.credits) : []
+  const res = serveSitePath({ site: credits.length ? { ...site, credits } : site, pages, redirects: [] }, slug, { preview: true, basePath: `/dashboard/new/preview/${data}` })
   const headers = new Headers(res.headers)
   headers.set('cache-control', 'private, max-age=60')
   return new Response(res.body, { status: res.status, headers })
