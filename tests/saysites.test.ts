@@ -20,8 +20,8 @@ import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
-import { accessFor, cleanPromo, newBilling } from '../apps/saysites/lib/billing'
-import { costMicros, overCap, siteBudget } from '../apps/saysites/lib/usage'
+import { accessFor, canSell, cleanPromo, newBilling, planForPrice, priceId } from '../apps/saysites/lib/billing'
+import { costMicros, monthShare, overCap, siteBudget } from '../apps/saysites/lib/usage'
 import { formEncode, verifySignature } from '../apps/saysites/lib/stripe'
 import { cacheLatest } from '../apps/saysites/lib/sofie'
 import { createHmac } from 'crypto'
@@ -1447,14 +1447,52 @@ describe('trial, caps and feedback', () => {
   it('prices tokens and stops at the caps', () => {
     expect(costMicros({ input_tokens: 1_000_000, output_tokens: 0 })).toBe(5_000_000)
     expect(costMicros({ output_tokens: 1000, cache_read_input_tokens: 10_000 })).toBe(25_000 + 5_000)
-    const none = { siteTotal: 0, siteToday: 0, siteTrial: 0, allToday: 0, trial: true }
-    expect(overCap(none)).toBeNull()
-    expect(overCap({ ...none, siteTotal: 10e6 })?.kind).toBe('site-total')
-    expect(overCap({ ...none, siteToday: 11e6, siteTotal: 5e6 })?.message).toMatch(/tomorrow/)
-    expect(overCap({ ...none, siteTrial: 11e6, siteTotal: 5e6, siteToday: 5e6 })?.kind).toBe('trial')
-    expect(overCap({ ...none, allToday: 160e6 })?.kind).toBe('all')
-    expect(siteBudget(7e6)).toBe(3e6)
-    expect(siteBudget(12e6)).toBe(0)
+    const none = { siteTotal: 0, siteToday: 0, siteTrial: 0, siteMonth: 0, allToday: 0 }
+    const trial = { status: 'trial' as const }
+    expect(overCap(none, trial)).toBeNull()
+    expect(overCap({ ...none, siteTotal: 10e6 }, trial)?.kind).toBe('site-total')
+    expect(overCap({ ...none, siteToday: 11e6, siteTotal: 5e6 }, trial)?.message).toMatch(/tomorrow/)
+    expect(overCap({ ...none, siteTrial: 11e6, siteTotal: 5e6, siteToday: 5e6 }, trial)?.kind).toBe('trial')
+    expect(overCap({ ...none, allToday: 160e6 }, trial)?.kind).toBe('all')
+    expect(siteBudget({ ...none, siteTotal: 7e6 }, trial)).toBe(3e6)
+    expect(siteBudget({ ...none, siteTotal: 12e6 }, trial)).toBe(0)
+  })
+
+  it('gives paying accounts a monthly Sofie allowance by plan', () => {
+    const none = { siteTotal: 0, siteToday: 0, siteTrial: 0, siteMonth: 0, allToday: 0 }
+    const site = { status: 'active' as const, plan: 'site' as const }
+    const shop = { status: 'active' as const, plan: 'store' as const }
+    // The lifetime trial cap no longer applies once they pay.
+    expect(overCap({ ...none, siteTotal: 40e6, siteMonth: 1e6 }, site)).toBeNull()
+    const used = overCap({ ...none, siteMonth: 5e6 }, site, new Date('2026-10-14T12:00:00Z'))
+    expect(used?.kind).toBe('month')
+    expect(used?.message).toMatch(/refills on November 1/)
+    expect(used?.message).toMatch(/Store plan/)
+    // Store gets more.
+    expect(overCap({ ...none, siteMonth: 5e6 }, shop)).toBeNull()
+    expect(overCap({ ...none, siteMonth: 8e6 }, shop)?.message).not.toMatch(/Store plan/)
+    expect(siteBudget({ ...none, siteMonth: 2e6 }, site)).toBe(3e6)
+    expect(siteBudget({ ...none, siteMonth: 2e6, siteToday: 9e6 }, site)).toBe(1e6)
+    expect(monthShare({ ...none, siteMonth: 2.5e6 }, site)).toBe(0.5)
+    expect(monthShare(none, { status: 'trial' })).toBeNull()
+  })
+
+  it('maps plans to Stripe prices and only lets the Store plan sell', () => {
+    const keys = ['STRIPE_SECRET_KEY', 'STRIPE_PRICE_ID', 'STRIPE_PRICE_STORE', 'STRIPE_PRICE_SITE_YEARLY', 'STRIPE_PRICE_STORE_YEARLY'] as const
+    const prev = Object.fromEntries(keys.map((k) => [k, process.env[k]]))
+    Object.assign(process.env, { STRIPE_SECRET_KEY: 'sk_test', STRIPE_PRICE_ID: 'price_site', STRIPE_PRICE_STORE: 'price_store', STRIPE_PRICE_SITE_YEARLY: 'price_site_y', STRIPE_PRICE_STORE_YEARLY: 'price_store_y' })
+    try {
+      expect(priceId('store', 'year')).toBe('price_store_y')
+      expect(planForPrice('price_store')).toEqual({ plan: 'store', interval: 'month' })
+      expect(planForPrice('price_other')).toBeNull()
+      const a = (status: 'trial' | 'active' | 'comp', plan?: 'site' | 'store') => ({ ok: true, status, trial: status === 'trial', daysLeft: 3, locked: false, billing: { status, trialEndsAt: '2030-01-01T00:00:00Z', ...(plan ? { plan } : {}) } })
+      expect(canSell(a('trial'))).toBe(true)
+      expect(canSell(a('active', 'site'))).toBe(false)
+      expect(canSell(a('active', 'store'))).toBe(true)
+      expect(canSell(a('comp'))).toBe(true)
+    } finally {
+      for (const k of keys) { if (prev[k] === undefined) delete process.env[k]; else process.env[k] = prev[k] }
+    }
   })
 
   it('keeps one moving cache marker on the newest message', () => {
@@ -1547,5 +1585,13 @@ describe('preview base path', () => {
     expect(out).toContain('href="/u/abc"')
     expect(out).toContain('href="/media/logos/x.svg"')
     expect(out).toContain('action="/preview/joes/__form"')
+  })
+})
+
+describe('dates', () => {
+  it('formats both days and full timestamps', async () => {
+    const { formatDate } = await import('../apps/saysites/lib/render')
+    expect(formatDate('2026-12-24')).toBe('December 24, 2026')
+    expect(formatDate('2026-12-24T07:41:00.000Z')).toBe('December 24, 2026')
   })
 })

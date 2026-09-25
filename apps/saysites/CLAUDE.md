@@ -67,3 +67,21 @@ number is still to be decided). Build and write everything toward that.
 - Never mention the founder's name in the product or marketing. Only the
   birthday page speaks in the first person about the founder's years of
   experience with websites and search.
+
+## Pricing (decided September 2026)
+
+- **Site $15/month or $150/year; Store $25/month or $250/year** (yearly is
+  two months free). 7-day free trial, 0% of sales, always. Prices live in
+  `PRICES` (lib/billing.ts); each plan/interval is its own Stripe price
+  (`STRIPE_PRICE_ID`, `STRIPE_PRICE_SITE_YEARLY`, `STRIPE_PRICE_STORE`,
+  `STRIPE_PRICE_STORE_YEARLY`).
+- **Sofie is the only real cost**, so paying accounts get a monthly AI
+  allowance per site (lib/usage.ts): Site $5, Store $8 of model cost. Even
+  fully used, Site keeps ~$8.75 of $15 after Stripe and hosting. Trial
+  accounts keep the $10 lifetime cap. When the allowance runs out, Sofie
+  pauses until the 1st; owners can still edit everything by hand.
+- Selling online (products) is the Store plan after the trial (`canSell`).
+- Never advertise a feature that isn't built (the SEO Suite is "Coming
+  soon"). Competitor prices on the homepage must come from their own
+  pricing pages, with the date checked and sources linked; re-check them
+  quarterly.

@@ -9,6 +9,8 @@ import { questLink } from '@/lib/visibility'
 import { leagueFor, leagues, tradePlural, weekStart } from '@/lib/league'
 import { leagueTerms } from '@/lib/league-style'
 import { ScoreDial } from '@/components/ScoreDial'
+import { loadAccess } from '@/lib/billing'
+import { loadSpend, monthShare, refillDate } from '@/lib/usage'
 import { Milestones } from '@/components/Milestones'
 
 export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
@@ -32,6 +34,9 @@ export default async function SiteOverview({ params, searchParams }: { params: P
     store.messagesForSite(site.id, 200),
   ])
   const messagesThisMonth = recentMessages.filter((m) => m.createdAt.slice(0, 10) >= monthStart).length
+  // How much of this month's Sofie allowance is used (paying accounts only).
+  const access = await loadAccess(store, user)
+  const sofieShare = monthShare(await loadSpend(store, site.id, user.createdAt), { status: access.status, plan: access.billing?.plan })
   const reached = callsThisMonth + messagesThisMonth
   const monthName = new Date(`${monthStart}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })
   // The same checks that gate publishing, summed up.
@@ -92,6 +97,13 @@ export default async function SiteOverview({ params, searchParams }: { params: P
                   : 'Add your phone number in Settings so customers can call you straight from your site.'}
             </p>
           </div>
+          {sofieShare !== null && (
+            <div className="card sofie-meter">
+              <span className="stat-label">Sofie this month</span>
+              <div className="meter"><i style={{ width: `${Math.round(sofieShare * 100)}%` }} /></div>
+              <p className="muted small">{sofieShare >= 1 ? `This month’s allowance is used. It refills on ${refillDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })}; you can still change everything yourself in Pages.` : `${Math.round(sofieShare * 100)}% used. Refills on ${refillDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })}.`}</p>
+            </div>
+          )}
           <div className="stats four">
             <a className="stat" href={`${base}/pages`}>
               <span className="stat-label">Speed</span>

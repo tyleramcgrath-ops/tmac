@@ -685,3 +685,14 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .goal-card .goal-nums span { color: var(--ink-3); font-size: 14px; }
 .goal-card.met { border-color: #0d6b45; box-shadow: 0 0 0 3px var(--mint-soft); }
 .goal-card p { margin: 0; }
+.plan-form { gap: 14px; }
+.plan-pick { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
+.plan-pick legend { margin-bottom: 6px; padding: 0; }
+.plan-pick label { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); cursor: pointer; }
+.plan-pick label:has(input:checked) { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.plan-pick input { margin-top: 4px; accent-color: var(--ink); }
+.plan-pick small { display: block; color: var(--ink-3); font-size: 13.5px; margin-top: 2px; }
+.plan-pick-row { grid-template-columns: 1fr 1fr; }
+@media (max-width: 560px) { .plan-pick-row { grid-template-columns: 1fr; } }
+.sofie-meter .meter { height: 8px; border-radius: 8px; background: var(--paper); overflow: hidden; margin: 10px 0 8px; }
+.sofie-meter .meter i { display: block; height: 100%; background: var(--ink); border-radius: 8px; }

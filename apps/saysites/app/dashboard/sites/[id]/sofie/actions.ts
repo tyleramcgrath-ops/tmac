@@ -6,7 +6,7 @@ import { requireUser } from '@/lib/session'
 import { getStore, type SofieState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
 import { loadAccess } from '@/lib/billing'
-import { costMicros, overCap, siteBudget } from '@/lib/usage'
+import { costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { photoSetFor, reportUse, searchPhotos, unsplashReady } from '@/lib/unsplash'
 import type { Page, Site } from '@/lib/schema'
@@ -82,15 +82,11 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
   if (access.locked) return view(state, live, 'Your free trial has ended. Start your plan on the Account page and Sofie will pick up right where you left off.')
   // Spend caps (lib/usage), so one site or a bug can never run up a bill.
   const today = dayString(new Date())
-  const [siteTotal, siteToday, siteTrial, allToday] = await Promise.all([
-    store.siteUsage(site.id, '2000-01-01'),
-    store.siteUsage(site.id, today),
-    store.siteUsage(site.id, dayString(new Date(user.createdAt))),
-    store.dayUsage(today),
-  ])
-  const capped = overCap({ siteTotal: siteTotal.micros, siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
+  const spend = await loadSpend(store, site.id, user.createdAt)
+  const payer = { status: access.status, plan: access.billing?.plan }
+  const capped = overCap(spend, payer)
   if (capped) return { ...view(state, live, capped.message), ...(capped.kind === 'site-total' ? { limit: true } : {}) }
-  const budgetMicros = siteBudget(siteTotal.micros)
+  const budgetMicros = siteBudget(spend, payer)
 
   const owner: ChatTurn = { role: 'owner', text, at: new Date().toISOString() }
   const started: SofieState = { ...state, chat: [...state.chat, owner].slice(-60), pending: { at: owner.at }, error: null }
