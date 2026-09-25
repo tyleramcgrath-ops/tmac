@@ -9,6 +9,8 @@
 //     except one optional priority image for the hero.
 //   - Every text value is HTML-escaped; the tree can never inject markup.
 
+import { WORDS, wordsFor, type SiteWords } from './site-words'
+import { vibeCheck } from './vibe'
 import {
   BREAKPOINT_MAX_WIDTH,
   COLOR_TOKENS,
@@ -36,6 +38,7 @@ export interface RenderedPage {
 }
 
 export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page]): RenderedPage {
+  t = wordsFor(site.language)
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
   const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(bar ? ['callbar'] : [])])
@@ -49,7 +52,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<title>${esc(page.seo.title)}</title>`,
     `<meta name="description" content="${esc(page.seo.description)}">`,
     `<link rel="canonical" href="${esc(url)}">`,
-    page.seo.noindex ? '<meta name="robots" content="noindex">' : '',
+    // Held out of Google until it passes the originality check (lib/vibe.ts).
+    page.seo.noindex || !vibeCheck(site, page, allPages).indexable ? '<meta name="robots" content="noindex">' : '',
     page.slug === '' && site.verification?.google ? `<meta name="google-site-verification" content="${esc(site.verification.google)}">` : '',
     page.slug === '' && site.verification?.bing ? `<meta name="msvalidate.01" content="${esc(site.verification.bing)}">` : '',
     `<link rel="icon" href="${esc(favicon(site))}">`,
@@ -85,6 +89,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 // The site's products, for the products widget. Set per render; rendering is
 // synchronous, so this can't leak between pages.
 let store: Site['store']
+let t: SiteWords = WORDS.en
 let posts: Page[] = []
 
 function renderElement(el: Element): string {
@@ -156,24 +161,24 @@ function renderWidget(w: Widget): string {
     }
     case 'testimonials':
       return `<div class="tst ${c}">${w.items
-        .map((t) => `<figure>${t.stars ? `<span class="tst-stars" role="img" aria-label="${t.stars} out of 5 stars">${'★'.repeat(t.stars)}${'☆'.repeat(5 - t.stars)}</span>` : ''}<blockquote>${esc(t.quote)}</blockquote><figcaption><strong>${esc(t.name)}</strong>${t.detail ? `<span>${esc(t.detail)}</span>` : ''}</figcaption></figure>`)
+        .map((q) => `<figure>${q.stars ? `<span class="tst-stars" role="img" aria-label="${esc(t.stars(q.stars))}">${'★'.repeat(q.stars)}${'☆'.repeat(5 - q.stars)}</span>` : ''}<blockquote>${esc(q.quote)}</blockquote><figcaption><strong>${esc(q.name)}</strong>${q.detail ? `<span>${esc(q.detail)}</span>` : ''}</figcaption></figure>`)
         .join('')}</div>`
   }
 }
 
-export function formatDate(iso: string): string {
-  return new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+export function formatDate(iso: string, locale = 'en-US'): string {
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
 }
 
 function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {
   const list = posts.slice(0, w.limit ?? 50)
-  if (!list.length) return `<p class="po-none">New posts are on the way.</p>`
+  if (!list.length) return `<p class="po-none">${esc(t.noPosts)}</p>`
   const cards = list.map((p) => {
     const href = pagePath(p)
     const img = p.post!.image
       ? `<a href="${esc(href)}" tabindex="-1" aria-hidden="true"><img class="po-img" src="${esc(p.post!.image.src)}"${srcset(p.post!.image.src, 1200)} sizes="(max-width: 640px) 100vw, 33vw" alt="" width="1200" height="800" loading="lazy" decoding="async"></a>`
       : ''
-    return `<article class="po">${img}<time datetime="${esc(p.post!.date)}">${esc(formatDate(p.post!.date))}</time><h3 class="po-t"><a href="${esc(href)}">${esc(p.post!.title)}</a></h3><p>${esc(p.post!.excerpt)}</p><a class="po-more" href="${esc(href)}">Read more <span aria-hidden="true">→</span></a></article>`
+    return `<article class="po">${img}<time datetime="${esc(p.post!.date)}">${esc(formatDate(p.post!.date, t.locale))}</time><h3 class="po-t"><a href="${esc(href)}">${esc(p.post!.title)}</a></h3><p>${esc(p.post!.excerpt)}</p><a class="po-more" href="${esc(href)}">${esc(t.readMore)} <span aria-hidden="true">→</span></a></article>`
   })
   return `<div class="pos ${cls(w.id)}">${cards.join('')}</div>`
 }
@@ -194,20 +199,20 @@ function renderProducts(w: Extract<Widget, { type: 'products' }>): string {
       ? `<img class="pr-img" src="${esc(p.image.src)}"${srcset(p.image.src, 800)} sizes="(max-width: 640px) 100vw, 33vw" alt="${esc(p.image.alt)}" width="800" height="800" loading="lazy" decoding="async">`
       : `<div class="pr-img pr-none" aria-hidden="true">${esc(p.name.charAt(0))}</div>`
     const buy = p.soldOut
-      ? `<span class="pr-out">Sold out</span>`
+      ? `<span class="pr-out">${esc(t.soldOut)}</span>`
       : p.buyUrl
-        ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">Buy now</a>`
-        : `<a class="btn btn-outline pr-buy" href="/contact">Ask about this</a>`
+        ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">${esc(t.buyNow)}</a>`
+        : `<a class="btn btn-outline pr-buy" href="/contact">${esc(t.askAboutThis)}</a>`
     return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}${buy}</div></article>`
   })
   return `<div class="prs ${cls(w.id)}">${cards.join('')}</div>`
 }
 
-const FIELD: Record<(typeof FORM_FIELDS)[number], { label: string; input: string }> = {
-  name: { label: 'Your name', input: '<input name="name" autocomplete="name" required maxlength="120">' },
-  email: { label: 'Email', input: '<input name="email" type="email" autocomplete="email" required maxlength="200">' },
-  phone: { label: 'Phone', input: '<input name="phone" type="tel" autocomplete="tel" maxlength="40">' },
-  message: { label: 'How can we help?', input: '<textarea name="message" rows="5" required maxlength="5000"></textarea>' },
+const FIELD: Record<(typeof FORM_FIELDS)[number], { label: (w: SiteWords) => string; input: string }> = {
+  name: { label: (w) => w.yourName, input: '<input name="name" autocomplete="name" required maxlength="120">' },
+  email: { label: (w) => w.email, input: '<input name="email" type="email" autocomplete="email" required maxlength="200">' },
+  phone: { label: (w) => w.phone, input: '<input name="phone" type="tel" autocomplete="tel" maxlength="40">' },
+  message: { label: (w) => w.howCanWeHelp, input: '<textarea name="message" rows="5" required maxlength="5000"></textarea>' },
 }
 
 // A plain HTML form: no script. The server answers a post with a redirect to
@@ -215,13 +220,13 @@ const FIELD: Record<(typeof FORM_FIELDS)[number], { label: string; input: string
 // page never changes. "website" is a honeypot field people never see.
 function renderForm(w: Extract<Widget, { type: 'form' }>): string {
   const fields = w.fields
-    .map((f) => `<label><span>${FIELD[f].label}${f === 'phone' ? ' <em>(optional)</em>' : ''}</span>${FIELD[f].input}</label>`)
+    .map((f) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${FIELD[f].input}</label>`)
     .join('')
   return (
     `<form class="sform ${cls(w.id)}" method="post" action="/__form">` +
-    `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? 'Thanks! Your message is on its way. We will get back to you soon.')}</p>` +
+    `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? t.thanks)}</p>` +
     `<input type="hidden" name="form" value="${esc(w.id)}">` +
-    `<label class="sform-hp" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>` +
+    `<label class="sform-hp" aria-hidden="true">${esc(t.leaveEmpty)}<input name="website" tabindex="-1" autocomplete="off"></label>` +
     fields +
     `<button class="btn btn-primary" type="submit">${esc(w.submitLabel)}</button></form>`
   )
@@ -241,7 +246,7 @@ function renderHeader(site: Site, page: Page): string {
   const brand = site.business.logo
     ? `<img class="sh-logo" src="${esc(site.business.logo)}" alt="${esc(site.business.name)}" width="252" height="56" loading="lazy" decoding="async">`
     : esc(site.business.name)
-  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="Main">${links}</nav>` : ''}${cta}</div></header>`
+  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cta}</div></header>`
 }
 
 // On phones, the two things local customers want most, one thumb away:
@@ -255,14 +260,12 @@ function callBar(site: Site): string {
     cta && !cta.href.startsWith('tel:')
       ? `<a class="scb-go" href="${esc(cta.href)}">${esc(cta.label)}</a>`
       : a
-        ? `<a class="scb-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=${esc(encodeURIComponent(`${a.street}, ${a.city}, ${a.region} ${a.postalCode}`))}" rel="noopener">Directions</a>`
+        ? `<a class="scb-go" href="https://www.google.com/maps/dir/?api=1&amp;destination=${esc(encodeURIComponent(`${a.street}, ${a.city}, ${a.region} ${a.postalCode}`))}" rel="noopener">${esc(t.directions)}</a>`
         : ''
   const icon = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>'
-  return `<nav class="scb" aria-label="Quick contact"><a class="scb-call" href="${esc(tel(phone))}">${icon}Call</a>${second}</nav>`
+  return `<nav class="scb" aria-label="${esc(t.quickContact)}"><a class="scb-call" href="${esc(tel(phone))}">${icon}${esc(t.call)}</a>${second}</nav>`
 }
 
-// Days in schema.org openingHours order, for the footer's hours list.
-const DAY: Record<string, string> = { Mo: 'Mon', Tu: 'Tue', We: 'Wed', Th: 'Thu', Fr: 'Fri', Sa: 'Sat', Su: 'Sun' }
 
 function renderFooter(site: Site): string {
   const b = site.business
@@ -272,28 +275,25 @@ function renderFooter(site: Site): string {
   if (b.phone) contact.push(`<a href="${esc(tel(b.phone))}">${esc(b.phone)}</a>`)
   if (b.email) contact.push(`<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>`)
   if (b.address) contact.push(`<span>${esc(`${b.address.street}, ${b.address.city}, ${b.address.region} ${b.address.postalCode}`)}</span>`)
-  if (contact.length) cols.push(`<div><h2 class="sf-h">Contact</h2>${contact.join('')}</div>`)
+  if (b.reviewUrl) contact.push(`<a href="/review" rel="nofollow">${esc(t.leaveReview)}</a>`)
+  if (contact.length) cols.push(`<div><h2 class="sf-h">${esc(t.contact)}</h2>${contact.join('')}</div>`)
   if (b.hours?.length) {
     const rows = b.hours.map((line) =>
       esc(
         line
-          .replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => DAY[d])
+          .replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => t.days[d])
           .replace(/-(?=[A-Z])/, '–')
-          .replace(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/, (_m, h1, m1, h2, m2) => `${clock(+h1, m1)}–${clock(+h2, m2)}`)
+          .replace(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/, (_m, h1, m1, h2, m2) => `${t.clock(+h1, m1)}–${t.clock(+h2, m2)}`)
       )
     )
-    cols.push(`<div><h2 class="sf-h">Hours</h2>${rows.map((r) => `<span>${r}</span>`).join('')}</div>`)
+    cols.push(`<div><h2 class="sf-h">${esc(t.hours)}</h2>${rows.map((r) => `<span>${r}</span>`).join('')}</div>`)
   }
   const pages = site.nav.filter((n) => n.href.startsWith('/'))
-  if (pages.length) cols.push(`<div><h2 class="sf-h">Pages</h2><a href="/">Home</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
-  return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">© ${year} ${esc(b.name)}</div></footer>`
+  if (pages.length) cols.push(`<div><h2 class="sf-h">${esc(t.pages)}</h2><a href="/">${esc(t.home)}</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
+  const note = site.footerNote ? `<p class="sf-note">${esc(site.footerNote)}</p>` : ''
+  return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">${note}© ${year} ${esc(b.name)}</div></footer>`
 }
 
-// 17:30 -> "5:30pm", 08:00 -> "8am".
-function clock(h: number, m: string): string {
-  const hour = h % 12 || 12
-  return `${hour}${m === '00' ? '' : `:${m}`}${h < 12 ? 'am' : 'pm'}`
-}
 
 function tel(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, '')}`
@@ -388,7 +388,7 @@ function baseCss(g: GlobalStyles): string {
     `.sf-in>div{display:flex;flex-direction:column;gap:6px}.sf-in p{margin:4px 0 0;max-width:320px}.sf a{color:inherit;text-decoration:none}.sf a:hover{color:var(--c-background)}` +
     `.sf-brand{font-family:var(--f-h);font-size:1.3em;color:var(--c-background);font-weight:${g.headingWeight ?? 700}}` +
     `.sf-h{font-family:var(--f-b);font-size:.78em;letter-spacing:.1em;text-transform:uppercase;color:var(--c-background);margin:0 0 6px;font-weight:600}` +
-    `.sf-base{max-width:var(--w);margin:0 auto;padding:18px 24px 28px;border-top:1px solid color-mix(in srgb,var(--c-background) 14%,transparent);font-size:.85em}`
+    `.sf-base{max-width:var(--w);margin:0 auto;padding:18px 24px 28px;border-top:1px solid color-mix(in srgb,var(--c-background) 14%,transparent);font-size:.85em}.sf-note{margin:0 0 10px;max-width:760px;line-height:1.55}`
   )
 }
 

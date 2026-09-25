@@ -51,6 +51,7 @@ export default function TemplatesPage() {
                       <a key={e.sub} className="gal-card" href={`/preview/${e.sub}`}>
                         <div className="gal-shot">
                           <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 100vw, 400px" style={{ objectFit: 'cover' }} />
+                          <span className="gal-plaque"><img src={`/media/logos/${e.sub}.svg`} alt="" /></span>
                           <div className="gal-over">
                             <small>{e.kind} · {e.place}</small>
                             <strong className={g.design === 'bold' ? '' : 'serif'}>{e.site.business.name}</strong>

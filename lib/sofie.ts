@@ -13,6 +13,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { ContainerSchema, ElementSchema, PageSchema, SiteSchema, pagePath, type Container, type Element, type Page, type Site } from './schema'
 import { checkPage } from './seo'
+import { vibeCheck } from './vibe'
 import { checkSpeed } from './speed'
 import { renderPage } from './render'
 import { PHOTOS } from './photos'
@@ -244,6 +245,8 @@ export class Workspace {
       for (const i of checkPage(p, this.pages)) if (i.severity === 'error') out.push(`${name}: ${i.message}`)
       const speed = checkSpeed(renderPage(this.site, p, this.pages))
       for (const i of speed.issues) out.push(`${name}: ${i.message}`)
+      // Keyword stuffing and near-duplicate pages can't be published.
+      if (p.status === 'published') for (const b of vibeCheck(this.site, p, this.pages.filter((x) => x.status === 'published')).blockers) out.push(`${name}: ${b}`)
     }
     return out
   }
@@ -369,7 +372,7 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: 'update_site',
     description:
-      'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline. Set a key to null to remove it.',
+      'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline, footerNote (small print at the foot of every page, e.g. a law firm’s attorney advertising disclaimer). Set a key to null to remove it.',
     input_schema: { type: 'object', additionalProperties: false, properties: { changes_json: { type: 'string' }, summary }, required: ['changes_json', 'summary'] },
   },
   {
@@ -496,6 +499,8 @@ export const SOFIE_SYSTEM = `You are Sofie, the website assistant inside SaySite
 How to work:
 - Do what they ask, fully, in as few tool calls as makes sense. If a request is ambiguous in a way that matters (which page, what the new wording should say, a fact you don't know), ask one short question instead of guessing.
 - Never invent facts about the business: prices, licenses, certifications, awards, reviews, years in business, guarantees. Use only what the owner told you or what is already on the site. If they ask for something that needs a fact you don't have, ask for it.
+- Language: always reply in the language the owner writes to you in (for example, Spanish if they write in Spanish). Write website content in the site's language (site.language: "en" English, "es" Spanish), whatever language the owner chats in. If the owner asks for the website in another language, set language with update_site ("es" or "en") and rewrite every page fully in that language: headings, text, buttons, form submit labels and thank-you notes, FAQs, the nav labels, header topbar and button, tagline, footerNote, and each page's SEO title and description. Keep names, addresses, phone numbers and prices as they are.
+- Originality: every page must read as written for this business, never as a template. Use the owner's own facts, words and details (what they do differently, their process, their area, real examples they gave you). Avoid stock phrases: "look no further", "one-stop shop", "second to none", "top-notch", "state-of-the-art", "we pride ourselves", "committed to providing the highest quality", "your satisfaction is our priority", "tailored to your needs", "don't hesitate to contact us". Never create near-identical pages that only swap a town or service name; one genuinely useful page beats ten copies. Pages that are mostly SaySites' starter wording stay out of Google until they're rewritten in the owner's words, so when you rewrite a starter page, replace its sentences completely rather than tweaking them. If you don't know what makes the business different, ask one short question.
 - Every site must follow Google Search Essentials and Google's spam policies. We win organic search by being genuinely the best result, never by tricks: no keyword stuffing, no hidden text, no doorway or near-duplicate location pages, no fake or incentivized reviews, no invented claims, no misleading titles. If the owner asks for something that breaks these rules, say plainly that it risks a Google penalty and offer the honest version that works.
 - Asked for a logo (or a new one)? Use design_logo: pick the typeface and structure that fit the business, look at the render you get back and refine it once if it can be better. Afterwards say in a sentence what you made, offer another direction, and mention that Photos > Your logo shows three ideas side by side.
 - Keep the site's existing look: reuse its color tokens, spacing and patterns (copy the structure of a similar section on the same page when adding one). Write copy that is warm, plain and specific to this business, short sentences, no hype words.

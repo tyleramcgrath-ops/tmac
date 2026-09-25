@@ -8,8 +8,9 @@
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
 import { SHOWCASE } from './showcase'
-import { PageSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
+import { PageSchema, RedirectSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
 import type { LeagueSite } from './league'
+import type { Preview } from './redesign'
 import type { ChatTurn, Snapshot } from './sofie'
 
 // Sofie's working state for one site: the chat, plus a draft of her edits
@@ -91,6 +92,8 @@ export interface Store {
   pagesForSite(siteId: string): Promise<Page[]>
   savePage(page: Page, author: RevisionAuthor, userId: string | null, note?: string): Promise<void>
   redirectsForSite(siteId: string): Promise<Redirect[]>
+  // Replaces the site's redirects.
+  saveRedirects(siteId: string, redirects: Redirect[]): Promise<void>
   sofieState(siteId: string): Promise<SofieState>
   saveSofieState(siteId: string, state: SofieState): Promise<void>
   // Removes a site and everything under it (pages, revisions, Sofie, messages).
@@ -121,6 +124,12 @@ export interface Store {
   recordScore(siteId: string, day: string, score: number): Promise<void>
   // Every site with a score since `day`, with its scores and daily views.
   leagueSites(day: string): Promise<LeagueSite[]>
+  // Free redesign previews. `who` is a hash of the requester, for limits.
+  savePreview(p: Preview, who: string): Promise<void>
+  preview(id: string): Promise<Preview | null>
+  previewCount(since: Date, who?: string): Promise<number>
+  // Marks a preview claimed; false when someone already claimed it.
+  claimPreview(id: string, by: string, siteId: string): Promise<boolean>
 }
 
 // Page views are counted per day and page, and nothing else: no cookies,
@@ -214,6 +223,13 @@ CREATE TABLE IF NOT EXISTS ss_scores (
   score SMALLINT NOT NULL,
   PRIMARY KEY (site_id, day)
 );
+CREATE TABLE IF NOT EXISTS ss_previews (
+  id TEXT PRIMARY KEY,
+  who TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_previews_who_idx ON ss_previews (who, created_at DESC);
 CREATE TABLE IF NOT EXISTS ss_logo_ideas (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
@@ -310,7 +326,23 @@ class PgStore implements Store {
       to: r.to_path,
       status: r.status as 301 | 302,
     }))
+  }  async saveRedirects(siteId: string, redirects: Redirect[]) {
+    const list = redirects.map((r) => RedirectSchema.parse(r))
+    const client = await this.pool.connect()
+    try {
+      await this.q('SELECT 1')
+      await client.query('BEGIN')
+      await client.query('DELETE FROM ss_redirects WHERE site_id = $1', [siteId])
+      for (const r of list) await client.query('INSERT INTO ss_redirects (site_id, from_path, to_path, status) VALUES ($1,$2,$3,$4) ON CONFLICT (site_id, from_path) DO UPDATE SET to_path = EXCLUDED.to_path, status = EXCLUDED.status', [siteId, r.from, r.to, r.status])
+      await client.query('COMMIT')
+    } catch (e) {
+      await client.query('ROLLBACK')
+      throw e
+    } finally {
+      client.release()
+    }
   }
+
   async sofieState(siteId: string) {
     const r = (await this.q<{ data: SofieState }>('SELECT data FROM ss_sofie WHERE site_id = $1', [siteId]))[0]
     return r ? r.data : emptySofieState()
@@ -386,6 +418,23 @@ class PgStore implements Store {
       [siteId, day]
     )
     return rows.map((r) => ({ day: r.day, path: r.path, views: Number(r.views) }))
+  }
+  async savePreview(p: Preview, who: string) {
+    await this.q('INSERT INTO ss_previews (id, who, data) VALUES ($1,$2,$3)', [p.id, who, p])
+  }
+  async preview(id: string) {
+    const r = (await this.q<{ data: Preview }>("SELECT data FROM ss_previews WHERE id = $1 AND created_at > now() - interval '30 days'", [id]))[0]
+    return r ? r.data : null
+  }
+  async claimPreview(id: string, by: string, siteId: string) {
+    const r = await this.q("UPDATE ss_previews SET data = jsonb_set(data, '{claimed}', $2::jsonb) WHERE id = $1 AND NOT (data ? 'claimed') RETURNING id", [id, JSON.stringify({ by, siteId })])
+    return r.length > 0
+  }
+  async previewCount(since: Date, who?: string) {
+    const r = who
+      ? await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_previews WHERE who = $1 AND created_at > $2', [who, since])
+      : await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_previews WHERE created_at > $1', [since])
+    return Number(r[0]?.n ?? 0)
   }
   async recordScore(siteId: string, day: string, score: number) {
     await this.q('INSERT INTO ss_scores (site_id, day, score) VALUES ($1,$2,$3) ON CONFLICT (site_id, day) DO UPDATE SET score = EXCLUDED.score', [siteId, day, score])
@@ -469,8 +518,12 @@ export class MemoryStore implements Store {
     this.pages.set(p.id, p)
     this.revisions.push({ pageId: p.id, author, note })
   }
-  async redirectsForSite() {
-    return []
+  private redirects = new Map<string, Redirect[]>()
+  async redirectsForSite(siteId: string) {
+    return structuredClone(this.redirects.get(siteId) ?? [])
+  }
+  async saveRedirects(siteId: string, redirects: Redirect[]) {
+    this.redirects.set(siteId, redirects.map((r) => RedirectSchema.parse(r)))
   }
   private sofie = new Map<string, SofieState>()
   async sofieState(siteId: string) {
@@ -558,6 +611,23 @@ export class MemoryStore implements Store {
       .filter((v) => v.siteId === siteId && v.day >= day)
       .map(({ day, path, views }) => ({ day, path, views }))
       .sort((a, b) => a.day.localeCompare(b.day))
+  }
+  private previews = new Map<string, { p: Preview; who: string; at: number }>()
+  async savePreview(p: Preview, who: string) {
+    this.previews.set(p.id, { p: structuredClone(p), who, at: Date.now() })
+  }
+  async preview(id: string) {
+    const r = this.previews.get(id)
+    return r ? structuredClone(r.p) : null
+  }
+  async claimPreview(id: string, by: string, siteId: string) {
+    const r = this.previews.get(id)
+    if (!r || r.p.claimed) return false
+    r.p.claimed = { by, siteId }
+    return true
+  }
+  async previewCount(since: Date, who?: string) {
+    return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
   }
   private scores = new Map<string, { day: string; score: number }[]>()
   async recordScore(siteId: string, day: string, score: number) {

@@ -12,7 +12,10 @@ export const SHOWCASE_ORG = 'org_showcase'
 const OWNER = SHOWCASE_ORG
 
 function make(input: Parameters<typeof buildStarterSite>[0], subdomain: string): { site: Site; pages: Page[] } {
-  return buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })
+  const demo = buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })
+  // Logos drawn by the same engine Sofie uses (scripts/showcase-logos.ts).
+  demo.site.business = { ...demo.site.business, logo: `/media/logos/${subdomain}.svg`, icon: `/media/logos/${subdomain}-icon.svg` }
+  return demo
 }
 
 // Gives an example site products and a Shop page, so the store can be seen

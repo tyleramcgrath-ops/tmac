@@ -317,6 +317,9 @@ export const PageSchema = z
     // Breadcrumb label and nav label.
     name: z.string().min(1).max(60),
     status: z.enum(['draft', 'published']),
+    // The address this page was imported from, when it came from the
+    // owner's previous website.
+    source: z.string().url().max(500).optional(),
     seo: PageSeo,
     // Set on blog posts: shown in the posts list and sent to Google.
     post: z
@@ -356,6 +359,9 @@ export const BusinessInfo = z
     // A square mark for browser tabs and home screens; the logo when missing.
     icon: z.string().optional(),
     sameAs: z.array(z.string().url()).optional(),
+    // Where customers leave a review (usually the Google review link).
+    // The site's /review address forwards here.
+    reviewUrl: z.string().url().startsWith('https://').max(500).optional(),
   })
   .strict()
 export type BusinessInfo = z.infer<typeof BusinessInfo>
@@ -407,6 +413,9 @@ export const SiteSchema = z
       .optional(),
     // One or two lines about the business, shown in the footer.
     tagline: z.string().max(200).optional(),
+    // Small print at the foot of every page, e.g. a law firm's attorney
+    // advertising disclaimer.
+    footerNote: z.string().max(600).optional(),
     // Things for sale. Customers pay the owner directly through the owner's
     // own Stripe payment link, so SaySites never touches the money.
     store: StoreSchema.optional(),
@@ -418,7 +427,7 @@ export const SiteSchema = z
       .optional(),
     // Weekly standings: sharing is reciprocal. An owner who shares sees the
     // named standings of everyone else who shares; private by default.
-    league: z.object({ public: z.boolean() }).strict().optional(),
+    league: z.object({ public: z.boolean().default(false), style: z.enum(['classic', 'market', 'arena']).optional() }).strict().optional(),
     updatedAt: z.string(),
   })
   .strict()

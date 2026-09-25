@@ -38,7 +38,7 @@ function SayBox({ id, label = 'Build my site' }: { id: string; label?: string })
 function Bakery({ priority = false }: { priority?: boolean }) {
   return (
     <div className="bk">
-      <div className="bk-nav"><b>Rosie’s Bakery</b><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
+      <div className="bk-nav"><img className="mk-logo" src="/media/logos/rosies-bakery.svg" alt="Rosie’s Bakery" width="203" height="79" /><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
       <div className="bk-hero">
         <div>
           <small>SE Division · Portland</small>
@@ -65,7 +65,7 @@ function Plumber() {
   return (
     <div className="pl">
       <div className="pl-top"><span>Licensed and insured · Rivertown and the valley</span><b>(555) 014-2200</b></div>
-      <div className="pl-nav"><b>RIVERTOWN PLUMBING</b><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
+      <div className="pl-nav"><img className="mk-logo" src="/media/logos/rivertown-plumbing.svg" alt="Rivertown Plumbing" width="476" height="89" /><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
       <div className="pl-hero ph">
         <Photo id="1749532125405-70950966b0e5" sizes="(max-width: 900px) 100vw, 760px" pos="50% 40%" />
         <div className="pl-copy">
@@ -87,7 +87,7 @@ function Plumber() {
 function Salon() {
   return (
     <div className="sa">
-      <div className="sa-nav"><span>Services</span><b>SALT &amp; STONE</b><span>Book</span></div>
+      <div className="sa-nav"><span>Services</span><img className="mk-logo" src="/media/logos/salt-and-stone.svg" alt="Salt &amp; Stone" width="431" height="84" /><span>Book</span></div>
       <div className="sa-hero">
         <div className="ph"><Photo id="1633681926022-84c23e8cb2d6" sizes="(max-width: 900px) 50vw, 300px" /></div>
         <div className="sa-copy">
@@ -128,6 +128,7 @@ export default function Home() {
             <p className="lede">Tell SaySites what you do. It builds a fast website that’s set up for Google, then changes it whenever you ask. <strong>$15 a month. 0% of your sales.</strong></p>
             <SayBox id="idea-top" />
             <ul className="assure"><li>No credit card</li><li>Live in minutes</li><li>Cancel anytime</li></ul>
+            <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free →</a></p>
           </div>
         </section>
 
@@ -237,6 +238,29 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="standing" id="standing">
+          <div className="wrap standing-in">
+            <div className="standing-copy">
+              <p className="kicker">Your weekly standing</p>
+              <h2>Earned, not bought.</h2>
+              <p>Every week, your site gets a Visibility Score and a standing against businesses like yours on SaySites. You don’t move up by spending on ads. You move up by doing what Google actually rewards, and Sofie does most of that for you.</p>
+              <p>Your standing arrives Monday in a private letter. Want to see who you’re up against? Share yours and compare with everyone who shares theirs.</p>
+              <a className="b b-line" href="/visibility-index">See the SaySites Index →</a>
+            </div>
+            <div className="standing-card" aria-hidden="true">
+              <div className="sc-head"><span>Plumbers on SaySites · this week</span><span>3 days left</span></div>
+              <ol>
+                <li><b>1</b><span>Oakline Plumbing<i>Greatest gain</i></span><em>+27</em></li>
+                <li><b>2</b><span>Clearwater Plumbing</span><em>+19</em></li>
+                <li className="me"><b>3</b><span>Rivertown Plumbing</span><em>+18</em></li>
+                <li><b>4</b><span>A plumber in Akron</span><em>+12</em></li>
+                <li><b>5</b><span>Keel &amp; Sons</span><em>+11</em></li>
+              </ol>
+              <p className="sc-tip"><b>2 points</b> moves you to 2nd. Ask Sofie to add your reviews, worth +3.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="pricing" id="pricing">
           <div className="wrap">
             <div className="head split">
@@ -281,6 +305,7 @@ export default function Home() {
             </div>
             <div className="feat-grid">
               <div><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p><span className="tag live">Live</span></div>
+              <div><h3>Kept up with Google</h3><p>Every site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up the same day. <a href="/google-guidelines">How it works</a></p><span className="tag live">Live</span></div>
               <div><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p><span className="tag live">Live</span></div>
               <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p><span className="tag live">Live</span></div>
               <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p><span className="tag live">Live</span></div>

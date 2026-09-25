@@ -14,6 +14,31 @@ text, doorway or near-duplicate location pages, fake or incentivized reviews,
 link schemes or invented claims. When a feature could be gamed, it is scored
 so the honest action is the one that earns points.
 
+Keeping up with Google is part of the job, not a one-off. The guidelines are
+tracked in `lib/guidelines.ts`, each with the check that enforces it. Review
+them against Google's documentation every quarter and whenever Google
+announces a core or spam update; when something changes, update the entry,
+the check and `GUIDELINES_REVIEWED` together. Every site is rendered live by
+the one platform, so the change reaches every site at once. Never promise
+rankings: say sites follow the guidelines and keep up, not that they'll rank.
+
+## Pricing rule (non-negotiable)
+
+Free when it costs us nothing; charge when it costs us money.
+
+- Anything SaySites does without paid services is free for the owner: the
+  redesign preview, importing and moving a site, redirects, the review
+  tools, the Visibility Score and standings. These are built without AI on
+  purpose, so they cost only a few page reads.
+- Anything that spends real money per use is charged, priced above its
+  cost: Claude (AI) tokens, paid data such as SerpApi searches, and any
+  other metered API. Examples: a done-for-you move where Sofie rewrites
+  every imported page, Search Intelligence ($9/month), heavy Sofie use.
+- Build every feature to spend as little as possible: deterministic code
+  first, AI only where it is genuinely needed, cached where it can be, and
+  limited so it can't be abused.
+- The base plan stays low ($15/month, 0% of sales). The goal is volume.
+
 One app, two jobs, split by host in `proxy.ts`:
 
 - **saysites.com** (also www, the Vercel test address and localhost): the
