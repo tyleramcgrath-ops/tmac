@@ -6,7 +6,8 @@ import { dayString, daysBefore } from '@/lib/visits'
 import { scoreSite } from '@/lib/site-score'
 import { milestones } from '@/lib/milestones'
 import { questLink } from '@/lib/visibility'
-import { leagueFor, leagues, ordinal, tradePlural, weekStart } from '@/lib/league'
+import { leagueFor, leagues, tradePlural, weekStart } from '@/lib/league'
+import { leagueTerms } from '@/lib/league-style'
 import { ScoreDial } from '@/components/ScoreDial'
 import { Milestones } from '@/components/Milestones'
 
@@ -33,6 +34,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
   const b = site.business
   const next = vis.quests[0]
   const start = weekStart(today)
+  const lt = leagueTerms(site.league?.style)
   const standing = leagueFor(leagues(await store.leagueSites(daysBefore(start, 7 * 14)), start, today), site.id)
   const marks = milestones({
     siteName: b.name,
@@ -100,7 +102,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
               <span className="stat-label">Visibility</span>
               {standing && standing.league.standings.length > 1 && (
                 <a className="league-line" href={`${base}/visibility`}>
-                  {ordinal(standing.me.rank)} of {standing.league.standings.length} {standing.league.trade ? tradePlural(standing.league.trade) : 'businesses'} on SaySites this week
+                  {lt.position(standing.me.rank)} {lt.of(standing.league.standings.length)} {standing.league.trade ? tradePlural(standing.league.trade) : 'businesses'} this week{standing.me.momentum ? ` · ${lt.move(standing.me.momentum)}` : ''}
                 </a>
               )}
               {next ? (

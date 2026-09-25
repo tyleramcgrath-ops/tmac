@@ -1,6 +1,7 @@
 // SEO by construction: structured data, pre-publish checks, sitemap, robots
 // and slug-change redirects. None of this is configured by the site owner.
 
+import { vibeCheck } from './vibe'
 import { pagePath, siteOrigin, walk, type Page, type Redirect, type Site } from './schema'
 
 // ---------------------------------------------------------------------------
@@ -96,7 +97,8 @@ function localBusiness(site: Site, origin: string): object {
   }
   if (b.phone) data.telephone = b.phone
   if (b.email) data.email = b.email
-  if (b.logo) data.logo = b.logo
+  // Google wants absolute URLs; uploaded logos are stored as /u/<id>.
+  if (b.logo) data.logo = b.logo.startsWith('/') ? origin + b.logo : b.logo
   if (b.priceRange) data.priceRange = b.priceRange
   if (b.hours?.length) data.openingHours = b.hours
   if (b.sameAs?.length) data.sameAs = b.sameAs
@@ -187,6 +189,8 @@ export function sitemapXml(site: Site, pages: readonly Page[]): string {
   const origin = siteOrigin(site)
   const urls = pages
     .filter((p) => p.status === 'published' && !p.seo.noindex)
+    // Only pages that pass the originality check are offered to Google.
+    .filter((p) => vibeCheck(site, p, pages.filter((x) => x.status === 'published')).indexable)
     .map((p) => `<url><loc>${xmlEsc(origin + pagePath(p))}</loc><lastmod>${p.updatedAt.slice(0, 10)}</lastmod></url>`)
     .join('')
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`

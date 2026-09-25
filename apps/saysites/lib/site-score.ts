@@ -6,6 +6,7 @@ import { checkPage } from './seo'
 import { checkSpeed } from './speed'
 import type { Page, Site } from './schema'
 import type { Media, Store, Visit } from './store'
+import { vibeForSite } from './vibe'
 import { visibility } from './visibility'
 import { summarizeVisits } from './visits'
 
@@ -37,6 +38,7 @@ export async function scoreSite(store: Store, site: Site, today: string, pages: 
     visits30: traffic.total,
     visitsPrev30: traffic.previous,
     today,
+    heldPages: [...vibeForSite(site, pages).entries()].filter(([pid, v]) => !v.indexable && pages.find((p) => p.id === pid)?.status === 'published' && !pages.find((p) => p.id === pid)?.seo.noindex).length,
   })
   // A lost snapshot only costs a league a day of precision; never block the page.
   await store.recordScore(site.id, today, vis.score).catch(() => {})

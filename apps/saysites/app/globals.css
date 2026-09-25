@@ -93,6 +93,7 @@ textarea.input { min-height: 110px; resize: vertical; }
 .dash-head h1 { font-size: 32px; margin: 0; }
 .notice { background: var(--amber-soft); color: #6b4500; border-radius: 12px; padding: 12px 16px; font-size: 15px; margin-bottom: 24px; }
 .notice.good { background: var(--mint-soft); color: #0d5c3b; }
+.notice.bad { background: #f8e6e4; color: #7a2620; }
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
 .card h2, .card h3 { font-size: 19px; }
@@ -527,10 +528,26 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .vis-league h3 { margin: 0; }
 .league-me { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .league-me strong { font-size: 44px; line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.league-move { align-self: center; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.league-move.is-up, .st-mom.is-up { color: var(--mint); }
+.ticker { display: grid; gap: 6px; margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--line); }
+.ticker-top { display: flex; justify-content: space-between; align-items: baseline; }
+.ticker-move { font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
+.ticker-move small { font-weight: 500; color: var(--ink-3); margin-left: 4px; }
+.ticker svg { width: 100%; height: 44px; display: block; }
+.ticker-line { fill: none; stroke: var(--ink-3); stroke-width: 2; stroke-linejoin: round; }
+.ticker-fill { fill: color-mix(in srgb, var(--ink-3) 8%, transparent); }
+.ticker.is-up .ticker-move, .ticker.is-up .ticker-line { color: var(--mint); stroke: var(--mint); }
+.ticker.is-up .ticker-fill { fill: color-mix(in srgb, var(--mint) 12%, transparent); }
+.ticker.is-down .ticker-move, .ticker.is-down .ticker-line { color: #9b2c2c; stroke: #9b2c2c; }
+.ticker.is-down .ticker-fill { fill: color-mix(in srgb, #9b2c2c 8%, transparent); }
+.league-style { display: inline-flex; justify-self: start; gap: 2px; padding: 3px; margin-top: 4px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
+.league-style button { font: inherit; font-size: 12.5px; font-weight: 600; border: 0; background: transparent; color: var(--ink-3); padding: 5px 12px; border-radius: 999px; cursor: pointer; }
+.league-style button.on { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .08); }
 .league-streak { align-self: center; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); }
 .title-seal { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; border: 1px solid currentColor; color: var(--mint); white-space: nowrap; }
 .standings { list-style: none; margin: 0 0 16px; padding: 0; counter-reset: none; }
-.standings li { display: grid; grid-template-columns: 36px minmax(0, 1fr) 44px 52px; gap: 12px; align-items: center; padding: 10px 10px; border-top: 1px solid var(--line); }
+.standings li { display: grid; grid-template-columns: 36px minmax(0, 1fr) 44px minmax(52px, auto); gap: 12px; align-items: center; padding: 10px 10px; border-top: 1px solid var(--line); }
 .standings li:first-child { border-top: 0; }
 .standings li.is-me { background: var(--paper); border-radius: 10px; border-top-color: transparent; font-weight: 700; }
 .standings li.is-me + li { border-top-color: transparent; }
@@ -538,7 +555,7 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .st-name { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; min-width: 0; }
 .st-name > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 .st-score, .st-mom { text-align: right; font-variant-numeric: tabular-nums; }
-.st-mom { font-weight: 700; }
+.st-mom { font-weight: 700; white-space: nowrap; }
 .league-public { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--line); }
 /* The Monday reveal: last week's result under a sealed envelope. */
 .reveal { position: relative; min-height: 132px; margin-bottom: 8px; }
@@ -583,6 +600,32 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
   .quest-area { display: none; }
   .quest .btn { grid-column: 2; justify-self: start; }
   .vis-card { flex-direction: column; align-items: flex-start; }
-  .standings li { grid-template-columns: 28px minmax(0, 1fr) 48px; }
+  .standings li { grid-template-columns: 34px minmax(0, 1fr) auto; }
   .st-score { display: none; }
 }
+.move-form { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.move-form .btn { height: 46px; }
+.reviews-two { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; }
+.review-card-wrap { display: grid; gap: 14px; }
+.review-card { display: flex; gap: 20px; align-items: center; padding: 22px; border: 1.5px solid var(--ink); border-radius: 14px; background: #fff; max-width: 420px; }
+.review-qr { width: 120px; flex: none; }
+.review-qr svg { display: block; width: 100%; height: auto; }
+.review-card strong { display: block; font-size: 18px; margin-bottom: 4px; }
+.review-card p { margin: 0 0 8px; font-size: 15px; }
+.review-card span { font-size: 12px; color: var(--ink-3); word-break: break-all; }
+.review-msgs { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.review-msgs li { padding-top: 14px; border-top: 1px solid var(--line); }
+.review-msgs li:first-child { border-top: 0; padding-top: 0; }
+.review-body { white-space: pre-line; margin: 0; font-size: 15px; color: var(--ink-2); }
+@media (max-width: 760px) { .reviews-two { grid-template-columns: 1fr; } }
+@media print {
+  body * { visibility: hidden; }
+  #review-card, #review-card * { visibility: visible; }
+  #review-card { position: absolute; left: 0; top: 0; }
+}
+
+.vibe { margin-top: 14px; padding: 14px 16px; border-radius: 12px; background: var(--amber-soft); display: grid; gap: 8px; }
+.vibe p { margin: 0; font-size: 14.5px; }
+.vibe .vibe-block { color: #7a2620; font-weight: 600; }
+.vibe ul { margin: 6px 0 0; padding-left: 18px; }
+.vibe .btn { justify-self: start; }

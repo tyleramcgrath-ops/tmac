@@ -1,6 +1,7 @@
 // Turns a request path on a site into a Response: a page, the sitemap,
 // robots.txt, a redirect, or a 404.
 
+import { wordsFor } from './site-words'
 import { renderPage, withBasePath } from './render'
 import { pagePath, walk, type Page } from './schema'
 import { SHOWCASE_ORG } from './showcase'
@@ -30,6 +31,9 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
 
   const page = pages.find((p) => p.status === 'published' && pagePath(p) === path)
   if (!page) {
+    // yoursite.com/review: a short, permanent address for QR cards and
+    // messages that forwards to wherever the owner collects reviews.
+    if (path === '/review' && site.business.reviewUrl) return new Response(null, { status: 302, headers: { location: site.business.reviewUrl, 'cache-control': 'public, s-maxage=300' } })
     const r = redirects.find((x) => x.from === path)
     if (r) return new Response(null, { status: r.status, headers: { location: (opts.basePath ?? '') + r.to } })
     return siteNotFound(bundle, opts)
@@ -50,13 +54,14 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
 // A 404 in the site's own look, with its header, footer and a way home.
 function siteNotFound(bundle: SiteBundle, opts: ServeOptions): Response {
   const { site, pages } = bundle
+  const nf = wordsFor(site.language).notFound
   const page: Page = {
     id: '404',
     siteId: site.id,
     slug: 'not-found',
     name: 'Not found',
     status: 'published',
-    seo: { title: `Page not found | ${site.business.name}`.slice(0, 70), description: `This page isn't here. Head back to ${site.business.name}'s home page.`.slice(0, 170), noindex: true },
+    seo: { title: `${nf.title} | ${site.business.name}`.slice(0, 70), description: `This page isn't here. Head back to ${site.business.name}'s home page.`.slice(0, 170), noindex: true },
     body: [
       {
         id: 'nf',
@@ -68,8 +73,8 @@ function siteNotFound(bundle: SiteBundle, opts: ServeOptions): Response {
         style: { padding: { desktop: { top: 120, right: 24, bottom: 140, left: 24 }, mobile: { top: 64, right: 20, bottom: 80, left: 20 } }, gap: { desktop: 16 }, textAlign: { desktop: 'center' } },
         children: [
           { id: 'nf-k', type: 'text', text: '404', style: { color: 'primary', fontWeight: 700, letterSpacing: 0.12 } },
-          { id: 'nf-h', type: 'heading', level: 1, text: 'We couldn’t find that page', style: { fontSize: { desktop: 48, mobile: 34 } } },
-          { id: 'nf-t', type: 'text', text: 'It may have moved, or the link may have a typo. These will get you back on track.', style: { color: 'muted', maxWidth: 520 } },
+          { id: 'nf-h', type: 'heading', level: 1, text: nf.heading, style: { fontSize: { desktop: 48, mobile: 34 } } },
+          { id: 'nf-t', type: 'text', text: nf.text, style: { color: 'muted', maxWidth: 520 } },
           {
             id: 'nf-a',
             type: 'container',
@@ -78,8 +83,8 @@ function siteNotFound(bundle: SiteBundle, opts: ServeOptions): Response {
             justify: 'center',
             style: { gap: { desktop: 12 }, margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
             children: [
-              { id: 'nf-home', type: 'button', label: 'Go to the home page', href: '/', variant: 'primary' },
-              ...(pages.some((p) => p.slug === 'contact' && p.status === 'published') ? [{ id: 'nf-contact', type: 'button' as const, label: 'Contact us', href: '/contact', variant: 'outline' as const }] : []),
+              { id: 'nf-home', type: 'button', label: nf.home, href: '/', variant: 'primary' },
+              ...(pages.some((p) => p.slug === 'contact' && p.status === 'published') ? [{ id: 'nf-contact', type: 'button' as const, label: nf.contact, href: '/contact', variant: 'outline' as const }] : []),
             ],
           },
         ],

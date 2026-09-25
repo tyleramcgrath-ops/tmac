@@ -16,6 +16,8 @@ export interface LeagueSite {
   visits: { day: string; views: number }[]
 }
 
+export type TitleKey = 'gain' | 'visibility' | 'growth'
+
 export interface Standing {
   siteId: string
   rank: number
@@ -26,7 +28,7 @@ export interface Standing {
   gain: number
   growth: number
   momentum: number
-  titles: string[]
+  titles: TitleKey[]
   streak: number
 }
 
@@ -125,10 +127,10 @@ export function leagues(all: LeagueSite[], start: string, today: string): League
     const topScore = Math.max(...sorted.map((r) => r.m.score))
     const topGrowth = Math.max(...sorted.map((r) => r.m.growth))
     const standings = sorted.map((r, i): Standing => {
-      const titles: string[] = []
-      if (i === 0 && r.m.momentum > 0) titles.push('Greatest gain')
-      if (r.m.score === topScore && sorted.length > 1) titles.push('Highest visibility')
-      if (r.m.growth === topGrowth && topGrowth > 0) titles.push('Fastest growth')
+      const titles: TitleKey[] = []
+      if (i === 0 && r.m.momentum > 0) titles.push('gain')
+      if (r.m.score === topScore && sorted.length > 1) titles.push('visibility')
+      if (r.m.growth === topGrowth && topGrowth > 0) titles.push('growth')
       return { siteId: r.s.site.id, rank: i + 1, ...display(r.s.site), score: r.m.score, gain: r.m.gain, growth: r.m.growth, momentum: r.m.momentum, titles, streak: streak(r.s, start, today) }
     })
     // Ties share a rank.

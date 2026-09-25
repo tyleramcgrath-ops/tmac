@@ -1,6 +1,7 @@
 // Blog posts are ordinary pages at /blog/<slug> with post details, plus a
 // /blog page listing them. These build both from what the owner types.
 
+import { wordsFor } from './site-words'
 import { randomUUID } from 'crypto'
 import type { Element, Page, Site } from './schema'
 
@@ -58,6 +59,7 @@ export function buildPostPage(site: Site, input: PostInput, existing?: Page): Pa
   const title = input.title.trim()
   const excerpt = excerptOf(input.body)
   const seoTitle = `${title} | ${site.business.name}`
+  const w = wordsFor(site.language)
   return {
     id: existing?.id ?? `page_${randomUUID()}`,
     siteId: site.id,
@@ -85,14 +87,14 @@ export function buildPostPage(site: Site, input: PostInput, existing?: Page): Pa
             layout: 'flex',
             style: { gap: { desktop: 16 }, maxWidth: 760 },
             children: [
-              { id: 'post-back', type: 'button', label: '← All posts', href: '/blog', variant: 'outline', style: { fontSize: { desktop: 14 } } },
-              { id: 'post-date', type: 'text', text: new Date(`${input.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }), style: { color: 'muted', fontWeight: 600, fontSize: { desktop: 15 }, margin: { desktop: { top: 16, right: 0, bottom: 0, left: 0 } } } },
+              { id: 'post-back', type: 'button', label: w.allPosts, href: '/blog', variant: 'outline', style: { fontSize: { desktop: 14 } } },
+              { id: 'post-date', type: 'text', text: new Date(`${input.date}T12:00:00Z`).toLocaleDateString(w.locale, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }), style: { color: 'muted', fontWeight: 600, fontSize: { desktop: 15 }, margin: { desktop: { top: 16, right: 0, bottom: 0, left: 0 } } } },
               { id: 'post-title', type: 'heading', level: 1, text: title.slice(0, 300), style: { fontSize: { desktop: 50, tablet: 42, mobile: 34 } } },
               ...(input.image
                 ? [{ id: 'post-img', type: 'image' as const, src: input.image.src, alt: input.image.alt, width: 1600, height: 1067, aspect: 1.6, priority: true, style: { borderRadius: Math.min(site.globals.radius, 14), margin: { desktop: { top: 12, right: 0, bottom: 12, left: 0 } } } }]
                 : []),
               ...bodyElements(input.body),
-              { id: 'post-cta', type: 'button', label: site.header?.cta?.label ?? 'Get in touch', href: site.header?.cta?.href ?? '/contact', variant: 'primary', style: { margin: { desktop: { top: 20, right: 0, bottom: 0, left: 0 } } } },
+              { id: 'post-cta', type: 'button', label: site.header?.cta?.label ?? w.getInTouch, href: site.header?.cta?.href ?? '/contact', variant: 'primary', style: { margin: { desktop: { top: 20, right: 0, bottom: 0, left: 0 } } } },
             ],
           },
         ],
@@ -103,15 +105,16 @@ export function buildPostPage(site: Site, input: PostInput, existing?: Page): Pa
 }
 
 export function buildBlogIndex(site: Site, id?: string): Page {
+  const w = wordsFor(site.language)
   return {
     id: id ?? `page_${randomUUID()}`,
     siteId: site.id,
     slug: 'blog',
-    name: 'Blog',
+    name: w.blogName,
     status: 'published',
     seo: {
-      title: `News and tips from ${site.business.name}`.slice(0, 60),
-      description: `Advice, news and updates from ${site.business.name}.`.slice(0, 160),
+      title: w.blogTitle(site.business.name).slice(0, 60),
+      description: w.blogIntro(site.business.name).slice(0, 160),
     },
     body: [
       {
@@ -122,8 +125,8 @@ export function buildBlogIndex(site: Site, id?: string): Page {
         boxed: true,
         style: { padding: section, gap: { desktop: 14 } },
         children: [
-          { id: 'blog-h', type: 'heading', level: 1, text: 'News & tips', style: { fontSize: { desktop: 52, mobile: 36 } } },
-          { id: 'blog-t', type: 'text', text: `Advice, news and updates from ${site.business.name}.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+          { id: 'blog-h', type: 'heading', level: 1, text: w.blogHeading, style: { fontSize: { desktop: 52, mobile: 36 } } },
+          { id: 'blog-t', type: 'text', text: w.blogIntro(site.business.name), style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
           { id: 'blog-posts', type: 'posts', style: { margin: { desktop: { top: 32, right: 0, bottom: 0, left: 0 } } } },
         ],
       },

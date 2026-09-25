@@ -9,6 +9,7 @@ import {
   robotsTxt,
   sitemapXml,
   structuredData,
+  walk,
   type Page,
 } from '../apps/saysites/lib'
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
@@ -18,6 +19,7 @@ import { serveSitePath } from '../apps/saysites/lib/serve'
 import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
+import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
 
 function clone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v))
@@ -217,7 +219,9 @@ describe('SaySites sitemap, robots and redirects', () => {
     const hidden: Page = { ...clone(sampleServices), id: 'h', slug: 'thanks', seo: { ...sampleServices.seo, noindex: true } }
     const xml = sitemapXml(sampleSite, [...samplePages, draft, hidden])
     expect(xml).toContain('<loc>https://rivertown-plumbing.saysites.com/</loc>')
-    expect(xml).toContain('<loc>https://rivertown-plumbing.saysites.com/services</loc>')
+    // The sample services page is thin (a heading and a line), so the
+    // originality check holds it back from Google until it says more.
+    expect(xml).not.toContain('<loc>https://rivertown-plumbing.saysites.com/services</loc>')
     expect(xml).not.toContain('/draft')
     expect(xml).not.toContain('/thanks')
     expect(robotsTxt(sampleSite)).toContain('Sitemap: https://rivertown-plumbing.saysites.com/sitemap.xml')
@@ -983,7 +987,7 @@ describe('SaySites: leagues', async () => {
     const all = leagues([...plumbers, baker], start, '2026-09-25')
     const pl = all.find((l) => l.trade === 'Plumber')!
     expect(pl.standings.map((s) => s.siteId)).toEqual(['s4', 's3', 's2', 's1', 's0'])
-    expect(pl.standings[0].titles).toContain('Greatest gain')
+    expect(pl.standings[0].titles).toContain('gain')
     expect(pl.standings[0].label).toBe('A plumber in Rivertown')
     const open = all.find((l) => l.trade === null)!
     expect(open.standings[0]).toMatchObject({ siteId: 's99', label: 'Biz 99', isPublic: true, gain: 10 })
@@ -1007,5 +1011,292 @@ describe('SaySites: leagues', async () => {
     expect(rows).toHaveLength(1)
     expect(rows[0].scores).toEqual([{ day: '2026-09-22', score: 44 }])
     expect(rows[0].visits).toEqual([{ day: '2026-09-22', views: 2 }])
+  })
+})
+
+describe('SaySites: showcase logos', async () => {
+  const { existsSync } = await import('fs')
+  const { join } = await import('path')
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { structuredData } = await import('../apps/saysites/lib/seo')
+  it('gives every example site a logo file and publishes it to Google as an absolute URL', () => {
+    for (const [sub, demo] of Object.entries(SHOWCASE)) {
+      expect(demo.site.business.logo).toBe(`/media/logos/${sub}.svg`)
+      expect(existsSync(join(__dirname, '../apps/saysites/public/media/logos', `${sub}.svg`))).toBe(true)
+      expect(existsSync(join(__dirname, '../apps/saysites/public/media/logos', `${sub}-icon.svg`))).toBe(true)
+    }
+    const { site, pages } = SHOWCASE['rivertown-plumbing']
+    const home = pages.find((p) => p.slug === '')!
+    const json = JSON.stringify(structuredData(site, home, pages))
+    expect(json).toContain('"logo":"https://rivertown-plumbing.saysites.com/media/logos/rivertown-plumbing.svg"')
+  })
+})
+
+describe('SaySites: law firm starter', () => {
+  it('builds practice areas, a consultation request and the attorney advertising notice', () => {
+    const { site, pages } = buildStarterSite({ name: 'Hale & Porter Law', type: 'lawyer', city: 'Columbus', region: 'OH', phone: '(555) 614-2290', services: ['Estate planning', 'Family law', 'Real estate closings'], palette: 'slate' }, 'org_x', 'hale-test')
+    expect(pages.map((p) => p.slug)).toEqual(['', 'practice-areas', 'contact'])
+    expect(site.nav[0]).toEqual({ label: 'Practice Areas', href: '/practice-areas' })
+    expect(site.footerNote).toMatch(/Attorney advertising.*not legal advice.*attorney-client relationship.*Prior results/)
+    const home = pages[0]
+    const h1 = [...walk(home.body)].find((e) => e.type === 'heading' && e.level === 1)
+    expect(h1 && 'text' in h1 && h1.text).toBe('Estate planning and family law attorneys in Columbus.')
+    expect(home.seo.title.length).toBeLessThanOrEqual(60)
+    expect(home.seo.title).toContain('Attorneys in Columbus, OH')
+    expect(renderPage(site, home, pages).html).toContain('Attorney advertising.')
+    for (const p of pages) expect(checkPage(p, pages).filter((i) => i.severity === 'error')).toEqual([])
+    // Other trades are unchanged.
+    const plumber = buildStarterSite({ name: 'P', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'o', 'p')
+    expect(plumber.site.footerNote).toBeUndefined()
+    expect(plumber.pages.map((p) => p.slug)).toEqual(['', 'services', 'contact'])
+  })
+})
+
+describe('SaySites: Spanish sites', async () => {
+  const { buildBlogIndex } = await import('../apps/saysites/lib/posts')
+  it('puts SaySites’ own words on the page in the site’s language', () => {
+    const { site, pages } = buildStarterSite({ name: 'Panadería Sol', type: 'bakery', city: 'San José', region: 'SJ', phone: '+506 2222 3333', services: ['Pan'], palette: 'sunset', hours: ['Mo-Fr 07:00-18:00'], language: 'es' }, 'org_x', 'sol')
+    expect(site.language).toBe('es')
+    const contact = pages.find((p) => p.slug === 'contact')!
+    const html = renderPage(site, contact, pages).html
+    expect(html).toContain('<html lang="es">')
+    expect(html).toContain('Tu nombre')
+    expect(html).toContain('Correo electrónico')
+    expect(html).toContain('Horario')
+    expect(html).toContain('Lun–Vie 7:00–18:00')
+    expect(html).toContain('>Llamar<')
+    expect(buildBlogIndex(site).seo.title).toBe('Noticias y consejos de Panadería Sol')
+    // English sites are unchanged.
+    const en = buildStarterSite({ name: 'Sun Bakery', type: 'bakery', city: 'Austin', region: 'TX', services: [], palette: 'sunset', hours: ['Mo-Fr 07:00-18:00'] }, 'o', 'sun')
+    const enHtml = renderPage(en.site, en.pages.find((p) => p.slug === 'contact')!, en.pages).html
+    expect(enHtml).toContain('Your name')
+    expect(enHtml).toContain('Mon–Fri 7am–6pm')
+  })
+})
+
+describe('SaySites: standings styles', async () => {
+  const { LEAGUE_STYLES, leagueTerms } = await import('../apps/saysites/lib/league-style')
+  it('words the same standings three ways, defaulting to professional', () => {
+    expect(LEAGUE_STYLES).toEqual(['classic', 'market', 'arena'])
+    expect(leagueTerms(undefined).titles.gain).toBe('Greatest gain')
+    expect(leagueTerms('market').titles.gain).toBe('Top mover')
+    expect(leagueTerms('market').move(12)).toBe('▲ 12')
+    expect(leagueTerms('arena').position(3)).toBe('#3')
+    expect(leagueTerms('arena').streak(4)).toContain('4-week streak')
+    expect(leagueTerms('nonsense').name).toBe('Professional')
+    expect(SiteSchema.safeParse({ ...buildStarterSite({ name: 'A', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'o', 'a').site, league: { public: true, style: 'arena' } }).success).toBe(true)
+  })
+})
+
+describe('SaySites: moving an existing website', async () => {
+  const { extract, slugForPath, planImport, discover, importSite, safeFetch, ImportError } = await import('../apps/saysites/lib/importer')
+  const html = (title: string, h1: string, body: string) => `<html><head><title>${title}</title><meta name="description" content="About ${h1}"></head><body><header><nav><a href="/a">A</a></nav></header><main><h1>${h1}</h1>${body}</main><footer><p>© 2026 All rights reserved. Privacy policy.</p></footer><script>var x = 1</script></body></html>`
+  const long = (n: number) => `<p>${'Clear words about this topic for real clients. '.repeat(n)}</p>`
+
+  it('reads the main content, not the menus, scripts or footer', () => {
+    const e = extract(html('Car Accident Lawyers | Firm', 'Car Accident Lawyers in Jackson, MS', `<h3>Early h3</h3>${long(4)}<h2>What to do</h2><ul><li>Call the police</li><li>Get medical care</li></ul><h4>Deep</h4><p>short</p>`))
+    expect(e.title).toBe('Car Accident Lawyers | Firm')
+    expect(e.description).toBe('About Car Accident Lawyers in Jackson, MS')
+    expect(e.h1).toBe('Car Accident Lawyers in Jackson, MS')
+    expect(e.blocks.map((b) => b.kind)).toEqual(['h3', 'p', 'h2', 'li', 'li', 'h3'])
+    expect(JSON.stringify(e)).not.toContain('All rights reserved')
+    expect(JSON.stringify(e)).not.toContain('var x')
+  })
+
+  it('keeps old addresses where it can and redirects the rest', () => {
+    expect(slugForPath('/Personal-Injury/Car_Accidents.html/')).toBe('personal-injury/car-accidents')
+    const { site, pages } = buildStarterSite({ name: 'W Law', type: 'lawyer', city: 'Jackson', region: 'MS', services: ['Injury'], palette: 'slate' }, 'o', 'w-law')
+    const page = (from: string, h1: string, words = 12): { from: string; url: string; extracted: ReturnType<typeof extract> } => ({ from, url: `https://old.example${from}`, extracted: extract(html(h1, h1, long(words))) })
+    const plan = planImport(site, pages, [
+      page('/', 'Home'),
+      page('/contact-us/', 'Contact us'),
+      page('/personal-injury/car-accidents/', 'Car accidents'),
+      page('/About_Us.html', 'About us'),
+      page('/thin', 'Thin', 1),
+    ])
+    expect(plan.pages.map((p) => [p.slug, p.status])).toEqual([['personal-injury/car-accidents', 'draft'], ['about-us', 'draft']])
+    expect(plan.pages[0].source).toBe('https://old.example/personal-injury/car-accidents/')
+    // The old brand in titles becomes the new firm's name.
+    const re = planImport(site, pages, [page('/a', 'Wills - Old Firm LLP'), page('/b', 'Trusts - Old Firm LLP'), page('/c', 'Probate - Old Firm LLP')])
+    expect(re.pages.map((p) => p.seo.title)).toEqual(['Wills - W Law', 'Trusts - W Law', 'Probate - W Law'])
+    expect(plan.redirects).toEqual([
+      { from: '/contact-us', to: '/contact', status: 301 },
+      { from: '/About_Us.html', to: '/about-us', status: 301 },
+    ])
+    expect(plan.skipped.map((s) => s.from)).toEqual(['/thin'])
+    // Imported pages pass the same checks as every other page.
+    for (const p of plan.pages) expect(checkPage(p, [...pages, ...plan.pages]).filter((i) => i.severity === 'error')).toEqual([])
+    expect(plan.pages[0].body[0].children.filter((c) => c.type === 'heading' && c.level === 1)).toHaveLength(1)
+    // Headings right after the H1 never reuse its id.
+    const withH2 = planImport(site, pages, [{ from: '/x', url: 'https://old.example/x', extracted: extract(html('X', 'X page', `<h2>First</h2>${long(10)}`)) }])
+    expect(checkPage(withH2.pages[0], [...pages, ...withH2.pages]).filter((i) => i.severity === 'error')).toEqual([])
+  })
+
+  it('finds pages from the sitemap and reads them', async () => {
+    const site = buildStarterSite({ name: 'W', type: 'lawyer', city: 'J', region: 'MS', services: [], palette: 'slate' }, 'o', 'w').site
+    const files: Record<string, { type: string; body: string }> = {
+      'https://old.example/sitemap.xml': { type: 'application/xml', body: '<sitemapindex><sitemap><loc>https://old.example/page-sitemap.xml</loc></sitemap><sitemap><loc>https://old.example/tag-sitemap.xml</loc></sitemap></sitemapindex>' },
+      'https://old.example/page-sitemap.xml': { type: 'application/xml', body: '<urlset><url><loc>https://old.example/</loc></url><url><loc>https://www.old.example/wills/</loc></url><url><loc>https://other.example/x/</loc></url><url><loc>https://old.example/wp-content/a.pdf</loc></url></urlset>' },
+      'https://old.example/': { type: 'text/html', body: html('Home', 'Home', long(10)) },
+      'https://www.old.example/wills/': { type: 'text/html; charset=utf-8', body: html('Wills', 'Wills and trusts', long(12)) },
+    }
+    const get = async (u: string) => (files[u] ? { url: u, status: 200, ...files[u] } : { url: u, status: 404, type: 'text/html', body: '' })
+    const urls = await discover(new URL('https://old.example/'), get)
+    expect(urls.map((u) => u.href)).toEqual(['https://old.example/', 'https://www.old.example/wills/'])
+    const res = await importSite(site, [], 'old.example', get)
+    expect(res.pages.map((p) => p.slug)).toEqual(['wills'])
+    await expect(importSite(site, [], 'nothing.example', async () => null)).rejects.toBeInstanceOf(ImportError)
+  })
+
+  it('refuses private and local addresses', async () => {
+    await expect(safeFetch('http://127.0.0.1/admin')).rejects.toBeInstanceOf(ImportError)
+    await expect(safeFetch('http://localhost:3000/')).rejects.toBeInstanceOf(ImportError)
+    await expect(safeFetch('http://169.254.169.254/latest/meta-data')).rejects.toBeInstanceOf(ImportError)
+    await expect(safeFetch('file:///etc/passwd')).rejects.toBeInstanceOf(ImportError)
+  })
+
+  it('stores redirects and serves them', async () => {
+    const store = new MemoryStore()
+    await store.saveRedirects('s1', [{ from: '/old', to: '/new', status: 301 }])
+    expect(await store.redirectsForSite('s1')).toEqual([{ from: '/old', to: '/new', status: 301 }])
+  })
+})
+
+describe('SaySites: import skips archives and listings', async () => {
+  const { discover } = await import('../apps/saysites/lib/importer')
+  it('keeps real pages and posts only', async () => {
+    const urls = ['/', '/category/injury/', '/tag/x', '/blog/', '/blog/my-post/', '/cities-pages-sitemap/', '/thank-you/', '/wp-content/uploads/a.jpg', '/page/2/', '/wills/']
+    const body = `<urlset>${urls.map((u) => `<url><loc>https://old.example${u}</loc></url>`).join('')}</urlset>`
+    const got = await discover(new URL('https://old.example/'), async (u) => (u.endsWith('/sitemap.xml') ? { url: u, status: 200, type: 'application/xml', body } : null))
+    expect(got.map((u) => u.pathname)).toEqual(['/', '/blog/my-post/', '/wills/'])
+  })
+})
+
+describe('SaySites: free redesign preview', async () => {
+  const { detectBusiness, guessType, nearestPalette } = await import('../apps/saysites/lib/detect')
+  const { buildPreview, claimFromPreview } = await import('../apps/saysites/lib/redesign')
+  const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebSite', name: 'x' }, { '@type': 'LegalService', name: 'Smith & Lee Law', telephone: '(555) 010-2000', address: { '@type': 'PostalAddress', streetAddress: '1 Main St', addressLocality: 'Dayton', addressRegion: 'OH', postalCode: '45402' } }] })
+  const home = `<html><head><title>Injury Lawyers in Dayton | Smith & Lee Law</title><meta name="theme-color" content="#1b4d7a"><script type="application/ld+json">${ld}</script></head><body><header><nav><a href="/car-accidents/">Car accidents</a><a href="/contact-us/">Contact</a></nav></header><main><h1>Injury Lawyers in Dayton, OH</h1><p>${'We help injured people in Dayton get the answers they need. '.repeat(6)}</p></main><script src="/a.js"></script><script src="/b.js"></script></body></html>`
+  const car = `<html><head><title>CAR ACCIDENT LAWYERS | Smith & Lee Law</title></head><body><main><h1>CAR ACCIDENT LAWYERS</h1><h2>After a crash</h2><p>${'What to do after a car accident in Ohio, step by step, in plain English. '.repeat(8)}</p></main></body></html>`
+  const files: Record<string, string> = { 'https://smithlee.example/': home, 'https://smithlee.example/car-accidents/': car }
+  const get = async (u: string) => (files[u] ? { url: u, status: 200, type: 'text/html', body: files[u] } : null)
+
+  it('reads who the business is from its own site', () => {
+    const d = detectBusiness(home, 'https://smithlee.example/')
+    expect(d).toMatchObject({ name: 'Smith & Lee Law', type: 'lawyer', phone: '(555) 010-2000', street: '1 Main St', city: 'Dayton', region: 'OH', postalCode: '45402', color: '#1b4d7a', palette: 'ocean' })
+    expect(guessType('Rivertown Plumbing | Drain cleaning')).toBe('plumber')
+    expect(guessType('Joe’s Place')).toBe('other')
+    expect(nearestPalette('#2f6b40')).toBe('forest')
+    expect(nearestPalette('#777777')).toBe('slate')
+  })
+
+  it('rebuilds the site without AI, keeps addresses, and reports before and after', async () => {
+    const p = await buildPreview('smithlee.example', get, '0123456789abcdef')
+    expect(p.site.business.name).toBe('Smith & Lee Law')
+    const h1 = [...walk(p.pages.find((x) => x.slug === '')!.body)].find((e) => e.type === 'heading' && e.level === 1)
+    expect(h1 && 'text' in h1 && h1.text).toBe('Injury Lawyers in Dayton, OH')
+    const imported = p.pages.find((x) => x.slug === 'car-accidents')!
+    expect(imported.status).toBe('published')
+    // /contact-us didn't load, so nothing points at it.
+    expect(p.redirects).toEqual([])
+    expect(p.before.scripts).toBe(2)
+    expect(p.after.scripts).toBe(0)
+    expect(p.after.speedPass).toBe(true)
+    expect(p.after.seoErrors).toBe(0)
+    // Claiming makes it the owner's, with imported pages as drafts.
+    const c = claimFromPreview(p, 'user_1', 'smith-lee-law')
+    expect(c.site.orgId).toBe('user_1')
+    expect(c.pages.find((x) => x.slug === 'car-accidents')!.status).toBe('draft')
+    expect(new Set(c.pages.map((x) => x.id)).size).toBe(c.pages.length)
+    const store = new MemoryStore()
+    await store.savePreview(p, 'who')
+    expect(await store.previewCount(new Date(Date.now() - 1000), 'who')).toBe(1)
+    expect(await store.claimPreview(p.id, 'user_1', c.site.id)).toBe(true)
+    expect(await store.claimPreview(p.id, 'user_2', 'other')).toBe(false)
+  })
+})
+
+describe('SaySites: reviews', async () => {
+  const { reviewMessages, checkReviewUrl, googleReviewUrl, reviewLink } = await import('../apps/saysites/lib/reviews')
+  const { visibility } = await import('../apps/saysites/lib/visibility')
+  it('gives every site a /review address, a footer link and honest request messages', () => {
+    const { site, pages } = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: [], palette: 'ocean' }, 'o', 'rivertown-p')
+    const withLink = { ...site, business: { ...site.business, reviewUrl: googleReviewUrl('ChIJabc123') } }
+    expect(withLink.business.reviewUrl).toBe('https://search.google.com/local/writereview?placeid=ChIJabc123')
+    expect(SiteSchema.safeParse(withLink).success).toBe(true)
+    const res = serveSitePath({ site: withLink, pages, redirects: [] }, ['review'], {})
+    expect(res.status).toBe(302)
+    expect(res.headers.get('location')).toBe(withLink.business.reviewUrl)
+    expect(serveSitePath({ site, pages, redirects: [] }, ['review'], {}).status).toBe(404)
+    expect(renderPage(withLink, pages[0], pages).html).toContain('<a href="/review" rel="nofollow">Leave us a review</a>')
+    const msgs = reviewMessages(withLink)
+    expect(msgs.map((m) => m.id)).toEqual(['text', 'email', 'person'])
+    expect(msgs[0].body).toContain(reviewLink(withLink))
+    // Nothing offered in return, nothing that filters for happy customers.
+    for (const m of msgs) expect(m.body).not.toMatch(/discount|free|gift|5 stars|five stars|if you were happy/i)
+    expect(reviewMessages({ ...withLink, language: 'es' })[0].body).toMatch(/^Hola/)
+    expect(checkReviewUrl('g.page/r/abc/review')).toEqual({ url: 'https://g.page/r/abc/review' })
+    expect(checkReviewUrl('http://x.com').error).toBeTruthy()
+    // The review link is an opportunity, and the score still adds up to 100.
+    const v = visibility({ site, pages, seoErrors: 0, seoTips: 0, fast: true, photos: 0, visits30: 0, visitsPrev30: 0, today: '2026-09-25' })
+    expect(v.quests.find((q) => q.id === 'review-link')?.href).toMatch(/\/reviews$/)
+    expect(v.score + v.quests.reduce((n, q) => n + q.points, 0)).toBe(100)
+  })
+})
+
+describe('SaySites: originality check', async () => {
+  const { vibeCheck, vibeForSite, isTemplate, stuffing, similarity } = await import('../apps/saysites/lib/vibe')
+  const own = (id: string, slug: string, text: string): Page => ({ id, siteId: 's', slug, name: slug || 'Home', status: 'published', seo: { title: `${slug} page title for the site`, description: 'A description long enough to be a proper description for Google.' }, body: [{ id: `${id}-s`, type: 'container', tag: 'section', layout: 'flex', children: [{ id: `${id}-h`, type: 'heading', level: 1, text: slug || 'Home' }, { id: `${id}-t`, type: 'text', text }] }], updatedAt: '2026-09-25T00:00:00.000Z' })
+
+  it('holds starter wording out of Google until it is made original', () => {
+    const { site, pages } = buildStarterSite({ name: 'Keel & Sons', type: 'plumber', city: 'Dayton', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drains'], palette: 'ocean' }, 'o', 'keel')
+    const v = vibeForSite(site, pages)
+    const home = v.get(pages[0].id)!
+    expect(home.originality).toBeLessThan(20)
+    expect(home.indexable).toBe(false)
+    expect(renderPage(site, pages[0], pages).html).toContain('<meta name="robots" content="noindex">')
+    expect(sitemapXml(site, pages)).not.toContain('<loc>https://keel.saysites.com/</loc>')
+    // The contact page is a utility page and isn't held back.
+    expect(v.get(pages.find((p) => p.slug === 'contact')!.id)!.indexable).toBe(true)
+    expect(isTemplate(`Tell us what you need and we'll take it from there.`)).toBe(true)
+    expect(isTemplate('Dave and his two sons still answer the phone themselves.')).toBe(false)
+    // The owner's own words pass.
+    const written = own('h2', '', 'Keel & Sons has fixed leaks in Dayton since 1994. Dave and his two sons still answer the phone themselves. Most jobs start with a free look at the problem and a written price before any work begins. We carry parts for older homes in the Oregon District, where cast iron drains are common, so repairs rarely need a second visit. Emergency calls after 6pm are answered by whichever of us is on call that week.')
+    const ok = vibeCheck(site, written, [written])
+    expect(ok.originality).toBe(100)
+    expect(ok.indexable).toBe(true)
+    expect(renderPage(site, written, [written]).html).not.toContain('noindex')
+  })
+
+  it('blocks keyword stuffing and near-copy pages, and flags stock phrases', () => {
+    const site = { ...buildStarterSite({ name: 'X', type: 'plumber', city: 'Dayton', region: 'OH', services: [], palette: 'ocean' }, 'o', 'x').site }
+    const stuffed = 'Our Dayton plumber team is the Dayton plumber you need. Call a Dayton plumber today. ' .repeat(4) + 'We fix leaks and install heaters for homes and shops across the area every single week of the year.'
+    expect(stuffing(stuffed, ['Dayton'])).toBe('dayton plumber')
+    expect(vibeCheck(site, own('a', 'a', stuffed), []).blockers[0]).toMatch(/keyword stuffing/)
+    // A guide that naturally repeats its topic is fine.
+    expect(stuffing('The tank holds water. '.repeat(12) + 'Check the tank each year.', ['Dayton'])).toBeNull()
+    const town = (t: string) => `Our ${t} plumbers fix leaks, clear drains and replace water heaters for homes and businesses. We answer the phone ourselves, give a written price first and clean up after every job. Most repairs are finished the same day, and we carry parts for older homes so a second visit is rare. Call us any time for help.`
+    const a = own('a', 'dayton', town('Dayton'))
+    const b = own('b', 'kettering', town('Kettering'))
+    expect(similarity(town('Dayton'), town('Kettering'))).toBeGreaterThan(0.7)
+    expect(vibeCheck(site, b, [a, b]).blockers[0]).toMatch(/nearly the same as \/dayton/)
+    const fluffy = own('f', 'f', 'Look no further for top-notch service. We pride ourselves on being second to none. Our state-of-the-art tools are tailored to your needs. Don’t hesitate to contact our friendly team for anything at all around the house.')
+    const fv = vibeCheck(site, fluffy, [fluffy])
+    expect(fv.filler.length).toBeGreaterThanOrEqual(3)
+    expect(fv.indexable).toBe(false)
+  })
+})
+
+describe('Google guidelines list', () => {
+  it('has a reviewed date and a Google source for every entry', () => {
+    expect(GUIDELINES_REVIEWED).toMatch(/^[A-Z][a-z]+ \d{4}$/)
+    const ids = new Set<string>()
+    for (const g of GUIDELINES) {
+      expect(ids.has(g.id)).toBe(false)
+      ids.add(g.id)
+      expect(g.source.url).toMatch(/^https:\/\/(developers\.google\.com|support\.google\.com|blog\.google)\//)
+      expect(g.how.length).toBeGreaterThan(30)
+    }
+    expect(GUIDELINES.length).toBeGreaterThanOrEqual(8)
   })
 })

@@ -9,13 +9,14 @@ function Error({ state }: { state: FormState }) {
   return state.error ? <p className="error" role="alert">{state.error}</p> : null
 }
 
-export function SignUpForm({ idea = '', template = '' }: { idea?: string; template?: string }) {
+export function SignUpForm({ idea = '', template = '', claim = '' }: { idea?: string; template?: string; claim?: string }) {
   const [state, action, pending] = useActionState(signUp, {})
   return (
     <form action={action}>
       <Error state={state} />
       {idea && <input type="hidden" name="idea" value={idea} />}
       {template && <input type="hidden" name="template" value={template} />}
+      {claim && <input type="hidden" name="claim" value={claim} />}
       <label className="field"><span>Your name</span><input className="input" name="name" autoComplete="name" required /></label>
       <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" required /></label>
       <label className="field"><span>Password</span><input className="input" name="password" type="password" autoComplete="new-password" minLength={8} required /><small>At least 8 characters.</small></label>
@@ -24,11 +25,12 @@ export function SignUpForm({ idea = '', template = '' }: { idea?: string; templa
   )
 }
 
-export function LogInForm() {
+export function LogInForm({ claim = '' }: { claim?: string }) {
   const [state, action, pending] = useActionState(logIn, {})
   return (
     <form action={action}>
       <Error state={state} />
+      {claim && <input type="hidden" name="claim" value={claim} />}
       <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" required /></label>
       <label className="field"><span>Password</span><input className="input" name="password" type="password" autoComplete="current-password" required /></label>
       <button className="btn btn-primary btn-block" type="submit" disabled={pending}>{pending ? 'Logging in…' : 'Log in'}</button>
@@ -77,8 +79,16 @@ export function NewSiteForm({ types, palettes, idea = '', template = '' }: { typ
       </label>
       <div className="row">
         <label className="field"><span>City</span><input className="input" name="city" placeholder="Rivertown" required maxLength={60} value={info.city} onChange={set('city')} /></label>
-        <label className="field"><span>State</span><input className="input" name="region" placeholder="OH" required maxLength={40} value={info.region} onChange={set('region')} /></label>
+        <label className="field"><span>State or province</span><input className="input" name="region" placeholder="OH" required maxLength={40} value={info.region} onChange={set('region')} /></label>
       </div>
+      <label className="field">
+        <span>Website language</span>
+        <select className="input" name="language" defaultValue="en">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+        <small>Sofie understands both, so you can talk to her in English or Spanish either way.</small>
+      </label>
       <div className="row">
         <label className="field"><span>Phone <em className="muted">(optional)</em></span><input className="input" name="phone" type="tel" placeholder="(555) 201-4480" maxLength={30} value={info.phone} onChange={set('phone')} /></label>
         <label className="field"><span>Email <em className="muted">(optional)</em></span><input className="input" name="email" type="email" placeholder="hello@yourbusiness.com" /></label>
