@@ -948,3 +948,64 @@ describe('SaySites: visibility score', async () => {
     expect(better.score).toBeGreaterThan(v.score)
   })
 })
+
+describe('SaySites: leagues', async () => {
+  const { leagues, leagueFor, momentum, ordinal, pointsToClimb, tradePlural, weekStart, MIN_LEAGUE } = await import('../apps/saysites/lib/league')
+  const mk = (n: number, type = 'plumber', schemaType?: string) => {
+    const { site } = buildStarterSite({ name: `Biz ${n}`, type, city: 'Rivertown', region: 'OH', services: ['A'], palette: 'ocean' }, 'org_x', `biz-${n}`)
+    return { ...site, id: `s${n}`, business: { ...site.business, ...(schemaType ? { schemaType } : {}) } }
+  }
+  const start = '2026-09-21'
+
+  it('finds the Monday of a week and names trades', () => {
+    expect(weekStart('2026-09-25')).toBe('2026-09-21')
+    expect(weekStart('2026-09-21')).toBe('2026-09-21')
+    expect(weekStart('2026-09-27')).toBe('2026-09-21')
+    expect(tradePlural('Plumber')).toBe('plumbers')
+    expect(tradePlural('HairSalon')).toBe('hair salons')
+    expect(tradePlural('Bakery')).toBe('bakeries')
+    expect(ordinal(1) + ordinal(2) + ordinal(3) + ordinal(11) + ordinal(22)).toBe('1st2nd3rd11th22nd')
+  })
+
+  it('scores momentum from score gained and traffic growth, not size', () => {
+    const s = { site: mk(1), scores: [{ day: '2026-09-18', score: 40 }, { day: '2026-09-24', score: 52 }], visits: [{ day: '2026-09-15', views: 10 }, { day: '2026-09-22', views: 30 }] }
+    const m = momentum(s, start, '2026-09-25')
+    expect(m.gain).toBe(12)
+    expect(m.growth).toBe(Math.round(10 * Math.log2(31 / 11)))
+    expect(m.momentum).toBe(24 + m.growth)
+    // A site that joins mid-week earns only what it adds afterwards.
+    expect(momentum({ site: mk(2), scores: [{ day: '2026-09-23', score: 70 }], visits: [] }, start, '2026-09-25').gain).toBe(0)
+  })
+
+  it('groups trades into leagues, falls back to an open league, and keeps names private unless opted in', () => {
+    const plumbers = Array.from({ length: MIN_LEAGUE }, (_, i) => ({ site: mk(i), scores: [{ day: '2026-09-14', score: 30 }, { day: '2026-09-24', score: 30 + i * 3 }], visits: [] }))
+    const baker = { site: { ...mk(99, 'bakery'), league: { public: true } }, scores: [{ day: '2026-09-22', score: 10 }, { day: '2026-09-23', score: 20 }], visits: [] }
+    const all = leagues([...plumbers, baker], start, '2026-09-25')
+    const pl = all.find((l) => l.trade === 'Plumber')!
+    expect(pl.standings.map((s) => s.siteId)).toEqual(['s4', 's3', 's2', 's1', 's0'])
+    expect(pl.standings[0].titles).toContain('Greatest gain')
+    expect(pl.standings[0].label).toBe('A plumber in Rivertown')
+    const open = all.find((l) => l.trade === null)!
+    expect(open.standings[0]).toMatchObject({ siteId: 's99', label: 'Biz 99', isPublic: true, gain: 10 })
+    const me = leagueFor(all, 's1')!
+    expect(me.me.rank).toBe(4)
+    // 3 points of score behind 3rd = 6 momentum; 4 more points passes them.
+    expect(pointsToClimb(me.league, me.me)).toBe(4)
+    expect(pointsToClimb(pl, pl.standings[0])).toBeNull()
+  })
+
+  it('stores daily scores for the leagues', async () => {
+    const store = new MemoryStore()
+    const site = mk(7)
+    await store.createUser({ email: 'l@example.com', name: 'L', passwordHash: 'x' })
+    await store.createSite('u', site, [])
+    await store.recordScore(site.id, '2026-09-22', 40)
+    await store.recordScore(site.id, '2026-09-22', 44)
+    await store.recordVisit(site.id, '2026-09-22', '/')
+    await store.recordVisit(site.id, '2026-09-22', '/about')
+    const rows = await store.leagueSites('2026-09-01')
+    expect(rows).toHaveLength(1)
+    expect(rows[0].scores).toEqual([{ day: '2026-09-22', score: 44 }])
+    expect(rows[0].visits).toEqual([{ day: '2026-09-22', views: 2 }])
+  })
+})

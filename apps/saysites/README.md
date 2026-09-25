@@ -3,6 +3,17 @@
 Tell it about your business; it builds a clean, fast website that ranks. See
 `CMS_PLAN.md` at the repo root for the product plan.
 
+## Search guidelines (non-negotiable)
+
+Every SaySites website must follow Google Search Essentials and Google's spam
+policies. The product exists to win organic search on merit, as the better
+alternative to paying for ads: fast pages, accurate business details, useful
+content and real reviews. Nothing in SaySites (Sofie, the Visibility Score,
+quests, the weekly standings) may reward or suggest keyword stuffing, hidden
+text, doorway or near-duplicate location pages, fake or incentivized reviews,
+link schemes or invented claims. When a feature could be gamed, it is scored
+so the honest action is the one that earns points.
+
 One app, two jobs, split by host in `proxy.ts`:
 
 - **saysites.com** (also www, the Vercel test address and localhost): the

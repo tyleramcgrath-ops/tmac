@@ -480,3 +480,14 @@ export async function chooseLogoIdea(siteId: string, index: number) {
   if (!idea) return
   await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: idea.logo, icon: idea.icon } }))
 }
+
+// ---------------------------------------------------------------------------
+// Leagues
+// ---------------------------------------------------------------------------
+
+export async function setLeaguePublic(siteId: string, form: FormData) {
+  const { store, site } = await ownSite(siteId)
+  await store.updateSite(SiteSchema.parse({ ...site, league: { public: form.get('public') === 'on' }, updatedAt: new Date().toISOString() }))
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  revalidatePath('/visibility-index')
+}
