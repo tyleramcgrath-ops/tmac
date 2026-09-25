@@ -25,7 +25,7 @@ export async function startPlan(form: FormData): Promise<void> {
   if (typed && typed !== current.promo) await store.saveBilling(user.id, { ...current, promo: typed })
   let url: string
   try {
-    url = await checkoutUrl({ userId: user.id, email: user.email, customerId: current.customerId, promo, origin: await origin() })
+    url = await checkoutUrl({ userId: user.id, email: user.email, customerId: current.customerId, promo, origin: await origin(), ...(current.status === 'trial' ? { trialEnd: current.trialEndsAt } : {}) })
   } catch (e) {
     console.error('checkout failed', e)
     redirect('/dashboard/account?billing=error')

@@ -1522,3 +1522,19 @@ describe('no AI look', () => {
     expect(SOFIE_SYSTEM).toMatch(/Never let a site look or read AI-made/)
   })
 })
+
+describe('feedback earns three months free', () => {
+  it('extends a trial to 90 days, once, and only while on the trial', async () => {
+    const { newBilling, withFeedbackReward, FEEDBACK_FREE_DAYS } = await import('../apps/saysites/lib/billing')
+    const now = Date.parse('2026-09-28T12:00:00Z')
+    const trial = newBilling(now)
+    const earned = withFeedbackReward(trial, now)!
+    expect(Date.parse(earned.trialEndsAt) - now).toBe(FEEDBACK_FREE_DAYS * 24 * 3600 * 1000)
+    expect(earned.feedbackReward).toBe(new Date(now).toISOString())
+    expect(withFeedbackReward(earned, now + 1000)).toBeNull()
+    expect(withFeedbackReward({ ...trial, status: 'active' }, now)).toBeNull()
+    // A longer trial is never shortened.
+    const long = { ...trial, trialEndsAt: new Date(now + 200 * 24 * 3600 * 1000).toISOString() }
+    expect(withFeedbackReward(long, now)!.trialEndsAt).toBe(long.trialEndsAt)
+  })
+})
