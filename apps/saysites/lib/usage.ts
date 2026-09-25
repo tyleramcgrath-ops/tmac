@@ -2,9 +2,9 @@
 // token counts are priced and recorded per site per day (ss_usage).
 //
 // Caps (dollars; override with env):
-// - per site per day: SAYSITES_SITE_DAILY_AI (default 5)
-// - per site during the trial: SAYSITES_TRIAL_AI (default 4)
-// - everything, per day: SAYSITES_DAILY_AI_BUDGET (default 75), the
+// - per site per day: SAYSITES_SITE_DAILY_AI (default 10)
+// - per site during the trial: SAYSITES_TRIAL_AI (default 10)
+// - everything, per day: SAYSITES_DAILY_AI_BUDGET (default 150), the
 //   circuit breaker if something goes wrong at scale.
 
 // Claude Opus 5, dollars per million tokens.
@@ -34,9 +34,9 @@ const dollars = (name: string, fallback: number) => {
 
 export function caps() {
   return {
-    siteDaily: dollars('SAYSITES_SITE_DAILY_AI', 5) * 1e6,
-    trial: dollars('SAYSITES_TRIAL_AI', 4) * 1e6,
-    allDaily: dollars('SAYSITES_DAILY_AI_BUDGET', 75) * 1e6,
+    siteDaily: dollars('SAYSITES_SITE_DAILY_AI', 10) * 1e6,
+    trial: dollars('SAYSITES_TRIAL_AI', 10) * 1e6,
+    allDaily: dollars('SAYSITES_DAILY_AI_BUDGET', 150) * 1e6,
   }
 }
 

@@ -1448,9 +1448,9 @@ describe('trial, caps and feedback', () => {
     expect(costMicros({ input_tokens: 1_000_000, output_tokens: 0 })).toBe(5_000_000)
     expect(costMicros({ output_tokens: 1000, cache_read_input_tokens: 10_000 })).toBe(25_000 + 5_000)
     expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 0, trial: true })).toBeNull()
-    expect(overCap({ siteToday: 6e6, siteTrial: 0, allToday: 0, trial: false })).toMatch(/tomorrow/)
-    expect(overCap({ siteToday: 0, siteTrial: 5e6, allToday: 0, trial: true })).toMatch(/trial/)
-    expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 80e6, trial: false })).toMatch(/break/)
+    expect(overCap({ siteToday: 11e6, siteTrial: 0, allToday: 0, trial: false })).toMatch(/tomorrow/)
+    expect(overCap({ siteToday: 0, siteTrial: 11e6, allToday: 0, trial: true })).toMatch(/trial/)
+    expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 160e6, trial: false })).toMatch(/break/)
   })
 
   it('keeps one moving cache marker on the newest message', () => {
