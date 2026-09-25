@@ -50,6 +50,13 @@ number is still to be decided). Build and write everything toward that.
   them (calls, messages, visitors, rankings).
 - **Permanent tagline: "Your site. Your say."**
 - Say "SEO fully optimized", not "Google-ready".
+- Nothing that looks AI-built, on SaySites or on any customer site, ever:
+  no "early access" / "beta" / "free while we build" pills with a glowing
+  dot, no "Live" or "New" tag stamped on every card, no sparkle icons, no
+  gradient text. Tags only where they carry real information (a plan
+  label, an unread count). Pricing copy says "7-day free trial".
+- The brand colour is the SaySites blue `#1E9BB7` (`--say`), used for the
+  logo mark and nothing else.
 - Never mention the founder's name in the product or marketing. Only the
   birthday page speaks in the first person about the founder's years of
   experience with websites and search.

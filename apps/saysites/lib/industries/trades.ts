@@ -53,7 +53,7 @@ export const TRADES: Industry[] = [
       'Put our emergency phone number in bigger type on the home page',
     ],
     faq: [
-      { q: 'How much does a plumbing website cost?', a: 'SaySites is free during early access. After that the planned price is $15 a month, which covers the site, hosting, your own domain, speed checks and changes made by Sofie. There are no setup fees and you can cancel anytime.' },
+      { q: 'How much does a plumbing website cost?', a: 'SaySites is $15 a month after a 7-day free trial, which covers the site, hosting, your own domain, speed checks and changes made by Sofie. There are no setup fees and you can cancel anytime.' },
       { q: 'Do I need to be technical to run it?', a: 'No. You describe your business and SaySites builds the site. After that you ask Sofie for changes in plain words, like adding a service or changing your hours. You see each change as a draft first and can undo it.' },
       { q: 'Will I show up for emergency plumber searches?', a: 'Nobody can honestly promise a ranking. What SaySites does is get the foundations right: a fast site, a Plumber business type with your address, phone and hours, a page per service and a clear service area. Pair that with a complete Google Business Profile and real reviews and you give yourself a fair chance.' },
       { q: 'Can I list every town I cover?', a: 'Yes. Your service-area page can name every town and neighborhood you work in. We keep it to one honest page rather than a stack of copied town pages, because Google treats those as spam.' },
@@ -109,7 +109,7 @@ export const TRADES: Industry[] = [
       'Split our services into residential and commercial sections',
     ],
     faq: [
-      { q: 'What does it cost?', a: 'Free during early access, then a planned $15 a month for your full site, hosting, your own domain, speed checks and changes by Sofie. No setup fees, and you can cancel anytime.' },
+      { q: 'What does it cost?', a: 'A 7-day free trial, then $15 a month for your full site, hosting, your own domain, speed checks and changes by Sofie. No setup fees, and you can cancel anytime.' },
       { q: 'I am not good with computers. Is that a problem?', a: 'Not at all. SaySites builds the site from a short description, and afterwards you ask Sofie for changes in plain words. Every change shows up as a draft you can check, and anything can be undone.' },
       { q: 'Can I show my license and insurance?', a: 'Yes. Ask Sofie to add your license number and insurance details to the footer, home page or an About page. Only include details that are current and accurate.' },
       { q: 'Can I show customer reviews?', a: 'Yes, in a testimonials section. Use real reviews from real customers, with their permission. SaySites will not invent reviews, and Google penalizes sites that do.' },
@@ -165,7 +165,7 @@ export const TRADES: Industry[] = [
       'Add ductless mini splits to our services',
     ],
     faq: [
-      { q: 'How much is it?', a: 'SaySites is free during early access. The planned price after that is $15 a month for the full site, including hosting, your own domain, speed checks and changes by Sofie. No setup fees.' },
+      { q: 'How much is it?', a: 'SaySites is $15 a month after a 7-day free trial, for the full site, including hosting, your own domain, speed checks and changes by Sofie. No setup fees.' },
       { q: 'Do I need a web person to keep it updated?', a: 'No. You ask Sofie in plain words, like adding a seasonal banner or a new service. You see the change as a draft first and can undo it.' },
       { q: 'Can I take maintenance plan sign-ups?', a: 'You can have a page explaining your plans, and customers can ask to sign up through your contact form or by calling. There is no online payment for service plans on the Site plan.' },
       { q: 'Should I write seasonal blog posts?', a: 'They help. A short post answering a question people ask each fall or spring is useful to customers and shows Google the site is kept up. Sofie can draft them for you to check.' },
@@ -221,7 +221,7 @@ export const TRADES: Industry[] = [
       'Change the main button to Request a free estimate',
     ],
     faq: [
-      { q: 'What does a roofing website cost with SaySites?', a: 'It is free during early access. After that the planned price is $15 a month, covering the site, hosting, your own domain, speed checks and changes by Sofie. Cancel anytime.' },
+      { q: 'What does a roofing website cost with SaySites?', a: '$15 a month after a 7-day free trial, covering the site, hosting, your own domain, speed checks and changes by Sofie. Cancel anytime.' },
       { q: 'Do I have to know how to build websites?', a: 'No. SaySites builds the site from a short description of your business. After that you ask Sofie for changes in plain words and check each one as a draft before it goes live.' },
       { q: 'Can I upload photos straight from my phone?', a: 'Yes. Upload them and they are resized for speed automatically. Real photos of your own roofs build more trust than stock images.' },
       { q: 'Can people request an estimate?', a: 'Yes, through your contact form. Requests land in your SaySites inbox with reply and call buttons. There is no scheduling or quoting system built in.' },
@@ -278,7 +278,7 @@ export const TRADES: Industry[] = [
       'Put a spring cleanup banner on the home page',
     ],
     faq: [
-      { q: 'How much does it cost?', a: 'Free during early access, then a planned $15 a month for the site, hosting, your own domain, speed checks and changes by Sofie. No setup fees, and you can cancel anytime.' },
+      { q: 'How much does it cost?', a: 'A 7-day free trial, then $15 a month for the site, hosting, your own domain, speed checks and changes by Sofie. No setup fees, and you can cancel anytime.' },
       { q: 'Do I need design skills to make the gallery look good?', a: 'No. Upload your photos and ask Sofie to add them to a gallery. The layout is handled for you, and you check the draft before it goes live.' },
       { q: 'Can I change services with the seasons?', a: 'Yes. Ask Sofie to add snow removal in November or a spring cleanup banner in March. Each change is a draft you approve, and you can undo it.' },
       { q: 'Will a gallery slow my site down?', a: 'It should not. Photos are resized automatically, and every page must pass a 95+ speed check before it can go live. If a change would slow a page, it gets fixed first.' },
@@ -334,7 +334,7 @@ export const TRADES: Industry[] = [
       'Add office cleaning as a separate service',
     ],
     faq: [
-      { q: 'What does SaySites cost for a cleaning company?', a: 'It is free during early access. After that, the planned price is $15 a month for your site, hosting, your own domain, speed checks and changes by Sofie.' },
+      { q: 'What does SaySites cost for a cleaning company?', a: '$15 a month after a 7-day free trial, for your site, hosting, your own domain, speed checks and changes by Sofie.' },
       { q: 'Do I need to be technical?', a: 'No. You describe your business and SaySites builds the site. Afterwards you ask Sofie for changes, like adding a service or updating your areas, and approve each draft.' },
       { q: 'Can clients book a cleaning online?', a: 'There is no booking system. Clients can call you or send a quote request through your contact form, and those messages land in your SaySites inbox.' },
       { q: 'Can I list prices?', a: 'Yes, if you want to. Starting prices or what affects a quote can go on each service page. Keep them accurate and up to date.' },
@@ -390,7 +390,7 @@ export const TRADES: Industry[] = [
       'Add these reviews from customers to the home page',
     ],
     faq: [
-      { q: 'How much does an auto repair website cost?', a: 'Free during early access, then a planned $15 a month for the site, hosting, your own domain, speed checks and changes by Sofie. No setup fees.' },
+      { q: 'How much does an auto repair website cost?', a: 'A 7-day free trial, then $15 a month for the site, hosting, your own domain, speed checks and changes by Sofie. No setup fees.' },
       { q: 'Do I need to know how websites work?', a: 'No. SaySites builds the site from a short description. You then ask Sofie for changes in plain words, check the draft and publish it, or undo it.' },
       { q: 'Can customers book an appointment online?', a: 'There is no booking system. Customers can call you or send a message through the contact form, which lands in your inbox with reply and call buttons.' },
       { q: 'Should I list prices?', a: 'It is your choice. Some shops list starting prices for common jobs like oil changes. If you do, keep them accurate so the site stays trustworthy.' },
@@ -446,7 +446,7 @@ export const TRADES: Industry[] = [
       'Write a blog post on what to do if you chip a tooth',
     ],
     faq: [
-      { q: 'What does a dental website cost with SaySites?', a: 'Free during early access. After that the planned price is $15 a month for the site, hosting, your own domain, speed checks and changes by Sofie. There are no setup fees.' },
+      { q: 'What does a dental website cost with SaySites?', a: '$15 a month after a 7-day free trial, for the site, hosting, your own domain, speed checks and changes by Sofie. There are no setup fees.' },
       { q: 'Does anyone on my team need to be technical?', a: 'No. Anyone on your team can ask Sofie for changes in plain words, like updating the insurance list. Every change appears as a draft you check first, and you can undo it.' },
       { q: 'Can patients book appointments online?', a: 'There is no online booking system. Patients can call the practice or send an appointment request through the contact form, which lands in your inbox for your front desk to follow up.' },
       { q: 'Should I say which insurance we accept?', a: 'Yes, if you can keep it accurate. It is one of the most common questions patients have, and a clear insurance page saves your front desk calls.' },
@@ -502,7 +502,7 @@ export const TRADES: Industry[] = [
       'Change our Thursday hours to 10 to 8',
     ],
     faq: [
-      { q: 'How much does a salon website cost?', a: 'Free during early access, then a planned $15 a month for your site, hosting, your own domain, speed checks and changes by Sofie. No setup fees, cancel anytime.' },
+      { q: 'How much does a salon website cost?', a: 'A 7-day free trial, then $15 a month for your site, hosting, your own domain, speed checks and changes by Sofie. No setup fees, cancel anytime.' },
       { q: 'I am not techy. Can I still run it?', a: 'Yes. You ask Sofie for changes in plain words, like adding photos or updating a price. You see each change as a draft and can undo anything.' },
       { q: 'Can clients book appointments online?', a: 'There is no booking system in SaySites. Clients can call the salon or send a request through the contact form. If you already use a separate booking service, Sofie can add a button that links to it.' },
       { q: 'Should my gallery just link to Instagram?', a: 'Keep Instagram, but put your best work on your own site too. Photos on your site can be found through Google, and they support the searches people make for your specialties.' },
@@ -558,7 +558,7 @@ export const TRADES: Industry[] = [
       'Add these photos of the new patio to the gallery',
     ],
     faq: [
-      { q: 'How much does a restaurant website cost?', a: 'Free during early access. After that the planned price is $15 a month for your site, hosting, your own domain, speed checks and changes by Sofie.' },
+      { q: 'How much does a restaurant website cost?', a: '$15 a month after a 7-day free trial, for your site, hosting, your own domain, speed checks and changes by Sofie.' },
       { q: 'Do I need to be technical to update the menu?', a: 'No. Tell Sofie what changed, like a new dish or a new price, and she updates the menu page. You see the draft first and can undo it.' },
       { q: 'Can people order food or reserve a table online?', a: 'SaySites does not take food orders or reservations. Guests can call you or send a message through your contact form. If you already use a separate ordering or reservation service, Sofie can add a button that links to it.' },
       { q: 'Why not just upload my PDF menu?', a: 'A PDF is slow and awkward on a phone and harder for search engines to understand. A menu written as a page is quicker to read, easier to update and can show up for searches about your dishes.' },
@@ -614,7 +614,7 @@ export const TRADES: Industry[] = [
       'Add these photos of this morning’s bakes to the gallery',
     ],
     faq: [
-      { q: 'What does a bakery website cost?', a: 'Free during early access. After that the planned price is $15 a month for a site, or $25 a month for a Store if you want to sell packaged goods through your own Stripe account. SaySites takes 0% of sales.' },
+      { q: 'What does a bakery website cost?', a: 'After a 7-day free trial, $15 a month for a site, or $25 a month for a Store if you want to sell packaged goods through your own Stripe account. SaySites takes 0% of sales.' },
       { q: 'Do I need to know anything about websites?', a: 'No. You describe your bakery and SaySites builds the site. Then you ask Sofie for changes in plain words and check each draft before it goes live.' },
       { q: 'Can customers order cakes online?', a: 'They can send a cake request through your contact form with the details, and it lands in your inbox. There is no online ordering or pickup system for daily bakes.' },
       { q: 'How do I show when we are open?', a: 'Add your opening hours once and they appear on the site and in its structured data. Keep them the same on your Google Business Profile.' },
@@ -670,9 +670,9 @@ export const TRADES: Industry[] = [
       'Write a blog post about the makers we stock this season',
     ],
     faq: [
-      { q: 'How much does it cost to sell online?', a: 'The Store plan is a planned $25 a month, and it is free during early access. Customers pay you through your own Stripe account. Stripe charges its normal card fee, and SaySites takes nothing on top.' },
+      { q: 'How much does it cost to sell online?', a: 'The Store plan is $25 a month, after a 7-day free trial. Customers pay you through your own Stripe account. Stripe charges its normal card fee, and SaySites takes nothing on top.' },
       { q: 'Do I need to be technical to add products?', a: 'No. Ask Sofie to add products with their names, prices and photos. You see the change as a draft first and can undo it.' },
-      { q: 'What if I only want a site for the shop, not online sales?', a: 'Then the Site plan at a planned $15 a month is enough. It covers your pages, hours, location, blog and contact form. You can add a Store later.' },
+      { q: 'What if I only want a site for the shop, not online sales?', a: 'Then the Site plan at $15 a month is enough. It covers your pages, hours, location, blog and contact form. You can add a Store later.' },
       { q: 'Will my products show up on Google?', a: 'Your product pages include prices in a form Google can read, and the site is fast and cleanly built. No one can promise rankings, but the foundations are set up properly.' },
       { q: 'Can I use my own domain?', a: 'Yes. Every site gets a free yourname.saysites.com address, and you can connect a domain you already own.' },
       { q: 'How do I know if the site is working?', a: 'Your dashboard shows visitors per day and your most-read pages, counted without cookies. Your Visibility Score shows how findable the site is, with steps to improve it.' },
