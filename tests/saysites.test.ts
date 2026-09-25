@@ -1622,3 +1622,16 @@ describe('SaySites database URL', () => {
     expect(pgUrl('postgres://u:p@h/db?sslmode=disable')).toBe('postgres://u:p@h/db?sslmode=disable')
   })
 })
+
+describe('SaySites photo pool', () => {
+  it('gives a deleted site’s stock photos back', async () => {
+    const store = new MemoryStore()
+    const a = await store.createUser({ email: 'p@x.com', name: 'P', passwordHash: 'h' })
+    const { site, pages } = buildStarterSite({ name: 'P Co', type: 'plumber', city: 'C', region: 'D', services: [], palette: 'ocean' }, a.id, 'photo-pool')
+    await store.createSite(a.id, site, pages)
+    await store.setSitePhotos(site.id, ['unsplash:abc'])
+    expect((await store.photosTaken()).has('unsplash:abc')).toBe(true)
+    await store.deleteUser(a.id)
+    expect((await store.photosTaken()).has('unsplash:abc')).toBe(false)
+  })
+})
