@@ -11,7 +11,7 @@ export default function Privacy() {
         <div className="wrap">
           <p className="kicker">Privacy</p>
           <h1>Your data, in plain words.</h1>
-          <p>SaySites is in early access. This page describes what the product does today, and it will be updated before public launch.</p>
+          <p>This page describes what SaySites does with your information today. We’ll update it whenever that changes.</p>
         </div>
       </section>
       <section className="legal">

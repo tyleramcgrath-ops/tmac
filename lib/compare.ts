@@ -30,7 +30,7 @@ export const COMPARISONS: Comparison[] = [
     h1: 'SaySites vs Justia for law firm websites',
     lede: 'Justia is a well-known legal publisher with a directory, WordPress-based firm websites and marketing services. SaySites is a website builder: a fast, professional site you run yourself by asking an assistant for changes. Here’s an honest side by side.',
     rows: [
-      { what: 'Website price', us: '$15 a month. Free during early access.', them: 'Law firm websites “start at just $82.50/month when paid annually,” per Justia. Exact tiers are quoted through a calculator.', src: [0] },
+      { what: 'Website price', us: '$15 a month, with a 7-day free trial.', them: 'Law firm websites “start at just $82.50/month when paid annually,” per Justia. Exact tiers are quoted through a calculator.', src: [0] },
       { what: 'Platform', us: 'SaySites, built for speed: lean pages with no plugins.', them: '“A tailored WordPress platform,” per Justia.', src: [0] },
       { what: 'Contract', us: 'Month to month. Cancel anytime.', them: 'Terms aren’t published on Justia’s site; Lawyerist notes pricing requires contacting Justia.', src: [1] },
       { what: 'If you leave', us: 'Your words, photos, bios and domain are yours to take.', them: 'Reviewers disagree: Lawyerist says you own your website, while Grow Law and Veritas report firms needing a rebuild after leaving.', src: [1, 2, 3] },
@@ -60,7 +60,7 @@ export const COMPARISONS: Comparison[] = [
     h1: 'SaySites vs Scorpion for law firm websites',
     lede: 'Scorpion is a full-service marketing agency: websites on its own platform, SEO, paid ads and more. SaySites is a website builder you run yourself. They solve different problems, so here’s where each one fits.',
     rows: [
-      { what: 'Price', us: '$15 a month. Free during early access.', them: 'Not published. Reviewers report roughly $3,000 to $5,000 a month for smaller firms, and more in competitive markets.', src: [1, 2] },
+      { what: 'Price', us: '$15 a month, with a 7-day free trial.', them: 'Not published. Reviewers report roughly $3,000 to $5,000 a month for smaller firms, and more in competitive markets.', src: [1, 2] },
       { what: 'Contract', us: 'Month to month. Cancel anytime.', them: 'Scorpion’s FAQ: “a 12-month contract for our marketing technology and certain marketing services like search engine optimization.” Ads are month to month.', src: [0] },
       { what: 'Platform', us: 'SaySites, built for speed: lean pages with no plugins.', them: 'Scorpion’s own proprietary CMS, per Scorpion.', src: [0] },
       { what: 'If you leave', us: 'Your words, photos, bios and domain are yours to take, any time.', them: 'Per Scorpion, domains, content and imagery are yours after the contract term, but the CMS isn’t, so the site has to be rebuilt elsewhere.', src: [0] },

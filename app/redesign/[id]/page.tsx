@@ -94,7 +94,7 @@ export default async function RedesignReport({ params }: { params: Promise<{ id:
           <div className="ind-seo">
             <div><h3>Claim it free</h3><p>It’s saved to your account with every page. Imported pages wait as drafts until you point your domain here, so nothing changes on your current site until you’re ready.</p></div>
             <div><h3>Make it yours by asking</h3><p>Sofie can fix anything we read wrong, add your photos, write new pages and polish the imported ones. You see every change before it goes live.</p></div>
-            <div><h3>$15 a month, no transfer fee</h3><p>Free during early access. No setup fee, no contract, and your words and domain stay yours.</p></div>
+            <div><h3>$15 a month, no transfer fee</h3><p>7-day free trial. No setup fee, no contract, and your words and domain stay yours.</p></div>
             <div><a className="b b-dark" href={`/redesign/${id}/claim`}>Claim this site free</a></div>
           </div>
         </div>

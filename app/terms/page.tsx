@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import '../home.css'
 
-export const metadata: Metadata = { title: 'Terms', description: 'The terms for using SaySites during early access.', alternates: { canonical: '/terms' } }
+export const metadata: Metadata = { title: 'Terms', description: 'The terms for using SaySites.', alternates: { canonical: '/terms' } }
 
 export default function Terms() {
   return (
@@ -11,13 +11,13 @@ export default function Terms() {
         <div className="wrap">
           <p className="kicker">Terms</p>
           <h1>The fair, short version.</h1>
-          <p>SaySites is in early access. These terms cover that period and will be replaced by full terms before public launch.</p>
+          <p>These terms cover your use of SaySites. We’ll tell you before they change.</p>
         </div>
       </section>
       <section className="legal">
         <div className="wrap">
-          <h2>Early access</h2>
-          <p>SaySites is free while in early access. Features may change, and we’ll tell you before anything you rely on goes away or before any charge begins. Planned pricing is shown on the homepage.</p>
+          <h2>Plans and changes</h2>
+          <p>Every account starts with a 7-day free trial. After that, plans are billed monthly at the prices shown on the homepage, and you can cancel anytime. Features may change, and we’ll tell you before anything you rely on goes away or before any price changes.</p>
           <h2>Your content is yours</h2>
           <p>You own your business details, words, photos and the websites you build. You give us permission to store and display them so your website works.</p>
           <h2>Using SaySites fairly</h2>
@@ -31,7 +31,7 @@ export default function Terms() {
           <h2>Sofie</h2>
           <p>Sofie is an AI assistant. She shows every change as a draft before it goes live, but you’re responsible for checking what you publish, especially prices, opening hours and claims about your business.</p>
           <h2>No guarantees</h2>
-          <p>We work hard to keep sites fast and online, but during early access SaySites is provided as is. Nobody can promise a particular Google ranking.</p>
+          <p>We work hard to keep sites fast and online, but SaySites is provided as is. Nobody can promise a particular Google ranking.</p>
         </div>
       </section>
     </MarketingShell>

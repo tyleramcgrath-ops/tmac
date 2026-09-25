@@ -141,7 +141,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <div><b>95+</b><span>speed score required on every page</span></div>
             <div><b>100%</b><span>yours: your words, photos and domain</span></div>
           </div>
-          <p className="fine">Free during early access. Cancel anytime.</p>
+          <p className="fine">7-day free trial. Cancel anytime.</p>
         </div>
       </section>
 

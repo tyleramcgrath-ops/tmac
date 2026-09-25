@@ -126,6 +126,9 @@ const FILLER = [
   /your satisfaction is our (top )?priority/i, /customer satisfaction is our/i, /don['’]t hesitate to (contact|call|reach)/i, /tailored to (meet )?your (unique )?needs/i,
   /cutting[- ]edge/i, /world[- ]class/i, /go(es)? above and beyond/i, /we['’]ve got you covered/i, /your trusted partner/i, /(peace of mind|rest assured) knowing/i,
   /the best (plumber|lawyer|attorney|dentist|electrician|roofer|contractor)s? in/i, /#1 /i, /number one (choice|provider)/i,
+  // Phrases that give away AI-written copy.
+  /\belevat(e|es|ing)\b/i, /\bunlock (your|the)\b/i, /\bseamless(ly)?\b/i, /\bdelv(e|es|ing)\b/i, /\bembark\b/i, /\bnestled\b/i,
+  /in the heart of/i, /\ba testament to\b/i, /\btapestry\b/i, /whether you['’]re .{3,60} or /i,
 ]
 
 export function fillerIn(sentence: string): boolean {

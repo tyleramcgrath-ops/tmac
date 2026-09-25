@@ -123,7 +123,6 @@ export default function Home() {
         <section className="hero">
           <div className="hero-bg"><Photo id="1687422808248-f807f4ea2a2e" sizes="100vw" priority pos="60% 30%" /></div>
           <div className="wrap hero-in">
-            <p className="eyebrow"><i />Early access · free while we build</p>
             <h1>Your business,<br />online by tonight.</h1>
             <p className="lede">You describe your business, pick the look and make every change yourself, in plain words. It goes live fast, SEO fully optimized, and it’s all yours. <strong>$15 a month. 0% of your sales.</strong></p>
             <SayBox id="idea-top" />
@@ -295,7 +294,7 @@ export default function Home() {
                 <a className="b b-line b-block" href="/signup">Start free</a>
               </div>
             </div>
-            <p className="fine">Free during early access. Planned launch prices. Cancel anytime, no setup fees.</p>
+            <p className="fine">7-day free trial. Cancel anytime, no setup fees.</p>
           </div>
         </section>
 
@@ -306,18 +305,18 @@ export default function Home() {
               <h2>The things SEO pros do, done for you.</h2>
             </div>
             <div className="feat-grid">
-              <div><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p><span className="tag live">Live</span></div>
-              <div><h3>Kept up with Google</h3><p>Every site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up the same day. <a href="/google-guidelines">How it works</a></p><span className="tag live">Live</span></div>
-              <div><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p><span className="tag live">Live</span></div>
-              <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p><span className="tag live">Live</span></div>
-              <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p><span className="tag live">Live</span></div>
-              <div><h3>Messages, not missed calls</h3><p>Every site has a contact form. Messages land in your inbox, with reply and call buttons right there.</p><span className="tag live">Live</span></div>
-              <div><h3>A blog that brings people in</h3><p>Write helpful posts, or ask Sofie to draft one. Each gets its own page, a spot in your sitemap and the markup Google looks for.</p><span className="tag live">Live</span></div>
-              <div><h3>Nothing is ever lost</h3><p>Every change is saved as a version, and Sofie’s edits wait in a draft you can undo or throw away before anything goes live.</p><span className="tag live">Live</span></div>
-              <div><h3>Google and Bing, connected</h3><p>Paste one code to prove you own your site in Search Console and Bing Webmaster Tools. Your sitemap is ready for both.</p><span className="tag live">Live</span></div>
-              <div><h3>See who’s visiting</h3><p>Page views per day and your most-read pages, counted without cookies. No cookie banner, nothing slowing you down.</p><span className="tag live">Live</span></div>
-              <div><h3>Your photos, your logo</h3><p>Upload from your phone and they’re resized for speed automatically. Show your work in a gallery and your reviews in their own section.</p><span className="tag live">Live</span></div>
-              <div><h3>Sell online, keep 100%</h3><p>Add products and a Shop page in minutes. Customers pay you through your own Stripe account, with nothing taken from each sale.</p><span className="tag live">Live</span></div>
+              <div><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p></div>
+              <div><h3>Kept up with Google</h3><p>Every site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up the same day. <a href="/google-guidelines">How it works</a></p></div>
+              <div><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p></div>
+              <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p></div>
+              <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p></div>
+              <div><h3>Messages, not missed calls</h3><p>Every site has a contact form. Messages land in your inbox, with reply and call buttons right there.</p></div>
+              <div><h3>A blog that brings people in</h3><p>Write helpful posts, or ask Sofie to draft one. Each gets its own page, a spot in your sitemap and the markup Google looks for.</p></div>
+              <div><h3>Nothing is ever lost</h3><p>Every change is saved as a version, and Sofie’s edits wait in a draft you can undo or throw away before anything goes live.</p></div>
+              <div><h3>Google and Bing, connected</h3><p>Paste one code to prove you own your site in Search Console and Bing Webmaster Tools. Your sitemap is ready for both.</p></div>
+              <div><h3>See who’s visiting</h3><p>Page views per day and your most-read pages, counted without cookies. No cookie banner, nothing slowing you down.</p></div>
+              <div><h3>Your photos, your logo</h3><p>Upload from your phone and they’re resized for speed automatically. Show your work in a gallery and your reviews in their own section.</p></div>
+              <div><h3>Sell online, keep 100%</h3><p>Add products and a Shop page in minutes. Customers pay you through your own Stripe account, with nothing taken from each sale.</p></div>
             </div>
           </div>
         </section>
@@ -333,7 +332,7 @@ export default function Home() {
               <details><summary>What does “0% of your sales” mean?</summary><p>Customers pay you through your own Stripe account. Stripe charges its normal card processing fee; SaySites takes nothing on top.</p></details>
               <details><summary>Will my site show up on Google?</summary><p>Every site is built the way Google likes: fast, clean, with proper titles, a sitemap and business details search engines can read. Nobody can promise a #1 spot, but you start with the foundations right.</p></details>
               <details><summary>Can I use my own domain?</summary><p>Yes. Every site gets a free yourname.saysites.com address, and you can connect a domain you own.</p></details>
-              <details><summary>What happens after early access?</summary><p>We’ll tell you well before anything changes. Planned pricing is $15 a month for a site and $25 a month for a store, and you can cancel anytime.</p></details>
+              <details><summary>What happens after the free trial?</summary><p>Your site stays live on the plan you pick: $15 a month for a site or $25 a month for a store. No contract, and you can cancel anytime.</p></details>
             </div>
           </div>
         </section>
