@@ -10,6 +10,7 @@ import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/s
 import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
+import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 
 async function ownSite(siteId: string) {
@@ -487,7 +488,15 @@ export async function chooseLogoIdea(siteId: string, index: number) {
 
 export async function setLeaguePublic(siteId: string, form: FormData) {
   const { store, site } = await ownSite(siteId)
-  await store.updateSite(SiteSchema.parse({ ...site, league: { public: form.get('public') === 'on' }, updatedAt: new Date().toISOString() }))
+  await store.updateSite(SiteSchema.parse({ ...site, league: { ...site.league, public: form.get('public') === 'on' }, updatedAt: new Date().toISOString() }))
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   revalidatePath('/visibility-index')
+}
+
+export async function setLeagueStyle(siteId: string, form: FormData) {
+  const { store, site } = await ownSite(siteId)
+  const style = String(form.get('style') ?? '')
+  if (!(LEAGUE_STYLES as readonly string[]).includes(style)) return
+  await store.updateSite(SiteSchema.parse({ ...site, league: { public: site.league?.public ?? false, style }, updatedAt: new Date().toISOString() }))
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }

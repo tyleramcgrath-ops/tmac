@@ -1,13 +1,16 @@
 import { notFound } from 'next/navigation'
 import { LeagueReveal } from '@/components/LeagueReveal'
+import { RankWatcher } from '@/components/RankWatcher'
+import { ScoreTicker } from '@/components/ScoreTicker'
 import { ScoreDial } from '@/components/ScoreDial'
-import { leagueFor, leagues, ordinal, pointsToClimb, tradePlural, weekStart } from '@/lib/league'
+import { leagueFor, leagues, pointsToClimb, tradePlural, weekStart } from '@/lib/league'
+import { LEAGUE_STYLES, LEAGUE_TERMS, leagueTerms } from '@/lib/league-style'
 import { requireUser } from '@/lib/session'
 import { scoreSite } from '@/lib/site-score'
 import { getStore } from '@/lib/store'
 import { questLink } from '@/lib/visibility'
 import { dayString, daysBefore } from '@/lib/visits'
-import { setLeaguePublic } from '../manage-actions'
+import { setLeaguePublic, setLeagueStyle } from '../manage-actions'
 
 export default async function VisibilityPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -30,8 +33,13 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
   // The smallest quest that's enough, preferring ones Sofie can do.
   const climbQuest = climb ? [...v.quests].filter((q) => q.points >= climb).sort((a, b) => a.points - b.points || Number(!!b.sofie) - Number(!!a.sofie))[0] : undefined
   const table = now ? now.league.standings.filter((s, i) => i < 8 || s.siteId === site.id) : []
-  const leagueTitle = now ? (now.league.trade ? `${tradePlural(now.league.trade)[0].toUpperCase()}${tradePlural(now.league.trade).slice(1)}` : 'The SaySites league') : ''
+  const terms = leagueTerms(site.league?.style)
+  const style = site.league?.style ?? 'classic'
+  const trade = (l: NonNullable<typeof now>['league']) => (l.trade ? `${tradePlural(l.trade)[0].toUpperCase()}${tradePlural(l.trade).slice(1)}` : 'All trades')
+  const leagueTitle = now ? terms.group(trade(now.league)) : ''
+  const history = everyone.find((e) => e.site.id === site.id)?.scores ?? []
   const setPublic = setLeaguePublic.bind(null, site.id)
+  const setStyle = setLeagueStyle.bind(null, site.id)
 
   return (
     <section className="stack">
@@ -56,30 +64,38 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
           </ul>
         </div>
         <div className="card vis-league">
-          {last && <LeagueReveal siteId={site.id} week={lastStart} place={ordinal(last.me.rank)} of={last.league.standings.length} league={last.league.trade ? `${tradePlural(last.league.trade)} on SaySites` : 'all trades'} titles={last.me.titles} />}
+          {last && <LeagueReveal siteId={site.id} week={lastStart} heading={terms.lastWeek} cta={terms.letterCta} place={terms.position(last.me.rank)} of={terms.of(last.league.standings.length)} league={terms.group(trade(last.league))} titles={last.me.titles.map((k) => terms.titles[k])} />}
+          {now && <RankWatcher siteId={site.id} week={start} rank={now.me.rank} title={terms.position(now.me.rank)} caption={`You moved up since you last looked. ${leagueTitle}, this week.`} />}
           {now ? (
             <>
               <div className="card-head">
-                <span className="stat-label">This week · {leagueTitle}</span>
+                <span className="stat-label">{terms.thisWeek} · {leagueTitle}</span>
                 <span className="muted small">{daysLeft === 1 ? 'Closes tonight' : `${daysLeft} days left`}</span>
               </div>
               <div className="league-me">
-                <strong>{ordinal(now.me.rank)}</strong>
-                <span className="muted">of {now.league.standings.length}</span>
-                {now.me.streak > 1 && <span className="league-streak">{now.me.streak} consecutive weeks of gains</span>}
+                <strong>{terms.position(now.me.rank)}</strong>
+                <span className="muted">{terms.of(now.league.standings.length)}</span>
+                <span className={`league-move${now.me.momentum ? ' is-up' : ''}`}>{terms.move(now.me.momentum)}</span>
+                {now.me.streak > 1 && <span className="league-streak">{terms.streak(now.me.streak)}</span>}
               </div>
               {climb ? (
                 <p className="small" style={{ margin: 0 }}>
-                  <strong>{climb} Visibility point{climb === 1 ? '' : 's'}</strong> moves you up one position
+                  <strong>{terms.climb(climb)}</strong>
                   {climbQuest ? <>: <a href={questLink(climbQuest)}>{climbQuest.title.charAt(0).toLowerCase() + climbQuest.title.slice(1)}</a> is worth +{climbQuest.points}.</> : '.'}
                 </p>
               ) : (
-                <p className="small" style={{ margin: 0 }}><strong>You hold first position.</strong> Standings close Sunday at midnight UTC.</p>
+                <p className="small" style={{ margin: 0 }}><strong>{terms.leader}</strong></p>
               )}
             </>
           ) : (
             <p className="muted small">Your first weekly standing appears here once your score has been recorded.</p>
           )}
+          <ScoreTicker history={history} score={v.score} label="Your score" />
+          <form action={setStyle} className="league-style" aria-label="How your standings are worded">
+            {LEAGUE_STYLES.map((k) => (
+              <button key={k} type="submit" name="style" value={k} className={k === style ? 'on' : undefined} aria-pressed={k === style} title={LEAGUE_TERMS[k].hint}>{LEAGUE_TERMS[k].name}</button>
+            ))}
+          </form>
         </div>
       </div>
 
@@ -87,20 +103,20 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
         <div className="card">
           <div className="card-head">
             <h3>{leagueTitle}</h3>
-            <span className="muted small">Ranked by weekly gain in organic visibility and traffic</span>
+            <span className="muted small">{terms.ranked}</span>
           </div>
           <ol className="standings">
             {table.map((s) => (
               <li key={s.siteId} className={s.siteId === site.id ? 'is-me' : undefined}>
-                <span className="st-rank">{s.rank}</span>
+                <span className="st-rank">{style === 'arena' ? `#${s.rank}` : s.rank}</span>
                 <span className="st-name">
                   <span>{s.siteId === site.id ? `${site.business.name} (you)` : s.label}</span>
                   {s.titles.map((t) => (
-                    <span key={t} className="title-seal">{t}</span>
+                    <span key={t} className="title-seal">{terms.titles[t]}</span>
                   ))}
                 </span>
                 <span className="st-score muted small">{s.score}</span>
-                <span className={`st-mom${s.momentum ? '' : ' muted'}`}>{s.momentum ? `+${s.momentum}` : '0'}</span>
+                <span className={`st-mom${s.momentum ? ' is-up' : ' muted'}`}>{terms.move(s.momentum)}</span>
               </li>
             ))}
           </ol>

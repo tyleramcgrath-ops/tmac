@@ -984,7 +984,7 @@ describe('SaySites: leagues', async () => {
     const all = leagues([...plumbers, baker], start, '2026-09-25')
     const pl = all.find((l) => l.trade === 'Plumber')!
     expect(pl.standings.map((s) => s.siteId)).toEqual(['s4', 's3', 's2', 's1', 's0'])
-    expect(pl.standings[0].titles).toContain('Greatest gain')
+    expect(pl.standings[0].titles).toContain('gain')
     expect(pl.standings[0].label).toBe('A plumber in Rivertown')
     const open = all.find((l) => l.trade === null)!
     expect(open.standings[0]).toMatchObject({ siteId: 's99', label: 'Biz 99', isPublic: true, gain: 10 })
@@ -1068,5 +1068,19 @@ describe('SaySites: Spanish sites', async () => {
     const enHtml = renderPage(en.site, en.pages.find((p) => p.slug === 'contact')!, en.pages).html
     expect(enHtml).toContain('Your name')
     expect(enHtml).toContain('Mon–Fri 7am–6pm')
+  })
+})
+
+describe('SaySites: standings styles', async () => {
+  const { LEAGUE_STYLES, leagueTerms } = await import('../apps/saysites/lib/league-style')
+  it('words the same standings three ways, defaulting to professional', () => {
+    expect(LEAGUE_STYLES).toEqual(['classic', 'market', 'arena'])
+    expect(leagueTerms(undefined).titles.gain).toBe('Greatest gain')
+    expect(leagueTerms('market').titles.gain).toBe('Top mover')
+    expect(leagueTerms('market').move(12)).toBe('▲ 12')
+    expect(leagueTerms('arena').position(3)).toBe('#3')
+    expect(leagueTerms('arena').streak(4)).toContain('4-week streak')
+    expect(leagueTerms('nonsense').name).toBe('Professional')
+    expect(SiteSchema.safeParse({ ...buildStarterSite({ name: 'A', type: 'plumber', city: 'X', region: 'OH', services: [], palette: 'ocean' }, 'o', 'a').site, league: { public: true, style: 'arena' } }).success).toBe(true)
   })
 })

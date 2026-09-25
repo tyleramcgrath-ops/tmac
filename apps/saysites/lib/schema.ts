@@ -421,7 +421,7 @@ export const SiteSchema = z
       .optional(),
     // Weekly standings: sharing is reciprocal. An owner who shares sees the
     // named standings of everyone else who shares; private by default.
-    league: z.object({ public: z.boolean() }).strict().optional(),
+    league: z.object({ public: z.boolean().default(false), style: z.enum(['classic', 'market', 'arena']).optional() }).strict().optional(),
     updatedAt: z.string(),
   })
   .strict()
