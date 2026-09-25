@@ -38,7 +38,7 @@ function SayBox({ id, label = 'Build my site' }: { id: string; label?: string })
 function Bakery({ priority = false }: { priority?: boolean }) {
   return (
     <div className="bk">
-      <div className="bk-nav"><b>Rosie’s Bakery</b><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
+      <div className="bk-nav"><img className="mk-logo" src="/media/logos/rosies-bakery.svg" alt="Rosie’s Bakery" width="203" height="79" /><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
       <div className="bk-hero">
         <div>
           <small>SE Division · Portland</small>
@@ -65,7 +65,7 @@ function Plumber() {
   return (
     <div className="pl">
       <div className="pl-top"><span>Licensed and insured · Rivertown and the valley</span><b>(555) 014-2200</b></div>
-      <div className="pl-nav"><b>RIVERTOWN PLUMBING</b><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
+      <div className="pl-nav"><img className="mk-logo" src="/media/logos/rivertown-plumbing.svg" alt="Rivertown Plumbing" width="476" height="89" /><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
       <div className="pl-hero ph">
         <Photo id="1749532125405-70950966b0e5" sizes="(max-width: 900px) 100vw, 760px" pos="50% 40%" />
         <div className="pl-copy">
@@ -87,7 +87,7 @@ function Plumber() {
 function Salon() {
   return (
     <div className="sa">
-      <div className="sa-nav"><span>Services</span><b>SALT &amp; STONE</b><span>Book</span></div>
+      <div className="sa-nav"><span>Services</span><img className="mk-logo" src="/media/logos/salt-and-stone.svg" alt="Salt &amp; Stone" width="431" height="84" /><span>Book</span></div>
       <div className="sa-hero">
         <div className="ph"><Photo id="1633681926022-84c23e8cb2d6" sizes="(max-width: 900px) 50vw, 300px" /></div>
         <div className="sa-copy">
@@ -234,6 +234,29 @@ export default function Home() {
               ))}
             </div>
             <p className="tpl-more"><a className="b b-line" href="/templates">See all 13 live example sites →</a></p>
+          </div>
+        </section>
+
+        <section className="standing" id="standing">
+          <div className="wrap standing-in">
+            <div className="standing-copy">
+              <p className="kicker">Your weekly standing</p>
+              <h2>Earned, not bought.</h2>
+              <p>Every week, your site gets a Visibility Score and a standing against businesses like yours on SaySites. You don’t move up by spending on ads. You move up by doing what Google actually rewards, and Sofie does most of that for you.</p>
+              <p>Your standing arrives Monday in a private letter. Want to see who you’re up against? Share yours and compare with everyone who shares theirs.</p>
+              <a className="b b-line" href="/visibility-index">See the SaySites Index →</a>
+            </div>
+            <div className="standing-card" aria-hidden="true">
+              <div className="sc-head"><span>Plumbers on SaySites · this week</span><span>3 days left</span></div>
+              <ol>
+                <li><b>1</b><span>Oakline Plumbing<i>Greatest gain</i></span><em>+27</em></li>
+                <li><b>2</b><span>Clearwater Plumbing</span><em>+19</em></li>
+                <li className="me"><b>3</b><span>Rivertown Plumbing</span><em>+18</em></li>
+                <li><b>4</b><span>A plumber in Akron</span><em>+12</em></li>
+                <li><b>5</b><span>Keel &amp; Sons</span><em>+11</em></li>
+              </ol>
+              <p className="sc-tip"><b>2 points</b> moves you to 2nd. Ask Sofie to add your reviews, worth +3.</p>
+            </div>
           </div>
         </section>
 

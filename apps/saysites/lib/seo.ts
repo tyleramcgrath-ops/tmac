@@ -96,7 +96,8 @@ function localBusiness(site: Site, origin: string): object {
   }
   if (b.phone) data.telephone = b.phone
   if (b.email) data.email = b.email
-  if (b.logo) data.logo = b.logo
+  // Google wants absolute URLs; uploaded logos are stored as /u/<id>.
+  if (b.logo) data.logo = b.logo.startsWith('/') ? origin + b.logo : b.logo
   if (b.priceRange) data.priceRange = b.priceRange
   if (b.hours?.length) data.openingHours = b.hours
   if (b.sameAs?.length) data.sameAs = b.sameAs

@@ -1009,3 +1009,21 @@ describe('SaySites: leagues', async () => {
     expect(rows[0].visits).toEqual([{ day: '2026-09-22', views: 2 }])
   })
 })
+
+describe('SaySites: showcase logos', async () => {
+  const { existsSync } = await import('fs')
+  const { join } = await import('path')
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { structuredData } = await import('../apps/saysites/lib/seo')
+  it('gives every example site a logo file and publishes it to Google as an absolute URL', () => {
+    for (const [sub, demo] of Object.entries(SHOWCASE)) {
+      expect(demo.site.business.logo).toBe(`/media/logos/${sub}.svg`)
+      expect(existsSync(join(__dirname, '../apps/saysites/public/media/logos', `${sub}.svg`))).toBe(true)
+      expect(existsSync(join(__dirname, '../apps/saysites/public/media/logos', `${sub}-icon.svg`))).toBe(true)
+    }
+    const { site, pages } = SHOWCASE['rivertown-plumbing']
+    const home = pages.find((p) => p.slug === '')!
+    const json = JSON.stringify(structuredData(site, home, pages))
+    expect(json).toContain('"logo":"https://rivertown-plumbing.saysites.com/media/logos/rivertown-plumbing.svg"')
+  })
+})
