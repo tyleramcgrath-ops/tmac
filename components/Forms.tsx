@@ -146,7 +146,7 @@ export function NewSiteForm({ types, palettes, idea = '', template = '' }: { typ
       </form>
       <aside className="new-preview" aria-label="Preview of your website">
         <div className="new-preview-bar"><i /><i /><i /><span>{info.name ? `${info.name}` : 'Your website'}</span></div>
-        <div className="new-preview-frame">
+        <div className={`new-preview-frame${src ? '' : ' empty'}`}>
           {src ? <iframe src={src} title="Your website, as it will look" loading="lazy" /> : <p className="muted">Pick your kind of business and your website appears here, built from what you type.</p>}
         </div>
         <small className="muted">This is your real site. Everything updates as you type, and you can change any of it later.</small>

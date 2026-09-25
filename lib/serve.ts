@@ -41,7 +41,7 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
 
   let { html } = renderPage(site, page, pages)
   if (opts.basePath) html = withBasePath(html, opts.basePath)
-  if (!opts.preview) html = html.replace('</body>', `${visitBeacon(path)}</body>`)
+  if (!opts.preview) html = html.replace('</body>', `${visitBeacon(path)}${callTracker(path)}</body>`).replace('<body', '<body ontouchstart=""')
   return new Response(html, {
     headers: {
       'content-type': 'text/html; charset=utf-8',
@@ -106,6 +106,26 @@ const GIF = Uint8Array.from(atob('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAA
 
 export function visitBeacon(path: string): string {
   return `<i aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:1px;background:url(/${VISIT_PATH}?p=${encodeURIComponent(path)})"></i>`
+}
+
+// Phone-number taps, counted without JavaScript: while a tel: link is being
+// pressed it gets a background image from /__c, and that request is the
+// count. (ontouchstart on <body> makes iOS apply :active on tap.)
+export const CALL_PATH = '__c'
+export function callTracker(path: string): string {
+  return `<style>a[href^="tel:"]:active{background-image:url(/${CALL_PATH}?p=${encodeURIComponent(path)})}</style>`
+}
+
+export async function handleCall(bundle: SiteBundle, req: Request, store: Store = getStore()): Promise<Response> {
+  const pixel = new Response(GIF, { headers: { 'content-type': 'image/gif', 'cache-control': 'no-store', 'x-robots-tag': 'noindex' } })
+  const ua = req.headers.get('user-agent') ?? ''
+  if (!ua || BOT.test(ua) || !bundle.site.business.phone) return pixel
+  try {
+    await store.recordVisit(bundle.site.id, new Date().toISOString().slice(0, 10), '#call')
+  } catch {
+    // Counting must never break a page.
+  }
+  return pixel
 }
 
 export async function handleVisit(bundle: SiteBundle, req: Request, store: Store = getStore()): Promise<Response> {

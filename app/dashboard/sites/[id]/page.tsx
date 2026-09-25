@@ -24,7 +24,16 @@ export default async function SiteOverview({ params, searchParams }: { params: P
     store.sofieState(site.id),
     store.visitsSince(site.id, daysBefore(today, 59)),
   ])
-  const [media, everVisited] = await Promise.all([store.mediaForSite(site.id), store.visitsSince(site.id, '2000-01-01')])
+  const monthStart = `${today.slice(0, 7)}-01`
+  const [media, everVisited, callsThisMonth, recentMessages] = await Promise.all([
+    store.mediaForSite(site.id),
+    store.visitsSince(site.id, '2000-01-01'),
+    store.callsSince(site.id, monthStart),
+    store.messagesForSite(site.id, 200),
+  ])
+  const messagesThisMonth = recentMessages.filter((m) => m.createdAt.slice(0, 10) >= monthStart).length
+  const reached = callsThisMonth + messagesThisMonth
+  const monthName = new Date(`${monthStart}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })
   // The same checks that gate publishing, summed up.
   const { errors, tips, fast, traffic, vis } = await scoreSite(store, site, today, pages, media, visits)
   const sparkMax = Math.max(1, ...traffic.days.map((d) => d.views))
@@ -69,6 +78,20 @@ export default async function SiteOverview({ params, searchParams }: { params: P
         </div>
 
         <div className="stack">
+          <div className={`card goal-card${reached ? ' met' : ''}`}>
+            <span className="stat-label">{monthName}: customers your website brought you</span>
+            <div className="goal-nums">
+              <div><strong>{callsThisMonth}</strong><span>call{callsThisMonth === 1 ? '' : 's'}</span></div>
+              <div><strong>{messagesThisMonth}</strong><span>message{messagesThisMonth === 1 ? '' : 's'}</span></div>
+            </div>
+            <p className="muted small">
+              {reached
+                ? 'Your website is working for you. Keep it fresh and it keeps bringing people in.'
+                : b.phone
+                  ? 'Your goal: your first call or message this month. Share your site, and follow the steps under Visibility to get found.'
+                  : 'Add your phone number in Settings so customers can call you straight from your site.'}
+            </p>
+          </div>
           <div className="stats four">
             <a className="stat" href={`${base}/pages`}>
               <span className="stat-label">Speed</span>

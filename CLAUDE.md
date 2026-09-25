@@ -37,3 +37,19 @@ Nice-to-haves (games, extra styles, clever extras) wait until customers ask.
 When the owner has to do something on another site (Vercel, Unsplash, a
 registrar), give numbered steps, one click per step, with the direct link.
 If they ask again, make the steps even simpler and ask for a screenshot.
+
+## North star (the owner's goal, permanent)
+
+Every customer should feel "damn, I built this whole website myself," and
+their site should bring them at least one phone call a month (the exact
+number is still to be decided). Build and write everything toward that.
+
+- **The owner is in control.** SaySites and Sofie are their tools, not an AI
+  that does it for them. Copy says "you build / you change / your site",
+  never "AI builds it for you". Show what the owner did and what it earned
+  them (calls, messages, visitors, rankings).
+- **Permanent tagline: "Your site. Your say."**
+- Say "SEO fully optimized", not "Google-ready".
+- Never mention the founder's name in the product or marketing. Only the
+  birthday page speaks in the first person about the founder's years of
+  experience with websites and search.

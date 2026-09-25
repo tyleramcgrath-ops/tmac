@@ -119,6 +119,8 @@ export interface Store {
   saveLogoIdeas(siteId: string, state: LogoIdeasState): Promise<void>
   // One page view on a live site. `day` is YYYY-MM-DD (UTC).
   recordVisit(siteId: string, day: string, path: string): Promise<void>
+  // Taps on the site's phone number since `day` (recorded as CALL_KEY).
+  callsSince(siteId: string, day: string): Promise<number>
   // Page views per day and page since a day (inclusive).
   visitsSince(siteId: string, day: string): Promise<Visit[]>
   // Today's Visibility Score, kept once per day for the weekly leagues.
@@ -473,10 +475,14 @@ class PgStore implements Store {
   }
   async visitsSince(siteId: string, day: string) {
     const rows = await this.q<{ day: string; path: string; views: number }>(
-      "SELECT to_char(day, 'YYYY-MM-DD') AS day, path, views FROM ss_visits WHERE site_id = $1 AND day >= $2 ORDER BY day",
+      "SELECT to_char(day, 'YYYY-MM-DD') AS day, path, views FROM ss_visits WHERE site_id = $1 AND day >= $2 AND path <> '#call' ORDER BY day",
       [siteId, day]
     )
     return rows.map((r) => ({ day: r.day, path: r.path, views: Number(r.views) }))
+  }
+  async callsSince(siteId: string, day: string) {
+    const r = await this.q<{ n: string | null }>("SELECT sum(views) AS n FROM ss_visits WHERE site_id = $1 AND day >= $2 AND path = '#call'", [siteId, day])
+    return Number(r[0]?.n ?? 0)
   }
   async savePreview(p: Preview, who: string) {
     await this.q('INSERT INTO ss_previews (id, who, data) VALUES ($1,$2,$3)', [p.id, who, p])
@@ -541,7 +547,7 @@ class PgStore implements Store {
     const [sites, scores, visits] = await Promise.all([
       this.q<{ data: Site }>('SELECT s.data FROM ss_sites s WHERE EXISTS (SELECT 1 FROM ss_scores c WHERE c.site_id = s.id AND c.day >= $1)', [day]),
       this.q<{ site_id: string; day: string; score: number }>("SELECT site_id, to_char(day, 'YYYY-MM-DD') AS day, score FROM ss_scores WHERE day >= $1", [day]),
-      this.q<{ site_id: string; day: string; views: string }>("SELECT site_id, to_char(day, 'YYYY-MM-DD') AS day, SUM(views) AS views FROM ss_visits WHERE day >= $1 GROUP BY site_id, day", [day]),
+      this.q<{ site_id: string; day: string; views: string }>("SELECT site_id, to_char(day, 'YYYY-MM-DD') AS day, SUM(views) AS views FROM ss_visits WHERE day >= $1 AND path <> '#call' GROUP BY site_id, day", [day]),
     ])
     const out = new Map<string, LeagueSite>()
     for (const r of sites) {
@@ -706,9 +712,12 @@ export class MemoryStore implements Store {
   }
   async visitsSince(siteId: string, day: string) {
     return [...this.visits.values()]
-      .filter((v) => v.siteId === siteId && v.day >= day)
+      .filter((v) => v.siteId === siteId && v.day >= day && v.path !== '#call')
       .map(({ day, path, views }) => ({ day, path, views }))
       .sort((a, b) => a.day.localeCompare(b.day))
+  }
+  async callsSince(siteId: string, day: string) {
+    return [...this.visits.values()].filter((v) => v.siteId === siteId && v.day >= day && v.path === '#call').reduce((n, v) => n + v.views, 0)
   }
   private previews = new Map<string, { p: Preview; who: string; at: number }>()
   async savePreview(p: Preview, who: string) {
@@ -790,7 +799,7 @@ export class MemoryStore implements Store {
       const scores = list.filter((s) => s.day >= day)
       if (!site || !scores.length) continue
       const perDay = new Map<string, number>()
-      for (const v of this.visits.values()) if (v.siteId === siteId && v.day >= day) perDay.set(v.day, (perDay.get(v.day) ?? 0) + v.views)
+      for (const v of this.visits.values()) if (v.siteId === siteId && v.day >= day && v.path !== '#call') perDay.set(v.day, (perDay.get(v.day) ?? 0) + v.views)
       out.push({ site, scores: [...scores], visits: [...perDay].map(([d, views]) => ({ day: d, views })) })
     }
     return out
