@@ -550,9 +550,8 @@
 @keyframes bdd-hours { 0%, 71% { opacity: 0; transform: translateY(6px) } 74%, 92% { opacity: 1; transform: none } 97%, 100% { opacity: 0 } }
 
 /* The quote-mark logo, large, in the brand's Ember, behind "Your site. Your say." */
-.home { --ember: var(--say); }
 .home .how { position: relative; overflow: hidden; }
-.home .how-mark { position: absolute; right: -120px; top: -60px; color: var(--ember); opacity: .9; pointer-events: none; }
+.home .how-mark { position: absolute; right: -120px; top: -60px; color: #fff; opacity: .06; pointer-events: none; }
 .home .how-mark svg { width: min(720px, 70vw); height: auto; display: block; }
 .home .how .wrap { position: relative; }
 @media (max-width: 760px) { .home .how-mark { right: -90px; top: -30px; opacity: .8; } .home .how-mark svg { width: 300px; } }
