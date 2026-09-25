@@ -15,7 +15,7 @@ import {
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
 import { resolveHost } from '../apps/saysites/lib/sites'
 import { classifyHost } from '../apps/saysites/lib/hosts'
-import { serveSitePath } from '../apps/saysites/lib/serve'
+import { handleCall, serveSitePath } from '../apps/saysites/lib/serve'
 import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
@@ -1486,5 +1486,25 @@ describe('trial, caps and feedback', () => {
     await store.recordUsage('s2', '2026-09-28', 7)
     expect(await store.siteUsage('s1', '2026-09-28')).toEqual({ micros: 1500, messages: 2 })
     expect((await store.dayUsage('2026-09-28')).micros).toBe(1507)
+  })
+})
+
+describe('calls from the website', () => {
+  it('counts phone taps separately from page views', async () => {
+    const store = new MemoryStore()
+    const { site, pages } = buildStarterSite({ name: 'Bloom', type: 'salon', city: 'Austin', region: 'TX', services: [], palette: 'ocean', phone: '(512) 555-0100' }, 'o', 'bloom')
+    const bundle = { site, pages, redirects: [] }
+    const html = await serveSitePath(bundle, [], { preview: false }).text()
+    expect(html).toContain('a[href^="tel:"]:active{background-image:url(/__c?p=%2F)}')
+    expect(html).toContain('<body ontouchstart=""')
+    const req = new Request('https://bloom.saysites.com/__c?p=%2F', { headers: { 'user-agent': 'Mozilla/5.0 (iPhone)' } })
+    await handleCall(bundle, req, store)
+    await handleCall(bundle, req, store)
+    await handleCall(bundle, new Request('https://bloom.saysites.com/__c', { headers: { 'user-agent': 'Googlebot' } }), store)
+    await store.recordVisit(site.id, '2026-09-28', '/')
+    const day = new Date().toISOString().slice(0, 10)
+    expect(await store.callsSince(site.id, day)).toBe(2)
+    expect((await store.visitsSince(site.id, '2000-01-01')).every((v) => v.path !== '#call')).toBe(true)
+    expect(await serveSitePath(bundle, [], { preview: true }).text()).not.toContain('__c?p=')
   })
 })
