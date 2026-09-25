@@ -696,3 +696,13 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 @media (max-width: 560px) { .plan-pick-row { grid-template-columns: 1fr; } }
 .sofie-meter .meter { height: 8px; border-radius: 8px; background: var(--paper); overflow: hidden; margin: 10px 0 8px; }
 .sofie-meter .meter i { display: block; height: 100%; background: var(--ink); border-radius: 8px; }
+
+/* Launch stats (team only) */
+.launch-range { display: flex; gap: 4px; flex-wrap: wrap; }
+.launch-range a { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); color: inherit; text-decoration: none; font-size: 13px; }
+.launch-range a[aria-current='page'] { background: var(--ink); color: var(--card); border-color: transparent; }
+.launch-card { min-width: 0; }
+.launch-table { overflow-x: auto; }
+.launch-table table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.launch-table th, .launch-table td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.launch-table th { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; opacity: .7; }

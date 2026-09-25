@@ -1595,3 +1595,21 @@ describe('dates', () => {
     expect(formatDate('2026-12-24T07:41:00.000Z')).toBe('December 24, 2026')
   })
 })
+
+describe('SaySites launch stats', () => {
+  it('counts signups, birthday codes, sites and feedback', async () => {
+    const store = new MemoryStore()
+    const a = await store.createUser({ email: 'a@x.com', name: 'A', passwordHash: 'h' })
+    const b = await store.createUser({ email: 'b@x.com', name: 'B', passwordHash: 'h' })
+    await store.saveBilling(a.id, newBilling(Date.now(), 'BIRTHDAY'))
+    await store.saveBilling(b.id, { ...newBilling(), status: 'active' })
+    const { site, pages } = buildStarterSite({ name: 'A Co', type: 'plumber', city: 'C', region: 'D', services: [], palette: 'ocean' }, a.id, 'launch-one')
+    await store.createSite(a.id, site, pages)
+    await store.addFeedback({ id: 'f1', userId: a.id, name: 'A', email: 'a@x.com', text: 'love it', at: new Date().toISOString() } as never)
+    const today = new Date().toISOString().slice(0, 10)
+    const s = await store.launchStats(today)
+    expect(s).toMatchObject({ users: 2, usersSince: 2, birthday: 1, paying: 1, sites: 1, sitesSince: 1, feedback: 1, feedbackSince: 1 })
+    expect(s.recent.find((u) => u.email === 'a@x.com')).toMatchObject({ sites: 1, promo: 'BIRTHDAY' })
+    expect((await store.launchStats('2999-01-01')).usersSince).toBe(0)
+  })
+})
