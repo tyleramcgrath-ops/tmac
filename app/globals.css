@@ -448,3 +448,60 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .verify summary { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; cursor: pointer; list-style: none; }
 .verify summary::-webkit-details-marker { display: none; }
 .verify[open] summary { margin-bottom: 8px; }
+
+/* The SaySites moment (components/Moment.tsx) */
+.moment { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: moment-in .28s ease both; cursor: pointer; }
+.moment.is-out { opacity: 0; transition: opacity .45s ease; }
+.moment-stage { position: relative; display: grid; justify-items: center; gap: 22px; }
+.moment-line { position: relative; display: inline-block; }
+.moment-body { position: relative; transition: opacity .35s ease, transform .5s ease; }
+.moment.is-fold .moment-body, .moment.is-out .moment-body { opacity: 0; transform: scale(.96); }
+.moment-title { display: block; font-size: clamp(34px, 7vw, 64px); font-weight: 700; letter-spacing: -.035em; line-height: 1.05; color: var(--ink); text-align: center; max-width: min(78vw, 820px); }
+.moment-title span { display: inline-block; animation: moment-letter .5s cubic-bezier(.2, .9, .2, 1) backwards; }
+.moment-image { display: block; height: clamp(64px, 12vw, 104px); width: auto; max-width: min(70vw, 620px); object-fit: contain; animation: moment-press .7s cubic-bezier(.2, 1.3, .3, 1) .12s backwards; filter: drop-shadow(0 10px 24px rgba(18, 19, 22, .10)); }
+.moment-q { position: absolute; color: var(--ink); line-height: 0; transition: transform .62s cubic-bezier(.6, 0, .2, 1), opacity .3s ease; }
+.moment-q svg { display: block; }
+.moment-open { right: calc(100% + 18px); top: 0; animation: moment-open .62s cubic-bezier(.2, 1.35, .35, 1) .18s backwards; }
+.moment-close { left: calc(100% + 18px); bottom: 0; animation: moment-close .62s cubic-bezier(.2, 1.35, .35, 1) .18s backwards; }
+.moment-ring { position: absolute; left: 50%; top: 42%; width: 240px; height: 240px; margin: -120px 0 0 -120px; border-radius: 50%; border: 1.5px solid var(--ink); opacity: 0; animation: moment-ring 1.1s cubic-bezier(.2, .7, .2, 1) .5s; pointer-events: none; }
+.moment-caption { margin: 0; font-size: 17px; color: var(--ink-2); letter-spacing: .01em; animation: moment-caption .5s ease .75s backwards; transition: opacity .3s ease; }
+.moment.is-fold .moment-caption, .moment.is-out .moment-caption { opacity: 0; }
+@keyframes moment-in { from { opacity: 0; } }
+@keyframes moment-letter { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } }
+@keyframes moment-press { from { opacity: 0; transform: scale(1.14); filter: drop-shadow(0 30px 40px rgba(18, 19, 22, .22)); } }
+@keyframes moment-open { from { opacity: 0; transform: translate(-36vw, -8vh) rotate(-70deg) scale(.6); } }
+@keyframes moment-close { from { opacity: 0; transform: translate(36vw, 8vh) rotate(-70deg) scale(.6); } }
+@keyframes moment-ring { 0% { opacity: .22; transform: scale(.55); } 100% { opacity: 0; transform: scale(1.9); } }
+@keyframes moment-caption { from { opacity: 0; transform: translateY(6px); } }
+@media (max-width: 560px) {
+  .moment-q svg { width: 26px; height: 38px; }
+  .moment-open { right: calc(100% + 10px); }
+  .moment-close { left: calc(100% + 10px); }
+  .moment-title { max-width: 70vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .moment, .moment * { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .2s !important; }
+}
+
+/* Milestones */
+.milestones .marks { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px 12px; }
+.mark a { display: grid; justify-items: center; gap: 6px; text-align: center; text-decoration: none; color: inherit; }
+.seal { width: 58px; height: 58px; overflow: visible; }
+.seal-disc { fill: transparent; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.seal-ring { fill: none; stroke: transparent; stroke-width: 1; }
+.seal-icon { fill: var(--line); }
+.mark.done .seal-disc { fill: var(--ink); stroke: var(--ink); stroke-dasharray: none; }
+.mark.done .seal-ring { stroke: color-mix(in srgb, var(--paper) 35%, transparent); }
+.mark.done .seal-icon { fill: var(--paper); }
+.mark-label { font-size: 13px; font-weight: 600; line-height: 1.25; color: var(--ink-3); }
+.mark.done .mark-label { color: var(--ink); }
+.mark-hint { font-size: 12px; line-height: 1.3; color: var(--ink-3); opacity: 0; max-height: 0; overflow: hidden; transition: opacity .2s ease, max-height .2s ease; }
+.mark a:hover .mark-hint, .mark a:focus-visible .mark-hint { opacity: 1; max-height: 3em; }
+.mark:not(.done) a:hover .seal-disc { stroke: var(--ink-3); }
+.mark.fresh .seal { animation: mark-stamp .55s cubic-bezier(.2, 1.4, .3, 1) 2.55s backwards; }
+.mark.fresh .mark-label { animation: mark-label .4s ease 2.8s backwards; }
+@keyframes mark-stamp { 0% { transform: scale(1.5) rotate(-12deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: none; } }
+@keyframes mark-label { from { opacity: 0; transform: translateY(4px); } }
+@media (max-width: 760px) { .milestones .marks { grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .mark.fresh .seal, .mark.fresh .mark-label { animation: none; } }
+.site-mono-img { background: #fff; object-fit: contain; padding: 0; box-shadow: 0 0 0 1px var(--line); }
