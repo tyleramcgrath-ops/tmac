@@ -25,6 +25,7 @@ export default async function PhotosPage({ params }: { params: Promise<{ id: str
         <div>
           <h2>Photos</h2>
           <p className="muted">Your own photos look better than any stock photo. Upload them here, then ask Sofie to use them, or pick them for products and blog posts.</p>
+          <p className="muted small">Until then, your site uses free professional photos from Unsplash photographers, picked so no other SaySites site has the same ones. The deal is a small “Photos by” credit in your footer: they get the credit, you get great photos for free. Swap in your own and the credit goes away.</p>
         </div>
       </div>
       <div className="card">

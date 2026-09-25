@@ -11,7 +11,7 @@
 import { dropRepeatedPhotos } from './photo-rules'
 import { randomUUID } from 'crypto'
 import type { Container, Element, GlobalStyles, Page, Site } from './schema'
-import { photosFor, type Photo } from './photos'
+import { photosFor, type Photo, type PhotoSet } from './photos'
 
 export type Design = 'bold' | 'editorial' | 'warm'
 
@@ -67,6 +67,8 @@ export interface StarterInput {
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
+  // Photos to use instead of the built-in set (lib/unsplash).
+  photos?: PhotoSet
   // A headline to use instead of the generated one (e.g. the H1 of the
   // owner's previous site, which is what they already rank for).
   headline?: string
@@ -109,7 +111,11 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const now = opts.now ?? new Date().toISOString()
   const t = BUSINESS_TYPES[input.type] ?? BUSINESS_TYPES.other
   const design: Design = input.design ?? t.design
-  const photos = photosFor(input.type)
+  const photos = input.photos ?? photosFor(input.type)
+  // Inner pages take fresh photos while there are any; repeats that remain
+  // are dropped at the end (lib/photo-rules).
+  const spare = [...(photos.extra ?? [])]
+  const fresh = (fallback: Photo): Photo => spare.shift() ?? fallback
   const name = input.name.trim()
   const city = tidyPlace(input.city)
   const place = input.region.trim() ? `${city}, ${tidyRegion(input.region)}` : city
@@ -459,7 +465,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   function aboutSplit(): Container {
-    const photo = photos.cards[0]
+    const photo = fresh(photos.cards[0])
     return {
       id: 'about',
       type: 'container',
@@ -501,13 +507,13 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     updatedAt: now,
   }
 
-  const banner = (id: string, title: string, text: string): Container => ({
+  const banner = (id: string, title: string, text: string, bg = fresh(photos.hero)): Container => ({
     id,
     type: 'container',
     tag: 'section',
     layout: 'flex',
     boxed: true,
-    backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.66, overlayStyle: 'full', priority: true },
+    backgroundImage: { src: bg.src, width: bg.width, height: bg.height, overlay: 0.66, overlayStyle: 'full', priority: true },
     style: { background: 'secondary', padding: { desktop: pad(88), mobile: pad(56, 20) }, gap: { desktop: 10 } },
     children: [
       { id: `${id}-h`, type: 'heading', level: 1, text: title, style: { color: '#ffffff', fontSize: { desktop: 52, mobile: 36 } } },
@@ -538,7 +544,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         style: { padding: section, gap: { desktop: 56 } },
         children: [
           ...list.map((s, i): Container => {
-            const photo = photos.cards[i % 3]
+            const photo = fresh(photos.cards[i % 3])
             return {
               id: `item-${i + 1}`,
               type: 'container',
@@ -611,7 +617,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               },
             ],
           },
-          { id: 'contact-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 1.2, priority: true, style: { borderRadius: design === 'editorial' ? 2 : 14 } },
+          { id: 'contact-img', type: 'image', ...pick(fresh(photos.hero)), aspect: 1.2, priority: true, style: { borderRadius: design === 'editorial' ? 2 : 14 } },
         ],
       },
     ],
@@ -653,6 +659,8 @@ export function tidyServices(list: string[]): string[] {
     .map((s) => (s === s.toLowerCase() ? s.charAt(0).toUpperCase() + s.slice(1) : s))
     .slice(0, 12)
 }
+
+const pick = (p: Photo) => ({ src: p.src, alt: p.alt, width: p.width, height: p.height })
 
 function cap(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1)

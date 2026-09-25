@@ -23,6 +23,8 @@ import { LOGO_CRAFT, LOGO_FONTS, LOGO_ICONS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQ
 import { renderSheet } from './logo-render'
 import { BUSINESS_TYPES, buildStarterSite, type BusinessTypeKey } from './starter'
 import { isStock, photoKey, photoUses, repeatedPhotos } from './photo-rules'
+import type { Credit, FoundPhoto } from './unsplash'
+import type { PhotoSet } from './photos'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -70,12 +72,38 @@ export class Workspace {
 
   // Stock photos other customers' sites use; never allowed here.
   readonly taken: Set<string>
+  // Photo search (lib/unsplash), when it's switched on.
+  private finder?: PhotoFinder
+  // Credits for photos found this session, kept if the photo gets used.
+  private found = new Map<string, Credit>()
 
-  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader; taken?: Set<string> } = {}) {
+  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader; taken?: Set<string>; finder?: PhotoFinder } = {}) {
     this.site = structuredClone(snapshot.site)
     this.pages = structuredClone(snapshot.pages)
     this.fontLoader = opts.fontLoader ?? googleFontLoader
     this.taken = opts.taken ?? new Set()
+    this.finder = opts.finder
+  }
+
+  // Fresh stock photos for a search, none already on this site or another's.
+  async findPhotos(query: string): Promise<string> {
+    if (!this.finder) throw new ToolError('Photo search is not switched on. Use the photo list you were given.')
+    const onSite = new Set(photoUses(this.pages).map((u) => u.key))
+    const hits = (await this.finder.search(query)).filter((p) => !onSite.has(p.credit.photo) && !this.taken.has(p.credit.photo)).slice(0, 10)
+    if (!hits.length) return 'No new photos for that search. Try other words.'
+    for (const h of hits) this.found.set(h.credit.photo, h.credit)
+    return JSON.stringify(hits.map((h) => ({ src: h.src, alt: h.alt, width: h.width, height: h.height })))
+  }
+
+  // Credits follow the photos: kept for stock photos still on the site.
+  syncCredits() {
+    const used = new Set(photoUses(this.pages).map((u) => u.key))
+    const known = new Map<string, Credit>([...(this.site.credits ?? []).map((c) => [c.photo, c] as const), ...this.found])
+    const credits = [...known.values()].filter((c) => used.has(c.photo)).slice(0, 80)
+    const next = { ...this.site, credits }
+    if (!credits.length) delete (next as { credits?: Credit[] }).credits
+    const parsed = SiteSchema.safeParse(next)
+    if (parsed.success) this.site = parsed.data
   }
 
   snapshot(): Snapshot {
@@ -233,13 +261,15 @@ export class Workspace {
   // site that is really a law firm): new layout, pages, photos and wording,
   // keeping the name, contact details, address, hours, logo, colours, blog
   // and shop. Pages that no longer fit are hidden, not deleted.
-  rebuildSite(input: { type: string; services: string[]; city: string; region: string; headline: string }, summary: string) {
+  async rebuildSite(input: { type: string; services: string[]; city: string; region: string; headline: string }, summary: string) {
     if (!(input.type in BUSINESS_TYPES)) throw new ToolError(`Unknown business type "${input.type}". Use one of: ${Object.keys(BUSINESS_TYPES).join(', ')}.`)
     const b = this.site.business
     const [areaCity, areaRegion] = (b.area ?? '').split(',').map((x) => x.trim())
     const city = input.city.trim() || b.address?.city || areaCity || ''
     const region = input.region.trim() || b.address?.region || areaRegion || ''
     if (!city) throw new ToolError('I need the town or city the business serves. Ask the owner.')
+    const set = this.finder ? await this.finder.set(input.type, this.taken) : null
+    if (set) for (const c of set.credits) this.found.set(c.photo, c)
     const built = buildStarterSite(
       {
         name: b.name,
@@ -254,6 +284,7 @@ export class Workspace {
         ...(b.address ? { street: b.address.street, postalCode: b.address.postalCode } : {}),
         ...(b.hours?.length ? { hours: b.hours } : {}),
         ...(input.headline.trim() ? { headline: input.headline } : {}),
+        ...(set ? { photos: set } : {}),
       },
       this.site.orgId,
       this.site.subdomain,
@@ -320,6 +351,11 @@ export class Workspace {
 }
 
 export class ToolError extends Error {}
+
+export interface PhotoFinder {
+  search(query: string): Promise<FoundPhoto[]>
+  set(type: string, taken: Set<string>): Promise<(PhotoSet & { credits: Credit[] }) | null>
+}
 
 function findElement(body: Element[], id: string): { element: Element; siblings: Element[]; index: number } | null {
   for (let i = 0; i < body.length; i++) {
@@ -492,6 +528,13 @@ SOFIE_TOOLS.push({
 })
 
 SOFIE_TOOLS.push({
+  name: 'find_photos',
+  description:
+    'Search free professional stock photos (Unsplash) when the photo list doesn\'t have a good fit. Returns up to 10 photos with src, alt, width and height; use them exactly. Search in plain English for what the photo shows, e.g. "attorney meeting client". Photos already on this site or another customer\'s site are left out. Each photographer is credited in the site footer automatically.',
+  input_schema: { type: 'object', additionalProperties: false, properties: { query: { type: 'string' } }, required: ['query'] },
+})
+
+SOFIE_TOOLS.push({
   name: 'write_post',
   description:
     'Publish a blog post to the site (at /blog/<title-slug>, listed on /blog; the /blog page and its menu link are created the first time). Write helpful, specific, honest content for this business\'s customers, 300-700 words. Never invent prices, awards, reviews or facts about the business.',
@@ -549,8 +592,10 @@ export async function runTool(ws: Workspace, name: string, input: Record<string,
         await ws.designLogo(input, s)
         break
       case 'rebuild_site':
-        ws.rebuildSite({ type: str('type'), services: Array.isArray(input.services) ? input.services.map(String) : [], city: str('city'), region: str('region'), headline: str('headline') }, s)
+        await ws.rebuildSite({ type: str('type'), services: Array.isArray(input.services) ? input.services.map(String) : [], city: str('city'), region: str('region'), headline: str('headline') }, s)
         break
+      case 'find_photos':
+        return await ws.findPhotos(str('query'))
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
         break
@@ -635,9 +680,9 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
   return create.call(client.beta.messages, params)
 }
 
-export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string> }): Promise<SofieResult> {
+export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder }): Promise<SofieResult> {
   const client = input.client ?? new Anthropic()
-  const ws = new Workspace(input.snapshot, { taken: input.taken })
+  const ws = new Workspace(input.snapshot, { taken: input.taken, finder: input.finder })
   const takenHere = PHOTO_KEYS.filter((k) => ws.taken.has(k))
 
   // Earlier turns as plain text; the current state of the site is sent fresh
@@ -726,6 +771,7 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   }
 
   if (!reply) reply = ws.changes.length ? 'I made those changes. Take a look at the preview.' : 'Sorry, I got stuck on that one. Could you try asking another way?'
+  ws.syncCredits()
   // Only files the final draft still uses (she may have drawn a few versions).
   const used = JSON.stringify(ws.site.business)
   const media = ws.media.filter((m) => used.includes(`/u/${m.id}`))

@@ -13,6 +13,8 @@ export interface Photo {
 export interface PhotoSet {
   hero: Photo
   cards: [Photo, Photo, Photo]
+  // More photos for inner pages, so nothing repeats (from lib/unsplash).
+  extra?: Photo[]
 }
 
 export function unsplash(id: string, alt: string, width = 1600, height = 1067): Photo {

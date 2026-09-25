@@ -1,10 +1,12 @@
 'use server'
 
+import { after } from 'next/server'
 import { redirect } from 'next/navigation'
 import { hashPassword, normalizeEmail, validEmail, verifyPassword } from '@/lib/auth'
 import { endSession, requireUser, startSession } from '@/lib/session'
 import { BUSINESS_TYPES, PALETTES, buildStarterSite, subdomainFor, type BusinessTypeKey } from '@/lib/starter'
-import { syncSitePhotos } from '@/lib/sites'
+import { creditsInUse, syncSitePhotos } from '@/lib/sites'
+import { photoSetFor, reportUse } from '@/lib/unsplash'
 import { getStore } from '@/lib/store'
 import { templateFor } from '@/lib/templates'
 
@@ -75,14 +77,20 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   const template = templateFor(str(form, 'template'))
   const phone = str(form, 'phone').slice(0, 30)
   const spanish = str(form, 'language') === 'es'
-  const { site, pages } = buildStarterSite(
-    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}) },
+  const taken = await store.photosTaken()
+  const found = await photoSetFor(store, type, taken)
+  const built = buildStarterSite(
+    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) },
     user.id,
     subdomain,
-    { taken: await store.photosTaken() }
+    { taken }
   )
+  const credits = found ? creditsInUse(built.pages, found.credits) : []
+  const site = credits.length ? { ...built.site, credits } : built.site
+  const pages = built.pages
   await store.createSite(user.id, site, pages)
   await syncSitePhotos(site.id, store)
+  after(() => reportUse(credits))
   // Talk & Design: open Sofie with the filled-in prompt, so the owner watches
   // her design the site. A Spanish site starts the same way: Sofie rewrites
   // the starter pages in Spanish. Without Sofie switched on, the site is ready as is.

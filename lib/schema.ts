@@ -416,6 +416,11 @@ export const SiteSchema = z
     // Small print at the foot of every page, e.g. a law firm's attorney
     // advertising disclaimer.
     footerNote: z.string().max(600).optional(),
+    // Who took the stock photos the site uses (Unsplash asks for credit).
+    credits: z
+      .array(z.object({ photo: z.string().max(80), name: z.string().max(120), url: z.string().url().max(300), download: z.string().url().max(500).optional() }).strict())
+      .max(80)
+      .optional(),
     // Things for sale. Customers pay the owner directly through the owner's
     // own Stripe payment link, so SaySites never touches the money.
     store: StoreSchema.optional(),
