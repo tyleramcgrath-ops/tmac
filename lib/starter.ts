@@ -128,6 +128,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ...(email ? { email } : {}),
       ...(input.street && input.postalCode ? { address: { street: input.street, city, region: input.region.trim(), postalCode: input.postalCode, country: 'US' } } : {}),
       ...(input.hours?.length ? { hours: input.hours } : {}),
+      ...(city ? { area: place } : {}),
     },
     globals: { colors, ...DESIGN_GLOBALS[design] },
     nav: [

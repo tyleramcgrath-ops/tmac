@@ -8,8 +8,8 @@ import { getStudioState } from './actions'
 // function's time limit.
 export const maxDuration = 300
 
-export default async function SofiePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ talk?: string }> }) {
-  const [{ id }, { talk }] = await Promise.all([params, searchParams])
+export default async function SofiePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ talk?: string; fill?: string }> }) {
+  const [{ id }, { talk, fill }] = await Promise.all([params, searchParams])
   const user = await requireUser()
   const site = await getStore().siteForUser(user.id, id)
   if (!site) notFound()
@@ -21,7 +21,8 @@ export default async function SofiePage({ params, searchParams }: { params: Prom
       siteName={site.business.name}
       initial={initial}
       ready={Boolean(process.env.ANTHROPIC_API_KEY)}
-      autostart={initial.chat.length === 0 ? (talk ?? '').slice(0, 2000) : ''}
+      autostart={initial.chat.length === 0 && !fill ? (talk ?? '').slice(0, 2000) : ''}
+      prefill={(fill ?? (initial.chat.length > 0 ? talk : '') ?? '').slice(0, 2000)}
     />
   )
 }
