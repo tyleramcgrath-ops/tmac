@@ -2,7 +2,7 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { billingReady, cleanPromo, newBilling } from '@/lib/billing'
+import { billingReady, cleanInterval, cleanPlan, cleanPromo, newBilling, priceId } from '@/lib/billing'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { checkoutUrl, portalUrl } from '@/lib/stripe'
@@ -23,9 +23,14 @@ export async function startPlan(form: FormData): Promise<void> {
   const typed = cleanPromo(String(form.get('promo') ?? ''))
   const promo = typed ?? current.promo
   if (typed && typed !== current.promo) await store.saveBilling(user.id, { ...current, promo: typed })
+  const plan = cleanPlan(form.get('plan'))
+  const interval = cleanInterval(form.get('interval'))
+  const price = priceId(plan, interval)
+  // A plan whose Stripe price isn't set up yet can't be bought.
+  if (!price) redirect('/dashboard/account?billing=soon')
   let url: string
   try {
-    url = await checkoutUrl({ userId: user.id, email: user.email, customerId: current.customerId, promo, origin: await origin(), ...(current.status === 'trial' ? { trialEnd: current.trialEndsAt } : {}) })
+    url = await checkoutUrl({ userId: user.id, email: user.email, customerId: current.customerId, promo, origin: await origin(), price, plan, interval, ...(current.status === 'trial' ? { trialEnd: current.trialEndsAt } : {}) })
   } catch (e) {
     console.error('checkout failed', e)
     redirect('/dashboard/account?billing=error')

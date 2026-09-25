@@ -43,17 +43,17 @@ export async function promoId(code: string): Promise<string | null> {
 
 // trialEnd: free time the owner still has (their trial, or months earned
 // with feedback). Stripe needs it at least 48 hours out.
-export async function checkoutUrl(input: { userId: string; email: string; customerId?: string; promo?: string; origin: string; trialEnd?: string }): Promise<string> {
+export async function checkoutUrl(input: { userId: string; email: string; customerId?: string; promo?: string; origin: string; trialEnd?: string; price: string; plan: string; interval: string }): Promise<string> {
   const trialEnd = input.trialEnd ? Math.floor(Date.parse(input.trialEnd) / 1000) : 0
   const freeTime = trialEnd > Date.now() / 1000 + 48 * 3600 ? { trial_end: trialEnd } : {}
   const promotion = input.promo ? await promoId(input.promo).catch(() => null) : null
   const session = await stripe<{ url: string }>('POST', '/checkout/sessions', {
     mode: 'subscription',
-    line_items: [{ price: process.env.STRIPE_PRICE_ID!, quantity: 1 }],
+    line_items: [{ price: input.price, quantity: 1 }],
     client_reference_id: input.userId,
     ...(input.customerId ? { customer: input.customerId } : { customer_email: input.email }),
-    subscription_data: { metadata: { user_id: input.userId }, ...freeTime },
-    metadata: { user_id: input.userId },
+    subscription_data: { metadata: { user_id: input.userId, plan: input.plan, interval: input.interval }, ...freeTime },
+    metadata: { user_id: input.userId, plan: input.plan, interval: input.interval },
     // Either the code they arrived with, or a box to type one in.
     ...(promotion ? { discounts: [{ promotion_code: promotion }] } : { allow_promotion_codes: true }),
     success_url: `${input.origin}/dashboard/account?billing=welcome`,

@@ -322,15 +322,15 @@ export default function Home() {
               <div className="plan plan-main">
                 <div className="plan-top"><h3>Site</h3><span className="tag">Start here</span></div>
                 <div className="amt">$15<small>/month</small></div>
-                <p className="per">For service businesses</p>
-                <ul><li>Your full website, built for you</li><li>Your own domain</li><li>Hosting, SSL, SEO and speed checks</li><li>Changes by Sofie</li><li>0% of your sales</li></ul>
+                <p className="per">For service businesses · or $150 a year, two months free</p>
+                <ul><li>Your full website, built for you</li><li>Your own domain</li><li>Hosting, SSL, SEO and speed checks</li><li>Call tracking and a messages inbox</li><li>Sofie for everyday changes, every month</li></ul>
                 <a className="b b-light b-block" href="/signup">Start free</a>
               </div>
               <div className="plan">
                 <div className="plan-top"><h3>Store</h3><span className="tag live">New</span></div>
                 <div className="amt">$25<small>/month</small></div>
-                <p className="per">For selling online</p>
-                <ul><li>Everything in Site</li><li>Products and a Shop page</li><li>Paid through your own Stripe</li><li>0% taken from your sales</li><li>Prices Google can read</li></ul>
+                <p className="per">For selling online · or $250 a year, two months free</p>
+                <ul><li>Everything in Site</li><li>Products and a Shop page</li><li>Paid through your own Stripe</li><li>0% taken from your sales</li><li>A bigger Sofie allowance</li></ul>
                 <a className="b b-line b-block" href="/signup">Start free</a>
               </div>
               <div className="plan">
@@ -341,7 +341,7 @@ export default function Home() {
                 <span className="b b-line b-block b-soon">Coming soon</span>
               </div>
             </div>
-            <p className="fine">7-day free trial. Cancel anytime, no setup fees.</p>
+            <p className="fine">7-day free trial, no card needed. Cancel anytime, no setup fees. Sofie’s allowance refills every month; you can always make changes yourself too.</p>
 
             <div className="compare">
               <div className="compare-head">
