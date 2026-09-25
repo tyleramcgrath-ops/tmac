@@ -63,6 +63,9 @@ export interface StarterInput {
   tagline?: string
   // A Talk & Design template can pick the design instead of the business type.
   design?: Design
+  // The site's language ("en" or "es"). The starter copy is English; Sofie
+  // rewrites it for other languages.
+  language?: string
 }
 
 export interface StarterOptions {
@@ -127,7 +130,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     id: siteId,
     orgId: ownerOrgId,
     subdomain,
-    language: 'en',
+    language: input.language === 'es' ? 'es' : 'en',
     business: {
       name,
       schemaType: t.schemaType,

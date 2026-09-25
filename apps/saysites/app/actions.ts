@@ -55,7 +55,7 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   const palette = str(form, 'palette')
   if (!name) return { error: 'What is your business called?' }
   if (!(type in BUSINESS_TYPES)) return { error: 'Please pick the kind of business.' }
-  if (!city || !region) return { error: 'Which city and state are you in?' }
+  if (!city || !region) return { error: 'Which city and state (or province) are you in?' }
   if (!(palette in PALETTES)) return { error: 'Please pick a color style.' }
   const email = str(form, 'email')
   if (email && !validEmail(email)) return { error: 'That email address doesn’t look right.' }
@@ -68,17 +68,22 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
 
   const template = templateFor(str(form, 'template'))
   const phone = str(form, 'phone').slice(0, 30)
+  const spanish = str(form, 'language') === 'es'
   const { site, pages } = buildStarterSite(
-    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(template ? { design: template.key } : {}) },
+    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}) },
     user.id,
     subdomain
   )
   await store.createSite(user.id, site, pages)
   // Talk & Design: open Sofie with the filled-in prompt, so the owner watches
-  // her design the site. Without Sofie switched on, the template site is ready.
-  if (template && process.env.ANTHROPIC_API_KEY) {
-    const prompt = template.prompt({ name, typeLabel: BUSINESS_TYPES[type].label, city, region, phone, services })
-    redirect(`/dashboard/sites/${site.id}/sofie?talk=${encodeURIComponent(prompt)}`)
+  // her design the site. A Spanish site starts the same way: Sofie rewrites
+  // the starter pages in Spanish. Without Sofie switched on, the site is ready as is.
+  if ((template || spanish) && process.env.ANTHROPIC_API_KEY) {
+    const parts = [
+      template ? template.prompt({ name, typeLabel: BUSINESS_TYPES[type].label, city, region, phone, services }) : '',
+      spanish ? 'Escribe todo el sitio web en español: cada página, título, botón, pregunta frecuente, menú, formulario y la descripción para Google. Mantén el nombre del negocio, el teléfono y la dirección tal como están.' : '',
+    ]
+    redirect(`/dashboard/sites/${site.id}/sofie?talk=${encodeURIComponent(parts.filter(Boolean).join('\n\n'))}`)
   }
   redirect(`/dashboard/sites/${site.id}?new=1`)
 }

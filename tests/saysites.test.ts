@@ -1048,3 +1048,25 @@ describe('SaySites: law firm starter', () => {
     expect(plumber.pages.map((p) => p.slug)).toEqual(['', 'services', 'contact'])
   })
 })
+
+describe('SaySites: Spanish sites', async () => {
+  const { buildBlogIndex } = await import('../apps/saysites/lib/posts')
+  it('puts SaySites’ own words on the page in the site’s language', () => {
+    const { site, pages } = buildStarterSite({ name: 'Panadería Sol', type: 'bakery', city: 'San José', region: 'SJ', phone: '+506 2222 3333', services: ['Pan'], palette: 'sunset', hours: ['Mo-Fr 07:00-18:00'], language: 'es' }, 'org_x', 'sol')
+    expect(site.language).toBe('es')
+    const contact = pages.find((p) => p.slug === 'contact')!
+    const html = renderPage(site, contact, pages).html
+    expect(html).toContain('<html lang="es">')
+    expect(html).toContain('Tu nombre')
+    expect(html).toContain('Correo electrónico')
+    expect(html).toContain('Horario')
+    expect(html).toContain('Lun–Vie 7:00–18:00')
+    expect(html).toContain('>Llamar<')
+    expect(buildBlogIndex(site).seo.title).toBe('Noticias y consejos de Panadería Sol')
+    // English sites are unchanged.
+    const en = buildStarterSite({ name: 'Sun Bakery', type: 'bakery', city: 'Austin', region: 'TX', services: [], palette: 'sunset', hours: ['Mo-Fr 07:00-18:00'] }, 'o', 'sun')
+    const enHtml = renderPage(en.site, en.pages.find((p) => p.slug === 'contact')!, en.pages).html
+    expect(enHtml).toContain('Your name')
+    expect(enHtml).toContain('Mon–Fri 7am–6pm')
+  })
+})

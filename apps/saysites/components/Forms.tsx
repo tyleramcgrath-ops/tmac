@@ -77,8 +77,16 @@ export function NewSiteForm({ types, palettes, idea = '', template = '' }: { typ
       </label>
       <div className="row">
         <label className="field"><span>City</span><input className="input" name="city" placeholder="Rivertown" required maxLength={60} value={info.city} onChange={set('city')} /></label>
-        <label className="field"><span>State</span><input className="input" name="region" placeholder="OH" required maxLength={40} value={info.region} onChange={set('region')} /></label>
+        <label className="field"><span>State or province</span><input className="input" name="region" placeholder="OH" required maxLength={40} value={info.region} onChange={set('region')} /></label>
       </div>
+      <label className="field">
+        <span>Website language</span>
+        <select className="input" name="language" defaultValue="en">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+        <small>Sofie understands both, so you can talk to her in English or Spanish either way.</small>
+      </label>
       <div className="row">
         <label className="field"><span>Phone <em className="muted">(optional)</em></span><input className="input" name="phone" type="tel" placeholder="(555) 201-4480" maxLength={30} value={info.phone} onChange={set('phone')} /></label>
         <label className="field"><span>Email <em className="muted">(optional)</em></span><input className="input" name="email" type="email" placeholder="hello@yourbusiness.com" /></label>
