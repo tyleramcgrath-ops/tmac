@@ -8,21 +8,21 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-const photo = (id: string, w: number, h: number) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=70&w=${w}&h=${h}`
-
-const HERO = photo('1611173622933-91942d394b04', 1100, 620)
-const SIDE = photo('1678153188688-0dc45722708a', 560, 520)
+// Every dog here is Buju, the founder's French bulldog (the only dog we
+// ever show). Cropped and compressed copies live in public/birthday.
+const HERO = '/birthday/buju-surf.jpg'
+const SIDE = '/birthday/buju-gentleman.jpg'
 const CARDS = [
-  { src: photo('1719464454959-9cf304ef4774', 360, 240), name: 'Full groom', note: 'Bath, cut and style' },
-  { src: photo('1597595735781-6a57fb8e3e3d', 360, 240), name: 'Bath & brush', note: 'For in-between visits' },
-  { src: photo('1581887936036-3f4f7f0b6679', 360, 240), name: 'Nails & ears', note: 'Ten minutes, no fuss' },
+  { src: '/birthday/buju-happy.jpg', name: 'Full groom', note: 'Bath, cut and style' },
+  { src: '/birthday/buju-nap.jpg', name: 'Bath & brush', note: 'Home and napping by noon' },
+  { src: '/birthday/buju-board.jpg', name: 'Beach-day rinse', note: 'Sand out, shine back' },
 ]
 
 // Each step: what the owner types, then what Sofie says and what changed.
 const STEPS = [
   { ask: 'A dog groomer in Austin, TX', reply: 'Built your site: Home, Services and Contact.', changes: ['3 pages', 'Photos', 'Google details'] },
   { ask: 'make it warmer and more fun', reply: 'Warmer colours, a friendlier font and rounder buttons.', changes: ['Colours', 'Fonts', 'Buttons'] },
-  { ask: 'put a big photo of a happy dog up top', reply: 'Found a photo no other SaySites customer uses and made it your header.', changes: ['Header photo'] },
+  { ask: 'use my beach photo of buju up top', reply: 'Made your beach photo of Buju the header, sized to load fast.', changes: ['Header photo', 'Your upload'] },
   { ask: 'add saturday 9 to 2 and a book button', reply: 'Added Saturday hours, and a Book button on every page.', changes: ['Hours', 'Book button'] },
 ] as const
 
@@ -111,19 +111,19 @@ export function BirthdayDemo() {
             <em className={step >= 4 ? 'is-on bdd-flash' : ''}>Book a groom</em>
           </nav>
           <header className={`bdd-hero bdd-in${step === 2 ? ' bdd-flash' : ''}${step >= 3 ? ' is-photo' : ''}`}>
-            <img className="bdd-hero-photo" src={HERO} alt="" width={1100} height={620} />
+            <img className="bdd-hero-photo" src={HERO} alt="" width={1400} height={798} />
             <div className="bdd-hero-text">
               <small>Dog grooming · Austin, TX</small>
               <strong>Happy dogs, groomed gently.</strong>
               <span className="bdd-btn">Book a groom</span>
             </div>
-            <img className="bdd-hero-side" src={SIDE} alt="" width={560} height={520} />
+            <img className="bdd-hero-side" src={SIDE} alt="" width={700} height={777} />
           </header>
           <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Open Saturdays 9:00–2:00</div>
           <div className="bdd-cards bdd-in">
             {CARDS.map((c) => (
               <div key={c.name} className="bdd-card">
-                <img src={c.src} alt="" width={360} height={240} loading="lazy" />
+                <img src={c.src} alt="" width={480} height={320} loading="lazy" />
                 <b>{c.name}</b>
                 <span>{c.note}</span>
               </div>

@@ -58,6 +58,10 @@ number is still to be decided). Build and write everything toward that.
 - Brand colours: black, white and the calm neutrals already in the app.
   The logo mark follows the text colour (white on dark, black on light).
   The owner tried a blue and an orange accent and said no; don't add one.
+- Dog photos in SaySites' own product and marketing (demos, ads, posts):
+  only ever the founder's French bulldog, Buju. His photos are in
+  `public/birthday/buju-*.jpg`. Never stock dogs. (Customers' own sites
+  pick their own photos as usual.)
 - Never mention the founder's name in the product or marketing. Only the
   birthday page speaks in the first person about the founder's years of
   experience with websites and search.
