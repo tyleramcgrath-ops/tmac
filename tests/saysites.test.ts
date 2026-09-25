@@ -20,7 +20,9 @@ import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
-import { photoUses, repeatedPhotos } from '../apps/saysites/lib/photo-rules'
+import { photoSetFor } from '../apps/saysites/lib/unsplash'
+import { creditsInUse } from '../apps/saysites/lib/sites'
+import { photoKey, photoUses, repeatedPhotos } from '../apps/saysites/lib/photo-rules'
 import { typeFromName } from '../apps/saysites/lib/type-hints'
 import { BUSINESS_TYPES, tidyPlace, tidyRegion, tidyServices } from '../apps/saysites/lib/starter'
 import { Workspace, runTool } from '../apps/saysites/lib/sofie'
@@ -1373,5 +1375,44 @@ describe('photo rules', () => {
     const key = photoUses(pages)[0].key
     const ws = new Workspace({ site, pages }, { taken: new Set([key]) })
     expect(ws.problems().some((p) => p.includes(key))).toBe(true)
+  })
+})
+
+describe('Unsplash photos', () => {
+  const api = (id: string, n: number) => ({ id, width: 3000, height: 2000, alt_description: `photo ${n}`, description: null, urls: { raw: `https://images.unsplash.com/photo-${id}?ixid=abc` }, links: { download_location: `https://api.unsplash.com/photos/${id}/download?ixid=abc` }, user: { name: `Person ${n}`, links: { html: `https://unsplash.com/@p${n}` } } })
+
+  it('builds a set of unique photos with credits, skipping taken ones, from the cache', async () => {
+    const store = new MemoryStore()
+    const prev = process.env.UNSPLASH_ACCESS_KEY
+    process.env.UNSPLASH_ACCESS_KEY = 'test'
+    try {
+      const queries = ['lawyer meeting client', 'law office', 'attorney desk documents', 'signing legal documents', 'courthouse']
+      queries.forEach((q, qi) => store.cacheSet(`unsplash:${q}:1`, Array.from({ length: 6 }, (_, i) => api(`${qi}${i}000-abc`, qi * 10 + i))))
+      const taken = new Set(['photo-00000-abc'])
+      const set = await photoSetFor(store, 'lawyer', taken)
+      expect(set).not.toBeNull()
+      const keys = [set!.hero, ...set!.cards, ...(set!.extra ?? [])].map((p) => photoKey(p.src))
+      expect(new Set(keys).size).toBe(keys.length)
+      expect(keys).not.toContain('photo-00000-abc')
+      const { site, pages } = buildStarterSite({ name: 'A Law', type: 'lawyer', city: 'A', region: 'B', services: ['Wills', 'Trusts', 'Probate'], palette: 'ocean', photos: set! }, 'o', 'a')
+      expect(repeatedPhotos(pages)).toEqual([])
+      const credits = creditsInUse(pages, set!.credits)
+      expect(credits.length).toBe(photoUses(pages).length)
+      const html = renderPage({ ...site, credits }, pages[0], pages).html
+      expect(html).toContain('Photos by')
+      expect(html).toContain('utm_source=saysites')
+    } finally {
+      process.env.UNSPLASH_ACCESS_KEY = prev
+    }
+  })
+
+  it('falls back to built-in photos without a key', async () => {
+    const prev = process.env.UNSPLASH_ACCESS_KEY
+    delete process.env.UNSPLASH_ACCESS_KEY
+    try {
+      expect(await photoSetFor(new MemoryStore(), 'lawyer', new Set())).toBeNull()
+    } finally {
+      if (prev) process.env.UNSPLASH_ACCESS_KEY = prev
+    }
   })
 })

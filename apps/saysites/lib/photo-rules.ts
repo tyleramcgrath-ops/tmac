@@ -32,6 +32,13 @@ export function photoUses(pages: Page[]): { key: string; src: string; page: stri
   return out
 }
 
+// Every photo key on one page body, draft or not.
+export function photoKeysOn(body: Element[]): Set<string> {
+  const keys = new Set<string>()
+  photoUses([{ slug: 'x', status: 'published', body } as Page]).forEach((u) => keys.add(u.key))
+  return keys
+}
+
 // Photos used more than once on the site: "photo-123 on home and services".
 export function repeatedPhotos(pages: Page[]): { key: string; pages: string[] }[] {
   const by = new Map<string, string[]>()

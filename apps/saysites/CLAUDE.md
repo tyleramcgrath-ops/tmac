@@ -31,3 +31,9 @@ customers soon? If not, say so plainly and point back to what does:
   into case studies.
 - Reliability of what exists beats new features.
 Nice-to-haves (games, extra styles, clever extras) wait until customers ask.
+
+## Talking to the owner
+
+When the owner has to do something on another site (Vercel, Unsplash, a
+registrar), give numbered steps, one click per step, with the direct link.
+If they ask again, make the steps even simpler and ask for a screenshot.

@@ -16,6 +16,8 @@ export interface SiteWords {
   pages: string
   home: string
   leaveReview: string
+  photosBy: string
+  onUnsplash: string
   call: string
   directions: string
   quickContact: string
@@ -52,6 +54,8 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     pages: 'Pages',
     home: 'Home',
     leaveReview: 'Leave us a review',
+    photosBy: 'Photos by',
+    onUnsplash: 'on',
     call: 'Call',
     directions: 'Directions',
     quickContact: 'Quick contact',
@@ -86,6 +90,8 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     pages: 'Páginas',
     home: 'Inicio',
     leaveReview: 'Déjanos una reseña',
+    photosBy: 'Fotos de',
+    onUnsplash: 'en',
     call: 'Llamar',
     directions: 'Cómo llegar',
     quickContact: 'Contacto rápido',
