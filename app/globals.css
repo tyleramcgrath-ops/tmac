@@ -46,10 +46,10 @@ img { max-width: 100%; display: block; }
 .btn-block { width: 100%; }
 
 /* Brand */
-.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 650; font-size: 21px; letter-spacing: -0.035em; color: var(--ink); text-decoration: none; }
+.logo { display: inline-flex; align-items: center; gap: 2px; font-weight: 650; font-size: 21px; letter-spacing: -0.035em; color: var(--ink); text-decoration: none; }
 .wordmark { display: inline-flex; align-items: baseline; white-space: nowrap; }
 .wordmark b { font-weight: 700; }
-.wordmark .wm-lt { font-weight: 400; color: color-mix(in srgb, currentColor 58%, transparent); }
+.wordmark .wm-lt { font-weight: 400; }
 .wordmark .wm-i { position: relative; display: inline-block; }
 .wordmark .wm-i svg { position: absolute; left: 50%; top: .05em; width: .24em; height: .276em; transform: translateX(-40%); }
 .logo-mark { flex: none; }

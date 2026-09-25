@@ -13,9 +13,8 @@ export function LogoMark({ size = 26 }: { size?: number }) {
   )
 }
 
-// The wordmark: bold "say", lighter "sites", and one comma from the mark
-// as the dot on the i. The comma keeps the full text colour; the grey
-// letters sit in their own spans so it works on light and dark alike.
+// The wordmark: bold "say", regular "sites", and one comma from the mark
+// as the dot on the i, all in the text colour so it reads on light and dark.
 export function Wordmark() {
   return (
     <span className="wordmark">
@@ -38,7 +37,7 @@ export function Wordmark() {
 export function Logo() {
   return (
     <a className="logo" href="/" aria-label="SaySites home">
-      <LogoMark />
+      <LogoMark size={35} />
       <Wordmark />
     </a>
   )
