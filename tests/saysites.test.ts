@@ -1613,3 +1613,12 @@ describe('SaySites launch stats', () => {
     expect((await store.launchStats('2999-01-01')).usersSince).toBe(0)
   })
 })
+
+describe('SaySites database URL', () => {
+  it('asks for verify-full, which pg already uses for require', async () => {
+    const { pgUrl } = await import('../apps/saysites/lib/store')
+    expect(pgUrl('postgres://u:p@h/db?sslmode=require')).toBe('postgres://u:p@h/db?sslmode=verify-full')
+    expect(pgUrl('postgres://u:p@h/db?channel_binding=require&sslmode=require')).toBe('postgres://u:p@h/db?channel_binding=require&sslmode=verify-full')
+    expect(pgUrl('postgres://u:p@h/db?sslmode=disable')).toBe('postgres://u:p@h/db?sslmode=disable')
+  })
+})

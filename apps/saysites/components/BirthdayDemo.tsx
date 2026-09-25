@@ -9,13 +9,19 @@
 import { useEffect, useRef, useState } from 'react'
 
 const photo = (id: string, w: number, h: number) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=72&w=${w}&h=${h}`
+// Each photo in a few widths, so phones and laptops load only what they show.
+const srcs = (id: string, ratio: number, widths: number[]) => ({
+  src: photo(id, widths[widths.length - 1], Math.round(widths[widths.length - 1] / ratio)),
+  srcSet: widths.map((w) => `${photo(id, w, Math.round(w / ratio))} ${w}w`).join(', '),
+})
 
-const HERO = photo('1622880833523-7cf1c0bd4296', 1400, 800)
-const SIDE = photo('1604068549290-dea0e4a305ca', 700, 700)
+const HERO = { ...srcs('1622880833523-7cf1c0bd4296', 1.75, [560, 820, 1100]), sizes: '(max-width: 700px) 92vw, 560px' }
+const SIDE = { ...srcs('1604068549290-dea0e4a305ca', 1, [240, 360, 480]), sizes: '(max-width: 700px) 40vw, 240px' }
+const card = (id: string) => ({ ...srcs(id, 1.5, [180, 320]), sizes: '(max-width: 700px) 25vw, 160px' })
 const CARDS = [
-  { src: photo('1599130143407-2a6ff8a196c9', 480, 320), name: 'Wood-fired pizza', note: '90 seconds at 900°' },
-  { src: photo('1516685018646-549198525c1b', 480, 320), name: 'Handmade pasta', note: 'Rolled every afternoon' },
-  { src: photo('1776362441386-c02107b86576', 480, 320), name: 'The room', note: 'Candlelit, 40 seats' },
+  { img: card('1599130143407-2a6ff8a196c9'), name: 'Wood-fired pizza', note: '90 seconds at 900°' },
+  { img: card('1516685018646-549198525c1b'), name: 'Handmade pasta', note: 'Rolled every afternoon' },
+  { img: card('1776362441386-c02107b86576'), name: 'The room', note: 'Candlelit, 40 seats' },
 ]
 
 // Each step: what the owner types, then what Sofie says and what changed.
@@ -111,19 +117,19 @@ export function BirthdayDemo() {
             <em className={step >= 4 ? 'is-on bdd-flash' : ''}>Reserve</em>
           </nav>
           <header className={`bdd-hero bdd-in${step === 2 ? ' bdd-flash' : ''}${step >= 3 ? ' is-photo' : ''}`}>
-            <img className="bdd-hero-photo" src={HERO} alt="" width={1400} height={800} />
+            <img className="bdd-hero-photo" {...HERO} alt="" width={1100} height={629} />
             <div className="bdd-hero-text">
               <small>East Austin · Open nightly</small>
               <strong>Neapolitan pizza, fired at 900°.</strong>
               <span className="bdd-btn">See the menu</span>
             </div>
-            <img className="bdd-hero-side" src={SIDE} alt="" width={700} height={700} />
+            <img className="bdd-hero-side" {...SIDE} alt="" width={480} height={480} />
           </header>
           <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Sunday brunch 10:00–2:00</div>
           <div className="bdd-cards bdd-in">
             {CARDS.map((c) => (
               <div key={c.name} className="bdd-card">
-                <img src={c.src} alt="" width={480} height={320} loading="lazy" />
+                <img {...c.img} alt="" width={320} height={213} loading="lazy" />
                 <b>{c.name}</b>
                 <span>{c.note}</span>
               </div>
