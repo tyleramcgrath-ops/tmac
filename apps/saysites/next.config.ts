@@ -4,6 +4,8 @@ import path from "node:path";
 const nextConfig: NextConfig = {
   // Photo uploads are resized in the browser first, so a few MB is plenty.
   experimental: { serverActions: { bodySizeLimit: '4mb' } },
+  // Native renderer Sofie uses to look at the logos she designs.
+  serverExternalPackages: ['@resvg/resvg-js'],
   turbopack: {
     root: path.join(__dirname),
   },

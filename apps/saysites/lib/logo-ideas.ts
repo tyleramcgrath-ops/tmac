@@ -1,11 +1,14 @@
-// Three logo directions at once, for the owner to pick from. Drawing is
-// hit-and-miss, so options beat a single try: one call asks Sofie for three
-// distinct ideas, each checked by the SVG allowlist before it is kept.
+// Three logo directions at once, for the owner to pick from. Sofie works as
+// an art director: she chooses typefaces, spacing, layout, mark and colours;
+// lib/logo-compose builds each logo with real typefaces and exact spacing;
+// then she sees the rendered result and refines it before the owner does.
 
 import Anthropic from '@anthropic-ai/sdk'
+import { LOGO_CRAFT, LOGO_FONTS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
+import { renderSheet } from './logo-render'
 import type { Site } from './schema'
 import { SOFIE_MODEL, createMessage } from './sofie'
-import { sanitizeSvg, SvgError, type CleanSvg } from './svg'
+import { SvgError, type CleanSvg } from './svg'
 
 export interface DrawnIdea {
   name: string
@@ -16,24 +19,23 @@ export interface DrawnIdea {
 
 const TOOL: Anthropic.Beta.BetaTool = {
   name: 'present_logos',
-  description: 'Show the owner your logo ideas. Call this exactly once with three distinct directions.',
+  description: 'Show your three logo directions. Each is built exactly from your spec with real typefaces.',
   input_schema: {
     type: 'object',
     additionalProperties: false,
     properties: {
       ideas: {
         type: 'array',
-        description: 'Exactly three ideas, each a different direction.',
+        description: 'Exactly three ideas, each a clearly different direction (different typeface and structure).',
         items: {
           type: 'object',
           additionalProperties: false,
           properties: {
-            name: { type: 'string', description: 'Two or three words naming the direction, e.g. "Classic badge".' },
-            note: { type: 'string', description: 'One short sentence for the owner on the idea.' },
-            svg: { type: 'string', description: 'The horizontal logo: one <svg> with xmlns and a viewBox like 0 0 360 80.' },
-            icon_svg: { type: 'string', description: 'The mark alone in a square viewBox 0 0 64 64.' },
+            direction: { type: 'string', description: 'Two or three words naming the direction, e.g. "Warm serif wordmark".' },
+            note: { type: 'string', description: 'One short, plain sentence for the owner about the idea.' },
+            ...LOGO_SPEC_PROPERTIES,
           },
-          required: ['name', 'note', 'svg', 'icon_svg'],
+          required: ['direction', 'note', ...LOGO_SPEC_REQUIRED],
         },
       },
     },
@@ -41,19 +43,18 @@ const TOOL: Anthropic.Beta.BetaTool = {
   },
 }
 
-export const LOGO_SYSTEM = `You are Sofie, the designer inside SaySites, drawing logo ideas for a small local business. You draw in SVG code.
+const FONT_LIST = Object.entries(LOGO_FONTS)
+  .map(([name, f]) => `- ${name} (${f.weights.join('/')}): ${f.style}`)
+  .join('\n')
 
-Give three genuinely different directions, for example: a wordmark where the name itself is the logo (set well, maybe one custom touch), a monogram or badge, and a simple symbol of the trade beside the name. Each is a horizontal lockup (viewBox wider than tall, like 0 0 360 80) that is shown 56px tall in the website header, plus the mark alone in a square 0 0 64 64 for the browser tab.
+export const LOGO_SYSTEM = `You are Sofie, the art director inside SaySites, designing a logo for a small local business. You don't draw letters by hand: you specify the design (typeface, weight, case, letter-spacing, layout, mark, colours) and SaySites builds it precisely with the real typeface. Then you see the result and refine it.
 
-Craft:
-- The name is the hero: its main line takes at least half the logo's height and is easy to read small. A second line (the trade or town), if any, is short and quiet.
-- Marks are bold and simple: a few confident geometric shapes, even stroke weights, no hairlines, no tiny details. It must still read at 32px.
-- Vertically centre text on the mark; leave even breathing room; nothing touches the edges of the viewBox.
-- Two or three colours at most. Use the site's colours unless the owner asks otherwise.
-- Text uses the visitor's fonts, so choose font-family stacks: a serif "Georgia, 'Times New Roman', serif", a sans "system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif", or "'Trebuchet MS', 'Segoe UI', sans-serif". Use font-weight and letter-spacing to give it character.
-- Never copy another company's logo or trademark; avoid clichés (swooshes, globes, lightbulbs, generic houses with a roof line unless it's a trade that fits) and marks that could be read as a stray letter.
+Typefaces you can use:
+${FONT_LIST}
 
-Allowed SVG: svg, g, path, circle, ellipse, rect, line, polyline, polygon, text, tspan, defs, linearGradient, radialGradient, stop, clipPath, title. Presentation attributes only (fill, stroke, transform, font-*…). No style attributes or <style>, no classes, no <use>, <image>, links, scripts or external URLs; url(#id) may point at a gradient or clip path in the same SVG.`
+${LOGO_CRAFT}
+
+Give three genuinely different directions, for example: (1) a pure wordmark where the name itself is the logo, (2) a monogram in a shape beside the name, (3) something with more personality for this trade: a small symbol, a characterful typeface or a badge-like tagline with a rule. Use a different typeface in each. Each logo is shown about 56px tall in the website header, and its mark (or first letter) becomes the browser-tab icon.`
 
 function brief(site: Site, ask: string): string {
   const b = site.business
@@ -62,43 +63,48 @@ function brief(site: Site, ask: string): string {
     `Business: ${b.name}`,
     site.tagline ? `About: ${site.tagline}` : '',
     b.address ? `Town: ${b.address.city}, ${b.address.region}` : '',
-    `Site colours: primary ${c.primary}, secondary ${c.secondary}, accent ${c.accent}, text ${c.text}, background ${c.background}.`,
-    `Site heading font style: ${site.globals.fonts.heading}.`,
-    ask ? `What the owner asked for: ${ask}` : 'The owner has not described a style; surprise them with three strong, fitting options.',
+    `Brand colours from the site: primary ${c.primary}, secondary ${c.secondary}, accent ${c.accent}, text ${c.text}, background ${c.background}. Use these unless the owner asks otherwise.`,
+    ask ? `What the owner asked for: ${ask}` : 'The owner has not described a style: give three strong, fitting options.',
   ]
     .filter(Boolean)
     .join('\n')
 }
 
-function check(raw: unknown): { ideas: DrawnIdea[]; problems: string[] } {
-  const list = Array.isArray((raw as { ideas?: unknown })?.ideas) ? ((raw as { ideas: unknown[] }).ideas) : []
-  const ideas: DrawnIdea[] = []
-  const problems: string[] = []
-  list.slice(0, 3).forEach((item, i) => {
-    const it = (item ?? {}) as Record<string, unknown>
-    try {
-      const logo = sanitizeSvg(String(it.svg ?? ''))
-      const ratio = logo.width / logo.height
-      if (ratio < 1.5 || ratio > 8) throw new SvgError('the logo should be a horizontal lockup, 1.5:1 to 8:1.')
-      const icon = sanitizeSvg(String(it.icon_svg ?? ''))
-      if (Math.abs(icon.width - icon.height) > 1) throw new SvgError('the icon must be square.')
-      ideas.push({ name: String(it.name ?? `Idea ${i + 1}`).slice(0, 40), note: String(it.note ?? '').slice(0, 200), logo, icon })
-    } catch (e) {
-      if (!(e instanceof SvgError)) throw e
-      problems.push(`Idea ${i + 1}: ${e.message}`)
-    }
-  })
-  if (list.length < 3) problems.push(`Only ${list.length} idea(s) were given; give three.`)
-  return { ideas, problems }
+interface Built {
+  name: string
+  note: string
+  logo: CleanSvg
+  icon: CleanSvg
 }
 
-export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic = new Anthropic()): Promise<DrawnIdea[]> {
+async function build(raw: unknown, load: FontLoader): Promise<{ built: (Built | null)[]; problems: string[] }> {
+  const list = Array.isArray((raw as { ideas?: unknown })?.ideas) ? (raw as { ideas: Record<string, unknown>[] }).ideas.slice(0, 3) : []
+  const problems: string[] = []
+  const built = await Promise.all(
+    list.map(async (it, i) => {
+      try {
+        const out = await composeLogo(specFromInput(it ?? {}), load)
+        return { name: String(it.direction ?? `Idea ${i + 1}`).slice(0, 40), note: String(it.note ?? '').slice(0, 200), logo: { svg: out.svg, width: out.width, height: out.height }, icon: { svg: out.icon, width: 64, height: 64 } }
+      } catch (e) {
+        if (!(e instanceof SvgError)) throw e
+        problems.push(`Idea ${i + 1}: ${e.message}`)
+        return null
+      }
+    })
+  )
+  if (list.length < 3) problems.push(`Only ${list.length} idea(s) were given; give three.`)
+  return { built, problems }
+}
+
+export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic = new Anthropic(), load: FontLoader = googleFontLoader): Promise<DrawnIdea[]> {
   const messages: Anthropic.Beta.BetaMessageParam[] = [{ role: 'user', content: brief(site, ask.trim().slice(0, 500)) }]
-  let best: DrawnIdea[] = []
-  for (let attempt = 0; attempt < 2; attempt++) {
+  let first: (Built | null)[] = []
+  // Round 1 designs; round 2 looks at the renders and refines; round 3 only
+  // happens if round 2's call was missing.
+  for (let round = 0; round < 3; round++) {
     const response = await createMessage(client, {
       model: SOFIE_MODEL,
-      max_tokens: 20000,
+      max_tokens: 16000,
       betas: ['server-side-fallback-2026-07-01'],
       fallbacks: 'default',
       thinking: { type: 'adaptive' },
@@ -109,16 +115,29 @@ export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic =
     })
     const call = response.content.find((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use' && b.name === TOOL.name)
     if (!call) {
+      if (first.length) break
       messages.push({ role: 'assistant', content: response.content }, { role: 'user', content: 'Please call present_logos with your three ideas.' })
       continue
     }
-    const { ideas, problems } = check(call.input)
-    if (ideas.length > best.length) best = ideas
-    if (!problems.length || attempt === 1) break
-    messages.push(
-      { role: 'assistant', content: response.content },
-      { role: 'user', content: [{ type: 'tool_result', tool_use_id: call.id, is_error: true, content: `Some ideas can't be used:\n- ${problems.join('\n- ')}\nCall present_logos again with three ideas, fixing these.` }] }
-    )
+    const { built, problems } = await build(call.input, load)
+    if (!first.length) {
+      first = built
+      const shown = built.filter((b): b is Built => b !== null)
+      const content: Anthropic.Beta.BetaToolResultBlockParam['content'] = [
+        {
+          type: 'text',
+          text:
+            (shown.length ? `Here is exactly how your ${shown.length} logo(s) render, top to bottom in order: each at twice header size on the site's background, then the icon large and at browser-tab size.\n` : '') +
+            (problems.length ? `These could not be built:\n- ${problems.join('\n- ')}\n` : '') +
+            'Look hard, like a senior identity designer reviewing a junior\'s work: is the name easy to read at small size? Is the spacing even, the letter-spacing right for the case, the mark in balance with the name (not too big or small), the colours calm with good contrast, and does each feel made for this business rather than generic? Fix every weakness you see (change typeface, weight, tracking, layout, tagline or colours as needed), replace any idea that is weak or too similar to another, then call present_logos with the final three.',
+        },
+      ]
+      if (shown.length) content.push({ type: 'image', source: { type: 'base64', media_type: 'image/png', data: renderSheet(shown.map((b) => ({ logo: b.logo.svg, icon: b.icon.svg })), site.globals.colors.background).toString('base64') } })
+      messages.push({ role: 'assistant', content: response.content }, { role: 'user', content: [{ type: 'tool_result', tool_use_id: call.id, content }] })
+      continue
+    }
+    // Final round: keep each refined idea, or the first version if it broke.
+    return built.map((b, i) => b ?? first[i] ?? null).filter((b): b is Built => b !== null)
   }
-  return best
+  return first.filter((b): b is Built => b !== null)
 }
