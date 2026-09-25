@@ -3,8 +3,9 @@
 // The birthday page demo: a small copy of the Sofie editor. The owner types,
 // Sofie answers, and the site changes the way it really does: the first
 // build, an upscale look (colours, fonts, buttons), a new header photo, new
-// hours and a Reserve button, then Publish with the page checks. Decorative
-// only; with reduced motion it shows the finished site without playing.
+// hours and a Reserve button, an online shop, then Publish with the page
+// checks. Decorative only; with reduced motion it shows the finished site
+// without playing.
 
 import { useEffect, useRef, useState } from 'react'
 
@@ -24,18 +25,26 @@ const CARDS = [
   { img: card('1776362441386-c02107b86576'), name: 'The room', note: 'Candlelit, 40 seats' },
 ]
 
+// In the shop step the same three cards become things to buy online.
+const PRODUCTS = [
+  { name: 'Pizza night kit', price: '$24' },
+  { name: 'Fresh pasta, 1 lb', price: '$9' },
+  { name: 'Gift card', price: 'from $25' },
+]
+
 // Each step: what the owner types, then what Sofie says and what changed.
 const STEPS = [
   { ask: 'A wood-fired Italian restaurant in Austin', reply: 'Built your site: Home, Menu and Visit.', changes: ['3 pages', 'Photos', 'Google details'] },
   { ask: 'make it darker and more upscale', reply: 'A dark, candlelit look, a classic serif and sharper buttons.', changes: ['Colours', 'Fonts', 'Buttons'] },
   { ask: 'put the oven photo up top', reply: 'Made the oven photo your header, sized to load fast.', changes: ['Header photo'] },
   { ask: 'add sunday brunch 10 to 2 and a reserve button', reply: 'Added Sunday brunch hours, and a Reserve button on every page.', changes: ['Hours', 'Reserve button'] },
+  { ask: 'sell pizza kits, fresh pasta and gift cards online', reply: 'Added a Shop page. Customers pay through your own Stripe, and SaySites takes 0%.', changes: ['Shop page', '3 products', 'Checkout'] },
 ] as const
 
 type Phase = 'typing' | 'working' | 'done'
 
 export function BirthdayDemo() {
-  // step: how far the site has got (1 = built … 4 = hours, 5 = published).
+  // step: how far the site has got (1 = built … 4 = hours, 5 = shop, 6 = published).
   const [step, setStep] = useState(1)
   const [ask, setAsk] = useState(0)
   const [phase, setPhase] = useState<Phase>('done')
@@ -45,8 +54,8 @@ export function BirthdayDemo() {
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setStep(4)
-      setAsk(3)
+      setStep(5)
+      setAsk(4)
       return
     }
     let alive = true
@@ -85,7 +94,7 @@ export function BirthdayDemo() {
         setPressed(true)
         await wait(260)
         setPressed(false)
-        setStep(5)
+        setStep(6)
         await wait(4200)
         first = true
         setStep(0)
@@ -108,12 +117,12 @@ export function BirthdayDemo() {
       </div>
 
       <div className="bdd-browser">
-        <div className="bdd-bar"><i /><i /><i /><span>{step >= 5 ? '🔒 ' : ''}olivo.saysites.com</span></div>
+        <div className="bdd-bar"><i /><i /><i /><span>{step >= 6 ? '🔒 ' : ''}olivo.saysites.com</span></div>
         <div className="bdd-site">
           {step === 0 && <div className="bdd-skel"><i /><i /><i /><i /></div>}
           <nav className="bdd-nav bdd-in">
             <b>Olivo<small>wood-fired kitchen</small></b>
-            <span>Menu</span><span>Visit</span>
+            <span>Menu</span>{step >= 5 && <span className="bdd-new">Shop</span>}<span>Visit</span>
             <em className={step >= 4 ? 'is-on bdd-flash' : ''}>Reserve</em>
           </nav>
           <header className={`bdd-hero bdd-in${step === 2 ? ' bdd-flash' : ''}${step >= 3 ? ' is-photo' : ''}`}>
@@ -126,21 +135,25 @@ export function BirthdayDemo() {
             <img className="bdd-hero-side" {...SIDE} alt="" width={480} height={480} />
           </header>
           <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Sunday brunch 10:00–2:00</div>
-          <div className="bdd-cards bdd-in">
-            {CARDS.map((c) => (
+          <div className={`bdd-cards bdd-in${step === 5 ? ' bdd-flash' : ''}`}>
+            {CARDS.map((c, i) => (
               <div key={c.name} className="bdd-card">
                 <img {...c.img} alt="" width={320} height={213} loading="lazy" />
-                <b>{c.name}</b>
-                <span>{c.note}</span>
+                <b>{step >= 5 ? PRODUCTS[i].name : c.name}</b>
+                {step >= 5 ? (
+                  <span className="bdd-buy"><span>{PRODUCTS[i].price}</span><em>Buy</em></span>
+                ) : (
+                  <span>{c.note}</span>
+                )}
               </div>
             ))}
           </div>
-          <div className={`bdd-live${step >= 5 ? ' is-on' : ''}`}><i>✓</i>Live at olivo.saysites.com</div>
+          <div className={`bdd-live${step >= 6 ? ' is-on' : ''}`}><i>✓</i>Live at olivo.saysites.com</div>
         </div>
       </div>
 
       <div className="bdd-chat">
-        {step >= 5 ? (
+        {step >= 6 ? (
           <>
             <p className="bdd-sofie">Published. It’s live, and every page passed its checks.</p>
             <ul className="bdd-checks"><li>Speed 100</li><li>Title fits Google</li><li>One main heading</li><li>Sitemap</li></ul>
