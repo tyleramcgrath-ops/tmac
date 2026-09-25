@@ -351,6 +351,8 @@ export const BusinessInfo = z
     hours: z.array(z.string()).optional(),
     priceRange: z.string().max(10).optional(),
     logo: z.string().optional(),
+    // The town or area served, e.g. "Rivertown, OH" (areaServed for Google).
+    area: z.string().max(80).optional(),
     // A square mark for browser tabs and home screens; the logo when missing.
     icon: z.string().optional(),
     sameAs: z.array(z.string().url()).optional(),

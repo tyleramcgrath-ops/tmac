@@ -5,6 +5,8 @@ import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
 import { dayString, daysBefore, summarizeVisits } from '@/lib/visits'
 import { milestones } from '@/lib/milestones'
+import { questLink, visibility } from '@/lib/visibility'
+import { ScoreDial } from '@/components/ScoreDial'
 import { Milestones } from '@/components/Milestones'
 
 export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
@@ -18,7 +20,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
     store.pagesForSite(site.id),
     store.messagesForSite(site.id, 4),
     store.sofieState(site.id),
-    store.visitsSince(site.id, daysBefore(today, 29)),
+    store.visitsSince(site.id, daysBefore(today, 59)),
   ])
   const [media, everVisited] = await Promise.all([store.mediaForSite(site.id), store.visitsSince(site.id, '2000-01-01')])
   const traffic = summarizeVisits(visits, today)
@@ -34,15 +36,18 @@ export default async function SiteOverview({ params, searchParams }: { params: P
   const base = `/dashboard/sites/${site.id}`
   const b = site.business
 
-  // A short setup checklist from what the site is still missing.
-  const todo = [
-    { done: !!b.phone, label: 'Add your phone number', href: `${base}/settings` },
-    { done: !!b.hours?.length, label: 'Add your opening hours', href: `${base}/settings` },
-    { done: !!b.address, label: 'Add your address for Google Maps', href: `${base}/settings` },
-    { done: sofie.chat.length > 0, label: 'Make your first change with Sofie', href: `${base}/sofie` },
-    { done: tips === 0 && errors === 0, label: 'Clear every SEO tip', href: `${base}/pages` },
-  ]
-  const doneCount = todo.filter((t) => t.done).length
+  const vis = visibility({
+    site,
+    pages,
+    seoErrors: errors,
+    seoTips: tips,
+    fast,
+    photos: media.filter((m) => m.mime !== 'image/svg+xml').length,
+    visits30: traffic.total,
+    visitsPrev30: traffic.previous,
+    today,
+  })
+  const next = vis.quests[0]
   const marks = milestones({
     siteName: b.name,
     base,
@@ -103,20 +108,23 @@ export default async function SiteOverview({ params, searchParams }: { params: P
             </a>
           </div>
 
-          <div className="card">
-            <div className="card-head">
-              <h3>Getting set up</h3>
-              <span className="muted small">{doneCount} of {todo.length}</span>
+          <div className="card vis-card">
+            <ScoreDial siteId={site.id} score={vis.score} band={vis.band} size={128} />
+            <div className="vis-next">
+              <span className="stat-label">Visibility</span>
+              {next ? (
+                <>
+                  <strong>Next: +{next.points} · {next.title}</strong>
+                  <span className="muted small">{next.why}</span>
+                  <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
+                    <a className="btn btn-primary btn-sm" href={questLink(next)}>{next.sofie ? 'Ask Sofie' : 'Do it'}</a>
+                    <a className="btn btn-ghost btn-sm" href={`${base}/visibility`}>All {vis.quests.length} quests</a>
+                  </span>
+                </>
+              ) : (
+                <strong>Every quest done. Keep posting monthly to hold your score.</strong>
+              )}
             </div>
-            <div className="meter" aria-hidden="true"><span style={{ width: `${(doneCount / todo.length) * 100}%` }} /></div>
-            <ul className="todo">
-              {todo.map((t) => (
-                <li key={t.label} className={t.done ? 'done' : ''}>
-                  <span className="tick" aria-hidden="true">{t.done ? '✓' : ''}</span>
-                  {t.done ? <span>{t.label}</span> : <a href={t.href}>{t.label}</a>}
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="card">

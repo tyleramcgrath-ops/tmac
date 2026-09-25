@@ -929,3 +929,22 @@ describe('SaySites: milestones', async () => {
     expect(new Set(all.map((m) => m.id)).size).toBe(10)
   })
 })
+
+describe('SaySites: visibility score', async () => {
+  const { visibility, questLink } = await import('../apps/saysites/lib/visibility')
+  it('scores a fresh site, ranks quests by points, and adds up to 100', () => {
+    const { site, pages } = buildStarterSite({ name: 'Vis Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks', 'Heaters', 'Drains'], palette: 'ocean' }, 'org_x', 'vis-co')
+    const base = { site, pages, seoErrors: 0, seoTips: 0, fast: true, photos: 0, visits30: 0, visitsPrev30: 0, today: '2026-09-25' }
+    const v = visibility(base)
+    expect(v.score).toBeGreaterThan(0)
+    expect(v.score + v.quests.reduce((n, q) => n + q.points, 0)).toBe(100)
+    expect(v.areas.reduce((n, a) => n + a.of, 0)).toBe(100)
+    const pts = v.quests.map((q) => q.points)
+    expect([...pts].sort((a, b) => b - a)).toEqual(pts)
+    expect(v.quests.find((q) => q.id === 'post')!.sofie).toMatch(/Rivertown/)
+    expect(questLink(v.quests.find((q) => q.id === 'reviews')!)).toMatch(/\/sofie\?fill=/)
+    expect(questLink(v.quests.find((q) => q.id === 'post')!)).toMatch(/\/sofie\?talk=/)
+    const better = visibility({ ...base, photos: 5, visits30: 20, visitsPrev30: 5, site: { ...site, business: { ...site.business, phone: '555', logo: '/u/x' }, verification: { google: 'abcdefghijkl' } } })
+    expect(better.score).toBeGreaterThan(v.score)
+  })
+})
