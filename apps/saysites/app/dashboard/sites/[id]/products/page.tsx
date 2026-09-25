@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { ProductForm } from '@/components/ProductForm'
 import { formatPrice } from '@/lib/render'
+import { PRICES, canSell, loadAccess } from '@/lib/billing'
 import { PHOTOS } from '@/lib/photos'
 import { walk } from '@/lib/schema'
 import { requireUser } from '@/lib/session'
@@ -51,10 +52,18 @@ export default async function ProductsPage({ params }: { params: Promise<{ id: s
         <p className="notice good">Your products are live on your website. <a href={`${previewPath(site)}/shop`} target="_blank" rel="noopener">See your shop ↗</a></p>
       )}
 
+      {!canSell(await loadAccess(store, user)) ? (
+        <div className="card">
+          <h3>Selling online is on the Store plan</h3>
+          <p className="muted">Products, a Shop page and checkout through your own Stripe, with 0% taken from your sales, for ${PRICES.store.month} a month.</p>
+          <a className="btn btn-primary btn-sm" href="/dashboard/account#plan">See plans</a>
+        </div>
+      ) : (
       <div className="card">
         <h3>Add a product</h3>
         <ProductForm action={saveProduct.bind(null, site.id, 'new')} values={{ name: '', price: '', description: '', imageSrc: '', imageAlt: '', buyUrl: '', soldOut: false }} photos={photos} isNew />
       </div>
+      )}
 
       {products.map((p) => (
         <details key={p.id} className="card product-row">
