@@ -46,6 +46,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ id: s
             topbar: site.header?.topbar ?? '',
             ctaLabel: site.header?.cta?.label ?? '',
             hasCta: !!site.header?.cta,
+            callBar: site.header?.callBar !== false,
             week: toWeek(b.hours),
             palette,
             design,

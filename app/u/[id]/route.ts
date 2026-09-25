@@ -1,5 +1,6 @@
 // Photos owners upload, served on every address (saysites.com and every
-// customer site). Ids are random and files never change, so they cache forever.
+// customer site). Ids are random and files never change, so browsers keep them
+// for a year. Our CDN keeps them for an hour, so a deleted photo disappears soon.
 
 import { getStore } from '@/lib/store'
 
@@ -12,6 +13,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ id: string }> 
     headers: {
       'content-type': file.mime,
       'cache-control': 'public, max-age=31536000, immutable',
+      'vercel-cdn-cache-control': 'max-age=3600',
       'x-content-type-options': 'nosniff',
       'content-security-policy': "default-src 'none'",
     },

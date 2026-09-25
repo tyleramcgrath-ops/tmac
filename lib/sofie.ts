@@ -17,6 +17,7 @@ import { checkSpeed } from './speed'
 import { renderPage } from './render'
 import { PHOTOS } from './photos'
 import { buildBlogIndex, buildPostPage } from './posts'
+import { sanitizeSvg, SvgError } from './svg'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -43,10 +44,21 @@ type Json = Record<string, unknown>
 const LOCKED_SITE_KEYS = ['id', 'orgId', 'subdomain', 'customDomain', 'updatedAt'] as const
 const LOCKED_ELEMENT_KEYS = ['id', 'type', 'children'] as const
 
+// A file Sofie made (a logo) that is saved with the owner's photos.
+export interface NewMedia {
+  id: string
+  mime: 'image/svg+xml'
+  width: number
+  height: number
+  alt: string
+  data: string
+}
+
 export class Workspace {
   site: Site
   pages: Page[]
   readonly changes: string[] = []
+  readonly media: NewMedia[] = []
 
   constructor(snapshot: Snapshot) {
     this.site = structuredClone(snapshot.site)
@@ -173,6 +185,35 @@ export class Workspace {
       const ok = SiteSchema.safeParse({ ...this.site, nav })
       if (ok.success) this.site = ok.data
     }
+    this.changes.push(summary)
+  }
+
+  // A logo drawn as SVG, cleaned to plain shapes and text, saved as the
+  // owner's file and used in the header (and the square mark as the icon).
+  designLogo(input: { svg: string; iconSvg: string; alt: string }, summary: string) {
+    const clean = (svg: string, what: string) => {
+      try {
+        return sanitizeSvg(svg)
+      } catch (e) {
+        if (e instanceof SvgError) throw new ToolError(`The ${what} can't be used: ${e.message}`)
+        throw e
+      }
+    }
+    const logo = clean(input.svg, 'logo')
+    const ratio = logo.width / logo.height
+    if (ratio < 0.8 || ratio > 8) throw new ToolError('The logo should be wider than it is tall, up to 8:1, like viewBox="0 0 320 80". Put a tall mark next to the name.')
+    const icon = input.iconSvg.trim() ? clean(input.iconSvg, 'icon') : null
+    if (icon && Math.abs(icon.width - icon.height) > 1) throw new ToolError('The icon must be square, like viewBox="0 0 64 64".')
+    const save = (c: { svg: string; width: number; height: number }, alt: string) => {
+      const id = cryptoRandom().replace(/-/g, '')
+      this.media.push({ id, mime: 'image/svg+xml', width: c.width, height: c.height, alt, data: c.svg })
+      return `/u/${id}`
+    }
+    const alt = input.alt.trim().slice(0, 200) || `${this.site.business.name} logo`
+    const business = { ...this.site.business, logo: save(logo, alt), ...(icon ? { icon: save(icon, `${alt} (icon)`) } : {}) }
+    const parsed = SiteSchema.safeParse({ ...this.site, business })
+    if (!parsed.success) throw new ToolError(`That change is not valid: ${formatZod(parsed.error)}`)
+    this.site = parsed.data
     this.changes.push(summary)
   }
 
@@ -373,6 +414,23 @@ SOFIE_TOOLS.push({
   },
 })
 
+SOFIE_TOOLS.push({
+  name: 'design_logo',
+  description:
+    "Design a logo for the business and put it in the site header. You draw it as SVG code: plain shapes, paths, text and gradients only (no <style>, <image>, <use>, links, scripts or CSS classes; colours as fill/stroke attributes). The logo is a horizontal lockup: a simple mark next to the business name, viewBox wider than tall (like 0 0 360 80), readable at 44px tall. Also draw icon_svg, the mark alone in a square viewBox (0 0 64 64) for browser tabs. Use the site's colours unless the owner asks otherwise. Text renders with the visitor's fonts, so use font-family stacks like \"Georgia, 'Times New Roman', serif\" or \"system-ui, -apple-system, 'Segoe UI', sans-serif\", or draw letters as paths. Keep it simple, timeless and specific to the trade; no clip-art, no gradients unless asked, never copy another company's logo or trademark.",
+  input_schema: {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      svg: { type: 'string', description: 'The full logo, one <svg> element with xmlns and a viewBox.' },
+      icon_svg: { type: 'string', description: 'The mark alone in a square viewBox, for the browser tab. Empty string to skip.' },
+      alt: { type: 'string', description: 'Alt text, e.g. "Rivertown Plumbing logo".' },
+      summary,
+    },
+    required: ['svg', 'icon_svg', 'alt', 'summary'],
+  },
+})
+
 export function runTool(ws: Workspace, name: string, input: Record<string, unknown>): string {
   const s = String(input.summary ?? 'Updated the site')
   const str = (k: string) => String(input[k] ?? '')
@@ -398,6 +456,9 @@ export function runTool(ws: Workspace, name: string, input: Record<string, unkno
         break
       case 'write_post':
         ws.writePost({ title: str('title'), date: str('date'), body: str('body') }, s)
+        break
+      case 'design_logo':
+        ws.designLogo({ svg: str('svg'), iconSvg: str('icon_svg'), alt: str('alt') }, s)
         break
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
@@ -436,6 +497,7 @@ export const SOFIE_SYSTEM = `You are Sofie, the website assistant inside SaySite
 How to work:
 - Do what they ask, fully, in as few tool calls as makes sense. If a request is ambiguous in a way that matters (which page, what the new wording should say, a fact you don't know), ask one short question instead of guessing.
 - Never invent facts about the business: prices, licenses, certifications, awards, reviews, years in business, guarantees. Use only what the owner told you or what is already on the site. If they ask for something that needs a fact you don't have, ask for it.
+- Asked for a logo (or a new one)? Use design_logo. Think about what the business is known for, then draw one simple mark with the name set in a fitting typeface, in the site's colours. Afterwards say in a sentence what you drew and offer to try a different direction (bolder, more classic, just the name).
 - Keep the site's existing look: reuse its color tokens, spacing and patterns (copy the structure of a similar section on the same page when adding one). Write copy that is warm, plain and specific to this business, short sentences, no hype words.
 - When the owner describes a whole website (a Talk & Design prompt) and the site already follows that layout, don't rebuild it from scratch: go through it and make every headline, paragraph, card, question and Google title specific to their business and their words, and add anything they described that is missing.
 - After changing things, reply in one to three short sentences saying what you did in plain English, and offer one sensible next step only if it is genuinely useful. Don't list ids or technical details.
@@ -458,6 +520,8 @@ ${PHOTO_LIST}`
 export interface SofieResult {
   reply: string
   changes: string[]
+  // Logos she drew, to save with the owner's files before the draft is shown.
+  media: NewMedia[]
   snapshot: Snapshot
   problems: string[]
 }
@@ -542,5 +606,8 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   }
 
   if (!reply) reply = ws.changes.length ? 'I made those changes. Take a look at the preview.' : 'Sorry, I got stuck on that one. Could you try asking another way?'
-  return { reply, changes: ws.changes, snapshot: ws.snapshot(), problems: ws.problems() }
+  // Only files the final draft still uses (she may have drawn a few versions).
+  const used = JSON.stringify(ws.site.business)
+  const media = ws.media.filter((m) => used.includes(`/u/${m.id}`))
+  return { reply, changes: ws.changes, media, snapshot: ws.snapshot(), problems: ws.problems() }
 }

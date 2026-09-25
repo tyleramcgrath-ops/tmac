@@ -37,6 +37,7 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
 
   let { html } = renderPage(site, page, pages)
   if (opts.basePath) html = withBasePath(html, opts.basePath)
+  if (!opts.preview) html = html.replace('</body>', `${visitBeacon(path)}</body>`)
   return new Response(html, {
     headers: {
       'content-type': 'text/html; charset=utf-8',
@@ -89,6 +90,32 @@ function siteNotFound(bundle: SiteBundle, opts: ServeOptions): Response {
   let { html } = renderPage(site, page, pages)
   if (opts.basePath) html = withBasePath(html, opts.basePath)
   return new Response(html, { status: 404, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=0, s-maxage=60', 'x-robots-tag': 'noindex' } })
+}
+
+// Visit counting without cookies or scripts: each live page carries a 1px
+// element whose background is /__v?p=<page>. Browsers fetch it; most bots
+// never load CSS backgrounds. Only the day, the page and a count are kept.
+export const VISIT_PATH = '__v'
+const BOT = /bot|crawl|spider|slurp|fetch|preview|headless|lighthouse|pagespeed|monitor|curl|wget|python|http-client|scan/i
+const GIF = Uint8Array.from(atob('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'), (c) => c.charCodeAt(0))
+
+export function visitBeacon(path: string): string {
+  return `<i aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:1px;background:url(/${VISIT_PATH}?p=${encodeURIComponent(path)})"></i>`
+}
+
+export async function handleVisit(bundle: SiteBundle, req: Request, store: Store = getStore()): Promise<Response> {
+  const pixel = new Response(GIF, { headers: { 'content-type': 'image/gif', 'cache-control': 'no-store', 'x-robots-tag': 'noindex' } })
+  const path = new URL(req.url).searchParams.get('p') ?? ''
+  const ua = req.headers.get('user-agent') ?? ''
+  if (!ua || BOT.test(ua) || req.headers.get('purpose') === 'prefetch' || req.headers.get('sec-purpose')?.includes('prefetch')) return pixel
+  // Only real, published pages count, so the table can't be filled with junk.
+  if (!bundle.pages.some((p) => p.status === 'published' && pagePath(p) === path)) return pixel
+  try {
+    await store.recordVisit(bundle.site.id, new Date().toISOString().slice(0, 10), path)
+  } catch {
+    // Counting must never break a page.
+  }
+  return pixel
 }
 
 export function notFound(message = 'This page does not exist.'): Response {

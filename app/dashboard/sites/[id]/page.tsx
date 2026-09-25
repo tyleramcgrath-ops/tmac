@@ -3,6 +3,7 @@ import { checkPage, checkSpeed, renderPage } from '@/lib'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
+import { dayString, daysBefore, summarizeVisits } from '@/lib/visits'
 
 export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
   const [{ id }, { new: isNew }] = await Promise.all([params, searchParams])
@@ -10,7 +11,16 @@ export default async function SiteOverview({ params, searchParams }: { params: P
   const store = getStore()
   const site = await store.siteForUser(user.id, id)
   if (!site) notFound()
-  const [pages, messages, sofie] = await Promise.all([store.pagesForSite(site.id), store.messagesForSite(site.id, 4), store.sofieState(site.id)])
+  const today = dayString(new Date())
+  const [pages, messages, sofie, visits] = await Promise.all([
+    store.pagesForSite(site.id),
+    store.messagesForSite(site.id, 4),
+    store.sofieState(site.id),
+    store.visitsSince(site.id, daysBefore(today, 29)),
+  ])
+  const traffic = summarizeVisits(visits, today)
+  const sparkMax = Math.max(1, ...traffic.days.map((d) => d.views))
+  const spark = traffic.days.map((d, i) => `${i ? 'L' : 'M'}${i} ${(20 - (d.views / sparkMax) * 18).toFixed(1)}`).join(' ')
 
   // The same checks that gate publishing, summed up.
   const checks = pages.map((p) => ({ issues: checkPage(p, pages), speed: checkSpeed(renderPage(site, p, pages)) }))
@@ -50,7 +60,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
         </div>
 
         <div className="stack">
-          <div className="stats">
+          <div className="stats four">
             <a className="stat" href={`${base}/pages`}>
               <span className="stat-label">Speed</span>
               <strong className={fast ? 'good' : 'bad'}>{fast ? '95+' : 'Check'}</strong>
@@ -65,6 +75,15 @@ export default async function SiteOverview({ params, searchParams }: { params: P
               <span className="stat-label">Messages</span>
               <strong>{messages.filter((m) => !m.read).length || messages.length}</strong>
               <span className="muted">{messages.some((m) => !m.read) ? 'new' : 'from your contact form'}</span>
+            </a>
+            <a className="stat" href={`${base}/visitors`}>
+              <span className="stat-label">Visitors</span>
+              <strong>{new Intl.NumberFormat('en-US').format(traffic.total)}</strong>
+              {traffic.total ? (
+                <svg className="spark" viewBox="0 0 29 21" preserveAspectRatio="none" aria-hidden="true"><path d={spark} /></svg>
+              ) : (
+                <span className="muted">page views, last 30 days</span>
+              )}
             </a>
           </div>
 
