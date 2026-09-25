@@ -13,8 +13,9 @@ export function LogoMark({ size = 26 }: { size?: number }) {
   )
 }
 
-// The wordmark: bold "say", regular "sites", and one comma from the mark
-// as the dot on the i, all in the text colour so it reads on light and dark.
+// The wordmark: bold "say", a slightly softer "sites" (72% of the text
+// colour, readable on light and dark), and one comma from the mark as the
+// dot on the i. The comma keeps the full text colour.
 export function Wordmark() {
   return (
     <span className="wordmark">

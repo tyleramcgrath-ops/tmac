@@ -61,6 +61,32 @@ function Bakery({ priority = false }: { priority?: boolean }) {
   )
 }
 
+// A coffee roaster's shop: the Store plan's products, prices and buy buttons.
+function Roaster() {
+  return (
+    <div className="ro">
+      <div className="ro-nav"><b>Northside <span>Roasters</span></b><span>Shop</span><span>Wholesale</span><span>Visit</span></div>
+      <div className="ro-hero">
+        <div className="ph"><Photo id="1741994043738-393513f7bf52" sizes="(max-width: 900px) 90vw, 560px" /></div>
+        <div className="ro-hero-t"><small>Small-batch · roasted Tuesdays</small><h3>Fresh coffee, at your door by Friday.</h3></div>
+      </div>
+      <div className="ro-row">
+        {[
+          ['1695245503558-5cdb37f49092', 'House Blend', 'Chocolate, toasted nuts', '$18.00', false],
+          ['1712402832925-d41c446883d3', 'Colombia Huila', 'Red apple, caramel', '$21.00', false],
+          ['1562051036-e0eea191d42f', 'Espresso Roast', 'Dark cocoa, molasses', '$19.00', true],
+        ].map(([id, name, notes, price, out]) => (
+          <div key={name as string} className="ro-card">
+            <div className="ph ro-th"><Photo id={id as string} sizes="(max-width: 900px) 30vw, 200px" /></div>
+            <b>{name}</b><span>{notes}</span>
+            <div className="ro-buy"><strong>{price}</strong>{out ? <em className="out">Sold out</em> : <em>Buy now</em>}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Plumber() {
   return (
     <div className="pl">
@@ -262,6 +288,27 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="sell" id="sell">
+          <div className="wrap sell-in">
+            <div className="sell-copy">
+              <p className="kicker">Sell online</p>
+              <h2>A real store for $25 a month. Keep every dollar.</h2>
+              <p>Add your products with photos and prices, and your site gets a Shop page with buy buttons. Customers pay through your own Stripe checkout, so the money goes straight to you. SaySites takes 0% of every sale.</p>
+              <ul className="sell-list">
+                <li>Products, photos and a Shop page</li>
+                <li>Checkout through your own Stripe account</li>
+                <li>Prices Google can read</li>
+                <li>Sold out? Mark it in one tap</li>
+              </ul>
+              <p><a className="b b-dark" href="/signup">Open your store</a></p>
+            </div>
+            <div className="sell-vis" aria-hidden="true">
+              <Frame url="northside-roasters.saysites.com"><Roaster /></Frame>
+              <div className="sell-order"><i>✓</i><div><b>New order · $36.00</b><span>Paid to your Stripe · SaySites fee $0.00</span></div></div>
+            </div>
+          </div>
+        </section>
+
         <section className="pricing" id="pricing">
           <div className="wrap">
             <div className="head split">
@@ -287,14 +334,35 @@ export default function Home() {
                 <a className="b b-line b-block" href="/signup">Start free</a>
               </div>
               <div className="plan">
-                <div className="plan-top"><h3>SEO Suite</h3><span className="tag">Add-on</span></div>
+                <div className="plan-top"><h3>SEO Suite</h3><span className="tag">Coming soon</span></div>
                 <div className="amt">+$19<small>/month</small></div>
                 <p className="per">For growing faster</p>
                 <ul><li>Rank tracking</li><li>One-click SEO fixes</li><li>Competitor tracking</li><li>AI search tracking</li><li>Content plans Sofie writes</li></ul>
-                <a className="b b-line b-block" href="/signup">Start free</a>
+                <span className="b b-line b-block b-soon">Coming soon</span>
               </div>
             </div>
             <p className="fine">7-day free trial. Cancel anytime, no setup fees.</p>
+
+            <div className="compare">
+              <div className="compare-head">
+                <h3>What it costs somewhere else</h3>
+                <p>Same job, their prices. Most builders charge more for a store, and some take a cut of every sale on top.</p>
+              </div>
+              <div className="compare-scroll">
+                <table>
+                  <thead>
+                    <tr><th scope="col"><span className="sr">Plan</span></th><th scope="col" className="us">SaySites</th><th scope="col">Squarespace</th><th scope="col">Shopify</th><th scope="col">Wix</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">A website</th><td className="us">$15/mo</td><td>$25/mo</td><td>$39/mo<small>stores only</small></td><td>from $17/mo<small>billed yearly</small></td></tr>
+                    <tr><th scope="row">Selling online</th><td className="us">$25/mo</td><td>$25/mo<small>Basic</small></td><td>$39/mo<small>Basic</small></td><td>from $29/mo<small>Core, billed yearly</small></td></tr>
+                    <tr><th scope="row">Their cut of each sale</th><td className="us">0%</td><td>2%<small>on Basic</small></td><td>0–2%<small>2% without Shopify Payments</small></td><td>0%</td></tr>
+                    <tr><th scope="row">On $2,000 of sales a month, you pay them</th><td className="us"><strong>$25</strong></td><td>$65</td><td>$39</td><td>from $29</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="compare-note">Prices from each company’s own pricing page, checked September 2026, billed monthly unless noted. Card processing (about 2.9% + 30¢ a sale) applies everywhere, including Stripe on SaySites. Sources: <a href="https://www.squarespace.com/pricing" rel="nofollow noopener">Squarespace</a>, <a href="https://www.shopify.com/pricing" rel="nofollow noopener">Shopify</a>, <a href="https://www.wix.com/plans" rel="nofollow noopener">Wix</a>.</p>
+            </div>
           </div>
         </section>
 
