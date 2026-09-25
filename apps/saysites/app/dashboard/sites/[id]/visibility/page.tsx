@@ -8,6 +8,7 @@ import { LEAGUE_STYLES, LEAGUE_TERMS, leagueTerms } from '@/lib/league-style'
 import { requireUser } from '@/lib/session'
 import { scoreSite } from '@/lib/site-score'
 import { getStore } from '@/lib/store'
+import { GUIDELINES, GUIDELINES_REVIEWED } from '@/lib/guidelines'
 import { questLink } from '@/lib/visibility'
 import { dayString, daysBefore } from '@/lib/visits'
 import { setLeaguePublic, setLeagueStyle } from '../manage-actions'
@@ -47,6 +48,7 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
         <div>
           <h2>Visibility</h2>
           <p className="muted">How findable your site is on Google, from 0 to 100, and exactly what raises it. Each opportunity follows Google’s guidelines and brings real visitors.</p>
+          <p className="small muted">Built and checked against {GUIDELINES.length} of Google’s guidelines, last reviewed {GUIDELINES_REVIEWED}. When Google changes them, your site is updated automatically. <a href="/google-guidelines" target="_blank" rel="noopener">See the list</a></p>
         </div>
       </div>
 

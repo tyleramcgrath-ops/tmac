@@ -305,6 +305,7 @@ export default function Home() {
             </div>
             <div className="feat-grid">
               <div><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p><span className="tag live">Live</span></div>
+              <div><h3>Kept up with Google</h3><p>Every site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up the same day. <a href="/google-guidelines">How it works</a></p><span className="tag live">Live</span></div>
               <div><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p><span className="tag live">Live</span></div>
               <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p><span className="tag live">Live</span></div>
               <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p><span className="tag live">Live</span></div>

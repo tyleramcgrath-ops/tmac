@@ -14,6 +14,14 @@ text, doorway or near-duplicate location pages, fake or incentivized reviews,
 link schemes or invented claims. When a feature could be gamed, it is scored
 so the honest action is the one that earns points.
 
+Keeping up with Google is part of the job, not a one-off. The guidelines are
+tracked in `lib/guidelines.ts`, each with the check that enforces it. Review
+them against Google's documentation every quarter and whenever Google
+announces a core or spam update; when something changes, update the entry,
+the check and `GUIDELINES_REVIEWED` together. Every site is rendered live by
+the one platform, so the change reaches every site at once. Never promise
+rankings: say sites follow the guidelines and keep up, not that they'll rank.
+
 ## Pricing rule (non-negotiable)
 
 Free when it costs us nothing; charge when it costs us money.

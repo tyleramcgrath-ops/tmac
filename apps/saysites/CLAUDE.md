@@ -4,6 +4,9 @@ Read `README.md` first. Two rules there are non-negotiable:
 
 1. **Search guidelines.** Every site follows Google Search Essentials and
    Google's spam policies. Win on merit, never with tricks.
+   The list lives in `lib/guidelines.ts`: when Google changes a guideline,
+   update that entry, its check and `GUIDELINES_REVIEWED` together (review
+   quarterly and at every core or spam update). Never promise rankings.
 2. **Pricing rule.** Free when it costs us nothing; charge when it costs us
    money (AI tokens, paid APIs such as SerpApi, any metered service), priced
    above cost. Build everything to spend as little as possible: plain code

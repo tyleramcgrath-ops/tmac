@@ -19,6 +19,7 @@ import { serveSitePath } from '../apps/saysites/lib/serve'
 import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
+import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
 
 function clone<T>(v: T): T {
   return JSON.parse(JSON.stringify(v))
@@ -1283,5 +1284,19 @@ describe('SaySites: originality check', async () => {
     const fv = vibeCheck(site, fluffy, [fluffy])
     expect(fv.filler.length).toBeGreaterThanOrEqual(3)
     expect(fv.indexable).toBe(false)
+  })
+})
+
+describe('Google guidelines list', () => {
+  it('has a reviewed date and a Google source for every entry', () => {
+    expect(GUIDELINES_REVIEWED).toMatch(/^[A-Z][a-z]+ \d{4}$/)
+    const ids = new Set<string>()
+    for (const g of GUIDELINES) {
+      expect(ids.has(g.id)).toBe(false)
+      ids.add(g.id)
+      expect(g.source.url).toMatch(/^https:\/\/(developers\.google\.com|support\.google\.com|blog\.google)\//)
+      expect(g.how.length).toBeGreaterThan(30)
+    }
+    expect(GUIDELINES.length).toBeGreaterThanOrEqual(8)
   })
 })
