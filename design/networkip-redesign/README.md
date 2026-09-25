@@ -9,6 +9,7 @@ Three homepage directions for https://www.networkip.net/, all built from the cur
 | `02-signal-*.png` | **B: Signal.** Dark "network operator" look: a dotted globe with call routes from Texas, a bento grid of stats, a mono-type route console. |
 | `04-professional-*.png` | **D: Professional (round 2).** A plain white layout in IBM Plex Sans, navy with a small gold accent. Includes a service status panel, a to-scale chart of the market, a comparison table and a three-step launch section. Responsive, with mobile screenshots. |
 | `05-corporate-*.png` | **E: Corporate (round 2).** The same page as D with a navy header band, gold buttons and Source Sans 3. |
+| `06-vibrant-*.png` | **F: Vibrant (round 3).** D's professional structure with more energy: a glowing navy hero, an animated live-calling dashboard, a scrolling strip of destinations, a gradient stats band, colorful service icons and hover motion. Plus Jakarta Sans. |
 | `03-homeline-*.png` | **C: Home Line.** Warm and human: cream and rust, a phone call UI ("Included in your plan"), a three-step launch flow. |
 
 `*-hero.png` is the first screen at 1440×900. `*-full.png` is the full page.
