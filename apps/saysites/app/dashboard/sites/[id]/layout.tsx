@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { MomentHost } from '@/components/Moment'
 import { SiteTabs } from '@/components/SiteTabs'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
@@ -16,7 +17,11 @@ export default async function SiteLayout({ children, params }: { children: React
     <>
       <div className="site-head">
         <div className="site-head-id">
-          <span className="site-mono" style={{ background: site.globals.colors.primary }} aria-hidden="true">{site.business.name.trim().charAt(0).toUpperCase()}</span>
+          {site.business.icon ? (
+            <img className="site-mono site-mono-img" src={site.business.icon} alt="" width={56} height={56} />
+          ) : (
+            <span className="site-mono" style={{ background: site.globals.colors.primary }} aria-hidden="true">{site.business.name.trim().charAt(0).toUpperCase()}</span>
+          )}
           <div>
             <p className="crumbs"><a href="/dashboard">My sites</a> / {site.business.name}</p>
             <h1>{site.business.name}</h1>
@@ -27,6 +32,7 @@ export default async function SiteLayout({ children, params }: { children: React
       </div>
       <SiteTabs siteId={site.id} unread={unread} />
       {children}
+      <MomentHost />
     </>
   )
 }

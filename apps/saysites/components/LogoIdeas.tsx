@@ -1,9 +1,12 @@
 'use client'
 
 import { useEffect, useState, useTransition } from 'react'
+import { celebrate } from './Moment'
+import { markSeen } from './milestone-seen'
 import type { LogoIdeasView } from '@/app/dashboard/sites/[id]/manage-actions'
 
 interface Props {
+  siteId: string
   siteName: string
   current: { logo?: string; icon?: string }
   initial: LogoIdeasView
@@ -13,7 +16,7 @@ interface Props {
 }
 
 // Ask Sofie for three logo directions, watch them arrive, pick one.
-export function LogoIdeas({ siteName, current, initial, request, poll, choose }: Props) {
+export function LogoIdeas({ siteId, siteName, current, initial, request, poll, choose }: Props) {
   const [view, setView] = useState(initial)
   const [ask, setAsk] = useState(initial.brief)
   const [using, setUsing] = useState(current.logo)
@@ -79,6 +82,8 @@ export function LogoIdeas({ siteName, current, initial, request, poll, choose }:
                       start(async () => {
                         await choose(i)
                         setUsing(idea.logo)
+                        markSeen(siteId, 'logo')
+                        celebrate({ image: idea.logo, caption: `${siteName} has a logo.` })
                       })
                     }
                   >

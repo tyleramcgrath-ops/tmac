@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState, useTransition } from 'react'
+import { celebrate } from './Moment'
+import { markSeen, readSeen } from './milestone-seen'
 import { discardDraft, getStudioState, publishDraft, sendToSofie, undoSofie, type StudioState } from '@/app/dashboard/sites/[id]/sofie/actions'
 import type { ChatTurn } from '@/lib/sofie'
 import { LogoMark } from './Logo'
@@ -161,7 +163,15 @@ export function SofieStudio(props: {
             {state.hasDraft ? <span className="pill warn">Not live yet</span> : <span className="pill ok">Live</span>}
             <button className="btn btn-ghost btn-sm" type="button" disabled={busy || state.working || !state.canUndo} onClick={() => run(() => undoSofie(props.siteId))}>Undo</button>
             <button className="btn btn-ghost btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => confirm('Throw away all unpublished changes?') && run(() => discardDraft(props.siteId))}>Discard</button>
-            <button className="btn btn-primary btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => run(() => publishDraft(props.siteId))}>Publish</button>
+            <button className="btn btn-primary btn-sm" type="button" disabled={busy || state.working || !state.hasDraft} onClick={() => run(async () => {
+              const next = await publishDraft(props.siteId)
+              // The first publish from Sofie gets its moment, once.
+              if (!next.hasDraft && !(readSeen(props.siteId) ?? []).includes('sofie')) {
+                markSeen(props.siteId, 'sofie')
+                celebrate({ title: props.siteName, caption: 'just changed with a sentence.' })
+              }
+              return next
+            })}>Publish</button>
           </div>
         </div>
         <div className={`studio-frame studio-${device}`}>

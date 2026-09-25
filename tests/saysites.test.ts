@@ -916,3 +916,16 @@ describe('SaySites: logos', async () => {
     expect((await store.logoIdeas(made.site.id)).ideas).toEqual([])
   })
 })
+
+describe('SaySites: milestones', async () => {
+  const { milestones } = await import('../apps/saysites/lib/milestones')
+  it('marks what a site has earned and points at the next steps', () => {
+    const base = '/dashboard/sites/s1'
+    const none = milestones({ siteName: 'A', base, hasLogo: false, sofieChanged: false, photos: 0, visits: 0, messages: 0, posts: 0, products: 0, seoClean: false })
+    expect(none.filter((m) => m.done).map((m) => m.id)).toEqual(['live'])
+    expect(none.find((m) => m.id === 'logo')!.href).toBe(`${base}/photos`)
+    const all = milestones({ siteName: 'A', base, hasLogo: true, sofieChanged: true, photos: 2, visits: 5, messages: 1, posts: 1, products: 3, customDomain: 'a.com', seoClean: true })
+    expect(all.every((m) => m.done)).toBe(true)
+    expect(new Set(all.map((m) => m.id)).size).toBe(10)
+  })
+})
