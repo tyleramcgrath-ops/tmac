@@ -57,18 +57,20 @@ export function LogoIdeas({ siteName, current, initial, request, poll, choose }:
             return (
               <figure key={idea.logo} className={`card logo-idea${chosen ? ' chosen' : ''}`}>
                 <div className="logo-stage">
-                  <div className="logo-header" aria-hidden="true">
-                    <img src={idea.logo} alt="" />
-                    <span className="logo-nav"><i /><i /><i /></span>
+                  <img className="logo-big" src={idea.logo} alt={`${idea.name}: logo idea ${i + 1}`} />
+                </div>
+                <figcaption>
+                  <div className="logo-meta">
+                    <img className="logo-icon" src={idea.icon} alt="" width={44} height={44} />
+                    <div>
+                      <strong>{idea.name}</strong>
+                      {idea.note && <span className="muted small">{idea.note}</span>}
+                    </div>
                   </div>
                   <div className="logo-tab" aria-hidden="true">
                     <img src={idea.icon} alt="" width={16} height={16} />
                     <span>{siteName}</span>
                   </div>
-                </div>
-                <figcaption>
-                  <strong>{idea.name}</strong>
-                  {idea.note && <span className="muted small">{idea.note}</span>}
                   <button
                     className={`btn btn-sm ${chosen ? 'btn-ghost' : 'btn-primary'}`}
                     type="button"

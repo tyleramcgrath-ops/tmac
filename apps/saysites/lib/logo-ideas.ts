@@ -131,6 +131,7 @@ export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic =
           text:
             (shown.length ? `Here is exactly how your ${shown.length} logo(s) render, top to bottom in order: each at twice header size on the site's background, then the icon large and at browser-tab size.\n` : '') +
             (problems.length ? `These could not be built:\n- ${problems.join('\n- ')}\n` : '') +
+            `Measured width to height: ${built.map((b, i) => (b ? `idea ${i + 1} ${(b.logo.width / b.logo.height).toFixed(1)}:1` : `idea ${i + 1} failed`)).join(', ')}. In a 56px-tall header, anything over 4.5:1 gets small and hard to read: stack words (a two-weight name stacks automatically) or shorten the tagline.\n` +
             'Look hard, like a senior identity designer reviewing a junior\'s work: is the name easy to read at small size? Is the spacing even, the letter-spacing right for the case, the mark in balance with the name (not too big or small), the colours calm with good contrast, and does each feel made for this business rather than generic? Fix every weakness you see (change typeface, weight, tracking, layout, tagline or colours as needed), replace any idea that is weak or too similar to another, then call present_logos with the final three.',
         },
       ]

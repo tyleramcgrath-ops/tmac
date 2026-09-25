@@ -242,7 +242,7 @@ export interface ComposedLogo {
 }
 
 // Wider than this and the logo shrinks to nothing in a 56px-tall header.
-const MAX_RATIO = 6.2
+const MAX_RATIO = 5.2
 
 export async function composeLogo(spec: LogoSpec, load: FontLoader = googleFontLoader): Promise<ComposedLogo> {
   let out = await composeOnce(spec, load)
@@ -306,12 +306,13 @@ async function composeOnce(spec: LogoSpec, load: FontLoader): Promise<ComposedLo
   let tagCap = 0
   if (tag && tf2) {
     const track = Math.max(0, Math.min(0.6, tag.tracking ?? 0.2))
-    tagCap = nameCap * 0.3
+    // A third of the name's cap height, shrinking to fit under the name but
+    // never below a readable size (then it may run wider than the name).
+    tagCap = nameCap * 0.34
     let t = outline(tf2, tag.text, tagCap / capRatio(tf2), track)
     const room = spec.taglineStyle === 'flanked' ? nameW * 0.72 : nameW
     if (t.x2 - t.x1 > room) {
-      const k = Math.max(room / (t.x2 - t.x1), 9 / tagCap)
-      tagCap *= k
+      tagCap = Math.max(tagCap * (room / (t.x2 - t.x1)), nameCap * 0.27)
       t = outline(tf2, tag.text, tagCap / capRatio(tf2), track)
     }
     tagLine = t
