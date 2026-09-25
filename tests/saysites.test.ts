@@ -21,7 +21,7 @@ import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
 import { accessFor, cleanPromo, newBilling } from '../apps/saysites/lib/billing'
-import { costMicros, overCap } from '../apps/saysites/lib/usage'
+import { costMicros, overCap, siteBudget } from '../apps/saysites/lib/usage'
 import { formEncode, verifySignature } from '../apps/saysites/lib/stripe'
 import { cacheLatest } from '../apps/saysites/lib/sofie'
 import { createHmac } from 'crypto'
@@ -1447,10 +1447,14 @@ describe('trial, caps and feedback', () => {
   it('prices tokens and stops at the caps', () => {
     expect(costMicros({ input_tokens: 1_000_000, output_tokens: 0 })).toBe(5_000_000)
     expect(costMicros({ output_tokens: 1000, cache_read_input_tokens: 10_000 })).toBe(25_000 + 5_000)
-    expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 0, trial: true })).toBeNull()
-    expect(overCap({ siteToday: 11e6, siteTrial: 0, allToday: 0, trial: false })).toMatch(/tomorrow/)
-    expect(overCap({ siteToday: 0, siteTrial: 11e6, allToday: 0, trial: true })).toMatch(/trial/)
-    expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 160e6, trial: false })).toMatch(/break/)
+    const none = { siteTotal: 0, siteToday: 0, siteTrial: 0, allToday: 0, trial: true }
+    expect(overCap(none)).toBeNull()
+    expect(overCap({ ...none, siteTotal: 10e6 })?.kind).toBe('site-total')
+    expect(overCap({ ...none, siteToday: 11e6, siteTotal: 5e6 })?.message).toMatch(/tomorrow/)
+    expect(overCap({ ...none, siteTrial: 11e6, siteTotal: 5e6, siteToday: 5e6 })?.kind).toBe('trial')
+    expect(overCap({ ...none, allToday: 160e6 })?.kind).toBe('all')
+    expect(siteBudget(7e6)).toBe(3e6)
+    expect(siteBudget(12e6)).toBe(0)
   })
 
   it('keeps one moving cache marker on the newest message', () => {

@@ -6,7 +6,7 @@ import { requireUser } from '@/lib/session'
 import { getStore, type SofieState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
 import { loadAccess } from '@/lib/billing'
-import { costMicros, overCap } from '@/lib/usage'
+import { costMicros, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { photoSetFor, reportUse, searchPhotos, unsplashReady } from '@/lib/unsplash'
 import type { Page, Site } from '@/lib/schema'
@@ -20,6 +20,8 @@ export interface StudioState {
   // Page tabs for the preview, in menu order.
   pages: { slug: string; name: string }[]
   error?: string
+  // This site has used its Sofie allowance (shown as a note from Tyler).
+  limit?: boolean
 }
 
 const MAX_MESSAGE = 2000
@@ -80,13 +82,15 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
   if (access.locked) return view(state, live, 'Your free trial has ended. Start your plan on the Account page and Sofie will pick up right where you left off.')
   // Spend caps (lib/usage), so one site or a bug can never run up a bill.
   const today = dayString(new Date())
-  const [siteToday, siteTrial, allToday] = await Promise.all([
+  const [siteTotal, siteToday, siteTrial, allToday] = await Promise.all([
+    store.siteUsage(site.id, '2000-01-01'),
     store.siteUsage(site.id, today),
     store.siteUsage(site.id, dayString(new Date(user.createdAt))),
     store.dayUsage(today),
   ])
-  const capped = overCap({ siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
-  if (capped) return view(state, live, capped)
+  const capped = overCap({ siteTotal: siteTotal.micros, siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
+  if (capped) return { ...view(state, live, capped.message), ...(capped.kind === 'site-total' ? { limit: true } : {}) }
+  const budgetMicros = siteBudget(siteTotal.micros)
 
   const owner: ChatTurn = { role: 'owner', text, at: new Date().toISOString() }
   const started: SofieState = { ...state, chat: [...state.chat, owner].slice(-60), pending: { at: owner.at }, error: null }
@@ -96,7 +100,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
     const current = state.draft ?? live
     try {
       const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
-      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}) })
+      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), budgetMicros, ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}) })
       await store.recordUsage(site.id, today, costMicros(result.usage))
       for (const m of result.media) {
         await store.addMedia({ id: m.id, siteId: site.id, mime: m.mime, width: m.width, height: m.height, alt: m.alt }, Buffer.from(m.data, 'utf8'))
