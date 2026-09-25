@@ -17,7 +17,9 @@ import { checkSpeed } from './speed'
 import { renderPage } from './render'
 import { PHOTOS } from './photos'
 import { buildBlogIndex, buildPostPage } from './posts'
-import { sanitizeSvg, SvgError } from './svg'
+import { SvgError } from './svg'
+import { LOGO_CRAFT, LOGO_FONTS, LOGO_ICONS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
+import { renderSheet } from './logo-render'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -59,10 +61,14 @@ export class Workspace {
   pages: Page[]
   readonly changes: string[] = []
   readonly media: NewMedia[] = []
+  // A PNG of the last logo drawn, shown back to Sofie so she can judge it.
+  lastLogoPreview: string | null = null
+  private fontLoader: FontLoader
 
-  constructor(snapshot: Snapshot) {
+  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader } = {}) {
     this.site = structuredClone(snapshot.site)
     this.pages = structuredClone(snapshot.pages)
+    this.fontLoader = opts.fontLoader ?? googleFontLoader
   }
 
   snapshot(): Snapshot {
@@ -188,33 +194,32 @@ export class Workspace {
     this.changes.push(summary)
   }
 
-  // A logo drawn as SVG, cleaned to plain shapes and text, saved as the
-  // owner's file and used in the header (and the square mark as the icon).
-  designLogo(input: { svg: string; iconSvg: string; alt: string }, summary: string) {
-    const clean = (svg: string, what: string) => {
-      try {
-        return sanitizeSvg(svg)
-      } catch (e) {
-        if (e instanceof SvgError) throw new ToolError(`The ${what} can't be used: ${e.message}`)
-        throw e
-      }
+  // A logo built from Sofie's spec with real typefaces (lib/logo-compose),
+  // saved as the owner's files and used in the header and browser tab.
+  async designLogo(input: Record<string, unknown>, summary: string) {
+    let out
+    try {
+      out = await composeLogo(specFromInput(input), this.fontLoader)
+    } catch (e) {
+      if (e instanceof SvgError) throw new ToolError(`That logo can't be built: ${e.message}`)
+      throw e
     }
-    const logo = clean(input.svg, 'logo')
-    const ratio = logo.width / logo.height
-    if (ratio < 0.8 || ratio > 8) throw new ToolError('The logo should be wider than it is tall, up to 8:1, like viewBox="0 0 320 80". Put a tall mark next to the name.')
-    const icon = input.iconSvg.trim() ? clean(input.iconSvg, 'icon') : null
-    if (icon && Math.abs(icon.width - icon.height) > 1) throw new ToolError('The icon must be square, like viewBox="0 0 64 64".')
-    const save = (c: { svg: string; width: number; height: number }, alt: string) => {
+    const save = (svg: string, width: number, height: number, alt: string) => {
       const id = cryptoRandom().replace(/-/g, '')
-      this.media.push({ id, mime: 'image/svg+xml', width: c.width, height: c.height, alt, data: c.svg })
+      this.media.push({ id, mime: 'image/svg+xml', width, height, alt, data: svg })
       return `/u/${id}`
     }
-    const alt = input.alt.trim().slice(0, 200) || `${this.site.business.name} logo`
-    const business = { ...this.site.business, logo: save(logo, alt), ...(icon ? { icon: save(icon, `${alt} (icon)`) } : {}) }
+    const alt = `${this.site.business.name} logo`
+    const business = { ...this.site.business, logo: save(out.svg, out.width, out.height, alt), icon: save(out.icon, 64, 64, `${alt} (icon)`) }
     const parsed = SiteSchema.safeParse({ ...this.site, business })
     if (!parsed.success) throw new ToolError(`That change is not valid: ${formatZod(parsed.error)}`)
     this.site = parsed.data
     this.changes.push(summary)
+    try {
+      this.lastLogoPreview = renderSheet([{ logo: out.svg, icon: out.icon }], this.site.globals.colors.background).toString('base64')
+    } catch {
+      this.lastLogoPreview = null
+    }
   }
 
   updateSite(changes: Json, summary: string) {
@@ -416,22 +421,16 @@ SOFIE_TOOLS.push({
 
 SOFIE_TOOLS.push({
   name: 'design_logo',
-  description:
-    "Design a logo for the business and put it in the site header. You draw it as SVG code: plain shapes, paths, text and gradients only (no <style>, <image>, <use>, links, scripts or CSS classes; colours as fill/stroke attributes). The logo is a horizontal lockup: a mark next to the business name, viewBox wider than tall (like 0 0 360 80), shown about 56px tall (44px on phones), so the name must be big: its main line should take up at least half the viewBox height, and keep any second line short. Design like a professional identity designer: one bold, simple silhouette built from a few confident shapes (a badge, a monogram, or one symbol of the trade) that still reads at 32px; even stroke weights; aligned, balanced spacing with the text vertically centred on the mark; two or three colours at most. Avoid thin scattered strokes, tiny details, stock clichés (swooshes, globes, lightbulbs) and marks that could be mistaken for a letter. Also draw icon_svg, the mark alone in a square viewBox (0 0 64 64) for browser tabs. Use the site's colours unless the owner asks otherwise. Text renders with the visitor's fonts, so use font-family stacks like \"Georgia, 'Times New Roman', serif\" or \"system-ui, -apple-system, 'Segoe UI', sans-serif\", or draw letters as paths. Keep it simple, timeless and specific to the trade; no clip-art, no gradients unless asked, never copy another company's logo or trademark.",
+  description: `Design a logo and put it in the site header (and its mark or first letter in the browser tab). You art-direct; SaySites builds it exactly with the real typeface and shows you the result so you can refine it (call again with changes if anything is off). Typefaces: ${Object.entries(LOGO_FONTS).map(([n, f]) => `${n} (${f.style})`).join('; ')}. Icons: ${LOGO_ICONS.join(', ')}.\n\n${LOGO_CRAFT}`,
   input_schema: {
     type: 'object',
     additionalProperties: false,
-    properties: {
-      svg: { type: 'string', description: 'The full logo, one <svg> element with xmlns and a viewBox.' },
-      icon_svg: { type: 'string', description: 'The mark alone in a square viewBox, for the browser tab. Empty string to skip.' },
-      alt: { type: 'string', description: 'Alt text, e.g. "Rivertown Plumbing logo".' },
-      summary,
-    },
-    required: ['svg', 'icon_svg', 'alt', 'summary'],
+    properties: { ...LOGO_SPEC_PROPERTIES, summary },
+    required: [...LOGO_SPEC_REQUIRED, 'summary'],
   },
 })
 
-export function runTool(ws: Workspace, name: string, input: Record<string, unknown>): string {
+export async function runTool(ws: Workspace, name: string, input: Record<string, unknown>): Promise<string> {
   const s = String(input.summary ?? 'Updated the site')
   const str = (k: string) => String(input[k] ?? '')
   try {
@@ -458,7 +457,7 @@ export function runTool(ws: Workspace, name: string, input: Record<string, unkno
         ws.writePost({ title: str('title'), date: str('date'), body: str('body') }, s)
         break
       case 'design_logo':
-        ws.designLogo({ svg: str('svg'), iconSvg: str('icon_svg'), alt: str('alt') }, s)
+        await ws.designLogo(input, s)
         break
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
@@ -497,7 +496,7 @@ export const SOFIE_SYSTEM = `You are Sofie, the website assistant inside SaySite
 How to work:
 - Do what they ask, fully, in as few tool calls as makes sense. If a request is ambiguous in a way that matters (which page, what the new wording should say, a fact you don't know), ask one short question instead of guessing.
 - Never invent facts about the business: prices, licenses, certifications, awards, reviews, years in business, guarantees. Use only what the owner told you or what is already on the site. If they ask for something that needs a fact you don't have, ask for it.
-- Asked for a logo (or a new one)? Use design_logo. Think about what the business is known for, then draw one simple mark with the name set in a fitting typeface, in the site's colours. Afterwards say in a sentence what you drew and offer to try a different direction (bolder, more classic, just the name).
+- Asked for a logo (or a new one)? Use design_logo: pick the typeface and structure that fit the business, look at the render you get back and refine it once if it can be better. Afterwards say in a sentence what you made, offer another direction, and mention that Photos > Your logo shows three ideas side by side.
 - Keep the site's existing look: reuse its color tokens, spacing and patterns (copy the structure of a similar section on the same page when adding one). Write copy that is warm, plain and specific to this business, short sentences, no hype words.
 - When the owner describes a whole website (a Talk & Design prompt) and the site already follows that layout, don't rebuild it from scratch: go through it and make every headline, paragraph, card, question and Google title specific to their business and their words, and add anything they described that is missing.
 - After changing things, reply in one to three short sentences saying what you did in plain English, and offer one sensible next step only if it is genuinely useful. Don't list ids or technical details.
@@ -532,7 +531,7 @@ const MAX_STEPS = 16
 // where an older SDK (without the newest request fields) is installed, such
 // as the repository root that type-checks the tests.
 type CreateParams = Record<string, unknown> & { messages: Anthropic.Beta.BetaMessageParam[] }
-function createMessage(client: Anthropic, params: CreateParams): Promise<Anthropic.Beta.BetaMessage> {
+export function createMessage(client: Anthropic, params: CreateParams): Promise<Anthropic.Beta.BetaMessage> {
   const create = client.beta.messages.create as unknown as (p: CreateParams) => Promise<Anthropic.Beta.BetaMessage>
   return create.call(client.beta.messages, params)
 }
@@ -585,10 +584,23 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
     const calls = response.content.filter((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use')
 
     if (calls.length) {
-      const results: Anthropic.Beta.BetaToolResultBlockParam[] = calls.map((c) => {
-        const out = runTool(ws, c.name, c.input as Record<string, unknown>)
-        return { type: 'tool_result', tool_use_id: c.id, content: out, ...(out.startsWith('Error:') ? { is_error: true } : {}) }
-      })
+      const results: Anthropic.Beta.BetaToolResultBlockParam[] = []
+      for (const c of calls) {
+        ws.lastLogoPreview = null
+        const out = await runTool(ws, c.name, c.input as Record<string, unknown>)
+        const preview = !out.startsWith('Error:') && ws.lastLogoPreview
+        results.push({
+          type: 'tool_result',
+          tool_use_id: c.id,
+          content: preview
+            ? [
+                { type: 'text', text: 'Done. This is exactly how it renders: the logo at twice header size, then the icon large and at tab size. Judge it honestly; if the spacing, weight, size balance or colours could be better, call design_logo again with the fixes before you reply.' },
+                { type: 'image', source: { type: 'base64', media_type: 'image/png', data: preview } },
+              ]
+            : out,
+          ...(out.startsWith('Error:') ? { is_error: true } : {}),
+        })
+      }
       messages.push({ role: 'user', content: results })
       continue
     }

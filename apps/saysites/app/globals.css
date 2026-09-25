@@ -379,6 +379,37 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .gallery-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .gallery-cta form { margin: 0; }
 
+/* Logo ideas */
+.current-logo img { height: 40px; width: auto; max-width: 220px; display: block; }
+.logo-ask { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.logo-ask .field { flex: 1 1 320px; margin: 0; }
+.logo-sketching { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 14px 16px; border-radius: 10px; background: var(--paper); color: var(--ink-2); font-size: 15px; }
+.logo-sketching .dots { display: inline-flex; gap: 5px; }
+.logo-sketching .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); animation: logo-dot 1.2s ease-in-out infinite; }
+.logo-sketching .dots i:nth-child(2) { animation-delay: .15s; }
+.logo-sketching .dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes logo-dot { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .logo-sketching .dots i { animation: none; } }
+.logo-grid { display: grid; gap: 14px; margin-top: 18px; transition: opacity .2s ease; }
+.logo-grid.dim { opacity: .45; }
+.logo-idea { margin: 0; padding: 0; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) 300px; }
+.logo-idea.chosen { border-color: var(--mint); box-shadow: 0 0 0 2px var(--mint-soft); }
+.logo-stage { background: #fff; border-right: 1px solid var(--line); display: flex; align-items: center; justify-content: center; padding: 34px 32px; min-height: 170px; }
+.logo-big { display: block; height: 96px; width: auto; max-width: 100%; object-fit: contain; }
+.logo-idea figcaption { display: grid; gap: 12px; align-content: center; padding: 18px 20px; background: var(--paper); }
+.logo-meta { display: flex; gap: 12px; align-items: flex-start; }
+.logo-meta > div { display: grid; gap: 2px; min-width: 0; }
+.logo-icon { width: 44px; height: 44px; flex: none; border-radius: 10px; }
+.logo-tab { display: inline-flex; align-items: center; gap: 8px; justify-self: start; background: #fff; border: 1px solid var(--line); border-radius: 8px 8px 0 0; padding: 6px 12px; font-size: 12.5px; color: var(--ink-2); max-width: 100%; }
+.logo-tab img { width: 16px; height: 16px; flex: none; }
+.logo-tab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.logo-idea figcaption .btn { justify-self: start; }
+@media (max-width: 760px) {
+  .logo-idea { grid-template-columns: 1fr; }
+  .logo-stage { border-right: 0; border-bottom: 1px solid var(--line); padding: 24px 18px; min-height: 120px; }
+  .logo-big { height: 64px; }
+}
+
 /* Visitors */
 .stats.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .vchart { position: relative; margin: 8px 0 0; }

@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { after } from 'next/server'
 import { redirect } from 'next/navigation'
 import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
 import { buildBlogIndex, buildPostPage } from '@/lib/posts'
@@ -8,7 +9,8 @@ import { randomUUID } from 'crypto'
 import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/schema'
 import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
-import { getStore } from '@/lib/store'
+import { drawLogoIdeas } from '@/lib/logo-ideas'
+import { getStore, type LogoIdeasState } from '@/lib/store'
 
 async function ownSite(siteId: string) {
   const user = await requireUser()
@@ -337,7 +339,7 @@ export async function uploadPhoto(siteId: string, _prev: UploadState, form: Form
   const width = Math.round(Number(form.get('width')))
   const height = Math.round(Number(form.get('height')))
   if (!(width > 0 && height > 0 && width <= 4000 && height <= 4000)) return { error: 'That photo couldn’t be read. Try another one.' }
-  if ((await store.mediaForSite(site.id)).length >= MAX_PHOTOS) return { error: `You can keep up to ${MAX_PHOTOS} photos. Delete some to add more.` }
+  if ((await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').length >= MAX_PHOTOS) return { error: `You can keep up to ${MAX_PHOTOS} photos. Delete some to add more.` }
   const alt = str(form, 'alt', 200) || `Photo from ${site.business.name}`
   const data = Buffer.from(await file.arrayBuffer())
   const media = await store.addMedia({ siteId: site.id, mime: file.type, width, height, alt }, data)
@@ -366,7 +368,7 @@ export async function setLogo(siteId: string, mediaId: string | null) {
 // refreshes the one already there), just above the questions section.
 export async function addGalleryToHome(siteId: string) {
   const { user, store, site } = await ownSite(siteId)
-  const photos = (await store.mediaForSite(site.id)).slice(0, 9)
+  const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').slice(0, 9)
   if (!photos.length) return
   const section: Page['body'][number] = {
     id: 'our-work',
@@ -411,4 +413,70 @@ export async function saveVerification(siteId: string, _prev: SettingsState, for
   if (!ok(google) || !ok(bing)) return { error: 'That doesn’t look like a verification code. Paste the code, or the whole meta tag.' }
   await changeSite(siteId, (s) => ({ ...s, verification: google || bing ? { ...(google ? { google } : {}), ...(bing ? { bing } : {}) } : undefined }))
   return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Logo ideas: Sofie sketches three directions in the background; the owner
+// picks one. The Photos page polls getLogoIdeas while she works.
+// ---------------------------------------------------------------------------
+
+// Drawing three logos takes Sofie up to a couple of minutes; after that an
+// unfinished request has died with its server and can be asked again.
+const LOGO_STALE_MS = 5 * 60 * 1000
+
+export interface LogoIdeasView {
+  working: boolean
+  error?: string
+  ideas: { name: string; note: string; logo: string; icon: string }[]
+  brief: string
+}
+
+function logoView(state: LogoIdeasState): LogoIdeasView {
+  const working = Boolean(state.pending && Date.now() - Date.parse(state.pending.at) < LOGO_STALE_MS)
+  return { working, ideas: state.ideas, brief: state.brief ?? '', ...(state.error && !working ? { error: state.error } : {}) }
+}
+
+export async function getLogoIdeas(siteId: string): Promise<LogoIdeasView> {
+  const { store, site } = await ownSite(siteId)
+  return logoView(await store.logoIdeas(site.id))
+}
+
+export async function requestLogoIdeas(siteId: string, ask: string): Promise<LogoIdeasView> {
+  const { user, store, site } = await ownSite(siteId)
+  const state = await store.logoIdeas(site.id)
+  if (logoView(state).working) return logoView(state)
+  if (!process.env.ANTHROPIC_API_KEY) return { ...logoView(state), error: 'Sofie isn’t switched on yet: this server has no Anthropic API key.' }
+  const brief = ask.trim().slice(0, 500)
+  const started: LogoIdeasState = { ...state, brief, pending: { at: new Date().toISOString() }, error: null }
+  await store.saveLogoIdeas(site.id, started)
+  after(async () => {
+    try {
+      const drawn = await drawLogoIdeas(site, brief)
+      if (!drawn.length) throw new Error('no usable ideas')
+      const ideas = []
+      for (const d of drawn) {
+        const save = async (svg: { svg: string; width: number; height: number }, alt: string) => {
+          const m = await store.addMedia({ siteId: site.id, mime: 'image/svg+xml', width: svg.width, height: svg.height, alt }, Buffer.from(svg.svg, 'utf8'))
+          return `/u/${m.id}`
+        }
+        ideas.push({ name: d.name, note: d.note, logo: await save(d.logo, `${site.business.name} logo`), icon: await save(d.icon, `${site.business.name} icon`) })
+      }
+      // Clear out the last round's files, except any the site now uses.
+      const now = await store.siteForUser(user.id, site.id)
+      const inUse = new Set([now?.business.logo, now?.business.icon, site.business.logo, site.business.icon])
+      for (const old of state.ideas) for (const src of [old.logo, old.icon]) if (!inUse.has(src)) await store.deleteMedia(site.id, src.slice(3))
+      await store.saveLogoIdeas(site.id, { brief, ideas, pending: null, error: null })
+    } catch (e) {
+      console.error('Logo ideas failed', e)
+      await store.saveLogoIdeas(site.id, { ...started, pending: null, error: 'Sofie couldn’t finish those logos just now. Please try again.' })
+    }
+  })
+  return logoView(started)
+}
+
+export async function chooseLogoIdea(siteId: string, index: number) {
+  const { store, site } = await ownSite(siteId)
+  const idea = (await store.logoIdeas(site.id)).ideas[index]
+  if (!idea) return
+  await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, logo: idea.logo, icon: idea.icon } }))
 }

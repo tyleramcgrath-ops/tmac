@@ -377,11 +377,11 @@ describe('Sofie', async () => {
   const { Workspace, runTool, askSofie } = await import('../apps/saysites/lib/sofie')
   const built = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', phone: '(555) 201-4480', services: ['Leak repair', 'Water heaters'], palette: 'ocean' }, 'o', 'rivertown', { siteId: 'site_t', now: '2026-01-01T00:00:00.000Z' })
 
-  it('edits text, style and site settings through validated tools', () => {
+  it('edits text, style and site settings through validated tools', async () => {
     const ws = new Workspace(built)
-    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero-title', fields_json: '{"text":"Plumbing done right"}', summary: 'New headline' })).toBe('Done.')
-    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero', fields_json: '{"style":{"padding":{"desktop":{"top":40,"right":24,"bottom":40,"left":24}}}}', summary: 'Tighter hero' })).toBe('Done.')
-    expect(runTool(ws, 'update_site', { changes_json: '{"business":{"hours":["Mo-Fr 08:00-17:00"]},"globals":{"colors":{"primary":"#2f6b4f"}}}', summary: 'Hours and color' })).toBe('Done.')
+    expect(await runTool(ws, 'update_element', { page: 'home', id: 'hero-title', fields_json: '{"text":"Plumbing done right"}', summary: 'New headline' })).toBe('Done.')
+    expect(await runTool(ws, 'update_element', { page: 'home', id: 'hero', fields_json: '{"style":{"padding":{"desktop":{"top":40,"right":24,"bottom":40,"left":24}}}}', summary: 'Tighter hero' })).toBe('Done.')
+    expect(await runTool(ws, 'update_site', { changes_json: '{"business":{"hours":["Mo-Fr 08:00-17:00"]},"globals":{"colors":{"primary":"#2f6b4f"}}}', summary: 'Hours and color' })).toBe('Done.')
     const home = ws.pages.find((p) => p.slug === '')!
     expect(JSON.stringify(home)).toContain('Plumbing done right')
     expect(ws.site.business.hours).toEqual(['Mo-Fr 08:00-17:00'])
@@ -391,25 +391,25 @@ describe('Sofie', async () => {
     expect(ws.problems()).toEqual([])
   })
 
-  it('rejects unsafe or invalid changes and leaves the site untouched', () => {
+  it('rejects unsafe or invalid changes and leaves the site untouched', async () => {
     const ws = new Workspace(built)
-    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero-cta', fields_json: '{"href":"javascript:alert(1)"}', summary: 'x' })).toMatch(/^Error:/)
-    expect(runTool(ws, 'update_element', { page: 'home', id: 'hero-title', fields_json: '{"type":"text"}', summary: 'x' })).toMatch(/^Error:/)
-    expect(runTool(ws, 'update_site', { changes_json: '{"subdomain":"someone-else"}', summary: 'x' })).toMatch(/^Error:/)
-    expect(runTool(ws, 'insert_elements', { page: 'home', parent_id: '', index: -1, elements_json: '[{"id":"hero","type":"container","layout":"flex","children":[]}]', summary: 'x' })).toMatch(/unique/)
-    expect(runTool(ws, 'update_element', { page: 'nope', id: 'x', fields_json: '{}', summary: 'x' })).toMatch(/no page/i)
+    expect(await runTool(ws, 'update_element', { page: 'home', id: 'hero-cta', fields_json: '{"href":"javascript:alert(1)"}', summary: 'x' })).toMatch(/^Error:/)
+    expect(await runTool(ws, 'update_element', { page: 'home', id: 'hero-title', fields_json: '{"type":"text"}', summary: 'x' })).toMatch(/^Error:/)
+    expect(await runTool(ws, 'update_site', { changes_json: '{"subdomain":"someone-else"}', summary: 'x' })).toMatch(/^Error:/)
+    expect(await runTool(ws, 'insert_elements', { page: 'home', parent_id: '', index: -1, elements_json: '[{"id":"hero","type":"container","layout":"flex","children":[]}]', summary: 'x' })).toMatch(/unique/)
+    expect(await runTool(ws, 'update_element', { page: 'nope', id: 'x', fields_json: '{}', summary: 'x' })).toMatch(/no page/i)
     expect(ws.changes).toEqual([])
     expect(ws.snapshot()).toEqual(built)
   })
 
-  it('adds sections and pages, and the publish gate catches broken structure', () => {
+  it('adds sections and pages, and the publish gate catches broken structure', async () => {
     const ws = new Workspace(built)
     const section = [{ id: 'hours', type: 'container', tag: 'section', layout: 'flex', boxed: true, children: [{ id: 'hours-h', type: 'heading', level: 2, text: 'Opening hours' }] }]
-    expect(runTool(ws, 'insert_elements', { page: 'home', parent_id: '', index: 2, elements_json: JSON.stringify(section), summary: 'Added hours' })).toBe('Done.')
+    expect(await runTool(ws, 'insert_elements', { page: 'home', parent_id: '', index: 2, elements_json: JSON.stringify(section), summary: 'Added hours' })).toBe('Done.')
     expect(ws.pages[0].body[2].id).toBe('hours')
-    expect(runTool(ws, 'add_page', { slug: 'about', name: 'About', title: 'About Rivertown Plumbing', description: 'Who we are.', body_json: JSON.stringify([{ id: 'a', type: 'container', layout: 'flex', children: [{ id: 'a-h', type: 'heading', level: 1, text: 'About us' }] }]), add_to_nav: true, summary: 'Added About page' })).toBe('Done.')
+    expect(await runTool(ws, 'add_page', { slug: 'about', name: 'About', title: 'About Rivertown Plumbing', description: 'Who we are.', body_json: JSON.stringify([{ id: 'a', type: 'container', layout: 'flex', children: [{ id: 'a-h', type: 'heading', level: 1, text: 'About us' }] }]), add_to_nav: true, summary: 'Added About page' })).toBe('Done.')
     expect(ws.site.nav.map((n) => n.href)).toContain('/about')
-    runTool(ws, 'insert_elements', { page: 'about', parent_id: 'a', index: -1, elements_json: '[{"id":"a-h2","type":"heading","level":1,"text":"Second title"}]', summary: 'x' })
+    await runTool(ws, 'insert_elements', { page: 'about', parent_id: 'a', index: -1, elements_json: '[{"id":"a-h2","type":"heading","level":1,"text":"Second title"}]', summary: 'x' })
     expect(ws.problems().join(' ')).toMatch(/about/)
   })
 
@@ -818,20 +818,25 @@ describe('SaySites: call bar on phones', () => {
   })
 })
 
-describe('SaySites: logos Sofie draws', async () => {
+describe('SaySites: logos', async () => {
+  const { readFileSync } = await import('fs')
   const { sanitizeSvg } = await import('../apps/saysites/lib/svg')
+  const { composeLogo } = await import('../apps/saysites/lib/logo-compose')
+  const { drawLogoIdeas } = await import('../apps/saysites/lib/logo-ideas')
   const { Workspace, runTool } = await import('../apps/saysites/lib/sofie')
-  const LOGO = `<svg viewBox="0 0 320 80"><defs><linearGradient id="g"><stop offset="0" stop-color="#1b4d7a"/></linearGradient></defs><circle cx="40" cy="40" r="30" fill="url(#g)"/><text x="84" y="50" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="#1b2430">Bar &amp; Co</text></svg>`
-  const ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1b4d7a"/></svg>'
-
-  it('keeps plain shapes and text and adds the namespace', () => {
-    const c = sanitizeSvg(LOGO)
-    expect(c.svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80">')).toBe(true)
-    expect(c.svg).toContain('Bar &amp; Co')
-    expect([c.width, c.height]).toEqual([320, 80])
+  // Tests use a local font file instead of Google Fonts.
+  const dejavu = readFileSync('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
+  const loader = async () => dejavu.buffer.slice(dejavu.byteOffset, dejavu.byteOffset + dejavu.byteLength) as ArrayBuffer
+  const make = () => buildStarterSite({ name: 'Bar Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'bar-co')
+  const flat = (over: Record<string, unknown> = {}) => ({
+    layout: 'mark-left', name_text: 'Rivertown', name_font: 'Oswald', name_weight: 700, name_case: 'upper', name_tracking: 0.04,
+    tagline_text: 'Plumbing', tagline_font: 'Oswald', tagline_weight: 500, tagline_case: 'upper', tagline_tracking: 0.4, rule: true,
+    mark_kind: 'monogram', mark_letters: 'R', mark_shape: 'shield', mark_style: 'solid', mark_font: 'Oswald', mark_weight: 700,
+    name_color: '#0f2438', tagline_color: '#1a4f86', mark_color: '#1a4f86', mark_ink_color: '#ffffff', ...over,
   })
 
-  it('rejects anything that could run code, load files or link away', () => {
+  it('sanitizer keeps plain shapes and rejects anything that could run code, load files or link away', () => {
+    expect(sanitizeSvg('<svg viewBox="0 0 320 80"><circle cx="40" cy="40" r="30" fill="url(#g)"/><text x="84" y="50">A &amp; B</text></svg>').svg).toContain('xmlns="http://www.w3.org/2000/svg"')
     const bad = [
       '<svg viewBox="0 0 10 10"><script>alert(1)</script></svg>',
       '<svg viewBox="0 0 10 10" onload="alert(1)"></svg>',
@@ -850,17 +855,64 @@ describe('SaySites: logos Sofie draws', async () => {
     for (const b of bad) expect(() => sanitizeSvg(b), b).toThrow()
   })
 
-  it('puts the logo and icon on the draft and hands back the files', () => {
-    const { site, pages } = buildStarterSite({ name: 'Bar Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'bar-co')
-    const ws = new Workspace({ site, pages })
-    expect(runTool(ws, 'design_logo', { svg: LOGO, icon_svg: ICON, alt: 'Bar Co logo', summary: 'Drew a logo' })).toBe('Done.')
+  it('builds a logo with outlined type, a mark and a square icon, and keeps it within header proportions', async () => {
+    const out = await composeLogo({ layout: 'mark-left', name: { text: 'Salt and Stone Studio', font: 'Josefin Sans', weight: 600, case: 'upper', tracking: 0.3 }, mark: { kind: 'monogram', letters: 'S', shape: 'circle', style: 'outline', font: 'Josefin Sans', weight: 600 }, colors: { name: '#2a2622', mark: '#8a6f55', markInk: '#ffffff' } }, loader)
+    expect(out.svg).toMatch(/^<svg xmlns="http:\/\/www.w3.org\/2000\/svg" viewBox="[^"]+"><path d="M/)
+    expect(out.svg).not.toContain('<text')
+    expect(out.svg).not.toContain('NaN')
+    expect(out.width / out.height).toBeLessThanOrEqual(6.3)
+    expect(out.icon).toContain('viewBox="0 0 64 64"')
+    await expect(composeLogo({ layout: 'wordmark', name: { text: 'X', font: 'Comic Sans', weight: 400 }, mark: { kind: 'none' }, colors: { name: '#000000', mark: '#000000', markInk: '#ffffff' } }, loader)).rejects.toThrow(/not one of the logo typefaces/)
+  })
+
+  it('draws professional icons in shapes and stacks an over-wide two-weight name', async () => {
+    const { specFromInput } = await import('../apps/saysites/lib/logo-compose')
+    const out = await composeLogo(specFromInput(flat({ mark_kind: 'icon', mark_icon: 'drop', mark_shape: 'rounded', tagline_text: '', name_accent_text: 'Plumbing and heating', name_accent_weight: 300 })), loader)
+    expect(out.width / out.height).toBeLessThanOrEqual(6.3)
+    expect(out.icon).toMatch(/<path d="M[^"]+" transform="translate\([^)]+\) scale\([^)]+\)" fill="#ffffff"\/>/)
+    await expect(composeLogo(specFromInput(flat({ mark_kind: 'icon', mark_icon: 'nope' })), loader)).rejects.toThrow(/not one of the icons/)
+  })
+
+  it('puts the logo and icon on the draft, shows Sofie a render, and reports problems', async () => {
+    const { site, pages } = make()
+    const ws = new Workspace({ site, pages }, { fontLoader: loader })
+    expect(await runTool(ws, 'design_logo', { ...flat(), summary: 'Drew a logo' })).toBe('Done.')
     expect(ws.site.business.logo).toMatch(/^\/u\/[a-f0-9]{32}$/)
     expect(ws.site.business.icon).toMatch(/^\/u\/[a-f0-9]{32}$/)
     expect(ws.media.map((m) => m.mime)).toEqual(['image/svg+xml', 'image/svg+xml'])
+    expect(ws.lastLogoPreview && Buffer.from(ws.lastLogoPreview, 'base64').subarray(1, 4).toString()).toBe('PNG')
     const html = renderPage(ws.site, pages.find((p) => p.slug === '')!, pages).html
     expect(html).toContain(`<img class="sh-logo" src="${ws.site.business.logo}"`)
     expect(html).toContain(`<link rel="icon" href="${ws.site.business.icon}">`)
-    expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 10"><script/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/^Error: The logo can't be used/)
-    expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 80"><rect/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/wider than it is tall/)
+    expect(await runTool(ws, 'design_logo', { ...flat({ mark_kind: 'symbol', symbol_svg: '<svg viewBox="0 0 64 64"><script/></svg>' }), summary: 'x' })).toMatch(/^Error: That logo can't be built/)
+  })
+
+  it('logo ideas: designs three, looks at the renders, keeps the refined set', async () => {
+    const calls: { messages: { content: unknown }[] }[] = []
+    const replies = [
+      { ideas: [flat(), flat({ layout: 'wordmark', mark_kind: 'none', name_font: 'Fraunces', name_case: 'as-is' }), flat({ name_font: 'Nope' })] },
+      { ideas: [flat({ direction: 'Final A' }), flat({ direction: 'Final B', name_font: 'Manrope' }), flat({ direction: 'Final C', mark_shape: 'circle' })] },
+    ]
+    const client = { beta: { messages: { create: async (p: never) => { calls.push(p); return { content: [{ type: 'tool_use', id: `t${calls.length}`, name: 'present_logos', input: replies[calls.length - 1] }] } } } } } as never
+    const { site } = make()
+    const ideas = await drawLogoIdeas(site, 'friendly', client, loader)
+    expect(calls).toHaveLength(2)
+    // Round two was shown a PNG of round one, plus the idea that failed.
+    const shown = JSON.stringify(calls[1].messages.at(-1)!.content)
+    expect(shown).toContain('image/png')
+    expect(shown).toContain('Idea 3')
+    expect(ideas.map((i) => i.name)).toEqual(['Final A', 'Final B', 'Final C'])
+    expect(ideas[0].icon.width).toBe(64)
+  })
+
+  it('stores ideas per site and forgets them with the site', async () => {
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'l@example.com', name: 'L', passwordHash: 'x' })
+    const made = buildStarterSite({ name: 'Idea Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, `org_${user.id}`, 'idea-co')
+    await store.createSite(user.id, made.site, made.pages)
+    await store.saveLogoIdeas(made.site.id, { ideas: [{ name: 'A', note: '', logo: '/u/a', icon: '/u/b' }] })
+    expect((await store.logoIdeas(made.site.id)).ideas).toHaveLength(1)
+    await store.deleteSite(user.id, made.site.id)
+    expect((await store.logoIdeas(made.site.id)).ideas).toEqual([])
   })
 })
