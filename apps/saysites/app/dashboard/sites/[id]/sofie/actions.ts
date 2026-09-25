@@ -5,6 +5,9 @@ import { askSofie, type ChatTurn } from '@/lib/sofie'
 import { requireUser } from '@/lib/session'
 import { getStore, type SofieState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
+import { loadAccess } from '@/lib/billing'
+import { costMicros, overCap } from '@/lib/usage'
+import { dayString } from '@/lib/visits'
 import { photoSetFor, reportUse, searchPhotos, unsplashReady } from '@/lib/unsplash'
 import type { Page, Site } from '@/lib/schema'
 
@@ -66,13 +69,24 @@ export async function getStudioState(siteId: string): Promise<StudioState> {
 // switching networks, a proxy timing out) never loses her work. The studio
 // polls getStudioState until she is done.
 export async function sendToSofie(siteId: string, message: string): Promise<StudioState> {
-  const { store, site, pages, state } = await load(siteId)
+  const { user, store, site, pages, state } = await load(siteId)
   const live = { site, pages }
   const text = message.trim().slice(0, MAX_MESSAGE)
   if (!text || isWorking(state)) return view(state, live)
   if (!process.env.ANTHROPIC_API_KEY) {
     return view(state, live, 'Sofie isn’t switched on yet: this server has no Anthropic API key. Add ANTHROPIC_API_KEY in the Vercel project settings, then try again.')
   }
+  const access = await loadAccess(store, user)
+  if (access.locked) return view(state, live, 'Your free trial has ended. Start your plan on the Account page and Sofie will pick up right where you left off.')
+  // Spend caps (lib/usage), so one site or a bug can never run up a bill.
+  const today = dayString(new Date())
+  const [siteToday, siteTrial, allToday] = await Promise.all([
+    store.siteUsage(site.id, today),
+    store.siteUsage(site.id, dayString(new Date(user.createdAt))),
+    store.dayUsage(today),
+  ])
+  const capped = overCap({ siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
+  if (capped) return view(state, live, capped)
 
   const owner: ChatTurn = { role: 'owner', text, at: new Date().toISOString() }
   const started: SofieState = { ...state, chat: [...state.chat, owner].slice(-60), pending: { at: owner.at }, error: null }
@@ -83,6 +97,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
     try {
       const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
       const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}) })
+      await store.recordUsage(site.id, today, costMicros(result.usage))
       for (const m of result.media) {
         await store.addMedia({ id: m.id, siteId: site.id, mime: m.mime, width: m.width, height: m.height, alt: m.alt }, Buffer.from(m.data, 'utf8'))
       }
@@ -127,6 +142,7 @@ export async function discardDraft(siteId: string): Promise<StudioState> {
 export async function publishDraft(siteId: string): Promise<StudioState> {
   const { user, store, site, pages, state } = await load(siteId)
   if (!state.draft || isWorking(state)) return view(state, { site, pages })
+  if ((await loadAccess(store, user)).locked) return view(state, { site, pages }, 'Your free trial has ended. Start your plan on the Account page to publish these changes; they’re saved.')
   const draft = state.draft
   // Only the owner's own site; ids that could point elsewhere are pinned.
   const nextSite = { ...draft.site, id: site.id, orgId: site.orgId, subdomain: site.subdomain, ...(site.customDomain ? { customDomain: site.customDomain } : {}), updatedAt: new Date().toISOString() }

@@ -1,6 +1,7 @@
 'use server'
 
 import { after } from 'next/server'
+import { cleanPromo, loadAccess, newBilling } from '@/lib/billing'
 import { redirect } from 'next/navigation'
 import { hashPassword, normalizeEmail, validEmail, verifyPassword } from '@/lib/auth'
 import { endSession, requireUser, startSession } from '@/lib/session'
@@ -28,6 +29,7 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
   const store = getStore()
   if (await store.userByEmail(email)) return { error: 'There is already an account with that email. Try logging in.' }
   const user = await store.createUser({ email, name: name.slice(0, 80), passwordHash: await hashPassword(password) })
+  await store.saveBilling(user.id, newBilling(Date.now(), cleanPromo(str(form, 'promo'))))
   await startSession(user.id)
   const claim = claimId(form)
   if (claim) redirect(`/redesign/${claim}/claim`)
@@ -56,6 +58,7 @@ export async function logOut(): Promise<void> {
 export async function createSite(_prev: FormState, form: FormData): Promise<FormState> {
   const user = await requireUser()
   const store = getStore()
+  if ((await loadAccess(store, user)).locked) return { error: 'Your free trial has ended. Start your plan on the Account page to build more websites.' }
   const name = str(form, 'name')
   const type = str(form, 'type') as BusinessTypeKey
   const city = str(form, 'city')

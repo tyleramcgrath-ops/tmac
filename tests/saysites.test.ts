@@ -20,6 +20,11 @@ import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
+import { accessFor, cleanPromo, newBilling } from '../apps/saysites/lib/billing'
+import { costMicros, overCap } from '../apps/saysites/lib/usage'
+import { formEncode, verifySignature } from '../apps/saysites/lib/stripe'
+import { cacheLatest } from '../apps/saysites/lib/sofie'
+import { createHmac } from 'crypto'
 import { photoSetFor } from '../apps/saysites/lib/unsplash'
 import { creditsInUse } from '../apps/saysites/lib/sites'
 import { photoKey, photoUses, repeatedPhotos } from '../apps/saysites/lib/photo-rules'
@@ -1414,5 +1419,68 @@ describe('Unsplash photos', () => {
     } finally {
       if (prev) process.env.UNSPLASH_ACCESS_KEY = prev
     }
+  })
+})
+
+describe('trial, caps and feedback', () => {
+  const user = { id: 'u1', email: 'a@b.com', name: 'A', passwordHash: 'x', createdAt: '2026-09-01T00:00:00.000Z' }
+
+  it('never locks anyone out until Stripe is connected', () => {
+    const prev = { k: process.env.STRIPE_SECRET_KEY, p: process.env.STRIPE_PRICE_ID }
+    delete process.env.STRIPE_SECRET_KEY
+    delete process.env.STRIPE_PRICE_ID
+    const old = accessFor(user, null, Date.parse('2026-10-01'))
+    expect(old.locked).toBe(false)
+    process.env.STRIPE_SECRET_KEY = 'sk'
+    process.env.STRIPE_PRICE_ID = 'price'
+    expect(accessFor(user, null, Date.parse('2026-10-01')).locked).toBe(true)
+    expect(accessFor(user, newBilling(Date.parse('2026-09-30')), Date.parse('2026-10-01')).daysLeft).toBe(6)
+    expect(accessFor(user, { ...newBilling(0), status: 'active' }, Date.parse('2026-10-01')).ok).toBe(true)
+    process.env.STRIPE_SECRET_KEY = prev.k
+    process.env.STRIPE_PRICE_ID = prev.p
+    if (!prev.k) delete process.env.STRIPE_SECRET_KEY
+    if (!prev.p) delete process.env.STRIPE_PRICE_ID
+    expect(cleanPromo(' family ')).toBe('FAMILY')
+    expect(cleanPromo('no spaces!')).toBeUndefined()
+  })
+
+  it('prices tokens and stops at the caps', () => {
+    expect(costMicros({ input_tokens: 1_000_000, output_tokens: 0 })).toBe(5_000_000)
+    expect(costMicros({ output_tokens: 1000, cache_read_input_tokens: 10_000 })).toBe(25_000 + 5_000)
+    expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 0, trial: true })).toBeNull()
+    expect(overCap({ siteToday: 6e6, siteTrial: 0, allToday: 0, trial: false })).toMatch(/tomorrow/)
+    expect(overCap({ siteToday: 0, siteTrial: 5e6, allToday: 0, trial: true })).toMatch(/trial/)
+    expect(overCap({ siteToday: 0, siteTrial: 0, allToday: 80e6, trial: false })).toMatch(/break/)
+  })
+
+  it('keeps one moving cache marker on the newest message', () => {
+    const messages: any[] = [{ role: 'user', content: 'hi' }, { role: 'assistant', content: [{ type: 'text', text: 'x' }] }, { role: 'user', content: [{ type: 'tool_result', tool_use_id: 't', content: 'Done.' }] }]
+    cacheLatest(messages)
+    cacheLatest(messages)
+    const marked = messages.flatMap((m) => (Array.isArray(m.content) ? m.content : [])).filter((b: any) => b.cache_control)
+    expect(marked).toHaveLength(1)
+    expect(messages[2].content[0].cache_control).toEqual({ type: 'ephemeral' })
+  })
+
+  it('checks Stripe signatures and encodes forms', () => {
+    const body = '{"type":"x"}'
+    const t = Math.floor(Date.now() / 1000)
+    const sig = createHmac('sha256', 'whsec').update(`${t}.${body}`).digest('hex')
+    expect(verifySignature(body, `t=${t},v1=${sig}`, 'whsec')).toBe(true)
+    expect(verifySignature(body, `t=${t},v1=${sig}`, 'other')).toBe(false)
+    expect(verifySignature(body, `t=${t - 1000},v1=${sig}`, 'whsec')).toBe(false)
+    expect(formEncode({ line_items: [{ price: 'p', quantity: 1 }], metadata: { user_id: 'u' } }).join('&')).toBe('line_items%5B0%5D%5Bprice%5D=p&line_items%5B0%5D%5Bquantity%5D=1&metadata%5Buser_id%5D=u')
+  })
+
+  it('stores feedback newest first and records usage per site', async () => {
+    const store = new MemoryStore()
+    await store.addFeedback({ id: '1', userId: null, name: 'A', email: '', text: 'first', page: '/birthday', at: '2026-09-28T00:00:00Z' })
+    await store.addFeedback({ id: '2', userId: null, name: 'B', email: '', text: 'second', page: '/dashboard', at: '2026-09-28T01:00:00Z' })
+    expect((await store.feedback(10)).map((f) => f.text)).toEqual(['second', 'first'])
+    await store.recordUsage('s1', '2026-09-28', 1000)
+    await store.recordUsage('s1', '2026-09-28', 500)
+    await store.recordUsage('s2', '2026-09-28', 7)
+    expect(await store.siteUsage('s1', '2026-09-28')).toEqual({ micros: 1500, messages: 2 })
+    expect((await store.dayUsage('2026-09-28')).micros).toBe(1507)
   })
 })
