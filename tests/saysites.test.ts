@@ -1508,3 +1508,17 @@ describe('calls from the website', () => {
     expect(await serveSitePath(bundle, [], { preview: true }).text()).not.toContain('__c?p=')
   })
 })
+
+describe('no AI look', () => {
+  it('flags phrases that give away AI-written copy, and not plain ones', async () => {
+    const { fillerIn } = await import('../apps/saysites/lib/vibe')
+    for (const s of ['Elevate your smile with our expert team.', 'We make it seamless from start to finish.', 'Nestled in downtown Dayton, we fix pipes.', 'Whether you’re a homeowner or a landlord, we can help.'])
+      expect(fillerIn(s)).toBe(true)
+    for (const s of ['We fix leaks the same day in Dayton.', 'Call Mike for a free quote.'])
+      expect(fillerIn(s)).toBe(false)
+  })
+  it('Sofie is told never to make a site look AI-made', async () => {
+    const { SOFIE_SYSTEM } = await import('../apps/saysites/lib/sofie')
+    expect(SOFIE_SYSTEM).toMatch(/Never let a site look or read AI-made/)
+  })
+})
