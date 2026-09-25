@@ -176,6 +176,7 @@ export default function Home() {
         </section>
 
         <section className="how dark" id="how">
+          <div className="how-mark" aria-hidden="true"><LogoMark size={720} /></div>
           <div className="wrap">
             <div className="head">
               <p className="kicker">How it works</p>
@@ -191,8 +192,8 @@ export default function Home() {
               </li>
               <li>
                 <span className="n">02</span>
-                <h3>Get a finished site</h3>
-                <p>Home, Services and Contact pages, written for your customers, with every page SEO-optimized from day one.</p>
+                <h3>Make it yours</h3>
+                <p>Pick the look, add your photos and your words. Home, Services and Contact pages, SEO-optimized from day one.</p>
                 <div className="vis vis-pages"><span>Home</span><span>Services</span><span>Contact</span><span>Sitemap</span></div>
               </li>
               <li>
