@@ -55,8 +55,9 @@ number is still to be decided). Build and write everything toward that.
   dot, no "Live" or "New" tag stamped on every card, no sparkle icons, no
   gradient text. Tags only where they carry real information (a plan
   label, an unread count). Pricing copy says "7-day free trial".
-- The brand colour is the SaySites blue `#1E9BB7` (`--say`), used for the
-  logo mark and nothing else.
+- Brand colours: black, white and the calm neutrals already in the app.
+  The logo mark follows the text colour (white on dark, black on light).
+  The owner tried a blue and an orange accent and said no; don't add one.
 - Never mention the founder's name in the product or marketing. Only the
   birthday page speaks in the first person about the founder's years of
   experience with websites and search.
