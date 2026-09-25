@@ -13,11 +13,33 @@ export function LogoMark({ size = 26 }: { size?: number }) {
   )
 }
 
+// The wordmark: bold "say", lighter "sites", and one comma from the mark
+// as the dot on the i. The comma keeps the full text colour; the grey
+// letters sit in their own spans so it works on light and dark alike.
+export function Wordmark() {
+  return (
+    <span className="wordmark">
+      <b>say</b>
+      <span className="wm-lt">s</span>
+      <span className="wm-i">
+        <span className="wm-lt">ı</span>
+        <svg viewBox="16 16 26 30" aria-hidden="true">
+          <g fill="currentColor">
+            <circle cx="29" cy="29" r="7.5" />
+            <path d="M36.5 29C36.5 37.3 30.1 43.3 21.5 43.9v-5.2c5.2-.5 9-4.1 9.6-9.7z" />
+          </g>
+        </svg>
+      </span>
+      <span className="wm-lt">tes</span>
+    </span>
+  )
+}
+
 export function Logo() {
   return (
     <a className="logo" href="/" aria-label="SaySites home">
       <LogoMark />
-      <span>saysites</span>
+      <Wordmark />
     </a>
   )
 }
