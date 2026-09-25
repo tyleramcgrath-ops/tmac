@@ -865,6 +865,14 @@ describe('SaySites: logos', async () => {
     await expect(composeLogo({ layout: 'wordmark', name: { text: 'X', font: 'Comic Sans', weight: 400 }, mark: { kind: 'none' }, colors: { name: '#000000', mark: '#000000', markInk: '#ffffff' } }, loader)).rejects.toThrow(/not one of the logo typefaces/)
   })
 
+  it('draws professional icons in shapes and stacks an over-wide two-weight name', async () => {
+    const { specFromInput } = await import('../apps/saysites/lib/logo-compose')
+    const out = await composeLogo(specFromInput(flat({ mark_kind: 'icon', mark_icon: 'drop', mark_shape: 'rounded', tagline_text: '', name_accent_text: 'Plumbing and heating', name_accent_weight: 300 })), loader)
+    expect(out.width / out.height).toBeLessThanOrEqual(6.3)
+    expect(out.icon).toMatch(/<path d="M[^"]+" transform="translate\([^)]+\) scale\([^)]+\)" fill="#ffffff"\/>/)
+    await expect(composeLogo(specFromInput(flat({ mark_kind: 'icon', mark_icon: 'nope' })), loader)).rejects.toThrow(/not one of the icons/)
+  })
+
   it('puts the logo and icon on the draft, shows Sofie a render, and reports problems', async () => {
     const { site, pages } = make()
     const ws = new Workspace({ site, pages }, { fontLoader: loader })

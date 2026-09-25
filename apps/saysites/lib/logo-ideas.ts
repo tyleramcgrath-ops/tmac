@@ -4,7 +4,7 @@
 // then she sees the rendered result and refines it before the owner does.
 
 import Anthropic from '@anthropic-ai/sdk'
-import { LOGO_CRAFT, LOGO_FONTS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
+import { LOGO_CRAFT, LOGO_FONTS, LOGO_ICONS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
 import { renderSheet } from './logo-render'
 import type { Site } from './schema'
 import { SOFIE_MODEL, createMessage } from './sofie'
@@ -54,7 +54,9 @@ ${FONT_LIST}
 
 ${LOGO_CRAFT}
 
-Give three genuinely different directions, for example: (1) a pure wordmark where the name itself is the logo, (2) a monogram in a shape beside the name, (3) something with more personality for this trade: a small symbol, a characterful typeface or a badge-like tagline with a rule. Use a different typeface in each. Each logo is shown about 56px tall in the website header, and its mark (or first letter) becomes the browser-tab icon.`
+Icons you can use (professionally drawn): ${LOGO_ICONS.join(', ')}.
+
+Give three genuinely different directions built on three different structures from the list above (for example: a classic or framed wordmark, a two-weight name, and an icon lockup), each with a different typeface, and each clearly made for this business rather than any business. Each logo is shown about 56px tall in the website header, and its mark (or first letter) becomes the browser-tab icon.`
 
 function brief(site: Site, ask: string): string {
   const b = site.business

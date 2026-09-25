@@ -18,7 +18,7 @@ import { renderPage } from './render'
 import { PHOTOS } from './photos'
 import { buildBlogIndex, buildPostPage } from './posts'
 import { SvgError } from './svg'
-import { LOGO_CRAFT, LOGO_FONTS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
+import { LOGO_CRAFT, LOGO_FONTS, LOGO_ICONS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
 import { renderSheet } from './logo-render'
 
 export const SOFIE_MODEL = 'claude-opus-5'
@@ -421,7 +421,7 @@ SOFIE_TOOLS.push({
 
 SOFIE_TOOLS.push({
   name: 'design_logo',
-  description: `Design a logo and put it in the site header (and its mark or first letter in the browser tab). You art-direct; SaySites builds it exactly with the real typeface and shows you the result so you can refine it (call again with changes if anything is off). Typefaces: ${Object.entries(LOGO_FONTS).map(([n, f]) => `${n} (${f.style})`).join('; ')}.\n\n${LOGO_CRAFT}`,
+  description: `Design a logo and put it in the site header (and its mark or first letter in the browser tab). You art-direct; SaySites builds it exactly with the real typeface and shows you the result so you can refine it (call again with changes if anything is off). Typefaces: ${Object.entries(LOGO_FONTS).map(([n, f]) => `${n} (${f.style})`).join('; ')}. Icons: ${LOGO_ICONS.join(', ')}.\n\n${LOGO_CRAFT}`,
   input_schema: {
     type: 'object',
     additionalProperties: false,
