@@ -3,6 +3,7 @@
 // lib/logo-compose builds each logo with real typefaces and exact spacing;
 // then she sees the rendered result and refines it before the owner does.
 
+import type { Tokens } from './usage'
 import Anthropic from '@anthropic-ai/sdk'
 import { LOGO_CRAFT, LOGO_FONTS, LOGO_ICONS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
 import { renderSheet } from './logo-render'
@@ -98,7 +99,7 @@ async function build(raw: unknown, load: FontLoader): Promise<{ built: (Built | 
   return { built, problems }
 }
 
-export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic = new Anthropic(), load: FontLoader = googleFontLoader): Promise<DrawnIdea[]> {
+export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic = new Anthropic(), load: FontLoader = googleFontLoader, meter?: (u: Tokens) => void): Promise<DrawnIdea[]> {
   const messages: Anthropic.Beta.BetaMessageParam[] = [{ role: 'user', content: brief(site, ask.trim().slice(0, 500)) }]
   let first: (Built | null)[] = []
   // Round 1 designs; round 2 looks at the renders and refines; round 3 only
@@ -115,6 +116,7 @@ export async function drawLogoIdeas(site: Site, ask: string, client: Anthropic =
       tools: [TOOL],
       messages,
     })
+    if (response.usage) meter?.(response.usage as Tokens)
     const call = response.content.find((b): b is Anthropic.Beta.BetaToolUseBlock => b.type === 'tool_use' && b.name === TOOL.name)
     if (!call) {
       if (first.length) break

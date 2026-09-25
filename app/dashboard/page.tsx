@@ -1,4 +1,5 @@
 import { requireUser } from '@/lib/session'
+import { isAdmin } from '@/lib/admin'
 import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
 
@@ -16,7 +17,10 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
           <p className="crumbs">Dashboard</p>
           <h1>Hi {user.name.split(' ')[0]}, here are your websites</h1>
         </div>
-        {sites.length > 0 && <a className="btn btn-primary" href="/dashboard/new">New website</a>}
+        <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {isAdmin(user.email) && <a className="btn btn-ghost" href="/dashboard/feedback">Feedback inbox</a>}
+          {sites.length > 0 && <a className="btn btn-primary" href="/dashboard/new">New website</a>}
+        </span>
       </div>
       {sites.length === 0 ? (
         <div className="card empty">

@@ -480,3 +480,15 @@
 .ind-lede-dark { color: var(--ink-mu); font-size: 18px; margin: 0; max-width: 460px; }
 .gl-src { margin-top: 8px !important; font-size: 14px; }
 .gl-src a { color: var(--ink); }
+
+/* Birthday page feedback form. */
+.home .bd-form { display: grid; gap: 14px; }
+.home .bd-form label { display: grid; gap: 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.home .bd-form label em { font-weight: 400; font-style: normal; color: var(--ink-mu); }
+.home .bd-form input, .home .bd-form textarea { font: inherit; font-weight: 400; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); }
+.home .bd-form button { justify-self: start; }
+.home .bd-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.home .bd-error { color: #9b2c2c; margin: 0; }
+.home .bd-thanks { font-size: 18px; }
+.home .fb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+@media (max-width: 700px) { .home .bd-row { grid-template-columns: 1fr; } }

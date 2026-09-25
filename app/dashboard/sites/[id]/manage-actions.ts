@@ -16,6 +16,9 @@ import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
+import { loadAccess } from '@/lib/billing'
+import { costMicros, overCap } from '@/lib/usage'
+import { dayString } from '@/lib/visits'
 
 async function ownSite(siteId: string) {
   const user = await requireUser()
@@ -451,12 +454,19 @@ export async function requestLogoIdeas(siteId: string, ask: string): Promise<Log
   const state = await store.logoIdeas(site.id)
   if (logoView(state).working) return logoView(state)
   if (!process.env.ANTHROPIC_API_KEY) return { ...logoView(state), error: 'Sofie isn’t switched on yet: this server has no Anthropic API key.' }
+  const access = await loadAccess(store, user)
+  if (access.locked) return { ...logoView(state), error: 'Your free trial has ended. Start your plan on the Account page to keep designing.' }
+  const today = dayString(new Date())
+  const [siteToday, siteTrial, allToday] = await Promise.all([store.siteUsage(site.id, today), store.siteUsage(site.id, dayString(new Date(user.createdAt))), store.dayUsage(today)])
+  const capped = overCap({ siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
+  if (capped) return { ...logoView(state), error: capped }
   const brief = ask.trim().slice(0, 500)
   const started: LogoIdeasState = { ...state, brief, pending: { at: new Date().toISOString() }, error: null }
   await store.saveLogoIdeas(site.id, started)
   after(async () => {
     try {
-      const drawn = await drawLogoIdeas(site, brief)
+      let micros = 0
+      const drawn = await drawLogoIdeas(site, brief, undefined, undefined, (u) => (micros += costMicros(u))).finally(() => store.recordUsage(site.id, today, micros))
       if (!drawn.length) throw new Error('no usable ideas')
       const ideas = []
       for (const d of drawn) {

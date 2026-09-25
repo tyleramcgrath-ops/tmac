@@ -1,9 +1,22 @@
 import { changePassword, deleteAccount, updateName } from '@/app/actions'
 import { ActionForm } from '@/components/ActionForm'
 import { requireUser } from '@/lib/session'
+import { billingReady, loadAccess } from '@/lib/billing'
+import { getStore } from '@/lib/store'
+import { formatDate } from '@/lib/render'
+import { managePlan, startPlan } from './billing-actions'
 
-export default async function AccountPage() {
+const NOTES: Record<string, [string, string]> = {
+  welcome: ['good', 'You’re all set. Thank you for joining SaySites.'],
+  soon: ['', 'Plans open very soon. Your trial keeps going until then.'],
+  error: ['bad', 'We couldn’t reach our payment provider. Please try again in a minute.'],
+}
+
+export default async function AccountPage({ searchParams }: { searchParams: Promise<{ billing?: string }> }) {
   const user = await requireUser()
+  const note = NOTES[(await searchParams).billing ?? '']
+  const a = await loadAccess(getStore(), user)
+  const promo = a.billing?.promo
   return (
     <div className="narrow stack">
       <div className="dash-head">
@@ -12,6 +25,36 @@ export default async function AccountPage() {
           <h1>Your account</h1>
           <p className="muted" style={{ margin: 0 }}>{user.email}</p>
         </div>
+      </div>
+      {note && <p className={`notice ${note[0]}`}>{note[1]}</p>}
+      <div className="card" id="plan">
+        <h3>Your plan</h3>
+        {a.status === 'comp' ? (
+          <p className="muted">Complimentary. Everything is included.</p>
+        ) : a.status === 'active' || a.status === 'past_due' ? (
+          <>
+            <p className="muted">{a.status === 'past_due' ? 'Your last payment didn’t go through. Please update your card to keep your site going.' : `Active${a.billing?.currentPeriodEnd ? `, renews ${formatDate(a.billing.currentPeriodEnd)}` : ''}.`}</p>
+            <form action={managePlan}><button className="btn btn-ghost" type="submit">Manage billing</button></form>
+          </>
+        ) : (
+          <>
+            <p className="muted">
+              {a.locked
+                ? 'Your free trial has ended. Your website and everything you’ve made are saved. Start your plan to keep editing and keep Sofie working for you.'
+                : a.status === 'canceled'
+                  ? 'Your plan is cancelled. Start it again any time.'
+                  : `Free trial: ${a.daysLeft} day${a.daysLeft === 1 ? '' : 's'} left.`}
+            </p>
+            {billingReady() ? (
+              <form action={startPlan} className="row" style={{ alignItems: 'end' }}>
+                <label className="field"><span>Promo code <em className="muted">(optional)</em></span><input className="input" name="promo" defaultValue={promo ?? ''} maxLength={40} autoCapitalize="characters" /></label>
+                <button className="btn btn-primary" type="submit">Start my plan</button>
+              </form>
+            ) : (
+              <p className="small muted">Plans open very soon{promo ? `. Your code ${promo} is saved and will be applied.` : '.'}</p>
+            )}
+          </>
+        )}
       </div>
       <div className="card">
         <h3>Your name</h3>
