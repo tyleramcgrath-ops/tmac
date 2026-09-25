@@ -156,7 +156,7 @@ const MAX_PER_HOUR = 30
 
 export async function handleFormPost(bundle: SiteBundle, req: Request, opts: ServeOptions, store: Store = getStore()): Promise<Response> {
   const base = opts.basePath ?? ''
-  const back = backPath(req, base)
+  let back = '/'
   const done = () => new Response(null, { status: 303, headers: { location: `${base}${back}#sent`, 'cache-control': 'no-store' } })
 
   let data: FormData
@@ -167,11 +167,15 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
   }
   const field = (k: string, max: number) => String(data.get(k) ?? '').trim().slice(0, max)
   const formId = field('form', 64)
-  const form = bundle.pages
-    .filter((p) => p.status === 'published')
-    .flatMap((p) => [...walk(p.body)])
-    .find((el) => el.type === 'form' && el.id === formId)
+  const homes = bundle.pages.filter((p) => p.status === 'published' && [...walk(p.body)].some((el) => el.type === 'form' && el.id === formId))
+  const form = homes.length ? [...walk(homes[0].body)].find((el) => el.type === 'form' && el.id === formId) : undefined
   if (!form || form.type !== 'form') return new Response('Not found', { status: 404 })
+  // Back to the page the form is on, where the thank-you note shows. The
+  // Referer only picks between pages that share a form; browsers and proxies
+  // don't always send it, or send it with a different host.
+  const paths = homes.map((p) => pagePath(p))
+  const ref = backPath(req, base)
+  back = paths.includes(ref) ? ref : paths[0]
 
   // Bots fill every field; people never see this one. Pretend it worked.
   if (field('website', 200)) return done()
