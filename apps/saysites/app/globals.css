@@ -505,3 +505,43 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 @media (max-width: 760px) { .milestones .marks { grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .mark.fresh .seal, .mark.fresh .mark-label { animation: none; } }
 .site-mono-img { background: #fff; object-fit: contain; padding: 0; box-shadow: 0 0 0 1px var(--line); }
+
+/* Visibility */
+.dial { position: relative; display: grid; place-items: center; flex: none; }
+.dial svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.dial-track, .dial-fill { fill: none; stroke-width: 7; stroke-linecap: round; }
+.dial-track { stroke: var(--line); }
+.dial-fill { stroke: var(--ink); transition: stroke-dasharray .2s linear; }
+.dial-text { display: grid; justify-items: center; line-height: 1; gap: .4em; max-width: 72%; text-align: center; }
+.dial-text strong { font-size: 3.1em; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.dial-text span { font-size: .62em; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.dial-gain { position: absolute; bottom: 2%; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--mint); background: var(--mint-soft); padding: 3px 10px; border-radius: 999px; animation: dial-gain .6s cubic-bezier(.2, 1.4, .3, 1) 1.5s backwards; }
+@keyframes dial-gain { from { opacity: 0; transform: translate(-50%, 6px) scale(.9); } }
+.vis-top { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
+.vis-score { display: flex; gap: 28px; align-items: center; }
+.vis-areas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; flex: 1; min-width: 0; }
+.vis-areas li { display: grid; grid-template-columns: 96px minmax(0, 1fr) 44px; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+.vis-bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.vis-bar i { display: block; height: 100%; background: var(--ink); border-radius: 3px; }
+.vis-league { display: grid; gap: 8px; align-content: start; position: relative; overflow: hidden; }
+.vis-league h3 { margin: 0; }
+.league-seal { justify-self: start; display: inline-grid; place-items: center; width: 88px; height: 88px; border-radius: 50%; border: 1.5px dashed var(--ink-3); margin: 6px 0; transform: rotate(-8deg); }
+.league-seal span { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); text-align: center; line-height: 1.2; padding: 0 10px; }
+.quests { list-style: none; margin: 0; padding: 0; display: grid; }
+.quest { display: grid; grid-template-columns: 52px minmax(0, 1fr) 110px auto; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+.quest:first-child { border-top: 0; }
+.quest-pts { font-weight: 800; font-size: 18px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.quest-body { display: grid; gap: 2px; min-width: 0; }
+.quest-area { text-align: right; }
+.vis-card { display: flex; gap: 20px; align-items: center; }
+.vis-card .vis-next { display: grid; gap: 6px; min-width: 0; }
+.vis-card .vis-next .btn { justify-self: start; }
+@media (max-width: 760px) {
+  .vis-top { grid-template-columns: 1fr; }
+  .vis-score { flex-direction: column; align-items: stretch; }
+  .vis-score .dial { align-self: center; }
+  .quest { grid-template-columns: 44px minmax(0, 1fr); }
+  .quest-area { display: none; }
+  .quest .btn { grid-column: 2; justify-self: start; }
+  .vis-card { flex-direction: column; align-items: flex-start; }
+}

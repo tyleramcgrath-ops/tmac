@@ -8,6 +8,7 @@ export function SiteTabs({ siteId, unread }: { siteId: string; unread: number })
   const base = `/dashboard/sites/${siteId}`
   const tabs = [
     { href: base, label: 'Overview' },
+    { href: `${base}/visibility`, label: 'Visibility' },
     { href: `${base}/sofie`, label: 'Sofie' },
     { href: `${base}/messages`, label: 'Messages', badge: unread },
     { href: `${base}/visitors`, label: 'Visitors' },

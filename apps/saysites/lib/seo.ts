@@ -100,6 +100,7 @@ function localBusiness(site: Site, origin: string): object {
   if (b.priceRange) data.priceRange = b.priceRange
   if (b.hours?.length) data.openingHours = b.hours
   if (b.sameAs?.length) data.sameAs = b.sameAs
+  if (b.area) data.areaServed = b.area
   if (b.address) {
     data.address = {
       '@type': 'PostalAddress',

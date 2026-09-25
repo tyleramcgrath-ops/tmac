@@ -22,10 +22,12 @@ export function SofieStudio(props: {
   ready: boolean
   // A Talk & Design prompt to send as soon as the studio opens.
   autostart?: string
+  // Put in the message box for the owner to finish or send.
+  prefill?: string
 }) {
   const [state, setState] = useState<StudioState>(props.initial)
   const [pending, setPending] = useState<string | null>(null)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(props.prefill ?? '')
   const [page, setPage] = useState('')
   const [device, setDevice] = useState<'desktop' | 'phone'>('desktop')
   const [version, setVersion] = useState(0)
