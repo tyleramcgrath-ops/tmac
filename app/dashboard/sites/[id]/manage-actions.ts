@@ -16,8 +16,8 @@ import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
-import { loadAccess } from '@/lib/billing'
-import { LIMIT_NOTE, costMicros, overCap, siteBudget } from '@/lib/usage'
+import { canSell, loadAccess } from '@/lib/billing'
+import { LIMIT_NOTE, costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 
 async function ownSite(siteId: string) {
@@ -179,6 +179,8 @@ async function changeSite(siteId: string, fn: (s: Site) => Site) {
 }
 
 export async function saveProduct(siteId: string, productId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const owner = await ownSite(siteId)
+  if (!canSell(await loadAccess(owner.store, owner.user))) return { error: 'Selling online is on the Store plan. Switch plans on your Account page to add products.' }
   const name = str(form, 'name', 120)
   if (!name) return { error: 'Give the product a name.' }
   const priceText = str(form, 'price', 20).replace(/[$,£€\s]/g, '')
@@ -457,11 +459,12 @@ export async function requestLogoIdeas(siteId: string, ask: string): Promise<Log
   const access = await loadAccess(store, user)
   if (access.locked) return { ...logoView(state), error: 'Your free trial has ended. Start your plan on the Account page to keep designing.' }
   const today = dayString(new Date())
-  const [siteTotal, siteToday, siteTrial, allToday] = await Promise.all([store.siteUsage(site.id, '2000-01-01'), store.siteUsage(site.id, today), store.siteUsage(site.id, dayString(new Date(user.createdAt))), store.dayUsage(today)])
-  const capped = overCap({ siteTotal: siteTotal.micros, siteToday: siteToday.micros, siteTrial: siteTrial.micros, allToday: allToday.micros, trial: access.status === 'trial' })
+  const spend = await loadSpend(store, site.id, user.createdAt)
+  const payer = { status: access.status, plan: access.billing?.plan }
+  const capped = overCap(spend, payer)
   if (capped) return { ...logoView(state), error: capped.message }
   // A round of logo ideas costs about a dollar; keep room so the site stays under its limit.
-  if (siteBudget(siteTotal.micros) < 1.5e6) return { ...logoView(state), error: LIMIT_NOTE }
+  if (siteBudget(spend, payer) < 1.5e6) return { ...logoView(state), error: LIMIT_NOTE }
   const brief = ask.trim().slice(0, 500)
   const started: LogoIdeasState = { ...state, brief, pending: { at: new Date().toISOString() }, error: null }
   await store.saveLogoIdeas(site.id, started)

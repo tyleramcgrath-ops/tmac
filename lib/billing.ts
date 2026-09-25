@@ -12,6 +12,38 @@ export const TRIAL_DAYS = 7
 const DAY = 24 * 3600 * 1000
 
 export type BillingStatus = 'trial' | 'active' | 'past_due' | 'canceled' | 'comp'
+export type Plan = 'site' | 'store'
+export type Interval = 'month' | 'year'
+
+// The prices, in dollars. Yearly is two months free. Each plan/interval is
+// its own Stripe price (env below); only the monthly Site price is required.
+export const PRICES: Record<Plan, Record<Interval, number>> = {
+  site: { month: 15, year: 150 },
+  store: { month: 25, year: 250 },
+}
+
+const PRICE_ENV: Record<Plan, Record<Interval, string>> = {
+  site: { month: 'STRIPE_PRICE_ID', year: 'STRIPE_PRICE_SITE_YEARLY' },
+  store: { month: 'STRIPE_PRICE_STORE', year: 'STRIPE_PRICE_STORE_YEARLY' },
+}
+
+export function priceId(plan: Plan, interval: Interval): string | undefined {
+  return process.env[PRICE_ENV[plan][interval]] || undefined
+}
+
+// Which plan a Stripe price is, from the env above.
+export function planForPrice(id: string | null | undefined): { plan: Plan; interval: Interval } | null {
+  if (!id) return null
+  for (const plan of ['site', 'store'] as const) for (const interval of ['month', 'year'] as const) if (priceId(plan, interval) === id) return { plan, interval }
+  return null
+}
+
+export function cleanPlan(v: unknown): Plan {
+  return v === 'store' ? 'store' : 'site'
+}
+export function cleanInterval(v: unknown): Interval {
+  return v === 'year' ? 'year' : 'month'
+}
 
 export interface Billing {
   status: BillingStatus
@@ -21,6 +53,9 @@ export interface Billing {
   // A promo code the owner arrived with, applied at checkout.
   promo?: string
   currentPeriodEnd?: string
+  // The plan they pay for (Site unless they chose Store).
+  plan?: Plan
+  interval?: Interval
   // When real feedback earned this account its free months (once only).
   feedbackReward?: string
 }
@@ -80,6 +115,12 @@ export function withFeedbackReward(b: Billing, now = Date.now()): Billing | null
 export function cleanPromo(code: string | null | undefined): string | undefined {
   const c = (code ?? '').trim().toUpperCase()
   return /^[A-Z0-9_-]{2,40}$/.test(c) ? c : undefined
+}
+
+// Selling online is the Store plan. Everyone can try it during the trial,
+// comped accounts always can, and nobody is blocked before billing is live.
+export function canSell(a: Access & { billing: Billing | null }): boolean {
+  return !billingReady() || a.status === 'trial' || a.status === 'comp' || a.billing?.plan === 'store'
 }
 
 export async function loadAccess(store: { billing(userId: string): Promise<Billing | null> }, user: User): Promise<Access & { billing: Billing | null }> {

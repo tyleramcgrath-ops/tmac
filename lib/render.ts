@@ -167,8 +167,9 @@ function renderWidget(w: Widget): string {
   }
 }
 
+// Accepts a day ("2026-09-28") or a full timestamp.
 export function formatDate(iso: string, locale = 'en-US'): string {
-  return new Date(`${iso}T12:00:00Z`).toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+  return new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString(locale, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
 }
 
 function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {

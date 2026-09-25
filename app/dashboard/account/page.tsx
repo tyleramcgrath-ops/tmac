@@ -1,7 +1,7 @@
 import { changePassword, deleteAccount, updateName } from '@/app/actions'
 import { ActionForm } from '@/components/ActionForm'
 import { requireUser } from '@/lib/session'
-import { billingReady, loadAccess } from '@/lib/billing'
+import { PRICES, billingReady, loadAccess, priceId } from '@/lib/billing'
 import { getStore } from '@/lib/store'
 import { formatDate } from '@/lib/render'
 import { managePlan, startPlan } from './billing-actions'
@@ -33,8 +33,10 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
           <p className="muted">Complimentary. Everything is included.</p>
         ) : a.status === 'active' || a.status === 'past_due' ? (
           <>
-            <p className="muted">{a.status === 'past_due' ? 'Your last payment didn’t go through. Please update your card to keep your site going.' : `Active${a.billing?.currentPeriodEnd ? `, renews ${formatDate(a.billing.currentPeriodEnd)}` : ''}.`}</p>
+            <p><strong>{a.billing?.plan === 'store' ? 'Store' : 'Site'} plan</strong>{a.billing?.interval === 'year' ? ', billed yearly' : ', billed monthly'}</p>
+            <p className="muted">{a.status === 'past_due' ? 'Your last payment didn’t go through. Please update your card to keep your site going.' : `Active${a.billing?.currentPeriodEnd ? `, renews ${formatDate(a.billing.currentPeriodEnd.slice(0, 10))}` : ''}.`}</p>
             <form action={managePlan}><button className="btn btn-ghost" type="submit">Manage billing</button></form>
+            <p className="small muted">Switch plans, change your card, see invoices or cancel, all in Manage billing.</p>
           </>
         ) : (
           <>
@@ -44,13 +46,36 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                 : a.status === 'canceled'
                   ? 'Your plan is cancelled. Start it again any time.'
                   : a.billing?.feedbackReward
-                    ? `Free until ${formatDate(a.billing.trialEndsAt)}: three months on us, for your feedback. Thank you.`
+                    ? `Free until ${formatDate(a.billing.trialEndsAt.slice(0, 10))}: three months on us, for your feedback. Thank you.`
                     : `Free trial: ${a.daysLeft} day${a.daysLeft === 1 ? '' : 's'} left.`}
             </p>
             {billingReady() ? (
-              <form action={startPlan} className="row" style={{ alignItems: 'end' }}>
-                <label className="field"><span>Promo code <em className="muted">(optional)</em></span><input className="input" name="promo" defaultValue={promo ?? ''} maxLength={40} autoCapitalize="characters" /></label>
-                <button className="btn btn-primary" type="submit">Start my plan</button>
+              <form action={startPlan} className="stack plan-form">
+                <fieldset className="plan-pick">
+                  <legend className="small muted">Choose a plan</legend>
+                  <label>
+                    <input type="radio" name="plan" value="site" defaultChecked />
+                    <span><b>Site</b> ${PRICES.site.month}/month<small>Your website, domain, hosting, SEO, call tracking and Sofie for everyday changes.</small></span>
+                  </label>
+                  {priceId('store', 'month') && (
+                    <label>
+                      <input type="radio" name="plan" value="store" />
+                      <span><b>Store</b> ${PRICES.store.month}/month<small>Everything in Site, plus products and a Shop page. 0% of your sales, and a bigger Sofie allowance.</small></span>
+                    </label>
+                  )}
+                </fieldset>
+                {priceId('site', 'year') && (
+                  <fieldset className="plan-pick plan-pick-row">
+                    <legend className="small muted">Pay</legend>
+                    <label><input type="radio" name="interval" value="month" defaultChecked /><span><b>Monthly</b></span></label>
+                    <label><input type="radio" name="interval" value="year" /><span><b>Yearly</b> two months free (${PRICES.site.year} or ${PRICES.store.year} a year)</span></label>
+                  </fieldset>
+                )}
+                <div className="row" style={{ alignItems: 'end' }}>
+                  <label className="field"><span>Promo code <em className="muted">(optional)</em></span><input className="input" name="promo" defaultValue={promo ?? ''} maxLength={40} autoCapitalize="characters" /></label>
+                  <button className="btn btn-primary" type="submit">Start my plan</button>
+                </div>
+                {!a.locked && a.status === 'trial' && <p className="small muted">You won’t be charged until your free time ends{a.billing?.trialEndsAt ? ` on ${formatDate(a.billing.trialEndsAt.slice(0, 10))}` : ''}.</p>}
               </form>
             ) : (
               <p className="small muted">Plans open very soon{promo ? `. Your code ${promo} is saved and will be applied.` : '.'}</p>
