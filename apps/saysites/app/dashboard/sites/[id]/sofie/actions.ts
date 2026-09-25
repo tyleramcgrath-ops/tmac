@@ -4,6 +4,7 @@ import { after } from 'next/server'
 import { askSofie, type ChatTurn } from '@/lib/sofie'
 import { requireUser } from '@/lib/session'
 import { getStore, type SofieState } from '@/lib/store'
+import { syncSitePhotos } from '@/lib/sites'
 import type { Page, Site } from '@/lib/schema'
 
 export interface StudioState {
@@ -80,7 +81,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
     const current = state.draft ?? live
     try {
       const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
-      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos })
+      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id) })
       for (const m of result.media) {
         await store.addMedia({ id: m.id, siteId: site.id, mime: m.mime, width: m.width, height: m.height, alt: m.alt }, Buffer.from(m.data, 'utf8'))
       }
@@ -136,7 +137,8 @@ export async function publishDraft(siteId: string): Promise<StudioState> {
     const id = known.has(p.id) ? p.id : `page_${crypto.randomUUID()}`
     await store.savePage({ ...p, id, siteId: site.id, updatedAt: new Date().toISOString() }, 'sofie', user.id, 'Published from Sofie')
   }
-  const next = { chat: [...state.chat, { role: 'sofie' as const, text: 'Published. Your changes are live.', at: new Date().toISOString() }], draft: null, history: [] }
+  await syncSitePhotos(site.id, store)
+  const next = { chat: [...state.chat, { role: 'sofie' as const, text: 'Published. Your changes are live. Tap “View live site” at the top to see them.', at: new Date().toISOString() }], draft: null, history: [] }
   await store.saveSofieState(site.id, next)
   return view(next, { site: nextSite, pages: await store.pagesForSite(site.id) })
 }

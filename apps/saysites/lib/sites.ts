@@ -3,6 +3,7 @@
 import { classifyHost } from './hosts'
 import type { Page, Redirect, Site } from './schema'
 import { getStore, type Store } from './store'
+import { isStock, photoUses } from './photo-rules'
 
 export interface SiteBundle {
   site: Site
@@ -31,4 +32,12 @@ export async function resolveHost(rawHost: string | null, store: Store = getStor
   if (!bundle) return null
   const preview = kind.host.endsWith('.vercel.app') || kind.host.endsWith('.localhost')
   return { bundle, preview }
+}
+
+// Records which stock photos the site's live pages use, so no other
+// customer's site is given them (lib/photo-rules).
+export async function syncSitePhotos(siteId: string, store: Store = getStore()): Promise<void> {
+  const pages = await store.pagesForSite(siteId)
+  const keys = [...new Set(photoUses(pages).filter((u) => isStock(u.src)).map((u) => u.key))]
+  await store.setSitePhotos(siteId, keys)
 }

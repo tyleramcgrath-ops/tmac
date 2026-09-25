@@ -629,3 +629,22 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .vibe .vibe-block { color: #7a2620; font-weight: 600; }
 .vibe ul { margin: 6px 0 0; padding-left: 18px; }
 .vibe .btn { justify-self: start; }
+
+/* New site: the form on the left, the owner's own site building live on the right. */
+.new-grid { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.new-preview { position: sticky; top: 20px; display: grid; gap: 10px; }
+.new-preview-bar { display: flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); border-bottom: 0; border-radius: 12px 12px 0 0; padding: 10px 14px; margin-bottom: -10px; font-size: 13px; color: var(--ink-3); }
+.new-preview-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.new-preview-bar span { margin-left: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.new-preview-frame { position: relative; height: min(78vh, 760px); border: 1px solid var(--line); border-radius: 0 0 12px 12px; overflow: hidden; background: var(--paper); display: grid; place-items: center; }
+.new-preview-frame p { max-width: 280px; text-align: center; padding: 20px; }
+/* Drawn at desktop width, shrunk to fit. */
+.new-preview-frame iframe { position: absolute; top: 0; left: 0; width: 1280px; height: calc(100% / 0.52); border: 0; transform: scale(0.52); transform-origin: 0 0; background: #fff; }
+.linkish { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: inherit; text-decoration: underline; cursor: pointer; }
+@media (max-width: 1180px) { .new-preview-frame iframe { transform: scale(0.44); height: calc(100% / 0.44); } }
+@media (max-width: 900px) {
+  .new-grid { grid-template-columns: 1fr; }
+  .new-preview { position: static; order: -1; }
+  .new-preview-frame { height: 380px; }
+  .new-preview-frame iframe { width: 390px; transform: scale(0.8); height: calc(100% / 0.8); left: 50%; margin-left: -156px; }
+}
