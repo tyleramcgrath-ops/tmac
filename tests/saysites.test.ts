@@ -864,3 +864,41 @@ describe('SaySites: logos Sofie draws', async () => {
     expect(runTool(ws, 'design_logo', { svg: '<svg viewBox="0 0 10 80"><rect/></svg>', icon_svg: '', alt: '', summary: 'x' })).toMatch(/wider than it is tall/)
   })
 })
+
+describe('SaySites: logo ideas', async () => {
+  const { drawLogoIdeas } = await import('../apps/saysites/lib/logo-ideas')
+  const good = (n: number) => ({ name: `Idea ${n}`, note: 'A note', svg: `<svg viewBox="0 0 360 80"><circle cx="40" cy="40" r="30" fill="#123456"/><text x="90" y="52" font-size="36">Co ${n}</text></svg>`, icon_svg: '<svg viewBox="0 0 64 64"><rect width="64" height="64" fill="#123456"/></svg>' })
+  const fakeClient = (replies: unknown[]) => {
+    const calls: unknown[] = []
+    const client = { beta: { messages: { create: async (p: unknown) => { calls.push(p); return { content: [{ type: 'tool_use', id: `t${calls.length}`, name: 'present_logos', input: replies[calls.length - 1] }] } } } } }
+    return { client: client as never, calls }
+  }
+  const { site } = buildStarterSite({ name: 'Idea Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, 'org_x', 'idea-co')
+
+  it('keeps three clean ideas from one call', async () => {
+    const { client, calls } = fakeClient([{ ideas: [good(1), good(2), good(3)] }])
+    const ideas = await drawLogoIdeas(site, 'friendly', client)
+    expect(ideas.map((i) => i.name)).toEqual(['Idea 1', 'Idea 2', 'Idea 3'])
+    expect(ideas[0].logo.svg).toContain('xmlns="http://www.w3.org/2000/svg"')
+    expect(calls).toHaveLength(1)
+  })
+
+  it('asks once more when an idea breaks the rules, and keeps the better round', async () => {
+    const bad = { ...good(3), svg: '<svg viewBox="0 0 360 80"><script>x</script></svg>' }
+    const { client, calls } = fakeClient([{ ideas: [good(1), good(2), bad] }, { ideas: [good(4), good(5), good(6)] }])
+    const ideas = await drawLogoIdeas(site, '', client)
+    expect(calls).toHaveLength(2)
+    expect(ideas.map((i) => i.name)).toEqual(['Idea 4', 'Idea 5', 'Idea 6'])
+  })
+
+  it('stores ideas per site and forgets them with the site', async () => {
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'l@example.com', name: 'L', passwordHash: 'x' })
+    const made = buildStarterSite({ name: 'Idea Co', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leaks'], palette: 'ocean' }, `org_${user.id}`, 'idea-co')
+    await store.createSite(user.id, made.site, made.pages)
+    await store.saveLogoIdeas(made.site.id, { ideas: [{ name: 'A', note: '', logo: '/u/a', icon: '/u/b' }] })
+    expect((await store.logoIdeas(made.site.id)).ideas).toHaveLength(1)
+    await store.deleteSite(user.id, made.site.id)
+    expect((await store.logoIdeas(made.site.id)).ideas).toEqual([])
+  })
+})

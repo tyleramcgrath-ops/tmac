@@ -23,6 +23,21 @@ export interface SofieState {
   error?: string | null
 }
 
+// Logo ideas Sofie sketched for the owner to choose from.
+export interface LogoIdea {
+  name: string
+  note: string
+  // /u/<id> files: the lockup and the square icon.
+  logo: string
+  icon: string
+}
+export interface LogoIdeasState {
+  ideas: LogoIdea[]
+  brief?: string
+  pending?: { at: string } | null
+  error?: string | null
+}
+
 export interface User {
   id: string
   email: string
@@ -95,6 +110,8 @@ export interface Store {
   unreadCount(siteId: string): Promise<number>
   // Messages received since a time, for rate limiting a site's form.
   recentMessageCount(siteId: string, since: Date): Promise<number>
+  logoIdeas(siteId: string): Promise<LogoIdeasState>
+  saveLogoIdeas(siteId: string, state: LogoIdeasState): Promise<void>
   // One page view on a live site. `day` is YYYY-MM-DD (UTC).
   recordVisit(siteId: string, day: string, path: string): Promise<void>
   // Page views per day and page since a day (inclusive).
@@ -185,6 +202,11 @@ CREATE TABLE IF NOT EXISTS ss_visits (
   path TEXT NOT NULL,
   views INTEGER NOT NULL DEFAULT 0,
   PRIMARY KEY (site_id, day, path)
+);
+CREATE TABLE IF NOT EXISTS ss_logo_ideas (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
@@ -337,6 +359,13 @@ class PgStore implements Store {
     const r = await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_messages WHERE site_id = $1 AND created_at > $2', [siteId, since.toISOString()])
     return Number(r[0]?.n ?? 0)
   }
+  async logoIdeas(siteId: string) {
+    const r = (await this.q<{ data: LogoIdeasState }>('SELECT data FROM ss_logo_ideas WHERE site_id = $1', [siteId]))[0]
+    return r ? r.data : { ideas: [] }
+  }
+  async saveLogoIdeas(siteId: string, state: LogoIdeasState) {
+    await this.q('INSERT INTO ss_logo_ideas (site_id, data) VALUES ($1,$2) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, state])
+  }
   async recordVisit(siteId: string, day: string, path: string) {
     await this.q('INSERT INTO ss_visits (site_id, day, path, views) VALUES ($1,$2,$3,1) ON CONFLICT (site_id, day, path) DO UPDATE SET views = ss_visits.views + 1', [siteId, day, path])
   }
@@ -447,6 +476,7 @@ export class MemoryStore implements Store {
     this.messages = this.messages.filter((m) => m.siteId !== siteId)
     for (const [id, x] of this.media) if (x.meta.siteId === siteId) this.media.delete(id)
     for (const [k, v] of this.visits) if (v.siteId === siteId) this.visits.delete(k)
+    this.logos.delete(siteId)
   }
   async deleteUser(userId: string) {
     for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)
@@ -479,6 +509,13 @@ export class MemoryStore implements Store {
   }
   async recentMessageCount(siteId: string, since: Date) {
     return this.messages.filter((m) => m.siteId === siteId && Date.parse(m.createdAt) > since.getTime()).length
+  }
+  private logos = new Map<string, LogoIdeasState>()
+  async logoIdeas(siteId: string) {
+    return structuredClone(this.logos.get(siteId) ?? { ideas: [] })
+  }
+  async saveLogoIdeas(siteId: string, state: LogoIdeasState) {
+    this.logos.set(siteId, structuredClone(state))
   }
   private visits = new Map<string, Visit & { siteId: string }>()
   async recordVisit(siteId: string, day: string, path: string) {

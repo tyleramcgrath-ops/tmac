@@ -532,7 +532,7 @@ const MAX_STEPS = 16
 // where an older SDK (without the newest request fields) is installed, such
 // as the repository root that type-checks the tests.
 type CreateParams = Record<string, unknown> & { messages: Anthropic.Beta.BetaMessageParam[] }
-function createMessage(client: Anthropic, params: CreateParams): Promise<Anthropic.Beta.BetaMessage> {
+export function createMessage(client: Anthropic, params: CreateParams): Promise<Anthropic.Beta.BetaMessage> {
   const create = client.beta.messages.create as unknown as (p: CreateParams) => Promise<Anthropic.Beta.BetaMessage>
   return create.call(client.beta.messages, params)
 }
