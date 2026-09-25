@@ -25,6 +25,7 @@ import { BUSINESS_TYPES, buildStarterSite, type BusinessTypeKey } from './starte
 import { isStock, photoKey, photoUses, repeatedPhotos } from './photo-rules'
 import type { Credit, FoundPhoto } from './unsplash'
 import type { PhotoSet } from './photos'
+import type { Tokens } from './usage'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -632,6 +633,8 @@ const PHOTO_LIST = Object.entries(PHOTOS)
 
 export const SOFIE_SYSTEM = `You are Sofie, the website assistant inside SaySites, a website builder for small local businesses. The person you are talking to owns the business and is usually not technical. You change their website by calling tools; you never write HTML.
 
+How owners talk: most are busy American small-business owners. They write fast and blunt, skip punctuation, make typos, swear, vent and say things like "this looks like shit, fix it" or "just do it". That is normal, not rudeness: never lecture, never comment on their language, never get formal or defensive. Read it as "I want this, now" and do it right away. Keep replies short and plain, like a sharp friend who handles it: what you did, in a sentence or two. Swearing never goes onto their website; the site always reads professional for their customers.
+
 How to work:
 - Do what they ask, fully, in as few tool calls as makes sense. If a request is ambiguous in a way that matters (which page, what the new wording should say, a fact you don't know), ask one short question instead of guessing.
 - Never invent facts about the business: prices, licenses, certifications, awards, reviews, years in business, guarantees. Use only what the owner told you or what is already on the site. If they ask for something that needs a fact you don't have, ask for it.
@@ -667,6 +670,8 @@ export interface SofieResult {
   media: NewMedia[]
   snapshot: Snapshot
   problems: string[]
+  // Tokens used across every step, for costing (lib/usage).
+  usage: Required<Tokens>
 }
 
 const MAX_STEPS = 16
@@ -707,7 +712,9 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
 
   let reply = ''
   let gateRounds = 0
+  const usage = { input_tokens: 0, output_tokens: 0, cache_creation_input_tokens: 0, cache_read_input_tokens: 0 }
   for (let step = 0; step < MAX_STEPS; step++) {
+    cacheLatest(messages)
     const response = await createMessage(client, {
       model: SOFIE_MODEL,
       max_tokens: 16000,
@@ -722,6 +729,8 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
       messages,
     })
 
+    const u = response.usage as Tokens | undefined
+    if (u) for (const k of Object.keys(usage) as (keyof typeof usage)[]) usage[k] += u[k] ?? 0
     if (response.stop_reason === 'refusal') {
       reply = 'Sorry, I can’t help with that one. Could you put it another way?'
       break
@@ -775,5 +784,21 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   // Only files the final draft still uses (she may have drawn a few versions).
   const used = JSON.stringify(ws.site.business)
   const media = ws.media.filter((m) => used.includes(`/u/${m.id}`))
-  return { reply, changes: ws.changes, media, snapshot: ws.snapshot(), problems: ws.problems() }
+  return { reply, changes: ws.changes, media, snapshot: ws.snapshot(), problems: ws.problems(), usage }
+}
+
+// Each step re-sends the whole conversation (the site, then every tool call
+// and result). Marking the newest message lets the next step read all of
+// that from the prompt cache at a tenth of the price. One moving marker plus
+// the system prompt's stays within the API's four.
+export function cacheLatest(messages: Anthropic.Beta.BetaMessageParam[]): void {
+  for (const m of messages) {
+    if (Array.isArray(m.content)) for (const b of m.content) delete (b as { cache_control?: unknown }).cache_control
+  }
+  const last = messages[messages.length - 1]
+  if (!last) return
+  if (typeof last.content === 'string') last.content = [{ type: 'text', text: last.content }]
+  const blocks = last.content as { type: string; cache_control?: { type: 'ephemeral' } }[]
+  const target = [...blocks].reverse().find((b) => b.type === 'text' || b.type === 'tool_result' || b.type === 'image')
+  if (target) target.cache_control = { type: 'ephemeral' }
 }

@@ -5,6 +5,7 @@
 // shows a "test mode" notice because that data does not survive a restart.
 // Every site and page is validated against the schema on the way in and out.
 
+import type { Billing } from './billing'
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
 import { SHOWCASE } from './showcase'
@@ -139,6 +140,26 @@ export interface Store {
   // A small shared cache (e.g. photo search results), fresh for `maxAgeMs`.
   cacheGet(key: string, maxAgeMs: number): Promise<unknown | null>
   cacheSet(key: string, data: unknown): Promise<void>
+  // Billing per account (lib/billing), and the lookup Stripe's webhook needs.
+  billing(userId: string): Promise<Billing | null>
+  saveBilling(userId: string, b: Billing): Promise<void>
+  // AI spend in millionths of a dollar, per site per day (lib/usage).
+  recordUsage(siteId: string, day: string, micros: number): Promise<void>
+  siteUsage(siteId: string, sinceDay: string): Promise<{ micros: number; messages: number }>
+  dayUsage(day: string): Promise<{ micros: number; messages: number }>
+  // What people tell us about SaySites itself (the feedback button).
+  addFeedback(f: Feedback): Promise<void>
+  feedback(limit: number): Promise<Feedback[]>
+}
+
+export interface Feedback {
+  id: string
+  userId: string | null
+  name: string
+  email: string
+  text: string
+  page: string
+  at: string
 }
 
 // Page views are counted per day and page, and nothing else: no cookies,
@@ -245,6 +266,24 @@ CREATE TABLE IF NOT EXISTS ss_photos (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_photos_site_idx ON ss_photos (site_id);
+CREATE TABLE IF NOT EXISTS ss_billing (
+  user_id TEXT PRIMARY KEY REFERENCES ss_users(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_usage (
+  site_id TEXT NOT NULL,
+  day DATE NOT NULL,
+  micros BIGINT NOT NULL DEFAULT 0,
+  messages INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (site_id, day)
+);
+CREATE INDEX IF NOT EXISTS ss_usage_day_idx ON ss_usage (day);
+CREATE TABLE IF NOT EXISTS ss_feedback (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 CREATE TABLE IF NOT EXISTS ss_cache (
   key TEXT PRIMARY KEY,
   data JSONB NOT NULL,
@@ -456,6 +495,30 @@ class PgStore implements Store {
       : await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_previews WHERE created_at > $1', [since])
     return Number(r[0]?.n ?? 0)
   }
+  async addFeedback(f: Feedback) {
+    await this.q('INSERT INTO ss_feedback (id, data) VALUES ($1,$2)', [f.id, JSON.stringify(f)])
+  }
+  async feedback(limit: number) {
+    return (await this.q<{ data: Feedback }>('SELECT data FROM ss_feedback ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
+  }
+  async billing(userId: string) {
+    const r = await this.q<{ data: Billing }>('SELECT data FROM ss_billing WHERE user_id = $1', [userId])
+    return r[0]?.data ?? null
+  }
+  async saveBilling(userId: string, b: Billing) {
+    await this.q('INSERT INTO ss_billing (user_id, data) VALUES ($1,$2) ON CONFLICT (user_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [userId, JSON.stringify(b)])
+  }
+  async recordUsage(siteId: string, day: string, micros: number) {
+    await this.q('INSERT INTO ss_usage (site_id, day, micros, messages) VALUES ($1,$2,$3,1) ON CONFLICT (site_id, day) DO UPDATE SET micros = ss_usage.micros + EXCLUDED.micros, messages = ss_usage.messages + 1', [siteId, day, Math.round(micros)])
+  }
+  async siteUsage(siteId: string, sinceDay: string) {
+    const r = await this.q<{ m: string | null; n: string | null }>('SELECT sum(micros) AS m, sum(messages) AS n FROM ss_usage WHERE site_id = $1 AND day >= $2', [siteId, sinceDay])
+    return { micros: Number(r[0]?.m ?? 0), messages: Number(r[0]?.n ?? 0) }
+  }
+  async dayUsage(day: string) {
+    const r = await this.q<{ m: string | null; n: string | null }>('SELECT sum(micros) AS m, sum(messages) AS n FROM ss_usage WHERE day = $1', [day])
+    return { micros: Number(r[0]?.m ?? 0), messages: Number(r[0]?.n ?? 0) }
+  }
   async cacheGet(key: string, maxAgeMs: number) {
     const r = await this.q<{ data: unknown }>('SELECT data FROM ss_cache WHERE key = $1 AND created_at > $2', [key, new Date(Date.now() - maxAgeMs)])
     return r[0]?.data ?? null
@@ -663,6 +726,41 @@ export class MemoryStore implements Store {
   }
   async previewCount(since: Date, who?: string) {
     return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
+  }
+  private notes: Feedback[] = []
+  async addFeedback(f: Feedback) {
+    this.notes.unshift(f)
+  }
+  async feedback(limit: number) {
+    return this.notes.slice(0, limit)
+  }
+  private bills = new Map<string, Billing>()
+  async billing(userId: string) {
+    return this.bills.get(userId) ?? null
+  }
+  async saveBilling(userId: string, b: Billing) {
+    this.bills.set(userId, b)
+  }
+  private usage = new Map<string, { micros: number; messages: number }>()
+  async recordUsage(siteId: string, day: string, micros: number) {
+    const k = `${siteId}|${day}`
+    const u = this.usage.get(k) ?? { micros: 0, messages: 0 }
+    this.usage.set(k, { micros: u.micros + Math.round(micros), messages: u.messages + 1 })
+  }
+  async siteUsage(siteId: string, sinceDay: string) {
+    let micros = 0
+    let messages = 0
+    for (const [k, u] of this.usage) {
+      const [site, day] = k.split('|')
+      if (site === siteId && day >= sinceDay) (micros += u.micros), (messages += u.messages)
+    }
+    return { micros, messages }
+  }
+  async dayUsage(day: string) {
+    let micros = 0
+    let messages = 0
+    for (const [k, u] of this.usage) if (k.endsWith(`|${day}`)) (micros += u.micros), (messages += u.messages)
+    return { micros, messages }
   }
   private cache = new Map<string, { data: unknown; at: number }>()
   async cacheGet(key: string, maxAgeMs: number) {
