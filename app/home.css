@@ -488,6 +488,7 @@
 .home .bd-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .home .bd-error { color: #9b2c2c; margin: 0; }
 .home .bd-thanks { font-size: 18px; }
+.home .bd-fine { margin-top: 14px; font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 46ch; }
 .home .fb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 @media (max-width: 700px) { .home .bd-row { grid-template-columns: 1fr; } }
 .home .head-note { max-width: 640px; margin-top: 18px; color: var(--mu); font-size: 18px; line-height: 1.55; }

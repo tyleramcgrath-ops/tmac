@@ -656,6 +656,10 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .fb-panel { width: min(360px, calc(100vw - 32px)); display: grid; gap: 10px; box-shadow: 0 12px 40px rgba(0, 0, 0, .18); }
 .fb-panel .field { margin: 0; }
 .fb-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.fb-offer { margin: 0; font-size: 13px; color: var(--ink-3); display: grid; gap: 6px; }
+.fb-offer.is-earned { color: var(--mint); font-weight: 600; }
+.fb-meter { display: block; height: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.fb-meter i { display: block; height: 100%; background: var(--mint); transition: width .2s; }
 .fb-list { display: grid; gap: 12px; }
 .fb-item p { white-space: pre-wrap; margin: 6px 0 0; }
 

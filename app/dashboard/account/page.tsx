@@ -43,7 +43,9 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                 ? 'Your free trial has ended. Your website and everything you’ve made are saved. Start your plan to keep editing and keep Sofie working for you.'
                 : a.status === 'canceled'
                   ? 'Your plan is cancelled. Start it again any time.'
-                  : `Free trial: ${a.daysLeft} day${a.daysLeft === 1 ? '' : 's'} left.`}
+                  : a.billing?.feedbackReward
+                    ? `Free until ${formatDate(a.billing.trialEndsAt)}: three months on us, for your feedback. Thank you.`
+                    : `Free trial: ${a.daysLeft} day${a.daysLeft === 1 ? '' : 's'} left.`}
             </p>
             {billingReady() ? (
               <form action={startPlan} className="row" style={{ alignItems: 'end' }}>

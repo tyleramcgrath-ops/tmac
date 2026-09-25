@@ -47,7 +47,9 @@ number is still to be decided). Build and write everything toward that.
 - **The owner is in control.** SaySites and Sofie are their tools, not an AI
   that does it for them. Copy says "you build / you change / your site",
   never "AI builds it for you". Show what the owner did and what it earned
-  them (calls, messages, visitors, rankings).
+  them (calls, messages, visitors, rankings). Saying the site "builds itself
+  as you type" is fine, because it does; the owner still describes it, picks
+  the look and makes every change.
 - **Permanent tagline: "Your site. Your say."**
 - Say "SEO fully optimized", not "Google-ready".
 - Nothing that looks AI-built, on SaySites or on any customer site, ever:

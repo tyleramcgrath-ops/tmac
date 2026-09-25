@@ -21,6 +21,8 @@ export interface Billing {
   // A promo code the owner arrived with, applied at checkout.
   promo?: string
   currentPeriodEnd?: string
+  // When real feedback earned this account its free months (once only).
+  feedbackReward?: string
 }
 
 export function billingReady(): boolean {
@@ -60,6 +62,18 @@ export function accessFor(user: User, b: Billing | null, now = Date.now()): Acce
   const inTrial = status === 'trial' && left > 0
   const ok = paid || inTrial || !billingReady()
   return { ok, status, trial: status === 'trial', daysLeft, locked: !ok }
+}
+
+// Honest feedback earns three months free: a few real sentences, once per
+// account, while still on the free trial. It extends the trial, and Checkout
+// carries the date over so Stripe doesn't charge until it ends.
+export const FEEDBACK_MIN_CHARS = 150
+export const FEEDBACK_FREE_DAYS = 90
+
+export function withFeedbackReward(b: Billing, now = Date.now()): Billing | null {
+  if (b.feedbackReward || b.status !== 'trial') return null
+  const until = Math.max(Date.parse(b.trialEndsAt), now + FEEDBACK_FREE_DAYS * DAY)
+  return { ...b, trialEndsAt: new Date(until).toISOString(), feedbackReward: new Date(now).toISOString() }
 }
 
 // Promo codes are letters, digits, dashes and underscores, as Stripe allows.

@@ -5,6 +5,7 @@ import { sendFeedback } from '@/app/feedback-actions'
 
 export function BirthdayFeedback() {
   const [state, action, pending] = useActionState(sendFeedback, {})
+  if (state.sent && state.freeUntil) return <p className="bd-thanks"><strong>Got it, thank you.</strong> That’s the best present. Your next three months are on me.</p>
   if (state.sent) return <p className="bd-thanks"><strong>Got it, thank you.</strong> That’s the best present.</p>
   return (
     <form action={action} className="bd-form">
