@@ -17,3 +17,17 @@ Also:
 - Design: calm colours (nothing bright), no bold-plus-cursive font pairings,
   nothing that looks AI-built.
 - Sofie never invents facts, reviews, results or credentials.
+- Photos: a photo appears once per site unless the owner asks for it again,
+  and a stock photo belongs to one customer's site (`lib/photo-rules.ts`,
+  table `ss_photos`). Owners' own uploads are exempt.
+
+## Money check (the owner asked for this, permanently)
+
+Before building anything new, ask: will this help get or keep paying
+customers soon? If not, say so plainly and point back to what does:
+- Selling first: law firms (the owner's network), using the free redesign
+  preview as the pitch. Goal: 10 paying firms, then trades.
+- Proof: track those firms' rankings for 60–90 days and turn real results
+  into case studies.
+- Reliability of what exists beats new features.
+Nice-to-haves (games, extra styles, clever extras) wait until customers ask.

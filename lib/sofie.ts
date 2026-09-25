@@ -21,6 +21,8 @@ import { buildBlogIndex, buildPostPage } from './posts'
 import { SvgError } from './svg'
 import { LOGO_CRAFT, LOGO_FONTS, LOGO_ICONS, LOGO_SPEC_PROPERTIES, LOGO_SPEC_REQUIRED, composeLogo, googleFontLoader, specFromInput, type FontLoader } from './logo-compose'
 import { renderSheet } from './logo-render'
+import { BUSINESS_TYPES, buildStarterSite, type BusinessTypeKey } from './starter'
+import { isStock, photoKey, photoUses, repeatedPhotos } from './photo-rules'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -66,10 +68,14 @@ export class Workspace {
   lastLogoPreview: string | null = null
   private fontLoader: FontLoader
 
-  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader } = {}) {
+  // Stock photos other customers' sites use; never allowed here.
+  readonly taken: Set<string>
+
+  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader; taken?: Set<string> } = {}) {
     this.site = structuredClone(snapshot.site)
     this.pages = structuredClone(snapshot.pages)
     this.fontLoader = opts.fontLoader ?? googleFontLoader
+    this.taken = opts.taken ?? new Set()
   }
 
   snapshot(): Snapshot {
@@ -223,6 +229,61 @@ export class Workspace {
     }
   }
 
+  // Starts the site over as a different kind of business (an electrician's
+  // site that is really a law firm): new layout, pages, photos and wording,
+  // keeping the name, contact details, address, hours, logo, colours, blog
+  // and shop. Pages that no longer fit are hidden, not deleted.
+  rebuildSite(input: { type: string; services: string[]; city: string; region: string; headline: string }, summary: string) {
+    if (!(input.type in BUSINESS_TYPES)) throw new ToolError(`Unknown business type "${input.type}". Use one of: ${Object.keys(BUSINESS_TYPES).join(', ')}.`)
+    const b = this.site.business
+    const [areaCity, areaRegion] = (b.area ?? '').split(',').map((x) => x.trim())
+    const city = input.city.trim() || b.address?.city || areaCity || ''
+    const region = input.region.trim() || b.address?.region || areaRegion || ''
+    if (!city) throw new ToolError('I need the town or city the business serves. Ask the owner.')
+    const built = buildStarterSite(
+      {
+        name: b.name,
+        type: input.type as BusinessTypeKey,
+        city,
+        region,
+        ...(b.phone ? { phone: b.phone } : {}),
+        ...(b.email ? { email: b.email } : {}),
+        services: input.services,
+        palette: 'ocean',
+        language: this.site.language,
+        ...(b.address ? { street: b.address.street, postalCode: b.address.postalCode } : {}),
+        ...(b.hours?.length ? { hours: b.hours } : {}),
+        ...(input.headline.trim() ? { headline: input.headline } : {}),
+      },
+      this.site.orgId,
+      this.site.subdomain,
+      { taken: this.taken }
+    )
+    const keep = (slug: string) => slug === 'blog' || slug.startsWith('blog/') || slug === 'shop' || slug === 'privacy' || slug === 'privacy-policy' || slug === 'terms'
+    const extraNav = this.site.nav.filter((n) => ['/blog', '/shop'].includes(n.href))
+    const nav = [...built.site.nav.filter((n) => n.href !== '/contact'), ...extraNav, ...built.site.nav.filter((n) => n.href === '/contact')]
+    const next: Json = {
+      ...structuredClone(this.site),
+      business: { ...b, schemaType: built.site.business.schemaType, ...(built.site.business.area ? { area: built.site.business.area } : {}) },
+      globals: { ...built.site.globals, colors: this.site.globals.colors },
+      nav,
+      header: built.site.header,
+      tagline: built.site.tagline,
+    }
+    if (built.site.footerNote) next.footerNote = built.site.footerNote
+    else delete next.footerNote
+    const parsed = SiteSchema.safeParse(next)
+    if (!parsed.success) throw new ToolError(`That change is not valid: ${formatZod(parsed.error)}`)
+    // Same address, same page: reuse the old page's id so publishing replaces it.
+    const bySlug = new Map(this.pages.map((p) => [p.slug, p]))
+    const fresh = built.pages.map((p) => ({ ...p, id: bySlug.get(p.slug)?.id ?? p.id, siteId: this.site.id }))
+    const freshSlugs = new Set(fresh.map((p) => p.slug))
+    const rest = this.pages.filter((p) => !freshSlugs.has(p.slug)).map((p) => (keep(p.slug) ? p : { ...p, status: 'draft' as const }))
+    this.site = parsed.data
+    this.pages = [...fresh, ...rest]
+    this.changes.push(summary)
+  }
+
   updateSite(changes: Json, summary: string) {
     for (const k of LOCKED_SITE_KEYS) if (k in changes) throw new ToolError(`"${k}" cannot be changed by Sofie.`)
     const next = structuredClone(this.site) as unknown as Json
@@ -248,7 +309,13 @@ export class Workspace {
       // Keyword stuffing and near-duplicate pages can't be published.
       if (p.status === 'published') for (const b of vibeCheck(this.site, p, this.pages.filter((x) => x.status === 'published')).blockers) out.push(`${name}: ${b}`)
     }
+    for (const u of photoUses(this.pages)) if (isStock(u.src) && this.taken.has(u.key)) out.push(`${u.page}: that stock photo (${u.key}) is already on another SaySites customer's site. Use a different photo or the owner's own.`)
     return out
+  }
+
+  // Photos used twice on this site. Allowed only when the owner asked.
+  repeats(): string[] {
+    return repeatedPhotos(this.pages).map((r) => `The photo ${r.key} appears on ${r.pages.join(' and ')}.`)
   }
 }
 
@@ -406,6 +473,25 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
 ]
 
 SOFIE_TOOLS.push({
+  name: 'rebuild_site',
+  description:
+    'Start the site over as a different kind of business, when the site was made for the wrong one (e.g. it shows an electrician but they are a law firm). Replaces the layout, pages, photos, menu and starter wording with the right ones for that business; keeps the name, phone, email, address, hours, logo, colours, blog and shop. Afterwards rewrite the new pages in the owner\'s words in the same turn.',
+  input_schema: {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      type: { type: 'string', enum: Object.keys(BUSINESS_TYPES) },
+      services: { type: 'array', items: { type: 'string' }, description: 'The services or practice areas the owner told you, in their words. Empty if you don\'t know them yet.' },
+      city: { type: 'string', description: 'Town or city served, or "" to keep the current one.' },
+      region: { type: 'string', description: 'State or province, or "" to keep the current one.' },
+      headline: { type: 'string', description: 'A main headline, or "" for the default.' },
+      summary,
+    },
+    required: ['type', 'services', 'city', 'region', 'headline', 'summary'],
+  },
+})
+
+SOFIE_TOOLS.push({
   name: 'write_post',
   description:
     'Publish a blog post to the site (at /blog/<title-slug>, listed on /blog; the /blog page and its menu link are created the first time). Write helpful, specific, honest content for this business\'s customers, 300-700 words. Never invent prices, awards, reviews or facts about the business.',
@@ -462,6 +548,9 @@ export async function runTool(ws: Workspace, name: string, input: Record<string,
       case 'design_logo':
         await ws.designLogo(input, s)
         break
+      case 'rebuild_site':
+        ws.rebuildSite({ type: str('type'), services: Array.isArray(input.services) ? input.services.map(String) : [], city: str('city'), region: str('region'), headline: str('headline') }, s)
+        break
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
         break
@@ -490,6 +579,8 @@ function parseJson(text: string, want: 'object' | 'array'): unknown {
 // Prompt
 // ---------------------------------------------------------------------------
 
+const PHOTO_KEYS = Object.values(PHOTOS).flatMap((set) => [set.hero, ...set.cards].map((p) => photoKey(p.src)))
+
 const PHOTO_LIST = Object.entries(PHOTOS)
   .map(([k, set]) => `- ${k}: ${[set.hero, ...set.cards].map((p) => `${p.src} (${p.width}x${p.height}, "${p.alt}")`).join('; ')}`)
   .join('\n')
@@ -503,6 +594,8 @@ How to work:
 - Originality: every page must read as written for this business, never as a template. Use the owner's own facts, words and details (what they do differently, their process, their area, real examples they gave you). Avoid stock phrases: "look no further", "one-stop shop", "second to none", "top-notch", "state-of-the-art", "we pride ourselves", "committed to providing the highest quality", "your satisfaction is our priority", "tailored to your needs", "don't hesitate to contact us". Never create near-identical pages that only swap a town or service name; one genuinely useful page beats ten copies. Pages that are mostly SaySites' starter wording stay out of Google until they're rewritten in the owner's words, so when you rewrite a starter page, replace its sentences completely rather than tweaking them. If you don't know what makes the business different, ask one short question.
 - Every site must follow Google Search Essentials and Google's spam policies. We win organic search by being genuinely the best result, never by tricks: no keyword stuffing, no hidden text, no doorway or near-duplicate location pages, no fake or incentivized reviews, no invented claims, no misleading titles. If the owner asks for something that breaks these rules, say plainly that it risks a Google penalty and offer the honest version that works.
 - Asked for a logo (or a new one)? Use design_logo: pick the typeface and structure that fit the business, look at the render you get back and refine it once if it can be better. Afterwards say in a sentence what you made, offer another direction, and mention that Photos > Your logo shows three ideas side by side.
+- Act, don't stall. If the site was built for the wrong kind of business, call rebuild_site straight away (never patch one photo at a time), then in the same turn rewrite the new pages with every fact you have. If the owner says the site is bland, wrong or not impressive, do a real redesign pass in that turn: a strong hero with a fitting photo, a specific headline, well-spaced sections, and pages that read as theirs. Missing facts (practice areas, years, team) never block the work: make it excellent with what you know, without inventing anything, then ask for the missing details in one short message at the end.
+- Photos: every photo appears once on the whole site. Never reuse a photo on another page or section (for example the home page's top photo as another page's header) unless the owner asks for that exact photo again; if you run out of fitting photos, use a solid colour header or ask for their own photos. Never use a stock photo that another SaySites customer already uses (you'll be told which). The owner's own uploaded photos are always theirs to use.
 - Keep the site's existing look: reuse its color tokens, spacing and patterns (copy the structure of a similar section on the same page when adding one). Write copy that is warm, plain and specific to this business, short sentences, no hype words.
 - When the owner describes a whole website (a Talk & Design prompt) and the site already follows that layout, don't rebuild it from scratch: go through it and make every headline, paragraph, card, question and Google title specific to their business and their words, and add anything they described that is missing.
 - After changing things, reply in one to three short sentences saying what you did in plain English, and offer one sensible next step only if it is genuinely useful. Don't list ids or technical details.
@@ -542,9 +635,10 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
   return create.call(client.beta.messages, params)
 }
 
-export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[] }): Promise<SofieResult> {
+export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string> }): Promise<SofieResult> {
   const client = input.client ?? new Anthropic()
-  const ws = new Workspace(input.snapshot)
+  const ws = new Workspace(input.snapshot, { taken: input.taken })
+  const takenHere = PHOTO_KEYS.filter((k) => ws.taken.has(k))
 
   // Earlier turns as plain text; the current state of the site is sent fresh
   // with each new request, so Sofie always edits what is actually there.
@@ -560,9 +654,11 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
       ...(input.photos?.length
         ? [{ type: 'text' as const, text: `The owner's own uploaded photos. Prefer these over stock photos when they fit (use src, alt, width and height exactly):\n${JSON.stringify(input.photos.slice(0, 40))}` }]
         : []),
+      ...(takenHere.length ? [{ type: 'text' as const, text: `Stock photos from the list that other SaySites customers already use. Never use these: ${takenHere.join(', ')}` }] : []),
       { type: 'text', text: input.message },
     ],
   })
+  const repeatsBefore = new Set(ws.repeats())
 
   let reply = ''
   let gateRounds = 0
@@ -614,9 +710,15 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
 
     // Sofie is done. Hold her to the same gate as a publish.
     const problems = ws.changes.length ? ws.problems() : []
-    if (problems.length && gateRounds < 2) {
+    // New repeats of a photo: fine only when the owner asked for it.
+    const repeats = ws.changes.length ? ws.repeats().filter((r) => !repeatsBefore.has(r)) : []
+    if ((problems.length || repeats.length) && gateRounds < 2) {
       gateRounds++
-      messages.push({ role: 'user', content: `Before you finish: the site now fails these checks. Fix them with tools, then reply to me again.\n- ${problems.join('\n- ')}` })
+      const parts = [
+        problems.length ? `The site now fails these checks. Fix them with tools.\n- ${problems.join('\n- ')}` : '',
+        repeats.length ? `Each photo is used once per site. If the owner did not ask for the same photo twice, swap the repeat for a different one (or their own). If they did ask, leave it.\n- ${repeats.join('\n- ')}` : '',
+      ]
+      messages.push({ role: 'user', content: `Before you finish:\n${parts.filter(Boolean).join('\n\n')}\nThen reply to me again.` })
       continue
     }
     reply = text || (ws.changes.length ? 'Done.' : '')

@@ -8,6 +8,7 @@
 // food and shops. Sofie then edits the result through the same validated
 // content model.
 
+import { dropRepeatedPhotos } from './photo-rules'
 import { randomUUID } from 'crypto'
 import type { Container, Element, GlobalStyles, Page, Site } from './schema'
 import { photosFor, type Photo } from './photos'
@@ -72,6 +73,8 @@ export interface StarterInput {
 }
 
 export interface StarterOptions {
+  // Stock photos other customers' sites already use (lib/photo-rules).
+  taken?: Set<string>
   // Fixed ids and time for reproducible sites (the showcase examples).
   siteId?: string
   now?: string
@@ -108,9 +111,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const design: Design = input.design ?? t.design
   const photos = photosFor(input.type)
   const name = input.name.trim()
-  const city = input.city.trim()
-  const place = input.region.trim() ? `${city}, ${input.region.trim()}` : city
-  const services = input.services.map((s) => s.trim()).filter(Boolean).slice(0, 12)
+  const city = tidyPlace(input.city)
+  const place = input.region.trim() ? `${city}, ${tidyRegion(input.region)}` : city
+  const services = tidyServices(input.services)
   const list = services.length ? services : [cap(t.trade)]
   const siteId = opts.siteId ?? `site_${randomUUID()}`
   const pageId = (slug: string) => (opts.siteId ? `${opts.siteId}_${slug || 'home'}` : `page_${randomUUID()}`)
@@ -139,7 +142,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       schemaType: t.schemaType,
       ...(phone ? { phone } : {}),
       ...(email ? { email } : {}),
-      ...(input.street && input.postalCode && input.region.trim() && city ? { address: { street: input.street, city, region: input.region.trim(), postalCode: input.postalCode, country: 'US' } } : {}),
+      ...(input.street && input.postalCode && input.region.trim() && city ? { address: { street: input.street, city, region: tidyRegion(input.region), postalCode: input.postalCode, country: 'US' } } : {}),
       ...(input.hours?.length ? { hours: input.hours } : {}),
       ...(city ? { area: place } : {}),
     },
@@ -615,7 +618,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     updatedAt: now,
   }
 
-  return { site, pages: [home, servicesPage, contact] }
+  return { site, pages: dropRepeatedPhotos([home, servicesPage, contact], opts.taken) }
 }
 
 // Lower-case a service name for use mid-sentence ("Teeth whitening" →
@@ -628,6 +631,27 @@ export function soften(s: string): string {
 
 function joinAnd(xs: string[]): string {
   return xs.length <= 1 ? (xs[0] ?? '') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`
+}
+
+// What owners type in a hurry: "jupiter" becomes "Jupiter", "fl" becomes "FL".
+export function tidyPlace(s: string): string {
+  const t = s.trim().replace(/\s+/g, ' ')
+  return t === t.toLowerCase() ? t.replace(/(^|[\s-])([a-z])/g, (_, a: string, b: string) => a + b.toUpperCase()) : t
+}
+export function tidyRegion(s: string): string {
+  const t = s.trim()
+  return /^[a-z]{2}$/i.test(t) ? t.toUpperCase() : tidyPlace(t)
+}
+
+// Services that say nothing ("everything", "all of it") fall back to the
+// trade, so a page never reads "everything, done properly".
+const VAGUE = /^(everything|anything|all|all of it|all of the above|whatever|misc|miscellaneous|stuff|things|n\/?a|none|-+|\.+)$/i
+export function tidyServices(list: string[]): string[] {
+  return list
+    .map((s) => s.trim().replace(/\s+/g, ' '))
+    .filter((s) => s && !VAGUE.test(s))
+    .map((s) => (s === s.toLowerCase() ? s.charAt(0).toUpperCase() + s.slice(1) : s))
+    .slice(0, 12)
 }
 
 function cap(s: string): string {

@@ -130,6 +130,12 @@ export interface Store {
   previewCount(since: Date, who?: string): Promise<number>
   // Marks a preview claimed; false when someone already claimed it.
   claimPreview(id: string, by: string, siteId: string): Promise<boolean>
+  // Stock photos in use, by photo key (lib/photo-rules): each belongs to one
+  // site. photosTaken returns the keys other sites hold.
+  photosTaken(exceptSiteId?: string): Promise<Set<string>>
+  // Records the stock photos a site now uses and releases the rest. Keys
+  // another site already holds are left with that site.
+  setSitePhotos(siteId: string, keys: string[]): Promise<void>
 }
 
 // Page views are counted per day and page, and nothing else: no cookies,
@@ -230,6 +236,12 @@ CREATE TABLE IF NOT EXISTS ss_previews (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_previews_who_idx ON ss_previews (who, created_at DESC);
+CREATE TABLE IF NOT EXISTS ss_photos (
+  photo TEXT PRIMARY KEY,
+  site_id TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_photos_site_idx ON ss_photos (site_id);
 CREATE TABLE IF NOT EXISTS ss_logo_ideas (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
@@ -436,6 +448,14 @@ class PgStore implements Store {
       : await this.q<{ n: string }>('SELECT count(*) AS n FROM ss_previews WHERE created_at > $1', [since])
     return Number(r[0]?.n ?? 0)
   }
+  async photosTaken(exceptSiteId?: string) {
+    const r = await this.q<{ photo: string }>('SELECT photo FROM ss_photos WHERE site_id <> $1', [exceptSiteId ?? ''])
+    return new Set(r.map((x) => x.photo))
+  }
+  async setSitePhotos(siteId: string, keys: string[]) {
+    await this.q('DELETE FROM ss_photos WHERE site_id = $1 AND NOT (photo = ANY($2::text[]))', [siteId, keys])
+    if (keys.length) await this.q('INSERT INTO ss_photos (photo, site_id) SELECT unnest($1::text[]), $2 ON CONFLICT (photo) DO NOTHING', [keys, siteId])
+  }
   async recordScore(siteId: string, day: string, score: number) {
     await this.q('INSERT INTO ss_scores (site_id, day, score) VALUES ($1,$2,$3) ON CONFLICT (site_id, day) DO UPDATE SET score = EXCLUDED.score', [siteId, day, score])
   }
@@ -628,6 +648,14 @@ export class MemoryStore implements Store {
   }
   async previewCount(since: Date, who?: string) {
     return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
+  }
+  private photos = new Map<string, string>()
+  async photosTaken(exceptSiteId?: string) {
+    return new Set([...this.photos].filter(([, site]) => site !== exceptSiteId).map(([k]) => k))
+  }
+  async setSitePhotos(siteId: string, keys: string[]) {
+    for (const [k, site] of this.photos) if (site === siteId && !keys.includes(k)) this.photos.delete(k)
+    for (const k of keys) if (!this.photos.has(k)) this.photos.set(k, siteId)
   }
   private scores = new Map<string, { day: string; score: number }[]>()
   async recordScore(siteId: string, day: string, score: number) {

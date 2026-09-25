@@ -15,6 +15,7 @@ import { checkReviewUrl, googleReviewUrl } from '@/lib/reviews'
 import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
+import { syncSitePhotos } from '@/lib/sites'
 
 async function ownSite(siteId: string) {
   const user = await requireUser()
@@ -556,6 +557,7 @@ export async function publishImported(siteId: string) {
     await store.savePage(next, 'owner', user.id, 'Published imported page')
     live.push(next)
   }
+  await syncSitePhotos(site.id, store)
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }
 

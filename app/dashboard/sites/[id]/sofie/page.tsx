@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { SofieStudio } from '@/components/SofieStudio'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
+import { previewPath } from '@/lib/urls'
 import { getStudioState } from './actions'
 
 // Sofie works in the background after a message is sent, within this
@@ -19,6 +20,7 @@ export default async function SofiePage({ params, searchParams }: { params: Prom
     <SofieStudio
       siteId={site.id}
       siteName={site.business.name}
+      viewUrl={previewPath(site)}
       initial={initial}
       ready={Boolean(process.env.ANTHROPIC_API_KEY)}
       autostart={initial.chat.length === 0 && !fill ? (talk ?? '').slice(0, 2000) : ''}
