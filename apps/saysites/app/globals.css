@@ -623,3 +623,9 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
   #review-card, #review-card * { visibility: visible; }
   #review-card { position: absolute; left: 0; top: 0; }
 }
+
+.vibe { margin-top: 14px; padding: 14px 16px; border-radius: 12px; background: var(--amber-soft); display: grid; gap: 8px; }
+.vibe p { margin: 0; font-size: 14.5px; }
+.vibe .vibe-block { color: #7a2620; font-weight: 600; }
+.vibe ul { margin: 6px 0 0; padding-left: 18px; }
+.vibe .btn { justify-self: start; }

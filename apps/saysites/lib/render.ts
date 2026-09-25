@@ -10,6 +10,7 @@
 //   - Every text value is HTML-escaped; the tree can never inject markup.
 
 import { WORDS, wordsFor, type SiteWords } from './site-words'
+import { vibeCheck } from './vibe'
 import {
   BREAKPOINT_MAX_WIDTH,
   COLOR_TOKENS,
@@ -51,7 +52,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<title>${esc(page.seo.title)}</title>`,
     `<meta name="description" content="${esc(page.seo.description)}">`,
     `<link rel="canonical" href="${esc(url)}">`,
-    page.seo.noindex ? '<meta name="robots" content="noindex">' : '',
+    // Held out of Google until it passes the originality check (lib/vibe.ts).
+    page.seo.noindex || !vibeCheck(site, page, allPages).indexable ? '<meta name="robots" content="noindex">' : '',
     page.slug === '' && site.verification?.google ? `<meta name="google-site-verification" content="${esc(site.verification.google)}">` : '',
     page.slug === '' && site.verification?.bing ? `<meta name="msvalidate.01" content="${esc(site.verification.bing)}">` : '',
     `<link rel="icon" href="${esc(favicon(site))}">`,

@@ -5,6 +5,7 @@ import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { previewPath } from '@/lib/urls'
 import { ActionForm } from '@/components/ActionForm'
+import { vibeCheck } from '@/lib/vibe'
 import { savePageSeo, saveVerification } from '../manage-actions'
 
 export default async function PagesPage({ params }: { params: Promise<{ id: string }> }) {
@@ -19,7 +20,7 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
   const rows = [...pages].sort((a, b) => order(a) - order(b)).map((p) => {
     const issues = checkPage(p, pages)
     const r = renderPage(site, p, pages)
-    return { page: p, issues, speed: checkSpeed(r), kb: Math.round(Buffer.byteLength(r.html) / 100) / 10 }
+    return { page: p, issues, speed: checkSpeed(r), kb: Math.round(Buffer.byteLength(r.html) / 100) / 10, vibe: vibeCheck(site, p, pages) }
   })
 
   return (
@@ -48,7 +49,7 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
           </div>
         </ActionForm>
       </details>
-      {rows.map(({ page, issues, speed, kb }) => {
+      {rows.map(({ page, issues, speed, kb, vibe }) => {
         const errors = issues.filter((i) => i.severity === 'error')
         const tips = issues.filter((i) => i.severity === 'warning')
         return (
@@ -61,10 +62,24 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
               <div className="page-pills">
                 {errors.length ? <span className="pill bad">Needs fixing</span> : tips.length ? <span className="pill warn">{tips.length} SEO tip{tips.length > 1 ? 's' : ''}</span> : <span className="pill ok">SEO all good</span>}
                 {speed.pass ? <span className="pill ok">Fast · {kb} KB</span> : <span className="pill bad">Too heavy</span>}
-                {page.seo.noindex && <span className="pill warn">Hidden from Google</span>}
+                {page.seo.noindex ? <span className="pill warn">Hidden from Google</span> : vibe.indexable ? <span className="pill ok">Original · on Google</span> : <span className="pill warn">Held back from Google</span>}
               </div>
             </header>
             {(errors.length > 0 || tips.length > 0) && <ul className="issues">{[...errors, ...tips].map((i, n) => <li key={n}>{i.message}</li>)}</ul>}
+            {!page.seo.noindex && !vibe.indexable && (
+              <div className="vibe">
+                <p><strong>Originality {vibe.originality}%.</strong> {vibe.held} Google only sees pages that pass, which keeps cookie-cutter pages off every SaySites site.</p>
+                {vibe.blockers.map((b) => <p key={b} className="vibe-block">{b}</p>)}
+                {vibe.templated.length > 0 && (
+                  <details>
+                    <summary className="small">{vibe.templated.length} sentence{vibe.templated.length === 1 ? '' : 's'} of starter wording to put in your own words</summary>
+                    <ul className="small muted">{vibe.templated.slice(0, 12).map((t) => <li key={t}>{t}</li>)}</ul>
+                  </details>
+                )}
+                {vibe.filler.length > 0 && <p className="small muted">Stock phrases: {vibe.filler.slice(0, 3).map((f) => `“${f}”`).join(' ')}</p>}
+                <a className="btn btn-primary btn-sm" href={`/dashboard/sites/${site.id}/sofie?fill=${encodeURIComponent(`Rewrite the ${page.slug ? `${page.name} page` : 'home page'} completely in our own words, so none of the starter wording is left. What makes us different: `)}`}>Rewrite it with Sofie</a>
+              </div>
+            )}
             <SeoForm
               action={savePageSeo.bind(null, site.id, page.id)}
               url={siteOrigin(site) + pagePath(page)}

@@ -12,6 +12,7 @@ import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
 import { ImportError, importSite } from '@/lib/importer'
 import { checkReviewUrl, googleReviewUrl } from '@/lib/reviews'
+import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 
@@ -547,8 +548,13 @@ export async function importFromSite(siteId: string, _prev: MoveResult, form: Fo
 export async function publishImported(siteId: string) {
   const { user, store, site } = await ownSite(siteId)
   const pages = await store.pagesForSite(site.id)
+  const live = pages.filter((p) => p.status === 'published')
   for (const p of pages.filter((x) => x.source && x.status === 'draft')) {
-    await store.savePage({ ...p, status: 'published', updatedAt: new Date().toISOString() }, 'owner', user.id, 'Published imported page')
+    const next = { ...p, status: 'published' as const, updatedAt: new Date().toISOString() }
+    // Near-copies and keyword stuffing stay as drafts until they're fixed.
+    if (vibeCheck(site, next, [...live, next]).blockers.length) continue
+    await store.savePage(next, 'owner', user.id, 'Published imported page')
+    live.push(next)
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
 }

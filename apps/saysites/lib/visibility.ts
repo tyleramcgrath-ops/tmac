@@ -31,6 +31,8 @@ export interface VisibilityFacts {
   visits30: number
   visitsPrev30: number
   today: string
+  // Published pages held back from Google by the originality check.
+  heldPages?: number
 }
 
 export interface Visibility {
@@ -97,8 +99,9 @@ export function visibility(f: VisibilityFacts): Visibility {
     { id: 'form', area: 'Local', points: 5, done: has(pages, 'form'), title: 'Add a contact form', why: 'Visitors who won\'t call will still send a message.', href: `${base}/sofie`, sofie: 'Add a contact form to my contact page.' },
     { id: 'bing', area: 'Local', points: 3, done: !!site.verification?.bing, title: 'Connect Bing Webmaster Tools', why: 'Bing also powers other search engines and AI assistants.', href: `${base}/pages` },
     // Content: give Google something to rank.
-    { id: 'services', area: 'Content', points: 8, done: servicePages >= 3, title: 'Give your main services their own pages', why: `A page per service ranks for searches like "${trade} ${town}" far better than one long list.`, href: `${base}/sofie`, sofie: `Give each of my main services its own page, written for people in ${town}.` },
-    { id: 'depth', area: 'Content', points: 7, done: wordCount >= 1200, title: 'Say more about what you do', why: 'Sites with a few hundred useful words per page answer more searches.', href: `${base}/sofie`, sofie: `Add a helpful questions section to my home page answering what people in ${town} usually ask before hiring us.` },
+    { id: 'original', area: 'Content', points: 4, done: (f.heldPages ?? 0) === 0, title: 'Make every page your own', why: 'Pages that are mostly template wording stay out of Google. Your own words are what make you stand apart from every other site.', href: `${base}/pages`, sofie: 'Rewrite my home page completely in our own words, so none of the starter wording is left. What makes us different: ', sofieFill: true },
+    { id: 'services', area: 'Content', points: 7, done: servicePages >= 3, title: 'Give your main services their own pages', why: `A page per service ranks for searches like "${trade} ${town}" far better than one long list.`, href: `${base}/sofie`, sofie: `Give each of my main services its own page, written for people in ${town}.` },
+    { id: 'depth', area: 'Content', points: 4, done: wordCount >= 1200, title: 'Say more about what you do', why: 'Sites with a few hundred useful words per page answer more searches.', href: `${base}/sofie`, sofie: `Add a helpful questions section to my home page answering what people in ${town} usually ask before hiring us.` },
     { id: 'post', area: 'Content', points: 5, done: posts.length > 0, title: 'Publish your first blog post', why: 'Posts answer the questions your customers search for.', href: `${base}/sofie`, sofie: `Write a blog post answering a question people in ${town} often ask about ${trade}.` },
     { id: 'fresh', area: 'Content', points: 5, done: daysSincePost <= 30, title: posts.length ? 'Post something new this month' : 'Keep posting monthly', why: 'Fresh posts show Google your business is active.', href: `${base}/sofie`, sofie: `Write a new blog post for this month, with a seasonal tip about ${trade} in ${town}.` },
     // Trust: what makes a visitor pick you.

@@ -218,7 +218,9 @@ describe('SaySites sitemap, robots and redirects', () => {
     const hidden: Page = { ...clone(sampleServices), id: 'h', slug: 'thanks', seo: { ...sampleServices.seo, noindex: true } }
     const xml = sitemapXml(sampleSite, [...samplePages, draft, hidden])
     expect(xml).toContain('<loc>https://rivertown-plumbing.saysites.com/</loc>')
-    expect(xml).toContain('<loc>https://rivertown-plumbing.saysites.com/services</loc>')
+    // The sample services page is thin (a heading and a line), so the
+    // originality check holds it back from Google until it says more.
+    expect(xml).not.toContain('<loc>https://rivertown-plumbing.saysites.com/services</loc>')
     expect(xml).not.toContain('/draft')
     expect(xml).not.toContain('/thanks')
     expect(robotsTxt(sampleSite)).toContain('Sitemap: https://rivertown-plumbing.saysites.com/sitemap.xml')
@@ -1238,5 +1240,48 @@ describe('SaySites: reviews', async () => {
     const v = visibility({ site, pages, seoErrors: 0, seoTips: 0, fast: true, photos: 0, visits30: 0, visitsPrev30: 0, today: '2026-09-25' })
     expect(v.quests.find((q) => q.id === 'review-link')?.href).toMatch(/\/reviews$/)
     expect(v.score + v.quests.reduce((n, q) => n + q.points, 0)).toBe(100)
+  })
+})
+
+describe('SaySites: originality check', async () => {
+  const { vibeCheck, vibeForSite, isTemplate, stuffing, similarity } = await import('../apps/saysites/lib/vibe')
+  const own = (id: string, slug: string, text: string): Page => ({ id, siteId: 's', slug, name: slug || 'Home', status: 'published', seo: { title: `${slug} page title for the site`, description: 'A description long enough to be a proper description for Google.' }, body: [{ id: `${id}-s`, type: 'container', tag: 'section', layout: 'flex', children: [{ id: `${id}-h`, type: 'heading', level: 1, text: slug || 'Home' }, { id: `${id}-t`, type: 'text', text }] }], updatedAt: '2026-09-25T00:00:00.000Z' })
+
+  it('holds starter wording out of Google until it is made original', () => {
+    const { site, pages } = buildStarterSite({ name: 'Keel & Sons', type: 'plumber', city: 'Dayton', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drains'], palette: 'ocean' }, 'o', 'keel')
+    const v = vibeForSite(site, pages)
+    const home = v.get(pages[0].id)!
+    expect(home.originality).toBeLessThan(20)
+    expect(home.indexable).toBe(false)
+    expect(renderPage(site, pages[0], pages).html).toContain('<meta name="robots" content="noindex">')
+    expect(sitemapXml(site, pages)).not.toContain('<loc>https://keel.saysites.com/</loc>')
+    // The contact page is a utility page and isn't held back.
+    expect(v.get(pages.find((p) => p.slug === 'contact')!.id)!.indexable).toBe(true)
+    expect(isTemplate(`Tell us what you need and we'll take it from there.`)).toBe(true)
+    expect(isTemplate('Dave and his two sons still answer the phone themselves.')).toBe(false)
+    // The owner's own words pass.
+    const written = own('h2', '', 'Keel & Sons has fixed leaks in Dayton since 1994. Dave and his two sons still answer the phone themselves. Most jobs start with a free look at the problem and a written price before any work begins. We carry parts for older homes in the Oregon District, where cast iron drains are common, so repairs rarely need a second visit. Emergency calls after 6pm are answered by whichever of us is on call that week.')
+    const ok = vibeCheck(site, written, [written])
+    expect(ok.originality).toBe(100)
+    expect(ok.indexable).toBe(true)
+    expect(renderPage(site, written, [written]).html).not.toContain('noindex')
+  })
+
+  it('blocks keyword stuffing and near-copy pages, and flags stock phrases', () => {
+    const site = { ...buildStarterSite({ name: 'X', type: 'plumber', city: 'Dayton', region: 'OH', services: [], palette: 'ocean' }, 'o', 'x').site }
+    const stuffed = 'Our Dayton plumber team is the Dayton plumber you need. Call a Dayton plumber today. ' .repeat(4) + 'We fix leaks and install heaters for homes and shops across the area every single week of the year.'
+    expect(stuffing(stuffed, ['Dayton'])).toBe('dayton plumber')
+    expect(vibeCheck(site, own('a', 'a', stuffed), []).blockers[0]).toMatch(/keyword stuffing/)
+    // A guide that naturally repeats its topic is fine.
+    expect(stuffing('The tank holds water. '.repeat(12) + 'Check the tank each year.', ['Dayton'])).toBeNull()
+    const town = (t: string) => `Our ${t} plumbers fix leaks, clear drains and replace water heaters for homes and businesses. We answer the phone ourselves, give a written price first and clean up after every job. Most repairs are finished the same day, and we carry parts for older homes so a second visit is rare. Call us any time for help.`
+    const a = own('a', 'dayton', town('Dayton'))
+    const b = own('b', 'kettering', town('Kettering'))
+    expect(similarity(town('Dayton'), town('Kettering'))).toBeGreaterThan(0.7)
+    expect(vibeCheck(site, b, [a, b]).blockers[0]).toMatch(/nearly the same as \/dayton/)
+    const fluffy = own('f', 'f', 'Look no further for top-notch service. We pride ourselves on being second to none. Our state-of-the-art tools are tailored to your needs. Don’t hesitate to contact our friendly team for anything at all around the house.')
+    const fv = vibeCheck(site, fluffy, [fluffy])
+    expect(fv.filler.length).toBeGreaterThanOrEqual(3)
+    expect(fv.indexable).toBe(false)
   })
 })
