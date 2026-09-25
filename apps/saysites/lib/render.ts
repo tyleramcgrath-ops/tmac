@@ -286,7 +286,8 @@ function renderFooter(site: Site): string {
   }
   const pages = site.nav.filter((n) => n.href.startsWith('/'))
   if (pages.length) cols.push(`<div><h2 class="sf-h">Pages</h2><a href="/">Home</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
-  return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">© ${year} ${esc(b.name)}</div></footer>`
+  const note = site.footerNote ? `<p class="sf-note">${esc(site.footerNote)}</p>` : ''
+  return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">${note}© ${year} ${esc(b.name)}</div></footer>`
 }
 
 // 17:30 -> "5:30pm", 08:00 -> "8am".
@@ -388,7 +389,7 @@ function baseCss(g: GlobalStyles): string {
     `.sf-in>div{display:flex;flex-direction:column;gap:6px}.sf-in p{margin:4px 0 0;max-width:320px}.sf a{color:inherit;text-decoration:none}.sf a:hover{color:var(--c-background)}` +
     `.sf-brand{font-family:var(--f-h);font-size:1.3em;color:var(--c-background);font-weight:${g.headingWeight ?? 700}}` +
     `.sf-h{font-family:var(--f-b);font-size:.78em;letter-spacing:.1em;text-transform:uppercase;color:var(--c-background);margin:0 0 6px;font-weight:600}` +
-    `.sf-base{max-width:var(--w);margin:0 auto;padding:18px 24px 28px;border-top:1px solid color-mix(in srgb,var(--c-background) 14%,transparent);font-size:.85em}`
+    `.sf-base{max-width:var(--w);margin:0 auto;padding:18px 24px 28px;border-top:1px solid color-mix(in srgb,var(--c-background) 14%,transparent);font-size:.85em}.sf-note{margin:0 0 10px;max-width:760px;line-height:1.55}`
   )
 }
 

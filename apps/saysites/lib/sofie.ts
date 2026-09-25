@@ -369,7 +369,7 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: 'update_site',
     description:
-      'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline. Set a key to null to remove it.',
+      'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline, footerNote (small print at the foot of every page, e.g. a law firm’s attorney advertising disclaimer). Set a key to null to remove it.',
     input_schema: { type: 'object', additionalProperties: false, properties: { changes_json: { type: 'string' }, summary }, required: ['changes_json', 'summary'] },
   },
   {

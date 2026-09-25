@@ -407,6 +407,9 @@ export const SiteSchema = z
       .optional(),
     // One or two lines about the business, shown in the footer.
     tagline: z.string().max(200).optional(),
+    // Small print at the foot of every page, e.g. a law firm's attorney
+    // advertising disclaimer.
+    footerNote: z.string().max(600).optional(),
     // Things for sale. Customers pay the owner directly through the owner's
     // own Stripe payment link, so SaySites never touches the money.
     store: StoreSchema.optional(),
