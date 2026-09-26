@@ -335,6 +335,45 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="conn" id="connect">
+          <div className="wrap">
+            <div className="conn-head">
+              <p className="kicker">Coming soon</p>
+              <h2>Bring what you already have.</h2>
+              <p>Connect your Google Business Profile, Instagram or Facebook, and your site picks up your real reviews and your best photos. You choose what shows, and nothing is posted anywhere without you.</p>
+            </div>
+            <div className="conn-grid">
+              <div className="conn-card">
+                <div className="conn-vis conn-g" aria-hidden="true">
+                  <div className="conn-rating"><b>4.9</b><span>★★★★★</span><small>38 reviews on Google</small></div>
+                  <blockquote>“Best sourdough in Portland. We come every Saturday.”<cite>Maria K.</cite></blockquote>
+                </div>
+                <h3>Your Google reviews</h3>
+                <p>Connect your Google Business Profile and your latest reviews appear on your site, in your customers’ own words. New ones show up on their own.</p>
+              </div>
+              <div className="conn-card">
+                <div className="conn-vis conn-ig" aria-hidden="true">
+                  {['1579697096985-41fe1430e5df', '1566698629409-787a68fc5724', '1567042661848-7161ce446f85', '1509440159596-0249088772ff', '1555507036-ab1f4038808a', '1517433670267-08bbd4be890f'].map((id) => (
+                    <div key={id} className="ph"><Photo id={id} sizes="120px" /></div>
+                  ))}
+                </div>
+                <h3>Your Instagram photos</h3>
+                <p>Pick posts from Instagram and they become your gallery, resized so your site stays fast. Post something new and add it in a tap.</p>
+              </div>
+              <div className="conn-card">
+                <div className="conn-vis conn-fb" aria-hidden="true">
+                  <div><b>Hours</b><span>Tue–Fri 7am–3pm</span></div>
+                  <div><b>Address</b><span>2210 SE Division St</span></div>
+                  <div><b>Photos</b><span>24 from your page</span></div>
+                  <em>Matched on your site ✓</em>
+                </div>
+                <h3>Your Facebook page</h3>
+                <p>Bring over your photos, hours and details from Facebook, so everything customers see matches, wherever they find you.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="pricing" id="pricing">
           <div className="wrap">
             <div className="head split">

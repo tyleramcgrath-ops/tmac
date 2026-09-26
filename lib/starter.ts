@@ -292,6 +292,129 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ],
   })
 
+  // Services as alternating photo and text rows, numbered: calmer and more
+  // editorial than three equal cards.
+  const zigzag = (title: string): Container => ({
+    id: 'services',
+    type: 'container',
+    tag: 'section',
+    layout: 'flex',
+    boxed: true,
+    style: { padding: { desktop: { top: 16, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 72, mobile: 44 } },
+    children: [
+      { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: { desktop: 42, mobile: 30 } } },
+      ...list.slice(0, 3).map((s, i): Container => {
+        const photo = photos.cards[i % 3]
+        const img: Element = { id: `svc-${i + 1}-img`, type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect: 1.25, style: { borderRadius: design === 'warm' ? 16 : 2 } }
+        const copy: Container = {
+          id: `svc-${i + 1}`,
+          type: 'container',
+          layout: 'flex',
+          style: { gap: { desktop: 12 }, padding: { desktop: { top: 0, right: i % 2 ? 48 : 0, bottom: 0, left: i % 2 ? 0 : 48 }, mobile: pad(0, 0) } },
+          children: [
+            { id: `svc-${i + 1}-n`, type: 'text', text: String(i + 1).padStart(2, '0'), style: { color: 'primary', fontWeight: 600, fontSize: { desktop: 14 }, letterSpacing: 0.14 } },
+            { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: 34, mobile: 26 } } },
+            { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 460 } },
+          ],
+        }
+        return { id: `svc-row-${i + 1}`, type: 'container', layout: 'grid', columns: { desktop: 2, mobile: 1 }, align: 'center', style: { gap: { desktop: 0, mobile: 20 } }, children: i % 2 ? [copy, img] : [img, copy] }
+      }),
+      ...(list.length > 3 ? [{ id: 'services-all', type: 'button' as const, label: law ? `All ${list.length} practice areas` : `All ${list.length} services`, href: svcHref, variant: 'outline' as const }] : []),
+    ],
+  })
+
+  // Services as a mosaic: one tall photo beside two stacked ones.
+  const mosaic = (title: string): Container => {
+    const tile = (s: string, i: number, aspect: number): Container => ({
+      id: `svc-${i + 1}`,
+      type: 'container',
+      layout: 'flex',
+      style: { gap: { desktop: 8 } },
+      children: [
+        { id: `svc-${i + 1}-img`, type: 'image', src: photos.cards[i % 3].src, alt: photos.cards[i % 3].alt, width: photos.cards[i % 3].width, height: photos.cards[i % 3].height, aspect, style: { borderRadius: design === 'upscale' ? 2 : 16 } },
+        { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: i === 0 ? 30 : 24, mobile: 24 }, margin: { desktop: { top: 8, right: 0, bottom: 0, left: 0 } } } },
+        { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted' } },
+      ],
+    })
+    const items = list.slice(0, 3)
+    return {
+      id: 'services',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      style: { padding: { desktop: { top: 24, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 36 } },
+      children: [
+        { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: { desktop: 42, mobile: 30 } } },
+        items.length >= 3
+          ? {
+              id: 'services-grid',
+              type: 'container',
+              layout: 'grid',
+              columns: { desktop: 2, mobile: 1 },
+              style: { gap: { desktop: 28, mobile: 32 } },
+              children: [
+                tile(items[0], 0, 0.82),
+                { id: 'svc-stack', type: 'container', layout: 'flex', style: { gap: { desktop: 28, mobile: 32 } }, children: [tile(items[1], 1, 1.7), tile(items[2], 2, 1.7)] },
+              ],
+            }
+          : { id: 'services-grid', type: 'container', layout: 'grid', columns: { desktop: 3, tablet: 2, mobile: 1 }, style: { gap: { desktop: 28 } }, children: items.map((s, i) => card(s, i, photos.cards[i % 3], 1.3)) },
+        ...(list.length > 3 ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: svcHref, variant: 'outline' as const }] : []),
+      ],
+    }
+  }
+
+  // A full-width photo with one line across it, to break up the page.
+  const photoBand = (line: string): Container => {
+    const bg = fresh(photos.hero)
+    return {
+      id: 'band',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      align: 'center',
+      backgroundImage: { src: bg.src, width: bg.width, height: bg.height, overlay: 0.5, overlayStyle: 'full' },
+      style: { background: '#16181c', padding: { desktop: pad(150), mobile: pad(96, 20) }, textAlign: { desktop: 'center' } },
+      children: [{ id: 'band-h', type: 'heading', level: 2, text: line, style: { color: '#ffffff', fontSize: { desktop: 46, mobile: 32 }, maxWidth: 820 } }],
+    }
+  }
+
+  // How hiring a trade works, in three plain steps.
+  const steps: Container = {
+    id: 'steps',
+    type: 'container',
+    tag: 'section',
+    layout: 'flex',
+    boxed: true,
+    style: { padding: section, gap: { desktop: 36 } },
+    children: [
+      { id: 'steps-h', type: 'heading', level: 2, text: 'How it works', style: { fontSize: { desktop: 42, mobile: 30 } } },
+      {
+        id: 'steps-grid',
+        type: 'container',
+        layout: 'grid',
+        columns: { desktop: 3, mobile: 1 },
+        style: { gap: { desktop: 28, mobile: 20 } },
+        children: [
+          ['01', 'Tell us what you need', phone ? `Call ${phone} or send a message. A quick description is plenty.` : 'Send a message. A quick description is plenty.'],
+          ['02', 'Get a straight answer', 'We explain what we would do and what it costs before any work starts.'],
+          ['03', 'We get it done', 'Careful work, a tidy finish, and we tell you when it’s done.'],
+        ].map(([n, h, d]): Container => ({
+          id: `step-${n}`,
+          type: 'container',
+          layout: 'flex',
+          style: { gap: { desktop: 8 }, padding: { desktop: pad(28, 28), mobile: pad(22, 20) }, background: 'surface', borderRadius: 12 },
+          children: [
+            { id: `step-${n}-n`, type: 'text', text: n, style: { color: 'primary', fontWeight: 700, fontSize: { desktop: 14 }, letterSpacing: 0.12 } },
+            { id: `step-${n}-h`, type: 'heading', level: 3, text: h, style: { fontSize: { desktop: 22 } } },
+            { id: `step-${n}-t`, type: 'text', text: d, style: { color: 'muted' } },
+          ],
+        })),
+      },
+    ],
+  }
+
   const faq: Container = {
     id: 'faq',
     type: 'container',
@@ -380,6 +503,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         })),
       },
       { ...servicesSection('What we do', 1.4), style: { background: 'surface', padding: section, gap: { desktop: 40 } } },
+      steps,
       aboutSplit(),
       faq,
       ctaBand,
@@ -444,7 +568,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
             : []),
         ],
       },
-      { ...servicesSection(law ? 'Practice areas' : 'Services', 0.8), style: { padding: { desktop: { top: 0, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 40 } } },
+      zigzag(law ? 'Practice areas' : 'Services'),
+      photoBand(law ? 'Clear answers, in plain English.' : 'Take your time. We will.'),
       faq,
       ctaBand,
     ]
@@ -476,7 +601,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           { id: 'intro-t', type: 'text', text: `Come as you are and leave glad you did. That's the whole idea.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 620 } },
         ],
       },
-      { ...servicesSection(law ? 'Practice areas' : 'What we offer', 0.8), style: { padding: { desktop: { top: 0, right: 24, bottom: 112, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 40 } } },
+      mosaic(law ? 'Practice areas' : 'What we offer'),
+      photoBand('Come as you are. Stay a while.'),
       faq,
       ctaBand,
     ]
@@ -496,7 +622,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           { id: 'hero-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 1.1, priority: true, style: { borderRadius: 18 } },
         ],
       },
-      { ...servicesSection('What we make', 1.3), style: { padding: { desktop: { top: 32, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 36 } } },
+      mosaic('What we make'),
       {
         id: 'about',
         type: 'container',
@@ -515,18 +641,21 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   function aboutSplit(): Container {
+    // Side by side only with a photo of its own; a repeat would be dropped
+    // and leave half the section empty.
+    const hasPhoto = spare.length > 0
     const photo = fresh(photos.cards[0])
     return {
       id: 'about',
       type: 'container',
       tag: 'section',
       layout: 'grid',
-      columns: { desktop: 2, mobile: 1 },
+      columns: { desktop: hasPhoto ? 2 : 1, mobile: 1 },
       align: 'center',
       boxed: true,
       style: { padding: section, gap: { desktop: 64, mobile: 28 } },
       children: [
-        { id: 'about-img', type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect: 1.2, style: { borderRadius: 12 } },
+        ...(hasPhoto ? [{ id: 'about-img', type: 'image' as const, src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect: 1.2, style: { borderRadius: 12 } }] : []),
         {
           id: 'about-copy',
           type: 'container',
