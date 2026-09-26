@@ -356,7 +356,7 @@ describe('SaySites starter sites', () => {
     const { pages } = buildStarterSite(input, 'owner-1', 'bright-smile-dental')
     expect(pages[0].seo.title).toBe('Bright Smile Dental | Dental care in Austin, TX')
     const html = renderPage(buildStarterSite(input, 'o', 's').site, pages[0], pages).html
-    expect(html).toContain('cleanings and checkups, teeth whitening, Invisalign')
+    expect(html).toContain('cleanings and checkups, teeth whitening and Invisalign')
   })
 
   it('works without a phone number or services', () => {

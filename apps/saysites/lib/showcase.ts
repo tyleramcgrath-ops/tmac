@@ -5,7 +5,7 @@
 import { PHOTOS, unsplash } from './photos'
 import { buildBlogIndex, buildPostPage } from './posts'
 import type { Page, Product, Site } from './schema'
-import { buildStarterSite, type BusinessTypeKey } from './starter'
+import { buildStarterSite, type BusinessTypeKey, type Design } from './starter'
 
 const NOW = '2026-09-24T00:00:00.000Z'
 export const SHOWCASE_ORG = 'org_showcase'
@@ -287,7 +287,8 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       postalCode: '28801',
       hours: ['We-Su 17:00-22:00'],
       services: ['Wood-fired dinners', 'Private dining', 'Weekend brunch'],
-      palette: 'sunset',
+      palette: 'noir',
+      design: 'upscale',
       tagline: 'Wood-fired Mediterranean cooking and natural wine in downtown Asheville.',
     },
     'olive-and-ember'
@@ -332,7 +333,8 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
 }
 
 // How the gallery groups and describes each example.
-export const SHOWCASE_INFO: Record<string, { type: BusinessTypeKey; kind: string; place: string }> = {
+// design: when the example uses a different look from its trade's default.
+export const SHOWCASE_INFO: Record<string, { type: BusinessTypeKey; kind: string; place: string; design?: Design }> = {
   'rivertown-plumbing': { type: 'plumber', kind: 'Plumber', place: 'Rivertown, OH' },
   'northside-electric': { type: 'electrician', kind: 'Electrician', place: 'Denver, CO' },
   'summit-heating-air': { type: 'hvac', kind: 'Heating & air', place: 'Boise, ID' },
@@ -344,6 +346,6 @@ export const SHOWCASE_INFO: Record<string, { type: BusinessTypeKey; kind: string
   'willow-dental': { type: 'dentist', kind: 'Dentist', place: 'Madison, WI' },
   'hale-and-porter': { type: 'lawyer', kind: 'Law firm', place: 'Columbus, OH' },
   'rosies-bakery': { type: 'bakery', kind: 'Bakery', place: 'Portland, OR' },
-  'olive-and-ember': { type: 'restaurant', kind: 'Restaurant', place: 'Asheville, NC' },
+  'olive-and-ember': { type: 'restaurant', kind: 'Restaurant', place: 'Asheville, NC', design: 'upscale' },
   'field-and-thread': { type: 'store', kind: 'Shop', place: 'Burlington, VT' },
 }
