@@ -1638,3 +1638,17 @@ describe('SaySites photo pool', () => {
     expect((await store.photosTaken()).has('unsplash:abc')).toBe(false)
   })
 })
+
+describe('SaySites starter copy', () => {
+  it('never claims credentials or promises the owner did not give', () => {
+    for (const type of Object.keys(BUSINESS_TYPES) as (keyof typeof BUSINESS_TYPES)[]) {
+      for (const design of [undefined, 'bold', 'editorial', 'warm', 'upscale'] as const) {
+        const { site, pages } = buildStarterSite({ name: 'Test Co', type, city: 'Austin', region: 'TX', phone: '(512) 555-0100', services: ['Wood-fired dinners', 'Private dining', 'Weekend brunch'], palette: 'ocean', ...(design ? { design } : {}) }, 'org_x', 'test-co')
+        const text = JSON.stringify(pages) + JSON.stringify(site.footer ?? {})
+        const found = text.match(/\b(licensed|insured|certified|award[- ]winning|24\/7|any time|same[- ]day|years of experience)\b/i)
+        expect(found?.[0], `${type}/${design ?? 'default'}`).toBeUndefined()
+        expect(JSON.stringify(pages)).toContain('wood-fired dinners, private dining and weekend brunch')
+      }
+    }
+  })
+})
