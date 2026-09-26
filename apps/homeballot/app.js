@@ -1,5 +1,5 @@
 // ---- Fill these in before you post the link ----
-const FUND_URL = "";          // e.g. "https://gofund.me/xxxx" — the "Back the build" buttons go here
+const FUND_URL = "";          // e.g. "https://gofund.me/xxxx"; the "Contribute" and "Support" buttons link here
 const INSTAGRAM_HANDLE = "";  // e.g. "homeballot" (no @)
 // ------------------------------------------------
 
@@ -88,7 +88,7 @@ function initVerify() {
   $("#gen-code").addEventListener("click", () => {
     code.value = makeCode();
     $("#verify-error").textContent = "";
-    toast("Demo code ready. In real life this arrives by mail.");
+    toast("Demo code generated. In production, this code is mailed to your registered address.");
   });
 
   code.addEventListener("input", () => {
@@ -96,7 +96,7 @@ function initVerify() {
     // Stop anyone typing a real SSN into the demo.
     if (/^\d{3}-?\d{2}-?\d{4}$/.test(code.value.trim()) || digits.length >= 9) {
       code.value = "";
-      $("#verify-error").textContent = "That looks like a Social Security number. Never type it here. Use \"Get a demo code\" instead.";
+      $("#verify-error").textContent = "That looks like a Social Security number. Do not enter it here. Use \"Generate demo code\" instead.";
     }
   });
 
@@ -105,11 +105,11 @@ function initVerify() {
     const f = e.target;
     const first = f.first.value.trim();
     const err = $("#verify-error");
-    if (!first) return (err.textContent = "Enter a first name (any name is fine for the demo).");
-    if (!f.state.value) return (err.textContent = "Choose your state.");
-    if (!validCode(f.code.value)) return (err.textContent = "That access code isn't valid. Tap \"Get a demo code\" to get one.");
+    if (!first) return (err.textContent = "Enter a first name. Any name may be used for the demonstration.");
+    if (!f.state.value) return (err.textContent = "Select a state.");
+    if (!validCode(f.code.value)) return (err.textContent = "This access code is not valid. Select \"Generate demo code\" to create one.");
     const n = normCode(f.code.value);
-    if (mem.used.includes(n)) return (err.textContent = "This access code has already been used to vote. One person, one vote.");
+    if (mem.used.includes(n)) return (err.textContent = "A ballot has already been submitted with this access code. Each voter may submit one ballot.");
     err.textContent = "";
     voter = { first, state: f.state.value, code: n };
     $$(".js-name").forEach((el) => (el.textContent = first));
@@ -166,11 +166,11 @@ function readBallot() {
     if (!pick) continue;
     if (pick.value === "__write") {
       const name = $(`.writein[data-for="${r.id}"]`).value.trim();
-      if (!name) return { error: `Type a name for your write-in for ${r.title}, or pick someone else.` };
+      if (!name) return { error: `Enter a name for your write-in selection for ${r.title}, or choose another option.` };
       out[r.id] = { writeIn: name };
     } else out[r.id] = { id: pick.value };
   }
-  if (!Object.keys(out).length) return { error: "Your ballot is empty. Pick at least one choice." };
+  if (!Object.keys(out).length) return { error: "Make at least one selection before continuing." };
   return { ballot: out };
 }
 
@@ -205,7 +205,7 @@ async function receiptFor(b) {
 async function cast() {
   const btn = $("#cast");
   btn.disabled = true;
-  btn.textContent = "Sealing ballot…";
+  btn.textContent = "Submitting…";
   // Identity and ballot are stored separately: the code list only records "voted".
   mem.used.push(voter.code);
   mem.votes.push(ballot);
@@ -217,7 +217,7 @@ async function cast() {
   setTimeout(() => {
     $("#receipt-code").textContent = code;
     btn.disabled = false;
-    btn.textContent = "Cast my ballot";
+    btn.textContent = "Submit ballot";
     go(5);
     renderResults();
   }, 700);
@@ -258,12 +258,12 @@ function renderResults() {
   bars.innerHTML = rows.map((r) => {
     const pct = total ? (r.n / total) * 100 : 0;
     return `<div>
-      <div class="bar-top"><span>${esc(r.name)}${r.id === mineId ? '<span class="you">you</span>' : ""}</span><span>${pct.toFixed(1)}%</span></div>
+      <div class="bar-top"><span>${esc(r.name)}${r.id === mineId ? '<span class="you">Your selection</span>' : ""}</span><span>${pct.toFixed(1)}%</span></div>
       <div class="bar ${r.n === max ? "lead" : ""}"><i style="width:${fresh ? 0 : pct}%" data-w="${pct}"></i></div>
     </div>`;
   }).join("");
   if (fresh) requestAnimationFrame(() => requestAnimationFrame(() => $$("#bars i").forEach((i) => (i.style.width = i.dataset.w + "%"))));
-  $("#total-line").textContent = `${total.toLocaleString()} demo ballots counted. Simulated numbers, not a real poll.`;
+  $("#total-line").textContent = `${total.toLocaleString()} ballots. Figures are simulated for demonstration.`;
 }
 
 function initResults() {
@@ -282,13 +282,13 @@ function initLookup() {
     e.preventDefault();
     const out = $("#lookup-result");
     const v = $("#lookup-input").value.toUpperCase().replace(/[^0-9A-F]/g, "");
-    if (v.length !== 12) { out.className = "lookup-result bad"; out.textContent = "Receipt codes are 12 characters, like 7F3A-C91E-04BD."; return; }
+    if (v.length !== 12) { out.className = "lookup-result bad"; out.textContent = "Receipt numbers have 12 characters, for example 7F3A-C91E-04BD."; return; }
     const code = `${v.slice(0, 4)}-${v.slice(4, 8)}-${v.slice(8)}`;
     const found = mem.receipts.includes(code);
     out.className = "lookup-result " + (found ? "ok" : "bad");
     out.textContent = found
-      ? `✓ ${code} is in the ledger and was counted. Your choices stay private.`
-      : `No ballot with receipt ${code} in this demo ledger.`;
+      ? `Receipt ${code} was found in the ledger. The ballot was counted.`
+      : `No ballot with receipt ${code} was found.`;
   });
 }
 
@@ -307,7 +307,7 @@ function initFlow() {
   $("#cast").addEventListener("click", cast);
   $("#copy-receipt").addEventListener("click", async () => {
     const code = $("#receipt-code").textContent;
-    try { await navigator.clipboard.writeText(code); toast("Receipt code copied"); }
+    try { await navigator.clipboard.writeText(code); toast("Receipt number copied"); }
     catch { toast(code); }
     $("#lookup-input").value = code;
   });
@@ -324,7 +324,7 @@ function initFunding() {
   $$(".js-fund").forEach((a) => {
     if (FUND_URL) { a.href = FUND_URL; a.target = "_blank"; a.rel = "noopener"; return; }
     a.addEventListener("click", () => {
-      if (a.id === "fund-main") note.textContent = "The pledge page opens soon. Share the demo to help spread the word.";
+      if (a.id === "fund-main") note.textContent = "The contribution page will open soon. In the meantime, please share this page.";
     });
   });
   if (INSTAGRAM_HANDLE) {
@@ -335,10 +335,10 @@ function initFunding() {
   }
   $$(".js-share").forEach((a) => a.addEventListener("click", async (e) => {
     e.preventDefault();
-    const data = { title: "Homeballot", text: "I just cast a demo vote from my phone. Try it:", url: location.origin + "/#demo" };
+    const data = { title: "Homeballot", text: "A working demonstration of secure online voting for American citizens.", url: location.origin + "/#demo" };
     try {
       if (navigator.share) await navigator.share(data);
-      else { await navigator.clipboard.writeText(data.url); toast("Link copied. Paste it in your story!"); }
+      else { await navigator.clipboard.writeText(data.url); toast("Link copied"); }
     } catch {}
   }));
 }

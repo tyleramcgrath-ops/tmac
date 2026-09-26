@@ -16,8 +16,8 @@ const FUND_URL = "";          // your GoFundMe / Kickstarter / Stripe link
 const INSTAGRAM_HANDLE = "";  // e.g. "homeballot" (no @)
 ```
 
-Until `FUND_URL` is set, the "Back the build" buttons scroll to the funding
-section and say the pledge page is opening soon.
+Until `FUND_URL` is set, the "Contribute" and "Support" buttons scroll to the
+funding section and say the contribution page will open soon.
 
 ## Deploy
 
