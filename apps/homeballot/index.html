@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homeballot — Vote from Home</title>
+<meta name="description" content="A working demo of verified online voting for Americans. Try it, then help fund the real build.">
+<meta property="og:title" content="Homeballot — Vote from Home">
+<meta property="og:description" content="Verified Americans. One vote each. A receipt you can check. Try the live demo.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b1b3a">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="demo-banner" role="note">
+  <strong>Demo only.</strong> Simulated election with fictional candidates. Never enter real personal information.
+</div>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Homeballot home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="12" width="26" height="17" rx="3" fill="currentColor"/><rect x="9" y="3" width="14" height="13" rx="1.5" fill="#fff" stroke="currentColor" stroke-width="2"/><path d="M12 9.5l2.5 2.5 5-5" fill="none" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="8" y="14" width="16" height="2.5" rx="1" fill="#fff"/></svg>
+    Homeballot
+  </a>
+  <nav aria-label="Sections">
+    <a href="#demo">Try it</a>
+    <a href="#how">How it works</a>
+    <a href="#roadmap">Roadmap</a>
+    <a class="btn btn-small btn-red js-fund" href="#fund">Back the build</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="dot"></span> A working prototype</p>
+    <h1>Vote from home.<br><em>Count on every ballot.</em></h1>
+    <p class="lede">You bank, file taxes and renew your license online. Homeballot is a plan to let verified American voters cast a secret ballot from their phone, then check it was counted.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-red" href="#demo">Cast a demo vote</a>
+      <a class="btn btn-ghost js-fund" href="#fund">Help fund the real thing</a>
+    </div>
+    <ul class="hero-points">
+      <li>Citizens on the voter roll only</li>
+      <li>One person, one vote</li>
+      <li>A receipt you can verify</li>
+    </ul>
+  </div>
+  <div class="hero-phone" aria-hidden="true">
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="ps-top"><span>Homeballot</span><span class="ps-lock">🔒 Verified</span></div>
+        <p class="ps-kicker">General Election · Demo</p>
+        <p class="ps-race">For Governor</p>
+        <div class="ps-opt on"><span class="ps-radio"></span>Avery Coleman</div>
+        <div class="ps-opt"><span class="ps-radio"></span>Dana Whitfield</div>
+        <div class="ps-opt"><span class="ps-radio"></span>Sam Okafor</div>
+        <div class="ps-btn">Review ballot →</div>
+        <div class="ps-receipt">Receipt <b>7F3A·C91E·04BD</b><br>Counted ✓</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" id="demo" aria-labelledby="demo-title">
+  <div class="section-head">
+    <p class="eyebrow dark">Live demo</p>
+    <h2 id="demo-title">Try the full voting flow</h2>
+    <p>Register, get verified, fill out a ballot and get a receipt. It takes about a minute. Everything stays in your browser.</p>
+  </div>
+
+  <div class="app" id="app">
+    <ol class="steps" aria-label="Progress">
+      <li data-step="1" class="active"><span>1</span>Verify</li>
+      <li data-step="2"><span>2</span>Check</li>
+      <li data-step="3"><span>3</span>Ballot</li>
+      <li data-step="4"><span>4</span>Review</li>
+      <li data-step="5"><span>5</span>Receipt</li>
+    </ol>
+
+    <!-- STEP 1 -->
+    <div class="panel active" data-panel="1">
+      <h3>Sign in to vote</h3>
+      <p class="muted">In the real system your state election office mails a one-time <b>Voter Access Code</b> to the address on the voter roll, after it has already confirmed you are a U.S. citizen. For the demo, grab a practice code.</p>
+      <form id="verify-form" novalidate autocomplete="off">
+        <div class="grid2">
+          <label>First name <span class="hint">(any name works)</span>
+            <input name="first" required maxlength="40" placeholder="Jordan">
+          </label>
+          <label>State
+            <select name="state" required id="state-select"><option value="">Choose…</option></select>
+          </label>
+        </div>
+        <label>Voter Access Code
+          <div class="code-row">
+            <input name="code" id="code-input" required placeholder="DEMO-XXXX-XXXX" maxlength="14" inputmode="text" autocapitalize="characters" spellcheck="false">
+            <button type="button" class="btn btn-ghost-dark" id="gen-code">Get a demo code</button>
+          </div>
+        </label>
+        <div class="callout">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <div><b>Why not just type your Social Security number?</b> SSNs have leaked in huge breaches, so anyone could type yours. The full build checks identity against state voter rolls plus a photo-ID and face match, and never stores your SSN.</div>
+        </div>
+        <p class="form-error" id="verify-error" role="alert"></p>
+        <button class="btn btn-red btn-block" type="submit">Verify me</button>
+      </form>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="panel" data-panel="2">
+      <h3>Running security checks</h3>
+      <p class="muted">These are simulated here. In production each one is a real service.</p>
+      <ul class="checks" id="checks">
+        <li data-check>Access code is genuine and unused</li>
+        <li data-check>Registered voter in <b class="js-state">your state</b></li>
+        <li data-check>U.S. citizenship confirmed on the voter roll</li>
+        <li data-check>Photo ID and face match</li>
+        <li data-check>Device secured, session encrypted</li>
+      </ul>
+      <button class="btn btn-red btn-block" id="to-ballot" disabled>Open my ballot</button>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="panel" data-panel="3">
+      <div class="ballot-head">
+        <div>
+          <p class="ballot-kicker">Official demo ballot · <span class="js-state">State</span></p>
+          <h3>2026 Demo General Election</h3>
+        </div>
+        <span class="pill">Secret ballot</span>
+      </div>
+      <p class="muted">Welcome, <b class="js-name">voter</b>. Pick one in each race. You can skip any race.</p>
+      <form id="ballot-form"></form>
+      <p class="form-error" id="ballot-error" role="alert"></p>
+      <button class="btn btn-red btn-block" id="to-review">Review my ballot</button>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="panel" data-panel="4">
+      <h3>Review your ballot</h3>
+      <p class="muted">Once you cast it, your ballot is sealed. Nobody, including us, can link it back to your name.</p>
+      <dl class="review" id="review"></dl>
+      <div class="row-btns">
+        <button class="btn btn-ghost-dark" id="back-ballot">Change something</button>
+        <button class="btn btn-red" id="cast">Cast my ballot</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="panel" data-panel="5">
+      <div class="receipt">
+        <div class="stamp" aria-hidden="true">✓</div>
+        <h3>Your vote is in.</h3>
+        <p class="muted">Keep this receipt code. You can look it up at any time to confirm your ballot was counted, without revealing who you voted for.</p>
+        <div class="receipt-code" id="receipt-code">…</div>
+        <div class="row-btns center">
+          <button class="btn btn-ghost-dark" id="copy-receipt">Copy code</button>
+          <a class="btn btn-ghost-dark" href="#results">See live results</a>
+        </div>
+        <p class="tiny">Try signing in again with the same access code. The system will refuse a second vote.</p>
+        <button class="btn btn-link" id="restart">Start over as a different voter</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-cards">
+    <div class="card" id="results">
+      <div class="card-head">
+        <h3>Live results</h3>
+        <span class="live"><span class="dot"></span> Demo tally</span>
+      </div>
+      <div class="race-picker" id="race-picker" role="tablist" aria-label="Race"></div>
+      <div id="bars" class="bars"></div>
+      <p class="tiny" id="total-line"></p>
+    </div>
+
+    <div class="card">
+      <h3>Check a receipt</h3>
+      <p class="muted small">Paste a receipt code to confirm it's in the public ballot ledger.</p>
+      <form id="lookup-form" class="code-row">
+        <input id="lookup-input" placeholder="XXXX-XXXX-XXXX" maxlength="14" spellcheck="false" aria-label="Receipt code">
+        <button class="btn btn-ghost-dark" type="submit">Check</button>
+      </form>
+      <p class="lookup-result" id="lookup-result" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how" aria-labelledby="how-title">
+  <div class="section-head light">
+    <p class="eyebrow">What we'd build</p>
+    <h2 id="how-title">Four promises the real system has to keep</h2>
+  </div>
+  <div class="pillars">
+    <article>
+      <div class="icon">🇺🇸</div>
+      <h3>Only eligible Americans</h3>
+      <p>Identity is checked against official state voter rolls, which already confirm citizenship, plus photo ID and a live face match. No roll record, no ballot.</p>
+    </article>
+    <article>
+      <div class="icon">☝️</div>
+      <h3>One person, one vote</h3>
+      <p>Each voter gets a single-use code. Once a ballot is cast the code is burned, and any in-person or mail ballot for the same voter is blocked.</p>
+    </article>
+    <article>
+      <div class="icon">🤫</div>
+      <h3>Your vote stays secret</h3>
+      <p>Your identity and your choices are split apart before the ballot is stored. The count sees choices, the roll sees "voted", and nothing joins the two.</p>
+    </article>
+    <article>
+      <div class="icon">🧾</div>
+      <h3>Proof it was counted</h3>
+      <p>Every ballot gets a receipt code in a public ledger. Anyone can recount it, and every electronic ballot has a paper record for audits.</p>
+    </article>
+  </div>
+</section>
+
+<section class="roadmap" id="roadmap" aria-labelledby="roadmap-title">
+  <div class="section-head">
+    <p class="eyebrow dark">The plan</p>
+    <h2 id="roadmap-title">From demo to real elections, one step at a time</h2>
+    <p>Public elections have to earn trust. So we start small, get audited in the open, and only move up once each stage holds.</p>
+  </div>
+  <ol class="timeline">
+    <li class="done">
+      <span class="tl-tag">Now</span>
+      <h3>Working demo</h3>
+      <p>The prototype you just used: the full voter flow, receipts and a live tally.</p>
+    </li>
+    <li>
+      <span class="tl-tag">Phase 1</span>
+      <h3>Secure build + open audit</h3>
+      <p>Real encryption, identity checks and an independent security audit. Source code published for anyone to inspect.</p>
+    </li>
+    <li>
+      <span class="tl-tag">Phase 2</span>
+      <h3>Private elections</h3>
+      <p>Run real votes for unions, HOAs, student governments and nonprofits, where online voting is already allowed.</p>
+    </li>
+    <li>
+      <span class="tl-tag">Phase 3</span>
+      <h3>Accessibility pilots</h3>
+      <p>Partner with election offices on the voters who need it most: overseas military and voters with disabilities.</p>
+    </li>
+    <li>
+      <span class="tl-tag">Phase 4</span>
+      <h3>State partnerships</h3>
+      <p>Work with states and certification bodies to meet federal voting system standards, one jurisdiction at a time.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="fund" id="fund" aria-labelledby="fund-title">
+  <div class="fund-inner">
+    <p class="eyebrow">Back the build</p>
+    <h2 id="fund-title">Help turn this demo into the real thing.</h2>
+    <p class="lede">Your support pays for engineers, security auditors and the first real pilots. Here's where each level of funding takes us.</p>
+    <div class="tiers">
+      <div class="tier">
+        <p class="tier-amt">$25K</p>
+        <h3>Secure prototype</h3>
+        <p>Real encryption, real identity checks in a test environment.</p>
+      </div>
+      <div class="tier feature">
+        <p class="tier-amt">$150K</p>
+        <h3>Independent audit</h3>
+        <p>Outside security firm tests it, results published in full.</p>
+      </div>
+      <div class="tier">
+        <p class="tier-amt">$500K</p>
+        <h3>First real pilots</h3>
+        <p>Live elections for organizations, with paper audit trail.</p>
+      </div>
+    </div>
+    <div class="fund-ctas">
+      <a class="btn btn-red btn-lg js-fund" id="fund-main" href="#fund">Support Homeballot</a>
+      <a class="btn btn-ghost js-share" href="#">Share the demo</a>
+    </div>
+    <p class="fund-note" id="fund-note" role="status"></p>
+    <p class="ig js-ig" hidden>Follow the build on Instagram <a class="js-ig-link" href="#" rel="noopener" target="_blank"></a></p>
+  </div>
+</section>
+
+<section class="faq" aria-labelledby="faq-title">
+  <div class="section-head">
+    <h2 id="faq-title">Straight answers</h2>
+  </div>
+  <details>
+    <summary>Is this a real election?</summary>
+    <p>No. It's a simulated election with made-up candidates so you can see how the experience would feel. Your demo vote is saved only in your own browser, and the tally is a demo.</p>
+  </details>
+  <details>
+    <summary>Can I use this to vote in an actual election?</summary>
+    <p>Not yet. Vote the way your state allows today: in person, by mail, or absentee. Homeballot is not affiliated with any government or election office.</p>
+  </details>
+  <details>
+    <summary>Isn't online voting risky?</summary>
+    <p>It can be, and security experts have real concerns. That's exactly why the plan starts with open source code, independent audits, a paper record for every ballot, and low-stakes elections first. We'd rather move slowly than lose anyone's trust.</p>
+  </details>
+  <details>
+    <summary>How do you stop non-citizens or fake accounts?</summary>
+    <p>You can only vote if you're on your state's official voter roll, which already requires citizenship. On top of that: a one-time code mailed to your registered address, photo ID and a face match.</p>
+  </details>
+  <details>
+    <summary>What happens to the money?</summary>
+    <p>It goes to building and auditing the secure system in the order shown above. We'll post progress updates publicly as each phase is reached.</p>
+  </details>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p><b>Homeballot</b> — a proposal and demo. Not a government website. Not affiliated with any election authority, party or candidate. All candidates and results on this page are fictional.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/app.js" defer></script>
+</body>
+</html>
