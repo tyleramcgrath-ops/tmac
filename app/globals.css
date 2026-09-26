@@ -51,7 +51,7 @@ img { max-width: 100%; display: block; }
 .wordmark b { font-weight: 700; }
 .wordmark .wm-lt { font-weight: 400; color: color-mix(in srgb, currentColor 72%, transparent); }
 .wordmark .wm-i { position: relative; display: inline-block; }
-.wordmark .wm-i svg { position: absolute; left: 50%; top: .10em; width: .24em; height: .276em; transform: translateX(-40%); }
+.wordmark .wm-i svg { position: absolute; left: 50%; top: .13em; width: .24em; height: .276em; transform: translateX(-40%); }
 .logo-mark { flex: none; }
 
 /* Top bar */
