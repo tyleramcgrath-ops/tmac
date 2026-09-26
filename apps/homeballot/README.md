@@ -21,10 +21,11 @@ funding section and say the contribution page will open soon.
 
 ## Contact form
 
-`api/contact.js` is a Vercel function that relays the form to the address in the
-`CONTACT_EMAIL` environment variable (set in the Vercel project, never in code).
-Delivery uses FormSubmit; the first message to a new address sends a one-time
-activation email that must be confirmed before messages arrive.
+The form posts from the browser to FormSubmit using a private alias code
+(`FORM_ALIAS` in `app.js`), so the destination address never appears in the
+page or the repo. FormSubmit issues the alias after the address is activated.
+FormSubmit blocks requests from Vercel's servers, so it can't be relayed through
+a serverless function.
 
 ## Deploy
 

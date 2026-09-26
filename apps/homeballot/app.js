@@ -1,6 +1,7 @@
 // ---- Fill these in before you post the link ----
 const FUND_URL = "https://www.gofundme.com/f/build-homeballot-secure-online-voting"; // the "Contribute" and "Support" buttons link here
 const INSTAGRAM_HANDLE = "";  // e.g. "homeballot" (no @)
+const FORM_ALIAS = "";        // FormSubmit alias code for the contact form (never put the email address here)
 // ------------------------------------------------
 
 const STATES = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
@@ -359,9 +360,24 @@ function initContact() {
     btn.disabled = true;
     btn.textContent = "Sending…";
     try {
-      const r = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      if (!FORM_ALIAS) throw new Error("The contact form is still being set up. Please check back soon.");
+      const r = await fetch(`https://formsubmit.co/ajax/${FORM_ALIAS}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Homeballot inquiry: ${data.topic}`,
+          _template: "table",
+          _captcha: "false",
+          _replyto: data.email.trim(),
+          _honey: data.website,
+          Name: data.name.trim().slice(0, 80),
+          Email: data.email.trim().slice(0, 120),
+          Topic: data.topic,
+          Message: data.message.trim().slice(0, 4000),
+        }),
+      });
       const out = await r.json().catch(() => ({}));
-      if (!r.ok || !out.ok) throw new Error(out.error || "Your message could not be sent. Please try again later.");
+      if (!r.ok || String(out.success) === "false") throw new Error("Your message could not be sent. Please try again later.");
       form.hidden = true;
       $("#contact-done").hidden = false;
     } catch (ex) {
