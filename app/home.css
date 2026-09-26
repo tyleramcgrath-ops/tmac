@@ -284,6 +284,23 @@
 .home .bk-th { aspect-ratio: 1.5; border-radius: 1.2cqw; }
 .home .bk-row b { display: block; font: 400 2.1cqw/1.2 Georgia, 'Times New Roman', serif; margin-top: 1.2cqw; }
 .home .bk-row span { color: #7a695b; font-size: 1.35cqw; }
+/* Dark & Upscale example (Olive & Ember) */
+.home .up { background: #14110f; color: #f1ebe3; font-size: 1.5cqw; line-height: 1.45; padding: 0 4.5cqw 4.5cqw; font-family: ui-sans-serif, system-ui, sans-serif; letter-spacing: 0; }
+.home .up-nav { display: flex; align-items: center; gap: 3cqw; padding: 2.6cqw 0; }
+.home .up-nav .mk-logo { margin-right: auto; height: 5.4cqw; width: auto; }
+.home .up-nav span { color: #aaa196; }
+.home .up-nav em, .home .up-btns em { font-style: normal; background: #c9a46c; color: #14110f; padding: 1.1cqw 2cqw; border-radius: .3cqw; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; font-size: 1.25cqw; }
+.home .up-hero { position: relative; aspect-ratio: 2.1; border-radius: .4cqw; overflow: hidden; }
+.home .up-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / .8), rgb(0 0 0 / .35) 55%, rgb(0 0 0 / 0)); }
+.home .up-copy { position: absolute; z-index: 1; left: 4cqw; bottom: 4.5cqw; max-width: 58%; }
+.home .up-copy small { font-size: 1.3cqw; letter-spacing: .14em; text-transform: uppercase; color: #c9a46c; font-weight: 600; }
+.home .up-copy h3 { font: 400 5.4cqw/1.04 Georgia, 'Times New Roman', serif; letter-spacing: -0.02em; margin: 1.4cqw 0 2.6cqw; color: #fff; }
+.home .up-btns { display: flex; gap: 2cqw; align-items: center; }
+.home .up-btns span { font-weight: 600; color: #fff; border: 1px solid rgb(255 255 255 / .7); padding: 1cqw 1.9cqw; border-radius: .3cqw; text-transform: uppercase; letter-spacing: .08em; font-size: 1.25cqw; }
+.home .up-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4cqw; margin-top: 3.6cqw; }
+.home .up-th { aspect-ratio: .9; border-radius: .3cqw; }
+.home .up-row b { display: block; font: 400 2.1cqw/1.2 Georgia, 'Times New Roman', serif; margin-top: 1.2cqw; }
+.home .up-row span { color: #aaa196; font-size: 1.35cqw; }
 
 .home .pl { background: #fff; color: #0d1b2a; font: 1.3cqw/1.45 ui-sans-serif, system-ui, sans-serif; letter-spacing: 0; }
 .home .pl-top { display: flex; justify-content: space-between; background: #0f2438; color: #aebccb; padding: .9cqw 3cqw; font-size: 1.15cqw; }
