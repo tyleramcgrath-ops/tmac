@@ -85,3 +85,21 @@ number is still to be decided). Build and write everything toward that.
   soon"). Competitor prices on the homepage must come from their own
   pricing pages, with the date checked and sources linked; re-check them
   quarterly.
+
+## Owner's ideas, planned (September 2026)
+
+- **Varied layouts, never "hero + 3 cards" everywhere.** Starter sites now
+  mix alternating numbered rows (editorial), a photo mosaic (warm,
+  upscale), a full-width photo band, and a "How it works" strip (bold).
+  Sofie's prompt says the same. Keep adding compositions, not colours.
+- **Connect Google, Instagram, Facebook** (homepage says "Coming soon"):
+  Google Business Profile reviews appear as testimonials (the real words,
+  never edited); Instagram/Facebook photos become the gallery; Facebook
+  hours and details stay in sync. Needs a Google Business Profile API
+  approval and a Meta app review, owner-authorized with OAuth. Nothing is
+  ever posted to their accounts.
+- **Kids mode** (/kids preview, noindex, not linked): parent-owned account,
+  parent approves before anything goes live, first names only, no photos
+  of the child, messages go to the parent, hidden from search, a kind
+  Sofie. Don't advertise it ("so easy kids can make one") until it exists.
+
