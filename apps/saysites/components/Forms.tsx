@@ -121,7 +121,7 @@ export function NewSiteForm({ types, palettes, idea = '', template = '' }: { typ
             </label>
             {TEMPLATES.map((t) => (
               <label key={t.key} className={`tpl${tpl === t.key ? ' on' : ''}`}>
-                <input type="radio" name="template" value={t.key} checked={tpl === t.key} onChange={() => setTpl(t.key)} />
+                <input type="radio" name="template" value={t.key} checked={tpl === t.key} onChange={() => { setTpl(t.key); if (t.key === 'upscale' || palette === 'noir') setPalette(t.palette) }} />
                 <strong>{t.name}</strong>
                 <span>{t.bestFor}</span>
               </label>

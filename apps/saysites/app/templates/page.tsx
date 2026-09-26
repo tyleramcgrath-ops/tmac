@@ -16,9 +16,10 @@ const GROUPS = [
   { design: 'bold', title: 'Bold & Local', note: 'A full photo header, a phone number you can’t miss and strong type. Built for trades that get calls.' },
   { design: 'editorial', title: 'Calm & Refined', note: 'Serif headings, generous space and a split photo. For practices and studios people book with care.' },
   { design: 'warm', title: 'Warm & Handmade', note: 'Cream backgrounds, rounded photos and soft buttons. For food, drink and shops with a story.' },
+  { design: 'upscale', title: 'Dark & Upscale', note: 'A near-black page, gold accents, serif type and a full photo header. For places with atmosphere.' },
 ] as const
 
-const TEMPLATE_KEY = { bold: 'bold', editorial: 'editorial', warm: 'warm' } as const
+const TEMPLATE_KEY = { bold: 'bold', editorial: 'editorial', warm: 'warm', upscale: 'upscale' } as const
 
 export default function TemplatesPage() {
   const entries = Object.keys(SHOWCASE_INFO).map((sub) => ({ sub, ...SHOWCASE_INFO[sub], site: SHOWCASE[sub].site }))
@@ -44,14 +45,14 @@ export default function TemplatesPage() {
               </header>
               <div className="gal-grid">
                 {entries
-                  .filter((e) => BUSINESS_TYPES[e.type].design === g.design)
+                  .filter((e) => (e.design ?? BUSINESS_TYPES[e.type].design) === g.design)
                   .map((e) => {
                     const photo = photosFor(e.type).hero
                     return (
                       <a key={e.sub} className="gal-card" href={`/preview/${e.sub}`}>
                         <div className="gal-shot">
                           <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 100vw, 400px" style={{ objectFit: 'cover' }} />
-                          <span className="gal-plaque"><img src={`/media/logos/${e.sub}.svg`} alt="" /></span>
+                          <span className={`gal-plaque${g.design === 'upscale' ? ' is-dark' : ''}`}><img src={`/media/logos/${e.sub}.svg`} alt="" /></span>
                           <div className="gal-over">
                             <small>{e.kind} · {e.place}</small>
                             <strong className={g.design === 'bold' ? '' : 'serif'}>{e.site.business.name}</strong>

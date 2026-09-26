@@ -12,7 +12,7 @@ import { BUSINESS_TYPES, PALETTES, buildStarterSite, type BusinessTypeKey, type 
 
 type Ctx = { params: Promise<{ data: string; slug?: string[] }> }
 
-const DESIGNS: Design[] = ['bold', 'editorial', 'warm']
+const DESIGNS: Design[] = ['bold', 'editorial', 'warm', 'upscale']
 
 export async function GET(_req: Request, ctx: Ctx) {
   if (!(await currentUser())) return new Response('Please log in.', { status: 401 })
