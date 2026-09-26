@@ -34,6 +34,7 @@
       <a href="#design">System design</a>
       <a href="#plan">Development plan</a>
       <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
       <a class="btn btn-red btn-sm js-fund" href="#support">Support the project</a>
     </nav>
   </div>
@@ -374,6 +375,51 @@
   </div>
 </section>
 
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <header class="sec-head">
+      <h2 id="contact-title">Contact the project</h2>
+      <p>Questions, press inquiries, partnership ideas, or interest in helping build Homeballot. Send a message and the team will respond by email.</p>
+      <ul class="contact-points">
+        <li><b>Press and media</b><span>Background on the project and the demonstration</span></li>
+        <li><b>Partners</b><span>Organizations interested in a future pilot</span></li>
+        <li><b>Volunteers</b><span>Engineers, security researchers and accessibility testers</span></li>
+      </ul>
+    </header>
+    <form class="contact-form" id="contact-form" novalidate>
+      <div class="grid2">
+        <label>Name
+          <input name="name" required maxlength="80" autocomplete="name">
+        </label>
+        <label>Email
+          <input name="email" type="email" required maxlength="120" autocomplete="email">
+        </label>
+      </div>
+      <label>Topic
+        <select name="topic">
+          <option>General question</option>
+          <option>Press or media</option>
+          <option>Partnership</option>
+          <option>Volunteer or developer</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Message
+        <textarea name="message" required minlength="10" maxlength="4000" rows="6"></textarea>
+      </label>
+      <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+      <p class="form-error" id="contact-error" role="alert"></p>
+      <button class="btn btn-primary btn-block" type="submit" id="contact-submit">Send message</button>
+      <p class="small muted contact-note">Please do not include Social Security numbers or other sensitive personal information.</p>
+    </form>
+    <div class="contact-done" id="contact-done" hidden>
+      <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#1b6b45"/><path d="M14 24.5l7 7 13-14" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="square"/></svg>
+      <h3>Message sent</h3>
+      <p class="muted">Thank you for reaching out. You will hear back by email.</p>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer class="footer">
@@ -385,6 +431,19 @@
     <p>Homeballot is an independent proposal. It is not a government website and is not affiliated with any election authority, political party or candidate. All candidates and results shown are fictional.</p>
   </div>
 </footer>
+
+<aside class="cta-pop" id="cta-pop" aria-label="Support Homeballot" hidden>
+  <button class="cta-close" id="cta-close" aria-label="Close">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8"/></svg>
+  </button>
+  <p class="cta-kicker">First milestone: $6,000</p>
+  <p class="cta-title">Help build secure, verifiable online voting.</p>
+  <p class="cta-text">Your contribution funds security engineering, identity verification testing and legal review.</p>
+  <div class="cta-actions">
+    <a class="btn btn-red btn-sm js-fund" href="#support">Contribute</a>
+    <a class="btn btn-outline-light btn-sm" href="#demo" id="cta-demo">Try the demo</a>
+  </div>
+</aside>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

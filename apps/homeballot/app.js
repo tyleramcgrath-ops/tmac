@@ -343,8 +343,71 @@ function initFunding() {
   }));
 }
 
+function initContact() {
+  const form = $("#contact-form");
+  if (!form) return;
+  const err = $("#contact-error");
+  const btn = $("#contact-submit");
+  form.addEventListener("input", () => { if (err.textContent) err.textContent = ""; });
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form));
+    if (!data.name.trim()) return (err.textContent = "Please enter your name.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim())) return (err.textContent = "Please enter a valid email address.");
+    if (data.message.trim().length < 10) return (err.textContent = "Please enter a message of at least 10 characters.");
+    err.textContent = "";
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    try {
+      const r = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      const out = await r.json().catch(() => ({}));
+      if (!r.ok || !out.ok) throw new Error(out.error || "Your message could not be sent. Please try again later.");
+      form.hidden = true;
+      $("#contact-done").hidden = false;
+    } catch (ex) {
+      err.textContent = ex.message || "Your message could not be sent. Please try again later.";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Send message";
+    }
+  });
+}
+
+// Slide-in call to action: appears once the visitor has scrolled a while or
+// spent some time on the page, and stays away for a week after it is closed.
+function initCta() {
+  const pop = $("#cta-pop");
+  if (!pop) return;
+  const KEY = "ctaClosed";
+  const closedAt = store.get(KEY, 0);
+  if (closedAt && Date.now() - closedAt < 7 * 864e5) return;
+  let shown = false;
+  const inView = (sel) => { const el = $(sel); if (!el) return false; const r = el.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; };
+  const show = () => {
+    if (shown || inView("#support") || inView("#contact")) return;
+    shown = true;
+    pop.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => pop.classList.add("show")));
+    removeEventListener("scroll", onScroll);
+  };
+  const hide = (remember) => {
+    pop.classList.remove("show");
+    setTimeout(() => (pop.hidden = true), 300);
+    if (remember) store.set(KEY, Date.now());
+  };
+  const onScroll = () => { if (scrollY > innerHeight * 1.2) show(); };
+  addEventListener("scroll", onScroll, { passive: true });
+  setTimeout(show, 25000);
+  $("#cta-close").addEventListener("click", () => hide(true));
+  $("#cta-demo").addEventListener("click", () => hide(true));
+  pop.querySelector(".js-fund").addEventListener("click", () => hide(true));
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && shown) hide(true); });
+}
+
 initVerify();
 initFlow();
 initResults();
 initLookup();
 initFunding();
+initContact();
+initCta();
