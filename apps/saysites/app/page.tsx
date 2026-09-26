@@ -110,6 +110,32 @@ function Plumber() {
   )
 }
 
+// Dark & Upscale: Olive & Ember, the look of the birthday demo.
+function Upscale() {
+  return (
+    <div className="up">
+      <div className="up-nav"><img className="mk-logo" src="/media/logos/olive-and-ember.svg" alt="Olive &amp; Ember" width="388" height="78" /><span>Menu</span><span>Visit</span><em>Reserve</em></div>
+      <div className="up-hero ph">
+        <Photo id="1622880833523-7cf1c0bd4296" sizes="(max-width: 900px) 100vw, 760px" pos="50% 55%" />
+        <div className="up-copy">
+          <small>Wall Street · Asheville</small>
+          <h3>Wood-fired, and worth the wait.</h3>
+          <div className="up-btns"><em>Reserve a table</em><span>See the menu</span></div>
+        </div>
+      </div>
+      <div className="up-row">
+        {[
+          ['1599130143407-2a6ff8a196c9', 'Wood-fired pizza', 'From the oven at 900°'],
+          ['1516685018646-549198525c1b', 'Handmade pasta', 'Rolled every afternoon'],
+          ['1776362441386-c02107b86576', 'Private dining', 'Up to 24 guests'],
+        ].map(([id, t, s]) => (
+          <div key={t}><div className="ph up-th"><Photo id={id} sizes="(max-width: 900px) 30vw, 220px" /></div><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Salon() {
   return (
     <div className="sa">
@@ -244,7 +270,7 @@ export default function Home() {
               {TEMPLATES.map((t, i) => (
                 <article className={`tplrow${i % 2 ? ' flip' : ''}`} key={t.key}>
                   <div className="tplrow-shot">
-                    <Frame url={`${t.example}.saysites.com`}>{t.key === 'bold' ? <Plumber /> : t.key === 'editorial' ? <Salon /> : <Bakery />}</Frame>
+                    <Frame url={`${t.example}.saysites.com`}>{t.key === 'bold' ? <Plumber /> : t.key === 'editorial' ? <Salon /> : t.key === 'upscale' ? <Upscale /> : <Bakery />}</Frame>
                   </div>
                   <div className="tplrow-copy">
                     <h3>{t.name}</h3>
