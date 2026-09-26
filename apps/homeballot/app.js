@@ -1,5 +1,5 @@
 // ---- Fill these in before you post the link ----
-const FUND_URL = "";          // e.g. "https://gofund.me/xxxx"; the "Contribute" and "Support" buttons link here
+const FUND_URL = "https://www.gofundme.com/f/build-homeballot-secure-online-voting"; // the "Contribute" and "Support" buttons link here
 const INSTAGRAM_HANDLE = "";  // e.g. "homeballot" (no @)
 // ------------------------------------------------
 
