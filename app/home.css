@@ -372,6 +372,7 @@
 .gal-shot::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,.72)); }
 .gal-plaque { position: absolute; top: 16px; left: 16px; z-index: 1; background: #fff; border-radius: 10px; padding: 10px 14px; box-shadow: 0 6px 18px rgba(0, 0, 0, .18); display: flex; }
 .gal-plaque img { display: block; height: 30px; width: auto; max-width: 200px; }
+.gal-plaque.is-dark { background: #14110f; }
 .gal-over { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 1; color: #fff; }
 .gal-over small { display: block; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; opacity: .82; margin-bottom: 6px; }
 .gal-over strong { display: block; font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; }

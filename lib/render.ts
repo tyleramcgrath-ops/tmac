@@ -205,7 +205,7 @@ function renderProducts(w: Extract<Widget, { type: 'products' }>): string {
       : p.buyUrl
         ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">${esc(t.buyNow)}</a>`
         : `<a class="btn btn-outline pr-buy" href="/contact">${esc(t.askAboutThis)}</a>`
-    return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}${buy}</div></article>`
+    return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}<div class="pr-foot"><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${buy}</div></div></article>`
   })
   return `<div class="prs ${cls(w.id)}">${cards.join('')}</div>`
 }
@@ -443,10 +443,11 @@ function widgetCss(used: Set<string>): string {
       `.po-t{font-size:1.35em;margin:0}.po-t a{color:var(--c-text);text-decoration:none}.po-t a:hover{color:var(--c-primary)}.po p{margin:0;color:var(--c-muted)}.po-more{font-weight:600;text-decoration:none;margin-top:4px}.po-none{color:var(--c-muted)}`
   if (used.has('products'))
     css +=
-      `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:28px}.pr{display:flex;flex-direction:column;gap:12px}` +
-      `.pr-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r);background:var(--c-surface)}.pr-none{display:grid;place-items:center;font:600 3em var(--f-h);color:var(--c-muted)}` +
-      `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1}.pr-name{font-size:1.15em;margin:0}.pr-price{margin:0;font-weight:700;color:var(--c-primary)}.pr-desc{margin:4px 0 0;color:var(--c-muted);font-size:.95em}` +
-      `.pr-buy{align-self:flex-start;margin-top:auto;padding:.65em 1.3em}.pr-body>.pr-buy{margin-top:10px}.pr-out{margin-top:10px;font-weight:600;color:var(--c-muted)}`
+      `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}.pr{display:flex;flex-direction:column;gap:14px;background:var(--c-surface);border-radius:var(--r);padding:10px 10px 14px}` +
+      `.pr-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:calc(var(--r) * .7);background:var(--c-background)}.pr-none{display:grid;place-items:center;font:600 3em var(--f-h);color:var(--c-muted)}` +
+      `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1;padding:0 6px}.pr-name{font-size:1.1em;margin:0}.pr-desc{margin:0;color:var(--c-muted);font-size:.92em}` +
+      `.pr-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:12px}.pr-price{margin:0;font-weight:700;color:var(--c-text)}` +
+      `.pr-buy{padding:.55em 1.1em;font-size:.9em;white-space:nowrap}.pr-out{padding:.5em 1em;font-size:.88em;font-weight:600;color:var(--c-muted);border:1.5px solid color-mix(in srgb,var(--c-muted) 45%,transparent);border-radius:var(--rb)}`
   if (used.has('form'))
     css +=
       `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +

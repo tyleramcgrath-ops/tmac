@@ -13,7 +13,7 @@ import { randomUUID } from 'crypto'
 import type { Container, Element, GlobalStyles, Page, Site } from './schema'
 import { photosFor, type Photo, type PhotoSet } from './photos'
 
-export type Design = 'bold' | 'editorial' | 'warm'
+export type Design = 'bold' | 'editorial' | 'warm' | 'upscale'
 
 export const BUSINESS_TYPES = {
   plumber: { label: 'Plumber', schemaType: 'Plumber', trade: 'plumbing', design: 'bold', headline: 'Fast, honest plumbing in {city}.' },
@@ -40,12 +40,16 @@ export const PALETTES: Record<string, { label: string; colors: GlobalStyles['col
   sunset: { label: 'Terracotta', colors: { primary: '#a8431f', secondary: '#2b211a', accent: '#d9a441', text: '#2b211a', muted: '#6d5d50', background: '#fbf8f3', surface: '#f3ece2' } },
   plum: { label: 'Blush', colors: { primary: '#7a4b5b', secondary: '#231d1a', accent: '#e3b5a4', text: '#231d1a', muted: '#6c625c', background: '#faf7f5', surface: '#f1ebe7' } },
   slate: { label: 'Charcoal', colors: { primary: '#1f2937', secondary: '#0b0f14', accent: '#9aa6b2', text: '#111827', muted: '#4b5563', background: '#ffffff', surface: '#f3f4f6' } },
+  // A dark site. Bands and the footer that use "secondary" turn cream, with
+  // the dark page colour as their text, so every pairing stays readable.
+  noir: { label: 'Midnight', colors: { primary: '#c9a46c', secondary: '#efe6d8', accent: '#c9a46c', text: '#f1ebe3', muted: '#aaa196', background: '#14110f', surface: '#1e1a17' } },
 }
 
 export const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
   bold: { fonts: { heading: 'sans', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 8, containerWidth: 1180, headingWeight: 800, headingTracking: -0.025, buttonShape: 'rounded' },
   editorial: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.28, radius: 2, containerWidth: 1180, headingWeight: 400, headingTracking: -0.015, buttonShape: 'square', buttonCase: 'upper' },
   warm: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 14, containerWidth: 1160, headingWeight: 500, headingTracking: -0.015, buttonShape: 'pill' },
+  upscale: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.3, radius: 2, containerWidth: 1180, headingWeight: 500, headingTracking: -0.02, buttonShape: 'square', buttonCase: 'upper' },
 }
 
 export interface StarterInput {
@@ -178,17 +182,18 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ? `${cap(joinAnd(list.slice(0, 2).map(soften)))} attorneys in ${city}.`
       : t.headline.replace('{city}', city).replace('{name}', name)
   // With no services listed, talk about the trade itself ("roofing").
-  const offer = services.length ? list.slice(0, 3).map(soften).join(', ') : t.trade
+  const offer = services.length ? joinAnd(list.slice(0, 3).map(soften)) : t.trade
   const intro = {
     bold: `${name} helps people across ${place} with ${offer}. Straight answers, fair prices and work done right.`,
     editorial: law
       ? `${name} helps people across ${place} with ${offer}. We explain where you stand, your options and what it will cost, in plain English, before you decide anything.`
       : `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
+    upscale: `${name} brings ${offer} to ${place}. Considered, unhurried and done properly.`,
   }[design]
   // "Other" businesses could be anything, so their intro makes no claims.
   const introText = input.type === 'other' ? `${name} serves customers across ${place}${services.length ? ` with ${offer}` : ''}. Friendly, local and easy to reach.` : intro
-  const more = law ? 'Practice areas' : { bold: 'See our services', editorial: 'View services', warm: 'See what we offer' }[design]
+  const more = law ? 'Practice areas' : { bold: 'See our services', editorial: 'View services', warm: 'See what we offer', upscale: 'Explore' }[design]
   // Three ways to say it per design, so neighbouring cards don't repeat.
   const cardText = (s: string, i = 0) =>
     ({
@@ -213,11 +218,16 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         `Made by hand in small batches, the way we'd want it ourselves.`,
         `A local favourite. Come by, say hello and see what's new today.`,
       ],
+      upscale: [
+        `${s}, done with care and an eye for detail.`,
+        `Nothing rushed and nothing generic. Ask us and we'll walk you through it.`,
+        `The details are the point. Come and see for yourself.`,
+      ],
     })[design][i % 3]
   const eyebrow = design === 'bold' ? `${cap(t.trade)} · ${city}` : place
 
   const heroBlocks = (light: boolean): Element[] => [
-    { id: 'hero-kicker', type: 'text', text: eyebrow, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: light ? '#dbe3ec' : 'primary' } },
+    { id: 'hero-kicker', type: 'text', text: eyebrow, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: light && design !== 'upscale' ? '#dbe3ec' : 'primary' } },
     { id: 'hero-title', type: 'heading', level: 1, text: headline, style: { fontSize: { desktop: design === 'bold' ? 62 : 58, tablet: 48, mobile: 38 }, maxWidth: 720, margin: { desktop: { top: 6, right: 0, bottom: 4, left: 0 } }, ...(light ? { color: '#ffffff' as const } : {}) } },
     { id: 'hero-text', type: 'text', text: introText, style: { fontSize: { desktop: 19, mobile: 17 }, maxWidth: 560, color: light ? '#e2e8ef' : 'muted' } },
     {
@@ -227,7 +237,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       direction: { desktop: 'row' },
       style: { gap: { desktop: 12 }, margin: { desktop: { top: 14, right: 0, bottom: 0, left: 0 } } },
       children: [
-        { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light ? { style: { background: '#ffffff', color: 'secondary' } } : {}) },
+        { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light && design !== 'upscale' ? { style: { background: '#ffffff', color: '#14171c' } } : {}) },
         law && phone
           ? { id: 'hero-services', type: 'button', label: 'Call now', href: telHref(phone), variant: 'outline' }
           : { id: 'hero-services', type: 'button', label: more, href: svcHref, variant: 'outline', ...(light ? { style: { color: '#ffffff' } } : {}) },
@@ -241,7 +251,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     layout: 'flex',
     style: { gap: { desktop: 10 } },
     children: [
-      { id: `svc-${i + 1}-img`, type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect, style: { borderRadius: design === 'editorial' ? 2 : 12, margin: { desktop: { top: 0, right: 0, bottom: 8, left: 0 } } } },
+      { id: `svc-${i + 1}-img`, type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect, style: { borderRadius: design === 'editorial' || design === 'upscale' ? 2 : 12, margin: { desktop: { top: 0, right: 0, bottom: 8, left: 0 } } } },
       { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: design === 'bold' ? 22 : 26 } } },
       { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted' } },
     ],
@@ -430,6 +440,38 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       faq,
       ctaBand,
     ]
+  } else if (design === 'upscale') {
+    // Dark and grown-up: a full photo under the headline, one centred line
+    // about the place, then the offer as tall photo cards.
+    homeBody = [
+      {
+        id: 'hero',
+        type: 'container',
+        tag: 'section',
+        layout: 'flex',
+        boxed: true,
+        backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.78, overlayStyle: 'side', priority: true },
+        style: { background: '#0c0a09', padding: { desktop: pad(148), tablet: pad(112), mobile: pad(84, 20) }, gap: { desktop: 16 } },
+        children: heroBlocks(true),
+      },
+      {
+        id: 'intro',
+        type: 'container',
+        tag: 'section',
+        layout: 'flex',
+        boxed: true,
+        align: 'center',
+        style: { padding: { desktop: pad(112), mobile: pad(64, 20) }, textAlign: { desktop: 'center' }, gap: { desktop: 16 } },
+        children: [
+          { id: 'intro-k', type: 'text', text: 'Welcome', style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.16, textTransform: 'uppercase', color: 'primary' } },
+          { id: 'intro-h', type: 'heading', level: 2, text: `Everything at ${name} is done with care, and it shows.`, style: { fontSize: { desktop: 42, mobile: 30 }, maxWidth: 820 } },
+          { id: 'intro-t', type: 'text', text: `Come as you are and leave glad you did. That's the whole idea.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 620 } },
+        ],
+      },
+      { ...servicesSection(law ? 'Practice areas' : 'What we offer', 0.8), style: { padding: { desktop: { top: 0, right: 24, bottom: 112, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 40 } } },
+      faq,
+      ctaBand,
+    ]
   } else {
     homeBody = [
       {
@@ -501,7 +543,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     status: 'published',
     seo: {
       title: law && services.length ? clip(`${cap(soften(list[0]))} Attorneys in ${place} | ${name}`, 60) : clip(`${name} | ${cap(t.trade)} in ${place}`, 60),
-      description: clip(`${name} provides ${t.trade} in ${place}${services.length ? `: ${list.slice(0, 3).map(soften).join(', ')}` : ''}. Friendly, local and easy to reach. Get in touch today.`, 160),
+      description: clip(`${name} provides ${t.trade} in ${place}${services.length ? `: ${joinAnd(list.slice(0, 3).map(soften))}` : ''}. Friendly, local and easy to reach. Get in touch today.`, 160),
     },
     body: homeBody,
     updatedAt: now,
@@ -632,7 +674,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
 // "HVAC repair").
 export function soften(s: string): string {
   const [first, ...rest] = s.split(' ')
-  return rest.length && /^[A-Z][a-z]+$/.test(first) ? first.toLowerCase() + (rest.length ? ' ' + rest.join(' ') : '') : s
+  return rest.length && /^[A-Z][a-z]+(-[a-z]+)*$/.test(first) ? first.toLowerCase() + (rest.length ? ' ' + rest.join(' ') : '') : s
 }
 
 function joinAnd(xs: string[]): string {

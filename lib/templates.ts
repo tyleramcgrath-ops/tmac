@@ -1,4 +1,4 @@
-// Talk & Design templates: the three example sites, each with a detailed
+// Talk & Design templates: the four example sites, each with a detailed
 // prompt that fills in with the owner's details. The prompt shows how
 // easy it is to describe a website in plain words; Sofie then designs the
 // site from it, starting from the template's design.
@@ -68,6 +68,20 @@ export const TEMPLATES: Template[] = [
       `Then a "What we make" section with a photo card for each: ${list(i.services, '[what you make or sell]')}. ` +
       `Add a dark band about being made here in ${or(i.city, '[your city]')}, three common questions, and our address and hours in the footer. ` +
       `Keep the wording cozy and specific, and set the Google titles for our city.`,
+  },
+  {
+    key: 'upscale',
+    name: 'Dark & Upscale',
+    bestFor: 'Restaurants, bars, salons, boutiques',
+    example: 'olive-and-ember',
+    palette: 'noir',
+    prompt: (i) =>
+      `Build a website for ${or(i.name, '[your business name]')}, a ${or(i.typeLabel, '[kind of business]').toLowerCase()} in ${or(i.city, '[your city]')}, ${or(i.region, '[state]')}. ` +
+      `Make it dark and upscale: a near-black background, warm gold accents, elegant serif headings and sharp, understated buttons. ` +
+      `Open with a full-width photo and a short, confident headline, with buttons to ${i.phone ? `call ${i.phone}` : 'get in touch'} and to explore what we offer. ` +
+      `Follow with one centered line about what it feels like to come here, then tall photo cards for: ${list(i.services, '[what you offer]')}. ` +
+      `Finish with three common questions and a simple call-to-action, with our hours and address in the footer. ` +
+      `Keep the wording short, calm and specific, never salesy, and set the Google titles for our city.`,
   },
 ]
 

@@ -58,7 +58,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
           <a className="gal-card ind-shot" href={`/preview/${i.example}`}>
             <div className="gal-shot">
               <Image src={photo.src} alt={photo.alt} fill priority sizes="(max-width: 900px) 100vw, 520px" style={{ objectFit: 'cover' }} />
-              <span className="gal-plaque"><img src={`/media/logos/${i.example}.svg`} alt="" /></span>
+              <span className={`gal-plaque${SHOWCASE_INFO[i.example]?.design === 'upscale' ? ' is-dark' : ''}`}><img src={`/media/logos/${i.example}.svg`} alt="" /></span>
               {info && (
                 <div className="gal-over">
                   <small>{info.kind} · {info.place}</small>

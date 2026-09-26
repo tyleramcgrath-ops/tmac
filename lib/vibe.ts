@@ -81,7 +81,7 @@ function templatePatterns(): RegExp[] {
   if (templates) return templates
   const seen = new Set<string>()
   const out: RegExp[] = []
-  const designs: (Design | undefined)[] = [undefined, 'bold', 'editorial', 'warm']
+  const designs: (Design | undefined)[] = [undefined, 'bold', 'editorial', 'warm', 'upscale']
   for (const type of Object.keys(BUSINESS_TYPES) as BusinessTypeKey[]) {
     for (const design of designs) {
       for (const services of [[`${SLOT}S1${SLOT}`, `${SLOT}S2${SLOT}`, `${SLOT}S3${SLOT}`, `${SLOT}S4${SLOT}`], []]) {
