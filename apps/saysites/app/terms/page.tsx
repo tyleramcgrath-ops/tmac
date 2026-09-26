@@ -18,6 +18,8 @@ export default function Terms() {
         <div className="wrap">
           <h2>Plans and changes</h2>
           <p>Every account starts with a 7-day free trial. After that, plans are billed monthly at the prices shown on the homepage, and you can cancel anytime. Features may change, and we’ll tell you before anything you rely on goes away or before any price changes.</p>
+          <h2>Who can have an account</h2>
+          <p>You must be 18 or older (or the age of majority where you live) to create a SaySites account. Children can help build a website with a parent or guardian, using the parent’s own account. The parent is the account holder, stays responsible for what is published, and shouldn’t put a child’s surname, photo, address, school or contact details on a public website.</p>
           <h2>Your content is yours</h2>
           <p>You own your business details, words, photos and the websites you build. You give us permission to store and display them so your website works.</p>
           <h2>Using SaySites fairly</h2>

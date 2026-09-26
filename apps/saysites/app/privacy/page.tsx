@@ -34,6 +34,8 @@ export default function Privacy() {
           </ul>
           <h2>Cookies</h2>
           <p>saysites.com uses one cookie to keep you logged in. Customer websites built with SaySites set no cookies and run no tracking scripts.</p>
+          <h2>Children</h2>
+          <p>SaySites accounts are for adults. We don’t knowingly collect personal information from children under 13, and children shouldn’t create accounts or give us their details. If a child builds a website with a parent, it’s done in the parent’s account. If you think a child has given us personal information, tell us with the Feedback button on any page and we’ll delete it.</p>
           <h2>Deleting your data</h2>
           <p>Deleting a website removes its pages, Sofie history and messages. Deleting your account removes everything linked to it.</p>
         </div>
