@@ -16,9 +16,9 @@ import { photosFor, type Photo, type PhotoSet } from './photos'
 export type Design = 'bold' | 'editorial' | 'warm' | 'upscale'
 
 export const BUSINESS_TYPES = {
-  plumber: { label: 'Plumber', schemaType: 'Plumber', trade: 'plumbing', design: 'bold', headline: 'Fast, honest plumbing in {city}.' },
-  electrician: { label: 'Electrician', schemaType: 'Electrician', trade: 'electrical work', design: 'bold', headline: 'Safe, tidy electrical work in {city}.' },
-  hvac: { label: 'Heating & air', schemaType: 'HVACBusiness', trade: 'heating and air conditioning', design: 'bold', headline: 'Stay comfortable all year in {city}.' },
+  plumber: { label: 'Plumber', schemaType: 'Plumber', trade: 'plumbing', design: 'bold', headline: 'Burst pipe? Blocked drain? Call us first.' },
+  electrician: { label: 'Electrician', schemaType: 'Electrician', trade: 'electrical work', design: 'bold', headline: 'Electrical work done safely, and done right.' },
+  hvac: { label: 'Heating & air', schemaType: 'HVACBusiness', trade: 'heating and air conditioning', design: 'bold', headline: 'Too hot? Too cold? We’ll sort it out.' },
   roofer: { label: 'Roofer', schemaType: 'RoofingContractor', trade: 'roofing', design: 'bold', headline: 'A roof you never have to think about.' },
   landscaper: { label: 'Landscaping', schemaType: 'LandscapingBusiness', trade: 'landscaping', design: 'bold', headline: 'Yards the neighbors notice.' },
   cleaner: { label: 'Cleaning', schemaType: 'HousekeepingService', trade: 'cleaning', design: 'bold', headline: 'Come home to a clean house.' },
@@ -26,8 +26,8 @@ export const BUSINESS_TYPES = {
   dentist: { label: 'Dentist', schemaType: 'Dentist', trade: 'dental care', design: 'editorial', headline: 'Gentle, modern dental care in {city}.' },
   salon: { label: 'Hair salon', schemaType: 'HairSalon', trade: 'hair care', design: 'editorial', headline: 'Hair that grows out beautifully.' },
   lawyer: { label: 'Law firm', schemaType: 'LegalService', trade: 'legal help', design: 'editorial', headline: 'Clear legal help when it matters.' },
-  restaurant: { label: 'Restaurant', schemaType: 'Restaurant', trade: 'food', design: 'warm', headline: 'Good food, made with care, in {city}.' },
-  bakery: { label: 'Bakery or café', schemaType: 'Bakery', trade: 'fresh baking', design: 'warm', headline: 'Baked fresh every morning in {city}.' },
+  restaurant: { label: 'Restaurant', schemaType: 'Restaurant', trade: 'food', design: 'warm', headline: 'Come hungry. Leave happy.' },
+  bakery: { label: 'Bakery or café', schemaType: 'Bakery', trade: 'fresh baking', design: 'warm', headline: 'Fresh from our oven, every morning.' },
   store: { label: 'Shop', schemaType: 'Store', trade: 'products', design: 'warm', headline: 'Things worth owning, from {city}.' },
   other: { label: 'Other', schemaType: 'LocalBusiness', trade: 'services', design: 'warm', headline: '{name}, right here in {city}.' },
 } as const satisfies Record<string, { label: string; schemaType: string; trade: string; design: Design; headline: string }>
@@ -133,6 +133,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   // Law firms get what legal clients look for: practice areas, a
   // consultation request, and the notices bar rules expect.
   const law = input.type === 'lawyer'
+  // Places people visit (food, shops) get questions about visiting and ordering.
+  const shopfront = input.type === 'restaurant' || input.type === 'bakery' || input.type === 'store'
   const svcHref = law ? '/practice-areas' : '/services'
   const svcLabel = law ? 'Practice Areas' : 'Services'
 
@@ -200,7 +202,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       bold: [
         `${s}, done properly by our team in ${city}. Ask us anything; we're happy to help.`,
         `Clear pricing before we start and a tidy job when we leave. ${cap(soften(s))} you can count on.`,
-        `Local, licensed and quick to respond. Tell us what you need and we'll take it from there.`,
+        `Local, friendly and easy to reach. Tell us what you need and we'll take it from there.`,
       ],
       editorial: law
         ? [
@@ -237,7 +239,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       direction: { desktop: 'row' },
       style: { gap: { desktop: 12 }, margin: { desktop: { top: 14, right: 0, bottom: 0, left: 0 } } },
       children: [
-        { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light && design !== 'upscale' ? { style: { background: '#ffffff', color: '#14171c' } } : {}) },
+        { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light && design !== 'upscale' ? { style: { background: '#ffffff', color: '#14171c' } } : design === 'warm' ? { style: { background: 'secondary', color: 'background' } } : {}) },
         law && phone
           ? { id: 'hero-services', type: 'button', label: 'Call now', href: telHref(phone), variant: 'outline' }
           : { id: 'hero-services', type: 'button', label: more, href: svcHref, variant: 'outline', ...(light ? { style: { color: '#ffffff' } } : {}) },
@@ -310,10 +312,16 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               { question: 'How do your fees work?', answer: `It depends on the matter. We explain our fees clearly at the start, in writing, before any work begins.` },
               { question: 'Which areas do you serve?', answer: `We help clients across ${place} and the surrounding area. Not sure if we can help? Just ask.` },
             ]
-          : [
+          : shopfront
+            ? [
+                { question: 'Where can I find you?', answer: `We're in ${place}.${input.street || input.hours?.length ? ' Our address and opening hours are at the bottom of every page.' : ' Get in touch and we’ll tell you how to find us.'}` },
+                { question: 'Can I order ahead?', answer: phone ? `Call us on ${phone} or send a message from our contact page, and we'll let you know what's possible.` : `Send us a message from our contact page and we'll let you know what's possible.` },
+                { question: 'Do you take larger orders or events?', answer: `Tell us what you have in mind and we'll let you know what we can do.` },
+              ]
+            : [
           { question: 'Which areas do you serve?', answer: `We work across ${place} and the surrounding area. Not sure if we cover you? Just ask.` },
-          { question: 'How do I get a quote?', answer: phone ? `Call us on ${phone} or send a message from our contact page, and we'll get back to you quickly.` : `Send us a message from our contact page and we'll get back to you quickly.` },
-          { question: 'How soon can you help?', answer: `Usually quickly. Get in touch and we'll tell you the first time that works for you.` },
+          { question: 'How do I get a quote?', answer: phone ? `Call us on ${phone} or send a message from our contact page, and we'll get back to you.` : `Send us a message from our contact page and we'll get back to you.` },
+          { question: 'How soon can you help?', answer: `Get in touch and we'll tell you the first time that works for you.` },
             ],
       },
     ],
@@ -358,7 +366,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         children: [
           ['Clear, upfront prices', 'You know the cost before we start.'],
           [`Local to ${city}`, 'A team from your own neighborhood.'],
-          ['Easy to reach', phone ? `Call ${phone} any time.` : 'Message us and we reply fast.'],
+          ['Easy to reach', phone ? `Call us on ${phone}.` : 'Send a message and we’ll get back to you.'],
           ['Work done right', 'Tidy, careful and properly finished.'],
         ].map(([h, d], i): Container => ({
           id: `strip-${i + 1}`,
@@ -482,13 +490,13 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         columns: { desktop: 2, mobile: 1 },
         align: 'center',
         boxed: true,
-        style: { background: 'surface', padding: { desktop: pad(80), mobile: pad(44, 20) }, gap: { desktop: 56, mobile: 28 } },
+        style: { padding: { desktop: { top: 56, right: 24, bottom: 72, left: 24 }, mobile: pad(36, 20) }, gap: { desktop: 56, mobile: 28 } },
         children: [
           { id: 'hero-copy', type: 'container', layout: 'flex', style: { gap: { desktop: 14 } }, children: heroBlocks(false) },
           { id: 'hero-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 1.1, priority: true, style: { borderRadius: 18 } },
         ],
       },
-      servicesSection('What we make', 1.3),
+      { ...servicesSection('What we make', 1.3), style: { padding: { desktop: { top: 32, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 36 } } },
       {
         id: 'about',
         type: 'container',
@@ -625,7 +633,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     status: 'published',
     seo: {
       title: law ? clip(`Contact ${name} | Attorneys in ${city}`, 60) : clip(`Contact ${name} | ${cap(t.trade)} in ${city}`, 60),
-      description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Send a message, call or email and we'll get back to you quickly.`, 160),
+      description: clip(`Get in touch with ${name} for ${t.trade} in ${place}. Send a message, call or email and we'll get back to you.`, 160),
     },
     body: [
       {
