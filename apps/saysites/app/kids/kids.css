@@ -1,0 +1,55 @@
+/* SaySites for kids (preview). Calm, warm and friendly: soft rose and
+   lilac on the example site, the usual black and white around it. */
+.home .kd-top { padding-bottom: 72px; }
+.home .kd-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 56px; align-items: center; }
+.home .kd-soon { font-size: 15px !important; color: var(--ink) !important; font-weight: 600; margin-top: 26px !important; display: inline-flex; align-items: center; gap: 10px; }
+.home .kd-soon::before { content: ''; width: 18px; height: 1px; background: currentColor; }
+@media (max-width: 900px) { .home .kd-hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+/* The example site: Polished by P */
+.home .kd-site { background: #fbf6f4; color: #3b2a30; font-size: 1.5cqw; line-height: 1.45; padding: 0 4.5cqw 4.5cqw; font-family: ui-sans-serif, system-ui, sans-serif; letter-spacing: 0; }
+.home .kd-nav { display: flex; align-items: center; gap: 3cqw; padding: 2.6cqw 0; }
+.home .kd-nav b { font: 600 3.1cqw/1 ui-rounded, 'SF Pro Rounded', system-ui, sans-serif; margin-right: auto; letter-spacing: -0.02em; color: #9c5a72; }
+.home .kd-nav b span { color: #3b2a30; font-weight: 500; }
+.home .kd-nav span { color: #7d6870; }
+.home .kd-nav em, .home .kd-btns em { font-style: normal; background: #9c5a72; color: #fff; padding: 1.1cqw 2cqw; border-radius: 99px; font-weight: 600; }
+.home .kd-hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 4cqw; align-items: center; }
+.home .kd-hero small { font-size: 1.3cqw; letter-spacing: .08em; text-transform: uppercase; color: #9c5a72; font-weight: 600; }
+.home .kd-hero h3 { font: 600 5.6cqw/1.02 ui-rounded, 'SF Pro Rounded', system-ui, sans-serif; letter-spacing: -0.035em; margin: 1.6cqw 0; }
+.home .kd-hero p { font-size: 1.75cqw; color: #6e5a62; margin: 0 0 2.6cqw; }
+.home .kd-btns { display: flex; gap: 2cqw; align-items: center; }
+.home .kd-btns span { font-weight: 600; }
+.home .kd-ph, .home .kd-th { position: relative; overflow: hidden; background: #efe4ea; }
+.home .kd-ph { aspect-ratio: 1 / .88; border-radius: 3cqw; }
+.home .kd-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4cqw; margin-top: 4cqw; }
+.home .kd-row > div { background: #fff; border-radius: 2.4cqw; padding: 1.2cqw 1.2cqw 1.8cqw; }
+.home .kd-th { aspect-ratio: 1.25; border-radius: 1.6cqw; }
+.home .kd-row b { display: block; font: 600 1.95cqw/1.2 ui-rounded, 'SF Pro Rounded', system-ui, sans-serif; margin: 1.3cqw .4cqw 0; }
+.home .kd-row span { color: #9c5a72; font-weight: 600; margin: 0 .4cqw; }
+
+/* Sections */
+.home .kd-sec { padding: 88px 0; }
+.home .kd-alt { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.home .kd-sec h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.02; margin: 0 0 36px; max-width: 760px; }
+.home .kd-steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: kd; }
+.home .kd-steps li { counter-increment: kd; display: grid; gap: 8px; padding: 28px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+.home .kd-steps li::before { content: counter(kd, decimal-leading-zero); font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--ink-mu); }
+.home .kd-steps b { font-size: 21px; letter-spacing: -0.02em; }
+.home .kd-steps span, .home .kd-grid span { color: var(--ink-mu); font-size: 16px; }
+.home .kd-split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+.home .kd-split p:not(.kicker) { color: var(--ink-mu); font-size: 18px; max-width: 460px; }
+.home .kd-split h2 { margin-bottom: 18px; }
+.home .kd-safe { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.home .kd-safe li { padding: 18px 0 18px 32px; border-top: 1px solid var(--line); position: relative; color: var(--ink-mu); font-size: 16px; }
+.home .kd-safe li::before { content: ''; position: absolute; left: 4px; top: 25px; width: 11px; height: 6px; border-left: 1.8px solid var(--ink); border-bottom: 1.8px solid var(--ink); transform: rotate(-45deg); }
+.home .kd-safe b { color: var(--ink); font-weight: 600; }
+.home .kd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.home .kd-grid > div { display: grid; gap: 6px; border-top: 1px solid var(--ink); padding-top: 16px; }
+.home .kd-grid b { font-size: 18px; letter-spacing: -0.01em; }
+@media (max-width: 900px) {
+  .home .kd-steps, .home .kd-split { grid-template-columns: 1fr; gap: 16px; }
+  .home .kd-split { gap: 28px; }
+  .home .kd-grid { grid-template-columns: 1fr 1fr; gap: 22px; }
+  .home .kd-sec { padding: 64px 0; }
+}
+@media (max-width: 480px) { .home .kd-grid { grid-template-columns: 1fr; } }

@@ -22,6 +22,7 @@ export function SignUpForm({ idea = '', template = '', claim = '', promo = '' }:
       <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" required /></label>
       <label className="field"><span>Password</span><input className="input" name="password" type="password" autoComplete="new-password" minLength={8} required /><small>At least 8 characters.</small></label>
       <button className="btn btn-primary btn-block" type="submit" disabled={pending}>{pending ? 'Creating your account…' : 'Create my account'}</button>
+      <p className="muted small" style={{ margin: '12px 0 0', textAlign: 'center' }}>By creating an account you confirm you’re 18 or older and agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy</a>.</p>
     </form>
   )
 }
