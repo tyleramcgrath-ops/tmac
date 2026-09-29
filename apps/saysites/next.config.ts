@@ -15,10 +15,11 @@ const nextConfig: NextConfig = {
     return [{ source: '/birthday', destination: '/early', permanent: false }]
   },
   images: {
-    // Photos in the homepage's example sites. Vercel resizes them and serves
-    // AVIF/WebP, so they stay light.
-    formats: ['image/avif', 'image/webp'],
-    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
+    // Photos in the marketing pages' example sites. Unsplash resizes them and
+    // serves AVIF/WebP itself (lib/image-loader.ts), so Vercel's metered image
+    // optimization isn't needed.
+    loader: 'custom',
+    loaderFile: './lib/image-loader.ts',
   },
 };
 
