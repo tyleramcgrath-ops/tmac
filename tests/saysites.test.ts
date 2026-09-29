@@ -1689,3 +1689,36 @@ describe('SaySites: start from a Google listing', () => {
     delete process.env.GOOGLE_PLACES_API_KEY
   })
 })
+
+describe('SaySites: promotion bar and booking button', () => {
+  it('checks booking and promotion links', async () => {
+    const { bookingService, checkBookingUrl, checkPromoLink } = await import('../apps/saysites/lib/promote')
+    expect(checkBookingUrl('calendly.com/rosie/30min').url).toBe('https://calendly.com/rosie/30min')
+    expect(checkBookingUrl('http://book.squareup.com/x').error).toMatch(/https/)
+    expect(checkBookingUrl('not a link').error).toBeTruthy()
+    expect(checkBookingUrl('https://rosies.saysites.com/contact').error).toMatch(/not your website/)
+    expect(bookingService('https://rosies-bakery.square.site/book')).toBe('Square')
+    expect(bookingService('https://www.vagaro.com/polished')).toBe('Vagaro')
+    expect(bookingService('https://example.com/book')).toBeNull()
+    expect(checkPromoLink('/contact').href).toBe('/contact')
+    expect(checkPromoLink('javascript:alert(1)').error).toBeTruthy()
+    expect(checkPromoLink('')).toEqual({})
+  })
+
+  it('shows the bar on every page until its last day, and the button in the header', async () => {
+    const { promoActive } = await import('../apps/saysites/lib/promote')
+    const { site, pages } = buildStarterSite({ name: 'Rosie’s Bakery', type: 'bakery', city: 'Portland', region: 'OR', phone: '(503) 555-0142', services: ['Sourdough', 'Cakes'] }, 'owner-1', 'rosies-bakery')
+    const withPromo = SiteSchema.parse({ ...site, promo: { text: 'Pumpkin loaves are back <this week>', href: '/menu', until: '2099-10-31' }, header: { ...site.header, cta: { label: 'Book a table', href: 'https://www.opentable.com/r/rosies' } } })
+    const html = renderPage(withPromo, pages[0], pages).html
+    expect(html).toContain('<div class="spb"><p><a href="/menu">Pumpkin loaves are back &lt;this week&gt;')
+    expect(renderPage(withPromo, pages[0], pages).css).toContain('.spb{')
+    expect(html).toContain('href="https://www.opentable.com/r/rosies">Book a table</a>')
+    // Phones get it next to Call.
+    expect(html).toMatch(/class="scb-go" href="https:\/\/www.opentable.com\/r\/rosies">Book a table/)
+    expect(promoActive(withPromo, new Date('2099-10-31T23:00:00Z'))).toBe(true)
+    expect(promoActive(withPromo, new Date('2099-11-01T00:30:00Z'))).toBe(false)
+    const ended = SiteSchema.parse({ ...withPromo, promo: { text: 'Old deal', until: '2020-01-01' } })
+    expect(renderPage(ended, pages[0], pages).html).not.toContain('class="spb"')
+    expect(() => SiteSchema.parse({ ...site, promo: { text: 'x'.repeat(101) } })).toThrow()
+  })
+})

@@ -411,6 +411,16 @@ export const SiteSchema = z
       })
       .strict()
       .optional(),
+    // A slim promotion bar across the top of every page (lib/promote.ts).
+    // Hidden after `until` (YYYY-MM-DD) when set.
+    promo: z
+      .object({
+        text: z.string().trim().min(1).max(100),
+        href: href.optional(),
+        until: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+      })
+      .strict()
+      .optional(),
     // One or two lines about the business, shown in the footer.
     tagline: z.string().max(200).optional(),
     // Small print at the foot of every page, e.g. a law firm's attorney

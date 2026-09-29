@@ -12,6 +12,7 @@ import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
 import { ImportError, importSite } from '@/lib/importer'
 import { checkReviewUrl, googleReviewUrl } from '@/lib/reviews'
+import { BOOKING_LABELS, BOOKING_LABELS_ES, checkBookingUrl, checkPromoLink } from '@/lib/promote'
 import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
@@ -586,4 +587,46 @@ export async function saveReviewUrl(siteId: string, _prev: SettingsState, form: 
   if (checked.error) return { error: checked.error }
   await changeSite(siteId, (s) => ({ ...s, business: { ...s.business, reviewUrl: checked.url } }))
   return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Promote: promotion bar and booking button
+// ---------------------------------------------------------------------------
+
+export async function savePromo(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const text = str(form, 'text', 100)
+  if (!text) return { error: 'Write the promotion, like “10% off your first visit this month”.' }
+  const link = checkPromoLink(str(form, 'href', 300))
+  if (link.error) return { error: link.error }
+  const until = str(form, 'until', 10)
+  if (until && !/^\d{4}-\d{2}-\d{2}$/.test(until)) return { error: 'Pick the last day from the calendar, or leave it empty.' }
+  if (until && until < new Date().toISOString().slice(0, 10)) return { error: 'That last day has already passed. Pick a later one, or leave it empty.' }
+  await changeSite(siteId, (s) => ({ ...s, promo: { text, ...(link.href ? { href: link.href } : {}), ...(until ? { until } : {}) } }))
+  return { saved: true }
+}
+
+export async function removePromo(siteId: string) {
+  await changeSite(siteId, (s) => ({ ...s, promo: undefined }))
+}
+
+export async function saveBooking(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const checked = checkBookingUrl(str(form, 'url', 300))
+  if (checked.error || !checked.url) return { error: checked.error }
+  const label = str(form, 'label', 40)
+  const labels: readonly string[] = [...BOOKING_LABELS, ...BOOKING_LABELS_ES]
+  if (!labels.includes(label)) return { error: 'Pick what the button says.' }
+  await changeSite(siteId, (s) => ({ ...s, header: { ...s.header, cta: { label, href: checked.url! } } }))
+  return { saved: true }
+}
+
+// Back to the usual "get in touch" button when the site has a contact page.
+export async function removeBooking(siteId: string) {
+  const { store, site } = await ownSite(siteId)
+  const pages = await store.pagesForSite(site.id)
+  const contact = pages.find((p) => p.status === 'published' && /^(contact|contacto)$/.test(p.slug))
+  const es = site.language.startsWith('es')
+  await changeSite(siteId, (s) => {
+    const { cta: _drop, ...rest } = s.header ?? {}
+    return { ...s, header: contact ? { ...rest, cta: { label: es ? 'Contáctanos' : 'Get in touch', href: '/' + contact.slug } } : rest }
+  })
 }

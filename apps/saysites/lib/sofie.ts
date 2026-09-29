@@ -299,7 +299,8 @@ export class Workspace {
       business: { ...b, schemaType: built.site.business.schemaType, ...(built.site.business.area ? { area: built.site.business.area } : {}) },
       globals: { ...built.site.globals, colors: this.site.globals.colors },
       nav,
-      header: built.site.header,
+      // A booking link the owner set on the Promote tab survives a rebuild.
+      header: this.site.header?.cta?.href.startsWith('https://') ? { ...built.site.header, cta: this.site.header.cta } : built.site.header,
       tagline: built.site.tagline,
     }
     if (built.site.footerNote) next.footerNote = built.site.footerNote
@@ -476,7 +477,7 @@ export const SOFIE_TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: 'update_site',
     description:
-      'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline, footerNote (small print at the foot of every page, e.g. a law firm’s attorney advertising disclaimer). Set a key to null to remove it.',
+      'Change site-wide settings as a JSON object string. Allowed keys: business (name, phone, email, address, hours, priceRange; merged), globals (colors, fonts, radius, headingWeight, headingTracking, headingCase, buttonShape, buttonCase, baseFontSize, typeScale; merged), header (topbar, cta; merged), nav (replaced), tagline, footerNote (small print at the foot of every page, e.g. a law firm’s attorney advertising disclaimer), promo (a slim promotion bar across the top of every page: {text up to 100 characters, href optional, until optional YYYY-MM-DD}; only offers the owner tells you about, never invent one). A booking button is header.cta with the owner’s own booking link. Set a key to null to remove it.',
     input_schema: { type: 'object', additionalProperties: false, properties: { changes_json: { type: 'string' }, summary }, required: ['changes_json', 'summary'] },
   },
   {
