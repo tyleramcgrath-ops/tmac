@@ -341,6 +341,7 @@ export default function Home() {
               <p className="kicker">Coming soon</p>
               <h2>Bring what you already have.</h2>
               <p>Connect your Google Business Profile, Instagram or Facebook, and your site picks up your real reviews and your best photos. You choose what shows, and nothing is posted anywhere without you.</p>
+              <p><a href="/connect">See what you can connect today →</a></p>
             </div>
             <div className="conn-grid">
               <div className="conn-card">
