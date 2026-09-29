@@ -1722,3 +1722,16 @@ describe('SaySites: promotion bar and booking button', () => {
     expect(() => SiteSchema.parse({ ...site, promo: { text: 'x'.repeat(101) } })).toThrow()
   })
 })
+
+describe('SaySites: photos load straight from Unsplash', () => {
+  it('asks Unsplash for each size and keeps fixed crops in shape', async () => {
+    const { default: loader } = await import('../apps/saysites/lib/image-loader')
+    const one = new URL(loader({ src: 'https://images.unsplash.com/photo-1?auto=format&fit=crop&q=75&w=900', width: 640 }))
+    expect(one.searchParams.get('w')).toBe('640')
+    expect(one.searchParams.get('q')).toBe('75')
+    expect(one.searchParams.get('auto')).toBe('format')
+    const crop = new URL(loader({ src: 'https://images.unsplash.com/photo-1?auto=format&fit=crop&q=72&w=800&h=600', width: 400, quality: 60 }))
+    expect([crop.searchParams.get('w'), crop.searchParams.get('h'), crop.searchParams.get('q')]).toEqual(['400', '300', '60'])
+    expect(loader({ src: '/birthday/buju-1.jpg', width: 640 })).toBe('/birthday/buju-1.jpg')
+  })
+})
