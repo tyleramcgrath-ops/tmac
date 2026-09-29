@@ -533,7 +533,7 @@ class PgStore implements Store {
       `SELECT
         (SELECT count(*) FROM ss_users) AS users,
         (SELECT count(*) FROM ss_users WHERE created_at >= $1::date) AS users_since,
-        (SELECT count(*) FROM ss_billing WHERE data->>'promo' = 'BIRTHDAY') AS birthday,
+        (SELECT count(*) FROM ss_billing WHERE data->>'promo' IN ('BIRTHDAY', 'EARLY')) AS birthday,
         (SELECT count(*) FROM ss_billing WHERE data->>'status' = 'active') AS paying,
         (SELECT count(*) FROM ss_sites) AS sites,
         (SELECT count(*) FROM ss_sites WHERE created_at >= $1::date) AS sites_since,
@@ -817,7 +817,7 @@ export class MemoryStore implements Store {
     return {
       users: users.length,
       usersSince: users.filter((u) => since(u.createdAt)).length,
-      birthday: bills.filter((b) => b.promo === 'BIRTHDAY').length,
+      birthday: bills.filter((b) => b.promo === 'BIRTHDAY' || b.promo === 'EARLY').length,
       paying: bills.filter((b) => b.status === 'active').length,
       sites: sites.length,
       sitesSince: sites.filter((s) => s.at && since(s.at)).length,
