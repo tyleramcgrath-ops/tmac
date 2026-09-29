@@ -20,7 +20,7 @@ export default async function FeedbackInbox() {
         </div>
       </div>
       {items.length === 0 ? (
-        <p className="muted">Nothing yet. Share saysites.com/birthday and it’ll start coming in.</p>
+        <p className="muted">Nothing yet. Share saysites.com/early and it’ll start coming in.</p>
       ) : (
         <div className="fb-list">
           {items.map((f) => (
