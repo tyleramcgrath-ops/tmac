@@ -2,6 +2,7 @@
 
 import { after } from 'next/server'
 import { cleanPromo, loadAccess, newBilling } from '@/lib/billing'
+import { googleReviewUrl } from '@/lib/reviews'
 import { redirect } from 'next/navigation'
 import { hashPassword, normalizeEmail, validEmail, verifyPassword } from '@/lib/auth'
 import { endSession, requireUser, startSession } from '@/lib/session'
@@ -79,17 +80,23 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
 
   const template = templateFor(str(form, 'template'))
   const phone = str(form, 'phone').slice(0, 30)
+  // Filled in from the owner's Google listing (lib/places), when they used it.
+  const street = str(form, 'street').slice(0, 120)
+  const postalCode = str(form, 'postalCode').slice(0, 20)
+  const hours = str(form, 'hours').split('\n').map((h) => h.trim()).filter((h) => /^[A-Za-z,-]+ \d{2}:\d{2}-\d{2}:\d{2}$/.test(h)).slice(0, 7)
+  const placeId = /^[\w-]{10,300}$/.test(str(form, 'placeId')) ? str(form, 'placeId') : ''
   const spanish = str(form, 'language') === 'es'
   const taken = await store.photosTaken()
   const found = await photoSetFor(store, type, taken)
   const built = buildStarterSite(
-    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) },
+    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(street && postalCode ? { street, postalCode } : {}), ...(hours.length ? { hours } : {}), language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) },
     user.id,
     subdomain,
     { taken }
   )
   const credits = found ? creditsInUse(built.pages, found.credits) : []
-  const site = credits.length ? { ...built.site, credits } : built.site
+  const withCredits = credits.length ? { ...built.site, credits } : built.site
+  const site = placeId ? { ...withCredits, business: { ...withCredits.business, reviewUrl: googleReviewUrl(placeId) } } : withCredits
   const pages = built.pages
   await store.createSite(user.id, site, pages)
   await syncSitePhotos(site.id, store)

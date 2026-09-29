@@ -1652,3 +1652,40 @@ describe('SaySites starter copy', () => {
     }
   })
 })
+
+describe('SaySites: start from a Google listing', () => {
+  it('turns a Places API answer into the new-site details', async () => {
+    const { searchPlaces, placeDetails, hoursFromPeriods, typeFromGoogle } = await import('../apps/saysites/lib/places')
+    process.env.GOOGLE_PLACES_API_KEY = 'test-key'
+    const calls: { url: string; init: RequestInit }[] = []
+    const fake = (async (url: string, init: RequestInit) => {
+      calls.push({ url, init })
+      if (url.endsWith(':searchText')) return new Response(JSON.stringify({ places: [{ id: 'ChIJ_rosies_bakery', displayName: { text: 'Rosie’s Bakery' }, formattedAddress: '2210 SE Division St, Portland, OR' }] }))
+      return new Response(JSON.stringify({
+        id: 'ChIJ_rosies_bakery',
+        displayName: { text: 'Rosie’s Bakery' },
+        primaryType: 'bakery',
+        postalAddress: { locality: 'Portland', administrativeArea: 'OR', postalCode: '97202', addressLines: ['2210 SE Division St'] },
+        nationalPhoneNumber: '(555) 310-2291',
+        regularOpeningHours: { periods: [2, 3, 4, 5].map((d) => ({ open: { day: d, hour: 7, minute: 0 }, close: { day: d, hour: 15, minute: 0 } })).concat([6, 0].map((d) => ({ open: { day: d, hour: 7, minute: 0 }, close: { day: d, hour: 14, minute: 0 } }))) },
+        rating: 4.8,
+        userRatingCount: 212,
+      }))
+    }) as unknown as typeof fetch
+    const matches = await searchPlaces('rosies bakery portland', fake)
+    expect(matches).toEqual([{ id: 'ChIJ_rosies_bakery', name: 'Rosie’s Bakery', address: '2210 SE Division St, Portland, OR' }])
+    expect((calls[0].init.headers as Record<string, string>)['X-Goog-Api-Key']).toBe('test-key')
+    const d = await placeDetails('ChIJ_rosies_bakery', fake)
+    expect(d).toMatchObject({ name: 'Rosie’s Bakery', type: 'bakery', city: 'Portland', region: 'OR', street: '2210 SE Division St', postalCode: '97202', phone: '(555) 310-2291', rating: 4.8, reviewCount: 212 })
+    expect(d.hours).toEqual(['Tu-Fr 07:00-15:00', 'Sa-Su 07:00-14:00'])
+    // A bar open past midnight, and a place open all day.
+    expect(hoursFromPeriods([{ open: { day: 5, hour: 17, minute: 0 }, close: { day: 6, hour: 1, minute: 0 } }])).toEqual(['Fr 17:00-23:59'])
+    expect(hoursFromPeriods([{ open: { day: 0, hour: 0, minute: 0 } }])).toEqual(['Su 00:00-23:59'])
+    expect(typeFromGoogle(['italian_restaurant'])).toBe('restaurant')
+    expect(typeFromGoogle(['hair_salon'])).toBe('salon')
+    expect(typeFromGoogle(['roofing_contractor'])).toBe('roofer')
+    expect(typeFromGoogle(['museum'])).toBe('other')
+    await expect(placeDetails('../../etc', fake)).rejects.toThrow()
+    delete process.env.GOOGLE_PLACES_API_KEY
+  })
+})
