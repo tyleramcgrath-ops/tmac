@@ -706,3 +706,16 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .launch-table table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
 .launch-table th, .launch-table td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .launch-table th { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; opacity: .7; }
+
+/* New site: start from your Google listing */
+.gstart { display: grid; gap: 6px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin: 0 0 22px; }
+.gstart b { font-size: 15px; }
+.gstart > span { color: var(--ink-3); font-size: 14px; }
+.gstart-row { display: flex; gap: 8px; margin-top: 6px; }
+.gstart-row .input { flex: 1; min-width: 0; width: auto; }
+.gstart-row .btn { flex: none; white-space: nowrap; }
+.gstart-list { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; }
+.gstart-list button { width: 100%; text-align: left; display: grid; gap: 2px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font: inherit; cursor: pointer; }
+.gstart-list button:hover { border-color: var(--ink); }
+.gstart-list span { color: var(--ink-3); font-size: 13px; }
+.gstart.done { background: var(--mint-soft); border-color: transparent; }

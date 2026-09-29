@@ -4,6 +4,8 @@ import { useActionState, useEffect, useState } from 'react'
 import { createSite, logIn, signUp, type FormState } from '@/app/actions'
 import { TEMPLATES, templateFor } from '@/lib/templates'
 import { typeFromName } from '@/lib/type-hints'
+import type { PlaceDetails } from '@/lib/places'
+import { findOnGoogle, pickFromGoogle, type GoogleSearchResult } from '@/app/dashboard/new/google-actions'
 
 function Error({ state }: { state: FormState }) {
   return state.error ? <p className="error" role="alert">{state.error}</p> : null
@@ -47,10 +49,61 @@ function b64url(s: string): string {
   return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 }
 
-export function NewSiteForm({ types, palettes, idea = '', template = '' }: { types: [string, string][]; palettes: [string, string, string][]; idea?: string; template?: string }) {
+// "Start from your Google listing": search, tap your business, and the
+// form below fills in with what Google has (lib/places).
+function GoogleStart({ onPick }: { onPick: (p: PlaceDetails) => void }) {
+  const [q, setQ] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [res, setRes] = useState<GoogleSearchResult>({})
+  const [picked, setPicked] = useState<PlaceDetails | null>(null)
+  const search = async () => {
+    if (q.trim().length < 3 || busy) return
+    setBusy(true)
+    setRes(await findOnGoogle(q))
+    setBusy(false)
+  }
+  const pick = async (id: string) => {
+    setBusy(true)
+    const r = await pickFromGoogle(id)
+    setBusy(false)
+    if (r.place) {
+      setPicked(r.place)
+      setRes({})
+      onPick(r.place)
+    } else setRes({ error: r.error })
+  }
+  if (picked)
+    return (
+      <div className="gstart done" role="status">
+        <b>Filled in from Google</b>
+        <span>{picked.name}{picked.city ? ` · ${picked.city}` : ''}{picked.hours.length ? ' · hours added' : ''}. Check the details below, add what you offer, and build.</span>
+      </div>
+    )
+  return (
+    <div className="gstart">
+      <b>On Google Maps? Start from your listing.</b>
+      <span>Type your business name and town, then tap your business. We fill in the rest.</span>
+      <div className="gstart-row">
+        <input className="input" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); search() } }} placeholder="Rosie’s Bakery Portland" aria-label="Your business on Google" maxLength={120} />
+        <button type="button" className="btn btn-ghost" onClick={search} disabled={busy}>{busy ? 'Looking…' : 'Find it'}</button>
+      </div>
+      {res.error && <small className="error">{res.error}</small>}
+      {res.matches && (
+        <ul className="gstart-list">
+          {res.matches.map((m) => (
+            <li key={m.id}><button type="button" onClick={() => pick(m.id)} disabled={busy}><strong>{m.name}</strong><span>{m.address}</span></button></li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+export function NewSiteForm({ types, palettes, idea = '', template = '', google = false }: { types: [string, string][]; palettes: [string, string, string][]; idea?: string; template?: string; google?: boolean }) {
   const [state, action, pending] = useActionState(createSite, {})
   const [tpl, setTpl] = useState(templateFor(template)?.key ?? '')
   const [info, setInfo] = useState({ name: '', type: '', city: '', region: '', phone: '', services: '' })
+  const [fromGoogle, setFromGoogle] = useState<PlaceDetails | null>(null)
   const [palette, setPalette] = useState(templateFor(template)?.palette ?? palettes[0]?.[0] ?? 'ocean')
   const [src, setSrc] = useState('')
   const set = (k: keyof typeof info) => (e: { target: { value: string } }) => setInfo((v) => ({ ...v, [k]: e.target.value }))
@@ -73,6 +126,22 @@ export function NewSiteForm({ types, palettes, idea = '', template = '' }: { typ
       <form action={action} className="card">
         <Error state={state} />
         {idea && <input type="hidden" name="idea" value={idea} />}
+        {google && (
+          <GoogleStart
+            onPick={(p) => {
+              setFromGoogle(p)
+              setInfo((v) => ({ ...v, name: p.name || v.name, type: p.type, city: p.city || v.city, region: p.region || v.region, phone: p.phone ?? v.phone }))
+            }}
+          />
+        )}
+        {fromGoogle && (
+          <>
+            <input type="hidden" name="placeId" value={fromGoogle.placeId} />
+            {fromGoogle.street && <input type="hidden" name="street" value={fromGoogle.street} />}
+            {fromGoogle.postalCode && <input type="hidden" name="postalCode" value={fromGoogle.postalCode} />}
+            {fromGoogle.hours.length > 0 && <input type="hidden" name="hours" value={fromGoogle.hours.join('\n')} />}
+          </>
+        )}
         <label className="field">
           <span>What kind of business?</span>
           <select className="input" name="type" value={info.type} onChange={set('type')} required>
