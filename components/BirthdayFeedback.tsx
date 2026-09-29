@@ -3,13 +3,13 @@
 import { useActionState } from 'react'
 import { sendFeedback } from '@/app/feedback-actions'
 
-export function BirthdayFeedback() {
+export function BirthdayFeedback({ page = '/early' }: { page?: string }) {
   const [state, action, pending] = useActionState(sendFeedback, {})
-  if (state.sent && state.freeUntil) return <p className="bd-thanks"><strong>Got it, thank you.</strong> That’s the best present. Your next three months are on me.</p>
-  if (state.sent) return <p className="bd-thanks"><strong>Got it, thank you.</strong> That’s the best present.</p>
+  if (state.sent && state.freeUntil) return <p className="bd-thanks"><strong>Got it, thank you.</strong> That really helps. Your next three months are on me.</p>
+  if (state.sent) return <p className="bd-thanks"><strong>Got it, thank you.</strong> That really helps.</p>
   return (
     <form action={action} className="bd-form">
-      <input type="hidden" name="page" value="/birthday" />
+      <input type="hidden" name="page" value={page} />
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="fb-hp" aria-hidden="true" />
       <div className="bd-row">
         <label><span>Your name</span><input name="name" maxLength={80} autoComplete="name" /></label>

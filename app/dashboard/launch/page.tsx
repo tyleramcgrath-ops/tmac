@@ -48,7 +48,7 @@ export default async function LaunchStatsPage({ searchParams }: { searchParams: 
 
       <div className="stats four">
         <div className="stat"><span className="stat-label">Signups {when}</span><strong>{n(s.usersSince)}</strong><span className="muted">{n(s.users)} accounts in total</span></div>
-        <div className="stat"><span className="stat-label">From /birthday</span><strong>{n(s.birthday)}</strong><span className="muted">signed up with BIRTHDAY</span></div>
+        <div className="stat"><span className="stat-label">Early access</span><strong>{n(s.birthday)}</strong><span className="muted">signed up from /early (or /birthday)</span></div>
         <div className="stat"><span className="stat-label">Sites built {when}</span><strong>{n(s.sitesSince)}</strong><span className="muted">{n(s.sites)} in total</span></div>
         <div className="stat"><span className="stat-label">Paying</span><strong>{n(s.paying)}</strong><span className="muted">active subscriptions</span></div>
         <div className="stat"><span className="stat-label">Feedback {when}</span><strong>{n(s.feedbackSince)}</strong><span className="muted"><a href="/dashboard/feedback">{n(s.feedback)} in the inbox</a></span></div>
@@ -82,7 +82,7 @@ export default async function LaunchStatsPage({ searchParams }: { searchParams: 
                     <td><a href={`mailto:${u.email}`}>{u.email}</a></td>
                     <td>{formatDate(u.createdAt)}</td>
                     <td>{u.sites}</td>
-                    <td>{[u.status ?? 'trial', u.promo === 'BIRTHDAY' ? 'birthday' : '', u.reward ? '3 free months' : ''].filter(Boolean).join(' · ')}</td>
+                    <td>{[u.status ?? 'trial', u.promo === 'BIRTHDAY' || u.promo === 'EARLY' ? 'early access' : '', u.reward ? '3 free months' : ''].filter(Boolean).join(' · ')}</td>
                   </tr>
                 ))}
               </tbody>

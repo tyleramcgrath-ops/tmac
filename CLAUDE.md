@@ -65,8 +65,15 @@ number is still to be decided). Build and write everything toward that.
   `public/birthday/buju-*.jpg`. Never stock dogs. (Customers' own sites
   pick their own photos as usual.)
 - Never mention the founder's name in the product or marketing. Only the
-  birthday page speaks in the first person about the founder's years of
-  experience with websites and search.
+  early-access page (/early, formerly /birthday) speaks in the first person
+  about the founder's years of experience with websites and search.
+
+## Launch (reset September 29, 2026)
+
+The birthday launch (September 28) was called off. Public launch is
+**Tuesday, November 10, 2026** (`lib/launch.ts`), after a quiet early-access
+test at /early (promo code EARLY) and the first paying law firms. /birthday
+redirects to /early.
 
 ## Pricing (decided September 2026)
 
