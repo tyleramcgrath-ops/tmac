@@ -33,6 +33,7 @@ export function SiteFooter() {
           <a href="/templates">Templates</a>
           <a href="/redesign">Free redesign</a>
           <a href="/websites-for">By business</a>
+          <a href="/connect">Connect</a>
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>
           <a href="/google-guidelines">Google’s guidelines</a>
