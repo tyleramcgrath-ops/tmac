@@ -98,6 +98,11 @@ number is still to be decided). Build and write everything toward that.
   hours and details stay in sync. Needs a Google Business Profile API
   approval and a Meta app review, owner-authorized with OAuth. Nothing is
   ever posted to their accounts.
+- **Built:** start a site from the owner's Google listing (Places API, off
+  until `GOOGLE_PLACES_API_KEY` is set), a promotion bar and a Book online
+  button (Promote tab, `lib/promote.ts`). In-page, never pop-ups.
+- **Next ideas, not built:** events list, Sofie drafting social posts, a
+  chatbot (paid add-on, it costs tokens), Claude/ChatGPT connector.
 - **Kids mode** (/kids preview, noindex, not linked): parent-owned account,
   parent approves before anything goes live, first names only, no photos
   of the child, messages go to the parent, hidden from search, a kind

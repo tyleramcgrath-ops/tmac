@@ -12,6 +12,7 @@ export function SiteTabs({ siteId, unread }: { siteId: string; unread: number })
     { href: `${base}/sofie`, label: 'Sofie' },
     { href: `${base}/messages`, label: 'Messages', badge: unread },
     { href: `${base}/reviews`, label: 'Reviews' },
+    { href: `${base}/promote`, label: 'Promote' },
     { href: `${base}/visitors`, label: 'Visitors' },
     { href: `${base}/pages`, label: 'Pages & SEO' },
     { href: `${base}/photos`, label: 'Photos' },

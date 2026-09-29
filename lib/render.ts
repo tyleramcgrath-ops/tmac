@@ -31,6 +31,7 @@ import {
   type Widget,
   walk,
 } from './schema'
+import { promoActive } from './promote'
 import { structuredData } from './seo'
 
 export interface RenderedPage {
@@ -42,7 +43,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   t = wordsFor(site.language)
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
-  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(bar ? ['callbar'] : [])])
+  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : [])])
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
   const jsonLd = structuredData(site, page, allPages)
@@ -248,7 +249,15 @@ function renderHeader(site: Site, page: Page): string {
   const brand = site.business.logo
     ? `<img class="sh-logo" src="${esc(site.business.logo)}" alt="${esc(site.business.name)}" width="252" height="56" loading="lazy" decoding="async">`
     : esc(site.business.name)
-  return `<header class="sh">${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cta}</div></header>`
+  const promo = promoActive(site) && site.promo ? promoBar(site.promo) : ''
+  return `<header class="sh">${promo}${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cta}</div></header>`
+}
+
+function promoBar(p: NonNullable<Site['promo']>): string {
+  const text = esc(p.text)
+  if (!p.href) return `<div class="spb"><p>${text}</p></div>`
+  const ext = p.href.startsWith('http') ? ' rel="noopener"' : ''
+  return `<div class="spb"><p><a href="${esc(p.href)}"${ext}>${text} <span aria-hidden="true">&rarr;</span></a></p></div>`
 }
 
 // On phones, the two things local customers want most, one thumb away:
@@ -414,6 +423,8 @@ function widgetCss(used: Set<string>): string {
     css +=
       `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}` +
       `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span{display:none}}`
+  if (used.has('promo'))
+    css += `.spb{background:var(--c-primary);color:var(--c-background);font-size:.88em;text-align:center}.spb p{max-width:var(--w);margin:0 auto;padding:9px 20px;line-height:1.4}.spb a{color:inherit;text-decoration:none;font-weight:600}.spb a:hover span{margin-left:3px}`
   if (used.has('callbar'))
     css +=
       `.scb{display:none}@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){body{padding-bottom:76px}` +
