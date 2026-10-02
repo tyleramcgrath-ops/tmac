@@ -83,3 +83,40 @@ export function BookingForm({ action, look, labels, initial }: { action: Action;
     </form>
   )
 }
+
+// Adding an event; the form clears itself after each one.
+export function EventForm({ action }: { action: Action }) {
+  const [state, run, pending] = useActionState(action, {})
+  const [round, setRound] = useState(0)
+  return (
+    <form action={async (f) => { await run(f); setRound((n) => n + 1) }} className="action-form" key={state.saved ? round : 'form'}>
+      <label className="field">
+        <span>What’s happening</span>
+        <input className="input" name="title" maxLength={100} placeholder="Live music on the patio" required />
+      </label>
+      <div className="pm-two">
+        <label className="field">
+          <span>Day</span>
+          <input className="input" type="date" name="date" required />
+        </label>
+        <label className="field">
+          <span>Starts at <em className="muted">(optional)</em></span>
+          <input className="input" type="time" name="time" />
+        </label>
+      </div>
+      <label className="field">
+        <span>Where <em className="muted">(optional)</em></span>
+        <input className="input" name="place" maxLength={120} placeholder="Leave empty if it’s at your place" />
+      </label>
+      <label className="field">
+        <span>A short note <em className="muted">(optional)</em></span>
+        <textarea className="input" name="note" maxLength={300} rows={2} placeholder="Free entry. Kids welcome." />
+      </label>
+      <label className="field">
+        <span>Link <em className="muted">(optional)</em></span>
+        <input className="input" name="href" maxLength={300} placeholder="/contact or a tickets page" />
+      </label>
+      <SaveRow state={state} pending={pending} submit="Add the event" done="Added. It’s on your home page now." />
+    </form>
+  )
+}
