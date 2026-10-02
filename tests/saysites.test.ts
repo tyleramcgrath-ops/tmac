@@ -259,7 +259,7 @@ describe('SaySites sitemap, robots and redirects', () => {
 
 describe('SaySites host routing', () => {
   it('sends saysites.com, www, the Vercel test address and localhost to the main app', () => {
-    for (const h of ['saysites.com', 'www.saysites.com', 'saysites.vercel.app', 'saysites-git-main-team.vercel.app', 'localhost:3000', null]) {
+    for (const h of ['saysites.com', 'www.saysites.com', 'saysites.vercel.app', 'saysites-git-main-team.vercel.app', 'localhost:3000', 'tylerm84.sg-host.com', null]) {
       expect(classifyHost(h).kind).toBe('main')
     }
   })
