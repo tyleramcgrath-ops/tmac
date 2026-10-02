@@ -3,7 +3,14 @@ import path from "node:path";
 
 const nextConfig: NextConfig = {
   // Photo uploads are resized in the browser first, so a few MB is plenty.
-  experimental: { serverActions: { bodySizeLimit: '4mb' } },
+  // Builds run on shared hosting (SiteGround), so they use one CPU and no
+  // worker threads to stay within its memory limit. They also use webpack
+  // (package.json): Turbopack starts helper processes that open a local
+  // port, which shared hosting doesn't allow.
+  experimental: { serverActions: { bodySizeLimit: '4mb' }, cpus: 1, workerThreads: false },
+  // Types are checked before every change ships (npx tsc --noEmit), so the
+  // build skips that step and its memory.
+  typescript: { ignoreBuildErrors: true },
   // Native renderer Sofie uses to look at the logos she designs.
   serverExternalPackages: ['@resvg/resvg-js'],
   turbopack: {
