@@ -1735,3 +1735,42 @@ describe('SaySites: photos load straight from Unsplash', () => {
     expect(loader({ src: '/birthday/buju-1.jpg', width: 640 })).toBe('/birthday/buju-1.jpg')
   })
 })
+
+describe('SaySites: redesign looks like the owner’s current site', () => {
+  it('reads their hero photo, logo, own photos and hero words', async () => {
+    const { readLook, matchPhotos, fullSize } = await import('../apps/saysites/lib/lookalike')
+    const html = `<html><body>
+      <header><img src="/wp-content/uploads/WNW_Logo-300x87.png" alt="WNW Legal"></header>
+      <div class="hero-info" style="background-image: url(https://firm.com/uploads/1.jpg)"><h2>WHEN YOU NEED A WIN</h2><p>Behind every case is a story worth fighting for, and we make sure yours is heard.</p></div>
+      <img width="535" height="535" src="https://firm.com/uploads/paul.jpg" alt="Portrait of R. Paul Williams">
+      <img width="700" height="467" src="https://firm.com/uploads/car.jpg" alt="Front-end collision damage after a car accident">
+      <img width="700" height="467" src="https://firm.com/uploads/nursing.jpg" alt="Empty nursing home wheelchair">
+      <img width="40" height="40" src="https://firm.com/uploads/icon.png" alt="Phone icon">
+    </body></html>`
+    const look = readLook(html, 'https://firm.com/', 'Williams Newman Williams')
+    expect(look.hero?.src).toBe('https://firm.com/uploads/1.jpg')
+    expect(look.photoHero).toBe(true)
+    expect(look.logo).toBe('https://firm.com/wp-content/uploads/WNW_Logo-300x87.png')
+    expect(look.heroLine).toBe('When you need a win')
+    expect(look.heroText).toMatch(/^Behind every case/)
+    // Landscape photos first, headshots last, icons never.
+    expect(look.photos.map((p) => p.src.split('/').pop())).toEqual(['car.jpg', 'nursing.jpg', 'paul.jpg'])
+    expect(matchPhotos(look.photos, ['Nursing Home Abuse', 'Car Accidents'])[0].src).toMatch(/nursing/)
+    expect(fullSize('https://a.com/x/photo-300x200.jpg')).toBe('https://a.com/x/photo.jpg')
+  })
+
+  it('finds the town, the kind of business and real services on older sites', async () => {
+    const { detectBusiness, cityInText } = await import('../apps/saysites/lib/detect')
+    const { menuServices } = await import('../apps/saysites/lib/redesign')
+    const html = `<title>Pacific Legal Support:</title><h1>Pacific Legal Support</h1>
+      <a href="index.html">Home</a><a href="messenger.html">Messenger Service</a><a href="rates.html">Messenger Rates</a>
+      <a href="process.html">Process Service</a><a href="inv.html">Investigations</a><a href="contact.html">Contact Us</a><a href="login.asp">Client/Agent Login</a>
+      <p>Our clients are private attorneys, law firms and collection attorneys. Call 206-223-9426. Our Seattle office has moved.</p>`
+    const d = detectBusiness(html, 'https://nwlegal.com/')
+    expect(d.name).toBe('Pacific Legal Support')
+    expect(d.type).toBe('lawyer')
+    expect([d.city, d.region]).toEqual(['Seattle', 'WA'])
+    expect(menuServices(html)).toEqual(['Messenger Service', 'Process Service', 'Investigations'])
+    expect(cityInText('Nothing about a town here')).toBeNull()
+  })
+})

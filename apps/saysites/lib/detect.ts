@@ -67,6 +67,37 @@ const SCHEMA_TYPE: Record<string, BusinessTypeKey> = {
   CafeOrCoffeeShop: 'bakery', Restaurant: 'restaurant', Store: 'store',
 }
 
+// Larger US cities, for sites that name their town in passing ("our Seattle
+// office") without a full "City, ST 12345" address.
+const CITIES: [string, string][] = [
+  ['New York', 'NY'], ['Los Angeles', 'CA'], ['Chicago', 'IL'], ['Houston', 'TX'], ['Phoenix', 'AZ'], ['Philadelphia', 'PA'], ['San Antonio', 'TX'],
+  ['San Diego', 'CA'], ['Dallas', 'TX'], ['Austin', 'TX'], ['Jacksonville', 'FL'], ['Fort Worth', 'TX'], ['Columbus', 'OH'], ['Charlotte', 'NC'],
+  ['Indianapolis', 'IN'], ['San Francisco', 'CA'], ['Seattle', 'WA'], ['Denver', 'CO'], ['Nashville', 'TN'], ['Oklahoma City', 'OK'],
+  ['El Paso', 'TX'], ['Las Vegas', 'NV'], ['Boston', 'MA'], ['Portland', 'OR'], ['Louisville', 'KY'], ['Memphis', 'TN'], ['Detroit', 'MI'],
+  ['Baltimore', 'MD'], ['Milwaukee', 'WI'], ['Albuquerque', 'NM'], ['Tucson', 'AZ'], ['Fresno', 'CA'], ['Sacramento', 'CA'], ['Kansas City', 'MO'],
+  ['Atlanta', 'GA'], ['Omaha', 'NE'], ['Colorado Springs', 'CO'], ['Raleigh', 'NC'], ['Miami', 'FL'], ['Minneapolis', 'MN'],
+  ['Tulsa', 'OK'], ['Tampa', 'FL'], ['Orlando', 'FL'], ['New Orleans', 'LA'], ['Cleveland', 'OH'], ['Pittsburgh', 'PA'], ['Cincinnati', 'OH'],
+  ['St. Louis', 'MO'], ['Salt Lake City', 'UT'], ['Boise', 'ID'], ['Spokane', 'WA'], ['Tacoma', 'WA'], ['Bellevue', 'WA'], ['Anchorage', 'AK'],
+  ['Honolulu', 'HI'], ['Richmond', 'VA'], ['Birmingham', 'AL'], ['Buffalo', 'NY'], ['Rochester', 'NY'], ['Hartford', 'CT'], ['Providence', 'RI'],
+  ['San Jose', 'CA'], ['Oakland', 'CA'], ['Long Beach', 'CA'], ['Fort Lauderdale', 'FL'], ['West Palm Beach', 'FL'], ['Naples', 'FL'], ['Jupiter', 'FL'],
+  ['Charleston', 'SC'], ['Savannah', 'GA'], ['Madison', 'WI'], ['Des Moines', 'IA'], ['Little Rock', 'AR'], ['Reno', 'NV'], ['Scottsdale', 'AZ'],
+]
+export function cityInText(text: string): { city: string; region: string } | null {
+  let best: { city: string; region: string; n: number } | null = null
+  for (const [city, region] of CITIES) {
+    const n = text.match(new RegExp(`\\b${city.replace('.', '\\.')}\\b`, 'g'))?.length ?? 0
+    if (n && (!best || n > best.n)) best = { city, region, n }
+  }
+  return best && { city: best.city, region: best.region }
+}
+
+// Two or more mentions in the page text ("we serve attorneys and law
+// firms") is a strong enough sign when the title and headings say nothing.
+export function guessTypeFromText(text: string): BusinessTypeKey {
+  for (const [type, re] of TYPE_WORDS) if ((text.match(new RegExp(re.source, 'gi'))?.length ?? 0) >= 2) return type
+  return 'other'
+}
+
 export function guessType(text: string): BusinessTypeKey {
   for (const [type, re] of TYPE_WORDS) if (re.test(text)) return type
   return 'other'
@@ -127,7 +158,9 @@ export function detectBusiness(html: string, url: string): Detected {
   const title = decode(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? '').trim()
   const siteName = decode(html.match(/<meta[^>]*property\s*=\s*["']og:site_name["'][^>]*content\s*=\s*["']([^"']+)["']/i)?.[1] ?? '').trim()
   const titleBrand = title.split(/\s[|\-–—]\s/).filter(Boolean)
-  const name = (str(biz?.name) || siteName || (titleBrand.length > 1 ? titleBrand[titleBrand.length - 1] : titleBrand[0]) || new URL(url).hostname.replace(/^www\./, '')).slice(0, 120)
+  const name = (str(biz?.name) || siteName || (titleBrand.length > 1 ? titleBrand[titleBrand.length - 1] : titleBrand[0]) || new URL(url).hostname.replace(/^www\./, ''))
+    .replace(/[\s:|,;\-–—]+$/, '')
+    .slice(0, 120)
 
   const tel = str(biz?.telephone) || decode(html.match(/href\s*=\s*["']tel:([^"']+)["']/i)?.[1] ?? '').trim() || text.match(/\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/)?.[0] || ''
   const email = str(biz?.email).replace(/^mailto:/, '') || decode(html.match(/href\s*=\s*["']mailto:([^"'?]+)/i)?.[1] ?? '').trim()
@@ -139,10 +172,15 @@ export function detectBusiness(html: string, url: string): Detected {
     const m = text.match(/\b([A-Z][a-zA-Z.]+(?: [A-Z][a-zA-Z.]+){0,2}),\s*([A-Z]{2})\s+(\d{5})\b/)
     if (m) [city, region, postalCode] = [m[1], m[2], m[3]]
   }
+  if (!city) {
+    const known = cityInText(text)
+    if (known) [city, region] = [known.city, known.region]
+  }
   const schemaType = String(biz?.['@type'] ?? '').split(/[\s,]/).map((t) => SCHEMA_TYPE[t]).find(Boolean)
   const description = decode(html.match(/<meta[^>]*name\s*=\s*["']description["'][^>]*content\s*=\s*["']([^"']*)["']/i)?.[1] ?? '')
   const h1 = decode((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '').replace(/<[^>]+>/g, ''))
-  const type = schemaType ?? guessType(`${name} ${title} ${description} ${h1}`)
+  const guessed = guessType(`${name} ${title} ${description} ${h1}`)
+  const type = schemaType ?? (guessed !== 'other' ? guessed : guessTypeFromText(text.slice(0, 6000)))
   const logoSrc =
     (typeof biz?.logo === 'string' ? biz.logo : str((biz?.logo as Json | undefined)?.url)) ||
     html.match(/<img[^>]*(?:class|id|alt|src)\s*=\s*["'][^"']*logo[^"']*["'][^>]*>/i)?.[0].match(/\ssrc\s*=\s*["']([^"']+)["']/i)?.[1] ||
