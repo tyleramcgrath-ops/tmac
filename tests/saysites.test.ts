@@ -1849,6 +1849,11 @@ describe('SaySites: redesign preview, their site as it is', async () => {
     expect(buttons.map((b) => b.type === 'button' && b.href)).toEqual(['/contact', '/contact'])
     expect(p.after.seoErrors).toBe(0)
     expect(p.after.speedPass).toBe(true)
+    // The fresh redesign has every page and every word, in a new design.
+    expect(p.fresh!.pages.map((x) => x.slug)).toEqual(p.pages.map((x) => x.slug))
+    const words = (pages: typeof p.pages) => pages.flatMap((x) => [...walk(x.body)]).filter((e) => e.type === 'text').map((e) => e.type === 'text' && e.text)
+    expect(words(p.fresh!.pages)).toEqual(words(p.pages))
+    expect(p.fresh!.site.globals.radius).toBe(14)
     expect(claimFromPreview(p, 'u', 'firm', 'fresh').pages.length).toBe(p.fresh!.pages.length)
     expect(claimFromPreview(p, 'u', 'firm').pages.length).toBe(p.pages.length)
     expect(claimPath('aaaaaaaaaaaaaaaaf')).toBe('/redesign/aaaaaaaaaaaaaaaa/claim?v=fresh')
