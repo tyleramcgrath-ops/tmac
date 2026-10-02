@@ -46,12 +46,21 @@ async function assertPublic(url: URL) {
 
 export type Fetcher = (url: string) => Promise<{ url: string; status: number; type: string; body: string } | null>
 
+// Why the last fetch that came back empty failed, for a clearer message
+// (a network error code like ENOTFOUND or ECONNREFUSED, or "timeout").
+export let lastFetchError = ''
+
 // Follows up to 4 redirects itself, checking every hop.
 export const safeFetch: Fetcher = async (start) => {
   let url = new URL(start)
   for (let hop = 0; hop < 5; hop++) {
     await assertPublic(url)
-    const res = await fetch(url, { redirect: 'manual', headers: { 'user-agent': UA, accept: 'text/html,application/xml;q=0.9,*/*;q=0.5' }, signal: AbortSignal.timeout(10000) }).catch(() => null)
+    const res = await fetch(url, { redirect: 'manual', headers: { 'user-agent': UA, accept: 'text/html,application/xml;q=0.9,*/*;q=0.5' }, signal: AbortSignal.timeout(10000) }).catch((e: unknown) => {
+      const err = e as { name?: string; message?: string; cause?: { code?: string; message?: string } }
+      lastFetchError = err?.name === 'TimeoutError' ? 'timeout' : err?.cause?.code || err?.cause?.message || err?.message || 'network error'
+      console.error('[import] fetch failed', url.href, lastFetchError)
+      return null
+    })
     if (!res) return null
     if (res.status >= 300 && res.status < 400 && res.headers.get('location')) {
       url = new URL(res.headers.get('location')!, url)
