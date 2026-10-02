@@ -1,0 +1,29 @@
+# Keeps the saysites-host branch in step with apps/saysites on main.
+# SiteGround's Node.js hosting builds from the top of a branch and can't be
+# pointed at a subfolder, so saysites-host holds just the SaySites app.
+name: SaySites host branch
+
+on:
+  push:
+    branches: [main]
+    paths: ['apps/saysites/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: saysites-host
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split apps/saysites and push it to saysites-host
+        run: |
+          git subtree split --prefix apps/saysites -b saysites-host-new
+          git push origin saysites-host-new:saysites-host
