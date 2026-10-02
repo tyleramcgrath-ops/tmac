@@ -712,6 +712,8 @@
 .home .conn-head { max-width: 720px; margin-bottom: 48px; }
 .home .conn-head h2 { font-size: clamp(38px, 4.6vw, 64px); line-height: 1.02; margin: 0 0 18px; text-wrap: balance; }
 .home .conn-head p:not(.kicker) { color: var(--ink-mu); font-size: 18px; margin: 0; }
+.home .conn-kids { margin: 56px 0 0; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-mu); font-size: 16px; }
+.home .conn-kids a { color: var(--ink); font-weight: 600; }
 .home .conn-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .home .conn-card h3 { font-size: 22px; letter-spacing: -0.025em; margin: 22px 0 8px; }
 .home .conn-card p { color: var(--ink-mu); margin: 0; font-size: 16px; }

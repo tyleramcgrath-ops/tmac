@@ -5,8 +5,9 @@ import '../home.css'
 import './kids.css'
 
 // SaySites for kids: a preview of the idea, not a product yet. It stays out
-// of search and isn't linked anywhere until kids mode (parent-owned, parent
-// approves before anything goes live) is built.
+// of search, and only a quiet "coming soon" line on the homepage links here,
+// until kids mode (parent-owned, parent approves before anything goes live)
+// is built.
 export const metadata: Metadata = {
   title: 'SaySites for kids',
   description: 'Kids dream up the business. Parents stay in charge. A safe place for young entrepreneurs to build a real website.',
