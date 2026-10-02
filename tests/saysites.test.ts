@@ -1757,6 +1757,11 @@ describe('SaySites: redesign looks like the owner’s current site', () => {
     expect(look.photos.map((p) => p.src.split('/').pop())).toEqual(['car.jpg', 'nursing.jpg', 'paul.jpg'])
     expect(matchPhotos(look.photos, ['Nursing Home Abuse', 'Car Accidents'])[0].src).toMatch(/nursing/)
     expect(fullSize('https://a.com/x/photo-300x200.jpg')).toBe('https://a.com/x/photo.jpg')
+    // A hero photo set by a stylesheet rule on the first section wins over
+    // later inline backgrounds.
+    const css = '.intro{color:red} .grid .sliderhome{background-image:url(https://firm.com/uploads/team-on-steps.jpg) !important}'
+    const styled = readLook('<body><div class="av-grid sliderhome"><h2>Hi</h2></div><div style="background-image:url(https://firm.com/uploads/gavel.jpg)"></div></body>', 'https://firm.com/', 'Firm', css)
+    expect(styled.hero?.src).toBe('https://firm.com/uploads/team-on-steps.jpg')
   })
 
   it('finds the town, the kind of business and real services on older sites', async () => {

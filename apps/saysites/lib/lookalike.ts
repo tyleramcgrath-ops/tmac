@@ -40,17 +40,45 @@ export function fullSize(src: string): string {
 
 const attr = (tag: string, name: string) => tag.match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, 'i'))?.slice(1).find((v) => v !== undefined)
 
-export function readLook(html: string, url: string, name = ''): SiteLook {
+// Background photos set in style rules, by class or id: ".sliderhome" →
+// its photo. From the page's own <style> blocks and its stylesheets.
+export function cssBackgrounds(css: string, base: string): Map<string, string> {
+  const out = new Map<string, string>()
+  const flat = css.replace(/\/\*[\s\S]*?\*\//g, ' ')
+  for (const m of flat.matchAll(/([^{}@]+)\{([^{}]*)\}/g)) {
+    const url = m[2].match(/background(?:-image)?\s*:[^;}]*url\(\s*['"]?([^'")]+)['"]?\s*\)/i)?.[1]
+    const src = url && absolute(url, base)
+    if (!src || !IMAGE.test(src) || NOT_PHOTO.test(src)) continue
+    for (const sel of m[1].split(',')) {
+      const last = sel.trim().split(/[\s>+~]+/).pop() ?? ''
+      for (const k of last.match(/[.#][\w-]+/g) ?? []) if (!out.has(k)) out.set(k, src)
+    }
+  }
+  return out
+}
+
+export function readLook(html: string, url: string, name = '', stylesheets = ''): SiteLook {
   const body = html.replace(/<script[\s\S]*?<\/script>|<!--[\s\S]*?-->/gi, ' ')
 
-  // The hero: the first full-width background photo (usually the top
-  // section), else the og:image the site shares on social media.
+  // The hero: the background photo of the first section that has one, in
+  // page order, whether it is set inline or by a style rule. Else the
+  // og:image the site shares on social media.
+  const inlineCss = [...body.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)].map((m) => m[1]).join('\n')
+  const rules = cssBackgrounds(`${stylesheets}\n${inlineCss}`, url)
   let hero: Photo | undefined
   let photoHero = false
-  for (const m of body.matchAll(/background(?:-image)?\s*:\s*url\(\s*['"]?([^'")]+)['"]?\s*\)/gi)) {
-    const src = absolute(m[1], url)
-    if (src && IMAGE.test(src) && !NOT_PHOTO.test(src)) {
-      hero = { src: fullSize(src), alt: name ? `${name}` : 'Our team', width: 1920, height: 1080 }
+  const start = body.search(/<body[\s>]/i)
+  for (const m of body.slice(Math.max(0, start)).matchAll(/<(?:div|section|header|main|figure|article|aside|span|a)\b[^>]*>/gi)) {
+    const tag = m[0]
+    const inline = attr(tag, 'style')?.match(/background(?:-image)?\s*:[^;]*url\(\s*['"]?([^'")]+)['"]?\s*\)/i)?.[1]
+    let src = inline ? absolute(inline, url) : undefined
+    if (src && (!IMAGE.test(src) || NOT_PHOTO.test(src))) src = undefined
+    if (!src) {
+      const keys = [...(attr(tag, 'class') ?? '').split(/\s+/).filter(Boolean).map((c) => `.${c}`), ...(attr(tag, 'id') ? [`#${attr(tag, 'id')}`] : [])]
+      src = keys.map((k) => rules.get(k)).find(Boolean)
+    }
+    if (src) {
+      hero = { src: fullSize(src), alt: name || 'Our team', width: 1920, height: 1080 }
       photoHero = true
       break
     }
