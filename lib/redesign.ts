@@ -74,7 +74,7 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
   // Their own look: hero photo, photos, logo and brand colour. A photo with
   // the words on top (the usual law firm or trades site) becomes the dark,
   // full-photo design so their light logo and photo read the same way.
-  const look = readLook(first.body, first.url, detected.name)
+  const look = readLook(first.body, first.url, detected.name, await siteStyles(first.body, first.url, get))
   const dark = look.photoHero
   const { site, pages: starter } = buildStarterSite(
     {
@@ -118,7 +118,20 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
     for (const el of walk(homeStarter.body)) {
       if (el.type === 'text' && el.id === 'hero-kicker' && look.heroLine) el.text = look.heroLine
       if (el.type === 'text' && el.id === 'hero-text' && look.heroText) el.text = look.heroText
+
     }
+  }
+  // Their own hero photo is the point, so it shows through more.
+  if (homeStarter && look.hero) {
+    const lighten = (v: unknown): void => {
+      if (Array.isArray(v)) return v.forEach(lighten)
+      if (!v || typeof v !== 'object') return
+      const o = v as Record<string, unknown>
+      const bg = o.backgroundImage as { src?: string; overlay?: number } | undefined
+      if (bg && bg.src === look.hero!.src && (bg.overlay ?? 0) > 0.62) bg.overlay = 0.62
+      Object.values(o).forEach(lighten)
+    }
+    lighten(homeStarter)
   }
   const plan = planImport(site, starter, pages)
   // In the preview, imported pages show; claimed sites start them as drafts.
@@ -137,6 +150,22 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
     after: { ...audit(rendered.html), speedPass: checkSpeed(rendered).pass, seoErrors: all.reduce((n, p) => n + checkPage(p, all).filter((i) => i.severity === 'error').length, 0) },
     pagesFound: urls.length,
   }
+}
+
+// The site's own stylesheets (up to three, on its own domain), where many
+// themes set the hero photo. Skips plugin and font styles.
+async function siteStyles(html: string, base: string, get: Fetcher): Promise<string> {
+  const host = new URL(base).hostname.replace(/^www\./, '')
+  const hrefs = [...html.matchAll(/<link\b[^>]*>/gi)]
+    .map((m) => m[0])
+    .filter((t) => /rel\s*=\s*["']?stylesheet/i.test(t))
+    .map((t) => t.match(/href\s*=\s*["']([^"']+)["']/i)?.[1])
+    .filter((h): h is string => !!h)
+    .map((h) => { try { return new URL(h, base) } catch { return null } })
+    .filter((u): u is URL => !!u && u.hostname.replace(/^www\./, '') === host && !/plugins\/(?!.*(theme|builder|elementor|avia|divi))|fonts?\b/i.test(u.pathname))
+    .slice(0, 3)
+  const css = await Promise.all(hrefs.map((u) => get(u.href).then((r) => (r && r.status === 200 ? r.body : '')).catch(() => '')))
+  return css.join('\n')
 }
 
 // Service names from the home page's menu links, for sites whose pages
