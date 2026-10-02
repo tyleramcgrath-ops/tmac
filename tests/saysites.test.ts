@@ -1786,3 +1786,72 @@ describe('SaySites: redesign looks like the owner’s current site', () => {
     expect(cityInText('Nothing about a town here')).toBeNull()
   })
 })
+
+describe('SaySites: redesign preview, their site as it is', async () => {
+  const { mirrorPage, readChrome } = await import('../apps/saysites/lib/mirror')
+  const { Styles } = await import('../apps/saysites/lib/css-lite')
+  const { parseHtml } = await import('../apps/saysites/lib/dom')
+  const { buildPreview, claimFromPreview } = await import('../apps/saysites/lib/redesign')
+  const { claimPath, CLAIM_CODE } = await import('../apps/saysites/lib/urls')
+  const css = `.dark{background:#111111;color:#ffffff}.lazy-bg{background-image:none!important}.band{background-image:url(/img/band.jpg)}
+    .cols h1{color:#224554;text-align:center}.gold{color:#fab81f}@media (max-width:600px){.cols h1{color:red}}.only-mobile{display:none}`
+  const html = `<html><body><header class="site-header"><img class="logo" src="/logo.png" alt="Firm"><nav><ul><li><a href="/about/">About</a></li><li><a href="/contact-us/">Contact</a></li><li class="menu-button"><a href="tel:5550102000">Call now</a></li></ul></nav></header>
+    <div class="slider"><div class="ls-slide"><img class="ls-bg" src="https://cdn.example/hero.jpg" alt=""><div style="font-size:50px">We fight for you</div></div><div class="ls-slide"><img class="ls-bg" src="https://cdn.example/second.jpg" alt=""><div style="font-size:50px">Second slide</div></div></div>
+    <section class="cols"><div class="col-md-8"><h1>Injury lawyers</h1><p><strong class="gold">Our process</strong></p><ul><li>We listen</li><li>We act</li></ul></div><div class="col-md-4"><img src="https://cdn.example/team.jpg" width="600" height="400" alt="Our team"></div></section>
+    <section class="dark"><h2>Free consultation</h2><a class="btn" href="/contact-us/">Call us</a><a class="btn" href="/missing/">Read more</a></section>
+    <section class="band lazy-bg"><h2>Another title</h2></section>
+    <div class="only-mobile"><p>Phone copy</p></div>
+    <footer><p>Disclaimer: past results do not guarantee a similar outcome in your case.</p></footer></body></html>`
+  const link = (h: string) => (h.startsWith('tel:') ? h : h.startsWith('/') ? `/${h.replace(/^\/|\/$/g, '')}`.replace(/^\/$/, '/') : undefined)
+  const st = new Styles(css, 'https://firm.example/')
+  const ctx = { url: 'https://firm.example/', name: 'Firm', styles: st, idBase: 'home', link, used: new Set<string>() }
+
+  it('keeps their sections in order: slider photo, columns, colours, one H1', () => {
+    const { body, h1 } = mirrorPage(html, ctx, '#222222', 'Firm')
+    expect(h1).toBe('Injury lawyers')
+    // The first slide only, as a photo hero with its words.
+    expect(body[0].backgroundImage?.src).toBe('https://cdn.example/hero.jpg')
+    const all = body.flatMap((c) => [...walk([c])])
+    const texts = all.filter((e) => e.type === 'heading').map((e) => ('text' in e ? e.text : ''))
+    expect(texts).toContain('We fight for you')
+    expect(texts).not.toContain('Second slide')
+    expect(all.filter((e) => e.type === 'heading' && e.level === 1)).toHaveLength(1)
+    // A bold line is a heading, in its own colour; desktop colours only.
+    const process = all.find((e) => e.type === 'heading' && e.text === 'Our process')
+    expect(process && process.style?.color).toBe('#fab81f')
+    const h = all.find((e) => e.type === 'heading' && e.text === 'Injury lawyers')
+    expect(h?.style?.color).toBe('#224554')
+    // Two-thirds and one-third columns keep their shares.
+    const row = body[1].children[0]
+    expect(row.type === 'container' && row.children.map((c) => c.style?.grow)).toEqual([8, 4])
+    // A dark band stays dark with light words; a lazy-loaded background shows.
+    expect(body[2].style?.background).toBe('#111111')
+    expect(body[2].style?.color).toBe('#ffffff')
+    expect(body[3].backgroundImage?.src).toBe('https://firm.example/img/band.jpg')
+    expect(JSON.stringify(body)).not.toContain('Phone copy')
+  })
+
+  it('reads their header: logo, menu and call button', () => {
+    const chrome = readChrome(parseHtml(html), st, 'https://firm.example/', 'Firm', link)
+    expect(chrome.logo).toBe('https://firm.example/logo.png')
+    expect(chrome.nav.map((n) => n.label)).toEqual(['About', 'Contact'])
+    expect(chrome.cta).toEqual({ label: 'Call now', href: 'tel:5550102000' })
+    expect(chrome.footerNote).toMatch(/past results/)
+  })
+
+  it('builds both versions; buttons to pages we did not read go to contact', async () => {
+    const pages: Record<string, string> = { 'https://firm.example/': html, 'https://firm.example/contact-us/': `<html><head><title>Contact the firm today</title></head><body><main><h1>Contact us</h1><p>${'Call or write and we will answer the same day, every day. '.repeat(4)}</p></main></body></html>` }
+    const get = async (u: string) => (pages[u] ? { url: u, status: 200, type: 'text/html', body: pages[u] } : u.endsWith('.css') ? null : null)
+    const p = await buildPreview('firm.example', get, 'aaaaaaaaaaaaaaaa')
+    expect(p.fresh).toBeDefined()
+    expect(p.pages.some((x) => x.slug === 'contact')).toBe(true)
+    const buttons = p.pages.flatMap((x) => [...walk(x.body)]).filter((e) => e.type === 'button')
+    expect(buttons.map((b) => b.type === 'button' && b.href)).toEqual(['/contact', '/contact'])
+    expect(p.after.seoErrors).toBe(0)
+    expect(p.after.speedPass).toBe(true)
+    expect(claimFromPreview(p, 'u', 'firm', 'fresh').pages.length).toBe(p.fresh!.pages.length)
+    expect(claimFromPreview(p, 'u', 'firm').pages.length).toBe(p.pages.length)
+    expect(claimPath('aaaaaaaaaaaaaaaaf')).toBe('/redesign/aaaaaaaaaaaaaaaa/claim?v=fresh')
+    expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaa')).toBe(true)
+  })
+})

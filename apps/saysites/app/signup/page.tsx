@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { SignUpForm } from '@/components/Forms'
 import { TopBar } from '@/components/TopBar'
 import { currentUser } from '@/lib/session'
+import { CLAIM_CODE, claimPath } from '@/lib/urls'
 import { TRIAL_DAYS, cleanPromo } from '@/lib/billing'
 
 export const metadata: Metadata = { title: 'Create your account', robots: { index: false } }
@@ -11,9 +12,9 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
   const sp = await searchParams
   const idea = (sp.idea ?? '').trim().slice(0, 200)
   const template = (sp.template ?? '').trim().slice(0, 20)
-  const claim = /^[a-f0-9]{16}$/.test(sp.claim ?? '') ? sp.claim! : ''
+  const claim = CLAIM_CODE.test(sp.claim ?? '') ? sp.claim! : ''
   const promo = cleanPromo(sp.promo) ?? ''
-  if (claim && (await currentUser())) redirect(`/redesign/${claim}/claim`)
+  if (claim && (await currentUser())) redirect(claimPath(claim))
   if (await currentUser()) {
     const q = new URLSearchParams({ ...(idea ? { idea } : {}), ...(template ? { template } : {}) }).toString()
     redirect(q ? `/dashboard/new?${q}` : '/dashboard')
