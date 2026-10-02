@@ -1,8 +1,9 @@
 // Which kind of request is this? Decided from the host alone, so it can run in
 // the proxy before any route code.
 //
-//   main      saysites.com, www.saysites.com, the Vercel test address and
-//             localhost: the marketing homepage, login and the dashboard.
+//   main      saysites.com, www.saysites.com, the Vercel and SiteGround test
+//             addresses and localhost: the marketing homepage, login and the
+//             dashboard.
 //   customer  <sub>.saysites.com, ss-<sub>.vercel.app (the test stand-in for a
 //             subdomain), <sub>.localhost, or any other host (a customer's
 //             own domain): a SaySites-built website.
@@ -29,6 +30,8 @@ export function classifyHost(raw: string | null): HostKind {
     // saysites.vercel.app and every per-deployment preview URL.
     return { kind: 'main' }
   }
+  // SiteGround's temporary address for the hosting account (*.sg-host.com).
+  if (host.endsWith('.sg-host.com')) return { kind: 'main' }
   // Anything else is a customer's own domain; www is the same site.
   return { kind: 'customer', subdomain: null, host: host.replace(/^www\./, '') }
 }
