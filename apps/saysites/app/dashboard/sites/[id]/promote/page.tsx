@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation'
-import { BookingForm, PromoForm } from '@/components/PromoteForms'
+import { BookingForm, EventForm, PromoForm } from '@/components/PromoteForms'
+import { upcomingEvents } from '@/lib/events'
 import { BOOKING_LABELS, BOOKING_LABELS_ES, bookingService, promoActive } from '@/lib/promote'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
-import { removeBooking, removePromo, saveBooking, savePromo } from '../manage-actions'
+import { addEvent, removeBooking, removeEvent, removePromo, saveBooking, savePromo } from '../manage-actions'
 
 export default async function PromotePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -18,13 +19,15 @@ export default async function PromotePage({ params }: { params: Promise<{ id: st
   const booking = cta?.href.startsWith('https://') ? cta : undefined
   const service = booking ? bookingService(booking.href) : null
   const labels = site.language.startsWith('es') ? BOOKING_LABELS_ES : BOOKING_LABELS
+  const events = upcomingEvents(site)
+  const day = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' })
 
   return (
     <section className="stack">
       <div className="sec-head">
         <div>
           <h2>Promote</h2>
-          <p className="muted">Two simple ways to turn visitors into customers. Both sit neatly in your site, never as a pop-up, so they don’t annoy people or hurt you in Google.</p>
+          <p className="muted">Simple ways to turn visitors into customers. They sit neatly in your site, never as a pop-up, so they don’t annoy people or hurt you in Google.</p>
         </div>
       </div>
 
@@ -57,6 +60,30 @@ export default async function PromotePage({ params }: { params: Promise<{ id: st
             <button className="btn btn-ghost btn-sm" type="submit">Remove the button</button>
           </form>
         )}
+      </div>
+
+      <div className="card">
+        <div className="card-head">
+          <h3>Events</h3>
+          {events.length > 0 && <span className="pill ok">{events.length} coming up</span>}
+        </div>
+        <p className="muted small">Classes, live music, tastings, open days. Upcoming events show on your home page in date order, and Google can show them in search. Each one disappears by itself once its day has passed.</p>
+        {events.length > 0 && (
+          <ul className="ev-list">
+            {events.map((e) => (
+              <li key={e.id}>
+                <div>
+                  <strong>{e.title}</strong>
+                  <span className="muted small">{[day(e.date), e.time, e.place].filter(Boolean).join(' · ')}</span>
+                </div>
+                <form action={removeEvent.bind(null, site.id, e.id)}>
+                  <button className="btn btn-ghost btn-sm" type="submit">Remove</button>
+                </form>
+              </li>
+            ))}
+          </ul>
+        )}
+        <EventForm action={addEvent.bind(null, site.id)} />
       </div>
     </section>
   )

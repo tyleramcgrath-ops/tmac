@@ -427,6 +427,24 @@ export const SiteSchema = z
       })
       .strict()
       .optional(),
+    // Coming up: classes, live music, open days. Upcoming ones show on the
+    // home page (and to Google as events); past ones drop off by themselves.
+    events: z
+      .array(
+        z
+          .object({
+            id: z.string().regex(/^[a-z0-9]{6,24}$/),
+            title: z.string().trim().min(1).max(100),
+            date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+            time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional(),
+            place: z.string().trim().max(120).optional(),
+            note: z.string().trim().max(300).optional(),
+            href: href.optional(),
+          })
+          .strict()
+      )
+      .max(30)
+      .optional(),
     // One or two lines about the business, shown in the footer.
     tagline: z.string().max(200).optional(),
     // Small print at the foot of every page, e.g. a law firm's attorney

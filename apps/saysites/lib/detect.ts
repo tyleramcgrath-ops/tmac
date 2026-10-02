@@ -150,6 +150,12 @@ function absolute(src: string, base: string): string | undefined {
   }
 }
 
+// Firms often add their practice to the name they publish ("Law Offices of
+// Michael Raheb Criminal Lawyers"). When what's left is already a firm's
+// name, the practice comes off; "Smith Injury Lawyers" stays as it is.
+const PRACTICE_TAIL = /^(.+?)\s+(?:(?:criminal|defen[cs]e|personal|injury|accident|car|truck|family|divorce|custody|immigration|estate|planning|probate|bankruptcy|business|employment|dui|dwi|trial|tax|real|elder|workers'?|compensation|medical|malpractice)\s+){1,3}(?:lawyers?|attorneys?(?:\s+at\s+law)?|law\s+firm)$/i
+const FIRM_STEM = /^(the\s+)?law\s+offices?\s+of\s+\S|\b(p\.?a\.?|p\.?l\.?l\.?c\.?|l\.?l\.?p\.?|l\.?l\.?c\.?|p\.?c\.?|law\s+(firm|group|office))$/i
+
 export function detectBusiness(html: string, url: string): Detected {
   const ld = jsonLd(html)
   const biz = ld.find((o) => BUSINESSY.test(String(o['@type'] ?? '')) && !/Organization/.test(String(o['@type'])) && str(o.name)) ?? ld.find((o) => BUSINESSY.test(String(o['@type'] ?? '')) && str(o.name))
@@ -160,6 +166,7 @@ export function detectBusiness(html: string, url: string): Detected {
   const titleBrand = title.split(/\s[|\-–—]\s/).filter(Boolean)
   const name = (str(biz?.name) || siteName || (titleBrand.length > 1 ? titleBrand[titleBrand.length - 1] : titleBrand[0]) || new URL(url).hostname.replace(/^www\./, ''))
     .replace(/[\s:|,;\-–—]+$/, '')
+    .replace(PRACTICE_TAIL, (m, stem: string) => (FIRM_STEM.test(stem) ? stem : m))
     .slice(0, 120)
 
   const tel = str(biz?.telephone) || decode(html.match(/href\s*=\s*["']tel:([^"']+)["']/i)?.[1] ?? '').trim() || text.match(/\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/)?.[0] || ''

@@ -13,6 +13,7 @@ import { drawLogoIdeas } from '@/lib/logo-ideas'
 import { ImportError, importSite } from '@/lib/importer'
 import { checkReviewUrl, googleReviewUrl } from '@/lib/reviews'
 import { BOOKING_LABELS, BOOKING_LABELS_ES, checkBookingUrl, checkPromoLink } from '@/lib/promote'
+import { checkEvent, upcomingEvents } from '@/lib/events'
 import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
@@ -628,5 +629,24 @@ export async function removeBooking(siteId: string) {
   await changeSite(siteId, (s) => {
     const { cta: _drop, ...rest } = s.header ?? {}
     return { ...s, header: contact ? { ...rest, cta: { label: es ? 'Contáctanos' : 'Get in touch', href: '/' + contact.slug } } : rest }
+  })
+}
+
+// Events: added one at a time; past ones are tidied away whenever the list
+// changes.
+export async function addEvent(siteId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
+  const checked = checkEvent({ title: str(form, 'title', 100), date: str(form, 'date', 10), time: str(form, 'time', 5), place: str(form, 'place', 120), note: str(form, 'note', 300), href: str(form, 'href', 300) })
+  if (checked.error || !checked.event) return { error: checked.error }
+  const { site } = await ownSite(siteId)
+  if (upcomingEvents(site).length >= 30) return { error: 'You have 30 events coming up, the most a site can list. Remove one to add another.' }
+  const id = randomUUID().replace(/-/g, '').slice(0, 12)
+  await changeSite(siteId, (s) => ({ ...s, events: [...upcomingEvents(s), { id, ...checked.event! }] }))
+  return { saved: true }
+}
+
+export async function removeEvent(siteId: string, eventId: string) {
+  await changeSite(siteId, (s) => {
+    const left = upcomingEvents(s).filter((e) => e.id !== eventId)
+    return { ...s, events: left.length ? left : undefined }
   })
 }
