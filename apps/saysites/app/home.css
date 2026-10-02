@@ -487,6 +487,7 @@
 .home .say.say-light input::placeholder { color: var(--ink-mu); }
 .redesign-wait, .redesign-err { flex-basis: 100%; margin: 8px 0 0; font-size: 14px; color: var(--ink-mu); }
 .redesign-err { color: #7a2620; }
+.redesign-err a { color: inherit; font-weight: 600; white-space: nowrap; }
 .redesign-frame { border-radius: 14px; overflow: hidden; box-shadow: 0 30px 70px -40px rgba(18, 19, 22, .45); border: 1px solid var(--line); background: #fff; }
 .redesign-frame iframe { display: block; width: 100%; height: min(78vh, 760px); border: 0; background: #fff; }
 .cmp td.cmp-win { color: #2f6b4f; font-weight: 600; }

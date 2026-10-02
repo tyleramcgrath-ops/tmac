@@ -11,7 +11,12 @@ export function RedesignForm({ id = 'redesign-url', dark = false }: { id?: strin
       <input id={id} name="url" placeholder="yourbusiness.com" autoComplete="url" inputMode="url" maxLength={300} required />
       <button className={`b ${dark ? 'b-dark' : 'b-light'}`} type="submit" disabled={pending}>{pending ? 'Rebuilding…' : 'See it redesigned'}</button>
       {pending && <p className="redesign-wait">Reading your pages and rebuilding them. About ten seconds.</p>}
-      {state.error && <p className="redesign-err" role="alert">{state.error}</p>}
+      {state.error && (
+        <p className="redesign-err" role="alert">
+          {state.error}
+          {/security check/.test(state.error) && <> <a href="/signup">Build it from your details →</a></>}
+        </p>
+      )}
     </form>
   )
 }
