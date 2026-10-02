@@ -1764,6 +1764,13 @@ describe('SaySites: redesign looks like the owner’s current site', () => {
     expect(styled.hero?.src).toBe('https://firm.com/uploads/team-on-steps.jpg')
   })
 
+  it('says plainly when a site has a security check, and never tries to get past it', async () => {
+    const { buildPreview } = await import('../apps/saysites/lib/redesign')
+    const captcha = '<html><head><meta http-equiv="refresh" content="0;/.well-known/sgcaptcha/?r=%2F"></head></html>'
+    const get = async (url: string) => ({ url, status: 202, type: 'text/html', body: captcha })
+    await expect(buildPreview('protected-firm.com', get)).rejects.toThrow(/security check/)
+  })
+
   it('finds the town, the kind of business and real services on older sites', async () => {
     const { detectBusiness, cityInText } = await import('../apps/saysites/lib/detect')
     const { menuServices } = await import('../apps/saysites/lib/redesign')

@@ -37,7 +37,10 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
   const start = normalizeStart(input)
   const first = await get(start.href)
   if (!first) throw new ImportError(`We couldn’t reach ${start.hostname}${lastFetchError ? ` (${lastFetchError})` : ''}. Check the address and try again.`)
-  if (first.status === 401 || first.status === 403 || first.status === 429 || first.status === 503) throw new ImportError(`${new URL(first.url).hostname} blocks automated visits (error ${first.status}), so we can’t read it. Try another website.`)
+  // Security checks ("prove you're human" pages, captchas, firewalls) are
+  // the site owner's choice; we never try to get around them.
+  const challenge = first.status === 202 || (first.body.length < 3000 && /sgcaptcha|captcha|cf-chl|just a moment|checking your browser|attention required/i.test(first.body))
+  if (challenge || first.status === 401 || first.status === 403 || first.status === 429 || first.status === 503) throw new ImportError(`${new URL(first.url).hostname.replace(/^www\./, '')} has a security check that only lets people in, not tools like ours, so we can’t read it. You can still build the site from your business details in about two minutes.`)
   if (first.status !== 200) throw new ImportError(`That address answered with error ${first.status}. Check the address and try again.`)
   if (!/html/i.test(first.type) || !first.body) throw new ImportError('That address isn’t a web page we can read. Try your homepage address.')
   const detected = detectBusiness(first.body, first.url)
