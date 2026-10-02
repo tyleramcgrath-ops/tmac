@@ -41,9 +41,12 @@ export function checkSpeed(page: RenderedPage): SpeedResult {
   const executable = scripts.filter((s) => !/type="application\/ld\+json"/i.test(s))
   if (executable.length) issues.push({ code: 'javascript', message: `The page ships ${executable.length} script tag(s); published pages run no JavaScript.` })
 
-  // No render-blocking external stylesheets or web fonts.
+  // No render-blocking external stylesheets, and no fonts but our own hosted
+  // heading font (preloaded, font-display: optional, so it never delays text).
   if (/<link\b[^>]*rel="stylesheet"/i.test(html)) issues.push({ code: 'blocking-stylesheet', message: 'The page loads an external stylesheet, which blocks rendering.' })
-  if (/@import|@font-face/i.test(css)) issues.push({ code: 'font-or-import', message: 'The CSS imports another file or downloads a font.' })
+  const faces = css.match(/@font-face\{[^}]*\}/gi) ?? []
+  const foreign = faces.filter((f) => !/src:url\(\/media\/fonts\/[\w-]+\.woff2\)/.test(f) || !/font-display:optional/.test(f))
+  if (/@import/i.test(css) || foreign.length || faces.length > 1) issues.push({ code: 'font-or-import', message: 'The CSS imports another file or downloads a font.' })
 
   // Every image sized (no layout shift), and at most one loaded eagerly.
   const imgs = html.match(/<img\b[^>]*>/gi) ?? []
