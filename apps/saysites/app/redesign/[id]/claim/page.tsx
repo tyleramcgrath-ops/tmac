@@ -9,18 +9,19 @@ import { getStore } from '@/lib/store'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ClaimPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ClaimPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ v?: string }> }) {
   const { id } = await params
+  const fresh = (await searchParams).v === 'fresh'
   const store = getStore()
   const p = await store.preview(id)
   if (!p) redirect('/redesign')
   const user = await currentUser()
-  if (!user) redirect(`/signup?claim=${encodeURIComponent(id)}`)
+  if (!user) redirect(`/signup?claim=${encodeURIComponent(id)}${fresh ? 'f' : ''}`)
   if (p.claimed) redirect(p.claimed.by === user.id ? `/dashboard/sites/${p.claimed.siteId}` : '/dashboard')
   const base = subdomainFor(p.detected.name)
   let subdomain = base
   for (let n = 2; await store.subdomainTaken(subdomain); n++) subdomain = `${base}-${n}`
-  const { site, pages, redirects } = claimFromPreview(p, user.id, subdomain)
+  const { site, pages, redirects } = claimFromPreview(p, user.id, subdomain, fresh ? 'fresh' : 'as-is')
   if (!(await store.claimPreview(id, user.id, site.id))) redirect('/dashboard')
   await store.createSite(user.id, site, pages)
   if (redirects.length) await store.saveRedirects(site.id, redirects)

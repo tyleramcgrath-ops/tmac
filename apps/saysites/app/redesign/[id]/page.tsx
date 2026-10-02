@@ -9,10 +9,14 @@ export const metadata: Metadata = { title: 'Your free redesign', robots: { index
 
 const LOCAL = /LocalBusiness|LegalService|Attorney|Plumber|Electrician|HVACBusiness|RoofingContractor|LandscapingBusiness|HousekeepingService|AutoRepair|Dentist|HairSalon|BeautySalon|Restaurant|Bakery|CafeOrCoffeeShop|Store/
 
-export default async function RedesignReport({ params }: { params: Promise<{ id: string }> }) {
+export default async function RedesignReport({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ v?: string }> }) {
   const { id } = await params
   const p = await getStore().preview(id)
   if (!p) notFound()
+  // Two versions: their site as it is (the default), or a fresh redesign.
+  const fresh = (await searchParams).v === 'fresh' && !!p.fresh
+  const src = `/redesign/${id}/${fresh ? 'fresh' : 'site'}`
+  const claim = `/redesign/${id}/claim${fresh ? '?v=fresh' : ''}`
   const { before: b, after: a, detected: d } = p
   const host = p.url.replace(/^https?:\/\//, '')
   const imported = p.pages.filter((pg) => pg.source).length
@@ -39,19 +43,31 @@ export default async function RedesignReport({ params }: { params: Promise<{ id:
         <div className="wrap">
           <p className="kicker">Your free redesign · {host}</p>
           <h1>Here’s {d.name} on SaySites.</h1>
-          <p>Your own pages and words, rebuilt: {imported} page{imported === 1 ? '' : 's'} carried over{kept ? `, ${kept} at exactly the same address` : ''}{p.redirects.length ? `, and ${p.redirects.length} redirect${p.redirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>
+          <p>{fresh ? 'A fresh design made from your own words and photos' : 'Your site as it is: the same pages, words, photos and colours, rebuilt to load fast'}: {imported} page{imported === 1 ? '' : 's'} carried over{kept ? `, ${kept} at exactly the same address` : ''}{p.redirects.length ? `, and ${p.redirects.length} redirect${p.redirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>
           <div className="ind-actions">
-            <a className="b b-dark" href={`/redesign/${id}/claim`}>Claim this site free</a>
-            <a className="tplrow-link" href={`/redesign/${id}/site`} target="_blank" rel="noopener">Open the full preview ↗</a>
+            <a className="b b-dark" href={claim}>Claim this site free</a>
+            <a className="tplrow-link" href={src} target="_blank" rel="noopener">Open the full preview ↗</a>
           </div>
         </div>
       </section>
 
       <section className="ind-sec" style={{ paddingTop: 0 }}>
         <div className="wrap">
+          {p.fresh && (
+            <nav className="rd-switch" aria-label="Choose a version">
+              <a href={`/redesign/${id}`} aria-current={fresh ? undefined : 'page'}>
+                <strong>Your site, as it is</strong>
+                <span>Same look and content, faster</span>
+              </a>
+              <a href={`/redesign/${id}?v=fresh`} aria-current={fresh ? 'page' : undefined}>
+                <strong>A fresh redesign</strong>
+                <span>Same content, a new look</span>
+              </a>
+            </nav>
+          )}
           <div className="frame redesign-frame">
             <div className="frame-bar"><i /><i /><i /><span>{host} on SaySites</span></div>
-            <iframe src={`/redesign/${id}/site`} title={`${d.name} rebuilt on SaySites`} loading="lazy" />
+            <iframe src={src} title={`${d.name} rebuilt on SaySites`} loading="lazy" />
           </div>
         </div>
       </section>
@@ -95,7 +111,7 @@ export default async function RedesignReport({ params }: { params: Promise<{ id:
             <div><h3>Claim it free</h3><p>It’s saved to your account with every page. Imported pages wait as drafts until you point your domain here, so nothing changes on your current site until you’re ready.</p></div>
             <div><h3>Make it yours by asking</h3><p>Sofie can fix anything we read wrong, add your photos, write new pages and polish the imported ones. You see every change before it goes live.</p></div>
             <div><h3>$15 a month, no transfer fee</h3><p>7-day free trial. No setup fee, no contract, and your words and domain stay yours.</p></div>
-            <div><a className="b b-dark" href={`/redesign/${id}/claim`}>Claim this site free</a></div>
+            <div><a className="b b-dark" href={claim}>Claim this site free</a></div>
           </div>
         </div>
       </section>

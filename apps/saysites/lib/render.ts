@@ -43,7 +43,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   t = wordsFor(site.language)
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
-  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : [])])
+  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : [])]) + headerColors(site)
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
   const jsonLd = structuredData(site, page, allPages)
@@ -251,6 +251,20 @@ function renderHeader(site: Site, page: Page): string {
     : esc(site.business.name)
   const promo = promoActive(site) && site.promo ? promoBar(site.promo) : ''
   return `<header class="sh">${promo}${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cta}</div></header>`
+}
+
+// The header's own colours, set after the base styles so they win.
+function headerColors(site: Site): string {
+  const c = site.header?.colors
+  if (!c) return ''
+  const hex = (v: string) => (/^#[0-9a-f]{3,6}$/i.test(v) ? v : '')
+  const bg = hex(c.background)
+  const fg = hex(c.text)
+  let css = bg && fg ? `.sh{background:${bg};border-bottom-color:transparent}.sh-brand,.sh nav a:hover,.sh nav a[aria-current]{color:${fg}}.sh nav a{color:color-mix(in srgb,${fg} 78%,transparent)}` : ''
+  const tb = c.topbarBackground && hex(c.topbarBackground)
+  const tt = c.topbarText && hex(c.topbarText)
+  if (tb && tt) css += `.stb{background:${tb};color:${tt}}.stb a{color:${tt}}`
+  return css
 }
 
 function promoBar(p: NonNullable<Site['promo']>): string {
@@ -521,6 +535,9 @@ function styleRules(sel: string, s: ElementStyle, byBp: Record<Breakpoint, Rules
   if (s.textTransform) add(d, sel, { 'text-transform': s.textTransform })
   if (s.fontFamily) add(d, sel, { 'font-family': s.fontFamily === 'heading' ? 'var(--f-h)' : 'var(--f-b)' })
   if (s.border) add(d, sel, { border: `1px solid ${color(s.border)}` })
+  // Doubled class: beats the parent row's equal-share rule on desktop; the
+  // phone layout (stacked) still wins there.
+  if (s.grow) add(d, `${sel}${sel}`, { flex: `${s.grow} 1 0` })
 }
 
 function eachBp<T>(r: Responsive<T>, fn: (bp: Breakpoint, v: T) => void) {
