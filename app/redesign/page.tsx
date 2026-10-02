@@ -18,7 +18,7 @@ export default function RedesignPage() {
         <div className="wrap">
           <p className="kicker">Free redesign preview</p>
           <h1>Paying too much for your website? See it rebuilt, free.</h1>
-          <p>Paste your current website’s address. In about ten seconds you’ll see it rebuilt on SaySites, with your own pages and words, and a side-by-side of what changes: how heavy it is, what Google can read, and whether it passes a 95+ speed check.</p>
+          <p>Paste your current website’s address. In about twenty seconds you’ll see your own site on SaySites, looking the way it does now, with every page, word and photo kept. Then see a fresh redesign of the same content, and a side-by-side of what changes: how heavy it is, what Google can read, and whether it passes a 95+ speed check.</p>
           <div className="redesign-form"><RedesignForm dark /></div>
           <p className="fine">No account needed. We only read public pages, and nothing changes on your current site.</p>
         </div>
@@ -27,8 +27,8 @@ export default function RedesignPage() {
         <div className="wrap">
           <ol className="ind-pages">
             <li><span>01</span><div><h3>We read your site</h3><p>Your pages, headings and words, and the business details you already publish: name, phone, address and colours.</p></div></li>
-            <li><span>02</span><div><h3>We rebuild it</h3><p>A clean SaySites design with your content, every page kept at the same address, and the details Google looks for.</p></div></li>
-            <li><span>03</span><div><h3>You compare</h3><p>A before and after of page weight, scripts, missing image descriptions and speed. Like it? Claim it free and make it yours.</p></div></li>
+            <li><span>02</span><div><h3>We rebuild it, twice</h3><p>Your site as it is: the same sections, photos, colours and menu. And a fresh redesign of the same content. Every page keeps its address and the details Google looks for.</p></div></li>
+            <li><span>03</span><div><h3>You compare</h3><p>A before and after of page weight, scripts, missing image descriptions and speed. Pick the version you like and claim it free.</p></div></li>
           </ol>
         </div>
       </section>

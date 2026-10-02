@@ -261,6 +261,9 @@ export interface ImportedPage {
   from: string
   url: string
   extracted: Extracted
+  // The page already rebuilt (the redesign preview's "as it is" version);
+  // otherwise it's laid out from the extracted words.
+  body?: Container[]
 }
 
 export interface ImportPlan {
@@ -365,7 +368,7 @@ export function planImport(site: Site, existing: readonly Page[], found: Importe
       // over, so the same words never live at two addresses at once.
       status: 'draft',
       seo: { title: clip(retitle(e.title || e.h1 || slug), 70), description: clip(e.description || firstPara || e.h1, 170) },
-      body: body(e, slug.replace(/\//g, '-').slice(0, 40)),
+      body: f.body ?? body(e, slug.replace(/\//g, '-').slice(0, 40)),
       updatedAt: now,
     })
     if (from !== `/${slug}`) plan.redirects.push({ from, to: `/${slug}`, status: 301 })

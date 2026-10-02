@@ -101,6 +101,9 @@ export const ElementStyle = z
     fontFamily: z.enum(['heading', 'body']).optional(),
     // A hairline border in a color token, e.g. dividers between strip items.
     border: ColorValue.optional(),
+    // In a row, this child's share of the width (a 2 next to a 1 is twice
+    // as wide), like a two-thirds column beside a one-third one.
+    grow: z.number().int().min(1).max(12).optional(),
   })
   .strict()
 export type ElementStyle = z.infer<typeof ElementStyle>
@@ -408,6 +411,9 @@ export const SiteSchema = z
         cta: z.object({ label: z.string().min(1).max(40), href }).strict().optional(),
         // The Call / Directions bar pinned to the bottom on phones. On unless false.
         callBar: z.boolean().optional(),
+        // The header's own colours, when they differ from the page's (a dark
+        // header over a light site, a brand-coloured top bar).
+        colors: z.object({ background: hex, text: hex, topbarBackground: hex.optional(), topbarText: hex.optional() }).strict().optional(),
       })
       .strict()
       .optional(),

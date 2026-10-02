@@ -3,13 +3,14 @@ import { redirect } from 'next/navigation'
 import { LogInForm } from '@/components/Forms'
 import { TopBar } from '@/components/TopBar'
 import { currentUser } from '@/lib/session'
+import { CLAIM_CODE, claimPath } from '@/lib/urls'
 
 export const metadata: Metadata = { title: 'Log in', robots: { index: false } }
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ claim?: string }> }) {
   const sp = await searchParams
-  const claim = /^[a-f0-9]{16}$/.test(sp.claim ?? '') ? sp.claim! : ''
-  if (await currentUser()) redirect(claim ? `/redesign/${claim}/claim` : '/dashboard')
+  const claim = CLAIM_CODE.test(sp.claim ?? '') ? sp.claim! : ''
+  if (await currentUser()) redirect(claim ? claimPath(claim) : '/dashboard')
   return (
     <>
       <TopBar />
