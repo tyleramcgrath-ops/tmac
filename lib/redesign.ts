@@ -6,7 +6,7 @@
 import { randomUUID } from 'crypto'
 import { audit, type Audit } from './audit'
 import { detectBusiness, type Detected } from './detect'
-import { ImportError, discover, dropTemplate, extract, normalizeStart, planImport, safeFetch, type Fetcher, type ImportedPage } from './importer'
+import { ImportError, discover, lastFetchError, dropTemplate, extract, normalizeStart, planImport, safeFetch, type Fetcher, type ImportedPage } from './importer'
 import { renderPage } from './render'
 import { checkPage } from './seo'
 import { checkSpeed } from './speed'
@@ -34,7 +34,10 @@ export interface Preview {
 export async function buildPreview(input: string, get: Fetcher = safeFetch, id = randomUUID().replace(/-/g, '').slice(0, 16)): Promise<Preview> {
   const start = normalizeStart(input)
   const first = await get(start.href)
-  if (!first || first.status !== 200 || !/html/i.test(first.type) || !first.body) throw new ImportError('We couldn’t open that website. Check the address and try again.')
+  if (!first) throw new ImportError(`We couldn’t reach ${start.hostname}${lastFetchError ? ` (${lastFetchError})` : ''}. Check the address and try again.`)
+  if (first.status === 401 || first.status === 403 || first.status === 429 || first.status === 503) throw new ImportError(`${new URL(first.url).hostname} blocks automated visits (error ${first.status}), so we can’t read it. Try another website.`)
+  if (first.status !== 200) throw new ImportError(`That address answered with error ${first.status}. Check the address and try again.`)
+  if (!/html/i.test(first.type) || !first.body) throw new ImportError('That address isn’t a web page we can read. Try your homepage address.')
   const detected = detectBusiness(first.body, first.url)
   const urls = (await discover(new URL(first.url), get)).slice(0, PREVIEW_PAGES)
   const found: ImportedPage[] = []
