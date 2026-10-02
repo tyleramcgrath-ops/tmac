@@ -17,6 +17,7 @@ import { luminance, photoSet, readLook } from './lookalike'
 import { Styles } from './css-lite'
 import { ancestors, findAll, parseHtml, type El } from './dom'
 import { mirrorPage, readChrome, readGlobals, regions } from './mirror'
+import { freshSite } from './restyle'
 
 // A preview reads fewer pages than a full move, to stay quick and cheap.
 export const PREVIEW_PAGES = 16
@@ -151,12 +152,11 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
     }
     lighten(homeStarter)
   }
-  const plan = planImport(site, starter, pages)
-  // In the preview, imported pages show; claimed sites start them as drafts.
-  const fresh = [...starter, ...plan.pages.map((p) => ({ ...p, status: 'published' as const }))]
-
-  // Their site as it is, page by page.
+  // Their site as it is, page by page; then the same pages and words in a
+  // fresh design.
   const mirror = buildMirror(first, found, sheets, site, starter, detected, look.logo)
+  const brand = /^#[0-9a-f]{6}$/i.test(detected.color ?? '') ? detected.color! : mirror.site.globals.colors.primary
+  const fresh = freshSite(mirror.site, mirror.pages, brand, detected.type === 'lawyer' || mirror.site.globals.fonts.heading === 'serif', look.hero)
   const homePage = mirror.pages.find((p) => p.slug === '')!
   const rendered = renderPage(mirror.site, homePage, mirror.pages)
   return {
@@ -167,7 +167,7 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
     site: mirror.site,
     pages: mirror.pages,
     redirects: mirror.redirects,
-    fresh: { site, pages: fresh, redirects: plan.redirects },
+    fresh: { ...fresh, redirects: mirror.redirects },
     before: audit(first.body),
     after: { ...audit(rendered.html), speedPass: checkSpeed(rendered).pass, seoErrors: mirror.pages.reduce((n, p) => n + checkPage(p, mirror.pages).filter((i) => i.severity === 'error').length, 0) },
     pagesFound: urls.length,
