@@ -13,6 +13,7 @@ import {
   type Page,
 } from '../apps/saysites/lib'
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
+import { HEADING_FONTS, headingFont } from '../apps/saysites/lib/schema'
 import { resolveHost } from '../apps/saysites/lib/sites'
 import { classifyHost } from '../apps/saysites/lib/hosts'
 import { handleCall, serveSitePath } from '../apps/saysites/lib/serve'
@@ -211,7 +212,26 @@ describe('SaySites speed gate', () => {
     const result = checkSpeed(renderPage(sampleSite, sampleHome, samplePages))
     expect(result.htmlBytes).toBeLessThan(15_000)
     // Well under the 30KB budget; this catches accidental bloat.
-    expect(result.cssBytes).toBeLessThan(6_000)
+    expect(result.cssBytes).toBeLessThan(9_000)
+  })
+
+  it('loads one hosted heading font, preloaded and never blocking, plus gentle motion', () => {
+    const { html, css } = renderPage(sampleSite, sampleHome, samplePages)
+    const font = headingFont(sampleSite.globals)
+    expect(font).not.toBeNull()
+    expect(html).toContain(`<link rel="preload" href="${HEADING_FONTS[font!].file}" as="font" type="font/woff2" crossorigin>`)
+    expect(css.match(/@font-face/g)).toHaveLength(1)
+    expect(css).toContain('font-display:optional')
+    // Motion only where the browser supports it and the visitor hasn't asked
+    // for less; nothing is hidden when it doesn't run.
+    expect(css).toContain('@media (prefers-reduced-motion:no-preference)')
+    expect(css).toContain('@supports (animation-timeline:view())')
+    const still = renderPage({ ...sampleSite, globals: { ...sampleSite.globals, motion: false, headingFont: 'system' } }, sampleHome, samplePages)
+    expect(still.css).not.toContain('animation-timeline')
+    expect(still.css).not.toContain('@font-face')
+    expect(still.html).not.toContain('rel="preload"')
+    // A font from anywhere else still fails the gate.
+    expect(checkSpeed({ html: '', css: '@font-face{font-family:x;src:url(https://fonts.example.com/x.woff2);font-display:optional}' }).issues.map((i) => i.code)).toEqual(['font-or-import'])
   })
 
   it('fails on scripts, external stylesheets and too many eager images', () => {
