@@ -23,6 +23,13 @@ export function proxy(req: NextRequest) {
   }
   // The renderer's internal route is never addressable directly.
   if (pathname.startsWith('/s-render')) return new NextResponse('Not found', { status: 404 })
+  // SiteGround's temporary address serves the same app; only saysites.com
+  // should ever appear in search.
+  if (req.headers.get('host')?.split(':')[0].endsWith('.sg-host.com')) {
+    const res = NextResponse.next()
+    res.headers.set('x-robots-tag', 'noindex, nofollow')
+    return res
+  }
   return NextResponse.next()
 }
 
