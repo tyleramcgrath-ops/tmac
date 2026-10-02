@@ -15,6 +15,13 @@ import { Slug, type Container, type Element, type Page, type Redirect, type Site
 export const MAX_IMPORT_PAGES = 40
 const MAX_BYTES = 2_000_000
 const UA = 'Mozilla/5.0 (compatible; SaySitesImporter/1.0; +https://saysites.com)'
+// The headers every browser sends. Some servers turn away requests without
+// them; the user agent still says honestly who is asking.
+const HEADERS = {
+  'user-agent': UA,
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language': 'en-US,en;q=0.9',
+}
 
 export class ImportError extends Error {}
 
@@ -55,7 +62,7 @@ export const safeFetch: Fetcher = async (start) => {
   let url = new URL(start)
   for (let hop = 0; hop < 5; hop++) {
     await assertPublic(url)
-    const res = await fetch(url, { redirect: 'manual', headers: { 'user-agent': UA, accept: 'text/html,application/xml;q=0.9,*/*;q=0.5' }, signal: AbortSignal.timeout(10000) }).catch((e: unknown) => {
+    const res = await fetch(url, { redirect: 'manual', headers: HEADERS, signal: AbortSignal.timeout(10000) }).catch((e: unknown) => {
       const err = e as { name?: string; message?: string; cause?: { code?: string; message?: string } }
       lastFetchError = err?.name === 'TimeoutError' ? 'timeout' : err?.cause?.code || err?.cause?.message || err?.message || 'network error'
       console.error('[import] fetch failed', url.href, lastFetchError)
