@@ -112,7 +112,8 @@ redirects to /early.
   show on the home page and to Google as Events; past ones drop off.
 - **Next ideas, not built:** Sofie drafting social posts, a chatbot (paid
   add-on, it costs tokens), Claude/ChatGPT connector.
-- **Kids mode** (/kids preview, noindex, not linked): parent-owned account,
+- **Kids mode** (/kids preview, noindex; one "Also coming soon" line on the
+  homepage links to it): parent-owned account,
   parent approves before anything goes live, first names only, no photos
   of the child, messages go to the parent, hidden from search, a kind
   Sofie. Don't advertise it ("so easy kids can make one") until it exists.

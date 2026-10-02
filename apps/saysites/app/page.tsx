@@ -372,6 +372,8 @@ export default function Home() {
                 <p>Bring over your photos, hours and details from Facebook, so everything customers see matches, wherever they find you.</p>
               </div>
             </div>
+            {/* Kids mode isn't built yet: a quiet mention, clearly coming soon. */}
+            <p className="conn-kids">Also coming soon: <a href="/kids">SaySites for kids</a>. Young entrepreneurs build a real website, and parents stay in charge.</p>
           </div>
         </section>
 
