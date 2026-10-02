@@ -6,12 +6,14 @@
 import { randomUUID } from 'crypto'
 import { audit, type Audit } from './audit'
 import { detectBusiness, type Detected } from './detect'
-import { ImportError, discover, lastFetchError, dropTemplate, extract, normalizeStart, planImport, safeFetch, type Fetcher, type ImportedPage } from './importer'
+import { ImportError, decode, discover, lastFetchError, dropTemplate, extract, normalizeStart, planImport, safeFetch, type Fetcher, type ImportedPage } from './importer'
 import { renderPage } from './render'
 import { checkPage } from './seo'
 import { checkSpeed } from './speed'
-import type { Page, Redirect, Site } from './schema'
+import { walk, type Page, type Redirect, type Site } from './schema'
 import { buildStarterSite } from './starter'
+import { photosFor } from './photos'
+import { luminance, photoSet, readLook } from './lookalike'
 
 // A preview reads fewer pages than a full move, to stay quick and cheap.
 export const PREVIEW_PAGES = 12
@@ -52,15 +54,28 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
   const pages = found.map((f, i) => ({ ...f, extracted: cleaned[i] }))
   // The main services are the imported pages' headings (not about, contact
   // and the like), which also fill the home page's services section.
-  const services = pages
+  const fromPages = pages
     .filter((p) => p.from !== '/' && !/about|contact|faq|privacy|terms|team|attorney|staff|review|testimonial|career|location|areas?-we-serve|blog|news/i.test(p.from))
     .map((p) => (p.extracted.h1 || p.extracted.title.split(/\s[|\-–—]\s/)[0]).trim())
     .filter((s) => s && s.length <= 80)
     // Keyword pages are often in capitals ("NAPLES DIVORCE LAWYERS").
     .map((s) => (s === s.toUpperCase() ? s.charAt(0) + s.slice(1).toLowerCase() : s))
+    // "Assaults at Businesses Lawyers in Jackson, MS" → "Assaults at Businesses".
+    .map((s) => s.replace(/\s+in\s+[A-Z][\w.' -]+,\s*[A-Z]{2}$/, '').replace(/\s+(lawyers?|attorneys?|law firm)$/i, '').trim())
+    .filter(Boolean)
+  // Older sites repeat the business name as every page's heading; those
+  // aren't services. Then the menu's own links fill any gap.
+  const named = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+  const services = [...new Set([...fromPages, ...menuServices(first.body)].map((s) => s.trim()))]
+    .filter((s, i, all) => named(s) !== named(detected.name) && all.findIndex((t) => named(t) === named(s)) === i)
     .slice(0, 6)
   const home = pages.find((p) => p.from === '/')?.extracted.h1 ?? ''
   const headline = home.length >= 12 && home.length <= 90 ? (home === home.toUpperCase() ? home.charAt(0) + home.slice(1).toLowerCase() : home) : undefined
+  // Their own look: hero photo, photos, logo and brand colour. A photo with
+  // the words on top (the usual law firm or trades site) becomes the dark,
+  // full-photo design so their light logo and photo read the same way.
+  const look = readLook(first.body, first.url, detected.name)
+  const dark = look.photoHero
   const { site, pages: starter } = buildStarterSite(
     {
       name: detected.name,
@@ -73,7 +88,9 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
       postalCode: detected.postalCode,
       hours: detected.hours,
       services,
-      palette: detected.palette,
+      palette: dark ? 'noir' : detected.palette,
+      photos: photoSet(look, photosFor(detected.type), services),
+      ...(dark ? { design: 'upscale' as const } : {}),
       ...(headline ? { headline } : {}),
     },
     'org_preview',
@@ -81,9 +98,27 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
   )
   // Old logos are often made for dark headers and would vanish on a light
   // one; the preview shows the name, and the owner adds a logo after claiming.
+  // Their exact brand colour for buttons and accents, when it reads well
+  // on the background (light enough on dark, dark enough on light).
+  if (detected.color && /^#[0-9a-f]{6}$/i.test(detected.color)) {
+    const l = luminance(detected.color)
+    if (dark ? l >= 0.18 : l <= 0.3) site.globals.colors = { ...site.globals.colors, primary: detected.color, accent: detected.color }
+  }
+  // Their logo: any version on the dark design, otherwise only one made
+  // for a light header.
+  const logo = dark ? look.logo ?? detected.logo : detected.logo
+  if (logo) site.business.logo = logo
   if (!detected.city) {
     // Without a town the starter's copy reads oddly; keep it general.
     site.business.area = undefined
+  }
+  // Their own hero words, in place of the generated ones.
+  const homeStarter = starter.find((p) => p.slug === '')
+  if (homeStarter) {
+    for (const el of walk(homeStarter.body)) {
+      if (el.type === 'text' && el.id === 'hero-kicker' && look.heroLine) el.text = look.heroLine
+      if (el.type === 'text' && el.id === 'hero-text' && look.heroText) el.text = look.heroText
+    }
   }
   const plan = planImport(site, starter, pages)
   // In the preview, imported pages show; claimed sites start them as drafts.
@@ -102,6 +137,21 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
     after: { ...audit(rendered.html), speedPass: checkSpeed(rendered).pass, seoErrors: all.reduce((n, p) => n + checkPage(p, all).filter((i) => i.severity === 'error').length, 0) },
     pagesFound: urls.length,
   }
+}
+
+// Service names from the home page's menu links, for sites whose pages
+// don't have their own headings. Skips the usual non-service links.
+const NOT_SERVICE = /^(home|about|about us|our (team|firm|story)|team|contact|contact us|blog|news|faq|faqs|careers?|jobs|privacy|terms|sitemap|site map|login|log in|sign in|sign up|register|account|my account|cart|checkout|search|links?|locations?|directions|forms?|resources|testimonials|reviews|partners|affiliations|gallery|photos|menu|more|pay|payments?|portal|client login)$|rates?$|prices?$|pricing|calculator|deadlines|login|log in|portal|e-?filing|beta/i
+export function menuServices(html: string): string[] {
+  const out: string[] = []
+  for (const m of html.matchAll(/<a\b[^>]*href\s*=\s*["']([^"'#]*)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    const href = m[1]
+    if (/^(mailto:|tel:|javascript:)/i.test(href) || /^https?:\/\//i.test(href)) continue
+    const text = decode(m[2].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').replace(/[>»›]+\s*$/, '').trim()
+    if (text.length < 4 || text.length > 40 || NOT_SERVICE.test(text) || !/[a-z]/i.test(text)) continue
+    out.push(text)
+  }
+  return out
 }
 
 // Claiming: the preview becomes the owner's site. Imported pages start as
