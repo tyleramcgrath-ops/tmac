@@ -99,6 +99,15 @@ redirects to /early.
   mix alternating numbered rows (editorial), a photo mosaic (warm,
   upscale), a full-width photo band, and a "How it works" strip (bold).
   Sofie's prompt says the same. Keep adding compositions, not colours.
+- **Built: personalities and finish** (October 2026). Heading fonts we host
+  (Newsreader, Fraunces, Bricolage Grotesque; one per page, preloaded,
+  font-display optional). Six personalities (`globals.flair`, lib/render.ts
+  FLAIR_CSS): editorial, luxe, soft, bold, studio, clean, drawn from
+  award-listed small-business sites; new sites get one that suits the
+  business, picked from the address, so neighbours differ. CSS-only scroll
+  motion (off with `globals.motion: false`, never for reduced-motion
+  visitors), a services ticker under the hero. Settings has a Personality
+  picker and a motion switch. Still no client JavaScript; mobile Lighthouse 100.
 - **Connect Google, Instagram, Facebook** (homepage says "Coming soon"):
   Google Business Profile reviews appear as testimonials (the real words,
   never edited); Instagram/Facebook photos become the gallery; Facebook

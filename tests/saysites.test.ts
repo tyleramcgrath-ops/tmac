@@ -215,6 +215,26 @@ describe('SaySites speed gate', () => {
     expect(result.cssBytes).toBeLessThan(9_000)
   })
 
+  it('gives each site a personality that suits it, and a strip of its real services', () => {
+    const a = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'ocean' }, 'org', 'rivertown-plumbing')
+    expect(['bold', 'clean', 'studio']).toContain(a.site.globals.flair)
+    const home = a.pages.find((p) => p.slug === '')!
+    expect(home.body[1].children[0]).toMatchObject({ type: 'ticker', items: ['Leak repair', 'Water heaters', 'Drain cleaning'] })
+    const { html, css } = renderPage(a.site, home, a.pages)
+    // The list twice for a seamless loop; the copy is hidden from screen readers.
+    expect(html.match(/<li>Water heaters<\/li>/g)).toHaveLength(2)
+    expect(html).toContain('<ul aria-hidden="true">')
+    expect(css).toContain('prefers-reduced-motion:reduce')
+    // Fewer than three services: no strip, rather than a slogan.
+    const b = buildStarterSite({ name: 'Rosie', type: 'bakery', city: 'Portland', region: 'OR', services: ['Bread'], palette: 'sunset' }, 'org', 'rosie')
+    expect(JSON.stringify(b.pages)).not.toContain('"ticker"')
+    // Every personality renders and passes the speed gate.
+    for (const flair of ['editorial', 'luxe', 'soft', 'bold', 'studio', 'clean'] as const) {
+      const r = renderPage({ ...a.site, globals: { ...a.site.globals, flair } }, home, a.pages)
+      expect(checkSpeed(r).issues).toEqual([])
+    }
+  })
+
   it('loads one hosted heading font, preloaded and never blocking, plus gentle motion', () => {
     const { html, css } = renderPage(sampleSite, sampleHome, samplePages)
     const font = headingFont(sampleSite.globals)

@@ -18,7 +18,9 @@ import {
   COLOR_TOKENS,
   FONT_STACKS,
   HEADING_FONTS,
+  flairOf,
   headingFont,
+  type Flair,
   pagePath,
   siteOrigin,
   type Breakpoint,
@@ -169,6 +171,12 @@ function renderWidget(w: Widget): string {
       return `<div class="gal gal-${cols} ${c}">${w.images
         .map((i) => `<figure><img src="${esc(i.src)}"${srcset(i.src, i.width)} sizes="(max-width: 640px) 100vw, ${Math.round(100 / cols)}vw" alt="${esc(i.alt)}" width="${i.width}" height="${i.height}" loading="lazy" decoding="async">${i.caption ? `<figcaption>${esc(i.caption)}</figcaption>` : ''}</figure>`)
         .join('')}</div>`
+    }
+    case 'ticker': {
+      // The list twice, end to end, so the strip loops without a seam; the
+      // copy is hidden from screen readers.
+      const list = `<li>${w.items.map(esc).join('</li><li>')}</li>`
+      return `<div class="tk ${c}"><div class="tk-t"><ul>${list}</ul><ul aria-hidden="true">${list}</ul></div></div>`
     }
     case 'testimonials':
       return `<div class="tst ${c}">${w.items
@@ -411,6 +419,7 @@ function baseCss(g: GlobalStyles): string {
     `--r:${g.radius}px`,
     `--rb:${g.buttonShape === 'pill' ? '999px' : g.buttonShape === 'square' ? '2px' : `${Math.min(g.radius, 12)}px`}`,
     `--w:${g.containerWidth}px`,
+    `--hw:${g.headingWeight ?? 700}`,
   ].join(';')
   // Heading sizes step up the modular scale from the base size (h6 = base).
   const steps = [4, 3, 2, 1, 0.5, 0]
@@ -500,6 +509,14 @@ function widgetCss(used: Set<string>): string {
       `.sform input:focus,.sform textarea:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
       `.sform-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}` +
       `.sform-ok{display:none;margin:0;padding:14px 16px;border-radius:min(var(--r),10px);background:color-mix(in srgb,var(--c-primary) 12%,var(--c-background));font-weight:600}.sform-ok:target{display:block}`
+  if (used.has('ticker'))
+    css +=
+      `.tk{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}` +
+      `.tk-t{display:flex;width:max-content}.tk ul{display:flex;margin:0;padding:0;list-style:none}` +
+      `.tk li{font-family:var(--f-h);font-weight:min(var(--hw),700);font-size:clamp(1.5em,2.6vw,2.4em);line-height:1.2;white-space:nowrap;display:flex;align-items:center}` +
+      `.tk li::after{content:"";width:.32em;height:.32em;border-radius:50%;background:var(--c-primary);margin:0 .9em;opacity:.7}` +
+      `@media (prefers-reduced-motion:no-preference){.tk-t{animation:tk 48s linear infinite}.tk:hover .tk-t{animation-play-state:paused}@keyframes tk{to{transform:translateX(-50%)}}}` +
+      `@media (prefers-reduced-motion:reduce){.tk{-webkit-mask-image:none;mask-image:none}.tk-t,.tk ul{flex-wrap:wrap;width:auto}.tk ul[aria-hidden]{display:none}}`
   if (used.has('faq')) {
     css +=
       `.faq details{border-bottom:1px solid var(--c-surface);padding:12px 0}` +
@@ -516,9 +533,9 @@ function widgetCss(used: Set<string>): string {
 function polishCss(g: GlobalStyles, used: Set<string>): string {
   const phone = BREAKPOINT_MAX_WIDTH.mobile
   let css =
-    `h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}::selection{background:color-mix(in srgb,var(--c-primary) 24%,transparent)}` +
+    `body{overflow-x:clip}h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}::selection{background:color-mix(in srgb,var(--c-primary) 24%,transparent)}` +
     `a:focus-visible,.btn:focus-visible{outline:2px solid var(--c-primary);outline-offset:3px}` +
-    `@media (min-width:${phone + 1}px){.sh{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--c-background) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}` +
+    `@media (min-width:${phone + 1}px){.sh{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--c-background) 94%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}` +
     `.sh nav a{position:relative}.sh nav a::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}.sh nav a:hover::after,.sh nav a[aria-current]::after{transform:scaleX(1)}}` +
     `.cd{transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}.cd:hover{transform:translateY(-4px);box-shadow:0 24px 44px -30px rgb(0 0 0/.4)}`
   if (used.has('button'))
@@ -527,6 +544,8 @@ function polishCss(g: GlobalStyles, used: Set<string>): string {
       `.btn-primary:hover{box-shadow:0 14px 28px -16px var(--c-primary)}` +
       `.btn-primary:not(.sh-cta):not([href^="tel:"])::after{content:"\\2192";display:inline-block;margin-left:.55em;transition:transform .25s}.btn-primary:hover::after{transform:translateX(4px)}`
   if (used.has('gallery')) css += `.gal figure{overflow:hidden;border-radius:var(--r)}.gal img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}.gal figure:hover img{transform:scale(1.04)}`
+  const flair = FLAIR_CSS[flairOf(g)]
+  css += flair.still
   if (g.motion === false) return css
   const rise = (sel: string, range: string) => `${sel}{animation:sr linear both;animation-timeline:view();animation-range:${range}}`
   return (
@@ -539,10 +558,53 @@ function polishCss(g: GlobalStyles, used: Set<string>): string {
     rise('.g>*', 'entry 0% entry 60%') +
     rise('.g>:nth-child(3n+2)', 'entry 6% entry 68%') +
     rise('.g>:nth-child(3n)', 'entry 12% entry 76%') +
-    `@keyframes sr{from{opacity:0;transform:translateY(34px)}}` +
+    `@keyframes sr{from{opacity:var(--ro,0);transform:translate3d(var(--rx,0),var(--ry,34px),0) scale(var(--rs,1));filter:blur(var(--rbl,0))}}` +
     `.hasbg>.bgi:not([fetchpriority]){top:-10%;height:120%;animation:sp linear both;animation-timeline:view()}@keyframes sp{from{transform:translateY(-7%)}to{transform:translateY(7%)}}` +
+    flair.moving +
     `}}`
   )
+}
+
+// What each personality adds: `still` always, `moving` only where scroll
+// animations run. Drawn from well-made small-business sites: numbered
+// sections and image wipes (editorial law and dental sites), framed photos
+// and a reading bar (restaurants, boutique practices), arches and soft
+// rises (salons, bakeries), a diagonal hero and side-on entrances (trades),
+// photos that turn from black and white to colour (studios, barbers).
+const PROGRESS = `body::before{content:"";position:fixed;top:0;left:0;right:0;height:3px;background:var(--c-primary);transform-origin:0 50%;transform:scaleX(0);z-index:60;pointer-events:none;animation:pg linear both;animation-timeline:scroll(root)}@keyframes pg{to{transform:scaleX(1)}}`
+const PHOTOS = 'main .bi img:not(.bgi)'
+const FLAIR_CSS: Record<Flair, { still: string; moving: string }> = {
+  editorial: {
+    still:
+      `main{counter-reset:sx}main>section~section h2{counter-increment:sx}` +
+      `main>section~section h2::before{content:counter(sx,decimal-leading-zero) " \\2014";display:block;font:600 max(12px,.3em)/1 var(--f-b);letter-spacing:.18em;color:var(--c-primary);margin-bottom:1.1em}` +
+      `main>section+section:not(.hasbg){border-top:1px solid color-mix(in srgb,var(--c-text) 9%,transparent)}`,
+    moving: `${PHOTOS}{animation:ew linear both;animation-timeline:view();animation-range:entry 0% cover 40%}@keyframes ew{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}`,
+  },
+  luxe: {
+    still:
+      `${PHOTOS},.gal img{outline:1px solid color-mix(in srgb,var(--c-primary) 60%,transparent);outline-offset:-14px}` +
+      `main h2::before{content:"";display:block;width:44px;height:1px;background:var(--c-primary);margin:0 var(--al,0) 1.1em}`,
+    moving: `:root{--ry:16px;--rbl:2px}${PROGRESS}`,
+  },
+  soft: {
+    still: `${PHOTOS}{border-radius:28px}main img[style*="aspect-ratio:0."]{border-radius:999px 999px 28px 28px}.cd.cd{border-radius:26px}.gal img{border-radius:22px}`,
+    moving: `:root{--ry:22px;--rs:.96;--rbl:6px}`,
+  },
+  bold: {
+    still:
+      `main>section.hasbg:first-child{z-index:2;clip-path:polygon(0 0,100% 0,100% calc(100% - 3.5vw),0 100%);margin-bottom:-3.5vw}main>section.hasbg:first-child+*{border-top:3.5vw solid transparent}` +
+      `main h2::after{content:"";display:block;width:56px;height:5px;border-radius:3px;background:var(--c-primary);margin:.4em var(--al,0) 0}`,
+    moving: `${PROGRESS}.g>:nth-child(odd){--rx:-40px;--ry:0}.g>:nth-child(even){--rx:40px;--ry:0}`,
+  },
+  studio: {
+    still: `${PHOTOS}{border-radius:0}main h2{text-transform:uppercase;letter-spacing:-.01em}.tk li{text-transform:uppercase}`,
+    moving: `:root{--ry:48px}${PHOTOS}{animation:sg linear both;animation-timeline:view();animation-range:entry 20% cover 55%}@keyframes sg{from{filter:grayscale(1) contrast(1.06)}}`,
+  },
+  clean: {
+    still: '',
+    moving: `:root{--ry:18px}.hasbg>.bgi:not([fetchpriority]){animation:none;top:0;height:100%}`,
+  },
 }
 
 const ALIGN: Record<NonNullable<Container['align']>, string> = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' }
@@ -582,7 +644,8 @@ function styleRules(sel: string, s: ElementStyle, byBp: Record<Breakpoint, Rules
   if (s.padding) eachBp(s.padding, (bp, v) => add(byBp[bp], sel, { padding: box(v) }))
   if (s.margin) eachBp(s.margin, (bp, v) => add(byBp[bp], sel, { margin: box(v) }))
   if (s.fontSize) eachBp(s.fontSize, (bp, v) => add(byBp[bp], sel, { 'font-size': `${v}px` }))
-  if (s.textAlign) eachBp(s.textAlign, (bp, v) => add(byBp[bp], sel, { 'text-align': v }))
+  // --al lets decorations (a rule above a heading) centre with the text.
+  if (s.textAlign) eachBp(s.textAlign, (bp, v) => add(byBp[bp], sel, { 'text-align': v, '--al': v === 'center' ? 'auto' : '0' }))
   if (s.background) add(d, sel, { background: color(s.background) })
   if (s.color) add(d, sel, { color: color(s.color) })
   if (s.fontWeight) add(d, sel, { 'font-weight': String(s.fontWeight) })

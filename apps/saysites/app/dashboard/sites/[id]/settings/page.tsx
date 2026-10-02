@@ -3,6 +3,7 @@ import { SettingsForm } from '@/components/SettingsForm'
 import { toWeek } from '@/lib/hours'
 import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES } from '@/lib/starter'
+import { flairOf } from '@/lib/schema'
 import { getStore } from '@/lib/store'
 import { liveUrl } from '@/lib/urls'
 import { ActionForm } from '@/components/ActionForm'
@@ -12,6 +13,15 @@ const DESIGNS = [
   { key: 'bold', label: 'Bold', note: 'Big photo header, strong type. Great for trades.' },
   { key: 'editorial', label: 'Editorial', note: 'Serif headings, calm and refined.' },
   { key: 'warm', label: 'Warm', note: 'Soft cream, rounded, friendly.' },
+]
+
+const FLAIR_CHOICES = [
+  { key: 'editorial', label: 'Editorial', note: 'Numbered sections, fine rules, photos that unveil as you scroll.' },
+  { key: 'luxe', label: 'Luxe', note: 'Framed photos, gold-line headings, a slim reading bar.' },
+  { key: 'soft', label: 'Soft', note: 'Arched photos, rounded cards, gentle fades.' },
+  { key: 'bold', label: 'Bold', note: 'A slanted header, strong underlines, cards that slide in.' },
+  { key: 'studio', label: 'Studio', note: 'Square photos that turn from black and white to colour.' },
+  { key: 'clean', label: 'Clean', note: 'Simple and quiet. Lets your words lead.' },
 ]
 
 export default async function SettingsPage({ params }: { params: Promise<{ id: string }> }) {
@@ -50,7 +60,10 @@ export default async function SettingsPage({ params }: { params: Promise<{ id: s
             week: toWeek(b.hours),
             palette,
             design,
+            flair: flairOf(site.globals),
+            motion: site.globals.motion !== false,
           }}
+          flairs={FLAIR_CHOICES}
           palettes={Object.entries(PALETTES).map(([key, p]) => ({ key, label: p.label, colors: [p.colors.primary, p.colors.secondary, p.colors.accent] }))}
           designs={DESIGNS}
         />
