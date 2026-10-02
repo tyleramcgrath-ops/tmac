@@ -1,6 +1,7 @@
 // SEO by construction: structured data, pre-publish checks, sitemap, robots
 // and slug-change redirects. None of this is configured by the site owner.
 
+import { eventData } from './events'
 import { vibeCheck } from './vibe'
 import { pagePath, siteOrigin, walk, type Page, type Redirect, type Site } from './schema'
 
@@ -14,7 +15,7 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
 
   // The business itself, on the home page — the page Google associates with
   // the Business Profile.
-  if (page.slug === '') out.push(localBusiness(site, origin))
+  if (page.slug === '') out.push(localBusiness(site, origin), ...eventData(site, origin))
 
   // FAQPage whenever the page carries FAQ widgets. Built from the same items
   // the visitor sees, which is what Google requires.

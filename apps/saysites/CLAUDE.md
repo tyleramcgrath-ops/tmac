@@ -108,10 +108,28 @@ redirects to /early.
 - **Built:** start a site from the owner's Google listing (Places API, off
   until `GOOGLE_PLACES_API_KEY` is set), a promotion bar and a Book online
   button (Promote tab, `lib/promote.ts`). In-page, never pop-ups.
-- **Next ideas, not built:** events list, Sofie drafting social posts, a
-  chatbot (paid add-on, it costs tokens), Claude/ChatGPT connector.
+- **Built:** an events list (Promote tab, `lib/events.ts`): upcoming events
+  show on the home page and to Google as Events; past ones drop off.
+- **Next ideas, not built:** Sofie drafting social posts, a chatbot (paid
+  add-on, it costs tokens), Claude/ChatGPT connector.
 - **Kids mode** (/kids preview, noindex, not linked): parent-owned account,
   parent approves before anything goes live, first names only, no photos
   of the child, messages go to the parent, hidden from search, a kind
   Sofie. Don't advertise it ("so easy kids can make one") until it exists.
 
+## Free redesign preview (October 2026)
+
+The owner wants firms to see their own site first. A preview has two
+versions: "Your site, as it is" (`lib/mirror.ts`: their sections, words,
+photos, colours, menu, rebuilt section by section) and "A fresh redesign"
+(`lib/restyle.ts`: the same pages and every word, in a clean modern
+design). Both keep every page's address for SEO. The owner claims either.
+
+## Hosting (moved October 2026)
+
+saysites.com runs on SiteGround's Node.js hosting (GrowBig), not Vercel. It
+deploys from the `saysites-host` branch, which `.github/workflows/
+saysites-host.yml` keeps in sync with `apps/saysites` on main. Builds use
+webpack (`next build --webpack`). SiteGround keeps every deploy in its own
+folder; `lib/prune-releases.ts` deletes old ones on start, because they
+pushed the plan over its inode (file count) limit.

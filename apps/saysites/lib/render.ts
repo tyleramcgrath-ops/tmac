@@ -9,6 +9,7 @@
 //     except one optional priority image for the hero.
 //   - Every text value is HTML-escaped; the tree can never inject markup.
 
+import { EVENTS_CSS, eventsHtml, upcomingEvents } from './events'
 import { photoKeysOn } from './photo-rules'
 import { WORDS, wordsFor, type SiteWords } from './site-words'
 import { vibeCheck } from './vibe'
@@ -43,7 +44,9 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   t = wordsFor(site.language)
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
-  const css = buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : [])]) + headerColors(site)
+  // Upcoming events show on the home page, after the owner's own sections.
+  const events = page.slug === '' ? eventsHtml(upcomingEvents(site), t) : ''
+  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : [])]) + headerColors(site)
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
   const jsonLd = structuredData(site, page, allPages)
@@ -75,7 +78,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   posts = allPages.filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const body = [
     renderHeader(site, page),
-    `<main>${page.body.map(renderElement).join('')}</main>`,
+    `<main>${page.body.map(renderElement).join('')}${events}</main>`,
     renderFooter(site, photoKeysOn(page.body)),
     bar,
   ].join('')

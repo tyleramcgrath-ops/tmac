@@ -1878,3 +1878,46 @@ describe('SaySites: old SiteGround releases', async () => {
     expect(pruneReleases(root)).toEqual([])
   })
 })
+
+describe('SaySites: events', async () => {
+  const { checkEvent, upcomingEvents, eventData } = await import('../apps/saysites/lib/events')
+  const { renderPage } = await import('../apps/saysites/lib/render')
+  const { detectBusiness } = await import('../apps/saysites/lib/detect')
+  const now = new Date('2026-10-10T15:00:00Z')
+
+  it('checks what the owner types', () => {
+    expect(checkEvent({ title: ' Live music ', date: '2026-10-12', time: '19:30', place: '', note: 'Free entry', href: '/contact' }, now).event).toEqual({ title: 'Live music', date: '2026-10-12', time: '19:30', note: 'Free entry', href: '/contact' })
+    expect(checkEvent({ title: '', date: '2026-10-12', time: '', place: '', note: '', href: '' }, now).error).toMatch(/name/)
+    expect(checkEvent({ title: 'Old', date: '2026-10-01', time: '', place: '', note: '', href: '' }, now).error).toMatch(/passed/)
+    expect(checkEvent({ title: 'X', date: '2026-10-12', time: '7pm', place: '', note: '', href: '' }, now).error).toMatch(/time/)
+    expect(checkEvent({ title: 'X', date: '2026-10-12', time: '', place: '', note: '', href: 'javascript:x' }, now).error).toMatch(/Link/)
+  })
+
+  it('shows upcoming events in order on the home page, and to Google', () => {
+    const site = { ...sampleSite, events: [
+      { id: 'evbbbbbb', title: 'Tasting night', date: '2026-10-20', time: '18:00' },
+      { id: 'evaaaaaa', title: 'Open day', date: '2026-10-12', place: 'Riverside Park' },
+      { id: 'evcccccc', title: 'Long gone', date: '2026-09-01' },
+    ] }
+    expect(upcomingEvents(site, now).map((e) => e.title)).toEqual(['Open day', 'Tasting night'])
+    // The day of an evening event in America still counts after midnight UTC.
+    expect(upcomingEvents(site, new Date('2026-10-13T03:00:00Z')).map((e) => e.title)).toEqual(['Open day', 'Tasting night'])
+    const ld = eventData(site, 'https://x.saysites.com', now) as Record<string, any>[]
+    expect(ld[0]).toMatchObject({ '@type': 'Event', name: 'Open day', startDate: '2026-10-12', location: { name: 'Riverside Park' } })
+    expect(ld[1].startDate).toBe('2026-10-20T18:00')
+    const pages = samplePages
+    const home = pages.find((p) => p.slug === '')!
+    const html = renderPage(site, home, pages).html
+    expect(html).toContain('Tasting night')
+    expect(html).toContain('"@type":"Event"')
+    const about = pages.find((p) => p.slug !== '')!
+    expect(renderPage(site, about, pages).html).not.toContain('Tasting night')
+  })
+
+  it('takes a practice off a law firm name only when the rest is a firm name', () => {
+    const ld = (n: string) => `<script type="application/ld+json">{"@type":"LegalService","name":"${n}"}</script>`
+    expect(detectBusiness(ld('Law Offices of Michael Raheb Criminal Lawyers'), 'https://x.com/').name).toBe('Law Offices of Michael Raheb')
+    expect(detectBusiness(ld('Jones & Lee, P.A. Personal Injury Attorneys'), 'https://x.com/').name).toBe('Jones & Lee, P.A.')
+    expect(detectBusiness(ld('Smith Injury Lawyers'), 'https://x.com/').name).toBe('Smith Injury Lawyers')
+  })
+})
