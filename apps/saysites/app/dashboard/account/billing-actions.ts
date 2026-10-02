@@ -33,9 +33,16 @@ export async function startPlan(form: FormData): Promise<void> {
     url = await checkoutUrl({ userId: user.id, email: user.email, customerId: current.customerId, promo, origin: await origin(), price, plan, interval, ...(current.status === 'trial' ? { trialEnd: current.trialEndsAt } : {}) })
   } catch (e) {
     console.error('checkout failed', e)
-    redirect('/dashboard/account?billing=error')
+    redirect(`/dashboard/account?billing=error${why(e)}`)
   }
   redirect(url)
+}
+
+// Stripe's own reason, carried along so the SaySites team (and only them)
+// can see why a payment page didn't open.
+function why(e: unknown): string {
+  const msg = e instanceof Error ? e.message : String(e)
+  return `&why=${encodeURIComponent(msg.slice(0, 300))}`
 }
 
 // Stripe's own page for changing card, seeing invoices or cancelling.
@@ -48,7 +55,7 @@ export async function managePlan(): Promise<void> {
     url = await portalUrl(b.customerId, await origin())
   } catch (e) {
     console.error('portal failed', e)
-    redirect('/dashboard/account?billing=error')
+    redirect(`/dashboard/account?billing=error${why(e)}`)
   }
   redirect(url)
 }
