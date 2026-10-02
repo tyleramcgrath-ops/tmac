@@ -33,6 +33,7 @@ export function freshGlobals(base: GlobalStyles, brand: string, serif: boolean):
       headingCase: 'none',
       buttonShape: 'rounded',
       buttonCase: 'none',
+      headingFont: serif ? 'newsreader' : 'bricolage',
     },
   }
 }

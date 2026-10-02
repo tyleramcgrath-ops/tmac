@@ -17,6 +17,8 @@ import {
   BREAKPOINT_MAX_WIDTH,
   COLOR_TOKENS,
   FONT_STACKS,
+  HEADING_FONTS,
+  headingFont,
   pagePath,
   siteOrigin,
   type Breakpoint,
@@ -70,6 +72,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
     `<meta property="og:site_name" content="${esc(site.business.name)}">`,
     `<meta property="og:image" content="${esc(shareImage(site, page))}">`,
     '<meta name="twitter:card" content="summary_large_image">',
+    fontPreload(site.globals),
     ...jsonLd.map((d) => `<script type="application/ld+json">${jsonForScript(d)}</script>`),
     `<style>${css}</style>`,
   ].filter(Boolean)
@@ -111,11 +114,14 @@ function renderContainer(c: Container): string {
   const photo = bg
     ? `<img class="bgi" src="${esc(bg.src)}"${srcset(bg.src, bg.width)} sizes="100vw" alt="" width="${bg.width}" height="${bg.height}" ${bg.priority ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${bg.position ? ` style="object-position:${esc(bg.position)}"` : ''}><span class="bgt bgt-${bg.overlayStyle ?? 'full'}" style="--o:${bg.overlay}"></span>`
     : ''
-  const classes = `${cls(c.id)}${c.boxed ? ' bx' : ''}${bg ? ' hasbg' : ''}`
+  // Hooks for the shared polish: rows of items (g) and cards (cd).
+  const row = c.layout === 'grid' || c.direction?.desktop === 'row'
+  const card = !!c.style?.background && !!c.style.borderRadius
+  const classes = `${cls(c.id)}${c.boxed ? ' bx' : ''}${bg ? ' hasbg' : ''}${row && !c.boxed ? ' g' : ''}${card ? ' cd' : ''}`
   // Boxed: the element spans full width (background bleeds); content sits in
   // an inner box capped at the global container width.
   return c.boxed
-    ? `<${tag} class="${classes}">${photo}<div class="${cls(c.id)}-in">${inner}</div></${tag}>`
+    ? `<${tag} class="${classes}">${photo}<div class="${cls(c.id)}-in bi${row ? ' g' : ''}">${inner}</div></${tag}>`
     : `<${tag} class="${classes}">${photo}${bg ? `<div class="bgc">${inner}</div>` : inner}</${tag}>`
 }
 
@@ -383,16 +389,24 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
   return [
     base,
     widgetCss(used),
+    polishCss(g, used),
     emit(byBp.desktop),
     media('tablet', byBp.tablet),
     media('mobile', byBp.mobile),
   ].join('')
 }
 
+function fontPreload(g: GlobalStyles): string {
+  const f = headingFont(g)
+  return f ? `<link rel="preload" href="${HEADING_FONTS[f].file}" as="font" type="font/woff2" crossorigin>` : ''
+}
+
 function baseCss(g: GlobalStyles): string {
+  const font = headingFont(g)
+  const face = font ? `@font-face{font-family:"${HEADING_FONTS[font].family}";src:url(${HEADING_FONTS[font].file}) format("woff2");font-weight:100 900;font-display:optional}` : ''
   const vars = [
     ...COLOR_TOKENS.map((t) => `--c-${t}:${g.colors[t]}`),
-    `--f-h:${FONT_STACKS[g.fonts.heading]}`,
+    `--f-h:${font ? `"${HEADING_FONTS[font].family}",` : ''}${FONT_STACKS[g.fonts.heading]}`,
     `--f-b:${FONT_STACKS[g.fonts.body]}`,
     `--r:${g.radius}px`,
     `--rb:${g.buttonShape === 'pill' ? '999px' : g.buttonShape === 'square' ? '2px' : `${Math.min(g.radius, 12)}px`}`,
@@ -401,10 +415,13 @@ function baseCss(g: GlobalStyles): string {
   // Heading sizes step up the modular scale from the base size (h6 = base).
   const steps = [4, 3, 2, 1, 0.5, 0]
   const sizes = steps.map((n, i) => `h${i + 1}{font-size:${round(g.baseFontSize * g.typeScale ** n)}px}`).join('')
+    // The page's one h1 grows with the screen, up to a confident display size.
+    + `h1{font-size:clamp(${round(g.baseFontSize * g.typeScale ** 3)}px,3.4vw + 1rem,${round(g.baseFontSize * g.typeScale ** 4.7)}px);line-height:1.06}h2{line-height:1.12}`
   // Large headings step down one notch on phones so long words don't wrap badly.
   const mobile = steps.slice(0, 3).map((n, i) => `h${i + 1}{font-size:${round(g.baseFontSize * g.typeScale ** (n - 1))}px}`).join('')
   const btnCase = g.buttonCase === 'upper' ? '.btn{text-transform:uppercase;letter-spacing:.08em;font-size:.85em}' : ''
   return (
+    face +
     btnCase +
     `:root{${vars}}*,*::before,*::after{box-sizing:border-box}` +
     `body{margin:0;font-family:var(--f-b);font-size:${g.baseFontSize}px;line-height:1.6;color:var(--c-text);background:var(--c-background)}` +
@@ -489,6 +506,43 @@ function widgetCss(used: Set<string>): string {
       `.faq summary{cursor:pointer;font-weight:600}.faq details>div{padding-top:8px}`
   }
   return css
+}
+
+// The finish every site shares: a glassy header that stays in reach, buttons
+// and cards that answer the pointer, and (unless turned off) sections that
+// rise in as they scroll into view and photos that drift a little. All CSS;
+// scroll effects only where the browser supports them natively, and never
+// for visitors who ask for less motion. Content is never hidden at rest.
+function polishCss(g: GlobalStyles, used: Set<string>): string {
+  const phone = BREAKPOINT_MAX_WIDTH.mobile
+  let css =
+    `h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}::selection{background:color-mix(in srgb,var(--c-primary) 24%,transparent)}` +
+    `a:focus-visible,.btn:focus-visible{outline:2px solid var(--c-primary);outline-offset:3px}` +
+    `@media (min-width:${phone + 1}px){.sh{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--c-background) 86%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}` +
+    `.sh nav a{position:relative}.sh nav a::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:1.5px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}.sh nav a:hover::after,.sh nav a[aria-current]::after{transform:scaleX(1)}}` +
+    `.cd{transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}.cd:hover{transform:translateY(-4px);box-shadow:0 24px 44px -30px rgb(0 0 0/.4)}`
+  if (used.has('button'))
+    css +=
+      `.btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background-color .2s,color .2s}.btn:hover{transform:translateY(-2px)}` +
+      `.btn-primary:hover{box-shadow:0 14px 28px -16px var(--c-primary)}` +
+      `.btn-primary:not(.sh-cta):not([href^="tel:"])::after{content:"\\2192";display:inline-block;margin-left:.55em;transition:transform .25s}.btn-primary:hover::after{transform:translateX(4px)}`
+  if (used.has('gallery')) css += `.gal figure{overflow:hidden;border-radius:var(--r)}.gal img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}.gal figure:hover img{transform:scale(1.04)}`
+  if (g.motion === false) return css
+  const rise = (sel: string, range: string) => `${sel}{animation:sr linear both;animation-timeline:view();animation-range:${range}}`
+  return (
+    css +
+    `@media (prefers-reduced-motion:no-preference){` +
+    `.hasbg>.bgi[fetchpriority]{animation:sk 2.4s cubic-bezier(.2,.7,.2,1) both}@keyframes sk{from{transform:scale(1.07)}}` +
+    `@supports (animation-timeline:view()){` +
+    `@media (min-width:${phone + 1}px){.sh{animation:sd linear both;animation-timeline:scroll();animation-range:0 140px}@keyframes sd{to{box-shadow:0 12px 32px -22px rgb(0 0 0/.45)}}}` +
+    rise(':where(.bi)>*:not(.g)', 'entry 0% entry 55%') +
+    rise('.g>*', 'entry 0% entry 60%') +
+    rise('.g>:nth-child(3n+2)', 'entry 6% entry 68%') +
+    rise('.g>:nth-child(3n)', 'entry 12% entry 76%') +
+    `@keyframes sr{from{opacity:0;transform:translateY(34px)}}` +
+    `.hasbg>.bgi:not([fetchpriority]){top:-10%;height:120%;animation:sp linear both;animation-timeline:view()}@keyframes sp{from{transform:translateY(-7%)}to{transform:translateY(7%)}}` +
+    `}}`
+  )
 }
 
 const ALIGN: Record<NonNullable<Container['align']>, string> = { start: 'flex-start', center: 'center', end: 'flex-end', stretch: 'stretch' }

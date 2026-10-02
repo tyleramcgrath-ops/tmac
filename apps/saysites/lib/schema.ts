@@ -54,6 +54,22 @@ export const FONT_STACKS = {
 } as const
 export type FontStack = keyof typeof FONT_STACKS
 
+// Heading typefaces we host (variable, Latin, ~40-60 KB each). Only the one a
+// page uses is loaded, preloaded and shown without delaying anything
+// (font-display: optional), so pages stay fast.
+export const HEADING_FONTS = {
+  newsreader: { family: 'Newsreader', file: '/media/fonts/newsreader.woff2' },
+  fraunces: { family: 'Fraunces', file: '/media/fonts/fraunces.woff2' },
+  bricolage: { family: 'Bricolage Grotesque', file: '/media/fonts/bricolage.woff2' },
+} as const
+
+export function headingFont(g: { fonts: { heading: FontStack }; radius: number; headingFont?: keyof typeof HEADING_FONTS | 'system' }): keyof typeof HEADING_FONTS | null {
+  if (g.headingFont) return g.headingFont === 'system' ? null : g.headingFont
+  if (g.fonts.heading === 'serif') return g.radius >= 10 ? 'fraunces' : 'newsreader'
+  if (g.fonts.heading === 'sans') return 'bricolage'
+  return null
+}
+
 export const GlobalStyles = z
   .object({
     colors: z.object(Object.fromEntries(COLOR_TOKENS.map((t) => [t, hex])) as Record<ColorToken, typeof hex>).strict(),
@@ -71,6 +87,13 @@ export const GlobalStyles = z
     headingCase: z.enum(['none', 'upper']).optional(),
     buttonShape: z.enum(['square', 'rounded', 'pill']).optional(),
     buttonCase: z.enum(['none', 'upper']).optional(),
+    // The headings' typeface, served from our own host. Unset picks one to
+    // suit the heading style; 'system' keeps the device's own font.
+    headingFont: z.enum(['newsreader', 'fraunces', 'bricolage', 'system']).optional(),
+    // Gentle motion: sections rise in as they scroll into view, photos drift.
+    // On unless the owner turns it off; visitors who ask for less motion
+    // never see it.
+    motion: z.boolean().optional(),
   })
   .strict()
 export type GlobalStyles = z.infer<typeof GlobalStyles>
