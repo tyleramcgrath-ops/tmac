@@ -1855,3 +1855,21 @@ describe('SaySites: redesign preview, their site as it is', async () => {
     expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaa')).toBe(true)
   })
 })
+
+describe('SaySites: old SiteGround releases', async () => {
+  const { pruneReleases } = await import('../apps/saysites/lib/prune-releases')
+  const { mkdtempSync, mkdirSync, readdirSync, writeFileSync, symlinkSync } = await import('fs')
+  const { join } = await import('path')
+  const { tmpdir } = await import('os')
+
+  it('keeps the running release, the one before it and everything else', () => {
+    const root = mkdtempSync(join(tmpdir(), 'nodeapp-'))
+    for (const d of ['1234567890-origin', '1790965634-cl7uvg', '1790969946-di19de', '1790970173-ilagqf', '1790973536-im6ky2']) mkdirSync(join(root, d, 'node_modules'), { recursive: true })
+    writeFileSync(join(root, 'app.json'), '{}')
+    symlinkSync(join(root, '1790973536-im6ky2'), join(root, 'latest'))
+    expect(pruneReleases(join(root, '1790973536-im6ky2')).sort()).toEqual(['1790965634-cl7uvg', '1790969946-di19de'])
+    expect(readdirSync(root).sort()).toEqual(['1234567890-origin', '1790970173-ilagqf', '1790973536-im6ky2', 'app.json', 'latest'])
+    // Anywhere else (local development), it does nothing.
+    expect(pruneReleases(root)).toEqual([])
+  })
+})
