@@ -3,6 +3,7 @@ import { ActionForm } from '@/components/ActionForm'
 import { requireUser } from '@/lib/session'
 import { PRICES, billingReady, loadAccess, priceId } from '@/lib/billing'
 import { getStore } from '@/lib/store'
+import { isAdmin } from '@/lib/admin'
 import { formatDate } from '@/lib/render'
 import { managePlan, startPlan } from './billing-actions'
 
@@ -12,9 +13,12 @@ const NOTES: Record<string, [string, string]> = {
   error: ['bad', 'We couldn’t reach our payment provider. Please try again in a minute.'],
 }
 
-export default async function AccountPage({ searchParams }: { searchParams: Promise<{ billing?: string }> }) {
+export default async function AccountPage({ searchParams }: { searchParams: Promise<{ billing?: string; why?: string }> }) {
   const user = await requireUser()
-  const note = NOTES[(await searchParams).billing ?? '']
+  const sp = await searchParams
+  const note = NOTES[sp.billing ?? '']
+  // Stripe's exact reason, for the SaySites team only.
+  const reason = sp.billing === 'error' && sp.why && isAdmin(user.email) ? sp.why.slice(0, 300) : ''
   const a = await loadAccess(getStore(), user)
   const promo = a.billing?.promo
   return (
@@ -26,7 +30,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
           <p className="muted" style={{ margin: 0 }}>{user.email}</p>
         </div>
       </div>
-      {note && <p className={`notice ${note[0]}`}>{note[1]}</p>}
+      {note && <p className={`notice ${note[0]}`}>{note[1]}{reason && <><br /><small>Stripe said: {reason}</small></>}</p>}
       <div className="card" id="plan">
         <h3>Your plan</h3>
         {a.status === 'comp' ? (
