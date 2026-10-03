@@ -239,3 +239,19 @@ a test email and see the scheduler's last runs at /dashboard/health
   integrations, intake, team, export, deleting leads and the rest of the
   site stay the owner's (`owned()` in leads/actions.ts). Every timeline
   entry records who made it (`stamp`).
+
+## Citation Gap in the SEO tab (October 2026)
+
+The SEO tab's "Beat the pages that rank" card runs Citation Gap
+(apps/citation-gap) in-process: `lib/gap-scan.ts` drives its resumable scan
+job with our own pages rendered as served, competitors through an
+SSRF-guarded fetch (`fetchPublicHtml`), and its Google reader with
+`SERPAPI_KEY`. No headless browser on our hosting, so scans use served HTML.
+The engines are vendored into `lib/citation-gap` by
+`scripts/sync-citation-gap.sh`; never edit the copies. Each scan is about
+four Google searches, so it's a premium (law plan) feature, at most
+`GAP_LIMITS.scans` per site and once a day each. "Fix with Sofie" asks
+always tell Sofie to use only facts the owner has or gives (the engine asks
+for numbers and claims; Sofie must never invent them). FAQ questions render
+as headings inside `<summary>` so search and answer engines read them as
+questions.
