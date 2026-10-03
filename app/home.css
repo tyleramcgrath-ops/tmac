@@ -941,3 +941,15 @@
 .home .lx-crms { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: baseline; margin: 40px 0 0; color: var(--ink-mu); }
 .home .lx-crms span { font-size: 14px; }
 .home .lx-crms b { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); }
+/* Citation Gap: the card sits on the left, so the two SEO sections don't read as one. */
+.home .standing.gap { background: #fff; }
+.home .gap .standing-in { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); }
+.home .gx-q { margin: 0 10px 14px; font-size: 18px; font-weight: 600; overflow-wrap: anywhere; }
+.home .gx-scores { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 10px 14px; }
+.home .gx-scores div { display: grid; gap: 4px; }
+.home .gx-scores b { font-size: 52px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.home .gx-scores span { color: var(--ink-mu); font-size: 14px; }
+.home .gx-aio { margin: 0 10px 12px; font-size: 15px; }
+.home .gap-ex li { grid-template-columns: minmax(0, 1fr) auto; }
+.home .gap-ex li i { color: var(--ink-mu); }
+@media (max-width: 900px) { .home .gap .standing-in { grid-template-columns: 1fr; } .home .gap .standing-copy { order: -1; } }

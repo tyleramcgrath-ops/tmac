@@ -255,3 +255,5 @@ always tell Sofie to use only facts the owner has or gives (the engine asks
 for numbers and claims; Sofie must never invent them). FAQ questions render
 as headings inside `<summary>` so search and answer engines read them as
 questions.
+The homepage's "Citation Gap" section (#citation-gap) describes it; its
+scan card is labelled an example (no real data). Keep it that way.
