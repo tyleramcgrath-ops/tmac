@@ -30,6 +30,11 @@ export interface SiteWords {
   allPosts: string
   // Joins a range of times: "7am to 6pm".
   to: string
+  privacy: string
+  breadcrumb: string
+  chatText: string
+  chatWhatsapp: string
+  chatMessenger: string
   getInTouch: string
   blogName: string
   blogHeading: string
@@ -71,6 +76,11 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     askAboutThis: 'Ask about this',
     allPosts: 'All posts',
     to: 'to',
+    privacy: 'Privacy',
+    breadcrumb: 'You are here',
+    chatText: 'Text us',
+    chatWhatsapp: 'WhatsApp us',
+    chatMessenger: 'Message us',
     getInTouch: 'Get in touch',
     blogName: 'Blog',
     blogHeading: 'News & tips',
@@ -110,6 +120,11 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     askAboutThis: 'Consultar',
     allPosts: 'Todas las publicaciones',
     to: 'a',
+    privacy: 'Privacidad',
+    breadcrumb: 'Está aquí',
+    chatText: 'Escríbanos',
+    chatWhatsapp: 'WhatsApp',
+    chatMessenger: 'Mensaje',
     getInTouch: 'Contáctanos',
     blogName: 'Blog',
     blogHeading: 'Noticias y consejos',

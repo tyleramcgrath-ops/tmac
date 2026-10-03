@@ -37,7 +37,7 @@ import {
   walk,
 } from './schema'
 import { promoActive } from './promote'
-import { structuredData } from './seo'
+import { breadcrumbs, structuredData } from './seo'
 
 export interface RenderedPage {
   html: string
@@ -50,7 +50,7 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   const bar = callBar(site)
   // Upcoming events show on the home page, after the owner's own sections.
   const events = page.slug === '' ? eventsHtml(upcomingEvents(site), t) : ''
-  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : [])]) + headerColors(site)
+  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : []), ...(site.nav.some((n) => n.children?.length) ? ['navdd'] : []), ...(site.business.sameAs?.length ? ['social'] : []), ...(site.chat ? ['chat'] : []), ...(page.slug.includes('/') ? ['bc'] : [])]) + headerColors(site)
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
   const jsonLd = structuredData(site, page, allPages)
@@ -83,8 +83,9 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   posts = allPages.filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const body = [
     renderHeader(site, page),
-    `<main>${page.body.map(renderElement).join('')}${events}</main>`,
+    `<main>${crumbBar(site, page, allPages)}${page.body.map(renderElement).join('')}${events}</main>`,
     renderFooter(site, photoKeysOn(page.body)),
+    chatButton(site),
     bar,
   ].join('')
 
@@ -254,8 +255,15 @@ function renderForm(w: Extract<Widget, { type: 'form' }>): string {
 
 function renderHeader(site: Site, page: Page): string {
   const current = pagePath(page)
+  // An item with its own pages opens a short list on hover or keyboard
+  // focus; tapping it on a phone goes to its page, which lists them all.
   const links = site.nav
-    .map((n) => `<a href="${esc(n.href)}"${n.href === current ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`)
+    .map((n) => {
+      const here = n.href === current || !!n.children?.some((c) => c.href === current)
+      const a = `<a href="${esc(n.href)}"${here ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
+      if (!n.children?.length) return a
+      return `<div class="nv-dd">${a}<div class="nv-sub">${n.children.map((c) => `<a href="${esc(c.href)}"${c.href === current ? ' aria-current="page"' : ''}>${esc(c.label)}</a>`).join('')}</div></div>`
+    })
     .join('')
   const h = site.header
   const phone = site.business.phone
@@ -309,6 +317,57 @@ function callBar(site: Site): string {
 }
 
 
+// Social profiles the owner added, as small icons. Known networks get their
+// own mark; anything else a plain link icon.
+const SOCIAL: [RegExp, string, string][] = [
+  [/facebook\.com|fb\.com/, 'Facebook', 'M14 8h3V4h-3c-2.8 0-5 2.2-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.6.4-1 1-1z'],
+  [/instagram\.com/, 'Instagram', 'M12 7.4A4.6 4.6 0 1 0 12 16.6 4.6 4.6 0 0 0 12 7.4zm0 7.6a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5.9-7.8a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM16.5 2h-9A5.5 5.5 0 0 0 2 7.5v9A5.5 5.5 0 0 0 7.5 22h9a5.5 5.5 0 0 0 5.5-5.5v-9A5.5 5.5 0 0 0 16.5 2zm3.7 14.5a3.7 3.7 0 0 1-3.7 3.7h-9a3.7 3.7 0 0 1-3.7-3.7v-9a3.7 3.7 0 0 1 3.7-3.7h9a3.7 3.7 0 0 1 3.7 3.7z'],
+  [/linkedin\.com/, 'LinkedIn', 'M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.2c0-1.2 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z'],
+  [/youtube\.com|youtu\.be/, 'YouTube', 'M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z'],
+  [/tiktok\.com/, 'TikTok', 'M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.2 6.2 0 1 0 5.3 6.2V8.8a7.6 7.6 0 0 0 4.4 1.4V6.9a4.4 4.4 0 0 1-4.4-4.4z'],
+  [/(^|\.)x\.com|twitter\.com/, 'X', 'M17.8 3h3.1l-6.8 7.8L22 21h-6.3l-4.9-6.4L5.2 21H2.1l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z'],
+  [/yelp\.com/, 'Yelp', 'M12.4 2.2c-.4-.3-5.4 1-6 1.6-.4.4-.4.9-.2 1.3l4.9 7.9c.5.8 1.8.5 1.8-.5l.1-9.4c0-.4-.2-.7-.6-.9zM20 12.6l-4.4 1.2c-.9.2-1 1.5-.1 1.9l4.1 2c.5.2 1-.1 1.2-.6.3-1 .3-2.6.1-3.6-.2-.6-.6-.9-.9-.9zm-3.3 4.9c-.6-.7-1.8-.3-1.8.6v4.6c0 .5.5.9 1 .8 1-.2 2.5-1 3.2-1.8.3-.3.3-.8 0-1.2zM10 14.5l-4.4-1.6c-.5-.2-1 .2-1.1.7-.1 1 .1 2.6.5 3.5.2.5.8.7 1.2.4l3.9-2.2c.8-.4.7-1.5-.1-1.8z'],
+  [/pinterest\.com/, 'Pinterest', 'M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.8 0 1.2.6 1.2 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.9 0-4.5 2.1-4.5 4.4 0 .9.3 1.8.8 2.3l.1.4-.3 1.2c0 .2-.2.3-.4.2-1.3-.6-2.1-2.5-2.1-4 0-3.2 2.4-6.2 6.8-6.2 3.6 0 6.4 2.6 6.4 6 0 3.6-2.2 6.4-5.4 6.4-1 0-2-.5-2.4-1.2l-.6 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1 0 12 2z'],
+]
+const LINK_ICON = 'M10.6 13.4a1 1 0 0 1 0-1.4l3.4-3.4a3 3 0 0 1 4.2 4.2l-2.1 2.1a1 1 0 1 1-1.4-1.4l2.1-2.1a1 1 0 0 0-1.4-1.4L12 13.4a1 1 0 0 1-1.4 0zm2.8-2.8a1 1 0 0 1 0 1.4L10 15.4a3 3 0 0 1-4.2-4.2l2.1-2.1a1 1 0 1 1 1.4 1.4l-2.1 2.1a1 1 0 0 0 1.4 1.4L12 10.6a1 1 0 0 1 1.4 0z'
+
+function socialLinks(urls: string[]): string {
+  return urls
+    .filter((u) => /^https:\/\//.test(u))
+    .slice(0, 8)
+    .map((u) => {
+      const host = (() => {
+        try {
+          return new URL(u).hostname.replace(/^www\./, '')
+        } catch {
+          return ''
+        }
+      })()
+      const [, name, path] = SOCIAL.find(([re]) => re.test(host)) ?? [null, host || 'Link', LINK_ICON]
+      return `<a href="${esc(u)}" rel="noopener me" aria-label="${esc(name)}"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="${path}"/></svg></a>`
+    })
+    .join('')
+}
+
+function crumbBar(site: Site, page: Page, allPages: readonly Page[]): string {
+  const c = breadcrumbs(site, page, allPages)
+  if (c.length < 2) return ''
+  return `<nav class="bc" aria-label="${esc(t.breadcrumb)}"><ol>${c.map((x, i) => (i === c.length - 1 ? `<li aria-current="page">${esc(x.label)}</li>` : `<li><a href="${esc(x.href)}">${esc(x.label)}</a></li>`)).join('')}</ol></nav>`
+}
+
+// The chat button: a text, WhatsApp or Messenger conversation with the
+// owner, opened by an ordinary link. Sits above the phone call bar.
+function chatButton(site: Site): string {
+  const c = site.chat
+  if (!c) return ''
+  const digits = c.to.replace(/[^\d+]/g, '')
+  const href =
+    c.kind === 'sms' ? `sms:${digits}` : c.kind === 'whatsapp' ? `https://wa.me/${digits.replace(/^\+/, '')}` : `https://m.me/${encodeURIComponent(c.to.replace(/^@/, ''))}`
+  const label = c.kind === 'sms' ? t.chatText : c.kind === 'whatsapp' ? t.chatWhatsapp : t.chatMessenger
+  const icon = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1L4.3 21l3.9-2c1.2.4 2.5.6 3.8.6 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>'
+  return `<a class="sct" href="${esc(href)}"${c.kind === 'sms' ? '' : ' rel="noopener"'}>${icon}<span>${esc(label)}</span></a>`
+}
+
 function renderFooter(site: Site, onPage: Set<string> = new Set()): string {
   const b = site.business
   const year = new Date(site.updatedAt).getUTCFullYear() || new Date().getUTCFullYear()
@@ -331,7 +390,9 @@ function renderFooter(site: Site, onPage: Set<string> = new Set()): string {
     cols.push(`<div><h2 class="sf-h">${esc(t.hours)}</h2>${rows.map((r) => `<span>${r}</span>`).join('')}</div>`)
   }
   const pages = site.nav.filter((n) => n.href.startsWith('/'))
-  if (pages.length) cols.push(`<div><h2 class="sf-h">${esc(t.pages)}</h2><a href="/">${esc(t.home)}</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}</div>`)
+  if (pages.length) cols.push(`<div><h2 class="sf-h">${esc(t.pages)}</h2><a href="/">${esc(t.home)}</a>${pages.map((n) => `<a href="${esc(n.href)}">${esc(n.label)}</a>`).join('')}<a href="/privacy">${esc(t.privacy)}</a></div>`)
+  // Every service page, listed: visitors find them, and so does Google.
+  for (const n of site.nav.filter((x) => x.children?.length)) cols.push(`<div><h2 class="sf-h">${esc(n.label)}</h2>${n.children!.map((c) => `<a href="${esc(c.href)}">${esc(c.label)}</a>`).join('')}</div>`)
   const note = site.footerNote ? `<p class="sf-note">${esc(site.footerNote)}</p>` : ''
   // Credit for the stock photos on this page, as Unsplash asks.
   const shown = (site.credits ?? []).filter((c) => onPage.has(c.photo))
@@ -340,6 +401,8 @@ function renderFooter(site: Site, onPage: Set<string> = new Set()): string {
   const credit = people.length
     ? `<p class="sf-note">${esc(t.photosBy)} ${people.map((c) => `<a href="${esc(utm(c.url))}" rel="nofollow noopener">${esc(c.name)}</a>`).join(', ')} ${esc(t.onUnsplash)} <a href="${esc(utm('https://unsplash.com/'))}" rel="nofollow noopener">Unsplash</a></p>`
     : ''
+  const social = socialLinks(b.sameAs ?? [])
+  if (social) cols[0] = cols[0].replace(/<\/div>$/, `<div class="sf-so">${social}</div></div>`)
   return `<footer class="sf"><div class="sf-in">${cols.join('')}</div><div class="sf-base">${note}${credit}© ${year} ${esc(b.name)}</div></footer>`
 }
 
@@ -543,6 +606,19 @@ function polishCss(g: GlobalStyles, used: Set<string>): string {
       `.btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background-color .2s,color .2s}.btn:hover{transform:translateY(-2px)}` +
       `.btn-primary:hover{box-shadow:0 14px 28px -16px var(--c-primary)}`
   if (used.has('gallery')) css += `.gal figure{overflow:hidden;border-radius:var(--r)}.gal img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}.gal figure:hover img{transform:scale(1.04)}`
+  if (used.has('navdd')) css +=
+    `.nv-dd{position:relative;display:inline-flex;align-items:center}.nv-dd>a{padding-right:15px}.nv-dd>a::before{content:"";position:absolute;right:1px;top:50%;width:6px;height:6px;margin-top:-5px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);opacity:.7}` +
+    `.nv-sub{position:absolute;top:100%;left:-14px;margin-top:12px;min-width:250px;padding:8px;display:none;flex-direction:column;gap:2px;background:var(--c-background);border:1px solid color-mix(in srgb,var(--c-text) 10%,transparent);border-radius:min(var(--r),12px);box-shadow:0 22px 44px -24px rgb(0 0 0/.4);z-index:45}` +
+    `.nv-sub::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}.nv-dd:hover .nv-sub,.nv-dd:focus-within .nv-sub{display:flex}` +
+    `.sh .nv-sub a{color:var(--c-text);padding:9px 12px;border-radius:8px;white-space:nowrap;font-weight:500}.sh .nv-sub a:hover,.sh .nv-sub a[aria-current]{background:var(--c-surface);color:var(--c-text)}.sh .nv-sub a::after{display:none}` +
+    `@media (max-width:${phone}px){.nv-sub{display:none!important}.nv-dd>a{padding-right:0}.nv-dd>a::before{display:none}}`
+  if (used.has('social')) css +=
+    `.sf-so{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.sf-so a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid color-mix(in srgb,var(--c-background) 25%,transparent)}.sf-so a:hover{background:color-mix(in srgb,var(--c-background) 12%,transparent)}`
+  if (used.has('chat')) css +=
+    `.sct{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:55;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--c-primary);color:var(--c-background);font-weight:600;text-decoration:none;box-shadow:0 16px 34px -14px rgb(0 0 0/.5);transition:transform .25s}.sct:hover{transform:translateY(-2px)}` +
+    `@media (max-width:${phone}px){.scb~.sct,.sct{bottom:calc(88px + env(safe-area-inset-bottom));right:14px;padding:12px}.sct span{display:none}}`
+  if (used.has('bc')) css +=
+    `.bc{max-width:var(--w);margin:0 auto;padding:14px 24px;font-size:.88em;color:var(--c-muted)}.bc ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}.bc li+li::before{content:"/";margin-right:6px;opacity:.5}.bc a{color:inherit;text-decoration:none}.bc a:hover{color:var(--c-text)}`
   const flair = FLAIR_CSS[flairOf(g)]
   css += flair.still
   if (g.motion === false) return css

@@ -126,6 +126,9 @@ export interface StarterInput {
   flair?: Flair
   // Longer writing about this business and each service.
   content?: WrittenContent
+  // Social profile links and a chat button, when the owner has them.
+  socials?: string[]
+  chat?: Site['chat']
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
@@ -216,12 +219,22 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ...(input.street && input.postalCode && input.region.trim() && city ? { address: { street: input.street, city, region: tidyRegion(input.region), postalCode: input.postalCode, country: 'US' } } : {}),
       ...(input.hours?.length ? { hours: input.hours } : {}),
       ...(city ? { area: place } : {}),
+      ...(input.socials?.length ? { sameAs: input.socials.slice(0, 8) } : {}),
     },
     globals: { colors, ...DESIGN_GLOBALS[design], flair: input.flair ?? flairFor(input.type, subdomain) },
     nav: [
-      { label: svcLabel, href: svcHref },
+      {
+        label: svcLabel,
+        href: svcHref,
+        // Each service with a page of its own, one click from anywhere.
+        ...(() => {
+          const written = list.filter((x) => input.content?.services?.some((w) => w.name.trim().toLowerCase() === x.trim().toLowerCase()))
+          return written.length ? { children: written.slice(0, 16).map((x) => ({ label: x, href: `${svcHref}/${serviceSlug(x)}` })) } : {}
+        })(),
+      },
       { label: 'Contact', href: '/contact' },
     ],
+    ...(input.chat ? { chat: input.chat } : {}),
     header: law
       ? { topbar: `Serving clients across ${place}`, cta: phone ? { label: `Call ${phone}`, href: telHref(phone) } : { label: cta.label, href: cta.href } }
       : {

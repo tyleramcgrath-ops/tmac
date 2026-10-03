@@ -452,7 +452,19 @@ export const SiteSchema = z
     language: z.string().min(2).max(10).default('en'),
     business: BusinessInfo,
     globals: GlobalStyles,
-    nav: z.array(z.object({ label: z.string().min(1).max(40), href }).strict()).max(12),
+    // Menu links; an item can open a short list of its own pages (Services:
+    // each service).
+    nav: z.array(z.object({ label: z.string().min(1).max(40), href, children: z.array(z.object({ label: z.string().min(1).max(60), href }).strict()).max(16).optional() }).strict()).max(12),
+    // A chat button in the corner: visitors text, WhatsApp or Messenger the
+    // owner directly. No script, no third-party widget.
+    chat: z
+      .object({
+        kind: z.enum(['sms', 'whatsapp', 'messenger']),
+        // A phone number for text and WhatsApp; a Facebook page name for Messenger.
+        to: z.string().trim().min(2).max(80),
+      })
+      .strict()
+      .optional(),
     // Optional slim bar above the header ("Licensed and insured · Open 24/7")
     // and a call-to-action button at the right of the header.
     header: z

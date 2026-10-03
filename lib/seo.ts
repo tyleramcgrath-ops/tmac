@@ -9,6 +9,21 @@ import { pagePath, siteOrigin, walk, type Page, type Redirect, type Site } from 
 // Structured data (JSON-LD)
 // ---------------------------------------------------------------------------
 
+// Home, then each parent page, then this one. Labels come from the menu
+// when the page is in it, otherwise from the page's own name.
+export function breadcrumbs(site: Site, page: Page, allPages: readonly Page[]): { label: string; href: string }[] {
+  if (!page.slug.includes('/')) return []
+  const parts = page.slug.split('/')
+  const out = [{ label: site.language === 'es' ? 'Inicio' : 'Home', href: '/' }]
+  for (let i = 1; i <= parts.length; i++) {
+    const href = '/' + parts.slice(0, i).join('/')
+    const p = i === parts.length ? page : allPages.find((x) => x.slug === parts.slice(0, i).join('/'))
+    const label = site.nav.find((n) => n.href === href)?.label ?? site.nav.flatMap((n) => n.children ?? []).find((c) => c.href === href)?.label ?? p?.name
+    if (label) out.push({ label, href })
+  }
+  return out
+}
+
 export function structuredData(site: Site, page: Page, allPages: readonly Page[]): object[] {
   const origin = siteOrigin(site)
   const out: object[] = []
@@ -25,6 +40,16 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+    })
+  }
+
+  // Where a page sits ("Home / Services / Water heaters"), for nested pages.
+  const crumbs = breadcrumbs(site, page, allPages)
+  if (crumbs.length > 1) {
+    out.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.label, item: origin + c.href })),
     })
   }
 
