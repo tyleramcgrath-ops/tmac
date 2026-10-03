@@ -560,20 +560,51 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ],
   }
 
-  const ctaBand: Container = {
-    id: 'cta',
+  // Wherever a visitor makes up their mind, they can ask right there: a
+  // request form beside a line of encouragement and the phone number,
+  // instead of a button that sends them off to the contact page.
+  const formLabel = vocab ? vocab.request : design === 'bold' ? 'Request a quote' : design === 'editorial' ? 'Request an appointment' : 'Send a message'
+  const formThanks = vocab ? vocab.thanks(name) : `Thank you. ${name} has your message and will get back to you soon.`
+  const leadSection = (id: string, heading: string, text: string, dark = false): Container => ({
+    id,
     type: 'container',
     tag: 'section',
-    layout: 'flex',
-    boxed: true,
+    layout: 'grid',
+    columns: { desktop: 2, mobile: 1 },
     align: 'center',
-    style: { background: 'secondary', color: 'background', padding: { desktop: pad(88), mobile: pad(56, 20) }, gap: { desktop: 16 }, textAlign: { desktop: 'center' } },
+    boxed: true,
+    style: { background: dark ? 'secondary' : 'surface', ...(dark ? { color: 'background' as const } : {}), padding: section, gap: { desktop: 64, mobile: 28 } },
     children: [
-      { id: 'cta-h', type: 'heading', level: 2, text: law ? 'Talk to us about your situation' : 'Ready when you are', style: { fontSize: { desktop: 44, mobile: 32 }, color: 'background' } },
-      { id: 'cta-t', type: 'text', text: law ? `Tell us what happened. ${name} will explain your options and the next step.` : `Tell us what you need and ${name} will take it from there.`, style: { fontSize: { desktop: 18 }, maxWidth: 520 } },
-      { id: 'cta-btn', type: 'button', label: cta.label, href: cta.href, variant: 'primary', style: { background: 'background', color: 'secondary', margin: { desktop: { top: 10, right: 0, bottom: 0, left: 0 } } } },
+      {
+        id: `${id}-copy`,
+        type: 'container',
+        layout: 'flex',
+        style: { gap: { desktop: 14 } },
+        children: [
+          { id: `${id}-h`, type: 'heading', level: 2, text: heading, style: { fontSize: { desktop: 42, mobile: 30 }, ...(dark ? { color: 'background' as const } : {}) } },
+          { id: `${id}-t`, type: 'text', text, style: { fontSize: { desktop: 18 }, maxWidth: 480, ...(dark ? {} : { color: 'muted' as const }) } },
+          ...(phone ? [{ id: `${id}-call`, type: 'button' as const, label: `Call ${phone}`, href: telHref(phone), variant: 'outline' as const, style: { margin: { desktop: { top: 6, right: 0, bottom: 0, left: 0 } } } }] : []),
+        ],
+      },
+      {
+        id: `${id}-card`,
+        type: 'container',
+        layout: 'flex',
+        style: { background: 'background', color: 'text', borderRadius: design === 'editorial' || design === 'upscale' ? 4 : 14, padding: { desktop: pad(32, 30), mobile: pad(24, 20) }, gap: { desktop: 10 } },
+        children: [
+          { id: `${id}-form`, type: 'form', fields: ['name', 'phone', 'email', 'message'], submitLabel: formLabel, thanks: formThanks },
+          ...(vocab ? [{ id: `${id}-note`, type: 'text' as const, text: vocab.formNote, style: { color: 'muted' as const, fontSize: { desktop: 13 } } }] : []),
+        ],
+      },
     ],
-  }
+  })
+
+  const homeLead = leadSection(
+    'cta',
+    { bold: 'Tell us what you need', editorial: 'Book your visit', warm: 'Get in touch', upscale: 'Get in touch' }[design],
+    `Send a few details and ${name} will get back to you${phone ? `, or call ${phone} now` : ''}.`,
+    true,
+  )
 
   // The owner's own services as a slow strip under the hero (three or more,
   // so it reads as a list and not a slogan).
@@ -635,7 +666,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       steps,
       aboutSplit(),
       faq,
-      ctaBand,
+      homeLead,
     ]
   } else if (design === 'editorial') {
     homeBody = [
@@ -699,7 +730,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       zigzag(law ? 'Practice areas' : 'Services'),
       photoBand(law ? 'Clear answers, in plain English.' : 'Take your time. We will.'),
       faq,
-      ctaBand,
+      homeLead,
     ]
   } else if (design === 'upscale') {
     // Dark and grown-up: a full photo under the headline, one centred line
@@ -732,7 +763,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       mosaic(law ? 'Practice areas' : 'What we offer'),
       photoBand('Come as you are. Stay a while.'),
       faq,
-      ctaBand,
+      homeLead,
     ]
   } else {
     homeBody = [
@@ -764,7 +795,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         ],
       },
       faq,
-      ctaBand,
+      homeLead,
     ]
   }
 
@@ -865,7 +896,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     updatedAt: now,
   }
 
-  const banner = (id: string, title: string, text: string, bg = fresh(photos.hero)): Container => ({
+  const banner = (id: string, title: string, text: string, bg = fresh(photos.hero), actions = false): Container => ({
     id,
     type: 'container',
     tag: 'section',
@@ -876,6 +907,22 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     children: [
       { id: `${id}-h`, type: 'heading', level: 1, text: title, style: { color: '#ffffff', fontSize: { desktop: 52, mobile: 36 } } },
       { id: `${id}-t`, type: 'text', text, style: { color: '#e2e8ef', fontSize: { desktop: 19 }, maxWidth: 600 } },
+      // On the pages people land on from a search, the next step is right there.
+      ...(actions
+        ? [
+            {
+              id: `${id}-actions`,
+              type: 'container' as const,
+              layout: 'flex' as const,
+              direction: { desktop: 'row' as const },
+              style: { gap: { desktop: 12 }, margin: { desktop: { top: 14, right: 0, bottom: 0, left: 0 } } },
+              children: [
+                ...(phone ? [{ id: `${id}-call`, type: 'button' as const, label: `Call ${phone}`, href: telHref(phone), variant: 'primary' as const, style: { background: '#ffffff' as const, color: '#14171c' as const } }] : []),
+                { id: `${id}-ask`, type: 'button' as const, label: formLabel, href: '/contact', variant: 'outline' as const, style: { color: '#ffffff' as const } },
+              ],
+            },
+          ]
+        : []),
     ],
   })
 
@@ -901,7 +948,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           description: clip(w.summary, 160),
         },
         body: [
-          banner(`${id}-banner`, s, w.summary),
+          banner(`${id}-banner`, s, w.summary, undefined, true),
           {
             id: `${id}-body`,
             type: 'container',
@@ -916,7 +963,6 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                 { id: `${id}-s${j + 1}-t`, type: 'text', text: sec.body, style: { fontSize: { desktop: 18 }, maxWidth: 760 } },
                 ...(j === 1 ? [{ id: `${id}-img`, type: 'image' as const, src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect: 1.9, style: { borderRadius: design === 'editorial' || design === 'upscale' ? 2 : 14, margin: { desktop: { top: 18, right: 0, bottom: 6, left: 0 } } } }] : []),
               ]),
-              { id: `${id}-cta`, type: 'button', label: cta.label, href: cta.href, variant: 'primary', style: { margin: { desktop: { top: 18, right: 0, bottom: 0, left: 0 } } } },
             ],
           },
           ...(w.faq.length
@@ -936,6 +982,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                 },
               ]
             : []),
+          leadSection(`${id}-lead`, vocab === VOCAB.law ? `Talk to us about ${soften(s)}` : `Ask about ${soften(s)}`, `Tell us a little about your situation and ${name} will get back to you${phone ? `, or call ${phone}` : ''}.`),
           ...(others.length
             ? [
                 {
@@ -1017,9 +1064,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               ],
             }
           }),
-          { id: 'svc-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary' },
         ],
       },
+      leadSection('svc-lead', law ? 'Not sure which applies to you?' : 'Not sure what you need?', `Tell us a little about it and ${name} will point you the right way${phone ? `, or call ${phone}` : ''}.`),
     ],
     updatedAt: now,
   }
@@ -1101,19 +1148,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               style: { padding: section, gap: { desktop: 24 } },
               children: attorneys.map((a, i) => attorneyCard(`team-${i + 1}`, a, lawStyle)),
             },
-            {
-              id: 'team-cta',
-              type: 'container',
-              tag: 'section',
-              layout: 'flex',
-              boxed: true,
-              align: 'center',
-              style: { background: 'surface', padding: { desktop: pad(72), mobile: pad(48, 20) }, gap: { desktop: 14 }, textAlign: { desktop: 'center' } },
-              children: [
-                { id: 'team-cta-h', type: 'heading', level: 2, text: 'Talk to us about your situation', style: { fontSize: { desktop: 36, mobile: 28 } } },
-                { id: 'team-cta-btn', type: 'button', label: cta.label, href: cta.href, variant: 'primary' },
-              ],
-            },
+            leadSection('team-cta', vocab ? vocab.ctaH : 'Talk to us', `Tell us a little about what you need and ${name} will get back to you${phone ? `, or call ${phone}` : ''}.`),
           ],
           updatedAt: now,
         },

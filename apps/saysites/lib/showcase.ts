@@ -36,6 +36,8 @@ function lawPhotos(hero: [string, string], rest: [string, string][]): PhotoSet {
 }
 
 function make(input: Parameters<typeof buildStarterSite>[0], subdomain: string): { site: Site; pages: Page[] } {
+  // Every example shows the text button, the way we set up real sites.
+  if (!input.chat && input.phone) input = { ...input, chat: { kind: 'sms', to: input.phone } }
   const demo = buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })
   // Logos drawn by the same engine Sofie uses (scripts/showcase-logos.ts).
   demo.site.business = { ...demo.site.business, logo: `/media/logos/${subdomain}.svg`, icon: `/media/logos/${subdomain}-icon.svg` }

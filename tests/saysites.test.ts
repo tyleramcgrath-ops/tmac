@@ -2110,3 +2110,15 @@ describe('SaySites: industry guides', () => {
     }
   })
 })
+
+describe('SaySites: every page that brings in visitors can take a lead', () => {
+  it('puts a request form on the home page, every service page, the services list and the team page', async () => {
+    const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+    for (const [sub, { pages }] of Object.entries(SHOWCASE)) {
+      for (const p of pages) {
+        if (p.slug === 'privacy' || p.slug === 'shop' || p.post || p.slug === 'blog') continue
+        expect(JSON.stringify(p.body), `${sub}/${p.slug}`).toContain('"type":"form"')
+      }
+    }
+  })
+})
