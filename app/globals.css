@@ -739,3 +739,37 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .ev-list { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
 .ev-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; }
 .ev-list li > div { display: grid; gap: 2px; min-width: 0; }
+
+/* SEO tab: audit, competitors, tracking */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.seo-top { display: flex; gap: 28px; align-items: center; margin-bottom: 16px; }
+.seo-score { display: grid; justify-items: center; min-width: 96px; }
+.seo-score strong { font-size: 48px; font-weight: 800; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.seo-issues .quest { grid-template-columns: 96px minmax(0, 1fr) 110px auto; }
+.seo-sev { font-size: 12px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; color: var(--ink-2); }
+.seo-sev.seo-critical { color: #7a2620; }
+.seo-pages { color: var(--ink-2); overflow-wrap: anywhere; }
+.seo-table-wrap { overflow-x: auto; margin: 6px 0 14px; }
+.seo-table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+.seo-table th, .seo-table td { text-align: left; padding: 10px 8px; border-top: 1px solid var(--line); white-space: nowrap; }
+.seo-table thead th { border-top: 0; font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.seo-table tbody th { font-weight: 600; }
+.seo-table tr.is-me { background: var(--line); }
+.seo-table form { margin: 0; }
+.seo-add { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 4px; }
+.seo-add input { flex: 1 1 240px; min-width: 0; }
+.seo-sub { margin: 20px 0 6px; font-size: 15px; }
+.seo-list { list-style: none; margin: 0; padding: 0; }
+.seo-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); }
+.seo-list li:first-child { border-top: 0; }
+.seo-list form { margin: 0; }
+.seo-term { font-weight: 600; overflow-wrap: anywhere; }
+.seo-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 0; }
+.seo-links dd { margin: 2px 0 0; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) {
+  .seo-top { flex-direction: column; align-items: stretch; }
+  .seo-issues .quest { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .seo-issues .quest .btn { grid-column: 1; }
+  .seo-list li { grid-template-columns: minmax(0, 1fr) auto; }
+  .seo-list li > .small { grid-column: 1; grid-row: 2; }
+}

@@ -106,8 +106,7 @@ redirects to /early.
   accounts keep the $10 lifetime cap. When the allowance runs out, Sofie
   pauses until the 1st; owners can still edit everything by hand.
 - Selling online (products) is the Store plan after the trial (`canSell`).
-- Never advertise a feature that isn't built (the SEO Suite is "Coming
-  soon"). Competitor prices on the homepage must come from their own
+- Never advertise a feature that isn't built. Competitor prices on the homepage must come from their own
   pricing pages, with the date checked and sources linked; re-check them
   quarterly.
 
@@ -152,6 +151,20 @@ versions: "Your site, as it is" (`lib/mirror.ts`: their sections, words,
 photos, colours, menu, rebuilt section by section) and "A fresh redesign"
 (`lib/restyle.ts`: the same pages and every word, in a clean modern
 design). Both keep every page's address for SEO. The owner claims either.
+
+## SEO tab, powered by RankForge (October 2026)
+
+Every site's dashboard has an SEO tab (`app/dashboard/sites/[id]/seo`,
+`lib/seo-intel.ts`) run by RankForge's engines, vendored into
+`lib/rankforge` because SaySites deploys alone (`apps/saysites` only).
+Refresh them with `scripts/sync-rankforge.sh`; never edit the copies.
+- Free (costs nothing): the site audit (every published page rendered
+  in-process, scored, ranked fixes with "Fix with Sofie") and competitor
+  comparison (up to 3 sites, 12 pages each, SSRF-guarded crawler).
+- Paid lookups, law firm plans only, once per item per day: Google
+  positions (`SERPAPI_KEY`), Perplexity citations (`PERPLEXITY_API_KEY`),
+  backlinks (`MAJESTIC_API_KEY`). Each is off until its key is set and
+  shows only what the provider returned. State lives in `ss_seo`.
 
 ## Hosting (moved October 2026)
 
