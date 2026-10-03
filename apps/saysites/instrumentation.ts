@@ -9,5 +9,12 @@ export async function register() {
   // Leads: follow-up emails, reminders and follow-up dates, every 10 minutes.
   const { runDue } = await import('./lib/leads')
   const { getStore } = await import('./lib/store')
-  setInterval(() => void runDue(getStore()).catch(() => null), 10 * 60_000).unref()
+  const { recordSchedulerRun } = await import('./lib/hosting-health')
+  setInterval(
+    () =>
+      void runDue(getStore())
+        .then((sent) => recordSchedulerRun(sent))
+        .catch((e) => recordSchedulerRun(0, e instanceof Error ? e.message : 'failed')),
+    10 * 60_000
+  ).unref()
 }
