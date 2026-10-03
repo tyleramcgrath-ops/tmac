@@ -171,6 +171,20 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           </div>
         </section>
 
+        <section className="ag-sec ag-essay" id="why-website">
+          <div className="wrap ind-two">
+            <div>
+              <p className="kicker">Why it matters</p>
+              <h2>Your website decides who gets the call.</h2>
+            </div>
+            <div className="ind-guide-body">
+              <p>People rarely pick a lawyer, a doctor or a plumber from one result. They search, open two or three sites, and call the one that feels right and makes it easy. That decision usually happens on a phone, in a minute or two, and it turns on a few things: whether the page appears quickly, whether it clearly does the thing they need, whether there are real people behind it, and whether the next step is obvious.</p>
+              <p>That is why every SaySites site is built around the next step. The request form sits on the home page instead of hiding behind a contact link. Your phone number is a button. Each service or practice area has a page of its own, written for your business and your town, because that is what people search for and what Google matches them to.</p>
+              <p>Search engines reward the same things people do: pages that load fast, say clearly what they are about and keep their facts consistent. We build to Google’s published guidelines, keep every page above a strict speed bar, and show you every message, call tap and visit, so you can see what your site brings in instead of guessing.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="faq" id="faq">
           <div className="wrap faq-in">
             <div className="head">
@@ -182,6 +196,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <details><summary>How long does it take?</summary><p>Your free redesign is ready in under a minute. A finished site depends on how many pages and people it covers; we’ll tell you when we talk, and you approve it before it goes live.</p></details>
               <details><summary>Will I lose what my current site ranks for?</summary><p>We keep your pages at the same addresses wherever we can, and set up redirects for the rest, so links and search results keep working.</p></details>
               <details><summary>Can I make changes myself?</summary><p>Yes. Ask us, or log in and change anything yourself, in plain words. You see every change before it goes live.</p></details>
+              <details><summary>Do you only work with certain industries?</summary><p>We focus on businesses where new clients start with a search: law firms, medical practices, med spas, dental practices and home service companies. Each has designs, pages and wording made for how its clients decide. If you are close to one of these, ask us.</p></details>
+              <details><summary>Who writes the words on my site?</summary><p>We write a page for each of your services, explaining the work the way you would to a client, for your business and your town. Nothing is invented: no reviews, results or credentials you didn’t give us. You approve every word before it goes live.</p></details>
+              <details><summary>What happens to my domain and email?</summary><p>Your domain stays yours. When you approve your new site, we walk you through pointing your domain to it, step by step. Your email keeps working where it is.</p></details>
               <details><summary>Can you promise more leads?</summary><p>No one honestly can promise a number. What we promise is a site where contacting you takes one tap, built the way Google’s own guidelines describe, and a dashboard that shows every message, call tap and visit, so you can see exactly what it brings in.</p></details>
             </div>
           </div>
