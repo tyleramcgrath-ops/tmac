@@ -1,0 +1,197 @@
+{
+ "lines": [
+  {
+   "text": "You can actually live at the Plaza. Here's the bill.",
+   "shots": [
+    [
+     "mk36736.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk34613.mp4",
+     0,
+     "lux",
+     "here's"
+    ]
+   ]
+  },
+  {
+   "text": "Central Park out the window. Room service. Someone else makes the bed.",
+   "shots": [
+    [
+     "mk4019.mp4",
+     4,
+     "lux"
+    ],
+    [
+     "mk15642.mp4",
+     3,
+     "lux",
+     "room"
+    ],
+    [
+     "mk4196.mp4@0.4",
+     3,
+     "lux",
+     "someone"
+    ]
+   ]
+  },
+  {
+   "text": "One standard room, one November night: about seventeen hundred dollars.",
+   "shots": [
+    [
+     "mk4046.mp4@0.4",
+     1,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Taxes and fees push it past two thousand.",
+   "shots": [
+    [
+     "mk4198.mp4@0.4",
+     1,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "Book twenty-eight nights: sixty-six thousand dollars.",
+   "shots": [
+    [
+     "mk27658.mp4",
+     10,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "The median Manhattan rent? Forty-nine hundred a month.",
+   "shots": [
+    [
+     "mk4030.mp4@0.5",
+     1,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "A full year at the Plaza: over seven hundred thousand dollars.",
+   "shots": [
+    [
+     "mk4641.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk22739.mp4",
+     8,
+     "lux",
+     "over"
+    ]
+   ]
+  },
+  {
+   "text": "One Plaza month covers thirteen people's rent. Would you check in?",
+   "shots": [
+    [
+     "mk4019.mp4",
+     20,
+     "lux"
+    ],
+    [
+     "mk36736.mp4",
+     8,
+     "lux",
+     "would"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "THE PLAZA",
+   "New York",
+   "5\u2605 \u00b7 FIFTH AVE",
+   "L1:plaza",
+   "L2",
+   ""
+  ],
+  [
+   "1 NIGHT \u00b7 NOV",
+   "$1,696",
+   "",
+   "L3:about",
+   "L4",
+   ""
+  ],
+  [
+   "ALL-IN",
+   "$2,024 / night",
+   "TAXES + FEES",
+   "L4:past",
+   "L5",
+   ""
+  ],
+  [
+   "28 NIGHTS",
+   "$66,366",
+   "",
+   "L5:sixty",
+   "L6",
+   ""
+  ],
+  [
+   "MEDIAN MANHATTAN RENT",
+   "$4,900 / mo",
+   "AUG 2026",
+   "L6:forty",
+   "L7",
+   ""
+  ],
+  [
+   "1 PLAZA MONTH",
+   "\u2248 13.5 rents",
+   "EST.",
+   "L8:thirteen",
+   "L8:would",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $739,000<br><span style='font-size:44px;font-weight:600'>a year (est.)</span>",
+   "L7:over",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "would you<br>check in?",
+   "L8:would",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:over",
+ "footnote": "Rates: Expedia, The Plaza, Nov 2026 (searched Oct 3 2026). Rent: Miller Samuel/Brick Underground. Long stays get tax breaks; year is est. Stock footage.",
+ "caption_fix": {}
+}

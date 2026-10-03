@@ -77,7 +77,7 @@ def cut():
         else:
             vf=(f"scale=-2:1920,crop=1080:1920:(iw-1080)*{fx}:0,fps=30,zoompan=z='1+0.06*on/({D}*30)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1920:fps=30,"
                 f"{G[g]},vignette=PI/4.5,fps=30,format=yuv420p")
-            cmd=['ffmpeg','-v','error','-y','-ss',str(off),'-t',str(D),'-i','raw/'+src,'-vf',vf,'-t',str(D),'-c:v','libx264','-preset','veryfast','-crf','18','-an',o]
+            cmd=['ffmpeg','-v','error','-y','-stream_loop','-1','-ss',str(off),'-t',str(D),'-i','raw/'+src,'-vf',vf,'-t',str(D),'-c:v','libx264','-preset','veryfast','-crf','18','-an',o]
         sh(*cmd); parts.append(o)
     open('build/list.txt','w').write(''.join(f"file '{os.path.basename(p)}'\n" for p in parts))
     sh('ffmpeg','-v','error','-y','-f','concat','-safe','0','-i','build/list.txt','-c','copy','assets/footage/track.mp4')

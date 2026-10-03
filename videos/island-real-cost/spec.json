@@ -1,0 +1,225 @@
+{
+ "lines": [
+  {
+   "text": "A Bahamas island costs about five million. That's the easy part.",
+   "shots": [
+    [
+     "mk2889.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk2888.mp4@0.4",
+     0,
+     "lux",
+     "that's"
+    ]
+   ]
+  },
+  {
+   "text": "Twelve acres in the Exumas. Two white-sand beaches. Your own harbor.",
+   "shots": [
+    [
+     "mk2890.mp4@0.45",
+     0,
+     "lux"
+    ],
+    [
+     "mk48510.mp4",
+     1,
+     "lux",
+     "two"
+    ],
+    [
+     "mk5368.mp4@0.6",
+     2,
+     "lux",
+     "your"
+    ]
+   ]
+  },
+  {
+   "text": "Add a house, and you need a live-in caretaker: forty-two grand a year.",
+   "shots": [
+    [
+     "mk51562.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk1575.mp4@0.3",
+     2,
+     "lux",
+     "forty"
+    ]
+   ]
+  },
+  {
+   "text": "Insurance in hurricane country: thirty-five thousand.",
+   "shots": [
+    [
+     "mk44391.mp4",
+     4,
+     "cost"
+    ]
+   ]
+  },
+  {
+   "text": "Salt air eats everything. Maintenance: fifty-five grand.",
+   "shots": [
+    [
+     "mk2888.mp4@0.6",
+     1,
+     "calm"
+    ],
+    [
+     "mk22739.mp4",
+     4,
+     "lux",
+     "maintenance"
+    ]
+   ]
+  },
+  {
+   "text": "The boat is your only road. Fifteen thousand to run it.",
+   "shots": [
+    [
+     "mk20399.mp4",
+     5,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Add solar, desalination and property tax: a hundred seventy-seven thousand a year.",
+   "shots": [
+    [
+     "mk2889.mp4@0.7",
+     6,
+     "lux"
+    ],
+    [
+     "mk48510.mp4",
+     5,
+     "lux",
+     "hundred"
+    ]
+   ]
+  },
+  {
+   "text": "That's almost five hundred dollars a day. Still want the island?",
+   "shots": [
+    [
+     "mk1575.mp4@0.5",
+     8,
+     "calm"
+    ],
+    [
+     "mk2890.mp4@0.5",
+     0,
+     "lux",
+     "still"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "ROBERTS CAY \u00b7 BAHAMAS",
+   "$5.25M",
+   "LISTED PRICE",
+   "L1:about",
+   "L2",
+   ""
+  ],
+  [
+   "12 ACRES",
+   "Exuma Cays",
+   "",
+   "L2:twelve",
+   "L3",
+   ""
+  ],
+  [
+   "CARETAKER",
+   "$42K / yr",
+   "",
+   "L3:forty",
+   "L4",
+   ""
+  ],
+  [
+   "INSURANCE",
+   "$35K / yr",
+   "",
+   "L4:thirty",
+   "L5",
+   ""
+  ],
+  [
+   "MAINTENANCE",
+   "$55K / yr",
+   "",
+   "L5:fifty",
+   "L6",
+   ""
+  ],
+  [
+   "BOAT",
+   "$15K / yr",
+   "",
+   "L6:fifteen",
+   "L7",
+   ""
+  ],
+  [
+   "POWER + WATER + TAX",
+   "$30K / yr",
+   "",
+   "L7:add",
+   "L7:hundred",
+   ""
+  ],
+  [
+   "PER DAY",
+   "~$485",
+   "EST.",
+   "L8:that's",
+   "L8:still",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $177,000<br><span style='font-size:44px;font-weight:600'>every year</span>",
+   "L7:hundred",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "still want<br>the island?",
+   "L8:still",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:hundred",
+ "footnote": "Running costs: PrivateIslandMarket 2026 model for a developed 10-acre Exuma island (est.). Price: Private Islands Online listing. Stock footage.",
+ "caption_fix": {}
+}

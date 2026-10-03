@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Lakers courtside costs at least four grand. Per seat. Per night."
+    },
+    {
+      "id": "02",
+      "text": "Your sneakers on the baseline. Celebrities one chair over."
+    },
+    {
+      "id": "03",
+      "text": "A regular-season night: four to ten thousand dollars a seat."
+    },
+    {
+      "id": "04",
+      "text": "Forty-one home games, at the cheapest: a hundred sixty-four grand."
+    },
+    {
+      "id": "05",
+      "text": "Make the playoffs, and one seat jumps to twenty to forty grand."
+    },
+    {
+      "id": "06",
+      "text": "Even the Lakers' new Courtside Reserve seats: fifteen to thirty grand."
+    },
+    {
+      "id": "07",
+      "text": "Two seats, every home game, cheapest nights: about three hundred thirty grand."
+    },
+    {
+      "id": "08",
+      "text": "Before a single playoff game. Would you sit courtside?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}
