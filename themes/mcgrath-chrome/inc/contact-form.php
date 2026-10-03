@@ -1,6 +1,6 @@
 <?php
 /**
- * The enquiry form on the contact page.
+ * The inquiry form on the contact page.
  *
  * Posts to admin-post.php so the submission is handled before any output,
  * then redirects back to the form with a result flag. Nonce, honeypot and a
@@ -24,7 +24,7 @@ function mcg_contact_return( $state ) {
 	exit;
 }
 
-/** Handle a posted enquiry. */
+/** Handle a posted inquiry. */
 function mcg_handle_contact() {
 	// A bot fills every field it is given; a person never sees this one.
 	if ( ! empty( $_POST['mcg_hp'] ) ) {
@@ -52,7 +52,7 @@ function mcg_handle_contact() {
 
 	$body = sprintf(
 		/* translators: 1: name, 2: email, 3: website, 4: message */
-		__( "New enquiry from the website.\n\nName: %1\$s\nEmail: %2\$s\nWebsite: %3\$s\n\n%4\$s\n", 'mcgrath-chrome' ),
+		__( "New inquiry from the website.\n\nName: %1\$s\nEmail: %2\$s\nWebsite: %3\$s\n\n%4\$s\n", 'mcgrath-chrome' ),
 		$name,
 		$email,
 		'' === $site ? __( '(not given)', 'mcgrath-chrome' ) : $site,
@@ -61,7 +61,7 @@ function mcg_handle_contact() {
 
 	$sent = wp_mail(
 		$to,
-		sprintf( /* translators: %s: sender name */ __( 'Website enquiry from %s', 'mcgrath-chrome' ), $name ),
+		sprintf( /* translators: %s: sender name */ __( 'Website inquiry from %s', 'mcgrath-chrome' ), $name ),
 		$body,
 		array( 'Reply-To: ' . $name . ' <' . $email . '>' )
 	);
@@ -72,7 +72,7 @@ add_action( 'admin_post_nopriv_mcg_contact', 'mcg_handle_contact' );
 add_action( 'admin_post_mcg_contact', 'mcg_handle_contact' );
 
 /**
- * Render the enquiry form.
+ * Render the inquiry form.
  *
  * Kept here rather than in the template so the contact page and any future
  * landing page can drop the same form in with one call.
@@ -125,7 +125,7 @@ function mcg_contact_form() {
 			</p>
 
 			<button class="btn" type="submit">
-				<?php esc_html_e( 'Send enquiry', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
+				<?php esc_html_e( 'Send inquiry', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
 			</button>
 		</form>
 	</div>

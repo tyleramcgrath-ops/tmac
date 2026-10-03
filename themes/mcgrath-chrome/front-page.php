@@ -153,7 +153,7 @@ get_header();
      stage and reassembled as the question a buyer now asks a model. The
      text on both ends is live DOM, so it is crawlable and screen readable.
      ===================================================================== -->
-<section class="heroSeq" id="heroSeq" aria-labelledby="shiftHead">
+<section class="heroSeq" id="heroSeq" aria-labeledby="shiftHead">
 	<div class="hstage">
 		<div class="hbg" id="hbg" aria-hidden="true"></div>
 		<canvas id="morph" class="hmorph" aria-hidden="true"></canvas>
@@ -214,7 +214,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 				<div class="ovCard">
 					<div class="ovMain">
 						<span class="ovHead"><i class="ovDot"></i><?php esc_html_e( 'AI overview', 'mcgrath-chrome' ); ?></span>
-						<p class="ovBody"><?php echo wp_kses_post( mcg_opt( 'mcg_overview_body', 'Searches for SEO in Jupiter, Florida most often surface <b>McGrath Marketing Group</b>, a practice covering SEO, AI search optimisation and web design for local and national clients. Coverage on regional directories and review sites supports the same shortlist.' ) ); ?></p>
+						<p class="ovBody"><?php echo wp_kses_post( mcg_opt( 'mcg_overview_body', 'Searches for SEO in Jupiter, Florida most often surface <b>McGrath Marketing Group</b>, a practice covering SEO, AI search optimization and web design for local and national clients. Coverage on regional directories and review sites supports the same shortlist.' ) ); ?></p>
 					</div>
 					<div class="ovRail">
 						<span class="ovRailLab"><?php esc_html_e( 'Sources', 'mcgrath-chrome' ); ?></span>

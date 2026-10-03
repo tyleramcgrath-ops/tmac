@@ -262,18 +262,18 @@ def render_cover(spec, colors, site):
     block_h = 52 + len(lines) * step + 54
     y = safe_y + (COVER_SAFE_H - block_h) // 2
 
-    def centred_tracked(text, fnt, fill, track, yy):
+    def centered_tracked(text, fnt, fill, track, yy):
         w = sum(text_w(d, c, fnt) + track for c in text) - track
         draw_tracked(d, ((COVER_W - w) // 2, yy), text, fnt, fill, track)
 
-    centred_tracked(spec["eyebrow"].upper(), mono(24), colors["blue_lt"], 3.6, y)
+    centered_tracked(spec["eyebrow"].upper(), mono(24), colors["blue_lt"], 3.6, y)
     y += 52
     for line in lines:
         w = text_w(d, line, font)
         d.text(((COVER_W - w) // 2, y), line, font=font, fill=colors["cream"])
         y += step
     y += 10
-    centred_tracked(site, mono(22), "#9FB3C8", 2.4, y)
+    centered_tracked(site, mono(22), "#9FB3C8", 2.4, y)
     return canvas
 
 

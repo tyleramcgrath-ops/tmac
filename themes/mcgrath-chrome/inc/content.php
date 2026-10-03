@@ -221,7 +221,7 @@ function mcg_plate( $name, $class = '', $focus = '50% 50%', $zoom = 'cover' ) {
 /**
  * The drawn stand-in scene: the Jupiter Inlet light at dusk, or open water at
  * night for the closing call to action. Inline SVG so it stays sharp, weighs
- * almost nothing and re-colours with the rest of the theme.
+ * almost nothing and re-colors with the rest of the theme.
  *
  * @param bool $night Night variant.
  */
@@ -433,7 +433,7 @@ function mcg_services() {
 		array(
 			'icon'   => 'chart',
 			'img'    => 'page-analytics',
-			'alt'    => 'Brand sheets, colour swatches and coastal prints laid out on a desk',
+			'alt'    => 'Brand sheets, color swatches and coastal prints laid out on a desk',
 			'title'  => 'Analytics & Conversion',
 			'sub'    => 'Turn traffic into revenue.',
 			'url'    => 'contact',

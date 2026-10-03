@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.6.0' );
+define( 'MCG_VERSION', '2.6.1' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -65,7 +65,7 @@ function mcg_customize( $wp_customize ) {
 		'mcg_hero_query'  => array( 'Search query shown in the dissolve', 'seo company jupiter fl' ),
 		'mcg_hero_ask'    => array( 'The question it lands on (words before the highlight)', 'Who is the best SEO company in' ),
 		'mcg_hero_mark'   => array( 'Highlighted end of the question', 'Jupiter, FL?' ),
-		'mcg_overview_body' => array( 'The overview that comes back (b tags allowed)', 'Searches for SEO in Jupiter, Florida most often surface <b>McGrath Marketing Group</b>, a practice covering SEO, AI search optimisation and web design for local and national clients. Coverage on regional directories and review sites supports the same shortlist.' ),
+		'mcg_overview_body' => array( 'The overview that comes back (b tags allowed)', 'Searches for SEO in Jupiter, Florida most often surface <b>McGrath Marketing Group</b>, a practice covering SEO, AI search optimization and web design for local and national clients. Coverage on regional directories and review sites supports the same shortlist.' ),
 		'mcg_brand_line'  => array( 'Wordmark sub-line', 'McGrath Marketing Group' ),
 		'mcg_tagline'     => array( 'Footer tagline', 'A Higher Visibility. A Brighter Tomorrow.' ),
 		'mcg_email'       => array( 'Contact email', 'tyler@mcgrathmarketinggroup.com' ),

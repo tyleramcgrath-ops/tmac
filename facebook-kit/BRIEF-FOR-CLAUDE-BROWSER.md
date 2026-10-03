@@ -164,7 +164,7 @@ The last section of `CAPTIONS.md` has every field: name, username, categories,
 profile picture, cover photo, short bio, long About, website, action button,
 services, and notes on address and hours.
 
-Two of those notes are judgement calls flagged for the human rather than for
+Two of those notes are judgment calls flagged for the human rather than for
 you — whether to show a street address, and whether to set opening hours. Ask;
 do not pick.
 

@@ -4,7 +4,7 @@ Theme URI: https://mcgrathmarketinggroup.com
 Author: Tyler McGrath
 Author URI: https://mcgrathmarketinggroup.com
 Description: Custom theme for McGrath Marketing Group, an SEO, AI search and web design company in Jupiter, Florida. Navy and cream editorial design with a live visibility dashboard, a scroll-driven dissolve that shatters a page of blue links into pixels and reassembles them as the question a buyer asks an AI model, a crawler-view toggle, a reveal lens and a password protected vault for client work.
-Version: 2.6.0
+Version: 2.6.1
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -474,7 +474,7 @@ body.crawl .vmode{background:var(--navy);color:var(--cream);border-color:var(--n
 .hstage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--paper);}
 .hstage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
 /* The only thing that moves in this section is the type turning into pixels.
-   This is a still colour that settles in behind the answer as they land. */
+   This is a still color that settles in behind the answer as they land. */
 .hbg{position:absolute;inset:0;opacity:0;transition:opacity .45s linear;
   background:radial-gradient(112% 82% at 50% 34%,#EDF3FC 0%,#DAE7F7 46%,#C2D8F0 78%,#AFCAE9 100%);}
 .hmorph{z-index:2;opacity:0;transition:opacity .16s linear;}
@@ -1073,7 +1073,7 @@ body.crawl .navcta{background:#0A120D;color:#9FF3B8;border-color:#1F5236;}
   .glyph{display:none;}
 }
 
-/* ---------- contact: the enquiry form beside the chart ---------- */
+/* ---------- contact: the inquiry form beside the chart ---------- */
 /* a text-only page header spans the full measure instead of leaving a hole
    where the artwork would have been. */
 .phero.solo .pin{grid-template-columns:minmax(0,1fr);}

@@ -30,7 +30,7 @@ Upload: `media/01-intro/01.jpg`
 ```text
 I'm Tyler McGrath, and I run McGrath Marketing Group out of Jupiter.
 
-Three things: search engine optimisation, AI search visibility, and websites. They sit together because they have become one problem.
+Three things: search engine optimization, AI search visibility, and websites. They sit together because they have become one problem.
 
 A buyer either types a query and picks from a results page, or they ask ChatGPT, Gemini or Perplexity who to call and act on a single answer. Both routes are decided by the same handful of things — whether your site is built so a machine can read it, whether what you say is clear enough to be repeated, and whether you appear anywhere those systems already look.
 
@@ -191,7 +191,7 @@ Upload: `media/07-roots/01.jpg`
 ```text
 Working from Jupiter isn't a sentimental detail. It changes the work.
 
-Local search turns on specifics. Which neighbouring towns you should actually be targeting. How buyers here name the thing they want. Which local sources and directories carry any weight in this county. Where the line sits between Jupiter, Tequesta, Palm Beach Gardens and Stuart in the eyes of somebody searching.
+Local search turns on specifics. Which neighboring towns you should actually be targeting. How buyers here name the thing they want. Which local sources and directories carry any weight in this county. Where the line sits between Jupiter, Tequesta, Palm Beach Gardens and Stuart in the eyes of somebody searching.
 
 A remote team guesses at those, and the usual result is targeting the whole of South Florida and ranking nowhere in particular.
 
@@ -219,7 +219,7 @@ Four questions, and you can send all of them in one email.
 
 1. Who, by name, will do the work? Not which agency — which person. If nobody will be named, you're buying a process rather than an outcome.
 
-2. What actually ships each month? A specific answer sounds like pages, fixes and listings. A vague one sounds like strategy, optimisation and alignment.
+2. What actually ships each month? A specific answer sounds like pages, fixes and listings. A vague one sounds like strategy, optimization and alignment.
 
 3. How is it reported? You want what moved, what shipped, and what's next. A dashboard login is not a report.
 
@@ -390,7 +390,7 @@ _Facebook's short bio field is tight — around 101 characters on current Pages.
 ```text
 McGrath Marketing Group is Tyler McGrath, working from Jupiter, Florida.
 
-Three services: search engine optimisation, AI search visibility, and custom websites. They sit together because a buyer now either searches or asks an AI model, and both routes are decided by the same underlying work — a site a machine can read, claims clear enough to repeat, and presence on the sources those systems already use.
+Three services: search engine optimization, AI search visibility, and custom websites. They sit together because a buyer now either searches or asks an AI model, and both routes are decided by the same underlying work — a site a machine can read, claims clear enough to repeat, and presence on the sources those systems already use.
 
 One person on your account rather than a chain of handoffs. Pricing in the open. No long contract, and you own everything that gets built.
 

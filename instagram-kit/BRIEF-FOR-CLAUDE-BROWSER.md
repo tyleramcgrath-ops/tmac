@@ -66,7 +66,7 @@ Ask the human to confirm, once:
 Work from `CAPTIONS.md`, in the numbered order, starting at post 1.
 
 **1. Open the composer.** On `instagram.com`, find the create control — a plus
-icon in the left navigation, usually labelled *Create*. Choose the option for a
+icon in the left navigation, usually labeled *Create*. Choose the option for a
 feed post. You should land on a file picker, with wording along the lines of
 *Select from computer*.
 
@@ -78,7 +78,7 @@ If the picker reorders them, fix it before moving on.
 **3. Keep the crop as-is.** Every image is already 1080 × 1350, the exact
 portrait ratio Instagram supports. If a crop or zoom control appears, set it to
 the original or the 4:5 option so nothing is trimmed. **Do not let it
-centre-crop to a square** — that cuts the headline off the bottom of the frame.
+center-crop to a square** — that cuts the headline off the bottom of the frame.
 
 **4. Skip filters.** Continue past any filter or editing step without applying
 anything. These are brand images; a filter breaks the palette.

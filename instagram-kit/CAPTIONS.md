@@ -25,7 +25,7 @@ Single image.  **Pin this to the profile grid.**
 ```text
 Start here.
 
-I'm Tyler McGrath. I run McGrath Marketing Group out of Jupiter, Florida, and I do three things: search engine optimisation, AI search visibility, and websites.
+I'm Tyler McGrath. I run McGrath Marketing Group out of Jupiter, Florida, and I do three things: search engine optimization, AI search visibility, and websites.
 
 The reason the three sit together is that they are now the same problem. A buyer either types a query, or they ask ChatGPT, Gemini or Perplexity who to call and read one answer. Both routes are decided by the same things: whether your site is structured so a machine can read it, whether your claims are clear enough to repeat, and whether you show up anywhere those systems already look.
 
@@ -238,7 +238,7 @@ Single image.
 ```text
 Working from Jupiter is not a sentimental detail. It changes the work.
 
-Local search turns on specifics: which neighbouring towns you should actually be targeting, how buyers here name what they want, which directories and local sources carry weight in this county, and where the boundary sits between Jupiter, Tequesta, Palm Beach Gardens and Stuart in the eyes of someone searching.
+Local search turns on specifics: which neighboring towns you should actually be targeting, how buyers here name what they want, which directories and local sources carry weight in this county, and where the boundary sits between Jupiter, Tequesta, Palm Beach Gardens and Stuart in the eyes of someone searching.
 
 A remote team guesses at those and tends to target the whole of South Florida, which usually means ranking nowhere in particular.
 
@@ -275,7 +275,7 @@ Carousel, 6 images.
 ```text
 Four questions, and you can ask them all in one email.
 
-They work because each one has a specific answer and a vague one, and the vague one tells you everything. "Our team handles that" is not an answer to who does the work. "We optimise continuously" is not an answer to what ships.
+They work because each one has a specific answer and a vague one, and the vague one tells you everything. "Our team handles that" is not an answer to who does the work. "We optimize continuously" is not an answer to what ships.
 
 The cost question is the one people feel rude asking. Ask it anyway. A firm that keeps every number behind a discovery call is reserving the right to price you after it has sized you up.
 
@@ -318,7 +318,7 @@ Carousel, 5 images.
 ```text
 The plainest definition I can give.
 
-AI search optimisation is the work that gets your business named and linked when someone puts a buying question to a model rather than into a search box.
+AI search optimization is the work that gets your business named and linked when someone puts a buying question to a model rather than into a search box.
 
 Most of it is not new. Clean structure, claims clear enough to quote, and showing up on sources those systems already read — that's the same foundation good SEO has always needed. The genuinely new part is measurement: there's no position four to check, so instead you check whether you get mentioned on the questions that would bring you work, and you track that month to month.
 

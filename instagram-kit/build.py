@@ -144,7 +144,7 @@ def fit_headline(draw, s, max_w, max_h, hi, lo=38, lh=1.14):
 # --------------------------------------------------------------------------
 
 def cover_crop(im, box_w, box_h):
-    """Crop to the box's ratio from the centre, then scale. Never distorts."""
+    """Crop to the box's ratio from the center, then scale. Never distorts."""
     want = box_w / box_h
     have = im.width / im.height
     if have > want:
@@ -216,7 +216,7 @@ def render_card(slide, colors, index, total):
     eyebrow = slide.get("eyebrow", "")
 
     # Measure everything before drawing anything, so the whole block can be
-    # centred in the live area rather than piling up against the top margin.
+    # centered in the live area rather than piling up against the top margin.
     bf = sans(31)
     body_lines = wrap_to_width(d, body, bf, inner) if body else []
     body_h = len(body_lines) * 46 + (34 if body_lines else 0)
@@ -230,7 +230,7 @@ def render_card(slide, colors, index, total):
                                      84 if body_lines else 104)
 
     block_h = eyebrow_h + len(lines) * step + body_h
-    # Optical centre sits a little above the true one.
+    # Optical center sits a little above the true one.
     y = top + max(0, (bottom - top - block_h) // 2) - 24
 
     if eyebrow:
@@ -267,7 +267,7 @@ def render_profile(spec, colors):
     out = os.path.join(MEDIA, "profile")
     os.makedirs(out, exist_ok=True)
 
-    # Avatar: the logo centred on cream, sized to survive a circular crop.
+    # Avatar: the logo centered on cream, sized to survive a circular crop.
     av = Image.new("RGB", (1080, 1080), colors["cream"])
     logo = Image.open(os.path.join(PHOTOS, spec["avatar_source"])).convert("RGBA")
     target = 660
@@ -275,7 +275,7 @@ def render_profile(spec, colors):
     av.paste(logo, ((1080 - logo.width) // 2, (1080 - logo.height) // 2), logo)
     av.save(os.path.join(out, "avatar.jpg"), quality=94)
 
-    # Highlight covers: story-shaped, label centred in the circular safe zone.
+    # Highlight covers: story-shaped, label centered in the circular safe zone.
     for h in spec["highlights"]:
         cov = Image.new("RGB", (1080, 1920), colors["navy"])
         d = ImageDraw.Draw(cov)

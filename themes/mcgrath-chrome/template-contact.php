@@ -18,7 +18,7 @@ get_header();
 	</div>
 </section>
 
-<!-- the enquiry itself: the form beside the chart, contact details beneath -->
+<!-- the inquiry itself: the form beside the chart, contact details beneath -->
 <section class="enqSec gut">
 	<div class="enqIn">
 		<div class="enqLeft rv">

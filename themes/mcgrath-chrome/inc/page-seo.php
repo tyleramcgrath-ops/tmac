@@ -152,7 +152,7 @@ function mcg_page_table() {
 				array( 'What the buyer sees', 'Ten links and a map pack', 'One paragraph naming two or three businesses' ),
 				array( 'Room below the fold', 'Page two exists', 'There is no page two' ),
 				array( 'What earns the place', 'Relevance, authority, site health', 'Being parseable, quotable and corroborated elsewhere' ),
-				array( 'What you optimise', 'Pages, links and URLs', 'Claims, structured data and third-party sources' ),
+				array( 'What you optimize', 'Pages, links and URLs', 'Claims, structured data and third-party sources' ),
 				array( 'How you track it', 'Rank tracking by keyword', 'A fixed question set run against each model monthly' ),
 			),
 		),
@@ -193,7 +193,7 @@ function mcg_page_faqs() {
 		'seo'       => array(
 			array(
 				'q' => 'Do you only work with businesses in Jupiter?',
-				'a' => 'No. The local work centres on Jupiter, Palm Beach Gardens, Tequesta, Juno Beach, Abacoa, Jupiter Farms, Hobe Sound and Stuart, because proximity decides the result there. Clients elsewhere are welcome; the organic and technical work is identical.',
+				'a' => 'No. The local work centers on Jupiter, Palm Beach Gardens, Tequesta, Juno Beach, Abacoa, Jupiter Farms, Hobe Sound and Stuart, because proximity decides the result there. Clients elsewhere are welcome; the organic and technical work is identical.',
 			),
 			array(
 				'q' => 'Will I lose rankings if I rebuild the site while you work on SEO?',

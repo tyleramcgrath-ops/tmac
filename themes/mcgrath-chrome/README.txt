@@ -1,7 +1,7 @@
 === McGrath Chrome 2.5 ===
 
 A custom WordPress theme for McGrath Marketing Group.
-Navy and cream editorial design, with the dissolve kept at the centre of it.
+Navy and cream editorial design, with the dissolve kept at the center of it.
 
 
 WHAT IS IN IT
@@ -19,11 +19,11 @@ WHAT IS IN IT
   the left, the sources it drew on listed alongside it, your own domain first.
   Both the field and the overview are drawn generically rather than as a copy of
   any one engine's branding. Nothing else in the section moves: the type turning
-  into pixels is the whole animation, and the colour behind it simply settles
+  into pixels is the whole animation, and the color behind it simply settles
   from paper to blue as the last particles arrive.
 
 * Crawler view. The switch in the header flips the whole site into the layer a
-  machine reads: monospace, heading tags exposed, colours inverted. The
+  machine reads: monospace, heading tags exposed, colors inverted. The
   dashboard, the photography and the dissolve all come with it.
 
 * The lens. On the services section, the cursor reveals the machine-readable
@@ -56,7 +56,7 @@ file over it. Nothing else needs touching.
     page-aeo.webp        AI Visibility page header, and the second service card
     page-analytics.webp  the fourth service card, and the visibility audit
     page-about.webp      About page header
-    page-contact.webp    the chart beside the enquiry form
+    page-contact.webp    the chart beside the inquiry form
     page-writing.webp    the Insights section, the blog index, archives, search
     art-mobile.webp      inside the Web Design page, under the first split
     ocean.*              behind the closing call to action — not shipped; a
@@ -177,7 +177,7 @@ on the site and names the problem for each page, with one button to fix them.
 The theme builds its own pages at its own addresses and never claims one that
 was already there. A site that had an /about/ or /contact/ before keeps them,
 with their content, at their addresses — they are simply not what the theme
-links to. The theme's own About lives at /about-tyler-mcgrath/ and its enquiry
+links to. The theme's own About lives at /about-tyler-mcgrath/ and its inquiry
 page at /free-seo-audit/, so the two never collide and the old content never
 turns up underneath a new header.
 
@@ -249,7 +249,7 @@ relying on it.
 
 After sending, the visitor comes back to the form with ?enquiry=sent (or =error)
 and sees a message above it. Nothing is stored in the database; if you want a
-record of enquiries, use a form plugin instead and drop its shortcode into the
+record of inquiries, use a form plugin instead and drop its shortcode into the
 page content, which still renders below the form.
 
 

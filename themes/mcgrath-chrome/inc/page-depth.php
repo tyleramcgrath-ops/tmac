@@ -35,7 +35,7 @@ function mcg_page_depth() {
 		'webdesign' => array(
 			array(
 				'h2'    => 'What decides whether a site converts',
-				'intro' => 'A good-looking site that does not turn visits into calls has failed at the only job it had. Three things decide that far more often than the visual design does, and all three are measurable before anyone argues about a colour.',
+				'intro' => 'A good-looking site that does not turn visits into calls has failed at the only job it had. Three things decide that far more often than the visual design does, and all three are measurable before anyone argues about a color.',
 				'subs'  => array(
 					array(
 						'h3' => 'Speed, and why it decides everything after it',
@@ -74,7 +74,7 @@ function mcg_page_depth() {
 					array(
 						'h3' => 'Design and build',
 						'p'  => array(
-							'Drawn at phone width first, then opened out. Built on WordPress rather than a proprietary builder, so the site remains editable by you and by any developer who comes after, with no licence to keep paying for and no platform holding your content.',
+							'Drawn at phone width first, then opened out. Built on WordPress rather than a proprietary builder, so the site remains editable by you and by any developer who comes after, with no license to keep paying for and no platform holding your content.',
 							'Custom throughout, not a marketplace theme with your logo dropped into it. A purchased theme carries every feature its author imagined anyone might want, and your visitors download all of it whether your business uses it or not.',
 						),
 					),
@@ -186,7 +186,7 @@ function mcg_page_depth() {
 			),
 			array(
 				'h2'    => 'What the first ninety days look like',
-				'intro' => 'Not a fixed programme, because the audit decides the order. But the shape is consistent, and it starts with the cheapest wins rather than the most impressive-sounding ones.',
+				'intro' => 'Not a fixed program, because the audit decides the order. But the shape is consistent, and it starts with the cheapest wins rather than the most impressive-sounding ones.',
 				'subs'  => array(
 					array(
 						'h3' => 'Fix what is already broken',
@@ -205,7 +205,7 @@ function mcg_page_depth() {
 					array(
 						'h3' => 'Then build, rather than before',
 						'p'  => array(
-							'New pages, new local signals and new content come after the foundation is sound and the easy ground is taken. Doing it in the other order is how a business ends up with a content programme sitting on top of a site that cannot support it.',
+							'New pages, new local signals and new content come after the foundation is sound and the easy ground is taken. Doing it in the other order is how a business ends up with a content program sitting on top of a site that cannot support it.',
 						),
 					),
 				),
@@ -217,7 +217,7 @@ function mcg_page_depth() {
 					array(
 						'h3' => 'Work, not access to a dashboard',
 						'p'  => array(
-							'A tool licence resold to you with a login is not a service. Tools are used here, but what you are paying for is the judgement about which of the thousand things a tool flags are worth doing on your site this month, and then the doing of them.',
+							'A tool license resold to you with a login is not a service. Tools are used here, but what you are paying for is the judgment about which of the thousand things a tool flags are worth doing on your site this month, and then the doing of them.',
 						),
 					),
 					array(
@@ -520,7 +520,7 @@ function mcg_page_depth() {
 					array(
 						'h3' => 'Cheapest fix with the largest effect, first',
 						'p'  => array(
-							'Not the most impressive-sounding work. A redirect chain quietly bleeding authority is duller than a content programme and frequently worth more this month. The order is chosen by expected effect divided by effort, and it is explained rather than asserted.',
+							'Not the most impressive-sounding work. A redirect chain quietly bleeding authority is duller than a content program and frequently worth more this month. The order is chosen by expected effect divided by effort, and it is explained rather than asserted.',
 						),
 					),
 					array(
@@ -532,13 +532,13 @@ function mcg_page_depth() {
 					array(
 						'h3' => 'Say no out loud',
 						'p'  => array(
-							'If something you have asked for will not work, you get told and given the reason, rather than quietly deprioritised. That includes ideas of mine that turned out to be wrong, which happens and is worth reporting rather than burying.',
+							'If something you have asked for will not work, you get told and given the reason, rather than quietly deprioritized. That includes ideas of mine that turned out to be wrong, which happens and is worth reporting rather than burying.',
 						),
 					),
 					array(
 						'h3' => 'Recommend somebody else when that is the answer',
 						'p'  => array(
-							'If the job needs a team, a media buying department, or a specialism outside search and web, saying so is faster and cheaper for you than finding out over two quarters. It has cost me work and it is still the right call.',
+							'If the job needs a team, a media buying department, or a specialty outside search and web, saying so is faster and cheaper for you than finding out over two quarters. It has cost me work and it is still the right call.',
 						),
 					),
 				),
@@ -725,7 +725,7 @@ function mcg_page_depth() {
 					array(
 						'h3' => 'What happens to what you send',
 						'p'  => array(
-							'The enquiry form emails it and stores nothing in the site database. Your details are not added to a mailing list, and there is no follow-up sequence. If you do not reply, you will not hear from me again.',
+							'The inquiry form emails it and stores nothing in the site database. Your details are not added to a mailing list, and there is no follow-up sequence. If you do not reply, you will not hear from me again.',
 						),
 					),
 				),
@@ -895,7 +895,7 @@ function mcg_page_depth() {
 			),
 			array(
 				'h2'    => 'What the first ninety days usually look like',
-				'intro' => 'Not a fixed programme, because the audit decides the order. But the shape is consistent across most engagements, and it deliberately starts with the least impressive work.',
+				'intro' => 'Not a fixed program, because the audit decides the order. But the shape is consistent across most engagements, and it deliberately starts with the least impressive work.',
 				'subs'  => array(
 					array(
 						'h3' => 'Weeks one and two: find out what is true',
