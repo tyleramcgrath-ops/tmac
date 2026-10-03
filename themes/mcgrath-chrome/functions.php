@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.5.0' );
+define( 'MCG_VERSION', '2.6.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -498,14 +498,29 @@ function mcg_social_tags() {
 
 	$url = is_singular() ? get_permalink() : home_url( '/' );
 
-	// The page's own photograph where it has one, the hero otherwise.
+	/*
+	 * The share image, in the order a crawler is happiest with.
+	 *
+	 * share-<key>.jpg first: a 1200x630 JPEG made for this, which is the size
+	 * Facebook and LinkedIn render as a large card. Then the page's own
+	 * photograph, JPEG or PNG before WebP — WebP support across the social
+	 * crawlers is inconsistent, and a preview that silently loses its picture
+	 * is worse than one built from a larger file. WebP stays last so a site
+	 * that only has WebP still gets a tag rather than none.
+	 */
 	$image = '';
+	$size  = array();
 	$dir   = get_template_directory() . '/assets/img/';
 	$uri   = get_template_directory_uri() . '/assets/img/';
-	foreach ( array( 'page-' . $key, 'hero' ) as $name ) {
-		foreach ( array( 'webp', 'jpg', 'png' ) as $ext ) {
+	$names = array( 'share-' . $key, 'page-' . $key, 'share-home', 'hero' );
+	foreach ( $names as $name ) {
+		foreach ( array( 'jpg', 'png', 'webp' ) as $ext ) {
 			if ( $name && file_exists( $dir . $name . '.' . $ext ) ) {
 				$image = $uri . $name . '.' . $ext;
+				$dims  = @getimagesize( $dir . $name . '.' . $ext );
+				if ( $dims ) {
+					$size = array( (int) $dims[0], (int) $dims[1] );
+				}
 				break 2;
 			}
 		}
@@ -521,6 +536,13 @@ function mcg_social_tags() {
 	);
 	if ( $image ) {
 		$tags['og:image'] = $image;
+		// Dimensions let a crawler lay the card out on first pass, instead of
+		// showing a small preview until it has fetched and measured the file.
+		if ( $size ) {
+			$tags['og:image:width']  = $size[0];
+			$tags['og:image:height'] = $size[1];
+		}
+		$tags['og:image:alt'] = $title;
 	}
 
 	foreach ( $tags as $prop => $val ) {
