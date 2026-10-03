@@ -90,6 +90,10 @@ export interface Store {
   siteByDomain(domain: string): Promise<Site | null>
   subdomainTaken(subdomain: string): Promise<boolean>
   updateSite(site: Site): Promise<void>
+  // A site waiting for its client's approval, by the code in its link.
+  siteByHandoff(code: string): Promise<Site | null>
+  // Moves a site (and everything under it) to another account.
+  transferSite(siteId: string, toOwnerId: string): Promise<void>
   pagesForSite(siteId: string): Promise<Page[]>
   savePage(page: Page, author: RevisionAuthor, userId: string | null, note?: string): Promise<void>
   redirectsForSite(siteId: string): Promise<Redirect[]>
@@ -385,6 +389,13 @@ class PgStore implements Store {
     const s = SiteSchema.parse(site)
     await this.q('UPDATE ss_sites SET data = $2, custom_domain = $3, updated_at = now() WHERE id = $1', [s.id, s, s.customDomain ?? null])
   }
+  async siteByHandoff(code: string) {
+    const r = (await this.q<{ data: Site }>("SELECT data FROM ss_sites WHERE data->'handoff'->>'code' = $1", [code]))[0]
+    return r ? SiteSchema.parse(r.data) : null
+  }
+  async transferSite(siteId: string, toOwnerId: string) {
+    await this.q("UPDATE ss_sites SET owner_id = $2, data = jsonb_set(data, '{orgId}', to_jsonb($2::text)), updated_at = now() WHERE id = $1", [siteId, toOwnerId])
+  }
   async pagesForSite(siteId: string) {
     const demo = Object.values(SHOWCASE).find((d) => d.site.id === siteId)
     if (demo) return demo.pages
@@ -668,6 +679,16 @@ export class MemoryStore implements Store {
   async updateSite(site: Site) {
     const s = this.sites.get(site.id)
     if (s) s.site = SiteSchema.parse(site)
+  }
+  async siteByHandoff(code: string) {
+    return [...this.sites.values()].find((s) => s.site.handoff?.code === code)?.site ?? null
+  }
+  async transferSite(siteId: string, toOwnerId: string) {
+    const s = this.sites.get(siteId)
+    if (s) {
+      s.ownerId = toOwnerId
+      s.site = { ...s.site, orgId: toOwnerId }
+    }
   }
   async pagesForSite(siteId: string) {
     const demo = Object.values(SHOWCASE).find((d) => d.site.id === siteId)

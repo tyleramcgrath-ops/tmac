@@ -1,7 +1,7 @@
 import { changePassword, deleteAccount, updateName } from '@/app/actions'
 import { ActionForm } from '@/components/ActionForm'
 import { requireUser } from '@/lib/session'
-import { PRICES, billingReady, loadAccess, priceId } from '@/lib/billing'
+import { PLAN_NAMES, PRICES, billingReady, cleanPlan, loadAccess, priceId } from '@/lib/billing'
 import { getStore } from '@/lib/store'
 import { isAdmin } from '@/lib/admin'
 import { formatDate } from '@/lib/render'
@@ -13,10 +13,12 @@ const NOTES: Record<string, [string, string]> = {
   error: ['bad', 'We couldn’t reach our payment provider. Please try again in a minute.'],
 }
 
-export default async function AccountPage({ searchParams }: { searchParams: Promise<{ billing?: string; why?: string }> }) {
+export default async function AccountPage({ searchParams }: { searchParams: Promise<{ billing?: string; why?: string; plan?: string; approved?: string }> }) {
   const user = await requireUser()
   const sp = await searchParams
-  const note = NOTES[sp.billing ?? '']
+  // A plan chosen elsewhere (approving a site the team built), picked here.
+  const wanted = sp.plan ? cleanPlan(sp.plan) : undefined
+  const note = sp.approved ? (['good', 'Your new website is in your account. Start your plan below and we will put it live.'] as const) : NOTES[sp.billing ?? '']
   // Stripe's exact reason, for the SaySites team only.
   const reason = sp.billing === 'error' && sp.why && isAdmin(user.email) ? sp.why.slice(0, 300) : ''
   const a = await loadAccess(getStore(), user)
@@ -37,7 +39,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
           <p className="muted">Complimentary. Everything is included.</p>
         ) : a.status === 'active' || a.status === 'past_due' ? (
           <>
-            <p><strong>{a.billing?.plan === 'store' ? 'Store' : 'Site'} plan</strong>{a.billing?.interval === 'year' ? ', billed yearly' : ', billed monthly'}</p>
+            <p><strong>{PLAN_NAMES[a.billing?.plan ?? 'site']} plan</strong>{a.billing?.interval === 'year' ? ', billed yearly' : ', billed monthly'}</p>
             <p className="muted">{a.status === 'past_due' ? 'Your last payment didn’t go through. Please update your card to keep your site going.' : `Active${a.billing?.currentPeriodEnd ? `, renews ${formatDate(a.billing.currentPeriodEnd.slice(0, 10))}` : ''}.`}</p>
             <form action={managePlan}><button className="btn btn-ghost" type="submit">Manage billing</button></form>
             <p className="small muted">Switch plans, change your card, see invoices or cancel, all in Manage billing.</p>
@@ -57,13 +59,25 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <form action={startPlan} className="stack plan-form">
                 <fieldset className="plan-pick">
                   <legend className="small muted">Choose a plan</legend>
+                  {priceId('law', 'month') && (
+                    <label>
+                      <input type="radio" name="plan" value="law" defaultChecked={wanted === 'law'} />
+                      <span><b>Law Firm</b> ${PRICES.law.month}/month<small>A law firm website you build and change yourself, with practice area pages, consultation requests, attorney advertising notices and a monthly Google rankings report.</small></span>
+                    </label>
+                  )}
+                  {priceId('lawpro', 'month') && (
+                    <label>
+                      <input type="radio" name="plan" value="lawpro" defaultChecked={wanted === 'lawpro'} />
+                      <span><b>Law Firm, built for you</b> ${PRICES.lawpro.month}/month<small>We build your site for you, you approve it before it goes live, and we keep it up to date when you ask.</small></span>
+                    </label>
+                  )}
                   <label>
-                    <input type="radio" name="plan" value="site" defaultChecked />
+                    <input type="radio" name="plan" value="site" defaultChecked={!wanted || wanted === 'site'} />
                     <span><b>Site</b> ${PRICES.site.month}/month<small>Your website, domain, hosting, SEO, call tracking and Sofie for everyday changes.</small></span>
                   </label>
                   {priceId('store', 'month') && (
                     <label>
-                      <input type="radio" name="plan" value="store" />
+                      <input type="radio" name="plan" value="store" defaultChecked={wanted === 'store'} />
                       <span><b>Store</b> ${PRICES.store.month}/month<small>Everything in Site, plus products and a Shop page. 0% of your sales, and a bigger Sofie allowance.</small></span>
                     </label>
                   )}

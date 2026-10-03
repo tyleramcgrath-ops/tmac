@@ -19,3 +19,9 @@ export const CLAIM_CODE = /^[a-f0-9]{16}f?$/
 export function claimPath(code: string): string {
   return `/redesign/${code.slice(0, 16)}/claim${code.endsWith('f') ? '?v=fresh' : ''}`
 }
+
+// Approving a site the SaySites team built: the code in the link.
+export const APPROVE_CODE = /^[a-f0-9]{24}$/
+export function approvePath(code: string): string {
+  return `/approve/${code}/accept`
+}
