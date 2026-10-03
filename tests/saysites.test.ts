@@ -2125,7 +2125,7 @@ describe('SaySites: every page that brings in visitors can take a lead', () => {
 
 describe('SaySites: SEO (RankForge engines)', async () => {
   const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
-  const { analyzePage, auditSite, checkedToday, emptySeoState, loadSeoState } = await import('../apps/saysites/lib/seo-intel')
+  const { analyzePage, applySeoFix, auditSite, auditStale, checkedToday, descriptionFor, emptySeoState, loadSeoState } = await import('../apps/saysites/lib/seo-intel')
 
   it('audits every published page of a site, rendered in-process, with ranked issues', async () => {
     const { site, pages } = SHOWCASE['hale-and-porter']
@@ -2157,5 +2157,76 @@ describe('SaySites: SEO (RankForge engines)', async () => {
     expect((await loadSeoState(store, 's1')).keywords[0].keyword).toBe('lawyer')
     expect(checkedToday([{ at: new Date().toISOString() }])).toBe(true)
     expect(checkedToday([{ at: '2020-01-01T00:00:00.000Z' }])).toBe(false)
+  })
+
+  it('gives every issue an action, and does not flag our hero image for loading first', async () => {
+    for (const sub of ['hale-and-porter', 'rivertown-plumbing']) {
+      const { site, pages } = SHOWCASE[sub]
+      const audit = await auditSite({ site, pages, redirects: [] }, `https://${sub}.saysites.com`)
+      expect(audit.issues.every((i) => ['auto', 'settings', 'sofie'].includes(i.action.kind)), sub).toBe(true)
+      expect(audit.issues.some((i) => i.ruleId === 'image-optimization'), sub).toBe(false)
+      // A page held back by our originality check says why, in our words.
+      for (const i of audit.issues.filter((x) => x.ruleId === 'noindex')) expect(i.why).not.toMatch(/non-200/)
+    }
+  })
+
+  it('fixes duplicate titles in one click, from the site’s own words', async () => {
+    const { site, pages: original } = SHOWCASE['hale-and-porter']
+    const pages = clone(original)
+    const [a, b] = pages.filter((p) => p.slug && p.status === 'published')
+    b.seo.title = a.seo.title
+    const before = await auditSite({ site, pages, redirects: [] }, 'https://hale-and-porter.saysites.com')
+    const dup = before.issues.find((i) => i.ruleId === 'dup-title')!
+    expect(dup.action.kind).toBe('auto')
+    const changed = applySeoFix(dup, site, pages)
+    expect(changed.length).toBeGreaterThan(0)
+    for (const c of changed) {
+      expect(c.seo.title).toContain(site.business.name)
+      expect(c.seo.title.length).toBeLessThanOrEqual(60)
+      expect(PageSchema.safeParse(c).success).toBe(true)
+    }
+    const fixed = pages.map((p) => changed.find((c) => c.id === p.id) ?? p)
+    const after = await auditSite({ site, pages: fixed, redirects: [] }, 'https://hale-and-porter.saysites.com')
+    expect(after.issues.some((i) => i.ruleId === 'dup-title')).toBe(false)
+  })
+
+  it('fixes duplicate descriptions without creating new duplicates', async () => {
+    const { site, pages: original } = SHOWCASE['lumen-aesthetics']
+    const pages = clone(original)
+    const pub = pages.filter((p) => p.status === 'published')
+    for (const p of pub) p.seo.description = pub[0].seo.description
+    const audit = await auditSite({ site, pages, redirects: [] }, 'https://lumen-aesthetics.saysites.com')
+    const dup = audit.issues.find((i) => i.ruleId === 'dup-meta')!
+    expect(dup.action.kind).toBe('auto')
+    const changed = applySeoFix(dup, site, pages)
+    expect(changed.length).toBeGreaterThan(0)
+    const descs = pages.map((p) => (changed.find((c) => c.id === p.id) ?? p).seo.description)
+    for (const c of changed) {
+      expect(descs.filter((d) => d === c.seo.description).length).toBe(1)
+      expect(c.seo.description).toMatch(/[.!?]$/)
+    }
+  })
+
+  it('builds descriptions only from the page’s own sentences', () => {
+    const { pages } = SHOWCASE['hale-and-porter']
+    const page = pages.find((p) => p.slug && p.status === 'published')!
+    const d = descriptionFor(page)
+    if (d) {
+      expect(d.length).toBeLessThanOrEqual(170)
+      expect(JSON.stringify(page.body)).toContain(d.replace(/…$/, '').split(' ').slice(0, 4).join(' '))
+    }
+  })
+
+  it('audits again after a change or a week', async () => {
+    const { site, pages } = SHOWCASE['hale-and-porter']
+    const audit = await auditSite({ site, pages, redirects: [] }, 'https://hale-and-porter.saysites.com')
+    const at = Date.parse(audit.at)
+    const old = '2020-01-01T00:00:00.000Z'
+    const quiet = { ...site, updatedAt: old }
+    const still = pages.map((p) => ({ ...p, updatedAt: old }))
+    expect(auditStale(audit, quiet, still, at + 1000)).toBe(false)
+    expect(auditStale(audit, quiet, still, at + 8 * 86_400_000)).toBe(true)
+    expect(auditStale(audit, quiet, [{ ...still[0], updatedAt: new Date(at + 5000).toISOString() }, ...still.slice(1)], at + 10_000)).toBe(true)
+    expect(auditStale(undefined, quiet, still)).toBe(true)
   })
 })

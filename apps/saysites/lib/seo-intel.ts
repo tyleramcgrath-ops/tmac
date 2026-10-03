@@ -29,10 +29,13 @@ import { fetchKeywordPosition, serpApiKey } from './rankforge/serp'
 import { checkCitation, perplexityApiKey } from './rankforge/ai-citations'
 import { checkBacklinks, majesticApiKey } from './rankforge/backlinks'
 import type { Scan } from './rankforge/types'
-import { pagePath } from './schema'
+import { tradeLabel } from './league'
+import { pagePath, type Page, type Site } from './schema'
 import { serveSitePath } from './serve'
 import type { SiteBundle } from './sites'
 import type { Store } from './store'
+import { liveUrl } from './urls'
+import { isTemplate, pageText, sentences, vibeCheck } from './vibe'
 
 export interface Scores {
   technical: number
@@ -41,8 +44,14 @@ export interface Scores {
   ai: number
 }
 
+// What the owner can do about an issue, from the SEO tab: SaySites fixes it
+// in one click, the fix lives in Settings, or Sofie does it with them.
+export type SeoAction = { kind: 'auto'; label: string } | { kind: 'settings'; label: string } | { kind: 'sofie'; ask: string }
+
 export interface SeoIssue {
   id: string
+  ruleId: string
+  action: SeoAction
   title: string
   severity: 'critical' | 'warning' | 'info'
   category: string
@@ -111,9 +120,16 @@ export const intelReady = {
   backlinks: () => !!majesticApiKey(),
 }
 
-// RankForge's per-page analysis, applied to HTML we already have.
-export function analyzePage(url: string, html: string, status = 200): CrawlPageResult {
+// RankForge's per-page analysis, applied to HTML we already have. On our own
+// pages the first image is the header logo, not the hero, so RankForge's
+// "first image may load eagerly" allowance goes to the first eager image (the
+// hero, which should load first) instead.
+export function analyzePage(url: string, html: string, status = 200, own = false): CrawlPageResult {
   const signals = extractSignals(html, url, status)
+  if (own) {
+    const eager = (html.match(/<img\b[^>]*>/gi) ?? []).filter((t) => !/\bloading\s*=\s*["']lazy["']/i.test(t)).length
+    signals.imagesMissingLazyLoad = Math.max(0, eager - 1)
+  }
   const fixes = buildFixes(signals, null)
   const scores = { technical: scoreTechnical(fixes), content: scoreContent(signals), schema: scoreSchema(signals), ai: scoreAiReadiness(signals) }
   return {
@@ -160,9 +176,45 @@ export async function auditSite(bundle: SiteBundle, baseUrl: string, industry?: 
     const path = pagePath(p)
     const res = serveSitePath(bundle, path.split('/').filter(Boolean), { preview: false })
     if (res.status !== 200 || !(res.headers.get('content-type') ?? '').includes('text/html')) continue
-    pages.push(analyzePage(`${base}${path}`, await res.text()))
+    pages.push(analyzePage(`${base}${path}`, await res.text(), 200, true))
   }
-  return finishAudit(bundle.site.id, base, pages, industry)
+  const audit = finishAudit(bundle.site.id, base, pages, industry)
+  audit.issues = audit.issues.map((i) => explain(i, bundle))
+  return audit
+}
+
+const byPath = (pages: readonly Page[]) => new Map(pages.filter((p) => p.status === 'published').map((p) => [pagePath(p), p]))
+
+// Turns a RankForge finding into SaySites terms: the real reason a page is
+// held back from Google (our originality check), and what to do about it.
+function explain(issue: SeoIssue, { site, pages }: SiteBundle): SeoIssue {
+  const named = issue.pages.map((u) => byPath(pages).get(u)?.name ?? u).join(', ')
+  const ask = (text: string): SeoAction => ({ kind: 'sofie', ask: text })
+  switch (issue.ruleId) {
+    case 'dup-title':
+    case 'title-length':
+      return { ...issue, action: { kind: 'auto', label: 'Write new titles' } }
+    case 'dup-meta':
+      return { ...issue, action: { kind: 'auto', label: 'Write new descriptions' } }
+    case 'local-business-incomplete':
+      return { ...issue, why: 'Google reads your business details (address, phone, hours) from your site. Some are missing.', action: { kind: 'settings', label: 'Add your details' } }
+    case 'noindex': {
+      const held = issue.pages.map((u) => byPath(pages).get(u)).filter((p): p is Page => !!p).map((p) => ({ p, why: vibeCheck(site, p, pages).held })).filter((x) => x.why)
+      if (!held.length) return { ...issue, action: ask(`Why is ${named || 'this page'} hidden from Google?`) }
+      const names = held.map((x) => x.p.name)
+      const list = names.length === 1 ? names[0] : `${names.slice(0, -1).join(', ')} and ${names.at(-1)}`
+      return {
+        ...issue,
+        title: held.length === 1 ? `${list} is hidden from Google for now` : `${held.length} pages are hidden from Google for now`,
+        why: held.length === 1 ? held[0].why! : held.map((x) => `${x.p.name}: ${x.why}`).join(' '),
+        action: ask(`Help me rewrite the ${list} ${held.length === 1 ? 'page' : 'pages'} in my own words so Google can show ${held.length === 1 ? 'it' : 'them'}.`),
+      }
+    }
+    case 'faq':
+      return { ...issue, title: `Answer common questions on ${named || 'your pages'}`, why: 'A few real questions and answers help visitors decide, and Google and AI tools can show them in results.', action: ask(`Add a few common questions and answers to ${named || 'my main pages'}. Use only what you know is true about my business, and ask me for anything you don’t.`) }
+    default:
+      return { ...issue, action: ask(`Fix this on my site: ${issue.title}${named ? ` (${named})` : ''}`) }
+  }
 }
 
 function finishAudit(siteId: string, base: string, pages: CrawlPageResult[], industry?: string): SeoAudit {
@@ -190,6 +242,8 @@ function finishAudit(siteId: string, base: string, pages: CrawlPageResult[], ind
     pages: pages.map((p) => ({ url: p.url, title: p.title, overall: p.overall, scores: p.scores })),
     issues: recommendations.slice(0, 40).map((r) => ({
       id: r.issueId,
+      ruleId: r.ruleId,
+      action: { kind: 'sofie', ask: `Fix this on my site: ${r.title}` },
       title: r.title,
       severity: r.severity,
       category: r.category,
@@ -200,6 +254,77 @@ function finishAudit(siteId: string, base: string, pages: CrawlPageResult[], ind
       rank: r.priorityRank ?? 0,
     })),
   }
+}
+
+// The audit re-runs by itself whenever the site has changed since, or once a
+// week, when the owner opens the dashboard. Free: it's all in-process.
+export const AUDIT_MAX_AGE_MS = 7 * 86_400_000
+
+export function auditStale(audit: SeoAudit | undefined, site: Site, pages: readonly Page[], now = Date.now()): boolean {
+  if (!audit || !audit.issues.every((i) => i.action)) return true
+  const at = Date.parse(audit.at)
+  if (now - at > AUDIT_MAX_AGE_MS) return true
+  return [site.updatedAt, ...pages.map((p) => p.updatedAt)].some((u) => Date.parse(u) > at)
+}
+
+export async function freshSeoState(store: Store, site: Site, pages?: Page[]): Promise<SeoState> {
+  const state = await loadSeoState(store, site.id)
+  const all = pages ?? (await store.pagesForSite(site.id))
+  if (!auditStale(state.audit, site, all)) return state
+  const redirects = await store.redirectsForSite(site.id)
+  const audit = await auditSite({ site, pages: all, redirects }, liveUrl(site), tradeLabel(site.business.schemaType))
+  const next = { ...state, audit }
+  await store.saveSeoState(site.id, next)
+  return next
+}
+
+// One-click fixes. Every word comes from the site itself (page names, the
+// business name and town, the page's own sentences); nothing is invented.
+const clipTo = (s: string, max: number) => (s.length <= max ? s : s.slice(0, max + 1).replace(/\s+\S*$/, '').replace(/[\s,;:|&-]+$/, ''))
+
+export function titleFor(page: Page, site: Site): string {
+  const b = site.business
+  const town = b.address?.city
+  const where = [town, b.address?.region].filter(Boolean).join(', ')
+  if (!page.slug) return clipTo(`${b.name}${where ? ` | ${where}` : ''}`, 60)
+  return clipTo(`${page.post?.title ?? page.name} | ${b.name}${town ? `, ${town}` : ''}`, 60)
+}
+
+// Whole sentences of the page's own writing (headings and starter text are
+// skipped), up to 155 characters, never the same as another page's.
+export function descriptionFor(page: Page, avoid: ReadonlySet<string> = new Set()): string | null {
+  const own = [...new Set(sentences(pageText(page)).map((x) => x.trim()))].filter((x) => /[.!?]$/.test(x) && !isTemplate(x) && x.length > 20 && x.length <= 155)
+  for (let start = 0; start < own.length; start++) {
+    let out = ''
+    for (const x of own.slice(start)) {
+      const next = out ? `${out} ${x}` : x
+      if (next.length > 155) break
+      out = next
+    }
+    if (out.length >= 50 && !avoid.has(out)) return out
+  }
+  return null
+}
+
+// Applies an "auto" fix to the pages the issue names. Returns the changed
+// pages (unchanged ones are left out).
+export function applySeoFix(issue: SeoIssue, site: Site, pages: readonly Page[]): Page[] {
+  const map = byPath(pages)
+  const targets = issue.pages.map((u) => map.get(u)).filter((p): p is Page => !!p)
+  const changed: Page[] = []
+  const taken = new Set(pages.filter((p) => !targets.includes(p)).map((p) => p.seo.description))
+  for (const p of targets) {
+    if (issue.ruleId === 'dup-title' || issue.ruleId === 'title-length') {
+      const title = titleFor(p, site)
+      if (title !== p.seo.title) changed.push({ ...p, seo: { ...p.seo, title } })
+    } else if (issue.ruleId === 'dup-meta') {
+      const description = descriptionFor(p, taken)
+      if (!description) continue
+      taken.add(description)
+      if (description !== p.seo.description) changed.push({ ...p, seo: { ...p.seo, description } })
+    }
+  }
+  return changed
 }
 
 // A competitor's public site, crawled and scored by RankForge (a few pages).
