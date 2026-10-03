@@ -16,19 +16,19 @@
         overflow: hidden;
       }
       /* full-bleed orange register — its own background clip, never on #root */
-      [id="06-total-ground"] {
+      [id="t06-ground"] {
         position: absolute;
         inset: 0;
         background: #E85D26;
       }
-      [id="06-total-stage"] {
+      [id="t06-stage"] {
         position: absolute;
         inset: 0;
         color: #111111;
         container-type: size;
       }
       /* chrome: mono catalogue numeral + rule stub + kicker */
-      [id="06-total-num"] {
+      [id="t06-num"] {
         position: absolute;
         left: 59px;
         top: 150px;
@@ -39,7 +39,7 @@
         text-transform: uppercase;
         color: rgba(17, 17, 17, 0.40);
       }
-      [id="06-total-kicker"] {
+      [id="t06-kicker"] {
         position: absolute;
         left: 59px;
         top: 560px;
@@ -53,7 +53,7 @@
         text-transform: uppercase;
         color: rgba(17, 17, 17, 0.55);
       }
-      [id="06-total-rule"] {
+      [id="t06-rule"] {
         display: block;
         width: 54px;
         height: 4px;
@@ -61,7 +61,7 @@
         transform-origin: left center;
       }
       /* hero figure: fixed-width box so digit changes never shift layout */
-      [id="06-total-hero"] {
+      [id="t06-hero"] {
         position: absolute;
         left: 0;
         width: 1080px;
@@ -71,7 +71,7 @@
         align-items: center;
         justify-content: center;
       }
-      [id="06-total-figure"] {
+      [id="t06-figure"] {
         display: inline-block;
         font-family: 'Barlow', sans-serif;
         font-weight: 900;
@@ -83,7 +83,7 @@
         transform-origin: center center;
         color: #111111;
       }
-      [id="06-total-hair"] {
+      [id="t06-hair"] {
         position: absolute;
         left: 59px;
         right: 59px;
@@ -92,7 +92,7 @@
         background: rgba(17, 17, 17, 0.20);
         transform-origin: left center;
       }
-      [id="06-total-lines"] {
+      [id="t06-lines"] {
         position: absolute;
         left: 59px;
         top: 1030px;
@@ -103,12 +103,12 @@
         letter-spacing: -0.02em;
         color: rgba(17, 17, 17, 0.75);
       }
-      [id="06-total-l1"],
-      [id="06-total-l2"] {
+      [id="t06-l1"],
+      [id="t06-l2"] {
         display: block;
         white-space: nowrap;
       }
-      [id="06-total-pill"] {
+      [id="t06-pill"] {
         position: absolute;
         left: 59px;
         top: 1312px;
@@ -125,18 +125,18 @@
       }
     </style>
 
-    <div id="06-total-ground" class="clip" data-start="0" data-duration="6.336" data-track-index="0"></div>
+    <div id="t06-ground" class="clip" data-start="0" data-duration="6.336" data-track-index="0"></div>
 
-    <div id="06-total-stage" class="clip" data-start="0" data-duration="6.336" data-track-index="1">
-      <div id="06-total-num">No. 06</div>
-      <div id="06-total-kicker"><span id="06-total-rule"></span><span id="06-total-kicker-text">Year one · total</span></div>
-      <div id="06-total-hero"><span id="06-total-figure">$46,200</span></div>
-      <div id="06-total-hair"></div>
-      <div id="06-total-lines">
-        <span id="06-total-l1">in year one.</span>
-        <span id="06-total-l2">on top of the car.</span>
+    <div id="t06-stage" class="clip" data-start="0" data-duration="6.336" data-track-index="1">
+      <div id="t06-num">No. 06</div>
+      <div id="t06-kicker"><span id="t06-rule"></span><span id="t06-kicker-text">Year one · total</span></div>
+      <div id="t06-hero"><span id="t06-figure">$46,200</span></div>
+      <div id="t06-hair"></div>
+      <div id="t06-lines">
+        <span id="t06-l1">in year one.</span>
+        <span id="t06-l2">on top of the car.</span>
       </div>
-      <div id="06-total-pill">≈ $4,900 / month</div>
+      <div id="t06-pill">≈ $4,900 / month</div>
     </div>
 
     <script>

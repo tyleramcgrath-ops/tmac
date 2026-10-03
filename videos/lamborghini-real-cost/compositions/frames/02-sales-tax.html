@@ -234,8 +234,10 @@
         // ---- Scene 1: kicker slides in ("Sales tax") ----
         tl.fromTo("#s02-stub", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power3.out" }, W.sales);
         tl.fromTo("#s02-kicker", { x: -90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.42, ease: "expo.out" }, W.sales + 0.04);
-        // "tax": kicker tracking tightens to settle
-        tl.fromTo("#s02-kicker", { letterSpacing: "0.3em" }, { letterSpacing: "0.14em", duration: 0.5, ease: "power3.out" }, W.tax);
+        // kicker tracking tightens from wide, settling through "tax"
+        tl.fromTo("#s02-kicker", { letterSpacing: "0.32em" }, { letterSpacing: "0.14em", duration: 0.8, ease: "power2.out" }, W.sales + 0.04);
+        // "tax": stub accent extends under the kicker
+        tl.fromTo("#s02-stub", { scaleX: 1 }, { scaleX: 2, duration: 0.35, ease: "power3.out", immediateRender: false }, W.tax);
         // "alone": stat-card top hairline draws out from center (anticipation)
         tl.fromTo("#s02-card-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.inOut" }, W.alone);
 

@@ -1,0 +1,368 @@
+<template id="03-depreciation-template">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face{font-family:"Barlow";font-weight:500;font-style:normal;font-display:block;src:url("assets/fonts/Barlow-500.woff2") format("woff2");}
+    @font-face{font-family:"Barlow";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Barlow-700.woff2") format("woff2");}
+    @font-face{font-family:"Barlow";font-weight:800;font-style:normal;font-display:block;src:url("assets/fonts/Barlow-800.woff2") format("woff2");}
+    @font-face{font-family:"Barlow";font-weight:900;font-style:normal;font-display:block;src:url("assets/fonts/Barlow-900.woff2") format("woff2");}
+    @font-face{font-family:"IBM Plex Mono";font-weight:500;font-style:normal;font-display:block;src:url("assets/fonts/IBM_Plex_Mono-500.woff2") format("woff2");}
+    @font-face{font-family:"IBM Plex Mono";font-weight:600;font-style:normal;font-display:block;src:url("assets/fonts/IBM_Plex_Mono-600.woff2") format("woff2");}
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      color: #F0ECE5;
+      font-family: "Barlow", sans-serif;
+    }
+    #d03-bg {
+      position: absolute;
+      inset: 0;
+      background: #111111;
+    }
+    #d03-stage {
+      position: absolute;
+      inset: 0;
+      transform-origin: 540px 820px;
+    }
+    /* catalogue numeral — background */
+    #d03-num {
+      position: absolute;
+      right: 40px;
+      top: 300px;
+      font-weight: 900;
+      font-size: 460px;
+      line-height: 0.8;
+      letter-spacing: -0.04em;
+      color: #1A1A18;
+    }
+    /* shared running total — pinned top-center */
+    #d03-total {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 150px;
+      text-align: center;
+    }
+    #d03-total-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 24px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888880;
+    }
+    #d03-total-value {
+      display: inline-block;
+      margin-top: 6px;
+      font-weight: 900;
+      font-size: 96px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #E85D26;
+      transform-origin: 50% 60%;
+    }
+    /* kicker */
+    #d03-kicker {
+      position: absolute;
+      left: 60px;
+      top: 392px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    #d03-rule {
+      width: 36px;
+      height: 2px;
+      background: #E85D26;
+    }
+    #d03-kicker-text {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      font-size: 28px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #E85D26;
+    }
+    /* chart */
+    #d03-chart {
+      position: absolute;
+      left: 90px;
+      top: 470px;
+      width: 900px;
+      height: 560px;
+    }
+    #d03-chart svg {
+      position: absolute;
+      inset: 0;
+      width: 900px;
+      height: 560px;
+      overflow: visible;
+    }
+    .d03-grid {
+      stroke: #282826;
+      stroke-width: 1;
+    }
+    #d03-axis {
+      stroke: #505048;
+      stroke-width: 2;
+    }
+    #d03-ref {
+      stroke: #505048;
+      stroke-width: 2;
+      stroke-dasharray: 10 10;
+      fill: none;
+    }
+    #d03-area {
+      fill: #E85D26;
+      opacity: 0;
+    }
+    #d03-line {
+      fill: none;
+      stroke: #E85D26;
+      stroke-width: 10;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+    }
+    .d03-drop {
+      stroke: #E85D26;
+      stroke-width: 2;
+      opacity: 0.55;
+    }
+    #d03-bracket {
+      stroke: #F0ECE5;
+      stroke-width: 2;
+      fill: none;
+    }
+    .d03-dot {
+      fill: #111111;
+      stroke: #E85D26;
+      stroke-width: 6;
+    }
+    .d03-axis-label {
+      position: absolute;
+      top: 582px;
+      width: 120px;
+      margin-left: -60px;
+      text-align: center;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.14em;
+      color: #888880;
+    }
+    .d03-val {
+      position: absolute;
+      font-weight: 800;
+      font-size: 44px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #d03-v0 { left: 0px; top: 26px; color: #F0ECE5; }
+    #d03-v5 { right: -20px; top: 488px; color: #F0ECE5; }
+    #d03-pct {
+      position: absolute;
+      right: 70px;
+      top: 220px;
+      font-weight: 900;
+      font-size: 104px;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #E85D26;
+      white-space: nowrap;
+      transform-origin: 100% 50%;
+    }
+    /* hero figure */
+    #d03-figure {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 1150px;
+      border-top: 1px solid #282826;
+      padding-top: 40px;
+    }
+    #d03-figure-row {
+      display: flex;
+      align-items: baseline;
+      gap: 22px;
+      transform-origin: 0% 70%;
+    }
+    #d03-fig-num {
+      font-weight: 900;
+      font-size: 184px;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #E85D26;
+      white-space: nowrap;
+    }
+    #d03-fig-unit {
+      font-weight: 700;
+      font-size: 76px;
+      letter-spacing: -0.02em;
+      color: #F0ECE5;
+      white-space: nowrap;
+    }
+    #d03-source {
+      margin-top: 36px;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888880;
+    }
+    #d03-source b { color: #E85D26; font-weight: 600; }
+  </style>
+
+  <div id="root" data-composition-id="03-depreciation" data-start="0" data-duration="7.531" data-width="1080" data-height="1920">
+    <div id="d03-bg" class="clip" data-start="0" data-duration="7.531" data-track-index="0"></div>
+
+    <div id="d03-stage" class="clip" data-start="0" data-duration="7.531" data-track-index="1">
+      <div id="d03-num">02</div>
+
+      <div id="d03-kicker">
+        <div id="d03-rule"></div>
+        <div id="d03-kicker-text">Depreciation</div>
+      </div>
+
+      <div id="d03-chart">
+        <svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+          <line class="d03-grid" x1="0" y1="93" x2="900" y2="93" />
+          <line class="d03-grid" x1="0" y1="214" x2="900" y2="214" />
+          <line class="d03-grid" x1="0" y1="335" x2="900" y2="335" />
+          <line class="d03-grid" x1="0" y1="456" x2="900" y2="456" />
+          <line id="d03-axis" x1="0" y1="560" x2="900" y2="560" />
+          <path id="d03-area" d="" />
+          <line id="d03-ref" x1="30" y1="93" x2="870" y2="93" />
+          <g id="d03-drops"></g>
+          <path id="d03-line" d="" />
+          <path id="d03-bracket" d="M 850 93 L 870 93 L 870 456 L 850 456" />
+          <circle id="d03-dot0" class="d03-dot" cx="30" cy="93" r="14" />
+          <circle id="d03-dot5" class="d03-dot" cx="870" cy="456" r="14" />
+        </svg>
+        <div id="d03-axis-labels"></div>
+        <div id="d03-v0" class="d03-val">$250k</div>
+        <div id="d03-v5" class="d03-val">$182k</div>
+        <div id="d03-pct">&minus;34.2%</div>
+      </div>
+
+      <div id="d03-figure">
+        <div id="d03-figure-row">
+          <div id="d03-fig-num">&minus;$17,100</div>
+          <div id="d03-fig-unit">/ yr</div>
+        </div>
+        <div id="d03-source"><b>/</b> iSeeCars: &minus;34.2% over 5 yrs</div>
+      </div>
+
+      <div id="d03-total">
+        <div id="d03-total-label">Year-one total</div>
+        <div id="d03-total-value">$17,500</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var ID = "03-depreciation";
+      var root = document.querySelector('[data-composition-id="' + ID + '"]');
+      var $ = function (sel) { return root.querySelector(sel); };
+      var $$ = function (sel) { return root.querySelectorAll(sel); };
+      var SVGNS = "http://www.w3.org/2000/svg";
+
+      // ── chart geometry: value $250k (yr 0) → $182k (yr 5), constant-rate decay ──
+      var X = function (yr) { return 30 + yr * 168; };
+      var Y = function (v) { return 40 + ((260 - v) / 90) * 480; }; // 250 → 93, 182 → 456
+      var V = function (yr) { return 250 * Math.pow(182 / 250, yr / 5); };
+      var pts = [];
+      for (var i = 0; i <= 50; i++) {
+        var yr = i / 10;
+        pts.push([X(yr), Y(V(yr))]);
+      }
+      var d = "M " + pts.map(function (p) { return p[0].toFixed(2) + " " + p[1].toFixed(2); }).join(" L ");
+      var line = $("#d03-line");
+      line.setAttribute("d", d);
+      $("#d03-area").setAttribute("d", d + " L 870 560 L 30 560 Z");
+
+      // per-year drop hairlines (the "÷5 averaging" beat) + axis labels
+      var drops = $("#d03-drops");
+      var labels = $("#d03-axis-labels");
+      for (var y = 0; y <= 5; y++) {
+        var lab = document.createElement("div");
+        lab.className = "d03-axis-label";
+        lab.style.left = X(y) + "px";
+        lab.textContent = "YR " + y;
+        labels.appendChild(lab);
+        if (y >= 1) {
+          var ln = document.createElementNS(SVGNS, "line");
+          ln.setAttribute("class", "d03-drop");
+          ln.setAttribute("x1", X(y));
+          ln.setAttribute("x2", X(y));
+          ln.setAttribute("y1", 560);
+          ln.setAttribute("y2", Y(V(y)));
+          drops.appendChild(ln);
+        }
+      }
+
+      var len = line.getTotalLength() * 1.02;
+      line.style.strokeDasharray = len;
+      line.style.strokeDashoffset = len;
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ── camera: one slow continuous push-in under the whole shot ──
+      tl.fromTo("#d03-stage", { scale: 1 }, { scale: 1.035, duration: 7.531, ease: "none" }, 0);
+
+      // ── Scene 1 (0.0–0.6s): kicker + chart frame + axis labels ──
+      // running total is the shared pinned element — already on screen at t=0
+      tl.fromTo("#d03-num", { opacity: 0.4, x: 60 }, { opacity: 1, x: 0, duration: 1.2, ease: "power3.out" }, 0);
+      tl.fromTo("#d03-rule", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.3, ease: "power3.out" }, 0);
+      tl.fromTo("#d03-kicker-text", { opacity: 0.2, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 0.05);
+      tl.fromTo("#d03-kicker-text", { letterSpacing: "0.14em" }, { letterSpacing: "0.22em", duration: 0.5, ease: "power2.out" }, 0.43);
+      tl.fromTo(".d03-grid", { scaleX: 0, transformOrigin: "0px 0px" }, { scaleX: 1, duration: 0.5, ease: "power3.out", stagger: 0.06 }, 0.05);
+      tl.fromTo("#d03-axis", { scaleX: 0, transformOrigin: "0px 0px" }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 0.1);
+      tl.fromTo(".d03-axis-label", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out", stagger: 0.06 }, 0.25);
+
+      // ── Scene 2 (0.6–4.7s): start point lands, line falls, −34.2% pops ──
+      tl.fromTo("#d03-dot0", { scale: 0, transformOrigin: "30px 93px" }, { scale: 1, duration: 0.4, ease: "back.out(2.5)" }, 1.66);
+      tl.fromTo("#d03-v0", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 1.82);
+      // trend line draws downward left→right on "loses … five years"
+      tl.to(line, { strokeDashoffset: 0, duration: 2.15, ease: "power1.inOut" }, 2.11);
+      tl.fromTo("#d03-area", { opacity: 0 }, { opacity: 0.1, duration: 1.6, ease: "power1.out" }, 2.6);
+      // dashed "where it started" reference on "a third"
+      tl.fromTo("#d03-ref", { opacity: 0, scaleX: 0, transformOrigin: "30px 93px" }, { opacity: 1, scaleX: 1, duration: 0.7, ease: "power2.out" }, 3.21);
+      // end point lands on "five years"
+      tl.fromTo("#d03-dot5", { scale: 0, transformOrigin: "870px 456px" }, { scale: 1, duration: 0.4, ease: "back.out(2.5)" }, 4.2);
+      tl.fromTo("#d03-v5", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 4.25);
+      tl.fromTo("#d03-bracket", { opacity: 0, scaleY: 0, transformOrigin: "870px 93px" }, { opacity: 1, scaleY: 1, duration: 0.35, ease: "power3.out" }, 4.5);
+      tl.fromTo("#d03-pct", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power4.out" }, 4.68);
+
+      // ── averaging beat: the drop splits into 5 yearly slices on "That's roughly" ──
+      tl.fromTo(".d03-drop", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.08 }, 5.34);
+      tl.fromTo("#d03-chart", { y: 0 }, { y: -24, duration: 0.6, ease: "power2.inOut" }, 5.6);
+
+      // ── Scene 3 (6.09s→): −$17,100 / yr slams in; running total counts up ──
+      tl.fromTo("#d03-figure", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, 6.09);
+      tl.fromTo("#d03-figure-row", { scale: 1.45, x: -20, filter: "blur(10px)" }, { scale: 1, x: 0, filter: "blur(0px)", duration: 0.32, ease: "power4.out" }, 6.09);
+      tl.fromTo("#d03-fig-unit", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 6.3);
+
+      var counter = { v: 17500 };
+      var totalEl = $("#d03-total-value");
+      tl.fromTo(counter, { v: 17500 }, {
+        v: 34600, duration: 0.9, ease: "power2.out",
+        onUpdate: function () {
+          totalEl.textContent = "$" + (Math.round(counter.v / 100) * 100).toLocaleString("en-US");
+        }
+      }, 6.09);
+      tl.fromTo(totalEl, { scale: 1 }, { scale: 1.12, duration: 0.15, ease: "power2.out" }, 6.09);
+      tl.to(totalEl, { scale: 1, duration: 0.5, ease: "power2.out" }, 6.24);
+
+      tl.fromTo("#d03-source", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power1.out" }, 6.7);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines[ID] = tl;
+    })();
+  </script>
+</template>
