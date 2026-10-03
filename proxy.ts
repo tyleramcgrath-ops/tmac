@@ -2,7 +2,7 @@
 // renderer; saysites.com itself (homepage, login, dashboard) passes through.
 
 import { NextResponse, type NextRequest } from 'next/server'
-import { classifyHost } from './lib/hosts'
+import { DOMAIN_CHECK_PATH, DOMAIN_CHECK_REPLY, classifyHost } from './lib/hosts'
 
 export function proxy(req: NextRequest) {
   const kind = classifyHost(req.headers.get('host'))
@@ -15,6 +15,10 @@ export function proxy(req: NextRequest) {
     url.pathname = pathname.replace(/%5c|\\/gi, '') || '/'
     return NextResponse.redirect(url, 308)
   }
+
+  // Lets the dashboard confirm a customer's domain has reached us, before
+  // the site switches to it.
+  if (pathname === DOMAIN_CHECK_PATH) return new NextResponse(DOMAIN_CHECK_REPLY, { headers: { 'content-type': 'text/plain', 'cache-control': 'no-store' } })
 
   if (kind.kind === 'customer') {
     const url = req.nextUrl.clone()
