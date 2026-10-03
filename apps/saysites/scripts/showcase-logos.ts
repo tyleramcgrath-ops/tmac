@@ -97,7 +97,22 @@ const SPECS: Record<string, LogoSpec> = {
     tagline: { text: 'Attorneys at Law', font: 'Libre Caslon Text', weight: 400, case: 'upper', tracking: 0.3 },
     taglineStyle: 'rule',
     mark: { kind: 'none' },
-    colors: { name: '#111827', tagline: '#4b5563', mark: '#1f2937', markInk: '#ffffff' },
+    colors: { name: '#211a18', tagline: '#6e2a2a', mark: '#6e2a2a', markInk: '#fbf9f4' },
+  },
+  'calder-and-vane': {
+    layout: 'wordmark',
+    align: 'center',
+    name: { text: 'Calder & Vane', font: 'Cormorant Garamond', weight: 600, case: 'upper', tracking: 0.08 },
+    tagline: { text: 'Injury Lawyers', font: 'Josefin Sans', weight: 600, case: 'upper', tracking: 0.42 },
+    taglineStyle: 'rule',
+    mark: { kind: 'none' },
+    colors: { name: '#0f2438', tagline: '#1a4f86', mark: '#1a4f86', markInk: '#ffffff' },
+  },
+  'ashgrove-defense': {
+    layout: 'mark-left',
+    name: { text: 'Ashgrove', font: 'Archivo', weight: 800, case: 'as-is', tracking: -0.01, accent: { text: 'Defense', weight: 400 } },
+    mark: { kind: 'monogram', letters: 'A', shape: 'square', style: 'solid', font: 'Archivo', weight: 800 },
+    colors: { name: '#111827', accent: '#2f6b4f', tagline: '#4b5563', mark: '#173a2b', markInk: '#ffffff' },
   },
   'field-and-thread': {
     layout: 'mark-left',

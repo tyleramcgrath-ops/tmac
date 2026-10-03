@@ -2,7 +2,7 @@
 // same starter code every customer gets, with fixed ids so they never change
 // between deploys, and served from /preview/<subdomain>.
 
-import { PHOTOS, unsplash } from './photos'
+import { PHOTOS, unsplash, type PhotoSet } from './photos'
 import { buildBlogIndex, buildPostPage } from './posts'
 import type { Page, Product, Site } from './schema'
 import { buildStarterSite, type BusinessTypeKey, type Design } from './starter'
@@ -19,10 +19,18 @@ import { content as rosiesBakeryContent } from './showcase-content/rosies-bakery
 import { content as saltAndStoneContent } from './showcase-content/salt-and-stone'
 import { content as summitHeatingAirContent } from './showcase-content/summit-heating-air'
 import { content as willowDentalContent } from './showcase-content/willow-dental'
+import { content as calderAndVaneContent } from './showcase-content/calder-and-vane'
+import { content as ashgroveDefenseContent } from './showcase-content/ashgrove-defense'
 
 const NOW = '2026-09-24T00:00:00.000Z'
 export const SHOWCASE_ORG = 'org_showcase'
 const OWNER = SHOWCASE_ORG
+
+// A law example's own photos, so the three law designs don't open alike.
+function lawPhotos(hero: [string, string], rest: [string, string][]): PhotoSet {
+  const [a, b, c, ...extra] = rest.map(([id, alt]) => unsplash(id, alt, 1600, 1067))
+  return { hero: unsplash(hero[0], hero[1], 2000, 1333), cards: [a, b, c], extra }
+}
 
 function make(input: Parameters<typeof buildStarterSite>[0], subdomain: string): { site: Site; pages: Page[] } {
   const demo = buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })
@@ -364,11 +372,80 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       postalCode: '43215',
       hours: ['Mo-Fr 08:30-17:30'],
       services: ['Estate planning', 'Family law', 'Real estate closings', 'Small business law'],
-      palette: 'slate',
+      palette: 'oxblood',
+      lawStyle: 'classic',
+      attorneys: [
+        { name: 'Margaret Hale', role: 'Partner', bio: 'Margaret works with families on wills, trusts and planning for the people they love, and helps them through probate when the time comes.' },
+        { name: 'David Porter', role: 'Partner', bio: 'David handles real estate closings and the everyday legal needs of small businesses, from contracts to setting up a new company.' },
+        { name: 'Elena Brooks', role: 'Associate', bio: 'Elena focuses on family law, guiding clients through divorce, parenting plans and support with care and clear information.' },
+      ],
       tagline: 'Clear, practical legal help for Ohio families and small businesses.',
       content: haleAndPorterContent,
     },
     'hale-and-porter'
+  ),
+  'calder-and-vane': make(
+    {
+      name: 'Calder & Vane',
+      type: 'lawyer',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'San Antonio',
+      region: 'TX',
+      phone: '(555) 210-4418',
+      chat: { kind: 'sms', to: '(555) 210-4418' },
+      street: '300 Convent Street',
+      postalCode: '78205',
+      hours: ['Mo-Fr 08:00-18:00'],
+      services: ['Car accidents', 'Truck accidents', 'Slip and fall injuries', 'Wrongful death'],
+      palette: 'ocean',
+      lawStyle: 'counsel',
+      photos: lawPhotos(['1486406146926-c627a92ad1ab', 'Office towers seen from the street'], [
+        ['1436450412740-6b988f486c6b', 'Stone columns of a courthouse'],
+        ['1521791055366-0d553872125f', 'Hand signing a paper contract'],
+        ['1454165804606-c3d57bc86b40', 'People taking notes at a meeting table'],
+        ['1479142506502-19b3a3b7ff33', 'Old law books on a wooden shelf'],
+        ['1589829545856-d10d557cf95f', 'Statue of Lady Justice with scales'],
+      ]),
+      headline: 'Hurt in a crash or a fall? Get clear answers first.',
+      attorneys: [
+        { name: 'Ruth Calder', role: 'Founding partner', bio: 'Ruth represents people hurt in car and truck crashes and families who have lost someone, and explains every step in plain language.' },
+        { name: 'Marcus Vane', role: 'Founding partner', bio: 'Marcus handles injury claims from falls and unsafe property, and works with clients from the first call to the last signature.' },
+      ],
+      tagline: 'Personal injury help for people and families across San Antonio.',
+      content: calderAndVaneContent,
+    },
+    'calder-and-vane'
+  ),
+  'ashgrove-defense': make(
+    {
+      name: 'Ashgrove Defense',
+      type: 'lawyer',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Nashville',
+      region: 'TN',
+      phone: '(555) 615-3070',
+      chat: { kind: 'sms', to: '(555) 615-3070' },
+      street: '1 Public Square',
+      postalCode: '37201',
+      hours: ['Mo-Fr 08:30-17:30'],
+      services: ['DUI defense', 'Drug charges', 'Assault charges', 'Expungement'],
+      palette: 'forest',
+      lawStyle: 'modern',
+      photos: lawPhotos(['1507679799987-c73779587ccf', 'Attorney in a dark suit buttoning his jacket'], [
+        ['1436450412740-6b988f486c6b', 'Stone columns of a courthouse'],
+        ['1450101499163-c8848c66ca85', 'Person signing a document at a desk'],
+        ['1505664194779-8beaceb93744', 'Library with busts and shelves of books'],
+        ['1521791055366-0d553872125f', 'Hand signing a paper contract'],
+        ['1454165804606-c3d57bc86b40', 'People taking notes at a meeting table'],
+      ]),
+      headline: 'Charged with a crime in Nashville? Talk to us first.',
+      attorneys: [
+        { name: 'Jonah Ashgrove', role: 'Attorney', bio: 'Jonah defends people charged with DUI, drug and assault offenses, and helps clients clear old records so they can move forward.' },
+      ],
+      tagline: 'Criminal defense for people in Nashville and Middle Tennessee.',
+      content: ashgroveDefenseContent,
+    },
+    'ashgrove-defense'
   ),
   'field-and-thread': withShop(make(
     {
@@ -410,6 +487,8 @@ export const SHOWCASE_INFO: Record<string, { type: BusinessTypeKey; kind: string
   'salt-and-stone': { type: 'salon', kind: 'Hair salon', place: 'Savannah, GA' },
   'willow-dental': { type: 'dentist', kind: 'Dentist', place: 'Madison, WI' },
   'hale-and-porter': { type: 'lawyer', kind: 'Law firm', place: 'Columbus, OH' },
+  'calder-and-vane': { type: 'lawyer', kind: 'Injury law firm', place: 'San Antonio, TX' },
+  'ashgrove-defense': { type: 'lawyer', kind: 'Criminal defense firm', place: 'Nashville, TN' },
   'rosies-bakery': { type: 'bakery', kind: 'Bakery', place: 'Portland, OR' },
   'olive-and-ember': { type: 'restaurant', kind: 'Restaurant', place: 'Asheville, NC', design: 'upscale' },
   'field-and-thread': { type: 'store', kind: 'Shop', place: 'Burlington, VT' },

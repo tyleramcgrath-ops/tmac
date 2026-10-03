@@ -77,11 +77,23 @@ export const PHOTOS: Record<string, PhotoSet> = {
     ['1566698629409-787a68fc5724', 'A basket of bread on a dark table'],
     ['1567042661848-7161ce446f85', 'Hands holding a stack of country loaves'],
   ]),
-  lawyer: set(['1758518731462-d091b0b4ed0d', 'Lawyer and clients signing a contract'], [
-    ['1589994965851-a8f479c573a9', 'Statue of Lady Justice holding scales'],
-    ['1562564055-71e051d33c19', 'Client signing legal documents'],
-    ['1571055931484-22dce9d6c510', 'Conference room with chairs around a table'],
-  ]),
+  lawyer: {
+    ...set(['1758518731462-d091b0b4ed0d', 'Lawyer and clients signing a contract'], [
+      ['1589994965851-a8f479c573a9', 'Statue of Lady Justice holding scales'],
+      ['1562564055-71e051d33c19', 'Client signing legal documents'],
+      ['1571055931484-22dce9d6c510', 'Conference room with chairs around a table'],
+    ]),
+    // Law designs use more photos than most; these keep them from repeating.
+    extra: [
+      unsplash('1479142506502-19b3a3b7ff33', 'Old law books on a wooden shelf', 1600, 1067),
+      unsplash('1436450412740-6b988f486c6b', 'Stone columns of a courthouse', 1600, 1067),
+      unsplash('1450101499163-c8848c66ca85', 'Person signing a document at a desk', 1600, 1067),
+      unsplash('1505664194779-8beaceb93744', 'Library with busts and shelves of books', 1600, 1067),
+      unsplash('1521791055366-0d553872125f', 'Hand signing a paper contract', 1600, 1067),
+      unsplash('1454165804606-c3d57bc86b40', 'People taking notes at a meeting table', 1600, 1067),
+      unsplash('1486406146926-c627a92ad1ab', 'Office towers seen from the street', 1600, 1067),
+    ],
+  },
   autorepair: set(['1727893119356-1702fe921cf9', 'Mechanics working on cars in a bright workshop'], [
     ['1625047509248-ec889cbff17f', 'Mechanic inspecting a car engine'],
     ['1619642751034-765dfdf7c58e', 'Hands using a wrench on an engine'],
