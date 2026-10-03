@@ -15,10 +15,11 @@ export const metadata: Metadata = {
 }
 
 const QUESTIONS: [string, string, string][] = [
+  ['Is your site built to get you leads?', 'Many sites look fine but make people hunt for a phone number or a form.', 'Every SaySites site puts a request form on the home page, makes your number one tap on every phone, and lets visitors text you right from the page.'],
   ['Who owns your website?', 'Some websites belong to the company that built them, and leaving means starting again.', 'With SaySites your site, your words and your domain are yours. No long contract holds them hostage.'],
   ['Are you locked into a contract?', 'Long agreements are common in this business, and they keep you paying whether the site works or not.', 'We have no long-term contract. We keep your business by keeping your site worth having.'],
   ['How fast is your site, really?', 'Speed decides whether people wait for your page or go back to the next result. You can test any site yourself with Google’s PageSpeed Insights.', 'Every SaySites page has to score 95 or more on the speed check before it can go live, and our example sites score 100.'],
-  ['Can you see what you’re paying for?', 'Monthly reports full of numbers can hide whether anything changed.', 'You get a weekly Visibility Score that shows where your site stands and what would move it, in plain English, and you see every change before it goes live.'],
+  ['Can you see the leads your site brings in?', 'Monthly reports full of numbers can hide the one thing that matters: did anyone get in touch.', 'Your dashboard shows every message, every tap on your phone number and every visit, page by page, with a weekly Visibility Score in plain English.'],
   ['How long does a small change take?', 'A new photo or a new line of text shouldn’t take a support ticket and a week.', 'Ask us, or log in and change it yourself in plain words. Either way you see it before it goes live.'],
   ['Did you see the site before you paid for it?', 'Most businesses pick a website company from a pitch.', 'We start with a free redesign of your current site, so you can judge the work itself before you decide anything.'],
   ['Does your site follow Google’s rules?', 'Shortcuts that worked once can get a site pushed down later.', 'Every SaySites site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up. We never buy links or invent reviews.'],

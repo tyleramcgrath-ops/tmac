@@ -34,7 +34,9 @@ Prices live only in the dashboard (account and billing). Why to switch from
 an agency lives on /about only, written as questions to ask any website
 company; never name or make claims about a competitor. /trades and the old
 /compare pages redirect. Self-serve sign-up still works at /signup but isn't
-promoted.
+promoted. The message is leads: every page is built to turn a
+search into a call, a request or a booking, and owners see every message,
+call tap and visit. Never promise a number of leads or rankings.
 
 ## Money check (the owner asked for this, permanently)
 
