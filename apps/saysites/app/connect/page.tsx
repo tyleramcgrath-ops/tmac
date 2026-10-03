@@ -34,25 +34,25 @@ export default function ConnectPage() {
               <div className="cx-search">Rosie’s Bakery Portland</div>
               <div className="cx-form">
                 <div><span>Phone</span><b>(503) 555-0142</b></div>
-                <div><span>Hours</span><b>Tue–Fri 7am–3pm</b></div>
+                <div><span>Hours</span><b>Tue-Fri 7am-3pm</b></div>
                 <span className="cx-done">✓ Filled in from Google</span>
               </div>
             </div>
             <h3>Google Business Profile {!google && <small>Coming soon</small>}</h3>
             <p>Search for your business, tap your listing, and your new site starts with your name, address, phone and hours, matching Google exactly.</p>
-            <span className="go">How it works →</span>
+            <span className="go">How it works</span>
           </a>
           <a className="cx-card" href="/connect/booking">
             <div className="cx-pic" aria-hidden="true">
               <div className="cx-site">
-                <div className="cx-site-bar">20% off your first visit →</div>
+                <div className="cx-site-bar">20% off your first visit</div>
                 <div className="cx-site-head"><b>Maple Street Salon</b><i>Book now</i></div>
               </div>
               <div className="cx-chips"><span>Square</span><span>Calendly</span><span>Vagaro</span><span>Booksy</span><span>OpenTable</span></div>
             </div>
             <h3>Your booking app</h3>
             <p>Paste your booking link and a Book online button appears on every page, plus an optional promotion bar for your latest offer.</p>
-            <span className="go">How it works →</span>
+            <span className="go">How it works</span>
           </a>
           <div className="cx-card">
             <div className="cx-pic" aria-hidden="true" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, padding: 14 }}>
@@ -66,7 +66,7 @@ export default function ConnectPage() {
           <div className="cx-card">
             <div className="cx-pic" aria-hidden="true">
               <div className="cx-form">
-                <div><span>Hours</span><b>Tue–Fri 7am–3pm</b></div>
+                <div><span>Hours</span><b>Tue-Fri 7am-3pm</b></div>
                 <div><span>Address</span><b>2210 SE Division St</b></div>
                 <div><span>Photos</span><b>From your page</b></div>
               </div>

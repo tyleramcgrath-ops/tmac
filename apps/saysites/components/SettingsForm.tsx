@@ -117,7 +117,7 @@ export function SettingsForm({ action, values, palettes, designs, flairs }: {
 
       <fieldset className="card">
         <legend>Header</legend>
-        <label className="field"><span>Top bar message <em className="muted">(leave empty to hide it)</em></span><input className="input" name="topbar" defaultValue={values.topbar} maxLength={120} placeholder="Licensed and insured · Same-day service" /></label>
+        <label className="field"><span>Top bar message <em className="muted">(leave empty to hide it)</em></span><input className="input" name="topbar" defaultValue={values.topbar} maxLength={120} placeholder="Licensed and insured, Same-day service" /></label>
         {values.hasCta && <label className="field"><span>Header button</span><input className="input" name="ctaLabel" defaultValue={values.ctaLabel} maxLength={40} /></label>}
         <label className="check"><input type="checkbox" name="callBar" defaultChecked={values.callBar} /> On phones, show a Call button pinned to the bottom of the screen <em className="muted">(needs a phone number)</em></label>
       </fieldset>

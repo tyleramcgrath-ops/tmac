@@ -27,7 +27,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <section className="page-hero">
         <div className="wrap">
-          <p className="kicker">Compare · for law firms</p>
+          <p className="kicker">Compare, for law firms</p>
           <h1>{c.h1}</h1>
           <p>{c.lede}</p>
         </div>

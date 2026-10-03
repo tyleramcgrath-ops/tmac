@@ -54,11 +54,11 @@ export default function TemplatesPage() {
                           <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 100vw, 400px" style={{ objectFit: 'cover' }} />
                           <span className={`gal-plaque${g.design === 'upscale' ? ' is-dark' : ''}`}><img src={`/media/logos/${e.sub}.svg`} alt="" /></span>
                           <div className="gal-over">
-                            <small>{e.kind} · {e.place}</small>
+                            <small>{e.kind}, {e.place}</small>
                             <strong className={g.design === 'bold' ? '' : 'serif'}>{e.site.business.name}</strong>
                           </div>
                         </div>
-                        <div className="gal-meta"><b>See the live site →</b><span>{g.title}</span></div>
+                        <div className="gal-meta"><b>See the live site</b><span>{g.title}</span></div>
                       </a>
                     )
                   })}

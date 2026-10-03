@@ -28,6 +28,8 @@ export interface SiteWords {
   buyNow: string
   askAboutThis: string
   allPosts: string
+  // Joins a range of times: "7am to 6pm".
+  to: string
   getInTouch: string
   blogName: string
   blogHeading: string
@@ -67,7 +69,8 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     soldOut: 'Sold out',
     buyNow: 'Buy now',
     askAboutThis: 'Ask about this',
-    allPosts: '← All posts',
+    allPosts: 'All posts',
+    to: 'to',
     getInTouch: 'Get in touch',
     blogName: 'Blog',
     blogHeading: 'News & tips',
@@ -105,7 +108,8 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     soldOut: 'Agotado',
     buyNow: 'Comprar',
     askAboutThis: 'Consultar',
-    allPosts: '← Todas las publicaciones',
+    allPosts: 'Todas las publicaciones',
+    to: 'a',
     getInTouch: 'Contáctanos',
     blogName: 'Blog',
     blogHeading: 'Noticias y consejos',

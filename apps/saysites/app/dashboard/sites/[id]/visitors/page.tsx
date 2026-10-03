@@ -45,7 +45,7 @@ export default async function VisitorsPage({ params }: { params: Promise<{ id: s
         </div>
         <div className="stat">
           <span className="stat-label">Busiest day</span>
-          <strong>{best.views ? fmt.format(best.views) : '–'}</strong>
+          <strong>{best.views ? fmt.format(best.views) : 'None yet'}</strong>
           <span className="muted">{best.views ? dayLabel(best.day, { weekday: 'short', month: 'short', day: 'numeric' }) : 'no views yet'}</span>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default async function VisitorsPage({ params }: { params: Promise<{ id: s
       <div className="card">
         <div className="card-head">
           <h3>Page views per day</h3>
-          <span className="muted small">{dayLabel(s.days[0].day)} – {dayLabel(today)}</span>
+          <span className="muted small">{dayLabel(s.days[0].day)} to {dayLabel(today)}</span>
         </div>
         {s.total === 0 ? (
           <div className="visits-empty">

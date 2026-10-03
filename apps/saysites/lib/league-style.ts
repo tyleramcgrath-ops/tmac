@@ -44,7 +44,7 @@ export const LEAGUE_TERMS: Record<LeagueStyle, LeagueTerms> = {
     climb: (p) => `${p} Visibility point${p === 1 ? '' : 's'} moves you up one position`,
     leader: 'You hold first position. Standings close Sunday at midnight UTC.',
     ranked: 'Ranked by weekly gain in organic visibility and traffic',
-    letterCta: 'Your weekly standing has arrived · Open',
+    letterCta: 'Your weekly standing has arrived. Open',
     column: 'Gain',
   },
   market: {
@@ -55,13 +55,13 @@ export const LEAGUE_TERMS: Record<LeagueStyle, LeagueTerms> = {
     lastWeek: 'Last week’s close',
     position: (n) => `No. ${n}`,
     of: (n) => `of ${n} listed`,
-    move: (p) => (p ? `▲ ${p}` : '— 0'),
+    move: (p) => (p ? `▲ ${p}` : 'No change'),
     titles: { gain: 'Top mover', visibility: 'Market leader', growth: 'Breakout' },
     streak: (w) => `Up ${w} weeks running`,
     climb: (p) => `${p} point${p === 1 ? '' : 's'} to overtake the next position`,
     leader: 'You’re the market leader. The market closes Sunday at midnight UTC.',
     ranked: 'Ranked by weekly movement: points gained plus traffic growth',
-    letterCta: 'Your weekly market report is in · Open',
+    letterCta: 'Your weekly market report is in. Open',
     column: 'Move',
   },
   arena: {
@@ -78,7 +78,7 @@ export const LEAGUE_TERMS: Record<LeagueStyle, LeagueTerms> = {
     climb: (p) => `${p} point${p === 1 ? '' : 's'} and you pass the one above you`,
     leader: 'You’re #1. Hold it until Sunday midnight UTC.',
     ranked: 'Live ranks: points gained this week plus traffic growth',
-    letterCta: 'Your result is in · Tap to reveal',
+    letterCta: 'Your result is in. Tap to reveal',
     column: 'Pts',
   },
 }

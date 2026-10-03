@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 function fmtWeek(start: string) {
   const f = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
-  return `${f(start)} – ${f(daysBefore(start, -6))}`
+  return `${f(start)} to ${f(daysBefore(start, -6))}`
 }
 
 const median = (xs: number[]) => {
@@ -47,7 +47,7 @@ export default async function IndexPage() {
     <MarketingShell>
       <section className="page-hero">
         <div className="wrap">
-          <p className="kicker">The SaySites Index · {fmtWeek(start)}</p>
+          <p className="kicker">The SaySites Index, {fmtWeek(start)}</p>
           <h1>Earned, not bought.</h1>
           <p>Every week we measure how findable each SaySites business is in Google, from 0 to 100: technical health, accurate local details, useful content, trust and traffic. No paid placement moves this number. Owners see where they stand against their trade privately, and compare by name only with peers who share in return.</p>
         </div>

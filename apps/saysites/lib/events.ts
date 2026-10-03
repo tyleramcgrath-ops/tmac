@@ -41,7 +41,7 @@ export function eventsHtml(events: SiteEvent[], t: SiteWords): string {
   if (!events.length) return ''
   const items = events.map((e) => {
     const [, m, d] = e.date.split('-')
-    const when = [e.time ? t.clock(+e.time.slice(0, 2), e.time.slice(3)) : '', e.place ?? ''].filter(Boolean).join(' · ')
+    const when = [e.time ? t.clock(+e.time.slice(0, 2), e.time.slice(3)) : '', e.place ?? ''].filter(Boolean).join(', ')
     const title = e.href ? `<a href="${esc(e.href)}"${e.href.startsWith('http') ? ' rel="noopener"' : ''}>${esc(e.title)}</a>` : esc(e.title)
     return `<li><time class="sev-d" datetime="${esc(e.date)}${e.time ? `T${esc(e.time)}` : ''}"><span>${esc(t.months[+m - 1] ?? '')}</span><b>${+d}</b></time><div><h3>${title}</h3>${when ? `<p class="sev-w">${esc(when)}</p>` : ''}${e.note ? `<p>${esc(e.note)}</p>` : ''}</div></li>`
   })

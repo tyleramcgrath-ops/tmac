@@ -621,7 +621,7 @@ describe('SaySites showcase', async () => {
   it('shows 12-hour opening times in the footer', () => {
     const { site, pages } = SHOWCASE['rivertown-plumbing']
     const html = renderPage(site, pages[0], pages).html
-    expect(html).toContain('Mon–Fri 7am–6pm')
+    expect(html).toContain('Mon-Fri 7am to 6pm')
   })
 })
 
@@ -1163,14 +1163,14 @@ describe('SaySites: Spanish sites', async () => {
     expect(html).toContain('Tu nombre')
     expect(html).toContain('Correo electrónico')
     expect(html).toContain('Horario')
-    expect(html).toContain('Lun–Vie 7:00–18:00')
+    expect(html).toContain('Lun-Vie 7:00 a 18:00')
     expect(html).toContain('>Llamar<')
     expect(buildBlogIndex(site).seo.title).toBe('Noticias y consejos de Panadería Sol')
     // English sites are unchanged.
     const en = buildStarterSite({ name: 'Sun Bakery', type: 'bakery', city: 'Austin', region: 'TX', services: [], palette: 'sunset', hours: ['Mo-Fr 07:00-18:00'] }, 'o', 'sun')
     const enHtml = renderPage(en.site, en.pages.find((p) => p.slug === 'contact')!, en.pages).html
     expect(enHtml).toContain('Your name')
-    expect(enHtml).toContain('Mon–Fri 7am–6pm')
+    expect(enHtml).toContain('Mon-Fri 7am to 6pm')
   })
 })
 

@@ -77,7 +77,7 @@ export const sampleHome: Page = {
             {
               id: 'hero-text',
               type: 'text',
-              text: 'Leaks, clogs, water heaters and emergencies — fixed right the first time, with the price agreed before we start.',
+              text: 'Leaks, clogs, water heaters and emergencies, fixed right the first time, with the price agreed before we start.',
               style: { color: 'muted', fontSize: { desktop: 20, mobile: 18 } },
             },
             {

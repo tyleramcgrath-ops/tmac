@@ -74,7 +74,7 @@ export default async function PromotePage({ params }: { params: Promise<{ id: st
               <li key={e.id}>
                 <div>
                   <strong>{e.title}</strong>
-                  <span className="muted small">{[day(e.date), e.time, e.place].filter(Boolean).join(' · ')}</span>
+                  <span className="muted small">{[day(e.date), e.time, e.place].filter(Boolean).join(', ')}</span>
                 </div>
                 <form action={removeEvent.bind(null, site.id, e.id)}>
                   <button className="btn btn-ghost btn-sm" type="submit">Remove</button>

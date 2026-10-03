@@ -422,7 +422,7 @@
 .ind-grid h3, .ind-seo h3, .ind-pages h3 { font-size: 21px; letter-spacing: -0.02em; font-weight: 600; margin: 0 0 8px; }
 .ind-grid p, .ind-seo p, .ind-pages p { margin: 0; color: var(--ink-mu); font-size: 16.5px; line-height: 1.6; }
 .ind-pages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 0 48px; }
-.ind-pages li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; padding: 26px 0; border-top: 1px solid var(--line); }
+.ind-pages li { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 26px 0; border-top: 1px solid var(--line); }
 .ind-pages li > span { font-size: 14px; font-weight: 600; color: var(--ink-mu); font-variant-numeric: tabular-nums; padding-top: 3px; }
 .ind-two { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 72px; align-items: start; }
 .ind-two h2 { margin-bottom: 28px; }

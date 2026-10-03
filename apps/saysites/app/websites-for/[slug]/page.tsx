@@ -52,7 +52,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <div className="ind-actions">
               <a className="b b-dark" href="/signup">Build my site free</a>
               <a className="b b-line" href="/redesign">See your current site rebuilt</a>
-              <a className="tplrow-link" href={`/preview/${i.example}`}>See a live example →</a>
+              <a className="tplrow-link" href={`/preview/${i.example}`}>See a live example</a>
             </div>
           </div>
           <a className="gal-card ind-shot" href={`/preview/${i.example}`}>
@@ -61,7 +61,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
               <span className={`gal-plaque${SHOWCASE_INFO[i.example]?.design === 'upscale' ? ' is-dark' : ''}`}><img src={`/media/logos/${i.example}.svg`} alt="" /></span>
               {info && (
                 <div className="gal-over">
-                  <small>{info.kind} · {info.place}</small>
+                  <small>{info.kind}, {info.place}</small>
                   <strong>A live example site</strong>
                 </div>
               )}
@@ -96,8 +96,8 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <p>Your site starts with a home, services and contact page written for your business and your town. Ask Sofie for any of the others. Every page is checked against Google’s basics and held to a 95+ speed score before it goes live.</p>
           </div>
           <ol className="ind-pages">
-            {i.pages.map((p, n) => (
-              <li key={p.name}><span>{String(n + 1).padStart(2, '0')}</span><div><h3>{p.name}</h3><p>{p.why}</p></div></li>
+            {i.pages.map((p) => (
+              <li key={p.name}><div><h3>{p.name}</h3><p>{p.why}</p></div></li>
             ))}
           </ol>
         </div>

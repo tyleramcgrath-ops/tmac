@@ -33,7 +33,7 @@
 .home .kd-sec h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.02; margin: 0 0 36px; max-width: 760px; }
 .home .kd-steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: kd; }
 .home .kd-steps li { counter-increment: kd; display: grid; gap: 8px; padding: 28px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
-.home .kd-steps li::before { content: counter(kd, decimal-leading-zero); font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--ink-mu); }
+.home .kd-steps li::before { content: ''; font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--ink-mu); }
 .home .kd-steps b { font-size: 21px; letter-spacing: -0.02em; }
 .home .kd-steps span, .home .kd-grid span { color: var(--ink-mu); font-size: 16px; }
 .home .kd-split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
