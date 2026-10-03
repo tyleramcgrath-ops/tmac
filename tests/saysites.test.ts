@@ -2122,3 +2122,40 @@ describe('SaySites: every page that brings in visitors can take a lead', () => {
     }
   })
 })
+
+describe('SaySites: SEO (RankForge engines)', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const { analyzePage, auditSite, checkedToday, emptySeoState, loadSeoState } = await import('../apps/saysites/lib/seo-intel')
+
+  it('audits every published page of a site, rendered in-process, with ranked issues', async () => {
+    const { site, pages } = SHOWCASE['hale-and-porter']
+    const audit = await auditSite({ site, pages, redirects: [] }, 'https://hale-and-porter.saysites.com/', 'Law firm')
+    expect(audit.pages.length).toBe(pages.filter((p) => p.status === 'published').length)
+    expect(audit.siteScore).toBeGreaterThan(50)
+    expect(audit.siteScore).toBeLessThanOrEqual(100)
+    for (const k of ['technical', 'content', 'schema', 'ai'] as const) expect(audit.scores[k]).toBeGreaterThanOrEqual(0)
+    expect(audit.pages.every((p) => p.url.startsWith('https://hale-and-porter.saysites.com/'))).toBe(true)
+    for (const i of audit.issues) {
+      expect(['critical', 'warning', 'info']).toContain(i.severity)
+      expect(i.title.length).toBeGreaterThan(0)
+      expect(i.pages.every((p) => p.startsWith('/'))).toBe(true)
+    }
+  })
+
+  it('scores a bare page lower than a complete one', () => {
+    const bare = analyzePage('https://example.com/', '<html><body><p>Hi</p></body></html>')
+    const { site, pages } = SHOWCASE['hale-and-porter']
+    const full = analyzePage('https://example.com/', renderPage(site, pages[0], pages).html)
+    expect(bare.overall).toBeLessThan(full.overall)
+    expect(bare.fixes.length).toBeGreaterThan(full.fixes.length)
+  })
+
+  it('stores SEO state per site and knows what was checked today', async () => {
+    const store = new MemoryStore()
+    expect(await loadSeoState(store, 'nope')).toEqual(emptySeoState())
+    await store.saveSeoState('s1', { ...emptySeoState(), keywords: [{ keyword: 'lawyer', checks: [] }] })
+    expect((await loadSeoState(store, 's1')).keywords[0].keyword).toBe('lawyer')
+    expect(checkedToday([{ at: new Date().toISOString() }])).toBe(true)
+    expect(checkedToday([{ at: '2020-01-01T00:00:00.000Z' }])).toBe(false)
+  })
+})
