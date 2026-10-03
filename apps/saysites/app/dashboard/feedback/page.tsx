@@ -28,8 +28,8 @@ export default async function FeedbackInbox() {
               <strong>{f.name || 'Someone'}</strong>
               <span className="muted small">
                 {' '}
-                {f.email && <a href={`mailto:${f.email}`}>{f.email}</a>} · {formatDate(f.at)}
-                {f.page ? ` · ${f.page}` : ''}
+                {f.email && <a href={`mailto:${f.email}`}>{f.email}</a>}, {formatDate(f.at)}
+                {f.page ? `, ${f.page}` : ''}
               </span>
               <p>{f.text}</p>
             </article>

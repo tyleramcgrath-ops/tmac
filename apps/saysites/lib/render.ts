@@ -198,7 +198,7 @@ function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {
     const img = p.post!.image
       ? `<a href="${esc(href)}" tabindex="-1" aria-hidden="true"><img class="po-img" src="${esc(p.post!.image.src)}"${srcset(p.post!.image.src, 1200)} sizes="(max-width: 640px) 100vw, 33vw" alt="" width="1200" height="800" loading="lazy" decoding="async"></a>`
       : ''
-    return `<article class="po">${img}<time datetime="${esc(p.post!.date)}">${esc(formatDate(p.post!.date, t.locale))}</time><h3 class="po-t"><a href="${esc(href)}">${esc(p.post!.title)}</a></h3><p>${esc(p.post!.excerpt)}</p><a class="po-more" href="${esc(href)}">${esc(t.readMore)} <span aria-hidden="true">→</span></a></article>`
+    return `<article class="po">${img}<time datetime="${esc(p.post!.date)}">${esc(formatDate(p.post!.date, t.locale))}</time><h3 class="po-t"><a href="${esc(href)}">${esc(p.post!.title)}</a></h3><p>${esc(p.post!.excerpt)}</p><a class="po-more" href="${esc(href)}">${esc(t.readMore)}</a></article>`
   })
   return `<div class="pos ${cls(w.id)}">${cards.join('')}</div>`
 }
@@ -288,7 +288,7 @@ function promoBar(p: NonNullable<Site['promo']>): string {
   const text = esc(p.text)
   if (!p.href) return `<div class="spb"><p>${text}</p></div>`
   const ext = p.href.startsWith('http') ? ' rel="noopener"' : ''
-  return `<div class="spb"><p><a href="${esc(p.href)}"${ext}>${text} <span aria-hidden="true">&rarr;</span></a></p></div>`
+  return `<div class="spb"><p><a href="${esc(p.href)}"${ext}>${text}</a></p></div>`
 }
 
 // On phones, the two things local customers want most, one thumb away:
@@ -324,8 +324,8 @@ function renderFooter(site: Site, onPage: Set<string> = new Set()): string {
       esc(
         line
           .replace(/\b(Mo|Tu|We|Th|Fr|Sa|Su)\b/g, (d) => t.days[d])
-          .replace(/-(?=[A-Z])/, '–')
-          .replace(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/, (_m, h1, m1, h2, m2) => `${t.clock(+h1, m1)}–${t.clock(+h2, m2)}`)
+          .replace(/-(?=[A-Z])/, '-')
+          .replace(/(\d{2}):(\d{2})-(\d{2}):(\d{2})/, (_m, h1, m1, h2, m2) => `${t.clock(+h1, m1)} ${t.to} ${t.clock(+h2, m2)}`)
       )
     )
     cols.push(`<div><h2 class="sf-h">${esc(t.hours)}</h2>${rows.map((r) => `<span>${r}</span>`).join('')}</div>`)
@@ -541,8 +541,7 @@ function polishCss(g: GlobalStyles, used: Set<string>): string {
   if (used.has('button'))
     css +=
       `.btn{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,background-color .2s,color .2s}.btn:hover{transform:translateY(-2px)}` +
-      `.btn-primary:hover{box-shadow:0 14px 28px -16px var(--c-primary)}` +
-      `.btn-primary:not(.sh-cta):not([href^="tel:"])::after{content:"\\2192";display:inline-block;margin-left:.55em;transition:transform .25s}.btn-primary:hover::after{transform:translateX(4px)}`
+      `.btn-primary:hover{box-shadow:0 14px 28px -16px var(--c-primary)}`
   if (used.has('gallery')) css += `.gal figure{overflow:hidden;border-radius:var(--r)}.gal img{transition:transform .8s cubic-bezier(.2,.7,.2,1)}.gal figure:hover img{transform:scale(1.04)}`
   const flair = FLAIR_CSS[flairOf(g)]
   css += flair.still
@@ -576,8 +575,7 @@ const PHOTOS = 'main .bi img:not(.bgi)'
 const FLAIR_CSS: Record<Flair, { still: string; moving: string }> = {
   editorial: {
     still:
-      `main{counter-reset:sx}main>section~section h2{counter-increment:sx}` +
-      `main>section~section h2::before{content:counter(sx,decimal-leading-zero) " \\2014";display:block;font:600 max(12px,.3em)/1 var(--f-b);letter-spacing:.18em;color:var(--c-primary);margin-bottom:1.1em}` +
+      `main>section~section h2::before{content:"";display:block;width:36px;height:2px;background:var(--c-primary);margin:0 var(--al,0) .9em}` +
       `main>section+section:not(.hasbg){border-top:1px solid color-mix(in srgb,var(--c-text) 9%,transparent)}`,
     moving: `${PHOTOS}{animation:ew linear both;animation-timeline:view();animation-range:entry 0% cover 40%}@keyframes ew{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}`,
   },

@@ -23,7 +23,7 @@ export default function EarlyPage() {
       <section className="page-hero">
         <div className="wrap bd-hero-grid">
           <div>
-          <p className="kicker">Early access · opens {LAUNCH_SHORT}</p>
+          <p className="kicker">Early access, opens {LAUNCH_SHORT}</p>
           <h1>Build a website with me, before anyone else.</h1>
           <p>SaySites is the website builder I’ve been making for small businesses. Before it opens to everyone, I’d love you to try it and tell me what you honestly think. It takes about two minutes, and building costs you nothing.</p>
           <p>You’re one of the first people to see it. You don’t need to know anything about websites: say what the business is, pick the look, and watch your site come together. Want something changed? Ask Sofie, the assistant, the way you’d text a friend. I’ve spent many years learning what websites need and what search engines reward, and all of it is built in.</p>
@@ -44,9 +44,9 @@ export default function EarlyPage() {
             <p>No business? Build one for a friend, a relative, or make one up. A taco truck, a dog groomer, a law firm: anything works.</p>
           </div>
           <ol className="ind-pages">
-            <li><span>01</span><div><h3>Make a free account</h3><p>Just a name, an email and a password. No card.</p></div></li>
-            <li><span>02</span><div><h3>Describe the business</h3><p>Pick the kind of business and type a few details. You’ll watch your site come together as you type, SEO fully optimized. Then ask Sofie to change anything, in plain words.</p></div></li>
-            <li><span>03</span><div><h3>Tell me what you think</h3><p>Press <strong>Feedback</strong> in the bottom corner of your dashboard. What was great, what was confusing, what broke. Blunt is best. Write a few real sentences and your first three months are free, my thank-you for being here early.</p></div></li>
+            <li><div><h3>Make a free account</h3><p>Just a name, an email and a password. No card.</p></div></li>
+            <li><div><h3>Describe the business</h3><p>Pick the kind of business and type a few details. You’ll watch your site come together as you type, SEO fully optimized. Then ask Sofie to change anything, in plain words.</p></div></li>
+            <li><div><h3>Tell me what you think</h3><p>Press <strong>Feedback</strong> in the bottom corner of your dashboard. What was great, what was confusing, what broke. Blunt is best. Write a few real sentences and your first three months are free, my thank-you for being here early.</p></div></li>
           </ol>
           <p style={{ marginTop: 28 }}><a className="b b-dark" href="/signup?promo=EARLY">Start building</a></p>
         </div>

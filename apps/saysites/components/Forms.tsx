@@ -76,7 +76,7 @@ function GoogleStart({ onPick }: { onPick: (p: PlaceDetails) => void }) {
     return (
       <div className="gstart done" role="status">
         <b>Filled in from Google</b>
-        <span>{picked.name}{picked.city ? ` · ${picked.city}` : ''}{picked.hours.length ? ' · hours added' : ''}. Check the details below, add what you offer, and build.</span>
+        <span>{picked.name}{picked.city ? `, ${picked.city}` : ''}{picked.hours.length ? ', hours added' : ''}. Check the details below, add what you offer, and build.</span>
       </div>
     )
   return (

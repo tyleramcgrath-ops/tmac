@@ -61,8 +61,8 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
               </div>
               <div className="page-pills">
                 {errors.length ? <span className="pill bad">Needs fixing</span> : tips.length ? <span className="pill warn">{tips.length} SEO tip{tips.length > 1 ? 's' : ''}</span> : <span className="pill ok">SEO all good</span>}
-                {speed.pass ? <span className="pill ok">Fast · {kb} KB</span> : <span className="pill bad">Too heavy</span>}
-                {page.seo.noindex ? <span className="pill warn">Hidden from Google</span> : vibe.indexable ? <span className="pill ok">Original · on Google</span> : <span className="pill warn">Held back from Google</span>}
+                {speed.pass ? <span className="pill ok">Fast, {kb} KB</span> : <span className="pill bad">Too heavy</span>}
+                {page.seo.noindex ? <span className="pill warn">Hidden from Google</span> : vibe.indexable ? <span className="pill ok">Original, on Google</span> : <span className="pill warn">Held back from Google</span>}
               </div>
             </header>
             {(errors.length > 0 || tips.length > 0) && <ul className="issues">{[...errors, ...tips].map((i, n) => <li key={n}>{i.message}</li>)}</ul>}

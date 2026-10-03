@@ -159,7 +159,7 @@ export function SofieStudio(props: {
                 send(input)
               }
             }}
-            placeholder="Ask Sofie to change anything…"
+            placeholder="Ask Sofie to change anything"
             rows={2}
             maxLength={2000}
             disabled={!props.ready}

@@ -71,7 +71,7 @@ export default async function VisibilityPage({ params }: { params: Promise<{ id:
           {now ? (
             <>
               <div className="card-head">
-                <span className="stat-label">{terms.thisWeek} · {leagueTitle}</span>
+                <span className="stat-label">{terms.thisWeek}, {leagueTitle}</span>
                 <span className="muted small">{daysLeft === 1 ? 'Closes tonight' : `${daysLeft} days left`}</span>
               </div>
               <div className="league-me">

@@ -49,7 +49,7 @@ Return ONLY a JSON object:
 
 Never invent facts about the business. Use no years, counts, team size, ratings, awards, certifications, licences, insurance, warranties, guarantees, prices, discounts, response times, opening hours, "24/7" or emergency availability, financing, brands, named people, specific dishes or products, or policies, unless the owner's own words below state them. Use no digits at all. No customer quotes or reviews. No promised outcomes. Law firms: no legal advice, no outcome claims, no "expert" or "specialist", no statutes or deadlines; say every situation is different. Health: no promises of results or pain-free treatment.
 
-Plain, warm, specific American English (or the language asked for). No clichés ("look no further", "one-stop shop", "top-notch", "second to none", "we pride ourselves", "state-of-the-art", "elevate"), no exclamation marks, no em dashes, no markdown. Mention the town naturally once or twice per service, never stuffed. Every service must read differently.`
+Plain, warm, specific American English (or the language asked for). No clichés ("look no further", "one-stop shop", "top-notch", "second to none", "we pride ourselves", "state-of-the-art", "elevate"), no exclamation marks, no em or en dashes, no "·" separators, no arrows, no numbered labels, no markdown. Mention the town naturally once or twice per service, never stuffed. Every service must read differently.`
 
 // Sentences that slipped a fact in anyway (a number, a guarantee) come out;
 // the rest of the paragraph stands.
@@ -57,7 +57,9 @@ const RISKY = /\d|\b(guarantee[ds]?|warrant(y|ies)|certified|licensed|insured|aw
 export function scrub(text: string, allowed = ''): string {
   const ok = (s: string) => !RISKY.test(s) || (allowed && [...s.matchAll(new RegExp(RISKY.source, 'gi'))].every((m) => allowed.toLowerCase().includes(m[0].toLowerCase())))
   return text
-    .replace(/\s*—\s*/g, ', ')
+    .replace(/\s*[—–]\s*/g, ', ')
+    .replace(/\s*[·|]\s*/g, ', ')
+    .replace(/\s*[→←]\s*/g, ' ')
     .replace(/!/g, '.')
     .split(/(?<=[.?])\s+/)
     .filter(ok)

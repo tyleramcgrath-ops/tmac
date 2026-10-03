@@ -16,7 +16,7 @@ export function ScoreTicker({ history, score, label }: { history: { day: string;
     <div className={`ticker is-${dir}`}>
       <div className="ticker-top">
         <span className="stat-label">{label}</span>
-        <span className="ticker-move">{move > 0 ? '▲' : move < 0 ? '▼' : '—'} {Math.abs(move)} <small>7 days</small></span>
+        <span className="ticker-move">{move > 0 ? '▲' : move < 0 ? '▼' : '='} {Math.abs(move)} <small>7 days</small></span>
       </div>
       <svg viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true">
         <path d={`${line} L100 32 L0 32 Z`} className="ticker-fill" />

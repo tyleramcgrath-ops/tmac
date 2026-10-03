@@ -46,7 +46,7 @@ function Label() {
 function Phone() {
   return (
     <div className="cx-phone">
-      <div className="cx-site-bar">20% off your first visit →</div>
+      <div className="cx-site-bar">20% off your first visit</div>
       <div className="cx-site-ph"><Pic id="1688583417770-ff6cc18071dc" alt="" sizes="170px" /></div>
       <div className="cx-phone-bar"><span>Call</span><span>Book now</span></div>
     </div>
@@ -72,7 +72,7 @@ export default function BookingPage() {
             <div className="frame-bar"><i /><i /><i /><span>maple-street-salon.saysites.com</span></div>
             <div className="frame-body">
               <div className="cx-site" style={{ border: 0, borderRadius: 0 }}>
-                <div className="cx-site-bar">20% off your first visit this month →</div>
+                <div className="cx-site-bar">20% off your first visit this month</div>
                 <div className="cx-site-head"><b>Maple Street Salon</b><i>Book now</i></div>
                 <div className="cx-site-ph" style={{ height: 260 }}><Pic id="1688583417770-ff6cc18071dc" alt="Freshly painted pastel nails" sizes="(max-width: 900px) 92vw, 520px" /></div>
               </div>

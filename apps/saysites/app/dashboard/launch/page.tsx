@@ -53,8 +53,8 @@ export default async function LaunchStatsPage({ searchParams }: { searchParams: 
         <div className="stat"><span className="stat-label">Paying</span><strong>{n(s.paying)}</strong><span className="muted">active subscriptions</span></div>
         <div className="stat"><span className="stat-label">Feedback {when}</span><strong>{n(s.feedbackSince)}</strong><span className="muted"><a href="/dashboard/feedback">{n(s.feedback)} in the inbox</a></span></div>
         <div className="stat"><span className="stat-label">Visitors to their sites</span><strong>{n(s.viewsSince)}</strong><span className="muted">page views {when}</span></div>
-        <div className="stat"><span className="stat-label">Customers reached</span><strong>{n(s.callsSince + s.messagesSince)}</strong><span className="muted">{n(s.callsSince)} calls · {n(s.messagesSince)} messages</span></div>
-        <div className="stat"><span className="stat-label">Sofie today</span><strong className={share >= 0.8 ? 'bad' : share >= 0.5 ? 'warn' : undefined}>{money(spend.micros)}</strong><span className="muted">{n(spend.messages)} requests · cap {money(cap)}</span></div>
+        <div className="stat"><span className="stat-label">Customers reached</span><strong>{n(s.callsSince + s.messagesSince)}</strong><span className="muted">{n(s.callsSince)} calls, {n(s.messagesSince)} messages</span></div>
+        <div className="stat"><span className="stat-label">Sofie today</span><strong className={share >= 0.8 ? 'bad' : share >= 0.5 ? 'warn' : undefined}>{money(spend.micros)}</strong><span className="muted">{n(spend.messages)} requests, cap {money(cap)}</span></div>
       </div>
 
       <div className="card sofie-meter">
@@ -82,7 +82,7 @@ export default async function LaunchStatsPage({ searchParams }: { searchParams: 
                     <td><a href={`mailto:${u.email}`}>{u.email}</a></td>
                     <td>{formatDate(u.createdAt)}</td>
                     <td>{u.sites}</td>
-                    <td>{[u.status ?? 'trial', u.promo === 'BIRTHDAY' || u.promo === 'EARLY' ? 'early access' : '', u.reward ? '3 free months' : ''].filter(Boolean).join(' · ')}</td>
+                    <td>{[u.status ?? 'trial', u.promo === 'BIRTHDAY' || u.promo === 'EARLY' ? 'early access' : '', u.reward ? '3 free months' : ''].filter(Boolean).join(', ')}</td>
                   </tr>
                 ))}
               </tbody>

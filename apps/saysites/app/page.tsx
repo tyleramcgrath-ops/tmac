@@ -41,10 +41,10 @@ function Bakery({ priority = false }: { priority?: boolean }) {
       <div className="bk-nav"><img className="mk-logo" src="/media/logos/rosies-bakery.svg" alt="Rosie’s Bakery" width="203" height="79" /><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
       <div className="bk-hero">
         <div>
-          <small>SE Division · Portland</small>
+          <small>SE Division, Portland</small>
           <h3>Sourdough, baked every morning at five.</h3>
           <p>Country loaves, celebration cakes and good coffee, a block from the park.</p>
-          <div className="bk-btns"><em>Order for pickup</em><span>Today’s bakes →</span></div>
+          <div className="bk-btns"><em>Order for pickup</em><span>Today’s bakes</span></div>
         </div>
         <div className="ph bk-ph"><Photo id="1509440159596-0249088772ff" sizes="(max-width: 900px) 45vw, 380px" priority={priority} /></div>
       </div>
@@ -68,7 +68,7 @@ function Roaster() {
       <div className="ro-nav"><b>Northside <span>Roasters</span></b><span>Shop</span><span>Wholesale</span><span>Visit</span></div>
       <div className="ro-hero">
         <div className="ph"><Photo id="1741994043738-393513f7bf52" sizes="(max-width: 900px) 90vw, 560px" /></div>
-        <div className="ro-hero-t"><small>Small-batch · roasted Tuesdays</small><h3>Fresh coffee, at your door by Friday.</h3></div>
+        <div className="ro-hero-t"><small>Small-batch, roasted Tuesdays</small><h3>Fresh coffee, at your door by Friday.</h3></div>
       </div>
       <div className="ro-row">
         {[
@@ -90,12 +90,12 @@ function Roaster() {
 function Plumber() {
   return (
     <div className="pl">
-      <div className="pl-top"><span>Licensed and insured · Rivertown and the valley</span><b>(555) 014-2200</b></div>
+      <div className="pl-top"><span>Licensed and insured, Rivertown and the valley</span><b>(555) 014-2200</b></div>
       <div className="pl-nav"><img className="mk-logo" src="/media/logos/rivertown-plumbing.svg" alt="Rivertown Plumbing" width="476" height="89" /><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
       <div className="pl-hero ph">
         <Photo id="1749532125405-70950966b0e5" sizes="(max-width: 900px) 100vw, 760px" pos="50% 40%" />
         <div className="pl-copy">
-          <small>Open 24/7 · Same-day callouts</small>
+          <small>Open 24/7, Same-day callouts</small>
           <h3>Burst pipe? We’re on the way.</h3>
           <p>Upfront-priced plumbing for homes and small businesses in Rivertown.</p>
           <div className="pl-btns"><em>Call (555) 014-2200</em><span>Get a free quote</span></div>
@@ -118,7 +118,7 @@ function Upscale() {
       <div className="up-hero ph">
         <Photo id="1622880833523-7cf1c0bd4296" sizes="(max-width: 900px) 100vw, 760px" pos="50% 55%" />
         <div className="up-copy">
-          <small>Wall Street · Asheville</small>
+          <small>Wall Street, Asheville</small>
           <h3>Wood-fired, and worth the wait.</h3>
           <div className="up-btns"><em>Reserve a table</em><span>See the menu</span></div>
         </div>
@@ -143,7 +143,7 @@ function Salon() {
       <div className="sa-hero">
         <div className="ph"><Photo id="1633681926022-84c23e8cb2d6" sizes="(max-width: 900px) 50vw, 300px" /></div>
         <div className="sa-copy">
-          <small>Jones Street · Savannah</small>
+          <small>Jones Street, Savannah</small>
           <h3>Hair that grows out beautifully.</h3>
           <p>Lived-in color and precise cuts, by appointment.</p>
           <em>Book a chair</em>
@@ -179,7 +179,7 @@ export default function Home() {
             <p className="lede">You describe your business, pick the look and make every change yourself, in plain words. It goes live fast, SEO fully optimized, and it’s all yours. <strong>$15 a month. 0% of your sales.</strong></p>
             <SayBox id="idea-top" />
             <ul className="assure"><li>No credit card</li><li>Live in minutes</li><li>Cancel anytime</li></ul>
-            <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free →</a></p>
+            <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free</a></p>
           </div>
         </section>
 
@@ -198,14 +198,14 @@ export default function Home() {
                 <aside className="side">
                   <div className="side-h"><span><LogoMark size={14} />Sofie</span><span>Speed 100</span></div>
                   <div className="msg me m1">Can you add our weekend hours and a photo of the pastries?</div>
-                  <div className="msg her m2">Done. I added “Sat–Sun, 7am–2pm” to the header and a pastries card on your home page.</div>
+                  <div className="msg her m2">Done. I added “Sat-Sun, 7am-2pm” to the header and a pastries card on your home page.</div>
                   <div className="diff m3">
                     <div><span>Header</span><span>+ Weekend hours</span></div>
-                    <div><span>Home · cards</span><span>+ Pastries</span></div>
+                    <div><span>Home, cards</span><span>+ Pastries</span></div>
                     <div><span>Speed check</span><span>Still 100</span></div>
                   </div>
                   <div className="msg me m4">Perfect. Publish it.</div>
-                  <div className="ask">Ask Sofie to change anything…</div>
+                  <div className="ask">Ask Sofie to change anything</div>
                 </aside>
               </div>
             </div>
@@ -236,19 +236,16 @@ export default function Home() {
             </div>
             <ol className="steps">
               <li>
-                <span className="n">01</span>
                 <h3>Say what you do</h3>
                 <p>Your business, your town, what you offer. A sentence or two is plenty.</p>
                 <div className="vis vis-type">We’re a two-person roofing crew in Tulsa. Repairs and storm damage.<i /></div>
               </li>
               <li>
-                <span className="n">02</span>
                 <h3>Make it yours</h3>
                 <p>Pick the look, add your photos and your words. Home, Services and Contact pages, SEO-optimized from day one.</p>
                 <div className="vis vis-pages"><span>Home</span><span>Services</span><span>Contact</span><span>Sitemap</span></div>
               </li>
               <li>
-                <span className="n">03</span>
                 <h3>Ask for changes</h3>
                 <p>Tell Sofie what to change. You see it first and can undo anything.</p>
                 <div className="vis vis-chat"><span>Add 10% off gutter cleaning until Friday.</span></div>
@@ -281,13 +278,13 @@ export default function Home() {
                     </div>
                     <div className="tplrow-actions">
                       <a className="b b-dark" href={`/signup?template=${t.key}`}>Use this template</a>
-                      <a className="tplrow-link" href={`/preview/${t.example}`}>See the live example →</a>
+                      <a className="tplrow-link" href={`/preview/${t.example}`}>See the live example</a>
                     </div>
                   </div>
                 </article>
               ))}
             </div>
-            <p className="tpl-more"><a className="b b-line" href="/templates">See all 13 live example sites →</a></p>
+            <p className="tpl-more"><a className="b b-line" href="/templates">See all 13 live example sites</a></p>
           </div>
         </section>
 
@@ -298,10 +295,10 @@ export default function Home() {
               <h2>Earned, not bought.</h2>
               <p>Every week, your site gets a Visibility Score and a standing against businesses like yours on SaySites. You don’t move up by spending on ads. You move up by doing what Google actually rewards, and Sofie does most of that for you.</p>
               <p>Your standing arrives Monday in a private letter. Want to see who you’re up against? Share yours and compare with everyone who shares theirs.</p>
-              <a className="b b-line" href="/visibility-index">See the SaySites Index →</a>
+              <a className="b b-line" href="/visibility-index">See the SaySites Index</a>
             </div>
             <div className="standing-card" aria-hidden="true">
-              <div className="sc-head"><span>Plumbers on SaySites · this week</span><span>3 days left</span></div>
+              <div className="sc-head"><span>Plumbers on SaySites, this week</span><span>3 days left</span></div>
               <ol>
                 <li><b>1</b><span>Oakline Plumbing<i>Greatest gain</i></span><em>+27</em></li>
                 <li><b>2</b><span>Clearwater Plumbing</span><em>+19</em></li>
@@ -330,7 +327,7 @@ export default function Home() {
             </div>
             <div className="sell-vis" aria-hidden="true">
               <Frame url="northside-roasters.saysites.com"><Roaster /></Frame>
-              <div className="sell-order"><i>✓</i><div><b>New order · $36.00</b><span>Paid to your Stripe · SaySites fee $0.00</span></div></div>
+              <div className="sell-order"><i>✓</i><div><b>New order, $36.00</b><span>Paid to your Stripe, SaySites fee $0.00</span></div></div>
             </div>
           </div>
         </section>
@@ -341,7 +338,7 @@ export default function Home() {
               <p className="kicker">Coming soon</p>
               <h2>Bring what you already have.</h2>
               <p>Connect your Google Business Profile, Instagram or Facebook, and your site picks up your real reviews and your best photos. You choose what shows, and nothing is posted anywhere without you.</p>
-              <p><a href="/connect">See what you can connect today →</a></p>
+              <p><a href="/connect">See what you can connect today</a></p>
             </div>
             <div className="conn-grid">
               <div className="conn-card">
@@ -363,7 +360,7 @@ export default function Home() {
               </div>
               <div className="conn-card">
                 <div className="conn-vis conn-fb" aria-hidden="true">
-                  <div><b>Hours</b><span>Tue–Fri 7am–3pm</span></div>
+                  <div><b>Hours</b><span>Tue-Fri 7am-3pm</span></div>
                   <div><b>Address</b><span>2210 SE Division St</span></div>
                   <div><b>Photos</b><span>24 from your page</span></div>
                   <em>Matched on your site ✓</em>
@@ -390,14 +387,14 @@ export default function Home() {
               <div className="plan plan-main">
                 <div className="plan-top"><h3>Site</h3><span className="tag">Start here</span></div>
                 <div className="amt">$15<small>/month</small></div>
-                <p className="per">For service businesses · or $150 a year, two months free</p>
+                <p className="per">For service businesses, or $150 a year, two months free</p>
                 <ul><li>Your full website, built for you</li><li>Your own domain</li><li>Hosting, SSL, SEO and speed checks</li><li>Call tracking and a messages inbox</li><li>Sofie for everyday changes, every month</li></ul>
                 <a className="b b-light b-block" href="/signup">Start free</a>
               </div>
               <div className="plan">
                 <div className="plan-top"><h3>Store</h3><span className="tag live">New</span></div>
                 <div className="amt">$25<small>/month</small></div>
-                <p className="per">For selling online · or $250 a year, two months free</p>
+                <p className="per">For selling online, or $250 a year, two months free</p>
                 <ul><li>Everything in Site</li><li>Products and a Shop page</li><li>Paid through your own Stripe</li><li>0% taken from your sales</li><li>A bigger Sofie allowance</li></ul>
                 <a className="b b-line b-block" href="/signup">Start free</a>
               </div>
@@ -424,7 +421,7 @@ export default function Home() {
                   <tbody>
                     <tr><th scope="row">A website</th><td className="us">$15/mo</td><td>$25/mo</td><td>$39/mo<small>stores only</small></td><td>from $17/mo<small>billed yearly</small></td></tr>
                     <tr><th scope="row">Selling online</th><td className="us">$25/mo</td><td>$25/mo<small>Basic</small></td><td>$39/mo<small>Basic</small></td><td>from $29/mo<small>Core, billed yearly</small></td></tr>
-                    <tr><th scope="row">Their cut of each sale</th><td className="us">0%</td><td>2%<small>on Basic</small></td><td>0–2%<small>2% without Shopify Payments</small></td><td>0%</td></tr>
+                    <tr><th scope="row">Their cut of each sale</th><td className="us">0%</td><td>2%<small>on Basic</small></td><td>0-2%<small>2% without Shopify Payments</small></td><td>0%</td></tr>
                     <tr><th scope="row">On $2,000 of sales a month, you pay them</th><td className="us"><strong>$25</strong></td><td>$65</td><td>$39</td><td>from $29</td></tr>
                   </tbody>
                 </table>
