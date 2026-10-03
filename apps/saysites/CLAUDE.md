@@ -215,3 +215,8 @@ saysites-host.yml` keeps in sync with `apps/saysites` on main. Builds use
 webpack (`next build --webpack`). SiteGround keeps every deploy in its own
 folder; `lib/prune-releases.ts` deletes old ones on start, because they
 pushed the plan over its inode (file count) limit.
+SiteGround's own Builds History counts too and isn't cleared by the app:
+when it fills, deploys fail and Site Tools locks until old builds are
+deleted there. Admins can see what's using the limit, run the cleanup, send
+a test email and see the scheduler's last runs at /dashboard/health
+(`lib/hosting-health.ts`). Batch changes into fewer deploys.

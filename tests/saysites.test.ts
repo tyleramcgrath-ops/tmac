@@ -2398,3 +2398,31 @@ describe('SaySites: lead sources, review requests and the monthly report', async
     expect(sent.filter((x) => x.subject.includes('your website in')).length).toBe(1)
   })
 })
+
+describe('SaySites: hosting health', async () => {
+  const H = await import('../apps/saysites/lib/hosting-health')
+  const { mkdtempSync, mkdirSync, writeFileSync } = await import('fs')
+  const { join } = await import('path')
+  const { tmpdir } = await import('os')
+
+  it('counts files and folders beside the running release, and caps the count', () => {
+    const root = mkdtempSync(join(tmpdir(), 'ss-health-'))
+    const app = join(root, 'apps')
+    const live = join(app, '1790000002-abcdef')
+    const old = join(app, '1790000001-zzzzzz')
+    for (const d of [live, old, join(old, 'node_modules', 'x')]) mkdirSync(d, { recursive: true })
+    for (let i = 0; i < 5; i++) writeFileSync(join(old, 'node_modules', 'x', `f${i}.js`), '')
+    writeFileSync(join(live, 'server.js'), '')
+    expect(H.countInodes(old)).toEqual({ inodes: 7, capped: false })
+    expect(H.countInodes(old, 3)).toMatchObject({ capped: true })
+    const { levels } = H.hostingFolders(live)
+    expect(levels[0].path).toBe(app)
+    expect(levels[0].folders.map((f) => [f.name, f.inodes, f.current])).toEqual([['1790000001-zzzzzz', 7, false], ['1790000002-abcdef', 1, true]])
+  })
+
+  it('remembers the last scheduler runs', () => {
+    H.recordSchedulerRun(2)
+    H.recordSchedulerRun(0, 'boom')
+    expect(H.schedulerRuns().slice(-2)).toMatchObject([{ sent: 2 }, { sent: 0, error: 'boom' }])
+  })
+})
