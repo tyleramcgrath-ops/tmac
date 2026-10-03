@@ -9,6 +9,7 @@
 //     except one optional priority image for the hero.
 //   - Every text value is HTML-escaped; the tree can never inject markup.
 
+import { intakeSet, type IntakeQuestion, type IntakeSet } from './intake'
 import { EVENTS_CSS, eventsHtml, upcomingEvents } from './events'
 import { photoKeysOn } from './photo-rules'
 import { WORDS, wordsFor, type SiteWords } from './site-words'
@@ -46,6 +47,8 @@ export interface RenderedPage {
 
 export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page]): RenderedPage {
   t = wordsFor(site.language)
+  // Question sets are written in English, so only English sites show them.
+  intake = site.language === 'es' ? undefined : intakeSet(site.intake?.[page.id])
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
   // Upcoming events show on the home page, after the owner's own sections.
@@ -102,6 +105,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 let store: Site['store']
 let t: SiteWords = WORDS.en
 let posts: Page[] = []
+// The intake questions for the page being rendered (lib/intake), if any.
+let intake: IntakeSet | undefined
 
 function renderElement(el: Element): string {
   return el.type === 'container' ? renderContainer(el) : renderWidget(el)
@@ -240,9 +245,10 @@ const FIELD: Record<(typeof FORM_FIELDS)[number], { label: (w: SiteWords) => str
 // "#sent", which reveals the thank-you note through :target, so the cached
 // page never changes. "website" is a honeypot field people never see.
 function renderForm(w: Extract<Widget, { type: 'form' }>): string {
-  const fields = w.fields
-    .map((f) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${FIELD[f].input}</label>`)
-    .join('')
+  const field = (f: (typeof FORM_FIELDS)[number]) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${FIELD[f].input}</label>`
+  // Intake questions go just before the message box, all optional.
+  const questions = intake ? (intake.note ? `<p class="sform-note">${esc(intake.note)}</p>` : '') + intake.questions.map(intakeField).join('') : ''
+  const fields = w.fields.map((f) => (f === 'message' ? questions + field(f) : field(f))).join('') + (w.fields.includes('message') ? '' : questions)
   return (
     `<form class="sform ${cls(w.id)}" method="post" action="/__form">` +
     `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? t.thanks)}</p>` +
@@ -251,6 +257,15 @@ function renderForm(w: Extract<Widget, { type: 'form' }>): string {
     fields +
     `<button class="btn btn-primary" type="submit">${esc(w.submitLabel)}</button></form>`
   )
+}
+
+function intakeField(q: IntakeQuestion): string {
+  const name = `q_${q.id}`
+  const label = `<span>${esc(q.label)} <em>(${esc(t.optional)})</em></span>`
+  if (q.kind === 'text') return `<label>${label}<input name="${name}" maxlength="300"></label>`
+  if (q.kind === 'date') return `<label>${label}<input name="${name}" type="date"></label>`
+  const options = q.kind === 'yesno' ? [['yes', 'Yes'], ['no', 'No']] : (q.options ?? []).map((o) => [o, o])
+  return `<label>${label}<select name="${name}"><option value="">Choose…</option>${options.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('')}</select></label>`
 }
 
 function renderHeader(site: Site, page: Page): string {
@@ -568,8 +583,8 @@ function widgetCss(used: Set<string>): string {
   if (used.has('form'))
     css +=
       `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +
-      `.sform input,.sform textarea{font:inherit;font-weight:400;padding:.75em .9em;border:1.5px solid color-mix(in srgb,var(--c-text) 18%,transparent);border-radius:min(var(--r),10px);background:var(--c-background);color:var(--c-text);width:100%}` +
-      `.sform input:focus,.sform textarea:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
+      `.sform input,.sform textarea,.sform select{font:inherit;font-weight:400;padding:.75em .9em;border:1.5px solid color-mix(in srgb,var(--c-text) 18%,transparent);border-radius:min(var(--r),10px);background:var(--c-background);color:var(--c-text);width:100%}` +
+      `.sform-note{margin:0;font-size:.9em;color:var(--c-muted)}.sform input:focus,.sform textarea:focus,.sform select:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
       `.sform-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}` +
       `.sform-ok{display:none;margin:0;padding:14px 16px;border-radius:min(var(--r),10px);background:color-mix(in srgb,var(--c-primary) 12%,var(--c-background));font-weight:600}.sform-ok:target{display:block}`
   if (used.has('ticker'))

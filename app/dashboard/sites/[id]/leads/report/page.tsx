@@ -4,14 +4,16 @@ import { loadCrm } from '@/lib/leads'
 import { buildReport, monthLabel, previousMonth, type MonthReport } from '@/lib/report'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
+import { siteAccess } from '@/lib/team'
 
 // The monthly results, as the owner gets them by email on the 1st.
 export default async function ReportPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ m?: string }> }) {
   const [{ id }, { m }] = await Promise.all([params, searchParams])
   const user = await requireUser()
   const store = getStore()
-  const site = await store.siteForUser(user.id, id)
-  if (!site) notFound()
+  const access = await siteAccess(store, user.id, id)
+  if (!access) notFound()
+  const { site, role } = access
   const thisMonth = new Date().toISOString().slice(0, 7)
   const last = previousMonth()
   const month = m === last ? last : thisMonth
@@ -27,7 +29,7 @@ export default async function ReportPage({ params, searchParams }: { params: Pro
           <p className="muted">Your results, month by month. This is also emailed to you on the 1st.</p>
         </div>
       </div>
-      <LeadsNav siteId={site.id} on="report" />
+      <LeadsNav siteId={site.id} on="report" role={role} />
       <div className="seg" role="group" aria-label="Month">
         <a href={`${base}/report?m=${last}`} aria-current={month === last ? 'page' : undefined}>{monthLabel(last)}</a>
         <a href={`${base}/report`} aria-current={month === thisMonth ? 'page' : undefined}>{monthLabel(thisMonth)} so far</a>

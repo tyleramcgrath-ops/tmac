@@ -11,7 +11,7 @@ function Error({ state }: { state: FormState }) {
   return state.error ? <p className="error" role="alert">{state.error}</p> : null
 }
 
-export function SignUpForm({ idea = '', template = '', claim = '', promo = '', approve = '' }: { idea?: string; template?: string; claim?: string; promo?: string; approve?: string }) {
+export function SignUpForm({ idea = '', template = '', claim = '', promo = '', approve = '', invite = '', email = '' }: { idea?: string; template?: string; claim?: string; promo?: string; approve?: string; invite?: string; email?: string }) {
   const [state, action, pending] = useActionState(signUp, {})
   return (
     <form action={action}>
@@ -20,9 +20,10 @@ export function SignUpForm({ idea = '', template = '', claim = '', promo = '', a
       {template && <input type="hidden" name="template" value={template} />}
       {claim && <input type="hidden" name="claim" value={claim} />}
       {approve && <input type="hidden" name="approve" value={approve} />}
+      {invite && <input type="hidden" name="invite" value={invite} />}
       {promo && <input type="hidden" name="promo" value={promo} />}
       <label className="field"><span>Your name</span><input className="input" name="name" autoComplete="name" required /></label>
-      <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" required /></label>
+      <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" defaultValue={email} required /></label>
       <label className="field"><span>Password</span><input className="input" name="password" type="password" autoComplete="new-password" minLength={8} required /><small>At least 8 characters.</small></label>
       <button className="btn btn-primary btn-block" type="submit" disabled={pending}>{pending ? 'Creating your account…' : 'Create my account'}</button>
       <p className="muted small" style={{ margin: '12px 0 0', textAlign: 'center' }}>By creating an account you confirm you’re 18 or older and agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy</a>.</p>
@@ -30,13 +31,14 @@ export function SignUpForm({ idea = '', template = '', claim = '', promo = '', a
   )
 }
 
-export function LogInForm({ claim = '', approve = '' }: { claim?: string; approve?: string }) {
+export function LogInForm({ claim = '', approve = '', invite = '' }: { claim?: string; approve?: string; invite?: string }) {
   const [state, action, pending] = useActionState(logIn, {})
   return (
     <form action={action}>
       <Error state={state} />
       {claim && <input type="hidden" name="claim" value={claim} />}
       {approve && <input type="hidden" name="approve" value={approve} />}
+      {invite && <input type="hidden" name="invite" value={invite} />}
       <label className="field"><span>Email</span><input className="input" name="email" type="email" autoComplete="email" required /></label>
       <label className="field"><span>Password</span><input className="input" name="password" type="password" autoComplete="current-password" required /></label>
       <button className="btn btn-primary btn-block" type="submit" disabled={pending}>{pending ? 'Logging in…' : 'Log in'}</button>

@@ -141,6 +141,17 @@ export interface Store {
   crmSites(): Promise<{ site: Site; state: unknown }[]>
   // Every site, for the monthly results email.
   allSites(): Promise<Site[]>
+  siteById(siteId: string): Promise<Site | null>
+  // Staff: people the owner invited to work a site's leads (lib/team).
+  addMember(siteId: string, userId: string): Promise<void>
+  removeMember(siteId: string, userId: string): Promise<void>
+  membersForSite(siteId: string): Promise<Member[]>
+  memberSites(userId: string): Promise<Site[]>
+  isMember(siteId: string, userId: string): Promise<boolean>
+  createInvite(siteId: string, email: string, code: string): Promise<void>
+  invite(code: string): Promise<Invite | null>
+  deleteInvite(code: string): Promise<void>
+  invitesForSite(siteId: string): Promise<Invite[]>
   // Every site with a score since `day`, with its scores and daily views.
   leagueSites(day: string): Promise<LeagueSite[]>
   // Free redesign previews. `who` is a hash of the requester, for limits.
@@ -199,6 +210,19 @@ export interface Feedback {
 
 // Page views are counted per day and page, and nothing else: no cookies,
 // no addresses, nothing that identifies a visitor.
+export interface Member {
+  userId: string
+  email: string
+  name: string
+  addedAt: string
+}
+export interface Invite {
+  code: string
+  siteId: string
+  email: string
+  createdAt: string
+}
+
 export interface Visit {
   day: string
   path: string
@@ -291,6 +315,18 @@ CREATE TABLE IF NOT EXISTS ss_crm (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_members (
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES ss_users(id) ON DELETE CASCADE,
+  added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (site_id, user_id)
+);
+CREATE TABLE IF NOT EXISTS ss_invites (
+  code TEXT PRIMARY KEY,
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  email TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_scores (
   site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
@@ -645,6 +681,38 @@ class PgStore implements Store {
   async allSites() {
     return (await this.q<{ data: Site }>('SELECT data FROM ss_sites ORDER BY created_at')).map((r) => SiteSchema.parse(r.data))
   }
+  async siteById(siteId: string) {
+    const r = (await this.q<{ data: Site }>('SELECT data FROM ss_sites WHERE id = $1', [siteId]))[0]
+    return r ? SiteSchema.parse(r.data) : null
+  }
+  async addMember(siteId: string, userId: string) {
+    await this.q('INSERT INTO ss_members (site_id, user_id) VALUES ($1,$2) ON CONFLICT DO NOTHING', [siteId, userId])
+  }
+  async removeMember(siteId: string, userId: string) {
+    await this.q('DELETE FROM ss_members WHERE site_id = $1 AND user_id = $2', [siteId, userId])
+  }
+  async membersForSite(siteId: string) {
+    return (await this.q<{ user_id: string; email: string; name: string; added_at: Date }>('SELECT m.user_id, u.email, u.name, m.added_at FROM ss_members m JOIN ss_users u ON u.id = m.user_id WHERE m.site_id = $1 ORDER BY m.added_at', [siteId])).map((r) => ({ userId: r.user_id, email: r.email, name: r.name, addedAt: new Date(r.added_at).toISOString() }))
+  }
+  async memberSites(userId: string) {
+    return (await this.q<{ data: Site }>('SELECT s.data FROM ss_members m JOIN ss_sites s ON s.id = m.site_id WHERE m.user_id = $1 ORDER BY m.added_at', [userId])).map((r) => SiteSchema.parse(r.data))
+  }
+  async isMember(siteId: string, userId: string) {
+    return (await this.q('SELECT 1 FROM ss_members WHERE site_id = $1 AND user_id = $2', [siteId, userId])).length > 0
+  }
+  async createInvite(siteId: string, email: string, code: string) {
+    await this.q('INSERT INTO ss_invites (code, site_id, email) VALUES ($1,$2,$3)', [code, siteId, email])
+  }
+  async invite(code: string) {
+    const r = (await this.q<{ code: string; site_id: string; email: string; created_at: Date }>('SELECT * FROM ss_invites WHERE code = $1', [code]))[0]
+    return r ? { code: r.code, siteId: r.site_id, email: r.email, createdAt: new Date(r.created_at).toISOString() } : null
+  }
+  async deleteInvite(code: string) {
+    await this.q('DELETE FROM ss_invites WHERE code = $1', [code])
+  }
+  async invitesForSite(siteId: string) {
+    return (await this.q<{ code: string; site_id: string; email: string; created_at: Date }>('SELECT * FROM ss_invites WHERE site_id = $1 ORDER BY created_at', [siteId])).map((r) => ({ code: r.code, siteId: r.site_id, email: r.email, createdAt: new Date(r.created_at).toISOString() }))
+  }
   async crmSites() {
     return (await this.q<{ site: Site; data: unknown }>('SELECT s.data AS site, c.data FROM ss_crm c JOIN ss_sites s ON s.id = c.site_id')).map((r) => ({ site: SiteSchema.parse(r.site), state: r.data }))
   }
@@ -943,6 +1011,44 @@ export class MemoryStore implements Store {
   }
   async allSites() {
     return [...this.sites.values()].map((s) => s.site)
+  }
+  async siteById(siteId: string) {
+    return this.sites.get(siteId)?.site ?? null
+  }
+  private members: { siteId: string; userId: string; addedAt: string }[] = []
+  private invites = new Map<string, Invite>()
+  async addMember(siteId: string, userId: string) {
+    if (!(await this.isMember(siteId, userId))) this.members.push({ siteId, userId, addedAt: new Date().toISOString() })
+  }
+  async removeMember(siteId: string, userId: string) {
+    this.members = this.members.filter((m) => !(m.siteId === siteId && m.userId === userId))
+  }
+  async membersForSite(siteId: string) {
+    return this.members.filter((m) => m.siteId === siteId).flatMap((m) => {
+      const u = this.users.get(m.userId)
+      return u ? [{ userId: u.id, email: u.email, name: u.name, addedAt: m.addedAt }] : []
+    })
+  }
+  async memberSites(userId: string) {
+    return this.members.filter((m) => m.userId === userId).flatMap((m) => {
+      const s = this.sites.get(m.siteId)
+      return s ? [s.site] : []
+    })
+  }
+  async isMember(siteId: string, userId: string) {
+    return this.members.some((m) => m.siteId === siteId && m.userId === userId)
+  }
+  async createInvite(siteId: string, email: string, code: string) {
+    this.invites.set(code, { code, siteId, email, createdAt: new Date().toISOString() })
+  }
+  async invite(code: string) {
+    return this.invites.get(code) ?? null
+  }
+  async deleteInvite(code: string) {
+    this.invites.delete(code)
+  }
+  async invitesForSite(siteId: string) {
+    return [...this.invites.values()].filter((i) => i.siteId === siteId)
   }
   async crmSites() {
     return [...this.crm].flatMap(([id, state]) => {

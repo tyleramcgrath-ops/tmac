@@ -832,6 +832,22 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .tl-text { overflow-wrap: anywhere; white-space: pre-wrap; }
 .lead-follow { display: flex; gap: 8px; margin-top: 8px; }
 .lead-follow .input { min-width: 0; }
+.intake-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); gap: 8px 16px; align-items: center; }
+.intake-row > span { min-width: 0; overflow-wrap: anywhere; }
+.intake-sets { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; align-items: start; }
+.intake-sets summary { cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+.intake-qs { margin: 12px 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 15px; }
+.team-invite { display: flex; gap: 8px; align-items: end; flex-wrap: wrap; }
+.team-invite .field { flex: 1 1 260px; margin: 0; }
+.team-list { list-style: none; margin: 0; padding: 0; }
+.team-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; }
+.team-list li + li { border-top: 1px solid var(--line); }
+.team-list li > span { min-width: 0; overflow-wrap: anywhere; }
+.team-invite-link { display: grid; gap: 6px; flex: 1; }
+.helping { margin-bottom: 24px; }
+@media (max-width: 640px) {
+  .intake-row { grid-template-columns: 1fr; }
+}
 .lead-dl { display: grid; gap: 8px; margin: 8px 0 0; }
 .lead-dl dt { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
 .lead-dl dd { margin: 0; overflow-wrap: anywhere; }
