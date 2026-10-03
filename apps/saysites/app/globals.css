@@ -934,3 +934,27 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .post-preview { line-height: 1.65; max-width: 680px; overflow-wrap: anywhere; }
 .post-preview h2 { font-size: 22px; margin: 28px 0 8px; }
 .post-preview h3 { font-size: 18px; margin: 20px 0 6px; }
+/* Owner analytics (/dashboard/analytics) */
+.analytics { max-width: 1080px; }
+.an-sec { display: grid; gap: 12px; }
+.an-sec h2 { font-size: 20px; letter-spacing: -.02em; margin: 12px 0 0; }
+.analytics .stats.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.an-ext { font-size: 17px !important; }
+.an-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.an-charts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.an-chart { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 10px; min-width: 0; }
+.an-chart figcaption { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.an-chart figcaption b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.daybars svg { display: block; width: 100%; height: 120px; }
+.daybars .db-bar { fill: var(--ink); }
+.db-labels { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.db-labels span:nth-child(2) { color: var(--ink-2); text-align: center; }
+.daybars .db-hit { fill: transparent; }
+.daybars .db-hit:hover { fill: var(--paper); }
+.daybars .db-axis { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.launch-table .num { text-align: right; padding-right: 0; padding-left: 12px; }
+.an-days { max-height: 420px; overflow: auto; margin-top: 12px; }
+@media (max-width: 900px) {
+  .analytics .stats.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .an-charts, .an-charts.three { grid-template-columns: 1fr; }
+}

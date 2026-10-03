@@ -271,3 +271,15 @@ sitemap and an RSS feed (/blog/rss.xml). Writing rules: no invented numbers,
 studies, quotes or results; link every outside fact to its source (Google's
 own documentation where possible); never promise rankings or leads; never
 name a competitor; never mention the founder's name (byline is "SaySites").
+
+## Owner analytics (October 2026)
+
+/dashboard/analytics (admins only; `lib/analytics.ts`, `store.analytics`):
+money (monthly revenue from list prices, yearly as a twelfth; trials,
+failed payments, cancellations, plans), growth (signups, sites, own
+domains, staff), our own leads (Let's talk requests, free redesigns, blog
+articles), what customers' sites bring in (visitors, leads, call taps, top
+sites) and costs (Sofie), each against the previous period, with daily
+charts (`components/DayBars.tsx`, server-drawn SVG) and a table of every
+day. Only recorded numbers; saysites.com visitors live in Google Analytics,
+so the page links there.
