@@ -78,6 +78,34 @@ export function flairFor(type: BusinessTypeKey, subdomain: string): Flair {
   return fit[h % fit.length]
 }
 
+// Longer writing for one business, from the content writer (lib/writer.ts)
+// or written by hand for the examples. Never invented facts: it explains the
+// work itself, in the business's voice, with no numbers, credentials,
+// guarantees or claims the owner didn't give us.
+export interface WrittenService {
+  name: string
+  // One or two sentences for cards and lists.
+  summary: string
+  // The service's own page: an opening paragraph, then sections.
+  intro: string
+  sections: { heading: string; body: string }[]
+  faq: { q: string; a: string }[]
+}
+export interface WrittenContent {
+  about?: { heading: string; paragraphs: string[] }
+  services?: WrittenService[]
+}
+
+export const serviceSlug = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60) || 'service'
+
 export interface StarterInput {
   name: string
   type: BusinessTypeKey
@@ -96,6 +124,8 @@ export interface StarterInput {
   design?: Design
   // The site's personality; otherwise one that suits the business.
   flair?: Flair
+  // Longer writing about this business and each service.
+  content?: WrittenContent
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
@@ -225,7 +255,10 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const introText = input.type === 'other' ? `${name} serves customers across ${place}${services.length ? ` with ${offer}` : ''}. Friendly, local and easy to reach.` : intro
   const more = law ? 'Practice areas' : { bold: 'See our services', editorial: 'View services', warm: 'See what we offer', upscale: 'Explore' }[design]
   // Three ways to say it per design, so neighbouring cards don't repeat.
-  const cardText = (s: string, i = 0) =>
+  // The written version of a service, when there is one.
+  const writtenFor = (s: string): WrittenService | undefined => input.content?.services?.find((w) => w.name.trim().toLowerCase() === s.trim().toLowerCase())
+  const cardText = (s: string, i = 0) => writtenFor(s)?.summary ?? stockCardText(s, i)
+  const stockCardText = (s: string, i = 0) =>
     ({
       bold: [
         `${s}, done properly by our team in ${city}. Ask us anything; we're happy to help.`,
@@ -688,6 +721,24 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   homeBody.splice(1, 0, ...ticker)
+  // The longer story of the business, before the questions.
+  const about = input.content?.about
+  if (about?.paragraphs.length) {
+    const at = homeBody.findIndex((c) => c.id === 'faq')
+    homeBody.splice(at < 0 ? homeBody.length - 1 : at, 0, {
+      id: 'story',
+      type: 'container',
+      tag: 'section',
+      layout: 'grid',
+      columns: { desktop: 2, mobile: 1 },
+      boxed: true,
+      style: { padding: section, gap: { desktop: 64, mobile: 20 } },
+      children: [
+        { id: 'story-h', type: 'heading', level: 2, text: about.heading, style: { fontSize: { desktop: 40, mobile: 30 }, maxWidth: 480 } },
+        { id: 'story-t', type: 'text', text: about.paragraphs.join('\n\n'), style: { fontSize: { desktop: 18 }, color: 'muted' } },
+      ],
+    })
+  }
 
   function aboutSplit(): Container {
     // Side by side only with a photo of its own; a repeat would be dropped
@@ -749,6 +800,93 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ],
   })
 
+  const svcSlug = law ? 'practice-areas' : 'services'
+
+  // A page of its own for each service that has been written up: what it
+  // is, how it goes and the questions people ask, then a way to get in touch.
+  const servicePages: Page[] = list.flatMap((s, i): Page[] => {
+    const w = writtenFor(s)
+    if (!w) return []
+    const slug = serviceSlug(s)
+    const id = `sv${i + 1}`
+    const photo = fresh(photos.cards[i % 3])
+    const others = list.filter((o) => o !== s && writtenFor(o)).slice(0, 5)
+    return [
+      {
+        id: pageId(`${svcSlug}/${slug}`),
+        siteId,
+        slug: `${svcSlug}/${slug}`,
+        name: s,
+        status: 'published',
+        seo: {
+          title: clip(`${s} in ${place} | ${name}`, 60),
+          description: clip(w.summary, 160),
+        },
+        body: [
+          banner(`${id}-banner`, s, w.summary),
+          {
+            id: `${id}-body`,
+            type: 'container',
+            tag: 'section',
+            layout: 'flex',
+            boxed: true,
+            style: { padding: section, gap: { desktop: 22 } },
+            children: [
+              { id: `${id}-intro`, type: 'text', text: w.intro, style: { fontSize: { desktop: 21, mobile: 18 }, maxWidth: 760 } },
+              ...w.sections.flatMap((sec, j): Element[] => [
+                { id: `${id}-s${j + 1}-h`, type: 'heading', level: 2, text: sec.heading, style: { fontSize: { desktop: 32, mobile: 26 }, maxWidth: 760, margin: { desktop: { top: 26, right: 0, bottom: 0, left: 0 } } } },
+                { id: `${id}-s${j + 1}-t`, type: 'text', text: sec.body, style: { fontSize: { desktop: 18 }, maxWidth: 760 } },
+                ...(j === 1 ? [{ id: `${id}-img`, type: 'image' as const, src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect: 1.9, style: { borderRadius: design === 'editorial' || design === 'upscale' ? 2 : 14, margin: { desktop: { top: 18, right: 0, bottom: 6, left: 0 } } } }] : []),
+              ]),
+              { id: `${id}-cta`, type: 'button', label: cta.label, href: cta.href, variant: 'primary', style: { margin: { desktop: { top: 18, right: 0, bottom: 0, left: 0 } } } },
+            ],
+          },
+          ...(w.faq.length
+            ? [
+                {
+                  id: `${id}-faq`,
+                  type: 'container' as const,
+                  tag: 'section' as const,
+                  layout: 'grid' as const,
+                  columns: { desktop: 2, mobile: 1 },
+                  boxed: true,
+                  style: { background: 'surface' as const, padding: section, gap: { desktop: 48, mobile: 20 } },
+                  children: [
+                    { id: `${id}-faq-h`, type: 'heading' as const, level: 2 as const, text: `Questions about ${soften(s)}`, style: { fontSize: { desktop: 36, mobile: 28 } } },
+                    { id: `${id}-faq-list`, type: 'faq' as const, items: w.faq.map((f) => ({ question: f.q, answer: f.a })) },
+                  ],
+                },
+              ]
+            : []),
+          ...(others.length
+            ? [
+                {
+                  id: `${id}-more`,
+                  type: 'container' as const,
+                  tag: 'section' as const,
+                  layout: 'flex' as const,
+                  boxed: true,
+                  style: { padding: { desktop: pad(64), mobile: pad(44, 20) }, gap: { desktop: 18 } },
+                  children: [
+                    { id: `${id}-more-h`, type: 'heading' as const, level: 2 as const, text: law ? 'Other practice areas' : 'Other services', style: { fontSize: { desktop: 28, mobile: 24 } } },
+                    {
+                      id: `${id}-more-row`,
+                      type: 'container' as const,
+                      layout: 'flex' as const,
+                      direction: { desktop: 'row' as const },
+                      style: { gap: { desktop: 12 } },
+                      children: others.map((o, k) => ({ id: `${id}-more-${k + 1}`, type: 'button' as const, label: o, href: `/${svcSlug}/${serviceSlug(o)}`, variant: 'outline' as const })),
+                    },
+                  ],
+                },
+              ]
+            : []),
+        ],
+        updatedAt: now,
+      },
+    ]
+  })
+
   const servicesPage: Page = {
     id: pageId('services'),
     siteId,
@@ -789,7 +927,13 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                   style: { gap: { desktop: 10 } },
                   children: [
                     { id: `item-${i + 1}-h`, type: 'heading', level: 2, text: s, style: { fontSize: { desktop: 34, mobile: 26 } } },
-                    { id: `item-${i + 1}-t`, type: 'text', text: law ? `${s}: we’ll listen, explain where you stand and your options, and give you a straight answer on cost before any work begins.` : design === 'bold' ? `${s}: we'll explain your options, give you a clear price and do the job properly.` : `${s}: tell us what you have in mind and we'll take it from there.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
+                    ...(writtenFor(s)
+                      ? [
+                          { id: `item-${i + 1}-t`, type: 'text' as const, text: writtenFor(s)!.summary, style: { color: 'muted' as const, fontSize: { desktop: 18 } } },
+                          { id: `item-${i + 1}-more`, type: 'button' as const, label: `More about ${soften(s)}`, href: `/${svcSlug}/${serviceSlug(s)}`, variant: 'outline' as const, style: { margin: { desktop: { top: 6, right: 0, bottom: 0, left: 0 } } } },
+                        ]
+                      : []),
+                    ...(writtenFor(s) ? [] : [{ id: `item-${i + 1}-t`, type: 'text' as const, text: law ? `${s}: we’ll listen, explain where you stand and your options, and give you a straight answer on cost before any work begins.` : design === 'bold' ? `${s}: we'll explain your options, give you a clear price and do the job properly.` : `${s}: tell us what you have in mind and we'll take it from there.`, style: { color: 'muted' as const, fontSize: { desktop: 18 } } }]),
                   ],
                 },
               ],
@@ -852,7 +996,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     updatedAt: now,
   }
 
-  return { site, pages: dropRepeatedPhotos([home, servicesPage, contact], opts.taken) }
+  return { site, pages: dropRepeatedPhotos([home, servicesPage, ...servicePages, contact], opts.taken) }
 }
 
 // Lower-case a service name for use mid-sentence ("Teeth whitening" →
