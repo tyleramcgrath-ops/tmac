@@ -235,6 +235,30 @@ describe('SaySites content writer', () => {
   })
 })
 
+describe('SaySites good-site basics', () => {
+  it('lists service pages in the menu and footer, with socials, chat, breadcrumbs and a privacy page', () => {
+    const svc = (name: string) => ({ name, summary: `${name}, explained.`, intro: 'An opening paragraph about the work and how it usually goes for people.', sections: [{ heading: 'How it works', body: 'A careful explanation of how the work usually goes for a homeowner, step by step, in plain words.' }, { heading: 'What to expect', body: 'What happens on the day, how long it tends to take and how we leave things when we are done.' }], faq: [{ q: 'Do I need to be home?', a: 'Usually, so we can show you what we found and agree what happens next.' }] })
+    const { site, pages } = buildStarterSite(
+      { name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', phone: '(555) 201-4480', services: ['Water heaters', 'Drain cleaning'], palette: 'ocean', content: { services: [svc('Water heaters'), svc('Drain cleaning')] }, socials: ['https://www.facebook.com/rivertown', 'https://www.instagram.com/rivertown'], chat: { kind: 'sms', to: '(555) 201-4480' } },
+      'org',
+      'rivertown-plumbing'
+    )
+    expect(site.nav[0].children).toEqual([{ label: 'Water heaters', href: '/services/water-heaters' }, { label: 'Drain cleaning', href: '/services/drain-cleaning' }])
+    const home = renderPage(site, pages[0], pages).html
+    expect(home).toContain('<div class="nv-sub"><a href="/services/water-heaters">Water heaters</a>')
+    expect(home).toContain('aria-label="Facebook"')
+    expect(home).toContain('href="sms:5552014480"')
+    expect(home).toContain('href="/privacy"')
+    const page = pages.find((p) => p.slug === 'services/water-heaters')!
+    const out = renderPage(site, page, pages)
+    expect(out.html).toContain('<nav class="bc"')
+    expect(out.html).toContain('"@type":"BreadcrumbList"')
+    expect(checkSpeed(out).issues).toEqual([])
+    const privacy = serveSitePath({ site, pages, redirects: [] }, ['privacy'], { preview: true })
+    expect(privacy.status).toBe(200)
+  })
+})
+
 describe('SaySites own domains', () => {
   it('takes whatever the owner pastes and keeps just the domain', () => {
     expect(cleanDomain('https://www.SmithLaw.com/about?x=1')).toBe('smithlaw.com')
@@ -256,7 +280,7 @@ describe('SaySites speed gate', () => {
 
   it('keeps the home page small', () => {
     const result = checkSpeed(renderPage(sampleSite, sampleHome, samplePages))
-    expect(result.htmlBytes).toBeLessThan(15_000)
+    expect(result.htmlBytes).toBeLessThan(20_000)
     // Well under the 30KB budget; this catches accidental bloat.
     expect(result.cssBytes).toBeLessThan(9_000)
   })

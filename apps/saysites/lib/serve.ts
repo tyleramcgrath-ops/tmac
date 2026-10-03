@@ -1,6 +1,7 @@
 // Turns a request path on a site into a Response: a page, the sitemap,
 // robots.txt, a redirect, or a 404.
 
+import { privacyPage } from './privacy'
 import { wordsFor } from './site-words'
 import { renderPage, withBasePath } from './render'
 import { pagePath, walk, type Page } from './schema'
@@ -29,7 +30,7 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
     return new Response(body, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, s-maxage=300' } })
   }
 
-  const page = pages.find((p) => p.status === 'published' && pagePath(p) === path)
+  const page = pages.find((p) => p.status === 'published' && pagePath(p) === path) ?? (path === '/privacy' ? privacyPage(site) : undefined)
   if (!page) {
     // yoursite.com/review: a short, permanent address for QR cards and
     // messages that forwards to wherever the owner collects reviews.
