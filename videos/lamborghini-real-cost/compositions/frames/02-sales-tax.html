@@ -1,12 +1,5 @@
 <template>
-  <div
-    id="root"
-    data-composition-id="02-sales-tax"
-    data-start="0"
-    data-duration="4.203"
-    data-width="1080"
-    data-height="1920"
-  >
+  <div data-hf-id="hf-c3mp" id="root" data-composition-id="02-sales-tax" data-start="0" data-duration="4.203" data-width="1080" data-height="1920">
     <style>
       @font-face { font-family: "Barlow"; font-weight: 700; font-style: normal; font-display: block; src: url("assets/fonts/Barlow-700.woff2") format("woff2"); }
       @font-face { font-family: "Barlow"; font-weight: 900; font-style: normal; font-display: block; src: url("assets/fonts/Barlow-900.woff2") format("woff2"); }
@@ -179,31 +172,31 @@
       }
     </style>
 
-    <div class="s02-ground clip" data-start="0" data-duration="4.203" data-track-index="0"></div>
+    <div data-hf-id="hf-ptv0" class="s02-ground clip" data-start="0" data-duration="4.203" data-track-index="0"></div>
 
-    <div class="s02-stage clip" id="s02-stage" data-start="0" data-duration="4.203" data-track-index="1">
-      <div class="s02-shake" id="s02-shake">
-        <div class="s02-num" id="s02-num">01</div>
+    <div data-hf-id="hf-ikf2" class="s02-stage clip" id="s02-stage" data-start="0" data-duration="4.203" data-track-index="1">
+      <div data-hf-id="hf-b7pm" class="s02-shake" id="s02-shake">
+        <div data-hf-id="hf-mii5" class="s02-num" id="s02-num">01</div>
 
-        <div class="s02-total" id="s02-total">
-          <div class="s02-total-label">Year-one total</div>
-          <div class="s02-total-value" id="s02-total-value">$0</div>
+        <div data-hf-id="hf-crwe" class="s02-total" id="s02-total">
+          <div data-hf-id="hf-4aef" class="s02-total-label">Year-one total</div>
+          <div data-hf-id="hf-4nqu" class="s02-total-value" id="s02-total-value">$0</div>
         </div>
-        <div class="s02-chrome-rule"></div>
+        <div data-hf-id="hf-ph57" class="s02-chrome-rule"></div>
 
-        <div class="s02-stub" id="s02-stub"></div>
-        <div class="s02-kicker" id="s02-kicker">Sales tax</div>
+        <div data-hf-id="hf-qrsy" class="s02-stub" id="s02-stub"></div>
+        <div data-hf-id="hf-n3q3" class="s02-kicker" id="s02-kicker">Sales tax</div>
 
-        <div class="s02-hero" id="s02-hero">+$17,500</div>
-        <div class="s02-card-rule" id="s02-card-rule"></div>
-        <div class="s02-foot" id="s02-foot">~7% · varies by state</div>
+        <div data-hf-id="hf-z0nq" class="s02-hero" id="s02-hero">+$17,500</div>
+        <div data-hf-id="hf-ktyo" class="s02-card-rule" id="s02-card-rule"></div>
+        <div data-hf-id="hf-6iit" class="s02-foot" id="s02-foot">~7% · varies by state</div>
 
-        <div class="s02-gone" id="s02-gone"><span class="s02-word" id="s02-w1">gone</span><span class="s02-word" id="s02-w2">on</span><span class="s02-word" id="s02-w3">day</span><span class="s02-word" id="s02-w4">one.</span></div>
-        <div class="s02-gone-stub" id="s02-gone-stub"></div>
+        <div data-hf-id="hf-avq6" class="s02-gone" id="s02-gone"><span data-hf-id="hf-nubs" class="s02-word" id="s02-w1">gone</span><span data-hf-id="hf-46s9" class="s02-word" id="s02-w2">on</span><span data-hf-id="hf-ivkh" class="s02-word" id="s02-w3">day</span><span data-hf-id="hf-mcwo" class="s02-word" id="s02-w4">one.</span></div>
+        <div data-hf-id="hf-nbny" class="s02-gone-stub" id="s02-gone-stub"></div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/vendor/gsap.min.js"></script>
     <script>
       (function () {
         window.__timelines = window.__timelines || {};
@@ -235,7 +228,6 @@
         tl.fromTo("#s02-stub", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power3.out" }, W.sales);
         tl.fromTo("#s02-kicker", { x: -90, opacity: 0 }, { x: 0, opacity: 1, duration: 0.42, ease: "expo.out" }, W.sales + 0.04);
         // kicker tracking tightens from wide, settling through "tax"
-        tl.fromTo("#s02-kicker", { letterSpacing: "0.32em" }, { letterSpacing: "0.14em", duration: 0.8, ease: "power2.out" }, W.sales + 0.04);
         // "tax": stub accent extends under the kicker
         tl.fromTo("#s02-stub", { scaleX: 1 }, { scaleX: 2, duration: 0.35, ease: "power3.out", immediateRender: false }, W.tax);
         // "alone": stat-card top hairline draws out from center (anticipation)
@@ -253,7 +245,7 @@
         tl.to("#s02-shake", { y: -6, duration: 0.06, ease: "power2.inOut" }, W.n17 + 0.15);
         tl.to("#s02-shake", { y: 0, duration: 0.12, ease: "power2.out" }, W.n17 + 0.21);
         // numeral recoils on impact
-        tl.fromTo("#s02-num", { opacity: 0.1 }, { opacity: 0.16, duration: 0.08, ease: "none" }, W.n17 + 0.1);
+        tl.fromTo("#s02-num", { opacity: 0.1 }, { opacity: 0.16, duration: 0.08, ease: "none", immediateRender: false }, W.n17 + 0.1);
         tl.to("#s02-num", { opacity: 0.1, duration: 0.6, ease: "power2.out" }, W.n17 + 0.18);
         // running total grows while counting, punches on landing
         tl.fromTo("#s02-total-value", { scale: 0.86 }, { scale: 1, duration: COUNT_DUR, ease: "power2.out" }, COUNT_START);

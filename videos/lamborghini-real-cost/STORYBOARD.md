@@ -166,7 +166,7 @@ Scene 3 (4.4–6.5s): on "forty-nine hundred a month", mono pill "≈ $4,900 / M
 ## Frame 7 — The lesson + follow
 
 - scene: "looking rich ≠ being rich." in two lines; "APEX REVIVAL — follow for the real numbers"; tiny sources line
-- duration: 3.755s
+- duration: 4.5s
 - transition_in: cut
 - type: cta
 - persuasion: Thesis line + call to follow
