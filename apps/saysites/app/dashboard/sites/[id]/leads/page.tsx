@@ -2,10 +2,11 @@ import { notFound } from 'next/navigation'
 import { LeadsNav } from '@/components/LeadsNav'
 import { INTEGRATIONS } from '@/lib/crm-sync'
 import { STAGES, STAGE_HINT, STAGE_LABEL, leadStats, loadCrm, type Stage } from '@/lib/leads'
+import { DIRECT, googleMapsLink } from '@/lib/lead-source'
 import { mailReady } from '@/lib/mail'
 import { requireUser } from '@/lib/session'
 import { getStore, type Message } from '@/lib/store'
-import { previewPath } from '@/lib/urls'
+import { liveUrl, previewPath } from '@/lib/urls'
 import { moveLead } from './actions'
 
 const NEXT: Partial<Record<Stage, Stage>> = { new: 'contacted', contacted: 'booked', booked: 'won' }
@@ -28,6 +29,9 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
   const stage = (STAGES as readonly string[]).includes(sp.stage ?? '') ? (sp.stage as Stage) : null
   const base = `/dashboard/sites/${site.id}/leads`
   const connected = INTEGRATIONS.filter((k) => state.integrations[k]?.on)
+  const sourceOf = (m: Message) => state.leads[m.id]?.source?.label ?? DIRECT
+  const monthly = messages.filter((m) => m.createdAt.slice(0, 10) >= monthStart)
+  const sources = [...monthly.reduce((acc, m) => acc.set(sourceOf(m), (acc.get(sourceOf(m)) ?? 0) + 1), new Map<string, number>())].sort((a, b) => b[1] - a[1])
   const due = messages.filter((m) => {
     const f = state.leads[m.id]?.followUpOn
     return f && f <= today && !['won', 'lost'].includes(stageOf(m))
@@ -73,6 +77,23 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
             {!mailReady() ? 'Automatic replies and alerts start once email is switched on for SaySites. ' : ''}
             {connected.length === 0 ? <>Use HubSpot, Salesforce or another CRM? <a href={`${base}/integrations`}>Send every lead there automatically</a>.</> : null}
           </p>
+        </div>
+      )}
+
+      {messages.length > 0 && (
+        <div className="card">
+          <div className="card-head"><h3>Where this month’s leads came from</h3><a className="small" href={`${base}/report`}>Monthly report</a></div>
+          {sources.length ? (
+            <ul className="report-list">
+              {sources.map(([k, n]) => <li key={k}><span>{k}</span><b>{n}</b></li>)}
+            </ul>
+          ) : <p className="muted small">No leads yet this month.</p>}
+          <details className="src-help">
+            <summary className="small">Count leads from Google Maps and your ads</summary>
+            <p className="small">Ads from Google, Facebook and Microsoft are recognized by themselves. For Google Maps, use this as the website link on your Google Business Profile:</p>
+            <input className="input" readOnly value={googleMapsLink(liveUrl(site))} aria-label="Website link for your Google Business Profile" />
+            <p className="muted small">Visitors who find you through a plain search or type your address show as “{DIRECT}”. Websites can’t tell those apart without tracking scripts, which would slow your site down.</p>
+          </details>
         </div>
       )}
 
@@ -132,7 +153,7 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
                         <a className="lead-card-main" href={`${base}/${m.id}`}>
                           <strong>{m.name || 'Someone'}</strong>
                           <span className="lead-snip">{m.body.slice(0, 110)}</span>
-                          <span className="muted small">{when(m.createdAt)}{m.page !== '/' ? ` · ${m.page}` : ''}</span>
+                          <span className="muted small">{when(m.createdAt)} · {sourceOf(m)}</span>
                         </a>
                         {NEXT[s] && (
                           <form action={moveLead.bind(null, site.id, m.id)}>

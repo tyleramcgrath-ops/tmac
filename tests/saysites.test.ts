@@ -2263,7 +2263,7 @@ describe('SaySites: leads', async () => {
 
   it('exports a spreadsheet that can’t run formulas', () => {
     const csv = L.csvFor([msg({ name: '=HYPERLINK("x")', body: 'line one, "two"\nthree' })], L.emptyCrm())
-    expect(csv.split('\r\n')[0]).toBe('Received,Name,Email,Phone,Stage,Follow up on,Page,Message')
+    expect(csv.split('\r\n')[0]).toBe('Received,Name,Email,Phone,Stage,Came from,Follow up on,Page,Message')
     expect(csv).toContain(`"'=HYPERLINK(""x"")"`)
     expect(csv).toContain('"line one, ""two""\nthree"')
   })
@@ -2315,5 +2315,86 @@ describe('SaySites: leads', async () => {
   it('sends nothing on a schedule until email is set up', async () => {
     const store = new MemoryStore()
     expect(await L.runDue(store)).toBe(0)
+  })
+})
+
+describe('SaySites: lead sources, review requests and the monthly report', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const S = await import('../apps/saysites/lib/lead-source')
+  const L = await import('../apps/saysites/lib/leads')
+  const R = await import('../apps/saysites/lib/report')
+  const { handleVisit } = await import('../apps/saysites/lib/serve')
+  const { site, pages } = SHOWCASE['hale-and-porter']
+  const mine = { ...site, id: 'site_srctest', subdomain: 'src-test-firm', orgId: 'owner2', business: { ...site.business, reviewUrl: 'https://g.page/r/example/review', email: 'office@example.com' } }
+  const u = (q: string) => new URL(`https://src-test-firm.saysites.com/practice-areas${q}`)
+
+  it('reads ads and tagged links, and never guesses an untagged visit', () => {
+    expect(S.sourceFromUrl(u('?gclid=abc&utm_campaign=Probate'))).toEqual({ label: 'Google Ads', campaign: 'Probate' })
+    expect(S.sourceFromUrl(u('?fbclid=x'))?.label).toBe('Facebook or Instagram')
+    expect(S.sourceFromUrl(u('?msclkid=x'))?.label).toBe('Microsoft Ads')
+    expect(S.sourceFromUrl(u('?utm_source=google&utm_medium=gbp'))?.label).toBe('Google Maps')
+    expect(S.sourceFromUrl(u('?utm_source=avvo&utm_medium=referral'))?.label).toBe('Avvo')
+    expect(S.sourceFromUrl(u('?utm_source=facebook&utm_medium=paid_social'))?.label).toBe('Facebook or Instagram ads')
+    expect(S.sourceFromUrl(u(''))).toBeNull()
+    expect(S.googleMapsLink('https://x.saysites.com/')).toBe('https://x.saysites.com/?utm_source=google&utm_medium=gbp')
+  })
+
+  it('keeps the first landing for untagged visits and the latest ad for tagged ones', () => {
+    const first = S.sourceToSet(u(''), '/practice-areas', null)
+    expect(first).toEqual({ label: S.DIRECT, landing: '/practice-areas' })
+    expect(S.sourceToSet(u(''), '/about', first)).toBeNull()
+    expect(S.sourceToSet(u('?gclid=1'), '/practice-areas', first)).toEqual({ label: 'Google Ads', landing: '/practice-areas' })
+    const cookie = S.sourceCookie({ label: 'Google Ads', landing: '/', campaign: 'Wills' })
+    expect(cookie).toMatch(/HttpOnly; Secure$/)
+    expect(S.readSource(`a=1; ${cookie.split(';')[0]}`)).toEqual({ label: 'Google Ads', landing: '/', campaign: 'Wills' })
+    expect(S.readSource('ss_src=%7Bbroken')).toBeNull()
+  })
+
+  it('the visit beacon remembers which ad brought the visitor', async () => {
+    const store = new MemoryStore()
+    const req = new Request('https://src-test-firm.saysites.com/__v?p=%2F', { headers: { 'user-agent': 'Mozilla/5.0', referer: 'https://src-test-firm.saysites.com/?gclid=abc&utm_campaign=Estate' } })
+    const res = await handleVisit({ site: mine, pages, redirects: [] }, req, store)
+    const set = res.headers.get('set-cookie') ?? ''
+    expect(S.readSource(set.split(';')[0])).toEqual({ label: 'Google Ads', landing: '/', campaign: 'Estate' })
+    expect(res.headers.get('cache-control')).toBe('no-store')
+  })
+
+  it('labels the lead, asks a won client for a review once, and sends the monthly report', async () => {
+    const store = new MemoryStore()
+    await store.createSite('owner2', mine, [])
+    const sent: { to: string; subject: string; text: string }[] = []
+    const send = async (m: { to: string; subject: string; text: string }) => (sent.push(m), { ok: true as const })
+    const m = await store.addMessage({ siteId: mine.id, name: 'Jordan Ellis', email: 'jordan@example.com', phone: '', body: 'Will question', page: '/contact' })
+    await L.onNewLead(store, mine, m, { label: 'Google Ads', landing: '/', campaign: 'Wills' })
+    await L.withCrm(store, mine.id, (s) => {
+      const meta = L.metaFor(s, m.id)
+      L.setStage(meta, 'won', new Date(Date.now() - 2 * 86_400_000).toISOString())
+      expect(meta.wonAt).toBeTruthy()
+      s.reportSent = R.previousMonth()
+    })
+    await L.runDue(store, new Date(), send as never)
+    const review = sent.filter((x) => x.to === 'jordan@example.com')
+    expect(review.length).toBe(1)
+    expect(review[0].text).toContain('https://src-test-firm.saysites.com/review')
+    await L.runDue(store, new Date(), send as never)
+    expect(sent.filter((x) => x.to === 'jordan@example.com').length).toBe(1)
+    const state = await L.loadCrm(store, mine.id)
+    expect(state.leads[m.id].source?.label).toBe('Google Ads')
+    expect(L.csvFor([m], state)).toContain('Google Ads (Wills)')
+
+    const month = new Date().toISOString().slice(0, 7)
+    const report = await R.buildReport(store, mine, state, month)
+    expect(report).toMatchObject({ leads: 1, won: 1, sources: [['Google Ads', 1]] })
+    expect(R.reportText(mine, report)).toContain('Google Ads: 1')
+    // The report goes out once, in the first week of the next month, to the owner.
+    const nextWeek = new Date(Date.UTC(Number(month.slice(0, 4)), Number(month.slice(5, 7)), 2, 9))
+    await L.withCrm(store, mine.id, (s) => { delete s.reportSent })
+    const before = sent.length
+    await L.runDue(store, nextWeek, send as never)
+    const reports = sent.slice(before).filter((x) => x.subject.includes('your website in'))
+    expect(reports.length).toBe(1)
+    expect(reports[0].to).toBe('office@example.com')
+    await L.runDue(store, nextWeek, send as never)
+    expect(sent.filter((x) => x.subject.includes('your website in')).length).toBe(1)
   })
 })

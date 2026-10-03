@@ -55,9 +55,9 @@ function exampleAudit() {
 const LEAD_FEATURES = [
   ['A pipeline for every lead', 'Each request lands as a card: New, Contacted, Booked, Won. Move it along in one tap and see who’s still waiting on you.'],
   ['An instant reply, every time', 'The moment someone asks for help, they get a reply from your firm saying it arrived. Their answer comes straight to you.'],
-  ['Nothing slips', 'An email alert for every new lead, a reminder if one is still unanswered, and an optional follow-up to leads nobody has called back.'],
+  ['Nothing slips', 'An email alert for every new lead, a reminder if one is still unanswered, a follow-up to leads nobody has called back, and a review request to every new client.'],
   ['Call, text or email in one tap', 'Every lead has its own page with their message, buttons to reach them, your notes, a follow-up date and the full history.'],
-  ['Know what’s working', 'Leads this month, phone taps, how fast you answer and how many became clients, without a spreadsheet.'],
+  ['Know what’s working', 'Where every lead came from, from Google Ads to Google Maps, plus phone taps, how fast you answer and new clients, in a results email on the 1st of each month.'],
   ['Into the CRM you already use', 'Each new lead can go straight to HubSpot, Salesforce, Pipedrive or Clio Grow, or anywhere else through Zapier or Make.'],
 ] as const
 

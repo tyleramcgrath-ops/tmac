@@ -879,3 +879,17 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
 .lead-delete[open] summary { display: none; }
 .lead-delete form { border: 1px solid #eccbc7; border-radius: 10px; padding: 12px 14px; background: var(--card); }
 .lead-delete p { margin: 0 0 10px; }
+.report-list { list-style: none; margin: 0; padding: 0; }
+.report-list li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.report-list li:first-child { border-top: 0; }
+.report-list li span { overflow-wrap: anywhere; min-width: 0; }
+.report-list b { font-variant-numeric: tabular-nums; }
+.report { display: grid; gap: 16px; }
+.report h3 { margin: 0; }
+.report-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.report-grid h4 { margin: 0 0 6px; font-size: 14px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; }
+.src-help { margin-top: 10px; }
+.src-help summary { cursor: pointer; color: var(--ink-2); }
+.src-help .input { font-size: 14px; margin: 4px 0; }
+@media (max-width: 760px) { .report-grid { grid-template-columns: minmax(0, 1fr); } }
+.leads > .seg { justify-self: start; }

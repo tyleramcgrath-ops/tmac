@@ -193,6 +193,17 @@ per lead (call, text, email, notes, follow-up date, timeline), stats
   Inbox token), Zapier/Make (signed webhook, SSRF-guarded). Free for us, so
   free on every plan. Only show "synced" when the CRM said so.
 - The default wording never promises anything to the lead.
+- Where leads came from (`lib/lead-source.ts`): the visit beacon (never
+  cached) reads the landing page's ad and campaign tags (gclid, fbclid,
+  msclkid, utm_…) from its Referer and keeps them in one first-party cookie
+  (`ss_src`, 90 days); the form handler stamps the lead with it. Untagged
+  visits are "Search or direct", never guessed; owners tag their Google
+  Business Profile link (`googleMapsLink`) to count Maps. Both privacy pages
+  say so; keep them in step if this changes.
+- Review requests: one email after a lead is marked Won (default 1 day),
+  through the site's /review link; off without a review link.
+- Monthly results email (`lib/report.ts`, page at /leads/report): on the 1st
+  (first week, once per month), only real numbers, quiet months not sent.
 - The homepage's "Leads, handled" section (#leads) lists it all. Its
   pipeline card is labelled an example; keep it that way (no real data).
 
