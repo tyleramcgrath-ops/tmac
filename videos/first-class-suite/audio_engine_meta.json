@@ -1,0 +1,108 @@
+{
+  "tts_provider": "kokoro",
+  "voice_id": "am_michael",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 3.499,
+      "words": []
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.8,
+      "words": []
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 3.776,
+      "words": []
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.861,
+      "words": []
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 4.096,
+      "words": []
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 2.645,
+      "words": []
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 2.731,
+      "words": [
+        {
+          "id": "w0",
+          "text": "that's",
+          "start": 0.05,
+          "end": 0.39
+        },
+        {
+          "id": "w1",
+          "text": "23",
+          "start": 0.39,
+          "end": 0.78
+        },
+        {
+          "id": "w2",
+          "text": "economy",
+          "start": 0.78,
+          "end": 1.24
+        },
+        {
+          "id": "w3",
+          "text": "tickets",
+          "start": 1.24,
+          "end": 1.68
+        },
+        {
+          "id": "w4",
+          "text": "for",
+          "start": 1.77,
+          "end": 1.89
+        },
+        {
+          "id": "w5",
+          "text": "one",
+          "start": 1.89,
+          "end": 2.08
+        },
+        {
+          "id": "w6",
+          "text": "suite.",
+          "start": 2.08,
+          "end": 2.44
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.349,
+      "words": []
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 28.757
+}

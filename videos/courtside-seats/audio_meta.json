@@ -1,0 +1,116 @@
+{
+  "bgm": null,
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.096,
+      "words": []
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 3.435,
+      "words": []
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 3.712,
+      "words": []
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.989,
+      "words": []
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.627,
+      "words": []
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 4.16,
+      "words": []
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 4.48,
+      "words": [
+        {
+          "id": "w0",
+          "text": "two",
+          "start": 0.03,
+          "end": 0.23
+        },
+        {
+          "id": "w1",
+          "text": "seats",
+          "start": 0.23,
+          "end": 0.56
+        },
+        {
+          "id": "w2",
+          "text": "every",
+          "start": 0.64,
+          "end": 1.01
+        },
+        {
+          "id": "w3",
+          "text": "home",
+          "start": 1.01,
+          "end": 1.32
+        },
+        {
+          "id": "w4",
+          "text": "game",
+          "start": 1.32,
+          "end": 1.63
+        },
+        {
+          "id": "w5",
+          "text": "cheapest",
+          "start": 1.63,
+          "end": 2.21
+        },
+        {
+          "id": "w6",
+          "text": "nights,",
+          "start": 2.26,
+          "end": 2.76
+        },
+        {
+          "id": "w7",
+          "text": "about",
+          "start": 2.79,
+          "end": 3.17
+        },
+        {
+          "id": "w8",
+          "text": "330",
+          "start": 3.17,
+          "end": 3.92
+        },
+        {
+          "id": "w9",
+          "text": "grand.",
+          "start": 3.92,
+          "end": 4.6
+        }
+      ]
+    },
+    {
+      "frame": 8,
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.093,
+      "words": []
+    }
+  ],
+  "sfx": []
+}

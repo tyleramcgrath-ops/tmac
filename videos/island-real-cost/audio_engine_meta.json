@@ -1,0 +1,120 @@
+{
+  "tts_provider": "kokoro",
+  "voice_id": "am_michael",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.075,
+      "words": []
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.395,
+      "words": []
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 3.925,
+      "words": []
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.349,
+      "words": []
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.456,
+      "words": []
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 3.349,
+      "words": []
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 5.333,
+      "words": [
+        {
+          "id": "w0",
+          "text": "at",
+          "start": 0.06,
+          "end": 0.17
+        },
+        {
+          "id": "w1",
+          "text": "solar,",
+          "start": 0.22,
+          "end": 0.92
+        },
+        {
+          "id": "w2",
+          "text": "desalination",
+          "start": 0.95,
+          "end": 1.84
+        },
+        {
+          "id": "w3",
+          "text": "and",
+          "start": 1.84,
+          "end": 2.07
+        },
+        {
+          "id": "w4",
+          "text": "property",
+          "start": 2.07,
+          "end": 2.68
+        },
+        {
+          "id": "w5",
+          "text": "tax,",
+          "start": 2.68,
+          "end": 3.12
+        },
+        {
+          "id": "w6",
+          "text": "$177,000",
+          "start": 3.13,
+          "end": 4.61
+        },
+        {
+          "id": "w7",
+          "text": "a",
+          "start": 4.61,
+          "end": 4.67
+        },
+        {
+          "id": "w8",
+          "text": "year.",
+          "start": 4.67,
+          "end": 5.15
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.499,
+      "words": []
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 31.381
+}

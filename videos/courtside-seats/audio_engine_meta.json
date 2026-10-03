@@ -1,0 +1,126 @@
+{
+  "tts_provider": "kokoro",
+  "voice_id": "am_michael",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.096,
+      "words": []
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 3.435,
+      "words": []
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 3.712,
+      "words": []
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.989,
+      "words": []
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.627,
+      "words": []
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 4.16,
+      "words": []
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 4.48,
+      "words": [
+        {
+          "id": "w0",
+          "text": "two",
+          "start": 0.03,
+          "end": 0.23
+        },
+        {
+          "id": "w1",
+          "text": "seats",
+          "start": 0.23,
+          "end": 0.56
+        },
+        {
+          "id": "w2",
+          "text": "every",
+          "start": 0.64,
+          "end": 1.01
+        },
+        {
+          "id": "w3",
+          "text": "home",
+          "start": 1.01,
+          "end": 1.32
+        },
+        {
+          "id": "w4",
+          "text": "game",
+          "start": 1.32,
+          "end": 1.63
+        },
+        {
+          "id": "w5",
+          "text": "cheapest",
+          "start": 1.63,
+          "end": 2.21
+        },
+        {
+          "id": "w6",
+          "text": "nights,",
+          "start": 2.26,
+          "end": 2.76
+        },
+        {
+          "id": "w7",
+          "text": "about",
+          "start": 2.79,
+          "end": 3.17
+        },
+        {
+          "id": "w8",
+          "text": "330",
+          "start": 3.17,
+          "end": 3.92
+        },
+        {
+          "id": "w9",
+          "text": "grand.",
+          "start": 3.92,
+          "end": 4.6
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.093,
+      "words": []
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 30.592
+}
