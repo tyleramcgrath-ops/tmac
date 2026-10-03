@@ -14,7 +14,7 @@ export default function GoogleGuidelinesPage() {
     <MarketingShell>
       <section className="page-hero">
         <div className="wrap">
-          <p className="kicker">Google’s guidelines · reviewed {GUIDELINES_REVIEWED}</p>
+          <p className="kicker">Google’s guidelines, reviewed {GUIDELINES_REVIEWED}</p>
           <h1>Built to Google’s guidelines. Kept up with every change.</h1>
           <p>Every SaySites website follows Google’s published guidelines to the letter, and they’re checked on every page before it goes live. When Google changes a guideline, we update the platform once and every site gets it the same day.</p>
         </div>
@@ -45,9 +45,8 @@ export default function GoogleGuidelinesPage() {
             <p>Each is Google’s own published guidance, linked so you can read it yourself.</p>
           </div>
           <ol className="ind-pages">
-            {GUIDELINES.map((g, n) => (
+            {GUIDELINES.map((g) => (
               <li key={g.id}>
-                <span>{String(n + 1).padStart(2, '0')}</span>
                 <div>
                   <h3>{g.title}</h3>
                   <p>{g.how}</p>

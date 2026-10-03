@@ -78,7 +78,7 @@ export default async function MovePage({ params, searchParams }: { params: Promi
         <details className="card">
           <summary><strong>{redirects.length} redirect{redirects.length === 1 ? '' : 's'}</strong> <span className="muted small">Old addresses and where they now go</span></summary>
           <ul className="small" style={{ marginTop: 12 }}>
-            {redirects.map((r) => <li key={r.from}><code>{r.from}</code> → <code>{r.to}</code></li>)}
+            {redirects.map((r) => <li key={r.from}><code>{r.from}</code> goes to <code>{r.to}</code></li>)}
           </ul>
         </details>
       )}

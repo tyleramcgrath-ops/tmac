@@ -26,9 +26,9 @@ export default function RedesignPage() {
       <section className="ind-sec ind-alt">
         <div className="wrap">
           <ol className="ind-pages">
-            <li><span>01</span><div><h3>We read your site</h3><p>Your pages, headings and words, and the business details you already publish: name, phone, address and colours.</p></div></li>
-            <li><span>02</span><div><h3>We rebuild it, twice</h3><p>Your site as it is: the same sections, photos, colours and menu. And a fresh redesign of the same content. Every page keeps its address and the details Google looks for.</p></div></li>
-            <li><span>03</span><div><h3>You compare</h3><p>A before and after of page weight, scripts, missing image descriptions and speed. Pick the version you like and claim it free.</p></div></li>
+            <li><div><h3>We read your site</h3><p>Your pages, headings and words, and the business details you already publish: name, phone, address and colours.</p></div></li>
+            <li><div><h3>We rebuild it, twice</h3><p>Your site as it is: the same sections, photos, colours and menu. And a fresh redesign of the same content. Every page keeps its address and the details Google looks for.</p></div></li>
+            <li><div><h3>You compare</h3><p>A before and after of page weight, scripts, missing image descriptions and speed. Pick the version you like and claim it free.</p></div></li>
           </ol>
         </div>
       </section>

@@ -55,7 +55,7 @@ function Filled() {
       <div><span>Name</span><b>Rosie’s Bakery</b></div>
       <div><span>Kind</span><b>Bakery</b></div>
       <div><span>Phone</span><b>(503) 555-0142</b></div>
-      <div><span>Hours</span><b>Tue–Fri 7am–3pm</b></div>
+      <div><span>Hours</span><b>Tue-Fri 7am-3pm</b></div>
       <span className="cx-done">✓ Filled in from Google</span>
     </div>
   )
@@ -69,7 +69,7 @@ export default function GoogleProfilePage() {
       <section className="page-hero cx-hero">
         <div className="wrap cx-hero-in">
           <div>
-            <p className="kicker">{live ? 'Google Business Profile' : 'Google Business Profile · coming soon'}</p>
+            <p className="kicker">{live ? 'Google Business Profile' : 'Google Business Profile, coming soon'}</p>
             <h1>Your Google listing, turned into your website.</h1>
             <p>Search for your business and tap your listing. Your website starts with your real name, address, phone number and opening hours, exactly as customers already see them on Google. You check it, change what you like, and it’s yours.</p>
             <div className="ind-actions">
@@ -85,7 +85,7 @@ export default function GoogleProfilePage() {
                 <div className="cx-site-head"><b>Rosie’s Bakery</b><i>(503) 555-0142</i></div>
                 <div className="cx-site-ph" style={{ height: 240 }}><Pic id="1509440159596-0249088772ff" alt="Fresh loaves of bread on a bakery counter" sizes="(max-width: 900px) 92vw, 520px" /></div>
                 <div className="cx-form" style={{ padding: 14 }}>
-                  <div><span>Open</span><b>Tue–Fri 7am–3pm · Sat–Sun 7am–2pm</b></div>
+                  <div><span>Open</span><b>Tue-Fri 7am-3pm, Sat-Sun 7am-2pm</b></div>
                   <div><span>Find us</span><b>2210 SE Division St, Portland</b></div>
                 </div>
               </div>

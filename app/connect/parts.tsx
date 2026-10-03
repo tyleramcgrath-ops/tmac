@@ -44,10 +44,9 @@ export function JsonLd({ faq, crumbs }: { faq: QA[]; crumbs: [string, string][] 
 export function Steps({ steps }: { steps: { title: string; text: string; pic: React.ReactNode }[] }) {
   return (
     <ol className="cx-steps">
-      {steps.map((s, i) => (
+      {steps.map((s) => (
         <li key={s.title}>
           <div className="cx-pic" aria-hidden="true">{s.pic}</div>
-          <span className="cx-n">{String(i + 1).padStart(2, '0')}</span>
           <h3>{s.title}</h3>
           <p>{s.text}</p>
         </li>

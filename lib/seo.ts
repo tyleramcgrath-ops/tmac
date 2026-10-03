@@ -163,9 +163,9 @@ export function checkPage(page: Page, allPages: readonly Page[] = [page]): SeoIs
   }
 
   // Title and description lengths that display fully in search results.
-  if (page.seo.title.length < 15) issues.push({ severity: 'warning', code: 'short-title', message: 'The page title is short; aim for 30–60 characters.' })
+  if (page.seo.title.length < 15) issues.push({ severity: 'warning', code: 'short-title', message: 'The page title is short; aim for 30 to 60 characters.' })
   if (page.seo.title.length > 60) issues.push({ severity: 'warning', code: 'long-title', message: 'The page title may be cut off in search results (over 60 characters).' })
-  if (page.seo.description.length < 70) issues.push({ severity: 'warning', code: 'short-description', message: 'The meta description is short; aim for 120–160 characters.' })
+  if (page.seo.description.length < 70) issues.push({ severity: 'warning', code: 'short-description', message: 'The meta description is short; aim for 120 to 160 characters.' })
 
   // Unique titles across the site.
   const dupeTitle = allPages.find((p) => p.id !== page.id && p.seo.title.trim().toLowerCase() === page.seo.title.trim().toLowerCase())

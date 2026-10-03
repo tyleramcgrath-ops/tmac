@@ -161,7 +161,8 @@ const pad = (y: number, x = 24) => ({ top: y, right: x, bottom: y, left: x })
 const section = { desktop: pad(96), mobile: pad(56, 20) }
 
 function clip(s: string, max: number): string {
-  return s.length <= max ? s : s.slice(0, max - 1).replace(/\s+\S*$/, '') + '…'
+  // Cut on a whole word, without a trailing ellipsis or dangling punctuation.
+  return s.length <= max ? s : s.slice(0, max + 1).replace(/\s+\S*$/, '').replace(/[\s,;:|&-]+$/, '')
 }
 
 function telHref(phone: string): string {
@@ -287,7 +288,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         `The details are the point. Come and see for yourself.`,
       ],
     })[design][i % 3]
-  const eyebrow = design === 'bold' ? `${cap(t.trade)} · ${city}` : place
+  const eyebrow = design === 'bold' ? `${cap(t.trade)} in ${city}` : place
 
   const heroBlocks = (light: boolean): Element[] => [
     { id: 'hero-kicker', type: 'text', text: eyebrow, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: light && design !== 'upscale' ? '#dbe3ec' : 'primary' } },
@@ -373,7 +374,6 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           layout: 'flex',
           style: { gap: { desktop: 12 }, padding: { desktop: { top: 0, right: i % 2 ? 48 : 0, bottom: 0, left: i % 2 ? 0 : 48 }, mobile: pad(0, 0) } },
           children: [
-            { id: `svc-${i + 1}-n`, type: 'text', text: String(i + 1).padStart(2, '0'), style: { color: 'primary', fontWeight: 600, fontSize: { desktop: 14 }, letterSpacing: 0.14 } },
             { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: 34, mobile: 26 } } },
             { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 460 } },
           ],
@@ -467,7 +467,6 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           layout: 'flex',
           style: { gap: { desktop: 8 }, padding: { desktop: pad(28, 28), mobile: pad(22, 20) }, background: 'surface', borderRadius: 12 },
           children: [
-            { id: `step-${n}-n`, type: 'text', text: n, style: { color: 'primary', fontWeight: 700, fontSize: { desktop: 14 }, letterSpacing: 0.12 } },
             { id: `step-${n}-h`, type: 'heading', level: 3, text: h, style: { fontSize: { desktop: 22 } } },
             { id: `step-${n}-t`, type: 'text', text: d, style: { color: 'muted' } },
           ],
@@ -638,7 +637,6 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                     layout: 'flex',
                     style: { gap: { desktop: 8 }, padding: { desktop: pad(28, 28), mobile: pad(22, 20) }, background: 'surface', borderRadius: 2 },
                     children: [
-                      { id: `step-${n}-n`, type: 'text', text: n, style: { color: 'primary', fontWeight: 600, fontSize: { desktop: 14 }, letterSpacing: 0.12 } },
                       { id: `step-${n}-h`, type: 'heading', level: 3, text: h, style: { fontSize: { desktop: 24 } } },
                       { id: `step-${n}-t`, type: 'text', text: d, style: { color: 'muted' } },
                     ],

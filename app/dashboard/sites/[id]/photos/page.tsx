@@ -66,7 +66,7 @@ export default async function PhotosPage({ params }: { params: Promise<{ id: str
                 <img src={src} alt={m.alt} loading="lazy" width={m.width} height={m.height} />
                 <figcaption>
                   <span className="small">{m.alt}</span>
-                  <span className="muted small">{m.width}×{m.height} · {Math.round(m.bytes / 1024)} KB{isLogo ? ' · Logo' : ''}</span>
+                  <span className="muted small">{m.width}×{m.height}, {Math.round(m.bytes / 1024)} KB{isLogo ? ', Logo' : ''}</span>
                   <span className="photo-actions">
                     <form action={setLogo.bind(null, site.id, isLogo ? null : m.id)}><button className="btn btn-ghost btn-sm" type="submit">{isLogo ? 'Stop using as logo' : 'Use as logo'}</button></form>
                     <form action={removePhoto.bind(null, site.id, m.id)}><button className="btn btn-ghost btn-sm danger" type="submit">Delete</button></form>

@@ -51,7 +51,7 @@ export const GUIDELINES: Guideline[] = [
   {
     id: 'structured-data',
     title: 'Structured data',
-    how: 'Each business is described with the right schema.org type (LegalService, Plumber, Dentist…), plus its address, hours, FAQs and breadcrumbs, and only with facts shown on the page.',
+    how: 'Each business is described with the right schema.org type (LegalService, Plumber, Dentist and more), plus its address, hours, FAQs and breadcrumbs, and only with facts shown on the page.',
     where: 'lib/seo.ts',
     source: { label: 'General structured data guidelines', url: 'https://developers.google.com/search/docs/appearance/structured-data/sd-policies' },
   },

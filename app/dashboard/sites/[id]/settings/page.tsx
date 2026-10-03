@@ -17,7 +17,7 @@ const DESIGNS = [
 ]
 
 const FLAIR_CHOICES = [
-  { key: 'editorial', label: 'Editorial', note: 'Numbered sections, fine rules, photos that unveil as you scroll.' },
+  { key: 'editorial', label: 'Editorial', note: 'Fine rules over headings, photos that unveil as you scroll.' },
   { key: 'luxe', label: 'Luxe', note: 'Framed photos, gold-line headings, a slim reading bar.' },
   { key: 'soft', label: 'Soft', note: 'Arched photos, rounded cards, gentle fades.' },
   { key: 'bold', label: 'Bold', note: 'A slanted header, strong underlines, cards that slide in.' },

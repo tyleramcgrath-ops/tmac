@@ -14,7 +14,7 @@ export function RedesignForm({ id = 'redesign-url', dark = false }: { id?: strin
       {state.error && (
         <p className="redesign-err" role="alert">
           {state.error}
-          {/security check/.test(state.error) && <> <a href="/signup">Build it from your details →</a></>}
+          {/security check/.test(state.error) && <> <a href="/signup">Build it from your details</a></>}
         </p>
       )}
     </form>

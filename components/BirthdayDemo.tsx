@@ -112,7 +112,7 @@ export function BirthdayDemo() {
   return (
     <div ref={root} className="bdd" aria-hidden="true" data-step={step} data-dark={dark ? '' : undefined}>
       <div className="bdd-tool">
-        <span className="bdd-who"><i />Sofie<em>· Olivo</em></span>
+        <span className="bdd-who"><i />Sofie<em>for Olivo</em></span>
         <span className="bdd-actions"><span>Undo</span><b className={pressed ? 'is-pressed' : ''}>Publish</b></span>
       </div>
 
@@ -128,13 +128,13 @@ export function BirthdayDemo() {
           <header className={`bdd-hero bdd-in${step === 2 ? ' bdd-flash' : ''}${step >= 3 ? ' is-photo' : ''}`}>
             <img className="bdd-hero-photo" {...HERO} alt="" width={1100} height={629} fetchPriority="low" decoding="async" />
             <div className="bdd-hero-text">
-              <small>East Austin · Open nightly</small>
+              <small>East Austin, Open nightly</small>
               <strong>Neapolitan pizza, fired at 900°.</strong>
               <span className="bdd-btn">See the menu</span>
             </div>
             <img className="bdd-hero-side" {...SIDE} alt="" width={480} height={480} fetchPriority="low" decoding="async" />
           </header>
-          <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Sunday brunch 10:00–2:00</div>
+          <div className={`bdd-hours${step >= 4 ? ' is-on bdd-flash' : ''}`}>Sunday brunch 10:00-2:00</div>
           <div className={`bdd-cards bdd-in${step === 5 ? ' bdd-flash' : ''}`}>
             {CARDS.map((c, i) => (
               <div key={c.name} className="bdd-card">
@@ -177,7 +177,7 @@ export function BirthdayDemo() {
           </>
         )}
         <div className="bdd-input">
-          <span>{phase === 'typing' && typed ? typed : <em>Ask Sofie to change anything…</em>}</span>
+          <span>{phase === 'typing' && typed ? typed : <em>Ask Sofie to change anything</em>}</span>
           {phase === 'typing' && <i className="bdd-caret" />}
         </div>
       </div>

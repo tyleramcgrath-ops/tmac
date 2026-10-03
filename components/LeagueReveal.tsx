@@ -30,7 +30,7 @@ export function LeagueReveal({ siteId, week, heading, cta, place, of, league, ti
   return (
     <div className={`reveal is-${state}`}>
       <div className="reveal-card" aria-live="polite">
-        <span className="stat-label">{heading} · {league}</span>
+        <span className="stat-label">{heading}, {league}</span>
         <strong className="reveal-place">{place}</strong>
         <span className="muted small">{of}</span>
         {titles.length > 0 && (

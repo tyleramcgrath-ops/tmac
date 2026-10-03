@@ -22,10 +22,10 @@ function NailSite() {
       <div className="kd-nav"><b>Polished <span>by P</span></b><span>Designs</span><span>Prices</span><em>Ask a grown-up to book</em></div>
       <div className="kd-hero">
         <div>
-          <small>Nail art · Saturdays</small>
+          <small>Nail art, Saturdays</small>
           <h3>Tiny nails, big ideas.</h3>
           <p>Pastel sets, glitter tips and matching nails for best friends. I paint them myself, carefully.</p>
-          <div className="kd-btns"><em>See my designs</em><span>Prices →</span></div>
+          <div className="kd-btns"><em>See my designs</em><span>Prices</span></div>
         </div>
         <div className="kd-ph"><Image src={U('1688583417770-ff6cc18071dc')} alt="Pastel painted nails" fill sizes="(max-width: 900px) 45vw, 360px" style={{ objectFit: 'cover' }} /></div>
       </div>
@@ -51,7 +51,7 @@ export default function KidsPage() {
       <section className="page-hero kd-top">
         <div className="wrap kd-hero-grid">
           <div>
-            <p className="kicker">SaySites for kids · coming soon</p>
+            <p className="kicker">SaySites for kids, coming soon</p>
             <h1>Big ideas deserve a real website.</h1>
             <p>Kids dream up the business: nails, lemonade, dog walking, comics, bracelets. They build the website themselves, in their own words. Parents stay in charge of everything, and nothing goes live until a grown-up says yes.</p>
             <p className="kd-soon">Kids mode is on its way. It isn’t open yet.</p>

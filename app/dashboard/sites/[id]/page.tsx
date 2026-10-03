@@ -137,12 +137,12 @@ export default async function SiteOverview({ params, searchParams }: { params: P
               <span className="stat-label">Visibility</span>
               {standing && standing.league.standings.length > 1 && (
                 <a className="league-line" href={`${base}/visibility`}>
-                  {lt.position(standing.me.rank)} {lt.of(standing.league.standings.length)} {standing.league.trade ? tradePlural(standing.league.trade) : 'businesses'} this week{standing.me.momentum ? ` · ${lt.move(standing.me.momentum)}` : ''}
+                  {lt.position(standing.me.rank)} {lt.of(standing.league.standings.length)} {standing.league.trade ? tradePlural(standing.league.trade) : 'businesses'} this week{standing.me.momentum ? `, ${lt.move(standing.me.momentum)}` : ''}
                 </a>
               )}
               {next ? (
                 <>
-                  <strong>Next: +{next.points} · {next.title}</strong>
+                  <strong>Next: +{next.points}, {next.title}</strong>
                   <span className="muted small">{next.why}</span>
                   <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
                     <a className="btn btn-primary btn-sm" href={questLink(next)}>{next.sofie ? 'Ask Sofie' : 'Do it'}</a>

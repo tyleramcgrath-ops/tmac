@@ -41,7 +41,7 @@ export default async function RedesignReport({ params, searchParams }: { params:
     <MarketingShell>
       <section className="page-hero redesign-hero">
         <div className="wrap">
-          <p className="kicker">Your free redesign · {host}</p>
+          <p className="kicker">Your free redesign, {host}</p>
           <h1>Here’s {d.name} on SaySites.</h1>
           <p>{fresh ? 'A fresh design made from your own words and photos' : 'Your site as it is: the same pages, words, photos and colours, rebuilt to load fast'}: {imported} page{imported === 1 ? '' : 's'} carried over{kept ? `, ${kept} at exactly the same address` : ''}{p.redirects.length ? `, and ${p.redirects.length} redirect${p.redirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>
           <div className="ind-actions">
