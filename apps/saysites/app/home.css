@@ -919,3 +919,12 @@
 .ind-guide-sec { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 56px; padding: 40px 0; border-top: 1px solid var(--line); scroll-margin-top: 96px; }
 .ind-guide-sec h3 { font-size: 26px; line-height: 1.15; letter-spacing: -0.025em; }
 @media (max-width: 900px) { .ind-guide-sec { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; } }
+
+/* SEO, built in */
+.home .seo-ex { display: flex; align-items: baseline; gap: 12px; padding: 6px 10px 14px; }
+.home .seo-ex b { font-size: 64px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.home .seo-ex span { color: var(--ink-mu); font-size: 15px; }
+.home .standing-card .seo-bar { display: block; height: 6px; border: 0; border-radius: 3px; padding: 0; background: var(--line); overflow: hidden; }
+.home .standing-card .seo-bar em { display: block; height: 100%; background: var(--ink); border-radius: 3px; }
+.home .standing-card li:has(.seo-bar) { grid-template-columns: 96px minmax(0, 1fr) 32px; }
+.home .seo-feats { margin-top: 64px; }
