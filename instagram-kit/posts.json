@@ -1,0 +1,456 @@
+{
+  "_comment": [
+    "Single source of truth for the Instagram kit. build.py renders media/ and",
+    "CAPTIONS.md from this file, so the pictures and the words cannot drift apart.",
+    "",
+    "RULES THIS FILE IS HELD TO: no price, no timeframe, no statistic, no client",
+    "name, no certification, no award, no guarantee, and no capability the business",
+    "does not have. Every claim here is traceable to a line already published on",
+    "mcgrathmarketinggroup.com. If a post needs a number, it says what decides it.",
+    "",
+    "Edit the text here, re-run build.py, and both outputs update together."
+  ],
+
+  "brand": {
+    "handle_placeholder": "@YOUR_INSTAGRAM_HANDLE",
+    "site": "mcgrathmarketinggroup.com",
+    "name": "McGrath Marketing Group",
+    "person": "Tyler McGrath",
+    "location": "Jupiter, FL",
+    "primary_cta": "Link in bio for a free SEO audit.",
+    "colors": {
+      "cream": "#F7F4EC",
+      "navy": "#0C2A47",
+      "ink": "#14263B",
+      "blue": "#2563C8",
+      "blue_lt": "#5B9BE8",
+      "line": "#DFD8C8"
+    }
+  },
+
+  "hashtags": {
+    "local": [
+      "#jupiterfl",
+      "#jupiterflorida",
+      "#palmbeachcounty",
+      "#jupiterbusiness",
+      "#palmbeachgardens",
+      "#tequesta",
+      "#stuartfl",
+      "#southfloridabusiness"
+    ],
+    "seo": [
+      "#seo",
+      "#localseo",
+      "#seocompany",
+      "#searchengineoptimization",
+      "#googlebusinessprofile",
+      "#smallbusinessmarketing"
+    ],
+    "webdesign": [
+      "#webdesign",
+      "#wordpress",
+      "#websitedesign",
+      "#customwebsite",
+      "#webdeveloper",
+      "#smallbusinesswebsite"
+    ],
+    "ai": [
+      "#aisearch",
+      "#chatgpt",
+      "#perplexity",
+      "#aeo",
+      "#geo",
+      "#aivisibility",
+      "#digitalmarketing"
+    ]
+  },
+
+  "posts": [
+    {
+      "id": "01-intro",
+      "order": 1,
+      "type": "photo",
+      "pin_to_profile": true,
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "hero.webp",
+          "panel": "cream",
+          "eyebrow": "JUPITER, FLORIDA",
+          "headline": "Getting found when a buyer searches, and when they ask an AI instead."
+        }
+      ],
+      "alt_text": [
+        "The Jupiter inlet at golden hour, with the text: Jupiter, Florida. Getting found when a buyer searches, and when they ask an AI instead."
+      ],
+      "caption": "Start here.\n\nI'm Tyler McGrath. I run McGrath Marketing Group out of Jupiter, Florida, and I do three things: search engine optimisation, AI search visibility, and websites.\n\nThe reason the three sit together is that they are now the same problem. A buyer either types a query, or they ask ChatGPT, Gemini or Perplexity who to call and read one answer. Both routes are decided by the same things: whether your site is structured so a machine can read it, whether your claims are clear enough to repeat, and whether you show up anywhere those systems already look.\n\nOne person on your account, which is me. Pricing in the open. No long contract.\n\nFollow along if you run something in Palm Beach County and you'd rather understand this than outsource it blind.",
+      "hashtag_sets": ["local", "seo", "ai"]
+    },
+
+    {
+      "id": "02-seo",
+      "order": 2,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "page-seo.webp",
+          "panel": "cream",
+          "eyebrow": "SEO COMPANY IN JUPITER",
+          "headline": "Local, technical and content SEO for Palm Beach County."
+        }
+      ],
+      "alt_text": [
+        "A desk workspace photograph, with the text: SEO company in Jupiter. Local, technical and content SEO for Palm Beach County."
+      ],
+      "caption": "What an SEO engagement here actually consists of.\n\nThree workstreams, running together:\n\nLocal — your Google Business Profile, your service pages, and the places that list your business. This is what decides whether you appear in the map pack when someone nearby searches.\n\nTechnical — how fast the site loads, how cleanly it can be crawled, whether your pages are readable to a machine at all. This is the floor. Content cannot outrun a broken foundation.\n\nContent — the pages that answer what buyers actually type, written to be the best answer on the page rather than the longest.\n\nOne report a month showing what moved, what shipped, and what's next. Priced in the open, no long contract, and you keep everything.\n\nFull breakdown on the site — link in bio.",
+      "hashtag_sets": ["seo", "local"]
+    },
+
+    {
+      "id": "03-webdesign",
+      "order": 3,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "page-webdesign.webp",
+          "panel": "navy",
+          "eyebrow": "WEB DESIGN IN JUPITER, FL",
+          "headline": "A template is built for everyone. Yours should be built for your buyers."
+        }
+      ],
+      "alt_text": [
+        "A workspace photograph on a navy ground, with the text: Web design in Jupiter, FL. A template is built for everyone. Yours should be built for your buyers."
+      ],
+      "caption": "The problem with a template isn't that it looks like other sites. It's that you can't change the parts that matter.\n\nA template arrives with features you'll never use and a structure you can't move. When you need a page shaped around how your buyers actually decide, you end up fighting the theme.\n\nA custom build starts from the other end: who's buying, what they need to see, and what URLs you already have that must keep working. Then it's built to be fast, to be readable by search engines and AI models from launch day, and to be handed over whole.\n\nThat last part is the one people get burned on. You should own the site, the hosting choice, and the ability to edit it without calling anyone. If you can't, you're renting.\n\nLink in bio.",
+      "hashtag_sets": ["webdesign", "local"]
+    },
+
+    {
+      "id": "04-aeo",
+      "order": 4,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "page-aeo.webp",
+          "panel": "navy",
+          "eyebrow": "AI SEARCH OPTIMIZATION",
+          "headline": "Your buyer asked ChatGPT who to call. Were you named?"
+        }
+      ],
+      "alt_text": [
+        "A photograph on a navy ground, with the text: AI search optimization. Your buyer asked ChatGPT who to call. Were you named?"
+      ],
+      "caption": "A growing share of buying questions never reach a results page. Someone asks a model, reads one answer, and calls whoever was named in it.\n\nThat answer is assembled from sources those systems already read. Which means being named is a thing you can work on, not a thing that happens to you.\n\nIt shares a foundation with SEO — clean structure, claims clear enough to quote, and presence on the sources the models pull from. It is not a separate universe, and anyone selling it as one is selling you the same work twice.\n\nWhat it is not: a guarantee. Nobody controls what a model says. What you can do is check, monthly, whether you're named on the questions that matter to you, and close the gaps that keep coming up.\n\nMore on the site — link in bio.",
+      "hashtag_sets": ["ai", "local"]
+    },
+
+    {
+      "id": "05-about",
+      "order": 5,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "page-about.webp",
+          "panel": "cream",
+          "eyebrow": "ONE PERSON, NOT AN AGENCY",
+          "headline": "You talk to the person doing the work. That is the whole pitch."
+        }
+      ],
+      "alt_text": [
+        "A workspace photograph, with the text: One person, not an agency. You talk to the person doing the work. That is the whole pitch."
+      ],
+      "caption": "The usual agency shape: you're sold by one person, onboarded by a second, and the work is done by a third you never meet. Context leaks at every handoff.\n\nHere there are no handoffs. The person on the sales call is the person in your account.\n\nThat cuts both ways, and it's worth being straight about the trade. Fewer clients than an agency means more attention per client — and a real ceiling on how many I can take. If you need five people on a launch next week, I'm the wrong call, and I'll tell you that rather than stretch.\n\nWhat you get instead: nothing lost in translation, direct answers, and one person who can't blame a department.\n\nWho I am and how the work runs — link in bio.",
+      "hashtag_sets": ["seo", "local"]
+    },
+
+    {
+      "id": "06-audit",
+      "order": 6,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "page-contact.webp",
+          "panel": "cream",
+          "eyebrow": "FREE SEO AUDIT - JUPITER, FL",
+          "headline": "Three fixes worth doing first, in writing, whether or not we work together."
+        }
+      ],
+      "alt_text": [
+        "A photograph of a coastal workspace, with the text: Free SEO audit, Jupiter FL. Three fixes worth doing first, in writing, whether or not we work together."
+      ],
+      "caption": "A free audit that is actually free, and actually yours.\n\nWhat's in it:\n\n— Where you rank now, for the phrases that would bring you work\n— What's technically holding the site back\n— Whether AI answers name your business at all\n— The three things worth fixing first, in priority order\n\nYou keep the document. If the right move is for you to hand it to whoever already builds your site, that's a fine outcome and I'll say so. Sometimes the honest answer is that the site doesn't need the work yet — you'll get that answer too.\n\nNo pitch deck, no discovery-call maze before you learn anything useful.\n\nRequest it from the link in bio.",
+      "hashtag_sets": ["seo", "local"]
+    },
+
+    {
+      "id": "07-roots",
+      "order": 7,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "roots.webp",
+          "panel": "navy",
+          "eyebrow": "PALM BEACH COUNTY",
+          "headline": "Local search is decided by things a stranger to the area gets wrong."
+        }
+      ],
+      "alt_text": [
+        "A Jupiter, Florida coastal landscape, with the text: Palm Beach County. Local search is decided by things a stranger to the area gets wrong."
+      ],
+      "caption": "Working from Jupiter is not a sentimental detail. It changes the work.\n\nLocal search turns on specifics: which neighbouring towns you should actually be targeting, how buyers here name what they want, which directories and local sources carry weight in this county, and where the boundary sits between Jupiter, Tequesta, Palm Beach Gardens and Stuart in the eyes of someone searching.\n\nA remote team guesses at those and tends to target the whole of South Florida, which usually means ranking nowhere in particular.\n\nFor what it's worth, I take clients outside Jupiter too — the method travels fine. But for anyone in Palm Beach County, knowing the ground is worth something real.",
+      "hashtag_sets": ["local", "seo"]
+    },
+
+    {
+      "id": "08-choose-seo",
+      "order": 8,
+      "type": "carousel",
+      "slides": [
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "HIRING",
+          "headline": "How do you choose an SEO company in Jupiter?",
+          "footer": "Swipe"
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "ASK 01",
+          "headline": "Who, by name, will do the work?",
+          "body": "Not which agency. Which person. If nobody will be named, you are buying a process, not an outcome."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "ASK 02",
+          "headline": "What actually ships each month?",
+          "body": "A specific answer sounds like pages, fixes and listings. A vague one sounds like strategy, optimisation and alignment."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "ASK 03",
+          "headline": "How is it reported?",
+          "body": "You want what moved, what shipped, and what is next. A dashboard login is not a report."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "ASK 04",
+          "headline": "What does it cost, before the call?",
+          "body": "A firm that will not put a number anywhere public is deciding your price after it has decided how much you can pay."
+        },
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "MCGRATH MARKETING GROUP",
+          "headline": "Ask me all four. The answers are already on the site.",
+          "footer": "mcgrathmarketinggroup.com"
+        }
+      ],
+      "alt_text": [
+        "Navy title card: How do you choose an SEO company in Jupiter?",
+        "Card: Ask 01, who, by name, will do the work?",
+        "Card: Ask 02, what actually ships each month?",
+        "Card: Ask 03, how is it reported?",
+        "Card: Ask 04, what does it cost, before the call?",
+        "Navy closing card: ask me all four, the answers are already on the site."
+      ],
+      "caption": "Four questions, and you can ask them all in one email.\n\nThey work because each one has a specific answer and a vague one, and the vague one tells you everything. \"Our team handles that\" is not an answer to who does the work. \"We optimise continuously\" is not an answer to what ships.\n\nThe cost question is the one people feel rude asking. Ask it anyway. A firm that keeps every number behind a discovery call is reserving the right to price you after it has sized you up.\n\nNone of this is specific to Jupiter, or to me. It's just how you tell a shop that does the work from a shop that sells the work.\n\nAnswers to all four are on the site — link in bio.",
+      "hashtag_sets": ["seo", "local"]
+    },
+
+    {
+      "id": "09-what-is-aeo",
+      "order": 9,
+      "type": "carousel",
+      "slides": [
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "AI SEARCH",
+          "headline": "What is AI search optimization?",
+          "footer": "Swipe"
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "THE SHORT VERSION",
+          "headline": "The work that gets you named when someone asks a model instead of searching.",
+          "body": "Same buying question. No results page. One answer, and either you are in it or you are not."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "WHAT IT SHARES WITH SEO",
+          "headline": "Clean structure. Clear claims. Presence where models already read.",
+          "body": "It is not a separate discipline. Anyone selling it as one is charging you twice for one foundation."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "WHAT IS DIFFERENT",
+          "headline": "There is no rank to check, so you check whether you are mentioned.",
+          "body": "The question set that matters to your business, run monthly, with the gaps written down."
+        },
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "THE HONEST LIMIT",
+          "headline": "Nobody controls what a model says. Anyone promising otherwise is guessing.",
+          "footer": "mcgrathmarketinggroup.com"
+        }
+      ],
+      "alt_text": [
+        "Navy title card: What is AI search optimization?",
+        "Card: the short version, the work that gets you named when someone asks a model instead of searching.",
+        "Card: what it shares with SEO, clean structure, clear claims, presence where models already read.",
+        "Card: what is different, there is no rank to check, so you check whether you are mentioned.",
+        "Navy closing card: nobody controls what a model says."
+      ],
+      "caption": "The plainest definition I can give.\n\nAI search optimisation is the work that gets your business named and linked when someone puts a buying question to a model rather than into a search box.\n\nMost of it is not new. Clean structure, claims clear enough to quote, and showing up on sources those systems already read — that's the same foundation good SEO has always needed. The genuinely new part is measurement: there's no position four to check, so instead you check whether you get mentioned on the questions that would bring you work, and you track that month to month.\n\nAnd the limit, which I'd rather say out loud: nobody controls model output. The honest claim is that you can influence it and measure it. Anyone selling certainty is selling you something they don't have.\n\nLink in bio.",
+      "hashtag_sets": ["ai", "seo"]
+    },
+
+    {
+      "id": "10-three-places",
+      "order": 10,
+      "type": "carousel",
+      "slides": [
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "JUPITER, FL",
+          "headline": "Three places a local business gets found, and what decides each one.",
+          "footer": "Swipe"
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "01 - THE MAP PACK",
+          "headline": "Decided by proximity, your Business Profile, and reviews.",
+          "body": "Moved by categories and services done properly, consistent listings, and asking for reviews on purpose rather than by accident."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "02 - THE BLUE LINKS",
+          "headline": "Decided by whether a page is the best answer to the thing typed.",
+          "body": "Moved by pages built around real queries, a site a crawler can read, and other sites having reason to link to you."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "03 - THE AI ANSWER",
+          "headline": "Decided by whether the sources a model reads mention you at all.",
+          "body": "Moved by clear quotable claims, structured pages, and presence on the places those systems pull from."
+        },
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "THE POINT",
+          "headline": "Different surfaces. One foundation. Work on the foundation.",
+          "footer": "mcgrathmarketinggroup.com"
+        }
+      ],
+      "alt_text": [
+        "Navy title card: three places a local business gets found, and what decides each one.",
+        "Card: 01 the map pack, decided by proximity, your Business Profile, and reviews.",
+        "Card: 02 the blue links, decided by whether a page is the best answer to the thing typed.",
+        "Card: 03 the AI answer, decided by whether the sources a model reads mention you at all.",
+        "Navy closing card: different surfaces, one foundation, work on the foundation."
+      ],
+      "caption": "Save this one.\n\nWhen someone in Jupiter needs what you sell, there are three surfaces they can land on, and each is decided by a different thing. Most businesses pour everything into one and wonder why the phone is quiet.\n\nThe map pack is proximity, profile and reviews. The blue links are whether a page genuinely answers the query. The AI answer is whether the sources a model reads mention you anywhere.\n\nHere's the useful part: the work overlaps heavily. A site that's structured cleanly, says clearly what it does, and is referenced by other sources moves all three at once. Which is why I'd rather fix the foundation than run three campaigns.\n\nWant to know which of the three is currently failing you? Free audit, link in bio.",
+      "hashtag_sets": ["local", "seo", "ai"]
+    },
+
+    {
+      "id": "11-no-guarantee",
+      "order": 11,
+      "type": "carousel",
+      "slides": [
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "A QUESTION I GET",
+          "headline": "“Can you guarantee ChatGPT will recommend my business?”",
+          "footer": "Swipe"
+        },
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "THE ANSWER",
+          "headline": "No. And neither can anyone else.",
+          "body": "Model output is not a ranking anyone can buy, set or lock. A guarantee on it is a sales line, not a service."
+        },
+        {
+          "kind": "card",
+          "ground": "cream",
+          "eyebrow": "WHAT IS ACTUALLY ON OFFER",
+          "headline": "Influence you can work on, and a result you can measure.",
+          "body": "Fix the structure, sharpen the claims, get onto the sources models read. Then check monthly whether you are named, and close the gaps."
+        },
+        {
+          "kind": "card",
+          "ground": "navy",
+          "eyebrow": "MCGRATH MARKETING GROUP",
+          "headline": "I would rather lose the sale than promise that.",
+          "footer": "mcgrathmarketinggroup.com"
+        }
+      ],
+      "alt_text": [
+        "Cream title card: can you guarantee ChatGPT will recommend my business?",
+        "Navy card: the answer, no, and neither can anyone else.",
+        "Card: what is actually on offer, influence you can work on, and a result you can measure.",
+        "Navy closing card: I would rather lose the sale than promise that."
+      ],
+      "caption": "Somebody will promise you this. Please don't buy it.\n\nNobody has a dial on model output. Not me, not an agency with a floor of staff, not a tool with a dashboard. There's no slot to buy and nothing to lock in place.\n\nWhat's genuinely on offer is narrower and more useful: you can influence whether you get named, and you can measure whether it's happening. That means fixing the structure so your pages can be read, sharpening what you say so it can be quoted, getting onto the sources these systems already pull from — and then checking, month after month, whether you're named on the questions that would actually bring you work.\n\nIf a guarantee is what closes the deal for you, I'm going to lose that deal. I'd rather lose it.",
+      "hashtag_sets": ["ai", "seo"]
+    },
+
+    {
+      "id": "12-own-your-site",
+      "order": 12,
+      "type": "photo",
+      "slides": [
+        {
+          "kind": "photo_panel",
+          "photo": "art-mobile.webp",
+          "panel": "cream",
+          "eyebrow": "WHAT HANDOVER SHOULD MEAN",
+          "headline": "If you cannot edit it, move it, or leave with it, you do not own it."
+        }
+      ],
+      "alt_text": [
+        "A phone showing a website, with the text: what handover should mean. If you cannot edit it, move it, or leave with it, you do not own it."
+      ],
+      "caption": "A test for any site you're about to pay for.\n\nAsk three things before launch:\n\nCan I edit the pages myself afterwards? Not every element of the design — but headlines, copy, a new service page, without raising a ticket.\n\nCan I move the hosting if I want to? You shouldn't have to migrate to work with someone, and you shouldn't be stuck if you leave.\n\nWhat happens to my existing URLs? If old addresses aren't mapped to new ones on launch day, you lose the rankings you already had. This is the single most common way a redesign quietly costs a business traffic.\n\nIf the answer to any of those is \"we handle that for you\" with no further detail, ask again until it's specific.\n\nHow I hand over — link in bio.",
+      "hashtag_sets": ["webdesign", "seo"]
+    }
+  ],
+
+  "profile": {
+    "avatar_source": "logo.png",
+    "name_field": "McGrath Marketing Group",
+    "bio": "SEO - AI search visibility - web design\nJupiter, FL - Palm Beach County\nOne person on your account. No long contract.\nFree audit, below.",
+    "bio_note": "Instagram allows 150 characters in the bio. The version above is within that limit; count again if you edit it.",
+    "link": "https://mcgrathmarketinggroup.com/free-seo-audit/",
+    "category_suggestion": "Marketing Agency",
+    "contact_options": "Email button pointed at the address you actually monitor. Leave the phone button off unless you want calls.",
+    "highlights": [
+      { "name": "SEO", "cover_from": "page-seo.webp", "holds": "Posts 02, 08, 10" },
+      { "name": "AI Search", "cover_from": "page-aeo.webp", "holds": "Posts 04, 09, 11" },
+      { "name": "Websites", "cover_from": "page-webdesign.webp", "holds": "Posts 03, 12" },
+      { "name": "Who I Am", "cover_from": "page-about.webp", "holds": "Posts 01, 05, 07" },
+      { "name": "Free Audit", "cover_from": "page-contact.webp", "holds": "Post 06" }
+    ]
+  }
+}
