@@ -48,3 +48,8 @@ next-env.d.ts
 /playwright-report
 apps/reloop/package-lock.json
 apps/north-star-hq/package-lock.json
+
+# Packaged social kits: build artefacts of instagram-kit/ and facebook-kit/,
+# whose contents are already tracked. Rebuild with `zip -r <name>.zip <dir>`.
+/instagram-kit.zip
+/facebook-kit.zip
