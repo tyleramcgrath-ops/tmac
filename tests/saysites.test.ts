@@ -2009,6 +2009,15 @@ describe('SaySites: old SiteGround releases', async () => {
     // Anywhere else (local development), it does nothing.
     expect(pruneReleases(root)).toEqual([])
   })
+
+  it('finds the release when the app runs from its app_source folder', () => {
+    const root = mkdtempSync(join(tmpdir(), 'nodeapp-'))
+    const names = ['1234567890-origin', '1791018231-d1qnht', '1791029406-t1gwtn', '1791031725-msbftk', '1791032224-tpbyfg', '1791032955-7lajf6']
+    for (const d of names) mkdirSync(join(root, d, 'app_source', 'node_modules'), { recursive: true })
+    const removed = pruneReleases(join(root, '1791032955-7lajf6', 'app_source'))
+    expect(removed.sort()).toEqual(['1791018231-d1qnht', '1791029406-t1gwtn', '1791031725-msbftk'])
+    expect(readdirSync(root).sort()).toEqual(['1234567890-origin', '1791032224-tpbyfg', '1791032955-7lajf6'])
+  })
 })
 
 describe('SaySites: events', async () => {
