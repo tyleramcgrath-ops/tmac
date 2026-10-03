@@ -4,7 +4,8 @@ import { STAGES, STAGE_LABEL, fill, loadCrm, valuesFor, type LeadEventKind } fro
 import { mailReady } from '@/lib/mail'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
-import { addNote, deleteLead, emailLead, logCall, moveLead, resendLead, setFollowUp } from '../actions'
+import { siteAccess, teamFor } from '@/lib/team'
+import { addNote, assignLead, deleteLead, emailLead, logCall, moveLead, resendLead, setFollowUp } from '../actions'
 
 const NOTES: Record<string, { text: string; tone?: 'good' | 'bad' }> = {
   sent: { text: 'Email sent. It’s on the timeline below.', tone: 'good' },
@@ -18,12 +19,13 @@ export default async function LeadPage({ params, searchParams }: { params: Promi
   const [{ id, leadId }, { note }] = await Promise.all([params, searchParams])
   const user = await requireUser()
   const store = getStore()
-  const site = await store.siteForUser(user.id, id)
-  if (!site) notFound()
+  const access = await siteAccess(store, user.id, id)
+  if (!access) notFound()
+  const { site, role } = access
   const m = (await store.messagesForSite(site.id)).find((x) => x.id === leadId)
   if (!m) notFound()
   if (!m.read) await store.setMessageRead(site.id, m.id, true)
-  const state = await loadCrm(store, site.id)
+  const [state, team] = await Promise.all([loadCrm(store, site.id), teamFor(store, site)])
   const meta = state.leads[m.id] ?? { stage: 'new' as const, activity: [] }
   const base = `/dashboard/sites/${site.id}/leads`
   const tel = m.phone.replace(/[^\d+]/g, '')
@@ -97,7 +99,7 @@ export default async function LeadPage({ params, searchParams }: { params: Promi
               {timeline.map((e, i) => (
                 <li key={i} className={e.ok === false ? 'bad' : undefined}>
                   <span className="tl-kind">{ICON[e.kind]}</span>
-                  <span className="tl-text">{e.text}</span>
+                  <span className="tl-text">{e.text}{'by' in e && e.by ? <span className="muted small"> · {e.by}</span> : null}</span>
                   <time className="muted small" dateTime={e.at}>{new Date(e.at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}</time>
                 </li>
               ))}
@@ -106,6 +108,20 @@ export default async function LeadPage({ params, searchParams }: { params: Promi
         </div>
 
         <div className="stack">
+          {team.length > 1 && (
+            <div className="card">
+              <h3>Assigned to</h3>
+              <form action={assignLead.bind(null, site.id, m.id)} className="lead-follow">
+                <label className="sr-only" htmlFor="lead-who">Assigned to</label>
+                <select className="input" id="lead-who" name="assignee" defaultValue={meta.assignee ?? ''}>
+                  <option value="">No one yet</option>
+                  {team.map((p) => <option key={p.userId} value={p.userId}>{p.name}{p.userId === user.id ? ' (you)' : ''}</option>)}
+                </select>
+                <button className="btn btn-ghost btn-sm" type="submit">Save</button>
+              </form>
+            </div>
+          )}
+
           <div className="card">
             <h3>Follow up</h3>
             <form action={setFollowUp.bind(null, site.id, m.id)} className="lead-follow">
@@ -137,10 +153,11 @@ export default async function LeadPage({ params, searchParams }: { params: Promi
                 </form>
               </>
             ) : (
-              <p className="muted small">Not connected. <a href={`${base}/integrations`}>Connect HubSpot, Salesforce or another CRM</a>.</p>
+              <p className="muted small">Not connected.{role === 'owner' && <> <a href={`${base}/integrations`}>Connect HubSpot, Salesforce or another CRM</a>.</>}</p>
             )}
           </div>
 
+          {role === 'owner' && (
           <details className="lead-delete">
             <summary className="btn btn-ghost btn-sm danger">Delete this lead</summary>
             <form action={deleteLead.bind(null, site.id, m.id)}>
@@ -148,6 +165,7 @@ export default async function LeadPage({ params, searchParams }: { params: Promi
               <button className="btn btn-sm btn-danger" type="submit">Yes, delete it</button>
             </form>
           </details>
+          )}
         </div>
       </div>
     </section>

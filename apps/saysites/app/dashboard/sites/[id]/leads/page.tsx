@@ -6,26 +6,36 @@ import { DIRECT, googleMapsLink } from '@/lib/lead-source'
 import { mailReady } from '@/lib/mail'
 import { requireUser } from '@/lib/session'
 import { getStore, type Message } from '@/lib/store'
+import { firstName, siteAccess, teamFor } from '@/lib/team'
 import { liveUrl, previewPath } from '@/lib/urls'
 import { moveLead } from './actions'
 
 const NEXT: Partial<Record<Stage, Stage>> = { new: 'contacted', contacted: 'booked', booked: 'won' }
 const NEXT_LABEL: Partial<Record<Stage, string>> = { new: 'Mark contacted', contacted: 'Mark booked', booked: 'Mark won' }
 
-export default async function LeadsPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string; stage?: string; q?: string }> }) {
+export default async function LeadsPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string; stage?: string; q?: string; mine?: string }> }) {
   const [{ id }, sp] = await Promise.all([params, searchParams])
   const user = await requireUser()
   const store = getStore()
-  const site = await store.siteForUser(user.id, id)
-  if (!site) notFound()
+  const access = await siteAccess(store, user.id, id)
+  if (!access) notFound()
+  const { site, role } = access
   const today = new Date().toISOString().slice(0, 10)
   const monthStart = `${today.slice(0, 7)}-01`
-  const [messages, state, calls] = await Promise.all([store.messagesForSite(site.id), loadCrm(store, site.id), store.callsSince(site.id, monthStart)])
+  const [messages, state, calls, team] = await Promise.all([store.messagesForSite(site.id), loadCrm(store, site.id), store.callsSince(site.id, monthStart), teamFor(store, site)])
+  const who = new Map(team.map((p) => [p.userId, firstName(p.name)]))
+  const assigneeOf = (m: Message) => who.get(state.leads[m.id]?.assignee ?? '')
+  const mine = sp.mine === '1' && team.length > 1
   const stats = leadStats(messages, state, monthStart)
   const stageOf = (m: Message): Stage => state.leads[m.id]?.stage ?? 'new'
   const q = (sp.q ?? '').trim().toLowerCase()
-  const shown = messages.filter((m) => !q || `${m.name} ${m.email} ${m.phone} ${m.body}`.toLowerCase().includes(q))
   const list = sp.view === 'list'
+  const shown = messages.filter((m) => (!q || `${m.name} ${m.email} ${m.phone} ${m.body}`.toLowerCase().includes(q)) && (!mine || state.leads[m.id]?.assignee === user.id))
+  // Keeps the current view, search and filter in every link.
+  const href = (o: { list?: boolean; stage?: string; mine?: boolean }) => {
+    const p = new URLSearchParams({ ...((o.list ?? list) ? { view: 'list' } : {}), ...(o.stage ? { stage: o.stage } : {}), ...(q ? { q } : {}), ...((o.mine ?? mine) ? { mine: '1' } : {}) }).toString()
+    return p ? `${base}?${p}` : base
+  }
   const stage = (STAGES as readonly string[]).includes(sp.stage ?? '') ? (sp.stage as Stage) : null
   const base = `/dashboard/sites/${site.id}/leads`
   const connected = INTEGRATIONS.filter((k) => state.integrations[k]?.on)
@@ -44,9 +54,9 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
           <h2>Leads</h2>
           <p className="muted">Every request your website brings in, from first message to new client.</p>
         </div>
-        {messages.length > 0 && <a className="btn btn-ghost btn-sm" href={`${base}/export`}>Download as a spreadsheet</a>}
+        {messages.length > 0 && role === 'owner' && <a className="btn btn-ghost btn-sm" href={`${base}/export`}>Download as a spreadsheet</a>}
       </div>
-      <LeadsNav siteId={site.id} on="pipeline" />
+      <LeadsNav siteId={site.id} on="pipeline" role={role} />
 
       <div className="stats lead-stats">
         <div className="stat">
@@ -75,7 +85,7 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
         <div className="card leads-tip">
           <p className="small" style={{ margin: 0 }}>
             {!mailReady() ? 'Automatic replies and alerts start once email is switched on for SaySites. ' : ''}
-            {connected.length === 0 ? <>Use HubSpot, Salesforce or another CRM? <a href={`${base}/integrations`}>Send every lead there automatically</a>.</> : null}
+            {connected.length === 0 && role === 'owner' ? <>Use HubSpot, Salesforce or another CRM? <a href={`${base}/integrations`}>Send every lead there automatically</a>.</> : null}
           </p>
         </div>
       )}
@@ -101,7 +111,7 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
         <div className="card">
           <div className="card-head"><h3>Follow up today</h3><span className="muted small">{due.length}</span></div>
           <ul className="lead-rows">
-            {due.map((m) => <LeadRow key={m.id} m={m} stage={stageOf(m)} base={base} />)}
+            {due.map((m) => <LeadRow key={m.id} m={m} stage={stageOf(m)} base={base} who={assigneeOf(m)} />)}
           </ul>
         </div>
       )}
@@ -117,25 +127,32 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
           <div className="leads-bar">
             <form className="leads-search" role="search">
               {list && <input type="hidden" name="view" value="list" />}
+              {mine && <input type="hidden" name="mine" value="1" />}
               <label className="sr-only" htmlFor="lead-q">Search leads</label>
               <input className="input" id="lead-q" name="q" type="search" defaultValue={sp.q ?? ''} placeholder="Search by name, email, phone or words" />
             </form>
+            {team.length > 1 && (
+              <div className="seg" role="group" aria-label="Whose leads">
+                <a href={href({ mine: false })} aria-current={!mine ? 'page' : undefined}>Everyone’s</a>
+                <a href={href({ mine: true })} aria-current={mine ? 'page' : undefined}>Mine</a>
+              </div>
+            )}
             <div className="seg" role="group" aria-label="View">
-              <a href={`${base}${q ? `?q=${encodeURIComponent(q)}` : ''}`} aria-current={!list ? 'page' : undefined}>Board</a>
-              <a href={`${base}?view=list${q ? `&q=${encodeURIComponent(q)}` : ''}`} aria-current={list ? 'page' : undefined}>List</a>
+              <a href={href({ list: false })} aria-current={!list ? 'page' : undefined}>Board</a>
+              <a href={href({ list: true })} aria-current={list ? 'page' : undefined}>List</a>
             </div>
           </div>
 
           {list ? (
             <div className="card">
               <div className="chips" role="group" aria-label="Filter by stage">
-                <a href={`${base}?view=list`} aria-current={!stage ? 'page' : undefined}>All {messages.length}</a>
+                <a href={href({ list: true })} aria-current={!stage ? 'page' : undefined}>All {shown.length}</a>
                 {STAGES.map((s) => (
-                  <a key={s} href={`${base}?view=list&stage=${s}`} aria-current={stage === s ? 'page' : undefined}>{STAGE_LABEL[s]} {stats.byStage[s]}</a>
+                  <a key={s} href={href({ list: true, stage: s })} aria-current={stage === s ? 'page' : undefined}>{STAGE_LABEL[s]} {shown.filter((m) => stageOf(m) === s).length}</a>
                 ))}
               </div>
               <ul className="lead-rows">
-                {shown.filter((m) => !stage || stageOf(m) === stage).map((m) => <LeadRow key={m.id} m={m} stage={stageOf(m)} base={base} />)}
+                {shown.filter((m) => !stage || stageOf(m) === stage).map((m) => <LeadRow key={m.id} m={m} stage={stageOf(m)} base={base} who={assigneeOf(m)} />)}
               </ul>
             </div>
           ) : (
@@ -153,7 +170,7 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
                         <a className="lead-card-main" href={`${base}/${m.id}`}>
                           <strong>{m.name || 'Someone'}</strong>
                           <span className="lead-snip">{m.body.slice(0, 110)}</span>
-                          <span className="muted small">{when(m.createdAt)} · {sourceOf(m)}</span>
+                          <span className="muted small">{when(m.createdAt)} · {sourceOf(m)}{assigneeOf(m) ? ` · ${assigneeOf(m)}` : ''}</span>
                         </a>
                         {NEXT[s] && (
                           <form action={moveLead.bind(null, site.id, m.id)}>
@@ -164,27 +181,27 @@ export default async function LeadsPage({ params, searchParams }: { params: Prom
                         )}
                       </article>
                     ))}
-                    {col.length > 30 && <a className="small" href={`${base}?view=list&stage=${s}`}>See all {col.length}</a>}
+                    {col.length > 30 && <a className="small" href={href({ list: true, stage: s })}>See all {col.length}</a>}
                   </section>
                 )
               })}
             </div>
           )}
-          {!list && stats.byStage.lost > 0 && <p className="muted small"><a href={`${base}?view=list&stage=lost`}>{stats.byStage.lost} marked Lost</a></p>}
+          {!list && stats.byStage.lost > 0 && <p className="muted small"><a href={href({ list: true, stage: 'lost' })}>{stats.byStage.lost} marked Lost</a></p>}
         </>
       )}
     </section>
   )
 }
 
-function LeadRow({ m, stage, base }: { m: Message; stage: Stage; base: string }) {
+function LeadRow({ m, stage, base, who }: { m: Message; stage: Stage; base: string; who?: string }) {
   return (
     <li className={m.read ? undefined : 'unread'}>
       <a href={`${base}/${m.id}`}>
         <strong>{m.name || 'Someone'}</strong>
         <span className="lead-snip">{m.body.slice(0, 120)}</span>
         <span className={`lead-stage lead-stage-${stage}`}>{STAGE_LABEL[stage]}</span>
-        <time className="muted small" dateTime={m.createdAt}>{when(m.createdAt)}</time>
+        <time className="muted small" dateTime={m.createdAt}>{who ? `${who} · ` : ''}{when(m.createdAt)}</time>
       </a>
     </li>
   )

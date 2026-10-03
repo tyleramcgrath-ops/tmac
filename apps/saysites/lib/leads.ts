@@ -34,6 +34,8 @@ export interface LeadEvent {
   kind: LeadEventKind
   text: string
   ok?: boolean
+  // Who did it, for staff and owner actions (lib/team).
+  by?: string
 }
 
 export interface LeadMeta {
@@ -48,6 +50,8 @@ export interface LeadMeta {
   // When they were first marked Won, for the review request.
   wonAt?: string
   reviewAsked?: boolean
+  // The person the lead is assigned to (a user id: the owner or staff).
+  assignee?: string
   replied?: boolean
   followedUp?: boolean
   reminded?: boolean

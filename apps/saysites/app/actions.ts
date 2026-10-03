@@ -11,6 +11,7 @@ import { creditsInUse, syncSitePhotos } from '@/lib/sites'
 import { photoSetFor, reportUse } from '@/lib/unsplash'
 import { getStore } from '@/lib/store'
 import { APPROVE_CODE, CLAIM_CODE, approvePath, claimPath } from '@/lib/urls'
+import { INVITE_CODE, invitePath } from '@/lib/team'
 import { templateFor } from '@/lib/templates'
 import { randomUUID } from 'crypto'
 import { writeContent } from '@/lib/writer'
@@ -28,6 +29,8 @@ const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim()
 const claimId = (f: FormData) => (CLAIM_CODE.test(str(f, 'claim')) ? str(f, 'claim') : '')
 // A site the team built, to approve after signing up or in.
 const approveId = (f: FormData) => (APPROVE_CODE.test(str(f, 'approve')) ? str(f, 'approve') : '')
+// A team invite to accept after signing up or in.
+const inviteId = (f: FormData) => (INVITE_CODE.test(str(f, 'invite')) ? str(f, 'invite') : '')
 
 export async function signUp(_prev: FormState, form: FormData): Promise<FormState> {
   const name = str(form, 'name')
@@ -45,6 +48,8 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
   if (claim) redirect(claimPath(claim))
   const approve = approveId(form)
   if (approve) redirect(approvePath(approve))
+  const invite = inviteId(form)
+  if (invite) redirect(invitePath(invite))
   const idea = str(form, 'idea').slice(0, 200)
   const template = str(form, 'template').slice(0, 20)
   const q = new URLSearchParams({ ...(idea ? { idea } : {}), ...(template ? { template } : {}) }).toString()
@@ -60,7 +65,8 @@ export async function logIn(_prev: FormState, form: FormData): Promise<FormState
   await startSession(user.id)
   const claim = claimId(form)
   const approve = approveId(form)
-  redirect(claim ? claimPath(claim) : approve ? approvePath(approve) : '/dashboard')
+  const invite = inviteId(form)
+  redirect(claim ? claimPath(claim) : approve ? approvePath(approve) : invite ? invitePath(invite) : '/dashboard')
 }
 
 export async function logOut(): Promise<void> {

@@ -1,12 +1,13 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import type { Role } from '@/lib/team'
 
 // The tabs under a site's name in the dashboard.
-export function SiteTabs({ siteId, unread }: { siteId: string; unread: number }) {
+export function SiteTabs({ siteId, unread, role = 'owner' }: { siteId: string; unread: number; role?: Role }) {
   const path = usePathname()
   const base = `/dashboard/sites/${siteId}`
-  const tabs = [
+  const all = [
     { href: base, label: 'Overview' },
     { href: `${base}/visibility`, label: 'Visibility' },
     { href: `${base}/seo`, label: 'SEO' },
@@ -21,6 +22,8 @@ export function SiteTabs({ siteId, unread }: { siteId: string; unread: number })
     { href: `${base}/products`, label: 'Products' },
     { href: `${base}/settings`, label: 'Settings' },
   ]
+  // Staff work the leads; the rest of the site is the owner's.
+  const tabs = role === 'owner' ? all : all.filter((t) => t.label === 'Leads')
   return (
     <nav className="site-tabs" aria-label="Website">
       {tabs.map((t) => {
