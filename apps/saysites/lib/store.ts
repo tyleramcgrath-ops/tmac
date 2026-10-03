@@ -5,6 +5,7 @@
 // shows a "test mode" notice because that data does not survive a restart.
 // Every site and page is validated against the schema on the way in and out.
 
+import type { Article } from './articles'
 import type { Billing } from './billing'
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
@@ -181,6 +182,10 @@ export interface Store {
   feedback(limit: number): Promise<Feedback[]>
   // Launch-day numbers for the team (admin only): totals, and since a day.
   launchStats(sinceDay: string): Promise<LaunchStats>
+  // saysites.com's own blog (lib/articles): articles written in the dashboard.
+  articles(): Promise<Article[]>
+  saveArticle(a: Article): Promise<void>
+  deleteArticle(slug: string): Promise<void>
 }
 
 export interface LaunchStats {
@@ -364,6 +369,11 @@ CREATE TABLE IF NOT EXISTS ss_feedback (
   id TEXT PRIMARY KEY,
   data JSONB NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_articles (
+  slug TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_cache (
   key TEXT PRIMARY KEY,
@@ -593,6 +603,15 @@ class PgStore implements Store {
   }
   async addFeedback(f: Feedback) {
     await this.q('INSERT INTO ss_feedback (id, data) VALUES ($1,$2)', [f.id, JSON.stringify(f)])
+  }
+  async articles() {
+    return (await this.q<{ data: Article }>('SELECT data FROM ss_articles')).map((r) => r.data)
+  }
+  async saveArticle(a: Article) {
+    await this.q('INSERT INTO ss_articles (slug, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (slug) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [a.slug, JSON.stringify(a)])
+  }
+  async deleteArticle(slug: string) {
+    await this.q('DELETE FROM ss_articles WHERE slug = $1', [slug])
   }
   async feedback(limit: number) {
     return (await this.q<{ data: Feedback }>('SELECT data FROM ss_feedback ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
@@ -922,6 +941,16 @@ export class MemoryStore implements Store {
   }
   async previewCount(since: Date, who?: string) {
     return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
+  }
+  private posts = new Map<string, Article>()
+  async articles() {
+    return [...this.posts.values()]
+  }
+  async saveArticle(a: Article) {
+    this.posts.set(a.slug, a)
+  }
+  async deleteArticle(slug: string) {
+    this.posts.delete(slug)
   }
   private notes: Feedback[] = []
   async addFeedback(f: Feedback) {
