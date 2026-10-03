@@ -109,7 +109,7 @@ export const content: WrittenContent = {
         },
         {
           heading: 'Symptoms worth checking even without a light',
-          body: 'Not every problem turns on a warning light. Rough idling, hesitation when you press the gas, stalling or a drop in fuel economy can all point to issues the computer hasn’t flagged yet. Smells are clues too: a sweet smell can mean a coolant leak, while a rotten egg smell may point to the catalytic converter. Blue smoke from the tailpipe often means oil is burning, and thick white smoke that lingers can suggest coolant is getting where it shouldn’t. New knocking, ticking or whining sounds are also worth a look before they get worse. Tacoma hills will often bring these symptoms out.',
+          body: 'Not every problem turns on a warning light. Rough idling, hesitation when you press the gas, stalling or a drop in fuel economy can all point to issues the computer hasn’t flagged yet. Smells are clues too: a sweet smell can mean a coolant leak, while a rotten egg smell may point to the catalytic converter. Blue smoke from the tailpipe often means oil is burning, and thick white smoke that lingers can suggest coolant is getting where it shouldn’t. New knocking, ticking or whining sounds deserve a look too. If you notice any of these on drives around Tacoma, jot down when they happen, since those details help with diagnosis.',
         },
       ],
       faq: [
