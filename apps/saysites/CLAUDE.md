@@ -193,6 +193,8 @@ per lead (call, text, email, notes, follow-up date, timeline), stats
   Inbox token), Zapier/Make (signed webhook, SSRF-guarded). Free for us, so
   free on every plan. Only show "synced" when the CRM said so.
 - The default wording never promises anything to the lead.
+- The homepage's "Leads, handled" section (#leads) lists it all. Its
+  pipeline card is labelled an example; keep it that way (no real data).
 
 ## Hosting (moved October 2026)
 
