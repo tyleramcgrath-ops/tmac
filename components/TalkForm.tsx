@@ -1,6 +1,6 @@
 import { sendLead } from '@/app/talk-actions'
 
-export const TALK_INDUSTRIES = ['Law firm', 'Dental practice', 'Home services', 'Other']
+export const TALK_INDUSTRIES = ['Law firm', 'Medical practice', 'Med spa', 'Dental practice', 'Home services', 'Other']
 
 // The "Let's talk" form. A plain form post (no client JavaScript); the page
 // shows the thank-you when it comes back with ?sent=1.

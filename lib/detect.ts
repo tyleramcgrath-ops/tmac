@@ -42,13 +42,15 @@ function jsonLd(html: string): Json[] {
   return out
 }
 
-const BUSINESSY = /LocalBusiness|LegalService|Attorney|Plumber|Electrician|HVACBusiness|RoofingContractor|Contractor|HomeAndConstructionBusiness|LandscapingBusiness|HousekeepingService|AutoRepair|AutomotiveBusiness|Dentist|MedicalBusiness|HairSalon|BeautySalon|Restaurant|Bakery|CafeOrCoffeeShop|FoodEstablishment|Store|ProfessionalService|Organization/
+const BUSINESSY = /LocalBusiness|LegalService|Attorney|Plumber|Electrician|HVACBusiness|RoofingContractor|Contractor|HomeAndConstructionBusiness|LandscapingBusiness|HousekeepingService|AutoRepair|AutomotiveBusiness|Dentist|MedicalBusiness|MedicalClinic|Physician|DaySpa|HairSalon|BeautySalon|Restaurant|Bakery|CafeOrCoffeeShop|FoodEstablishment|Store|ProfessionalService|Organization/
 const str = (v: unknown) => (typeof v === 'string' ? decode(v).trim() : Array.isArray(v) && typeof v[0] === 'string' ? decode(v[0]).trim() : '')
 
 // Keyword guesses for the kind of business, most specific first.
 const TYPE_WORDS: [BusinessTypeKey, RegExp][] = [
   ['lawyer', /\b(attorneys?|lawyers?|law (firm|office|group)|legal services?|esq\.?)\b/i],
   ['dentist', /\b(dentists?|dental|orthodont\w*)\b/i],
+  ['medspa', /\b(med ?spas?|medical spa|aesthetics? (clinic|center)|botox|fillers?|injectables?)\b/i],
+  ['doctor', /\b(physicians?|family medicine|internal medicine|pediatrics?|orthopedic\w*|primary care|medical (practice|clinic|group|center)|doctors?)\b/i],
   ['plumber', /\b(plumb\w*|drain cleaning|water heaters?)\b/i],
   ['electrician', /\b(electricians?|electrical (contractor|services?))\b/i],
   ['hvac', /\b(hvac|heating (and|&) (air|cooling)|air condition\w*|furnace)\b/i],
@@ -65,6 +67,7 @@ const SCHEMA_TYPE: Record<string, BusinessTypeKey> = {
   LegalService: 'lawyer', Attorney: 'lawyer', Dentist: 'dentist', Plumber: 'plumber', Electrician: 'electrician', HVACBusiness: 'hvac', RoofingContractor: 'roofer',
   LandscapingBusiness: 'landscaper', HousekeepingService: 'cleaner', AutoRepair: 'autorepair', HairSalon: 'salon', BeautySalon: 'salon', Bakery: 'bakery',
   CafeOrCoffeeShop: 'bakery', Restaurant: 'restaurant', Store: 'store',
+  MedicalClinic: 'doctor', Physician: 'doctor', MedicalBusiness: 'doctor', DaySpa: 'medspa',
 }
 
 // Larger US cities, for sites that name their town in passing ("our Seattle

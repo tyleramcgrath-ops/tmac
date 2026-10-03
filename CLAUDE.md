@@ -24,15 +24,19 @@ Also:
 ## Positioning (October 2026, the owner's decision)
 
 SaySites presents itself like a website company for the industries that
-compete hardest online (law firms first, then dental, home services, and
-medical practices and med spas once their designs exist). The public site
+compete hardest online: law firms first, then medical practices, med spas,
+dental and home services. Law firms, medical practices and med spas share
+three designs (lib/law-designs.ts: counsel, classic, modern) with their own
+words per profession (VOCAB) and small print (FOOTER_NOTES). The public site
 shows **no prices**: visitors "Let's talk" (form on / and /about, leads land
 in the dashboard Feedback inbox marked "Let's talk") or get a free redesign.
 Prices live only in the dashboard (account and billing). Why to switch from
 an agency lives on /about only, written as questions to ask any website
 company; never name or make claims about a competitor. /trades and the old
 /compare pages redirect. Self-serve sign-up still works at /signup but isn't
-promoted.
+promoted. The message is leads: every page is built to turn a
+search into a call, a request or a booking, and owners see every message,
+call tap and visit. Never promise a number of leads or rankings.
 
 ## Money check (the owner asked for this, permanently)
 
