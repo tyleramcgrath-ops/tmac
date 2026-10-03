@@ -93,7 +93,7 @@ export const content: WrittenContent = {
       summary:
         'Layer cakes made to order for birthdays, gatherings and milestones, filled and finished by hand with your occasion in mind.',
       intro:
-        'A celebration cake is the centerpiece of a good day, and we treat it that way. Each one is made to order, then layered, filled and finished by hand for the occasion you’re marking. We’ll talk with you about size, style and the flavors you love, and help you think through practical details like how far it needs to travel and how long it will sit out. What we enjoy most is a generous cake with honest flavor, a tender crumb and a finish that looks homemade in the best sense.',
+        'A celebration cake is the centerpiece of a good day, and we treat it that way. Each one is made to order, then layered, filled and finished by hand for the occasion you’re marking. We’ll talk with you about size, style and the flavors you love, and help you think through practical details like how far it needs to travel. What we enjoy most is a generous cake with honest flavor, a tender crumb and a finish that looks homemade in the best sense.',
       sections: [
         {
           heading: 'Built layer by layer',
