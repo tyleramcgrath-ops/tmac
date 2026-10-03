@@ -4,6 +4,7 @@
 import { after } from 'next/server'
 import { onNewLead } from './leads'
 import { DIRECT, readSource, sourceCookie, sourceToSet } from './lead-source'
+import { answersText, intakeSet, readAnswers } from './intake'
 import { privacyPage } from './privacy'
 import { wordsFor } from './site-words'
 import { renderPage, withBasePath } from './render'
@@ -196,6 +197,9 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
   if (field('website', 200)) return done()
 
   const msg = { name: field('name', 120), email: field('email', 200), phone: field('phone', 40), body: field('message', 5000) }
+  // Intake answers for the page it was sent from, checked against its set.
+  const from = homes.find((p) => pagePath(p) === back) ?? homes[0]
+  const answers = bundle.site.language === 'es' ? [] : readAnswers(intakeSet(bundle.site.intake?.[from.id]), (k) => field(k, 300))
   const missing = form.fields.filter((f) => f !== 'phone' && !msg[f === 'message' ? 'body' : f])
   if (missing.length || (msg.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(msg.email))) {
     return new Response('Please fill in every field and use a real email address, then go back and try again.', { status: 422, headers: { 'content-type': 'text/plain; charset=utf-8' } })
@@ -204,7 +208,8 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
   // Showcase sites are examples; their forms work but nothing is stored.
   if (bundle.site.orgId === SHOWCASE_ORG) return done()
   if ((await store.recentMessageCount(bundle.site.id, new Date(Date.now() - 3600_000))) >= MAX_PER_HOUR) return done()
-  const saved = await store.addMessage({ siteId: bundle.site.id, ...msg, page: back })
+  const body = answers.length ? `${msg.body}\n\n${answersText(answers)}`.slice(0, 6000) : msg.body
+  const saved = await store.addMessage({ siteId: bundle.site.id, ...msg, body, page: back })
   // The instant reply, the owner's alert and the CRM sync run after the
   // visitor is sent on, so a slow CRM never holds up the thank-you page.
   const source = readSource(req.headers.get('cookie')) ?? { label: DIRECT, landing: back }

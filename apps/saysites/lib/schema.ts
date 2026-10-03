@@ -536,6 +536,8 @@ export const SiteSchema = z
     // Weekly standings: sharing is reciprocal. An owner who shares sees the
     // named standings of everyone else who shares; private by default.
     league: z.object({ public: z.boolean().default(false), style: z.enum(['classic', 'market', 'arena']).optional() }).strict().optional(),
+    // Intake questions per page: page id → question set key (lib/intake).
+    intake: z.record(z.string().max(80), z.string().max(40)).optional(),
     updatedAt: z.string(),
   })
   .strict()

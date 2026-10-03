@@ -3,14 +3,17 @@ import { MomentHost } from '@/components/Moment'
 import { SiteTabs } from '@/components/SiteTabs'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
+import { siteAccess } from '@/lib/team'
 import { liveUrl, previewPath } from '@/lib/urls'
 
 export default async function SiteLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
   const { id } = await params
   const user = await requireUser()
   const store = getStore()
-  const site = await store.siteForUser(user.id, id)
-  if (!site) notFound()
+  // Owners see every tab; staff they invited see Leads only.
+  const access = await siteAccess(store, user.id, id)
+  if (!access) notFound()
+  const { site, role } = access
   const unread = await store.unreadCount(site.id)
 
   return (
@@ -30,7 +33,7 @@ export default async function SiteLayout({ children, params }: { children: React
         </div>
         <a className="btn btn-ghost" href={previewPath(site)} target="_blank" rel="noopener">View website ↗</a>
       </div>
-      <SiteTabs siteId={site.id} unread={unread} />
+      <SiteTabs siteId={site.id} unread={unread} role={role} />
       {children}
       <MomentHost />
     </>

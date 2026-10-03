@@ -220,3 +220,22 @@ when it fills, deploys fail and Site Tools locks until old builds are
 deleted there. Admins can see what's using the limit, run the cleanup, send
 a test email and see the scheduler's last runs at /dashboard/health
 (`lib/hosting-health.ts`). Batch changes into fewer deploys.
+
+## Intake questions and staff logins (October 2026)
+
+- **Intake questions** (`lib/intake.ts`, Leads → Intake questions): the
+  owner picks a question set per page with a request form (personal
+  injury, estate planning, family, criminal, employment, business, new
+  patient, med spa consult, home services). The form gets plain selects and
+  date fields, all optional; `handleFormPost` keeps only answers that fit
+  each question and appends them to the lead. Law sets ask the other
+  party's name for a conflict check; medical sets ask nothing clinical.
+  English sites only for now.
+- **Staff logins** (`lib/team.ts`, Leads → Team, tables `ss_members`,
+  `ss_invites`): the owner invites by email; the invite link
+  (/invite/<code>) works once, for that address, through sign-up or log-in.
+  Staff see only the Leads tab (pipeline, lead pages, report): they move,
+  call, email, note, follow up and assign leads. Automations,
+  integrations, intake, team, export, deleting leads and the rest of the
+  site stay the owner's (`owned()` in leads/actions.ts). Every timeline
+  entry records who made it (`stamp`).
