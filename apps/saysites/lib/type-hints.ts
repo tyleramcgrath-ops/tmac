@@ -10,6 +10,8 @@ const TYPE_HINTS: [RegExp, string][] = [
   [/\b(clean\w*|maids?)\b/i, 'cleaner'],
   [/\b(auto|mechanic\w*|garage|tires?)\b/i, 'autorepair'],
   [/\b(dental|dentist\w*|orthodont\w*)\b/i, 'dentist'],
+  [/\b(med ?spa|aesthetics?)\b/i, 'medspa'],
+  [/\b(medicine|medical|clinic|pediatrics?|orthopedics?|physicians?|md)\b/i, 'doctor'],
   [/\b(salon|hair|barber\w*)\b/i, 'salon'],
   [/\b(bakery|bakes?|caf[eé]|coffee)\b/i, 'bakery'],
   [/\b(restaurant|grill|kitchen|bistro|diner|pizza\w*|tacos?)\b/i, 'restaurant'],

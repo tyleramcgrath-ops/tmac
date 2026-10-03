@@ -34,6 +34,8 @@ const QUERIES: Record<string, string[]> = {
   landscaper: ['landscaping garden', 'lawn mowing', 'garden design backyard', 'landscaper at work'],
   cleaner: ['house cleaning', 'clean living room', 'cleaning supplies', 'tidy kitchen'],
   autorepair: ['auto mechanic', 'car repair garage', 'car engine', 'mechanic tools'],
+  doctor: ['doctor with patient', 'medical clinic exam room', 'nurse with patient', 'stethoscope'],
+  medspa: ['facial treatment spa', 'skincare treatment', 'aesthetic clinic', 'spa treatment room'],
   dentist: ['dentist office', 'dental clinic', 'smiling patient dentist', 'dental care'],
   salon: ['hair salon', 'hairdresser cutting hair', 'salon interior', 'hair styling'],
   lawyer: ['lawyer meeting client', 'law office', 'attorney desk documents', 'signing legal documents', 'courthouse'],

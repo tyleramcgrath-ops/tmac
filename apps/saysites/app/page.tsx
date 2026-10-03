@@ -12,7 +12,7 @@ import './home.css'
 
 export const metadata: Metadata = {
   title: { absolute: 'SaySites: websites for businesses that compete for every client' },
-  description: 'Fast, SEO fully optimized websites for law firms, dental practices and home service companies. Designed, built and looked after for you, and always yours.',
+  description: 'Fast, SEO fully optimized websites for law firms, medical practices, med spas, dentists and home service companies. Designed, built and looked after for you.',
   alternates: { canonical: '/' },
 }
 
@@ -20,6 +20,8 @@ const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&f
 
 const SECTORS = [
   { name: 'Law firms', href: '/websites-for/law-firms', photo: '1436450412740-6b988f486c6b', text: 'Practice area pages, attorney profiles and a consultation request on every home page. Three designs, so no two firms look alike.', links: [] as [string, string][] },
+  { name: 'Medical practices', href: '/websites-for/medical-practices', photo: '1631217868264-e5b90bb7e133', text: 'Clear service pages, your providers by name and an appointment request on the home page, with the notices patients expect.', links: [] },
+  { name: 'Med spas', href: '/websites-for/med-spas', photo: '1570172619644-dfd03ed5d881', text: 'Calm, polished sites that explain every treatment, set honest expectations and make booking a consultation easy.', links: [] },
   { name: 'Dental practices', href: '/websites-for/dentists', photo: '1629909613654-28e377c37b09', text: 'Calm, reassuring sites that answer new-patient questions, explain each treatment and make it easy to ask for an appointment.', links: [] },
   { name: 'Home services', href: '/websites-for', photo: '1749532125405-70950966b0e5', text: 'Sites that win the emergency search: a big call button, a page per service and the towns you cover.', links: [['Plumbers', '/websites-for/plumbers'], ['Heating and air', '/websites-for/hvac-companies'], ['Roofers', '/websites-for/roofers'], ['Electricians', '/websites-for/electricians']] },
 ]
@@ -45,6 +47,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <summary>Who we work with</summary>
               <div>
                 <a href="/websites-for/law-firms">Law firms</a>
+                <a href="/websites-for/medical-practices">Medical practices</a>
+                <a href="/websites-for/med-spas">Med spas</a>
                 <a href="/websites-for/dentists">Dental practices</a>
                 <a href="/websites-for/plumbers">Plumbers</a>
                 <a href="/websites-for/hvac-companies">Heating and air</a>
@@ -66,9 +70,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
         <section className="ag-hero">
           <div className="wrap ag-hero-in">
             <div className="ag-hero-copy">
-              <p className="lw-eyebrow">Law, dental and home services</p>
+              <p className="lw-eyebrow">Law, medical, aesthetics, dental and home services</p>
               <h1>Websites for businesses that compete for every client.</h1>
-              <p className="lede">When someone searches for a lawyer, a dentist or a plumber, they choose from the first few sites they see. We design, build and look after fast, SEO fully optimized websites that make your business the obvious call.</p>
+              <p className="lede">When someone searches for a lawyer, a doctor or a plumber, they choose from the first few sites they see. We design, build and look after fast, SEO fully optimized websites that make your business the obvious call.</p>
               <div className="lw-acts">
                 <a className="b b-light" href="#talk">Let’s talk</a>
                 <a className="b lw-ghost" href="/redesign">See your site redesigned, free</a>
@@ -83,7 +87,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             </div>
           </div>
           <ul className="ag-strip" aria-label="Industries we build for">
-            {['Personal injury', 'Family law', 'Criminal defense', 'Estate planning', 'Dentistry', 'Plumbing', 'Heating and air', 'Roofing', 'Electrical'].map((s) => <li key={s}>{s}</li>)}
+            {['Personal injury', 'Family law', 'Criminal defense', 'Estate planning', 'Family medicine', 'Orthopedics', 'Med spas', 'Dentistry', 'Plumbing', 'Heating and air', 'Roofing', 'Electrical'].map((s) => <li key={s}>{s}</li>)}
           </ul>
         </section>
 

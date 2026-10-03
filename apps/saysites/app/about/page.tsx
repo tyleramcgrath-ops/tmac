@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
+import { SwitchDemo } from '@/components/SwitchDemo'
 import { TalkForm } from '@/components/TalkForm'
 import '../home.css'
 
@@ -9,7 +10,7 @@ import '../home.css'
 
 export const metadata: Metadata = {
   title: 'Why SaySites',
-  description: 'Why law firms, dental practices and home service companies switch their website to SaySites: ownership, no long contract, real speed and a free redesign first.',
+  description: 'Why law firms, medical practices, med spas and home service companies switch their website to SaySites: ownership, no long contract and real speed.',
   alternates: { canonical: '/about' },
 }
 
@@ -46,6 +47,17 @@ export default async function About({ searchParams }: { searchParams: Promise<{ 
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="ag-demo">
+        <div className="wrap">
+          <div className="head">
+            <p className="kicker">How easy is it to switch?</p>
+            <h2>One conversation with Sofie.</h2>
+            <p className="head-note">Tell Sofie where your current site lives. She brings over your pages, your words and your photos, keeps every address you rank for, and shows you the result before anything goes live.</p>
+          </div>
+          <SwitchDemo />
         </div>
       </section>
 

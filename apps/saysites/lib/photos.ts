@@ -94,6 +94,22 @@ export const PHOTOS: Record<string, PhotoSet> = {
       unsplash('1486406146926-c627a92ad1ab', 'Office towers seen from the street', 1600, 1067),
     ],
   },
+  doctor: {
+    ...set(['1631217868264-e5b90bb7e133', 'Doctor talking with a patient in an exam room'], [
+      ['1666214280557-f1b5022eb634', 'Doctor explaining a scan to a patient'],
+      ['1581056771107-24ca5f033842', 'Doctor visiting a patient'],
+      ['1612349317150-e413f6a5b16d', 'Doctor in a white coat with a stethoscope'],
+    ]),
+    extra: [unsplash('1505751172876-fa1923c5c528', 'Stethoscope on a table', 1600, 1067), unsplash('1519494026892-80bbd2d6fd0d', 'Clinic reception desk', 1600, 1089)],
+  },
+  medspa: {
+    ...set(['1570172619644-dfd03ed5d881', 'Facial treatment at a spa'], [
+      ['1616394584738-fc6e612e71b9', 'Client receiving a facial mask'],
+      ['1552693673-1bf958298935', 'Skin treatment in a clinic'],
+      ['1515377905703-c4788e51af15', 'Dropper of skincare serum'],
+    ]),
+    extra: [unsplash('1540555700478-4be289fbecef', 'Spa towels and flowers', 1600, 1067), unsplash('1544161515-4ab6ce6db874', 'Massage oil being poured', 1600, 1067), unsplash('1600334089648-b0d9d3028eb2', 'Hot stone spa treatment', 1600, 1067)],
+  },
   autorepair: set(['1727893119356-1702fe921cf9', 'Mechanics working on cars in a bright workshop'], [
     ['1625047509248-ec889cbff17f', 'Mechanic inspecting a car engine'],
     ['1619642751034-765dfdf7c58e', 'Hands using a wrench on an engine'],

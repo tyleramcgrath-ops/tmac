@@ -24,8 +24,10 @@ Also:
 ## Positioning (October 2026, the owner's decision)
 
 SaySites presents itself like a website company for the industries that
-compete hardest online (law firms first, then dental, home services, and
-medical practices and med spas once their designs exist). The public site
+compete hardest online: law firms first, then medical practices, med spas,
+dental and home services. Law firms, medical practices and med spas share
+three designs (lib/law-designs.ts: counsel, classic, modern) with their own
+words per profession (VOCAB) and small print (FOOTER_NOTES). The public site
 shows **no prices**: visitors "Let's talk" (form on / and /about, leads land
 in the dashboard Feedback inbox marked "Let's talk") or get a free redesign.
 Prices live only in the dashboard (account and billing). Why to switch from

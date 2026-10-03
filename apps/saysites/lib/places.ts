@@ -116,6 +116,8 @@ const MATCHES: [RegExp, BusinessTypeKey][] = [
   [/clean|maid|janitor/, 'cleaner'],
   [/car_repair|auto|mechanic|tire|body_shop/, 'autorepair'],
   [/dent|orthodont/, 'dentist'],
+  [/doctor|physician|medical_clinic|hospital|medical_center/, 'doctor'],
+  [/medical_spa|skin_care_clinic/, 'medspa'],
   [/hair|barber|beauty|nail|salon|spa/, 'salon'],
   [/lawyer|attorney|legal|law_firm/, 'lawyer'],
   [/bakery|cafe|coffee|pastry|donut|dessert/, 'bakery'],

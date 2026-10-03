@@ -879,3 +879,13 @@
   .home .ag-qs li { grid-template-columns: 1fr; gap: 12px; }
 }
 @media (max-width: 560px) { .home .talk-row { grid-template-columns: 1fr; } .home .talk-form { padding: 22px; } }
+.home .ag-demo { background: var(--g0); color: var(--tx); padding: 120px 0 104px; }
+.home .ag-demo .kicker { color: var(--mu); }
+.home .ag-demo .head-note { color: var(--mu); font-size: 18px; max-width: 620px; margin: 22px 0 0; }
+.home .ag-demo .frame-body img { display: block; width: 100%; height: auto; }
+@media (max-width: 900px) { .home .ag-demo { padding: 84px 0 72px; } .home .ag-demo .app-tabs, .home .ag-demo .app-site { display: none; } }
+.home .ag-sectors { grid-template-columns: repeat(6, 1fr); }
+.home .ag-sector { grid-column: span 2; }
+.home .ag-sector:nth-child(-n + 2) { grid-column: span 3; }
+.home .ag-sector:nth-child(-n + 2) .ag-sector-img { aspect-ratio: 16 / 9; }
+@media (max-width: 900px) { .home .ag-sectors { grid-template-columns: 1fr; } .home .ag-sector, .home .ag-sector:nth-child(-n + 2) { grid-column: auto; } }

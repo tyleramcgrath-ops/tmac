@@ -374,7 +374,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Estate planning', 'Family law', 'Real estate closings', 'Small business law'],
       palette: 'oxblood',
       lawStyle: 'classic',
-      attorneys: [
+      team: [
         { name: 'Margaret Hale', role: 'Partner', bio: 'Margaret works with families on wills, trusts and planning for the people they love, and helps them through probate when the time comes.' },
         { name: 'David Porter', role: 'Partner', bio: 'David handles real estate closings and the everyday legal needs of small businesses, from contracts to setting up a new company.' },
         { name: 'Elena Brooks', role: 'Associate', bio: 'Elena focuses on family law, guiding clients through divorce, parenting plans and support with care and clear information.' },
@@ -407,7 +407,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
         ['1589829545856-d10d557cf95f', 'Statue of Lady Justice with scales'],
       ]),
       headline: 'Hurt in a crash or a fall? Get clear answers first.',
-      attorneys: [
+      team: [
         { name: 'Ruth Calder', role: 'Founding partner', bio: 'Ruth represents people hurt in car and truck crashes and families who have lost someone, and explains every step in plain language.' },
         { name: 'Marcus Vane', role: 'Founding partner', bio: 'Marcus handles injury claims from falls and unsafe property, and works with clients from the first call to the last signature.' },
       ],
@@ -439,7 +439,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
         ['1454165804606-c3d57bc86b40', 'People taking notes at a meeting table'],
       ]),
       headline: 'Charged with a crime in Nashville? Talk to us first.',
-      attorneys: [
+      team: [
         { name: 'Jonah Ashgrove', role: 'Attorney', bio: 'Jonah defends people charged with DUI, drug and assault offenses, and helps clients clear old records so they can move forward.' },
       ],
       tagline: 'Criminal defense for people in Nashville and Middle Tennessee.',
