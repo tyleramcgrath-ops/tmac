@@ -257,3 +257,17 @@ as headings inside `<summary>` so search and answer engines read them as
 questions.
 The homepage's "Citation Gap" section (#citation-gap) describes it; its
 scan card is labelled an example (no real data). Keep it that way.
+
+## Blog (October 2026)
+
+saysites.com/blog (`lib/articles.ts`, `app/blog`): guides and news on
+getting found in Google and AI answers, for law firms, medical practices
+and local businesses. The launch articles live in code; the team writes and
+edits at /dashboard/blog (admins only, table `ss_articles`), and a saved
+article replaces a launch one with the same address, so posting needs no
+deploy. Each article has key points first (answer-first, for readers and AI
+answers), Article/NewsArticle and breadcrumb JSON-LD, a contents list, the
+sitemap and an RSS feed (/blog/rss.xml). Writing rules: no invented numbers,
+studies, quotes or results; link every outside fact to its source (Google's
+own documentation where possible); never promise rankings or leads; never
+name a competitor; never mention the founder's name (byline is "SaySites").

@@ -32,6 +32,7 @@ export function SiteFooter() {
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>
           <a href="/google-guidelines">Google’s guidelines</a>
+          <a href="/blog">Blog</a>
           <a href="/#faq">FAQ</a>
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>

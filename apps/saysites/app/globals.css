@@ -929,3 +929,8 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper); bord
   .gap-scores { grid-template-columns: auto auto; }
   .gap-scores p { grid-column: 1 / -1; }
 }
+.field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.input.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; line-height: 1.55; }
+.post-preview { line-height: 1.65; max-width: 680px; overflow-wrap: anywhere; }
+.post-preview h2 { font-size: 22px; margin: 28px 0 8px; }
+.post-preview h3 { font-size: 18px; margin: 20px 0 6px; }
