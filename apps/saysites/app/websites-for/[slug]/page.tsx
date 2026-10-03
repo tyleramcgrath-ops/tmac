@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { MarketingShell } from '@/components/MarketingShell'
 import { INDUSTRIES, industry } from '@/lib/industries'
+import { GUIDES } from '@/lib/industries/guides'
 import { photosFor } from '@/lib/photos'
 import { SHOWCASE_INFO } from '@/lib/showcase'
 import '../../home.css'
@@ -23,6 +24,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
   const photo = photosFor(i.type).hero
   const info = SHOWCASE_INFO[i.example]
   const others = INDUSTRIES.filter((o) => o.slug !== i.slug)
+  const guide = GUIDES[i.slug]
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -132,6 +134,27 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
           </ul>
         </div>
       </section>
+
+      {guide && (
+        <section className="ind-sec ind-guide" id="guide">
+          <div className="wrap">
+            <div className="ind-guide-head">
+              <p className="kicker">The guide</p>
+              <h2>{guide.title}</h2>
+              <p>{guide.intro}</p>
+            </div>
+            <ul className="ind-guide-toc" aria-label="In this guide">
+              {guide.sections.map((g, n) => <li key={g.heading}><a href={`#g${n + 1}`}>{g.heading}</a></li>)}
+            </ul>
+            {guide.sections.map((g, n) => (
+              <div className="ind-guide-sec" id={`g${n + 1}`} key={g.heading}>
+                <h3>{g.heading}</h3>
+                <div className="ind-guide-body">{g.body.split(/\n\s*\n/).map((para, k) => <p key={k}>{para}</p>)}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="ind-sec ind-price">
         <div className="wrap">
