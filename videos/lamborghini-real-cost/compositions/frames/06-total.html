@@ -1,0 +1,204 @@
+<template id="06-total-template">
+  <div id="root" data-composition-id="06-total" data-width="1080" data-height="1920" data-start="0" data-duration="6.336">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: block; }
+      @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBM_Plex_Mono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+      @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBM_Plex_Mono-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+
+      #root {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+      }
+      /* full-bleed orange register — its own background clip, never on #root */
+      [id="06-total-ground"] {
+        position: absolute;
+        inset: 0;
+        background: #E85D26;
+      }
+      [id="06-total-stage"] {
+        position: absolute;
+        inset: 0;
+        color: #111111;
+        container-type: size;
+      }
+      /* chrome: mono catalogue numeral + rule stub + kicker */
+      [id="06-total-num"] {
+        position: absolute;
+        left: 59px;
+        top: 150px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 26px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.40);
+      }
+      [id="06-total-kicker"] {
+        position: absolute;
+        left: 59px;
+        top: 560px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+        font-size: 30px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(17, 17, 17, 0.55);
+      }
+      [id="06-total-rule"] {
+        display: block;
+        width: 54px;
+        height: 4px;
+        background: #111111;
+        transform-origin: left center;
+      }
+      /* hero figure: fixed-width box so digit changes never shift layout */
+      [id="06-total-hero"] {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        top: 676px;
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [id="06-total-figure"] {
+        display: inline-block;
+        font-family: 'Barlow', sans-serif;
+        font-weight: 900;
+        font-size: 250px;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        transform-origin: center center;
+        color: #111111;
+      }
+      [id="06-total-hair"] {
+        position: absolute;
+        left: 59px;
+        right: 59px;
+        top: 984px;
+        height: 2px;
+        background: rgba(17, 17, 17, 0.20);
+        transform-origin: left center;
+      }
+      [id="06-total-lines"] {
+        position: absolute;
+        left: 59px;
+        top: 1030px;
+        font-family: 'Barlow', sans-serif;
+        font-weight: 700;
+        font-size: 96px;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: rgba(17, 17, 17, 0.75);
+      }
+      [id="06-total-l1"],
+      [id="06-total-l2"] {
+        display: block;
+        white-space: nowrap;
+      }
+      [id="06-total-pill"] {
+        position: absolute;
+        left: 59px;
+        top: 1312px;
+        padding: 26px 38px;
+        background: #111111;
+        color: #E85D26;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600;
+        font-size: 50px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transform-origin: left center;
+      }
+    </style>
+
+    <div id="06-total-ground" class="clip" data-start="0" data-duration="6.336" data-track-index="0"></div>
+
+    <div id="06-total-stage" class="clip" data-start="0" data-duration="6.336" data-track-index="1">
+      <div id="06-total-num">No. 06</div>
+      <div id="06-total-kicker"><span id="06-total-rule"></span><span id="06-total-kicker-text">Year one · total</span></div>
+      <div id="06-total-hero"><span id="06-total-figure">$46,200</span></div>
+      <div id="06-total-hair"></div>
+      <div id="06-total-lines">
+        <span id="06-total-l1">in year one.</span>
+        <span id="06-total-l2">on top of the car.</span>
+      </div>
+      <div id="06-total-pill">≈ $4,900 / month</div>
+    </div>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        var tl = gsap.timeline({ paused: true });
+
+        var $ = function (id) { return document.getElementById("06-total-" + id); };
+        var figure = $("figure");
+        var COUNT_DUR = 1.5;
+        var COUNT_EASE = "power3.out";
+        var START_SCALE = 0.55;
+        var state = { value: 46200 };
+        var fmt = function (n) {
+          var s = String(Math.round(n));
+          return "$" + s.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+
+        // Scene 1 (0.0–2.6s): hard flip to orange (the ground clip is the cut);
+        // "$58,700" counts up from $46,200 while scaling to full width — lands ~1.5s.
+        tl.fromTo(figure, { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "none" }, 0);
+        tl.fromTo(
+          state,
+          { value: 46200 },
+          {
+            value: 58700,
+            duration: COUNT_DUR,
+            ease: COUNT_EASE,
+            onUpdate: function () { figure.textContent = fmt(state.value); }
+          },
+          0
+        );
+        tl.fromTo(figure, { scale: START_SCALE }, { scale: 1, duration: COUNT_DUR, ease: COUNT_EASE }, 0);
+
+        // chrome arrives early, under the count
+        tl.fromTo($("num"), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.1);
+        tl.fromTo($("rule"), { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 0.25);
+        tl.fromTo($("kicker-text"), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 0.35);
+
+        // landing weight: a tiny settle on the land, then the number holds still
+        tl.fromTo(figure, { y: 0 }, { y: 6, duration: 0.08, ease: "power2.out" }, COUNT_DUR - 0.02);
+        tl.to(figure, { y: 0, duration: 0.22, ease: "power2.out" }, COUNT_DUR + 0.06);
+
+        // Scene 2 (2.6–4.4s, retimed to VO): "in year one." on "in" (1.92),
+        // hairline draws, "on top of the car." on "on" (2.93)
+        tl.fromTo($("hair"), { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 1.8);
+        tl.fromTo($("l1"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 1.92);
+        tl.fromTo($("l2"), { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 2.93);
+
+        // Scene 3: on "$4,900" (4.82) the mono pill pops in; then HOLD still
+        tl.fromTo(
+          $("pill"),
+          { opacity: 0, scale: 0.6 },
+          { opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.7)" },
+          4.82
+        );
+
+        // pin the timeline to the frame's full duration (hold to the end)
+        tl.set({}, {}, 6.336);
+
+        window.__timelines["06-total"] = tl;
+      })();
+    </script>
+  </div>
+</template>
