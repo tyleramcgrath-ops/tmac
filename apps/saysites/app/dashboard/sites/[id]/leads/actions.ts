@@ -115,6 +115,8 @@ export async function saveAutomations(siteId: string, form: FormData): Promise<v
     a.alert = { on: form.get('alertOn') === 'on', to: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to) ? to : '' }
     a.followUp = { on: form.get('followOn') === 'on', days: days(form.get('followDays'), 1, 14, 2), subject: str('followSubject', 200) || a.followUp.subject, body: str('followBody', 4000) || a.followUp.body }
     a.remind = { on: form.get('remindOn') === 'on', hours: days(form.get('remindHours'), 1, 72, 24) }
+    a.review = { on: form.get('reviewOn') === 'on', days: days(form.get('reviewDays'), 0, 30, 1), subject: str('reviewSubject', 200) || a.review.subject, body: str('reviewBody', 4000) || a.review.body }
+    a.report = { on: form.get('reportOn') === 'on' }
   })
   back(`${base(siteId)}/automations`, 'saved')
 }

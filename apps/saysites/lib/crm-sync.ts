@@ -68,6 +68,8 @@ export interface LeadPayload {
   createdAt: string
   business: string
   website: string
+  // Which ad or tagged link brought them, e.g. "Google Ads (Probate)".
+  source?: string
 }
 
 export type SyncResult = { ok: boolean; text: string }
@@ -121,7 +123,7 @@ async function salesforce(cfg: Record<string, string>, lead: LeadPayload): Promi
     company: lead.name || 'Website lead',
     email: lead.email,
     phone: lead.phone,
-    description: `${lead.message}\n\nSent from ${lead.website}${lead.page === '/' ? '' : lead.page}`.slice(0, 32000),
+    description: `${lead.message}\n\nSent from ${lead.website}${lead.page === '/' ? '' : lead.page}${lead.source ? `\nSource: ${lead.source}` : ''}`.slice(0, 32000),
     lead_source: 'Website',
   })
   const res = await fetch('https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8', {
@@ -165,7 +167,7 @@ async function clio(cfg: Record<string, string>, lead: LeadPayload): Promise<Syn
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
-      inbox_lead: { from_first: first, from_last: last, from_message: lead.message, from_email: lead.email, from_phone: lead.phone, referring_url: `${lead.website}${lead.page === '/' ? '' : lead.page}`, from_source: 'SaySites website' },
+      inbox_lead: { from_first: first, from_last: last, from_message: lead.message, from_email: lead.email, from_phone: lead.phone, referring_url: `${lead.website}${lead.page === '/' ? '' : lead.page}`, from_source: lead.source ? `SaySites website: ${lead.source}`.slice(0, 100) : 'SaySites website' },
       inbox_lead_token: cfg.token,
     }),
     signal: AbortSignal.timeout(TIMEOUT),

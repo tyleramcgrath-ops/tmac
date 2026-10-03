@@ -33,7 +33,7 @@ export default function Privacy() {
             <li><strong>Unsplash</strong> serves the starter photos on new websites.</li>
           </ul>
           <h2>Cookies</h2>
-          <p>saysites.com uses one cookie to keep you logged in. Customer websites built with SaySites set no cookies and run no tracking scripts.</p>
+          <p>saysites.com uses one cookie to keep you logged in, and Google Analytics, which sets its own cookies to count visits to saysites.com and see which pages are useful. You can block those in your browser or with Google’s opt-out add-on, and saysites.com still works. Customer websites built with SaySites run no tracking scripts. They set one small first-party cookie that remembers which link or ad brought a visitor, so the business can see which advertising brings in leads; it isn’t shared and expires after 90 days.</p>
           <h2>Children</h2>
           <p>SaySites accounts are for adults. We don’t knowingly collect personal information from children under 13, and children shouldn’t create accounts or give us their details. If a child builds a website with a parent, it’s done in the parent’s account. If you think a child has given us personal information, tell us with the Feedback button on any page and we’ll delete it.</p>
           <h2>Deleting your data</h2>

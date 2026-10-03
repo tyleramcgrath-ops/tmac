@@ -121,7 +121,9 @@ export default async function LeadPage({ params, searchParams }: { params: Promi
             <dl className="lead-dl">
               {m.email && <><dt>Email</dt><dd>{m.email}</dd></>}
               {m.phone && <><dt>Phone</dt><dd>{m.phone}</dd></>}
-              <dt>Page</dt><dd>{m.page === '/' ? 'Home page' : m.page}</dd>
+              <dt>Came from</dt><dd>{meta.source ? <>{meta.source.label}{meta.source.campaign ? ` (${meta.source.campaign})` : ''}</> : 'Search or direct'}</dd>
+              {meta.source?.landing && meta.source.landing !== m.page && <><dt>First page they saw</dt><dd>{meta.source.landing === '/' ? 'Home page' : meta.source.landing}</dd></>}
+              <dt>Sent from</dt><dd>{m.page === '/' ? 'Home page' : m.page}</dd>
             </dl>
           </div>
 

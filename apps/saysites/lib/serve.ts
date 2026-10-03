@@ -3,6 +3,7 @@
 
 import { after } from 'next/server'
 import { onNewLead } from './leads'
+import { DIRECT, readSource, sourceCookie, sourceToSet } from './lead-source'
 import { privacyPage } from './privacy'
 import { wordsFor } from './site-words'
 import { renderPage, withBasePath } from './render'
@@ -143,6 +144,17 @@ export async function handleVisit(bundle: SiteBundle, req: Request, store: Store
   } catch {
     // Counting must never break a page.
   }
+  // Remember which ad or tagged link brought them (lib/lead-source). The
+  // Referer is the page itself, with its ?gclid=… or ?utm_… tags.
+  try {
+    const page = new URL(req.headers.get('referer') ?? '')
+    if (page.host === new URL(req.url).host) {
+      const next = sourceToSet(page, path, readSource(req.headers.get('cookie')))
+      if (next) pixel.headers.append('set-cookie', sourceCookie(next))
+    }
+  } catch {
+    // No Referer (some privacy settings): nothing to remember.
+  }
   return pixel
 }
 
@@ -195,7 +207,8 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
   const saved = await store.addMessage({ siteId: bundle.site.id, ...msg, page: back })
   // The instant reply, the owner's alert and the CRM sync run after the
   // visitor is sent on, so a slow CRM never holds up the thank-you page.
-  const work = () => onNewLead(store, bundle.site, saved)
+  const source = readSource(req.headers.get('cookie')) ?? { label: DIRECT, landing: back }
+  const work = () => onNewLead(store, bundle.site, saved, source)
   try {
     after(work)
   } catch {

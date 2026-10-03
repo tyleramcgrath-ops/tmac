@@ -20,9 +20,19 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', images: ['/og-home.jpg'] },
 }
 
+// Google Analytics for saysites.com itself (marketing pages and dashboard).
+// Customer websites never load it: they're served as plain HTML by route
+// handlers, not through this layout. Google's own snippet, in <head> so
+// Google's setup check finds it; the script loads async, never blocking.
+const GA_ID = 'G-KP42T8YXTF'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={sans.variable}>
+      <head>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GA_ID}');` }} />
+      </head>
       <body>{children}</body>
     </html>
   )

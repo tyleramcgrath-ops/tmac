@@ -139,6 +139,8 @@ export interface Store {
   saveCrmState(siteId: string, state: unknown): Promise<void>
   // Every site that has a leads pipeline, for the follow-up scheduler.
   crmSites(): Promise<{ site: Site; state: unknown }[]>
+  // Every site, for the monthly results email.
+  allSites(): Promise<Site[]>
   // Every site with a score since `day`, with its scores and daily views.
   leagueSites(day: string): Promise<LeagueSite[]>
   // Free redesign previews. `who` is a hash of the requester, for limits.
@@ -640,6 +642,9 @@ class PgStore implements Store {
   async saveCrmState(siteId: string, state: unknown) {
     await this.q('INSERT INTO ss_crm (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(state)])
   }
+  async allSites() {
+    return (await this.q<{ data: Site }>('SELECT data FROM ss_sites ORDER BY created_at')).map((r) => SiteSchema.parse(r.data))
+  }
   async crmSites() {
     return (await this.q<{ site: Site; data: unknown }>('SELECT s.data AS site, c.data FROM ss_crm c JOIN ss_sites s ON s.id = c.site_id')).map((r) => ({ site: SiteSchema.parse(r.site), state: r.data }))
   }
@@ -935,6 +940,9 @@ export class MemoryStore implements Store {
   }
   async saveCrmState(siteId: string, state: unknown) {
     this.crm.set(siteId, JSON.parse(JSON.stringify(state)))
+  }
+  async allSites() {
+    return [...this.sites.values()].map((s) => s.site)
   }
   async crmSites() {
     return [...this.crm].flatMap(([id, state]) => {
