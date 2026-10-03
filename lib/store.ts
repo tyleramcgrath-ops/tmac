@@ -5,6 +5,7 @@
 // shows a "test mode" notice because that data does not survive a restart.
 // Every site and page is validated against the schema on the way in and out.
 
+import type { AnalyticsRaw } from './analytics'
 import type { Article } from './articles'
 import type { Billing } from './billing'
 import { randomUUID } from 'crypto'
@@ -182,6 +183,8 @@ export interface Store {
   feedback(limit: number): Promise<Feedback[]>
   // Launch-day numbers for the team (admin only): totals, and since a day.
   launchStats(sinceDay: string): Promise<LaunchStats>
+  // The owner's analytics (lib/analytics), from sinceDay (YYYY-MM-DD) on.
+  analytics(sinceDay: string): Promise<AnalyticsRaw>
   // saysites.com's own blog (lib/articles): articles written in the dashboard.
   articles(): Promise<Article[]>
   saveArticle(a: Article): Promise<void>
@@ -604,6 +607,56 @@ class PgStore implements Store {
   async addFeedback(f: Feedback) {
     await this.q('INSERT INTO ss_feedback (id, data) VALUES ($1,$2)', [f.id, JSON.stringify(f)])
   }
+  async analytics(sinceDay: string) {
+    type Row = { d: Date | string; n: string }
+    const series = (sql: string) => this.q<Row>(sql, [sinceDay])
+    const [signups, sites, leads, visits, previews, talks, ai, bills, totals, top] = await Promise.all([
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_users WHERE created_at >= $1::date GROUP BY 1'),
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_sites WHERE created_at >= $1::date GROUP BY 1'),
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_messages WHERE created_at >= $1::date GROUP BY 1'),
+      this.q<{ d: Date | string; views: string; calls: string }>("SELECT day AS d, coalesce(sum(views) FILTER (WHERE path <> '#call'), 0) AS views, coalesce(sum(views) FILTER (WHERE path = '#call'), 0) AS calls FROM ss_visits WHERE day >= $1::date GROUP BY 1", [sinceDay]),
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_previews WHERE created_at >= $1::date GROUP BY 1'),
+      series("SELECT created_at::date AS d, count(*) AS n FROM ss_feedback WHERE created_at >= $1::date AND data->>'page' LIKE 'Let’s talk%' GROUP BY 1"),
+      series('SELECT day AS d, sum(micros) AS n FROM ss_usage WHERE day >= $1::date GROUP BY 1'),
+      this.q<{ data: Billing }>('SELECT data FROM ss_billing'),
+      this.q<Record<string, string>>('SELECT (SELECT count(*) FROM ss_users) AS users, (SELECT count(*) FROM ss_sites) AS sites, (SELECT count(*) FROM ss_sites WHERE custom_domain IS NOT NULL) AS domains, (SELECT count(*) FROM ss_members) AS members'),
+      this.q<{ id: string; name: string | null; subdomain: string; views: string; calls: string; leads: string }>(
+        `SELECT s.id, s.data->'business'->>'name' AS name, s.subdomain,
+          coalesce(v.views, 0) AS views, coalesce(v.calls, 0) AS calls, coalesce(m.leads, 0) AS leads
+         FROM ss_sites s
+         LEFT JOIN (SELECT site_id, sum(views) FILTER (WHERE path <> '#call') AS views, sum(views) FILTER (WHERE path = '#call') AS calls FROM ss_visits WHERE day >= $1::date GROUP BY 1) v ON v.site_id = s.id
+         LEFT JOIN (SELECT site_id, count(*) AS leads FROM ss_messages WHERE created_at >= $1::date GROUP BY 1) m ON m.site_id = s.id
+         WHERE coalesce(v.views, 0) + coalesce(v.calls, 0) + coalesce(m.leads, 0) > 0
+         ORDER BY leads DESC, calls DESC, views DESC LIMIT 10`,
+        [sinceDay],
+      ),
+    ])
+    const day = (d: Date | string) => (typeof d === 'string' ? d.slice(0, 10) : d.toISOString().slice(0, 10))
+    const days = new Map<string, AnalyticsRaw['daily'][number]>()
+    const put = (rows: Row[], k: keyof Omit<AnalyticsRaw['daily'][number], 'day'>) => {
+      for (const r of rows) {
+        const d = day(r.d)
+        const row = days.get(d) ?? { day: d }
+        row[k] = Number(r.n)
+        days.set(d, row)
+      }
+    }
+    put(signups, 'signups')
+    put(sites, 'sites')
+    put(leads, 'leads')
+    put(visits.map((v) => ({ d: v.d, n: v.views })), 'views')
+    put(visits.map((v) => ({ d: v.d, n: v.calls })), 'calls')
+    put(previews, 'previews')
+    put(talks, 'talks')
+    put(ai, 'aiMicros')
+    const t = totals[0] ?? {}
+    return {
+      daily: [...days.values()],
+      billing: bills.map((b) => b.data),
+      totals: { users: Number(t.users ?? 0), sites: Number(t.sites ?? 0), customDomains: Number(t.domains ?? 0), members: Number(t.members ?? 0) },
+      topSites: top.map((r) => ({ id: r.id, name: r.name ?? r.subdomain, subdomain: r.subdomain, views: Number(r.views), leads: Number(r.leads), calls: Number(r.calls) })),
+    }
+  }
   async articles() {
     return (await this.q<{ data: Article }>('SELECT data FROM ss_articles')).map((r) => r.data)
   }
@@ -941,6 +994,43 @@ export class MemoryStore implements Store {
   }
   async previewCount(since: Date, who?: string) {
     return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
+  }
+  async analytics(sinceDay: string) {
+    const days = new Map<string, AnalyticsRaw['daily'][number]>()
+    const add = (d: string, k: keyof Omit<AnalyticsRaw['daily'][number], 'day'>, n = 1) => {
+      if (d < sinceDay) return
+      const row = days.get(d) ?? { day: d }
+      row[k] = (row[k] ?? 0) + n
+      days.set(d, row)
+    }
+    for (const u of this.users.values()) add(u.createdAt.slice(0, 10), 'signups')
+    for (const s of this.sites.values()) if (s.at) add(s.at.slice(0, 10), 'sites')
+    for (const m of this.messages) add(m.createdAt.slice(0, 10), 'leads')
+    for (const v of this.visits.values()) add(v.day, v.path === '#call' ? 'calls' : 'views', v.views)
+    for (const p of this.previews.values()) add(new Date(p.at).toISOString().slice(0, 10), 'previews')
+    for (const f of this.notes) if (f.page.startsWith('Let’s talk')) add(f.at.slice(0, 10), 'talks')
+    for (const [k, u] of this.usage) add(k.split('|')[1], 'aiMicros', u.micros)
+    const per = new Map<string, { views: number; calls: number; leads: number }>()
+    const bump = (id: string, k: 'views' | 'calls' | 'leads', n: number) => {
+      const r = per.get(id) ?? { views: 0, calls: 0, leads: 0 }
+      r[k] += n
+      per.set(id, r)
+    }
+    for (const v of this.visits.values()) if (v.day >= sinceDay) bump(v.siteId, v.path === '#call' ? 'calls' : 'views', v.views)
+    for (const m of this.messages) if (m.createdAt.slice(0, 10) >= sinceDay) bump(m.siteId, 'leads', 1)
+    const sites = [...this.sites.values()]
+    return {
+      daily: [...days.values()],
+      billing: [...this.bills.values()],
+      totals: { users: this.users.size, sites: sites.length, customDomains: sites.filter((s) => s.site.customDomain).length, members: this.members.length },
+      topSites: [...per]
+        .flatMap(([id, r]) => {
+          const s = this.sites.get(id)
+          return s ? [{ id, name: s.site.business.name, subdomain: s.site.subdomain, ...r }] : []
+        })
+        .sort((a, b) => b.leads - a.leads || b.calls - a.calls || b.views - a.views)
+        .slice(0, 10),
+    }
   }
   private posts = new Map<string, Article>()
   async articles() {
