@@ -12,6 +12,7 @@ import { dropRepeatedPhotos } from './photo-rules'
 import { randomUUID } from 'crypto'
 import type { Container, Element, Flair, GlobalStyles, Page, Site } from './schema'
 import { photosFor, type Photo, type PhotoSet } from './photos'
+import { LAW_GLOBALS, attorneyCard, lawHome, lawStyleFor, type Attorney, type LawStyle } from './law-designs'
 
 export type Design = 'bold' | 'editorial' | 'warm' | 'upscale'
 
@@ -39,6 +40,7 @@ export const PALETTES: Record<string, { label: string; colors: GlobalStyles['col
   forest: { label: 'Forest', colors: { primary: '#2f6b4f', secondary: '#173a2b', accent: '#c9a45c', text: '#18241e', muted: '#56645c', background: '#ffffff', surface: '#f1f4ef' } },
   sunset: { label: 'Terracotta', colors: { primary: '#a8431f', secondary: '#2b211a', accent: '#d9a441', text: '#2b211a', muted: '#6d5d50', background: '#fbf8f3', surface: '#f3ece2' } },
   plum: { label: 'Blush', colors: { primary: '#7a4b5b', secondary: '#231d1a', accent: '#e3b5a4', text: '#231d1a', muted: '#6c625c', background: '#faf7f5', surface: '#f1ebe7' } },
+  oxblood: { label: 'Burgundy', colors: { primary: '#6e2a2a', secondary: '#231b19', accent: '#b38b59', text: '#211a18', muted: '#675b55', background: '#fbf9f4', surface: '#f1ebe1' } },
   slate: { label: 'Charcoal', colors: { primary: '#1f2937', secondary: '#0b0f14', accent: '#9aa6b2', text: '#111827', muted: '#4b5563', background: '#ffffff', surface: '#f3f4f6' } },
   // A dark site. Bands and the footer that use "secondary" turn cream, with
   // the dark page colour as their text, so every pairing stays readable.
@@ -132,6 +134,10 @@ export interface StarterInput {
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
+  // Law firms: one of the law designs (lib/law-designs), and the firm's
+  // attorneys in the owner's own words.
+  lawStyle?: LawStyle
+  attorneys?: Attorney[]
   // Photos to use instead of the built-in set (lib/unsplash).
   photos?: PhotoSet
   // A headline to use instead of the generated one (e.g. the H1 of the
@@ -199,6 +205,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const shopfront = input.type === 'restaurant' || input.type === 'bakery' || input.type === 'store'
   const svcHref = law ? '/practice-areas' : '/services'
   const svcLabel = law ? 'Practice Areas' : 'Services'
+  const lawStyle: LawStyle = input.lawStyle ?? lawStyleFor(subdomain)
+  const attorneys = law ? (input.attorneys ?? []).filter((a) => a.name.trim()).slice(0, 12) : []
 
   const cta = law
     ? { label: 'Request a consultation', href: '/contact' }
@@ -221,7 +229,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ...(city ? { area: place } : {}),
       ...(input.socials?.length ? { sameAs: input.socials.slice(0, 8) } : {}),
     },
-    globals: { colors, ...DESIGN_GLOBALS[design], flair: input.flair ?? flairFor(input.type, subdomain) },
+    globals: law
+      ? { colors, ...LAW_GLOBALS[lawStyle], ...(input.flair ? { flair: input.flair } : {}) }
+      : { colors, ...DESIGN_GLOBALS[design], flair: input.flair ?? flairFor(input.type, subdomain) },
     nav: [
       {
         label: svcLabel,
@@ -232,6 +242,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           return written.length ? { children: written.slice(0, 16).map((x) => ({ label: x, href: `${svcHref}/${serviceSlug(x)}` })) } : {}
         })(),
       },
+      ...(attorneys.length ? [{ label: attorneys.length === 1 ? 'Attorney' : 'Attorneys', href: '/attorneys' }] : []),
       { label: 'Contact', href: '/contact' },
     ],
     ...(input.chat ? { chat: input.chat } : {}),
@@ -734,9 +745,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   homeBody.splice(1, 0, ...ticker)
   // The longer story of the business, before the questions.
   const about = input.content?.about
-  if (about?.paragraphs.length) {
-    const at = homeBody.findIndex((c) => c.id === 'faq')
-    homeBody.splice(at < 0 ? homeBody.length - 1 : at, 0, {
+  const story: Container | undefined = about?.paragraphs.length
+    ? {
       id: 'story',
       type: 'container',
       tag: 'section',
@@ -748,6 +758,34 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         { id: 'story-h', type: 'heading', level: 2, text: about.heading, style: { fontSize: { desktop: 40, mobile: 30 }, maxWidth: 480 } },
         { id: 'story-t', type: 'text', text: about.paragraphs.join('\n\n'), style: { fontSize: { desktop: 18 }, color: 'muted' } },
       ],
+    }
+    : undefined
+  if (story) {
+    const at = homeBody.findIndex((c) => c.id === 'faq')
+    homeBody.splice(at < 0 ? homeBody.length - 1 : at, 0, story)
+  }
+  // Law firms get a design of their own (lib/law-designs).
+  if (law) {
+    const a = input.street && input.postalCode && city ? `${input.street}, ${city}${input.region.trim() ? `, ${tidyRegion(input.region)}` : ''} ${input.postalCode}` : undefined
+    homeBody = lawHome({
+      style: lawStyle,
+      name,
+      place,
+      headline,
+      intro: introText,
+      phone,
+      email,
+      address: a,
+      areas: list,
+      summary: cardText,
+      areaHref: (s) => (writtenFor(s) ? `${svcHref}/${serviceSlug(s)}` : undefined),
+      areasHref: svcHref,
+      hero: photos.hero,
+      photo: () => fresh(photos.cards[spare.length % 3]),
+      attorneys,
+      ticker,
+      faq,
+      story,
     })
   }
 
@@ -1007,7 +1045,51 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     updatedAt: now,
   }
 
-  return { site, pages: dropRepeatedPhotos([home, servicesPage, ...servicePages, contact], opts.taken) }
+  // The firm's attorneys, when the owner told us who they are.
+  const attorneysPage: Page[] = attorneys.length
+    ? [
+        {
+          id: pageId('attorneys'),
+          siteId,
+          slug: 'attorneys',
+          name: attorneys.length === 1 ? 'Attorney' : 'Attorneys',
+          status: 'published',
+          seo: {
+            title: clip(`${attorneys.length === 1 ? 'Attorney' : 'Our Attorneys'} | ${name}, ${place}`, 60),
+            description: clip(`Meet ${joinAnd(attorneys.slice(0, 3).map((a) => a.name))} of ${name}, helping clients across ${place}.`, 160),
+          },
+          body: [
+            banner('team-banner', attorneys.length === 1 ? 'Your attorney' : 'Our attorneys', `The people you will speak to at ${name}.`),
+            {
+              id: 'team',
+              type: 'container',
+              tag: 'section',
+              layout: 'grid',
+              columns: { desktop: Math.max(2, Math.min(3, attorneys.length)), tablet: 2, mobile: 1 },
+              boxed: true,
+              style: { padding: section, gap: { desktop: 24 } },
+              children: attorneys.map((a, i) => attorneyCard(`team-${i + 1}`, a, lawStyle)),
+            },
+            {
+              id: 'team-cta',
+              type: 'container',
+              tag: 'section',
+              layout: 'flex',
+              boxed: true,
+              align: 'center',
+              style: { background: 'surface', padding: { desktop: pad(72), mobile: pad(48, 20) }, gap: { desktop: 14 }, textAlign: { desktop: 'center' } },
+              children: [
+                { id: 'team-cta-h', type: 'heading', level: 2, text: 'Talk to us about your situation', style: { fontSize: { desktop: 36, mobile: 28 } } },
+                { id: 'team-cta-btn', type: 'button', label: cta.label, href: cta.href, variant: 'primary' },
+              ],
+            },
+          ],
+          updatedAt: now,
+        },
+      ]
+    : []
+
+  return { site, pages: dropRepeatedPhotos([home, servicesPage, ...servicePages, ...attorneysPage, contact], opts.taken) }
 }
 
 // Lower-case a service name for use mid-sentence ("Teeth whitening" →

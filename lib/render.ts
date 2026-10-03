@@ -365,7 +365,7 @@ function chatButton(site: Site): string {
     c.kind === 'sms' ? `sms:${digits}` : c.kind === 'whatsapp' ? `https://wa.me/${digits.replace(/^\+/, '')}` : `https://m.me/${encodeURIComponent(c.to.replace(/^@/, ''))}`
   const label = c.kind === 'sms' ? t.chatText : c.kind === 'whatsapp' ? t.chatWhatsapp : t.chatMessenger
   const icon = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1L4.3 21l3.9-2c1.2.4 2.5.6 3.8.6 5.5 0 10-3.8 10-8.5S17.5 3 12 3z"/></svg>'
-  return `<a class="sct" href="${esc(href)}"${c.kind === 'sms' ? '' : ' rel="noopener"'}>${icon}<span>${esc(label)}</span></a>`
+  return `<a class="sct" href="${esc(href)}" aria-label="${esc(label)}"${c.kind === 'sms' ? '' : ' rel="noopener"'}>${icon}<span>${esc(label)}</span></a>`
 }
 
 function renderFooter(site: Site, onPage: Set<string> = new Set()): string {
