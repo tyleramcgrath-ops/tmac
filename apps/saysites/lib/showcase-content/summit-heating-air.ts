@@ -13,7 +13,7 @@ export const content: WrittenContent = {
     {
       name: 'Furnace repair',
       summary: 'Diagnosis and repair for furnaces that won’t light, short-cycle, blow cold air or make new noises, with a clear explanation of what failed and why.',
-      intro: 'A furnace rarely quits without warning. Most of the time it gives hints first: a burner that takes a few tries to light, a blower that runs longer than it used to, a faint smell when the heat comes on for the first time in the fall. In a Boise winter those hints matter, because a cold house on a frozen night is more than an inconvenience. We track down the cause, repair what’s actually broken, and explain what we found before we leave.',
+      intro: 'A furnace rarely quits without warning. It usually gives hints first: a burner that takes a few tries to light, a blower that runs longer than it used to, a faint smell when the heat first comes on in the fall. In a Boise winter those hints matter. We track down the cause, repair what’s actually broken, and explain what we found before we leave.',
       sections: [
         {
           heading: 'Signs your furnace needs attention',
@@ -21,11 +21,11 @@ export const content: WrittenContent = {
         },
         {
           heading: 'How we track down the problem',
-          body: 'We start with what you’ve noticed, because the timing of a symptom tells us a lot. Then we work through the furnace in order: the thermostat signal, power and safety switches, the igniter and flame sensor, gas pressure, the burners, the blower and the airflow across the whole system. Many modern furnaces store error codes on the control board, and we read those too. We check the venting so exhaust leaves the house the way it should, and we look over the heat exchanger for cracks. Before any repair, you’ll hear what we found, what we recommend and the reasoning behind it.',
+          body: 'We start with what you’ve noticed, because the timing of a symptom tells us a lot. Then we work through the furnace in order: the thermostat signal, power and safety switches, the igniter and flame sensor, gas pressure, the burners, the blower and the airflow across the system. Many modern furnaces store error codes on the control board, and we read those too. We check the venting so exhaust leaves the house the way it should, and we look over the heat exchanger for cracks. Before any repair, you’ll hear what we found, what we recommend and the reasoning behind it.',
         },
         {
           heading: 'Common repairs and what causes them',
-          body: 'A lot of furnace trouble traces back to a handful of parts. Flame sensors collect a thin coating over time and stop recognizing the flame, so the furnace shuts down after a few seconds. Hot surface igniters crack with age. Inducer motors, which pull exhaust through the vent before the burners light, wear out and get noisy. Pressure switches and their small hoses can fail or clog with condensation. Clogged filters make the furnace run hot, which trips the limit switch and wears every other part faster. Knowing why a part failed helps keep the next one from going the same way.',
+          body: 'Most furnace trouble traces back to a handful of parts. Flame sensors collect a thin coating over time and stop recognizing the flame, so the furnace shuts down after a few seconds. Hot surface igniters crack with age. Inducer motors, which pull exhaust through the vent before the burners light, wear out and get noisy. Pressure switches and their small hoses can fail or clog with condensation. Clogged filters make the furnace run hot, which trips the limit switch and wears every other part faster. Knowing why a part failed helps keep the next one from going the same way.',
         },
         {
           heading: 'When repair stops making sense',
@@ -35,15 +35,15 @@ export const content: WrittenContent = {
       faq: [
         {
           q: 'Is it safe to keep running a furnace that’s acting up?',
-          a: 'It depends on the symptom. A noisy blower is usually a nuisance, not a hazard. A smell of gas, soot around the burners, a carbon monoxide alarm or a flame that wavers when the blower starts are different. In those cases, turn the furnace off, leave the house if you smell gas, and call your gas utility first.',
+          a: 'It depends on the symptom. A noisy blower is usually a nuisance, not a hazard. A gas smell, soot around the burners, a carbon monoxide alarm or a flame that wavers when the blower starts are different: turn the furnace off, leave the house if you smell gas, and call your gas utility.',
         },
         {
           q: 'Can a dirty filter really cause a breakdown?',
-          a: 'Yes. A clogged filter starves the furnace of air, so the heat exchanger runs hotter than it was designed to. The high limit switch then shuts the burners off to protect it, and the furnace cycles on and off. Over a season, that extra heat and stress wears out parts sooner.',
+          a: 'Yes. A clogged filter starves the furnace of air, so the heat exchanger runs hotter than it was designed to. The high limit switch then shuts the burners off to protect it, and the furnace cycles on and off. Over a season, that stress wears out parts sooner.',
         },
         {
           q: 'What should I check before calling?',
-          a: 'Make sure the thermostat is set to heat and its batteries are fresh, the service switch near the furnace is on, the breaker hasn’t tripped and the filter isn’t clogged. Also check that the furnace door is fully closed, since a safety switch keeps the system off when the panel is loose.',
+          a: 'Make sure the thermostat is set to heat and its batteries are fresh, the service switch near the furnace is on, the breaker hasn’t tripped and the filter isn’t clogged. Check that the furnace door is fully closed, since a safety switch keeps the system off when the panel is loose.',
         },
       ],
     },
