@@ -1,0 +1,597 @@
+// The live example sites linked from saysites.com. They are built by the
+// same starter code every customer gets, with fixed ids so they never change
+// between deploys, and served from /preview/<subdomain>.
+
+import { PHOTOS, unsplash, type PhotoSet } from './photos'
+import { buildBlogIndex, buildPostPage } from './posts'
+import type { Page, Product, Site } from './schema'
+import { buildStarterSite, type BusinessTypeKey, type Design } from './starter'
+import { content as brightAndTidyContent } from './showcase-content/bright-and-tidy'
+import { content as fieldAndThreadContent } from './showcase-content/field-and-thread'
+import { content as greenAcreLandscapesContent } from './showcase-content/green-acre-landscapes'
+import { content as haleAndPorterContent } from './showcase-content/hale-and-porter'
+import { content as harborAutoContent } from './showcase-content/harbor-auto'
+import { content as northsideElectricContent } from './showcase-content/northside-electric'
+import { content as oliveAndEmberContent } from './showcase-content/olive-and-ember'
+import { content as ridgelineRoofingContent } from './showcase-content/ridgeline-roofing'
+import { content as rivertownPlumbingContent } from './showcase-content/rivertown-plumbing'
+import { content as rosiesBakeryContent } from './showcase-content/rosies-bakery'
+import { content as saltAndStoneContent } from './showcase-content/salt-and-stone'
+import { content as summitHeatingAirContent } from './showcase-content/summit-heating-air'
+import { content as willowDentalContent } from './showcase-content/willow-dental'
+import { content as calderAndVaneContent } from './showcase-content/calder-and-vane'
+import { content as ashgroveDefenseContent } from './showcase-content/ashgrove-defense'
+import { content as brightwaterContent } from './showcase-content/brightwater-family-medicine'
+import { content as northpointContent } from './showcase-content/northpoint-orthopedics'
+import { content as lumenContent } from './showcase-content/lumen-aesthetics'
+
+const NOW = '2026-09-24T00:00:00.000Z'
+export const SHOWCASE_ORG = 'org_showcase'
+const OWNER = SHOWCASE_ORG
+
+// A law example's own photos, so the three law designs don't open alike.
+function lawPhotos(hero: [string, string], rest: [string, string][]): PhotoSet {
+  const [a, b, c, ...extra] = rest.map(([id, alt]) => unsplash(id, alt, 1600, 1067))
+  return { hero: unsplash(hero[0], hero[1], 2000, 1333), cards: [a, b, c], extra }
+}
+
+function make(input: Parameters<typeof buildStarterSite>[0], subdomain: string): { site: Site; pages: Page[] } {
+  // Every example shows the text button, the way we set up real sites.
+  if (!input.chat && input.phone) input = { ...input, chat: { kind: 'sms', to: input.phone } }
+  const demo = buildStarterSite(input, OWNER, subdomain, { siteId: `site_showcase_${subdomain.replace(/-/g, '_')}`, now: NOW })
+  // Logos drawn by the same engine Sofie uses (scripts/showcase-logos.ts).
+  demo.site.business = { ...demo.site.business, logo: `/media/logos/${subdomain}.svg`, icon: `/media/logos/${subdomain}-icon.svg` }
+  return demo
+}
+
+// Gives an example site products and a Shop page, so the store can be seen
+// working. No payment links: the buttons ask the visitor to get in touch.
+function withShop(demo: { site: Site; pages: Page[] }, products: Product[], intro: string): { site: Site; pages: Page[] } {
+  const { site, pages } = demo
+  const shop: Page = {
+    id: `${site.id}_shop`,
+    siteId: site.id,
+    slug: 'shop',
+    name: 'Shop',
+    status: 'published',
+    seo: { title: `Shop ${site.business.name} online`.slice(0, 60), description: `${intro} Order online from ${site.business.name}.`.slice(0, 160) },
+    body: [
+      {
+        id: 'shop',
+        type: 'container',
+        tag: 'section',
+        layout: 'flex',
+        boxed: true,
+        style: { padding: { desktop: { top: 88, right: 24, bottom: 96, left: 24 }, mobile: { top: 48, right: 20, bottom: 56, left: 20 } }, gap: { desktop: 14 } },
+        children: [
+          { id: 'shop-h', type: 'heading', level: 1, text: 'Shop', style: { fontSize: { desktop: 52, mobile: 36 } } },
+          { id: 'shop-t', type: 'text', text: intro, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+          { id: 'shop-products', type: 'products', style: { margin: { desktop: { top: 28, right: 0, bottom: 0, left: 0 } } } },
+        ],
+      },
+    ],
+    updatedAt: site.updatedAt,
+  }
+  return {
+    site: { ...site, nav: [{ label: 'Shop', href: '/shop' }, ...site.nav], store: { currency: 'USD', products } },
+    pages: [...pages, shop],
+  }
+}
+
+// Gives an example site a blog with a few posts.
+function withBlog(demo: { site: Site; pages: Page[] }, posts: { title: string; date: string; body: string; image?: { src: string; alt: string } }[]): { site: Site; pages: Page[] } {
+  const { site, pages } = demo
+  const fixed = (p: Page, slug: string): Page => ({ ...p, id: `${site.id}_${slug.replace(/\//g, '_')}`, updatedAt: site.updatedAt })
+  const postPages = posts.map((p) => {
+    const page = buildPostPage(site, p)
+    return fixed(page, page.slug)
+  })
+  const nav = [...site.nav.filter((n) => n.href !== '/contact'), { label: 'Blog', href: '/blog' }, ...site.nav.filter((n) => n.href === '/contact')]
+  return { site: { ...site, nav }, pages: [...pages, fixed(buildBlogIndex(site), 'blog'), ...postPages] }
+}
+
+const img = (id: string, alt: string) => ({ src: unsplash(id, alt, 800, 800).src, alt })
+
+export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
+  'rivertown-plumbing': withBlog(make(
+    {
+      name: 'Rivertown Plumbing',
+      type: 'plumber',
+      flair: 'bold',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Rivertown',
+      region: 'OH',
+      phone: '(555) 201-4480',
+      chat: { kind: 'sms', to: '(555) 201-4480' },
+      email: 'hello@rivertownplumbing.com',
+      street: '118 Mill Street',
+      postalCode: '44101',
+      hours: ['Mo-Fr 07:00-18:00', 'Sa 08:00-14:00'],
+      services: ['Leak and burst pipe repair', 'Water heaters', 'Drain cleaning', 'Bathroom remodels', 'Sump pumps', 'Gas lines'],
+      palette: 'ocean',
+      tagline: 'Family-run plumbers serving Rivertown and the valley since 2009.',
+      content: rivertownPlumbingContent,
+    },
+    'rivertown-plumbing'
+  ), [
+    {
+      title: '5 signs your water heater is about to give out',
+      date: '2026-09-10',
+      image: { src: PHOTOS.plumber.cards[1].src, alt: PHOTOS.plumber.cards[1].alt },
+      body: `Most water heaters last 8 to 12 years, and they usually warn you before they fail. Catching the signs early means you can replace it on your schedule instead of after a cold shower and a wet basement.
+
+## 1. Rusty or muddy hot water
+If only your hot water looks brown or orange, the inside of the tank may be corroding. Once the tank rusts through, a leak isn't far behind.
+
+## 2. Rumbling and popping
+Sediment settles at the bottom of the tank and hardens. When the burner heats it, you hear rumbling. Flushing can help if it's caught early; if it's been going on for years, the tank is working much harder than it should.
+
+## 3. Water around the base
+Even a small puddle is worth a look. Sometimes it's a loose fitting or the relief valve, which are easy fixes. If the tank itself is weeping, it needs replacing.
+
+## 4. Hot water runs out faster
+If showers are getting shorter, sediment may be taking up room in the tank or a heating element may be failing.
+
+## 5. It's past its tenth birthday
+The date is on the label on the side of the tank. Past ten years, it's worth planning for a replacement before it picks the day for you.
+
+Not sure what you're looking at? Call us and describe it. We'll tell you honestly whether it's a repair or a replacement.`,
+    },
+    {
+      title: 'What to do in the first ten minutes of a burst pipe',
+      date: '2026-08-21',
+      image: { src: PHOTOS.plumber.cards[0].src, alt: PHOTOS.plumber.cards[0].alt },
+      body: `A burst pipe can put hundreds of gallons on the floor in an hour. What you do before the plumber arrives makes the biggest difference to the damage.
+
+## Shut off the water
+Find your main shutoff valve. It's usually where the water line enters the house: in the basement, a utility closet or near the water heater. Turn it clockwise until it stops. It's worth finding it today, before you need it.
+
+## Turn off the electricity near the water
+If water is near outlets, appliances or the electrical panel, switch off power to that area at the breaker, but only if you can reach the panel without standing in water.
+
+## Open the taps
+Open a cold tap at the lowest point in the house to drain the pipes and relieve pressure. Flush toilets to empty them too.
+
+## Move things and take photos
+Move what you can out of the water, and take photos of the damage for your insurer before you start cleaning up.
+
+## Call us
+Tell us what you've shut off and we'll tell you what to do next, and how soon we can be there.`,
+    },
+  ]),
+  'rosies-bakery': withShop(make(
+    {
+      name: 'Rosie’s Bakery',
+      type: 'bakery',
+      flair: 'soft',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Portland',
+      region: 'OR',
+      phone: '(555) 310-2291',
+      chat: { kind: 'sms', to: '(555) 310-2291' },
+      street: '2210 SE Division St',
+      postalCode: '97202',
+      hours: ['Tu-Fr 07:00-15:00', 'Sa-Su 07:00-14:00'],
+      services: ['Country sourdough', 'Pastries and buns', 'Celebration cakes'],
+      palette: 'sunset',
+      tagline: 'Sourdough, cakes and good coffee on SE Division, baked every morning at five.',
+      content: rosiesBakeryContent,
+    },
+    'rosies-bakery'
+  ), [
+    { id: 'p-sourdough', name: 'Country sourdough', price: 900, description: 'Our everyday loaf: long-fermented, crackly crust, open crumb.', image: img('1509440159596-0249088772ff', 'Sourdough loaves with wheat') },
+    { id: 'p-pastry-box', name: 'Morning pastry box (6)', price: 2200, description: 'A mix of croissants, buns and whatever came out of the oven best that morning.', image: img('1579697096985-41fe1430e5df', 'Shelves of fresh bread and pastries') },
+    { id: 'p-bread-share', name: 'Weekly bread share', price: 3200, description: 'Four loaves a month, a different bake each Saturday. Pick up at the shop.', image: img('1566698629409-787a68fc5724', 'A basket of bread on a dark table') },
+    { id: 'p-cake', name: 'Celebration cake', price: 5200, description: 'Serves 12. Tell us the flavor and message when you order.' },
+  ], 'Order bread, pastries and cakes for pickup on SE Division.'),
+  'salt-and-stone': make(
+    {
+      name: 'Salt & Stone',
+      type: 'salon',
+      flair: 'soft',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Savannah',
+      region: 'GA',
+      phone: '(555) 406-7712',
+      chat: { kind: 'sms', to: '(555) 406-7712' },
+      street: '31 Jones Street',
+      postalCode: '31401',
+      hours: ['Tu-Sa 10:00-19:00'],
+      services: ['Cut and style', 'Lived-in color', 'Balayage'],
+      palette: 'plum',
+      tagline: 'Lived-in color and precise cuts on Jones Street, by appointment.',
+      content: saltAndStoneContent,
+    },
+    'salt-and-stone'
+  ),
+  'northside-electric': make(
+    {
+      name: 'Northside Electric',
+      type: 'electrician',
+      flair: 'studio',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Denver',
+      region: 'CO',
+      phone: '(555) 303-0188',
+      chat: { kind: 'sms', to: '(555) 303-0188' },
+      street: '400 Blake Street',
+      postalCode: '80205',
+      hours: ['Mo-Fr 07:00-17:00'],
+      services: ['Panel upgrades', 'EV charger installs', 'Lighting and fans', 'Whole-home rewiring', 'Generators', 'Safety inspections'],
+      palette: 'slate',
+      tagline: 'Licensed electricians keeping Denver homes safe, tidy and up to code.',
+      content: northsideElectricContent,
+    },
+    'northside-electric'
+  ),
+  'summit-heating-air': make(
+    {
+      name: 'Summit Heating & Air',
+      type: 'hvac',
+      flair: 'clean',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Boise',
+      region: 'ID',
+      phone: '(555) 208-4410',
+      chat: { kind: 'sms', to: '(555) 208-4410' },
+      street: '1290 W Main Street',
+      postalCode: '83702',
+      hours: ['Mo-Fr 07:00-18:00', 'Sa 08:00-12:00'],
+      services: ['Furnace repair', 'AC installation', 'Heat pumps', 'Duct cleaning', 'Maintenance plans', 'Thermostats'],
+      palette: 'ocean',
+      tagline: 'Comfortable homes across the Treasure Valley, winter and summer.',
+      content: summitHeatingAirContent,
+    },
+    'summit-heating-air'
+  ),
+  'ridgeline-roofing': make(
+    {
+      name: 'Ridgeline Roofing',
+      type: 'roofer',
+      flair: 'bold',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Knoxville',
+      region: 'TN',
+      phone: '(555) 865-2201',
+      chat: { kind: 'sms', to: '(555) 865-2201' },
+      street: '77 Emory Road',
+      postalCode: '37918',
+      hours: ['Mo-Sa 07:00-17:00'],
+      services: ['Roof replacement', 'Storm damage repair', 'Gutters', 'Free inspections'],
+      palette: 'slate',
+      tagline: 'Roofs built to outlast the weather, with a 25-year workmanship warranty.',
+      content: ridgelineRoofingContent,
+    },
+    'ridgeline-roofing'
+  ),
+  'green-acre-landscapes': make(
+    {
+      name: 'Green Acre Landscapes',
+      type: 'landscaper',
+      flair: 'soft',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Raleigh',
+      region: 'NC',
+      phone: '(555) 919-3302',
+      chat: { kind: 'sms', to: '(555) 919-3302' },
+      street: '5 Oak Park Drive',
+      postalCode: '27607',
+      hours: ['Mo-Fr 07:00-17:00'],
+      services: ['Lawn care', 'Garden design', 'Patios and paths', 'Seasonal cleanups'],
+      palette: 'forest',
+      tagline: 'Lawns, gardens and patios that make Raleigh neighbors slow down.',
+      content: greenAcreLandscapesContent,
+    },
+    'green-acre-landscapes'
+  ),
+  'bright-and-tidy': make(
+    {
+      name: 'Bright & Tidy Cleaning',
+      type: 'cleaner',
+      flair: 'clean',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Austin',
+      region: 'TX',
+      phone: '(555) 512-7780',
+      chat: { kind: 'sms', to: '(555) 512-7780' },
+      hours: ['Mo-Sa 08:00-18:00'],
+      services: ['Weekly home cleaning', 'Deep cleans', 'Move-in and move-out', 'Office cleaning'],
+      palette: 'ocean',
+      tagline: 'Insured, background-checked cleaners. Same team every visit.',
+      content: brightAndTidyContent,
+    },
+    'bright-and-tidy'
+  ),
+  'harbor-auto': make(
+    {
+      name: 'Harbor Auto Repair',
+      type: 'autorepair',
+      flair: 'studio',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Tacoma',
+      region: 'WA',
+      phone: '(555) 253-9914',
+      chat: { kind: 'sms', to: '(555) 253-9914' },
+      street: '2101 Pacific Avenue',
+      postalCode: '98402',
+      hours: ['Mo-Fr 08:00-18:00', 'Sa 09:00-14:00'],
+      services: ['Brakes', 'Oil changes', 'Engine diagnostics', 'Tires and alignment', 'State inspections'],
+      palette: 'slate',
+      tagline: 'Honest repairs, straight answers and a written quote before we start.',
+      content: harborAutoContent,
+    },
+    'harbor-auto'
+  ),
+  'willow-dental': make(
+    {
+      name: 'Willow Dental',
+      type: 'dentist',
+      flair: 'editorial',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Madison',
+      region: 'WI',
+      phone: '(555) 608-4120',
+      chat: { kind: 'sms', to: '(555) 608-4120' },
+      street: '18 S Pinckney Street',
+      postalCode: '53703',
+      hours: ['Mo-Th 08:00-17:00', 'Fr 08:00-13:00'],
+      services: ['Checkups and cleanings', 'Teeth whitening', 'Invisalign', 'Crowns'],
+      palette: 'forest',
+      tagline: 'Gentle, modern dentistry for the whole family, a block from the Capitol.',
+      content: willowDentalContent,
+    },
+    'willow-dental'
+  ),
+  'olive-and-ember': make(
+    {
+      name: 'Olive & Ember',
+      type: 'restaurant',
+      flair: 'luxe',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Asheville',
+      region: 'NC',
+      phone: '(555) 828-6604',
+      chat: { kind: 'sms', to: '(555) 828-6604' },
+      street: '12 Wall Street',
+      postalCode: '28801',
+      hours: ['We-Su 17:00-22:00'],
+      services: ['Wood-fired dinners', 'Private dining', 'Weekend brunch'],
+      palette: 'noir',
+      design: 'upscale',
+      tagline: 'Wood-fired Mediterranean cooking and natural wine in downtown Asheville.',
+      content: oliveAndEmberContent,
+    },
+    'olive-and-ember'
+  ),
+  'hale-and-porter': make(
+    {
+      name: 'Hale & Porter Law',
+      type: 'lawyer',
+      flair: 'editorial',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Columbus',
+      region: 'OH',
+      phone: '(555) 614-2290',
+      chat: { kind: 'sms', to: '(555) 614-2290' },
+      street: '250 E Broad Street',
+      postalCode: '43215',
+      hours: ['Mo-Fr 08:30-17:30'],
+      services: ['Estate planning', 'Family law', 'Real estate closings', 'Small business law'],
+      palette: 'oxblood',
+      lawStyle: 'classic',
+      team: [
+        { name: 'Margaret Hale', role: 'Partner', bio: 'Margaret works with families on wills, trusts and planning for the people they love, and helps them through probate when the time comes.' },
+        { name: 'David Porter', role: 'Partner', bio: 'David handles real estate closings and the everyday legal needs of small businesses, from contracts to setting up a new company.' },
+        { name: 'Elena Brooks', role: 'Associate', bio: 'Elena focuses on family law, guiding clients through divorce, parenting plans and support with care and clear information.' },
+      ],
+      tagline: 'Clear, practical legal help for Ohio families and small businesses.',
+      content: haleAndPorterContent,
+    },
+    'hale-and-porter'
+  ),
+  'calder-and-vane': make(
+    {
+      name: 'Calder & Vane',
+      type: 'lawyer',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'San Antonio',
+      region: 'TX',
+      phone: '(555) 210-4418',
+      chat: { kind: 'sms', to: '(555) 210-4418' },
+      street: '300 Convent Street',
+      postalCode: '78205',
+      hours: ['Mo-Fr 08:00-18:00'],
+      services: ['Car accidents', 'Truck accidents', 'Slip and fall injuries', 'Wrongful death'],
+      palette: 'ocean',
+      lawStyle: 'counsel',
+      photos: lawPhotos(['1486406146926-c627a92ad1ab', 'Office towers seen from the street'], [
+        ['1436450412740-6b988f486c6b', 'Stone columns of a courthouse'],
+        ['1521791055366-0d553872125f', 'Hand signing a paper contract'],
+        ['1454165804606-c3d57bc86b40', 'People taking notes at a meeting table'],
+        ['1479142506502-19b3a3b7ff33', 'Old law books on a wooden shelf'],
+        ['1589829545856-d10d557cf95f', 'Statue of Lady Justice with scales'],
+      ]),
+      headline: 'Hurt in a crash or a fall? Get clear answers first.',
+      team: [
+        { name: 'Ruth Calder', role: 'Founding partner', bio: 'Ruth represents people hurt in car and truck crashes and families who have lost someone, and explains every step in plain language.' },
+        { name: 'Marcus Vane', role: 'Founding partner', bio: 'Marcus handles injury claims from falls and unsafe property, and works with clients from the first call to the last signature.' },
+      ],
+      tagline: 'Personal injury help for people and families across San Antonio.',
+      content: calderAndVaneContent,
+    },
+    'calder-and-vane'
+  ),
+  'ashgrove-defense': make(
+    {
+      name: 'Ashgrove Defense',
+      type: 'lawyer',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Nashville',
+      region: 'TN',
+      phone: '(555) 615-3070',
+      chat: { kind: 'sms', to: '(555) 615-3070' },
+      street: '1 Public Square',
+      postalCode: '37201',
+      hours: ['Mo-Fr 08:30-17:30'],
+      services: ['DUI defense', 'Drug charges', 'Assault charges', 'Expungement'],
+      palette: 'forest',
+      lawStyle: 'modern',
+      photos: lawPhotos(['1507679799987-c73779587ccf', 'Attorney in a dark suit buttoning his jacket'], [
+        ['1436450412740-6b988f486c6b', 'Stone columns of a courthouse'],
+        ['1450101499163-c8848c66ca85', 'Person signing a document at a desk'],
+        ['1505664194779-8beaceb93744', 'Library with busts and shelves of books'],
+        ['1521791055366-0d553872125f', 'Hand signing a paper contract'],
+        ['1454165804606-c3d57bc86b40', 'People taking notes at a meeting table'],
+      ]),
+      headline: 'Charged with a crime in Nashville? Talk to us first.',
+      team: [
+        { name: 'Jonah Ashgrove', role: 'Attorney', bio: 'Jonah defends people charged with DUI, drug and assault offenses, and helps clients clear old records so they can move forward.' },
+      ],
+      tagline: 'Criminal defense for people in Nashville and Middle Tennessee.',
+      content: ashgroveDefenseContent,
+    },
+    'ashgrove-defense'
+  ),
+  'brightwater-family-medicine': make(
+    {
+      name: 'Brightwater Family Medicine',
+      type: 'doctor',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Charlotte',
+      region: 'NC',
+      phone: '(555) 704-2210',
+      street: '400 S Tryon Street',
+      postalCode: '28202',
+      hours: ['Mo-Fr 08:00-17:00'],
+      services: ['Annual physicals', 'Chronic condition care', 'Sick visits', 'Preventive screenings'],
+      palette: 'forest',
+      lawStyle: 'modern',
+      headline: 'Family medicine in Charlotte, for every age.',
+      photos: lawPhotos(['1631217868264-e5b90bb7e133', 'Doctor talking with a patient in an exam room'], [
+        ['1666214280557-f1b5022eb634', 'Doctor explaining a scan to a patient'],
+        ['1505751172876-fa1923c5c528', 'Stethoscope on a table'],
+        ['1519494026892-80bbd2d6fd0d', 'Clinic reception desk'],
+        ['1612349317150-e413f6a5b16d', 'Doctor in a white coat with a stethoscope'],
+        ['1581056771107-24ca5f033842', 'Doctor visiting a patient'],
+      ]),
+      team: [
+        { name: 'Dr. Naomi Reyes', role: 'Family physician', bio: 'Dr. Reyes sees patients of every age for checkups, ongoing conditions and everyday illnesses, and takes time to explain each next step.' },
+        { name: 'Dr. Owen Mercer', role: 'Family physician', bio: 'Dr. Mercer looks after families from first visits to annual physicals, with a focus on prevention and steady, long-term care.' },
+        { name: 'Lila Grant', role: 'Nurse practitioner', bio: 'Lila sees patients for sick visits and follow-ups, and helps them keep track of screenings and care plans.' },
+      ],
+      tagline: 'Family medicine for children and adults in Charlotte.',
+      content: brightwaterContent,
+    },
+    'brightwater-family-medicine'
+  ),
+  'northpoint-orthopedics': make(
+    {
+      name: 'Northpoint Orthopedics',
+      type: 'doctor',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Minneapolis',
+      region: 'MN',
+      phone: '(555) 612-8840',
+      street: '800 Nicollet Mall',
+      postalCode: '55402',
+      hours: ['Mo-Fr 07:30-17:30'],
+      services: ['Knee pain', 'Shoulder injuries', 'Sports injuries', 'Back and neck pain'],
+      palette: 'ocean',
+      lawStyle: 'counsel',
+      headline: 'Knee, shoulder or back pain? Let’s find out why.',
+      photos: lawPhotos(['1581056771107-24ca5f033842', 'Doctor visiting a patient'], [
+        ['1612349317150-e413f6a5b16d', 'Doctor in a white coat with a stethoscope'],
+        ['1666214280557-f1b5022eb634', 'Doctor explaining a scan to a patient'],
+        ['1505751172876-fa1923c5c528', 'Stethoscope on a table'],
+        ['1631217868264-e5b90bb7e133', 'Doctor talking with a patient in an exam room'],
+      ]),
+      team: [
+        { name: 'Dr. Henry Lund', role: 'Orthopedic physician', bio: 'Dr. Lund treats knee and shoulder problems, from new injuries to long-standing pain, and explains every option before a plan is made.' },
+        { name: 'Dr. Priya Nair', role: 'Orthopedic physician', bio: 'Dr. Nair works with people of all activity levels on sports injuries and back and neck pain, with care built around getting them moving.' },
+      ],
+      tagline: 'Orthopedic care for knees, shoulders, backs and sports injuries in Minneapolis.',
+      content: northpointContent,
+    },
+    'northpoint-orthopedics'
+  ),
+  'lumen-aesthetics': make(
+    {
+      name: 'Lumen Aesthetics',
+      type: 'medspa',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Scottsdale',
+      region: 'AZ',
+      phone: '(555) 480-3317',
+      chat: { kind: 'sms', to: '(555) 480-3317' },
+      street: '7014 E Camelback Road',
+      postalCode: '85251',
+      hours: ['Tu-Sa 09:00-18:00'],
+      services: ['Facials', 'Chemical peels', 'Laser skin treatments', 'Injectables'],
+      palette: 'plum',
+      lawStyle: 'classic',
+      headline: 'Skin care and aesthetics in Scottsdale, planned around you.',
+      photos: lawPhotos(['1570172619644-dfd03ed5d881', 'Facial treatment at a spa'], [
+        ['1616394584738-fc6e612e71b9', 'Client receiving a facial mask'],
+        ['1552693673-1bf958298935', 'Skin treatment in a clinic'],
+        ['1515377905703-c4788e51af15', 'Dropper of skincare serum'],
+        ['1540555700478-4be289fbecef', 'Spa towels and flowers'],
+        ['1600334089648-b0d9d3028eb2', 'Hot stone spa treatment'],
+      ]),
+      team: [
+        { name: 'Camille Ortiz', role: 'Nurse injector', bio: 'Camille plans injectable treatments with each client, starting with a conversation about what they want and what to expect.' },
+        { name: 'Jade Whitman', role: 'Licensed esthetician', bio: 'Jade leads facials and chemical peels, and helps clients build a routine that suits their skin.' },
+      ],
+      tagline: 'Facials, peels, laser treatments and injectables in Scottsdale.',
+      content: lumenContent,
+    },
+    'lumen-aesthetics'
+  ),
+  'field-and-thread': withShop(make(
+    {
+      name: 'Field & Thread',
+      type: 'store',
+      flair: 'clean',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Burlington',
+      region: 'VT',
+      phone: '(555) 802-1175',
+      chat: { kind: 'sms', to: '(555) 802-1175' },
+      street: '96 Church Street',
+      postalCode: '05401',
+      hours: ['Mo-Sa 10:00-18:00', 'Su 11:00-16:00'],
+      services: ['Everyday clothing', 'Local makers', 'Gifts and cards'],
+      palette: 'forest',
+      tagline: 'Well-made clothing and gifts from Vermont makers, on Church Street.',
+      content: fieldAndThreadContent,
+    },
+    'field-and-thread'
+  ), [
+    { id: 'p-flannel', name: 'Heavy flannel shirt', price: 8800, description: 'Brushed cotton flannel, cut in Vermont. Warm enough for October mornings.', image: img('1573612664822-d7d347da7b80', 'Clothes on a rack beside a wooden table') },
+    { id: 'p-tee', name: 'Everyday organic tee', price: 3400, description: 'Heavyweight organic cotton in six colors. The one you reach for first.', image: img('1441984904996-e0b6ba687e04', 'Boutique clothing racks') },
+    { id: 'p-card', name: 'Letterpress card set', price: 1800, description: 'Six cards and envelopes, printed a mile from the shop.' },
+    { id: 'p-scarf', name: 'Merino scarf', price: 6400, description: 'Soft, warm and knit in New England.', soldOut: true },
+  ], 'Clothing and gifts from Vermont makers, shipped or ready for pickup on Church Street.'),
+}
+
+// How the gallery groups and describes each example.
+// design: when the example uses a different look from its trade's default.
+export const SHOWCASE_INFO: Record<string, { type: BusinessTypeKey; kind: string; place: string; design?: Design }> = {
+  'rivertown-plumbing': { type: 'plumber', kind: 'Plumber', place: 'Rivertown, OH' },
+  'northside-electric': { type: 'electrician', kind: 'Electrician', place: 'Denver, CO' },
+  'summit-heating-air': { type: 'hvac', kind: 'Heating & air', place: 'Boise, ID' },
+  'ridgeline-roofing': { type: 'roofer', kind: 'Roofer', place: 'Knoxville, TN' },
+  'green-acre-landscapes': { type: 'landscaper', kind: 'Landscaping', place: 'Raleigh, NC' },
+  'bright-and-tidy': { type: 'cleaner', kind: 'Cleaning', place: 'Austin, TX' },
+  'harbor-auto': { type: 'autorepair', kind: 'Auto repair', place: 'Tacoma, WA' },
+  'salt-and-stone': { type: 'salon', kind: 'Hair salon', place: 'Savannah, GA' },
+  'willow-dental': { type: 'dentist', kind: 'Dentist', place: 'Madison, WI' },
+  'hale-and-porter': { type: 'lawyer', kind: 'Law firm', place: 'Columbus, OH' },
+  'calder-and-vane': { type: 'lawyer', kind: 'Injury law firm', place: 'San Antonio, TX' },
+  'ashgrove-defense': { type: 'lawyer', kind: 'Criminal defense firm', place: 'Nashville, TN' },
+  'brightwater-family-medicine': { type: 'doctor', kind: 'Family medicine', place: 'Charlotte, NC' },
+  'northpoint-orthopedics': { type: 'doctor', kind: 'Orthopedics', place: 'Minneapolis, MN' },
+  'lumen-aesthetics': { type: 'medspa', kind: 'Med spa', place: 'Scottsdale, AZ' },
+  'rosies-bakery': { type: 'bakery', kind: 'Bakery', place: 'Portland, OR' },
+  'olive-and-ember': { type: 'restaurant', kind: 'Restaurant', place: 'Asheville, NC', design: 'upscale' },
+  'field-and-thread': { type: 'store', kind: 'Shop', place: 'Burlington, VT' },
+}

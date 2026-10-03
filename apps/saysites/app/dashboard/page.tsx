@@ -1,0 +1,72 @@
+import { requireUser } from '@/lib/session'
+import { isAdmin } from '@/lib/admin'
+import { getStore } from '@/lib/store'
+import { liveUrl, previewPath } from '@/lib/urls'
+
+export default async function Dashboard({ searchParams }: { searchParams: Promise<{ deleted?: string }> }) {
+  const { deleted } = await searchParams
+  const user = await requireUser()
+  const store = getStore()
+  const sites = await store.sitesForUser(user.id)
+  const [unread, helping] = await Promise.all([Promise.all(sites.map((s) => store.unreadCount(s.id))), store.memberSites(user.id)])
+  return (
+    <>
+      {deleted && <p className="notice good">That website has been deleted.</p>}
+      <div className="dash-head">
+        <div>
+          <p className="crumbs">Dashboard</p>
+          <h1>Hi {user.name.split(' ')[0]}, {sites.length === 0 && helping.length > 0 ? 'here are your leads' : 'here are your websites'}</h1>
+        </div>
+        <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {isAdmin(user.email) && <><a className="btn btn-ghost" href="/dashboard/launch">Launch stats</a><a className="btn btn-ghost" href="/dashboard/feedback">Feedback inbox</a><a className="btn btn-ghost" href="/dashboard/health">Hosting health</a><a className="btn btn-ghost" href="/dashboard/blog">Blog</a></>}
+          {sites.length > 0 && <a className="btn btn-primary" href="/dashboard/new">New website</a>}
+        </span>
+      </div>
+      {helping.length > 0 && (
+        <div className="card stack helping">
+          <h2>Sites you help with</h2>
+          <ul className="team-list">
+            {helping.map((s) => (
+              <li key={s.id}>
+                <span><strong>{s.business.name}</strong> <span className="muted small">{liveUrl(s).replace('https://', '')}</span></span>
+                <a className="btn btn-ghost btn-sm" href={`/dashboard/sites/${s.id}/leads`}>Open leads</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {sites.length === 0 && helping.length > 0 ? null : sites.length === 0 ? (
+        <div className="card empty">
+          <h2>Let’s build your first website</h2>
+          <p className="muted">Tell us a little about your business and your site will be ready in seconds.</p>
+          <a className="btn btn-primary" href="/dashboard/new">Build my website</a>
+        </div>
+      ) : (
+        <div className="site-grid">
+          {sites.map((s, i) => (
+            <a key={s.id} className="card site-tile" href={`/dashboard/sites/${s.id}`}>
+              <div className="tile-shot">
+                <iframe src={previewPath(s)} title="" loading="lazy" tabIndex={-1} aria-hidden="true" />
+              </div>
+              <div className="tile-meta">
+                <div>
+                  <h2>{s.business.name}</h2>
+                  <span className="url muted">{liveUrl(s).replace('https://', '')}</span>
+                </div>
+                <div className="tile-pills">
+                  <span className="pill ok">Live</span>
+                  {unread[i] > 0 && <span className="pill warn">{unread[i]} new message{unread[i] > 1 ? 's' : ''}</span>}
+                </div>
+              </div>
+            </a>
+          ))}
+          <a className="card site-tile add-tile" href="/dashboard/new">
+            <span className="add-plus" aria-hidden="true">+</span>
+            <strong>New website</strong>
+            <span className="muted small">Ready in seconds</span>
+          </a>
+        </div>
+      )}
+    </>
+  )
+}

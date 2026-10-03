@@ -15,7 +15,7 @@ import {
   LayoutDashboard, Radar, FileText, LineChart, Link2, Plug, FileBarChart,
   Search, Loader2, RefreshCw, StopCircle, Network, ShieldCheck, Code2, Bot,
   Zap, FolderOpen, Wand2, Sparkles, TrendingUp, History as HistoryIcon,
-  LogOut, PenSquare, Swords, Quote, type LucideIcon,
+  LogOut, PenSquare, Swords, Quote, Globe, type LucideIcon,
 } from 'lucide-react'
 import { api, ApiError, type ProjectDTO, type ScanSummary } from '../../../lib/client'
 import { useAuth } from '../../../lib/auth-context'
@@ -28,6 +28,7 @@ import { OperatorTab } from './OperatorTab'
 import { WordPressTab } from './WordPressTab'
 import { ContentTab } from './ContentTab'
 import { AtlasTab } from './AtlasTab'
+import { ConnectionsTab } from './ConnectionsTab'
 import { HistoryTab } from './HistoryTab'
 import { DangerZone } from './shared'
 import { PilotBar } from '../../../lib/PilotBar'
@@ -35,30 +36,50 @@ import { PilotBar } from '../../../lib/PilotBar'
 type SectionId =
   | 'command' | 'overview' | 'audit' | 'content' | 'links' | 'indexability' | 'schema'
   | 'recommendations' | 'rankings' | 'backlinks' | 'ai-citations' | 'content-studio' | 'competitors' | 'wordpress' | 'operator' | 'reports' | 'history'
+  | 'connections'
 
+// Grouped by the QUESTION you are asking, not by which engine produced the
+// data. The old grouping put "Connections" nowhere — connecting Google lived
+// inside the Competitors tab, which nobody could find — and split the audit
+// across "Analyze" while filing Reports and History under "Deploy", which they
+// are not.
+//
+//   Start      — where you land, and what to do today
+//   Find problems — the audit and its facets: what is broken
+//   Find opportunities — demand-side: what is worth going after
+//   Take action — turn a finding into a change on the site
+//   Track      — what happened, and did it work
+//   Setup      — connections and data sources
 const NAV_GROUPS: { label: string; items: { id: SectionId; label: string; icon: LucideIcon }[] }[] = [
-  { label: 'Analyze', items: [
+  { label: 'Start', items: [
     { id: 'command', label: 'Command Center', icon: Bot },
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+  ]},
+  { label: 'Find problems', items: [
     { id: 'audit', label: 'Site Audit', icon: Radar },
-    { id: 'content', label: 'Content', icon: FileText },
+    { id: 'content', label: 'Page Content', icon: FileText },
     { id: 'links', label: 'Internal Links', icon: Network },
     { id: 'indexability', label: 'Indexability', icon: ShieldCheck },
     { id: 'schema', label: 'Structured Data', icon: Code2 },
-    { id: 'recommendations', label: 'Recommendations', icon: Wand2 },
   ]},
-  { label: 'Grow', items: [
-    { id: 'rankings', label: 'Rankings', icon: LineChart },
+  { label: 'Find opportunities', items: [
+    { id: 'rankings', label: 'Keywords & Rankings', icon: LineChart },
+    { id: 'content-studio', label: 'Content Plan', icon: PenSquare },
+    { id: 'ai-citations', label: 'AI Search', icon: Quote },
     { id: 'backlinks', label: 'Backlinks', icon: Link2 },
-    { id: 'ai-citations', label: 'AI Citations', icon: Quote },
-    { id: 'content-studio', label: 'Content Studio', icon: PenSquare },
     { id: 'competitors', label: 'Competitors', icon: Swords },
   ]},
-  { label: 'Deploy', items: [
-    { id: 'wordpress', label: 'WordPress', icon: Plug },
+  { label: 'Take action', items: [
+    { id: 'recommendations', label: 'Recommendations', icon: Wand2 },
     { id: 'operator', label: 'Operator', icon: Sparkles },
+  ]},
+  { label: 'Track', items: [
     { id: 'reports', label: 'Reports', icon: FileBarChart },
     { id: 'history', label: 'History', icon: HistoryIcon },
+  ]},
+  { label: 'Setup', items: [
+    { id: 'connections', label: 'Connections', icon: Plug },
+    { id: 'wordpress', label: 'WordPress', icon: Globe },
   ]},
 ]
 const ALL_SECTIONS = NAV_GROUPS.flatMap((g) => g.items)
@@ -248,6 +269,7 @@ export function ProjectDashboard({ project, scans, onReload, initialSection = 'c
             {section === 'ai-citations' && <AiCitations projectId={project.id} />}
             {section === 'content-studio' && <ContentTab projectId={project.id} />}
             {section === 'competitors' && <AtlasTab projectId={project.id} />}
+            {section === 'connections' && <ConnectionsTab projectId={project.id} />}
             {section === 'wordpress' && <WordPressTab projectId={project.id} />}
             {section === 'operator' && <OperatorTab projectId={project.id} />}
             {section === 'history' && (

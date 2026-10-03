@@ -1,0 +1,128 @@
+import { changePassword, deleteAccount, updateName } from '@/app/actions'
+import { ActionForm } from '@/components/ActionForm'
+import { requireUser } from '@/lib/session'
+import { PLAN_NAMES, PRICES, billingReady, cleanPlan, loadAccess, priceId } from '@/lib/billing'
+import { getStore } from '@/lib/store'
+import { isAdmin } from '@/lib/admin'
+import { formatDate } from '@/lib/render'
+import { managePlan, startPlan } from './billing-actions'
+
+const NOTES: Record<string, [string, string]> = {
+  welcome: ['good', 'You’re all set. Thank you for joining SaySites.'],
+  soon: ['', 'Plans open very soon. Your trial keeps going until then.'],
+  error: ['bad', 'We couldn’t reach our payment provider. Please try again in a minute.'],
+}
+
+export default async function AccountPage({ searchParams }: { searchParams: Promise<{ billing?: string; why?: string; plan?: string; approved?: string }> }) {
+  const user = await requireUser()
+  const sp = await searchParams
+  // A plan chosen elsewhere (approving a site the team built), picked here.
+  const wanted = sp.plan ? cleanPlan(sp.plan) : undefined
+  const note = sp.approved ? (['good', 'Your new website is in your account. Start your plan below and we will put it live.'] as const) : NOTES[sp.billing ?? '']
+  // Stripe's exact reason, for the SaySites team only.
+  const reason = sp.billing === 'error' && sp.why && isAdmin(user.email) ? sp.why.slice(0, 300) : ''
+  const a = await loadAccess(getStore(), user)
+  const promo = a.billing?.promo
+  return (
+    <div className="narrow stack">
+      <div className="dash-head">
+        <div>
+          <p className="crumbs"><a href="/dashboard">My sites</a> / Account</p>
+          <h1>Your account</h1>
+          <p className="muted" style={{ margin: 0 }}>{user.email}</p>
+        </div>
+      </div>
+      {note && <p className={`notice ${note[0]}`}>{note[1]}{reason && <><br /><small>Stripe said: {reason}</small></>}</p>}
+      <div className="card" id="plan">
+        <h3>Your plan</h3>
+        {a.status === 'comp' ? (
+          <p className="muted">Complimentary. Everything is included.</p>
+        ) : a.status === 'active' || a.status === 'past_due' ? (
+          <>
+            <p><strong>{PLAN_NAMES[a.billing?.plan ?? 'site']} plan</strong>{a.billing?.interval === 'year' ? ', billed yearly' : ', billed monthly'}</p>
+            <p className="muted">{a.status === 'past_due' ? 'Your last payment didn’t go through. Please update your card to keep your site going.' : `Active${a.billing?.currentPeriodEnd ? `, renews ${formatDate(a.billing.currentPeriodEnd.slice(0, 10))}` : ''}.`}</p>
+            <form action={managePlan}><button className="btn btn-ghost" type="submit">Manage billing</button></form>
+            <p className="small muted">Switch plans, change your card, see invoices or cancel, all in Manage billing.</p>
+          </>
+        ) : (
+          <>
+            <p className="muted">
+              {a.locked
+                ? 'Your free trial has ended. Your website and everything you’ve made are saved. Start your plan to keep editing and keep Sofie working for you.'
+                : a.status === 'canceled'
+                  ? 'Your plan is cancelled. Start it again any time.'
+                  : a.billing?.feedbackReward
+                    ? `Free until ${formatDate(a.billing.trialEndsAt.slice(0, 10))}: three months on us, for your feedback. Thank you.`
+                    : `Free trial: ${a.daysLeft} day${a.daysLeft === 1 ? '' : 's'} left.`}
+            </p>
+            {billingReady() ? (
+              <form action={startPlan} className="stack plan-form">
+                <fieldset className="plan-pick">
+                  <legend className="small muted">Choose a plan</legend>
+                  {priceId('law', 'month') && (
+                    <label>
+                      <input type="radio" name="plan" value="law" defaultChecked={wanted === 'law'} />
+                      <span><b>Law Firm</b> ${PRICES.law.month}/month<small>A law firm website you build and change yourself, with practice area pages, attorney profiles, consultation requests, attorney advertising notices and a weekly Visibility Score.</small></span>
+                    </label>
+                  )}
+                  {priceId('lawpro', 'month') && (
+                    <label>
+                      <input type="radio" name="plan" value="lawpro" defaultChecked={wanted === 'lawpro'} />
+                      <span><b>Law Firm, built for you</b> ${PRICES.lawpro.month}/month<small>We build your site for you, you approve it before it goes live, and we keep it up to date when you ask.</small></span>
+                    </label>
+                  )}
+                  <label>
+                    <input type="radio" name="plan" value="site" defaultChecked={!wanted || wanted === 'site'} />
+                    <span><b>Site</b> ${PRICES.site.month}/month<small>Your website, domain, hosting, SEO, call tracking and Sofie for everyday changes.</small></span>
+                  </label>
+                  {priceId('store', 'month') && (
+                    <label>
+                      <input type="radio" name="plan" value="store" defaultChecked={wanted === 'store'} />
+                      <span><b>Store</b> ${PRICES.store.month}/month<small>Everything in Site, plus products and a Shop page. 0% of your sales, and a bigger Sofie allowance.</small></span>
+                    </label>
+                  )}
+                </fieldset>
+                {priceId('site', 'year') && (
+                  <fieldset className="plan-pick plan-pick-row">
+                    <legend className="small muted">Pay</legend>
+                    <label><input type="radio" name="interval" value="month" defaultChecked /><span><b>Monthly</b></span></label>
+                    <label><input type="radio" name="interval" value="year" /><span><b>Yearly</b> two months free (${PRICES.site.year} or ${PRICES.store.year} a year)</span></label>
+                  </fieldset>
+                )}
+                <div className="row" style={{ alignItems: 'end' }}>
+                  <label className="field"><span>Promo code <em className="muted">(optional)</em></span><input className="input" name="promo" defaultValue={promo ?? ''} maxLength={40} autoCapitalize="characters" /></label>
+                  <button className="btn btn-primary" type="submit">Start my plan</button>
+                </div>
+                {!a.locked && a.status === 'trial' && <p className="small muted">You won’t be charged until your free time ends{a.billing?.trialEndsAt ? ` on ${formatDate(a.billing.trialEndsAt.slice(0, 10))}` : ''}.</p>}
+              </form>
+            ) : (
+              <p className="small muted">Plans open very soon{promo ? `. Your code ${promo} is saved and will be applied.` : '.'}</p>
+            )}
+          </>
+        )}
+      </div>
+      <div className="card">
+        <h3>Your name</h3>
+        <ActionForm action={updateName} submit="Save">
+          <label className="field"><span>Name</span><input className="input" name="name" defaultValue={user.name} required maxLength={80} autoComplete="name" /></label>
+        </ActionForm>
+      </div>
+      <div className="card">
+        <h3>Password</h3>
+        <ActionForm action={changePassword} submit="Change password">
+          <div className="row">
+            <label className="field"><span>Current password</span><input className="input" name="current" type="password" required autoComplete="current-password" /></label>
+            <label className="field"><span>New password</span><input className="input" name="next" type="password" required minLength={8} autoComplete="new-password" /></label>
+          </div>
+        </ActionForm>
+      </div>
+      <div className="card danger-zone">
+        <h3>Delete your account</h3>
+        <p className="muted small">This deletes your account and every website you’ve built, with their pages, Sofie history and messages. It can’t be undone.</p>
+        <ActionForm action={deleteAccount} submit="Delete my account" danger>
+          <label className="field"><span>Enter your password to confirm</span><input className="input" name="password" type="password" required autoComplete="current-password" /></label>
+        </ActionForm>
+      </div>
+    </div>
+  )
+}

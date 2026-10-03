@@ -187,6 +187,21 @@ export function handled(
         return Response.json({ error: err.message }, { status: err.status })
       }
       const message = err instanceof Error ? err.message : 'Unexpected error.'
+      // Log before swallowing. The CLIENT still gets a generic message — no
+      // internals leak — but a 500 nobody can see is a 500 nobody can fix:
+      // a failing 540-page scan surfaced as "Unexpected error." in the browser
+      // and a bare `500` in the runtime logs, with no message, no stack, and
+      // no way to tell a database failure from a bug in the engine.
+      try {
+        console.error('[api] unhandled error', JSON.stringify({
+          method: request.method,
+          path: new URL(request.url).pathname,
+          message,
+          stack: err instanceof Error ? err.stack?.split('\n').slice(0, 12).join('\n') : undefined,
+        }))
+      } catch {
+        // Never let diagnostics take down the response path.
+      }
       // Configuration errors (missing DATABASE_URL / APP_SECRET in production)
       // are safe to surface and actionable — don't bury them as a generic 500.
       // They contain no secrets, only the name of the missing env var.

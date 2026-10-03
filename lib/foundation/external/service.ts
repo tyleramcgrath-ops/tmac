@@ -31,10 +31,11 @@ import {
   type PageRollup,
   type LandingPageOutcome,
 } from '../reco/keyword-intelligence'
-import { findKeywordOpportunities, type KeywordOpportunity } from '../reco/keyword-opportunities'
+import { findKeywordOpportunities, countKeywordOpportunities, type KeywordOpportunity } from '../reco/keyword-opportunities'
 import { findKeywordCannibalization, type CannibalizedQuery } from '../reco/keyword-cannibalization'
-import { findLowCtrOutliers, type CtrOutlier } from '../reco/ctr-outliers'
+import { findLowCtrOutliers, countLowCtrOutliers, type CtrOutlier } from '../reco/ctr-outliers'
 import { detectMobileGap, type MobileGap } from '../reco/mobile-gap'
+import { brandTermsFor } from '../reco/brand'
 import type { FoundationStore } from '../store'
 import { googleOAuthConfig } from '../env'
 import { decodeTokenBundle, encodeTokenBundle, type GoogleTokenBundle } from '../oauth/google'
@@ -224,6 +225,10 @@ export async function fetchGoogleBreakdowns(
 
 const KEYWORD_CORPUS_ROW_LIMIT = 5000
 
+// Striking distance is page two: 11-20. The same phrase must mean the same
+// thing in the band card and the panel beneath it.
+const STRIKING_WINDOW = { min: 11, max: 20 }
+
 export interface KeywordIntelligence {
   range: { from: string; to: string } | null
   /** Why the keyword corpus is missing, when it is. Null when GSC returned. */
@@ -237,6 +242,10 @@ export interface KeywordIntelligence {
   opportunities: KeywordOpportunity[]
   cannibalization: CannibalizedQuery[]
   lowCtr: CtrOutlier[]
+  /** How many findings exist in total, before each list is capped for display.
+   *  Without these the UI presented its own truncation as the answer — a site
+   *  with 736 striking-distance keywords showed a badge reading "25". */
+  totals: { opportunities: number; cannibalization: number; lowCtr: number; brandCannibalization: number }
   devices: GscBreakdownRow[]
   mobileGap: MobileGap | null
   countries: GscBreakdownRow[]
@@ -275,6 +284,7 @@ export async function assembleKeywordIntelligence(
     opportunities: [],
     cannibalization: [],
     lowCtr: [],
+    totals: { opportunities: 0, cannibalization: 0, lowCtr: 0, brandCannibalization: 0 },
     devices: deviceOutcome.ok ? deviceOutcome.data : [],
     mobileGap: deviceOutcome.ok ? detectMobileGap(deviceOutcome.data) : null,
     countries: countryOutcome.ok ? countryOutcome.data : [],
@@ -285,6 +295,15 @@ export async function assembleKeywordIntelligence(
 
   const rows = reportOutcome.data.rows
   const rollups = rollUpKeywords(rows, tracked.map((k) => k.keyword))
+
+  // Brand queries are excluded from cannibalization, but still counted, so the
+  // UI can say how many were set aside rather than silently dropping them.
+  const brandTerms = brandTermsFor({
+    domain: project.domain,
+    competitorDomains: (await store.listCompetitors(projectId)).map((c) => c.domain),
+  })
+  const allCannibalization = findKeywordCannibalization(rows, Number.MAX_SAFE_INTEGER, { brandTerms })
+  const realCannibalization = allCannibalization.filter((c) => !c.isBrand)
   const withLanding = attachLandingOutcomes(rollups, ga4Outcome.ok ? ga4Outcome.data.pages : [])
 
   return {
@@ -296,9 +315,18 @@ export async function assembleKeywordIntelligence(
     // The analyses below run on the RAW (query, page) rows, not the rollups —
     // cannibalization and CTR outliers are page-level findings by definition,
     // and collapsing pages first would destroy exactly the signal they look for.
-    opportunities: findKeywordOpportunities(rows, 25),
-    cannibalization: findKeywordCannibalization(rows, 25),
+    // Positions 11-20 only, matching what the band card calls striking
+    // distance. The two used to disagree (4-20 here) and put two meanings of
+    // the same phrase side by side on one screen.
+    opportunities: findKeywordOpportunities(rows, 25, STRIKING_WINDOW),
+    cannibalization: realCannibalization.slice(0, 25),
     lowCtr: findLowCtrOutliers(rows, 25),
+    totals: {
+      opportunities: countKeywordOpportunities(rows, STRIKING_WINDOW),
+      cannibalization: realCannibalization.length,
+      lowCtr: countLowCtrOutliers(rows),
+      brandCannibalization: allCannibalization.length - realCannibalization.length,
+    },
   }
 }
 

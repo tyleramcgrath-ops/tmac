@@ -21,6 +21,13 @@ import { getStore } from '@/lib/foundation/store'
 import type { Scan } from '@/lib/foundation/types'
 
 export const runtime = 'nodejs'
+// Finalizing a scan is the heaviest request this app serves: it evaluates every
+// crawled page, upserts one recommendation at a time (postgres.ts
+// createRecommendations), runs multi-agent coordination over the result, and
+// writes an audit row. Every other heavy route here sets 45-120s and the cron
+// runner sets 300; this one was left on Vercel's short default, so a real site
+// (540 pages) died partway through and surfaced as a bare 500.
+export const maxDuration = 300
 
 interface PageLike {
   overall?: number

@@ -1,0 +1,225 @@
+import { notFound } from 'next/navigation'
+import { LeadsNav } from '@/components/LeadsNav'
+import { INTEGRATIONS } from '@/lib/crm-sync'
+import { STAGES, STAGE_HINT, STAGE_LABEL, leadStats, loadCrm, type Stage } from '@/lib/leads'
+import { DIRECT, googleMapsLink } from '@/lib/lead-source'
+import { mailReady } from '@/lib/mail'
+import { requireUser } from '@/lib/session'
+import { getStore, type Message } from '@/lib/store'
+import { firstName, siteAccess, teamFor } from '@/lib/team'
+import { liveUrl, previewPath } from '@/lib/urls'
+import { moveLead } from './actions'
+
+const NEXT: Partial<Record<Stage, Stage>> = { new: 'contacted', contacted: 'booked', booked: 'won' }
+const NEXT_LABEL: Partial<Record<Stage, string>> = { new: 'Mark contacted', contacted: 'Mark booked', booked: 'Mark won' }
+
+export default async function LeadsPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string; stage?: string; q?: string; mine?: string }> }) {
+  const [{ id }, sp] = await Promise.all([params, searchParams])
+  const user = await requireUser()
+  const store = getStore()
+  const access = await siteAccess(store, user.id, id)
+  if (!access) notFound()
+  const { site, role } = access
+  const today = new Date().toISOString().slice(0, 10)
+  const monthStart = `${today.slice(0, 7)}-01`
+  const [messages, state, calls, team] = await Promise.all([store.messagesForSite(site.id), loadCrm(store, site.id), store.callsSince(site.id, monthStart), teamFor(store, site)])
+  const who = new Map(team.map((p) => [p.userId, firstName(p.name)]))
+  const assigneeOf = (m: Message) => who.get(state.leads[m.id]?.assignee ?? '')
+  const mine = sp.mine === '1' && team.length > 1
+  const stats = leadStats(messages, state, monthStart)
+  const stageOf = (m: Message): Stage => state.leads[m.id]?.stage ?? 'new'
+  const q = (sp.q ?? '').trim().toLowerCase()
+  const list = sp.view === 'list'
+  const shown = messages.filter((m) => (!q || `${m.name} ${m.email} ${m.phone} ${m.body}`.toLowerCase().includes(q)) && (!mine || state.leads[m.id]?.assignee === user.id))
+  // Keeps the current view, search and filter in every link.
+  const href = (o: { list?: boolean; stage?: string; mine?: boolean }) => {
+    const p = new URLSearchParams({ ...((o.list ?? list) ? { view: 'list' } : {}), ...(o.stage ? { stage: o.stage } : {}), ...(q ? { q } : {}), ...((o.mine ?? mine) ? { mine: '1' } : {}) }).toString()
+    return p ? `${base}?${p}` : base
+  }
+  const stage = (STAGES as readonly string[]).includes(sp.stage ?? '') ? (sp.stage as Stage) : null
+  const base = `/dashboard/sites/${site.id}/leads`
+  const connected = INTEGRATIONS.filter((k) => state.integrations[k]?.on)
+  const sourceOf = (m: Message) => state.leads[m.id]?.source?.label ?? DIRECT
+  const monthly = messages.filter((m) => m.createdAt.slice(0, 10) >= monthStart)
+  const sources = [...monthly.reduce((acc, m) => acc.set(sourceOf(m), (acc.get(sourceOf(m)) ?? 0) + 1), new Map<string, number>())].sort((a, b) => b[1] - a[1])
+  const due = messages.filter((m) => {
+    const f = state.leads[m.id]?.followUpOn
+    return f && f <= today && !['won', 'lost'].includes(stageOf(m))
+  })
+
+  return (
+    <section className="stack leads">
+      <div className="sec-head">
+        <div>
+          <h2>Leads</h2>
+          <p className="muted">Every request your website brings in, from first message to new client.</p>
+        </div>
+        {messages.length > 0 && role === 'owner' && <a className="btn btn-ghost btn-sm" href={`${base}/export`}>Download as a spreadsheet</a>}
+      </div>
+      <LeadsNav siteId={site.id} on="pipeline" role={role} />
+
+      <div className="stats lead-stats">
+        <div className="stat">
+          <span className="stat-label">This month</span>
+          <strong>{stats.thisMonth}</strong>
+          <span className="muted">lead{stats.thisMonth === 1 ? '' : 's'}, plus {calls} call tap{calls === 1 ? '' : 's'}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Waiting on you</span>
+          <strong className={stats.byStage.new ? 'warn' : 'good'}>{stats.byStage.new}</strong>
+          <span className="muted">{stats.byStage.new ? 'not answered yet' : 'all answered'}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Time to answer</span>
+          <strong>{stats.responseMins === null ? '–' : fmtMins(stats.responseMins)}</strong>
+          <span className="muted">typical, first contact</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Became clients</span>
+          <strong>{stats.byStage.won}</strong>
+          <span className="muted">{stats.winRate === null ? 'none decided yet' : `${stats.winRate}% of decided leads`}</span>
+        </div>
+      </div>
+
+      {(!mailReady() || connected.length === 0) && messages.length > 0 && (
+        <div className="card leads-tip">
+          <p className="small" style={{ margin: 0 }}>
+            {!mailReady() ? 'Automatic replies and alerts start once email is switched on for SaySites. ' : ''}
+            {connected.length === 0 && role === 'owner' ? <>Use HubSpot, Salesforce or another CRM? <a href={`${base}/integrations`}>Send every lead there automatically</a>.</> : null}
+          </p>
+        </div>
+      )}
+
+      {messages.length > 0 && (
+        <div className="card">
+          <div className="card-head"><h3>Where this month’s leads came from</h3><a className="small" href={`${base}/report`}>Monthly report</a></div>
+          {sources.length ? (
+            <ul className="report-list">
+              {sources.map(([k, n]) => <li key={k}><span>{k}</span><b>{n}</b></li>)}
+            </ul>
+          ) : <p className="muted small">No leads yet this month.</p>}
+          <details className="src-help">
+            <summary className="small">Count leads from Google Maps and your ads</summary>
+            <p className="small">Ads from Google, Facebook and Microsoft are recognized by themselves. For Google Maps, use this as the website link on your Google Business Profile:</p>
+            <input className="input" readOnly value={googleMapsLink(liveUrl(site))} aria-label="Website link for your Google Business Profile" />
+            <p className="muted small">Visitors who find you through a plain search or type your address show as “{DIRECT}”. Websites can’t tell those apart without tracking scripts, which would slow your site down.</p>
+          </details>
+        </div>
+      )}
+
+      {due.length > 0 && (
+        <div className="card">
+          <div className="card-head"><h3>Follow up today</h3><span className="muted small">{due.length}</span></div>
+          <ul className="lead-rows">
+            {due.map((m) => <LeadRow key={m.id} m={m} stage={stageOf(m)} base={base} who={assigneeOf(m)} />)}
+          </ul>
+        </div>
+      )}
+
+      {messages.length === 0 ? (
+        <div className="card empty">
+          <h3>No leads yet</h3>
+          <p className="muted">Every request form on your site sends its leads here. Try one yourself to see how it works.</p>
+          <a className="btn btn-ghost" href={`${previewPath(site)}/contact`} target="_blank" rel="noopener">Open my Contact page ↗</a>
+        </div>
+      ) : (
+        <>
+          <div className="leads-bar">
+            <form className="leads-search" role="search">
+              {list && <input type="hidden" name="view" value="list" />}
+              {mine && <input type="hidden" name="mine" value="1" />}
+              <label className="sr-only" htmlFor="lead-q">Search leads</label>
+              <input className="input" id="lead-q" name="q" type="search" defaultValue={sp.q ?? ''} placeholder="Search by name, email, phone or words" />
+            </form>
+            {team.length > 1 && (
+              <div className="seg" role="group" aria-label="Whose leads">
+                <a href={href({ mine: false })} aria-current={!mine ? 'page' : undefined}>Everyone’s</a>
+                <a href={href({ mine: true })} aria-current={mine ? 'page' : undefined}>Mine</a>
+              </div>
+            )}
+            <div className="seg" role="group" aria-label="View">
+              <a href={href({ list: false })} aria-current={!list ? 'page' : undefined}>Board</a>
+              <a href={href({ list: true })} aria-current={list ? 'page' : undefined}>List</a>
+            </div>
+          </div>
+
+          {list ? (
+            <div className="card">
+              <div className="chips" role="group" aria-label="Filter by stage">
+                <a href={href({ list: true })} aria-current={!stage ? 'page' : undefined}>All {shown.length}</a>
+                {STAGES.map((s) => (
+                  <a key={s} href={href({ list: true, stage: s })} aria-current={stage === s ? 'page' : undefined}>{STAGE_LABEL[s]} {shown.filter((m) => stageOf(m) === s).length}</a>
+                ))}
+              </div>
+              <ul className="lead-rows">
+                {shown.filter((m) => !stage || stageOf(m) === stage).map((m) => <LeadRow key={m.id} m={m} stage={stageOf(m)} base={base} who={assigneeOf(m)} />)}
+              </ul>
+            </div>
+          ) : (
+            <div className="lead-board">
+              {STAGES.filter((s) => s !== 'lost').map((s) => {
+                const col = shown.filter((m) => stageOf(m) === s)
+                return (
+                  <section key={s} className={`lead-col lead-col-${s}`} aria-label={STAGE_LABEL[s]}>
+                    <header>
+                      <h3>{STAGE_LABEL[s]} <span className="muted">{col.length}</span></h3>
+                      <span className="muted small">{STAGE_HINT[s]}</span>
+                    </header>
+                    {col.slice(0, 30).map((m) => (
+                      <article key={m.id} className={`lead-card${m.read ? '' : ' unread'}`}>
+                        <a className="lead-card-main" href={`${base}/${m.id}`}>
+                          <strong>{m.name || 'Someone'}</strong>
+                          <span className="lead-snip">{m.body.slice(0, 110)}</span>
+                          <span className="muted small">{when(m.createdAt)} · {sourceOf(m)}{assigneeOf(m) ? ` · ${assigneeOf(m)}` : ''}</span>
+                        </a>
+                        {NEXT[s] && (
+                          <form action={moveLead.bind(null, site.id, m.id)}>
+                            <input type="hidden" name="stage" value={NEXT[s]} />
+                            <input type="hidden" name="from" value="board" />
+                            <button className="btn btn-ghost btn-sm" type="submit">{NEXT_LABEL[s]}</button>
+                          </form>
+                        )}
+                      </article>
+                    ))}
+                    {col.length > 30 && <a className="small" href={href({ list: true, stage: s })}>See all {col.length}</a>}
+                  </section>
+                )
+              })}
+            </div>
+          )}
+          {!list && stats.byStage.lost > 0 && <p className="muted small"><a href={href({ list: true, stage: 'lost' })}>{stats.byStage.lost} marked Lost</a></p>}
+        </>
+      )}
+    </section>
+  )
+}
+
+function LeadRow({ m, stage, base, who }: { m: Message; stage: Stage; base: string; who?: string }) {
+  return (
+    <li className={m.read ? undefined : 'unread'}>
+      <a href={`${base}/${m.id}`}>
+        <strong>{m.name || 'Someone'}</strong>
+        <span className="lead-snip">{m.body.slice(0, 120)}</span>
+        <span className={`lead-stage lead-stage-${stage}`}>{STAGE_LABEL[stage]}</span>
+        <time className="muted small" dateTime={m.createdAt}>{who ? `${who} · ` : ''}{when(m.createdAt)}</time>
+      </a>
+    </li>
+  )
+}
+
+function fmtMins(mins: number): string {
+  if (mins < 60) return `${mins} min`
+  const h = Math.round(mins / 60)
+  return h < 48 ? `${h} h` : `${Math.round(h / 24)} days`
+}
+
+function when(iso: string): string {
+  const d = new Date(iso)
+  const mins = Math.round((Date.now() - d.getTime()) / 60000)
+  if (mins < 1) return 'just now'
+  if (mins < 60) return `${mins} min ago`
+  const hrs = Math.round(mins / 60)
+  if (hrs < 24) return `${hrs} h ago`
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+

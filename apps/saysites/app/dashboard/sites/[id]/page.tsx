@@ -1,0 +1,227 @@
+import { notFound } from 'next/navigation'
+import { requireUser } from '@/lib/session'
+import { getStore } from '@/lib/store'
+import { liveUrl, previewPath } from '@/lib/urls'
+import { dayString, daysBefore } from '@/lib/visits'
+import { scoreSite } from '@/lib/site-score'
+import { milestones } from '@/lib/milestones'
+import { questLink } from '@/lib/visibility'
+import { leagueFor, leagues, tradePlural, weekStart } from '@/lib/league'
+import { leagueTerms } from '@/lib/league-style'
+import { ScoreDial } from '@/components/ScoreDial'
+import { PLANS, PLAN_NAMES, PRICES, loadAccess } from '@/lib/billing'
+import { isAdmin } from '@/lib/admin'
+import { ActionForm } from '@/components/ActionForm'
+import { cancelApproval, sendForApproval } from './manage-actions'
+import { loadSpend, monthShare, refillDate } from '@/lib/usage'
+import { Milestones } from '@/components/Milestones'
+import { freshSeoState } from '@/lib/seo-intel'
+
+export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
+  const [{ id }, { new: isNew }] = await Promise.all([params, searchParams])
+  const user = await requireUser()
+  const store = getStore()
+  const site = await store.siteForUser(user.id, id)
+  if (!site) notFound()
+  const today = dayString(new Date())
+  const [pages, messages, sofie, visits] = await Promise.all([
+    store.pagesForSite(site.id),
+    store.messagesForSite(site.id, 4),
+    store.sofieState(site.id),
+    store.visitsSince(site.id, daysBefore(today, 59)),
+  ])
+  const monthStart = `${today.slice(0, 7)}-01`
+  const [media, everVisited, callsThisMonth, recentMessages] = await Promise.all([
+    store.mediaForSite(site.id),
+    store.visitsSince(site.id, '2000-01-01'),
+    store.callsSince(site.id, monthStart),
+    store.messagesForSite(site.id, 200),
+  ])
+  const messagesThisMonth = recentMessages.filter((m) => m.createdAt.slice(0, 10) >= monthStart).length
+  // How much of this month's Sofie allowance is used (paying accounts only).
+  const access = await loadAccess(store, user)
+  const sofieShare = monthShare(await loadSpend(store, site.id, user.createdAt), { status: access.status, plan: access.billing?.plan })
+  const reached = callsThisMonth + messagesThisMonth
+  const monthName = new Date(`${monthStart}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })
+  // The same checks that gate publishing, summed up.
+  const { errors, tips, fast, traffic, vis } = await scoreSite(store, site, today, pages, media, visits)
+  // RankForge's audit, refreshed whenever the site changed since it last ran.
+  const seo = (await freshSeoState(store, site, pages).catch(() => null))?.audit
+  const fixes = seo?.issues.filter((i) => i.severity !== 'info').length ?? 0
+  const sparkMax = Math.max(1, ...traffic.days.map((d) => d.views))
+  const spark = traffic.days.map((d, i) => `${i ? 'L' : 'M'}${i} ${(20 - (d.views / sparkMax) * 18).toFixed(1)}`).join(' ')
+  const lastSofie = [...sofie.chat].reverse().find((t) => t.role === 'sofie' && t.changes?.length)
+  const base = `/dashboard/sites/${site.id}`
+  const b = site.business
+  const next = vis.quests[0]
+  const start = weekStart(today)
+  const lt = leagueTerms(site.league?.style)
+  const standing = leagueFor(leagues(await store.leagueSites(daysBefore(start, 7 * 14)), start, today), site.id)
+  const marks = milestones({
+    siteName: b.name,
+    base,
+    hasLogo: !!b.logo,
+    sofieChanged: sofie.chat.some((t) => t.role === 'sofie' && t.text.startsWith('Published.')),
+    photos: media.filter((m) => m.mime !== 'image/svg+xml').length,
+    visits: everVisited.length,
+    messages: messages.length,
+    posts: pages.filter((p) => p.post).length,
+    products: site.store?.products.length ?? 0,
+    customDomain: site.customDomain,
+    seoClean: errors === 0 && tips === 0,
+  })
+
+  return (
+    <div className="stack">
+      {isNew && <p className="notice good"><strong>Your website is ready.</strong> Have a look, then use Sofie or Settings to make it yours.</p>}
+
+      <div className="overview">
+        <div className="card preview-card">
+          <div className="browser">
+            <div className="browser-bar"><i /><i /><i /><span>{liveUrl(site).replace('https://', '')}</span></div>
+            <div className="browser-view">
+              <iframe src={previewPath(site)} title={`${b.name} home page`} loading="lazy" tabIndex={-1} aria-hidden="true" />
+            </div>
+          </div>
+          <div className="preview-actions">
+            <a className="btn btn-primary" href={`${base}/sofie`}>Change it with Sofie</a>
+            <a className="btn btn-ghost" href={previewPath(site)} target="_blank" rel="noopener">Open website ↗</a>
+          </div>
+        </div>
+
+        <div className="stack">
+          <div className={`card goal-card${reached ? ' met' : ''}`}>
+            <span className="stat-label">{monthName}: customers your website brought you</span>
+            <div className="goal-nums">
+              <div><strong>{callsThisMonth}</strong><span>call{callsThisMonth === 1 ? '' : 's'}</span></div>
+              <div><strong>{messagesThisMonth}</strong><span>message{messagesThisMonth === 1 ? '' : 's'}</span></div>
+            </div>
+            <p className="muted small">
+              {reached
+                ? 'Your website is working for you. Keep it fresh and it keeps bringing people in.'
+                : b.phone
+                  ? 'Your goal: your first call or message this month. Share your site, and follow the steps under Visibility to get found.'
+                  : 'Add your phone number in Settings so customers can call you straight from your site.'}
+            </p>
+          </div>
+          {sofieShare !== null && (
+            <div className="card sofie-meter">
+              <span className="stat-label">Sofie this month</span>
+              <div className="meter"><i style={{ width: `${Math.round(sofieShare * 100)}%` }} /></div>
+              <p className="muted small">{sofieShare >= 1 ? `This month’s allowance is used. It refills on ${refillDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })}; you can still change everything yourself in Pages.` : `${Math.round(sofieShare * 100)}% used. Refills on ${refillDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })}.`}</p>
+            </div>
+          )}
+          <div className="stats four">
+            <a className="stat" href={`${base}/pages`}>
+              <span className="stat-label">Speed</span>
+              <strong className={fast ? 'good' : 'bad'}>{fast ? '95+' : 'Check'}</strong>
+              <span className="muted">{fast ? 'Every page passes' : 'A page is too heavy'}</span>
+            </a>
+            {errors || !seo ? (
+              <a className="stat" href={`${base}/pages`}>
+                <span className="stat-label">SEO</span>
+                <strong className={errors ? 'bad' : tips ? 'warn' : 'good'}>{errors ? `${errors} to fix` : tips ? `${tips} tip${tips > 1 ? 's' : ''}` : 'All good'}</strong>
+                <span className="muted">{pages.length} page{pages.length === 1 ? '' : 's'} checked</span>
+              </a>
+            ) : (
+              <a className="stat" href={`${base}/seo`}>
+                <span className="stat-label">SEO</span>
+                <strong className={seo.siteScore >= 90 ? 'good' : seo.siteScore >= 70 ? 'warn' : 'bad'}>{seo.siteScore}/100</strong>
+                <span className="muted">{fixes ? `${fixes} fix${fixes > 1 ? 'es' : ''} to make` : `${seo.pages.length} page${seo.pages.length === 1 ? '' : 's'} checked`}</span>
+              </a>
+            )}
+            <a className="stat" href={`${base}/leads`}>
+              <span className="stat-label">Messages</span>
+              <strong>{messages.filter((m) => !m.read).length || messages.length}</strong>
+              <span className="muted">{messages.some((m) => !m.read) ? 'new' : 'from your contact form'}</span>
+            </a>
+            <a className="stat" href={`${base}/visitors`}>
+              <span className="stat-label">Visitors</span>
+              <strong>{new Intl.NumberFormat('en-US').format(traffic.total)}</strong>
+              {traffic.total ? (
+                <svg className="spark" viewBox="0 0 29 21" preserveAspectRatio="none" aria-hidden="true"><path d={spark} /></svg>
+              ) : (
+                <span className="muted">page views, last 30 days</span>
+              )}
+            </a>
+          </div>
+
+          <div className="card vis-card">
+            <ScoreDial siteId={site.id} score={vis.score} band={vis.band} size={128} />
+            <div className="vis-next">
+              <span className="stat-label">Visibility</span>
+              {standing && standing.league.standings.length > 1 && (
+                <a className="league-line" href={`${base}/visibility`}>
+                  {lt.position(standing.me.rank)} {lt.of(standing.league.standings.length)} {standing.league.trade ? tradePlural(standing.league.trade) : 'businesses'} this week{standing.me.momentum ? `, ${lt.move(standing.me.momentum)}` : ''}
+                </a>
+              )}
+              {next ? (
+                <>
+                  <strong>Next: +{next.points}, {next.title}</strong>
+                  <span className="muted small">{next.why}</span>
+                  <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
+                    <a className="btn btn-primary btn-sm" href={questLink(next)}>{next.sofie ? 'Ask Sofie' : 'Do it'}</a>
+                    <a className="btn btn-ghost btn-sm" href={`${base}/visibility`}>All {vis.quests.length} opportunities</a>
+                  </span>
+                </>
+              ) : (
+                <strong>Every opportunity taken. Keep posting monthly to hold your score.</strong>
+              )}
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-head">
+              <h3>Latest messages</h3>
+              <a className="small" href={`${base}/leads`}>See all</a>
+            </div>
+            {messages.length === 0 ? (
+              <p className="muted small" style={{ margin: 0 }}>Nothing yet. When someone fills in your contact form, it lands here.</p>
+            ) : (
+              <ul className="mini-inbox">
+                {messages.map((m) => (
+                  <li key={m.id}>
+                    <a href={`${base}/leads/${m.id}`}>
+                      <strong>{m.name || 'Someone'}</strong>{!m.read && <span className="pill ok">New</span>}
+                      <span className="muted">{m.body.slice(0, 80)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {lastSofie && (
+            <div className="card sofie-card">
+              <h3>Sofie’s last change</h3>
+              <p className="small" style={{ margin: '0 0 8px' }}>{lastSofie.text.split('\n')[0].slice(0, 220)}</p>
+              {sofie.draft ? <a className="btn btn-primary btn-sm" href={`${base}/sofie`}>Review and publish</a> : <span className="pill ok">Live</span>}
+            </div>
+          )}
+        </div>
+      </div>
+      <Milestones siteId={site.id} siteName={b.name} domain={site.customDomain} isNew={!!isNew} items={marks} />
+      {isAdmin(user.email) && (
+        <div className="card">
+          <h3>Built for a client? Send it for approval</h3>
+          <p className="muted small">Your client gets a private link to look the site over, ask for changes or approve it. When they approve, it moves into their own account and they start the plan you pick here.</p>
+          {site.handoff ? (
+            <>
+              <p className="small">Link for {site.business.name}, sent {site.handoff.sentAt.slice(0, 10)}:</p>
+              <p className="url">https://saysites.com/approve/{site.handoff.code}</p>
+              <ActionForm action={cancelApproval.bind(null, site.id)} submit="Turn this link off" danger><span /></ActionForm>
+            </>
+          ) : null}
+          <ActionForm action={sendForApproval.bind(null, site.id)} submit={site.handoff ? 'Make a new link' : 'Make the approval link'}>
+            <label className="field">
+              <span>Their plan</span>
+              <select className="input" name="plan" defaultValue={site.handoff?.plan ?? 'lawpro'}>
+                {PLANS.map((p) => <option key={p} value={p}>{PLAN_NAMES[p]}, ${PRICES[p].month}/month</option>)}
+              </select>
+            </label>
+          </ActionForm>
+        </div>
+      )}
+    </div>
+  )
+}

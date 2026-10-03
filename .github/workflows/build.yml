@@ -13,8 +13,10 @@ jobs:
       matrix:
         project:
           - .
+          - apps/citation-gap
           - apps/north-star-hq
           - apps/reloop
+          - apps/saysites
           - seo-intel
           - shorts
     defaults:

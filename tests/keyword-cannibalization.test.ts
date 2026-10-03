@@ -24,6 +24,8 @@ describe('findKeywordCannibalization: real split-signal queries only', () => {
           { page: '/roof-repair', impressions: 300, clicks: 10, position: 8 },
           { page: '/blog/roof-repair-guide', impressions: 150, clicks: 3, position: 14 },
         ],
+        // No brand terms supplied, so nothing can be a brand query.
+        isBrand: false,
       },
     ])
   })

@@ -1,0 +1,126 @@
+{
+  "note": "Written by `node build.js --seal`. build.js refuses to build if a shipped file is missing or does not match the hash here.",
+  "sealedAt": "2026-09-23T12:05:33.176Z",
+  "files": {
+    "index.html": {
+      "sha256": "71e3bbc7ea3c379400a5388b6cc1b1f006aa9b591b4b9161061961aef68eb96b",
+      "bytes": 199442
+    },
+    "score.js": {
+      "sha256": "cfe5979cc0c355edc49875313d7db972464ad1987aa8a3ac603780cf3d5e9d4d",
+      "bytes": 163559
+    },
+    "og.png": {
+      "sha256": "c06993aa191014a25ca0dd87f9e8caac451660d044fce46ccebdc2935b3ee482",
+      "bytes": 133066
+    },
+    "icon.svg": {
+      "sha256": "470b763fe5a9096a5a49d96ed2e19ac52c220416dbb15a9c9dc9c95f748528bf",
+      "bytes": 652
+    },
+    "apple-touch-icon.png": {
+      "sha256": "598e3543c6f924bb6162e60f2ea5561f196b9f177e605ed8d3982c8bfeda5c72",
+      "bytes": 10008
+    },
+    "api/page.js": {
+      "sha256": "dc2c2279821eb379b86ddd79eae1309ff980c8c2bf97bfeff9bbdd75112cfcf0",
+      "bytes": 449
+    },
+    "api/render.js": {
+      "sha256": "4c5189867766abe834539d6961c9a53e5673d8c47d5a2193d07625234de4aeeb",
+      "bytes": 230
+    },
+    "api/serp.js": {
+      "sha256": "552381689142f313c8b522f4799315c8ff5c925aad76bbec1ee9805a9dcd1de2",
+      "bytes": 5734
+    },
+    "api/auth/link.js": {
+      "sha256": "b8d6d5d927974d80bef018d5fdc207fca07081ebd209c60dde2cd8ef1488215a",
+      "bytes": 3443
+    },
+    "api/auth/session.js": {
+      "sha256": "3b58fdd2d3bc4676532f38b0c50a4c4184e180493338d794216f5e39e94c9e11",
+      "bytes": 1984
+    },
+    "api/projects.js": {
+      "sha256": "24c7956edb281d15452f6d6d52f82fa409e31ce786334b4a9db3efce315ecea7",
+      "bytes": 3166
+    },
+    "api/scans.js": {
+      "sha256": "ea088377f35150a52aeb11555c1871b0a3a7916623f7ae31c8eada1a086786e9",
+      "bytes": 2387
+    },
+    "api/tick.js": {
+      "sha256": "129a3ffe6ccc563c2af7626b6db94254f543655ac0fd0dfe5761103e5f3792de",
+      "bytes": 4121
+    },
+    "api/account.js": {
+      "sha256": "ccef907d30697a9ea712d973822fae4fd4f0b86abf5f0882d1f255c1c63f5c3a",
+      "bytes": 3006
+    },
+    "api/schedules.js": {
+      "sha256": "d0353aa9ee670215ed847d2df7cc28f5100f87ed8a400940040394cafc614a44",
+      "bytes": 2989
+    },
+    "api/stripe.js": {
+      "sha256": "245cc61dbbb7cefdc02ac354d5e684bf5027fcf366694c7e82b5bfa9f870e863",
+      "bytes": 2444
+    },
+    "api/stripe-webhook.js": {
+      "sha256": "8058b00013a7133d7b60373b2eb3a839d511ddbb4ccecfd8003f416819913e25",
+      "bytes": 3045
+    },
+    "lib/page.impl.js": {
+      "sha256": "93b7fd5d24f00ae84791d016dd1dd5b2818e6f894a07b1ade6504ae01649b38b",
+      "bytes": 47439
+    },
+    "lib/render.impl.js": {
+      "sha256": "f3507dbaf9b0bba5b918ab56395c4b2eaf2c09091dbb7fd1fc8d11bc05df063c",
+      "bytes": 58816
+    },
+    "lib/db.js": {
+      "sha256": "cd27d4114990f1f693d333dac38508cdc52a5715d44b018d4e7e465b76d7a3a3",
+      "bytes": 3107
+    },
+    "lib/auth.js": {
+      "sha256": "472fa560a59f3b9f7428502ac1dbf50455f2ffb5eaf00096ddff643f629c082d",
+      "bytes": 5814
+    },
+    "lib/mail.js": {
+      "sha256": "2c7c2147d96b3a3375b8dfbaed0298c3aeff7781d2727e70cc33b7beac32a11d",
+      "bytes": 1753
+    },
+    "lib/store.js": {
+      "sha256": "5add0a355019b2fff078826647a94cf8bbfe815229741d91058f58bf94a5f538",
+      "bytes": 8999
+    },
+    "lib/keys.js": {
+      "sha256": "d7b683fe0efbe54a5883b6d005b4d846a08006a23ff33338df8ed95ec32549a8",
+      "bytes": 4863
+    },
+    "lib/scan-job.js": {
+      "sha256": "eeeef62e1775e5309bcba139332ec406fc499e670779f3c82be70db850dcda7d",
+      "bytes": 12993
+    },
+    "lib/tick.js": {
+      "sha256": "a14a87c486c101eab5e61cca772a4ce8f99c0343294940fcb1e4f5f2a427fb10",
+      "bytes": 16418
+    },
+    "lib/schedule.js": {
+      "sha256": "8c6937bfe3b743a7d825379b57ca845052ed11c5cc79fe8e903adc6c9fa3eeb8",
+      "bytes": 8081
+    },
+    "lib/stripe.js": {
+      "sha256": "097aa8918496384803e4a23419d32ecb0fb2e1b46dd6a7f3d8a5a861cb4140d2",
+      "bytes": 9561
+    },
+    "package.json": {
+      "sha256": "9047c70a8fd19110c245b069bc550f00ccbba08e166090874b585e512290287e",
+      "bytes": 642
+    },
+    "vercel.json": {
+      "sha256": "2e3ad046d1057d70145cc338d2561c1c7581ab5312d399eeaac7589ae6183ff6",
+      "bytes": 247
+    }
+  }
+}

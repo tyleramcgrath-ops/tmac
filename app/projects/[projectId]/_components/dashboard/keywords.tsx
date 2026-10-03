@@ -58,16 +58,30 @@ function Metric({ label, value, sub, tone }: { label: string; value: string; sub
   )
 }
 
-function Panel({ icon: Icon, title, count, blurb, children }: {
-  icon: typeof Target; title: string; count: number; blurb: string; children: React.ReactNode
+function Panel({ icon: Icon, title, shown, total, blurb, note, children }: {
+  icon: typeof Target
+  title: string
+  /** How many rows are rendered. */
+  shown: number
+  /** How many exist in total. The badge used to show `shown` alone, which read
+   *  as the answer — a site with 736 striking-distance keywords displayed "25". */
+  total: number
+  blurb: string
+  note?: string
+  children: React.ReactNode
 }) {
+  const truncated = total > shown
   return (
     <div className="rf-card overflow-hidden">
       <div className="flex items-start gap-3 border-b border-[var(--rf-card-line)] px-4 py-3">
         <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--rf-blue-bright)]" />
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-white">{title} <span className="rf-mono text-xs font-normal text-[var(--rf-faint)]">{count}</span></p>
+          <p className="text-sm font-semibold text-white">
+            {title} <span className="rf-mono text-xs font-normal text-[var(--rf-faint)]">{total.toLocaleString()}</span>
+          </p>
           <p className="mt-0.5 text-xs text-[var(--rf-muted)]">{blurb}</p>
+          {truncated && <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">Showing the top {shown} of {total.toLocaleString()} by impressions.</p>}
+          {note && <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{note}</p>}
         </div>
       </div>
       {children}
@@ -248,10 +262,10 @@ export function KeywordIntelligence({ projectId, onTrack }: { projectId: string;
 
       {/* ── 3. Decisions: the three opportunity types, each already counted ── */}
       <div className="grid gap-3 lg:grid-cols-3">
-        <Panel icon={Target} title="Striking distance" count={data.opportunities.length}
-          blurb="Ranking 4-20 with real impressions. The closest wins available.">
+        <Panel icon={Target} title="Striking distance" shown={data.opportunities.length} total={data.totals.opportunities}
+          blurb="Page two — positions 11-20 with real impressions. The closest wins available.">
           {data.opportunities.length === 0 ? (
-            <EmptyRow>Nothing in positions 4-20 with meaningful impressions yet.</EmptyRow>
+            <EmptyRow>Nothing on page two with meaningful impressions yet.</EmptyRow>
           ) : (
             <ul className="divide-y divide-[var(--rf-card-line)]">
               {data.opportunities.slice(0, 6).map((o) => (
@@ -270,10 +284,10 @@ export function KeywordIntelligence({ projectId, onTrack }: { projectId: string;
           )}
         </Panel>
 
-        <Panel icon={MousePointerClick} title="Underperforming CTR" count={data.lowCtr.length}
-          blurb="Ranking well but under-clicked versus your own keywords at the same position. Title/meta rewrites.">
+        <Panel icon={MousePointerClick} title="Underperforming CTR" shown={data.lowCtr.length} total={data.totals.lowCtr}
+          blurb="Ranking well but not being clicked — either far below your own keywords at the same position, or never clicked at all. Title/meta rewrites.">
           {data.lowCtr.length === 0 ? (
-            <EmptyRow>No keyword is clicking meaningfully below its peers.</EmptyRow>
+            <EmptyRow>Nothing ranking on page one is going unclicked, and no keyword is clicking meaningfully below its peers.</EmptyRow>
           ) : (
             <ul className="divide-y divide-[var(--rf-card-line)]">
               {data.lowCtr.slice(0, 6).map((o) => (
@@ -284,7 +298,10 @@ export function KeywordIntelligence({ projectId, onTrack }: { projectId: string;
                   </div>
                   <div className="shrink-0 text-right">
                     <p className="rf-mono text-sm font-semibold text-[var(--rf-red)]">{pct(o.ctr)}</p>
-                    <p className="text-[11px] text-[var(--rf-faint)]">peers {pct(o.cohortMedianCtr)}</p>
+                    {/* An absolute finding has no peer baseline — it needs none. */}
+                    <p className="text-[11px] text-[var(--rf-faint)]">
+                      {o.kind === 'absolute' ? `0 clicks in ${num(o.impressions)}` : `peers ${pct(o.cohortMedianCtr)}`}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -292,10 +309,13 @@ export function KeywordIntelligence({ projectId, onTrack }: { projectId: string;
           )}
         </Panel>
 
-        <Panel icon={Split} title="Cannibalization" count={data.cannibalization.length}
-          blurb="One query, several of your pages competing. Splits the signal Google would concentrate on one.">
+        <Panel icon={Split} title="Cannibalization" shown={data.cannibalization.length} total={data.totals.cannibalization}
+          blurb="One query, several of your pages competing. Splits the signal Google would concentrate on one."
+          note={data.totals.brandCannibalization > 0
+            ? `${data.totals.brandCannibalization} brand quer${data.totals.brandCannibalization === 1 ? 'y' : 'ies'} excluded — many of your pages ranking for your own name is healthy, not a defect.`
+            : undefined}>
           {data.cannibalization.length === 0 ? (
-            <EmptyRow>No query is being split across multiple pages.</EmptyRow>
+            <EmptyRow>No non-brand query is being split across multiple pages.</EmptyRow>
           ) : (
             <ul className="divide-y divide-[var(--rf-card-line)]">
               {data.cannibalization.slice(0, 6).map((c) => (

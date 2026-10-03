@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><title>Render fixture</title>
+<style>
+.elementor-invisible{visibility:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.gone{display:none}
+.faded{opacity:0}
+.off{position:absolute;left:-9999px}
+</style></head>
+<body>
+<h1>Telematics solutions that drive results</h1>
+<p>Visible paragraph about fleet telematics and GPS tracking.</p>
+<div class="elementor-invisible" id="stuck"><a href="/demo/">Get a Free Demo</a><p>Let Us Be Your Strategic Partner!</p>
+  <span class="elementor-counter-number" data-to-value="31" data-from-value="31">31</span><span>%</span>
+  <div class="elementor-counter-title">Annual Reportable Accidents Reduced By 31%</div></div>
+<div style="height:1400px"></div>
+<div class="elementor-invisible" id="reveals"><h2>Our Telematics Solutions Drive Results</h2></div>
+<div style="height:600px"></div>
+<p class="gone">Hidden by display none $49 per month</p>
+<p class="faded">Faded out heading text here</p>
+<p class="off">Offscreen promo text</p>
+<span class="sr-only">Screen reader only label</span>
+<nav class="elementor-nav-menu"><ul class="sub-menu" style="visibility:hidden"><li><a href="/dash-cams/">Dash Cams</a></li><li><a href="/gps/">GPS Tracking</a></li></ul></nav>
+<div class="swiper"><div class="swiper-slide off"><p>I would recommend them to any fleet manager who wants a quote.</p></div><div class="swiper-slide swiper-slide-duplicate"><p>Cloned slide words that a loop carousel repeats for every testimonial shown twice</p></div></div>
+<div class="elementor-popup-modal gone"><a href="/demo/">Book a demo from the popup</a></div>
+<div id="js"></div>
+<form><label>Email address for the newsletter</label><input type="text"><button>Subscribe now</button></form>
+<script>
+  // Releases only when scrolled into view, like a real entrance animation.
+  new IntersectionObserver(function(entries, obs){ entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.remove('elementor-invisible'); obs.disconnect(); } }); }).observe(document.getElementById('reveals'));
+  document.getElementById('js').textContent='Injected by JavaScript after load with a 22% figure';
+  setTimeout(function(){ document.body.appendChild(document.createTextNode('')); }, 100);
+</script>
+</body></html>

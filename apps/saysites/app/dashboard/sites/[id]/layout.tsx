@@ -1,0 +1,41 @@
+import { notFound } from 'next/navigation'
+import { MomentHost } from '@/components/Moment'
+import { SiteTabs } from '@/components/SiteTabs'
+import { requireUser } from '@/lib/session'
+import { getStore } from '@/lib/store'
+import { siteAccess } from '@/lib/team'
+import { liveUrl, previewPath } from '@/lib/urls'
+
+export default async function SiteLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const user = await requireUser()
+  const store = getStore()
+  // Owners see every tab; staff they invited see Leads only.
+  const access = await siteAccess(store, user.id, id)
+  if (!access) notFound()
+  const { site, role } = access
+  const unread = await store.unreadCount(site.id)
+
+  return (
+    <>
+      <div className="site-head">
+        <div className="site-head-id">
+          {site.business.icon ? (
+            <img className="site-mono site-mono-img" src={site.business.icon} alt="" width={56} height={56} />
+          ) : (
+            <span className="site-mono" style={{ background: site.globals.colors.primary }} aria-hidden="true">{site.business.name.trim().charAt(0).toUpperCase()}</span>
+          )}
+          <div>
+            <p className="crumbs"><a href="/dashboard">My sites</a> / {site.business.name}</p>
+            <h1>{site.business.name}</h1>
+            <span className="url muted">{liveUrl(site).replace('https://', '')}</span>
+          </div>
+        </div>
+        <a className="btn btn-ghost" href={previewPath(site)} target="_blank" rel="noopener">View website ↗</a>
+      </div>
+      <SiteTabs siteId={site.id} unread={unread} role={role} />
+      {children}
+      <MomentHost />
+    </>
+  )
+}
