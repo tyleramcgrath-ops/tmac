@@ -12,8 +12,8 @@ import './home.css'
 // client JavaScript of its own; the example screenshots are our own work.
 
 export const metadata: Metadata = {
-  title: { absolute: 'SaySites: websites built to bring in leads' },
-  description: 'Websites built to turn searches into calls, consultation requests and booked appointments, for law firms, medical practices, med spas and home services.',
+  title: { absolute: 'SaySites: premium websites built to bring in leads' },
+  description: 'Premium websites built to turn searches into calls, consultation requests and booked appointments, for law firms, medical practices, med spas and home services.',
   alternates: { canonical: '/' },
 }
 
@@ -54,8 +54,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
         <section className="ag-hero">
           <div className="wrap ag-hero-in">
             <div className="ag-hero-copy">
-              <p className="lw-eyebrow">Law, medical, aesthetics, dental and home services</p>
-              <h1>Websites built to bring in leads.</h1>
+              <p className="lw-eyebrow">Premium websites for law, medical, aesthetics, dental and home services</p>
+              <h1>Premium websites built to bring in leads.</h1>
               <p className="lede">When someone searches for a lawyer, a doctor or a plumber, they call one of the first few businesses they find. We build fast, SEO fully optimized websites where every page is made to turn that search into a call, a consultation request or a booked appointment, and every lead lands in one inbox.</p>
               <div className="lw-acts">
                 <a className="b b-light" href="#talk">Let’s talk</a>
@@ -164,10 +164,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
         <section className="ag-sec ag-switch">
           <div className="wrap ag-switch-in">
             <div>
-              <p className="kicker">Already with an agency?</p>
-              <h2>Here’s why businesses switch to SaySites.</h2>
+              <p className="kicker">The premium choice</p>
+              <h2>See how SaySites compares with agencies and website builders.</h2>
             </div>
-            <a className="b b-line" href="/about">Why SaySites</a>
+            <a className="b b-line" href="/about#compare">See the comparison</a>
           </div>
         </section>
 

@@ -82,8 +82,9 @@ number is still to be decided). Build and write everything toward that.
   `public/birthday/buju-*.jpg`. Never stock dogs. (Customers' own sites
   pick their own photos as usual.)
 - Never mention the founder's name in the product or marketing. Only the
-  early-access page (/early, formerly /birthday) speaks in the first person
-  about the founder's years of experience with websites and search.
+  early-access page (/early, formerly /birthday) and one small note on
+  /about ("Where the SEO comes from") speak in the first person about the
+  founder's years of experience with websites and search.
 
 ## Launch (reset September 29, 2026)
 
