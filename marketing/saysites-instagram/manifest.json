@@ -1,0 +1,120 @@
+{
+  "account": "@saysites",
+  "profile": {
+    "photo": "profile/profile-photo.png",
+    "name": "SaySites · Websites that bring in leads",
+    "bio": "Premium websites built to bring in leads.\nLaw firms · Medical · Med spas · Dental · Home services\nSee your site redesigned, free ↓",
+    "link": "https://saysites.com/redesign",
+    "link_title": "Free redesign",
+    "category": "Web Designer (or the closest match Instagram offers)"
+  },
+  "posts": [
+    {
+      "order": 1,
+      "day": 1,
+      "files": ["posts/01-premium.png"],
+      "caption": "Premium websites built to bring in leads.\n\nWe design and build websites for the businesses that compete hardest for every client: law firms, medical practices, med spas, dentists and home services.\n\nEvery page is made to turn a search into a call, a request or a booking, and you see every one of them come in.\n\nSee what your current site could look like, free: link in bio.",
+      "hashtags": ["#lawfirmmarketing", "#medicalpracticemarketing", "#medspamarketing", "#webdesign", "#smallbusinesswebsite"],
+      "alt": "Black graphic with the SaySites logo and the words: Premium websites built to bring in leads. For law firms, medical practices, med spas, dentists and home services."
+    },
+    {
+      "order": 2,
+      "day": 1,
+      "files": ["posts/02-work-law.png"],
+      "caption": "Calder & Vane: an example personal injury firm website from our law firm designs.\n\nA consultation request right on the home page, a call button on every screen, and a page for each practice area, so the right page answers the right search.\n\nThis is a SaySites example design, not a real firm. Want yours like this? Link in bio.",
+      "hashtags": ["#lawfirmwebsite", "#attorneywebsite", "#legalmarketing", "#personalinjurylawyer", "#webdesign"],
+      "alt": "A law firm website shown on a laptop browser and a phone. The firm is Calder & Vane, injury lawyers in San Antonio, with a dark city photo, the headline Hurt in a crash or a fall? Get clear answers first, and a Request a consultation form. Labelled Example design."
+    },
+    {
+      "order": 3,
+      "day": 1,
+      "files": ["posts/03-who-gets-the-call-1.png", "posts/03-who-gets-the-call-2.png", "posts/03-who-gets-the-call-3.png", "posts/03-who-gets-the-call-4.png", "posts/03-who-gets-the-call-5.png"],
+      "caption": "Your website decides who gets the call. Swipe through.\n\nSomeone needs help, searches, opens a few websites and contacts the one that answers their question and makes it easy to reach them.\n\nThat's the moment we design for: a page for every service, a request form up front, and one tap to call.\n\nLink in bio to see your site redesigned, free.",
+      "hashtags": ["#lawfirmmarketing", "#localseo", "#leadgeneration", "#websitedesign", "#smallbusinesstips"],
+      "alt": [
+        "Black slide: Your website decides who gets the call. Here's what happens before anyone picks up the phone.",
+        "Step 1: Someone needs help. They search, usually on a phone, usually in a hurry.",
+        "Step 2: They open a few websites and compare who looks trustworthy and who answers their question.",
+        "Step 3: They contact the one that makes it easy.",
+        "What we build for that moment: a page for every service, a request form up front, one tap to call."
+      ]
+    },
+    {
+      "order": 4,
+      "day": 2,
+      "files": ["posts/04-work-medical.png"],
+      "caption": "Brightwater Family Medicine: an example from our medical practice designs.\n\nClear service pages, providers by name, and an appointment request right on the home page, with the notices patients expect.\n\nThis is a SaySites example design, not a real practice. Link in bio.",
+      "hashtags": ["#medicalpracticemarketing", "#healthcaremarketing", "#medicalwebsite", "#doctorwebsite", "#webdesign"],
+      "alt": "A family medicine website shown on a laptop browser and a phone: Brightwater Family Medicine in Charlotte, with a photo of a smiling doctor and a Request an appointment button. Labelled Example design."
+    },
+    {
+      "order": 5,
+      "day": 3,
+      "files": ["posts/05-leads-handled-1.png", "posts/05-leads-handled-2.png", "posts/05-leads-handled-3.png", "posts/05-leads-handled-4.png", "posts/05-leads-handled-5.png"],
+      "caption": "A website is only half the job. The other half is what happens when someone reaches out.\n\nEvery SaySites website comes with its own leads pipeline:\n→ every request lands in one place\n→ an instant reply goes out the moment someone asks for help\n→ you get an alert, and a reminder if a lead is still waiting\n→ each lead can go straight to HubSpot, Salesforce, Pipedrive, Clio Grow, or anywhere through Zapier\n→ a results email on the 1st of every month\n\nLink in bio.",
+      "hashtags": ["#leadgeneration", "#lawfirmmarketing", "#crm", "#clientintake", "#smallbusinessgrowth"],
+      "alt": [
+        "Black slide: Every lead answered, followed up and tracked.",
+        "An example leads pipeline card: 2 new, 3 contacted, 1 booked, 1 won, with requests like Estate planning question and Probate consultation.",
+        "An example automatic reply email: Thank you for getting in touch. We've received your message and will get back to you as soon as we can.",
+        "Already use a CRM? Every lead goes there too: HubSpot, Salesforce, Pipedrive, Clio Grow, Zapier, Make.",
+        "Know where every lead came from, and what's working: Google Ads, Google Maps, Facebook, and a results email on the 1st of every month."
+      ]
+    },
+    {
+      "order": 6,
+      "day": 4,
+      "files": ["posts/06-work-medspa.png"],
+      "caption": "Lumen Aesthetics: an example from our med spa designs.\n\nCalm and polished, with every treatment explained, honest expectations, and booking a consultation one tap away.\n\nThis is a SaySites example design, not a real med spa. Link in bio.",
+      "hashtags": ["#medspamarketing", "#medspa", "#aestheticsmarketing", "#beautybusiness", "#webdesign"],
+      "alt": "A med spa website shown on a laptop browser and a phone: Lumen Aesthetics in Scottsdale, Skin care and aesthetics planned around you, in soft cream and plum tones. Labelled Example design."
+    },
+    {
+      "order": 7,
+      "day": 5,
+      "files": ["posts/07-seo-built-in-1.png", "posts/07-seo-built-in-2.png", "posts/07-seo-built-in-3.png", "posts/07-seo-built-in-4.png"],
+      "caption": "SEO, built in.\n\nEvery SaySites website is audited the way Google reads it, every page, again after every change. You get a score, the fixes that matter most in plain words, and a side-by-side with the firms you compete with.\n\nNo one honest can promise you a ranking. What we promise is that you'll always know exactly where you stand, and why.\n\nLink in bio.",
+      "hashtags": ["#seo", "#localseo", "#lawfirmseo", "#googleranking", "#websiteaudit"],
+      "alt": [
+        "Black slide: SEO, built in. Know where you stand on Google.",
+        "An example SEO audit card for the Hale & Porter Law example site: 90 out of 100 across 8 pages, with Technical 97, Content 93, Google data 74 and AI answers 84.",
+        "Fixes, most important first. Each in plain words; common ones fixed in one click; compare with competitors.",
+        "No one honest can promise you a ranking. What we promise: you'll always know exactly where you stand, and why."
+      ]
+    },
+    {
+      "order": 8,
+      "day": 6,
+      "files": ["posts/08-free-redesign.png"],
+      "caption": "Send us your website. We'll redesign it, free.\n\nPage by page, with your words and your services, so you can see the difference before we've even spoken. No obligation.\n\nStart at saysites.com/redesign (link in bio).",
+      "hashtags": ["#websiteredesign", "#lawfirmwebsite", "#medicalwebsite", "#webdesign", "#smallbusinesswebsite"],
+      "alt": "Side by side: a plain grey sketch labelled Your site today, and a phone showing the Hale & Porter law firm example labelled Redesigned, free. Text: Send us your website. We'll redesign it, free. Page by page, before we've even spoken. No obligation."
+    },
+    {
+      "order": 9,
+      "day": 7,
+      "files": ["posts/09-how-we-work-1.png", "posts/09-how-we-work-2.png", "posts/09-how-we-work-3.png"],
+      "caption": "How we work: you see it before you commit to anything.\n\n1. A free redesign of your current site\n2. We build your site: your services, your people, your words\n3. You approve it: nothing goes live until you say so\n4. You watch the leads: every message, call tap and visit\n\nLet's talk about getting you more leads. Send us a message here or tap the link in bio.",
+      "hashtags": ["#lawfirmmarketing", "#medicalpracticemarketing", "#webdesignagency", "#websitedesign", "#leadgeneration"],
+      "alt": [
+        "Black slide: How we work. You see it before you commit to anything.",
+        "Four steps: 01 A free redesign. 02 We build your site. 03 You approve it. 04 You watch the leads.",
+        "Let's talk about getting you more leads. Send us a message here, or start at saysites.com."
+      ]
+    }
+  ],
+  "stories": [
+    { "day": 1, "file": "stories/s1-intro.png", "sticker": null, "highlight": "Work" },
+    { "day": 1, "file": "stories/s2-work.png", "sticker": null, "highlight": "Law firms" },
+    { "day": 3, "file": "stories/s3-free-redesign.png", "sticker": { "type": "link", "url": "https://saysites.com/redesign", "text": "Free redesign", "place": "over the dashed box" }, "highlight": "Free redesign" },
+    { "day": 5, "file": "stories/s4-leads.png", "sticker": null, "highlight": "Leads" },
+    { "day": 7, "file": "stories/s5-lets-talk.png", "sticker": { "type": "link", "url": "https://saysites.com", "text": "Let's talk", "place": "over the dashed box" }, "highlight": "Work" }
+  ],
+  "highlights": [
+    { "title": "Work", "cover": "highlights/highlight-work.png" },
+    { "title": "Law firms", "cover": "highlights/highlight-law.png" },
+    { "title": "Medical", "cover": "highlights/highlight-medical.png" },
+    { "title": "Leads", "cover": "highlights/highlight-leads.png" },
+    { "title": "Free redesign", "cover": "highlights/highlight-redesign.png" }
+  ]
+}
