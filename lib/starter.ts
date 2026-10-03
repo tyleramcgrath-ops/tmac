@@ -10,7 +10,7 @@
 
 import { dropRepeatedPhotos } from './photo-rules'
 import { randomUUID } from 'crypto'
-import type { Container, Element, GlobalStyles, Page, Site } from './schema'
+import type { Container, Element, Flair, GlobalStyles, Page, Site } from './schema'
 import { photosFor, type Photo, type PhotoSet } from './photos'
 
 export type Design = 'bold' | 'editorial' | 'warm' | 'upscale'
@@ -52,6 +52,32 @@ export const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
   upscale: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.3, radius: 2, containerWidth: 1180, headingWeight: 500, headingTracking: -0.02, buttonShape: 'square', buttonCase: 'upper' },
 }
 
+// Which personalities suit each kind of business; a site gets one of them,
+// picked from its address, so two plumbers in one town don't look alike.
+const FLAIR_FIT: Record<BusinessTypeKey, Flair[]> = {
+  plumber: ['bold', 'clean', 'studio'],
+  electrician: ['bold', 'studio', 'clean'],
+  hvac: ['bold', 'clean', 'studio'],
+  roofer: ['bold', 'studio', 'clean'],
+  landscaper: ['bold', 'soft', 'clean'],
+  cleaner: ['clean', 'soft', 'bold'],
+  autorepair: ['bold', 'studio', 'clean'],
+  dentist: ['soft', 'clean', 'editorial'],
+  salon: ['soft', 'studio', 'luxe', 'editorial'],
+  lawyer: ['editorial', 'luxe', 'clean'],
+  restaurant: ['luxe', 'editorial', 'soft'],
+  bakery: ['soft', 'clean', 'editorial'],
+  store: ['clean', 'soft', 'studio'],
+  other: ['clean', 'soft', 'editorial', 'bold'],
+}
+
+export function flairFor(type: BusinessTypeKey, subdomain: string): Flair {
+  const fit = FLAIR_FIT[type] ?? FLAIR_FIT.other
+  let h = 0
+  for (const ch of subdomain) h = (h * 31 + ch.charCodeAt(0)) >>> 0
+  return fit[h % fit.length]
+}
+
 export interface StarterInput {
   name: string
   type: BusinessTypeKey
@@ -68,6 +94,8 @@ export interface StarterInput {
   tagline?: string
   // A Talk & Design template can pick the design instead of the business type.
   design?: Design
+  // The site's personality; otherwise one that suits the business.
+  flair?: Flair
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
@@ -158,7 +186,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ...(input.hours?.length ? { hours: input.hours } : {}),
       ...(city ? { area: place } : {}),
     },
-    globals: { colors, ...DESIGN_GLOBALS[design] },
+    globals: { colors, ...DESIGN_GLOBALS[design], flair: input.flair ?? flairFor(input.type, subdomain) },
     nav: [
       { label: svcLabel, href: svcHref },
       { label: 'Contact', href: '/contact' },
@@ -465,6 +493,25 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ],
   }
 
+  // The owner's own services as a slow strip under the hero (three or more,
+  // so it reads as a list and not a slogan).
+  const ticker: Container[] =
+    services.length >= 3
+      ? [
+          {
+            id: 'ticker',
+            type: 'container',
+            tag: 'section',
+            layout: 'flex',
+            style: {
+              ...(design === 'bold' ? { background: 'secondary', color: 'background' } : design === 'upscale' ? {} : { background: 'surface' }),
+              padding: { desktop: pad(30, 0), mobile: pad(22, 0) },
+            },
+            children: [{ id: 'ticker-list', type: 'ticker', items: services.slice(0, 12) }],
+          },
+        ]
+      : []
+
   let homeBody: Container[]
   if (design === 'bold') {
     homeBody = [
@@ -639,6 +686,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ctaBand,
     ]
   }
+
+  homeBody.splice(1, 0, ...ticker)
 
   function aboutSplit(): Container {
     // Side by side only with a photo of its own; a repeat would be dropped

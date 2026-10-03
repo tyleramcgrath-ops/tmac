@@ -63,6 +63,16 @@ export const HEADING_FONTS = {
   bricolage: { family: 'Bricolage Grotesque', file: '/media/fonts/bricolage.woff2' },
 } as const
 
+// Six personalities, each drawn from well-made small-business sites.
+export const FLAIRS = ['editorial', 'luxe', 'soft', 'bold', 'studio', 'clean'] as const
+export type Flair = (typeof FLAIRS)[number]
+
+export function flairOf(g: { fonts: { heading: FontStack }; radius: number; flair?: Flair }): Flair {
+  if (g.flair) return g.flair
+  if (g.fonts.heading === 'sans') return 'bold'
+  return g.radius >= 10 ? 'soft' : 'editorial'
+}
+
 export function headingFont(g: { fonts: { heading: FontStack }; radius: number; headingFont?: keyof typeof HEADING_FONTS | 'system' }): keyof typeof HEADING_FONTS | null {
   if (g.headingFont) return g.headingFont === 'system' ? null : g.headingFont
   if (g.fonts.heading === 'serif') return g.radius >= 10 ? 'fraunces' : 'newsreader'
@@ -94,6 +104,9 @@ export const GlobalStyles = z
     // On unless the owner turns it off; visitors who ask for less motion
     // never see it.
     motion: z.boolean().optional(),
+    // The site's personality: how photos are framed, how sections meet, how
+    // things move. Unset follows the heading style (lib/schema flairOf).
+    flair: z.enum(FLAIRS).optional(),
   })
   .strict()
 export type GlobalStyles = z.infer<typeof GlobalStyles>
@@ -247,7 +260,17 @@ export const TestimonialsWidget = z
   })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget, GalleryWidget, TestimonialsWidget])
+// A slow, endless strip of short phrases: what the business does, in the
+// owner's own words ("Leak repair · Water heaters · Drain cleaning").
+export const TickerWidget = z
+  .object({
+    ...widgetBase,
+    type: z.literal('ticker'),
+    items: z.array(z.string().trim().min(1).max(60)).min(3).max(16),
+  })
+  .strict()
+
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget, GalleryWidget, TestimonialsWidget, TickerWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 
