@@ -52,6 +52,17 @@ function exampleAudit() {
   return example.catch(() => null)
 }
 
+const LEAD_FEATURES = [
+  ['A pipeline for every lead', 'Each request lands as a card: New, Contacted, Booked, Won. Move it along in one tap and see who’s still waiting on you.'],
+  ['An instant reply, every time', 'The moment someone asks for help, they get a reply from your firm saying it arrived. Their answer comes straight to you.'],
+  ['Nothing slips', 'An email alert for every new lead, a reminder if one is still unanswered, and an optional follow-up to leads nobody has called back.'],
+  ['Call, text or email in one tap', 'Every lead has its own page with their message, buttons to reach them, your notes, a follow-up date and the full history.'],
+  ['Know what’s working', 'Leads this month, phone taps, how fast you answer and how many became clients, without a spreadsheet.'],
+  ['Into the CRM you already use', 'Each new lead can go straight to HubSpot, Salesforce, Pipedrive or Clio Grow, or anywhere else through Zapier or Make.'],
+] as const
+
+const CRMS = ['HubSpot', 'Salesforce', 'Pipedrive', 'Clio Grow', 'Zapier', 'Make']
+
 const SEO_FEATURES = [
   ['A full audit of every page', 'Titles, descriptions, headings, links, photos, Google data and speed, checked the way Google reads them. It runs by itself after every change and every week.'],
   ['Fixes, most important first', 'Each one explained in plain words. Common ones, like duplicate titles and descriptions, are fixed in one click. For the rest, say what you want changed and approve it before it goes live.'],
@@ -213,6 +224,39 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
                 <div key={h}><h3>{h}</h3><p>{t}</p></div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="ag-sec standing" id="leads">
+          <div className="wrap">
+            <div className="standing-in">
+              <div className="standing-copy">
+                <p className="kicker">Leads, handled</p>
+                <h2>Every lead answered, followed up and tracked.</h2>
+                <p>Your site comes with its own leads pipeline. Every request is answered the moment it arrives, you’re told about it straight away, and nothing waits in an inbox until it goes cold.</p>
+                <p>Already use a CRM? Connect it in a minute and every lead goes there too.</p>
+              </div>
+              <div className="standing-card leads-ex" aria-label="An example leads pipeline">
+                <div className="sc-head"><span>Example pipeline</span><span>This week</span></div>
+                <div className="lx-cols">
+                  {([['New', 2], ['Contacted', 3], ['Booked', 1], ['Won', 1]] as const).map(([k, n]) => (
+                    <div key={k}><b>{n}</b><span>{k}</span></div>
+                  ))}
+                </div>
+                <ol>
+                  <li><span><em>Estate planning question</em></span><i>New</i></li>
+                  <li><span>Probate consultation</span><i className="lx-auto">Replied automatically</i></li>
+                  <li><span>Will update after a move</span><i className="lx-booked">Booked</i></li>
+                </ol>
+                <p className="sc-tip">An example of what you see in your dashboard. Every lead also goes to <b>HubSpot</b>, <b>Salesforce</b> or another CRM if you connect one.</p>
+              </div>
+            </div>
+            <div className="feat-grid seo-feats">
+              {LEAD_FEATURES.map(([h, t]) => (
+                <div key={h}><h3>{h}</h3><p>{t}</p></div>
+              ))}
+            </div>
+            <p className="lx-crms"><span>Works with</span>{CRMS.map((c) => <b key={c}>{c}</b>)}</p>
           </div>
         </section>
 
