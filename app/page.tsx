@@ -358,7 +358,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       <footer className="foot">
         <div className="wrap">
           <Logo />
-          <nav aria-label="Footer"><a href="/websites-for">Who we work with</a><a href="/about">Why SaySites</a><a href="/redesign">Free redesign</a><a href="/templates">Our work</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
+          <nav aria-label="Footer"><a href="/websites-for">Who we work with</a><a href="/about">Why SaySites</a><a href="/redesign">Free redesign</a><a href="/templates">Our work</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
           <span>© {new Date().getFullYear()} SaySites</span>
         </div>
       </footer>
