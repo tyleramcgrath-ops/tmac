@@ -175,6 +175,25 @@ Refresh them with `scripts/sync-rankforge.sh`; never edit the copies.
   real audit of the Hale & Porter example site (computed once per server
   start). Keep its claims to what's built; tracking needs the keys above.
 
+## Leads (October 2026)
+
+The Messages tab became **Leads** (`app/dashboard/sites/[id]/leads`,
+`lib/leads.ts`): a pipeline (New, Contacted, Booked, Won, Lost) with a page
+per lead (call, text, email, notes, follow-up date, timeline), stats
+(response time, win rate), a list view and a CSV export.
+- Automations: an instant reply to each lead, an alert to the owner, a
+  reminder when a lead is still New, an optional follow-up email. Sent by
+  `lib/mail.ts` through a saysites.com mailbox on SiteGround (SMTP_USER,
+  SMTP_PASS, optional SMTP_HOST/SMTP_PORT/MAIL_FROM); off until set. The
+  scheduler runs every 10 minutes from `instrumentation.ts`. Leads that
+  arrived before a site's pipeline existed are never emailed.
+- Integrations (`lib/crm-sync.ts`), each with the CRM's own documented
+  intake and a key the owner pastes: HubSpot (private app token),
+  Salesforce (Web-to-Lead org ID), Pipedrive (API token), Clio Grow (Lead
+  Inbox token), Zapier/Make (signed webhook, SSRF-guarded). Free for us, so
+  free on every plan. Only show "synced" when the CRM said so.
+- The default wording never promises anything to the lead.
+
 ## Hosting (moved October 2026)
 
 saysites.com runs on SiteGround's Node.js hosting (GrowBig), not Vercel. It

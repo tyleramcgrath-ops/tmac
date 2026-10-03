@@ -36,7 +36,7 @@ export function milestones(f: MilestoneFacts): Milestone[] {
     m('sofie', f.sofieChanged, 'First words', 'just changed with a sentence.', 'Ask Sofie to change something.', `${f.base}/sofie`),
     m('photos', f.photos > 0, 'In your own light', 'is showing your own photos.', 'Upload a photo of your work.', `${f.base}/photos`),
     m('visitor', f.visits > 0, 'First visitor', 'just had its first visitor.', 'Share your address.', `${f.base}/visitors`),
-    m('message', f.messages > 0, 'First hello', 'got its first message.', 'Someone fills in your contact form.', `${f.base}/messages`),
+    m('message', f.messages > 0, 'First hello', 'got its first message.', 'Someone fills in your contact form.', `${f.base}/leads`),
     m('post', f.posts > 0, 'First story', 'published its first post.', 'Write a post, or ask Sofie to.', `${f.base}/posts`),
     m('shop', f.products > 0, 'Open for business', 'is selling online.', 'Add a product.', `${f.base}/products`),
     m('seo', f.seoClean, 'Top marks', 'passes every Google check.', 'Clear every SEO tip.', `${f.base}/pages`),

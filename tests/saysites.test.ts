@@ -2230,3 +2230,90 @@ describe('SaySites: SEO (RankForge engines)', async () => {
     expect(auditStale(undefined, quiet, still)).toBe(true)
   })
 })
+
+describe('SaySites: leads', async () => {
+  const { SHOWCASE } = await import('../apps/saysites/lib/showcase')
+  const L = await import('../apps/saysites/lib/leads')
+  const C = await import('../apps/saysites/lib/crm-sync')
+  const { site } = SHOWCASE['hale-and-porter']
+  const mine = { ...site, id: 'site_leadtest', subdomain: 'lead-test-firm', orgId: 'owner1' }
+  const msg = (over: Partial<import('../apps/saysites/lib/store').Message> = {}) => ({ id: 'm1', siteId: site.id, name: 'Jordan Ellis', email: 'jordan@example.com', phone: '(614) 555-0100', body: 'I need help with a will.', page: '/', createdAt: new Date().toISOString(), read: false, ...over })
+
+  it('fills templates and drops lines it has nothing for', () => {
+    const v = L.valuesFor({ ...site, business: { ...site.business, phone: undefined } }, msg())
+    const out = L.fill('Hi {first},\nCall us at {phone}.\nThanks, {business}', v)
+    expect(out).toBe(`Hi Jordan,\nThanks, ${site.business.name}`)
+    expect(L.fill('Hi {first}', L.valuesFor(site, msg({ name: '' })))).toBe('Hi there')
+  })
+
+  it('moves stages, records first contact, and counts the pipeline', () => {
+    const state = L.emptyCrm()
+    const meta = L.metaFor(state, 'm1')
+    const t0 = new Date(Date.now() - 3600_000).toISOString()
+    L.setStage(meta, 'contacted')
+    L.setStage(meta, 'won')
+    expect(meta.stage).toBe('won')
+    expect(meta.contactedAt).toBeTruthy()
+    expect(meta.activity.filter((e) => e.kind === 'stage').length).toBe(2)
+    const s = L.leadStats([msg({ createdAt: t0 }), msg({ id: 'm2', createdAt: t0 })], state, '2000-01-01')
+    expect(s.byStage).toMatchObject({ new: 1, won: 1 })
+    expect(s.responseMins).toBeGreaterThanOrEqual(59)
+    expect(s.winRate).toBe(100)
+  })
+
+  it('exports a spreadsheet that can’t run formulas', () => {
+    const csv = L.csvFor([msg({ name: '=HYPERLINK("x")', body: 'line one, "two"\nthree' })], L.emptyCrm())
+    expect(csv.split('\r\n')[0]).toBe('Received,Name,Email,Phone,Stage,Follow up on,Page,Message')
+    expect(csv).toContain(`"'=HYPERLINK(""x"")"`)
+    expect(csv).toContain('"line one, ""two""\nthree"')
+  })
+
+  it('checks CRM keys before connecting', () => {
+    expect(C.validConfig('hubspot', { token: 'nope' }).ok).toBe(false)
+    expect(C.validConfig('hubspot', { token: 'pat-na1-1234567890abcdef' }).ok).toBe(true)
+    expect(C.validConfig('salesforce', { orgId: '00D5g000004ABCD' }).ok).toBe(true)
+    expect(C.validConfig('webhook', { url: 'http://insecure.example.com/hook' }).ok).toBe(false)
+    expect(C.splitName('Mary Ann Smith')).toEqual({ first: 'Mary Ann', last: 'Smith' })
+    expect(C.splitName('')).toEqual({ first: '', last: 'Website lead' })
+  })
+
+  it('sends a new lead to a connected CRM and logs what it answered', async () => {
+    const store = new MemoryStore()
+    await store.createSite('owner1', mine, [])
+    const sent: { url: string; body: string }[] = []
+    const real = globalThis.fetch
+    globalThis.fetch = (async (url: string, init: RequestInit) => {
+      sent.push({ url: String(url), body: String(init.body) })
+      return new Response('{}', { status: 201 })
+    }) as typeof fetch
+    try {
+      await L.withCrm(store, mine.id, (s) => {
+        s.integrations.hubspot = { on: true, config: { token: 'pat-na1-1234567890abcdef' } }
+      })
+      const m = await store.addMessage({ siteId: mine.id, name: 'Jordan Ellis', email: 'jordan@example.com', phone: '', body: 'Hello', page: '/' })
+      await L.onNewLead(store, mine, m)
+      const state = await L.loadCrm(store, mine.id)
+      expect(sent[0].url).toBe('https://api.hubapi.com/crm/v3/objects/contacts')
+      expect(JSON.parse(sent[0].body).properties).toMatchObject({ firstname: 'Jordan', lastname: 'Ellis', email: 'jordan@example.com', lifecyclestage: 'lead' })
+      expect(state.leads[m.id].activity.at(-1)).toMatchObject({ kind: 'sync', ok: true, text: 'Added to HubSpot as a contact.' })
+      expect(state.integrations.hubspot?.last?.ok).toBe(true)
+    } finally {
+      globalThis.fetch = real
+    }
+  })
+
+  it('never loses a change when two arrive at once', async () => {
+    const store = new MemoryStore()
+    await store.createSite('owner1', mine, [])
+    await Promise.all(['a', 'b', 'c'].map((id) => L.withCrm(store, mine.id, async (s) => {
+      await new Promise((r) => setTimeout(r, 5))
+      L.addEvent(L.metaFor(s, id), 'note', id)
+    })))
+    expect(Object.keys((await L.loadCrm(store, mine.id)).leads).sort()).toEqual(['a', 'b', 'c'])
+  })
+
+  it('sends nothing on a schedule until email is set up', async () => {
+    const store = new MemoryStore()
+    expect(await L.runDue(store)).toBe(0)
+  })
+})

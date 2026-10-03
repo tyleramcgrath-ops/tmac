@@ -133,6 +133,12 @@ export interface Store {
   // latest audit, competitor audits, tracked keywords and AI answers.
   seoState(siteId: string): Promise<unknown | null>
   saveSeoState(siteId: string, state: unknown): Promise<void>
+  // The site's leads pipeline (lib/leads): each lead's stage, notes and
+  // timeline, plus the site's automations and CRM integrations.
+  crmState(siteId: string): Promise<unknown | null>
+  saveCrmState(siteId: string, state: unknown): Promise<void>
+  // Every site that has a leads pipeline, for the follow-up scheduler.
+  crmSites(): Promise<{ site: Site; state: unknown }[]>
   // Every site with a score since `day`, with its scores and daily views.
   leagueSites(day: string): Promise<LeagueSite[]>
   // Free redesign previews. `who` is a hash of the requester, for limits.
@@ -275,6 +281,11 @@ CREATE TABLE IF NOT EXISTS ss_visits (
   PRIMARY KEY (site_id, day, path)
 );
 CREATE TABLE IF NOT EXISTS ss_seo (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_crm (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -623,6 +634,15 @@ class PgStore implements Store {
   async saveSeoState(siteId: string, state: unknown) {
     await this.q('INSERT INTO ss_seo (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(state)])
   }
+  async crmState(siteId: string) {
+    return (await this.q<{ data: unknown }>('SELECT data FROM ss_crm WHERE site_id = $1', [siteId]))[0]?.data ?? null
+  }
+  async saveCrmState(siteId: string, state: unknown) {
+    await this.q('INSERT INTO ss_crm (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(state)])
+  }
+  async crmSites() {
+    return (await this.q<{ site: Site; data: unknown }>('SELECT s.data AS site, c.data FROM ss_crm c JOIN ss_sites s ON s.id = c.site_id')).map((r) => ({ site: SiteSchema.parse(r.site), state: r.data }))
+  }
   async recordScore(siteId: string, day: string, score: number) {
     await this.q('INSERT INTO ss_scores (site_id, day, score) VALUES ($1,$2,$3) ON CONFLICT (site_id, day) DO UPDATE SET score = EXCLUDED.score', [siteId, day, score])
   }
@@ -909,6 +929,19 @@ export class MemoryStore implements Store {
     for (const k of keys) if (!this.photos.has(k)) this.photos.set(k, siteId)
   }
   private scores = new Map<string, { day: string; score: number }[]>()
+  private crm = new Map<string, unknown>()
+  async crmState(siteId: string) {
+    return this.crm.get(siteId) ?? null
+  }
+  async saveCrmState(siteId: string, state: unknown) {
+    this.crm.set(siteId, JSON.parse(JSON.stringify(state)))
+  }
+  async crmSites() {
+    return [...this.crm].flatMap(([id, state]) => {
+      const s = this.sites.get(id)
+      return s ? [{ site: s.site, state }] : []
+    })
+  }
   private seo = new Map<string, unknown>()
   async seoState(siteId: string) {
     return this.seo.get(siteId) ?? null

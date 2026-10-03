@@ -6,4 +6,8 @@ export async function register() {
   // them a minute after a successful start, off the startup path.
   const { pruneReleases } = await import('./lib/prune-releases')
   setTimeout(() => pruneReleases(), 60_000).unref()
+  // Leads: follow-up emails, reminders and follow-up dates, every 10 minutes.
+  const { runDue } = await import('./lib/leads')
+  const { getStore } = await import('./lib/store')
+  setInterval(() => void runDue(getStore()).catch(() => null), 10 * 60_000).unref()
 }
