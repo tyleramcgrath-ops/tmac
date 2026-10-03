@@ -165,6 +165,15 @@ Refresh them with `scripts/sync-rankforge.sh`; never edit the copies.
   positions (`SERPAPI_KEY`), Perplexity citations (`PERPLEXITY_API_KEY`),
   backlinks (`MAJESTIC_API_KEY`). Each is off until its key is set and
   shows only what the provider returned. State lives in `ss_seo`.
+- It's part of every site, not a separate tool: the audit re-runs by itself
+  when the site changed or is a week old (on opening Overview or SEO), the
+  Overview SEO tile shows its score, and duplicate or too-short titles and
+  duplicate descriptions are fixed in one click (`applySeoFix`, words taken
+  only from the site itself). Pages our originality check holds back show
+  that check's reason, not RankForge's generic "not indexable".
+- The homepage's "SEO, built in" section (#seo) lists all of it, with a
+  real audit of the Hale & Porter example site (computed once per server
+  start). Keep its claims to what's built; tracking needs the keys above.
 
 ## Hosting (moved October 2026)
 

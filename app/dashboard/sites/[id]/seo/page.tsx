@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 import { requireUser } from '@/lib/session'
-import { LIMITS, intelReady, loadSeoState, type Scores } from '@/lib/seo-intel'
+import { LIMITS, freshSeoState, intelReady, type Scores, type SeoIssue } from '@/lib/seo-intel'
 import { getStore } from '@/lib/store'
-import { addAiQuery, addCompetitor, addKeyword, checkNow, paidLookupsAllowed, removeAiQuery, removeCompetitor, removeKeyword, runAudit } from './actions'
+import { addAiQuery, addCompetitor, addKeyword, applyFix, checkNow, paidLookupsAllowed, removeAiQuery, removeCompetitor, removeKeyword, runAudit } from './actions'
 
 const NOTES: Record<string, { text: string; tone?: 'good' | 'bad' }> = {
   error: { text: 'Your site could not be read just now. Try again in a minute.', tone: 'bad' },
@@ -10,6 +10,8 @@ const NOTES: Record<string, { text: string; tone?: 'good' | 'bad' }> = {
   competitors: { text: `You can compare with up to ${LIMITS.competitors} websites. Remove one to add another.` },
   keywords: { text: `You can track up to ${LIMITS.keywords} searches. Remove one to add another.` },
   queries: { text: `You can track up to ${LIMITS.aiQueries} questions. Remove one to add another.` },
+  fixed: { text: 'Fixed and live. Your audit has been updated.', tone: 'good' },
+  nofix: { text: 'There wasn’t enough of your own writing on those pages to build from. Ask Sofie to help with this one.' },
   plan: { text: 'Ranking, AI answer and backlink checks are part of the law firm plans. Your audit and competitor comparison stay free.' },
 }
 
@@ -19,6 +21,8 @@ const AREAS: { key: keyof Scores; label: string }[] = [
   { key: 'schema', label: 'Google data' },
   { key: 'ai', label: 'AI answers' },
 ]
+
+const CATEGORY: Record<string, string> = { indexability: 'Google', schema: 'Google data', content: 'Content', technical: 'Technical', links: 'Links', performance: 'Speed', images: 'Photos', ai: 'AI answers' }
 
 const SEVERITY = { critical: 'Fix first', warning: 'Worth fixing', info: 'Nice to have' } as const
 
@@ -37,17 +41,28 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
   const store = getStore()
   const site = await store.siteForUser(user.id, id)
   if (!site) notFound()
-  const [state, paid] = await Promise.all([loadSeoState(store, site.id), paidLookupsAllowed(site.id)])
+  const [state, paid] = await Promise.all([freshSeoState(store, site), paidLookupsAllowed(site.id)])
   const { audit } = state
   const ready = { rankings: intelReady.rankings(), ai: intelReady.ai(), backlinks: intelReady.backlinks() }
   const anyReady = ready.rankings || ready.ai || ready.backlinks
   const flash = note ? NOTES[note] : undefined
   const sofie = (text: string) => `/dashboard/sites/${site.id}/sofie?fill=${encodeURIComponent(text)}`
+  const settings = `/dashboard/sites/${site.id}/settings`
   const audit$ = runAudit.bind(null, site.id)
+  const act = (i: SeoIssue) =>
+    i.action.kind === 'auto' ? (
+      <form action={applyFix.bind(null, site.id, i.id)}>
+        <button className="btn btn-sm btn-primary" type="submit">{i.action.label}</button>
+      </form>
+    ) : i.action.kind === 'settings' ? (
+      <a className="btn btn-sm btn-ghost" href={settings}>{i.action.label}</a>
+    ) : (
+      <a className="btn btn-sm btn-ghost" href={sofie(i.action.ask)}>Fix with Sofie</a>
+    )
   const check$ = checkNow.bind(null, site.id)
 
   return (
-    <section className="stack">
+    <section className="stack seo">
       <div className="sec-head">
         <div>
           <h2>SEO</h2>
@@ -79,10 +94,11 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
             </ul>
           </div>
         ) : (
-          <p className="muted">Reads every published page the way Google does: titles, descriptions, headings, links, photos, Google data and how easy it is for AI tools to quote you. Takes a few seconds and it’s free.</p>
+          <p className="muted">Publish a page and your audit appears here.</p>
         )}
+        <p className="muted small">Checks every published page the way Google reads it: titles, descriptions, headings, links, photos, Google data and how easy it is for AI tools to quote you. It runs by itself after every change and once a week.</p>
         <form action={audit$}>
-          <button className={`btn ${audit ? 'btn-ghost' : 'btn-primary'}`} type="submit">{audit ? 'Run again' : 'Run the audit'}</button>
+          <button className="btn btn-ghost btn-sm" type="submit">Check again now</button>
         </form>
       </div>
 
@@ -104,8 +120,8 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
                     <span className="muted small">{i.why}</span>
                     {i.pages.length > 0 && <span className="small seo-pages">{i.pages.join(', ')}</span>}
                   </div>
-                  <span className="quest-area muted small">{i.category}</span>
-                  <a className="btn btn-sm btn-ghost" href={sofie(`Fix this on my site: ${i.title}${i.pages.length ? ` (pages: ${i.pages.join(', ')})` : ''}`)}>Fix with Sofie</a>
+                  <span className="quest-area muted small">{CATEGORY[i.category] ?? i.category.charAt(0).toUpperCase() + i.category.slice(1)}</span>
+                  {act(i)}
                 </li>
               ))}
             </ol>
@@ -170,7 +186,7 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
         {state.competitors.length < LIMITS.competitors && (
           <form action={addCompetitor.bind(null, site.id)} className="seo-add">
             <label className="sr-only" htmlFor="seo-comp">Competitor website</label>
-            <input id="seo-comp" name="url" type="text" inputMode="url" placeholder="competitor.com" required maxLength={200} />
+            <input className="input" id="seo-comp" name="url" type="text" inputMode="url" placeholder="competitor.com" required maxLength={200} />
             <button className="btn btn-primary" type="submit">Compare</button>
           </form>
         )}
@@ -217,7 +233,7 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
         {state.keywords.length < LIMITS.keywords && (
           <form action={addKeyword.bind(null, site.id)} className="seo-add">
             <label className="sr-only" htmlFor="seo-kw">Search to track</label>
-            <input id="seo-kw" name="keyword" type="text" placeholder="personal injury lawyer in Austin" required maxLength={80} />
+            <input className="input" id="seo-kw" name="keyword" type="text" placeholder="personal injury lawyer in Austin" required maxLength={80} />
             <button className="btn btn-ghost" type="submit">Track</button>
           </form>
         )}
@@ -244,7 +260,7 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
         {state.aiQueries.length < LIMITS.aiQueries && (
           <form action={addAiQuery.bind(null, site.id)} className="seo-add">
             <label className="sr-only" htmlFor="seo-ai">Question to track</label>
-            <input id="seo-ai" name="query" type="text" placeholder="Who is the best car accident lawyer in Austin?" required maxLength={160} />
+            <input className="input" id="seo-ai" name="query" type="text" placeholder="Who is the best car accident lawyer in Austin?" required maxLength={160} />
             <button className="btn btn-ghost" type="submit">Track</button>
           </form>
         )}

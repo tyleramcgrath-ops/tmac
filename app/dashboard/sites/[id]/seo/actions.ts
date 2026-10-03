@@ -6,7 +6,8 @@ import { isAdmin } from '@/lib/admin'
 import { loadAccess } from '@/lib/billing'
 import { tradeLabel } from '@/lib/league'
 import { requireUser } from '@/lib/session'
-import { LIMITS, auditCompetitor, auditSite, checkAiQuery, checkKeyword, checkLinks, checkedToday, loadSeoState, type SeoState } from '@/lib/seo-intel'
+import { PageSchema } from '@/lib/schema'
+import { LIMITS, applySeoFix, auditCompetitor, auditSite, checkAiQuery, checkKeyword, checkLinks, checkedToday, loadSeoState, type SeoState } from '@/lib/seo-intel'
 import { bundleFor } from '@/lib/sites'
 import { getStore } from '@/lib/store'
 import { liveUrl } from '@/lib/urls'
@@ -40,6 +41,28 @@ export async function runAudit(siteId: string): Promise<void> {
   const audit = await auditSite(bundle!, liveUrl(site), tradeLabel(bundle!.site.business.schemaType))
   await store.saveSeoState(site.id, { ...state, audit } satisfies SeoState)
   back(siteId)
+}
+
+// "Fix it for me": applies a one-click fix to the live pages (and to any
+// unpublished Sofie draft, so publishing it later doesn't undo the fix), then
+// audits again.
+export async function applyFix(siteId: string, issueId: string): Promise<void> {
+  const { user, store, site, state } = await owned(siteId)
+  const issue = state.audit?.issues.find((i) => i.id === issueId)
+  if (!issue || issue.action.kind !== 'auto') back(siteId)
+  const pages = await store.pagesForSite(site.id)
+  const changed = applySeoFix(issue!, site, pages).filter((p) => PageSchema.safeParse(p).success)
+  const now = new Date().toISOString()
+  for (const p of changed) await store.savePage({ ...p, updatedAt: now }, 'owner', user.id, `SEO fix: ${issue!.title}`)
+  const sofie = await store.sofieState(site.id)
+  if (sofie.draft && changed.length) {
+    const seo = new Map(changed.map((p) => [p.id, p.seo]))
+    await store.saveSofieState(site.id, { ...sofie, draft: { ...sofie.draft, pages: sofie.draft.pages.map((p) => (seo.has(p.id) ? { ...p, seo: { ...p.seo, ...seo.get(p.id) } } : p)) } })
+  }
+  const bundle = await bundleFor(site, store)
+  const audit = await auditSite(bundle!, liveUrl(site), tradeLabel(site.business.schemaType))
+  await store.saveSeoState(site.id, { ...state, audit })
+  back(siteId, changed.length ? 'fixed' : 'nofix')
 }
 
 export async function addCompetitor(siteId: string, form: FormData): Promise<void> {

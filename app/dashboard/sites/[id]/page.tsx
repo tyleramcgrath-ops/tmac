@@ -15,6 +15,7 @@ import { ActionForm } from '@/components/ActionForm'
 import { cancelApproval, sendForApproval } from './manage-actions'
 import { loadSpend, monthShare, refillDate } from '@/lib/usage'
 import { Milestones } from '@/components/Milestones'
+import { freshSeoState } from '@/lib/seo-intel'
 
 export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
   const [{ id }, { new: isNew }] = await Promise.all([params, searchParams])
@@ -44,6 +45,9 @@ export default async function SiteOverview({ params, searchParams }: { params: P
   const monthName = new Date(`${monthStart}T00:00:00Z`).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' })
   // The same checks that gate publishing, summed up.
   const { errors, tips, fast, traffic, vis } = await scoreSite(store, site, today, pages, media, visits)
+  // RankForge's audit, refreshed whenever the site changed since it last ran.
+  const seo = (await freshSeoState(store, site, pages).catch(() => null))?.audit
+  const fixes = seo?.issues.filter((i) => i.severity !== 'info').length ?? 0
   const sparkMax = Math.max(1, ...traffic.days.map((d) => d.views))
   const spark = traffic.days.map((d, i) => `${i ? 'L' : 'M'}${i} ${(20 - (d.views / sparkMax) * 18).toFixed(1)}`).join(' ')
   const lastSofie = [...sofie.chat].reverse().find((t) => t.role === 'sofie' && t.changes?.length)
@@ -113,11 +117,19 @@ export default async function SiteOverview({ params, searchParams }: { params: P
               <strong className={fast ? 'good' : 'bad'}>{fast ? '95+' : 'Check'}</strong>
               <span className="muted">{fast ? 'Every page passes' : 'A page is too heavy'}</span>
             </a>
-            <a className="stat" href={`${base}/pages`}>
-              <span className="stat-label">SEO</span>
-              <strong className={errors ? 'bad' : tips ? 'warn' : 'good'}>{errors ? `${errors} to fix` : tips ? `${tips} tip${tips > 1 ? 's' : ''}` : 'All good'}</strong>
-              <span className="muted">{pages.length} page{pages.length === 1 ? '' : 's'} checked</span>
-            </a>
+            {errors || !seo ? (
+              <a className="stat" href={`${base}/pages`}>
+                <span className="stat-label">SEO</span>
+                <strong className={errors ? 'bad' : tips ? 'warn' : 'good'}>{errors ? `${errors} to fix` : tips ? `${tips} tip${tips > 1 ? 's' : ''}` : 'All good'}</strong>
+                <span className="muted">{pages.length} page{pages.length === 1 ? '' : 's'} checked</span>
+              </a>
+            ) : (
+              <a className="stat" href={`${base}/seo`}>
+                <span className="stat-label">SEO</span>
+                <strong className={seo.siteScore >= 90 ? 'good' : seo.siteScore >= 70 ? 'warn' : 'bad'}>{seo.siteScore}/100</strong>
+                <span className="muted">{fixes ? `${fixes} fix${fixes > 1 ? 'es' : ''} to make` : `${seo.pages.length} page${seo.pages.length === 1 ? '' : 's'} checked`}</span>
+              </a>
+            )}
             <a className="stat" href={`${base}/messages`}>
               <span className="stat-label">Messages</span>
               <strong>{messages.filter((m) => !m.read).length || messages.length}</strong>

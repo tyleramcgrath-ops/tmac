@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Logo, LogoMark } from '@/components/Logo'
 import { SiteNav } from '@/components/SiteNav'
 import { TalkForm } from '@/components/TalkForm'
+import { auditSite } from '@/lib/seo-intel'
+import { SHOWCASE } from '@/lib/showcase'
 import './home.css'
 
 // saysites.com: SaySites as a website company for the industries that
@@ -39,8 +41,28 @@ const WORK = [
   { img: '/media/work/summit-heating-air.jpg', firm: 'summit-heating-air', name: 'Summit Heating & Air', kind: 'Heating and air, Boise' },
 ]
 
+// A real audit of one of our example sites, run the same way every client's
+// SEO tab runs it. Nothing on this card is made up.
+// Worked out once per server start, not on every visit.
+const EXAMPLE = 'hale-and-porter'
+let example: ReturnType<typeof auditSite> | null = null
+function exampleAudit() {
+  const { site, pages } = SHOWCASE[EXAMPLE]
+  example ??= auditSite({ site, pages, redirects: [] }, `https://${EXAMPLE}.saysites.com`)
+  return example.catch(() => null)
+}
+
+const SEO_FEATURES = [
+  ['A full audit of every page', 'Titles, descriptions, headings, links, photos, Google data and speed, checked the way Google reads them. It runs by itself after every change and every week.'],
+  ['Fixes, most important first', 'Each one explained in plain words. Common ones, like duplicate titles and descriptions, are fixed in one click. For the rest, say what you want changed and approve it before it goes live.'],
+  ['Ready for AI answers', 'A score for how easily ChatGPT-style answer engines can read and quote your pages, and what would raise it.'],
+  ['Side by side with competitors', 'Add the firms you lose clients to. Their sites are read and scored the same way as yours, so you see exactly where you lead and where you don’t.'],
+  ['Where you show up on Google', 'Track the searches that bring clients, like “estate planning lawyer near me”, and see your real position each day.'],
+  ['Who AI recommends', 'Ask the questions clients ask AI and see whether your site is cited, and which sites are cited instead. Plus the websites that link to yours.'],
+] as const
+
 export default async function Home({ searchParams }: { searchParams: Promise<{ sent?: string; talk?: string }> }) {
-  const sp = await searchParams
+  const [sp, audit] = await Promise.all([searchParams, exampleAudit()])
   return (
     <div className="home ag">
       <header className="nav">
@@ -157,6 +179,39 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <div><h3>Every lead in one inbox</h3><p>Requests land in one inbox with call and reply buttons beside them, and every tap on your phone number is counted, page by page.</p></div>
               <div><h3>Found when they search</h3><p>A page for every service and town, fast on every phone, and your details marked up the way Google reads them.</p></div>
               <div><h3>Trust before they call</h3><p>Your people by name, plain answers to the questions clients ask, and the notices your industry expects. Nothing invented.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="ag-sec standing" id="seo">
+          <div className="wrap">
+            <div className="standing-in">
+              <div className="standing-copy">
+                <p className="kicker">SEO, built in</p>
+                <h2>Know where you stand on Google, and what to fix next.</h2>
+                <p>Every site comes with its own SEO suite in your dashboard. It audits every page, ranks what to fix, fixes the common things in one click and shows you how you compare with the firms you compete with.</p>
+                <p>No one honest can promise you a ranking. What we promise is that you’ll always know exactly where you stand and why.</p>
+              </div>
+              {audit && (
+                <div className="standing-card" aria-label="An example audit">
+                  <div className="sc-head"><span>Example audit</span><span>{SHOWCASE[EXAMPLE].site.business.name}</span></div>
+                  <div className="seo-ex">
+                    <b>{audit.siteScore}</b>
+                    <span>out of 100, across {audit.pages.length} pages</span>
+                  </div>
+                  <ol>
+                    {([['Technical', audit.scores.technical], ['Content', audit.scores.content], ['Google data', audit.scores.schema], ['AI answers', audit.scores.ai]] as const).map(([k, v]) => (
+                      <li key={k}><span>{k}</span><i className="seo-bar" aria-hidden="true"><em style={{ width: `${v}%` }} /></i><em>{v}</em></li>
+                    ))}
+                  </ol>
+                  <p className="sc-tip">A real audit of our <a href={`/preview/${EXAMPLE}`}>example law firm site</a>, run the same way every client’s runs.</p>
+                </div>
+              )}
+            </div>
+            <div className="feat-grid seo-feats">
+              {SEO_FEATURES.map(([h, t]) => (
+                <div key={h}><h3>{h}</h3><p>{t}</p></div>
+              ))}
             </div>
           </div>
         </section>
