@@ -54,7 +54,21 @@ export default async function AutomationsPage({ params, searchParams }: { params
           <Preview subject={fill(a.followUp.subject, sample)} body={fill(a.followUp.body, sample)} />
         </div>
 
-        <p className="muted small">In your messages, {'{first}'} becomes their first name, {'{business}'} your business name and {'{phone}'} your phone number. A line with nothing to fill in is left out.</p>
+        <div className="card auto-card">
+          <label className="auto-switch"><input type="checkbox" name="reviewOn" defaultChecked={a.review.on} /> <span><strong>Ask new clients for a review</strong><span className="muted small">When you mark a lead Won, they get one friendly email asking for a review, with your review link. One email per client, never more.</span></span></label>
+          {!site.business.reviewUrl && <p className="notice">Add your review link on the <a href={`/dashboard/sites/${site.id}/reviews`}>Reviews</a> tab first. Until then, no review emails are sent.</p>}
+          <label className="field field-inline"><span>After</span><input className="input" name="reviewDays" type="number" min={0} max={30} defaultValue={a.review.days} /><span>days</span></label>
+          <label className="field"><span>Subject</span><input className="input" name="reviewSubject" defaultValue={a.review.subject} maxLength={200} /></label>
+          <label className="field"><span>Message</span><textarea className="input" name="reviewBody" rows={8} defaultValue={a.review.body} maxLength={4000} /></label>
+          <Preview subject={fill(a.review.subject, sample)} body={fill(a.review.body, { ...sample, review: sample.review || `${sample.website}/review` })} />
+        </div>
+
+        <div className="card auto-card">
+          <label className="auto-switch"><input type="checkbox" name="reportOn" defaultChecked={a.report.on} /> <span><strong>Send me a monthly results email</strong><span className="muted small">On the 1st: last month’s leads, phone taps, visitors, how fast you answered, new clients, where leads came from and your SEO. Quiet months aren’t sent.</span></span></label>
+          <p className="small" style={{ margin: 0 }}><a href={`/dashboard/sites/${site.id}/leads/report`}>See your report</a></p>
+        </div>
+
+        <p className="muted small">In your messages, {'{first}'} becomes their first name, {'{business}'} your business name, {'{phone}'} your phone number and {'{review}'} your review link. A line with nothing to fill in is left out.</p>
         <div><button className="btn btn-primary" type="submit">Save automations</button></div>
       </form>
     </section>

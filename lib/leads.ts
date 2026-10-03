@@ -9,10 +9,12 @@
 // wording only confirms the message arrived and how to reach the business.
 
 import { randomBytes } from 'crypto'
+import type { LeadSource } from './lead-source'
 import { INTEGRATIONS, pushLead, type IntegrationKind, type LeadPayload, type SyncResult } from './crm-sync'
 import { mailReady, sendMail } from './mail'
 import type { Site } from './schema'
 import type { Message, Store } from './store'
+import { SHOWCASE_ORG } from './showcase'
 import { liveUrl } from './urls'
 
 export const STAGES = ['new', 'contacted', 'booked', 'won', 'lost'] as const
@@ -41,6 +43,11 @@ export interface LeadMeta {
   followUpOn?: string
   // When the lead was first contacted (moved on from New), for response time.
   contactedAt?: string
+  // Which ad or tagged link brought them (lib/lead-source).
+  source?: LeadSource
+  // When they were first marked Won, for the review request.
+  wonAt?: string
+  reviewAsked?: boolean
   replied?: boolean
   followedUp?: boolean
   reminded?: boolean
@@ -52,6 +59,10 @@ export interface Automations {
   alert: { on: boolean; to: string }
   followUp: { on: boolean; days: number; subject: string; body: string }
   remind: { on: boolean; hours: number }
+  // Asks clients marked Won for a review, through the site's /review link.
+  review: { on: boolean; days: number; subject: string; body: string }
+  // A results email to the owner on the 1st of each month.
+  report: { on: boolean }
 }
 
 export interface IntegrationState {
@@ -69,6 +80,8 @@ export interface CrmState {
   integrations: Partial<Record<IntegrationKind, IntegrationState>>
   // Signs webhook deliveries (lib/crm-sync).
   secret: string
+  // YYYY-MM of the last monthly report sent.
+  reportSent?: string
 }
 
 export function defaultAutomations(): Automations {
@@ -86,6 +99,13 @@ export function defaultAutomations(): Automations {
       body: 'Hi {first},\n\nI wanted to follow up on the message you sent {business}. Are you still looking for help? Just reply to this email, or call us at {phone}, and we’ll take it from there.\n\n{business}',
     },
     remind: { on: true, hours: 24 },
+    review: {
+      on: true,
+      days: 1,
+      subject: 'Would you share your experience with {business}?',
+      body: 'Hi {first},\n\nThank you for choosing {business}. If you have a minute, would you share your experience in a short review? It helps other people find the help they need.\n\n{review}\n\nThank you,\n{business}',
+    },
+    report: { on: true },
   }
 }
 
@@ -101,9 +121,10 @@ export async function loadCrm(store: Store, siteId: string): Promise<CrmState> {
   return {
     since: raw.since ?? new Date().toISOString(),
     leads: raw.leads ?? {},
-    automations: { reply: { ...d.reply, ...a.reply }, alert: { ...d.alert, ...a.alert }, followUp: { ...d.followUp, ...a.followUp }, remind: { ...d.remind, ...a.remind } },
+    automations: { reply: { ...d.reply, ...a.reply }, alert: { ...d.alert, ...a.alert }, followUp: { ...d.followUp, ...a.followUp }, remind: { ...d.remind, ...a.remind }, review: { ...d.review, ...a.review }, report: { ...d.report, ...a.report } },
     integrations: raw.integrations ?? {},
     secret: raw.secret ?? randomBytes(24).toString('hex'),
+    ...(raw.reportSent ? { reportSent: raw.reportSent } : {}),
   }
 }
 
@@ -137,6 +158,7 @@ export function addEvent(meta: LeadMeta, kind: LeadEventKind, text: string, ok?:
 export function setStage(meta: LeadMeta, stage: Stage, at = new Date().toISOString()): void {
   if (meta.stage === stage) return
   if (meta.stage === 'new' && !meta.contactedAt) meta.contactedAt = at
+  if (stage === 'won' && !meta.wonAt) meta.wonAt = at
   addEvent(meta, 'stage', `Moved from ${STAGE_LABEL[meta.stage]} to ${STAGE_LABEL[stage]}`, undefined, at)
   meta.stage = stage
 }
@@ -156,11 +178,11 @@ export function fill(template: string, values: Record<string, string>): string {
 
 export function valuesFor(site: Site, m: Pick<Message, 'name' | 'email'>): Record<string, string> {
   const first = m.name.trim().split(/\s+/)[0] ?? ''
-  return { first: first || 'there', name: m.name, business: site.business.name, phone: site.business.phone ?? '', email: site.business.email ?? '', website: liveUrl(site) }
+  return { first: first || 'there', name: m.name, business: site.business.name, phone: site.business.phone ?? '', email: site.business.email ?? '', website: liveUrl(site), review: site.business.reviewUrl ? `${liveUrl(site)}/review` : '' }
 }
 
-export function payloadFor(site: Site, m: Message): LeadPayload {
-  return { id: m.id, name: m.name, email: m.email, phone: m.phone, message: m.body, page: m.page, createdAt: m.createdAt, business: site.business.name, website: liveUrl(site) }
+export function payloadFor(site: Site, m: Message, source?: LeadSource): LeadPayload {
+  return { id: m.id, name: m.name, email: m.email, phone: m.phone, message: m.body, page: m.page, createdAt: m.createdAt, business: site.business.name, website: liveUrl(site), ...(source ? { source: source.campaign ? `${source.label} (${source.campaign})` : source.label } : {}) }
 }
 
 const APP = 'https://saysites.com'
@@ -176,7 +198,7 @@ export async function syncLead(state: CrmState, site: Site, m: Message, only?: I
   for (const kind of INTEGRATIONS) {
     const int = state.integrations[kind]
     if (!int?.on || (only && kind !== only)) continue
-    const r = await pushLead(kind, int.config, payloadFor(site, m), state.secret)
+    const r = await pushLead(kind, int.config, payloadFor(site, m, meta.source), state.secret)
     int.last = { at: new Date().toISOString(), ok: r.ok, text: r.text }
     addEvent(meta, 'sync', r.text, r.ok)
     out.push(r)
@@ -187,9 +209,10 @@ export async function syncLead(state: CrmState, site: Site, m: Message, only?: I
 // A new lead just arrived from the site's form: reply to them, tell the
 // owner, and send it to their CRMs. Never throws; every outcome lands on
 // the lead's timeline.
-export async function onNewLead(store: Store, site: Site, m: Message): Promise<void> {
+export async function onNewLead(store: Store, site: Site, m: Message, source?: LeadSource): Promise<void> {
   await withCrm(store, site.id, async (state) => {
     const meta = metaFor(state, m.id)
+    if (source) meta.source = source
     const a = state.automations
     const v = valuesFor(site, m)
     if (a.reply.on && m.email && mailReady()) {
@@ -205,7 +228,7 @@ export async function onNewLead(store: Store, site: Site, m: Message): Promise<v
     if (a.alert.on && mailReady()) {
       const to = await ownerEmail(store, site, state)
       if (to) {
-        const lines = [`${m.name || 'Someone'} just sent a request through ${site.business.name}’s website.`, '', m.body, '', [m.email && `Email: ${m.email}`, m.phone && `Phone: ${m.phone}`].filter(Boolean).join('\n'), '', `Open the lead: ${leadLink(site.id, m.id)}`]
+        const lines = [`${m.name || 'Someone'} just sent a request through ${site.business.name}’s website${source && source.label !== 'Search or direct' ? ` (from ${source.label})` : ''}.`, '', m.body, '', [m.email && `Email: ${m.email}`, m.phone && `Phone: ${m.phone}`].filter(Boolean).join('\n'), '', `Open the lead: ${leadLink(site.id, m.id)}`]
         await sendMail({ to, subject: `New lead: ${m.name || 'website request'}`, text: lines.join('\n'), fromName: 'SaySites', ...(m.email ? { replyTo: m.email } : {}) })
       }
     }
@@ -217,38 +240,78 @@ const DAY = 86_400_000
 
 // Runs every few minutes: follow-up emails to leads nobody has answered,
 // reminders to owners, and follow-up dates that have come round.
-export async function runDue(store: Store, now = new Date()): Promise<number> {
-  if (!mailReady()) return 0
+// Whether a lead has anything the scheduler might send about now.
+function leadDue(state: CrmState, site: Site, m: Message, now: number, today: string): boolean {
+  const meta = state.leads[m.id]
+  const a = state.automations
+  const fresh = now - Date.parse(m.createdAt) < 30 * DAY && Date.parse(m.createdAt) >= Date.parse(state.since)
+  if (fresh && (meta?.stage ?? 'new') === 'new' && ((a.followUp.on && !meta?.followedUp && m.email) || (a.remind.on && !meta?.reminded))) return true
+  if (meta?.followUpOn && meta.followUpOn <= today && meta.remindedOn !== meta.followUpOn) return true
+  return !!(a.review.on && site.business.reviewUrl && meta?.stage === 'won' && meta.wonAt && !meta.reviewAsked && m.email)
+}
+
+// Runs every 10 minutes: follow-up emails to leads nobody has answered,
+// reminders to owners, follow-up dates that have come round, review
+// requests to new clients, and (in the first week of a month) last month's
+// results email.
+export async function runDue(store: Store, now = new Date(), send: typeof sendMail = sendMail): Promise<number> {
+  if (send === sendMail && !mailReady()) return 0
   let sent = 0
+  const t = now.getTime()
   const today = now.toISOString().slice(0, 10)
-  for (const { site } of await store.crmSites()) {
-    const messages = (await store.messagesForSite(site.id, 200)).filter((m) => now.getTime() - Date.parse(m.createdAt) < 30 * DAY)
-    if (!messages.length) continue
+  const R = now.getUTCDate() <= 7 ? await import('./report') : null
+  const last = R?.previousMonth(now)
+  for (const site of await store.allSites()) {
+    if (site.orgId === SHOWCASE_ORG) continue
+    const messages = await store.messagesForSite(site.id, 200)
+    const peek = await loadCrm(store, site.id)
+    const wantReport = !!R && peek.automations.report.on && peek.reportSent !== last
+    if (!wantReport && !messages.some((m) => leadDue(peek, site, m, t, today))) continue
     await withCrm(store, site.id, async (state) => {
       const a = state.automations
       for (const m of messages) {
-        if (Date.parse(m.createdAt) < Date.parse(state.since)) continue
+        if (!leadDue(state, site, m, t, today)) continue
         const meta = metaFor(state, m.id)
-        const age = now.getTime() - Date.parse(m.createdAt)
+        const age = t - Date.parse(m.createdAt)
+        const fresh = age < 30 * DAY && Date.parse(m.createdAt) >= Date.parse(state.since)
         const v = valuesFor(site, m)
-        if (a.followUp.on && meta.stage === 'new' && !meta.followedUp && m.email && age >= a.followUp.days * DAY) {
-          const r = await sendMail({ to: m.email, subject: fill(a.followUp.subject, v), text: fill(a.followUp.body, v), fromName: site.business.name, replyTo: site.business.email })
+        if (fresh && a.followUp.on && meta.stage === 'new' && !meta.followedUp && m.email && age >= a.followUp.days * DAY) {
+          const r = await send({ to: m.email, subject: fill(a.followUp.subject, v), text: fill(a.followUp.body, v), fromName: site.business.name, replyTo: site.business.email })
           meta.followedUp = true
           addEvent(meta, 'auto', r.ok ? `Follow-up email sent to ${m.email}` : `Follow-up email not sent: ${r.error}`, r.ok)
           if (r.ok) sent++
         }
         const to = a.remind.on || meta.followUpOn ? await ownerEmail(store, site, state) : ''
-        if (to && a.remind.on && meta.stage === 'new' && !meta.reminded && age >= a.remind.hours * 3_600_000) {
-          const r = await sendMail({ to, subject: `Still waiting: ${m.name || 'a website lead'}`, text: `${m.name || 'Someone'} asked ${site.business.name} for help ${Math.round(age / 3_600_000)} hours ago and is still marked New.\n\nOpen the lead: ${leadLink(site.id, m.id)}`, fromName: 'SaySites' })
+        if (fresh && to && a.remind.on && meta.stage === 'new' && !meta.reminded && age >= a.remind.hours * 3_600_000) {
+          const r = await send({ to, subject: `Still waiting: ${m.name || 'a website lead'}`, text: `${m.name || 'Someone'} asked ${site.business.name} for help ${Math.round(age / 3_600_000)} hours ago and is still marked New.\n\nOpen the lead: ${leadLink(site.id, m.id)}`, fromName: 'SaySites' })
           meta.reminded = true
           addEvent(meta, 'reminder', r.ok ? 'Reminder sent to you: not answered yet' : `Reminder not sent: ${r.error}`, r.ok)
           if (r.ok) sent++
         }
         if (to && meta.followUpOn && meta.followUpOn <= today && meta.remindedOn !== meta.followUpOn && meta.stage !== 'won' && meta.stage !== 'lost') {
-          const r = await sendMail({ to, subject: `Follow up today: ${m.name || 'a website lead'}`, text: `You set today to follow up with ${m.name || 'this lead'}.\n\nOpen the lead: ${leadLink(site.id, m.id)}`, fromName: 'SaySites' })
+          const r = await send({ to, subject: `Follow up today: ${m.name || 'a website lead'}`, text: `You set today to follow up with ${m.name || 'this lead'}.\n\nOpen the lead: ${leadLink(site.id, m.id)}`, fromName: 'SaySites' })
           meta.remindedOn = meta.followUpOn
           addEvent(meta, 'reminder', r.ok ? 'Follow-up reminder sent to you' : `Follow-up reminder not sent: ${r.error}`, r.ok)
           if (r.ok) sent++
+        }
+        if (a.review.on && site.business.reviewUrl && meta.stage === 'won' && meta.wonAt && !meta.reviewAsked && m.email && t - Date.parse(meta.wonAt) >= a.review.days * DAY) {
+          const r = await send({ to: m.email, subject: fill(a.review.subject, v), text: fill(a.review.body, v), fromName: site.business.name, replyTo: site.business.email })
+          meta.reviewAsked = true
+          addEvent(meta, 'auto', r.ok ? `Review request sent to ${m.email}` : `Review request not sent: ${r.error}`, r.ok)
+          if (r.ok) sent++
+        }
+      }
+      if (R && last && a.report.on && state.reportSent !== last) {
+        const report = await R.buildReport(store, site, state, last)
+        const to = await ownerEmail(store, site, state)
+        if (!R.reportHasNews(report) || !to) {
+          state.reportSent = last
+        } else {
+          const r = await send({ to, subject: `${site.business.name}: your website in ${report.label}`, text: R.reportText(site, report), fromName: 'SaySites' })
+          if (r.ok) {
+            state.reportSent = last
+            sent++
+          }
         }
       }
     }).catch(() => null)
@@ -289,10 +352,11 @@ export function csvFor(messages: Message[], state: CrmState): string {
   const esc = (s: string) => (/[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s)
   // Spreadsheet apps run cells that start with these as formulas.
   const safe = (s: string) => esc(/^[=+\-@\t\r]/.test(s) ? `'${s}` : s)
-  const rows = [['Received', 'Name', 'Email', 'Phone', 'Stage', 'Follow up on', 'Page', 'Message']]
+  const rows = [['Received', 'Name', 'Email', 'Phone', 'Stage', 'Came from', 'Follow up on', 'Page', 'Message']]
   for (const m of messages) {
     const meta = state.leads[m.id]
-    rows.push([m.createdAt, m.name, m.email, m.phone, STAGE_LABEL[meta?.stage ?? 'new'], meta?.followUpOn ?? '', m.page, m.body])
+    const src = meta?.source ? `${meta.source.label}${meta.source.campaign ? ` (${meta.source.campaign})` : ''}` : 'Search or direct'
+    rows.push([m.createdAt, m.name, m.email, m.phone, STAGE_LABEL[meta?.stage ?? 'new'], src, meta?.followUpOn ?? '', m.page, m.body])
   }
   return rows.map((r) => r.map(safe).join(',')).join('\r\n') + '\r\n'
 }
