@@ -162,9 +162,11 @@ function renderWidget(w: Widget): string {
     case 'button':
       return `<a class="btn btn-${w.variant} ${c}" href="${esc(w.href)}">${esc(w.label)}</a>`
     case 'faq':
-      // <details> gives open/close with zero JavaScript.
+      // <details> gives open/close with zero JavaScript. Each question is a
+      // real heading inside its summary, so search and answer engines read it
+      // as a question the page answers.
       return `<div class="faq ${c}">${w.items
-        .map((i) => `<details><summary>${esc(i.question)}</summary><div>${paragraphs(i.answer).map((p) => `<p>${p}</p>`).join('')}</div></details>`)
+        .map((i) => `<details><summary><h3>${esc(i.question)}</h3></summary><div>${paragraphs(i.answer).map((p) => `<p>${p}</p>`).join('')}</div></details>`)
         .join('')}</div>`
     case 'form':
       return renderForm(w)
@@ -598,7 +600,7 @@ function widgetCss(used: Set<string>): string {
   if (used.has('faq')) {
     css +=
       `.faq details{border-bottom:1px solid var(--c-surface);padding:12px 0}` +
-      `.faq summary{cursor:pointer;font-weight:600}.faq details>div{padding-top:8px}`
+      `.faq summary{cursor:pointer;font-weight:600}.faq summary h3{display:inline;font:inherit;margin:0;letter-spacing:inherit;text-transform:none}.faq details>div{padding-top:8px}`
   }
   return css
 }

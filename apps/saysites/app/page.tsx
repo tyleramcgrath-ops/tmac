@@ -66,7 +66,7 @@ const CRMS = ['HubSpot', 'Salesforce', 'Pipedrive', 'Clio Grow', 'Zapier', 'Make
 const SEO_FEATURES = [
   ['A full audit of every page', 'Titles, descriptions, headings, links, photos, Google data and speed, checked the way Google reads them. It runs by itself after every change and every week.'],
   ['Fixes, most important first', 'Each one explained in plain words. Common ones, like duplicate titles and descriptions, are fixed in one click. For the rest, say what you want changed and approve it before it goes live.'],
-  ['Ready for AI answers', 'A score for how easily ChatGPT-style answer engines can read and quote your pages, and what would raise it.'],
+  ['Beat the pages that rank', 'Pick a page and the search you want it to win. It’s scored against the pages Google ranks and the sites its AI Overview quotes, with what to change, most valuable first. Every page also gets a score for how easily AI answer engines can quote it.'],
   ['Side by side with competitors', 'Add the firms you lose clients to. Their sites are read and scored the same way as yours, so you see exactly where you lead and where you don’t.'],
   ['Where you show up on Google', 'Track the searches that bring clients, like “estate planning lawyer near me”, and see your real position each day.'],
   ['Who AI recommends', 'Ask the questions clients ask AI and see whether your site is cited, and which sites are cited instead. Plus the websites that link to yours.'],

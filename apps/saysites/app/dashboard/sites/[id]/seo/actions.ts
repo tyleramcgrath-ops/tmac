@@ -8,6 +8,7 @@ import { tradeLabel } from '@/lib/league'
 import { requireUser } from '@/lib/session'
 import { PageSchema } from '@/lib/schema'
 import { LIMITS, applySeoFix, auditCompetitor, auditSite, checkAiQuery, checkKeyword, checkLinks, checkedToday, loadSeoState, type SeoState } from '@/lib/seo-intel'
+import { GAP_LIMITS, scanGap } from '@/lib/gap-scan'
 import { bundleFor } from '@/lib/sites'
 import { getStore } from '@/lib/store'
 import { liveUrl } from '@/lib/urls'
@@ -133,5 +134,31 @@ export async function checkNow(siteId: string): Promise<void> {
   )
   const backlinks = state.backlinks && checkedToday([state.backlinks]) ? state.backlinks : ((await checkLinks(host)) ?? state.backlinks)
   await store.saveSeoState(site.id, { ...state, keywords, aiQueries, ...(backlinks ? { backlinks } : {}) })
+  back(siteId)
+}
+
+// Citation Gap: one page against the pages that rank for one search. About
+// four Google searches per scan, so premium plans only, once a day per scan.
+export async function runGapScan(siteId: string, form: FormData): Promise<void> {
+  if (!(await paidLookupsAllowed(siteId))) back(siteId, 'plan')
+  const { store, site, state } = await owned(siteId)
+  const pageId = String(form.get('page') ?? '')
+  const keyword = String(form.get('keyword') ?? '').trim().replace(/\s+/g, ' ').slice(0, 80)
+  const bundle = await bundleFor(site, store)
+  const page = bundle?.pages.find((p) => p.id === pageId && p.status === 'published')
+  if (!bundle || !page || !keyword) back(siteId)
+  const gaps = state.gaps ?? []
+  const same = (g: { pageId: string; keyword: string }) => g.pageId === pageId && g.keyword.toLowerCase() === keyword.toLowerCase()
+  const old = gaps.find(same)
+  if (!old && gaps.length >= GAP_LIMITS.scans) back(siteId, 'gaps')
+  if (old && !old.error && checkedToday([old])) back(siteId, 'gaptoday')
+  const result = await scanGap(bundle!, liveUrl(site), page!, keyword)
+  await store.saveSeoState(site.id, { ...state, gaps: [result, ...gaps.filter((g) => !same(g))] })
+  back(siteId, result.error ? 'gaperror' : 'gap')
+}
+
+export async function removeGapScan(siteId: string, pageId: string, keyword: string): Promise<void> {
+  const { store, site, state } = await owned(siteId)
+  await store.saveSeoState(site.id, { ...state, gaps: (state.gaps ?? []).filter((g) => !(g.pageId === pageId && g.keyword === keyword)) })
   back(siteId)
 }
