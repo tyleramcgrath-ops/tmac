@@ -1,0 +1,501 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import { Logo, LogoMark, Wordmark } from '@/components/Logo'
+import { TEMPLATES } from '@/lib/templates'
+import '../home.css'
+
+export const metadata: Metadata = {
+  title: 'Websites for trades and local businesses',
+  description: 'Describe your business in a sentence and SaySites builds a fast, fully SEO-optimized website. $15 a month, and 0% of your sales. Ever.',
+  alternates: { canonical: '/trades' },
+}
+
+// saysites.com/trades: SaySites for trades and every other local business
+// (law firms have the home page). A static page with no client JavaScript of its own; motion is
+// CSS only. Anything not built yet is labelled "Coming soon". The example
+// sites and the editor are design mockups drawn in HTML; their photos come from
+// Unsplash and are resized by Vercel's image optimizer.
+
+const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2000&q=75`
+
+function Photo({ id, sizes, priority = false, pos }: { id: string; sizes: string; priority?: boolean; pos?: string }) {
+  return <Image src={U(id)} alt="" fill sizes={sizes} priority={priority} style={{ objectFit: 'cover', objectPosition: pos ?? 'center' }} />
+}
+
+function Frame({ url, children }: { url: string; children: React.ReactNode }) {
+  return (
+    <div className="frame">
+      <div className="frame-bar"><i /><i /><i /><span>{url}</span></div>
+      <div className="frame-body">{children}</div>
+    </div>
+  )
+}
+
+function SayBox({ id, label = 'Build my site' }: { id: string; label?: string }) {
+  return (
+    <form className="say" action="/signup" method="get" role="search" aria-label="Describe your business">
+      <label htmlFor={id} className="visually-hidden">What does your business do?</label>
+      <input id={id} name="idea" placeholder="A family bakery in Portland, Oregon…" autoComplete="off" maxLength={200} />
+      <button className="b b-light" type="submit">{label}</button>
+    </form>
+  )
+}
+
+/* ---------- Example sites (mockups) ---------- */
+
+function Bakery({ priority = false }: { priority?: boolean }) {
+  return (
+    <div className="bk">
+      <div className="bk-nav"><img className="mk-logo" src="/media/logos/rosies-bakery.svg" alt="Rosie’s Bakery" width="203" height="79" /><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
+      <div className="bk-hero">
+        <div>
+          <small>SE Division, Portland</small>
+          <h3>Sourdough, baked every morning at five.</h3>
+          <p>Country loaves, celebration cakes and good coffee, a block from the park.</p>
+          <div className="bk-btns"><em>Order for pickup</em><span>Today’s bakes</span></div>
+        </div>
+        <div className="ph bk-ph"><Photo id="1509440159596-0249088772ff" sizes="(max-width: 900px) 45vw, 380px" priority={priority} /></div>
+      </div>
+      <div className="bk-row">
+        {[
+          ['1579697096985-41fe1430e5df', 'Pastries', 'Croissants and buns'],
+          ['1566698629409-787a68fc5724', 'Bread', 'Country, rye, seeded'],
+          ['1567042661848-7161ce446f85', 'Wholesale', 'For cafés nearby'],
+        ].map(([id, t, s]) => (
+          <div key={t}><div className="ph bk-th"><Photo id={id} sizes="(max-width: 900px) 30vw, 220px" /></div><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// A coffee roaster's shop: the Store plan's products, prices and buy buttons.
+function Roaster() {
+  return (
+    <div className="ro">
+      <div className="ro-nav"><b>Northside <span>Roasters</span></b><span>Shop</span><span>Wholesale</span><span>Visit</span></div>
+      <div className="ro-hero">
+        <div className="ph"><Photo id="1741994043738-393513f7bf52" sizes="(max-width: 900px) 90vw, 560px" /></div>
+        <div className="ro-hero-t"><small>Small-batch, roasted Tuesdays</small><h3>Fresh coffee, at your door by Friday.</h3></div>
+      </div>
+      <div className="ro-row">
+        {[
+          ['1695245503558-5cdb37f49092', 'House Blend', 'Chocolate, toasted nuts', '$18.00', false],
+          ['1712402832925-d41c446883d3', 'Colombia Huila', 'Red apple, caramel', '$21.00', false],
+          ['1562051036-e0eea191d42f', 'Espresso Roast', 'Dark cocoa, molasses', '$19.00', true],
+        ].map(([id, name, notes, price, out]) => (
+          <div key={name as string} className="ro-card">
+            <div className="ph ro-th"><Photo id={id as string} sizes="(max-width: 900px) 30vw, 200px" /></div>
+            <b>{name}</b><span>{notes}</span>
+            <div className="ro-buy"><strong>{price}</strong>{out ? <em className="out">Sold out</em> : <em>Buy now</em>}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Plumber() {
+  return (
+    <div className="pl">
+      <div className="pl-top"><span>Licensed and insured, Rivertown and the valley</span><b>(555) 014-2200</b></div>
+      <div className="pl-nav"><img className="mk-logo" src="/media/logos/rivertown-plumbing.svg" alt="Rivertown Plumbing" width="476" height="89" /><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
+      <div className="pl-hero ph">
+        <Photo id="1749532125405-70950966b0e5" sizes="(max-width: 900px) 100vw, 760px" pos="50% 40%" />
+        <div className="pl-copy">
+          <small>Open 24/7, Same-day callouts</small>
+          <h3>Burst pipe? We’re on the way.</h3>
+          <p>Upfront-priced plumbing for homes and small businesses in Rivertown.</p>
+          <div className="pl-btns"><em>Call (555) 014-2200</em><span>Get a free quote</span></div>
+        </div>
+      </div>
+      <div className="pl-strip">
+        {[['Leaks and bursts', '60-minute response'], ['Water heaters', 'Repair and install'], ['Drains', 'Cleared same day'], ['Remodels', 'Kitchens and baths']].map(([t, s]) => (
+          <div key={t}><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Dark & Upscale: Olive & Ember, the look of the birthday demo.
+function Upscale() {
+  return (
+    <div className="up">
+      <div className="up-nav"><img className="mk-logo" src="/media/logos/olive-and-ember.svg" alt="Olive &amp; Ember" width="388" height="78" /><span>Menu</span><span>Visit</span><em>Reserve</em></div>
+      <div className="up-hero ph">
+        <Photo id="1622880833523-7cf1c0bd4296" sizes="(max-width: 900px) 100vw, 760px" pos="50% 55%" />
+        <div className="up-copy">
+          <small>Wall Street, Asheville</small>
+          <h3>Wood-fired, and worth the wait.</h3>
+          <div className="up-btns"><em>Reserve a table</em><span>See the menu</span></div>
+        </div>
+      </div>
+      <div className="up-row">
+        {[
+          ['1599130143407-2a6ff8a196c9', 'Wood-fired pizza', 'From the oven at 900°'],
+          ['1516685018646-549198525c1b', 'Handmade pasta', 'Rolled every afternoon'],
+          ['1776362441386-c02107b86576', 'Private dining', 'Up to 24 guests'],
+        ].map(([id, t, s]) => (
+          <div key={t}><div className="ph up-th"><Photo id={id} sizes="(max-width: 900px) 30vw, 220px" /></div><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Salon() {
+  return (
+    <div className="sa">
+      <div className="sa-nav"><span>Services</span><img className="mk-logo" src="/media/logos/salt-and-stone.svg" alt="Salt &amp; Stone" width="431" height="84" /><span>Book</span></div>
+      <div className="sa-hero">
+        <div className="ph"><Photo id="1633681926022-84c23e8cb2d6" sizes="(max-width: 900px) 50vw, 300px" /></div>
+        <div className="sa-copy">
+          <small>Jones Street, Savannah</small>
+          <h3>Hair that grows out beautifully.</h3>
+          <p>Lived-in color and precise cuts, by appointment.</p>
+          <em>Book a chair</em>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ---------- Page ---------- */
+
+export default function Trades() {
+  return (
+    <div className="home">
+      <header className="nav">
+        <div className="wrap">
+          <Logo />
+          <nav aria-label="Main">
+            <a className="hide-sm" href="/">Law firms</a>
+            <a className="hide-sm" href="#how">How it works</a>
+            <a className="hide-sm" href="/templates">Templates</a>
+            <a className="hide-sm" href="#pricing">Pricing</a>
+            <a href="/login">Log in</a>
+            <a className="b b-light b-sm" href="/signup">Start free</a>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section className="hero">
+          <div className="hero-bg"><Photo id="1687422808248-f807f4ea2a2e" sizes="100vw" priority pos="60% 30%" /></div>
+          <div className="wrap hero-in">
+            <h1>Your business,<br />online by tonight.</h1>
+            <p className="lede">You describe your business, pick the look and make every change yourself, in plain words. It goes live fast, SEO fully optimized, and it’s all yours. <strong>$15 a month. 0% of your sales.</strong></p>
+            <SayBox id="idea-top" />
+            <ul className="assure"><li>No credit card</li><li>Live in minutes</li><li>Cancel anytime</li></ul>
+            <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free</a></p>
+          </div>
+        </section>
+
+        <section className="product" aria-label="The SaySites editor">
+          <div className="wrap">
+            <div className="app" aria-hidden="true">
+              <div className="app-bar">
+                <span className="app-logo"><LogoMark size={24} /><Wordmark /></span>
+                <span className="app-site">Rosie’s Bakery</span>
+                <div className="app-tabs"><span className="on">Home</span><span>Services</span><span>Contact</span></div>
+                <span className="app-live"><i />Live</span>
+                <span className="app-pub">Publish</span>
+              </div>
+              <div className="app-body">
+                <div className="canvas"><Frame url="rosies-bakery.saysites.com"><Bakery priority /></Frame></div>
+                <aside className="side">
+                  <div className="side-h"><span><LogoMark size={14} />Sofie</span><span>Speed 100</span></div>
+                  <div className="msg me m1">Can you add our weekend hours and a photo of the pastries?</div>
+                  <div className="msg her m2">Done. I added “Sat-Sun, 7am-2pm” to the header and a pastries card on your home page.</div>
+                  <div className="diff m3">
+                    <div><span>Header</span><span>+ Weekend hours</span></div>
+                    <div><span>Home, cards</span><span>+ Pastries</span></div>
+                    <div><span>Speed check</span><span>Still 100</span></div>
+                  </div>
+                  <div className="msg me m4">Perfect. Publish it.</div>
+                  <div className="ask">Ask Sofie to change anything</div>
+                </aside>
+              </div>
+            </div>
+            <div className="checks" aria-hidden="true">
+              <b>Page checks</b>
+              <span>Title fits Google</span><span>One main heading</span><span>Business details</span><span>Sitemap</span>
+            </div>
+            <p className="product-note">A preview of the SaySites editor with Sofie, your assistant.</p>
+          </div>
+        </section>
+
+        <section className="stats" aria-label="SaySites at a glance">
+          <div className="wrap">
+            <div><b>$15</b><span>a month, everything included</span></div>
+            <div><b>0%</b><span>of your sales, ever</span></div>
+            <div><b>100</b><span>Google speed score on our sample site</span></div>
+            <div><b>95+</b><span>required before any page goes live</span></div>
+          </div>
+        </section>
+
+        <section className="how dark" id="how">
+          <div className="how-mark" aria-hidden="true"><LogoMark size={720} /></div>
+          <div className="wrap">
+            <div className="head">
+              <p className="kicker">How it works</p>
+              <h2>Your site.<br />Your say.</h2>
+              <p className="head-note">Built on years of experience making websites that rank: what search engines look for, what customers need, and what gets them to call.</p>
+            </div>
+            <ol className="steps">
+              <li>
+                <h3>Say what you do</h3>
+                <p>Your business, your town, what you offer. A sentence or two is plenty.</p>
+                <div className="vis vis-type">We’re a two-person roofing crew in Tulsa. Repairs and storm damage.<i /></div>
+              </li>
+              <li>
+                <h3>Make it yours</h3>
+                <p>Pick the look, add your photos and your words. Home, Services and Contact pages, SEO-optimized from day one.</p>
+                <div className="vis vis-pages"><span>Home</span><span>Services</span><span>Contact</span><span>Sitemap</span></div>
+              </li>
+              <li>
+                <h3>Ask for changes</h3>
+                <p>Tell Sofie what to change. You see it first and can undo anything.</p>
+                <div className="vis vis-chat"><span>Add 10% off gutter cleaning until Friday.</span></div>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section className="examples" id="examples">
+          <div className="wrap">
+            <div className="head split">
+              <div>
+                <p className="kicker">Talk &amp; Design templates</p>
+                <h2>Pick a look. Say who you are. Done.</h2>
+              </div>
+              <p>Each template comes with a ready-made prompt. Fill in your business name, town and services, and Sofie designs your site from it. Then keep talking to change anything.</p>
+            </div>
+            <div className="tpls">
+              {TEMPLATES.map((t, i) => (
+                <article className={`tplrow${i % 2 ? ' flip' : ''}`} key={t.key}>
+                  <div className="tplrow-shot">
+                    <Frame url={`${t.example}.saysites.com`}>{t.key === 'bold' ? <Plumber /> : t.key === 'editorial' ? <Salon /> : t.key === 'upscale' ? <Upscale /> : <Bakery />}</Frame>
+                  </div>
+                  <div className="tplrow-copy">
+                    <h3>{t.name}</h3>
+                    <p className="tplrow-for">Great for {t.bestFor.toLowerCase()}</p>
+                    <div className="prompt-card">
+                      <span className="prompt-label">The prompt</span>
+                      <p>{t.prompt({}).split(/(\[[^\]]+\])/).map((part, n) => (part.startsWith('[') ? <mark key={n}>{part.slice(1, -1)}</mark> : part))}</p>
+                    </div>
+                    <div className="tplrow-actions">
+                      <a className="b b-dark" href={`/signup?template=${t.key}`}>Use this template</a>
+                      <a className="tplrow-link" href={`/preview/${t.example}`}>See the live example</a>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="tpl-more"><a className="b b-line" href="/templates">See all 13 live example sites</a></p>
+          </div>
+        </section>
+
+        <section className="standing" id="standing">
+          <div className="wrap standing-in">
+            <div className="standing-copy">
+              <p className="kicker">Your weekly standing</p>
+              <h2>Earned, not bought.</h2>
+              <p>Every week, your site gets a Visibility Score and a standing against businesses like yours on SaySites. You don’t move up by spending on ads. You move up by doing what Google actually rewards, and Sofie does most of that for you.</p>
+              <p>Your standing arrives Monday in a private letter. Want to see who you’re up against? Share yours and compare with everyone who shares theirs.</p>
+              <a className="b b-line" href="/visibility-index">See the SaySites Index</a>
+            </div>
+            <div className="standing-card" aria-hidden="true">
+              <div className="sc-head"><span>Plumbers on SaySites, this week</span><span>3 days left</span></div>
+              <ol>
+                <li><b>1</b><span>Oakline Plumbing<i>Greatest gain</i></span><em>+27</em></li>
+                <li><b>2</b><span>Clearwater Plumbing</span><em>+19</em></li>
+                <li className="me"><b>3</b><span>Rivertown Plumbing</span><em>+18</em></li>
+                <li><b>4</b><span>A plumber in Akron</span><em>+12</em></li>
+                <li><b>5</b><span>Keel &amp; Sons</span><em>+11</em></li>
+              </ol>
+              <p className="sc-tip"><b>2 points</b> moves you to 2nd. Ask Sofie to add your reviews, worth +3.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="sell" id="sell">
+          <div className="wrap sell-in">
+            <div className="sell-copy">
+              <p className="kicker">Sell online</p>
+              <h2>A real store for $25 a month. Keep every dollar.</h2>
+              <p>Add your products with photos and prices, and your site gets a Shop page with buy buttons. Customers pay through your own Stripe checkout, so the money goes straight to you. SaySites takes 0% of every sale.</p>
+              <ul className="sell-list">
+                <li>Products, photos and a Shop page</li>
+                <li>Checkout through your own Stripe account</li>
+                <li>Prices Google can read</li>
+                <li>Sold out? Mark it in one tap</li>
+              </ul>
+              <p><a className="b b-dark" href="/signup">Open your store</a></p>
+            </div>
+            <div className="sell-vis" aria-hidden="true">
+              <Frame url="northside-roasters.saysites.com"><Roaster /></Frame>
+              <div className="sell-order"><i>✓</i><div><b>New order, $36.00</b><span>Paid to your Stripe, SaySites fee $0.00</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="conn" id="connect">
+          <div className="wrap">
+            <div className="conn-head">
+              <p className="kicker">Coming soon</p>
+              <h2>Bring what you already have.</h2>
+              <p>Connect your Google Business Profile, Instagram or Facebook, and your site picks up your real reviews and your best photos. You choose what shows, and nothing is posted anywhere without you.</p>
+              <p><a href="/connect">See what you can connect today</a></p>
+            </div>
+            <div className="conn-grid">
+              <div className="conn-card">
+                <div className="conn-vis conn-g" aria-hidden="true">
+                  <div className="conn-rating"><b>4.9</b><span>★★★★★</span><small>38 reviews on Google</small></div>
+                  <blockquote>“Best sourdough in Portland. We come every Saturday.”<cite>Maria K.</cite></blockquote>
+                </div>
+                <h3>Your Google reviews</h3>
+                <p>Connect your Google Business Profile and your latest reviews appear on your site, in your customers’ own words. New ones show up on their own.</p>
+              </div>
+              <div className="conn-card">
+                <div className="conn-vis conn-ig" aria-hidden="true">
+                  {['1579697096985-41fe1430e5df', '1566698629409-787a68fc5724', '1567042661848-7161ce446f85', '1509440159596-0249088772ff', '1555507036-ab1f4038808a', '1517433670267-08bbd4be890f'].map((id) => (
+                    <div key={id} className="ph"><Photo id={id} sizes="120px" /></div>
+                  ))}
+                </div>
+                <h3>Your Instagram photos</h3>
+                <p>Pick posts from Instagram and they become your gallery, resized so your site stays fast. Post something new and add it in a tap.</p>
+              </div>
+              <div className="conn-card">
+                <div className="conn-vis conn-fb" aria-hidden="true">
+                  <div><b>Hours</b><span>Tue-Fri 7am-3pm</span></div>
+                  <div><b>Address</b><span>2210 SE Division St</span></div>
+                  <div><b>Photos</b><span>24 from your page</span></div>
+                  <em>Matched on your site ✓</em>
+                </div>
+                <h3>Your Facebook page</h3>
+                <p>Bring over your photos, hours and details from Facebook, so everything customers see matches, wherever they find you.</p>
+              </div>
+            </div>
+            {/* Kids mode isn't built yet: a quiet mention, clearly coming soon. */}
+            <p className="conn-kids">Also coming soon: <a href="/kids">SaySites for kids</a>. Young entrepreneurs build a real website, and parents stay in charge.</p>
+          </div>
+        </section>
+
+        <section className="pricing" id="pricing">
+          <div className="wrap">
+            <div className="head split">
+              <div>
+                <p className="kicker">Pricing</p>
+                <h2>One price. Everything included.</h2>
+              </div>
+              <p>Other builders charge more for a store, sell the basics as paid apps, and some take a fee on every sale. SaySites is one flat price, and your money stays yours.</p>
+            </div>
+            <div className="plans">
+              <div className="plan plan-main">
+                <div className="plan-top"><h3>Site</h3><span className="tag">Start here</span></div>
+                <div className="amt">$15<small>/month</small></div>
+                <p className="per">For service businesses, or $150 a year, two months free</p>
+                <ul><li>Your full website, built for you</li><li>Your own domain</li><li>Hosting, SSL, SEO and speed checks</li><li>Call tracking and a messages inbox</li><li>Sofie for everyday changes, every month</li></ul>
+                <a className="b b-light b-block" href="/signup">Start free</a>
+              </div>
+              <div className="plan">
+                <div className="plan-top"><h3>Store</h3><span className="tag live">New</span></div>
+                <div className="amt">$25<small>/month</small></div>
+                <p className="per">For selling online, or $250 a year, two months free</p>
+                <ul><li>Everything in Site</li><li>Products and a Shop page</li><li>Paid through your own Stripe</li><li>0% taken from your sales</li><li>A bigger Sofie allowance</li></ul>
+                <a className="b b-line b-block" href="/signup">Start free</a>
+              </div>
+              <div className="plan">
+                <div className="plan-top"><h3>SEO Suite</h3><span className="tag">Coming soon</span></div>
+                <div className="amt">+$19<small>/month</small></div>
+                <p className="per">For growing faster</p>
+                <ul><li>Rank tracking</li><li>One-click SEO fixes</li><li>Competitor tracking</li><li>AI search tracking</li><li>Content plans Sofie writes</li></ul>
+                <span className="b b-line b-block b-soon">Coming soon</span>
+              </div>
+            </div>
+            <p className="fine">7-day free trial, no card needed. Cancel anytime, no setup fees. Sofie’s allowance refills every month; you can always make changes yourself too.</p>
+
+            <div className="compare">
+              <div className="compare-head">
+                <h3>What it costs somewhere else</h3>
+                <p>Same job, their prices. Most builders charge more for a store, and some take a cut of every sale on top.</p>
+              </div>
+              <div className="compare-scroll">
+                <table>
+                  <thead>
+                    <tr><th scope="col"><span className="sr">Plan</span></th><th scope="col" className="us">SaySites</th><th scope="col">Squarespace</th><th scope="col">Shopify</th><th scope="col">Wix</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><th scope="row">A website</th><td className="us">$15/mo</td><td>$25/mo</td><td>$39/mo<small>stores only</small></td><td>from $17/mo<small>billed yearly</small></td></tr>
+                    <tr><th scope="row">Selling online</th><td className="us">$25/mo</td><td>$25/mo<small>Basic</small></td><td>$39/mo<small>Basic</small></td><td>from $29/mo<small>Core, billed yearly</small></td></tr>
+                    <tr><th scope="row">Their cut of each sale</th><td className="us">0%</td><td>2%<small>on Basic</small></td><td>0-2%<small>2% without Shopify Payments</small></td><td>0%</td></tr>
+                    <tr><th scope="row">On $2,000 of sales a month, you pay them</th><td className="us"><strong>$25</strong></td><td>$65</td><td>$39</td><td>from $29</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="compare-note">Prices from each company’s own pricing page, checked September 2026, billed monthly unless noted. Card processing (about 2.9% + 30¢ a sale) applies everywhere, including Stripe on SaySites. Sources: <a href="https://www.squarespace.com/pricing" rel="nofollow noopener">Squarespace</a>, <a href="https://www.shopify.com/pricing" rel="nofollow noopener">Shopify</a>, <a href="https://www.wix.com/plans" rel="nofollow noopener">Wix</a>.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="feats">
+          <div className="wrap">
+            <div className="head">
+              <p className="kicker">What’s inside</p>
+              <h2>The things SEO pros do, done for you.</h2>
+            </div>
+            <div className="feat-grid">
+              <div><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p></div>
+              <div><h3>Kept up with Google</h3><p>Every site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up the same day. <a href="/google-guidelines">How it works</a></p></div>
+              <div><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p></div>
+              <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p></div>
+              <div><h3>Sofie, your assistant</h3><p>Change text, photos, sections and pages by chatting. You see every change first and can undo it.</p></div>
+              <div><h3>Messages, not missed calls</h3><p>Every site has a contact form. Messages land in your inbox, with reply and call buttons right there.</p></div>
+              <div><h3>A blog that brings people in</h3><p>Write helpful posts, or ask Sofie to draft one. Each gets its own page, a spot in your sitemap and the markup Google looks for.</p></div>
+              <div><h3>Nothing is ever lost</h3><p>Every change is saved as a version, and Sofie’s edits wait in a draft you can undo or throw away before anything goes live.</p></div>
+              <div><h3>Google and Bing, connected</h3><p>Paste one code to prove you own your site in Search Console and Bing Webmaster Tools. Your sitemap is ready for both.</p></div>
+              <div><h3>See who’s visiting</h3><p>Page views per day and your most-read pages, counted without cookies. No cookie banner, nothing slowing you down.</p></div>
+              <div><h3>Your photos, your logo</h3><p>Upload from your phone and they’re resized for speed automatically. Show your work in a gallery and your reviews in their own section.</p></div>
+              <div><h3>Sell online, keep 100%</h3><p>Add products and a Shop page in minutes. Customers pay you through your own Stripe account, with nothing taken from each sale.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="faq" id="faq">
+          <div className="wrap faq-in">
+            <div className="head">
+              <p className="kicker">Questions</p>
+              <h2>Good questions.</h2>
+            </div>
+            <div className="qa">
+              <details><summary>Do I need any design or tech skills?</summary><p>No. You describe your business and we build the site, then you change anything by asking Sofie: “make the photo darker”, “add our Saturday hours”. A drag-and-drop editor is coming too, for people who like to tinker.</p></details>
+              <details><summary>What does “0% of your sales” mean?</summary><p>Customers pay you through your own Stripe account. Stripe charges its normal card processing fee; SaySites takes nothing on top.</p></details>
+              <details><summary>Will my site show up on Google?</summary><p>Every site is built the way Google likes: fast, clean, with proper titles, a sitemap and business details search engines can read. Nobody can promise a #1 spot, but you start with the foundations right.</p></details>
+              <details><summary>Can I use my own domain?</summary><p>Yes. Every site gets a free yourname.saysites.com address, and you can connect a domain you own.</p></details>
+              <details><summary>What happens after the free trial?</summary><p>Your site stays live on the plan you pick: $15 a month for a site or $25 a month for a store. No contract, and you can cancel anytime.</p></details>
+            </div>
+          </div>
+        </section>
+
+        <section className="last">
+          <div className="hero-bg"><Photo id="1633681926022-84c23e8cb2d6" sizes="100vw" /></div>
+          <div className="wrap">
+            <LogoMark size={44} />
+            <h2>Your website is one sentence away.</h2>
+            <SayBox id="idea-bottom" />
+          </div>
+        </section>
+      </main>
+
+      <footer className="foot">
+        <div className="wrap">
+          <Logo />
+          <nav aria-label="Footer"><a href="/templates">Templates</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
+          <span>© {new Date().getFullYear()} SaySites</span>
+        </div>
+      </footer>
+    </div>
+  )
+}

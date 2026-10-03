@@ -6,6 +6,7 @@ import { placesReady } from '@/lib/places'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: 'https://saysites.com/', changeFrequency: 'weekly', priority: 1 },
+    { url: 'https://saysites.com/trades', changeFrequency: 'weekly', priority: 0.9 },
     { url: 'https://saysites.com/templates', changeFrequency: 'weekly', priority: 0.8 },
     { url: 'https://saysites.com/visibility-index', changeFrequency: 'weekly', priority: 0.7 },
     { url: 'https://saysites.com/redesign', changeFrequency: 'monthly', priority: 0.8 },

@@ -62,7 +62,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                   {priceId('law', 'month') && (
                     <label>
                       <input type="radio" name="plan" value="law" defaultChecked={wanted === 'law'} />
-                      <span><b>Law Firm</b> ${PRICES.law.month}/month<small>A law firm website you build and change yourself, with practice area pages, consultation requests, attorney advertising notices and a monthly Google rankings report.</small></span>
+                      <span><b>Law Firm</b> ${PRICES.law.month}/month<small>A law firm website you build and change yourself, with practice area pages, attorney profiles, consultation requests, attorney advertising notices and a weekly Visibility Score.</small></span>
                     </label>
                   )}
                   {priceId('lawpro', 'month') && (
