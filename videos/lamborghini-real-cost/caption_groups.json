@@ -1,0 +1,955 @@
+{
+  "total_duration_s": 40.364,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.07,
+      "end": 3.61,
+      "text": "This Lamborghini costs $250,000.",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "This",
+          "start": 0.07,
+          "end": 0.32
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "Lamborghini",
+          "start": 0.32,
+          "end": 1.2
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "costs",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "id": "caption-word-0-3",
+          "text": "$250,000.",
+          "start": 1.6,
+          "end": 3.54
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 3.61,
+      "end": 4.04,
+      "text": "That's the",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "That's",
+          "start": 3.61,
+          "end": 3.87
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "the",
+          "start": 3.87,
+          "end": 4.04
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 4.04,
+      "end": 4.816,
+      "text": "cheap part.",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "cheap",
+          "start": 4.04,
+          "end": 4.32
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "part.",
+          "start": 4.32,
+          "end": 4.74
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 4.816,
+      "end": 5.926,
+      "text": "Sales tax alone",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "Sales",
+          "start": 4.816,
+          "end": 5.226
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "tax",
+          "start": 5.226,
+          "end": 5.516
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "alone",
+          "start": 5.516,
+          "end": 5.806
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 6.166,
+      "end": 6.716,
+      "text": "about $17",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "about",
+          "start": 6.166,
+          "end": 6.336
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "$17",
+          "start": 6.336,
+          "end": 6.716
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 6.716,
+      "end": 6.966,
+      "text": "and a",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "and",
+          "start": 6.716,
+          "end": 6.906
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "a",
+          "start": 6.906,
+          "end": 6.966
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 6.966,
+      "end": 7.726,
+      "text": "half thousand",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "half",
+          "start": 6.966,
+          "end": 7.106
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "thousand",
+          "start": 7.236,
+          "end": 7.606
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 7.916,
+      "end": 8.286,
+      "text": "gone on",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "gone",
+          "start": 7.916,
+          "end": 8.146
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "on",
+          "start": 8.146,
+          "end": 8.286
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 8.286,
+      "end": 8.896,
+      "text": "day one.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "day",
+          "start": 8.286,
+          "end": 8.496
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "one.",
+          "start": 8.496,
+          "end": 8.776
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 3,
+      "start": 8.989,
+      "end": 10.599,
+      "text": "Then depreciation.",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "Then",
+          "start": 8.989,
+          "end": 9.289
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "depreciation.",
+          "start": 9.369,
+          "end": 10.539
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 3,
+      "start": 10.599,
+      "end": 11.049,
+      "text": "The Urus",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "The",
+          "start": 10.599,
+          "end": 10.759
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "Urus",
+          "start": 10.759,
+          "end": 11.049
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 3,
+      "start": 11.049,
+      "end": 12.149,
+      "text": "loses about a",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "loses",
+          "start": 11.049,
+          "end": 11.409
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "about",
+          "start": 11.409,
+          "end": 11.599
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "a",
+          "start": 11.599,
+          "end": 12.149
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 12.149,
+      "end": 12.369,
+      "text": "third of",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "third",
+          "start": 12.149,
+          "end": 12.239
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "of",
+          "start": 12.239,
+          "end": 12.369
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 3,
+      "start": 12.369,
+      "end": 12.899,
+      "text": "its value",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "its",
+          "start": 12.369,
+          "end": 12.559
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "value",
+          "start": 12.559,
+          "end": 12.899
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 3,
+      "start": 12.899,
+      "end": 14.279,
+      "text": "in five years.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "in",
+          "start": 12.899,
+          "end": 13.139
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "five",
+          "start": 13.139,
+          "end": 13.459
+        },
+        {
+          "id": "caption-word-14-2",
+          "text": "years.",
+          "start": 13.619,
+          "end": 14.219
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 3,
+      "start": 14.279,
+      "end": 16.079,
+      "text": "That's roughly $17,000",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "That's",
+          "start": 14.279,
+          "end": 14.569
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "roughly",
+          "start": 14.649,
+          "end": 15.029
+        },
+        {
+          "id": "caption-word-15-2",
+          "text": "$17,000",
+          "start": 15.029,
+          "end": 16.079
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 3,
+      "start": 16.079,
+      "end": 16.51,
+      "text": "a year.",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "a",
+          "start": 16.079,
+          "end": 16.139
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "year.",
+          "start": 16.139,
+          "end": 16.619
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 4,
+      "start": 16.51,
+      "end": 17.97,
+      "text": "Insurance runs around",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "Insurance",
+          "start": 16.51,
+          "end": 17.15
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "runs",
+          "start": 17.15,
+          "end": 17.45
+        },
+        {
+          "id": "caption-word-17-2",
+          "text": "around",
+          "start": 17.45,
+          "end": 17.89
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 4,
+      "start": 17.97,
+      "end": 19.12,
+      "text": "$6,600,",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "$6,600,",
+          "start": 17.97,
+          "end": 19.11
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 4,
+      "start": 19.12,
+      "end": 19.49,
+      "text": "a dealer",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "a",
+          "start": 19.12,
+          "end": 19.16
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "dealer",
+          "start": 19.16,
+          "end": 19.49
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 4,
+      "start": 19.49,
+      "end": 21.3,
+      "text": "service about $2,000,",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "service",
+          "start": 19.49,
+          "end": 19.93
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "about",
+          "start": 19.95,
+          "end": 20.19
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "$2,000,",
+          "start": 20.31,
+          "end": 21.27
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 4,
+      "start": 21.3,
+      "end": 21.59,
+      "text": "a set",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "a",
+          "start": 21.3,
+          "end": 21.35
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "set",
+          "start": 21.35,
+          "end": 21.59
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 4,
+      "start": 21.59,
+      "end": 23.37,
+      "text": "of tires $3,000.",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "of",
+          "start": 21.59,
+          "end": 21.74
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "tires",
+          "start": 21.74,
+          "end": 22.15
+        },
+        {
+          "id": "caption-word-22-2",
+          "text": "$3,000.",
+          "start": 22.15,
+          "end": 23.25
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 5,
+      "start": 23.481,
+      "end": 23.901,
+      "text": "and the",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "and",
+          "start": 23.481,
+          "end": 23.631
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "the",
+          "start": 23.631,
+          "end": 23.901
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 5,
+      "start": 23.901,
+      "end": 25.381,
+      "text": "one nobody counts,",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "one",
+          "start": 23.901,
+          "end": 24.161
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "nobody",
+          "start": 24.161,
+          "end": 24.631
+        },
+        {
+          "id": "caption-word-24-2",
+          "text": "counts,",
+          "start": 24.791,
+          "end": 25.381
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 5,
+      "start": 25.381,
+      "end": 25.941,
+      "text": "that quarter",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "that",
+          "start": 25.381,
+          "end": 25.561
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "quarter",
+          "start": 25.621,
+          "end": 25.941
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 5,
+      "start": 25.941,
+      "end": 27.091,
+      "text": "million invested at",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "million",
+          "start": 25.941,
+          "end": 26.251
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "invested",
+          "start": 26.361,
+          "end": 26.871
+        },
+        {
+          "id": "caption-word-26-2",
+          "text": "at",
+          "start": 26.871,
+          "end": 26.971
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 5,
+      "start": 27.131,
+      "end": 27.951,
+      "text": "5%",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "5%",
+          "start": 27.131,
+          "end": 27.831
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 5,
+      "start": 28.221,
+      "end": 28.401,
+      "text": "would have",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "would",
+          "start": 28.221,
+          "end": 28.321
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "have",
+          "start": 28.321,
+          "end": 28.401
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 5,
+      "start": 28.401,
+      "end": 30.151,
+      "text": "earned you $12,500.",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "earned",
+          "start": 28.401,
+          "end": 28.641
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "you",
+          "start": 28.641,
+          "end": 28.721
+        },
+        {
+          "id": "caption-word-29-2",
+          "text": "$12,500.",
+          "start": 28.721,
+          "end": 30.031
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 6,
+      "start": 30.353,
+      "end": 33.033,
+      "text": "$58,700 in year one",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "$58,700",
+          "start": 30.353,
+          "end": 32.193
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "in",
+          "start": 32.193,
+          "end": 32.403
+        },
+        {
+          "id": "caption-word-30-2",
+          "text": "year",
+          "start": 32.403,
+          "end": 32.833
+        },
+        {
+          "id": "caption-word-30-3",
+          "text": "one",
+          "start": 32.833,
+          "end": 32.913
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 6,
+      "start": 33.203,
+      "end": 33.743,
+      "text": "on top",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "on",
+          "start": 33.203,
+          "end": 33.403
+        },
+        {
+          "id": "caption-word-31-1",
+          "text": "top",
+          "start": 33.403,
+          "end": 33.743
+        }
+      ]
+    },
+    {
+      "id": "caption-group-32",
+      "frame": 6,
+      "start": 33.743,
+      "end": 34.213,
+      "text": "of the",
+      "words": [
+        {
+          "id": "caption-word-32-0",
+          "text": "of",
+          "start": 33.743,
+          "end": 33.963
+        },
+        {
+          "id": "caption-word-32-1",
+          "text": "the",
+          "start": 33.963,
+          "end": 34.093
+        }
+      ]
+    },
+    {
+      "id": "caption-group-33",
+      "frame": 6,
+      "start": 34.653,
+      "end": 34.693,
+      "text": "car,",
+      "words": [
+        {
+          "id": "caption-word-33-0",
+          "text": "car,",
+          "start": 34.653,
+          "end": 34.673
+        }
+      ]
+    },
+    {
+      "id": "caption-group-34",
+      "frame": 6,
+      "start": 34.693,
+      "end": 35.033,
+      "text": "about",
+      "words": [
+        {
+          "id": "caption-word-34-0",
+          "text": "about",
+          "start": 34.693,
+          "end": 34.913
+        }
+      ]
+    },
+    {
+      "id": "caption-group-35",
+      "frame": 6,
+      "start": 35.093,
+      "end": 36.623,
+      "text": "$4,900 a month.",
+      "words": [
+        {
+          "id": "caption-word-35-0",
+          "text": "$4,900",
+          "start": 35.093,
+          "end": 36.073
+        },
+        {
+          "id": "caption-word-35-1",
+          "text": "a",
+          "start": 36.073,
+          "end": 36.123
+        },
+        {
+          "id": "caption-word-35-2",
+          "text": "month.",
+          "start": 36.123,
+          "end": 36.503
+        }
+      ]
+    },
+    {
+      "id": "caption-group-36",
+      "frame": 7,
+      "start": 36.659,
+      "end": 37.299,
+      "text": "Looking rich",
+      "words": [
+        {
+          "id": "caption-word-36-0",
+          "text": "Looking",
+          "start": 36.659,
+          "end": 37.049
+        },
+        {
+          "id": "caption-word-36-1",
+          "text": "rich",
+          "start": 37.049,
+          "end": 37.299
+        }
+      ]
+    },
+    {
+      "id": "caption-group-37",
+      "frame": 7,
+      "start": 37.299,
+      "end": 37.809,
+      "text": "and being",
+      "words": [
+        {
+          "id": "caption-word-37-0",
+          "text": "and",
+          "start": 37.299,
+          "end": 37.489
+        },
+        {
+          "id": "caption-word-37-1",
+          "text": "being",
+          "start": 37.489,
+          "end": 37.809
+        }
+      ]
+    },
+    {
+      "id": "caption-group-38",
+      "frame": 7,
+      "start": 37.809,
+      "end": 38.799,
+      "text": "rich are different",
+      "words": [
+        {
+          "id": "caption-word-38-0",
+          "text": "rich",
+          "start": 37.809,
+          "end": 38.059
+        },
+        {
+          "id": "caption-word-38-1",
+          "text": "are",
+          "start": 38.059,
+          "end": 38.249
+        },
+        {
+          "id": "caption-word-38-2",
+          "text": "different",
+          "start": 38.249,
+          "end": 38.679
+        }
+      ]
+    },
+    {
+      "id": "caption-group-39",
+      "frame": 7,
+      "start": 38.809,
+      "end": 39.179,
+      "text": "math,",
+      "words": [
+        {
+          "id": "caption-word-39-0",
+          "text": "math,",
+          "start": 38.809,
+          "end": 39.129
+        }
+      ]
+    },
+    {
+      "id": "caption-group-40",
+      "frame": 7,
+      "start": 39.179,
+      "end": 39.689,
+      "text": "still want",
+      "words": [
+        {
+          "id": "caption-word-40-0",
+          "text": "still",
+          "start": 39.179,
+          "end": 39.439
+        },
+        {
+          "id": "caption-word-40-1",
+          "text": "want",
+          "start": 39.439,
+          "end": 39.609
+        }
+      ]
+    },
+    {
+      "id": "caption-group-41",
+      "frame": 7,
+      "start": 39.689,
+      "end": 40.369,
+      "text": "the Lambo?",
+      "words": [
+        {
+          "id": "caption-word-41-0",
+          "text": "the",
+          "start": 39.689,
+          "end": 39.879
+        },
+        {
+          "id": "caption-word-41-1",
+          "text": "Lambo?",
+          "start": 39.879,
+          "end": 40.249
+        }
+      ]
+    }
+  ]
+}
