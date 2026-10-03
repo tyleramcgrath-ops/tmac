@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MarketingShell } from '@/components/MarketingShell'
 import { typeLabel } from '@/lib/detect'
-import { PRICES } from '@/lib/billing'
 import { getStore } from '@/lib/store'
 import '../../home.css'
 
@@ -111,11 +110,7 @@ export default async function RedesignReport({ params, searchParams }: { params:
           <div className="ind-seo">
             <div><h3>Claim it free</h3><p>It’s saved to your account with every page. Imported pages wait as drafts until you point your domain here, so nothing changes on your current site until you’re ready.</p></div>
             <div><h3>Make it yours by asking</h3><p>Sofie can fix anything we read wrong, add your photos, write new pages and polish the imported ones. You see every change before it goes live.</p></div>
-            {d.type === 'lawyer' ? (
-              <div><h3>${PRICES.law.month} a month, or ${PRICES.lawpro.month} and we do it all</h3><p>7-day free trial. No setup fee, no contract, and your words and domain stay yours. On the built-for-you plan we finish the site and you approve it before it goes live.</p></div>
-            ) : (
-              <div><h3>${PRICES.site.month} a month, no transfer fee</h3><p>7-day free trial. No setup fee, no contract, and your words and domain stay yours.</p></div>
-            )}
+            <div><h3>Want us to finish it?</h3><p>We build it out with you, you approve every page from one private link, and it goes live on your own domain. No setup fee, no long contract, and your words and domain stay yours. <a href="/#talk">Let’s talk</a>.</p></div>
             <div><a className="b b-dark" href={claim}>Claim this site free</a></div>
           </div>
         </div>

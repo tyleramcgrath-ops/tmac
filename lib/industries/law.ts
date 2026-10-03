@@ -6,9 +6,9 @@ export const LAW_FIRMS: Industry = {
   example: 'hale-and-porter',
   plural: 'law firms',
   title: 'Law Firm Websites Without the Contract | SaySites',
-  description: 'A fast, professional law firm website with practice area pages, attorney advertising notices and a consultation form. $15 a month, no contract, and it’s yours.',
+  description: 'A fast, professional law firm website with practice area pages, attorney advertising notices and a consultation form. No long contract, and it’s yours.',
   kicker: 'Websites for law firms',
-  h1: 'A law firm website you own, for $15 a month.',
+  h1: 'A law firm website built for consultations.',
   lede: 'Practice area pages written for how clients search, a consultation form that reaches your inbox, and the professional polish a firm needs. No long contract, no setup fee, and every word and page stays yours.',
   problems: [
     { title: 'Locked into a platform', body: 'Many legal marketing providers sign firms to 12-month or longer agreements, and sites built on a proprietary platform have to be rebuilt from scratch when a firm leaves.' },
@@ -39,7 +39,7 @@ export const LAW_FIRMS: Industry = {
     'Add the attorney advertising notice to the bottom of every page',
   ],
   faq: [
-    { q: 'How much does a law firm website cost on SaySites?', a: '$15 a month, with no setup fee and no long-term contract. That includes hosting, your own domain, speed checks, SEO basics and changes by Sofie. It starts with a 7-day free trial.' },
+    { q: 'How much does a law firm website cost on SaySites?', a: 'It depends on your practice areas and what your firm needs, so we quote after a short conversation. There’s no setup fee and no long-term contract, and your site, content and domain stay yours. Start with a free redesign of your current site or tell us about your firm.' },
     { q: 'Can we move our existing site without losing rankings?', a: 'Yes. Enter your current website’s address and SaySites imports your pages, keeps the same page addresses wherever it can, and sets permanent redirects where one changes. Imported pages wait as drafts until you switch your domain over.' },
     { q: 'Do we own our website and content?', a: 'Yes. Your words, photos, attorney bios and domain are yours. If you ever leave, you take them with you.' },
     { q: 'Does it handle attorney advertising rules?', a: 'Each law firm site includes an attorney advertising notice and a note that information on the site isn’t legal advice, and Sofie never invents results, credentials or reviews. Bar rules vary by state, so the final wording is always yours to review.' },

@@ -12,8 +12,8 @@ const sans = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://saysites.com'),
-  title: { default: 'SaySites: say what your business does, get a website that ranks', template: '%s | SaySites' },
-  description: 'Describe your business in a sentence and SaySites builds a fast, fully SEO-optimized website. $15 a month, and 0% of your sales. Ever.',
+  title: { default: 'SaySites: websites for businesses that compete for every client', template: '%s | SaySites' },
+  description: 'Fast, SEO fully optimized websites for law firms, dental practices and home service companies. Designed, built and looked after for you, and always yours.',
   icons: { icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }, { url: '/favicon.png', sizes: '32x32', type: 'image/png' }], apple: '/apple-touch-icon.png' },
   // The picture shown when someone shares a SaySites link in a text or DM.
   openGraph: { siteName: 'SaySites', type: 'website', images: [{ url: '/og-home.jpg', width: 1200, height: 630, alt: 'SaySites: Your site. Your say.' }] },
