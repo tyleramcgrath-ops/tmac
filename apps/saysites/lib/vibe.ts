@@ -54,6 +54,8 @@ function elementText(el: Element): string[] {
       return el.items.map((i) => i.quote)
     case 'gallery':
       return el.images.map((i) => i.caption ?? '').filter(Boolean)
+    case 'ticker':
+      return [el.items.join('. ')]
     default:
       return []
   }

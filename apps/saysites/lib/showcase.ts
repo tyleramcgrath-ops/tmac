@@ -71,6 +71,7 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
     {
       name: 'Rivertown Plumbing',
       type: 'plumber',
+      flair: 'bold',
       city: 'Rivertown',
       region: 'OH',
       phone: '(555) 201-4480',
@@ -133,6 +134,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Rosie’s Bakery',
       type: 'bakery',
+      flair: 'soft',
       city: 'Portland',
       region: 'OR',
       phone: '(555) 310-2291',
@@ -154,6 +156,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Salt & Stone',
       type: 'salon',
+      flair: 'soft',
       city: 'Savannah',
       region: 'GA',
       phone: '(555) 406-7712',
@@ -170,6 +173,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Northside Electric',
       type: 'electrician',
+      flair: 'studio',
       city: 'Denver',
       region: 'CO',
       phone: '(555) 303-0188',
@@ -186,6 +190,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Summit Heating & Air',
       type: 'hvac',
+      flair: 'clean',
       city: 'Boise',
       region: 'ID',
       phone: '(555) 208-4410',
@@ -202,6 +207,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Ridgeline Roofing',
       type: 'roofer',
+      flair: 'bold',
       city: 'Knoxville',
       region: 'TN',
       phone: '(555) 865-2201',
@@ -218,6 +224,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Green Acre Landscapes',
       type: 'landscaper',
+      flair: 'soft',
       city: 'Raleigh',
       region: 'NC',
       phone: '(555) 919-3302',
@@ -234,6 +241,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Bright & Tidy Cleaning',
       type: 'cleaner',
+      flair: 'clean',
       city: 'Austin',
       region: 'TX',
       phone: '(555) 512-7780',
@@ -248,6 +256,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Harbor Auto Repair',
       type: 'autorepair',
+      flair: 'studio',
       city: 'Tacoma',
       region: 'WA',
       phone: '(555) 253-9914',
@@ -264,6 +273,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Willow Dental',
       type: 'dentist',
+      flair: 'editorial',
       city: 'Madison',
       region: 'WI',
       phone: '(555) 608-4120',
@@ -280,6 +290,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Olive & Ember',
       type: 'restaurant',
+      flair: 'luxe',
       city: 'Asheville',
       region: 'NC',
       phone: '(555) 828-6604',
@@ -297,6 +308,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Hale & Porter Law',
       type: 'lawyer',
+      flair: 'editorial',
       city: 'Columbus',
       region: 'OH',
       phone: '(555) 614-2290',
@@ -313,6 +325,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     {
       name: 'Field & Thread',
       type: 'store',
+      flair: 'clean',
       city: 'Burlington',
       region: 'VT',
       phone: '(555) 802-1175',

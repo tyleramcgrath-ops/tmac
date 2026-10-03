@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
 import { buildBlogIndex, buildPostPage } from '@/lib/posts'
 import { randomUUID } from 'crypto'
-import { PageSeo, SiteSchema, type Page, type Product, type Site } from '@/lib/schema'
+import { FLAIRS, PageSeo, SiteSchema, type Flair, type Page, type Product, type Site } from '@/lib/schema'
 import { requireUser } from '@/lib/session'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
@@ -81,6 +81,11 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
   const design = str(form, 'design', 20) as Design
   const colors = palette && PALETTES[palette] ? PALETTES[palette].colors : site.globals.colors
   const looks = design in DESIGN_GLOBALS ? DESIGN_GLOBALS[design] : null
+  const flairPick = str(form, 'flair', 20) as Flair
+  const flair = (FLAIRS as readonly string[]).includes(flairPick) ? flairPick : undefined
+  // The form always sends its own fields; an older form without the
+  // personality section leaves motion as it was.
+  const motion = form.has('flair') ? !!form.get('motion') : undefined
 
   const topbar = str(form, 'topbar', 120)
   const ctaLabel = str(form, 'ctaLabel', 40)
@@ -97,7 +102,7 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
         address: anyAddress ? { street, city, region, postalCode, country: s.business.address?.country ?? 'US' } : undefined,
         hours: hours.length ? hours : undefined,
       },
-      globals: { ...s.globals, ...(looks ?? {}), colors },
+      globals: { ...s.globals, ...(looks ?? {}), colors, ...(flair ? { flair } : {}), ...(motion === undefined ? {} : { motion }) },
       header: {
         ...(topbar ? { topbar } : {}),
         ...(ctaLabel && s.header?.cta ? { cta: { ...s.header.cta, label: ctaLabel } } : s.header?.cta ? { cta: s.header.cta } : {}),

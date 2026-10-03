@@ -20,15 +20,18 @@ export interface SettingsValues {
   week: WeekHours
   palette: string
   design: string
+  flair: string
+  motion: boolean
 }
 
 type Action = (prev: SettingsState, form: FormData) => Promise<SettingsState>
 
-export function SettingsForm({ action, values, palettes, designs }: {
+export function SettingsForm({ action, values, palettes, designs, flairs }: {
   action: Action
   values: SettingsValues
   palettes: { key: string; label: string; colors: string[] }[]
   designs: { key: string; label: string; note: string }[]
+  flairs: { key: string; label: string; note: string }[]
 }) {
   const [state, run, pending] = useActionState(action, {})
   return (
@@ -84,6 +87,20 @@ export function SettingsForm({ action, values, palettes, designs }: {
             </label>
           ))}
         </div>
+        <span className="label">Personality</span>
+        <div className="choice-grid">
+          {flairs.map((f) => (
+            <label key={f.key} className="choice">
+              <input type="radio" name="flair" value={f.key} defaultChecked={values.flair === f.key} />
+              <strong>{f.label}</strong>
+              <span className="muted">{f.note}</span>
+            </label>
+          ))}
+        </div>
+        <label className="check">
+          <input type="checkbox" name="motion" defaultChecked={values.motion} />
+          <span>Gentle motion as visitors scroll <span className="muted">(never shown to people who ask their device for less motion)</span></span>
+        </label>
         <span className="label">Colors</span>
         <div className="swatches">
           {palettes.map((p) => (
