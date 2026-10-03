@@ -14,6 +14,7 @@ import {
 } from '../apps/saysites/lib'
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
 import { HEADING_FONTS, headingFont } from '../apps/saysites/lib/schema'
+import { writeContent } from '../apps/saysites/lib/writer'
 import { resolveHost } from '../apps/saysites/lib/sites'
 import { classifyHost, cleanDomain } from '../apps/saysites/lib/hosts'
 import { handleCall, serveSitePath } from '../apps/saysites/lib/serve'
@@ -196,6 +197,41 @@ describe('SaySites pre-publish SEO checks', () => {
     const codes = checkPage(page, samplePages).map((i) => i.code)
     expect(codes).toContain('duplicate-id')
     expect(codes).toContain('broken-link')
+  })
+})
+
+describe('SaySites content writer', () => {
+  const svc = (name: string) => ({
+    name,
+    summary: `${name}, explained plainly before any work starts.`,
+    intro: 'We start by looking at what you have and explaining the choices in plain words. Then we agree what happens next.',
+    sections: [1, 2, 3, 4].map((n) => ({ heading: `Part ${'abcd'[n - 1]}`, body: `A careful explanation of how this part of the work usually goes for a homeowner, and what to look out for along the way. We have done this for 20 years. It is guaranteed for life.` })),
+    faq: [{ q: 'How long does it take?', a: 'It depends on what we find, and we tell you before we begin.' }, { q: 'Do I need to be home?', a: 'Usually, so we can show you what we found.' }],
+  })
+  const fake = (json: unknown) => ({ beta: { messages: { create: async () => ({ content: [{ type: 'text', text: 'Here you go:\n' + JSON.stringify(json) }], usage: { input_tokens: 1000, output_tokens: 4000 } }) } } }) as never
+
+  it('writes each service, keeps only real names, and strips any invented facts', async () => {
+    const { content, usage } = await writeContent(
+      { name: 'Rivertown Plumbing', kind: 'Plumber', city: 'Rivertown', region: 'OH', services: ['Water heaters', 'Drain cleaning'] },
+      fake({ about: { heading: 'Plumbing, explained', paragraphs: ['We explain what we find in plain words before we start any work. Rated #1 in Ohio!', 'We clean up after ourselves and leave the place as we found it.'] }, services: [svc('Water heaters'), svc('drain cleaning'), svc('Roof repair')] })
+    )
+    expect(usage.output_tokens).toBe(4000)
+    expect(content.services!.map((s) => s.name)).toEqual(['Water heaters', 'Drain cleaning'])
+    const all = JSON.stringify(content)
+    expect(all).not.toMatch(/20 years|guaranteed|#1|!/)
+    expect(content.about!.paragraphs[0]).toBe('We explain what we find in plain words before we start any work.')
+  })
+
+  it('turns written content into a page per service, linked from the services page', () => {
+    const content = { about: { heading: 'Plumbing, explained', paragraphs: ['We explain what we find in plain words before we start any work, and give you the choice.', 'We clean up after ourselves.'] }, services: [svc('Water heaters'), svc('Drain cleaning')] }
+    const { site, pages } = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Water heaters', 'Drain cleaning', 'Gas lines'], palette: 'ocean', content }, 'org', 'rivertown-plumbing')
+    expect(pages.map((p) => p.slug)).toEqual(['', 'services', 'services/water-heaters', 'services/drain-cleaning', 'contact'])
+    for (const p of pages) expect(() => PageSchema.parse(p)).not.toThrow()
+    const services = JSON.stringify(pages.find((p) => p.slug === 'services'))
+    expect(services).toContain('"href":"/services/water-heaters"')
+    const home = pages.find((p) => p.slug === '')!
+    expect(home.body.some((c) => c.id === 'story')).toBe(true)
+    expect(renderPage(site, pages[2], pages).html).toContain('<h1')
   })
 })
 

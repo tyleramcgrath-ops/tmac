@@ -6,6 +6,19 @@ import { PHOTOS, unsplash } from './photos'
 import { buildBlogIndex, buildPostPage } from './posts'
 import type { Page, Product, Site } from './schema'
 import { buildStarterSite, type BusinessTypeKey, type Design } from './starter'
+import { content as brightAndTidyContent } from './showcase-content/bright-and-tidy'
+import { content as fieldAndThreadContent } from './showcase-content/field-and-thread'
+import { content as greenAcreLandscapesContent } from './showcase-content/green-acre-landscapes'
+import { content as haleAndPorterContent } from './showcase-content/hale-and-porter'
+import { content as harborAutoContent } from './showcase-content/harbor-auto'
+import { content as northsideElectricContent } from './showcase-content/northside-electric'
+import { content as oliveAndEmberContent } from './showcase-content/olive-and-ember'
+import { content as ridgelineRoofingContent } from './showcase-content/ridgeline-roofing'
+import { content as rivertownPlumbingContent } from './showcase-content/rivertown-plumbing'
+import { content as rosiesBakeryContent } from './showcase-content/rosies-bakery'
+import { content as saltAndStoneContent } from './showcase-content/salt-and-stone'
+import { content as summitHeatingAirContent } from './showcase-content/summit-heating-air'
+import { content as willowDentalContent } from './showcase-content/willow-dental'
 
 const NOW = '2026-09-24T00:00:00.000Z'
 export const SHOWCASE_ORG = 'org_showcase'
@@ -82,6 +95,7 @@ export const SHOWCASE: Record<string, { site: Site; pages: Page[] }> = {
       services: ['Leak and burst pipe repair', 'Water heaters', 'Drain cleaning', 'Bathroom remodels', 'Sump pumps', 'Gas lines'],
       palette: 'ocean',
       tagline: 'Family-run plumbers serving Rivertown and the valley since 2009.',
+      content: rivertownPlumbingContent,
     },
     'rivertown-plumbing'
   ), [
@@ -144,6 +158,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Country sourdough', 'Pastries and buns', 'Celebration cakes'],
       palette: 'sunset',
       tagline: 'Sourdough, cakes and good coffee on SE Division, baked every morning at five.',
+      content: rosiesBakeryContent,
     },
     'rosies-bakery'
   ), [
@@ -166,6 +181,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Cut and style', 'Lived-in color', 'Balayage'],
       palette: 'plum',
       tagline: 'Lived-in color and precise cuts on Jones Street, by appointment.',
+      content: saltAndStoneContent,
     },
     'salt-and-stone'
   ),
@@ -183,6 +199,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Panel upgrades', 'EV charger installs', 'Lighting and fans', 'Whole-home rewiring', 'Generators', 'Safety inspections'],
       palette: 'slate',
       tagline: 'Licensed electricians keeping Denver homes safe, tidy and up to code.',
+      content: northsideElectricContent,
     },
     'northside-electric'
   ),
@@ -200,6 +217,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Furnace repair', 'AC installation', 'Heat pumps', 'Duct cleaning', 'Maintenance plans', 'Thermostats'],
       palette: 'ocean',
       tagline: 'Comfortable homes across the Treasure Valley, winter and summer.',
+      content: summitHeatingAirContent,
     },
     'summit-heating-air'
   ),
@@ -217,6 +235,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Roof replacement', 'Storm damage repair', 'Gutters', 'Free inspections'],
       palette: 'slate',
       tagline: 'Roofs built to outlast the weather, with a 25-year workmanship warranty.',
+      content: ridgelineRoofingContent,
     },
     'ridgeline-roofing'
   ),
@@ -234,6 +253,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Lawn care', 'Garden design', 'Patios and paths', 'Seasonal cleanups'],
       palette: 'forest',
       tagline: 'Lawns, gardens and patios that make Raleigh neighbors slow down.',
+      content: greenAcreLandscapesContent,
     },
     'green-acre-landscapes'
   ),
@@ -249,6 +269,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Weekly home cleaning', 'Deep cleans', 'Move-in and move-out', 'Office cleaning'],
       palette: 'ocean',
       tagline: 'Insured, background-checked cleaners. Same team every visit.',
+      content: brightAndTidyContent,
     },
     'bright-and-tidy'
   ),
@@ -266,6 +287,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Brakes', 'Oil changes', 'Engine diagnostics', 'Tires and alignment', 'State inspections'],
       palette: 'slate',
       tagline: 'Honest repairs, straight answers and a written quote before we start.',
+      content: harborAutoContent,
     },
     'harbor-auto'
   ),
@@ -283,6 +305,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Checkups and cleanings', 'Teeth whitening', 'Invisalign', 'Crowns'],
       palette: 'forest',
       tagline: 'Gentle, modern dentistry for the whole family, a block from the Capitol.',
+      content: willowDentalContent,
     },
     'willow-dental'
   ),
@@ -301,6 +324,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       palette: 'noir',
       design: 'upscale',
       tagline: 'Wood-fired Mediterranean cooking and natural wine in downtown Asheville.',
+      content: oliveAndEmberContent,
     },
     'olive-and-ember'
   ),
@@ -318,6 +342,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Estate planning', 'Family law', 'Real estate closings', 'Small business law'],
       palette: 'slate',
       tagline: 'Clear, practical legal help for Ohio families and small businesses.',
+      content: haleAndPorterContent,
     },
     'hale-and-porter'
   ),
@@ -335,6 +360,7 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
       services: ['Everyday clothing', 'Local makers', 'Gifts and cards'],
       palette: 'forest',
       tagline: 'Well-made clothing and gifts from Vermont makers, on Church Street.',
+      content: fieldAndThreadContent,
     },
     'field-and-thread'
   ), [

@@ -12,6 +12,12 @@ import { photoSetFor, reportUse } from '@/lib/unsplash'
 import { getStore } from '@/lib/store'
 import { CLAIM_CODE, claimPath } from '@/lib/urls'
 import { templateFor } from '@/lib/templates'
+import { randomUUID } from 'crypto'
+import { writeContent } from '@/lib/writer'
+import { costMicros } from '@/lib/usage'
+import { dayString } from '@/lib/visits'
+import type { Site } from '@/lib/schema'
+import type { StarterInput } from '@/lib/starter'
 
 export interface FormState {
   error?: string
@@ -89,12 +95,10 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   const spanish = str(form, 'language') === 'es'
   const taken = await store.photosTaken()
   const found = await photoSetFor(store, type, taken)
-  const built = buildStarterSite(
-    { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(street && postalCode ? { street, postalCode } : {}), ...(hours.length ? { hours } : {}), language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) },
-    user.id,
-    subdomain,
-    { taken }
-  )
+  const starterInput = { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(street && postalCode ? { street, postalCode } : {}), ...(hours.length ? { hours } : {}), language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) }
+  // A fixed site id keeps page ids stable when the writer fills it in below.
+  const siteId = `site_${randomUUID()}`
+  const built = buildStarterSite(starterInput, user.id, subdomain, { taken, siteId })
   const credits = found ? creditsInUse(built.pages, found.credits) : []
   const withCredits = credits.length ? { ...built.site, credits } : built.site
   const site = placeId ? { ...withCredits, business: { ...withCredits.business, reviewUrl: googleReviewUrl(placeId) } } : withCredits
@@ -102,6 +106,13 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   await store.createSite(user.id, site, pages)
   await syncSitePhotos(site.id, store)
   after(() => reportUse(credits))
+  // Sofie's writer fills in the site: a longer story for the home page and a
+  // page for each service, in words written for this business. It runs after
+  // the owner lands in the dashboard and only touches a site still exactly
+  // as it was built. (Talk & Design and Spanish sites go to Sofie instead.)
+  if (!template && !spanish && process.env.ANTHROPIC_API_KEY && services.length) {
+    after(() => fillIn(site, starterInput, user.id, subdomain, taken, found?.credits ?? []).catch((e) => console.error('content writer', e)))
+  }
   // Talk & Design: open Sofie with the filled-in prompt, so the owner watches
   // her design the site. A Spanish site starts the same way: Sofie rewrites
   // the starter pages in Spanish. Without Sofie switched on, the site is ready as is.
@@ -113,6 +124,24 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
     redirect(`/dashboard/sites/${site.id}/sofie?talk=${encodeURIComponent(parts.filter(Boolean).join('\n\n'))}`)
   }
   redirect(`/dashboard/sites/${site.id}?new=1`)
+}
+
+async function fillIn(site: Site, input: StarterInput, userId: string, subdomain: string, taken: Set<string>, photoCredits: Parameters<typeof creditsInUse>[1]) {
+  const store = getStore()
+  const { content, usage } = await writeContent({ name: input.name, kind: BUSINESS_TYPES[input.type].label, city: input.city, region: input.region, services: input.services })
+  await store.recordUsage(site.id, dayString(new Date()), costMicros(usage))
+  const now = await store.siteForUser(userId, site.id)
+  if (!now || now.updatedAt !== site.updatedAt) return
+  const before = await store.pagesForSite(site.id)
+  if (before.some((p) => p.updatedAt !== site.updatedAt)) return
+  const full = buildStarterSite({ ...input, content }, userId, subdomain, { taken, siteId: site.id, now: site.updatedAt })
+  const keep = new Set(before.map((p) => p.id))
+  for (const p of full.pages) await store.savePage({ ...p, updatedAt: new Date().toISOString() }, 'sofie', null, keep.has(p.id) ? 'Sofie wrote more for this page' : 'Sofie wrote this page')
+  // New pages may show more stock photos: credit their photographers and
+  // mark the photos as this site's.
+  const credits = creditsInUse(full.pages, photoCredits)
+  await store.updateSite({ ...now, ...(credits.length ? { credits } : {}), updatedAt: new Date().toISOString() })
+  await syncSitePhotos(site.id, store)
 }
 
 // ---------------------------------------------------------------------------
