@@ -5,33 +5,33 @@ music: none
 ---
 
 ## Frame 1 — L1
-- duration: 4s
+- duration: 4.017s
 - voiceover: "That private jet photo? It might be a studio in East L.A."
 
 ## Frame 2 — L2
-- duration: 4s
+- duration: 3.256s
 - voiceover: "The Lambo, the mansion, the jet, the Birkin. Rich, right?"
 
 ## Frame 3 — L3
-- duration: 4s
+- duration: 4.152s
 - voiceover: "The Lamborghini: rentals in L.A. start around a thousand a day."
 
 ## Frame 4 — L4
-- duration: 4s
+- duration: 3.917s
 - voiceover: "The mansion: listed by the hour. Four hours, about eight hundred."
 
 ## Frame 5 — L5
-- duration: 4s
+- duration: 3.021s
 - voiceover: "The jet set: around forty-five dollars an hour."
 
 ## Frame 6 — L6
-- duration: 4s
+- duration: 2.872s
 - voiceover: "The Birkin: a rental membership, eight hundred a month."
 
 ## Frame 7 — L7
-- duration: 4s
+- duration: 5.069s
 - voiceover: "One rich-looking photo day: about twenty-eight hundred dollars. Owned at the end: nothing."
 
 ## Frame 8 — L8
-- duration: 4s
+- duration: 3.976s
 - voiceover: "Next time you see the jet pic: real, or rented?"
