@@ -2085,3 +2085,14 @@ describe('SaySites: law firm designs', () => {
     }
   })
 })
+
+describe('SaySites: no prices on the public site', () => {
+  it('keeps prices out of the home page, Why SaySites and every industry page', async () => {
+    const { readFileSync } = await import('fs')
+    const { INDUSTRIES } = await import('../apps/saysites/lib/industries')
+    for (const f of ['app/page.tsx', 'app/about/page.tsx', 'app/websites-for/[slug]/page.tsx', 'app/redesign/[id]/page.tsx', 'components/MarketingShell.tsx']) {
+      expect(readFileSync(`apps/saysites/${f}`, 'utf8'), f).not.toMatch(/\$\d\d|PRICES|free trial/)
+    }
+    expect(JSON.stringify(INDUSTRIES)).not.toMatch(/\$\d|free trial|a month/)
+  })
+})
