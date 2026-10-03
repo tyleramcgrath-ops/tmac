@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import Script from 'next/script'
 import './globals.css'
 
 // One typeface everywhere, self-hosted so builds never depend on a font CDN.
@@ -23,23 +22,18 @@ export const metadata: Metadata = {
 
 // Google Analytics for saysites.com itself (marketing pages and dashboard).
 // Customer websites never load it: they're served as plain HTML by route
-// handlers, not through this layout. Loaded once the page is idle so it
-// can't cost the 95+ speed score.
+// handlers, not through this layout. Google's own snippet, in <head> so
+// Google's setup check finds it; the script loads async, never blocking.
 const GA_ID = 'G-KP42T8YXTF'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={sans.variable}>
-      <body>
-        {children}
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="lazyOnload" />
-        <Script id="gtag" strategy="lazyOnload">
-          {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_ID}');`}
-        </Script>
-      </body>
+      <head>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GA_ID}');` }} />
+      </head>
+      <body>{children}</body>
     </html>
   )
 }
