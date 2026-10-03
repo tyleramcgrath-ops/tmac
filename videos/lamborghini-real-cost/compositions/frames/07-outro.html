@@ -1,0 +1,266 @@
+<template id="07-outro-template">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+    @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: block; }
+    @font-face { font-family: 'IBM Plex Mono'; src: url('assets/fonts/IBM_Plex_Mono-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+
+    #root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      color: #F0ECE5;
+      font-family: 'Barlow', sans-serif;
+    }
+    #outro07-ground {
+      position: absolute;
+      inset: 0;
+      background: #111111;
+    }
+    #outro07-stage {
+      position: absolute;
+      inset: 0;
+      transform-origin: 30% 40%;
+    }
+
+    /* chrome — mono wordmark row */
+    #outro07-mark {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 112px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #282826;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 24px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    #outro07-mark .outro07-brand { color: #E85D26; }
+    #outro07-mark .outro07-num { color: #505048; }
+
+    /* thesis */
+    #outro07-thesis {
+      position: absolute;
+      left: 60px;
+      top: 330px;
+      width: 960px;
+    }
+    .outro07-line {
+      display: block;
+      font-weight: 900;
+      font-size: 128px;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+      white-space: nowrap;
+    }
+    .outro07-cream { color: #F0ECE5; }
+    .outro07-orange { color: #E85D26; }
+    .outro07-w {
+      display: inline-block;
+      margin-right: 0.2em;
+      transform-origin: 50% 85%;
+      will-change: transform, opacity, filter;
+    }
+    .outro07-w:last-child { margin-right: 0; }
+
+    /* drawn not-equal sign (glyph-independent) */
+    #outro07-neq {
+      position: relative;
+      display: inline-block;
+      width: 0.62em;
+      height: 0.72em;
+      margin-right: 0.24em;
+      vertical-align: -0.04em;
+    }
+    #outro07-neq .outro07-bar {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 0.11em;
+      background: #E85D26;
+      transform-origin: 0% 50%;
+    }
+    #outro07-neq .outro07-bar.outro07-b1 { top: 0.2em; }
+    #outro07-neq .outro07-bar.outro07-b2 { top: 0.43em; }
+    #outro07-slash {
+      position: absolute;
+      left: 50%;
+      top: -0.04em;
+      width: 0.11em;
+      height: 0.84em;
+      margin-left: -0.055em;
+      background: #E85D26;
+      transform-origin: 50% 0%;
+    }
+
+    #outro07-math {
+      display: block;
+      margin-top: 40px;
+      font-weight: 600;
+      font-size: 54px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: #888880;
+      text-transform: lowercase;
+    }
+    #outro07-math .outro07-w { margin-right: 0.26em; }
+
+    /* the loop-back question */
+    #outro07-q {
+      position: absolute;
+      left: 60px;
+      top: 850px;
+      width: 960px;
+    }
+    #outro07-q .outro07-line {
+      font-size: 168px;
+      line-height: 0.9;
+      color: #E85D26;
+    }
+    #outro07-q .outro07-w { transform-origin: 30% 90%; }
+
+    /* follow lockup */
+    #outro07-follow {
+      position: absolute;
+      left: 60px;
+      top: 1250px;
+      width: 960px;
+    }
+    #outro07-rule {
+      width: 36px;
+      height: 2px;
+      background: #E85D26;
+      margin-bottom: 24px;
+      transform-origin: 0% 50%;
+    }
+    #outro07-follow-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+      font-size: 28px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #F0ECE5;
+    }
+    #outro07-follow-text span { color: #E85D26; }
+
+    /* sources footnote — sits just above the caption band */
+    #outro07-foot {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      top: 1488px;
+      padding-top: 16px;
+      border-top: 1px solid #282826;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 1.4;
+      color: #888880;
+    }
+  </style>
+
+  <div id="root" data-composition-id="07-outro" data-width="1080" data-height="1920" data-start="0" data-duration="3.755">
+    <div id="outro07-ground" class="clip" data-start="0" data-duration="3.755" data-track-index="0"></div>
+
+    <div id="outro07-stage">
+      <div id="outro07-mark">
+        <span class="outro07-brand">Apex Revival</span>
+        <span class="outro07-num">No. 07</span>
+      </div>
+
+      <div id="outro07-thesis">
+        <span class="outro07-line outro07-cream">
+          <span class="outro07-w" id="outro07-t-looking">looking</span><span class="outro07-w" id="outro07-t-rich1">rich</span>
+        </span>
+        <span class="outro07-line outro07-orange">
+          <span id="outro07-neq"><span class="outro07-bar outro07-b1"></span><span class="outro07-bar outro07-b2"></span><span id="outro07-slash"></span></span><span class="outro07-w" id="outro07-t-being">being</span><span class="outro07-w" id="outro07-t-rich2">rich.</span>
+        </span>
+        <span id="outro07-math">
+          <span class="outro07-w" id="outro07-t-different">different</span><span class="outro07-w" id="outro07-t-mathw">math.</span>
+        </span>
+      </div>
+
+      <div id="outro07-q">
+        <span class="outro07-line">
+          <span class="outro07-w" id="outro07-q-still">still</span><span class="outro07-w" id="outro07-q-want">want</span>
+        </span>
+        <span class="outro07-line">
+          <span class="outro07-w" id="outro07-q-the">the</span><span class="outro07-w" id="outro07-q-lambo">lambo?</span>
+        </span>
+      </div>
+
+      <div id="outro07-follow">
+        <div id="outro07-rule"></div>
+        <div id="outro07-follow-text">Follow <span>/</span> for the real numbers</div>
+      </div>
+
+      <div id="outro07-foot">Estimates. Sources: TrueCar, iSeeCars, Insuranceopedia. Tax varies by state.</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const q = (s) => document.querySelector(s);
+
+      // per-word slam: oversized + blurred -> sharp at rest
+      const slam = (sel, at, from) => {
+        tl.fromTo(q(sel),
+          Object.assign({ opacity: 0, scale: 1.45, y: 24, filter: 'blur(14px)' }, from || {}),
+          { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 0.3, ease: 'power4.out' },
+          at);
+      };
+
+      // macro camera: slow push under the whole shot
+      tl.fromTo(q('#outro07-stage'), { scale: 1 }, { scale: 1.035, duration: 3.755, ease: 'none' }, 0);
+
+      // chrome wordmark row — quiet, immediate
+      tl.fromTo(q('#outro07-mark'), { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power3.out' }, 0);
+
+      // Scene 1 — thesis lands on the VO
+      slam('#outro07-t-looking', 0.05);   // "Looking"
+      slam('#outro07-t-rich1', 0.44);     // "rich"
+      // "and" -> the not-equal bars draw, slash strikes
+      tl.fromTo(q('#outro07-neq .outro07-b1'), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: 'power3.out' }, 0.69);
+      tl.fromTo(q('#outro07-neq .outro07-b2'), { scaleX: 0 }, { scaleX: 1, duration: 0.16, ease: 'power3.out' }, 0.74);
+      tl.fromTo(q('#outro07-slash'), { scaleY: 0, rotation: 28 }, { scaleY: 1, rotation: 28, duration: 0.18, ease: 'power4.out' }, 0.8);
+      slam('#outro07-t-being', 0.88);     // "being"
+      slam('#outro07-t-rich2', 1.2);      // "rich."
+      // "different math." — small, quick per-word blur-up
+      slam('#outro07-t-different', 1.64, { scale: 1.2, y: 14, filter: 'blur(8px)' });
+      slam('#outro07-t-mathw', 2.2, { scale: 1.2, y: 14, filter: 'blur(8px)' });
+
+      // footnote eases in during the calm
+      tl.fromTo(q('#outro07-foot'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 2.0);
+
+      // calm: thesis steps back so the question owns the frame
+      tl.fromTo(q('#outro07-thesis'), { opacity: 1 }, { opacity: 0.4, duration: 0.3, ease: 'power2.out' }, 2.45);
+
+      // Scene 2 — the loop-back question slams word by word
+      slam('#outro07-q-still', 2.57, { scale: 1.6 });
+      slam('#outro07-q-want', 2.83, { scale: 1.6 });
+      slam('#outro07-q-the', 3.08, { scale: 1.6 });
+      tl.fromTo(q('#outro07-q-lambo'),
+        { opacity: 0, scale: 1.9, y: 30, filter: 'blur(18px)' },
+        { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 0.34, ease: 'back.out(1.6)' },
+        3.27);
+
+      // follow lockup fades up beneath
+      tl.fromTo(q('#outro07-rule'), { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: 'power3.out' }, 2.9);
+      tl.fromTo(q('#outro07-follow-text'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, 2.95);
+
+      // hold to the hard loop (the stage push already spans the full 3.755s)
+
+      window.__timelines['07-outro'] = tl;
+    })();
+  </script>
+</template>
