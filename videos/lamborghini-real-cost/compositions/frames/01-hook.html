@@ -14,7 +14,7 @@
   }
 
   /* ---- background layer (full-bleed clip) ---- */
-  .01-hook-bg, #hook01-bg {
+  #hook01-bg {
     position: absolute;
     inset: 0;
     background: #111111;
@@ -258,7 +258,7 @@
     var LIFT_AT = T.thats - 0.18;
     tl.fromTo("#hook01-head", { y: 0 }, { y: -232, duration: 0.45, ease: "power3.inOut" }, LIFT_AT);
     tl.fromTo("#hook01-num-wrap", { scale: 1, opacity: 1 }, { scale: 0.7, opacity: 0.35, duration: 0.45, ease: "power3.inOut" }, LIFT_AT);
-    tl.fromTo("#hook01-glyph", { opacity: 0.7 }, { opacity: 0.35, duration: 0.45, ease: "power2.inOut" }, LIFT_AT);
+    tl.to("#hook01-glyph", { opacity: 0.35, duration: 0.45, ease: "power2.inOut" }, LIFT_AT);
 
     // distinct per-word entrances on the VO onsets
     tl.fromTo("#hook01-w1", { scale: 1.6, opacity: 0, filter: "blur(14px)" },
