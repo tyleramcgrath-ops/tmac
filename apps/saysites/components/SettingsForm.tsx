@@ -17,6 +17,9 @@ export interface SettingsValues {
   ctaLabel: string
   hasCta: boolean
   callBar: boolean
+  socials: string
+  chatKind: string
+  chatTo: string
   week: WeekHours
   palette: string
   design: string
@@ -120,6 +123,31 @@ export function SettingsForm({ action, values, palettes, designs, flairs }: {
         <label className="field"><span>Top bar message <em className="muted">(leave empty to hide it)</em></span><input className="input" name="topbar" defaultValue={values.topbar} maxLength={120} placeholder="Licensed and insured, Same-day service" /></label>
         {values.hasCta && <label className="field"><span>Header button</span><input className="input" name="ctaLabel" defaultValue={values.ctaLabel} maxLength={40} /></label>}
         <label className="check"><input type="checkbox" name="callBar" defaultChecked={values.callBar} /> On phones, show a Call button pinned to the bottom of the screen <em className="muted">(needs a phone number)</em></label>
+      </fieldset>
+
+      <fieldset className="card">
+        <legend>Social and chat</legend>
+        <label className="field">
+          <span>Your social pages <em className="muted">(one link per line: Facebook, Instagram, LinkedIn, YouTube, TikTok, Yelp)</em></span>
+          <textarea className="input" name="socials" rows={4} defaultValue={values.socials} placeholder={'https://www.facebook.com/yourbusiness\nhttps://www.instagram.com/yourbusiness'} />
+        </label>
+        <p className="muted help">They show as small icons at the foot of every page, and tell Google these profiles are yours.</p>
+        <span className="label">Chat button</span>
+        <div className="choice-grid">
+          {[
+            ['', 'None', 'No chat button.'],
+            ['sms', 'Text message', 'Visitors text your mobile.'],
+            ['whatsapp', 'WhatsApp', 'Opens a WhatsApp chat with you.'],
+            ['messenger', 'Messenger', 'Opens your Facebook page’s Messenger.'],
+          ].map(([key, label, note]) => (
+            <label key={key} className="choice">
+              <input type="radio" name="chatKind" value={key} defaultChecked={values.chatKind === key} />
+              <strong>{label}</strong>
+              <span className="muted">{note}</span>
+            </label>
+          ))}
+        </div>
+        <label className="field"><span>Chat goes to <em className="muted">(a mobile number, or your Facebook page name for Messenger)</em></span><input className="input" name="chatTo" defaultValue={values.chatTo} maxLength={80} placeholder="(555) 201-4480" /></label>
       </fieldset>
 
       <div className="save-bar">

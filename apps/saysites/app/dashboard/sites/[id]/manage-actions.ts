@@ -88,6 +88,17 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
   // personality section leaves motion as it was.
   const motion = form.has('flair') ? !!form.get('motion') : undefined
 
+  // Social pages: one https link per line; anything else is left out.
+  const socials = String(form.get('socials') ?? '')
+    .split(/\s+/)
+    .map((u) => u.trim())
+    .filter((u) => /^https:\/\/[^\s]+\.[^\s]+$/.test(u))
+    .slice(0, 8)
+  const chatKind = str(form, 'chatKind', 20)
+  const chatTo = str(form, 'chatTo', 80)
+  if (chatKind && !chatTo) return { error: 'Add the number or page name the chat button should go to.' }
+  const chat = chatKind === 'sms' || chatKind === 'whatsapp' || chatKind === 'messenger' ? { kind: chatKind, to: chatTo } as const : undefined
+
   const topbar = str(form, 'topbar', 120)
   const ctaLabel = str(form, 'ctaLabel', 40)
   const tagline = str(form, 'tagline', 200)
@@ -102,7 +113,9 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
         email: email || undefined,
         address: anyAddress ? { street, city, region, postalCode, country: s.business.address?.country ?? 'US' } : undefined,
         hours: hours.length ? hours : undefined,
+        ...(form.has('socials') ? { sameAs: socials.length ? socials : undefined } : {}),
       },
+      ...(form.has('chatKind') ? { chat } : {}),
       globals: { ...s.globals, ...(looks ?? {}), colors, ...(flair ? { flair } : {}), ...(motion === undefined ? {} : { motion }) },
       header: {
         ...(topbar ? { topbar } : {}),
