@@ -132,7 +132,7 @@ export const content: WrittenContent = {
         },
         {
           heading: 'What a spring cleanup includes',
-          body: 'Spring cleanups get beds ready for new growth. We cut back ornamental grasses and remaining perennials before fresh shoots emerge, rake out leaves and debris that collected over winter, and pull weeds while they’re still small. Bed edges are recut to give a crisp line between lawn and garden. Shrubs damaged by winter weather get pruned back to healthy wood, and summer-flowering shrubs that bloom on new growth can be shaped. A fresh layer of mulch finishes the beds, keeping moisture in and weeds down as temperatures rise.',
+          body: 'Spring cleanups get beds ready for new growth. We cut back ornamental grasses and remaining perennials before fresh shoots emerge, rake out leaves and debris that collected over winter, and pull weeds while they’re still small. Bed edges are recut to give a crisp line between lawn and garden. Shrubs damaged by winter weather get pruned back to healthy wood, and summer-flowering shrubs that bloom on new growth can be shaped. Crowded clumps of perennials such as daylilies and hostas can be divided before they leaf out fully. A fresh layer of mulch finishes the beds, keeping moisture in and weeds down as temperatures rise.',
         },
         {
           heading: 'Timing and why it matters',
