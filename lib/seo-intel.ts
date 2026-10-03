@@ -23,6 +23,7 @@ import {
   scoreSchema,
   scoreTechnical,
 } from './rankforge/seo-scan/analyze'
+import type { GapScan } from './gap-scan'
 import { isCrawlBatchError, runCrawlBatch, type CrawlPageResult } from './rankforge/engine/crawl-batch'
 import { generateRecommendationsV2 } from './rankforge/reco/engine'
 import { fetchKeywordPosition, serpApiKey } from './rankforge/serp'
@@ -101,6 +102,8 @@ export interface SeoState {
   keywords: { keyword: string; checks: KeywordCheck[] }[]
   aiQueries: { query: string; checks: AiCheck[] }[]
   backlinks?: { at: string; totalBacklinks: number | null; referringDomains: number | null; trustFlow: number | null; citationFlow: number | null }
+  // Citation Gap scans: one page against what ranks for one search (lib/gap-scan).
+  gaps?: GapScan[]
 }
 
 export const LIMITS = { keywords: 10, aiQueries: 5, competitors: 3, competitorPages: 12, checksPerDay: 1 }

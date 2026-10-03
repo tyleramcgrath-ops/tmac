@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation'
 import { requireUser } from '@/lib/session'
 import { LIMITS, freshSeoState, intelReady, type Scores, type SeoIssue } from '@/lib/seo-intel'
+import { GAP_LIMITS, type GapScan } from '@/lib/gap-scan'
+import { pagePath } from '@/lib/schema'
 import { getStore } from '@/lib/store'
-import { addAiQuery, addCompetitor, addKeyword, applyFix, checkNow, paidLookupsAllowed, removeAiQuery, removeCompetitor, removeKeyword, runAudit } from './actions'
+import { addAiQuery, addCompetitor, addKeyword, applyFix, checkNow, paidLookupsAllowed, removeAiQuery, removeCompetitor, removeGapScan, removeKeyword, runAudit, runGapScan } from './actions'
 
 const NOTES: Record<string, { text: string; tone?: 'good' | 'bad' }> = {
   error: { text: 'Your site could not be read just now. Try again in a minute.', tone: 'bad' },
@@ -12,6 +14,10 @@ const NOTES: Record<string, { text: string; tone?: 'good' | 'bad' }> = {
   queries: { text: `You can track up to ${LIMITS.aiQueries} questions. Remove one to add another.` },
   fixed: { text: 'Fixed and live. Your audit has been updated.', tone: 'good' },
   nofix: { text: 'There wasn’t enough of your own writing on those pages to build from. Ask Sofie to help with this one.' },
+  gap: { text: 'Scan finished. Your page and the pages that rank are below.', tone: 'good' },
+  gaperror: { text: 'That scan didn’t finish. The reason is shown below.', tone: 'bad' },
+  gaps: { text: `You can keep up to ${GAP_LIMITS.scans} scans. Remove one to add another.` },
+  gaptoday: { text: 'That one was already scanned today. Scan it again tomorrow.' },
   plan: { text: 'Ranking, AI answer and backlink checks are part of the law firm plans. Your audit and competitor comparison stay free.' },
 }
 
@@ -25,6 +31,14 @@ const AREAS: { key: keyof Scores; label: string }[] = [
 const CATEGORY: Record<string, string> = { indexability: 'Google', schema: 'Google data', content: 'Content', technical: 'Technical', links: 'Links', performance: 'Speed', images: 'Photos', ai: 'AI answers' }
 
 const SEVERITY = { critical: 'Fix first', warning: 'Worth fixing', info: 'Nice to have' } as const
+
+// Citation Gap's priorities, in our words.
+const GAP_SEV: Record<string, { label: string; cls: string }> = {
+  CRITICAL: { label: 'Fix first', cls: 'critical' },
+  HIGH: { label: 'Fix first', cls: 'critical' },
+  MEDIUM: { label: 'Worth fixing', cls: 'warning' },
+  LOW: { label: 'Nice to have', cls: 'info' },
+}
 
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 const hostOf = (url: string) => {
@@ -60,6 +74,12 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
       <a className="btn btn-sm btn-ghost" href={sofie(i.action.ask)}>Fix with Sofie</a>
     )
   const check$ = checkNow.bind(null, site.id)
+  const published = (await store.pagesForSite(site.id)).filter((p) => p.status === 'published' && !p.post)
+  const pageName = new Map(published.map((p) => [p.id, p.name]))
+  const gaps = state.gaps ?? []
+  const gapAsk = (g: GapScan, title: string, body = '') =>
+    sofie(`On my ${pageName.get(g.pageId) ?? ''} page, for people searching “${g.keyword}”: ${title}. ${body} Use only facts about my business that are already on my site or that I give you, and ask me for any numbers.`)
+  const today = new Date().toISOString().slice(0, 10)
 
   return (
     <section className="stack seo">
@@ -190,6 +210,100 @@ export default async function SeoPage({ params, searchParams }: { params: Promis
             <button className="btn btn-primary" type="submit">Compare</button>
           </form>
         )}
+      </div>
+
+
+      <div className="card" id="gap">
+        <div className="card-head">
+          <h3>Beat the pages that rank</h3>
+          <span className="muted small">{gaps.length}/{GAP_LIMITS.scans}</span>
+        </div>
+        <p className="muted small">Pick a page and the search you want it to win. We read Google’s top results and its AI Overview for that search, score your page against the pages that rank (for Google, and for being quoted in AI answers), and list what to change, most valuable first. Powered by Citation Gap.</p>
+        {!paid ? (
+          <p className="muted small">Scans are part of the law firm plans, because each one runs several live Google searches.</p>
+        ) : !ready.rankings ? (
+          <p className="muted small">Live Google checks aren’t switched on yet, so scans can’t run yet.</p>
+        ) : published.length === 0 ? (
+          <p className="muted small">Publish a page first.</p>
+        ) : gaps.length < GAP_LIMITS.scans ? (
+          <form action={runGapScan.bind(null, site.id)} className="seo-add gap-add">
+            <label className="sr-only" htmlFor="gap-page">Page</label>
+            <select className="input" id="gap-page" name="page" required>
+              {published.map((p) => <option key={p.id} value={p.id}>{p.name} ({pagePath(p)})</option>)}
+            </select>
+            <label className="sr-only" htmlFor="gap-kw">Search</label>
+            <input className="input" id="gap-kw" name="keyword" type="text" placeholder="car accident lawyer columbus" required maxLength={80} />
+            <button className="btn btn-primary" type="submit">Scan</button>
+          </form>
+        ) : null}
+        {paid && ready.rankings && <p className="muted small">A scan takes up to a minute. Each one can be run again once a day.</p>}
+
+        {gaps.map((g) => (
+          <div key={`${g.pageId}|${g.keyword}`} className="gap-scan">
+            <div className="gap-head">
+              <div>
+                <strong>“{g.keyword}”</strong>
+                <span className="muted small"> · {pageName.get(g.pageId) ?? 'A page you removed'} · {shortDate(g.at)}</span>
+              </div>
+              <div className="gap-actions">
+                {paid && ready.rankings && pageName.has(g.pageId) && (g.error || g.at.slice(0, 10) !== today) && (
+                  <form action={runGapScan.bind(null, site.id)}>
+                    <input type="hidden" name="page" value={g.pageId} />
+                    <input type="hidden" name="keyword" value={g.keyword} />
+                    <button className="btn btn-ghost btn-sm" type="submit">Scan again</button>
+                  </form>
+                )}
+                <form action={removeGapScan.bind(null, site.id, g.pageId, g.keyword)}>
+                  <button className="btn btn-ghost btn-sm" type="submit" aria-label={`Remove the scan for ${g.keyword}`}>Remove</button>
+                </form>
+              </div>
+            </div>
+            {g.error ? (
+              <p className="muted small">{g.error}</p>
+            ) : (
+              <>
+                <div className="gap-scores">
+                  <div><strong>{g.rank}</strong><span className="muted small">Google ranking score</span></div>
+                  <div><strong>{g.answer}</strong><span className="muted small">AI answer score</span></div>
+                  <p className="small">
+                    {!g.aiOverview?.shown ? 'Google showed no AI Overview for this search.' : g.aiOverview.citesYou ? 'Google’s AI Overview cites you.' : `Google’s AI Overview cites ${g.aiOverview.sources.slice(0, 3).join(', ') || 'other sites'}, not you.`}
+                    {g.competitors?.length ? <span className="muted"> Compared with {g.competitors.length} ranking page{g.competitors.length === 1 ? '' : 's'}: {g.competitors.slice(0, 4).map((c) => c.domain).join(', ')}{g.competitors.length > 4 ? '…' : ''}.</span> : null}
+                  </p>
+                </div>
+                {g.fixes?.length ? (
+                  <ol className="quests seo-issues">
+                    {g.fixes.map((f, i) => (
+                      <li key={i} className="quest">
+                        <span className={`seo-sev seo-${GAP_SEV[f.severity]?.cls ?? 'info'}`}>{GAP_SEV[f.severity]?.label ?? 'Worth fixing'}</span>
+                        <div className="quest-body">
+                          <strong>{f.title}</strong>
+                          {f.body && <span className="muted small">{f.body}</span>}
+                        </div>
+                        <span className="quest-area muted small">{f.effort.toLowerCase()}</span>
+                        <a className="btn btn-sm btn-ghost" href={gapAsk(g, f.title, f.body)}>Fix with Sofie</a>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="muted small">Nothing to change: this page matches or beats the pages that rank.</p>
+                )}
+                <details className="gap-detail">
+                  <summary className="small">How your page compares</summary>
+                  <div className="seo-table-wrap">
+                    <table className="seo-table">
+                      <thead><tr><th scope="col">Check</th><th scope="col">Your page</th><th scope="col">Pages that rank</th></tr></thead>
+                      <tbody>
+                        {[...(g.rankRows ?? []), ...(g.answerRows ?? [])].map((r, i) => (
+                          <tr key={i}><th scope="row">{r.label}</th><td>{String(r.mine)}</td><td>{String(r.target)}</td></tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </details>
+              </>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="card">
