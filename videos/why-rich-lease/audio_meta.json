@@ -1,0 +1,468 @@
+{
+  "bgm": null,
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.949,
+      "words": [
+        {
+          "id": "w0",
+          "text": "the",
+          "start": 0.04,
+          "end": 0.24
+        },
+        {
+          "id": "w1",
+          "text": "guy",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "id": "w2",
+          "text": "in",
+          "start": 0.48,
+          "end": 0.64
+        },
+        {
+          "id": "w3",
+          "text": "the",
+          "start": 0.64,
+          "end": 0.75
+        },
+        {
+          "id": "w4",
+          "text": "$300,000",
+          "start": 0.91,
+          "end": 2.52
+        },
+        {
+          "id": "w5",
+          "text": "supercar.",
+          "start": 2.52,
+          "end": 3.2
+        },
+        {
+          "id": "w6",
+          "text": "There's",
+          "start": 3.24,
+          "end": 3.59
+        },
+        {
+          "id": "w7",
+          "text": "a",
+          "start": 3.59,
+          "end": 3.64
+        },
+        {
+          "id": "w8",
+          "text": "good",
+          "start": 3.64,
+          "end": 3.86
+        },
+        {
+          "id": "w9",
+          "text": "chance",
+          "start": 3.86,
+          "end": 4.2
+        },
+        {
+          "id": "w10",
+          "text": "he",
+          "start": 4.2,
+          "end": 4.31
+        },
+        {
+          "id": "w11",
+          "text": "doesn't",
+          "start": 4.31,
+          "end": 4.7
+        },
+        {
+          "id": "w12",
+          "text": "own",
+          "start": 4.7,
+          "end": 4.87
+        },
+        {
+          "id": "w13",
+          "text": "it.",
+          "start": 4.87,
+          "end": 5.2
+        }
+      ]
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 5.12,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Exotic",
+          "start": 0.07,
+          "end": 0.54
+        },
+        {
+          "id": "w1",
+          "text": "cars",
+          "start": 0.57,
+          "end": 0.95
+        },
+        {
+          "id": "w2",
+          "text": "lose",
+          "start": 0.95,
+          "end": 1.33
+        },
+        {
+          "id": "w3",
+          "text": "about",
+          "start": 1.33,
+          "end": 1.81
+        },
+        {
+          "id": "w4",
+          "text": "28%",
+          "start": 1.81,
+          "end": 2.48
+        },
+        {
+          "id": "w5",
+          "text": "in",
+          "start": 2.48,
+          "end": 2.67
+        },
+        {
+          "id": "w6",
+          "text": "five",
+          "start": 2.67,
+          "end": 3.04
+        },
+        {
+          "id": "w7",
+          "text": "years.",
+          "start": 3.04,
+          "end": 3.6
+        },
+        {
+          "id": "w8",
+          "text": "That's",
+          "start": 3.67,
+          "end": 4.01
+        },
+        {
+          "id": "w9",
+          "text": "$85K",
+          "start": 4.11,
+          "end": 4.55
+        },
+        {
+          "id": "w10",
+          "text": "grand.",
+          "start": 4.55,
+          "end": 5.2
+        }
+      ]
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 5.099,
+      "words": [
+        {
+          "id": "w0",
+          "text": "so",
+          "start": 0.08,
+          "end": 0.16
+        },
+        {
+          "id": "w1",
+          "text": "a",
+          "start": 0.16,
+          "end": 0.24
+        },
+        {
+          "id": "w2",
+          "text": "lot",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "id": "w3",
+          "text": "of",
+          "start": 0.48,
+          "end": 0.64
+        },
+        {
+          "id": "w4",
+          "text": "wealthy",
+          "start": 0.64,
+          "end": 1.22
+        },
+        {
+          "id": "w5",
+          "text": "people",
+          "start": 1.22,
+          "end": 1.71
+        },
+        {
+          "id": "w6",
+          "text": "lease.",
+          "start": 1.71,
+          "end": 2.16
+        },
+        {
+          "id": "w7",
+          "text": "They",
+          "start": 2.24,
+          "end": 2.4
+        },
+        {
+          "id": "w8",
+          "text": "still",
+          "start": 2.4,
+          "end": 2.7
+        },
+        {
+          "id": "w9",
+          "text": "pay",
+          "start": 2.7,
+          "end": 2.88
+        },
+        {
+          "id": "w10",
+          "text": "for",
+          "start": 2.88,
+          "end": 3.03
+        },
+        {
+          "id": "w11",
+          "text": "the",
+          "start": 3.12,
+          "end": 3.2
+        },
+        {
+          "id": "w12",
+          "text": "drop,",
+          "start": 3.26,
+          "end": 3.63
+        },
+        {
+          "id": "w13",
+          "text": "but",
+          "start": 3.63,
+          "end": 3.74
+        },
+        {
+          "id": "w14",
+          "text": "they",
+          "start": 3.8,
+          "end": 3.94
+        },
+        {
+          "id": "w15",
+          "text": "never",
+          "start": 3.94,
+          "end": 4.38
+        },
+        {
+          "id": "w16",
+          "text": "tie",
+          "start": 4.38,
+          "end": 4.49
+        },
+        {
+          "id": "w17",
+          "text": "up",
+          "start": 4.49,
+          "end": 4.54
+        },
+        {
+          "id": "w18",
+          "text": "the",
+          "start": 4.61,
+          "end": 4.71
+        },
+        {
+          "id": "w19",
+          "text": "cash.",
+          "start": 4.8,
+          "end": 5.23
+        }
+      ]
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 6.464,
+      "words": [
+        {
+          "id": "w0",
+          "text": "that",
+          "start": 0.03,
+          "end": 0.37
+        },
+        {
+          "id": "w1",
+          "text": "$300K",
+          "start": 0.37,
+          "end": 1.31
+        },
+        {
+          "id": "w2",
+          "text": "stays",
+          "start": 1.31,
+          "end": 1.78
+        },
+        {
+          "id": "w3",
+          "text": "invested.",
+          "start": 1.78,
+          "end": 2.56
+        },
+        {
+          "id": "w4",
+          "text": "At",
+          "start": 2.59,
+          "end": 2.89
+        },
+        {
+          "id": "w5",
+          "text": "7%,",
+          "start": 2.89,
+          "end": 3.88
+        },
+        {
+          "id": "w6",
+          "text": "that's",
+          "start": 3.88,
+          "end": 4.25
+        },
+        {
+          "id": "w7",
+          "text": "about",
+          "start": 4.25,
+          "end": 4.5
+        },
+        {
+          "id": "w8",
+          "text": "$120K",
+          "start": 4.56,
+          "end": 4.64
+        },
+        {
+          "id": "w9",
+          "text": "grand",
+          "start": 5.15,
+          "end": 5.48
+        },
+        {
+          "id": "w10",
+          "text": "in",
+          "start": 5.48,
+          "end": 5.64
+        },
+        {
+          "id": "w11",
+          "text": "five",
+          "start": 5.64,
+          "end": 5.96
+        },
+        {
+          "id": "w12",
+          "text": "years.",
+          "start": 5.96,
+          "end": 6.57
+        }
+      ]
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.712,
+      "words": [
+        {
+          "id": "w0",
+          "text": "The",
+          "start": 0.04,
+          "end": 0.21
+        },
+        {
+          "id": "w1",
+          "text": "car",
+          "start": 0.21,
+          "end": 0.42
+        },
+        {
+          "id": "w2",
+          "text": "is",
+          "start": 0.42,
+          "end": 0.54
+        },
+        {
+          "id": "w3",
+          "text": "the",
+          "start": 0.59,
+          "end": 0.77
+        },
+        {
+          "id": "w4",
+          "text": "flex,",
+          "start": 0.77,
+          "end": 1.09
+        },
+        {
+          "id": "w5",
+          "text": "the",
+          "start": 1.27,
+          "end": 1.47
+        },
+        {
+          "id": "w6",
+          "text": "cash",
+          "start": 1.47,
+          "end": 1.77
+        },
+        {
+          "id": "w7",
+          "text": "is",
+          "start": 1.77,
+          "end": 1.92
+        },
+        {
+          "id": "w8",
+          "text": "the",
+          "start": 1.92,
+          "end": 2.15
+        },
+        {
+          "id": "w9",
+          "text": "wealth,",
+          "start": 2.15,
+          "end": 2.76
+        },
+        {
+          "id": "w10",
+          "text": "lease",
+          "start": 2.76,
+          "end": 3.14
+        },
+        {
+          "id": "w11",
+          "text": "or",
+          "start": 3.14,
+          "end": 3.29
+        },
+        {
+          "id": "w12",
+          "text": "buy?",
+          "start": 3.29,
+          "end": 3.71
+        }
+      ]
+    }
+  ],
+  "sfx": []
+}
