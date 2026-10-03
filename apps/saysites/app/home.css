@@ -895,3 +895,14 @@
 .home.inner .nav.solid .ag-menu > div { background: var(--paper); box-shadow: inset 0 0 0 1px var(--line), 0 24px 50px -24px rgba(0, 0, 0, 0.35); }
 .home.inner .nav.solid .ag-menu > div a { color: var(--ink) !important; }
 .home.inner .nav.solid .ag-menu > div a:hover { background: var(--paper-2); color: var(--ink) !important; }
+.home section.ag-compare { padding-top: 40px; }
+.home .ag-compare-note { color: var(--ink-mu); font-size: 18px; max-width: 620px; margin: 18px 0 0; }
+.home .ag-cmp { min-width: 760px; }
+.home .ag-cmp tbody th { width: 14%; }
+.home .ag-cmp td { width: 28.6%; }
+.home .ag-cmp td:first-of-type { color: var(--ink); font-weight: 500; }
+.home .ag-cmp thead th:nth-child(2) { color: var(--ink); font-size: 15px; }
+.home .ag-founder { margin-top: 40px; max-width: 560px; padding: 22px 24px; border-radius: 14px; background: var(--paper-2); display: grid; gap: 6px; }
+.home .ag-founder b { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
+.home .ag-founder p { margin: 0; color: var(--ink); }
+.home .ag-founder span { color: var(--ink-mu); font-size: 14px; }
