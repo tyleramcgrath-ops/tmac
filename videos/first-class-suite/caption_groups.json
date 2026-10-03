@@ -1,0 +1,736 @@
+{
+  "total_duration_s": 30.6,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.05,
+      "end": 0.5,
+      "text": "This seat",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "This",
+          "start": 0.05,
+          "end": 0.21
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "seat",
+          "start": 0.21,
+          "end": 0.49
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 0.5,
+      "end": 0.99,
+      "text": "to Dubai",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "to",
+          "start": 0.5,
+          "end": 0.63
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "Dubai",
+          "start": 0.64,
+          "end": 0.99
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 0.99,
+      "end": 2.87,
+      "text": "costs $18,000,",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "costs",
+          "start": 0.99,
+          "end": 1.35
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "$18,000,",
+          "start": 1.35,
+          "end": 2.84
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 2.87,
+      "end": 3.61,
+      "text": "one way.",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "one",
+          "start": 2.87,
+          "end": 3.12
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "way.",
+          "start": 3.12,
+          "end": 3.49
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 3.789,
+      "end": 4.289,
+      "text": "A private",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "A",
+          "start": 3.789,
+          "end": 3.809
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "private",
+          "start": 3.809,
+          "end": 4.289
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 4.289,
+      "end": 4.939,
+      "text": "suite with",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "suite",
+          "start": 4.289,
+          "end": 4.649
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "with",
+          "start": 4.649,
+          "end": 4.939
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 4.939,
+      "end": 5.479,
+      "text": "a door,",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "a",
+          "start": 4.939,
+          "end": 5.009
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "door,",
+          "start": 5.009,
+          "end": 5.479
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 5.479,
+      "end": 6.049,
+      "text": "a shower",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "a",
+          "start": 5.479,
+          "end": 5.559
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "shower",
+          "start": 5.559,
+          "end": 6.049
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 6.049,
+      "end": 6.439,
+      "text": "in the",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "in",
+          "start": 6.049,
+          "end": 6.199
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "the",
+          "start": 6.199,
+          "end": 6.419
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 2,
+      "start": 6.439,
+      "end": 6.879,
+      "text": "sky,",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "sky,",
+          "start": 6.439,
+          "end": 6.849
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 2,
+      "start": 6.879,
+      "end": 7.999,
+      "text": "champagne that never",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "champagne",
+          "start": 6.879,
+          "end": 7.439
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "that",
+          "start": 7.439,
+          "end": 7.679
+        },
+        {
+          "id": "caption-word-10-2",
+          "text": "never",
+          "start": 7.679,
+          "end": 7.929
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 2,
+      "start": 7.999,
+      "end": 8.549,
+      "text": "stops.",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "stops.",
+          "start": 7.999,
+          "end": 8.429
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 8.719,
+      "end": 9.659,
+      "text": "Emirates First,",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "Emirates",
+          "start": 8.719,
+          "end": 9.119
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "First,",
+          "start": 9.239,
+          "end": 9.659
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 3,
+      "start": 9.659,
+      "end": 10.119,
+      "text": "New York",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "New",
+          "start": 9.659,
+          "end": 9.859
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "York",
+          "start": 9.859,
+          "end": 10.119
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 3,
+      "start": 10.119,
+      "end": 10.939,
+      "text": "to Dubai,",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "to",
+          "start": 10.119,
+          "end": 10.259
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "Dubai,",
+          "start": 10.259,
+          "end": 10.819
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 3,
+      "start": 10.959,
+      "end": 12.529,
+      "text": "18,100.",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "18,100.",
+          "start": 10.959,
+          "end": 12.409
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 4,
+      "start": 12.575,
+      "end": 13.125,
+      "text": "Economy,",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "Economy,",
+          "start": 12.575,
+          "end": 13.125
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 4,
+      "start": 13.125,
+      "end": 13.915,
+      "text": "same flight,",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "same",
+          "start": 13.125,
+          "end": 13.385
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "flight,",
+          "start": 13.385,
+          "end": 13.915
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 4,
+      "start": 13.915,
+      "end": 14.885,
+      "text": "same plane,",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "same",
+          "start": 13.915,
+          "end": 14.145
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "plane,",
+          "start": 14.205,
+          "end": 14.785
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 4,
+      "start": 14.885,
+      "end": 16.375,
+      "text": "773.",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "773.",
+          "start": 14.885,
+          "end": 16.255
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 5,
+      "start": 16.546,
+      "end": 17.186,
+      "text": "It's 12",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "It's",
+          "start": 16.546,
+          "end": 16.666
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "12",
+          "start": 16.776,
+          "end": 17.186
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 5,
+      "start": 17.186,
+      "end": 17.456,
+      "text": "and a",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "and",
+          "start": 17.186,
+          "end": 17.386
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "a",
+          "start": 17.386,
+          "end": 17.456
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 5,
+      "start": 17.456,
+      "end": 18.186,
+      "text": "half hours.",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "half",
+          "start": 17.456,
+          "end": 17.656
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "hours.",
+          "start": 17.716,
+          "end": 18.156
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 5,
+      "start": 18.186,
+      "end": 18.916,
+      "text": "Economy,",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "Economy,",
+          "start": 18.186,
+          "end": 18.916
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 5,
+      "start": 18.916,
+      "end": 20.836,
+      "text": "about $60 an hour.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "about",
+          "start": 18.916,
+          "end": 19.286
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "$60",
+          "start": 19.326,
+          "end": 19.926
+        },
+        {
+          "id": "caption-word-24-2",
+          "text": "an",
+          "start": 19.926,
+          "end": 20.096
+        },
+        {
+          "id": "caption-word-24-3",
+          "text": "hour.",
+          "start": 20.096,
+          "end": 20.716
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 6,
+      "start": 20.842,
+      "end": 21.332,
+      "text": "First,",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "First,",
+          "start": 20.842,
+          "end": 21.332
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 6,
+      "start": 21.332,
+      "end": 23.492,
+      "text": "about 1450 an hour.",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "about",
+          "start": 21.332,
+          "end": 21.742
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "1450",
+          "start": 21.792,
+          "end": 22.782
+        },
+        {
+          "id": "caption-word-26-2",
+          "text": "an",
+          "start": 22.782,
+          "end": 22.952
+        },
+        {
+          "id": "caption-word-26-3",
+          "text": "hour.",
+          "start": 22.952,
+          "end": 23.372
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 7,
+      "start": 23.547,
+      "end": 24.737,
+      "text": "that's 23 economy",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "that's",
+          "start": 23.547,
+          "end": 23.887
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "23",
+          "start": 23.887,
+          "end": 24.277
+        },
+        {
+          "id": "caption-word-27-2",
+          "text": "economy",
+          "start": 24.277,
+          "end": 24.737
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 7,
+      "start": 24.737,
+      "end": 25.387,
+      "text": "tickets for",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "tickets",
+          "start": 24.737,
+          "end": 25.177
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "for",
+          "start": 25.267,
+          "end": 25.387
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 7,
+      "start": 25.387,
+      "end": 26.057,
+      "text": "one suite.",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "one",
+          "start": 25.387,
+          "end": 25.577
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "suite.",
+          "start": 25.577,
+          "end": 25.937
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 8,
+      "start": 26.448,
+      "end": 26.748,
+      "text": "and the",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "and",
+          "start": 26.448,
+          "end": 26.548
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "the",
+          "start": 26.548,
+          "end": 26.748
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 8,
+      "start": 26.748,
+      "end": 27.128,
+      "text": "shower?",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "shower?",
+          "start": 26.748,
+          "end": 27.008
+        }
+      ]
+    },
+    {
+      "id": "caption-group-32",
+      "frame": 8,
+      "start": 27.218,
+      "end": 27.858,
+      "text": "five minutes",
+      "words": [
+        {
+          "id": "caption-word-32-0",
+          "text": "five",
+          "start": 27.218,
+          "end": 27.398
+        },
+        {
+          "id": "caption-word-32-1",
+          "text": "minutes",
+          "start": 27.398,
+          "end": 27.848
+        }
+      ]
+    },
+    {
+      "id": "caption-group-33",
+      "frame": 8,
+      "start": 27.858,
+      "end": 28.258,
+      "text": "of water",
+      "words": [
+        {
+          "id": "caption-word-33-0",
+          "text": "of",
+          "start": 27.858,
+          "end": 27.988
+        },
+        {
+          "id": "caption-word-33-1",
+          "text": "water",
+          "start": 27.988,
+          "end": 28.138
+        }
+      ]
+    },
+    {
+      "id": "caption-group-34",
+      "frame": 8,
+      "start": 28.468,
+      "end": 29.738,
+      "text": "worth 18 grand?",
+      "words": [
+        {
+          "id": "caption-word-34-0",
+          "text": "worth",
+          "start": 28.468,
+          "end": 28.658
+        },
+        {
+          "id": "caption-word-34-1",
+          "text": "18",
+          "start": 28.718,
+          "end": 29.158
+        },
+        {
+          "id": "caption-word-34-2",
+          "text": "grand?",
+          "start": 29.158,
+          "end": 29.618
+        }
+      ]
+    }
+  ]
+}

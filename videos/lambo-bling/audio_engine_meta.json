@@ -1,0 +1,529 @@
+{
+  "tts_provider": "kokoro",
+  "voice_id": "am_michael",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 3.221,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Everyone",
+          "start": 0.04,
+          "end": 0.64
+        },
+        {
+          "id": "w1",
+          "text": "sees",
+          "start": 0.64,
+          "end": 0.97
+        },
+        {
+          "id": "w2",
+          "text": "the",
+          "start": 0.97,
+          "end": 1.2
+        },
+        {
+          "id": "w3",
+          "text": "Lambo,",
+          "start": 1.2,
+          "end": 1.75
+        },
+        {
+          "id": "w4",
+          "text": "the",
+          "start": 1.8,
+          "end": 1.93
+        },
+        {
+          "id": "w5",
+          "text": "parties,",
+          "start": 1.93,
+          "end": 2.45
+        },
+        {
+          "id": "w6",
+          "text": "the",
+          "start": 2.45,
+          "end": 2.63
+        },
+        {
+          "id": "w7",
+          "text": "lifestyle.",
+          "start": 2.63,
+          "end": 3.22
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 3.989,
+      "words": [
+        {
+          "id": "w0",
+          "text": "nobody",
+          "start": 0.04,
+          "end": 0.59
+        },
+        {
+          "id": "w1",
+          "text": "sees",
+          "start": 0.59,
+          "end": 0.98
+        },
+        {
+          "id": "w2",
+          "text": "the",
+          "start": 0.98,
+          "end": 1.25
+        },
+        {
+          "id": "w3",
+          "text": "bill.",
+          "start": 1.27,
+          "end": 1.89
+        },
+        {
+          "id": "w4",
+          "text": "250",
+          "start": 1.89,
+          "end": 2.52
+        },
+        {
+          "id": "w5",
+          "text": "grand",
+          "start": 2.53,
+          "end": 2.88
+        },
+        {
+          "id": "w6",
+          "text": "is",
+          "start": 2.88,
+          "end": 3.02
+        },
+        {
+          "id": "w7",
+          "text": "just",
+          "start": 3.02,
+          "end": 3.3
+        },
+        {
+          "id": "w8",
+          "text": "the",
+          "start": 3.39,
+          "end": 3.47
+        },
+        {
+          "id": "w9",
+          "text": "sticker.",
+          "start": 3.47,
+          "end": 3.9
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 2.923,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Sales",
+          "start": 0.06,
+          "end": 0.35
+        },
+        {
+          "id": "w1",
+          "text": "Tax,",
+          "start": 0.42,
+          "end": 0.76
+        },
+        {
+          "id": "w2",
+          "text": "17",
+          "start": 0.76,
+          "end": 1.22
+        },
+        {
+          "id": "w3",
+          "text": "and",
+          "start": 1.22,
+          "end": 1.45
+        },
+        {
+          "id": "w4",
+          "text": "a",
+          "start": 1.45,
+          "end": 1.52
+        },
+        {
+          "id": "w5",
+          "text": "half",
+          "start": 1.52,
+          "end": 1.75
+        },
+        {
+          "id": "w6",
+          "text": "grand,",
+          "start": 1.86,
+          "end": 2.23
+        },
+        {
+          "id": "w7",
+          "text": "day",
+          "start": 2.38,
+          "end": 2.58
+        },
+        {
+          "id": "w8",
+          "text": "one.",
+          "start": 2.58,
+          "end": 2.84
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.733,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Depreciation",
+          "start": 0.04,
+          "end": 0.86
+        },
+        {
+          "id": "w1",
+          "text": "burns",
+          "start": 0.89,
+          "end": 1.23
+        },
+        {
+          "id": "w2",
+          "text": "another",
+          "start": 1.23,
+          "end": 1.74
+        },
+        {
+          "id": "w3",
+          "text": "17,000",
+          "start": 1.74,
+          "end": 2.51
+        },
+        {
+          "id": "w4",
+          "text": "every",
+          "start": 3.01,
+          "end": 3.35
+        },
+        {
+          "id": "w5",
+          "text": "year.",
+          "start": 3.35,
+          "end": 3.73
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 4.459,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Insurance",
+          "start": 0.02,
+          "end": 0.77
+        },
+        {
+          "id": "w1",
+          "text": "6600.",
+          "start": 0.77,
+          "end": 2.01
+        },
+        {
+          "id": "w2",
+          "text": "Service",
+          "start": 2.01,
+          "end": 2.41
+        },
+        {
+          "id": "w3",
+          "text": "two",
+          "start": 2.41,
+          "end": 2.57
+        },
+        {
+          "id": "w4",
+          "text": "grand.",
+          "start": 2.58,
+          "end": 2.92
+        },
+        {
+          "id": "w5",
+          "text": "Tires",
+          "start": 3.07,
+          "end": 3.39
+        },
+        {
+          "id": "w6",
+          "text": "3,000.",
+          "start": 3.39,
+          "end": 4.38
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 4.096,
+      "words": [
+        {
+          "id": "w0",
+          "text": "and",
+          "start": 0.1,
+          "end": 0.22
+        },
+        {
+          "id": "w1",
+          "text": "that",
+          "start": 0.22,
+          "end": 0.51
+        },
+        {
+          "id": "w2",
+          "text": "quarter",
+          "start": 0.51,
+          "end": 1.03
+        },
+        {
+          "id": "w3",
+          "text": "million",
+          "start": 1.03,
+          "end": 1.55
+        },
+        {
+          "id": "w4",
+          "text": "invested",
+          "start": 1.55,
+          "end": 1.82
+        },
+        {
+          "id": "w5",
+          "text": "would",
+          "start": 2.24,
+          "end": 2.32
+        },
+        {
+          "id": "w6",
+          "text": "have",
+          "start": 2.32,
+          "end": 2.39
+        },
+        {
+          "id": "w7",
+          "text": "made",
+          "start": 2.39,
+          "end": 2.64
+        },
+        {
+          "id": "w8",
+          "text": "you",
+          "start": 2.68,
+          "end": 2.76
+        },
+        {
+          "id": "w9",
+          "text": "twelve",
+          "start": 2.76,
+          "end": 3.05
+        },
+        {
+          "id": "w10",
+          "text": "and",
+          "start": 3.05,
+          "end": 3.19
+        },
+        {
+          "id": "w11",
+          "text": "a",
+          "start": 3.19,
+          "end": 3.23
+        },
+        {
+          "id": "w12",
+          "text": "half",
+          "start": 3.23,
+          "end": 3.44
+        },
+        {
+          "id": "w13",
+          "text": "grand.",
+          "start": 3.44,
+          "end": 3.92
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 4.416,
+      "words": [
+        {
+          "id": "w0",
+          "text": "$58,700,",
+          "start": 0.1,
+          "end": 2.43
+        },
+        {
+          "id": "w1",
+          "text": "year",
+          "start": 2.43,
+          "end": 2.75
+        },
+        {
+          "id": "w2",
+          "text": "one,",
+          "start": 2.75,
+          "end": 3.16
+        },
+        {
+          "id": "w3",
+          "text": "just",
+          "start": 3.21,
+          "end": 3.42
+        },
+        {
+          "id": "w4",
+          "text": "to",
+          "start": 3.43,
+          "end": 3.57
+        },
+        {
+          "id": "w5",
+          "text": "be",
+          "start": 3.57,
+          "end": 3.71
+        },
+        {
+          "id": "w6",
+          "text": "seen",
+          "start": 3.71,
+          "end": 3.98
+        },
+        {
+          "id": "w7",
+          "text": "in",
+          "start": 3.98,
+          "end": 4.12
+        },
+        {
+          "id": "w8",
+          "text": "it.",
+          "start": 4.12,
+          "end": 4.41
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.584,
+      "words": [
+        {
+          "id": "w0",
+          "text": "They",
+          "start": 0.04,
+          "end": 0.3
+        },
+        {
+          "id": "w1",
+          "text": "see",
+          "start": 0.31,
+          "end": 0.55
+        },
+        {
+          "id": "w2",
+          "text": "the",
+          "start": 0.55,
+          "end": 0.79
+        },
+        {
+          "id": "w3",
+          "text": "flex,",
+          "start": 0.79,
+          "end": 1.14
+        },
+        {
+          "id": "w4",
+          "text": "now",
+          "start": 1.16,
+          "end": 1.35
+        },
+        {
+          "id": "w5",
+          "text": "you",
+          "start": 1.35,
+          "end": 1.56
+        },
+        {
+          "id": "w6",
+          "text": "know",
+          "start": 1.56,
+          "end": 1.85
+        },
+        {
+          "id": "w7",
+          "text": "the",
+          "start": 1.85,
+          "end": 2.06
+        },
+        {
+          "id": "w8",
+          "text": "math,",
+          "start": 2.06,
+          "end": 2.46
+        },
+        {
+          "id": "w9",
+          "text": "still",
+          "start": 2.51,
+          "end": 2.76
+        },
+        {
+          "id": "w10",
+          "text": "want",
+          "start": 2.76,
+          "end": 2.98
+        },
+        {
+          "id": "w11",
+          "text": "the",
+          "start": 2.98,
+          "end": 3.14
+        },
+        {
+          "id": "w12",
+          "text": "Lambo.",
+          "start": 3.14,
+          "end": 3.45
+        }
+      ]
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 30.421
+}

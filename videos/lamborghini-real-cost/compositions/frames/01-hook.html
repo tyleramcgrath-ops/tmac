@@ -1,0 +1,275 @@
+<template id="01-hook-template">
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+  @font-face { font-family: "Barlow"; src: url("assets/fonts/Barlow-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+  @font-face { font-family: "Barlow"; src: url("assets/fonts/Barlow-800.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: block; }
+  @font-face { font-family: "Barlow"; src: url("assets/fonts/Barlow-900.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: block; }
+  @font-face { font-family: "IBM Plex Mono"; src: url("assets/fonts/IBM_Plex_Mono-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: block; }
+
+  #root {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: "Barlow", sans-serif;
+  }
+
+  /* ---- background layer (full-bleed clip) ---- */
+  #hook01-bg {
+    position: absolute;
+    inset: 0;
+    background: #111111;
+  }
+  #hook01-grid {
+    position: absolute;
+    inset: 0;
+    width: 1080px;
+    height: 1920px;
+  }
+  #hook01-glyph {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 180px;
+    text-align: center;
+    font-family: "Barlow", sans-serif;
+    font-weight: 900;
+    font-size: 1500px;
+    line-height: 0.8;
+    color: #1A1A18;
+    letter-spacing: -0.04em;
+  }
+
+  /* ---- content layer ---- */
+  #hook01-stage {
+    position: absolute;
+    inset: 0;
+  }
+  #hook01-camera {
+    position: absolute;
+    inset: 0;
+    transform-origin: 540px 806px;
+  }
+  #hook01-head {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1920px;
+  }
+  #hook01-kicker {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 588px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #E85D26;
+    white-space: nowrap;
+  }
+  #hook01-kicker-stub {
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: #E85D26;
+  }
+  #hook01-num-wrap {
+    position: absolute;
+    left: 40px;
+    width: 1000px;
+    top: 690px;
+    height: 232px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: 500px 116px;
+  }
+  #hook01-num {
+    display: inline-block;
+    font-family: "Barlow", sans-serif;
+    font-weight: 900;
+    font-size: 232px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: #F0ECE5;
+    white-space: nowrap;
+    transform-origin: center center;
+  }
+
+  .hook01-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: "Barlow", sans-serif;
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+  #hook01-line1 {
+    top: 836px;
+    font-weight: 800;
+    font-size: 128px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #F0ECE5;
+  }
+  #hook01-line2 {
+    top: 978px;
+    font-weight: 900;
+    font-size: 150px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #E85D26;
+  }
+  .hook01-word {
+    display: inline-block;
+    margin: 0 0.12em;
+  }
+  #hook01-rule {
+    position: absolute;
+    left: 504px;
+    top: 1160px;
+    width: 72px;
+    height: 4px;
+    background: #E85D26;
+    transform-origin: left center;
+  }
+</style>
+
+<div data-hf-id="hf-2lr8" id="root" data-composition-id="01-hook" data-start="0" data-duration="4.736" data-width="1080" data-height="1920">
+  <!-- background: ink ground + 1px hairline grid + faint oversized "$" -->
+  <div data-hf-id="hf-h0ya" id="hook01-bg" class="clip" data-start="0" data-duration="4.736" data-track-index="0">
+    <svg data-hf-id="hf-34ao" id="hook01-grid" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g data-hf-id="hf-8ivz" id="hook01-grid-lines" stroke="#282826" stroke-width="1" shape-rendering="crispEdges" />
+    </svg>
+    <div data-hf-id="hf-yjmt" id="hook01-glyph" aria-hidden="true">$</div>
+  </div>
+
+  <!-- foreground: kicker + count-up sticker + slam lines -->
+  <div data-hf-id="hf-51we" id="hook01-stage" class="clip" data-start="0" data-duration="4.736" data-track-index="1">
+    <div data-hf-id="hf-4y3v" id="hook01-camera">
+      <div data-hf-id="hf-qeus" id="hook01-head">
+        <div data-hf-id="hf-gor5" id="hook01-kicker"><span data-hf-id="hf-kabt" id="hook01-kicker-stub"></span><span data-hf-id="hf-5e9g" id="hook01-kicker-text"></span></div>
+        <div data-hf-id="hf-p2qf" id="hook01-num-wrap"><span data-hf-id="hf-y3y1" id="hook01-num">$000,000</span></div>
+      </div>
+      <div data-hf-id="hf-b8cx" id="hook01-line1" class="hook01-line"><span data-hf-id="hf-zcse" class="hook01-word" id="hook01-w1">that's</span><span data-hf-id="hf-0ip1" class="hook01-word" id="hook01-w2">the</span></div>
+      <div data-hf-id="hf-f6gy" id="hook01-line2" class="hook01-line"><span data-hf-id="hf-cpea" class="hook01-word" id="hook01-w3">cheap</span><span data-hf-id="hf-v02p" class="hook01-word" id="hook01-w4">part.</span></div>
+      <div data-hf-id="hf-hp1g" id="hook01-rule"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var DUR = 4.736;
+    // real VO word onsets (seconds from frame start)
+    var T = { costs: 1.2, price: 1.6, thats: 3.61, the: 3.87, cheap: 4.04, part: 4.32 };
+
+    // ---- build hairline grid (deterministic) ----
+    var NS = "http://www.w3.org/2000/svg";
+    var g = document.getElementById("hook01-grid-lines");
+    var x, y, ln;
+    for (x = 0; x <= 1080; x += 108) {
+      ln = document.createElementNS(NS, "line");
+      ln.setAttribute("x1", x + 0.5); ln.setAttribute("x2", x + 0.5);
+      ln.setAttribute("y1", 0); ln.setAttribute("y2", 1920);
+      g.appendChild(ln);
+    }
+    for (y = 0; y <= 1920; y += 108) {
+      ln = document.createElementNS(NS, "line");
+      ln.setAttribute("y1", y + 0.5); ln.setAttribute("y2", y + 0.5);
+      ln.setAttribute("x1", 0); ln.setAttribute("x2", 1080);
+      g.appendChild(ln);
+    }
+
+    // ---- kicker chars (type-on) ----
+    var KICK = "LAMBORGHINI URUS SE · MSRP";
+    var kt = document.getElementById("hook01-kicker-text");
+    var chars = [];
+    for (var i = 0; i < KICK.length; i++) {
+      var s = document.createElement("span");
+      s.textContent = KICK.charAt(i) === " " ? " " : KICK.charAt(i);
+      kt.appendChild(s);
+      chars.push(s);
+    }
+
+    // ---- counter formatting: zero-padded 6 digits -> "$000,000" .. "$250,490" ----
+    var numEl = document.getElementById("hook01-num");
+    function fmt(v) {
+      var n = Math.round(v);
+      var str = String(n);
+      while (str.length < 6) str = "0" + str;
+      return "$" + str.slice(0, 3) + "," + str.slice(3);
+    }
+    var state = { value: 0 };
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    // ===== Scene 1 (0.0–0.6): sticker already on screen; grid + glyph fade up; kicker types on =====
+    tl.fromTo("#hook01-grid", { opacity: 0 }, { opacity: 0.55, duration: 0.6, ease: "power1.out" }, 0);
+    tl.fromTo("#hook01-glyph", { opacity: 0, y: 40 }, { opacity: 0.7, y: 0, duration: 0.9, ease: "power2.out" }, 0);
+    tl.fromTo("#hook01-kicker-stub", { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power3.out", transformOrigin: "left center" }, 0.04);
+    tl.fromTo(chars, { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.02, ease: "none" }, 0.1);
+
+    // slow camera lean-in under the whole shot
+    tl.fromTo("#hook01-camera", { scale: 1 }, { scale: 1.045, duration: DUR, ease: "none" }, 0);
+
+    // ===== Scene 2 (0.3–2.6): count-up with dynamic scale (hook-counter-burst) =====
+    var COUNT_AT = 0.3, COUNT_DUR = 2.3, START_SCALE = 0.6;
+    tl.fromTo(
+      state,
+      { value: 0 },
+      {
+        value: 250490,
+        duration: COUNT_DUR,
+        ease: "power3.out",
+        onUpdate: function () { numEl.textContent = fmt(state.value); }
+      },
+      COUNT_AT
+    );
+    tl.fromTo(numEl, { scale: START_SCALE }, { scale: 1, duration: COUNT_DUR, ease: "power3.out" }, COUNT_AT);
+    // ensure frame 0 / pre-count state reads "$000,000"
+    tl.call(function () { numEl.textContent = fmt(state.value); }, null, 0);
+
+    // landing shake on "$250,000" (~2.6s)
+    var LAND = COUNT_AT + COUNT_DUR;
+    tl.fromTo("#hook01-num-wrap", { x: 0 }, { x: 14, duration: 0.04, ease: "power2.out" }, LAND);
+    tl.to("#hook01-num-wrap", { x: -11, duration: 0.05, ease: "power2.inOut" }, LAND + 0.04);
+    tl.to("#hook01-num-wrap", { x: 6, duration: 0.05, ease: "power2.inOut" }, LAND + 0.09);
+    tl.to("#hook01-num-wrap", { x: 0, duration: 0.07, ease: "power2.out" }, LAND + 0.14);
+    tl.fromTo("#hook01-glyph", { scale: 1 }, { scale: 1.06, duration: 0.25, ease: "power3.out", immediateRender: false }, LAND);
+
+    // ===== Scene 3 (3.45–4.4): number dims + shrinks up; "that's the" / "cheap part." slam =====
+    var LIFT_AT = T.thats - 0.18;
+    tl.fromTo("#hook01-head", { y: 0 }, { y: -232, duration: 0.45, ease: "power3.inOut" }, LIFT_AT);
+    tl.fromTo("#hook01-num-wrap", { scale: 1, opacity: 1 }, { scale: 0.7, opacity: 0.35, duration: 0.45, ease: "power3.inOut", immediateRender: false }, LIFT_AT);
+    tl.to("#hook01-glyph", { opacity: 0.35, duration: 0.45, ease: "power2.inOut" }, LIFT_AT);
+
+    // distinct per-word entrances on the VO onsets
+    tl.fromTo("#hook01-w1", { scale: 1.6, opacity: 0, filter: "blur(14px)" },
+      { scale: 1, opacity: 1, filter: "blur(0px)", duration: 0.26, ease: "power4.out" }, T.thats);
+    tl.fromTo("#hook01-w2", { x: 220, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.22, ease: "expo.out" }, T.the);
+    tl.fromTo("#hook01-w3", { y: 110, rotation: 6, opacity: 0 },
+      { y: 0, rotation: 0, opacity: 1, duration: 0.26, ease: "circ.out" }, T.cheap);
+    tl.fromTo("#hook01-w4", { scale: 0.4, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.24, ease: "back.out(1.8)" }, T.part);
+
+    // ===== Scene 4 (4.45–end): orange rule stub draws under "cheap part." =====
+    tl.fromTo("#hook01-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.22, ease: "power3.out" }, T.part + 0.12);
+
+    // full-span anchor
+    tl.to({}, { duration: DUR }, 0);
+    window.__timelines["01-hook"] = tl;
+  })();
+</script>
+</template>

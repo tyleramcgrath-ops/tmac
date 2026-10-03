@@ -1,0 +1,46 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Two people. Same salary. A hundred fifty K a year."
+    },
+    {
+      "id": "02",
+      "text": "One spends it on the life everyone sees."
+    },
+    {
+      "id": "03",
+      "text": "The parties. The trips. The hundred-twenty-thousand-dollar car."
+    },
+    {
+      "id": "04",
+      "text": "That car alone? About two grand a month."
+    },
+    {
+      "id": "05",
+      "text": "The other drives a forty-thousand-dollar car. Six eighty a month."
+    },
+    {
+      "id": "06",
+      "text": "And quietly invests the other thirteen hundred. Every month."
+    },
+    {
+      "id": "07",
+      "text": "Ten years later, the party's over."
+    },
+    {
+      "id": "08",
+      "text": "And one of them is two hundred thirty-six thousand dollars richer."
+    },
+    {
+      "id": "09",
+      "text": "Same salary. One looked rich. One got rich. Which one are you?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}
