@@ -9,12 +9,12 @@ export function MarketingShell({ children }: { children: React.ReactNode }) {
         <div className="wrap">
           <Logo />
           <nav aria-label="Main">
-            <a className="hide-sm" href="/#how">How it works</a>
-            <a className="hide-sm" href="/templates">Templates</a>
+            <a className="hide-sm" href="/websites-for">Who we work with</a>
+            <a className="hide-sm" href="/#work">Our work</a>
+            <a className="hide-sm" href="/about">Why SaySites</a>
             <a className="hide-sm" href="/redesign">Free redesign</a>
-            <a className="hide-sm" href="/#pricing">Pricing</a>
             <a href="/login">Log in</a>
-            <a className="b b-dark b-sm" href="/signup">Start free</a>
+            <a className="b b-dark b-sm" href="/#talk">Let’s talk</a>
           </nav>
         </div>
       </header>
@@ -30,14 +30,14 @@ export function SiteFooter() {
       <div className="wrap">
         <Logo />
         <nav aria-label="Footer">
-          <a href="/templates">Templates</a>
+          <a href="/websites-for">Who we work with</a>
+          <a href="/about">Why SaySites</a>
           <a href="/redesign">Free redesign</a>
-          <a href="/websites-for">By business</a>
+          <a href="/templates">Our work</a>
           <a href="/connect">Connect</a>
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>
           <a href="/google-guidelines">Google’s guidelines</a>
-          <a href="/#pricing">Pricing</a>
           <a href="/#faq">FAQ</a>
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>

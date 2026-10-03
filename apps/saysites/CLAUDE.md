@@ -21,6 +21,19 @@ Also:
   and a stock photo belongs to one customer's site (`lib/photo-rules.ts`,
   table `ss_photos`). Owners' own uploads are exempt.
 
+## Positioning (October 2026, the owner's decision)
+
+SaySites presents itself like a website company for the industries that
+compete hardest online (law firms first, then dental, home services, and
+medical practices and med spas once their designs exist). The public site
+shows **no prices**: visitors "Let's talk" (form on / and /about, leads land
+in the dashboard Feedback inbox marked "Let's talk") or get a free redesign.
+Prices live only in the dashboard (account and billing). Why to switch from
+an agency lives on /about only, written as questions to ask any website
+company; never name or make claims about a competitor. /trades and the old
+/compare pages redirect. Self-serve sign-up still works at /signup but isn't
+promoted.
+
 ## Money check (the owner asked for this, permanently)
 
 Before building anything new, ask: will this help get or keep paying

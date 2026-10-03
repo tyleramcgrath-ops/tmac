@@ -50,7 +50,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <h1>{i.h1}</h1>
             <p>{i.lede}</p>
             <div className="ind-actions">
-              <a className="b b-dark" href="/signup">Build my site free</a>
+              <a className="b b-dark" href="/#talk">Let’s talk</a>
               <a className="b b-line" href="/redesign">See your current site rebuilt</a>
               <a className="tplrow-link" href={`/preview/${i.example}`}>See a live example</a>
             </div>
@@ -136,12 +136,11 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
       <section className="ind-sec ind-price">
         <div className="wrap">
           <div className="ind-price-in">
-            <div><b>$15</b><span>a month, everything included</span></div>
+            <div><b>100</b><span>speed score on our example sites</span></div>
             <div><b>0</b><span>setup fees or long contracts</span></div>
             <div><b>95+</b><span>speed score required on every page</span></div>
             <div><b>100%</b><span>yours: your words, photos and domain</span></div>
           </div>
-          <p className="fine">7-day free trial. Cancel anytime.</p>
         </div>
       </section>
 

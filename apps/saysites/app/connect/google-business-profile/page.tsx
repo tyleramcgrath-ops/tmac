@@ -27,7 +27,7 @@ const FAQ: QA[] = [
   { q: 'What if something on my listing is out of date?', a: 'Everything fills into the form first, and you can change any of it before you build. Your website and your listing should say the same thing, so it’s also a good moment to fix the listing on Google.' },
   { q: 'Why does it matter that my website matches my Google listing?', a: 'Google compares the name, address and phone number on your website with your Business Profile and other listings. When they match, it’s easier for Google to trust they’re all the same business, which helps in local results and on Google Maps.' },
   { q: 'Will my Google reviews show on my website?', a: 'Not yet. Showing your Google reviews on your site, in your customers’ own words, is coming soon. Today your site gets a “Leave us a review” link, a printable review card and ready-to-send review messages.' },
-  { q: 'How much does it cost?', a: 'Starting from your Google listing is included free. A SaySites website is $15 a month, or $25 a month with a store, after a 7-day free trial.' },
+  { q: 'How much does it cost?', a: 'Starting from your Google listing is included free. What your website costs depends on what your business needs, so we quote after a short conversation. There’s no setup fee and no long-term contract.' },
 ]
 
 function Searching() {

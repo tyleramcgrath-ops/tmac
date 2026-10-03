@@ -19,8 +19,6 @@ const GROUPS = [
   { design: 'upscale', title: 'Dark & Upscale', note: 'A near-black page, gold accents, serif type and a full photo header. For places with atmosphere.' },
 ] as const
 
-const TEMPLATE_KEY = { bold: 'bold', editorial: 'editorial', warm: 'warm', upscale: 'upscale' } as const
-
 export default function TemplatesPage() {
   const entries = Object.keys(SHOWCASE_INFO).map((sub) => ({ sub, ...SHOWCASE_INFO[sub], site: SHOWCASE[sub].site }))
   return (
@@ -63,19 +61,15 @@ export default function TemplatesPage() {
                     )
                   })}
               </div>
-              <p style={{ marginTop: 22 }}><a className="b b-line b-sm" href={`/signup?template=${TEMPLATE_KEY[g.design]}`}>Use {g.title}</a></p>
+              <p style={{ marginTop: 22 }}><a className="b b-line b-sm" href="/#talk">Ask for {g.title}</a></p>
             </div>
           ))}
           <div className="gal-cta">
             <div>
               <h2>Don’t see your business? It still works.</h2>
-              <p>Pick the style you like best. Sofie writes the words for your trade, your town and your services, and you change anything by asking.</p>
+              <p>Tell us about your business. We design it around your work, your town and your services, and you approve every page before it goes live.</p>
             </div>
-            <form className="say" action="/signup" method="get">
-              <label htmlFor="idea-tpl" className="visually-hidden">What does your business do?</label>
-              <input id="idea-tpl" name="idea" placeholder="A dog groomer in Tulsa…" autoComplete="off" maxLength={200} />
-              <button className="b b-light" type="submit">Build my site</button>
-            </form>
+            <p><a className="b b-light" href="/#talk">Let’s talk</a></p>
           </div>
         </div>
       </section>

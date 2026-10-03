@@ -1,157 +1,185 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Logo, LogoMark } from '@/components/Logo'
-import { PRICES } from '@/lib/billing'
+import { TalkForm } from '@/components/TalkForm'
 import './home.css'
 
-// saysites.com: law firms first. A static page with no client JavaScript of
-// its own; everything else (trades, shops, restaurants) lives at /trades.
-// The three designs are screenshots of the live example firms.
+// saysites.com: SaySites as a website company for the industries that
+// compete hardest online. No prices on the public site; businesses ask us
+// ("Let's talk") or start with a free redesign of their current site. Why
+// to switch from an agency lives on /about. A static-feeling page with no
+// client JavaScript of its own; the example screenshots are our own work.
 
 export const metadata: Metadata = {
-  title: { absolute: 'Law firm websites that bring in consultations | SaySites' },
-  description: 'Fast, SEO fully optimized law firm websites with practice area pages, attorney profiles and a consultation request on the home page. Build it yourself or have us build it. No contract.',
+  title: { absolute: 'SaySites: websites for businesses that compete for every client' },
+  description: 'Fast, SEO fully optimized websites for law firms, dental practices and home service companies. Designed, built and looked after for you, and always yours.',
   alternates: { canonical: '/' },
 }
 
-const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2000&q=75`
+const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=72`
 
-function Frame({ url, children }: { url: string; children: React.ReactNode }) {
-  return (
-    <div className="frame">
-      <div className="frame-bar"><i /><i /><i /><span>{url}</span></div>
-      <div className="frame-body">{children}</div>
-    </div>
-  )
-}
-
-const DESIGNS = [
-  { key: 'counsel', name: 'Counsel', firm: 'calder-and-vane', label: 'Calder & Vane, personal injury', text: 'Dark and formal, with the consultation form right beside your headline. Made for firms whose clients need to act quickly.' },
-  { key: 'classic', name: 'Classic', firm: 'hale-and-porter', label: 'Hale & Porter, estate and family law', text: 'Ivory, serif and calm, with your practice areas set out like an index. Made for firms clients trust with their families.' },
-  { key: 'modern', name: 'Modern', firm: 'ashgrove-defense', label: 'Ashgrove Defense, criminal defense', text: 'Light and clean, with a photo for each practice area and the form on a dark band. Made for firms that want to look current.' },
+const SECTORS = [
+  { name: 'Law firms', href: '/websites-for/law-firms', photo: '1436450412740-6b988f486c6b', text: 'Practice area pages, attorney profiles and a consultation request on every home page. Three designs, so no two firms look alike.', links: [] as [string, string][] },
+  { name: 'Dental practices', href: '/websites-for/dentists', photo: '1629909613654-28e377c37b09', text: 'Calm, reassuring sites that answer new-patient questions, explain each treatment and make it easy to ask for an appointment.', links: [] },
+  { name: 'Home services', href: '/websites-for', photo: '1749532125405-70950966b0e5', text: 'Sites that win the emergency search: a big call button, a page per service and the towns you cover.', links: [['Plumbers', '/websites-for/plumbers'], ['Heating and air', '/websites-for/hvac-companies'], ['Roofers', '/websites-for/roofers'], ['Electricians', '/websites-for/electricians']] },
 ]
 
-export default function Home() {
+const WORK = [
+  { img: '/media/law/counsel.jpg', firm: 'calder-and-vane', name: 'Calder & Vane', kind: 'Personal injury, San Antonio' },
+  { img: '/media/work/willow-dental.jpg', firm: 'willow-dental', name: 'Willow Dental', kind: 'Dental practice, Madison' },
+  { img: '/media/law/classic.jpg', firm: 'hale-and-porter', name: 'Hale & Porter', kind: 'Estate and family law, Columbus' },
+  { img: '/media/work/rivertown-plumbing.jpg', firm: 'rivertown-plumbing', name: 'Rivertown Plumbing', kind: 'Plumbing, Rivertown' },
+  { img: '/media/law/modern.jpg', firm: 'ashgrove-defense', name: 'Ashgrove Defense', kind: 'Criminal defense, Nashville' },
+  { img: '/media/work/summit-heating-air.jpg', firm: 'summit-heating-air', name: 'Summit Heating & Air', kind: 'Heating and air, Boise' },
+]
+
+export default async function Home({ searchParams }: { searchParams: Promise<{ sent?: string; talk?: string }> }) {
+  const sp = await searchParams
   return (
-    <div className="home">
+    <div className="home ag">
       <header className="nav">
         <div className="wrap">
           <Logo />
           <nav aria-label="Main">
-            <a className="hide-sm" href="#designs">Designs</a>
-            <a className="hide-sm" href="#pricing">Pricing</a>
-            <a className="hide-sm" href="/trades">Other businesses</a>
+            <details className="ag-menu hide-sm">
+              <summary>Who we work with</summary>
+              <div>
+                <a href="/websites-for/law-firms">Law firms</a>
+                <a href="/websites-for/dentists">Dental practices</a>
+                <a href="/websites-for/plumbers">Plumbers</a>
+                <a href="/websites-for/hvac-companies">Heating and air</a>
+                <a href="/websites-for/roofers">Roofers</a>
+                <a href="/websites-for/electricians">Electricians</a>
+                <a href="/websites-for">Every industry</a>
+              </div>
+            </details>
+            <a className="hide-sm" href="#work">Our work</a>
+            <a className="hide-sm" href="/about">Why SaySites</a>
+            <a className="hide-sm" href="/redesign">Free redesign</a>
             <a href="/login">Log in</a>
-            <a className="b b-light b-sm" href="/redesign">Free redesign</a>
+            <a className="b b-light b-sm" href="#talk">Let’s talk</a>
           </nav>
         </div>
       </header>
 
       <main>
-        <section className="hero lw-hero">
-          <div className="hero-bg"><Image src={U('1436450412740-6b988f486c6b')} alt="" fill sizes="100vw" priority style={{ objectFit: 'cover', objectPosition: '60% 40%' }} /></div>
-          <div className="wrap hero-in">
-            <p className="lw-eyebrow">Websites for law firms</p>
-            <h1>Law firm websites that bring in consultations.</h1>
-            <p className="lede">Built for how people choose a lawyer: clear practice area pages, real attorney profiles and a consultation request right on the home page. Fast, SEO fully optimized, and no two firms look the same. <strong>From ${PRICES.law.month} a month. No contract.</strong></p>
-            <div className="lw-acts">
-              <a className="b b-light" href="/redesign">See your site redesigned, free</a>
-              <a className="b lw-ghost" href="#designs">See the designs</a>
+        <section className="ag-hero">
+          <div className="wrap ag-hero-in">
+            <div className="ag-hero-copy">
+              <p className="lw-eyebrow">Law, dental and home services</p>
+              <h1>Websites for businesses that compete for every client.</h1>
+              <p className="lede">When someone searches for a lawyer, a dentist or a plumber, they choose from the first few sites they see. We design, build and look after fast, SEO fully optimized websites that make your business the obvious call.</p>
+              <div className="lw-acts">
+                <a className="b b-light" href="#talk">Let’s talk</a>
+                <a className="b lw-ghost" href="/redesign">See your site redesigned, free</a>
+              </div>
             </div>
-            <ul className="assure"><li>7-day free trial</li><li>Your domain, your site</li><li>Cancel anytime</li></ul>
+            <div className="ag-stack" aria-hidden="true">
+              {[WORK[0], WORK[1], WORK[3]].map((w, i) => (
+                <div key={w.firm} className={`ag-shot ag-shot-${i + 1}`}>
+                  <Image src={w.img} alt="" width={1280} height={860} sizes="(max-width: 900px) 70vw, 460px" priority={i === 0} />
+                </div>
+              ))}
+            </div>
           </div>
+          <ul className="ag-strip" aria-label="Industries we build for">
+            {['Personal injury', 'Family law', 'Criminal defense', 'Estate planning', 'Dentistry', 'Plumbing', 'Heating and air', 'Roofing', 'Electrical'].map((s) => <li key={s}>{s}</li>)}
+          </ul>
         </section>
 
-        <section className="lw-designs" id="designs">
+        <section className="ag-sec" id="industries">
           <div className="wrap">
             <div className="head split">
               <div>
-                <p className="kicker">Three designs</p>
-                <h2>No two firms look alike.</h2>
+                <p className="kicker">Who we work with</p>
+                <h2>Only the industries where a website wins the work.</h2>
               </div>
-              <p>Every firm starts from one of three designs and makes it its own: its colors, its words, its photos and its attorneys. Yours won’t look like the office down the street.</p>
+              <p>We focus on businesses where every new client starts with a search. Each industry gets designs, pages and wording made for how its customers decide.</p>
             </div>
-            <div className="lw-grid">
-              {DESIGNS.map((d, i) => (
-                <article className="lw-card" key={d.key}>
-                  <a href={`/preview/${d.firm}`} aria-label={`See the ${d.name} design live`}>
-                    <Frame url={`${d.firm}.saysites.com`}>
-                      <Image src={`/media/law/${d.key}.jpg`} alt={`The ${d.name} design: the home page of ${d.label}`} width={1280} height={860} sizes="(max-width: 900px) 92vw, 400px" priority={i === 0} />
-                    </Frame>
+            <div className="ag-sectors">
+              {SECTORS.map((s, i) => (
+                <article key={s.name} className="ag-sector">
+                  <a className="ag-sector-img" href={s.href} tabIndex={-1} aria-hidden="true">
+                    <Image src={U(s.photo)} alt="" fill sizes="(max-width: 900px) 92vw, 400px" style={{ objectFit: 'cover' }} priority={i === 0} />
                   </a>
-                  <h3>{d.name}</h3>
-                  <p className="lw-for">{d.label}</p>
-                  <p>{d.text}</p>
-                  <a className="lw-link" href={`/preview/${d.firm}`}>See it live</a>
+                  <h3><a href={s.href}>{s.name}</a></h3>
+                  <p>{s.text}</p>
+                  {s.links.length > 0 && <p className="ag-sublinks">{s.links.map(([l, h]) => <a key={h} href={h}>{l}</a>)}</p>}
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="how dark lw-inside" id="inside">
-          <div className="how-mark" aria-hidden="true"><LogoMark size={720} /></div>
+        <section className="ag-sec ag-dark" id="work">
           <div className="wrap">
-            <div className="head">
-              <p className="kicker">In every law firm site</p>
-              <h2>What people look for before they call a lawyer.</h2>
+            <div className="head split">
+              <div>
+                <p className="kicker">Our work</p>
+                <h2>Every one is different.</h2>
+              </div>
+              <p>Real pages you can open, click and test on your phone. Each business gets its own design, words and photos, never a template with the name swapped.</p>
             </div>
-            <div className="lw-feats">
-              <div><h3>A page for every practice area</h3><p>Each area of law gets its own page: what it involves, how the work goes and the questions clients ask, written for your firm and your town.</p></div>
-              <div><h3>Your attorneys, by name</h3><p>Profiles for the people clients will actually speak to, on the home page and a page of their own.</p></div>
-              <div><h3>Consultation requests</h3><p>A request form on the home page and the contact page. Every request lands in your inbox, with the attorney-client notice beside it.</p></div>
-              <div><h3>The notices clients expect</h3><p>An attorney advertising notice and a plain disclaimer at the foot of every page, and nothing that promises results.</p></div>
-              <div><h3>Fast on every phone</h3><p>Every page has to score 95 or more on the speed check before it can go live. Our example firms score 100.</p></div>
-              <div><h3>Ready for Google</h3><p>Titles, a sitemap and your firm’s details marked up as a legal service, following Google’s published guidelines. Nobody can promise rankings; we build it right.</p></div>
+            <div className="ag-work">
+              {WORK.map((w) => (
+                <a key={w.firm} className="ag-work-item" href={`/preview/${w.firm}`}>
+                  <div className="ag-work-img"><Image src={w.img} alt={`The ${w.name} website`} width={1280} height={860} sizes="(max-width: 700px) 92vw, (max-width: 1100px) 45vw, 380px" /></div>
+                  <b>{w.name}</b>
+                  <span>{w.kind}</span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="pricing" id="pricing">
+        <section className="ag-sec" id="how">
           <div className="wrap">
-            <div className="head split">
-              <div>
-                <p className="kicker">Pricing</p>
-                <h2>Build it yourself, or have us build it.</h2>
-              </div>
-              <p>Either way the site, the words and the domain are yours. One flat monthly price, no setup fee and no contract.</p>
+            <div className="head">
+              <p className="kicker">How we work</p>
+              <h2>You see it before you commit to anything.</h2>
             </div>
-            <div className="plans lw-plans">
-              <div className="plan">
-                <div className="plan-top"><h3>Law Firm</h3><span className="tag">You build it</span></div>
-                <div className="amt">${PRICES.law.month}<small>/month</small></div>
-                <p className="per">For firms who like to be hands on</p>
-                <ul>
-                  <li>One of three law designs, made yours</li>
-                  <li>Practice area pages written for your firm</li>
-                  <li>Attorney profiles and consultation requests</li>
-                  <li>Attorney advertising notices on every page</li>
-                  <li>Your domain, hosting, SSL and speed checks</li>
-                  <li>Sofie for everyday changes, and a weekly Visibility Score</li>
-                </ul>
-                <a className="b b-line b-block" href="/signup">Start free</a>
-              </div>
-              <div className="plan plan-main">
-                <div className="plan-top"><h3>Law Firm, built for you</h3><span className="tag">We build it</span></div>
-                <div className="amt">${PRICES.lawpro.month}<small>/month</small></div>
-                <p className="per">For firms with cases to run</p>
-                <ul>
-                  <li>Everything in Law Firm</li>
-                  <li>We build your whole site for you</li>
-                  <li>You review it from one private link</li>
-                  <li>Nothing goes live until you approve it</li>
-                  <li>Changes made for you whenever you ask</li>
-                </ul>
-                <a className="b b-light b-block" href="/redesign">Start with a free redesign</a>
-              </div>
-            </div>
-            <ol className="lw-flow" aria-label="How built for you works">
-              <li><b>Send us your current site</b><span>Or a few lines about your firm if you don’t have one.</span></li>
-              <li><b>We build your new site</b><span>Your practice areas, your attorneys, your words.</span></li>
-              <li><b>You review it from one link</b><span>Ask for changes right on the page.</span></li>
-              <li><b>Approve, and it goes live</b><span>On your own domain, and it stays yours.</span></li>
+            <ol className="ag-steps">
+              <li><b>A free redesign</b><span>Send us your current site. We rebuild it so you can see the difference, page by page, before we’ve even spoken.</span></li>
+              <li><b>We build your site</b><span>Your services, your people and your words, written for the way your clients search and decide.</span></li>
+              <li><b>You approve it</b><span>One private link to look through every page and ask for changes. Nothing goes live until you say so.</span></li>
+              <li><b>We keep it growing</b><span>Changes when you ask, a weekly Visibility Score, and every page kept up with Google’s published guidelines.</span></li>
             </ol>
-            <p className="fine">7-day free trial. No setup fee, no contract, cancel anytime.</p>
+          </div>
+        </section>
+
+        <section className="ag-sec ag-proof">
+          <div className="wrap ag-proof-in">
+            <div><b>100</b><span>Google speed score on our example sites</span></div>
+            <div><b>95+</b><span>required before any page can go live</span></div>
+            <div><b>0</b><span>long-term contracts</span></div>
+            <div><b>1</b><span>private link to review and approve your site</span></div>
+          </div>
+        </section>
+
+        <section className="ag-sec" id="built">
+          <div className="wrap">
+            <div className="head">
+              <p className="kicker">Built to compete</p>
+              <h2>What every site gets.</h2>
+            </div>
+            <div className="feat-grid">
+              <div><h3>Speed first</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p></div>
+              <div><h3>Ready for Google</h3><p>Titles that fit, a sitemap, one clear heading per page and your business details marked up the way search engines read them.</p></div>
+              <div><h3>A page for every service</h3><p>Each service or practice area gets its own page, written for your business and your town, with the questions people ask.</p></div>
+              <div><h3>Leads to your inbox</h3><p>Consultation and appointment requests land in one inbox, with call and reply buttons right beside them.</p></div>
+              <div><h3>The rules of your industry</h3><p>Attorney advertising notices for law firms, and nothing on any site that promises results or invents a review.</p></div>
+              <div><h3>Yours, always</h3><p>Your site, your words and your domain belong to you. No long contract holds them hostage.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="ag-sec ag-switch">
+          <div className="wrap ag-switch-in">
+            <div>
+              <p className="kicker">Already with an agency?</p>
+              <h2>Here’s why businesses switch to SaySites.</h2>
+            </div>
+            <a className="b b-line" href="/about">Why SaySites</a>
           </div>
         </section>
 
@@ -162,35 +190,24 @@ export default function Home() {
               <h2>Good questions.</h2>
             </div>
             <div className="qa">
-              <details><summary>Will my site follow the advertising rules for lawyers?</summary><p>Every law firm site carries an attorney advertising notice and a disclaimer that the site isn’t legal advice, and we never add results, ratings or claims you didn’t give us. Rules differ from state to state, so check yours; we’ll change any wording you need.</p></details>
-              <details><summary>Who writes the words?</summary><p>Each practice area gets its own page explaining the work in plain English, written for your firm and your town, with no invented facts. You can change any word, or ask Sofie to.</p></details>
-              <details><summary>We already have a website. What happens to it?</summary><p>Send it to the free redesign and see it rebuilt first, with every page kept at the same address so you don’t lose what you rank for. Nothing changes on your current site until you point your domain here.</p></details>
-              <details><summary>How does the built-for-you plan work?</summary><p>We build your site, then send you one private link. You look through every page, ask for changes right there, and approve it when it’s right. It goes live after you approve, never before.</p></details>
-              <details><summary>Is there a contract?</summary><p>No. Pay monthly and cancel anytime. Your words and your domain stay yours.</p></details>
+              <details><summary>What does it cost?</summary><p>It depends on what your business needs, so we quote after a short conversation. There’s no setup fee and no long-term contract, and you can see a free redesign of your current site before you decide anything.</p></details>
+              <details><summary>How long does it take?</summary><p>Your free redesign is ready in under a minute. A finished site depends on how many pages and people it covers; we’ll tell you when we talk, and you approve it before it goes live.</p></details>
+              <details><summary>Will I lose what my current site ranks for?</summary><p>We keep your pages at the same addresses wherever we can, and set up redirects for the rest, so links and search results keep working.</p></details>
+              <details><summary>Can I make changes myself?</summary><p>Yes. Ask us, or log in and change anything yourself, in plain words. You see every change before it goes live.</p></details>
+              <details><summary>Can you promise first place on Google?</summary><p>No one honestly can. We build every site the way Google’s own guidelines describe, keep it fast, and show you a weekly Visibility Score so you can see where you stand.</p></details>
             </div>
           </div>
         </section>
 
-        <section className="lw-trades">
-          <div className="wrap lw-trades-in">
+        <section className="ag-talk" id="talk">
+          <div className="wrap ag-talk-in">
             <div>
-              <p className="kicker">Not a law firm?</p>
-              <h2>SaySites builds for trades and local businesses too.</h2>
-              <p>Plumbers, electricians, salons, restaurants and shops, each with designs of their own. From ${PRICES.site.month} a month.</p>
+              <LogoMark size={40} />
+              <h2>Let’s talk about your website.</h2>
+              <p>Tell us about your business and what you want your site to do. We’ll get back to you to talk it through, with no pressure and no jargon.</p>
+              <p className="ag-talk-alt">Rather see it first? <a href="/redesign">Get a free redesign of your current site.</a></p>
             </div>
-            <a className="b b-line" href="/trades">See SaySites for your business</a>
-          </div>
-        </section>
-
-        <section className="last">
-          <div className="hero-bg"><Image src={U('1505664194779-8beaceb93744')} alt="" fill sizes="100vw" style={{ objectFit: 'cover' }} /></div>
-          <div className="wrap">
-            <LogoMark size={44} />
-            <h2>See your firm’s new site before you pay a thing.</h2>
-            <div className="lw-acts">
-              <a className="b b-light" href="/redesign">See your site redesigned, free</a>
-              <a className="b lw-ghost" href="/signup">Start from scratch</a>
-            </div>
+            <TalkForm from="/" sent={sp.sent === '1'} missing={sp.talk === 'missing'} />
           </div>
         </section>
       </main>
@@ -198,7 +215,7 @@ export default function Home() {
       <footer className="foot">
         <div className="wrap">
           <Logo />
-          <nav aria-label="Footer"><a href="/trades">Other businesses</a><a href="/templates">Templates</a><a href="#pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
+          <nav aria-label="Footer"><a href="/websites-for">Who we work with</a><a href="/about">Why SaySites</a><a href="/redesign">Free redesign</a><a href="/templates">Our work</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
           <span>© {new Date().getFullYear()} SaySites</span>
         </div>
       </footer>
