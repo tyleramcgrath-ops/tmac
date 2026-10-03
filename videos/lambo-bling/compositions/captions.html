@@ -1,0 +1,231 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="assets/vendor/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: block; }
+      :root {
+      --ink-black: #111111;
+      --ink-black-alt: #1A1A18;
+      --fire-orange: #E85D26;
+      --cream: #F0ECE5;
+      --cream-muted: #888880;
+      --cream-hint: #505048;
+      --border-dark: #282826;
+      --ink-on-orange-muted: rgba(17,17,17,0.75);
+      --ink-on-orange-hint: rgba(17,17,17,0.55);
+      --ink-on-orange-faint: rgba(17,17,17,0.40);
+      --ink-on-orange-border: rgba(17,17,17,0.20);
+      --cap-ink: #111111;
+      --cap-canvas: #F0ECE5;
+      --cap-accent: #E85D26;
+      --cap-accent-2: #888880;
+      --font-display: "Barlow", system-ui, serif;
+      --font-body: "Barlow", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE ink-black plate — single 1px fire-orange hairline (broadside's lone accent),
+     SHARP corners (0 radius), NO shadow (the plane is flat) */
+  .caption-pill {
+    max-width: 80%;
+    padding: 18px 44px 22px;
+    background: var(--cap-ink, #111111);
+    border: 1px solid var(--cap-accent, #e85d26);
+    border-radius: 0;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.04em 0.3em;
+    font-family: "Barlow", system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(38px, 4.2vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  /* upcoming — faint cream, no block (massive lowercase Barlow 900 as graphic primitive) */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.08em;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 42%, var(--cap-ink, #111111));
+  }
+  /* current word — THE register flip: a hard flat fire-orange block (box-shadow spread =
+     a sharp rectangle w/o layout shift; no blur), ink reading on top — the lone accent */
+  .caption-word.is-active {
+    color: var(--cap-ink, #111111);
+    background: var(--cap-accent, #e85d26);
+    box-shadow: 0 0 0 0.06em var(--cap-accent, #e85d26);
+  }
+  /* already spoken — solid cream, the orange block cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-canvas, #f0ece5);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — fire-orange ink, the cream-on-ink register's only inflection */
+  .caption-word.cap-brand {
+    color: var(--cap-accent, #e85d26);
+  }
+  /* numerals / data — the IBM Plex Mono chrome voice, uppercase + tracked, recessed */
+  .caption-word.cap-num {
+    font-family: "Barlow", ui-monospace, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 72%, var(--cap-ink, #111111));
+  }
+  /* emphasis — a fire-orange hairline underline (no second hue; the lone accent again) */
+  .caption-word.cap-cta {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cap-accent-2, #e85d26);
+    text-underline-offset: 0.1em;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(32px, 5.2vw, 46px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="32.3"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.04,"end":1.2,"text":"Everyone sees the","words":[{"id":"caption-word-0-0","text":"Everyone","start":0.04,"end":0.64},{"id":"caption-word-0-1","text":"sees","start":0.64,"end":0.97},{"id":"caption-word-0-2","text":"the","start":0.97,"end":1.2}]},{"id":"caption-group-1","frame":1,"start":1.2,"end":1.8,"text":"Lambo,","words":[{"id":"caption-word-1-0","text":"Lambo,","start":1.2,"end":1.75}]},{"id":"caption-group-2","frame":1,"start":1.8,"end":2.45,"text":"the parties,","words":[{"id":"caption-word-2-0","text":"the","start":1.8,"end":1.93},{"id":"caption-word-2-1","text":"parties,","start":1.93,"end":2.45}]},{"id":"caption-group-3","frame":1,"start":2.45,"end":3.34,"text":"the lifestyle.","words":[{"id":"caption-word-3-0","text":"the","start":2.45,"end":2.63},{"id":"caption-word-3-1","text":"lifestyle.","start":2.63,"end":3.22}]},{"id":"caption-group-4","frame":2,"start":3.481,"end":4.711,"text":"nobody sees the","words":[{"id":"caption-word-4-0","text":"nobody","start":3.481,"end":4.031},{"id":"caption-word-4-1","text":"sees","start":4.031,"end":4.421},{"id":"caption-word-4-2","text":"the","start":4.421,"end":4.691}]},{"id":"caption-group-5","frame":2,"start":4.711,"end":5.331,"text":"bill.","words":[{"id":"caption-word-5-0","text":"bill.","start":4.711,"end":5.331}]},{"id":"caption-group-6","frame":2,"start":5.331,"end":6.461,"text":"$250 grand is","words":[{"id":"caption-word-6-0","text":"$250","start":5.331,"end":5.961},{"id":"caption-word-6-1","text":"grand","start":5.971,"end":6.321},{"id":"caption-word-6-2","text":"is","start":6.321,"end":6.461}]},{"id":"caption-group-7","frame":2,"start":6.461,"end":7.461,"text":"just the sticker.","words":[{"id":"caption-word-7-0","text":"just","start":6.461,"end":6.741},{"id":"caption-word-7-1","text":"the","start":6.831,"end":6.911},{"id":"caption-word-7-2","text":"sticker.","start":6.911,"end":7.341}]},{"id":"caption-group-8","frame":3,"start":7.61,"end":8.31,"text":"Sales tax,","words":[{"id":"caption-word-8-0","text":"Sales","start":7.61,"end":7.9},{"id":"caption-word-8-1","text":"tax,","start":7.97,"end":8.31}]},{"id":"caption-group-9","frame":3,"start":8.31,"end":9,"text":"$17 and","words":[{"id":"caption-word-9-0","text":"$17","start":8.31,"end":8.77},{"id":"caption-word-9-1","text":"and","start":8.77,"end":9}]},{"id":"caption-group-10","frame":3,"start":9,"end":9.41,"text":"a half","words":[{"id":"caption-word-10-0","text":"a","start":9,"end":9.07},{"id":"caption-word-10-1","text":"half","start":9.07,"end":9.3}]},{"id":"caption-group-11","frame":3,"start":9.41,"end":9.9,"text":"grand,","words":[{"id":"caption-word-11-0","text":"grand,","start":9.41,"end":9.78}]},{"id":"caption-group-12","frame":3,"start":9.93,"end":10.51,"text":"day one.","words":[{"id":"caption-word-12-0","text":"day","start":9.93,"end":10.13},{"id":"caption-word-12-1","text":"one.","start":10.13,"end":10.39}]},{"id":"caption-group-13","frame":4,"start":10.633,"end":13.223,"text":"Depreciation burns another $17,000","words":[{"id":"caption-word-13-0","text":"Depreciation","start":10.633,"end":11.453},{"id":"caption-word-13-1","text":"burns","start":11.483,"end":11.823},{"id":"caption-word-13-2","text":"another","start":11.823,"end":12.333},{"id":"caption-word-13-3","text":"$17,000","start":12.333,"end":13.103}]},{"id":"caption-group-14","frame":4,"start":13.603,"end":14.443,"text":"every year.","words":[{"id":"caption-word-14-0","text":"every","start":13.603,"end":13.943},{"id":"caption-word-14-1","text":"year.","start":13.943,"end":14.323}]},{"id":"caption-group-15","frame":5,"start":14.466,"end":16.456,"text":"Insurance $6,600.","words":[{"id":"caption-word-15-0","text":"Insurance","start":14.466,"end":15.216},{"id":"caption-word-15-1","text":"$6,600.","start":15.216,"end":16.456}]},{"id":"caption-group-16","frame":5,"start":16.456,"end":17.486,"text":"Service two grand.","words":[{"id":"caption-word-16-0","text":"Service","start":16.456,"end":16.856},{"id":"caption-word-16-1","text":"two","start":16.856,"end":17.016},{"id":"caption-word-16-2","text":"grand.","start":17.026,"end":17.366}]},{"id":"caption-group-17","frame":5,"start":17.516,"end":18.946,"text":"Tires $3,000.","words":[{"id":"caption-word-17-0","text":"Tires","start":17.516,"end":17.836},{"id":"caption-word-17-1","text":"$3,000.","start":17.836,"end":18.826}]},{"id":"caption-group-18","frame":6,"start":19.125,"end":19.535,"text":"and that","words":[{"id":"caption-word-18-0","text":"and","start":19.125,"end":19.245},{"id":"caption-word-18-1","text":"that","start":19.245,"end":19.535}]},{"id":"caption-group-19","frame":6,"start":19.535,"end":20.965,"text":"quarter million invested","words":[{"id":"caption-word-19-0","text":"quarter","start":19.535,"end":20.055},{"id":"caption-word-19-1","text":"million","start":20.055,"end":20.575},{"id":"caption-word-19-2","text":"invested","start":20.575,"end":20.845}]},{"id":"caption-group-20","frame":6,"start":21.265,"end":21.415,"text":"would have","words":[{"id":"caption-word-20-0","text":"would","start":21.265,"end":21.345},{"id":"caption-word-20-1","text":"have","start":21.345,"end":21.415}]},{"id":"caption-group-21","frame":6,"start":21.415,"end":21.785,"text":"made you","words":[{"id":"caption-word-21-0","text":"made","start":21.415,"end":21.665},{"id":"caption-word-21-1","text":"you","start":21.705,"end":21.785}]},{"id":"caption-group-22","frame":6,"start":21.785,"end":22.215,"text":"twelve and","words":[{"id":"caption-word-22-0","text":"twelve","start":21.785,"end":22.075},{"id":"caption-word-22-1","text":"and","start":22.075,"end":22.215}]},{"id":"caption-group-23","frame":6,"start":22.215,"end":23.065,"text":"a half grand.","words":[{"id":"caption-word-23-0","text":"a","start":22.215,"end":22.255},{"id":"caption-word-23-1","text":"half","start":22.255,"end":22.465},{"id":"caption-word-23-2","text":"grand.","start":22.465,"end":22.945}]},{"id":"caption-group-24","frame":7,"start":23.341,"end":25.671,"text":"$58,700,","words":[{"id":"caption-word-24-0","text":"$58,700,","start":23.341,"end":25.671}]},{"id":"caption-group-25","frame":7,"start":25.671,"end":26.451,"text":"year one,","words":[{"id":"caption-word-25-0","text":"year","start":25.671,"end":25.991},{"id":"caption-word-25-1","text":"one,","start":25.991,"end":26.401}]},{"id":"caption-group-26","frame":7,"start":26.451,"end":26.811,"text":"just to","words":[{"id":"caption-word-26-0","text":"just","start":26.451,"end":26.661},{"id":"caption-word-26-1","text":"to","start":26.671,"end":26.811}]},{"id":"caption-group-27","frame":7,"start":26.811,"end":27.221,"text":"be seen","words":[{"id":"caption-word-27-0","text":"be","start":26.811,"end":26.951},{"id":"caption-word-27-1","text":"seen","start":26.951,"end":27.221}]},{"id":"caption-group-28","frame":7,"start":27.221,"end":27.771,"text":"in it.","words":[{"id":"caption-word-28-0","text":"in","start":27.221,"end":27.361},{"id":"caption-word-28-1","text":"it.","start":27.361,"end":27.651}]},{"id":"caption-group-29","frame":8,"start":27.817,"end":28.327,"text":"They see","words":[{"id":"caption-word-29-0","text":"They","start":27.817,"end":28.077},{"id":"caption-word-29-1","text":"see","start":28.087,"end":28.327}]},{"id":"caption-group-30","frame":8,"start":28.327,"end":28.937,"text":"the flex,","words":[{"id":"caption-word-30-0","text":"the","start":28.327,"end":28.567},{"id":"caption-word-30-1","text":"flex,","start":28.567,"end":28.917}]},{"id":"caption-group-31","frame":8,"start":28.937,"end":29.337,"text":"now you","words":[{"id":"caption-word-31-0","text":"now","start":28.937,"end":29.127},{"id":"caption-word-31-1","text":"you","start":29.127,"end":29.337}]},{"id":"caption-group-32","frame":8,"start":29.337,"end":29.837,"text":"know the","words":[{"id":"caption-word-32-0","text":"know","start":29.337,"end":29.627},{"id":"caption-word-32-1","text":"the","start":29.627,"end":29.837}]},{"id":"caption-group-33","frame":8,"start":29.837,"end":30.287,"text":"math,","words":[{"id":"caption-word-33-0","text":"math,","start":29.837,"end":30.237}]},{"id":"caption-group-34","frame":8,"start":30.287,"end":30.757,"text":"still want","words":[{"id":"caption-word-34-0","text":"still","start":30.287,"end":30.537},{"id":"caption-word-34-1","text":"want","start":30.537,"end":30.757}]},{"id":"caption-group-35","frame":8,"start":30.757,"end":31.347,"text":"the Lambo?","words":[{"id":"caption-word-35-0","text":"the","start":30.757,"end":30.917},{"id":"caption-word-35-1","text":"Lambo?","start":30.917,"end":31.227}]}];
+  var DURATION = 32.3;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.92 }, { scale: 1, duration: 0.1, ease: "power3.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>
