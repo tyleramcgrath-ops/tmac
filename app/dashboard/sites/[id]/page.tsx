@@ -130,7 +130,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
                 <span className="muted">{fixes ? `${fixes} fix${fixes > 1 ? 'es' : ''} to make` : `${seo.pages.length} page${seo.pages.length === 1 ? '' : 's'} checked`}</span>
               </a>
             )}
-            <a className="stat" href={`${base}/messages`}>
+            <a className="stat" href={`${base}/leads`}>
               <span className="stat-label">Messages</span>
               <strong>{messages.filter((m) => !m.read).length || messages.length}</strong>
               <span className="muted">{messages.some((m) => !m.read) ? 'new' : 'from your contact form'}</span>
@@ -173,7 +173,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
           <div className="card">
             <div className="card-head">
               <h3>Latest messages</h3>
-              <a className="small" href={`${base}/messages`}>See all</a>
+              <a className="small" href={`${base}/leads`}>See all</a>
             </div>
             {messages.length === 0 ? (
               <p className="muted small" style={{ margin: 0 }}>Nothing yet. When someone fills in your contact form, it lands here.</p>
@@ -181,7 +181,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
               <ul className="mini-inbox">
                 {messages.map((m) => (
                   <li key={m.id}>
-                    <a href={`${base}/messages`}>
+                    <a href={`${base}/leads/${m.id}`}>
                       <strong>{m.name || 'Someone'}</strong>{!m.read && <span className="pill ok">New</span>}
                       <span className="muted">{m.body.slice(0, 80)}</span>
                     </a>

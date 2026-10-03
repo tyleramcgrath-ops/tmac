@@ -176,7 +176,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <div><h3>A request form up front</h3><p>A consultation or appointment request on the home page itself, not buried on a contact page, and a request button on every service page.</p></div>
               <div><h3>One tap to call</h3><p>Your number is a button everywhere, with a call bar fixed to the bottom of every phone screen.</p></div>
               <div><h3>Text us, right there</h3><p>A corner button lets visitors text you, message you on WhatsApp or reach your Facebook page without leaving the site.</p></div>
-              <div><h3>Every lead in one inbox</h3><p>Requests land in one inbox with call and reply buttons beside them, and every tap on your phone number is counted, page by page.</p></div>
+              <div><h3>Every lead, followed up</h3><p>Requests land in your own leads pipeline with call and reply buttons, an instant reply goes to every lead, and each one can go straight to HubSpot, Salesforce, Clio Grow or Pipedrive.</p></div>
               <div><h3>Found when they search</h3><p>A page for every service and town, fast on every phone, and your details marked up the way Google reads them.</p></div>
               <div><h3>Trust before they call</h3><p>Your people by name, plain answers to the questions clients ask, and the notices your industry expects. Nothing invented.</p></div>
             </div>

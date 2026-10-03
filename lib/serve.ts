@@ -1,6 +1,8 @@
 // Turns a request path on a site into a Response: a page, the sitemap,
 // robots.txt, a redirect, or a 404.
 
+import { after } from 'next/server'
+import { onNewLead } from './leads'
 import { privacyPage } from './privacy'
 import { wordsFor } from './site-words'
 import { renderPage, withBasePath } from './render'
@@ -190,7 +192,15 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
   // Showcase sites are examples; their forms work but nothing is stored.
   if (bundle.site.orgId === SHOWCASE_ORG) return done()
   if ((await store.recentMessageCount(bundle.site.id, new Date(Date.now() - 3600_000))) >= MAX_PER_HOUR) return done()
-  await store.addMessage({ siteId: bundle.site.id, ...msg, page: back })
+  const saved = await store.addMessage({ siteId: bundle.site.id, ...msg, page: back })
+  // The instant reply, the owner's alert and the CRM sync run after the
+  // visitor is sent on, so a slow CRM never holds up the thank-you page.
+  const work = () => onNewLead(store, bundle.site, saved)
+  try {
+    after(work)
+  } catch {
+    void work()
+  }
   return done()
 }
 
