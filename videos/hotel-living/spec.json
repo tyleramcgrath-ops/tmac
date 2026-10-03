@@ -154,7 +154,7 @@
    "28 NIGHTS",
    "$66,366",
    "",
-   "L5:sixty",
+   "L5:$66",
    "L6",
    ""
   ],
@@ -162,7 +162,7 @@
    "MEDIAN MANHATTAN RENT",
    "$4,900 / mo",
    "AUG 2026",
-   "L6:forty",
+   "L6:$4",
    "L7",
    ""
   ],
@@ -170,7 +170,7 @@
    "1 PLAZA MONTH",
    "\u2248 13.5 rents",
    "EST.",
-   "L8:thirteen",
+   "L8:13",
    "L8:would",
    ""
   ]
@@ -193,5 +193,10 @@
  ],
  "impact": "L7:over",
  "footnote": "Rates: Expedia, The Plaza, Nov 2026 (searched Oct 3 2026). Rent: Miller Samuel/Brick Underground. Long stays get tax breaks; year is est. Stock footage.",
- "caption_fix": {}
+ "caption_fix": {
+  "plaza.": "Plaza.",
+  "plaza,": "Plaza,",
+  "Month": "month",
+  "rent,": "rent?"
+ }
 }

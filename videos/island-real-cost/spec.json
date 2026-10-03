@@ -50,7 +50,7 @@
      "mk1575.mp4@0.3",
      2,
      "lux",
-     "forty"
+     "42"
     ]
    ]
   },
@@ -102,7 +102,7 @@
      "mk48510.mp4",
      5,
      "lux",
-     "hundred"
+     "$177"
     ]
    ]
   },
@@ -150,7 +150,7 @@
    "12 ACRES",
    "Exuma Cays",
    "",
-   "L2:twelve",
+   "L2:12",
    "L3",
    ""
   ],
@@ -158,7 +158,7 @@
    "CARETAKER",
    "$42K / yr",
    "",
-   "L3:forty",
+   "L3:42",
    "L4",
    ""
   ],
@@ -166,7 +166,7 @@
    "INSURANCE",
    "$35K / yr",
    "",
-   "L4:thirty",
+   "L4:$35",
    "L5",
    ""
   ],
@@ -174,7 +174,7 @@
    "MAINTENANCE",
    "$55K / yr",
    "",
-   "L5:fifty",
+   "L5:$55",
    "L6",
    ""
   ],
@@ -182,7 +182,7 @@
    "BOAT",
    "$15K / yr",
    "",
-   "L6:fifteen",
+   "L6:15",
    "L7",
    ""
   ],
@@ -191,7 +191,7 @@
    "$30K / yr",
    "",
    "L7:add",
-   "L7:hundred",
+   "L7:$177",
    ""
   ],
   [
@@ -206,7 +206,7 @@
  "mids": [
   [
    "\u2248 $177,000<br><span style='font-size:44px;font-weight:600'>every year</span>",
-   "L7:hundred",
+   "L7:$177",
    "L8",
    104,
    "#fff"
@@ -219,7 +219,15 @@
    "#fff"
   ]
  ],
- "impact": "L7:hundred",
+ "impact": "L7:$177",
  "footnote": "Running costs: PrivateIslandMarket 2026 model for a developed 10-acre Exuma island (est.). Price: Private Islands Online listing. Stock footage.",
- "caption_fix": {}
+ "caption_fix": {
+  "At": "Add",
+  "at": "Add",
+  "living": "live-in",
+  "island.": "island?",
+  "Air": "air",
+  "Hurricane": "hurricane",
+  "Country,": "country:"
+ }
 }

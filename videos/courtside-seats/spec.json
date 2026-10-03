@@ -36,8 +36,8 @@
    "text": "A regular-season night: four to ten thousand dollars a seat.",
    "shots": [
     [
-     "mk44471.mp4",
-     2,
+     "mk44471.mp4@0.7",
+     3,
      "lux"
     ]
    ]
@@ -46,7 +46,7 @@
    "text": "Forty-one home games, at the cheapest: a hundred sixty-four grand.",
    "shots": [
     [
-     "mk43619.mp4",
+     "mk44464.mp4@0.3",
      0,
      "calm"
     ],
@@ -54,7 +54,7 @@
      "mk13733.mp4",
      0,
      "lux",
-     "a"
+     "164"
     ]
    ]
   },
@@ -70,7 +70,7 @@
      "mk9585.mp4",
      14,
      "lux",
-     "twenty"
+     "20"
     ]
    ]
   },
@@ -142,7 +142,7 @@
   ],
   [
    "ROW AA",
-   "Crypto.com Arena",
+   "on the baseline",
    "",
    "L2:your",
    "L3",
@@ -152,7 +152,7 @@
    "REGULAR SEASON",
    "$4K\u2013$10K / seat",
    "RESALE MARKET",
-   "L3:four",
+   "L3:$4",
    "L4",
    ""
   ],
@@ -160,7 +160,7 @@
    "41 GAMES \u00d7 $4K",
    "$164K",
    "EST. \u00b7 1 SEAT",
-   "L4:a",
+   "L4:164",
    "L5",
    ""
   ],
@@ -168,7 +168,7 @@
    "PLAYOFFS",
    "$20K\u2013$40K / seat",
    "",
-   "L5:twenty",
+   "L5:20",
    "L6",
    ""
   ],
@@ -176,7 +176,7 @@
    "COURTSIDE RESERVE",
    "$15K\u2013$30K",
    "PLAYOFFS",
-   "L6:fifteen",
+   "L6:$15",
    "L7",
    ""
   ],

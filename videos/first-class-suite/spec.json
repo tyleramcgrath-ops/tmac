@@ -130,7 +130,7 @@
    "EMIRATES FIRST \u00b7 ONE-WAY",
    "$18,117",
    "",
-   "L1:eighteen",
+   "L1:$18",
    "L2",
    ""
   ],
@@ -146,7 +146,7 @@
    "JFK \u2192 DXB \u00b7 FIRST",
    "$18,117",
    "",
-   "L3:eighteen",
+   "L3:18",
    "L4",
    ""
   ],
@@ -154,7 +154,7 @@
    "JFK \u2192 DXB \u00b7 ECONOMY",
    "$773",
    "SAME FLIGHT",
-   "L4:seven",
+   "L4:773",
    "L5",
    ""
   ],
@@ -186,7 +186,7 @@
  "mids": [
   [
    "1 suite<br><span style='font-size:44px;font-weight:600'>\u2248 23 economy seats</span>",
-   "L7:twenty",
+   "L7:23",
    "L8",
    110,
    "#fff"
@@ -199,7 +199,7 @@
    "#fff"
   ]
  ],
- "impact": "L7:twenty",
+ "impact": "L7:23",
  "footnote": "Cash fares: Expedia search for EK204, Nov 4 2026 (flex fares, searched Oct 3 2026). Shower: Simple Flying. Per-hour figures est. Stock footage.",
  "caption_fix": {}
 }
