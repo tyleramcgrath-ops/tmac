@@ -4,7 +4,7 @@ export const content: WrittenContent = {
   about: {
     heading: 'A family plumbing business that explains before it starts',
     paragraphs: [
-      'Rivertown Plumbing is family-run, and we’ve been fixing pipes, drains and water heaters for neighbors in Rivertown and across the valley since 2009. Most of our work starts with a phone call from someone who has found water where it shouldn’t be, or who has a fixture that’s been acting up for weeks. We take both kinds of call seriously, because a small drip and a flooded basement often have the same beginning.',
+      'Rivertown Plumbing is family-run, and we’ve been fixing pipes, drains and water heaters for our neighbors in Rivertown and across the valley. Most of our work starts with a phone call from someone who has found water where it shouldn’t be, or who has a fixture that’s been acting up for weeks. We take both kinds of call seriously, because a small drip and a flooded basement often have the same beginning.',
       'When we arrive, we look first and talk second. We’ll show you what we found, explain what’s causing it in plain language, and lay out your options before any tools come out. If a simple repair will do the job, we’ll say so. If something is near the end of its life, we’ll tell you that too, and leave the decision about when to replace it with you.',
       'We treat your home the way we’d want ours treated. That means covering floors, keeping the work area tidy and cleaning up when the job is done. Older valley homes often hide a mix of pipe materials from different decades, so we take the time to understand what’s behind the walls before we change it. Call us when something’s wrong, or when you’d simply like a second opinion.',
     ],
