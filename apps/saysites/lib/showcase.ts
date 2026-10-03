@@ -21,6 +21,9 @@ import { content as summitHeatingAirContent } from './showcase-content/summit-he
 import { content as willowDentalContent } from './showcase-content/willow-dental'
 import { content as calderAndVaneContent } from './showcase-content/calder-and-vane'
 import { content as ashgroveDefenseContent } from './showcase-content/ashgrove-defense'
+import { content as brightwaterContent } from './showcase-content/brightwater-family-medicine'
+import { content as northpointContent } from './showcase-content/northpoint-orthopedics'
+import { content as lumenContent } from './showcase-content/lumen-aesthetics'
 
 const NOW = '2026-09-24T00:00:00.000Z'
 export const SHOWCASE_ORG = 'org_showcase'
@@ -447,6 +450,100 @@ Tell us what you've shut off and we'll tell you what to do next, and how soon we
     },
     'ashgrove-defense'
   ),
+  'brightwater-family-medicine': make(
+    {
+      name: 'Brightwater Family Medicine',
+      type: 'doctor',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Charlotte',
+      region: 'NC',
+      phone: '(555) 704-2210',
+      street: '400 S Tryon Street',
+      postalCode: '28202',
+      hours: ['Mo-Fr 08:00-17:00'],
+      services: ['Annual physicals', 'Chronic condition care', 'Sick visits', 'Preventive screenings'],
+      palette: 'forest',
+      lawStyle: 'modern',
+      headline: 'Family medicine in Charlotte, for every age.',
+      photos: lawPhotos(['1631217868264-e5b90bb7e133', 'Doctor talking with a patient in an exam room'], [
+        ['1666214280557-f1b5022eb634', 'Doctor explaining a scan to a patient'],
+        ['1505751172876-fa1923c5c528', 'Stethoscope on a table'],
+        ['1519494026892-80bbd2d6fd0d', 'Clinic reception desk'],
+        ['1612349317150-e413f6a5b16d', 'Doctor in a white coat with a stethoscope'],
+        ['1581056771107-24ca5f033842', 'Doctor visiting a patient'],
+      ]),
+      team: [
+        { name: 'Dr. Naomi Reyes', role: 'Family physician', bio: 'Dr. Reyes sees patients of every age for checkups, ongoing conditions and everyday illnesses, and takes time to explain each next step.' },
+        { name: 'Dr. Owen Mercer', role: 'Family physician', bio: 'Dr. Mercer looks after families from first visits to annual physicals, with a focus on prevention and steady, long-term care.' },
+        { name: 'Lila Grant', role: 'Nurse practitioner', bio: 'Lila sees patients for sick visits and follow-ups, and helps them keep track of screenings and care plans.' },
+      ],
+      tagline: 'Family medicine for children and adults in Charlotte.',
+      content: brightwaterContent,
+    },
+    'brightwater-family-medicine'
+  ),
+  'northpoint-orthopedics': make(
+    {
+      name: 'Northpoint Orthopedics',
+      type: 'doctor',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Minneapolis',
+      region: 'MN',
+      phone: '(555) 612-8840',
+      street: '800 Nicollet Mall',
+      postalCode: '55402',
+      hours: ['Mo-Fr 07:30-17:30'],
+      services: ['Knee pain', 'Shoulder injuries', 'Sports injuries', 'Back and neck pain'],
+      palette: 'ocean',
+      lawStyle: 'counsel',
+      headline: 'Knee, shoulder or back pain? Let’s find out why.',
+      photos: lawPhotos(['1581056771107-24ca5f033842', 'Doctor visiting a patient'], [
+        ['1612349317150-e413f6a5b16d', 'Doctor in a white coat with a stethoscope'],
+        ['1666214280557-f1b5022eb634', 'Doctor explaining a scan to a patient'],
+        ['1505751172876-fa1923c5c528', 'Stethoscope on a table'],
+        ['1631217868264-e5b90bb7e133', 'Doctor talking with a patient in an exam room'],
+      ]),
+      team: [
+        { name: 'Dr. Henry Lund', role: 'Orthopedic physician', bio: 'Dr. Lund treats knee and shoulder problems, from new injuries to long-standing pain, and explains every option before a plan is made.' },
+        { name: 'Dr. Priya Nair', role: 'Orthopedic physician', bio: 'Dr. Nair works with people of all activity levels on sports injuries and back and neck pain, with care built around getting them moving.' },
+      ],
+      tagline: 'Orthopedic care for knees, shoulders, backs and sports injuries in Minneapolis.',
+      content: northpointContent,
+    },
+    'northpoint-orthopedics'
+  ),
+  'lumen-aesthetics': make(
+    {
+      name: 'Lumen Aesthetics',
+      type: 'medspa',
+      socials: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.yelp.com/'],
+      city: 'Scottsdale',
+      region: 'AZ',
+      phone: '(555) 480-3317',
+      chat: { kind: 'sms', to: '(555) 480-3317' },
+      street: '7014 E Camelback Road',
+      postalCode: '85251',
+      hours: ['Tu-Sa 09:00-18:00'],
+      services: ['Facials', 'Chemical peels', 'Laser skin treatments', 'Injectables'],
+      palette: 'plum',
+      lawStyle: 'classic',
+      headline: 'Skin care and aesthetics in Scottsdale, planned around you.',
+      photos: lawPhotos(['1570172619644-dfd03ed5d881', 'Facial treatment at a spa'], [
+        ['1616394584738-fc6e612e71b9', 'Client receiving a facial mask'],
+        ['1552693673-1bf958298935', 'Skin treatment in a clinic'],
+        ['1515377905703-c4788e51af15', 'Dropper of skincare serum'],
+        ['1540555700478-4be289fbecef', 'Spa towels and flowers'],
+        ['1600334089648-b0d9d3028eb2', 'Hot stone spa treatment'],
+      ]),
+      team: [
+        { name: 'Camille Ortiz', role: 'Nurse injector', bio: 'Camille plans injectable treatments with each client, starting with a conversation about what they want and what to expect.' },
+        { name: 'Jade Whitman', role: 'Licensed esthetician', bio: 'Jade leads facials and chemical peels, and helps clients build a routine that suits their skin.' },
+      ],
+      tagline: 'Facials, peels, laser treatments and injectables in Scottsdale.',
+      content: lumenContent,
+    },
+    'lumen-aesthetics'
+  ),
   'field-and-thread': withShop(make(
     {
       name: 'Field & Thread',
@@ -489,6 +586,9 @@ export const SHOWCASE_INFO: Record<string, { type: BusinessTypeKey; kind: string
   'hale-and-porter': { type: 'lawyer', kind: 'Law firm', place: 'Columbus, OH' },
   'calder-and-vane': { type: 'lawyer', kind: 'Injury law firm', place: 'San Antonio, TX' },
   'ashgrove-defense': { type: 'lawyer', kind: 'Criminal defense firm', place: 'Nashville, TN' },
+  'brightwater-family-medicine': { type: 'doctor', kind: 'Family medicine', place: 'Charlotte, NC' },
+  'northpoint-orthopedics': { type: 'doctor', kind: 'Orthopedics', place: 'Minneapolis, MN' },
+  'lumen-aesthetics': { type: 'medspa', kind: 'Med spa', place: 'Scottsdale, AZ' },
   'rosies-bakery': { type: 'bakery', kind: 'Bakery', place: 'Portland, OR' },
   'olive-and-ember': { type: 'restaurant', kind: 'Restaurant', place: 'Asheville, NC', design: 'upscale' },
   'field-and-thread': { type: 'store', kind: 'Shop', place: 'Burlington, VT' },

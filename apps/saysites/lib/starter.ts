@@ -283,7 +283,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       : pro === 'medical'
         ? `${name} offers ${offer} for patients across ${place}. We take time to listen and explain your options clearly.`
         : pro === 'medspa'
-          ? `${name} offers ${offer} in ${place}, with every treatment planned around you after a conversation with our team.`
+          ? `${name} offers skin and aesthetic treatments in ${place}, with every treatment planned around you after a conversation with our team.`
           : `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
     upscale: `${name} brings ${offer} to ${place}. Considered, unhurried and done properly.`,
@@ -520,7 +520,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     boxed: true,
     style: { background: 'surface', padding: section, gap: { desktop: 48, mobile: 20 } },
     children: [
-      { id: 'faq-h', type: 'heading', level: 2, text: law ? 'Questions clients ask' : pro === 'medical' ? 'Questions patients ask' : 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
+      { id: 'faq-h', type: 'heading', level: 2, text: law || pro === 'medspa' ? 'Questions clients ask' : pro === 'medical' ? 'Questions patients ask' : 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
       {
         id: 'faq-list',
         type: 'faq',
@@ -792,6 +792,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
   // Law firms, medical practices and med spas get designs of their own
   // (lib/law-designs).
+  const cardPool = [...photos.cards]
   if (pro) {
     const a = input.street && input.postalCode && city ? `${input.street}, ${city}${input.region.trim() ? `, ${tidyRegion(input.region)}` : ''} ${input.postalCode}` : undefined
     homeBody = lawHome({
@@ -808,7 +809,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       areaHref: (s) => (writtenFor(s) ? `${svcHref}/${serviceSlug(s)}` : undefined),
       areasHref: svcHref,
       hero: photos.hero,
-      photo: () => fresh(photos.cards[spare.length % 3]),
+      // Unused photos first (spares, then the card set), so cards don't repeat.
+      photo: () => spare.shift() ?? cardPool.shift() ?? photos.cards[0],
       attorneys,
       vocab,
       ticker,

@@ -28,10 +28,13 @@ const SECTORS = [
 
 const WORK = [
   { img: '/media/law/counsel.jpg', firm: 'calder-and-vane', name: 'Calder & Vane', kind: 'Personal injury, San Antonio' },
-  { img: '/media/work/willow-dental.jpg', firm: 'willow-dental', name: 'Willow Dental', kind: 'Dental practice, Madison' },
+  { img: '/media/work/brightwater-family-medicine.jpg', firm: 'brightwater-family-medicine', name: 'Brightwater Family Medicine', kind: 'Family medicine, Charlotte' },
+  { img: '/media/work/lumen-aesthetics.jpg', firm: 'lumen-aesthetics', name: 'Lumen Aesthetics', kind: 'Med spa, Scottsdale' },
   { img: '/media/law/classic.jpg', firm: 'hale-and-porter', name: 'Hale & Porter', kind: 'Estate and family law, Columbus' },
-  { img: '/media/work/rivertown-plumbing.jpg', firm: 'rivertown-plumbing', name: 'Rivertown Plumbing', kind: 'Plumbing, Rivertown' },
+  { img: '/media/work/northpoint-orthopedics.jpg', firm: 'northpoint-orthopedics', name: 'Northpoint Orthopedics', kind: 'Orthopedics, Minneapolis' },
+  { img: '/media/work/willow-dental.jpg', firm: 'willow-dental', name: 'Willow Dental', kind: 'Dental practice, Madison' },
   { img: '/media/law/modern.jpg', firm: 'ashgrove-defense', name: 'Ashgrove Defense', kind: 'Criminal defense, Nashville' },
+  { img: '/media/work/rivertown-plumbing.jpg', firm: 'rivertown-plumbing', name: 'Rivertown Plumbing', kind: 'Plumbing, Rivertown' },
   { img: '/media/work/summit-heating-air.jpg', firm: 'summit-heating-air', name: 'Summit Heating & Air', kind: 'Heating and air, Boise' },
 ]
 
@@ -79,7 +82,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               </div>
             </div>
             <div className="ag-stack" aria-hidden="true">
-              {[WORK[0], WORK[1], WORK[3]].map((w, i) => (
+              {[WORK[0], WORK[1], WORK[2]].map((w, i) => (
                 <div key={w.firm} className={`ag-shot ag-shot-${i + 1}`}>
                   <Image src={w.img} alt="" width={1280} height={860} sizes="(max-width: 900px) 70vw, 460px" priority={i === 0} />
                 </div>
