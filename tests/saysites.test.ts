@@ -15,7 +15,7 @@ import {
 import { sampleHome, samplePages, sampleServices, sampleSite } from '../apps/saysites/lib/sample'
 import { HEADING_FONTS, headingFont } from '../apps/saysites/lib/schema'
 import { resolveHost } from '../apps/saysites/lib/sites'
-import { classifyHost } from '../apps/saysites/lib/hosts'
+import { classifyHost, cleanDomain } from '../apps/saysites/lib/hosts'
 import { handleCall, serveSitePath } from '../apps/saysites/lib/serve'
 import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
@@ -196,6 +196,16 @@ describe('SaySites pre-publish SEO checks', () => {
     const codes = checkPage(page, samplePages).map((i) => i.code)
     expect(codes).toContain('duplicate-id')
     expect(codes).toContain('broken-link')
+  })
+})
+
+describe('SaySites own domains', () => {
+  it('takes whatever the owner pastes and keeps just the domain', () => {
+    expect(cleanDomain('https://www.SmithLaw.com/about?x=1')).toBe('smithlaw.com')
+    expect(cleanDomain('smith-law.co.uk')).toBe('smith-law.co.uk')
+    expect(cleanDomain('smith law')).toBeNull()
+    expect(cleanDomain('rivertown.saysites.com')).toBeNull()
+    expect(cleanDomain('saysites.com')).toBeNull()
   })
 })
 

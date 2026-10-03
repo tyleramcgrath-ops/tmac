@@ -21,6 +21,7 @@ import { syncSitePhotos } from '@/lib/sites'
 import { canSell, loadAccess } from '@/lib/billing'
 import { LIMIT_NOTE, costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
+import { DOMAIN_CHECK_PATH, DOMAIN_CHECK_REPLY, cleanDomain } from '@/lib/hosts'
 
 async function ownSite(siteId: string) {
   const user = await requireUser()
@@ -133,6 +134,60 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Own domain
+// ---------------------------------------------------------------------------
+
+export interface DomainState {
+  error?: string
+  saved?: string
+}
+
+// The owner names their domain; we hold it as pending, and let the team
+// know so SiteGround can add it and its certificate.
+export async function requestDomain(siteId: string, _prev: DomainState, form: FormData): Promise<DomainState> {
+  const { user, store, site } = await ownSite(siteId)
+  const domain = cleanDomain(str(form, 'domain', 255))
+  if (!domain) return { error: 'Type just the domain, like smithlaw.com.' }
+  const taken = await store.siteByDomain(domain)
+  if (taken && taken.id !== site.id) return { error: 'That domain is already connected to another SaySites website.' }
+  await store.updateSite({ ...site, pendingDomain: domain, updatedAt: new Date().toISOString() })
+  await store.addFeedback({
+    id: randomUUID(),
+    userId: user.id,
+    name: user.name,
+    email: user.email,
+    text: `Domain to connect: ${domain} (and www.${domain}) for ${site.business.name}, ${site.subdomain}.saysites.com. In SiteGround: Domain > Parked Domains, add both; then Security > SSL Manager, Let's Encrypt for both.`,
+    page: 'domain-request',
+    at: new Date().toISOString(),
+  })
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: 'Saved. Now add the two records below at your domain company.' }
+}
+
+// Switches the site to its domain once https://domain/ reaches us.
+export async function checkDomain(siteId: string, _prev: DomainState, _form: FormData): Promise<DomainState> {
+  const { store, site } = await ownSite(siteId)
+  const domain = site.pendingDomain
+  if (!domain) return { error: 'Add your domain first.' }
+  const reaches = async (host: string) => {
+    try {
+      const res = await fetch(`https://${host}${DOMAIN_CHECK_PATH}`, { cache: 'no-store', redirect: 'manual', signal: AbortSignal.timeout(8000) })
+      return res.ok && (await res.text()).trim() === DOMAIN_CHECK_REPLY
+    } catch {
+      return false
+    }
+  }
+  if (!(await reaches(domain))) {
+    return { error: `${domain} doesn’t reach SaySites securely yet. Records can take a few hours to spread, and we add the security certificate within one working day. Try again later.` }
+  }
+  const www = await reaches(`www.${domain}`)
+  const { pendingDomain: _done, ...rest } = site
+  await store.updateSite({ ...rest, customDomain: domain, updatedAt: new Date().toISOString() })
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: `Connected. Your site now lives at ${domain}.${www ? '' : ` (www.${domain} isn’t ready yet; it will follow.)`}` }
 }
 
 // ---------------------------------------------------------------------------

@@ -445,6 +445,10 @@ export const SiteSchema = z
     // <subdomain>.saysites.com until a custom domain is attached.
     subdomain: z.string().regex(/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/),
     customDomain: z.string().regex(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/).optional(),
+    // A domain the owner is connecting; it becomes customDomain once it
+    // reaches us over https (so the site never points Google at a dead
+    // address).
+    pendingDomain: z.string().regex(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/).optional(),
     language: z.string().min(2).max(10).default('en'),
     business: BusinessInfo,
     globals: GlobalStyles,

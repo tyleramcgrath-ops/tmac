@@ -7,7 +7,8 @@ import { flairOf } from '@/lib/schema'
 import { getStore } from '@/lib/store'
 import { liveUrl } from '@/lib/urls'
 import { ActionForm } from '@/components/ActionForm'
-import { deleteWebsite, saveSettings } from '../manage-actions'
+import { checkDomain, deleteWebsite, requestDomain, saveSettings } from '../manage-actions'
+import { HOSTING_IP } from '@/lib/hosts'
 
 const DESIGNS = [
   { key: 'bold', label: 'Bold', note: 'Big photo header, strong type. Great for trades.' },
@@ -75,12 +76,27 @@ export default async function SettingsPage({ params }: { params: Promise<{ id: s
           </div>
           <div className="card">
             <h3>Use your own domain</h3>
-            <p className="muted small">Already own a name like <strong>{site.subdomain.replace(/-/g, '')}.com</strong>? Point it here and your site moves over with its Google rankings intact.</p>
-            <ol className="steps-sm">
-              <li>At your domain company, add a <strong>CNAME</strong> record for <code>www</code> pointing to <code>cname.vercel-dns.com</code>.</li>
-              <li>Add an <strong>A</strong> record for <code>@</code> pointing to <code>76.76.21.21</code>.</li>
-            </ol>
-            <p className="muted small">One-click domain connection, right here, is coming soon.</p>
+            {site.customDomain ? (
+              <p className="muted small">Connected. Your site lives at <strong>{site.customDomain}</strong>, and Google is told that’s its home.</p>
+            ) : (
+              <>
+                <p className="muted small">Already own a name like <strong>{site.subdomain.replace(/-/g, '')}.com</strong>? Point it here and your site moves over.</p>
+                <ActionForm action={requestDomain.bind(null, site.id)} submit={site.pendingDomain ? 'Change domain' : 'Use this domain'}>
+                  <label className="field"><span>Your domain</span><input className="input" name="domain" placeholder="smithlaw.com" defaultValue={site.pendingDomain ?? ''} required autoComplete="off" /></label>
+                </ActionForm>
+                {site.pendingDomain && (
+                  <>
+                    <p className="muted small">At the company where you bought <strong>{site.pendingDomain}</strong>, open its DNS settings and add:</p>
+                    <ol className="steps-sm">
+                      <li>An <strong>A</strong> record for <code>@</code> pointing to <code>{HOSTING_IP}</code>.</li>
+                      <li>A <strong>CNAME</strong> record for <code>www</code> pointing to <code>{site.subdomain}.saysites.com</code>.</li>
+                    </ol>
+                    <p className="muted small">Remove any other A or CNAME records for <code>@</code> and <code>www</code>. We add your domain’s security certificate within one working day; then press the button below.</p>
+                    <ActionForm action={checkDomain.bind(null, site.id)} submit="Check my domain"><span /></ActionForm>
+                  </>
+                )}
+              </>
+            )}
           </div>
           <div className="card danger-zone">
             <h3>Delete this website</h3>
