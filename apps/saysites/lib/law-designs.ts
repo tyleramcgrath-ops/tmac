@@ -139,7 +139,7 @@ function attorneysSection(x: LawHomeInput, bg?: 'surface'): Container[] {
           id: 'lw-team-grid',
           type: 'container',
           layout: 'grid',
-          columns: { desktop: Math.min(3, x.attorneys.length), tablet: Math.min(2, x.attorneys.length), mobile: 1 },
+          columns: { desktop: Math.max(2, Math.min(3, x.attorneys.length)), tablet: 2, mobile: 1 },
           style: { gap: { desktop: 24 } },
           children: x.attorneys.slice(0, 6).map((a, i): Container => attorneyCard(`lw-at-${i + 1}`, a, x.style, bg ? 'background' : 'surface')),
         },

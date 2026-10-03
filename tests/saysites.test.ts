@@ -2053,3 +2053,35 @@ describe('SaySites: events', async () => {
     expect(detectBusiness(ld('Smith Injury Lawyers'), 'https://x.com/').name).toBe('Smith Injury Lawyers')
   })
 })
+
+describe('SaySites: law firm designs', () => {
+  const base = { name: 'Test & Law', type: 'lawyer' as const, city: 'Dayton', region: 'OH', phone: '(555) 100-2000', services: ['Estate planning', 'Family law', 'Probate'], palette: 'ocean' as const }
+  const ids = (b: unknown): string[] => JSON.stringify(b).match(/"id":"[^"]+"/g) ?? []
+
+  it('gives each law design its own home page, with a consultation form on it', async () => {
+    const { LAW_STYLES } = await import('../apps/saysites/lib/law-designs')
+    const homes = LAW_STYLES.map((lawStyle) => buildStarterSite({ ...base, lawStyle }, 'org_t', 'test-law').pages.find((p) => p.slug === '')!)
+    for (const h of homes) expect(JSON.stringify(h.body)).toContain('"type":"form"')
+    expect(new Set(homes.map((h) => ids(h.body).join()))).toHaveProperty('size', LAW_STYLES.length)
+    const fonts = LAW_STYLES.map((lawStyle) => buildStarterSite({ ...base, lawStyle }, 'org_t', 'test-law').site.globals.headingFont)
+    expect(new Set(fonts).size).toBe(LAW_STYLES.length)
+  })
+
+  it('adds attorney profiles and an Attorneys page only when the owner gives them', () => {
+    const without = buildStarterSite(base, 'org_t', 'test-law')
+    expect(without.pages.some((p) => p.slug === 'attorneys')).toBe(false)
+    expect(without.site.nav.some((n) => n.href === '/attorneys')).toBe(false)
+    const withTeam = buildStarterSite({ ...base, attorneys: [{ name: 'Ann Lee', role: 'Partner', bio: 'Ann handles estate planning.' }] }, 'org_t', 'test-law')
+    expect(withTeam.pages.some((p) => p.slug === 'attorneys')).toBe(true)
+    expect(withTeam.site.nav.some((n) => n.href === '/attorneys')).toBe(true)
+    expect(JSON.stringify(withTeam.pages.find((p) => p.slug === '')!.body)).toContain('Ann Lee')
+  })
+
+  it('makes no claims a firm did not give us', async () => {
+    const { LAW_STYLES } = await import('../apps/saysites/lib/law-designs')
+    for (const lawStyle of LAW_STYLES) {
+      const text = JSON.stringify(buildStarterSite({ ...base, lawStyle }, 'org_t', 'test-law').pages.find((p) => p.slug === '')!.body)
+      expect(text).not.toMatch(/guarantee|free consultation|no fee|award|years of experience|expert|specialist|[—–]/i)
+    }
+  })
+})

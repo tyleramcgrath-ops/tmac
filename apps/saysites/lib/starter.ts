@@ -1065,7 +1065,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               type: 'container',
               tag: 'section',
               layout: 'grid',
-              columns: { desktop: Math.min(3, attorneys.length), tablet: Math.min(2, attorneys.length), mobile: 1 },
+              columns: { desktop: Math.max(2, Math.min(3, attorneys.length)), tablet: 2, mobile: 1 },
               boxed: true,
               style: { padding: section, gap: { desktop: 24 } },
               children: attorneys.map((a, i) => attorneyCard(`team-${i + 1}`, a, lawStyle)),
