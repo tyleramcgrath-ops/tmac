@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Logo, LogoMark } from '@/components/Logo'
+import { SiteNav } from '@/components/SiteNav'
 import { TalkForm } from '@/components/TalkForm'
 import './home.css'
 
@@ -45,27 +46,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       <header className="nav">
         <div className="wrap">
           <Logo />
-          <nav aria-label="Main">
-            <details className="ag-menu hide-sm">
-              <summary>Who we work with</summary>
-              <div>
-                <a href="/websites-for/law-firms">Law firms</a>
-                <a href="/websites-for/medical-practices">Medical practices</a>
-                <a href="/websites-for/med-spas">Med spas</a>
-                <a href="/websites-for/dentists">Dental practices</a>
-                <a href="/websites-for/plumbers">Plumbers</a>
-                <a href="/websites-for/hvac-companies">Heating and air</a>
-                <a href="/websites-for/roofers">Roofers</a>
-                <a href="/websites-for/electricians">Electricians</a>
-                <a href="/websites-for">Every industry</a>
-              </div>
-            </details>
-            <a className="hide-sm" href="#work">Our work</a>
-            <a className="hide-sm" href="/about">Why SaySites</a>
-            <a className="hide-sm" href="/redesign">Free redesign</a>
-            <a href="/login">Log in</a>
-            <a className="b b-light b-sm" href="#talk">Let’s talk</a>
-          </nav>
+          <SiteNav home />
         </div>
       </header>
 
