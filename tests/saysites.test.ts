@@ -2096,3 +2096,17 @@ describe('SaySites: no prices on the public site', () => {
     expect(JSON.stringify(INDUSTRIES)).not.toMatch(/\$\d|free trial|a month/)
   })
 })
+
+describe('SaySites: industry guides', () => {
+  it('gives every industry page a full, clean guide', async () => {
+    const { INDUSTRIES } = await import('../apps/saysites/lib/industries')
+    const { GUIDES } = await import('../apps/saysites/lib/industries/guides')
+    for (const i of INDUSTRIES) {
+      const g = GUIDES[i.slug]
+      expect(g, i.slug).toBeTruthy()
+      const text = [g.title, g.intro, ...g.sections.flatMap((s) => [s.heading, s.body])].join(' ')
+      expect(text.split(/\s+/).length, i.slug).toBeGreaterThan(800)
+      expect(text, i.slug).not.toMatch(/\$\d|free trial|\d+%|[—–]|we guarantee|guaranteed (rankings|results|leads)/i)
+    }
+  })
+})
