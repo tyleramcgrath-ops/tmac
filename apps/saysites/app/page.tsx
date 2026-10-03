@@ -61,6 +61,12 @@ const LEAD_FEATURES = [
   ['Into the CRM you already use', 'Each new lead can go straight to HubSpot, Salesforce, Pipedrive or Clio Grow, or anywhere else through Zapier or Make.'],
 ] as const
 
+const GAP_FEATURES = [
+  ['Scored against what ranks', 'Pick a page and the search you want it to win. We read Google’s top results for that search and score your page against the pages that rank, check by check.'],
+  ['Quoted in AI answers', 'A second score for how likely AI answers are to quote your page, and whether Google’s AI Overview cites you or the firms it cites instead.'],
+  ['What to change, in order', 'The changes that close the gap, most valuable first, each with how long it takes. Say the word and make each change, with nothing invented.'],
+] as const
+
 const CRMS = ['HubSpot', 'Salesforce', 'Pipedrive', 'Clio Grow', 'Zapier', 'Make']
 
 const SEO_FEATURES = [
@@ -221,6 +227,39 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             </div>
             <div className="feat-grid seo-feats">
               {SEO_FEATURES.map(([h, t]) => (
+                <div key={h}><h3>{h}</h3><p>{t}</p></div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="ag-sec standing gap" id="citation-gap">
+          <div className="wrap">
+            <div className="standing-in">
+              <div className="standing-card gap-ex" aria-label="An example Citation Gap scan">
+                <div className="sc-head"><span>Example scan</span><span>Home page</span></div>
+                <p className="gx-q">“estate planning lawyer columbus”</p>
+                <div className="gx-scores">
+                  <div><b>58</b><span>Google ranking score</span></div>
+                  <div><b>41</b><span>AI answer score</span></div>
+                </div>
+                <p className="gx-aio">Google’s AI Overview cites 3 other firms, not you.</p>
+                <ol>
+                  <li><span>Put the search in your page title</span><i>15 min</i></li>
+                  <li><span>Answer the questions clients ask, as headings</span><i>3 hrs</i></li>
+                  <li><span>Add a plain comparison table</span><i>2 hrs</i></li>
+                </ol>
+                <p className="sc-tip">An example of a scan in your dashboard. Real scans compare your page with the pages Google ranks that day.</p>
+              </div>
+              <div className="standing-copy">
+                <p className="kicker">Citation Gap</p>
+                <h2>See why other firms get the click, and the quote.</h2>
+                <p>Choose a page and the search you want it to win. Citation Gap reads what Google ranks and what its AI Overview quotes for that search, then shows exactly where your page falls short.</p>
+                <p>You get two scores, one for Google and one for AI answers, and a short list of changes, most valuable first.</p>
+              </div>
+            </div>
+            <div className="feat-grid seo-feats">
+              {GAP_FEATURES.map(([h, t]) => (
                 <div key={h}><h3>{h}</h3><p>{t}</p></div>
               ))}
             </div>
