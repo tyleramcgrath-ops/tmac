@@ -5,9 +5,10 @@ import { after } from 'next/server'
 import { redirect } from 'next/navigation'
 import { DAYS, fromWeek, type WeekHours } from '@/lib/hours'
 import { buildBlogIndex, buildPostPage } from '@/lib/posts'
-import { randomUUID } from 'crypto'
+import { randomBytes, randomUUID } from 'crypto'
 import { FLAIRS, PageSeo, SiteSchema, type Flair, type Page, type Product, type Site } from '@/lib/schema'
 import { requireUser } from '@/lib/session'
+import { isAdmin } from '@/lib/admin'
 import { DESIGN_GLOBALS, PALETTES, type Design } from '@/lib/starter'
 import { drawLogoIdeas } from '@/lib/logo-ideas'
 import { ImportError, importSite } from '@/lib/importer'
@@ -18,7 +19,7 @@ import { vibeCheck } from '@/lib/vibe'
 import { LEAGUE_STYLES } from '@/lib/league-style'
 import { getStore, type LogoIdeasState } from '@/lib/store'
 import { syncSitePhotos } from '@/lib/sites'
-import { canSell, loadAccess } from '@/lib/billing'
+import { canSell, cleanPlan, loadAccess } from '@/lib/billing'
 import { LIMIT_NOTE, costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { DOMAIN_CHECK_PATH, DOMAIN_CHECK_REPLY, cleanDomain } from '@/lib/hosts'
@@ -147,6 +148,36 @@ export async function saveSettings(siteId: string, _prev: SettingsState, form: F
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: true }
+}
+
+// ---------------------------------------------------------------------------
+// Built for a client: send it for their approval
+// ---------------------------------------------------------------------------
+
+export interface HandoffState {
+  error?: string
+  saved?: string
+}
+
+// The SaySites team builds a site, then sends the client a private link to
+// look it over and approve it (app/approve). A new link replaces the old.
+export async function sendForApproval(siteId: string, _prev: HandoffState, form: FormData): Promise<HandoffState> {
+  const { user, store, site } = await ownSite(siteId)
+  if (!isAdmin(user.email)) return { error: 'Only the SaySites team can send sites for approval.' }
+  const plan = cleanPlan(form.get('plan'))
+  const code = randomBytes(12).toString('hex')
+  await store.updateSite({ ...site, handoff: { code, plan, sentAt: new Date().toISOString() }, updatedAt: new Date().toISOString() })
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: 'Link ready. Copy it below and send it to your client.' }
+}
+
+export async function cancelApproval(siteId: string, _prev: HandoffState, _form: FormData): Promise<HandoffState> {
+  const { user, store, site } = await ownSite(siteId)
+  if (!isAdmin(user.email)) return { error: 'Only the SaySites team can do this.' }
+  const { handoff: _old, ...rest } = site
+  await store.updateSite({ ...rest, updatedAt: new Date().toISOString() })
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: 'The link no longer works.' }
 }
 
 // ---------------------------------------------------------------------------

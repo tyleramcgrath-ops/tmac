@@ -455,6 +455,13 @@ export const SiteSchema = z
     // Menu links; an item can open a short list of its own pages (Services:
     // each service).
     nav: z.array(z.object({ label: z.string().min(1).max(40), href, children: z.array(z.object({ label: z.string().min(1).max(60), href }).strict()).max(16).optional() }).strict()).max(12),
+    // A site the SaySites team built for a client, waiting for them to look
+    // it over and approve it at /approve/<code>; it then moves to their
+    // account on the plan named here.
+    handoff: z
+      .object({ code: z.string().regex(/^[a-f0-9]{24}$/), plan: z.enum(['site', 'store', 'law', 'lawpro']), sentAt: z.string() })
+      .strict()
+      .optional(),
     // A chat button in the corner: visitors text, WhatsApp or Messenger the
     // owner directly. No script, no third-party widget.
     chat: z

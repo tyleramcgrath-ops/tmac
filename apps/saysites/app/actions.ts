@@ -10,7 +10,7 @@ import { BUSINESS_TYPES, PALETTES, buildStarterSite, subdomainFor, type Business
 import { creditsInUse, syncSitePhotos } from '@/lib/sites'
 import { photoSetFor, reportUse } from '@/lib/unsplash'
 import { getStore } from '@/lib/store'
-import { CLAIM_CODE, claimPath } from '@/lib/urls'
+import { APPROVE_CODE, CLAIM_CODE, approvePath, claimPath } from '@/lib/urls'
 import { templateFor } from '@/lib/templates'
 import { randomUUID } from 'crypto'
 import { writeContent } from '@/lib/writer'
@@ -26,6 +26,8 @@ export interface FormState {
 const str = (f: FormData, k: string) => String(f.get(k) ?? '').trim()
 // A redesign preview to claim after signing up or in.
 const claimId = (f: FormData) => (CLAIM_CODE.test(str(f, 'claim')) ? str(f, 'claim') : '')
+// A site the team built, to approve after signing up or in.
+const approveId = (f: FormData) => (APPROVE_CODE.test(str(f, 'approve')) ? str(f, 'approve') : '')
 
 export async function signUp(_prev: FormState, form: FormData): Promise<FormState> {
   const name = str(form, 'name')
@@ -41,6 +43,8 @@ export async function signUp(_prev: FormState, form: FormData): Promise<FormStat
   await startSession(user.id)
   const claim = claimId(form)
   if (claim) redirect(claimPath(claim))
+  const approve = approveId(form)
+  if (approve) redirect(approvePath(approve))
   const idea = str(form, 'idea').slice(0, 200)
   const template = str(form, 'template').slice(0, 20)
   const q = new URLSearchParams({ ...(idea ? { idea } : {}), ...(template ? { template } : {}) }).toString()
@@ -55,7 +59,8 @@ export async function logIn(_prev: FormState, form: FormData): Promise<FormState
   if (!user || !(await verifyPassword(password, user.passwordHash))) return { error: 'That email and password don’t match.' }
   await startSession(user.id)
   const claim = claimId(form)
-  redirect(claim ? claimPath(claim) : '/dashboard')
+  const approve = approveId(form)
+  redirect(claim ? claimPath(claim) : approve ? approvePath(approve) : '/dashboard')
 }
 
 export async function logOut(): Promise<void> {

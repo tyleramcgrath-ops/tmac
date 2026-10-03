@@ -22,7 +22,7 @@ import { MemoryStore } from '../apps/saysites/lib/store'
 import { buildStarterSite, subdomainFor } from '../apps/saysites/lib/starter'
 import { createSessionToken, hashPassword, readSessionToken, verifyPassword } from '../apps/saysites/lib/auth'
 import { GUIDELINES, GUIDELINES_REVIEWED } from '../apps/saysites/lib/guidelines'
-import { accessFor, canSell, cleanPromo, newBilling, planForPrice, priceId } from '../apps/saysites/lib/billing'
+import { PRICES, accessFor, canSell, cleanPlan, cleanPromo, newBilling, planForPrice, priceId } from '../apps/saysites/lib/billing'
 import { costMicros, monthShare, overCap, siteBudget } from '../apps/saysites/lib/usage'
 import { formEncode, verifySignature } from '../apps/saysites/lib/stripe'
 import { cacheLatest } from '../apps/saysites/lib/sofie'
@@ -256,6 +256,28 @@ describe('SaySites good-site basics', () => {
     expect(checkSpeed(out).issues).toEqual([])
     const privacy = serveSitePath({ site, pages, redirects: [] }, ['privacy'], { preview: true })
     expect(privacy.status).toBe(200)
+  })
+})
+
+describe('SaySites law firm plans and approval links', () => {
+  it('knows the law firm plans and their prices', () => {
+    expect(PRICES.law.month).toBe(299)
+    expect(PRICES.lawpro.month).toBe(599)
+    expect(cleanPlan('lawpro')).toBe('lawpro')
+    expect(cleanPlan('nonsense')).toBe('site')
+  })
+
+  it('finds a site by its approval code and moves it to the client', async () => {
+    const store = new MemoryStore()
+    const admin = await store.createUser({ email: 'team@saysites.com', name: 'Team', passwordHash: 'x' })
+    const client = await store.createUser({ email: 'firm@example.com', name: 'Firm', passwordHash: 'x' })
+    const built = buildStarterSite({ name: 'Hale & Porter Law', type: 'lawyer', city: 'Columbus', region: 'OH', services: ['Estate planning'], palette: 'slate' }, admin.id, 'hale-porter-law')
+    const code = 'a'.repeat(24)
+    await store.createSite(admin.id, { ...built.site, handoff: { code, plan: 'lawpro', sentAt: '2026-10-03' } }, built.pages)
+    expect((await store.siteByHandoff(code))?.id).toBe(built.site.id)
+    await store.transferSite(built.site.id, client.id)
+    expect(await store.siteForUser(admin.id, built.site.id)).toBeNull()
+    expect((await store.siteForUser(client.id, built.site.id))?.orgId).toBe(client.id)
   })
 })
 
