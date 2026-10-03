@@ -11,8 +11,8 @@ import './home.css'
 // client JavaScript of its own; the example screenshots are our own work.
 
 export const metadata: Metadata = {
-  title: { absolute: 'SaySites: websites for businesses that compete for every client' },
-  description: 'Fast, SEO fully optimized websites for law firms, dental practices and home service companies. Designed, built and looked after for you, and always yours.',
+  title: { absolute: 'SaySites: websites built to bring in leads' },
+  description: 'Websites built to turn searches into calls, consultation requests and booked appointments, for law firms, medical practices, med spas and home services.',
   alternates: { canonical: '/' },
 }
 
@@ -20,16 +20,21 @@ const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&f
 
 const SECTORS = [
   { name: 'Law firms', href: '/websites-for/law-firms', photo: '1436450412740-6b988f486c6b', text: 'Practice area pages, attorney profiles and a consultation request on every home page. Three designs, so no two firms look alike.', links: [] as [string, string][] },
+  { name: 'Medical practices', href: '/websites-for/medical-practices', photo: '1631217868264-e5b90bb7e133', text: 'Clear service pages, your providers by name and an appointment request on the home page, with the notices patients expect.', links: [] },
+  { name: 'Med spas', href: '/websites-for/med-spas', photo: '1570172619644-dfd03ed5d881', text: 'Calm, polished sites that explain every treatment, set honest expectations and make booking a consultation easy.', links: [] },
   { name: 'Dental practices', href: '/websites-for/dentists', photo: '1629909613654-28e377c37b09', text: 'Calm, reassuring sites that answer new-patient questions, explain each treatment and make it easy to ask for an appointment.', links: [] },
   { name: 'Home services', href: '/websites-for', photo: '1749532125405-70950966b0e5', text: 'Sites that win the emergency search: a big call button, a page per service and the towns you cover.', links: [['Plumbers', '/websites-for/plumbers'], ['Heating and air', '/websites-for/hvac-companies'], ['Roofers', '/websites-for/roofers'], ['Electricians', '/websites-for/electricians']] },
 ]
 
 const WORK = [
   { img: '/media/law/counsel.jpg', firm: 'calder-and-vane', name: 'Calder & Vane', kind: 'Personal injury, San Antonio' },
-  { img: '/media/work/willow-dental.jpg', firm: 'willow-dental', name: 'Willow Dental', kind: 'Dental practice, Madison' },
+  { img: '/media/work/brightwater-family-medicine.jpg', firm: 'brightwater-family-medicine', name: 'Brightwater Family Medicine', kind: 'Family medicine, Charlotte' },
+  { img: '/media/work/lumen-aesthetics.jpg', firm: 'lumen-aesthetics', name: 'Lumen Aesthetics', kind: 'Med spa, Scottsdale' },
   { img: '/media/law/classic.jpg', firm: 'hale-and-porter', name: 'Hale & Porter', kind: 'Estate and family law, Columbus' },
-  { img: '/media/work/rivertown-plumbing.jpg', firm: 'rivertown-plumbing', name: 'Rivertown Plumbing', kind: 'Plumbing, Rivertown' },
+  { img: '/media/work/northpoint-orthopedics.jpg', firm: 'northpoint-orthopedics', name: 'Northpoint Orthopedics', kind: 'Orthopedics, Minneapolis' },
+  { img: '/media/work/willow-dental.jpg', firm: 'willow-dental', name: 'Willow Dental', kind: 'Dental practice, Madison' },
   { img: '/media/law/modern.jpg', firm: 'ashgrove-defense', name: 'Ashgrove Defense', kind: 'Criminal defense, Nashville' },
+  { img: '/media/work/rivertown-plumbing.jpg', firm: 'rivertown-plumbing', name: 'Rivertown Plumbing', kind: 'Plumbing, Rivertown' },
   { img: '/media/work/summit-heating-air.jpg', firm: 'summit-heating-air', name: 'Summit Heating & Air', kind: 'Heating and air, Boise' },
 ]
 
@@ -45,6 +50,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <summary>Who we work with</summary>
               <div>
                 <a href="/websites-for/law-firms">Law firms</a>
+                <a href="/websites-for/medical-practices">Medical practices</a>
+                <a href="/websites-for/med-spas">Med spas</a>
                 <a href="/websites-for/dentists">Dental practices</a>
                 <a href="/websites-for/plumbers">Plumbers</a>
                 <a href="/websites-for/hvac-companies">Heating and air</a>
@@ -66,16 +73,16 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
         <section className="ag-hero">
           <div className="wrap ag-hero-in">
             <div className="ag-hero-copy">
-              <p className="lw-eyebrow">Law, dental and home services</p>
-              <h1>Websites for businesses that compete for every client.</h1>
-              <p className="lede">When someone searches for a lawyer, a dentist or a plumber, they choose from the first few sites they see. We design, build and look after fast, SEO fully optimized websites that make your business the obvious call.</p>
+              <p className="lw-eyebrow">Law, medical, aesthetics, dental and home services</p>
+              <h1>Websites built to bring in leads.</h1>
+              <p className="lede">When someone searches for a lawyer, a doctor or a plumber, they call one of the first few businesses they find. We build fast, SEO fully optimized websites where every page is made to turn that search into a call, a consultation request or a booked appointment, and every lead lands in one inbox.</p>
               <div className="lw-acts">
                 <a className="b b-light" href="#talk">Let’s talk</a>
                 <a className="b lw-ghost" href="/redesign">See your site redesigned, free</a>
               </div>
             </div>
             <div className="ag-stack" aria-hidden="true">
-              {[WORK[0], WORK[1], WORK[3]].map((w, i) => (
+              {[WORK[0], WORK[1], WORK[2]].map((w, i) => (
                 <div key={w.firm} className={`ag-shot ag-shot-${i + 1}`}>
                   <Image src={w.img} alt="" width={1280} height={860} sizes="(max-width: 900px) 70vw, 460px" priority={i === 0} />
                 </div>
@@ -83,7 +90,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             </div>
           </div>
           <ul className="ag-strip" aria-label="Industries we build for">
-            {['Personal injury', 'Family law', 'Criminal defense', 'Estate planning', 'Dentistry', 'Plumbing', 'Heating and air', 'Roofing', 'Electrical'].map((s) => <li key={s}>{s}</li>)}
+            {['Personal injury', 'Family law', 'Criminal defense', 'Estate planning', 'Family medicine', 'Orthopedics', 'Med spas', 'Dentistry', 'Plumbing', 'Heating and air', 'Roofing', 'Electrical'].map((s) => <li key={s}>{s}</li>)}
           </ul>
         </section>
 
@@ -142,7 +149,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <li><b>A free redesign</b><span>Send us your current site. We rebuild it so you can see the difference, page by page, before we’ve even spoken.</span></li>
               <li><b>We build your site</b><span>Your services, your people and your words, written for the way your clients search and decide.</span></li>
               <li><b>You approve it</b><span>One private link to look through every page and ask for changes. Nothing goes live until you say so.</span></li>
-              <li><b>We keep it growing</b><span>Changes when you ask, a weekly Visibility Score, and every page kept up with Google’s published guidelines.</span></li>
+              <li><b>You watch the leads</b><span>Every message, every tap on your phone number and every visit shows in your dashboard, with a weekly Visibility Score and changes whenever you ask.</span></li>
             </ol>
           </div>
         </section>
@@ -159,16 +166,16 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
         <section className="ag-sec" id="built">
           <div className="wrap">
             <div className="head">
-              <p className="kicker">Built to compete</p>
-              <h2>What every site gets.</h2>
+              <p className="kicker">Built for leads</p>
+              <h2>How your site brings in business.</h2>
             </div>
             <div className="feat-grid">
-              <div><h3>Speed first</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p></div>
-              <div><h3>Ready for Google</h3><p>Titles that fit, a sitemap, one clear heading per page and your business details marked up the way search engines read them.</p></div>
-              <div><h3>A page for every service</h3><p>Each service or practice area gets its own page, written for your business and your town, with the questions people ask.</p></div>
-              <div><h3>Leads to your inbox</h3><p>Consultation and appointment requests land in one inbox, with call and reply buttons right beside them.</p></div>
-              <div><h3>The rules of your industry</h3><p>Attorney advertising notices for law firms, and nothing on any site that promises results or invents a review.</p></div>
-              <div><h3>Yours, always</h3><p>Your site, your words and your domain belong to you. No long contract holds them hostage.</p></div>
+              <div><h3>A request form up front</h3><p>A consultation or appointment request on the home page itself, not buried on a contact page, and a request button on every service page.</p></div>
+              <div><h3>One tap to call</h3><p>Your number is a button everywhere, with a call bar fixed to the bottom of every phone screen.</p></div>
+              <div><h3>Text us, right there</h3><p>A corner button lets visitors text you, message you on WhatsApp or reach your Facebook page without leaving the site.</p></div>
+              <div><h3>Every lead in one inbox</h3><p>Requests land in one inbox with call and reply buttons beside them, and every tap on your phone number is counted, page by page.</p></div>
+              <div><h3>Found when they search</h3><p>A page for every service and town, fast on every phone, and your details marked up the way Google reads them.</p></div>
+              <div><h3>Trust before they call</h3><p>Your people by name, plain answers to the questions clients ask, and the notices your industry expects. Nothing invented.</p></div>
             </div>
           </div>
         </section>
@@ -194,7 +201,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <details><summary>How long does it take?</summary><p>Your free redesign is ready in under a minute. A finished site depends on how many pages and people it covers; we’ll tell you when we talk, and you approve it before it goes live.</p></details>
               <details><summary>Will I lose what my current site ranks for?</summary><p>We keep your pages at the same addresses wherever we can, and set up redirects for the rest, so links and search results keep working.</p></details>
               <details><summary>Can I make changes myself?</summary><p>Yes. Ask us, or log in and change anything yourself, in plain words. You see every change before it goes live.</p></details>
-              <details><summary>Can you promise first place on Google?</summary><p>No one honestly can. We build every site the way Google’s own guidelines describe, keep it fast, and show you a weekly Visibility Score so you can see where you stand.</p></details>
+              <details><summary>Can you promise more leads?</summary><p>No one honestly can promise a number. What we promise is a site where contacting you takes one tap, built the way Google’s own guidelines describe, and a dashboard that shows every message, call tap and visit, so you can see exactly what it brings in.</p></details>
             </div>
           </div>
         </section>
@@ -203,8 +210,8 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           <div className="wrap ag-talk-in">
             <div>
               <LogoMark size={40} />
-              <h2>Let’s talk about your website.</h2>
-              <p>Tell us about your business and what you want your site to do. We’ll get back to you to talk it through, with no pressure and no jargon.</p>
+              <h2>Let’s talk about getting you more leads.</h2>
+              <p>Tell us about your business and the clients you want more of. We’ll get back to you to talk it through, with no pressure and no jargon.</p>
               <p className="ag-talk-alt">Rather see it first? <a href="/redesign">Get a free redesign of your current site.</a></p>
             </div>
             <TalkForm from="/" sent={sp.sent === '1'} missing={sp.talk === 'missing'} />

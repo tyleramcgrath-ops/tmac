@@ -2071,7 +2071,7 @@ describe('SaySites: law firm designs', () => {
     const without = buildStarterSite(base, 'org_t', 'test-law')
     expect(without.pages.some((p) => p.slug === 'attorneys')).toBe(false)
     expect(without.site.nav.some((n) => n.href === '/attorneys')).toBe(false)
-    const withTeam = buildStarterSite({ ...base, attorneys: [{ name: 'Ann Lee', role: 'Partner', bio: 'Ann handles estate planning.' }] }, 'org_t', 'test-law')
+    const withTeam = buildStarterSite({ ...base, team: [{ name: 'Ann Lee', role: 'Partner', bio: 'Ann handles estate planning.' }] }, 'org_t', 'test-law')
     expect(withTeam.pages.some((p) => p.slug === 'attorneys')).toBe(true)
     expect(withTeam.site.nav.some((n) => n.href === '/attorneys')).toBe(true)
     expect(JSON.stringify(withTeam.pages.find((p) => p.slug === '')!.body)).toContain('Ann Lee')

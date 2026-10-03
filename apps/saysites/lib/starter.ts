@@ -12,7 +12,7 @@ import { dropRepeatedPhotos } from './photo-rules'
 import { randomUUID } from 'crypto'
 import type { Container, Element, Flair, GlobalStyles, Page, Site } from './schema'
 import { photosFor, type Photo, type PhotoSet } from './photos'
-import { LAW_GLOBALS, attorneyCard, lawHome, lawStyleFor, type Attorney, type LawStyle } from './law-designs'
+import { FOOTER_NOTES, LAW_GLOBALS, VOCAB, attorneyCard, lawHome, lawStyleFor, type Attorney, type LawStyle, type ProKind } from './law-designs'
 
 export type Design = 'bold' | 'editorial' | 'warm' | 'upscale'
 
@@ -27,6 +27,8 @@ export const BUSINESS_TYPES = {
   dentist: { label: 'Dentist', schemaType: 'Dentist', trade: 'dental care', design: 'editorial', headline: 'Gentle, modern dental care in {city}.' },
   salon: { label: 'Hair salon', schemaType: 'HairSalon', trade: 'hair care', design: 'editorial', headline: 'Hair that grows out beautifully.' },
   lawyer: { label: 'Law firm', schemaType: 'LegalService', trade: 'legal help', design: 'editorial', headline: 'Clear legal help when it matters.' },
+  doctor: { label: 'Medical practice', schemaType: 'MedicalClinic', trade: 'medical care', design: 'editorial', headline: 'Thoughtful medical care in {city}.' },
+  medspa: { label: 'Med spa', schemaType: 'HealthAndBeautyBusiness', trade: 'aesthetic treatments', design: 'editorial', headline: 'Skin and aesthetic care in {city}.' },
   restaurant: { label: 'Restaurant', schemaType: 'Restaurant', trade: 'food', design: 'warm', headline: 'Come hungry. Leave happy.' },
   bakery: { label: 'Bakery or café', schemaType: 'Bakery', trade: 'fresh baking', design: 'warm', headline: 'Fresh from our oven, every morning.' },
   store: { label: 'Shop', schemaType: 'Store', trade: 'products', design: 'warm', headline: 'Things worth owning, from {city}.' },
@@ -67,6 +69,8 @@ const FLAIR_FIT: Record<BusinessTypeKey, Flair[]> = {
   dentist: ['soft', 'clean', 'editorial'],
   salon: ['soft', 'studio', 'luxe', 'editorial'],
   lawyer: ['editorial', 'luxe', 'clean'],
+  doctor: ['clean', 'soft', 'editorial'],
+  medspa: ['luxe', 'soft', 'editorial'],
   restaurant: ['luxe', 'editorial', 'soft'],
   bakery: ['soft', 'clean', 'editorial'],
   store: ['clean', 'soft', 'studio'],
@@ -134,10 +138,10 @@ export interface StarterInput {
   // The site's language ("en" or "es"). The starter copy is English; Sofie
   // rewrites it for other languages.
   language?: string
-  // Law firms: one of the law designs (lib/law-designs), and the firm's
-  // attorneys in the owner's own words.
+  // Law firms, medical practices and med spas: one of the professional
+  // designs (lib/law-designs), and the people, in the owner's own words.
   lawStyle?: LawStyle
-  attorneys?: Attorney[]
+  team?: Attorney[]
   // Photos to use instead of the built-in set (lib/unsplash).
   photos?: PhotoSet
   // A headline to use instead of the generated one (e.g. the H1 of the
@@ -203,13 +207,19 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const law = input.type === 'lawyer'
   // Places people visit (food, shops) get questions about visiting and ordering.
   const shopfront = input.type === 'restaurant' || input.type === 'bakery' || input.type === 'store'
-  const svcHref = law ? '/practice-areas' : '/services'
-  const svcLabel = law ? 'Practice Areas' : 'Services'
+  // Professions with a design of their own and their own words.
+  const pro: ProKind | undefined = law ? 'law' : input.type === 'doctor' ? 'medical' : input.type === 'medspa' ? 'medspa' : undefined
+  const vocab = pro ? VOCAB[pro] : undefined
+  const svcSlug = law ? 'practice-areas' : input.type === 'medspa' ? 'treatments' : 'services'
+  const svcHref = `/${svcSlug}`
+  const svcLabel = law ? 'Practice Areas' : input.type === 'medspa' ? 'Treatments' : 'Services'
   const lawStyle: LawStyle = input.lawStyle ?? lawStyleFor(subdomain)
-  const attorneys = law ? (input.attorneys ?? []).filter((a) => a.name.trim()).slice(0, 12) : []
+  const attorneys = pro ? (input.team ?? []).filter((a) => a.name.trim()).slice(0, 12) : []
+  const teamSlug = pro === 'medical' ? 'providers' : pro === 'medspa' ? 'our-team' : 'attorneys'
+  const teamLabel = pro === 'medical' ? 'Providers' : pro === 'medspa' ? 'Our Team' : attorneys.length === 1 ? 'Attorney' : 'Attorneys'
 
-  const cta = law
-    ? { label: 'Request a consultation', href: '/contact' }
+  const cta = vocab
+    ? { label: vocab.request, href: '/contact' }
     : phone
       ? { label: design === 'bold' ? `Call ${phone}` : 'Call us', href: telHref(phone) }
       : { label: design === 'editorial' ? 'Book a visit' : 'Get in touch', href: '/contact' }
@@ -229,7 +239,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ...(city ? { area: place } : {}),
       ...(input.socials?.length ? { sameAs: input.socials.slice(0, 8) } : {}),
     },
-    globals: law
+    globals: pro
       ? { colors, ...LAW_GLOBALS[lawStyle], ...(input.flair ? { flair: input.flair } : {}) }
       : { colors, ...DESIGN_GLOBALS[design], flair: input.flair ?? flairFor(input.type, subdomain) },
     nav: [
@@ -242,19 +252,17 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           return written.length ? { children: written.slice(0, 16).map((x) => ({ label: x, href: `${svcHref}/${serviceSlug(x)}` })) } : {}
         })(),
       },
-      ...(attorneys.length ? [{ label: attorneys.length === 1 ? 'Attorney' : 'Attorneys', href: '/attorneys' }] : []),
+      ...(attorneys.length ? [{ label: teamLabel, href: `/${teamSlug}` }] : []),
       { label: 'Contact', href: '/contact' },
     ],
     ...(input.chat ? { chat: input.chat } : {}),
-    header: law
-      ? { topbar: `Serving clients across ${place}`, cta: phone ? { label: `Call ${phone}`, href: telHref(phone) } : { label: cta.label, href: cta.href } }
+    header: pro
+      ? { topbar: pro === 'medical' ? `Caring for patients across ${place}` : `Serving clients across ${place}`, cta: phone ? { label: `Call ${phone}`, href: telHref(phone) } : { label: cta.label, href: cta.href } }
       : {
           ...(design === 'bold' ? { topbar: `${cap(t.trade)} for homes and businesses across ${place}` } : {}),
           cta: phone && design === 'bold' ? { label: 'Call now', href: telHref(phone) } : { label: cta.label, href: cta.href },
         },
-    ...(law
-      ? { footerNote: 'Attorney advertising. The information on this website is for general information only and is not legal advice. Contacting us does not create an attorney-client relationship. Prior results do not guarantee a similar outcome.' }
-      : {}),
+    ...(pro ? { footerNote: FOOTER_NOTES[pro] } : {}),
     tagline: input.tagline?.trim() || `${cap(t.trade)} in ${place}. Friendly, local and easy to reach.`,
     updatedAt: now,
   }
@@ -272,7 +280,11 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     bold: `${name} helps people across ${place} with ${offer}. Straight answers, fair prices and work done right.`,
     editorial: law
       ? `${name} helps people across ${place} with ${offer}. We explain where you stand, your options and what it will cost, in plain English, before you decide anything.`
-      : `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
+      : pro === 'medical'
+        ? `${name} offers ${offer} for patients across ${place}. We take time to listen and explain your options clearly.`
+        : pro === 'medspa'
+          ? `${name} offers skin and aesthetic treatments in ${place}, with every treatment planned around you after a conversation with our team.`
+          : `${name} offers ${offer} in ${place}. Thoughtful, unhurried and always honest.`,
     warm: `${name} brings ${offer} to ${place}. Made by hand, with care, every day.`,
     upscale: `${name} brings ${offer} to ${place}. Considered, unhurried and done properly.`,
   }[design]
@@ -508,11 +520,25 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     boxed: true,
     style: { background: 'surface', padding: section, gap: { desktop: 48, mobile: 20 } },
     children: [
-      { id: 'faq-h', type: 'heading', level: 2, text: law ? 'Questions clients ask' : 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
+      { id: 'faq-h', type: 'heading', level: 2, text: law || pro === 'medspa' ? 'Questions clients ask' : pro === 'medical' ? 'Questions patients ask' : 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
       {
         id: 'faq-list',
         type: 'faq',
-        items: law
+        items: pro === 'medical'
+          ? [
+              { question: 'How do I make an appointment?', answer: phone ? `Call us on ${phone} or send a request from this website, and we’ll get back to you to find a time.` : `Send a request from this website and we’ll get back to you to find a time.` },
+              { question: 'What should I bring to my first visit?', answer: 'A photo ID, your insurance card if you have one, and a list of any medicines you take. Questions you want to ask are welcome too.' },
+              { question: 'Which insurance do you accept?', answer: 'Plans change, so the quickest way to know is to ask us. Get in touch and we’ll check yours.' },
+              { question: 'Can I send you my medical details here?', answer: 'Please don’t include medical details in a message through this website. We’ll talk about them when we speak. In an emergency, call 911.' },
+            ]
+          : pro === 'medspa'
+            ? [
+                { question: 'Do I need a consultation first?', answer: 'Yes. Every treatment starts with a conversation about what you want, so we can explain the options and whether a treatment is right for you.' },
+                { question: 'How long do results last?', answer: 'It depends on the treatment and on you. Results vary from person to person, and we’ll talk you through what to expect at your consultation.' },
+                { question: 'Is there any downtime?', answer: 'Some treatments have none and some need a little time to settle. We’ll explain what to expect for yours before you decide.' },
+                { question: 'How do I book?', answer: phone ? `Call us on ${phone} or send a request from this website, and we’ll find a time.` : `Send a request from this website and we’ll find a time.` },
+              ]
+          : law
           ? [
               { question: 'What happens at a consultation?', answer: `We listen to what happened, explain where you stand and the options open to you, and tell you what it would cost before you decide anything.` },
               { question: 'Is what I tell you confidential?', answer: `Yes, what you tell us in a consultation is kept confidential. Sending a message through this website doesn't create an attorney-client relationship, so please keep sensitive details for when we speak.` },
@@ -764,8 +790,10 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     const at = homeBody.findIndex((c) => c.id === 'faq')
     homeBody.splice(at < 0 ? homeBody.length - 1 : at, 0, story)
   }
-  // Law firms get a design of their own (lib/law-designs).
-  if (law) {
+  // Law firms, medical practices and med spas get designs of their own
+  // (lib/law-designs).
+  const cardPool = [...photos.cards]
+  if (pro) {
     const a = input.street && input.postalCode && city ? `${input.street}, ${city}${input.region.trim() ? `, ${tidyRegion(input.region)}` : ''} ${input.postalCode}` : undefined
     homeBody = lawHome({
       style: lawStyle,
@@ -781,8 +809,10 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       areaHref: (s) => (writtenFor(s) ? `${svcHref}/${serviceSlug(s)}` : undefined),
       areasHref: svcHref,
       hero: photos.hero,
-      photo: () => fresh(photos.cards[spare.length % 3]),
+      // Unused photos first (spares, then the card set), so cards don't repeat.
+      photo: () => spare.shift() ?? cardPool.shift() ?? photos.cards[0],
       attorneys,
+      vocab,
       ticker,
       faq,
       story,
@@ -849,7 +879,6 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ],
   })
 
-  const svcSlug = law ? 'practice-areas' : 'services'
 
   // A page of its own for each service that has been written up: what it
   // is, how it goes and the questions people ask, then a way to get in touch.
@@ -917,7 +946,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                   boxed: true,
                   style: { padding: { desktop: pad(64), mobile: pad(44, 20) }, gap: { desktop: 18 } },
                   children: [
-                    { id: `${id}-more-h`, type: 'heading' as const, level: 2 as const, text: law ? 'Other practice areas' : 'Other services', style: { fontSize: { desktop: 28, mobile: 24 } } },
+                    { id: `${id}-more-h`, type: 'heading' as const, level: 2 as const, text: vocab ? `Other ${vocab.areasLower}` : 'Other services', style: { fontSize: { desktop: 28, mobile: 24 } } },
                     {
                       id: `${id}-more-row`,
                       type: 'container' as const,
@@ -939,8 +968,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const servicesPage: Page = {
     id: pageId('services'),
     siteId,
-    slug: law ? 'practice-areas' : 'services',
-    name: law ? 'Practice Areas' : 'Services',
+    slug: svcSlug,
+    name: svcLabel,
     status: 'published',
     seo: {
       title: law ? clip(`Practice Areas | ${name}, ${place}`, 60) : clip(`${cap(t.trade)} services in ${place} | ${name}`, 60),
@@ -949,7 +978,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         : clip(`${list.join(', ')} from ${name}, serving ${place}. Clear pricing and friendly local service.`, 160),
     },
     body: [
-      law ? banner('svc-banner', 'Practice areas', `The areas of law ${name} handles for clients across ${place}.`) : banner('svc-banner', 'Our services', `Here's what ${name} can help you with in ${place}.`),
+      law ? banner('svc-banner', 'Practice areas', `The areas of law ${name} handles for clients across ${place}.`) : pro === 'medspa' ? banner('svc-banner', 'Treatments', `The treatments ${name} offers clients across ${place}.`) : pro === 'medical' ? banner('svc-banner', 'Our services', `The care ${name} offers patients across ${place}.`) : banner('svc-banner', 'Our services', `Here's what ${name} can help you with in ${place}.`),
       {
         id: 'svc',
         type: 'container',
@@ -1027,13 +1056,15 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               { id: 'contact-t', type: 'text', text: contactLines.join('\n\n'), style: { fontSize: { desktop: 19 } } },
               ...(law
                 ? [{ id: 'contact-note', type: 'text' as const, text: 'Sending a message doesn’t create an attorney-client relationship. Please don’t include confidential details until we’ve spoken.', style: { color: 'muted' as const, fontSize: { desktop: 15 } } }]
-                : []),
+                : vocab
+                  ? [{ id: 'contact-note', type: 'text' as const, text: vocab.formNote, style: { color: 'muted' as const, fontSize: { desktop: 15 } } }]
+                  : []),
               {
                 id: 'contact-form',
                 type: 'form',
                 fields: ['name', 'email', 'phone', 'message'],
-                submitLabel: law ? 'Request a consultation' : design === 'editorial' ? 'Send request' : 'Send message',
-                thanks: law ? `Thank you. ${name} has your message and will be in touch soon.` : `Thanks! ${name} has your message and will get back to you soon.`,
+                submitLabel: vocab ? vocab.request : design === 'editorial' ? 'Send request' : 'Send message',
+                thanks: vocab ? vocab.thanks(name) : `Thanks! ${name} has your message and will get back to you soon.`,
                 style: { margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
               },
             ],
@@ -1049,17 +1080,17 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const attorneysPage: Page[] = attorneys.length
     ? [
         {
-          id: pageId('attorneys'),
+          id: pageId(teamSlug),
           siteId,
-          slug: 'attorneys',
-          name: attorneys.length === 1 ? 'Attorney' : 'Attorneys',
+          slug: teamSlug,
+          name: teamLabel,
           status: 'published',
           seo: {
-            title: clip(`${attorneys.length === 1 ? 'Attorney' : 'Our Attorneys'} | ${name}, ${place}`, 60),
+            title: clip(`${vocab ? vocab.team(attorneys.length) : teamLabel} | ${name}, ${place}`, 60),
             description: clip(`Meet ${joinAnd(attorneys.slice(0, 3).map((a) => a.name))} of ${name}, helping clients across ${place}.`, 160),
           },
           body: [
-            banner('team-banner', attorneys.length === 1 ? 'Your attorney' : 'Our attorneys', `The people you will speak to at ${name}.`),
+            banner('team-banner', vocab ? vocab.team(attorneys.length) : teamLabel, vocab ? vocab.teamT : `The people you will speak to at ${name}.`),
             {
               id: 'team',
               type: 'container',

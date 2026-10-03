@@ -60,6 +60,8 @@ export interface LawHomeInput {
   // The next photo not yet used on the site.
   photo: () => Photo
   attorneys: Attorney[]
+  // The profession's words (law when unset).
+  vocab?: ProVocab
   ticker: Container[]
   faq: Container
   story?: Container
@@ -73,20 +75,140 @@ const lower = (s: string) => (/^[A-Z][a-z]+(\s|$)/.test(s) && !/^[A-Z]{2,}/.test
 
 export const FORM_NOTE = 'Sending this form doesn’t create an attorney-client relationship. Please leave out confidential details until we’ve spoken.'
 
-const COMMITMENTS: [string, string][] = [
-  ['Plain English', 'We explain where you stand and what could happen next, without the jargon.'],
-  ['Straight answers on cost', 'You’ll know how our fees work, in writing, before any work begins.'],
-  ['You’ll hear from us', 'We keep you informed as things move and tell you what we need from you.'],
-  ['Confidential', 'What you tell us in a consultation stays between us.'],
-]
+// The words that change between professions; the designs stay the same.
+export type ProKind = 'law' | 'medical' | 'medspa'
+export interface ProVocab {
+  areas: string
+  areasLower: string
+  handleH: string
+  handleT: (name: string, place: string) => string
+  request: string
+  requestT: string
+  formNote: string
+  thanks: (name: string) => string
+  commitments: [string, string][]
+  steps: (phone?: string) => [string, string][]
+  stepsH: string
+  stepsT: string
+  whyK: (name: string) => string
+  whyH: string
+  band: string
+  ctaH: string
+  ctaT: (name: string) => string
+  tellH: string
+  tellT: (name: string) => string
+  team: (n: number) => string
+  teamT: string
+}
 
-const STEPS = (phone?: string): [string, string][] => [
-  ['Tell us what happened', phone ? `Call ${phone} or send the form. A short description is plenty to start.` : 'Send the form. A short description is plenty to start.'],
-  ['Understand your options', 'We listen, ask questions and explain where you stand and what each path tends to involve.'],
-  ['Decide with a clear plan', 'If you want our help, we agree the next steps and fees in writing before any work begins.'],
-]
+export const VOCAB: Record<ProKind, ProVocab> = {
+  law: {
+    areas: 'Practice areas',
+    areasLower: 'practice areas',
+    handleH: 'What we handle',
+    handleT: (name, place) => `The areas of law ${name} handles for clients across ${place}. Not sure which applies to you? Ask, and we’ll tell you honestly.`,
+    request: 'Request a consultation',
+    requestT: 'Tell us briefly what happened and how to reach you. We’ll get back to you to talk it through.',
+    formNote: FORM_NOTE,
+    thanks: (name) => `Thank you. ${name} has your message and will be in touch soon.`,
+    commitments: [
+      ['Plain English', 'We explain where you stand and what could happen next, without the jargon.'],
+      ['Straight answers on cost', 'You’ll know how our fees work, in writing, before any work begins.'],
+      ['You’ll hear from us', 'We keep you informed as things move and tell you what we need from you.'],
+      ['Confidential', 'What you tell us in a consultation stays between us.'],
+    ],
+    steps: (phone) => [
+      ['Tell us what happened', phone ? `Call ${phone} or send the form. A short description is plenty to start.` : 'Send the form. A short description is plenty to start.'],
+      ['Understand your options', 'We listen, ask questions and explain where you stand and what each path tends to involve.'],
+      ['Decide with a clear plan', 'If you want our help, we agree the next steps and fees in writing before any work begins.'],
+    ],
+    stepsH: 'How working with us begins',
+    stepsT: 'No pressure and no jargon. You decide at every step.',
+    whyK: (name) => `Why clients call ${name}`,
+    whyH: 'You should understand your own case.',
+    band: 'Clear answers, in plain English.',
+    ctaH: 'Talk to us about your situation',
+    ctaT: (name) => `Tell us what happened. ${name} will explain your options and the next step.`,
+    tellH: 'Tell us what happened',
+    tellT: (name) => `A few lines is plenty. ${name} will get back to you to explain where you stand, your options and what it would cost.`,
+    team: (n) => (n === 1 ? 'Your attorney' : 'Our attorneys'),
+    teamT: 'The people you will actually speak to.',
+  },
+  medical: {
+    areas: 'Services',
+    areasLower: 'services',
+    handleH: 'How we can help',
+    handleT: (name, place) => `The care ${name} offers patients across ${place}. Not sure what you need? Call us and we’ll point you the right way.`,
+    request: 'Request an appointment',
+    requestT: 'Tell us how to reach you and a little about what you need. We’ll get back to you to find a time.',
+    formNote: 'Please don’t include medical details in this form. In an emergency, call 911.',
+    thanks: (name) => `Thank you. ${name} has your request and will be in touch to find a time.`,
+    commitments: [
+      ['Time to listen', 'We hear what’s going on before we suggest anything.'],
+      ['Clear explanations', 'You’ll understand what we recommend and why.'],
+      ['Questions welcome', 'Ask anything, at any visit. No question is too small.'],
+      ['Your privacy', 'What you share with us is kept private.'],
+    ],
+    steps: (phone) => [
+      ['Get in touch', phone ? `Call ${phone} or send the form, and we’ll find a time that works.` : 'Send the form and we’ll find a time that works.'],
+      ['Your first visit', 'We listen, examine and talk through what we find and the choices you have.'],
+      ['A plan that fits you', 'We agree the next steps together, and you can always ask questions along the way.'],
+    ],
+    stepsH: 'How your first visit works',
+    stepsT: 'Unhurried and clear, with time for your questions.',
+    whyK: (name) => `Why patients choose ${name}`,
+    whyH: 'Care you can understand.',
+    band: 'Care that starts with listening.',
+    ctaH: 'Ready when you are',
+    ctaT: (name) => `Tell us what you need and ${name} will find a time that works for you.`,
+    tellH: 'Request an appointment',
+    tellT: (name) => `A few lines is plenty. ${name} will get back to you to find a time.`,
+    team: (n) => (n === 1 ? 'Your doctor' : 'Our providers'),
+    teamT: 'The people who will look after you.',
+  },
+  medspa: {
+    areas: 'Treatments',
+    areasLower: 'treatments',
+    handleH: 'Treatments',
+    handleT: (name, place) => `What ${name} offers clients across ${place}. Not sure what’s right for you? Book a consultation and we’ll talk it through.`,
+    request: 'Book a consultation',
+    requestT: 'Tell us how to reach you and what you’re interested in. We’ll get back to you to find a time.',
+    formNote: 'Please don’t include medical details in this form. We’ll talk them through at your consultation.',
+    thanks: (name) => `Thank you. ${name} has your request and will be in touch to find a time.`,
+    commitments: [
+      ['A plan made for you', 'Every treatment starts with a conversation about what you want.'],
+      ['Honest advice', 'If a treatment isn’t right for you, we’ll tell you.'],
+      ['No pressure', 'Take your time to decide. We’re happy to answer every question.'],
+      ['Your comfort', 'We explain each step before we begin and check in as we go.'],
+    ],
+    steps: (phone) => [
+      ['Book a consultation', phone ? `Call ${phone} or send the form, and we’ll find a time.` : 'Send the form and we’ll find a time.'],
+      ['Talk it through', 'We listen to what you want, look at your skin and explain the options.'],
+      ['Your treatment plan', 'You decide what feels right, and we go from there.'],
+    ],
+    stepsH: 'How it works',
+    stepsT: 'Every plan starts with a conversation, and results vary from person to person.',
+    whyK: (name) => `Why clients choose ${name}`,
+    whyH: 'Thoughtful care, never rushed.',
+    band: 'Every plan starts with a conversation.',
+    ctaH: 'Book your consultation',
+    ctaT: (name) => `Tell us what you have in mind and ${name} will find a time to talk it through.`,
+    tellH: 'Book a consultation',
+    tellT: (name) => `A few lines is plenty. ${name} will get back to you to find a time.`,
+    team: (n) => (n === 1 ? 'Your provider' : 'Our team'),
+    teamT: 'The people you will see at every visit.',
+  },
+}
 
-export function lawHome(x: LawHomeInput): Container[] {
+// Small print at the foot of every page, per profession.
+export const FOOTER_NOTES: Record<ProKind, string> = {
+  law: 'Attorney advertising. The information on this website is for general information only and is not legal advice. Contacting us does not create an attorney-client relationship. Prior results do not guarantee a similar outcome.',
+  medical: 'The information on this website is general information and is not medical advice. If you have a medical emergency, call 911.',
+  medspa: 'Results vary from person to person. The information on this website is general information and is not medical advice. Talk with a qualified provider about whether a treatment is right for you.',
+}
+
+export function lawHome(input: LawHomeInput): Container[] {
+  const x = { ...input, vocab: input.vocab ?? VOCAB.law }
   return x.style === 'classic' ? classic(x) : x.style === 'modern' ? modern(x) : counsel(x)
 }
 
@@ -94,14 +216,16 @@ export function lawHome(x: LawHomeInput): Container[] {
 // Shared pieces
 // ---------------------------------------------------------------------------
 
+const v = (x: LawHomeInput): ProVocab => x.vocab ?? VOCAB.law
+
 function kicker(id: string, text: string, color: string = 'primary'): Element {
   return { id, type: 'text', text, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.14, textTransform: 'uppercase', color: color as never } }
 }
 
 function form(id: string, x: LawHomeInput): Element[] {
   return [
-    { id, type: 'form', fields: ['name', 'phone', 'email', 'message'], submitLabel: 'Request a consultation', thanks: `Thank you. ${x.name} has your message and will be in touch soon.` },
-    { id: `${id}-note`, type: 'text', text: FORM_NOTE, style: { color: 'muted', fontSize: { desktop: 13 } } },
+    { id, type: 'form', fields: ['name', 'phone', 'email', 'message'], submitLabel: v(x).request, thanks: v(x).thanks(x.name) },
+    { id: `${id}-note`, type: 'text', text: v(x).formNote, style: { color: 'muted', fontSize: { desktop: 13 } } },
   ]
 }
 
@@ -111,7 +235,7 @@ function areaButton(id: string, x: LawHomeInput, area: string, light = false): E
 }
 
 function allAreas(x: LawHomeInput, shown: number): Element[] {
-  return x.areas.length > shown ? [{ id: 'lw-areas-all', type: 'button', label: `All ${x.areas.length} practice areas`, href: x.areasHref, variant: 'outline' }] : []
+  return x.areas.length > shown ? [{ id: 'lw-areas-all', type: 'button', label: `All ${x.areas.length} ${v(x).areasLower}`, href: x.areasHref, variant: 'outline' }] : []
 }
 
 function attorneysSection(x: LawHomeInput, bg?: 'surface'): Container[] {
@@ -131,8 +255,8 @@ function attorneysSection(x: LawHomeInput, bg?: 'surface'): Container[] {
           layout: 'flex',
           style: { gap: { desktop: 10 } },
           children: [
-            { id: 'lw-team-h', type: 'heading', level: 2, text: x.attorneys.length === 1 ? 'Your attorney' : 'Our attorneys', style: { fontSize: { desktop: 42, mobile: 30 } } },
-            { id: 'lw-team-t', type: 'text', text: 'The people you will actually speak to.', style: { color: 'muted', fontSize: { desktop: 18 } } },
+            { id: 'lw-team-h', type: 'heading', level: 2, text: v(x).team(x.attorneys.length), style: { fontSize: { desktop: 42, mobile: 30 } } },
+            { id: 'lw-team-t', type: 'text', text: v(x).teamT, style: { color: 'muted', fontSize: { desktop: 18 } } },
           ],
         },
         {
@@ -183,8 +307,8 @@ function steps(x: LawHomeInput, dark: boolean, radius: number): Container {
         layout: 'flex',
         style: { gap: { desktop: 10 } },
         children: [
-          { id: 'lw-steps-h', type: 'heading', level: 2, text: 'How working with us begins', style: { fontSize: { desktop: 42, mobile: 30 }, ...(dark ? { color: 'background' as const } : {}) } },
-          { id: 'lw-steps-t', type: 'text', text: 'No pressure and no jargon. You decide at every step.', style: { fontSize: { desktop: 18 }, ...(dark ? {} : { color: 'muted' as const }) } },
+          { id: 'lw-steps-h', type: 'heading', level: 2, text: v(x).stepsH, style: { fontSize: { desktop: 42, mobile: 30 }, ...(dark ? { color: 'background' as const } : {}) } },
+          { id: 'lw-steps-t', type: 'text', text: v(x).stepsT, style: { fontSize: { desktop: 18 }, ...(dark ? {} : { color: 'muted' as const }) } },
         ],
       },
       {
@@ -193,7 +317,7 @@ function steps(x: LawHomeInput, dark: boolean, radius: number): Container {
         layout: 'grid',
         columns: { desktop: 3, mobile: 1 },
         style: { gap: { desktop: 28, mobile: 18 } },
-        children: STEPS(x.phone).map(([h, d], i): Container => ({
+        children: v(x).steps(x.phone).map(([h, d], i): Container => ({
           id: `lw-step-${i + 1}`,
           type: 'container',
           layout: 'flex',
@@ -252,7 +376,7 @@ function counsel(x: LawHomeInput): Container[] {
               style: { gap: { desktop: 12 }, margin: { desktop: { top: 10, right: 0, bottom: 0, left: 0 } } },
               children: [
                 ...(x.phone ? [{ id: 'hero-call', type: 'button' as const, label: `Call ${x.phone}`, href: tel(x.phone), variant: 'primary' as const, style: { background: '#ffffff' as const, color: '#11161d' as const } }] : []),
-                { id: 'hero-areas', type: 'button', label: 'Practice areas', href: x.areasHref, variant: 'outline', style: { color: '#ffffff' } },
+                { id: 'hero-areas', type: 'button', label: v(x).areas, href: x.areasHref, variant: 'outline', style: { color: '#ffffff' } },
               ],
             },
           ],
@@ -263,8 +387,8 @@ function counsel(x: LawHomeInput): Container[] {
           layout: 'flex',
           style: { grow: 5, background: 'background', color: 'text', borderRadius: 4, padding: { desktop: pad(36, 34), mobile: pad(26, 20) }, gap: { desktop: 12 } },
           children: [
-            { id: 'hero-card-h', type: 'heading', level: 2, text: 'Request a consultation', style: { fontSize: { desktop: 30, mobile: 26 } } },
-            { id: 'hero-card-t', type: 'text', text: 'Tell us briefly what happened and how to reach you. We’ll get back to you to talk it through.', style: { color: 'muted', fontSize: { desktop: 16 } } },
+            { id: 'hero-card-h', type: 'heading', level: 2, text: v(x).request, style: { fontSize: { desktop: 30, mobile: 26 } } },
+            { id: 'hero-card-t', type: 'text', text: v(x).requestT, style: { color: 'muted', fontSize: { desktop: 16 } } },
             ...form('hero-form', x),
           ],
         },
@@ -287,8 +411,8 @@ function counsel(x: LawHomeInput): Container[] {
           align: 'end',
           style: { gap: { desktop: 48, mobile: 12 } },
           children: [
-            { id: 'lw-areas-h', type: 'heading', level: 2, text: 'What we handle', style: { fontSize: { desktop: 46, mobile: 32 } } },
-            { id: 'lw-areas-t', type: 'text', text: `The areas of law ${x.name} handles for clients across ${x.place}. Not sure which applies to you? Ask, and we’ll tell you honestly.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
+            { id: 'lw-areas-h', type: 'heading', level: 2, text: v(x).handleH, style: { fontSize: { desktop: 46, mobile: 32 } } },
+            { id: 'lw-areas-t', type: 'text', text: v(x).handleT(x.name, x.place), style: { color: 'muted', fontSize: { desktop: 18 } } },
           ],
         },
         {
@@ -329,15 +453,15 @@ function counsel(x: LawHomeInput): Container[] {
           layout: 'flex',
           style: { gap: { desktop: 14 } },
           children: [
-            kicker('lw-why-k', `Why clients call ${x.name}`),
-            { id: 'lw-why-h', type: 'heading', level: 2, text: 'You should understand your own case.', style: { fontSize: { desktop: 44, mobile: 30 } } },
+            kicker('lw-why-k', v(x).whyK(x.name)),
+            { id: 'lw-why-h', type: 'heading', level: 2, text: v(x).whyH, style: { fontSize: { desktop: 44, mobile: 30 } } },
             {
               id: 'lw-why-grid',
               type: 'container',
               layout: 'grid',
               columns: { desktop: 2, mobile: 1 },
               style: { gap: { desktop: 26, mobile: 18 }, margin: { desktop: { top: 16, right: 0, bottom: 0, left: 0 } } },
-              children: COMMITMENTS.map(([h, d], i): Container => ({
+              children: v(x).commitments.map(([h, d], i): Container => ({
                 id: `lw-why-${i + 1}`,
                 type: 'container',
                 layout: 'flex',
@@ -365,8 +489,8 @@ function counsel(x: LawHomeInput): Container[] {
       backgroundImage: { src: band.src, width: band.width, height: band.height, overlay: 0.8, overlayStyle: 'full' },
       style: { background: '#11161d', padding: { desktop: pad(120), mobile: pad(72, 20) }, gap: { desktop: 16 }, textAlign: { desktop: 'center' } },
       children: [
-        { id: 'cta-h', type: 'heading', level: 2, text: 'Talk to us about your situation', style: { color: '#ffffff', fontSize: { desktop: 48, mobile: 32 } } },
-        { id: 'cta-t', type: 'text', text: `Tell us what happened. ${x.name} will explain your options and the next step.`, style: { color: '#dfe5ec', fontSize: { desktop: 18 }, maxWidth: 540 } },
+        { id: 'cta-h', type: 'heading', level: 2, text: v(x).ctaH, style: { color: '#ffffff', fontSize: { desktop: 48, mobile: 32 } } },
+        { id: 'cta-t', type: 'text', text: v(x).ctaT(x.name), style: { color: '#dfe5ec', fontSize: { desktop: 18 }, maxWidth: 540 } },
         {
           id: 'cta-actions',
           type: 'container',
@@ -375,7 +499,7 @@ function counsel(x: LawHomeInput): Container[] {
           justify: 'center',
           style: { gap: { desktop: 12 }, margin: { desktop: { top: 10, right: 0, bottom: 0, left: 0 } } },
           children: [
-            { id: 'cta-btn', type: 'button', label: 'Request a consultation', href: '/contact', variant: 'primary', style: { background: '#ffffff', color: '#11161d' } },
+            { id: 'cta-btn', type: 'button', label: v(x).request, href: '/contact', variant: 'primary', style: { background: '#ffffff', color: '#11161d' } },
             ...(x.phone ? [{ id: 'cta-call', type: 'button' as const, label: `Call ${x.phone}`, href: tel(x.phone), variant: 'outline' as const, style: { color: '#ffffff' as const } }] : []),
           ],
         },
@@ -412,7 +536,7 @@ function classic(x: LawHomeInput): Container[] {
           justify: 'center',
           style: { gap: { desktop: 12 }, margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
           children: [
-            { id: 'hero-cta', type: 'button', label: 'Request a consultation', href: '/contact', variant: 'primary' },
+            { id: 'hero-cta', type: 'button', label: v(x).request, href: '/contact', variant: 'primary' },
             ...(x.phone ? [{ id: 'hero-call', type: 'button' as const, label: `Call ${x.phone}`, href: tel(x.phone), variant: 'outline' as const }] : []),
           ],
         },
@@ -442,9 +566,9 @@ function classic(x: LawHomeInput): Container[] {
           layout: 'flex',
           style: { gap: { desktop: 14 }, grow: 1 },
           children: [
-            kicker('lw-areas-k', 'Practice areas'),
+            kicker('lw-areas-k', v(x).areas),
             { id: 'lw-areas-h', type: 'heading', level: 2, text: `How ${x.name} can help`, style: { fontSize: { desktop: 40, mobile: 30 } } },
-            { id: 'lw-areas-t', type: 'text', text: 'Not sure which applies to you? Ask, and we’ll tell you honestly.', style: { color: 'muted', fontSize: { desktop: 17 } } },
+            { id: 'lw-areas-t', type: 'text', text: v(x).handleT(x.name, x.place), style: { color: 'muted', fontSize: { desktop: 17 } } },
             ...allAreas(x, shown.length),
           ],
         },
@@ -478,7 +602,7 @@ function classic(x: LawHomeInput): Container[] {
       backgroundImage: { src: band.src, width: band.width, height: band.height, overlay: 0.62, overlayStyle: 'full' },
       style: { background: '#1d1a17', padding: { desktop: pad(150), mobile: pad(96, 20) }, gap: { desktop: 14 }, textAlign: { desktop: 'center' } },
       children: [
-        { id: 'band-h', type: 'heading', level: 2, text: 'Clear answers, in plain English.', style: { color: '#ffffff', fontSize: { desktop: 54, mobile: 34 }, maxWidth: 820 } },
+        { id: 'band-h', type: 'heading', level: 2, text: v(x).band, style: { color: '#ffffff', fontSize: { desktop: 54, mobile: 34 }, maxWidth: 820 } },
         { id: 'band-t', type: 'text', text: `${x.name}, ${x.place}`, style: { color: '#ece6dc', fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.16, textTransform: 'uppercase' } },
       ],
     },
@@ -490,7 +614,7 @@ function classic(x: LawHomeInput): Container[] {
       columns: { desktop: 4, tablet: 2, mobile: 1 },
       boxed: true,
       style: { padding: { desktop: pad(88), mobile: pad(56, 20) }, gap: { desktop: 36, mobile: 22 } },
-      children: COMMITMENTS.map(([h, d], i): Container => ({
+      children: v(x).commitments.map(([h, d], i): Container => ({
         id: `lw-why-${i + 1}`,
         type: 'container',
         layout: 'flex',
@@ -519,9 +643,9 @@ function classic(x: LawHomeInput): Container[] {
           layout: 'flex',
           style: { gap: { desktop: 16 } },
           children: [
-            kicker('lw-consult-k', 'Request a consultation'),
-            { id: 'lw-consult-h', type: 'heading', level: 2, text: 'Talk to us about your situation', style: { fontSize: { desktop: 46, mobile: 32 } } },
-            { id: 'lw-consult-t', type: 'text', text: `Tell us briefly what happened and how to reach you. ${x.name} will get back to you to explain your options and the next step.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
+            kicker('lw-consult-k', v(x).request),
+            { id: 'lw-consult-h', type: 'heading', level: 2, text: v(x).ctaH, style: { fontSize: { desktop: 46, mobile: 32 } } },
+            { id: 'lw-consult-t', type: 'text', text: v(x).requestT, style: { color: 'muted', fontSize: { desktop: 18 } } },
             ...(contactLines(x) ? [{ id: 'lw-consult-d', type: 'text' as const, text: contactLines(x), style: { fontSize: { desktop: 17 }, fontWeight: 500 as const } }] : []),
           ],
         },
@@ -571,7 +695,7 @@ function modern(x: LawHomeInput): Container[] {
               direction: { desktop: 'row' },
               style: { gap: { desktop: 12 }, margin: { desktop: { top: 10, right: 0, bottom: 0, left: 0 } } },
               children: [
-                { id: 'hero-cta', type: 'button', label: 'Request a consultation', href: '/contact', variant: 'primary' },
+                { id: 'hero-cta', type: 'button', label: v(x).request, href: '/contact', variant: 'primary' },
                 ...(x.phone ? [{ id: 'hero-call', type: 'button' as const, label: `Call ${x.phone}`, href: tel(x.phone), variant: 'outline' as const }] : []),
               ],
             },
@@ -588,7 +712,7 @@ function modern(x: LawHomeInput): Container[] {
       columns: { desktop: 4, tablet: 2, mobile: 1 },
       boxed: true,
       style: { padding: { desktop: pad(44), mobile: pad(32, 20) }, gap: { desktop: 32, mobile: 18 } },
-      children: COMMITMENTS.map(([h, d], i): Container => ({
+      children: v(x).commitments.map(([h, d], i): Container => ({
         id: `lw-why-${i + 1}`,
         type: 'container',
         layout: 'flex',
@@ -614,8 +738,8 @@ function modern(x: LawHomeInput): Container[] {
           layout: 'flex',
           style: { gap: { desktop: 10 } },
           children: [
-            { id: 'lw-areas-h', type: 'heading', level: 2, text: 'Practice areas', style: { fontSize: { desktop: 46, mobile: 32 } } },
-            { id: 'lw-areas-t', type: 'text', text: `What ${x.name} handles for clients across ${x.place}.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
+            { id: 'lw-areas-h', type: 'heading', level: 2, text: v(x).areas, style: { fontSize: { desktop: 46, mobile: 32 } } },
+            { id: 'lw-areas-t', type: 'text', text: v(x).handleT(x.name, x.place), style: { color: 'muted', fontSize: { desktop: 18 } } },
           ],
         },
         {
@@ -659,8 +783,8 @@ function modern(x: LawHomeInput): Container[] {
           layout: 'flex',
           style: { gap: { desktop: 16 } },
           children: [
-            { id: 'lw-consult-h', type: 'heading', level: 2, text: 'Tell us what happened', style: { color: 'background', fontSize: { desktop: 50, mobile: 34 } } },
-            { id: 'lw-consult-t', type: 'text', text: `A few lines is plenty. ${x.name} will get back to you to explain where you stand, your options and what it would cost.`, style: { fontSize: { desktop: 19 }, maxWidth: 480 } },
+            { id: 'lw-consult-h', type: 'heading', level: 2, text: v(x).tellH, style: { color: 'background', fontSize: { desktop: 50, mobile: 34 } } },
+            { id: 'lw-consult-t', type: 'text', text: v(x).tellT(x.name), style: { fontSize: { desktop: 19 }, maxWidth: 480 } },
             ...(contactLines(x) ? [{ id: 'lw-consult-d', type: 'text' as const, text: contactLines(x), style: { fontSize: { desktop: 17 }, fontWeight: 500 as const } }] : []),
           ],
         },
