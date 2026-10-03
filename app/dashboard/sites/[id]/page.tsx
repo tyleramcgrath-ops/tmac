@@ -9,7 +9,10 @@ import { questLink } from '@/lib/visibility'
 import { leagueFor, leagues, tradePlural, weekStart } from '@/lib/league'
 import { leagueTerms } from '@/lib/league-style'
 import { ScoreDial } from '@/components/ScoreDial'
-import { loadAccess } from '@/lib/billing'
+import { PLANS, PLAN_NAMES, PRICES, loadAccess } from '@/lib/billing'
+import { isAdmin } from '@/lib/admin'
+import { ActionForm } from '@/components/ActionForm'
+import { cancelApproval, sendForApproval } from './manage-actions'
 import { loadSpend, monthShare, refillDate } from '@/lib/usage'
 import { Milestones } from '@/components/Milestones'
 
@@ -186,6 +189,27 @@ export default async function SiteOverview({ params, searchParams }: { params: P
         </div>
       </div>
       <Milestones siteId={site.id} siteName={b.name} domain={site.customDomain} isNew={!!isNew} items={marks} />
+      {isAdmin(user.email) && (
+        <div className="card">
+          <h3>Built for a client? Send it for approval</h3>
+          <p className="muted small">Your client gets a private link to look the site over, ask for changes or approve it. When they approve, it moves into their own account and they start the plan you pick here.</p>
+          {site.handoff ? (
+            <>
+              <p className="small">Link for {site.business.name}, sent {site.handoff.sentAt.slice(0, 10)}:</p>
+              <p className="url">https://saysites.com/approve/{site.handoff.code}</p>
+              <ActionForm action={cancelApproval.bind(null, site.id)} submit="Turn this link off" danger><span /></ActionForm>
+            </>
+          ) : null}
+          <ActionForm action={sendForApproval.bind(null, site.id)} submit={site.handoff ? 'Make a new link' : 'Make the approval link'}>
+            <label className="field">
+              <span>Their plan</span>
+              <select className="input" name="plan" defaultValue={site.handoff?.plan ?? 'lawpro'}>
+                {PLANS.map((p) => <option key={p} value={p}>{PLAN_NAMES[p]}, ${PRICES[p].month}/month</option>)}
+              </select>
+            </label>
+          </ActionForm>
+        </div>
+      )}
     </div>
   )
 }

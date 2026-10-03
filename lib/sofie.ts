@@ -49,7 +49,7 @@ export interface Snapshot {
 
 type Json = Record<string, unknown>
 
-const LOCKED_SITE_KEYS = ['id', 'orgId', 'subdomain', 'customDomain', 'pendingDomain', 'updatedAt'] as const
+const LOCKED_SITE_KEYS = ['id', 'orgId', 'subdomain', 'customDomain', 'pendingDomain', 'handoff', 'updatedAt'] as const
 const LOCKED_ELEMENT_KEYS = ['id', 'type', 'children'] as const
 
 // A file Sofie made (a logo) that is saved with the owner's photos.

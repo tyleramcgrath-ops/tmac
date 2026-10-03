@@ -145,7 +145,7 @@ export async function publishDraft(siteId: string): Promise<StudioState> {
   if ((await loadAccess(store, user)).locked) return view(state, { site, pages }, 'Your free trial has ended. Start your plan on the Account page to publish these changes; they’re saved.')
   const draft = state.draft
   // Only the owner's own site; ids that could point elsewhere are pinned.
-  const nextSite = { ...draft.site, id: site.id, orgId: site.orgId, subdomain: site.subdomain, ...(site.customDomain ? { customDomain: site.customDomain } : {}), pendingDomain: site.pendingDomain, updatedAt: new Date().toISOString() }
+  const nextSite = { ...draft.site, id: site.id, orgId: site.orgId, subdomain: site.subdomain, ...(site.customDomain ? { customDomain: site.customDomain } : {}), pendingDomain: site.pendingDomain, handoff: site.handoff, updatedAt: new Date().toISOString() }
   await store.updateSite(nextSite)
   // Pages Sofie added get fresh ids here, so a draft can never write over a
   // page that belongs to another site.
