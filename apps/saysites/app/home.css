@@ -953,3 +953,22 @@
 .home .gap-ex li { grid-template-columns: minmax(0, 1fr) auto; }
 .home .gap-ex li i { color: var(--ink-mu); }
 @media (max-width: 900px) { .home .gap .standing-in { grid-template-columns: 1fr; } .home .gap .standing-copy { order: -1; } }
+
+/* Plans (components/PricingPlans): homepage #pricing, /pricing, law firms page. */
+.home .plans { display: grid; gap: 48px; }
+.home .plans-label { font-size: 14px; font-weight: 500; color: var(--ink-mu); margin: 0 0 14px; letter-spacing: .01em; }
+.home .plans-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.home .plan { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+.home .plan-featured { border-color: var(--ink); box-shadow: 0 24px 60px -36px rgba(18, 19, 22, .45); }
+.home .plan h4 { font-size: 20px; letter-spacing: -0.02em; margin: 0 0 14px; }
+.home .plan-price { display: flex; align-items: baseline; gap: 8px; margin: 0; }
+.home .plan-price b { font-size: 52px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.home .plan-price span { color: var(--ink-mu); font-size: 15px; }
+.home .plan-year { margin: 6px 0 16px; color: var(--ink-mu); font-size: 14px; font-variant-numeric: tabular-nums; }
+.home .plan-lede { margin: 0 0 18px; font-size: 16px; }
+.home .plan ul { list-style: none; margin: 0 0 24px; padding: 18px 0 0; border-top: 1px solid var(--line); display: grid; gap: 10px; font-size: 15px; flex: 1; }
+.home .plan li { padding-left: 22px; position: relative; }
+.home .plan li::before { content: ''; position: absolute; left: 2px; top: .62em; width: 10px; height: 1px; background: var(--ink); }
+.home .plan .b { align-self: flex-start; }
+.home .plans-fine { margin: 0; color: var(--ink-mu); font-size: 14px; max-width: 720px; }
+@media (max-width: 760px) { .home .plans-row { grid-template-columns: 1fr; } .home .plan { padding: 22px; } }

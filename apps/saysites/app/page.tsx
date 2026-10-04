@@ -2,14 +2,17 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Logo, LogoMark } from '@/components/Logo'
 import { SiteNav } from '@/components/SiteNav'
+import { PricingPlans } from '@/components/PricingPlans'
 import { TalkForm } from '@/components/TalkForm'
+import { PRICES } from '@/lib/billing'
 import { auditSite } from '@/lib/seo-intel'
 import { SHOWCASE } from '@/lib/showcase'
 import './home.css'
 
 // saysites.com: SaySites as a website company for the industries that
-// compete hardest online. No prices on the public site; businesses ask us
-// ("Let's talk") or start with a free redesign of their current site. Why
+// compete hardest online. Prices are public (#pricing, /pricing, from
+// lib/billing.ts, the same prices Stripe charges); businesses can also ask
+// us ("Let's talk") or start with a free redesign of their current site. Why
 // to switch from an agency lives on /about. A static-feeling page with no
 // client JavaScript of its own; the example screenshots are our own work.
 
@@ -323,6 +326,16 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           </div>
         </section>
 
+        <section className="ag-sec" id="pricing">
+          <div className="wrap">
+            <div className="head">
+              <p className="kicker">Pricing</p>
+              <h2>One monthly price. Everything included.</h2>
+            </div>
+            <PricingPlans />
+          </div>
+        </section>
+
         <section className="faq" id="faq">
           <div className="wrap faq-in">
             <div className="head">
@@ -330,7 +343,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <h2>Good questions.</h2>
             </div>
             <div className="qa">
-              <details><summary>What does it cost?</summary><p>It depends on what your business needs, so we quote after a short conversation. There’s no setup fee and no long-term contract, and you can see a free redesign of your current site before you decide anything.</p></details>
+              <details><summary>What does it cost?</summary><p>Law firm websites are ${PRICES.law.month} a month, or ${PRICES.lawpro.month} a month if we build it for you. Websites for other businesses start at ${PRICES.site.month} a month. Hosting, your domain, leads, intake and SEO are included. There’s no setup fee and no contract, and you can see a free redesign of your current site before you decide anything. <a href="/pricing">See every plan</a>.</p></details>
               <details><summary>How long does it take?</summary><p>Your free redesign is ready in under a minute. A finished site depends on how many pages and people it covers; we’ll tell you when we talk, and you approve it before it goes live.</p></details>
               <details><summary>Will I lose what my current site ranks for?</summary><p>We keep your pages at the same addresses wherever we can, and set up redirects for the rest, so links and search results keep working.</p></details>
               <details><summary>Can I make changes myself?</summary><p>Yes. Ask us, or log in and change anything yourself, in plain words. You see every change before it goes live.</p></details>
@@ -358,7 +371,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       <footer className="foot">
         <div className="wrap">
           <Logo />
-          <nav aria-label="Footer"><a href="/websites-for">Who we work with</a><a href="/about">Why SaySites</a><a href="/redesign">Free redesign</a><a href="/templates">Our work</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
+          <nav aria-label="Footer"><a href="/websites-for">Who we work with</a><a href="/about">Why SaySites</a><a href="/redesign">Free redesign</a><a href="/templates">Our work</a><a href="/pricing">Pricing</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
           <span>© {new Date().getFullYear()} SaySites</span>
         </div>
       </footer>

@@ -28,6 +28,7 @@ export function SiteFooter() {
           <a href="/about">Why SaySites</a>
           <a href="/redesign">Free redesign</a>
           <a href="/templates">Our work</a>
+          <a href="/pricing">Pricing</a>
           <a href="/connect">Connect</a>
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>

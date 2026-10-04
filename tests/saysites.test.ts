@@ -2095,14 +2095,18 @@ describe('SaySites: law firm designs', () => {
   })
 })
 
-describe('SaySites: no prices on the public site', () => {
-  it('keeps prices out of the home page, Why SaySites and every industry page', async () => {
+describe('SaySites: public prices match Stripe', () => {
+  it('shows only the prices in lib/billing.ts, never a hard-coded amount', async () => {
     const { readFileSync } = await import('fs')
     const { INDUSTRIES } = await import('../apps/saysites/lib/industries')
-    for (const f of ['app/page.tsx', 'app/about/page.tsx', 'app/websites-for/[slug]/page.tsx', 'app/redesign/[id]/page.tsx', 'components/MarketingShell.tsx']) {
-      expect(readFileSync(`apps/saysites/${f}`, 'utf8'), f).not.toMatch(/\$\d\d|PRICES|free trial/)
+    const { PRICES } = await import('../apps/saysites/lib/billing')
+    // Pages and the pricing component read PRICES; none types a dollar amount.
+    for (const f of ['app/page.tsx', 'app/about/page.tsx', 'app/websites-for/[slug]/page.tsx', 'app/redesign/[id]/page.tsx', 'components/MarketingShell.tsx', 'components/PricingPlans.tsx', 'app/pricing/page.tsx']) {
+      expect(readFileSync(`apps/saysites/${f}`, 'utf8'), f).not.toMatch(/\$\d{2,}/)
     }
-    expect(JSON.stringify(INDUSTRIES)).not.toMatch(/\$\d|free trial|a month/)
+    // Industry pages may quote prices, and only real ones.
+    const allowed = new Set(Object.values(PRICES).flatMap((p) => [p.month, p.year]).map(String))
+    for (const m of JSON.stringify(INDUSTRIES).matchAll(/\$([\d,]+)/g)) expect(allowed.has(m[1].replace(/,/g, '')), m[0]).toBe(true)
   })
 })
 

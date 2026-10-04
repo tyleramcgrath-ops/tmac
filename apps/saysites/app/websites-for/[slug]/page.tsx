@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { PricingPlans } from '@/components/PricingPlans'
+import { PRICES } from '@/lib/billing'
 import { MarketingShell } from '@/components/MarketingShell'
 import { INDUSTRIES, industry } from '@/lib/industries'
 import { GUIDES } from '@/lib/industries/guides'
@@ -164,6 +166,16 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <div><b>95+</b><span>speed score required on every page</span></div>
             <div><b>100%</b><span>yours: your words, photos and domain</span></div>
           </div>
+        </div>
+      </section>
+
+      <section className="ind-sec" id="pricing">
+        <div className="wrap">
+          <div className="head">
+            <p className="kicker">Pricing</p>
+            <h2>{i.slug === 'law-firms' ? 'One monthly price. Everything a firm needs.' : `From $${PRICES.site.month} a month, everything included.`}</h2>
+          </div>
+          {i.slug === 'law-firms' ? <PricingPlans only="law" /> : <p><a className="b b-dark" href="/pricing">See every plan</a></p>}
         </div>
       </section>
 
