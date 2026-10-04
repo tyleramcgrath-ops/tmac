@@ -109,6 +109,12 @@ redirects to /early.
   accounts keep the $10 lifetime cap. When the allowance runs out, Sofie
   pauses until the 1st; owners can still edit everything by hand.
 - Selling online (products) is the Store plan after the trial (`canSell`).
+- **Law Firm Starter, $79/month or $790/year** (October 4, 2026): the
+  complete law firm site without the paid lookups (Google positions, AI
+  citations, Citation Gap stay on Law $299 and built-for-you $599, which
+  `paidLookupsAllowed` checks), Sofie allowance $8. It's in `AUTO_PRICED`:
+  without `STRIPE_PRICE_LAW_STARTER(_YEARLY)`, checkout finds or creates its
+  Stripe price by lookup key (`ensurePrice`, `saysites_lawstarter_month`).
 - Never advertise a feature that isn't built. Competitor prices on the homepage must come from their own
   pricing pages, with the date checked and sources linked; re-check them
   quarterly.

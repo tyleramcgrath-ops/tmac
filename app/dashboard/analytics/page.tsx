@@ -19,7 +19,7 @@ const RANGES = [
 const n = (x: number) => new Intl.NumberFormat('en-US').format(x)
 const usd = (x: number) => `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: x % 1 ? 2 : 0, maximumFractionDigits: 2 }).format(x)}`
 const cents = (micros: number) => (micros > 0 && micros < 10_000 ? 'under $0.01' : `$${(micros / 1e6).toFixed(2)}`)
-const PLAN: Record<string, string> = { site: 'Site', store: 'Store', law: 'Law firm', lawpro: 'Law firm, we build' }
+const PLAN: Record<string, string> = { site: 'Site', store: 'Store', lawstarter: 'Law firm starter', law: 'Law firm', lawpro: 'Law firm, we build' }
 
 // Everything about SaySites in one place, for the team: money, growth, our
 // own leads, what customers' sites earn them, and what it all costs. Only
