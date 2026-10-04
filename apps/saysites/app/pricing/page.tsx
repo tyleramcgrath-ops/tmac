@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: `Law firm websites from $${PRICES.law.month} a month, with leads, intake, SEO and hosting included. Websites for other businesses from $${PRICES.site.month} a month. No setup fee, no contract.`,
+  description: `Law firm websites from $${PRICES.lawstarter.month} a month, with leads, intake, SEO and hosting included. Websites for other businesses from $${PRICES.site.month} a month. No setup fee, no contract.`,
   alternates: { canonical: '/pricing' },
 }
 

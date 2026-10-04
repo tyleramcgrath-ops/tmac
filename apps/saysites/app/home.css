@@ -992,3 +992,5 @@
 .lr-note { margin: 18px 0 0; font-size: 14px; color: var(--ink-mu); max-width: 760px; }
 .home .ag-proof-note { margin: 40px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; color: var(--ink-mu); max-width: 820px; }
 .home .ag-proof-note a { color: var(--ink); }
+.home .pp-row.pp-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .home .pp-row.pp-three { grid-template-columns: 1fr; } }

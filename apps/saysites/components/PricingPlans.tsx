@@ -9,7 +9,7 @@ const usd = (n: number) => `$${new Intl.NumberFormat('en-US').format(n)}`
 export function PricingPlans({ only }: { only?: 'law' }) {
   const google = intelReady.rankings()
   const ai = intelReady.ai()
-  const law = [
+  const starter = [
     'Three law firm designs, written for how clients choose a lawyer',
     'A page for every practice area, attorney profiles and office pages',
     'A consultation request on every page, with intake questions per practice area and a conflict-check field',
@@ -18,21 +18,34 @@ export function PricingPlans({ only }: { only?: 'law' }) {
     'Every lead sent to Clio Grow, HubSpot, Salesforce or Pipedrive if you use them',
     'Logins for your intake staff, paralegals and office manager',
     'A full SEO audit of every page, fixes in one click, and side-by-side with three competitors',
-    ...(google ? ['Your Google positions for the searches that matter, checked daily', 'Citation Gap: your pages against what Google ranks and its AI Overview quotes'] : []),
-    ...(ai ? ['Whether AI assistants cite your firm, checked daily'] : []),
     'A monthly results email: leads, calls and where they came from',
     'Hosting, your domain, security and a 95+ speed score on every page',
+  ]
+  const law = [
+    'Everything in Law Firm Starter',
+    ...(google ? ['Your Google positions for the searches that matter, checked daily', 'Citation Gap: your pages against what Google ranks and its AI Overview quotes'] : []),
+    ...(ai ? ['Whether AI assistants cite your firm, checked daily'] : []),
+    'Three times the Sofie allowance, for bigger changes in plain words',
   ]
   return (
     <div className="pp">
       <div className="pp-group">
         <h3 className="pp-label">For law firms</h3>
-        <div className="pp-row">
+        <div className="pp-row pp-three">
+          <Plan
+            name="Law Firm Starter"
+            price={PRICES.lawstarter.month}
+            year={PRICES.lawstarter.year}
+            lede="A complete law firm website you build and change yourself, with everything a firm needs from day one."
+            items={starter}
+            cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
+            featured
+          />
           <Plan
             name="Law Firm"
             price={PRICES.law.month}
             year={PRICES.law.year}
-            lede="You build it and change it yourself, in plain words, with everything a firm needs from day one."
+            lede="For firms competing hard for searches: everything in Starter, plus live tracking of where you stand."
             items={law}
             cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
           />
@@ -43,7 +56,6 @@ export function PricingPlans({ only }: { only?: 'law' }) {
             lede="We build your whole site from your current one and your practice, you approve it before it goes live, and we make changes when you ask."
             items={['Everything in Law Firm', 'Built by our team from your current site, your bios and your practice areas', 'Your pages keep their addresses, with redirects for the rest, so you keep what you rank for', 'You approve every page before it goes live', 'Changes made for you whenever you ask']}
             cta={{ href: '/redesign', label: 'See your site redesigned, free' }}
-            featured
           />
         </div>
       </div>

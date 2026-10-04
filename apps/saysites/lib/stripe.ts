@@ -62,6 +62,25 @@ export async function checkoutUrl(input: { userId: string; email: string; custom
   return session.url
 }
 
+// A recurring price found by its lookup key, or created (with its product)
+// at the given amount the first time it's needed. Lets a new plan be sold
+// without anyone setting it up in the Stripe dashboard first.
+export async function ensurePrice(input: { lookupKey: string; product: string; amountCents: number; interval: 'month' | 'year' }): Promise<string> {
+  const found = await stripe<{ data: { id: string; unit_amount: number; recurring: { interval: string } | null }[] }>('GET', '/prices', { lookup_keys: [input.lookupKey], active: true, limit: 1 })
+  const hit = found.data[0]
+  if (hit && hit.unit_amount === input.amountCents && hit.recurring?.interval === input.interval) return hit.id
+  const created = await stripe<{ id: string }>('POST', '/prices', {
+    currency: 'usd',
+    unit_amount: input.amountCents,
+    recurring: { interval: input.interval },
+    lookup_key: input.lookupKey,
+    // Moves the key from an older price at a different amount to this one.
+    transfer_lookup_key: true,
+    product_data: { name: input.product },
+  })
+  return created.id
+}
+
 export async function portalUrl(customerId: string, origin: string): Promise<string> {
   const s = await stripe<{ url: string }>('POST', '/billing_portal/sessions', { customer: customerId, return_url: `${origin}/dashboard/account` })
   return s.url
