@@ -27,10 +27,13 @@ SaySites presents itself like a website company for the industries that
 compete hardest online: law firms first, then medical practices, med spas,
 dental and home services. Law firms, medical practices and med spas share
 three designs (lib/law-designs.ts: counsel, classic, modern) with their own
-words per profession (VOCAB) and small print (FOOTER_NOTES). The public site
-shows **no prices**: visitors "Let's talk" (form on / and /about, leads land
-in the dashboard Feedback inbox marked "Let's talk") or get a free redesign.
-Prices live only in the dashboard (account and billing). Why to switch from
+words per profession (VOCAB) and small print (FOOTER_NOTES). **Prices are
+public** (the owner's decision, October 4, 2026): /pricing, the homepage's
+#pricing and the law firms page show the Stripe prices from `PRICES`
+(lib/billing.ts) through `components/PricingPlans.tsx`; never type a dollar
+amount anywhere else (a test checks). Visitors can also "Let's talk" (form
+on / and /about, leads land in the dashboard Feedback inbox marked "Let's
+talk") or get a free redesign. Why to switch from
 an agency lives on /about only, written as questions to ask any website
 company; never name or make claims about a competitor. /trades and the old
 /compare pages redirect. Self-serve sign-up still works at /signup but isn't
@@ -283,3 +286,16 @@ sites) and costs (Sofie), each against the previous period, with daily
 charts (`components/DayBars.tsx`, server-drawn SVG) and a table of every
 day. Only recorded numbers; saysites.com visitors live in Google Analytics,
 so the page links there.
+
+## Law firm research (October 4, 2026)
+
+We tested 105 top-ranking law firm websites (method, data and scripts:
+`marketing/law-research/` at the repo root, outside the deployed app).
+Aggregate numbers live in `lib/law-research.ts` and feed the law firms
+page's "Measured, not claimed" table (#compared), the homepage proof note
+and the blog article /blog/we-tested-top-ranking-law-firm-websites. Never
+name a firm or vendor publicly with these numbers. From the findings, every
+site now also describes each attorney card (Person) and each practice area
+page (Service) in structured data, and nested pages carry one breadcrumb
+trail (it was two). Review markup for a firm's own testimonials is left out
+on purpose: Google treats it as self-serving for local businesses.

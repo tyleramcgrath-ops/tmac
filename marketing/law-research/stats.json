@@ -1,0 +1,653 @@
+{
+ "candidates": 135,
+ "ok": 105,
+ "blocked": [
+  "flexerlaw.com: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "elkandelk.com: blocked/challenge (HTTP 202, 607 B, server cloudflare)",
+  "mtvlaw.com: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "dickersonoxton.com: blocked/challenge (HTTP 202, 168 B, server nginx)",
+  "maneygordon.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "lefkovitz.com: blocked/challenge (HTTP 403, 5642 B, server cloudflare)",
+  "kolmogorovlaw.com: blocked/challenge (HTTP 403, 5689 B, server cloudflare)",
+  "estateplanningdfw.law: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "indyjustice.com: blocked/challenge (HTTP 202, 169 B, server nginx)",
+  "knowleslaw.org: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "greenwood.law: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "calltherightattorney.com: blocked/challenge (HTTP 403, 5674 B, server cloudflare)",
+  "purdybailey.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "goodmanlawgroup.com: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "sjblaw.com: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "gardnergordon.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "sacramentobankruptcylawyer.us: blocked/challenge (HTTP 202, 168 B, server nginx)",
+  "yprklaw.com: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "thefullerlawfirm.com: blocked/challenge (HTTP 503, 2502 B, server cloudflare)",
+  "coastlawgroup.com: blocked/challenge (HTTP 403, 5646 B, server cloudflare)",
+  "alvandigroup.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "mikeschultzlaw.com: blocked/challenge (HTTP 403, 5647 B, server cloudflare)",
+  "sargonlawgroup.com: blocked/challenge (HTTP 403, 125 B, server nginx)",
+  "meyringlaw.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "tennessee-bankruptcy.com: blocked/challenge (HTTP 202, 168 B, server nginx)",
+  "abramowitzandassociates.com: blocked/challenge (HTTP 403, 5487 B, server cloudflare)",
+  "draskovich.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "fishlawfirm.com: blocked/challenge (HTTP 403, 5488 B, server cloudflare)",
+  "morrishall.com: blocked/challenge (HTTP 202, 168 B, server nginx)",
+  "ohiocompensationlawyer.com: blocked/challenge (HTTP 202, 169 B, server nginx)"
+ ],
+ "platform": [
+  [
+   "WordPress",
+   82
+  ],
+  [
+   "Justia (proprietary)",
+   10
+  ],
+  [
+   "Next.js",
+   2
+  ],
+  [
+   "OVC (proprietary)",
+   2
+  ],
+  [
+   "ASP.NET",
+   2
+  ],
+  [
+   "Drupal",
+   1
+  ],
+  [
+   "Foster DSS (proprietary)",
+   1
+  ],
+  [
+   "custom/unknown",
+   1
+  ],
+  [
+   "Astro",
+   1
+  ],
+  [
+   "Wix",
+   1
+  ],
+  [
+   "Webflow",
+   1
+  ],
+  [
+   "Squarespace",
+   1
+  ]
+ ],
+ "wp_builder": [
+  [
+   "Gutenberg blocks",
+   13
+  ],
+  [
+   "Elementor",
+   11
+  ],
+  [
+   "WPBakery",
+   11
+  ],
+  [
+   "Divi",
+   5
+  ],
+  [
+   "Beaver Builder",
+   1
+  ]
+ ],
+ "hosting": [
+  [
+   "Cloudflare",
+   43
+  ],
+  [
+   "nginx",
+   24
+  ],
+  [
+   "Apache",
+   23
+  ],
+  [
+   "WP Engine",
+   22
+  ],
+  [
+   "CloudFront",
+   13
+  ],
+  [
+   "NitroPack",
+   11
+  ],
+  [
+   "LiteSpeed",
+   7
+  ],
+  [
+   "Kinsta",
+   5
+  ],
+  [
+   "Flywheel",
+   4
+  ],
+  [
+   "Pantheon",
+   2
+  ],
+  [
+   "Sucuri",
+   2
+  ],
+  [
+   "Vercel",
+   2
+  ],
+  [
+   "IIS",
+   1
+  ]
+ ],
+ "vendor": [
+  [
+   "(none credited)",
+   63
+  ],
+  [
+   "Justia",
+   11
+  ],
+  [
+   "iLawyerMarketing",
+   5
+  ],
+  [
+   "OVC Lawyer Marketing",
+   2
+  ],
+  [
+   "TSEG",
+   2
+  ],
+  [
+   "Brandlytics",
+   1
+  ],
+  [
+   "Hennessey Digital",
+   1
+  ],
+  [
+   "Juris Digital",
+   1
+  ],
+  [
+   "MeanPug",
+   1
+  ],
+  [
+   "OrangeSky Websites",
+   1
+  ],
+  [
+   "Say So Marketing",
+   1
+  ],
+  [
+   "The Modern Firm",
+   1
+  ],
+  [
+   "Postali",
+   1
+  ],
+  [
+   "EverConvert",
+   1
+  ],
+  [
+   "BSPE Legal Marketing",
+   1
+  ],
+  [
+   "Foster Web Marketing",
+   1
+  ],
+  [
+   "SearchNexus",
+   1
+  ],
+  [
+   "Fyve (Thryv)",
+   1
+  ],
+  [
+   "Gorilla Webtactics",
+   1
+  ],
+  [
+   "Lifted Logic",
+   1
+  ],
+  [
+   "Patrick Marketing",
+   1
+  ],
+  [
+   "Acute SEO",
+   1
+  ],
+  [
+   "Woland Web",
+   1
+  ],
+  [
+   "LawRank",
+   1
+  ],
+  [
+   "Digital Law Marketing",
+   1
+  ],
+  [
+   "Omnizant",
+   1
+  ],
+  [
+   "Twelve Three Media",
+   1
+  ]
+ ],
+ "median_bytes": 205864,
+ "p25_bytes": 0,
+ "max_bytes": 2125495,
+ "min_bytes": 33887,
+ "median_scripts": 45,
+ "median_ext_scripts": 20,
+ "median_3p_hosts": 2,
+ "median_3p_hosts_incl_inline": 3,
+ "max_3p_incl": 10,
+ "median_inline_scripts": 21,
+ "sites_ge_5_3p": "35/105 (33%)",
+ "sites_ge_50_scripts": "37/105 (35%)",
+ "sites_ge_10_3p": "0/105 (0%)",
+ "median_ttfb": 0.384519,
+ "median_total": 0.409698,
+ "top_3p_hosts": [
+  [
+   "www.googletagmanager.com",
+   54
+  ],
+  [
+   "www.google.com",
+   32
+  ],
+  [
+   "cdn.callrail.com",
+   20
+  ],
+  [
+   "static.cloudflareinsights.com",
+   12
+  ],
+  [
+   "justatic.com",
+   10
+  ],
+  [
+   "cdnjs.cloudflare.com",
+   10
+  ],
+  [
+   "cdn.trustindex.io",
+   8
+  ],
+  [
+   "ajax.googleapis.com",
+   7
+  ],
+  [
+   "analytics.ahrefs.com",
+   5
+  ],
+  [
+   "cdn.calltrk.com",
+   4
+  ],
+  [
+   "cdn.userway.org",
+   4
+  ],
+  [
+   "challenges.cloudflare.com",
+   4
+  ],
+  [
+   "kit.fontawesome.com",
+   4
+  ],
+  [
+   "static.addtoany.com",
+   3
+  ],
+  [
+   "js.hsforms.net",
+   3
+  ]
+ ],
+ "chat_any": "11/105 (10%)",
+ "chat": [
+  [
+   "Ngage / Ngage Live",
+   5
+  ],
+  [
+   "Juvo Leads",
+   3
+  ],
+  [
+   "ApexChat",
+   1
+  ],
+  [
+   "Tawk.to",
+   1
+  ],
+  [
+   "LiveChat",
+   1
+  ],
+  [
+   "LeadConnector / GoHighLevel",
+   1
+  ]
+ ],
+ "call_any": "26/105 (25%)",
+ "call": [
+  [
+   "CallRail",
+   23
+  ],
+  [
+   "CallTrackingMetrics",
+   4
+  ]
+ ],
+ "analytics": [
+  [
+   "Google Tag Manager",
+   67
+  ],
+  [
+   "Google Analytics 4 (gtag G-)",
+   58
+  ],
+  [
+   "Meta Pixel",
+   21
+  ],
+  [
+   "Universal Analytics (UA-)",
+   17
+  ],
+  [
+   "Google Ads (AW-)",
+   15
+  ],
+  [
+   "Microsoft Clarity",
+   11
+  ],
+  [
+   "Bing UET",
+   2
+  ],
+  [
+   "Matomo",
+   2
+  ],
+  [
+   "LinkedIn Insight",
+   1
+  ],
+  [
+   "Hotjar",
+   1
+  ]
+ ],
+ "no_analytics": "5/105 (5%)",
+ "jsonld_any": "101/105 (96%)",
+ "jsonld_parse_err_sites": 8,
+ "schema_LegalService": "63/105 (60%)",
+ "schema_Attorney": "7/105 (7%)",
+ "schema_LocalBusiness": "12/105 (11%)",
+ "schema_Organization": "67/105 (64%)",
+ "schema_FAQPage": "15/105 (14%)",
+ "schema_Review_or_AggregateRating": "38/105 (36%)",
+ "schema_BreadcrumbList": "66/105 (63%)",
+ "schema_WebSite": "87/105 (83%)",
+ "schema_Person": "46/105 (44%)",
+ "schema_any_legal_business": "71/105 (68%)",
+ "no_legal_schema": "34/105 (32%)",
+ "schema_types_top": [
+  [
+   "WebSite",
+   87
+  ],
+  [
+   "WebPage",
+   82
+  ],
+  [
+   "PostalAddress",
+   70
+  ],
+  [
+   "Organization",
+   67
+  ],
+  [
+   "BreadcrumbList",
+   66
+  ],
+  [
+   "ListItem",
+   66
+  ],
+  [
+   "SearchAction",
+   63
+  ],
+  [
+   "LegalService",
+   63
+  ],
+  [
+   "ImageObject",
+   62
+  ],
+  [
+   "ReadAction",
+   61
+  ],
+  [
+   "EntryPoint",
+   53
+  ],
+  [
+   "GeoCoordinates",
+   48
+  ],
+  [
+   "PropertyValueSpecification",
+   47
+  ],
+  [
+   "Person",
+   46
+  ],
+  [
+   "AggregateRating",
+   38
+  ],
+  [
+   "OpeningHoursSpecification",
+   29
+  ],
+  [
+   "City",
+   25
+  ],
+  [
+   "Rating",
+   24
+  ],
+  [
+   "Review",
+   24
+  ],
+  [
+   "Service",
+   20
+  ]
+ ],
+ "contact_form": "78/105 (74%)",
+ "form_iframe_only": 0,
+ "no_static_form_but_js_form_embed": "5/105 (5%)",
+ "no_form_signal_at_all": "20/105 (19%)",
+ "tel": "97/105 (92%)",
+ "meta_desc": "101/105 (96%)",
+ "meta_desc_over160": 26,
+ "h1_exactly1": "87/105 (83%)",
+ "h1_none": "6/105 (6%)",
+ "h1_multi": "12/105 (11%)",
+ "viewport": "105/105 (100%)",
+ "median_imgs": 27,
+ "sites_missing_alt": "23/105 (22%)",
+ "imgs_total": 3864,
+ "imgs_missing_alt": 221,
+ "imgs_empty_alt": 529,
+ "reviews": "88/105 (84%)",
+ "no_form_no_chat": "24/105 (23%)",
+ "vendor_by_platform": [
+  [
+   "Justia (proprietary) / Justia",
+   10
+  ],
+  [
+   "WordPress / iLawyerMarketing",
+   5
+  ],
+  [
+   "OVC (proprietary) / OVC Lawyer Marketing",
+   2
+  ],
+  [
+   "WordPress / TSEG",
+   2
+  ],
+  [
+   "WordPress / Brandlytics",
+   1
+  ],
+  [
+   "WordPress / Hennessey Digital",
+   1
+  ],
+  [
+   "WordPress / Juris Digital",
+   1
+  ],
+  [
+   "WordPress / MeanPug",
+   1
+  ],
+  [
+   "WordPress / OrangeSky Websites",
+   1
+  ],
+  [
+   "WordPress / Say So Marketing",
+   1
+  ],
+  [
+   "WordPress / The Modern Firm",
+   1
+  ],
+  [
+   "WordPress / Postali",
+   1
+  ],
+  [
+   "WordPress / EverConvert",
+   1
+  ],
+  [
+   "WordPress / BSPE Legal Marketing",
+   1
+  ],
+  [
+   "Foster DSS (proprietary) / Foster Web Marketing",
+   1
+  ],
+  [
+   "WordPress / SearchNexus",
+   1
+  ],
+  [
+   "WordPress / Fyve (Thryv)",
+   1
+  ],
+  [
+   "WordPress / Gorilla Webtactics",
+   1
+  ],
+  [
+   "WordPress / Lifted Logic",
+   1
+  ],
+  [
+   "WordPress / Patrick Marketing",
+   1
+  ],
+  [
+   "WordPress / Acute SEO",
+   1
+  ],
+  [
+   "WordPress / Woland Web",
+   1
+  ],
+  [
+   "WordPress / LawRank",
+   1
+  ],
+  [
+   "WordPress / Digital Law Marketing",
+   1
+  ],
+  [
+   "WordPress / Justia",
+   1
+  ],
+  [
+   "WordPress / Omnizant",
+   1
+  ],
+  [
+   "WordPress / Twelve Three Media",
+   1
+  ]
+ ]
+}

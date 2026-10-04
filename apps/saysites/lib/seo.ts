@@ -43,13 +43,36 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
     })
   }
 
-  // Where a page sits ("Home / Services / Water heaters"), for nested pages.
-  const crumbs = breadcrumbs(site, page, allPages)
-  if (crumbs.length > 1) {
+  // The people on the page (attorney and provider cards: a name heading and a
+  // role line), so Google and AI answers can connect each person to the firm.
+  // Only cards visitors can see on this page are described.
+  for (const el of walk(page.body)) {
+    if (el.type !== 'container') continue
+    const name = el.children.find((c) => c.type === 'heading' && c.id === `${el.id}-h`)
+    const role = el.children.find((c) => c.type === 'text' && c.id === `${el.id}-r`)
+    if (!name || name.type !== 'heading' || !role || role.type !== 'text') continue
+    const bio = el.children.find((c) => c.type === 'text' && c.id === `${el.id}-t`)
     out.push({
       '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.label, item: origin + c.href })),
+      '@type': 'Person',
+      name: name.text,
+      jobTitle: role.text,
+      ...(bio && bio.type === 'text' ? { description: bio.text.slice(0, 300) } : {}),
+      worksFor: { '@id': `${origin}/#business` },
+    })
+  }
+
+  // A practice area, service or treatment page: the service itself, offered
+  // by the business, where it works.
+  if (/^(practice-areas|services|treatments)\/[^/]+$/.test(page.slug) && !page.post) {
+    out.push({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: page.name,
+      description: page.seo.description,
+      url: origin + pagePath(page),
+      provider: { '@id': `${origin}/#business` },
+      ...(site.business.area ? { areaServed: site.business.area } : {}),
     })
   }
 

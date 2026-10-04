@@ -1,0 +1,321 @@
+[
+ {
+  "domain": "johnfoy.com",
+  "platform": "WordPress",
+  "vendor": "Hennessey Digital",
+  "url": "https://www.johnfoy.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:41:15.713Z",
+  "performance": 38,
+  "seo": 92,
+  "accessibility": 91,
+  "LCP_s": 8.394307000000001,
+  "FCP_s": 1.482875,
+  "TBT_ms": 5173.387249999997,
+  "CLS": 0.08885752943310866,
+  "total_bytes": 3001814,
+  "requests": 259,
+  "third_party_entities": 50,
+  "third_party_main_thread_ms": 1722,
+  "third_party_kb": 2615,
+  "top_third_parties": [
+   "Google Tag Manager (586ms main-thread, 859KB)",
+   "nitrocdn.com (236ms main-thread, 607KB)",
+   "fouanalytics.com (209ms main-thread, 8KB)"
+  ],
+  "unused_js_kb": 627,
+  "js_bootup_ms": 9339,
+  "failed_a11y": [
+   "color-contrast",
+   "link-in-text-block",
+   "target-size"
+  ]
+ },
+ {
+  "domain": "piastawalker.com",
+  "platform": "WordPress",
+  "vendor": "iLawyerMarketing",
+  "url": "https://www.piastawalker.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:41:46.286Z",
+  "performance": 54,
+  "seo": 92,
+  "accessibility": 84,
+  "LCP_s": 6.372770000000001,
+  "FCP_s": 2.6773409999999997,
+  "TBT_ms": 673.5,
+  "CLS": 0.01741709857657334,
+  "total_bytes": 1741508,
+  "requests": 81,
+  "third_party_entities": 5,
+  "third_party_main_thread_ms": 336,
+  "third_party_kb": 977,
+  "top_third_parties": [
+   "Google Tag Manager (278ms main-thread, 857KB)",
+   "CallRail (29ms main-thread, 13KB)",
+   "Google Analytics (22ms main-thread, 23KB)"
+  ],
+  "unused_js_kb": 471,
+  "js_bootup_ms": 1791,
+  "failed_a11y": [
+   "frame-title",
+   "image-alt",
+   "landmark-one-main",
+   "link-name",
+   "meta-viewport"
+  ]
+ },
+ {
+  "domain": "chicagodivorceatty.com",
+  "platform": "Justia (proprietary)",
+  "vendor": "Justia",
+  "url": "https://www.chicagodivorceatty.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:42:05.861Z",
+  "performance": 80,
+  "seo": 92,
+  "accessibility": 96,
+  "LCP_s": 3.2404259999999994,
+  "FCP_s": 1.866763,
+  "TBT_ms": 470.5,
+  "CLS": 0.014556374306085381,
+  "total_bytes": 701051,
+  "requests": 39,
+  "third_party_entities": 5,
+  "third_party_main_thread_ms": 208,
+  "third_party_kb": 443,
+  "top_third_parties": [
+   "justia.run (182ms main-thread, 300KB)",
+   "justatic.com (26ms main-thread, 52KB)",
+   "Google Fonts (0ms main-thread, 90KB)"
+  ],
+  "unused_js_kb": 118,
+  "js_bootup_ms": 906,
+  "failed_a11y": [
+   "color-contrast"
+  ]
+ },
+ {
+  "domain": "monastlaw.com",
+  "platform": "Foster DSS (proprietary)",
+  "vendor": "Foster Web Marketing",
+  "url": "https://www.monastlaw.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:42:24.866Z",
+  "performance": 83,
+  "seo": 92,
+  "accessibility": 89,
+  "LCP_s": 1.423712,
+  "FCP_s": 1.248098,
+  "TBT_ms": 672,
+  "CLS": 0.004736504751308492,
+  "total_bytes": 4361029,
+  "requests": 45,
+  "third_party_entities": 10,
+  "third_party_main_thread_ms": 385,
+  "third_party_kb": 734,
+  "top_third_parties": [
+   "Google Tag Manager (252ms main-thread, 510KB)",
+   "Clarity (52ms main-thread, 28KB)",
+   "CallTrackingMetrics (45ms main-thread, 18KB)"
+  ],
+  "unused_js_kb": 346,
+  "js_bootup_ms": 1656,
+  "failed_a11y": [
+   "color-contrast",
+   "heading-order",
+   "landmark-one-main",
+   "link-name"
+  ]
+ },
+ {
+  "domain": "forthepeople.com",
+  "platform": "Drupal",
+  "vendor": null,
+  "url": "https://www.forthepeople.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:42:44.473Z",
+  "performance": 46,
+  "seo": 100,
+  "accessibility": 94,
+  "LCP_s": 11.474909250000001,
+  "FCP_s": 3.4706965000000003,
+  "TBT_ms": 711.5,
+  "CLS": 0,
+  "total_bytes": 1273908,
+  "requests": 51,
+  "third_party_entities": 7,
+  "third_party_main_thread_ms": 252,
+  "third_party_kb": 658,
+  "top_third_parties": [
+   "Google Tag Manager (167ms main-thread, 353KB)",
+   "Optanon (47ms main-thread, 198KB)",
+   "CallTrackingMetrics (36ms main-thread, 21KB)"
+  ],
+  "unused_js_kb": 286,
+  "js_bootup_ms": 1440,
+  "failed_a11y": [
+   "color-contrast",
+   "target-size"
+  ]
+ },
+ {
+  "domain": "aramilaw.com",
+  "platform": "Next.js",
+  "vendor": null,
+  "url": "https://aramilaw.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:43:03.342Z",
+  "performance": 49,
+  "seo": 100,
+  "accessibility": 100,
+  "LCP_s": 14.460047,
+  "FCP_s": 4.718132000000001,
+  "TBT_ms": 466,
+  "CLS": 0,
+  "total_bytes": 2218203,
+  "requests": 53,
+  "third_party_entities": 4,
+  "third_party_main_thread_ms": 133,
+  "third_party_kb": 391,
+  "top_third_parties": [
+   "Google Tag Manager (133ms main-thread, 340KB)",
+   "Other Google APIs/SDKs (0ms main-thread, 50KB)",
+   "Google Analytics (0ms main-thread, 1KB)"
+  ],
+  "unused_js_kb": 193,
+  "js_bootup_ms": 1935,
+  "failed_a11y": [
+   "label-content-name-mismatch"
+  ]
+ },
+ {
+  "domain": "ramimmigrationlaw.com",
+  "platform": "Webflow",
+  "vendor": null,
+  "url": "https://www.ramimmigrationlaw.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:43:25.722Z",
+  "performance": 70,
+  "seo": 100,
+  "accessibility": 82,
+  "LCP_s": 10.747068500000001,
+  "FCP_s": 2.1529858909301756,
+  "TBT_ms": 164,
+  "CLS": 0.014947290031445189,
+  "total_bytes": 3089739,
+  "requests": 64,
+  "third_party_entities": 5,
+  "third_party_main_thread_ms": 327,
+  "third_party_kb": 2590,
+  "top_third_parties": [
+   "Google CDN (164ms main-thread, 354KB)",
+   "website-files.com (109ms main-thread, 1784KB)",
+   "cloudfront.net (53ms main-thread, 31KB)"
+  ],
+  "unused_js_kb": 183,
+  "js_bootup_ms": 1759,
+  "failed_a11y": [
+   "color-contrast",
+   "heading-order",
+   "html-has-lang",
+   "landmark-one-main",
+   "link-name",
+   "target-size"
+  ]
+ },
+ {
+  "domain": "larrimer.com",
+  "platform": "Wix",
+  "vendor": null,
+  "url": "https://www.larrimer.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:43:41.354Z",
+  "performance": 50,
+  "seo": 100,
+  "accessibility": 94,
+  "LCP_s": 10.785654499999998,
+  "FCP_s": 4.591063499999999,
+  "TBT_ms": 428,
+  "CLS": 0,
+  "total_bytes": 2398721,
+  "requests": 208,
+  "third_party_entities": 6,
+  "third_party_main_thread_ms": 402,
+  "third_party_kb": 1502,
+  "top_third_parties": [
+   "Wix (264ms main-thread, 1095KB)",
+   "Google Tag Manager (101ms main-thread, 328KB)",
+   "CallRail (19ms main-thread, 13KB)"
+  ],
+  "unused_js_kb": 275,
+  "js_bootup_ms": 3012,
+  "failed_a11y": [
+   "color-contrast",
+   "link-name"
+  ]
+ },
+ {
+  "domain": "businessattorneysandiego.com",
+  "platform": "Squarespace",
+  "vendor": null,
+  "url": "https://www.businessattorneysandiego.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:44:05.393Z",
+  "performance": 32,
+  "seo": 100,
+  "accessibility": 96,
+  "LCP_s": 20.220368,
+  "FCP_s": 12.199358499999999,
+  "TBT_ms": 1130.0000000000036,
+  "CLS": 0.00034751005903585854,
+  "total_bytes": 2818004,
+  "requests": 86,
+  "third_party_entities": 9,
+  "third_party_main_thread_ms": 515,
+  "third_party_kb": 2720,
+  "top_third_parties": [
+   "Squarespace (240ms main-thread, 1078KB)",
+   "Google Tag Manager (235ms main-thread, 708KB)",
+   "Google Analytics (12ms main-thread, 21KB)"
+  ],
+  "unused_js_kb": 854,
+  "js_bootup_ms": 2348,
+  "failed_a11y": [
+   "link-in-text-block"
+  ]
+ },
+ {
+  "domain": "npavliklaw.com",
+  "platform": "WordPress",
+  "vendor": null,
+  "url": "https://npavliklaw.com/",
+  "formFactor": "mobile",
+  "fetchTime": "2026-10-04T02:44:23.340Z",
+  "performance": 64,
+  "seo": 85,
+  "accessibility": 92,
+  "LCP_s": 7.931082999999999,
+  "FCP_s": 1.9031440000000002,
+  "TBT_ms": 274,
+  "CLS": 0.002267422081719992,
+  "total_bytes": 849574,
+  "requests": 53,
+  "third_party_entities": 5,
+  "third_party_main_thread_ms": 158,
+  "third_party_kb": 334,
+  "top_third_parties": [
+   "Google Tag Manager (75ms main-thread, 174KB)",
+   "Clarity (66ms main-thread, 28KB)",
+   "savvycal.com (17ms main-thread, 32KB)"
+  ],
+  "unused_js_kb": 98,
+  "js_bootup_ms": 1639,
+  "failed_a11y": [
+   "heading-order",
+   "landmark-one-main",
+   "link-name",
+   "skip-link"
+  ]
+ }
+]
