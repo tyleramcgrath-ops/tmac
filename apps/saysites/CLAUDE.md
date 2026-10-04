@@ -286,3 +286,16 @@ sites) and costs (Sofie), each against the previous period, with daily
 charts (`components/DayBars.tsx`, server-drawn SVG) and a table of every
 day. Only recorded numbers; saysites.com visitors live in Google Analytics,
 so the page links there.
+
+## Law firm research (October 4, 2026)
+
+We tested 105 top-ranking law firm websites (method, data and scripts:
+`marketing/law-research/` at the repo root, outside the deployed app).
+Aggregate numbers live in `lib/law-research.ts` and feed the law firms
+page's "Measured, not claimed" table (#compared), the homepage proof note
+and the blog article /blog/we-tested-top-ranking-law-firm-websites. Never
+name a firm or vendor publicly with these numbers. From the findings, every
+site now also describes each attorney card (Person) and each practice area
+page (Service) in structured data, and nested pages carry one breadcrumb
+trail (it was two). Review markup for a firm's own testimonials is left out
+on purpose: Google treats it as self-serving for local businesses.

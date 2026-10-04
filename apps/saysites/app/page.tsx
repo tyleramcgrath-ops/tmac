@@ -5,6 +5,7 @@ import { SiteNav } from '@/components/SiteNav'
 import { PricingPlans } from '@/components/PricingPlans'
 import { TalkForm } from '@/components/TalkForm'
 import { PRICES } from '@/lib/billing'
+import { LAW_RESEARCH } from '@/lib/law-research'
 import { auditSite } from '@/lib/seo-intel'
 import { SHOWCASE } from '@/lib/showcase'
 import './home.css'
@@ -184,6 +185,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             <div><b>0</b><span>long-term contracts</span></div>
             <div><b>1</b><span>private link to review and approve your site</span></div>
           </div>
+          <div className="wrap"><p className="ag-proof-note">We tested {LAW_RESEARCH.sites} law firm websites at the top of Google. The middle one scored {LAW_RESEARCH.rows[0].them} for mobile speed and took {LAW_RESEARCH.rows[1].them} to show its main content. <a href="/websites-for/law-firms#compared">See how SaySites compares</a>.</p></div>
         </section>
 
         <section className="ag-sec" id="built">

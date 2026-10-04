@@ -24,10 +24,10 @@ export function PricingPlans({ only }: { only?: 'law' }) {
     'Hosting, your domain, security and a 95+ speed score on every page',
   ]
   return (
-    <div className="plans">
-      <div className="plans-group">
-        <h3 className="plans-label">For law firms</h3>
-        <div className="plans-row">
+    <div className="pp">
+      <div className="pp-group">
+        <h3 className="pp-label">For law firms</h3>
+        <div className="pp-row">
           <Plan
             name="Law Firm"
             price={PRICES.law.month}
@@ -48,9 +48,9 @@ export function PricingPlans({ only }: { only?: 'law' }) {
         </div>
       </div>
       {only !== 'law' && (
-        <div className="plans-group">
-          <h3 className="plans-label">For every other business</h3>
-          <div className="plans-row">
+        <div className="pp-group">
+          <h3 className="pp-label">For every other business</h3>
+          <div className="pp-row">
             <Plan
               name="Site"
               price={PRICES.site.month}
@@ -70,18 +70,18 @@ export function PricingPlans({ only }: { only?: 'law' }) {
           </div>
         </div>
       )}
-      <p className="plans-fine">Prices in US dollars. Yearly billing is two months free. No setup fee, no contract: cancel any time from your account. A {TRIAL_DAYS}-day free trial on every self-serve plan.</p>
+      <p className="pp-fine">Prices in US dollars. Yearly billing is two months free. No setup fee, no contract: cancel any time from your account. A {TRIAL_DAYS}-day free trial on every self-serve plan.</p>
     </div>
   )
 }
 
 function Plan({ name, price, year, lede, items, cta, featured }: { name: string; price: number; year: number; lede: string; items: string[]; cta: { href: string; label: string }; featured?: boolean }) {
   return (
-    <article className={`plan${featured ? ' plan-featured' : ''}`}>
+    <article className={`pp-plan${featured ? ' pp-featured' : ''}`}>
       <h4>{name}</h4>
-      <p className="plan-price"><b>{usd(price)}</b><span>a month</span></p>
-      <p className="plan-year">or {usd(year)} a year</p>
-      <p className="plan-lede">{lede}</p>
+      <p className="pp-price"><b>{usd(price)}</b><span>a month</span></p>
+      <p className="pp-year">or {usd(year)} a year</p>
+      <p className="pp-lede">{lede}</p>
       <ul>{items.map((t) => <li key={t}>{t}</li>)}</ul>
       <a className={`b ${featured ? 'b-dark' : 'b-line'}`} href={cta.href}>{cta.label}</a>
     </article>
