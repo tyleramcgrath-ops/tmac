@@ -42,7 +42,7 @@
    "text": "The venue alone: fifty thousand dollars.",
    "shots": [
     [
-     "mk40596.mp4",
+     "mk40596.mp4@0.35",
      3,
      "lux"
     ]
@@ -60,7 +60,7 @@
      "mk22738.mp4",
      1,
      "lux",
-     "fifty"
+     "$52"
     ]
    ]
   },
@@ -96,7 +96,7 @@
      "mk29012.mp4",
      10,
      "lux",
-     "two"
+     "200"
     ]
    ]
   },
@@ -104,8 +104,8 @@
    "text": "The average American wedding? Two hundred ninety-two per guest. Would you go big, or elope?",
    "shots": [
     [
-     "mk5206.mp4",
-     4,
+     "mk40596.mp4@0.4",
+     12,
      "calm"
     ],
     [
@@ -144,7 +144,7 @@
    "VENUE",
    "$50,000",
    "",
-   "L3:fifty",
+   "L3:$50",
    "L4",
    ""
   ],
@@ -152,7 +152,7 @@
    "CATERING + BAR",
    "$52,500",
    "",
-   "L4:fifty",
+   "L4:$52",
    "L5",
    ""
   ],
@@ -160,7 +160,7 @@
    "FLOWERS + DECOR",
    "$25,000",
    "",
-   "L5:twenty",
+   "L5:25",
    "L6",
    ""
   ],
@@ -168,7 +168,7 @@
    "PLANNER",
    "$15,000",
    "",
-   "L6:fifteen",
+   "L6:15",
    "L7",
    ""
   ],
@@ -176,7 +176,7 @@
    "U.S. AVERAGE",
    "$292 / guest",
    "THE KNOT",
-   "L8:two",
+   "L8:292",
    "L8:would",
    ""
   ]
@@ -184,7 +184,7 @@
  "mids": [
   [
    "$200,000<br><span style='font-size:44px;font-weight:600'>\u2248 $1,333 per guest</span>",
-   "L7:two",
+   "L7:200",
    "L8",
    104,
    "#fff"
@@ -197,7 +197,10 @@
    "#fff"
   ]
  ],
- "impact": "L7:two",
+ "impact": "L7:200",
  "footnote": "Sample luxury budget for 150 guests (luxury wedding planner guide); U.S. average per guest: The Knot. Per-guest est. Stock footage.",
- "caption_fix": {}
+ "caption_fix": {
+  "alope?": "elope?",
+  "wedding,": "wedding?"
+ }
 }

@@ -60,7 +60,7 @@
      "mk3378.mp4",
      3,
      "lux",
-     "a"
+     "144"
     ]
    ]
   },
@@ -156,7 +156,7 @@
    "5 BR CHALET \u00b7 SNOWMASS",
    "sleeps 10",
    "",
-   "L2:five",
+   "L2:5",
    "L3",
    ""
   ],
@@ -164,7 +164,7 @@
    "CHRISTMAS RATE",
    "$72,000 / wk",
    "",
-   "L3:seventy",
+   "L3:72",
    "L4",
    ""
   ],
@@ -172,7 +172,7 @@
    "14 NIGHTS",
    "$144,000",
    "EST.",
-   "L4:a",
+   "L4:144",
    "L5",
    ""
   ],
@@ -219,5 +219,8 @@
  ],
  "impact": "L7:about",
  "footnote": "Rental: villa guide (May 2026); lift tickets: 2025\u201326 walk-up holiday rate; chef day rate. Totals est. Stock footage, not Aspen.",
- "caption_fix": {}
+ "caption_fix": {
+  "Shallies": "chalets",
+  "snowmass,": "Snowmass."
+ }
 }

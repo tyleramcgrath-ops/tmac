@@ -1,0 +1,160 @@
+<title>Apex Revival Upload Kit 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column of shot "slates" — vertical video left, upload copy right; stacks on phones */
+:root{
+  --bg:#f3f1ee; --surface:#ffffff; --fg:#17150f; --muted:#6b665c; --line:#dcd7cd; --accent:#b8892b; --ok:#2f7d4f; --ink-on-accent:#17150f;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif; --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121110;--surface:#1b1a17;--fg:#efebe3;--muted:#a39d91;--line:#2f2d28;--accent:#e2b65a;--ok:#5cc489;--ink-on-accent:#17150f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121110;--surface:#1b1a17;--fg:#efebe3;--muted:#a39d91;--line:#2f2d28;--accent:#e2b65a;--ok:#5cc489;--ink-on-accent:#17150f;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:32px 64px;display:grid;gap:28px}
+header h1{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6vw,3.4rem);line-height:.95;letter-spacing:.01em;text-transform:uppercase;margin:0;text-wrap:balance}
+header p{color:var(--muted);max-width:62ch;margin:.6rem 0 0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.prompt{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:12px}
+.prompt h2{font-family:var(--display);font-weight:800;font-size:1.5rem;margin:0;text-transform:uppercase;letter-spacing:.02em}
+.prompt ol{margin:0;padding-left:1.2rem;color:var(--muted);display:grid;gap:4px}
+pre{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:13px;line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;max-height:280px;overflow:auto}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px var(--body);border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:9px 14px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--ink-on-accent)}
+button:hover{border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.status{font-family:var(--mono);font-size:12px;color:var(--ok);min-height:1em}
+.slate{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:24px;padding-block:24px;border-top:1px solid var(--line)}
+.slate video{width:100%;aspect-ratio:9/16;max-width:100%;border-radius:10px;background:#000;display:block}
+.meta{display:grid;gap:14px;align-content:start;min-width:0}
+.meta .num{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.meta h3{font-family:var(--display);font-weight:800;font-size:1.9rem;line-height:1;margin:0;text-transform:uppercase;text-wrap:balance}
+.field{display:grid;gap:4px;min-width:0}
+.field .lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.field .val{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:14.5px;word-break:break-word}
+.facts{display:flex;flex-wrap:wrap;gap:6px}
+.facts span{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted)}
+@media (max-width:640px){.slate{grid-template-columns:minmax(0,1fr)}.slate video{max-width:300px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<main class="wrap">
+  <header>
+    <div class="eyebrow">Apex Revival · Batch 4 · 5 Shorts · 1080×1920</div>
+    <h1>Apex Revival Upload Kit 4</h1>
+    <p>Five new Shorts with their thumbnails and upload copy. Download the files, then paste the prompt below into Claude in Chrome so it can upload them to YouTube Studio as private drafts for you to review.</p>
+  </header>
+
+  <section class="prompt" aria-labelledby="ph">
+    <h2 id="ph">Prompt for Claude in Chrome</h2>
+    <ol>
+      <li>Download all five videos and thumbnails with the buttons below (they land in your Downloads folder).</li>
+      <li>Open YouTube Studio for the Apex Revival channel in Chrome.</li>
+      <li>Copy this prompt into Claude in Chrome. It uploads each Short as <strong>Private</strong>, so nothing goes public until you check it.</li>
+    </ol>
+    <pre id="promptText"></pre>
+    <div class="row"><button class="primary" id="copyPrompt" type="button">Copy prompt</button><span class="status" id="promptStatus" aria-live="polite"></span></div>
+  </section>
+
+  <section id="list" aria-label="Shorts"></section>
+</main>
+
+<script>
+const SHORTS=[
+ {n:1,file:"files/apex-monaco-gp-weekend.mp4",thumb:"files/thumb-monaco.jpg",len:"34s",
+  title:"What a Monaco Grand Prix Weekend Really Costs",
+  desc:"Yacht hospitality, a race-week room at the Hôtel de Paris, helicopter seats and an after-party: about €54,000 (~$60,000) for one couple. Or a Sunday grandstand seat for about €950. Estimates from published hospitality prices (Senate Grand Prix 2027 list), heliport fares and an after-party listing. Stock footage.",
+  tags:"#shorts #monaco #formula1 #luxury #money"},
+ {n:2,file:"files/apex-superbowl-suite.mp4",thumb:"files/thumb-superbowl.jpg",len:"34s",
+  title:"What a Super Bowl Suite Really Costs",
+  desc:"Super Bowl LX suites started around $600,000 for 16 tickets. Add catering, staff and security (reportedly +35% or more) and it's about $810,000, or ~$50,000 a guest (est.). Sources: Sports Illustrated, The Independent, Elite Traveler. Stock footage, not the Super Bowl.",
+  tags:"#shorts #superbowl #nfl #luxury #money"},
+ {n:3,file:"files/apex-million-dollar-wedding.mp4",thumb:"files/thumb-wedding.jpg",len:"33s",
+  title:"What a Celebrity-Style Wedding Really Costs",
+  desc:"A luxury wedding for 150 guests: venue $50K, dinner and open bar $52.5K, flowers $25K, planner $15K. About $200,000 total, over $1,300 a guest, vs the U.S. average of $292 a guest (The Knot). Sample budget from a luxury wedding planning guide. Stock footage.",
+  tags:"#shorts #wedding #luxurywedding #weddingbudget #money"},
+ {n:4,file:"files/apex-aspen-christmas.mp4",thumb:"files/thumb-aspen.jpg",len:"31s",
+  title:"Christmas in an Aspen Chalet: The Real Bill",
+  desc:"A 5-bedroom Snowmass chalet rents for about $72,000 a week at Christmas, with a 14-night minimum. Add lift tickets for 10 and a private chef: about $175,000 before tips and tax (est.). Sources: villa rental guide (2026), 2025–26 holiday lift-ticket price. Stock footage, not Aspen.",
+  tags:"#shorts #aspen #skiing #luxurytravel #money"},
+ {n:5,file:"files/apex-met-gala.mp4",thumb:"files/thumb-metgala.jpg",len:"33s",
+  title:"What It Really Costs to Go to the Met Gala",
+  desc:"A Met Gala ticket is now $100,000 (it was $75,000 in 2025). Tables of ten start around $350,000, usually paid by a brand. Add a penthouse at The Mark and it's $145,000 before the dress (est.), though most gowns are lent by designers. Sources: CBS and press reports, The Mark. Stock footage; people shown are models.",
+  tags:"#shorts #metgala #fashion #luxury #money"}
+];
+const fname=p=>p.split("/").pop();
+
+const prompt=`I'm in YouTube Studio for my channel "Apex Revival". Please upload these 5 YouTube Shorts from my Downloads folder, one at a time. For EACH video:
+- Click Create > Upload videos and select the MP4 file named below.
+- Set the Title and Description exactly as written below (put the hashtags at the end of the description).
+- Upload the matching thumbnail JPG as the custom thumbnail (if the option is available for Shorts).
+- Audience: "No, it's not made for kids".
+- Visibility: PRIVATE. Do not publish publicly or schedule — I will review first.
+- Save, then move on to the next video.
+If anything is unclear, a file is missing, or YouTube asks for something not covered here, stop and ask me.
+
+` + SHORTS.map(s=>`VIDEO ${s.n}
+File: ${fname(s.file)}
+Thumbnail: ${fname(s.thumb)}
+Title: ${s.title}
+Description: ${s.desc}
+
+${s.tags}`).join("\n\n");
+document.getElementById("promptText").textContent=prompt;
+
+async function copyText(text,statusEl,label){
+  try{await navigator.clipboard.writeText(text);statusEl.textContent=label+" copied";}
+  catch(e){statusEl.textContent="Copy blocked here: select the text and copy it manually";}
+}
+document.getElementById("copyPrompt").addEventListener("click",()=>copyText(prompt,document.getElementById("promptStatus"),"Prompt"));
+
+let downloadsP=null;
+function getDownloads(){ if(!downloadsP) downloadsP=(window.claude&&window.claude.use)?window.claude.use("downloads"):Promise.resolve(null); return downloadsP; }
+async function saveFile(path,statusEl){
+  statusEl.textContent="Preparing "+fname(path)+"…";
+  try{
+    const dl=await getDownloads();
+    if(!dl){statusEl.textContent="Downloads aren't available in this view. Open the page on claude.ai.";return;}
+    const res=await fetch(path); if(!res.ok) throw new Error("fetch "+res.status);
+    const blob=await res.blob();
+    await dl.save({filename:fname(path),data:blob});
+    statusEl.textContent="Saved "+fname(path);
+  }catch(e){
+    const c=e&&e.code;
+    statusEl.textContent = c==="declined" ? "Download cancelled" : c==="rate_limited" ? "Another download prompt is open; finish it first" : "Couldn't download "+fname(path);
+  }
+}
+
+const list=document.getElementById("list");
+for(const s of SHORTS){
+  const el=document.createElement("article"); el.className="slate"; el.id="short-"+s.n;
+  el.innerHTML=`
+    <video controls preload="metadata" playsinline poster="${s.thumb}" src="${s.file}" aria-label="Short ${s.n} preview"></video>
+    <div class="meta">
+      <div class="num">Short ${s.n} · ${s.len} · vertical</div>
+      <h3></h3>
+      <div class="facts"><span>${fname(s.file)}</span><span>${fname(s.thumb)}</span></div>
+      <div class="field"><div class="lab">Title</div><div class="val t"></div></div>
+      <div class="field"><div class="lab">Description</div><div class="val d"></div></div>
+      <div class="field"><div class="lab">Hashtags</div><div class="val h"></div></div>
+      <div class="row">
+        <button class="primary" type="button" data-act="mp4">Download MP4</button>
+        <button type="button" data-act="thumb">Download thumbnail</button>
+        <button type="button" data-act="ct">Copy title</button>
+        <button type="button" data-act="cd">Copy description + tags</button>
+      </div>
+      <div class="status" aria-live="polite"></div>
+    </div>`;
+  el.querySelector("h3").textContent=s.title;
+  el.querySelector(".t").textContent=s.title;
+  el.querySelector(".d").textContent=s.desc;
+  el.querySelector(".h").textContent=s.tags;
+  const st=el.querySelector(".status");
+  el.querySelector('[data-act="mp4"]').onclick=()=>saveFile(s.file,st);
+  el.querySelector('[data-act="thumb"]').onclick=()=>saveFile(s.thumb,st);
+  el.querySelector('[data-act="ct"]').onclick=()=>copyText(s.title,st,"Title");
+  el.querySelector('[data-act="cd"]').onclick=()=>copyText(s.desc+"\n\n"+s.tags,st,"Description");
+  list.appendChild(el);
+}
+</script>

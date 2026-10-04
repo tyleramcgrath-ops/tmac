@@ -138,7 +138,7 @@
    "SUITE",
    "16 tickets",
    "",
-   "L2:sixteen",
+   "L2:16",
    "L3",
    ""
   ],
@@ -178,7 +178,7 @@
    "PER GUEST",
    "~$50,625",
    "EST.",
-   "L8:fifty",
+   "L8:50",
    "L8:suite",
    ""
   ]
@@ -201,5 +201,12 @@
  ],
  "impact": "L7:about",
  "footnote": "Suite pricing: Sports Illustrated, The Independent (Super Bowl LX); add-ons: Elite Traveler (reported). Totals est. Stock footage, not the Super Bowl.",
- "caption_fix": {}
+ "caption_fix": {
+  "sweets": "suites",
+  "Sweet": "Suite",
+  "sweet": "suite",
+  "Plus": "plus",
+  "Add-Ons,": "add-ons:",
+  "cash.": "cash?"
+ }
 }

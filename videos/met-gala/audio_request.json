@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "A Met Gala ticket now costs a hundred thousand dollars."
+    },
+    {
+      "id": "02",
+      "text": "The museum steps. The flashbulbs. A gown everyone talks about."
+    },
+    {
+      "id": "03",
+      "text": "Last year it was seventy-five thousand."
+    },
+    {
+      "id": "04",
+      "text": "A table of ten: three hundred fifty thousand, usually paid by a brand."
+    },
+    {
+      "id": "05",
+      "text": "Stars prep at the Mark hotel. Penthouses: forty-five thousand a night."
+    },
+    {
+      "id": "06",
+      "text": "Custom couture? Some estimates put a gown at five hundred thousand."
+    },
+    {
+      "id": "07",
+      "text": "Ticket plus that suite: a hundred forty-five thousand. Before the dress."
+    },
+    {
+      "id": "08",
+      "text": "But most stars don't buy the dress. Brands lend it. Who's really paying?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

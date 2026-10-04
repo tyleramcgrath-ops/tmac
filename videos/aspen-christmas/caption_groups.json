@@ -1,0 +1,679 @@
+{
+  "total_duration_s": 31.39,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.11,
+      "end": 1.12,
+      "text": "Aspen chalets don't",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Aspen",
+          "start": 0.11,
+          "end": 0.27
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "chalets",
+          "start": 0.34,
+          "end": 0.81
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "don't",
+          "start": 0.81,
+          "end": 1.12
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 1.12,
+      "end": 1.56,
+      "text": "rent for",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "rent",
+          "start": 1.12,
+          "end": 1.37
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "for",
+          "start": 1.37,
+          "end": 1.56
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.56,
+      "end": 2.91,
+      "text": "just Christmas week.",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "just",
+          "start": 1.56,
+          "end": 1.79
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "Christmas",
+          "start": 1.93,
+          "end": 2.39
+        },
+        {
+          "id": "caption-word-2-2",
+          "text": "week.",
+          "start": 2.39,
+          "end": 2.79
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 3.243,
+      "end": 4.063,
+      "text": "5 bedrooms",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "5",
+          "start": 3.243,
+          "end": 3.393
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "bedrooms",
+          "start": 3.393,
+          "end": 4.063
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 4.063,
+      "end": 5.043,
+      "text": "in Snowmass.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "in",
+          "start": 4.063,
+          "end": 4.223
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "Snowmass.",
+          "start": 4.223,
+          "end": 5.033
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 5.043,
+      "end": 5.483,
+      "text": "hot tub",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "hot",
+          "start": 5.043,
+          "end": 5.163
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "tub",
+          "start": 5.273,
+          "end": 5.483
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 5.483,
+      "end": 5.843,
+      "text": "in the",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "in",
+          "start": 5.483,
+          "end": 5.623
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "the",
+          "start": 5.623,
+          "end": 5.843
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 5.843,
+      "end": 6.383,
+      "text": "snow,",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "snow,",
+          "start": 5.843,
+          "end": 6.303
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 6.383,
+      "end": 7.353,
+      "text": "room for 10.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "room",
+          "start": 6.383,
+          "end": 6.583
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "for",
+          "start": 6.583,
+          "end": 6.793
+        },
+        {
+          "id": "caption-word-8-2",
+          "text": "10.",
+          "start": 6.793,
+          "end": 7.233
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 3,
+      "start": 7.516,
+      "end": 8.716,
+      "text": "The holiday rate,",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "The",
+          "start": 7.516,
+          "end": 7.686
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "holiday",
+          "start": 7.686,
+          "end": 8.206
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "rate,",
+          "start": 8.206,
+          "end": 8.636
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 3,
+      "start": 8.716,
+      "end": 10.456,
+      "text": "72,000 a week.",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "72,000",
+          "start": 8.716,
+          "end": 9.886
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "a",
+          "start": 9.886,
+          "end": 9.956
+        },
+        {
+          "id": "caption-word-10-2",
+          "text": "week.",
+          "start": 9.956,
+          "end": 10.336
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 4,
+      "start": 10.566,
+      "end": 10.866,
+      "text": "and the",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "and",
+          "start": 10.566,
+          "end": 10.666
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "the",
+          "start": 10.666,
+          "end": 10.866
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 4,
+      "start": 10.866,
+      "end": 11.616,
+      "text": "minimum stay",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "minimum",
+          "start": 10.866,
+          "end": 11.346
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "stay",
+          "start": 11.346,
+          "end": 11.616
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 4,
+      "start": 11.616,
+      "end": 12.886,
+      "text": "is 14 nights,",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "is",
+          "start": 11.616,
+          "end": 11.746
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "14",
+          "start": 11.746,
+          "end": 12.156
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "nights,",
+          "start": 12.156,
+          "end": 12.766
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 4,
+      "start": 12.886,
+      "end": 14.616,
+      "text": "144,000.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "144,000.",
+          "start": 12.886,
+          "end": 14.496
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 5,
+      "start": 14.859,
+      "end": 15.729,
+      "text": "10 skiers,",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "10",
+          "start": 14.859,
+          "end": 15.199
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "skiers,",
+          "start": 15.199,
+          "end": 15.729
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 5,
+      "start": 15.729,
+      "end": 16.199,
+      "text": "one week",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "one",
+          "start": 15.729,
+          "end": 15.929
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "week",
+          "start": 15.929,
+          "end": 16.199
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 5,
+      "start": 16.199,
+      "end": 16.599,
+      "text": "of lift",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "of",
+          "start": 16.199,
+          "end": 16.309
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "lift",
+          "start": 16.339,
+          "end": 16.549
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 5,
+      "start": 16.599,
+      "end": 17.189,
+      "text": "tickets,",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "tickets,",
+          "start": 16.599,
+          "end": 17.169
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 5,
+      "start": 17.189,
+      "end": 19.109,
+      "text": "about 19,500.",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "about",
+          "start": 17.189,
+          "end": 17.569
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "19,500.",
+          "start": 17.569,
+          "end": 18.989
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 6,
+      "start": 19.172,
+      "end": 19.712,
+      "text": "a private",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "a",
+          "start": 19.172,
+          "end": 19.182
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "private",
+          "start": 19.182,
+          "end": 19.712
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 6,
+      "start": 19.712,
+      "end": 20.232,
+      "text": "chef for",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "chef",
+          "start": 19.712,
+          "end": 20.012
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "for",
+          "start": 20.012,
+          "end": 20.232
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 6,
+      "start": 20.232,
+      "end": 20.982,
+      "text": "two weeks,",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "two",
+          "start": 20.232,
+          "end": 20.442
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "weeks,",
+          "start": 20.442,
+          "end": 20.982
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 6,
+      "start": 20.982,
+      "end": 22.942,
+      "text": "about 12,000 plus food.",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "about",
+          "start": 20.982,
+          "end": 21.232
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "12,000",
+          "start": 21.282,
+          "end": 22.252
+        },
+        {
+          "id": "caption-word-23-2",
+          "text": "plus",
+          "start": 22.252,
+          "end": 22.482
+        },
+        {
+          "id": "caption-word-23-3",
+          "text": "food.",
+          "start": 22.482,
+          "end": 22.822
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 7,
+      "start": 22.974,
+      "end": 24.114,
+      "text": "before tips and",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "before",
+          "start": 22.974,
+          "end": 23.434
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "tips",
+          "start": 23.524,
+          "end": 23.804
+        },
+        {
+          "id": "caption-word-24-2",
+          "text": "and",
+          "start": 23.834,
+          "end": 23.994
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 7,
+      "start": 24.124,
+      "end": 24.574,
+      "text": "tax,",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "tax,",
+          "start": 24.124,
+          "end": 24.544
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 7,
+      "start": 24.574,
+      "end": 27.114,
+      "text": "about $175,000.",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "about",
+          "start": 24.574,
+          "end": 25.004
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "$175,000.",
+          "start": 25.004,
+          "end": 26.994
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 8,
+      "start": 27.147,
+      "end": 29.707,
+      "text": "That's 17,500 a guest.",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "That's",
+          "start": 27.147,
+          "end": 27.617
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "17,500",
+          "start": 27.617,
+          "end": 29.067
+        },
+        {
+          "id": "caption-word-27-2",
+          "text": "a",
+          "start": 29.067,
+          "end": 29.127
+        },
+        {
+          "id": "caption-word-27-3",
+          "text": "guest.",
+          "start": 29.137,
+          "end": 29.677
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 8,
+      "start": 29.707,
+      "end": 30.097,
+      "text": "Would you",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "Would",
+          "start": 29.707,
+          "end": 29.927
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "you",
+          "start": 29.937,
+          "end": 30.097
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 8,
+      "start": 30.097,
+      "end": 30.757,
+      "text": "split it?",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "split",
+          "start": 30.097,
+          "end": 30.357
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "it?",
+          "start": 30.357,
+          "end": 30.637
+        }
+      ]
+    }
+  ]
+}

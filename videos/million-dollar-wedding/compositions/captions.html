@@ -1,0 +1,231 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="assets/vendor/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: block; }
+      :root {
+      --ink-black: #111111;
+      --ink-black-alt: #1A1A18;
+      --fire-orange: #E85D26;
+      --cream: #F0ECE5;
+      --cream-muted: #888880;
+      --cream-hint: #505048;
+      --border-dark: #282826;
+      --ink-on-orange-muted: rgba(17,17,17,0.75);
+      --ink-on-orange-hint: rgba(17,17,17,0.55);
+      --ink-on-orange-faint: rgba(17,17,17,0.40);
+      --ink-on-orange-border: rgba(17,17,17,0.20);
+      --cap-ink: #111111;
+      --cap-canvas: #F0ECE5;
+      --cap-accent: #E85D26;
+      --cap-accent-2: #888880;
+      --font-display: "Barlow", system-ui, serif;
+      --font-body: "Barlow", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE ink-black plate — single 1px fire-orange hairline (broadside's lone accent),
+     SHARP corners (0 radius), NO shadow (the plane is flat) */
+  .caption-pill {
+    max-width: 80%;
+    padding: 18px 44px 22px;
+    background: var(--cap-ink, #111111);
+    border: 1px solid var(--cap-accent, #e85d26);
+    border-radius: 0;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.04em 0.3em;
+    font-family: "Barlow", system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(38px, 4.2vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  /* upcoming — faint cream, no block (massive lowercase Barlow 900 as graphic primitive) */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.08em;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 42%, var(--cap-ink, #111111));
+  }
+  /* current word — THE register flip: a hard flat fire-orange block (box-shadow spread =
+     a sharp rectangle w/o layout shift; no blur), ink reading on top — the lone accent */
+  .caption-word.is-active {
+    color: var(--cap-ink, #111111);
+    background: var(--cap-accent, #e85d26);
+    box-shadow: 0 0 0 0.06em var(--cap-accent, #e85d26);
+  }
+  /* already spoken — solid cream, the orange block cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-canvas, #f0ece5);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — fire-orange ink, the cream-on-ink register's only inflection */
+  .caption-word.cap-brand {
+    color: var(--cap-accent, #e85d26);
+  }
+  /* numerals / data — the IBM Plex Mono chrome voice, uppercase + tracked, recessed */
+  .caption-word.cap-num {
+    font-family: "Barlow", ui-monospace, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 72%, var(--cap-ink, #111111));
+  }
+  /* emphasis — a fire-orange hairline underline (no second hue; the lone accent again) */
+  .caption-word.cap-cta {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cap-accent-2, #e85d26);
+    text-underline-offset: 0.1em;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(32px, 5.2vw, 46px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="32.94"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.04,"end":2.2,"text":"Billionaire weddings make headlines.","words":[{"id":"caption-word-0-0","text":"Billionaire","start":0.04,"end":0.67},{"id":"caption-word-0-1","text":"weddings","start":0.67,"end":1.15},{"id":"caption-word-0-2","text":"make","start":1.25,"end":1.37},{"id":"caption-word-0-3","text":"headlines.","start":1.39,"end":2.15}]},{"id":"caption-group-1","frame":1,"start":2.2,"end":2.83,"text":"Here's what","words":[{"id":"caption-word-1-0","text":"Here's","start":2.2,"end":2.56},{"id":"caption-word-1-1","text":"what","start":2.56,"end":2.83}]},{"id":"caption-group-2","frame":1,"start":2.83,"end":3.29,"text":"a luxury","words":[{"id":"caption-word-2-0","text":"a","start":2.83,"end":2.89},{"id":"caption-word-2-1","text":"luxury","start":2.89,"end":3.29}]},{"id":"caption-group-3","frame":1,"start":3.29,"end":4.6,"text":"one really costs.","words":[{"id":"caption-word-3-0","text":"one","start":3.29,"end":3.49},{"id":"caption-word-3-1","text":"really","start":3.49,"end":3.77},{"id":"caption-word-3-2","text":"costs.","start":3.89,"end":4.48}]},{"id":"caption-group-4","frame":2,"start":4.612,"end":5.842,"text":"A private estate,","words":[{"id":"caption-word-4-0","text":"A","start":4.612,"end":4.652},{"id":"caption-word-4-1","text":"private","start":4.722,"end":5.192},{"id":"caption-word-4-2","text":"estate,","start":5.252,"end":5.842}]},{"id":"caption-group-5","frame":2,"start":5.842,"end":7.142,"text":"walls of flowers,","words":[{"id":"caption-word-5-0","text":"walls","start":5.842,"end":6.202},{"id":"caption-word-5-1","text":"of","start":6.202,"end":6.362},{"id":"caption-word-5-2","text":"flowers,","start":6.362,"end":7.052}]},{"id":"caption-group-6","frame":2,"start":7.142,"end":8.302,"text":"dinner for 150","words":[{"id":"caption-word-6-0","text":"dinner","start":7.142,"end":7.472},{"id":"caption-word-6-1","text":"for","start":7.472,"end":7.682},{"id":"caption-word-6-2","text":"150","start":7.682,"end":8.302}]},{"id":"caption-group-7","frame":2,"start":8.302,"end":8.852,"text":"guests.","words":[{"id":"caption-word-7-0","text":"guests.","start":8.302,"end":8.732}]},{"id":"caption-group-8","frame":3,"start":8.935,"end":9.375,"text":"the venue","words":[{"id":"caption-word-8-0","text":"the","start":8.935,"end":9.075},{"id":"caption-word-8-1","text":"venue","start":9.075,"end":9.375}]},{"id":"caption-group-9","frame":3,"start":9.375,"end":9.815,"text":"alone,","words":[{"id":"caption-word-9-0","text":"alone,","start":9.375,"end":9.695}]},{"id":"caption-group-10","frame":3,"start":9.855,"end":11.325,"text":"$50,000.","words":[{"id":"caption-word-10-0","text":"$50,000.","start":9.855,"end":11.205}]},{"id":"caption-group-11","frame":4,"start":11.538,"end":12.258,"text":"Dinner and","words":[{"id":"caption-word-11-0","text":"Dinner","start":11.538,"end":11.998},{"id":"caption-word-11-1","text":"and","start":11.998,"end":12.258}]},{"id":"caption-group-12","frame":4,"start":12.258,"end":13.278,"text":"an open bar,","words":[{"id":"caption-word-12-0","text":"an","start":12.258,"end":12.328},{"id":"caption-word-12-1","text":"open","start":12.428,"end":12.778},{"id":"caption-word-12-2","text":"bar,","start":12.778,"end":13.248}]},{"id":"caption-group-13","frame":4,"start":13.278,"end":15.028,"text":"$52,500.","words":[{"id":"caption-word-13-0","text":"$52,500.","start":13.278,"end":14.908}]},{"id":"caption-group-14","frame":5,"start":15.175,"end":16.305,"text":"Flowers and décor,","words":[{"id":"caption-word-14-0","text":"Flowers","start":15.175,"end":15.575},{"id":"caption-word-14-1","text":"and","start":15.575,"end":15.795},{"id":"caption-word-14-2","text":"décor,","start":15.795,"end":16.185}]},{"id":"caption-group-15","frame":5,"start":16.475,"end":17.735,"text":"25,000.","words":[{"id":"caption-word-15-0","text":"25,000.","start":16.475,"end":17.615}]},{"id":"caption-group-16","frame":6,"start":17.964,"end":18.504,"text":"A planner","words":[{"id":"caption-word-16-0","text":"A","start":17.964,"end":17.984},{"id":"caption-word-16-1","text":"planner","start":17.984,"end":18.504}]},{"id":"caption-group-17","frame":6,"start":18.504,"end":18.884,"text":"to run","words":[{"id":"caption-word-17-0","text":"to","start":18.504,"end":18.654},{"id":"caption-word-17-1","text":"run","start":18.654,"end":18.884}]},{"id":"caption-group-18","frame":6,"start":18.884,"end":19.464,"text":"it all,","words":[{"id":"caption-word-18-0","text":"it","start":18.884,"end":19.034},{"id":"caption-word-18-1","text":"all,","start":19.034,"end":19.354}]},{"id":"caption-group-19","frame":6,"start":19.464,"end":20.504,"text":"15,000.","words":[{"id":"caption-word-19-0","text":"15,000.","start":19.464,"end":20.384}]},{"id":"caption-group-20","frame":7,"start":20.782,"end":21.442,"text":"Add photos,","words":[{"id":"caption-word-20-0","text":"Add","start":20.782,"end":20.902},{"id":"caption-word-20-1","text":"photos,","start":21.042,"end":21.442}]},{"id":"caption-group-21","frame":7,"start":21.442,"end":21.902,"text":"music,","words":[{"id":"caption-word-21-0","text":"music,","start":21.442,"end":21.902}]},{"id":"caption-group-22","frame":7,"start":21.902,"end":22.582,"text":"the dress,","words":[{"id":"caption-word-22-0","text":"the","start":21.902,"end":22.112},{"id":"caption-word-22-1","text":"dress,","start":22.152,"end":22.582}]},{"id":"caption-group-23","frame":7,"start":22.582,"end":22.982,"text":"and the","words":[{"id":"caption-word-23-0","text":"and","start":22.582,"end":22.782},{"id":"caption-word-23-1","text":"the","start":22.782,"end":22.982}]},{"id":"caption-group-24","frame":7,"start":22.982,"end":23.442,"text":"rest.","words":[{"id":"caption-word-24-0","text":"rest.","start":22.982,"end":23.362}]},{"id":"caption-group-25","frame":7,"start":23.442,"end":24.962,"text":"200,000,","words":[{"id":"caption-word-25-0","text":"200,000,","start":23.442,"end":24.962}]},{"id":"caption-group-26","frame":7,"start":24.962,"end":26.77,"text":"over 1,300 per","words":[{"id":"caption-word-26-0","text":"over","start":24.962,"end":25.322},{"id":"caption-word-26-1","text":"1,300","start":25.322,"end":26.552},{"id":"caption-word-26-2","text":"per","start":26.652,"end":26.862}]},{"id":"caption-group-27","frame":8,"start":26.77,"end":26.862,"text":"the","words":[{"id":"caption-word-27-0","text":"the","start":26.77,"end":26.91}]},{"id":"caption-group-28","frame":7,"start":26.862,"end":26.91,"text":"guest.","words":[{"id":"caption-word-28-0","text":"guest.","start":26.862,"end":27.642}]},{"id":"caption-group-29","frame":8,"start":26.91,"end":28.49,"text":"average American wedding?","words":[{"id":"caption-word-29-0","text":"average","start":26.91,"end":27.38},{"id":"caption-word-29-1","text":"American","start":27.38,"end":27.91},{"id":"caption-word-29-2","text":"wedding?","start":27.91,"end":28.47}]},{"id":"caption-group-30","frame":8,"start":28.49,"end":30.39,"text":"292 per guest,","words":[{"id":"caption-word-30-0","text":"292","start":28.49,"end":29.42},{"id":"caption-word-30-1","text":"per","start":29.48,"end":29.77},{"id":"caption-word-30-2","text":"guest,","start":29.77,"end":30.33}]},{"id":"caption-group-31","frame":8,"start":30.39,"end":30.95,"text":"would you","words":[{"id":"caption-word-31-0","text":"would","start":30.39,"end":30.72},{"id":"caption-word-31-1","text":"you","start":30.72,"end":30.95}]},{"id":"caption-group-32","frame":8,"start":30.95,"end":31.33,"text":"go big","words":[{"id":"caption-word-32-0","text":"go","start":30.95,"end":31.1},{"id":"caption-word-32-1","text":"big","start":31.1,"end":31.33}]},{"id":"caption-group-33","frame":8,"start":31.33,"end":32.25,"text":"or elope?","words":[{"id":"caption-word-33-0","text":"or","start":31.33,"end":31.48},{"id":"caption-word-33-1","text":"elope?","start":31.48,"end":32.13}]}];
+  var DURATION = 32.94;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.92 }, { scale: 1, duration: 0.1, ease: "power3.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

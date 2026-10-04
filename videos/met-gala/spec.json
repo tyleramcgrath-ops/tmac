@@ -164,7 +164,7 @@
    "2025 TICKET",
    "$75,000",
    "",
-   "L3:seventy",
+   "L3:75",
    "L4",
    ""
   ],
@@ -172,7 +172,7 @@
    "TABLE OF 10",
    "from $350,000",
    "",
-   "L4:three",
+   "L4:350",
    "L5",
    ""
   ],
@@ -180,7 +180,7 @@
    "THE MARK \u00b7 PENTHOUSE",
    "from $45K / night",
    "",
-   "L5:forty",
+   "L5:$45",
    "L6",
    ""
   ],
@@ -188,7 +188,7 @@
    "COUTURE GOWN",
    "up to $500K",
    "ESTIMATES",
-   "L6:five",
+   "L6:$500",
    "L7",
    ""
   ],
@@ -204,7 +204,7 @@
  "mids": [
   [
    "$145,000<br><span style='font-size:44px;font-weight:600'>before the dress</span>",
-   "L7:a",
+   "L7:145",
    "L8",
    104,
    "#fff"
@@ -217,7 +217,10 @@
    "#fff"
   ]
  ],
- "impact": "L7:a",
+ "impact": "L7:145",
  "footnote": "Ticket and table prices: CBS and press reports (2025\u201326); The Mark's published penthouse rate. Totals est. Stock footage; people shown are models, not attendees.",
- "caption_fix": {}
+ "caption_fix": {
+  "paying.": "paying?",
+  "couture.": "couture?"
+ }
 }

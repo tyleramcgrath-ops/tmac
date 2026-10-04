@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Billionaire weddings make headlines. Here's what a luxury one really costs."
+    },
+    {
+      "id": "02",
+      "text": "A private estate. Walls of flowers. Dinner for a hundred fifty guests."
+    },
+    {
+      "id": "03",
+      "text": "The venue alone: fifty thousand dollars."
+    },
+    {
+      "id": "04",
+      "text": "Dinner and an open bar: fifty-two thousand five hundred."
+    },
+    {
+      "id": "05",
+      "text": "Flowers and decor: twenty-five thousand."
+    },
+    {
+      "id": "06",
+      "text": "A planner to run it all: fifteen thousand."
+    },
+    {
+      "id": "07",
+      "text": "Add photos, music, the dress and the rest: two hundred thousand. Over thirteen hundred per guest."
+    },
+    {
+      "id": "08",
+      "text": "The average American wedding? Two hundred ninety-two per guest. Would you go big, or elope?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}
