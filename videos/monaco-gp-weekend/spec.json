@@ -1,0 +1,205 @@
+{
+ "lines": [
+  {
+   "text": "Monaco Grand Prix, on a yacht. Race day alone: five thousand two hundred euros.",
+   "shots": [
+    [
+     "mk4280.mp4@0.5",
+     2,
+     "lux"
+    ],
+    [
+     "mk51562.mp4",
+     2,
+     "lux",
+     "race"
+    ]
+   ]
+  },
+  {
+   "text": "Champagne on deck. Formula One cars screaming past the harbor.",
+   "shots": [
+    [
+     "mk22738.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk35540.mp4",
+     2,
+     "lux",
+     "formula"
+    ]
+   ]
+  },
+  {
+   "text": "Three race days aboard, for two: eighteen thousand four hundred.",
+   "shots": [
+    [
+     "mk47193.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk33497.mp4",
+     1,
+     "lux",
+     "eighteen"
+    ]
+   ]
+  },
+  {
+   "text": "Hotel de Paris, race week: thirty-three thousand euros.",
+   "shots": [
+    [
+     "mk4300.mp4@0.5",
+     1,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Helicopter from Nice: about eight hundred, there and back.",
+   "shots": [
+    [
+     "mk35596.mp4@0.6",
+     3,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "Sunday after-party: fifteen hundred for two.",
+   "shots": [
+    [
+     "mk48510.mp4",
+     2,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Total for one couple: about fifty-four thousand euros. Roughly sixty thousand dollars.",
+   "shots": [
+    [
+     "mk4157.mp4",
+     4,
+     "lux"
+    ],
+    [
+     "mk51562.mp4",
+     8,
+     "lux",
+     "roughly"
+    ]
+   ]
+  },
+  {
+   "text": "Or a Sunday grandstand seat: nine hundred fifty euros. Which would you pick?",
+   "shots": [
+    [
+     "mk35164.mp4@0.6",
+     4,
+     "calm"
+    ],
+    [
+     "mk4280.mp4@0.5",
+     8,
+     "lux",
+     "which"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "YACHT HOSPITALITY \u00b7 SUNDAY",
+   "\u20ac5,200 / person",
+   "",
+   "L1:race",
+   "L2",
+   ""
+  ],
+  [
+   "44 M YACHT",
+   "Monaco harbor",
+   "",
+   "L2:champagne",
+   "L3",
+   ""
+  ],
+  [
+   "FRI + SAT + SUN \u00d7 2",
+   "\u20ac18,400",
+   "EST.",
+   "L3:eighteen",
+   "L4",
+   ""
+  ],
+  [
+   "H\u00d4TEL DE PARIS \u00b7 RACE WEEK",
+   "\u20ac33,000 / room",
+   "",
+   "L4:race",
+   "L5",
+   ""
+  ],
+  [
+   "HELICOPTER \u00b7 4 SEATS",
+   "~\u20ac780",
+   "EST.",
+   "L5:about",
+   "L6",
+   ""
+  ],
+  [
+   "AFTER-PARTY \u00b7 2 PASSES",
+   "\u20ac1,500",
+   "",
+   "L6:fifteen",
+   "L7",
+   ""
+  ],
+  [
+   "GRANDSTAND \u00b7 SUNDAY",
+   "~\u20ac950",
+   "",
+   "L8:nine",
+   "L8:which",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 \u20ac54,000<br><span style='font-size:44px;font-weight:600'>\u2248 $60,000 \u00b7 one weekend</span>",
+   "L7:total",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "which would<br>you pick?",
+   "L8:which",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:total",
+ "footnote": "Prices: Senate Grand Prix hospitality (2027 list), Monaco heliport fares, after-party listing. Totals est.; ECB rate 1.1225. Stock footage.",
+ "caption_fix": {}
+}

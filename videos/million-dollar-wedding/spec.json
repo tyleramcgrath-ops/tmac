@@ -1,0 +1,203 @@
+{
+ "lines": [
+  {
+   "text": "Billionaire weddings make headlines. Here's what a luxury one really costs.",
+   "shots": [
+    [
+     "mk29012.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk40591.mp4",
+     1,
+     "lux",
+     "here's"
+    ]
+   ]
+  },
+  {
+   "text": "A private estate. Walls of flowers. Dinner for a hundred fifty guests.",
+   "shots": [
+    [
+     "mk40627.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk5213.mp4",
+     2,
+     "lux",
+     "walls"
+    ],
+    [
+     "mk5216.mp4",
+     2,
+     "lux",
+     "dinner"
+    ]
+   ]
+  },
+  {
+   "text": "The venue alone: fifty thousand dollars.",
+   "shots": [
+    [
+     "mk40596.mp4",
+     3,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Dinner and an open bar: fifty-two thousand five hundred.",
+   "shots": [
+    [
+     "mk5227.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk22738.mp4",
+     1,
+     "lux",
+     "fifty"
+    ]
+   ]
+  },
+  {
+   "text": "Flowers and decor: twenty-five thousand.",
+   "shots": [
+    [
+     "mk18204.mp4",
+     2,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "A planner to run it all: fifteen thousand.",
+   "shots": [
+    [
+     "mk5183.mp4",
+     3,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "Add photos, music, the dress and the rest: two hundred thousand. Over thirteen hundred per guest.",
+   "shots": [
+    [
+     "mk33273.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk29012.mp4",
+     10,
+     "lux",
+     "two"
+    ]
+   ]
+  },
+  {
+   "text": "The average American wedding? Two hundred ninety-two per guest. Would you go big, or elope?",
+   "shots": [
+    [
+     "mk5206.mp4",
+     4,
+     "calm"
+    ],
+    [
+     "mk40591.mp4",
+     4,
+     "lux",
+     "would"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "LUXURY WEDDING",
+   "150 guests",
+   "",
+   "L2:dinner",
+   "L3",
+   ""
+  ],
+  [
+   "VENUE",
+   "$50,000",
+   "",
+   "L3:fifty",
+   "L4",
+   ""
+  ],
+  [
+   "CATERING + BAR",
+   "$52,500",
+   "",
+   "L4:fifty",
+   "L5",
+   ""
+  ],
+  [
+   "FLOWERS + DECOR",
+   "$25,000",
+   "",
+   "L5:twenty",
+   "L6",
+   ""
+  ],
+  [
+   "PLANNER",
+   "$15,000",
+   "",
+   "L6:fifteen",
+   "L7",
+   ""
+  ],
+  [
+   "U.S. AVERAGE",
+   "$292 / guest",
+   "THE KNOT",
+   "L8:two",
+   "L8:would",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "$200,000<br><span style='font-size:44px;font-weight:600'>\u2248 $1,333 per guest</span>",
+   "L7:two",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "go big,<br>or elope?",
+   "L8:would",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:two",
+ "footnote": "Sample luxury budget for 150 guests (luxury wedding planner guide); U.S. average per guest: The Knot. Per-guest est. Stock footage.",
+ "caption_fix": {}
+}

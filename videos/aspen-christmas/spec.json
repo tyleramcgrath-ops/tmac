@@ -1,0 +1,223 @@
+{
+ "lines": [
+  {
+   "text": "Aspen chalets don't rent for just Christmas week.",
+   "shots": [
+    [
+     "mk48502.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk2707.mp4",
+     2,
+     "lux",
+     "christmas"
+    ]
+   ]
+  },
+  {
+   "text": "Five bedrooms in Snowmass. Hot tub in the snow. Room for ten.",
+   "shots": [
+    [
+     "mk48398.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk24115.mp4",
+     3,
+     "lux",
+     "hot"
+    ],
+    [
+     "mk31949.mp4",
+     4,
+     "lux",
+     "room"
+    ]
+   ]
+  },
+  {
+   "text": "The holiday rate: seventy-two thousand a week.",
+   "shots": [
+    [
+     "mk3387.mp4",
+     2,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "And the minimum stay is fourteen nights: a hundred forty-four thousand.",
+   "shots": [
+    [
+     "mk24120.mp4",
+     3,
+     "calm"
+    ],
+    [
+     "mk3378.mp4",
+     3,
+     "lux",
+     "a"
+    ]
+   ]
+  },
+  {
+   "text": "Ten skiers, one week of lift tickets: about nineteen and a half thousand.",
+   "shots": [
+    [
+     "mk4016.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk3363.mp4",
+     2,
+     "lux",
+     "about"
+    ]
+   ]
+  },
+  {
+   "text": "A private chef for two weeks: about twelve thousand, plus food.",
+   "shots": [
+    [
+     "mk15642.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk22739.mp4",
+     4,
+     "lux",
+     "plus"
+    ]
+   ]
+  },
+  {
+   "text": "Before tips and tax: about a hundred seventy-five thousand dollars.",
+   "shots": [
+    [
+     "mk32348.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk3380.mp4",
+     2,
+     "lux",
+     "about"
+    ]
+   ]
+  },
+  {
+   "text": "That's seventeen thousand five hundred a guest. Would you split it?",
+   "shots": [
+    [
+     "mk2707.mp4",
+     6,
+     "calm"
+    ],
+    [
+     "mk48502.mp4",
+     14,
+     "lux",
+     "would"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "CHRISTMAS",
+   "14-night minimum",
+   "",
+   "L1:christmas",
+   "L2",
+   ""
+  ],
+  [
+   "5 BR CHALET \u00b7 SNOWMASS",
+   "sleeps 10",
+   "",
+   "L2:five",
+   "L3",
+   ""
+  ],
+  [
+   "CHRISTMAS RATE",
+   "$72,000 / wk",
+   "",
+   "L3:seventy",
+   "L4",
+   ""
+  ],
+  [
+   "14 NIGHTS",
+   "$144,000",
+   "EST.",
+   "L4:a",
+   "L5",
+   ""
+  ],
+  [
+   "LIFT TICKETS \u00b7 10 \u00d7 7 DAYS",
+   "$19,530",
+   "EST.",
+   "L5:about",
+   "L6",
+   ""
+  ],
+  [
+   "CHEF \u00b7 14 DAYS",
+   "$11,900",
+   "EST. \u00b7 PLUS FOOD",
+   "L6:about",
+   "L7",
+   ""
+  ],
+  [
+   "PER GUEST",
+   "~$17,543",
+   "EST.",
+   "L8:that's",
+   "L8:would",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $175,000<br><span style='font-size:44px;font-weight:600'>two weeks \u00b7 before tips</span>",
+   "L7:about",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "would you<br>split it?",
+   "L8:would",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:about",
+ "footnote": "Rental: villa guide (May 2026); lift tickets: 2025\u201326 walk-up holiday rate; chef day rate. Totals est. Stock footage, not Aspen.",
+ "caption_fix": {}
+}

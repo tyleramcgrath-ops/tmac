@@ -1,0 +1,223 @@
+{
+ "lines": [
+  {
+   "text": "A Met Gala ticket now costs a hundred thousand dollars.",
+   "shots": [
+    [
+     "mk23578.mp4",
+     8,
+     "lux"
+    ],
+    [
+     "mk23335.mp4",
+     2,
+     "lux",
+     "costs"
+    ]
+   ]
+  },
+  {
+   "text": "The museum steps. The flashbulbs. A gown everyone talks about.",
+   "shots": [
+    [
+     "mk31786.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk23092.mp4",
+     8,
+     "lux",
+     "the"
+    ],
+    [
+     "mk23430.mp4",
+     6,
+     "lux",
+     "a"
+    ]
+   ]
+  },
+  {
+   "text": "Last year it was seventy-five thousand.",
+   "shots": [
+    [
+     "mk23421.mp4",
+     10,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "A table of ten: three hundred fifty thousand, usually paid by a brand.",
+   "shots": [
+    [
+     "mk51562.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk23000.mp4",
+     8,
+     "lux",
+     "usually"
+    ]
+   ]
+  },
+  {
+   "text": "Stars prep at the Mark hotel. Penthouses: forty-five thousand a night.",
+   "shots": [
+    [
+     "mk40556.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk51230.mp4",
+     2,
+     "lux",
+     "penthouses"
+    ]
+   ]
+  },
+  {
+   "text": "Custom couture? Some estimates put a gown at five hundred thousand.",
+   "shots": [
+    [
+     "mk51227.mp4",
+     4,
+     "lux"
+    ],
+    [
+     "mk52270.mp4",
+     3,
+     "lux",
+     "some"
+    ]
+   ]
+  },
+  {
+   "text": "Ticket plus that suite: a hundred forty-five thousand. Before the dress.",
+   "shots": [
+    [
+     "mk34425.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk23578.mp4",
+     20,
+     "lux",
+     "before"
+    ]
+   ]
+  },
+  {
+   "text": "But most stars don't buy the dress. Brands lend it. Who's really paying?",
+   "shots": [
+    [
+     "mk23092.mp4",
+     20,
+     "calm"
+    ],
+    [
+     "mk23335.mp4",
+     10,
+     "lux",
+     "who's"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "2026 TICKET",
+   "$100,000",
+   "",
+   "L1:costs",
+   "L2",
+   ""
+  ],
+  [
+   "INVITE ONLY",
+   "The Met, New York",
+   "",
+   "L2:the",
+   "L3",
+   ""
+  ],
+  [
+   "2025 TICKET",
+   "$75,000",
+   "",
+   "L3:seventy",
+   "L4",
+   ""
+  ],
+  [
+   "TABLE OF 10",
+   "from $350,000",
+   "",
+   "L4:three",
+   "L5",
+   ""
+  ],
+  [
+   "THE MARK \u00b7 PENTHOUSE",
+   "from $45K / night",
+   "",
+   "L5:forty",
+   "L6",
+   ""
+  ],
+  [
+   "COUTURE GOWN",
+   "up to $500K",
+   "ESTIMATES",
+   "L6:five",
+   "L7",
+   ""
+  ],
+  [
+   "GOWN",
+   "usually on loan",
+   "",
+   "L8:brands",
+   "L8:who's",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "$145,000<br><span style='font-size:44px;font-weight:600'>before the dress</span>",
+   "L7:a",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "who's really<br>paying?",
+   "L8:who's",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:a",
+ "footnote": "Ticket and table prices: CBS and press reports (2025\u201326); The Mark's published penthouse rate. Totals est. Stock footage; people shown are models, not attendees.",
+ "caption_fix": {}
+}
