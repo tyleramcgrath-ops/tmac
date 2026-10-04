@@ -1,3 +1,4 @@
+import { PRICES } from '../billing'
 import type { Industry } from './types'
 
 export const LAW_FIRMS: Industry = {
@@ -39,7 +40,7 @@ export const LAW_FIRMS: Industry = {
     'Add the attorney advertising notice to the bottom of every page',
   ],
   faq: [
-    { q: 'How much does a law firm website cost on SaySites?', a: 'It depends on your practice areas and what your firm needs, so we quote after a short conversation. There’s no setup fee and no long-term contract, and your site, content and domain stay yours. Start with a free redesign of your current site or tell us about your firm.' },
+    { q: 'How much does a law firm website cost on SaySites?', a: `The Law Firm plan is $${PRICES.law.month} a month (or $${PRICES.law.year} a year): you build and change your site yourself, with practice area pages, attorney profiles, intake, your leads pipeline, SEO and hosting included. If you’d rather we build it, it’s $${PRICES.lawpro.month} a month and you approve every page. No setup fee and no contract, and your site, content and domain stay yours. Start with a free redesign of your current site.` },
     { q: 'Can we move our existing site without losing rankings?', a: 'Yes. Enter your current website’s address and SaySites imports your pages, keeps the same page addresses wherever it can, and sets permanent redirects where one changes. Imported pages wait as drafts until you switch your domain over.' },
     { q: 'Do we own our website and content?', a: 'Yes. Your words, photos, attorney bios and domain are yours. If you ever leave, you take them with you.' },
     { q: 'Does it handle attorney advertising rules?', a: 'Each law firm site includes an attorney advertising notice and a note that information on the site isn’t legal advice, and Sofie never invents results, credentials or reviews. Bar rules vary by state, so the final wording is always yours to review.' },

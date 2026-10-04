@@ -42,6 +42,55 @@ const GBP_RANKING = 'https://support.google.com/business/answer/7091'
 
 export const LAUNCH_ARTICLES: Article[] = [
   {
+    slug: 'we-tested-top-ranking-law-firm-websites',
+    title: 'We tested 105 top-ranking law firm websites. Here’s what we found.',
+    description: 'What the law firm websites that rank at the top of Google are built with, how fast they load on a phone, and the gaps most of them share.',
+    kind: 'guide',
+    summary: [
+      'Most top-ranking firm sites are slow on phones: in our Lighthouse sample, 9 of 10 took longer than Google’s 2.5 second target to show their main content.',
+      'Many carry dozens of scripts, and a third have no legal business type in their structured data.',
+      'About one in five has no way to send a request from the home page other than calling.',
+    ],
+    body: `In October 2026 we looked at the law firm websites that rank at the top of Google for the searches clients actually make, like “car accident lawyer Houston” or “estate planning attorney Columbus”. We wanted to know what they’re built with, how they perform, and where they fall short. We’re not naming any firm or company here: the point is the pattern, not the people.
+
+## How we did it
+
+We ran 25 Google searches across 10 practice areas (personal injury, car accidents, estate planning, family law, criminal defense, workers’ compensation, employment, immigration, bankruptcy and business law) in 20 US cities. We skipped directories and kept each firm’s own website, which gave us 135 firms. We could read 105 home pages; 30 blocked automated visits, so they’re left out.
+
+For each home page we recorded what it’s built on, how many scripts it loads, its structured data, whether it has a request form, and basic accessibility checks. We also ran Google’s Lighthouse test, set to a mobile phone, on a sample of 10 sites.
+
+## Most of them are slow on a phone
+
+Google says a page gives a good experience when its main content appears within 2.5 seconds ([web.dev on Largest Contentful Paint](https://web.dev/articles/lcp)). In our sample of 10, nine took longer than that, and eight took longer than 4 seconds. The middle of the sample took 9.6 seconds, scored 52 out of 100 for performance, and downloaded 2.2 MB.
+
+The usual cause isn’t the design. It’s everything loaded on top of it: the middle home page in our full sample had 45 script tags, and a third had 50 or more. On most of the sites we tested, the single biggest extra cost was a tag manager loading other tools.
+
+## A lot of tracking, much of it out of date
+
+Two thirds use a tag manager. One in six still carries tags for Universal Analytics, a version of Google Analytics that has been retired, so that code loads for nothing. Only a quarter visibly track phone calls, even though more than nine in ten push visitors to call.
+
+## Structured data with gaps
+
+Almost every site has some structured data, the code that tells search engines what a page is about. But a third don’t say they’re a law firm or a local business at all, only 7% use the type made for attorneys, and 8 sites had structured data that was broken and couldn’t be read.
+
+## Easy ways to lose a lead
+
+- **No request form.** About one in four home pages has no form in the page, and one in five offers no way to get in touch except the phone.
+- **Accessibility basics.** One in five sites has images with no description for screen readers, seven of the ten we tested had text that’s hard to read against its background, and one in six home pages doesn’t have exactly one main heading.
+
+## What this means for your firm
+
+None of this is about having a fancier website. The firms at the top often win despite these problems, on reputation, reviews and years of content. That’s good news if you’re competing with them: a fast, clear site with a request form on every page, complete structured data and no dead weight is a real advantage, and it’s within reach of any firm.
+
+If you want to know where your own site stands, run it through [PageSpeed Insights](https://pagespeed.web.dev/) on a phone setting, or [send it to us](/redesign) and we’ll redesign it free.
+
+## How SaySites sites compare
+
+Every page on a SaySites site has to score 95 or more on the same Lighthouse test before it can go live. Our example law firm sites score 100 on mobile, show their main content in 1.2 seconds and weigh about 100 KB. (We measured those on our own test server rather than over the internet, so it isn’t a perfect like-for-like.) They load no third-party scripts, describe the firm, each attorney and each practice area in structured data, and put a consultation request on every page.`,
+    published: '2026-10-04',
+    status: 'published',
+  },
+  {
     slug: 'how-ai-search-chooses-who-to-recommend',
     title: 'How AI search decides which businesses to mention',
     description: 'What Google’s AI Overviews and AI assistants look for when they answer “who should I call?”, and what a law firm, practice or local business can do about it.',

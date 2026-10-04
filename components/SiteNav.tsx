@@ -24,6 +24,7 @@ export function SiteNav({ home = false }: { home?: boolean }) {
       </details>
       <a className="hide-sm" href={home ? '#work' : '/#work'}>Our work</a>
       <a className="hide-sm" href="/about">Why SaySites</a>
+      <a className="hide-sm" href="/pricing">Pricing</a>
       <a className="hide-sm" href="/blog">Blog</a>
       <a className="hide-sm" href="/redesign">Free redesign</a>
       <a href="/login">Log in</a>
