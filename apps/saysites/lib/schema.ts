@@ -459,7 +459,7 @@ export const SiteSchema = z
     // it over and approve it at /approve/<code>; it then moves to their
     // account on the plan named here.
     handoff: z
-      .object({ code: z.string().regex(/^[a-f0-9]{24}$/), plan: z.enum(['site', 'store', 'law', 'lawpro']), sentAt: z.string() })
+      .object({ code: z.string().regex(/^[a-f0-9]{24}$/), plan: z.enum(['site', 'store', 'lawstarter', 'law', 'lawpro']), sentAt: z.string() })
       .strict()
       .optional(),
     // A chat button in the corner: visitors text, WhatsApp or Messenger the
