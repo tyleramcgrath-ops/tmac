@@ -151,3 +151,15 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - /surfsight/ now permanently redirects (301) to /dash-cams/, so old links and Google results land somewhere useful.
 - In WordPress: trash the "Surfsight" page (Pages → Surfsight → Trash) so it drops out of the AIOSEO sitemap.
   The redirect keeps working after it's trashed.
+
+## v6.11 — PestWorld flyer landing page
+- New page at **/pestworld/** for the "Pestworld Flyer" campaign. It shows the flyer itself (rebuilt in HTML so it stays
+  sharp on any screen) next to a "Request your demo" form for the $50 Amazon gift card offer. On phones the form
+  comes first, so people who scan the flyer can sign up right away.
+- Sections below cover Fleet Intelligence, AI Cameras (GO Focus Pro) and Smoke Detection (Bosch RideCare), plus a
+  3-step "how the offer works" section.
+- The form sends visitors to /get-in-touch/ with their details and `source=pestworld-flyer&offer=amazon-50` in the URL,
+  so leads from the flyer can be told apart. It doesn't use WPForms.
+- The flyer on the page has a working QR code that points to https://envuetelematics.com/pestworld/. The printed
+  flyer's QR code should point to this same address.
+- Works with no WordPress page. To manage its SEO in AIOSEO, add a blank page with the slug `pestworld`.
