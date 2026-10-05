@@ -163,3 +163,12 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - The flyer on the page has a working QR code that points to https://envuetelematics.com/pestworld/. The printed
   flyer's QR code should point to this same address.
 - Works with no WordPress page. To manage its SEO in AIOSEO, add a blank page with the slug `pestworld`.
+
+## v6.12 — GO Focus Plus $50 demo page (replaces /pestworld/)
+- New page at **/gofocusplus-demo50/** that works for every trade show. It recreates the new "Catch the risks.
+  Protect your routes." flyer and says plainly that the demo includes the **Geotab GO Focus Plus** camera
+  ("Schedule and complete a qualifying Geotab GO Focus Plus camera demo"), alongside the "Schedule your demo" form.
+- To tell shows apart, put `?event=Show+Name` on the end of each show's QR link, e.g.
+  `envuetelematics.com/gofocusplus-demo50/?event=PestWorld+2026`. That fills in the form's
+  "Where did you meet us?" field. The form sends leads to /get-in-touch/ tagged `source=gofocusplus-demo50&offer=amazon-50`.
+- /pestworld/ was removed. It now redirects (301) to /gofocusplus-demo50/, so any QR codes already printed still work.

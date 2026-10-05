@@ -25,8 +25,8 @@ add_action( 'wp_enqueue_scripts', function () {
         '21',
         true
     );
-    // The PestWorld flyer page uses the flyer's condensed display face.
-    if ( function_exists( 'envue_current_slug' ) && 'pestworld' === envue_current_slug() ) {
+    // The demo-offer flyer page uses the flyer's condensed display face.
+    if ( function_exists( 'envue_current_slug' ) && 'gofocusplus-demo50' === envue_current_slug() ) {
         wp_enqueue_style( 'envue-font-display', 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap', [], null );
     }
 } );
@@ -132,7 +132,7 @@ function envue_template_map() {
         'fleetio'                 => 'page-fleetio.php',
         'fleetcor'                => 'page-fleetcor.php',
         'promiles'                => 'page-promiles.php',
-        'pestworld'               => 'page-pestworld.php',
+        'gofocusplus-demo50'      => 'page-gofocusplus-demo50.php',
         'drivewyze'               => 'page-drivewyze.php',
         'route4me'                => 'page-route4me.php',
         'elite-extra'             => 'page-elite-extra.php',
@@ -271,6 +271,8 @@ function envue_canonical_slug_for( $tpl, $slug ) {
 function envue_retired_pages() {
     return [
         'surfsight' => '/dash-cams/',
+        // The PestWorld flyer page became the all-shows GO Focus Plus demo page.
+        'pestworld' => '/gofocusplus-demo50/',
     ];
 }
 add_action( 'template_redirect', function () {
@@ -702,7 +704,7 @@ function envue_seo_meta() {
         'blog-articles'             => [ 'Innovative Fleet Management Ideas: Bright Insights for Modern Operations', 'Explore innovative insights in fleet management with our comprehensive articles. Enhance efficiency and safety in your fleet operations today.' ],
         'events-calendar'           => [ 'Events - EnVue Telematics', 'Fleet technology webinars, trade shows, and industry events from EnVue Telematics and our technology partners.' ],
         'events'                    => [ 'Events - EnVue Telematics', 'Fleet technology webinars, trade shows, and industry events from EnVue Telematics and our technology partners.' ],
-        'pestworld'                 => [ 'Fleet Technology for Pest Control: $50 Amazon Gift Card Demo | EnVue', 'GPS fleet tracking, AI cameras and smoke detection for pest control fleets. Request a demo and get a $50 Amazon gift card after your qualified demo.' ],
+        'gofocusplus-demo50'        => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'powered-by-geotab'         => [ 'Powered by Geotab: #1 Fleet Telematics Platform | EnVue Telematics', "EnVue is a Geotab Elite Specialized Partner. Deploy the world's most powerful open fleet platform with expert implementation, training, and 24/7 support." ],
     ];
 }
