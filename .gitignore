@@ -58,3 +58,6 @@ apps/citation-gap/test/*.png
 # whose contents are already tracked. Rebuild with `zip -r <name>.zip <dir>`.
 /instagram-kit.zip
 /facebook-kit.zip
+
+# theme package built for download, not source
+mcgrath-chrome.zip
