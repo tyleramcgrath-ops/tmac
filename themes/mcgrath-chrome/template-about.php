@@ -8,14 +8,14 @@
 get_header();
 ?>
 
-<section class="phero">
+<section class="phero bedded">
+	<?php mcg_light_bed( 'page-about', '50% 48%' ); ?>
 	<div class="pin">
 		<div class="pheroTxt">
 			<span class="mono"><?php esc_html_e( 'Who you are hiring', 'mcgrath-chrome' ); ?></span>
 			<h1 data-tag="&lt;h1&gt;"><?php esc_html_e( 'One Person, Not an Agency', 'mcgrath-chrome' ); ?></h1>
 			<p class="sub"><?php esc_html_e( 'Tyler McGrath. Search and web work for Jupiter and the surrounding area, done by the person you talk to.', 'mcgrath-chrome' ); ?></p>
 		</div>
-		<?php mcg_page_art( 'about', 'A laptop showing a coastal site on a seawall table, the inlet behind it' ); ?>
 	</div>
 </section>
 

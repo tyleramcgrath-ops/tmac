@@ -238,7 +238,7 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 		<?php // The same photograph again, at full strength, masked to a circle that
 		// follows the cursor. The scrim above it keeps the words readable, so the
 		// light only ever washes over the water. ?>
-		<span class="rootsSpot" id="rootsSpot"><?php mcg_plate( 'roots', 'rootsLit', '50% 46%' ); ?></span>
+		<span class="bedSpot"><?php mcg_plate( 'roots', 'bedLit', '50% 46%' ); ?></span>
 	</div>
 
 	<div class="rootsBody">

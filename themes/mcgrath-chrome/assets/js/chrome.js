@@ -519,9 +519,13 @@
   var heroSpot = document.getElementById('heroSpot');
   if (heroSpot) follow(heroSpot, heroSpot.parentNode, null);
 
-  // Jupiter roots: the same light, but it lifts the photograph back to full
-  // strength where it falls, so the marina comes up out of the dark.
-  var rootsSpot = document.getElementById('rootsSpot');
-  if (rootsSpot) follow(rootsSpot, rootsSpot.closest('.roots'), rootsSpot.closest('.roots'));
+  // Every light bed on the page: the same light, but it lifts a photograph
+  // back to full strength where it falls, so the picture comes up out of the
+  // dark. Found by markup rather than by id, so a section that grows one
+  // later is wired without touching this file.
+  [].forEach.call(document.querySelectorAll('.bedSpot'), function (spot) {
+    var host = spot.closest('section') || spot.parentNode;
+    follow(spot, host, host);
+  });
 
 })();

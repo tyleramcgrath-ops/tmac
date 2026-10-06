@@ -501,6 +501,42 @@ function mcg_page_art( $name, $alt = '' ) {
 }
 
 /**
+ * A photograph laid across a whole section, lit from the cursor.
+ *
+ * Two copies of the same picture: a dimmed bed, and above it a full-strength
+ * copy masked to a soft circle that follows the pointer. Whatever scrim the
+ * section paints over this is painted above both, so the light washes across
+ * the picture without ever reaching the words.
+ *
+ * Renders nothing when no photograph is shipped for the name, which leaves the
+ * section on its own flat background rather than on a drawn stand-in.
+ *
+ * @param string $name  File basename inside assets/img.
+ * @param string $focus background-position for the crop.
+ */
+function mcg_light_bed( $name, $focus = '50% 50%' ) {
+	$dir   = get_template_directory() . '/assets/img/';
+	$found = false;
+
+	foreach ( array( 'webp', 'jpg', 'jpeg', 'png' ) as $ext ) {
+		if ( file_exists( $dir . $name . '.' . $ext ) ) {
+			$found = true;
+			break;
+		}
+	}
+
+	if ( ! $found ) {
+		return;
+	}
+
+	echo '<div class="bed" aria-hidden="true">';
+	mcg_plate( $name, '', $focus );
+	echo '<span class="bedSpot">';
+	mcg_plate( $name, 'bedLit', $focus );
+	echo '</span></div>';
+}
+
+/**
  * A wide photograph inside the body of a page, with an optional caption.
  *
  * @param string $name    File basename inside assets/img.

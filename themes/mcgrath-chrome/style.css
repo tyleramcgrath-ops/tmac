@@ -4,7 +4,7 @@ Theme URI: https://mcgrathmarketinggroup.com
 Author: Tyler McGrath
 Author URI: https://mcgrathmarketinggroup.com
 Description: Custom theme for McGrath Marketing Group, an SEO, AI search and web design company in Jupiter, Florida. Monolith: a black and white design drawn from the MG mark, with a colossal hero, a citation constellation of the surfaces a brand can be cited on, service rows that invert to white, a scroll-driven dissolve that shatters a page of blue links into pixels and reassembles them as the question a buyer asks an AI model, a crawler-view toggle, a reveal lens and a password protected vault for client work.
-Version: 3.2.0
+Version: 3.3.0
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -649,7 +649,10 @@ body.crawl .brand .mark,body.crawl .footBrand .mark,body.crawl .dashNav .dlogo i
   filter:brightness(0) saturate(100%) invert(84%) sepia(22%) saturate(686%) hue-rotate(74deg) brightness(101%) contrast(93%);
 }
 body.crawl .glyph .g-hole{fill:#080C0A;}
-body.crawl .phero::before{display:none;}
+/* a text-only header drops its wash; a header carrying a photograph keeps
+   its scrim, or the white type would sit straight on the picture. */
+body.crawl .phero:not(.bedded)::before{display:none;}
+body.crawl .bed .ph{filter:grayscale(1) brightness(.4) sepia(1) hue-rotate(75deg) saturate(3);}
 /* every photograph on the site, not just the page headers, goes to the
    terminal palette when the crawler view is on. */
 body.crawl .pArt img,body.crawl .svcPic img,body.crawl .insPic img,
@@ -1242,23 +1245,6 @@ img{filter:grayscale(1) contrast(1.06);}
 .rootsPic::after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,#000 6%,rgba(0,0,0,.3) 58%,rgba(0,0,0,.8) 100%);}
 
-/* the cursor light. The same photograph a second time at full strength,
-   masked to a soft circle that follows the pointer. It is painted under the
-   scrim above, so the light only ever washes over the water and never fogs
-   the sentence. Hidden until the pointer is actually over the section. */
-.rootsSpot{position:absolute;inset:0;pointer-events:none;opacity:0;
-  transition:opacity .45s ease;
-  -webkit-mask-image:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
-    #000 0,rgba(0,0,0,.55) 48%,transparent 74%);
-  mask-image:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
-    #000 0,rgba(0,0,0,.55) 48%,transparent 74%);}
-.rootsPic .rootsSpot .ph{opacity:1;}
-.rootsSpot .grade{display:none;}
-.rootsSpot::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
-    rgba(255,255,255,.1),transparent 70%);}
-.roots.lit .rootsSpot{opacity:1;}
-@media(prefers-reduced-motion:reduce){.rootsSpot{transition:none;}}
 .rootsBody{position:relative;z-index:2;display:grid;
   grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
   gap:clamp(24px,3.4vw,56px);align-items:center;
@@ -1527,94 +1513,50 @@ img{filter:grayscale(1) contrast(1.06);}
 }
 
 /* =====================================================================
-   21. THE MARK, AS VECTOR
-   mcg_mark() inlines assets/img/mark.svg, so the logo is resolution free
-   and takes its colour from whatever it sits on.
+   23. THE LIGHT BED
+   A photograph laid across a whole section with a light that follows the
+   cursor: a dimmed bed, and over it the same picture at full strength
+   masked to a soft circle. The section's own scrim is painted above both,
+   so the light crosses the picture and never reaches the words.
+
+   These rules sit last on purpose. .rootsPic .ph and .phero .ph both dim
+   the bed at the same specificity, so the lit copy needs the later turn.
    ===================================================================== */
-.mgMark{display:block;line-height:0;}
-.mgMark svg{display:block;width:100%;height:auto;fill:currentColor;}
-.brand .mgMark{display:inline-block;color:#fff;}
-.brand .mgMark svg{width:auto;height:30px;}
-.footBrand .mgMark{display:inline-block;color:#fff;filter:none;}
-.footBrand .mgMark svg{width:auto;height:28px;}
+.bed{position:absolute;inset:0;overflow:hidden;}
+.bedSpot{position:absolute;inset:0;pointer-events:none;opacity:0;
+  transition:opacity .45s ease;
+  -webkit-mask-image:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
+    #000 0,rgba(0,0,0,.55) 48%,transparent 74%);
+  mask-image:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
+    #000 0,rgba(0,0,0,.55) 48%,transparent 74%);}
+.bedSpot .ph{opacity:1;}
+.bedSpot .grade{display:none;}
+/* the light itself, so it reads as a lamp rather than only a brightening */
+.bedSpot::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
+    rgba(255,255,255,.1),transparent 70%);}
+.lit > .bed > .bedSpot,.lit .bedSpot{opacity:1;}
+@media(prefers-reduced-motion:reduce){.bedSpot{transition:none;}}
 
-/* the hero watermark: the mark blown up until it reads as architecture */
-.mgWater{position:absolute;right:clamp(-230px,-9vw,-70px);top:clamp(-80px,-5vw,-24px);
-  height:clamp(300px,47vw,680px);width:auto;z-index:1;color:#fff;opacity:.05;
-  pointer-events:none;}
-.mgWater svg{width:auto;height:100%;}
-
-/* =====================================================================
-   22. THE SURFACES
-   One band, six cells. A pulse runs the rail underneath and each cell lights
-   as it passes, so a single question is seen crossing all six places a buyer
-   could meet the brand. Costs about a fifth of the height the ring did.
-   ===================================================================== */
-.surf{background:#000;padding-block:clamp(34px,4.4vw,60px);}
-.surfHead{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
-  flex-wrap:wrap;border-top:1px solid var(--line);padding-top:clamp(16px,2vw,24px);}
-.surfHead .eyebrow::before{display:none;}
-.surfNote{color:var(--ink-45);}
-
-.surfBand{position:relative;margin-top:clamp(20px,2.6vw,32px);overflow:hidden;}
-.surfRow{list-style:none;margin:0;padding:0;position:relative;z-index:2;
-  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));}
-.surfCell{
-  position:relative;padding:4px clamp(14px,1.6vw,22px) clamp(16px,1.8vw,22px) 0;
-  border-left:1px solid var(--line-2);padding-left:clamp(14px,1.6vw,22px);
-  /* a custom property cannot be interpolated, so the colour itself is what
-     animates and the heading simply inherits it */
-  color:var(--ink-70);
-  animation:surfLight 10.8s linear infinite;
-  animation-delay:calc(var(--i) * 1.6s);
-}
-.surfCell:first-child{border-left:0;padding-left:0;}
-.surfN{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;
-  color:currentColor;opacity:.4;margin-bottom:10px;}
-.surfCell h3{font-size:clamp(15px,1.3vw,18.5px);letter-spacing:-.025em;line-height:1.15;
-  font-weight:600;color:inherit;}
-.surfSub{display:block;margin-top:7px;font-size:12.5px;line-height:1.45;
-  color:currentColor;opacity:.52;font-weight:300;}
-
-/* the playhead: a soft column with a hard bright leading edge, travelling the
-   full band once per cycle. One element reads as both the sweep and the head. */
-.surfScan{position:absolute;top:0;bottom:0;left:0;width:clamp(120px,13vw,190px);
-  z-index:1;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.015) 45%,rgba(255,255,255,.07));
-  border-right:1px solid rgba(255,255,255,.5);
-  box-shadow:1px 0 14px 0 rgba(255,255,255,.18);
-  animation:surfScan 10.8s linear infinite;}
-
-
-@keyframes surfScan{
-  from{left:calc(-1 * clamp(120px,13vw,190px));}
-  to{left:100%;}
-}
-/* bright for roughly the sixth of the cycle the head spends over the cell */
-@keyframes surfLight{
-  0%,1%{color:var(--ink-70);}
-  4%,13%{color:#fff;}
-  17%,100%{color:var(--ink-70);}
-}
-
-@media(prefers-reduced-motion:reduce){
-  .surfCell,.surfScan{animation:none;}
-  .surfScan{display:none;}
-  .surfCell{color:var(--ink-70);}
-}
-/* Once the cells wrap, a single horizontal head would light whole columns at
-   once rather than one surface at a time, so the sweep stops and the band is
-   simply read at full strength. */
-@media(max-width:1040px){
-  .surfRow{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:clamp(20px,2.6vw,28px);}
-  .surfCell:nth-child(4){border-left:0;padding-left:0;}
-  .surfScan{display:none;}
-  .surfCell{animation:none;color:#fff;}
-}
-@media(max-width:620px){
-  .surfRow{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .surfCell:nth-child(odd){border-left:0;padding-left:0;}
-  .surfCell:nth-child(4){border-left:1px solid var(--line-2);
-    padding-left:clamp(14px,1.6vw,22px);}
-  .surfSub{font-size:11.5px;}
+/* ---- the inner-page header, as one full-bleed photograph ------------ */
+/* the picture spans the whole header instead of sitting in a frame beside
+   the words, and the scrim keeps the left-hand column black enough to read
+   against at every width. */
+/* only the headers that carry a photograph change shape; a text-only header
+   such as contact or a 404 keeps the height its own copy gives it */
+.phero.bedded{position:relative;overflow:hidden;
+  min-height:clamp(320px,38vw,520px);display:flex;align-items:center;}
+.phero.bedded .bed{z-index:0;}
+/* the direct child only: the lit copy inside .bedSpot must stay full strength */
+.phero.bedded .bed > .ph{opacity:.42;}
+.phero.bedded::before{z-index:1;
+  background:linear-gradient(90deg,#000 4%,rgba(0,0,0,.34) 56%,rgba(0,0,0,.76) 100%);}
+.phero.bedded .pin{z-index:2;width:100%;}
+/* with the photograph behind the whole band there is no column to leave
+   open, so the words take the full measure */
+.phero.bedded .pin{grid-template-columns:minmax(0,1fr);}
+.phero.bedded .pheroTxt{max-width:54ch;}
+@media(max-width:860px){
+  .phero.bedded{min-height:clamp(280px,52vw,420px);}
+  .phero.bedded::before{background:linear-gradient(180deg,rgba(0,0,0,.52),rgba(0,0,0,.86));}
 }
