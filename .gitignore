@@ -64,3 +64,4 @@ apps/citation-gap/test/*.png
 # Rebuild with `zip -r mcgrath-chrome.zip mcgrath-chrome` from themes/.
 /mcgrath-chrome.zip
 /theme-preview-home.png
+/surfaces-band.png
