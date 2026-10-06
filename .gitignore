@@ -62,7 +62,7 @@ apps/citation-gap/test/*.png
 # Theme package and the preview render handed to the client: both are built
 # from themes/mcgrath-chrome, which is tracked, so neither belongs in the repo.
 # Rebuild with `zip -r mcgrath-chrome.zip mcgrath-chrome` from themes/.
-/mcgrath-chrome.zip
+/themes/mcgrath-chrome.zip
 /theme-preview-home.png
 /surfaces-band.png
 /roots-spotlight.png
