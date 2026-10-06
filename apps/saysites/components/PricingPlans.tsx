@@ -2,7 +2,8 @@ import { PRICES, TRIAL_DAYS } from '@/lib/billing'
 import { intelReady } from '@/lib/seo-intel'
 
 // The plans, at the prices in lib/billing.ts (the same ones Stripe charges),
-// so the website and checkout can never disagree. Each line is a feature
+// so the website and checkout can never disagree. Small businesses first,
+// law firms after (or alone, on the law firm page). Each line is a feature
 // that's built; the paid Google and AI lookups only show once switched on.
 const usd = (n: number) => `$${new Intl.NumberFormat('en-US').format(n)}`
 
@@ -29,6 +30,30 @@ export function PricingPlans({ only }: { only?: 'law' }) {
   ]
   return (
     <div className="pp">
+      {only !== 'law' && (
+        <div className="pp-group">
+          <h3 className="pp-label">For small businesses</h3>
+          <div className="pp-row">
+            <Plan
+              name="Site"
+              price={PRICES.site.month}
+              year={PRICES.site.year}
+              lede="Your whole website for any small business. Say what you want and it’s on your site."
+              items={['Sofie: change anything by saying so, with a monthly allowance', 'Designs and wording made for your kind of business', 'Your leads inbox, instant replies and alerts', 'SEO audit, call tracking and visitor counts', 'Hosting, your domain and security']}
+              cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
+              featured
+            />
+            <Plan
+              name="Store"
+              price={PRICES.store.month}
+              year={PRICES.store.year}
+              lede="Everything in Site, plus selling online."
+              items={['Everything in Site', 'Products and a shop page', '0% of your sales, always', 'A bigger monthly allowance for Sofie']}
+              cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
+            />
+          </div>
+        </div>
+      )}
       <div className="pp-group">
         <h3 className="pp-label">For law firms</h3>
         <div className="pp-row pp-three">
@@ -39,7 +64,7 @@ export function PricingPlans({ only }: { only?: 'law' }) {
             lede="A complete law firm website you build and change yourself, with everything a firm needs from day one."
             items={starter}
             cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
-            featured
+            featured={only === 'law'}
           />
           <Plan
             name="Law Firm"
@@ -59,29 +84,6 @@ export function PricingPlans({ only }: { only?: 'law' }) {
           />
         </div>
       </div>
-      {only !== 'law' && (
-        <div className="pp-group">
-          <h3 className="pp-label">For every other business</h3>
-          <div className="pp-row">
-            <Plan
-              name="Site"
-              price={PRICES.site.month}
-              year={PRICES.site.year}
-              lede="A complete website for a medical practice, med spa, dental practice or home service company."
-              items={['Designs and wording made for your industry', 'Your leads pipeline, instant replies and alerts', 'SEO audit, call tracking and visitor counts', 'Hosting, your domain and security', 'Sofie, for everyday changes in plain words']}
-              cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
-            />
-            <Plan
-              name="Store"
-              price={PRICES.store.month}
-              year={PRICES.store.year}
-              lede="Everything in Site, plus selling online."
-              items={['Everything in Site', 'Products and a shop page', '0% of your sales, always', 'A bigger monthly allowance for Sofie']}
-              cta={{ href: '/signup', label: `Start free for ${TRIAL_DAYS} days` }}
-            />
-          </div>
-        </div>
-      )}
       <p className="pp-fine">Prices in US dollars. Yearly billing is two months free. No setup fee, no contract: cancel any time from your account. A {TRIAL_DAYS}-day free trial on every self-serve plan.</p>
     </div>
   )

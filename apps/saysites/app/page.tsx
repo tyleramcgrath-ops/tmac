@@ -1,91 +1,198 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Logo, LogoMark } from '@/components/Logo'
+import { Logo, LogoMark, Wordmark } from '@/components/Logo'
 import { SiteNav } from '@/components/SiteNav'
+import { SiteFooter } from '@/components/MarketingShell'
 import { PricingPlans } from '@/components/PricingPlans'
 import { TalkForm } from '@/components/TalkForm'
-import { PRICES } from '@/lib/billing'
-import { LAW_RESEARCH } from '@/lib/law-research'
-import { auditSite } from '@/lib/seo-intel'
-import { SHOWCASE } from '@/lib/showcase'
+import { PRICES, TRIAL_DAYS } from '@/lib/billing'
+import { TEMPLATES } from '@/lib/templates'
 import './home.css'
 
-// saysites.com: SaySites as a website company for the industries that
-// compete hardest online. Prices are public (#pricing, /pricing, from
-// lib/billing.ts, the same prices Stripe charges); businesses can also ask
-// us ("Let's talk") or start with a free redesign of their current site. Why
-// to switch from an agency lives on /about. A static-feeling page with no
-// client JavaScript of its own; the example screenshots are our own work.
+// saysites.com: website building for small businesses, with Sofie at the
+// centre. You say what you want, in your own words, and your site changes:
+// that's the product and the fun of it. Prices are public and read from
+// PRICES (lib/billing.ts, the same ones Stripe charges); never type one.
+// A static page with no client JavaScript of its own; motion is CSS only.
+// The example sites and the editor are design mockups drawn in HTML, and
+// everything Sofie says on this page is something she can actually do.
 
 export const metadata: Metadata = {
-  title: { absolute: 'SaySites: premium websites built to bring in leads' },
-  description: 'Premium websites built to turn searches into calls, consultation requests and booked appointments, for law firms, medical practices, med spas and home services.',
+  title: { absolute: 'SaySites: say it, and your website does it' },
+  description: `Tell Sofie about your business and watch your website appear. Then say anything you want changed, in plain words. From $${PRICES.site.month} a month, 0% of your sales.`,
   alternates: { canonical: '/' },
 }
 
-const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=72`
+const U = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2000&q=75`
+const money = (n: number) => `$${n.toFixed(2)}`
 
-const SECTORS = [
-  { name: 'Law firms', href: '/websites-for/law-firms', photo: '1436450412740-6b988f486c6b', text: 'Practice area pages, attorney profiles and a consultation request on every home page. Three designs, so no two firms look alike.', links: [] as [string, string][] },
-  { name: 'Medical practices', href: '/websites-for/medical-practices', photo: '1631217868264-e5b90bb7e133', text: 'Clear service pages, your providers by name and an appointment request on the home page, with the notices patients expect.', links: [] },
-  { name: 'Med spas', href: '/websites-for/med-spas', photo: '1570172619644-dfd03ed5d881', text: 'Calm, polished sites that explain every treatment, set honest expectations and make booking a consultation easy.', links: [] },
-  { name: 'Dental practices', href: '/websites-for/dentists', photo: '1629909613654-28e377c37b09', text: 'Calm, reassuring sites that answer new-patient questions, explain each treatment and make it easy to ask for an appointment.', links: [] },
-  { name: 'Home services', href: '/websites-for', photo: '1749532125405-70950966b0e5', text: 'Sites that win the emergency search: a big call button, a page per service and the towns you cover.', links: [['Plumbers', '/websites-for/plumbers'], ['Heating and air', '/websites-for/hvac-companies'], ['Roofers', '/websites-for/roofers'], ['Electricians', '/websites-for/electricians']] },
-]
-
-const WORK = [
-  { img: '/media/law/counsel.jpg', firm: 'calder-and-vane', name: 'Calder & Vane', kind: 'Personal injury, San Antonio' },
-  { img: '/media/work/brightwater-family-medicine.jpg', firm: 'brightwater-family-medicine', name: 'Brightwater Family Medicine', kind: 'Family medicine, Charlotte' },
-  { img: '/media/work/lumen-aesthetics.jpg', firm: 'lumen-aesthetics', name: 'Lumen Aesthetics', kind: 'Med spa, Scottsdale' },
-  { img: '/media/law/classic.jpg', firm: 'hale-and-porter', name: 'Hale & Porter', kind: 'Estate and family law, Columbus' },
-  { img: '/media/work/northpoint-orthopedics.jpg', firm: 'northpoint-orthopedics', name: 'Northpoint Orthopedics', kind: 'Orthopedics, Minneapolis' },
-  { img: '/media/work/willow-dental.jpg', firm: 'willow-dental', name: 'Willow Dental', kind: 'Dental practice, Madison' },
-  { img: '/media/law/modern.jpg', firm: 'ashgrove-defense', name: 'Ashgrove Defense', kind: 'Criminal defense, Nashville' },
-  { img: '/media/work/rivertown-plumbing.jpg', firm: 'rivertown-plumbing', name: 'Rivertown Plumbing', kind: 'Plumbing, Rivertown' },
-  { img: '/media/work/summit-heating-air.jpg', firm: 'summit-heating-air', name: 'Summit Heating & Air', kind: 'Heating and air, Boise' },
-]
-
-// A real audit of one of our example sites, run the same way every client's
-// SEO tab runs it. Nothing on this card is made up.
-// Worked out once per server start, not on every visit.
-const EXAMPLE = 'hale-and-porter'
-let example: ReturnType<typeof auditSite> | null = null
-function exampleAudit() {
-  const { site, pages } = SHOWCASE[EXAMPLE]
-  example ??= auditSite({ site, pages, redirects: [] }, `https://${EXAMPLE}.saysites.com`)
-  return example.catch(() => null)
+function Photo({ id, sizes, priority = false, pos }: { id: string; sizes: string; priority?: boolean; pos?: string }) {
+  return <Image src={U(id)} alt="" fill sizes={sizes} priority={priority} style={{ objectFit: 'cover', objectPosition: pos ?? 'center' }} />
 }
 
-const LEAD_FEATURES = [
-  ['A pipeline for every lead', 'Each request lands as a card: New, Contacted, Booked, Won. Move it along in one tap and see who’s still waiting on you.'],
-  ['An instant reply, every time', 'The moment someone asks for help, they get a reply from your firm saying it arrived. Their answer comes straight to you.'],
-  ['Nothing slips', 'An email alert for every new lead, a reminder if one is still unanswered, a follow-up to leads nobody has called back, and a review request to every new client.'],
-  ['Call, text or email in one tap', 'Every lead has its own page with their message, buttons to reach them, your notes, a follow-up date and the full history.'],
-  ['Know what’s working', 'Where every lead came from, from Google Ads to Google Maps, plus phone taps, how fast you answer and new clients, in a results email on the 1st of each month.'],
-  ['Into the CRM you already use', 'Each new lead can go straight to HubSpot, Salesforce, Pipedrive or Clio Grow, or anywhere else through Zapier or Make.'],
-] as const
+function Frame({ url, children }: { url: string; children: React.ReactNode }) {
+  return (
+    <div className="frame">
+      <div className="frame-bar"><i /><i /><i /><span>{url}</span></div>
+      <div className="frame-body">{children}</div>
+    </div>
+  )
+}
 
-const GAP_FEATURES = [
-  ['Scored against what ranks', 'Pick a page and the search you want it to win. We read Google’s top results for that search and score your page against the pages that rank, check by check.'],
-  ['Quoted in AI answers', 'A second score for how likely AI answers are to quote your page, and whether Google’s AI Overview cites you or the firms it cites instead.'],
-  ['What to change, in order', 'The changes that close the gap, most valuable first, each with how long it takes. Say the word and make each change, with nothing invented.'],
-] as const
+function SayBox({ id, label = 'Build my site' }: { id: string; label?: string }) {
+  return (
+    <form className="say" action="/signup" method="get" role="search" aria-label="Describe your business">
+      <label htmlFor={id} className="visually-hidden">What does your business do?</label>
+      <input id={id} name="idea" placeholder="A family bakery in Portland, Oregon…" autoComplete="off" maxLength={200} />
+      <button className="b b-light" type="submit">{label}</button>
+    </form>
+  )
+}
 
-const CRMS = ['HubSpot', 'Salesforce', 'Pipedrive', 'Clio Grow', 'Zapier', 'Make']
+// Things owners say to Sofie, and what she does. Each one maps to a tool she
+// really has (lib/sofie.ts): pages, posts, logos, photos, the promo bar,
+// events, the chat button, colours, fonts and the site's personality.
+const SAYINGS: [string, string][] = [
+  ['Make it feel cozier.', 'Softer colours, rounded photos and a warmer heading font, all at once.'],
+  ['Design me a logo with a little loaf of bread.', 'A logo drawn for you, ready for your header. Don’t love it? Say what to change.'],
+  ['Add a page for our wedding cakes.', 'A new page with its own address, in your menu and your sitemap.'],
+  ['Put up a banner: pies 20% off until Thanksgiving.', 'A slim bar across the top of every page that disappears when the offer ends.'],
+  ['Write a post about how we make our sourdough.', 'A blog post in your words, with its own page Google can find.'],
+  ['We have live music Friday at 7.', 'Your event on the home page, and in the details Google reads.'],
+  ['Let people text me from the site.', 'A text button in the corner, to the number you give her.'],
+  ['That photo is too dark. Find a brighter one.', 'A few brighter photos to choose from, sized so your site stays fast.'],
+]
 
-const SEO_FEATURES = [
-  ['A full audit of every page', 'Titles, descriptions, headings, links, photos, Google data and speed, checked the way Google reads them. It runs by itself after every change and every week.'],
-  ['Fixes, most important first', 'Each one explained in plain words. Common ones, like duplicate titles and descriptions, are fixed in one click. For the rest, say what you want changed and approve it before it goes live.'],
-  ['Beat the pages that rank', 'Pick a page and the search you want it to win. It’s scored against the pages Google ranks and the sites its AI Overview quotes, with what to change, most valuable first. Every page also gets a score for how easily AI answer engines can quote it.'],
-  ['Side by side with competitors', 'Add the firms you lose clients to. Their sites are read and scored the same way as yours, so you see exactly where you lead and where you don’t.'],
-  ['Where you show up on Google', 'Track the searches that bring clients, like “estate planning lawyer near me”, and see your real position each day.'],
-  ['Who AI recommends', 'Ask the questions clients ask AI and see whether your site is cited, and which sites are cited instead. Plus the websites that link to yours.'],
-] as const
+/* ---------- Example sites (mockups) ---------- */
+
+/* ---------- Example sites (mockups) ---------- */
+
+function Bakery({ priority = false }: { priority?: boolean }) {
+  return (
+    <div className="bk">
+      <div className="bk-nav"><img className="mk-logo" src="/media/logos/rosies-bakery.svg" alt="Rosie’s Bakery" width="203" height="79" /><span>Bread</span><span>Cakes</span><span>Visit</span><em>Order ahead</em></div>
+      <div className="bk-hero">
+        <div>
+          <small>SE Division, Portland</small>
+          <h3>Sourdough, baked every morning at five.</h3>
+          <p>Country loaves, celebration cakes and good coffee, a block from the park.</p>
+          <div className="bk-btns"><em>Order for pickup</em><span>Today’s bakes</span></div>
+        </div>
+        <div className="ph bk-ph"><Photo id="1509440159596-0249088772ff" sizes="(max-width: 900px) 45vw, 380px" priority={priority} /></div>
+      </div>
+      <div className="bk-row">
+        {[
+          ['1579697096985-41fe1430e5df', 'Pastries', 'Croissants and buns'],
+          ['1566698629409-787a68fc5724', 'Bread', 'Country, rye, seeded'],
+          ['1567042661848-7161ce446f85', 'Wholesale', 'For cafés nearby'],
+        ].map(([id, t, s]) => (
+          <div key={t}><div className="ph bk-th"><Photo id={id} sizes="(max-width: 900px) 30vw, 220px" /></div><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// A coffee roaster's shop: the Store plan's products, prices and buy buttons.
+function Roaster() {
+  return (
+    <div className="ro">
+      <div className="ro-nav"><b>Northside <span>Roasters</span></b><span>Shop</span><span>Wholesale</span><span>Visit</span></div>
+      <div className="ro-hero">
+        <div className="ph"><Photo id="1741994043738-393513f7bf52" sizes="(max-width: 900px) 90vw, 560px" /></div>
+        <div className="ro-hero-t"><small>Small-batch, roasted Tuesdays</small><h3>Fresh coffee, at your door by Friday.</h3></div>
+      </div>
+      <div className="ro-row">
+        {[
+          ['1695245503558-5cdb37f49092', 'House Blend', 'Chocolate, toasted nuts', money(18), false],
+          ['1712402832925-d41c446883d3', 'Colombia Huila', 'Red apple, caramel', money(21), false],
+          ['1562051036-e0eea191d42f', 'Espresso Roast', 'Dark cocoa, molasses', money(19), true],
+        ].map(([id, name, notes, price, out]) => (
+          <div key={name as string} className="ro-card">
+            <div className="ph ro-th"><Photo id={id as string} sizes="(max-width: 900px) 30vw, 200px" /></div>
+            <b>{name}</b><span>{notes}</span>
+            <div className="ro-buy"><strong>{price}</strong>{out ? <em className="out">Sold out</em> : <em>Buy now</em>}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Plumber() {
+  return (
+    <div className="pl">
+      <div className="pl-top"><span>Licensed and insured, Rivertown and the valley</span><b>(555) 014-2200</b></div>
+      <div className="pl-nav"><img className="mk-logo" src="/media/logos/rivertown-plumbing.svg" alt="Rivertown Plumbing" width="476" height="89" /><span>Services</span><span>Areas</span><span>About</span><em>Call now</em></div>
+      <div className="pl-hero ph">
+        <Photo id="1749532125405-70950966b0e5" sizes="(max-width: 900px) 100vw, 760px" pos="50% 40%" />
+        <div className="pl-copy">
+          <small>Open 24/7, Same-day callouts</small>
+          <h3>Burst pipe? We’re on the way.</h3>
+          <p>Upfront-priced plumbing for homes and small businesses in Rivertown.</p>
+          <div className="pl-btns"><em>Call (555) 014-2200</em><span>Get a free quote</span></div>
+        </div>
+      </div>
+      <div className="pl-strip">
+        {[['Leaks and bursts', '60-minute response'], ['Water heaters', 'Repair and install'], ['Drains', 'Cleared same day'], ['Remodels', 'Kitchens and baths']].map(([t, s]) => (
+          <div key={t}><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Dark & Upscale: Olive & Ember, the look of the birthday demo.
+function Upscale() {
+  return (
+    <div className="up">
+      <div className="up-nav"><img className="mk-logo" src="/media/logos/olive-and-ember.svg" alt="Olive &amp; Ember" width="388" height="78" /><span>Menu</span><span>Visit</span><em>Reserve</em></div>
+      <div className="up-hero ph">
+        <Photo id="1622880833523-7cf1c0bd4296" sizes="(max-width: 900px) 100vw, 760px" pos="50% 55%" />
+        <div className="up-copy">
+          <small>Wall Street, Asheville</small>
+          <h3>Wood-fired, and worth the wait.</h3>
+          <div className="up-btns"><em>Reserve a table</em><span>See the menu</span></div>
+        </div>
+      </div>
+      <div className="up-row">
+        {[
+          ['1599130143407-2a6ff8a196c9', 'Wood-fired pizza', 'From the oven at 900°'],
+          ['1516685018646-549198525c1b', 'Handmade pasta', 'Rolled every afternoon'],
+          ['1776362441386-c02107b86576', 'Private dining', 'Up to 24 guests'],
+        ].map(([id, t, s]) => (
+          <div key={t}><div className="ph up-th"><Photo id={id} sizes="(max-width: 900px) 30vw, 220px" /></div><b>{t}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Salon() {
+  return (
+    <div className="sa">
+      <div className="sa-nav"><span>Services</span><img className="mk-logo" src="/media/logos/salt-and-stone.svg" alt="Salt &amp; Stone" width="431" height="84" /><span>Book</span></div>
+      <div className="sa-hero">
+        <div className="ph"><Photo id="1633681926022-84c23e8cb2d6" sizes="(max-width: 900px) 50vw, 300px" /></div>
+        <div className="sa-copy">
+          <small>Jones Street, Savannah</small>
+          <h3>Hair that grows out beautifully.</h3>
+          <p>Lived-in color and precise cuts, by appointment.</p>
+          <em>Book a chair</em>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ---------- Page ---------- */
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ sent?: string; talk?: string }> }) {
-  const [sp, audit] = await Promise.all([searchParams, exampleAudit()])
+  const sp = await searchParams
+  const site = PRICES.site
+  const store = PRICES.store
   return (
-    <div className="home ag">
+    <div className="home">
       <header className="nav">
         <div className="wrap">
           <Logo />
@@ -94,247 +201,195 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
       </header>
 
       <main>
-        <section className="ag-hero">
-          <div className="wrap ag-hero-in">
-            <div className="ag-hero-copy">
-              <p className="lw-eyebrow">Premium websites for law, medical, aesthetics, dental and home services</p>
-              <h1>Premium websites built to bring in leads.</h1>
-              <p className="lede">When someone searches for a lawyer, a doctor or a plumber, they call one of the first few businesses they find. We build fast, SEO fully optimized websites where every page is made to turn that search into a call, a consultation request or a booked appointment, and every lead lands in one inbox.</p>
-              <div className="lw-acts">
-                <a className="b b-light" href="#talk">Let’s talk</a>
-                <a className="b lw-ghost" href="/redesign">See your site redesigned, free</a>
-              </div>
-            </div>
-            <div className="ag-stack" aria-hidden="true">
-              {[WORK[0], WORK[1], WORK[2]].map((w, i) => (
-                <div key={w.firm} className={`ag-shot ag-shot-${i + 1}`}>
-                  <Image src={w.img} alt="" width={1280} height={860} sizes="(max-width: 900px) 70vw, 460px" priority={i === 0} />
-                </div>
-              ))}
-            </div>
+        <section className="hero">
+          <div className="hero-bg"><Photo id="1687422808248-f807f4ea2a2e" sizes="100vw" priority pos="60% 30%" /></div>
+          <div className="wrap hero-in">
+            <h1>Say it.<br />It’s on your site.</h1>
+            <p className="lede">Tell Sofie about your business in your own words and watch your website appear. Then say anything: “make it cozier”, “add our Saturday hours”, “put up a menu”. You see every change before it goes live. <strong>${site.month} a month. 0% of your sales.</strong></p>
+            <SayBox id="idea-top" />
+            <ul className="assure"><li>No credit card</li><li>{TRIAL_DAYS}-day free trial</li><li>Cancel anytime</li></ul>
+            <p className="hero-alt"><a href="/redesign">Already have a website? See it rebuilt on SaySites, free</a></p>
           </div>
-          <ul className="ag-strip" aria-label="Industries we build for">
-            {['Personal injury', 'Family law', 'Criminal defense', 'Estate planning', 'Family medicine', 'Orthopedics', 'Med spas', 'Dentistry', 'Plumbing', 'Heating and air', 'Roofing', 'Electrical'].map((s) => <li key={s}>{s}</li>)}
-          </ul>
         </section>
 
-        <section className="ag-sec" id="industries">
+        <section className="product" id="sofie-demo" aria-label="The SaySites editor">
+          <div className="wrap">
+            <div className="app" aria-hidden="true">
+              <div className="app-bar">
+                <span className="app-logo"><LogoMark size={24} /><Wordmark /></span>
+                <span className="app-site">Rosie’s Bakery</span>
+                <div className="app-tabs"><span className="on">Home</span><span>Services</span><span>Contact</span></div>
+                <span className="app-live"><i />Live</span>
+                <span className="app-pub">Publish</span>
+              </div>
+              <div className="app-body">
+                <div className="canvas"><Frame url="rosies-bakery.saysites.com"><Bakery priority /></Frame></div>
+                <aside className="side">
+                  <div className="side-h"><span><LogoMark size={14} />Sofie</span><span>Speed 100</span></div>
+                  <div className="msg me m1">Can you add our weekend hours and a photo of the pastries?</div>
+                  <div className="msg her m2">Done. I added “Sat-Sun, 7am-2pm” to the header and a pastries card on your home page.</div>
+                  <div className="diff m3">
+                    <div><span>Header</span><span>+ Weekend hours</span></div>
+                    <div><span>Home, cards</span><span>+ Pastries</span></div>
+                    <div><span>Speed check</span><span>Still 100</span></div>
+                  </div>
+                  <div className="msg me m4">Perfect. Publish it.</div>
+                  <div className="ask">Say what you want changed</div>
+                </aside>
+              </div>
+            </div>
+            <p className="product-note">An example of the SaySites editor. Sofie is the assistant built into every site.</p>
+          </div>
+        </section>
+
+        <section className="sofie" id="sofie">
           <div className="wrap">
             <div className="head split">
               <div>
-                <p className="kicker">Who we work with</p>
-                <h2>Only the industries where a website wins the work.</h2>
+                <p className="kicker">Meet Sofie</p>
+                <h2>Say anything.<br />Watch it happen.</h2>
               </div>
-              <p>We focus on businesses where every new client starts with a search. Each industry gets designs, pages and wording made for how its customers decide.</p>
+              <p>No menus to learn, no settings to hunt for. Talk to your site the way you’d talk to a friend who’s good with websites. A few things owners say:</p>
             </div>
-            <div className="ag-sectors">
-              {SECTORS.map((s, i) => (
-                <article key={s.name} className="ag-sector">
-                  <a className="ag-sector-img" href={s.href} tabIndex={-1} aria-hidden="true">
-                    <Image src={U(s.photo)} alt="" fill sizes="(max-width: 900px) 92vw, 400px" style={{ objectFit: 'cover' }} priority={i === 0} />
-                  </a>
-                  <h3><a href={s.href}>{s.name}</a></h3>
-                  <p>{s.text}</p>
-                  {s.links.length > 0 && <p className="ag-sublinks">{s.links.map(([l, h]) => <a key={h} href={h}>{l}</a>)}</p>}
-                </article>
+            <ul className="says">
+              {SAYINGS.map(([said, did]) => (
+                <li key={said}>
+                  <q>{said}</q>
+                  <p>{did}</p>
+                </li>
               ))}
+            </ul>
+            <div className="sofie-rules">
+              <div><h3>You see it first</h3><p>Sofie’s changes wait in a draft. Look it over, then publish, or undo with one tap.</p></div>
+              <div><h3>It stays yours</h3><p>Your words, your photos, your look. Sofie never makes up reviews, prices or facts about your business.</p></div>
+              <div><h3>It stays fast</h3><p>Every change is checked before it goes live. If it would slow your site down, it gets fixed first.</p></div>
             </div>
           </div>
         </section>
 
-        <section className="ag-sec ag-dark" id="work">
+        <section className="stats" aria-label="SaySites at a glance">
           <div className="wrap">
-            <div className="head split">
-              <div>
-                <p className="kicker">Our work</p>
-                <h2>Every one is different.</h2>
-              </div>
-              <p>Real pages you can open, click and test on your phone. Each business gets its own design, words and photos, never a template with the name swapped.</p>
-            </div>
-            <div className="ag-work">
-              {WORK.map((w) => (
-                <a key={w.firm} className="ag-work-item" href={`/preview/${w.firm}`}>
-                  <div className="ag-work-img"><Image src={w.img} alt={`The ${w.name} website`} width={1280} height={860} sizes="(max-width: 700px) 92vw, (max-width: 1100px) 45vw, 380px" /></div>
-                  <b>{w.name}</b>
-                  <span>{w.kind}</span>
-                </a>
-              ))}
-            </div>
+            <div><b>${site.month}</b><span>a month, everything included</span></div>
+            <div><b>0%</b><span>of your sales, ever</span></div>
+            <div><b>1</b><span>sentence to start your site</span></div>
+            <div><b>95+</b><span>speed score required before any page goes live</span></div>
           </div>
         </section>
 
-        <section className="ag-sec" id="how">
+        <section className="how dark" id="how">
+          <div className="how-mark" aria-hidden="true"><LogoMark size={720} /></div>
           <div className="wrap">
             <div className="head">
-              <p className="kicker">How we work</p>
-              <h2>You see it before you commit to anything.</h2>
+              <p className="kicker">How it works</p>
+              <h2>Your site.<br />Your say.</h2>
+              <p className="head-note">It’s your website because you said what goes on it. Built on years of experience making sites that rank: what search engines look for, what customers need and what gets them to call.</p>
             </div>
-            <ol className="ag-steps">
-              <li><b>A free redesign</b><span>Send us your current site. We rebuild it so you can see the difference, page by page, before we’ve even spoken.</span></li>
-              <li><b>We build your site</b><span>Your services, your people and your words, written for the way your clients search and decide.</span></li>
-              <li><b>You approve it</b><span>One private link to look through every page and ask for changes. Nothing goes live until you say so.</span></li>
-              <li><b>You watch the leads</b><span>Every message, every tap on your phone number and every visit shows in your dashboard, with a weekly Visibility Score and changes whenever you ask.</span></li>
+            <ol className="steps">
+              <li>
+                <h3>Say what you do</h3>
+                <p>Your business, your town, what you offer. A sentence or two is plenty.</p>
+                <div className="vis vis-type">We’re a two-person roofing crew in Tulsa. Repairs and storm damage.<i /></div>
+              </li>
+              <li>
+                <h3>Watch it appear</h3>
+                <p>Home, services and contact pages, written for your business and SEO fully optimized from day one.</p>
+                <div className="vis vis-pages"><span>Home</span><span>Services</span><span>Contact</span><span>Sitemap</span></div>
+              </li>
+              <li>
+                <h3>Keep talking</h3>
+                <p>Say what to change, whenever you like. You see it first and can undo anything.</p>
+                <div className="vis vis-chat"><span>Add 10% off gutter cleaning until Friday.</span></div>
+              </li>
             </ol>
           </div>
         </section>
 
-        <section className="ag-sec ag-proof">
-          <div className="wrap ag-proof-in">
-            <div><b>100</b><span>Google speed score on our example sites</span></div>
-            <div><b>95+</b><span>required before any page can go live</span></div>
-            <div><b>0</b><span>long-term contracts</span></div>
-            <div><b>1</b><span>private link to review and approve your site</span></div>
-          </div>
-          <div className="wrap"><p className="ag-proof-note">We tested {LAW_RESEARCH.sites} law firm websites at the top of Google. The middle one scored {LAW_RESEARCH.rows[0].them} for mobile speed and took {LAW_RESEARCH.rows[1].them} to show its main content. <a href="/websites-for/law-firms#compared">See how SaySites compares</a>.</p></div>
-        </section>
-
-        <section className="ag-sec" id="built">
+        <section className="examples" id="examples">
           <div className="wrap">
-            <div className="head">
-              <p className="kicker">Built for leads</p>
-              <h2>How your site brings in business.</h2>
-            </div>
-            <div className="feat-grid">
-              <div><h3>A request form up front</h3><p>A consultation or appointment request on the home page itself, not buried on a contact page, and a request button on every service page.</p></div>
-              <div><h3>One tap to call</h3><p>Your number is a button everywhere, with a call bar fixed to the bottom of every phone screen.</p></div>
-              <div><h3>Text us, right there</h3><p>A corner button lets visitors text you, message you on WhatsApp or reach your Facebook page without leaving the site.</p></div>
-              <div><h3>Every lead, followed up</h3><p>Requests land in your own leads pipeline with call and reply buttons, an instant reply goes to every lead, and each one can go straight to HubSpot, Salesforce, Clio Grow or Pipedrive.</p></div>
-              <div><h3>Found when they search</h3><p>A page for every service and town, fast on every phone, and your details marked up the way Google reads them.</p></div>
-              <div><h3>Trust before they call</h3><p>Your people by name, plain answers to the questions clients ask, and the notices your industry expects. Nothing invented.</p></div>
-            </div>
-          </div>
-        </section>
-
-        <section className="ag-sec standing" id="seo">
-          <div className="wrap">
-            <div className="standing-in">
-              <div className="standing-copy">
-                <p className="kicker">SEO, built in</p>
-                <h2>Know where you stand on Google, and what to fix next.</h2>
-                <p>Every site comes with its own SEO suite in your dashboard. It audits every page, ranks what to fix, fixes the common things in one click and shows you how you compare with the firms you compete with.</p>
-                <p>No one honest can promise you a ranking. What we promise is that you’ll always know exactly where you stand and why.</p>
+            <div className="head split">
+              <div>
+                <p className="kicker">Pick a look</p>
+                <h2>Pick a look. Say who you are. Done.</h2>
               </div>
-              {audit && (
-                <div className="standing-card" aria-label="An example audit">
-                  <div className="sc-head"><span>Example audit</span><span>{SHOWCASE[EXAMPLE].site.business.name}</span></div>
-                  <div className="seo-ex">
-                    <b>{audit.siteScore}</b>
-                    <span>out of 100, across {audit.pages.length} pages</span>
+              <p>Each look comes with a ready-made sentence. Fill in your business name, town and services, and your site is built from it. Then keep talking to change anything.</p>
+            </div>
+            <div className="tpls">
+              {TEMPLATES.slice(0, 4).map((t, i) => (
+                <article className={`tplrow${i % 2 ? ' flip' : ''}`} key={t.key}>
+                  <div className="tplrow-shot">
+                    <Frame url={`${t.example}.saysites.com`}>{t.key === 'bold' ? <Plumber /> : t.key === 'editorial' ? <Salon /> : t.key === 'upscale' ? <Upscale /> : <Bakery />}</Frame>
                   </div>
-                  <ol>
-                    {([['Technical', audit.scores.technical], ['Content', audit.scores.content], ['Google data', audit.scores.schema], ['AI answers', audit.scores.ai]] as const).map(([k, v]) => (
-                      <li key={k}><span>{k}</span><i className="seo-bar" aria-hidden="true"><em style={{ width: `${v}%` }} /></i><em>{v}</em></li>
-                    ))}
-                  </ol>
-                  <p className="sc-tip">A real audit of our <a href={`/preview/${EXAMPLE}`}>example law firm site</a>, run the same way every client’s runs.</p>
-                </div>
-              )}
-            </div>
-            <div className="feat-grid seo-feats">
-              {SEO_FEATURES.map(([h, t]) => (
-                <div key={h}><h3>{h}</h3><p>{t}</p></div>
+                  <div className="tplrow-copy">
+                    <h3>{t.name}</h3>
+                    <p className="tplrow-for">Great for {t.bestFor.toLowerCase()}</p>
+                    <div className="prompt-card">
+                      <span className="prompt-label">Say this</span>
+                      <p>{t.prompt({}).split(/(\[[^\]]+\])/).map((part, n) => (part.startsWith('[') ? <mark key={n}>{part.slice(1, -1)}</mark> : part))}</p>
+                    </div>
+                    <div className="tplrow-actions">
+                      <a className="b b-dark" href={`/signup?template=${t.key}`}>Start with this look</a>
+                      <a className="tplrow-link" href={`/preview/${t.example}`}>See the live example</a>
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
+            <p className="tpl-more"><a className="b b-line" href="/templates">See every example site</a></p>
           </div>
         </section>
 
-        <section className="ag-sec standing gap" id="citation-gap">
+        <section className="sell" id="sell">
+          <div className="wrap sell-in">
+            <div className="sell-copy">
+              <p className="kicker">Sell online</p>
+              <h2>A real store for ${store.month} a month. Keep every dollar.</h2>
+              <p>Say “add our House Blend, twelve ounces, eighteen dollars” and it’s in your shop with a buy button. Customers pay through your own Stripe checkout, so the money goes straight to you. SaySites takes 0% of every sale.</p>
+              <ul className="sell-list">
+                <li>Products, photos and a Shop page</li>
+                <li>Checkout through your own Stripe account</li>
+                <li>Prices Google can read</li>
+                <li>Sold out? Mark it in one tap</li>
+              </ul>
+              <p><a className="b b-dark" href="/signup">Open your store</a></p>
+            </div>
+            <div className="sell-vis" aria-hidden="true">
+              <Frame url="northside-roasters.saysites.com"><Roaster /></Frame>
+              <div className="sell-order"><i>✓</i><div><b>New order, {money(36)}</b><span>Paid to your Stripe, SaySites fee {money(0)}</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="pricing" id="pricing">
           <div className="wrap">
-            <div className="standing-in">
-              <div className="standing-card gap-ex" aria-label="An example Citation Gap scan">
-                <div className="sc-head"><span>Example scan</span><span>Home page</span></div>
-                <p className="gx-q">“estate planning lawyer columbus”</p>
-                <div className="gx-scores">
-                  <div><b>58</b><span>Google ranking score</span></div>
-                  <div><b>41</b><span>AI answer score</span></div>
-                </div>
-                <p className="gx-aio">Google’s AI Overview cites 3 other firms, not you.</p>
-                <ol>
-                  <li><span>Put the search in your page title</span><i>15 min</i></li>
-                  <li><span>Answer the questions clients ask, as headings</span><i>3 hrs</i></li>
-                  <li><span>Add a plain comparison table</span><i>2 hrs</i></li>
-                </ol>
-                <p className="sc-tip">An example of a scan in your dashboard. Real scans compare your page with the pages Google ranks that day.</p>
+            <div className="head split">
+              <div>
+                <p className="kicker">Pricing</p>
+                <h2>Small-business prices. Everything included.</h2>
               </div>
-              <div className="standing-copy">
-                <p className="kicker">Citation Gap</p>
-                <h2>See why other firms get the click, and the quote.</h2>
-                <p>Choose a page and the search you want it to win. Citation Gap reads what Google ranks and what its AI Overview quotes for that search, then shows exactly where your page falls short.</p>
-                <p>You get two scores, one for Google and one for AI answers, and a short list of changes, most valuable first.</p>
-              </div>
-            </div>
-            <div className="feat-grid seo-feats">
-              {GAP_FEATURES.map(([h, t]) => (
-                <div key={h}><h3>{h}</h3><p>{t}</p></div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="ag-sec standing" id="leads">
-          <div className="wrap">
-            <div className="standing-in">
-              <div className="standing-copy">
-                <p className="kicker">Leads, handled</p>
-                <h2>Every lead answered, followed up and tracked.</h2>
-                <p>Your site comes with its own leads pipeline. Every request is answered the moment it arrives, you’re told about it straight away, and nothing waits in an inbox until it goes cold.</p>
-                <p>Already use a CRM? Connect it in a minute and every lead goes there too.</p>
-              </div>
-              <div className="standing-card leads-ex" aria-label="An example leads pipeline">
-                <div className="sc-head"><span>Example pipeline</span><span>This week</span></div>
-                <div className="lx-cols">
-                  {([['New', 2], ['Contacted', 3], ['Booked', 1], ['Won', 1]] as const).map(([k, n]) => (
-                    <div key={k}><b>{n}</b><span>{k}</span></div>
-                  ))}
-                </div>
-                <ol>
-                  <li><span><em>Estate planning question</em></span><i>New</i></li>
-                  <li><span>Probate consultation</span><i className="lx-auto">Replied automatically</i></li>
-                  <li><span>Will update after a move</span><i className="lx-booked">Booked</i></li>
-                </ol>
-                <p className="sc-tip">An example of what you see in your dashboard. Every lead also goes to <b>HubSpot</b>, <b>Salesforce</b> or another CRM if you connect one.</p>
-              </div>
-            </div>
-            <div className="feat-grid seo-feats">
-              {LEAD_FEATURES.map(([h, t]) => (
-                <div key={h}><h3>{h}</h3><p>{t}</p></div>
-              ))}
-            </div>
-            <p className="lx-crms"><span>Works with</span>{CRMS.map((c) => <b key={c}>{c}</b>)}</p>
-          </div>
-        </section>
-
-        <section className="ag-sec ag-switch">
-          <div className="wrap ag-switch-in">
-            <div>
-              <p className="kicker">The premium choice</p>
-              <h2>See how SaySites compares with agencies and website builders.</h2>
-            </div>
-            <a className="b b-line" href="/about#compare">See the comparison</a>
-          </div>
-        </section>
-
-        <section className="ag-sec ag-essay" id="why-website">
-          <div className="wrap ind-two">
-            <div>
-              <p className="kicker">Why it matters</p>
-              <h2>Your website decides who gets the call.</h2>
-            </div>
-            <div className="ind-guide-body">
-              <p>People rarely pick a lawyer, a doctor or a plumber from one result. They search, open two or three sites, and call the one that feels right and makes it easy. That decision usually happens on a phone, in a minute or two, and it turns on a few things: whether the page appears quickly, whether it clearly does the thing they need, whether there are real people behind it, and whether the next step is obvious.</p>
-              <p>That is why every SaySites site is built around the next step. The request form sits on the home page instead of hiding behind a contact link. Your phone number is a button. Each service or practice area has a page of its own, written for your business and your town, because that is what people search for and what Google matches them to.</p>
-              <p>Search engines reward the same things people do: pages that load fast, say clearly what they are about and keep their facts consistent. We build to Google’s published guidelines, keep every page above a strict speed bar, and show you every message, call tap and visit, so you can see what your site brings in instead of guessing.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="ag-sec" id="pricing">
-          <div className="wrap">
-            <div className="head">
-              <p className="kicker">Pricing</p>
-              <h2>One monthly price. Everything included.</h2>
+              <p>Less a month than the big-name website builders charge for a site, with nothing sold as an add-on and nothing taken from your sales.</p>
             </div>
             <PricingPlans />
+            <p className="price-note">Compared with the monthly website plans of the three best-known website builders, from their own pricing pages, checked September 2026. Card processing by Stripe (about 2.9% + 30¢ a sale) applies to store sales, as it does everywhere.</p>
+          </div>
+        </section>
+
+        <section className="feats">
+          <div className="wrap">
+            <div className="head">
+              <p className="kicker">What’s inside</p>
+              <h2>Everything a small business needs, in one price.</h2>
+            </div>
+            <div className="feat-grid">
+              <div><h3>Sofie, built in</h3><p>Change words, photos, colours, pages and your whole look by saying so. Her monthly allowance refills on the 1st, and you can always edit by hand too.</p></div>
+              <div><h3>Built to rank</h3><p>Clean code, one clear heading per page, titles that fit Google, a sitemap and business details Google can read.</p></div>
+              <div><h3>Kept up with Google</h3><p>Every site follows Google’s published guidelines, and when Google changes them we update the platform once, so every site keeps up the same day. <a href="/google-guidelines">How it works</a></p></div>
+              <div><h3>Always fast</h3><p>Every page is checked before it goes live. If a change would slow your site down, it gets fixed first.</p></div>
+              <div><h3>Your own address</h3><p>Every site gets yourname.saysites.com, and you can connect a domain you own.</p></div>
+              <div><h3>Every lead in one place</h3><p>Messages from your site land in your inbox, with instant replies, reminders to follow up and call buttons right there.</p></div>
+              <div><h3>A blog that brings people in</h3><p>Write helpful posts, or ask Sofie to draft one. Each gets its own page, a spot in your sitemap and the markup Google looks for.</p></div>
+              <div><h3>Nothing is ever lost</h3><p>Every change is saved as a version, so you can always go back.</p></div>
+              <div><h3>See who’s visiting</h3><p>Page views per day and your most-read pages, counted without cookies. No cookie banner, nothing slowing you down.</p></div>
+            </div>
           </div>
         </section>
 
@@ -345,38 +400,40 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
               <h2>Good questions.</h2>
             </div>
             <div className="qa">
-              <details><summary>What does it cost?</summary><p>Law firm websites start at ${PRICES.lawstarter.month} a month, or ${PRICES.lawpro.month} a month if we build it for you. Websites for other businesses start at ${PRICES.site.month} a month. Hosting, your domain, leads, intake and SEO are included. There’s no setup fee and no contract, and you can see a free redesign of your current site before you decide anything. <a href="/pricing">See every plan</a>.</p></details>
-              <details><summary>How long does it take?</summary><p>Your free redesign is ready in under a minute. A finished site depends on how many pages and people it covers; we’ll tell you when we talk, and you approve it before it goes live.</p></details>
-              <details><summary>Will I lose what my current site ranks for?</summary><p>We keep your pages at the same addresses wherever we can, and set up redirects for the rest, so links and search results keep working.</p></details>
-              <details><summary>Can I make changes myself?</summary><p>Yes. Ask us, or log in and change anything yourself, in plain words. You see every change before it goes live.</p></details>
-              <details><summary>Do you only work with certain industries?</summary><p>We focus on businesses where new clients start with a search: law firms, medical practices, med spas, dental practices and home service companies. Each has designs, pages and wording made for how its clients decide. If you are close to one of these, ask us.</p></details>
-              <details><summary>Who writes the words on my site?</summary><p>We write a page for each of your services, explaining the work the way you would to a client, for your business and your town. Nothing is invented: no reviews, results or credentials you didn’t give us. You approve every word before it goes live.</p></details>
-              <details><summary>What happens to my domain and email?</summary><p>Your domain stays yours. When you approve your new site, we walk you through pointing your domain to it, step by step. Your email keeps working where it is.</p></details>
-              <details><summary>Can you promise more leads?</summary><p>No one honestly can promise a number. What we promise is a site where contacting you takes one tap, built the way Google’s own guidelines describe, and a dashboard that shows every message, call tap and visit, so you can see exactly what it brings in.</p></details>
+              <details><summary>Do I need any design or tech skills?</summary><p>No. You say what your business is and your site appears. Then you change anything by telling Sofie: “make the photo brighter”, “add our Saturday hours”. You can also edit everything by hand.</p></details>
+              <details><summary>Who is Sofie?</summary><p>Sofie is the assistant built into SaySites. She makes the changes you ask for, in a draft you look over before anything goes live. She only uses facts you give her, never made-up reviews, prices or claims.</p></details>
+              <details><summary>What does it cost?</summary><p>${site.month} a month for a website, or ${store.month} a month with a store. Paying yearly is two months free. There’s a {TRIAL_DAYS}-day free trial with no card, no setup fee and no contract.</p></details>
+              <details><summary>What does “0% of your sales” mean?</summary><p>Customers pay you through your own Stripe account. Stripe charges its normal card processing fee; SaySites takes nothing on top.</p></details>
+              <details><summary>Will my site show up on Google?</summary><p>Every site is built the way Google likes: fast, clean, with proper titles, a sitemap and business details search engines can read. Nobody can promise a #1 spot, but you start with the foundations right.</p></details>
+              <details><summary>Can I use my own domain?</summary><p>Yes. Every site gets a free yourname.saysites.com address, and you can connect a domain you own.</p></details>
+              <details><summary>I run a law firm. Is there a plan for me?</summary><p>Yes. Law firm plans add practice area pages, attorney profiles, intake questions and attorney advertising notices. <a href="/websites-for/law-firms">See websites for law firms</a>.</p></details>
             </div>
           </div>
         </section>
 
-        <section className="ag-talk" id="talk">
+        <section className="ag-talk ag-talk-light" id="talk">
           <div className="wrap ag-talk-in">
             <div>
-              <LogoMark size={40} />
-              <h2>Let’s talk about getting you more leads.</h2>
-              <p>Tell us about your business and the clients you want more of. We’ll get back to you to talk it through, with no pressure and no jargon.</p>
+              <p className="kicker">Rather we build it?</p>
+              <h2>Tell us about your business.</h2>
+              <p>If you’d like a hand, send us a note and we’ll get back to you. No pressure and no jargon.</p>
               <p className="ag-talk-alt">Rather see it first? <a href="/redesign">Get a free redesign of your current site.</a></p>
             </div>
             <TalkForm from="/" sent={sp.sent === '1'} missing={sp.talk === 'missing'} />
           </div>
         </section>
+
+        <section className="last">
+          <div className="hero-bg"><Photo id="1633681926022-84c23e8cb2d6" sizes="100vw" /></div>
+          <div className="wrap">
+            <LogoMark size={44} />
+            <h2>Your website is one sentence away.</h2>
+            <SayBox id="idea-bottom" />
+          </div>
+        </section>
       </main>
 
-      <footer className="foot">
-        <div className="wrap">
-          <Logo />
-          <nav aria-label="Footer"><a href="/websites-for">Who we work with</a><a href="/about">Why SaySites</a><a href="/redesign">Free redesign</a><a href="/templates">Our work</a><a href="/pricing">Pricing</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/login">Log in</a></nav>
-          <span>© {new Date().getFullYear()} SaySites</span>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
