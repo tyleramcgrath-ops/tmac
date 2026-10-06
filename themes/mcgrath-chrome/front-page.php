@@ -52,50 +52,45 @@ get_header();
 	</div>
 </section>
 
-<!-- =========================== THE ORBIT ===========================
-	 Six places a buyer can meet the brand, set on one slow ring with the mark
-	 at the centre. Radial spokes only, so nothing crosses anything; the ring
-	 turns and the labels counter-turn so they stay upright. It is a map of
-	 where the work happens, not a reading, so it carries no numbers.
+<!-- ========================== THE SURFACES =========================
+	 One band, six cells: the places a buyer can meet the brand, named and
+	 described in a line each. A single pulse travels the rail underneath and
+	 lights each cell as it passes, so one question is seen crossing all six
+	 surfaces. It is a map of where the work happens, so it carries no numbers.
 	 ================================================================= -->
-<section class="orbit gut" id="surfaces" aria-labelledby="orbitHead">
+<section class="surf gut" id="surfaces" aria-labelledby="surfHead">
 	<div class="wrap">
-		<div class="orbitHead">
-			<span class="eyebrow" id="orbitHead"><?php esc_html_e( 'Where people meet your brand', 'mcgrath-chrome' ); ?></span>
-			<span class="mono orbitNote"><?php esc_html_e( 'Six surfaces · one strategy', 'mcgrath-chrome' ); ?></span>
+		<div class="surfHead">
+			<span class="eyebrow" id="surfHead"><?php esc_html_e( 'Where people meet your brand', 'mcgrath-chrome' ); ?></span>
+			<span class="mono surfNote"><?php esc_html_e( 'Six surfaces · one strategy', 'mcgrath-chrome' ); ?></span>
 		</div>
 
-		<div class="orbitStage rv">
-			<span class="orbRing r1" aria-hidden="true"></span>
-			<span class="orbRing r2" aria-hidden="true"></span>
-			<span class="orbRing r3" aria-hidden="true"></span>
+		<div class="surfBand rv">
+			<!-- the playhead: one pass across the band, lighting each cell as it
+			     reaches it, with the rail beneath standing in for the query -->
+			<span class="surfScan" aria-hidden="true"></span>
 
-			<ul class="orbSpin">
-				<?php
-				$mcg_surfaces = array(
-					__( 'AI overviews', 'mcgrath-chrome' ),
-					__( 'Assistants', 'mcgrath-chrome' ),
-					__( 'Answer boxes', 'mcgrath-chrome' ),
-					__( 'Organic search', 'mcgrath-chrome' ),
-					__( 'The map pack', 'mcgrath-chrome' ),
-					__( 'Directories', 'mcgrath-chrome' ),
-				);
-				foreach ( $mcg_surfaces as $mcg_n => $mcg_surface ) :
-					?>
-					<li class="orbNode" style="--a:<?php echo esc_attr( $mcg_n * 60 ); ?>deg">
-						<span class="orbSpoke" aria-hidden="true"></span>
-						<span class="orbDot" aria-hidden="true"></span>
-						<!-- pushed one step further out along the spoke, then turned
-						     back upright, so the word never sits on its own dot -->
-						<span class="orbOut"><span class="orbLab"><?php echo esc_html( $mcg_surface ); ?></span></span>
-					</li>
-				<?php endforeach; ?>
+			<ul class="surfRow">
+			<?php
+			$mcg_surfaces = array(
+				array( __( 'AI overviews', 'mcgrath-chrome' ), __( 'The summary above the links', 'mcgrath-chrome' ) ),
+				array( __( 'Assistants', 'mcgrath-chrome' ), __( 'Answers given inside a chat', 'mcgrath-chrome' ) ),
+				array( __( 'Answer boxes', 'mcgrath-chrome' ), __( 'The snippet that takes the click', 'mcgrath-chrome' ) ),
+				array( __( 'Organic search', 'mcgrath-chrome' ), __( 'The ten blue links', 'mcgrath-chrome' ) ),
+				array( __( 'The map pack', 'mcgrath-chrome' ), __( 'Three local results and a map', 'mcgrath-chrome' ) ),
+				array( __( 'Directories', 'mcgrath-chrome' ), __( 'The lists that send people on', 'mcgrath-chrome' ) ),
+			);
+			foreach ( $mcg_surfaces as $mcg_n => $mcg_surface ) :
+				?>
+				<li class="surfCell" style="--i:<?php echo esc_attr( $mcg_n ); ?>">
+					<span class="surfN"><?php echo esc_html( sprintf( '%02d', $mcg_n + 1 ) ); ?></span>
+					<h3><?php echo esc_html( $mcg_surface[0] ); ?></h3>
+					<span class="surfSub"><?php echo esc_html( $mcg_surface[1] ); ?></span>
+				</li>
+			<?php endforeach; ?>
 			</ul>
 
-			<div class="orbCore">
-				<?php mcg_mark(); ?>
-				<span class="orbHost"><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></span>
-			</div>
+			<span class="surfRail" aria-hidden="true"></span>
 		</div>
 	</div>
 </section>
