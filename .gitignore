@@ -63,6 +63,7 @@ apps/citation-gap/test/*.png
 # from themes/mcgrath-chrome, which is tracked, so neither belongs in the repo.
 # Rebuild with `zip -r mcgrath-chrome.zip mcgrath-chrome` from themes/.
 /themes/mcgrath-chrome.zip
+/mcgrath-chrome.zip
 /theme-preview-home.png
 /surfaces-band.png
 /roots-spotlight.png
