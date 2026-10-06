@@ -22,7 +22,7 @@ export default async function ApprovePage({ params }: { params: Promise<{ code: 
   const plan = site.handoff.plan
   const src = `/approve/${code}/site`
   return (
-    <MarketingShell>
+    <MarketingShell closing={false}>
       <section className="page-hero redesign-hero">
         <div className="wrap">
           <p className="kicker">Ready for you to look over</p>

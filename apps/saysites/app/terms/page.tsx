@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Terms', description: 'The terms for 
 
 export default function Terms() {
   return (
-    <MarketingShell>
+    <MarketingShell closing={false}>
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Terms</p>
