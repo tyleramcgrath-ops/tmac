@@ -53,57 +53,48 @@ get_header();
 </section>
 
 <!-- ========================== THE SURFACES =========================
-	 One band, six cells: the places a buyer can meet the brand, named and
-	 described in a line each. A single pulse travels the rail underneath and
-	 lights each cell as it passes, so one question is seen crossing all six
-	 surfaces. It is a map of where the work happens, so it carries no numbers.
+	 The band that used to be the stat strip. Six cells edge to edge: the places
+	 a buyer can meet the brand, named with a line saying what each one is. A
+	 playhead crosses the band and lifts each cell to white as it arrives, so a
+	 single question is seen travelling all six. It is a map of where the work
+	 happens, so it carries no numbers.
 	 ================================================================= -->
-<section class="surf gut" id="surfaces" aria-labelledby="surfHead">
-	<div class="wrap">
-		<div class="surfHead">
-			<span class="eyebrow" id="surfHead"><?php esc_html_e( 'Where people meet your brand', 'mcgrath-chrome' ); ?></span>
-			<span class="mono surfNote"><?php esc_html_e( 'Six surfaces · one strategy', 'mcgrath-chrome' ); ?></span>
+<section class="surf" id="surfaces" aria-labelledby="surfHead">
+	<div class="gut">
+		<div class="wrap">
+			<div class="surfHead">
+				<span class="eyebrow" id="surfHead"><?php esc_html_e( 'Where people meet your brand', 'mcgrath-chrome' ); ?></span>
+				<span class="mono surfNote"><?php esc_html_e( 'Six surfaces · one strategy', 'mcgrath-chrome' ); ?></span>
+			</div>
 		</div>
+	</div>
 
-		<div class="surfBand rv">
-			<!-- the playhead: one pass across the band, lighting each cell as it
-			     reaches it, with the rail beneath standing in for the query -->
+	<!-- the rules bleed to the edges, like the strip it replaces, while the
+	     cells stay on the same measure as everything above them -->
+	<div class="surfBand rv">
+		<div class="surfInner">
 			<span class="surfScan" aria-hidden="true"></span>
 
 			<ul class="surfRow">
-			<?php
-			$mcg_surfaces = array(
-				array( __( 'AI overviews', 'mcgrath-chrome' ), __( 'The summary above the links', 'mcgrath-chrome' ) ),
-				array( __( 'Assistants', 'mcgrath-chrome' ), __( 'Answers given inside a chat', 'mcgrath-chrome' ) ),
-				array( __( 'Answer boxes', 'mcgrath-chrome' ), __( 'The snippet that takes the click', 'mcgrath-chrome' ) ),
-				array( __( 'Organic search', 'mcgrath-chrome' ), __( 'The ten blue links', 'mcgrath-chrome' ) ),
-				array( __( 'The map pack', 'mcgrath-chrome' ), __( 'Three local results and a map', 'mcgrath-chrome' ) ),
-				array( __( 'Directories', 'mcgrath-chrome' ), __( 'The lists that send people on', 'mcgrath-chrome' ) ),
-			);
-			foreach ( $mcg_surfaces as $mcg_n => $mcg_surface ) :
-				?>
-				<li class="surfCell" style="--i:<?php echo esc_attr( $mcg_n ); ?>">
-					<span class="surfN"><?php echo esc_html( sprintf( '%02d', $mcg_n + 1 ) ); ?></span>
-					<h3><?php echo esc_html( $mcg_surface[0] ); ?></h3>
-					<span class="surfSub"><?php echo esc_html( $mcg_surface[1] ); ?></span>
-				</li>
+		<?php
+		$mcg_surfaces = array(
+			array( __( 'AI overviews', 'mcgrath-chrome' ), __( 'The summary above the links', 'mcgrath-chrome' ) ),
+			array( __( 'Assistants', 'mcgrath-chrome' ), __( 'Answers given inside a chat', 'mcgrath-chrome' ) ),
+			array( __( 'Answer boxes', 'mcgrath-chrome' ), __( 'The snippet that takes the click', 'mcgrath-chrome' ) ),
+			array( __( 'Organic search', 'mcgrath-chrome' ), __( 'The ten blue links', 'mcgrath-chrome' ) ),
+			array( __( 'The map pack', 'mcgrath-chrome' ), __( 'Three local results and a map', 'mcgrath-chrome' ) ),
+			array( __( 'Directories', 'mcgrath-chrome' ), __( 'The lists that send people on', 'mcgrath-chrome' ) ),
+		);
+		foreach ( $mcg_surfaces as $mcg_n => $mcg_surface ) :
+			?>
+			<li class="surfCell" style="--i:<?php echo esc_attr( $mcg_n ); ?>">
+				<span class="surfN"><?php echo esc_html( sprintf( '%02d', $mcg_n + 1 ) ); ?></span>
+				<h3><?php echo esc_html( $mcg_surface[0] ); ?></h3>
+				<span class="surfSub"><?php echo esc_html( $mcg_surface[1] ); ?></span>
+			</li>
 			<?php endforeach; ?>
 			</ul>
-
-			<span class="surfRail" aria-hidden="true"></span>
 		</div>
-	</div>
-</section>
-
-<!-- ========================== STAT STRIP ========================== -->
-<section class="strip gut" aria-label="<?php esc_attr_e( 'At a glance', 'mcgrath-chrome' ); ?>">
-	<div class="stripIn">
-		<?php foreach ( mcg_strip() as $mcg_s ) : ?>
-			<div class="sItem">
-				<?php mcg_icon( $mcg_s['icon'] ); ?>
-				<span><b><?php echo esc_html( $mcg_s['value'] ); ?></b><span><?php echo esc_html( $mcg_s['label'] ); ?></span></span>
-			</div>
-		<?php endforeach; ?>
 	</div>
 </section>
 

@@ -387,16 +387,6 @@ function mcg_scene( $night = false ) {
 	<?php
 }
 
-/** The four-up stat strip under the hero. */
-function mcg_strip() {
-	return array(
-		array( 'icon' => 'calendar', 'value' => '19+ Years',      'label' => 'Experience' ),
-		array( 'icon' => 'bars',     'value' => 'SEO + AI Search','label' => "Ahead of What's Next" ),
-		array( 'icon' => 'pin',      'value' => 'Jupiter, FL',    'label' => 'Local Roots. Real Relationships.' ),
-		array( 'icon' => 'globe',    'value' => 'National Reach', 'label' => 'Results Without Boundaries.' ),
-	);
-}
-
 /** The four service cards. Also drives the Service schema. */
 function mcg_services() {
 	return array(
