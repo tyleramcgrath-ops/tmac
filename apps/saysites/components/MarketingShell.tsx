@@ -2,7 +2,7 @@ import { Logo } from './Logo'
 import { SiteNav } from './SiteNav'
 
 // The nav and footer for saysites.com's inner pages (templates, legal). The
-// homepage draws its own nav over the hero photo.
+// homepage draws its own nav over the hero photo and shares the footer.
 export function MarketingShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="home inner">
@@ -24,11 +24,13 @@ export function SiteFooter() {
       <div className="wrap">
         <Logo />
         <nav aria-label="Footer">
-          <a href="/websites-for">Who we work with</a>
-          <a href="/about">Why SaySites</a>
-          <a href="/redesign">Free redesign</a>
-          <a href="/templates">Our work</a>
+          <a href="/#sofie">Meet Sofie</a>
+          <a href="/templates">Examples</a>
           <a href="/pricing">Pricing</a>
+          <a href="/websites-for">Who it’s for</a>
+          <a href="/redesign">Free redesign</a>
+          <a href="/about">Why SaySites</a>
+          <a href="/#talk">Let’s talk</a>
           <a href="/connect">Connect</a>
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>

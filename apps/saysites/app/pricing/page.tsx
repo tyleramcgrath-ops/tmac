@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: `Law firm websites from $${PRICES.lawstarter.month} a month, with leads, intake, SEO and hosting included. Websites for other businesses from $${PRICES.site.month} a month. No setup fee, no contract.`,
+  description: `Small-business websites from $${PRICES.site.month} a month and online stores from $${PRICES.store.month}, with Sofie, hosting, SEO and leads included and 0% of your sales. Law firm plans from $${PRICES.lawstarter.month}. No setup fee, no contract.`,
   alternates: { canonical: '/pricing' },
 }
 
@@ -18,8 +18,8 @@ export default function PricingPage() {
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Pricing</p>
-          <h1>Everything a firm needs, at one monthly price.</h1>
-          <p>Your website, hosting, leads, intake, SEO and reporting, all included. No setup fee, no contract, and you can see your site redesigned free before you decide.</p>
+          <h1>Small-business prices. Everything included.</h1>
+          <p>Your website, Sofie, hosting, SEO and your leads inbox, all in one monthly price, with 0% taken from your sales. No setup fee, no contract, and a free trial with no card.</p>
         </div>
       </section>
       <section className="ind-sec" style={{ paddingTop: 0 }}>

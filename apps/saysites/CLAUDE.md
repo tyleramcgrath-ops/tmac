@@ -21,32 +21,36 @@ Also:
   and a stock photo belongs to one customer's site (`lib/photo-rules.ts`,
   table `ss_photos`). Owners' own uploads are exempt.
 
-## Positioning (October 2026, the owner's decision)
+## Positioning (October 6, 2026, the owner's decision)
 
-SaySites presents itself like a website company for the industries that
-compete hardest online: law firms first, then medical practices, med spas,
-dental and home services. Law firms, medical practices and med spas share
-three designs (lib/law-designs.ts: counsel, classic, modern) with their own
-words per profession (VOCAB) and small print (FOOTER_NOTES). **Prices are
-public** (the owner's decision, October 4, 2026): /pricing, the homepage's
-#pricing and the law firms page show the Stripe prices from `PRICES`
-(lib/billing.ts) through `components/PricingPlans.tsx`; never type a dollar
-amount anywhere else (a test checks). Visitors can also "Let's talk" (form
-on / and /about, leads land in the dashboard Feedback inbox marked "Let's
-talk") or get a free redesign. Why to switch from
-an agency lives on /about only, written as questions to ask any website
-company; never name or make claims about a competitor. /trades and the old
-/compare pages redirect. Self-serve sign-up still works at /signup but isn't
-promoted. The message is leads: every page is built to turn a
-search into a call, a request or a booking, and owners see every message,
-call tap and visit. Never promise a number of leads or rankings.
+SaySites is for **small businesses**, with **Sofie at the centre**: you say
+anything, in your own words, and your site does it. That's the product and
+the fun of it, and it's why the site is yours: you said what goes on it.
+The homepage is back to the original self-serve look (dark photo hero, the
+"say what you do" box posting to /signup?idea=, the editor mockup with
+Sofie) with a "Meet Sofie" section of things owners say and what happens.
+Every example there must map to a tool Sofie really has (lib/sofie.ts).
+Lead with the lowest prices: Site and Store come first in
+`components/PricingPlans.tsx`; law firm plans follow (and stand alone on
+the law firms page via `only="law"`). Industry pages, the free redesign
+and "Let's talk" (#talk on /) stay, but don't lead.
+
+**Prices are public** and come only from `PRICES` (lib/billing.ts) through
+`components/PricingPlans.tsx` or template strings; never type a dollar
+amount in a marketing page (a test checks). Price comparisons stay
+unnamed and aggregate ("the three best-known website builders, checked
+September 2026"); never name or make claims about a competitor, and
+re-check those prices quarterly before keeping the claim. /about (questions
+to ask any website company) stays. /trades and the old /compare pages
+redirect. Never promise a number of leads or rankings.
 
 ## Money check (the owner asked for this, permanently)
 
 Before building anything new, ask: will this help get or keep paying
 customers soon? If not, say so plainly and point back to what does:
-- Selling first: law firms (the owner's network), using the free redesign
-  preview as the pitch. Goal: 10 paying firms, then trades.
+- Selling first: small businesses signing up themselves, with Sofie as
+  the pitch; law firms (the owner's network) through the law firm plans
+  and the free redesign preview.
 - Proof: track those firms' rankings for 60–90 days and turn real results
   into case studies.
 - Reliability of what exists beats new features.
