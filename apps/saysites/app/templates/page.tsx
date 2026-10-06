@@ -61,15 +61,15 @@ export default function TemplatesPage() {
                     )
                   })}
               </div>
-              <p style={{ marginTop: 22 }}><a className="b b-line b-sm" href="/#talk">Ask for {g.title}</a></p>
+              <p style={{ marginTop: 22 }}><a className="b b-line b-sm" href={`/signup?template=${g.design}`}>Start with {g.title}</a></p>
             </div>
           ))}
           <div className="gal-cta">
             <div>
               <h2>Don’t see your business? It still works.</h2>
-              <p>Tell us about your business. We design it around your work, your town and your services, and you approve every page before it goes live.</p>
+              <p>Say what you do in a sentence. Your site is built around your work, your town and your services, and you change anything by saying so.</p>
             </div>
-            <p><a className="b b-light" href="/#talk">Let’s talk</a></p>
+            <p><a className="b b-light" href="/signup">Start free</a></p>
           </div>
         </div>
       </section>

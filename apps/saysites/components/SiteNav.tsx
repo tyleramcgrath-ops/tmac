@@ -14,7 +14,7 @@ export const INDUSTRY_LINKS: [string, string][] = [
   ['Every industry', '/websites-for'],
 ]
 
-export function SiteNav({ home = false }: { home?: boolean }) {
+export function SiteNav({ home = false, light = false }: { home?: boolean; light?: boolean }) {
   return (
     <nav aria-label="Main">
       <a className="hide-sm" href={home ? '#sofie' : '/#sofie'}>Meet Sofie</a>
@@ -28,7 +28,7 @@ export function SiteNav({ home = false }: { home?: boolean }) {
       </details>
       <a className="hide-sm" href="/blog">Blog</a>
       <a href="/login">Log in</a>
-      <a className={`b ${home ? 'b-light' : 'b-dark'} b-sm`} href="/signup">Start free</a>
+      <a className={`b ${home || light ? 'b-light' : 'b-dark'} b-sm`} href="/signup">Start free</a>
     </nav>
   )
 }

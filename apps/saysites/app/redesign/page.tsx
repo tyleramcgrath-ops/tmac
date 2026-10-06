@@ -29,7 +29,7 @@ export default function RedesignPage() {
           <p className="kicker">Free redesign preview</p>
           <h1>Paying too much for your website? See it rebuilt, free.</h1>
           <p>Paste your current website’s address. In about twenty seconds you’ll see your own site on SaySites, looking the way it does now, with every page, word and photo kept. Then see a fresh redesign of the same content, and a side-by-side of what changes: how heavy it is, what Google can read, and whether it passes a 95+ speed check.</p>
-          <div className="redesign-form"><RedesignForm dark /></div>
+          <div className="redesign-form"><RedesignForm /></div>
           <p className="fine">No account needed. We only read public pages, and nothing changes on your current site.</p>
         </div>
       </section>

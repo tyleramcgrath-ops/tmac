@@ -1023,3 +1023,22 @@
   .home .says li:nth-child(2n) { padding-left: 0; border-left: 0; }
   .home .sofie-rules { grid-template-columns: 1fr; gap: 22px; margin-top: 40px; }
 }
+
+/* Inner pages in the homepage's look (October 2026): dark nav, dark page
+   hero, then paper sections and the closing say box. */
+.home.inner .nav.solid { background: var(--g0); color: var(--tx); backdrop-filter: none; border-bottom: 1px solid var(--gl); }
+.home.inner .nav.solid .logo { color: var(--tx); }
+.home.inner .nav.solid nav a:not(.b), .home.inner .nav.solid .ag-menu summary { color: var(--mu); }
+.home.inner .nav.solid nav a:not(.b):hover, .home.inner .nav.solid .ag-menu summary:hover, .home.inner .nav.solid .ag-menu[open] summary { color: var(--tx); }
+.home.inner .nav.solid .ag-menu > div { background: var(--g1); box-shadow: inset 0 0 0 1px var(--gl), 0 24px 50px -24px rgba(0, 0, 0, 0.6); }
+.home.inner .nav.solid .ag-menu > div a { color: var(--tx) !important; }
+.home.inner .nav.solid .ag-menu > div a:hover { background: var(--g0); color: var(--tx) !important; }
+.home.inner .page-hero { background: var(--g0); color: var(--tx); padding-bottom: 96px; }
+.home.inner .page-hero + section { padding-top: 96px !important; }
+.home.inner .page-hero .kd-soon { color: var(--tx) !important; }
+.home.inner .page-hero p, .home.inner .page-hero .kicker, .home.inner .page-hero .muted { color: var(--mu); }
+.home.inner .page-hero p strong, .home.inner .page-hero a:not(.b) { color: var(--tx); }
+.home.inner .page-hero .b-dark { background: var(--tx); color: var(--g0); }
+.home.inner .page-hero .b-line { color: var(--tx); box-shadow: inset 0 0 0 1px var(--tx); }
+.home.inner .page-hero .b-line:hover { background: var(--tx); color: var(--g0); }
+@media (max-width: 760px) { .home.inner .page-hero { padding-bottom: 64px; } .home.inner .page-hero + section { padding-top: 64px !important; } }
