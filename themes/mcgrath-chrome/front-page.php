@@ -233,7 +233,13 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 
 <!-- ======================= JUPITER ROOTS ========================= -->
 <section class="roots" id="home-base">
-	<div class="rootsPic" aria-hidden="true"><?php mcg_plate( 'roots', '', '50% 46%' ); ?></div>
+	<div class="rootsPic" aria-hidden="true">
+		<?php mcg_plate( 'roots', '', '50% 46%' ); ?>
+		<?php // The same photograph again, at full strength, masked to a circle that
+		// follows the cursor. The scrim above it keeps the words readable, so the
+		// light only ever washes over the water. ?>
+		<span class="rootsSpot" id="rootsSpot"><?php mcg_plate( 'roots', 'rootsLit', '50% 46%' ); ?></span>
+	</div>
 
 	<div class="rootsBody">
 		<div class="rv">

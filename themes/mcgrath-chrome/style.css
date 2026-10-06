@@ -4,7 +4,7 @@ Theme URI: https://mcgrathmarketinggroup.com
 Author: Tyler McGrath
 Author URI: https://mcgrathmarketinggroup.com
 Description: Custom theme for McGrath Marketing Group, an SEO, AI search and web design company in Jupiter, Florida. Monolith: a black and white design drawn from the MG mark, with a colossal hero, a citation constellation of the surfaces a brand can be cited on, service rows that invert to white, a scroll-driven dissolve that shatters a page of blue links into pixels and reassembles them as the question a buyer asks an AI model, a crawler-view toggle, a reveal lens and a password protected vault for client work.
-Version: 3.1.0
+Version: 3.2.0
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -1241,6 +1241,24 @@ img{filter:grayscale(1) contrast(1.06);}
 .rootsPic img{width:100%;height:100%;object-fit:cover;opacity:.42;}
 .rootsPic::after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,#000 6%,rgba(0,0,0,.3) 58%,rgba(0,0,0,.8) 100%);}
+
+/* the cursor light. The same photograph a second time at full strength,
+   masked to a soft circle that follows the pointer. It is painted under the
+   scrim above, so the light only ever washes over the water and never fogs
+   the sentence. Hidden until the pointer is actually over the section. */
+.rootsSpot{position:absolute;inset:0;pointer-events:none;opacity:0;
+  transition:opacity .45s ease;
+  -webkit-mask-image:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
+    #000 0,rgba(0,0,0,.55) 48%,transparent 74%);
+  mask-image:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
+    #000 0,rgba(0,0,0,.55) 48%,transparent 74%);}
+.rootsPic .rootsSpot .ph{opacity:1;}
+.rootsSpot .grade{display:none;}
+.rootsSpot::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(340px 340px at var(--mx,62%) var(--my,50%),
+    rgba(255,255,255,.1),transparent 70%);}
+.roots.lit .rootsSpot{opacity:1;}
+@media(prefers-reduced-motion:reduce){.rootsSpot{transition:none;}}
 .rootsBody{position:relative;z-index:2;display:grid;
   grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
   gap:clamp(24px,3.4vw,56px);align-items:center;

@@ -486,11 +486,17 @@
      cursor across the hero, and the constellation's lit edges drawing
      themselves in rather than appearing all at once.
      --------------------------------------------------------------- */
-  var spot = document.getElementById('heroSpot');
-  if (spot && !reduce && window.matchMedia('(pointer:fine)').matches) {
-    var hero = spot.parentNode, raf = 0, px = 68, py = 34;
-    hero.addEventListener('pointermove', function (e) {
-      var r = hero.getBoundingClientRect();
+  var fine = !reduce && window.matchMedia('(pointer:fine)').matches;
+
+  // Point a light at the cursor. `host` is the box the pointer is measured
+  // against, `spot` the element that paints the light, and `lit` an optional
+  // element that carries a class only while the pointer is inside.
+  function follow(spot, host, lit) {
+    if (!spot || !host || !fine) return;
+    var raf = 0, px = 0, py = 0;
+
+    host.addEventListener('pointermove', function (e) {
+      var r = host.getBoundingClientRect();
       px = ((e.clientX - r.left) / r.width) * 100;
       py = ((e.clientY - r.top) / r.height) * 100;
       if (raf) return;
@@ -498,8 +504,24 @@
         raf = 0;
         spot.style.setProperty('--mx', px.toFixed(2) + '%');
         spot.style.setProperty('--my', py.toFixed(2) + '%');
+        if (lit) lit.classList.add('lit');
       });
     }, { passive: true });
+
+    if (lit) {
+      host.addEventListener('pointerleave', function () {
+        lit.classList.remove('lit');
+      }, { passive: true });
+    }
   }
+
+  // The hero: a light on flat black.
+  var heroSpot = document.getElementById('heroSpot');
+  if (heroSpot) follow(heroSpot, heroSpot.parentNode, null);
+
+  // Jupiter roots: the same light, but it lifts the photograph back to full
+  // strength where it falls, so the marina comes up out of the dark.
+  var rootsSpot = document.getElementById('rootsSpot');
+  if (rootsSpot) follow(rootsSpot, rootsSpot.closest('.roots'), rootsSpot.closest('.roots'));
 
 })();
