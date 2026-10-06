@@ -24,9 +24,7 @@ get_header();
 	<span class="heroSpot" id="heroSpot" aria-hidden="true"></span>
 	<span class="heroGrain" aria-hidden="true"></span>
 
-	<img class="mgWater" aria-hidden="true" alt=""
-		src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/mark-light.png' ); ?>"
-		width="1000" height="556">
+	<?php mcg_mark( 'mgWater' ); ?>
 
 	<div class="heroIn gut">
 		<div class="heroCopy">
@@ -54,42 +52,51 @@ get_header();
 	</div>
 </section>
 
-<!-- ======================= THE CONSTELLATION =======================
-	 The surfaces a buyer can meet a brand on, drawn as one diagram with the
-	 domain at the centre. The lit edges are the ones we are working on. It is
-	 a picture of the job, labelled as a sample so it is never read as a claim.
+<!-- =========================== THE ORBIT ===========================
+	 Six places a buyer can meet the brand, set on one slow ring with the mark
+	 at the centre. Radial spokes only, so nothing crosses anything; the ring
+	 turns and the labels counter-turn so they stay upright. It is a map of
+	 where the work happens, not a reading, so it carries no numbers.
 	 ================================================================= -->
-<section class="con gut" id="constellation" aria-labelledby="conHead">
+<section class="orbit gut" id="surfaces" aria-labelledby="orbitHead">
 	<div class="wrap">
-		<div class="conHead">
-			<span class="eyebrow" id="conHead"><?php esc_html_e( 'Surfaces we track · sample view', 'mcgrath-chrome' ); ?></span>
-			<span class="conQ mono"><?php esc_html_e( 'Query', 'mcgrath-chrome' ); ?> ·
-				<b><?php echo esc_html( mcg_opt( 'mcg_hero_query', 'seo company jupiter fl' ) ); ?></b></span>
+		<div class="orbitHead">
+			<span class="eyebrow" id="orbitHead"><?php esc_html_e( 'Where people meet your brand', 'mcgrath-chrome' ); ?></span>
+			<span class="mono orbitNote"><?php esc_html_e( 'Six surfaces · one strategy', 'mcgrath-chrome' ); ?></span>
 		</div>
 
-		<svg class="conNet rv" viewBox="-40 -14 1256 266" role="img"
-			aria-label="<?php esc_attr_e( 'A diagram of the surfaces a brand can be cited on — AI overviews, assistants, the local pack, organic results, directories and answer boxes — drawn around the site at the centre.', 'mcgrath-chrome' ); ?>">
-			<g class="edges">
-				<line class="on" x1="588" y1="118" x2="196" y2="54"/>
-				<line class="on" x1="588" y1="118" x2="196" y2="182"/>
-				<line x1="588" y1="118" x2="412" y2="212"/>
-				<line class="on" x1="588" y1="118" x2="980" y2="54"/>
-				<line x1="588" y1="118" x2="980" y2="182"/>
-				<line class="on" x1="588" y1="118" x2="764" y2="24"/>
-				<line class="soft" x1="196" y1="54" x2="412" y2="212"/>
-				<line class="soft" x1="980" y1="182" x2="764" y2="24"/>
-			</g>
-			<circle class="halo" cx="588" cy="118" r="36"/>
-			<circle class="halo" cx="588" cy="118" r="22"/>
-			<circle class="core" cx="588" cy="118" r="9"/>
-			<text class="lead" x="588" y="178" text-anchor="middle"><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></text>
-			<circle class="node" cx="196" cy="54" r="5"/><text x="196" y="36" text-anchor="middle"><?php esc_html_e( 'AI overviews', 'mcgrath-chrome' ); ?></text>
-			<circle class="node" cx="196" cy="182" r="5"/><text x="196" y="206" text-anchor="middle"><?php esc_html_e( 'Assistants', 'mcgrath-chrome' ); ?></text>
-			<circle class="node" cx="412" cy="212" r="5"/><text x="412" y="236" text-anchor="middle"><?php esc_html_e( 'Local pack', 'mcgrath-chrome' ); ?></text>
-			<circle class="node" cx="980" cy="54" r="5"/><text x="980" y="36" text-anchor="middle"><?php esc_html_e( 'Organic', 'mcgrath-chrome' ); ?></text>
-			<circle class="node" cx="980" cy="182" r="5"/><text x="980" y="206" text-anchor="middle"><?php esc_html_e( 'Directories', 'mcgrath-chrome' ); ?></text>
-			<circle class="node" cx="764" cy="24" r="5"/><text x="764" y="8" text-anchor="middle"><?php esc_html_e( 'Answer boxes', 'mcgrath-chrome' ); ?></text>
-		</svg>
+		<div class="orbitStage rv">
+			<span class="orbRing r1" aria-hidden="true"></span>
+			<span class="orbRing r2" aria-hidden="true"></span>
+			<span class="orbRing r3" aria-hidden="true"></span>
+
+			<ul class="orbSpin">
+				<?php
+				$mcg_surfaces = array(
+					__( 'AI overviews', 'mcgrath-chrome' ),
+					__( 'Assistants', 'mcgrath-chrome' ),
+					__( 'Answer boxes', 'mcgrath-chrome' ),
+					__( 'Organic search', 'mcgrath-chrome' ),
+					__( 'The map pack', 'mcgrath-chrome' ),
+					__( 'Directories', 'mcgrath-chrome' ),
+				);
+				foreach ( $mcg_surfaces as $mcg_n => $mcg_surface ) :
+					?>
+					<li class="orbNode" style="--a:<?php echo esc_attr( $mcg_n * 60 ); ?>deg">
+						<span class="orbSpoke" aria-hidden="true"></span>
+						<span class="orbDot" aria-hidden="true"></span>
+						<!-- pushed one step further out along the spoke, then turned
+						     back upright, so the word never sits on its own dot -->
+						<span class="orbOut"><span class="orbLab"><?php echo esc_html( $mcg_surface ); ?></span></span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+
+			<div class="orbCore">
+				<?php mcg_mark(); ?>
+				<span class="orbHost"><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></span>
+			</div>
+		</div>
 	</div>
 </section>
 

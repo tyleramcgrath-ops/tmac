@@ -529,3 +529,41 @@ function mcg_body_art( $name, $alt = '', $caption = '' ) {
 	}
 	echo '</figure>';
 }
+
+/**
+ * The MG mark, inlined as vector.
+ *
+ * Traced from the artwork rather than shipped as a bitmap, so it stays sharp at
+ * the size the hero uses it — about six hundred pixels tall — and takes its
+ * colour from whatever it sits on instead of needing a light and a dark file.
+ *
+ * @param string $class Classes for the wrapping span.
+ * @param string $label Accessible name. Empty keeps it decorative.
+ */
+function mcg_mark( $class = '', $label = '' ) {
+	static $svg = null;
+
+	if ( null === $svg ) {
+		$file = get_template_directory() . '/assets/img/mark.svg';
+		$svg  = file_exists( $file ) ? file_get_contents( $file ) : ''; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	}
+
+	if ( '' === $svg ) {
+		return;
+	}
+
+	$out = $svg;
+	if ( $label ) {
+		$out = str_replace(
+			'role="img" aria-hidden="true"',
+			'role="img" aria-label="' . esc_attr( $label ) . '"',
+			$out
+		);
+	}
+
+	printf(
+		'<span class="mgMark%s">%s</span>',
+		$class ? ' ' . esc_attr( $class ) : '',
+		$out // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file.
+	);
+}

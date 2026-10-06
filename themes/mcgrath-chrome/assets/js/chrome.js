@@ -502,18 +502,4 @@
     }, { passive: true });
   }
 
-  /* each edge needs its own length before the dash offset means anything */
-  var net = document.querySelector('.conNet');
-  if (net) {
-    [].slice.call(net.querySelectorAll('line')).forEach(function (ln) {
-      var len = 0;
-      try { len = ln.getTotalLength(); } catch (err) { len = 0; }
-      if (!len) {
-        var dx = ln.x2.baseVal.value - ln.x1.baseVal.value;
-        var dy = ln.y2.baseVal.value - ln.y1.baseVal.value;
-        len = Math.sqrt(dx * dx + dy * dy);
-      }
-      ln.style.setProperty('--len', Math.ceil(len));
-    });
-  }
 })();
