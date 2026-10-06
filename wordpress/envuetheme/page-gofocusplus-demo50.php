@@ -3,7 +3,10 @@
  * GO Focus Plus $50 demo offer page (/gofocusplus-demo50/).
  * The QR code on the trade-show flyer points here. The page is not tied to one
  * show: add ?event=Show+Name to the QR link to tag leads from a given event.
+ * page-gofocusplus-email50.php reuses this template for the email campaign,
+ * setting $gf_slug first so its leads carry their own source tag.
  */
+$gf_slug  = isset( $gf_slug ) ? $gf_slug : 'gofocusplus-demo50';
 $pw_event = isset( $_GET['event'] ) ? sanitize_text_field( wp_unslash( $_GET['event'] ) ) : '';
 get_header(); ?>
 <main id="main">
@@ -85,7 +88,7 @@ get_header(); ?>
 <div class="gf">
 
 <section class="gf-hero" aria-labelledby="gf-title"><div class="wrap">
-  <nav class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a> / <a href="<?php echo esc_url( home_url( '/dash-cams/' ) ); ?>">AI Dash Cams</a> / <a href="<?php echo esc_url( home_url( '/gofocusplus-demo50/' ) ); ?>">GO Focus Plus Demo Offer</a></nav>
+  <nav class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a> / <a href="<?php echo esc_url( home_url( '/dash-cams/' ) ); ?>">AI Dash Cams</a> / <a href="<?php echo esc_url( home_url( '/' . $gf_slug . '/' ) ); ?>">GO Focus Plus Demo Offer</a></nav>
 
   <div class="gf-hero-grid">
     <!-- The flyer -->
@@ -129,7 +132,7 @@ get_header(); ?>
       <div class="gf-form-card">
         <h2>Schedule your demo</h2>
         <form class="lead-form" action="<?php echo esc_url( home_url( '/get-in-touch/' ) ); ?>" method="get">
-          <input type="hidden" name="source" value="gofocusplus-demo50">
+          <input type="hidden" name="source" value="<?php echo esc_attr( $gf_slug ); ?>">
           <input type="hidden" name="offer" value="amazon-50">
           <div class="form-row">
             <label>First name<input type="text" autocomplete="given-name" required name="first_name"></label>

@@ -26,7 +26,7 @@ add_action( 'wp_enqueue_scripts', function () {
         true
     );
     // The demo-offer flyer page uses the flyer's condensed display face.
-    if ( function_exists( 'envue_current_slug' ) && 'gofocusplus-demo50' === envue_current_slug() ) {
+    if ( function_exists( 'envue_current_slug' ) && in_array( envue_current_slug(), [ 'gofocusplus-demo50', 'gofocusplus-email50' ], true ) ) {
         wp_enqueue_style( 'envue-font-display', 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap', [], null );
     }
 } );
@@ -133,6 +133,7 @@ function envue_template_map() {
         'fleetcor'                => 'page-fleetcor.php',
         'promiles'                => 'page-promiles.php',
         'gofocusplus-demo50'      => 'page-gofocusplus-demo50.php',
+        'gofocusplus-email50'     => 'page-gofocusplus-email50.php',
         'drivewyze'               => 'page-drivewyze.php',
         'route4me'                => 'page-route4me.php',
         'elite-extra'             => 'page-elite-extra.php',
@@ -229,6 +230,12 @@ add_filter( 'pre_handle_404', function ( $preempt, $wp_query ) {
     if ( $preempt || is_admin() || ! empty( $wp_query->posts ) ) return $preempt;
     $slug = envue_request_path();
     if ( ! $slug || strpos( $slug, '/' ) !== false ) return $preempt;
+    // Mixed-case links (/Gofocusplus-email50/) 301 to the lowercase route.
+    $lower = strtolower( $slug );
+    if ( $lower !== $slug && envue_template_for_slug( $lower ) ) {
+        wp_safe_redirect( home_url( '/' . $lower . '/' ), 301 );
+        exit;
+    }
     $tpl = envue_template_for_slug( $slug );
     if ( ! $tpl ) return $preempt;
     // Alias URLs (/gps/, /company/, /faq/…) 301 to the real page that uses the
@@ -705,6 +712,7 @@ function envue_seo_meta() {
         'events-calendar'           => [ 'Events - EnVue Telematics', 'Fleet technology webinars, trade shows, and industry events from EnVue Telematics and our technology partners.' ],
         'events'                    => [ 'Events - EnVue Telematics', 'Fleet technology webinars, trade shows, and industry events from EnVue Telematics and our technology partners.' ],
         'gofocusplus-demo50'        => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
+        'gofocusplus-email50'       => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'powered-by-geotab'         => [ 'Powered by Geotab: #1 Fleet Telematics Platform | EnVue Telematics', "EnVue is a Geotab Elite Specialized Partner. Deploy the world's most powerful open fleet platform with expert implementation, training, and 24/7 support." ],
     ];
 }

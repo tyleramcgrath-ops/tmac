@@ -172,3 +172,9 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   `envuetelematics.com/gofocusplus-demo50/?event=PestWorld+2026`. That fills in the form's
   "Where did you meet us?" field. The form sends leads to /get-in-touch/ tagged `source=gofocusplus-demo50&offer=amazon-50`.
 - /pestworld/ was removed. It now redirects (301) to /gofocusplus-demo50/, so any QR codes already printed still work.
+
+## v6.13 — email-campaign copy of the GO Focus Plus page
+- New page at **/gofocusplus-email50/**. It matches /gofocusplus-demo50/ exactly but tags its leads
+  `source=gofocusplus-email50`, so email sign-ups and trade-show sign-ups stay separate on /get-in-touch/.
+  Both pages are built from one template, so any change to the offer shows up on both.
+- Links typed with capital letters (e.g. `/Gofocusplus-email50`) now 301 to the lowercase address instead of 404ing.
