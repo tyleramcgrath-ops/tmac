@@ -3,7 +3,8 @@ import Image from 'next/image'
 import { Logo, LogoMark, Wordmark } from '@/components/Logo'
 import { SiteNav } from '@/components/SiteNav'
 import { SiteFooter } from '@/components/MarketingShell'
-import { PricingPlans } from '@/components/PricingPlans'
+import { ClassicPlans } from '@/components/ClassicPlans'
+import { ClosingSay, SayBox } from '@/components/SayBox'
 import { TalkForm } from '@/components/TalkForm'
 import { PRICES, TRIAL_DAYS } from '@/lib/billing'
 import { TEMPLATES } from '@/lib/templates'
@@ -36,16 +37,6 @@ function Frame({ url, children }: { url: string; children: React.ReactNode }) {
       <div className="frame-bar"><i /><i /><i /><span>{url}</span></div>
       <div className="frame-body">{children}</div>
     </div>
-  )
-}
-
-function SayBox({ id, label = 'Build my site' }: { id: string; label?: string }) {
-  return (
-    <form className="say" action="/signup" method="get" role="search" aria-label="Describe your business">
-      <label htmlFor={id} className="visually-hidden">What does your business do?</label>
-      <input id={id} name="idea" placeholder="A family bakery in Portland, Oregon…" autoComplete="off" maxLength={200} />
-      <button className="b b-light" type="submit">{label}</button>
-    </form>
   )
 }
 
@@ -364,12 +355,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             <div className="head split">
               <div>
                 <p className="kicker">Pricing</p>
-                <h2>Small-business prices. Everything included.</h2>
+                <h2>One price. Everything included.</h2>
               </div>
-              <p>Less a month than the big-name website builders charge for a site, with nothing sold as an add-on and nothing taken from your sales.</p>
+              <p>Other builders charge more for a store, sell the basics as paid apps, and some take a fee on every sale. SaySites is one flat price, and your money stays yours.</p>
             </div>
-            <PricingPlans />
-            <p className="price-note">Compared with the monthly website plans of the three best-known website builders, from their own pricing pages, checked September 2026. Card processing by Stripe (about 2.9% + 30¢ a sale) applies to store sales, as it does everywhere.</p>
+            <ClassicPlans />
           </div>
         </section>
 
@@ -423,14 +413,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
           </div>
         </section>
 
-        <section className="last">
-          <div className="hero-bg"><Photo id="1633681926022-84c23e8cb2d6" sizes="100vw" /></div>
-          <div className="wrap">
-            <LogoMark size={44} />
-            <h2>Your website is one sentence away.</h2>
-            <SayBox id="idea-bottom" />
-          </div>
-        </section>
+        <ClosingSay />
       </main>
 
       <SiteFooter />

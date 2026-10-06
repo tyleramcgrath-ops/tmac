@@ -1,18 +1,24 @@
 import { Logo } from './Logo'
 import { SiteNav } from './SiteNav'
+import { ClosingSay } from './SayBox'
 
-// The nav and footer for saysites.com's inner pages (templates, legal). The
-// homepage draws its own nav over the hero photo and shares the footer.
-export function MarketingShell({ children }: { children: React.ReactNode }) {
+// The nav and footer for saysites.com's inner pages (templates, legal), in
+// the homepage's look: a dark nav and dark page hero (home.css, .home.inner),
+// and the closing say box before the footer. The homepage draws its own nav
+// over the hero photo and shares the footer.
+export function MarketingShell({ children, closing = true }: { children: React.ReactNode; closing?: boolean }) {
   return (
     <div className="home inner">
       <header className="nav solid">
         <div className="wrap">
           <Logo />
-          <SiteNav />
+          <SiteNav light />
         </div>
       </header>
-      <main>{children}</main>
+      <main>
+        {children}
+        {closing && <ClosingSay />}
+      </main>
       <SiteFooter />
     </div>
   )

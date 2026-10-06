@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Privacy', description: 'What SaySite
 
 export default function Privacy() {
   return (
-    <MarketingShell>
+    <MarketingShell closing={false}>
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Privacy</p>

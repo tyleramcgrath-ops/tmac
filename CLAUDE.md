@@ -30,9 +30,13 @@ The homepage is back to the original self-serve look (dark photo hero, the
 "say what you do" box posting to /signup?idea=, the editor mockup with
 Sofie) with a "Meet Sofie" section of things owners say and what happens.
 Every example there must map to a tool Sofie really has (lib/sofie.ts).
-Lead with the lowest prices: Site and Store come first in
-`components/PricingPlans.tsx`; law firm plans follow (and stand alone on
-the law firms page via `only="law"`). Industry pages, the free redesign
+Lead with the lowest prices: the homepage and /pricing use the original
+cards (`components/ClassicPlans.tsx`: Site, Store, and Law firms from the
+Starter price) with the unnamed builder comparison from
+`lib/builder-prices.ts`; /pricing then lists the law plans
+(`PricingPlans only="law"`). Every other marketing page uses
+`MarketingShell`: dark nav, dark `.page-hero`, and the closing say box
+(`components/SayBox.tsx`; `closing={false}` on legal pages). Industry pages, the free redesign
 and "Let's talk" (#talk on /) stay, but don't lead.
 
 **Prices are public** and come only from `PRICES` (lib/billing.ts) through
