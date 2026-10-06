@@ -711,6 +711,7 @@ function envue_seo_meta() {
         'blog-articles'             => [ 'Innovative Fleet Management Ideas: Bright Insights for Modern Operations', 'Explore innovative insights in fleet management with our comprehensive articles. Enhance efficiency and safety in your fleet operations today.' ],
         'events-calendar'           => [ 'Events - EnVue Telematics', 'Fleet technology webinars, trade shows, and industry events from EnVue Telematics and our technology partners.' ],
         'events'                    => [ 'Events - EnVue Telematics', 'Fleet technology webinars, trade shows, and industry events from EnVue Telematics and our technology partners.' ],
+        'geotab-go-focus-plus'      => [ 'GO Focus Plus™ AI Dash Cam: Dual-Facing Video Telematics | EnVue', 'GO Focus Plus is a dual-facing AI dash cam with driver monitoring (DMS), ADAS, real-time in-cab coaching and MyGeotab integration. Deploy it with EnVue Telematics.' ],
         'gofocusplus-demo50'        => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'gofocusplus-email50'       => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'powered-by-geotab'         => [ 'Powered by Geotab: #1 Fleet Telematics Platform | EnVue Telematics', "EnVue is a Geotab Elite Specialized Partner. Deploy the world's most powerful open fleet platform with expert implementation, training, and 24/7 support." ],
@@ -771,7 +772,8 @@ function envue_seo_output( $slug, $url, $title, $desc, $img ) {
     }
 
     // ── BreadcrumbList (inner pages) ──────────────────────────────
-    if ( $slug && !is_front_page() ) {
+    // Pages that print their own BreadcrumbList set $GLOBALS['envue_own_breadcrumb'].
+    if ( $slug && !is_front_page() && empty( $GLOBALS['envue_own_breadcrumb'] ) ) {
         $page_name = get_queried_object_id() ? get_the_title( get_queried_object_id() ) : ucwords( str_replace( '-', ' ', $slug ) );
         $partner_slugs = ['lytx','netradyne','mobileye','samsara','azuga','elite-extra','route4me','drivewyze','fleetcor','coast-pay','fleetio','whip-around','car-advise','promiles','smith-system','speedgauge','safety-first','lifesaver-mobile','predictive-coach','phillips-connect','sensata-technologies','origo','ok-alone','moveev','greater-than','craig-safety-technologies','xtract'];
         $industry_slugs = ['construction','trucking-transportation','field-services','oil-gas','government','leasing-rental'];

@@ -178,3 +178,18 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   `source=gofocusplus-email50`, so email sign-ups and trade-show sign-ups stay separate on /get-in-touch/.
   Both pages are built from one template, so any change to the offer shows up on both.
 - Links typed with capital letters (e.g. `/Gofocusplus-email50`) now 301 to the lowercase address instead of 404ing.
+
+## v6.14 — GO Focus Plus page rebuilt from Geotab's AI Toolkit (LLM pilot)
+- **/geotab-go-focus-plus/** now follows Geotab's "single product" GO Focus Plus page from the Partner AI Toolkit:
+  same blocks, heading levels and Geotab-verified wording (At-a-Glance, problem/solution cards, outcomes,
+  how it works, supported safety events, Structured Q&A, GO Focus family comparison, capabilities, FAQ).
+  The URL is unchanged so Geotab can compare against the September baseline.
+- Structured data on the page: **Product** (Geotab toolkit Block 1, EnVue as seller), **FAQPage** with all ten
+  Q&As (they are visible on the page, as Google requires) and **BreadcrumbList** (Home › AI Dash Cams › GO Focus Plus).
+  Organization schema is not repeated; it is already site-wide.
+- New images in the theme: the Geotab GO Focus Plus camera render and the driver photo from the toolkit design.
+- **AIOSEO (live site):** on the GO Focus Plus page, set
+  - Title: `GO Focus Plus™ AI Dash Cam: Dual-Facing Video Telematics | EnVue`
+  - Description: `GO Focus Plus is a dual-facing AI dash cam with driver monitoring (DMS), ADAS, real-time in-cab coaching and MyGeotab integration. Deploy it with EnVue Telematics.`
+- After it is live: check the URL at https://search.google.com/test/rich-results (FAQ and Product should be detected),
+  then send the URL to Geotab.
