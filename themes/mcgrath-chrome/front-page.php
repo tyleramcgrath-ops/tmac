@@ -14,124 +14,82 @@ get_header();
 ?>
 
 <!-- ============================ HERO ============================ -->
+<!--
+	The stage is black and the only thing on it is the sentence. The mark is
+	blown up past the edge of the page so it reads as architecture rather than
+	a logo, a spotlight follows the cursor, and the middle word is drawn as an
+	outline so the line has a hole in it where the light gets through.
+-->
 <section class="hero" id="hero">
-	<!-- The photograph is the hero. It bleeds off the top, right and bottom and
-	     dissolves leftward into the paper, so the headline sits on clean ground
-	     and the dashboard floats over open water. -->
-	<div class="heroPhoto" aria-hidden="true">
-		<?php mcg_plate( 'hero', '', '50% 34%' ); ?>
-		<span class="veil"></span>
-	</div>
+	<span class="heroSpot" id="heroSpot" aria-hidden="true"></span>
+	<span class="heroGrain" aria-hidden="true"></span>
+
+	<img class="mgWater" aria-hidden="true" alt=""
+		src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/mark-light.png' ); ?>"
+		width="1000" height="556">
 
 	<div class="heroIn gut">
 		<div class="heroCopy">
 			<span class="eyebrow"><?php echo esc_html( mcg_opt( 'mcg_hero_kicker', 'Jupiter, Florida · Serving Clients Nationwide' ) ); ?></span>
 
 			<h1>
-				<span class="line"><span data-l><?php echo esc_html( mcg_opt( 'mcg_hero_l1', 'Built to Make Your' ) ); ?></span></span>
-				<span class="line"><span data-l><?php echo esc_html( mcg_opt( 'mcg_hero_l2', 'Business Impossible' ) ); ?></span></span>
-				<span class="line"><span data-l><?php echo esc_html( mcg_opt( 'mcg_hero_l3', 'to Miss.' ) ); ?></span></span>
+				<span class="line"><span data-l><?php echo esc_html( mcg_opt( 'mcg_hero_l1', 'Impossible' ) ); ?></span></span>
+				<span class="line out"><span data-l><?php echo esc_html( mcg_opt( 'mcg_hero_l2', 'to' ) ); ?></span></span>
+				<span class="line dim"><span data-l><?php echo esc_html( mcg_opt( 'mcg_hero_l3', 'Miss.' ) ); ?></span></span>
 			</h1>
 
-			<p><?php echo esc_html( mcg_opt( 'mcg_hero_sub', 'SEO, AI Search Optimization, web design and digital strategies that get you found, build authority and drive measurable growth.' ) ); ?></p>
+			<div class="heroFoot">
+				<p><?php echo esc_html( mcg_opt( 'mcg_hero_sub', 'SEO, AI Search Optimization, web design and digital strategies that get you found, build authority and drive measurable growth.' ) ); ?></p>
 
-			<div class="heroBtns">
-				<a class="btn" href="<?php echo esc_url( mcg_url( 'contact' ) ); ?>" data-mag>
-					<?php esc_html_e( 'Start a Project', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
-				</a>
-				<a class="btn ghost" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>">
-					<?php esc_html_e( 'See Our Work', 'mcgrath-chrome' ); ?>
-				</a>
-			</div>
-
-			<div class="trust">
-				<span class="faces" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-				<p><?php echo wp_kses_post( mcg_opt( 'mcg_hero_trust', 'Trusted by growing businesses<br>in Jupiter and across the country.' ) ); ?></p>
-			</div>
-		</div>
-
-		<div class="heroScene">
-			<span class="tag" aria-hidden="true">
-				<?php echo esc_html( mcg_opt( 'mcg_plate_l1', 'Higher Visibility' ) ); ?><br>
-				<?php echo esc_html( mcg_opt( 'mcg_plate_l2', 'Stronger Businesses' ) ); ?><br>
-				<?php echo esc_html( mcg_opt( 'mcg_plate_l3', 'A Brighter Tomorrow' ) ); ?>
-			</span>
-
-			<!-- The dashboard is drawn in markup, not shipped as an image, so it
-			     stays sharp on every screen and readable to a crawler. -->
-			<div class="dash rv" role="img"
-				aria-label="<?php esc_attr_e( 'A visibility dashboard showing a score of 87 out of 100 across Google Search, ChatGPT, Gemini, Perplexity and AI Overviews.', 'mcgrath-chrome' ); ?>">
-				<div class="dashBar" aria-hidden="true">
-					<i></i><i></i><i></i>
-					<span class="dots"><b></b><b></b><b></b><b></b></span>
-				</div>
-
-				<div class="dashBody" aria-hidden="true">
-					<div class="dashNav">
-						<span class="dlogo">
-							<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/img/logo.png' ); ?>"
-								alt="" width="1109" height="612">
-						</span>
-						<ul>
-							<li class="on">Overview</li>
-							<li>Search Visibility</li>
-							<li>AI Search</li>
-							<li>Keywords</li>
-							<li>Leads</li>
-							<li>Reports</li>
-						</ul>
-					</div>
-
-					<div class="dashMain">
-						<div class="dashHead">
-							<h4><?php esc_html_e( 'Your Business Visibility', 'mcgrath-chrome' ); ?></h4>
-							<span class="dashPill"><?php esc_html_e( 'Last 90 days', 'mcgrath-chrome' ); ?></span>
-						</div>
-
-						<div class="plats">
-							<?php foreach ( mcg_platforms() as $mcg_p ) : ?>
-								<span class="plat">
-									<?php mcg_icon( $mcg_p['icon'] ); ?>
-									<span><?php echo wp_kses_post( $mcg_p['label'] ); ?></span>
-								</span>
-							<?php endforeach; ?>
-						</div>
-
-						<div class="score">
-							<div class="sHead">
-								<span class="sLab"><?php esc_html_e( 'Visibility Score', 'mcgrath-chrome' ); ?></span>
-								<span class="up">32%</span>
-							</div>
-							<span class="sNum"><b data-count="87">87</b><small>/ 100</small></span>
-							<span class="spark">
-								<svg viewBox="0 0 100 40" preserveAspectRatio="none">
-									<defs>
-										<linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
-											<stop offset="0" stop-color="#2563C8" stop-opacity=".22"/>
-											<stop offset="1" stop-color="#2563C8" stop-opacity="0"/>
-										</linearGradient>
-									</defs>
-									<path class="fl" d="M1,33 L13,31 L25,32 L37,25 L49,23 L61,17 L73,15 L85,8 L97,3 L97,40 L1,40 Z"/>
-									<path class="ln" d="M1,33 L13,31 L25,32 L37,25 L49,23 L61,17 L73,15 L85,8 L97,3"/>
-								</svg>
-							</span>
-						</div>
-
-						<div class="tiles">
-							<span class="tile"><span class="tl"><?php esc_html_e( 'Organic Traffic', 'mcgrath-chrome' ); ?></span><span class="tv">12.4K</span><span class="td">&uarr; 60%</span></span>
-							<span class="tile"><span class="tl"><?php esc_html_e( 'Leads', 'mcgrath-chrome' ); ?></span><span class="tv">482</span><span class="td">&uarr; 41%</span></span>
-							<span class="tile"><span class="tl"><?php esc_html_e( 'Keyword Rankings', 'mcgrath-chrome' ); ?></span><span class="tv">1,036</span><span class="td">&uarr; 122%</span></span>
-							<span class="tile"><span class="tl"><?php esc_html_e( 'AI Citations', 'mcgrath-chrome' ); ?></span><span class="tv">89</span><span class="td">&uarr; 318%</span></span>
-						</div>
-					</div>
+				<div class="heroBtns">
+					<a class="btn" href="<?php echo esc_url( mcg_url( 'contact' ) ); ?>" data-mag>
+						<?php esc_html_e( 'Start a Project', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span>
+					</a>
+					<a class="btn ghost" href="<?php echo esc_url( mcg_url( 'vault' ) ); ?>">
+						<?php esc_html_e( 'See Our Work', 'mcgrath-chrome' ); ?>
+					</a>
 				</div>
 			</div>
-
-			<div class="heroSig" aria-hidden="true">
-				<span class="script"><?php echo esc_html( mcg_opt( 'mcg_location', 'Jupiter, Florida' ) ); ?></span>
-				<span class="mono"><?php echo esc_html( mcg_opt( 'mcg_coords', '26.9342° N, 80.0942° W' ) ); ?></span>
-			</div>
 		</div>
+	</div>
+</section>
+
+<!-- ======================= THE CONSTELLATION =======================
+	 The surfaces a buyer can meet a brand on, drawn as one diagram with the
+	 domain at the centre. The lit edges are the ones we are working on. It is
+	 a picture of the job, labelled as a sample so it is never read as a claim.
+	 ================================================================= -->
+<section class="con gut" id="constellation" aria-labelledby="conHead">
+	<div class="wrap">
+		<div class="conHead">
+			<span class="eyebrow" id="conHead"><?php esc_html_e( 'Surfaces we track · sample view', 'mcgrath-chrome' ); ?></span>
+			<span class="conQ mono"><?php esc_html_e( 'Query', 'mcgrath-chrome' ); ?> ·
+				<b><?php echo esc_html( mcg_opt( 'mcg_hero_query', 'seo company jupiter fl' ) ); ?></b></span>
+		</div>
+
+		<svg class="conNet rv" viewBox="-40 -14 1256 266" role="img"
+			aria-label="<?php esc_attr_e( 'A diagram of the surfaces a brand can be cited on — AI overviews, assistants, the local pack, organic results, directories and answer boxes — drawn around the site at the centre.', 'mcgrath-chrome' ); ?>">
+			<g class="edges">
+				<line class="on" x1="588" y1="118" x2="196" y2="54"/>
+				<line class="on" x1="588" y1="118" x2="196" y2="182"/>
+				<line x1="588" y1="118" x2="412" y2="212"/>
+				<line class="on" x1="588" y1="118" x2="980" y2="54"/>
+				<line x1="588" y1="118" x2="980" y2="182"/>
+				<line class="on" x1="588" y1="118" x2="764" y2="24"/>
+				<line class="soft" x1="196" y1="54" x2="412" y2="212"/>
+				<line class="soft" x1="980" y1="182" x2="764" y2="24"/>
+			</g>
+			<circle class="halo" cx="588" cy="118" r="36"/>
+			<circle class="halo" cx="588" cy="118" r="22"/>
+			<circle class="core" cx="588" cy="118" r="9"/>
+			<text class="lead" x="588" y="178" text-anchor="middle"><?php echo esc_html( wp_parse_url( home_url(), PHP_URL_HOST ) ); ?></text>
+			<circle class="node" cx="196" cy="54" r="5"/><text x="196" y="36" text-anchor="middle"><?php esc_html_e( 'AI overviews', 'mcgrath-chrome' ); ?></text>
+			<circle class="node" cx="196" cy="182" r="5"/><text x="196" y="206" text-anchor="middle"><?php esc_html_e( 'Assistants', 'mcgrath-chrome' ); ?></text>
+			<circle class="node" cx="412" cy="212" r="5"/><text x="412" y="236" text-anchor="middle"><?php esc_html_e( 'Local pack', 'mcgrath-chrome' ); ?></text>
+			<circle class="node" cx="980" cy="54" r="5"/><text x="980" y="36" text-anchor="middle"><?php esc_html_e( 'Organic', 'mcgrath-chrome' ); ?></text>
+			<circle class="node" cx="980" cy="182" r="5"/><text x="980" y="206" text-anchor="middle"><?php esc_html_e( 'Directories', 'mcgrath-chrome' ); ?></text>
+			<circle class="node" cx="764" cy="24" r="5"/><text x="764" y="8" text-anchor="middle"><?php esc_html_e( 'Answer boxes', 'mcgrath-chrome' ); ?></text>
+		</svg>
 	</div>
 </section>
 
@@ -259,22 +217,21 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 			</a>
 		</div>
 
-		<div class="svcGrid">
+		<!-- Rows, not cards. The whole row is the target, and hovering it flips
+		     the strip to solid white and slides the photograph out from under
+		     the right edge. The disciplines stay in the markup either way. -->
+		<div class="svcRows">
 			<?php foreach ( mcg_services() as $mcg_i => $mcg_svc ) : ?>
-				<a class="svcCard rv<?php echo $mcg_svc['accent'] ? ' accent' : ''; ?>"
-					data-d="<?php echo (int) $mcg_i % 2; ?>" href="<?php echo esc_url( mcg_url( $mcg_svc['url'] ) ); ?>">
-					<span class="svcPic">
-						<?php mcg_img( $mcg_svc['img'], $mcg_svc['alt'] ); ?>
-						<span class="num"><?php echo esc_html( sprintf( '%02d', $mcg_i + 1 ) ); ?></span>
-					</span>
-					<span class="svcTxt">
+				<a class="svcRow rv" data-d="<?php echo (int) $mcg_i % 2; ?>"
+					href="<?php echo esc_url( mcg_url( $mcg_svc['url'] ) ); ?>">
+					<span class="svcN"><?php echo esc_html( sprintf( '%02d', $mcg_i + 1 ) ); ?></span>
+					<span class="svcName">
 						<h3 data-tag="&lt;h3&gt;"><?php echo esc_html( $mcg_svc['title'] ); ?></h3>
-						<p><?php echo esc_html( $mcg_svc['sub'] ); ?></p>
-						<!-- the disciplines stay on the page as one thin line, so the card
-						     reads as a picture and a promise but the terms are still here. -->
 						<span class="svcTags"><?php echo esc_html( implode( ' · ', $mcg_svc['items'] ) ); ?></span>
-						<span class="svcGo"><?php esc_html_e( 'Explore', 'mcgrath-chrome' ); ?> <span class="arw" aria-hidden="true">&rarr;</span></span>
 					</span>
+					<span class="svcSub"><?php echo esc_html( $mcg_svc['sub'] ); ?></span>
+					<span class="svcGo" aria-hidden="true">&rarr;</span>
+					<span class="svcShot" aria-hidden="true"><?php mcg_img( $mcg_svc['img'], '' ); ?></span>
 				</a>
 			<?php endforeach; ?>
 		</div>

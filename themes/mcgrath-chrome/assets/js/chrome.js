@@ -478,4 +478,42 @@
       window.dispatchEvent(new Event('resize'));
     });
   }
+
+  /* ---------------------------------------------------------------
+     MONOLITH
+
+     Two small things the black stage needs: a light that follows the
+     cursor across the hero, and the constellation's lit edges drawing
+     themselves in rather than appearing all at once.
+     --------------------------------------------------------------- */
+  var spot = document.getElementById('heroSpot');
+  if (spot && !reduce && window.matchMedia('(pointer:fine)').matches) {
+    var hero = spot.parentNode, raf = 0, px = 68, py = 34;
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect();
+      px = ((e.clientX - r.left) / r.width) * 100;
+      py = ((e.clientY - r.top) / r.height) * 100;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        spot.style.setProperty('--mx', px.toFixed(2) + '%');
+        spot.style.setProperty('--my', py.toFixed(2) + '%');
+      });
+    }, { passive: true });
+  }
+
+  /* each edge needs its own length before the dash offset means anything */
+  var net = document.querySelector('.conNet');
+  if (net) {
+    [].slice.call(net.querySelectorAll('line')).forEach(function (ln) {
+      var len = 0;
+      try { len = ln.getTotalLength(); } catch (err) { len = 0; }
+      if (!len) {
+        var dx = ln.x2.baseVal.value - ln.x1.baseVal.value;
+        var dy = ln.y2.baseVal.value - ln.y1.baseVal.value;
+        len = Math.sqrt(dx * dx + dy * dy);
+      }
+      ln.style.setProperty('--len', Math.ceil(len));
+    });
+  }
 })();

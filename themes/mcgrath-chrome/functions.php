@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '2.6.1' );
+define( 'MCG_VERSION', '3.0.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -33,7 +33,7 @@ add_action( 'after_setup_theme', 'mcg_setup' );
 function mcg_assets() {
 	wp_enqueue_style(
 		'mcg-fonts',
-		'https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&family=Caveat:wght@400;500&display=swap',
+		'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Archivo:wght@300..700&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap',
 		array(),
 		null
 	);
@@ -52,9 +52,9 @@ function mcg_customize( $wp_customize ) {
 
 	$fields = array(
 		'mcg_hero_kicker' => array( 'Hero kicker', 'Jupiter, Florida · Serving Clients Nationwide' ),
-		'mcg_hero_l1'     => array( 'Headline line 1', 'Built to Make Your' ),
-		'mcg_hero_l2'     => array( 'Headline line 2', 'Business Impossible' ),
-		'mcg_hero_l3'     => array( 'Headline line 3', 'to Miss.' ),
+		'mcg_hero_l1'     => array( 'Headline line 1 (solid)', 'Impossible' ),
+		'mcg_hero_l2'     => array( 'Headline line 2 (outlined)', 'to' ),
+		'mcg_hero_l3'     => array( 'Headline line 3 (grey)', 'Miss.' ),
 		'mcg_hero_sub'    => array( 'Hero paragraph', 'SEO, AI Search Optimization, web design and digital strategies that get you found, build authority and drive measurable growth.' ),
 		'mcg_hero_trust'  => array( 'Trust line under the buttons', 'Trusted by growing businesses<br>in Jupiter and across the country.' ),
 		'mcg_plate_l1'    => array( 'Photo overlay line 1', 'Higher Visibility' ),
