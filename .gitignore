@@ -59,5 +59,8 @@ apps/citation-gap/test/*.png
 /instagram-kit.zip
 /facebook-kit.zip
 
-# theme package built for download, not source
-mcgrath-chrome.zip
+# Theme package and the preview render handed to the client: both are built
+# from themes/mcgrath-chrome, which is tracked, so neither belongs in the repo.
+# Rebuild with `zip -r mcgrath-chrome.zip mcgrath-chrome` from themes/.
+/mcgrath-chrome.zip
+/theme-preview-home.png
