@@ -15,7 +15,12 @@ Read `README.md` first. Two rules there are non-negotiable:
 Also:
 - Every page must pass the 95+ speed check before it can go live.
 - Design: calm colours (nothing bright), no bold-plus-cursive font pairings,
-  nothing that looks AI-built.
+  nothing that looks AI-built. Exception (the owner, October 8, 2026): trades
+  use the contractor layout modelled on a site the owner built for an
+  electrician (eec-fl.com: bright photo hero with a request bar on its edge,
+  slanted photo panels, a "need help?" block, numbered service cards, a call
+  band), Poppins headings, and may start in the bright "Electric" palette.
+  Never copy that site; keep its structure and quality.
 - Sofie never invents facts, reviews, results or credentials.
 - Photos: a photo appears once per site unless the owner asks for it again,
   and a stock photo belongs to one customer's site (`lib/photo-rules.ts`,

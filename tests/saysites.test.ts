@@ -308,10 +308,17 @@ describe('SaySites speed gate', () => {
   })
 
   it('gives each site a personality that suits it, and a strip of its real services', () => {
-    const a = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'ocean' }, 'org', 'rivertown-plumbing')
-    expect(['bold', 'clean', 'studio']).toContain(a.site.globals.flair)
+    const a = buildStarterSite({ name: 'Rivertown Bakery', type: 'bakery', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'sunset' }, 'org', 'rivertown-bakery')
+    expect(['soft', 'clean', 'editorial']).toContain(a.site.globals.flair)
     const home = a.pages.find((p) => p.slug === '')!
     expect(home.body[1].children[0]).toMatchObject({ type: 'ticker', items: ['Leak repair', 'Water heaters', 'Drain cleaning'] })
+    // Trades get the contractor layout instead: a request bar in the hero
+    // and the main services as slanted photo panels.
+    const trade = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'ocean' }, 'org', 'rivertown-plumbing')
+    const tradeHome = JSON.stringify(trade.pages.find((p) => p.slug === ''))
+    expect(trade.site.globals.flair).toBe('clean')
+    expect(tradeHome).toContain('"layout":"row"')
+    expect(tradeHome).toContain('"effect":"slant"')
     const { html, css } = renderPage(a.site, home, a.pages)
     // The list twice for a seamless loop; the copy is hidden from screen readers.
     expect(html.match(/<li>Water heaters<\/li>/g)).toHaveLength(2)

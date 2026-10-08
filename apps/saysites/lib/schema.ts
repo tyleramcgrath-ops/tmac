@@ -61,6 +61,8 @@ export const HEADING_FONTS = {
   newsreader: { family: 'Newsreader', file: '/media/fonts/newsreader.woff2' },
   fraunces: { family: 'Fraunces', file: '/media/fonts/fraunces.woff2' },
   bricolage: { family: 'Bricolage Grotesque', file: '/media/fonts/bricolage.woff2' },
+  // Geometric and confident, for contractors (Latin, bold, ~8 KB).
+  poppins: { family: 'Poppins', file: '/media/fonts/poppins.woff2' },
 } as const
 
 // Six personalities, each drawn from well-made small-business sites.
@@ -99,7 +101,7 @@ export const GlobalStyles = z
     buttonCase: z.enum(['none', 'upper']).optional(),
     // The headings' typeface, served from our own host. Unset picks one to
     // suit the heading style; 'system' keeps the device's own font.
-    headingFont: z.enum(['newsreader', 'fraunces', 'bricolage', 'system']).optional(),
+    headingFont: z.enum(['newsreader', 'fraunces', 'bricolage', 'poppins', 'system']).optional(),
     // Gentle motion: sections rise in as they scroll into view, photos drift.
     // On unless the owner turns it off; visitors who ask for less motion
     // never see it.
@@ -140,6 +142,8 @@ export const ElementStyle = z
     // In a row, this child's share of the width (a 2 next to a 1 is twice
     // as wide), like a two-thirds column beside a one-third one.
     grow: z.number().int().min(1).max(12).optional(),
+    // A thick accent line down the left edge, beside a heading block.
+    rule: ColorValue.optional(),
   })
   .strict()
 export type ElementStyle = z.infer<typeof ElementStyle>
@@ -219,6 +223,9 @@ export const FormWidget = z
     submitLabel: z.string().min(1).max(40),
     // Shown after a message is sent.
     thanks: z.string().min(1).max(200).optional(),
+    // "row": the fields side by side in one line (labels kept for screen
+    // readers), like a request bar under a hero.
+    layout: z.enum(['row']).optional(),
   })
   .strict()
 
@@ -294,6 +301,8 @@ export interface Container {
   boxed?: boolean
   // A photo behind the content, darkened so text on it stays readable.
   backgroundImage?: BackgroundImage
+  // "slant": a row of photo panels with angled edges between them.
+  effect?: 'slant'
   style?: ElementStyle
   children: Element[]
 }
@@ -334,6 +343,7 @@ export const ContainerSchema: z.ZodType<Container> = z.lazy(() =>
         })
         .strict()
         .optional(),
+      effect: z.enum(['slant']).optional(),
       style: ElementStyle.optional(),
       children: z.array(ElementSchema).max(200),
     })

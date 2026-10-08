@@ -44,6 +44,8 @@ export const PALETTES: Record<string, { label: string; colors: GlobalStyles['col
   sunset: { label: 'Terracotta', colors: { primary: '#a8431f', secondary: '#2b211a', accent: '#d9a441', text: '#2b211a', muted: '#6d5d50', background: '#fbf8f3', surface: '#f3ece2' } },
   plum: { label: 'Blush', colors: { primary: '#7a4b5b', secondary: '#231d1a', accent: '#e3b5a4', text: '#231d1a', muted: '#6c625c', background: '#faf7f5', surface: '#f1ebe7' } },
   oxblood: { label: 'Burgundy', colors: { primary: '#6e2a2a', secondary: '#231b19', accent: '#b38b59', text: '#211a18', muted: '#675b55', background: '#fbf9f4', surface: '#f1ebe1' } },
+  // Bright safety orange on slate, for electricians and other trades.
+  electric: { label: 'Electric', colors: { primary: '#ee6c1b', secondary: '#2b303c', accent: '#ee6c1b', text: '#22262e', muted: '#5d6470', background: '#ffffff', surface: '#f4f5f7' } },
   slate: { label: 'Charcoal', colors: { primary: '#1f2937', secondary: '#0b0f14', accent: '#9aa6b2', text: '#111827', muted: '#4b5563', background: '#ffffff', surface: '#f3f4f6' } },
   // A dark site. Bands and the footer that use "secondary" turn cream, with
   // the dark page colour as their text, so every pairing stays readable.
@@ -51,7 +53,7 @@ export const PALETTES: Record<string, { label: string; colors: GlobalStyles['col
 }
 
 export const DESIGN_GLOBALS: Record<Design, Omit<GlobalStyles, 'colors'>> = {
-  bold: { fonts: { heading: 'sans', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 8, containerWidth: 1180, headingWeight: 800, headingTracking: -0.025, buttonShape: 'rounded' },
+  bold: { fonts: { heading: 'sans', body: 'sans' }, headingFont: 'poppins', baseFontSize: 17, typeScale: 1.26, radius: 4, containerWidth: 1200, headingWeight: 700, headingTracking: -0.015, buttonShape: 'rounded' },
   editorial: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.28, radius: 2, containerWidth: 1180, headingWeight: 400, headingTracking: -0.015, buttonShape: 'square', buttonCase: 'upper' },
   warm: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.26, radius: 14, containerWidth: 1160, headingWeight: 500, headingTracking: -0.015, buttonShape: 'pill' },
   upscale: { fonts: { heading: 'serif', body: 'sans' }, baseFontSize: 17, typeScale: 1.3, radius: 2, containerWidth: 1180, headingWeight: 500, headingTracking: -0.02, buttonShape: 'square', buttonCase: 'upper' },
@@ -245,7 +247,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     },
     globals: pro
       ? { colors, ...LAW_GLOBALS[lawStyle], ...(input.flair ? { flair: input.flair } : {}) }
-      : { colors, ...DESIGN_GLOBALS[design], flair: input.flair ?? flairFor(input.type, subdomain) },
+      : { colors, ...DESIGN_GLOBALS[design], flair: design === 'bold' ? 'clean' : input.flair ?? flairFor(input.type, subdomain) },
     nav: [
       {
         label: svcLabel,
@@ -728,40 +730,206 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ],
   })
 
-  let homeBody: Container[]
-  if (design === 'bold') {
-    homeBody = [
-      quoteHero,
-      {
-        id: 'strip',
-        type: 'container',
-        tag: 'section',
-        layout: 'grid',
-        columns: { desktop: 4, tablet: 2, mobile: 1 },
-        boxed: true,
-        style: { background: 'background', padding: { desktop: pad(8), mobile: pad(8, 20) }, gap: { desktop: 0 } },
-        children: [
-          ['Clear, upfront prices', 'You know the cost before we start.'],
-          [`Local to ${city}`, 'A team from your own neighborhood.'],
-          ['Easy to reach', phone ? `Call us on ${phone}.` : 'Send a message and we’ll get back to you.'],
-          ['Work done right', 'Tidy, careful and properly finished.'],
-        ].map(([h, d], i): Container => ({
-          id: `strip-${i + 1}`,
+  // Trades: the contractor layout. A bright photo with the headline across
+  // it and a request bar sitting on its bottom edge, a welcome line, the
+  // main services as slanted photo panels, a "need help?" block with a
+  // check list, every service as a numbered card, and a call band.
+  function contractorHome(): Container[] {
+    const white = '#ffffff' as const
+    const hero: Container = {
+      id: 'hero',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.5, overlayStyle: 'full', priority: true },
+      style: { background: 'secondary', padding: { desktop: { top: 190, right: 24, bottom: 0, left: 24 }, mobile: { top: 96, right: 20, bottom: 0, left: 20 } }, gap: { desktop: 16 } },
+      children: [
+        { id: 'hero-copy', type: 'container', layout: 'flex', align: 'center', style: { gap: { desktop: 16 } }, children: heroBlocks(true, { center: true, size: { desktop: headline.length > 48 ? 64 : 76, tablet: 54, mobile: 40 } }) },
+        {
+          id: 'ask',
           type: 'container',
           layout: 'flex',
-          style: { padding: { desktop: pad(26, 24), mobile: pad(16, 0) }, gap: { desktop: 2 } },
+          style: { margin: { desktop: { top: 150, right: 0, bottom: 0, left: 0 }, mobile: { top: 64, right: 0, bottom: 0, left: 0 } }, gap: { desktop: 0 } },
           children: [
-            { id: `strip-${i + 1}-h`, type: 'text', text: h, style: { fontWeight: 700, fontSize: { desktop: 17 } } },
-            { id: `strip-${i + 1}-t`, type: 'text', text: d, style: { color: 'muted', fontSize: { desktop: 15 } } },
+            { id: 'ask-tab-row', type: 'container', layout: 'grid', columns: { desktop: 3, tablet: 2, mobile: 1 }, children: [{ id: 'ask-tab', type: 'text', text: 'Request service today', style: { background: 'primary', color: white, fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 22, mobile: 18 }, padding: { desktop: pad(14, 30), mobile: pad(12, 20) } } }] },
+            {
+              id: 'ask-bar',
+              type: 'container',
+              layout: 'flex',
+              style: { background: 'secondary', padding: { desktop: pad(30, 32), mobile: pad(20, 16) } },
+              children: [{ id: 'ask-form', type: 'form', layout: 'row', fields: ['name', 'email', 'phone'], submitLabel: 'Get service', thanks: 'Thank you. We have your request and will get back to you soon.' }],
+            },
           ],
-        })),
-      },
-      serviceIndex('What we do'),
-      steps,
-      aboutSplit(),
-      faq,
-      homeLead,
-    ]
+        },
+      ],
+    }
+    const welcome: Container = {
+      id: 'welcome',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      align: 'center',
+      style: { padding: { desktop: pad(104), mobile: pad(60, 20) }, gap: { desktop: 14 }, textAlign: { desktop: 'center' } },
+      children: [
+        { id: 'welcome-k', type: 'text', text: `Welcome to ${name}`, style: { textAlign: { desktop: 'center' }, color: 'primary', fontWeight: 700, fontSize: { desktop: 18 } } },
+        { id: 'welcome-h', type: 'heading', level: 2, text: `Your ${t.trade} team in ${place}`, style: { textAlign: { desktop: 'center' }, fontSize: { desktop: 48, tablet: 40, mobile: 30 }, maxWidth: 900 } },
+        { id: 'welcome-t', type: 'text', text: introText, style: { textAlign: { desktop: 'center' }, color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 680 } },
+      ],
+    }
+    const panels: Container | undefined =
+      list.length >= 3
+        ? {
+            id: 'panels',
+            type: 'container',
+            tag: 'section',
+            layout: 'grid',
+            columns: { desktop: 3, mobile: 1 },
+            effect: 'slant',
+            style: { gap: { desktop: 0 } },
+            children: list.slice(0, 3).map((sv, i): Container => {
+              const ph = photos.cards[i]
+              return {
+                id: `panel-${i + 1}`,
+                type: 'container',
+                layout: 'flex',
+                align: 'center',
+                backgroundImage: { src: ph.src, width: ph.width, height: ph.height, overlay: 0.5, overlayStyle: 'full' },
+                style: { padding: { desktop: pad(210, 56), mobile: pad(110, 24) }, gap: { desktop: 22 } },
+                children: [
+                  { id: `panel-${i + 1}-h`, type: 'heading', level: 3, text: sv, style: { color: white, textAlign: { desktop: 'center' }, fontSize: { desktop: 42, tablet: 34, mobile: 32 } } },
+                  { id: `panel-${i + 1}-b`, type: 'button', label: 'Learn more', href: writtenFor(sv) ? `${svcHref}/${serviceSlug(sv)}` : svcHref, variant: 'primary', style: { borderRadius: 999 } },
+                ],
+              }
+            }),
+          }
+        : undefined
+    const check = (txt: string, i: number): Container => ({
+      id: `why-${i + 1}`,
+      type: 'container',
+      layout: 'flex',
+      direction: { desktop: 'row' },
+      style: { gap: { desktop: 14 } },
+      children: [
+        { id: `why-${i + 1}-m`, type: 'text', text: '✓', style: { grow: 1, color: 'primary', fontWeight: 800, fontSize: { desktop: 20 } } },
+        { id: `why-${i + 1}-t`, type: 'text', text: txt, style: { grow: 11, fontSize: { desktop: 18 } } },
+      ],
+    })
+    const help: Container = {
+      id: 'help',
+      type: 'container',
+      tag: 'section',
+      layout: 'grid',
+      columns: { desktop: 2, mobile: 1 },
+      align: 'center',
+      boxed: true,
+      style: { background: 'surface', padding: section, gap: { desktop: 72, mobile: 36 } },
+      children: [
+        {
+          id: 'help-copy',
+          type: 'container',
+          layout: 'flex',
+          style: { gap: { desktop: 18 } },
+          children: [
+            { id: 'help-h', type: 'heading', level: 2, text: `Do you need help with ${t.trade}?`, style: { rule: 'primary', fontSize: { desktop: 48, tablet: 40, mobile: 30 } } },
+            { id: 'help-t', type: 'text', text: `Tell us what’s going on and we’ll explain your options and what it costs before any work starts.`, style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 520 } },
+            {
+              id: 'help-actions',
+              type: 'container',
+              layout: 'flex',
+              direction: { desktop: 'row' },
+              style: { gap: { desktop: 12 }, margin: { desktop: { top: 8, right: 0, bottom: 0, left: 0 } } },
+              children: [
+                ...(phone ? [{ id: 'help-call', type: 'button' as const, label: `Call ${phone}`, href: telHref(phone), variant: 'primary' as const }] : []),
+                { id: 'help-ask', type: 'button', label: 'Request service', href: '/contact', variant: 'secondary' },
+              ],
+            },
+          ],
+        },
+        {
+          id: 'why',
+          type: 'container',
+          layout: 'flex',
+          style: { background: 'secondary', color: white, padding: { desktop: pad(44, 44), mobile: pad(28, 22) }, gap: { desktop: 16 } },
+          children: [
+            { id: 'why-k', type: 'text', text: 'Why choose us', style: { color: 'accent', fontWeight: 700, fontSize: { desktop: 17 } } },
+            { id: 'why-h', type: 'heading', level: 3, text: `Why ${city} calls us`, style: { color: white, fontSize: { desktop: 34, mobile: 28 } } },
+            ...[
+              'A clear price before any work starts',
+              'Careful, tidy work, properly finished',
+              `Local to ${city} and the area around it`,
+              phone ? `Easy to reach on ${phone}` : 'Easy to reach: send us a message any time',
+            ].map(check),
+          ],
+        },
+      ],
+    }
+    const offer: Container = {
+      id: 'services',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      align: 'center',
+      style: { padding: section, gap: { desktop: 48 } },
+      children: [
+        { id: 'services-h', type: 'heading', level: 2, text: `We offer full-service ${t.trade}`, style: { textAlign: { desktop: 'center' }, fontSize: { desktop: 48, tablet: 40, mobile: 30 }, maxWidth: 820 } },
+        {
+          id: 'services-grid',
+          type: 'container',
+          layout: 'grid',
+          // Four cards sit two by two rather than leaving one alone.
+          columns: { desktop: Math.min(list.length, 6) === 4 ? 2 : 3, tablet: 2, mobile: 1 },
+          style: { gap: { desktop: 24 } },
+          children: list.slice(0, 6).map((sv, i): Container => ({
+            id: `svc-${i + 1}`,
+            type: 'container',
+            layout: 'flex',
+            style: { border: 'surface', background: 'background', borderRadius: 4, padding: { desktop: pad(34, 30), mobile: pad(26, 22) }, gap: { desktop: 10 } },
+            children: [
+              { id: `svc-${i + 1}-n`, type: 'text', text: String(i + 1).padStart(2, '0'), style: { color: 'primary', fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 40 } } },
+              { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: sv, style: { fontSize: { desktop: 24 } } },
+              { id: `svc-${i + 1}-t`, type: 'text', text: cardText(sv, i), style: { color: 'muted' } },
+            ],
+          })),
+        },
+        ...(list.length > 6 ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: svcHref, variant: 'outline' as const }] : []),
+      ],
+    }
+    const callBand: Container[] = phone
+      ? [
+          {
+            id: 'call',
+            type: 'container',
+            tag: 'section',
+            layout: 'grid',
+            columns: { desktop: 2, mobile: 1 },
+            align: 'center',
+            boxed: true,
+            style: { background: 'primary', color: white, padding: { desktop: pad(72), mobile: pad(48, 20) }, gap: { desktop: 32, mobile: 18 } },
+            children: [
+              {
+                id: 'call-copy',
+                type: 'container',
+                layout: 'flex',
+                style: { gap: { desktop: 8 } },
+                children: [
+                  { id: 'call-h', type: 'heading', level: 2, text: 'Need us fast?', style: { color: white, fontSize: { desktop: 44, mobile: 32 } } },
+                  { id: 'call-t', type: 'text', text: 'Call us and talk to someone who can help.', style: { fontSize: { desktop: 19 } } },
+                ],
+              },
+              { id: 'call-btn', type: 'button', label: `Call ${phone}`, href: telHref(phone), variant: 'secondary', style: { fontSize: { desktop: 26, mobile: 20 }, padding: { desktop: pad(20, 36) } } },
+            ],
+          },
+        ]
+      : []
+    return [hero, welcome, ...(panels ? [panels] : []), help, offer, ...callBand, faq, homeLead]
+  }
+
+  let homeBody: Container[]
+  if (design === 'bold') {
+    homeBody = contractorHome()
   } else if (design === 'editorial') {
     homeBody = [
       ...coverHero,
@@ -854,7 +1022,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   // The ticker runs under the hero (after the cover photo, when there is one).
-  homeBody.splice(homeBody[1]?.id === 'hero-photo' ? 2 : 1, 0, ...ticker)
+  if (design !== 'bold') homeBody.splice(homeBody[1]?.id === 'hero-photo' ? 2 : 1, 0, ...ticker)
   // The longer story of the business, before the questions.
   const about = input.content?.about
   const story: Container | undefined = about?.paragraphs.length

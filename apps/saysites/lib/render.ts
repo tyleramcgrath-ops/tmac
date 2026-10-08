@@ -125,7 +125,7 @@ function renderContainer(c: Container): string {
   // Hooks for the shared polish: rows of items (g) and cards (cd).
   const row = c.layout === 'grid' || c.direction?.desktop === 'row'
   const card = !!c.style?.background && !!c.style.borderRadius
-  const classes = `${cls(c.id)}${c.boxed ? ' bx' : ''}${bg ? ' hasbg' : ''}${row && !c.boxed ? ' g' : ''}${card ? ' cd' : ''}`
+  const classes = `${cls(c.id)}${c.boxed ? ' bx' : ''}${bg ? ' hasbg' : ''}${row && !c.boxed ? ' g' : ''}${card ? ' cd' : ''}${c.effect ? ` fx-${c.effect}` : ''}`
   // Boxed: the element spans full width (background bleeds); content sits in
   // an inner box capped at the global container width.
   return c.boxed
@@ -247,12 +247,15 @@ const FIELD: Record<(typeof FORM_FIELDS)[number], { label: (w: SiteWords) => str
 // "#sent", which reveals the thank-you note through :target, so the cached
 // page never changes. "website" is a honeypot field people never see.
 function renderForm(w: Extract<Widget, { type: 'form' }>): string {
-  const field = (f: (typeof FORM_FIELDS)[number]) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${FIELD[f].input}</label>`
+  const rowed = w.layout === 'row'
+  // In a row the label is read by screen readers and shown as a placeholder.
+  const input = (f: (typeof FORM_FIELDS)[number]) => (rowed ? FIELD[f].input.replace(/^<(input|textarea)/, `<$1 placeholder="${esc(FIELD[f].label(t))}"`).replace(/ rows="5"/, ' rows="1"') : FIELD[f].input)
+  const field = (f: (typeof FORM_FIELDS)[number]) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${input(f)}</label>`
   // Intake questions go just before the message box, all optional.
-  const questions = intake ? (intake.note ? `<p class="sform-note">${esc(intake.note)}</p>` : '') + intake.questions.map(intakeField).join('') : ''
+  const questions = intake && !rowed ? (intake.note ? `<p class="sform-note">${esc(intake.note)}</p>` : '') + intake.questions.map(intakeField).join('') : ''
   const fields = w.fields.map((f) => (f === 'message' ? questions + field(f) : field(f))).join('') + (w.fields.includes('message') ? '' : questions)
   return (
-    `<form class="sform ${cls(w.id)}" method="post" action="/__form">` +
+    `<form class="sform${rowed ? ' sform-row' : ''} ${cls(w.id)}" method="post" action="/__form">` +
     `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? t.thanks)}</p>` +
     `<input type="hidden" name="form" value="${esc(w.id)}">` +
     `<label class="sform-hp" aria-hidden="true">${esc(t.leaveEmpty)}<input name="website" tabindex="-1" autocomplete="off"></label>` +
@@ -285,7 +288,7 @@ function renderHeader(site: Site, page: Page): string {
   const h = site.header
   const phone = site.business.phone
   const top = h?.topbar
-    ? `<div class="stb"><div class="stb-in"><span>${esc(h.topbar)}</span>${phone ? `<a href="${esc(tel(phone))}">${esc(phone)}</a>` : ''}</div></div>`
+    ? `<div class="stb"><div class="stb-in"><span>${esc(h.topbar)}</span><span class="stb-c">${site.business.email ? `<a href="mailto:${esc(site.business.email)}">${esc(site.business.email)}</a>` : ''}${phone ? `<a href="${esc(tel(phone))}">${esc(phone)}</a>` : ''}</span></div></div>`
     : ''
   const cta = h?.cta ? `<a class="btn btn-primary sh-cta" href="${esc(h.cta.href)}">${esc(h.cta.label)}</a>` : ''
   const brand = site.business.logo
@@ -462,12 +465,13 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
     used.add(el.type === 'container' ? 'container' : el.type)
     if (el.type === 'container') {
       if (el.backgroundImage) used.add('bg')
+      if (el.effect) used.add(`fx-${el.effect}`)
       containerRules(el, byBp)
       el.children.forEach(visit)
     } else {
       if (el.type === 'button') used.add(`btn-${el.variant}`)
       if (el.type === 'image' && el.aspect) used.add('crop')
-      if (el.type === 'form') used.add('button').add('btn-primary')
+      if (el.type === 'form') used.add('button').add('btn-primary').add(el.layout === 'row' ? 'form-row' : 'form')
       if (el.type === 'products') used.add('button').add('btn-primary').add('btn-outline')
     }
     if (el.style) styleRules(`.${cls(el.id)}`, el.style, byBp)
@@ -544,8 +548,8 @@ function widgetCss(used: Set<string>): string {
   if (used.has('text')) css += `.tx p:last-child{margin-bottom:0}`
   if (used.has('topbar'))
     css +=
-      `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}` +
-      `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span{display:none}}`
+      `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}.stb-c{display:flex;gap:4px 22px;flex-wrap:wrap}` +
+      `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span:first-child,.stb-c a[href^=mailto]{display:none}}`
   if (used.has('promo'))
     css += `.spb{background:var(--c-primary);color:var(--c-background);font-size:.88em;text-align:center}.spb p{max-width:var(--w);margin:0 auto;padding:9px 20px;line-height:1.4}.spb a{color:inherit;text-decoration:none;font-weight:600}.spb a:hover span{margin-left:3px}`
   if (used.has('callbar'))
@@ -589,6 +593,14 @@ function widgetCss(used: Set<string>): string {
       `.sform-note{margin:0;font-size:.9em;color:var(--c-muted)}.sform input:focus,.sform textarea:focus,.sform select:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
       `.sform-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}` +
       `.sform-ok{display:none;margin:0;padding:14px 16px;border-radius:min(var(--r),10px);background:color-mix(in srgb,var(--c-primary) 12%,var(--c-background));font-weight:600}.sform-ok:target{display:block}`
+  if (used.has('form-row'))
+    css +=
+      `.sform-row{max-width:none;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:stretch}.sform-row label>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}` +
+      `.sform-row textarea{resize:none;min-height:0;height:100%}.sform-row .btn{justify-self:stretch}.sform-row .sform-ok{grid-column:1/-1}`
+  if (used.has('fx-slant'))
+    css +=
+      `.fx-slant{overflow:hidden}.fx-slant>.hasbg{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}` +
+      `@media (min-width:${BREAKPOINT_MAX_WIDTH.mobile + 1}px){.fx-slant>:nth-child(2){clip-path:polygon(16% 0,100% 0,84% 100%,0 100%);margin:0 -8%;z-index:1}}`
   if (used.has('ticker'))
     css +=
       `.tk{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}` +
@@ -746,6 +758,7 @@ function styleRules(sel: string, s: ElementStyle, byBp: Record<Breakpoint, Rules
   if (s.textTransform) add(d, sel, { 'text-transform': s.textTransform })
   if (s.fontFamily) add(d, sel, { 'font-family': s.fontFamily === 'heading' ? 'var(--f-h)' : 'var(--f-b)' })
   if (s.border) add(d, sel, { border: `1px solid ${color(s.border)}` })
+  if (s.rule) add(d, sel, { 'border-left': `5px solid ${color(s.rule)}`, 'padding-left': '28px' })
   // Doubled class: beats the parent row's equal-share rule on desktop; the
   // phone layout (stacked) still wins there.
   if (s.grow) add(d, `${sel}${sel}`, { flex: `${s.grow} 1 0` })
