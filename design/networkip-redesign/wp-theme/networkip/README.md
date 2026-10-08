@@ -1,4 +1,4 @@
-# NetworkIP WordPress Theme (v1.0.0)
+# NetworkIP WordPress Theme (v1.1.0)
 
 This is a custom theme built from the ChatGPT "left homepage" handoff. It has a dark navy and electric-blue design with a connected-globe hero, a global network map section, glowing service cards and a contact form.
 
@@ -12,6 +12,18 @@ Requirements: WordPress 6.3+ (tested on 7.1.3) and PHP 7.4+ (tested on 8.4). It 
 4. Optional: under **Appearance → Menus**, assign menus to *Primary navigation*, *Footer: Company*, *Footer: Service* and *Footer: Technology*. If a location has no menu, the theme shows the public-site links automatically.
 5. Under **Appearance → Customize → Site Identity → Logo**, upload the approved NetworkIP logo (see the caveats below).
 
+## Switching from the current Elementor site
+
+The current networkip.net is built with Elementor. Version 1.1 handles that so the new design doesn't end up mixed with the old one:
+
+- **Elementor's global colors and fonts are blocked.** Elementor's "kit" styles used to recolor the menu and headings dark navy and swap the font to Roboto. Elementor stays installed and working.
+- **The old homepage content is hidden.** The static front page's editor content (the old Elementor homepage) is not shown inside the new homepage.
+- **The main pages use built-in designs.** About Us, Management, Service, International Calling, Customer Intelligence, Technology, Integration, Call Quality and Contact Us render built-in layouts with the public content, instead of their old Elementor layouts. They only need to exist with those slugs.
+
+All three can be switched off in **Customize → NetworkIP Homepage → Layout & compatibility**. Other pages (for example Privacy Policy) still show their own content.
+
+**If the old header or footer still appears:** that comes from Elementor Pro's Theme Builder. Go to **Templates → Theme Builder** and set the old Header and Footer templates to Draft, or remove their display conditions.
+
 ## Editing content
 
 | What | Where |
@@ -21,7 +33,9 @@ Requirements: WordPress 6.3+ (tested on 7.1.3) and PHP 7.4+ (tested on 8.4). It 
 | Contact headline, text, address, phone, email; form on/off and recipient | Customize → NetworkIP Homepage → Contact & form |
 | Service cards, global-calling panels and stats, technology cards and capacity stats | `inc/content.php` (commented PHP arrays), or the `networkip_home_content` filter from a child theme or plugin |
 | Extra homepage content | Anything written in the editor on the static front page appears between the About and Services sections |
-| Interior pages | Normal page editor. They use a map banner (the page excerpt becomes its subtitle) and end with a contact call to action. The `contact-us` page ends with the full contact section and form instead. |
+| Main interior pages (About Us, Management, Service, International Calling, Customer Intelligence, Technology, Integration, Call Quality, Contact Us) | `inc/pages.php` (commented arrays), or the `networkip_page_layouts` filter. To add headshots to the Management page, add `'photo' => 'https://…'` to each person. |
+| Other pages | Normal page editor. They use a map banner (the page excerpt becomes its subtitle) and end with a contact call to action. |
+| Menus | Appearance → Menus. Dropdown sub-items are supported. |
 
 ## Contact form
 
@@ -60,6 +74,8 @@ Nothing is hotlinked. The hero image is preloaded with `fetchpriority="high"`, a
 
 - Every PHP file passes `php -l`. No notices or warnings with `WP_DEBUG` on.
 - It ran on a real WordPress 7.1.3 install (SQLite) and was checked at 1440, 820 and 400 px with no horizontal overflow.
+- With Elementor 4.3.4 active, a dark-navy global kit and Elementor-built pages: the theme's colors and font hold, and no old content appears on the homepage or the nine designed pages.
+- Dropdown menus work on hover and on keyboard focus, and appear as nested items in the mobile menu.
 - Mobile menu:
   - Toggle with `aria-expanded`.
   - Focus moves into the menu and is trapped there.

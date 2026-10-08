@@ -56,6 +56,11 @@ function networkip_defaults() {
 		'contact_email'        => 'marketing@networkip.net',
 		'contact_recipient'    => '',
 		'contact_form_enabled' => '1',
+
+		// Layout options.
+		'home_show_content'    => '',
+		'designed_pages'       => '1',
+		'neutralize_builders'  => '1',
 	);
 }
 

@@ -10,6 +10,7 @@ $networkip_phone   = networkip_mod( 'contact_phone' );
 $networkip_email   = networkip_mod( 'contact_email' );
 $networkip_status  = networkip_contact_status();
 $networkip_form_on = '1' === networkip_mod( 'contact_form_enabled' );
+$networkip_extra   = isset( $args['extra'] ) ? (array) $args['extra'] : array();
 ?>
 <section class="nip-section nip-contact" id="contact" aria-labelledby="contact-title">
 	<div class="nip-wrap nip-contact__grid<?php echo $networkip_form_on ? '' : ' nip-contact__grid--solo'; ?>">
@@ -18,6 +19,17 @@ $networkip_form_on = '1' === networkip_mod( 'contact_form_enabled' );
 			<p class="nip-lead"><?php echo esc_html( networkip_mod( 'contact_text' ) ); ?></p>
 
 			<ul class="nip-contact__list" role="list">
+				<?php foreach ( $networkip_extra as $networkip_row ) : ?>
+					<li>
+						<span class="nip-contact__label"><?php echo esc_html( $networkip_row['label'] ); ?></span>
+						<span>
+							<?php echo esc_html( $networkip_row['text'] ); ?>
+							<?php if ( ! empty( $networkip_row['email'] ) ) : ?>
+								<br><a href="mailto:<?php echo esc_attr( antispambot( $networkip_row['email'] ) ); ?>"><?php echo esc_html( antispambot( $networkip_row['email'] ) ); ?></a>
+							<?php endif; ?>
+						</span>
+					</li>
+				<?php endforeach; ?>
 				<?php if ( $networkip_address ) : ?>
 					<li>
 						<span class="nip-contact__label"><?php esc_html_e( 'Address', 'networkip' ); ?></span>

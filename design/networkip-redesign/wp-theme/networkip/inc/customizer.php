@@ -52,6 +52,7 @@ function networkip_customize_register( $wp_customize ) {
 		'networkip_hero'    => __( 'Hero', 'networkip' ),
 		'networkip_about'   => __( 'About', 'networkip' ),
 		'networkip_contact' => __( 'Contact & form', 'networkip' ),
+		'networkip_layout'  => __( 'Layout & compatibility', 'networkip' ),
 	);
 	foreach ( $sections as $id => $title ) {
 		$wp_customize->add_section( $id, array( 'title' => $title, 'panel' => 'networkip_home' ) );
@@ -82,6 +83,10 @@ function networkip_customize_register( $wp_customize ) {
 		'contact_email'        => array( 'networkip_contact', __( 'Public email', 'networkip' ), 'email', 'sanitize_email' ),
 		'contact_form_enabled' => array( 'networkip_contact', __( 'Show the contact form', 'networkip' ), 'checkbox', 'networkip_sanitize_checkbox' ),
 		'contact_recipient'    => array( 'networkip_contact', __( 'Send form messages to (blank = site admin email)', 'networkip' ), 'email', 'sanitize_email' ),
+
+		'designed_pages'       => array( 'networkip_layout', __( 'Use the built-in designs for About Us, Management, Service, International Calling, Customer Intelligence, Technology, Integration, Call Quality and Contact Us (ignores those pages’ old editor content)', 'networkip' ), 'checkbox', 'networkip_sanitize_checkbox' ),
+		'home_show_content'    => array( 'networkip_layout', __( 'Show the front page’s own editor content on the homepage (off by default: on migrated sites it holds the old design)', 'networkip' ), 'checkbox', 'networkip_sanitize_checkbox' ),
+		'neutralize_builders'  => array( 'networkip_layout', __( 'Stop Elementor’s global kit colors and fonts from overriding the theme', 'networkip' ), 'checkbox', 'networkip_sanitize_checkbox' ),
 	);
 
 	$defaults = networkip_defaults();

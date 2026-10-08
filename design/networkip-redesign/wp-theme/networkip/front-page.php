@@ -2,7 +2,10 @@
 /**
  * Homepage template. Each section is a template part in template-parts/home/.
  *
- * If the static front page has editor content, it is shown after the About section.
+ * The static front page's own editor content is ignored by default, because on
+ * sites migrated from a page builder it holds the old homepage design. Turn on
+ * Customize → NetworkIP Homepage → Hero → "Show the front page's editor content"
+ * to show it after the About section.
  *
  * @package NetworkIP
  */
@@ -14,7 +17,7 @@ get_header();
 	get_template_part( 'template-parts/home/hero' );
 	get_template_part( 'template-parts/home/about' );
 
-	if ( 'page' === get_option( 'show_on_front' ) ) {
+	if ( 'page' === get_option( 'show_on_front' ) && '1' === networkip_mod( 'home_show_content' ) ) {
 		while ( have_posts() ) {
 			the_post();
 			if ( '' !== trim( get_the_content() ) ) {
