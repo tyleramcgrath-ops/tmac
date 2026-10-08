@@ -288,6 +288,12 @@ sitemap and an RSS feed (/blog/rss.xml). Writing rules: no invented numbers,
 studies, quotes or results; link every outside fact to its source (Google's
 own documentation where possible); never promise rankings or leads; never
 name a competitor; never mention the founder's name (byline is "SaySites").
+**One article a day** (the owner's request, October 8, 2026): articles are
+written a week ahead in `lib/articles-scheduled.ts`, each dated a day apart;
+`publishedArticles` hides each until its day, so a week ships in one deploy.
+A weekly routine writes the next week. Each one must be genuinely useful
+on its own (Google warns against mass-produced pages), built only on sources
+checked that day, with every claim about SaySites true of what's built.
 
 ## Owner analytics (October 2026)
 
