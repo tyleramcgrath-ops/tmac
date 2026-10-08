@@ -308,10 +308,21 @@ describe('SaySites speed gate', () => {
   })
 
   it('gives each site a personality that suits it, and a strip of its real services', () => {
-    const a = buildStarterSite({ name: 'Rivertown Plumbing', type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'ocean' }, 'org', 'rivertown-plumbing')
-    expect(['bold', 'clean', 'studio']).toContain(a.site.globals.flair)
+    const a = buildStarterSite({ name: 'Rivertown Bakery', type: 'bakery', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'sunset' }, 'org', 'rivertown-bakery')
+    expect(['soft', 'clean', 'editorial']).toContain(a.site.globals.flair)
     const home = a.pages.find((p) => p.slug === '')!
     expect(home.body[1].children[0]).toMatchObject({ type: 'ticker', items: ['Leak repair', 'Water heaters', 'Drain cleaning'] })
+    // Every site different: plumbers in the same town get different
+    // layouts, fonts or headlines, and the preview matches the build.
+    const plumber = (n: string) => buildStarterSite({ name: n, type: 'plumber', city: 'Rivertown', region: 'OH', services: ['Leak repair', 'Water heaters', 'Drain cleaning'], palette: 'ocean' }, 'org', 'x')
+    const look = (b: ReturnType<typeof plumber>) => {
+      const home = b.pages.find((p) => p.slug === '')!
+      return JSON.stringify([b.site.globals.headingFont, b.site.globals.radius, home.body.map((c) => c.id), (home.body.flatMap((c) => c.children) as { id: string; text?: string }[]).find((e) => e.id === 'hero-title')?.text])
+    }
+    const looks = new Set(['Rivertown Plumbing', 'Ace Pipe Pros', 'Keel & Sons', 'Blue Tap', 'Dayton Drain Co', 'Northside Plumbing'].map((n) => look(plumber(n))))
+    expect(looks.size).toBeGreaterThanOrEqual(5)
+    expect(look(plumber('Keel & Sons'))).toBe(look(plumber('Keel & Sons')))
+    expect(plumber('Keel & Sons').site.globals.flair).toBe('clean')
     const { html, css } = renderPage(a.site, home, a.pages)
     // The list twice for a seamless loop; the copy is hidden from screen readers.
     expect(html.match(/<li>Water heaters<\/li>/g)).toHaveLength(2)
