@@ -461,6 +461,8 @@ export const SiteSchema = z
       })
       .strict()
       .optional(),
+    // How the site was started, for the team's directory (lib/directory).
+    startedVia: z.enum(['questions', 'google', 'redesign', 'outreach', 'team', 'template']).optional(),
     language: z.string().min(2).max(10).default('en'),
     business: BusinessInfo,
     globals: GlobalStyles,

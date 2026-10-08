@@ -6,6 +6,7 @@
 // Every site and page is validated against the schema on the way in and out.
 
 import type { AnalyticsRaw } from './analytics'
+import type { DirectoryRaw } from './directory'
 import type { Article } from './articles'
 import type { Billing } from './billing'
 import { randomUUID } from 'crypto'
@@ -187,6 +188,9 @@ export interface Store {
   launchStats(sinceDay: string): Promise<LaunchStats>
   // The owner's analytics (lib/analytics), from sinceDay (YYYY-MM-DD) on.
   analytics(sinceDay: string): Promise<AnalyticsRaw>
+  // Every account and site for the team's directory (lib/directory), with
+  // views, calls and leads from sinceDay on.
+  directory(sinceDay: string): Promise<DirectoryRaw>
   // saysites.com's own blog (lib/articles): articles written in the dashboard.
   articles(): Promise<Article[]>
   saveArticle(a: Article): Promise<void>
@@ -688,6 +692,50 @@ class PgStore implements Store {
       topSites: top.map((r) => ({ id: r.id, name: r.name ?? r.subdomain, subdomain: r.subdomain, views: Number(r.views), leads: Number(r.leads), calls: Number(r.calls) })),
     }
   }
+  async directory(sinceDay: string) {
+    type T = Date | string | null
+    const iso = (d: T) => (d == null ? undefined : typeof d === 'string' ? d : d.toISOString())
+    const [users, sites] = await Promise.all([
+      this.q<{ id: string; email: string; name: string; created_at: T; billing: Billing | null }>(
+        'SELECT u.id, u.email, u.name, u.created_at, b.data AS billing FROM ss_users u LEFT JOIN ss_billing b ON b.user_id = u.id ORDER BY u.created_at DESC',
+      ),
+      this.q<{ id: string; owner_id: string; created_at: T; updated_at: T; data: Site; pages: string; published: string; views: string | null; calls: string | null; last_view: T; leads: string | null; leads_all: string | null; last_lead: T; micros: string | null; chats: string | null; last_sofie: T; members: string }>(
+        `SELECT s.id, s.owner_id, s.created_at, s.updated_at, s.data,
+          (SELECT count(*) FROM ss_pages p WHERE p.site_id = s.id) AS pages,
+          (SELECT count(*) FROM ss_pages p WHERE p.site_id = s.id AND p.data->>'status' = 'published') AS published,
+          v.views, v.calls, v.last_view, m.leads, m.leads_all, m.last_lead, a.micros, a.chats, a.last_sofie,
+          (SELECT count(*) FROM ss_members x WHERE x.site_id = s.id) AS members
+         FROM ss_sites s
+         LEFT JOIN (SELECT site_id, sum(views) FILTER (WHERE path <> '#call' AND day >= $1::date) AS views, sum(views) FILTER (WHERE path = '#call' AND day >= $1::date) AS calls, max(day) FILTER (WHERE path <> '#call') AS last_view FROM ss_visits GROUP BY 1) v ON v.site_id = s.id
+         LEFT JOIN (SELECT site_id, count(*) FILTER (WHERE created_at >= $1::date) AS leads, count(*) AS leads_all, max(created_at) AS last_lead FROM ss_messages GROUP BY 1) m ON m.site_id = s.id
+         LEFT JOIN (SELECT site_id, sum(micros) AS micros, sum(messages) AS chats, max(day) AS last_sofie FROM ss_usage GROUP BY 1) a ON a.site_id = s.id
+         ORDER BY s.created_at DESC`,
+        [sinceDay],
+      ),
+    ])
+    return {
+      users: users.map((u) => ({ id: u.id, email: u.email, name: u.name, createdAt: iso(u.created_at) ?? '', billing: u.billing })),
+      sites: sites.map((r) => ({
+        id: r.id,
+        ownerId: r.owner_id,
+        createdAt: iso(r.created_at) ?? '',
+        updatedAt: iso(r.updated_at) ?? '',
+        site: r.data,
+        pages: Number(r.pages),
+        published: Number(r.published),
+        views: Number(r.views ?? 0),
+        calls: Number(r.calls ?? 0),
+        leads: Number(r.leads ?? 0),
+        leadsAll: Number(r.leads_all ?? 0),
+        lastLead: iso(r.last_lead),
+        lastView: iso(r.last_view),
+        aiMicros: Number(r.micros ?? 0),
+        chats: Number(r.chats ?? 0),
+        lastSofie: iso(r.last_sofie),
+        members: Number(r.members),
+      })),
+    }
+  }
   async articles() {
     return (await this.q<{ data: Article }>('SELECT data FROM ss_articles')).map((r) => r.data)
   }
@@ -1091,6 +1139,43 @@ export class MemoryStore implements Store {
         })
         .sort((a, b) => b.leads - a.leads || b.calls - a.calls || b.views - a.views)
         .slice(0, 10),
+    }
+  }
+  async directory(sinceDay: string) {
+    const pages = [...this.pages.values()]
+    const visits = [...this.visits.values()]
+    const usage = [...this.usage].map(([k, u]) => ({ site: k.split('|')[0], day: k.split('|')[1], ...u }))
+    const max = (xs: string[]) => xs.reduce<string | undefined>((m, x) => (!m || x > m ? x : m), undefined)
+    return {
+      users: [...this.users.values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map((u) => ({ id: u.id, email: u.email, name: u.name, createdAt: u.createdAt, billing: this.bills.get(u.id) ?? null })),
+      sites: [...this.sites.values()]
+        .sort((a, b) => (b.at ?? '').localeCompare(a.at ?? ''))
+        .map(({ ownerId, site, at }) => {
+          const mine = pages.filter((p) => p.siteId === site.id)
+          const v = visits.filter((x) => x.siteId === site.id)
+          const m = this.messages.filter((x) => x.siteId === site.id)
+          const u = usage.filter((x) => x.site === site.id)
+          const sum = (xs: typeof v) => xs.reduce((n, x) => n + x.views, 0)
+          return {
+            id: site.id,
+            ownerId,
+            createdAt: at ?? site.updatedAt,
+            updatedAt: site.updatedAt,
+            site: structuredClone(site),
+            pages: mine.length,
+            published: mine.filter((p) => p.status === 'published').length,
+            views: sum(v.filter((x) => x.day >= sinceDay && x.path !== '#call')),
+            calls: sum(v.filter((x) => x.day >= sinceDay && x.path === '#call')),
+            lastView: max(v.filter((x) => x.path !== '#call').map((x) => x.day)),
+            leads: m.filter((x) => x.createdAt.slice(0, 10) >= sinceDay).length,
+            leadsAll: m.length,
+            lastLead: max(m.map((x) => x.createdAt)),
+            aiMicros: u.reduce((n, x) => n + x.micros, 0),
+            chats: u.reduce((n, x) => n + x.messages, 0),
+            lastSofie: max(u.map((x) => x.day)),
+            members: this.members.filter((x) => x.siteId === site.id).length,
+          }
+        }),
     }
   }
   private posts = new Map<string, Article>()

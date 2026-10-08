@@ -30,8 +30,8 @@ export default async function ClaimPage({ params, searchParams }: { params: Prom
   const domain = hostOf(p.url)
   const site = { ...claimed.site, ownership: { verified: false, ...(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/.test(domain) ? { domain } : {}) } }
   if (!(await store.claimPreview(id, user.id, site.id))) redirect('/dashboard')
-  await store.createSite(user.id, site, pages)
   const prospect = await store.prospectByPreview(id)
+  await store.createSite(user.id, { ...site, startedVia: prospect ? 'outreach' : 'redesign' }, pages)
   if (prospect) {
     await store.saveProspect({ ...prospect, claimedAt: new Date().toISOString() })
     const bill = await store.billing(user.id)
