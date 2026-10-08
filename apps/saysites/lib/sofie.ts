@@ -690,7 +690,9 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
 }
 
 export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder; budgetMicros?: number }): Promise<SofieResult> {
-  const client = input.client ?? new Anthropic()
+  // New API accounts hit rate limits quickly; the SDK waits and retries
+  // (respecting retry-after) a few times before giving up.
+  const client = input.client ?? new Anthropic({ maxRetries: 5 })
   const ws = new Workspace(input.snapshot, { taken: input.taken, finder: input.finder })
   const takenHere = PHOTO_KEYS.filter((k) => ws.taken.has(k))
 

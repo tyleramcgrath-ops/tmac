@@ -1,5 +1,7 @@
 'use server'
 
+import { isAdmin } from '@/lib/admin'
+import { sofieErrorText } from '@/lib/sofie-errors'
 import { after } from 'next/server'
 import { askSofie, type ChatTurn } from '@/lib/sofie'
 import { requireUser } from '@/lib/session'
@@ -76,7 +78,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
   const text = message.trim().slice(0, MAX_MESSAGE)
   if (!text || isWorking(state)) return view(state, live)
   if (!process.env.ANTHROPIC_API_KEY) {
-    return view(state, live, 'Sofie isn’t switched on yet: this server has no Anthropic API key. Add ANTHROPIC_API_KEY in the Vercel project settings, then try again.')
+    return view(state, live, 'Sofie isn’t switched on yet: this server has no Anthropic API key. Add ANTHROPIC_API_KEY in SiteGround (Devs → Node.js → Environment variables), restart the app, then try again.')
   }
   const access = await loadAccess(store, user)
   if (access.locked) return view(state, live, 'Your free trial has ended. Start your plan on the Account page and Sofie will pick up right where you left off.')
@@ -111,7 +113,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
       })
     } catch (e) {
       console.error('Sofie failed', e)
-      await store.saveSofieState(site.id, { ...started, pending: null, error: 'Sofie couldn’t finish that just now. Please try again in a moment.' })
+      await store.saveSofieState(site.id, { ...started, pending: null, error: sofieErrorText(e, isAdmin(user.email)) })
     }
   })
 
