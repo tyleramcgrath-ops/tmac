@@ -14,6 +14,8 @@ import { SHOWCASE } from './showcase'
 import { PageSchema, RedirectSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
 import type { LeagueSite } from './league'
 import type { Preview } from './redesign'
+import type { Campaign } from './outreach'
+import type { CityReport, Prospect } from './prospects'
 import type { ChatTurn, Snapshot } from './sofie'
 
 // Sofie's working state for one site: the chat, plus a draft of her edits
@@ -189,6 +191,17 @@ export interface Store {
   articles(): Promise<Article[]>
   saveArticle(a: Article): Promise<void>
   deleteArticle(slug: string): Promise<void>
+  // Outreach (lib/outreach, lib/prospects): campaigns, the businesses in
+  // them, and the city reports published from them.
+  campaigns(): Promise<Campaign[]>
+  saveCampaign(c: Campaign): Promise<void>
+  prospects(campaign?: string): Promise<Prospect[]>
+  prospect(id: string): Promise<Prospect | null>
+  prospectByPreview(previewId: string): Promise<Prospect | null>
+  saveProspect(p: Prospect): Promise<void>
+  reports(): Promise<CityReport[]>
+  report(slug: string): Promise<CityReport | null>
+  saveReport(r: CityReport): Promise<void>
 }
 
 export interface LaunchStats {
@@ -374,6 +387,24 @@ CREATE TABLE IF NOT EXISTS ss_feedback (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_articles (
+  slug TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_campaigns (
+  slug TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_prospects (
+  id TEXT PRIMARY KEY,
+  campaign TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_prospects_campaign_idx ON ss_prospects (campaign);
+CREATE INDEX IF NOT EXISTS ss_prospects_preview_idx ON ss_prospects ((data->>'previewId'));
+CREATE TABLE IF NOT EXISTS ss_reports (
   slug TEXT PRIMARY KEY,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -665,6 +696,36 @@ class PgStore implements Store {
   }
   async deleteArticle(slug: string) {
     await this.q('DELETE FROM ss_articles WHERE slug = $1', [slug])
+  }
+  async campaigns() {
+    return (await this.q<{ data: Campaign }>('SELECT data FROM ss_campaigns ORDER BY updated_at DESC')).map((r) => r.data)
+  }
+  async saveCampaign(c: Campaign) {
+    await this.q('INSERT INTO ss_campaigns (slug, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (slug) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [c.slug, JSON.stringify(c)])
+  }
+  async prospects(campaign?: string) {
+    const rows = campaign
+      ? await this.q<{ data: Prospect }>('SELECT data FROM ss_prospects WHERE campaign = $1 ORDER BY created_at', [campaign])
+      : await this.q<{ data: Prospect }>('SELECT data FROM ss_prospects ORDER BY created_at')
+    return rows.map((r) => r.data)
+  }
+  async prospect(id: string) {
+    return (await this.q<{ data: Prospect }>('SELECT data FROM ss_prospects WHERE id = $1', [id]))[0]?.data ?? null
+  }
+  async prospectByPreview(previewId: string) {
+    return (await this.q<{ data: Prospect }>("SELECT data FROM ss_prospects WHERE data->>'previewId' = $1 LIMIT 1", [previewId]))[0]?.data ?? null
+  }
+  async saveProspect(p: Prospect) {
+    await this.q('INSERT INTO ss_prospects (id, campaign, data) VALUES ($1,$2,$3) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data', [p.id, p.campaign, JSON.stringify(p)])
+  }
+  async reports() {
+    return (await this.q<{ data: CityReport }>('SELECT data FROM ss_reports ORDER BY updated_at DESC')).map((r) => r.data)
+  }
+  async report(slug: string) {
+    return (await this.q<{ data: CityReport }>('SELECT data FROM ss_reports WHERE slug = $1', [slug]))[0]?.data ?? null
+  }
+  async saveReport(r: CityReport) {
+    await this.q('INSERT INTO ss_reports (slug, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (slug) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [r.slug, JSON.stringify(r)])
   }
   async feedback(limit: number) {
     return (await this.q<{ data: Feedback }>('SELECT data FROM ss_feedback ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
@@ -1041,6 +1102,41 @@ export class MemoryStore implements Store {
   }
   async deleteArticle(slug: string) {
     this.posts.delete(slug)
+  }
+  private camps = new Map<string, Campaign>()
+  async campaigns() {
+    return [...this.camps.values()].reverse().map((c) => structuredClone(c))
+  }
+  async saveCampaign(c: Campaign) {
+    this.camps.delete(c.slug)
+    this.camps.set(c.slug, structuredClone(c))
+  }
+  private prosp = new Map<string, Prospect>()
+  async prospects(campaign?: string) {
+    return [...this.prosp.values()].filter((p) => !campaign || p.campaign === campaign).map((p) => structuredClone(p))
+  }
+  async prospect(id: string) {
+    const p = this.prosp.get(id)
+    return p ? structuredClone(p) : null
+  }
+  async prospectByPreview(previewId: string) {
+    const p = [...this.prosp.values()].find((x) => x.previewId === previewId)
+    return p ? structuredClone(p) : null
+  }
+  async saveProspect(p: Prospect) {
+    this.prosp.set(p.id, structuredClone(p))
+  }
+  private reps = new Map<string, CityReport>()
+  async reports() {
+    return [...this.reps.values()].reverse().map((r) => structuredClone(r))
+  }
+  async report(slug: string) {
+    const r = this.reps.get(slug)
+    return r ? structuredClone(r) : null
+  }
+  async saveReport(r: CityReport) {
+    this.reps.delete(r.slug)
+    this.reps.set(r.slug, structuredClone(r))
   }
   private notes: Feedback[] = []
   async addFeedback(f: Feedback) {

@@ -313,3 +313,40 @@ site now also describes each attorney card (Person) and each practice area
 page (Service) in structured data, and nested pages carry one breadcrumb
 trail (it was two). Review markup for a firm's own testimonials is left out
 on purpose: Google treats it as self-serving for local businesses.
+
+## Outreach, ownership and city reports (October 2026)
+
+The owner's plan for getting the first customers: show businesses their own
+site rebuilt, free to keep for a month. Admins run it at /dashboard/outreach
+(`lib/outreach.ts`, `lib/prospects.ts`, tables `ss_campaigns`,
+`ss_prospects`, `ss_reports`).
+- **Find:** a trade and a city run a few Google searches (`SERPAPI_KEY`) and
+  keep businesses' own websites (directories, social, .gov dropped), or the
+  team pastes a list. Never pull Google Maps/Places data to build a list
+  (Google's terms forbid it).
+- **Build:** "Build the next 25" makes free redesign previews in the
+  background (`after`), with the email from the business's own site. A site
+  that asks not to get unsolicited email is marked `noEmail` and left out.
+- **Email:** SaySites never sends these itself (an automatic sender was
+  blocked in review; the owner decides that). The campaign's "Download the
+  email list" CSV has each business's personal link (/r/<token>, counts
+  opens), unsubscribe link (/unsubscribe/<token>, one click, never emailed
+  again by address or website) and the wording (`outreachEmail`): it names
+  SaySites, our postal address (`OUTREACH_ADDRESS`, CAN-SPAM) and the real
+  price from `PRICES`. Send from a separate domain, slowly.
+- **Claim:** a preview from outreach claims with a free first month
+  (`withFreeMonth`, 30 days of trial, no card).
+- **Ownership (every preview claim):** anyone can preview any website, so a
+  claimed site has `ownership: { verified: false }` and `serve.ts` keeps it
+  off the public web until the owner proves it (`lib/ownership.ts`): a link
+  to an address at the business's own domain, pointing that domain at us
+  (`checkDomain`), or the team's hand check on /dashboard/outreach (call the
+  number on their own site first). Sofie can't change `ownership`. Google
+  Business Profile sign-in is the planned fourth way, once Google approves
+  API access.
+- **City reports** (/reports, /reports/<slug>): drafted automatically once a
+  campaign has `REPORT_MIN_SITES` measured homepages; the team publishes.
+  SaySites' own name, aggregate numbers, and by name only the lightest ten
+  sites (good news people share). Never a list of who did worst; anyone can
+  ask to be removed. These are the "content" the owner wants instead of
+  thin city SEO pages, so keep each one real and measured.
