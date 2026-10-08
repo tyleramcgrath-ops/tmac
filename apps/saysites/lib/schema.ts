@@ -63,6 +63,10 @@ export const HEADING_FONTS = {
   bricolage: { family: 'Bricolage Grotesque', file: '/media/fonts/bricolage.woff2' },
   // Geometric and confident, for contractors (Latin, bold, ~8 KB).
   poppins: { family: 'Poppins', file: '/media/fonts/poppins.woff2' },
+  archivo: { family: 'Archivo', file: '/media/fonts/archivo.woff2' },
+  sora: { family: 'Sora', file: '/media/fonts/sora.woff2' },
+  syne: { family: 'Syne', file: '/media/fonts/syne.woff2' },
+  dmserif: { family: 'DM Serif Display', file: '/media/fonts/dmserif.woff2' },
 } as const
 
 // Six personalities, each drawn from well-made small-business sites.
@@ -101,7 +105,7 @@ export const GlobalStyles = z
     buttonCase: z.enum(['none', 'upper']).optional(),
     // The headings' typeface, served from our own host. Unset picks one to
     // suit the heading style; 'system' keeps the device's own font.
-    headingFont: z.enum(['newsreader', 'fraunces', 'bricolage', 'poppins', 'system']).optional(),
+    headingFont: z.enum(['newsreader', 'fraunces', 'bricolage', 'poppins', 'archivo', 'sora', 'syne', 'dmserif', 'system']).optional(),
     // Gentle motion: sections rise in as they scroll into view, photos drift.
     // On unless the owner turns it off; visitors who ask for less motion
     // never see it.
@@ -144,6 +148,10 @@ export const ElementStyle = z
     grow: z.number().int().min(1).max(12).optional(),
     // A thick accent line down the left edge, beside a heading block.
     rule: ColorValue.optional(),
+    // In a grid, how many columns this child spans (one column on phones).
+    span: z.number().int().min(2).max(12).optional(),
+    // A hairline across the top, between items in a list.
+    line: z.boolean().optional(),
   })
   .strict()
 export type ElementStyle = z.infer<typeof ElementStyle>
@@ -302,7 +310,8 @@ export interface Container {
   // A photo behind the content, darkened so text on it stays readable.
   backgroundImage?: BackgroundImage
   // "slant": a row of photo panels with angled edges between them.
-  effect?: 'slant'
+  // "glass": a frosted panel over a photo.
+  effect?: 'slant' | 'glass'
   style?: ElementStyle
   children: Element[]
 }
@@ -343,7 +352,7 @@ export const ContainerSchema: z.ZodType<Container> = z.lazy(() =>
         })
         .strict()
         .optional(),
-      effect: z.enum(['slant']).optional(),
+      effect: z.enum(['slant', 'glass']).optional(),
       style: ElementStyle.optional(),
       children: z.array(ElementSchema).max(200),
     })

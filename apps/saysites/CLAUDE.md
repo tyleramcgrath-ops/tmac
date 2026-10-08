@@ -21,6 +21,21 @@ Also:
   slanted photo panels, a "need help?" block, numbered service cards, a call
   band), Poppins headings, and may start in the bright "Electric" palette.
   Never copy that site; keep its structure and quality.
+- **Every site different (the owner's rule, October 8, 2026).** No two
+  customer sites may look alike, and never one template for everyone. New
+  small-business home pages are assembled by `uniqueHome` (lib/starter.ts)
+  from interchangeable parts chosen by a number from the business's name:
+  the top of the page (inset photo frame with a frosted card, split, giant
+  cover type, photo with a request bar, bento tiles, side fade), how
+  services show (bento, numbered rows, photo cards, slanted panels, dark
+  index, zigzag, numbered cards), the "why us" part, the closing call, the
+  heading font (Poppins, Archivo, Sora, Syne, Bricolage, DM Serif,
+  Newsreader, Fraunces), corner style, headline and lead photo. Cool,
+  modern and premium from the first look, not just a colour change. When
+  adding to it, add whole new compositions, and check a contact sheet of
+  several businesses (two in the same trade and town must differ) before
+  shipping. Reference sites the owner shares show the quality bar, never a
+  layout to copy.
 - Sofie never invents facts, reviews, results or credentials.
 - Photos: a photo appears once per site unless the owner asks for it again,
   and a stock photo belongs to one customer's site (`lib/photo-rules.ts`,
@@ -134,10 +149,9 @@ redirects to /early.
 
 ## Owner's ideas, planned (September 2026)
 
-- **Varied layouts, never "hero + 3 cards" everywhere.** Starter sites now
-  mix alternating numbered rows (editorial), a photo mosaic (warm,
-  upscale), a full-width photo band, and a "How it works" strip (bold).
-  Sofie's prompt says the same. Keep adding compositions, not colours.
+- **Varied layouts, never "hero + 3 cards" everywhere.** See "Every site
+  different" above (uniqueHome). Sofie's prompt says the same. Keep adding
+  compositions, not colours.
 - **Built: personalities and finish** (October 2026). Heading fonts we host
   (Newsreader, Fraunces, Bricolage Grotesque; one per page, preloaded,
   font-display optional). Six personalities (`globals.flair`, lib/render.ts

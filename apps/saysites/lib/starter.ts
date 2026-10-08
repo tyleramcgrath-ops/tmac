@@ -81,6 +81,37 @@ const FLAIR_FIT: Record<BusinessTypeKey, Flair[]> = {
   other: ['clean', 'soft', 'editorial', 'bold'],
 }
 
+// More headlines per kind of business (with BUSINESS_TYPES' own), picked
+// per site. Plain and true for any business of that kind: no claims.
+const HEADLINE_ALTS: Partial<Record<BusinessTypeKey, string[]>> = {
+  plumber: ['Plumbing done properly, the first time.', 'Plumbing help, close to home in {city}.'],
+  electrician: ['Power you can count on in {city}.', 'Wiring, panels and lighting, done right.'],
+  hvac: ['Comfortable all year in {city}.', 'Heating and cooling, sorted properly.'],
+  roofer: ['Roofs built for {city} weather.', 'A solid roof over your head.'],
+  landscaper: ['Outdoor spaces you’ll actually use.', 'Lawns and gardens, beautifully kept.'],
+  cleaner: ['A spotless home, without lifting a finger.', 'Careful cleaning across {city}.'],
+  autorepair: ['Car trouble? We’ll tell you straight.', 'Repairs done right in {city}.'],
+  dentist: ['Dental care that puts you at ease.', 'Healthy smiles in {city}.'],
+  salon: ['Hair you’ll love wearing.', 'Cuts and color, done with care.'],
+  restaurant: ['Good food, made fresh in {city}.', 'Your table is waiting.'],
+  bakery: ['Baked fresh in {city}.', 'Bread, pastries and cakes, made by hand.'],
+  store: ['Good things, picked with care.', 'Thoughtfully chosen, from {city}.'],
+  professional: ['Clear advice, done well.', 'Expert help for {city} businesses.'],
+  other: ['Welcome to {name}.'],
+}
+
+// Puts card photo k (1-3) first, so sites in the same trade don't open on
+// the same picture; the old lead photo becomes a card. Sizes follow the
+// slot (Unsplash resizes from the address).
+function leadWith(set: PhotoSet, k: number): PhotoSet {
+  if (k < 1 || k > 3 || !set.cards[k - 1]) return set
+  const resize = (p: Photo, w: number, h: number): Photo => ({ ...p, src: p.src.replace(/([?&])w=\d+/, `$1w=${w}`), width: w, height: h })
+  const cards = [...set.cards] as Photo[]
+  const lead = cards[k - 1]
+  cards[k - 1] = resize(set.hero, 800, 600)
+  return { ...set, hero: resize(lead, 2000, 1500), cards: cards as PhotoSet['cards'] }
+}
+
 export function flairFor(type: BusinessTypeKey, subdomain: string): Flair {
   const fit = FLAIR_FIT[type] ?? FLAIR_FIT.other
   let h = 0
@@ -159,6 +190,9 @@ export interface StarterOptions {
   // Fixed ids and time for reproducible sites (the showcase examples).
   siteId?: string
   now?: string
+  // Picks the look by number instead of from the name (the originality
+  // check walks every variant to learn all of SaySites' own wording).
+  variant?: number
 }
 
 export function subdomainFor(name: string): string {
@@ -193,7 +227,13 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   const now = opts.now ?? new Date().toISOString()
   const t = BUSINESS_TYPES[input.type] ?? BUSINESS_TYPES.other
   const design: Design = input.design ?? t.design
-  const photos = input.photos ?? photosFor(input.type)
+  // A number from the business's name that picks this site's own look,
+  // headline and lead photo, so neighbours in the same trade differ.
+  let nameSeed = 17
+  for (const ch of subdomainFor(input.name.trim() || 'site')) nameSeed = (nameSeed * 131 + ch.charCodeAt(0)) >>> 0
+  if (opts.variant !== undefined) nameSeed = Math.imul(opts.variant + 1, 2654435761) >>> 0
+  const professionalKind = input.type === 'lawyer' || input.type === 'doctor' || input.type === 'medspa'
+  const photos = professionalKind ? (input.photos ?? photosFor(input.type)) : leadWith(input.photos ?? photosFor(input.type), nameSeed % 4)
   // Inner pages take fresh photos while there are any; repeats that remain
   // are dropped at the end (lib/photo-rules).
   const spare = [...(photos.extra ?? [])]
@@ -279,7 +319,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ? input.headline.trim().slice(0, 160)
     : law && services.length
       ? `${cap(joinAnd(list.slice(0, 2).map(soften)))} attorneys in ${city}.`
-      : t.headline.replace('{city}', city).replace('{name}', name)
+      : [t.headline, ...(HEADLINE_ALTS[input.type] ?? [])][(nameSeed >>> 5) % (1 + (HEADLINE_ALTS[input.type]?.length ?? 0))].replace('{city}', city).replace('{name}', name)
   // With no services listed, talk about the trade itself ("roofing").
   const offer = services.length ? joinAnd(list.slice(0, 3).map(soften)) : t.trade
   const intro = {
@@ -734,7 +774,23 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   // it and a request bar sitting on its bottom edge, a welcome line, the
   // main services as slanted photo panels, a "need help?" block with a
   // check list, every service as a numbered card, and a call band.
-  function contractorHome(): Container[] {
+  // Font and corners, also seeded by the name: one site sharp and
+  // industrial, the next soft and round, never the same look twice.
+  let lookSeed = 7
+  for (const ch of `${subdomainFor(name)}~look`) lookSeed = (lookSeed * 31 + ch.charCodeAt(0)) >>> 0
+  const FONT_CHOICES: Record<Design, NonNullable<GlobalStyles['headingFont']>[]> = {
+    bold: ['poppins', 'archivo', 'sora', 'bricolage', 'syne'],
+    editorial: ['newsreader', 'dmserif', 'fraunces', 'sora'],
+    warm: ['fraunces', 'dmserif', 'sora', 'bricolage'],
+    upscale: ['newsreader', 'dmserif', 'syne'],
+  }
+  const radius = pro ? site.globals.radius : [2, 10, 18][lookSeed % 3]
+  if (!pro) {
+    const fonts = FONT_CHOICES[design]
+    site.globals = { ...site.globals, headingFont: fonts[(lookSeed >>> 4) % fonts.length], radius, buttonShape: radius <= 2 ? 'square' : radius >= 18 ? 'pill' : 'rounded' }
+  }
+
+  function uniqueHome(): Container[] {
     const white = '#ffffff' as const
     const hero: Container = {
       id: 'hero',
@@ -773,7 +829,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       align: 'center',
       style: { padding: { desktop: pad(104), mobile: pad(60, 20) }, gap: { desktop: 14 }, textAlign: { desktop: 'center' } },
       children: [
-        { id: 'welcome-k', type: 'text', text: `Welcome to ${name}`, style: { textAlign: { desktop: 'center' }, color: 'primary', fontWeight: 700, fontSize: { desktop: 18 } } },
+        { id: 'welcome-k', type: 'text', text: 'Welcome', style: { textAlign: { desktop: 'center' }, color: 'primary', fontWeight: 700, fontSize: { desktop: 18 } } },
         { id: 'welcome-h', type: 'heading', level: 2, text: `Your ${t.trade} team in ${place}`, style: { textAlign: { desktop: 'center' }, fontSize: { desktop: 48, tablet: 40, mobile: 30 }, maxWidth: 900 } },
         { id: 'welcome-t', type: 'text', text: introText, style: { textAlign: { desktop: 'center' }, color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 680 } },
       ],
@@ -832,8 +888,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           layout: 'flex',
           style: { gap: { desktop: 18 } },
           children: [
-            { id: 'help-h', type: 'heading', level: 2, text: `Do you need help with ${t.trade}?`, style: { rule: 'primary', fontSize: { desktop: 48, tablet: 40, mobile: 30 } } },
-            { id: 'help-t', type: 'text', text: `Tell us what’s going on and we’ll explain your options and what it costs before any work starts.`, style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 520 } },
+            { id: 'help-h', type: 'heading', level: 2, text: design === 'bold' ? `Do you need help with ${t.trade}?` : 'Not sure where to start?', style: { rule: 'primary', fontSize: { desktop: 48, tablet: 40, mobile: 30 } } },
+            { id: 'help-t', type: 'text', text: design === 'bold' ? 'Tell us what’s going on and we’ll explain your options and what it costs before any work starts.' : 'Tell us what you have in mind and we’ll talk you through the options, with no pressure.', style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 520 } },
             {
               id: 'help-actions',
               type: 'container',
@@ -842,7 +898,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
               style: { gap: { desktop: 12 }, margin: { desktop: { top: 8, right: 0, bottom: 0, left: 0 } } },
               children: [
                 ...(phone ? [{ id: 'help-call', type: 'button' as const, label: `Call ${phone}`, href: telHref(phone), variant: 'primary' as const }] : []),
-                { id: 'help-ask', type: 'button', label: 'Request service', href: '/contact', variant: 'secondary' },
+                { id: 'help-ask', type: 'button', label: design === 'bold' ? 'Request service' : 'Send a message', href: '/contact', variant: 'secondary' },
               ],
             },
           ],
@@ -854,10 +910,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           style: { background: 'secondary', color: white, padding: { desktop: pad(44, 44), mobile: pad(28, 22) }, gap: { desktop: 16 } },
           children: [
             { id: 'why-k', type: 'text', text: 'Why choose us', style: { color: 'accent', fontWeight: 700, fontSize: { desktop: 17 } } },
-            { id: 'why-h', type: 'heading', level: 3, text: `Why ${city} calls us`, style: { color: white, fontSize: { desktop: 34, mobile: 28 } } },
+            { id: 'why-h', type: 'heading', level: 3, text: 'Why people choose us', style: { color: white, fontSize: { desktop: 34, mobile: 28 } } },
             ...[
-              'A clear price before any work starts',
-              'Careful, tidy work, properly finished',
+              ...(design === 'bold' ? ['A clear price before any work starts', 'Careful, tidy work, properly finished'] : ['Time to talk through what you want', 'Honest advice, never a hard sell']),
               `Local to ${city} and the area around it`,
               phone ? `Easy to reach on ${phone}` : 'Easy to reach: send us a message any time',
             ].map(check),
@@ -915,8 +970,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
                 layout: 'flex',
                 style: { gap: { desktop: 8 } },
                 children: [
-                  { id: 'call-h', type: 'heading', level: 2, text: 'Need us fast?', style: { color: white, fontSize: { desktop: 44, mobile: 32 } } },
-                  { id: 'call-t', type: 'text', text: 'Call us and talk to someone who can help.', style: { fontSize: { desktop: 19 } } },
+                  { id: 'call-h', type: 'heading', level: 2, text: design === 'bold' ? 'Need us fast?' : 'Questions? Just ask.', style: { color: white, fontSize: { desktop: 44, mobile: 32 } } },
+                  { id: 'call-t', type: 'text', text: design === 'bold' ? 'Call us and talk to someone who can help.' : 'Call us and talk to a real person.', style: { fontSize: { desktop: 19 } } },
                 ],
               },
               { id: 'call-btn', type: 'button', label: `Call ${phone}`, href: telHref(phone), variant: 'secondary', style: { fontSize: { desktop: 26, mobile: 20 }, padding: { desktop: pad(20, 36) } } },
@@ -924,12 +979,282 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           },
         ]
       : []
-    return [hero, welcome, ...(panels ? [panels] : []), help, offer, ...callBand, faq, homeLead]
+
+    // ---- Every site different ------------------------------------------
+    // The home page is put together from interchangeable parts, chosen from
+    // the business's name: how the top of the page works, how services
+    // show, the "why us" section and the closing call, plus the font and
+    // the corner style (set on the site above). Two plumbers in one town
+    // get different sites. Never one template for everyone.
+    const R = radius
+    const glassCard: Container = {
+      id: 'hero-card',
+      type: 'container',
+      layout: 'flex',
+      effect: 'glass',
+      style: { borderRadius: Math.max(R, 6), padding: { desktop: pad(34, 32), mobile: pad(24, 20) }, gap: { desktop: 10 } },
+      children: [
+        { id: 'hero-card-k', type: 'text', text: phone ? 'Talk to us' : 'Get in touch', style: { color: white, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', fontSize: { desktop: 13 } } },
+        { id: 'hero-card-p', type: 'text', text: phone || place, style: { color: white, fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 34, mobile: 28 } } },
+        { id: 'hero-card-t', type: 'text', text: phone ? `Serving ${place}` : 'Tell us what you need and we’ll get back to you.', style: { color: white, fontSize: { desktop: 16 } } },
+        { id: 'hero-card-b', type: 'button', label: phone ? 'Call now' : cta.label, href: phone ? telHref(phone) : cta.href, variant: 'primary', style: { margin: { desktop: { top: 8, right: 0, bottom: 0, left: 0 } } } },
+      ],
+    }
+    const tile = (extra: Partial<Container> & { id: string; children: Element[] }): Container => ({ type: 'container', layout: 'flex', ...extra })
+    const kicker = (id: string, text: string, color: 'primary' | typeof white) => ({ id, type: 'text' as const, text, style: { color, fontWeight: 600 as const, letterSpacing: 0.12, textTransform: 'uppercase' as const, fontSize: { desktop: 13 } } })
+    const heroes: Record<string, () => Container[]> = {
+      // A rounded photo frame inset from the page edge, headline low on
+      // the left and a frosted contact card on the right.
+      inset: () => [{
+        id: 'hero',
+        type: 'container',
+        tag: 'section',
+        layout: 'grid',
+        columns: { desktop: 3, mobile: 1 },
+        align: 'end',
+        boxed: true,
+        backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.62, overlayStyle: 'side', priority: true },
+        style: { background: 'secondary', borderRadius: R * 1.5, margin: { desktop: { top: 14, right: 14, bottom: 0, left: 14 }, mobile: { top: 8, right: 8, bottom: 0, left: 8 } }, padding: { desktop: { top: 250, right: 48, bottom: 52, left: 48 }, mobile: { top: 150, right: 18, bottom: 22, left: 18 } }, gap: { desktop: 40, mobile: 28 } },
+        children: [tile({ id: 'hero-copy', style: { span: 2, gap: { desktop: 14 } }, children: heroBlocks(true, { size: { desktop: headline.length > 48 ? 64 : 80, tablet: 56, mobile: 40 } }) }), glassCard],
+      }],
+      // Solid colour on the left with the headline, the photo on the right.
+      split: () => [{
+        id: 'hero',
+        type: 'container',
+        tag: 'section',
+        layout: 'grid',
+        columns: { desktop: 2, mobile: 1 },
+        style: { gap: { desktop: 0 } },
+        children: [
+          tile({ id: 'hero-copy', justify: 'center', style: { background: 'secondary', padding: { desktop: pad(140, 64), mobile: pad(64, 20) }, gap: { desktop: 16 } }, children: heroBlocks(true, { size: { desktop: headline.length > 48 ? 56 : 68, tablet: 50, mobile: 38 } }) }),
+          tile({ id: 'hero-photo', backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0, overlayStyle: 'full', priority: true }, style: { padding: { desktop: pad(300, 0), mobile: pad(150, 0) } }, children: [] }),
+        ],
+      }],
+      // The headline alone, very large, then the photo full width.
+      cover: () => coverHero.map((c) => (c.id === 'hero' ? { ...c, children: heroBlocks(false, { center: true, size: { desktop: headline.length > 48 ? 88 : 116, tablet: 72, mobile: 46 } }) } : c)),
+      // A bright full photo with a request bar on its bottom edge.
+      bar: () => [hero],
+      // Tiles: the headline, the photo, the phone number, the area and the work.
+      bento: () => [{
+        id: 'hero',
+        type: 'container',
+        tag: 'section',
+        layout: 'grid',
+        columns: { desktop: 3, mobile: 1 },
+        boxed: true,
+        style: { padding: { desktop: pad(24, 24), mobile: pad(12, 12) }, gap: { desktop: 16, mobile: 12 } },
+        children: [
+          tile({ id: 'hero-copy', justify: 'end', style: { span: 2, background: 'surface', borderRadius: R * 1.5, padding: { desktop: pad(72, 56), mobile: pad(40, 22) }, gap: { desktop: 14 } }, children: heroBlocks(false, { size: { desktop: headline.length > 48 ? 56 : 72, tablet: 52, mobile: 38 } }) }),
+          tile({ id: 'hero-photo', backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0, overlayStyle: 'full', priority: true }, style: { borderRadius: R * 1.5, padding: { desktop: pad(240, 0), mobile: pad(140, 0) } }, children: [] }),
+          tile({ id: 'hero-call', justify: 'between', style: { background: 'primary', color: white, borderRadius: R * 1.5, padding: { desktop: pad(32, 32), mobile: pad(24, 22) }, gap: { desktop: 18 } }, children: [
+            kicker('hero-call-k', phone ? 'Call us' : 'Get in touch', white),
+            phone ? { id: 'hero-call-p', type: 'button', label: phone, href: telHref(phone), variant: 'outline', style: { color: white, fontSize: { desktop: 22 } } } : { id: 'hero-call-p', type: 'button', label: cta.label, href: cta.href, variant: 'outline', style: { color: white } },
+          ] }),
+          tile({ id: 'hero-area', justify: 'between', style: { background: 'secondary', color: white, borderRadius: R * 1.5, padding: { desktop: pad(32, 32), mobile: pad(24, 22) }, gap: { desktop: 18 } }, children: [
+            kicker('hero-area-k', 'Where we work', white),
+            { id: 'hero-area-t', type: 'text', text: place, style: { color: white, fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 30, mobile: 26 } } },
+          ] }),
+          tile({ id: 'hero-list', justify: 'between', style: { border: 'muted', borderRadius: R * 1.5, padding: { desktop: pad(32, 32), mobile: pad(24, 22) }, gap: { desktop: 18 } }, children: [
+            kicker('hero-list-k', 'What we do', 'primary'),
+            { id: 'hero-list-t', type: 'text', text: list.slice(0, 4).join(' · ') || cap(t.trade), style: { fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 22, mobile: 20 } } },
+          ] }),
+        ],
+      }],
+      // Full photo, headline on the left over a dark fade.
+      side: () => [photoHero(0.8, 'secondary')],
+    }
+
+    // The first tile spans two columns; the last stretches so no row ends half empty.
+    const tileSpans = (n: number) => {
+      const spans = Array.from({ length: n }, (_, i) => (i === 0 ? 2 : 1))
+      const used = spans.reduce((a, b) => a + b, 0) % 3
+      if (used) spans[n - 1] += 3 - used
+      return spans
+    }
+    const svcTitle = 'What we do'
+    const allBtn = (top = 0): Element[] => (list.length > 6 ? [{ id: 'services-all', type: 'button', label: `All ${list.length} services`, href: svcHref, variant: 'outline', ...(top ? { style: { margin: { desktop: { top, right: 0, bottom: 0, left: 0 } } } } : {}) }] : [])
+    const services: Record<string, () => Container> = {
+      slant: () => panels ?? offer,
+      numbered: () => offer,
+      index: () => serviceIndex(svcTitle),
+      zigzag: () => zigzag('Services'),
+      // Bento tiles: the first three with photos, the first one wide.
+      bento: () => {
+        const items = list.slice(0, 6)
+        const spans = tileSpans(items.length)
+        return {
+          id: 'services',
+          type: 'container',
+          tag: 'section',
+          layout: 'flex',
+          boxed: true,
+          style: { padding: section, gap: { desktop: 40 } },
+          children: [
+            { id: 'services-h', type: 'heading', level: 2, text: svcTitle, style: { fontSize: H2 } },
+            {
+              id: 'services-grid',
+              type: 'container',
+              layout: 'grid',
+              columns: { desktop: 3, mobile: 1 },
+              style: { gap: { desktop: 16 } },
+              children: items.map((sv, i): Container => {
+                const ph = i < 3 ? photos.cards[i] : undefined
+                const dark = !!ph || i % 2 === 1
+                return tile({
+                  id: `svc-${i + 1}`,
+                  justify: 'end',
+                  ...(ph ? { backgroundImage: { src: ph.src, width: ph.width, height: ph.height, overlay: 0.55, overlayStyle: 'full' as const } } : {}),
+                  style: { ...(spans[i] > 1 ? { span: spans[i] } : {}), ...(ph ? {} : dark ? { background: 'secondary' as const, color: white } : { background: 'surface' as const }), borderRadius: R * 1.5, padding: { desktop: { top: ph ? 210 : 64, right: 32, bottom: 32, left: 32 }, mobile: { top: ph ? 140 : 32, right: 22, bottom: 24, left: 22 } }, gap: { desktop: 8 } },
+                  children: [
+                    { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: sv, style: { fontSize: { desktop: i === 0 ? 40 : 28, mobile: 26 }, ...(dark ? { color: white } : {}) } },
+                    { id: `svc-${i + 1}-t`, type: 'text', text: cardText(sv, i), style: { maxWidth: 520, color: dark ? '#e9edf2' : 'muted' } },
+                  ],
+                })
+              }),
+            },
+            ...allBtn(),
+          ],
+        }
+      },
+      // A big numbered list, one service per line.
+      rows: () => ({
+        id: 'services',
+        type: 'container',
+        tag: 'section',
+        layout: 'flex',
+        boxed: true,
+        style: { padding: section, gap: { desktop: 0 } },
+        children: [
+          { id: 'services-h', type: 'heading', level: 2, text: 'Services', style: { fontSize: H2, margin: { desktop: { top: 0, right: 0, bottom: 40, left: 0 } } } },
+          ...list.slice(0, 6).map((sv, i): Container => ({
+            id: `svc-${i + 1}`,
+            type: 'container',
+            layout: 'grid',
+            columns: { desktop: 12, mobile: 1 },
+            align: 'center',
+            style: { line: true, padding: { desktop: pad(36, 0), mobile: pad(22, 0) }, gap: { desktop: 24, mobile: 6 } },
+            children: [
+              { id: `svc-${i + 1}-n`, type: 'text', text: String(i + 1).padStart(2, '0'), style: { span: 2, color: 'primary', fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 22 } } },
+              { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: sv, style: { span: 5, fontSize: { desktop: 46, tablet: 36, mobile: 30 } } },
+              { id: `svc-${i + 1}-t`, type: 'text', text: cardText(sv, i), style: { span: 5, color: 'muted', fontSize: { desktop: 17 } } },
+            ],
+          })),
+          ...allBtn(32),
+        ],
+      }),
+      // Tall photo cards with the name low on each.
+      cards: () => ({
+        id: 'services',
+        type: 'container',
+        tag: 'section',
+        layout: 'flex',
+        boxed: true,
+        style: { background: 'surface', padding: section, gap: { desktop: 40 } },
+        children: [
+          { id: 'services-h', type: 'heading', level: 2, text: svcTitle, style: { fontSize: H2 } },
+          { id: 'services-grid', type: 'container', layout: 'grid', columns: { desktop: 3, mobile: 1 }, style: { gap: { desktop: 20 } }, children: list.slice(0, 3).map((sv, i): Container => tile({
+            id: `svc-${i + 1}`,
+            justify: 'end',
+            backgroundImage: { src: photos.cards[i].src, width: photos.cards[i].width, height: photos.cards[i].height, overlay: 0.6, overlayStyle: 'full' },
+            style: { borderRadius: R * 1.5, padding: { desktop: { top: 300, right: 28, bottom: 28, left: 28 }, mobile: { top: 180, right: 22, bottom: 22, left: 22 } }, gap: { desktop: 8 } },
+            children: [
+              { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: sv, style: { color: white, fontSize: { desktop: 30, mobile: 26 } } },
+              { id: `svc-${i + 1}-t`, type: 'text', text: cardText(sv, i), style: { color: '#e9edf2' } },
+            ],
+          })) },
+          ...(list.length > 3 ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: svcHref, variant: 'outline' as const }] : []),
+        ],
+      }),
+    }
+
+    const statements: Container = {
+      id: 'why',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      style: { background: 'secondary', color: white, padding: section, gap: { desktop: 48 } },
+      children: [
+        { id: 'why-h', type: 'heading', level: 2, text: `Why ${city} calls us`, style: { color: white, fontSize: H2, maxWidth: 820 } },
+        { id: 'why-grid', type: 'container', layout: 'grid', columns: { desktop: 3, mobile: 1 }, style: { gap: { desktop: 40, mobile: 28 } }, children: [
+          ...(design === 'bold'
+            ? [['Straight answers', 'A clear price and a plain explanation before any work starts.'], ['Careful work', 'Done properly, tidied up after, and finished when we say it will be.']]
+            : [['Unhurried', 'Time to talk through what you want, and honest advice about it.'], ['Done with care', 'Attention to the details, every time you visit.']]),
+          [`Local to ${city}`, phone ? `Nearby, and easy to reach on ${phone}.` : 'Nearby, and easy to reach.'],
+        ].map(([h, d], i): Container => tile({
+          id: `why-${i + 1}`,
+          style: { line: true, padding: { desktop: { top: 28, right: 0, bottom: 0, left: 0 } }, gap: { desktop: 10 } },
+          children: [
+            { id: `why-${i + 1}-n`, type: 'text', text: String(i + 1).padStart(2, '0'), style: { color: 'accent', fontFamily: 'heading', fontWeight: 700, fontSize: { desktop: 64, mobile: 48 } } },
+            { id: `why-${i + 1}-h`, type: 'heading', level: 3, text: h, style: { color: white, fontSize: { desktop: 28 } } },
+            { id: `why-${i + 1}-t`, type: 'text', text: d, style: { color: '#d7dde5' } },
+          ],
+        })) },
+      ],
+    }
+    const promises: Container = {
+      id: 'why',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      style: { background: 'primary', color: white, padding: { desktop: pad(34, 0), mobile: pad(24, 0) } },
+      children: [{ id: 'why-list', type: 'ticker', items: ['Clear prices before we start', 'Careful, tidy work', `Local to ${city}`, phone ? `Call ${phone}` : 'Easy to reach'] }],
+    }
+    const whys: Record<string, () => Container> = { help: () => help, statements: () => statements, promises: () => promises }
+
+    const bigCard: Container = {
+      id: 'call',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      style: { padding: { desktop: pad(64), mobile: pad(32, 12) } },
+      children: [tile({
+        id: 'call-card',
+        align: 'center',
+        style: { background: 'primary', color: white, borderRadius: R * 2, padding: { desktop: pad(96, 48), mobile: pad(56, 22) }, gap: { desktop: 18 }, textAlign: { desktop: 'center' } },
+        children: [
+          { id: 'call-h', type: 'heading', level: 2, text: 'Ready when you are', style: { color: white, textAlign: { desktop: 'center' }, fontSize: { desktop: 64, tablet: 52, mobile: 38 } } },
+          { id: 'call-t', type: 'text', text: phone ? `Call ${phone} or send a message, and we’ll take it from there.` : 'Send a message and we’ll take it from there.', style: { textAlign: { desktop: 'center' }, fontSize: { desktop: 20, mobile: 17 }, maxWidth: 560 } },
+          { id: 'call-actions', type: 'container', layout: 'flex', direction: { desktop: 'row' }, justify: 'center', style: { gap: { desktop: 12 }, margin: { desktop: { top: 10, right: 0, bottom: 0, left: 0 } } }, children: [
+            ...(phone ? [{ id: 'call-btn', type: 'button' as const, label: `Call ${phone}`, href: telHref(phone), variant: 'secondary' as const }] : []),
+            { id: 'call-msg', type: 'button', label: 'Send a message', href: '/contact', variant: 'outline', style: { color: white } },
+          ] },
+        ],
+      })],
+    }
+    const ctas: Record<string, () => Container[]> = { band: () => (callBand.length ? callBand : [bigCard]), card: () => [bigCard] }
+
+    // The pick: seeded by the name, so the preview and the built site agree.
+    let seed = nameSeed ^ 0x9e3779b9
+    for (const ch of input.type) seed = (seed * 33 + ch.charCodeAt(0)) >>> 0
+    const pick = <T,>(xs: readonly T[]): T => {
+      seed = Math.imul(seed ^ (seed >>> 15), 2246822519) >>> 0
+      seed = (seed ^ (seed >>> 13)) >>> 0
+      return xs[seed % xs.length]
+    }
+    const many = list.length >= 3
+    const heroKind = pick(design === 'bold' ? ['bar', 'inset', 'split', 'bento', 'side'] : design === 'editorial' ? ['cover', 'inset', 'split', 'bento'] : design === 'warm' ? ['inset', 'split', 'cover', 'bento'] : ['side', 'inset', 'cover'])
+    const svcKind = pick(many ? (design === 'bold' ? ['slant', 'bento', 'rows', 'cards', 'index', 'numbered'] : ['bento', 'rows', 'cards', 'zigzag', 'slant']) : ['rows', 'numbered'])
+    const whyKind = pick(['help', 'statements', 'promises'])
+    const ctaKind = pick(['band', 'card'])
+    const withWelcome = heroKind !== 'cover' && heroKind !== 'bento' && pick([true, false])
+    const withTicker = many && whyKind !== 'promises' && pick([true, false])
+    return [
+      ...heroes[heroKind](),
+      ...(withTicker ? ticker : []),
+      ...(withWelcome ? [welcome] : []),
+      services[svcKind](),
+      whys[whyKind](),
+      ...ctas[ctaKind](),
+      faq,
+      homeLead,
+    ]
   }
 
   let homeBody: Container[]
   if (design === 'bold') {
-    homeBody = contractorHome()
+    homeBody = uniqueHome()
   } else if (design === 'editorial') {
     homeBody = [
       ...coverHero,
@@ -1022,7 +1347,9 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   }
 
   // The ticker runs under the hero (after the cover photo, when there is one).
-  if (design !== 'bold') homeBody.splice(homeBody[1]?.id === 'hero-photo' ? 2 : 1, 0, ...ticker)
+  // Every small-business home is put together fresh (uniqueHome); law,
+  // medical and med spa sites get their own designs below.
+  if (!pro) homeBody = uniqueHome()
   // The longer story of the business, before the questions.
   const about = input.content?.about
   const story: Container | undefined = about?.paragraphs.length

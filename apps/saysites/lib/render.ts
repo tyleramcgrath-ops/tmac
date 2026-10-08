@@ -601,6 +601,8 @@ function widgetCss(used: Set<string>): string {
     css +=
       `.fx-slant{overflow:hidden}.fx-slant>.hasbg{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}` +
       `@media (min-width:${BREAKPOINT_MAX_WIDTH.mobile + 1}px){.fx-slant>:nth-child(2){clip-path:polygon(16% 0,100% 0,84% 100%,0 100%);margin:0 -8%;z-index:1}}`
+  if (used.has('fx-glass'))
+    css += `.fx-glass{background:rgb(255 255 255/.12);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);border:1px solid rgb(255 255 255/.24);color:#fff}`
   if (used.has('ticker'))
     css +=
       `.tk{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}` +
@@ -759,6 +761,11 @@ function styleRules(sel: string, s: ElementStyle, byBp: Record<Breakpoint, Rules
   if (s.fontFamily) add(d, sel, { 'font-family': s.fontFamily === 'heading' ? 'var(--f-h)' : 'var(--f-b)' })
   if (s.border) add(d, sel, { border: `1px solid ${color(s.border)}` })
   if (s.rule) add(d, sel, { 'border-left': `5px solid ${color(s.rule)}`, 'padding-left': '28px' })
+  if (s.line) add(d, sel, { 'border-top': '1px solid color-mix(in srgb,currentColor 16%,transparent)' })
+  if (s.span) {
+    add(d, sel, { 'grid-column': `span ${s.span}` })
+    add(byBp.mobile, sel, { 'grid-column': 'auto' })
+  }
   // Doubled class: beats the parent row's equal-share rule on desktop; the
   // phone layout (stacked) still wins there.
   if (s.grow) add(d, `${sel}${sel}`, { flex: `${s.grow} 1 0` })
