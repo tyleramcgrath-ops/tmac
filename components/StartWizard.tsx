@@ -1,11 +1,11 @@
 'use client'
-
 // Starting a website, one easy question at a time. Three ways in: describe
 // the business step by step, start from its Google listing, or rebuild the
 // website it already has. Every step has an example, Back and Next, and the
 // real site builds itself on the right as the owner answers.
 
 import { useActionState, useEffect, useRef, useState } from 'react'
+import { TYPE_PALETTE } from '@/lib/type-palettes'
 import { createSite } from '@/app/actions'
 import { createRedesign } from '@/app/redesign/actions'
 import { findOnGoogle, pickFromGoogle, type GoogleSearchResult } from '@/app/dashboard/new/google-actions'
@@ -49,7 +49,12 @@ export function StartWizard({ types, palettes, idea = '', template = '', google 
   const [info, setInfo] = useState({ name: '', type: typeFromName(idea) ?? '', city: '', region: '', phone: '', email: '', services: '' })
   // null until the owner types their own words; then exactly what they typed.
   const [photoHint, setPhotoHint] = useState<string | null>(null)
-  const [palette, setPalette] = useState(templateFor(template)?.palette ?? palettes[0]?.[0] ?? 'ocean')
+  const [palette, setPalette] = useState(templateFor(template)?.palette ?? TYPE_PALETTE[info.type] ?? palettes[0]?.[0] ?? 'ocean')
+  // Until the owner picks colours, they follow the kind of business.
+  const [ownColors, setOwnColors] = useState(!!templateFor(template))
+  useEffect(() => {
+    if (!ownColors && TYPE_PALETTE[info.type]) setPalette(TYPE_PALETTE[info.type])
+  }, [info.type, ownColors])
   const [tpl, setTpl] = useState(templateFor(template)?.key ?? '')
   // Law firms, medical practices and med spas pick one of their own designs
   // ('' lets SaySites pick one from the name, the same way the build does).
@@ -224,7 +229,7 @@ export function StartWizard({ types, palettes, idea = '', template = '', google 
                 <Q title="Pick a look." help="Colors and a style. You can change both later.">
                   <div className="swatches" role="radiogroup" aria-label="Colors">
                     {palettes.map(([k, label, color]) => (
-                      <button type="button" key={k} className={`wiz-swatch${palette === k ? ' on' : ''}`} aria-pressed={palette === k} onClick={() => setPalette(k)}>
+                      <button type="button" key={k} className={`wiz-swatch${palette === k ? ' on' : ''}`} aria-pressed={palette === k} onClick={() => { setPalette(k); setOwnColors(true) }}>
                         <i style={{ background: color }} />{label}
                       </button>
                     ))}
