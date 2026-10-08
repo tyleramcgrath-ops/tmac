@@ -330,15 +330,19 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     })[design][i % 3]
   const eyebrow = design === 'bold' ? `${cap(t.trade)} in ${city}` : place
 
-  const heroBlocks = (light: boolean): Element[] => [
-    { id: 'hero-kicker', type: 'text', text: eyebrow, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: light && design !== 'upscale' ? '#dbe3ec' : 'primary' } },
-    { id: 'hero-title', type: 'heading', level: 1, text: headline, style: { fontSize: { desktop: headline.length > 48 ? 72 : 88, tablet: 60, mobile: 42 }, maxWidth: 940, letterSpacing: -0.03, margin: { desktop: { top: 10, right: 0, bottom: 8, left: 0 } }, ...(light ? { color: '#ffffff' as const } : {}) } },
-    { id: 'hero-text', type: 'text', text: introText, style: { fontSize: { desktop: 21, mobile: 18 }, maxWidth: 600, color: light ? '#e9edf2' : 'muted' } },
+  type HeroOpts = { center?: boolean; size?: { desktop: number; tablet: number; mobile: number } }
+  const heroBlocks = (light: boolean, o: HeroOpts = {}): Element[] => {
+    const ta = o.center ? { textAlign: { desktop: 'center' as const } } : {}
+    return [
+    { id: 'hero-kicker', type: 'text', text: eyebrow, style: { ...ta, fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.14, textTransform: 'uppercase', color: light && design !== 'upscale' ? '#dbe3ec' : 'primary' } },
+    { id: 'hero-title', type: 'heading', level: 1, text: headline, style: { ...ta, fontSize: o.size ?? { desktop: headline.length > 48 ? 72 : 88, tablet: 60, mobile: 42 }, maxWidth: o.center ? 1100 : 940, letterSpacing: -0.03, margin: { desktop: { top: 10, right: 0, bottom: 8, left: 0 } }, ...(light ? { color: '#ffffff' as const } : {}) } },
+    { id: 'hero-text', type: 'text', text: introText, style: { ...ta, fontSize: { desktop: 21, mobile: 18 }, maxWidth: 600, color: light ? '#e9edf2' : 'muted' } },
     {
       id: 'hero-actions',
       type: 'container',
       layout: 'flex',
       direction: { desktop: 'row' },
+      ...(o.center ? { justify: 'center' as const } : {}),
       style: { gap: { desktop: 12 }, margin: { desktop: { top: 22, right: 0, bottom: 0, left: 0 }, mobile: { top: 14, right: 0, bottom: 0, left: 0 } } },
       children: [
         { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light && design !== 'upscale' ? { style: { background: '#ffffff', color: '#14171c' } } : design === 'warm' ? { style: { background: 'secondary', color: 'background' } } : {}) },
@@ -348,6 +352,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       ],
     },
   ]
+  }
 
   const card = (s: string, i: number, photo: Photo, aspect: number): Container => ({
     id: `svc-${i + 1}`,
@@ -635,21 +640,98 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   // Every small-business design opens on a full photo with the headline
   // across it, at display size: the first thing an owner sees should look
   // like a studio made it.
-  const photoHero = (overlay: number, background: string): Container => ({
+  const photoHero = (overlay: number, background: string, center = false): Container => ({
     id: 'hero',
     type: 'container',
     tag: 'section',
     layout: 'flex',
     boxed: true,
-    backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay, overlayStyle: 'side', priority: true },
-    style: { background, padding: { desktop: { top: 196, right: 24, bottom: 156, left: 24 }, tablet: pad(128), mobile: { top: 104, right: 20, bottom: 80, left: 20 } }, gap: { desktop: 16 } },
-    children: heroBlocks(true),
+    ...(center ? { align: 'center' as const } : {}),
+    backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay, overlayStyle: center ? 'full' : 'side', priority: true },
+    style: { background, padding: { desktop: { top: center ? 220 : 196, right: 24, bottom: center ? 200 : 156, left: 24 }, tablet: pad(128), mobile: { top: 104, right: 20, bottom: 80, left: 20 } }, gap: { desktop: 16 } },
+    children: heroBlocks(true, center ? { center: true } : {}),
+  })
+
+  // Trades: the photo hero with a quote form right in it, so a visitor with
+  // a burst pipe can ask before they scroll.
+  const quoteHero: Container = {
+    id: 'hero',
+    type: 'container',
+    tag: 'section',
+    layout: 'grid',
+    columns: { desktop: 2, mobile: 1 },
+    align: 'center',
+    boxed: true,
+    backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.86, overlayStyle: 'side', priority: true },
+    style: { background: 'secondary', padding: { desktop: { top: 128, right: 24, bottom: 128, left: 24 }, tablet: pad(96), mobile: { top: 72, right: 20, bottom: 56, left: 20 } }, gap: { desktop: 64, mobile: 36 } },
+    children: [
+      { id: 'hero-copy', type: 'container', layout: 'flex', style: { gap: { desktop: 16 } }, children: heroBlocks(true, { size: { desktop: headline.length > 48 ? 58 : 72, tablet: 52, mobile: 40 } }) },
+      {
+        id: 'hero-quote',
+        type: 'container',
+        layout: 'flex',
+        style: { background: 'background', color: 'text', borderRadius: 14, padding: { desktop: pad(32, 30), mobile: pad(24, 20) }, gap: { desktop: 6 } },
+        children: [
+          { id: 'hero-quote-h', type: 'heading', level: 2, text: 'Ask for a quote', style: { fontSize: { desktop: 28, mobile: 24 } } },
+          { id: 'hero-quote-t', type: 'text', text: phone ? `Tell us what you need, or call ${phone}.` : 'Tell us what you need and we’ll get back to you.', style: { color: 'muted', fontSize: { desktop: 16 } } },
+          { id: 'hero-quote-form', type: 'form', fields: ['name', 'phone', 'message'], submitLabel: 'Send my request', thanks: `Thank you. ${name} has your request and will get back to you soon.` },
+        ],
+      },
+    ],
+  }
+
+  // Salons, clinics and studios: the headline alone first, very large, like
+  // a magazine cover line; then the photo, full width and wide.
+  const coverHero: Container[] = [
+    {
+      id: 'hero',
+      type: 'container',
+      tag: 'section',
+      layout: 'flex',
+      boxed: true,
+      align: 'center',
+      style: { padding: { desktop: { top: 128, right: 24, bottom: 72, left: 24 }, mobile: { top: 64, right: 20, bottom: 40, left: 20 } }, gap: { desktop: 18 } },
+      children: heroBlocks(false, { center: true, size: { desktop: headline.length > 48 ? 88 : 112, tablet: 72, mobile: 46 } }),
+    },
+    { id: 'hero-photo', type: 'container', tag: 'section', layout: 'flex', children: [{ id: 'hero-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 2.4, priority: true }] },
+  ]
+
+  // Trades: services as a numbered index on the dark colour, big and plain.
+  const serviceIndex = (title: string): Container => ({
+    id: 'services',
+    type: 'container',
+    tag: 'section',
+    layout: 'flex',
+    boxed: true,
+    style: { background: 'secondary', color: 'background', padding: section, gap: { desktop: 40 } },
+    children: [
+      { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: H2, color: 'background' } },
+      {
+        id: 'services-grid',
+        type: 'container',
+        layout: 'grid',
+        columns: { desktop: 2, mobile: 1 },
+        style: { gap: { desktop: 20, mobile: 14 } },
+        children: list.slice(0, 6).map((sv, i): Container => ({
+          id: `svc-${i + 1}`,
+          type: 'container',
+          layout: 'flex',
+          style: { border: 'muted', borderRadius: 12, padding: { desktop: pad(30, 30), mobile: pad(22, 20) }, gap: { desktop: 8 } },
+          children: [
+            { id: `svc-${i + 1}-n`, type: 'text', text: String(i + 1).padStart(2, '0'), style: { fontSize: { desktop: 15 }, fontWeight: 700, letterSpacing: 0.1, color: 'accent' } },
+            { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: sv, style: { fontSize: { desktop: 30, mobile: 24 }, color: 'background' } },
+            { id: `svc-${i + 1}-t`, type: 'text', text: cardText(sv, i) },
+          ],
+        })),
+      },
+      ...(list.length > 6 ? [{ id: 'services-all', type: 'button' as const, label: `All ${list.length} services`, href: svcHref, variant: 'outline' as const }] : []),
+    ],
   })
 
   let homeBody: Container[]
   if (design === 'bold') {
     homeBody = [
-      photoHero(0.82, 'secondary'),
+      quoteHero,
       {
         id: 'strip',
         type: 'container',
@@ -674,7 +756,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           ],
         })),
       },
-      { ...servicesSection('What we do', 1.4), style: { background: 'surface', padding: section, gap: { desktop: 40 } } },
+      serviceIndex('What we do'),
       steps,
       aboutSplit(),
       faq,
@@ -682,7 +764,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ]
   } else if (design === 'editorial') {
     homeBody = [
-      photoHero(0.74, '#15171a'),
+      ...coverHero,
       {
         id: 'intro',
         type: 'container',
@@ -752,7 +834,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ]
   } else {
     homeBody = [
-      photoHero(0.7, '#1c1712'),
+      photoHero(0.5, '#1c1712', true),
       mosaic('What we make'),
       {
         id: 'about',
@@ -771,7 +853,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ]
   }
 
-  homeBody.splice(1, 0, ...ticker)
+  // The ticker runs under the hero (after the cover photo, when there is one).
+  homeBody.splice(homeBody[1]?.id === 'hero-photo' ? 2 : 1, 0, ...ticker)
   // The longer story of the business, before the questions.
   const about = input.content?.about
   const story: Container | undefined = about?.paragraphs.length

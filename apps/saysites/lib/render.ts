@@ -797,7 +797,9 @@ function round(n: number): number {
 export const SHARE_CARD_PATH = '__og'
 export function shareImage(site: Site, page: Page): string {
   const origin = siteOrigin(site)
-  const first = page.seo.ogImage ?? page.post?.image?.src ?? [...walk(page.body)].find((el) => el.type === 'image')?.src
+  // The first photo on the page, whether an image or a section's background.
+  const photo = [...walk(page.body)].map((el) => (el.type === 'image' ? el.src : el.type === 'container' ? el.backgroundImage?.src : undefined)).find(Boolean)
+  const first = page.seo.ogImage ?? page.post?.image?.src ?? photo
   if (!first) return `${origin}/${SHARE_CARD_PATH}?p=${encodeURIComponent(pagePath(page))}`
   // Stock photos come cropped to the 1200 x 630 shape share previews use.
   if (first.startsWith('https://images.unsplash.com/')) {
