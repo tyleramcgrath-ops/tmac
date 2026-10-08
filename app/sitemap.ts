@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await publishedArticles(getStore())
+  const reports = (await getStore().reports()).filter((r) => r.publishedAt)
   return [
     { url: 'https://saysites.com/', changeFrequency: 'weekly', priority: 1 },
     { url: 'https://saysites.com/about', changeFrequency: 'monthly', priority: 0.9 },
@@ -24,6 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...INDUSTRIES.map((i) => ({ url: `https://saysites.com/websites-for/${i.slug}`, changeFrequency: 'monthly' as const, priority: 0.8 })),
     { url: 'https://saysites.com/blog', changeFrequency: 'weekly', priority: 0.8 },
     ...articles.map((a) => ({ url: `https://saysites.com/blog/${a.slug}`, lastModified: a.updated ?? a.published, changeFrequency: 'monthly' as const, priority: 0.7 })),
+    ...(reports.length ? [{ url: 'https://saysites.com/reports', changeFrequency: 'weekly' as const, priority: 0.6 }] : []),
+    ...reports.map((r) => ({ url: `https://saysites.com/reports/${r.slug}`, lastModified: r.measuredAt, changeFrequency: 'monthly' as const, priority: 0.6 })),
     { url: 'https://saysites.com/privacy', changeFrequency: 'yearly', priority: 0.2 },
     { url: 'https://saysites.com/terms', changeFrequency: 'yearly', priority: 0.2 },
   ]

@@ -449,6 +449,18 @@ export const SiteSchema = z
     // reaches us over https (so the site never points Google at a dead
     // address).
     pendingDomain: z.string().regex(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/).optional(),
+    // Set when the site was claimed from a redesign preview (lib/ownership):
+    // it stays off the public web until the owner proves the business is
+    // theirs. Sites made any other way have no ownership field.
+    ownership: z
+      .object({
+        verified: z.boolean(),
+        domain: z.string().regex(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/).optional(),
+        how: z.enum(['email', 'domain', 'team', 'google']).optional(),
+        at: z.string().optional(),
+      })
+      .strict()
+      .optional(),
     language: z.string().min(2).max(10).default('en'),
     business: BusinessInfo,
     globals: GlobalStyles,

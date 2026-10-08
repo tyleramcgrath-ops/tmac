@@ -23,6 +23,7 @@ import { canSell, cleanPlan, loadAccess } from '@/lib/billing'
 import { LIMIT_NOTE, costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { DOMAIN_CHECK_PATH, DOMAIN_CHECK_REPLY, cleanDomain } from '@/lib/hosts'
+import { verified } from '@/lib/ownership'
 
 async function ownSite(siteId: string) {
   const user = await requireUser()
@@ -229,7 +230,9 @@ export async function checkDomain(siteId: string, _prev: DomainState, _form: For
   }
   const www = await reaches(`www.${domain}`)
   const { pendingDomain: _done, ...rest } = site
-  await store.updateSite({ ...rest, customDomain: domain, updatedAt: new Date().toISOString() })
+  // Pointing the business's own domain here proves the site is theirs.
+  const owned = rest.ownership && !rest.ownership.verified && rest.ownership.domain === domain ? { ownership: verified('domain', domain) } : {}
+  await store.updateSite({ ...rest, customDomain: domain, ...owned, updatedAt: new Date().toISOString() })
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: `Connected. Your site now lives at ${domain}.${www ? '' : ` (www.${domain} isn’t ready yet; it will follow.)`}` }
 }

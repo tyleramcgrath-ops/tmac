@@ -11,8 +11,11 @@ const LOCAL = /LocalBusiness|LegalService|Attorney|Plumber|Electrician|HVACBusin
 
 export default async function RedesignReport({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ v?: string }> }) {
   const { id } = await params
-  const p = await getStore().preview(id)
+  const store = getStore()
+  const p = await store.preview(id)
   if (!p) notFound()
+  // A preview from our outreach: claiming it starts with a free first month.
+  const fromOutreach = !p.claimed && !!(await store.prospectByPreview(id))
   // Two versions: their site as it is (the default), or a fresh redesign.
   const fresh = (await searchParams).v === 'fresh' && !!p.fresh
   const src = `/redesign/${id}/${fresh ? 'fresh' : 'site'}`
@@ -45,7 +48,7 @@ export default async function RedesignReport({ params, searchParams }: { params:
           <h1>Here’s {d.name} on SaySites.</h1>
           <p>{fresh ? 'A fresh design made from your own words and photos' : 'Your site as it is: the same pages, words, photos and colours, rebuilt to load fast'}: {imported} page{imported === 1 ? '' : 's'} carried over{kept ? `, ${kept} at exactly the same address` : ''}{p.redirects.length ? `, and ${p.redirects.length} redirect${p.redirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>
           <div className="ind-actions">
-            <a className="b b-dark" href={claim}>Claim this site free</a>
+            <a className="b b-dark" href={claim}>{fromOutreach ? 'Claim it, first month free' : 'Claim this site free'}</a>
             <a className="tplrow-link" href={src} target="_blank" rel="noopener">Open the full preview ↗</a>
           </div>
         </div>

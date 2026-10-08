@@ -12,6 +12,7 @@ import { pagePath, walk, type Page } from './schema'
 import { SHOWCASE_ORG } from './showcase'
 import { getStore, type Store } from './store'
 import { robotsTxt, sitemapXml } from './seo'
+import { awaitingOwner } from './ownership'
 import type { SiteBundle } from './sites'
 
 export interface ServeOptions {
@@ -25,6 +26,13 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
   const { site, pages, redirects } = bundle
   const path = '/' + slug.join('/')
   const noindex: Record<string, string> = opts.preview ? { 'x-robots-tag': 'noindex' } : {}
+
+  // Claimed from a preview and the owner hasn't proved the business is theirs
+  // yet (lib/ownership): nothing public, not even its name.
+  if (!opts.preview && awaitingOwner(site)) {
+    if (path === '/robots.txt') return new Response('User-agent: *\nDisallow: /\n', { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' } })
+    return new Response('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Not published yet</title><p style="font:16px/1.5 system-ui,sans-serif;max-width:32rem;margin:20vh auto;padding:0 16px">This website isn’t published yet.</p>', { status: 404, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex' } })
+  }
 
   if (path === '/sitemap.xml') {
     return new Response(sitemapXml(site, pages), { headers: { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, s-maxage=300', ...noindex } })
