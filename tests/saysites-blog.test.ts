@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { SCHEDULED_ARTICLES } from '../apps/saysites/lib/articles-scheduled'
 import { LAUNCH_ARTICLES, allArticles, checkArticle, headingsOf, publishedArticles, renderBody, slugify } from '../apps/saysites/lib/articles'
 import { MemoryStore } from '../apps/saysites/lib/store'
 
@@ -42,6 +43,19 @@ describe('SaySites blog', () => {
     const live = await publishedArticles(store)
     expect(live.some((a) => a.slug === first.slug)).toBe(false)
     expect(live.some((a) => a.slug === 'future-post')).toBe(false)
-    expect(live.length).toBe(LAUNCH_ARTICLES.length - 1)
+    const today = new Date().toISOString().slice(0, 10)
+    expect(live.length).toBe(LAUNCH_ARTICLES.length - 1 + SCHEDULED_ARTICLES.filter((a) => a.published <= today).length)
+  })
+
+  it('writes ahead: one checked article a day, each hidden until its day', () => {
+    for (const a of SCHEDULED_ARTICLES) {
+      expect(checkArticle(a), a.slug).toBeNull()
+      expect(a.body.split(/\s+/).length, a.slug).toBeGreaterThan(450)
+      expect(a.body, a.slug).not.toMatch(/guarantee|#1|rank first|more leads/i)
+    }
+    const days = SCHEDULED_ARTICLES.map((a) => a.published)
+    expect(new Set(days).size).toBe(days.length)
+    const slugs = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES].map((a) => a.slug)
+    expect(new Set(slugs).size).toBe(slugs.length)
   })
 })

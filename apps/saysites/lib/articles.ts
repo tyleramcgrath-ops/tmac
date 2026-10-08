@@ -14,6 +14,7 @@
 // [links](https://…). Everything else is shown as plain text.
 
 import type { Store } from './store'
+import { SCHEDULED_ARTICLES } from './articles-scheduled'
 
 export type ArticleKind = 'guide' | 'news'
 
@@ -318,7 +319,7 @@ const byDateDesc = (a: Article, b: Article) => b.published.localeCompare(a.publi
 // Every article, dashboard edits winning over the launch set.
 export async function allArticles(store: Store): Promise<Article[]> {
   const saved = await store.articles().catch(() => [] as Article[])
-  const map = new Map(LAUNCH_ARTICLES.map((a) => [a.slug, a]))
+  const map = new Map([...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES].map((a) => [a.slug, a]))
   for (const a of saved) map.set(a.slug, a)
   return [...map.values()].sort(byDateDesc)
 }
