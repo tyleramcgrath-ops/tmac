@@ -167,7 +167,7 @@ export async function sendForApproval(siteId: string, _prev: HandoffState, form:
   if (!isAdmin(user.email)) return { error: 'Only the SaySites team can send sites for approval.' }
   const plan = cleanPlan(form.get('plan'))
   const code = randomBytes(12).toString('hex')
-  await store.updateSite({ ...site, handoff: { code, plan, sentAt: new Date().toISOString() }, updatedAt: new Date().toISOString() })
+  await store.updateSite({ ...site, handoff: { code, plan, sentAt: new Date().toISOString() }, startedVia: 'team', updatedAt: new Date().toISOString() })
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: 'Link ready. Copy it below and send it to your client.' }
 }

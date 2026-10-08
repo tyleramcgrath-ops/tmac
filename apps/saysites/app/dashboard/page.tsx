@@ -18,7 +18,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
           <h1>Hi {user.name.split(' ')[0]}, {sites.length === 0 && helping.length > 0 ? 'here are your leads' : 'here are your websites'}</h1>
         </div>
         <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {isAdmin(user.email) && <><a className="btn btn-primary" href="/dashboard/analytics">Analytics</a><a className="btn btn-ghost" href="/dashboard/outreach">Outreach</a><a className="btn btn-ghost" href="/dashboard/launch">Launch stats</a><a className="btn btn-ghost" href="/dashboard/feedback">Feedback inbox</a><a className="btn btn-ghost" href="/dashboard/health">Hosting health</a><a className="btn btn-ghost" href="/dashboard/blog">Blog</a></>}
+          {isAdmin(user.email) && <><a className="btn btn-primary" href="/dashboard/directory">All sites</a><a className="btn btn-ghost" href="/dashboard/analytics">Analytics</a><a className="btn btn-ghost" href="/dashboard/outreach">Outreach</a><a className="btn btn-ghost" href="/dashboard/launch">Launch stats</a><a className="btn btn-ghost" href="/dashboard/feedback">Feedback inbox</a><a className="btn btn-ghost" href="/dashboard/health">Hosting health</a><a className="btn btn-ghost" href="/dashboard/blog">Blog</a></>}
           {sites.length > 0 && <a className="btn btn-primary" href="/dashboard/new">New website</a>}
         </span>
       </div>
