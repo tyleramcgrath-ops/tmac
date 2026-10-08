@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Everyone sees the Lambo. The parties. The lifestyle."
+    },
+    {
+      "id": "02",
+      "text": "Nobody sees the bill. Two hundred fifty grand is just the sticker."
+    },
+    {
+      "id": "03",
+      "text": "Sales tax? Seventeen and a half grand. Day one."
+    },
+    {
+      "id": "04",
+      "text": "Depreciation burns another seventeen thousand. Every year."
+    },
+    {
+      "id": "05",
+      "text": "Insurance, sixty-six hundred. Service, two grand. Tires, three thousand."
+    },
+    {
+      "id": "06",
+      "text": "And that quarter million, invested, would've made you twelve and a half grand."
+    },
+    {
+      "id": "07",
+      "text": "Fifty-eight thousand seven hundred dollars. Year one. Just to be seen in it."
+    },
+    {
+      "id": "08",
+      "text": "They see the flex. Now you know the math. Still want the Lambo?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

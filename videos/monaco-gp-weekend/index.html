@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-600.woff2") format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-700.woff2") format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-800.woff2") format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"Plex";src:url("assets/fonts/IBM_Plex_Mono-500.woff2") format("woff2");font-weight:500;font-display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;font-family:"Barlow",sans-serif}
+#footage{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+#shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 55%,rgba(0,0,0,.35) 75%,rgba(0,0,0,.6) 100%)}
+.pill{position:absolute;top:110px;left:70px;font-family:"Plex",monospace;font-weight:500;font-size:28px;letter-spacing:.16em;color:#fff;
+  padding:10px 20px;border-radius:40px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.55);backdrop-filter:blur(6px)}
+.pill b{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:12px;vertical-align:middle}
+.tag{position:absolute;left:70px;top:1230px;padding:18px 26px 20px;border-radius:16px;background:rgba(10,10,10,.42);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.18);color:#fff;min-width:360px}
+.tag .k{font-family:"Plex",monospace;font-weight:500;font-size:27px;letter-spacing:.16em;color:rgba(255,255,255,.75)}
+.tag .v{font-weight:700;font-size:76px;line-height:1.05;letter-spacing:-.01em}
+.tag .s{font-family:"Plex",monospace;font-size:20px;letter-spacing:.1em;color:rgba(255,255,255,.6);margin-top:4px}
+.mid{position:absolute;left:0;right:0;text-align:center;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.6)}
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="34.39" data-width="1080" data-height="1920">
+  <video id="footage" class="clip" src="assets/footage/track.mp4" muted playsinline data-start="0" data-duration="34.39" data-track-index="0"></video>
+  <div id="ovl" class="clip" data-start="0" data-duration="34.39" data-track-index="1" style="position:absolute;inset:0">
+    <div id="shade"></div>
+    <div id="pl0" class="pill" style="opacity:0"><b style="background:#FFC94A"></b>WHAT THEY SEE</div>
+    <div id="pl1" class="pill" style="opacity:0"><b style="background:#fff"></b>WHAT IT COSTS</div>
+    <div id="tg0" class="tag" style="opacity:0"><div class="k">YACHT HOSPITALITY · SUNDAY</div><div class="v">€5,200 / person</div></div>
+    <div id="tg1" class="tag" style="opacity:0"><div class="k">44 M YACHT</div><div class="v">Monaco harbor</div></div>
+    <div id="tg2" class="tag" style="opacity:0"><div class="k">FRI + SAT + SUN × 2</div><div class="v">€18,400</div><div class="s">EST.</div></div>
+    <div id="tg3" class="tag" style="opacity:0"><div class="k">HÔTEL DE PARIS · RACE WEEK</div><div class="v">€33,000 / room</div></div>
+    <div id="tg4" class="tag" style="opacity:0"><div class="k">HELICOPTER · 4 SEATS</div><div class="v">~€780</div><div class="s">EST.</div></div>
+    <div id="tg5" class="tag" style="opacity:0"><div class="k">AFTER-PARTY · 2 PASSES</div><div class="v">€1,500</div></div>
+    <div id="tg6" class="tag" style="opacity:0"><div class="k">GRANDSTAND · SUNDAY</div><div class="v">~€950</div></div>
+    <div id="md0" class="mid" style="top:330px;opacity:0;font-weight:800;font-size:104px;line-height:1.05;color:#fff">≈ €54,000<br><span style='font-size:44px;font-weight:600'>≈ $60,000 · one weekend</span></div>
+    <div id="md1" class="mid" style="top:330px;opacity:0;font-weight:800;font-size:96px;line-height:1.05;color:#fff">which would<br>you pick?</div>
+    <div id="src" class="mid" style="top:1840px;opacity:0;font-size:20px;color:rgba(255,255,255,.6)">Prices: Senate Grand Prix hospitality (2027 list), Monaco heliport fares, after-party listing. Totals est.; ECB rate 1.1225. Stock footage.</div>
+  </div>
+  <div id="caps" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0" data-duration="34.39" data-track-index="2"></div>
+  <audio id="vo1" class="clip" src="assets/voice/01.wav" data-start="0.1" data-duration="5.355" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo2" class="clip" src="assets/voice/02.wav" data-start="5.575" data-duration="3.84" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo3" class="clip" src="assets/voice/03.wav" data-start="9.535" data-duration="3.712" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo4" class="clip" src="assets/voice/04.wav" data-start="13.367" data-duration="3.648" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo5" class="clip" src="assets/voice/05.wav" data-start="17.135" data-duration="3.157" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo6" class="clip" src="assets/voice/06.wav" data-start="20.412" data-duration="2.837" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo7" class="clip" src="assets/voice/07.wav" data-start="23.369" data-duration="5.376" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo8" class="clip" src="assets/voice/08.wav" data-start="28.865" data-duration="4.629" data-track-index="10" data-volume="1"></audio>
+  <audio id="bgm" class="clip" src="assets/bgm/dark-pulse.mp3" data-start="0" data-duration="34.39" data-track-index="11" data-volume="0.2"></audio>
+  <audio id="sfx0" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="2.35" data-duration="1.2" data-track-index="20" data-volume="0.25"></audio>
+  <audio id="sfx1" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="5.56" data-duration="1.2" data-track-index="21" data-volume="0.25"></audio>
+  <audio id="sfx2" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="7.06" data-duration="1.2" data-track-index="22" data-volume="0.25"></audio>
+  <audio id="sfx3" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="9.52" data-duration="1.2" data-track-index="20" data-volume="0.25"></audio>
+  <audio id="sfx4" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="11.93" data-duration="1.2" data-track-index="21" data-volume="0.25"></audio>
+  <audio id="sfx5" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="13.35" data-duration="1.2" data-track-index="22" data-volume="0.25"></audio>
+  <audio id="sfx6" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="17.12" data-duration="1.2" data-track-index="20" data-volume="0.25"></audio>
+  <audio id="sfx7" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="20.39" data-duration="1.2" data-track-index="21" data-volume="0.25"></audio>
+  <audio id="sfx8" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="23.35" data-duration="1.2" data-track-index="22" data-volume="0.25"></audio>
+  <audio id="sfx9" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="27.03" data-duration="1.2" data-track-index="20" data-volume="0.25"></audio>
+  <audio id="sfx10" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="28.84" data-duration="1.2" data-track-index="21" data-volume="0.25"></audio>
+  <audio id="sfx11" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="32.64" data-duration="1.2" data-track-index="22" data-volume="0.25"></audio>
+  <audio id="sfx12" class="clip" src="assets/sfx/click.mp3" data-start="2.37" data-duration="1.2" data-track-index="20" data-volume="0.35"></audio>
+  <audio id="sfx13" class="clip" src="assets/sfx/click.mp3" data-start="5.625" data-duration="1.2" data-track-index="21" data-volume="0.35"></audio>
+  <audio id="sfx14" class="clip" src="assets/sfx/click.mp3" data-start="11.945" data-duration="1.2" data-track-index="22" data-volume="0.35"></audio>
+  <audio id="sfx15" class="clip" src="assets/sfx/click.mp3" data-start="14.547" data-duration="1.2" data-track-index="20" data-volume="0.35"></audio>
+  <audio id="sfx16" class="clip" src="assets/sfx/click.mp3" data-start="18.755" data-duration="1.2" data-track-index="21" data-volume="0.35"></audio>
+  <audio id="sfx17" class="clip" src="assets/sfx/click.mp3" data-start="21.882" data-duration="1.2" data-track-index="22" data-volume="0.35"></audio>
+  <audio id="sfx18" class="clip" src="assets/sfx/click.mp3" data-start="30.865" data-duration="1.2" data-track-index="20" data-volume="0.35"></audio>
+  <audio id="sfx19" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="23.389" data-duration="1.2" data-track-index="21" data-volume="0.55"></audio>
+</div>
+<script>
+(function(){
+  window.__timelines = window.__timelines || {};
+  var tl = gsap.timeline({ paused: true });
+  function IN(sel, at, from){ tl.fromTo(sel, Object.assign({opacity:0, y:24}, from||{}), {opacity:1, y:0, x:0, scale:1, duration:0.45, ease:"power3.out", immediateRender:false}, at); }
+  function OUT(sel, at){ tl.to(sel, {opacity:0, y:-10, duration:0.3, ease:"power2.in"}, at); }
+  IN("#pl0",0.1,{x:-20,y:0});OUT("#pl0",9.385);
+  IN("#pl1",9.535,{x:-20,y:0});OUT("#pl1",28.715);
+  IN("#tg0",2.37);OUT("#tg0",5.425);
+  IN("#tg1",5.625);OUT("#tg1",9.385);
+  IN("#tg2",11.945);OUT("#tg2",13.217);
+  IN("#tg3",14.547);OUT("#tg3",16.985000000000003);
+  IN("#tg4",18.755);OUT("#tg4",20.262);
+  IN("#tg5",21.882);OUT("#tg5",23.219);
+  IN("#tg6",30.865);OUT("#tg6",32.505);
+  IN("#md0",23.389,{y:0});OUT("#md0",28.715);
+  IN("#md1",32.655,{y:0});
+  tl.fromTo("#src",{opacity:0},{opacity:1,duration:0.4,immediateRender:false},32.19);
+  tl.to({}, {duration:34.39}, 0);
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body></html>

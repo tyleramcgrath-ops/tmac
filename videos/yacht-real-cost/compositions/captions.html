@@ -1,0 +1,231 @@
+<template id="captions-template" data-composition-id="captions" data-width="1080" data-height="1920">
+<script src="assets/vendor/gsap.min.js"></script>
+
+
+<style data-brand-tokens>
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-600.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-700.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-800.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: block; }
+      @font-face { font-family: 'Barlow'; src: url('assets/fonts/Barlow-900.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: block; }
+      :root {
+      --ink-black: #111111;
+      --ink-black-alt: #1A1A18;
+      --fire-orange: #E85D26;
+      --cream: #F0ECE5;
+      --cream-muted: #888880;
+      --cream-hint: #505048;
+      --border-dark: #282826;
+      --ink-on-orange-muted: rgba(17,17,17,0.75);
+      --ink-on-orange-hint: rgba(17,17,17,0.55);
+      --ink-on-orange-faint: rgba(17,17,17,0.40);
+      --ink-on-orange-border: rgba(17,17,17,0.20);
+      --cap-ink: #111111;
+      --cap-canvas: #F0ECE5;
+      --cap-accent: #E85D26;
+      --cap-accent-2: #888880;
+      --font-display: "Barlow", system-ui, serif;
+      --font-body: "Barlow", system-ui, sans-serif;
+      --cap-band-top: 1600px;
+      --cap-band-height: 320px;
+      }
+    </style>
+
+<style>
+  #captions-root {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .caption-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+  /* the keep-out band, from captionBand(H) — frame content stays above it */
+  .caption-stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--cap-band-top, 900px);
+    height: var(--cap-band-height, 180px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caption-group {
+    /* every group is absolutely stacked over the SAME band — exactly one shown at a
+       time via opacity. Must be absolute: in-flow groups would lay out side-by-side. */
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  /* THE ink-black plate — single 1px fire-orange hairline (broadside's lone accent),
+     SHARP corners (0 radius), NO shadow (the plane is flat) */
+  .caption-pill {
+    max-width: 80%;
+    padding: 18px 44px 22px;
+    background: var(--cap-ink, #111111);
+    border: 1px solid var(--cap-accent, #e85d26);
+    border-radius: 0;
+  }
+  .caption-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.04em 0.3em;
+    font-family: "Barlow", system-ui, sans-serif;
+    font-weight: 900;
+    font-size: clamp(38px, 4.2vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  /* upcoming — faint cream, no block (massive lowercase Barlow 900 as graphic primitive) */
+  .caption-word {
+    display: inline-block;
+    padding: 0 0.08em;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 42%, var(--cap-ink, #111111));
+  }
+  /* current word — THE register flip: a hard flat fire-orange block (box-shadow spread =
+     a sharp rectangle w/o layout shift; no blur), ink reading on top — the lone accent */
+  .caption-word.is-active {
+    color: var(--cap-ink, #111111);
+    background: var(--cap-accent, #e85d26);
+    box-shadow: 0 0 0 0.06em var(--cap-accent, #e85d26);
+  }
+  /* already spoken — solid cream, the orange block cleared */
+  .caption-word.is-spoken {
+    color: var(--cap-canvas, #f0ece5);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  /* optional per-word accents (dormant until a word-classer tags them) */
+  /* brand / key term — fire-orange ink, the cream-on-ink register's only inflection */
+  .caption-word.cap-brand {
+    color: var(--cap-accent, #e85d26);
+  }
+  /* numerals / data — the IBM Plex Mono chrome voice, uppercase + tracked, recessed */
+  .caption-word.cap-num {
+    font-family: "Barlow", ui-monospace, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: color-mix(in srgb, var(--cap-canvas, #f0ece5) 72%, var(--cap-ink, #111111));
+  }
+  /* emphasis — a fire-orange hairline underline (no second hue; the lone accent again) */
+  .caption-word.cap-cta {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--cap-accent-2, #e85d26);
+    text-underline-offset: 0.1em;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    .caption-pill {
+      max-width: 92%;
+    }
+    .caption-line {
+      font-size: clamp(32px, 5.2vw, 46px);
+    }
+  }
+</style>
+
+<div
+  id="captions-root"
+  data-composition-id="captions"
+  data-timeline-locked
+  data-start="0"
+  data-duration="30.53"
+  data-fps="30"
+  data-width="1080"
+  data-height="1920"
+>
+  <div class="caption-layer" aria-hidden="true">
+    <div id="caption-stage" class="caption-stage"></div>
+  </div>
+</div>
+
+<script>
+  // captions.mjs injects the engine's scene-aware groups + real duration here.
+  var GROUPS = [{"id":"caption-group-0","frame":1,"start":0.13,"end":0.71,"text":"Owning this","words":[{"id":"caption-word-0-0","text":"Owning","start":0.13,"end":0.42},{"id":"caption-word-0-1","text":"this","start":0.42,"end":0.71}]},{"id":"caption-group-1","frame":1,"start":0.71,"end":1.71,"text":"yacht costs about","words":[{"id":"caption-word-1-0","text":"yacht","start":0.71,"end":1.07},{"id":"caption-word-1-1","text":"costs","start":1.07,"end":1.43},{"id":"caption-word-1-2","text":"about","start":1.43,"end":1.59}]},{"id":"caption-group-2","frame":1,"start":1.82,"end":3.32,"text":"$8,000 a day.","words":[{"id":"caption-word-2-0","text":"$8,000","start":1.82,"end":2.85},{"id":"caption-word-2-1","text":"a","start":2.85,"end":2.93},{"id":"caption-word-2-2","text":"day.","start":2.93,"end":3.2}]},{"id":"caption-group-3","frame":2,"start":3.691,"end":4.781,"text":"50 meters,","words":[{"id":"caption-word-3-0","text":"50","start":3.691,"end":4.101},{"id":"caption-word-3-1","text":"meters,","start":4.101,"end":4.771}]},{"id":"caption-group-4","frame":2,"start":4.781,"end":6.101,"text":"$30 million,","words":[{"id":"caption-word-4-0","text":"$30","start":4.781,"end":5.371},{"id":"caption-word-4-1","text":"million,","start":5.371,"end":6.101}]},{"id":"caption-group-5","frame":2,"start":6.101,"end":6.731,"text":"Champagne in","words":[{"id":"caption-word-5-0","text":"Champagne","start":6.101,"end":6.621},{"id":"caption-word-5-1","text":"in","start":6.621,"end":6.731}]},{"id":"caption-group-6","frame":2,"start":6.731,"end":7.041,"text":"St.","words":[{"id":"caption-word-6-0","text":"St.","start":6.731,"end":6.991}]},{"id":"caption-group-7","frame":2,"start":7.041,"end":7.711,"text":"Tropez.","words":[{"id":"caption-word-7-0","text":"Tropez.","start":7.041,"end":7.591}]},{"id":"caption-group-8","frame":3,"start":7.826,"end":8.326,"text":"the crew","words":[{"id":"caption-word-8-0","text":"the","start":7.826,"end":8.006},{"id":"caption-word-8-1","text":"crew","start":8.026,"end":8.326}]},{"id":"caption-group-9","frame":3,"start":8.326,"end":8.786,"text":"about a","words":[{"id":"caption-word-9-0","text":"about","start":8.326,"end":8.716},{"id":"caption-word-9-1","text":"a","start":8.716,"end":8.786}]},{"id":"caption-group-10","frame":3,"start":8.786,"end":9.796,"text":"dozen people,","words":[{"id":"caption-word-10-0","text":"dozen","start":8.786,"end":9.176},{"id":"caption-word-10-1","text":"people,","start":9.176,"end":9.796}]},{"id":"caption-group-11","frame":3,"start":9.796,"end":10.126,"text":"one to","words":[{"id":"caption-word-11-0","text":"one","start":9.796,"end":9.946},{"id":"caption-word-11-1","text":"to","start":10.016,"end":10.126}]},{"id":"caption-group-12","frame":3,"start":10.126,"end":10.796,"text":"two million","words":[{"id":"caption-word-12-0","text":"two","start":10.126,"end":10.326},{"id":"caption-word-12-1","text":"million","start":10.326,"end":10.796}]},{"id":"caption-group-13","frame":3,"start":10.796,"end":11.246,"text":"a year.","words":[{"id":"caption-word-13-0","text":"a","start":10.796,"end":10.856},{"id":"caption-word-13-1","text":"year.","start":10.856,"end":11.126}]},{"id":"caption-group-14","frame":4,"start":11.305,"end":13.075,"text":"maintenance and repairs,","words":[{"id":"caption-word-14-0","text":"maintenance","start":11.305,"end":12.125},{"id":"caption-word-14-1","text":"and","start":12.125,"end":12.365},{"id":"caption-word-14-2","text":"repairs,","start":12.365,"end":13.075}]},{"id":"caption-group-15","frame":4,"start":13.075,"end":14.745,"text":"700 grand minimum.","words":[{"id":"caption-word-15-0","text":"700","start":13.075,"end":13.645},{"id":"caption-word-15-1","text":"grand","start":13.735,"end":14.075},{"id":"caption-word-15-2","text":"minimum.","start":14.075,"end":14.625}]},{"id":"caption-group-16","frame":5,"start":14.886,"end":15.166,"text":"Fuel a","words":[{"id":"caption-word-16-0","text":"Fuel","start":14.886,"end":15.086},{"id":"caption-word-16-1","text":"a","start":15.086,"end":15.166}]},{"id":"caption-group-17","frame":5,"start":15.166,"end":16.506,"text":"quarter million.","words":[{"id":"caption-word-17-0","text":"quarter","start":15.166,"end":15.756},{"id":"caption-word-17-1","text":"million.","start":15.756,"end":16.386}]},{"id":"caption-group-18","frame":5,"start":16.526,"end":17.066,"text":"Double that","words":[{"id":"caption-word-18-0","text":"Double","start":16.526,"end":16.766},{"id":"caption-word-18-1","text":"that","start":16.766,"end":17.006}]},{"id":"caption-group-19","frame":5,"start":17.066,"end":17.726,"text":"if you actually","words":[{"id":"caption-word-19-0","text":"if","start":17.066,"end":17.136},{"id":"caption-word-19-1","text":"you","start":17.136,"end":17.326},{"id":"caption-word-19-2","text":"actually","start":17.326,"end":17.606}]},{"id":"caption-group-20","frame":5,"start":18.086,"end":18.516,"text":"cruise.","words":[{"id":"caption-word-20-0","text":"cruise.","start":18.086,"end":18.396}]},{"id":"caption-group-21","frame":6,"start":18.54,"end":19.53,"text":"A Riviera berth","words":[{"id":"caption-word-21-0","text":"A","start":18.54,"end":18.57},{"id":"caption-word-21-1","text":"Riviera","start":18.57,"end":19.18},{"id":"caption-word-21-2","text":"berth","start":19.21,"end":19.41}]},{"id":"caption-group-22","frame":6,"start":19.83,"end":21.54,"text":"up to $350,000.","words":[{"id":"caption-word-22-0","text":"up","start":19.83,"end":19.86},{"id":"caption-word-22-1","text":"to","start":19.86,"end":19.91},{"id":"caption-word-22-2","text":"$350,000.","start":20,"end":21.42}]},{"id":"caption-group-23","frame":7,"start":21.681,"end":22.951,"text":"The industry rule,","words":[{"id":"caption-word-23-0","text":"The","start":21.681,"end":21.831},{"id":"caption-word-23-1","text":"industry","start":21.831,"end":22.411},{"id":"caption-word-23-2","text":"rule,","start":22.411,"end":22.831}]},{"id":"caption-group-24","frame":7,"start":22.971,"end":23.481,"text":"10% of","words":[{"id":"caption-word-24-0","text":"10%","start":22.971,"end":23.341},{"id":"caption-word-24-1","text":"of","start":23.341,"end":23.481}]},{"id":"caption-group-25","frame":7,"start":23.481,"end":24.541,"text":"the price every","words":[{"id":"caption-word-25-0","text":"the","start":23.481,"end":23.681},{"id":"caption-word-25-1","text":"price","start":23.741,"end":24.081},{"id":"caption-word-25-2","text":"every","start":24.131,"end":24.541}]},{"id":"caption-group-26","frame":7,"start":24.541,"end":24.991,"text":"year,","words":[{"id":"caption-word-26-0","text":"year,","start":24.541,"end":24.961}]},{"id":"caption-group-27","frame":7,"start":24.991,"end":26.301,"text":"$3 million.","words":[{"id":"caption-word-27-0","text":"$3","start":24.991,"end":25.211},{"id":"caption-word-27-1","text":"million.","start":25.211,"end":26.181}]},{"id":"caption-group-28","frame":8,"start":26.443,"end":27.053,"text":"10 years","words":[{"id":"caption-word-28-0","text":"10","start":26.443,"end":26.763},{"id":"caption-word-28-1","text":"years","start":26.763,"end":27.053}]},{"id":"caption-group-29","frame":8,"start":27.053,"end":27.303,"text":"in,","words":[{"id":"caption-word-29-0","text":"in,","start":27.053,"end":27.223}]},{"id":"caption-group-30","frame":8,"start":27.303,"end":27.913,"text":"you've paid","words":[{"id":"caption-word-30-0","text":"you've","start":27.303,"end":27.583},{"id":"caption-word-30-1","text":"paid","start":27.633,"end":27.843}]},{"id":"caption-group-31","frame":8,"start":27.913,"end":28.173,"text":"for it","words":[{"id":"caption-word-31-0","text":"for","start":27.913,"end":28.053},{"id":"caption-word-31-1","text":"it","start":28.053,"end":28.173}]},{"id":"caption-group-32","frame":8,"start":28.173,"end":28.543,"text":"twice.","words":[{"id":"caption-word-32-0","text":"twice.","start":28.173,"end":28.513}]},{"id":"caption-group-33","frame":8,"start":28.543,"end":29.053,"text":"Still want","words":[{"id":"caption-word-33-0","text":"Still","start":28.543,"end":28.813},{"id":"caption-word-33-1","text":"want","start":28.813,"end":29.053}]},{"id":"caption-group-34","frame":8,"start":29.053,"end":29.803,"text":"the yacht?","words":[{"id":"caption-word-34-0","text":"the","start":29.053,"end":29.233},{"id":"caption-word-34-1","text":"yacht?","start":29.233,"end":29.683}]}];
+  var DURATION = 30.53;
+
+  (function () {
+    var stage = document.getElementById("caption-stage");
+
+    // build DOM: one .caption-group per group, .caption-word per word
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "caption-group";
+      groupEl.id = "caption-group-" + g;
+      var pill = document.createElement("div");
+      pill.className = "caption-pill";
+      var line = document.createElement("div");
+      line.className = "caption-line";
+      (group.words || []).forEach(function (w, i) {
+        var span = document.createElement("span");
+        span.className = "caption-word";
+        span.id = "caption-word-" + g + "-" + i;
+        span.textContent = String(w.text);
+        line.appendChild(span);
+      });
+      pill.appendChild(line);
+      groupEl.appendChild(pill);
+      stage.appendChild(groupEl);
+    });
+
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    GROUPS.forEach(function (group, g) {
+      var groupEl = document.getElementById("caption-group-" + g);
+      var words = group.words || [];
+      var next = GROUPS[g + 1];
+      var isLast = g === GROUPS.length - 1;
+      var start = Math.max(0, Number(group.start));
+      var end = isLast ? DURATION : Math.min(Number(next.start), Number(group.end) + 0.3);
+      if (end <= start) end = start + 0.01;
+
+      // group on/off — exactly one group visible at a time
+      tl.set(groupEl, { opacity: 1 }, start);
+      tl.set(groupEl, { opacity: 0 }, end);
+
+      // 3-state karaoke via className SETS — seek-safe (gsap.set applies on the
+      // engine's frame-by-frame seek; .call callbacks would NOT fire).
+      words.forEach(function (w, i) {
+        var el = document.getElementById("caption-word-" + g + "-" + i);
+        var at = Math.max(start, Number(w.start));
+        tl.set(el, { className: "caption-word" }, start); // upcoming (also resets on reverse-seek)
+        tl.set(el, { className: "caption-word is-active" }, at); // current
+        tl.fromTo(el, { scale: 0.92 }, { scale: 1, duration: 0.1, ease: "power3.out" }, at);
+        if (i + 1 < words.length) {
+          var nextAt = Math.max(start, Number(words[i + 1].start));
+          tl.set(el, { className: "caption-word is-spoken" }, nextAt); // demote when next activates
+        }
+      });
+      if (words.length) {
+        var lastEl = document.getElementById("caption-word-" + g + "-" + (words.length - 1));
+        var lastSpoken = Math.min(end, Number(words[words.length - 1].end) + 0.1);
+        tl.set(lastEl, { className: "caption-word is-spoken" }, lastSpoken);
+      }
+    });
+
+    // full-span anchor so the sub-comp timeline spans the whole video
+    tl.to({}, { duration: DURATION }, 0);
+    window.__timelines["captions"] = tl;
+  })();
+</script>
+
+<style>
+  .caption-line { line-height: 1.1 !important; }
+</style>
+</template>

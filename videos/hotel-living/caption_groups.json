@@ -1,0 +1,697 @@
+{
+  "total_duration_s": 29.79,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.06,
+      "end": 0.36,
+      "text": "You can",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "You",
+          "start": 0.06,
+          "end": 0.17
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "can",
+          "start": 0.18,
+          "end": 0.36
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 0.36,
+      "end": 1.1,
+      "text": "actually live",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "actually",
+          "start": 0.36,
+          "end": 0.86
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "live",
+          "start": 0.86,
+          "end": 1.1
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.1,
+      "end": 1.41,
+      "text": "at the",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "at",
+          "start": 1.1,
+          "end": 1.23
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "the",
+          "start": 1.23,
+          "end": 1.41
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 1.41,
+      "end": 1.87,
+      "text": "Plaza.",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "Plaza.",
+          "start": 1.41,
+          "end": 1.75
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 1,
+      "start": 2,
+      "end": 3.12,
+      "text": "Here's the bill.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "Here's",
+          "start": 2,
+          "end": 2.33
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "the",
+          "start": 2.33,
+          "end": 2.52
+        },
+        {
+          "id": "caption-word-4-2",
+          "text": "bill.",
+          "start": 2.52,
+          "end": 3
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 3.181,
+      "end": 3.951,
+      "text": "Central Park",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "Central",
+          "start": 3.181,
+          "end": 3.651
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "Park",
+          "start": 3.651,
+          "end": 3.951
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 3.951,
+      "end": 4.391,
+      "text": "out the",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "out",
+          "start": 3.951,
+          "end": 4.171
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "the",
+          "start": 4.171,
+          "end": 4.391
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 4.391,
+      "end": 4.941,
+      "text": "window,",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "window,",
+          "start": 4.391,
+          "end": 4.901
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 4.941,
+      "end": 6.011,
+      "text": "room service,",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "room",
+          "start": 4.941,
+          "end": 5.271
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "service,",
+          "start": 5.271,
+          "end": 6.011
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 2,
+      "start": 6.011,
+      "end": 6.551,
+      "text": "someone else",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "someone",
+          "start": 6.011,
+          "end": 6.331
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "else",
+          "start": 6.331,
+          "end": 6.501
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 2,
+      "start": 6.551,
+      "end": 6.951,
+      "text": "makes the",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "makes",
+          "start": 6.551,
+          "end": 6.771
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "the",
+          "start": 6.841,
+          "end": 6.951
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 2,
+      "start": 6.951,
+      "end": 7.251,
+      "text": "bed.",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "bed.",
+          "start": 6.951,
+          "end": 7.131
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 7.524,
+      "end": 8.634,
+      "text": "One standard room",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "One",
+          "start": 7.524,
+          "end": 7.684
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "standard",
+          "start": 7.684,
+          "end": 8.314
+        },
+        {
+          "id": "caption-word-12-2",
+          "text": "room",
+          "start": 8.314,
+          "end": 8.634
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 3,
+      "start": 8.634,
+      "end": 10.074,
+      "text": "one November night,",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "one",
+          "start": 8.634,
+          "end": 8.874
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "November",
+          "start": 8.874,
+          "end": 9.504
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "night,",
+          "start": 9.504,
+          "end": 10.074
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 3,
+      "start": 10.074,
+      "end": 11.734,
+      "text": "about $1,700.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "about",
+          "start": 10.074,
+          "end": 10.454
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "$1,700.",
+          "start": 10.454,
+          "end": 11.614
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 4,
+      "start": 11.891,
+      "end": 12.311,
+      "text": "Taxes and",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "Taxes",
+          "start": 11.891,
+          "end": 12.131
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "and",
+          "start": 12.131,
+          "end": 12.311
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 4,
+      "start": 12.311,
+      "end": 12.801,
+      "text": "fees push",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "fees",
+          "start": 12.311,
+          "end": 12.551
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "push",
+          "start": 12.551,
+          "end": 12.771
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 4,
+      "start": 12.801,
+      "end": 14.241,
+      "text": "it past $2,000.",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "it",
+          "start": 12.801,
+          "end": 12.911
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "past",
+          "start": 12.911,
+          "end": 13.151
+        },
+        {
+          "id": "caption-word-17-2",
+          "text": "$2,000.",
+          "start": 13.151,
+          "end": 14.121
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 5,
+      "start": 14.55,
+      "end": 15.92,
+      "text": "Book 28 nights,",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "Book",
+          "start": 14.55,
+          "end": 14.76
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "28",
+          "start": 14.82,
+          "end": 15.26
+        },
+        {
+          "id": "caption-word-18-2",
+          "text": "nights,",
+          "start": 15.26,
+          "end": 15.87
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 5,
+      "start": 15.92,
+      "end": 17.58,
+      "text": "$66,000.",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "$66,000.",
+          "start": 15.92,
+          "end": 17.46
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 6,
+      "start": 17.86,
+      "end": 18.98,
+      "text": "The median Manhattan",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "The",
+          "start": 17.86,
+          "end": 18
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "median",
+          "start": 18,
+          "end": 18.38
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "Manhattan",
+          "start": 18.39,
+          "end": 18.98
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 6,
+      "start": 18.98,
+      "end": 19.37,
+      "text": "rent?",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "rent?",
+          "start": 18.98,
+          "end": 19.27
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 6,
+      "start": 19.37,
+      "end": 20.92,
+      "text": "$4,900 a month.",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "$4,900",
+          "start": 19.37,
+          "end": 20.34
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "a",
+          "start": 20.34,
+          "end": 20.4
+        },
+        {
+          "id": "caption-word-22-2",
+          "text": "month.",
+          "start": 20.4,
+          "end": 20.8
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 7,
+      "start": 21.285,
+      "end": 21.645,
+      "text": "a full",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "a",
+          "start": 21.285,
+          "end": 21.295
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "full",
+          "start": 21.295,
+          "end": 21.645
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 7,
+      "start": 21.645,
+      "end": 22.205,
+      "text": "year at",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "year",
+          "start": 21.645,
+          "end": 21.995
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "at",
+          "start": 21.995,
+          "end": 22.145
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 7,
+      "start": 22.205,
+      "end": 23.045,
+      "text": "the Plaza,",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "the",
+          "start": 22.205,
+          "end": 22.425
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "Plaza,",
+          "start": 22.425,
+          "end": 22.975
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 7,
+      "start": 23.045,
+      "end": 25.095,
+      "text": "over $700,000.",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "over",
+          "start": 23.045,
+          "end": 23.295
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "$700,000.",
+          "start": 23.295,
+          "end": 24.975
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 8,
+      "start": 25.225,
+      "end": 25.705,
+      "text": "One Plaza",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "One",
+          "start": 25.225,
+          "end": 25.375
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "Plaza",
+          "start": 25.375,
+          "end": 25.705
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 8,
+      "start": 25.705,
+      "end": 26.875,
+      "text": "month covers 13",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "month",
+          "start": 25.705,
+          "end": 26.025
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "covers",
+          "start": 26.065,
+          "end": 26.415
+        },
+        {
+          "id": "caption-word-28-2",
+          "text": "13",
+          "start": 26.515,
+          "end": 26.875
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 8,
+      "start": 26.875,
+      "end": 27.985,
+      "text": "people's rent.",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "people's",
+          "start": 26.875,
+          "end": 27.415
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "rent.",
+          "start": 27.415,
+          "end": 27.935
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 8,
+      "start": 27.985,
+      "end": 28.385,
+      "text": "Would you",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "Would",
+          "start": 27.985,
+          "end": 28.185
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "you",
+          "start": 28.275,
+          "end": 28.385
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 8,
+      "start": 28.385,
+      "end": 29.095,
+      "text": "check in?",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "check",
+          "start": 28.385,
+          "end": 28.665
+        },
+        {
+          "id": "caption-word-31-1",
+          "text": "in?",
+          "start": 28.665,
+          "end": 28.975
+        }
+      ]
+    }
+  ]
+}

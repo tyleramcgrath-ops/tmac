@@ -1,0 +1,784 @@
+{
+  "total_duration_s": 30.57,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.07,
+      "end": 0.45,
+      "text": "A Vegas",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "A",
+          "start": 0.07,
+          "end": 0.08
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "Vegas",
+          "start": 0.08,
+          "end": 0.45
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 0.45,
+      "end": 1.05,
+      "text": "club will",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "club",
+          "start": 0.45,
+          "end": 0.75
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "will",
+          "start": 0.75,
+          "end": 1.05
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.05,
+      "end": 1.96,
+      "text": "sell you vodka",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "sell",
+          "start": 1.05,
+          "end": 1.35
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "you",
+          "start": 1.35,
+          "end": 1.58
+        },
+        {
+          "id": "caption-word-2-2",
+          "text": "vodka",
+          "start": 1.58,
+          "end": 1.84
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 2.16,
+      "end": 3.9,
+      "text": "for $750.",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "for",
+          "start": 2.16,
+          "end": 2.4
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "$750.",
+          "start": 2.4,
+          "end": 3.78
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 4.141,
+      "end": 4.791,
+      "text": "Sparklers,",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "Sparklers,",
+          "start": 4.141,
+          "end": 4.761
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 4.791,
+      "end": 5.151,
+      "text": "a booth",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "a",
+          "start": 4.791,
+          "end": 4.831
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "booth",
+          "start": 4.831,
+          "end": 5.101
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 5.151,
+      "end": 6.201,
+      "text": "above the crowd,",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "above",
+          "start": 5.151,
+          "end": 5.431
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "the",
+          "start": 5.521,
+          "end": 5.661
+        },
+        {
+          "id": "caption-word-6-2",
+          "text": "crowd,",
+          "start": 5.661,
+          "end": 6.141
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 6.201,
+      "end": 7.421,
+      "text": "the bottle parade.",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "the",
+          "start": 6.201,
+          "end": 6.361
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "bottle",
+          "start": 6.361,
+          "end": 6.811
+        },
+        {
+          "id": "caption-word-7-2",
+          "text": "parade.",
+          "start": 6.811,
+          "end": 7.301
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 3,
+      "start": 7.502,
+      "end": 8.612,
+      "text": "Weekend minimums at",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "Weekend",
+          "start": 7.502,
+          "end": 7.912
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "minimums",
+          "start": 7.912,
+          "end": 8.442
+        },
+        {
+          "id": "caption-word-8-2",
+          "text": "at",
+          "start": 8.492,
+          "end": 8.612
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 3,
+      "start": 8.612,
+      "end": 9.022,
+      "text": "the top",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "the",
+          "start": 8.612,
+          "end": 8.812
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "top",
+          "start": 8.862,
+          "end": 9.022
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 3,
+      "start": 9.022,
+      "end": 9.552,
+      "text": "clubs,",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "clubs,",
+          "start": 9.022,
+          "end": 9.552
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 3,
+      "start": 9.552,
+      "end": 10.002,
+      "text": "three to",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "three",
+          "start": 9.552,
+          "end": 9.862
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "to",
+          "start": 9.872,
+          "end": 10.002
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 10.002,
+      "end": 10.662,
+      "text": "six grand.",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "six",
+          "start": 10.002,
+          "end": 10.192
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "grand.",
+          "start": 10.192,
+          "end": 10.542
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 4,
+      "start": 10.846,
+      "end": 11.866,
+      "text": "Two Grey Goose",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "Two",
+          "start": 10.846,
+          "end": 10.996
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "Grey",
+          "start": 10.996,
+          "end": 11.306
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "Goose",
+          "start": 11.396,
+          "end": 11.866
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 4,
+      "start": 11.866,
+      "end": 13.286,
+      "text": "One Dom Perignon.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "One",
+          "start": 11.866,
+          "end": 12.156
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "Dom",
+          "start": 12.156,
+          "end": 12.446
+        },
+        {
+          "id": "caption-word-14-2",
+          "text": "Perignon.",
+          "start": 12.446,
+          "end": 13.246
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 4,
+      "start": 13.286,
+      "end": 13.746,
+      "text": "That's your",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "That's",
+          "start": 13.286,
+          "end": 13.456
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "your",
+          "start": 13.556,
+          "end": 13.746
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 4,
+      "start": 13.746,
+      "end": 14.556,
+      "text": "three grand.",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "three",
+          "start": 13.746,
+          "end": 14.006
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "grand.",
+          "start": 14.006,
+          "end": 14.436
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 5,
+      "start": 14.581,
+      "end": 15.361,
+      "text": "then tax,",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "then",
+          "start": 14.581,
+          "end": 14.901
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "tax,",
+          "start": 14.901,
+          "end": 15.351
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 5,
+      "start": 15.361,
+      "end": 16.381,
+      "text": "venue fee and",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "venue",
+          "start": 15.361,
+          "end": 15.721
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "fee",
+          "start": 15.871,
+          "end": 16.101
+        },
+        {
+          "id": "caption-word-18-2",
+          "text": "and",
+          "start": 16.101,
+          "end": 16.381
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 5,
+      "start": 16.381,
+      "end": 17.731,
+      "text": "auto gratuity,",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "auto",
+          "start": 16.381,
+          "end": 16.731
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "gratuity,",
+          "start": 16.791,
+          "end": 17.731
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 5,
+      "start": 17.731,
+      "end": 18.851,
+      "text": "up to 38%",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "up",
+          "start": 17.731,
+          "end": 17.811
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "to",
+          "start": 17.961,
+          "end": 18.131
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "38%",
+          "start": 18.131,
+          "end": 18.851
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 5,
+      "start": 18.851,
+      "end": 19.531,
+      "text": "on top.",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "on",
+          "start": 18.851,
+          "end": 19.051
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "top.",
+          "start": 19.051,
+          "end": 19.411
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 6,
+      "start": 19.65,
+      "end": 20.25,
+      "text": "your three",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "your",
+          "start": 19.65,
+          "end": 19.88
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "three",
+          "start": 19.89,
+          "end": 20.25
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 6,
+      "start": 20.25,
+      "end": 21.15,
+      "text": "grand table,",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "grand",
+          "start": 20.25,
+          "end": 20.6
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "table,",
+          "start": 20.6,
+          "end": 21.15
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 6,
+      "start": 21.15,
+      "end": 22.74,
+      "text": "over $4,000.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "over",
+          "start": 21.15,
+          "end": 21.45
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "$4,000.",
+          "start": 21.45,
+          "end": 22.62
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 7,
+      "start": 22.799,
+      "end": 23.279,
+      "text": "the same",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "the",
+          "start": 22.799,
+          "end": 22.949
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "same",
+          "start": 22.949,
+          "end": 23.159
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 7,
+      "start": 23.279,
+      "end": 24.019,
+      "text": "three bottles",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "three",
+          "start": 23.279,
+          "end": 23.549
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "bottles",
+          "start": 23.549,
+          "end": 24.019
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 7,
+      "start": 24.019,
+      "end": 24.239,
+      "text": "at a",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "at",
+          "start": 24.019,
+          "end": 24.149
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "a",
+          "start": 24.149,
+          "end": 24.179
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 7,
+      "start": 24.239,
+      "end": 25.119,
+      "text": "liquor store,",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "liquor",
+          "start": 24.239,
+          "end": 24.609
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "store,",
+          "start": 24.609,
+          "end": 25.119
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 7,
+      "start": 25.119,
+      "end": 26.559,
+      "text": "about 300 bucks.",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "about",
+          "start": 25.119,
+          "end": 25.449
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "300",
+          "start": 25.449,
+          "end": 26.039
+        },
+        {
+          "id": "caption-word-29-2",
+          "text": "bucks.",
+          "start": 26.039,
+          "end": 26.439
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 8,
+      "start": 26.66,
+      "end": 27.67,
+      "text": "13 times the",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "13",
+          "start": 26.66,
+          "end": 27.03
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "times",
+          "start": 27.03,
+          "end": 27.43
+        },
+        {
+          "id": "caption-word-30-2",
+          "text": "the",
+          "start": 27.43,
+          "end": 27.63
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 8,
+      "start": 27.67,
+      "end": 28.42,
+      "text": "price.",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "price.",
+          "start": 27.67,
+          "end": 28.32
+        }
+      ]
+    },
+    {
+      "id": "caption-group-32",
+      "frame": 8,
+      "start": 28.42,
+      "end": 29.43,
+      "text": "Would you still",
+      "words": [
+        {
+          "id": "caption-word-32-0",
+          "text": "Would",
+          "start": 28.42,
+          "end": 28.74
+        },
+        {
+          "id": "caption-word-32-1",
+          "text": "you",
+          "start": 28.74,
+          "end": 28.99
+        },
+        {
+          "id": "caption-word-32-2",
+          "text": "still",
+          "start": 28.99,
+          "end": 29.39
+        }
+      ]
+    },
+    {
+      "id": "caption-group-33",
+      "frame": 8,
+      "start": 29.43,
+      "end": 29.92,
+      "text": "book the",
+      "words": [
+        {
+          "id": "caption-word-33-0",
+          "text": "book",
+          "start": 29.43,
+          "end": 29.75
+        },
+        {
+          "id": "caption-word-33-1",
+          "text": "the",
+          "start": 29.75,
+          "end": 29.8
+        }
+      ]
+    },
+    {
+      "id": "caption-group-34",
+      "frame": 8,
+      "start": 30.11,
+      "end": 30.84,
+      "text": "table?",
+      "words": [
+        {
+          "id": "caption-word-34-0",
+          "text": "table?",
+          "start": 30.11,
+          "end": 30.72
+        }
+      ]
+    }
+  ]
+}

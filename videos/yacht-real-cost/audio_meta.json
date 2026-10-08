@@ -1,0 +1,501 @@
+{
+  "bgm": null,
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 3.371,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Owning",
+          "start": 0.13,
+          "end": 0.42
+        },
+        {
+          "id": "w1",
+          "text": "this",
+          "start": 0.42,
+          "end": 0.71
+        },
+        {
+          "id": "w2",
+          "text": "yacht",
+          "start": 0.71,
+          "end": 1.07
+        },
+        {
+          "id": "w3",
+          "text": "costs",
+          "start": 1.07,
+          "end": 1.43
+        },
+        {
+          "id": "w4",
+          "text": "about",
+          "start": 1.43,
+          "end": 1.59
+        },
+        {
+          "id": "w5",
+          "text": "$8,000",
+          "start": 1.82,
+          "end": 2.85
+        },
+        {
+          "id": "w6",
+          "text": "a",
+          "start": 2.85,
+          "end": 2.93
+        },
+        {
+          "id": "w7",
+          "text": "day.",
+          "start": 2.93,
+          "end": 3.2
+        }
+      ]
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.075,
+      "words": [
+        {
+          "id": "w0",
+          "text": "50",
+          "start": 0.1,
+          "end": 0.51
+        },
+        {
+          "id": "w1",
+          "text": "meters,",
+          "start": 0.51,
+          "end": 1.18
+        },
+        {
+          "id": "w2",
+          "text": "$30",
+          "start": 1.19,
+          "end": 1.78
+        },
+        {
+          "id": "w3",
+          "text": "million,",
+          "start": 1.78,
+          "end": 2.51
+        },
+        {
+          "id": "w4",
+          "text": "Champagne",
+          "start": 2.51,
+          "end": 3.03
+        },
+        {
+          "id": "w5",
+          "text": "in",
+          "start": 3.03,
+          "end": 3.14
+        },
+        {
+          "id": "w6",
+          "text": "St.",
+          "start": 3.14,
+          "end": 3.4
+        },
+        {
+          "id": "w7",
+          "text": "Tropez.",
+          "start": 3.45,
+          "end": 4
+        }
+      ]
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 3.349,
+      "words": [
+        {
+          "id": "w0",
+          "text": "the",
+          "start": 0.04,
+          "end": 0.22
+        },
+        {
+          "id": "w1",
+          "text": "crew",
+          "start": 0.24,
+          "end": 0.54
+        },
+        {
+          "id": "w2",
+          "text": "about",
+          "start": 0.54,
+          "end": 0.93
+        },
+        {
+          "id": "w3",
+          "text": "a",
+          "start": 0.93,
+          "end": 1
+        },
+        {
+          "id": "w4",
+          "text": "dozen",
+          "start": 1,
+          "end": 1.39
+        },
+        {
+          "id": "w5",
+          "text": "people,",
+          "start": 1.39,
+          "end": 2.01
+        },
+        {
+          "id": "w6",
+          "text": "one",
+          "start": 2.01,
+          "end": 2.16
+        },
+        {
+          "id": "w7",
+          "text": "to",
+          "start": 2.23,
+          "end": 2.34
+        },
+        {
+          "id": "w8",
+          "text": "two",
+          "start": 2.34,
+          "end": 2.54
+        },
+        {
+          "id": "w9",
+          "text": "million",
+          "start": 2.54,
+          "end": 3.01
+        },
+        {
+          "id": "w10",
+          "text": "a",
+          "start": 3.01,
+          "end": 3.07
+        },
+        {
+          "id": "w11",
+          "text": "year.",
+          "start": 3.07,
+          "end": 3.34
+        }
+      ]
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.371,
+      "words": [
+        {
+          "id": "w0",
+          "text": "maintenance",
+          "start": 0.05,
+          "end": 0.87
+        },
+        {
+          "id": "w1",
+          "text": "and",
+          "start": 0.87,
+          "end": 1.11
+        },
+        {
+          "id": "w2",
+          "text": "repairs,",
+          "start": 1.11,
+          "end": 1.82
+        },
+        {
+          "id": "w3",
+          "text": "700",
+          "start": 1.82,
+          "end": 2.39
+        },
+        {
+          "id": "w4",
+          "text": "grand",
+          "start": 2.48,
+          "end": 2.82
+        },
+        {
+          "id": "w5",
+          "text": "minimum.",
+          "start": 2.82,
+          "end": 3.37
+        }
+      ]
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.584,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Fuel",
+          "start": 0.14,
+          "end": 0.34
+        },
+        {
+          "id": "w1",
+          "text": "a",
+          "start": 0.34,
+          "end": 0.42
+        },
+        {
+          "id": "w2",
+          "text": "quarter",
+          "start": 0.42,
+          "end": 1.01
+        },
+        {
+          "id": "w3",
+          "text": "million.",
+          "start": 1.01,
+          "end": 1.64
+        },
+        {
+          "id": "w4",
+          "text": "Double",
+          "start": 1.78,
+          "end": 2.02
+        },
+        {
+          "id": "w5",
+          "text": "that",
+          "start": 2.02,
+          "end": 2.26
+        },
+        {
+          "id": "w6",
+          "text": "if",
+          "start": 2.32,
+          "end": 2.39
+        },
+        {
+          "id": "w7",
+          "text": "you",
+          "start": 2.39,
+          "end": 2.58
+        },
+        {
+          "id": "w8",
+          "text": "actually",
+          "start": 2.58,
+          "end": 2.86
+        },
+        {
+          "id": "w9",
+          "text": "cruise.",
+          "start": 3.34,
+          "end": 3.65
+        }
+      ]
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 3.051,
+      "words": [
+        {
+          "id": "w0",
+          "text": "A",
+          "start": 0.09,
+          "end": 0.12
+        },
+        {
+          "id": "w1",
+          "text": "Riviera",
+          "start": 0.12,
+          "end": 0.73
+        },
+        {
+          "id": "w2",
+          "text": "berth",
+          "start": 0.76,
+          "end": 0.96
+        },
+        {
+          "id": "w3",
+          "text": "up",
+          "start": 1.38,
+          "end": 1.41
+        },
+        {
+          "id": "w4",
+          "text": "to",
+          "start": 1.41,
+          "end": 1.46
+        },
+        {
+          "id": "w5",
+          "text": "$350,000.",
+          "start": 1.55,
+          "end": 2.97
+        }
+      ]
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 4.672,
+      "words": [
+        {
+          "id": "w0",
+          "text": "The",
+          "start": 0.06,
+          "end": 0.21
+        },
+        {
+          "id": "w1",
+          "text": "industry",
+          "start": 0.21,
+          "end": 0.79
+        },
+        {
+          "id": "w2",
+          "text": "rule,",
+          "start": 0.79,
+          "end": 1.21
+        },
+        {
+          "id": "w3",
+          "text": "10%",
+          "start": 1.35,
+          "end": 1.72
+        },
+        {
+          "id": "w4",
+          "text": "of",
+          "start": 1.72,
+          "end": 1.86
+        },
+        {
+          "id": "w5",
+          "text": "the",
+          "start": 1.86,
+          "end": 2.06
+        },
+        {
+          "id": "w6",
+          "text": "price",
+          "start": 2.12,
+          "end": 2.46
+        },
+        {
+          "id": "w7",
+          "text": "every",
+          "start": 2.51,
+          "end": 2.92
+        },
+        {
+          "id": "w8",
+          "text": "year,",
+          "start": 2.92,
+          "end": 3.34
+        },
+        {
+          "id": "w9",
+          "text": "$3",
+          "start": 3.37,
+          "end": 3.59
+        },
+        {
+          "id": "w10",
+          "text": "million.",
+          "start": 3.59,
+          "end": 4.56
+        }
+      ]
+    },
+    {
+      "frame": 8,
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.221,
+      "words": [
+        {
+          "id": "w0",
+          "text": "10",
+          "start": 0.03,
+          "end": 0.35
+        },
+        {
+          "id": "w1",
+          "text": "years",
+          "start": 0.35,
+          "end": 0.64
+        },
+        {
+          "id": "w2",
+          "text": "in,",
+          "start": 0.64,
+          "end": 0.81
+        },
+        {
+          "id": "w3",
+          "text": "you've",
+          "start": 0.89,
+          "end": 1.17
+        },
+        {
+          "id": "w4",
+          "text": "paid",
+          "start": 1.22,
+          "end": 1.43
+        },
+        {
+          "id": "w5",
+          "text": "for",
+          "start": 1.5,
+          "end": 1.64
+        },
+        {
+          "id": "w6",
+          "text": "it",
+          "start": 1.64,
+          "end": 1.76
+        },
+        {
+          "id": "w7",
+          "text": "twice.",
+          "start": 1.76,
+          "end": 2.1
+        },
+        {
+          "id": "w8",
+          "text": "Still",
+          "start": 2.13,
+          "end": 2.4
+        },
+        {
+          "id": "w9",
+          "text": "want",
+          "start": 2.4,
+          "end": 2.64
+        },
+        {
+          "id": "w10",
+          "text": "the",
+          "start": 2.64,
+          "end": 2.82
+        },
+        {
+          "id": "w11",
+          "text": "yacht?",
+          "start": 2.82,
+          "end": 3.27
+        }
+      ]
+    }
+  ],
+  "sfx": []
+}

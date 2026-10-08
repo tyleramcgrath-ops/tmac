@@ -1,0 +1,194 @@
+{
+ "lines": [
+  {
+   "text": "That private jet photo? It might be a studio in East L.A.",
+   "shots": [
+    [
+     "mk50466.mp4",
+     2.0,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "The Lambo, the mansion, the jet, the Birkin. Rich, right?",
+   "shots": [
+    [
+     "mk44561.mp4",
+     2.0,
+     "lux"
+    ],
+    [
+     "mk43068.mp4@0.4",
+     2.0,
+     "lux",
+     "jet"
+    ]
+   ]
+  },
+  {
+   "text": "The Lamborghini: rentals in L.A. start around a thousand a day.",
+   "shots": [
+    [
+     "mk50492.mp4",
+     2.0,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "The mansion: listed by the hour. Four hours, about eight hundred.",
+   "shots": [
+    [
+     "mk41614.mp4",
+     2.0,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "The jet set: around forty-five dollars an hour.",
+   "shots": [
+    [
+     "mk41626.mp4",
+     2.0,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "The Birkin: a rental membership, eight hundred a month.",
+   "shots": [
+    [
+     "mk34422.mp4",
+     2.0,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "One rich-looking photo day: about twenty-eight hundred dollars. Owned at the end: nothing.",
+   "shots": [
+    [
+     "mk50467.mp4",
+     2.0,
+     "lux"
+    ],
+    [
+     "mk15838.mp4",
+     2.0,
+     "calm",
+     "owned"
+    ]
+   ]
+  },
+  {
+   "text": "Next time you see the jet pic: real, or rented?",
+   "shots": [
+    [
+     "mk42315.mp4",
+     2.0,
+     "lux"
+    ],
+    [
+     "mk50466.mp4",
+     6.0,
+     "lux",
+     "real"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "\"JET\" STUDIO",
+   "East Los Angeles",
+   "",
+   "L1:it",
+   "L2",
+   ""
+  ],
+  [
+   "LAMBO RENTAL",
+   "~$1,000 / day",
+   "",
+   "L3:start",
+   "L4",
+   ""
+  ],
+  [
+   "MANSION SET",
+   "$200/hr \u00d7 4 = $800",
+   "",
+   "L4:four",
+   "L5",
+   ""
+  ],
+  [
+   "JET STUDIO",
+   "$35\u2013$55 / hr",
+   "",
+   "L5:around",
+   "L6",
+   ""
+  ],
+  [
+   "BIRKIN RENTAL",
+   "$800 / mo",
+   "MEMBERSHIP",
+   "L6:800",
+   "L7",
+   ""
+  ],
+  [
+   "OWNED AFTERWARDS",
+   "$0",
+   "",
+   "L7:owned",
+   "L8",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $2,780<br><span style='font-size:44px;font-weight:600'>for one photo day</span>",
+   "L7:about",
+   "L7:owned",
+   104,
+   "#fff"
+  ],
+  [
+   "real,<br>or rented?",
+   "L8:real",
+   "END",
+   104,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:about",
+ "footnote": "Estimates from LA rental listings (Pugachev, Peerspace, FD Photo Studio, Vivrelle). People shown are stock models, not real creators.",
+ "caption_fix": {
+  "photo.": "photo?",
+  "Wright.": "right?",
+  "Pick,": "pic:",
+  "rented.": "rented?",
+  "Mansion,": "mansion,",
+  "Jet,": "jet,",
+  "Jet": "jet",
+  "Set,": "set,"
+ }
+}

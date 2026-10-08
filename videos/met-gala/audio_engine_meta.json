@@ -1,0 +1,517 @@
+{
+  "tts_provider": "kokoro",
+  "voice_id": "am_michael",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 3.392,
+      "words": [
+        {
+          "id": "w0",
+          "text": "A",
+          "start": 0.07,
+          "end": 0.1
+        },
+        {
+          "id": "w1",
+          "text": "Met",
+          "start": 0.1,
+          "end": 0.29
+        },
+        {
+          "id": "w2",
+          "text": "Gala",
+          "start": 0.42,
+          "end": 0.6
+        },
+        {
+          "id": "w3",
+          "text": "ticket",
+          "start": 0.6,
+          "end": 1.02
+        },
+        {
+          "id": "w4",
+          "text": "now",
+          "start": 1.02,
+          "end": 1.35
+        },
+        {
+          "id": "w5",
+          "text": "costs",
+          "start": 1.35,
+          "end": 1.65
+        },
+        {
+          "id": "w6",
+          "text": "$100,000.",
+          "start": 1.68,
+          "end": 3.39
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 3.925,
+      "words": [
+        {
+          "id": "w0",
+          "text": "The",
+          "start": 0.04,
+          "end": 0.24
+        },
+        {
+          "id": "w1",
+          "text": "museum",
+          "start": 0.24,
+          "end": 0.71
+        },
+        {
+          "id": "w2",
+          "text": "steps,",
+          "start": 0.71,
+          "end": 1.26
+        },
+        {
+          "id": "w3",
+          "text": "the",
+          "start": 1.33,
+          "end": 1.47
+        },
+        {
+          "id": "w4",
+          "text": "flash",
+          "start": 1.47,
+          "end": 1.78
+        },
+        {
+          "id": "w5",
+          "text": "bulbs,",
+          "start": 1.84,
+          "end": 2.34
+        },
+        {
+          "id": "w6",
+          "text": "a",
+          "start": 2.36,
+          "end": 2.42
+        },
+        {
+          "id": "w7",
+          "text": "gown",
+          "start": 2.42,
+          "end": 2.68
+        },
+        {
+          "id": "w8",
+          "text": "everyone",
+          "start": 2.74,
+          "end": 3.16
+        },
+        {
+          "id": "w9",
+          "text": "talks",
+          "start": 3.16,
+          "end": 3.4
+        },
+        {
+          "id": "w10",
+          "text": "about.",
+          "start": 3.44,
+          "end": 3.75
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 2.304,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Last",
+          "start": 0.07,
+          "end": 0.27
+        },
+        {
+          "id": "w1",
+          "text": "year",
+          "start": 0.37,
+          "end": 0.58
+        },
+        {
+          "id": "w2",
+          "text": "it",
+          "start": 0.58,
+          "end": 0.72
+        },
+        {
+          "id": "w3",
+          "text": "was",
+          "start": 0.72,
+          "end": 0.81
+        },
+        {
+          "id": "w4",
+          "text": "75,000.",
+          "start": 0.99,
+          "end": 2.23
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 4.459,
+      "words": [
+        {
+          "id": "w0",
+          "text": "A",
+          "start": 0.07,
+          "end": 0.11
+        },
+        {
+          "id": "w1",
+          "text": "table",
+          "start": 0.11,
+          "end": 0.45
+        },
+        {
+          "id": "w2",
+          "text": "of",
+          "start": 0.45,
+          "end": 0.58
+        },
+        {
+          "id": "w3",
+          "text": "10,",
+          "start": 0.67,
+          "end": 1.2
+        },
+        {
+          "id": "w4",
+          "text": "350,000",
+          "start": 1.43,
+          "end": 2.79
+        },
+        {
+          "id": "w5",
+          "text": "usually",
+          "start": 2.92,
+          "end": 3.33
+        },
+        {
+          "id": "w6",
+          "text": "paid",
+          "start": 3.39,
+          "end": 3.71
+        },
+        {
+          "id": "w7",
+          "text": "by",
+          "start": 3.71,
+          "end": 3.87
+        },
+        {
+          "id": "w8",
+          "text": "a",
+          "start": 3.87,
+          "end": 3.93
+        },
+        {
+          "id": "w9",
+          "text": "brand.",
+          "start": 3.94,
+          "end": 4.44
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 4.565,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Stars",
+          "start": 0.06,
+          "end": 0.41
+        },
+        {
+          "id": "w1",
+          "text": "prep",
+          "start": 0.5,
+          "end": 0.74
+        },
+        {
+          "id": "w2",
+          "text": "at",
+          "start": 0.79,
+          "end": 0.94
+        },
+        {
+          "id": "w3",
+          "text": "The",
+          "start": 0.94,
+          "end": 1.2
+        },
+        {
+          "id": "w4",
+          "text": "Mark",
+          "start": 1.2,
+          "end": 1.52
+        },
+        {
+          "id": "w5",
+          "text": "Hotel,",
+          "start": 1.53,
+          "end": 2.11
+        },
+        {
+          "id": "w6",
+          "text": "Pint",
+          "start": 2.11,
+          "end": 2.33
+        },
+        {
+          "id": "w7",
+          "text": "Houses,",
+          "start": 2.33,
+          "end": 2.74
+        },
+        {
+          "id": "w8",
+          "text": "$45,000",
+          "start": 2.86,
+          "end": 3.97
+        },
+        {
+          "id": "w9",
+          "text": "a",
+          "start": 3.97,
+          "end": 4.03
+        },
+        {
+          "id": "w10",
+          "text": "night.",
+          "start": 4.03,
+          "end": 4.4
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 4.139,
+      "words": [
+        {
+          "id": "w0",
+          "text": "custom",
+          "start": 0.04,
+          "end": 0.56
+        },
+        {
+          "id": "w1",
+          "text": "couture.",
+          "start": 0.61,
+          "end": 1.51
+        },
+        {
+          "id": "w2",
+          "text": "Some",
+          "start": 1.51,
+          "end": 1.74
+        },
+        {
+          "id": "w3",
+          "text": "estimates",
+          "start": 1.74,
+          "end": 2.27
+        },
+        {
+          "id": "w4",
+          "text": "put",
+          "start": 2.27,
+          "end": 2.44
+        },
+        {
+          "id": "w5",
+          "text": "a",
+          "start": 2.44,
+          "end": 2.49
+        },
+        {
+          "id": "w6",
+          "text": "gown",
+          "start": 2.49,
+          "end": 2.76
+        },
+        {
+          "id": "w7",
+          "text": "at",
+          "start": 2.76,
+          "end": 2.79
+        },
+        {
+          "id": "w8",
+          "text": "$500,000.",
+          "start": 2.85,
+          "end": 4.05
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 4.181,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Ticket",
+          "start": 0.03,
+          "end": 0.49
+        },
+        {
+          "id": "w1",
+          "text": "plus",
+          "start": 0.49,
+          "end": 0.79
+        },
+        {
+          "id": "w2",
+          "text": "that",
+          "start": 0.84,
+          "end": 1.12
+        },
+        {
+          "id": "w3",
+          "text": "suite,",
+          "start": 1.12,
+          "end": 1.71
+        },
+        {
+          "id": "w4",
+          "text": "145,000",
+          "start": 1.71,
+          "end": 3.18
+        },
+        {
+          "id": "w5",
+          "text": "before",
+          "start": 3.33,
+          "end": 3.66
+        },
+        {
+          "id": "w6",
+          "text": "the",
+          "start": 3.66,
+          "end": 3.84
+        },
+        {
+          "id": "w7",
+          "text": "dress.",
+          "start": 3.84,
+          "end": 4.18
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 4.181,
+      "words": [
+        {
+          "id": "w0",
+          "text": "but",
+          "start": 0.03,
+          "end": 0.21
+        },
+        {
+          "id": "w1",
+          "text": "most",
+          "start": 0.21,
+          "end": 0.5
+        },
+        {
+          "id": "w2",
+          "text": "stars",
+          "start": 0.5,
+          "end": 0.86
+        },
+        {
+          "id": "w3",
+          "text": "don't",
+          "start": 0.86,
+          "end": 1.21
+        },
+        {
+          "id": "w4",
+          "text": "buy",
+          "start": 1.21,
+          "end": 1.42
+        },
+        {
+          "id": "w5",
+          "text": "the",
+          "start": 1.42,
+          "end": 1.63
+        },
+        {
+          "id": "w6",
+          "text": "dress.",
+          "start": 1.63,
+          "end": 2.04
+        },
+        {
+          "id": "w7",
+          "text": "Brands",
+          "start": 2.07,
+          "end": 2.47
+        },
+        {
+          "id": "w8",
+          "text": "lend",
+          "start": 2.47,
+          "end": 2.74
+        },
+        {
+          "id": "w9",
+          "text": "it,",
+          "start": 2.81,
+          "end": 3.06
+        },
+        {
+          "id": "w10",
+          "text": "who's",
+          "start": 3.06,
+          "end": 3.32
+        },
+        {
+          "id": "w11",
+          "text": "really",
+          "start": 3.36,
+          "end": 3.69
+        },
+        {
+          "id": "w12",
+          "text": "paying.",
+          "start": 3.69,
+          "end": 4.24
+        }
+      ]
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 31.146
+}

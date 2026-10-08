@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "That private jet photo? It might be a studio in East L.A."
+    },
+    {
+      "id": "02",
+      "text": "The Lambo, the mansion, the jet, the Birkin. Rich, right?"
+    },
+    {
+      "id": "03",
+      "text": "The Lamborghini: rentals in L.A. start around a thousand a day."
+    },
+    {
+      "id": "04",
+      "text": "The mansion: listed by the hour. Four hours, about eight hundred."
+    },
+    {
+      "id": "05",
+      "text": "The jet set: around forty-five dollars an hour."
+    },
+    {
+      "id": "06",
+      "text": "The Birkin: a rental membership, eight hundred a month."
+    },
+    {
+      "id": "07",
+      "text": "One rich-looking photo day: about twenty-eight hundred dollars. Owned at the end: nothing."
+    },
+    {
+      "id": "08",
+      "text": "Next time you see the jet pic: real, or rented?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

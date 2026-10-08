@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Buying a ten million dollar mansion is the cheap part."
+    },
+    {
+      "id": "02",
+      "text": "Los Angeles. Infinity pool, canyon views, full-time staff."
+    },
+    {
+      "id": "03",
+      "text": "Property tax, about one point two percent: a hundred twenty grand a year."
+    },
+    {
+      "id": "04",
+      "text": "Insuring the house and everything in it: about seventy-two grand."
+    },
+    {
+      "id": "05",
+      "text": "Upkeep, using the one percent rule: another hundred grand."
+    },
+    {
+      "id": "06",
+      "text": "A house manager, a private chef and a housekeeper: two hundred ninety grand, at the low end."
+    },
+    {
+      "id": "07",
+      "text": "Before you flip a light switch: almost six hundred grand a year. Forty-eight thousand a month."
+    },
+    {
+      "id": "08",
+      "text": "Still want the mansion?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

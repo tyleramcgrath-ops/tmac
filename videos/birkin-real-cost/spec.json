@@ -1,0 +1,197 @@
+{
+ "lines": [
+  {
+   "text": "You can't just walk in and buy a Birkin.",
+   "shots": [
+    [
+     "mk21331.mp4",
+     1,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "A Birkin twenty-five, in Togo leather. Straight from the boutique.",
+   "shots": [
+    [
+     "mk34425.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk9060.mp4",
+     1,
+     "lux",
+     "straight"
+    ]
+   ]
+  },
+  {
+   "text": "The US sticker price: thirteen and a half grand.",
+   "shots": [
+    [
+     "mk21330.mp4",
+     2,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "First, buyers say, you build a purchase history. Scarves, shoes, home goods.",
+   "shots": [
+    [
+     "mk6302.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk8866.mp4",
+     4,
+     "lux",
+     "scarves"
+    ]
+   ]
+  },
+  {
+   "text": "Collectors describe spending one to one. Some say double.",
+   "shots": [
+    [
+     "mk12938.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk34422.mp4",
+     2,
+     "lux",
+     "some"
+    ]
+   ]
+  },
+  {
+   "text": "A twenty twenty-four lawsuit alleged illegal tying. Dismissed, now on appeal.",
+   "shots": [
+    [
+     "mk21331.mp4",
+     6,
+     "cost"
+    ]
+   ]
+  },
+  {
+   "text": "At one to one, your thirteen-grand bag really costs twenty-seven thousand.",
+   "shots": [
+    [
+     "mk51562.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk34425.mp4",
+     4,
+     "lux",
+     "really"
+    ]
+   ]
+  },
+  {
+   "text": "Or skip the line: resale runs close to thirty grand. Which would you pay?",
+   "shots": [
+    [
+     "mk48510.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk21330.mp4",
+     6,
+     "lux",
+     "which"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "BIRKIN 25 \u00b7 TOGO",
+   "\"not available\"",
+   "",
+   "L1:birkin",
+   "L2",
+   ""
+  ],
+  [
+   "RETAIL \u00b7 US 2026",
+   "$13,500",
+   "",
+   "L3:13",
+   "L4",
+   ""
+  ],
+  [
+   "PURCHASE HISTORY",
+   "reportedly expected",
+   "",
+   "L4:purchase",
+   "L5",
+   ""
+  ],
+  [
+   "SPEND RATIO",
+   "1:1 to 1:2",
+   "REPORTED \u00b7 UNCONFIRMED",
+   "L5:one",
+   "L6",
+   ""
+  ],
+  [
+   "2024 LAWSUIT",
+   "dismissed",
+   "APPEAL PENDING",
+   "L6:dismissed",
+   "L7",
+   ""
+  ],
+  [
+   "RESALE",
+   "$28K\u2013$30K",
+   "",
+   "L8:resale",
+   "L8:which",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $27,000<br><span style='font-size:44px;font-weight:600'>for a $13.5K bag</span>",
+   "L7:really",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "which would<br>you pay?",
+   "L8:which",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:really",
+ "footnote": "Sources: Sotheby's, PurseBop (2026 prices). Spend ratio is buyer-reported; Herm\u00e8s has never confirmed it. ~$27K is an estimate. Stock footage.",
+ "caption_fix": {}
+}

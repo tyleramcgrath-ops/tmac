@@ -1,0 +1,766 @@
+{
+  "total_duration_s": 32.41,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.05,
+      "end": 0.45,
+      "text": "Buying a",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Buying",
+          "start": 0.05,
+          "end": 0.35
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "a",
+          "start": 0.35,
+          "end": 0.37
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 0.45,
+      "end": 1.58,
+      "text": "$10 million dollar",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "$10",
+          "start": 0.45,
+          "end": 0.82
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "million",
+          "start": 0.82,
+          "end": 1.23
+        },
+        {
+          "id": "caption-word-1-2",
+          "text": "dollar",
+          "start": 1.23,
+          "end": 1.58
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.58,
+      "end": 1.92,
+      "text": "mansion",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "mansion",
+          "start": 1.58,
+          "end": 1.8
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 2.06,
+      "end": 2.34,
+      "text": "is the",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "is",
+          "start": 2.06,
+          "end": 2.16
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "the",
+          "start": 2.16,
+          "end": 2.34
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 1,
+      "start": 2.34,
+      "end": 3.05,
+      "text": "cheap part.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "cheap",
+          "start": 2.34,
+          "end": 2.63
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "part.",
+          "start": 2.63,
+          "end": 2.93
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 3.449,
+      "end": 4.679,
+      "text": "Los Angeles,",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "Los",
+          "start": 3.449,
+          "end": 3.749
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "Angeles,",
+          "start": 3.749,
+          "end": 4.679
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 4.679,
+      "end": 5.409,
+      "text": "Infinity Pool,",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "Infinity",
+          "start": 4.679,
+          "end": 5.079
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "Pool,",
+          "start": 5.089,
+          "end": 5.329
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 5.409,
+      "end": 6.799,
+      "text": "Canyon views full-time",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "Canyon",
+          "start": 5.409,
+          "end": 5.819
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "views",
+          "start": 5.819,
+          "end": 6.169
+        },
+        {
+          "id": "caption-word-7-2",
+          "text": "full-time",
+          "start": 6.169,
+          "end": 6.799
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 6.799,
+      "end": 7.289,
+      "text": "staff.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "staff.",
+          "start": 6.799,
+          "end": 7.169
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 3,
+      "start": 7.429,
+      "end": 10.109,
+      "text": "property tax about 1.2%,",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "property",
+          "start": 7.429,
+          "end": 8.139
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "tax",
+          "start": 8.139,
+          "end": 8.429
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "about",
+          "start": 8.429,
+          "end": 8.879
+        },
+        {
+          "id": "caption-word-9-3",
+          "text": "1.2%,",
+          "start": 8.929,
+          "end": 10.099
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 3,
+      "start": 10.109,
+      "end": 11.809,
+      "text": "120 grand a year.",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "120",
+          "start": 10.109,
+          "end": 10.839
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "grand",
+          "start": 10.839,
+          "end": 11.249
+        },
+        {
+          "id": "caption-word-10-2",
+          "text": "a",
+          "start": 11.249,
+          "end": 11.329
+        },
+        {
+          "id": "caption-word-10-3",
+          "text": "year.",
+          "start": 11.329,
+          "end": 11.689
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 4,
+      "start": 11.84,
+      "end": 12.87,
+      "text": "Insuring the house",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "Insuring",
+          "start": 11.84,
+          "end": 12.34
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "the",
+          "start": 12.34,
+          "end": 12.54
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "house",
+          "start": 12.54,
+          "end": 12.87
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 4,
+      "start": 12.87,
+      "end": 13.73,
+      "text": "and everything",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "and",
+          "start": 12.87,
+          "end": 13.05
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "everything",
+          "start": 13.06,
+          "end": 13.61
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 4,
+      "start": 13.85,
+      "end": 14.06,
+      "text": "in it,",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "in",
+          "start": 13.85,
+          "end": 13.86
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "it,",
+          "start": 14.01,
+          "end": 14.03
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 4,
+      "start": 14.06,
+      "end": 15.68,
+      "text": "about 72 grand.",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "about",
+          "start": 14.06,
+          "end": 14.47
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "72",
+          "start": 14.47,
+          "end": 15
+        },
+        {
+          "id": "caption-word-14-2",
+          "text": "grand.",
+          "start": 15,
+          "end": 15.56
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 5,
+      "start": 15.86,
+      "end": 17.03,
+      "text": "upkeep using the",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "upkeep",
+          "start": 15.86,
+          "end": 16.31
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "using",
+          "start": 16.31,
+          "end": 16.76
+        },
+        {
+          "id": "caption-word-15-2",
+          "text": "the",
+          "start": 16.76,
+          "end": 17.03
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 5,
+      "start": 17.03,
+      "end": 17.93,
+      "text": "1% rule,",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "1%",
+          "start": 17.03,
+          "end": 17.39
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "rule,",
+          "start": 17.39,
+          "end": 17.85
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 5,
+      "start": 17.93,
+      "end": 19.28,
+      "text": "another hundred grand.",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "another",
+          "start": 17.93,
+          "end": 18.3
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "hundred",
+          "start": 18.32,
+          "end": 18.79
+        },
+        {
+          "id": "caption-word-17-2",
+          "text": "grand.",
+          "start": 18.79,
+          "end": 19.16
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 6,
+      "start": 19.406,
+      "end": 19.746,
+      "text": "A house",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "A",
+          "start": 19.406,
+          "end": 19.466
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "house",
+          "start": 19.466,
+          "end": 19.746
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 6,
+      "start": 19.746,
+      "end": 20.346,
+      "text": "manager,",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "manager,",
+          "start": 19.746,
+          "end": 20.346
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 6,
+      "start": 20.346,
+      "end": 21.346,
+      "text": "a private chef",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "a",
+          "start": 20.346,
+          "end": 20.516
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "private",
+          "start": 20.516,
+          "end": 20.956
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "chef",
+          "start": 21.006,
+          "end": 21.256
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 6,
+      "start": 21.346,
+      "end": 22.586,
+      "text": "and a housekeeper.",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "and",
+          "start": 21.346,
+          "end": 21.506
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "a",
+          "start": 21.516,
+          "end": 21.586
+        },
+        {
+          "id": "caption-word-21-2",
+          "text": "housekeeper.",
+          "start": 21.586,
+          "end": 22.466
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 6,
+      "start": 22.586,
+      "end": 23.556,
+      "text": "290 grand",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "290",
+          "start": 22.586,
+          "end": 23.176
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "grand",
+          "start": 23.176,
+          "end": 23.436
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 6,
+      "start": 23.626,
+      "end": 23.966,
+      "text": "at the",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "at",
+          "start": 23.626,
+          "end": 23.686
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "the",
+          "start": 23.746,
+          "end": 23.966
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 6,
+      "start": 23.966,
+      "end": 24.586,
+      "text": "low end.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "low",
+          "start": 23.966,
+          "end": 24.206
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "end.",
+          "start": 24.206,
+          "end": 24.466
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 7,
+      "start": 24.807,
+      "end": 25.367,
+      "text": "before you",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "before",
+          "start": 24.807,
+          "end": 25.127
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "you",
+          "start": 25.237,
+          "end": 25.307
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 7,
+      "start": 25.367,
+      "end": 25.717,
+      "text": "flip a",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "flip",
+          "start": 25.367,
+          "end": 25.617
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "a",
+          "start": 25.617,
+          "end": 25.657
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 7,
+      "start": 25.717,
+      "end": 26.517,
+      "text": "light switch,",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "light",
+          "start": 25.717,
+          "end": 25.987
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "switch,",
+          "start": 26.007,
+          "end": 26.477
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 7,
+      "start": 26.517,
+      "end": 28.107,
+      "text": "almost 600 grand a",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "almost",
+          "start": 26.517,
+          "end": 26.857
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "600",
+          "start": 26.857,
+          "end": 27.617
+        },
+        {
+          "id": "caption-word-28-2",
+          "text": "grand",
+          "start": 27.617,
+          "end": 28.027
+        },
+        {
+          "id": "caption-word-28-3",
+          "text": "a",
+          "start": 28.027,
+          "end": 28.077
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 7,
+      "start": 28.107,
+      "end": 28.527,
+      "text": "year,",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "year,",
+          "start": 28.107,
+          "end": 28.477
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 7,
+      "start": 28.527,
+      "end": 30.28,
+      "text": "48,000 a month.",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "48,000",
+          "start": 28.527,
+          "end": 29.607
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "a",
+          "start": 29.607,
+          "end": 29.667
+        },
+        {
+          "id": "caption-word-30-2",
+          "text": "month.",
+          "start": 29.667,
+          "end": 30.217
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 8,
+      "start": 30.28,
+      "end": 30.78,
+      "text": "still want",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "still",
+          "start": 30.28,
+          "end": 30.5
+        },
+        {
+          "id": "caption-word-31-1",
+          "text": "want",
+          "start": 30.5,
+          "end": 30.71
+        }
+      ]
+    },
+    {
+      "id": "caption-group-32",
+      "frame": 8,
+      "start": 30.78,
+      "end": 31.45,
+      "text": "the mansion?",
+      "words": [
+        {
+          "id": "caption-word-32-0",
+          "text": "the",
+          "start": 30.78,
+          "end": 30.9
+        },
+        {
+          "id": "caption-word-32-1",
+          "text": "mansion?",
+          "start": 30.9,
+          "end": 31.33
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "A Vegas club will sell you vodka for seven hundred fifty dollars."
+    },
+    {
+      "id": "02",
+      "text": "Sparklers, a booth above the crowd, the bottle parade."
+    },
+    {
+      "id": "03",
+      "text": "Weekend minimums at the top clubs: three to six grand."
+    },
+    {
+      "id": "04",
+      "text": "Two Grey Goose, one Dom Pérignon. That's your three grand."
+    },
+    {
+      "id": "05",
+      "text": "Then tax, venue fee and auto-gratuity: up to thirty-eight percent on top."
+    },
+    {
+      "id": "06",
+      "text": "Your three grand table? Over four thousand dollars."
+    },
+    {
+      "id": "07",
+      "text": "The same three bottles at a liquor store: about three hundred bucks."
+    },
+    {
+      "id": "08",
+      "text": "Thirteen times the price. Would you still book the table?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

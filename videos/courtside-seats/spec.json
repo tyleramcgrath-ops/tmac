@@ -1,0 +1,211 @@
+{
+ "lines": [
+  {
+   "text": "Lakers courtside costs at least four grand. Per seat. Per night.",
+   "shots": [
+    [
+     "mk9585.mp4",
+     3,
+     "lux"
+    ],
+    [
+     "mk44464.mp4",
+     1,
+     "lux",
+     "per"
+    ]
+   ]
+  },
+  {
+   "text": "Your sneakers on the baseline. Celebrities one chair over.",
+   "shots": [
+    [
+     "mk30312.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk48510.mp4",
+     1,
+     "lux",
+     "celebrities"
+    ]
+   ]
+  },
+  {
+   "text": "A regular-season night: four to ten thousand dollars a seat.",
+   "shots": [
+    [
+     "mk44471.mp4@0.7",
+     3,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Forty-one home games, at the cheapest: a hundred sixty-four grand.",
+   "shots": [
+    [
+     "mk44464.mp4@0.3",
+     0,
+     "calm"
+    ],
+    [
+     "mk13733.mp4",
+     0,
+     "lux",
+     "164"
+    ]
+   ]
+  },
+  {
+   "text": "Make the playoffs, and one seat jumps to twenty to forty grand.",
+   "shots": [
+    [
+     "mk44455.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk9585.mp4",
+     14,
+     "lux",
+     "20"
+    ]
+   ]
+  },
+  {
+   "text": "Even the Lakers' new Courtside Reserve seats: fifteen to thirty grand.",
+   "shots": [
+    [
+     "mk51562.mp4",
+     4,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Two seats, every home game, cheapest nights: about three hundred thirty grand.",
+   "shots": [
+    [
+     "mk44454.mp4",
+     0,
+     "lux"
+    ],
+    [
+     "mk48510.mp4",
+     6,
+     "lux",
+     "about"
+    ]
+   ]
+  },
+  {
+   "text": "Before a single playoff game. Would you sit courtside?",
+   "shots": [
+    [
+     "mk24341.mp4",
+     2,
+     "calm"
+    ],
+    [
+     "mk9585.mp4",
+     20,
+     "lux",
+     "would"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "LAKERS COURTSIDE",
+   "from $4,000",
+   "PER SEAT \u00b7 PER GAME",
+   "L1:four",
+   "L2",
+   ""
+  ],
+  [
+   "ROW AA",
+   "on the baseline",
+   "",
+   "L2:your",
+   "L3",
+   ""
+  ],
+  [
+   "REGULAR SEASON",
+   "$4K\u2013$10K / seat",
+   "RESALE MARKET",
+   "L3:$4",
+   "L4",
+   ""
+  ],
+  [
+   "41 GAMES \u00d7 $4K",
+   "$164K",
+   "EST. \u00b7 1 SEAT",
+   "L4:164",
+   "L5",
+   ""
+  ],
+  [
+   "PLAYOFFS",
+   "$20K\u2013$40K / seat",
+   "",
+   "L5:20",
+   "L6",
+   ""
+  ],
+  [
+   "COURTSIDE RESERVE",
+   "$15K\u2013$30K",
+   "PLAYOFFS",
+   "L6:$15",
+   "L7",
+   ""
+  ],
+  [
+   "+ PLAYOFFS",
+   "not included",
+   "",
+   "L8:before",
+   "L8:would",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $328,000<br><span style='font-size:44px;font-weight:600'>2 seats \u00b7 1 season</span>",
+   "L7:about",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "would you sit<br>courtside?",
+   "L8:would",
+   "END",
+   92,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:about",
+ "footnote": "Resale-market prices via New York Post (Apr 2026); face value not public. Season totals are estimates at the low end. Stock footage, not Lakers games.",
+ "caption_fix": {}
+}
