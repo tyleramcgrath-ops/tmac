@@ -40,6 +40,7 @@ export function SiteFooter() {
           <a href="/connect">Connect</a>
           <a href="/websites-for/law-firms">For law firms</a>
           <a href="/visibility-index">The Index</a>
+          <a href="/reports">Local reports</a>
           <a href="/google-guidelines">Google’s guidelines</a>
           <a href="/blog">Blog</a>
           <a href="/#faq">FAQ</a>
