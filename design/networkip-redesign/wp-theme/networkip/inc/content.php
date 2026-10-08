@@ -57,6 +57,9 @@ function networkip_defaults() {
 		'contact_recipient'    => '',
 		'contact_form_enabled' => '1',
 
+		// Logo shown in the dark header and footer (blank = bundled white logo).
+		'logo_light'           => '',
+
 		// Layout options.
 		'home_show_content'    => '',
 		'designed_pages'       => '1',

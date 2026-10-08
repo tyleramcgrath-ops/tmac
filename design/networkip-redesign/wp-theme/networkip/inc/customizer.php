@@ -89,6 +89,27 @@ function networkip_customize_register( $wp_customize ) {
 		'neutralize_builders'  => array( 'networkip_layout', __( 'Stop Elementor’s global kit colors and fonts from overriding the theme', 'networkip' ), 'checkbox', 'networkip_sanitize_checkbox' ),
 	);
 
+	// Logo for the dark header and footer. Goes in Site Identity, under the regular logo.
+	$wp_customize->add_setting(
+		'networkip_logo_light',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'networkip_logo_light',
+			array(
+				'label'       => __( 'Logo for dark backgrounds (header and footer)', 'networkip' ),
+				'description' => __( 'Use a version with white lettering. Leave empty to use the white NetworkIP logo bundled with the theme.', 'networkip' ),
+				'section'     => 'title_tagline',
+				'priority'    => 9,
+			)
+		)
+	);
+
 	$defaults = networkip_defaults();
 	foreach ( $fields as $key => $field ) {
 		$setting = 'networkip_' . $key;

@@ -133,7 +133,10 @@ ul, ol { padding: 0; }
 
 .nip-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: var(--nip-header-h); }
 .nip-header__brand { flex: none; }
-.nip-header__brand .custom-logo { max-height: 44px; width: auto; }
+.nip-logo { display: inline-flex; align-items: center; line-height: 0; }
+.nip-logo img { display: block; width: auto; height: 46px; }
+.nip-logo--footer img { height: 50px; }
+@media (max-width: 640px) { .nip-logo--header img { height: 40px; } }
 
 .nip-wordmark { display: inline-flex; align-items: center; text-decoration: none; color: var(--nip-white); }
 .nip-wordmark__text { position: relative; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; padding-right: 2px; }

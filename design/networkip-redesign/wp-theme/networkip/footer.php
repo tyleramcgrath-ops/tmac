@@ -12,7 +12,7 @@ $networkip_email   = networkip_mod( 'contact_email' );
 <footer class="nip-footer">
 	<div class="nip-wrap nip-footer__grid">
 		<div class="nip-footer__brand">
-			<?php networkip_logo(); ?>
+			<?php networkip_logo( 'footer' ); ?>
 			<address class="nip-footer__contact">
 				<?php if ( $networkip_address ) : ?>
 					<span><?php echo nl2br( esc_html( $networkip_address ) ); ?></span>

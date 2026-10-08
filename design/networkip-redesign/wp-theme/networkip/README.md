@@ -1,4 +1,4 @@
-# NetworkIP WordPress Theme (v1.1.0)
+# NetworkIP WordPress Theme (v1.2.0)
 
 This is a custom theme built from the ChatGPT "left homepage" handoff. It has a dark navy and electric-blue design with a connected-globe hero, a global network map section, glowing service cards and a contact form.
 
@@ -10,7 +10,7 @@ Requirements: WordPress 6.3+ (tested on 7.1.3) and PHP 7.4+ (tested on 8.4). It 
 2. Under **Settings → Reading**, set "Your homepage displays" to **A static page** and pick a page (for example "Home"). `front-page.php` also renders when the homepage shows latest posts.
 3. Under **Settings → Permalinks**, choose **Post name**. Create pages with these slugs so the built-in links resolve: `about-us`, `management`, `service`, `international-calling`, `customer-intelligence`, `technology`, `integration`, `call-quality`, `contact-us`, `privacy-policy`.
 4. Optional: under **Appearance → Menus**, assign menus to *Primary navigation*, *Footer: Company*, *Footer: Service* and *Footer: Technology*. If a location has no menu, the theme shows the public-site links automatically.
-5. Under **Appearance → Customize → Site Identity → Logo**, upload the approved NetworkIP logo (see the caveats below).
+5. The white NetworkIP logo is already built in. To replace it, use **Appearance → Customize → Site Identity → Logo for dark backgrounds** (see the caveats below).
 
 ## Switching from the current Elementor site
 
@@ -58,14 +58,15 @@ All three can be switched off in **Customize → NetworkIP Homepage → Layout &
 | `assets/images/hero-globe-*.webp/.jpg` | ChatGPT handoff `hero-connected-globe-3840x2160.png`, resized to 960/1600/2560 px WebP plus a 1600 px JPG fallback |
 | `assets/images/network-map-*.webp/.jpg` | ChatGPT handoff `global-network-map-3840x1536.png`, same treatment |
 | `assets/icons/*.svg` | ChatGPT handoff icon set, used as `<img>` because the SVGs share internal gradient ids |
-| `assets/images/networkip-wordmark.svg` | ChatGPT handoff fallback wordmark (the header uses an HTML text version of it) |
+| `assets/images/networkip-logo-white*.png` | Official NetworkIP logo supplied by the client, recolored so the black lettering is white |
+| `assets/images/networkip-wordmark.svg` | ChatGPT handoff fallback wordmark (no longer used) |
 | `assets/fonts/manrope-*.woff2` | Manrope variable font (SIL Open Font License), self-hosted |
 
 Nothing is hotlinked. The hero image is preloaded with `fetchpriority="high"`, and below-the-fold images lazy-load. JavaScript is a single deferred 2 KB file for the mobile menu and the header scroll state.
 
 ## Caveats
 
-- **Logo:** the "Network**IP**" wordmark is a temporary text treatment, not the official logo. Upload the approved logo under Site Identity and it replaces the wordmark everywhere.
+- **Logo:** the header and footer use a white version of the official NetworkIP logo (`assets/images/networkip-logo-white*.png`). The black lettering and globe are white; the gold line and red "IP" are unchanged. It was made from a small 170×50 copy of the logo, so it can look slightly soft on high-resolution screens. For a sharper result, upload a larger PNG (about 700px wide or more) with white lettering under **Customize → Site Identity → Logo for dark backgrounds**. The regular Site Identity logo is not used in the header, because its black lettering disappears on the dark background.
 - **Imagery:** the globe and map are AI-generated concept art from the handoff, not official NetworkIP photography.
 - **Copy:** all homepage copy comes from public networkip.net pages (Home, Service, International Calling, Customer Intelligence, Integration, Call Quality, Technology), lightly shortened. Stats (51.6M, 80M+, 25+%, under 2%, 6M+ calls a day, 1B+ accounts, 100,000+ ports, 100+ carriers) are quoted from those pages with footnotes. Have NetworkIP confirm they are still current before launch.
 - **Security note about the current live site:** the "Direct Integration" paragraph on networkip.net/technology/ contains injected spam links (phone-spyware sites). That is a sign the current WordPress install has been compromised. The paragraph was **not** reused here. Have the current site cleaned and audited, and do not migrate its database content without review.

@@ -113,17 +113,32 @@ function networkip_icon( $name, $size = 56 ) {
 }
 
 /**
- * Site logo: the custom logo if one is set, otherwise the temporary text wordmark.
+ * Site logo for the dark header and footer.
+ *
+ * Order: the "Logo for dark backgrounds" Customizer image, then the bundled
+ * white version of the official NetworkIP logo. The regular Site Identity logo
+ * is not used here because the official logo has black lettering that disappears
+ * on the dark navy header.
+ *
+ * @param string $context "header" or "footer" (used for the class name).
  */
-function networkip_logo() {
-	if ( has_custom_logo() ) {
-		the_custom_logo();
-		return;
+function networkip_logo( $context = 'header' ) {
+	$custom = networkip_mod( 'logo_light' );
+	if ( $custom ) {
+		$src    = $custom;
+		$srcset = '';
+	} else {
+		$src    = networkip_asset( 'images/networkip-logo-white.png' );
+		$srcset = networkip_asset( 'images/networkip-logo-white.png' ) . ' 1x, ' . networkip_asset( 'images/networkip-logo-white@2x.png' ) . ' 2x';
 	}
+
 	printf(
-		'<a class="nip-wordmark" href="%1$s" rel="home"><span class="nip-wordmark__text">Network<span>IP</span></span><span class="screen-reader-text"> %2$s</span></a>',
+		'<a class="nip-logo nip-logo--%1$s" href="%2$s" rel="home"><img src="%3$s"%4$s width="170" height="50" alt="%5$s" decoding="async"></a>',
+		esc_attr( $context ),
 		esc_url( home_url( '/' ) ),
-		esc_html__( 'home', 'networkip' )
+		esc_url( $src ),
+		$srcset ? ' srcset="' . esc_attr( $srcset ) . '"' : '',
+		esc_attr__( 'NetworkIP home', 'networkip' )
 	);
 }
 
