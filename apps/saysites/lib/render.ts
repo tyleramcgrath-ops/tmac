@@ -513,7 +513,7 @@ function baseCss(g: GlobalStyles): string {
     face +
     btnCase +
     `:root{${vars}}*,*::before,*::after{box-sizing:border-box}` +
-    `body{margin:0;font-family:var(--f-b);font-size:${g.baseFontSize}px;line-height:1.6;color:var(--c-text);background:var(--c-background)}` +
+    `body{margin:0;font-family:var(--f-b);font-size:${g.baseFontSize}px;line-height:1.6;color:var(--c-text);background:var(--c-background);-webkit-font-smoothing:antialiased}h1,h2,h3{text-wrap:balance}` +
     `h1,h2,h3,h4,h5,h6{font-family:var(--f-h);line-height:1.2;margin:0 0 .5em}${sizes}` +
     `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){${mobile}}` +
     `p{margin:0 0 1em}img{max-width:100%;height:auto;display:block}a{color:var(--c-primary)}` +
@@ -536,7 +536,7 @@ function baseCss(g: GlobalStyles): string {
 function widgetCss(used: Set<string>): string {
   let css = ''
   if (used.has('button')) {
-    css += `.btn{display:inline-block;padding:.8em 1.6em;border-radius:var(--rb);font-weight:600;text-decoration:none;border:1.5px solid transparent;line-height:1.2;text-align:center}`
+    css += `.btn{display:inline-block;padding:.9em 1.75em;border-radius:var(--rb);font-weight:600;text-decoration:none;border:1.5px solid transparent;line-height:1.2;text-align:center;transition:transform .2s}.btn:hover{transform:translateY(-1px)}`
     if (used.has('btn-primary')) css += `.btn-primary{background:var(--c-primary);color:var(--c-background)}`
     if (used.has('btn-secondary')) css += `.btn-secondary{background:var(--c-secondary);color:var(--c-background)}`
     if (used.has('btn-outline')) css += `.btn-outline{border-color:currentColor;color:inherit}`
