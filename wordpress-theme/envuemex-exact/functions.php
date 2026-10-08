@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'EMX_VERSION', '7.4.3' );
+define( 'EMX_VERSION', '7.4.4' );
 define( 'EMX_DIR', get_template_directory() );
 define( 'EMX_URI', get_template_directory_uri() );
 
@@ -43,7 +43,19 @@ add_action( 'after_setup_theme', function () {
 /* =========================================================
    Elementor widgets
    ========================================================= */
-require_once EMX_DIR . '/inc/elementor-widgets.php';
+// The widget classes extend Elementor's, which aren't loaded yet when the
+// theme loads, so only include them once Elementor registers widgets.
+add_action( 'elementor/widgets/register', function ( $widgets_manager ) {
+	require_once EMX_DIR . '/inc/elementor-widgets.php';
+	envuemex_register_elementor_widgets( $widgets_manager );
+} );
+
+add_action( 'elementor/elements/categories_registered', function ( $elements_manager ) {
+	$elements_manager->add_category( 'envuemex', array(
+		'title' => 'EnVueMex Sections',
+		'icon'  => 'fa fa-plug',
+	) );
+} );
 
 /* =========================================================
    Elementor section helper

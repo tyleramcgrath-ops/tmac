@@ -517,11 +517,3 @@ function envuemex_register_elementor_widgets( $widgets_manager ) {
 	$widgets_manager->register( new \EnVueMex_Page_Content_Widget() );
 	$widgets_manager->register( new \EnVueMex_Contact_Widget() );
 }
-add_action( 'elementor/widgets/register', 'envuemex_register_elementor_widgets' );
-
-add_action( 'elementor/elements/categories_registered', function ( $elements_manager ) {
-	$elements_manager->add_category( 'envuemex', array(
-		'title' => 'EnVueMex Sections',
-		'icon'  => 'fa fa-plug',
-	) );
-} );
