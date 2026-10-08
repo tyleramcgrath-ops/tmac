@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetworkIP Holdings</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --night:#07142A; --navy:#0B1D3B; --panel:#0F2445; --line:rgba(214,188,132,.22); --hair:rgba(255,255,255,.1);
+    --text:#C3CCDA; --muted:#8C9AB1; --white:#F6F3EC; --gold:#D6BC84; --gold-deep:#B8893A;
+    --max:1200px; color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Hanken Grotesk",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--night);color:var(--text);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--max);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+  h1,h2,h3,h4,.metric b,.stop b,.index .num{font-variant-numeric:lining-nums}
+  h1,h2,h3,h4{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;color:var(--white);letter-spacing:-.01em;line-height:1.05;text-wrap:balance}
+  h1{font-size:clamp(46px,7.2vw,96px)}
+  h2{font-size:clamp(36px,4.6vw,58px)}
+  em{font-style:italic;color:var(--gold)}
+  .kicker{display:inline-flex;align-items:center;gap:14px;font-size:11.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+  .kicker:before,.kicker.both:after{content:"";width:36px;height:1px;background:var(--gold)}
+  .btn{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 28px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:all .25s}
+  .btn-gold{background:var(--gold);color:var(--night)}
+  .btn-gold:hover{background:#E6CF9D}
+  .btn-ghost{border:1px solid var(--line);color:var(--white)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  /* Header */
+  header.site{position:relative;z-index:2;border-bottom:1px solid var(--hair)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:88px;gap:24px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand .name{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px;font-weight:600;color:var(--white);letter-spacing:.01em}
+  .brand .name b{color:var(--gold);font-weight:600}
+  .brand small{display:block;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-top:-4px}
+  .menu{display:flex;gap:40px;font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+  .menu a:hover{color:var(--gold)}
+
+  /* Hero */
+  .hero{position:relative;overflow:hidden;isolation:isolate}
+  .hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+  .hero:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(900px 500px at 50% 0%,rgba(214,188,132,.12),transparent 70%),linear-gradient(180deg,rgba(7,20,42,0) 55%,var(--night))}
+  .hero .inner{text-align:center;padding-block:120px 110px;max-width:980px;margin:0 auto}
+  .hero h1{margin-top:28px}
+  .hero p.lead{font-size:19px;color:var(--text);max-width:38em;margin:30px auto 0}
+  .hero .actions{display:flex;gap:14px;justify-content:center;margin-top:44px;flex-wrap:wrap}
+
+  .metrics{border-block:1px solid var(--line);background:rgba(15,36,69,.55);backdrop-filter:blur(4px)}
+  .metrics .container{display:grid;grid-template-columns:repeat(4,1fr)}
+  .metric{padding:34px 28px;text-align:center}
+  .metric + .metric{border-left:1px solid var(--line)}
+  .metric b{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:54px;line-height:1;color:var(--white)}
+  .metric span{display:block;margin-top:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+  section{padding-block:120px}
+  .intro{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:start}
+  .intro p{font-size:18px}
+  .intro p + p{margin-top:18px}
+  .signature{margin-top:34px;display:flex;align-items:center;gap:16px}
+  .signature .mono{width:52px;height:52px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-family:"Cormorant Garamond",Georgia,serif;font-size:20px;color:var(--gold)}
+  .signature b{display:block;color:var(--white);font-weight:600}
+  .signature span{font-size:13px;color:var(--muted)}
+
+  /* Portfolio index */
+  .portfolio{background:var(--navy);border-block:1px solid var(--hair)}
+  .phead{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:48px;flex-wrap:wrap}
+  .phead p{max-width:30em}
+  .index{list-style:none;border-top:1px solid var(--line)}
+  .index li a{display:grid;grid-template-columns:70px 1.3fr 1fr 1.6fr 40px;gap:24px;align-items:center;padding:30px 8px;border-bottom:1px solid var(--line);transition:background .25s,padding .25s}
+  .index li a:hover{background:rgba(214,188,132,.06);padding-left:18px}
+  .index .num{font-family:"Cormorant Garamond",Georgia,serif;font-size:20px;color:var(--gold)}
+  .index h3{font-size:30px}
+  .index .sector{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .index p{font-size:15px}
+  .index .arrow{justify-self:end;width:36px;height:36px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--gold);transition:all .25s}
+  .index li a:hover .arrow{background:var(--gold);color:var(--night);border-color:var(--gold)}
+  .index li.flag h3{color:var(--gold)}
+  .pnote{margin-top:20px;font-size:12.5px;color:var(--muted)}
+
+  /* Milestones */
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;position:relative}
+  .timeline:before{content:"";position:absolute;left:0;right:0;top:9px;height:1px;background:var(--line)}
+  .stop{padding-right:28px;position:relative}
+  .stop i{display:block;width:19px;height:19px;border-radius:50%;border:1px solid var(--gold);background:var(--night);position:relative}
+  .stop i:after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--gold)}
+  .stop b{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:34px;color:var(--white);margin-top:22px}
+  .stop p{font-size:15px;margin-top:6px}
+
+  /* Leadership */
+  .leaders{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:56px}
+  .leader{background:var(--night);padding:34px 28px}
+  .leader .mono{width:64px;height:64px;border-radius:50%;background:linear-gradient(150deg,#1A3460,#0F2445);border:1px solid var(--line);display:grid;place-items:center;font-family:"Cormorant Garamond",Georgia,serif;font-size:24px;color:var(--gold)}
+  .leader h4{font-size:24px;margin-top:22px}
+  .leader p{font-size:13.5px;color:var(--muted);margin-top:4px}
+
+  /* Carriers */
+  .carriers{text-align:center;padding-block:72px;border-top:1px solid var(--hair)}
+  .carriers ul{list-style:none;display:flex;justify-content:center;gap:72px;flex-wrap:wrap;margin-top:26px}
+  .carriers li{font-family:"Cormorant Garamond",Georgia,serif;font-size:32px;font-weight:500;color:#7F8DA6}
+
+  /* Contact */
+  .contact{position:relative;overflow:hidden;background:linear-gradient(135deg,#0F2445,#07142A 70%)}
+  .contact:before{content:"";position:absolute;right:-180px;top:-180px;width:560px;height:560px;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 0 70px rgba(214,188,132,.03),0 0 0 140px rgba(214,188,132,.02)}
+  .contact .container{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:end;position:relative}
+  .contact p{font-size:18px;margin-top:24px;max-width:30em}
+  .contact .actions{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap}
+  .addr{border-left:1px solid var(--line);padding-left:36px;display:grid;gap:22px}
+  .addr small{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+  .addr span{color:var(--white);font-size:16px}
+
+  footer{border-top:1px solid var(--hair);font-size:13px;color:var(--muted)}
+  footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:28px}
+
+  @media (max-width:960px){
+    .menu{display:none}
+    .metrics .container{grid-template-columns:1fr 1fr}
+    .metric:nth-child(3){border-left:none}
+    .metric:nth-child(n+3){border-top:1px solid var(--line)}
+    .intro,.contact .container{grid-template-columns:1fr;gap:40px}
+    .index li a{grid-template-columns:44px 1fr 36px;row-gap:8px}
+    .index .sector{grid-column:2}
+    .index p{grid-column:2}
+    .index .arrow{grid-row:1;grid-column:3}
+    .timeline{grid-template-columns:1fr 1fr;row-gap:40px}
+    .timeline:before{display:none}
+    .leaders{grid-template-columns:1fr 1fr}
+    .addr{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:28px}
+    section{padding-block:80px}
+    .hero .inner{padding-block:72px}
+  }
+  @media (max-width:520px){ .timeline,.leaders{grid-template-columns:1fr} .carriers ul{gap:28px} }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <canvas id="arcs" aria-hidden="true"></canvas>
+  <header class="site">
+    <div class="container nav">
+      <a class="brand" href="#">
+        <svg width="38" height="38" viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="15.5" stroke="#D6BC84"/><ellipse cx="17" cy="17" rx="6.5" ry="15.5" stroke="#D6BC84" stroke-opacity=".6"/><path d="M1.5 17h31" stroke="#D6BC84" stroke-opacity=".6"/><circle cx="17" cy="17" r="2.6" fill="#D6BC84"/></svg>
+        <span><span class="name">Network<b>IP</b></span><small>Holdings · Est. 1998</small></span>
+      </a>
+      <nav class="menu" aria-label="Main"><a href="#">Companies</a><a href="#">Our Story</a><a href="#">Leadership</a><a href="#">Contact</a></nav>
+      <a class="btn btn-ghost" href="#">Contact</a>
+    </div>
+  </header>
+  <div class="container inner">
+    <span class="kicker both">The NetworkIP Group</span>
+    <h1>Building the <em>connections</em> that carry the world's conversations.</h1>
+    <p class="lead">NetworkIP is the privately held parent of a group of communications companies. For more than 25 years, we have invested in the engineering, carrier relationships and expertise that our operating companies build on.</p>
+    <div class="actions"><a class="btn btn-gold" href="#">Explore our companies</a><a class="btn btn-ghost" href="#">Our story</a></div>
+  </div>
+  <div class="metrics">
+    <div class="container">
+      <div class="metric"><b>1998</b><span>Founded in Texas</span></div>
+      <div class="metric"><b>25+</b><span>Years of operation</span></div>
+      <div class="metric"><b>$80M</b><span>Invested in R&amp;D</span></div>
+      <div class="metric"><b>4</b><span>National carrier connections</span></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section>
+    <div class="container intro">
+      <div>
+        <span class="kicker">Who we are</span>
+        <h2 style="margin-top:22px">A long-term owner and operator in <em>communications.</em></h2>
+      </div>
+      <div>
+        <p>NetworkIP was founded in 1998 in Longview, Texas. What began as an international voice service provider has grown into a group of specialized companies that share a common foundation: carrier-grade engineering, direct relationships with the largest U.S. networks and deep regulatory experience.</p>
+        <p>As a privately held company, we invest for the long term. We give each operating company the infrastructure and support to focus on its market, and we hold every one of them to the same standard of reliability.</p>
+        <div class="signature"><span class="mono">PP</span><span><b>Peter R. Pattullo</b><span>Co-founder &amp; Chief Executive Officer</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio">
+    <div class="container">
+      <div class="phead">
+        <div><span class="kicker">Our companies</span><h2 style="margin-top:22px">The NetworkIP portfolio</h2></div>
+        <p>Each operating company is focused on its own market and backed by the scale and systems of the group.</p>
+      </div>
+      <ul class="index">
+        <li class="flag"><a href="#"><span class="num">01</span><h3>NetworkIP Global Calling</h3><span class="sector">International voice</span><p>Worldwide calling for MNOs and MVNOs through direct carrier connections.</p><span class="arrow">→</span></a></li>
+        <li><a href="#"><span class="num">02</span><h3>Operating Company A</h3><span class="sector">Sector name</span><p>One-line description of what this company does and who it serves.</p><span class="arrow">→</span></a></li>
+        <li><a href="#"><span class="num">03</span><h3>Operating Company B</h3><span class="sector">Sector name</span><p>One-line description of what this company does and who it serves.</p><span class="arrow">→</span></a></li>
+        <li><a href="#"><span class="num">04</span><h3>Operating Company C</h3><span class="sector">Sector name</span><p>One-line description of what this company does and who it serves.</p><span class="arrow">→</span></a></li>
+      </ul>
+      <p class="pnote">Company names, sectors and descriptions are placeholders for the group's operating companies.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <span class="kicker">Our story</span>
+      <h2 style="margin-top:22px;max-width:14em">More than two decades of steady growth.</h2>
+      <div class="timeline">
+        <div class="stop"><i></i><b>1998</b><p>NetworkIP is founded in Longview, Texas as an international voice service provider.</p></div>
+        <div class="stop"><i></i><b>Carriers</b><p>Exclusive direct connections established with AT&amp;T, Verizon, T-Mobile and Boost Mobile.</p></div>
+        <div class="stop"><i></i><b>$80M</b><p>Invested in research and development and a scalable N+x platform for every critical system.</p></div>
+        <div class="stop"><i></i><b>Today</b><p>A group of specialized operating companies built on a shared foundation.</p></div>
+      </div>
+
+      <div style="margin-top:120px"><span class="kicker">Leadership</span><h2 style="margin-top:22px">Experienced leadership.</h2></div>
+      <div class="leaders">
+        <div class="leader"><span class="mono">PP</span><h4>Peter R. Pattullo</h4><p>Co-founder &amp; Chief Executive Officer</p></div>
+        <div class="leader"><span class="mono">MT</span><h4>Mike Truemner</h4><p>Vice President, Engineering &amp; Operations</p></div>
+        <div class="leader"><span class="mono">BK</span><h4>Brian Kirk</h4><p>Vice President, Business Development</p></div>
+        <div class="leader"><span class="mono">KJ</span><h4>Kristin Jones</h4><p>Director, Client Services</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container carriers">
+    <span class="kicker both">Direct carrier connections</span>
+    <ul><li>AT&amp;T</li><li>Verizon</li><li>T‑Mobile</li><li>Boost Mobile</li></ul>
+  </div>
+
+  <section class="contact">
+    <div class="container">
+      <div>
+        <span class="kicker">Contact</span>
+        <h2 style="margin-top:22px">Partner with <em>NetworkIP.</em></h2>
+        <p>For partnerships, carrier relationships or questions about any of our companies, we will connect you with the right team.</p>
+        <div class="actions"><a class="btn btn-gold" href="#">Get in touch</a></div>
+      </div>
+      <div class="addr">
+        <div><small>Headquarters</small><span>119 West Tyler Street, Suite 100<br>Longview, Texas 75601</span></div>
+        <div><small>Phone</small><span>512‑423‑0748</span></div>
+        <div><small>Email</small><span>marketing@networkip.net</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="container"><span>© 2026 NetworkIP. All rights reserved.</span><span>Companies · Our Story · Leadership · Privacy Policy</span></div></footer>
+
+<script>
+// Slow gold arcs across the hero, like routes over a map
+(function(){
+  var c=document.getElementById('arcs'); if(!c) return; var x=c.getContext('2d');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W,H,dpr=Math.min(2,window.devicePixelRatio||1),t=0,dots=[],arcs=[];
+  function rnd(s){return function(){s=(s*16807)%2147483647;return s/2147483647}}
+  function size(){W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    var r=rnd(42);dots=[];for(var i=0;i<Math.round(W*H/5200);i++)dots.push([r()*W,r()*H*.8,r()]);
+    arcs=[];for(var k=0;k<9;k++){var a=[r()*W,H*(.25+r()*.5)],b=[r()*W,H*(.2+r()*.5)];arcs.push({a:a,b:b,h:60+r()*160,o:r()});}}
+  function draw(){x.clearRect(0,0,W,H);x.fillStyle='#07142A';x.fillRect(0,0,W,H);
+    for(var i=0;i<dots.length;i++){var d=dots[i];x.fillStyle='rgba(195,204,218,'+(0.08+0.12*d[2])+')';x.fillRect(d[0],d[1],1.2,1.2);}
+    arcs.forEach(function(A){var mx=(A.a[0]+A.b[0])/2,my=Math.min(A.a[1],A.b[1])-A.h;
+      x.strokeStyle='rgba(214,188,132,.16)';x.lineWidth=1;x.beginPath();x.moveTo(A.a[0],A.a[1]);x.quadraticCurveTo(mx,my,A.b[0],A.b[1]);x.stroke();
+      var p=(t*.0012+A.o)%1,q=1-p,px=q*q*A.a[0]+2*q*p*mx+p*p*A.b[0],py=q*q*A.a[1]+2*q*p*my+p*p*A.b[1];
+      x.fillStyle='rgba(214,188,132,.9)';x.beginPath();x.arc(px,py,2,0,7);x.fill();
+      [A.a,A.b].forEach(function(e){x.fillStyle='rgba(214,188,132,.5)';x.beginPath();x.arc(e[0],e[1],2.4,0,7);x.fill();});});
+    t++; if(!reduce)requestAnimationFrame(draw);}
+  size();draw();addEventListener('resize',function(){size();if(reduce)draw();});
+})();
+</script>
+</body>
+</html>
