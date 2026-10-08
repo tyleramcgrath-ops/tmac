@@ -50,6 +50,7 @@ function pt_backfill_content() {
 	pt_backfill_post_images();
 	pt_backfill_drop_renamed_twins();
 	pt_drop_retired_images();
+	pt_backfill_reviews_page();
 }
 add_action( 'init', 'pt_backfill_content', 996 );
 
@@ -497,4 +498,58 @@ function pt_move_bookings( $from, $to ) {
 	foreach ( $bookings as $booking_id ) {
 		update_post_meta( $booking_id, '_ptb_experience', (int) $to );
 	}
+}
+
+/**
+ * Create the Leave a Review page on a site that was seeded before it existed.
+ *
+ * Found by template, not by slug, so a site where somebody already made a
+ * page called "reviews" by hand does not end up with two.
+ */
+function pt_backfill_reviews_page() {
+	if ( pt_reviews_page_id() ) {
+		return;
+	}
+
+	$page_id = pt_seed_page(
+		__( 'Leave a Review', 'palmtreesurf' ),
+		'leave-a-review',
+		'',
+		'page-templates/page-reviews.php'
+	);
+
+	if ( ! $page_id ) {
+		return;
+	}
+
+	/*
+	 * Add it to the footer menu if one is already assigned. The seeder only
+	 * builds menus on a site that has none, so on an established install this
+	 * is the only way the link appears without the client doing it by hand.
+	 */
+	$locations = get_theme_mod( 'nav_menu_locations', array() );
+
+	if ( empty( $locations['footer'] ) ) {
+		return;
+	}
+
+	$menu_id = (int) $locations['footer'];
+	$items   = wp_get_nav_menu_items( $menu_id );
+
+	foreach ( (array) $items as $item ) {
+		if ( (int) $item->object_id === (int) $page_id && 'post_type' === $item->type ) {
+			return;
+		}
+	}
+
+	wp_update_nav_menu_item(
+		$menu_id,
+		0,
+		array(
+			'menu-item-object'    => 'page',
+			'menu-item-object-id' => (int) $page_id,
+			'menu-item-type'      => 'post_type',
+			'menu-item-status'    => 'publish',
+		)
+	);
 }

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Theme version. Used to bust asset caches; bump it on every release.
  */
-define( 'PT_VERSION', '1.14.2' );
+define( 'PT_VERSION', '1.15.0' );
 
 /**
  * Absolute path to the theme directory, with a trailing slash.
@@ -48,6 +48,8 @@ $pt_includes = array(
 	'inc/fields.php',           // Experience detail fields.
 	'inc/taxonomy-content.php', // Category archives: routing, copy, term images.
 	'inc/reviews.php',          // Star ratings from moderated visitor reviews.
+	'inc/reviews-page.php',     // The shareable page guests leave a review on.
+	'inc/reviews-admin.php',    // The review link and QR code, for the operator.
 	'inc/customizer.php',       // Contact details, social links, footer.
 	'inc/i18n.php',             // English and Spanish.
 	'inc/blocks.php',           // Editor colours and block patterns.

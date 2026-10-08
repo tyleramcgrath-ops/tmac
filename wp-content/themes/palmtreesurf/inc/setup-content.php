@@ -436,6 +436,12 @@ function pt_seed_content() {
 		pt_seed_contact_body(),
 		'page-templates/page-contact.php'
 	);
+	$reviews_id = pt_seed_page(
+		__( 'Leave a Review', 'palmtreesurf' ),
+		'leave-a-review',
+		'',
+		'page-templates/page-reviews.php'
+	);
 	$privacy_id = pt_seed_page(
 		__( 'Privacy Policy', 'palmtreesurf' ),
 		'privacy-policy',
@@ -542,6 +548,7 @@ function pt_seed_content() {
 			'operators'   => $operator_id,
 			'journal'     => $blog_id,
 			'contact'     => $contact_id,
+			'reviews'     => $reviews_id,
 			'privacy'     => $privacy_id,
 		)
 	);
@@ -622,7 +629,7 @@ function pt_seed_menus( $refs ) {
 		$menu_id = wp_create_nav_menu( __( 'Footer', 'palmtreesurf' ) );
 
 		if ( ! is_wp_error( $menu_id ) ) {
-			foreach ( array( 'about', 'gallery', 'journal', 'contact', 'privacy' ) as $key ) {
+			foreach ( array( 'about', 'gallery', 'journal', 'reviews', 'contact', 'privacy' ) as $key ) {
 				if ( empty( $refs[ $key ] ) ) {
 					continue;
 				}

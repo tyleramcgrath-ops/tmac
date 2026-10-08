@@ -2307,3 +2307,127 @@ body.menu-open { overflow: hidden; }
 	font-size: 0.875rem;
 	color: var(--pt-ink-500);
 }
+
+
+/* --------------------------------------------------- Leave a Review page */
+
+/* The form a guest reaches from a QR code on the counter. Deliberately the
+   same shape as the booking form, so somebody who has used one recognises
+   the other, but styled from the theme's own tokens rather than borrowing
+   the booking plugin's stylesheet — the theme has to stand up without it. */
+
+.review-page__status:empty { display: none; }
+
+.review-page__notice {
+	border: 1px solid var(--pt-line);
+	border-left: 4px solid var(--pt-teal);
+	border-radius: var(--pt-radius-md);
+	padding: var(--pt-space-md);
+	margin-bottom: var(--pt-space-lg);
+	background: var(--pt-off-white);
+}
+
+.review-page__notice h2 { margin: 0 0 0.4rem; font-size: var(--pt-h); }
+.review-page__notice p:last-child { margin-bottom: 0; }
+
+.review-page__form { margin-top: var(--pt-space-md); }
+
+.review-page__field { margin-bottom: var(--pt-space-sm); }
+
+.review-page__field > label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 0.35rem;
+}
+
+.review-page__field select,
+.review-page__field input[type="text"],
+.review-page__field input[type="email"],
+.review-page__field textarea {
+	width: 100%;
+	padding: 0.7rem 0.85rem;
+	border: 1px solid var(--pt-line);
+	border-radius: var(--pt-radius-sm);
+	background: #fff;
+	color: var(--pt-ink);
+	font: inherit;
+}
+
+.review-page__field textarea { resize: vertical; min-height: 7.5rem; }
+
+.review-page__field select:focus-visible,
+.review-page__field input:focus-visible,
+.review-page__field textarea:focus-visible {
+	outline: 2px solid var(--pt-teal);
+	outline-offset: 2px;
+	border-color: var(--pt-teal);
+}
+
+.review-page__row { display: grid; gap: var(--pt-space-sm); }
+
+@media (min-width: 40rem) {
+	.review-page__row { grid-template-columns: 1fr 1fr; }
+}
+
+.review-page__hint,
+.review-page__note {
+	color: var(--pt-muted);
+	font-size: var(--pt-small);
+}
+
+.review-page__hint { margin: 0.35rem 0 0; }
+
+/* Off-screen rather than display:none — a bot reading the DOM fills in what
+   it can see in the markup, and a hidden field it skips is no trap at all. */
+.review-page__hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.review-page__submit {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--pt-space-sm);
+	margin-top: var(--pt-space-md);
+}
+
+.review-page__summary { margin-bottom: var(--pt-space-lg); }
+.review-page__summary h2 { margin: 0 0 var(--pt-space-xs); }
+
+.review-page__average {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	margin: 0;
+	font-size: var(--pt-body-lg);
+}
+
+.review-page__average strong { font-size: 1.4em; line-height: 1; }
+.review-page__average span { color: var(--pt-muted); font-size: var(--pt-small); }
+
+.review-page__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: var(--pt-space-md);
+}
+
+@media (min-width: 52rem) {
+	.review-page__list { grid-template-columns: 1fr 1fr; }
+}
+
+.review-page__list .review__inner {
+	height: 100%;
+	background: #fff;
+	border: 1px solid var(--pt-line);
+	border-radius: var(--pt-radius-md);
+	padding: var(--pt-space-md);
+}
+
+.review__host { margin: var(--pt-space-xs) 0 0; font-size: var(--pt-small); }
+.review__host a { color: var(--pt-teal); }

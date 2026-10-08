@@ -3086,15 +3086,6 @@ msgstr "No se ha cobrado nada y su reserva sigue apartada. Puede pagar ahora, o 
 msgid "Try the payment again"
 msgstr "Intentar el pago de nuevo"
 
-msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
-msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
-
-msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
-msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
-
-msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
-msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
-
 msgid "Payments are being taken but nothing is being recorded."
 msgstr "Se están cobrando pagos pero no se está registrando nada."
 
@@ -3130,6 +3121,138 @@ msgstr "En Stripe, agregue un endpoint en esta dirección y suscríbalo a estos 
 
 msgid "The last one is what keeps a booking from still claiming it is paid after you refund it from the Stripe dashboard."
 msgstr "El último es el que evita que una reserva siga diciendo que está pagada después de que usted la reembolse desde el panel de Stripe."
+
+msgid "Beginner surf lesson — 2 hours — $60 per person\\nSunset catamaran — 2.5 hours — $95 per person"
+msgstr "Clase de surf para principiantes — 2 horas — $60 por persona\\nCatamarán al atardecer — 2.5 horas — $95 por persona"
+
+msgid "Hi %1\\$s,\\n\\nThanks for applying to list your tours with %2\\$s. A real person reads every application — we will come back to you once we have been through it.\\n\\nIf anything changes in the meantime, just reply to this email."
+msgstr "Hola %1\\$s:\\n\\nGracias por postular para publicar sus tours con %2\\$s. Una persona de verdad lee cada solicitud; le responderemos en cuanto la hayamos revisado.\\n\\nSi algo cambia mientras tanto, solo responda a este correo."
+
+msgid "Ana, 34, 165cm, 60kg\\nSam, 11, 140cm, 35kg"
+msgstr "Ana, 34, 165 cm, 60 kg\\nSam, 11, 140 cm, 35 kg"
+
+msgid "Leave a Review"
+msgstr "Dejar una reseña"
+
+msgid "Your trip, your words"
+msgstr "Su viaje, en sus palabras"
+
+msgid "If you went out with us, we would love to hear how it went. It takes about a minute."
+msgstr "Si salió con nosotros, nos encantaría saber cómo le fue. Toma como un minuto."
+
+msgid "A group of guests with their kayaks at the end of a tour"
+msgstr "Un grupo de clientes con sus kayaks al final de un tour"
+
+msgid "Which trip did you go on?"
+msgstr "¿En cuál viaje fue?"
+
+msgid "Choose your trip…"
+msgstr "Elija su viaje…"
+
+msgid "More than one trip, or Palm Tree Surf in general"
+msgstr "Más de un viaje, o Palm Tree Surf en general"
+
+msgid "How was it?"
+msgstr "¿Qué tal estuvo?"
+
+msgid "How did it go?"
+msgstr "¿Cómo le fue?"
+
+msgid "What you did, who looked after you, anything the next person should know."
+msgstr "Qué hizo, quién lo atendió, cualquier cosa que le sirva a la próxima persona."
+
+msgid "Not published, and not added to any list. It is only so we can reply if we need to."
+msgstr "No se publica ni se agrega a ninguna lista. Es solo para poder responderle si hiciera falta."
+
+msgid "Send my review"
+msgstr "Enviar mi reseña"
+
+msgid "We read each one before it goes up."
+msgstr "Leemos cada una antes de publicarla."
+
+msgid "The review form appears here once the tours are published."
+msgstr "El formulario de reseñas aparece aquí una vez que los tours estén publicados."
+
+msgid "Thank you — that has reached us"
+msgstr "Gracias — ya nos llegó"
+
+msgid "We read every review before it goes up, so give us a day or so and yours will appear on the page below and on your tour."
+msgstr "Leemos cada reseña antes de publicarla, así que denos un día más o menos y la suya aparecerá en la lista de abajo y en su tour."
+
+msgid "Thank you — your review is up"
+msgstr "Gracias — su reseña ya está publicada"
+
+msgid "You should see it in the list below."
+msgstr "Debería verla en la lista de abajo."
+
+msgid "From our guests"
+msgstr "De nuestros clientes"
+
+msgid "What people said"
+msgstr "Lo que dice la gente"
+
+msgid "That form had been open a while and has expired. Please go back, reload the page and send it again — your words are still in the box."
+msgstr "El formulario llevaba rato abierto y venció. Regrese, recargue la página y envíelo de nuevo — su texto sigue en el recuadro."
+
+msgid "Form expired"
+msgstr "Formulario vencido"
+
+msgid "Thank you."
+msgstr "Gracias."
+
+msgid "Thank you"
+msgstr "Gracias"
+
+msgid "Please choose which trip you went on."
+msgstr "Por favor elija en cuál viaje fue."
+
+msgid "Trip required"
+msgstr "Falta el viaje"
+
+msgid "Review link & QR"
+msgstr "Enlace y QR de reseñas"
+
+msgid "Send this to anyone who has been out with you. They pick their trip, tap the stars and write a line or two — no account, nothing to install."
+msgstr "Envíe esto a cualquiera que haya salido con usted. Elige su viaje, toca las estrellas y escribe un par de líneas — sin cuenta y sin instalar nada."
+
+msgid "The link"
+msgstr "El enlace"
+
+msgid "Paste it into a WhatsApp message, an email signature or the note you send after a trip."
+msgstr "Péguelo en un mensaje de WhatsApp, en la firma de su correo o en la nota que manda después de un viaje."
+
+msgid "The QR code"
+msgstr "El código QR"
+
+msgid "The bundled QR code no longer matches this page."
+msgstr "El código QR incluido ya no corresponde a esta página."
+
+msgid "How was your trip?"
+msgstr "¿Qué tal su viaje?"
+
+msgid "Scan to leave us a review — it takes a minute."
+msgstr "Escanee para dejarnos una reseña — toma un minuto."
+
+msgid "Print this card"
+msgstr "Imprimir esta tarjeta"
+
+msgid "Download the QR as a PNG"
+msgstr "Descargar el QR en PNG"
+
+msgid "Download the QR as an SVG"
+msgstr "Descargar el QR en SVG"
+
+msgid "The SVG stays sharp at any size — use it for anything a printer is producing. The PNG is easier to drop into a social post."
+msgstr "El SVG se mantiene nítido en cualquier tamaño — úselo para cualquier cosa que vaya a imprenta. El PNG es más fácil de poner en una publicación de redes."
+
+msgid "QR code linking to the Leave a Review page"
+msgstr "Código QR que lleva a la página para dejar una reseña"
+
+msgid "What happens to a review"
+msgstr "Qué pasa con una reseña"
+
+msgid "The Leave a Review page does not exist yet. Create a page and set its template to \"Leave a Review\"."
+msgstr "La página para dejar reseñas todavía no existe. Cree una página y asígnele la plantilla «Leave a Review»."
 
 msgid "%d guest"
 msgid_plural "%d guests"
@@ -3190,3 +3313,9 @@ msgid "%1$s — %2$d guest"
 msgid_plural "%1$s — %2$d guests"
 msgstr[0] "%1$s — %2$d persona"
 msgstr[1] "%1$s — %2$d personas"
+
+
+msgid "from %s review"
+msgid_plural "from %s reviews"
+msgstr[0] "de %s reseña"
+msgstr[1] "de %s reseñas"

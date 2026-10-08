@@ -351,6 +351,30 @@ out in writing when you reply. Do not let the theme invent a commission rate —
 edit that answer once you have decided, via the `pt_operator_faq` filter or by
 telling me what it should say.
 
+### Reviews — one link, one QR code
+
+**Comments → Review link & QR.** The address of the review page, a QR code for
+it, and a card you can print for the counter.
+
+Send the link to anybody who has been out with you. They pick their trip from
+a list, tap the stars, write a line or two and that is it — no account, nothing
+to install, and it works the same on a phone in an airport as on a laptop.
+
+A review arrives in **Comments**, held for approval. Approve it and it appears
+in two places at once: on the review page, and on the tour the guest picked,
+where it counts towards that tour's star rating and towards the rating Google
+can show next to your search result. Nothing is ever published without you
+seeing it first, and nothing invents a rating — the average appears only once
+real reviews exist.
+
+Somebody who did three trips in one week can pick **More than one trip, or Palm
+Tree Surf in general** instead of choosing one.
+
+**If you change the page's address**, the printed QR code stops working and
+there is no way to tell by looking at it. The admin screen notices, hides the
+code and says so rather than showing you one that sends people to a dead page —
+ask for a new one and it takes a minute.
+
 ### Spanish — off until you switch it on
 
 **Customize → Palm Tree Surf → Language → "Offer the site in Spanish".**

@@ -22,6 +22,27 @@ defined( 'ABSPATH' ) || exit;
 const PT_RATING_META = 'pt_rating';
 
 /**
+ * Whether reviews may hang off this post.
+ *
+ * Every tour, plus the Leave a Review page itself. The page is a host in its
+ * own right because somebody who did three trips in a week has one review to
+ * leave and no single tour to hang it on, and making them pick one would
+ * either lose the review or attribute it to the wrong thing.
+ *
+ * @param int $post_id Post ID.
+ * @return bool
+ */
+function pt_is_review_host( $post_id ) {
+	$post_id = (int) $post_id;
+
+	if ( PT_EXPERIENCE_POST_TYPE === get_post_type( $post_id ) ) {
+		return true;
+	}
+
+	return $post_id > 0 && $post_id === pt_reviews_page_id();
+}
+
+/**
  * Open reviews on experiences even when the site's default is closed.
  *
  * A fresh WordPress with "allow comments" unticked would otherwise hide the
@@ -32,7 +53,7 @@ const PT_RATING_META = 'pt_rating';
  * @return bool
  */
 function pt_reviews_open( $open, $post_id ) {
-	if ( PT_EXPERIENCE_POST_TYPE !== get_post_type( $post_id ) ) {
+	if ( ! pt_is_review_host( $post_id ) ) {
 		return $open;
 	}
 
@@ -293,7 +314,7 @@ add_filter( 'comment_form_defaults', 'pt_review_form_labels' );
  * @return array<string, mixed>
  */
 function pt_require_review_rating( $commentdata ) {
-	if ( PT_EXPERIENCE_POST_TYPE !== get_post_type( $commentdata['comment_post_ID'] ) ) {
+	if ( ! pt_is_review_host( $commentdata['comment_post_ID'] ) ) {
 		return $commentdata;
 	}
 
@@ -323,7 +344,7 @@ add_filter( 'preprocess_comment', 'pt_require_review_rating' );
 function pt_save_review_rating( $comment_id ) {
 	$comment = get_comment( $comment_id );
 
-	if ( ! $comment || PT_EXPERIENCE_POST_TYPE !== get_post_type( $comment->comment_post_ID ) ) {
+	if ( ! $comment || ! pt_is_review_host( $comment->comment_post_ID ) ) {
 		return;
 	}
 
@@ -353,7 +374,7 @@ function pt_moderate_reviews( $approved, $commentdata ) {
 		return $approved;
 	}
 
-	if ( PT_EXPERIENCE_POST_TYPE !== get_post_type( $commentdata['comment_post_ID'] ) ) {
+	if ( ! pt_is_review_host( $commentdata['comment_post_ID'] ) ) {
 		return $approved;
 	}
 
