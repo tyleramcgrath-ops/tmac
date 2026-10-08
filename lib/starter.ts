@@ -1163,9 +1163,12 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
 // Lower-case a service name for use mid-sentence ("Teeth whitening" →
 // "teeth whitening") but leave brand names and acronyms alone ("Invisalign",
 // "HVAC repair").
+// Brand names that stay capitalised even on their own.
+const BRANDS = new Set(['invisalign', 'botox', 'dysport', 'juvederm', 'restylane', 'kybella', 'sculptra', 'hydrafacial', 'coolsculpting', 'emsculpt', 'morpheus8', 'xeomin', 'daxxify', 'lasik', 'medicare', 'medicaid'])
 export function soften(s: string): string {
   const [first, ...rest] = s.split(' ')
-  return rest.length && /^[A-Z][a-z]+(-[a-z]+)*$/.test(first) ? first.toLowerCase() + (rest.length ? ' ' + rest.join(' ') : '') : s
+  if (!/^[A-Z][a-z]+(-[a-z]+)*$/.test(first) || BRANDS.has(first.toLowerCase())) return s
+  return first.toLowerCase() + (rest.length ? ' ' + rest.join(' ') : '')
 }
 
 function joinAnd(xs: string[]): string {

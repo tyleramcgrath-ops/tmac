@@ -1,12 +1,13 @@
 'use server'
 
+import { LAW_STYLES, lawStyleFor, type LawStyle } from '@/lib/law-designs'
 import { after } from 'next/server'
 import { cleanPromo, loadAccess, newBilling } from '@/lib/billing'
 import { googleReviewUrl } from '@/lib/reviews'
 import { redirect } from 'next/navigation'
 import { hashPassword, normalizeEmail, validEmail, verifyPassword } from '@/lib/auth'
 import { endSession, requireUser, startSession } from '@/lib/session'
-import { BUSINESS_TYPES, PALETTES, buildStarterSite, subdomainFor, type BusinessTypeKey } from '@/lib/starter'
+import { BUSINESS_TYPES, PALETTES, buildStarterSite, flairFor, subdomainFor, type BusinessTypeKey } from '@/lib/starter'
 import { creditsInUse, syncSitePhotos } from '@/lib/sites'
 import { photoSetFor, reportUse } from '@/lib/unsplash'
 import { getStore } from '@/lib/store'
@@ -106,7 +107,12 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   const spanish = str(form, 'language') === 'es'
   const taken = await store.photosTaken()
   const found = await photoSetFor(store, type, taken, 12, str(form, 'photoHint').slice(0, 60))
-  const starterInput = { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(street && postalCode ? { street, postalCode } : {}), ...(hours.length ? { hours } : {}), language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) }
+  // The same design and personality the owner saw in the preview: both come
+  // from the name (base), never from a -2 suffix added for uniqueness.
+  const pickedStyle = str(form, 'lawStyle')
+  const lawStyle = (LAW_STYLES as readonly string[]).includes(pickedStyle) ? (pickedStyle as LawStyle) : lawStyleFor(base)
+  const professional = type === 'lawyer' || type === 'doctor' || type === 'medspa'
+  const starterInput = { lawStyle, ...(template || professional ? {} : { flair: flairFor(type, base) }), name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(street && postalCode ? { street, postalCode } : {}), ...(hours.length ? { hours } : {}), language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) }
   // A fixed site id keeps page ids stable when the writer fills it in below.
   const siteId = `site_${randomUUID()}`
   const built = buildStarterSite(starterInput, user.id, subdomain, { taken, siteId })

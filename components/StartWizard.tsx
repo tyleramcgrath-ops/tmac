@@ -51,20 +51,24 @@ export function StartWizard({ types, palettes, idea = '', template = '', google 
   const [photoHint, setPhotoHint] = useState<string | null>(null)
   const [palette, setPalette] = useState(templateFor(template)?.palette ?? palettes[0]?.[0] ?? 'ocean')
   const [tpl, setTpl] = useState(templateFor(template)?.key ?? '')
+  // Law firms, medical practices and med spas pick one of their own designs
+  // ('' lets SaySites pick one from the name, the same way the build does).
+  const [lawStyle, setLawStyle] = useState('')
   const [place, setPlace] = useState<PlaceDetails | null>(null)
   const [src, setSrc] = useState('')
   const first = useRef<HTMLDivElement>(null)
   const set = (k: keyof typeof info) => (v: string) => setInfo((x) => ({ ...x, [k]: v }))
   const hint = HINTS[info.type] ?? HINTS.other
   const typeLabel = types.find(([k]) => k === info.type)?.[1] ?? ''
+  const pro = info.type === 'lawyer' || info.type === 'doctor' || info.type === 'medspa'
   const at = FLOW.indexOf(step)
 
   // The live preview, a moment after typing stops.
   useEffect(() => {
     if (!info.type || !info.name) return setSrc('')
-    const t = setTimeout(() => setSrc(`/dashboard/new/preview/${b64url(JSON.stringify({ ...info, palette, ...(tpl ? { design: tpl } : {}) }))}`), 450)
+    const t = setTimeout(() => setSrc(`/dashboard/new/preview/${b64url(JSON.stringify({ ...info, palette, ...(tpl && !pro ? { design: tpl } : {}), ...(lawStyle && pro ? { lawStyle } : {}) }))}`), 450)
     return () => clearTimeout(t)
-  }, [info, palette, tpl])
+  }, [info, palette, tpl, lawStyle, pro])
 
   // Each new step puts the cursor in its first box.
   useEffect(() => {
@@ -127,7 +131,8 @@ export function StartWizard({ types, palettes, idea = '', template = '', google 
             {idea && <input type="hidden" name="idea" value={idea} />}
             {Object.entries(info).map(([k, v]) => <input key={k} type="hidden" name={k} value={v} />)}
             <input type="hidden" name="palette" value={palette} />
-            <input type="hidden" name="template" value={tpl} />
+            <input type="hidden" name="template" value={pro ? '' : tpl} />
+            <input type="hidden" name="lawStyle" value={pro ? lawStyle : ''} />
             <input type="hidden" name="photoHint" value={photoHint ?? hint.photos} />
             {place && (
               <>
@@ -224,6 +229,21 @@ export function StartWizard({ types, palettes, idea = '', template = '', google 
                       </button>
                     ))}
                   </div>
+                  {pro && (
+                    <div className="wiz-types" style={{ marginTop: 16 }}>
+                      {([
+                        ['counsel', 'Counsel', 'Big photo header, words on the left. Confident.'],
+                        ['classic', 'Classic', 'Centered headline over a full photo. Timeless.'],
+                        ['modern', 'Modern', 'Words beside a large photo. Light and clean.'],
+                      ] as const).map(([k, name, about]) => (
+                        <button type="button" key={k} className={`wiz-tile small${(lawStyle || '') === k ? ' on' : ''}`} aria-pressed={lawStyle === k} onClick={() => setLawStyle(k)}>
+                          <strong>{name}</strong>
+                          <span>{about}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {!pro && (
                   <div className="wiz-types" style={{ marginTop: 16 }}>
                     <button type="button" className={`wiz-tile small${tpl === '' ? ' on' : ''}`} aria-pressed={tpl === ''} onClick={() => setTpl('')}>
                       <strong>Made for {typeLabel ? typeLabel.toLowerCase() : 'your business'}</strong>
@@ -236,6 +256,8 @@ export function StartWizard({ types, palettes, idea = '', template = '', google 
                       </button>
                     ))}
                   </div>
+                  )}
+                  {pro && !lawStyle && <p className="muted small">Not sure? The preview shows the one we picked for you. Tap any design to see it.</p>}
                 </Q>
               )}
 
