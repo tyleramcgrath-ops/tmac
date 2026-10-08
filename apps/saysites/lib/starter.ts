@@ -32,6 +32,7 @@ export const BUSINESS_TYPES = {
   restaurant: { label: 'Restaurant', schemaType: 'Restaurant', trade: 'food', design: 'warm', headline: 'Come hungry. Leave happy.' },
   bakery: { label: 'Bakery or café', schemaType: 'Bakery', trade: 'fresh baking', design: 'warm', headline: 'Fresh from our oven, every morning.' },
   store: { label: 'Shop', schemaType: 'Store', trade: 'products', design: 'warm', headline: 'Things worth owning, from {city}.' },
+  professional: { label: 'Professional services', schemaType: 'ProfessionalService', trade: 'professional services', design: 'editorial', headline: 'Straight answers and good work, from {city}.' },
   other: { label: 'Other', schemaType: 'LocalBusiness', trade: 'services', design: 'warm', headline: '{name}, right here in {city}.' },
 } as const satisfies Record<string, { label: string; schemaType: string; trade: string; design: Design; headline: string }>
 export type BusinessTypeKey = keyof typeof BUSINESS_TYPES
@@ -74,6 +75,7 @@ const FLAIR_FIT: Record<BusinessTypeKey, Flair[]> = {
   restaurant: ['luxe', 'editorial', 'soft'],
   bakery: ['soft', 'clean', 'editorial'],
   store: ['clean', 'soft', 'studio'],
+  professional: ['clean', 'editorial', 'studio'],
   other: ['clean', 'soft', 'editorial', 'bold'],
 }
 

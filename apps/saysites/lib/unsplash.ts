@@ -42,6 +42,7 @@ const QUERIES: Record<string, string[]> = {
   restaurant: ['restaurant interior', 'chef cooking', 'plated food', 'restaurant table'],
   bakery: ['bakery bread', 'pastries display', 'baker kneading dough', 'coffee and croissant'],
   store: ['small shop interior', 'boutique store', 'shop owner', 'retail display'],
+  professional: ['business team meeting', 'modern office workspace', 'consultant with client', 'laptop on office desk'],
   other: ['small business owner', 'local business storefront', 'team at work', 'workspace'],
 }
 
@@ -105,9 +106,12 @@ export async function searchPhotos(store: Store, query: string, page = 1): Promi
 // A full set for a new site: a hero, three cards and extras for inner pages,
 // none of them used by another customer's site. Null when the API isn't
 // available or can't supply enough, so the caller uses the built-in set.
-export async function photoSetFor(store: Store, type: string, taken: Set<string>, need = 12): Promise<(PhotoSet & { credits: Credit[] }) | null> {
+// `hint` is what the owner said their photos should show ("marketing team",
+// "wedding cakes"); it leads the searches, with the type's own after it.
+export async function photoSetFor(store: Store, type: string, taken: Set<string>, need = 12, hint = ''): Promise<(PhotoSet & { credits: Credit[] }) | null> {
   if (!unsplashReady()) return null
-  const queries = QUERIES[type] ?? QUERIES.other
+  const h = hint.trim().slice(0, 60)
+  const queries = [...(h ? [h, `${h} at work`] : []), ...(QUERIES[type] ?? QUERIES.other)].slice(0, 5)
   // One list per search angle, then take from each in turn, so the site
   // doesn't show several near-identical shots.
   const lists: FoundPhoto[][] = []

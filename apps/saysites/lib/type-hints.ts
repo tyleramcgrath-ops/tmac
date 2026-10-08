@@ -15,6 +15,7 @@ const TYPE_HINTS: [RegExp, string][] = [
   [/\b(salon|hair|barber\w*)\b/i, 'salon'],
   [/\b(bakery|bakes?|caf[eé]|coffee)\b/i, 'bakery'],
   [/\b(restaurant|grill|kitchen|bistro|diner|pizza\w*|tacos?)\b/i, 'restaurant'],
+  [/\b(marketing|agency|consult\w*|accounting|accountants?|cpa|bookkeeping|insurance|realty|real estate|financial|advis\w*|media|design studio)\b/i, 'professional'],
 ]
 export function typeFromName(name: string): string | null {
   for (const [re, t] of TYPE_HINTS) if (re.test(name)) return t
