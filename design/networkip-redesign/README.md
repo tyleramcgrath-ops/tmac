@@ -13,6 +13,7 @@ Three homepage directions for https://www.networkip.net/, all built from the cur
 | `07-group-light-*.png` | **G: Group, light (round 4, for the board).** Presents NetworkIP as the parent company. Refined ivory and navy, Newsreader and Manrope, a group structure chart linking the parent to its operating companies, operating principles, leadership and contact. Operating company names are placeholders. |
 | `08-group-dark-*.png` | **H: Group, dark (round 4, for the board).** Premium navy and gold, Cormorant Garamond and Hanken Grotesk, an animated route-map hero, a portfolio index of operating companies, a history timeline and leadership. Operating company names are placeholders. |
 | `03-homeline-*.png` | **C: Home Line.** Warm and human: cream and rust, a phone call UI ("Included in your plan"), a three-step launch flow. |
+| `09-handoff-left-*.png` | **I: Handoff "left" concept, built as a WordPress theme (round 5).** These are screenshots of the actual theme running on WordPress 7.1, not a static mockup. Desktop full/hero, tablet, mobile full, open mobile menu, and an interior page (Technology). Theme source is in `wp-theme/networkip/`; the installable zip is `wp-theme/networkip-theme.zip`. See `wp-theme/networkip/README.md`. |
 
 `*-hero.png` is the first screen at 1440×900. `*-full.png` is the full page.
 

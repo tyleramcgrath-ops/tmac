@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Call quality shield icon">
+<defs>
+  <linearGradient id="g" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#39D7FF"/>
+    <stop offset="1" stop-color="#1277FF"/>
+  </linearGradient>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="2.2" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<rect x="2" y="2" width="60" height="60" rx="14" fill="#061A33"/>
+<rect x="2.5" y="2.5" width="59" height="59" rx="13.5" fill="none" stroke="#1E86FF" opacity=".34"/>
+<g fill="none" stroke="url(#g)" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"><path d="M32 11l17 7v12c0 11-7 20-17 24-10-4-17-13-17-24V18l17-7z"/><path d="M24 34l5 5 12-14"/><path d="M22 23h4M38 23h4"/></g></svg>
