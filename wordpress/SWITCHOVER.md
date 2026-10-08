@@ -193,3 +193,10 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   - Description: `GO Focus Plus is a dual-facing AI dash cam with driver monitoring (DMS), ADAS, real-time in-cab coaching and MyGeotab integration. Deploy it with EnVue Telematics.`
 - After it is live: check the URL at https://search.google.com/test/rich-results (FAQ and Product should be detected),
   then send the URL to Geotab.
+
+## v6.15 — Schema and link fixes
+- **/geotab-go-focus-plus/**: removed the `offers` block from the Product structured data. Product, FAQPage and
+  BreadcrumbList are otherwise unchanged.
+- **/predictive-coach/**: the "Read the Case Study" button now goes to https://predictivecoach.com/resources/
+  (the old case-study link was removed).
+- Install envuetheme-final-v6.15.0.zip, then purge the SiteGround cache.

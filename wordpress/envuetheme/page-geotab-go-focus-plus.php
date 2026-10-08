@@ -347,13 +347,6 @@ $gfp_schema = [
 		'url'         => $gfp_url,
 		'category'    => 'Fleet Safety Technology',
 		'keywords'    => 'dual-facing AI dash cam, driver monitoring system, DMS, ADAS, real-time coaching, fleet safety camera, video telematics, driver behavior, MyGeotab',
-		'offers'      => [
-			'@type'         => 'Offer',
-			'url'           => $gfp_url,
-			'availability'  => 'https://schema.org/InStock',
-			'priceCurrency' => 'USD',
-			'seller'        => [ '@type' => 'Organization', 'name' => 'EnVue Telematics', 'url' => home_url( '/' ) ],
-		],
 		'additionalProperty' => array_map(
 			function ( $name, $value ) { return [ '@type' => 'PropertyValue', 'name' => $name, 'value' => $value ]; },
 			[ 'Camera Configuration', 'Driver Monitoring System (DMS)', 'Advanced Driver Assistance Systems (ADAS)', 'Real-Time Coaching', 'Recording Capabilities', 'Coaching Workflows', 'Platform Integration', 'Installation', 'Privacy' ],

@@ -98,7 +98,7 @@
       <h3>Proven in the field.</h3>
       <p>Predictive Coach proved to be a valuable asset in a transit setting with a fleet already firmly focused on safety. Fleets interested in continually improving safety reap significant benefits from Predictive Coach.</p>
     </div>
-    <a class="button-white" href="https://predictivecoach.com/fleet-safety-case-study-2/" target="_blank" rel="noopener">Read the Case Study &rarr;</a>
+    <a class="button-white" href="https://predictivecoach.com/resources/" target="_blank" rel="noopener">Read the Case Study &rarr;</a>
   </div>
 </div></section>
 
