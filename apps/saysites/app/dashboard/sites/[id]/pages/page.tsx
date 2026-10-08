@@ -27,8 +27,8 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
     <section className="stack">
       <div className="sec-head">
         <div>
-          <h2>Pages & SEO</h2>
-          <p className="muted">How each page shows up on Google, and the checks every page must pass before it goes live.</p>
+          <h2>Pages</h2>
+          <p className="muted">Every page on your site: its title and description on Google, and the checks it must pass before it goes live. The whole-site audit is on the SEO tab.</p>
         </div>
         <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <a className="btn btn-ghost btn-sm" href={`/dashboard/sites/${site.id}/move`}>Import from my old site</a>

@@ -193,11 +193,12 @@ dl.facts dd { margin: 0; }
 .site-head-id { display: flex; align-items: center; gap: 16px; min-width: 0; }
 .site-head h1 { font-size: 30px; margin: 0 0 2px; }
 .site-mono { width: 52px; height: 52px; border-radius: 14px; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 22px; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
-.site-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 26px; overflow-x: auto; scrollbar-width: none; }
-.site-tabs a { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px 12px; color: var(--ink-3); text-decoration: none; font-weight: 550; font-size: 15.5px; white-space: nowrap; }
+.site-tabs { display: flex; flex-wrap: wrap; gap: 0 2px; border-bottom: 1px solid var(--line); margin-bottom: 26px; }
+@media (max-width: 760px) { .site-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } }
+.site-tabs a { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px 12px; color: var(--ink-3); text-decoration: none; font-weight: 550; font-size: 15.5px; white-space: nowrap; }
 .site-tabs a:hover { color: var(--ink); }
 .site-tabs a[aria-current="page"] { color: var(--ink); }
-.site-tabs a[aria-current="page"]::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 2px; background: var(--ink); border-radius: 2px; }
+.site-tabs a[aria-current="page"]::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; background: var(--ink); border-radius: 2px; }
 .badge { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 700; display: inline-grid; place-items: center; }
 .stack { display: grid; gap: 18px; align-content: start; }
 .sec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
