@@ -118,7 +118,8 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   const built = buildStarterSite(starterInput, user.id, subdomain, { taken, siteId })
   const credits = found ? creditsInUse(built.pages, found.credits) : []
   const withCredits = credits.length ? { ...built.site, credits } : built.site
-  const site = placeId ? { ...withCredits, business: { ...withCredits.business, reviewUrl: googleReviewUrl(placeId) } } : withCredits
+  const startedVia = placeId ? 'google' : template ? 'template' : 'questions'
+  const site = { ...(placeId ? { ...withCredits, business: { ...withCredits.business, reviewUrl: googleReviewUrl(placeId) } } : withCredits), startedVia } as const
   const pages = built.pages
   await store.createSite(user.id, site, pages)
   await syncSitePhotos(site.id, store)
