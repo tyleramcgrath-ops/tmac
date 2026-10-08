@@ -173,7 +173,9 @@ export function subdomainFor(name: string): string {
 }
 
 const pad = (y: number, x = 24) => ({ top: y, right: x, bottom: y, left: x })
-const section = { desktop: pad(96), mobile: pad(56, 20) }
+const section = { desktop: pad(120), mobile: pad(64, 20) }
+// Section headings at a confident display size, like a well-made studio site.
+const H2 = { desktop: 56, tablet: 44, mobile: 32 }
 
 function clip(s: string, max: number): string {
   // Cut on a whole word, without a trailing ellipsis or dangling punctuation.
@@ -330,14 +332,14 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
 
   const heroBlocks = (light: boolean): Element[] => [
     { id: 'hero-kicker', type: 'text', text: eyebrow, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: light && design !== 'upscale' ? '#dbe3ec' : 'primary' } },
-    { id: 'hero-title', type: 'heading', level: 1, text: headline, style: { fontSize: { desktop: design === 'bold' ? 62 : 58, tablet: 48, mobile: 38 }, maxWidth: 720, margin: { desktop: { top: 6, right: 0, bottom: 4, left: 0 } }, ...(light ? { color: '#ffffff' as const } : {}) } },
-    { id: 'hero-text', type: 'text', text: introText, style: { fontSize: { desktop: 19, mobile: 17 }, maxWidth: 560, color: light ? '#e2e8ef' : 'muted' } },
+    { id: 'hero-title', type: 'heading', level: 1, text: headline, style: { fontSize: { desktop: headline.length > 48 ? 72 : 88, tablet: 60, mobile: 42 }, maxWidth: 940, letterSpacing: -0.03, margin: { desktop: { top: 10, right: 0, bottom: 8, left: 0 } }, ...(light ? { color: '#ffffff' as const } : {}) } },
+    { id: 'hero-text', type: 'text', text: introText, style: { fontSize: { desktop: 21, mobile: 18 }, maxWidth: 600, color: light ? '#e9edf2' : 'muted' } },
     {
       id: 'hero-actions',
       type: 'container',
       layout: 'flex',
       direction: { desktop: 'row' },
-      style: { gap: { desktop: 12 }, margin: { desktop: { top: 14, right: 0, bottom: 0, left: 0 } } },
+      style: { gap: { desktop: 12 }, margin: { desktop: { top: 22, right: 0, bottom: 0, left: 0 }, mobile: { top: 14, right: 0, bottom: 0, left: 0 } } },
       children: [
         { id: 'hero-cta', type: 'button', label: cta.label, href: cta.href, variant: 'primary', ...(light && design !== 'upscale' ? { style: { background: '#ffffff', color: '#14171c' } } : design === 'warm' ? { style: { background: 'secondary', color: 'background' } } : {}) },
         law && phone
@@ -373,8 +375,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         layout: 'flex',
         style: { gap: { desktop: 10 } },
         children: [
-          { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: { desktop: 42, mobile: 30 } } },
-          { id: 'services-t', type: 'text', text: law ? `The areas of law ${name} handles. Not sure which applies to you? Ask, and we’ll tell you honestly.` : `Here's how ${name} can help. Not sure what you need? Just ask.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 560 } },
+          { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: H2 } },
+          { id: 'services-t', type: 'text', text: law ? `The areas of law ${name} handles. Not sure which applies to you? Ask, and we’ll tell you honestly.` : `Here's how ${name} can help. Not sure what you need? Just ask.`, style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 560 } },
         ],
       },
       {
@@ -402,7 +404,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     boxed: true,
     style: { padding: { desktop: { top: 16, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 72, mobile: 44 } },
     children: [
-      { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: { desktop: 42, mobile: 30 } } },
+      { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: H2 } },
       ...list.slice(0, 3).map((s, i): Container => {
         const photo = photos.cards[i % 3]
         const img: Element = { id: `svc-${i + 1}-img`, type: 'image', src: photo.src, alt: photo.alt, width: photo.width, height: photo.height, aspect: 1.25, style: { borderRadius: design === 'warm' ? 16 : 2 } }
@@ -413,7 +415,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           style: { gap: { desktop: 12 }, padding: { desktop: { top: 0, right: i % 2 ? 48 : 0, bottom: 0, left: i % 2 ? 0 : 48 }, mobile: pad(0, 0) } },
           children: [
             { id: `svc-${i + 1}-h`, type: 'heading', level: 3, text: s, style: { fontSize: { desktop: 34, mobile: 26 } } },
-            { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 460 } },
+            { id: `svc-${i + 1}-t`, type: 'text', text: cardText(s, i), style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 460 } },
           ],
         }
         return { id: `svc-row-${i + 1}`, type: 'container', layout: 'grid', columns: { desktop: 2, mobile: 1 }, align: 'center', style: { gap: { desktop: 0, mobile: 20 } }, children: i % 2 ? [copy, img] : [img, copy] }
@@ -444,7 +446,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       boxed: true,
       style: { padding: { desktop: { top: 24, right: 24, bottom: 104, left: 24 }, mobile: pad(40, 20) }, gap: { desktop: 36 } },
       children: [
-        { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: { desktop: 42, mobile: 30 } } },
+        { id: 'services-h', type: 'heading', level: 2, text: title, style: { fontSize: H2 } },
         items.length >= 3
           ? {
               id: 'services-grid',
@@ -488,7 +490,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     boxed: true,
     style: { padding: section, gap: { desktop: 36 } },
     children: [
-      { id: 'steps-h', type: 'heading', level: 2, text: 'How it works', style: { fontSize: { desktop: 42, mobile: 30 } } },
+      { id: 'steps-h', type: 'heading', level: 2, text: 'How it works', style: { fontSize: H2 } },
       {
         id: 'steps-grid',
         type: 'container',
@@ -522,7 +524,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     boxed: true,
     style: { background: 'surface', padding: section, gap: { desktop: 48, mobile: 20 } },
     children: [
-      { id: 'faq-h', type: 'heading', level: 2, text: law || pro === 'medspa' ? 'Questions clients ask' : pro === 'medical' ? 'Questions patients ask' : 'Common questions', style: { fontSize: { desktop: 40, mobile: 30 } } },
+      { id: 'faq-h', type: 'heading', level: 2, text: law || pro === 'medspa' ? 'Questions clients ask' : pro === 'medical' ? 'Questions patients ask' : 'Common questions', style: { fontSize: H2 } },
       {
         id: 'faq-list',
         type: 'faq',
@@ -565,7 +567,10 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
   // Wherever a visitor makes up their mind, they can ask right there: a
   // request form beside a line of encouragement and the phone number,
   // instead of a button that sends them off to the contact page.
-  const formLabel = vocab ? vocab.request : design === 'bold' ? 'Request a quote' : design === 'editorial' ? 'Request an appointment' : 'Send a message'
+  // Appointments are for salons and clinics; a consultancy or an "other"
+  // business just gets a message.
+  const booked = design === 'editorial' && input.type !== 'professional' && input.type !== 'other'
+  const formLabel = vocab ? vocab.request : design === 'bold' ? 'Request a quote' : booked ? 'Request an appointment' : 'Send a message'
   const formThanks = vocab ? vocab.thanks(name) : `Thank you. ${name} has your message and will get back to you soon.`
   const leadSection = (id: string, heading: string, text: string, dark = false): Container => ({
     id,
@@ -583,7 +588,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         layout: 'flex',
         style: { gap: { desktop: 14 } },
         children: [
-          { id: `${id}-h`, type: 'heading', level: 2, text: heading, style: { fontSize: { desktop: 42, mobile: 30 }, ...(dark ? { color: 'background' as const } : {}) } },
+          { id: `${id}-h`, type: 'heading', level: 2, text: heading, style: { fontSize: H2, ...(dark ? { color: 'background' as const } : {}) } },
           { id: `${id}-t`, type: 'text', text, style: { fontSize: { desktop: 18 }, maxWidth: 480, ...(dark ? {} : { color: 'muted' as const }) } },
           ...(phone ? [{ id: `${id}-call`, type: 'button' as const, label: `Call ${phone}`, href: telHref(phone), variant: 'outline' as const, style: { margin: { desktop: { top: 6, right: 0, bottom: 0, left: 0 } } } }] : []),
         ],
@@ -603,7 +608,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
 
   const homeLead = leadSection(
     'cta',
-    { bold: 'Tell us what you need', editorial: 'Book your visit', warm: 'Get in touch', upscale: 'Get in touch' }[design],
+    { bold: 'Tell us what you need', editorial: booked ? 'Book your visit' : 'Tell us what you need', warm: 'Get in touch', upscale: 'Get in touch' }[design],
     `Send a few details and ${name} will get back to you${phone ? `, or call ${phone} now` : ''}.`,
     true,
   )
@@ -627,19 +632,24 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         ]
       : []
 
+  // Every small-business design opens on a full photo with the headline
+  // across it, at display size: the first thing an owner sees should look
+  // like a studio made it.
+  const photoHero = (overlay: number, background: string): Container => ({
+    id: 'hero',
+    type: 'container',
+    tag: 'section',
+    layout: 'flex',
+    boxed: true,
+    backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay, overlayStyle: 'side', priority: true },
+    style: { background, padding: { desktop: { top: 196, right: 24, bottom: 156, left: 24 }, tablet: pad(128), mobile: { top: 104, right: 20, bottom: 80, left: 20 } }, gap: { desktop: 16 } },
+    children: heroBlocks(true),
+  })
+
   let homeBody: Container[]
   if (design === 'bold') {
     homeBody = [
-      {
-        id: 'hero',
-        type: 'container',
-        tag: 'section',
-        layout: 'flex',
-        boxed: true,
-        backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.82, overlayStyle: 'side', priority: true },
-        style: { background: 'secondary', padding: { desktop: pad(132), tablet: pad(104), mobile: pad(72, 20) }, gap: { desktop: 14 } },
-        children: heroBlocks(true),
-      },
+      photoHero(0.82, 'secondary'),
       {
         id: 'strip',
         type: 'container',
@@ -672,25 +682,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ]
   } else if (design === 'editorial') {
     homeBody = [
-      {
-        id: 'hero',
-        type: 'container',
-        tag: 'section',
-        layout: 'grid',
-        columns: { desktop: 2, mobile: 1 },
-        align: 'center',
-        style: { background: 'surface', gap: { desktop: 0 } },
-        children: [
-          { id: 'hero-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 0.95, priority: true },
-          {
-            id: 'hero-copy',
-            type: 'container',
-            layout: 'flex',
-            style: { padding: { desktop: pad(72, 64), mobile: pad(44, 20) }, gap: { desktop: 14 } },
-            children: heroBlocks(false),
-          },
-        ],
-      },
+      photoHero(0.74, '#15171a'),
       {
         id: 'intro',
         type: 'container',
@@ -700,8 +692,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         align: 'center',
         style: { padding: { desktop: pad(104), mobile: pad(64, 20) }, textAlign: { desktop: 'center' }, gap: { desktop: 16 } },
         children: [
-          { id: 'intro-h', type: 'heading', level: 2, text: law ? 'How working with us begins' : `Unhurried, personal and always honest. That's ${name}.`, style: { fontSize: { desktop: 40, mobile: 28 }, maxWidth: 820 } },
-          { id: 'intro-t', type: 'text', text: law ? `No jargon and no pressure. Three simple steps, and you decide at every one.` : `We take the time to listen, explain your options and do the work with care. It's why people across ${city} keep coming back.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 620 } },
+          { id: 'intro-h', type: 'heading', level: 2, text: law ? 'How working with us begins' : `Unhurried, personal and always honest. That's ${name}.`, style: { fontSize: H2, maxWidth: 820 } },
+          { id: 'intro-t', type: 'text', text: law ? `No jargon and no pressure. Three simple steps, and you decide at every one.` : `We take the time to listen, explain your options and do the work with care. It's why people across ${city} keep coming back.`, style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 620 } },
           ...(law
             ? [
                 {
@@ -738,16 +730,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     // Dark and grown-up: a full photo under the headline, one centred line
     // about the place, then the offer as tall photo cards.
     homeBody = [
-      {
-        id: 'hero',
-        type: 'container',
-        tag: 'section',
-        layout: 'flex',
-        boxed: true,
-        backgroundImage: { src: photos.hero.src, width: photos.hero.width, height: photos.hero.height, overlay: 0.78, overlayStyle: 'side', priority: true },
-        style: { background: '#0c0a09', padding: { desktop: pad(148), tablet: pad(112), mobile: pad(84, 20) }, gap: { desktop: 16 } },
-        children: heroBlocks(true),
-      },
+      photoHero(0.78, '#0c0a09'),
       {
         id: 'intro',
         type: 'container',
@@ -758,8 +741,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         style: { padding: { desktop: pad(112), mobile: pad(64, 20) }, textAlign: { desktop: 'center' }, gap: { desktop: 16 } },
         children: [
           { id: 'intro-k', type: 'text', text: 'Welcome', style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.16, textTransform: 'uppercase', color: 'primary' } },
-          { id: 'intro-h', type: 'heading', level: 2, text: `Everything at ${name} is done with care, and it shows.`, style: { fontSize: { desktop: 42, mobile: 30 }, maxWidth: 820 } },
-          { id: 'intro-t', type: 'text', text: `Come as you are and leave glad you did. That's the whole idea.`, style: { color: 'muted', fontSize: { desktop: 18 }, maxWidth: 620 } },
+          { id: 'intro-h', type: 'heading', level: 2, text: `Everything at ${name} is done with care, and it shows.`, style: { fontSize: H2, maxWidth: 820 } },
+          { id: 'intro-t', type: 'text', text: `Come as you are and leave glad you did. That's the whole idea.`, style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 }, maxWidth: 620 } },
         ],
       },
       mosaic(law ? 'Practice areas' : 'What we offer'),
@@ -769,20 +752,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
     ]
   } else {
     homeBody = [
-      {
-        id: 'hero',
-        type: 'container',
-        tag: 'section',
-        layout: 'grid',
-        columns: { desktop: 2, mobile: 1 },
-        align: 'center',
-        boxed: true,
-        style: { padding: { desktop: { top: 56, right: 24, bottom: 72, left: 24 }, mobile: pad(36, 20) }, gap: { desktop: 56, mobile: 28 } },
-        children: [
-          { id: 'hero-copy', type: 'container', layout: 'flex', style: { gap: { desktop: 14 } }, children: heroBlocks(false) },
-          { id: 'hero-img', type: 'image', src: photos.hero.src, alt: photos.hero.alt, width: photos.hero.width, height: photos.hero.height, aspect: 1.1, priority: true, style: { borderRadius: 18 } },
-        ],
-      },
+      photoHero(0.7, '#1c1712'),
       mosaic('What we make'),
       {
         id: 'about',
@@ -792,7 +762,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
         boxed: true,
         style: { background: 'secondary', color: 'background', padding: { desktop: pad(96), mobile: pad(56, 20) }, gap: { desktop: 16 } },
         children: [
-          { id: 'about-h', type: 'heading', level: 2, text: `Made here in ${city}`, style: { fontSize: { desktop: 42, mobile: 30 }, color: 'background' } },
+          { id: 'about-h', type: 'heading', level: 2, text: `Made here in ${city}`, style: { fontSize: H2, color: 'background' } },
           { id: 'about-t', type: 'text', text: `${name} is a local business, and it shows. Everything is done by hand, by people who care about getting it right, for neighbors who notice the difference.`, style: { fontSize: { desktop: 19 }, maxWidth: 640 } },
         ],
       },
@@ -814,7 +784,7 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
       boxed: true,
       style: { padding: section, gap: { desktop: 64, mobile: 20 } },
       children: [
-        { id: 'story-h', type: 'heading', level: 2, text: about.heading, style: { fontSize: { desktop: 40, mobile: 30 }, maxWidth: 480 } },
+        { id: 'story-h', type: 'heading', level: 2, text: about.heading, style: { fontSize: H2, maxWidth: 480 } },
         { id: 'story-t', type: 'text', text: about.paragraphs.join('\n\n'), style: { fontSize: { desktop: 18 }, color: 'muted' } },
       ],
     }
@@ -875,8 +845,8 @@ export function buildStarterSite(input: StarterInput, ownerOrgId: string, subdom
           style: { gap: { desktop: 14 } },
           children: [
             { id: 'about-k', type: 'text', text: `Why ${city} calls ${name}`, style: { fontSize: { desktop: 13 }, fontWeight: 600, letterSpacing: 0.12, textTransform: 'uppercase', color: 'primary' } },
-            { id: 'about-h', type: 'heading', level: 2, text: 'The job done right, the first time', style: { fontSize: { desktop: 40, mobile: 30 } } },
-            { id: 'about-t', type: 'text', text: `We show up when we say we will, explain what we find in plain English and give you a clear price before any work starts. Then we clean up after ourselves.`, style: { color: 'muted', fontSize: { desktop: 18 } } },
+            { id: 'about-h', type: 'heading', level: 2, text: 'The job done right, the first time', style: { fontSize: H2 } },
+            { id: 'about-t', type: 'text', text: `We show up when we say we will, explain what we find in plain English and give you a clear price before any work starts. Then we clean up after ourselves.`, style: { color: 'muted', fontSize: { desktop: 19, mobile: 17 } } },
             { id: 'about-btn', type: 'button', label: cta.label, href: cta.href, variant: 'primary', style: { margin: { desktop: { top: 8, right: 0, bottom: 0, left: 0 } } } },
           ],
         },
