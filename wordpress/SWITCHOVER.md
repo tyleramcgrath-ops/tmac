@@ -200,3 +200,12 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - **/predictive-coach/**: the "Read the Case Study" button now goes to https://predictivecoach.com/resources/
   (the old case-study link was removed).
 - Install envuetheme-final-v6.15.0.zip, then purge the SiteGround cache.
+
+## v6.16 — GO Focus Plus: theme Product and Breadcrumb schema removed
+- **/geotab-go-focus-plus/**: the theme no longer prints the Product block or its own BreadcrumbList.
+  AIOSEO's schema in `<head>` (Breadcrumb, ItemPage, ProfessionalService, Service, WebSite) is the only breadcrumb now,
+  and the theme's FAQPage (all ten Q&As) stays.
+- If AIOSEO is ever turned off, the theme's standard site-wide breadcrumb takes over automatically, so the page is
+  never left without one or with two.
+- Install envuetheme-final-v6.16.0.zip, purge the SiteGround cache, then re-run
+  https://search.google.com/test/rich-results on the page: expect one Breadcrumb and one FAQ result.

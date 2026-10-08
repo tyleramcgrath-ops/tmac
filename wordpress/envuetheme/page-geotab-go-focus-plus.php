@@ -35,8 +35,6 @@ foreach ( $gfp_qa + $gfp_faq as $q => $a ) {
 		'acceptedAnswer' => [ '@type' => 'Answer', 'text' => $a ],
 	];
 }
-// This page prints its own BreadcrumbList (below), so the theme skips its generic one.
-$GLOBALS['envue_own_breadcrumb'] = true;
 
 get_header(); ?>
 <main id="main">
@@ -333,47 +331,4 @@ get_header(); ?>
 </div></section>
 
 <?php
-// Product + BreadcrumbList schema (Geotab toolkit Blocks 1 and 3, filled in for EnVue).
-// Organization (Block 4) is already printed site-wide, so it is not repeated here.
-$gfp_schema = [
-	[
-		'@context'    => 'https://schema.org',
-		'@type'       => 'Product',
-		'name'        => 'GO Focus Plus™ AI Dash Cam',
-		'description' => 'A dual-facing AI dash cam that combines road-facing video, driver monitoring, real-time coaching alerts and automated safety workflows to help fleets reduce risk, improve driver behavior and gain visibility into critical safety events.',
-		'brand'        => [ '@type' => 'Brand', 'name' => 'Geotab' ],
-		'manufacturer' => [ '@type' => 'Organization', 'name' => 'Geotab', 'url' => 'https://www.geotab.com' ],
-		'image'       => $gfp_img,
-		'url'         => $gfp_url,
-		'category'    => 'Fleet Safety Technology',
-		'keywords'    => 'dual-facing AI dash cam, driver monitoring system, DMS, ADAS, real-time coaching, fleet safety camera, video telematics, driver behavior, MyGeotab',
-		'additionalProperty' => array_map(
-			function ( $name, $value ) { return [ '@type' => 'PropertyValue', 'name' => $name, 'value' => $value ]; },
-			[ 'Camera Configuration', 'Driver Monitoring System (DMS)', 'Advanced Driver Assistance Systems (ADAS)', 'Real-Time Coaching', 'Recording Capabilities', 'Coaching Workflows', 'Platform Integration', 'Installation', 'Privacy' ],
-			[
-				'Dual-facing: road-facing and driver-facing cameras',
-				'Detects phone use, driver distraction, drowsiness and fatigue indicators, seatbelt violations, eating and drinking',
-				'Detects tailgating, rolling stops, swerving, near-collision events, collision events',
-				'In-cab verbal coaching alerts that help drivers self-correct unsafe behaviors as they occur',
-				'Continuous recording and live streaming, plus AI-powered safety event detection',
-				'Automated driver risk scoring, behavior prioritization, and coaching workflow management',
-				'MyGeotab and Geotab Video platform',
-				'Auto-pairing with compatible Geotab GO devices and self-calibration during installation',
-				'Privacy-focused design options to support driver acceptance',
-			]
-		),
-	],
-	[
-		'@context'        => 'https://schema.org',
-		'@type'           => 'BreadcrumbList',
-		'itemListElement' => [
-			[ '@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => home_url( '/' ) ],
-			[ '@type' => 'ListItem', 'position' => 2, 'name' => 'AI Dash Cams', 'item' => home_url( '/dash-cams/' ) ],
-			[ '@type' => 'ListItem', 'position' => 3, 'name' => 'GO Focus Plus AI Dash Cam', 'item' => $gfp_url ],
-		],
-	],
-];
-foreach ( $gfp_schema as $block ) {
-	echo '<script type="application/ld+json">' . wp_json_encode( $block, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . "</script>\n";
-}
 get_footer();
