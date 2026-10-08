@@ -7,7 +7,7 @@
 $tmac_url = envuemex_get( 'envuemex_us_url', 'https://tyleramcgrath-ops.github.io/tmac/' );
 $email    = envuemex_get( 'envuemex_email', 'ventas@envuemex.com' );
 $support  = envuemex_get( 'envuemex_support_email', 'soporte@envuemex.com' );
-$phone    = envuemex_get( 'envuemex_phone', '+52 800 123 4567' );
+$phone    = envuemex_get( 'envuemex_phone', '1-703-705-1304' );
 ?>
 </main>
 
@@ -82,7 +82,7 @@ $phone    = envuemex_get( 'envuemex_phone', '+52 800 123 4567' );
 				} else {
 					?>
 					<a href="mailto:<?php echo esc_attr( $support ); ?>"><?php echo esc_html( $support ); ?></a>
-					<a href="tel:<?php echo esc_attr( preg_replace( '/[^\d+]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
+					<a href="tel:<?php echo esc_attr( preg_replace( '/^1(\d{10})$/', '+1$1', preg_replace( '/[^\d+]/', '', $phone ) ) ); ?>"><?php echo esc_html( $phone ); ?></a>
 					<span data-es="Lun–Vie · 24/7 críticos" data-en="Mon–Fri · 24/7 critical">Lun–Vie · 24/7 críticos</span>
 					<?php
 				}

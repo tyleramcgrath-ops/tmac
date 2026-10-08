@@ -330,7 +330,7 @@ class EnVueMex_CTA_Widget extends EnVueMex_Base_Widget {
 		</div>
 		<div class="cta-actions" data-reveal>
 			<a class="btn btn-primary" href="mailto:ventas@et-envue.com">ventas@et-envue.com</a>
-			<a class="btn btn-on-dark" href="tel:8121880258">81 2188 0258</a>
+			<a class="btn btn-on-dark" href="tel:+17037051304">1-703-705-1304</a>
 		</div>
 	</div>
 </section>
@@ -364,7 +364,7 @@ class EnVueMex_CTA_Widget extends EnVueMex_Base_Widget {
 			<ul>
 				<li>Blvd. Díaz Ordaz 3102, Piso 2</li>
 				<li>Santa María, 64650 Monterrey, N.L.</li>
-				<li><a href="tel:8121880258">81 2188 0258</a></li>
+				<li><a href="tel:+17037051304">1-703-705-1304</a></li>
 				<li><a href="mailto:ventas@et-envue.com">ventas@et-envue.com</a></li>
 			</ul>
 		</div>
@@ -432,7 +432,7 @@ class EnVueMex_Contact_Widget extends EnVueMex_Base_Widget {
 		$this->text_control( 'title', 'Title', 'Cuéntanos sobre tu flota.', 'TEXTAREA' );
 		$this->text_control( 'intro', 'Intro', 'Te respondemos el mismo día hábil con una propuesta a la medida.', 'TEXTAREA' );
 		$this->text_control( 'email', 'Email', 'ventas@et-envue.com' );
-		$this->text_control( 'phone', 'Phone', '81 2188 0258' );
+		$this->text_control( 'phone', 'Phone', '1-703-705-1304' );
 		$this->text_control( 'address', 'Address', 'Blvd. Díaz Ordaz 3102, Piso 2, Santa María, 64650 Monterrey, N.L.', 'TEXTAREA' );
 		$this->end_controls_section();
 	}
@@ -448,7 +448,7 @@ class EnVueMex_Contact_Widget extends EnVueMex_Base_Widget {
 			<p class="lead" data-en="We get back to you within one business day with a tailored proposal."><?php echo esc_html( $s['intro'] ); ?></p>
 			<ul>
 				<li><span data-en="Email">Correo</span><a href="mailto:<?php echo esc_attr( $s['email'] ); ?>"><?php echo esc_html( $s['email'] ); ?></a></li>
-				<li><span data-en="Phone">Teléfono</span><a href="tel:<?php echo esc_attr( preg_replace( '/[^\d+]/', '', $s['phone'] ) ); ?>"><?php echo esc_html( $s['phone'] ); ?></a></li>
+				<li><span data-en="Phone">Teléfono</span><a href="tel:<?php echo esc_attr( preg_replace( '/^1(\d{10})$/', '+1$1', preg_replace( '/[^\d+]/', '', $s['phone'] ) ) ); ?>"><?php echo esc_html( $s['phone'] ); ?></a></li>
 				<li><span data-en="Offices">Oficinas</span><span><?php echo esc_html( $s['address'] ); ?></span></li>
 				<li><span data-en="Hours">Horario</span><span data-en="Mon–Fri 9:00–18:00 · 24/7 critical support">Lun–Vie 9:00–18:00 · soporte crítico 24/7</span></li>
 			</ul>

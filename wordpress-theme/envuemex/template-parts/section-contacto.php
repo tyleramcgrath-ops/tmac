@@ -9,7 +9,7 @@
  * @package envuemex
  */
 $email   = envuemex_get( 'envuemex_email', 'ventas@envuemex.com' );
-$phone   = envuemex_get( 'envuemex_phone', '+52 800 123 4567' );
+$phone   = envuemex_get( 'envuemex_phone', '1-703-705-1304' );
 $offices = envuemex_get( 'envuemex_offices', 'Monterrey · Ciudad de México · Guadalajara' );
 $tmac    = envuemex_get( 'envuemex_us_url', 'https://tyleramcgrath-ops.github.io/tmac/' );
 $cf7_id  = get_theme_mod( 'envuemex_cf7_id', '' );
@@ -31,7 +31,7 @@ $cf7_id  = get_theme_mod( 'envuemex_cf7_id', '' );
 				</li>
 				<li>
 					<span class="contact__lbl" data-es="Teléfono" data-en="Phone">Teléfono</span>
-					<a href="tel:<?php echo esc_attr( preg_replace( '/[^\d+]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
+					<a href="tel:<?php echo esc_attr( preg_replace( '/^1(\d{10})$/', '+1$1', preg_replace( '/[^\d+]/', '', $phone ) ) ); ?>"><?php echo esc_html( $phone ); ?></a>
 				</li>
 				<li>
 					<span class="contact__lbl" data-es="Oficinas" data-en="Offices">Oficinas</span>

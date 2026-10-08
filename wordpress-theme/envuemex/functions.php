@@ -171,7 +171,7 @@ function envuemex_customize_register( $wp_customize ) {
 	$fields = array(
 		'envuemex_email'         => array( 'label' => __( 'Sales email', 'envuemex' ),      'default' => 'ventas@envuemex.com' ),
 		'envuemex_support_email' => array( 'label' => __( 'Support email', 'envuemex' ),    'default' => 'soporte@envuemex.com' ),
-		'envuemex_phone'         => array( 'label' => __( 'Phone', 'envuemex' ),            'default' => '+52 800 123 4567' ),
+		'envuemex_phone'         => array( 'label' => __( 'Phone', 'envuemex' ),            'default' => '1-703-705-1304' ),
 		'envuemex_offices'       => array( 'label' => __( 'Offices', 'envuemex' ),          'default' => 'Monterrey · Ciudad de México · Guadalajara' ),
 		'envuemex_us_url'        => array( 'label' => __( 'TMAC USA URL', 'envuemex' ),     'default' => 'https://tyleramcgrath-ops.github.io/tmac/' ),
 	);

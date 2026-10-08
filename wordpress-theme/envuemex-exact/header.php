@@ -46,7 +46,7 @@ $current = home_url( $_SERVER['REQUEST_URI'] ?? '/' );
 			<button type="button" data-lang-btn="es" class="is-active" aria-pressed="true">ES</button>
 			<button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
 		</div>
-		<a class="btn btn-ghost" href="tel:8121880258">81 2188 0258</a>
+		<a class="btn btn-ghost" href="tel:+17037051304">1-703-705-1304</a>
 		<a class="btn btn-primary" href="<?php echo esc_url( home_url( '/contacto/' ) ); ?>" data-en="Get started">Comience hoy</a>
 		<button class="nav-toggle" type="button" aria-label="Abrir menú" data-en-attr="aria-label=Open menu" aria-expanded="false" aria-controls="emx-drawer">
 			<span></span><span></span><span></span>
