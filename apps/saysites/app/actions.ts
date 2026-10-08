@@ -105,7 +105,7 @@ export async function createSite(_prev: FormState, form: FormData): Promise<Form
   const placeId = /^[\w-]{10,300}$/.test(str(form, 'placeId')) ? str(form, 'placeId') : ''
   const spanish = str(form, 'language') === 'es'
   const taken = await store.photosTaken()
-  const found = await photoSetFor(store, type, taken)
+  const found = await photoSetFor(store, type, taken, 12, str(form, 'photoHint').slice(0, 60))
   const starterInput = { name: name.slice(0, 120), type, city: city.slice(0, 60), region: region.slice(0, 40), phone, email, services, palette, ...(street && postalCode ? { street, postalCode } : {}), ...(hours.length ? { hours } : {}), language: spanish ? 'es' : 'en', ...(template ? { design: template.key } : {}), ...(found ? { photos: found } : {}) }
   // A fixed site id keeps page ids stable when the writer fills it in below.
   const siteId = `site_${randomUUID()}`

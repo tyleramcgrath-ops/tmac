@@ -120,6 +120,13 @@ export const PHOTOS: Record<string, PhotoSet> = {
     ['1573612664822-d7d347da7b80', 'Clothes on a rack beside a wooden table'],
     ['1758520387635-d290a74d3aee', 'Shoppers looking at a store window display'],
   ]),
+  // Marketing, consulting, accounting, insurance, real estate: offices and
+  // meetings, never a shop.
+  professional: set(['1454165804606-c3d57bc86b40', 'People taking notes at a meeting table'], [
+    ['1571055931484-22dce9d6c510', 'Conference room with chairs around a table'],
+    ['1450101499163-c8848c66ca85', 'Person signing a document at a desk'],
+    ['1486406146926-c627a92ad1ab', 'Office towers seen from the street'],
+  ]),
   other: set(['1687422808248-f807f4ea2a2e', 'Small business owner in their shop'], [
     ['1546213290-e1b492ab3eee', 'Customer browsing inside a small shop'],
     ['1509440159596-0249088772ff', 'Fresh local goods on display'],

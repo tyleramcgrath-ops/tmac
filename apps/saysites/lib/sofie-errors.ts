@@ -15,6 +15,8 @@ export function describeSofieError(e: unknown): SofieFailure {
   if (s !== undefined) {
     if (s === 401 || s === 403)
       return { owner: 'Sofie can’t connect right now. We’re on it; please try again later.', team: `The Anthropic API key was refused (${s}). In SiteGround, check ANTHROPIC_API_KEY is pasted exactly (starts with sk-ant-, no spaces or quotes), then restart the app.` }
+    if (s === 400 && /scoped to a workspace|anthropic-workspace-id/i.test(raw))
+      return { owner: 'Sofie can’t connect right now. We’re on it; please try again later.', team: 'The Anthropic API key isn’t tied to a workspace. In the Claude Console, API keys → Create key, pick the Default workspace, then paste the new key into ANTHROPIC_API_KEY in SiteGround and restart the app.' }
     if (s === 400 && /credit balance|billing|purchase credits/i.test(raw))
       return { owner: 'Sofie can’t connect right now. We’re on it; please try again later.', team: 'The Anthropic account is out of credit. Add credit at console.anthropic.com → Settings → Billing.' }
     if (s === 429)
