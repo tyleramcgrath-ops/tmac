@@ -15,7 +15,7 @@ $networkip_chips = networkip_split_list( networkip_mod( 'hero_chips' ) );
 		<?php if ( networkip_mod( 'hero_eyebrow' ) ) : ?>
 			<p class="nip-eyebrow"><?php echo esc_html( networkip_mod( 'hero_eyebrow' ) ); ?></p>
 		<?php endif; ?>
-		<h1 id="hero-title"><?php echo esc_html( networkip_mod( 'hero_title' ) ); ?></h1>
+		<h1 id="hero-title"><?php echo networkip_highlight( networkip_mod( 'hero_title' ), networkip_mod( 'hero_title_highlight' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in networkip_highlight(). ?></h1>
 		<p class="nip-hero__text"><?php echo esc_html( networkip_mod( 'hero_text' ) ); ?></p>
 
 		<div class="nip-actions">

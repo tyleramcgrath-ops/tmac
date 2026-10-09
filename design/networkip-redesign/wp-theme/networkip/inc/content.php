@@ -33,6 +33,7 @@ function networkip_defaults() {
 		// Hero.
 		'hero_eyebrow'         => __( 'International voice services', 'networkip' ),
 		'hero_title'           => __( 'International Voice Services Built for Mobile Growth', 'networkip' ),
+		'hero_title_highlight' => __( 'Mobile Growth', 'networkip' ),
 		'hero_text'            => __( 'NetworkIP is an international voice service provider with over 25 years of experience. We enable MNOs and MVNOs to outsource international calling offerings with minimal risk and significant regulatory savings.', 'networkip' ),
 		'hero_primary_label'   => __( 'Contact Us', 'networkip' ),
 		'hero_primary_url'     => '/contact-us/',

@@ -1,4 +1,4 @@
-# NetworkIP WordPress Theme (v1.3.0)
+# NetworkIP WordPress Theme (v2.0.0)
 
 This is a custom theme built from the ChatGPT "left homepage" handoff. It has a dark navy and electric-blue design with a connected-globe hero, a global network map section, glowing service cards and a contact form.
 
@@ -24,22 +24,28 @@ All three can be switched off in **Customize → NetworkIP Homepage → Layout &
 
 **If the old header or footer still appears:** that comes from Elementor Pro's Theme Builder. Go to **Templates → Theme Builder** and set the old Header and Footer templates to Draft, or remove their display conditions.
 
-## Brand colors
+## Look (v2.0: red, gold and white)
 
-The base palette is navy and electric blue. On top of that, two accents come from the official logo:
-- **Gold #D8A040** (the logo's gold line): the glow and border on cards and panels, stat numbers, "Learn more" links, contact labels and the line under the header.
-- **Red #A3141F, with a brighter #E2454D for small marks** (the logo's red "IP"):
-  - the tip of the line before each section label;
-  - the underline on the current menu item;
-  - the dots in the hero chips;
-  - the technology card numbers;
-  - the check marks;
-  - the required-field asterisks;
-  - the footer column underlines.
+This is design T ("red, gold and white") from the mockup rounds.
 
-The footer's top rule and the section-label lines blend from gold to red, like the logo.
+- **Dark areas:** the hero is the dark connected globe from the original design, with "Mobile Growth" in gold. The header and interior page banners are dark too, so the white logo stays visible.
+- **White pages:** everything below the hero is white, with a warm cream section for global calling and light-gray bands.
+- **Gold #D8A040 (the logo's gold line):**
+  - all buttons;
+  - stat numbers;
+  - icons;
+  - section labels and their lines;
+  - the line under the hero and page banners;
+  - the rule over the footer.
+  On white, text and icons use a deeper gold (#A8771F) so they stay readable.
+- **Red #A3141F (the logo's red "IP"):**
+  - the contact section and the "Still have questions?" band;
+  - technology card numbers;
+  - check marks;
+  - required-field marks.
+- **Footer:** charcoal.
 
-All accent colors are CSS variables at the top of `assets/css/theme.css` (`--nip-gold`, `--nip-red`, `--nip-red-bright`, `--nip-glow`).
+All colors are CSS variables at the top of `assets/css/theme.css`. The gold words in the headline can be changed under Customize → NetworkIP Homepage → Hero.
 
 ## Editing content
 
@@ -73,8 +79,9 @@ All accent colors are CSS variables at the top of `assets/css/theme.css` (`--nip
 | File | Source |
 |---|---|
 | `assets/images/hero-globe-*.webp/.jpg` | ChatGPT handoff `hero-connected-globe-3840x2160.png`, resized to 960/1600/2560 px WebP plus a 1600 px JPG fallback |
-| `assets/images/network-map-*.webp/.jpg` | ChatGPT handoff `global-network-map-3840x1536.png`, same treatment |
-| `assets/icons/*.svg` | ChatGPT handoff icon set, used as `<img>` because the SVGs share internal gradient ids |
+| `assets/images/network-map-*.webp/.jpg` | ChatGPT handoff `global-network-map-3840x1536.png`, same treatment (used in interior page banners) |
+| `assets/images/network-map-light-*.webp/.jpg` | Same map, inverted to a light cream version for the white global-calling section |
+| Line icons | Drawn in the theme (`networkip_icon_paths()` in `inc/template-tags.php`) so they can be colored gold |
 | `assets/images/networkip-logo-white*.png` | Official NetworkIP logo supplied by the client, recolored so the black lettering is white |
 | `assets/images/networkip-wordmark.svg` | ChatGPT handoff fallback wordmark (no longer used) |
 | `assets/fonts/manrope-*.woff2` | Manrope variable font (SIL Open Font License), self-hosted |

@@ -9,7 +9,7 @@ $networkip_content = networkip_home_content();
 ?>
 <section class="nip-section nip-network" id="global-calling" aria-labelledby="network-title">
 	<div class="nip-network__media" aria-hidden="true">
-		<?php networkip_picture( 'network-map', 'nip-network__img', false, 2560, 1024 ); ?>
+		<?php networkip_picture( 'network-map-light', 'nip-network__img', false, 2560, 1024 ); ?>
 	</div>
 	<div class="nip-wrap nip-network__inner">
 		<div class="nip-split">

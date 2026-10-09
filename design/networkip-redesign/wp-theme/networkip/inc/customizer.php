@@ -62,6 +62,7 @@ function networkip_customize_register( $wp_customize ) {
 	$fields = array(
 		'hero_eyebrow'         => array( 'networkip_hero', __( 'Eyebrow', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_title'           => array( 'networkip_hero', __( 'Headline', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'hero_title_highlight' => array( 'networkip_hero', __( 'Gold words in the headline (must match part of the headline)', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_text'            => array( 'networkip_hero', __( 'Intro text', 'networkip' ), 'textarea', 'sanitize_textarea_field' ),
 		'hero_primary_label'   => array( 'networkip_hero', __( 'Primary button label', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_primary_url'     => array( 'networkip_hero', __( 'Primary button link', 'networkip' ), 'text', 'networkip_sanitize_link' ),

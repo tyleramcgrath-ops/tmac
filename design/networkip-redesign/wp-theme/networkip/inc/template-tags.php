@@ -94,22 +94,42 @@ function networkip_picture( $name, $class, $eager, $w, $h ) {
 }
 
 /**
- * Output a decorative icon from assets/icons. Icons are <img> elements because
- * the source SVGs share internal gradient ids.
+ * Line-icon paths, keyed by the icon names used in inc/content.php and inc/pages.php.
+ * Static, theme-authored markup (24x24 viewBox, stroked with currentColor).
  *
- * @param string $name Icon file name without extension.
- * @param int    $size Rendered size in px.
+ * @return array<string,string>
+ */
+function networkip_icon_paths() {
+	$globe  = '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 3.9 5.8 3.9 9s-1.3 6.2-3.9 9c-2.6-2.8-3.9-5.8-3.9-9S9.4 5.8 12 3z"/>';
+	$shield = '<path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>';
+	$phone  = '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>';
+	return array(
+		'international-calling'   => $globe,
+		'globe-coverage'          => $globe,
+		'customer-intelligence'   => '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+		'integration-flexibility' => '<path d="M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0zM12 17v5"/>',
+		'call-quality-shield'     => $shield,
+		'service-platform'        => '<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+		'carriers-users'          => '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20c0 1.1-1.8 2-4 2h-2"/>',
+		'phone-calls'             => $phone,
+		'calendar-experience'     => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+	);
+}
+
+/**
+ * Output a decorative line icon in a gold tile.
+ *
+ * @param string $name Icon name (see networkip_icon_paths()).
+ * @param int    $size Kept for backwards compatibility; size is set in CSS.
  */
 function networkip_icon( $name, $size = 56 ) {
-	$name = sanitize_file_name( $name );
-	if ( ! file_exists( get_template_directory() . "/assets/icons/{$name}.svg" ) ) {
+	$paths = networkip_icon_paths();
+	if ( ! isset( $paths[ $name ] ) ) {
 		return;
 	}
-	printf(
-		'<img class="nip-icon" src="%1$s" width="%2$d" height="%2$d" alt="" loading="lazy" decoding="async">',
-		esc_url( networkip_asset( "icons/{$name}.svg" ) ),
-		(int) $size
-	);
+	unset( $size );
+	// The paths are static strings defined above, not user input.
+	echo '<span class="nip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">' . $paths[ $name ] . '</svg></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
@@ -195,4 +215,21 @@ function networkip_section_heading( $heading, $id ) {
 	if ( ! empty( $heading['text'] ) ) {
 		echo '<p class="nip-lead">' . esc_html( $heading['text'] ) . '</p>';
 	}
+}
+
+/**
+ * Escape a heading and wrap the first occurrence of a phrase in a gold span.
+ *
+ * @param string $text      Heading text.
+ * @param string $highlight Phrase to highlight (optional).
+ * @return string Escaped HTML.
+ */
+function networkip_highlight( $text, $highlight ) {
+	$text      = esc_html( $text );
+	$highlight = esc_html( trim( (string) $highlight ) );
+	if ( '' === $highlight || false === strpos( $text, $highlight ) ) {
+		return $text;
+	}
+	$pos = strpos( $text, $highlight );
+	return substr( $text, 0, $pos ) . '<span class="nip-gold">' . $highlight . '</span>' . substr( $text, $pos + strlen( $highlight ) );
 }

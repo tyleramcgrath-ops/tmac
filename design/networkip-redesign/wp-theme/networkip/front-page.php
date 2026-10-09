@@ -15,6 +15,7 @@ get_header();
 <main id="main" class="nip-main nip-home">
 	<?php
 	get_template_part( 'template-parts/home/hero' );
+	get_template_part( 'template-parts/home/carriers' );
 	get_template_part( 'template-parts/home/about' );
 
 	if ( 'page' === get_option( 'show_on_front' ) && '1' === networkip_mod( 'home_show_content' ) ) {
