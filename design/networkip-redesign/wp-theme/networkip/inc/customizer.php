@@ -43,14 +43,16 @@ function networkip_customize_register( $wp_customize ) {
 		'networkip_home',
 		array(
 			'title'       => __( 'NetworkIP Homepage', 'networkip' ),
-			'description' => __( 'Short homepage text and contact details. Service, network and technology cards are in inc/content.php (or the networkip_home_content filter).', 'networkip' ),
+			'description' => __( 'Short homepage text and contact details. The gold band features, impact numbers, service and technology cards are in inc/content.php (or the networkip_home_content filter).', 'networkip' ),
 			'priority'    => 30,
 		)
 	);
 
 	$sections = array(
-		'networkip_hero'    => __( 'Hero', 'networkip' ),
-		'networkip_about'   => __( 'About', 'networkip' ),
+		'networkip_hero'    => __( 'Header & hero', 'networkip' ),
+		'networkip_band'    => __( 'Gold band', 'networkip' ),
+		'networkip_bridge'  => __( 'Photo section', 'networkip' ),
+		'networkip_about'   => __( 'Carriers', 'networkip' ),
 		'networkip_contact' => __( 'Contact & form', 'networkip' ),
 		'networkip_layout'  => __( 'Layout & compatibility', 'networkip' ),
 	);
@@ -60,21 +62,31 @@ function networkip_customize_register( $wp_customize ) {
 
 	// key => [section, label, control type, sanitize callback].
 	$fields = array(
+		'header_cta_label'     => array( 'networkip_hero', __( 'Header button label', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_eyebrow'         => array( 'networkip_hero', __( 'Eyebrow', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_title'           => array( 'networkip_hero', __( 'Headline', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_title_highlight' => array( 'networkip_hero', __( 'Gold words in the headline (must match part of the headline)', 'networkip' ), 'text', 'sanitize_text_field' ),
 		'hero_text'            => array( 'networkip_hero', __( 'Intro text', 'networkip' ), 'textarea', 'sanitize_textarea_field' ),
-		'hero_primary_label'   => array( 'networkip_hero', __( 'Primary button label', 'networkip' ), 'text', 'sanitize_text_field' ),
-		'hero_primary_url'     => array( 'networkip_hero', __( 'Primary button link', 'networkip' ), 'text', 'networkip_sanitize_link' ),
-		'hero_secondary_label' => array( 'networkip_hero', __( 'Secondary button label', 'networkip' ), 'text', 'sanitize_text_field' ),
-		'hero_secondary_url'   => array( 'networkip_hero', __( 'Secondary button link', 'networkip' ), 'text', 'networkip_sanitize_link' ),
-		'hero_chips'           => array( 'networkip_hero', __( 'Proof chips (comma-separated, public facts only)', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'hero_primary_label'   => array( 'networkip_hero', __( 'Button label', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'hero_primary_url'     => array( 'networkip_hero', __( 'Button link', 'networkip' ), 'text', 'networkip_sanitize_link' ),
+		'hero_secondary_label' => array( 'networkip_hero', __( 'Second button label (optional)', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'hero_secondary_url'   => array( 'networkip_hero', __( 'Second button link', 'networkip' ), 'text', 'networkip_sanitize_link' ),
+		'hero_side_words'      => array( 'networkip_hero', __( 'Side words (comma-separated, blank to hide)', 'networkip' ), 'text', 'sanitize_text_field' ),
 
-		'about_eyebrow'        => array( 'networkip_about', __( 'Eyebrow', 'networkip' ), 'text', 'sanitize_text_field' ),
-		'about_title'          => array( 'networkip_about', __( 'Headline', 'networkip' ), 'text', 'sanitize_text_field' ),
-		'about_text'           => array( 'networkip_about', __( 'Body text', 'networkip' ), 'textarea', 'sanitize_textarea_field' ),
-		'about_panel_title'    => array( 'networkip_about', __( 'Panel title', 'networkip' ), 'text', 'sanitize_text_field' ),
-		'about_panel_text'     => array( 'networkip_about', __( 'Panel text', 'networkip' ), 'textarea', 'sanitize_textarea_field' ),
+		'band_eyebrow'         => array( 'networkip_band', __( 'Eyebrow', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'band_title'           => array( 'networkip_band', __( 'Headline', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'band_title_highlight' => array( 'networkip_band', __( 'Red words in the headline (must match part of the headline)', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'band_text'            => array( 'networkip_band', __( 'Intro text', 'networkip' ), 'textarea', 'sanitize_textarea_field' ),
+		'band_side_words'      => array( 'networkip_band', __( 'Side words (comma-separated, blank to hide)', 'networkip' ), 'text', 'sanitize_text_field' ),
+
+		'bridge_eyebrow'         => array( 'networkip_bridge', __( 'Eyebrow', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'bridge_title'           => array( 'networkip_bridge', __( 'Headline', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'bridge_title_highlight' => array( 'networkip_bridge', __( 'Gold words in the headline (must match part of the headline)', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'bridge_text'            => array( 'networkip_bridge', __( 'Text', 'networkip' ), 'textarea', 'sanitize_textarea_field' ),
+		'bridge_button_label'    => array( 'networkip_bridge', __( 'Button label', 'networkip' ), 'text', 'sanitize_text_field' ),
+		'bridge_button_url'      => array( 'networkip_bridge', __( 'Button link', 'networkip' ), 'text', 'networkip_sanitize_link' ),
+		'bridge_side_words'      => array( 'networkip_bridge', __( 'Words over the photo (comma-separated, blank to hide)', 'networkip' ), 'text', 'sanitize_text_field' ),
+
 		'about_carriers'       => array( 'networkip_about', __( 'Carrier names (comma-separated)', 'networkip' ), 'text', 'sanitize_text_field' ),
 
 		'contact_title'        => array( 'networkip_contact', __( 'Headline', 'networkip' ), 'text', 'sanitize_text_field' ),
@@ -90,7 +102,27 @@ function networkip_customize_register( $wp_customize ) {
 		'neutralize_builders'  => array( 'networkip_layout', __( 'Stop Elementor’s global kit colors and fonts from overriding the theme', 'networkip' ), 'checkbox', 'networkip_sanitize_checkbox' ),
 	);
 
-	// Logo for the dark header and footer. Goes in Site Identity, under the regular logo.
+	// Photo in the "Bridging People" section.
+	$wp_customize->add_setting(
+		'networkip_bridge_image',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'esc_url_raw',
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control(
+			$wp_customize,
+			'networkip_bridge_image',
+			array(
+				'label'       => __( 'Photo', 'networkip' ),
+				'description' => __( 'A landscape photo, at least 1600 px wide. Leave empty to use the bundled photo of a woman on a call.', 'networkip' ),
+				'section'     => 'networkip_bridge',
+			)
+		)
+	);
+
+	// Logo for the dark footer. Goes in Site Identity, under the regular logo.
 	$wp_customize->add_setting(
 		'networkip_logo_light',
 		array(
@@ -103,8 +135,8 @@ function networkip_customize_register( $wp_customize ) {
 			$wp_customize,
 			'networkip_logo_light',
 			array(
-				'label'       => __( 'Logo for dark backgrounds (header and footer)', 'networkip' ),
-				'description' => __( 'Use a version with white lettering. Leave empty to use the white NetworkIP logo bundled with the theme.', 'networkip' ),
+				'label'       => __( 'Logo for dark backgrounds (footer)', 'networkip' ),
+				'description' => __( 'Use a version with white lettering. Leave empty to use the white NetworkIP logo bundled with the theme. The header uses the regular Logo above, or the bundled color logo.', 'networkip' ),
 				'section'     => 'title_tagline',
 				'priority'    => 9,
 			)

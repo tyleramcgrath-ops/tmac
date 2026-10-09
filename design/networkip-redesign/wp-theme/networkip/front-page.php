@@ -2,37 +2,43 @@
 /**
  * Homepage template. Each section is a template part in template-parts/home/.
  *
+ * Default order: hero, carrier strip, gold band, photo section, impact figures,
+ * services, technology, contact. Change it with the `networkip_home_sections`
+ * filter (for example, add 'network' to bring back the global-calling map section).
+ *
  * The static front page's own editor content is ignored by default, because on
  * sites migrated from a page builder it holds the old homepage design. Turn on
- * Customize → NetworkIP Homepage → Hero → "Show the front page's editor content"
- * to show it after the About section.
+ * Customize → NetworkIP Homepage → Layout & compatibility → "Show the front
+ * page's own editor content" to show it after the impact figures.
  *
  * @package NetworkIP
  */
+
+$networkip_sections = apply_filters(
+	'networkip_home_sections',
+	array( 'hero', 'carriers', 'band', 'bridge', 'impact', 'content', 'services', 'technology', 'contact' )
+);
 
 get_header();
 ?>
 <main id="main" class="nip-main nip-home">
 	<?php
-	get_template_part( 'template-parts/home/hero' );
-	get_template_part( 'template-parts/home/carriers' );
-	get_template_part( 'template-parts/home/about' );
-
-	if ( 'page' === get_option( 'show_on_front' ) && '1' === networkip_mod( 'home_show_content' ) ) {
-		while ( have_posts() ) {
-			the_post();
-			if ( '' !== trim( get_the_content() ) ) {
-				echo '<section class="nip-section nip-section--plain"><div class="nip-wrap entry-content">';
-				the_content();
-				echo '</div></section>';
+	foreach ( (array) $networkip_sections as $networkip_section ) {
+		if ( 'content' === $networkip_section ) {
+			if ( 'page' === get_option( 'show_on_front' ) && '1' === networkip_mod( 'home_show_content' ) ) {
+				while ( have_posts() ) {
+					the_post();
+					if ( '' !== trim( get_the_content() ) ) {
+						echo '<section class="nip-section nip-section--plain"><div class="nip-wrap entry-content">';
+						the_content();
+						echo '</div></section>';
+					}
+				}
 			}
+			continue;
 		}
+		get_template_part( 'template-parts/home/' . sanitize_key( $networkip_section ) );
 	}
-
-	get_template_part( 'template-parts/home/services' );
-	get_template_part( 'template-parts/home/network' );
-	get_template_part( 'template-parts/home/technology' );
-	get_template_part( 'template-parts/home/contact' );
 	?>
 </main>
 <?php

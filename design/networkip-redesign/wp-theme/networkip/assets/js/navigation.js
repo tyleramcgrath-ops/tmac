@@ -1,5 +1,5 @@
 /**
- * NetworkIP header: mobile menu toggle and solid header on scroll.
+ * NetworkIP header: mobile menu toggle and header shadow on scroll.
  */
 ( function () {
 	'use strict';
@@ -81,18 +81,17 @@
 		}
 	}
 
-	if ( document.body.classList.contains( 'has-hero-header' ) ) {
-		var ticking = false;
-		var update = function () {
-			header.classList.toggle( 'is-scrolled', window.scrollY > 24 );
-			ticking = false;
-		};
-		window.addEventListener( 'scroll', function () {
-			if ( ! ticking ) {
-				ticking = true;
-				window.requestAnimationFrame( update );
-			}
-		}, { passive: true } );
-		update();
-	}
+	// Add a shadow under the sticky header once the page scrolls.
+	var ticking = false;
+	var update = function () {
+		header.classList.toggle( 'is-scrolled', window.scrollY > 24 );
+		ticking = false;
+	};
+	window.addEventListener( 'scroll', function () {
+		if ( ! ticking ) {
+			ticking = true;
+			window.requestAnimationFrame( update );
+		}
+	}, { passive: true } );
+	update();
 }() );

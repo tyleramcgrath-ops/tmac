@@ -61,12 +61,13 @@ function networkip_asset( $path ) {
 /**
  * WebP srcset for a bundled responsive image.
  *
- * @param string $name Image base name (hero-globe or network-map).
+ * @param string $name   Image base name (for example network-map-light).
+ * @param int[]  $widths Widths that exist as {$name}-{$w}.webp.
  * @return string
  */
-function networkip_srcset( $name ) {
+function networkip_srcset( $name, $widths = array( 960, 1600, 2560 ) ) {
 	$parts = array();
-	foreach ( array( 960, 1600, 2560 ) as $w ) {
+	foreach ( $widths as $w ) {
 		$parts[] = networkip_asset( "images/{$name}-{$w}.webp" ) . " {$w}w";
 	}
 	return implode( ', ', $parts );
@@ -94,6 +95,45 @@ function networkip_picture( $name, $class, $eager, $w, $h ) {
 }
 
 /**
+ * Output a bundled WebP image with a srcset (used for the hero globe, band map and photo).
+ *
+ * @param string $name   Image base name in assets/images.
+ * @param int[]  $widths Available widths; the second one is used as the plain src.
+ * @param string $class  Class for the <img>.
+ * @param bool   $eager  Load eagerly with high priority (hero) or lazily.
+ * @param int    $w      Intrinsic width.
+ * @param int    $h      Intrinsic height.
+ * @param string $sizes  The sizes attribute.
+ */
+function networkip_webp( $name, $widths, $class, $eager, $w, $h, $sizes = '100vw' ) {
+	$src = isset( $widths[1] ) ? $widths[1] : $widths[0];
+	printf(
+		'<img class="%1$s" src="%2$s" srcset="%3$s" sizes="%4$s" width="%5$d" height="%6$d" alt="" decoding="async" %7$s>',
+		esc_attr( $class ),
+		esc_url( networkip_asset( "images/{$name}-{$src}.webp" ) ),
+		esc_attr( networkip_srcset( $name, $widths ) ),
+		esc_attr( $sizes ),
+		(int) $w,
+		(int) $h,
+		$eager ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'
+	);
+}
+
+/**
+ * Output stacked uppercase "side words" from a comma-separated setting.
+ *
+ * @param string $value Comma-separated words.
+ * @param string $class Extra class.
+ */
+function networkip_side_words( $value, $class = '' ) {
+	$words = networkip_split_list( $value );
+	if ( ! $words ) {
+		return;
+	}
+	echo '<p class="nip-side-words ' . esc_attr( $class ) . '" aria-hidden="true">' . implode( '<br>', array_map( 'esc_html', $words ) ) . '</p>';
+}
+
+/**
  * Line-icon paths, keyed by the icon names used in inc/content.php and inc/pages.php.
  * Static, theme-authored markup (24x24 viewBox, stroked with currentColor).
  *
@@ -113,43 +153,58 @@ function networkip_icon_paths() {
 		'carriers-users'          => '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20c0 1.1-1.8 2-4 2h-2"/>',
 		'phone-calls'             => $phone,
 		'calendar-experience'     => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+		'growth-bars'             => '<rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>',
+		'partners'                => '<circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-1a6 6 0 0 1 12 0v1M14 20v-.5a4.5 4.5 0 0 1 7-3.7"/>',
 	);
 }
 
 /**
  * Output a decorative line icon in a gold tile.
  *
- * @param string $name Icon name (see networkip_icon_paths()).
- * @param int    $size Kept for backwards compatibility; size is set in CSS.
+ * @param string $name  Icon name (see networkip_icon_paths()).
+ * @param int    $size  Kept for backwards compatibility; size is set in CSS.
+ * @param string $class Wrapper class.
  */
-function networkip_icon( $name, $size = 56 ) {
+function networkip_icon( $name, $size = 56, $class = 'nip-icon' ) {
 	$paths = networkip_icon_paths();
 	if ( ! isset( $paths[ $name ] ) ) {
 		return;
 	}
 	unset( $size );
 	// The paths are static strings defined above, not user input.
-	echo '<span class="nip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">' . $paths[ $name ] . '</svg></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<span class="' . esc_attr( $class ) . '" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" focusable="false">' . $paths[ $name ] . '</svg></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 /**
- * Site logo for the dark header and footer.
+ * Site logo.
  *
- * Order: the "Logo for dark backgrounds" Customizer image, then the bundled
- * white version of the official NetworkIP logo. The regular Site Identity logo
- * is not used here because the official logo has black lettering that disappears
- * on the dark navy header.
+ * Header (white): the Site Identity logo if one is set, otherwise the bundled
+ * full-color NetworkIP logo.
+ * Footer (charcoal): the "Logo for dark backgrounds" Customizer image, otherwise
+ * the bundled white version, because the official logo's black lettering
+ * disappears on a dark background.
  *
- * @param string $context "header" or "footer" (used for the class name).
+ * @param string $context "header" or "footer".
  */
 function networkip_logo( $context = 'header' ) {
-	$custom = networkip_mod( 'logo_light' );
-	if ( $custom ) {
-		$src    = $custom;
-		$srcset = '';
+	$src    = '';
+	$srcset = '';
+
+	if ( 'footer' === $context ) {
+		$src = networkip_mod( 'logo_light' );
+		if ( ! $src ) {
+			$src    = networkip_asset( 'images/networkip-logo-white.png' );
+			$srcset = $src . ' 1x, ' . networkip_asset( 'images/networkip-logo-white@2x.png' ) . ' 2x';
+		}
 	} else {
-		$src    = networkip_asset( 'images/networkip-logo-white.png' );
-		$srcset = networkip_asset( 'images/networkip-logo-white.png' ) . ' 1x, ' . networkip_asset( 'images/networkip-logo-white@2x.png' ) . ' 2x';
+		$logo_id = (int) get_theme_mod( 'custom_logo' );
+		if ( $logo_id ) {
+			$src = (string) wp_get_attachment_image_url( $logo_id, 'full' );
+		}
+		if ( ! $src ) {
+			$src    = networkip_asset( 'images/networkip-logo.png' );
+			$srcset = $src . ' 1x, ' . networkip_asset( 'images/networkip-logo@2x.png' ) . ' 2x';
+		}
 	}
 
 	printf(
@@ -218,18 +273,26 @@ function networkip_section_heading( $heading, $id ) {
 }
 
 /**
- * Escape a heading and wrap the first occurrence of a phrase in a gold span.
+ * Escape a heading, wrap the first occurrence of a phrase in an accent span and
+ * wrap a final period in its own span (styled as an accent dot).
  *
  * @param string $text      Heading text.
  * @param string $highlight Phrase to highlight (optional).
+ * @param string $class     Class for the highlight span.
  * @return string Escaped HTML.
  */
-function networkip_highlight( $text, $highlight ) {
+function networkip_highlight( $text, $highlight, $class = 'nip-gold' ) {
+	$text = trim( (string) $text );
+	$dot  = '';
+	if ( '.' === substr( $text, -1 ) && '..' !== substr( $text, -2 ) ) {
+		$text = substr( $text, 0, -1 );
+		$dot  = '<span class="nip-dot">.</span>';
+	}
 	$text      = esc_html( $text );
 	$highlight = esc_html( trim( (string) $highlight ) );
-	if ( '' === $highlight || false === strpos( $text, $highlight ) ) {
-		return $text;
+	if ( '' !== $highlight && false !== strpos( $text, $highlight ) ) {
+		$pos  = strpos( $text, $highlight );
+		$text = substr( $text, 0, $pos ) . '<span class="' . esc_attr( $class ) . '">' . $highlight . '</span>' . substr( $text, $pos + strlen( $highlight ) );
 	}
-	$pos = strpos( $text, $highlight );
-	return substr( $text, 0, $pos ) . '<span class="nip-gold">' . $highlight . '</span>' . substr( $text, $pos + strlen( $highlight ) );
+	return $text . $dot;
 }

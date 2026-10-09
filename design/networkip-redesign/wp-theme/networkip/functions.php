@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NETWORKIP_VERSION', '2.0.0' );
+define( 'NETWORKIP_VERSION', '3.0.0' );
 
 require get_template_directory() . '/inc/content.php';
 require get_template_directory() . '/inc/template-tags.php';
@@ -69,18 +69,18 @@ function networkip_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'networkip_enqueue_assets' );
 
 /**
- * Preload the latin font file and, on the homepage, the hero image (the LCP element).
+ * Preload the latin font file and, on the homepage, the hero globe (the LCP element).
  */
 function networkip_preload_assets() {
 	$uri = get_template_directory_uri();
 	printf(
 		'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-		esc_url( $uri . '/assets/fonts/manrope-latin-var.woff2' )
+		esc_url( $uri . '/assets/fonts/plus-jakarta-sans-latin-var.woff2' )
 	);
 	if ( is_front_page() ) {
 		printf(
-			'<link rel="preload" as="image" type="image/webp" imagesrcset="%1$s" imagesizes="100vw" fetchpriority="high">' . "\n",
-			esc_attr( networkip_srcset( 'hero-globe' ) )
+			'<link rel="preload" as="image" type="image/webp" imagesrcset="%1$s" imagesizes="(max-width: 1100px) 150vw, 84vw" fetchpriority="high">' . "\n",
+			esc_attr( networkip_srcset( 'hero-globe-gold', array( 960, 1600, 1920 ) ) )
 		);
 	}
 }
@@ -93,17 +93,3 @@ function networkip_js_class() {
 	echo "<script>document.documentElement.classList.replace('no-js','js');</script>\n";
 }
 add_action( 'wp_head', 'networkip_js_class', 0 );
-
-/**
- * Add a body class for the transparent header used over the homepage hero.
- *
- * @param string[] $classes Body classes.
- * @return string[]
- */
-function networkip_body_classes( $classes ) {
-	if ( is_front_page() ) {
-		$classes[] = 'has-hero-header';
-	}
-	return $classes;
-}
-add_filter( 'body_class', 'networkip_body_classes' );

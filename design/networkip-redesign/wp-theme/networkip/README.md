@@ -1,6 +1,6 @@
-# NetworkIP WordPress Theme (v2.0.0)
+# NetworkIP WordPress Theme (v3.0.0)
 
-This is a custom theme built from the ChatGPT "left homepage" handoff. It has a dark navy and electric-blue design with a connected-globe hero, a global network map section, glowing service cards and a contact form.
+This is a custom theme for networkip.net. Version 3.0 follows mockup X, "People Connect Possibilities": a white page with a gold globe, a gold band, a photo of someone on a call, red pill buttons and the logo's gold and red as accents. It also has designed interior pages and a contact form.
 
 Requirements: WordPress 6.3+ (tested on 7.1.3) and PHP 7.4+ (tested on 8.4). It needs no plugins and no page builder.
 
@@ -10,7 +10,7 @@ Requirements: WordPress 6.3+ (tested on 7.1.3) and PHP 7.4+ (tested on 8.4). It 
 2. Under **Settings → Reading**, set "Your homepage displays" to **A static page** and pick a page (for example "Home"). `front-page.php` also renders when the homepage shows latest posts.
 3. Under **Settings → Permalinks**, choose **Post name**. Create pages with these slugs so the built-in links resolve: `about-us`, `management`, `service`, `international-calling`, `customer-intelligence`, `technology`, `integration`, `call-quality`, `contact-us`, `privacy-policy`.
 4. Optional: under **Appearance → Menus**, assign menus to *Primary navigation*, *Footer: Company*, *Footer: Service* and *Footer: Technology*. If a location has no menu, the theme shows the public-site links automatically.
-5. The white NetworkIP logo is already built in. To replace it, use **Appearance → Customize → Site Identity → Logo for dark backgrounds** (see the caveats below).
+5. Both NetworkIP logos are built in: the full-color logo in the white header, and a white-lettered version in the dark footer. To replace them, use **Appearance → Customize → Site Identity**: *Logo* for the header, *Logo for dark backgrounds* for the footer.
 
 ## Switching from the current Elementor site
 
@@ -24,40 +24,52 @@ All three can be switched off in **Customize → NetworkIP Homepage → Layout &
 
 **If the old header or footer still appears:** that comes from Elementor Pro's Theme Builder. Go to **Templates → Theme Builder** and set the old Header and Footer templates to Draft, or remove their display conditions.
 
-## Look (v2.0: red, gold and white)
+## Look (v3.0: "People Connect Possibilities")
 
-This is design T ("red, gold and white") from the mockup rounds.
+This is mockup X (`design/networkip-redesign/24-people-connect-*.png`), with photo A.
 
-- **Dark areas:** the hero is the dark connected globe from the original design, with "Mobile Growth" in gold. The header and interior page banners are dark too, so the white logo stays visible.
-- **White pages:** everything below the hero is white, with a warm cream section for global calling and light-gray bands.
-- **Gold #D8A040 (the logo's gold line):**
+Homepage, top to bottom:
+
+1. **Header:** white and sticky, with the full-color logo, dark menu links and a red "Talk to Our Team" pill button. It gets a soft shadow when the page scrolls.
+2. **Hero:** white, with the black-and-gold globe on the right. The headline is "People Connect Possibilities." with "Possibilities" in gold and a red period. Stacked side words sit at the bottom right.
+3. **Carrier strip:** AT&T, Verizon, T-Mobile and Boost Mobile, centered.
+4. **Gold band:** "Global Calling Solutions for Mobile Operators." over a world map of gold lights, with three features (Grow Revenue, Move Faster, A Partner You Can Trust) and red line icons.
+5. **Photo section:** "Bridging People. Strengthening Communities." next to a photo of a woman on a call, cut at an angle.
+6. **Our impact:** 25+ years, 100+ carriers, 6M+ calls a day, 1B+ accounts.
+7. **Services** and **technology** cards (white and light gray). Icons are red on a soft gold tile.
+8. **Contact:** red section with the white form card.
+9. **Footer:** charcoal with the white logo.
+
+Interior pages get a white banner with the gold globe faded in on the right, then the same cards, red call-to-action band and footer.
+
+- **Font:** Plus Jakarta Sans, self-hosted.
+- **Gold #D8A040:**
+  - label bars;
+  - headline highlights;
+  - the band;
+  - impact numbers (#A8771F on white, so they stay readable).
+- **Red #A3141F:**
   - all buttons;
-  - stat numbers;
-  - icons;
-  - section labels and their lines;
-  - the line under the hero and page banners;
-  - the rule over the footer.
-  On white, text and icons use a deeper gold (#A8771F) so they stay readable.
-- **Red #A3141F (the logo's red "IP"):**
-  - the contact section and the "Still have questions?" band;
-  - technology card numbers;
-  - check marks;
-  - required-field marks.
-- **Footer:** charcoal.
+  - headline periods;
+  - band icons;
+  - the contact areas.
 
-All colors are CSS variables at the top of `assets/css/theme.css`. The gold words in the headline can be changed under Customize → NetworkIP Homepage → Hero.
+All colors are CSS variables at the top of `assets/css/theme.css`. A period at the end of a headline is shown in red automatically.
 
 ## Editing content
 
 | What | Where |
 |---|---|
-| Hero eyebrow, headline, intro, buttons, proof chips | Customize → NetworkIP Homepage → Hero |
-| About headline, text, direct-dialing panel, carrier names | Customize → NetworkIP Homepage → About |
+| Header button label; hero eyebrow, headline, gold words, intro, buttons, side words | Customize → NetworkIP Homepage → Header & hero |
+| Gold band eyebrow, headline, red words, intro, side words | Customize → NetworkIP Homepage → Gold band |
+| Photo section text, button, side words and the photo itself | Customize → NetworkIP Homepage → Photo section |
+| Carrier names in the strip under the hero | Customize → NetworkIP Homepage → Carriers |
 | Contact headline, text, address, phone, email; form on/off and recipient | Customize → NetworkIP Homepage → Contact & form |
-| Service cards, global-calling panels and stats, technology cards and capacity stats | `inc/content.php` (commented PHP arrays), or the `networkip_home_content` filter from a child theme or plugin |
-| Extra homepage content | Anything written in the editor on the static front page appears between the About and Services sections |
+| Gold band features, impact numbers, service cards, technology cards and capacity stats (plus the optional global-calling section) | `inc/content.php` (commented PHP arrays), or the `networkip_home_content` filter from a child theme or plugin |
+| Section order | The `networkip_home_sections` filter. The default is `hero, carriers, band, bridge, impact, content, services, technology, contact`. Add `network` to bring back the global-calling map section with the market figures. |
+| Extra homepage content | When turned on under Layout & compatibility, the static front page's editor content appears after the impact figures |
 | Main interior pages (About Us, Management, Service, International Calling, Customer Intelligence, Technology, Integration, Call Quality, Contact Us) | `inc/pages.php` (commented arrays), or the `networkip_page_layouts` filter. To add headshots to the Management page, add `'photo' => 'https://…'` to each person. |
-| Other pages | Normal page editor. They use a map banner (the page excerpt becomes its subtitle) and end with a contact call to action. |
+| Other pages | Normal page editor. They use the white globe banner (the page excerpt becomes its subtitle) and end with a contact call to action. |
 | Menus | Appearance → Menus. Dropdown sub-items are supported. |
 
 ## Contact form
@@ -78,21 +90,22 @@ All colors are CSS variables at the top of `assets/css/theme.css`. The gold word
 
 | File | Source |
 |---|---|
-| `assets/images/hero-globe-*.webp/.jpg` | ChatGPT handoff `hero-connected-globe-3840x2160.png`, resized to 960/1600/2560 px WebP plus a 1600 px JPG fallback |
-| `assets/images/network-map-*.webp/.jpg` | ChatGPT handoff `global-network-map-3840x1536.png`, same treatment (used in interior page banners) |
-| `assets/images/network-map-light-*.webp/.jpg` | Same map, inverted to a light cream version for the white global-calling section |
-| Line icons | Drawn in the theme (`networkip_icon_paths()` in `inc/template-tags.php`) so they can be colored gold |
-| `assets/images/networkip-logo-white*.png` | Official NetworkIP logo supplied by the client, recolored so the black lettering is white |
-| `assets/images/networkip-wordmark.svg` | ChatGPT handoff fallback wordmark (no longer used) |
-| `assets/fonts/manrope-*.woff2` | Manrope variable font (SIL Open Font License), self-hosted |
+| `assets/images/hero-globe-gold-*.webp` | The ChatGPT handoff `hero-connected-globe-3840x2160.png`, cut out as a circle and recolored black and gold. 960, 1600 and 1920 px WebP with transparency. Used in the hero and interior banners. |
+| `assets/images/band-map-*.webp` | The ChatGPT handoff `global-network-map-3840x1536.png`, reduced to its lights and recolored gold. Shown with `mix-blend-mode: screen` on the gold band. |
+| `assets/images/bridge-call-*.webp/.jpg` | "A woman smiling while talking on a cell phone" by Vitaly Gariev, https://unsplash.com/photos/a-woman-smiling-while-talking-on-a-cell-phone-3KgSopqBgYI. Free to use under the [Unsplash License](https://unsplash.com/license); credit is appreciated but not required. |
+| `assets/images/network-map-light-*.webp/.jpg` | The same map, inverted to cream. Used only by the optional `network` section. |
+| Line icons | Drawn in the theme (`networkip_icon_paths()` in `inc/template-tags.php`), so CSS can color them |
+| `assets/images/networkip-logo*.png` | The official NetworkIP logo supplied by the client. `networkip-logo` is the full-color version; `networkip-logo-white` has the black lettering turned white for the footer. |
+| `assets/images/networkip-wordmark.svg` | Fallback wordmark from the ChatGPT handoff (no longer used) |
+| `assets/fonts/plus-jakarta-sans-*.woff2` | Plus Jakarta Sans variable font (SIL Open Font License), self-hosted |
 
-Nothing is hotlinked. The hero image is preloaded with `fetchpriority="high"`, and below-the-fold images lazy-load. JavaScript is a single deferred 2 KB file for the mobile menu and the header scroll state.
+Nothing is hotlinked. The hero globe is preloaded with `fetchpriority="high"`, and below-the-fold images lazy-load. JavaScript is a single deferred 2 KB file for the mobile menu and the header scroll state.
 
 ## Caveats
 
-- **Logo:** the header and footer use a white version of the official NetworkIP logo (`assets/images/networkip-logo-white*.png`). The black lettering and globe are white; the gold line and red "IP" are unchanged. It was made from a small 170×50 copy of the logo, so it can look slightly soft on high-resolution screens. For a sharper result, upload a larger PNG (about 700px wide or more) with white lettering under **Customize → Site Identity → Logo for dark backgrounds**. The regular Site Identity logo is not used in the header, because its black lettering disappears on the dark background.
-- **Imagery:** the globe and map are AI-generated concept art from the handoff, not official NetworkIP photography.
-- **Copy:** all homepage copy comes from public networkip.net pages (Home, Service, International Calling, Customer Intelligence, Integration, Call Quality, Technology), lightly shortened. Stats (51.6M, 80M+, 25+%, under 2%, 6M+ calls a day, 1B+ accounts, 100,000+ ports, 100+ carriers) are quoted from those pages with footnotes. Have NetworkIP confirm they are still current before launch.
+- **Logo:** both bundled logos were made from a small 340×100 copy of the official logo, so they can look slightly soft on large high-resolution screens. For a sharper result, upload larger PNGs (about 700 px wide) under Customize → Site Identity.
+- **Imagery:** the globe and map are AI-generated concept art from the handoff, not official NetworkIP photography. The photo is a stock photo; NetworkIP may want to use its own (Customize → NetworkIP Homepage → Photo section).
+- **Copy:** all homepage copy comes from public networkip.net pages (Home, Service, International Calling, Customer Intelligence, Integration, Call Quality, Technology), lightly shortened. The new v3 headings ("People Connect Possibilities.", "Bridging People. Strengthening Communities.", the three band features) are new marketing wording built on those facts. Stats (25+ years, 6M+ calls a day, 1B+ accounts, 100,000+ ports, 100+ carriers, plus the market figures in the optional global-calling section) are quoted from those pages. Have NetworkIP confirm they are still current before launch.
 - **Security note about the current live site:** the "Direct Integration" paragraph on networkip.net/technology/ contains injected spam links (phone-spyware sites). That is a sign the current WordPress install has been compromised. The paragraph was **not** reused here. Have the current site cleaned and audited, and do not migrate its database content without review.
 
 ## Tested

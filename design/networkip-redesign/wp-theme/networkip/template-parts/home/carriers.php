@@ -1,7 +1,7 @@
 <?php
 /**
  * Strip under the hero naming the US MNOs NetworkIP connects to directly.
- * Uses the carrier names from Customize -> NetworkIP Homepage -> About.
+ * Uses the carrier names from Customize -> NetworkIP Homepage -> Carriers.
  *
  * @package NetworkIP
  */
@@ -11,9 +11,9 @@ if ( ! $networkip_carriers ) {
 	return;
 }
 ?>
-<section class="nip-carrier-strip" aria-label="<?php esc_attr_e( 'Direct connections', 'networkip' ); ?>">
-	<div class="nip-wrap nip-carrier-strip__inner">
-		<p class="nip-carrier-strip__label"><?php esc_html_e( 'Direct connections with the major US MNOs', 'networkip' ); ?></p>
+<section class="nip-carrier-strip" aria-labelledby="carrier-strip-title">
+	<div class="nip-wrap">
+		<h2 class="nip-carrier-strip__label" id="carrier-strip-title"><?php esc_html_e( 'Direct connections with the major US mobile operators', 'networkip' ); ?></h2>
 		<ul class="nip-carrier-strip__list" role="list">
 			<?php foreach ( $networkip_carriers as $networkip_carrier ) : ?>
 				<li><?php echo esc_html( $networkip_carrier ); ?></li>

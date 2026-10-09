@@ -1,11 +1,11 @@
 /* Block editor styles: match the front-end white pages, dark text and gold accents. */
 @font-face {
-	font-family: "Manrope";
+	font-family: "Plus Jakarta Sans";
 	font-weight: 200 800;
 	font-display: swap;
-	src: url("../fonts/manrope-latin-var.woff2") format("woff2");
+	src: url("../fonts/plus-jakarta-sans-latin-var.woff2") format("woff2");
 }
-body { background: #fff; color: #26303f; font-family: "Manrope", system-ui, sans-serif; font-size: 17px; line-height: 1.65; }
-h1, h2, h3, h4 { color: #0a1a2f; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+body { background: #fff; color: #2b2b30; font-family: "Plus Jakarta Sans", system-ui, sans-serif; font-size: 17px; line-height: 1.65; }
+h1, h2, h3, h4 { color: #0b0b0d; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
 a { color: #a8771f; }
-strong { color: #0a1a2f; }
+strong { color: #0b0b0d; }

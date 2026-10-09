@@ -30,23 +30,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function networkip_defaults() {
 	return array(
-		// Hero.
-		'hero_eyebrow'         => __( 'International voice services', 'networkip' ),
-		'hero_title'           => __( 'International Voice Services Built for Mobile Growth', 'networkip' ),
-		'hero_title_highlight' => __( 'Mobile Growth', 'networkip' ),
-		'hero_text'            => __( 'NetworkIP is an international voice service provider with over 25 years of experience. We enable MNOs and MVNOs to outsource international calling offerings with minimal risk and significant regulatory savings.', 'networkip' ),
-		'hero_primary_label'   => __( 'Contact Us', 'networkip' ),
-		'hero_primary_url'     => '/contact-us/',
-		'hero_secondary_label' => __( 'Explore International Calling', 'networkip' ),
-		'hero_secondary_url'   => '/international-calling/',
-		'hero_chips'           => __( '25+ years of experience, MNO / MVNO support, International calling, Direct dialing', 'networkip' ),
+		// Header.
+		'header_cta_label'     => __( 'Talk to Our Team', 'networkip' ),
 
-		// About.
-		'about_eyebrow'        => __( 'About NetworkIP', 'networkip' ),
-		'about_title'          => __( 'An international voice service provider for mobile operators.', 'networkip' ),
-		'about_text'           => __( 'NetworkIP is an international voice “Service Provider” with over 25 years of experience, specializing in high-quality international calling services. We enable MNOs and Mobile Virtual Network Operators (MVNOs) to outsource international calling offerings with minimal risk and significant regulatory savings.', 'networkip' ),
-		'about_panel_title'    => __( 'Direct dialing support', 'networkip' ),
-		'about_panel_text'     => __( 'NetworkIP supports direct dialing through its exclusive connections with the major US MNOs, including:', 'networkip' ),
+		// Hero.
+		'hero_eyebrow'         => __( 'Global reach. Real opportunity.', 'networkip' ),
+		'hero_title'           => __( 'People Connect Possibilities.', 'networkip' ),
+		'hero_title_highlight' => __( 'Possibilities', 'networkip' ),
+		'hero_text'            => __( 'For more than 25 years, NetworkIP has enabled MNOs and MVNOs to outsource international calling with minimal risk and significant regulatory savings, helping them grow, compete and deliver more value to their customers.', 'networkip' ),
+		'hero_primary_label'   => __( 'Talk to Our Team', 'networkip' ),
+		'hero_primary_url'     => '/contact-us/',
+		'hero_secondary_label' => '',
+		'hero_secondary_url'   => '/international-calling/',
+		'hero_side_words'      => __( 'People, Connect, Opportunities, Grow', 'networkip' ),
+
+		// Gold band under the carrier strip.
+		'band_eyebrow'         => __( 'Built on experience. Designed for growth.', 'networkip' ),
+		'band_title'           => __( 'Global Calling Solutions for Mobile Operators.', 'networkip' ),
+		'band_title_highlight' => __( 'Mobile Operators', 'networkip' ),
+		'band_text'            => __( 'Bundled and add-on international calling that helps MNOs and MVNOs remove consumer barriers, increase revenue and improve loyalty.', 'networkip' ),
+		'band_side_words'      => __( 'People, Ideas, Cultures, Opportunities', 'networkip' ),
+
+		// Photo section.
+		'bridge_eyebrow'         => __( 'A more connected world', 'networkip' ),
+		'bridge_title'           => __( 'Bridging People. Strengthening Communities.', 'networkip' ),
+		'bridge_title_highlight' => __( 'Strengthening', 'networkip' ),
+		'bridge_text'            => __( 'International calling is more than a service. It keeps families and friends together, without the need for calling apps, and helps mobile operators deliver greater value.', 'networkip' ),
+		'bridge_button_label'    => __( 'Our Services', 'networkip' ),
+		'bridge_button_url'      => '/service/',
+		'bridge_side_words'      => __( 'People, Ideas, Cultures, Opportunities', 'networkip' ),
+		'bridge_image'           => '',
+
+		// Carrier strip under the hero.
 		'about_carriers'       => 'AT&T, Verizon, T-Mobile, Boost Mobile',
 
 		// Contact.
@@ -58,7 +73,7 @@ function networkip_defaults() {
 		'contact_recipient'    => '',
 		'contact_form_enabled' => '1',
 
-		// Logo shown in the dark header and footer (blank = bundled white logo).
+		// Logo shown in the dark footer (blank = bundled white logo).
 		'logo_light'           => '',
 
 		// Layout options.
@@ -77,6 +92,44 @@ function networkip_defaults() {
  */
 function networkip_home_content() {
 	$content = array(
+		'band_features'    => array(
+			array(
+				'icon'  => 'international-calling',
+				'title' => __( 'Grow Revenue', 'networkip' ),
+				'text'  => __( 'Offering international long distance is an easy way to increase revenue and improve loyalty.', 'networkip' ),
+			),
+			array(
+				'icon'  => 'growth-bars',
+				'title' => __( 'Move Faster', 'networkip' ),
+				'text'  => __( 'Turnkey, or integrated with your existing infrastructure. NetworkIP gets you up and running quickly.', 'networkip' ),
+			),
+			array(
+				'icon'  => 'partners',
+				'title' => __( 'A Partner You Can Trust', 'networkip' ),
+				'text'  => __( '25+ years of experience and exclusive direct connections with the major US MNOs.', 'networkip' ),
+			),
+		),
+
+		'impact_title'     => __( 'Our impact', 'networkip' ),
+		'impact'           => array(
+			array(
+				'value' => '25+',
+				'label' => __( 'Years of experience', 'networkip' ),
+			),
+			array(
+				'value' => '100+',
+				'label' => __( 'International carriers', 'networkip' ),
+			),
+			array(
+				'value' => '6M+',
+				'label' => __( 'Calls a day capacity', 'networkip' ),
+			),
+			array(
+				'value' => '1B+',
+				'label' => __( 'End-user accounts supported', 'networkip' ),
+			),
+		),
+
 		'services_heading' => array(
 			'eyebrow' => __( 'Services', 'networkip' ),
 			'title'   => __( 'Turnkey international calling, technology and intelligence.', 'networkip' ),
