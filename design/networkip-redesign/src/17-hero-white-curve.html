@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NetworkIP — Big hero, curved edge, light footer</title><link rel="stylesheet" href="fonts-07-group-light.css"><style>
+*{box-sizing:border-box}html,body{margin:0;overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;color:var(--head);letter-spacing:-.02em;line-height:1.08;font-weight:800}
+h1{font-size:clamp(2.6rem,1.6rem + 4vw,5rem);letter-spacing:-.035em;line-height:1.02}
+h2{font-size:clamp(1.9rem,1.3rem + 2vw,3rem)}h3{font-size:1.16rem;letter-spacing:-.01em;line-height:1.25}
+p{margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+.ic{width:26px;height:26px}.ic-a{width:18px;height:18px}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:.76rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--eyebrow);margin-bottom:18px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--gold)}
+.lead{font-size:1.1rem;color:var(--muted);max-width:60ch;margin-top:18px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 26px;border-radius:var(--btn-r);font-weight:700;font-size:1rem;border:1.5px solid transparent;white-space:nowrap}
+.btn-sm{height:44px;padding:0 20px;font-size:.92rem}
+.btn-primary{background:var(--red);color:#fff;box-shadow:0 12px 26px -12px rgba(163,20,31,.7)}
+.btn-ghost{border-color:var(--line-strong);color:var(--head)}
+.hd{position:relative;z-index:5;background:var(--hd-bg);border-bottom:1px solid var(--line)}
+.hd-in{display:flex;align-items:center;gap:40px;height:88px}
+.logo img{height:46px;width:auto}
+.nav{display:flex;gap:30px;margin-left:auto;font-size:.95rem;font-weight:600;color:var(--nav)}
+.nav a:first-child{color:var(--head);box-shadow:inset 0 -2px 0 var(--red);padding-bottom:4px}
+.sec{padding:110px 0}
+.head{max-width:760px;margin-bottom:56px}
+.cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--card-r);padding:32px 30px;display:flex;flex-direction:column;gap:12px}
+.card p{color:var(--muted);font-size:.97rem}
+.card-ic{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;color:var(--icon);background:var(--icon-bg);margin-bottom:8px}
+.more{margin-top:auto;padding-top:10px;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;color:var(--link)}
+.carriers{border-bottom:1px solid var(--line);background:var(--strip-bg)}
+.carriers-in{display:flex;align-items:center;gap:40px;padding-top:30px;padding-bottom:30px}
+.carriers-label{font-size:.74rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);max-width:230px;line-height:1.5}
+.carriers-list{display:flex;flex:1;justify-content:space-between;gap:20px}
+.car{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;color:var(--car)}
+.car+.car{padding-left:20px;border-left:1px solid var(--line)}
+.market-grid,.platform-grid,.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start}
+.points{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.points li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:22px;border-radius:var(--card-r);background:var(--point-bg);border:1px solid var(--line)}
+.points .ic{color:var(--icon);width:30px;height:30px;margin-top:2px}
+.points p{color:var(--muted);font-size:.95rem;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin:72px 0 0;border-top:1px solid var(--line-strong)}
+.stat{display:flex;flex-direction:column-reverse;justify-content:flex-end;padding:28px 24px 0 0}
+.stat+.stat{padding-left:24px;border-left:1px solid var(--line)}
+.stat dd{margin:0 0 10px;font-size:clamp(2.2rem,1.6rem + 2vw,3.3rem);font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--num)}
+.stat dt{font-size:.92rem;color:var(--muted);max-width:24ch}
+.stats-2{grid-template-columns:repeat(2,1fr);margin:0;border:0;gap:0}
+.stats-2 .stat{padding:28px;border:1px solid var(--line);border-left:1px solid var(--line)}
+.foot{margin-top:22px;font-size:.8rem;color:var(--muted)}
+.facts{background:var(--card);border:1px solid var(--line);border-radius:var(--card-r);padding:36px}
+.facts ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:14px}
+.facts li{position:relative;padding-left:28px;color:var(--ink)}
+.facts li::before{content:"";position:absolute;left:0;top:.55em;width:12px;height:2px;background:var(--red)}
+.about-grid .btn{margin-top:30px}
+.cta{padding:84px 0;background:var(--cta-bg);color:var(--cta-ink)}
+.cta h2{color:var(--cta-head)}.cta p{margin-top:12px;max-width:56ch;opacity:.85}
+.cta-in{display:flex;align-items:center;justify-content:space-between;gap:40px}
+.cta-actions{display:flex;align-items:center;gap:26px}.cta-tel{font-weight:800;font-size:1.2rem}
+.ft{background:var(--ft-bg);color:var(--ft-ink);padding:72px 0 0;font-size:.95rem}
+.ft img{height:50px;width:auto;margin-bottom:22px}
+.ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.ft h4{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ft-head);margin-bottom:18px}
+.ft h4::after{content:"";display:block;width:22px;height:2px;background:var(--red);margin-top:10px}
+.ft-grid a{display:block;margin-bottom:10px;opacity:.85}
+.ft-bottom{display:flex;justify-content:space-between;margin-top:56px;padding-top:22px;padding-bottom:28px;border-top:1px solid var(--ft-line);font-size:.85rem;opacity:.8}
+@media (max-width:1100px){.nav{display:none}.hd-in{justify-content:space-between}}
+@media (max-width:900px){
+ .sec{padding:72px 0}.cards{grid-template-columns:1fr 1fr}
+ .market-grid,.platform-grid,.about-grid{grid-template-columns:1fr;gap:40px}
+ .stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){padding-left:0;border-left:0}
+ .carriers-in{flex-direction:column;align-items:flex-start;gap:16px}.carriers-list{width:100%;flex-wrap:wrap}
+ .cta-in{flex-direction:column;align-items:flex-start}.ft-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+ .wrap{padding:0 18px}.cards{grid-template-columns:1fr}.btn-sm{display:none}
+ .car{font-size:1.15rem}.car+.car{padding-left:0;border-left:0}.carriers-list{gap:8px 20px;justify-content:flex-start}
+ .stats-2{grid-template-columns:1fr 1fr}.stats-2 .stat{padding:20px}
+ .stat,.stat+.stat{padding:22px 12px 0 0}.stat:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}
+ .stats-2 .stat:nth-child(even){padding-left:20px}
+ .points li{grid-template-columns:1fr}.cta-actions{flex-direction:column;align-items:flex-start}
+ .ft-grid{grid-template-columns:1fr}
+}
+
+.hd{position:absolute;left:0;right:0;top:0;background:transparent;border-bottom:1px solid rgba(255,255,255,.12)}
+.hd .nav{color:rgba(255,255,255,.86)}.hd .nav a:first-child{color:#fff}
+.bighero{position:relative;isolation:isolate;min-height:860px;display:flex;align-items:center;padding:150px 0 110px;background:#03101f;overflow:hidden}
+.bh-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;z-index:-2}
+.bighero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#03101f 0%,#03101f 28%,rgba(3,16,31,.6) 60%,rgba(3,16,31,.06) 100%),linear-gradient(180deg,rgba(3,16,31,.55),rgba(3,16,31,0) 25%)}
+.bh-in{width:100%}
+.bighero .eyebrow{color:#fff}
+.bighero h1{color:#fff;max-width:13.5ch;font-size:clamp(2.7rem,1.6rem + 3.8vw,4.7rem)}
+.bighero .lead{color:#cfdbea;font-size:1.15rem;max-width:56ch;margin-top:24px}
+.bh-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.btn-hero-ghost{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(3,16,31,.3)}
+.bh-chips{list-style:none;margin:40px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.bh-chips li{padding:9px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(11,33,61,.6);color:#fff;font-size:.86rem;font-weight:700}
+.bh-chips li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--chip-dot);margin-right:9px;vertical-align:2px}
+@media (max-width:900px){.bighero{min-height:0;padding:130px 0 80px}.bighero::before{background:linear-gradient(180deg,rgba(3,16,31,.6),rgba(3,16,31,.85) 55%,#03101f)}.bh-img{object-position:78% 50%}}
+
+:root{--font:"Manrope",system-ui,sans-serif;--bg:#fff;--ink:#26303f;--head:#0a1a2f;--muted:#5b6574;--eyebrow:#0a1a2f;
+--gold:#d8a040;--line:#e6e9ee;--line-strong:#d3d8e0;--card:#fff;--card-r:12px;--btn-r:10px;--num:#0a1a2f;--strip-bg:#fff;--car:#0a1a2f;
+--point-bg:#fff;--nav:#fff;--hd-bg:transparent;--cta-ink:#fff;--cta-head:#fff;--ft-ink:#c3cbd6;--ft-head:#fff}
+
+:root{--red:#a3141f;--chip-dot:#38d8ff;--icon:#1277ff;--icon-bg:#edf4ff;--link:#1277ff;
+--cta-bg:#f3f7fc;--cta-ink:#26303f;--cta-head:#0a1a2f;--ft-bg:#fff;--ft-ink:#4b5565;--ft-head:#0a1a2f;--ft-line:#e6e9ee}
+.bighero{padding-bottom:170px}
+.bighero::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-120px;height:220px;background:#fff;border-radius:50% 50% 0 0/100% 100% 0 0}
+.carriers{border-bottom:0;position:relative;z-index:1;margin-top:-40px}
+.card{border-radius:16px;box-shadow:0 16px 40px -28px rgba(10,26,47,.5)}
+.sec-market{background:#f3f7fc}
+.points li{border-radius:14px}
+.sec-market .stats{background:#fff;border:0;border-radius:16px;padding:6px 26px 26px;box-shadow:0 16px 40px -28px rgba(10,26,47,.5)}
+.stat dd::after{content:"";display:block;width:24px;height:3px;background:var(--red);margin-top:14px}
+.sec-about{background:#f3f7fc}
+.stats-2 .stat{background:#f8fafd}
+.cta{border-top:1px solid #e3eaf3}
+.ft{border-top:1px solid var(--line)}
+.ft h4::after{background:var(--red)}
+</style></head><body><header class="hd"><div class="wrap hd-in">
+  <a class="logo" href="#"><img src="img-white/logo-white@2x.png" alt="NetworkIP" width="170" height="50"></a>
+  <nav class="nav"><a href="#">About Us</a><a href="#">Services</a><a href="#">International Calling</a><a href="#">Technology</a><a href="#">Contact Us</a></nav>
+  <a class="btn btn-primary btn-sm" href="#">Talk to our team <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div></header><main><section class="bighero">
+  <img class="bh-img" src="img-white/globe-navy.jpg" alt="">
+  <div class="wrap bh-in">
+    <p class="eyebrow">International voice services</p>
+    <h1>International Voice Services Built for Mobile Growth</h1>
+    <p class="lead">NetworkIP is an international voice service provider with over 25 years of experience. We enable MNOs and MVNOs to outsource international calling with minimal risk and significant regulatory savings.</p>
+    <div class="bh-actions"><a class="btn btn-primary" href="#">Contact Us <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-hero-ghost" href="#">Explore International Calling</a></div>
+    <ul class="bh-chips"><li>25+ years of experience</li><li>MNO / MVNO support</li><li>International calling</li><li>Direct dialing</li></ul>
+  </div>
+</section><section class="carriers"><div class="wrap carriers-in">
+  <p class="carriers-label">Direct connections with the major US MNOs</p><div class="carriers-list"><span class="car">AT&amp;T</span><span class="car">Verizon</span><span class="car">T-Mobile</span><span class="car">Boost Mobile</span></div>
+</div></section><section class="sec sec-services"><div class="wrap">
+  <div class="head"><p class="eyebrow">What we do</p><h2>Turnkey international calling, technology and intelligence.</h2>
+  <p class="lead">NetworkIP offers a range of calling solutions on its Hosted Services Platform. Offering international long distance is an easy way to increase revenue and improve loyalty.</p></div>
+  <ul class="cards"><li class="card"><span class="card-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 3.9 5.8 3.9 9s-1.3 6.2-3.9 9c-2.6-2.8-3.9-5.8-3.9-9S9.4 5.8 12 3z"/></svg></span><h3>International Calling</h3><p>Bundled and add-on international calling offerings that remove the traditional barrier and consumer confusion.</p><a class="more" href="#">Learn more <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li class="card"><span class="card-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><h3>Customer Intelligence</h3><p>Customizable reports and flexible data mining with Odessi to plan distribution, marketing and new offerings.</p><a class="more" href="#">Learn more <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li class="card"><span class="card-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><h3>Call Quality (iQT)</h3><p>Patented iQTechnology® adjusts routing in real time for more successful calls and fewer trouble tickets.</p><a class="more" href="#">Learn more <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li class="card"><span class="card-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v5M15 2v5M6 7h12v4a6 6 0 0 1-12 0zM12 17v5"/></svg></span><h3>Integration</h3><p>Turnkey, or integrated with your existing infrastructure through straightforward APIs. Up and running quickly.</p><a class="more" href="#">Learn more <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li class="card"><span class="card-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></span><h3>Hosted Services Platform</h3><p>Cloud-based turnkey services. No infrastructure, switches or additional technical staff required.</p><a class="more" href="#">Learn more <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li><li class="card"><span class="card-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20c0 1.1-1.8 2-4 2h-2"/></svg></span><h3>Carrier & Customer Support</h3><p>Support before, during and after the sale, with a bilingual English and Spanish call center.</p><a class="more" href="#">Learn more <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li></ul>
+</div></section><section class="sec sec-market" style="--map:url('img-white/map-light-steel.jpg')"><div class="wrap">
+  <div class="market-grid">
+    <div><p class="eyebrow">Why international calling</p><h2>Call anyone, anywhere. As easy as calling stateside.</h2>
+    <p class="lead">Bundled and add-on worldwide calling gives consumers the least path of resistance to call anywhere in the world, and removes the need for calling apps to reach family and friends.</p>
+    <a class="btn btn-ghost" href="#">Explore International Calling <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <ul class="points">
+      <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 3.9 5.8 3.9 9s-1.3 6.2-3.9 9c-2.6-2.8-3.9-5.8-3.9-9S9.4 5.8 12 3z"/></svg><div><h3>Bundled / add-on worldwide calling</h3><p>Included at no additional cost, calling from and to any phone.</p></div></li>
+      <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><div><h3>Direct dialing support</h3><p>Exclusive connections with AT&amp;T, Verizon, T-Mobile and Boost Mobile.</p></div></li>
+      <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><div><h3>Fraud and abuse controls</h3><p>Proven automated measures that enable casual consumers, not just heavy users.</p></div></li>
+    </ul>
+  </div>
+  <dl class="stats"><div class="stat"><dt>foreign-born U.S. residents, 15.6% of the population*</dt><dd>51.6M</dd></div><div class="stat"><dt>addressable market in the USA (25% of US consumers)</dt><dd>80M+</dd></div><div class="stat"><dt>of mobile subscribers have the need</dt><dd>25+%</dd></div><div class="stat"><dt>value of roaming compared with that need</dt><dd>Under 2%</dd></div></dl>
+  <p class="foot">*2024: the highest share of foreign-born people in U.S. history. Figures from networkip.net.</p>
+</div></section><section class="sec sec-platform"><div class="wrap">
+  <div class="platform-grid">
+    <div><p class="eyebrow">Technology</p><h2>One platform, so you can focus on your customers.</h2>
+    <p class="lead">No infrastructure, switches or additional technical staff. Switching facilities across two geographic regions, enterprise-grade storage and backup, and connections to over 100 international carriers.</p></div>
+    <dl class="stats stats-2"><div class="stat"><dt>calls a day of capacity</dt><dd>6M+</dd></div><div class="stat"><dt>end-user accounts supported</dt><dd>1B+</dd></div><div class="stat"><dt>telephony ports</dt><dd>100,000+</dd></div><div class="stat"><dt>international carrier connections</dt><dd>100+</dd></div></dl>
+  </div>
+</div></section><section class="sec sec-about"><div class="wrap about-grid">
+  <div><p class="eyebrow">About NetworkIP</p><h2>Over 25 years of international voice.</h2>
+  <p class="lead">NetworkIP is an international voice service provider with over 25 years of experience. We enable MNOs and MVNOs to outsource international calling with minimal risk and significant regulatory savings. NetworkIP supports direct dialing through its exclusive connections with the major US MNOs.</p>
+  <a class="btn btn-primary" href="#">About us <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  <div class="facts"><h3>NetworkIP facts</h3><ul><li>Privately held Texas technology company, founded 1998</li><li>$80M invested in R&D</li><li>Exclusive direct connections supporting MVNOs on AT&T, T-Mobile, Verizon and Boost Mobile</li><li>Scalable N+x load-sharing server topology on all critical systems</li><li>Expertise with Federal and State regulatory requirements</li></ul></div>
+</div></section><section class="cta"><div class="wrap cta-in">
+  <div><h2>Still have questions? Let’s chat.</h2><p>Get in touch by phone or email, or leave us a message and we’ll get back to you as soon as possible.</p></div>
+  <div class="cta-actions"><a class="btn btn-primary" href="#">Contact us <svg class="ic-a" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="cta-tel" href="#">512-423-0748</a></div>
+</div></section><footer class="ft"><div class="wrap ft-grid">
+  <div><img src="img-white/logo-color@2x.png" alt="NetworkIP" width="170" height="50"><p>119 West Tyler Street, Suite 100<br>Longview, Texas 75601<br>512-423-0748 · marketing@networkip.net</p></div><div><h4>Company</h4><a href="#">About Us</a><a href="#">Management</a><a href="#">Contact Us</a></div><div><h4>Service</h4><a href="#">International Calling</a><a href="#">Customer Intelligence</a></div><div><h4>Technology</h4><a href="#">Integration</a><a href="#">Call Quality</a></div>
+</div><div class="wrap ft-bottom"><span>All rights reserved by NetworkIP © 2026.</span><a href="#">Privacy Policy</a></div></footer></main></body></html>

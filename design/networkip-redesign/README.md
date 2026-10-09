@@ -18,6 +18,11 @@ Three homepage directions for https://www.networkip.net/, all built from the cur
 | `11-white-navy-*.png` | **K: White & Navy (round 6).** White pages with deep navy sections, red buttons and thin gold lines. The hero puts the blue globe in a rounded panel with key figures, followed by a navy global-calling band and a navy footer. Plus Jakarta Sans. |
 | `12-white-charcoal-*.png` | **L: White & Charcoal (round 6).** Editorial layout with a big headline, a full-width monochrome globe band with figures, services as numbered rows, and charcoal contact and footer. Red accents. Hanken Grotesk. |
 | `13-white-steel-*.png` | **M: White & Steel Blue (round 6).** Soft and airy: a centered hero over a pale world map, rounded white cards with soft shadows, steel-blue accents and red buttons. Figtree. |
+| `14-hero-white-blue-*.png` | **N: Big hero, white page, blue (round 7).** Keeps the original's full-width dark globe hero. Everything below it is white, with the original electric-blue buttons and accents, and the footer is navy. The closest to the original. |
+| `15-hero-white-red-*.png` | **O: Big hero, white page, red (round 7).** Same hero with a gold-and-red line under it, like the logo. White page, red buttons and accents, a red contact band and a charcoal footer. |
+| `16-hero-white-overlap-*.png` | **P: Big hero with an overlapping white card (round 7).** A white stats card (1998, 25+, 6M+, 100+) sits across the bottom edge of the hero. Services are an open, borderless grid. Red accents and a navy footer. |
+| `17-hero-white-curve-*.png` | **Q: Big hero with a curved edge (round 7).** The hero ends in a curved white edge. Below it, white and pale-blue sections with soft-shadow cards, blue icons and red buttons, and a white footer. |
+| `18-hero-all-white-*.png` | **R: Big hero, all-white page (round 7).** The most white of the set: only the hero is dark. Minimal service columns, red accents, a boxed contact call to action and a white footer. |
 
 `*-hero.png` is the first screen at 1440×900. `*-full.png` is the full page.
 
