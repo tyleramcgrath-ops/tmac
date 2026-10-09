@@ -23,6 +23,7 @@ Three homepage directions for https://www.networkip.net/, all built from the cur
 | `16-hero-white-overlap-*.png` | **P: Big hero with an overlapping white card (round 7).** A white stats card (1998, 25+, 6M+, 100+) sits across the bottom edge of the hero. Services are an open, borderless grid. Red accents and a navy footer. |
 | `17-hero-white-curve-*.png` | **Q: Big hero with a curved edge (round 7).** The hero ends in a curved white edge. Below it, white and pale-blue sections with soft-shadow cards, blue icons and red buttons, and a white footer. |
 | `18-hero-all-white-*.png` | **R: Big hero, all-white page (round 7).** The most white of the set: only the hero is dark. Minimal service columns, red accents, a boxed contact call to action and a white footer. |
+| `19-23-gold-hero-*.png` | **S–W: Gold versions of N–R (round 8).** The same five layouts with more of the logo's gold: gold buttons, a gold "Mobile Growth" in the headline, gold stat numbers, icons, section-label lines, a gold line under the hero and a gold rule over the footer. A deeper gold is used for text on white so it stays readable. 19 = N (blue), 20 = O (red), 21 = P (overlapping card), 22 = Q (curved edge, now gold-rimmed), 23 = R (all white). |
 
 `*-hero.png` is the first screen at 1440×900. `*-full.png` is the full page.
 
