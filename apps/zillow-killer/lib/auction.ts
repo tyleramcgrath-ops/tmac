@@ -171,7 +171,11 @@ export function placeBid(state: AuctionState, req: BidRequest): BidResult {
   let outbid: boolean;
   if (maxAmount > leaderMax) {
     // Challenger takes the lead, paying one increment over the old leader's max.
-    next.history.push({ bidderId: leaderId, amount: leaderMax, at: now, auto: true });
+    // Record the old leader's proxy reaching its max, unless the history already ends there.
+    const last = next.history[next.history.length - 1];
+    if (!last || last.bidderId !== leaderId || last.amount !== leaderMax) {
+      next.history.push({ bidderId: leaderId, amount: leaderMax, at: now, auto: true });
+    }
     next.leaderId = bidderId;
     next.price = Math.min(maxAmount, leaderMax + increment(leaderMax));
     next.history.push({ bidderId, amount: next.price, at: now, auto: false });

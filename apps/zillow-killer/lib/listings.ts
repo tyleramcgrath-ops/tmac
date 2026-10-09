@@ -1,4 +1,4 @@
-// Sample Tampa Bay listings for the prototype. In production these come from
+// Sample Palm Beach County listings for the prototype. In production these come from
 // Postgres; the shape here is the shape of the `listings` table (see PLAN.md §9).
 
 export type ListingStatus = "live" | "upcoming" | "sold";
@@ -31,7 +31,7 @@ export type Listing = {
   /** Seeded competing bids so the prototype auction feels alive. */
   seedBids: { bidder: string; max: number }[];
   watchers: number;
-  /** Map position, 0–100 on the stylized Tampa Bay map. */
+  /** Map position, 0–100 on the stylized Palm Beach County map. */
   pin: { x: number; y: number };
   palette: { body: string; roof: string; door: string; sky: string };
   headline: string;
@@ -55,11 +55,11 @@ const baseDocs: Listing["documents"] = [
 
 export const listings: Listing[] = [
   {
-    id: "4127-w-san-luis-st",
-    address: "4127 W San Luis St",
-    city: "Tampa",
-    zip: "33629",
-    neighborhood: "Palma Ceia",
+    id: "418-pershing-way",
+    address: "418 Pershing Way",
+    city: "West Palm Beach",
+    zip: "33401",
+    neighborhood: "Flamingo Park",
     type: "Single family",
     beds: 3,
     baths: 2,
@@ -79,9 +79,9 @@ export const listings: Listing[] = [
       { bidder: "Bidder K2", max: 627_500 },
     ],
     watchers: 214,
-    pin: { x: 38, y: 52 },
+    pin: { x: 66, y: 40 },
     palette: { body: "#e9dcc7", roof: "#5b4636", door: "#2f5d50", sky: "#cfe4f2" },
-    headline: "Renovated mid-century block home, two blocks from Palma Ceia Golf",
+    headline: "Restored 1950s block home in historic Flamingo Park, minutes from Clematis Street",
     description:
       "Owner-sold. Terrazzo floors restored in 2024, new roof (2022, transferable warranty), impact windows, and a fenced backyard with a saltwater pool. Seller has uploaded a full pre-listing inspection — read it before you bid.",
     features: ["Saltwater pool", "Roof 2022", "Impact windows", "Terrazzo floors", "Flood zone X", "A-rated schools"],
@@ -108,11 +108,11 @@ export const listings: Listing[] = [
     ],
   },
   {
-    id: "812-bayshore-ct",
-    address: "812 Bayshore Ct",
-    city: "St. Petersburg",
-    zip: "33701",
-    neighborhood: "Old Northeast",
+    id: "214-ne-7th-ave",
+    address: "214 NE 7th Ave",
+    city: "Delray Beach",
+    zip: "33483",
+    neighborhood: "Del-Ida Park",
     type: "Single family",
     beds: 4,
     baths: 3,
@@ -133,9 +133,9 @@ export const listings: Listing[] = [
       { bidder: "Bidder R1", max: 955_000 },
     ],
     watchers: 488,
-    pin: { x: 18, y: 66 },
+    pin: { x: 70, y: 76 },
     palette: { body: "#f2efe6", roof: "#3c4a57", door: "#9b3d2c", sky: "#d9e9f5" },
-    headline: "1925 Craftsman with a detached studio, four blocks to the waterfront",
+    headline: "1925 cottage with a detached studio, a short walk to Atlantic Avenue",
     description:
       "Restored heart-pine floors, wraparound porch, elevated in 2021 above base flood elevation (certificate in the data room). Detached garage studio with its own bath.",
     features: ["Elevated 2021", "Garage studio", "Wraparound porch", "Heart-pine floors", "EV charger"],
@@ -160,11 +160,11 @@ export const listings: Listing[] = [
     ],
   },
   {
-    id: "15502-amberly-dr",
-    address: "15502 Amberly Dr",
-    city: "Tampa",
-    zip: "33647",
-    neighborhood: "Tampa Palms",
+    id: "9218-laurel-oak-way",
+    address: "9218 Laurel Oak Way",
+    city: "Palm Beach Gardens",
+    zip: "33418",
+    neighborhood: "Gardens West",
     type: "Single family",
     beds: 4,
     baths: 2.5,
@@ -181,7 +181,7 @@ export const listings: Listing[] = [
     endsInHours: 74,
     seedBids: [{ bidder: "Bidder T3", max: 462_500 }],
     watchers: 131,
-    pin: { x: 66, y: 22 },
+    pin: { x: 60, y: 22 },
     palette: { body: "#dfe5df", roof: "#6b5a4a", door: "#2c3e63", sky: "#d4e8ef" },
     headline: "Conservation-lot pool home in a gated A-school community",
     description: "No rear neighbors, new AC (2023), screened lanai, three-car garage. Self-tour any day 8am–8pm with a verified ID.",
@@ -206,11 +206,11 @@ export const listings: Listing[] = [
     ],
   },
   {
-    id: "2201-n-gomez-ave",
-    address: "2201 N Gomez Ave",
-    city: "Tampa",
-    zip: "33607",
-    neighborhood: "West Tampa",
+    id: "1120-lucerne-ave",
+    address: "1120 Lucerne Ave",
+    city: "Lake Worth Beach",
+    zip: "33460",
+    neighborhood: "Downtown",
     type: "Townhome",
     beds: 3,
     baths: 3.5,
@@ -230,11 +230,11 @@ export const listings: Listing[] = [
       { bidder: "Bidder L5", max: 507_500 },
     ],
     watchers: 167,
-    pin: { x: 33, y: 41 },
+    pin: { x: 64, y: 54 },
     palette: { body: "#cfd6dc", roof: "#2b2f36", door: "#c9852f", sky: "#d7e6f3" },
     headline: "No-reserve auction: 2021 townhome with rooftop deck",
     description:
-      "Absolute auction — the highest bid wins, no reserve. Builder warranty transfers. Rooftop deck with downtown skyline views, two-car garage.",
+      "Absolute auction — the highest bid wins, no reserve. Builder warranty transfers. Rooftop deck with Intracoastal views, two-car garage.",
     features: ["No reserve", "Rooftop deck", "Builder warranty", "2-car garage", "Solar-ready"],
     rooms: [
       { name: "Garage", w: 40, h: 22, x: 0, y: 0 },
@@ -256,11 +256,11 @@ export const listings: Listing[] = [
     ],
   },
   {
-    id: "530-harbor-view-ln",
-    address: "530 Harbor View Ln",
-    city: "Clearwater",
-    zip: "33767",
-    neighborhood: "Island Estates",
+    id: "2700-n-ocean-blvd-402",
+    address: "2700 N Ocean Blvd #402",
+    city: "Boca Raton",
+    zip: "33431",
+    neighborhood: "Boca beachfront",
     type: "Condo",
     beds: 2,
     baths: 2,
@@ -277,9 +277,9 @@ export const listings: Listing[] = [
     endsInHours: 168,
     seedBids: [],
     watchers: 59,
-    pin: { x: 8, y: 34 },
+    pin: { x: 74, y: 88 },
     palette: { body: "#eef1f3", roof: "#7a8b99", door: "#2a6f97", sky: "#cde7f6" },
-    headline: "Intracoastal-view condo, milestone inspection passed",
+    headline: "Ocean-view condo, milestone inspection passed",
     description:
       "Bidding opens after this weekend's open house. Building passed its 2025 milestone + SIRS reserve study (both in the data room) — no surprise assessments.",
     features: ["Water view", "Milestone passed", "SIRS funded", "Boat slip available", "Pool + gym"],
@@ -306,11 +306,11 @@ export const listings: Listing[] = [
     ],
   },
   {
-    id: "7019-s-sparkman-st",
-    address: "7019 S Sparkman St",
-    city: "Tampa",
-    zip: "33616",
-    neighborhood: "Port Tampa",
+    id: "1847-sandpiper-cir",
+    address: "1847 Sandpiper Cir",
+    city: "Jupiter",
+    zip: "33458",
+    neighborhood: "Jupiter",
     type: "Single family",
     beds: 3,
     baths: 2,
@@ -327,7 +327,7 @@ export const listings: Listing[] = [
     endsInHours: -40,
     seedBids: [],
     watchers: 302,
-    pin: { x: 30, y: 72 },
+    pin: { x: 64, y: 9 },
     palette: { body: "#e4d4c0", roof: "#4a3f35", door: "#3b6e57", sky: "#d6e6f0" },
     headline: "Sold in 7 days — 23 bids, 11 verified bidders",
     description: "Seller paid a $499 flat fee instead of ~$26,600 in commissions.",

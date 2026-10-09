@@ -46,7 +46,7 @@ export function ListingWizard() {
       {step === 0 && (
         <div className="space-y-3">
           <label className="block text-sm font-medium">Property address</label>
-          <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="4127 W San Luis St, Tampa FL" className={input.replace("font-mono ", "")} />
+          <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="418 Pershing Way, West Palm Beach FL" className={input.replace("font-mono ", "")} />
           <p className="text-xs text-ink-mute">We pull the parcel, tax record and recent sales to estimate value and pre-fill the listing.</p>
         </div>
       )}

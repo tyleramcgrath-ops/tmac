@@ -36,7 +36,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-16 pt-14 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:pt-20">
           <div className="rise space-y-6">
             <p className="inline-flex items-center gap-2 rounded-full border bg-surface px-3 py-1 text-sm text-ink-dim">
-              <span className="pulse-dot h-2 w-2 rounded-full bg-live" /> {liveCount} homes taking bids now in Tampa Bay
+              <span className="pulse-dot h-2 w-2 rounded-full bg-live" /> {liveCount} homes taking bids now in Palm Beach County
             </p>
             <h1 className="font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
               Bid on homes.

@@ -1,254 +1,174 @@
-# Zillow Killer — Gavel Homes: Full Plan
+# Gavel Homes: The Plan
 
-> **One line:** eBay for houses. Owners list for a flat fee. Buyers see everything (3D, live stream, self-tour, the inspection report) without an agent, then bid in the open with verified buying power. Nobody pays the 5–6%.
+> **One line:** eBay for houses, launched in Palm Beach County. Owners list for a flat fee. Buyers see everything on their own (3D walkthrough, live-streamed open house, self-tour, the inspection report) and then bid in the open with verified buying power. A licensed brokerage, run by a broker with 40 years in Palm Beach County, keeps every sale compliant.
 
-Working brand: **Gavel Homes** (`gavelhomes.com` showed as available on GoDaddy on 2026-10-09; also open: `homegavel.com`, `bidmyhouse.com`, `ownerbid.com`, `openbidhomes.com`). Register it today along with the `.co` and `.app`, and run a USPTO trademark search before spending money on the brand (§12).
+Companion documents:
+- **[`PARTNER_PLAN.md`](./PARTNER_PLAN.md)**: the plan for our founding broker (Mom), covering her role, what changes for her, and her first 90 days.
+- **[`INVESTOR_PLAN.md`](./INVESTOR_PLAN.md)**: the story for investors.
+- **Demo:** `demo/gavel-demo.html` walks through the whole project in five minutes (seller, buyer, live auction, broker console, closing). The Next.js app in this folder is the working prototype.
 
-A clickable prototype of the product is in this folder (`pnpm dev`, see README). The bid engine in `lib/auction.ts` is production logic, not a mock, and it has tests.
+This plan has no dollar figures on purpose. Fees, budgets and funding get decided later, with the founding broker and investors in the room.
 
 ---
 
-## 1. The thesis: why now
+## 1. Why now
+1. **Commissions are out in the open.** The 2024 NAR settlement ended buyer-agent pay through the MLS and made buyers sign written agreements before touring. For the first time, buyers see the fee directly.
+2. **Buyers already do most of the work.** Nearly every buyer starts online, and most find the home they buy themselves. In many deals today, the agent's job is to unlock the door and handle the paperwork. Technology now does both.
+3. **Blind offers frustrate everyone.** Sellers wonder if they left money on the table, and buyers lose bidding wars they never saw. Open bidding with proxy bids works for cars (Bring a Trailer), collectibles (eBay), and most homes in Australia.
+4. **The building blocks exist:** phone 3D scanning, ID and funds verification, smart locks with access codes, remote online notarization (legal in Florida), and AI that answers questions from a listing's own documents.
 
-1. **Commissions are finally out in the open.** The 2024 NAR settlement (Sitzer/Burnett) stopped sellers from offering buyer-agent pay through the MLS, and buyers now have to sign a written agreement before touring with an agent. Buyers can now *see* that they're paying an agent, and many are asking why.
-2. **Buyers already do the agent's job.** About 95% of buyers start online, and most find the home they buy themselves. In the typical deal today, the agent mostly unlocks the door and handles the paperwork. Technology can do both of those things.
-3. **Price discovery is broken.** Offers are blind and the seller's agent controls who hears what. An open auction with proxy bidding is a more honest way to set the price. It works for cars (Bring a Trailer, Cars & Bids), it works for collectibles (eBay), and Australia sells a large share of its homes at public auction.
-4. **The pieces now exist as APIs:** phone LiDAR 3D scans, ID verification, bank and asset verification, smart locks with API access, remote online notarization (RON), e-closing, and LLMs that can answer questions grounded in a listing's documents.
+**Beycome** (the reference) proves owners will sell without a listing agent. It's still a flat-fee MLS listing, though, and the sale still happens the old way with private offers through agents. **Our wedge is the transaction itself:** open bidding, self-tours, and every document up front.
 
-**Beycome** (the reference) proves owners will sell without a listing agent. They charge a flat $99/$399/$999, rebate up to 2% to buyers, run their own title company ($99 settlement in FL) and an AI assistant ("Artur"), and operate in about 18 states. They're still a **flat-fee MLS listing service**, though: the sale itself still happens the old way, with private offers through agents. **Our wedge is the transaction itself:** open bidding, self-tours, and the full data room up front. Beycome gets you onto the MLS. We aim to replace what the MLS does.
+## 2. Why Palm Beach County first
+Palm Beach County suits auctions better than almost anywhere in the country:
 
-## 2. Being honest about "wipe out realtors and the MLS"
+- **A large, active market:** 39 cities and towns, from Jupiter and Tequesta down to Boca Raton, with high sales volume in every price range.
+- **Out-of-town buyers.** Seasonal residents and relocating buyers from the Northeast often can't fly down for every showing. 3D tours, live-streamed open houses and online bidding fit how they already buy.
+- **Equity-rich retirees and estates.** Long-time owners, estate and probate sales, and downsizers want a fast, defensible, transparent price. That is exactly what an open auction provides.
+- **Condos after Surfside.** Florida's milestone-inspection and reserve-study (SIRS) laws made condo buyers anxious about surprise assessments. Our data room puts the milestone report, SIRS and association budget in front of every bidder before they bid, which is a strong selling point in Palm Beach.
+- **Florida law fits the model.** Florida is a disclosure state (sold prices are public, so our valuations work), closings don't require an attorney, remote online notarization is legal, and Florida's default **transaction broker** relationship (limited representation of both sides) fits a platform model naturally.
+- **The founding broker's home turf.** Forty years of relationships with attorneys, title companies, inspectors, lenders, associations and past clients. No competitor can buy that.
 
-You can't switch the MLS off on day one, and you don't need to. The plan has three stages:
+**Start with:** West Palm Beach, Lake Worth Beach, Boynton Beach, Delray Beach, Palm Beach Gardens, Jupiter and Wellington (single-family homes, townhomes and condos at broad price points). **Later:** the island of Palm Beach and estate-level luxury, which need a white-glove version.
+
+## 3. Being honest about "wipe out realtors and the MLS"
+We don't fight the industry on day one. We make agents optional and the MLS unnecessary, in stages:
 
 | Stage | What we do with the MLS | Why |
 |---|---|---|
-| **Year 1: use it** | Our own brokerage puts Pro listings on the local MLS. The MLS syndicates them to Zillow, Realtor.com and Redfin, with "Bidding live on Gavel" in the remarks. | It's free traffic from the very portals we're competing with, and every buyer it brings in learns our brand. |
-| **Year 2: make it optional** | Once a metro has enough verified bidders, new sellers choose "Gavel-only" (exclusive, no MLS) in exchange for a lower fee. | We get exclusive inventory, which is the moat. |
-| **Year 3+: replace it** | Our own feed of verified bidders, listings, and recorded sold prices does the MLS's job (exposure, comps, cooperation) in our metros. | A network effect: sellers come for the bidders, and bidders come for the listings. |
+| **Year 1: use it** | Our brokerage lists homes on the local MLS (BeachesMLS), which feeds Zillow and Realtor.com, with "Bidding live on Gavel" in the listing. | Free reach from the portals we're competing with. Every visitor learns our name. |
+| **Year 2: make it optional** | Once Palm Beach has enough verified bidders, sellers can choose to list on Gavel only. | Exclusive listings are the moat. |
+| **Year 3+: replace it** | Our feed of verified bidders, listings and recorded sold prices does the MLS's job (exposure, comps, cooperation) in our markets. | A network effect: sellers come for the bidders, and bidders come for the homes. |
 
-**Agents:** we don't ban them. Buyers can bring an agent and pay that agent themselves. Sellers can offer a buyer-agent concession if they want to. We simply make the agent unnecessary. If the product is good, the share of deals with agents shrinks on its own. Being hostile to agents gets you lawsuits and MLS bans. Making them optional gets you market share.
+**Agents are welcome, not required.** Buyers can bring their own agent. Sellers can offer a buyer-agent concession if they choose. Our founding broker's licensed team becomes the expert help people *choose* to call, rather than the gatekeeper they *have* to go through. Treating agents as optional instead of as enemies keeps us out of lawsuits and MLS disputes, and it's the reason a 40-year broker can lead this with a clear conscience.
 
-## 3. Customers
-
-- **Sellers (supply, the hard side):** equity-rich owners who hate the 6% (about $27K on a $450K home), mostly 35–65 years old, comfortable selling on Facebook Marketplace and eBay. Also landlords selling rentals, estate and probate sales (executors love auctions because they're defensible and fast), relocations, and divorces (where a transparent price ends fights).
-- **Buyers (demand):** first-time buyers priced out by fees, investors, and move-up buyers who are tired of losing blind bidding wars. They also get a fair process: they can see the price and can't be quietly outbid.
-- **Do not launch with:** new construction (builders have their own sales staff), luxury over $3M (needs a white-glove touch), or rural land.
-
-## 4. Product: how a sale works
-
+## 4. How a sale works
 ```
-Seller lists ─▶ Capture day ─▶ "Opening soon" (3–5 days) ─▶ Live auction (5–14 days) ─▶ Winner ─▶ Contract ─▶ Escrow/title ─▶ Close
-               photos, 3D,      self-tours, livestream        proxy bids, soft close     48h to sign +   7-day financing   e-close / RON
-               lock, inspection open house, bidder verify     reserve, Buy Now           fund earnest    & appraisal window
+Seller lists → Capture day → "Opening soon" (3–5 days) → Live auction (5–14 days) → Winner → Contract → Escrow & title → Close
+               photos, 3D,    self-tours, livestream,       proxy bids, soft close,    48h to sign    financing &       e-closing
+               lock, inspection  bidders get verified       hidden reserve              and fund       appraisal window  or RON
 ```
 
-### 4.1 Auction rules (implemented in `lib/auction.ts`; 14 tests)
-- **Every bidder is verified:** photo ID plus a selfie match, and a lender pre-approval *or* bank-verified proof of funds. **Your verified amount is your bid ceiling.**
-- **Proxy bidding (eBay style):** you enter a secret maximum, and the engine bids one increment at a time on your behalf. Increments are $1K under $100K, $2.5K up to $500K, $5K up to $1M, and $10K above that.
-- **Soft close:** a bid in the last 5 minutes adds 5 minutes, so there's no sniping.
-- **Hidden reserve:** the seller can set a minimum price. Bidders see only "reserve met / not met." When the top bidder's max reaches the reserve, the price jumps up to the reserve.
-- **No-reserve auctions** are clearly badged and draw the most bidders. Push estate sales toward them.
+### 4.1 Auction rules (built and tested in `lib/auction.ts`)
+- **Every bidder is verified:** photo ID + selfie, and a lender pre-approval or bank-verified proof of funds. **Verified buying power is your bid ceiling.**
+- **Proxy bidding:** enter the most you'd pay, and the system bids for you one step at a time, only as high as needed.
+- **Soft close:** a bid in the last 5 minutes adds 5 minutes. No sniping.
+- **Hidden reserve:** bidders see only "reserve met" or "not met." No-reserve auctions are clearly labeled and draw the most bidders.
 - **Buy Now:** an optional instant-win price that disappears once the reserve is met.
-- **Ties** go to the earlier bid.
-- **Shill-bid prevention:** the seller and linked accounts are blocked. We match on device, payment method, address and identity, and flag anomalies (e.g., a bidder who only ever pushes the price up and never wins).
-- **$2,500 bid deposit:** a card or ACH hold, not a charge. It becomes part of the earnest money if you win, and is forfeited only if you win and walk away without a contractual reason.
-- **Second chance:** if the winner doesn't sign and fund within 48h, the runner-up is offered the home at their own max (the engine keeps track of the backup bidder).
+- **No shill bidding:** sellers and linked accounts are blocked, and the broker console flags suspicious patterns.
+- **Refundable bid deposit** (a card hold) proves bidders are serious. It becomes part of the deposit if you win and is released if you lose.
+- **Backup buyer:** if the winner doesn't sign and fund escrow in 48 hours, the runner-up gets the home at their own max bid.
 - **Under the reserve:** the seller can accept, counter the high bidder, or relist.
 
-### 4.2 Fixing the hard parts of auctioning a house
-| Problem | Our fix |
+### 4.2 Solving what makes houses hard to auction
+| Problem | Our answer |
 |---|---|
-| Buyers need an inspection | The seller provides a **pre-listing inspection** from an independent inspector the seller doesn't choose. The contract also gives a 7-day due-diligence window, but only for *undisclosed material defects*. |
-| Financing falls through | Pre-approval is verified before bidding (through the lender's portal or Plaid). The contract has a financing/appraisal window. Bidders can declare an **appraisal-gap cover** when they register, and sellers see it. |
-| The appraisal comes in under the bid | Same appraisal-gap mechanism. Our AVM shows a warning when bids run more than 8% over the estimate. |
-| Winner's remorse or default | Bid deposit, then the second-chance offer to the backup bidder. Earnest money (3%) is due within 48h. |
-| "Auction" sounds like foreclosure | Brand it as **"open bidding"** or **"live offers."** Never say "absolute sale" except on no-reserve listings. Use bright photography and normal neighborhoods. |
-| Sellers fear a low price | Hidden reserve, the estimate shown on the listing, and coaching on starting bids (a low start draws more bidders, and the reserve protects the downside). |
+| Buyers need an inspection | A pre-listing inspection by an independent inspector is in the data room, plus a short due-diligence window for undisclosed defects. |
+| Financing falls through | Pre-approval is verified before bidding. The contract has a financing and appraisal window. Bidders can declare an appraisal-gap amount they'll cover. |
+| Condo and HOA approval (very common in Palm Beach) | Association rules, the application and the approval timeline are in the data room. The contract includes the association-approval period, and bidders can pre-submit their application. |
+| Winner backs out | Bid deposit, then the backup buyer. |
+| "Auction" sounds like foreclosure | We call it **open bidding**, with bright photography and normal neighborhoods. "Absolute auction" appears only on no-reserve sales. |
+| Sellers fear a low price | Hidden reserve, a valuation from public county sales, starting-bid coaching, and a review with the broker before going live. |
 
-### 4.3 "So many ways to view it yourself" (the agent replacement)
-1. **Guided photo capture app.** The app walks the seller through a shot list (horizon level, lights on, no people). The $149 pro shoot is included in Pro. Edits are labeled; we don't allow fake skies or object removal that hides defects.
-2. **3D walkthrough.** Captured with a phone's LiDAR (Matterport's iPhone capture, or our own Gaussian-splat pipeline later). You can measure any wall.
-3. **Auto floor plan** with room dimensions, generated from the scan.
-4. **Livestream open house hosted by the owner.** Viewers ask questions in chat ("open the electrical panel"). It's recorded and attached to the listing. This is also our **TikTok and Reels content engine**.
-5. **Self-tours.** ID-verified buyers book a slot. A smart lock (Igloohome, Yale or Schlage with API access; or a key-safe lockbox at first) issues a one-time code for 45 minutes. The seller is notified. An exterior camera is optional; interior cameras are banned (they create wiretap and privacy risk).
-6. **Video walkthrough plus drone** for houses on lots and waterfront.
-7. **Data room** with the disclosure, inspection, wind-mitigation and 4-point reports (FL insurance), title commitment preview, HOA documents, permits, utility bills, flood zone and elevation certificate, and an insurance quote. These are things buyers usually only see *after* going under contract. Showing them before bidding is what makes it safe to bid without an agent.
-8. **"Ask this home" AI.** An LLM answers only from that listing's documents and cites the page. If it can't answer, the question goes to the seller, and the answer is posted publicly so every bidder sees the same information (which is also a fair-housing safeguard).
-9. **Neighborhood layer:** commute times, flood risk (FEMA plus First Street), walk score, noise, sun path, and school boundaries (with a "verify with the district" caveat). We never show "safety" or demographic scores, which would be a fair-housing problem.
+### 4.3 Seeing a home without an agent
+1. **Guided photo capture**: the app walks the seller through every shot, or a pro shoots it. Edits are labeled; no fake skies or hidden cracks.
+2. **3D walkthrough**: a phone LiDAR scan you can walk and measure.
+3. **Auto floor plan** with room dimensions.
+4. **Live-streamed open house**: the owner walks the home while viewers ask in chat ("open the electrical panel"). It's recorded, and seasonal buyers up north love it.
+5. **Self-tours**: ID-verified buyers book a time slot and get a one-time smart-lock code. The owner approves and is notified. No interior cameras.
+6. **Data room**: disclosure, inspection, wind-mitigation and 4-point reports, flood zone, title preview, utility bills, and for condos the milestone inspection, SIRS, budget and rules.
+7. **"Ask this home" AI**: answers only from the listing's documents. Questions it can't answer go to the seller, and the answers are published for every bidder.
+8. **Neighborhood**: commute, flood risk, walkability and school boundaries. No demographic or "safety" scores (that's a fair-housing issue).
 
-### 4.4 Closing (where deals die, so own it)
-- The winning bid automatically generates the **Gavel standard purchase contract**. It is attorney-drafted for each state (we can't use the Florida Realtors/Bar forms without a license from them). Both parties e-sign it.
-- **Escrow and title** go through a partner title agency at first. We launch **Gavel Title** in month 9–12, the way Beycome did. Title is the most reliable profit center in the deal.
-- **Closing tracker:** every milestone works like a flight status (earnest money received, title cleared, appraisal in, clear to close).
-- **Wire-fraud protocol:** wire instructions appear *only* in the app, are confirmed by a phone call to a number on file, and never go by email. Use a verification service like CertifID. Wire fraud is the #1 real-world risk in a no-agent product.
-- **RON / e-closing** where the state allows it (FL does).
+### 4.4 Closing
+- The winning bid generates an attorney-drafted Florida purchase contract that both parties e-sign. The broker reviews every contract.
+- **Escrow and title** go through partner title companies the founding broker already trusts. Deposits go to the title company, not the brokerage, which keeps her trust-account exposure simple. An in-house title agency comes later.
+- **Closing tracker**: every step works like a flight status (deposit received, title clear, appraisal in, clear to close).
+- **Wire-fraud protection**: wire instructions appear only in the app and are confirmed by phone, never sent by email.
 
-## 5. Business model and unit economics
+## 5. The founding broker's role (summary; full plan in `PARTNER_PLAN.md`)
+- **Broker of record and co-founder.** Gavel's Florida brokerage operates under her license and supervision.
+- **Compliance owner.** She approves the contract, auction terms, disclosures and fair-housing policy, and supervises every listing through the **broker console**.
+- **Market maker.** Her network supplies the first sellers (estate attorneys, CPAs, past clients, associations), the vendor bench (title, inspectors, photographers, lenders), and instant credibility in local press.
+- **Expert on call.** Her licensed team staffs the premium "broker-guided" option for sellers and buyers who want a professional at their side.
 
-| Revenue line | Price | Notes |
-|---|---|---|
-| Seller: Basic | $0 | Supply growth. Self-shot photos, standard contract. |
-| Seller: **Pro** | **$499** | Pro media, 3D, inspection coordination, smart lock, yard sign, optional MLS. Paid up front and *not contingent on a sale* (important for licensing, see §6). |
-| Seller: Concierge | $1,499 | Human transaction coordinator, hosted livestream, attorney review. |
-| Featured placement | $99–$199 | Homepage and alert boosts. |
-| Title and settlement | ~$1,000–$1,800 gross margin per deal once we own Gavel Title | The biggest profit line. |
-| Mortgage | Affiliate or JV lender, ~$1,500–$3,000 per funded loan | Must follow RESPA: an Affiliated Business Arrangement disclosure, and no referral fees. |
-| Insurance, home warranty, moving | ~$100–$400 per deal | Through a licensed agency. |
-| Buyer side | **Free** | Never charge a buyer's premium. Buyers hate it, and it kills bids. |
+## 6. Business model (structure only; figures to be decided together)
+- **Sellers** pay a flat listing fee in tiers: self-serve, pro media, and broker-guided. The fee is paid up front and doesn't depend on whether the home sells.
+- **Buyers** pay nothing. There's never a buyer's premium.
+- **Closing services**: title and settlement through partners, later an owned title agency.
+- **Partner services**: mortgage, insurance, home warranty and moving, all with proper RESPA disclosures and no referral kickbacks.
 
-**Contribution per closed sale (steady state, one metro):** about $500 seller fee + $1,300 title + 30% mortgage attach × $2,500 ($750) + $200 ancillaries = **~$2,750**. Minus about $600 in variable costs (capture, inspection subsidy, TC time, payments), that's **~$2,150 contribution**.
+## 7. Legal and licensing checklist (for our real estate attorney)
+1. **Brokerage:** Gavel operates as a Florida brokerage with the founding broker as qualifying broker. Decide whether that's a new entity under her license or an affiliation with her existing firm.
+2. **Auctioneer licensing:** get a written opinion on whether Florida's auctioneer law applies to online real estate auctions run by a licensed broker.
+3. **Brokerage relationship:** confirm we use the transaction-broker disclosure (Florida's default) on every listing and bidder account.
+4. **Escrow:** deposits held by the partner title company. Confirm FREC rules on bid-deposit holds.
+5. **Contract and terms:** purchase contract, auction terms, bidder agreement, seller agreement, self-tour agreement.
+6. **RESPA** (no referral payments), **Fair Housing** (no steering, careful ad targeting), **lead-paint disclosure** for homes built before 1978, **TCPA** (text consent), **ADA** website accessibility, data privacy.
+7. **Insurance:** E&O, cyber, general liability, crime/fidelity.
 
-| | Year 1 (Tampa Bay) | Year 2 (FL: 4 metros) | Year 3 (FL + TX + AZ + NC) |
-|---|---|---|---|
-| Listings | 600 | 3,000 | 12,000 |
-| Closed sales (65% sell-through) | 390 | 1,950 | 7,800 |
-| Revenue | ~$0.6M | ~$4.5M | ~$20M |
-| Seller savings vs 5.5% | ~$9.6M | ~$48M | ~$190M |
+## 8. Go-to-market in Palm Beach County
+**Rule: get 50 listings before spending on buyers.** Buyers follow homes.
 
-The "savings delivered" number is the marketing number, so publish it live on the homepage.
+Sellers:
+1. **Ten launch homes from the founding broker's network**: photogenic, sensibly priced, with low or no reserve. Document each one. "Sold in 7 days, 23 bids" is the marketing.
+2. **Estate, probate, trust and divorce attorneys, plus CPAs and wealth managers.** Fiduciaries need a transparent, documented price. An open auction is exactly that, and she already knows these people.
+3. **Condo and HOA boards.** We offer a free milestone/SIRS-ready listing package that helps the whole building's resale value.
+4. **Expired listings** (owners who already tried the old way), reached by direct mail.
+5. **Local SEO and yard signs** with a QR code showing the live bid.
 
-## 6. Legal and licensing (do this first; it's the real barrier)
+Buyers:
+1. **Live-streamed auction endings and open houses** on social video ("this Delray townhome just sold live").
+2. **Seasonal and northern buyers**: alerts, 3D and remote bidding, marketed in the Northeast feeder markets.
+3. **Lenders** who pre-approve buyers and send them to us.
+4. **Local press**: "40-year Palm Beach broker launches home auctions."
 
-*This section is a roadmap for your lawyer, not legal advice. Every item needs to be confirmed by a licensed real estate attorney in each state.*
-
-1. **Real estate brokerage license.** Anyone who negotiates sales or runs auctions for compensation needs one in most states. The safest structure is the one Beycome and Redfin use: **Gavel Realty, LLC** is a licensed brokerage with a **broker of record** in each state, either hired or contracted. This also gets us MLS membership. Fees tied to whether a sale happens ("success fees") almost always require a license, so we keep seller fees flat and up front.
-2. **Auctioneer license.** Many states license auctioneers (FL, TX, GA, NC, TN and others). Several exempt real estate sales conducted by a licensed broker. **Get a written opinion** for each launch state before turning bidding on.
-3. **Launch state: Florida.** It's a disclosure state (sold prices are public, so our AVM works), closings don't require an attorney, RON is legal, FSBO and auction volume are high, and buyers are used to wind-mitigation and 4-point reports. Its seller disclosure duty comes from case law (*Johnson v. Davis*), so collect a full disclosure form anyway. Texas is the second state, but it's a non-disclosure state (sold prices aren't public), so comps are harder. **Avoid at launch:** states that require an attorney at closing (NY, MA, GA, SC, CT, DE and others) and states with heavy auction-specific rules.
-4. **RESPA Section 8:** no kickbacks for referrals to title, mortgage or insurance. Use Affiliated Business Arrangement disclosures, and pay employees no per-referral bonuses.
-5. **Fair Housing Act:** no steering. Ad targeting must not use protected classes (Meta's housing ad category rules apply). Q&A answers are public to all bidders, there are no demographic overlays, and every page carries the Equal Housing Opportunity notice.
-6. **Federal lead-based paint disclosure** for homes built before 1978.
-7. **TCPA / CAN-SPAM:** get express written consent before texting. Outbid alerts by SMS are transactional, but marketing texts need opt-in.
-8. **Privacy:** pre-approval and bank data are sensitive. Use SOC 2-ready vendors, encrypt at rest, and follow GLBA-style safeguards if we touch lending.
-9. **ADA / WCAG 2.2 AA** for the website. Real estate sites are frequent targets of accessibility lawsuits.
-10. **Terms:** Auction Terms of Sale, Bidder Agreement (covering the deposit, default and the second-chance offer), Seller Listing Agreement (non-contingent fee, reserve rules, shill-bidding ban), and a Self-Tour Agreement (liability, cameras).
-11. **Insurance:** E&O (errors and omissions), cyber, general liability, and a crime/fidelity policy for escrow.
-
-## 7. Go-to-market: winning one metro first
-
-**Launch market: Tampa Bay (Hillsborough + Pinellas).** It has high volume, a large FSBO population, many retirees with equity, and investors who like auctions. Beycome is strong in FL, so our differentiation has to be the live bidding experience, not just a lower fee. *(Alternatives if you're based elsewhere: Jacksonville, Phoenix, Charlotte.)*
-
-**Rule: get 50 listings before spending on buyers.** Buyers follow inventory.
-
-Supply (sellers):
-1. **The founder's network plus 10 "hero" listings.** Subsidize them heavily (free Pro), pick photogenic homes with no reserve or a low reserve, and document every one. The first 10 sold-by-bidding stories ("sold in 7 days, 23 bids, kept $26K") are the whole marketing plan.
-2. **Expired and withdrawn MLS listings.** Owners who already failed with an agent. Reach them by direct mail (public records). Check the TCPA and Do Not Call registry before any phone calls.
-3. **Estate, probate and divorce attorneys, plus CPAs.** Auctions give a defensible, documented market price, which is exactly what fiduciaries need.
-4. **SEO:** pages like "sell my house without a realtor in Tampa," commission calculators, neighborhood sold-price pages, and every auction result as a public page. The `seo-intel` tooling in this repo can drive this.
-5. **Yard signs with a QR code that shows the live bid**, which is a street-level ad.
-6. **Landlords and small investors** (they're repeat sellers).
-
-Demand (buyers):
-1. **Livestream auction endings and open houses** on TikTok, Reels and YouTube Shorts ("this house just sold live for $X"). Real estate plus a countdown is watchable content. The `shorts` tooling in this repo can automate clips.
-2. **Saved-search alerts** for "auction ending in 1 hour," "reserve just met," and "no-reserve home listed."
-3. **Partner lenders** who pre-approve buyers and send them to us (lenders love buyers who are already verified).
-4. **Investor lists:** local REIA groups.
-
-**PR angle:** "The 6% is dead," with a live counter of savings delivered. Pitch every local TV station on the first no-reserve auction.
-
-## 8. Competition
-
+## 9. Competition
 | Player | What they are | Our edge |
 |---|---|---|
-| **Zillow** | The biggest portal; makes money selling buyer leads to agents (Premier Agent) | Zillow's revenue *depends on agents*. It can't kill commissions without killing itself. That's the classic innovator's dilemma. |
-| **Beycome** | Flat-fee MLS, buyer rebate, own title, AI assistant | They're still private offers through the MLS. We own the auction, the self-tour and the data room. |
-| **Redfin** (now Rocket) / discount brokers | Agents at lower commissions | Lower than 6% is still thousands of dollars. We're a flat fee. |
-| **Auction.com / Xome / Ten-X** | Foreclosure, REO and commercial auctions | That's distressed inventory. We're normal homeowners with a consumer-grade experience. |
-| **Opendoor / Offerpad** | iBuyers that buy at a discount | We get sellers *market price* via competition. iBuyers charge 5–10% in spread and fees. |
-| **FSBO.com / Facebook Marketplace / Craigslist** | Listings only | No verification, no contract, no closing. We handle everything after "I'm interested." |
+| **Zillow** | A portal that makes money selling leads to agents | Its business depends on agents, so it can't remove them. |
+| **Beycome** | Flat-fee MLS listing | Still private offers. We run the actual sale. |
+| **Redfin / discount brokers** | Cheaper agents | Still a percentage. We're a flat fee. |
+| **Auction.com / Xome** | Foreclosure and bank-owned auctions | Distressed homes. We sell normal homes with a consumer experience. |
+| **Opendoor / iBuyers** | Buy at a discount | We get the seller market price through competition. |
 
-**Moats in order:** (1) verified-bidder liquidity in each metro, (2) exclusive Gavel-only inventory, (3) owned title and closing data, (4) the sold-price and bidding dataset that makes our AVM better than Zestimate in our metros, (5) the brand as "the place homes sell in public."
+**Moats:** verified-bidder density in Palm Beach, exclusive listings, the founding broker's relationships and reputation, owned closing data, and a sold-price and bidding dataset that sharpens our valuations.
 
-## 9. Technology
+## 10. Technology
+- **Web:** Next.js + Tailwind (this repo). **Mobile:** React Native app for capture and bid alerts.
+- **Database:** Postgres + PostGIS. **Bid engine:** `lib/auction.ts` running server-side in a locked transaction, with an append-only bid ledger.
+- **Realtime:** a WebSocket service for live prices and outbid alerts.
+- **Verification:** Persona or Stripe Identity (ID), Plaid (funds), Stripe (deposit holds).
+- **Contracts and closing:** an e-sign API, the title partner's API, our milestone tracker.
+- **Media:** video and livestream service, 3D capture SDK, image CDN.
+- **Data:** Palm Beach County property appraiser and recorded sales, FEMA flood maps, school boundaries.
+- **AI:** Claude for "Ask this home," listing drafts, disclosure-gap checks and broker-console summaries.
+- **Broker console:** listing approvals, bidder verification review, flagged-bid review, contract review, escrow status. It's how a licensed broker supervises the platform.
 
-**Stack** (it matches the rest of this repo, so you already know how to run it):
-- **Web:** Next.js 16 (App Router) + Tailwind 4 on Vercel. **Mobile:** an Expo/React Native app in Phase 2 (capture and bidding alerts need native).
-- **DB:** Postgres (Neon or Supabase) + PostGIS for parcels and map search.
-- **Bid engine:** the `lib/auction.ts` rules run server-side in a **single serializable transaction with the auction row locked (`SELECT … FOR UPDATE`)**. Every bid gets an idempotency key, and an append-only `bids` ledger is the audit trail. Server time is the only clock.
-- **Realtime:** Ably or Pusher (or Supabase Realtime) channels per auction for price, clock and outbid pushes. A scheduled worker closes auctions, with a re-check, because soft close moves the end time.
-- **Search and map:** Mapbox GL with PostGIS; Typesense or Postgres FTS for text.
-- **Identity:** Persona or Stripe Identity. **Funds:** Plaid (Assets, Auth). **Payments and deposit holds:** Stripe (manual-capture PaymentIntents for card holds; ACH for larger amounts).
-- **Pre-approval verification:** start by uploading the letter and calling the lender to verify. Later, lender API partnerships.
-- **Contracts:** Dropbox Sign or DocuSign API, with state templates. **Closing:** the title partner's API (e.g., Qualia) plus our own milestone tracker.
-- **Media:** Mux (video and livestream), Matterport SDK at first (in-house 3D splats later), Cloudflare R2 + Images.
-- **Property data:** county parcel and recorded-sale data (ATTOM or Regrid), FEMA NFHL flood, First Street, school boundary data, and Walk Score. **AVM:** gradient-boosted model on recorded sales, cross-checked against live bid data.
-- **Smart locks:** Igloohome or Yale/August APIs for one-time codes. Fallback is a code-changing key safe.
-- **AI:** Claude for the "Ask this home" assistant (answers come only from that listing's documents, with citations), listing-description drafts, disclosure-gap checks, and a seller copilot.
-- **Notifications:** Postmark (email), Twilio (SMS with consent), and push.
-- **Observability and safety:** Sentry, audit logs on every bid and state change, and anomaly detection for shill bidding.
-
-**Core tables:** `users`, `identities` (KYC status), `buying_power` (amount, source, expires), `properties` (parcel, facts), `listings` (status, fees, MLS flag), `auctions` (start, reserve, buy_now, ends_at, soft-close settings), `bids` (ledger: bidder, max, shown amount, auto, created_at, idempotency key), `deposits` (hold id, status), `tours` (slot, lock code, audit), `documents` (data room), `questions` (public Q&A), `contracts`, `transactions` (milestones), `payouts`.
-
-**Auction state machine:** `draft → capture → opening_soon → live → (extended)* → ended → {sold → contract → escrow → closed} | {reserve_not_met → countered | relisted} | {no_bids → relisted} | {winner_default → second_chance → contract}`.
-
-## 10. Roadmap
-
+## 11. Roadmap
 | When | Milestone |
 |---|---|
-| **Weeks 0–4** | Form the entity, open a bank account, hire counsel, secure a broker of record and the FL brokerage license, get the auctioneer-exemption opinion, register the domain and trademark, and draft the contract and terms. **The prototype is done (this folder).** |
-| **Months 1–4: MVP** | Real accounts, listing creation, media upload, map search, KYC + proof of funds, server-side bid engine + realtime, deposits, contract generation + e-sign, partner title, admin console. **Pilot: 10 subsidized hero listings.** |
-| **Months 4–9** | Self-tour smart locks, livestream open houses, 3D, "Ask this home" AI, AVM, lender partner, MLS syndication for Pro, mobile app. **Goal: 50 live listings/month in Tampa Bay, 65% sell-through.** |
-| **Months 9–18** | Gavel Title, Orlando, Jacksonville and South FL, Gavel-only exclusive tier, investor features (bulk bidding, watchlists). **Seed/Series A on the metrics.** |
-| **Year 2–3** | Texas, Arizona, North Carolina; mortgage JV; the replacement-MLS data feed (§2). |
+| **Now** | Founding broker on board. Attorney engaged. Brand and domain secured. Demo and prototype done (this folder). |
+| **Phase 1 (MVP)** | Real accounts, listing creation, verified bidding, server-side auctions, contracts, partner title, broker console. **Pilot: 10 launch homes in Palm Beach County.** |
+| **Phase 2** | Self-tour smart locks, livestream open houses, 3D, "Ask this home," valuations, lender partner, MLS syndication, mobile app. |
+| **Phase 3** | Broward and Martin/St. Lucie counties, Gavel-only listings, in-house title, investor tools. |
+| **Phase 4** | Other Florida metros, then other disclosure states. |
 
-**KPIs to watch weekly:** listings live, sell-through rate (% of auctions that close a sale), median verified bidders per auction (target ≥5), sale price ÷ AVM (target ≥100%), days from list to contract, winner default rate (target <5%), contract-to-close rate, seller NPS, and cost to acquire a listing.
+**Weekly scorecard:** live listings, sell-through rate, verified bidders per auction (target 5+), sale price vs. valuation, days to contract, winner default rate, seller satisfaction.
 
-## 11. Team and budget
+## 12. Next steps
+- [ ] Walk the founding broker through the demo and `PARTNER_PLAN.md`.
+- [ ] Register gavelhomes.com and run a trademark search.
+- [ ] Book the Florida real estate attorney (agenda: §7).
+- [ ] Decide on the brokerage structure with the founding broker.
+- [ ] Pick 10 launch homes from her network.
+- [ ] Share `INVESTOR_PLAN.md` and the demo with the first investors.
+- [ ] Turn the prototype into the MVP (§11).
 
-**Lean (bootstrap / angel, ~$350–500K for 12 months):**
-- You (CEO, sales, sellers)
-- 1 senior full-stack engineer + AI coding tools (this repo already builds Next apps)
-- 1 contract designer (part-time)
-- Broker of record (contract, ~$2–4K/month)
-- 1 transaction coordinator / ops (licensed; also hosts livestreams)
-- Real estate attorney on retainer (~$3–5K/month at first; ~$15–25K upfront for contracts and terms)
-- Photographers and inspectors paid per job
-
-**Faster (seed, ~$1.5–2.5M):** add 2 engineers, a growth marketer, a second TC, and a head of title/escrow.
-
-**Monthly run-rate costs (lean):** infrastructure + APIs ~$1–2K (Vercel, DB, Mapbox, Persona, Plaid, Mux, Twilio scale with usage); insurance ~$1–2K; MLS dues ~$100–300; marketing $5–15K.
-
-## 12. Your checklist: everything you need, in order
-
-**This week**
-- [ ] Register **gavelhomes.com** (plus `.co`, `.app`, and `bidmyhouse.com` as a redirect). Lock down social handles.
-- [ ] USPTO trademark knockout search for "Gavel Homes" in classes 35/36. Check that no state real estate company already uses "Gavel."
-- [ ] Book consultations with a **Florida real estate/regulatory attorney**. Bring §6 as the agenda.
-- [ ] Decide on the broker of record: get your own FL broker license (it takes time: sales associate experience is required first) **or** hire or contract a licensed FL broker. The fastest path is to contract one.
-
-**Weeks 2–4**
-- [ ] Form the entities: **Gavel Homes, Inc.** (Delaware C-corp, the tech company) + **Gavel Realty, LLC** (FL brokerage), with a services agreement between them. Get EINs and bank accounts.
-- [ ] Get the written auctioneer-license opinion for FL.
-- [ ] Have the attorney draft the purchase contract, auction terms, bidder agreement, seller agreement and self-tour agreement.
-- [ ] Get E&O, GL and cyber insurance quotes.
-- [ ] Join a Tampa Bay MLS through the brokerage (needed for syndication).
-- [ ] Sign the title/escrow partner. Shop 3 Tampa title agencies for a bulk rate and API access.
-- [ ] Open vendor accounts: Stripe, Persona (or Stripe Identity), Plaid, Mapbox, Mux, Twilio, Postmark, ATTOM or Regrid, and a smart-lock vendor.
-
-**Month 2+**
-- [ ] Hire the engineer and build the MVP from this prototype (§10).
-- [ ] Line up the 10 hero sellers (friends, family, estate attorneys).
-- [ ] Build a bench of photographers and inspectors (per-job pricing).
-- [ ] Set up the content engine (livestreams, TikTok, SEO pages).
-
-## 13. Biggest risks and mitigations
-1. **Not enough sellers (chicken and egg).** Mitigate with one metro only, subsidized hero listings, MLS syndication for reach, and expired-listing outreach.
-2. **Licensing or auction-law misstep.** Mitigate with the brokerage structure, written opinions, and flat non-contingent fees.
-3. **Low bidder counts make auctions look weak.** Mitigate with a 3–5 day "opening soon" period to build a bidder pool, coaching toward low starting bids and no reserve, and minimum marketing before an auction opens.
-4. **Winner default / financing failure.** Mitigate with verified buying power, deposits, the appraisal-gap declaration, and the backup bidder.
-5. **Wire fraud.** Mitigate with in-app-only instructions, call-back verification, and a CertifID-style service.
-6. **Self-tour incidents (theft, squatting).** Mitigate with ID verification, one-time codes, seller approval for each tour, exterior cameras, and insurance.
-7. **Industry retaliation (MLS rule changes, lawsuits).** Mitigate by keeping agents optional rather than banned, following MLS rules while we use the MLS, and documenting everything.
-8. **Beycome or Zillow copying the model.** Mitigate with speed, density in each metro, the owned closing stack, and brand.
-
----
-
-### What's built in this folder
-- `lib/auction.ts`: the real bid engine (proxy bidding, increments, verified buying-power ceiling, shill block, soft close, hidden reserve with jump, Buy Now, tie-break, settlement with backup bidder). Tests are in `lib/auction.test.ts` (`pnpm test`).
-- `/`: landing page, live auctions, the six ways to view a home, savings calculator, competitor comparison.
-- `/homes`: search, filters (status, beds, price, self-tour), and a map with live price pins.
-- `/homes/[id]`: photo, 3D, floor plan, livestream and neighborhood tabs; data room; "Ask this home"; self-tour booking; and a **working live bid panel** (verify → deposit → proxy bid → rival bidder → outbid alert → bid history).
-- `/sell`: pricing tiers, listing wizard with reserve coaching and a FL net sheet, and the timeline.
-- `/how-it-works`: every auction rule plus an FAQ.
-
-Sample listings are fictional and live in `lib/listings.ts`.
+## 13. Biggest risks
+1. **Too few sellers early.** Mitigate by focusing on one county, the broker's network, launch homes, and MLS reach.
+2. **Licensing or auction-law misstep.** Mitigate with the broker of record, a written legal opinion, and flat up-front fees.
+3. **Too few bidders.** Mitigate with the "opening soon" period, coaching toward low starting bids, and alerts.
+4. **Winner default or financing failure.** Mitigate with verified buying power, deposits, appraisal-gap declarations, and the backup buyer.
+5. **Wire fraud.** Mitigate with in-app-only instructions and phone verification.
+6. **Industry pushback.** Mitigate by keeping agents optional rather than banned, following MLS rules, and leaning on a respected broker's reputation.

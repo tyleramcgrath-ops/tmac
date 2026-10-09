@@ -86,7 +86,7 @@ export function HomeSearch() {
             </Link>
           ))}
           <p className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs text-ink-dim">
-            Tampa Bay · {results.length} homes
+            Palm Beach County · {results.length} homes
           </p>
         </div>
         <div>
@@ -111,17 +111,30 @@ export function HomeSearch() {
   );
 }
 
-// Stylized Tampa Bay. Production uses Mapbox vector tiles with parcel outlines.
+// Stylized Palm Beach County coast. Production uses Mapbox vector tiles with parcel outlines.
 function BayMap() {
+  const towns: [string, number, number][] = [
+    ["Jupiter", 46, 8],
+    ["Palm Beach Gardens", 34, 25],
+    ["West Palm Beach", 40, 37],
+    ["Wellington", 22, 47],
+    ["Lake Worth Beach", 40, 58],
+    ["Boynton Beach", 42, 66],
+    ["Delray Beach", 44, 79],
+    ["Boca Raton", 44, 94],
+  ];
   return (
     <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
       <rect width="100" height="100" fill="#eef0e8" />
-      <path d="M0 0h14c4 20-2 40 2 60s-4 30-6 40H0z" fill="#bcd7e6" />
-      <path d="M22 100c4-14 14-22 18-30s-2-14 6-22 16-6 18-14-6-14-2-22h4c-2 10 6 16 2 26s-14 10-18 18 2 16-6 26-10 12-12 18z" fill="#bcd7e6" />
-      <path d="M40 0v100M0 45h100M70 0v100M0 75h100" stroke="#dfe2d6" strokeWidth="0.6" />
-      <text x="44" y="38" fontSize="3" fill="#8a909c">Tampa</text>
-      <text x="12" y="80" fontSize="3" fill="#8a909c">St. Pete</text>
-      <text x="2" y="28" fontSize="3" fill="#8a909c">Clearwater</text>
+      <path d="M76 0c-2 20 2 40 0 60s-4 30-2 40h26V0z" fill="#bcd7e6" />
+      <path d="M71 4c-1 20 1 40-1 58s-2 26-1 38" stroke="#bcd7e6" strokeWidth="1.6" fill="none" />
+      <path d="M0 20h76M0 45h76M0 70h76M55 0v100M30 0v100" stroke="#dfe2d6" strokeWidth="0.6" />
+      <text x="84" y="50" fontSize="3" fill="#6f8ea3" transform="rotate(90 84 50)">Atlantic Ocean</text>
+      {towns.map(([name, x, y]) => (
+        <text key={name} x={x} y={y} fontSize="2.6" fill="#8a909c">
+          {name}
+        </text>
+      ))}
     </svg>
   );
 }
