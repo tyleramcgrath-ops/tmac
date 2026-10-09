@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'NETWORKIP_VERSION', '1.2.0' );
+define( 'NETWORKIP_VERSION', '1.3.0' );
 
 require get_template_directory() . '/inc/content.php';
 require get_template_directory() . '/inc/template-tags.php';

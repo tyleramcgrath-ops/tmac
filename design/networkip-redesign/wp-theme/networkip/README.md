@@ -1,4 +1,4 @@
-# NetworkIP WordPress Theme (v1.2.0)
+# NetworkIP WordPress Theme (v1.3.0)
 
 This is a custom theme built from the ChatGPT "left homepage" handoff. It has a dark navy and electric-blue design with a connected-globe hero, a global network map section, glowing service cards and a contact form.
 
@@ -23,6 +23,23 @@ The current networkip.net is built with Elementor. Version 1.1 handles that so t
 All three can be switched off in **Customize → NetworkIP Homepage → Layout & compatibility**. Other pages (for example Privacy Policy) still show their own content.
 
 **If the old header or footer still appears:** that comes from Elementor Pro's Theme Builder. Go to **Templates → Theme Builder** and set the old Header and Footer templates to Draft, or remove their display conditions.
+
+## Brand colors
+
+The base palette is navy and electric blue. On top of that, two accents come from the official logo:
+- **Gold #D8A040** (the logo's gold line): the glow and border on cards and panels, stat numbers, "Learn more" links, contact labels and the line under the header.
+- **Red #A3141F, with a brighter #E2454D for small marks** (the logo's red "IP"):
+  - the tip of the line before each section label;
+  - the underline on the current menu item;
+  - the dots in the hero chips;
+  - the technology card numbers;
+  - the check marks;
+  - the required-field asterisks;
+  - the footer column underlines.
+
+The footer's top rule and the section-label lines blend from gold to red, like the logo.
+
+All accent colors are CSS variables at the top of `assets/css/theme.css` (`--nip-gold`, `--nip-red`, `--nip-red-bright`, `--nip-glow`).
 
 ## Editing content
 
