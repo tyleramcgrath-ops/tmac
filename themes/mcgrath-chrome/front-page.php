@@ -244,7 +244,8 @@ echo '<span data-q class="mk">' . esc_html( wp_strip_all_tags( $mcg_mark ) ) . '
 	<div class="rootsBody">
 		<div class="rv">
 			<span class="eyebrow"><?php esc_html_e( 'Our home', 'mcgrath-chrome' ); ?></span>
-			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Jupiter roots.', 'mcgrath-chrome' ); ?><br><?php esc_html_e( 'National capability.', 'mcgrath-chrome' ); ?></h2>
+			<?php // County rather than town: the office is in Palm Beach Gardens, the market it serves runs from Jupiter to Stuart. ?>
+			<h2 data-tag="&lt;h2&gt;"><?php esc_html_e( 'Palm Beach County roots.', 'mcgrath-chrome' ); ?><br><?php esc_html_e( 'National capability.', 'mcgrath-chrome' ); ?></h2>
 			<p><?php
 				printf(
 					/* translators: %s: the location, wrapped for emphasis. */

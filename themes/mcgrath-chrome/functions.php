@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '3.3.0' );
+define( 'MCG_VERSION', '3.4.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -15,6 +15,7 @@ require_once get_template_directory() . '/inc/page-seo.php';
 require_once get_template_directory() . '/inc/page-depth.php';
 require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/diagnostics.php';
+require_once get_template_directory() . '/inc/agentic.php';
 
 function mcg_setup() {
 	add_theme_support( 'title-tag' );
@@ -69,9 +70,17 @@ function mcg_customize( $wp_customize ) {
 		'mcg_brand_line'  => array( 'Wordmark sub-line', 'McGrath Marketing Group' ),
 		'mcg_tagline'     => array( 'Footer tagline', 'A Higher Visibility. A Brighter Tomorrow.' ),
 		'mcg_email'       => array( 'Contact email', 'tyler@mcgrathmarketinggroup.com' ),
-		'mcg_location'    => array( 'Location line', 'Jupiter, Florida' ),
+		'mcg_location'    => array( 'Location line', 'Palm Beach Gardens, Florida' ),
 		'mcg_reach'       => array( 'Reach line', 'Serving Clients Nationwide' ),
-		'mcg_coords'      => array( 'Coordinates under the dashboard', '26.9342° N, 80.0942° W' ),
+		'mcg_coords'      => array( 'Coordinates under the dashboard', '26.8633° N, 80.1269° W' ),
+		// The postal address, in parts. Schema.org wants them separated, and
+		// splitting them here means the contact page, llms.txt and the
+		// LocalBusiness markup can never state the address three ways.
+		'mcg_street'      => array( 'Street address', '5785 Golden Eagle Cir' ),
+		'mcg_city'        => array( 'City', 'Palm Beach Gardens' ),
+		'mcg_region'      => array( 'State (two letters)', 'FL' ),
+		'mcg_postal'      => array( 'ZIP code', '33418' ),
+		'mcg_country'     => array( 'Country', 'United States' ),
 		'mcg_price_audit'  => array( 'SEO page price: one-off audit', 'On request' ),
 		'mcg_price_month'  => array( 'SEO page price: monthly SEO', 'On request' ),
 		'mcg_price_launch' => array( 'SEO page price: local launch', 'Fixed scope, on request' ),
@@ -310,9 +319,16 @@ function mcg_schema() {
 		'founder'     => array( '@type' => 'Person', 'name' => 'Tyler McGrath' ),
 		'address'     => array(
 			'@type'           => 'PostalAddress',
-			'addressLocality' => 'Jupiter',
-			'addressRegion'   => 'FL',
+			'streetAddress'   => mcg_address()['street'],
+			'addressLocality' => mcg_address()['city'],
+			'addressRegion'   => mcg_address()['region'],
+			'postalCode'      => mcg_address()['postal'],
 			'addressCountry'  => 'US',
+		),
+		'geo'         => array(
+			'@type'     => 'GeoCoordinates',
+			'latitude'  => 26.863322,
+			'longitude' => -80.126924,
 		),
 		'areaServed'  => array_map(
 			function ( $a ) {

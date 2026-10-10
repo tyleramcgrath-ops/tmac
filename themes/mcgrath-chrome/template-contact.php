@@ -43,6 +43,19 @@ get_header();
 			<a class="big" href="mailto:<?php echo esc_attr( mcg_opt( 'mcg_email', 'tyler@mcgrathmarketinggroup.com' ) ); ?>"><?php echo esc_html( mcg_opt( 'mcg_email', 'tyler@mcgrathmarketinggroup.com' ) ); ?></a>
 		</div>
 		<div>
+			<span class="mono"><?php esc_html_e( 'Office', 'mcgrath-chrome' ); ?></span>
+			<?php
+			// Marked up as an address so the postal details a search engine
+			// reads here match the PostalAddress in the page's schema.
+			$mcg_a = mcg_address();
+			?>
+			<address style="font-size:17px;line-height:1.6;color:var(--ink-70);font-style:normal;">
+				<?php echo esc_html( $mcg_a['street'] ); ?><br>
+				<?php echo esc_html( $mcg_a['city'] . ', ' . $mcg_a['region'] . ' ' . $mcg_a['postal'] ); ?><br>
+				<?php echo esc_html( $mcg_a['country'] ); ?>
+			</address>
+		</div>
+		<div>
 			<span class="mono"><?php esc_html_e( 'Serving', 'mcgrath-chrome' ); ?></span>
 			<p style="font-size:17px;line-height:1.6;color:var(--ink-70);">
 				<?php esc_html_e( 'Jupiter, Palm Beach Gardens, Tequesta, Juno Beach, Abacoa, Jupiter Farms, Hobe Sound and Stuart. Remote clients welcome.', 'mcgrath-chrome' ); ?>

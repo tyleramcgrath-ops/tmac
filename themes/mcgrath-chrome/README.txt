@@ -253,6 +253,62 @@ record of inquiries, use a form plugin instead and drop its shortcode into the
 page content, which still renders below the form.
 
 
+ADDRESS
+-------
+The business address lives in five Customizer fields under Homepage & brand:
+Street address, City, State, ZIP code and Country. They ship set to
+
+  5785 Golden Eagle Cir, Palm Beach Gardens, FL 33418, United States
+
+and feed three places at once: the Office block on the contact page, the
+PostalAddress in the LocalBusiness schema, and the Office line in llms.txt.
+Change them in one place and all three follow.
+
+Two neighbouring fields are separate on purpose. "Location line" is what the
+footer and the homepage roots paragraph say, and "Coordinates" is the caption
+under the contact chart; both ship matching the address above, but they are
+positioning rather than postal, so you can point them wherever you like.
+
+Note that the pages still target Jupiter: the slugs, the H1s and the head terms
+in inc/page-seo.php are all "in Jupiter, FL". That is deliberate and it is not a
+conflict. Being based in Palm Beach Gardens while serving and targeting Jupiter
+is ordinary, and areaServed in the schema names both. If you ever want the
+targeting itself moved, that is a bigger change than this one: slugs, titles,
+meta descriptions and the dissolve animation's query all move together.
+
+
+AGENTIC BROWSING (inc/agentic.php)
+----------------------------------
+Lighthouse 13.3 added an "Agentic Browsing" category, scored as a fraction of
+the checks that apply rather than out of 100. It does not feed the Performance,
+Accessibility, Best Practices or SEO scores.
+
+The theme serves the two documents that category looks for. Neither is a file on
+disk; both are generated from the same options and page arrays everything else
+renders from, so a staging copy describes itself rather than production:
+
+  /llms.txt                      the site in plain text, for a model to read
+  /.well-known/ai-catalog.json   an ARD 1.0 manifest naming that file
+
+Both are advertised with a <link rel="ai-catalog"> in the head and an Agentmap
+line in robots.txt. The robots line only lands if WordPress is generating
+robots.txt; an SEO plugin writing its own takes over and the link element
+carries the signal by itself.
+
+One caution if you edit the manifest. Lighthouse skips its ard-schema audit
+entirely when a site advertises no catalog, and starts scoring it the moment one
+appears, so a broken manifest is worse than none. The shipped one validates
+against the ARD conformance suite with zero errors and zero warnings; keep it
+that way or remove the catalog altogether.
+
+The category's three WebMCP checks need the WebMCP origin trial, which this
+theme does not use, so they stay "not applicable".
+
+If both URLs 404 after an upgrade, the rewrite rules have not been flushed:
+open Settings > Permalinks and save, which flushes them without changing
+anything.
+
+
 PRICING
 -------
 The three price lines on the SEO page are Customizer fields, under Homepage &
