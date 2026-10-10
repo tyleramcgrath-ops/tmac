@@ -43,6 +43,19 @@
 .post-more h2 { font-size: 20px; margin: 0 0 12px; }
 .post-more ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 17px; }
 .post-more a { color: var(--ink); }
+/* Photos: the hero under the title and figures in the body. */
+.post-hero { margin: 32px 0 0; }
+.post-hero img, .post-body figure img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; background: var(--line); }
+.post-body figure { margin: 32px 0; }
+/* Common questions */
+.post-faq { margin: 56px 0 0; border-top: 1px solid var(--ink); padding-top: 8px; }
+.post-faq h2 { font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.025em; margin: 20px 0 8px; scroll-margin-top: 96px; }
+.post-faq details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+.post-faq summary { cursor: pointer; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.post-faq summary::-webkit-details-marker { display: none; }
+.post-faq summary::after { content: "+"; font-weight: 400; color: var(--ink-mu); }
+.post-faq details[open] summary::after { content: "\2212"; }
+.post-faq p { margin: 12px 0 0; font-size: 17px; line-height: 1.65; color: var(--ink); }
 @media (max-width: 640px) {
   .post { padding-top: 40px; }
   .post-body { font-size: 17px; }
