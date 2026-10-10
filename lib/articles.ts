@@ -29,7 +29,19 @@ export interface Article {
   published: string // YYYY-MM-DD
   updated?: string // YYYY-MM-DD
   status: 'draft' | 'published'
+  // Optional photo at the top (also the share image). Unsplash only.
+  hero?: ArticleImage
+  // Optional common questions: shown on the page and as FAQPage markup.
+  faq?: { q: string; a: string }[]
 }
+
+export interface ArticleImage {
+  src: string
+  alt: string
+}
+
+// Photos come from Unsplash only, so nothing else can be pulled into a page.
+export const safeImage = (u: string) => /^https:\/\/images\.unsplash\.com\/[A-Za-z0-9._~\-\/?=&%]+$/.test(u)
 
 export const KIND_LABEL: Record<ArticleKind, string> = { guide: 'Guide', news: 'News' }
 export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
@@ -382,6 +394,11 @@ export function renderBody(body: string): string {
     const b = raw.trim()
     if (!b) continue
     const lines = b.split('\n').map((l) => l.trim())
+    const img = /^!\[([^\]]+)\]\((\S+)\)$/.exec(b)
+    if (img) {
+      if (safeImage(img[2])) html.push(`<figure><img src="${esc(img[2])}" alt="${esc(img[1])}" width="1200" height="800" loading="lazy" decoding="async"></figure>`)
+      continue
+    }
     if (b.startsWith('### ')) html.push(`<h3>${inline(b.slice(4))}</h3>`)
     else if (b.startsWith('## ')) html.push(`<h2 id="${headingId(b.slice(3).trim())}">${inline(b.slice(3))}</h2>`)
     else if (lines.every((l) => /^[-*] /.test(l))) html.push(`<ul>${lines.map((l) => `<li>${inline(l.slice(2))}</li>`).join('')}</ul>`)
@@ -392,7 +409,47 @@ export function renderBody(body: string): string {
   return html.join('\n')
 }
 
-export const readingMinutes = (body: string) => Math.max(1, Math.round(body.split(/\s+/).filter(Boolean).length / 220))
+// Words a reader actually reads (image lines don't count).
+export const bodyWords = (body: string) => body.split('\n').filter((l) => !l.trim().startsWith('![')).join(' ').split(/\s+/).filter(Boolean)
+
+// Every image used in an article's body or hero.
+export const imagesOf = (a: Article) => [...(a.hero ? [a.hero.src] : []), ...[...a.body.matchAll(/^!\[[^\]]+\]\((\S+)\)$/gm)].map((m) => m[1])]
+
+function shingles(text: string): Set<string> {
+  const w = text.toLowerCase().replace(/\]\([^)]*\)/g, ']').replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
+  const out = new Set<string>()
+  for (let i = 0; i + 5 <= w.length; i++) out.add(w.slice(i, i + 5).join(' '))
+  return out
+}
+
+// The owner's rule: never the same content twice. Throws, so the build
+// fails, when two articles share an address, a title or a photo, or when two
+// bodies overlap too much (word 5-gram Jaccard above 0.15).
+export function assertNoDuplicates(list: Article[]): void {
+  const seen = new Map<string, string>()
+  const put = (key: string, slug: string, what: string) => {
+    const prev = seen.get(key)
+    if (prev && prev !== slug) throw new Error(`Duplicate ${what} in articles: ${prev} and ${slug}`)
+    seen.set(key, slug)
+  }
+  for (const a of list) {
+    put(`slug:${a.slug}`, a.slug + '#' + list.indexOf(a), 'address')
+    put(`title:${a.title.toLowerCase()}`, a.slug, 'title')
+    for (const src of imagesOf(a)) put(`img:${src.split('?')[0]}`, a.slug, 'photo')
+  }
+  const sh = list.map((a) => ({ slug: a.slug, s: shingles(a.body) }))
+  for (let i = 0; i < sh.length; i++)
+    for (let j = i + 1; j < sh.length; j++) {
+      const A = sh[i].s, B = sh[j].s
+      if (!A.size || !B.size) continue
+      let inter = 0
+      for (const x of A) if (B.has(x)) inter++
+      const jac = inter / (A.size + B.size - inter)
+      if (jac > 0.15) throw new Error(`Articles ${sh[i].slug} and ${sh[j].slug} are too similar (${jac.toFixed(2)})`)
+    }
+}
+
+export const readingMinutes = (body: string) => Math.max(1, Math.round(bodyWords(body).length / 220))
 
 // Checks an article from the dashboard form. Returns the problem in plain words.
 export function checkArticle(a: Article): string | null {
@@ -404,3 +461,6 @@ export function checkArticle(a: Article): string | null {
   if (a.summary.length > 5) return 'Keep the key points to five or fewer.'
   return null
 }
+
+// Checked whenever this module loads, so a duplicate stops the build.
+assertNoDuplicates([...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES])
