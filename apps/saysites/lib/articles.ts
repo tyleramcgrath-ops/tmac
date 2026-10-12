@@ -33,6 +33,8 @@ export interface Article {
   hero?: ArticleImage
   // Optional common questions: shown on the page and as FAQPage markup.
   faq?: { q: string; a: string }[]
+  // Optional topics the article is about (names only), for Article markup.
+  about?: string[]
 }
 
 export interface ArticleImage {

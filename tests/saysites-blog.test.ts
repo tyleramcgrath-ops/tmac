@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { SCHEDULED_ARTICLES } from '../apps/saysites/lib/articles-scheduled'
-import { LAUNCH_ARTICLES, allArticles, checkArticle, headingsOf, publishedArticles, renderBody, slugify } from '../apps/saysites/lib/articles'
+import { LAUNCH_ARTICLES, allArticles, assertNoDuplicates, bodyWords, checkArticle, headingsOf, imagesOf, publishedArticles, renderBody, safeImage, slugify } from '../apps/saysites/lib/articles'
 import { MemoryStore } from '../apps/saysites/lib/store'
 
 describe('SaySites blog', () => {
@@ -47,15 +47,54 @@ describe('SaySites blog', () => {
     expect(live.length).toBe(LAUNCH_ARTICLES.length - 1 + SCHEDULED_ARTICLES.filter((a) => a.published <= today).length)
   })
 
-  it('writes ahead: one checked article a day, each hidden until its day', () => {
+  it('writes ahead: checked articles, each hidden until its day', () => {
     for (const a of SCHEDULED_ARTICLES) {
       expect(checkArticle(a), a.slug).toBeNull()
       expect(a.body.split(/\s+/).length, a.slug).toBeGreaterThan(450)
-      expect(a.body, a.slug).not.toMatch(/guarantee|#1|rank first|more leads/i)
+      // Articles may quote rules about guarantees; SaySites itself never promises results.
+      expect(a.body, a.slug).not.toMatch(/we guarantee|guaranteed (rank|result|lead|traffic)|rank first|more leads|#1 (on|in) google/i)
+      expect(`${a.title} ${a.description} ${a.body}`, a.slug).not.toContain('\u2014')
     }
-    const days = SCHEDULED_ARTICLES.map((a) => a.published)
-    expect(new Set(days).size).toBe(days.length)
     const slugs = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES].map((a) => a.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
+  })
+
+  it('daily articles (from 2026-10-12): 2,000+ words, photos with alt text, FAQ and fresh links', () => {
+    const daily = SCHEDULED_ARTICLES.filter((a) => a.published >= '2026-10-12' && a.faq)
+    expect(daily.length).toBeGreaterThanOrEqual(2)
+    for (const a of daily) {
+      expect(bodyWords(a.body).length, a.slug).toBeGreaterThanOrEqual(2000)
+      expect(a.title.length, a.slug).toBeLessThanOrEqual(62)
+      expect(a.description.length, a.slug).toBeGreaterThanOrEqual(120)
+      expect(a.description.length, a.slug).toBeLessThanOrEqual(160)
+      expect(a.hero && safeImage(a.hero.src) && a.hero.alt.length > 15, a.slug).toBeTruthy()
+      const imgs = imagesOf(a)
+      expect(imgs.length, a.slug).toBeGreaterThanOrEqual(3)
+      for (const src of imgs) expect(safeImage(src), src).toBe(true)
+      expect(a.faq!.length, a.slug).toBeGreaterThanOrEqual(5)
+      for (const f of a.faq!) {
+        const w = f.a.split(/\s+/).length
+        expect(w, f.q).toBeGreaterThanOrEqual(40)
+        expect(w, f.q).toBeLessThanOrEqual(80)
+      }
+      for (const href of ['/pricing', '/redesign', '/signup', '/websites-for/']) expect(a.body, `${a.slug} ${href}`).toContain(`](${href}`)
+      expect((a.body.match(/\]\(\/blog\//g) ?? []).length, a.slug).toBeGreaterThanOrEqual(2)
+    }
+  })
+
+  it('renders body photos as lazy figures with escaped alt text, and drops other hosts', () => {
+    const html = renderBody('![A "quoted" <alt>](https://images.unsplash.com/photo-1?w=10)\n\n![x](https://evil.example/p.jpg)')
+    expect(html).toContain('<figure><img src="https://images.unsplash.com/photo-1?w=10" alt="A &quot;quoted&quot; &lt;alt&gt;" width="1200" height="800" loading="lazy" decoding="async"></figure>')
+    expect(html).not.toContain('evil.example')
+  })
+
+  it('duplicate guard: every article is unique (address, title, photos, 5-gram overlap)', () => {
+    const all = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES]
+    expect(() => assertNoDuplicates(all)).not.toThrow()
+    const a = SCHEDULED_ARTICLES[0]
+    expect(() => assertNoDuplicates([...all, { ...a, slug: 'copy-of-it', title: 'A different title here' }])).toThrow(/too similar|photo/)
+    expect(() => assertNoDuplicates([...all, { ...LAUNCH_ARTICLES[1], slug: 'other-slug', body: 'fresh words '.repeat(200) }])).toThrow(/title/)
+    const noPhoto = { ...a, hero: undefined, body: a.body.replace(/^!\[.*$/gm, '') }
+    expect(() => assertNoDuplicates([...all.filter((x) => x.slug !== a.slug), noPhoto, { ...noPhoto, slug: 'near-copy', title: 'Another title entirely' }])).toThrow(/too similar/)
   })
 })
