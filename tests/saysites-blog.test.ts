@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { SCHEDULED_ARTICLES } from '../apps/saysites/lib/articles-scheduled'
-import { LAUNCH_ARTICLES, allArticles, checkArticle, headingsOf, publishedArticles, renderBody, slugify } from '../apps/saysites/lib/articles'
+import { DAILY_ARTICLES } from '../apps/saysites/lib/articles-daily'
+import { LAUNCH_ARTICLES, allArticles, assertNoDuplicates, bodyWords, checkArticle, headingsOf, imagesOf, publishedArticles, renderBody, safeImage, slugify } from '../apps/saysites/lib/articles'
 import { MemoryStore } from '../apps/saysites/lib/store'
 
 describe('SaySites blog', () => {
@@ -51,11 +52,60 @@ describe('SaySites blog', () => {
     for (const a of SCHEDULED_ARTICLES) {
       expect(checkArticle(a), a.slug).toBeNull()
       expect(a.body.split(/\s+/).length, a.slug).toBeGreaterThan(450)
-      expect(a.body, a.slug).not.toMatch(/guarantee|#1|rank first|more leads/i)
+      // Promises, not quotes: articles may quote bar rules that ban guarantees.
+      expect(a.body, a.slug).not.toMatch(/we guarantee|guaranteed (results|rankings|leads)|rank(s)? #1|rank first|more leads/i)
     }
-    const days = SCHEDULED_ARTICLES.map((a) => a.published)
-    expect(new Set(days).size).toBe(days.length)
+    // One a day until the daily run began; two a day since (the owner, October 10, 2026).
+    const perDay = new Map<string, number>()
+    for (const a of SCHEDULED_ARTICLES) perDay.set(a.published, (perDay.get(a.published) ?? 0) + 1)
+    for (const [day, n] of perDay) expect(n, day).toBeLessThanOrEqual(3)
     const slugs = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES].map((a) => a.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
+  })
+
+  it('never publishes the same or near-same content twice', () => {
+    const all = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES]
+    expect(() => assertNoDuplicates(all)).not.toThrow()
+    const titles = all.map((a) => a.title.toLowerCase())
+    expect(new Set(titles).size).toBe(titles.length)
+    const faqs = all.flatMap((a) => (a.faq ?? []).map((f) => f.a.toLowerCase()))
+    expect(new Set(faqs).size).toBe(faqs.length)
+    // The guard really does catch a copy, a reworded copy's twin and a reused photo.
+    const a = DAILY_ARTICLES[0]
+    expect(() => assertNoDuplicates([a, { ...a, slug: 'copy', title: 'A copy' }])).toThrow(/too similar|photo/)
+    expect(() => assertNoDuplicates([a, { ...a, title: 'Other title', body: 'Fresh words.' }])).toThrow(/address/)
+  })
+
+  it('daily articles meet the daily run’s bar', () => {
+    expect(DAILY_ARTICLES.length).toBeGreaterThanOrEqual(1)
+    for (const a of DAILY_ARTICLES) {
+      expect(checkArticle(a), a.slug).toBeNull()
+      expect(bodyWords(a.body).length, a.slug).toBeGreaterThanOrEqual(2000)
+      expect(a.title.length, a.slug).toBeLessThanOrEqual(62)
+      expect(a.description.length, a.slug).toBeGreaterThanOrEqual(120)
+      expect(a.description.length, a.slug).toBeLessThanOrEqual(160)
+      expect(a.summary.length, a.slug).toBeGreaterThanOrEqual(3)
+      expect(a.hero && safeImage(a.hero.src) && a.hero.alt.length > 20, a.slug).toBeTruthy()
+      const inBody = imagesOf(a).length - 1
+      expect(inBody, a.slug).toBeGreaterThanOrEqual(2)
+      expect(inBody, a.slug).toBeLessThanOrEqual(3)
+      for (const m of a.body.matchAll(/^!\[([^\]]+)\]\((\S+)\)$/gm)) {
+        expect(safeImage(m[2]), m[2]).toBe(true)
+        expect(m[1].length, m[2]).toBeGreaterThan(20)
+      }
+      expect(a.faq?.length ?? 0, a.slug).toBeGreaterThanOrEqual(5)
+      expect(a.faq?.length ?? 0, a.slug).toBeLessThanOrEqual(8)
+      for (const f of a.faq ?? []) {
+        const n = f.a.split(/\s+/).length
+        expect(n, f.q).toBeGreaterThanOrEqual(40)
+        expect(n, f.q).toBeLessThanOrEqual(80)
+      }
+      const text = `${a.title} ${a.description} ${a.summary.join(' ')} ${a.body} ${(a.faq ?? []).map((f) => f.q + ' ' + f.a).join(' ')}`
+      expect(text, a.slug).not.toContain('\u2014')
+      expect(text, a.slug).not.toMatch(/guarantee(d)? (you |a |more )?(rank|position|lead|calls)|more leads|rank first|#1 on google/i)
+      for (const link of ['/websites-for/', '/pricing', '/redesign', '/signup']) expect(a.body, `${a.slug} ${link}`).toContain(`](${link}`)
+      expect([...a.body.matchAll(/\]\(\/blog\/[a-z0-9-]+\)/g)].length, a.slug).toBeGreaterThanOrEqual(2)
+      for (const m of a.body.matchAll(/\]\(([^)]+)\)/g)) expect(m[1]).toMatch(/^(https:\/\/|\/)/)
+    }
   })
 })

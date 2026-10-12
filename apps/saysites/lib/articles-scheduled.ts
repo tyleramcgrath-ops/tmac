@@ -5,6 +5,7 @@
 // no competitors named. Byline "SaySites".
 
 import type { Article } from './articles'
+import { DAILY_ARTICLES } from './articles-daily'
 
 const LOCAL_RANKING = 'https://support.google.com/business/answer/7091'
 const REVIEW_TIPS = 'https://support.google.com/business/answer/3474122'
@@ -748,4 +749,6 @@ SaySites puts your business name, phone number and area into your site’s detai
     published: '2026-10-15',
     status: 'published',
   },
+  // The daily run's articles (two a day from October 12, 2026; this branch holds one ready for October 13).
+  ...DAILY_ARTICLES,
 ]
