@@ -51,6 +51,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       dateModified: a.updated ?? a.published,
       mainEntityOfPage: url,
       ...(hero ? { image: [hero.src] } : {}),
+      ...(a.about?.length ? { about: a.about.map((name) => ({ '@type': 'Thing', name })) } : {}),
       inLanguage: 'en-US',
       author: { '@type': 'Organization', name: 'SaySites', url: BASE },
       publisher: { '@type': 'Organization', name: 'SaySites', url: BASE, logo: { '@type': 'ImageObject', url: `${BASE}/apple-touch-icon.png` } },
