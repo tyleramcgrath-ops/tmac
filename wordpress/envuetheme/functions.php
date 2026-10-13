@@ -16,7 +16,7 @@ add_action( 'wp_enqueue_scripts', function () {
         'envue-style',
         get_template_directory_uri() . '/assets/css/envue.css',
         [ 'envue-fonts' ],
-        '21'
+        '22'
     );
     wp_enqueue_script(
         'envue-script',
@@ -808,7 +808,12 @@ function envue_seo_output( $slug, $url, $title, $desc, $img ) {
 ══════════════════════════════════════════════════════════════════════ */
 add_action( 'init', function () {
     if ( ! isset( $_POST['envue_contact_nonce'] ) ) return;
-    if ( ! wp_verify_nonce( $_POST['envue_contact_nonce'], 'envue_contact_form' ) ) wp_die( 'Security check failed.' );
+    // No hard nonce check: pages are served from the SiteGround cache, so a
+    // cached nonce can be days old. The hidden honeypot field stops bots.
+    if ( ! empty( $_POST['contact_website'] ) ) {
+        wp_safe_redirect( add_query_arg( 'sent', '1', wp_get_referer() ?: home_url( '/' ) ) . '#contact-form' );
+        exit;
+    }
 
     $name       = sanitize_text_field( $_POST['contact_name']       ?? '' );
     $company    = sanitize_text_field( $_POST['contact_company']     ?? '' );
@@ -837,9 +842,71 @@ add_action( 'init', function () {
 
     // Redirect regardless of mail success to avoid double-submit
     $redirect = add_query_arg( 'sent', '1', wp_get_referer() ?: home_url( '/get-in-touch/' ) );
-    wp_safe_redirect( $redirect );
+    wp_safe_redirect( $redirect . '#contact-form' );
     exit;
 } );
+
+/* ══════════════════════════════════════════════════════════════════════
+   LEAD FORM — the contact form in the closing band of the industry and
+   solution pages (envue_lead_form_card()).
+   Uses the site's WPForms lead form (#2958, the /get-in-touch/ form). On a
+   site without WPForms it falls back to the theme's own form, which posts
+   to the handler above.
+══════════════════════════════════════════════════════════════════════ */
+/* The site's WPForms lead form ID when WPForms is active and the form exists, else 0. */
+function envue_wpforms_lead_form_id() {
+    $id = (int) apply_filters( 'envue_wpforms_lead_form_id', 2958 );
+    if ( ! $id || ! function_exists( 'wpforms' ) ) return 0;
+    return ( 'wpforms' === get_post_type( $id ) && 'publish' === get_post_status( $id ) ) ? $id : 0;
+}
+
+/* Left column of the closing band: reasons to reach out plus the phone line. */
+function envue_lead_points() {
+    return '<ul class="lead-points">'
+        . '<li>Free, no-obligation fleet assessment</li>'
+        . '<li>A fleet advisor replies within one business day</li>'
+        . '<li>Geotab Elite Specialized Partner with 24/7 US-based support</li>'
+        . '</ul>'
+        . '<p class="lead-call">Prefer to talk? <a href="tel:8002011169">Call (800) 201-1169</a></p>';
+}
+
+/* White card holding the contact form, for the dark closing band. */
+function envue_lead_form_card( $heading = 'Request a free fleet assessment' ) {
+    ob_start(); ?>
+<div class="lead-card" id="contact-form">
+  <h3><?php echo esc_html( $heading ); ?></h3>
+  <p class="lead-card-sub">Tell us about your fleet and we&rsquo;ll configure a free demo around it.</p>
+  <?php if ( $wpf = envue_wpforms_lead_form_id() ) : ?>
+    <?php echo do_shortcode( '[wpforms id="' . $wpf . '" title="false"]' ); ?>
+  <?php elseif ( isset( $_GET['sent'] ) ) : ?>
+    <p class="lead-sent" role="status"><strong>Thanks &mdash; we&rsquo;ve got it.</strong> A fleet advisor will be in touch within one business day.</p>
+  <?php else : ?>
+    <form class="lead-form" method="post" action="">
+      <input type="hidden" name="envue_contact_nonce" value="<?php echo esc_attr( wp_create_nonce( 'envue_contact_form' ) ); ?>">
+      <div class="lead-hp" aria-hidden="true"><label>Website <input type="text" name="contact_website" tabindex="-1" autocomplete="off"></label></div>
+      <label><span>Name<em aria-hidden="true">*</em></span><input type="text" name="contact_name" autocomplete="name" required></label>
+      <label><span>Work email<em aria-hidden="true">*</em></span><input type="email" name="contact_email" autocomplete="email" required></label>
+      <label>Company<input type="text" name="contact_company" autocomplete="organization"></label>
+      <label>Phone<input type="tel" name="contact_phone" autocomplete="tel"></label>
+      <label class="lead-full">Fleet size
+        <select name="contact_fleet_size">
+          <option value="">Select&hellip;</option>
+          <option>1&ndash;10 vehicles</option>
+          <option>11&ndash;50 vehicles</option>
+          <option>51&ndash;200 vehicles</option>
+          <option>201&ndash;1,000 vehicles</option>
+          <option>1,000+ vehicles</option>
+        </select>
+      </label>
+      <label class="lead-full">How can we help?<textarea name="contact_message" rows="3"></textarea></label>
+      <button type="submit" class="button button-primary button-lg lead-full">Get My Free Demo <span>&rarr;</span></button>
+    </form>
+  <?php endif; ?>
+  <p class="lead-consent">By providing my phone number to EnVue Telematics, I agree and acknowledge that EnVue Telematics may send text messages to my wireless phone number for any purpose. Message and data rates may apply. We will only send one SMS as a reply to you, and you will be able to opt out by replying &ldquo;STOP&rdquo;. See our <a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>">Privacy Policy</a>.</p>
+</div>
+<?php
+    return ob_get_clean();
+}
 
 /* ══════════════════════════════════════════════════════════════════════
    OFFICE CARD HEADER — crisp vector flag + location label

@@ -220,3 +220,16 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - The page works without creating a WordPress page. Creating one with the slug `boschridecare` later lets AIOSEO manage
   its title, description and sitemap entry.
 - Install envuetheme-final-v6.17.0.zip, purge the SiteGround cache, then open envuetelematics.com/boschridecare/.
+
+## v6.18 — Contact form on the industry and solution pages
+- The closing band on 21 pages now has the copy on the left and a "Request a free fleet assessment" form card on the
+  right. Pages: /industries/, /solutions/, the six industry pages (construction, trucking-transportation,
+  field-services, oil-gas, government, leasing-rental) and the solution pages (expandability, dash-cams,
+  gps-tracking, equipment-management, maintenance, fuel-management, geotab, safety, productivity, optimization,
+  sustainability, compliance, electric-vehicles).
+- The card uses the same WPForms form as /get-in-touch/ (**#2958**), so leads arrive exactly as they do today. Change
+  the form with the `envue_wpforms_lead_form_id` filter if needed.
+- If WPForms isn't active (or form #2958 doesn't exist), the theme shows its own short form instead. It emails
+  sales@et-envue.com through the theme's contact handler and uses a hidden honeypot field for spam (no nonce, so
+  cached pages keep working).
+- Install envuetheme-final-v6.18.0.zip, purge the SiteGround cache, then check a page such as /construction/#demo.

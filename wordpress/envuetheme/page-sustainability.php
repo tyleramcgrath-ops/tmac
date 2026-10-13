@@ -120,12 +120,10 @@ echo envue_faq_section([
 ], 'FAQ: Fleet Sustainability');
 ?>
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Fleet Sustainability</span><h2>Reduce emissions and costs simultaneously.</h2></div>
-  <div><p>Get a free fleet sustainability assessment from EnVue Telematics including CO2 baseline measurement and EV readiness analysis for your specific fleet inventory.</p>
-  <div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Fleet Sustainability</span><h2>Reduce emissions and costs simultaneously.</h2>
+  <p>Get a free fleet sustainability assessment from EnVue Telematics including CO2 baseline measurement and EV readiness analysis for your specific fleet inventory.</p>
+  <?php echo envue_lead_points(); ?></div>
+  <div><?php echo envue_lead_form_card(); ?></div>
 </div></section>
 <?php get_footer(); ?>

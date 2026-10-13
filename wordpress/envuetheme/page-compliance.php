@@ -121,12 +121,10 @@ echo envue_faq_section([
 ], 'FAQ: Fleet Compliance');
 ?>
 </main>
-<section class="final-cta" id="demo"><div class="wrap final-grid">
-  <div><span class="eyebrow eyebrow--light">Fleet Compliance</span><h2>Automate compliance. Eliminate audit risk.</h2></div>
-  <div><p>Get a free fleet compliance assessment from EnVue Telematics covering ELD, IFTA, DVIR, and DOT documentation requirements for your specific operation.</p>
-  <div class="hero-actions">
-    <a class="button button-primary button-lg" href="<?php echo esc_url(home_url("/get-in-touch/")); ?>">Get a Free Demo <span>&rarr;</span></a>
-    <a class="button button-ghost button-lg" href="tel:8002011169">Call (800) 201-1169</a>
-  </div></div>
+<section class="final-cta final-cta--form" id="demo"><div class="wrap final-grid">
+  <div><span class="eyebrow eyebrow--light">Fleet Compliance</span><h2>Automate compliance. Eliminate audit risk.</h2>
+  <p>Get a free fleet compliance assessment from EnVue Telematics covering ELD, IFTA, DVIR, and DOT documentation requirements for your specific operation.</p>
+  <?php echo envue_lead_points(); ?></div>
+  <div><?php echo envue_lead_form_card(); ?></div>
 </div></section>
 <?php get_footer(); ?>
