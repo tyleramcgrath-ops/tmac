@@ -233,3 +233,11 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   sales@et-envue.com through the theme's contact handler and uses a hidden honeypot field for spam (no nonce, so
   cached pages keep working).
 - Install envuetheme-final-v6.18.0.zip, purge the SiteGround cache, then check a page such as /construction/#demo.
+
+## v6.19 — Bosch RideCare page audit
+- /boschridecare/ was revised for accuracy and conversions: a new headline, every Bosch figure labeled as
+  Bosch-reported (with a footnote), driver-ID and union/privacy claims corrected, the $1,200 graphic removed, the
+  video moved up near the top, a new limo/rental/shared-fleet section, consistent "Request a RideCare Demo" buttons
+  (to /get-in-touch/), and a clarified Swift Ride card. The full change log, sources and open questions for Bosch
+  are in `wordpress/RIDECARE_CHANGELOG.md`.
+- Install envuetheme-final-v6.19.0.zip only after the page is approved, then purge the SiteGround cache.

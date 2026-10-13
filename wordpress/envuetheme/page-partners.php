@@ -180,7 +180,7 @@
       </a>
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/boschridecare/")); ?>">
         <div class="partner-dir-name">Bosch RideCare</div>
-        <div class="partner-dir-desc">Palm-sized sensor that detects smoking, vaping, damage impacts and harsh driving in real time, with incident reports in MyGeotab.</div>
+        <div class="partner-dir-desc">Palm-sized sensor that detects smoking, vaping, damage impacts and harsh driving, with incident reports in MyGeotab.</div>
         <span class="partner-dir-link">Learn more →</span>
       </a>
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>">
