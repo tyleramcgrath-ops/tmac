@@ -209,3 +209,14 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   never left without one or with two.
 - Install envuetheme-final-v6.16.0.zip, purge the SiteGround cache, then re-run
   https://search.google.com/test/rich-results on the page: expect one Breadcrumb and one FAQ result.
+
+## v6.17 — New Bosch RideCare page
+- **/boschridecare/** is a new partner page built from Bosch's RideCare Reseller Marketing Kit: what RideCare
+  detects, why smoking in vehicles is a cost and safety risk, the MyGeotab add-in, how it works, the Bosch overview
+  video plus the kit's explainer videos, benefits, Bosch/Geotab resources and an FAQ (FAQPage schema).
+- All figures and claims come from the kit. Images are cropped from the kit into `assets/images/ridecare/`.
+- "Get a Demo" and "Schedule a RideCare Demo" go to /get-in-touch/. No forms on the page.
+- Added to the Partners directory (/our-partners/), the partner breadcrumb, and the theme's title/description map.
+- The page works without creating a WordPress page. Creating one with the slug `boschridecare` later lets AIOSEO manage
+  its title, description and sitemap entry.
+- Install envuetheme-final-v6.17.0.zip, purge the SiteGround cache, then open envuetelematics.com/boschridecare/.

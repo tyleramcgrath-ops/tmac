@@ -178,6 +178,11 @@
         <div class="partner-dir-desc">AI platform that predicts which drivers are most likely to be involved in a future accident — enabling proactive coaching.</div>
         <span class="partner-dir-link">Learn more →</span>
       </a>
+    <a class="partner-dir-card" href="<?php echo esc_url(home_url("/boschridecare/")); ?>">
+        <div class="partner-dir-name">Bosch RideCare</div>
+        <div class="partner-dir-desc">Palm-sized sensor that detects smoking, vaping, damage impacts and harsh driving in real time, with incident reports in MyGeotab.</div>
+        <span class="partner-dir-link">Learn more →</span>
+      </a>
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/craig-safety-technologies/")); ?>">
         <div class="partner-dir-name">Craig Safety Technologies</div>
         <div class="partner-dir-desc">Compliance Safety Manager (CSM) software &mdash; digital DQ files, The Hiring Path&reg; driver onboarding, and DOT drug &amp; alcohol testing.</div>

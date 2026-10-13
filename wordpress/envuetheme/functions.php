@@ -500,6 +500,7 @@ function envue_partner_logo( $slug, $name, $size = 'normal' ) {
         'moveev'           => '',
         'greater-than'     => '',
         'xtract'           => '',
+        'boschridecare'    => '',
     ];
 
     $src = $logos[$slug] ?? '';
@@ -696,6 +697,7 @@ function envue_seo_meta() {
         'greater-than'              => [ 'Greater Than AI Fleet Risk & Sustainability Scoring | EnVue', 'AI-powered driver risk scoring and CO₂ emissions tracking powered by Geotab data from EnVue Telematics.' ],
         'craig-safety-technologies' => [ 'Craig Safety Technologies Compliance Safety Manager | EnVue', 'Compliance Safety Manager software for DQ file management, The Hiring Path®, and paperless drug screening. Craig Safety Technologies partner of EnVue Telematics.' ],
         'xtract'                    => [ 'Xtract Crash Data & Claims Platform with eFNOL | EnVue Telematics', 'Automated first notice of loss, crash data, and claims handling for fleets. Xtract partner of EnVue Telematics.' ],
+        'boschridecare'             => [ 'Bosch RideCare Smoking, Vaping & Damage Detection | EnVue', 'Bosch RideCare detects smoking, vaping, damage impacts and harsh driving in real time, with incident reports in MyGeotab. Installs in 15 minutes. Deployed by EnVue Telematics.' ],
         'leasing-rental'            => [ 'Leasing & Rental Fleet Management | Asset Tracking | EnVue', 'Utilization reporting, odometer tracking, and unauthorized-use alerts for leasing and rental fleet operations.' ],
         'safety'                    => [ 'Fleet Safety Programs: AI Cameras, Coaching & Risk Management | EnVue', 'Comprehensive fleet safety programs combining AI dash cams, GPS tracking, and driver coaching to reduce accidents and lower insurance costs.' ],
         'productivity'              => [ 'Fleet Productivity: Dispatch, Routing & Utilization | EnVue', 'Increase fleet productivity with real-time GPS dispatch, route optimization, and utilization reporting from Geotab-powered EnVue Telematics.' ],
@@ -774,8 +776,9 @@ function envue_seo_output( $slug, $url, $title, $desc, $img ) {
     // ── BreadcrumbList (inner pages) ──────────────────────────────
     // Pages that print their own BreadcrumbList set $GLOBALS['envue_own_breadcrumb'].
     if ( $slug && !is_front_page() && empty( $GLOBALS['envue_own_breadcrumb'] ) ) {
-        $page_name = get_queried_object_id() ? get_the_title( get_queried_object_id() ) : ucwords( str_replace( '-', ' ', $slug ) );
-        $partner_slugs = ['lytx','netradyne','mobileye','samsara','azuga','elite-extra','route4me','drivewyze','fleetcor','coast-pay','fleetio','whip-around','car-advise','promiles','smith-system','speedgauge','safety-first','lifesaver-mobile','predictive-coach','phillips-connect','sensata-technologies','origo','ok-alone','moveev','greater-than','craig-safety-technologies','xtract'];
+        // Templates served without a WP page can name themselves via $GLOBALS['envue_page_name'].
+        $page_name = get_queried_object_id() ? get_the_title( get_queried_object_id() ) : ( $GLOBALS['envue_page_name'] ?? ucwords( str_replace( '-', ' ', $slug ) ) );
+        $partner_slugs = ['lytx','netradyne','mobileye','samsara','azuga','elite-extra','route4me','drivewyze','fleetcor','coast-pay','fleetio','whip-around','car-advise','promiles','smith-system','speedgauge','safety-first','lifesaver-mobile','predictive-coach','phillips-connect','sensata-technologies','origo','ok-alone','moveev','greater-than','craig-safety-technologies','xtract','boschridecare'];
         $industry_slugs = ['construction','trucking-transportation','field-services','oil-gas','government','leasing-rental'];
         $solution_slugs = ['powered-by-geotab','expandability','dash-cams','gps-tracking','equipment-management','maintenance','fuel-management','geotab','safety','productivity','optimization','sustainability','compliance','electric-vehicles'];
 
