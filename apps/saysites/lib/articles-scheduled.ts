@@ -51,8 +51,394 @@ const NWS_PHX = 'https://www.weather.gov/psr/ExtremeTemps'
 const CENSUS_PHX = 'https://www.census.gov/quickfacts/fact/table/phoenixcityarizona,maricopacountyarizona/PST045225'
 const PHX_COOLING = 'https://www.phoenix.gov/content/dam/phoenix/heatsite/documents/6-3-22%20Cooling%20Ordinance%20Flyer%20English%20and%20Spanish_-combined.pdf'
 const SCHEMA_HVAC = 'https://schema.org/HVACBusiness'
+const CA_CH7 = 'https://www.calbar.ca.gov/legal-professionals/rules/rules-professional-conduct/current-rules-professional-conduct/chapter-7-information-about-legal-services'
+const CA_RRC_71 = 'https://www.calbar.ca.gov/sites/default/files/portals/0/documents/rules/rrc2014/final_rules/rrc2-7.1_%5B1-400%5D-all.pdf'
+const CA_1400 = 'https://www.calbar.ca.gov/legal-professionals/rules/rules-professional-conduct/previous-rules-professional-conduct/rule-1-400-advertising-and-solicitation'
+const CA_OP_2001 = 'https://www.calbar.ca.gov/sites/default/files/portals/0/documents/ethics/Opinions/2001-155.htm'
+const CA_SPEC_AREAS = 'https://www.calbar.ca.gov/legal-professionals/legal-specialization/legal-specialty-areas'
+const CA_SPEC_FIND = 'https://www.calbar.ca.gov/public/find-legal-professionals/find-certified-specialist'
+const CA_BAR_DEMO = 'https://apps.calbar.ca.gov/members/demographics.aspx'
+const CA_BAR_COUNTIES = 'https://apps.calbar.ca.gov/members/demographics_counties.aspx'
+const CA_GENAI = 'https://www.calbar.ca.gov/sites/default/files/portals/0/documents/ethics/Generative-AI-Practical-Guidance.pdf'
+const CA_DVRO = 'https://newsroom.courts.ca.gov/news/california-supreme-court-amends-rules-professional-conduct'
+const BPC_6157 = 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=6157'
+const BPC_6157_2 = 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=6157.2'
+const BPC_6158 = 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=6158'
+const BPC_6159_1 = 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=6159.1'
+const LASC_RELEASE = 'https://www.lacourt.org/newsmedia/uploads/14202699134019NR-09-09-2026-PresidingJudge-AssistantPresidingJudge.pdf'
+const CACD_PROFILE = 'https://www.cacd.uscourts.gov/sites/default/files/documents/2020%20Central%20District%20of%20California%20Profile.pdf'
+const CENSUS_LA = 'https://www.census.gov/quickfacts/fact/table/losangelescountycalifornia,losangelescitycalifornia/PST045224'
+const ILCS_5 = 'https://ilga.gov/legislation/ilcs/documents/022503200K5.htm'
+const ILCS_3 = 'https://ilga.gov/legislation/ilcs/documents/022503200K3.htm'
+const ILCS_13_1 = 'https://www.ilga.gov/Documents/legislation/ilcs/documents/022503200K13.1.htm'
+const IDPH_PLUMB = 'https://dph.illinois.gov/topics-services/environmental-health-protection/plumbing.html'
+const CHI_PL = 'https://chicago.gov/city/en/depts/bldgs/supp_info/TLdetails/PLcontractor.html'
+const CHI_DWM = 'https://www.chicago.gov/content/dam/city/depts/obm/supp_info/2025Budget/2025BudgetOpeningStatements/Department%20Hearing%20Opening%20Statement%20DWM.pdf'
+const CHI_CCR_2023 = 'https://www.chicago.gov/content/dam/city/depts/water/ConsumerConfidenceReports/2023_WaterQualityReport_CCR.pdf'
+const CHI_CCR_2024 = 'https://www.chicago.gov/content/dam/city/depts/water/ConsumerConfidenceReports/2024_WaterQuality%20Report_CCR.pdf'
+const IL_LSL_ACT = 'https://www.ilga.gov/Documents/legislation/ilcs/documents/041500050K17.12.htm'
+const IDPH_LSL = 'https://dph.illinois.gov/topics-services/environmental-health-protection/lead-in-water/lead-service-lines/lead-service-line-replacements.html'
+const CHI_FLOOD = 'https://www.chicago.gov/city/en/depts/water/supp_info/basement_floodingpartnership.html'
+const MWRD_GUIDE = 'https://www.mwrd.org/sites/default/files/2025-10/Flood_Resource_Guide_251027.pdf'
+const NWS_NORMALS = 'https://www.weather.gov/lot/ord_rfd_monthly_yearly_normals'
+const NWS_2019 = 'https://www.weather.gov/lot/RecordColdJan2019'
+const NWS_RECORDS = 'https://www.weather.gov/lot/Chicago_Temperature_Records'
+const CENSUS_CHI = 'https://www.census.gov/quickfacts/fact/table/chicagocityillinois,cookcountyillinois/POP010210'
+const CENSUS_COOK = 'https://www.census.gov/quickfacts/fact/table/cookcountyillinois,IL/PST045222'
 
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'los-angeles-law-firm-website-design',
+    title: 'Los Angeles Law Firm Website Design: California Rules',
+    description: 'What a Los Angeles law firm website must show under California’s ad rules, what it can’t say, and how to build one for a bilingual, 88-city market.',
+    kind: 'guide',
+    summary: [
+      'California treats a law firm website as advertising: Rule 7.2 requires the name and address of at least one lawyer or firm responsible for its content.',
+      'No guarantees or “quick settlement” promises; since January 1, 2026, no award badges from groups that charge for them or give them for membership.',
+      '“Certified specialist” is reserved for lawyers certified by the State Bar’s program or another State Bar accredited body, and the certifier must be named.',
+      'More than half of Los Angeles residents speak a language other than English at home; offer another language only if a named role at the firm really speaks it.',
+      'Build one page per real office and practice area, not a copy for each of the county’s 88 cities.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1600621895391-0a5ac353d1b6?auto=format&fit=crop&w=1600&q=75', alt: 'Los Angeles City Hall’s white tower rising above a wide plaza with palm trees and pedestrians on a sunny day' },
+    body: `A good law firm website in Los Angeles does two jobs at once. It follows California’s attorney advertising rules, which treat your website as a communication about your services, and it turns a stressed, often bilingual visitor on a phone into a consultation request. In practice that means: name a responsible lawyer and an address on the site, never promise results, say “certified specialist” only when the State Bar’s program or another State Bar accredited body certified you, offer Spanish or another language only when someone at the firm really speaks it, and build a separate page for each practice area and courthouse reality your clients face.
+
+This guide walks through each of those points with the rule or statute linked, then covers how Los Angeles clients search, how to handle a county with 88 cities without spammy location pages, and a checklist you can hand to whoever builds your site. It is general information, not legal or ethics advice; for a question about your own advertising, the State Bar of California’s ethics resources are the place to go.
+
+## Does California treat a law firm website as advertising?
+
+Yes. The State Bar’s ethics committee answered this directly in Formal Opinion 2001-155: an attorney website is a “communication” under the professional rules and an “advertisement” under the Business and Professions Code, but not a “solicitation,” even when it lets visitors send email ([Formal Opinion 2001-155](${CA_OP_2001})). The opinion cites the rules in force at the time, so read it for the reasoning rather than the rule numbers.
+
+The current rules say the same thing in their own words. Rule 7.1 covers “all communications of any type whatsoever,” and the comment to Rule 7.3 says a communication aimed at the general public, such as a website or an internet banner ad, is not a solicitation ([California Rules of Professional Conduct, Chapter 7](${CA_CH7})). So your site has to meet the advertising rules, and it does not trigger the stricter solicitation rules just by existing.
+
+The statutes add their own layer. Business and Professions Code section 6157 defines an “electronic medium” to include computer networks ([B&P § 6157](${BPC_6157})), and section 6158 says that in electronic media advertising the message as a whole may not be false, misleading or deceptive and must be factually substantiated ([B&P § 6158](${BPC_6158})).
+
+## What must a California law firm website include?
+
+The one firm requirement in the rules themselves is short. Rule 7.2(c) says any communication made under the advertising rule “shall include the name and address of at least one lawyer or law firm responsible for its content” ([Rule 7.2](${CA_CH7})).
+
+Since January 1, 2026, the Business and Professions Code adds its own version. As amended by SB 37, section 6157.2(b) says an advertisement must conspicuously display the name of at least one lawyer licensed in California or the responsible firm, and the city, town or county of at least one bona fide office or the address of record listed with the State Bar ([B&P § 6157.2](${BPC_6157_2})).
+
+On a website, the clean way to meet both is a line in the footer of every page with the firm name and its office address, plus an About or Contact page that names the responsible attorney. Many firms already show their address for Google; the point is to make sure it appears on every page that advertises, including landing pages built for ads.
+
+Two statutes are worth knowing because they shape what goes on the page:
+
+- **Keep a copy.** Section 6159.1 requires a true and correct copy of an advertisement to be kept for one year ([B&P § 6159.1](${BPC_6159_1})). For a website that changes often, the safest habit is a dated copy of each version of your key pages, kept outside the website itself.
+- **Contingency fees and costs.** Section 6157.2 says a statement that you work on a contingent basis must also say whether the client will be responsible for costs you advanced when there is no recovery; if the client won’t be, no disclosure is needed ([B&P § 6157.2](${BPC_6157_2})). Comment [3] to Rule 7.1 says anything that states or implies “no fee without recovery” is misleading unless it discloses whether the client will be liable for costs ([Rule 7.1](${CA_CH7})).
+
+If your home page says “No fee unless we win,” the costs sentence belongs right next to it, not on a separate page.
+
+Not sure your current site gets these right? Send us the address for a [free redesign](/redesign) and you’ll see your own pages rebuilt with these basics in place, at no cost and with no commitment.
+
+## What can’t a Los Angeles law firm say on its website?
+
+Rule 7.1(a) is the core: “A lawyer shall not make a false or misleading communication about the lawyer or the lawyer’s services” ([Rule 7.1](${CA_CH7})). The comments turn that into specifics that matter for websites.
+
+### Guarantees and predictions
+
+Comment [2] to Rule 7.1 says a communication containing an express guarantee or warranty of the result of a particular representation is false or misleading. The statute is even more pointed: section 6157.2 bars any guarantee or warranty of success regarding the outcome of a legal matter, and statements promising immediate cash or quick settlements ([B&P § 6157.2](${BPC_6157_2})).
+
+On a real site, that rules out headlines like “We win or you don’t pay a dime” without the costs disclosure, “Get your settlement fast,” and “We will get you the maximum.” Plain, true statements work better anyway: what the firm handles, who handles it, how a consultation works.
+
+### Case results and client reviews
+
+Comment [4] to Rule 7.1 says past results and testimonials may be misleading if they lead a reasonable person to form an unjustified expectation, and that an appropriate disclaimer or qualifying language often avoids that ([Rule 7.1](${CA_CH7})). Before 2018, California had a formal list of “standards” presumed to violate the old advertising rule, including testimonials without a disclaimer and dramatizations without a notice. Those standards were not carried into the current rules; the commission that rewrote them recommended dropping them ([Rules revision commission report](${CA_RRC_71})), and they now live only in the archive of former Rule 1-400 ([former Rule 1-400](${CA_1400})). The ideas behind them still appear in the comments and in section 6157.2, which requires a disclosure when an ad uses a dramatization or impersonation.
+
+For a results page, that means:
+
+1. Use real results only, with the client’s permission where confidentiality requires it.
+2. Give context: the type of case, what was recovered or achieved, and, where it matters, what the client’s costs were.
+3. Put a short, visible qualifier near the results (for example, that every case is different and past results do not guarantee a future outcome), not hidden at the bottom of the page.
+4. Never use an actor or a reenactment without saying so.
+
+### Awards, badges and “top lawyer” logos
+
+The 2026 amendment also reaches the badges many firm sites display. Section 6157.2(a)(6) now bars references to a lawyer’s or firm’s recognition by, or awards from, an organization unless the recognition isn’t conferred just for being a member, and the organization doesn’t charge or solicit a fee, cost or payment for it. The same section bars misleading statements about a lawyer’s or firm’s skills, experience or record ([B&P § 6157.2](${BPC_6157_2})).
+
+That makes a badge audit worth an afternoon. For each award logo on your site, find out how it was earned and whether the organization charged anything for the award, a listing or a plaque. If you can’t confirm both conditions, take it down. The stakes are higher than a bar complaint: the amended section lets a consumer who was misled by an ad that violates it bring a civil action, after a State Bar complaint process, for statutory damages of $5,000 to $100,000 per unique advertisement or three times actual damages, whichever is larger ([B&P § 6157.2](${BPC_6157_2})).
+
+### Specialist and expertise claims
+
+Rule 7.4 allows a lawyer to say a practice “specializes in, is limited to, or is concentrated in” a field, subject to Rule 7.1. Calling yourself a **certified specialist** is different: it is allowed only if you are certified by the State Bar’s Board of Legal Specialization or another entity accredited by the State Bar, and the communication clearly names the certifying organization ([Rule 7.4](${CA_CH7})).
+
+The State Bar currently certifies specialists in twelve areas: admiralty and maritime, appellate, bankruptcy, criminal, estate planning, trust and probate, family, franchise and distribution, immigration and nationality, legal malpractice, privacy law, taxation, and workers’ compensation ([legal specialty areas](${CA_SPEC_AREAS})). If an attorney at your firm holds one of these, say so on their profile with the certifying body named and a link to the State Bar’s certified specialist search, where anyone can confirm it ([find a certified specialist](${CA_SPEC_FIND})). If no one does, use “practice focused on” or “concentrating in” instead.
+
+### Firm names, domains and logos
+
+Rule 7.5 bars a firm name, trade name or other professional designation that violates Rule 7.1 or implies a connection with a government agency or a legal services organization. Its comment says “other professional designation” includes logos, letterheads, URLs and signature blocks ([Rule 7.5](${CA_CH7})). A domain like “lacountyinjuryhelp” for a private firm, or a seal-style logo that looks official, is worth a second look before you buy it.
+
+## Does the website need a Spanish version?
+
+For many Los Angeles firms, real Spanish pages are one of the most useful things a site can add, but only if the firm can serve those clients. Census Bureau figures for 2020 to 2024 show that 56.4% of Los Angeles city residents age 5 and older speak a language other than English at home, and 55.1% in Los Angeles County; 47.2% of city residents and 49.3% of county residents are Hispanic or Latino ([Census QuickFacts](${CENSUS_LA})).
+
+California’s rules address language directly. Comment [5] to Rule 7.1 says a lawyer may not claim to provide services in a language other than English unless the lawyer can actually do so, or the communication states the employment title of the person who speaks the language ([Rule 7.1](${CA_CH7})). So “Se habla español” is fine if an attorney speaks Spanish; if a paralegal or intake coordinator does, say that (“Our intake coordinator speaks Spanish”).
+
+For the pages themselves:
+
+- Write or review the Spanish pages with a fluent speaker who knows legal terms. Machine translation of a practice page tends to read badly and can change the meaning of a disclaimer.
+- Translate the disclaimers, the costs disclosure and the responsible lawyer line too. A Spanish page that drops them is a separate advertisement missing required parts.
+- Link each Spanish page to its English version so Google can show the right one to each searcher ([localized versions](${HREFLANG})).
+- If your team also serves Korean, Armenian, Tagalog, Chinese or other language communities, the same rules and the same honesty apply to each.
+
+![Downtown Los Angeles skyline with glass towers in front of the San Gabriel Mountains under a hazy sky](https://images.unsplash.com/photo-1638059957884-2faffe7b6943?auto=format&fit=crop&w=1200&q=75)
+
+## How do Los Angeles clients search for a lawyer?
+
+Los Angeles is a crowded legal market. The State Bar’s county breakdown lists 58,838 active licensees in Los Angeles County ([State Bar county figures](${CA_BAR_COUNTIES})), and the statewide count of active licensees was 201,250 as of October 11, 2026 ([State Bar demographics](${CA_BAR_DEMO})). A site that says “we handle all types of cases” is competing with all of them at once.
+
+What helps a searcher, and Google, is specificity. People search by problem and by place: “wrongful termination lawyer in Glendale,” “DUI attorney near the Van Nuys courthouse,” “abogado de accidentes en East LA.” The court landscape gives you real, local detail to write about. The Superior Court of Los Angeles County describes itself as the largest trial court in the nation, serving a population of almost 10 million in 36 courthouses spread over more than 4,000 square miles and 88 cities ([Los Angeles Superior Court](${LASC_RELEASE})). Federal cases go to the Central District of California, which covers Los Angeles and six neighboring counties in Western, Southern and Eastern divisions ([Central District of California profile](${CACD_PROFILE})).
+
+Useful, local content for a firm’s site might include:
+
+- **For a criminal defense firm:** which courthouses you appear in regularly, what happens at an arraignment there, and what a client should bring.
+- **For a family law firm:** how the process starts, where filings go for your clients, and what a first consultation covers.
+- **For a personal injury firm:** what to do in the first days after a crash, how medical records and insurance claims fit together, and how your fee and costs work, stated clearly.
+- **For an employment firm:** the agencies and deadlines involved, linked to the official sources.
+
+Write these from real experience. A short, accurate page about how your firm handles a matter at a specific courthouse is more useful to a client than a generic 3,000-word page about the law in general, and Google’s guidance on [helpful, people-first content](${HELPFUL}) asks for exactly that kind of first-hand expertise.
+
+## How should a firm cover 88 cities without spam pages?
+
+The tempting move is a page for every city in the county: “Personal Injury Lawyer in Pasadena,” “in Long Beach,” “in Torrance,” each with the same text and a new name. Google’s spam policies name this pattern as doorway abuse and also warn against scaled content abuse, meaning many pages produced mainly to rank rather than to help ([Google spam policies](${SPAM})). It can hurt the whole site, not just those pages.
+
+A structure that works better:
+
+1. **One page per office you actually have.** Address, hours, parking or transit notes, the attorneys who work there, a map. If you meet clients in Century City and Long Beach, those are two real pages.
+2. **One page per practice area,** each with its own substance.
+3. **Local detail where it is real:** a page about a courthouse you appear in, a neighborhood your firm has served for years, or a community you serve in its own language.
+4. **A plain service-area statement** on the contact page listing where you take cases.
+
+## Google Business Profile for Los Angeles lawyers
+
+Google treats lawyers as individual practitioners. Its guidelines say a practitioner can have their own Business Profile if they work in a public-facing role and can be contacted at the verified location during stated hours, and that the profile title should include only the practitioner’s name. When several practitioners work at one location, the firm should have its own profile for that location, separate from each practitioner’s. And a practitioner should not have multiple profiles to cover each specialization ([Google Business Profile guidelines](${GBP_GUIDELINES})).
+
+For a multi-office LA firm, that usually means one profile per staffed office, attorney profiles only where they meet the practitioner test, and the exact same name, address and phone on the website’s office page as on the profile. Our guide to [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses) explains why relevance, distance and prominence matter here.
+
+![Pen in hand signing a printed document on a desk, in soft natural light](https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=75)
+
+## Can a law firm website use chat, AI or intake forms?
+
+Yes, with care. The State Bar has published practical guidance on generative AI that focuses on competence, confidentiality and supervision ([State Bar generative AI guidance](${CA_GENAI})). It does not carve out a special rule for website chat, so the ordinary rules apply: what a chatbot says on your site is still your firm’s communication under Rule 7.1, and a chat or form that collects case details raises confidentiality questions.
+
+On the intake side, practical steps:
+
+- Keep the first form short: name, phone or email, what happened in a sentence or two, and the other party’s name so you can run a conflict check before anyone shares details.
+- Say on the form that submitting it does not create an attorney-client relationship and that visitors shouldn’t send confidential information until you confirm you can take the matter.
+- Answer fast. A visitor who filled in your form at 9 p.m. has often filled in two others.
+
+One rule change in 2026 touches online outreach. The California Supreme Court amended Rule 7.3, effective June 1, 2026, to bar lawyers from soliciting the respondent in an ex parte domestic violence restraining order case before that person is served, unless the respondent is a current or former client ([California courts newsroom](${CA_DVRO})). Family law firms that run targeted ads or outreach should review that change; an ordinary website is still not a solicitation.
+
+## Which pages should a Los Angeles law firm website have?
+
+A practical page list, adjusted to your practice:
+
+- **Home:** what you do and for whom, where your offices are, how to reach you, and the responsible lawyer and address line.
+- **A page for each practice area,** written by or with the attorney who handles that work.
+- **Attorney profiles:** education, bar admission, years in practice, languages actually spoken, and any State Bar certified specialist designation with the certifying body named.
+- **Results and reviews,** if you use them, with context and a visible qualifier.
+- **Office pages,** one per real location.
+- **Spanish (and other language) pages** where you have the staff to serve them.
+- **Fees:** how consultations work and, for contingency matters, whether the client pays costs if there is no recovery.
+- **Contact:** a short form, phone, address and hours.
+
+Behind the pages, structured data should describe the firm with the details the page shows: name, address, phone, hours and practice areas, using Google’s local business properties ([local business structured data](${LOCAL_SD})). Never mark up reviews or claims the page doesn’t show.
+
+![Modern conference room with a long wooden table, leather chairs and glass walls](https://images.unsplash.com/photo-1571624436279-b272aff752b5?auto=format&fit=crop&w=1200&q=75)
+
+## A checklist before your Los Angeles firm’s site goes live
+
+1. Firm name and office address on every page, conspicuously shown; a responsible California lawyer named on the About or Contact page.
+2. No guarantees, no “quick settlement” or “immediate cash” language, and no award badges from organizations that charge for them or hand them out for membership.
+3. Any “no fee unless we win” claim sits next to a clear statement of whether the client pays costs if there is no recovery.
+4. Results and testimonials are real, permitted, in context and visibly qualified; dramatizations are labeled.
+5. “Certified specialist” appears only for State Bar certified attorneys, with the certifying body named.
+6. Languages are offered only where a named role at the firm really speaks them, and translated pages carry the same disclaimers.
+7. Domain, firm name and logo don’t suggest a government or legal aid connection.
+8. One page per real office, one per practice area; no near-identical city pages.
+9. Business Profiles follow Google’s practitioner rules and match the site exactly.
+10. Intake form is short, includes a conflict-check question and a no-relationship notice.
+11. A dated copy of each version of the site’s advertising pages is kept for at least a year.
+12. The site loads fast on a phone and passes a [speed test](${PAGESPEED}).
+
+## Where SaySites fits
+
+SaySites builds law firm websites with this structure from the start: a page for each practice area, attorney profiles, office details Google can read, and a consultation request on every page with intake questions that include the other party’s name for a conflict check. Each firm is described to search engines as a LegalService, and every page has to pass a 95+ speed check before it can go live. Nothing is invented: results, reviews, languages and certifications appear only if you give them to us. You make changes by saying them in plain words, like “add our costs disclosure under the no-fee line,” and see each one as a draft before you publish it, so the attorney responsible for the content approves every word.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). Already have a site? [Get a free redesign](/redesign) and see your current pages rebuilt before you decide anything, or [start a 7-day free trial](/signup) and build it yourself. If you also practice in other states, compare the rules in our guides to [New York law firm websites after the 2026 changes](/blog/new-york-law-firm-website-rules) and [Florida law firm websites](/blog/law-firm-website-design-florida).`,
+    faq: [
+      { q: 'Does California consider my law firm website an advertisement?', a: 'Yes. The State Bar’s Formal Opinion 2001-155 treats an attorney website as a communication under the professional rules and an advertisement under the Business and Professions Code, though not a solicitation. The current Rule 7.1 covers communications of any type, so everything on your site, from the home page to attorney bios and results, has to be truthful and not misleading.' },
+      { q: 'What does Rule 7.2 require on a California law firm website?', a: 'Rule 7.2(c) requires any advertising communication to include the name and address of at least one lawyer or law firm responsible for its content. On a website, the simplest approach is the firm name and office address in the footer of every page, with the responsible attorney named on the About or Contact page, including on any landing pages used for ads.' },
+      { q: 'Can my firm say “no fee unless we win” on its website?', a: 'Only with a clear costs disclosure. Comment 3 to Rule 7.1 says a communication stating or implying no fee without recovery is misleading unless it says whether the client will be liable for costs, and Business and Professions Code section 6157.2 requires contingency fee statements to say whether clients pay advanced costs when there is no recovery. Put that sentence right next to the claim.' },
+      { q: 'Can our website show “best lawyer” or award badges?', a: 'Only some. Since January 1, 2026, Business and Professions Code section 6157.2 bars references to recognition or awards unless the award isn’t given simply for membership and the organization doesn’t charge or solicit a fee for it. Check how each badge on your site was earned and whether anything was paid, and remove any you can’t confirm.' },
+      { q: 'When can a Los Angeles lawyer call themselves a certified specialist?', a: 'Only when certified by the State Bar’s Board of Legal Specialization or another entity the State Bar accredits, and the certifying organization must be named. The State Bar certifies twelve areas, including criminal, family, immigration and workers’ compensation law. Otherwise, Rule 7.4 lets you say a practice specializes in, is limited to, or concentrates in a field.' },
+      { q: 'Can we advertise that our firm speaks Spanish?', a: 'Yes, if it is true. Comment 5 to Rule 7.1 says a lawyer may not claim to provide services in another language unless the lawyer can, or the communication states the job title of the person who speaks it, such as an intake coordinator. Translate the disclaimers and costs disclosure along with the rest of each Spanish page.' },
+      { q: 'Should a Los Angeles firm make a page for every city it serves?', a: 'Usually not. Near-identical city pages with only the name changed fall under Google’s doorway and scaled content abuse policies. Build one page for each office you really have, one for each practice area, and local pages only where you have real substance, such as a courthouse you appear in regularly or a community you serve in its language.' },
+      { q: 'How much does a law firm website from SaySites cost?', a: 'The Law Firm Starter plan is $79 a month and includes a page for each practice area, attorney profiles, intake with a conflict check question, structured data and hosting, with a 7-day free trial. You can also send your current site for a free redesign preview and see your own pages rebuilt before you decide anything.' },
+    ],
+    about: ['California Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Los Angeles, California'],
+    published: '2026-10-13',
+    status: 'published',
+  },
+  {
+    slug: 'chicago-plumber-website-design',
+    title: 'Chicago Plumber Websites: License Rules to Winter Calls',
+    description: 'What a Chicago plumbing website should show under Illinois and city license rules, plus pages for lead lines, flooding, frozen pipes and Spanish speakers.',
+    kind: 'guide',
+    summary: [
+      'Illinois law bars advertising plumbing services without the license number in the ad; show it on your website’s home page near the phone number.',
+      'Working in the city takes a City of Chicago plumbing contractor license on top of the state license, so list both in a “Licensed and insured” block.',
+      'Lead service line replacement, basement flooding and frozen pipes are the Chicago jobs that deserve their own pages, linked to the city’s official programs.',
+      'Real Spanish pages, one honest service-area page and Plumber structured data finish a site built for Chicago and the suburbs.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1614734292826-78010d348dfc?auto=format&fit=crop&w=1600&q=75', alt: 'Snow-covered residential street lined with brick buildings, bare trees and parked cars buried after a winter storm' },
+    body: `A plumbing website in Chicago has to work for two kinds of customer: the homeowner standing in a wet basement after a storm, and the one quietly researching what it takes to replace a lead service line. Both need a phone number they can tap, proof you are licensed, and plain answers. Illinois law also puts your license number in your plumbing advertising, and Chicago adds its own contractor license on top of the state’s, so the site should show both clearly. Build the rest around the jobs Chicago actually produces: frozen pipes, flood control, lead line replacement and old housing stock, with honest Spanish pages if your crew serves Spanish-speaking customers.
+
+This guide covers the license rules with the statutes linked, the local problems worth a page of their own, how to cover the city and suburbs without spam pages, and a checklist at the end. It is general information, not legal advice; for questions about your own license or ads, the Illinois Department of Public Health and the City of Chicago Department of Buildings are the authorities.
+
+## Does Illinois require a license number on plumbing ads?
+
+Yes. Section 5 of the Illinois Plumbing License Law says that people who advertise plumbing services must display the licensed plumber’s license at their place of business, that the number must be included with the plumbing identification on vehicles, and that no one who provides plumbing services may advertise them unless the advertisement includes that license number ([225 ILCS 320/5](${ILCS_5})).
+
+The penalties are real. A violation is a Class A misdemeanor with a $1,000 fine, and each day an ad runs in violation counts as a separate offense. The law also lets the Department of Public Health, after notice and a hearing, order a phone company to disconnect numbers listed in unlawful printed plumbing ads ([225 ILCS 320/5](${ILCS_5})).
+
+The statute speaks of “advertisement” and printed ads; it doesn’t mention websites by name. But a plumbing company’s website exists to advertise its services, and putting the license number on it costs nothing. The sensible reading is to treat the site like any other ad: show the license number on the home page near your phone number, and repeat it on the contact page and in the footer.
+
+## Who has to be licensed, and what about Chicago’s own license?
+
+Illinois requires that plumbing, and the planning and design of plumbing systems, be done only by licensed plumbers, and that employees of a plumbing firm who do plumbing be licensed too. A homeowner can do plumbing on their own single-family home, but can’t hire anyone other than a licensed plumber to do it ([225 ILCS 320/3](${ILCS_3})). Businesses that work as plumbing contractors register with the Department of Public Health ([225 ILCS 320/13.1](${ILCS_13_1})), and the department says contractors register every year and must carry liability and workers’ compensation insurance ([IDPH plumbing program](${IDPH_PLUMB})).
+
+Chicago adds a layer. The city’s Department of Buildings says a City of Chicago plumbing contractor license is required to install, alter, repair or maintain plumbing in the city, and that a contractor licensed by the state must also get the city license. At least one principal must be a city-licensed plumber, the contractor files a $20,000 performance bond payable to the city, and the license runs for one year. The page cites Chapters 4-332 and 4-336 of the Municipal Code ([Chicago plumbing contractor license](${CHI_PL})). The state law also connects the two: if the state suspends or revokes a contractor’s registration, it notifies the city, and the matching Chicago license is suspended or revoked too ([225 ILCS 320/13.1](${ILCS_13_1})).
+
+For your website, that suggests a short “Licensed and insured” block that lists:
+
+- your Illinois plumber license number;
+- your IDPH plumbing contractor registration, if you have one;
+- your City of Chicago plumbing contractor license, if you work in the city;
+- a line saying you carry liability and workers’ compensation insurance, which the state already requires of registered contractors;
+- a link to the Department of Public Health’s plumbing page, where customers can find the state’s license verification tool.
+
+Homeowners hear warnings about unlicensed plumbers every year. Making your licenses easy to check is a simple way to stand apart.
+
+If your current site hides the license number in small print or skips it, you can see the fix before paying for anything: [get a free redesign](/redesign) of your site with the license block where customers look first.
+
+![Ice floes covering the Chicago River between downtown buildings, with a steel drawbridge in the background](https://images.unsplash.com/photo-1615227776946-a7f8231dda63?auto=format&fit=crop&w=1200&q=75)
+
+## Why do lead service lines deserve their own page?
+
+Because Chicago homeowners are searching for answers, and the program is going to run for years. The city’s Department of Water Management has described over 400,000 lead service lines installed before 1986 and called replacing them a huge, multi-year, multi-billion-dollar effort ([Chicago Department of Water Management, 2025 budget statement](${CHI_DWM})). The city’s water quality report says houses and two-flats built before 1986 have a high likelihood of a lead service line, and points residents to an address lookup at sli.chicagowaterquality.org ([2023 Chicago water quality report](${CHI_CCR_2023})).
+
+State law sets the pace. The Lead Service Line Replacement and Notification Act required water systems to finish a complete inventory by April 15, 2024 and to submit final replacement plans by April 15, 2027. Systems with more than 99,999 lead lines must replace at least 2% a year and finish within 50 years. Owners and occupants must get written notice at least 14 days before planned work, with a required statement in 10 languages, including Spanish ([415 ILCS 5/17.12](${IL_LSL_ACT})). The Department of Public Health counts 667,275 lead lines statewide that need replacing, plus more than 1,000,000 galvanized or unknown-material lines, and notes that water service lines are plumbing under the Plumbing License Law ([IDPH lead service line replacements](${IDPH_LSL})).
+
+The city runs several replacement programs, described in its 2024 water quality report ([2024 Chicago water quality report](${CHI_CCR_2024})):
+
+- **Equity:** free replacement for income-qualified owners of a house or two-flat.
+- **Homeowner-Initiated:** the owner pays for the work, and city permit fees up to $5,000 are waived.
+- **Leaks and Breaks:** free replacement when a leak or break is found; residents call 311.
+- **Daycare:** free replacement at qualifying daycares, which the city contacts directly.
+- **Block-Level:** free replacement along water or sewer main work, with the city notifying eligible residents.
+
+If you do this work, a lead service line page is one of the most useful things your site can have. Explain how a homeowner can check their line, which city program might apply and when a privately hired replacement makes sense, what the job involves (permit, excavation or trenchless methods if you use them, restoring the parkway and basement wall), and how long it usually takes you. Link to the city’s program pages rather than paraphrasing eligibility rules, because those details change. And keep it honest: only describe the programs you can actually take part in.
+
+## Basement flooding and sewer backups
+
+Chicago’s sewers mostly carry stormwater and wastewater in the same pipes. The Department of Water Management says the system was designed decades ago when storm patterns were very different, that a heavy storm can put about 500 gallons of water on a home’s roof, and that the city has 4,400 miles of sewer main ([Chicago basement flooding partnership](${CHI_FLOOD})). The Metropolitan Water Reclamation District’s flood resource guide makes the same point about combined sewers across the region, encourages residents to consider contacting a licensed professional for repairs, and offers Overflow Action Alerts by sign-up ([MWRD Flood Resource Guide](${MWRD_GUIDE})).
+
+That gives a plumber two pages worth writing:
+
+1. **Emergency flooding and backups.** What to do right now (stay safe around electricity, don’t use fixtures that drain into the backed-up line), when to call, and how fast you can usually come out after a big storm. Put the phone number at the top and again at the end.
+2. **Flood prevention.** The work you actually do to reduce the risk: sewer line inspection with a camera, repairs, sump pumps, backflow prevention or other measures your licensed plumbers install. Describe what the customer gets, what affects the price, and whether permits are involved. If you’re not sure a specific device fits a given home, say that you’ll assess it on site rather than promising it will stop every flood.
+
+## Frozen pipes and Chicago winters
+
+Winter is the other busy season. National Weather Service normals for Chicago (1991 to 2020) put January’s average high at 31.6°F and average low at 18.8°F ([NWS Chicago normals](${NWS_NORMALS})). On January 30, 2019, O’Hare reached minus 23°F, the coldest temperature in Chicago in 34 years, with a wind chill of minus 52°F ([NWS on the January 2019 cold](${NWS_2019})). The city’s all-time record low is minus 27°F, set on January 20, 1985 ([NWS Chicago temperature records](${NWS_RECORDS})).
+
+For the website, that means:
+
+- A **frozen and burst pipe page** that tells people how to find and close the main shutoff, what not to do (no open flames on pipes), and when to call.
+- **Hours that are honest.** If you answer at 2 a.m. during a cold snap, say so near the top of every page. If you don’t, say what happens to a message left overnight.
+- **Seasonal updates made in time.** A short “before the first deep freeze” note in the fall, linked from the home page, helps customers and shows the site is looked after.
+
+![Plumber in a red shirt tightening a white drain pipe under a bathroom sink, lit by blue light](https://images.unsplash.com/photo-1676210134188-4c05dd172f89?auto=format&fit=crop&w=1200&q=75)
+
+## Should a Chicago plumber’s website be in Spanish?
+
+If someone at your company can take the call and do the walk-through in Spanish, real Spanish pages are worth it. The Census Bureau counts 29.7% of Chicago residents as Hispanic or Latino, and 35.4% of residents age 5 and older speak a language other than English at home (2020 to 2024); in Cook County, the figures are 27.8% and 35.8% ([Census QuickFacts, Chicago](${CENSUS_CHI}), [Cook County](${CENSUS_COOK})). The state’s own lead line notice rule requires a statement in Spanish and nine other languages, which tells you how multilingual the customer base is ([415 ILCS 5/17.12](${IL_LSL_ACT})).
+
+Start with the pages that matter most in an emergency: home, emergency plumbing, lead service lines and contact. Have them written or checked by a fluent speaker, keep the license numbers on them, and link each to its English version so search engines can show the right page to each searcher ([localized versions](${HREFLANG})). Only say “Hablamos español” if a Spanish speaker really answers.
+
+## Owners, renters and two-flats
+
+Chicago’s housing mix shapes who calls you. The Census Bureau puts the owner-occupied housing rate at 46.0% in Chicago and 57.7% in Cook County ([Census QuickFacts](${CENSUS_CHI})). Many calls come from renters, landlords and owners of two-flats and small buildings who live in one unit and rent the other.
+
+Practical choices for the site:
+
+- On the request form, ask whether the person owns or rents, and the property type (house, two-flat, condo, larger building). It routes the job and saves a phone call.
+- Write a page for **landlords and property managers:** how you handle tenant-occupied units, access, billing the owner, and repeat work across buildings.
+- For renters, explain that the landlord usually arranges and pays for repairs to the building’s plumbing, and invite them to share your number with their landlord.
+
+## How should you cover the city and suburbs?
+
+Cook County had an estimated 5,194,625 residents in July 2025 ([Census QuickFacts, Cook County](${CENSUS_COOK})), and most plumbing companies work across the city and a ring of suburbs. The mistake is a stack of near-identical pages, “Plumber in Evanston,” “Plumber in Oak Park,” “Plumber in Cicero,” with only the town name changed. Google’s spam policies treat that as doorway abuse, and mass-producing pages mainly to rank falls under scaled content abuse ([Google spam policies](${SPAM})).
+
+A better structure:
+
+1. **One service-area page** that lists the neighborhoods and suburbs you serve, with any trip charge for farther areas and a note about whether you hold a Chicago license for work inside the city.
+2. **A separate page only where something is genuinely different:** a second shop, a suburb with its own rules you deal with often, or a neighborhood with a housing type you specialize in.
+3. **A Google Business Profile set up as a service-area business** if customers don’t visit your shop, with your service areas listed instead of a public address. We explain the setup in [how to show Google where you work](/blog/service-area-business-google).
+
+## Which pages should a Chicago plumbing website have?
+
+Each page should match a different search. For a typical Chicago-area company:
+
+- **Home:** phone number and license numbers near the top, the areas you serve, your main services and your hours.
+- **Emergency plumbing:** burst pipes, backups, no water, with what to do first.
+- **Lead service line replacement:** see the section above.
+- **Flood control and sewer work:** camera inspection, sewer repair, sump pumps and the prevention work you do.
+- **Water heaters:** repair and replacement, tank and tankless if you install both.
+- **Drain cleaning,** **fixtures and remodels,** and **repiping,** as separate pages if you do them.
+- **Landlords and property managers.**
+- **About and licenses:** owners, years in business, license numbers and insurance.
+- **Reviews:** link to your Google reviews and quote customers only with permission. Our guide on [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers what Google allows.
+- **Contact and request form:** short, asking how soon, the ZIP code, own or rent.
+
+![Wrench gripping a copper fitting on a pipe above a white water heater tank](https://images.unsplash.com/photo-1620653713380-7a34b773fef8?auto=format&fit=crop&w=1200&q=75)
+
+## Structured data for a plumbing company
+
+Structured data describes your business to search engines in a standard format. Google’s documentation asks you to use the most specific LocalBusiness type you can, and its own example uses Plumber; name and address are the required properties, with phone, hours and others recommended ([Google local business structured data](${LOCAL_SD})). Keep it identical to what the page shows and to your Business Profile. If the markup says you open at 7 and the page says 8, search engines get two answers.
+
+## A checklist before your Chicago plumbing site goes live
+
+1. Illinois license number on the home page near the phone number, and on the contact page.
+2. A “Licensed and insured” block with your state license, IDPH contractor registration and City of Chicago contractor license, as they apply.
+3. A link to the Department of Public Health’s plumbing page so customers can check a license.
+4. Tap-to-call phone number at the top of every page, with honest hours.
+5. Emergency, flood control, frozen pipe and lead service line pages written from your real work.
+6. Links to the city’s own lead line program pages instead of your paraphrase of eligibility rules.
+7. A request form that asks how soon, the ZIP code, own or rent, and property type.
+8. Spanish pages only if your team serves Spanish speakers, each linked to its English version.
+9. One honest service-area page; town pages only where you have something real to say.
+10. Business Profile set up correctly as a storefront or service-area business, matching the site.
+11. Plumber structured data that matches the page.
+12. The home page passes a mobile [speed test](${PAGESPEED}).
+
+## Where SaySites fits
+
+SaySites builds plumbing websites this way from the start: a page for each service, a service-area page, a tap-to-call number and a job request form on every page. Each site is described to search engines as a Plumber, and every page must pass a 95+ speed check before it can go live. The request form can ask how soon the customer needs you, the ZIP code of the job and whether they own or rent, and every request lands in a leads pipeline where you can call, text, add notes and follow it through to a won job. You make changes by saying them in plain words, like “put our Illinois and Chicago license numbers under the phone number,” and see each change as a draft before it goes live. Nothing is invented: licenses, reviews and photos come from you.
+
+The Site plan is $15 a month, with hosting and your own domain included ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). Want to see your current site rebuilt before you decide? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and have it ready before the first hard freeze. For more on showing up in local results, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
+    faq: [
+      { q: 'Does my plumbing license number have to be on my website?', a: 'Illinois law says no one who provides plumbing services may advertise them unless the ad includes the license number, and it requires the number on vehicles too. The statute talks about advertisements and doesn’t name websites, but a company website advertises your services, so the safe and simple choice is to show the number on the home page near your phone number.' },
+      { q: 'Do I need a City of Chicago license if I have an Illinois plumbing license?', a: 'Yes, for work inside the city. Chicago’s Department of Buildings says a city plumbing contractor license is required to install, alter, repair or maintain plumbing in Chicago, even for contractors licensed by the state. At least one principal must be a city-licensed plumber, and the contractor files a $20,000 performance bond with the city.' },
+      { q: 'Should a Chicago plumber’s website have a lead service line page?', a: 'If you do that work, yes. The city has described more than 400,000 lead service lines installed before 1986, and homeowners are searching for how replacement works. Explain how to check a line, which city programs may apply, what the job involves and how long it takes, and link to the city’s program pages for eligibility details.' },
+      { q: 'What should a basement flooding page on a plumbing website include?', a: 'Start with safety and what to do right now, then your phone number and how quickly you usually respond after heavy storms. Add a separate prevention page describing the work your licensed plumbers actually do, such as camera inspections, sewer repairs and sump pumps, and avoid promising that any device will stop every flood.' },
+      { q: 'Do Chicago plumbers need a Spanish website?', a: 'If someone on your team can serve customers in Spanish, real Spanish pages are worth building. Census figures show 29.7% of Chicago residents are Hispanic or Latino and 35.4% speak a language other than English at home. Start with home, emergency, lead line and contact pages, reviewed by a fluent speaker, with the same license numbers shown.' },
+      { q: 'Should I make a page for every suburb I serve?', a: 'Usually not. Google’s spam policies treat near-identical town pages as doorway abuse. One service-area page listing the neighborhoods and suburbs you cover works better, with separate pages only where something is really different, like a second shop. If customers don’t visit you, set up your Business Profile as a service-area business.' },
+      { q: 'How much is a plumbing website with SaySites?', a: 'The Site plan is $15 a month, with hosting, your own domain, a job request form, a leads pipeline and SEO included, plus a 7-day free trial. You can also send us your current website for a free redesign preview, so you see the new version with your license block in place before deciding anything.' },
+    ],
+    about: ['Plumbing contractor websites', 'Illinois Plumbing License Law', 'Chicago, Illinois'],
+    published: '2026-10-13',
+    status: 'published',
+  },
   {
     slug: 'new-york-law-firm-website-rules',
     title: 'New York Law Firm Websites After the 2026 Ad Rule Changes',
