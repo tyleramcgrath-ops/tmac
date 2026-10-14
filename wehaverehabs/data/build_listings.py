@@ -39,6 +39,8 @@ EXCLUDE_NAME = re.compile(
     r"\b(jail|correction(al|s)?|prison|detention|penitentiary|sheriff|probation|parole|inmate)\b", re.I
 )
 
+UK_NATIONS = {"England", "Scotland", "Wales", "Northern Ireland"}
+
 CARE_LEVELS = {"Retreat", "Clinical program", "Medically supervised"}
 FOCUS = {
     "Alcohol & substance use", "Anxiety & depression", "Trauma & PTSD", "Burnout & exhaustion",
@@ -228,6 +230,9 @@ def intl(directory):
             name = clean(it.get("name"))
             site = website(it.get("website"))
             country = clean(it.get("country"))
+            region = clean(it.get("region"))
+            if country in UK_NATIONS:  # File Scotland, Wales etc. under the UK, like the CQC listings.
+                country, region = "United Kingdom", country
             if not name or not site or not country:
                 continue
             # Same website + same name is a duplicate; one operator's separate locations are kept.
@@ -244,7 +249,7 @@ def intl(directory):
                 "name": name,
                 "operator": None,
                 "country": country,
-                "region": clean(it.get("region")),
+                "region": region,
                 "city": clean(it.get("city")),
                 "address": None,
                 "lat": None,
