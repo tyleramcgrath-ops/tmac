@@ -5,6 +5,30 @@
   const money = n => `$${n.toFixed(2)}`;
   const tc = s => s[0].toUpperCase() + s.slice(1);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ================= THE BEAR (Teddy's mascot, redrawn from the favicon) ================= */
+  const BEAR = `<svg viewBox="0 0 220 220" aria-hidden="true" class="bear-svg">
+    <g stroke="#0B1912" stroke-linejoin="round" stroke-linecap="round">
+      <circle cx="62" cy="96" r="21" fill="#EFE6D2" stroke-width="5"/><circle cx="62" cy="96" r="9.5" fill="#C9A77C" stroke="none"/>
+      <circle cx="158" cy="96" r="21" fill="#EFE6D2" stroke-width="5"/><circle cx="158" cy="96" r="9.5" fill="#C9A77C" stroke="none"/>
+      <ellipse cx="110" cy="130" rx="58" ry="53" fill="#EFE6D2" stroke-width="5"/>
+      <ellipse cx="76" cy="146" rx="9" ry="5" fill="#D98C7A" opacity=".45" stroke="none"/><ellipse cx="144" cy="146" rx="9" ry="5" fill="#D98C7A" opacity=".45" stroke="none"/>
+      <g class="bear-eyes" stroke="none"><ellipse cx="88" cy="126" rx="5.5" ry="6.5" fill="#0B1912"/><ellipse cx="132" cy="126" rx="5.5" ry="6.5" fill="#0B1912"/><circle cx="90" cy="123.5" r="1.6" fill="#fff"/><circle cx="134" cy="123.5" r="1.6" fill="#fff"/></g>
+      <ellipse cx="110" cy="149" rx="25" ry="19" fill="#F8F2E4" stroke-width="3.5"/>
+      <path d="M100.5 140 Q110 134.5 119.5 140 Q117.5 149 110 150 Q102.5 149 100.5 140Z" fill="#0B1912" stroke="none"/>
+      <path d="M110 150 V156 M102 157.5 Q110 164 118 157.5" fill="none" stroke-width="3.5"/>
+      <g transform="translate(110 189)"><path d="M0 0 L-25 -12 Q-29 0 -25 12 Z M0 0 L25 -12 Q29 0 25 12 Z" fill="#1E4630" stroke-width="4"/><path d="M-19 -6 L-19 6 M19 -6 L19 6" stroke="#D9A23B" stroke-width="2.5"/><circle r="6.5" fill="#D9A23B" stroke-width="3.5"/></g>
+      <g class="bear-hat">
+        <path d="M63 101 Q60 54 79 41 Q93 34 101 47 Q110 38 119 47 Q127 34 141 41 Q160 54 157 101 Z" fill="#1E4630" stroke-width="5"/>
+        <path d="M85 50 Q95 44 101 52" fill="none" stroke="#2D6145" stroke-width="3"/>
+        <path d="M64 87 Q110 96 156 87 L157 99 Q110 108 63 99 Z" fill="#D9A23B" stroke-width="3.5"/>
+        <path d="M12 94 Q34 108 110 104 Q186 108 208 94 Q199 117 110 120 Q21 117 12 94 Z" fill="#17392A" stroke-width="5"/>
+        <text x="110" y="78" text-anchor="middle" font-family="Yellowtail, cursive" font-size="30" fill="#EFE6D2" stroke="none">T</text>
+      </g>
+    </g></svg>`;
+  const bearMark = (cls = "") => `<span class="bear-mark ${cls}">${BEAR}</span>`;
 
   /* ================= DATA ================= */
   const CITY = {
@@ -43,7 +67,9 @@
     { id: "trucker", name: "Teddy Trucker", price: 40, color: "Forest / gold", img: ["apparel-trucker"], sizes: ["One size"], desc: "Forest green mesh trucker with the gold Teddy Headwear oval embroidered on the front. Snap closure." },
     { id: "cord", name: "Corduroy Trucker", price: 45, color: "Cream cord", img: ["apparel-cord"], sizes: ["One size"], desc: "Wide-wale cream corduroy front with a mesh back and the gold Teddy oval embroidered on the crown." },
     { id: "rag", name: "Silk Wild Rag", price: 55, color: "Silk gold", img: ["apparel-rag"], sizes: ["One size"], desc: "A gold silk wild rag cut from the same shade as our hat lining, with a tone-on-tone paisley and a small script T in the corner." },
-    { id: "tote", name: "Canvas Tote", price: 35, color: "Bone canvas", img: ["apparel-tote"], sizes: ["One size"], desc: "Heavy bone canvas tote with saddle leather handles and the Teddy script in forest green." }
+    { id: "tote", name: "Canvas Tote", price: 35, color: "Bone canvas", img: ["apparel-tote"], sizes: ["One size"], desc: "Heavy bone canvas tote with saddle leather handles and the Teddy script in forest green." },
+    { id: "bear-pin", name: "Bear Hat Pin", price: 20, color: "Gold + enamel", img: ["acc-bear-pin"], sizes: ["One size"], desc: "The Teddy bear in hard enamel and polished gold, made to ride on the band or brim of your hat." },
+    { id: "bear-patch", name: "Bear Patch", price: 15, color: "Embroidered", img: ["acc-bear-patch"], sizes: ["One size"], desc: "The Teddy bear, densely embroidered with a raised gold border. Iron it on a jacket, a tote or a cap." }
   ].map(a => ({ ...a, kind: "apparel" }));
   const ALL = [...HATS, ...APPAREL];
   const byId = id => ALL.find(p => p.id === id);
@@ -139,6 +165,15 @@
     if (cnt) { cnt.classList.remove("bump"); void cnt.offsetWidth; cnt.classList.add("bump"); }
     const label = custom ? `Custom "${custom.text}" ${p.type}` : `${p.name}${p.kind === "hat" ? ", " + variant : variant && variant !== "One size" ? ", " + variant : ""}`;
     toast(custom ? blankImg(p.type, variant) : thumbOf(p, variant), `${label} added`);
+    peek();
+  }
+  let pt;
+  function peek() {
+    const el = $("#peek"); if (!el) return;
+    const lines = ["Good pick.", "Looks sharp.", "Yeehaw.", "Fine choice.", "Now that's a hat."];
+    $(".peek__say", el).textContent = lines[Math.floor(Math.random() * lines.length)];
+    el.classList.remove("on"); void el.offsetWidth; el.classList.add("on");
+    clearTimeout(pt); pt = setTimeout(() => el.classList.remove("on"), 2600);
   }
   function lineThumb(l) {
     const p = byId(l.id);
@@ -155,7 +190,7 @@
     $("#subtotal").textContent = money(cart.reduce((s, l) => s + l.qty * linePrice(l), 0));
     $("#cartFoot").hidden = !n;
     if (!n) {
-      box.innerHTML = `<div class="empty"><b>Nothing here yet.</b><span>Every hat starts with a monogram.</span><a class="btn btn--felt" href="studio.html">Design yours</a></div>`;
+      box.innerHTML = `<div class="empty">${bearMark()}<b>Nothing here yet.</b><span>Every hat starts with a monogram.</span><a class="btn btn--felt" href="studio.html">Design yours</a></div>`;
       return;
     }
     const hasHat = cart.some(l => byId(l.id).kind === "hat"), hasApp = cart.some(l => byId(l.id).kind === "apparel");
@@ -189,7 +224,7 @@
       </div></div>
       <header class="hdr${document.body.classList.contains("has-hero") ? "" : " hdr--solid"}" id="hdr">
         <div class="wrap hdr__in">
-          <a class="hdr__logo" href="./" aria-label="Teddy Headwear home"><img src="img/logo.webp" alt="Teddy Headwear" width="450" height="84"></a>
+          <a class="hdr__logo" href="./" aria-label="Teddy Headwear home">${bearMark()}<img src="img/logo.webp" alt="Teddy Headwear" width="450" height="84"></a>
           <nav id="nav" aria-label="Main">${NAV.map(([h, t, k, c]) => `<a href="${h}" class="${c || ""}"${k === page ? ' aria-current="page"' : ""}>${t}</a>`).join("")}</nav>
           <div class="hdr__actions">
             <button class="cart-btn" id="cartOpen" aria-label="Open cart">Cart <span class="cart-count" id="cartCount">0</span></button>
@@ -204,7 +239,7 @@
             <p style="margin:0;font-size:clamp(20px,2.4vw,30px);font-weight:600;line-height:1.25;max-width:30ch">Follow along for drops, shoots and where the hats end up next.</p></div>
           <a class="btn btn--felt" href="https://www.instagram.com/teddyheadwear/" target="_blank" rel="noopener">Follow on Instagram <span class="arrow">↗</span></a>
         </div>
-        <p class="wordmark__big" aria-hidden="true">Teddy</p>
+        <p class="wordmark__big" aria-hidden="true">Teddy<span class="wordmark__bear">${BEAR}</span></p>
       </section>
       <footer class="ft"><div class="wrap">
         <div class="foot">
@@ -225,7 +260,9 @@
           <p class="drawer__note" id="checkoutNote">Shipping and taxes calculated at checkout.</p>
         </div>
       </aside>
-      <div class="toast" id="toast" role="status" aria-live="polite"><img id="toastImg" src="img/cowboy-t-cream.webp" alt=""><span id="toastTxt">Added</span><button id="toastView">View cart</button></div>`;
+      <div class="toast" id="toast" role="status" aria-live="polite"><img id="toastImg" src="img/cowboy-t-cream.webp" alt=""><span id="toastTxt">Added</span><button id="toastView">View cart</button></div>
+      <div class="peek" id="peek" aria-hidden="true">${BEAR}<span class="peek__say">Good pick.</span></div>
+      ${fine && !calm ? '<div class="cursor" id="cursor"><b>VIEW</b></div>' : ""}`;
 
     const hdr = $("#hdr");
     if (document.body.classList.contains("has-hero")) {
@@ -339,6 +376,104 @@
     });
     render();
     return render;
+  }
+
+
+  /* ================= INTRO: the bear pops up, tips its hat, iris out ================= */
+  function intro() {
+    $$("[data-bear]").forEach(e => { e.innerHTML = BEAR; });
+    $$("[data-bearmark]").forEach(e => { e.outerHTML = bearMark(); });
+    const el = $("#intro"); if (!el) return;
+    if (document.documentElement.classList.contains("no-intro") || calm) { el.remove(); return; }
+    try { sessionStorage.setItem("teddy-intro", "1"); } catch (_) {}
+    const done = () => { el.classList.add("gone"); setTimeout(() => el.remove(), 50); };
+    const skip = () => { if (el.classList.contains("skip")) return; el.classList.add("skip"); setTimeout(done, 650); };
+    el.addEventListener("click", skip);
+    addEventListener("keydown", skip, { once: true });
+    setTimeout(done, 3950);
+  }
+
+  /* ================= MOTION + INTERACTION ================= */
+  function fx() {
+    // reveal on scroll (elements start visible; they only slide in)
+    const rvs = $$(".rv");
+    if (rvs.length && !calm && "IntersectionObserver" in window) {
+      document.documentElement.classList.add("js-rv");
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
+      rvs.forEach(r => io.observe(r));
+    }
+    // custom cursor
+    const cur = $("#cursor");
+    if (cur) {
+      let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
+      addEventListener("pointermove", e => {
+        x = e.clientX; y = e.clientY; cur.classList.add("ready");
+        const t = e.target.closest?.(".card__media, .shot, .tile, .hframe, .gallery__main, .club__art");
+        cur.classList.toggle("view", !!t);
+        $("b", cur).textContent = t?.classList.contains("gallery__main") ? "ZOOM" : t?.classList.contains("shot") || t?.classList.contains("hframe") ? "SHOP" : "VIEW";
+        cur.classList.toggle("link", !t && !!e.target.closest?.("a, button, input, label, summary"));
+      }, { passive: true });
+      const loop = () => { cx += (x - cx) * .22; cy += (y - cy) * .22; cur.style.transform = `translate3d(${cx}px, ${cy}px, 0)`; requestAnimationFrame(loop); };
+      loop();
+    }
+    // 3D tilt + light sweep on product plates
+    if (fine && !calm) {
+      document.addEventListener("pointermove", e => {
+        const m = e.target.closest?.(".card__media"); if (!m) return;
+        const r = m.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        m.style.transform = `rotateX(${(.5 - py) * 9}deg) rotateY(${(px - .5) * 11}deg) translateZ(0)`;
+        m.style.setProperty("--gx", px * 100 + "%"); m.style.setProperty("--gy", py * 100 + "%");
+      }, { passive: true });
+      document.addEventListener("pointerout", e => { const m = e.target.closest?.(".card__media"); if (m && !m.contains(e.relatedTarget)) m.style.transform = ""; });
+    }
+    // giant marquee that speeds up with scroll
+    const mq = $$(".bigmarq__track");
+    if (mq.length && !calm) {
+      let last = scrollY, vel = 0, off = 0;
+      const step = () => {
+        const d = scrollY - last; last = scrollY; vel = vel * .9 + d * .1;
+        off -= .6 + Math.abs(vel) * .35;
+        mq.forEach((t, i) => { const w = t.scrollWidth / 2; const o = ((off % w) + w) % w; t.style.transform = `translate3d(${i % 2 ? o - w : -o}px,0,0)`; });
+        requestAnimationFrame(step);
+      };
+      step();
+    }
+    // manifesto words light up as it scrolls through the viewport
+    const man = $(".manifesto");
+    if (man) {
+      const words = $$(".w", man);
+      const lite = () => {
+        const r = man.getBoundingClientRect(), p = Math.min(1, Math.max(0, (innerHeight * .85 - r.top) / (r.height + innerHeight * .35)));
+        const n = calm ? words.length : Math.round(p * words.length);
+        words.forEach((w, i) => w.classList.toggle("lit", i < n));
+      };
+      addEventListener("scroll", lite, { passive: true }); lite();
+    }
+    // city list: photo follows the cursor
+    const fl = $(".cities__float");
+    if (fl && fine) {
+      const img = $("img", fl);
+      $$(".cities a").forEach(a => {
+        a.addEventListener("pointerenter", () => { img.src = a.dataset.img; fl.classList.add("on"); });
+        a.addEventListener("pointerleave", () => fl.classList.remove("on"));
+      });
+      addEventListener("pointermove", e => { fl.style.left = e.clientX + "px"; fl.style.top = e.clientY + "px"; }, { passive: true });
+    }
+    // sticky horizontal campaign rail
+    const rail = $(".hrail");
+    if (rail && !calm && matchMedia("(min-width: 761px)").matches) {
+      const track = $(".hrail__track", rail);
+      const size = () => { rail.style.height = (track.scrollWidth - innerWidth + innerHeight) + "px"; };
+      const move = () => {
+        const r = rail.getBoundingClientRect(), max = track.scrollWidth - innerWidth;
+        const p = Math.min(1, Math.max(0, -r.top / Math.max(1, rail.offsetHeight - innerHeight)));
+        track.style.transform = `translate3d(${-p * max}px,0,0)`;
+      };
+      size(); move();
+      addEventListener("resize", () => { size(); move(); });
+      addEventListener("scroll", move, { passive: true });
+      addEventListener("load", () => { size(); move(); });
+    }
   }
 
   /* ================= PAGES ================= */
@@ -507,7 +642,9 @@
     campaign() { reelNav(); signup(); }
   };
 
+  intro();
   chrome();
   (PAGES[page] || (() => {}))();
+  fx();
   window.Teddy = { add, ALL, HATS, APPAREL, paintStage };
 })();

@@ -29,6 +29,8 @@ APPAREL = [
     ("cord", "Corduroy Trucker", 45, "apparel-cord", "Cream corduroy trucker with the gold Teddy oval."),
     ("rag", "Silk Wild Rag", 55, "apparel-rag", "Gold silk wild rag that matches the hat lining."),
     ("tote", "Canvas Tote", 35, "apparel-tote", "Bone canvas tote with leather handles."),
+    ("bear-pin", "Bear Hat Pin", 20, "acc-bear-pin", "The Teddy bear in hard enamel and polished gold, for your hat band."),
+    ("bear-patch", "Bear Patch", 15, "acc-bear-patch", "The Teddy bear, embroidered, with a raised gold border."),
 ]
 APPAREL = [{"id": i, "name": n, "price": p, "img": f"img/{k}.webp", "desc": d} for i, n, p, k, d in APPAREL]
 
@@ -50,7 +52,10 @@ def head(title, desc, extra=""):
 
 
 def page(path, title, desc, body_attrs, main, extra_head="", after_main=""):
+    flag = ("try{if(sessionStorage.getItem('teddy-intro'))document.documentElement.classList.add('no-intro')}catch(e){}"
+            if path == "index.html" else "document.documentElement.classList.add('no-intro')")
     html = head(title, desc, extra_head) + f"""<body {body_attrs}>
+<script>{flag}</script>{INTRO if path == "index.html" else ""}
 <div id="chrome-top"></div>
 <main id="top">
 {main}
@@ -96,13 +101,37 @@ def stage():
 
 
 # ---------------- HOME ----------------
+INTRO = """
+<div class="intro" id="intro" role="presentation">
+  <div class="intro__stage">
+    <div class="intro__bear" data-bear></div>
+    <div class="intro__word" aria-label="Teddy"><span>T</span><span>E</span><span>D</span><span>D</span><span>Y</span></div>
+    <div class="intro__sub">a new frontier.</div>
+  </div>
+  <button class="intro__skip" type="button">Skip intro</button>
+</div>"""
+
+MANIFESTO = "Born in <i>Jupiter,</i> Florida. Built on the shapes of the <i>West.</i> 100% wool, lined in gold silk, and finished with letters that <i>mean something.</i>"
+def words(t):
+    import re
+    out = []
+    for tok in re.findall(r"<i>.*?</i>|\S+", t):
+        if tok.startswith("<i>"):
+            out += [f'<span class="w"><i>{w}</i></span>' for w in tok[3:-4].split()]
+        else:
+            out.append(f'<span class="w">{tok}</span>')
+    return " ".join(out)
+
+CITIES = [("T", "Texas", "cowboy-t", "scene-texas-motel", "The original"), ("F", "Florida", "cowboy-f", "scene-jupiter-horse", "Home water"),
+          ("NY", "New York", "cowboy-ny", "scene-nyc-night", "City brim"), ("LA", "Los Angeles", "fedora-la", "scene-la-convertible", "Noon shadow")]
+
 HOME = f"""
   <section class="hero hero--shift">
     <div class="hero__img"><img src="img/hero-noir.webp" alt="Model in a cream Teddy cowboy hat, the brim casting a deep shadow over her eyes, against the Atlantic" fetchpriority="high"></div>
     <div class="wrap hero__content">
       <span class="eyebrow">Campaign 01 / Four cities, one frontier</span>
       <h1 class="display"><span class="row"><span>A new</span></span><span class="row"><span class="serif-i">frontier.</span></span></h1>
-      <p class="hero__sub">Western silhouettes, contemporary monograms. 100% wool cowboy hats and fedoras, and now your own letters stitched on the crown.</p>
+      <p class="hero__sub">Western silhouettes, contemporary monograms. 100% wool cowboy hats and fedoras, lined in gold silk, with your own letters on the crown.</p>
       <div class="hero__ctas">
         <a class="btn" href="shop.html#hats">Shop hats <span class="arrow">→</span></a>
         <a class="btn btn--ghost" href="studio.html">Design your monogram</a>
@@ -110,23 +139,32 @@ HOME = f"""
       <div class="hero__meta"><span>100% wool</span><span>Silk-lined interior</span><span>Custom letters</span></div>
     </div>
     <div class="seal" aria-hidden="true">
-      <svg viewBox="0 0 150 150"><defs><path id="circ" d="M75,75 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs><text><textPath href="#circ">Born in Jupiter, Florida ✦ Teddy Headwear ✦ </textPath></text></svg>
-      <b>T</b>
+      <svg class="ring" viewBox="0 0 150 150"><defs><path id="circ" d="M75,75 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs><text><textPath href="#circ">Born in Jupiter, Florida ✦ Teddy Headwear ✦ </textPath></text></svg>
+      <span data-bearmark></span>
     </div>
   </section>
 
-  <section class="section" id="shop">
+  <div class="bigmarq" aria-hidden="true"><div class="bigmarq__track">{''.join('<span>Cowboy <i>&amp;</i> <span class="o">Fedora</span> <span data-bearmark></span> Your <i>letters</i> <span class="o">Jupiter, FL</span> <span data-bearmark></span></span>' for _ in range(4))}</div></div>
+
+  <section class="section sec-night" id="shop">
     <div class="wrap">
       <div class="section-head">
-        <div><span class="eyebrow">The hats</span><h2 class="display">Pick your <span class="serif-i">city.</span></h2></div>
-        <div><p class="lede" style="margin:0">T for Texas, F for Florida, NY and LA. Every hat has its own page now, so open one up and look closer.</p>
+        <div><span class="eyebrow">The hats</span><h2 class="display">Pick your <span class="serif-i gold">city.</span></h2></div>
+        <div><p class="lede" style="margin:0">T for Texas, F for Florida, NY and LA. Every hat has its own page, so open one up and look closer.</p>
           <a class="btn btn--line" href="shop.html" style="justify-self:start">Shop everything <span class="arrow">→</span></a></div>
       </div>
       <div class="grid" id="grid"></div>
     </div>
   </section>
 
-  <section class="section dark" id="teaser">
+  <section class="section sec-ox">
+    <div class="wrap" style="display:grid;gap:36px">
+      <span class="eyebrow">The brand</span>
+      <p class="manifesto">{words(MANIFESTO)}</p>
+    </div>
+  </section>
+
+  <section class="section sec-pine" id="teaser">
     <div class="wrap">
       <div class="section-head" style="margin-bottom:clamp(28px,4vw,48px)">
         <div><span class="eyebrow">New / Monogram Studio</span><h2 class="display">Your letters, <span class="serif-i gold">your hat.</span></h2></div>
@@ -141,27 +179,42 @@ HOME = f"""
   </section>
   <style>@media (max-width: 900px) {{ .teaser-grid {{ grid-template-columns: minmax(0, 1fr) !important; }} }}</style>
 
-  <section class="section black">
+  <section class="section sec-night">
     <div class="wrap">
-      <div class="section-head">
-        <div><span class="eyebrow">Campaign 01</span><h2 class="display">Four cities. <span class="serif-i gold">One frontier.</span></h2></div>
-        <a class="btn btn--ghost" href="campaign.html">See the campaign <span class="arrow">→</span></a>
-      </div>
-      <div class="mosaic">
-        <figure class="m-a"><img src="img/scene-jupiter-horse.webp" alt="Rider on horseback in the Jupiter surf, cream F cowboy hat" loading="lazy"><figcaption>Jupiter</figcaption></figure>
-        <figure class="m-b"><img src="img/scene-nyc-night.webp" alt="Man under a New York streetlight in the brown NY cowboy hat" loading="lazy"><figcaption>New York</figcaption></figure>
-        <figure class="m-c"><img src="img/scene-la-convertible.webp" alt="Woman by a cream convertible in the LA fedora" loading="lazy"><figcaption>Los Angeles</figcaption></figure>
-        <figure class="m-d"><img src="img/scene-texas-motel.webp" alt="Man on a pickup outside a Texas motel in the brown T cowboy" loading="lazy"><figcaption>Texas</figcaption></figure>
-        <figure class="m-e"><img src="img/noir-life-5.webp" alt="Model holding the brim of a cream NY fedora, eyes in shadow" loading="lazy"><figcaption>Studio</figcaption></figure>
+      <div class="section-head"><div><span class="eyebrow">Four cities</span><h2 class="display">Every letter <span class="serif-i gold">is a place.</span></h2></div></div>
+      <ul class="cities">
+        {''.join(f'<li><a href="product-{pid}.html" data-img="img/{img}.webp"><span class="num">{m}</span><span class="name">{name}</span><span class="meta">{line} →</span></a></li>' for m, name, pid, img, line in CITIES)}
+      </ul>
+      <div class="cities__float" aria-hidden="true"><img src="img/scene-texas-motel.webp" alt=""></div>
+    </div>
+  </section>
+
+  <section class="hrail sec-night" aria-label="Campaign 01">
+    <div class="hrail__sticky">
+      <div class="hrail__track">
+        <div class="hrail__intro">
+          <span class="eyebrow">Campaign 01</span>
+          <h2 class="display">Shot with the <span class="serif-i gold">brim shadow.</span></h2>
+          <p class="lede" style="margin:0">One hard light per frame, and the brim does the rest. Keep scrolling.</p>
+          <a class="btn btn--ghost" href="campaign.html" style="justify-self:start">See the campaign <span class="arrow">→</span></a>
+        </div>
+        {''.join(f'<figure class="hframe{" wide" if w else ""}"><img src="img/{img}.webp" alt="{alt}" loading="lazy"><figcaption><b>{cap}</b><a href="product-{pid}.html">Shop</a></figcaption></figure>' for img, alt, cap, pid, w in [
+            ("scene-jupiter-horse", "Rider in the Jupiter surf in the cream F cowboy", "Jupiter", "cowboy-f", 1),
+            ("noir-life-2", "Man in the brown NY cowboy under a single spotlight", "New York", "cowboy-ny", 0),
+            ("scene-la-convertible", "Woman by a convertible in the cream LA fedora", "Los Angeles", "fedora-la", 1),
+            ("noir-life-3", "Woman seated in the brown LA cowboy, eyes in shadow", "Studio", "cowboy-la", 0),
+            ("scene-texas-motel", "Man outside a Texas motel in the brown T cowboy", "Texas", "cowboy-t", 1),
+            ("noir-life-5", "Hands on the brim of the cream NY fedora", "Hands on the brim", "fedora-ny", 0),
+            ("scene-studio-duo", "Two models in Teddy hats under one light", "The pair", "fedora-t", 1)])}
       </div>
     </div>
   </section>
 
-  <section class="section" id="apparel">
+  <section class="section sec-choc" id="apparel">
     <div class="wrap">
       <div class="section-head">
-        <div><span class="eyebrow">The apparel drop</span><h2 class="display">Beyond the <span class="serif-i">brim.</span></h2></div>
-        <div><p class="lede" style="margin:0">Tees, fleece, truckers and a gold silk wild rag cut from the same shade as our hat lining.</p>
+        <div><span class="eyebrow">The apparel drop</span><h2 class="display">Beyond the <span class="serif-i gold">brim.</span></h2></div>
+        <div><p class="lede" style="margin:0">Tees, fleece, truckers, a gold silk wild rag cut to match the hat lining, and the bear in enamel and thread.</p>
           <a class="btn btn--line" href="shop.html#apparel" style="justify-self:start">Shop all apparel <span class="arrow">→</span></a></div>
       </div>
       <div class="grid" id="appGrid"></div>
@@ -169,62 +222,63 @@ HOME = f"""
   </section>
   <section class="split" aria-label="Apparel looks">
     <a class="tile" href="product-hoodie.html"><img src="img/apparel-hoodie-model.webp" alt="Woman in the forest green Frontier Hoodie and cream cowboy hat" loading="lazy"><span class="tile__price">$95</span>
-      <div class="tile__body"><span class="eyebrow">Frontier Hoodie</span><h3 class="display">Gold <span class="serif-i">thread.</span></h3><span class="link">Shop the hoodie <span>→</span></span></div></a>
+      <div class="tile__body"><span class="eyebrow">Frontier Hoodie</span><h3 class="display">Gold <span class="serif-i gold">thread.</span></h3><span class="link">Shop the hoodie <span>→</span></span></div></a>
     <a class="tile" href="product-tee-script.html"><img src="img/apparel-tee-black-model.webp" alt="Man in the black Teddy Script Tee and brown cowboy hat at dusk" loading="lazy"><span class="tile__price">$45</span>
-      <div class="tile__body"><span class="eyebrow">Teddy Script Tee</span><h3 class="display">After <span class="serif-i">dark.</span></h3><span class="link">Shop the tee <span>→</span></span></div></a>
+      <div class="tile__body"><span class="eyebrow">Teddy Script Tee</span><h3 class="display">After <span class="serif-i gold">dark.</span></h3><span class="link">Shop the tee <span>→</span></span></div></a>
   </section>
 
-  <section class="section" id="details">
+  <section class="section sec-ox" id="list">
+    <div class="wrap club">
+      <div class="club__art rv"><img src="img/bear-hero.webp" alt="The Teddy bear in a green cowboy hat on an oxblood velvet chair, a cream cowboy hat at its feet" loading="lazy">
+        <a class="club__pin" href="product-bear-pin.html" aria-label="Shop the Bear Hat Pin"><img src="img/acc-bear-pin.webp" alt="" loading="lazy"></a></div>
+      <div>
+        <span class="eyebrow">The Bear Club</span>
+        <h2 class="display h-md" style="margin-top:18px">First in line, <span class="serif-i gold">every drop.</span></h2>
+        <p class="lede">The bear has been on every Teddy tab since day one. Join the club for release dates, new colors and first-in-line passes before anyone else.</p>
+        <form class="signup" id="signup" novalidate>
+          <label for="email" class="sr">Email address</label>
+          <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required>
+          <button class="btn" type="submit">Join the club <span class="arrow">→</span></button>
+        </form>
+        <p class="signup-note" id="signupNote" role="status"></p>
+        <p style="display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 0"><a class="gold" href="product-bear-pin.html" style="font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase">Bear Hat Pin $20 →</a><a class="gold" href="product-bear-patch.html" style="font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase">Bear Patch $15 →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sec-pine" id="details">
     <div class="wrap details__grid">
-      <div class="hot">
+      <div class="hot rv">
         <img id="hotImg" src="img/detail-interior.webp" alt="Inside a Teddy Headwear hat: gold silk lining and sweatband" loading="lazy">
         <button class="pin" style="left:50%;top:44%" data-i="0" aria-pressed="true" aria-label="Silk lined interior">1</button>
         <button class="pin" style="left:28%;top:56%" data-i="1" aria-pressed="false" aria-label="Adjustable and breathable sweatband">2</button>
       </div>
       <div>
         <span class="eyebrow">The details</span>
-        <h2 class="display" style="margin-top:18px">Look <span class="serif-i">inside.</span></h2>
+        <h2 class="display" style="margin-top:18px">Look <span class="serif-i gold">inside.</span></h2>
         <ul class="feat" id="feat">
           <li class="open"><button data-i="0"><span class="n">01</span><b>Custom silk lined interior</b><i>+</i></button><p>A gold silk lining that matches our woven label, so the inside of the hat is as finished as the outside.</p></li>
           <li><button data-i="1"><span class="n">02</span><b>Adjustable, breathable sweatband</b><i>+</i></button><p>Dial in the fit and stay comfortable through a full day in the Florida sun.</p></li>
           <li><button data-i="2"><span class="n">03</span><b>Branded exterior woven label</b><i>+</i></button><p>The Teddy script, woven in gold and stitched to the brim.</p></li>
           <li><button data-i="3"><span class="n">04</span><b>Leather band with metal button</b><i>+</i></button><p>A saddle leather hat band finished with a debossed metal button.</p></li>
         </ul>
-        <a class="btn btn--felt" href="studio.html">Design yours <span class="arrow">→</span></a>
+        <a class="btn" href="studio.html">Design yours <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
 
-  <section class="section paper2" id="look">
+  <section class="section sec-night" id="look">
     <div class="wrap section-head">
-      <div><span class="eyebrow">Lookbook</span><h2 class="display">Worn <span class="serif-i">in.</span></h2></div>
+      <div><span class="eyebrow">Lookbook</span><h2 class="display">Worn <span class="serif-i gold">in.</span></h2></div>
       <div class="reel-nav"><button id="reelPrev" aria-label="Previous looks">←</button><button id="reelNext" aria-label="Next looks">→</button></div>
     </div>
     <div class="reel" id="reel">
       {''.join(f'<figure class="shot"><img src="img/{img}.webp" alt="{cap}" loading="lazy"><figcaption><span>{cap}</span><a href="product-{pid}.html">Shop</a></figcaption></figure>' for img, cap, pid in [
-          ("noir-life-1", "T Cowboy, cream", "cowboy-t"), ("noir-life-2", "NY Cowboy, brown", "cowboy-ny"), ("noir-life-4", "T Fedora, cream", "fedora-t"),
-          ("noir-life-3", "LA Cowboy, brown", "cowboy-la"), ("noir-life-6", "Jupiter, cream cowboy", "cowboy-f"), ("scene-studio-duo", "T Fedora + T Cowboy", "fedora-t"),
-          ("noir-life-5", "NY Fedora, cream", "fedora-ny"), ("apparel-hoodie-model", "Frontier Hoodie", "hoodie")])}
+          ("noir-life-1", "T Cowboy, cream", "cowboy-t"), ("noir-life-4", "T Fedora, cream", "fedora-t"), ("scene-nyc-night", "NY Cowboy, brown", "cowboy-ny"),
+          ("noir-life-6", "Jupiter, cream cowboy", "cowboy-f"), ("noir-cowboy-model", "F Cowboy, cream", "cowboy-f"), ("apparel-hoodie-model", "Frontier Hoodie", "hoodie"),
+          ("apparel-tee-black-model", "Teddy Script Tee", "tee-script"), ("bear-hero", "The bear", "bear-pin")])}
     </div>
   </section>
-
-  <section class="section dark" id="list">
-    <div class="wrap" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center" id="listGrid">
-      <img src="img/apparel-trucker.webp" alt="Green Teddy Trucker with gold oval logo" loading="lazy" style="border-radius:6px;width:100%;max-width:520px;justify-self:center">
-      <div>
-        <span class="eyebrow">The frontier list</span>
-        <h2 class="display h-md" style="margin-top:18px">First in line, <span class="serif-i gold">every drop.</span></h2>
-        <p class="lede">Release dates, new colors and first-in-line passes before anyone else.</p>
-        <form class="signup" id="signup" novalidate>
-          <label for="email" class="sr">Email address</label>
-          <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required>
-          <button class="btn" type="submit">Join the list <span class="arrow">→</span></button>
-        </form>
-        <p class="signup-note" id="signupNote" role="status"></p>
-      </div>
-    </div>
-  </section>
-  <style>@media (max-width: 900px) {{ #listGrid {{ grid-template-columns: minmax(0, 1fr) !important; }} }}</style>
 """
 
 # ---------------- SHOP ----------------
@@ -241,7 +295,7 @@ SHOP = """
         <button class="chip" data-f="hats" aria-pressed="false">All hats</button>
         <button class="chip" data-f="cowboy" aria-pressed="false">Cowboy <small>$150</small></button>
         <button class="chip" data-f="fedora" aria-pressed="false">Fedora <small>$140</small></button>
-        <button class="chip" data-f="apparel" aria-pressed="false">Apparel <small>from $35</small></button>
+        <button class="chip" data-f="apparel" aria-pressed="false">Apparel <small>from $15</small></button>
       </div>
       <span class="mono" id="count" style="font-size:13px;color:var(--muted)"></span>
     </div>
@@ -278,7 +332,7 @@ STUDIO = f"""
     </div>
   </section>
   <style>@media (max-width: 900px) {{ #studioGrid {{ grid-template-columns: minmax(0, 1fr) !important; }} #stageCol {{ position: static !important; }} }}</style>
-  <section class="section dark">
+  <section class="section sec-pine">
     <div class="wrap">
       <div class="section-head"><div><span class="eyebrow">How it works</span><h2 class="display h-md">Three steps to <span class="serif-i gold">yours.</span></h2></div></div>
       <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px">
@@ -308,7 +362,7 @@ def chapter(n, city, title, img, alt, copy, shop, pair):
       <div class="row"><a class="btn" href="product-{shop[0]}.html">{shop[1]} <span class="arrow">→</span></a><a class="btn btn--ghost" href="studio.html">Design your own</a></div>
     </div>
   </section>
-  <section class="section--tight black"><div class="wrap pair">{pair_html}</div></section>"""
+  <section class="section--tight sec-night"><div class="wrap pair">{pair_html}</div></section>"""
 
 
 CAMPAIGN = """
@@ -332,7 +386,7 @@ CAMPAIGN = """
     + chapter("T", "Texas", 'The <span class="serif-i gold">original.</span>', "scene-texas-motel", "Man on a pickup outside a Texas roadside motel at dusk in the brown T cowboy hat",
               "Where the cowboy hat got its shape. Dusk on the highway and neon coming on.", ("cowboy-t", "Shop the T Cowboy"),
               [("scene-studio-duo", "T Fedora + T Cowboy", "fedora-t"), ("noir-life-4", "T Fedora, cream", "fedora-t")]) + """
-  <section class="section dark"><div class="wrap" style="display:grid;gap:22px;justify-items:start">
+  <section class="section sec-pine"><div class="wrap" style="display:grid;gap:22px;justify-items:start">
     <span class="eyebrow">Your city isn't here?</span>
     <h2 class="display">Stitch <span class="serif-i gold">your own.</span></h2>
     <p class="lede" style="margin:0">Put any letters on the crown in the Monogram Studio: initials, an area code, your town.</p>
