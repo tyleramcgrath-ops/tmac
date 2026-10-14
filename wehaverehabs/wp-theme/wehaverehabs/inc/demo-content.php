@@ -414,6 +414,11 @@ function whr_demo_remove() {
 	foreach ( array( 'destination', 'condition', 'care_level', 'approach', 'setting', 'category' ) as $tax ) {
 		$terms = get_terms( array( 'taxonomy' => $tax, 'hide_empty' => false, 'meta_key' => 'whr_demo', 'fields' => 'ids' ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
 		foreach ( is_wp_error( $terms ) ? array() : $terms as $term_id ) {
+			$objects = get_objects_in_term( $term_id, $tax );
+			if ( ! is_wp_error( $objects ) && $objects ) {
+				delete_term_meta( $term_id, 'whr_demo' ); // Still used by real or imported listings: keep it.
+				continue;
+			}
 			wp_delete_term( $term_id, $tax );
 		}
 	}

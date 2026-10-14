@@ -26,6 +26,11 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
   and sorting. Sponsored listings appear first and are always labeled.
 * Inquiries: the form on each sanctuary emails the sanctuary's inquiry address (or the site admin)
   and keeps a private copy under wp-admin → Inquiries. "List your sanctuary" requests land there too.
+* Public listings & claims: import real facilities from listings.jsonl.gz (Tools → Import listings,
+  or `wp whr-import listings.jsonl.gz`). Imported listings show only their source facts with
+  attribution and a "Claim this listing" form. Claims land in Inquiries; tick "Claimed by the
+  facility" on the sanctuary to switch it to the full profile. Claimed listings rank above public ones.
+  The results page also has a "Name or city" keyword search.
 * Page template "For sanctuaries (listing & plans)" for the owners' page.
 * Appearance → Customize → We Have Rehabs: homepage text and photos, care-team WhatsApp,
   book-a-call link, contact email, crisis-line text, helplines link, plan prices.

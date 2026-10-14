@@ -5,9 +5,10 @@
  * @package WeHaveRehabs
  */
 
-$stay = whr_stay_text();
+$stay    = whr_stay_text();
+$claimed = whr_is_claimed();
 ?>
-<a class="card" href="<?php the_permalink(); ?>">
+<a class="card<?php echo $claimed ? '' : ' card--public'; ?>" href="<?php the_permalink(); ?>">
 	<span class="card__media">
 		<?php echo whr_post_image( null, 'whr-card', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built by core image functions. ?>
 		<?php echo whr_care_badge(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>
@@ -22,10 +23,14 @@ $stay = whr_stay_text();
 	<?php endif; ?>
 	<span class="card__meta">
 		<?php
-		if ( $stay ) {
-			echo esc_html( $stay ) . ' · ';
+		if ( ! $claimed ) {
+			esc_html_e( 'Public listing · Unclaimed', 'wehaverehabs' );
+		} else {
+			if ( $stay ) {
+				echo esc_html( $stay ) . ' · ';
+			}
+			echo whr_price_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
 		}
-		echo whr_price_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
 		?>
 	</span>
 </a>

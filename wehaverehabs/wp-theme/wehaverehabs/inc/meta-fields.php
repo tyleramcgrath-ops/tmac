@@ -46,6 +46,25 @@ function whr_sanctuary_fields() {
 		'whr_not_included'      => array( __( 'Not included', 'wehaverehabs' ), 'textarea', '', 'content' ),
 		'whr_guest_quote'       => array( __( 'Guest reflection', 'wehaverehabs' ), 'textarea', __( 'Only publish real, consented guest words.', 'wehaverehabs' ), 'content' ),
 		'whr_guest_attribution' => array( __( 'Guest attribution', 'wehaverehabs' ), 'text', __( 'e.g. J.M. · Canada · 30 nights', 'wehaverehabs' ), 'content' ),
+
+		'whr_claimed'           => array( __( 'Claimed by the facility', 'wehaverehabs' ), 'checkbox', __( 'Tick once you have verified the person claiming works there. Claimed listings get the full profile and the inquiry form.', 'wehaverehabs' ), 'listing' ),
+		'whr_address'           => array( __( 'Address', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_phone'             => array( __( 'Public phone', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_intake_phone'      => array( __( 'Intake phone', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_website'           => array( __( 'Website', 'wehaverehabs' ), 'url', '', 'listing' ),
+		'whr_lat'               => array( __( 'Latitude', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_lng'               => array( __( 'Longitude', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_operator'          => array( __( 'Operated by', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_service_setting'   => array( __( 'Service settings', 'wehaverehabs' ), 'textarea', '', 'listing' ),
+		'whr_approaches'        => array( __( 'Treatment approaches', 'wehaverehabs' ), 'textarea', '', 'listing' ),
+		'whr_programs'          => array( __( 'Programs & groups', 'wehaverehabs' ), 'textarea', '', 'listing' ),
+		'whr_payment'           => array( __( 'Payment & insurance', 'wehaverehabs' ), 'textarea', '', 'listing' ),
+		'whr_license_text'      => array( __( 'Licenses & accreditation (from source)', 'wehaverehabs' ), 'textarea', '', 'listing' ),
+		'whr_ages'              => array( __( 'Ages accepted', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_source'            => array( __( 'Data source', 'wehaverehabs' ), 'text', __( 'samhsa, cqc, web or manual.', 'wehaverehabs' ), 'listing' ),
+		'whr_source_id'         => array( __( 'Source ID', 'wehaverehabs' ), 'text', '', 'listing' ),
+		'whr_source_url'        => array( __( 'Source page', 'wehaverehabs' ), 'url', '', 'listing' ),
+		'whr_source_date'       => array( __( 'Source retrieved', 'wehaverehabs' ), 'date', '', 'listing' ),
 	);
 }
 
@@ -107,6 +126,8 @@ function whr_sanitize_field( $type, $value ) {
 			return $value ? 1 : 0;
 		case 'email':
 			return sanitize_email( $value );
+		case 'url':
+			return esc_url_raw( $value );
 		case 'date':
 			return preg_match( '/^\d{4}-\d{2}-\d{2}$/', $value ) ? $value : '';
 		case 'gallery':
@@ -152,7 +173,7 @@ function whr_render_field( $key, $f, $value ) {
 				esc_html__( 'Clear', 'wehaverehabs' )
 			);
 		} else {
-			$input = array( 'number' => 'number', 'email' => 'email', 'date' => 'date' );
+			$input = array( 'number' => 'number', 'email' => 'email', 'date' => 'date', 'url' => 'url' );
 			printf( '<input type="%1$s" id="%2$s" name="%2$s" value="%3$s" class="widefat">', esc_attr( $input[ $type ] ?? 'text' ), $id, esc_attr( $value ) );
 		}
 	}
@@ -171,6 +192,7 @@ add_action(
 			'trust'   => __( 'License & verification', 'wehaverehabs' ),
 			'contact' => __( 'Inquiries & travel', 'wehaverehabs' ),
 			'content' => __( 'Profile page content', 'wehaverehabs' ),
+			'listing' => __( 'Public listing & claim status', 'wehaverehabs' ),
 		);
 		foreach ( $groups as $group => $title ) {
 			add_meta_box(
@@ -187,7 +209,7 @@ add_action(
 					}
 				},
 				'sanctuary',
-				'content' === $group ? 'normal' : ( 'basics' === $group ? 'normal' : 'side' ),
+				in_array( $group, array( 'basics', 'content', 'listing' ), true ) ? 'normal' : 'side',
 				'basics' === $group ? 'high' : 'default'
 			);
 		}

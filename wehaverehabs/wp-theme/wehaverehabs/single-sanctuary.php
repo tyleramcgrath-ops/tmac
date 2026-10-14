@@ -9,6 +9,10 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
+	if ( ! whr_is_claimed() ) {
+		get_template_part( 'template-parts/profile-unclaimed' );
+		continue;
+	}
 	$post_id  = get_the_ID();
 	$gallery  = whr_gallery_ids();
 	$dest     = whr_first_term( 'destination' );

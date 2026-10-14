@@ -42,7 +42,7 @@ global $wp_query;
 	<section class="results-main" aria-label="<?php esc_attr_e( 'Results', 'wehaverehabs' ); ?>">
 		<form class="results-bar" method="get">
 			<?php
-			foreach ( array( 'dest', 'need', 'care', 'setting', 'stay', 'budget' ) as $keep ) {
+			foreach ( array( 'dest', 'need', 'care', 'setting', 'stay', 'budget', 'q' ) as $keep ) {
 				if ( $f[ $keep ] ) {
 					printf( '<input type="hidden" name="%s" value="%s">', esc_attr( $keep ), esc_attr( $f[ $keep ] ) );
 				}

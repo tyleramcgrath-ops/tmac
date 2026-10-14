@@ -92,7 +92,69 @@ function whr_image( $attachment_id, $size = 'large', $attr = array(), $fallback 
  */
 function whr_post_image( $post_id = null, $size = 'whr-card', $attr = array() ) {
 	$post_id = $post_id ? $post_id : get_the_ID();
-	return whr_image( (int) get_post_thumbnail_id( $post_id ), $size, $attr );
+	$thumb   = (int) get_post_thumbnail_id( $post_id );
+	if ( ! $thumb && 'sanctuary' === get_post_type( $post_id ) ) {
+		// No photos yet (e.g. an unclaimed public listing): a neutral brand panel, never a stock photo
+		// that could be mistaken for the facility.
+		$class = trim( 'whr-placeholder ' . ( isset( $attr['class'] ) ? $attr['class'] : '' ) );
+		return '<img src="' . esc_url( whr_asset( 'brand/placeholder.svg' ) ) . '" alt="" class="' . esc_attr( $class ) . '" loading="lazy">';
+	}
+	return whr_image( $thumb, $size, $attr );
+}
+
+/**
+ * Whether a listing is managed by the facility (or was created by the site team).
+ * Imported public listings stay "unclaimed" until an admin approves a claim.
+ *
+ * @param int|null $post_id Post ID.
+ * @return bool
+ */
+function whr_is_claimed( $post_id = null ) {
+	$source = whr_meta( 'source', $post_id );
+	return (bool) whr_meta( 'claimed', $post_id ) || '' === $source || 'manual' === $source;
+}
+
+/**
+ * Attribution line for an imported listing.
+ *
+ * @param int|null $post_id Post ID.
+ * @return string Escaped HTML.
+ */
+function whr_source_note( $post_id = null ) {
+	$source = whr_meta( 'source', $post_id );
+	$date   = whr_meta( 'source_date', $post_id );
+	$when   = $date ? date_i18n( 'F Y', strtotime( $date ) ) : '';
+	$url    = whr_meta( 'source_url', $post_id );
+	switch ( $source ) {
+		case 'samhsa':
+			$text = sprintf(
+				/* translators: %s: month and year */
+				__( 'Details from the US government’s public FindTreatment.gov locator (SAMHSA), retrieved %s. SAMHSA does not endorse this site or this listing.', 'wehaverehabs' ),
+				$when
+			);
+			break;
+		case 'cqc':
+			$text = sprintf(
+				/* translators: %s: month and year */
+				__( 'Details from the Care Quality Commission directory, retrieved %s. Contains public sector information licensed under the Open Government Licence v3.0.', 'wehaverehabs' ),
+				$when
+			);
+			break;
+		case 'web':
+			$text = sprintf(
+				/* translators: %s: month and year */
+				__( 'Compiled from the facility’s public website, %s.', 'wehaverehabs' ),
+				$when
+			);
+			break;
+		default:
+			return '';
+	}
+	$html = esc_html( $text );
+	if ( $url ) {
+		$html .= ' <a href="' . esc_url( $url ) . '" target="_blank" rel="noopener nofollow">' . esc_html__( 'Source', 'wehaverehabs' ) . '</a>';
+	}
+	return $html;
 }
 
 /**
@@ -206,6 +268,11 @@ function whr_location( $post_id = null ) {
  * @return int
  */
 function whr_term_count( $term ) {
+	$cache_key = 'whr_count_' . $term->term_id . '_' . (int) get_option( 'whr_count_gen', 0 );
+	$cached    = get_transient( $cache_key );
+	if ( false !== $cached ) {
+		return (int) $cached;
+	}
 	$q = new WP_Query(
 		array(
 			'post_type'      => 'sanctuary',
@@ -215,8 +282,20 @@ function whr_term_count( $term ) {
 			'tax_query'      => array( array( 'taxonomy' => $term->taxonomy, 'terms' => $term->term_id, 'include_children' => true ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
 		)
 	);
+	set_transient( $cache_key, (int) $q->found_posts, 12 * HOUR_IN_SECONDS );
 	return (int) $q->found_posts;
 }
+
+/** Invalidate cached counts whenever a sanctuary changes. */
+function whr_bump_count_generation() {
+	update_option( 'whr_count_gen', (int) get_option( 'whr_count_gen', 0 ) + 1, false );
+}
+add_action( 'save_post_sanctuary', 'whr_bump_count_generation' );
+add_action( 'before_delete_post', function ( $post_id ) {
+	if ( 'sanctuary' === get_post_type( $post_id ) ) {
+		whr_bump_count_generation();
+	}
+} );
 
 /**
  * "3 sanctuaries".

@@ -16,6 +16,12 @@ if ( is_tax( 'condition' ) && ! $f['need'] ) {
 ?>
 <div class="search-float<?php echo $compact ? ' search-float--sm' : ''; ?>">
 	<form class="search-panel" method="get" action="<?php echo esc_url( get_post_type_archive_link( 'sanctuary' ) ); ?>" role="search">
+		<?php if ( $compact ) : ?>
+			<label class="search-panel__q">
+				<span><?php esc_html_e( 'Name or city', 'wehaverehabs' ); ?></span>
+				<input type="search" name="q" value="<?php echo esc_attr( $f['q'] ); ?>" placeholder="<?php esc_attr_e( 'e.g. Nosara, Phoenix', 'wehaverehabs' ); ?>">
+			</label>
+		<?php endif; ?>
 		<label>
 			<span><?php esc_html_e( 'Destination', 'wehaverehabs' ); ?></span>
 			<select name="dest">

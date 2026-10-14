@@ -59,11 +59,12 @@ if ( $conditions && ! is_wp_error( $conditions ) ) :
 <?php
 $destinations = get_terms( array( 'taxonomy' => 'destination', 'parent' => 0, 'hide_empty' => false ) );
 if ( $destinations && ! is_wp_error( $destinations ) ) :
-	// Most-listed destinations first.
+	// Destinations with their own photo first (imported countries have none yet), then most-listed.
 	usort(
 		$destinations,
 		function ( $a, $b ) {
-			return whr_term_count( $b ) - whr_term_count( $a );
+			$photo = (int) (bool) get_term_meta( $b->term_id, 'whr_image', true ) - (int) (bool) get_term_meta( $a->term_id, 'whr_image', true );
+			return $photo ? $photo : whr_term_count( $b ) - whr_term_count( $a );
 		}
 	);
 	$destinations = array_slice( $destinations, 0, 4 );
@@ -115,6 +116,7 @@ $more_query  = new WP_Query(
 		'posts_per_page' => 3,
 		'post__not_in'   => $shown,
 		'no_found_rows'  => true,
+		'meta_key'       => '_thumbnail_id', // phpcs:ignore WordPress.DB.SlowDBQuery -- only listings with photos on the homepage.
 	)
 );
 if ( $featured->have_posts() || $more_query->have_posts() ) :

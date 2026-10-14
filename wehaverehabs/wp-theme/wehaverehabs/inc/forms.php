@@ -14,6 +14,8 @@ add_action( 'admin_post_nopriv_whr_inquiry', 'whr_handle_inquiry' );
 add_action( 'admin_post_whr_inquiry', 'whr_handle_inquiry' );
 add_action( 'admin_post_nopriv_whr_listing', 'whr_handle_listing' );
 add_action( 'admin_post_whr_listing', 'whr_handle_listing' );
+add_action( 'admin_post_nopriv_whr_claim', 'whr_handle_claim' );
+add_action( 'admin_post_whr_claim', 'whr_handle_claim' );
 
 /**
  * Basic abuse protection: nonce, honeypot and a per-IP hourly cap.
@@ -168,6 +170,61 @@ function whr_handle_listing() {
 }
 
 /**
+ * A facility asks to take over its public listing. An admin verifies the request, then ticks
+ * "Claimed by the facility" on the sanctuary and sets its inquiry email.
+ */
+function whr_handle_claim() {
+	$sanctuary_id = isset( $_POST['sanctuary_id'] ) ? absint( $_POST['sanctuary_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- verified below.
+	$back         = $sanctuary_id ? get_permalink( $sanctuary_id ) : home_url( '/' );
+
+	if ( ! $sanctuary_id || 'sanctuary' !== get_post_type( $sanctuary_id ) || ! whr_form_is_valid( 'whr_claim' ) ) {
+		whr_form_redirect( $back, 'error', 'claim' );
+	}
+	$name  = whr_posted( 'claim_name' );
+	$email = sanitize_email( whr_posted( 'claim_email' ) );
+	if ( '' === $name || ! is_email( $email ) || '1' !== whr_posted( 'claim_confirm' ) ) {
+		whr_form_redirect( $back, 'error', 'claim' );
+	}
+	$title  = get_the_title( $sanctuary_id );
+	$site   = whr_meta( 'website', $sanctuary_id );
+	$host   = $site ? preg_replace( '/^www\./', '', (string) wp_parse_url( $site, PHP_URL_HOST ) ) : '';
+	$domain = substr( strrchr( $email, '@' ), 1 );
+	$fields = array(
+		__( 'Facility', 'wehaverehabs' )  => $title,
+		__( 'Name', 'wehaverehabs' )      => $name,
+		__( 'Role', 'wehaverehabs' )      => whr_posted( 'claim_role' ),
+		__( 'Email', 'wehaverehabs' )     => $email,
+		__( 'Phone', 'wehaverehabs' )     => whr_posted( 'claim_phone' ),
+		__( 'Message', 'wehaverehabs' )   => whr_posted( 'message', true ),
+		__( 'Listed website', 'wehaverehabs' ) => $site,
+		__( 'Email matches website', 'wehaverehabs' ) => $host ? ( strtolower( $domain ) === strtolower( $host ) || '.' . strtolower( $domain ) === substr( strtolower( $host ), -strlen( $domain ) - 1 ) ? __( 'Yes', 'wehaverehabs' ) : __( 'No — verify by phone', 'wehaverehabs' ) ) : __( 'No website on file', 'wehaverehabs' ),
+		__( 'Listing phone', 'wehaverehabs' ) => whr_meta( 'phone', $sanctuary_id ),
+	);
+	$body = '';
+	foreach ( $fields as $label => $value ) {
+		$body .= $label . ': ' . ( '' === $value ? '—' : $value ) . "\n";
+	}
+	wp_insert_post(
+		array(
+			'post_type'    => 'whr_inquiry',
+			'post_status'  => 'private',
+			/* translators: %s: facility name */
+			'post_title'   => sprintf( __( 'Claim request: %s', 'wehaverehabs' ), $title ),
+			'post_content' => $body,
+			'meta_input'   => array( '_whr_sanctuary' => $sanctuary_id, '_whr_kind' => 'claim' ),
+		)
+	);
+	wp_mail(
+		get_option( 'admin_email' ),
+		/* translators: %s: facility name */
+		sprintf( __( 'Claim request: %s', 'wehaverehabs' ), $title ),
+		$body . "\n— " . get_permalink( $sanctuary_id ) . "\n— " . admin_url( 'post.php?action=edit&post=' . $sanctuary_id ),
+		array( 'Reply-To: ' . $name . ' <' . $email . '>' )
+	);
+	whr_form_redirect( $back, 'sent', 'claim' );
+}
+
+/**
  * Success / error notice after a redirect.
  *
  * @param string $sent_text Message on success.
@@ -193,7 +250,12 @@ add_action(
 	'manage_whr_inquiry_posts_custom_column',
 	function ( $col, $post_id ) {
 		if ( 'whr_kind' === $col ) {
-			echo esc_html( 'listing' === get_post_meta( $post_id, '_whr_kind', true ) ? __( 'Listing request', 'wehaverehabs' ) : __( 'Guest inquiry', 'wehaverehabs' ) );
+			$labels = array(
+				'listing' => __( 'Listing request', 'wehaverehabs' ),
+				'claim'   => __( 'Claim request', 'wehaverehabs' ),
+			);
+			$kind   = get_post_meta( $post_id, '_whr_kind', true );
+			echo esc_html( isset( $labels[ $kind ] ) ? $labels[ $kind ] : __( 'Guest inquiry', 'wehaverehabs' ) );
 		}
 	},
 	10,

@@ -27,6 +27,7 @@ function whr_filters() {
 		'stay'    => isset( $_GET['stay'] ) ? absint( $_GET['stay'] ) : 0,
 		'budget'  => isset( $_GET['budget'] ) ? absint( $_GET['budget'] ) : 0,
 		'sort'    => in_array( $get( 'sort' ), array( 'price', 'stay', 'name' ), true ) ? $get( 'sort' ) : '',
+		'q'       => isset( $_GET['q'] ) ? mb_substr( sanitize_text_field( wp_unslash( $_GET['q'] ) ), 0, 80 ) : '',
 	);
 	// phpcs:enable
 	return $filters;
@@ -77,7 +78,9 @@ add_action(
 		// Every sanctuary carries whr_sponsored (see whr_ensure_sponsored_flag), so this clause excludes nothing.
 		$meta_query['sponsored'] = array( 'key' => 'whr_sponsored', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
 
-		$order = array( 'sponsored' => 'DESC' );
+		// Facilities that manage their own profile come before unclaimed public listings.
+		$meta_query['claimed'] = array( 'key' => 'whr_claimed_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
+		$order                 = array( 'sponsored' => 'DESC', 'claimed' => 'DESC' );
 		if ( 'price' === $f['sort'] ) {
 			$meta_query['price_sort'] = array( 'key' => 'whr_price_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
 			$order['price_sort']      = 'ASC';
@@ -96,6 +99,29 @@ add_action(
 );
 
 /**
+ * Keyword search on name, city and summary for the results page. Uses its own "q"
+ * parameter so the page keeps the sanctuary results template.
+ */
+add_filter(
+	'posts_where',
+	function ( $where, $query ) {
+		if ( is_admin() || ! $query->is_main_query() || 'sanctuary' !== $query->get( 'post_type' ) ) {
+			return $where;
+		}
+		$q = whr_filters()['q'];
+		if ( '' === $q ) {
+			return $where;
+		}
+		global $wpdb;
+		$like   = '%' . $wpdb->esc_like( $q ) . '%';
+		$where .= $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s OR {$wpdb->posts}.post_excerpt LIKE %s)", $like, $like );
+		return $where;
+	},
+	10,
+	2
+);
+
+/**
  * Keep the keys the results page sorts on present on every sanctuary, however it was
  * created (editor, REST, import), so sorting never drops a listing. Listings without a
  * price or stay sort last.
@@ -107,17 +133,18 @@ function whr_sync_sort_keys( $post_id ) {
 		return;
 	}
 	add_post_meta( $post_id, 'whr_sponsored', 0, true );
+	update_post_meta( $post_id, 'whr_claimed_sort', whr_is_claimed( $post_id ) ? 1 : 0 );
 	$price = (int) get_post_meta( $post_id, 'whr_price_from', true );
 	$stay  = (int) get_post_meta( $post_id, 'whr_stay_min', true );
 	update_post_meta( $post_id, 'whr_price_sort', $price ? $price : 999999999 );
 	update_post_meta( $post_id, 'whr_stay_sort', $stay ? $stay : 99999 );
 }
 add_action( 'save_post_sanctuary', 'whr_sync_sort_keys', 20 );
-foreach ( array( 'added_post_meta', 'updated_post_meta' ) as $whr_meta_hook ) {
+foreach ( array( 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ) as $whr_meta_hook ) {
 	add_action(
 		$whr_meta_hook,
 		function ( $meta_id, $post_id, $key ) {
-			if ( in_array( $key, array( 'whr_price_from', 'whr_stay_min' ), true ) ) {
+			if ( in_array( $key, array( 'whr_price_from', 'whr_stay_min', 'whr_claimed', 'whr_source' ), true ) ) {
 				whr_sync_sort_keys( $post_id );
 			}
 		},
@@ -133,7 +160,16 @@ add_action(
 		if ( get_option( 'whr_sort_keys_version' ) === WHR_VERSION ) {
 			return;
 		}
-		foreach ( get_posts( array( 'post_type' => 'sanctuary', 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids' ) ) as $id ) {
+		$missing = get_posts(
+			array(
+				'post_type'   => 'sanctuary',
+				'post_status' => 'any',
+				'numberposts' => -1,
+				'fields'      => 'ids',
+				'meta_query'  => array( array( 'key' => 'whr_claimed_sort', 'compare' => 'NOT EXISTS' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+			)
+		);
+		foreach ( $missing as $id ) {
 			whr_sync_sort_keys( $id );
 		}
 		update_option( 'whr_sort_keys_version', WHR_VERSION );
