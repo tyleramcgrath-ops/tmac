@@ -230,10 +230,12 @@ def intl(directory):
             country = clean(it.get("country"))
             if not name or not site or not country:
                 continue
+            # Same website + same name is a duplicate; one operator's separate locations are kept.
             key = re.sub(r"^https?://(www\.)?", "", site.lower()).rstrip("/")
-            if key in seen:
+            if (key, name.lower()) in seen:
                 continue
-            seen.add(key)
+            seen.add((key, name.lower()))
+            key = key + "|" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
             care = clean(it.get("care_level"))
             yield {
                 "source": "web",
