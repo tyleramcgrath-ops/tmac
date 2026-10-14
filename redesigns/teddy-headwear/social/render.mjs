@@ -58,6 +58,7 @@ const CALLOUTS = {
   'fedora-la-brown': [[0.64, 0.62, 'Original artwork'], [0.45, 0.73, 'Leather band'], [0.2, 0.8, '100% wool']],
   'apparel-rag': [[0.5, 0.48, 'Gold silk'], [0.8, 0.81, 'T monogram'], [0.24, 0.3, 'Tonal paisley']],
 };
+const FEATHER = new Set(['apparel-cord', 'apparel-rag']);
 const MONO_POS = [0.49, 0.6]; // where the studio monogram sits on blank-cowboy-cream
 
 // tags for picking carousel slide photos
@@ -145,6 +146,7 @@ function stage(key, boxW, boxH, fit = 'cover', inner = '', cls = '') {
   }
   const mono = key === 'studio'
     ? `<span class="mono-stitch" style="left:${MONO_POS[0] * 100}%;top:${MONO_POS[1] * 100}%;font-size:${(w * 0.105).toFixed(1)}px">JB</span>` : '';
+  if (FEATHER.has(key)) cls += ' feather';
   return `<div class="stage ${cls}" style="left:${left.toFixed(1)}px;top:${top.toFixed(1)}px;width:${w.toFixed(1)}px;height:${h.toFixed(1)}px"><img src="${src(key)}" alt=""${isLight(key) ? ` style="filter:brightness(${liftFor(key).toFixed(3)})"` : ''}>${mono}${inner}</div>`;
 }
 const logo = (ink = false, w = 230) => ink
@@ -157,7 +159,7 @@ const CSS = (W, H) => `
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:${W}px;height:${H}px;overflow:hidden;background:var(--felt)}
 .c{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:var(--felt);color:var(--bone);font-family:Archivo,sans-serif;-webkit-font-smoothing:antialiased}
-.stage{position:absolute}.stage img{display:block;width:100%;height:100%}
+.stage{position:absolute}.feather img{-webkit-mask-image:radial-gradient(closest-side,#000 74%,transparent 100%);mask-image:radial-gradient(closest-side,#000 74%,transparent 100%)}.stage img{display:block;width:100%;height:100%}
 .mono-stitch{position:absolute;transform:translate(-50%,-50%);font-family:'Pinyon Script',cursive;color:#D9A21E;line-height:1;white-space:nowrap;text-shadow:0 1px 0 rgba(90,60,0,.35),0 0 1px rgba(90,60,0,.4)}
 .h{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 125;font-stretch:125%;font-weight:800;text-transform:uppercase;line-height:.9;letter-spacing:-.012em;overflow-wrap:normal;word-break:normal}
 .h em{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:500;text-transform:none;color:var(--gold);letter-spacing:-.01em;font-size:1.1em;line-height:.8;font-variation-settings:normal}
@@ -262,7 +264,7 @@ function tCover(d, k, W, H) {
   const tagRow = `<div class="abs row" style="left:72px;right:72px;top:250px">${isLight(k) ? logo(true, 250) : logo(false, 250)}<span class="pill mono ${isLight(k) ? 'felt' : 'ghost'}" style="font-size:21px">▶ Reel</span></div>`;
   if (isLight(k)) {
     return `<div class="c on-bone">
-    <div class="abs" style="left:0;top:1080px;width:${W}px;height:760px">${stage(k, W, 760, 'contain')}</div>
+    <div class="abs" style="left:-140px;top:1010px;width:${W + 280}px;height:910px">${stage(k, W + 280, 910, 'contain')}</div>
     ${tagRow}
     <div class="abs" style="left:72px;right:72px;top:600px;height:480px;display:flex;flex-direction:column;justify-content:center">
       <span class="mono" style="color:var(--saddle)">Day ${nn(d.day)} — ${esc(d.asset.tag)}</span>
