@@ -58,7 +58,7 @@ const CALLOUTS = {
   'fedora-la-brown': [[0.64, 0.62, 'Original artwork'], [0.45, 0.73, 'Leather band'], [0.2, 0.8, '100% wool']],
   'apparel-rag': [[0.5, 0.48, 'Gold silk'], [0.8, 0.81, 'T monogram'], [0.24, 0.3, 'Tonal paisley']],
 };
-const FEATHER = new Set(['apparel-cord', 'apparel-rag']);
+const FEATHER = new Set(['apparel-cord']);
 const MONO_POS = [0.49, 0.6]; // where the studio monogram sits on blank-cowboy-cream
 
 // tags for picking carousel slide photos
