@@ -86,7 +86,337 @@ const NWS_RECORDS = 'https://www.weather.gov/lot/Chicago_Temperature_Records'
 const CENSUS_CHI = 'https://www.census.gov/quickfacts/fact/table/chicagocityillinois,cookcountyillinois/POP010210'
 const CENSUS_COOK = 'https://www.census.gov/quickfacts/fact/table/cookcountyillinois,IL/PST045222'
 
+const TX_RULES = 'https://www.texasbar.com/Content/NavigationMenu/ForLawyers/AdvertisingReview/ADRULES2023.pdf'
+const TX_ADREVIEW = 'https://www.texasbar.com/AM/Template.cfm?Section=Advertising_Review&Template=/CM/HTMLDisplay.cfm&ContentID=60143'
+const TX_FAQ = 'https://www.texasbar.com/AM/Template.cfm?Section=Advertising_Review&Template=/CM/ContentDisplay.cfm&ContentID=53939'
+const TX_ORDER = 'https://www.txcourts.gov/media/1453538/229011.pdf'
+const TX_HARRIS_ATTY = 'https://www.texasbar.com/AM/Template.cfm?Section=Demographic_and_Economic_Trends&Template=/CM/ContentDisplay.cfm&ContentID=71546'
+const PC_3812 = 'https://statutes.capitol.texas.gov/Docs/PE/htm/PE.38.htm#38.12'
+const GV_820651 = 'https://statutes.capitol.texas.gov/Docs/GV/htm/GV.82.htm#82.0651'
+const JUSTEX = 'https://www.justex.net/'
+const JUSTEX_NEW = 'https://www.justex.net/dca/JustexDocuments/0/News%20Items/News%202026/Three%20New%20Civil%20District%20Courts%20Opened%20Sept%201%20as%20Part%20of%20Harris%20County%20Judicial%20Expansion.pdf'
+const TXS_HOU = 'https://www.txs.uscourts.gov/offices/houston-division'
+const CENSUS_HOU = 'https://www.census.gov/quickfacts/fact/table/houstoncitytexas,harriscountytexas/PST045224'
+const CRS6 = 'https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-06.pdf'
+const CRS_102 = 'https://colorado.public.law/statutes/crs_6-22-102'
+const CRS_103 = 'https://colorado.public.law/statutes/crs_6-22-103'
+const CRS_104 = 'https://colorado.public.law/statutes/crs_6-22-104'
+const CRS_105 = 'https://colorado.public.law/statutes/crs_6-22-105'
+const COAG_2019 = 'https://coag.gov/press-releases/8-22-19-2'
+const COAG_ALERT = 'https://coag.gov/app/uploads/2020/10/FINAL-Oct-2020-home-repair-fraud-consumer-alert.pdf'
+const STOPFRAUD = 'https://stopfraudcolorado.gov/fraud-center/contractor-fraud/'
+const DEN_LICENSE = 'https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Contractor-Licensing/Contractor-Licenses/Apply-for-a-Contractor-License'
+const DEN_CLASSD = 'https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Contractor-Licensing/Supervisor-Certificates/Specialty-Class-D-Certificates'
+const DEN_ROOF_GUIDE = 'https://www.denvergov.org/files/assets/public/v/4/community-planning-and-development/documents/ds/inspections/roofing_guidelines_and_checklist.pdf'
+const DOI_2024 = 'https://doi.colorado.gov/news-releases-consumer-advisories/consumer-advisory-division-of-insurance-shares-tips-after'
+const DOI_2025 = 'https://doi.colorado.gov/news-releases-consumer-advisories/consumer-advisory-division-of-insurance-shares-tips-to-prepare'
+const NWS_2017 = 'https://www.weather.gov/bou/SevereWeatherReport8May2017'
+const NWS_GLD = 'https://www.weather.gov/gld/ColoradoSevereWeatherAwarenessWeek'
+const CSU_HAIL = 'https://newsmediarelations.colostate.edu/inthenews/when-is-hail-season-in-colorado/'
+const CENSUS_DEN = 'https://www.census.gov/quickfacts/fact/table/denvercitycolorado/POP060210'
+const LSA_US = 'https://support.google.com/localservices/answer/12174778?hl=en&co=GENIE.CountryCode%3DUS'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'houston-law-firm-website-design',
+    title: 'Houston Law Firm Website Design: Texas Bar Rules',
+    description: 'What a Houston law firm website must show under Texas advertising rules, when the home page must be filed, and how to build for Harris County clients.',
+    kind: 'guide',
+    summary: [
+      'Texas Rule 7.02 requires every ad, including your website, to name a lawyer responsible for its content and identify that lawyer’s primary practice location.',
+      'Most of a Texas firm website is exempt from filing with the State Bar’s Advertising Review Committee, but the home page may need to be filed within 10 days unless its content is exempt.',
+      '“Board Certified” has exact required wording under Rule 7.02(b), and contingent fee claims must say whether clients pay case expenses.',
+      'A website is not a solicitation in Texas, but the barratry laws still shape what follow-up you send after an accident.',
+      'Harris County has 72 district courts and nearly half its residents speak a language other than English at home, so specific practice pages and real Spanish pages matter.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1609445333560-e03ba271b2ce?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Houston’s glass towers rising beyond a grassy park with oak trees and people relaxing on the lawn' },
+    body: `A Houston law firm website has to satisfy the Texas Disciplinary Rules of Professional Conduct before it can do anything else. In short: name a lawyer who is responsible for the site and give that lawyer’s primary practice location, never create unjustified expectations about results, use “Board Certified” only in the exact form Rule 7.02(b) allows, say whether clients pay expenses wherever you mention contingent fees, and check whether your home page has to be filed with the State Bar’s Advertising Review Committee. Then build the site for how Harris County clients actually look for a lawyer: by problem, by courthouse, on a phone, and often in Spanish.
+
+Below, each rule is quoted from the State Bar of Texas’s own text with the link, followed by the Houston court landscape, the barratry rules that limit follow-up, Google Business Profile setup, and a checklist. This is general information, not legal or ethics advice. For a ruling on a specific ad, Texas lets you ask the Advertising Review Committee in advance, which is covered below.
+
+## What does Texas require on a law firm website?
+
+Texas rewrote its advertising rules effective July 1, 2021, and the State Bar publishes the current Part VII text on its Advertising Review page ([State Bar of Texas, Advertising Review](${TX_ADREVIEW})). The core requirement for any advertisement is short. Rule 7.02(a) says: “An advertisement of legal services shall publish the name of a lawyer who is responsible for the content of the advertisement and identify the lawyer’s primary practice location” ([Texas Rules, Part VII](${TX_RULES})).
+
+On a website, that usually means a footer line on every page with the responsible attorney’s name and the office city or address where that attorney mainly practices. Putting it only on the Contact page is risky, because a visitor who lands on a practice area page from Google may never see the Contact page, and each landing page is doing the advertising.
+
+Two more required statements come up on most firm sites:
+
+- **Contingent fees.** Rule 7.02(c) says that if an ad “discloses a willingness to render services on a contingent fee basis, the advertisement must state whether the client will be obligated to pay for other expenses, such as the costs of litigation” ([Rule 7.02](${TX_RULES})). If your home page says “No fee unless we recover,” the expenses sentence belongs right next to it.
+- **Advertised fees.** Under Rule 7.02(d), a lawyer who advertises a fee must honor it for the ad’s expected circulation period, though not for more than one year after publication unless the lawyer expressly promised longer. A flat fee on a web page should be one you are ready to keep.
+
+The comments add a practical point for screens. Comment 6 to Rule 7.01 says that in internet ads, written statements “must appear in a size and font, and for a sufficient length of time, that a viewer can easily see and read the statements.” Light grey eight-point disclaimers fail that test on a phone.
+
+## Does a Houston firm have to file its website with the State Bar?
+
+Usually only the home page, and sometimes not even that. Rule 7.04(a) requires a lawyer to file a non-exempt advertisement with the Advertising Review Committee no later than ten days after it is first disseminated, with a copy, an application and a fee. Rule 7.05(b) then exempts “information and links posted on a law firm website, except the contents of the website homepage, unless that information is otherwise exempt from filing” ([Rules 7.04 and 7.05](${TX_RULES})).
+
+Comment 2 to Rule 7.05 spells it out: the entire website must comply with Rules 7.01 and 7.02, but “the only material on the website that may need to be filed pursuant to this Rule is the contents of the homepage. However, even a homepage does not need to be filed if the contents of the homepage are exempt.”
+
+What makes a home page exempt? Rule 7.05(i) exempts communications that contain only basic information: the lawyer’s or firm’s name, addresses and phone numbers, areas of practice, bar admissions, education, foreign language abilities, Texas Board of Legal Specialization certification, fees for an initial consultation, required disclosures, and similar items. Once the home page adds slogans, case results, client quotes or claims about the firm’s skill, it is likely outside that list and needs filing.
+
+The cost of skipping it is real. The State Bar’s page says the application fee is $100, and that if a non-exempt ad that was never filed comes to its attention, “the State Bar may assess a $250 fine and a $100 review fee,” adding that failure to file is itself a violation of the disciplinary rules ([Advertising Review](${TX_ADREVIEW})). Filing is done through the Advertising Review Portal on your My Bar Page.
+
+Two habits make this painless:
+
+1. **Treat a home page redesign as a new ad.** The State Bar notes that ads approved under the old rules need no refiling only if unchanged; a substantive change needs a new application and fee. A new home page with new claims is a substantive change.
+2. **Use pre-approval for anything bold.** Rule 7.04(c) lets you submit an ad at least thirty days before it runs, and a finding of compliance “is binding in favor of the submitting lawyer.” For a new firm site with results on the home page, that month of lead time is worth building into the launch plan.
+
+Not sure how your current home page would read to the committee? Send us your address for a [free redesign](/redesign). You’ll see your own pages rebuilt with the responsible lawyer line, expense disclosures and readable disclaimers in place, with no cost and no commitment.
+
+![Three professionals in suits at a white table, one signing a document while the others look on](https://images.unsplash.com/photo-1758518731462-d091b0b4ed0d?auto=format&fit=crop&w=1200&q=75)
+
+## What can’t a Texas law firm say on its website?
+
+Rule 7.01(a) bars any “false or misleading communication about the qualifications or services of a lawyer or law firm.” It defines misleading in two ways: a statement likely to lead a reasonable person to a conclusion “for which there is no reasonable factual foundation,” or one “substantially likely to create unjustified expectations about the results the lawyer can achieve” ([Rule 7.01](${TX_RULES})). Most website problems fall under the second half.
+
+### Results, verdicts and who gets credit
+
+Texas is more specific than most states about case results:
+
+- **Reduced verdicts.** Rule 7.01(g) says that if a lawyer knows an advertised verdict was later reduced or reversed, or the case settled for less, each ad of that verdict must state, with equal or greater prominence, the amount the client actually received.
+- **Credit for results.** The Supreme Court of Texas amended Comment 10 in 2022 ([Misc. Docket No. 22-9011](${TX_ORDER})). It now says a lawyer may claim credit for a prior judgment or settlement only if the lawyer played a substantial role in obtaining it, a standard met if the lawyer “served as lead counsel or was primarily responsible for the settlement.” A lateral hire’s results from a former firm need that test before they appear on your site.
+- **Context.** Comment 5 says truthful past results can still mislead if presented so a reasonable person expects the same outcome, and that “an appropriate disclaimer or qualifying language may preclude a finding that a statement is likely to mislead.”
+
+For a results page, list the case type, the result, whether it was a verdict or settlement, the attorney who handled it, and a visible note that each case differs. Put the note beside the numbers, not in the footer.
+
+### Comparisons, actors and trade names
+
+Comment 7 warns that an unsubstantiated comparison with other firms “may be misleading if presented with such specificity as to lead a reasonable person to conclude that the comparison or claim can be substantiated.” “Houston’s most aggressive injury firm” and “we recover more than other firms” are the kinds of lines to drop unless you could prove them.
+
+Comment 3 says using an actor to portray a lawyer is misleading if a reasonable person would conclude the actor is the lawyer. If a website video uses actors, label it.
+
+Texas allows trade names. Rule 7.01(c) says lawyers “may practice law under a trade name that is not false or misleading,” and Comment 9 allows a distinctive website address or social media username that is not misleading. The State Bar’s FAQ adds that the disciplinary rules do not require a registered trade name, and that registering one with the Secretary of State does not by itself mean it complies ([Advertising Review FAQ](${TX_FAQ})). A domain that suggests a government agency or a public service, rather than a private firm, deserves a hard look before you buy it.
+
+### Board Certified and specialist claims
+
+Rule 7.02(b) generally bars statements of certification or special competence, with two exceptions. A lawyer certified by the Texas Board of Legal Specialization may state, for each area, “Board Certified, area of specialization -- Texas Board of Legal Specialization.” Other certifications are allowed only from organizations TBLS has accredited, and Comment 5 says the certifying organization’s name must appear in any communication about the certification ([Rule 7.02](${TX_RULES})).
+
+Lawyers who aren’t board certified can still describe their work. Comment 3 permits saying a lawyer “practices, focuses, or concentrates” in an area, but the statement “must be objectively based on the lawyer’s experience, specialized training, or education.” On an attorney profile, “Board Certified, Personal Injury Trial Law -- Texas Board of Legal Specialization” and “practice focused on workers’ compensation claims” are both fine when true. “Specialist in truck accidents” is not.
+
+## Is a law firm website a solicitation under Texas barratry rules?
+
+No, and that matters. Comment 2 to Rule 7.03 says a communication “is not a solicitation if it is directed to the general public, such as through a billboard, an Internet banner advertisement, a website or a television commercial, or if it is made in response to a request for information, including an electronic search for information” ([Rule 7.03](${TX_RULES})). Someone who searches “Houston truck accident lawyer” and finds your page has asked for information.
+
+What happens after the visitor reaches you is a different story. Rule 7.03(b) bars solicitation through in-person contact or “regulated telephone, social media, or other electronic contact,” meaning live or interactive contact, with narrow exceptions. Texas criminal law goes further. Penal Code section 38.12 makes it an offense to send a written communication about a personal injury or wrongful death claim, or one otherwise related to an accident or disaster, “before the 31st day after the date on which the accident or disaster occurred” ([Penal Code § 38.12](${PC_3812})). Violations of subsection (d) are a Class A misdemeanor, and some barratry offenses are third-degree felonies.
+
+The civil side is just as serious. Under Government Code section 82.0651, a client can void a contract obtained through barratry and recover fees paid, damages and a $10,000 penalty, and a person who was solicited but never signed can recover a $50,000 penalty ([Gov’t Code § 82.0651](${GV_820651})). Both statutes were amended effective September 1, 2025, so older summaries may be out of date.
+
+For a website, three practical rules follow:
+
+1. Let visitors come to you. A contact form, a click-to-call button and a chat window that answers the visitor’s own questions are responses to a request for information.
+2. Don’t buy lists. Never feed accident report data or scraped contacts into email or text campaigns from the site.
+3. Vet lead sources. Comment 13 says a lawyer “must not pay a lead generator that states, implies, or creates a reasonable impression that it is recommending the lawyer.” Paying a website designer or a domain registrar is expressly fine under Comment 11.
+
+When a solicitation is allowed, Rule 7.03(d)(2) requires it to be marked as an advertisement, and Comment 10 says the first word of an email’s subject line, or of a text or social media message, must be “ADVERTISEMENT.”
+
+![Person typing on a laptop at a dark wooden desk beside an open book and a phone](https://images.unsplash.com/photo-1584556326561-c8746083993b?auto=format&fit=crop&w=1200&q=75)
+
+## How do Harris County clients look for a lawyer?
+
+They search for a problem in a place, and the place has a lot of courts. According to the Harris County District Courts, 72 of the more than 500 district courts in Texas are in Harris County: 29 civil, 29 criminal, 11 family and 3 juvenile district courts, plus 14 associate judges ([Harris County District Courts](${JUSTEX})). The county is still adding capacity: the 513th, 514th and 515th civil district courts opened on September 1, 2026, with the 516th and 517th scheduled to open on October 1 ([Harris County District Courts news release](${JUSTEX_NEW})). Federal cases go to the Southern District of Texas, whose Houston Division sits at the Bob Casey United States Courthouse, 515 Rusk Avenue, and covers Colorado, Fort Bend, Harris, Montgomery, San Jacinto and Wharton counties ([Southern District of Texas, Houston Division](${TXS_HOU})).
+
+The lawyer market is crowded too. The State Bar’s 2025-26 profile counts 25,911 active attorneys in Harris County, up from 23,379 in 2015 ([Harris County attorney profile](${TX_HARRIS_ATTY})). A home page that says “we handle all legal matters” competes with every one of them at once.
+
+That is why specific, first-hand pages work. Ideas that fit Houston practices:
+
+- **Family law:** what happens at a first temporary orders hearing in the family district courts, what to bring, and how long the wait tends to be in your experience.
+- **Criminal defense:** where an arrest in Houston leads next, how bail hearings work, and what a client’s family can do that first night.
+- **Personal injury:** what to do in the first weeks after a crash on I-45 or the Beltway, how expenses work in your fee agreement, and why the firm cannot send letters during those first 30 days.
+- **Employment and business law:** which agencies and deadlines apply, linked to the official sources.
+
+Write these from your own cases and courtrooms. Google’s guidance on [helpful, people-first content](${HELPFUL}) asks for exactly this kind of experience, and an AI answer is far more likely to quote a page that explains one courthouse step clearly than a page that lists twenty practice areas.
+
+## Should a Houston firm’s website be in Spanish?
+
+For many firms, yes, if someone at the firm can serve those clients. Census Bureau figures show that 47.1% of Houston residents and 45.0% of Harris County residents age 5 and older speak a language other than English at home (2020 to 2024), and 44.2% of city residents and 46.1% of county residents are Hispanic or Latino ([Census QuickFacts](${CENSUS_HOU})).
+
+Texas has one rule that every bilingual site must follow. Rule 7.01(d) says a statement or disclaimer required by the rules must be clear enough for an ordinary person to understand and “made in each language used in the communication” ([Rule 7.01](${TX_RULES})). So the Spanish version of a practice page needs the responsible lawyer line, the contingent fee expenses statement and any results qualifier in Spanish too. The same rule adds that simply stating a language is spoken (“Hablamos español”) doesn’t require the disclaimers in that language.
+
+Good practice for the pages themselves:
+
+- Have a fluent speaker who knows legal vocabulary write or review them; machine translation can change what a disclaimer means.
+- Say who speaks Spanish: an attorney, a paralegal or the intake team. Clients care whether they can talk to the lawyer directly.
+- Link each Spanish page to its English counterpart so Google can show the right version to each searcher ([localized versions](${HREFLANG})).
+- Apply the same standards to Vietnamese, Chinese, Arabic or any other language your team speaks.
+
+## Google Business Profile for Houston lawyers
+
+Google treats lawyers as individual practitioners. Its guidelines name lawyers among them, allow a title like JD or Esq. in a practitioner’s profile, and say a practitioner should have their own profile only if they work in a public-facing role and can be contacted at the verified location during stated hours. When several practitioners share a location, the firm gets its own profile for that location, and each practitioner’s profile should carry only the practitioner’s name. A practitioner “shouldn’t have multiple Business Profiles to cover all of their specializations” ([Business Profile guidelines](${GBP_GUIDELINES})).
+
+For a Houston firm with offices downtown and in, say, the Energy Corridor, that means one firm profile per staffed office, attorney profiles only for lawyers who meet the test, and the same name, address and phone on each office page of the website as on its profile. Our guide to [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses) explains why relevance, distance and prominence all count. Avoid spinning up near-identical pages for Katy, Sugar Land, Pasadena and The Woodlands; Google’s spam policies treat that pattern as doorway abuse ([spam policies](${SPAM})). Build an office page where you have an office and a local page only where you have something real to say.
+
+## A pre-launch checklist for a Houston law firm website
+
+1. Responsible lawyer’s name and primary practice location on every page.
+2. Expenses statement next to every contingent fee mention, in every language used.
+3. Results show the type of case, who handled it and what the client received, with a visible qualifier; reduced verdicts show the final amount.
+4. No unprovable comparisons, guarantees or “best” claims; actors labeled.
+5. “Board Certified” only in the Rule 7.02(b) wording with TBLS named; “focuses on” only when objectively true.
+6. Home page reviewed for exemption under Rule 7.05(i); if not exempt, filed within 10 days of launch, or submitted 30 days ahead for pre-approval.
+7. Disclaimers readable on a phone screen.
+8. Contact form and chat answer the visitor; no automated outreach to accident victims, and no lead generators that imply a recommendation.
+9. Spanish pages carry their own disclaimers and link to their English versions.
+10. Business Profiles follow Google’s practitioner rules and match each office page exactly.
+11. Structured data matches what the page shows ([local business structured data](${LOCAL_SD})).
+
+## How SaySites builds Houston law firm websites
+
+SaySites builds law firm sites with this structure from the first draft: a page for each practice area, attorney profiles, an office page for each location, and a consultation form on every page whose intake questions include the other party’s name for a conflict check. Each firm is described to search engines as a LegalService, and every page must pass a 95+ speed check before it goes live. Nothing is invented. Results, certifications and languages appear only when you supply them, and you make changes by saying them in plain words, such as “add the expenses sentence under our no-fee line,” then review each one as a draft before publishing. The responsible attorney approves every word, which is what the Texas rules expect.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). Have a site already? [Get a free redesign](/redesign) and see your own pages rebuilt before you decide anything, or [start a 7-day free trial](/signup) and build it yourself this week. Practicing in more than one state? Compare our guides to [Los Angeles law firm websites](/blog/los-angeles-law-firm-website-design) and [New York law firm websites after the 2026 changes](/blog/new-york-law-firm-website-rules).`,
+    faq: [
+      { q: 'Does a Texas law firm website have to name a lawyer?', a: 'Yes. Rule 7.02(a) of the Texas Disciplinary Rules says every advertisement of legal services must publish the name of a lawyer responsible for its content and identify that lawyer’s primary practice location. A website is an advertisement, so the safest approach is a footer line on every page, including landing pages for ads, with the attorney’s name and office location.' },
+      { q: 'Do I have to file my website with the Advertising Review Committee?', a: 'Usually only the home page. Rule 7.05(b) exempts information posted on a law firm website except the home page, and the home page is exempt too if it holds only basic information listed in Rule 7.05(i), such as names, addresses, practice areas and TBLS certification. Otherwise, file it within 10 days of launch through the Advertising Review Portal.' },
+      { q: 'What happens if a Houston firm doesn’t file a home page that needed filing?', a: 'The State Bar of Texas says that when it finds an unfiled advertisement that is not exempt, it may assess a $250 fine and a $100 review fee, and that failing to file a non-exempt ad also violates the Texas Disciplinary Rules. The normal filing fee is $100, so filing on time is the cheaper path.' },
+      { q: 'How should a Texas lawyer word board certification on a website?', a: 'Rule 7.02(b)(1) allows a lawyer certified by the Texas Board of Legal Specialization to state, for each area, “Board Certified, area of specialization -- Texas Board of Legal Specialization.” Certifications from other organizations are allowed only if TBLS accredits them, and the certifying organization must always be named. Lawyers who aren’t certified can say they focus on an area if that is objectively true.' },
+      { q: 'Can a Texas firm website say “no fee unless we win”?', a: 'Yes, with a disclosure. Rule 7.02(c) says an advertisement that mentions a contingent fee must state whether the client will have to pay other expenses, such as litigation costs. Put that sentence directly beside the claim, keep it readable on a phone, and include it in Spanish on any Spanish page, because Rule 7.01(d) requires disclaimers in each language used.' },
+      { q: 'Can my firm email accident victims who visited our website?', a: 'If they contacted you first, you can answer them. Texas treats a website as a response to a request for information, not a solicitation. Unprompted written outreach about an accident is different: Penal Code section 38.12 bars written solicitations about a personal injury claim before the 31st day after the accident, and Government Code section 82.0651 adds civil penalties.' },
+      { q: 'Should a Houston law firm website have Spanish pages?', a: 'Often, yes. Census figures show 47.1% of Houston residents age 5 and older speak a language other than English at home. If your team can serve Spanish-speaking clients, write real Spanish pages with a fluent reviewer, say who speaks Spanish, include every required disclaimer in Spanish, and link each page to its English version.' },
+      { q: 'What does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month with a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict check question, LegalService structured data and hosting. You can also send your current site for a free redesign and see your own pages rebuilt before deciding.' },
+    ],
+    about: ['Texas Disciplinary Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Houston, Texas'],
+    published: '2026-10-14',
+    status: 'published',
+  },
+  {
+    slug: 'denver-roofing-website-design',
+    title: 'Denver Roofing Websites: Colorado Rules and Hail Season',
+    description: 'What a Denver roofing company website should show under Colorado’s roofing law and Denver licensing, and how to win homeowners’ trust after a hailstorm.',
+    kind: 'guide',
+    summary: [
+      'Colorado’s residential roofing law bars roofers from advertising or promising to pay, waive or rebate an insurance deductible, so no “we cover your deductible” anywhere on the site.',
+      'Explain the contract homeowners will sign: written terms, a 72-hour cancel window, and the right to cancel within 72 hours of an insurance denial.',
+      'Roofing in Denver takes a city contractor license backed by a Class D supervisor certificate; show yours and say you pull permits.',
+      'Hail season sends homeowners searching fast, and the state warns them about door-to-door roofers, so a site that answers their worries beats one that just shouts “free inspection.”',
+      'One service-area business profile, real job photos and honest reviews do more than a page for every suburb.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1602800458591-eddda28a498b?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Denver’s high-rises and surrounding neighborhoods with the Rocky Mountains on the horizon' },
+    body: `A roofing website in Denver earns calls by being the calm, trustworthy option after a hailstorm. It should make clear, in plain words, that you follow Colorado’s residential roofing law: you never advertise paying or waiving a homeowner’s insurance deductible, you put every job in a written contract with the cancellation rights the statute requires, and you never act as the homeowner’s public adjuster. It should show your Denver contractor license and the supervisor certificate behind it, say that you pull permits, and answer the questions homeowners ask before they let anyone on their roof. Then it needs fast pages for storm damage, replacement and repair, real photos of your own work, and a phone number that is one tap away.
+
+This guide walks through Colorado’s roofing statute with each section linked, Denver’s licensing and permit rules, what the state tells homeowners to watch for, and how to set up Google and your pages for a metro area that gets hit by hail. It is general information, not legal advice. For questions about your own contracts or license, ask a Colorado attorney or Denver Community Planning and Development.
+
+## What does Colorado’s roofing law mean for your website?
+
+Colorado added a residential roofing article to its consumer protection laws in 2012, through SB 12-038 ([Colorado Revised Statutes, Title 6](${CRS6})). The Attorney General’s office has called it the Residential Roofing Bill of Rights ([Colorado Attorney General](${COAG_2019})). It applies to roofing work on residential property, generally one- and two-family homes, but not to new construction or jobs paid $1,000 or less per contract ([C.R.S. 6-22-102](${CRS_102})).
+
+Three parts of it touch your marketing directly.
+
+### No deductible promises, anywhere
+
+Section 6-22-105 says a roofing contractor “shall not advertise or promise to pay, waive, or rebate all or part of any insurance deductible.” If a contractor does, the insurer is not obligated to consider the contractor’s estimate, and the homeowner or insurer can sue for damages ([C.R.S. 6-22-105](${CRS_105})).
+
+On a website, that rules out more than the obvious “We pay your deductible!” banner. Watch for softer versions: “deductible assistance,” “we’ll work with your deductible,” a “$0 out of pocket” claim on an insurance job, or a review you’ve featured that praises a crew for covering the deductible. Colorado’s Division of Insurance tells homeowners the same thing from the other side: “Remember that you are responsible for paying the deductible amount” ([Division of Insurance advisory, 2024](${DOI_2024})). A site that says so plainly earns trust the moment a homeowner compares it with a flyer that hints otherwise.
+
+### You can’t be the homeowner’s adjuster
+
+The same section says a roofing contractor “shall not claim to be or act as a public insurance adjuster adjusting claims for losses or damages.” It still allows a contractor with a valid contract to discuss the scope of repairs with the insurer ([C.R.S. 6-22-105](${CRS_105})).
+
+So “we handle your insurance claim for you” and “we negotiate with your adjuster” are wording to avoid. “We document the damage with photos, meet your adjuster on the roof, and walk them through the repairs we’ve agreed with you” describes the help you can lawfully give.
+
+### Tell people what the contract will say
+
+Section 6-22-103 requires a written, signed contract before any roofing work. It must include the scope of work and materials, approximate dates, approximate costs based on damage known at signing, your physical address, email and phone, your surety and liability insurer if applicable, a cancellation and refund policy with the right to rescind and get a full deposit refund within seventy-two hours of signing, a statement of the separate right to rescind after an insurance denial, and a statement that you can’t pay, waive or rebate the deductible. A bold-faced statement must also say you hold the homeowner’s payment in trust until materials are delivered or most of the work is done ([C.R.S. 6-22-103](${CRS_103})).
+
+Section 6-22-104 adds that homeowners may cancel within seventy-two hours after receiving written notice that their insurer denied the claim in whole or in part, and that the contractor must return payments within ten days, minus pay for work actually performed ([C.R.S. 6-22-104](${CRS_104})).
+
+None of this needs to be hidden in fine print. A short “What you’ll sign” section on your insurance and storm damage pages, in plain language, does three jobs: it shows you know the law, it answers the worries homeowners bring, and it filters out callers who want a deductible deal you can’t give.
+
+![Roofer in jeans and a work shirt bending over to fasten asphalt shingles on a pitched residential roof](https://images.unsplash.com/photo-1633759593085-1eaeb724fc88?auto=format&fit=crop&w=1200&q=75)
+
+## What licenses should a Denver roofer show on the website?
+
+Colorado’s roofing article doesn’t set up a statewide roofing license or registration. The state’s own fraud prevention site tells homeowners to “check with your city or county to make sure the general contractor is licensed to work in your area,” noting that electrical and plumbing licenses are the ones regulated by the state ([Stop Fraud Colorado](${STOPFRAUD})). In Denver, that local check is real.
+
+Denver requires a contractor license, and before applying an applicant “must hold a supervisor certificate, employ a supervisor certificate holder, or hold a Colorado electrical or plumbing license” ([Denver contractor licenses](${DEN_LICENSE})). For roofers, the relevant certificates are Class D specialty certificates: Roofing-Shingles for residential work, done under the on-site supervision of a Class D Roofing-Shingles supervisor certificate holder; Roof Covering and Waterproofing for commercial and residential low-slope work; and a Metal Roof Installer certificate ([Denver Class D certificates](${DEN_CLASSD})).
+
+The city’s roofing guide adds permit details worth reflecting in your copy. Repairs on buildings under 25,000 square feet need a permit when they cover more than 10% of the roof area or two roof squares, whichever is smaller; all new roof penetrations need a permit; existing roofs must be torn off to the deck where two or more layers already exist; and membrane roofs must be installed by a contractor holding the roof covering and waterproofing license ([Denver roofing guide](${DEN_ROOF_GUIDE})). The guide even sets minimum shingle wind ratings by area, rising from 115 mph east of Federal Boulevard to 140 mph between Sheridan and Kipling.
+
+On the site, that becomes a short “Licensed in Denver” block near the top of the home page and every service page:
+
+- Your company’s Denver contractor license class and number, and the supervisor certificate type that backs it.
+- A sentence saying you pull the required permits and pass the city’s inspections.
+- The other cities and counties where you hold licenses, if you work outside Denver.
+- Your liability insurance carrier, since the statute already asks you to name it in contracts.
+
+Stop Fraud Colorado lists “refusing to pull required local permits” as a red flag, so a homeowner who reads “we pull every permit” is reading the opposite of a red flag. Want to see your own site with that block in place? Ask for a [free redesign](/redesign) and we’ll rebuild your current pages so you can compare, at no cost.
+
+## How does hail season change what Denver homeowners search for?
+
+Hail sends people online in a hurry. The National Weather Service’s Colorado severe weather materials say “some of the biggest insurance losses each year are due to large hail,” and that Colorado hailstones range from pea size to softball size, around 4 1/2 inches across ([NWS Colorado Severe Weather Awareness Week](${NWS_GLD})). Locals remember storms like May 8, 2017, when the NWS Boulder office reported hail up to baseball size around Golden, Lakewood, Wheat Ridge and northwest Denver, with dented cars, shattered windows and “considerable roof damage” ([NWS Boulder storm report](${NWS_2017})). Colorado State University’s climate experts describe hail picking up in late April and early May, with severe hail days peaking in early to mid-June and tapering through July and August ([Colorado State University](${CSU_HAIL})).
+
+Homeowners also arrive wary. After a 2024 storm hit metro Denver, the Division of Insurance warned that after storms “roofing contractors and other construction contractors start door-to-door sales or phone solicitations,” and told homeowners to get everything in writing ([Division of Insurance advisory, 2024](${DOI_2024})). The Attorney General’s consumer alert puts it more bluntly: “NEVER allow an uninvited contractor to inspect your home or your roof” ([Attorney General consumer alert](${COAG_ALERT})). And the Division notes that many policies now carry wind and hail deductibles set as a percentage of coverage, such as 1%, 2% or 5%, and that if damage is below the deductible, the insurer won’t pay ([Division of Insurance advisory, 2025](${DOI_2025})).
+
+Put those together and the storm damage page that works is the one that reassures:
+
+1. **Lead with what to do first.** Photograph the damage from the ground, tarp only if safe, call the insurer, and get a written estimate before signing anything.
+2. **Explain the deductible honestly.** A percentage deductible can be large, and a small repair may fall under it. Saying so loses you nothing and builds trust with the homeowner who checks.
+3. **Show your process.** Inspection, photos shared with the homeowner, the written contract, the adjuster meeting, permits, the work, the final inspection.
+4. **Say you are local and permanent.** Your office address, how long you’ve worked in Denver, and how warranty calls reach you after the trucks leave.
+5. **Make the call easy.** A tap-to-call number at the top of every page, and a short form asking how soon they need you and the ZIP code of the job.
+
+![Close-up of a hand holding several jagged white hailstones above a lawn covered in ice](https://images.unsplash.com/photo-1606588347049-62bfd0c118d5?auto=format&fit=crop&w=1200&q=75)
+
+## Which pages should a Denver roofing website have?
+
+Homeowners with one missing shingle and homeowners pricing a full tear-off want different things, and Google ranks pages, not whole sites. A practical page list:
+
+- **Home:** what you do, where you work, the license block, a tap-to-call number and a few real project photos.
+- **Storm and hail damage:** the reassuring page described above, with the contract and deductible facts.
+- **Roof replacement:** materials you install (asphalt shingles, metal, low-slope membranes if you hold that certificate), how long a typical job takes, what the permit and inspection steps are.
+- **Roof repair:** leaks, flashing, missing shingles, and when repair is enough.
+- **Insurance claims explained:** what you can and can’t do under Colorado law, written plainly.
+- **Projects:** your own before-and-after photos, by neighborhood or roof type, with a line on what was done.
+- **About:** owner, crew, years in Denver, licenses, insurance, warranty.
+- **Service area and contact:** the cities and counties you serve, hours and a form.
+
+Each page should carry its own title and heading that match how people actually search, like “hail damage roof repair in Denver” or “roof replacement in Aurora.” What doesn’t work is cloning the replacement page twenty times with a new suburb name swapped in. Google’s spam policies treat those near-identical location pages as doorway abuse ([spam policies](${SPAM})). Write about a suburb only when you have something real to say, such as a neighborhood where you’ve replaced dozens of roofs after one storm, with photos to show it.
+
+If your crew and office serve Spanish-speaking homeowners, a Spanish version is worth building. Census figures show 23.9% of Denver residents age 5 and older speak a language other than English at home, and 28.0% are Hispanic or Latino ([Census QuickFacts](${CENSUS_DEN})). Have a fluent speaker write it, and make sure the contract summary and deductible facts are just as clear in Spanish.
+
+## How should a Denver roofer set up Google Business Profile and reviews?
+
+Most roofers are service-area businesses: you go to the customer. Google’s rules for that setup are specific. If you don’t serve customers at your business address, remove it from your profile; you can list up to 20 service areas; the overall area shouldn’t extend beyond about two hours’ drive from your base; you can’t set a radius; and a service-area business can only have one profile for the whole area it serves ([Google service areas](${SERVICE_AREAS})). Our guide on [showing Google where you work without a storefront](/blog/service-area-business-google) walks through it step by step.
+
+Reviews matter even more after a storm, when homeowners compare three or four roofers in an evening. Google’s policy treats reviews that were paid for, “directly or in kind,” as fake engagement, and bars businesses from offering discounts or free services for reviews, discouraging negative reviews, or selectively asking only happy customers ([Google Maps content policy](${MAPS_POLICY})). Ask every customer, the same way, after the job passes inspection. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) has wording you can use.
+
+If you run Google Local Services Ads, Google lists roofing as a category and screens roofers for insurance and, where required, licenses, and requires a verified Business Profile ([Local Services screening](${LSA_US})). Keep the name, phone and service area on your website identical to the profile, so the two reinforce each other.
+
+![Roofer carrying a bundle of shingles across a pitched roof, with stacked shingle packs and a tree branch nearby](https://images.unsplash.com/photo-1643225523483-e2c434191bba?auto=format&fit=crop&w=1200&q=75)
+
+## A launch checklist for a Denver roofing website
+
+1. No deductible offers in any form, including in featured reviews and ad landing pages.
+2. No claims to handle or adjust the homeowner’s insurance claim; describe documenting damage and meeting the adjuster instead.
+3. A plain-language “What you’ll sign” section covering the written contract, the 72-hour cancel window, the right to cancel within 72 hours of an insurance denial, and funds held in trust.
+4. Denver contractor license and supervisor certificate shown near the top, plus other cities where you’re licensed.
+5. A clear statement that you pull permits and pass inspections.
+6. A storm damage page that tells homeowners what to do first and explains percentage deductibles honestly.
+7. Separate pages for replacement, repair and storm damage, each with its own title and heading.
+8. Real project photos, not stock, on the projects page and service pages.
+9. A tap-to-call number on every page and a short job request form.
+10. One service-area Business Profile matching the site exactly, and the same review request for every customer.
+11. Spanish pages only if someone on your team can serve those customers.
+12. Pages that load fast on a phone; check with a [speed test](${PAGESPEED}).
+
+## How SaySites helps Denver roofers
+
+SaySites builds roofing websites with this layout from the start: separate pages for replacement, repair and storm damage, each with its own title and heading, a tap-to-call number, a job request form that asks how soon the homeowner needs you, the job’s ZIP code and whether they own or rent, and structured data that describes your company as a RoofingContractor. Your own photos are resized automatically, and every page has to pass a 95+ speed check before it can go live. Nothing gets made up: licenses, warranties, reviews and project photos come only from you. You change anything by saying it in plain words, like “add our Denver license number under the phone number” or “put a section on our storm page about what homeowners sign,” and you see it as a draft before it publishes.
+
+Leads land in a simple pipeline where you can call, text, email and follow up, with an instant reply to each homeowner if you turn it on. The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your storm damage page up before the next hail season, or [get a free redesign](/redesign) of your current site and see the difference first. Running a trade business in a hot-weather market? See our guide to [Phoenix HVAC websites](/blog/phoenix-hvac-website-design) for how licensing rules shape another trade’s site.`,
+    faq: [
+      { q: 'Can a Colorado roofer offer to cover a homeowner’s insurance deductible?', a: 'No. Colorado Revised Statutes section 6-22-105 says a roofing contractor shall not advertise or promise to pay, waive or rebate all or part of an insurance deductible. If a contractor does, the insurer doesn’t have to consider that contractor’s estimate, and the homeowner or insurer can sue for damages. Keep any deductible offer, however softly worded, off your website and ads.' },
+      { q: 'What must a Colorado residential roofing contract include?', a: 'Section 6-22-103 requires a signed written contract before work starts, covering scope and materials, approximate dates and costs, your contact details and insurer, a 72-hour right to rescind with a full deposit refund, the right to cancel after an insurance denial, a no-deductible-waiver statement, and a bold statement that you hold payments in trust until materials arrive or most work is done.' },
+      { q: 'Can a homeowner cancel a roofing contract if insurance denies the claim?', a: 'Yes. Under section 6-22-104, a homeowner may cancel within 72 hours after receiving written notice that the insurer denied the claim in whole or in part. The roofer must return payments within ten days, though it may keep payment for work actually performed. Explaining this on your storm damage page shows homeowners you know the law.' },
+      { q: 'Does a roofer need a license to work in Denver?', a: 'Yes. Denver requires a contractor license, and applicants must hold or employ a supervisor certificate holder first. Residential shingle work falls under a Class D Roofing-Shingles certificate, low-slope and membrane work under a Class D Roof Covering and Waterproofing certificate. Other Colorado cities set their own rules, so list each license you hold on your website.' },
+      { q: 'Can my roofing company handle the homeowner’s insurance claim?', a: 'Not as their adjuster. Section 6-22-105 bars roofing contractors from claiming to be or acting as a public insurance adjuster. With a valid contract, you can still discuss the scope of repairs with the insurer. On your website, describe documenting damage, sharing photos and meeting the adjuster rather than promising to handle the claim.' },
+      { q: 'Should a Denver roofer make a page for every suburb?', a: 'No. Near-identical pages that only swap a suburb name fall under Google’s doorway abuse policy and can hurt the whole site. Build strong pages for storm damage, replacement and repair, list your service area clearly, and add a local page only when you have real substance, such as photos and details from many jobs in one neighborhood.' },
+      { q: 'How much does a SaySites roofing website cost?', a: 'The Site plan is $15 a month with a 7-day free trial. It includes separate pages for replacement, repair and storm damage, a tap-to-call number, a job request form, RoofingContractor structured data, a leads pipeline and hosting. You can also ask for a free redesign and see your current site rebuilt before you decide anything.' },
+    ],
+    about: ['Colorado residential roofing law', 'Roofing contractor websites', 'Hail damage', 'Denver, Colorado'],
+    published: '2026-10-14',
+    status: 'published',
+  },
   {
     slug: 'los-angeles-law-firm-website-design',
     title: 'Los Angeles Law Firm Website Design: California Rules',
