@@ -18,6 +18,7 @@ import type { Preview } from './redesign'
 import type { Campaign } from './outreach'
 import type { CityReport, Prospect } from './prospects'
 import type { ChatTurn, Snapshot } from './sofie'
+import type { Order, OrderStatus, Stock } from './commerce'
 
 // Sofie's working state for one site: the chat, plus a draft of her edits
 // (with the steps before it, for undo) that is not live until published.
@@ -206,6 +207,25 @@ export interface Store {
   reports(): Promise<CityReport[]>
   report(slug: string): Promise<CityReport | null>
   saveReport(r: CityReport): Promise<void>
+  // The shop (lib/commerce): orders and stock counts.
+  saveOrder(o: Order): Promise<void>
+  order(siteId: string, id: string): Promise<Order | null>
+  // The customer's private order page, and Stripe's checkout, find orders
+  // by these.
+  orderByToken(token: string): Promise<Order | null>
+  orderBySession(session: string): Promise<Order | null>
+  // Newest first.
+  ordersForSite(siteId: string, opts?: { status?: OrderStatus[]; limit?: number }): Promise<Order[]>
+  // Moves an order to paid exactly once and gives it the site's next number
+  // (#1001 on). Null when it was already paid (or isn't there).
+  markOrderPaid(siteId: string, id: string, at: string): Promise<number | null>
+  stock(siteId: string): Promise<Stock>
+  setStock(siteId: string, item: string, qty: number): Promise<void>
+  // Adds (or, negative, takes away) in one step, so two orders at once
+  // can't both take the last one without it showing.
+  adjustStock(siteId: string, deltas: Record<string, number>): Promise<void>
+  // Paid orders per discount code, for usage limits.
+  discountUses(siteId: string): Promise<Record<string, number>>
 }
 
 export interface LaunchStats {
@@ -422,6 +442,29 @@ CREATE TABLE IF NOT EXISTS ss_logo_ideas (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_orders (
+  id TEXT PRIMARY KEY,
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  number INTEGER,
+  token TEXT NOT NULL UNIQUE,
+  session TEXT UNIQUE,
+  status TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_orders_site_idx ON ss_orders (site_id, created_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS ss_orders_number_idx ON ss_orders (site_id, number) WHERE number IS NOT NULL;
+CREATE TABLE IF NOT EXISTS ss_order_seq (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  n INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS ss_stock (
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  item TEXT NOT NULL,
+  qty INTEGER NOT NULL,
+  PRIMARY KEY (site_id, item)
 );
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
@@ -915,11 +958,74 @@ class PgStore implements Store {
     for (const r of visits) out.get(r.site_id)?.visits.push({ day: r.day, views: Number(r.views) })
     return [...out.values()]
   }
+  async saveOrder(o: Order) {
+    await this.q(
+      `INSERT INTO ss_orders (id, site_id, number, token, session, status, data, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,now())
+       ON CONFLICT (id) DO UPDATE SET number = COALESCE(ss_orders.number, EXCLUDED.number), session = EXCLUDED.session, status = EXCLUDED.status, data = EXCLUDED.data, updated_at = now()`,
+      [o.id, o.siteId, o.number ?? null, o.token, o.stripe.session ?? null, o.status, JSON.stringify(o), o.createdAt],
+    )
+  }
+  async order(siteId: string, id: string) {
+    return toOrder((await this.q<{ data: Order; number: number | null }>('SELECT data, number FROM ss_orders WHERE site_id = $1 AND id = $2', [siteId, id]))[0])
+  }
+  async orderByToken(token: string) {
+    return toOrder((await this.q<{ data: Order; number: number | null }>('SELECT data, number FROM ss_orders WHERE token = $1', [token]))[0])
+  }
+  async orderBySession(session: string) {
+    return toOrder((await this.q<{ data: Order; number: number | null }>('SELECT data, number FROM ss_orders WHERE session = $1', [session]))[0])
+  }
+  async ordersForSite(siteId: string, opts: { status?: OrderStatus[]; limit?: number } = {}) {
+    const rows = await this.q<{ data: Order; number: number | null }>(
+      `SELECT data, number FROM ss_orders WHERE site_id = $1 ${opts.status ? 'AND status = ANY($3)' : ''} ORDER BY created_at DESC LIMIT $2`,
+      opts.status ? [siteId, opts.limit ?? 5000, opts.status] : [siteId, opts.limit ?? 5000],
+    )
+    return rows.map((r) => toOrder(r)!)
+  }
+  async markOrderPaid(siteId: string, id: string, at: string) {
+    await this.q('SELECT 1')
+    const client = await this.pool.connect()
+    try {
+      await client.query('BEGIN')
+      const moved = await client.query("UPDATE ss_orders SET status = 'paid' WHERE site_id = $1 AND id = $2 AND status <> 'paid' RETURNING id", [siteId, id])
+      if (!moved.rowCount) {
+        await client.query('ROLLBACK')
+        return null
+      }
+      const seq = await client.query<{ n: number }>('INSERT INTO ss_order_seq (site_id, n) VALUES ($1, 1001) ON CONFLICT (site_id) DO UPDATE SET n = ss_order_seq.n + 1 RETURNING n', [siteId])
+      const n = seq.rows[0].n
+      await client.query("UPDATE ss_orders SET number = $3, data = data || jsonb_build_object('status', 'paid', 'number', $3::int, 'paidAt', $4::text), updated_at = now() WHERE site_id = $1 AND id = $2", [siteId, id, n, at])
+      await client.query('COMMIT')
+      return n
+    } catch (err) {
+      await client.query('ROLLBACK').catch(() => {})
+      throw err
+    } finally {
+      client.release()
+    }
+  }
+  async stock(siteId: string) {
+    const rows = await this.q<{ item: string; qty: number }>('SELECT item, qty FROM ss_stock WHERE site_id = $1', [siteId])
+    return Object.fromEntries(rows.map((r) => [r.item, r.qty]))
+  }
+  async setStock(siteId: string, item: string, qty: number) {
+    await this.q('INSERT INTO ss_stock (site_id, item, qty) VALUES ($1,$2,$3) ON CONFLICT (site_id, item) DO UPDATE SET qty = EXCLUDED.qty', [siteId, item, qty])
+  }
+  async adjustStock(siteId: string, deltas: Record<string, number>) {
+    for (const [item, d] of Object.entries(deltas)) {
+      if (!d) continue
+      await this.q('INSERT INTO ss_stock (site_id, item, qty) VALUES ($1,$2,$3) ON CONFLICT (site_id, item) DO UPDATE SET qty = ss_stock.qty + EXCLUDED.qty', [siteId, item, d])
+    }
+  }
+  async discountUses(siteId: string) {
+    const rows = await this.q<{ code: string; n: string }>("SELECT data->>'discountCode' AS code, count(*) AS n FROM ss_orders WHERE site_id = $1 AND status = 'paid' AND data ? 'discountCode' GROUP BY 1", [siteId])
+    return Object.fromEntries(rows.map((r) => [r.code, Number(r.n)]))
+  }
 }
 
 function toUser(r: Record<string, unknown> | undefined): User | null {
   if (!r) return null
   return { id: String(r.id), email: String(r.email), name: String(r.name), passwordHash: String(r.password_hash), createdAt: new Date(r.created_at as string).toISOString() }
+
 }
 
 // ---------------------------------------------------------------------------
@@ -1031,6 +1137,9 @@ export class MemoryStore implements Store {
     for (const [k, v] of this.visits) if (v.siteId === siteId) this.visits.delete(k)
     for (const [k, site] of this.photos) if (site === siteId) this.photos.delete(k)
     this.logos.delete(siteId)
+    for (const [id, o] of this.orders) if (o.siteId === siteId) this.orders.delete(id)
+    this.stockCounts.delete(siteId)
+    this.orderSeq.delete(siteId)
   }
   async deleteUser(userId: string) {
     for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)
@@ -1379,6 +1488,57 @@ export class MemoryStore implements Store {
     }
     return out
   }
+
+  private orders = new Map<string, Order>()
+  private orderSeq = new Map<string, number>()
+  private stockCounts = new Map<string, Stock>()
+  async saveOrder(o: Order) {
+    const old = this.orders.get(o.id)
+    this.orders.set(o.id, JSON.parse(JSON.stringify({ ...o, number: old?.number ?? o.number })))
+  }
+  async order(siteId: string, id: string) {
+    const o = this.orders.get(id)
+    return o && o.siteId === siteId ? structuredClone(o) : null
+  }
+  async orderByToken(token: string) {
+    const o = [...this.orders.values()].find((x) => x.token === token)
+    return o ? structuredClone(o) : null
+  }
+  async orderBySession(session: string) {
+    const o = [...this.orders.values()].find((x) => x.stripe.session === session)
+    return o ? structuredClone(o) : null
+  }
+  async ordersForSite(siteId: string, opts: { status?: OrderStatus[]; limit?: number } = {}) {
+    return [...this.orders.values()]
+      .filter((o) => o.siteId === siteId && (!opts.status || opts.status.includes(o.status)))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, opts.limit ?? 5000)
+      .map((o) => structuredClone(o))
+  }
+  async markOrderPaid(siteId: string, id: string, at: string) {
+    const o = this.orders.get(id)
+    if (!o || o.siteId !== siteId || o.status === 'paid') return null
+    const n = (this.orderSeq.get(siteId) ?? 1000) + 1
+    this.orderSeq.set(siteId, n)
+    this.orders.set(id, { ...o, status: 'paid', number: n, paidAt: at })
+    return n
+  }
+  async stock(siteId: string) {
+    return { ...(this.stockCounts.get(siteId) ?? {}) }
+  }
+  async setStock(siteId: string, item: string, qty: number) {
+    this.stockCounts.set(siteId, { ...(this.stockCounts.get(siteId) ?? {}), [item]: qty })
+  }
+  async adjustStock(siteId: string, deltas: Record<string, number>) {
+    const s = { ...(this.stockCounts.get(siteId) ?? {}) }
+    for (const [item, d] of Object.entries(deltas)) s[item] = (s[item] ?? 0) + d
+    this.stockCounts.set(siteId, s)
+  }
+  async discountUses(siteId: string) {
+    const out: Record<string, number> = {}
+    for (const o of this.orders.values()) if (o.siteId === siteId && o.status === 'paid' && o.discountCode) out[o.discountCode] = (out[o.discountCode] ?? 0) + 1
+    return out
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -1398,4 +1558,9 @@ export function getStore(): Store {
 // the same security and quiets the warning.
 export function pgUrl(url: string): string {
   return url.replace(/([?&]sslmode=)(require|prefer|verify-ca)\b/, '$1verify-full')
+}
+
+function toOrder(r: { data: Order; number: number | null } | undefined): Order | null {
+  if (!r) return null
+  return { ...r.data, ...(r.number !== null && r.number !== undefined ? { number: r.number } : {}) }
 }

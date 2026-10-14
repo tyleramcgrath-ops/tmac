@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { MomentHost } from '@/components/Moment'
 import { SiteTabs } from '@/components/SiteTabs'
+import { needsAction } from '@/lib/commerce'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { siteAccess } from '@/lib/team'
@@ -14,7 +15,8 @@ export default async function SiteLayout({ children, params }: { children: React
   const access = await siteAccess(store, user.id, id)
   if (!access) notFound()
   const { site, role } = access
-  const unread = await store.unreadCount(site.id)
+  const [unread, paid] = await Promise.all([store.unreadCount(site.id), role === 'owner' && site.store?.products.length ? store.ordersForSite(site.id, { status: ['paid'], limit: 500 }) : Promise.resolve([])])
+  const toSend = paid.filter(needsAction).length
 
   return (
     <>
@@ -33,7 +35,7 @@ export default async function SiteLayout({ children, params }: { children: React
         </div>
         <a className="btn btn-ghost" href={previewPath(site)} target="_blank" rel="noopener">View website ↗</a>
       </div>
-      <SiteTabs siteId={site.id} unread={unread} role={role} />
+      <SiteTabs siteId={site.id} unread={unread} toSend={toSend} role={role} />
       {children}
       <MomentHost />
     </>
