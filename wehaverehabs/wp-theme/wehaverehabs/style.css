@@ -453,7 +453,7 @@ h1 em, h2 em, h3 em, p em { font-style: italic; }
 
 /* ---------- Public (unclaimed) listings & claims ---------- */
 .hero--plain { min-height: 400px; background: radial-gradient(120% 90% at 50% 0%, #3b493b 0%, var(--forest-deep) 70%); }
-.hero--plain::before { content: ""; position: absolute; inset: 0; background: url(assets/brand/mark-lotus-reversed.svg) no-repeat 50% 38% / 220px auto; opacity: .07; }
+.hero--plain::before { content: ""; position: absolute; inset: 0; background: url(assets/brand/mark-lotus-reversed.svg) no-repeat 50% 72% / 200px auto; opacity: .06; }
 .claim-banner { background: var(--sand); border-bottom: 1px solid var(--line-soft); }
 .claim-banner .wrap { display: flex; flex-wrap: wrap; gap: 14px 30px; align-items: center; justify-content: space-between; padding-top: 18px; padding-bottom: 18px; }
 .claim-banner p { margin: 0; font-size: 14.5px; color: var(--text-soft); flex: 1 1 420px; }
@@ -480,3 +480,7 @@ h1 em, h2 em, h3 em, p em { font-style: italic; }
 @media (max-width: 640px) {
 	.listing-facts > div { grid-template-columns: 1fr; }
 }
+.tile--plain { background: radial-gradient(120% 90% at 50% 0%, #3b493b 0%, var(--forest-deep) 75%); }
+.tile--plain::before { content: ""; position: absolute; inset: 0; background: url(assets/brand/mark-lotus-reversed.svg) no-repeat 50% 36% / 120px auto; opacity: .1; }
+.tile--plain::after { display: none; }
+.tiles--regions .tile--plain { height: 220px; }

@@ -158,12 +158,23 @@ function whr_source_note( $post_id = null ) {
 }
 
 /**
- * Hero image of a destination (or other) term.
+ * Whether a destination has its own photo. Imported countries and regions start without one,
+ * and get a plain brand panel rather than an unrelated stock photo.
  *
  * @param WP_Term $term Term.
- * @param string  $size Size.
+ * @return bool
+ */
+function whr_term_has_image( $term ) {
+	return (bool) get_term_meta( $term->term_id, 'whr_image', true );
+}
+
+/**
+ * A term's photo, falling back to a bundled one.
+ *
+ * @param WP_Term $term Term.
+ * @param string  $size Image size.
  * @param array   $attr Attributes.
- * @return string
+ * @return string HTML.
  */
 function whr_term_image( $term, $size = 'whr-card', $attr = array() ) {
 	return whr_image( (int) get_term_meta( $term->term_id, 'whr_image', true ), $size, $attr );

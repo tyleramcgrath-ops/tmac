@@ -12,13 +12,16 @@ $dest = $f['dest'] ? get_term_by( 'slug', $f['dest'], 'destination' ) : null;
 if ( is_tax( 'destination' ) ) {
 	$dest = get_queried_object();
 }
-$hero = $dest ? whr_term_image( $dest, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager' ) ) : whr_image( 0, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager' ), 'poolpalms.jpg' );
+$plain = $dest && ! whr_term_has_image( $dest );
+$hero  = $plain ? '' : ( $dest ? whr_term_image( $dest, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager' ) ) : whr_image( 0, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager' ), 'poolpalms.jpg' ) );
 global $wp_query;
 ?>
 
-<section class="hero hero--sm">
-	<?php echo $hero; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-	<div class="hero__shade"></div>
+<section class="hero hero--sm<?php echo $plain ? ' hero--plain' : ''; ?>">
+	<?php if ( $hero ) : ?>
+		<?php echo $hero; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		<div class="hero__shade"></div>
+	<?php endif; ?>
 	<div class="hero__body">
 		<nav class="breadcrumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wehaverehabs' ); ?>">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'wehaverehabs' ); ?></a>

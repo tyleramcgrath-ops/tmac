@@ -77,8 +77,8 @@ if ( $destinations && ! is_wp_error( $destinations ) ) :
 		</div>
 		<div class="tiles">
 			<?php foreach ( $destinations as $term ) : ?>
-				<a class="tile" href="<?php echo esc_url( get_term_link( $term ) ); ?>">
-					<?php echo whr_term_image( $term, 'whr-card', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<a class="tile<?php echo whr_term_has_image( $term ) ? '' : ' tile--plain'; ?>" href="<?php echo esc_url( get_term_link( $term ) ); ?>">
+					<?php echo whr_term_has_image( $term ) ? whr_term_image( $term, 'whr-card', array( 'alt' => '' ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<span class="tile__label">
 						<span class="tile__count"><?php echo esc_html( whr_count_label( $term ) ); ?></span>
 						<span class="tile__name"><?php echo esc_html( $term->name ); ?></span>

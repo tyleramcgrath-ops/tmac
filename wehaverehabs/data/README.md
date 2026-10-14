@@ -8,17 +8,23 @@ its page and you verify it, it becomes a full sanctuary profile.
 
 ## Sources
 
-| Source | Coverage | Licence / terms | Records |
+Build of October 2026: **21,842 listings in 65 countries**.
+
+| Source | Coverage | Licence / terms | Listings |
 |---|---|---|---|
-| [FindTreatment.gov](https://findtreatment.gov/) locator (SAMHSA) | United States | US government work, public domain. Must not imply SAMHSA endorsement (the theme's attribution line says so). | `samhsa` |
-| [CQC care directory](https://www.cqc.org.uk/about-us/transparency/using-cqc-data) | England | Open Government Licence v3.0, attribution shown on each listing | `cqc` |
-| Facilities' own public websites, found by web research | Latin America, Europe, Asia-Pacific, Canada, Africa, Middle East | Facts only (name, place, website, phone, focus); each listing links to its source | `web` |
+| [FindTreatment.gov](https://findtreatment.gov/) locator (SAMHSA), `samhsa` | United States | US government work, public domain. Must not imply SAMHSA endorsement (the theme's attribution line says so). | 20,031 |
+| [CQC care directory](https://www.cqc.org.uk/about-us/transparency/using-cqc-data), `cqc` | England | Open Government Licence v3.0, attribution shown on each listing | 1,149 |
+| Facilities' own public websites, found by web research, `web` (files in `intl/`) | 63 other countries: Canada 102, Australia 68, South Africa 57, India 38, Thailand 36, Bali 27, Spain 26, Switzerland 24, Mexico 20, Ireland 19, Costa Rica 16, … | Facts only (name, place, website, phone, focus, short paraphrased description); each listing links to its source | 662 |
 
 What's kept:
 
 - **SAMHSA:** substance use and mental health facilities. Correctional and detention settings are dropped, since they aren't open to the public. Entries for the same facility at the same address are merged.
 - **CQC:** substance misuse rehab and community services, plus mental health hospitals and community services. Prison healthcare is dropped.
-- **Web:** official facility websites only (no directories or aggregators), de-duplicated by domain.
+- **Web:** each entry was checked against the facility's own live website (no directories or aggregators).
+  - Duplicates are matched on website and name, so one operator's separate locations are kept.
+  - Scotland, Wales and Northern Ireland are filed under United Kingdom, and Puerto Rico under United States.
+  - **Psychedelic programs are left out by default.** That covers ibogaine clinics, ayahuasca and psilocybin retreats: ibogaine carries serious cardiac risk and is illegal in many countries. Pass `--include-psychedelic` to keep them (17 entries in this build).
+  - A few cities came from directory listings rather than the facility's site. The research notes flagged them, and claimants can correct them.
 
 The care level is mapped to the theme's three levels:
 
@@ -40,7 +46,7 @@ done
 python3 build_listings.py --samhsa raw/samhsa --cqc raw/cqc.csv --intl raw/intl -o listings.jsonl.gz
 ```
 
-`intl/` holds the web-researched files used for this build.
+`intl/` holds the web-researched files used for this build, so `python3 build_listings.py ... --intl intl` reproduces it.
 
 ## Import into WordPress
 

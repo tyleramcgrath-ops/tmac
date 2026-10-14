@@ -39,6 +39,12 @@ EXCLUDE_NAME = re.compile(
     r"\b(jail|correction(al|s)?|prison|detention|penitentiary|sheriff|probation|parole|inmate)\b", re.I
 )
 
+# Psychedelic programs (ibogaine carries serious cardiac risk and is illegal in many countries)
+# are left out unless --include-psychedelic is passed.
+PSYCHEDELIC = re.compile(
+    r"ibogaine|ayahuasca|psilocybin|psychedelic|plant[- ]medicine|kambo|5-meo|bufo|huachuma|san pedro", re.I
+)
+
 UK_NATIONS = {"England", "Scotland", "Wales", "Northern Ireland"}
 
 CARE_LEVELS = {"Retreat", "Clinical program", "Medically supervised"}
@@ -217,7 +223,7 @@ def cqc(path):
         }
 
 
-def intl(directory):
+def intl(directory, include_psychedelic=False):
     seen = set()
     for path in sorted(glob.glob(os.path.join(directory, "*.json"))):
         with open(path, encoding="utf-8") as fh:
@@ -233,7 +239,12 @@ def intl(directory):
             region = clean(it.get("region"))
             if country in UK_NATIONS:  # File Scotland, Wales etc. under the UK, like the CQC listings.
                 country, region = "United Kingdom", country
+            elif country == "Puerto Rico":  # As in the SAMHSA data.
+                country, region = "United States", "Puerto Rico"
             if not name or not site or not country:
+                continue
+            text = " ".join(str(it.get(k) or "") for k in ("name", "description", "website"))
+            if not include_psychedelic and PSYCHEDELIC.search(text):
                 continue
             # Same website + same name is a duplicate; one operator's separate locations are kept.
             key = re.sub(r"^https?://(www\.)?", "", site.lower()).rstrip("/")
@@ -277,6 +288,7 @@ def main():
     ap.add_argument("--samhsa")
     ap.add_argument("--cqc")
     ap.add_argument("--intl")
+    ap.add_argument("--include-psychedelic", action="store_true", help="keep ibogaine / ayahuasca / psilocybin programs")
     ap.add_argument("-o", "--out", required=True, help="listings.jsonl (or .jsonl.gz)")
     ap.add_argument("--retrieved", default=datetime.date.today().isoformat(), help="date the sources were downloaded")
     args = ap.parse_args()
@@ -285,7 +297,7 @@ def main():
     with opener(args.out, "wt", encoding="utf-8") as out:
         for name, gen in (("samhsa", samhsa(args.samhsa) if args.samhsa else []),
                           ("cqc", cqc(args.cqc) if args.cqc else []),
-                          ("web", intl(args.intl) if args.intl else [])):
+                          ("web", intl(args.intl, args.include_psychedelic) if args.intl else [])):
             for rec in gen:
                 rec["retrieved"] = args.retrieved
                 out.write(json.dumps(rec, ensure_ascii=False) + "\n")

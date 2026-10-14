@@ -26,9 +26,12 @@ $tagline = get_term_meta( $term->term_id, 'whr_tagline', true );
 $count   = whr_term_count( $term );
 ?>
 
-<section class="hero">
-	<?php echo whr_term_image( $term, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-	<div class="hero__shade"></div>
+<?php $has_photo = whr_term_has_image( $term ); ?>
+<section class="hero<?php echo $has_photo ? '' : ' hero--md hero--plain'; ?>">
+	<?php if ( $has_photo ) : ?>
+		<?php echo whr_term_image( $term, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		<div class="hero__shade"></div>
+	<?php endif; ?>
 	<div class="hero__body" style="padding-bottom:90px">
 		<div class="eyebrow"><?php echo $term->parent ? wp_kses_post( whr_destination_trail( $term ) ) : esc_html__( 'Destination', 'wehaverehabs' ); ?></div>
 		<h1 class="hero__title hero__title--xl"><?php echo esc_html( $term->name ); ?></h1>
@@ -106,8 +109,8 @@ $count   = whr_term_count( $term );
 		</div>
 		<div class="tiles tiles--regions">
 			<?php foreach ( $children as $child ) : ?>
-				<a class="tile" href="<?php echo esc_url( get_term_link( $child ) ); ?>">
-					<?php echo whr_term_image( $child, 'whr-wide', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<a class="tile<?php echo whr_term_has_image( $child ) ? '' : ' tile--plain'; ?>" href="<?php echo esc_url( get_term_link( $child ) ); ?>">
+					<?php echo whr_term_has_image( $child ) ? whr_term_image( $child, 'whr-wide', array( 'alt' => '' ) ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<span class="tile__label">
 						<span class="tile__name"><?php echo esc_html( $child->name ); ?></span>
 						<span class="tile__desc"><?php echo esc_html( trim( get_term_meta( $child->term_id, 'whr_card', true ) . ' · ' . whr_count_label( $child ), ' ·' ) ); ?></span>
