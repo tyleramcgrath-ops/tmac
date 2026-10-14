@@ -7,6 +7,9 @@ import { verifySignature } from '@/lib/stripe'
 
 interface StripeEvent {
   type: string
+  // Set on events from customers' own Stripe accounts (their shops), which
+  // belong to /api/stripe/shop, not here.
+  account?: string
   data: { object: Record<string, unknown> }
 }
 
@@ -23,6 +26,7 @@ export async function POST(req: Request) {
   const body = await req.text()
   if (!verifySignature(body, req.headers.get('stripe-signature'), process.env.STRIPE_WEBHOOK_SECRET ?? '')) return new Response('Bad signature', { status: 400 })
   const event = JSON.parse(body) as StripeEvent
+  if (event.account) return Response.json({ received: true })
   const o = event.data.object
   const store = getStore()
 

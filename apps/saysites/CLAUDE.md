@@ -294,6 +294,48 @@ questions.
 The homepage's "Citation Gap" section (#citation-gap) describes it; its
 scan card is labelled an example (no real data). Keep it that way.
 
+## Store (October 14, 2026, the owner's request: "model it on Shopify, but better")
+
+The Store tab (`app/dashboard/sites/[id]/store`: Home, Orders, Products,
+Discounts, Customers, Settings) replaced the old Products tab. Research
+notes and the comparison: `marketing/store-research.md` at the repo root.
+- **Money:** checkout runs on the owner's own Stripe account (Stripe
+  Connect, Accounts v2, direct charges; `lib/checkout.ts`). The owner
+  connects on Stripe's hosted form (`store/connect`); SaySites takes no
+  application fee, ever: "0% of sales" is a promise. Stripe's own card fee
+  is the only cost. Shops without Stripe connected fall back to the old
+  per-product Stripe payment link or "Ask about this".
+- **Catalog** lives in `Site.store` (lib/schema: options up to 3, 100
+  variants, compare-at, cost, SKU, sections, draft/unlisted, no-shipping
+  items). **Stock counts** live in `ss_stock` (not in the site JSON, so
+  Sofie's draft can't overwrite them); **orders** in `ss_orders`, numbered
+  #1001 on per site (`markOrderPaid`, exactly once).
+- **Storefront** (`lib/shop-render.ts`, `lib/shop-serve.ts`): every product
+  has its own page at /shop/<slug> with ProductGroup/Offer data (shipping
+  and return policy included); the shop page carries an ItemList. Cart is
+  one HttpOnly cookie and plain form posts; prices are always re-read from
+  the shop. No client JavaScript, speed gate still applies. /returns is made
+  from the owner's policy.
+- **Orders** (`lib/orders.ts`): settled from the thank-you page or the
+  Connect webhook (`/api/stripe/shop`, STRIPE_CONNECT_WEBHOOK_SECRET),
+  whichever comes first. Emails: confirmation, owner alert (with low stock),
+  shipped / ready for pickup / out for delivery, refund. Refunds go through
+  the owner's Stripe and can restock.
+- **Shipping:** flat rate with free-over threshold and express, pickup,
+  local delivery by ZIP list (prefix*) with a minimum. Discounts: codes and
+  automatic, percent / amount / free shipping, minimum, dates, use limit;
+  one money-off plus free shipping can combine. Tax: optional Stripe Tax.
+- **Numbers:** sales, orders, average order, profit (from costs),
+  returning customers, best sellers, and a cookie-free funnel (product page
+  views, #add, #checkout, paid), all from our own tables.
+- **Sofie** adds and changes products (`save_product`, `remove_product`);
+  `store` is otherwise locked for her. She never invents prices or stock.
+- Abandoned checkouts are listed but never emailed (no marketing consent).
+- To switch checkout on in production: STRIPE_SECRET_KEY (already set for
+  billing), Connect enabled on the SaySites Stripe account, and a Connect
+  webhook to https://saysites.com/api/stripe/shop for checkout.session.*
+  events with its secret in STRIPE_CONNECT_WEBHOOK_SECRET.
+
 ## Blog (October 2026)
 
 saysites.com/blog (`lib/articles.ts`, `app/blog`): guides and news on

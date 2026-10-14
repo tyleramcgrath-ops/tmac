@@ -240,8 +240,12 @@ export const FormWidget = z
 // The site's products (from Site.store), as a grid of cards with prices and
 // buy buttons. Shows all products, or up to "limit".
 export const ProductsWidget = z
-  .object({ ...widgetBase, type: z.literal('products'), limit: z.number().int().min(1).max(100).optional() })
+  .object({ ...widgetBase, type: z.literal('products'), limit: z.number().int().min(1).max(100).optional(), category: z.string().trim().max(40).optional() })
   .strict()
+
+// One product in full (photos, options, add to cart): its own page, or a
+// featured product anywhere on the site.
+export const ProductWidget = z.object({ ...widgetBase, type: z.literal('product'), productId: id }).strict()
 
 // The site's blog posts (pages with post details), newest first.
 export const PostsWidget = z
@@ -285,7 +289,7 @@ export const TickerWidget = z
   })
   .strict()
 
-export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, PostsWidget, GalleryWidget, TestimonialsWidget, TickerWidget])
+export const Widget = z.discriminatedUnion('type', [HeadingWidget, TextWidget, ImageWidget, ButtonWidget, FaqWidget, FormWidget, ProductsWidget, ProductWidget, PostsWidget, GalleryWidget, TestimonialsWidget, TickerWidget])
 export type Widget = z.infer<typeof Widget>
 export type WidgetType = Widget['type']
 
@@ -434,28 +438,132 @@ export const BusinessInfo = z
   .strict()
 export type BusinessInfo = z.infer<typeof BusinessInfo>
 
+// Money is in cents, to avoid rounding.
+const cents = z.number().int().min(0).max(100_000_000)
+const productImageSrc = z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/)
+const ProductImage = z.object({ src: productImageSrc, alt: z.string().trim().min(1).max(250) }).strict()
+const optionValue = z.string().trim().min(1).max(40)
+
+// One choice a shopper makes, e.g. Size: Small, Medium, Large.
+export const ProductOptionSchema = z.object({ name: z.string().trim().min(1).max(30), values: z.array(optionValue).min(1).max(30) }).strict()
+
+// One combination of option values (Small / Blue), with its own price,
+// stock and code when they differ from the product's.
+export const VariantSchema = z
+  .object({
+    id,
+    values: z.array(optionValue).min(1).max(3),
+    price: cents.optional(),
+    compareAt: cents.optional(),
+    sku: z.string().trim().max(60).optional(),
+    soldOut: z.boolean().optional(),
+  })
+  .strict()
+export type Variant = z.infer<typeof VariantSchema>
+
 export const ProductSchema = z
   .object({
     id,
     name: z.string().min(1).max(120),
-    // In cents, to avoid rounding.
-    price: z.number().int().min(0).max(100_000_000),
+    price: cents,
+    // The short line on product cards.
     description: z.string().max(600).optional(),
-    image: z.object({ src: z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/), alt: z.string().trim().min(1).max(250) }).strict().optional(),
-    // A Stripe Payment Link (buy.stripe.com/...). Without one, the button
-    // asks the visitor to get in touch instead.
+    image: ProductImage.optional(),
+    // A Stripe Payment Link (buy.stripe.com/...), for shops that haven't
+    // connected Stripe for checkout. Without either, the button asks the
+    // visitor to get in touch instead.
     buyUrl: z.string().regex(/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/, 'use a Stripe payment link (https://buy.stripe.com/...)').optional(),
     soldOut: z.boolean().optional(),
+    // The product's own page: /shop/<slug>.
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).max(80).optional(),
+    // Drafts stay off the website. Unlisted products can be bought from
+    // their own address but aren't in the shop, the sitemap or search.
+    status: z.enum(['active', 'draft', 'unlisted']).optional(),
+    // The full description on the product's page (blank lines make paragraphs).
+    details: z.string().max(5000).optional(),
+    // More photos after `image`, shown on the product's page.
+    images: z.array(ProductImage).max(8).optional(),
+    // "Was" price, shown struck through when higher than the price.
+    compareAt: cents.optional(),
+    // What it costs the owner, for profit figures. Never shown to shoppers.
+    cost: cents.optional(),
+    sku: z.string().trim().max(60).optional(),
+    // Count stock (kept in ss_stock, not here) and stop selling at zero
+    // unless `oversell` is on.
+    track: z.boolean().optional(),
+    oversell: z.boolean().optional(),
+    options: z.array(ProductOptionSchema).max(3).optional(),
+    variants: z.array(VariantSchema).max(100).optional(),
+    // The shop's sections ("Candles", "Gift sets").
+    category: z.string().trim().max(40).optional(),
+    // Gift cards, classes and downloads: no address or delivery needed.
+    noShipping: z.boolean().optional(),
   })
   .strict()
 export type Product = z.infer<typeof ProductSchema>
 
+export const DiscountSchema = z
+  .object({
+    code: z.string().regex(/^[A-Z0-9][A-Z0-9_-]{2,29}$/, 'codes are 3 to 30 capital letters, digits, dashes or underscores'),
+    // percent: value is 1-100. amount: value is cents off the order.
+    // shipping: free shipping (value unused).
+    kind: z.enum(['percent', 'amount', 'shipping']),
+    value: z.number().int().min(0).max(100_000_000),
+    minSubtotal: cents.optional(),
+    startsOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    endsOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    // Total uses allowed across all customers.
+    limit: z.number().int().min(1).max(1_000_000).optional(),
+    // Applied to every cart that qualifies, no code needed.
+    auto: z.boolean().optional(),
+    active: z.boolean(),
+  })
+  .strict()
+export type Discount = z.infer<typeof DiscountSchema>
+
+const country = z.string().regex(/^[A-Z]{2}$/)
+const postal = z.string().regex(/^[A-Za-z0-9][A-Za-z0-9 -]{0,9}\*?$/)
+
 export const StoreSchema = z
   .object({
     currency: z.enum(['USD', 'CAD', 'GBP', 'EUR', 'AUD']),
-    products: z.array(ProductSchema).max(100),
+    products: z.array(ProductSchema).max(300),
+    // Checkout through the owner's own Stripe account (Stripe Connect,
+    // direct charges): money goes straight to them and SaySites takes 0%.
+    checkout: z.object({ account: z.string().regex(/^acct_[A-Za-z0-9]{6,60}$/), ready: z.boolean().optional() }).strict().optional(),
+    // false: taking a break; the shop shows but checkout is paused.
+    open: z.boolean().optional(),
+    shipping: z
+      .object({
+        ship: z
+          .object({
+            rate: cents,
+            freeOver: cents.optional(),
+            countries: z.array(country).min(1).max(30),
+            // How long delivery usually takes, in the owner's words.
+            days: z.string().trim().max(60).optional(),
+            express: z.object({ rate: cents, days: z.string().trim().max(60).optional() }).strict().optional(),
+          })
+          .strict()
+          .optional(),
+        pickup: z.object({ note: z.string().trim().min(1).max(300) }).strict().optional(),
+        delivery: z.object({ fee: cents, zips: z.array(postal).min(1).max(300), minOrder: cents.optional(), note: z.string().trim().max(300).optional() }).strict().optional(),
+      })
+      .strict()
+      .optional(),
+    // Let Stripe work out sales tax (Stripe Tax, set up in the owner's
+    // Stripe account).
+    tax: z.object({ auto: z.boolean() }).strict().optional(),
+    discounts: z.array(DiscountSchema).max(50).optional(),
+    // Days to return (0: no returns), and whether returns are free.
+    returns: z.object({ days: z.number().int().min(0).max(365), free: z.boolean().optional(), note: z.string().trim().max(1000).optional() }).strict().optional(),
+    // Where new-order emails go (the account email when blank).
+    notifyEmail: z.string().email().max(200).optional(),
+    // Warn when tracked stock falls to this or below.
+    lowStock: z.number().int().min(0).max(10_000).optional(),
   })
   .strict()
+export type ShopSettings = z.infer<typeof StoreSchema>
 
 export const SiteSchema = z
   .object({
@@ -557,8 +665,8 @@ export const SiteSchema = z
       .array(z.object({ photo: z.string().max(80), name: z.string().max(120), url: z.string().url().max(300), download: z.string().url().max(500).optional() }).strict())
       .max(80)
       .optional(),
-    // Things for sale. Customers pay the owner directly through the owner's
-    // own Stripe payment link, so SaySites never touches the money.
+    // Things for sale (lib/commerce). Customers pay the owner directly through
+    // the owner's own Stripe account, so SaySites never touches the money.
     store: StoreSchema.optional(),
     // Search engine ownership codes (the content of their verification meta
     // tags), shown on the home page so Search Console can confirm the site.

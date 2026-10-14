@@ -1,5 +1,6 @@
 // Loads everything the renderer needs for one site.
 
+import type { Stock } from './commerce'
 import { classifyHost } from './hosts'
 import type { Page, Redirect, Site } from './schema'
 import { getStore, type Store } from './store'
@@ -10,12 +11,15 @@ export interface SiteBundle {
   site: Site
   pages: Page[]
   redirects: Redirect[]
+  // Stock counts, when the shop counts stock (lib/commerce).
+  stock?: Stock
 }
 
 export async function bundleFor(site: Site | null, store: Store = getStore()): Promise<SiteBundle | null> {
   if (!site) return null
-  const [pages, redirects] = await Promise.all([store.pagesForSite(site.id), store.redirectsForSite(site.id)])
-  return { site, pages, redirects }
+  const counts = site.store?.products.some((p) => p.track)
+  const [pages, redirects, stock] = await Promise.all([store.pagesForSite(site.id), store.redirectsForSite(site.id), counts ? store.stock(site.id) : Promise.resolve(undefined)])
+  return { site, pages, redirects, ...(stock ? { stock } : {}) }
 }
 
 export interface HostMatch {

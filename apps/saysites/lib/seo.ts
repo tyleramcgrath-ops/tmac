@@ -3,7 +3,8 @@
 
 import { eventData } from './events'
 import { vibeCheck } from './vibe'
-import { pagePath, siteOrigin, walk, type Page, type Redirect, type Site } from './schema'
+import { pagePath, siteOrigin, walk, type Page, type Product, type Redirect, type Site, type Variant } from './schema'
+import { availableQty, hasVariants, isListed, isLive, productPath, productSlugs, shopList, unitPrice, type Stock } from './commerce'
 
 // ---------------------------------------------------------------------------
 // Structured data (JSON-LD)
@@ -24,7 +25,7 @@ export function breadcrumbs(site: Site, page: Page, allPages: readonly Page[]): 
   return out
 }
 
-export function structuredData(site: Site, page: Page, allPages: readonly Page[]): object[] {
+export function structuredData(site: Site, page: Page, allPages: readonly Page[], stock: Stock = {}): object[] {
   const origin = siteOrigin(site)
   const out: object[] = []
 
@@ -92,26 +93,28 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
     })
   }
 
-  // Products shown on the page, so Google can show prices and availability.
-  if ([...walk(page.body)].some((el) => el.type === 'products') && site.store?.products.length) {
-    const cur = site.store.currency
-    for (const p of site.store.products) {
-      out.push({
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: p.name,
-        ...(p.description ? { description: p.description } : {}),
-        ...(p.image ? { image: /^https?:/.test(p.image.src) ? p.image.src : origin + p.image.src } : {}),
-        brand: { '@type': 'Brand', name: site.business.name },
-        offers: {
-          '@type': 'Offer',
-          price: (p.price / 100).toFixed(2),
-          priceCurrency: cur,
-          availability: p.soldOut ? 'https://schema.org/OutOfStock' : 'https://schema.org/InStock',
-          url: origin + pagePath(page),
-          seller: { '@id': `${origin}/#business` },
-        },
-      })
+  // A product's own page carries the full product (Google's merchant
+  // listing data: price, stock, shipping, returns, variants). A page that
+  // lists products carries the list of their pages, since Google reads
+  // product markup only on a page about one product.
+  const shop = site.store
+  if (shop?.products.length) {
+    const slugs = productSlugs(shop.products)
+    const els = [...walk(page.body)]
+    for (const el of els) {
+      if (el.type !== 'product') continue
+      const p = shop.products.find((x) => x.id === el.productId)
+      if (p && isLive(p)) out.push(productData(site, p, origin + productPath(slugs.get(p.id)!), stock))
+    }
+    const grid = els.find((el) => el.type === 'products')
+    if (grid && grid.type === 'products') {
+      const list = shopList(shop.products, grid.category).slice(0, grid.limit ?? 100)
+      if (list.length)
+        out.push({
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: origin + productPath(slugs.get(p.id)!), name: p.name })),
+        })
     }
   }
 
@@ -241,7 +244,7 @@ export function sitemapXml(site: Site, pages: readonly Page[]): string {
     // Only pages that pass the originality check are offered to Google.
     .filter((p) => vibeCheck(site, p, pages.filter((x) => x.status === 'published')).indexable)
     .map((p) => `<url><loc>${xmlEsc(origin + pagePath(p))}</loc><lastmod>${p.updatedAt.slice(0, 10)}</lastmod></url>`)
-    .join('')
+    .join('') + productUrls(site).map((u) => `<url><loc>${xmlEsc(u)}</loc><lastmod>${site.updatedAt.slice(0, 10)}</lastmod></url>`).join('') + (site.store?.returns ? `<url><loc>${xmlEsc(origin)}/returns</loc></url>` : '')
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`
 }
 
@@ -266,4 +269,80 @@ export function redirectsAfterSlugChange(existing: readonly Redirect[], oldSlug:
 
 function xmlEsc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+const abs = (origin: string, src: string) => (/^https?:/.test(src) ? src : origin + src)
+const VARIES: Record<string, string> = { size: 'https://schema.org/size', color: 'https://schema.org/color', colour: 'https://schema.org/color', material: 'https://schema.org/material', pattern: 'https://schema.org/pattern' }
+
+function offerFor(site: Site, p: Product, v: Variant | undefined, url: string, stock: Stock): object {
+  const shop = site.store!
+  const origin = siteOrigin(site)
+  const s = shop.shipping
+  const shipping = !p.noShipping && s?.ship
+    ? {
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: { '@type': 'MonetaryAmount', value: (s.ship.rate / 100).toFixed(2), currency: shop.currency },
+          shippingDestination: s.ship.countries.map((c) => ({ '@type': 'DefinedRegion', addressCountry: c })),
+        },
+      }
+    : {}
+  const r = shop.returns
+  const countries = s?.ship?.countries ?? [site.business.address?.country ?? 'US']
+  const returns = r
+    ? {
+        hasMerchantReturnPolicy: r.days
+          ? { '@type': 'MerchantReturnPolicy', applicableCountry: countries, returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: r.days, returnFees: r.free ? 'https://schema.org/FreeReturn' : 'https://schema.org/ReturnFeesCustomerResponsibility', merchantReturnLink: `${origin}/returns` }
+          : { '@type': 'MerchantReturnPolicy', applicableCountry: countries, returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' },
+      }
+    : {}
+  return {
+    '@type': 'Offer',
+    url: v ? `${url}?v=${v.id}` : url,
+    price: (unitPrice(p, v) / 100).toFixed(2),
+    priceCurrency: shop.currency,
+    itemCondition: 'https://schema.org/NewCondition',
+    availability: availableQty(p, v, stock) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    seller: { '@id': `${origin}/#business` },
+    ...shipping,
+    ...returns,
+  }
+}
+
+export function productData(site: Site, p: Product, url: string, stock: Stock = {}): object {
+  const origin = siteOrigin(site)
+  const images = [...(p.image ? [p.image] : []), ...(p.images ?? [])].map((i) => abs(origin, i.src))
+  const common = {
+    name: p.name,
+    ...(p.details || p.description ? { description: (p.details ?? p.description)!.slice(0, 5000) } : {}),
+    ...(images.length ? { image: images } : {}),
+    brand: { '@type': 'Brand', name: site.business.name },
+    ...(p.category ? { category: p.category } : {}),
+  }
+  if (!hasVariants(p)) return { '@context': 'https://schema.org', '@type': 'Product', ...common, ...(p.sku ? { sku: p.sku } : {}), offers: offerFor(site, p, undefined, url, stock) }
+  const varies = (p.options ?? []).map((o) => VARIES[o.name.toLowerCase()]).filter(Boolean)
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProductGroup',
+    ...common,
+    url,
+    productGroupID: p.id,
+    ...(varies.length ? { variesBy: varies } : {}),
+    hasVariant: p.variants!.map((v) => ({
+      '@type': 'Product',
+      name: `${p.name} (${v.values.join(' / ')})`,
+      ...(images.length ? { image: images[0] } : {}),
+      ...((v.sku ?? p.sku) ? { sku: v.sku ?? p.sku } : {}),
+      ...Object.fromEntries((p.options ?? []).map((o, i) => [o.name.toLowerCase() === 'colour' ? 'color' : o.name.toLowerCase(), v.values[i]]).filter(([k]) => ['size', 'color', 'material', 'pattern'].includes(k))),
+      offers: offerFor(site, p, v, url, stock),
+    })),
+  }
+}
+
+// Product pages for the sitemap: every live, listed product.
+export function productUrls(site: Site): string[] {
+  const shop = site.store
+  if (!shop?.products.length) return []
+  const slugs = productSlugs(shop.products)
+  return shop.products.filter(isListed).map((p) => siteOrigin(site) + productPath(slugs.get(p.id)!))
 }

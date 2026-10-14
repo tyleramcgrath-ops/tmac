@@ -39,24 +39,38 @@ import {
 } from './schema'
 import { promoActive } from './promote'
 import { breadcrumbs, structuredData } from './seo'
+import { checkoutOpen, isListed, type Stock } from './commerce'
+import { CART_COUNT_PATH, CART_PATH, SHOP_CSS, renderProductBlock, renderProductsGrid } from './shop-render'
+export { formatPrice } from './commerce'
 
 export interface RenderedPage {
   html: string
   css: string
 }
 
-export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page]): RenderedPage {
+export interface RenderOptions {
+  // Stock counts for the shop (lib/commerce), when the site counts stock.
+  stock?: Stock
+  // Request-specific HTML under the page's own content (the cart, an
+  // order); it always needs the shop's styles.
+  inject?: string
+}
+
+export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page], opts: RenderOptions = {}): RenderedPage {
   t = wordsFor(site.language)
+  stock = opts.stock ?? {}
+  productHeading = page.slug.startsWith('shop/') ? 1 : 2
+  const cartLink = checkoutOpen(site.store) && !!site.store?.products.some(isListed)
   // Question sets are written in English, so only English sites show them.
   intake = site.language === 'es' ? undefined : intakeSet(site.intake?.[page.id])
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
   // Upcoming events show on the home page, after the owner's own sections.
   const events = page.slug === '' ? eventsHtml(upcomingEvents(site), t) : ''
-  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : []), ...(site.nav.some((n) => n.children?.length) ? ['navdd'] : []), ...(site.business.sameAs?.length ? ['social'] : []), ...(site.chat ? ['chat'] : []), ...(page.slug.includes('/') ? ['bc'] : [])]) + headerColors(site)
+  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : []), ...(site.nav.some((n) => n.children?.length) ? ['navdd'] : []), ...(site.business.sameAs?.length ? ['social'] : []), ...(site.chat ? ['chat'] : []), ...(page.slug.includes('/') ? ['bc'] : []), ...(opts.inject ? ['shop', 'button', 'btn-primary', 'btn-outline'] : []), ...(cartLink ? ['cartlink'] : [])]) + headerColors(site)
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
-  const jsonLd = structuredData(site, page, allPages)
+  const jsonLd = structuredData(site, page, allPages, opts.stock)
 
   const head = [
     '<meta charset="utf-8">',
@@ -85,8 +99,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   store = site.store
   posts = allPages.filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const body = [
-    renderHeader(site, page),
-    `<main>${crumbBar(site, page, allPages)}${page.body.map(renderElement).join('')}${events}</main>`,
+    renderHeader(site, page, cartLink),
+    `<main>${crumbBar(site, page, allPages)}${page.body.map(renderElement).join('')}${opts.inject ? `<div class="bx shop-x"><div class="bi">${opts.inject}</div></div>` : ''}${events}</main>`,
     renderFooter(site, photoKeysOn(page.body)),
     chatButton(site),
     bar,
@@ -103,6 +117,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 // The site's products, for the products widget. Set per render; rendering is
 // synchronous, so this can't leak between pages.
 let store: Site['store']
+let stock: Stock = {}
+let productHeading: 1 | 2 = 2
 let t: SiteWords = WORDS.en
 let posts: Page[] = []
 // The intake questions for the page being rendered (lib/intake), if any.
@@ -171,7 +187,9 @@ function renderWidget(w: Widget): string {
     case 'form':
       return renderForm(w)
     case 'products':
-      return renderProducts(w)
+      return renderProductsGrid(w, { settings: store, stock, t }, cls(w.id))
+    case 'product':
+      return renderProductBlock(w.productId, { settings: store, stock, t }, cls(w.id), productHeading)
     case 'posts':
       return renderPosts(w)
     case 'gallery': {
@@ -211,31 +229,6 @@ function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {
   return `<div class="pos ${cls(w.id)}">${cards.join('')}</div>`
 }
 
-const SYMBOL: Record<string, string> = { USD: '$', CAD: 'CA$', AUD: 'A$', GBP: '£', EUR: '€' }
-
-export function formatPrice(cents: number, currency: string): string {
-  const whole = cents % 100 === 0
-  return `${SYMBOL[currency] ?? ''}${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 })}`
-}
-
-function renderProducts(w: Extract<Widget, { type: 'products' }>): string {
-  const products = (store?.products ?? []).slice(0, w.limit ?? 100)
-  if (!products.length) return ''
-  const cur = store?.currency ?? 'USD'
-  const cards = products.map((p) => {
-    const img = p.image
-      ? `<img class="pr-img" src="${esc(p.image.src)}"${srcset(p.image.src, 800)} sizes="(max-width: 640px) 100vw, 33vw" alt="${esc(p.image.alt)}" width="800" height="800" loading="lazy" decoding="async">`
-      : `<div class="pr-img pr-none" aria-hidden="true">${esc(p.name.charAt(0))}</div>`
-    const buy = p.soldOut
-      ? `<span class="pr-out">${esc(t.soldOut)}</span>`
-      : p.buyUrl
-        ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">${esc(t.buyNow)}</a>`
-        : `<a class="btn btn-outline pr-buy" href="/contact">${esc(t.askAboutThis)}</a>`
-    return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}<div class="pr-foot"><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${buy}</div></div></article>`
-  })
-  return `<div class="prs ${cls(w.id)}">${cards.join('')}</div>`
-}
-
 const FIELD: Record<(typeof FORM_FIELDS)[number], { label: (w: SiteWords) => string; input: string }> = {
   name: { label: (w) => w.yourName, input: '<input name="name" autocomplete="name" required maxlength="120">' },
   email: { label: (w) => w.email, input: '<input name="email" type="email" autocomplete="email" required maxlength="200">' },
@@ -273,7 +266,7 @@ function intakeField(q: IntakeQuestion): string {
   return `<label>${label}<select name="${name}"><option value="">Choose…</option>${options.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('')}</select></label>`
 }
 
-function renderHeader(site: Site, page: Page): string {
+function renderHeader(site: Site, page: Page, cartLink = false): string {
   const current = pagePath(page)
   // An item with its own pages opens a short list on hover or keyboard
   // focus; tapping it on a phone goes to its page, which lists them all.
@@ -295,7 +288,7 @@ function renderHeader(site: Site, page: Page): string {
     ? `<img class="sh-logo" src="${esc(site.business.logo)}" alt="${esc(site.business.name)}" width="252" height="56" loading="lazy" decoding="async">`
     : esc(site.business.name)
   const promo = promoActive(site) && site.promo ? promoBar(site.promo) : ''
-  return `<header class="sh">${promo}${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cta}</div></header>`
+  return `<header class="sh">${promo}${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cartLink ? `<a class="sh-cart" href="${CART_PATH}">${esc(t.shop.cart)}<img src="/${CART_COUNT_PATH}" alt="" width="22" height="22"></a>` : ''}${cta}</div></header>`
 }
 
 // The header's own colours, set after the base styles so they win.
@@ -472,7 +465,7 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
       if (el.type === 'button') used.add(`btn-${el.variant}`)
       if (el.type === 'image' && el.aspect) used.add('crop')
       if (el.type === 'form') used.add('button').add('btn-primary').add(el.layout === 'row' ? 'form-row' : 'form')
-      if (el.type === 'products') used.add('button').add('btn-primary').add('btn-outline')
+      if (el.type === 'products' || el.type === 'product') used.add('shop').add('button').add('btn-primary').add('btn-outline')
     }
     if (el.style) styleRules(`.${cls(el.id)}`, el.style, byBp)
   }
@@ -579,13 +572,8 @@ function widgetCss(used: Set<string>): string {
       `.pos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:36px 28px}.po{display:flex;flex-direction:column;gap:8px}` +
       `.po-img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r);margin-bottom:8px}.po time{font-size:.85em;color:var(--c-muted);font-weight:600;letter-spacing:.02em}` +
       `.po-t{font-size:1.35em;margin:0}.po-t a{color:var(--c-text);text-decoration:none}.po-t a:hover{color:var(--c-primary)}.po p{margin:0;color:var(--c-muted)}.po-more{font-weight:600;text-decoration:none;margin-top:4px}.po-none{color:var(--c-muted)}`
-  if (used.has('products'))
-    css +=
-      `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}.pr{display:flex;flex-direction:column;gap:14px;background:var(--c-surface);border-radius:var(--r);padding:10px 10px 14px}` +
-      `.pr-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:calc(var(--r) * .7);background:var(--c-background)}.pr-none{display:grid;place-items:center;font:600 3em var(--f-h);color:var(--c-muted)}` +
-      `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1;padding:0 6px}.pr-name{font-size:1.1em;margin:0}.pr-desc{margin:0;color:var(--c-muted);font-size:.92em}` +
-      `.pr-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:12px}.pr-price{margin:0;font-weight:700;color:var(--c-text)}` +
-      `.pr-buy{padding:.55em 1.1em;font-size:.9em;white-space:nowrap}.pr-out{padding:.5em 1em;font-size:.88em;font-weight:600;color:var(--c-muted);border:1.5px solid color-mix(in srgb,var(--c-muted) 45%,transparent);border-radius:var(--rb)}`
+  if (used.has('shop')) css += SHOP_CSS
+  else if (used.has('cartlink')) css += `.sh-cart{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none;color:inherit}.sh-cart img{height:22px;width:auto}`
   if (used.has('form'))
     css +=
       `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +

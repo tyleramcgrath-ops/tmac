@@ -697,11 +697,15 @@ describe('SaySites store', async () => {
     expect(checkSpeed(renderPage(site, shop, pages)).pass).toBe(true)
   })
 
-  it('gives Google product data with price and availability', () => {
-    const ld = structuredData(site, shop, pages) as { '@type': string; name?: string; offers?: { price: string; availability: string } }[]
-    const products = ld.filter((d) => d['@type'] === 'Product')
-    expect(products).toHaveLength(site.store!.products.length)
-    expect(products.find((p) => p.name === 'Merino scarf')!.offers).toMatchObject({ price: '64.00', availability: 'https://schema.org/OutOfStock' })
+  it('lists each product page on the shop page, and gives Google the full product on its own page', () => {
+    const ld = structuredData(site, shop, pages) as { '@type': string; itemListElement?: { url: string }[] }[]
+    const list = ld.find((d) => d['@type'] === 'ItemList')!
+    expect(list.itemListElement).toHaveLength(site.store!.products.length)
+    expect(ld.some((d) => d['@type'] === 'Product')).toBe(false)
+    const scarf = site.store!.products.find((p) => p.name === 'Merino scarf')!
+    const res = serveSitePath({ site, pages, redirects: [] }, ['shop', 'merino-scarf'], { preview: false })
+    expect(res.status).toBe(200)
+    expect(scarf.soldOut).toBe(true)
   })
 
   it('only accepts Stripe payment links for checkout', () => {
