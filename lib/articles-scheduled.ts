@@ -116,7 +116,553 @@ const CSU_HAIL = 'https://newsmediarelations.colostate.edu/inthenews/when-is-hai
 const CENSUS_DEN = 'https://www.census.gov/quickfacts/fact/table/denvercitycolorado/POP060210'
 const LSA_US = 'https://support.google.com/localservices/answer/12174778?hl=en&co=GENIE.CountryCode%3DUS'
 
+const PRODUCT_SD = 'https://developers.google.com/search/docs/appearance/structured-data/product'
+const MERCHANT_SD = 'https://developers.google.com/search/docs/appearance/structured-data/merchant-listing'
+const VARIANTS_SD = 'https://developers.google.com/search/docs/appearance/structured-data/product-variants'
+const REVIEW_SD = 'https://developers.google.com/search/docs/appearance/structured-data/review-snippet'
+const FREE_LISTINGS = 'https://support.google.com/merchants/answer/13889434'
+const LOCAL_LISTINGS = 'https://support.google.com/merchants/answer/9825611'
+const ROBOTS_META = 'https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag'
+const RETURN_SD = 'https://developers.google.com/search/docs/appearance/structured-data/return-policy'
+const SHIPPING_SD = 'https://developers.google.com/search/docs/appearance/structured-data/shipping-policy'
+const FTC_MAIL = 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'product-structured-data-small-shops',
+    title: 'Product Structured Data: Product Pages Google Can Show',
+    description: 'How Google reads a product page: product snippets vs merchant listings, the required markup, photos, descriptions, variants, stock and honest reviews.',
+    kind: 'guide',
+    summary: [
+      'Google has two kinds of product results: product snippets for pages where people can’t buy, and merchant listings for pages where a shopper can buy from you.',
+      'Merchant listings need a product name, an image and an Offer, and the price must be greater than zero, with the currency in three-letter form.',
+      'Give each product its own page with real photos, a description you wrote, the current stock status and, for options like size or color, one page that can preselect each choice.',
+      'Mark up reviews only if they are real, shown on the page and about that product; Google’s rules forbid fake and undisclosed incentivized reviews.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=1600&q=75', alt: 'Handmade speckled stoneware cups in cream and white, one with an amber glazed base, lined up on a white shelf' },
+    body: `When someone searches for a thing they want to buy, Google can show more than a blue link. A product result can carry the price, whether it’s in stock, star ratings, shipping and return details, and a photo. Whether your shop’s pages can appear that way depends mostly on two things you control: how each product page is built, and the structured data that describes it.
+
+This guide walks through what Google’s own documentation says a product page needs, in plain words. It covers the two kinds of product results, the properties that are required, photos, descriptions, product options like size and color, stock status and reviews. It ends with a checklist you can work through one product at a time. No one can promise Google will show any rich result for your pages, and Google says so too ([merchant listing documentation](${MERCHANT_SD})). What you can do is make every page eligible and accurate.
+
+## What is product structured data?
+
+Structured data is a short block of code on a page that describes its content in a standard vocabulary, so a search engine doesn’t have to guess. For a product page, it says “this is a product, this is its name, this is its photo, this is the price, this is the currency, and it’s in stock.” Google reads that code alongside the visible page.
+
+Google’s product documentation describes several places this information can be used: product results in Search, annotated product images in Google Images, and other shopping experiences. It also says the more of the documented properties you add, the more enhancements a page can be eligible for ([Google product structured data](${PRODUCT_SD})).
+
+The rule underneath all of it is simple: the markup has to describe what a shopper actually sees on the page. A price in the code that doesn’t match the price on the page, or a “Product” label on a category page full of different things, is a mismatch rather than an improvement.
+
+## Product snippets vs merchant listings: which applies to you?
+
+Google splits product markup into two uses, and the difference is whether a person can buy on the page ([Google product structured data](${PRODUCT_SD})):
+
+- **Product snippets** are for pages where people can’t buy the product directly, such as an editorial review or a comparison article. This markup has more room for review details, like pros and cons.
+- **Merchant listings** are for pages where customers can purchase from you. This markup has more room for detailed product information, like apparel sizing, shipping details and return policy.
+
+Google’s merchant listing guide is direct about it: only pages where a shopper can purchase a product are eligible for merchant listing experiences ([merchant listing documentation](${MERCHANT_SD})). A page that only says “call us to order” or “available in store” is a product snippet page, not a merchant listing page.
+
+There’s a useful overlap. Google notes that adding the required properties for merchant listings means your product pages can also be eligible for product snippets ([Google product structured data](${PRODUCT_SD})). So if you sell online, build for merchant listings and you cover both.
+
+## One product, one page
+
+Google’s merchant listing guidelines say product rich results only support pages that focus on a single product, or on multiple variants of the same product ([merchant listing documentation](${MERCHANT_SD})). A “Mugs” page showing twenty different mugs is a category page. It’s useful for browsing, but it is not what product results are built from.
+
+For a small shop this has a practical meaning: every product you want people to find in Search deserves its own page, with its own address, its own photos and its own description. The category page then links to each product page. This is also better for the shopper, who can share or bookmark the exact thing they want.
+
+If you’re rebuilding an old shop and aren’t sure your pages are set up this way, you can see a cleaner version first: [get a free redesign](/redesign) of your current site.
+
+## The properties Google requires for merchant listings
+
+Google’s merchant listing guide lists three properties on the Product as required ([merchant listing documentation](${MERCHANT_SD})):
+
+1. **name:** the name of the product.
+2. **image:** photos of the product. Google says pictures clearly showing the product, for example against a white background, are preferred.
+3. **offers:** an Offer, because for merchant listings the merchant has to be the seller of the product.
+
+Inside the Offer, two more are required:
+
+- **price:** and here’s a detail that trips people up. Unlike product snippets, merchant listing experiences require a price greater than zero. A product listed at 0.00, or “free with purchase,” doesn’t qualify.
+- **priceCurrency:** the currency, in three-letter ISO 4217 format, such as USD.
+
+Then come the recommended properties. Google lists, among others ([merchant listing documentation](${MERCHANT_SD})):
+
+- **availability:** whether the item is in stock (more on this below).
+- **brand:** Google says to include at most one brand name.
+- **gtin and related identifiers:** include all applicable global identifiers, such as the barcode number, if your products have them.
+- **itemCondition:** the condition of the item offered for sale.
+- **url:** the address of the page where a shopper can buy it.
+- **shippingDetails:** your shipping policy for that offer.
+- **hasMerchantReturnPolicy:** your return policy for that offer.
+
+Shipping and returns can also be described once for the whole shop instead of on every product, which is usually easier. Google’s product documentation says merchant return policy markup belongs nested under Organization markup ([Google product structured data](${PRODUCT_SD})). That’s a topic of its own, and it’s worth getting right before you start shipping.
+
+## Product photos Google can use
+
+Photos are a required property, and Google gives specific guidance on them ([merchant listing documentation](${MERCHANT_SD})):
+
+- Image addresses must be crawlable and indexable. If your photos are blocked from search engines, Google can’t use them.
+- Images must represent the marked-up content. The photo has to show the product the page sells, not a mood shot of something else.
+- For best results, Google recommends multiple high-resolution images, at least 50,000 pixels when you multiply width by height, in 16x9, 4x3 and 1x1 aspect ratios.
+
+![Green suede brogue shoe resting on a pale pink box beside halved apricots, against soft pastel paper backdrops](https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=1200&q=75)
+
+What that means in practice for a small shop:
+
+- **Shoot the product, clearly.** One photo on a plain, light background, filling most of the frame. Then add the extras that help a buyer decide: the item in use, a close-up of the material, the back or the label, something that shows scale.
+- **Take the photos yourself.** A maker’s or supplier’s catalog photo may be the same one on a hundred other sites. Your own photos show the actual item you’re shipping.
+- **Keep them light.** Big photos slow a page down, especially on phones. Resize before you upload, or use a site that does it for you, and check the page with a [speed test](${PAGESPEED}). Our guide to [whether your website is fast enough](/blog/is-your-website-fast-enough) explains what the numbers mean.
+- **Write real alt text.** Describe what’s in the photo (“speckled stoneware mug with a pink handle”) rather than repeating the product name or stuffing keywords.
+
+## Descriptions you wrote yourself
+
+Google’s merchant listing guide says the description property isn’t mandatory, but it is strongly recommended ([merchant listing documentation](${MERCHANT_SD})). The bigger point is what you put in it.
+
+Google’s guidance on helpful content asks whether a page provides original information and substantial value compared with other pages in search results, rather than simply copying or rewriting other sources ([Google on helpful content](${HELPFUL})). A description pasted from the supplier’s sheet is, by definition, the same as everyone else’s. Its spam policies also call out scaled content abuse: producing many pages mainly to rank, with little value for the reader ([Google spam policies](${SPAM})). A hundred product pages generated from a template with only the name changed fit that description.
+
+A good small-shop product description answers the questions a person would ask if they were holding the item in your store:
+
+- **What it is and who it’s for,** in one or two plain sentences.
+- **Size and measurements,** with units, and how it compares to something familiar if that helps.
+- **Materials and how it’s made,** especially if it’s handmade, local, or made in small batches.
+- **Care:** washing, cleaning, what to avoid.
+- **What’s in the box,** if there’s more than one piece.
+- **Anything that would surprise a buyer:** natural variation in handmade items, colors that look different in daylight, a smell, a weight.
+
+Keep the facts on the page and in the markup the same. If the page says 12 ounces and the description in the structured data says 10, one of them is wrong.
+
+## Sizes, colors and other variants
+
+Many products come in options: a sweater in three sizes, a candle in four scents, a print in two frame colors. Google has a separate guide for marking these up as variants of one product ([Google product variants](${VARIANTS_SD})).
+
+The building blocks:
+
+- **ProductGroup:** the parent product, such as “Linen apron.”
+- **productGroupID:** the identifier of the group, which Google says is also known as the parent SKU.
+- **variesBy:** what changes between variants. Google’s supported values are color, size, suggestedAge, suggestedGender, material and pattern.
+- **hasVariant:** each individual variant, marked up as its own Product with its own details.
+
+Google describes two ways to build the pages:
+
+1. **One page for the whole product.** There must be only one distinct canonical address for the ProductGroup, and the site needs to be able to preselect each variant directly with a distinct address using URL query parameters. Google’s example is an address ending in ?size=small&color=green. Preselecting a variant includes showing the right image, price and availability for it.
+2. **A page for each variant.** Then each page needs full and self-contained markup for what’s on that page.
+
+For most small shops, one page per product with a size or color selector is the simpler choice, as long as choosing an option updates the photo, price and stock status that the shopper sees.
+
+![Amber glass dropper bottle standing on a turned wooden pedestal against a pale wall striped with palm leaf shadows](https://images.unsplash.com/photo-1608571423539-e951b9b3871e?auto=format&fit=crop&w=1200&q=75)
+
+## In stock, sold out or pre-order
+
+Google’s product documentation says to provide availability data to help customers know when you have a product in stock ([Google product structured data](${PRODUCT_SD})). The merchant listing guide lists the values you can use, and says not to specify more than one ([merchant listing documentation](${MERCHANT_SD})):
+
+- **InStock:** the item is in stock.
+- **OutOfStock:** the item is currently out of stock.
+- **SoldOut:** the item has been sold out.
+- **PreOrder:** the item is available for pre-order.
+- **PreSale:** available for ordering and delivery before general availability.
+- **BackOrder:** the item is on back order.
+- **LimitedAvailability:** the item has limited availability.
+- **OnlineOnly:** available online only.
+- **InStoreOnly:** only available for purchase in store.
+- **Discontinued:** the item has been discontinued.
+
+The value only helps if it’s true today. A small shop that sells its last one at a market on Saturday and doesn’t update the website until Wednesday is telling Google, and the next shopper, something that isn’t so. When something sells out, mark it sold out on the page the same day, and keep the page up if it’s coming back, rather than deleting it and breaking every link to it.
+
+## Reviews and ratings: only real ones
+
+Star ratings in product results are tempting, which is exactly why Google’s rules around them are strict. The merchant listing guide lists aggregateRating and review as recommended properties, says they should follow Google’s review snippet guidelines, and says a reviewer’s name must be a valid name for a person or team ([merchant listing documentation](${MERCHANT_SD})).
+
+The review snippet guidelines then set the rules ([Google review snippet guidelines](${REVIEW_SD})):
+
+- Ratings must be sourced directly from users.
+- The review content you mark up must be readily available to users on the marked-up page. If you mark up an average rating, people must be able to see it on the page.
+- Reviews must be about a specific item, not a category or a list of items.
+- Don’t aggregate reviews or ratings from other websites.
+- Don’t include fake or undisclosed incentivized reviews. Reviews must reflect a genuine experience, and any incentive, like payment or free products, must be clearly disclosed.
+- If you show several individual reviews, also include an aggregate rating of them.
+
+Violations can lead to a manual action ([Google review snippet guidelines](${REVIEW_SD})). For a shop with a handful of genuine reviews, the honest route is to show them on the product page, word for word, with the reviewer’s permission, and mark up exactly those. If a product has no reviews yet, it simply has no rating markup. That’s fine. Our guide on [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers how to ask customers without breaking the rules.
+
+## What else affects how your product appears
+
+Structured data isn’t the only source Google uses. The product documentation says providing both structured data on web pages and a Merchant Center feed maximizes your eligibility for shopping experiences ([Google product structured data](${PRODUCT_SD})). And when information conflicts, the merchant listing guide puts product-level feeds submitted in Merchant Center above settings in Merchant Center or Search Console, which in turn sit above the markup on your pages ([merchant listing documentation](${MERCHANT_SD})).
+
+The ordinary parts of the page still matter too. The title of a product page should say what the product is in the words a shopper would use, and the meta description should give a reason to click; our guide to [page titles and descriptions that get clicks](/blog/page-titles-and-descriptions-that-get-clicks) shows how. If you run a physical shop as well, your business details belong in your own markup; see [structured data for local businesses](/blog/structured-data-for-local-businesses).
+
+## How to test your product pages
+
+Google’s merchant listing guide gives the steps ([merchant listing documentation](${MERCHANT_SD})):
+
+1. **Validate the code** with the Rich Results Test and fix any critical errors.
+2. **Check how Google sees the page** with the URL Inspection tool in Search Console.
+3. **Allow time.** Google advises allowing several days after publishing for pages to be crawled again.
+4. **Watch the reports.** Search Console has a Merchant listings report for pages where shoppers can buy, and a Product snippets report for other product pages like reviews. After big site changes, watch for a rise in invalid items.
+
+If a test shows an error, it usually names the missing or wrong property. The common ones for small shops are a missing image, a price of zero, a price without a currency, or markup describing a page that lists many products.
+
+## A checklist for each product page
+
+1. One page per product, with its own address, linked from its category page.
+2. A buy button on the page, if you want it eligible for merchant listings.
+3. Product markup with name, image and an Offer; a price greater than zero; a three-letter currency.
+4. Availability that matches today’s stock, set to sold out the day it sells out.
+5. Several of your own photos, at least 50,000 pixels each, crawlable, showing the actual product.
+6. A description you wrote, with size, materials, care and anything that would surprise a buyer.
+7. Brand (at most one) and barcode identifiers where your products have them.
+8. Sizes and colors handled as variants, with each choice updating the photo, price and stock.
+9. Reviews only if they are real, visible on the page, about this product and disclosed if incentivized.
+10. Shipping and return policies written and published.
+11. A page title and meta description in the words shoppers use.
+12. The page passes the Rich Results Test and a mobile speed test.
+
+## Where SaySites fits
+
+SaySites is a website builder for small businesses, and the Store plan adds a Shop to your site. You add products with photos, prices and descriptions, customers pay through checkout with your own Stripe account, and SaySites takes 0% of your sales (Stripe charges its normal card fee). Products on your Shop page are described to search engines in structured data with their name, price, currency and whether they’re in stock or sold out, and every page must pass a 95+ speed check before it can go live. Everything else on the site you change by saying it in plain words to Sofie, like “put our holiday gift guide on the home page,” and you see each change as a draft first. Nothing is invented: products, photos and reviews come from you.
+
+The Store plan is $25 a month or $250 a year, with hosting included and your own domain connected ([websites for independent shops](/websites-for/shops), [pricing](/pricing)). Want to see your current site rebuilt first? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and put your first products online this week.`,
+    faq: [
+      { q: 'What is the difference between product snippets and merchant listings?', a: 'Product snippets are for pages where people can’t buy the product directly, such as reviews and comparison articles. Merchant listings are for pages where a shopper can purchase from you, and they can show details like shipping and returns. Google notes that adding the properties required for merchant listings means a product page can also be eligible for product snippets.' },
+      { q: 'What structured data does a product page need for Google?', a: 'For merchant listings, Google requires a product name, an image and an Offer. The Offer needs a price greater than zero and the currency in three-letter ISO 4217 form, such as USD. Recommended extras include availability, brand, barcode identifiers, item condition, the page address, and shipping and return policy details.' },
+      { q: 'Can a product priced at zero appear in merchant listings?', a: 'No. Google’s merchant listing documentation says that, unlike product snippets, merchant listing experiences require a price greater than zero. A free sample or a “free with purchase” item can still have a page that helps shoppers, but it won’t be eligible for merchant listings. Make sure paid products never show a zero price by mistake.' },
+      { q: 'How big should product photos be for Google?', a: 'Google recommends multiple high-resolution images of at least 50,000 pixels when you multiply width by height, in 16x9, 4x3 and 1x1 aspect ratios. Image addresses must be crawlable and indexable, and the photos must show the product being sold. Pictures that clearly show the product, for example on a white background, are preferred.' },
+      { q: 'How should I handle sizes and colors on product pages?', a: 'Google describes product variants with a ProductGroup that lists what varies, such as size or color, and each variant as its own Product. With one page per product, each variant needs a distinct address using query parameters that preselects it, showing the right photo, price and availability. Alternatively, each variant gets its own fully marked-up page.' },
+      { q: 'Can I add star ratings to my product pages?', a: 'Only for real reviews. Google’s guidelines say ratings must come directly from users, be visible on the page, be about that specific product, and not be copied from other websites. Fake reviews and undisclosed incentivized reviews are not allowed, and violations can lead to a manual action. A product without reviews should simply have no rating markup.' },
+      { q: 'How much is a SaySites online store?', a: 'The Store plan is $25 a month or $250 a year, with hosting and a Shop page included and your own domain connected. Customers pay through your own Stripe account and SaySites takes 0% of sales; Stripe charges its normal card fee. There is a 7-day free trial, and you can ask for a free redesign preview of your current site first.' },
+    ],
+    about: ['Product structured data', 'Google merchant listings', 'Small online shops'],
+    published: '2026-10-16',
+    status: 'published',
+  },
+  {
+    slug: 'free-product-listings-on-google',
+    title: 'Free Product Listings on Google: A Small Shop’s Guide',
+    description: 'How a small shop gets products into Google’s free listings: where they appear, the Merchant Center steps, required product details, shipping and returns.',
+    kind: 'guide',
+    summary: [
+      'Free listings let your products appear at no cost across Google, including Search, the Shopping tab, Images, Lens, YouTube in some countries, Maps and the products on your Business Profile.',
+      'Turning on free listings in Merchant Center gives Google permission to show your products; Google says it doesn’t guarantee they will be shown.',
+      'Every product needs an id, title, link, image link, price, description and availability, and in the US and many other countries you must also set up shipping.',
+      'Products crawled from your online store can appear even without Merchant Center, but a clean account with accurate data, returns and shipping gives Google the most to work with.',
+      'If you also have a physical shop, free local listings can show your in-store products with hours, directions and distance.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1536936812504-0e77dc3f0b40?auto=format&fit=crop&w=1600&q=75', alt: 'Handmade ceramic cups with pink and cream glazes and a speckled tumbler displayed on a light wooden shop shelf' },
+    body: `Google shows products from shops of every size, and for most of those places it charges nothing. Google calls them free listings: products that can appear at no cost across Google, with prices, photos and other details shoppers use to choose ([Google Merchant Center Help on free listings](${FREE_LISTINGS})). For a small shop that sells online, or a physical shop that wants nearby shoppers to know what’s on the shelves, they are one of the few places to be seen in Google without paying for ads.
+
+This guide covers where free listings appear, how to turn them on, which product details Google requires, the shipping and return information you need, what happens if you don’t use Merchant Center at all, and the local version for shops with a counter and a front door. Everything here comes from Google’s own help pages, linked as we go, and those pages change, so check them before you start.
+
+## What are free listings on Google?
+
+Free listings are product listings that Google shows without charging the seller. Google’s help page says the products you sell can appear at no cost on Google Search and elsewhere, and describes them as a way to reach shoppers for online and local sales ([Google Merchant Center Help](${FREE_LISTINGS})). You give Google information about your products, usually through a free Google Merchant Center account, and Google uses it to match your products to what people search for.
+
+They’re separate from Shopping ads, which you pay for. You can use free listings without ever running an ad.
+
+## Where can free listings appear?
+
+Google lists a wide set of places ([Google Merchant Center Help](${FREE_LISTINGS})):
+
+- **Google Search:** in rich results, in Popular Products (for Apparel and Accessories, on mobile in the US only), and in the Shopping Knowledge Panel in listed countries.
+- **The Shopping tab** at google.com/shopping.
+- **Google Images,** including a “Product” label on images, and **Google Lens,** where people search with a photo.
+- **YouTube,** in a limited set of countries.
+- **Google Maps, Gemini,** and **the products module on your Business Profile.**
+
+For a small shop, Lens and Images are worth a thought. Someone can point a phone at a mug a friend owns or a lamp in a café and search for it. If your product photos are clear and your data is accurate, your listing can be one of the answers.
+
+## Does it cost anything?
+
+No. Free listings are, as the name says, shown at no cost ([Google Merchant Center Help](${FREE_LISTINGS})). Merchant Center itself is free to use. Your costs are your own time and, if you want them, ads, which are optional and separate.
+
+## Permission to show, not a promise
+
+This is the part people misread. Merchant Center has a Free listings status, and Google’s help page says it controls permission to show your products for free; it doesn’t guarantee that your products will be shown to customers ([Google Merchant Center Help](${FREE_LISTINGS})). Google also says it relies on the data you provide to match your products to searches.
+
+So a green status means you’re in the running. Whether a given product shows up for a given search depends on how well your product information matches what that person is looking for, along with everything else Google weighs. Anyone who promises you a spot in free listings is promising something Google itself doesn’t.
+
+![Rows of unglazed white ceramic pieces, including teapots, cups, vases and small animal figures, crowded together on a workshop table](https://images.unsplash.com/photo-1612870199268-d33b7e0bd9b0?auto=format&fit=crop&w=1200&q=75)
+
+## How to turn on free listings in Merchant Center
+
+Google’s help page describes the setup ([Google Merchant Center Help](${FREE_LISTINGS})):
+
+1. **Create a Merchant Center account,** if you don’t have one. Google says new accounts are opted in to free listings by default.
+2. **For an existing account,** find the “Free listings” card under Marketing methods in the left navigation and check its status there.
+3. **Make sure the right person has access.** Only users with Admin access can change the free listings setting.
+4. **Add your products,** with the required details described below.
+5. **Set up shipping and add your return policy,** which the page lists among the requirements.
+
+If an outside company or platform created your Merchant Center account for you and sends your product data through the Merchant API, Google says changes go through that partner instead ([Google Merchant Center Help](${FREE_LISTINGS})).
+
+Google also asks you to follow its policies for showing products for free across Google, which cover what can be listed and how ([Google Merchant Center Help](${FREE_LISTINGS})). Read them once before you upload; it’s quicker than fixing disapproved products later.
+
+## The product details Google requires
+
+Google lists the attributes required for all products ([Google Merchant Center Help](${FREE_LISTINGS})):
+
+- **id:** your own unique code for the product, such as your SKU.
+- **title:** the product’s name.
+- **link:** the address of the product’s page on your website.
+- **image link:** the address of the main product photo.
+- **price:** the price.
+- **description:** a description of the product.
+- **availability:** whether it’s in stock.
+
+Some attributes are required only in certain cases ([Google Merchant Center Help](${FREE_LISTINGS})):
+
+- **condition,** if the product is used or refurbished.
+- **brand, GTIN** (the barcode number), or **MPN** if there’s no GTIN, for products that have them.
+- **multipack** and **bundle,** if you sell those.
+- **item group ID,** for variants like sizes and colors.
+- **color, size, age group and gender,** for Apparel and Accessories.
+
+Google recommends extras too, including additional image links and a canonical link, and for apparel, pattern, material, size type and size system. For a place in the Shopping Knowledge Panel, it asks for strong identifiers: a GTIN, or an MPN plus brand ([Google Merchant Center Help](${FREE_LISTINGS})).
+
+On images, Google says they should be large enough and free of promotional content ([Google Merchant Center Help](${FREE_LISTINGS})). That rules out “SALE” banners, price stickers and watermarks across the product photo.
+
+A small shop selling handmade goods often has no GTIN, because no barcode was ever registered. The requirement applies to products that have one; leave it out if yours genuinely don’t, rather than inventing a number.
+
+## Which pages count?
+
+Free listings are for product pages. Google’s help page says they are not for pages like your home page, your shipping and return policy pages, or category pages ([Google Merchant Center Help](${FREE_LISTINGS})). The link you give for each product should go to a page about that one product, where a shopper can see the price and buy it.
+
+That lines up with how Google reads product pages for its search results. We covered the details, including the structured data, photos and variants, in [product pages Google can show](/blog/product-structured-data-small-shops).
+
+## Shipping and returns are part of the deal
+
+Google’s help page says you’re required to set up shipping settings in Merchant Center, or add shipping costs to each product with the shipping attribute, in a long list of countries that includes the United States, Canada, the United Kingdom, Australia, India, Japan and most of the European Union ([Google Merchant Center Help](${FREE_LISTINGS})). If you sell to customers in the US, shipping information isn’t optional.
+
+For returns, the page tells you to add your return policy information to your website so customers see returns information next to products, recommends adding the return policy in Merchant Center, and notes that return policies can affect purchase decisions ([Google Merchant Center Help](${FREE_LISTINGS})).
+
+Both of these are worth writing down carefully before you enter them anywhere, because they’re also promises to your customers. Our guide to [shipping, local pickup and return policies](/blog/shipping-and-return-policy-small-online-shop) covers what to put in them, including the federal rule on shipping times.
+
+## Can my products show up without Merchant Center?
+
+Yes, sometimes. Google’s help page says products and their details crawled on your online store can show up on Google even without a Merchant Center account or schema.org markup, so shoppers can see products from many retailers ([Google Merchant Center Help](${FREE_LISTINGS})).
+
+Two things follow from that:
+
+- **Your product pages are already being read.** Clear names, real prices, honest stock status and good photos on the page matter even if you never open Merchant Center.
+- **You can opt out.** Google says you can stop this with crawl and indexing controls, such as the [robots meta tag](${ROBOTS_META}). The page also notes that Google may still show information you added in Merchant Center, like titles and images, even if you turn off a free listing.
+
+Merchant Center is still worth setting up for most shops that sell online, because it lets you give Google exact, structured product data and see what’s approved or disapproved. Google’s own product documentation says providing both structured data on web pages and a Merchant Center feed maximizes your eligibility ([Google product structured data](${PRODUCT_SD})).
+
+![Small corner shop seen through a half-open metal shutter at night, its shelves stacked with bottles, jars and boxes around a counter](https://images.unsplash.com/photo-1780765896926-8cc2d92cb069?auto=format&fit=crop&w=1200&q=75)
+
+## Free local listings for shops with a counter
+
+If you have a physical store, there’s a local version. Google’s help page says your in-store products may appear in free local listings on the Shopping tab if you’ve opted in, and that a local listing could include store hours, directions, phone number, product price, availability and approximate distance ([Google Merchant Center Help](${FREE_LISTINGS})).
+
+Google’s overview of local inventory and free local listings says that with free local listings, the in-store products you sell can appear at no cost across Google, and that if your website lacks inventory for your stores, you can show your in-store inventory using a Google-hosted page for your store ([local inventory ads and free local listings](${LOCAL_LISTINGS})). The same overview describes pickup options, such as “pickup today” for items bought online and collected the same or next day, as features of local inventory ads, which are paid ([local inventory ads and free local listings](${LOCAL_LISTINGS})).
+
+For a shop that’s mostly about foot traffic, this is the practical point: people searching “near me” for a specific thing can learn that you have it in stock, a few streets away, before they set out. It depends on keeping your in-store inventory data current, which is real work for a busy shop. Start with the products people ask for by name.
+
+## Get the basics right first
+
+Free listings reward accurate, specific product data. Before you upload anything:
+
+- **Write titles the way shoppers search.** “Hand-thrown stoneware mug, 12 oz, speckled white” tells Google and a shopper far more than “The Daisy.” Our guide to [page titles and descriptions that get clicks](/blog/page-titles-and-descriptions-that-get-clicks) applies here too.
+- **Use your own photos.** The same product photo on many sites gives Google no reason to prefer yours, and photos of your actual stock are more honest.
+- **Keep prices and stock in sync.** If the price in Merchant Center differs from the one on the page, or an item shows in stock that sold out last week, shoppers notice.
+- **Describe, don’t pad.** A description should help a buyer decide: size, materials, care, what’s in the box. Google’s guidance on [helpful content](${HELPFUL}) applies to product pages as much as articles.
+- **Make your shop easy to trust.** A clear About page, a contact page, a physical address if you have one, and your policies linked from every product page.
+
+## A checklist for free listings
+
+1. A Merchant Center account, with an Admin who can manage the free listings setting.
+2. The Free listings card under Marketing methods showing your status.
+3. Every product with id, title, link, image link, price, description and availability.
+4. Brand, GTIN or MPN, condition, and apparel details where they apply; left out where they genuinely don’t.
+5. Each link going to a single product page with a visible price and a way to buy.
+6. Photos large enough, of the real product, with no promotional text or watermarks.
+7. Shipping settings set up, required in the US and many other countries.
+8. A return policy on your website and in Merchant Center.
+9. Product pages that read well to Google even without Merchant Center, with markup that matches the page.
+10. For a physical store, free local listings with current in-store inventory, if you can keep it up to date.
+
+## Where SaySites fits
+
+SaySites is a website builder for small businesses, and its Store plan gives you a Shop on your own website. You add products with photos, prices and descriptions; customers pay through checkout with your own Stripe account; and SaySites takes 0% of your sales (Stripe charges its normal card fee). Products on your Shop page are described to search engines with their name, price, currency and whether they’re in stock or sold out, and every page must pass a 95+ speed check before it goes live. The rest of the site, like your hours, your About page or a holiday notice, you change by telling Sofie in plain words, and you see each change as a draft before it’s published. Merchant Center itself is Google’s, and you set it up in your own Google account.
+
+The Store plan is $25 a month or $250 a year, with hosting included and your own domain connected ([websites for independent shops](/websites-for/shops), [pricing](/pricing)). Curious what your current site would look like rebuilt? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and get your products online.`,
+    faq: [
+      { q: 'Are Google free listings really free?', a: 'Yes. Google’s Merchant Center Help says the products you sell can appear at no cost on Google Search and across other Google surfaces, and Merchant Center is free to use. Shopping ads are a separate, paid option that you can choose to run or ignore. Your only cost for free listings is the time to set up and maintain accurate product data.' },
+      { q: 'Where do free product listings appear?', a: 'Google lists Search, including rich results, Popular Products and the Shopping Knowledge Panel in certain countries, plus the Shopping tab, Google Images, Google Lens, YouTube in limited countries, Google Maps, Gemini and the products module on your Business Profile. Popular Products for apparel is limited to mobile in the US. Where a product appears depends on what people search for.' },
+      { q: 'Does turning on free listings guarantee my products will show?', a: 'No. Google says the Free listings status in Merchant Center controls permission to show your products for free and doesn’t guarantee they will be shown to customers. Google matches products to searches using the data you provide, so accurate titles, prices, photos, descriptions and availability give it the most to work with. No one can promise a placement.' },
+      { q: 'What product information does Google require for free listings?', a: 'Every product needs an id, title, link, image link, price, description and availability. Some products also need condition, brand, GTIN or MPN, multipack, bundle or an item group ID for variants. Apparel and Accessories need color, size, age group and gender. Google recommends extras like additional images, and says images should be large and free of promotional content.' },
+      { q: 'Do I need shipping settings for free listings?', a: 'In many countries, yes. Google says you’re required to set up shipping settings in Merchant Center, or add shipping costs with the shipping attribute, in countries including the United States, Canada, the United Kingdom, Australia and much of Europe. Google also tells you to add your return policy to your website and recommends adding it in Merchant Center.' },
+      { q: 'Can my products appear on Google without Merchant Center?', a: 'They can. Google says products and details crawled from your online store can show up even without a Merchant Center account or schema.org markup. You can stop that with crawl and indexing controls such as the robots meta tag. Merchant Center is still useful, because it gives Google exact product data and shows you what was approved or disapproved.' },
+      { q: 'How much does a SaySites store cost?', a: 'The Store plan is $25 a month or $250 a year, with hosting and a Shop page included and your own domain connected. Customers pay through your own Stripe account, SaySites takes 0% of sales, and Stripe charges its normal card fee. There is a 7-day free trial, and a free redesign preview if you want to see your current site rebuilt first.' },
+    ],
+    about: ['Google free listings', 'Google Merchant Center', 'Small online shops'],
+    published: '2026-10-17',
+    status: 'published',
+  },
+  {
+    slug: 'shipping-and-return-policy-small-online-shop',
+    title: 'Shipping and Return Policies for a Small Online Shop',
+    description: 'What a small online shop’s shipping, pickup and return policies should say, the FTC rule on shipping times and refunds, and the markup Google reads.',
+    kind: 'guide',
+    summary: [
+      'Under the FTC’s Mail, Internet, or Telephone Order Merchandise Rule, you need a reasonable basis for any shipping time you state, and if you state none you must ship within 30 days.',
+      'If you can’t ship on time, you must tell the customer and offer the choice to wait or cancel; refunds for cash, check or third-party credit card orders are due within seven working days.',
+      'Google can show your return and shipping policies next to products: return policy markup goes under Organization, or you can link to your policy page with merchantReturnLink.',
+      'Settings you enter in Merchant Center or Search Console take precedence over markup on your pages, so keep them and your written policy identical.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1624137527136-66e631bdaa0e?auto=format&fit=crop&w=1600&q=75', alt: 'Plain brown cardboard boxes, some with open flaps, stacked unevenly against a warm brown wall' },
+    body: `A small online shop makes two promises with every order: when it will arrive, and what happens if the customer doesn’t want it. Those promises live in your shipping and return policies, and in the United States, the shipping one is backed by a federal rule. Google also reads these policies and can show them next to your products in Search, which means a clear, accurate policy helps a shopper before they ever reach your site.
+
+This guide covers what the FTC’s rule requires on shipping times, delays and refunds, what to put in a shipping policy, how to describe local pickup honestly, what a return policy should say, and how to give Google the same information through structured data or its own settings. It is general information, not legal advice. The rule text and the FTC’s guide to it are linked throughout.
+
+## The FTC rule every US online shop should know
+
+The Federal Trade Commission enforces the Mail, Internet, or Telephone Order Merchandise Rule. Its business guide says the rule covers merchandise ordered by mail, via the internet or by telephone ([FTC business guide to the rule](${FTC_MAIL})). If you sell physical goods through a website, it applies to you.
+
+The guide also lists what’s outside it. It says the rule does not cover services, such as mail order photo-finishing, and it lists exempt sales including magazine subscriptions after the first shipment, sales of seeds and growing plants, collect-on-delivery orders, and transactions covered by the FTC’s Negative Option Rule ([FTC business guide](${FTC_MAIL})).
+
+The stakes are real. The FTC’s guide says merchants who break the rule can face civil penalties of up to $53,088 per violation, a figure updated in January 2025 for inflation, along with refunds to consumers ([FTC business guide](${FTC_MAIL})).
+
+## Rule one: have a reasonable basis for any shipping time
+
+The core of the rule is that you must have a reasonable basis to expect you can ship within the time you state ([FTC business guide](${FTC_MAIL})). The FTC defines that as having information that would satisfy a reasonable and prudent businessperson, acting in good faith.
+
+For a small shop, that means your stated time should come from your actual experience, not your best week. If you make candles to order and it usually takes you four days to pour, cure and pack them, “ships in 1 to 2 days” isn’t a reasonable basis. The FTC also notes that an accurate, up-to-date recordkeeping system can help show you are complying ([FTC business guide](${FTC_MAIL})). Your order history, with order and ship dates, is that record.
+
+The guide’s examples are pointed. If you say you ship in 48 hours “most of the time,” you are required to ship, or send a delay notice, within 48 hours all the time. And if you say in-stock items ship immediately, then unless you tell customers at ordering that an item isn’t in stock, you must ship, notify of a delay or cancel immediately ([FTC business guide](${FTC_MAIL})). Words like “usually” don’t soften the promise.
+
+## Rule two: no time stated means 30 days
+
+If your site doesn’t say when an order ships, the rule fills the gap: you must ship within 30 days after receiving a properly completed order. If the customer applies for credit to pay, the window is 50 days instead ([FTC business guide](${FTC_MAIL})).
+
+Under the rule, an order counts as shipped when the merchandise is physically placed in the possession of the carrier ([FTC business guide](${FTC_MAIL})). Printing a label isn’t shipping; handing the box over is.
+
+Thirty days is a backstop, not a goal. Most shoppers want a clearer answer, and a stated time you can keep is better for everyone than silence.
+
+![Empty open cardboard box with its flaps folded out, photographed head-on against a white background](https://images.unsplash.com/photo-1573376670329-0261ea9fde97?auto=format&fit=crop&w=1200&q=75)
+
+## When you can’t ship on time
+
+Delays happen: a supplier runs late, a product sells faster than you can make it, you get sick. The rule tells you what to do ([FTC business guide](${FTC_MAIL})):
+
+1. **Tell the customer before the promised time,** without waiting for them to ask, and offer the choice to accept the delay or cancel the order.
+2. **Include in the first delay notice** a definite revised shipping date, or a statement that you can’t give one; a statement that if the customer doesn’t want to wait, they can cancel and get a full and prompt refund; and a way for the customer to cancel at your expense.
+3. **If the new date is 30 days or less** after the original, a customer who doesn’t respond is treated as agreeing to the delay, but only if your notice said so.
+4. **If the customer agrees to an indefinite delay,** they keep a continuing right to cancel at any time until you ship.
+5. **For any further delay,** silence is not consent. Unless the customer agrees to the further delay, the order is automatically cancelled and you must give a prompt refund.
+
+You can always skip the delay notice and simply cancel and refund. The FTC says you must then notify the customer and send the refund within the time a delay notice would have been due ([FTC business guide](${FTC_MAIL})).
+
+The guide adds a note on order-status pages: posting a delay notice there can be an excellent way to back up notification by another means, but it isn’t enough alone if customers might not see it before the promised ship time ([FTC business guide](${FTC_MAIL})). Email the customer too.
+
+## How fast refunds are due
+
+When an order is cancelled under the rule, the refund deadlines are specific ([FTC business guide](${FTC_MAIL})):
+
+- **Paid by cash, check, money order, or credit where a third party is the creditor** (which includes ordinary credit cards): refund within seven working days after the order is cancelled.
+- **Paid on credit where you are the creditor** (a store account you run): credit the account, or notify the customer that the account won’t be charged, within one billing cycle.
+
+Seven working days is a short window for a one-person shop that checks email twice a week. Decide now who issues refunds and how, so a cancellation doesn’t sit in an inbox.
+
+## What to put in your shipping policy
+
+A shipping policy is one page, linked from every product page and the checkout, that answers a shopper’s questions before they ask. A practical outline:
+
+- **Processing time:** how long from order to handing the parcel to the carrier, based on your real records. If made-to-order items take longer than ready-made ones, say so separately.
+- **Carriers and methods:** which services you use and roughly how long each takes once shipped, phrased as an estimate from the carrier rather than your promise.
+- **Where you ship:** the states or countries you deliver to, and any you don’t.
+- **Costs:** flat rates, rates by weight or order value, or free shipping over an amount, exactly as they’ll appear at checkout.
+- **Delays:** what you’ll do if something can’t ship on time, in line with the rule above: you’ll tell them and offer to cancel.
+- **Damaged or lost parcels:** who to contact and what you need, such as a photo of the damage.
+- **Contact:** an email address that someone reads.
+
+Keep the numbers on this page and at checkout identical. If the policy says orders ship in three business days and a product page says “ships tomorrow,” the stricter promise is the one the customer will hold you to.
+
+## Local pickup: say exactly how it works
+
+Many small shops let local customers skip shipping and collect their order. If you offer it, the policy should cover:
+
+- **Where:** the address, and which door or counter if it isn’t obvious.
+- **When:** the hours pickup is available, and how much notice you need.
+- **How they’ll know it’s ready:** an email or text when the order is packed, and how long you’ll hold it.
+- **What to bring:** an order number or name, and whether someone else can collect.
+
+Only offer pickup windows you can staff. A customer who drives across town to a locked door is worse off than one who paid for postage.
+
+## What to put in your return policy
+
+No law requires a shop to accept returns of items that aren’t faulty, but whatever you decide, write it down plainly. Shoppers read return policies before they buy, and Google can show the key facts next to your products. Cover:
+
+- **Whether you accept returns,** and for which items. Many shops exclude personalized, made-to-order or final-sale items; say so on those product pages too.
+- **The window:** how many days, and from when. Google’s markup counts from the delivery date ([Google return policy structured data](${RETURN_SD})), which is a clear choice for customers as well.
+- **Condition:** unused, with tags, in original packaging, or whatever you need.
+- **How to return:** by mail, in store, or both, and whether the customer needs to contact you first.
+- **Who pays for return shipping,** and whether you charge a restocking fee.
+- **What they get back:** a refund to the original payment method, store credit or an exchange, and how quickly you process it.
+- **Faulty or damaged items:** usually treated differently, with the shop covering return costs.
+
+Then make sure the policy matches what you actually do. If you’ve quietly been accepting returns after 45 days but the page says 30, update one of them.
+
+![Two plain cardboard boxes on dark wooden shelves beside a small stack of books, with potted plants in metal buckets on the top shelf](https://images.unsplash.com/photo-1577702312572-5bb9328a9f15?auto=format&fit=crop&w=1200&q=75)
+
+## Show your return policy to Google
+
+Google’s return policy documentation says that when you add this markup, Google Search can use it to display return policies alongside your products and in knowledge panels ([Google return policy structured data](${RETURN_SD})).
+
+There are two ways to provide it:
+
+- **Shop-wide:** a MerchantReturnPolicy nested under your Organization markup with the hasMerchantReturnPolicy property. This is the usual choice for a small shop with one policy.
+- **Per product:** one or more MerchantReturnPolicy entries under a product’s Offer, which can override the shop-wide policy for that item.
+
+For the required properties, Google lets you choose ([Google return policy structured data](${RETURN_SD})):
+
+- **The full option:** applicableCountry (the country the policy applies to), returnPolicyCategory, and, for a set window, merchantReturnDays (the number of days from delivery). The category is one of MerchantReturnFiniteReturnWindow (a set number of days), MerchantReturnNotPermitted (no returns) or MerchantReturnUnlimitedWindow (no time limit).
+- **The minimal option:** merchantReturnLink, the address of the page that describes your return policy.
+
+Google also recommends details that answer the questions above: returnMethod (ReturnByMail, ReturnInStore or ReturnAtKiosk), returnFees (FreeReturn, ReturnFeesCustomerResponsibility or ReturnShippingFees, with returnShippingFeesAmount), refundType, itemCondition, restockingFee, separate fees for customer-remorse and defect returns, and returnLabelSource ([Google return policy structured data](${RETURN_SD})).
+
+## Show your shipping policy to Google
+
+Google’s shipping policy documentation works the same way. With ShippingService markup, Google Search can display shipping information alongside your products ([Google shipping policy structured data](${SHIPPING_SD})).
+
+- **Shop-wide:** a ShippingService nested under Organization with the hasShippingService property. Google recommends placing it on one page that describes your shipping policy.
+- **Per product:** OfferShippingDetails under an Offer with the shippingDetails property, which supports fewer properties.
+
+The only required property on ShippingService is shippingConditions, and a destination region needs its country ([Google shipping policy structured data](${SHIPPING_SD})). Recommended properties include shippingRate, shippingDestination, handlingTime, transitTime, orderValue, weight and fulfillmentType. Free shipping over a threshold is modeled as a rate of zero for an order value range, and if several conditions apply, Google uses the lowest shipping cost for the situation. For fulfillmentType, the documentation lists delivery, which is the default, and FulfillmentTypeCollectionPoint, where the product is shipped to a collection point for customer pickup ([Google shipping policy structured data](${SHIPPING_SD})).
+
+## Which source wins: your markup or Google’s settings?
+
+Both the return and shipping documentation set an order of precedence, from strongest to weakest: account settings sent through Google’s API, then settings in Merchant Center or Search Console, then product-level markup, then Organization-level markup. If you provide both markup and Search Console settings, Google says it will only use the information in Search Console ([Google return policy structured data](${RETURN_SD}), [Google shipping policy structured data](${SHIPPING_SD})).
+
+The merchant listing documentation adds that Merchant Center settings can be easier than markup when your policies change often ([merchant listing documentation](${MERCHANT_SD})). Whichever you use, the rule is the same: your written policy page, the details at checkout, your markup and any Google settings should all say the same thing. Free listings in Merchant Center also require shipping information in the US and many other countries; see [free product listings on Google](/blog/free-product-listings-on-google). For the product side of the markup, see [product pages Google can show](/blog/product-structured-data-small-shops).
+
+## A checklist for your policies
+
+1. A shipping time based on your real order records, stated the same everywhere it appears.
+2. A plan for delays: a notice that offers to wait or cancel, sent before the promised date.
+3. Refunds for cancelled orders within seven working days, with someone responsible for issuing them.
+4. A shipping policy page: processing time, carriers, destinations, costs, delays, damage, contact.
+5. Local pickup details, if you offer it: where, when, how they’ll know, what to bring.
+6. A return policy page: window from delivery, condition, method, who pays, refund type and timing.
+7. Final-sale and personalized items marked on their product pages.
+8. Policy pages linked from every product page and the checkout.
+9. Return and shipping policies described to Google, by markup or in Merchant Center or Search Console, matching the pages.
+10. A yearly check that the policy still matches what you actually do.
+
+## Where SaySites fits
+
+SaySites is a website builder for small businesses. On the Store plan, your site gets a Shop where you add products with photos, prices and descriptions, and customers pay through checkout with your own Stripe account; SaySites takes 0% of your sales, and Stripe charges its normal card fee. Writing and updating your shipping and return policy pages is something you can do by telling Sofie in plain words, like “add a returns page: 30 days from delivery, unused, customer pays return postage,” and you see the page as a draft before it goes live. Every page must pass a 95+ speed check, and products are described to search engines with their name, price, currency and stock status. The policies themselves are yours to decide; SaySites publishes what you say, nothing invented.
+
+The Store plan is $25 a month or $250 a year, with hosting included and your own domain connected ([websites for independent shops](/websites-for/shops), [pricing](/pricing)). Want to see your current shop’s site rebuilt? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and publish your policies alongside your first products. For more on what belongs on the front page of a small business site, read [what to put on your home page](/blog/what-to-put-on-your-home-page).`,
+    faq: [
+      { q: 'How long do I have to ship an online order?', a: 'Under the FTC’s Mail, Internet, or Telephone Order Merchandise Rule, you must ship within the time you state, and you need a reasonable basis to expect you can. If you state no time, you must ship within 30 days of receiving a properly completed order, or 50 days if the customer applies for credit to pay. Shipped means handed to the carrier.' },
+      { q: 'What do I do if an order is going to ship late?', a: 'Tell the customer before the promised date and offer the choice to wait or cancel. The first notice needs a revised date or a statement that you can’t give one, a statement that they can cancel for a full and prompt refund, and a way to cancel at your expense. You can also simply cancel and refund instead.' },
+      { q: 'How quickly must I refund a cancelled online order?', a: 'The FTC’s guide says that if the customer paid by cash, check, money order or credit from a third party, such as an ordinary credit card, you must refund within seven working days after the order is cancelled. If you are the creditor, through a store account, you must credit the account within one billing cycle.' },
+      { q: 'Does a small online shop have to accept returns?', a: 'The FTC rule covered here is about shipping times and refunds for orders you can’t ship, not about returns of items customers simply don’t want. Whatever return policy you choose, write it down clearly: the window, the item condition, how to return, who pays postage and what refund the customer gets. Check your own state’s laws too.' },
+      { q: 'How do I show my return policy in Google search results?', a: 'Google can show return policies next to products when you add MerchantReturnPolicy markup, usually nested under your Organization markup. You can give the country, the policy category and the number of days, or simply link to your policy page with merchantReturnLink. Settings entered in Merchant Center or Search Console take precedence over markup on your pages.' },
+      { q: 'Can my shipping markup describe local pickup?', a: 'Google’s shipping policy documentation lists a fulfillmentType property with delivery as the default and FulfillmentTypeCollectionPoint, where the product is shipped to a collection point for customer pickup. Whatever you mark up, explain local pickup on your shipping policy page too: the address, the hours, how customers will know the order is ready, and what to bring.' },
+      { q: 'How much does it cost to sell online with SaySites?', a: 'The Store plan is $25 a month or $250 a year, with hosting and a Shop page included and your own domain connected. Customers pay through your own Stripe account and SaySites takes 0% of sales, while Stripe charges its normal card fee. You can try it free for 7 days, or ask for a free redesign preview of your current site.' },
+    ],
+    about: ['Shipping policy', 'Return policy', 'FTC Mail, Internet, or Telephone Order Merchandise Rule'],
+    published: '2026-10-18',
+    status: 'published',
+  },
   {
     slug: 'houston-law-firm-website-design',
     title: 'Houston Law Firm Website Design: Texas Bar Rules',
@@ -755,7 +1301,7 @@ Structured data describes your business to search engines in a standard format. 
 
 SaySites builds plumbing websites this way from the start: a page for each service, a service-area page, a tap-to-call number and a job request form on every page. Each site is described to search engines as a Plumber, and every page must pass a 95+ speed check before it can go live. The request form can ask how soon the customer needs you, the ZIP code of the job and whether they own or rent, and every request lands in a leads pipeline where you can call, text, add notes and follow it through to a won job. You make changes by saying them in plain words, like “put our Illinois and Chicago license numbers under the phone number,” and see each change as a draft before it goes live. Nothing is invented: licenses, reviews and photos come from you.
 
-The Site plan is $15 a month, with hosting and your own domain included ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). Want to see your current site rebuilt before you decide? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and have it ready before the first hard freeze. For more on showing up in local results, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
+The Site plan is $15 a month, with hosting included and your own domain connected ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). Want to see your current site rebuilt before you decide? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and have it ready before the first hard freeze. For more on showing up in local results, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
     faq: [
       { q: 'Does my plumbing license number have to be on my website?', a: 'Illinois law says no one who provides plumbing services may advertise them unless the ad includes the license number, and it requires the number on vehicles too. The statute talks about advertisements and doesn’t name websites, but a company website advertises your services, so the safe and simple choice is to show the number on the home page near your phone number.' },
       { q: 'Do I need a City of Chicago license if I have an Illinois plumbing license?', a: 'Yes, for work inside the city. Chicago’s Department of Buildings says a city plumbing contractor license is required to install, alter, repair or maintain plumbing in Chicago, even for contractors licensed by the state. At least one principal must be a city-licensed plumber, and the contractor files a $20,000 performance bond with the city.' },
@@ -1048,7 +1594,7 @@ Structured data is code that describes your business to search engines in a stan
 
 SaySites builds HVAC websites with this structure from the start: a page for each service, a service-area page, a tap-to-call number and a request form on every page. Each site is described to search engines as an HVACBusiness, and every page must pass a 95+ speed check before it goes live. The job request form can ask how soon the customer needs you, the ZIP code of the job and whether they own or rent, and every request lands in a leads pipeline where you can call, text, take notes and track it to a booked job. You make changes by saying them in plain words, like “put our ROC number under the phone number on the home page”, and see each one as a draft before it goes live.
 
-The Site plan is $15 a month, with hosting and your own domain included ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). Want to see your current site rebuilt first? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and build it yourself before the next heat wave. For more on getting found locally, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
+The Site plan is $15 a month, with hosting included and your own domain connected ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). Want to see your current site rebuilt first? [Get a free redesign](/redesign). Or [start a 7-day free trial](/signup) and build it yourself before the next heat wave. For more on getting found locally, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
     faq: [
       { q: 'Does my ROC license number have to be on my HVAC website?', a: 'If your internet, radio, TV, vehicle or billboard ads show your web address instead of your license number, yes. Arizona lets those ads skip the number only when they link directly to a home page that prominently shows your business name and ROC number. Showing it on the home page is the simplest way to stay covered.' },
       { q: 'Can the ROC license number go in my website footer?', a: 'Not if you rely on the website exception for your ads. The Registrar of Contractors says the name and license number must appear directly on the home page, be clearly visible, use an appropriately sized font and not be placed in the footer. A line near your phone number at the top of the page works well.' },
