@@ -100,6 +100,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
       const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
       const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), budgetMicros, ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}) })
       await store.recordUsage(site.id, today, costMicros(result.usage))
+      for (const [item, qty] of Object.entries(result.stock ?? {})) await store.setStock(site.id, item, qty)
       for (const m of result.media) {
         await store.addMedia({ id: m.id, siteId: site.id, mime: m.mime, width: m.width, height: m.height, alt: m.alt }, Buffer.from(m.data, 'utf8'))
       }

@@ -11,7 +11,7 @@
 // or undoes it; nothing reaches the live site without that step.
 
 import Anthropic from '@anthropic-ai/sdk'
-import { ContainerSchema, ElementSchema, PageSchema, SiteSchema, pagePath, type Container, type Element, type Page, type Site } from './schema'
+import { ContainerSchema, ElementSchema, PageSchema, ProductSchema, SiteSchema, pagePath, type Container, type Element, type Page, type Site } from './schema'
 import { checkPage } from './seo'
 import { vibeCheck } from './vibe'
 import { checkSpeed } from './speed'
@@ -26,6 +26,7 @@ import { isStock, photoKey, photoUses, repeatedPhotos } from './photo-rules'
 import type { Credit, FoundPhoto } from './unsplash'
 import type { PhotoSet } from './photos'
 import { costMicros, type Tokens } from './usage'
+import { buildVariants } from './commerce'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -49,7 +50,8 @@ export interface Snapshot {
 
 type Json = Record<string, unknown>
 
-const LOCKED_SITE_KEYS = ['id', 'orgId', 'subdomain', 'customDomain', 'pendingDomain', 'handoff', 'ownership', 'startedVia', 'updatedAt'] as const
+// The shop changes only through save_product and remove_product.
+const LOCKED_SITE_KEYS = ['id', 'orgId', 'subdomain', 'customDomain', 'pendingDomain', 'handoff', 'ownership', 'startedVia', 'updatedAt', 'store'] as const
 const LOCKED_ELEMENT_KEYS = ['id', 'type', 'children'] as const
 
 // A file Sofie made (a logo) that is saved with the owner's photos.
@@ -67,6 +69,9 @@ export class Workspace {
   pages: Page[]
   readonly changes: string[] = []
   readonly media: NewMedia[] = []
+  // Stock counts the owner gave for products (saved straight away: stock
+  // isn't part of the draft).
+  readonly stock: Record<string, number> = {}
   // A PNG of the last logo drawn, shown back to Sofie so she can judge it.
   lastLogoPreview: string | null = null
   private fontLoader: FontLoader
@@ -317,6 +322,70 @@ export class Workspace {
     this.changes.push(summary)
   }
 
+  // Adds a product, or changes one by id. Prices come in dollars (or the
+  // shop's currency) as numbers, as the owner said them.
+  saveProduct(input: Json, summary: string) {
+    const shop = this.site.store ?? { currency: 'USD' as const, products: [] }
+    const id = typeof input.id === 'string' && input.id ? input.id : ''
+    const old = id ? shop.products.find((p) => p.id === id) : undefined
+    if (id && !old) throw new ToolError(`There is no product with id "${id}". Leave id out to add a new one.`)
+    const cents = (v: unknown, what: string): number | undefined => {
+      if (v === undefined || v === null || v === '') return undefined
+      const n = typeof v === 'number' ? v : Number(String(v).replace(/[$,£€\s]/g, ''))
+      if (!Number.isFinite(n) || n < 0 || n > 1_000_000) throw new ToolError(`${what} should be a number like 24 or 24.50.`)
+      return Math.round(n * 100)
+    }
+    const name = typeof input.name === 'string' ? input.name.trim() : old?.name
+    const price = cents(input.price, 'price') ?? old?.price
+    if (!name) throw new ToolError('A product needs a name.')
+    if (price === undefined) throw new ToolError('Ask the owner for the price; never guess it.')
+    const options = Array.isArray(input.options)
+      ? (input.options as Json[]).map((o) => ({ name: String(o.name ?? '').trim(), values: Array.isArray(o.values) ? (o.values as unknown[]).map((v) => String(v).trim()).filter(Boolean) : [] })).filter((o) => o.name && o.values.length)
+      : old?.options
+    const productId = old?.id ?? `p-${Math.random().toString(36).slice(2, 10)}`
+    const variants = options?.length ? buildVariants(options, old?.variants ?? []) : undefined
+    const prices = isObject(input.variant_prices) ? (input.variant_prices as Json) : {}
+    const photos = Array.isArray(input.photos) ? (input.photos as Json[]).map((ph) => ({ src: String(ph.src ?? ''), alt: String(ph.alt ?? name).slice(0, 250) })).filter((ph) => ph.src) : null
+    const next: Json = {
+      ...(old ? structuredClone(old) : {}),
+      id: productId,
+      name,
+      price,
+      ...(typeof input.description === 'string' ? { description: input.description } : {}),
+      ...(typeof input.details === 'string' ? { details: input.details } : {}),
+      ...(typeof input.category === 'string' ? { category: input.category } : {}),
+      ...(typeof input.status === 'string' ? { status: input.status } : {}),
+      ...(input.compare_at !== undefined ? { compareAt: cents(input.compare_at, 'compare_at') } : {}),
+      ...(input.cost !== undefined ? { cost: cents(input.cost, 'cost') } : {}),
+      ...(typeof input.sold_out === 'boolean' ? { soldOut: input.sold_out } : {}),
+      ...(typeof input.no_shipping === 'boolean' ? { noShipping: input.no_shipping } : {}),
+      ...(photos ? { image: photos[0], images: photos.slice(1, 9) } : {}),
+      ...(options ? { options, variants: variants!.map((v) => ({ ...v, ...(prices[v.values.join(' / ')] !== undefined ? { price: cents(prices[v.values.join(' / ')], 'variant price') } : {}) })) } : {}),
+    }
+    if (input.stock !== undefined && input.stock !== null) {
+      const n = Number(input.stock)
+      if (!Number.isInteger(n) || n < 0) throw new ToolError('stock should be a whole number.')
+      next.track = true
+      this.stock[productId] = n
+    }
+    for (const k of Object.keys(next)) if (next[k] === undefined || (Array.isArray(next[k]) && !(next[k] as unknown[]).length && k === 'images')) delete next[k]
+    const parsed = ProductSchema.safeParse(next)
+    if (!parsed.success) throw new ToolError(`That product is not valid: ${formatZod(parsed.error)}`)
+    const products = old ? shop.products.map((p) => (p.id === productId ? parsed.data : p)) : [...shop.products, parsed.data]
+    const site = SiteSchema.safeParse({ ...this.site, store: { ...shop, products } })
+    if (!site.success) throw new ToolError(`That change is not valid: ${formatZod(site.error)}`)
+    this.site = site.data
+    this.changes.push(summary)
+    return productId
+  }
+
+  removeProduct(id: string, summary: string) {
+    const shop = this.site.store
+    if (!shop?.products.some((p) => p.id === id)) throw new ToolError(`There is no product with id "${id}".`)
+    this.site = { ...this.site, store: { ...shop, products: shop.products.filter((p) => p.id !== id) } }
+    this.changes.push(summary)
+  }
+
   updateSite(changes: Json, summary: string) {
     for (const k of LOCKED_SITE_KEYS) if (k in changes) throw new ToolError(`"${k}" cannot be changed by Sofie.`)
     const next = structuredClone(this.site) as unknown as Json
@@ -530,6 +599,19 @@ SOFIE_TOOLS.push({
 })
 
 SOFIE_TOOLS.push({
+  name: 'save_product',
+  description:
+    'Add a product to the owner\'s shop, or change one (pass its id from site.store.products). Only facts the owner gives you: never invent a price, stock count, sizes or claims. product_json is a JSON object with any of: id (to change an existing product), name, price (a number in the shop\'s currency, e.g. 24 or 24.5), compare_at (an earlier "was" price, only if the owner says it\'s on sale), cost (what it costs the owner, private), description (one line for product cards), details (the full description; blank line = new paragraph), category (a section of the shop, e.g. "Candles"), status ("active", "draft" or "unlisted"), options ([{"name":"Size","values":["Small","Large"]}], up to 3), variant_prices ({"Small": 20, "Large / Red": 28}, only for combinations that cost something else), stock (how many they have; turns on stock counting), sold_out (true/false), no_shipping (true for gift cards, classes or downloads), photos ([{"src","alt"}], the owner\'s own first). Each product gets its own page at /shop/<name>. If the site has no Shop page yet, also add one with a products widget and a menu link. Changes go live when the owner publishes, except stock counts, which save straight away.',
+  input_schema: { type: 'object', additionalProperties: false, properties: { product_json: { type: 'string' }, summary }, required: ['product_json', 'summary'] },
+})
+
+SOFIE_TOOLS.push({
+  name: 'remove_product',
+  description: 'Remove a product from the shop by its id (from site.store.products). Only when the owner asks.',
+  input_schema: { type: 'object', additionalProperties: false, properties: { id: { type: 'string' }, summary }, required: ['id', 'summary'] },
+})
+
+SOFIE_TOOLS.push({
   name: 'find_photos',
   description:
     'Search free professional stock photos (Unsplash) when the photo list doesn\'t have a good fit. Returns up to 10 photos with src, alt, width and height; use them exactly. Search in plain English for what the photo shows, e.g. "attorney meeting client". Photos already on this site or another customer\'s site are left out. Each photographer is credited in the site footer automatically.',
@@ -598,6 +680,11 @@ export async function runTool(ws: Workspace, name: string, input: Record<string,
         break
       case 'find_photos':
         return await ws.findPhotos(str('query'))
+      case 'save_product':
+        return `Done. Product id: ${ws.saveProduct(parseJson(str('product_json'), 'object') as Json, s)}`
+      case 'remove_product':
+        ws.removeProduct(str('id'), s)
+        break
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
         break
@@ -654,7 +741,7 @@ How to work:
 
 The content model (enforced; invalid changes are rejected with a reason, then fix and retry):
 - A page body is an array of top-level containers (sections). Container: {"id","type":"container","tag"?: "section"|"div"|..., "layout":"flex"|"grid", "direction"?: {"desktop":"row"|"column", "mobile"?}, "columns"?: {"desktop":n,"tablet"?:n,"mobile"?:n} (grid), "align"?: "start"|"center"|"end"|"stretch", "justify"?: "start"|"center"|"end"|"between", "boxed"?: true (full-width background, content capped to site width), "backgroundImage"?: {"src","width","height","overlay":0-0.95,"overlayStyle"?:"full"|"side","priority"?:bool}, "style"?, "children":[...] }.
-- Widgets: heading {"id","type":"heading","level":1-6,"text"}; text {"id","type":"text","text"} (blank line = new paragraph); image {"id","type":"image","src","alt" (required, descriptive),"width","height","aspect"?: ratio like 1.5,"priority"?: bool}; button {"id","type":"button","label","href","variant":"primary"|"secondary"|"outline"}; faq {"id","type":"faq","items":[{"question","answer"}]}; posts (a list of the site's blog posts, newest first; use write_post to add posts) {"id","type":"posts","limit"?: number}; products (the site's products from the owner's Products tab, as cards with prices and buy buttons; you cannot add or change products themselves) {"id","type":"products","limit"?: number}; gallery (a grid of photos, e.g. "Our work"; prefer the owner's uploaded photos) {"id","type":"gallery","columns"?: 2-4,"images":[{"src","alt","width","height","caption"?}]}; ticker (a slow, endless strip of 3-16 short phrases, e.g. the owner's real services or towns they serve; good right under the hero, in a section with no padding at the sides) {"id","type":"ticker","items":["Drain cleaning","Water heaters",…]}; testimonials (ONLY real quotes the owner gave you, word for word; never invent or paraphrase reviews) {"id","type":"testimonials","items":[{"quote","name","detail"?: e.g. town or service,"stars"?: 1-5}]}; form (a contact form whose messages go to the owner's inbox) {"id","type":"form","fields":["name","email","phone","message"] (any of these, in order),"submitLabel","thanks"?: note shown after sending}.
+- Widgets: heading {"id","type":"heading","level":1-6,"text"}; text {"id","type":"text","text"} (blank line = new paragraph); image {"id","type":"image","src","alt" (required, descriptive),"width","height","aspect"?: ratio like 1.5,"priority"?: bool}; button {"id","type":"button","label","href","variant":"primary"|"secondary"|"outline"}; faq {"id","type":"faq","items":[{"question","answer"}]}; posts (a list of the site's blog posts, newest first; use write_post to add posts) {"id","type":"posts","limit"?: number}; products (the shop's products as cards with prices and add-to-cart buttons, each linking to its own page; add and change products with save_product) {"id","type":"products","limit"?: number,"category"?: one section of the shop}; product (one product in full, with photos, options and add to cart, e.g. a featured product on the home page) {"id","type":"product","productId"}; gallery (a grid of photos, e.g. "Our work"; prefer the owner's uploaded photos) {"id","type":"gallery","columns"?: 2-4,"images":[{"src","alt","width","height","caption"?}]}; ticker (a slow, endless strip of 3-16 short phrases, e.g. the owner's real services or towns they serve; good right under the hero, in a section with no padding at the sides) {"id","type":"ticker","items":["Drain cleaning","Water heaters",…]}; testimonials (ONLY real quotes the owner gave you, word for word; never invent or paraphrase reviews) {"id","type":"testimonials","items":[{"quote","name","detail"?: e.g. town or service,"stars"?: 1-5}]}; form (a contact form whose messages go to the owner's inbox) {"id","type":"form","fields":["name","email","phone","message"] (any of these, in order),"submitLabel","thanks"?: note shown after sending}.
 - style (all optional): padding/margin {"desktop":{"top","right","bottom","left"},"mobile"?:{...}}; gap {"desktop":n,"mobile"?:n}; fontSize {"desktop":n,"tablet"?:n,"mobile"?:n}; textAlign {"desktop":"left"|"center"|"right"}; background, color, border: a color token (primary, secondary, accent, text, muted, background, surface) or a hex like "#ffffff"; fontWeight 300-900; borderRadius; maxWidth; letterSpacing (em); textTransform "uppercase"|"none"; fontFamily "heading"|"body".
 - Links (href): "/page-slug", "https://...", "tel:+15551234567", "mailto:...", or "#anchor". Ids: lowercase letters, digits and dashes, unique on the page.
 - Rules the publish gate checks: exactly one level-1 heading per page, headings don't skip levels, every image has alt text, at most one image per page loads eagerly (priority: true, only the first image near the top), titles under 70 characters, descriptions under 170.
@@ -674,6 +761,8 @@ export interface SofieResult {
   media: NewMedia[]
   snapshot: Snapshot
   problems: string[]
+  // Stock counts to save now (ss_stock), by product id.
+  stock: Record<string, number>
   // Tokens used across every step, for costing (lib/usage).
   usage: Required<Tokens>
 }
@@ -795,7 +884,7 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   // Only files the final draft still uses (she may have drawn a few versions).
   const used = JSON.stringify(ws.site.business)
   const media = ws.media.filter((m) => used.includes(`/u/${m.id}`))
-  return { reply, changes: ws.changes, media, snapshot: ws.snapshot(), problems: ws.problems(), usage }
+  return { reply, changes: ws.changes, media, snapshot: ws.snapshot(), problems: ws.problems(), usage, stock: ws.stock }
 }
 
 // Each step re-sends the whole conversation (the site, then every tool call

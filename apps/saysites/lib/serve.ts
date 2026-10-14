@@ -6,6 +6,8 @@ import { onNewLead } from './leads'
 import { DIRECT, readSource, sourceCookie, sourceToSet } from './lead-source'
 import { answersText, intakeSet, readAnswers } from './intake'
 import { privacyPage } from './privacy'
+import { productPage, returnsPage } from './shop-render'
+import { isLive, productSlugs } from './commerce'
 import { wordsFor } from './site-words'
 import { renderPage, withBasePath } from './render'
 import { pagePath, walk, type Page } from './schema'
@@ -42,7 +44,7 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
     return new Response(body, { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, s-maxage=300' } })
   }
 
-  const page = pages.find((p) => p.status === 'published' && pagePath(p) === path) ?? (path === '/privacy' ? privacyPage(site) : undefined)
+  const page = pages.find((p) => p.status === 'published' && pagePath(p) === path) ?? (path === '/privacy' ? privacyPage(site) : path === '/returns' ? returnsPage(site, wordsFor(site.language)) : shopPage(bundle, path))
   if (!page) {
     // yoursite.com/review: a short, permanent address for QR cards and
     // messages that forwards to wherever the owner collects reviews.
@@ -52,7 +54,7 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
     return siteNotFound(bundle, opts)
   }
 
-  let { html } = renderPage(site, page, pages)
+  let { html } = renderPage(site, page, pages, { stock: bundle.stock })
   if (opts.basePath) html = withBasePath(html, opts.basePath)
   if (!opts.preview) html = html.replace('</body>', `${visitBeacon(path)}${callTracker(path)}</body>`).replace('<body', '<body ontouchstart=""')
   return new Response(html, {
@@ -242,4 +244,14 @@ function backPath(req: Request, base: string): string {
   } catch {
     return '/'
   }
+}
+
+// /shop/<slug>: a product's own page, made from the product.
+function shopPage(bundle: SiteBundle, path: string): Page | undefined {
+  const m = path.match(/^\/shop\/([a-z0-9-]{1,80})$/)
+  const products = bundle.site.store?.products
+  if (!m || !products?.length) return undefined
+  const slugs = productSlugs(products)
+  const p = products.find((x) => slugs.get(x.id) === m[1] && isLive(x))
+  return p ? productPage(bundle.site, p, m[1], bundle.pages) : undefined
 }

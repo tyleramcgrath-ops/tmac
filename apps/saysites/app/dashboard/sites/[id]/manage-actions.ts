@@ -287,49 +287,6 @@ async function changeSite(siteId: string, fn: (s: Site) => Site) {
   return next
 }
 
-export async function saveProduct(siteId: string, productId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
-  const owner = await ownSite(siteId)
-  if (!canSell(await loadAccess(owner.store, owner.user))) return { error: 'Selling online is on the Store plan. Switch plans on your Account page to add products.' }
-  const name = str(form, 'name', 120)
-  if (!name) return { error: 'Give the product a name.' }
-  const priceText = str(form, 'price', 20).replace(/[$,£€\s]/g, '')
-  if (!/^\d+(\.\d{1,2})?$/.test(priceText)) return { error: 'Enter a price like 24 or 24.50.' }
-  const price = Math.round(Number(priceText) * 100)
-  const buyUrl = str(form, 'buyUrl', 300)
-  if (buyUrl && !/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/.test(buyUrl)) return { error: 'The buy link should be a Stripe payment link, like https://buy.stripe.com/abc123.' }
-  const imageSrc = str(form, 'imageSrc', 500)
-  if (imageSrc && !/^(https:\/\/[^\s]+|\/u\/[a-f0-9]{32})$/.test(imageSrc)) return { error: 'The photo needs to be one of your photos or a link starting with https://.' }
-  const description = str(form, 'description', 600)
-  const product: Product = {
-    id: productId === 'new' ? `p-${randomUUID().slice(0, 8)}` : productId,
-    name,
-    price,
-    ...(description ? { description } : {}),
-    ...(imageSrc ? { image: { src: imageSrc, alt: str(form, 'imageAlt', 250) || name } } : {}),
-    ...(buyUrl ? { buyUrl } : {}),
-    ...(form.get('soldOut') ? { soldOut: true } : {}),
-  }
-  try {
-    await changeSite(siteId, (s) => {
-      const list = s.store?.products ?? []
-      const products = productId === 'new' ? [...list, product] : list.map((p) => (p.id === productId ? product : p))
-      return { ...s, store: { currency: s.store?.currency ?? 'USD', products } }
-    })
-  } catch {
-    return { error: 'That product couldn’t be saved. Check the details and try again.' }
-  }
-  return { saved: true }
-}
-
-export async function deleteProduct(siteId: string, productId: string) {
-  await changeSite(siteId, (s) => ({ ...s, store: { currency: s.store?.currency ?? 'USD', products: (s.store?.products ?? []).filter((p) => p.id !== productId) } }))
-}
-
-export async function setCurrency(siteId: string, form: FormData) {
-  const currency = str(form, 'currency', 3) as 'USD'
-  await changeSite(siteId, (s) => ({ ...s, store: { currency, products: s.store?.products ?? [] } }))
-}
-
 // Adds a "Shop" page with every product and puts it in the menu.
 export async function addShopPage(siteId: string) {
   const { user, store, site } = await ownSite(siteId)

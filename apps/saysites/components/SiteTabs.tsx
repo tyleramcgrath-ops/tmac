@@ -7,7 +7,7 @@ import type { Role } from '@/lib/team'
 // The tabs under a site's name in the dashboard. They wrap onto a second
 // line on wide screens; on phones they scroll sideways, with the open tab
 // brought into view.
-export function SiteTabs({ siteId, unread, role = 'owner' }: { siteId: string; unread: number; role?: Role }) {
+export function SiteTabs({ siteId, unread, toSend = 0, role = 'owner' }: { siteId: string; unread: number; toSend?: number; role?: Role }) {
   const path = usePathname()
   const nav = useRef<HTMLElement>(null)
   useEffect(() => {
@@ -26,7 +26,7 @@ export function SiteTabs({ siteId, unread, role = 'owner' }: { siteId: string; u
     { href: `${base}/pages`, label: 'Pages' },
     { href: `${base}/photos`, label: 'Photos' },
     { href: `${base}/posts`, label: 'Blog' },
-    { href: `${base}/products`, label: 'Products' },
+    { href: `${base}/store`, label: 'Store', badge: toSend },
     { href: `${base}/settings`, label: 'Settings' },
   ]
   // Staff work the leads; the rest of the site is the owner's.
@@ -38,7 +38,7 @@ export function SiteTabs({ siteId, unread, role = 'owner' }: { siteId: string; u
         return (
           <a key={t.href} href={t.href} aria-current={on ? 'page' : undefined}>
             {t.label}
-            {t.badge ? <span className="badge" aria-label={`${t.badge} unread`}>{t.badge}</span> : null}
+            {t.badge ? <span className="badge" aria-label={t.label === 'Store' ? `${t.badge} orders to send` : `${t.badge} unread`}>{t.badge}</span> : null}
           </a>
         )
       })}
