@@ -1057,3 +1057,15 @@
 .home .rp-index a { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; font-size: 20px; }
 .home .rp-index a span { color: var(--ink-mu); font-size: 15px; }
 @media (max-width: 600px) { .home .rp-table td { white-space: normal; } }
+
+/* Free homepage mockup request (/mockup), on the dark page hero */
+.home .mockup-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 680px; margin: 28px 0 14px; }
+.home .mockup-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: rgba(238, 239, 239, 0.86); }
+.home .mockup-form label em { font-weight: 400; font-style: normal; opacity: .7; }
+.home .mockup-form .wide { grid-column: 1 / -1; }
+.home .mockup-form input, .home .mockup-form textarea { font: 400 16px/1.4 var(--font); color: #fff; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 12px 14px; outline: none; }
+.home .mockup-form input:focus, .home .mockup-form textarea:focus { border-color: rgba(255, 255, 255, 0.6); }
+.home .mockup-form button { grid-column: 1 / -1; justify-self: start; }
+.home .mockup-form .redesign-err { grid-column: 1 / -1; margin: 0; color: #ffb4a8; }
+.home .mockup-done { max-width: 640px; margin: 28px 0 14px; padding: 16px 18px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 17px; }
+@media (max-width: 560px) { .home .mockup-form { grid-template-columns: 1fr; } }
