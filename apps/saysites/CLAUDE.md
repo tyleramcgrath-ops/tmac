@@ -419,12 +419,20 @@ site rebuilt, free to keep for a month. Admins run it at /dashboard/outreach
   next to one of our premium starter designs filled with their real name,
   phone, town and services, on a computer and a phone. Needs Chromium, so it
   runs on the team's machine or Claude's cloud session, never the host.
+  Pass `--services` from their own site (menu names are often junk) and
+  `--no-today` when their site sits behind a bot check (never bypass it).
+  It also writes a ~250 KB JPEG: email tools can't attach big files, so
+  those go in `public/mockups/` under an unguessable name and the email
+  shows `https://saysites.com/mockups/<name>.jpg` (kept out of search by
+  robots.ts).
 - **Daily prospects** (the owner, October 15, 2026): a routine finds 20
   businesses with weak sites a day (measured: no mobile viewport, no https,
   old copyright, heavy pages), uses only emails published on their own
-  sites, and puts each personal email in the owner's Gmail Drafts with the
-  owner on CC; the owner reviews and sends. Emails name SaySites, the
-  mailing address and a "reply no thanks" opt-out, which is honoured.
+  sites, and sends each personal email from the owner's Gmail with the
+  owner on CC (the owner asked for sending, not drafts, the same day).
+  Write emails as HTML with real links: the Gmail connector rewrites bare
+  URLs in plain text into google.com redirect links. Emails name SaySites,
+  the mailing address and a "reply no thanks" opt-out, which is honoured.
 - **City reports** (/reports, /reports/<slug>): drafted automatically once a
   campaign has `REPORT_MIN_SITES` measured homepages; the team publishes.
   SaySites' own name, aggregate numbers, and by name only the lightest ten

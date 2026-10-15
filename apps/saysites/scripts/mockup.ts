@@ -6,7 +6,7 @@
 //
 //   npx tsx scripts/mockup.ts https://example-law.com [out-dir] [--name "Firm, P.A."]
 //     [--type lawyer] [--city "Boca Raton"] [--region FL] [--phone "(561) 555-0100"]
-//     [--services "Estate planning, Probate, Trusts"]
+//     [--services "Estate planning, Probate, Trusts"] [--no-today]
 //
 // The redesign is one of SaySites' own premium starter designs, filled in
 // with the business's real name, phone, town and services (read from their
@@ -16,10 +16,12 @@
 // Writes <out-dir>/<host>-mockup.png (the picture to send), plus
 // <host>-redesign.html and the two screenshots it was made from.
 
-import { execFileSync } from 'child_process'
-import { mkdirSync, writeFileSync } from 'fs'
+import { execFile } from 'child_process'
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'fs'
 import { createRequire } from 'module'
+import { tmpdir } from 'os'
 import { join, resolve } from 'path'
+import { promisify } from 'util'
 import { buildPreview } from '../lib/redesign'
 import { renderPage } from '../lib/render'
 import { BUSINESS_TYPES, buildStarterSite, type BusinessTypeKey } from '../lib/starter'
@@ -34,6 +36,10 @@ const cleanName = (s: string) => s.replace(/^[^A-Za-z0-9]+/, '').replace(/^welco
 const require = createRequire(import.meta.url)
 const { chromium } = require(process.env.PLAYWRIGHT_PATH ?? '/opt/node22/lib/node_modules/playwright')
 const CHROME = process.env.CHROMIUM_PATH ?? '/opt/pw-browsers/chromium'
+
+const run = promisify(execFile)
+const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'
+type Route = { request(): { url(): string; method(): string }; fulfill(o: object): Promise<void>; continue(): Promise<void>; abort(): Promise<void> }
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!)
 
@@ -71,17 +77,24 @@ async function main() {
   writeFileSync(htmlPath, html)
 
   const browser = await chromium.launch({ executablePath: CHROME })
+  const tmp = mkdtempSync(join(tmpdir(), 'mockup-'))
+  let n = 0
   try {
     const shot = async (url: string, width: number, height: number, file: string) => {
       const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 2 })
-      // Some sandboxes only reach the web through curl's proxy settings.
-      if (process.env.MOCKUP_CURL_IMAGES !== '0')
-        await page.route(/^https:\/\/(images|plus)\.unsplash\.com\//, async (route: { request(): { url(): string }; fulfill(o: object): Promise<void>; abort(): Promise<void> }) => {
+      // Some sandboxes (Claude's cloud sessions) only reach the web through
+      // curl's proxy settings, so every page request goes through curl there.
+      if (process.env.MOCKUP_CURL !== '0')
+        await page.route(/^https?:\/\//, async (route: Route) => {
+          const req = route.request()
+          if (req.method() !== 'GET') return route.continue()
+          const out = join(tmp, String(n++))
           try {
-            const body = execFileSync('curl', ['-sS', '--max-time', '20', route.request().url()], { maxBuffer: 1 << 26 })
-            await route.fulfill({ status: 200, contentType: 'image/jpeg', body })
+            const { stdout } = await run('curl', ['-sSL', '--compressed', '--max-time', '25', '-A', UA, '-o', out, '-w', '%{http_code}\n%{content_type}', req.url()])
+            const [status, type] = stdout.split('\n')
+            await route.fulfill({ status: Number(status) || 200, contentType: type || undefined, body: readFileSync(out) })
           } catch {
-            await route.abort()
+            await route.abort().catch(() => {})
           }
         })
       await page.goto(url, { waitUntil: 'load', timeout: 45_000 }).catch(() => {})
@@ -99,7 +112,9 @@ async function main() {
       await page.close()
       return file
     }
-    const before = await shot(preview.url, 1440, 1000, join(out, `${host}-before.png`))
+    // --no-today leaves their current site out (e.g. it sits behind a bot check).
+    const today = !process.argv.includes('--no-today')
+    const before = today ? await shot(preview.url, 1440, 1000, join(out, `${host}-before.png`)) : ''
     const after = await shot(`file://${htmlPath}`, 1440, 1000, join(out, `${host}-after.png`))
     const phone = await shot(`file://${htmlPath}`, 390, 844, join(out, `${host}-phone.png`))
 
@@ -110,14 +125,14 @@ async function main() {
       .win{position:absolute;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(18,19,22,.18),0 4px 14px rgba(18,19,22,.08)}
       .bar{height:44px;background:#f4f3ef;display:flex;align-items:center;gap:9px;padding:0 18px;border-bottom:1px solid #e3e1dc}.bar i{width:13px;height:13px;border-radius:50%;background:#d8d6d0}.bar span{margin-left:14px;font-size:17px;color:#6a6c71}
       .win img{display:block;width:100%}
-      .before{left:96px;top:250px;width:900px;opacity:.96}.after{left:860px;top:330px;width:1180px}
+      .before{left:96px;top:250px;width:900px;opacity:.96}.after{left:${today ? 860 : 300}px;top:${today ? 330 : 280}px;width:${today ? 1180 : 1500}px}
       .tag{position:absolute;font-size:22px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 18px;border-radius:999px}
-      .t1{left:96px;top:200px;background:#fff;color:#6a6c71}.t2{left:860px;top:280px;background:#121316;color:#fff}
+      .t1{left:96px;top:200px;background:#fff;color:#6a6c71}.t2{left:${today ? 860 : 300}px;top:${today ? 280 : 230}px;background:#121316;color:#fff}
       .phone{position:absolute;right:110px;top:420px;width:330px;border-radius:46px;background:#121316;padding:14px;box-shadow:0 30px 80px rgba(18,19,22,.3)}.phone img{display:block;width:100%;border-radius:34px}
       .foot{position:absolute;left:96px;bottom:60px;font-size:24px;color:#3d3f44}.foot b{color:#121316}
     </style>
     <div class="head"><p>Free homepage mockup</p><h1>${esc(name)}, redesigned</h1></div>
-    <span class="tag t1">Today</span><div class="win before"><div class="bar"><i></i><i></i><i></i><span>${esc(host)}</span></div><img src="file://${before}"></div>
+    ${today ? `<span class="tag t1">Today</span><div class="win before"><div class="bar"><i></i><i></i><i></i><span>${esc(host)}</span></div><img src="file://${before}"></div>` : ''}
     <span class="tag t2">Redesigned</span><div class="win after"><div class="bar"><i></i><i></i><i></i><span>${esc(host)}</span></div><img src="file://${after}"></div>
     <div class="phone"><img src="file://${phone}"></div>
     <div class="foot">Your business on a fast, mobile-first SaySites design. Change anything just by saying it. <b>SaySites</b> · saysites.com</div>`
@@ -128,9 +143,12 @@ async function main() {
     await page.waitForTimeout(500)
     const png = join(out, `${host}-mockup.png`)
     await page.screenshot({ path: png, type: 'png' })
+    // A small copy to host at saysites.com/mockups/ and show inside an email.
+    await page.screenshot({ path: png.replace(/\.png$/, '.jpg'), type: 'jpeg', quality: 80 })
     console.log(png)
   } finally {
     await browser.close()
+    rmSync(tmp, { recursive: true, force: true })
   }
 }
 
