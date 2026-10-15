@@ -419,8 +419,13 @@ site rebuilt, free to keep for a month. Admins run it at /dashboard/outreach
   next to one of our premium starter designs filled with their real name,
   phone, town and services, on a computer and a phone. Needs Chromium, so it
   runs on the team's machine or Claude's cloud session, never the host.
-  Pass `--services` from their own site (menu names are often junk) and
+  Pass `--services` from their own site (menu names are often junk),
+  `--phone` from their site (never a fax line, never a guess) and
   `--no-today` when their site sits behind a bot check (never bypass it).
+  The owner wants these to look striking: `--palette noir --style
+  classic|counsel` plus a `--hero <unsplash id>` that fits the work (a
+  Florida pool home for real estate, a family on the beach for family law,
+  columns or a law library for probate), on a dark, warm stage.
   It also writes a ~250 KB JPEG: email tools can't attach big files, so
   those go in `public/mockups/` under an unguessable name and the email
   shows `https://saysites.com/mockups/<name>.jpg` (kept out of search by
