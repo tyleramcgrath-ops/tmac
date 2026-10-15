@@ -127,6 +127,49 @@ const RETURN_SD = 'https://developers.google.com/search/docs/appearance/structur
 const SHIPPING_SD = 'https://developers.google.com/search/docs/appearance/structured-data/shipping-policy'
 const FTC_MAIL = 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule'
 
+const IL_ART8 = 'https://www.illinoiscourts.gov/rules/supreme-court-rules?a=viii'
+const IL_71 = 'https://www.illinoiscourts.gov/resources/4ebe98db-481b-40d2-9846-c7986e2abe72/file'
+const IL_72 = 'https://www.illinoiscourts.gov/resources/39c73f58-b094-4603-84a9-a590a1f17b97/file'
+const IL_73 = 'https://www.illinoiscourts.gov/resources/f043b2de-4071-42b8-b0e9-5d2064cb5202/file'
+const IL_74 = 'https://www.illinoiscourts.gov/resources/529c1e00-1f0a-4943-9876-adba5f78cd39/file'
+const IL_75 = 'https://www.illinoiscourts.gov/resources/ae11ea70-ed9d-46fd-a5ae-6d722cd27217/file'
+const IL_ICS_NEWS = 'https://www.illinoiscourts.gov/News/1534/Supreme-Court-approves-3-proposals-impacting-the-practice-of-law-in-Illinois/news-detail/'
+const IL_AI_POLICY = 'https://ilcourtsaudio.blob.core.windows.net/antilles-resources/resources/e43964ab-8874-4b7a-be4e-63af019cb6f7/Illinois%20Supreme%20Court%20AI%20Policy.pdf'
+const ARDC_AI = 'https://www.iardc.org/EducationAndOutreach/ArtificialIntelligence'
+const ARDC_2025 = 'https://www.iardc.org/Files/AnnualReports/AnnualReport2025.pdf'
+const ISBA_9610 = 'https://www.isba.org/ethics/opinions/9610'
+const ISBA_1204 = 'https://www.isba.org/ethics/opinions/1204'
+const ISBA_2202 = 'https://www.isba.org/ethics/opinions/2202'
+const ISBA_2402 = 'https://www.isba.org/ethics/opinions/2402'
+const ISBA_2502 = 'https://www.isba.org/ethics/opinions/2502'
+const COOK_ORG = 'https://www.cookcountycourt.org/about/organization-court'
+const COOK_FIRST = 'https://www.cookcountycourt.org/district/first-municipal-district-chicago'
+const ILND = 'https://www.ilnd.uscourts.gov/'
+const CENSUS_CHI_COOK = 'https://www.census.gov/quickfacts/fact/table/chicagocityillinois,cookcountyillinois/PST045224'
+
+const TX_164_1 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-164-1'
+const TX_164_2 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-164-2'
+const TX_164_3 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-164-3'
+const TX_164_4 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-164-4'
+const TX_169_25 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-169-25'
+const TX_169_26 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-169-26'
+const TX_169_27 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-169-27'
+const TX_169_28 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-169-28'
+const TX_177_2 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-177-2'
+const TX_193_17 = 'https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-193-17'
+const OC_101 = 'https://statutes.capitol.texas.gov/Docs/OC/htm/OC.101.htm'
+const OC_172 = 'https://statutes.capitol.texas.gov/Docs/OC/htm/OC.172.htm'
+const HS_401 = 'https://statutes.capitol.texas.gov/Docs/HS/htm/HS.401.htm'
+const HB3749_HIST = 'https://capitol.texas.gov/BillLookup/History.aspx?LegSess=89R&Bill=HB3749'
+const HB3749_TEXT = 'https://capitol.texas.gov/tlodocs/89R/billtext/html/HB03749F.htm'
+const TDLR_LAS = 'https://www.tdlr.texas.gov/las/las.htm'
+const FTC_REVIEWS = 'https://www.govinfo.gov/content/pkg/FR-2024-08-22/pdf/2024-18519.pdf'
+const FTC_ENDORSE = 'https://www.govinfo.gov/content/pkg/FR-2023-07-26/pdf/2023-14795.pdf'
+const FDA_FILLERS = 'https://www.fda.gov/medical-devices/aesthetic-cosmetic-devices/dermal-fillers-soft-tissue-fillers'
+const FDA_BOTOX = 'https://www.fda.gov/drugs/drug-alerts-and-statements/counterfeit-version-botox-found-multiple-states'
+const HHS_TRACKING = 'https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/hipaa-online-tracking/index.html'
+const CENSUS_DAL = 'https://www.census.gov/quickfacts/fact/table/dallascitytexas/PST045224'
+
 export const SCHEDULED_ARTICLES: Article[] = [
   {
     slug: 'product-structured-data-small-shops',
@@ -661,6 +704,330 @@ The Store plan is $25 a month or $250 a year, with hosting included and your own
     ],
     about: ['Shipping policy', 'Return policy', 'FTC Mail, Internet, or Telephone Order Merchandise Rule'],
     published: '2026-10-18',
+    status: 'published',
+  },
+  {
+    slug: 'chicago-law-firm-website-design',
+    title: 'Chicago Law Firm Website Design: Illinois Ad Rules',
+    description: 'What a Chicago law firm website must include under Illinois Rules 7.1 to 7.5, the 2025 lead generator rule, and how Cook County clients search for a lawyer.',
+    kind: 'guide',
+    summary: [
+      'Illinois Rule 7.2(a) requires the name and office address of at least one lawyer or firm responsible for the content, so a Chicago firm site should carry it on every page.',
+      'Illinois bars lawyers from calling themselves “certified,” “specialist” or “expert” except to identify a real certificate or award, and then a set statement from Rule 7.4(c) is required.',
+      'Since July 1, 2025, paying a directory, matching site or lead generator is allowed only through Rule 7.2(c), with disclosures and written verification from the service.',
+      'Illinois has no ad filing requirement in Rules 7.1 to 7.5, but targeted emails to people with a known legal matter must say “Advertising Material” at the start and end.',
+      'Cook County has about 400 judges across ten divisions and six municipal districts, so pages built around a specific courthouse and problem serve clients better than a list of practice areas.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Chicago’s towers at sunset with Lake Michigan stretching to the horizon' },
+    body: `A Chicago law firm website has to follow the Illinois Rules of Professional Conduct, Rules 7.1 through 7.5, which the Illinois Supreme Court publishes and the ARDC enforces. The short version: put the name and office address of a responsible lawyer or firm on the site, keep every statement free of unjustified expectations, never describe a lawyer as a “specialist” or “expert” unless you are naming a specific certificate or award and adding the statement Rule 7.4(c) requires, and check any directory or lead service you pay against the intermediary connecting service rule that took effect on July 1, 2025. Illinois does not make you file your website with anyone, which puts the whole job of compliance on the firm. After that, build the site for how Cook County residents actually look for help: by legal problem, by courthouse and on a phone.
+
+This guide quotes each Illinois rule from the Supreme Court’s own text, with links, then covers the Cook County court landscape, the language mix of Chicago’s clients, Google Business Profile limits for city offices, AI chat tools on firm sites, and a launch checklist. It is general information, not legal or ethics advice. The ISBA and the ARDC both answer ethics questions from Illinois lawyers, and the opinions cited below show how they have read these rules.
+
+## What does Illinois require on a law firm website?
+
+One line of identification and a lot of care. Rule 7.2(a) lets a lawyer advertise through written, recorded or electronic communication, and adds: “Any communication made pursuant to this paragraph shall include the name and office address of at least one lawyer or law firm responsible for its content” ([Illinois Rule 7.2](${IL_72})).
+
+Because Google can send a visitor straight to a practice area page, a blog post or an attorney bio, each of those pages is the advertisement for that visitor. The practical answer is a footer on every page with the firm’s name and its office street address, or the responsible lawyer’s name and office address. A Loop firm with a second office in Schaumburg can list both, as long as each address is a real office.
+
+The comments to Rule 7.2 also say what kind of information belongs on a firm site. Comment 2 describes permitted content that includes a lawyer’s name, address, “email address, website,” fields of practice, fees and payment terms, and “a lawyer’s foreign language ability” ([Rule 7.2 comments](${IL_72})). That last item matters in a city where many clients prefer to talk about a legal problem in Spanish, Polish, Arabic or another language. If a lawyer at the firm speaks it, say so on that lawyer’s profile.
+
+The ISBA reached the same conclusion about websites years ago. Opinion 96-10 says a lawyer website “is not ‘communication directed to a specific recipient’” and that “only the general rules governing communications concerning a lawyer’s services and advertising should apply” ([ISBA Op. 96-10](${ISBA_9610})). In other words, the site is advertising, not solicitation, so Rules 7.1 and 7.2 are the ones that govern it.
+
+## Does an Illinois firm have to file its website with the ARDC?
+
+No. None of Rules 7.1 through 7.5 contains a filing, pre-approval or fee requirement for advertising ([Article VIII index](${IL_ART8})). That is a real difference from states such as Texas or Florida, where firms file certain ads with the state bar.
+
+It cuts both ways. There is no review committee to catch a risky headline before launch, and no advisory approval to rely on afterward. If a complaint reaches the ARDC, the question is simply whether the page was false or misleading when it was published. For that reason, Illinois firms do well to keep their own record: a dated copy of each version of the home page and results page, who approved it, and where every factual claim came from. Rule 7.2 does not require you to keep copies, but a record answers questions later.
+
+## What can’t a Chicago law firm website say?
+
+Rule 7.1 is short: “A lawyer shall not make a false or misleading communication about the lawyer or the lawyer’s services.” A statement is misleading if it “contains a material misrepresentation of fact or law, or omits a fact necessary to make the statement considered as a whole not materially misleading” ([Illinois Rule 7.1](${IL_71})). The comments explain where firm websites usually go wrong.
+
+### True statements that still mislead
+
+Comment 2 says even a truthful statement is misleading if there is “a substantial likelihood that it will lead a reasonable person to formulate a specific conclusion about the lawyer or the lawyer’s services for which there is no reasonable factual foundation.” A homepage banner that says “Chicago’s top trial lawyers” invites exactly that conclusion. Who decided they were the top, and on what basis? If you cannot answer that on the page, cut the line.
+
+### Case results
+
+Comment 3 covers results. Truthful reports of past wins “may be misleading if presented so as to lead a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters without reference to the specific factual and legal circumstances of each client’s case.” The same comment notes that “the inclusion of an appropriate disclaimer or qualifying language may preclude a finding that a statement is likely to create unjustified expectations” ([Rule 7.1, Comment 3](${IL_71})).
+
+A results page that holds up well in Illinois gives each result enough context to stand on its own: the kind of case, the court or forum, whether it was a verdict or a settlement, and a qualifier placed right next to the figures. Comment 3 also warns about an “unsubstantiated comparison” of a lawyer’s services or fees with other lawyers’. “Lower fees than any firm in Chicago” is a comparison you would need to prove.
+
+### Firm names, trade names and web addresses
+
+Illinois still keeps firm names in a separate Rule 7.5. A lawyer in private practice may use a trade name “if it does not imply a connection with a government agency or with a public or charitable legal services organization and is not otherwise in violation of Rule 7.1.” Rule 7.5(d) adds that lawyers may imply they practice in a partnership or other organization “only when that is the fact” ([Illinois Rule 7.5](${IL_75})).
+
+Comment 1 confirms a firm “may also be designated by a distinctive website address,” and warns that a name with a geographic term, its example being “Springfield Legal Clinic,” may need an express disclaimer that the firm is not a public legal aid agency. Before buying a domain like “chicagotenantrights” or “cookcountyinjuryhelp,” ask whether a reasonable visitor might think it is a public service. If so, pick another name or carry the disclaimer.
+
+Titles on attorney pages count too. The ISBA said in Opinion 24-02 that “of counsel,” “counsel,” “senior counsel” and “special counsel” are proper for a lawyer with a “close, regular, and personal relationship” with the firm ([ISBA Op. 24-02](${ISBA_2402})). List a lawyer that way only when the relationship fits.
+
+![The Picasso sculpture in Chicago’s Daley Plaza, with flags flying and the Chicago Temple’s spire rising behind it](https://images.unsplash.com/photo-1780937792102-acfa87199ada?auto=format&fit=crop&w=1200&q=75)
+
+## Can an Illinois lawyer say “specialist” or “expert” on a website?
+
+Only in a narrow way, and this is where many Chicago sites slip. Rule 7.4(b) states: “The Supreme Court of Illinois does not recognize certifications of specialties in the practice of law, nor does it recognize certifications of expertise in any phase of the practice of law by any agency, governmental or private, or by any group, organization or association.” The one listed exception is that a lawyer admitted before the U.S. Patent and Trademark Office may use the designation “Patent Attorney” ([Illinois Rule 7.4](${IL_74})).
+
+Rule 7.4(c) then says that, except when identifying certificates, awards or recognitions issued to the lawyer, “a lawyer may not use the terms ‘certified,’ ‘specialist,’ ‘expert,’ or any other, similar terms to describe his qualifications.” When the lawyer does name a certificate, award or recognition, the reference must be truthful and verifiable, and it must state that the Supreme Court of Illinois does not recognize certifications of specialties in the practice of law and that the certificate, award or recognition is not a requirement to practice law in Illinois.
+
+Here is how that plays out on a typical profile page:
+
+- **Not allowed:** “Maria is a DUI expert.” “Our workers’ compensation specialists.” “Certified divorce attorneys.”
+- **Allowed:** “Maria’s practice is limited to DUI and traffic defense.” Comment 1 to Rule 7.4 permits statements such as practicing only in certain fields.
+- **Allowed with the statement:** “Board certified in civil trial advocacy by [the certifying organization],” followed by the Rule 7.4(c) statement, placed beside the credential rather than in a distant footer.
+
+The same applies to award badges. A peer-review or magazine recognition shown on the home page is a recognition issued to the lawyer, so it needs to be truthful, verifiable and accompanied by the Illinois statement. Many firms find it simpler to show such badges only on the lawyer’s own profile, with the statement directly underneath.
+
+## How does the 2025 rule change affect directories and lead generators?
+
+This is the newest part of the Illinois rules, and it reaches beyond the firm’s own site. Rule 7.2(b) keeps the general ban: “A lawyer shall not give anything of value to a person for recommending the lawyer’s services.” On April 1, 2025, the Supreme Court added Rule 7.2(c), effective July 1, 2025, which allows a lawyer to “accept a connection of a potential client through, and/or pay the usual charges of, an intermediary connecting service (ICS),” subject to conditions ([Rule 7.2](${IL_72}); [Supreme Court announcement](${IL_ICS_NEWS})).
+
+Comment 6 defines the term broadly: an ICS includes “a lawyer directory, referral service, matching service, bidding site, question-and-answer site, lead generator, or similar marketplace.” Under 7.2(c), the lawyer must disclose the relationship and any connecting or advertising fees, and must take “reasonable steps, such as obtaining written verification from the ICS” that the service meets a list of conditions. Among them, the service may not make false or misleading statements, must make any rating criteria publicly available, and, apart from bar association and legal aid services, its fees may not be contingent on the outcome or calculated as a percentage of legal fees. Comment 8 points to a sample ICS certification letter in the Article VIII forms appendix and describes the due diligence as initial and annual.
+
+What does that mean for your website project?
+
+1. **Your web designer is not an ICS.** Comment 5 says a lawyer may pay for directory listings, domain registrations and internet advertising, and may pay vendors who provide marketing services, naming “website designers” among them.
+2. **Paid placement on a marketplace is.** If the firm buys leads, pays a matching site or takes cases from a question-and-answer platform, get the written verification on file before the first lead, then renew it each year.
+3. **Disclose it.** If your site mentions a directory profile or rating, check what the ICS rules require you to tell the client about the relationship and the fees.
+
+The ISBA has already applied the rules to marketplaces. Opinion 22-02 found that a for-profit matching service may comply if matches are automated, the service “does not endorse or vouch for the lawyer’s services,” and the fees are reasonable and unrelated to the legal services provided ([ISBA Op. 22-02](${ISBA_2202})). Opinion 25-02 found that a lawyer would violate the rules by taking clients from a for-profit referral service that offers a “money-back guarantee” or fails to disclose that it uses non-attorney actors in its ads ([ISBA Op. 25-02](${ISBA_2502})).
+
+Not sure your current site would hold up? Send its address for a [free redesign](/redesign) and you’ll see your own pages rebuilt with the responsible-firm footer and plain fields-of-practice wording in place, with no cost and no commitment.
+
+## When does Illinois require “Advertising Material”?
+
+Not on the website itself, but on some of what you send after it. Comment 1 to Rule 7.3 says a communication is typically not a solicitation if it is directed to the general public, “such as through a billboard, an Internet banner advertisement, a website or a television commercial,” or if it responds to a request for information or is “automatically generated in response to Internet searches” ([Illinois Rule 7.3](${IL_73})).
+
+Targeted messages are different. Rule 7.3(c) requires every written, recorded or electronic solicitation to anyone “known to be in need of legal services in a particular matter” to include the words “Advertising Material” on the outside envelope, if any, “and at the beginning and ending of any recorded or electronic communication.” The ISBA has said the exact words matter: in Opinion 12-04, a solicitation labeled “promotional materials” did not comply ([ISBA Op. 12-04](${ISBA_1204})).
+
+Rule 7.3(a) also bars live solicitation, in person, by live phone or by real-time electronic contact, when a significant motive is the lawyer’s pecuniary gain, with exceptions for other lawyers and people with a family, close personal or prior professional relationship. Illinois adds one more limit of its own in Rule 7.3(b)(3): no solicitation of a respondent in an ex parte protective order case before the respondent has been served.
+
+For a firm website, that means:
+
+- A visitor who fills out your form has asked for information, so a reply to them is not a solicitation.
+- A drip campaign to people the firm knows have a pending matter, such as recent defendants or foreclosure filings, needs “Advertising Material” at the beginning and end of each email.
+- A chat window that pops up and starts selling to a visitor is real-time electronic contact. Keep chat reactive: it answers the visitor’s own questions and offers a consultation, nothing more.
+
+## How do Cook County clients look for a lawyer?
+
+By problem and by place, and in Cook County the place can be one of many courthouses. The Circuit Court of Cook County describes itself as the largest of the 24 judicial circuits in Illinois and “one of the largest unified court systems in the world,” with about 400 judges serving 5.2 million residents in Chicago and 126 suburbs, and more than 1 million cases filed each year. It is organized into ten divisions and six geographic districts: the First Municipal District covers the City of Chicago, and the others sit in Skokie, Rolling Meadows, Maywood, Bridgeview and Markham ([Circuit Court of Cook County](${COOK_ORG})). The First District’s main location is the Richard J. Daley Center at 50 W. Washington Street ([First Municipal District](${COOK_FIRST})). Federal cases in the Eastern Division of the Northern District of Illinois are heard at the Dirksen U.S. Courthouse, 219 South Dearborn Street ([N.D. Illinois](${ILND})).
+
+Competition is dense. The ARDC’s 2025 annual report counts 47,089 lawyers with a principal business address in Cook County, 71.8% of all lawyers based in Illinois ([ARDC Annual Report 2025](${ARDC_2025})). A homepage that lists twenty practice areas says nothing a client can’t find on thousands of other sites.
+
+Pages that explain a real step in a real courthouse, written from the firm’s own experience, are much harder to replace. A few that suit Chicago practices:
+
+- **Traffic and misdemeanor defense:** which suburban district courthouse a ticket from a particular suburb is likely heard in, what happens at the first appearance, and what to bring.
+- **Family law:** how a first court date works in the Domestic Relations Division at the Daley Center, and what clients can do to prepare.
+- **Landlord and tenant:** the eviction process from the tenant’s or the landlord’s side, linked to the court’s own forms and instructions.
+- **Personal injury:** what to do in the weeks after a crash on the Kennedy or the Dan Ryan, how your contingent fee and expenses work, and how long cases in the Law Division tend to take in your experience.
+
+Google’s guidance on [helpful, people-first content](${HELPFUL}) asks whether a page shows first-hand expertise and leaves the reader feeling they learned enough. A page like these does both, and it is the kind of clear, specific passage an AI answer can quote.
+
+![Two people at a desk reviewing papers as one signs a document](https://images.unsplash.com/photo-1562564055-71e051d33c19?auto=format&fit=crop&w=1200&q=75)
+
+## Should a Chicago firm’s website be in more than one language?
+
+If the firm can serve those clients, often yes. Census Bureau figures for 2020 to 2024 show that 35.4% of Chicago residents age 5 and older speak a language other than English at home, and 20.9% of residents were born outside the United States ([Census QuickFacts, Chicago and Cook County](${CENSUS_CHI_COOK})).
+
+Illinois treats foreign language ability as permitted advertising content (Rule 7.2, Comment 2), and the rest of the rules apply unchanged to every translated page. In practice:
+
+- Say exactly who speaks the language: a named attorney, a paralegal or the intake team. A client who wants to speak to the lawyer directly needs to know.
+- Have a fluent speaker who knows legal vocabulary review each page, including any results qualifier and the Rule 7.4(c) statement if a credential appears.
+- Link each translated page to its English version so Google can show the right one to each searcher ([localized versions](${HREFLANG})).
+- Translate the pages people actually need, such as a practice area, the consultation page and office details, rather than machine-translating the entire site.
+
+## Google Business Profile for Chicago law offices
+
+Google lists lawyers among individual practitioners, allows titles such as JD or Esq. in a practitioner’s profile, and says “a practitioner shouldn’t have multiple Business Profiles to cover all of their specializations” ([Business Profile guidelines](${GBP_GUIDELINES})). Where several lawyers share an office, the firm creates its own profile for that location.
+
+Two rules catch Chicago firms in particular. Google says a virtual office, a rented mailing address the business doesn’t operate from, “isn’t eligible for a Business Profile,” and a co-working office qualifies only with clear signage and staff during business hours. A firm based in the Loop that rents a suburban mailbox to show up in Oak Park or Naperville searches is outside the guidelines.
+
+The same thinking applies to the website. Google’s spam policies name “multiple domain names or pages targeted at specific regions or cities that funnel users to one page” as doorway abuse ([spam policies](${SPAM})). Build an office page for each office you staff, with its own address and directions, and write about a suburb only when you have something specific to say about its courthouse or its clients. Our guide to [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses) explains how relevance, distance and prominence shape the map results.
+
+## Can a Chicago firm use an AI chat assistant on its site?
+
+It can, with the same duties that apply to any other tool. The Illinois Supreme Court’s Policy on Artificial Intelligence, effective January 1, 2025, says use of AI by attorneys “may be expected, should not be discouraged, and is authorized provided it complies with legal and ethical standards,” and that the Rules of Professional Conduct “apply fully to the use of AI technologies” ([Illinois Supreme Court AI Policy](${IL_AI_POLICY})). The ARDC adds that the policy authorizes AI use so long as duties of competence, confidentiality, supervision and candor are met, and it publishes a nonbinding guide with sample policies and notices ([ARDC on AI](${ARDC_AI})).
+
+For a website chat tool, that comes down to a few questions. Does it tell visitors not to share confidential details before a conflict check? Does it avoid giving legal advice or predicting outcomes? Does a lawyer review what it says, the same way they would review the rest of the site? A chat window that makes a misleading statement is a misleading communication under Rule 7.1, no matter who typed it.
+
+## A launch checklist for a Chicago law firm website
+
+1. Name and office address of a responsible lawyer or firm on every page (Rule 7.2(a)).
+2. No “specialist,” “expert” or “certified” except to name a real certificate or award, with the Rule 7.4(c) statement beside it.
+3. Results show the type of case, the forum and verdict or settlement, with a qualifier next to the figures.
+4. No unprovable comparisons or superlatives.
+5. Trade name and domain don’t suggest a government or legal aid connection; “of counsel” and partnership claims are accurate.
+6. Every paid directory, matching site or lead source has written ICS verification on file, renewed yearly, with required disclosures made.
+7. Follow-up emails to people with a known matter carry “Advertising Material” at the start and end; chat stays reactive.
+8. Translated pages name who speaks the language and link to their English versions.
+9. One Business Profile per staffed office, no virtual offices, and matching details on each office page.
+10. Dated copies of each version of the home and results pages, with who approved them.
+11. Structured data matches what each page shows ([local business structured data](${LOCAL_SD})).
+
+## How SaySites builds Chicago law firm websites
+
+SaySites law firm sites start with the structure this guide describes: a page for each practice area, attorney profiles, an office page for each location, and a consultation form on every page whose intake questions include the other party’s name for a conflict check. The firm is described to search engines as a LegalService, attorneys as people and practice areas as services, and every page must pass a 95+ speed check before it goes live. Nothing is invented. Results, credentials and languages appear only when you supply them, and you change anything by saying it in plain words, such as “replace ‘DUI expert’ with ‘practice limited to DUI defense,’” then review the change as a draft before you publish.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). Already have a site? [Get a free redesign](/redesign) and see your own pages rebuilt first, or [start a 7-day free trial](/signup) and build it yourself this week. Firms with offices in more than one state can compare our guides to [Houston law firm websites under the Texas rules](/blog/houston-law-firm-website-design) and [New York law firm websites after the 2026 changes](/blog/new-york-law-firm-website-rules).`,
+    faq: [
+      { q: 'What must an Illinois law firm website include?', a: 'Illinois Rule 7.2(a) says any advertising communication must include the name and office address of at least one lawyer or law firm responsible for its content. Since visitors can land on any page from a search, the simplest approach is a footer on every page with the firm’s name and the street address of a real office, plus the responsible lawyer if you prefer.' },
+      { q: 'Do Illinois lawyers have to file website ads with the ARDC?', a: 'No. Illinois Rules 7.1 through 7.5 contain no filing, pre-approval or fee requirement for advertising, unlike some states. That means no committee reviews your site before launch, so the firm carries the whole responsibility. Keeping dated copies of each home page and results page, with who approved them, is a sensible habit.' },
+      { q: 'Can a Chicago lawyer call themselves a specialist?', a: 'Not as a general description. Rule 7.4(c) bars the words certified, specialist and expert except when identifying a certificate, award or recognition actually issued to the lawyer. Then the reference must be truthful and verifiable and must state that the Supreme Court of Illinois does not recognize certifications of specialties and that the credential is not required to practice law in Illinois.' },
+      { q: 'Can my firm pay a lead generator or legal directory in Illinois?', a: 'Yes, under Rule 7.2(c), effective July 1, 2025, if the service qualifies as an intermediary connecting service and meets the rule’s conditions. You must disclose the relationship and fees, and take reasonable steps such as getting written verification from the service. Fees generally cannot be contingent on outcomes or a percentage of legal fees.' },
+      { q: 'When do Illinois law firm emails need “Advertising Material”?', a: 'When they are targeted solicitations. Rule 7.3(c) requires the words Advertising Material at the beginning and end of electronic communications sent to someone known to need legal services in a particular matter. A website and a reply to someone who contacted you first are not solicitations, and the ISBA has said other labels do not satisfy the rule.' },
+      { q: 'Should a Chicago law firm website be in Spanish or other languages?', a: 'If someone at the firm can serve those clients, it often helps. Census figures show 35.4% of Chicago residents age 5 and older speak a language other than English at home. Illinois lists foreign language ability as permitted advertising content. Name who speaks each language, have a fluent reviewer check every page, and link each version to its English page.' },
+      { q: 'Can a Chicago firm list a suburban mailbox on Google Business Profile?', a: 'No. Google’s Business Profile guidelines say a virtual office, a rented address the business doesn’t operate from, isn’t eligible, and co-working spaces qualify only with signage and staff during business hours. Create a profile for each office you actually staff, and keep the website’s office pages matched to those profiles.' },
+      { q: 'What does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month with a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict check question, LegalService structured data and hosting. You can also send your current site for a free redesign and see your own pages rebuilt before you decide.' },
+    ],
+    about: ['Illinois Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Chicago, Illinois'],
+    published: '2026-10-15',
+    status: 'published',
+  },
+  {
+    slug: 'dallas-med-spa-website-design',
+    title: 'Dallas Med Spa Websites: Texas Ad and Delegation Rules',
+    description: 'What a Dallas med spa website should show under Texas Medical Board ad rules, the 2025 IV therapy law and laser hair removal licensing, before you launch.',
+    kind: 'guide',
+    summary: [
+      'Texas Medical Board rule 164.3 treats unlabeled models, undisclosed paid testimonials and unproven “exclusive” skill claims as misleading, and physicians answer for every ad.',
+      'A med spa where care is delivered under standing orders away from the physician’s main practice must disclose the medical directorship, supervision or delegation in its ads.',
+      'Patients must consent before their photos appear in any advertising, and physicians keep a copy of each ad for two years.',
+      'Since September 1, 2025, Jenifer’s Law (Occupations Code chapter 172) sets who may order and give elective IV therapy, so IV pages should name the professionals involved.',
+      'Laser hair removal facilities that aren’t physician-owned need a TDLR license, and their ads may not call the treatment risk-free or medically beneficial.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1631660975301-b2b65e80c98a?auto=format&fit=crop&w=1600&q=75', alt: 'Dallas skyline at dusk with Reunion Tower lit up, reflected in a still pond' },
+    body: `A Dallas med spa website is a medical advertisement in the eyes of Texas law, so it has to meet the Texas Medical Board’s advertising rules before it worries about design. In short: every claim must be true and checkable, models must be labeled as models, testimonials need a credentials disclaimer and a disclosure of any compensation, patients must consent before their photos are used, and if treatments happen under a physician’s standing orders away from that physician’s main practice, the site must disclose the medical directorship or delegation. Add the 2025 rules for elective IV therapy and the separate licensing rules for laser hair removal, and you have the checklist a Dallas aesthetics practice should work through before launch. Then build the site for how clients really choose: one treatment at a time, by the person holding the syringe or the laser, on a phone.
+
+This guide quotes the Texas Administrative Code and statutes directly, with links, and adds the federal rules on reviews, product claims and online tracking that also shape a med spa site. It is general information, not legal or medical advice. Because a med spa’s structure (who owns it, who supervises, who performs what) changes which rules apply, have a Texas health care attorney review your setup.
+
+## Is a med spa website “advertising” under Texas rules?
+
+Yes. The Texas Medical Board defines advertising as “any communication designed to attract attention to the practice of a physician” ([22 TAC § 164.1](${TX_164_1})). A treatment menu, a provider page and a seasonal offer all qualify. Rule 164.2 then makes each physician “responsible for the form and content of any advertisement” and deems the physician “to have reviewed and approved any and all advertisements” ([22 TAC § 164.2](${TX_164_2})).
+
+That puts the medical director’s license behind every page, whether or not the physician wrote it. Two duties in the same rule matter for a website:
+
+- **Photo consent.** Rule 164.2(b): “Patients must consent prior to any use of photographs or other representations in any advertising by a physician, practice, or entity.” Before and after galleries need written consent from each patient pictured, and the consent should cover the website and social media specifically.
+- **Two-year records.** Rule 164.2(c): “A recording or copy of any advertisement shall be retained by the physician for a period of two years from the last date of communication.” For a website, that means dated copies of each page version, especially treatment pages, offers and galleries.
+
+The statute is broader still. Texas Occupations Code section 101.201 says a person “may not use advertising that is false, misleading, deceptive, or not readily subject to verification,” and lists, among other things, advertising that “makes a representation likely to create an unjustified expectation about the results of a health care service or procedure” and advertising that “causes confusion or misunderstanding as to the credentials, education, or licensing of a health care professional” ([Occ. Code ch. 101](${OC_101})). The same list names advertising that “contains a testimonial.” Because the Board’s rules describe how a testimonial must be disclosed, as covered below, ask your attorney how the two fit before you put patient quotes on the site.
+
+## What does Texas treat as misleading on a med spa site?
+
+Rule 164.3 lists specific items the Board deems “false, deceptive, or misleading,” in addition to those in the statute ([22 TAC § 164.3](${TX_164_3})). The ones that come up most on aesthetics websites:
+
+1. **Unlabeled models.** “Failing to explicitly identify individuals as models or actors instead of actual patients.” The glowing face in a stock hero image needs a caption such as “Model, not a patient.”
+2. **Testimonials without disclosures.** “Providing a testimonial without: (A) a disclaimer or warning as to the credentials of the person making the testimonial; and (B) a disclosure of compensation provided in exchange for the testimonial.” A free treatment for a review is compensation.
+3. **Cost claims.** “Untruthful or deceptive claims regarding costs and fees, including claims of free service if a third-party is billed.” A “free consultation” must actually be free.
+4. **Unique skill.** “Claiming a unique or exclusive skill without substantiation.” Lines such as “the only injector in Dallas trained in this technique” need proof.
+5. **Paid content.** “Failing to disclose that the advertisement, article, or infomercial is a ‘paid for’ presentation.” A sponsored feature reposted on your site should say so.
+6. **Board wording.** Using “board eligible,” “board qualified” or similar language “calculated to convey the same meaning as ‘board certified.’”
+
+Rule 164.4 limits “board certified” to physicians currently certified by a member board of the American Board of Medical Specialties, the AOA’s Bureau of Osteopathic Specialists, the American Board of Oral and Maxillofacial Surgery, or a board the TMB has approved ([22 TAC § 164.4](${TX_164_4})). If your medical director is board certified in dermatology or plastic surgery, name the board. If not, describe training and experience in plain terms instead.
+
+## What must a Dallas med spa disclose about its medical director?
+
+This is the rule written with med spas in mind. Rule 164.3(b)(8) makes it misleading to fail “to disclose medical directorship, supervision of, or delegation to non-physicians at a location that is not the physician’s primary practice location and where care is delivered pursuant to standing orders and protocols” ([22 TAC § 164.3](${TX_164_3})).
+
+Many Dallas med spas fit that description exactly: a physician supervises from a practice elsewhere, while nurses and other trained staff perform injections, peels or laser treatments under written protocols. If that is your model, say so clearly on the website, for example on the About page and each treatment page: who the medical director is, that treatments are performed by named staff under the physician’s supervision and protocols, and how patients reach the physician.
+
+The delegation rules themselves explain what to describe. Since January 9, 2025, the Board’s cosmetic delegation rules sit in 22 TAC chapter 169. Section 169.25 lists “nonsurgical medical cosmetic procedures, including but not limited to the injection of medication or substances for cosmetic purposes” and the use of a prescription medical device for cosmetic purposes among acts that can be delegated and supervised ([22 TAC § 169.25](${TX_169_25})). The old rule in chapter 193 was repealed, so older articles quoting section 193.17 are out of date ([repeal notice](${TX_193_17})).
+
+Before a delegated procedure, section 169.26 requires a physician, PA or APRN to establish a practitioner-patient relationship, keep an adequate medical record, “disclose the identity and title of the individual who will perform the delegated act,” and make sure someone trained in basic life support is present. A physician, PA or APRN must be on site or “immediately available for emergency consultation in the event of an adverse outcome” ([22 TAC § 169.26](${TX_169_26})). Written orders must include the delegating physician’s identity, patient screening criteria and procedures for complications and emergencies ([22 TAC § 169.27](${TX_169_27})).
+
+Section 169.28 adds posting rules for the spa itself: the Board’s complaint notice and the delegating physicians’ names and Texas license numbers in each public area and treatment room, and name tags that show each staff member’s identity and credentials ([22 TAC § 169.28](${TX_169_28})). The complaint notice rule, section 177.2, also says practices that offer telemedicine must show it through a prominent link on the provider website in at least 10-point readable type ([22 TAC § 177.2](${TX_177_2})).
+
+A website that matches what the client sees in the treatment room builds trust. Put the same names, titles and credentials on your provider pages that appear on the name tags and posted notices.
+
+![A gloved practitioner giving a client a facial treatment in a calm clinic room](https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=1200&q=75)
+
+## What changed for IV therapy pages in 2025?
+
+Texas passed HB 3749, known as Jenifer’s Law, which the Governor signed on June 20, 2025, effective September 1, 2025 ([bill history](${HB3749_HIST}); [enrolled text](${HB3749_TEXT})). It created Occupations Code chapter 172, “Provision of Elective Intravenous Therapy” ([Occ. Code ch. 172](${OC_172})).
+
+The law defines elective IV therapy as a procedure to give fluids, nutrients, medications or blood through a vein that the patient seeks “to alleviate symptoms of temporary discomfort or improve temporary wellness,” and that is not given in a physician’s office or a licensed health facility. Section 172.051 then sets who may do what: a physician may delegate prescribing or ordering to a physician assistant or an advanced practice registered nurse acting under adequate physician supervision, and may delegate administering to a PA, an APRN or a registered nurse acting under adequate physician supervision.
+
+For an IV hydration page, that gives you clear content to write:
+
+- Who orders the drip (the physician, or a named PA or APRN under the physician’s supervision).
+- Who places the IV and monitors the client (a named RN, PA or APRN).
+- Who the supervising physician is, consistent with the directorship disclosure above.
+- What the screening involves before a drip is started, described in your own practice’s terms.
+
+Keep benefit claims modest. The Federal Trade Commission’s Endorsement Guides say “consumer endorsements themselves are not competent and reliable scientific evidence” ([16 CFR Part 255](${FTC_ENDORSE})), and the Texas statute bars representations likely to create unjustified expectations. “Fluids and electrolytes given by a registered nurse under our physician’s orders” is a description. “Boosts immunity and cures hangovers” is a claim you would need evidence for.
+
+## Do laser hair removal pages need anything special?
+
+If the facility isn’t owned by a physician, yes. In Texas, laser hair removal is licensed by the Texas Department of Licensing and Regulation ([TDLR laser hair removal](${TDLR_LAS})) under Health and Safety Code chapter 401, subchapter M ([H&S Code ch. 401](${HS_401})). Section 401.510 says a person “may not operate a laser hair removal facility unless the person holds a license,” with exemptions including a facility owned or operated by a physician for the practice of medicine. Technicians need the appropriate certificate under section 401.504, which does not apply to a physician or a physician’s delegate acting under chapter 157.
+
+Section 401.518 is the advertising rule: a facility operator “may not claim, advertise, or distribute promotional materials that claim that laser hair removal is free from risk or provides any medical benefit,” and may not produce false or misleading advertising about its services. On the website, that rules out “painless and risk-free” and “medical-grade results.” Sections 401.513 and 401.515 require the license to be displayed in the facility and each customer to get a written statement of risks, including the eye-protection warning. Linking to a plain-language version of that risk statement from the laser page lets clients read it before they book.
+
+## What about reviews, before and after photos and product names?
+
+Three federal sources apply on top of the Texas rules.
+
+**Reviews.** The FTC’s rule on consumer reviews and testimonials took effect October 21, 2024. It bans fake reviews, buying reviews conditioned on a particular sentiment, undisclosed reviews by officers or managers, and suppressing reviews through threats or by implying the reviews you show are all or most of them ([16 CFR Part 465](${FTC_REVIEWS})). Ask every client for a review the same way, and never offer a discount only for a five-star one. Our guide on [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers the Google side.
+
+**Before and after photos.** Under the Endorsement Guides, an endorsement about a key result is likely to be read as typical. If you can’t show it is typical, the ad should clearly disclose what results clients can generally expect ([16 CFR Part 255](${FTC_ENDORSE})). Put a short, readable note beside the gallery itself: the treatment, the number of sessions, the time between photos, and that results vary. Combine that with the Texas consent rule, and use only your own patients’ photos.
+
+**Product names and approved uses.** The FDA says dermal fillers are approved for adults over 21 for specific uses, recommends against them for body contouring such as breast or buttock augmentation, and notes that injectable silicone is not approved for any aesthetic procedure ([FDA on dermal fillers](${FDA_FILLERS})). Botulinum toxin products are prescription drugs; in 2024 the FDA warned about counterfeit Botox given to consumers in several states and reminded providers to buy only from authorized sources ([FDA alert](${FDA_BOTOX})). A treatment page that names the product, its approved area and who injects it answers the questions careful clients now ask.
+
+## How do Dallas clients choose a med spa online?
+
+By treatment, by provider and by trust. Most people searching “lip filler Dallas” or “laser hair removal near Uptown” want one answer: what the treatment involves, who does it, what it costs, how long recovery takes and how to book. A single menu page can’t answer all of that for every treatment, so give each treatment its own page.
+
+A strong treatment page for a Dallas practice includes:
+
+- What the treatment is and what it isn’t, in plain words.
+- Who performs it, by name and credential, and who supervises.
+- What happens at the consultation, the visit and the days after.
+- Price or a price range if you publish one, and what it includes.
+- Real before and after photos with consent and the context described above.
+- One clear way to request a consultation.
+
+Language matters too. Census Bureau figures show 41.2% of Dallas residents age 5 and older speak a language other than English at home (2020 to 2024) ([Census QuickFacts, Dallas](${CENSUS_DAL})). If your team consults in Spanish, a Spanish version of your key treatment pages, reviewed by a fluent speaker and linked to the English pages, serves those clients properly ([localized versions](${HREFLANG})).
+
+Speed counts on phones, where most of these searches happen. Large galleries and background videos are the usual reason aesthetics sites feel slow; our plain-English guide to [Core Web Vitals](/blog/is-your-website-fast-enough) explains what to measure.
+
+Want to see how your current site would look with all of this in place? Send it for a [free redesign](/redesign). You’ll see your own pages rebuilt, free and without commitment, before deciding anything.
+
+![Hands holding a smartphone showing an appointment booking screen in a salon](https://images.unsplash.com/photo-1778711310283-cac086522cac?auto=format&fit=crop&w=1200&q=75)
+
+## Can a med spa website use tracking pixels and contact forms?
+
+Carefully. The Department of Health and Human Services’ guidance on online tracking says HIPAA-regulated entities may not use tracking technologies in a way that results in impermissible disclosures of protected health information, and gives the example of a patient booking an appointment on a clinic website with third-party tracking. A federal court in Texas vacated part of that guidance in June 2024, the part about unauthenticated public pages, and HHS says it is evaluating next steps ([HHS online tracking guidance](${HHS_TRACKING})). The guidance also points out that businesses outside HIPAA may be subject to the FTC’s Health Breach Notification Rule.
+
+Whether your spa is a covered entity is a question for your attorney. Either way, a simple approach keeps risk low: keep the consultation form to contact details and the treatment a client is interested in, ask clients not to send medical history through it, and don’t put advertising pixels on booking or form confirmation pages.
+
+## A launch checklist for a Dallas med spa website
+
+1. Medical directorship, supervision or delegation disclosed wherever care is given under standing orders away from the physician’s main practice.
+2. Provider pages show the same names and credentials as the name tags and posted notices.
+3. Models labeled; testimonials carry a credentials disclaimer and any compensation disclosed.
+4. Signed photo consents on file for every before and after image, with context beside each gallery.
+5. “Board certified” used only for qualifying boards, with the board named.
+6. IV therapy pages name who orders and who administers, consistent with Occupations Code chapter 172.
+7. Laser hair removal pages show no risk-free or medical-benefit claims, and the facility license is current if required.
+8. Products named only for their approved uses; no unprovable outcome promises.
+9. Reviews gathered without incentives tied to sentiment, and none suppressed.
+10. Dated copies of every page version kept for two years.
+11. No ad pixels on form or booking confirmation pages, and a form that asks for no medical details.
+12. One Business Profile per location, named as clients see it on the storefront ([Business Profile guidelines](${GBP_GUIDELINES})).
+
+## How SaySites builds Dallas med spa websites
+
+SaySites med spa sites start with the pages this guide describes: a page for each treatment, provider profiles, a before and after gallery with a “results vary” note, a contact page, and a consultation request form whose med spa intake questions ask nothing clinical. Your spa is described to search engines as a health and beauty business with its address, phone and hours, and every page must pass a 95+ speed check before it goes live. Nothing is invented. Credentials, prices, photos and reviews appear only when you supply them, and you change anything by saying it in plain words, such as “add ‘Model, not a patient’ under the home page photo,” then review it as a draft before publishing. Your medical director can read every page before it goes live, which is what the Texas rules expect.
+
+The Site plan is $15 a month ([websites for med spas](/websites-for/med-spas), [pricing](/pricing)). Have a site already? [Get a free redesign](/redesign) and see your own pages rebuilt first, or [start a 7-day free trial](/signup) and build it yourself this week. Running a dental practice too? Our guide to [Houston dental websites under Texas rules](/blog/houston-dental-practice-website-texas-rules) covers the dental board’s requirements.`,
+    faq: [
+      { q: 'Does a Texas med spa need to name its medical director on the website?', a: 'Often, yes. Texas Medical Board rule 164.3(b)(8) treats an ad as misleading if it fails to disclose medical directorship, supervision or delegation to non-physicians at a location that is not the physician’s primary practice and where care follows standing orders and protocols. Many med spas work exactly that way, so name the director and explain the supervision clearly.' },
+      { q: 'Can a Dallas med spa post before and after photos?', a: 'Yes, with care. Rule 164.2(b) requires patient consent before any photograph is used in advertising, and the physician must keep a copy of each ad for two years. Use only your own patients, label any models as models, and put the treatment, number of sessions, timing and a results-vary note beside each gallery.' },
+      { q: 'Can we post patient testimonials on a Texas med spa site?', a: 'Proceed carefully. Board rule 164.3 says a testimonial needs a disclaimer about the credentials of the person giving it and a disclosure of any compensation, while Occupations Code section 101.201 lists advertising that contains a testimonial among misleading practices. Ask a Texas health care attorney how both apply before publishing patient quotes.' },
+      { q: 'What does Jenifer’s Law mean for an IV hydration page?', a: 'Jenifer’s Law, effective September 1, 2025, added Occupations Code chapter 172 for elective IV therapy outside physician offices and licensed facilities. A physician may delegate ordering to a supervised PA or APRN, and administering to a supervised PA, APRN or registered nurse. Your page should name who orders, who administers and who supervises.' },
+      { q: 'Can a med spa advertise laser hair removal as painless or risk-free?', a: 'No. Texas Health and Safety Code section 401.518 says a laser hair removal facility operator may not claim that laser hair removal is free from risk or provides any medical benefit, and may not run false or misleading ads. Facilities not owned by a physician also need a TDLR license and must give customers a written risk statement.' },
+      { q: 'Can a med spa offer discounts for Google reviews?', a: 'Not for reviews of a particular sentiment. The FTC rule on consumer reviews, effective October 21, 2024, bans incentives conditioned on positive or negative reviews, fake reviews, undisclosed staff reviews and review suppression. Ask every client the same way, accept whatever they write, and never hide or threaten over a negative review.' },
+      { q: 'What does a SaySites med spa website cost?', a: 'The Site plan is $15 a month with a 7-day free trial, including hosting, a page per treatment, provider profiles, a gallery with a results-vary note and a consultation form that asks nothing clinical. You can also send your current site for a free redesign and see your own pages rebuilt before deciding.' },
+    ],
+    about: ['Texas Medical Board advertising rules', 'Medical spa websites', 'Elective intravenous therapy', 'Dallas, Texas'],
+    published: '2026-10-15',
     status: 'published',
   },
   {
