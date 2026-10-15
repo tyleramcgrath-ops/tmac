@@ -411,6 +411,20 @@ site rebuilt, free to keep for a month. Admins run it at /dashboard/outreach
   number on their own site first). Sofie can't change `ownership`. Google
   Business Profile sign-in is the planned fourth way, once Google approves
   API access.
+- **Free homepage mockups** (the owner, October 15, 2026): a business asks
+  on /mockup or replies "mockup" to an outreach email; requests list at
+  /dashboard/mockups (admins, `lib/mockups.ts`, table `ss_mockups`, team
+  emailed via SAYSITES_ADMIN_EMAILS). `npx tsx scripts/mockup.ts <url>
+  --name --type --city --services` makes one picture: their homepage today
+  next to one of our premium starter designs filled with their real name,
+  phone, town and services, on a computer and a phone. Needs Chromium, so it
+  runs on the team's machine or Claude's cloud session, never the host.
+- **Daily prospects** (the owner, October 15, 2026): a routine finds 20
+  businesses with weak sites a day (measured: no mobile viewport, no https,
+  old copyright, heavy pages), uses only emails published on their own
+  sites, and puts each personal email in the owner's Gmail Drafts with the
+  owner on CC; the owner reviews and sends. Emails name SaySites, the
+  mailing address and a "reply no thanks" opt-out, which is honoured.
 - **City reports** (/reports, /reports/<slug>): drafted automatically once a
   campaign has `REPORT_MIN_SITES` measured homepages; the team publishes.
   SaySites' own name, aggregate numbers, and by name only the lightest ten

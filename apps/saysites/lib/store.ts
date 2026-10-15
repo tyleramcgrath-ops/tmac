@@ -19,6 +19,7 @@ import type { Campaign } from './outreach'
 import type { CityReport, Prospect } from './prospects'
 import type { ChatTurn, Snapshot } from './sofie'
 import type { Order, OrderStatus, Stock } from './commerce'
+import type { MockupRequest } from './mockups'
 
 // Sofie's working state for one site: the chat, plus a draft of her edits
 // (with the steps before it, for undo) that is not live until published.
@@ -226,6 +227,9 @@ export interface Store {
   adjustStock(siteId: string, deltas: Record<string, number>): Promise<void>
   // Paid orders per discount code, for usage limits.
   discountUses(siteId: string): Promise<Record<string, number>>
+  // Free homepage mockup requests (lib/mockups), newest first.
+  saveMockup(r: MockupRequest): Promise<void>
+  mockups(limit?: number): Promise<MockupRequest[]>
 }
 
 export interface LaunchStats {
@@ -465,6 +469,11 @@ CREATE TABLE IF NOT EXISTS ss_stock (
   item TEXT NOT NULL,
   qty INTEGER NOT NULL,
   PRIMARY KEY (site_id, item)
+);
+CREATE TABLE IF NOT EXISTS ss_mockups (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
@@ -1020,6 +1029,12 @@ class PgStore implements Store {
     const rows = await this.q<{ code: string; n: string }>("SELECT data->>'discountCode' AS code, count(*) AS n FROM ss_orders WHERE site_id = $1 AND status = 'paid' AND data ? 'discountCode' GROUP BY 1", [siteId])
     return Object.fromEntries(rows.map((r) => [r.code, Number(r.n)]))
   }
+  async saveMockup(r: MockupRequest) {
+    await this.q('INSERT INTO ss_mockups (id, data) VALUES ($1,$2) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data', [r.id, JSON.stringify(r)])
+  }
+  async mockups(limit = 200) {
+    return (await this.q<{ data: MockupRequest }>('SELECT data FROM ss_mockups ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
+  }
 }
 
 function toUser(r: Record<string, unknown> | undefined): User | null {
@@ -1538,6 +1553,13 @@ export class MemoryStore implements Store {
     const out: Record<string, number> = {}
     for (const o of this.orders.values()) if (o.siteId === siteId && o.status === 'paid' && o.discountCode) out[o.discountCode] = (out[o.discountCode] ?? 0) + 1
     return out
+  }
+  private mockupList: MockupRequest[] = []
+  async saveMockup(r: MockupRequest) {
+    this.mockupList = [r, ...this.mockupList.filter((x) => x.id !== r.id)]
+  }
+  async mockups(limit = 200) {
+    return this.mockupList.slice(0, limit).map((x) => ({ ...x }))
   }
 }
 
