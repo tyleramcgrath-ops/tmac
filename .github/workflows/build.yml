@@ -14,6 +14,7 @@ jobs:
         project:
           - .
           - apps/citation-gap
+          - apps/girls-around-the-globe
           - apps/north-star-hq
           - apps/reloop
           - apps/saysites

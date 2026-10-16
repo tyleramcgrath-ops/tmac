@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #fbf6f2;
+  --surface: #ffffff;
+  --surface-2: #f5ebe6;
+  --border: #ead9d1;
+  --ink: #23161c;
+  --ink-dim: #6b5560;
+  --ink-mute: #a8949c;
+  --accent: #c2335f;
+  --accent-deep: #8e1d42;
+  --accent-soft: #fbe4ea;
+  --gold: #c99a3e;
+  --ok: #2f855a;
+  --warn: #b45309;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-mute: var(--ink-mute);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-manrope);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 150ms, transform 150ms, box-shadow 150ms;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 18px -8px rgb(194 51 95 / 0.7);
+}
+.btn-primary:hover {
+  background: var(--accent-deep);
+}
+.btn-ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  background: var(--surface-2);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 2px rgb(35 22 28 / 0.04), 0 8px 24px -16px rgb(35 22 28 / 0.18);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  background: var(--surface-2);
+  color: var(--ink-dim);
+}
+
+.field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.field:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.globe-lines {
+  background-image:
+    radial-gradient(circle at 50% 50%, transparent 58%, rgb(194 51 95 / 0.12) 58.4%, transparent 59%),
+    repeating-radial-gradient(ellipse 50% 100% at 50% 50%, transparent 0 17%, rgb(194 51 95 / 0.08) 17.3% 17.6%),
+    repeating-linear-gradient(0deg, transparent 0 11.8%, rgb(194 51 95 / 0.08) 11.8% 12.2%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 58%, transparent 58.5%);
+}
