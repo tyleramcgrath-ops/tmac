@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NetworkIP — Concept A: Clarity</title>
+<link href="fonts-01-clarity.css" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E2749; --navy-2:#1B3A66; --gold:#C9973F; --gold-soft:#F5EBD8;
+    --ink:#0E2749; --muted:#5B6B82; --line:#E4E8EE; --paper:#FBFAF7; --white:#fff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Instrument Sans",sans-serif;color:var(--ink);background:var(--paper);width:1440px;-webkit-font-smoothing:antialiased}
+  .wrap{width:1200px;margin:0 auto}
+  .serif{font-family:"Fraunces",serif;font-optical-sizing:auto}
+
+  /* NAV */
+  nav{display:flex;align-items:center;justify-content:space-between;padding:28px 0}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.02em;font-size:20px}
+  .logo .mark{width:30px;height:30px;border-radius:50%;border:2px solid var(--navy);position:relative;overflow:hidden}
+  .logo .mark:before{content:"";position:absolute;inset:-2px 9px;border:2px solid var(--navy);border-radius:50%}
+  .logo .mark:after{content:"";position:absolute;left:-2px;right:-2px;top:12px;border-top:2px solid var(--navy)}
+  .logo b{color:var(--gold)}
+  .links{display:flex;gap:38px;font-size:15px;color:var(--muted)}
+  .links a{color:inherit;text-decoration:none}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none}
+  .btn-dark{background:var(--navy);color:#fff}
+  .btn-ghost{border:1px solid var(--line);color:var(--navy);background:#fff}
+  .arrow{font-family:system-ui}
+
+  /* HERO */
+  .hero{padding:90px 0 70px;display:grid;grid-template-columns:1.25fr 1fr;gap:70px;align-items:end}
+  .eyebrow{display:inline-flex;gap:10px;align-items:center;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .eyebrow:before{content:"";width:28px;height:1px;background:var(--gold)}
+  h1{font-family:"Fraunces",serif;font-weight:300;font-size:84px;line-height:1.02;letter-spacing:-.02em;margin:26px 0 30px}
+  h1 em{font-style:italic;color:var(--gold);font-weight:400}
+  .lede{font-size:20px;line-height:1.55;color:var(--muted);max-width:560px}
+  .cta{display:flex;gap:14px;margin-top:40px}
+  .hero-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:0 30px 60px -30px rgba(14,39,73,.25)}
+  .hero-card h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .big{font-family:"Fraunces",serif;font-size:96px;font-weight:300;line-height:1;margin:18px 0 6px}
+  .big sup{font-size:40px;color:var(--gold)}
+  .hero-card p{color:var(--muted);line-height:1.5}
+  .bar{height:10px;border-radius:10px;background:var(--gold-soft);margin:26px 0 10px;overflow:hidden}
+  .bar i{display:block;height:100%;width:15.6%;background:var(--gold);border-radius:10px}
+  .legend{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+
+  /* CARRIERS */
+  .carriers{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:30px 0;display:flex;align-items:center;justify-content:space-between}
+  .carriers span.lbl{font-size:14px;color:var(--muted);max-width:230px;line-height:1.4}
+  .carriers .c{font-weight:600;font-size:26px;color:#9AA6B8;letter-spacing:-.01em}
+
+  /* SERVICES */
+  section.block{padding:110px 0}
+  .head{display:flex;justify-content:space-between;align-items:end;margin-bottom:56px}
+  h2{font-family:"Fraunces",serif;font-weight:300;font-size:56px;line-height:1.05;letter-spacing:-.015em;max-width:640px}
+  h2 em{font-style:italic;color:var(--gold)}
+  .head p{max-width:380px;color:var(--muted);line-height:1.6}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:36px;min-height:320px;display:flex;flex-direction:column}
+  .card .n{font-family:"Fraunces",serif;font-size:15px;color:var(--gold)}
+  .card h3{font-size:24px;font-weight:600;margin:60px 0 14px;letter-spacing:-.01em}
+  .card p{color:var(--muted);line-height:1.6;font-size:16px}
+  .card .more{margin-top:auto;padding-top:24px;font-weight:600;font-size:15px}
+  .card.feature{background:var(--navy);color:#fff;border:none}
+  .card.feature p{color:#AEBBD0}
+  .card.feature .more{color:var(--gold)}
+
+  /* COMPARISON */
+  .compare{background:#fff;border:1px solid var(--line);border-radius:28px;overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:16px}
+  th,td{padding:22px 28px;text-align:left;border-bottom:1px solid var(--line)}
+  th{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;background:#FCFCFD}
+  th.us{background:var(--navy);color:#fff}
+  td.us{background:#F6F8FB;font-weight:600}
+  tr:last-child td{border-bottom:none}
+  .y{color:#1E8E5A;font-weight:600}.l{color:#B7812A}.x{color:#B9C1CD}
+  td:first-child{font-weight:500}
+  td small{display:block;color:var(--muted);font-weight:400;font-size:14px;margin-top:4px}
+
+  /* CTA */
+  .cta-band{background:var(--navy);color:#fff;border-radius:36px;padding:80px;display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:center;position:relative;overflow:hidden}
+  .cta-band:after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:1px solid rgba(201,151,63,.35);box-shadow:0 0 0 60px rgba(201,151,63,.05),0 0 0 120px rgba(201,151,63,.04)}
+  .cta-band h2{color:#fff}
+  .cta-band ul{list-style:none;display:grid;gap:16px;color:#C9D3E3;position:relative;z-index:1}
+  .cta-band li b{display:block;color:#fff;font-weight:500;font-size:18px}
+  footer{padding:60px 0 50px;display:flex;justify-content:space-between;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="logo"><span class="mark"></span>NETWORK<b>IP</b></div>
+    <div class="links"><a>About</a><a>International Calling</a><a>Customer Intelligence</a><a>Technology</a><a>Management</a></div>
+    <a class="btn btn-dark">Talk to us <span class="arrow">→</span></a>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <span class="eyebrow">International voice for MVNOs &amp; MNOs</span>
+      <h1>Turn international calling into your <em>competitive edge.</em></h1>
+      <p class="lede">For 25+ years NetworkIP has powered worldwide calling for mobile operators — so you can bundle it in, cut regulatory overhead, and win the subscribers everyone else overlooks.</p>
+      <div class="cta">
+        <a class="btn btn-dark">Book a strategy call <span class="arrow">→</span></a>
+        <a class="btn btn-ghost">▶&nbsp; Watch how it works</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h4>The opportunity</h4>
+      <div class="big">51.6<sup>M</sup></div>
+      <p>foreign‑born residents in the U.S. — the highest share in the nation's history.</p>
+      <div class="bar"><i></i></div>
+      <div class="legend"><span><b style="color:var(--navy)">15.6%</b> of U.S. population</span><span>2024</span></div>
+    </div>
+  </header>
+
+  <div class="carriers">
+    <span class="lbl">Direct dialing through exclusive connections with major U.S. carriers</span>
+    <span class="c">AT&amp;T</span><span class="c">Verizon</span><span class="c">T‑Mobile</span><span class="c">Boost Mobile</span>
+  </div>
+
+  <section class="block">
+    <div class="head">
+      <h2>One partner for the whole <em>world</em> of voice.</h2>
+      <p>Outsource international calling with minimal risk. We handle routing, quality and fraud — you keep the customer relationship.</p>
+    </div>
+    <div class="grid3">
+      <div class="card feature"><span class="n">01</span><h3>International Calling</h3><p>Bundled or add‑on worldwide calling that lets subscribers call any phone, anywhere — no apps required.</p><span class="more">Explore →</span></div>
+      <div class="card"><span class="n">02</span><h3>Customer Intelligence</h3><p>Understand who calls where, and design offers that attract and retain the casual international caller.</p><span class="more">Explore →</span></div>
+      <div class="card"><span class="n">03</span><h3>Integration &amp; Call Quality</h3><p>Proven automated fraud &amp; abuse controls and carrier‑grade quality, integrated with your existing stack.</p><span class="more">Explore →</span></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="head">
+      <h2>How Global Calling <em>compares</em></h2>
+      <p>International calling solutions from stateside, at a glance.</p>
+    </div>
+    <div class="compare">
+      <table>
+        <tr><th>Value to consumer</th><th class="us">NetworkIP Global Calling</th><th>Calling apps</th><th>Big‑3 carrier plans</th><th>Other providers</th></tr>
+        <tr><td>Affordability<small>Included at no additional cost</small></td><td class="us y">✓ Included</td><td class="y">✓</td><td class="l">Limited</td><td class="x">—</td></tr>
+        <tr><td>Convenience<small>Call from / to any phone</small></td><td class="us y">✓</td><td class="x">—</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Global connectivity<small>Reach people worldwide</small></td><td class="us y">✓</td><td class="l">Limited</td><td class="l">Limited</td><td class="x">—</td></tr>
+        <tr><td>As easy as calling stateside</td><td class="us y">✓</td><td class="x">—</td><td class="y">✓</td><td class="x">—</td></tr>
+        <tr><td>Easy‑to‑understand offer</td><td class="us y">✓</td><td class="y">✓</td><td class="x">—</td><td class="x">—</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="cta-band">
+      <div>
+        <span class="eyebrow">Let's talk</span>
+        <h2 style="margin-top:20px">Call anyone, anywhere — <em>with no worries.</em></h2>
+        <div class="cta" style="margin-top:36px"><a class="btn" style="background:var(--gold);color:var(--navy)">Contact our team <span class="arrow">→</span></a></div>
+      </div>
+      <ul>
+        <li><b>512‑423‑0748</b>Mon–Fri, Central Time</li>
+        <li><b>marketing@networkip.net</b>We reply within one business day</li>
+        <li><b>Longview, Texas</b>119 West Tyler Street, Suite 100</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer><span>© 2025 NetworkIP. All rights reserved.</span><span>About · Management · Privacy Policy</span></footer>
+</div>
+</body>
+</html>
