@@ -170,7 +170,372 @@ const FDA_BOTOX = 'https://www.fda.gov/drugs/drug-alerts-and-statements/counterf
 const HHS_TRACKING = 'https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/hipaa-online-tracking/index.html'
 const CENSUS_DAL = 'https://www.census.gov/quickfacts/fact/table/dallascitytexas/PST045224'
 
+const PA_ORDER = 'https://www.pacourts.us/assets/opinions/Supreme/out/Order%20Entered%20-%20106105653284483483.pdf?cb=1'
+const PA_ADV_NEWS = 'https://padisciplinaryboard.org/news-media/news-article/3866/supreme-court-adopts-amendments-to-advertising-and-solicitation-rules'
+const PA_RPC = 'https://www.padisciplinaryboard.org/for-attorneys/rules/rule/3/the-rules-of-professional-conduct'
+const PBA_2014_300 = 'https://inns.innsofcourt.org/media/150090/03-16-17%20-%202%20PA%20FO%202014-300.pdf'
+const PA_AI_OPINION = 'https://lawnext.com/wp-content/uploads/2024/06/Joint-Formal-Opinion-2024-200.pdf'
+const PHL_FAMILY = 'https://courts.phila.gov/common-pleas/family'
+const PHL_MC_CIVIL = 'https://www.courts.phila.gov/municipal/civil/'
+const PHL_CRIMINAL = 'https://www.courts.phila.gov/common-pleas/trial/criminal/'
+const PHL_MASS_TORT = 'https://www.courts.phila.gov/pdf/cpcivil/Mass-Tort-Docket-and-Liaison-Counsel-List.pdf'
+const EDPA = 'https://www.paed.uscourts.gov/'
+const PA_DB_2025 = 'https://www.padisciplinaryboard.org/Storage/media/pdfs/20260319/145428-2025annualreport.pdf'
+const CENSUS_PHL = 'https://www.census.gov/quickfacts/philadelphiacitypennsylvania'
+const CSLB_ADS = 'https://cslb.ca.gov/Resources/GuidesAndPublications/AdvertisingGuidelines.pdf'
+const CSLB_ADS_BULLETIN = 'https://cslb.ca.gov/Resources/IndustryBulletins/2020/20-21_Advertising_on_Vehicles.pdf'
+const CSLB_LOOKUP = 'https://www.cslb.ca.gov/OnlineServices/CheckLicenseII/CheckLicense.aspx'
+const CSLB_C10 = 'https://www.cslb.ca.gov/about_us/library/licensing_classifications/Licensing_Classifications_Detail.aspx?Class=C10'
+const CSLB_MINOR = 'https://cslb.ca.gov/Resources/IndustryBulletins/2024/AB%202622%20Implementation.FINAL.pdf'
+const DIR_ECU = 'https://www.dir.ca.gov/dlse/ecu/electricaltrade.html'
+const SD_ELEC = 'https://www.sandiego.gov/development-services/permits/electrical-permit'
+const SD_SIMPLE = 'https://www.sandiego.gov/development-services/permits/electrical-permit/simple'
+const SD_IB187 = 'https://www.sandiego.gov/development-services/forms-publications/information-bulletins/187'
+const SD_SOLAR = 'https://www.sandiego.gov/development-services/permits/solar-photovoltaic-permit'
+const COUNTY_EV = 'https://www.sandiegocounty.gov/content/sdc/sustainability/ev-consumerguide/charger/installation.html'
+const SDGE_GEN = 'https://www.sdge.com/more-information/customer-generation'
+const SDGE_SBP = 'https://www.sdge.com/solar/solar-billing-plan'
+const SDGE_PROJECTS = 'https://www.sdge.com/myprojectcenter'
+const SDGE_PSPS = 'https://www.sdge.com/wildfire-safety/psps-more-info'
+const SDGE_GENERATORS = 'https://www.sdge.com/more-information/safety/emergency-preparedness/electric-generators'
+const CEC_2022 = 'https://www.energy.ca.gov/sites/default/files/2021-08/CEC_2022_EnergyCodeUpdateSummary_ADA.pdf'
+const CEC_2025 = 'https://www.energy.ca.gov/sites/default/files/2024-12/2025_Energy_Code_Summary_ADA.pdf'
+const CENSUS_SD = 'https://www.census.gov/quickfacts/sandiegocitycalifornia'
+const LSA_START = 'https://support.google.com/localservices/answer/6224841'
+const SCHEMA_ELECTRICIAN = 'https://schema.org/Electrician'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'philadelphia-law-firm-website-design',
+    title: 'Philadelphia Law Firm Website Design: PA Ad Rules',
+    description: 'What a Philadelphia law firm website must show under Pennsylvania’s amended Rules 7.1 to 7.3, from dramatization labels to fee disclosures.',
+    kind: 'guide',
+    summary: [
+      'Pennsylvania amended its lawyer advertising rules by a Supreme Court order of October 15, 2024: Rules 7.4, 7.5 and 7.7 are now reserved, and their content moved into Rules 7.1 and 7.2.',
+      'Every page should name a responsible lawyer or firm with contact information (Rule 7.2(k)) and the city or town of the office where the lawyers doing the work principally practice (Rule 7.2(h)).',
+      'Stock photos of people, actors and AI-generated faces need a dramatization disclosure under Rule 7.2(f), and celebrity endorsements are banned outright by Rule 7.2(e).',
+      '“No fee unless we win” must say the client will owe certain expenses if that is the case, and any advertised fee has to be honored for at least 90 days (Rule 7.2(g)).',
+      'Philadelphia County has 13,617 active attorneys, the most of any county in the state, so specific pages about real courts and real problems are what set a firm apart.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1517009572053-93fb56dfef49?auto=format&fit=crop&w=1600&q=75', alt: 'Philadelphia City Hall’s clock tower and William Penn statue seen down a sunlit street, with a crosswalk and traffic lights in front' },
+    body: `A Philadelphia law firm website has to follow Pennsylvania Rules of Professional Conduct 7.1 through 7.3, which the Supreme Court of Pennsylvania rewrote in late 2024. In practice that means five things: name at least one responsible lawyer or firm with contact information on every page; state the city or town of the office where the lawyers who will do the work principally practice; label any stock photo, actor or AI-generated person as a dramatization; never use a celebrity endorsement or an undisclosed paid one; and if you advertise “no fee unless we win,” say that the client will still owe certain expenses if that is how your agreement works. Then build the site around the way Philadelphians actually look for a lawyer: by problem, by courthouse and on a phone.
+
+This guide quotes the current Pennsylvania rules from the Disciplinary Board’s published text, explains what changed and what didn’t, then covers the Philadelphia court landscape, language access, Google Business Profile for city and suburban offices, AI chat on firm sites and a checklist. It is general information, not legal or ethics advice. The Pennsylvania Bar Association and the Disciplinary Board’s ethics resources are the places to take a question about your own ads.
+
+## What changed in Pennsylvania’s lawyer advertising rules?
+
+By an order dated October 15, 2024, the Supreme Court of Pennsylvania amended Rules 7.1, 7.2, 7.3, 7.4, 7.5 and 7.7, among others, effective 30 days later ([Supreme Court order](${PA_ORDER}); [Disciplinary Board announcement](${PA_ADV_NEWS})). If your website copy was written before then, three changes matter most.
+
+1. **The rule numbers moved.** Rules 7.4 (specialization), 7.5 (firm names) and 7.7 (referral services) are now reserved. Specialist claims live in Rule 7.2(c), and firm names and web addresses are covered in the comments to Rule 7.1 ([current Rules of Professional Conduct](${PA_RPC})). A site footer that cites “Rule 7.4” is citing a rule that no longer has text.
+2. **A new identification rule.** Rule 7.2(k) now says: “Any communication made under this Rule must include the name and contact information of at least one lawyer or law firm responsible for its content.”
+3. **The old record-keeping provision is gone.** The amended rules no longer contain the requirement to keep copies of advertisements for a set period. Keeping a dated record of each version of your home page and results page is still a sensible habit, because it answers questions later, but the rule itself no longer demands it.
+
+What did not change is just as important. Pennsylvania kept its long list of specific advertising requirements on photos, endorsements, fees and office location, which go well beyond the national model rule. Those are where Philadelphia firm sites most often fall short.
+
+## What must every Pennsylvania law firm web page include?
+
+Two pieces of information, on every page a visitor might land on from a search.
+
+**A responsible lawyer or firm, with contact information.** Rule 7.2(k) requires the name and contact information of at least one lawyer or law firm responsible for the content. The comment explains that “contact information includes a website address, a telephone number, an email address or a physical office location” ([Rule 7.2 and comments](${PA_RPC})). A footer with the firm name, phone number and office address covers it everywhere at once.
+
+**The city or town of the office doing the work.** Rule 7.2(h) is a Pennsylvania original: “All advertisements and written communications shall disclose the geographic location, by city or town, of the office in which the lawyer or lawyers who will actually perform the services advertised principally practice law.” If that office is outside the city or town, the county must be given too. For a Center City firm that is simple. It gets harder for a firm whose website targets Philadelphia clients while its lawyers work out of King of Prussia, Media or Cherry Hill. The disclosure has to name where the lawyers who will handle the case actually practice, not where the firm would like to appear.
+
+Rule 7.2(j) adds a related limit. A firm may not advertise that it handles, or limits its practice to, particular types of cases unless it handles them “as a principal part” of its practice, and “a lawyer or law firm shall not advertise as a pretext to refer cases obtained from advertising to other lawyers.” A site that ranks for a practice area the firm only refers out is exactly what this rule targets.
+
+## Can a Philadelphia firm use stock photos or AI-generated images?
+
+Yes, but in Pennsylvania they need a label. Rule 7.2(f) says an advertisement or public communication “shall not contain a portrayal of a client by a non-client; the re-enactment of any events or scenes; or, pictures or persons, which are not actual or authentic, without a disclosure that such depiction is a dramatization.” The same paragraph says a non-lawyer shall not portray a lawyer or imply that he or she is a lawyer.
+
+That reaches a lot of what appears on law firm websites:
+
+- A stock photo of a smiling family on a page about estate planning shows persons who are not actual clients.
+- A photo of a model in a suit on the attorneys page implies a lawyer who is not one of yours.
+- An AI-generated image of an injured driver, or a “client” in a video testimonial voiced by an actor, is a portrayal that is not authentic.
+
+The cleanest fix is real photography: your lawyers, your office, your street. Where a stock image of people helps the page, put a short “Dramatization” caption on the image itself, not in a distant footer. Images of places, like the photo of City Hall at the top of this article, show no portrayed client or lawyer and raise no such issue.
+
+![The Philadelphia skyline lit by late-day sun, reflected in the Schuylkill River with trees along the riverbank](https://images.unsplash.com/photo-1581909811589-a1317515f20c?auto=format&fit=crop&w=1200&q=75)
+
+## Are client reviews and testimonials allowed in Pennsylvania?
+
+Pennsylvania does not ban testimonials outright. They are judged under Rule 7.1, which bars any “false or misleading communication about the lawyer or the lawyer’s services,” and under the endorsement rules in Rule 7.2(e). That paragraph is strict: an advertisement with “a paid endorsement shall disclose that the endorser is being paid or otherwise compensated,” and “no advertisement or public communication shall contain an endorsement by a celebrity or public figure” ([Rule 7.2](${PA_RPC})). A local sports figure or TV personality vouching for the firm is out, paid or not.
+
+The Pennsylvania Bar Association’s ethics committee addressed online reviews in Formal Opinion 2014-300. It concluded that attorneys “may accept client reviews but must monitor those reviews for accuracy,” that lawyers may respond to and solicit endorsements, and that a lawyer has a duty to remove or correct inaccurate ones. The opinion also notes the committee’s earlier view that a lawyer may not reveal client confidential information in response to a negative online review ([PBA Formal Op. 2014-300](${PBA_2014_300})).
+
+For a website, that suggests a short set of house rules:
+
+1. Show only real reviews from real clients, with nothing paid for and nothing edited to change the meaning.
+2. Pair any review that mentions a result with the same context and qualifier you would give the result itself.
+3. Reply to a bad review politely and without discussing the client’s matter.
+4. Read your own profiles and the reviews you display at least every few months, and fix anything that has become inaccurate.
+
+## How should a Pennsylvania site talk about fees?
+
+Carefully, because Rule 7.2(g) attaches two conditions to fee statements. First, advertisements “that state or indicate that no fee will be charged in the absence of recovery shall disclose that the client will be liable for certain expenses in addition to the fee, if such is the case.” Second, a lawyer who advertises a specific fee, hourly rate or range of fees for a service “shall honor the advertised fee for at least ninety (90) days,” or for at least a year in media published annually unless the ad says otherwise.
+
+Two practical consequences for a Philadelphia personal injury or consumer firm:
+
+- Put the expense disclosure right beside “No fee unless we win,” in the hero banner and on the fees page, wherever the phrase appears. If your agreements make the client responsible for costs, the site has to say so.
+- If you publish flat fees, for example for an expungement, a simple will or a landlord-tenant hearing, treat each published price as a 90-day promise. Date your fee page and change prices only on a schedule you can keep.
+
+## Can a Pennsylvania lawyer say “specialist” on a website?
+
+Only in the ways Rule 7.2(c) lists. A lawyer may not state or imply that they are a specialist except: when certified by an organization approved by the Supreme Court of Pennsylvania; when certified by another state’s highest court, if the communication states that the lawyer is not certified in Pennsylvania; when the claim is objectively verifiable from experience, training or education, in which case the lawyer “shall include a disclaimer stating that the lawyer is not certified in the claimed specialty” and “may not claim specialization in more than one field of law”; and for “patent attorney” and admiralty designations. The comments add that “the name of the certifying organization must be included in any communication regarding the certification” ([Rule 7.2(c) and comments](${PA_RPC})).
+
+On a typical attorney profile:
+
+- **Fine:** “Practice limited to workers’ compensation claims for injured workers.” Rule 7.2(c) allows saying what a lawyer does or does not handle.
+- **Fine, with the organization named:** a board certification from an approved certifying organization, listed by its full name.
+- **A problem:** “Philadelphia’s DUI specialists” on the home page, “expert divorce attorneys,” or one lawyer described as a specialist in three fields.
+
+## What do Pennsylvania rules say about results, firm names and NJ offices?
+
+Results are governed by Rule 7.1. The comments warn that a truthful report of client results may still mislead if it leads “a reasonable person to form an unjustified expectation that the same results could be obtained for other clients,” and that “an appropriate disclaimer or qualifying language may preclude a finding” of unjustified expectations ([Rule 7.1 comments](${PA_RPC})). Give each result its context: the type of case, the forum, and whether it was a verdict or a settlement, with the qualifier right next to the number.
+
+Firm names and web addresses now sit in the Rule 7.1 comments as well. A firm may use “a distinctive website address, social media username or comparable professional designation that is not misleading.” A trade name with a place in it, the comments’ example being “Springfield Legal Clinic,” may need an express statement that the firm is not a public legal aid organization. Before buying a domain like “phillytenanthelp,” ask whether a visitor could take it for a public service.
+
+Many Philadelphia firms have lawyers admitted in both Pennsylvania and New Jersey, or offices on both sides of the river. The same comments say a firm with offices in more than one jurisdiction may use one name, but “identification of the lawyers in an office of the firm shall indicate the jurisdictional limitations on those not licensed to practice in the jurisdiction where the office is located.” Each attorney profile should list exactly where that lawyer is admitted. New Jersey has its own advertising rules, so check them separately before the site targets New Jersey clients.
+
+Not sure how your current site measures up? Send its address for a [free redesign](/redesign) and see your own pages rebuilt with the contact footer, office location and fee disclosures in place, at no cost and with no commitment.
+
+## Can a Philadelphia firm pay for leads or directory listings?
+
+Yes, within limits. Rule 7.2(b) bars giving anything of value for recommending the lawyer’s services, but allows paying “the reasonable costs of advertisements or communications permitted by this Rule” and the usual charges of a lawyer referral service or legal service plan. The comments confirm a lawyer may pay vendors such as “website designers,” and may pay for Internet-based client leads “as long as the lead generator does not recommend the lawyer.” They add that a lawyer “must not pay a lead generator that states, implies, or creates a reasonable impression that it is recommending the lawyer, is making the referral without payment from the lawyer, or has analyzed a person’s legal problems” ([Rule 7.2 comments](${PA_RPC})).
+
+Before signing with a lead service, read its consumer-facing pages. If they promise to “match you with the best lawyer for your case” or present a free case evaluation that ends in a paid referral, the firm paying for those leads carries the risk.
+
+## When does a firm’s outreach become solicitation?
+
+Rule 7.3 defines solicitation as a communication directed to “a specific person the lawyer knows or reasonably should know needs legal services in a particular matter.” A website is not one: the comments say a communication directed to the general public, “such as through a billboard, an Internet banner advertisement, a website or a television commercial,” or one “automatically generated in response to electronic searches,” is not a solicitation ([Rule 7.3](${PA_RPC})).
+
+What follows the website is where care is needed:
+
+- **Live contact.** Rule 7.3(b) bars live person-to-person solicitation for pecuniary gain except with lawyers and people with a family, close personal or prior professional relationship. The comments say live contact “includes text messages” but “does not include chat rooms or other written communications that recipients may easily disregard.” An unsolicited text to someone you learned was in a crash is live contact.
+- **Targeted letters and emails.** Rule 7.3(c) allows targeted direct mail. Pennsylvania has no general waiting period, but Rule 7.3(d) bars solicitation of anyone who has said they do not want contact, and for a defendant or respondent in a domestic relations action the lawyer “shall wait until proof of service appears on the docket.”
+- **Website forms.** A visitor who fills in your consultation form has asked to hear from you, so your reply is a response to a request for information, not a solicitation.
+
+## Can a Pennsylvania firm put an AI chat assistant on its site?
+
+It can, with the same duties that apply to any tool. The Pennsylvania Bar Association and the Philadelphia Bar Association issued Joint Formal Opinion 2024-200 on artificial intelligence. It says lawyers “must be competent in the use of AI technologies,” must protect client confidentiality and verify AI output, and concludes that “with appropriate safeguards, lawyers can utilize artificial intelligence in accordance with the Pennsylvania Rules of Professional Conduct” ([Joint Formal Opinion 2024-200](${PA_AI_OPINION})).
+
+Applied to a chat window, the opinion points to three habits. Warn visitors up front to hold back confidential details until the firm has checked for conflicts. Program it to explain process and book consultations, never to assess a case or guess at an outcome. And have a lawyer read its scripts and a sample of its conversations, since Rule 7.1 does not care whether a misleading sentence came from a person or software. Because the visitor starts the conversation, a chat that only replies is not live solicitation under the Rule 7.3 comments.
+
+## How do Philadelphia clients look for a lawyer?
+
+By problem, and often by courthouse. Philadelphia’s courts are spread across several buildings, and clients search for the one on their papers.
+
+- **Family Court** sits at 1501 Arch Street and “consists of two major branches: Juvenile and Domestic Relations” ([Family Court](${PHL_FAMILY})).
+- **Municipal Court’s Civil Division** hears “Landlord and Tenant cases, Code Enforcement cases, and Small Claims cases up to $12,000” ([Municipal Court Civil Division](${PHL_MC_CIVIL})).
+- **Criminal cases** in the Court of Common Pleas are heard at the Justice Juanita Kidd Stout Center for Criminal Justice, 1301 Filbert Street ([Criminal Division](${PHL_CRIMINAL})).
+- **Mass torts.** The Court of Common Pleas runs a Mass Tort Program through its Complex Litigation Center, with dockets that have included asbestos, Roundup, Zantac and hair relaxer cases ([Mass Tort docket list](${PHL_MASS_TORT})).
+- **Federal cases** go to the U.S. District Court for the Eastern District of Pennsylvania at 601 Market Street ([E.D. Pa.](${EDPA})).
+
+The competition is dense. The Disciplinary Board’s 2025 annual report counts 47,249 active attorneys in Pennsylvania, and Philadelphia County has 13,617 of them, more than any other county ([2025 Annual Report](${PA_DB_2025})). A home page that lists fifteen practice areas looks like hundreds of others. Pages that explain one real step in one real court, from the firm’s own experience, do not:
+
+- What happens at a first listing in Landlord-Tenant Court, for tenants or for landlords, with a link to the court’s own instructions.
+- How a protection from abuse petition works at Family Court, written in plain language.
+- What to expect after an arrest, from preliminary arraignment to the first listing at the Stout Center.
+- For mass tort firms, which program a product case may join and what that means for timing.
+
+Pages like these match what Google describes as [helpful, people-first content](${HELPFUL}): written from real experience, for a reader with a specific need, and complete enough that they can act on it. They are also the kind of specific, sourced passages that AI answers can quote.
+
+![Floor-to-ceiling wooden shelves of old leather-bound books with a row of marble busts in a long library hall](https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1200&q=75)
+
+## Should a Philadelphia firm’s website be in Spanish or other languages?
+
+When someone at the firm can actually serve those clients, it is worth doing. According to the Census Bureau’s 2020 to 2024 estimates, 24.4% of Philadelphians age 5 and older speak a language other than English at home, and 15.2% were born outside the United States ([Census QuickFacts, Philadelphia](${CENSUS_PHL})).
+
+Every rule above applies to translated pages too, including the dramatization label, the fee disclosure and the specialist disclaimer. Say exactly who speaks the language, whether that is a named lawyer, a paralegal or the intake team. Ask a fluent speaker who knows legal terms to review every page before it goes live. Translate the pages people need, such as the practice area, the consultation page and the office details, and connect each version to its English counterpart, which helps Google serve the right language ([localized versions](${HREFLANG})).
+
+## Google Business Profile for city and suburban offices
+
+Google lets law firms and individual lawyers have Business Profiles, but a practitioner “shouldn’t have multiple Business Profiles to cover all of their specializations,” and a virtual office or rented mailing address the business doesn’t operate from isn’t eligible ([Business Profile guidelines](${GBP_GUIDELINES})). A firm based in Center City that rents a mailbox in Media or Doylestown to appear in suburban searches is outside the guidelines, and in Pennsylvania it could also blur the Rule 7.2(h) office disclosure.
+
+The website follows the same logic. Google’s spam policies name doorway pages, including “multiple domain names or pages targeted at specific regions or cities that funnel users to one page,” as a violation ([spam policies](${SPAM})). Give each staffed office its own page with its address, hours and the Rule 7.2(h) location line. A page about Montgomery, Delaware or Bucks County earns its place only if it says something a client there needs, such as how the county courthouse in Norristown, Media or Doylestown handles their kind of case. For the map results themselves, see [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).
+
+## A launch checklist for a Philadelphia law firm website
+
+1. Every page names a responsible lawyer or firm with contact information (Rule 7.2(k)).
+2. Every page states the city or town, and county if needed, of the office where the handling lawyers principally practice (Rule 7.2(h)).
+3. Stock photos of people, actors and AI-generated images carry a “Dramatization” label on the image; no non-lawyer appears as a lawyer (Rule 7.2(f)).
+4. No celebrity or public figure endorsements; any paid endorsement says it is paid (Rule 7.2(e)).
+5. “No fee unless we win” sits next to the expense disclosure; published fees are dated and honored for 90 days (Rule 7.2(g)).
+6. Specialist claims follow Rule 7.2(c), name the certifying organization, and never cover more than one field under the verifiable-claim option.
+7. Results show the case type, forum and verdict or settlement, with a qualifier beside the figures (Rule 7.1).
+8. Each attorney profile lists the jurisdictions where that lawyer is admitted.
+9. Lead services don’t claim to recommend or evaluate; nothing is advertised as a pretext to refer cases out.
+10. Follow-up texts and letters respect Rule 7.3; chat stays reactive and is reviewed by a lawyer.
+11. One Business Profile per staffed office, and matching details on each office page.
+12. Structured data matches what each page shows ([local business structured data](${LOCAL_SD})).
+
+## Where SaySites fits for a Philadelphia firm
+
+Everything on the checklist above is easier when the site is built around it. With SaySites, a law firm site comes with practice area pages, a profile for each attorney (with room to list every bar admission), a page per staffed office, and a consultation form on every page. Its intake questions ask for the other party’s name, so you can run a conflict check before calling back. Behind the scenes the firm is marked up as a LegalService, each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. You make edits by typing them in plain words, for example “put ‘Dramatization’ under the family photo on the estate planning page” or “add the expense disclosure next to ‘no fee unless we win,’” and every edit waits as a draft for your approval. SaySites never makes up a result, review, credential or photo; those come only from you.
+
+The Law Firm Starter plan costs $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). If you have a site already, [ask for a free redesign](/redesign) to see your own pages rebuilt under these rules first, or [start a 7-day free trial](/signup) and draft the new site yourself. Practicing across state lines? Compare the [New York rules after the 2026 changes](/blog/new-york-law-firm-website-rules) and the [Illinois rules for Chicago firms](/blog/chicago-law-firm-website-design).`,
+    faq: [
+      { q: 'What must a Pennsylvania law firm website include?', a: 'Under Rule 7.2(k), each communication must include the name and contact information of at least one lawyer or law firm responsible for its content, such as a phone number, website, email or office address. Rule 7.2(h) also requires the city or town of the office where the lawyers who will do the work principally practice, plus the county if the office is outside that city or town.' },
+      { q: 'Do stock photos on a Pennsylvania law firm site need a disclaimer?', a: 'Photos of people who are not actual clients or lawyers do. Rule 7.2(f) bars portrayals of clients by non-clients, re-enactments, and pictures of persons that are not actual or authentic unless the ad discloses that the depiction is a dramatization. A short “Dramatization” caption on the image works. Photos of buildings or places raise no such issue.' },
+      { q: 'Can a Philadelphia firm advertise “no fee unless we win”?', a: 'Yes, with a disclosure. Rule 7.2(g) says an ad indicating no fee will be charged without a recovery must disclose that the client will be liable for certain expenses in addition to the fee, if that is the case. Put the disclosure right beside the phrase wherever it appears, including the home page banner and the fees page.' },
+      { q: 'Are client testimonials allowed on Pennsylvania lawyer websites?', a: 'Yes, if they are real and not misleading. Pennsylvania has no outright testimonial ban, but Rule 7.2(e) requires disclosure of paid endorsements and bans endorsements by celebrities or public figures. PBA Formal Opinion 2014-300 says lawyers may accept client reviews but must monitor them for accuracy and correct inaccurate ones.' },
+      { q: 'When did Pennsylvania change its lawyer advertising rules?', a: 'The Supreme Court of Pennsylvania amended the rules by an order dated October 15, 2024, effective 30 days later. Rules 7.4, 7.5 and 7.7 are now reserved, with specialization moved into Rule 7.2(c) and firm names into the comments to Rule 7.1. Rule 7.2(k) added the requirement to name a responsible lawyer or firm with contact information.' },
+      { q: 'Can a Pennsylvania lawyer call themselves a specialist?', a: 'Only as Rule 7.2(c) allows: with certification from an organization approved by the Pennsylvania Supreme Court, with another state’s certification plus a statement that the lawyer isn’t certified in Pennsylvania, or with an objectively verifiable claim that includes a disclaimer that the lawyer is not certified, limited to one field. Name any certifying organization in full.' },
+      { q: 'Should a Philadelphia law firm website be in Spanish?', a: 'If someone at the firm can serve Spanish-speaking clients, it often helps. Census figures show 24.4% of Philadelphia residents age 5 and older speak a language other than English at home. Name who speaks the language, have a fluent reviewer check each page, keep every Pennsylvania disclosure on the translated version, and link it to its English page.' },
+      { q: 'What does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month with a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict check question, LegalService structured data and hosting. You can also send your current site for a free redesign and see your own pages rebuilt before deciding.' },
+    ],
+    about: ['Pennsylvania Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Philadelphia, Pennsylvania'],
+    published: '2026-10-16',
+    status: 'published',
+  },
+  {
+    slug: 'san-diego-electrician-website-design',
+    title: 'San Diego Electrician Websites: CSLB Rules to EV Jobs',
+    description: 'What a San Diego electrician’s website must show under California license rules, and how to build pages for EV chargers, solar, batteries and outage backup.',
+    kind: 'guide',
+    summary: [
+      'California requires a contractor’s license number in all advertising, and the CSLB says that includes websites; put your C-10 number by the phone number on every page.',
+      'Don’t say “bonded” in your ads, don’t advertise work outside your license classification, and remember that unlicensed handymen can only advertise jobs under $1,000 that need no permit.',
+      'San Diego’s steadiest electrical work has clear official rules worth explaining on its own page: home EV chargers, rooftop solar with batteries and panel upgrades, and backup power for outages.',
+      'The City of San Diego and the County issue permits separately, so a service-area page should say which permit office covers which neighborhoods instead of spinning up thin town pages.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1531379972711-3c48ecf21e04?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown San Diego’s towers and apartment blocks with a busy freeway in the foreground and the bay beyond' },
+    body: `A San Diego electrician’s website has to do two jobs: satisfy California’s contractor advertising rules and answer the specific questions San Diego customers ask before they call. On the rules side, show your Contractors State License Board (CSLB) license number on the site, ideally beside the phone number on every page; advertise only work your C-10 classification covers; and never describe the business as “bonded.” On the customer side, give each of the region’s steadiest jobs its own clear page: home EV chargers, rooftop solar with batteries and panel upgrades, and backup power for outages and planned shutoffs. Each of those has official permit and utility rules you can explain better than anyone else.
+
+Every rule below links to its source at the CSLB, the Department of Industrial Relations, the City or County of San Diego, or SDG&E. After the rules come language, service areas, Google Business Profile, structured data and a launch checklist. Treat this as general information rather than legal advice; the CSLB answers questions about a specific license or ad.
+
+## Does California require a license number on an electrician’s website?
+
+Yes. The CSLB’s advertising guidelines say licensed contractors must include their license number in all construction contracts, subcontracts, calls for bid “and all forms of advertising,” and they list “any website or post that solicits business on the Internet” among the forms advertising takes. The civil penalty for not complying “is between $100 and $1,000 for a first offense” ([CSLB Advertising Guidelines](${CSLB_ADS})). A CSLB industry bulletin says the same about online ads: the license number is required, and “this includes online sales postings and websites” ([CSLB Bulletin 20-21](${CSLB_ADS_BULLETIN})).
+
+Where should it go? Customers check licenses. The CSLB runs a public [license lookup](${CSLB_LOOKUP}), and a careful homeowner hiring someone to open their panel will use it. Make that easy:
+
+- Put “CSLB Lic. #” and the number in the header or footer of every page, next to the phone number.
+- Repeat it on the contact page and on quote or estimate pages.
+- Use the exact business name the license is issued to, so the lookup matches what the customer sees.
+- Add it to your Google Business Profile description and your social profiles, which are advertising too.
+
+## What else can’t an electrician’s ad say in California?
+
+Three rules from the CSLB catch contractors out online.
+
+**Stay inside your classification.** The CSLB says you “cannot advertise for construction work outside of areas for which you are licensed,” using the example that a masonry contractor “cannot advertise for electrical work, unless he or she also holds a C-10 Electrical contractor license” ([CSLB Advertising Guidelines](${CSLB_ADS})). The reverse applies to you. If the site offers drywall patching, roofing or full remodels, make sure your license covers them or remove them.
+
+**Don’t say “bonded.”** The same guidelines say the law prevents you from noting in your advertising “that you are bonded,” because it could lead a consumer to think bonding offers more protection than it does. Many electrician sites still carry a “Licensed, Bonded and Insured” badge. In California, change it to “Licensed and insured,” and only if both are true.
+
+**No false or misleading claims.** The CSLB notes it is a misdemeanor to use false, misleading or deceptive advertising to induce someone into an improvement contract. Claims like “San Diego’s #1 electrician” or “lowest prices in the county” are the kind of statements you would need to prove.
+
+![Rows of white circuit breakers and terminal blocks inside an open electrical panel, with neatly run red, blue and green wires](https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?auto=format&fit=crop&w=1200&q=75)
+
+## What do C-10 and electrician certification mean for your site?
+
+The C-10 classification is the CSLB license for this trade. In the CSLB’s words, an electrical contractor “places, installs, erects or connects any electrical wires, fixtures, appliances, apparatus, raceways, conduits, solar photovoltaic cells or any part thereof” that generate, transmit, transform or use electrical energy ([C-10 classification](${CSLB_C10})). That wording includes solar photovoltaic work, which matters in San Diego.
+
+California also certifies the people doing the work. The Department of Industrial Relations explains that “existing law requires that persons performing work as electrician under a C-10 licensed contractor be certified” under standards set by the Division of Labor Standards Enforcement ([DIR Electrician Certification](${DIR_ECU})).
+
+A website can turn both into trust signals, as long as every word is true:
+
+- “Our electricians are state-certified” on the about page, if every person doing electrical work for you holds a current certification.
+- Each team member’s certification type on their profile, if they’re happy to be named.
+- A short paragraph explaining what certification means, for homeowners comparing you with someone who isn’t licensed.
+
+## Why does the $1,000 handyman rule matter for your website?
+
+Because your customers are comparing you with people who aren’t licensed. Since January 1, 2025, the minor work exemption is $1,000, up from $500, with conditions: the CSLB says “the work cannot require a permit, and the unlicensed person cannot employ anyone.” Unlicensed people may advertise work up to $1,000 only if they disclose in the ad that they are not licensed ([CSLB Bulletin 24-07](${CSLB_MINOR})).
+
+Most electrical jobs a homeowner would search for need a permit. The City of San Diego says an electrical permit “is required for all electrical work, including Electric Vehicle Charging Systems” ([City electrical permits](${SD_ELEC})). So a “cheap handyman” who installs an EV charger or adds a circuit isn’t covered by the minor work exemption. A page titled something like “Do I need a licensed electrician for this?” that explains the $1,000 rule and the permit requirement with those links helps homeowners make a safe choice, and the honest answer happens to favor a licensed contractor.
+
+## Which San Diego jobs deserve their own page?
+
+The ones customers search for by name and that come with real local rules. Each page below should say what the job involves, what the permit process looks like, what the customer needs to decide, and what your own process is.
+
+### Home EV chargers
+
+The City’s Simple (No-Plan) Electrical Permit covers “electric vehicle charging stations for a private garage,” along with added circuits and miscellaneous wiring, and applicants “receive their permit normally within two business days” ([Simple No-Plan Permit](${SD_SIMPLE})). The City’s information bulletin on EV charging adds that chargers in a residential private garage for single dwellings, duplexes or townhouses “do not require plan review” ([IB 187](${SD_IB187})).
+
+Your EV charger page can walk a homeowner through it: a quick look at the panel’s capacity, choosing a charger and location, the permit, the installation and the inspection. Say plainly whether you pull the permit (most customers expect you to), and that a charger in a condo or apartment garage usually needs more than a single-family install.
+
+![A charging cable plugged into the port of a dark gray electric car, the connector ring glowing blue](https://images.unsplash.com/photo-1593941707874-ef25b8b4a92b?auto=format&fit=crop&w=1200&q=75)
+
+### Rooftop solar, batteries and panel upgrades
+
+For qualifying residential rooftop systems, the City says the solar permit “will be self-issued with no plan review” when the system does not exceed 38.4 kW AC and other conditions are met. The same permit may include “a panel upgrade of up to 320 amps,” an energy storage system “of up to 38.4 kWh, with each unit not exceeding 20 kWh,” and an inverter-integrated EV charger ([City solar PV permit](${SD_SOLAR})).
+
+The utility side matters just as much. SDG&E treats anyone interconnecting generation or storage, “whether that is a homeowner, the homeowner’s energy contractor, or a third-party developer,” as an interconnection customer ([SDG&E customer generation](${SDGE_GEN})). SDG&E also notes that in December 2022 the CPUC modernized the rooftop solar program “in part by incentivizing solar paired with battery storage,” which created the Solar Billing Plan ([SDG&E Solar Billing Plan](${SDGE_SBP})). That is why so many San Diego homeowners now ask about adding a battery to an existing system, and why a page on battery retrofits and the panel work they need is worth writing.
+
+If a job needs more capacity from the utility, SDG&E handles service work for solar, EV chargers and ADUs through its online [My Project Center](${SDGE_PROJECTS}). Explain who starts that request, your company or the homeowner, and roughly what happens next.
+
+![A worker in jeans and a gray shirt lifting a black solar panel into place on a shingled roof under a clear blue sky](https://images.unsplash.com/photo-1624397640148-949b1732bb0a?auto=format&fit=crop&w=1200&q=75)
+
+### Backup power for outages and planned shutoffs
+
+SDG&E explains that “during extreme fire weather, we may temporarily turn off power in certain areas,” which it calls a Public Safety Power Shutoff ([SDG&E PSPS](${SDGE_PSPS})). Homeowners in the backcountry and fire-prone neighborhoods plan for it.
+
+SDG&E’s generator guidance is direct: standby generators “require professional installation from a licensed electrician,” and “all generators installed with an Auto Transfer Switch require a Backup Generator Application submitted to SDG&E for review and approval” ([SDG&E generator safety](${SDGE_GENERATORS})). A backup power page that compares a standby generator with a home battery, explains the transfer switch and the utility application, and says which one you install, is exactly the kind of page a worried homeowner reads to the end.
+
+### Electric-ready homes and the energy code
+
+California’s 2022 Energy Code, in force since January 1, 2023, added requirements for new homes such as “electrical circuits for space heating, water heating, cooking/ovens, and clothes dryers” and an “electrical panel, branch circuits, and transfer switch for battery storage” ([2022 Energy Code summary](${CEC_2022})). The 2025 Energy Code took effect on January 1, 2026 and, among other changes, encourages heat pumps in new single-family homes ([2025 Energy Code summary](${CEC_2025})). If you work with builders or on ADUs, a page on what these requirements mean for wiring and panels shows you know the current code.
+
+## City or County: which permit office covers your customer?
+
+This is a San Diego detail many websites get wrong. The City of San Diego’s Development Services Department issues permits inside city limits. Unincorporated communities are served by the County, whose guide to home EV chargers says residents can use its online portal “to receive same-day permits for home chargers,” and tells residents of a city to “use the appropriate permit provided by the city you live in” ([County EV charger permits](${COUNTY_EV})). The region’s other cities have their own building departments.
+
+You can turn that into one genuinely useful service-area page: list the areas you cover, note which permit office handles each, and say that you handle the permit either way. That is far more helpful than a dozen near-identical pages that swap in a town name, which Google’s spam policies treat as doorway pages: “multiple domain names or pages targeted at specific regions or cities that funnel users to one page” ([spam policies](${SPAM})). Write a separate page for a community only when you have something real to say about it, such as the fire-season backup power questions you hear from customers there.
+
+## Should a San Diego electrician’s site be in Spanish?
+
+If someone on your team can serve Spanish-speaking customers, yes. The Census Bureau’s 2020 to 2024 estimates put the share of San Diegans age 5 and older who speak a language other than English at home at 39.0%, and 25.1% were born outside the United States ([Census QuickFacts, San Diego](${CENSUS_SD})).
+
+Do it properly: translate the pages that drive calls, such as your top services, the request form and the contact page, with a fluent person checking electrical terms. Say who speaks Spanish when someone calls. Keep your license number on every translated page, since it is advertising too. And link each Spanish page to its English version so Google can show the right one ([localized versions](${HREFLANG})).
+
+## Owners, renters and property managers
+
+San Diego is a city of renters as well as owners. QuickFacts puts the owner-occupied housing rate at 47.3% ([Census QuickFacts, San Diego](${CENSUS_SD})). That changes who calls. A tenant whose breaker keeps tripping can’t authorize a panel upgrade, and a property manager with forty units wants fast scheduling and clean invoices.
+
+Make the request form ask whether the person owns, rents or manages the property, and consider a short page for landlords and property managers that explains how you schedule access, report findings and bill. It shows customers you understand their situation and saves you a wasted trip.
+
+## Google Business Profile and Local Services Ads
+
+Most electricians work at the customer’s home, which makes them a service-area business. Google says, “If you don’t serve customers at your business address, remove your address from your Business Profile,” and that service-area businesses “can only have one profile for the whole area that they serve” ([service areas](${SERVICE_AREAS})). Keep the website’s service-area page and the profile’s service areas in step.
+
+If you run Local Services Ads, electricians are one of the listed categories, and the requirements include acknowledging “possession of all appropriate business licenses” ([Local Services Ads](${LSA_START})). The license number on your website is one more place a customer can confirm what the ad says.
+
+## Structured data for an electrician
+
+Schema.org has a specific Electrician type, a kind of local business ([schema.org/Electrician](${SCHEMA_ELECTRICIAN})). Describe the business with it, including name, phone, hours and service area, and make sure every value matches what the page shows. Google’s [local business structured data](${LOCAL_SD}) documentation explains which properties it reads.
+
+## A checklist before your San Diego electrician site goes live
+
+1. CSLB license number on every page, beside the phone number, under the exact licensed business name.
+2. Only services your classification covers; nothing that implies other trades you aren’t licensed for.
+3. No “bonded” claim; “licensed and insured” only if both are true.
+4. Certification claims only where every electrician doing the work is certified.
+5. A page each for EV chargers, solar and battery work, panel upgrades and backup power, each with the City, County or SDG&E link it relies on.
+6. One honest service-area page that says which permit office covers which areas.
+7. A request form that asks the ZIP code, own, rent or manage, and how urgent the job is.
+8. Spanish pages only if your team can serve Spanish speakers, each linked to its English version.
+9. Business Profile set up as a service-area business, matching the website.
+10. Electrician structured data that matches the page.
+11. A mobile [speed test](${PAGESPEED}) of the home page comes back fast.
+
+## How SaySites helps San Diego electricians
+
+A SaySites electrician site comes with the pieces this guide asks for: one page per service (EV chargers, panel upgrades and backup power can each have their own), a page listing the areas you serve, a call button visitors can tap on a phone, and a request form on every page. Search engines read the business as an Electrician from its structured data, and nothing is published until the page clears a 95+ speed check. Each request is filed in your leads pipeline, where you can call or text the customer, keep notes and mark the job won, and the form can collect the job’s ZIP code and whether the customer owns or rents. To update the site, you type what you want, like “show our CSLB license number beside the phone number on every page,” then check the draft and publish it. SaySites adds no license, certification, photo or review you didn’t give it.
+
+It runs on the Site plan, $15 a month with hosting included ([websites for electricians](/websites-for/electricians), [pricing](/pricing)). You can [request a free redesign](/redesign) of your current site to compare, or [start a 7-day free trial](/signup) and publish your EV charger page this week. Two related guides: [no storefront? How to show Google where you work](/blog/service-area-business-google) and [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
+    faq: [
+      { q: 'Does a California electrician have to put a license number on their website?', a: 'Yes. The CSLB says licensed contractors must include their license number in all forms of advertising, and it counts any website or post that solicits business on the Internet as advertising. The civil penalty for a first offense is between $100 and $1,000. Show the number beside your phone number on every page.' },
+      { q: 'Can a San Diego electrician say “licensed, bonded and insured”?', a: 'Not the “bonded” part. The CSLB says the law prevents contractors from noting in their advertising that they are bonded, because it could make consumers think a bond protects them more than it does. “Licensed and insured” is fine if both are true, with your CSLB license number shown next to it.' },
+      { q: 'Do I need a permit to install a home EV charger in San Diego?', a: 'Yes. The City of San Diego requires an electrical permit for all electrical work, including EV charging systems. A charger in a private garage of a single-family home, duplex or townhouse can use the Simple No-Plan Electrical Permit, usually issued within two business days. Unincorporated areas use the County’s permit portal instead.' },
+      { q: 'Can a handyman do electrical work in California without a license?', a: 'Only minor work. Since January 1, 2025, unlicensed people may take jobs under $1,000, but only if the work needs no permit and they employ no one, and their ads must say they are not licensed. Most electrical jobs, such as EV chargers and new circuits, need a permit, so a licensed contractor is required.' },
+      { q: 'What should a San Diego electrician’s website include?', a: 'Your CSLB license number on every page, a tap-to-call number, a request form, and a page for each main job: EV chargers, solar and battery work, panel upgrades and backup power. Add one service-area page that says which permit office covers which areas, and Spanish pages if your team serves Spanish speakers.' },
+      { q: 'Does a backup generator in San Diego need SDG&E approval?', a: 'If it uses an automatic transfer switch, yes. SDG&E says all generators installed with an Auto Transfer Switch need a Backup Generator Application submitted for its review and approval, and that standby generators require professional installation by a licensed electrician. A backup power page on your site can explain both steps.' },
+      { q: 'How much does a SaySites electrician website cost?', a: 'The Site plan is $15 a month with hosting included and a 7-day free trial. It includes a page per service, a service-area page, tap-to-call, a request form on every page, a leads pipeline and Electrician structured data. You can also send your current site for a free redesign and see it rebuilt first.' },
+    ],
+    about: ['California contractor licensing', 'Electrician websites', 'EV charger installation', 'San Diego, California'],
+    published: '2026-10-16',
+    status: 'published',
+  },
   {
     slug: 'product-structured-data-small-shops',
     title: 'Product Structured Data: Product Pages Google Can Show',
