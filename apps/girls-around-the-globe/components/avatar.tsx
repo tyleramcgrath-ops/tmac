@@ -1,8 +1,7 @@
-import type { Profile } from "@/lib/profiles";
-import { initials } from "@/lib/profiles";
+/* eslint-disable @next/next/no-img-element -- member photos are served from our own auth-gated route */
 
 type Props = {
-  profile: Pick<Profile, "name" | "palette" | "flag">;
+  profile: { name: string; palette: [string, string]; flag?: string; photos?: string[] };
   size?: "sm" | "md" | "lg" | "xl";
   className?: string;
 };
@@ -14,17 +13,29 @@ const SIZES = {
   xl: "h-40 w-40 text-7xl",
 };
 
-// Generated portrait placeholder: the prototype ships no member photos.
+// The member's first photo, or a generated initial on their palette.
 export function Avatar({ profile, size = "md", className = "" }: Props) {
   const [a, b] = profile.palette;
+  const photo = profile.photos?.[0];
+  const round = size === "lg" ? "" : "rounded-full";
+  if (photo) {
+    return (
+      <img
+        src={photo}
+        alt=""
+        draggable={false}
+        className={`shrink-0 object-cover ${SIZES[size]} ${round} ${className}`}
+      />
+    );
+  }
   return (
     <div
-      className={`relative flex shrink-0 items-center justify-center overflow-hidden font-display font-semibold text-white ${SIZES[size]} ${size === "lg" ? "" : "rounded-full"} ${className}`}
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden font-display font-semibold text-white ${SIZES[size]} ${round} ${className}`}
       style={{ background: `linear-gradient(135deg, ${a}, ${b})` }}
       aria-hidden="true"
     >
-      <span className="drop-shadow-sm">{initials(profile.name)}</span>
-      {(size === "md" || size === "xl") && (
+      <span className="drop-shadow-sm">{profile.name.slice(0, 1).toUpperCase()}</span>
+      {(size === "md" || size === "xl") && profile.flag && (
         <span className="absolute bottom-1 right-1 text-lg leading-none">{profile.flag}</span>
       )}
     </div>

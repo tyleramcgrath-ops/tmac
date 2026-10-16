@@ -45,3 +45,7 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Test
+        if: matrix.project == 'apps/girls-around-the-globe'
+        run: pnpm test

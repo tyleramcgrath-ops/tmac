@@ -1,43 +1,75 @@
 # Girls Around the Globe
 
 International dating with a swipe. Match with people from every country, use
-Passport to swipe in a city before you travel there, and chat with built-in
-translation and a scam shield.
+Passport to swipe in a city before you travel there, chat with your matches,
+and upgrade to **Globe+** for premium features.
 
-This is a clickable prototype: the UI and flows work end to end, but members
-are fictional seed data (`lib/profiles.ts`) and accounts, swipes, matches and
-messages live in the visitor's browser (`lib/member-store.ts`). Replies in chat
-and the "translated from" labels are simulated.
+## What works
 
-## Screens
+- **Accounts**: email + password sign-up (18+ enforced on the server), log-in,
+  log-out, account deletion. Passwords are hashed with scrypt; sessions are
+  signed, httpOnly cookies.
+- **Profiles & photos**: up to 6 photos per member (JPEG/PNG/WebP, 4 MB max,
+  checked by file signature, not file name), bio, prompts, languages,
+  interests, travel status. Photos are only served to signed-in members.
+- **Swiping**: drag, buttons or ← ↑ → keys. Mutual likes create a match. The
+  deck respects both people's "show me" preferences.
+- **Chat**: real messages between matches, refreshed every 3 seconds, with the
+  scam/paid-arrangement shield. Unmatch and report & block from the chat menu.
+- **Globe+** ($14.99/month via Stripe Checkout):
+  | | Free | Globe+ |
+  |---|---|---|
+  | Passport to another city | — | ✓ |
+  | See who likes you | blurred | ✓ |
+  | Likes | 25/day | unlimited |
+  | Super likes | 1/day | 5/day |
 
-- **`/`** — landing page with a phone mockup of the swipe deck
-- **`/join`** — 3-step sign-up with an 18+ date-of-birth gate and community guidelines
-- **`/swipe`** — card deck: drag, buttons or ← → keys; Worldwide or Passport city; "It's a match!" modal
-- **`/matches`** — new matches row, conversation list, chat with scam/paid-arrangement warnings
-- **`/profile/[id]`** — full profile with like/pass
-- **`/safety`** — meeting tips, red flags, community guidelines, reporting
+Twelve fictional **sample members** are loaded on first start so a new site
+has people to swipe on. Some of them "like back" and send a canned reply, so
+you can test matching and chat alone. Turn them off with `SEED_MEMBERS=off`.
 
-## Policies baked into the product
-
-Adults 18+ only, consent first, and no paid or transactional arrangements
-(escorting, "donations", sugar deals). The chat scanner flags money requests,
-gift cards, crypto, off-platform pushes, and rate/"roses" language.
-
-## Before launch
-
-- Real auth + database for profiles, swipes, matches and messages
-- Photo uploads with moderation, and selfie + ID verification (e.g. Persona, Veriff, Onfido)
-- Server-side message moderation and a human report-review queue
-- Real translation (DeepL or Google Translate API)
-- Payments for premium features (Passport, see who liked you)
-- Legal review: terms, privacy policy (GDPR/CCPA), age assurance rules by country
-
-## Stack
-
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4
+## Running it
 
 ```bash
 pnpm install
-pnpm dev
+pnpm dev        # http://localhost:3000
+pnpm test       # unit + database tests
 ```
+
+No setup is needed locally: without `DATABASE_URL` the app uses PGlite (real
+Postgres compiled to WebAssembly) and stores data in `.data/pglite`. Without
+Stripe keys, the Globe+ page offers a 30-day test upgrade instead of checkout.
+
+## Going live
+
+Set these environment variables (see `.env.example`):
+
+| Variable | What it's for |
+|---|---|
+| `DATABASE_URL` | Postgres connection string (Neon, Supabase, Vercel Postgres…). Tables are created on first request. |
+| `SESSION_SECRET` | Signs login cookies. Generate with `openssl rand -base64 32`. |
+| `SITE_URL` | Public URL, used for Stripe redirects, e.g. `https://girlsaroundtheglobe.com`. |
+| `STRIPE_SECRET_KEY` | Turns on Globe+ checkout and the billing portal. |
+| `STRIPE_WEBHOOK_SECRET` | Verifies Stripe webhooks sent to `/api/stripe/webhook`. Subscribe to `checkout.session.completed`, `invoice.paid` and `customer.subscription.deleted`. |
+| `SEED_MEMBERS` | `off` to launch without the sample members. |
+
+The app refuses to start in production without `DATABASE_URL` and
+`SESSION_SECRET`, so it can't silently run on throwaway storage or a guessable
+secret.
+
+## Still to do before launch
+
+- Selfie + ID verification (e.g. Persona, Veriff, Onfido); the verified badge
+  is currently only set on sample members
+- Moving photos from the database to object storage (Vercel Blob or S3) once
+  traffic grows, plus automatic nudity screening
+- Email verification and password reset (needs an email provider)
+- A moderation queue for the `reports` table
+- Real translation in chat (DeepL or Google Translate API)
+- Login rate limiting in a shared store; today's limiter is per server instance
+- Legal review: terms, privacy policy (GDPR/CCPA), age-assurance rules by country
+
+## Stack
+
+Next.js 16 (App Router, server actions) · React 19 · TypeScript · Tailwind
+CSS v4 · Postgres (`pg`) / PGlite · Stripe · jose

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { sessionUserId } from "@/lib/session";
 import { JoinForm } from "./join-form";
 
 export const metadata: Metadata = {
   title: "Join · Girls Around the Globe",
 };
 
-export default function JoinPage() {
+export default async function JoinPage() {
+  if (await sessionUserId()) redirect("/swipe");
   return (
     <div className="mx-auto max-w-lg px-4 py-12 sm:px-6">
       <h1 className="font-display text-4xl font-semibold">Join Girls Around the Globe</h1>

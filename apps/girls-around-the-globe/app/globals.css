@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #fbf6f2;
+  --bg: #fff7f2;
   --surface: #ffffff;
-  --surface-2: #f5ebe6;
-  --border: #ead9d1;
-  --ink: #23161c;
-  --ink-dim: #6b5560;
-  --ink-mute: #a8949c;
-  --accent: #c2335f;
-  --accent-deep: #8e1d42;
-  --accent-soft: #fbe4ea;
-  --gold: #c99a3e;
-  --ok: #2f855a;
+  --surface-2: #fcece5;
+  --border: #f0dbd1;
+  --ink: #1b1838;
+  --ink-dim: #5c5672;
+  --ink-mute: #9d97ad;
+  --accent: #e8436a;
+  --accent-deep: #b8234c;
+  --accent-soft: #ffe3e9;
+  --gold: #ff9a4d;
+  --ok: #1f8a5b;
   --warn: #b45309;
+  --sunset: linear-gradient(120deg, #ff4f7b 0%, #ff7a59 55%, #ffb347 100%);
 }
 
 @theme inline {
@@ -64,12 +65,16 @@ body {
   transform: translateY(1px);
 }
 .btn-primary {
-  background: var(--accent);
+  background: var(--sunset);
   color: #fff;
-  box-shadow: 0 6px 18px -8px rgb(194 51 95 / 0.7);
+  box-shadow: 0 8px 20px -10px rgb(232 67 106 / 0.8);
 }
 .btn-primary:hover {
-  background: var(--accent-deep);
+  filter: brightness(0.95) saturate(1.1);
+}
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 .btn-ghost {
   background: var(--surface);
@@ -84,7 +89,7 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
-  box-shadow: 0 1px 2px rgb(35 22 28 / 0.04), 0 8px 24px -16px rgb(35 22 28 / 0.18);
+  box-shadow: 0 1px 2px rgb(27 24 56 / 0.04), 0 10px 28px -18px rgb(27 24 56 / 0.25);
 }
 
 .chip {
@@ -112,10 +117,13 @@ body {
   outline-offset: 1px;
 }
 
-.globe-lines {
-  background-image:
-    radial-gradient(circle at 50% 50%, transparent 58%, rgb(194 51 95 / 0.12) 58.4%, transparent 59%),
-    repeating-radial-gradient(ellipse 50% 100% at 50% 50%, transparent 0 17%, rgb(194 51 95 / 0.08) 17.3% 17.6%),
-    repeating-linear-gradient(0deg, transparent 0 11.8%, rgb(194 51 95 / 0.08) 11.8% 12.2%);
-  mask-image: radial-gradient(circle at 50% 50%, #000 58%, transparent 58.5%);
+/* Last, so the gradient wins over .card and .chip backgrounds. */
+.text-sunset {
+  background: var(--sunset);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-sunset {
+  background: var(--sunset);
 }

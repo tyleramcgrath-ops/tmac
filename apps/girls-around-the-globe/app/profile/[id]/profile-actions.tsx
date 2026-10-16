@@ -1,31 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useStore } from "@/lib/member-store";
+import { swipe } from "@/app/actions";
 
-export function ProfileActions({ id, name }: { id: string; name: string }) {
-  const { matches, seen, swipe } = useStore();
-  const [justMatched, setJustMatched] = useState(false);
-  const matched = matches.includes(id);
+type Status = "matched" | "swiped" | "open";
 
-  if (matched) {
-    return (
-      <div className="mt-4">
-        {justMatched && <p className="mb-2 text-center font-semibold text-accent">It&rsquo;s a match! 💘</p>}
-        <Link href={`/matches?to=${id}`} className="btn btn-primary w-full">Message {name}</Link>
-      </div>
-    );
+export function ProfileActions({ id, name, status }: { id: string; name: string; status: Status }) {
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState("");
+
+  if (status === "matched") {
+    return <Link href={`/matches/${id}`} className="btn btn-primary mt-4 w-full">Message {name}</Link>;
   }
-
-  if (seen.includes(id)) {
+  if (status === "swiped") {
     return <p className="mt-4 text-center text-sm text-ink-mute">You&rsquo;ve already swiped on {name}.</p>;
   }
 
+  const act = async (liked: boolean) => {
+    setBusy(true);
+    const res = await swipe(id, liked);
+    setBusy(false);
+    if (!res.ok && res.reason === "out-of-likes") return setNotice("You're out of likes for today.");
+    router.refresh();
+  };
+
   return (
-    <div className="mt-4 grid grid-cols-2 gap-3">
-      <button type="button" onClick={() => swipe(id, false)} className="btn btn-ghost text-rose-500">✕ Pass</button>
-      <button type="button" onClick={() => setJustMatched(swipe(id, true))} className="btn btn-primary">♥ Like</button>
+    <div className="mt-4">
+      <div className="grid grid-cols-2 gap-3">
+        <button type="button" disabled={busy} onClick={() => act(false)} className="btn btn-ghost text-rose-500">✕ Pass</button>
+        <button type="button" disabled={busy} onClick={() => act(true)} className="btn btn-primary">♥ Like</button>
+      </div>
+      {notice && (
+        <p className="mt-2 text-center text-sm text-accent-deep">
+          {notice} <Link href="/premium" className="underline">Get Globe+</Link>
+        </p>
+      )}
     </div>
   );
 }

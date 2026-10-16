@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { sessionUserId } from "@/lib/session";
 import { Avatar } from "@/components/avatar";
 import { PASSPORT_CITIES, PROFILES, VIBE_EMOJI, VIBE_LABEL } from "@/lib/profiles";
 
@@ -27,7 +29,8 @@ const PILLARS = [
   { title: "Adults only, always", body: "Strictly 18+, consent first, and no paid arrangements. Breaking that means a permanent ban." },
 ];
 
-export default function Home() {
+export default async function Home() {
+  if (await sessionUserId()) redirect("/swipe");
   const stack = PROFILES.filter((p) => p.gender === "woman").slice(0, 3);
   const [front] = stack;
 
@@ -39,7 +42,7 @@ export default function Home() {
           <div>
             <p className="chip !bg-accent-soft !text-accent-deep">🌍 Singles in 60+ countries</p>
             <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-              Swipe right on <em className="text-accent">the whole world.</em>
+              Swipe right on <em className="text-sunset">the whole world.</em>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-ink-dim">
               Girls Around the Globe is international dating with a swipe. Match with people from
@@ -55,7 +58,7 @@ export default function Home() {
 
           {/* Phone mockup */}
           <div className="relative mx-auto w-[300px]">
-            <div className="rounded-[2.75rem] border-[10px] border-ink bg-ink shadow-2xl">
+            <div className="rounded-[2.75rem] border-[10px] border-ink bg-ink shadow-[0_40px_80px_-30px_rgb(232_67_106/0.55)]">
               <div className="overflow-hidden rounded-[2rem] bg-bg">
                 <div className="flex items-center justify-between px-5 pb-2 pt-4 text-xs text-ink-dim">
                   <span>✈️ Passport: Lisbon</span>
@@ -139,6 +142,33 @@ export default function Home() {
             ))}
           </div>
           <Link href="/safety" className="btn mt-10 bg-white !text-ink hover:bg-white/90">Safety center</Link>
+        </div>
+      </section>
+
+      {/* Globe+ */}
+      <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6">
+        <div className="grid items-center gap-8 md:grid-cols-[1.2fr_1fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">✦ Globe+</p>
+            <h2 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">Travel smarter. Match faster.</h2>
+            <p className="mt-3 max-w-lg text-ink-dim">
+              Passport to any city before you land, see everyone who already liked you, and never run out of likes.
+            </p>
+            <Link href="/premium" className="btn btn-primary mt-6">See Globe+</Link>
+          </div>
+          <ul className="grid grid-cols-2 gap-3 text-sm">
+            {[
+              ["✈️", "Passport to any city"],
+              ["👀", "See who likes you"],
+              ["♥", "Unlimited likes"],
+              ["★", "5 super likes a day"],
+            ].map(([icon, label]) => (
+              <li key={label} className="card p-4">
+                <span className="text-2xl">{icon}</span>
+                <p className="mt-2 font-semibold">{label}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
