@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="border-t bg-night">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 text-sm text-ink-dim sm:grid-cols-[1.4fr_1fr_1fr] sm:px-6">
         <div>
-          <Wordmark height={64} />
+          <Wordmark height={92} />
           <p className="mt-4 max-w-xs">
             Serious dating for adults around the world. Respect first, and no paid arrangements, ever.
           </p>

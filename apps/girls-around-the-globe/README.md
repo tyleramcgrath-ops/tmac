@@ -71,7 +71,7 @@ fail to connect.
 
 ## Design
 
-Built around the GAG logo (serif GAG, gold globe and orbit): warm black,
+Built around the GAG logo (serif GAG with a gold A framing a woman's profile): warm black,
 off-white and champagne gold, with Instrument Serif for headings and Manrope
 for body text, both self-hosted. Colours are tokens in `app/globals.css`; the
 gold accent always carries dark text (`text-on-accent`). Logo files live in
