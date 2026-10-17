@@ -210,7 +210,8 @@ function whr_import_file( $file, array $opts = array(), $tick = null ) {
 	if ( ! $fh ) {
 		return array( 'error' => 1 );
 	}
-	$opts   = wp_parse_args( $opts, array( 'limit' => 0, 'offset' => 0, 'update' => false, 'source' => '', 'country' => '' ) );
+	$opts   = wp_parse_args( $opts, array( 'limit' => 0, 'offset' => 0, 'update' => false, 'source' => '', 'country' => '', 'seconds' => 0 ) );
+	$start  = microtime( true );
 	$counts = array( 'created' => 0, 'updated' => 0, 'skipped' => 0, 'error' => 0 );
 	$seen   = 0;
 	$done   = 0;
@@ -239,7 +240,7 @@ function whr_import_file( $file, array $opts = array(), $tick = null ) {
 				call_user_func( $tick, $done, $counts );
 			}
 		}
-		if ( $opts['limit'] && $done >= $opts['limit'] ) {
+		if ( ( $opts['limit'] && $done >= $opts['limit'] ) || ( $opts['seconds'] && microtime( true ) - $start > $opts['seconds'] ) ) {
 			break;
 		}
 	}
@@ -410,7 +411,7 @@ add_action(
 			return;
 		}
 		$counts = wp_count_posts( 'sanctuary' );
-		if ( (int) $counts->publish > 50 || get_option( 'whr_import_notice_dismissed' ) ) {
+		if ( (int) $counts->publish > 50 || get_option( 'whr_autoimport' ) ) {
 			return;
 		}
 		echo '<div class="notice notice-info"><p><strong>We Have Rehabs:</strong> ' . esc_html__( 'Fill the directory with 21,842 real treatment facilities in 65 countries, ready for them to claim.', 'wehaverehabs' ) . ' <a class="button button-primary" href="' . esc_url( admin_url( 'tools.php?page=whr-import' ) ) . '">' . esc_html__( 'Import listings', 'wehaverehabs' ) . '</a></p></div>';
@@ -510,3 +511,138 @@ function whr_import_page() {
 	}
 	echo '<p class="description">' . esc_html__( 'Large files take a while: about 150 listings per step. With WP-CLI you can run: wp whr-import listings.jsonl.gz', 'wehaverehabs' ) . '</p></div>';
 }
+
+/*
+ * Automatic import of the bundled listings. A new install with (almost) no listings starts
+ * importing in the background by itself: batches of about 20 seconds run on WP-Cron (visitor
+ * traffic keeps it moving) and on admin page loads, until all 21,842 facilities are in.
+ */
+
+/** Total listings in the bundled file (counted once). */
+function whr_bundled_total() {
+	$total = (int) get_option( 'whr_bundled_total' );
+	if ( ! $total && is_readable( whr_bundled_listings() ) ) {
+		$fh = gzopen( whr_bundled_listings(), 'rb' );
+		while ( gzgets( $fh, 1 << 20 ) !== false ) {
+			++$total;
+		}
+		gzclose( $fh );
+		update_option( 'whr_bundled_total', $total, false );
+	}
+	return $total;
+}
+
+/** Start the background import on sites that have (almost) no listings yet. */
+function whr_autoimport_maybe_start() {
+	if ( get_option( 'whr_autoimport' ) || ! is_readable( whr_bundled_listings() ) ) {
+		return;
+	}
+	$counts = wp_count_posts( 'sanctuary' );
+	if ( (int) $counts->publish > 50 && false === get_option( 'whr_autoimport_offset', false ) ) {
+		update_option( 'whr_autoimport', 'done', false ); // The site already has its own listings.
+		return;
+	}
+	update_option( 'whr_autoimport', 'running', false );
+	add_option( 'whr_autoimport_offset', 0, '', false ); // Resumes where it stopped if restarted.
+	wp_schedule_single_event( time(), 'whr_autoimport_batch' );
+	whr_autoimport_kick();
+}
+add_action( 'after_switch_theme', 'whr_autoimport_maybe_start' );
+add_action( 'admin_init', 'whr_autoimport_maybe_start' );
+add_action(
+	'init',
+	function () {
+		if ( ! get_option( 'whr_autoimport' ) ) {
+			whr_autoimport_maybe_start();
+		}
+	},
+	20
+);
+
+/**
+ * Import one batch of the bundled listings.
+ *
+ * @param int $seconds Time budget.
+ */
+function whr_autoimport_batch( $seconds = 20 ) {
+	if ( 'running' !== get_option( 'whr_autoimport' ) || get_transient( 'whr_autoimport_lock' ) ) {
+		return;
+	}
+	set_transient( 'whr_autoimport_lock', 1, 90 );
+	if ( function_exists( 'set_time_limit' ) ) {
+		set_time_limit( 120 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
+	}
+	$offset = (int) get_option( 'whr_autoimport_offset' );
+	$counts = whr_import_file( whr_bundled_listings(), array( 'offset' => $offset, 'seconds' => $seconds ) );
+	$did    = $counts['created'] + $counts['updated'] + $counts['skipped'] + $counts['error'];
+	update_option( 'whr_autoimport_offset', $offset + $did, false );
+	delete_transient( 'whr_autoimport_lock' );
+	if ( ! empty( $counts['eof'] ) || 0 === $did ) {
+		update_option( 'whr_autoimport', 'done', false );
+		return;
+	}
+	wp_schedule_single_event( time() + 30, 'whr_autoimport_batch' ); // Backup if the chain below breaks.
+	whr_autoimport_kick();
+}
+
+/**
+ * Start the next batch at once with a background request to this site, so the import keeps
+ * going without visitors. Protected by a random token only this site knows.
+ */
+function whr_autoimport_kick() {
+	$token = get_option( 'whr_autoimport_token' );
+	if ( ! $token ) {
+		$token = wp_generate_password( 32, false );
+		update_option( 'whr_autoimport_token', $token, false );
+	}
+	wp_remote_post(
+		admin_url( 'admin-ajax.php' ),
+		array(
+			'timeout'   => 0.01,
+			'blocking'  => false,
+			'sslverify' => apply_filters( 'https_local_ssl_verify', false ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals -- core filter.
+			'body'      => array( 'action' => 'whr_autoimport', 'token' => $token ),
+		)
+	);
+}
+foreach ( array( 'wp_ajax_whr_autoimport', 'wp_ajax_nopriv_whr_autoimport' ) as $whr_ajax_hook ) {
+	add_action(
+		$whr_ajax_hook,
+		function () {
+			$token = isset( $_POST['token'] ) ? sanitize_text_field( wp_unslash( $_POST['token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing -- loopback request authenticated by token.
+			if ( $token && hash_equals( (string) get_option( 'whr_autoimport_token' ), $token ) ) {
+				ignore_user_abort( true );
+				whr_autoimport_batch( 20 );
+			}
+			wp_die( '', '', array( 'response' => 200 ) );
+		}
+	);
+}
+add_action(
+	'whr_autoimport_batch',
+	function () {
+		whr_autoimport_batch( 20 );
+	}
+);
+/* Admin page loads also move it along, in case WP-Cron is slow or disabled on the host. */
+add_action(
+	'admin_init',
+	function () {
+		if ( 'running' === get_option( 'whr_autoimport' ) && current_user_can( 'manage_options' ) && ! wp_doing_ajax() ) {
+			whr_autoimport_batch( 8 );
+		}
+	},
+	30
+);
+add_action(
+	'admin_notices',
+	function () {
+		if ( 'running' !== get_option( 'whr_autoimport' ) || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$total = whr_bundled_total();
+		$done  = min( $total, (int) get_option( 'whr_autoimport_offset' ) );
+		/* translators: 1: imported 2: total */
+		echo '<div class="notice notice-info"><p><strong>We Have Rehabs:</strong> ' . esc_html( sprintf( __( 'Adding real treatment facilities to your directory in the background — %1$s of %2$s so far. This keeps going on its own; reloading any admin page speeds it up.', 'wehaverehabs' ), number_format_i18n( $done ), number_format_i18n( $total ) ) ) . '</p></div>';
+	}
+);
