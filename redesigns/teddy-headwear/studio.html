@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Monogram Studio | Teddy Headwear</title>
+<meta name="description" content="Design a custom monogram for your Teddy Headwear cowboy hat or fedora.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=IBM+Plex+Mono:wght@400;500&family=Yellowtail&family=Graduate&family=Rye&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="studio">
+<script>document.documentElement.classList.add('no-intro')</script>
+<div id="chrome-top"></div>
+<main id="top">
+
+  <section class="phero" style="padding-bottom:0"><div class="wrap" style="display:grid;gap:18px;padding-bottom:40px">
+    <span class="eyebrow">Monogram Studio</span>
+    <h1 class="display" style="font-size:clamp(48px,9vw,140px)">Make your <span class="serif-i gold">mark.</span></h1>
+    <p class="lede" style="margin:0">Your letters, embroidered on the crown of a 100% wool cowboy hat or fedora. What you see here is what we stitch.</p>
+  </div></section>
+  <section class="section--tight" id="studio">
+    <div class="wrap" style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:start" id="studioGrid">
+      <div style="position:sticky;top:96px;display:grid;gap:14px" id="stageCol">
+        <div class="stage"><span class="stage__tag" data-tag></span><span class="stage__price" data-price></span></div>
+        <dl class="mono" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0;font-size:12px">
+          <div><dt style="opacity:.6">Letters</dt><dd style="margin:0" id="sumText"></dd></div>
+          <div><dt style="opacity:.6">Lettering</dt><dd style="margin:0" id="sumStyle"></dd></div>
+          <div><dt style="opacity:.6">Thread</dt><dd style="margin:0" id="sumThread"></dd></div>
+          <div><dt style="opacity:.6">Hat</dt><dd style="margin:0" id="sumHat"></dd></div>
+        </dl>
+      </div>
+      <div style="display:grid;gap:24px">
+        
+    <div class="opts">
+      <div class="opt"><label class="lab" for="sLetters">Your letters <output data-out="text"></output></label>
+        <div class="letters"><input id="sLetters" class="letters-in" maxlength="3" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="sHint"></div>
+        <div class="presets" aria-label="Quick picks"><button type="button" data-preset="T">T</button><button type="button" data-preset="F">F</button><button type="button" data-preset="NY">NY</button><button type="button" data-preset="LA">LA</button><button type="button" data-preset="305">305</button><button type="button" data-preset="TX">TX</button><button type="button" data-preset="&">&</button></div>
+        <p id="sHint" data-hint style="font-size:13px;margin:0;opacity:.7">Up to 3 letters or numbers. The ampersand works too.</p>
+      </div>
+      <fieldset class="opt"><legend>Lettering <output data-out="style"></output></legend>
+        <div class="seg seg--styles" data-k="style"><button type="button" data-v="script"><b style="font-family:Yellowtail">Ab</b><small>Script</small></button><button type="button" data-v="varsity"><b style="font-family:Graduate">Ab</b><small>Varsity</small></button><button type="button" data-v="serif"><b style="font-family:'Bodoni Moda';font-style:italic;font-weight:600">Ab</b><small>Serif</small></button><button type="button" data-v="western"><b style="font-family:Rye">Ab</b><small>Western</small></button></div></fieldset>
+      <fieldset class="opt"><legend>Thread <output data-out="thread"></output></legend>
+        <div class="threads" data-k="thread"><button type="button" class="thread" data-v="white" style="background:#F5F2EA" aria-label="White thread"></button><button type="button" class="thread" data-v="gold" style="background:#E2A526" aria-label="Gold thread"></button><button type="button" class="thread" data-v="cream" style="background:#E3D5B6" aria-label="Cream thread"></button><button type="button" class="thread" data-v="forest" style="background:#1E4630" aria-label="Forest thread"></button><button type="button" class="thread" data-v="black" style="background:#1C1C1C" aria-label="Black thread"></button><button type="button" class="thread" data-v="saddle" style="background:#8E6239" aria-label="Saddle thread"></button></div></fieldset>
+      <fieldset class="opt"><legend>Silhouette <output data-out="type"></output></legend>
+        <div class="seg" data-k="type"><button type="button" data-v="cowboy"><b>Cowboy</b><small>Classic Western / $150</small></button><button type="button" data-v="fedora"><b>Fedora</b><small>Wide-brim / $140</small></button></div></fieldset>
+      <fieldset class="opt"><legend>Wool <output data-out="color"></output></legend>
+        <div class="seg" data-k="color"><button type="button" class="color" data-v="cream"><span class="sw sw--cream"></span><b>Cream</b></button><button type="button" class="color" data-v="brown"><span class="sw sw--brown"></span><b>Brown</b></button></div></fieldset>
+      <div class="opt"><label class="lab" for="sSize">Letter size</label>
+        <input type="range" id="sSize" class="range" min="70" max="125" value="100"></div>
+      <div class="total"><span>Hat + custom monogram</span><strong data-price>$175.00</strong></div>
+      <button type="button" class="btn btn--block" data-addcustom>Add custom hat to cart <span class="arrow">→</span></button>
+    </div>
+        <p style="margin:0;font-size:13px;color:var(--muted)">Hat <span id="sumBase" class="mono"></span> + custom monogram <span class="mono">$25.00</span>. Every hat keeps the silk lining, adjustable sweatband, woven label and leather band.</p>
+      </div>
+    </div>
+  </section>
+  <style>@media (max-width: 900px) { #studioGrid { grid-template-columns: minmax(0, 1fr) !important; } #stageCol { position: static !important; } }</style>
+  <section class="section sec-pine">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">How it works</span><h2 class="display h-md">Three steps to <span class="serif-i gold">yours.</span></h2></div></div>
+      <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px">
+        <li style="border-top:1px solid var(--line-light);padding-top:20px;display:grid;gap:8px"><span class="mono gold">01</span><b style="font-size:22px">Type your letters</b><span style="color:var(--on-dark)">Up to three letters or numbers. Initials, an area code, a brand of your own.</span></li>
+        <li style="border-top:1px solid var(--line-light);padding-top:20px;display:grid;gap:8px"><span class="mono gold">02</span><b style="font-size:22px">Pick lettering and thread</b><span style="color:var(--on-dark)">Script, Varsity, Serif or Western, in six thread colors.</span></li>
+        <li style="border-top:1px solid var(--line-light);padding-top:20px;display:grid;gap:8px"><span class="mono gold">03</span><b style="font-size:22px">We stitch it</b><span style="color:var(--on-dark)">Your monogram is embroidered on the crown of a cream or brown wool hat.</span></li>
+      </ol>
+    </div>
+  </section>
+  <section class="section"><div class="wrap">
+    <div class="section-head"><div><span class="eyebrow">Ideas</span><h2 class="display h-md">Start from <span class="serif-i">one of these.</span></h2></div></div>
+    <div class="grid" id="examples"></div>
+  </div></section>
+
+</main>
+<div id="chrome-bottom"></div>
+<script src="assets/site.js"></script>
+</body>
+</html>

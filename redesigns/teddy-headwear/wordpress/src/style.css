@@ -1,0 +1,15 @@
+/*
+Theme Name: Teddy Midnight
+Theme URI: https://teddyheadwear.com/
+Author: Teddy Headwear
+Description: The Teddy Headwear "Midnight Rodeo" storefront for WooCommerce: the bear intro, a page per product, the Monogram Studio for custom letters (with a per-order monogram fee), the four-city campaign, apparel, the Bear Club signup list, and a one-click installer (Appearance → Teddy Setup) that loads every product, image and page.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 7.4
+WC requires at least: 8.0
+License: Proprietary
+Text Domain: teddy
+*/
+
+/* All storefront styles live in assets/site.css (shared with the static site). WordPress-only additions are in assets/wp.css. */
