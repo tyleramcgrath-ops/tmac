@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WHR_VERSION', '1.2.6' );
+define( 'WHR_VERSION', '1.2.7' );
 define( 'WHR_DIR', get_template_directory() );
 define( 'WHR_URI', get_template_directory_uri() );
 

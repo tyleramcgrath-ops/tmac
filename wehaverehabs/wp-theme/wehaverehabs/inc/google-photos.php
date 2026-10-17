@@ -158,31 +158,26 @@ function whr_places_is_match( $place, $post_id ) {
  * @return array|null { uri, credits }
  */
 function whr_google_photo_fetch( $id, &$why = '' ) {
+	// One Text Search per lookup: it returns the photos too, so no separate Place Details call
+	// (which has its own, often tiny, daily quota). The stored Place ID confirms it is the same place.
 	$place_id = (string) whr_meta( 'gplace', $id );
-	$photos   = null;
-	if ( '' === $place_id ) {
-		$query = trim( get_the_title( $id ) . ', ' . ( whr_meta( 'address', $id ) ? whr_meta( 'address', $id ) : whr_location( $id ) . ', ' . whr_term_names( 'destination', $id ) ), ', ' );
-		$found = whr_places_request( 'POST', 'https://places.googleapis.com/v1/places:searchText', 'places.id,places.displayName,places.formattedAddress,places.photos', array( 'textQuery' => $query, 'pageSize' => 1 ) );
-		if ( null === $found ) {
-			$why = 'search-error: ' . whr_gphoto_error_text();
-			return null; // Try again on a later visit.
-		}
-		$place = $found['places'][0] ?? null;
-		if ( ! $place || ! whr_places_is_match( $place, $id ) ) {
-			update_post_meta( $id, 'whr_gplace', 'none' ); // Not on Google, or not confidently the same place.
-			$why = $place ? 'no-match: ' . ( $place['displayName']['text'] ?? '' ) : 'not-found';
-			return null;
-		}
-		update_post_meta( $id, 'whr_gplace', sanitize_text_field( $place['id'] ) ); // Place IDs may be stored.
-		$photos = $place['photos'] ?? array();
-	} else {
-		$details = whr_places_request( 'GET', 'https://places.googleapis.com/v1/places/' . rawurlencode( $place_id ), 'photos' );
-		if ( null === $details ) {
-			$why = 'details-error: ' . whr_gphoto_error_text();
-			return null;
-		}
-		$photos = $details['photos'] ?? array();
+	$query    = trim( get_the_title( $id ) . ', ' . ( whr_meta( 'address', $id ) ? whr_meta( 'address', $id ) : whr_location( $id ) . ', ' . whr_term_names( 'destination', $id ) ), ', ' );
+	$found    = whr_places_request( 'POST', 'https://places.googleapis.com/v1/places:searchText', 'places.id,places.displayName,places.formattedAddress,places.photos', array( 'textQuery' => $query, 'pageSize' => 1 ) );
+	if ( null === $found ) {
+		$why = 'search-error: ' . whr_gphoto_error_text();
+		return null; // Try again on a later visit.
 	}
+	$place = $found['places'][0] ?? null;
+	$same  = $place && ( ( '' !== $place_id && $place['id'] === $place_id ) || whr_places_is_match( $place, $id ) );
+	if ( ! $same ) {
+		update_post_meta( $id, 'whr_gplace', 'none' ); // Not on Google, or not confidently the same place.
+		$why = $place ? 'no-match: ' . ( $place['displayName']['text'] ?? '' ) : 'not-found';
+		return null;
+	}
+	if ( $place['id'] !== $place_id ) {
+		update_post_meta( $id, 'whr_gplace', sanitize_text_field( $place['id'] ) ); // Place IDs may be stored.
+	}
+	$photos = $place['photos'] ?? array();
 	if ( empty( $photos[0]['name'] ) ) {
 		$why = 'no-photos';
 		return null;
@@ -318,6 +313,7 @@ function whr_render_google_panel() {
 		echo '<p class="description">' . esc_html( sprintf( __( 'Last photo that could not be shown: %1$s — %2$s', 'wehaverehabs' ), get_the_title( $last[1] ), $last[2] ) ) . '</p>';
 	}
 	if ( isset( $_POST['whr_gtest'] ) && check_admin_referer( 'whr_gtest' ) ) {
+		delete_transient( 'whr_gphoto_paused' );
 		$matched = get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 1, 'meta_query' => array( array( 'key' => 'whr_gplace', 'value' => array( '', 'none' ), 'compare' => 'NOT IN' ) ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
 		if ( $matched ) {
 			$why   = '';
@@ -334,6 +330,7 @@ function whr_render_google_panel() {
 	if ( isset( $_POST['whr_gretry'] ) && check_admin_referer( 'whr_gtest' ) ) {
 		$n = $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = 'whr_gplace' AND meta_value = 'none'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		delete_option( 'whr_gphoto_error' );
+		delete_transient( 'whr_gphoto_paused' );
 		/* translators: %s: count */
 		echo '<div class="notice notice-success inline"><p>' . esc_html( sprintf( __( '%s listings will be looked up again when next viewed.', 'wehaverehabs' ), number_format_i18n( (int) $n ) ) ) . '</p></div>';
 	}
